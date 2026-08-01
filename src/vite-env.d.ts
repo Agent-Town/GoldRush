@@ -184,6 +184,7 @@ interface ThreeGameDiagnostics {
   waveState: 'quiet' | 'warning' | 'active' | 'cleared';
   pulse: number;
   edge: 'north' | 'south' | 'east' | 'west' | null;
+  drillYard: import('./game/DrillYard').DrillYardDiagnostics | null;
   budget: number;
   lastPulseAt: number;
   spawnDisabled: boolean;

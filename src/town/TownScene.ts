@@ -1937,7 +1937,8 @@ export class TownScene {
     const pageIndex = clampBoardPage(this.boardPageIndex, chapters.length);
     this.boardPageIndex = pageIndex;
     const chapter = chapters[pageIndex];
-    for (const contract of chapter?.contracts ?? []) discoverLedgerContract(contract.id);
+    const contracts = chapter?.contracts ?? [];
+    for (const contract of contracts) discoverLedgerContract(contract.id);
     const boardEpochId = chapter?.id ?? activeEpoch.id;
     const accent = townEraAccent(chapter?.order ?? activeEpoch.order);
     const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');
@@ -1970,10 +1971,10 @@ export class TownScene {
                       <p class="town-ui__board-eyebrow">Chapter ${chapter.order}</p>
                       <h3>${escapeHtml(chapter.displayName)}</h3>
                     </div>
-                    <span>${chapter.contracts.length} contract${chapter.contracts.length === 1 ? '' : 's'}</span>
+                    <span>${contracts.length} contract${contracts.length === 1 ? '' : 's'}</span>
                   </header>
                   <div class="town-ui__chapter-contracts">
-                    ${chapter.contracts.map((contract, index) => this.renderContractCard(contract, scores, index, chapter.contracts.length)).join('')}
+                    ${contracts.map((contract, index) => this.renderContractCard(contract, scores, index, contracts.length)).join('')}
                   </div>
                 </section>`
               : ''

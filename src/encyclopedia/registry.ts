@@ -75,6 +75,7 @@ export type BuildableLedgerEntryId =
 export type ContractLedgerEntryId =
   | 'the_claim'
   | 'assay_office_records'
+  | 'contract_e1_drill_yard'
   | 'contract_e1_dry_gulch'
   | 'contract_e1_night_shift'
   | 'contract_e1_twin_banks'
@@ -147,6 +148,7 @@ export const buildableLedgerEntryById: Record<BuildableId, BuildableLedgerEntryI
 
 export const contractLedgerEntryById: Record<string, ContractLedgerEntryId> = {
   [DEFAULT_CONTRACT_ID]: 'the_claim',
+  'e1-drill-yard': 'contract_e1_drill_yard',
   'e1-dry-gulch': 'contract_e1_dry_gulch',
   'e1-night-shift': 'contract_e1_night_shift',
   'e1-twin-banks': 'contract_e1_twin_banks',

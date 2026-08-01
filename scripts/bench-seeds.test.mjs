@@ -44,8 +44,32 @@ test('contract ids are globally unique across the ten epoch bundles', () => {
   assert.equal(knownContractIds.size, allContractIds.length);
 });
 
+// F-1323-1 (s1323). A bench seed set exists so agent-play runs on one contract stay
+// COMPARABLE across sessions (specs/agent-play/README.md:61) — it freezes the maps a score
+// was earned on. The Drill Yard (merged s1323) is the first Frontier contract that records
+// NOTHING: its own `practice` block declares scores/standings/runHistory/metaProgress/tapes
+// all false, and its e2e asserts a ledger delta of [] and zero standings requests. There is
+// therefore no measurement to hold comparable, and a frozen seed set for it would be dead
+// data pretending to be a baseline.
+// This narrows the guard to the set its PURPOSE covers; it does not loosen it:
+//   - the exemption is keyed on the contract's OWN declaration, never an id allow-list, so a
+//     practice contract that ever starts scoring is covered again automatically; and
+//   - it is asserted BIDIRECTIONALLY — an exempt contract must not carry seeds either, so the
+//     branch cannot decay into a silent skip that hides real missing coverage.
+const recordsNoScore = (contract) => contract.practice?.scores === false;
+
 test('bench seed sets cover Frontier and contain only valid known-contract seeds', () => {
-  for (const { id: contractId } of frontierContracts.contracts) {
+  for (const contract of frontierContracts.contracts) {
+    const { id: contractId } = contract;
+    if (recordsNoScore(contract)) {
+      assert.equal(
+        Object.hasOwn(benchSeeds, contractId),
+        false,
+        `${contractId} declares practice.scores:false, so it must NOT carry a bench seed set — ` +
+          `a frozen seed set for a contract that records no score is dead data`,
+      );
+      continue;
+    }
     assert.ok(Object.hasOwn(benchSeeds, contractId), `${contractId} needs a bench seed set`);
   }
   for (const [contractId, seeds] of Object.entries(benchSeeds)) {

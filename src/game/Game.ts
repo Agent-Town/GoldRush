@@ -255,6 +255,7 @@ import { gameApiUrl } from '../app/GameApi';
 import { installRunTelemetry } from '../telemetry/runBeacon';
 import { readTelemetryOptIn, TELEMETRY_DEV_SEND_STORAGE_KEY } from '../telemetry/payload';
 import { GameState } from './GameState';
+import { DrillYard } from './DrillYard';
 import {
   applyStoredPerformanceTier,
   performanceTierDiagnostics,
@@ -483,6 +484,7 @@ export class Game {
       if (this.weaponForActor(actor) === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
     },
     (enemy, amount, died, ownerId) => {
+      if (this.drillYard?.handleEnemyDamage(enemy, died, this.timeAlive)) return false;
       if (died && e6CureArmForOwner(ownerId) && this.wrangle.powerDown(enemy)) {
         this.e6ArsenalSystem.recordPowerDown(enemy, ownerId);
         return false;
@@ -765,7 +767,7 @@ export class Game {
       this.advanceMegaprojectOnWave(atSim);
       return !this.secureClaimChoicePending();
     },
-    () => areWavesDisabled() || this.deepwaterClaim !== null,
+    () => areWavesDisabled() || this.deepwaterClaim !== null || this.activeContract.practice?.scheduledWaves === false,
     () => this.activeContract,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
     () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active || this.ferrisWheel?.target.active === true),
@@ -1182,6 +1184,7 @@ export class Game {
   private securedScoreAt: number | null = null;
 
   private runManager?: RunManager;
+  private drillYard?: DrillYard;
   private agentStub?: AgentStub;
   private readonly agentConsent = new AgentConsentStore();
   private unsubscribeAgentReceipts?: () => void;
@@ -1593,7 +1596,7 @@ export class Game {
     });
     this.events.on('building_wrecked', () => {
       this.buildingsWrecked += 1;
-      emitStorySignal({ type: 'building-lost' });
+      if (this.activeContract.practice?.metaProgress !== false) emitStorySignal({ type: 'building-lost' });
     });
     this.events.on('wave_started', (event) => {
       const baron = this.activeContract.twist.baron;
@@ -1625,6 +1628,23 @@ export class Game {
     });
 
     this.createScene();
+    if (this.activeContract.practice) {
+      this.drillYard = new DrillYard(
+        this.activeContract.practice,
+        this.enemies,
+        this.economy,
+        this.waveSystem,
+        this.promptStack,
+        (position, text, color) => this.vfx.floatText(position, text, color),
+        (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 3, 'wave', title),
+        () => this.returnToTown('overrun'),
+        () => {
+          this.syncUi();
+          this.publishDiagnostics();
+        },
+      );
+      this.scene.add(this.drillYard.group);
+    }
     const e10Params = new URLSearchParams(window.location.search);
     const finaleStageDebug = isDebugEnabled() && e10Params.has('e10finale');
     const staticStageDebug = isDebugEnabled() && e10Params.has('e10static');
@@ -1889,14 +1909,14 @@ export class Game {
         },
         placeFree: (id: BuildableId, x: number, z: number, rotationSteps = 0) => {
           const placed = !this.deepwaterClaim && this.buildSystem.placeFree(id, { x, z }, rotationSteps);
-          if (placed) discoverLedgerBuildable(id);
+          if (placed) this.recordLedgerBuildable(id);
           this.publishDiagnostics();
           return placed;
         },
         confirmBuild: () => {
           const id = this.buildSystem.diagnostics.selectedBuildable;
           const placed = !this.deepwaterClaim && this.buildSystem.confirm(this.timeAlive);
-          if (placed) discoverLedgerBuildable(id);
+          if (placed) this.recordLedgerBuildable(id);
           this.publishDiagnostics();
           return placed;
         },
@@ -2053,16 +2073,18 @@ export class Game {
     this.prefetchContractPresentation();
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
     // Meta defenses need to exist before the opening stress spawns pick lanes.
-    this.runManager = new RunManager(this, {
-      onSecureChoice: (choice) => {
-        if (!this.mpClient) return false;
-        this.mpQueuedActions.push({ type: 'secure_choice', choice });
-        return true;
-      },
-      onRunStarted: () => this.startRunTape(),
-      onRunEnded: ({ reason, at, summary }) => this.finishRunTape(reason, at, summary),
-    });
-    this.runManager.install();
+    if (!this.activeContract.practice) {
+      this.runManager = new RunManager(this, {
+        onSecureChoice: (choice) => {
+          if (!this.mpClient) return false;
+          this.mpQueuedActions.push({ type: 'secure_choice', choice });
+          return true;
+        },
+        onRunStarted: () => this.startRunTape(),
+        onRunEnded: ({ reason, at, summary }) => this.finishRunTape(reason, at, summary),
+      });
+      this.runManager.install();
+    }
     this.installMultiplayerDev();
     this.waveSystem.spawnStressEnemies();
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
@@ -2084,7 +2106,7 @@ export class Game {
             : 0;
           const placed = this.buildSystem.confirmPlacement(this.timeAlive, { id, position, rotationSteps });
           if (placed) {
-            discoverLedgerBuildable(id);
+            this.recordLedgerBuildable(id);
             this.recordRunTapeAction({ type: 'place_build', id, position, rotationSteps });
           }
           return placed;
@@ -2185,6 +2207,7 @@ export class Game {
     window.removeEventListener('resize', this.syncViewport);
     cancelAnimationFrame(this.resizeFrame);
     this.runManager?.dispose();
+    this.drillYard?.dispose();
     this.unsubscribeAgentReceipts?.();
     this.agentStub?.dispose();
     this.mpClient?.dispose();
@@ -2424,6 +2447,7 @@ export class Game {
       this.damSurge?.update(this.timeAlive);
       if (this.finishPendingDeath()) return true;
       this.waveSystem.update(this.timeAlive);
+      this.drillYard?.update(this.timeAlive, this.localActor.group.position);
       this.wrangle.update(simDelta, this.timeAlive);
       if (this.activeContract.twist.baron?.variantId === 'dynamo_crawler' && this.baronBeatenThisRun) {
         this.crawlerBoss.restoreWreck(this.baronStandardPosition);
@@ -2587,15 +2611,21 @@ export class Game {
   }
 
   private discoverLedgerEnemyEntry(entryId: EnemyLedgerEntryId): void {
+    if (this.activeContract.practice?.metaProgress === false) return;
     if (this.enemyLedgerEntriesSeenThisRun.has(entryId)) return;
     this.enemyLedgerEntriesSeenThisRun.add(entryId);
     discoverLedgerEntry(entryId);
   }
 
   private revealLedgerEnemyStats(entryId: EnemyLedgerEntryId): void {
+    if (this.activeContract.practice?.metaProgress === false) return;
     if (this.enemyLedgerStatsSeenThisRun.has(entryId)) return;
     this.enemyLedgerStatsSeenThisRun.add(entryId);
     revealLedgerEnemyStats(entryId);
+  }
+
+  private recordLedgerBuildable(id: BuildableId): void {
+    if (this.activeContract.practice?.metaProgress !== false) discoverLedgerBuildable(id);
   }
 
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
@@ -2735,7 +2765,7 @@ export class Game {
   /** Returns true when the action schedules a run transition and later actions from this tick must be ignored. */
   private applyMultiplayerAction(action: LockstepAction): boolean {
     if (action.type === 'place_build' && !this.deepwaterClaim) {
-      if (this.buildSystem.confirmPlacement(this.timeAlive, action)) discoverLedgerBuildable(action.id as BuildableId);
+      if (this.buildSystem.confirmPlacement(this.timeAlive, action)) this.recordLedgerBuildable(action.id as BuildableId);
     }
     if (action.type === 'weapon_toggle') this.toggleWeapon(this.actionActor);
     if (action.type === 'restart' && this.state.current === 'dead') {
@@ -4273,6 +4303,7 @@ export class Game {
       waveState: this.waveSystem.diagnostics.waveState,
       pulse: this.waveSystem.diagnostics.pulse,
       edge: this.waveSystem.diagnostics.edge,
+      drillYard: this.drillYard?.diagnostics ?? null,
       budget: this.waveSystem.diagnostics.budget,
       lastPulseAt: this.waveSystem.diagnostics.lastPulseAt,
       spawnDisabled: isSpawnDisabled(),
@@ -4693,6 +4724,7 @@ export class Game {
   }
 
   private speakTrailGuide(trigger: TrailGuideTrigger): void {
+    if (this.activeContract.practice?.metaProgress === false) return;
     const bark = takeTrailGuideBark(trigger);
     if (!bark) return;
     if (this.trailGuideLine) {
@@ -5311,6 +5343,7 @@ export class Game {
   }
 
   private isBuildableEnabled(id: BuildableId): boolean {
+    if (this.activeContract.practice?.buildables.includes(id)) return true;
     if (this.activeContract.twist.powerGrid && (id === 'turret' || id === 'lantern_post')) return false;
     if (id === 'lantern_post') return this.isNightShiftContract();
     if (id === 'decoy_shed') return this.activeContract.id === 'e3-moth-season';
@@ -5546,7 +5579,7 @@ export class Game {
       weaponSplit: this.weaponSplit(runStats),
       contractId: this.activeContract.id,
     };
-    const scores = recordScore(score);
+    const scores = this.activeContract.practice?.scores === false ? loadScores() : recordScore(score);
     return { scoreAt, economySummary, runStats, score, scores };
   }
 
@@ -5615,6 +5648,7 @@ export class Game {
   }
 
   private keepTapeOptions() {
+    if (this.activeContract.practice?.tapes === false) return {};
     return {
       tapeKept: this.lastRunTape?.kept === true,
       onKeepTape: () => {
@@ -5628,6 +5662,7 @@ export class Game {
   }
 
   private async submitCountyStanding(score: ScoreRecord): Promise<void> {
+    if (this.activeContract.practice?.standings === false) return;
     if (!this.countyStandingsEnabled || !score.secured || !readTelemetryOptIn() || globalThis.navigator?.onLine === false) return;
     try {
       const epoch = listEpochs().find((entry) => loadEpoch(entry.id).contracts.some((contract) => contract.id === this.activeContract.id));
@@ -6144,6 +6179,7 @@ export class Game {
     this.mothSwarm.reset();
     this.goldPickups.recycleAll();
     this.waveSystem.reset();
+    this.drillYard?.reset();
     this.deepwaterClaim?.reset();
     this.deepwaterCorsairWavesSpawned = 0;
     this.buildMenuOpen = false;
@@ -7127,7 +7163,7 @@ export class Game {
       const id = build.selectedBuildable;
       this.updateActionActorPosition();
       if (this.buildSystem.confirm(this.timeAlive)) {
-        discoverLedgerBuildable(id);
+        this.recordLedgerBuildable(id);
         this.recordRunTapeAction({ type: 'place_build',
           id,
           position: build.ghostPos,
@@ -7136,6 +7172,7 @@ export class Game {
       }
       return;
     }
+    if (this.drillYard?.interact(this.actionActor.group.position)) return;
     if (this.buildSystem.assayOfficeInRange(this.actionActor.group.position)) {
       this.audio.play('ledger-open');
       this.openAssayBench?.();
@@ -7287,6 +7324,7 @@ export class Game {
   }
 
   private researchOverlayOptions(totalRounds: number): DeathOverlayOptions {
+    if (this.activeContract.practice?.metaProgress === false) return {};
     this.researchState = loadResearchState(this.researchStorage, this.researchStorage, this.researchUnlockFlags());
     let roundsRemaining = Math.max(0, totalRounds);
     const state = (): DeathResearchState => ({

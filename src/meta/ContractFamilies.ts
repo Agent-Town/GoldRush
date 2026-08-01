@@ -22,6 +22,7 @@ import deepskyContracts from '../../assets/contracts/epoch-10-deepsky/contracts.
 import deepskyManifest from '../../assets/contracts/epoch-10-deepsky/manifest.json' with { type: 'json' };
 import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
 import { e7SignalExitBeatReady } from '../systems/E7SignalSystem';
+import type { BuildableId } from '../game/buildables';
 
 const RELEASE_E1 = typeof __GR_RELEASE_E1__ !== 'undefined' && __GR_RELEASE_E1__;
 
@@ -551,6 +552,18 @@ export type ContractEscortMode = {
   payout: number;
   railRouteIndex: number;
 };
+export type ContractPracticeMode = {
+  scheduledWaves: false;
+  scores: false;
+  metaProgress: false;
+  runHistory: false;
+  standings: false;
+  tapes: false;
+  goldGrant: number;
+  bellWaveSize: number;
+  dummyRespawnSeconds: number;
+  buildables: BuildableId[];
+};
 export type ContractManifest = {
   id: string;
   name: string;
@@ -610,6 +623,7 @@ export type ContractManifest = {
     baron?: ContractBaronTwist;
   };
   modes?: ContractEscortMode[];
+  practice?: ContractPracticeMode;
   boardRow: {
     name: string;
     ledgerBlurb: string;

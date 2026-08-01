@@ -1,3 +1,8 @@
+> ⬆️ **SUPERSEDED s1323, 2026-08-01 — the REJECT below stood for one cycle and no longer holds.**
+> The corrective it ordered (`pc-01b`) resolved the single blocking objection, and the whole stack **MERGED**
+> at s1323. See **`reviews/pc-01b-drill-yard-parity.md`** for the accept verdict and evidence. This file is kept
+> intact as the record of *why* the slice waited — the reasoning was sound and the objection was real.
+
 # pc-01-drill-yard — The Drill Yard (PC-01)
 
 - **Slice:** PC-01, `specs/practice-claim/README.md` (RATIFIED as THE DRILL YARD, owner 2026-08-01)

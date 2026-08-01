@@ -9,7 +9,7 @@ import { FIRST_CLAIM_DONE_KEY } from './game/ProfileStorage';
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
-import { activeContract, DEFAULT_CONTRACT_ID, readCharterLaunch, stagePlayerContractLaunch } from './meta/ContractFamilies';
+import { activeContract, DEFAULT_CONTRACT_ID, loadContract, readCharterLaunch, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
 import { installClaimLedgerRequestHandler } from './encyclopedia/events';
 import { installEpochLedgerDiscovery } from './encyclopedia/state';
@@ -212,7 +212,7 @@ function continueSavedRun(): void {
 
 function launchContract(contractId: string): void {
   advanceStream.pause();
-  markFirstClaimDone();
+  if (!loadContract(contractId).practice) markFirstClaimDone();
   stagePlayerContractLaunch(contractId);
   const nextSearch = new URLSearchParams(window.location.search);
   nextSearch.set('contract', contractId);

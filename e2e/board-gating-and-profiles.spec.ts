@@ -1,7 +1,7 @@
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { ACTIVE_EPOCH_KEY, loadEpoch } from '../src/meta/ContractFamilies';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
@@ -60,7 +60,9 @@ test('the board hides future epochs and keeps reached-era contract gates', async
   expect(await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeEpochId)).toBe('epoch-1-frontier');
   await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(1);
   await expect(page.getByTestId('contract-chapter-count')).toHaveText('1 / 1');
-  await expect(page.getByTestId('contract-chapter-epoch-1-frontier').locator('[data-contract-id]')).toHaveCount(5);
+  await expect(page.getByTestId('contract-chapter-epoch-1-frontier').locator('[data-contract-id]')).toHaveCount(
+    loadEpoch('epoch-1-frontier').contracts.length,
+  );
   for (const epochId of [
     'epoch-2-steamworks',
     'epoch-3-voltage',
