@@ -425,3 +425,105 @@ test('a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escala
   const strict = run(dir, 'stopped-s9999-20260730-000000-lane-z-no-such-slice.md', '--strict');
   assert.equal(strict.status, 2);
 });
+
+// ── F-1322-1: DUPLICATE DISPATCH ────────────────────────────────────────────────────────────────
+// s1321 reproduced F-1307-1 five sessions after its cure shipped: it copied the pc-01b master at
+// ~08:39:2x (dispatched 08:39:26), found the citation gate red against the master already running,
+// repaired it at 08:40:53, and re-copied — and the runner dispatched the repaired VERSION as a
+// second run the instant the slot freed at 08:57:30. The s1312 cure is an ORDER rule in prose, and
+// prose cannot refuse an act; these arms move the refusal into the command the law already routes
+// every `cp` through. Every arm carries its control, because a guard keyed on the filename rather
+// than on the runner's state would pass all of them.
+const dispatchLeaf = {
+  id: 'dup-dispatch',
+  title: 'Duplicate dispatch fixture',
+  taskFile: 'lane-b-dup-dispatch.md',
+  status: 'queued',
+};
+
+function dispatchFixture(t, { running = [], done = [] } = {}) {
+  const dir = fixture(dispatchLeaf);
+  cleanup(t, dir);
+  fs.writeFileSync(path.join(dir, 'tasks', dispatchLeaf.taskFile), '# master with no citations\n');
+  for (const [sub, names] of [['running', running], ['done', done]]) {
+    fs.mkdirSync(path.join(dir, 'tasks', sub), { recursive: true });
+    for (const n of names) fs.writeFileSync(path.join(dir, 'tasks', sub, n), '');
+  }
+  return dir;
+}
+
+test('--queue REFUSES a master a runner already holds (F-1322-1) — and clears it once the slot frees', (t) => {
+  const live = dispatchFixture(t, {
+    running: [`lane-b--20260801-085730-${dispatchLeaf.taskFile}`, 'lane-b.pid'],
+  });
+  const r = run(live, dispatchLeaf.taskFile, '--queue');
+  assert.equal(r.status, 1, `expected rc=1, got rc=${r.status}\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /⛔ ALREADY DISPATCHED — DO NOT QUEUE/);
+  assert.match(r.stdout, /lane-b--20260801-085730-lane-b-dup-dispatch\.md/);
+  // It must not borrow a neighbouring refusal's wording — "already shipped" would be false for a
+  // master that is running right now, and a wrong reason teaches the next fire the wrong lesson.
+  assert.doesNotMatch(r.stdout, /ALREADY SHIPPED/);
+
+  // CONTROL — identical fixture, empty running/. If this also refused, the arm above would be
+  // proving something about the leaf or the filename rather than about the runner holding the slot.
+  const free = dispatchFixture(t, {});
+  const c = run(free, dispatchLeaf.taskFile, '--queue');
+  assert.equal(c.status, 0, `control must CLEAR, got rc=${c.status}\n${c.stdout}${c.stderr}`);
+  assert.match(c.stdout, /✅ CLEAR/);
+});
+
+test("the live-run match is the runner's exact shape, not a name suffix", (t) => {
+  // `foo.md` must not be refused by a running `lane-b--<stamp>-lane-b-foo.md`: two masters differing
+  // only by a lane prefix are ordinary here, and the first draft of this guard refused exactly that.
+  const dir = fixture({ ...dispatchLeaf, taskFile: 'dup-dispatch.md' });
+  cleanup(t, dir);
+  fs.writeFileSync(path.join(dir, 'tasks', 'dup-dispatch.md'), '# master\n');
+  fs.mkdirSync(path.join(dir, 'tasks', 'running'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'tasks', 'running', 'lane-b--20260801-085730-lane-b-dup-dispatch.md'), '');
+  const r = run(dir, 'dup-dispatch.md', '--queue');
+  assert.equal(r.status, 0, `a different master must not be refused, got rc=${r.status}\n${r.stdout}`);
+  assert.doesNotMatch(r.stdout, /ALREADY DISPATCHED/);
+
+  // CONTROL — the exact-shape match still fires when the name really is the one running, so the arm
+  // above is measuring precision rather than a guard that simply stopped working.
+  const exact = dispatchFixture(t, { running: [`lane-b--20260801-085730-${dispatchLeaf.taskFile}`] });
+  assert.equal(run(exact, dispatchLeaf.taskFile, '--queue').status, 1);
+});
+
+test("an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re-dispatch must pass", (t) => {
+  // Measured counter-example, not caution: s1320 re-queued lane-d-f1319-3-... while exactly such a
+  // done-move sat in tasks/done/ (the lawful self-cancel), and that re-dispatch was CORRECT — the
+  // lane had gone 153 commits fresher. A guard that fires on the lawful case gets flagged past.
+  const dir = dispatchFixture(t, { done: [`20260801-080403-${dispatchLeaf.taskFile}`] });
+  const r = run(dir, dispatchLeaf.taskFile, '--queue');
+  assert.equal(r.status, 0, `a warning must not change the exit code, got rc=${r.status}\n${r.stdout}`);
+  assert.match(r.stdout, /UNDRAINED OUTPUT EXISTS/);
+  assert.match(r.stdout, /CHANGED PREMISE/);
+  assert.match(r.stdout, /✅ CLEAR/);
+
+  // CONTROL — a PREFIXED done-move is a drained unit, and a successor needs it to be silently
+  // queueable. Both prefixes the factory actually writes are asserted; the set is the contract.
+  for (const f of [
+    `drained-s1321-992f4066-20260801-080403-${dispatchLeaf.taskFile}`,
+    `rejected-s1321-f0bf5251-20260801-080403-${dispatchLeaf.taskFile}`,
+  ]) {
+    const clean = dispatchFixture(t, { done: [f] });
+    const c = run(clean, dispatchLeaf.taskFile, '--queue');
+    assert.equal(c.status, 0);
+    assert.doesNotMatch(c.stdout, /UNDRAINED OUTPUT EXISTS/, `${f} is drained — it must not warn`);
+  }
+});
+
+test('the DRAIN path is untouched by both arms — a done-move is what a drain is FOR', (t) => {
+  // Without --queue this check must never run: §3.0 is called with a done-move filename by
+  // definition, and a live run of the same master is the normal shape of main-slot output.
+  const dir = dispatchFixture(t, {
+    running: [`lane-b--20260801-085730-${dispatchLeaf.taskFile}`],
+    done: [`20260801-080403-${dispatchLeaf.taskFile}`],
+  });
+  const r = run(dir, dispatchLeaf.taskFile);
+  assert.equal(r.status, 0, `the drain path must CLEAR, got rc=${r.status}\n${r.stdout}`);
+  assert.match(r.stdout, /✅ CLEAR/);
+  assert.doesNotMatch(r.stdout, /ALREADY DISPATCHED/);
+  assert.doesNotMatch(r.stdout, /UNDRAINED OUTPUT EXISTS/);
+});

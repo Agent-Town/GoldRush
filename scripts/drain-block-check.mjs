@@ -402,6 +402,8 @@ function main() {
       console.log(`    If you believe the question is live again, author a SUCCESSOR; do not revive this leaf.`);
       process.exit(1);
     }
+    const dispatchStatus = checkAlreadyDispatched(target);
+    if (dispatchStatus !== 0) process.exit(dispatchStatus);
     const citationStatus = checkQueuedMasterCitations(target);
     if (citationStatus !== 0) process.exit(citationStatus);
   }
@@ -417,6 +419,86 @@ function main() {
 }
 
 main();
+
+// F-1322-1 (s1322) — THE F-1307-1 CLASS RECURRED, AND THE SHIPPED CURE COULD NOT SEE IT.
+//
+// s1312 landed the ORDER rule (.claude/skills/author-task/SKILL.md:54): gate the master, THEN `cp`
+// it into the queue. That rule is correct and it is still the primary defence. But it is prose, and
+// prose cannot refuse an act. s1321 authored the pc-01b corrective, copied it at ~08:39:2x (runner
+// dispatched it 08:39:26 as the 9,226-byte version), then found the citation gate red AGAINST the
+// master it had just dispatched, repaired it at 08:40:53 (`a5c6cd1d`, +14 lines of quoted test
+// titles), and re-copied. The runner holds one pidfile per slot, so the second copy simply WAITED —
+// and the instant run 1 released the slot at 08:57:30 it dispatched the 9,856-byte version as run 2.
+// Two runs, one master, two VERSIONS: exactly F-1307-1, five sessions after its cure shipped.
+//
+// The cost differs from s1307's in a way worth recording. There, run 2's safe-dupe pre-flight read
+// HOLDS and stopped. Here the corrective's pre-flight is deliberately BUILD-ON-PREDECESSOR (lane/m4
+// is intentionally ahead — resetting it would destroy the Drill Yard), so nothing stopped run 2 and
+// it re-derived work run 1 had already committed at `74df35dc`, on top of a 250,318-token run 1.
+// ⚠️ A safe pre-flight is not a duplicate-dispatch guard; it caught s1307 by side effect, and the
+// lanes where it is correct to build on a predecessor are precisely the lanes where it cannot.
+//
+// So the refusal belongs HERE, at the one command the law already routes every `cp` through.
+//
+// TWO ARMS, DELIBERATELY UNEQUAL — and the asymmetry is the whole design:
+//
+//   LIVE RUN (tasks/running/<slot>--<stamp>-<name>) -> rc=1, REFUSE.
+//       There is no lawful reading of two runners on one master. The runner names the file
+//       "$slot--$stamp-$name" (scripts/lane-runner-v3.sh:58), so the suffix match is exact.
+//
+//   UNDRAINED DONE-MOVE (tasks/done/<stamp>-<name>, un-prefixed) -> WARN, rc unchanged.
+//       NOT a refusal, and this is a measured decision rather than caution. s1320 re-queued
+//       `lane-d-f1319-3-terrain-seed-per-sample-url-parse.md` while exactly such a done-move sat in
+//       tasks/done/ (`20260801-080403-...`, the lawful self-cancel), and that re-dispatch was
+//       CORRECT under §7.5 — the premise had changed, the lane having gone 153 commits fresher.
+//       Refusing it would have blocked the board's best-evidenced work to prevent a defect that was
+//       not present. A guard that fires on the lawful case teaches fires to pass a flag by reflex,
+//       which is how a refusal decays into a formality.
+//
+// Prefixed done-moves (drained-/rejected-/stopped-/CRASHED-/rc<N>-) never match either arm: the
+// stamp anchor is ^\d{8}-\d{6}-, so a drained unit is silently queueable, which is what a
+// successor task needs.
+// MATCH THE RUNNER'S SHAPE EXACTLY, NOT A SUFFIX. The first draft of this function asked
+// `f.endsWith('-' + name)`, which refuses `foo.md` on a running `lane-b--<stamp>-lane-b-foo.md`
+// because that string does end in "-foo.md". Two masters whose names differ only by a lane prefix
+// are ordinary here (lane-drill-yard.md and lane-b-pc01b-drill-yard-....md shipped this same week),
+// so anchoring on the full "$slot--$stamp-$name" is the difference between a refusal and a guess.
+// A function DECLARATION, not a const arrow: main() is invoked at :421, above this line, so a
+// const would be in its temporal dead zone every time the --queue arm ran. Caught by running it.
+function escapeRe(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function checkAlreadyDispatched(target) {
+  const name = basename(target.trim());
+  const runningDir = resolve(process.cwd(), 'tasks', 'running');
+  const doneDir = resolve(process.cwd(), 'tasks', 'done');
+  const RUNNING = new RegExp(`^[\\w.-]+--\\d{8}-\\d{6}-${escapeRe(name)}$`);
+  const DONE = new RegExp(`^\\d{8}-\\d{6}-${escapeRe(name)}$`);
+
+  const live = existsSync(runningDir) ? readdirSync(runningDir).filter((f) => RUNNING.test(f)) : [];
+  if (live.length) {
+    console.log(`\n  ⛔ ALREADY DISPATCHED — DO NOT QUEUE: ${name}`);
+    for (const f of live) console.log(`    live run        : tasks/running/${f}`);
+    console.log(`    refusal arm     : a runner holds this master RIGHT NOW (F-1322-1, the F-1307-1 class)`);
+    console.log(`\n  Copying it again does not update the running copy — the runner MOVED the first one`);
+    console.log(`  out of the queue (lane-runner-v3.sh:59), so a second copy is a second DISPATCH that`);
+    console.log(`  fires the moment this slot frees. If you repaired the master after copying it, the`);
+    console.log(`  repair belongs to the NEXT run of this work: let the live run finish, drain it, and`);
+    console.log(`  judge the repaired master on its own evidence. Gate BEFORE the cp, not after`);
+    console.log(`  (.claude/skills/author-task/SKILL.md:54).\n`);
+    return 1;
+  }
+
+  const undrained = existsSync(doneDir) ? readdirSync(doneDir).filter((f) => DONE.test(f)) : [];
+  if (undrained.length) {
+    console.log(`\n  ⚠️  UNDRAINED OUTPUT EXISTS for this master — not a refusal, but say why you are re-queueing.`);
+    for (const f of undrained) console.log(`    done-move       : tasks/done/${f} (un-prefixed = never drained)`);
+    console.log(`    §7.5 allows a re-dispatch only on a CHANGED PREMISE. An identical retry is forbidden.`);
+    console.log(`    If the premise has not changed, DRAIN that output instead of re-deriving it (Mistake #8).\n`);
+  }
+  return 0;
+}
 
 function checkQueuedMasterCitations(target) {
   const repoRoot = process.cwd();
