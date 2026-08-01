@@ -99,6 +99,33 @@ function behindCount(branch) {
   return git(['rev-list', '--count', `${branch}..main`]).trim() || '?'
 }
 
+// s1343 — F-1343-2. The comment above is right that staleness-enough-to-matter is a property of
+// the TASK, and this does NOT turn it into a verdict word. It fixes a different problem: the
+// behind-COUNT conflates bookkeeping with code, and it is the only number the footnote offers.
+//
+// Measured s1343 on the live fleet: lane-a/c/d each read `behind=59`, which sounds alarming.
+// Of those 59 commits, ZERO touched `src/` and zero touched `functions/`; the real drift was
+// FIVE files — four e2e specs and package.json. The other 54 commits were STATUS.md, artifacts
+// screenshots and ledger rows, which cannot affect whether a master RUNS. "59" and "5 files, no
+// game source" call for completely different decisions, and only the second is readable.
+//
+// The package.json entry is why this is worth printing rather than leaving to the reader:
+// lane/m3's `test:ledger-guards` was a STRICT SUBSET of main's (missing test:desk-declaration
+// and status-archive-audit), so a task gated on that lane would produce a green that means less
+// than main's green — a false-green hazard invisible to every existing probe.
+//
+// Deliberately narrow: only surfaces that can change whether a task runs or how it is gated.
+// docs/, tasks/, artifacts/, reviews/ and logs/ are excluded BY DESIGN, not by oversight.
+const RUN_SURFACE = [
+  'src', 'e2e', 'functions', 'scripts',
+  'package.json', 'package-lock.json', 'playwright.config.ts', 'tsconfig.json', 'vite.config.ts',
+]
+
+function surfaceDrift(branch) {
+  const out = git(['diff', '--name-only', branch, 'main', '--', ...RUN_SURFACE]).trim()
+  return out ? out.split('\n').filter(Boolean) : []
+}
+
 function classify(branch) {
   const ahead = git(['rev-list', `main..${branch}`]).trim().split('\n').filter(Boolean)
   if (ahead.length === 0) return { ahead: 0, behind: behindCount(branch), held: [], paths: 0 }
@@ -197,6 +224,25 @@ function report(r) {
         `       git merge-base --is-ancestor <sha> ${r.branch}\n` +
         `     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane ${r.slot}) — F-1320-2.`,
     )
+    // The count above answers "how far behind"; this answers "behind in anything that RUNS" —
+    // usually a far smaller and more actionable number (F-1343-2).
+    const drift = surfaceDrift(r.branch)
+    if (drift.length === 0) {
+      console.log(
+        `     ✅ ...but NONE of it is run-surface: src/ e2e/ functions/ scripts/ and the configs are\n` +
+          `        byte-identical to main. The gap is bookkeeping only — nothing here can stop a task running.`,
+      )
+    } else {
+      console.log(`     📋 run-surface drift: ${drift.length} file(s) main has moved that this lane lacks:`)
+      for (const p of drift.slice(0, 8)) console.log(`          ${p}`)
+      if (drift.length > 8) console.log(`          … and ${drift.length - 8} more`)
+      if (drift.some((p) => p === 'package.json')) {
+        console.log(
+          `        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of\n` +
+            `        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.`,
+        )
+      }
+    }
   }
 }
 
