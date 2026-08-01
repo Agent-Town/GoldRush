@@ -80,15 +80,9 @@ const REPORT = process.argv.includes('--report');
  * Removing a name from this list once its row exists is always safe.
  */
 const GRANDFATHERED = new Set([
-  'F-1193-2', // found by this guard, not by the probe — see the vocabulary note above
-  'F-1120-2',
-  'F-1254-3',
-  'F-1193-3',
-  'F-1209-3',
-  'F-1185-1',
-  'F-1208-3',
-  'F-1204-1',
-  'F-1182-2',
+  // EMPTY since s1335 — all nine were given declaring rows carrying a FRESH
+  // measurement (not their birth text). The list may only ever SHRINK; see the
+  // monotonic-ceiling note in the test. Adding a name here requires a measurement.
 ]);
 
 const FINDING = /F-\d{3,4}-\d+/g;
