@@ -324,8 +324,9 @@
               "id": "f1319-2-float-rendered-text-assertion",
               "title": "Give the float-fit guard a non-tautological assertion by surfacing renderedText (+ guard the ellipsis)",
               "taskFile": "lane-a-f1319-2-float-rendered-text-assertion.md",
-              "status": "queued",
-              "reason": "F-1319-2: the f1318-1 cure made renderedWidthPx <= budget a theorem (Vfx.ts:199 and :203 are the same quantity), and the certifying RED was taken against the pre-cure tree. Scope 4 requires the new arm to RED at its own birth commit by mutation."
+              "status": "shipped",
+              "reason": "SHIPPED s1323 (reviews/f1319-2-float-rendered-text-assertion.md). Surfaces renderedText through the vfx diagnostics and asserts the ellipsis an over-budget line must carry, with a fitting line as control — replacing an assertion that compared Vfx.ts:199 to :203, i.e. a theorem that could never red. Driven by the debug-gated __GR_TEST__.emitFloatText hook because no real upgrade sentence truncates; gate verified at source (Game.ts:1696), so no player-facing surface. MUTATION PROOF re-taken on the merged tree rather than inherited: removing the ellipsis at Vfx.ts:210 reds the spec, Vfx.ts restored byte-exact sha256 d2a57b97e412cb72 matching the runner independent hash. The 4 bt-01-tiers reds are PRE-EXISTING, proven in two directions (abort-and-rerun on main, then a detached worktree at 5f81a36d before either merge) - filed F-1323-5, known build-mode-prompt family.",
+              "mergeHash": "49e7c0636409150e39e4fee57f74475adc3ad2ce"
             },
             {
               "id": "pc-01-drill-yard",
