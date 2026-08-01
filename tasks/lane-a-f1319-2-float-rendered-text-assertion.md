@@ -44,7 +44,7 @@ F-1319-2's stated cure, quoted: *"surface `renderedText` from `drawTextTexture` 
 
 Touch ONLY: `src/systems/Vfx.ts`, `src/vite-env.d.ts`, `src/game/Game.ts` (the `__GR_TEST__` block ONLY), `e2e/vfx-float-legibility.spec.ts`.
 
-NO changes to: `FLOAT_TEXT_MIN_FONT_PX` or `FLOAT_TEXT_PADDING_PX` (`src/systems/Vfx.ts:24-25`) — the floor and padding are F-1316-1/F-1318-1 rulings, not knobs · the shrink loop's condition at `:199` · any upgrade or float **copy** string anywhere (`src/game/Balance*`, `BuildSystem`) — changing player-facing wording to make a test fire is forbidden · the existing assertions at `e2e/vfx-float-legibility.spec.ts:42/44/45/55` (ADD arms; do not weaken or delete) · sim semantics · any other file under `src/`.
+NO changes to: `FLOAT_TEXT_MIN_FONT_PX` or `FLOAT_TEXT_PADDING_PX` (`src/systems/Vfx.ts:24-25`) — the floor and padding are F-1316-1/F-1318-1 rulings, not knobs · the shrink loop's condition at `:199` · any upgrade or float **copy** string anywhere (`src/game/Balance*`, `BuildSystem`) — changing player-facing wording to make a test fire is forbidden · the existing assertions inside `e2e/vfx-float-legibility.spec.ts:13` (`"every upgrade and a reused short float report legible rendered bounds"`) — the `toHaveLength(8)`, the `renderedWidthPx`/`canvasWidthPx` bound, the `fontPx >= 32` floor and the `fontPx === 64` short-float check (ADD arms; do not weaken or delete) · sim semantics · any other file under `src/`.
 
 ⛔ Explicitly forbidden as a "fix": deleting or loosening the `renderedWidthPx <= canvasWidthPx - 20` assertion. It is tautological, not wrong — it stays as a cheap invariant, and the new arms carry the teeth.
 
