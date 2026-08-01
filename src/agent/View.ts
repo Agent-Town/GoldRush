@@ -189,7 +189,7 @@ function buildStablePrefix(
   const contract = record(diagnostics.contract);
   const tile = record(contract.tileParams);
   const briefing = record(contract.briefing);
-  const stake = manifest.tileParams.stakeMarkers?.find((marker) => marker.lossCondition);
+  const stake = manifest.tileParams.stakeMarkers?.find((marker) => marker.heroStart);
   const roster = manifest.id === (text(contract.activeId) ?? manifest.id) ? manifest.twist.enemyRoster ?? [] : [];
   const gates = roster.flatMap((entry) => entry.spawnGates ?? []);
   const spawnEdges = strings(record(tile.lanes).spawnEdges);

@@ -16,9 +16,9 @@
       { "id": "coal-bed-terrace", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
     ],
     "stakeMarkers": [
-      { "id": "west-boiler-bed", "x": -12, "z": 12, "lossCondition": true },
-      { "id": "center-boiler-bed", "x": 0, "z": 12, "lossCondition": false },
-      { "id": "east-boiler-bed", "x": 12, "z": 12, "lossCondition": false }
+      { "id": "west-boiler-bed", "x": -12, "z": 12, "heroStart": true },
+      { "id": "center-boiler-bed", "x": 0, "z": 12, "heroStart": false },
+      { "id": "east-boiler-bed", "x": 12, "z": 12, "heroStart": false }
     ],
     "rails": [],
     "waterSources": [],

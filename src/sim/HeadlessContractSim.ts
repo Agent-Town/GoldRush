@@ -120,7 +120,7 @@ export class HeadlessContractSim {
       throw new Error(`AP-07 supports only ${[...SUPPORTED_CONTRACTS].join(', ')}; received ${contractId}.`);
     }
     this.manifest = loadContract(contractId);
-    const stake = this.manifest.tileParams.stakeMarkers?.find((marker) => marker.lossCondition);
+    const stake = this.manifest.tileParams.stakeMarkers?.find((marker) => marker.heroStart);
     const start = new THREE.Vector3(stake?.x ?? 0, 0.06, stake?.z ?? 12);
     this.hero.resetRun(start);
     this.prospector.reset(start);

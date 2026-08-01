@@ -227,8 +227,8 @@
           { "id": "north-bank", "bank": "north", "minX": -28, "maxX": 28, "minZ": 7, "maxZ": 30 }
         ],
         "stakeMarkers": [
-          { "id": "south-claim-stake", "x": 0, "z": -12, "lossCondition": true },
-          { "id": "north-expansion-marker", "x": 0, "z": 12, "lossCondition": false }
+          { "id": "south-claim-stake", "x": 0, "z": -12, "heroStart": true },
+          { "id": "north-expansion-marker", "x": 0, "z": 12, "heroStart": false }
         ],
         "waterSources": [],
         "heightfield": {

@@ -7857,7 +7857,7 @@ function normalizeProbeEvery(value: number | undefined): number {
 }
 
 function contractHeroStart(contract: ContractManifest): THREE.Vector3 {
-  const lossStake = contract.tileParams.stakeMarkers?.find((marker) => marker.lossCondition);
+  const lossStake = contract.tileParams.stakeMarkers?.find((marker) => marker.heroStart);
   return new THREE.Vector3(lossStake?.x ?? 0, 0.06, lossStake?.z ?? 12);
 }
 

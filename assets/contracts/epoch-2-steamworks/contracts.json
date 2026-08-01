@@ -20,7 +20,7 @@
           { "id": "t3-west", "bank": "north", "minX": -36, "maxX": -22, "minZ": 37, "maxZ": 44 },
           { "id": "t3-east", "bank": "north", "minX": 22, "maxX": 36, "minZ": 37, "maxZ": 44 }
         ],
-        "stakeMarkers": [{ "id": "boiler-house-site", "x": 0, "z": 12, "lossCondition": true }],
+        "stakeMarkers": [{ "id": "boiler-house-site", "x": 0, "z": 12, "heroStart": true }],
         "rails": [
           {
             "style": "steamworks",
@@ -281,8 +281,8 @@
           { "id": "north-approach", "bank": "north", "minX": -30, "maxX": 30, "minZ": 7, "maxZ": 30 }
         ],
         "stakeMarkers": [
-          { "id": "south-boiler-site", "x": 12, "z": -12, "lossCondition": true },
-          { "id": "north-boiler-site", "x": -12, "z": 12, "lossCondition": false }
+          { "id": "south-boiler-site", "x": 12, "z": -12, "heroStart": true },
+          { "id": "north-boiler-site", "x": -12, "z": 12, "heroStart": false }
         ],
         "rails": [
           {
@@ -490,9 +490,9 @@
           { "id": "coal-bed-terrace", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
         ],
         "stakeMarkers": [
-          { "id": "west-boiler-bed", "x": -12, "z": 12, "lossCondition": true },
-          { "id": "center-boiler-bed", "x": 0, "z": 12, "lossCondition": false },
-          { "id": "east-boiler-bed", "x": 12, "z": 12, "lossCondition": false }
+          { "id": "west-boiler-bed", "x": -12, "z": 12, "heroStart": true },
+          { "id": "center-boiler-bed", "x": 0, "z": 12, "heroStart": false },
+          { "id": "east-boiler-bed", "x": 12, "z": 12, "heroStart": false }
         ],
         "rails": [],
         "waterSources": [],
@@ -654,8 +654,8 @@
           { "id": "upper-ore-yard", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
         ],
         "stakeMarkers": [
-          { "id": "lower-engine-house", "x": -24, "z": -18, "lossCondition": true },
-          { "id": "upper-winch-house", "x": 0, "z": 40, "lossCondition": false }
+          { "id": "lower-engine-house", "x": -24, "z": -18, "heroStart": true },
+          { "id": "upper-winch-house", "x": 0, "z": 40, "heroStart": false }
         ],
         "rails": [
           {

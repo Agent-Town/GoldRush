@@ -98,7 +98,7 @@ export function createClaimProps(): THREE.Group {
   const stakes = ACTIVE_CONTRACT.tileParams.stakeMarkers ?? [];
   if (stakes.length > 0) {
     for (const stake of stakes) {
-      placements.push([createClaimPostPlaceholder, stake.x, stake.z, stake.lossCondition ? 1 : 0.82, stake.lossCondition ? -0.25 : 0.25]);
+      placements.push([createClaimPostPlaceholder, stake.x, stake.z, stake.heroStart ? 1 : 0.82, stake.heroStart ? -0.25 : 0.25]);
     }
   } else {
     placements.push([createClaimPostPlaceholder, -4.5, -7.2, 1, -0.25]);
