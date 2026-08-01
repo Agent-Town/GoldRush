@@ -30,7 +30,7 @@ If `SUBJECT-PRESENT` does not print, **STOP** and report — `d640dc31` is the c
 
 > **GATE: none owed; fold into the next touch of this rig.**
 
-This task is that fold. Verified at source by the authoring fire, not inherited: `e2e/charter-press-totality.spec.ts:26,31,32` do hold the literals `arms[3]`, `arms[9]`, `arms[3]`.
+This task is that fold. Verified at source by the authoring fire, not inherited: `e2e/charter-press-totality.spec.ts:26,31,32` ("blank briefing goal fires with a briefing and noops after missing briefing") do hold the literals `arms[3]`, `arms[9]`, `arms[3]`.
 
 **Context you must not undo:** this guard is what restored whole-suite collection from `Total: 0 tests in 0 files` to `2476 tests in 350 files`. Its 169-ordered-pair test is the thing that caught a real outage. **You are strengthening its addressing, not rewriting its purpose.**
 
