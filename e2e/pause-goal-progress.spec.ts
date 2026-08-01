@@ -2,7 +2,7 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
 
-const ARTIFACT_DIR = path.resolve('artifacts/pause-goal-progress');
+const ARTIFACT_DIR = path.resolve('artifacts/survive-copy');
 
 test('Twin Banks pause goals show the win wave and live progress', async ({ page }, testInfo) => {
   const errors: string[] = [];
@@ -18,7 +18,10 @@ test('Twin Banks pause goals show the win wave and live progress', async ({ page
   await page.keyboard.press('KeyP');
 
   await expect(page.getByTestId('pause-contract-goal-progress')).toHaveText('Secure the claim at wave 20 — wave 13/20');
-  await expect(page.getByTestId('pause-contract-goals')).toHaveText('Build on either bank and watch both fords.');
+  expect(await page.getByTestId('pause-contract-goals').locator('li').allTextContents()).toEqual([
+    'Survive through wave 20.',
+    'Build on either bank and watch both fords.',
+  ]);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-wave-13.png`) });
   expect(errors).toEqual([]);

@@ -24,14 +24,14 @@ type SeedScore = {
   contractId?: string;
 };
 
-const ARTIFACT_DIR = path.resolve('reviews/shots-e1-briefing-truth');
+const ARTIFACT_DIR = path.resolve('artifacts/survive-copy');
 const CONTRACTS: readonly Briefing[] = [
   {
     id: 'the-claim',
     name: 'The Claim',
     secureWave: 10,
     geographyLine: 'The classic river claim.',
-    goals: ['Hold the claim through wave 10.'],
+    goals: ['Survive through wave 10.'],
     rules: [
       'The river splits the claim around one center ford.',
       'Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck.',
@@ -42,7 +42,7 @@ const CONTRACTS: readonly Briefing[] = [
     name: 'The Dry Gulch',
     secureWave: 20,
     geographyLine: 'Mesa country; dry washes fall toward one sunken spring.',
-    goals: ['Hold the gulch through wave 20.', 'Work the dry washes around the lone spring.'],
+    goals: ['Survive through wave 20.', 'Work the dry washes around the lone spring.'],
     rules: [
       'Sluices work only beside the spring.',
       'The river is gone; enemies can press from every edge.',
@@ -66,7 +66,7 @@ const CONTRACTS: readonly Briefing[] = [
     name: 'Twin Banks',
     secureWave: 20,
     geographyLine: 'A braided river claim with twin fords, gravel bars, and damp reeds.',
-    goals: ['Hold both banks through wave 20.', 'Build on either bank and watch both fords.'],
+    goals: ['Survive through wave 20.', 'Build on either bank and watch both fords.'],
     rules: [
       'Both banks can hold buildings.',
       'Two fords carry pressure across the river.',
@@ -300,9 +300,9 @@ function assertNoErrors(errors: ErrorBucket): void {
   expect(errors.pageErrors).toEqual([]);
 }
 
-test('all 41 card briefings use in-world copy and only cite authored wave numbers', async () => {
+test('all 42 card briefings use in-world copy and only cite authored wave numbers', async () => {
   const contracts = await allContractCopy();
-  expect(contracts).toHaveLength(41);
+  expect(contracts).toHaveLength(42);
   for (const contract of contracts) {
     const lines = [contract.boardRow.ledgerBlurb, contract.briefing.geographyLine, ...contract.briefing.goals, ...contract.briefing.rules];
     expect(lines, contract.id).not.toContain('');
@@ -369,7 +369,7 @@ test('plain no-debug board launch still briefs The Claim', async ({ page }) => {
 test('board cards show the same briefing data', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await openBoard(page, true);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(6);
   for (const contract of CONTRACTS) await assertBoardBriefing(page, contract);
   await page.getByTestId('contract-chapter-tab-epoch-1-frontier').click();
   await shot(page, testInfo, 'board-briefings');
