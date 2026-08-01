@@ -403,7 +403,10 @@ test('EN-02 enemy stats reveal once, persist, and hero facts live-read abilities
     window.__GR_TEST__?.spawnPack(1, 4, { speedScale: 0 });
   });
   await expect.poll(() => ledgerStorage(page), { timeout: 12_000 }).toContain('claim_jumper_stats');
-  await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats')).toBe(1);
+  // The hint is written only when the story card is SHOWN (StoryRuntime.show -> markStoryBeatSeen),
+  // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst
+  // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1338-1).
+  await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);
 
   await openLedgerDirect(page, 'claim_jumper');
   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');
@@ -418,7 +421,8 @@ test('EN-02 enemy stats reveal once, persist, and hero facts live-read abilities
     window.__GR_TEST__?.spawnPack(1, 4, { speedScale: 0 });
   });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.kills ?? 0), { timeout: 12_000 }).toBeGreaterThan(kills);
-  await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats')).toBe(1);
+  // Same card-queue floor as above; the dupe guard proper is the toHaveLength(1) on the next line.
+  await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);
   expect((await ledgerStorage(page)).filter((id) => id === 'claim_jumper_stats')).toHaveLength(1);
 
   await page.reload();
