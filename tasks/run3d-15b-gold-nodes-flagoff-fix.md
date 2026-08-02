@@ -37,8 +37,8 @@ On **main**, `const selection = params.get('run3dPilot') ?? 'all'` means a plain
 
 Measured on the merged tree, `--workers=1`, **both projects**, and **not** fingerprint-matched to `logs/suite-red-inventory.md`:
 
-- `e2e/m2-05-base-damage-repair.spec.ts:353` — `waitForFunction(['ready','lite','failed'].includes(run3dPilotState))` → **timeout 30 000 ms** (boots without the param; state is `'off'`, which is not in the accepted set).
-- `e2e/night3d-perf.spec.ts:118` — `terrain3dPilotState === 'ready' && run3dPilotState === 'ready'` → **timeout 90 000 ms** (same cause).
+- `e2e/m2-05-base-damage-repair.spec.ts:353` ("wreck and repair cycles leave shooter and renderer counts at baseline") — `waitForFunction(['ready','lite','failed'].includes(run3dPilotState))` → **timeout 30 000 ms** (boots without the param; state is `'off'`, which is not in the accepted set).
+- `e2e/night3d-perf.spec.ts:118` ("Night Shift keeps its lantern read and auto-tiers one sticky step at a time") — `terrain3dPilotState === 'ready' && run3dPilotState === 'ready'` → **timeout 90 000 ms** (same cause).
 
 **The early return is also redundant**, which is why this is a small fix and not a redesign. The very next line already delivers exactly what the master asked for:
 
