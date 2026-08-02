@@ -7293,7 +7293,6 @@ export class Game {
   }
 
   private contractSeamYieldMult(): number {
-    if (this.activeContract.id === 'e1-dry-gulch') return Balance.contracts.dryGulch.seamYieldMult;
     return Math.max(0.1, this.activeContract.twist.seamYieldMult ?? 1);
   }
 

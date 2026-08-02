@@ -846,9 +846,6 @@ export const Balance = {
       repairRadius: 2.6,
       enemyPreferenceRange: 18,
     },
-    dryGulch: {
-      seamYieldMult: 1.4,
-    },
     nightShift: {
       duskWave: 5,
       darkWave: 10,

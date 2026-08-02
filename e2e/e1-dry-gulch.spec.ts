@@ -2,6 +2,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { Balance } from '../src/game/Balance';
+import { loadContract } from '../src/meta/ContractFamilies';
 
 type ErrorBucket = { consoleErrors: string[]; consoleWarnings: string[]; pageErrors: string[] };
 type BuildableId = 'sluice';
@@ -180,7 +181,7 @@ test('Dry Gulch seam panning uses the +40% contract yield multiplier', async ({ 
         }),
       { timeout: 10_000 },
     )
-    .toBe(Balance.goldSeam.tickGold * Balance.contracts.dryGulch.seamYieldMult);
+    .toBe(Balance.goldSeam.tickGold * loadContract('e1-dry-gulch').twist.seamYieldMult!);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.seamYieldMult)).toBe(1.4);
   expectClean(errors);
 });
