@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { PNG } from 'pngjs';
 
 // Beauty shift capture rig for e1-night-shift (docs/beauty/e1-night-shift-brief.md §4 shot list).
 // Rendering-only: it drives the shipped debug harness, changes no sim balance, and asserts nothing
@@ -125,6 +126,44 @@ async function readMetrics(page: Page, moment: string, project: string): Promise
   return { moment, project, frameP95Ms: Math.round(frameP95Ms * 100) / 100, ...rest };
 }
 
+// Frame-to-frame noise (sprite bob, lamp flicker) swamps a whole-image diff, so measure the thing
+// itself: for every visible enemy, pair the light it actually stands in with the colour its own
+// pixels are drawn at. A binary boost gives one flat row; a graded ignition gives a ramp.
+async function ignitionLadder(page: Page): Promise<unknown> {
+  const probes = await page.evaluate(() => {
+    const api = window.__GR_TEST__!;
+    return api.enemyPositions()
+      .map((enemy) => {
+        const point = api.screenPoint(enemy.x, enemy.z, api.terrainVisualY(enemy.x, enemy.z, 0.9));
+        return { coverage: api.lightCoverage(enemy.x, enemy.z), x: point.x, y: point.y, inView: point.inView };
+      })
+      .filter((probe) => probe.inView);
+  });
+  const canvas = page.locator('#game-canvas');
+  await setCanvasOnly(page, true);
+  const [box, buffer] = await Promise.all([canvas.boundingBox(), canvas.screenshot()]);
+  await setCanvasOnly(page, false);
+  const png = PNG.sync.read(buffer);
+  const rows = probes.map((probe) => {
+    const centerX = Math.round(probe.x * png.width / box!.width);
+    const centerY = Math.round(probe.y * png.height / box!.height);
+    let peak = -1; let peakPixel = [0, 0, 0];
+    // The sprite stands above its ground point; take the brightest pixel in a box over the figure.
+    for (let py = centerY - 26; py <= centerY + 4; py += 1) {
+      for (let px = centerX - 8; px <= centerX + 8; px += 1) {
+        if (px < 0 || py < 0 || px >= png.width || py >= png.height) continue;
+        const offset = (py * png.width + px) * 4;
+        const [r, g, b] = [png.data[offset]!, png.data[offset + 1]!, png.data[offset + 2]!];
+        const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        if (luma > peak) { peak = luma; peakPixel = [r, g, b]; }
+      }
+    }
+    return { coverage: +probe.coverage.toFixed(3), peakLuma: +peak.toFixed(1), rgb: peakPixel.join(',') , warm: peakPixel[0]! - peakPixel[2]! };
+  });
+  rows.sort((a, b) => a.coverage - b.coverage);
+  return rows;
+}
+
 async function shoot(page: Page, testInfo: TestInfo, moment: string, metrics: Metrics[]): Promise<void> {
   metrics.push(await readMetrics(page, moment, testInfo.project.name));
   await setCanvasOnly(page, true);
@@ -158,6 +197,22 @@ test('night shift beauty board', async ({ page }, testInfo) => {
   });
   await page.waitForTimeout(600);
   await shoot(page, testInfo, '03-dark-pool', metrics);
+
+  // 3b. The ignition read, isolated — WRECKERS. A lantern-carrying enemy stands at the centre of its
+  // own pool and is therefore always fully lit, so it can never show the approach ramp.
+  // WaveSystem.enemyCarriesLantern is `!wrecker && classes.includes('rusher')`: wreckers are the one
+  // class that walks in carrying nothing, and they are also the class the 1.18x dark-corridor speed
+  // rides. They are the whole subject of this upgrade.
+  await page.evaluate(() => {
+    window.__GR_TEST__!.clearEnemies();
+    window.__GR_TEST__!.spawnPack(18, 11, { speedScale: 0.001, hpScale: 999, wrecker: true });
+  });
+  await page.waitForTimeout(600);
+  await shoot(page, testInfo, '03b-dark-approach', metrics);
+  await writeFile(
+    path.join(SHOT_DIR, `ignition-${testInfo.project.name}.json`),
+    `${JSON.stringify(await ignitionLadder(page), null, 2)}\n`,
+  );
 
   // 4. Dawn at wave 25 survived.
   await page.evaluate(() => window.__GR_TEST__!.clearEnemies());

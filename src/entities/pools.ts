@@ -51,6 +51,12 @@ const RAILCAR_3D_COMPONENTS = {
 type RailcarComponentId = keyof typeof RAILCAR_3D_COMPONENTS;
 type Railcar3dState = 'off' | 'loading' | 'ready' | 'lite' | 'failed' | 'disposed';
 const FEVER_GOLD = new THREE.Color(Balance.legibility.feveredColor);
+// Night Shift ignition (render-side; §4.6). At full dark a visible enemy used to snap straight to
+// the lit tint at full boost, so attackers POPPED into being instead of walking into the light.
+// These are the unlit end of that ramp: a cold ember the figure carries at the outer edge of the
+// falloff band, warming to nightSpriteTint/nightSpriteLightBoost as it crosses into the pool.
+const NIGHT_EMBER_TINT = new THREE.Color('#6f6a84');
+const NIGHT_EMBER_BOOST = 0.75;
 const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
   active: false,
   phase: 0,
@@ -422,6 +428,8 @@ export class EnemyPool {
   private readonly bannerClothColor = new THREE.Color('#7f2633');
   private readonly dimmedColor = new THREE.Color();
   private readonly feverAccentColor = new THREE.Color();
+  private readonly nightIgnitionColor = new THREE.Color();
+  private readonly nightLitTint = new THREE.Color(Balance.contracts.nightShift.nightSpriteTint);
   private readonly herdBias = new THREE.Vector2();
   private lightDimming: EnemyLightDimmingConfig = {
     enabled: false,
@@ -1591,10 +1599,18 @@ export class EnemyPool {
   }
 
   private syncEnemySprite(enemy: ClaimJumperEnemy): void {
-    const lightFactor = this.renderLightFactor(this.lightFactorFor(enemy));
+    // physicalLight is the pool light the enemy actually stands in (1 inside a radius, decaying
+    // cubically across the falloff band). renderLightFactor then applies the visibility cutoff and
+    // boost — that gate is sim-coupled and stays exactly where it was.
+    const physicalLight = this.lightFactorFor(enemy);
+    const lightFactor = this.renderLightFactor(physicalLight);
     const fullDark = this.fullDarkRenderCutoffActive();
-    const spriteLightFactor = fullDark && lightFactor > 0 ? Balance.contracts.nightShift.nightSpriteLightBoost : lightFactor;
-    const spriteTint = fullDark && lightFactor > 0 ? Balance.contracts.nightShift.nightSpriteTint : undefined;
+    const kindled = fullDark && lightFactor > 0;
+    const ignition = kindled ? this.nightIgnition(physicalLight) : 0;
+    const spriteLightFactor = kindled
+      ? THREE.MathUtils.lerp(NIGHT_EMBER_BOOST, Balance.contracts.nightShift.nightSpriteLightBoost, ignition)
+      : lightFactor;
+    const spriteTint = kindled ? this.nightIgnitionTint(ignition) : undefined;
     const nightScale = fullDark ? Balance.contracts.nightShift.nightSpriteScale : 1;
     const renderScale = this.renderScale(enemy) * nightScale;
     const litVisible = lightFactor > 0;
@@ -1763,6 +1779,15 @@ export class EnemyPool {
     this.dimmedColor.copy(base).multiplyScalar(lightFactor);
     mesh.setColorAt(index, this.dimmedColor);
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  }
+
+  /** 0 at the outer edge of what the dark lets you see, 1 once the figure is inside a pool. */
+  private nightIgnition(physicalLight: number): number {
+    return THREE.MathUtils.smoothstep(physicalLight, Balance.contracts.nightShift.renderVisibilityCutoff, 1);
+  }
+
+  private nightIgnitionTint(ignition: number): THREE.Color {
+    return this.nightIgnitionColor.copy(NIGHT_EMBER_TINT).lerp(this.nightLitTint, ignition);
   }
 
   private renderLightFactor(lightFactor: number): number {
