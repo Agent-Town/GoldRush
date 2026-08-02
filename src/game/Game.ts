@@ -2739,7 +2739,7 @@ export class Game {
       this.runtimePerformanceVerdict >= 2 ? Balance.render.night.degradedDynamicLights : null,
     );
     this.syncNightShiftLighting();
-    this.lightRig?.update(this.timeAlive);
+    this.lightRig?.update(this.timeAlive, this.localActor.renderPosition);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
     this.syncUi();
@@ -3639,7 +3639,7 @@ export class Game {
   }
 
   private createScene(): void {
-    this.lightRig = new LightRig(this.scene, this.renderer);
+    this.lightRig = new LightRig(this.scene, this.renderer, this.activeContract.id);
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
@@ -3785,7 +3785,7 @@ export class Game {
 
   private dressScene(): void {
     this.syncNightShiftLighting();
-    this.lightRig?.update(this.timeAlive);
+    this.lightRig?.update(this.timeAlive, this.localActor.renderPosition);
   }
 
   private createMegaprojectVisuals(): void {
