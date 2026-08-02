@@ -129,6 +129,11 @@ const TAVERN_DOOR = new THREE.Vector3(townPlazaSlot('tavern').approach.x, 0.08, 
 const FIRST_CLAIM_GREETING = "The valley's open. The tavern keeps the contracts. Go stake your first claim.";
 const FIRST_CLAIM_PENDING = 'pending';
 const APPROACH_RADIUS = 5.2;
+// U1: the cast used to float 8cm above the plate. With a blob shadow beneath them the gap reads as
+// hover, not as air — 2cm is the sprite-clip margin, nothing more.
+const FEET_CONTACT_Y = 0.02;
+// The player stands hero-height (1.85u) in town; 0.15 of that is the same ratio the cast uses.
+const HERO_BLOB_RADIUS = 0.28;
 const STAMP_MILL_ID = 'stamp-mill';
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
 const DYNAMO_HALL_ID = 'dynamo-hall';
@@ -151,6 +156,38 @@ const STAMP_MILL_PROGRESS_LINES = [
   'The Stamp Mill rises: the boilers are seated.',
   'The Stamp Mill rises: the stamps are set.',
 ] as const;
+
+export type FrameStatSnapshot = { last: number; avg: number; p95: number; sampleCount: number };
+
+class FrameStats {
+  private readonly samples: number[] = [];
+  private cursor = 0;
+  private last = 0;
+
+  constructor(private readonly window = 180) {}
+
+  record(ms: number): void {
+    if (!Number.isFinite(ms) || ms < 0) return;
+    this.last = ms;
+    if (this.samples.length < this.window) this.samples.push(ms);
+    else {
+      this.samples[this.cursor] = ms;
+      this.cursor = (this.cursor + 1) % this.samples.length;
+    }
+  }
+
+  snapshot(): FrameStatSnapshot {
+    if (!this.samples.length) return { last: 0, avg: 0, p95: 0, sampleCount: 0 };
+    const sorted = [...this.samples].sort((left, right) => left - right);
+    const total = sorted.reduce((sum, sample) => sum + sample, 0);
+    return {
+      last: this.last,
+      avg: total / sorted.length,
+      p95: sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))] ?? 0,
+      sampleCount: sorted.length,
+    };
+  }
+}
 
 export type TownDiagnostics = {
   frame: number;
@@ -263,7 +300,13 @@ export type TownDiagnostics = {
     flagKey: typeof FIRST_CLAIM_DONE_KEY;
   };
   welcome: ReturnType<TownWelcome['snapshot']>;
-  renderer: { calls: number; geometries: number; textures: number };
+  // THE BEAUTY-SHIFT MEASURING STICK (docs/beauty/README.md: "frame p95 +15% max, measured").
+  // frameMs = wall-clock interval between presented frames (the house convention, Game.ts:2583).
+  // renderMs = CPU time inside renderer.render, shadow pass included — the interval is vsync-
+  // pinned at ~16.7ms on an idle scene, so it cannot see a cost the render pass actually pays.
+  frameMs: FrameStatSnapshot;
+  renderMs: FrameStatSnapshot;
+  renderer: { calls: number; geometries: number; textures: number; triangles: number };
   canvas: { width: number; height: number; dpr: number };
   camera: CameraZoomDiagnostics & {
     currentDistance: number;
@@ -367,6 +410,8 @@ export class TownScene {
   private readonly ambientDust = createAmbientDust(this.performanceTier, this.townNight);
   private readonly ambientDustObject = new THREE.Object3D();
   private readonly townActors: TownActorRuntime[] = [];
+  private readonly blobShadows = new TownBlobShadows(TOWN_ACTORS.length + 2, this.townNight);
+  private readonly blobCasters: { x: number; z: number; radius: number }[] = [];
   private readonly actorBarkVisits = new Map<TownActorId, number>();
   private readonly barkCard = document.createElement('div');
   private readonly welcome = new TownWelcome();
@@ -377,6 +422,9 @@ export class TownScene {
   private nameBeat?: HTMLElement;
   private frame = 0;
   private elapsed = 0;
+  private readonly frameStats = new FrameStats();
+  private readonly renderStats = new FrameStats();
+  private lastPresentAt = 0;
   private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | { id: typeof CHARTER_PRESS_ID; name: 'Charter Press' } | { id: typeof TAILOR_WAGON_ID; name: "The Tailor's Wagon" } | null = null;
   private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
   private activeBarkActor: TownActorRuntime | null = null;
@@ -518,6 +566,7 @@ export class TownScene {
     this.ceremonies.update(delta);
     if (this.heraldOpen) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
+      this.syncBlobShadows();
       this.lastExitIntent = rawExitIntent;
       this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
       this.publishDiagnostics();
@@ -525,6 +574,7 @@ export class TownScene {
     }
     if (this.boardOpen || this.schoolhouseOpen || this.wardrobeOpen || this.assayBenchOpen() || this.ceremonies.modalOpen() || this.e10Finale) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
+      this.syncBlobShadows();
       if (rawExitIntent && !this.lastExitIntent) {
         if (this.ceremonies.modalOpen()) this.ceremonies.requestLeave();
         else if (this.boardOpen) this.closeBoard();
@@ -566,6 +616,7 @@ export class TownScene {
           : undefined,
       );
     }
+    this.syncBlobShadows();
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.updateWelcome();
     this.updateFirstClaimGuide();
@@ -576,9 +627,13 @@ export class TownScene {
   }
 
   private render(): void {
+    const startedAt = performance.now();
+    if (this.lastPresentAt > 0) this.frameStats.record(startedAt - this.lastPresentAt);
+    this.lastPresentAt = startedAt;
     this.renderer.info.reset();
     this.renderer.render(this.scene, this.camera);
     flushRenderedFrameCaptures(this.canvas);
+    this.renderStats.record(performance.now() - startedAt);
   }
 
   private readonly sampleTown = (x: number, z: number) => {
@@ -646,6 +701,8 @@ export class TownScene {
     }
 
     if (this.ambientDust) this.scene.add(this.ambientDust);
+    this.scene.add(this.blobShadows.mesh);
+    this.syncBlobShadows();
     this.hero.group.position.copy(HERO_START);
     this.scene.add(this.hero.group);
 
@@ -2302,10 +2359,13 @@ export class TownScene {
         flagKey: FIRST_CLAIM_DONE_KEY,
       },
       welcome: this.welcome.snapshot(),
+      frameMs: this.frameStats.snapshot(),
+      renderMs: this.renderStats.snapshot(),
       renderer: {
         calls: this.renderer.info.render.calls,
         geometries: this.renderer.info.memory.geometries,
         textures: this.renderer.info.memory.textures,
+        triangles: this.renderer.info.render.triangles,
       },
       canvas: {
         width: this.canvas.width,
@@ -2475,6 +2535,17 @@ export class TownScene {
     this.scene.add(this.firstClaimGuideGroup);
   }
 
+  // Rebuilt from the live actor list every frame: the cast walks authored loops, so a static
+  // matrix would strand shadows on the plaza while their owners kept walking.
+  private syncBlobShadows(): void {
+    this.blobCasters.length = 0;
+    for (const actor of this.townActors) {
+      this.blobCasters.push({ x: actor.position.x, z: actor.position.z, radius: actor.blobRadius });
+    }
+    this.blobCasters.push({ x: this.hero.group.position.x, z: this.hero.group.position.z, radius: HERO_BLOB_RADIUS });
+    this.blobShadows.sync(this.blobCasters);
+  }
+
   private updateAmbientDust(): void {
     if (!this.ambientDust) return;
     const object = this.ambientDustObject;
@@ -2510,6 +2581,48 @@ export class TownScene {
       dot.scale.setScalar(0.82 + phase * 0.22);
     });
     this.firstClaimPulseRing?.scale.setScalar(1 + phase * 0.08);
+  }
+}
+
+// U1 — THE CAST STOPS HOVERING. Ported from the run's SpriteBlobShadows (LightRig.ts:426): a
+// three.js Sprite is never drawn into the shadow map, so a painted ellipse under the feet is the
+// only contact a billboarded townsperson can have. One instanced mesh, one draw call, every actor
+// plus the player. Lite tier gets it too — it is the biggest thing lite can afford.
+class TownBlobShadows {
+  readonly mesh: THREE.InstancedMesh;
+  private readonly object = new THREE.Object3D();
+
+  constructor(capacity: number, night: boolean) {
+    const material = new THREE.MeshBasicMaterial({
+      color: '#2e1b0e',
+      transparent: true,
+      opacity: night ? 0.28 : 0.18,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
+    });
+    this.mesh = new THREE.InstancedMesh(new THREE.CircleGeometry(1, 24), material, Math.max(1, capacity));
+    this.mesh.name = 'TownCastBlobShadows';
+    this.mesh.frustumCulled = false;
+    this.mesh.renderOrder = RenderLayers.groundShadows;
+    this.mesh.count = 0;
+  }
+
+  sync(casters: readonly { x: number; z: number; radius: number }[]): void {
+    let index = 0;
+    for (const caster of casters) {
+      if (index >= this.mesh.instanceMatrix.count) break;
+      if (caster.radius <= 0) continue;
+      this.object.position.set(caster.x, 0.018, caster.z);
+      this.object.rotation.set(-Math.PI / 2, 0, -0.38);
+      this.object.scale.set(caster.radius, caster.radius * 0.62, 1);
+      this.object.updateMatrix();
+      this.mesh.setMatrixAt(index, this.object.matrix);
+      index += 1;
+    }
+    this.mesh.count = index;
+    this.mesh.instanceMatrix.needsUpdate = true;
   }
 }
 
@@ -2550,10 +2663,10 @@ class TownActorRuntime {
       this.group.add(createPortraitPost(cardSize));
     } else if (definition.id === 'prospector') {
       this.sprite.scale.setScalar(worldHeight);
-      this.sprite.position.y = worldHeight * 0.55 + 0.08;
+      this.sprite.position.y = worldHeight * 0.55 + FEET_CONTACT_Y;
     } else {
       this.sprite.scale.set(worldHeight * 0.42, worldHeight, 1);
-      this.sprite.position.y = worldHeight / 2 + 0.08;
+      this.sprite.position.y = worldHeight / 2 + FEET_CONTACT_Y;
     }
     this.sprite.renderOrder = RenderLayers.companion;
     this.sprite.visible = true;
@@ -2580,6 +2693,13 @@ class TownActorRuntime {
 
   get spriteHeight(): number {
     return this.sprite.scale.y;
+  }
+
+  // Sized off the billboard HEIGHT, not its width: walk-sheet cells carry a lot of empty margin,
+  // so a width-derived ellipse painted a puddle three times wider than the person standing in it.
+  // Height is the metrology the cast is authored against, so a child gets a child's shadow.
+  get blobRadius(): number {
+    return this.definition.fullBody ? this.sprite.scale.y * 0.15 : 0.2;
   }
 
   get frameKey(): string {
@@ -2700,7 +2820,7 @@ class TownActorRuntime {
     this.fitted = true;
     const targetHeight = this.definition.scale * TOWN_CAST_METROLOGY.worldUnitsPerHero;
     this.sprite.scale.set(targetHeight * (width / height), targetHeight, 1);
-    this.sprite.position.y = targetHeight / 2 + 0.08;
+    this.sprite.position.y = targetHeight / 2 + FEET_CONTACT_Y;
   }
 }
 
