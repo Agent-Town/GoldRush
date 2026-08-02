@@ -210,6 +210,27 @@ const CONTRACT_CHANNEL_WATER: Record<string, { surfaceLift: number; edgeBleed: n
   },
 };
 
+// TWO HOMESTEADS, TWO LIVES — RENDER SIDE (docs/beauty/e1-twin-banks-brief.md U4).
+// The map's story is one family holding both banks, and the pair ships as the same body under a
+// 0.09 rad rotation difference: at the run camera, and worse at 390px, nothing tells a player
+// which bank they are standing on. The bodies themselves could not be re-authored tonight — the
+// landmark pack no longer regenerates faithfully (see the review's U4 entry) — so the difference
+// is hung on the MOUNT instead: the south roof (the stake side, the loss condition) is graded
+// warm and carries a lamplit pane; the north outpost across the braid is graded cool and stays
+// dark. Same ids, same bodies, same footprints — the sim never sees this.
+type LandmarkDressing = { emissive: [number, number, number]; lamp?: { acrossX: number; upY: number; width: number; height: number } };
+const CONTRACT_LANDMARK_DRESSING: Record<string, Record<string, LandmarkDressing>> = {
+  'e1-twin-banks': {
+    south_bank_homestead: { emissive: [1.14, 0.99, 0.74], lamp: { acrossX: 0.68, upY: 0.56, width: 0.82, height: 0.62 } },
+    south_bank_winch: { emissive: [1.10, 0.97, 0.80] },
+    north_bank_homestead: { emissive: [0.78, 0.88, 1.02] },
+    north_bank_winch: { emissive: [0.80, 0.89, 1.02] },
+  },
+};
+// Saturated on purpose: ACES tone mapping walks a bright unlit pane toward white, and a lamp
+// that reads white reads as a hole in the wall.
+const LAMP_COLOUR = '#ff9c38';
+
 const BOUNDS_EPSILON = 0.03;
 const CONTINUATION_SAMPLE_DEPTH = 8;
 const LEGACY_GROUND_SLOTS = new Set(['terrain.bank', 'terrain.river', 'terrain.ford']);
@@ -329,6 +350,36 @@ function preparePanorama(model: THREE.Object3D): void {
     };
     material.needsUpdate = true;
   }
+}
+
+function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
+  const dressing = CONTRACT_LANDMARK_DRESSING[contractId]?.[mountId];
+  if (!dressing) return;
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    // keepLandmarkPaintReadable drives these bodies almost entirely off emissive (map + intensity
+    // 3), so the emissive colour — not the diffuse — is the lever that actually grades them.
+    mesh.material.emissive.setRGB(...dressing.emissive, THREE.LinearSRGBColorSpace);
+    mesh.material.needsUpdate = true;
+  });
+  if (!dressing.lamp) return;
+  const box = new THREE.Box3().setFromObject(model);
+  const lamp = new THREE.Mesh(
+    new THREE.PlaneGeometry(dressing.lamp.width, dressing.lamp.height),
+    // Opaque and depth-writing on purpose: e2e/landmark-brightness.spec.ts and the census both
+    // assert that no landmark material is transparent or skips depth write. A lit window does
+    // not need to be either — it is unlit paint that outshines the wall it sits on.
+    new THREE.MeshBasicMaterial({ color: LAMP_COLOUR }),
+  );
+  lamp.name = `${mountId}.Lamp`;
+  lamp.position.set(
+    THREE.MathUtils.lerp(box.min.x, box.max.x, dressing.lamp.acrossX) - model.position.x,
+    THREE.MathUtils.lerp(box.min.y, box.max.y, dressing.lamp.upY) - model.position.y,
+    box.max.z - model.position.z + 0.03,
+  );
+  lamp.userData.renderOnly = true;
+  model.add(lamp);
 }
 
 function keepLandmarkPaintReadable(model: THREE.Object3D): void {
@@ -720,6 +771,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           model.scale.fromArray(mount.scale);
           inspect(model, false);
           if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
+          dressLandmark(model, host.contractId, mount.id);
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
