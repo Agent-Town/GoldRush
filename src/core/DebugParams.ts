@@ -111,6 +111,21 @@ export function isProfileEnabled(): boolean {
   return DEBUG_PARAMS.profile;
 }
 
+/**
+ * ?nobeauty — hold back the map beauty-shift render additions (sculpt water, motes,
+ * landmark contact shadows) while everything else boots identically.
+ *
+ * This exists so the shift's perf law stays CHECKABLE. A before/after p95 taken from
+ * two runs on a shared box measures the box as much as the change (F-1113-4); with
+ * this flag both arms run in the same browser, same minute, same load, and the delta
+ * is the additions. Reads the URL directly like ?nolevel so a harness can flip it
+ * without a reload path through DEBUG_PARAMS.
+ */
+export function isMapBeautyDisabled(): boolean {
+  if (typeof window === 'undefined') return false;
+  return new URLSearchParams(window.location.search).has('nobeauty');
+}
+
 function getSearch(): string {
   if (typeof window === 'undefined') {
     return '';

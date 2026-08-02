@@ -64,11 +64,17 @@ import seedRunPanoramaContractText from '../../assets/pilots/map-rebuild-spike/s
 import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json?raw';
 import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
+import { isMapBeautyDisabled } from '../core/DebugParams';
+import { RenderLayers } from '../core/RenderLayers';
+import { ledgerSunShadowDirection } from './LightRig';
 import { Balance } from '../game/Balance';
 import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
 import { disposeObject3D } from '../utils/dispose';
 import { trackedGltfLoader } from '../assets/AssetLoading';
+import * as Terrain from './Terrain';
 import { installVisualHeightSource } from './Terrain';
+import { createSculptWater, type SculptWater } from './Water';
+import { createSunMotes, type SunMotes } from './SunMotes';
 
 type Contract = {
   tileId: string;
@@ -98,6 +104,8 @@ type Host = {
   paintedGround?: THREE.Object3D;
   nightMode?: boolean;
   nightLighting?: () => LightFieldSnapshot;
+  /** True while a post-secure "Stay for the Rush" run is live (RunManager owns it). */
+  rushActive?: () => boolean;
   onVisualHeightSourceInstalled?: () => void;
 };
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
@@ -175,6 +183,28 @@ const CONTINUATION_SAMPLE_DEPTH = 8;
 const LEGACY_GROUND_SLOTS = new Set(['terrain.bank', 'terrain.river', 'terrain.ford']);
 const SKIRT_INSET = 2.5;
 const NIGHT_POOL_SHADER_CAP = 32;
+
+// U1, the-claim beauty shift (docs/beauty/the-claim-brief.md): the sculpt carves a
+// channel and then hides every painted water surface, so the map's one event has
+// been a static black slot. These contracts get a render-only living-water quad laid
+// into that channel. Per contract because each sculpt's bed sits at its own depth.
+const SCULPT_WATER_CONTRACTS = new Set(['the-claim']);
+/** Water fades out over the last stretch before the tile edge instead of cutting. */
+const SCULPT_WATER_EDGE_FADE = 7;
+/** How much water stands over the ford shelf: ankle deep, still obviously a crossing. */
+const SCULPT_WATER_FORD_SKIM = 0.11;
+/** U3: contracts whose mounted landmarks get soft contact ellipses. */
+const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim']);
+/** U5: contracts that get the drifting mote field, and its hard cap. */
+const SUN_MOTE_CONTRACTS = new Set(['the-claim']);
+const SUN_MOTE_CAP = 200;
+/** Embers on the claim stake while the Rush is live. */
+const RUSH_EMBER_COUNT = 26;
+/** Ellipse radius as a fraction of the model's footprint — a pool, not a slab. */
+const LANDMARK_CONTACT_SPREAD = 0.46;
+/** How far the pool leans away from the body, as a fraction of the body's height. */
+const LANDMARK_CONTACT_THROW = 0.30;
+const SCULPT_WATER_MAX_DELTA = 0.1;
 
 function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', source: 'painted' | 'glb', metrics?: Metrics, panorama?: THREE.Object3D, panoramaMetrics?: Metrics): void {
   canvas.dataset.terrain3dPilotState = state;
@@ -291,14 +321,290 @@ function preparePanorama(model: THREE.Object3D): void {
   }
 }
 
-function keepLandmarkPaintReadable(model: THREE.Object3D): void {
+/**
+ * Landmark paint would go dark without this, so it stays — but at intensity 3 the
+ * colour map is its own light source and the bodies float in flat white while the
+ * low sun models everything around them. U3 of the beauty shift makes the intensity
+ * a per-contract tunable and drops the Claim's to where the sun does the modelling
+ * and the emissive only keeps the paint off the floor.
+ */
+const LANDMARK_EMISSIVE_DEFAULT = 3;
+const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45 };
+
+function keepLandmarkPaintReadable(model: THREE.Object3D, intensity: number): void {
   model.traverse((node) => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
     if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
     mesh.material.emissive.set('#ffffff');
     mesh.material.emissiveMap = mesh.material.map;
-    mesh.material.emissiveIntensity = 3;
+    mesh.material.emissiveIntensity = intensity;
   });
+}
+
+/**
+ * U3 — soft contact ellipses under the mounted landmarks.
+ *
+ * Landmarks are mounted with castShadow off, so a lit body has nothing tying it to
+ * the ground. One instanced quad per mount, sized from the model's own footprint,
+ * using the shipped blob-shadow recipe (LightRig SpriteBlobShadows: #2e1b0e at 0.17,
+ * depthWrite off, polygon-offset, laid flat just above the terrain).
+ *
+ * Deliberately NOT a child of Terrain3dLandmarks: that group's children are counted
+ * as landmarks and their materials are audited for transparency by the map census,
+ * so a shadow parented there would read as a sixth landmark with an unlit material.
+ */
+function mountLandmarkContacts(
+  host: Host,
+  mounts: Array<{ id: string; model: THREE.Object3D }>,
+  heightAt: (x: number, z: number) => number,
+  waterY: number | undefined,
+): THREE.InstancedMesh | undefined {
+  if (isMapBeautyDisabled() || !LANDMARK_CONTACT_CONTRACTS.has(host.contractId) || !mounts.length) return undefined;
+  const geometry = new THREE.CircleGeometry(1, 24);
+  const material = new THREE.MeshBasicMaterial({
+    color: '#2e1b0e',
+    transparent: true,
+    opacity: 0.17,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+  const contacts = new THREE.InstancedMesh(geometry, material, mounts.length);
+  contacts.name = 'Terrain3dLandmarkContacts';
+  contacts.userData.renderOnly = true;
+  contacts.frustumCulled = false;
+  contacts.renderOrder = RenderLayers.groundShadows;
+  const box = new THREE.Box3();
+  const size = new THREE.Vector3();
+  const placer = new THREE.Object3D();
+  // Lean the pool the way the key light throws it, or a shadow centred under a solid
+  // building is simply covered by the building and never reads.
+  const lean = ledgerSunShadowDirection();
+  let written = 0;
+  for (const { model } of mounts) {
+    box.setFromObject(model);
+    box.getSize(size);
+    const ground = heightAt(model.position.x, model.position.z);
+    // No contact shadow on a body standing in water: the riparian pack sits in the
+    // channel, and a hard ellipse under the surface reads as a hole, not a shadow.
+    if (waterY !== undefined && ground < waterY) continue;
+    const throwLength = size.y * LANDMARK_CONTACT_THROW;
+    placer.position.set(
+      model.position.x + lean.x * throwLength,
+      ground + 0.022,
+      model.position.z + lean.y * throwLength,
+    );
+    placer.rotation.set(-Math.PI / 2, 0, -0.38);
+    placer.scale.set(
+      Math.max(0.7, size.x * LANDMARK_CONTACT_SPREAD),
+      Math.max(0.7, size.z * LANDMARK_CONTACT_SPREAD),
+      1,
+    );
+    placer.updateMatrix();
+    contacts.setMatrixAt(written, placer.matrix);
+    written += 1;
+  }
+  contacts.count = written;
+  contacts.instanceMatrix.needsUpdate = true;
+  if (!written) {
+    geometry.dispose();
+    material.dispose();
+    return undefined;
+  }
+  host.scene.add(contacts);
+  host.canvas.dataset.terrain3dPilotContactShadows = String(written);
+  return contacts;
+}
+
+/**
+ * Where the water line sits in a baked channel.
+ *
+ * Two truths compete: the channel wants to be full, and the ford has to stay a
+ * crossing. So the surface is the LOWER of "channel bed + fill" and "ford bed +
+ * skim" — the channel reads deep, the ford reads like a wet shelf you can walk.
+ * Both beds are read from the baked grid, so a re-sculpt moves the water with it.
+ */
+function sculptWaterSurfaceY(
+  heightAt: (x: number, z: number) => number,
+  halfX: number,
+  centerZ: number,
+  fordHalfWidth: number,
+): number {
+  const channel: number[] = [];
+  const ford: number[] = [];
+  for (let x = -halfX + 2; x <= halfX - 2; x += 1) {
+    for (const z of [-3.5, -2, -1, 0, 1, 2, 3.5]) {
+      (Math.abs(x) <= fordHalfWidth ? ford : channel).push(heightAt(x, centerZ + z));
+    }
+  }
+  const median = (values: number[]): number => {
+    const sorted = [...values].sort((a, b) => a - b);
+    return sorted[Math.floor(sorted.length / 2)] ?? 0;
+  };
+  const channelBed = channel.length ? median(channel) : 0;
+  const fordBed = ford.length ? median(ford) : channelBed;
+  return Math.min(channelBed + 0.42, fordBed + SCULPT_WATER_FORD_SKIM);
+}
+
+/**
+ * U1 — mount the render-only living-water surface for a sculpted contract.
+ * Sim-silent: every number below is read from the sim's own declarations or from
+ * the baked height grid; nothing is written back.
+ */
+function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number, bounds: THREE.Box3): SculptWater | undefined {
+  if (isMapBeautyDisabled() || !SCULPT_WATER_CONTRACTS.has(host.contractId) || !Terrain.hasRiverWater()) return undefined;
+  const river = Terrain.riverGeometry();
+  const centerZ = (river.minZ + river.maxZ) / 2;
+  const riverHalfWidth = (river.maxZ - river.minZ) / 2;
+  const fordHalfWidth = Terrain.fordRanges()[0]?.halfWidth ?? 3;
+  const halfX = Math.min(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
+  const surfaceY = sculptWaterSurfaceY(heightAt, halfX, centerZ, fordHalfWidth);
+  const water = createSculptWater({
+    ford: false,
+    depthTest: true,
+    heightAt,
+    // The carved channel runs ~0.45m below the water line at its deepest; the last
+    // ~15cm of depth is the damp margin where the surface fades into wet ground.
+    deepMeters: 0.5,
+    shoreMeters: 0.15,
+    // Style anchor: "the river writes the only dark line". The shipped shader is
+    // tuned over pale painted sand and reads as mint over this sculpt's umber bed,
+    // so the palette is multiplied warm and the surface let through enough for the
+    // bed's own darkness to carry the channel.
+    color: '#c9b892',
+    opacity: 0.7,
+    centerZ,
+    surfaceY,
+    halfLength: halfX,
+    riverHalfWidth,
+    visualHalfWidth: Terrain.visualWaterHalfWidth(),
+    lengthHalf: halfX,
+    fadeStart: Math.max(1, halfX - SCULPT_WATER_EDGE_FADE),
+    fordHalfWidth,
+    riverDepth: Terrain.waterDepth('river'),
+    fordDepth: Terrain.waterDepth('ford'),
+    wadeDepth: Balance.terrainSim.wadeDepth,
+    deepDepth: Balance.terrainSim.deepDepth,
+    // The gold glints belong on the sluice line: each harvest anchor pushed to its
+    // own bank lip, exactly as the painted river places them.
+    anchors: Terrain.nodeAnchors.map((anchor) => ({
+      x: anchor.x,
+      z: anchor.z < centerZ ? river.minZ + 0.55 : river.maxZ - 0.55,
+    })),
+  });
+  let lastFrame = -1;
+  let lastAt = 0;
+  water.mesh.onBeforeRender = (renderer) => {
+    const frame = renderer.info.render.frame;
+    if (frame === lastFrame) return;
+    const now = performance.now() / 1000;
+    const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+    lastFrame = frame;
+    lastAt = now;
+    water.advance(delta);
+  };
+  host.scene.add(water.mesh);
+  host.canvas.dataset.terrain3dPilotSculptWater = 'living-water-quad';
+  host.canvas.dataset.terrain3dPilotSculptWaterY = surfaceY.toFixed(4);
+  host.canvas.dataset.terrain3dPilotSculptWaterGlints = String(Terrain.nodeAnchors.length);
+  host.canvas.dataset.terrain3dPilotSculptWaterDeepest = water.deepestMeters.toFixed(3);
+  return water;
+}
+
+/**
+ * U5 — living air over the Claim, plus the Rush's one visible reward note.
+ *
+ * Motes: a capped additive point field drifting along the key light. One draw call,
+ * one buffer, all motion in the vertex shader.
+ * Ember: while a post-secure Rush run is live, the claim-stake mount gets a warm
+ * lift — the map says out loud that the player chose to press their luck. It is
+ * driven from RunManager's own rush flag through the host, never inferred.
+ */
+function mountSunMotes(host: Host, bounds: THREE.Box3): SunMotes | undefined {
+  if (isMapBeautyDisabled() || !SUN_MOTE_CONTRACTS.has(host.contractId)) return undefined;
+  const mobile = typeof window !== 'undefined' && window.innerWidth <= 430;
+  const lean = ledgerSunShadowDirection();
+  const motes = createSunMotes({
+    count: mobile ? Math.round(SUN_MOTE_CAP * 0.45) : SUN_MOTE_CAP,
+    halfX: Math.min(Math.abs(bounds.min.x), Math.abs(bounds.max.x)) * 0.62,
+    halfZ: 13,
+    centerZ: 4,
+    minY: 0.4,
+    maxY: 5.0,
+    drift: new THREE.Vector2(lean.x * 0.55, lean.y * 0.55),
+    color: '#ffd9a2',
+    size: 2.1,
+    seed: 0x1c1a,
+  });
+  let lastFrame = -1;
+  let lastAt = 0;
+  motes.points.onBeforeRender = (renderer) => {
+    const frame = renderer.info.render.frame;
+    if (frame === lastFrame) return;
+    const now = performance.now() / 1000;
+    const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+    lastFrame = frame;
+    lastAt = now;
+    motes.advance(delta);
+  };
+  host.scene.add(motes.points);
+  host.canvas.dataset.terrain3dPilotMotes = String(motes.count);
+  return motes;
+}
+
+/**
+ * U5b — the Rush's reward note: a warm ember lift off the claim-stake ring, live
+ * only while the player has chosen to press their luck. Same point field as the
+ * motes, one draw call, hidden (and therefore near-free) the rest of the time.
+ */
+function mountRushEmbers(
+  host: Host,
+  mounts: Array<{ id: string; model: THREE.Object3D }>,
+  heightAt: (x: number, z: number) => number,
+): SunMotes | undefined {
+  if (isMapBeautyDisabled() || !SUN_MOTE_CONTRACTS.has(host.contractId) || !host.rushActive) return undefined;
+  const stake = mounts.find(({ id }) => id === 'claim_stake')?.model;
+  if (!stake) return undefined;
+  const embers = createSunMotes({
+    count: RUSH_EMBER_COUNT,
+    halfX: 1.15,
+    halfZ: 1.15,
+    centerZ: stake.position.z,
+    minY: heightAt(stake.position.x, stake.position.z) + 0.15,
+    maxY: heightAt(stake.position.x, stake.position.z) + 2.7,
+    drift: new THREE.Vector2(0, 0),
+    rise: 0.55,
+    color: '#ff9a3c',
+    size: 2.4,
+    seed: 0x5715,
+  });
+  embers.points.name = 'ClaimStakeRushEmbers';
+  embers.points.position.x = stake.position.x;
+  embers.points.visible = false;
+  let lastFrame = -1;
+  let lastAt = 0;
+  embers.points.onBeforeRender = (renderer) => {
+    const frame = renderer.info.render.frame;
+    if (frame === lastFrame) return;
+    const now = performance.now() / 1000;
+    const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+    lastFrame = frame;
+    lastAt = now;
+    embers.advance(delta);
+  };
+  // visible is polled off the run state on the frame BEFORE the draw, so an ended
+  // Rush stops costing anything at all rather than fading out over seconds.
+  const poll = () => {
+    if (!embers.points.parent) return;
+    embers.points.visible = host.rushActive?.() === true;
+    host.canvas.dataset.terrain3dPilotRushEmbers = embers.points.visible ? String(RUSH_EMBER_COUNT) : '0';
+    requestAnimationFrame(poll);
+  };
+  host.scene.add(embers.points);
+  requestAnimationFrame(poll);
+  host.canvas.dataset.terrain3dPilotRushEmbers = '0';
+  return embers;
 }
 
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
@@ -515,6 +821,10 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let panorama: THREE.Object3D | undefined;
   let landmarks: THREE.Group | undefined;
   let skirt: THREE.Object3D | undefined;
+  let sculptWater: SculptWater | undefined;
+  let sunMotes: SunMotes | undefined;
+  let rushEmbers: SunMotes | undefined;
+  let landmarkContacts: THREE.InstancedMesh | undefined;
   let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
   let loadedPanorama: THREE.Object3D | undefined;
@@ -580,6 +890,18 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.scene.add(nextTerrain, nextPanorama);
       if (nextSkirt) host.scene.add(nextSkirt);
       hiddenRelief = hidePaintedGround(host);
+      // A decoration must never cost the map its sculpt: if the water fails to
+      // build, the terrain stays mounted and the failure is published, not silent.
+      try {
+        sculptWater = mountSculptWater(host, heightAt, terrainMetrics.bounds);
+      } catch (error) {
+        host.canvas.dataset.terrain3dPilotSculptWater = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+      }
+      try {
+        sunMotes = mountSunMotes(host, terrainMetrics.bounds);
+      } catch (error) {
+        host.canvas.dataset.terrain3dPilotMotes = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+      }
       host.canvas.dataset.terrain3dPilotTerrainLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotHiddenRelief = String(hiddenRelief.length);
@@ -626,7 +948,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           model.rotation.set(...mount.rotation);
           model.scale.fromArray(mount.scale);
           inspect(model, false);
-          if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
+          if (host.contractId !== 'e1-night-shift') {
+            keepLandmarkPaintReadable(model, LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT);
+          }
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
@@ -642,7 +966,27 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         }
         landmarks = nextLandmarks;
         host.scene.add(nextLandmarks);
+        try {
+          landmarkContacts = mountLandmarkContacts(
+            host,
+            nextLandmarks.children.map((model) => ({ id: model.name, model })),
+            heightAt,
+            sculptWater?.mesh.position.y,
+          );
+        } catch (error) {
+          host.canvas.dataset.terrain3dPilotContactShadows = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        }
+        try {
+          rushEmbers = mountRushEmbers(
+            host,
+            nextLandmarks.children.map((model) => ({ id: model.name, model })),
+            heightAt,
+          );
+        } catch (error) {
+          host.canvas.dataset.terrain3dPilotRushEmbers = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        }
         host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'mounted';
+        host.canvas.dataset.terrain3dPilotLandmarkEmissive = String(LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT);
         host.canvas.dataset.terrain3dPilotLandmarks = String(nextLandmarks.children.length);
         host.canvas.dataset.terrain3dPilotLandmarkSkipped = String(diagnostics.length);
         host.canvas.dataset.terrain3dPilotLandmarkDiagnostics = diagnostics.join('; ');
@@ -700,6 +1044,30 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.scene.remove(skirt);
       disposeObject3D(skirt);
       skirt = undefined;
+    }
+    if (sculptWater) {
+      host.scene.remove(sculptWater.mesh);
+      sculptWater.dispose();
+      sculptWater = undefined;
+      delete host.canvas.dataset.terrain3dPilotSculptWater;
+    }
+    if (rushEmbers) {
+      host.scene.remove(rushEmbers.points);
+      rushEmbers.dispose();
+      rushEmbers = undefined;
+      delete host.canvas.dataset.terrain3dPilotRushEmbers;
+    }
+    if (sunMotes) {
+      host.scene.remove(sunMotes.points);
+      sunMotes.dispose();
+      sunMotes = undefined;
+      delete host.canvas.dataset.terrain3dPilotMotes;
+    }
+    if (landmarkContacts) {
+      host.scene.remove(landmarkContacts);
+      disposeObject3D(landmarkContacts);
+      landmarkContacts = undefined;
+      delete host.canvas.dataset.terrain3dPilotContactShadows;
     }
     for (const model of [terrain, panorama, landmarks]) {
       if (!model) continue;

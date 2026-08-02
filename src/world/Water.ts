@@ -52,6 +52,28 @@ type WaterMaterialConfig = {
   wadeDepth: number;
   deepDepth: number;
   anchors: Array<{ x: number; z: number }>;
+  /**
+   * The painted river floats over flat ground, so it ships with depth testing OFF.
+   * A surface laid into a sculpted channel needs it ON or it paints straight over
+   * the banks in front of it.
+   */
+  depthTest?: boolean;
+  /**
+   * Multiplies the shader's water palette. White keeps the shipped mint; a warm
+   * sepia pulls the same water into a Frontier Ledger map's tone without touching
+   * the shader. Foam and gold glints ride the same multiply, so they stay warm.
+   */
+  color?: string;
+  /** Surface opacity. Lower lets a sculpted bed's own darkness ground the water. */
+  opacity?: number;
+  /**
+   * Optional baked bed-depth map (red channel, 0..1 == 0..deepMeters below the
+   * surface). Present only for sculpted channels: the painted river floats over
+   * flat ground and has no bed to read. When present the water stops guessing its
+   * depth from the tile's declared band and reads the real carved channel, so the
+   * sculpted meander shows as dark water and the margins go shallow and damp.
+   */
+  bedDepth?: { map: THREE.Texture; deepMeters: number; shoreMeters: number };
 };
 
 export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.MeshStandardMaterial {
@@ -67,10 +89,10 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     deepDepth: { value: config.deepDepth },
   };
   const material = new THREE.MeshStandardMaterial({
-    color: '#ffffff',
+    color: config.color ?? '#ffffff',
     transparent: true,
-    opacity: config.ford ? 0.74 : 0.92,
-    depthTest: config.ford,
+    opacity: config.opacity ?? (config.ford ? 0.74 : 0.92),
+    depthTest: config.depthTest ?? config.ford,
     depthWrite: false,
     roughness: config.ford ? 0.58 : 0.36,
     metalness: 0.01,
@@ -79,9 +101,29 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
   configureWaterMap(material.map);
   material.userData.waterUniforms = uniforms;
   material.userData.waterGlints = config.anchors.length;
-  material.customProgramCacheKey = () => `living-water-${config.ford ? 'ford' : 'river'}`;
+  // The band geometry is BAKED INTO THE SOURCE below as literals (visual/river/ford
+  // half widths, the fade window, one line per glint anchor). Two materials that
+  // share a cache key share a compiled program, so the key has to carry every
+  // literal that can differ — otherwise a second water surface on the same map
+  // silently renders with the first one's constants.
+  material.customProgramCacheKey = () => [
+    'living-water',
+    config.ford ? 'ford' : 'river',
+    config.visualHalfWidth.toFixed(3),
+    config.riverHalfWidth.toFixed(3),
+    config.fordHalfWidth.toFixed(3),
+    config.fadeStart.toFixed(3),
+    config.lengthHalf.toFixed(3),
+    config.anchors.map((anchor) => `${anchor.x.toFixed(2)},${anchor.z.toFixed(2)}`).join('_') || 'noglints',
+    config.bedDepth ? `bed${config.bedDepth.deepMeters.toFixed(3)}_${config.bedDepth.shoreMeters.toFixed(3)}` : 'nobed',
+  ].join('-');
   material.onBeforeCompile = (shader) => {
     shader.uniforms.waterTime = uniforms.time;
+    if (config.bedDepth) {
+      shader.uniforms.waterBedMap = { value: config.bedDepth.map };
+      shader.uniforms.waterBedDeep = { value: config.bedDepth.deepMeters };
+      shader.uniforms.waterBedShore = { value: config.bedDepth.shoreMeters };
+    }
     shader.uniforms.waterQuality = uniforms.quality;
     shader.uniforms.waterRepeat = uniforms.repeat;
     shader.uniforms.waterFord = uniforms.ford;
@@ -104,6 +146,7 @@ uniform float waterRiverDepth;
 uniform float waterFordDepth;
 uniform float waterWadeDepth;
 uniform float waterDeepDepth;
+${config.bedDepth ? 'uniform sampler2D waterBedMap;\nuniform float waterBedDeep;\nuniform float waterBedShore;' : ''}
 varying vec2 vWaterUv;
 varying vec2 vWaterWorld;
 
@@ -158,6 +201,12 @@ float waterNoise(vec2 p) {
   float channelDepth = mix(waterWadeDepth * 0.5, waterRiverDepth, smoothstep(0.05, ${config.riverHalfWidth.toFixed(3)}, riverDist));
   float declaredDepth = mix(channelDepth, waterFordDepth, fordBand);
   float depth = smoothstep(max(0.001, waterWadeDepth), max(waterWadeDepth + 0.001, waterDeepDepth), declaredDepth);
+  float bedShore = 1.0;
+${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * waterBedDeep;
+  // The carved channel owns the depth read; the ford keeps the tile's DECLARED
+  // depth so a crossing the sim calls water never renders as dry ground.
+  depth = mix(clamp(bedMetres / waterBedDeep, 0.0, 1.0), depth, fordBand);
+  bedShore = max(smoothstep(0.0, waterBedShore, bedMetres), fordBand);` : ''}
   float rippleFreq = mix(1.05, 2.45, lengthNoise);
   float rippleAmp = mix(0.06, 0.17, crossNoise);
   float ripple = sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise)) * 0.5 + 0.5;
@@ -179,6 +228,13 @@ float waterNoise(vec2 p) {
   waterColor = mix(waterColor, vec3(0.92, 0.84, 0.62), bankFoam * 0.58);
   waterColor += vec3(1.0, 0.72, 0.20) * waterGoldGlints(vWaterWorld) * 0.42;
   waterColor = mix(waterColor, baseTexel.rgb, 0.12);
+${config.bedDepth ? `  // Sculpt-only. The declared band's foam line sits where the SIM says the bank is;
+  // over a carved channel the real edge is wherever the bed comes up, so foam is
+  // driven by measured depth. The ripple is also lifted: at the run camera the
+  // surface is seen almost face-on, where a flat diffuse sheet reads as glass.
+  float shoreFoam = (1.0 - smoothstep(0.02, 0.26, bedMetres)) * foamNoise * (0.45 + waterQuality * 0.55);
+  waterColor = mix(waterColor, vec3(0.94, 0.88, 0.70), shoreFoam * 0.5 * (1.0 - fordBand));
+  waterColor += vec3(0.10, 0.11, 0.08) * pow(ripple, 2.0) * waterQuality * (1.0 - fordBand);` : ''}
   float alpha = mix(0.74, 0.94, depth);
   alpha = mix(alpha, 0.58, fordBand * 0.72);
   alpha = mix(alpha, 0.72, bankFoam * 0.4);
@@ -186,12 +242,127 @@ float waterNoise(vec2 p) {
   alpha *= mix(1.0 - smoothstep(${config.fadeStart.toFixed(3)}, ${config.lengthHalf.toFixed(3)}, abs(vWaterWorld.x)), 1.0, waterFord);
   float fordOverlayFade = smoothstep(0.0, 0.18, vWaterUv.x) * (1.0 - smoothstep(0.82, 1.0, vWaterUv.x));
   alpha *= mix(1.0, fordOverlayFade, waterFord);
+  // A sculpted shoreline is a depth-buffer intersection, i.e. a razor edge. Fading
+  // the last few centimetres of depth turns it into a damp margin instead, and the
+  // foam that gathers there stays visible after the water itself has faded out.
+  alpha *= bedShore;
+${config.bedDepth ? '  alpha = max(alpha, shoreFoam * 0.5 * smoothstep(0.0, 0.05, bedMetres));' : ''}
   vec4 sampledDiffuseColor = vec4(waterColor, alpha);
   diffuseColor *= sampledDiffuseColor;
 #endif`);
   };
   if (!config.ford) void loadGeneratedTexture(assetSlots.terrainRiver);
   return material;
+}
+
+export type SculptWaterConfig = WaterMaterialConfig & {
+  /** World Y of the water surface — set from the baked sculpt bed, not from WATER_Y. */
+  surfaceY: number;
+  /** World Z of the band centre (the sim's declared river centre). */
+  centerZ: number;
+  /** Half length along X. The plane is a single quad; the shader owns the shoreline. */
+  halfLength: number;
+};
+
+export type SculptWater = {
+  mesh: THREE.Mesh;
+  advance: (delta: number) => void;
+  dispose: () => void;
+  /** Deepest metre reading baked into the bed map — evidence for the review board. */
+  deepestMeters: number;
+};
+
+const BED_MAP_WIDTH = 512;
+const BED_MAP_HEIGHT = 64;
+
+/**
+ * Bake how deep the water stands over a sculpted bed, in the water plane's own UV
+ * space. Red channel, 8-bit: 0 == dry, 255 == `deepMeters` or deeper. 8 bits over
+ * half a metre is ~2mm, far finer than the eye reads at the gameplay camera, and
+ * an unsigned byte texture is linearly filterable everywhere (a float one is not).
+ */
+function bakeBedDepth(
+  heightAt: (x: number, z: number) => number,
+  surfaceY: number,
+  halfLength: number,
+  centerZ: number,
+  visualHalfWidth: number,
+  deepMeters: number,
+): { texture: THREE.DataTexture; deepest: number } {
+  const data = new Uint8Array(BED_MAP_WIDTH * BED_MAP_HEIGHT);
+  let deepest = 0;
+  for (let row = 0; row < BED_MAP_HEIGHT; row += 1) {
+    // Plane geometry rotated -90 deg about X: world z decreases as uv.y grows.
+    const z = centerZ - (((row + 0.5) / BED_MAP_HEIGHT) - 0.5) * visualHalfWidth * 2;
+    for (let column = 0; column < BED_MAP_WIDTH; column += 1) {
+      const x = (((column + 0.5) / BED_MAP_WIDTH) - 0.5) * halfLength * 2;
+      const depth = Math.max(0, surfaceY - heightAt(x, z));
+      if (depth > deepest) deepest = depth;
+      data[row * BED_MAP_WIDTH + column] = Math.round(THREE.MathUtils.clamp(depth / deepMeters, 0, 1) * 255);
+    }
+  }
+  const texture = new THREE.DataTexture(data, BED_MAP_WIDTH, BED_MAP_HEIGHT, THREE.RedFormat, THREE.UnsignedByteType);
+  texture.name = 'SculptWaterBedDepth';
+  texture.magFilter = THREE.LinearFilter;
+  texture.minFilter = THREE.LinearFilter;
+  texture.wrapS = THREE.ClampToEdgeWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
+  texture.generateMipmaps = false;
+  texture.colorSpace = THREE.NoColorSpace;
+  texture.needsUpdate = true;
+  return { texture, deepest };
+}
+
+/**
+ * A render-only living-water surface laid into a SCULPTED channel.
+ *
+ * The painted river is a ribbon that floats over flat ground with depth testing
+ * off; a sculpted map already carries the channel in its terrain mesh, so the
+ * water here is one flat quad at the channel's water line with depth testing ON.
+ * The banks then occlude it themselves and the shoreline is wherever the sculpt
+ * rises through the surface — no shoreline geometry, no second draw call.
+ *
+ * Rendering only: nothing here is read by the simulation.
+ */
+export function createSculptWater(config: SculptWaterConfig & {
+  heightAt: (x: number, z: number) => number;
+  deepMeters: number;
+  shoreMeters: number;
+}): SculptWater {
+  const bed = bakeBedDepth(
+    config.heightAt,
+    config.surfaceY,
+    config.halfLength,
+    config.centerZ,
+    config.visualHalfWidth,
+    config.deepMeters,
+  );
+  const material = createLivingWaterMaterial({
+    ...config,
+    bedDepth: { map: bed.texture, deepMeters: config.deepMeters, shoreMeters: config.shoreMeters },
+  });
+  const geometry = new THREE.PlaneGeometry(config.halfLength * 2, config.visualHalfWidth * 2, 1, 1);
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.name = 'SculptLivingWater';
+  mesh.rotation.x = -Math.PI / 2;
+  mesh.position.set(0, config.surfaceY, config.centerZ);
+  mesh.renderOrder = RenderLayers.groundDecals;
+  mesh.receiveShadow = false;
+  mesh.castShadow = false;
+  mesh.frustumCulled = false;
+  mesh.userData.renderOnly = true;
+  mesh.userData.visualHalfWidth = config.visualHalfWidth;
+  return {
+    mesh,
+    deepestMeters: bed.deepest,
+    advance: (delta: number) => updateWaterMaterial(mesh, delta),
+    dispose: () => {
+      geometry.dispose();
+      bed.texture.dispose();
+      material.map?.dispose();
+      material.dispose();
+    },
+  };
 }
 
 export function createFordStones(waterY: number, offsetX = 0): THREE.InstancedMesh {

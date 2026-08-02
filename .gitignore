@@ -25,6 +25,10 @@ worktrees/
 scripts/_s*
 playwright.s*.config.ts
 .scratch/
+# beauty-shift probe scratch (the-claim shift, 2026-08-02): throwaway page probes
+# used to measure the sculpt before deciding an upgrade. The BOARDS are history and
+# live in reviews/shots-beauty-claim/; these one-shot probes are not.
+.scratch-beauty/
 # THE EIGHT WINDS (2026-07-28): proof-only extraction of the diagonal siblings.
 # Nothing binds these cells yet, so they must NOT reach assets/processed or the
 # bundle — anim-pass-winds.mjs extracts here to measure and throws the cells away.

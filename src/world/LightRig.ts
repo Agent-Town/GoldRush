@@ -80,6 +80,22 @@ type MuzzleFlash = {
   endsAt: number;
 };
 
+/**
+ * The Ledger low sun, exported so anything that has to agree with the key light —
+ * a contact shadow's offset, an art board's camera — reads the same two numbers the
+ * rig is built from instead of copying them.
+ */
+export const LEDGER_SUN_POSITION = new THREE.Vector3(-28, 18, -22);
+export const LEDGER_SUN_TARGET = new THREE.Vector3(4, 0, 8);
+
+/** Unit XZ direction the key light travels, i.e. the way ground shadows lean. */
+export function ledgerSunShadowDirection(): THREE.Vector2 {
+  return new THREE.Vector2(
+    LEDGER_SUN_TARGET.x - LEDGER_SUN_POSITION.x,
+    LEDGER_SUN_TARGET.z - LEDGER_SUN_POSITION.z,
+  ).normalize();
+}
+
 export class LightRig {
   private readonly group = new THREE.Group();
   private readonly sun = new THREE.DirectionalLight('#ffd28a', 2.35);
@@ -139,8 +155,8 @@ export class LightRig {
   constructor(private readonly scene: THREE.Scene, private readonly renderer: THREE.WebGLRenderer) {
     this.group.name = 'GoldenHourLightRig';
     this.sun.name = 'LedgerLowSun';
-    this.sun.position.set(-28, 18, -22);
-    this.sun.target.position.set(4, 0, 8);
+    this.sun.position.copy(LEDGER_SUN_POSITION);
+    this.sun.target.position.copy(LEDGER_SUN_TARGET);
     this.sun.castShadow = true;
     this.sun.shadow.camera.near = 0.5;
     this.sun.shadow.camera.far = 76;

@@ -255,6 +255,16 @@ export function waterSources(): readonly ContractWaterSource[] {
   return SPRING_PONDS;
 }
 
+/**
+ * Read-only: the half width of the tile's DECLARED visual water band, the same
+ * number the painted river ribbon is cut to. Exported so a sculpted map can lay
+ * its own water surface to the identical width without duplicating the fallback
+ * rule. Reads sim declarations; writes nothing.
+ */
+export function visualWaterHalfWidth(): number {
+  return visualWaterWidth() / 2;
+}
+
 export function waterMask(): ContractWaterMask | undefined {
   return WATER_MASK;
 }
