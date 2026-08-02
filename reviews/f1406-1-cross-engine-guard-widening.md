@@ -5,7 +5,11 @@
 **Banked at:** `save/f1406-1-dispatch2-fire-shell-s1408` (blob `5039bec2`), which also carries the two cure attempts s1408 measured
 **Gated by:** s1408 fire, 2026-08-02T23:30Z → 2026-08-03T00:1xZ
 
-## VERDICT: HOLD — NOT MERGED. The slice does what it was asked to do; it cannot pay for itself in the shell that has to run it.
+## VERDICT (s1408): HOLD — NOT MERGED. The slice does what it was asked to do; it cannot pay for itself in the shell that has to run it.
+
+## VERDICT (s1409, SUPERSEDING): MERGED — `9b3961f6952fffa23b23b4f518e0c0b98d13d94b`. The hold was lifted by RULING F-1408-2, not by a green.
+
+The s1408 hold below stands as written, and its measurements were re-used rather than re-run. What changed is that the ruling it asked for was made. See the s1409 section at the foot of this file.
 
 `scripts/wave-scaling-cross-engine.test.mjs` is a member of `test:node-guards` (`package.json:18`, verified by grep+read). That battery is run by **fires**, on every drain gate. This slice makes it either RED or ten-minutes-long in a fire shell. Merging it would hand every future fire a red it did not cause.
 
@@ -63,3 +67,52 @@ So in a fire shell this guard is red at every budget I could justify, or minutes
 ## Custody
 
 Undecided content was in main's working tree (main-slot convention puts it there). It is banked at `save/f1406-1-dispatch2-fire-shell-s1408` **before** main was restored, and the restore was verified by **blob hash**, not by `git status` — per F-1295-1, a sweep's signature is the absence of dirt, so `git status` cannot discriminate. `HEAD:scripts/wave-scaling-cross-engine.test.mjs` = worktree = `97358bf3`; the banked variant is `5039bec2`. Nothing was lost and nothing undecided is on main.
+
+---
+
+# s1409 — the ruling, and what it cost to make it
+
+**Gated in:** detached worktree `worktrees/gate-s1409` (§3.0b — the block was `blockClass: "gate-side"`, so evidence may be gathered but main's tree may not be dirtied)
+**Merged:** `9b3961f6952fffa23b23b4f518e0c0b98d13d94b`, leaf flipped in the immediately following commit (F-1384-1: a commit cannot contain its own hash)
+
+## The ruling: (a), as recommended — but re-priced first rather than inherited
+
+s1408 recommended (a) and it was right. I did not take that on trust, because the choice between (a) and (b) turns on a number s1408 never measured: **how much of the cost is `e1-night-shift` itself, and is there a cheap trim of it?** Measured in a fire shell:
+
+| Contract | Waves | Replay events | Fire-shell wall |
+|---|---|---|---|
+| `the-claim` | 10 | 545 | **4.4 s** |
+| `e1-night-shift` | 25 | 1541 | **35.8 s** |
+
+Cost is **super-linear in waves** — 2.5× the waves for 8× the time — so a "fewer waves" trim buys much less than it looks like it should, and any trim deep enough to matter would have to be justified against the very property that makes `e1-night-shift` the only discriminating subject. Option (b) had no cheap version. Option (c) pays ~4 minutes on every drain gate forever. **(a) it is.**
+
+⚠️ Note 35.8 s here against s1408's 56.7 s for the same probe: **the fire shell's cost is not a constant**, which is itself a reason not to buy this workload there.
+
+## What landed
+
+`scripts/cross-engine-skip.mjs` holds the decision as a pure function, so **both** directions are assertable; `scripts/cross-engine-skip.test.mjs` pins them and is rooted in `test:node-guards`. The skip reason is a **string**, so node:test prints `# SKIP <reason>` on every line and a fire's green cannot be misread as coverage it did not perform.
+
+**Red path proven by manufacturing the defect** (a passing guard never executes its violation path): replacing the function body with an unconditional skip — the exact "simplification" that would silently delete the cross-engine guard from the whole factory — goes **rc=1 naming the lane arm**, while the **fire arm still passes**. That asymmetry is the whole argument for a two-directional guard: a one-directional one would have been green on the defect. Probe reverted, `sha256/16 93ea6c8e95f469c5` byte-identical.
+
+⚠️ **What this cure does NOT do, stated so no one reads it as more than it is:** fires no longer run the cross-engine comparison at all. The coverage now lives entirely in lane and attended shells. That is defensible — sim code is authored there — but it is a real reduction, and the printed SKIP reason exists so that nobody mistakes a fire's green for the check having happened.
+
+## Evidence
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | rc=0, 17.2 s |
+| `npm run build` | rc=0, 50.6 s |
+| cross-engine guard, fire shell | **rc=0, 0.1 s, 3 skipped, reason printed** (was RED 95.0 / 230.5 / 697.2 s at s1408) |
+| `node --test scripts/cross-engine-skip.test.mjs` | rc=0, 3 pass; manufactured defect → **rc=1** |
+| `npm run test:node-guards` ×3 (arm) | 235 tests — 232 pass / 232 / 231 |
+| `npm run test:node-guards` ×3 (control, pristine main) | 230 tests — 230 / **1 red** / 230 |
+
+Lane-shell behaviour is **not** re-measured here and is not claimed: I cannot produce a lane shell from inside a fire, and unsetting `CLAUDE_CONFIG_DIR` would only change the *label*, not the process context that F-1269-1 is about. The lane arm rests on the runner's own s1408 report (**3 pass / 0 fail, 42.09 s**) plus the pure-function guard above.
+
+## F-1409-1 — a red in a file this slice never touched, and why it is not this slice's
+
+The battery drew a red in `scripts/gr-sim.test.mjs`. I did not reason my way out of it; I ran the **control**: same battery, same shell, same hour, slice reverted to pristine main. **Control 2 green / 1 red. Arm 1 green / 2 red.** The flake is on main.
+
+Three further facts make it a load ceiling rather than a line: a **different test** fails on different runs (`replays … byte-for-byte` at 53.8 s twice, `boots escort mode from data` at 41.3 s once); every failure carries an **inflated duration**; and the same file run **isolated is rc=0**, with the byte-for-byte test taking **5.1 s** instead of 53.8. `node --test` runs files concurrently, so a heavy sim file competes with 38 siblings under the F-1269-1 ceiling.
+
+**At n=3 per arm the green-rate difference between arm and control is noise, and I am not claiming it as a difference in either direction** — including the tempting direction, that skipping the probes made the battery lighter. Filed as F-1409-1 with its own gate; deliberately not cured from inside a drain.
