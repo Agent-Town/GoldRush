@@ -31,6 +31,7 @@ let input;
 try {
   const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
   const sim = new HeadlessContractSim({ contractId: options.contract, seed: options.seed, mode: options.mode });
+  const waveCeiling = (sim.manifest.twist.secureWave ?? 20) + 2;
   Object.assign(console, originalConsole);
 
   input = options.policy === 'idle'
@@ -39,6 +40,9 @@ try {
   const lines = input?.[Symbol.asyncIterator]();
   let turn = sim.currentTurn();
   while (true) {
+    if (turn.view.now.wave > waveCeiling) {
+      throw new Error(`gr-sim wave ceiling exceeded: contract=${options.contract} mode=${options.mode ?? 'default'} seed=${options.seed} wave=${turn.view.now.wave} ceiling=${waveCeiling}`);
+    }
     process.stdout.write(`${JSON.stringify(turn.view)}\n`);
     if (turn.terminal) break;
     if (options.policy !== 'idle') await readOrders(lines, sim);

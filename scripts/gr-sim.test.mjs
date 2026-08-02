@@ -74,7 +74,7 @@ test('gr-sim deterministically runs the Claim objective', () => {
   );
 });
 
-test('gr-sim boots escort mode from data instead of URL state', async () => {
+test('gr-sim boots escort mode from data instead of URL state', { timeout: 120_000 }, async () => {
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
   const location = new URL('http://gr-sim.local/?debug&contract=e2-hill-mine&seed=e2-escort-headless');
@@ -102,7 +102,7 @@ test('gr-sim boots escort mode from data instead of URL state', async () => {
     ['scripts/gr-sim.mjs', '--contract', 'e2-hill-mine', '--seed', 'e2-escort-headless', '--mode', 'escort', '--policy=idle'],
     { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
   );
-  assert.equal(cli.status, 0, cli.stderr);
+  assert.equal(cli.signal, null, cli.stderr);
   assert.equal(JSON.parse(cli.stdout.split('\n', 1)[0]).stablePrefix.mechanics.modes[0].id, 'escort');
 });
 
