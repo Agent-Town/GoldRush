@@ -44,6 +44,19 @@ function git(args, opts = {}) {
   return execFileSync('git', args, { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024, ...opts })
 }
 
+// s1418 — F-1418-1. The MAIN worktree root, not `--show-toplevel` (which returns the LANE
+// worktree's own root when cwd is a lane, i.e. exactly the wrong answer here). The parent of
+// `--git-common-dir` is the main repo root from anywhere in the repo or any of its worktrees.
+let ROOT_CACHE = null
+function repoRoot() {
+  if (ROOT_CACHE) return ROOT_CACHE
+  const r = tryGit(['rev-parse', '--git-common-dir'])
+  if (!r.ok) return (ROOT_CACHE = '.')
+  const common = r.out.trim()
+  const abs = common.startsWith('/') ? common : `${process.cwd()}/${common}`
+  return (ROOT_CACHE = abs.replace(/\/?\.git\/?$/, '') || '.')
+}
+
 function tryGit(args, opts = {}) {
   try {
     return { ok: true, out: git(args, opts) }
@@ -200,8 +213,83 @@ function sessionLabel() {
   return 'fire'
 }
 
+// s1418 — F-1418-1. `busy` used to be `existsSync('tasks/running/<slot>.pid')`, which is
+// WRONG IN TWO DIRECTIONS and was saved for ~120 sessions only by an accident of cwd.
+//
+//   (1) cwd-relative. `tasks/running/` is UNTRACKED, so it does not exist inside a lane
+//       worktree at all. The runner runs Codex with `cd worktrees/lane-a`, so every master
+//       whose pre-flight said `node scripts/lane-usable.mjs lane-a` (8 of them) asked from
+//       a directory where the pidfile is structurally invisible — and got USABLE. Correct
+//       answer, no mechanism behind it.
+//   (2) not self-aware. `lane-runner-v3.sh:131` writes that pidfile IN ORDER TO DISPATCH
+//       the run. So a pre-flight that DOES see it is looking at its own reflection: the
+//       "runner holding the slot" is the one executing the very task that is asking.
+//
+// s1417 authored f1417-3 with the pre-flight `... lane-a` **from the repo root** — the one
+// clarification that defeats (1) — and the run STOPped on its own dispatch in 30,378 tokens
+// with zero edits. The more precise instruction is what broke it.
+//
+// Fix both at once, because either alone is worse than neither: anchoring the path without
+// self-detection would make all 8 working masters start reading BUSY.
+//
+// FAIL-SAFE BY CONSTRUCTION: the dangerous direction is a false NOT-busy, which would let a
+// fire refill an occupied lane and `reset --hard` over live runner output. So anything we
+// cannot establish — unreadable pidfile, unparseable pid, `ps` failing — resolves to BUSY.
+// Only a pid positively proven to be one of OUR OWN ancestors is discounted.
+// ⚠️ pid 1 (launchd) and pid 0 are ancestors of EVERY process, so they must never count as
+// "my dispatcher" — the first draft of this function pushed them and consequently reported a
+// foreign runner's pidfile as our own reflection, i.e. it failed in the one direction that is
+// destructive (a fire refilling an occupied lane resets over live output). Caught by running
+// the probe below before trusting it, not by review. Only genuinely intermediate pids count.
+function ancestors(pid) {
+  const out = []
+  let cur = pid
+  for (let i = 0; i < 24 && cur > 1; i++) {
+    const r = tryGitless(cur)
+    if (r === null) return null // ps failed -> caller must fail safe
+    if (!r || r === cur) break
+    if (r > 1) out.push(r)
+    cur = r
+  }
+  return out
+}
+
+function tryGitless(pid) {
+  try {
+    const out = execFileSync('ps', ['-o', 'ppid=', '-p', String(pid)], { encoding: 'utf8' }).trim()
+    if (!out) return 0 // no such process: chain ends, not an error
+    const n = Number.parseInt(out, 10)
+    return Number.isFinite(n) ? n : null
+  } catch {
+    return 0 // ps exits non-zero when the pid is gone; that is an ended chain, not a failure
+  }
+}
+
+// Exported so the guard can drive both directions without a runner. `self` is the pid the
+// caller claims to be (process.pid in production); `readPid` returns the pidfile's contents
+// or null when absent.
+export function isSlotBusy(readPid, self = process.pid) {
+  const raw = readPid()
+  if (raw === null || raw === undefined) return false // no pidfile: nobody holds the slot
+  const pid = Number.parseInt(String(raw).trim(), 10)
+  if (!Number.isFinite(pid) || pid <= 0) return true // unparseable -> fail safe
+  const chain = ancestors(self)
+  if (chain === null) return true // could not establish ancestry -> fail safe
+  return !chain.includes(pid) // our own dispatcher does not count as "someone else"
+}
+
 function inspect(lane) {
-  const busy = existsSync(`tasks/running/${lane.slot}.pid`)
+  // Anchor to the MAIN worktree root so the answer no longer depends on where we were run
+  // from. `--git-common-dir`'s parent is the main repo root even when cwd is a lane worktree.
+  const busy = isSlotBusy(() => {
+    const pidfile = `${repoRoot()}/tasks/running/${lane.slot}.pid`
+    if (!existsSync(pidfile)) return null
+    try {
+      return readFileSync(pidfile, 'utf8')
+    } catch {
+      return 'unreadable' // -> unparseable -> fail safe to BUSY
+    }
+  })
   const c = classify(lane.branch)
   const d = dirt(lane.worktree)
   let verdict
