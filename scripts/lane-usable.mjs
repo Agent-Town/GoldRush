@@ -304,14 +304,24 @@ function inspect(lane) {
 
 const RC = { USABLE: 0, 'AHEAD-BUT-ABSORBED': 1, HOLDS: 2, DIRTY: 2, BUSY: 2 }
 
-function residueForHeld(r, held) {
+export function residueForHeld(r, held, runGit = git) {
+  const quiet = { stdio: ['ignore', 'pipe', 'ignore'] }
+  let diff
   try {
-    const diff = git(['diff', `${r.base}:${held.path}`, `${r.branch}:${held.path}`])
-    const mainText = git(['show', `main:${held.path}`])
-    return residueFor({ diff, mainText })
+    diff = runGit(['diff', `${r.base}:${held.path}`, `${r.branch}:${held.path}`], quiet)
   } catch {
-    return residueFor()
+    try {
+      runGit(['cat-file', '-e', `${r.branch}:${held.path}`], quiet)
+      diff = runGit(['diff', '4b825dc642cb6eb9a060e54bf8d69288fbee4904', r.branch, '--', held.path], quiet)
+    } catch {
+      return residueFor()
+    }
   }
+  let mainText = ''
+  try {
+    mainText = runGit(['show', `main:${held.path}`], quiet)
+  } catch {}
+  return residueFor({ diff, mainText })
 }
 
 export function formatHeldResidue(held, residue) {
