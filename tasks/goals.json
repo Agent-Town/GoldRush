@@ -188,6 +188,17 @@
               "mergeHash": "0195da9f146dd367db2b408f31d5fb7c5adb5598"
             },
             {
+              "id": "f1397-1-e1-release-door-drill-yard",
+              "title": "F-1397-2 — the E1 release door (release-build.spec.ts:18 CONTRACTS) boots 5 of E1 6 contracts; e1-drill-yard never goes through it (roster-shaped half of F-1396-3; launch-readiness)",
+              "taskFile": "f1397-1-e1-release-door-drill-yard.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "review": "reviews/f1396-drill-yard-roster-debt.md",
+              "authoredBy": "s1397",
+              "registeredBy": "s1397",
+              "authorNotes": "FIRE-AUTHORED from measured evidence. s1397 re-READ all six F-1396-3 iteration-list sites and their constant DEFINITIONS rather than inheriting the list, and found they are NOT one class: release-build.spec.ts:18 CONTRACTS is roster-shaped (precisely the five E1 contracts that predate drill-yard, and its test seeds unlocked:true so unlock gating cannot confound it), while panorama-framing PROOF_CONTRACTS (spans E4), terrain-seamless MAPS (spans E2) and tr-02-splat-ground IDENTITY_CONTRACTS are deliberately SAMPLED sets, and contract-briefings UNLOCKED_BOARD_CONTRACTS encodes an unlock ruling of the kind that bit cp03 (F-1396-2). Only the roster-shaped one is authored; the other five stay firewalled OUT and UNMEASURED per s1396. The task is MEASURE-FIRST and branches explicitly: if drill-yard reds at the release door the runner must STOP, revert and REPORT rather than fix, because that would be a launch-readiness defect in a shipping contract and product code is out of scope. Relevant because the owner top outstanding ask is closing launch (rf-05-fixed-version, vE1.0 tag + final E1 walk) and the release gate has never booted one of the six shipping E1 contracts. Queued lane-c: lane-usable.mjs reports USABLE ahead=0, 17 behind but ZERO run-surface drift, and merge-base --is-ancestor f0bf5251 lane/e2-arsenal = YES."
+            },
+            {
               "id": "e1-trail-guide-plain-boot-proof",
               "title": "Prove the teaching path in a plain boot (Trail Guide + greenhorn offer), F-E1-2. OWNER GATE LIFTED 2026-07-29 — promoted from DRAFT and queued lane-b.",
               "taskFile": "lane-b-trail-guide-plain-boot-seam-approach.md",
