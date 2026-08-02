@@ -26,7 +26,8 @@
               "id": "e1-authored-bundle-validation",
               "title": "Authored bundle validation (attended census wave 2026-08-02)",
               "taskFile": "lane-authored-bundle-validation.md",
-              "status": "queued"
+              "status": "blocked",
+        "blockedReason": "F-1381-1 (s1381 gate, reviews/lane-authored-bundle-validation.md): the slice REGRESSES the E1 release build — GR_RELEASE=e1 npm run build:release fails at scripts/assert-release-build.mjs:48 with an E4 sprite chunk (char-bandit-base-sheet-walk8-r2c6-e4) emitted into the E1-only bundle. Attribution isolated by a control (clean main GREEN) plus three arms: not the contract JSON, not the s1381 graft, and RED at the lane own tip 0f2544f2 so not a main interaction. MECHANISM UNVERIFIED — the eager-epoch-import hypothesis is FALSE (main already imports all ten bundles statically, src/meta/ContractFamilies.ts:9); diagnosing it is the corrective first job. DO NOT REFILL lane-d: lane/perf holds this undrained slice and a preflight reset would destroy it (LANE-SAFETY LAW)."
             },
             {
               "id": "e1-headless-the-claim",
