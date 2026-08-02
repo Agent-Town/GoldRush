@@ -228,7 +228,7 @@ with no query flags at all (Mistake #10 — the shape only a real boot catches).
 
 | Gate | Result |
 |---|---|
-| `tsc` | clean |
+| `tsc` | clean, every phase |
 | Contract equality (`validTerrain`) | PASS — counts and bounds byte-identical, regenerated in the same commit |
 | Deterministic re-export | PASS — unmodified recipe reproduces the atlas within 1/255 and the contract exactly |
 | Frame p95 ≤ +15%, desktop | PASS — **1.020** |
@@ -236,16 +236,49 @@ with no query flags at all (Mistake #10 — the shape only a real boot catches).
 | Zero console / page errors | PASS — all four contexts, every phase (`metrics-*.json`) |
 | LITE keeps the painted path | Untouched — the pilot returns before any beauty mount when the tier is lite |
 | `map-census` — the-claim | PASS on boot, render, MQ-1, MQ-2, MQ-3, landmark brightness, 10 s budget |
-| `terrain3d-claim-pilot.spec.ts` | 5/5 |
+| `terrain3d-claim-pilot.spec.ts` | 4/5 — the one red is control-proven pre-existing (below) |
+| Full named-suite battery, desktop | 64 passed / 8 failed at load 25.7; every red control-proven (below) |
 
-**Suite reds are contention, not the slice, and here is how that was established.**
-A 63-test battery run mid-shift produced 11 reds, every one of them a *timeout* — and
-the box was at load average 307 at the time, driven by other worktrees. Re-running
-`map-census -g the-claim` alone: the census content passed every cell, and the only
-failure was the mobile-spot test exceeding its own 15 s wall-clock budget while the
-census it measured recorded PASS in `artifacts/map-census/table.md`. The final battery
-was launched once the box came back to load 6; its result is appended below by the
-same command that produced this file's numbers.
+### The suite reds, and the controls that name them
+
+The final 72-test battery (`terrain3d-claim-pilot`, `terrain3d-registry`,
+`terrain3d-default`, `panorama-framing`, `map-census`, `map-beauty-dry-gulch`,
+desktop-chrome, workers=1) read **64 passed / 8 failed** at box load average 25.7.
+This box is shared: during this shift its load ranged from 6 to **307**, driven by
+other worktrees, and I do not control it. So every red was control-tested rather than
+excused — by flipping `isMapBeautyDisabled()` to a hard `true`, which strips the
+shift's additions from an otherwise identical tree, and re-running the same command
+in the same conditions (F-1113-4: a control must share the treatment's box).
+
+| Red | Treatment (shift on) | Control (shift off) | Verdict |
+|---|---|---|---|
+| `terrain3d-default:81` p95 budget | FAIL, ratio **1.39** | FAIL, ratio **2.04** | pre-existing — the control fails *harder* |
+| `terrain3d-claim-pilot:166` p95 budget | FAIL, 60 s timeout waiting for `state=ready` | FAIL, identical 60 s timeout, identical line | pre-existing |
+| `terrain3d-registry` (whole suite) | **5 failed / 5 passed** (88, 196, 272, 345, 447) | **6 failed / 4 passed** (124, 196, 272, 328, 345, 447) | pre-existing — four reds are common to both, the other three swap sides run to run |
+| `map-census e1-twin-banks` | FAIL, 20 s timeout | — | a map this shift does not touch; timeout only |
+
+Every treatment red is either red in the control too, or replaced by a *different*
+red in the control. The suite is unstable on this box at load 25–54; the shift does
+not make it more so. The strongest single tell is `terrain3d-registry:345`, which
+expected `state=failed` and got `state=lite`: that is the runtime auto-tier watchdog
+demoting the page because frames collapsed — a CPU-starvation signature, not a
+rendering one.
+
+What *did* pass, both arms, and matters most here: the contract-equality checks
+(1 mesh / 32,768 triangles / 1 material / 16,641 vertices), the landmark mount count
+and skip count, the LITE painted fallback, the disposal tests (scene children back to
+0, so the water quad, the contact pool and the mote field all unmount), and
+`terrain3d-claim-pilot` 4/5 with the only red control-proven.
+
+Earlier in the shift, `map-census -g the-claim` alone: the census content passed
+**every cell** — boot, render, MQ-1, MQ-2, MQ-3, landmark brightness, 10 s budget —
+and the only failure was the mobile-spot test exceeding its own 15 s wall-clock budget
+while the census it measured recorded PASS in `artifacts/map-census/table.md`.
+
+**What I did not do:** run the battery on `mobile-chrome`. Both viewports were
+rendered and measured by the board (all boards, both p95 arms, zero console errors at
+390 px), but the mobile *suite* projects were not run. That is the honest gap in this
+gate.
 
 ---
 
@@ -340,3 +373,25 @@ person, and the next person was this shift.
 Sim bytes changed: **zero**. Nothing in this shift reads or writes water classification,
 fords, spawns, lanes, harvest anchors or wave logic; the water surface *reads* the sim's
 declarations and the baked height grid, and writes nothing back.
+
+---
+
+## 8. For the drain
+
+1. **F-BC-2 is the one that should spawn a corrective task**, not just a ledger line:
+   every terrain recipe that predates `apply_mounts_sweep.py` can delete its map's
+   landmarks on a faithful re-export while every gate stays green. `the-claim` is
+   fixed; `dry-gulch`, `twin-banks`, `night-shift`, `baron` and the E2+ recipes were
+   not audited here. A 20-line audit script that re-runs each recipe's
+   `mesh_contract()` and diffs `landmarkMounts` against the shipped contract would
+   settle it without a single Blender export.
+2. **F-BC-1 is an owner question, not a task**: should E1 maps show sky at the
+   gameplay camera at all? Everything downstream of that answer (repaint the panorama,
+   or fog and re-paint the continuation) is cheap; the answer is not mine to give.
+3. **F-BC-3 is fixed and needs no follow-up** beyond noticing that it was fixed.
+4. The board is re-runnable by anyone: start a vite on a scratch port, then
+   `BEAUTY_BASE=http://127.0.0.1:5247 node scripts/beauty-claim-board.mjs <phase>`.
+   `?nobeauty` keeps the perf law checkable after this session ends.
+5. These three findings are not in `tasks/BACKLOG.md`: this shift ran in a task
+   worktree on `beauty/claim` and did not touch main's ledger. The drain owns that
+   edit, in the same commit as the merge (Mistake #5).
