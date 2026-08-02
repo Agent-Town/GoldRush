@@ -1,0 +1,2 @@
+# THE BEAUTY SHIFTS — farewell-burn visual program (2026-08-02 → 08-06)
+Owner directive: "I see a lot of Threejs Opus 5 games where it continuously updates 3D games to look amazing. Maybe we can tap into that potential?" One Opus-5 solo-writer shift per surface, continuous change→render→compare loop. LAWS: rendering only (§4.6, zero sim bytes) · frame p95 +15% max, measured · before/after boards per upgrade · path-scoped commits · honest partials valid. Briefs live beside this file; shifts read their brief as TASK.md §THE BRIEF.
