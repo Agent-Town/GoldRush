@@ -1,0 +1,23 @@
+[desktop-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged
+[desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+[desktop-chrome] › e2e/e1-twin-banks.spec.ts:175:1 › seeded Twin Banks diagnostics are stable
+[desktop-chrome] › e2e/gt-05-water-depth.spec.ts:333:1 › classic claim keeps deep water impassable while carrying equivalent depth data (1.0m)
+[desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water
+[desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable
+[desktop-chrome] › e2e/terrain3d-registry.spec.ts:328:1 › terrain2d and the 3D default keep bounds, spawns, fog, masks, and simulation byte-identical per map (3.1m)
+[desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+[desktop-chrome] › e2e/terrain3d-registry.spec.ts:447:1 › each registered terrain and panorama stays inside the 115% p95 budget (1.5m)
+[desktop-chrome] › e2e/tile-identity-pass.spec.ts:121:1 › E1 contracts load place descriptors, render identity shots, and stay deterministic
+[desktop-chrome] › e2e/water-mask-engine.spec.ts:23:1 › the Claim keeps its legacy water contract byte-for-byte when no mask is authored
+[mobile-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged
+[mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+[mobile-chrome] › e2e/gt-05-water-depth.spec.ts:181:1 › deep water blocks hero and enemy through the shared resolver
+[mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water
+[mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable
+[mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+[mobile-chrome] › e2e/terrain3d-registry.spec.ts:447:1 › each registered terrain and panorama stays inside the 115% p95 budget (3.2m)
+[mobile-chrome] › e2e/tile-identity-pass.spec.ts:121:1 › E1 contracts load place descriptors, render identity shots, and stay deterministic
+[mobile-chrome] › e2e/tile-identity-pass.spec.ts:71:1 › The Claim keeps the default tile params and seeded flat-claim fingerprint
+[mobile-chrome] › e2e/water-mask-engine.spec.ts:23:1 › the Claim keeps its legacy water contract byte-for-byte when no mask is authored

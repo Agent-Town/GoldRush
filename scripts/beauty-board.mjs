@@ -22,6 +22,14 @@ const sharp = require('sharp');
 
 const ROOT = path.resolve('artifacts/beauty-dry-gulch');
 const PROJECTS = ['desktop-chrome', 'mobile-chrome'];
+/**
+ * Pair boards are the review's evidence, not the working copy — full-res captures stay in
+ * `artifacts/` and these are what a reader opens. 0.42 keeps composition, colour and the tiling
+ * fingerprint legible while keeping a five-upgrade branch pushable (large packs die on the remote).
+ */
+const PAIR_SCALE = 0.42;
+/** Mobile is a law (390px), not a gallery: board the framings where 390px can actually differ. */
+const MOBILE_PAIRS = new Set(['1-boot.png', '6-horizon.png']);
 
 const [command, ...args] = process.argv.slice(2);
 
@@ -66,9 +74,10 @@ async function pair(beforeLabel, afterLabel, outDir) {
         console.log(`  skip ${project}/${shot}: no ${beforeLabel} side`);
         continue;
       }
+      if (project !== 'desktop-chrome' && !MOBILE_PAIRS.has(shot)) continue;
       const meta = await sharp(left).metadata();
-      const width = Math.round(meta.width / 2);
-      const height = Math.round(meta.height / 2);
+      const width = Math.round(meta.width * PAIR_SCALE);
+      const height = Math.round(meta.height * PAIR_SCALE);
       const [a, b] = await Promise.all([
         sharp(left).resize(width, height).toBuffer(),
         sharp(right).resize(width, height).toBuffer(),

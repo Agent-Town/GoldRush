@@ -68,7 +68,8 @@ import { Balance } from '../game/Balance';
 import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
 import { disposeObject3D } from '../utils/dispose';
 import { trackedGltfLoader } from '../assets/AssetLoading';
-import { installVisualHeightSource } from './Terrain';
+import { installVisualHeightSource, waterSources } from './Terrain';
+import { createSpringPondSurface, type SpringPondSurface } from './Water';
 
 type Contract = {
   tileId: string;
@@ -291,15 +292,39 @@ function preparePanorama(model: THREE.Object3D): void {
   }
 }
 
-function keepLandmarkPaintReadable(model: THREE.Object3D): void {
+function keepLandmarkPaintReadable(model: THREE.Object3D, intensity = 3): void {
   model.traverse((node) => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
     if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
     mesh.material.emissive.set('#ffffff');
     mesh.material.emissiveMap = mesh.material.map;
-    mesh.material.emissiveIntensity = 3;
+    mesh.material.emissiveIntensity = intensity;
   });
 }
+
+/**
+ * Dry Gulch mounts a LIVE pool over the isolated_spring, so that landmark's baked cyan water must
+ * stop glowing at emissive 3 — a full-bright pool bed shines through the surface above it and the
+ * map keeps its dead-paint smudge. The pack is one mesh on one material (pack law), so the pool
+ * cannot be dimmed separately from its stones, and dropping the whole body far enough to kill the
+ * cyan also killed the stone ring. 2.1 is where the two land together: measured, the live surface
+ * already covers the flat cap at alpha 0.88-0.985, so the residual cyan has nowhere to show, while
+ * the stones — which stand ABOVE the water plane and are never covered — keep their pale rim read.
+ */
+const DRY_GULCH_SPRING_EMISSIVE = 2.1;
+
+/**
+ * Where the live water goes, measured off the landmark body rather than guessed.
+ * `isolated_spring.glb` draws its pool as a flat cap at local y 0.0875 (14 coplanar triangles,
+ * vertices out to r 2.80) with the stone ring covering everything past r~2.0. So the live surface
+ * sits a hair above 0.0875 and its water line is 2.35, with the damp margin reaching past 2.80 —
+ * the whole baked cap has to be covered or its cyan rim survives as a halo around the new water.
+ * Re-measure with `scripts/beauty-spring-pool.mjs` if that body is ever replaced.
+ */
+type LiveSpringPool = { surfaceY: number; radius: number };
+const LIVE_SPRING_POND_CONTRACTS = new Map<string, LiveSpringPool>([
+  ['e1-dry-gulch', { surfaceY: 0.0875, radius: 2.35 }],
+]);
 
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
 function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Host): void {
@@ -382,6 +407,26 @@ function nightPoolPriority(source: LightSource): number {
 
 function isWarmPool(source: LightSource | undefined): boolean {
   return source?.kind !== 'hero' && source?.kind !== 'prospector';
+}
+
+/**
+ * The 3D pilot hides `SpringPonds` along with every other painted ground layer, which on a map whose
+ * whole story is one spring leaves the water as baked atlas paint. Contracts in
+ * `LIVE_SPRING_POND_CONTRACTS` get that surface back as render-only geometry, sized to the pool the
+ * atlas already draws rather than to the sim's smaller `waterSources[].radius` — the sim radius is
+ * where the spring COUNTS, the atlas pool is where it LOOKS, and this touches only the second.
+ */
+function createLiveSpringPonds(host: Host, heightAt: (x: number, z: number) => number): SpringPondSurface[] {
+  const pool = LIVE_SPRING_POND_CONTRACTS.get(host.contractId);
+  if (!pool) return [];
+  return waterSources()
+    .filter((source) => source.kind === 'spring_pond')
+    .map((source) => createSpringPondSurface({
+      x: source.x,
+      z: source.z,
+      radius: pool.radius,
+      surfaceY: heightAt(source.x, source.z) + pool.surfaceY,
+    }));
 }
 
 function hidePaintedRelief(host: Host): HiddenRelief[] {
@@ -515,6 +560,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let panorama: THREE.Object3D | undefined;
   let landmarks: THREE.Group | undefined;
   let skirt: THREE.Object3D | undefined;
+  let ponds: SpringPondSurface[] = [];
+  let nextPonds: SpringPondSurface[] = [];
   let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
   let loadedPanorama: THREE.Object3D | undefined;
@@ -557,6 +604,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       }
       const heightAt = bakeHeightGrid(nextTerrain, terrainMetrics);
       if (disposed) throw new Error('terrain pilot disposed');
+      nextPonds = createLiveSpringPonds(host, heightAt);
       nextTerrain.name = 'Terrain3dClaimPilot';
       if (host.nightMode) featherTerrainEdge(nextTerrain, terrainMetrics.bounds, host);
       else {
@@ -579,6 +627,10 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.onVisualHeightSourceInstalled?.();
       host.scene.add(nextTerrain, nextPanorama);
       if (nextSkirt) host.scene.add(nextSkirt);
+      ponds = nextPonds;
+      nextPonds = [];
+      for (const pond of ponds) host.scene.add(pond.group);
+      host.canvas.dataset.terrain3dPilotSpringPonds = String(ponds.length);
       hiddenRelief = hidePaintedGround(host);
       host.canvas.dataset.terrain3dPilotTerrainLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'mounted';
@@ -626,7 +678,10 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           model.rotation.set(...mount.rotation);
           model.scale.fromArray(mount.scale);
           inspect(model, false);
-          if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
+          if (host.contractId !== 'e1-night-shift') {
+            const live = LIVE_SPRING_POND_CONTRACTS.has(host.contractId) && mount.id === 'isolated_spring';
+            keepLandmarkPaintReadable(model, live ? DRY_GULCH_SPRING_EMISSIVE : 3);
+          }
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
@@ -670,6 +725,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     } catch {
       disposeObject3D(nextTerrain);
       disposeObject3D(nextPanorama);
+      for (const pond of nextPonds) pond.dispose();
+      nextPonds = [];
       loadedTerrain = undefined;
       loadedPanorama = undefined;
       if (!disposed) publish(host.canvas, 'failed', 'painted', terrainMetrics, undefined, panoramaMetrics);
@@ -701,6 +758,13 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       disposeObject3D(skirt);
       skirt = undefined;
     }
+    for (const pond of ponds) {
+      host.scene.remove(pond.group);
+      pond.dispose();
+    }
+    ponds = [];
+    for (const pond of nextPonds) pond.dispose();
+    nextPonds = [];
     for (const model of [terrain, panorama, landmarks]) {
       if (!model) continue;
       host.scene.remove(model);

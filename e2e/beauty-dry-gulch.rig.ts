@@ -96,10 +96,20 @@ async function settle(page: Page, frames: number): Promise<void> {
   );
 }
 
-/** Frame the world point (x, z): put the hero where the run camera centres on it. */
+/**
+ * Frame the world point (x, z): put the hero where the run camera centres on it, then wait for the
+ * camera to actually ARRIVE.
+ *
+ * CameraRig lerps at `Balance.camera.lag` 0.15, i.e. ~5.4% of the remaining distance per 120 Hz
+ * frame, so 45 frames still leaves ~8% of a 30 m teleport unconsumed and the camera is visibly
+ * creeping at shutter time. That produced a whole-frame sub-pixel drift between boards: a
+ * u2-vs-u3 pixel diff came back "40% of pixels changed" for an upgrade that only adds 54 small
+ * ellipses, because the two frames were photographed from marginally different places. 240 frames
+ * puts the residual at ~1e-6 of the jump — the frames are then comparable pixel for pixel.
+ */
 async function frameOn(page: Page, x: number, z: number): Promise<void> {
   await page.evaluate(([px, pz]) => window.__GR_TEST__?.teleport(px!, pz!), [x, z + LOOK_OFFSET] as const);
-  await settle(page, 45);
+  await settle(page, 240);
 }
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
@@ -138,6 +148,15 @@ test('dry gulch beauty board', async ({ page }, testInfo) => {
   test.setTimeout(300_000);
   const errors = collectErrors(page);
   await boot(page);
+
+  // U1's contract: the map's one spring is a LIVE surface, not baked paint. If this ever reads 0
+  // again the pond silently fell back and every shot below would look fine while lying.
+  // Any `before*` label is captured on the base commit, where the pond does not exist yet.
+  // Prefix, not equality: the timed repeats are labelled before-r1..r3 and an equality test
+  // silently turned all three into failures with empty sample sets.
+  if (!LABEL.startsWith('before')) {
+    expect(await page.evaluate(() => document.querySelector('canvas')?.dataset.terrain3dPilotSpringPonds)).toBe('1');
+  }
 
   // 1. Plain boot — the standing-orders framing, hero where the run starts.
   await shot(page, testInfo, '1-boot');
@@ -189,8 +208,11 @@ test('dry gulch secured board', async ({ page }, testInfo) => {
   await shot(page, testInfo, '5-secured');
 
   // Mid-wave perf: the p95 the +15% law is measured against, with a live pack on screen.
+  // The long settle is load-bearing. Sampling 30 frames after the spawn measured shader compilation
+  // and pool warm-up, not the scene: two runs of the SAME build came back 16.8ms and 10.2ms, a 39%
+  // swing that would have been read as an upgrade's cost. 120 frames of warm-up first.
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(28, 14));
-  await settle(page, 30);
+  await settle(page, 120);
   await measure(page, 'secured-midwave', 240);
   await shot(page, testInfo, '5-secured-midwave');
 
