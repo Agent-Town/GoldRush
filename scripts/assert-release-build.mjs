@@ -44,8 +44,15 @@ const leakedAssets = files
   .map((file) => basename(file))
   .filter((file) => [...laterAssetStems].some((stem) => file === `${stem}${extname(file)}` || file.startsWith(`${stem}-`)));
 if (leakedAssets.length) fail(`later plate/GLB assets emitted: ${leakedAssets.slice(0, 8).join(', ')}`);
-const laterEraNamed = files.map((file) => basename(file)).filter((file) => /(?:^|[.-])e(?:[2-9]|10)(?:[.-])/.test(file));
-if (laterEraNamed.length) fail(`later era assets emitted: ${laterEraNamed.slice(0, 8).join(', ')}`);
+// Dist filenames are `<module>-<hash>-diet-<fingerprint><ext>` (vite.config.ts:51-53). That hash is
+// 8 chars of base64url and MAY contain '-' (187 of 1869 did at s1382), so an era pattern matched
+// against the whole basename can fire on hash text: rolldown minted `e4-RHTJh` for the E1 frame
+// char-bandit-base-sheet-walk8-r2c6, and this check read it as an E4 leak and held the release door
+// shut on CLEAN MAIN. Match the module name only, and anchor the tail with `$` so a genuine era
+// suffix (`icons-e2`, `...-e4`) is still caught once the hash is stripped (F-1382-1).
+const moduleName = (file) => basename(file, extname(file)).replace(/-[A-Za-z0-9_-]{8}-diet-[0-9a-f]{8}$/, '');
+const laterEraNamed = files.filter((file) => /(?:^|[.-])e(?:[2-9]|10)(?:[.-]|$)/.test(moduleName(file)));
+if (laterEraNamed.length) fail(`later era assets emitted: ${laterEraNamed.map((file) => basename(file)).slice(0, 8).join(', ')}`);
 const laterEraAssets = files.map((file) => basename(file)).filter((file) =>
   /^(?:boss-railcar-|char-(?:railtough|steamwrecker|coalthief)-|bld-boiler-house-|ceremony-stage-t(?:[2-9]|10)-|kit-era-(?:[2-9]|10)-)/.test(file),
 );

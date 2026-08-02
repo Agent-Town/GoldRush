@@ -32,6 +32,19 @@ function fixture({ dist = ['benign'], denominator = true } = {}) {
   if (dist.includes('later-epoch')) write(join(root, 'dist/assets/app.js'), 'const id = "epoch-3-canyon";');
   // A file whose name matches a blacklisted plate stem — the leak check's original job.
   if (dist.includes('leaked-plate')) write(join(root, 'dist/assets/plate-contract-e2-incline.png'), 'x');
+  // An E1 sprite whose rolldown content hash happens to READ like an era tag (F-1382-1). Dist names
+  // are `<module>-<hash>-diet-<fingerprint>`; the hash is base64url and may contain '-'.
+  if (dist.includes('hash-false-positive')) {
+    write(join(root, 'dist/assets/char-bandit-base-sheet-walk8-r2c6-e4-RHTJh-diet-a9d5c9a0.js'), 'x');
+  }
+  // A genuine later-era asset, named the way the repo names them (assets/processed/icons-e2-r0c3.png).
+  if (dist.includes('real-era-asset')) {
+    write(join(root, 'dist/assets/icons-e2-r0c3-D2vmZunU-diet-a9d5c9a0.png'), 'x');
+  }
+  // A genuine later-era asset whose era tag ends the module name — caught only by the `$` anchor.
+  if (dist.includes('era-suffix-tail')) {
+    write(join(root, 'dist/assets/char-tinkerer-e4-Djmulw-f-diet-a9d5c9a0.png'), 'x');
+  }
   if (denominator) write(join(root, 'assets/raw/plate-contract-e2-incline.png'), 'x');
   return root;
 }
@@ -125,5 +138,34 @@ test('POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invo
     const { code, out } = runGuard(root, { release: null });
     assert.notEqual(code, 0, out);
     assert.match(out, /requires GR_RELEASE=e1/, out);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The defect s1382 found: the era check read rolldown's content hash as an era
+// tag and held the release door shut on clean main for days. The pair below is
+// the point — dropping the false positive must NOT cost the real catch.
+// ---------------------------------------------------------------------------
+
+test('an E1 asset whose content hash reads like an era tag is NOT a leak', () => {
+  withFixture({ dist: ['benign', 'hash-false-positive'], denominator: true }, (root) => {
+    const { code, out } = runGuard(root);
+    assert.equal(code, 0, `char-bandit-...-r2c6 carrying hash 'e4-RHTJh' is an E1 frame, not an E4 asset:\n${out}`);
+  });
+});
+
+test('POSITIVE CONTROL: a genuine later-era asset in dist still fails', () => {
+  withFixture({ dist: ['benign', 'real-era-asset'], denominator: true }, (root) => {
+    const { code, out } = runGuard(root);
+    assert.notEqual(code, 0, `icons-e2-r0c3 is a real E2 asset and must still be caught:\n${out}`);
+    assert.match(out, /later era assets emitted/, out);
+  });
+});
+
+test('POSITIVE CONTROL: a later-era tag ENDING the module name still fails (the `$` anchor)', () => {
+  withFixture({ dist: ['benign', 'era-suffix-tail'], denominator: true }, (root) => {
+    const { code, out } = runGuard(root);
+    assert.notEqual(code, 0, `char-tinkerer-e4 is caught only if the stripped name is anchored:\n${out}`);
+    assert.match(out, /later era assets emitted/, out);
   });
 });
