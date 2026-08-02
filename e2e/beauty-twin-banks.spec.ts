@@ -190,6 +190,40 @@ test('the beauty pass pays its frame budget, measured against its own build', as
   expectClean(errors);
 });
 
+test('the reed field is alive in a still frame', async ({ page }, testInfo) => {
+  test.setTimeout(120_000);
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one viewport is enough to prove motion');
+  const errors = collectErrors(page);
+  await boot(page);
+  await poseAt(page, RUN_CAMERA.x, RUN_CAMERA.z);
+  await hideGameChrome(page);
+  // A vertex sway cannot be photographed, so it is measured: two frames 600 ms apart, counted
+  // over the near bank only (below the braid, away from hero and companion idle animation).
+  const first = PNG.sync.read(await page.screenshot());
+  await page.waitForTimeout(600);
+  const second = PNG.sync.read(await page.screenshot());
+  const viewport = page.viewportSize()!;
+  const heroBox = { x0: viewport.width * 0.4, x1: viewport.width * 0.6, y0: viewport.height * 0.45, y1: viewport.height * 0.72 };
+  let moved = 0;
+  for (let y = Math.round(first.height * 0.45); y < first.height; y += 1) {
+    for (let x = 0; x < first.width; x += 1) {
+      const inViewportX = (x * viewport.width) / first.width;
+      const inViewportY = (y * viewport.height) / first.height;
+      if (inViewportX > heroBox.x0 && inViewportX < heroBox.x1 && inViewportY > heroBox.y0 && inViewportY < heroBox.y1) continue;
+      const offset = (y * first.width + x) * 4;
+      const delta =
+        Math.abs(first.data[offset]! - second.data[offset]!) +
+        Math.abs(first.data[offset + 1]! - second.data[offset + 1]!) +
+        Math.abs(first.data[offset + 2]! - second.data[offset + 2]!);
+      if (delta > 18) moved += 1;
+    }
+  }
+  await mkdir(ARTIFACT_DIR, { recursive: true });
+  await writeFile(path.join(ARTIFACT_DIR, 'reed-motion.json'), `${JSON.stringify({ stage: STAGE, movedPixels: moved }, null, 2)}\n`);
+  expect(moved, 'the reed sway should move pixels on the dry bank between two frames').toBeGreaterThan(60);
+  expectClean(errors);
+});
+
 test('twin banks beauty board: west ford under pressure', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   test.skip(testInfo.project.name !== 'desktop-chrome', 'pressure board is a desktop composition judge');
