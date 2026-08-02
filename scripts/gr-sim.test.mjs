@@ -53,7 +53,7 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
     { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
   );
   assert.notEqual(unsupported.status, 0);
-  assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks/);
+  assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron/);
 });
 
 test('gr-sim deterministically runs the Claim objective', () => {
@@ -311,4 +311,108 @@ test('gr-sim places Night Shift fixtures from the contract', () => {
   });
   const firstView = firstLines[0];
   assert.equal(firstView.now.works.byKind.lantern_post, contract.tileParams.prePlacedBuildables.length);
+});
+
+test('the Baron driver runs the declared fight and keeps medal writes off headless', async () => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const previousStorage = globalThis.localStorage;
+  const location = new URL('http://gr-sim.local/?debug&contract=e1-baron&seed=e1-baron-01');
+  const storageWrites = [];
+  globalThis.location = location;
+  globalThis.window = { location };
+  globalThis.localStorage = {
+    getItem: () => null,
+    setItem: (key, value) => storageWrites.push([key, value]),
+  };
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const manifest = JSON.parse(readFileSync(new URL('../assets/contracts/epoch-1-frontier/contracts.json', import.meta.url), 'utf8'))
+      .contracts.find(({ id }) => id === 'e1-baron');
+    const baron = manifest.twist.baron;
+    const rig = { ...Balance.sparkRig };
+    Object.assign(Balance.sparkRig, { damage: 1_000, fireRate: 60, range: 300, boltSpeed: 30, boltLife: 5 });
+    try {
+      const run = () => {
+        const sim = new HeadlessContractSim({ contractId: 'e1-baron', seed: 'e1-baron-01' });
+        sim.hero.applyStats(100_000, 1);
+        sim.hero.heal(100_000);
+        let turn = sim.currentTurn();
+        while (!turn.terminal) turn = sim.advanceToTurn();
+        return {
+          outcome: sim.outcome(),
+          payout: sim.runManager.diagnostics.victoryPayout,
+          transcript: sim.replayEvents.filter(({ type }) =>
+            ['baron_announcement', 'baron_spawned', 'baron_rocket_telegraph', 'baron_rocket_volley', 'run_secured', 'baron_defeated'].includes(type)),
+        };
+      };
+      const first = run();
+      const second = run();
+      assert.deepEqual(second, first);
+      assert.deepEqual(first.outcome, {
+        secured: true,
+        waves: baron.wave,
+        timeMs: 528_433,
+        gold: 0,
+        kills: 869,
+        calls: 0,
+        eventLogHash: 'fnv1a32:b9566c6d',
+      });
+      assert.equal(first.payout.science, Balance.meta.victoryPayout.science * baron.sciencePayoutMult);
+      assert.deepEqual(first.transcript.filter(({ type }) => type === 'baron_announcement').map(({ wave }) => wave), [5, 12, 18, 20]);
+      const { at: spawnAt, ...spawn } = first.transcript.find(({ type }) => type === 'baron_spawned');
+      assert.ok(Math.abs(spawnAt - baron.wave * Balance.waves.waveInterval / manifest.twist.waveCadenceMult) <= 1 / 30);
+      assert.deepEqual(spawn, {
+        type: 'baron_spawned',
+        position: { x: 5.911, z: -14 },
+        wave: baron.wave,
+        hpScale: baron.hpScale,
+        speedScale: baron.speedScale,
+        scale: baron.scale,
+        pursuitRange: baron.pursuitRange,
+        escorts: baron.escortCount,
+      });
+      const { at: volleyAt, ...volley } = first.transcript.find(({ type }) => type === 'baron_rocket_volley');
+      assert.ok(volleyAt - spawnAt >= baron.rocketVolley.telegraphSeconds);
+      assert.deepEqual(volley, {
+        type: 'baron_rocket_volley',
+        volley: 0,
+        count: baron.rocketVolley.count,
+        damage: baron.rocketVolley.damage,
+        radius: baron.rocketVolley.radius,
+        target: { x: 0, z: 12 },
+      });
+      const { at: defeatAt, ...defeat } = first.transcript.at(-1);
+      assert.equal(defeatAt, first.transcript.at(-2).at);
+      assert.deepEqual(defeat, {
+        type: 'baron_defeated',
+        wave: baron.wave,
+        defeatBeat: baron.defeatBeat,
+        sciencePayoutMult: baron.sciencePayoutMult,
+        medal: { eligible: true, blurb: baron.medalBlurb, awarded: false, sideEffects: false },
+      });
+      assert.deepEqual(storageWrites, []);
+      assert.deepEqual(benchSeeds['e1-baron'], ['e1-baron-01', 'e1-baron-02', 'e1-baron-03', 'e1-baron-04', 'e1-baron-05']);
+
+      Balance.sparkRig.damage = 0;
+      const capped = new HeadlessContractSim({ contractId: 'e1-baron', seed: 'e1-baron-01' });
+      capped.hero.applyStats(1_000_000_000, 1);
+      capped.hero.heal(1_000_000_000);
+      let cappedTurn = capped.currentTurn();
+      while (cappedTurn.view.now.wave < baron.wave) cappedTurn = capped.advanceToTurn();
+      assert.equal(capped.replayEvents.find(({ type }) => type === 'baron_spawned').escorts, 0);
+    } finally {
+      Object.assign(Balance.sparkRig, rig);
+    }
+  } finally {
+    await vite.close();
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+    if (previousStorage === undefined) delete globalThis.localStorage;
+    else globalThis.localStorage = previousStorage;
+  }
 });

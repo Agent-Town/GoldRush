@@ -32,7 +32,8 @@ import { WaveSystem } from '../systems/WaveSystem';
 import * as Terrain from '../world/Terrain';
 
 const STEP_SECONDS = 1 / 30;
-const SUPPORTED_CONTRACTS = new Set(['e1-dry-gulch', 'the-claim', 'e1-night-shift', 'e1-twin-banks']);
+const SUPPORTED_CONTRACTS = new Set(['e1-dry-gulch', 'the-claim', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
 
 export type GrSimOutcome = {
   secured: boolean;
@@ -123,6 +124,11 @@ export class HeadlessContractSim {
   private advanceCpuMs = 0;
   private prospectorHarvesting = false;
   private buildingHits = 0;
+  private baronBeaten = false;
+  private baronRocketNextAt = 0;
+  private baronRocketTelegraphAt = -1;
+  private baronRocketVolleys = 0;
+  private readonly baronRocketTarget = new THREE.Vector3();
 
   constructor(readonly boot: HeadlessContractBoot) {
     this.contractId = boot.contractId;
@@ -188,6 +194,9 @@ export class HeadlessContractSim {
       () => this.build.diagnostics.stockpilesState.some((entry) => entry.active),
       () => this.build.hasAnyBuildable,
       () => this.enemies.all.filter((enemy) => enemy.isAlive && enemy.isThief).length,
+      () => false,
+      this.hero.group.position,
+      (position, at, escorts) => this.postBaronSpawn(position, at, escorts),
     );
 
     const adapter: AgentGameAdapter = {
@@ -213,11 +222,17 @@ export class HeadlessContractSim {
         waveSystem: this.waves,
         activeContract: this.manifest,
         secureWaveForRun: () => this.manifest.twist.secureWave ?? Balance.run.secureWave,
+        autoSecureWaveForRun: () => this.manifest.twist.baron && !this.baronBeaten
+          ? Number.MAX_SAFE_INTEGER
+          : this.manifest.twist.secureWave ?? Balance.run.secureWave,
+        securePayoutMultForRun: () => this.baronBeaten
+          ? { science: Math.max(1, this.manifest.twist.baron?.sciencePayoutMult ?? 1) }
+          : undefined,
         get timeAlive() {
           return sim.timeAlive;
         },
       },
-      { now: () => Math.round(this.timeAlive * 1000) },
+      { now: () => Math.round(this.timeAlive * 1000), storage: HEADLESS_META_STORAGE },
     ).install();
   }
 
@@ -327,6 +342,7 @@ export class HeadlessContractSim {
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
     });
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
+    this.updateBaronRocketVolley();
     this.combat.update(STEP_SECONDS, this.timeAlive);
     this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
     observeStandingOrders();
@@ -342,6 +358,16 @@ export class HeadlessContractSim {
 
   private startWave(wave: number, at: number): boolean | void {
     this.events.emit({ type: 'wave_started', at, wave });
+    const baron = this.manifest.twist.baron;
+    if (baron && (wave === baron.wave || baron.tauntWaves.includes(wave))) {
+      this.replayEvents.push({
+        type: 'baron_announcement',
+        at,
+        wave,
+        kind: wave === baron.wave ? 'arrival' : 'taunt',
+        text: baron.taunt,
+      });
+    }
     if (this.runManager.diagnostics.secured) return false;
   }
 
@@ -363,8 +389,135 @@ export class HeadlessContractSim {
         if (event.type === 'run_secured') this.secured = true;
         if (event.type === 'run_ended' && event.reason !== 'secured') this.dead = true;
         this.replayEvents.push(canonicalEvent(event));
+        if (event.type === 'enemy_killed') {
+          const baron = this.manifest.twist.baron;
+          const expectedKind = baron?.bossKind ?? 'baron';
+          const expectedGroupId = baron?.components?.length
+            ? `${this.contractId}:wave-${baron.wave}:${(baron.variantId ?? 'baron_railcar') === 'baron_railcar' ? 'railcar' : 'component-boss'}`
+            : undefined;
+          const groupDown = expectedGroupId === undefined
+            ? event.bossGroupId === undefined
+            : event.bossGroupId === expectedGroupId && event.bossRemaining === 0;
+          if (event.eliteKind === expectedKind && groupDown) this.postBaronDefeat(event.at);
+        }
       });
     }
+  }
+
+  private postBaronSpawn(position: THREE.Vector3, at: number, escorts: number): void {
+    const baron = this.manifest.twist.baron;
+    if (!baron) return;
+    this.baronRocketNextAt = at;
+    this.replayEvents.push({
+      type: 'baron_spawned',
+      at,
+      position: point(position),
+      wave: baron.wave,
+      hpScale: baron.hpScale,
+      speedScale: baron.speedScale,
+      scale: baron.scale,
+      pursuitRange: baron.pursuitRange ?? null,
+      escorts,
+    });
+  }
+
+  private postBaronDefeat(at: number): void {
+    const baron = this.manifest.twist.baron;
+    if (!baron || this.baronBeaten) return;
+    this.baronBeaten = true;
+    const secured = this.runManager.diagnostics.secured || this.runManager.secureCurrentRun(this.waves.diagnostics.wave);
+    if (!secured) {
+      this.baronBeaten = false;
+      return;
+    }
+    this.replayEvents.push({
+      type: 'baron_defeated',
+      at,
+      wave: this.waves.diagnostics.wave,
+      defeatBeat: baron.defeatBeat,
+      sciencePayoutMult: baron.sciencePayoutMult,
+      medal: {
+        eligible: baron.awardMedal !== false,
+        blurb: baron.medalBlurb,
+        awarded: false,
+        sideEffects: false,
+      },
+    });
+  }
+
+  private updateBaronRocketVolley(): void {
+    const config = this.manifest.twist.baron?.rocketVolley;
+    const baron = config
+      ? this.enemies.all.find((enemy) => enemy.isAlive && enemy.eliteKind === 'baron')
+      : undefined;
+    if (!config || !baron || this.baronBeaten) {
+      this.baronRocketTelegraphAt = -1;
+      return;
+    }
+    if (this.baronRocketMeleeSuppressed(baron)) {
+      this.baronRocketTelegraphAt = -1;
+      return;
+    }
+    if (this.baronRocketTelegraphAt >= 0) {
+      if (this.timeAlive - this.baronRocketTelegraphAt < Math.max(0.1, config.telegraphSeconds)) return;
+      const count = THREE.MathUtils.clamp(Math.floor(config.count), 1, 6);
+      const ownerId = `baron_rocket:${baron.id}`;
+      const target = new THREE.Vector3();
+      for (let index = 0; index < count; index += 1) {
+        const rng = createRng(`${this.seed}:baron-rocket:${this.baronRocketVolleys}:${index}`);
+        const angle = (Math.PI * 2 * index) / count + rng.range(-0.24, 0.24);
+        const spread = index === 0 ? 0 : Math.max(0, config.spreadRadius) * rng.range(0.55, 1);
+        target.set(
+          this.baronRocketTarget.x + Math.cos(angle) * spread,
+          this.baronRocketTarget.y,
+          this.baronRocketTarget.z + Math.sin(angle) * spread,
+        );
+        this.combat.launchLob(
+          baron.position,
+          target,
+          Math.max(0.1, config.airTime),
+          Math.max(0, config.damage),
+          Math.max(0.2, config.radius),
+          ownerId,
+        );
+      }
+      this.replayEvents.push({
+        type: 'baron_rocket_volley',
+        at: round(this.timeAlive),
+        volley: this.baronRocketVolleys,
+        count,
+        damage: config.damage,
+        radius: config.radius,
+        target: point(this.baronRocketTarget),
+      });
+      this.baronRocketVolleys += 1;
+      this.baronRocketTelegraphAt = -1;
+      this.baronRocketNextAt = this.timeAlive + Math.max(0.2, config.cadenceSeconds);
+      return;
+    }
+    if (this.timeAlive < this.baronRocketNextAt) return;
+    const building = this.targeting.nearestBuilding(baron.position);
+    const heroRange = Math.max(16, baron.heroPursuitRange || 45);
+    const heroInRange = baron.position.distanceToSquared(this.hero.group.position) <= heroRange * heroRange;
+    this.baronRocketTarget.copy(heroInRange || !building ? this.hero.group.position : building.position);
+    this.baronRocketTelegraphAt = this.timeAlive;
+    this.replayEvents.push({
+      type: 'baron_rocket_telegraph',
+      at: round(this.timeAlive),
+      target: heroInRange || !building ? 'hero' : 'building',
+      position: point(this.baronRocketTarget),
+    });
+  }
+
+  private baronRocketMeleeSuppressed(baron: (typeof this.enemies.all)[number]): boolean {
+    const heroReach = baron.hitRadius + Balance.hero.radius + 0.35;
+    if (baron.position.distanceToSquared(this.hero.group.position) <= heroReach * heroReach) return true;
+    const building = this.targeting.nearestBuilding(baron.position);
+    if (!building) return false;
+    const dx = Math.max(0, Math.abs(baron.position.x - building.position.x) - building.halfX);
+    const dz = Math.max(0, Math.abs(baron.position.z - building.position.z) - building.halfZ);
+    const reach = Balance.wreck.reach * Math.max(1, baron.visualScale) + 0.35;
+    return dx * dx + dz * dz <= reach * reach;
   }
 
   private postHeroDeath(): void {

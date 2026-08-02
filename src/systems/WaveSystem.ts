@@ -155,7 +155,7 @@ export class WaveSystem {
     private readonly liveThiefCount: () => number = () => 0,
     private readonly hasTerritoryRing: () => boolean = () => false,
     private readonly territoryRingCenter: THREE.Vector3 = heroPosition,
-    private readonly onBaronSpawned: (position: THREE.Vector3, atSim: number) => void = () => {},
+    private readonly onBaronSpawned: (position: THREE.Vector3, atSim: number, escortsSpawned: number) => void = () => {},
     registerEscortTarget: (target: BuildingTarget) => void = () => {},
     private readonly onEscortPayout: (amount: number, position: THREE.Vector3, atSim: number) => void = () => {},
     private readonly escortRepairers: () => readonly THREE.Vector3[] = () => [heroPosition],
@@ -796,11 +796,12 @@ export class WaveSystem {
     edge = baronArrivalEdge(this.contract) ?? edge;
     const escorts = Math.max(0, Math.floor(baron.escortCount));
     const groupCount = escorts + 1;
+    let escortsSpawned = 0;
     for (let index = 0; index < escorts; index += 1) {
-      this.spawnAt(edge, index, wave, groupCount, false, false, this.variantOptionsFor(wave, edge, index));
+      if (this.spawnAt(edge, index, wave, groupCount, false, false, this.variantOptionsFor(wave, edge, index))) escortsSpawned += 1;
     }
     if ((baron.components?.length ?? 0) > 0) {
-      this.spawnComponentBossWave(wave);
+      this.spawnComponentBossWave(wave, escortsSpawned);
       return;
     }
     const spawned = this.spawnAt(
@@ -824,10 +825,10 @@ export class WaveSystem {
       },
       false,
     );
-    if (spawned) this.onBaronSpawned(this.spawnPosition, this.currentAtSim);
+    if (spawned) this.onBaronSpawned(this.spawnPosition, this.currentAtSim, escortsSpawned);
   }
 
-  private spawnComponentBossWave(wave: number): void {
+  private spawnComponentBossWave(wave: number, escortsSpawned: number): void {
     const baron = this.contract.twist.baron;
     const components = baron?.components ?? [];
     if (!baron || components.length === 0) return;
@@ -892,7 +893,7 @@ export class WaveSystem {
       this.waveSpawnedTotal += 1;
       spawned += 1;
     }
-    if (spawned > 0) this.onBaronSpawned(this.spawnPosition, this.currentAtSim);
+    if (spawned > 0) this.onBaronSpawned(this.spawnPosition, this.currentAtSim, escortsSpawned);
   }
 
   private maxTelegraphLead(): number {
