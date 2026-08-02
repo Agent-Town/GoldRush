@@ -36,6 +36,12 @@
       "fingerprint": "5a95e83cbbe1",
       "excerpt": "if (leaf.mergeHash) assert.match(leaf.mergeHash, /^[0-9a-f]{40}$/);"
     },
+    "scripts/fire.md -> scripts/goal-tracker.test.mjs:81": {
+      "target": "scripts/goal-tracker.test.mjs",
+      "line": 81,
+      "fingerprint": "c5593bf5b9fb",
+      "excerpt": "if (leaf.status === 'merged') assert.ok(leaf.mergeHash, `${leaf.id}: merged without Git evidence`);"
+    },
     "scripts/fire.md -> scripts/drain-block-check.mjs:385": {
       "target": "scripts/drain-block-check.mjs",
       "line": 385,
@@ -89,18 +95,6 @@
       "line": 44,
       "fingerprint": "2a211a7c1a67",
       "excerpt": "🔓 **FIREWALL LIFT, EXPLICIT:** the predecessor's blanket \"**NO:** any other file under `src/`\" is *"
-    },
-    "tasks/goals.json[e1-authored-bundle-validation] -> vite.config.ts:51": {
-      "target": "vite.config.ts",
-      "line": 51,
-      "fingerprint": "5af270461d4e",
-      "excerpt": "entryFileNames: `assets/[name]-[hash]-diet-${assetDietFingerprint}.js`,"
-    },
-    "tasks/goals.json[e1-authored-bundle-validation] -> scripts/assert-release-build.mjs:54": {
-      "target": "scripts/assert-release-build.mjs",
-      "line": 54,
-      "fingerprint": "bea8bf74fff0",
-      "excerpt": "const laterEraNamed = files.filter((file) => /(?:^|[.-])e(?:[2-9]|10)(?:[.-]|$)/.test(moduleName(fil"
     },
     "tasks/goals.json[e1-hold-the-claim-defeat-fork] -> src/game/Game.ts:6640": {
       "target": "src/game/Game.ts",
