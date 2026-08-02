@@ -770,10 +770,13 @@ export class TownScene {
   private dressScene(): void {
     this.scene.background = new THREE.Color(this.townNight ? '#41365a' : '#e9c98d');
     this.scene.fog = new THREE.Fog(this.townNight ? '#41365a' : '#e9c98d', this.townNight ? 24 : 34, this.townNight ? 58 : 76);
+    // U5: this fill now carries the warmth the GLB loader used to fake with a per-model emissive
+    // lift (0x4a2a17 @ 0.2 on every building except the assay office). One light for the whole
+    // square — shells, props and GLBs — instead of a tonal exception living in the asset path.
     const fill = new THREE.HemisphereLight(
       this.townNight ? '#ddc6a0' : '#fff2cc',
       this.townNight ? '#2e2642' : '#8b6c3f',
-      this.townNight ? 0.62 : 1.15,
+      this.townNight ? 0.7 : 1.3,
     );
     fill.name = 'TownFill';
     const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffd28a', this.townNight ? 0.82 : 1.85);
@@ -3800,7 +3803,35 @@ function createShell(building: TownBuilding): THREE.Group {
   cap.position.set(0, 1.58, halfZ - 0.02);
   cap.castShadow = true;
 
-  shell.add(base, ao, back, left, right, porch, front, cap);
+  // U5 — CLOSE THE CRATE. The lite shell was four walls and a painted front card with nothing on
+  // top: at the zoom the town now reaches, a player looked straight down into an empty box. This
+  // is the boomtown answer — a flat roof deck behind the false front, with a ridge beam for a
+  // silhouette. Lite is the roughest first impression we ship; it should at least be a building.
+  // A flat deck was the first try and it read as a table-top behind a billboard: every painted
+  // facade in the set depicts a PITCHED roof, so the lite shell now pitches too — two slopes
+  // meeting at a ridge just above the walls, eaves landing on them.
+  const eaveY = 1.5;
+  const ridgeY = 1.92;
+  const slopeDepth = Math.hypot(halfZ, ridgeY - eaveY) + 0.06;
+  const roofs = [-1, 1].map((side) => {
+    const slope = new THREE.Mesh(new THREE.BoxGeometry(building.footprint.w + 0.22, 0.1, slopeDepth), trimMaterial);
+    slope.name = `TownFacadeRoof:${building.id}:${side < 0 ? 'back' : 'front'}`;
+    slope.position.set(0, (eaveY + ridgeY) / 2, side * halfZ * 0.5);
+    slope.rotation.x = side * Math.atan2(ridgeY - eaveY, halfZ);
+    slope.castShadow = true;
+    slope.receiveShadow = true;
+    return slope;
+  });
+
+  const ridge = new THREE.Mesh(
+    new THREE.BoxGeometry(building.footprint.w + 0.26, 0.12, 0.18),
+    new THREE.MeshStandardMaterial({ color: building.accent, roughness: 0.8, metalness: 0.02 }),
+  );
+  ridge.name = `TownFacadeRidge:${building.id}`;
+  ridge.position.set(0, ridgeY + 0.02, 0);
+  ridge.castShadow = true;
+
+  shell.add(base, ao, back, left, right, porch, front, cap, ...roofs, ridge);
   group.add(shell);
   return group;
 }
@@ -3849,7 +3880,10 @@ function loadTownFacadeTexture(facade: { key: string; url: string }): Promise<TH
       facade.url,
       (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;
-        texture.anisotropy = 4;
+        // U5: 8x on full/balanced, 4 kept on lite. The facade planks are read at 0.36 framing now.
+        texture.anisotropy = performanceTierDiagnostics().tier === 'lite' ? 4 : 8;
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.generateMipmaps = true;
         resolve(texture);
       },
       undefined,
