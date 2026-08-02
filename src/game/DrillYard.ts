@@ -7,15 +7,9 @@ import * as Terrain from '../world/Terrain';
 import type { Economy } from './Economy';
 
 const INTERACTION_RADIUS = 3;
-const TARGET_POSITIONS = [
-  [-9, -9],
-  [-4.5, -10],
-  [0, -9],
-  [4.5, -10],
-  [9, -9],
-] as const;
 
-type TargetKind = 'straw-man' | 'rolling-log';
+type TargetKind = ContractPracticeMode['targets'][number]['kind'];
+type PracticeStation = ContractPracticeMode['stations'][number] & { position: THREE.Vector3 };
 type TargetState = {
   kind: TargetKind;
   position: THREE.Vector3;
@@ -52,8 +46,7 @@ export type DrillYardDiagnostics = {
 
 export class DrillYard {
   readonly group = new THREE.Group();
-  private readonly faucetPosition = new THREE.Vector3(-8, 0, 12);
-  private readonly bellPosition = new THREE.Vector3(8, 0, 12);
+  private readonly stations: PracticeStation[];
   private readonly targets: TargetState[];
   private readonly geometries = new Set<THREE.BufferGeometry>();
   private readonly materials = new Set<THREE.Material>();
@@ -61,7 +54,7 @@ export class DrillYard {
   private readonly promptTitle = document.createElement('span');
   private readonly actionButton = document.createElement('button');
   private readonly exitButton = document.createElement('button');
-  private nearby: 'faucet' | 'bell' | null = null;
+  private nearby: PracticeStation | null = null;
   private grants = 0;
   private lastGrant = 0;
   private rings = 0;
@@ -79,9 +72,12 @@ export class DrillYard {
     private readonly onChanged: () => void,
   ) {
     this.group.name = 'DrillYard';
+    this.stations = config.stations.map((station) => ({
+      ...station,
+      position: new THREE.Vector3(station.x, 0, station.z),
+    }));
     this.group.add(this.createAssayTent(), this.createBell());
-    this.targets = TARGET_POSITIONS.map(([x, z], index) => {
-      const kind: TargetKind = index % 2 === 0 ? 'straw-man' : 'rolling-log';
+    this.targets = config.targets.map(({ kind, x, z }) => {
       const position = new THREE.Vector3(x, 0, z);
       const visual = kind === 'straw-man' ? this.createStrawMan() : this.createRollingLog();
       visual.position.set(x, Terrain.visualY(x, z, 0), z);
@@ -95,12 +91,14 @@ export class DrillYard {
 
   get diagnostics(): DrillYardDiagnostics {
     const manual = this.waves.diagnostics.manual;
+    const faucetPosition = this.stationPosition('assay_tent_faucet');
+    const bellPosition = this.stationPosition('drill_bell');
     return {
       active: true,
-      faucet: { x: this.faucetPosition.x, z: this.faucetPosition.z, grants: this.grants, lastAmount: this.lastGrant },
+      faucet: { x: faucetPosition.x, z: faucetPosition.z, grants: this.grants, lastAmount: this.lastGrant },
       bell: {
-        x: this.bellPosition.x,
-        z: this.bellPosition.z,
+        x: bellPosition.x,
+        z: bellPosition.z,
         rings: this.rings,
         waveActive: manual.active,
         wavesCompleted: manual.completed,
@@ -138,31 +136,29 @@ export class DrillYard {
         target.respawns += 1;
       }
     }
-    const faucetDistance = flatDistance(heroPosition, this.faucetPosition);
-    const bellDistance = flatDistance(heroPosition, this.bellPosition);
-    this.nearby = Math.min(faucetDistance, bellDistance) > INTERACTION_RADIUS
-      ? null
-      : faucetDistance <= bellDistance ? 'faucet' : 'bell';
-    this.promptTitle.textContent = this.nearby === 'faucet'
+    this.nearby = this.stationAt(heroPosition);
+    this.promptTitle.textContent = this.nearby?.id === 'assay_tent_faucet'
       ? 'Assay tent practice lever'
-      : this.nearby === 'bell'
+      : this.nearby?.id === 'drill_bell'
         ? 'Drill Bell'
         : 'The Drill Yard';
     this.actionButton.hidden = this.nearby === null;
-    this.actionButton.textContent = this.nearby === 'faucet' ? 'Top up practice gold' : 'Ring one drill wave';
+    this.actionButton.textContent = this.nearby?.id === 'assay_tent_faucet' ? 'Top up practice gold' : 'Ring one drill wave';
   }
 
   interact(heroPosition: THREE.Vector3): boolean {
-    if (flatDistance(heroPosition, this.faucetPosition) <= INTERACTION_RADIUS) return this.topUp();
-    if (flatDistance(heroPosition, this.bellPosition) <= INTERACTION_RADIUS) return this.ringBell();
+    const station = this.stationAt(heroPosition);
+    if (station?.id === 'assay_tent_faucet') return this.topUp();
+    if (station?.id === 'drill_bell') return this.ringBell();
     return false;
   }
 
   topUp(): boolean {
+    const faucetPosition = this.stationPosition('assay_tent_faucet');
     const amount = Math.min(this.config.goldGrant, this.economy.bankCap - this.economy.gold);
     this.lastGrant = Math.max(0, amount);
     if (amount <= 0) {
-      this.floatText(this.faucetPosition, 'Practice purse full', '#8b7d3c');
+      this.floatText(faucetPosition, 'Practice purse full', '#8b7d3c');
       this.onChanged();
       return true;
     }
@@ -176,7 +172,7 @@ export class DrillYard {
     });
     if (!result.ok) return false;
     this.grants += 1;
-    this.floatText(this.faucetPosition, `+${amount} practice gold`, '#c4883a');
+    this.floatText(faucetPosition, `+${amount} practice gold`, '#c4883a');
     this.onChanged();
     return true;
   }
@@ -251,7 +247,7 @@ export class DrillYard {
     this.actionButton.className = 'building-context-prompt__button building-context-prompt__button--fund';
     this.actionButton.type = 'button';
     this.actionButton.dataset.testid = 'drill-yard-action';
-    this.actionButton.addEventListener('click', () => this.nearby === 'faucet' ? this.topUp() : this.nearby === 'bell' && this.ringBell());
+    this.actionButton.addEventListener('click', () => this.nearby?.id === 'assay_tent_faucet' ? this.topUp() : this.nearby?.id === 'drill_bell' && this.ringBell());
     this.exitButton.className = 'building-context-prompt__button';
     this.exitButton.type = 'button';
     this.exitButton.dataset.testid = 'drill-yard-exit';
@@ -264,7 +260,8 @@ export class DrillYard {
   private createAssayTent(): THREE.Group {
     const group = new THREE.Group();
     group.name = 'DrillAssayTent';
-    group.position.set(this.faucetPosition.x, Terrain.visualY(this.faucetPosition.x, this.faucetPosition.z, 0), this.faucetPosition.z);
+    const position = this.stationPosition('assay_tent_faucet');
+    group.position.set(position.x, Terrain.visualY(position.x, position.z, 0), position.z);
     const canvas = this.mesh(new THREE.ConeGeometry(2.1, 2.8, 4), new THREE.MeshStandardMaterial({ color: '#d8c08c', roughness: 0.95 }));
     canvas.position.y = 1.35;
     canvas.rotation.y = Math.PI * 0.25;
@@ -278,7 +275,8 @@ export class DrillYard {
   private createBell(): THREE.Group {
     const group = new THREE.Group();
     group.name = 'DrillBell';
-    group.position.set(this.bellPosition.x, Terrain.visualY(this.bellPosition.x, this.bellPosition.z, 0), this.bellPosition.z);
+    const position = this.stationPosition('drill_bell');
+    group.position.set(position.x, Terrain.visualY(position.x, position.z, 0), position.z);
     const postMaterial = new THREE.MeshStandardMaterial({ color: '#6a4728', roughness: 0.9 });
     const brass = new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.38, metalness: 0.55 });
     const post = this.mesh(new THREE.CylinderGeometry(0.15, 0.18, 2.8, 8), postMaterial);
@@ -326,6 +324,25 @@ export class DrillYard {
     this.geometries.add(geometry);
     this.materials.add(material);
     return new THREE.Mesh(geometry, material);
+  }
+
+  private stationAt(position: THREE.Vector3): PracticeStation | null {
+    let nearest: PracticeStation | null = null;
+    let nearestDistance = Infinity;
+    for (const station of this.stations) {
+      const distance = flatDistance(position, station.position);
+      if (distance < nearestDistance) {
+        nearest = station;
+        nearestDistance = distance;
+      }
+    }
+    return nearestDistance <= INTERACTION_RADIUS ? nearest : null;
+  }
+
+  private stationPosition(id: string): THREE.Vector3 {
+    const position = this.stations.find((station) => station.id === id)?.position;
+    if (!position) throw new Error(`Missing Drill Yard station: ${id}`);
+    return position;
   }
 }
 

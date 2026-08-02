@@ -57,7 +57,18 @@
         "goldGrant": 100,
         "bellWaveSize": 8,
         "dummyRespawnSeconds": 1.5,
-        "buildables": ["sentry_beacon", "palisade", "sluice", "stockpile", "turret", "assay_office", "lantern_post"]
+        "buildables": ["sentry_beacon", "palisade", "sluice", "stockpile", "turret", "assay_office", "lantern_post"],
+        "stations": [
+          { "id": "assay_tent_faucet", "op": "top_up", "x": -8, "z": 12 },
+          { "id": "drill_bell", "op": "ring", "x": 8, "z": 12 }
+        ],
+        "targets": [
+          { "kind": "straw-man", "x": -9, "z": -9 },
+          { "kind": "rolling-log", "x": -4.5, "z": -10 },
+          { "kind": "straw-man", "x": 0, "z": -9 },
+          { "kind": "rolling-log", "x": 4.5, "z": -10 },
+          { "kind": "straw-man", "x": 9, "z": -9 }
+        ]
       },
       "boardRow": {
         "name": "The Drill Yard",
