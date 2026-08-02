@@ -16,6 +16,9 @@ const ORDERS = [
   [],
 ].map(JSON.stringify).join('\n') + '\n';
 
+// F-1406-2: these terminal outcome pins are change detectors. A red means the
+// sim's behaviour moved; establish why before re-deriving, never paste over it.
+
 test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   const run = () => spawnSync(
     process.execPath,
@@ -31,6 +34,15 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   const lines = first.stdout.trim().split('\n').map((line) => JSON.parse(line));
   assert.equal(lines[0].schema, 'goldrush.view.v1');
   assert.deepEqual(Object.keys(lines.at(-1)), ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'eventLogHash']);
+  assert.deepEqual(lines.at(-1), {
+    secured: false,
+    waves: 4,
+    timeMs: 135667,
+    gold: 4,
+    kills: 37,
+    calls: 5,
+    eventLogHash: 'fnv1a32:68b99428',
+  });
   assert.equal(lines.at(-1).calls, 5);
   assert.ok(lines.some((line) => line.schema === 'goldrush.view.v1' && line.now.works.byKind.palisade === 1));
   assert.match(first.stderr, /gr-sim speed: \d+\.\d{2} waves\/s/);
@@ -184,12 +196,27 @@ test('the frozen Claim environment rows equal the five pinned bench seeds', () =
 test('gr-sim places Night Shift fixtures from the contract', () => {
   const contracts = JSON.parse(readFileSync(new URL('../assets/contracts/epoch-1-frontier/contracts.json', import.meta.url), 'utf8'));
   const contract = contracts.contracts.find(({ id }) => id === 'e1-night-shift');
-  const run = spawnSync(
+  const run = () => spawnSync(
     process.execPath,
     ['scripts/gr-sim.mjs', '--contract', contract.id, '--seed', 'e1-night-shift-01', '--policy=idle'],
     { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
   );
-  assert.equal(run.status, 0, run.stderr);
-  const firstView = JSON.parse(run.stdout.split('\n', 1)[0]);
+  const first = run();
+  const second = run();
+  assert.equal(first.status, 0, first.stderr);
+  assert.equal(second.status, 0, second.stderr);
+  const firstLines = first.stdout.trim().split('\n').map(JSON.parse);
+  const secondOutcome = JSON.parse(second.stdout.trim().split('\n').at(-1));
+  assert.deepEqual(secondOutcome, firstLines.at(-1));
+  assert.deepEqual(firstLines.at(-1), {
+    secured: false,
+    waves: 4,
+    timeMs: 126167,
+    gold: 0,
+    kills: 65,
+    calls: 0,
+    eventLogHash: 'fnv1a32:0bbf2fec',
+  });
+  const firstView = firstLines[0];
   assert.equal(firstView.now.works.byKind.lantern_post, contract.tileParams.prePlacedBuildables.length);
 });
