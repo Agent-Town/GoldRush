@@ -229,6 +229,7 @@ with no query flags at all (Mistake #10 — the shape only a real boot catches).
 | Gate | Result |
 |---|---|
 | `tsc` | clean, every phase |
+| `npm run build` | green |
 | Contract equality (`validTerrain`) | PASS — counts and bounds byte-identical, regenerated in the same commit |
 | Deterministic re-export | PASS — unmodified recipe reproduces the atlas within 1/255 and the contract exactly |
 | Frame p95 ≤ +15%, desktop | PASS — **1.020** |
@@ -275,10 +276,17 @@ Earlier in the shift, `map-census -g the-claim` alone: the census content passed
 and the only failure was the mobile-spot test exceeding its own 15 s wall-clock budget
 while the census it measured recorded PASS in `artifacts/map-census/table.md`.
 
-**What I did not do:** run the battery on `mobile-chrome`. Both viewports were
-rendered and measured by the board (all boards, both p95 arms, zero console errors at
-390 px), but the mobile *suite* projects were not run. That is the honest gap in this
-gate.
+On `mobile-chrome`, `terrain3d-claim-pilot` reads **4 passed / 1 failed** — the same
+`:166` p95-budget test, the same 60 s timeout on the same line, i.e. the same
+control-proven red as desktop.
+
+**What I did not do:** run the *whole* battery on `mobile-chrome` — only the claim
+pilot suite. Both viewports were rendered and measured by the board (all boards, both
+p95 arms, zero console errors at 390 px), but `terrain3d-registry`, `map-census` and
+`panorama-framing` were desktop-only. That is the honest gap in this gate.
+
+`npm run build`: **green** (1.53 s, asset diet clean, the re-exported 7.8 MB GLB rides
+the same 84% cut as the other 234).
 
 ---
 
