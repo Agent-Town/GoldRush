@@ -38,6 +38,7 @@
               "id": "e1-seam-yield-single-source-orig",
               "title": "Dry Gulch seam yield single-source — ORIGINAL master, unachievable as written (F-1380-1); superseded by the firewall-lifted re-author",
               "taskFile": "lane-seam-yield-single-source.md",
+              "supersededReason": "F-1380-1: unachievable as written — its SCOPE named the dry-gulch e2e suite as its proof while its TOUCH-ONLY forbade touching it, and that spec was itself the third reader of the field being deleted, so the removal failed tsc (TS2339) before any suite could run. Codex refused correctly (104,543 tokens). Re-authored s1380 as lane-seam-yield-single-source-lift.md with the firewall lifted by exactly one file; that master merged 7435fa7c.",
               "status": "superseded"
             },
             {
