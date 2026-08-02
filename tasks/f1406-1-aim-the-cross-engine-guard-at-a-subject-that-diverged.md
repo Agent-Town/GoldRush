@@ -1,5 +1,8 @@
 CODEX: model=gpt-5.6-sol effort=high
 # f1406-1-aim-the-cross-engine-guard-at-a-subject-that-diverged — make the determinism guard able to fail (FIRE-AUTHORED, attended review welcome)
+DISPATCH 2 (s1407) — content UNCHANGED; only the PRE-FLIGHT was repaired (F-1407-1). Dispatch 1
+never reached scope 1: it stopped at a pre-flight that forbade churn the factory produces itself.
+This is a CHANGED-PREMISE re-dispatch per CLAUDE.md §7.5, not an identical retry.
 ROLE: main-slot implementer. WORKDIR: repo root. One task, firewalled. Small.
 
 WHY (F-1406-1 + F-1406-2, s1406 drain gate — reviews/f1405-1-cross-engine-wave-scaling-cure.md):
@@ -33,9 +36,21 @@ READ-FIRST (paths, read them, do not skim):
  · `scripts/twin-banks-hash-probe.mjs` — the instrument; note its `--contract` / `--seed` flags and
    that `HeadlessContractSim` supports exactly `e1-dry-gulch`, `the-claim`, `e1-night-shift`.
 
-PRE-FLIGHT (main slot, tracked-clean): `git status --porcelain` must show no tracked dirt you did
-not create (`logs/*` churn is expected and is not yours). If tracked dirt exists that belongs to no
-task, STOP and report.
+PRE-FLIGHT (main slot, factory-churn aware — REPAIRED s1407, this master's first dispatch died here):
+`git status --porcelain` must show no tracked dirt OUTSIDE the two factory-churn classes below. If
+tracked dirt exists outside them and belongs to no task, STOP and report.
+ ⚠️ **EXPECTED, NEVER A STOP — list them and PROCEED:**
+   (a) `logs/**` — fire/runner accounting, rewritten every cycle by the factory itself.
+   (b) `artifacts/**`, `reviews/shots-*`, any `.png` — regenerated evidence. The drain gate that
+       dispatched you runs playwright, which rewrites tracked screenshots; this is the F-1266-1
+       EVIDENCE-ARTIFACT EXCEPTION the lane pre-flight template has carried since s1266.
+ ⓘ Dispatch 1 (`20260802-225251`) stopped right here having spent **54,875 tokens for zero edits**:
+   it found 26 modified tracked PNGs under `artifacts/054/`, `artifacts/baron-presence/`,
+   `artifacts/e2-enemies/` — the exhaust of the s1406 drain that authored this very master, one
+   minute earlier. The run was CORRECT to refuse to guess; the pre-flight was the defect (F-1407-1).
+ 🚫 What still STOPs, unchanged: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`,
+   `specs/**`, `reviews/*.md` — anything a live drain or concurrent task could actually own.
+   In particular `scripts/wave-scaling-cross-engine.test.mjs` must be clean before you touch it.
 
 SCOPE (numbered, each testable):
  1. Widen `scripts/wave-scaling-cross-engine.test.mjs` to cover ALL THREE supported contracts:
