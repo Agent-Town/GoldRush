@@ -1,0 +1,93 @@
+diff --git a/assets/pilots/map-rebuild-spike/build_landmark_packs.py b/assets/pilots/map-rebuild-spike/build_landmark_packs.py
+index c344aa93..7ee8e8a2 100644
+--- a/assets/pilots/map-rebuild-spike/build_landmark_packs.py
++++ b/assets/pilots/map-rebuild-spike/build_landmark_packs.py
+@@ -1636,16 +1636,84 @@ def build_parts(identifier, source_spec):
+             parts.append(add_rock(f"Riparian.FordStone.{index}", ((-0.25 if index % 2 else 0.25), y, 0.20), (0.72, 0.88, 0.24), "stone"))
+         return parts
+     if kind == "ruined-mine":
++        # BEAUTY SHIFT (dry-gulch U4). The stamp mill plus two fallen beams reads as intact-with-
++        # litter at the run camera. What sells a RUIN is what the weather did to it: canvas the wind
++        # has been at, a brace that has given up, and rust running down the timber from every iron
++        # fixing. Outlaw-company and nature are the only antagonists here -- no scorch story beyond
++        # the one already shipped.
+         ruin = import_source(STAMP_MILL, "timber", (7.5, 5.4, 5.7))
+-        return [ruin, add_beam("Ruin.FallenA", (-4.2, -2.8, 0), (1.4, -2.5, 0.7), 0.22), add_beam("Ruin.FallenB", (2.7, 2.9, 0), (4.5, -0.8, 1.2), 0.20), add_box("Ruin.Scorch", (-1.5, -2.75, 1.5), (1.9, 0.09, 1.8), "soot", 0.14)]
++        parts = [
++            ruin,
++            add_beam("Ruin.FallenA", (-4.2, -2.8, 0), (1.4, -2.5, 0.7), 0.22),
++            add_beam("Ruin.FallenB", (2.7, 2.9, 0), (4.5, -0.8, 1.2), 0.20),
++            add_box("Ruin.Scorch", (-1.5, -2.75, 1.5), (1.9, 0.09, 1.8), "soot", 0.14),
++            # The brace that leaned and stayed leaning.
++            add_beam("Ruin.HeadframeBrace", (2.55, 1.35, 5.35), (4.35, 2.55, 0.0), 0.19, "timber"),
++            add_beam("Ruin.BraceFoot", (4.35, 2.55, 0.0), (3.45, 2.05, 0.55), 0.15, "timber"),
++        ]
++        # Wind-tattered canvas: thin panels hung off the frame at slack angles, each a different
++        # length so the torn edge is a silhouette rather than a rectangle.
++        for index, (x, y, z, width, height, tilt) in enumerate((
++            (-2.35, 2.25, 3.45, 2.30, 1.85, 0.16),
++            (-0.75, 2.55, 3.05, 1.55, 2.35, -0.10),
++            (1.65, 2.35, 3.70, 1.20, 1.35, 0.24),
++            (-3.05, -2.15, 2.60, 1.05, 1.60, -0.22),
++        )):
++            parts.append(add_box(f"Ruin.Canvas.{index}", (x, y, z), (width, 0.07, height), "parchment", tilt))
++        # Rust running down the timber under each iron fixing.
++        for index, (x, y, z, height) in enumerate((
++            (-3.15, -2.62, 1.15, 2.35), (-0.20, -2.68, 0.85, 3.05),
++            (2.95, -2.55, 1.45, 1.95), (3.32, 2.42, 1.05, 2.55),
++        )):
++            parts.append(add_box(f"Ruin.RustStreak.{index}", (x, y, z), (0.22, 0.06, height), "rust"))
++        return parts
+     if kind == "cactus":
+         return cactus_parts()
+     if kind == "skeleton":
+-        parts = [add_cylinder("Skeleton.Spine", (-2.7, 0, 0.45), (2.5, 0, 0.45), 0.13, "bone", 7), add_rock("Skeleton.Skull", (3.0, 0, 0.7), (0.7, 0.48, 0.52), "bone")]
++        # BEAUTY SHIFT (dry-gulch U4). The shipped body was a straight spine with seven straight rib
++        # spokes and a paddle skull: at the run camera it read as a flat line drawing lying on the
++        # sand, a generation behind the adopted detail bosses beside it. The detail rung it earns
++        # here is anatomy, not polygons -- ribs that ARC, vertebrae you can count, and the sand
++        # drift that explains why the far half is missing. Bleached bone and sand only; the desert
++        # takes the animal, it never mangles it (brief section 3, "don't make the skeleton gore").
++        parts = [
++            add_cylinder("Skeleton.Spine", (-2.7, 0, 0.45), (2.5, 0, 0.45), 0.13, "bone", 7),
++            add_rock("Skeleton.Skull", (3.0, 0, 0.7), (0.7, 0.48, 0.52), "bone"),
++            add_cylinder("Skeleton.Muzzle", (3.55, 0, 0.62), (4.05, 0, 0.5), 0.16, "bone", 6),
++        ]
++        # Ribs in two segments: up and out from the spine, then down to the sand. A single straight
++        # spoke is what made the old body read as a diagram.
+         for index, x in enumerate(np.linspace(-2.0, 1.7, 7)):
+             width = 1.25 - abs(x) * 0.16
+-            parts.extend([add_cylinder(f"Skeleton.RibL.{index}", (x, 0, 0.45), (x, width, 0.16), 0.065, "bone", 6), add_cylinder(f"Skeleton.RibR.{index}", (x, 0, 0.45), (x, -width, 0.16), 0.065, "bone", 6)])
+-        parts.extend([add_cylinder("Skeleton.HornL", (3.2, 0.25, 0.9), (3.8, 0.9, 1.15), 0.07, "bone", 6), add_cylinder("Skeleton.HornR", (3.2, -0.25, 0.9), (3.8, -0.9, 1.15), 0.07, "bone", 6)])
++            drop = 0.10 + index * 0.012
++            for side in (1, -1):
++                tag = "L" if side > 0 else "R"
++                shoulder = (x, side * width * 0.62, 0.86)
++                parts.extend([
++                    add_cylinder(f"Skeleton.Rib{tag}.{index}a", (x, side * 0.06, 0.45), shoulder, 0.062, "bone", 6),
++                    add_cylinder(f"Skeleton.Rib{tag}.{index}b", shoulder, (x - 0.12, side * width, drop), 0.052, "bone", 6),
++                ])
++        # Vertebrae along the spine, sinking as the drift climbs over the tail end.
++        for index, x in enumerate(np.linspace(-2.62, 2.3, 9)):
++            buried = max(0.0, -x) * 0.11
++            parts.append(add_box(
++                f"Skeleton.Vertebra.{index}", (x, 0, 0.40 - buried), (0.17, 0.30, 0.26), "bone",
++                0.16 * math.sin(index * 1.7),
++            ))
++        # Hips and two long bones fallen clear of the cage.
++        parts.extend([
++            add_rock("Skeleton.Pelvis", (-2.55, 0, 0.44), (0.42, 0.62, 0.34), "bone"),
++            add_cylinder("Skeleton.FemurA", (-2.2, 0.95, 0.12), (-3.35, 1.5, 0.12), 0.075, "bone", 6),
++            add_cylinder("Skeleton.FemurB", (-2.35, -0.88, 0.11), (-3.6, -1.15, 0.11), 0.070, "bone", 6),
++            add_cylinder("Skeleton.HornL", (3.2, 0.25, 0.9), (3.8, 0.9, 1.15), 0.07, "bone", 6),
++            add_cylinder("Skeleton.HornR", (3.2, -0.25, 0.9), (3.8, -0.9, 1.15), 0.07, "bone", 6),
++        ])
++        # The sand drift: a long low bank piled against the tail end, half-swallowing the last ribs.
++        # Stone role, not bone -- it is the desert, and it must not read as more skeleton.
++        for index, (x, y, height, length) in enumerate((
++            (-2.9, 0.30, 0.30, 1.55), (-2.15, -0.55, 0.24, 1.25), (-1.5, 0.75, 0.18, 0.95),
++        )):
++            parts.append(add_rock(f"Skeleton.Drift.{index}", (x, y, height * 0.42), (length, 0.78, height), "stone"))
+         return parts
+     if kind == "spring":
+         parts = []

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { setWorldSpriteTint } from '../assets/generated';
 import type { LightSource } from '../systems/LightField';
 import * as Terrain from './Terrain';
@@ -43,6 +44,69 @@ export type LightRigNightShiftState = {
   spriteTint?: string;
 };
 
+/**
+ * PER-MAP DAYTIME ATMOSPHERE (brief U2).
+ *
+ * The five E1 maps ship one identical golden-hour rig, which is the cheapest identity the game is
+ * throwing away: atmosphere tells you which map you are on before any landmark does. Night Shift
+ * already proves the shape — an authored ramp flowing contract -> Game -> LightRig — but that path
+ * is a NIGHT ramp keyed to waves. Daylight needs no keyframes, just a per-contract override.
+ *
+ * EVERY FIELD IS A MULTIPLIER OR AN ABSENCE, never a snapshot. `Balance.world.fogNear/fogFar` are
+ * live tuning-panel values read each frame; a palette that stored 48.3 would silently disconnect
+ * this map's fog slider. A map with no entry here takes the `?? today` branch at every use site, so
+ * "all other maps keep byte-identical current values" is visible in the diff rather than asserted.
+ */
+export type LightRigDayPalette = {
+  background: string;
+  sun: string;
+  /** Applied to the shared 2.35 golden-hour sun. */
+  sunIntensityMult: number;
+  sunHeight: number;
+  fogNearMult: number;
+  fogFarMult: number;
+};
+
+/**
+ * HEAT YOU CAN SEE (brief U5).
+ *
+ * A still frame can be orange; only motion reads as HOT. Two effects, both per-contract and both
+ * shed at the first sign of stress:
+ *  - a shimmer band across the top of the frame, where the far ground is, distorting what is
+ *    already drawn there;
+ *  - one or two dust devils wandering the far field, additive and capped.
+ *
+ * SHED FIRST. `setStressFallback` is the earliest rung of the MQ-4 auto-tier ladder (it fires at
+ * runtime verdict >= 1, before the dynamic-light cap at 2 and the LITE fallback at 3), so gating on
+ * it registers the heat ahead of everything else the ladder sheds — no new watchdog needed.
+ */
+export type LightRigHeatProfile = {
+  /** Screen fraction where the shimmer reaches full strength (1 = top of frame). */
+  bandTop: number;
+  /** Screen fraction where the shimmer starts, below which the frame is untouched. */
+  bandBottom: number;
+  /** Peak horizontal displacement, in device-independent pixels. */
+  amplitudePx: number;
+  devils: number;
+};
+
+const HEAT_PROFILES: ReadonlyMap<string, LightRigHeatProfile> = new Map([
+  ['e1-dry-gulch', { bandTop: 0.98, bandBottom: 0.55, amplitudePx: 2.2, devils: 2 }],
+]);
+
+const DAY_PALETTES: ReadonlyMap<string, LightRigDayPalette> = new Map([
+  // "Noon, dry, merciless": a hotter whiter sun raised toward overhead, and dry air that sees
+  // further than the golden-hour haze does.
+  ['e1-dry-gulch', {
+    background: '#f3cd92',
+    sun: '#ffe0a0',
+    sunIntensityMult: 1.06,
+    sunHeight: 27,
+    fogNearMult: 1.15,
+    fogFarMult: 1.15,
+  }],
+]);
+
 export type LightRigDiagnostics = {
   sunPresent: boolean;
   shadowsQuality: ShadowsQuality;
@@ -53,6 +117,9 @@ export type LightRigDiagnostics = {
   shadowMapSize: number;
   shadowMapTargetSize: number;
   blobShadows: number;
+  /** True only on a heat contract, at FULL tier, with the auto-tier ladder unstressed. */
+  heatShimmer: boolean;
+  dustDevilQuads: number;
   palette: {
     background: string;
     fog: string;
@@ -122,7 +189,8 @@ export class LightRig {
   private readonly dawnGround = new THREE.Color('#a08a86');
   private readonly darkGround = new THREE.Color('#000000');
   private readonly blobShadows = new SpriteBlobShadows();
-  private readonly post = new LedgerPostPass();
+  private readonly post: LedgerPostPass;
+  private readonly dustDevils: DustDevils | undefined;
   // ponytail: dynamic lights cap at 32; use clustered lighting if night encounters outgrow this render budget.
   private readonly nightPoolLights = Array.from({ length: 32 }, () => new THREE.PointLight());
   private readonly lanternBulbGeometry = new THREE.SphereGeometry(0.09, 8, 6);
@@ -146,13 +214,27 @@ export class LightRig {
     return { light, target, startedAt: -1, endsAt: -1 };
   });
   private firedMuzzleFlashes = 0;
+  private lastHeatAt = 0;
   private currentShadowMapSize = -1;
   private stressFallback = false;
   private nightPoolSources = 0;
   private nightLightLimit: number | null = null;
   private nightShift: LightRigNightShiftState = { enabled: false, phase: 'full', darkness: 0 };
 
-  constructor(private readonly scene: THREE.Scene, private readonly renderer: THREE.WebGLRenderer) {
+  private readonly dayPalette: LightRigDayPalette | undefined;
+
+  constructor(
+    private readonly scene: THREE.Scene,
+    private readonly renderer: THREE.WebGLRenderer,
+    contractId?: string,
+  ) {
+    this.dayPalette = contractId === undefined ? undefined : DAY_PALETTES.get(contractId);
+    const heat = contractId === undefined ? undefined : HEAT_PROFILES.get(contractId);
+    // FULL tier only: the shimmer costs a framebuffer copy per frame, which is exactly the kind of
+    // cost a machine already on the LITE path cannot absorb.
+    const heatAllowed = heat && performanceTierDiagnostics().tier === 'full' ? heat : undefined;
+    this.post = new LedgerPostPass(heatAllowed);
+    this.dustDevils = heatAllowed && heatAllowed.devils > 0 ? new DustDevils(heatAllowed.devils) : undefined;
     this.group.name = 'GoldenHourLightRig';
     this.sun.name = 'LedgerLowSun';
     this.sun.position.copy(LEDGER_SUN_POSITION);
@@ -184,13 +266,18 @@ export class LightRig {
     }
     for (const flash of this.muzzleFlashes) this.group.add(flash.light, flash.target);
     this.scene.add(this.group, this.blobShadows.group);
+    if (this.dustDevils) this.scene.add(this.dustDevils.group);
   }
 
-  update(at = 0): void {
+  update(at = 0, focus?: THREE.Vector3): void {
     const quality = effectiveShadowQuality(this.stressFallback);
     const darkness = this.nightShift.enabled ? THREE.MathUtils.clamp(this.nightShift.darkness, 0, 1) : 0;
-    const baseFogNear = this.nightShift.enabled ? 34 : Balance.world.fogNear;
-    const baseFogFar = this.nightShift.enabled ? 72 : Balance.world.fogFar;
+    const baseFogNear = this.nightShift.enabled
+      ? 34
+      : Balance.world.fogNear * (this.dayPalette?.fogNearMult ?? 1);
+    const baseFogFar = this.nightShift.enabled
+      ? 72
+      : Balance.world.fogFar * (this.dayPalette?.fogFarMult ?? 1);
     const fogNear = THREE.MathUtils.lerp(baseFogNear, 18, darkness);
     const fogFar = Math.max(fogNear + 8, THREE.MathUtils.lerp(baseFogFar, 42, darkness));
     this.applyNightShiftPalette(darkness);
@@ -206,6 +293,12 @@ export class LightRig {
     this.applyShadowMapSize(mapSize);
     this.sun.shadow.mapSize.set(mapSize, mapSize);
     this.blobShadows.update(this.scene);
+    // The heat is the first thing the auto-tier ladder sheds, and it never runs at night.
+    const heatOn = !this.stressFallback && !this.nightShift.enabled;
+    this.post.setHeatEnabled(heatOn);
+    this.post.advanceHeat(Math.min(0.1, Math.max(0, at - this.lastHeatAt)));
+    this.lastHeatAt = at;
+    this.dustDevils?.update(at, heatOn, focus);
     this.post.update();
   }
 
@@ -263,6 +356,8 @@ export class LightRig {
       shadowMapSize: shadowMapSize(quality),
       shadowMapTargetSize: quality === 'soft' ? shadowTargetSize : 0,
       blobShadows: this.blobShadows.count,
+      heatShimmer: this.post.heatActive,
+      dustDevilQuads: this.dustDevils?.quadCount ?? 0,
       palette: {
         background: `#${this.background.getHexString()}`,
         fog: `#${this.fog.color.getHexString()}`,
@@ -304,6 +399,10 @@ export class LightRig {
     for (const flash of this.muzzleFlashes) flash.light.dispose();
     this.blobShadows.dispose();
     this.post.dispose();
+    if (this.dustDevils) {
+      this.scene.remove(this.dustDevils.group);
+      this.dustDevils.dispose();
+    }
   }
 
   private applyShadowMapSize(mapSize: number): void {
@@ -318,14 +417,15 @@ export class LightRig {
 
   private applyNightShiftPalette(darkness: number): void {
     if (!this.nightShift.enabled) {
-      this.background.copy(this.dayBackground);
+      const day = this.dayPalette;
+      this.background.copy(day ? dayPaletteColor(day.background) : this.dayBackground);
       this.fog.color.copy(this.dayFog);
-      this.sun.color.copy(this.daySun);
-      this.sun.intensity = 2.35;
+      this.sun.color.copy(day ? dayPaletteColor(day.sun) : this.daySun);
+      this.sun.intensity = 2.35 * (day?.sunIntensityMult ?? 1);
       this.fill.color.copy(this.dayFill);
       this.fill.groundColor.copy(this.dayGround);
       this.fill.intensity = 1.12;
-      this.sun.position.y = 18;
+      this.sun.position.y = day?.sunHeight ?? 18;
       setWorldSpriteTint('#ffffff');
       return;
     }
@@ -572,6 +672,7 @@ class LedgerPostPass {
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   private readonly geometry = new THREE.PlaneGeometry(2, 2);
+  private readonly heat: HeatShimmerBand | undefined;
   private readonly material = new THREE.ShaderMaterial({
     transparent: true,
     depthTest: false,
@@ -608,9 +709,22 @@ void main() {
   });
   private readonly quad = new THREE.Mesh(this.geometry, this.material);
 
-  constructor() {
+  constructor(profile?: LightRigHeatProfile) {
     this.quad.frustumCulled = false;
     this.scene.add(this.quad);
+    this.heat = profile ? new HeatShimmerBand(profile) : undefined;
+  }
+
+  get heatActive(): boolean {
+    return this.heat?.active ?? false;
+  }
+
+  setHeatEnabled(enabled: boolean): void {
+    this.heat?.setEnabled(enabled);
+  }
+
+  advanceHeat(delta: number): void {
+    this.heat?.advance(delta);
   }
 
   get enabled(): boolean {
@@ -624,11 +738,210 @@ void main() {
   }
 
   render(renderer: THREE.WebGLRenderer): void {
-    if (!this.enabled) return;
     const autoClear = renderer.autoClear;
     renderer.autoClear = false;
-    renderer.render(this.scene, this.camera);
+    // Shimmer first: it distorts the frame that is already there, so it has to run before the
+    // paper-grain overlay is painted on top of it (grain that wobbles would read as a wet lens).
+    this.heat?.render(renderer);
+    if (this.enabled) renderer.render(this.scene, this.camera);
     renderer.autoClear = autoClear;
+  }
+
+  dispose(): void {
+    this.geometry.dispose();
+    this.material.dispose();
+    this.heat?.dispose();
+  }
+}
+
+/**
+ * The shimmer band. It re-reads the frame the game just drew (`copyFramebufferToTexture`) and
+ * redraws the top of it through a horizontal wobble — no render-target rewiring, no change to how
+ * the scene is drawn, and when it is off there is not one extra GL call.
+ */
+class HeatShimmerBand {
+  private readonly scene = new THREE.Scene();
+  private readonly camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  private readonly geometry = new THREE.PlaneGeometry(2, 2);
+  private readonly frame = new THREE.FramebufferTexture(2, 2);
+  private readonly size = new THREE.Vector2();
+  private readonly material: THREE.ShaderMaterial;
+  private readonly quad: THREE.Mesh;
+  private enabled = false;
+  private width = 0;
+  private height = 0;
+
+  constructor(private readonly profile: LightRigHeatProfile) {
+    this.frame.minFilter = THREE.LinearFilter;
+    this.frame.magFilter = THREE.LinearFilter;
+    this.material = new THREE.ShaderMaterial({
+      transparent: true,
+      depthTest: false,
+      depthWrite: false,
+      uniforms: {
+        frame: { value: this.frame },
+        heatTime: { value: 0 },
+        amplitude: { value: 0 },
+        bandTop: { value: profile.bandTop },
+        bandBottom: { value: profile.bandBottom },
+      },
+      vertexShader: `
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = vec4(position.xy, 0.0, 1.0);
+}`,
+      fragmentShader: `
+varying vec2 vUv;
+uniform sampler2D frame;
+uniform float heatTime;
+uniform float amplitude;
+uniform float bandTop;
+uniform float bandBottom;
+
+void main() {
+  float band = smoothstep(bandBottom, bandTop, vUv.y);
+  if (band <= 0.002) discard;
+  // Two rates, so the air rolls instead of vibrating at one frequency.
+  float wobble =
+    sin(vUv.y * 178.0 + heatTime * 3.1) * 0.62 +
+    sin(vUv.y * 63.0 + vUv.x * 8.0 - heatTime * 2.05) * 0.38;
+  vec2 shifted = vec2(clamp(vUv.x + wobble * amplitude * band, 0.0, 1.0), vUv.y);
+  gl_FragColor = vec4(texture2D(frame, shifted).rgb, band);
+}`,
+    });
+    this.quad = new THREE.Mesh(this.geometry, this.material);
+    this.quad.frustumCulled = false;
+    this.scene.add(this.quad);
+  }
+
+  get active(): boolean {
+    return this.enabled;
+  }
+
+  setEnabled(enabled: boolean): void {
+    this.enabled = enabled;
+  }
+
+  advance(delta: number): void {
+    if (!this.enabled) return;
+    this.material.uniforms.heatTime!.value += delta;
+  }
+
+  render(renderer: THREE.WebGLRenderer): void {
+    if (!this.enabled) return;
+    renderer.getDrawingBufferSize(this.size);
+    if (this.size.x < 4 || this.size.y < 4) return;
+    if (this.size.x !== this.width || this.size.y !== this.height) {
+      this.width = this.size.x;
+      this.height = this.size.y;
+      // A FramebufferTexture cannot be resized in place; drop the GPU copy and let three re-upload.
+      this.frame.dispose();
+      this.frame.image = { width: this.width, height: this.height };
+      this.material.uniforms.amplitude!.value = this.profile.amplitudePx / this.width;
+    }
+    renderer.copyFramebufferToTexture(this.frame);
+    renderer.render(this.scene, this.camera);
+  }
+
+  dispose(): void {
+    this.geometry.dispose();
+    this.material.dispose();
+    this.frame.dispose();
+  }
+}
+
+const dayPaletteColors = new Map<string, THREE.Color>();
+
+/** Colours are authored as strings and consumed every frame; parse each exactly once. */
+function dayPaletteColor(value: string): THREE.Color {
+  let color = dayPaletteColors.get(value);
+  if (!color) {
+    color = new THREE.Color(value);
+    dayPaletteColors.set(value, color);
+  }
+  return color;
+}
+
+/**
+ * Wandering dust devils: one instanced mesh, one additive material, one draw call for all of them.
+ *
+ * BILLBOARDING WITHOUT A CAMERA. `CameraRig` only ever translates by a fixed offset and calls
+ * lookAt; it never yaws or rolls, so the view direction's heading is constant for the whole run and
+ * a quad pitched to match the camera's fixed tilt faces it from anywhere on the map. That is why
+ * these can be instances rather than N Sprites with N draw calls.
+ *
+ * They keep their distance on purpose: a dust devil that walks through the player is a collider the
+ * sim does not have, so each one fades out as the hero closes and re-seeds its path far away.
+ */
+class DustDevils {
+  readonly group = new THREE.Group();
+
+  private static readonly QUADS_PER_DEVIL = 11;
+  private readonly geometry = new THREE.PlaneGeometry(1, 1);
+  private readonly material = new THREE.MeshBasicMaterial({
+    color: '#e7c48f',
+    transparent: true,
+    opacity: 0.13,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+  });
+  private readonly mesh: THREE.InstancedMesh;
+  private readonly anchor = new THREE.Object3D();
+  /** Matches the run camera's fixed pitch: atan2(26.2, 21.65) from the horizontal. */
+  private readonly cameraPitch = Math.atan2(Balance.camera.offset.y, Balance.camera.offset.z + Balance.camera.downScreenLookOffset);
+
+  constructor(private readonly devils: number) {
+    this.group.name = 'DryGulchDustDevils';
+    this.mesh = new THREE.InstancedMesh(this.geometry, this.material, Math.max(1, devils * DustDevils.QUADS_PER_DEVIL));
+    this.mesh.name = 'DryGulchDustDevilQuads';
+    this.mesh.frustumCulled = false;
+    this.mesh.castShadow = false;
+    this.mesh.receiveShadow = false;
+    this.mesh.renderOrder = RenderLayers.gameplayFade;
+    this.mesh.count = 0;
+    this.group.add(this.mesh);
+  }
+
+  get quadCount(): number {
+    return this.mesh.count;
+  }
+
+  update(at: number, enabled: boolean, focus?: THREE.Vector3): void {
+    if (!enabled) {
+      this.mesh.count = 0;
+      return;
+    }
+    let written = 0;
+    for (let devil = 0; devil < this.devils; devil += 1) {
+      // A slow lissajous walk over the far field; different rates per devil so they never pair up.
+      const phase = at * (0.045 + devil * 0.012) + devil * 2.4;
+      const x = Math.sin(phase) * 24 + Math.sin(phase * 2.3 + 1.1) * 4;
+      const z = Math.cos(phase * 0.83 + devil) * 24 + Math.cos(phase * 1.7) * 5;
+      const nearness = focus ? 1 - THREE.MathUtils.clamp((Math.hypot(x - focus.x, z - focus.z) - 12) / 8, 0, 1) : 0;
+      const presence = (1 - nearness) * THREE.MathUtils.clamp(Math.sin(phase * 0.7) * 0.5 + 0.75, 0, 1);
+      if (presence <= 0.02) continue;
+      const ground = Terrain.visualY(x, z, 0);
+      for (let step = 0; step < DustDevils.QUADS_PER_DEVIL; step += 1) {
+        const up = step / DustDevils.QUADS_PER_DEVIL;
+        const twist = at * 2.1 + step * 1.15 + devil * 3.3;
+        const radius = 0.35 + up * 1.9;
+        this.anchor.position.set(
+          x + Math.cos(twist) * radius * 0.34,
+          ground + 0.15 + up * 5.4,
+          z + Math.sin(twist) * radius * 0.34,
+        );
+        this.anchor.rotation.set(this.cameraPitch - Math.PI / 2, 0, twist * 0.12);
+        const spread = (0.9 + up * 2.3) * presence;
+        this.anchor.scale.set(spread, spread * 1.25, 1);
+        this.anchor.updateMatrix();
+        this.mesh.setMatrixAt(written, this.anchor.matrix);
+        written += 1;
+      }
+    }
+    this.mesh.count = written;
+    this.mesh.instanceMatrix.needsUpdate = true;
   }
 
   dispose(): void {
