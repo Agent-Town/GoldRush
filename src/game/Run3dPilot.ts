@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { trackedGltfLoader } from '../assets/AssetLoading';
+import { RenderLayers } from '../core/RenderLayers';
 import type { BuildDiagnostics } from '../systems/BuildSystem';
 import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from '../world/Terrain';
@@ -11,6 +12,7 @@ const registry = {
   gold_seam: { url: new URL('../../assets/pilots/run3d/gold-seam.glb', import.meta.url).href, fallback: 'GoldSeamVisualBatch', groundPad: 0 },
   lantern_post: { url: new URL('../../assets/pilots/run3d/lantern-post.glb', import.meta.url).href, fallback: 'LanternPostPool', groundPad: 0.4 },
   palisade: { url: new URL('../../assets/pilots/run3d/palisade.glb', import.meta.url).href, fallback: 'PalisadePool', groundPad: 1.5 },
+  rail_element: { url: new URL('../../assets/pilots/run3d/rail-element.glb', import.meta.url).href, fallback: 'RailPath.Sleepers', groundPad: 0 },
   sluice: { url: new URL('../../assets/pilots/run3d/sluice.glb', import.meta.url).href, fallback: 'SluicePool', groundPad: 0.9 },
   turret: { url: new URL('../../assets/pilots/run3d/turret.glb', import.meta.url).href, fallback: 'TurretPool', groundPad: 1.2 },
   stockpile: { url: new URL('../../assets/pilots/run3d/stockpile.glb', import.meta.url).href, fallback: 'StockpilePool', groundPad: 0.75 },
@@ -19,6 +21,7 @@ const registry = {
 
 type Run3dId = keyof typeof registry;
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement; diagnostics: () => BuildDiagnostics };
+type RailTie = { x: number; y: number; z: number; yaw: number };
 
 export type Run3dPilot = { update: () => void; dispose: () => void };
 
@@ -40,7 +43,7 @@ export function installRun3dPilot(host: Host): Run3dPilot {
     publish(host.canvas, 'lite');
     return { update: () => undefined, dispose: () => publish(host.canvas, 'lite') };
   }
-  const ids = (selection === 'all' ? Object.keys(registry).filter((id) => id !== 'gold_seam') : [selection]).filter(
+  const ids = (selection === 'all' ? Object.keys(registry).filter((id) => id !== 'gold_seam' && id !== 'rail_element') : [selection]).filter(
     (id): id is Run3dId => typeof id === 'string' && id in registry,
   );
   const group = new THREE.Group();
@@ -53,6 +56,11 @@ export function installRun3dPilot(host: Host): Run3dPilot {
   const matrixScale = new THREE.Vector3();
   const euler = new THREE.Euler();
   const color = new THREE.Color();
+  const railPosition = new THREE.Vector3();
+  const railRotation = new THREE.Quaternion();
+  const railScale = new THREE.Vector3(1, 1, 1);
+  let railElements: THREE.InstancedMesh | undefined;
+  let railTieCount = -1;
   let disposed = false;
   const loader = trackedGltfLoader(host.canvas, 'the claim');
   publish(host.canvas, 'loading');
@@ -167,14 +175,46 @@ export function installRun3dPilot(host: Host): Run3dPilot {
         instance.position.set(node.position.x, Terrain.visualY(node.position.x, node.position.z, 0.05), node.position.z);
       }
     }
+    if (ids.includes('rail_element')) {
+      const rails = window.__THREE_GAME_DIAGNOSTICS__?.terrain.rails as { ties?: RailTie[] } | undefined;
+      const ties = rails?.ties ?? [];
+      if (ties.length !== railTieCount) {
+        if (railElements) {
+          group.remove(railElements);
+          railElements.dispose();
+        }
+        const template = templates.get('rail_element')!;
+        let source: THREE.Mesh | undefined;
+        template.traverse((node) => { if (!source && (node as THREE.Mesh).isMesh) source = node as THREE.Mesh; });
+        if (!source) return;
+        railElements = new THREE.InstancedMesh(source.geometry, source.material, Math.max(1, ties.length));
+        railElements.name = 'Run3dPilot.RailElements';
+        railElements.count = ties.length;
+        railElements.renderOrder = RenderLayers.groundDecals;
+        railElements.frustumCulled = false;
+        railElements.receiveShadow = true;
+        group.add(railElements);
+        railTieCount = ties.length;
+      }
+      for (let index = 0; index < ties.length; index += 1) {
+        const tie = ties[index]!;
+        railPosition.set(tie.x, Terrain.visualY(tie.x, tie.z, 0, 0), tie.z);
+        railRotation.setFromEuler(euler.set(0, tie.yaw, 0));
+        matrix.compose(railPosition, railRotation, railScale);
+        railElements!.setMatrixAt(index, matrix);
+      }
+      if (railElements) railElements.instanceMatrix.needsUpdate = true;
+    }
     for (const [key, instance] of instances) {
       if (alive.has(key)) continue;
       group.remove(instance);
       if (key.startsWith('palisade:')) instance.traverse((node) => (node as THREE.Mesh).isMesh && ((node as THREE.Mesh).material as THREE.Material).dispose());
       instances.delete(key);
     }
-    const triangles = [...instances.keys()].reduce((total, key) => total + (triangleCounts.get(key.split(':')[0] as Run3dId) ?? 0), 0);
-    publish(host.canvas, 'ready', instances.size, triangles);
+    const railInstances = railElements?.count ?? 0;
+    const triangles = [...instances.keys()].reduce((total, key) => total + (triangleCounts.get(key.split(':')[0] as Run3dId) ?? 0), 0)
+      + railInstances * (triangleCounts.get('rail_element') ?? 0);
+    publish(host.canvas, 'ready', instances.size + railInstances, triangles);
   }
 
   return {
@@ -186,6 +226,8 @@ export function installRun3dPilot(host: Host): Run3dPilot {
         if (sprite) sprite.visible = true;
       }
       host.scene.remove(group);
+      railElements?.dispose();
+      railElements = undefined;
       for (const [key, instance] of instances) {
         if (key.startsWith('palisade:')) instance.traverse((node) => (node as THREE.Mesh).isMesh && ((node as THREE.Mesh).material as THREE.Material).dispose());
       }

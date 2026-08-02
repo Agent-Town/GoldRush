@@ -16,6 +16,7 @@ export type RailPathDiagnostics = {
   drawCalls: number;
   asset: 'procedural-placeholder';
   samples: Array<{ x: number; y: number; z: number; kind: 'point' | 'midpoint' }>;
+  ties: Array<{ x: number; y: number; z: number; yaw: number }>;
 };
 
 type RailSegment = {
@@ -80,6 +81,7 @@ export class RailPathView {
       drawCalls: (railSegments.length > 0 ? 1 : 0) + (ties.length > 0 ? 1 : 0),
       asset: 'procedural-placeholder',
       samples,
+      ties,
     };
   }
 
@@ -87,6 +89,7 @@ export class RailPathView {
     return {
       ...this.diagnosticsState,
       samples: this.diagnosticsState.samples.map((sample) => ({ ...sample })),
+      ties: this.diagnosticsState.ties.map((tie) => ({ ...tie })),
     };
   }
 
@@ -108,6 +111,7 @@ export function emptyRailPathDiagnostics(): RailPathDiagnostics {
     drawCalls: 0,
     asset: 'procedural-placeholder',
     samples: [],
+    ties: [],
   };
 }
 
