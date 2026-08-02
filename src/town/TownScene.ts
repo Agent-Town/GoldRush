@@ -327,11 +327,20 @@ export type TownDiagnostics = {
     sign: 'asset' | 'placeholder';
   };
   ambientDust: { enabled: boolean; tier: PerformanceTier; count: number; drawCalls: number };
-  // U1/U2 ground-contact door: what a plain boot can prove without ?debug (Mistake #10).
+  // THE BEAUTY-SHIFT DOOR: every visual U1-U8 added, countable from a plain boot without ?debug
+  // (Mistake #10 — a visual with no plain-boot door is a visual that does not exist).
   contact: {
     blobShadows: number;
     skirts: number;
     sunShadow: { enabled: boolean; mapSize: number; extent: number };
+  };
+  dressing: {
+    mood: TownMoodName;
+    wearDecals: number;
+    parcelPieces: number;
+    windowGlow: number;
+    lanternBeads: number;
+    lanternLights: number;
   };
   firstClaimGuide: {
     active: boolean;
@@ -818,7 +827,13 @@ export class TownScene {
     const sun = new THREE.DirectionalLight(light.sun, light.sunIntensity);
     sun.name = 'TownSun';
     sun.position.set(...light.sunPosition);
-    sun.castShadow = true;
+    // LITE PAYS NO SHADOW PASS. Measured on the 390px lite boot: with the aimed frustum it costs
+    // 106 draw calls against 55 without — the shadow pass is HALF of everything lite draws, on
+    // the tier we picked precisely because the device is weak (and this box is a desktop GPU, so
+    // the real cost there is worse than what I can measure). Lite keeps its grounding from the
+    // contact skirt and the blob shadows, which are two draw calls between them, and lands
+    // CHEAPER than it was before this shift (55 vs 57) while gaining roofs, wear and dressing.
+    sun.castShadow = this.performanceTier !== 'lite';
     // U2 — THE SHADOW CAMERA WAS NEVER AIMED. castShadow has been true since the town shipped,
     // but three.js defaults a directional shadow camera to a +/-5 frustum: a 10x10 patch of a
     // 30x30 town. Everything outside the plaza centre cast nothing, which is why nine handsome
@@ -2309,6 +2324,10 @@ export class TownScene {
     emitStorySignal({ type: 'run-return-town', result: this.options.returnResult });
   }
 
+  private instanceCount(name: string): number {
+    return (this.scene.getObjectByName(name) as THREE.InstancedMesh | undefined)?.count ?? 0;
+  }
+
   private publishDiagnostics(): void {
     const dpr = this.renderer.getPixelRatio();
     const background = this.scene.background as THREE.Color;
@@ -2422,12 +2441,20 @@ export class TownScene {
       },
       contact: {
         blobShadows: this.blobShadows.mesh.count,
-        skirts: (this.scene.getObjectByName('TownContactSkirts') as THREE.InstancedMesh | undefined)?.count ?? 0,
+        skirts: this.instanceCount('TownContactSkirts'),
         sunShadow: {
           enabled: !!sun?.castShadow,
           mapSize: sun?.shadow.mapSize.x ?? 0,
           extent: sun?.shadow.camera.right ?? 0,
         },
+      },
+      dressing: {
+        mood: this.townMood,
+        wearDecals: this.instanceCount('TownWearDecals'),
+        parcelPieces: this.instanceCount('TownParcelBoxes') + this.instanceCount('TownParcelTurned'),
+        windowGlow: this.instanceCount('TownWindowGlowPanes') + this.instanceCount('TownDoorGlowPanes'),
+        lanternBeads: this.instanceCount('TownLanternStringBeads'),
+        lanternLights: this.scene.getObjectByName('TownLanternLights')?.children.length ?? 0,
       },
       firstClaimGuide: {
         active: this.firstClaimGuideActive,
@@ -3745,28 +3772,37 @@ function createWindowGlow(buildings: readonly TownBuilding[], mood: TownMoodName
     blending: THREE.AdditiveBlending,
     side: THREE.DoubleSide,
   });
+  // Instanced, not a mesh per pane: the first cut built ~33 little planes and dusk measured 82
+  // draw calls against day's 45 — sixty of them for light spilling out of six buildings.
+  const windows: THREE.Matrix4[] = [];
+  const doors: THREE.Matrix4[] = [];
+  const object = new THREE.Object3D();
   for (const building of buildings) {
     const slot = townPlazaSlot(building.id);
     const yaw = Math.atan2(slot.approach.x - building.position.x, slot.approach.z - building.position.z);
     const face = building.footprint.d * 0.5 + 0.06;
-    const parcel = new THREE.Group();
-    parcel.name = `TownWindowGlow:${building.id}`;
-    parcel.position.set(building.position.x, 0, building.position.z);
-    parcel.rotation.y = yaw;
-    for (const [index, window] of TOWN_WINDOW_GLOW[building.id].entries()) {
-      const card = new THREE.Mesh(new THREE.PlaneGeometry(window.w * 1.5, window.h * 1.4), material);
-      card.name = `TownWindowGlow:${building.id}:${index}`;
-      card.position.set(window.x, window.y, face);
-      card.renderOrder = RenderLayers.gameplayFade;
-      parcel.add(card);
-    }
+    const place = (local: { x: number; y: number }, width: number, height: number): THREE.Matrix4 => {
+      const at = localPoint({ position: building.position, rotation: yaw }, local.x, face);
+      object.position.set(at.x, local.y, at.z);
+      object.rotation.set(0, yaw, 0);
+      object.scale.set(width, height, 1);
+      object.updateMatrix();
+      return object.matrix.clone();
+    };
+    for (const window of TOWN_WINDOW_GLOW[building.id]) windows.push(place(window, window.w * 1.5, window.h * 1.4));
     // The doorway spills onto the porch, wider and dimmer than a window.
-    const door = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 1.5), doorMaterial);
-    door.name = `TownDoorGlow:${building.id}`;
-    door.position.set(0, 0.66, face);
-    door.renderOrder = RenderLayers.gameplayFade;
-    parcel.add(door);
-    group.add(parcel);
+    doors.push(place({ x: 0, y: 0.66 }, 1.3, 1.5));
+  }
+  for (const [name, matrices, glowMaterial] of [
+    ['TownWindowGlowPanes', windows, material],
+    ['TownDoorGlowPanes', doors, doorMaterial],
+  ] as const) {
+    const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1), glowMaterial, Math.max(1, matrices.length));
+    mesh.name = name;
+    mesh.renderOrder = RenderLayers.gameplayFade;
+    matrices.forEach((matrix, index) => mesh.setMatrixAt(index, matrix));
+    mesh.count = matrices.length;
+    group.add(mesh);
   }
   return group;
 }
