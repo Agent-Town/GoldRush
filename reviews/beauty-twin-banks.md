@@ -3,7 +3,7 @@
 **Slice/branch:** `beauty/twin-banks` (dedicated Opus-5 shift, worktree `gr-task-beauty-twin-banks`, solo writer)
 **Brief:** `docs/beauty/e1-twin-banks-brief.md` · **Program laws:** `docs/beauty/README.md`
 **Base:** `c708f27d` (origin/main at pre-flight, 2026-08-02) · **Date:** 2026-08-02 → 08-03
-**Boards:** `artifacts/beauty-twin-banks/<stage>/` — stages `before`, `u1`, `u2`, `u3`, `u4`
+**Boards:** `artifacts/beauty-twin-banks/<stage>/` — stages `before`, `u1`, `u2`, `u3`, `u4`, `final`
 **Verdict:** ✅ **THREE UPGRADES KEPT, ONE PARTIAL, ONE NOT ATTEMPTED — and the two that did not land
 name a pipeline defect that no beauty shift on this map can route around.**
 
@@ -15,8 +15,9 @@ The braid runs. The map's thesis — a living braided river — was the stillest
 two channels measured **33,21,10** and **17,13,8** at their centrelines, near-black ink slots); it now
 carries two depth-tested water ribbons cut from the sculpt's own mask polylines, a wet-margin and
 skylight repaint that lifts the channel walls the sun cannot reach by up to **+66%**, and a reed bed
-that is damp, jittered, grounded and moving. Cost: **+4 draw calls, +566 triangles, p95 within
-run-to-run noise** against a +15% law.
+that is damp, jittered, grounded and moving — and both ford pans now read wet under pressure. Cost:
+**+5 draw calls, +570 triangles, +0.0% p95 / +1.1% avg measured A/B against its own build**, against
+a +15% law.
 
 ---
 
@@ -26,12 +27,12 @@ run-to-run noise** against a +15% law.
 |---|---------|---------|----------------------|---------------------------|-----------|
 | U1 | Water moves in the braid | ✅ **KEPT** | `before/desktop-chrome-2-braid-run-camera.png` → `u1/…` | A/B same session: **15.1 → 15.4 ms (+2.0%)**, avg 8.81 → 8.97 | 89 → 91 (+2) |
 | U2 | Wet margins, banked foam, gold north | ✅ **KEPT** | `u1/…-2-braid-run-camera.png` → `u2/…` | 10.2 → 10.3 (atlas-only; A/B unchanged) | 91 (unchanged) |
+| U2b | The ford pans read wet | ✅ **KEPT** (added after the honest line named it) | `u4/…-3-west-ford-pressure.png` → `final/…` | inside noise | 93 → 94 (+1) |
 | U3 | Damp reeds | ✅ **KEPT** | `u2/…-2-braid-run-camera.png` → `u3/…` (+ 3× tuft crops in this review) | inside noise | 91 → 92 (+1) |
 | U4 | Two homesteads, two lives | ⚠️ **PARTIAL — mount dressing kept, new bodies REVERTED** | `u3/…-5-both-banks-overview.png` → `u4/…` | inside noise | 92 → 93 (+1) |
 | U5 | The braid continues to the horizon | ❌ **NOT ATTEMPTED — asset pipeline refused** | — (the standing MQ-2 check ran: `u4/desktop-chrome-6-wide-aspect-join.png`) | — | — |
 
-**Totals, before → final:** 89 → 93 draw calls, 127,888 → 128,454 triangles (+0.44%), mobile 61 → 64
-calls. Frame p95 across five identical-code runs of the same stage ranged **10.2–24.1 ms**, which is
+**Totals, before → final:** 89 → 94 draw calls, 127,888 → 128,458 triangles (+0.45%). Frame p95 across five identical-code runs of the same stage ranged **10.2–24.1 ms**, which is
 larger than any effect measured here — so the honest perf statement is the A/B below, not a
 before-commit/after-commit p95 pair.
 
@@ -45,13 +46,14 @@ withheld, and the spec measures both arms in one session at one camera
 (`e2e/beauty-twin-banks.spec.ts`, "the beauty pass pays its frame budget, measured against its own
 build"). Median of three, desktop 1280×800 at the fresh-eye run camera:
 
-| Arm | p95 | avg | calls | triangles |
+| Arm (final tree, median of 3) | p95 | avg | calls | triangles |
 |-----|-----|-----|-------|-----------|
-| `?nochannelwater` (dressing withheld) | 15.1 ms | 8.81 | 89 | 127,888 |
-| shipped | 15.4 ms | 8.97 | 91 | 128,040 |
+| `?nochannelwater` (water withheld) | 10.3 ms | 8.52 | 91 | 128,302 |
+| shipped | 10.3 ms | 8.61 | 94 | 128,458 |
 
-**+2.0% p95, +1.8% avg, exactly +2 draw calls.** Mobile 390px, median of two: 20.3 → 20.7 ms (+2%),
-61 → 63 calls. The law is +15%.
+**+0.0% p95, +1.1% avg, exactly +3 draw calls** (two channel ribbons and one sheet over both ford
+pans). At U1, before the ford sheet, the same protocol measured +2.0% p95 / +1.8% avg for +2 calls;
+mobile 390px, median of two: 20.3 → 20.7 ms (+2%). The law is +15%.
 
 The same flag is the shift's honesty instrument: every suite behaves identically with it on, because
 the water is decoration.
@@ -171,6 +173,20 @@ shader draws each glint as a thin line at the anchor's z, so an anchor 1 m off-c
 instead of the current. Desktop only by the shipped `waterQuality ≥ 0.75` gate; mobile keeps its
 quality budget.
 
+### U2b — the ford pans read wet ✅ KEPT
+
+Added after this review's own honest line named it as the highest-value thing left that needed no
+new pipeline. Both fords are cut below the water plane across an 11 m band while only a 3.4 m ribbon
+crossed them, so the crossings rendered as brown gravel with a stripe of river through them and the
+pressure board showed enemies wading dry ground. One sheet now covers both pans, built from the
+mask's own ford rects and carrying the shipped FORD branch of the water shader — which already reads
+across in world z and fades at both ends of its uv span, exactly what a pan needs.
+
+Measured at the west pan centre (−16, 0) against the dry bank nine metres north, on the pressure
+board: the pan's blue-to-red ratio is now **more than 1.3× the bank's**, asserted permanently; 8,536
+pixels of that board changed. One draw call, four triangles, and the stepping stones finally sit in
+water instead of on it.
+
 ## U3 — Damp reeds ✅ KEPT
 
 The class was `grassGeometry` scaled thinner: two crossed quads of equal height in one flat colour,
@@ -256,6 +272,18 @@ the contract's water block declares no `centerZ`/`halfWidth`. The real channels 
 teaching the scatter about the sculpt's mask — the same mask F-OP5-1 keeps owner-gated — so it is
 deliberately left alone. It is why the reeds read as bank grass rather than a river's edge.
 
+**F-BTB-5 (non-blocking, mechanism for a known flake) — `tile-identity-pass`'s determinism red is a
+height-source boot race, not scatter.** The suite compares a whole-payload hash across two boots and
+reports only "hashes differ". A field-by-field probe run for this shift shows the drifting field is
+`terrain.height.probes` — e.g. dry-gulch river `0.328` on one boot and `-0.180` on the next, and
+twin-banks river `0.577` vs `-0.148`: the fingerprint is sometimes read before the 3D pilot's
+`installVisualHeightSource` has replaced the painted heightfield. It drifts identically on
+**e1-dry-gulch, which this shift never touched**, and the scatter classes, totals and signature do
+NOT drift — which is the proof that U3's reed work is not involved. `logs/suite-red-inventory.md:243`
+records the same test at 83.3% pass. The cure is for the fingerprint to wait on
+`data-terrain3d-pilot-state = ready` (or for the diagnostics to publish which height source answered),
+not for anyone to chase the scatter again.
+
 **F-BTB-4 (non-blocking) — `e2e/e1-twin-banks.spec.ts` is not the 10/10 the brief believes.** Three
 of its tests are in the tree's own red inventory (`logs/suite-red-inventory.md:93-97`, flake rates
 43.8% / 40% / mobile-only). They failed here and were **proven not to be this shift's**: with the
@@ -270,7 +298,9 @@ water disabled at the same commit (`?nochannelwater`), the same two desktop test
 | `npx tsc --noEmit` | clean |
 | `e2e/beauty-twin-banks.spec.ts` (new, permanent) | 5/5 desktop, 3/3 mobile |
 | `e2e/e1-twin-banks.spec.ts` (the brief's named suite) | 6 passed / 5 failed — all five fingerprint-match `logs/suite-red-inventory.md:93-97`; control run proves they are not this shift's (F-BTB-4) |
-| adjacent: `tile-identity-pass`, `landmark-brightness`, `terrain3d-claim-pilot` | see the gate log recorded with this branch |
+| `e2e/landmark-brightness.spec.ts` | 4/4 (both viewports) — the lamp pane is opaque and depth-writing, as that suite requires |
+| `e2e/terrain3d-claim-pilot.spec.ts` | 8/10; the 2 reds are the 115%-p95 test timing out under a 30-test serial batch. **Passes alone: ratio 0.369 against a 1.15 ceiling** — and it boots `the-claim`, where every line this shift added is a no-op |
+| `e2e/tile-identity-pass.spec.ts` | 4/6; the 2 reds are the determinism fingerprint — **pre-existing and now explained, F-BTB-5** |
 | sculpt contract equality | vertices 25,921 / triangles 51,200 / bounds / mask agreement 0/0 — all byte-identical; only the three file hashes moved |
 | landmark footprints (sim) | `landmark-collision-contract.json` untouched; pack bounds returned to HEAD bytes |
 | zero console/page errors | asserted in every board test, both viewports |
@@ -303,8 +333,10 @@ draw calls measured against its own build.
    a 4×4 m dry hole in the river.
 5. **The reeds are bank grass.** See F-BTB-3. They are damp, they move, they have contact — and they
    are 4 m from the water.
-6. **The ford pans read dry.** Both fords are cut below the water plane across an 11 m band, and only
-   a 3.4 m ribbon crosses them, so the crossing itself is brown gravel with a stripe of water
-   through it. The pressure board (`3-west-ford-pressure.png`) shows enemies wading dry ground. This
-   is the single highest-value thing left that needs no new pipeline: two shallow ford sheets, one
-   draw call, inside the same mask.
+6. ~~**The ford pans read dry.**~~ **FIXED IN THIS SHIFT (U2b)** — this line was written, then
+   answered, and is left standing because the sequence is the point: the honest line found the
+   defect the five-upgrade plan had missed, and it cost one draw call.
+7. **The braid's kink is visible.** The mask is five points per channel, so both cuts turn through
+   a hard mitre at x=0 and x=±14. The water follows the sculpt faithfully — which means it inherits
+   the polyline's corners. A real river's bend has no vertex; smoothing the ribbon alone would peel
+   it off the bed, so this needs the mask, which is owner-gated.

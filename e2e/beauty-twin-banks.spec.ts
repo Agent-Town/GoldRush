@@ -195,8 +195,8 @@ test('the beauty pass pays its frame budget, measured against its own build', as
     path.join(ARTIFACT_DIR, `perf-ab-${testInfo.project.name}.json`),
     `${JSON.stringify({ stage: STAGE, project: testInfo.project.name, without, with: withWater }, null, 2)}\n`,
   );
-  // Exact and deterministic: the dressing is two extra draw calls, nothing else.
-  expect(withWater.calls - without.calls).toBe(2);
+  // Exact and deterministic: two channel ribbons and one sheet over both ford pans.
+  expect(withWater.calls - without.calls).toBe(3);
   expect(withWater.triangles).toBeGreaterThan(without.triangles);
   // p95 is a worst-5%-of-180-frames sample and swings several ms between identical runs, so the
   // spec guards a generous ceiling and the review reports the measured pair.
@@ -253,6 +253,30 @@ test('twin banks beauty board: west ford under pressure', async ({ page }, testI
   await page.waitForTimeout(2_600);
   await hideGameChrome(page);
   await shot(page, testInfo, '3-west-ford-pressure');
+
+  // The crossing has to READ wet, not merely be classified wet: the pan is the one place a player
+  // decides to step or not, and it is where the sim and the render used to disagree on sight.
+  expect(await page.locator('canvas').getAttribute('data-terrain3d-pilot-ford-water')).toBe('1');
+  const fordProbe = await page.evaluate(() => ({
+    zone: window.__GR_TEST__!.terrainSample(-16, 0).zone,
+    pan: window.__GR_TEST__!.screenPoint(-16, 0, 0.037),
+    bank: window.__GR_TEST__!.screenPoint(-16, 9, window.__GR_TEST__!.terrainVisualY(-16, 9)),
+  }));
+  expect(fordProbe.zone).toBe('ford');
+  const image = PNG.sync.read(await page.screenshot());
+  const viewport = page.viewportSize()!;
+  const read = (point: { x: number; y: number; inView: boolean }): number[] => {
+    expect(point.inView).toBe(true);
+    const offset =
+      (Math.round((point.y * image.height) / viewport.height) * image.width +
+        Math.round((point.x * image.width) / viewport.width)) * 4;
+    return [image.data[offset]!, image.data[offset + 1]!, image.data[offset + 2]!];
+  };
+  // A ford is pale on purpose (the shipped shader tints it toward wet gravel, not deep teal), so
+  // the honest test is not "is it green" but "is it cooler than the dry bank nine metres away".
+  const pan = read(fordProbe.pan);
+  const bank = read(fordProbe.bank);
+  expect(pan[2] / pan[0], `pan ${pan.join(',')} vs bank ${bank.join(',')}`).toBeGreaterThan((bank[2] / bank[0]) * 1.3);
   expectClean(errors);
 });
 

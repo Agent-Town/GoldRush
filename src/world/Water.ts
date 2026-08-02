@@ -69,6 +69,14 @@ export type WaterRibbonConfig = {
   name: string;
 };
 
+export type WaterFordConfig = {
+  pans: ReadonlyArray<{ minX: number; maxX: number; minZ: number; maxZ: number }>;
+  halfDepth: number;
+  surfaceY: number;
+  depth: number;
+  name: string;
+};
+
 // A braid channel is ~3 m wide, where the shared river shader's cross-section profile — a
 // 0.95-unit alpha ramp in from the visual edge, and a banked-foam line 0.72 units either side
 // of the river half-width — would swallow the whole ribbon in fade and foam. Rather than fork
@@ -268,6 +276,58 @@ export function createWaterRibbon(config: WaterRibbonConfig): THREE.Mesh {
   mesh.name = config.name;
   mesh.userData.renderOnly = true;
   mesh.userData.visualHalfWidth = config.halfWidth;
+  mesh.renderOrder = RenderLayers.groundDecals;
+  mesh.receiveShadow = false;
+  mesh.castShadow = false;
+  mesh.frustumCulled = false;
+  return mesh;
+}
+
+/**
+ * The shallow sheet over a mask's ford rects — the crossing a player reads before stepping.
+ *
+ * One mesh for every pan on the tile, carrying the shipped ford water config, so a braid's
+ * crossings read wet-but-passable instead of brown gravel with a stripe of river through them.
+ * Depth-tested like the channel ribbons: the sculpt cuts the waterline, not this geometry.
+ */
+export function createFordSheet(config: WaterFordConfig): THREE.Mesh {
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const indices: number[] = [];
+  for (const pan of config.pans) {
+    const base = positions.length / 3;
+    for (const [x, z] of [[pan.minX, pan.minZ], [pan.maxX, pan.minZ], [pan.minX, pan.maxZ], [pan.maxX, pan.maxZ]] as const) {
+      positions.push(x, config.surfaceY, z);
+      uvs.push((x - pan.minX) / Math.max(0.001, pan.maxX - pan.minX), (z - pan.minZ) / Math.max(0.001, pan.maxZ - pan.minZ));
+    }
+    indices.push(base, base + 2, base + 1, base + 1, base + 2, base + 3);
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  geometry.computeBoundingSphere();
+  // The ford branch of the shared shader already does what a pan needs: it reads across in WORLD
+  // z (so visualHalfWidth is the pan's own half-depth) and fades the sheet at both ends of its uv
+  // span, which is how the shipped centre ford stops dead against dry gravel.
+  const material = createLivingWaterMaterial({
+    ford: true,
+    riverHalfWidth: config.halfDepth * 0.72,
+    visualHalfWidth: config.halfDepth,
+    lengthHalf: 512,
+    fadeStart: 511,
+    fordHalfWidth: config.halfDepth,
+    riverDepth: config.depth,
+    fordDepth: config.depth,
+    wadeDepth: Balance.terrainSim.wadeDepth,
+    deepDepth: Balance.terrainSim.deepDepth,
+    anchors: [],
+  });
+  material.color.setRGB(RIBBON_TINT.r, RIBBON_TINT.g, RIBBON_TINT.b, THREE.LinearSRGBColorSpace);
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.name = config.name;
+  mesh.userData.renderOnly = true;
   mesh.renderOrder = RenderLayers.groundDecals;
   mesh.receiveShadow = false;
   mesh.castShadow = false;

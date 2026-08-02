@@ -69,7 +69,7 @@ import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
 import { disposeObject3D } from '../utils/dispose';
 import { trackedGltfLoader } from '../assets/AssetLoading';
 import { installVisualHeightSource } from './Terrain';
-import { createWaterRibbon, updateWaterMaterial } from './Water';
+import { createFordSheet, createWaterRibbon, updateWaterMaterial } from './Water';
 
 type Contract = {
   tileId: string;
@@ -89,6 +89,10 @@ type MaskRegion = {
   zone: string;
   halfWidth?: number;
   points?: Array<{ x: number; z: number }>;
+  minX?: number;
+  maxX?: number;
+  minZ?: number;
+  maxZ?: number;
 };
 type PanoramaContract = Pick<Contract, 'vertices' | 'triangles' | 'meshCount' | 'materialCount'> & { renderOnly: boolean };
 type Mount = {
@@ -190,10 +194,12 @@ export async function contractPrefetchUrls(contractId: string): Promise<string[]
 // the sculpt is already below the water plane. Adopting that mask as SIM truth is a separate,
 // owner-gated decision (F-OP5-1): nothing here touches band classification, fords or crossings.
 type ChannelDressing = { depth: 'deep' | 'shallow'; glints?: Array<{ x: number; z: number }>; headFade: number; tailFade: number };
-const CONTRACT_CHANNEL_WATER: Record<string, { surfaceLift: number; edgeBleed: number; channels: Record<string, ChannelDressing> }> = {
+const CONTRACT_CHANNEL_WATER: Record<string, { surfaceLift: number; edgeBleed: number; fordDepth?: number; channels: Record<string, ChannelDressing> }> = {
   'e1-twin-banks': {
     surfaceLift: 0.012,
     edgeBleed: 0.22,
+    // Ford depth as a fraction of the wade..deep ramp: a pan a hero walks through, not a channel.
+    fordDepth: 0.06,
     channels: {
       // North runs deep and fast — the gold rides it, and only it: an asymmetric sparkle is how
       // a player learns which channel is the dangerous one without a line of UI. Anchors sit ON
@@ -527,6 +533,21 @@ function createChannelWater(contractId: string, contract: Contract): THREE.Group
       tailFade: channel.tailFade,
     }));
   }
+  // THE CROSSINGS READ WET (beauty U2's affordance half). Both fords are cut below the water plane
+  // across an 11 m band while only a 3.4 m ribbon crosses them, so the pans rendered as brown
+  // gravel with a stripe of river through it and the pressure board showed enemies wading dry
+  // ground. One sheet for both pans, from the mask's own ford rects.
+  const pans = regions.filter((region) => region.kind === 'rect' && region.zone === 'ford' && region.minX !== undefined);
+  if (dressing.fordDepth !== undefined && pans.length > 0) {
+    const halfDepth = Math.max(...pans.map((pan) => (pan.maxZ! - pan.minZ!) / 2));
+    group.add(createFordSheet({
+      name: 'Terrain3dChannelWater.fords',
+      pans: pans.map((pan) => ({ minX: pan.minX!, maxX: pan.maxX!, minZ: pan.minZ!, maxZ: pan.maxZ! })),
+      halfDepth,
+      surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift,
+      depth: wade + (deep - wade) * dressing.fordDepth,
+    }));
+  }
   if (group.children.length === 0) return undefined;
   const clock = { frame: -1, last: 0 };
   const advance = (renderer: THREE.WebGLRenderer): void => {
@@ -722,7 +743,12 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.scene.add(nextTerrain, nextPanorama);
       if (nextSkirt) host.scene.add(nextSkirt);
       if (nextChannelWater) host.scene.add(nextChannelWater);
-      host.canvas.dataset.terrain3dPilotChannelWater = String(nextChannelWater?.children.length ?? 0);
+      host.canvas.dataset.terrain3dPilotChannelWater = String(
+        nextChannelWater?.children.filter((child) => child.name.includes('-channel')).length ?? 0,
+      );
+      host.canvas.dataset.terrain3dPilotFordWater = String(
+        nextChannelWater?.children.filter((child) => child.name.endsWith('.fords')).length ?? 0,
+      );
       hiddenRelief = hidePaintedGround(host);
       host.canvas.dataset.terrain3dPilotTerrainLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'mounted';
