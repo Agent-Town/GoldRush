@@ -340,7 +340,9 @@ if (wanted('4')) {
   await page.evaluate(() => {
     const test = window.__GR_TEST__;
     test.grantGold(4000);
-    test.teleport(0, 8);
+    // Look north from the ford so the secured panel sits over the far bank and the
+    // sluice line + stockpile stay in frame below it.
+    test.teleport(0, 3);
     // Sluices ride the river line, wide enough apart to clear the secured panel;
     // the stockpile and a beacon sit back on the near bank beside them.
     test.placeFree('sluice', -12, 5.4);
