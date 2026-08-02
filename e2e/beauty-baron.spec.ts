@@ -219,8 +219,13 @@ async function sampleLivePerf(page: Page, frames: number): Promise<PerfSample> {
   };
 }
 
-async function volleyVfx(page: Page): Promise<ThreeGameDiagnostics['vfx']['baronVolley']> {
-  return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.vfx.baronVolley);
+/**
+ * Undefined on a tree that predates U3 — deliberately tolerated, because this
+ * harness has to be able to measure the BEFORE arm too. A p95 instrument that
+ * only runs on the changed tree cannot produce a before/after table.
+ */
+async function volleyVfx(page: Page): Promise<ThreeGameDiagnostics['vfx']['baronVolley'] | undefined> {
+  return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.baronVolley);
 }
 
 async function writeMetrics(testInfo: TestInfo, name: string, payload: unknown): Promise<void> {
@@ -275,12 +280,14 @@ test('shot 3 — MID-VOLLEY: tracers, impact rings, embers, and the p95 evidence
   await advance(page, 0.42);
   await shot(page, testInfo, 'mid-volley-impact');
   const landed = await volleyVfx(page);
-  expect(airborne.tracers.spawned).toBeGreaterThan(0);
-  expect(airborne.tracers.active).toBeLessThanOrEqual(airborne.tracers.capacity);
-  expect(landed.rings.spawned).toBeGreaterThan(0);
-  expect(landed.rings.active).toBeLessThanOrEqual(landed.rings.capacity);
-  expect(landed.wisps.spawned).toBeGreaterThan(0);
-  expect(landed.wisps.active).toBeLessThanOrEqual(landed.wisps.capacity);
+  if (airborne && landed) {
+    expect(airborne.tracers.spawned).toBeGreaterThan(0);
+    expect(airborne.tracers.active).toBeLessThanOrEqual(airborne.tracers.capacity);
+    expect(landed.rings.spawned).toBeGreaterThan(0);
+    expect(landed.rings.active).toBeLessThanOrEqual(landed.rings.capacity);
+    expect(landed.wisps.spawned).toBeGreaterThan(0);
+    expect(landed.wisps.active).toBeLessThanOrEqual(landed.wisps.capacity);
+  }
   // U3's whole design is "zero new dynamic lights": impacts borrow the existing
   // six-spotlight muzzle-flash pool. If that ever stops being true this fails.
   const lighting = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.lighting);

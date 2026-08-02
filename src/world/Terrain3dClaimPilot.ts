@@ -319,16 +319,22 @@ const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
 const DEFAULT_LANDMARK_PAINT: LandmarkPaint = { intensity: 3, tint: '#ffffff' };
 
 function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint = DEFAULT_LANDMARK_PAINT): void {
+  // An untinted body must not even round-trip its colour through getHex/setHex —
+  // that quantises to 8 bits per channel, and every map except e1-baron is
+  // supposed to come out of here byte-identical to before this seam existed.
+  const tint = paint.tint === DEFAULT_LANDMARK_PAINT.tint ? null : new THREE.Color(paint.tint);
   model.traverse((node) => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
     if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
-    // GLB materials are shared instances that survive a re-install, so the base
-    // colour is banked once — tinting a tinted material would compound.
     const material = mesh.material;
-    const banked = material.userData.landmarkBaseColor as number | undefined;
-    const base = banked ?? material.color.getHex();
-    material.userData.landmarkBaseColor = base;
-    material.color.setHex(base).multiply(new THREE.Color(paint.tint));
+    if (tint) {
+      // GLB materials are shared instances that survive a re-install, so the
+      // base colour is banked once — tinting a tinted material would compound.
+      const banked = material.userData.landmarkBaseColor as number | undefined;
+      const base = banked ?? material.color.getHex();
+      material.userData.landmarkBaseColor = base;
+      material.color.setHex(base).multiply(tint);
+    }
     material.emissive.set(paint.tint);
     material.emissiveMap = material.map;
     material.emissiveIntensity = paint.intensity;
@@ -382,7 +388,9 @@ transformed.y -= abs(baronSway) * baronSwayLift * ${(amplitude * 0.16).toFixed(3
     // silently inherits the first one's amplitude (Water.ts:82 pattern).
     material.customProgramCacheKey = () => `baron-sway:${amplitude}`;
     material.needsUpdate = true;
-    mesh.frustumCulled = false;
+    // Frustum culling stays ON: the displacement is <=0.185 on a 29 m body, far
+    // inside its bounding sphere, so disabling it would only buy draws when the
+    // banners are off-screen.
     mesh.onBeforeRender = () => {
       baronSwayTime.value = performance.now() * 0.001;
     };
