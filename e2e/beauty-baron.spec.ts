@@ -319,6 +319,18 @@ test('shot 4 — siege-line close-up: banners, wreck margin, scorch pads', async
   assertNoErrors(errors);
 });
 
+test('shot 6 — the horizon behind the fort: what the panorama says about his operation', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&contract=e1-baron&timescale=1&nolevel&nowaves&nokill&nosteal&nowreck&tier=full&seed=e1-baron-horizon');
+  await expectGlbTerrain(page);
+  await clearBriefing(page);
+  // Standing deep on his bank is the only pose in the run camera's reach that
+  // puts sky in frame at all — measured before repainting anything (verify the
+  // premise: a horizon nobody can see is not worth a batch of art).
+  await pinCamera(page, -21.0, 21.0, 20.0);
+  await shot(page, testInfo, 'horizon');
+  assertNoErrors(errors);
+});
+
 test('shot 5 — victory over the battle-scarred field', async ({ page }, testInfo) => {
   const errors = await openGame(page, '?debug&contract=e1-baron&timescale=8&nolevel&nowaves&nosteal&nowreck&tier=full&seed=e1-baron-victory');
   await expectGlbTerrain(page);
