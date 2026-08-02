@@ -684,6 +684,7 @@ export class TownScene {
     }
     this.scene.add(createContactSkirts(this.contactSkirtPlacements()));
     this.scene.add(createWearDecals(this.wearDecalPlacements()));
+    this.scene.add(createParcelDressing(this.visibleBuildings));
     for (const building of townBuildings) {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
@@ -3524,6 +3525,165 @@ function createContactSkirts(placements: readonly SkirtPlacement[]): THREE.Insta
     mesh.setMatrixAt(index, object.matrix);
   });
   mesh.count = placements.length;
+  return mesh;
+}
+
+// U4 — LIVED-IN PARCELS. Each earned building gets 3-4 pieces of its own trade at its own
+// doorstep, authored in the building's LOCAL frame (+Z is the approach side, +X its right) and
+// transformed by the same yaw the shell uses, so the dressing turns with the building.
+//
+// This is deliberately NOT the plate's decoration yards. The plate GLB already bakes eight
+// audited clusters (artifacts/town-plate-3d/decoration-clearance.json: tavern-workyard,
+// claim-notice-yard, ...) — but they sit 2.7-4u out beside and behind each building, they are
+// invisible on lite because lite has no plate, and none of them is where a player standing at a
+// door actually looks. These hug the walls instead. The door lane (|local x| < 0.6) is left
+// clear so the route stays walkable-looking, nothing extends past 0.45u from the footprint, and
+// no townPropAt/collision entry changes — a keg here is scenery, not a wall.
+type ParcelParts = { wood: BoxPart[]; pale: BoxPart[]; brass: BoxPart[]; barrel: CylinderPart[]; iron: CylinderPart[] };
+
+function parcelDressing(building: TownBuilding, parts: ParcelParts): void {
+  const slot = townPlazaSlot(building.id);
+  const yaw = Math.atan2(slot.approach.x - building.position.x, slot.approach.z - building.position.z);
+  const frame = { position: building.position, rotation: yaw };
+  const halfX = building.footprint.w * 0.5;
+  const front = building.footprint.d * 0.5 + 0.28;
+  const box = (into: BoxPart[], lx: number, y: number, lz: number, sx: number, sy: number, sz: number, spin = 0): void => {
+    const at = localPoint(frame, lx, lz);
+    into.push({ x: at.x, y, z: at.z, sx, sy, sz, rotation: yaw + spin });
+  };
+  const cyl = (into: CylinderPart[], lx: number, y: number, lz: number, radius: number, height: number, tilt = 0, roll = 0): void => {
+    const at = localPoint(frame, lx, lz);
+    into.push({ x: at.x, y, z: at.z, scale: [radius, height, radius], rotation: new THREE.Euler(tilt, yaw, roll) });
+  };
+  const bench = (lx: number, lz: number, spin: number): void => {
+    box(parts.wood, lx, 0.36, lz, 1.1, 0.09, 0.32, spin);
+    box(parts.wood, lx - 0.42, 0.18, lz, 0.09, 0.34, 0.26, spin);
+    box(parts.wood, lx + 0.42, 0.18, lz, 0.09, 0.34, 0.26, spin);
+  };
+
+  if (building.id === 'tavern') {
+    // Hitching rail, two kegs off the porch, and a blank sign plank on its bracket (no letters).
+    box(parts.wood, -halfX + 0.35, 0.42, front - 0.1, 0.1, 0.84, 0.1);
+    box(parts.wood, -halfX + 1.45, 0.42, front - 0.1, 0.1, 0.84, 0.1);
+    box(parts.wood, -halfX + 0.9, 0.74, front - 0.1, 1.24, 0.09, 0.09);
+    cyl(parts.barrel, halfX - 0.55, 0.23, front - 0.2, 0.24, 0.46);
+    cyl(parts.barrel, halfX - 0.18, 0.21, front - 0.55, 0.21, 0.42);
+    box(parts.wood, halfX - 1.25, 1.44, front - 0.3, 0.56, 0.08, 0.08);
+    box(parts.brass, halfX - 1, 1.36, front - 0.3, 0.05, 0.18, 0.05);
+    box(parts.wood, halfX - 1, 1.08, front - 0.3, 0.46, 0.38, 0.06, 0.1);
+    return;
+  }
+  if (building.id === 'claim_office') {
+    // Survey tripod and a bundle of unplanted stakes: the office's whole job in two objects.
+    for (const [tilt, roll] of [[0.22, 0], [-0.11, 0.19], [-0.11, -0.19]] as const) {
+      cyl(parts.iron, -halfX + 0.55, 0.5, front - 0.1, 0.045, 1, tilt, roll);
+    }
+    box(parts.brass, -halfX + 0.55, 1.04, front - 0.1, 0.18, 0.12, 0.18, 0.4);
+    for (const [index, spin] of [0.16, -0.1, 0.05].entries()) {
+      cyl(parts.barrel, halfX - 0.55 + index * 0.1, 0.32, front - 0.3, 0.055, 0.72, 0.26 + spin, spin);
+    }
+    return;
+  }
+  if (building.id === 'general_store') {
+    // Delivery not yet carried in: two crates, a barrel, a slumped sack.
+    box(parts.wood, -halfX + 0.55, 0.24, front - 0.15, 0.52, 0.48, 0.5, 0.1);
+    box(parts.wood, -halfX + 0.5, 0.7, front - 0.2, 0.44, 0.42, 0.42, 0.34);
+    cyl(parts.barrel, halfX - 0.6, 0.31, front - 0.15, 0.28, 0.62);
+    box(parts.pale, halfX - 1.15, 0.18, front - 0.05, 0.46, 0.36, 0.34, -0.4);
+    return;
+  }
+  if (building.id === 'schoolhouse') {
+    bench(-halfX + 0.75, front - 0.05, 0);
+    cyl(parts.barrel, halfX - 0.6, 0.36, front - 0.2, 0.34, 0.06, 1.36);
+    box(parts.pale, halfX - 0.25, 0.28, front - 0.35, 0.42, 0.5, 0.05, 0.25);
+    return;
+  }
+  if (building.id === 'assay_office') {
+    // Ore apron: samples in, proof out. The brass beam is the only metal in the parcel set.
+    box(parts.wood, -halfX + 0.6, 0.24, front - 0.15, 0.5, 0.46, 0.48, 0.12);
+    box(parts.wood, -halfX + 1.15, 0.2, front - 0.28, 0.42, 0.4, 0.4, -0.35);
+    box(parts.wood, halfX - 0.85, 0.22, front - 0.12, 0.72, 0.44, 0.5);
+    box(parts.brass, halfX - 0.85, 0.62, front - 0.12, 0.06, 0.36, 0.06);
+    box(parts.brass, halfX - 0.85, 0.82, front - 0.12, 0.5, 0.05, 0.05);
+    box(parts.brass, halfX - 1.06, 0.73, front - 0.12, 0.2, 0.03, 0.16);
+    box(parts.brass, halfX - 0.64, 0.73, front - 0.12, 0.2, 0.03, 0.16);
+    return;
+  }
+  if (building.id === 'chapel') {
+    bench(-halfX + 0.75, front - 0.05, 0);
+    bench(halfX - 0.75, front - 0.05, 0);
+    // Bell-garden border: five stones set along one side, never across the door lane.
+    for (let index = 0; index < 5; index += 1) {
+      const t = index / 4;
+      cyl(parts.iron, -halfX + 0.3 + t * 1.35, 0.08, front + 0.16 - t * t * 0.24, 0.12, 0.17);
+    }
+  }
+}
+
+function createParcelDressing(buildings: readonly TownBuilding[]): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownParcelDressing';
+  const parts: ParcelParts = { wood: [], pale: [], brass: [], barrel: [], iron: [] };
+  for (const building of buildings) parcelDressing(building, parts);
+  // Five palettes, but only TWO meshes: instanceColor tints each piece off one white material.
+  // Every mesh here is drawn twice (colour pass + shadow pass), so five meshes would have cost
+  // ten draw calls for forty small boxes — the whole point of instancing, thrown away.
+  const meshes = [
+    tintedInstances(
+      'TownParcelBoxes',
+      new THREE.BoxGeometry(1, 1, 1),
+      new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.84, metalness: 0.03 }),
+      [
+        ...parts.wood.map((part) => ({ part, colour: '#7a5132' })),
+        ...parts.pale.map((part) => ({ part, colour: '#e8d5a8' })),
+        ...parts.brass.map((part) => ({ part, colour: '#c4883a' })),
+      ],
+    ),
+    tintedInstances(
+      'TownParcelTurned',
+      new THREE.CylinderGeometry(1, 1, 1, 12),
+      new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.82, metalness: 0.03 }),
+      [
+        ...parts.barrel.map((part) => ({ part, colour: '#8b6c3f' })),
+        ...parts.iron.map((part) => ({ part, colour: '#5f4930' })),
+      ],
+    ),
+  ];
+  for (const mesh of meshes) {
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    group.add(mesh);
+  }
+  return group;
+}
+
+function tintedInstances(
+  name: string,
+  geometry: THREE.BufferGeometry,
+  material: THREE.Material,
+  entries: readonly { part: BoxPart | CylinderPart; colour: string }[],
+): THREE.InstancedMesh {
+  const mesh = new THREE.InstancedMesh(geometry, material, Math.max(1, entries.length));
+  mesh.name = name;
+  const object = new THREE.Object3D();
+  const colour = new THREE.Color();
+  entries.forEach(({ part, colour: hex }, index) => {
+    object.position.set(part.x, part.y, part.z);
+    if ('scale' in part) {
+      object.rotation.copy(part.rotation);
+      object.scale.set(...part.scale);
+    } else {
+      object.rotation.set(0, part.rotation ?? 0, 0);
+      object.scale.set(part.sx, part.sy, part.sz);
+    }
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+    // No convertSRGBToLinear here: three.js colour management already converts a hex string into
+    // the working space on Color.set. Doing it twice cubed the darkness and painted every crate,
+    // keg and stake in the town flat black — visible in reviews/shots-beauty-town/u4 history.
+    mesh.setColorAt(index, colour.set(hex));
+  });
+  mesh.count = entries.length;
   return mesh;
 }
 
