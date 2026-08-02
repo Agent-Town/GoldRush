@@ -65,6 +65,8 @@ import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom
 import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { isMapBeautyDisabled } from '../core/DebugParams';
+import { RenderLayers } from '../core/RenderLayers';
+import { ledgerSunShadowDirection } from './LightRig';
 import { Balance } from '../game/Balance';
 import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
 import { disposeObject3D } from '../utils/dispose';
@@ -188,6 +190,12 @@ const SCULPT_WATER_CONTRACTS = new Set(['the-claim']);
 const SCULPT_WATER_EDGE_FADE = 7;
 /** How much water stands over the ford shelf: ankle deep, still obviously a crossing. */
 const SCULPT_WATER_FORD_SKIM = 0.11;
+/** U3: contracts whose mounted landmarks get soft contact ellipses. */
+const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim']);
+/** Ellipse radius as a fraction of the model's footprint — a pool, not a slab. */
+const LANDMARK_CONTACT_SPREAD = 0.46;
+/** How far the pool leans away from the body, as a fraction of the body's height. */
+const LANDMARK_CONTACT_THROW = 0.30;
 const SCULPT_WATER_MAX_DELTA = 0.1;
 
 function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', source: 'painted' | 'glb', metrics?: Metrics, panorama?: THREE.Object3D, panoramaMetrics?: Metrics): void {
@@ -305,14 +313,100 @@ function preparePanorama(model: THREE.Object3D): void {
   }
 }
 
-function keepLandmarkPaintReadable(model: THREE.Object3D): void {
+/**
+ * Landmark paint would go dark without this, so it stays — but at intensity 3 the
+ * colour map is its own light source and the bodies float in flat white while the
+ * low sun models everything around them. U3 of the beauty shift makes the intensity
+ * a per-contract tunable and drops the Claim's to where the sun does the modelling
+ * and the emissive only keeps the paint off the floor.
+ */
+const LANDMARK_EMISSIVE_DEFAULT = 3;
+const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45 };
+
+function keepLandmarkPaintReadable(model: THREE.Object3D, intensity: number): void {
   model.traverse((node) => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
     if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
     mesh.material.emissive.set('#ffffff');
     mesh.material.emissiveMap = mesh.material.map;
-    mesh.material.emissiveIntensity = 3;
+    mesh.material.emissiveIntensity = intensity;
   });
+}
+
+/**
+ * U3 — soft contact ellipses under the mounted landmarks.
+ *
+ * Landmarks are mounted with castShadow off, so a lit body has nothing tying it to
+ * the ground. One instanced quad per mount, sized from the model's own footprint,
+ * using the shipped blob-shadow recipe (LightRig SpriteBlobShadows: #2e1b0e at 0.17,
+ * depthWrite off, polygon-offset, laid flat just above the terrain).
+ *
+ * Deliberately NOT a child of Terrain3dLandmarks: that group's children are counted
+ * as landmarks and their materials are audited for transparency by the map census,
+ * so a shadow parented there would read as a sixth landmark with an unlit material.
+ */
+function mountLandmarkContacts(
+  host: Host,
+  mounts: Array<{ id: string; model: THREE.Object3D }>,
+  heightAt: (x: number, z: number) => number,
+  waterY: number | undefined,
+): THREE.InstancedMesh | undefined {
+  if (isMapBeautyDisabled() || !LANDMARK_CONTACT_CONTRACTS.has(host.contractId) || !mounts.length) return undefined;
+  const geometry = new THREE.CircleGeometry(1, 24);
+  const material = new THREE.MeshBasicMaterial({
+    color: '#2e1b0e',
+    transparent: true,
+    opacity: 0.17,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+  const contacts = new THREE.InstancedMesh(geometry, material, mounts.length);
+  contacts.name = 'Terrain3dLandmarkContacts';
+  contacts.userData.renderOnly = true;
+  contacts.frustumCulled = false;
+  contacts.renderOrder = RenderLayers.groundShadows;
+  const box = new THREE.Box3();
+  const size = new THREE.Vector3();
+  const placer = new THREE.Object3D();
+  // Lean the pool the way the key light throws it, or a shadow centred under a solid
+  // building is simply covered by the building and never reads.
+  const lean = ledgerSunShadowDirection();
+  let written = 0;
+  for (const { model } of mounts) {
+    box.setFromObject(model);
+    box.getSize(size);
+    const ground = heightAt(model.position.x, model.position.z);
+    // No contact shadow on a body standing in water: the riparian pack sits in the
+    // channel, and a hard ellipse under the surface reads as a hole, not a shadow.
+    if (waterY !== undefined && ground < waterY) continue;
+    const throwLength = size.y * LANDMARK_CONTACT_THROW;
+    placer.position.set(
+      model.position.x + lean.x * throwLength,
+      ground + 0.022,
+      model.position.z + lean.y * throwLength,
+    );
+    placer.rotation.set(-Math.PI / 2, 0, -0.38);
+    placer.scale.set(
+      Math.max(0.7, size.x * LANDMARK_CONTACT_SPREAD),
+      Math.max(0.7, size.z * LANDMARK_CONTACT_SPREAD),
+      1,
+    );
+    placer.updateMatrix();
+    contacts.setMatrixAt(written, placer.matrix);
+    written += 1;
+  }
+  contacts.count = written;
+  contacts.instanceMatrix.needsUpdate = true;
+  if (!written) {
+    geometry.dispose();
+    material.dispose();
+    return undefined;
+  }
+  host.scene.add(contacts);
+  host.canvas.dataset.terrain3dPilotContactShadows = String(written);
+  return contacts;
 }
 
 /**
@@ -625,6 +719,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let landmarks: THREE.Group | undefined;
   let skirt: THREE.Object3D | undefined;
   let sculptWater: SculptWater | undefined;
+  let landmarkContacts: THREE.InstancedMesh | undefined;
   let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
   let loadedPanorama: THREE.Object3D | undefined;
@@ -743,7 +838,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           model.rotation.set(...mount.rotation);
           model.scale.fromArray(mount.scale);
           inspect(model, false);
-          if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
+          if (host.contractId !== 'e1-night-shift') {
+            keepLandmarkPaintReadable(model, LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT);
+          }
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
@@ -759,7 +856,18 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         }
         landmarks = nextLandmarks;
         host.scene.add(nextLandmarks);
+        try {
+          landmarkContacts = mountLandmarkContacts(
+            host,
+            nextLandmarks.children.map((model) => ({ id: model.name, model })),
+            heightAt,
+            sculptWater?.mesh.position.y,
+          );
+        } catch (error) {
+          host.canvas.dataset.terrain3dPilotContactShadows = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        }
         host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'mounted';
+        host.canvas.dataset.terrain3dPilotLandmarkEmissive = String(LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT);
         host.canvas.dataset.terrain3dPilotLandmarks = String(nextLandmarks.children.length);
         host.canvas.dataset.terrain3dPilotLandmarkSkipped = String(diagnostics.length);
         host.canvas.dataset.terrain3dPilotLandmarkDiagnostics = diagnostics.join('; ');
@@ -823,6 +931,12 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       sculptWater.dispose();
       sculptWater = undefined;
       delete host.canvas.dataset.terrain3dPilotSculptWater;
+    }
+    if (landmarkContacts) {
+      host.scene.remove(landmarkContacts);
+      disposeObject3D(landmarkContacts);
+      landmarkContacts = undefined;
+      delete host.canvas.dataset.terrain3dPilotContactShadows;
     }
     for (const model of [terrain, panorama, landmarks]) {
       if (!model) continue;
