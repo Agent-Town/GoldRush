@@ -222,6 +222,7 @@ import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { WrangleSystem } from '../systems/WrangleSystem';
 import { CombatVfx } from '../systems/CombatVfx';
+import { BaronVolleyVfx } from '../systems/BaronVolleyVfx';
 import { Vfx } from '../systems/Vfx';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
 import {
@@ -417,6 +418,8 @@ export class Game {
   private readonly xpMotes = new XpMotePool();
   private readonly goldPickups = new GoldPickupPool();
   private readonly combatVfx = new CombatVfx();
+  private readonly baronVolleyVfx = new BaronVolleyVfx();
+  private readonly baronImpactFlashFrom = new THREE.Vector3();
   private readonly baronStandardGroup = new THREE.Group();
   private readonly baronStandardPoleGeometry = new THREE.CylinderGeometry(0.035, 0.045, 1.75, 8);
   private readonly baronStandardClothGeometry = new THREE.PlaneGeometry(0.86, 0.58);
@@ -479,10 +482,20 @@ export class Game {
     },
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
     (position, freedOrdinal) => this.onEnemyKilled(position, freedOrdinal),
-    (at, origin, target) => {
+    (at, origin, target, ownerId) => {
       this.lightRig?.triggerMuzzleFlash(at, origin, target);
+      if (ownerId.startsWith(BARON_ROCKET_OWNER_PREFIX)) this.baronVolleyVfx.tracer(origin, target);
       const actor = this.nearestActorTo(origin);
       if (this.weaponForActor(actor) === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
+    },
+    // Impacts are lit by REUSING the muzzle-flash pool — six spotlights, no
+    // seventh. The flash is aimed straight down at the crater so the ground
+    // takes the light, which is what ties the sim event to the world.
+    (at, position, radius, ownerId) => {
+      if (!ownerId.startsWith(BARON_ROCKET_OWNER_PREFIX)) return;
+      this.baronVolleyVfx.impact(position, radius);
+      this.baronImpactFlashFrom.set(position.x, position.y + 2.6, position.z);
+      this.lightRig?.triggerMuzzleFlash(at, this.baronImpactFlashFrom, position);
     },
     (enemy, amount, died, ownerId) => {
       if (this.drillYard?.handleEnemyDamage(enemy, died, this.timeAlive)) return false;
@@ -2726,6 +2739,7 @@ export class Game {
     this.syncAudioLoops();
     this.vfx.update(delta);
     this.combatVfx.update(delta);
+    this.baronVolleyVfx.update(delta);
     this.syncBaronStandardDrop();
     this.syncBaronRocketCart();
     const visualStress =
@@ -2735,6 +2749,7 @@ export class Game {
     this.cameraZoom.update(delta);
     this.cameraRig.update(delta, this.localActor.renderPosition, this.localActor.velocity);
     this.syncMultiplayerNameChips();
+    this.baronVolleyVfx.setDetailBudget(this.runtimePerformanceVerdict);
     this.lightRig?.setStressFallback(visualStress || this.runtimePerformanceVerdict >= 1);
     this.lightRig?.setNightLightLimit(
       this.runtimePerformanceVerdict >= 2 ? Balance.render.night.degradedDynamicLights : null,
@@ -3744,6 +3759,7 @@ export class Game {
     this.scene.add(this.xpMotes.group);
     this.scene.add(this.goldPickups.group);
     this.scene.add(this.combatVfx.group);
+    this.scene.add(this.baronVolleyVfx.group);
     this.primaryActor.group.position.copy(this.heroStart);
     this.syncHeroVisualHeight();
     for (const actor of this.actors) actor.snapRenderState();
@@ -4478,6 +4494,7 @@ export class Game {
         floatTextPool: this.vfx.capacity,
         lastFloatText: this.vfx.lastFloatText,
         combat: this.combatVfx.diagnostics(),
+        baronVolley: this.baronVolleyVfx.diagnostics(),
       },
       performance: performanceTierDiagnostics(),
       readability: {
@@ -6215,6 +6232,7 @@ export class Game {
     this.e7ArsenalSystem.reset();
     this.damSurge?.reset();
     if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge?.trigger(this.timeAlive);
+    this.baronVolleyVfx.reset();
     this.lightRig?.resetTransientLights();
     this.actorWeapons.clear();
     this.activeWeapon = 'rig';

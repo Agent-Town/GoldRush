@@ -592,6 +592,7 @@ interface ThreeGameDiagnostics {
       ticks: { active: number; capacity: number };
       rings: { active: number; capacity: number };
     };
+    baronVolley: import('./systems/BaronVolleyVfx').BaronVolleyVfxDiagnostics;
   };
   performance: {
     tier: 'full' | 'balanced' | 'lite';

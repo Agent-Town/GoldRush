@@ -429,13 +429,26 @@ function dressLandmark(model: THREE.Object3D, contractId: string, mountId: strin
   model.add(lamp);
 }
 
-function keepLandmarkPaintReadable(model: THREE.Object3D, intensity = 3): void {
+function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint = DEFAULT_LANDMARK_PAINT): void {
+  // An untinted body must not even round-trip its colour through getHex/setHex —
+  // that quantises to 8 bits per channel, and every map except e1-baron is
+  // supposed to come out of here byte-identical to before this seam existed.
+  const tint = paint.tint === DEFAULT_LANDMARK_PAINT.tint ? null : new THREE.Color(paint.tint);
   model.traverse((node) => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
     if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
-    mesh.material.emissive.set('#ffffff');
-    mesh.material.emissiveMap = mesh.material.map;
-    mesh.material.emissiveIntensity = intensity;
+    const material = mesh.material;
+    if (tint) {
+      // GLB materials are shared instances that survive a re-install, so the
+      // base colour is banked once — tinting a tinted material would compound.
+      const banked = material.userData.landmarkBaseColor as number | undefined;
+      const base = banked ?? material.color.getHex();
+      material.userData.landmarkBaseColor = base;
+      material.color.setHex(base).multiply(tint);
+    }
+    material.emissive.set(paint.tint);
+    material.emissiveMap = material.map;
+    material.emissiveIntensity = paint.intensity;
   });
 }
 
@@ -1176,7 +1189,15 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           inspect(model, false);
           if (host.contractId !== 'e1-night-shift') {
             const live = LIVE_SPRING_POND_CONTRACTS.has(host.contractId) && mount.id === 'isolated_spring';
-            keepLandmarkPaintReadable(model, live ? DRY_GULCH_SPRING_EMISSIVE : (LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT));
+            const contractIntensity = LANDMARK_EMISSIVE[host.contractId];
+            const paint = live
+              ? { intensity: DRY_GULCH_SPRING_EMISSIVE, tint: DEFAULT_LANDMARK_PAINT.tint }
+              : (LANDMARK_PAINT[host.contractId]?.[mount.id]
+                ?? (contractIntensity !== undefined ? { intensity: contractIntensity, tint: DEFAULT_LANDMARK_PAINT.tint } : DEFAULT_LANDMARK_PAINT));
+            keepLandmarkPaintReadable(model, paint);
+          }
+          if (host.contractId === 'e1-baron' && BARON_SWAY_AMPLITUDE[mount.id] !== undefined) {
+            installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
           }
           if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
           dressLandmark(model, host.contractId, mount.id);
@@ -1318,4 +1339,96 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     channelWater = undefined;
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
   };
+}
+
+
+type LandmarkPaint = { intensity: number; tint: string };
+
+
+/**
+ * Per-contract landmark paint. The default — self-lit 3x off the body's own
+ * albedo, tinted white — is what keeps every landmark on every map readable
+ * under the day rig, and it stays the default for all of them.
+ *
+ * e1-baron is the one map that needs a SIDE. The finale is a duel between a warm
+ * home bank and a cold company one (docs/beauty/e1-baron-brief.md U2), and the
+ * fort bodies were reading as the same warm ochre timber as the player's own
+ * gear. Turning their readability down and their hue toward wet iron makes the
+ * far bank loom instead of blend — while the oxblood banners keep an ember lift,
+ * because his brand is the one warm thing allowed on that side. The floor here
+ * is deliberate: the brief's own warning is "MENACE, not invisibility", so no
+ * body drops below 1.5 and the silhouette edges stay lit.
+ */
+const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
+  'e1-baron': {
+    fortified_far_bank: { intensity: 1.7, tint: '#93a0aa' },
+    siege_line: { intensity: 1.9, tint: '#9ba5ab' },
+    seized_headframe: { intensity: 2.1, tint: '#a9a9a6' },
+    oxblood_banners: { intensity: 3.4, tint: '#ffd2b4' },
+  },
+};
+
+
+const DEFAULT_LANDMARK_PAINT: LandmarkPaint = { intensity: 3, tint: '#ffffff' };
+
+
+/**
+ * U4 — banners in the wind. The Baron's claim-jumping company brand reads in the
+ * HUD every time he taunts, and hung dead in the world. This is a vertex-shader
+ * sway: no new draws, no new geometry, no CPU per-frame work beyond one uniform.
+ *
+ * The displacement is gated on the vertex's own HEIGHT, so poles stay planted in
+ * the ground and only cloth moves, and its phase comes from the vertex's own X —
+ * which means the six banners strung along one 29 m body each breathe on their
+ * own beat without a single per-instance attribute.
+ *
+ * Amplitudes are per-mount: the banner line gets a real flap, the siege line gets
+ * a third of it (its geometry is mostly stakes, and a swaying palisade would read
+ * as a bug rather than as weather).
+ */
+const BARON_SWAY_AMPLITUDE: Record<string, number> = { oxblood_banners: 0.185, siege_line: 0.06 };
+
+
+const BARON_SWAY_FLOOR = 2.2;
+
+
+const baronSwayTime = { value: 0 };
+
+
+function installBannerSway(model: THREE.Object3D, amplitude: number): void {
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.Material>;
+    if (!mesh.isMesh || Array.isArray(mesh.material)) return;
+    const material = mesh.material;
+    if (material.userData.baronSwayAmplitude === amplitude) return;
+    material.userData.baronSwayAmplitude = amplitude;
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.uBaronSwayTime = baronSwayTime;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nuniform float uBaronSwayTime;')
+        .replace(
+          '#include <begin_vertex>',
+          `#include <begin_vertex>
+float baronSwayLift = clamp((position.y - ${BARON_SWAY_FLOOR.toFixed(2)}) / 3.2, 0.0, 1.0);
+baronSwayLift *= baronSwayLift;
+float baronSwayPhase = position.x * 0.55;
+float baronSway = sin(uBaronSwayTime * 1.7 + baronSwayPhase) * 0.72 + sin(uBaronSwayTime * 2.9 + baronSwayPhase * 1.9 + 1.3) * 0.28;
+transformed.x += baronSway * baronSwayLift * ${amplitude.toFixed(3)};
+transformed.z += sin(uBaronSwayTime * 1.31 + baronSwayPhase * 0.7) * baronSwayLift * ${(amplitude * 0.45).toFixed(3)};
+transformed.y -= abs(baronSway) * baronSwayLift * ${(amplitude * 0.16).toFixed(3)};`,
+        );
+    };
+    // Two banner bodies must not share one compiled program, or the second one
+    // silently inherits the first one's amplitude (Water.ts:82 pattern).
+    material.customProgramCacheKey = () => `baron-sway:${amplitude}`;
+    material.needsUpdate = true;
+    // Frustum culling stays ON: the displacement is <=0.185 on a 29 m body, far
+    // inside its bounding sphere, so disabling it would only buy draws when the
+    // banners are off-screen.
+    mesh.onBeforeRender = () => {
+      baronSwayTime.value = performance.now() * 0.001;
+    };
+  });
 }
