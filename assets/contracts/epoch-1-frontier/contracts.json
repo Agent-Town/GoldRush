@@ -115,6 +115,9 @@
             "cactus": 24
           }
         },
+        "engineDependencies": [
+          { "dep": "dry-gulch-inert-fields", "status": "missing", "description": "Needs consumers for sluice water-source gating; the declared dry-gulch seam yield is tracked separately until that field is single-sourced." }
+        ],
         "lanes": {
           "spawnEdges": ["north", "south", "east", "west"],
           "territoryRingBiasWaves": 0,

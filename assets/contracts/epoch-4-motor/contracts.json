@@ -65,6 +65,9 @@
           "density": 0.28,
           "classCounts": { "rocks": 48, "dry_grass": 24, "wagon_ruts": 32, "claim_posts": 16, "cactus": 12 }
         },
+        "engineDependencies": [
+          { "dep": "dust-flats-tile-consumer", "status": "missing", "description": "Needs the booted DustFlatsTile consumer for the declared tar seams, roads, ORBIT spawn, and dry wash." }
+        ],
         "lanes": { "spawnEdges": ["north", "east", "south", "west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
       },
       "twist": {
@@ -176,7 +179,7 @@
           "description": "Teaches total mobility; attachment travels. The town that learned to BE a convoy will one day be a ship."
         },
         "engineDependencies": [
-          { "id": "convoy-claim-consumer", "status": "missing", "description": "Needs a moving-claim consumer: Hauler-only basing with no fixed pads, convoy advance along the road, brief rest-stop anchorage windows, and loss tied to the lead Hauler rather than a fixed stake." }
+          { "dep": "convoy-claim-consumer", "status": "missing", "description": "Needs a moving-claim consumer: Hauler-only basing with no fixed pads, convoy advance along the road, brief rest-stop anchorage windows, and loss tied to the lead Hauler rather than a fixed stake." }
         ],
         "palette": {
           "id": "long-road-graded-ochre",
@@ -292,7 +295,7 @@
           "description": "Teaches risk sequencing — which geyser do you ride first? The county is a boiling economy tamed well by well."
         },
         "engineDependencies": [
-          { "id": "wild-derrick-consumer", "status": "missing", "description": "Needs wild-derrick eruption scheduling, cap-to-claim conversion, the blowout wave each cap triggers, and tar sprites spawning from seams instead of edges." }
+          { "dep": "wild-derrick-consumer", "status": "missing", "description": "Needs wild-derrick eruption scheduling, cap-to-claim conversion, the blowout wave each cap triggers, and tar sprites spawning from seams instead of edges." }
         ],
         "palette": {
           "id": "gusher-county-crude-ochre",
@@ -391,7 +394,7 @@
           "description": "Teaches the economy of the dead and respect for old machines; the yard rewards those who leave the sleeper asleep, and no tooltip ever says so."
         },
         "engineDependencies": [
-          { "id": "salvage-race-consumer", "status": "missing", "description": "Needs a strip-under-pressure salvage economy, rival rustler crews working the same hulks, and the sleeper's wake trigger with its untold reward for leaving it asleep." }
+          { "dep": "salvage-race-consumer", "status": "missing", "description": "Needs a strip-under-pressure salvage economy, rival rustler crews working the same hulks, and the sleeper's wake trigger with its untold reward for leaving it asleep." }
         ],
         "palette": {
           "id": "boneyard-rust-dusk",

@@ -370,6 +370,11 @@ export type ContractEnemyVariant = {
   heroPursuitRange?: number;
   spawnEdges?: readonly ContractEdge[];
   spawnGates?: readonly ContractEnemySpawnGate[];
+  unitClass?: string;
+  vehicleChassis?: string;
+  travelClass?: 'boat' | 'depth';
+  waterRegions?: readonly string[];
+  art?: 'placeholder';
 };
 export type ContractEnemyLanternClass = 'rusher' | 'thief';
 export type ContractEnemySpawnGate = {
@@ -421,6 +426,55 @@ export type RailPathDescriptor = {
 export type ContractHarvestAnchor = {
   x: number;
   z: number;
+};
+export type ContractRectZone = {
+  id: string;
+  minX: number;
+  maxX: number;
+  minZ: number;
+  maxZ: number;
+  description?: string;
+};
+export type ContractEngineDependency = {
+  dep: string;
+  status: 'missing';
+  description: string;
+};
+export type ContractObjective = { id: string; description: string };
+export type ContractObjectiveMetadata = { description: string; teachingIntent: string };
+export type ContractDeepwaterFields = {
+  waterTile: {
+    id: string;
+    size: number;
+    regions: Array<ContractRectZone & {
+      depth: number;
+      depthClass: 'surface' | 'shallows' | 'reef' | 'wreck' | 'trench';
+      travel: Array<'swim' | 'boat' | 'depth'>;
+    }>;
+  };
+  claimBoat: {
+    id: string;
+    initialAnchorId: string;
+    anchors: Array<{ id: string; x: number; z: number }>;
+    pads: Array<{ id: string; x: number; z: number }>;
+  };
+  stormTrack: { regionId: string; westX: number; eastX: number };
+  corsairWaveSize: number;
+  wrecks: Array<{ id: string; era: string; x: number; z: number; depthClass: 'wreck' }>;
+};
+export type ContractGravity = {
+  feelG: number;
+  lobArcDistanceMultiplier: number;
+  movement: 'floaty' | 'free-fall';
+  projectileBehavior?: 'orbital-return';
+};
+export type ContractAtmosphere = { airIsWall: boolean; outsideDomes: 'suit-timer' | 'suit-only' };
+export type ContractPreserveSite = {
+  id: string;
+  kind: 'light' | 'song' | 'memory';
+  x: number;
+  z: number;
+  radius: number;
 };
 export type ContractTarSeam = ContractHarvestAnchor & {
   id: string;
@@ -567,6 +621,7 @@ export type ContractPracticeMode = {
 export type ContractManifest = {
   id: string;
   name: string;
+  description?: string;
   tileParams: {
     tileId: string;
     biome: string;
@@ -583,8 +638,25 @@ export type ContractManifest = {
     harvestAnchors?: ContractHarvestAnchor[];
     tarSeams?: ContractTarSeam[];
     roadCorridors?: ContractRoadCorridor[];
+    convoyRoute?: ContractHarvestAnchor[];
+    restStops?: Array<ContractRectZone & { anchorageSeconds: number }>;
     orbitSpawn?: ContractOrbitSpawn;
     dryWash?: ContractDryWash;
+    wildDerricks?: Array<ContractHarvestAnchor & { id: string; radius: number; eruptionCycleSeconds: number; eruptionOffsetSeconds: number }>;
+    outhouseGeyser?: ContractHarvestAnchor & { id: string; radius: number; oncePerRun: boolean };
+    salvageHulks?: Array<ContractHarvestAnchor & { id: string; kind: 'flivver' | 'boiler' | 'hauler' }>;
+    sleeper?: ContractHarvestAnchor & { id: string; radius: number; wakes: 'only-if-disturbed' };
+    unmarkedWagon?: ContractHarvestAnchor & { id: string };
+    raceCourse?: { fastWaterZone: ContractRectZone; beacons: Array<ContractHarvestAnchor & { id: string; radius: number }> };
+    stillwater?: {
+      fogZone: ContractRectZone;
+      quietZones: ContractRectZone[];
+      noiseSources: Array<ContractHarvestAnchor & { id: string; radius: number }>;
+    };
+    flotilla?: {
+      formationZone: ContractRectZone;
+      hulls: Array<ContractHarvestAnchor & { id: string; district: string; radius: number }>;
+    };
     render?: TileRenderDescriptor;
     elevation?: TileElevationDescriptor;
     heightfield?: ContractHeightfieldDescriptor;
@@ -597,12 +669,38 @@ export type ContractManifest = {
     pylonSites?: ContractPylonSite[];
     capacitorSites?: ContractCapacitorSite[];
     ridgeGlow?: { x: number; z: number; color: string; intensity: number };
+    deepwater?: ContractDeepwaterFields;
+    gravity?: ContractGravity;
+    atmosphere?: ContractAtmosphere;
+    objectiveMetadata?: ContractObjectiveMetadata;
+    echoCanyonBands?: Array<ContractRectZone & { height: number }>;
+    broadcastMirrorZones?: ContractRectZone[];
+    signalNullZones?: ContractRectZone[];
+    interferenceFrontZones?: ContractRectZone[];
+    probeRecoveryZones?: ContractRectZone[];
+    suitOnlyZones?: ContractRectZone[];
+    orbitalScaffoldZones?: ContractRectZone[];
+    debrisFields?: ContractRectZone[];
+    handholdRoutes?: Array<{ id: string; points: ContractHarvestAnchor[] }>;
+    eclipseShadowZones?: ContractRectZone[];
+    archiveWingZones?: Array<ContractRectZone & { order: number }>;
+    emptyShelfZone?: ContractRectZone;
+    lightHoldSites?: Array<ContractHarvestAnchor & { id: string; radius: number }>;
+    eraDeckZones?: Array<ContractRectZone & { era: number }>;
+    preserveSites?: ContractPreserveSite[];
+    riverBand?: ContractRectZone;
+    creditsRiverZone?: ContractRectZone;
+    description?: string;
+    objectives?: ContractObjective[];
+    teachingIntent?: { description: string };
+    engineDependencies?: ContractEngineDependency[];
     /** Birth-loader output only (tile-persistence sim entries) — never authored in contract JSON. */
     noSpawnZones?: Array<{ x: number; z: number; radius: number }>;
     lanes: {
       spawnEdges: ContractEdge[];
       territoryRingBiasWaves: number;
       territoryRingLaneBias: number;
+      patrolRoutes?: Array<{ id: string; points: ContractHarvestAnchor[] }>;
     };
   };
   twist: {
@@ -619,6 +717,15 @@ export type ContractManifest = {
     enemyLanternClasses?: readonly ContractEnemyLanternClass[];
     enemyRoster?: readonly ContractEnemyVariant[];
     baron?: ContractBaronTwist;
+    broadcastMirror?: { description: string; delay: 'next-wave' };
+    signalSuppression?: { description: string; drones: false; playbooks: false; relayChains?: false };
+    interferenceFront?: { description: string; relayTarget: string; visual: string };
+    probePlayback?: { description: string; trigger: 'probe-recovered' };
+    zeroGravity?: { description: string; projectiles: 'orbital-return'; roads: 'handholds' };
+    eclipseEvent?: { description: string; trigger: 'mid-run'; firstRunWarning: false; solarEconomy: 'offline'; waveSet: 'dark' };
+    persistentPlanting?: { description: string };
+    scheduledRelocation?: { description: string };
+    persistentCanalChoices?: { description: string };
   };
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
@@ -751,19 +858,19 @@ const fallbackFamilyBundles: Record<string, EpochFamiliesBundle> = {
 const fallbackCapsBundles: Record<string, EpochCapsBundle> = {
   '../../assets/contracts/epoch-1-frontier/caps.json': frontierCaps as EpochCapsBundle,
 };
-const fallbackContractBundles: Record<string, ContractsBundle> = RELEASE_E1 ? {
-  '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts as ContractsBundle,
+const fallbackContractBundles: Record<string, unknown> = RELEASE_E1 ? {
+  '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts,
 } : {
-  '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts as ContractsBundle,
-  '../../assets/contracts/epoch-2-steamworks/contracts.json': steamworksContracts as unknown as ContractsBundle,
-  '../../assets/contracts/epoch-3-voltage/contracts.json': voltageContracts as unknown as ContractsBundle,
-  '../../assets/contracts/epoch-4-motor/contracts.json': motorContracts as unknown as ContractsBundle,
-  '../../assets/contracts/epoch-5-deepwater/contracts.json': deepwaterContracts as unknown as ContractsBundle,
-  '../../assets/contracts/epoch-6-atomic/contracts.json': atomicContracts as unknown as ContractsBundle,
-  '../../assets/contracts/epoch-7-signal/contracts.json': signalContracts as unknown as ContractsBundle,
-  '../../assets/contracts/epoch-8-orbital/contracts.json': orbitalContracts as unknown as ContractsBundle,
-  '../../assets/contracts/epoch-9-redfields/contracts.json': redfieldsContracts as unknown as ContractsBundle,
-  '../../assets/contracts/epoch-10-deepsky/contracts.json': deepskyContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts,
+  '../../assets/contracts/epoch-2-steamworks/contracts.json': steamworksContracts,
+  '../../assets/contracts/epoch-3-voltage/contracts.json': voltageContracts,
+  '../../assets/contracts/epoch-4-motor/contracts.json': motorContracts,
+  '../../assets/contracts/epoch-5-deepwater/contracts.json': deepwaterContracts,
+  '../../assets/contracts/epoch-6-atomic/contracts.json': atomicContracts,
+  '../../assets/contracts/epoch-7-signal/contracts.json': signalContracts,
+  '../../assets/contracts/epoch-8-orbital/contracts.json': orbitalContracts,
+  '../../assets/contracts/epoch-9-redfields/contracts.json': redfieldsContracts,
+  '../../assets/contracts/epoch-10-deepsky/contracts.json': deepskyContracts,
 };
 
 const manifests =
@@ -789,11 +896,12 @@ const capsBundles =
     : fallbackCapsBundles;
 const contractBundles =
   typeof import.meta.env === 'object'
-    ? import.meta.glob<ContractsBundle>('../../assets/contracts/*/contracts.json', {
+    ? import.meta.glob<unknown>('../../assets/contracts/*/contracts.json', {
         eager: true,
         import: 'default',
       })
     : fallbackContractBundles;
+const validatedContractBundles = new Map<string, ContractsBundle>();
 
 const orderedManifests = Object.values(manifests).sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 const manifestsById = new Map(orderedManifests.map((manifest) => [manifest.id, manifest]));
@@ -900,7 +1008,9 @@ export type ContractNumberRange = { min: number; max: number; step: number };
 
 export function contractNumberRange(path: string, value: number): ContractNumberRange {
   const key = path.split('.').at(-1) ?? '';
-  const signed = path.includes('.elevation.analytic.') || /^(?:.*X|.*Z|xOffset|zOffset|angle|rotation|.*Height)$/i.test(key);
+  const signed = path.includes('.elevation.analytic.')
+    || (key === 'depth' && path.includes('.deepwater.waterTile.regions['))
+    || /^(?:.*X|.*Z|xOffset|zOffset|angle|rotation|.*Height)$/i.test(key);
   const discrete = path.includes('.classCounts.') || /^(?:size|columns|rows|rotationSteps|territoryRingBiasWaves)$/i.test(key);
   const magnitude = Math.max(1, Math.abs(value) * 3);
   if (key === 'rotationSteps') return { min: 0, max: 3, step: 1 };
@@ -1087,7 +1197,7 @@ function loadContracts(manifest: EpochManifest): ContractsBundle {
   if (!contractsPath) {
     return { version: 1, epochId: manifest.id, contracts: [defaultContractFor(manifest)] };
   }
-  const bundle = contractBundles[`../../assets/contracts/${manifest.id}/${contractsPath}`];
+  const bundle = validatedContractBundles.get(`../../assets/contracts/${manifest.id}/${contractsPath}`);
   if (!bundle) throw new Error(`Missing contracts bundle for contract epoch: ${manifest.id}`);
   return bundle;
 }
@@ -1394,6 +1504,202 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+const AUTHORED_CONTRACT_KEYS = ['id', 'name', 'description', 'tileParams', 'twist', 'modes', 'practice', 'boardRow', 'briefing'] as const;
+const AUTHORED_TILE_KEYS = [
+  'tileId', 'biome', 'size', 'dimensions', 'river', 'ford', 'fords', 'buildZones', 'stakeMarkers', 'rails', 'waterSources',
+  'waterMask', 'harvestAnchors', 'tarSeams', 'roadCorridors', 'convoyRoute', 'restStops', 'orbitSpawn', 'dryWash', 'render',
+  'elevation', 'heightfield', 'authoredTerrain', 'palette', 'scatter', 'water', 'prePlacedBuildables', 'prebuiltPalisades',
+  'pylonSites', 'capacitorSites', 'ridgeGlow', 'deepwater', 'wildDerricks', 'outhouseGeyser', 'salvageHulks',
+  'sleeper', 'unmarkedWagon', 'raceCourse', 'stillwater', 'flotilla', 'gravity', 'atmosphere', 'objectiveMetadata',
+  'echoCanyonBands', 'broadcastMirrorZones', 'signalNullZones', 'interferenceFrontZones', 'probeRecoveryZones', 'suitOnlyZones',
+  'orbitalScaffoldZones', 'debrisFields', 'handholdRoutes', 'eclipseShadowZones', 'archiveWingZones', 'emptyShelfZone',
+  'lightHoldSites', 'eraDeckZones', 'preserveSites', 'riverBand', 'creditsRiverZone', 'description', 'objectives', 'teachingIntent',
+  'engineDependencies', 'lanes',
+] as const;
+const AUTHORED_TWIST_KEYS = [
+  'pressureEnabled', 'seamYieldMult', 'secureWave', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
+  'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'baron', 'broadcastMirror',
+  'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
+  'scheduledRelocation', 'persistentCanalChoices',
+] as const;
+const AUTHORED_LANE_KEYS = ['spawnEdges', 'territoryRingBiasWaves', 'territoryRingLaneBias', 'patrolRoutes'] as const;
+const AUTHORED_ENEMY_KEYS = [
+  'id', 'label', 'waveMin', 'hpScale', 'speedMult', 'visualScale', 'tint', 'boltDamageMult', 'thief', 'wrecker',
+  'contactDamageScale', 'buildingDamageScale', 'supportBuildingDamageScale', 'heroPursuitRange', 'spawnEdges', 'spawnGates',
+  'unitClass', 'vehicleChassis', 'travelClass', 'waterRegions', 'art',
+] as const;
+const AUTHORED_BARON_KEYS = [
+  'wave', 'spawnEdge', 'bossKind', 'variantId', 'variantLabel', 'hpScale', 'speedScale', 'scale', 'contactDamageScale',
+  'buildingDamageScale', 'supportBuildingDamageScale', 'pursuitRange', 'escortCount', 'tauntWaves', 'taunt', 'arrivalTitle',
+  'tauntTitle', 'defeatTitle', 'defeatLine', 'ledgerLabel', 'secureCallout', 'awardMedal', 'defeatBeat', 'medalBlurb',
+  'sciencePayoutMult', 'railRouteIndex', 'railSpeed', 'componentDegradeSpeedMult', 'components', 'rocketVolley',
+] as const;
+const AUTHORED_COMPONENT_KEYS = [
+  'id', 'label', 'hpScale', 'visualScale', 'xOffset', 'zOffset', 'tint', 'boltDamageMult', 'contactDamageScale',
+  'buildingDamageScale', 'supportBuildingDamageScale',
+] as const;
+const DECLARED_INERT_PATHS = [
+  'tileParams.tarSeams',
+  'tileParams.roadCorridors',
+  'tileParams.orbitSpawn',
+  'tileParams.dryWash',
+  'tileParams.convoyRoute',
+  'tileParams.restStops',
+  'tileParams.wildDerricks',
+  'tileParams.outhouseGeyser',
+  'tileParams.salvageHulks',
+  'tileParams.sleeper',
+  'tileParams.unmarkedWagon',
+  'tileParams.raceCourse',
+  'tileParams.stillwater',
+  'tileParams.flotilla',
+  'tileParams.description',
+  'tileParams.objectives',
+  'tileParams.teachingIntent',
+  'twist.fairground.crowdFlocks',
+  'tileParams.objectiveMetadata',
+  'tileParams.echoCanyonBands',
+  'tileParams.broadcastMirrorZones',
+  'tileParams.signalNullZones',
+  'tileParams.interferenceFrontZones',
+  'twist.broadcastMirror',
+  'twist.signalSuppression',
+  'twist.interferenceFront',
+  'tileParams.atmosphere.airIsWall',
+  'tileParams.probeRecoveryZones',
+  'tileParams.suitOnlyZones',
+  'tileParams.orbitalScaffoldZones',
+  'tileParams.debrisFields',
+  'tileParams.handholdRoutes',
+  'tileParams.eclipseShadowZones',
+  'twist.probePlayback',
+  'twist.zeroGravity.roads',
+  'twist.eclipseEvent',
+  'twist.persistentPlanting',
+  'twist.scheduledRelocation',
+  'twist.persistentCanalChoices',
+  'tileParams.archiveWingZones',
+  'tileParams.emptyShelfZone',
+  'tileParams.lightHoldSites',
+  'tileParams.riverBand',
+  'tileParams.creditsRiverZone',
+] as const;
+
+export function validateContractsBundle(value: unknown, expectedEpochId: string): ContractsBundle {
+  if (!exactRecord(value, ['version', 'epochId', 'contracts']) || value.version !== 1 || value.epochId !== expectedEpochId || !Array.isArray(value.contracts) || value.contracts.length === 0) {
+    throw new Error(`Invalid contracts bundle ${expectedEpochId}: expected version 1, matching epochId, and non-empty contracts[]`);
+  }
+  const ids = new Set<string>();
+  for (const [index, raw] of value.contracts.entries()) {
+    const reasons: ContractDescriptorReason[] = [];
+    const contract = validateAuthoredContractShape(raw, reasons);
+    if (contract) {
+      if (ids.has(contract.id)) addDescriptorReason(reasons, reason('contract_duplicate', 'Each authored contract needs a different ID.', 'id'));
+      ids.add(contract.id);
+      const parsed = parseContractDescriptor(contractDescriptorJson(contract), contract);
+      if (!parsed.ok) for (const next of parsed.reasons) addDescriptorReason(reasons, next);
+    }
+    if (reasons.length > 0) {
+      const id = isRecord(raw) && typeof raw.id === 'string' ? raw.id : `contracts[${index}]`;
+      const detail = descriptorRejection(reasons).reasons.map((entry) => `${entry.path ?? '<root>'}: ${entry.code}`).join(', ');
+      throw new Error(`Invalid authored contract ${expectedEpochId}/${id}: ${detail}`);
+    }
+  }
+  return value as ContractsBundle;
+}
+
+function validateAuthoredContractShape(value: unknown, reasons: ContractDescriptorReason[]): ContractManifest | null {
+  if (!isRecord(value) || Array.isArray(value)) {
+    addDescriptorReason(reasons, reason('field_section', 'An authored contract must be one ledger record.'));
+    return null;
+  }
+  addUnknownFieldReasons(value, AUTHORED_CONTRACT_KEYS, '', reasons);
+  const tileParams = isRecord(value.tileParams) && !Array.isArray(value.tileParams) ? value.tileParams : null;
+  const twist = isRecord(value.twist) && !Array.isArray(value.twist) ? value.twist : null;
+  if (!shortText(value.id)) addDescriptorReason(reasons, reason('contract_id', 'Every authored contract needs a short ID.', 'id'));
+  if (!shortText(value.name)) addDescriptorReason(reasons, reason('contract_name', 'Every authored contract needs a short name.', 'name'));
+  if (!tileParams) addDescriptorReason(reasons, reason('field_section', 'The terrain section has the wrong shape.', 'tileParams'));
+  if (!twist) addDescriptorReason(reasons, reason('field_section', 'The twist section has the wrong shape.', 'twist'));
+  if (!isRecord(value.boardRow) || Array.isArray(value.boardRow)) addDescriptorReason(reasons, reason('field_section', 'The board row has the wrong shape.', 'boardRow'));
+  if (!isRecord(value.briefing) || Array.isArray(value.briefing)) addDescriptorReason(reasons, reason('field_section', 'The briefing has the wrong shape.', 'briefing'));
+  if (!tileParams || !twist) return null;
+  addUnknownFieldReasons(tileParams, AUTHORED_TILE_KEYS, 'tileParams', reasons);
+  addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons);
+  if (!shortText(tileParams.tileId)) addDescriptorReason(reasons, reason('tile_id', 'Every authored contract needs a tile ID.', 'tileParams.tileId'));
+  if (!shortText(tileParams.biome)) addDescriptorReason(reasons, reason('tile_biome', 'Every authored contract needs a biome.', 'tileParams.biome'));
+  if (typeof tileParams.river !== 'boolean') addDescriptorReason(reasons, reason('field_type', 'river must be true or false.', 'tileParams.river'));
+  if (typeof tileParams.ford !== 'boolean') addDescriptorReason(reasons, reason('field_type', 'ford must be true or false.', 'tileParams.ford'));
+  if (!Array.isArray(tileParams.waterSources)) addDescriptorReason(reasons, reason('water_source_list', 'Water sources must be a list.', 'tileParams.waterSources'));
+  if (!isRecord(tileParams.lanes) || Array.isArray(tileParams.lanes)) {
+    addDescriptorReason(reasons, reason('field_section', 'The lane section has the wrong shape.', 'tileParams.lanes'));
+  } else {
+    addUnknownFieldReasons(tileParams.lanes, AUTHORED_LANE_KEYS, 'tileParams.lanes', reasons);
+  }
+  if (Array.isArray(twist.enemyRoster)) {
+    twist.enemyRoster.forEach((entry, index) => {
+      if (isRecord(entry) && !Array.isArray(entry)) addUnknownFieldReasons(entry, AUTHORED_ENEMY_KEYS, `twist.enemyRoster[${index}]`, reasons);
+      else addDescriptorReason(reasons, reason('field_section', 'An enemy row has the wrong shape.', `twist.enemyRoster[${index}]`));
+    });
+  } else if (twist.enemyRoster !== undefined) {
+    addDescriptorReason(reasons, reason('field_list', 'The enemy roster must be a list.', 'twist.enemyRoster'));
+  }
+  if (isRecord(twist.baron) && !Array.isArray(twist.baron)) {
+    addUnknownFieldReasons(twist.baron, AUTHORED_BARON_KEYS, 'twist.baron', reasons);
+    if (Array.isArray(twist.baron.components)) twist.baron.components.forEach((entry, index) => {
+      if (isRecord(entry) && !Array.isArray(entry)) addUnknownFieldReasons(entry, AUTHORED_COMPONENT_KEYS, `twist.baron.components[${index}]`, reasons);
+      else addDescriptorReason(reasons, reason('field_section', 'A boss component has the wrong shape.', `twist.baron.components[${index}]`));
+    });
+  } else if (twist.baron !== undefined) {
+    addDescriptorReason(reasons, reason('field_section', 'The boss section has the wrong shape.', 'twist.baron'));
+  }
+  return value as ContractManifest;
+}
+
+function addUnknownFieldReasons(
+  value: Record<string, unknown>,
+  allowed: readonly string[],
+  path: string,
+  reasons: ContractDescriptorReason[],
+): void {
+  for (const key of Object.keys(value)) {
+    if (allowed.includes(key)) continue;
+    addDescriptorReason(reasons, reason('field_unknown', 'This contract page carries an unknown field.', path ? `${path}.${key}` : key));
+  }
+}
+
+function validateEngineDependencies(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
+  const dependencies = contract.tileParams.engineDependencies;
+  if (dependencies !== undefined) {
+    if (!Array.isArray(dependencies) || dependencies.length === 0) {
+      addDescriptorReason(reasons, reason('engine_dependency_shape', 'Engine dependencies must be a non-empty list.', 'tileParams.engineDependencies'));
+    } else dependencies.forEach((entry, index) => {
+      const path = `tileParams.engineDependencies[${index}]`;
+      if (
+        !exactRecord(entry, ['dep', 'status', 'description'])
+        || !shortText(entry.dep)
+        || entry.status !== 'missing'
+        || typeof entry.description !== 'string'
+        || entry.description.trim() === ''
+        || entry.description.length > 1_024
+      ) {
+        addDescriptorReason(reasons, reason('engine_dependency_shape', 'An engine dependency needs dep, missing status, and a description.', path));
+      }
+    });
+  }
+  const inert = DECLARED_INERT_PATHS.find((path) => descriptorPathValue(contract, path) !== undefined);
+  if (inert && (!Array.isArray(dependencies) || dependencies.length === 0)) {
+    addDescriptorReason(reasons, reason(
+      'engine_dependency_required',
+      'Declared-inert contract data must name its missing engine dependency.',
+      inert,
+    ));
+  }
+}
+
+function descriptorPathValue(value: unknown, path: string): unknown {
+  return path.split('.').reduce<unknown>((current, key) => isRecord(current) ? current[key] : undefined, value);
+}
+
 const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
   'tileParams.render.terrainMesh': ['required', 'preferred', 'off'],
   'tileParams.heightfield.mode': ['visual'],
@@ -1417,8 +1723,9 @@ function sameDescriptorShape(
   template: unknown,
   path: string,
   reasons: ContractDescriptorReason[],
+  allowEmptySpawnEdges = false,
 ): boolean {
-  const variableArray = variableDescriptorArrayShape(value, path, reasons);
+  const variableArray = variableDescriptorArrayShape(value, path, reasons, allowEmptySpawnEdges);
   if (variableArray !== null) return variableArray;
   if (typeof template === 'number') {
     const range = contractNumberRange(descriptorSchemaPath(path), template);
@@ -1453,7 +1760,7 @@ function sameDescriptorShape(
     }
     let valid = true;
     value.forEach((entry, index) => {
-      if (!sameDescriptorShape(entry, template[index], `${path}[${index}]`, reasons)) valid = false;
+      if (!sameDescriptorShape(entry, template[index], `${path}[${index}]`, reasons, allowEmptySpawnEdges)) valid = false;
     });
     return valid;
   }
@@ -1479,7 +1786,7 @@ function sameDescriptorShape(
       valid = false;
       continue;
     }
-    if (!sameDescriptorShape(value[key], template[key], nextPath, reasons)) valid = false;
+    if (!sameDescriptorShape(value[key], template[key], nextPath, reasons, allowEmptySpawnEdges)) valid = false;
   }
   return valid;
 }
@@ -1499,7 +1806,7 @@ function normalizeContractDescriptor(
   }
   const candidateShape = withoutAuthoredTerrain(value);
   const templateShape = withoutAuthoredTerrain(template as unknown as Record<string, unknown>);
-  if (!sameDescriptorShape(candidateShape, templateShape, '', reasons)) return null;
+  if (!sameDescriptorShape(candidateShape, templateShape, '', reasons, template.id === 'e10-river')) return null;
 
   const rawLayer = Object.hasOwn(value.tileParams, 'authoredTerrain') ? value.tileParams.authoredTerrain : undefined;
   const claimSize = typeof value.tileParams.size === 'number' ? value.tileParams.size : 64;
@@ -1562,6 +1869,7 @@ function variableDescriptorArrayShape(
   value: unknown,
   path: string,
   reasons: ContractDescriptorReason[],
+  allowEmptySpawnEdges: boolean,
 ): boolean | null {
   if (path === 'tileParams.buildZones') {
     if (value === undefined) return true;
@@ -1637,7 +1945,7 @@ function variableDescriptorArrayShape(
       addDescriptorReason(reasons, reason('spawn_edge_list', 'Spawn edges must be a list of compass sides.', path));
       return false;
     }
-    if (value.length === 0) {
+    if (value.length === 0 && !allowEmptySpawnEdges) {
       addDescriptorReason(reasons, reason('spawn_edge_required', 'Keep at least one open edge for incoming waves.', path));
       return false;
     }
@@ -1663,6 +1971,7 @@ function variableDescriptorArrayShape(
 }
 
 function validateContractMap(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
+  validateEngineDependencies(contract, reasons);
   validateLightRamp(contract.twist.lightRamp, reasons);
   validateWaterMask(contract.tileParams.waterMask, reasons);
   const orbit = contract.tileParams.orbitSpawn;
@@ -1931,6 +2240,12 @@ function currentSearch(): string {
   } catch {
     return '';
   }
+}
+
+for (const [path, bundle] of Object.entries(contractBundles)) {
+  const epochId = path.match(/\/assets\/contracts\/([^/]+)\/contracts\.json$/)?.[1];
+  if (!epochId) throw new Error(`Invalid contracts bundle path: ${path}`);
+  validatedContractBundles.set(path, validateContractsBundle(bundle, epochId));
 }
 
 try {

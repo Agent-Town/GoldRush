@@ -295,6 +295,9 @@
           "description": "Escort the seed-vault caravan to the basin and choose which vaults to plant along the route.",
           "teachingIntent": "Investment across runs: present generosity becomes future shelter."
         },
+        "engineDependencies": [
+          { "dep": "persistent-planting-consumer", "status": "missing", "description": "Needs the profile-persistent planted-waypoint and objective consumers declared by this contract." }
+        ],
         "lanes": {
           "spawnEdges": [
             "west",
@@ -426,6 +429,9 @@
           "description": "Hold the alley while scheduled dust devils pick up and relocate unanchored buildings.",
           "teachingIntent": "Attachment versus adaptation, with relocation played for laughs."
         },
+        "engineDependencies": [
+          { "dep": "scheduled-relocation-consumer", "status": "missing", "description": "Needs the scheduled moving-column relocation and objective consumers declared by this contract." }
+        ],
         "lanes": {
           "spawnEdges": [
             "west",
@@ -596,6 +602,9 @@
           "description": "Choose whether to re-dig or demolish each inherited canal segment, changing its eventual flow forever.",
           "teachingIntent": "Inheritance is edited, not erased."
         },
+        "engineDependencies": [
+          { "dep": "persistent-canal-choice-consumer", "status": "missing", "description": "Needs the profile-persistent segment-choice, derived water-flow, and objective consumers declared by this contract." }
+        ],
         "lanes": {
           "spawnEdges": [
             "north",

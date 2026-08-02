@@ -121,6 +121,9 @@
           "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.25, "springPond": 0.2 },
           "speedMul": { "river": 0.45, "ford": 0.8, "shallows": 0.72, "springPond": 0.8 }
         },
+        "engineDependencies": [
+          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
+        ],
         "lanes": {
           "spawnEdges": ["west", "east", "north"],
           "territoryRingBiasWaves": 0,
@@ -361,6 +364,9 @@
           "depths": { "river": 1.25, "ford": 0.3, "shallows": 0.25 },
           "speedMul": { "river": 0.45, "ford": 0.8, "shallows": 0.72 }
         },
+        "engineDependencies": [
+          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
+        ],
         "lanes": {
           "spawnEdges": ["south", "north", "east", "west"],
           "territoryRingBiasWaves": 0,
@@ -555,6 +561,9 @@
           "depths": { "river": 1.1, "ford": 0.3, "shallows": 0.22 },
           "speedMul": { "river": 0.5, "ford": 0.82, "shallows": 0.75 }
         },
+        "engineDependencies": [
+          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
+        ],
         "lanes": {
           "spawnEdges": ["south", "east", "west", "north"],
           "territoryRingBiasWaves": 0,
@@ -739,6 +748,9 @@
           "depths": { "river": 1.15, "ford": 0.3, "shallows": 0.22 },
           "speedMul": { "river": 0.48, "ford": 0.82, "shallows": 0.74 }
         },
+        "engineDependencies": [
+          { "dep": "elevation-advisory-fields", "status": "missing", "description": "Needs registered consumers for the declared slopeMax and waterline advisory fields." }
+        ],
         "lanes": {
           "spawnEdges": ["south", "north", "east", "west"],
           "territoryRingBiasWaves": 0,

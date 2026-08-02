@@ -221,6 +221,9 @@
             "maxZ": 54
           }
         ],
+        "engineDependencies": [
+          { "dep": "broadcast-mirror-consumer", "status": "missing", "description": "Needs the playbook broadcast-mirror, echo-band, and objective consumers declared by this contract." }
+        ],
         "lanes": {
           "spawnEdges": [
             "north",
@@ -327,6 +330,9 @@
             "minZ": -54,
             "maxZ": 54
           }
+        ],
+        "engineDependencies": [
+          { "dep": "signal-suppression-consumer", "status": "missing", "description": "Needs the contract-level drone, playbook, and relay-chain suppression consumer declared by this contract." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -444,6 +450,9 @@
             "minZ": -54,
             "maxZ": 54
           }
+        ],
+        "engineDependencies": [
+          { "dep": "interference-front-consumer", "status": "missing", "description": "Needs the event-driven interference-front cycle and signal-muting consumer declared by this contract." }
         ],
         "lanes": {
           "spawnEdges": [

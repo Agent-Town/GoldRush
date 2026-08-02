@@ -140,6 +140,9 @@
           "airIsWall": true,
           "outsideDomes": "suit-timer"
         },
+        "engineDependencies": [
+          { "dep": "atmosphere-wall-consumer", "status": "missing", "description": "Needs the declared atmosphere wall and suit-timer consumer; gravity physics already has a registered consumer." }
+        ],
         "lanes": {
           "spawnEdges": [
             "north",
@@ -292,6 +295,9 @@
             "minZ": -54,
             "maxZ": 54
           }
+        ],
+        "engineDependencies": [
+          { "dep": "far-side-contract-consumers", "status": "missing", "description": "Needs the declared signal suppression, suit-only zones, probe recovery, playback, and atmosphere-wall consumers." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -471,6 +477,9 @@
               }
             ]
           }
+        ],
+        "engineDependencies": [
+          { "dep": "low-orbit-contract-consumers", "status": "missing", "description": "Needs the declared scaffold, debris, handhold-road, objective, and atmosphere-wall consumers; zero-gravity projectile physics already runs." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -667,6 +676,9 @@
             "minZ": -54,
             "maxZ": 54
           }
+        ],
+        "engineDependencies": [
+          { "dep": "eclipse-contract-consumers", "status": "missing", "description": "Needs the declared eclipse event, shadow-zone, objective, and atmosphere-wall consumers." }
         ],
         "lanes": {
           "spawnEdges": [

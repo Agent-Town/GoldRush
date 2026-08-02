@@ -106,10 +106,10 @@
           "sciencePayoutMult": 1,
           "componentDegradeSpeedMult": 1,
           "components": [
-            { "id": "claw", "label": "CLAW", "hpScale": 1, "xOffset": 0, "zOffset": 0, "tint": "#5b8a8a" },
-            { "id": "paddle_port", "label": "PORT PADDLE", "hpScale": 1, "xOffset": 0, "zOffset": -3, "tint": "#c4883a" },
-            { "id": "paddle_starboard", "label": "STARBOARD PADDLE", "hpScale": 1, "xOffset": 0, "zOffset": 3, "tint": "#c4883a" },
-            { "id": "hold", "label": "HOLD", "hpScale": 1, "xOffset": 3, "zOffset": 0, "tint": "#7f2633" }
+            { "id": "claw", "label": "CLAW", "hpScale": 1, "xOffset": -3.2, "zOffset": 0, "tint": "#5b8a8a" },
+            { "id": "paddle_port", "label": "PORT PADDLE", "hpScale": 1, "xOffset": -0.3, "zOffset": -2.4, "tint": "#c4883a" },
+            { "id": "paddle_starboard", "label": "STARBOARD PADDLE", "hpScale": 1, "xOffset": -0.3, "zOffset": 2.4, "tint": "#c4883a" },
+            { "id": "hold", "label": "HOLD", "hpScale": 1, "xOffset": 1.8, "zOffset": 0, "tint": "#7f2633" }
           ]
         },
         "enemyRoster": [
@@ -178,7 +178,7 @@
           "description": "Teaches storm-reading as a skill the player can feel improving by rewarding daring lines near the weather front."
         },
         "engineDependencies": [
-          { "id": "regatta-race-consumer", "status": "missing", "description": "Needs a checkpoint race and competing-racer loot consumer; storm scheduling and Claim-Boat movement already exist." }
+          { "dep": "regatta-race-consumer", "status": "missing", "description": "Needs a checkpoint race and competing-racer loot consumer; storm scheduling and Claim-Boat movement already exist." }
         ],
         "deepwater": {
           "waterTile": {
@@ -302,7 +302,7 @@
           "description": "Teaches subtraction as mastery and establishes quiet as a place before the Quiet becomes a threat in E10."
         },
         "engineDependencies": [
-          { "id": "noise-hunt-consumer", "status": "missing", "description": "Needs permanent fog and storm suppression plus noise emission and leviathan attraction for pumps, engines, and harpoon reloads." }
+          { "dep": "noise-hunt-consumer", "status": "missing", "description": "Needs permanent fog and storm suppression plus noise emission and leviathan attraction for pumps, engines, and harpoon reloads." }
         ],
         "deepwater": {
           "waterTile": {
@@ -440,7 +440,7 @@
           "description": "Teaches redundancy and convoy empathy; in co-op, each rider owns one hull."
         },
         "engineDependencies": [
-          { "id": "distributed-base-consumer", "status": "missing", "description": "Needs multi-hull base ownership, straggler targeting, nonfatal hull loss, formation reshaping, and one-hull-per-rider co-op assignment." }
+          { "dep": "distributed-base-consumer", "status": "missing", "description": "Needs multi-hull base ownership, straggler targeting, nonfatal hull loss, formation reshaping, and one-hull-per-rider co-op assignment." }
         ],
         "deepwater": {
           "waterTile": {

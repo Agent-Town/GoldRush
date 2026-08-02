@@ -223,6 +223,9 @@
             "radius": 4
           }
         ],
+        "engineDependencies": [
+          { "dep": "archive-world-consumers", "status": "missing", "description": "Needs the declared archive-wing, light-hold, empty-shelf, objective, procgen, and lore-unlock consumers." }
+        ],
         "lanes": {
           "spawnEdges": [
             "north",
@@ -426,6 +429,9 @@
             "radius": 3
           }
         ],
+        "engineDependencies": [
+          { "dep": "last-claim-objective-consumer", "status": "missing", "description": "Needs the declared objective metadata consumer; era decks and preserve sites already drive the finale systems." }
+        ],
         "lanes": {
           "spawnEdges": [
             "south",
@@ -530,6 +536,9 @@
           "minZ": -5,
           "maxZ": 5
         },
+        "engineDependencies": [
+          { "dep": "credits-river-consumer", "status": "missing", "description": "Needs the declared credits-river band, gold-fleck zone, and objective consumers." }
+        ],
         "lanes": {
           "spawnEdges": [],
           "territoryRingBiasWaves": 0,
