@@ -76,6 +76,7 @@ import { createSculptWater, type SculptWater } from './Water';
 import { createSunMotes, type SunMotes } from './SunMotes';
 import { installVisualHeightSource, waterSources } from './Terrain';
 import { createSpringPondSurface, type SpringPondSurface } from './Water';
+import { createFordSheet, createWaterRibbon, updateWaterMaterial } from './Water';
 
 type Contract = {
   tileId: string;
@@ -86,6 +87,19 @@ type Contract = {
   boundsMeters: { min: [number, number, number]; max: [number, number, number] };
   panoramaMount: Mount;
   landmarkMounts?: LandmarkMount[];
+  maskTruth?: { waterMask?: { id: string; regions: MaskRegion[] } };
+  maskAgreement?: { waterPlaneY?: number };
+};
+type MaskRegion = {
+  id: string;
+  kind: string;
+  zone: string;
+  halfWidth?: number;
+  points?: Array<{ x: number; z: number }>;
+  minX?: number;
+  maxX?: number;
+  minZ?: number;
+  maxZ?: number;
 };
 type PanoramaContract = Pick<Contract, 'vertices' | 'triangles' | 'meshCount' | 'materialCount'> & { renderOnly: boolean };
 type Mount = {
@@ -178,6 +192,59 @@ export async function contractPrefetchUrls(contractId: string): Promise<string[]
   );
   return [...new Set([selected.terrainUrl, selected.panoramaUrl, ...landmarks.filter(Boolean)])];
 }
+
+// RENDER-ONLY LIVING WATER OVER A SCULPTED CHANNEL (docs/beauty/e1-twin-banks-brief.md U1).
+//
+// The braid's two channels are cut into the mounted sculpt but painted near-black, because the
+// pilot hides every legacy living-water surface (LEGACY_GROUND_SLOTS below). This table names the
+// contracts whose sculpt carries polyline channels worth dressing, and how each channel reads.
+// The GEOMETRY is never authored here — it is read from the contract's own mask polylines, the
+// same table `build_twin_banks_braid.py` cut the relief from, so the water can only ever sit where
+// the sculpt is already below the water plane. Adopting that mask as SIM truth is a separate,
+// owner-gated decision (F-OP5-1): nothing here touches band classification, fords or crossings.
+type ChannelDressing = { depth: 'deep' | 'shallow'; glints?: Array<{ x: number; z: number }>; headFade: number; tailFade: number };
+const CONTRACT_CHANNEL_WATER: Record<string, { surfaceLift: number; edgeBleed: number; fordDepth?: number; channels: Record<string, ChannelDressing> }> = {
+  'e1-twin-banks': {
+    surfaceLift: 0.012,
+    edgeBleed: 0.22,
+    // Ford depth as a fraction of the wade..deep ramp: a pan a hero walks through, not a channel.
+    fordDepth: 0.06,
+    channels: {
+      // North runs deep and fast — the gold rides it, and only it: an asymmetric sparkle is how
+      // a player learns which channel is the dangerous one without a line of UI. Anchors sit ON
+      // the mask centreline (the shader draws each glint as a thin line at the anchor's z, so an
+      // anchor off the centreline lights the bank instead of the current).
+      'north-channel': {
+        depth: 'deep',
+        glints: [{ x: -19.5, z: 2.43 }, { x: -6.2, z: 2.89 }, { x: 8.1, z: 3.16 }, { x: 19.8, z: 2.34 }],
+        headFade: 3.2,
+        tailFade: 2.6,
+      },
+      'south-channel': { depth: 'shallow', headFade: 3.2, tailFade: 2.6 },
+    },
+  },
+};
+
+// TWO HOMESTEADS, TWO LIVES — RENDER SIDE (docs/beauty/e1-twin-banks-brief.md U4).
+// The map's story is one family holding both banks, and the pair ships as the same body under a
+// 0.09 rad rotation difference: at the run camera, and worse at 390px, nothing tells a player
+// which bank they are standing on. The bodies themselves could not be re-authored tonight — the
+// landmark pack no longer regenerates faithfully (see the review's U4 entry) — so the difference
+// is hung on the MOUNT instead: the south roof (the stake side, the loss condition) is graded
+// warm and carries a lamplit pane; the north outpost across the braid is graded cool and stays
+// dark. Same ids, same bodies, same footprints — the sim never sees this.
+type LandmarkDressing = { emissive: [number, number, number]; lamp?: { acrossX: number; upY: number; width: number; height: number } };
+const CONTRACT_LANDMARK_DRESSING: Record<string, Record<string, LandmarkDressing>> = {
+  'e1-twin-banks': {
+    south_bank_homestead: { emissive: [1.14, 0.99, 0.74], lamp: { acrossX: 0.68, upY: 0.56, width: 0.82, height: 0.62 } },
+    south_bank_winch: { emissive: [1.10, 0.97, 0.80] },
+    north_bank_homestead: { emissive: [0.78, 0.88, 1.02] },
+    north_bank_winch: { emissive: [0.80, 0.89, 1.02] },
+  },
+};
+// Saturated on purpose: ACES tone mapping walks a bright unlit pane toward white, and a lamp
+// that reads white reads as a hole in the wall.
+const LAMP_COLOUR = '#ff9c38';
 
 const BOUNDS_EPSILON = 0.03;
 const CONTINUATION_SAMPLE_DEPTH = 8;
@@ -331,6 +398,36 @@ function preparePanorama(model: THREE.Object3D): void {
  */
 const LANDMARK_EMISSIVE_DEFAULT = 3;
 const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45 };
+
+function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
+  const dressing = CONTRACT_LANDMARK_DRESSING[contractId]?.[mountId];
+  if (!dressing) return;
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    // keepLandmarkPaintReadable drives these bodies almost entirely off emissive (map + intensity
+    // 3), so the emissive colour — not the diffuse — is the lever that actually grades them.
+    mesh.material.emissive.setRGB(...dressing.emissive, THREE.LinearSRGBColorSpace);
+    mesh.material.needsUpdate = true;
+  });
+  if (!dressing.lamp) return;
+  const box = new THREE.Box3().setFromObject(model);
+  const lamp = new THREE.Mesh(
+    new THREE.PlaneGeometry(dressing.lamp.width, dressing.lamp.height),
+    // Opaque and depth-writing on purpose: e2e/landmark-brightness.spec.ts and the census both
+    // assert that no landmark material is transparent or skips depth write. A lit window does
+    // not need to be either — it is unlit paint that outshines the wall it sits on.
+    new THREE.MeshBasicMaterial({ color: LAMP_COLOUR }),
+  );
+  lamp.name = `${mountId}.Lamp`;
+  lamp.position.set(
+    THREE.MathUtils.lerp(box.min.x, box.max.x, dressing.lamp.acrossX) - model.position.x,
+    THREE.MathUtils.lerp(box.min.y, box.max.y, dressing.lamp.upY) - model.position.y,
+    box.max.z - model.position.z + 0.03,
+  );
+  lamp.userData.renderOnly = true;
+  model.add(lamp);
+}
 
 function keepLandmarkPaintReadable(model: THREE.Object3D, intensity = 3): void {
   model.traverse((node) => {
@@ -757,6 +854,69 @@ function hidePaintedRelief(host: Host): HiddenRelief[] {
   return hidden;
 }
 
+function createChannelWater(contractId: string, contract: Contract): THREE.Group | undefined {
+  const dressing = CONTRACT_CHANNEL_WATER[contractId];
+  const regions = contract.maskTruth?.waterMask?.regions ?? [];
+  if (!dressing || regions.length === 0) return undefined;
+  // `?nochannelwater` boots the identical build with the dressing withheld. It exists because a
+  // beauty claim is only worth what its A/B proves, and it also answers "is this render or sim?"
+  // in one reload: every suite behaves identically with it on, because the water is decoration.
+  if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('nochannelwater')) return undefined;
+  const wade = Balance.terrainSim.wadeDepth;
+  const deep = Balance.terrainSim.deepDepth;
+  const group = new THREE.Group();
+  group.name = 'Terrain3dChannelWater';
+  group.userData.renderOnly = true;
+  for (const region of regions) {
+    const channel = dressing.channels[region.id];
+    const points = region.points ?? [];
+    if (!channel || region.kind !== 'polyline_band' || region.zone !== 'river' || points.length < 2 || !region.halfWidth) continue;
+    group.add(createWaterRibbon({
+      name: `Terrain3dChannelWater.${region.id}`,
+      points,
+      halfWidth: region.halfWidth,
+      edgeBleed: dressing.edgeBleed,
+      // The mask agreement measured 0 dry ground inside the mask at this plane, so a surface
+      // just above it covers the cut channel and nothing else. Depth-tested, so wherever the
+      // ribbon would stray onto a bank the sculpt itself occludes it.
+      surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift,
+      // Render depth, not sim depth: it only picks a point on the shader's wade..deep colour
+      // ramp, so the contract's north-deeper-than-south ORDER reads as colour and foam.
+      depth: channel.depth === 'deep' ? deep : wade + (deep - wade) * 0.34,
+      glints: channel.glints ?? [],
+      headFade: channel.headFade,
+      tailFade: channel.tailFade,
+    }));
+  }
+  // THE CROSSINGS READ WET (beauty U2's affordance half). Both fords are cut below the water plane
+  // across an 11 m band while only a 3.4 m ribbon crosses them, so the pans rendered as brown
+  // gravel with a stripe of river through it and the pressure board showed enemies wading dry
+  // ground. One sheet for both pans, from the mask's own ford rects.
+  const pans = regions.filter((region) => region.kind === 'rect' && region.zone === 'ford' && region.minX !== undefined);
+  if (dressing.fordDepth !== undefined && pans.length > 0) {
+    const halfDepth = Math.max(...pans.map((pan) => (pan.maxZ! - pan.minZ!) / 2));
+    group.add(createFordSheet({
+      name: 'Terrain3dChannelWater.fords',
+      pans: pans.map((pan) => ({ minX: pan.minX!, maxX: pan.maxX!, minZ: pan.minZ!, maxZ: pan.maxZ! })),
+      halfDepth,
+      surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift,
+      depth: wade + (deep - wade) * dressing.fordDepth,
+    }));
+  }
+  if (group.children.length === 0) return undefined;
+  const clock = { frame: -1, last: 0 };
+  const advance = (renderer: THREE.WebGLRenderer): void => {
+    if (renderer.info.render.frame === clock.frame) return;
+    clock.frame = renderer.info.render.frame;
+    const now = performance.now();
+    const delta = clock.last === 0 ? 0 : Math.min(0.1, Math.max(0, (now - clock.last) / 1000));
+    clock.last = now;
+    for (const child of group.children) updateWaterMaterial(child as THREE.Mesh, delta);
+  };
+  for (const child of group.children) (child as THREE.Mesh).onBeforeRender = advance;
+  return group;
+}
+
 function createContinuation(
   terrain: THREE.Object3D,
   panorama: THREE.Object3D,
@@ -876,6 +1036,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let landmarkContacts: THREE.InstancedMesh | undefined;
   let ponds: SpringPondSurface[] = [];
   let nextPonds: SpringPondSurface[] = [];
+  let channelWater: THREE.Group | undefined;
   let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
   let loadedPanorama: THREE.Object3D | undefined;
@@ -932,9 +1093,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds);
+      const nextChannelWater = createChannelWater(host.contractId, selected.contract);
       terrain = nextTerrain;
       panorama = nextPanorama;
       skirt = nextSkirt;
+      channelWater = nextChannelWater;
       loadedTerrain = undefined;
       loadedPanorama = undefined;
       uninstallHeightSource = installVisualHeightSource(heightAt);
@@ -945,6 +1108,13 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPonds = [];
       for (const pond of ponds) host.scene.add(pond.group);
       host.canvas.dataset.terrain3dPilotSpringPonds = String(ponds.length);
+      if (nextChannelWater) host.scene.add(nextChannelWater);
+      host.canvas.dataset.terrain3dPilotChannelWater = String(
+        nextChannelWater?.children.filter((child) => child.name.includes('-channel')).length ?? 0,
+      );
+      host.canvas.dataset.terrain3dPilotFordWater = String(
+        nextChannelWater?.children.filter((child) => child.name.endsWith('.fords')).length ?? 0,
+      );
       hiddenRelief = hidePaintedGround(host);
       // A decoration must never cost the map its sculpt: if the water fails to
       // build, the terrain stays mounted and the failure is published, not silent.
@@ -1008,6 +1178,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
             const live = LIVE_SPRING_POND_CONTRACTS.has(host.contractId) && mount.id === 'isolated_spring';
             keepLandmarkPaintReadable(model, live ? DRY_GULCH_SPRING_EMISSIVE : (LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT));
           }
+          if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
+          dressLandmark(model, host.contractId, mount.id);
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
@@ -1135,7 +1307,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     ponds = [];
     for (const pond of nextPonds) pond.dispose();
     nextPonds = [];
-    for (const model of [terrain, panorama, landmarks]) {
+    for (const model of [terrain, panorama, landmarks, channelWater]) {
       if (!model) continue;
       host.scene.remove(model);
       disposeObject3D(model);
@@ -1143,6 +1315,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     terrain = undefined;
     panorama = undefined;
     landmarks = undefined;
+    channelWater = undefined;
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
   };
 }

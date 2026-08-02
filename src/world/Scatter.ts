@@ -51,6 +51,10 @@ type DetailProfile = {
   maxScale: number;
   baseY: number;
   groundRotationX?: number;
+  /** Per-instance colour, drawn from a stream of its own so placement stays byte-identical. */
+  instanceTint?: (rng: Rng) => THREE.Color;
+  /** Radius of the ground contact patch under instances at or above `contactScale`. */
+  contact?: { radius: number; minScale: number };
 };
 
 type DetailInstance = {
@@ -226,9 +230,13 @@ export class DetailScatter {
     this.group.add(mesh);
 
     const rng = createRng((this.seed ^ normalizeSeed(profile.id)) >>> 0);
+    // Dressing draws from a stream of its own, so adding a tint cannot shift one placement:
+    // the seeded scatter signature stays byte-identical to the run before this upgrade.
+    const tintRng = createRng((this.seed ^ normalizeSeed(`${profile.id}:tint`)) >>> 0);
     const instances: DetailInstance[] = [];
     for (let index = 0; index < count; index += 1) {
       const placed = placeDetail(profile, rng, instances);
+      if (profile.instanceTint) mesh.setColorAt(index, profile.instanceTint(tintRng));
       if (!placed) {
         mesh.setMatrixAt(index, hiddenMatrix);
         continue;
@@ -247,6 +255,20 @@ export class DetailScatter {
     }
     mesh.instanceMatrix.needsUpdate = true;
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    const contact = contactPatchMesh(instances, profile);
+    if (contact) this.group.add(contact);
+    const swayTime = (profile.material.userData.reedTime ?? null) as THREE.IUniform<number> | null;
+    if (swayTime) {
+      let lastFrame = -1;
+      let last = 0;
+      mesh.onBeforeRender = (renderer) => {
+        if (renderer.info.render.frame === lastFrame) return;
+        lastFrame = renderer.info.render.frame;
+        const now = performance.now();
+        swayTime.value += last === 0 ? 0 : Math.min(0.1, Math.max(0, (now - last) / 1000));
+        last = now;
+      };
+    }
     return { profile, mesh, instances };
   }
 }
@@ -317,15 +339,15 @@ function createProfiles(): DetailProfile[] {
       id: 'reeds',
       baseCount: profileCount('reeds', 0),
       geometry: reedGeometry(),
-      material: new THREE.MeshStandardMaterial({
-        color: '#566c42',
-        roughness: 1,
-        metalness: 0,
-        side: THREE.DoubleSide,
-      }),
+      material: reedMaterial(),
       minScale: 0.72,
       maxScale: 1.42,
       baseY: 0.01,
+      instanceTint: reedTint,
+      // Scatter never casts a shadow (castShadow is off for every class, by budget), so a tuft
+      // with no contact patch floats. Only the bigger half get one; a patch under every sprig
+      // reads as mould.
+      contact: { radius: 0.38, minScale: 0.98 },
     },
   ];
 }
@@ -598,10 +620,136 @@ function cactusGeometry(): THREE.BufferGeometry {
   return geometry;
 }
 
+// A REED IS NOT A BLADE OF GRASS (docs/beauty/e1-twin-banks-brief.md U3). The reeds class used
+// to be grassGeometry scaled thinner: two crossed quads of equal height, which at the run camera
+// read as four identical bright matchsticks stuck in dry dirt — on a map whose briefing card
+// promises "damp reeds". Three unequal tapered blades, leaning off-axis, give a tuft a silhouette
+// that survives 390px; the sway, the per-instance tint and the contact patch do the rest.
+const REED_BLADES = [
+  { angle: 0, height: 0.88, lean: 0.12, width: 0.085 },
+  { angle: 1.09, height: 0.7, lean: -0.16, width: 0.072 },
+  { angle: 2.24, height: 1.02, lean: 0.06, width: 0.078 },
+] as const;
+// The class it replaces, in the renderer's working (linear) space. Anything derived from a
+// contract tint has to be MODULATED against this, never used as an albedo: dampTint is a
+// splat multiplier around 0.5, which as a linear albedo is five times the value this
+// silhouette was authored at, and the first cut of U3 bleached every reed to dead straw.
+const REED_BASE = { r: 0.095, g: 0.15, b: 0.052 } as const;
+const REED_DRY = { r: 0.155, g: 0.125, b: 0.055 } as const;
+
 function reedGeometry(): THREE.BufferGeometry {
-  const geometry = grassGeometry();
-  geometry.scale(0.58, 1.24, 0.58);
+  const positions: number[] = [];
+  const indices: number[] = [];
+  for (const blade of REED_BLADES) {
+    const along = { x: Math.cos(blade.angle), z: Math.sin(blade.angle) };
+    const base = positions.length / 3;
+    // Tapered quad: a wide root, a tip pulled sideways so no two blades stand parallel.
+    positions.push(
+      -along.x * blade.width, 0, -along.z * blade.width,
+      along.x * blade.width, 0, along.z * blade.width,
+      -along.x * blade.width * 0.22 + along.x * blade.lean, blade.height, -along.z * blade.width * 0.22 + along.z * blade.lean,
+      along.x * blade.width * 0.22 + along.x * blade.lean, blade.height, along.z * blade.width * 0.22 + along.z * blade.lean,
+    );
+    indices.push(base, base + 1, base + 2, base + 2, base + 1, base + 3);
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
   return geometry;
+}
+
+function reedMaterial(): THREE.MeshStandardMaterial {
+  const material = new THREE.MeshStandardMaterial({
+    color: '#ffffff', // the tile's own dampTint arrives per instance; white keeps it honest
+    roughness: 1,
+    metalness: 0,
+    side: THREE.DoubleSide,
+  });
+  const time = { value: 0 };
+  material.userData.reedTime = time;
+  material.customProgramCacheKey = () => 'reed-sway';
+  material.onBeforeCompile = (shader) => {
+    shader.uniforms.uReedTime = time;
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', '#include <common>\nuniform float uReedTime;')
+      .replace(
+        '#include <begin_vertex>',
+        `#include <begin_vertex>
+        // Phase from the instance's own world position: neighbouring tufts never bend in step,
+        // and the whole field costs one uniform and no CPU work per frame.
+        float reedPhase = instanceMatrix[3].x * 0.71 + instanceMatrix[3].z * 0.93;
+        float reedSway = sin(uReedTime * 1.25 + reedPhase) * 0.06 + sin(uReedTime * 2.6 + reedPhase * 1.7) * 0.022;
+        transformed.x += reedSway * transformed.y;
+        transformed.z += reedSway * 0.42 * transformed.y;`,
+      );
+  };
+  return material;
+}
+
+/** Damp green-grey pulled toward the tile's own dampTint HUE, jittered per instance. */
+function reedTint(rng: Rng): THREE.Color {
+  const damp = activeContract().tileParams.palette?.dampTint ?? [0.45, 0.53, 0.4];
+  const mean = Math.max(0.001, (damp[0]! + damp[1]! + damp[2]!) / 3);
+  const value = rng.range(0.78, 1.26);
+  // A minority of every reed bed is last season's dry stalk; squared so it stays a minority.
+  const dry = rng.range(0, 1) ** 2 * 0.55;
+  const channel = (base: number, dried: number, tint: number): number =>
+    THREE.MathUtils.lerp(base * (tint / mean), dried, dry) * value;
+  return new THREE.Color().setRGB(
+    channel(REED_BASE.r, REED_DRY.r, damp[0]!),
+    channel(REED_BASE.g, REED_DRY.g, damp[1]!),
+    channel(REED_BASE.b, REED_DRY.b, damp[2]!),
+    THREE.LinearSRGBColorSpace,
+  );
+}
+
+function contactPatchMesh(details: readonly DetailInstance[], profile: DetailProfile): THREE.InstancedMesh | null {
+  const contact = profile.contact;
+  const tufts = contact ? details.filter((detail) => detail.scale >= contact.minScale) : [];
+  if (!contact || tufts.length === 0) return null;
+  const mesh = new THREE.InstancedMesh(new THREE.CircleGeometry(contact.radius, 12), contactMaterial(), tufts.length);
+  mesh.name = `DetailScatter.${profile.id}.contact`;
+  mesh.renderOrder = RenderLayers.groundDecals;
+  mesh.frustumCulled = false;
+  mesh.castShadow = false;
+  mesh.receiveShadow = false;
+  const object = new THREE.Object3D();
+  for (const [index, detail] of tufts.entries()) {
+    object.position.set(detail.x, detail.y + 0.012, detail.z);
+    object.rotation.set(-Math.PI / 2, 0, detail.rotation);
+    object.scale.set(detail.scale, detail.scale * 0.72, 1);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  }
+  mesh.instanceMatrix.needsUpdate = true;
+  return mesh;
+}
+
+function contactMaterial(): THREE.MeshBasicMaterial {
+  const size = 64;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const context = canvas.getContext('2d');
+  if (context) {
+    const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
+    gradient.addColorStop(0, 'rgba(28, 22, 12, 0.62)');
+    gradient.addColorStop(0.55, 'rgba(28, 22, 12, 0.28)');
+    gradient.addColorStop(1, 'rgba(28, 22, 12, 0)');
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, size, size);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return new THREE.MeshBasicMaterial({
+    map: texture,
+    transparent: true,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
 }
 
 function grassGeometry(): THREE.BufferGeometry {
