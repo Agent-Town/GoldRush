@@ -70,7 +70,7 @@ And the two "contaminated" hunks were **read**, not merely applied: they add `"i
 6. `npm run test:node-guards` → rc 0, report X/Y.
 7. `git diff --name-only main...HEAD` → paste the **full** list (scope item 3).
 
-⚠️ **`e2e/night3d-perf.spec.ts:67` is a KNOWN PRE-EXISTING RED on clean main** (F-1390-1; control-measured ratio **1.6491**). It is not yours. Do not run it, do not fix it, do not report it as a failure.
+⚠️ **`e2e/night3d-perf.spec.ts:67` ("daylight matrix and Night Shift pressure stay within the painted 115% p95 gate") is a KNOWN PRE-EXISTING RED on clean main** (F-1390-1; control-measured ratio **1.6491**). It is not yours. Do not run it, do not fix it, do not report it as a failure.
 
 This slice touches `src/world/Terrain.ts` and contract geometry, so **it may have a rendering surface**. If any boot screenshot differs visibly from main, capture it to `reviews/shots-e1-claim-geometry-reland/` and say so. If nothing renders differently, say that explicitly rather than omitting it.
 
