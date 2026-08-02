@@ -291,13 +291,47 @@ function preparePanorama(model: THREE.Object3D): void {
   }
 }
 
-function keepLandmarkPaintReadable(model: THREE.Object3D): void {
+type LandmarkPaint = { intensity: number; tint: string };
+
+/**
+ * Per-contract landmark paint. The default — self-lit 3x off the body's own
+ * albedo, tinted white — is what keeps every landmark on every map readable
+ * under the day rig, and it stays the default for all of them.
+ *
+ * e1-baron is the one map that needs a SIDE. The finale is a duel between a warm
+ * home bank and a cold company one (docs/beauty/e1-baron-brief.md U2), and the
+ * fort bodies were reading as the same warm ochre timber as the player's own
+ * gear. Turning their readability down and their hue toward wet iron makes the
+ * far bank loom instead of blend — while the oxblood banners keep an ember lift,
+ * because his brand is the one warm thing allowed on that side. The floor here
+ * is deliberate: the brief's own warning is "MENACE, not invisibility", so no
+ * body drops below 1.5 and the silhouette edges stay lit.
+ */
+const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
+  'e1-baron': {
+    fortified_far_bank: { intensity: 1.7, tint: '#93a0aa' },
+    siege_line: { intensity: 1.9, tint: '#9ba5ab' },
+    seized_headframe: { intensity: 2.1, tint: '#a9a9a6' },
+    oxblood_banners: { intensity: 3.4, tint: '#ffd2b4' },
+  },
+};
+
+const DEFAULT_LANDMARK_PAINT: LandmarkPaint = { intensity: 3, tint: '#ffffff' };
+
+function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint = DEFAULT_LANDMARK_PAINT): void {
   model.traverse((node) => {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
     if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
-    mesh.material.emissive.set('#ffffff');
-    mesh.material.emissiveMap = mesh.material.map;
-    mesh.material.emissiveIntensity = 3;
+    // GLB materials are shared instances that survive a re-install, so the base
+    // colour is banked once — tinting a tinted material would compound.
+    const material = mesh.material;
+    const banked = material.userData.landmarkBaseColor as number | undefined;
+    const base = banked ?? material.color.getHex();
+    material.userData.landmarkBaseColor = base;
+    material.color.setHex(base).multiply(new THREE.Color(paint.tint));
+    material.emissive.set(paint.tint);
+    material.emissiveMap = material.map;
+    material.emissiveIntensity = paint.intensity;
   });
 }
 
@@ -626,7 +660,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           model.rotation.set(...mount.rotation);
           model.scale.fromArray(mount.scale);
           inspect(model, false);
-          if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
+          if (host.contractId !== 'e1-night-shift') {
+            keepLandmarkPaintReadable(model, LANDMARK_PAINT[host.contractId]?.[mount.id] ?? DEFAULT_LANDMARK_PAINT);
+          }
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
