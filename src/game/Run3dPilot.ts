@@ -22,7 +22,7 @@ type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement; diagnostics: () => 
 
 export type Run3dPilot = { update: () => void; dispose: () => void };
 
-function publish(canvas: HTMLCanvasElement, state: 'off' | 'loading' | 'ready' | 'lite' | 'failed', meshes = 0, triangles = 0): void {
+function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', meshes = 0, triangles = 0): void {
   canvas.dataset.run3dPilotState = state;
   canvas.dataset.run3dPilotMeshes = String(meshes);
   canvas.dataset.run3dPilotTriangles = String(triangles);
@@ -40,11 +40,6 @@ export function installRun3dPilot(host: Host): Run3dPilot {
     publish(host.canvas, 'lite');
     return { update: () => undefined, dispose: () => publish(host.canvas, 'lite') };
   }
-  if (!params.has('run3dPilot')) {
-    publish(host.canvas, 'off');
-    return { update: () => undefined, dispose: () => publish(host.canvas, 'off') };
-  }
-
   const ids = (selection === 'all' ? Object.keys(registry).filter((id) => id !== 'gold_seam') : [selection]).filter(
     (id): id is Run3dId => typeof id === 'string' && id in registry,
   );

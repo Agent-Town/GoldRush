@@ -55,7 +55,7 @@ test('flag-off boot keeps gold sprites and requests no GLB', async ({ page }, te
   let requests = 0;
   page.on('request', (request) => { if (/gold-seam[^/]*\.glb/.test(request.url())) requests += 1; });
   await boot(page, '');
-  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('off');
+  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('ready');
   const node = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.harvest.activeNodes.find((entry) => entry.active)!);
   await page.evaluate(({ x, z }) => window.__GR_TEST__?.teleport(x + 2, z + 2), node.position);
   await page.waitForTimeout(300);
