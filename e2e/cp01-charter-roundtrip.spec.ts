@@ -24,9 +24,10 @@ const CLOCK = () => '2026-07-17T00:00:00.000Z';
 const E1_CONTRACTS = listContracts('epoch-1-frontier');
 
 test.describe('CP-01 round-trip gate', () => {
-  test('the epoch ships the five expected fixtures', () => {
+  test('the epoch ships the six expected fixtures', () => {
     expect(E1_CONTRACTS.map((contract) => contract.id)).toEqual([
       'the-claim',
+      'e1-drill-yard',
       'e1-dry-gulch',
       'e1-night-shift',
       'e1-twin-banks',
