@@ -130,9 +130,29 @@ const TOWN_SHADOW_EXTENT = 17;
 const SKIRT_MARGIN = 1.5;
 // The town's sky/vista palettes. Canon §4.1 only — sky blue to parchment amber, dunes in
 // sandDeep. `horizon` doubles as the fog colour so the vista ring has no seam to give it away.
-const TOWN_MOOD: Record<'day' | 'night', TownMoodPalette> = {
+const TOWN_MOOD: Record<TownMoodName, TownMoodPalette> = {
   day: { zenith: '#c2e6ff', band: '#ffe4a0', horizon: '#e9c98d', ridge: '#c9a469', dune: '#8b6c3f' },
+  // U7: the run's authored dusk ramp family (LightRig.ts:74-90) read into town terms.
+  dusk: { zenith: '#7c6aa8', band: '#e0a06a', horizon: '#c98a5c', ridge: '#8f6a4d', dune: '#5f4930' },
   night: { zenith: '#241d3a', band: '#4b3f68', horizon: '#41365a', ridge: '#3a3054', dune: '#2e2642' },
+};
+// U7 — THREE-STATE LOOK, FLAGS ONLY. The default day boot is byte-identical; dusk and night are
+// reached with ?townDusk / ?townNight and nothing else changes them (no clock, no owner ruling
+// spent). Fog near/far and the two lights per state; the sun swings low and amber at dusk.
+const TOWN_MOOD_LIGHT: Record<TownMoodName, {
+  fogNear: number;
+  fogFar: number;
+  sky: string;
+  ground: string;
+  fill: number;
+  sun: string;
+  sunIntensity: number;
+  sunPosition: readonly [number, number, number];
+  lit: boolean;
+}> = {
+  day: { fogNear: 34, fogFar: 76, sky: '#fff2cc', ground: '#8b6c3f', fill: 1.3, sun: '#ffca7a', sunIntensity: 1.68, sunPosition: [-24, 12, -20], lit: false },
+  dusk: { fogNear: 28, fogFar: 68, sky: '#ffd9a8', ground: '#6b4f38', fill: 0.91, sun: '#ff9f5a', sunIntensity: 1.12, sunPosition: [-26, 7, -18], lit: true },
+  night: { fogNear: 24, fogFar: 58, sky: '#ddc6a0', ground: '#2e2642', fill: 0.7, sun: '#bfa3ff', sunIntensity: 0.82, sunPosition: [-24, 12, -20], lit: true },
 };
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 2);
@@ -145,6 +165,10 @@ const APPROACH_RADIUS = 5.2;
 const FEET_CONTACT_Y = 0.02;
 // The player stands hero-height (1.85u) in town; 0.15 of that is the same ratio the cast uses.
 const HERO_BLOB_RADIUS = 0.28;
+// U7: the whole night-lighting budget the town is allowed to spend, in lights.
+const TOWN_LANTERN_LIGHT_CAP = 6;
+// A cylinder's own axis, for aiming string segments along their span.
+const UP = new THREE.Vector3(0, 1, 0);
 const STAMP_MILL_ID = 'stamp-mill';
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
 const DYNAMO_HALL_ID = 'dynamo-hall';
@@ -421,7 +445,8 @@ export class TownScene {
     depthWrite: false,
   });
   private readonly propRingEnabled = !new URLSearchParams(window.location.search).has('noTownProps');
-  private readonly townNight = new URLSearchParams(window.location.search).has('townNight');
+  private readonly townMood: TownMoodName = readTownMood();
+  private readonly townNight = this.townMood === 'night';
   private readonly performanceTier = performanceTierDiagnostics().tier;
   private readonly eraOrder = loadEpoch(activeEpochId()).order;
   private readonly ambientDust = createAmbientDust(this.performanceTier, this.townNight);
@@ -691,6 +716,11 @@ export class TownScene {
     this.scene.add(createContactSkirts(this.contactSkirtPlacements()));
     this.scene.add(createWearDecals(this.wearDecalPlacements()));
     this.scene.add(createParcelDressing(this.visibleBuildings));
+    this.scene.add(
+      createWindowGlow(this.visibleBuildings, this.townMood),
+      createLanternStrings(this.townMood, this.eraOrder),
+      createLanternLights(this.townMood),
+    );
     for (const building of townBuildings) {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
@@ -774,23 +804,20 @@ export class TownScene {
   }
 
   private dressScene(): void {
-    const mood = this.townNight ? TOWN_MOOD.night : TOWN_MOOD.day;
+    const mood = TOWN_MOOD[this.townMood];
+    const light = TOWN_MOOD_LIGHT[this.townMood];
     this.scene.background = new THREE.Color(mood.horizon);
-    this.scene.fog = new THREE.Fog(mood.horizon, this.townNight ? 24 : 34, this.townNight ? 58 : 76);
+    this.scene.fog = new THREE.Fog(mood.horizon, light.fogNear, light.fogFar);
     // U5: this fill now carries the warmth the GLB loader used to fake with a per-model emissive
     // lift (0x4a2a17 @ 0.2 on every building except the assay office). One light for the whole
     // square — shells, props and GLBs — instead of a tonal exception living in the asset path.
-    const fill = new THREE.HemisphereLight(
-      this.townNight ? '#ddc6a0' : '#fff2cc',
-      this.townNight ? '#2e2642' : '#8b6c3f',
-      this.townNight ? 0.7 : 1.3,
-    );
+    const fill = new THREE.HemisphereLight(light.sky, light.ground, light.fill);
     fill.name = 'TownFill';
     // U6: late afternoon, not noon. Dropping the sun from 18 to 12 units of height stretches
-    // every shadow U2 just switched on, which is what sells the hour.
-    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffca7a', this.townNight ? 0.82 : 1.68);
+    // every shadow U2 just switched on, which is what sells the hour. Dusk drops it further.
+    const sun = new THREE.DirectionalLight(light.sun, light.sunIntensity);
     sun.name = 'TownSun';
-    sun.position.set(-24, 12, -20);
+    sun.position.set(...light.sunPosition);
     sun.castShadow = true;
     // U2 — THE SHADOW CAMERA WAS NEVER AIMED. castShadow has been true since the town shipped,
     // but three.js defaults a directional shadow camera to a +/-5 frustum: a 10x10 patch of a
@@ -3632,6 +3659,245 @@ function parcelDressing(building: TownBuilding, parts: ParcelParts): void {
   }
 }
 
+// U7 — WARM WINDOWS. Authored per building in its OBJECT frame and mounted outside the shell, so
+// they survive the GLB swap and they never billboard (Mistake #6: world things anchor in their
+// object's frame). Local x is measured from the building's centre, y off the ground, and every
+// card sits a few centimetres proud of the front face. Additive, so they read as light spilling
+// out rather than as paint. Day never builds them.
+const TOWN_WINDOW_GLOW: Record<TownBuildingId, readonly { x: number; y: number; w: number; h: number }[]> = {
+  tavern: [
+    { x: -1.55, y: 1.02, w: 0.5, h: 0.62 },
+    { x: -0.02, y: 1.02, w: 0.5, h: 0.62 },
+    { x: 1.52, y: 1.05, w: 0.5, h: 0.62 },
+    { x: -1.2, y: 2.35, w: 0.42, h: 0.5 },
+    { x: 1.2, y: 2.35, w: 0.42, h: 0.5 },
+  ],
+  general_store: [
+    { x: -1.3, y: 1.06, w: 0.62, h: 0.66 },
+    { x: 1.3, y: 1.06, w: 0.62, h: 0.66 },
+    { x: 0, y: 2.2, w: 0.46, h: 0.46 },
+  ],
+  claim_office: [
+    { x: -1.15, y: 1, w: 0.52, h: 0.6 },
+    { x: 1.15, y: 1, w: 0.52, h: 0.6 },
+  ],
+  assay_office: [
+    { x: -1.2, y: 1.02, w: 0.54, h: 0.58 },
+    { x: 1.24, y: 1.02, w: 0.54, h: 0.58 },
+    { x: 0, y: 2.1, w: 0.4, h: 0.44 },
+  ],
+  schoolhouse: [
+    { x: -1.1, y: 1.04, w: 0.5, h: 0.62 },
+    { x: 1.1, y: 1.04, w: 0.5, h: 0.62 },
+  ],
+  chapel: [
+    { x: 0, y: 1.5, w: 0.46, h: 0.9 },
+    { x: -1.05, y: 1.05, w: 0.34, h: 0.56 },
+    { x: 1.05, y: 1.05, w: 0.34, h: 0.56 },
+  ],
+};
+
+// A hard-edged additive rectangle is a decal, not a light — the first cut pasted pale white
+// cards across facades whose real windows are somewhere else entirely, because these offsets are
+// authored against the FOOTPRINT and the GLB does not have to agree. A soft-edged bloom reads as
+// warmth spilling from inside and forgives the couple of centimetres it is wrong by.
+function createGlowCardTexture(): THREE.CanvasTexture {
+  const size = 96;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, size, size);
+    for (let step = 0; step < 14; step += 1) {
+      const t = (step + 1) / 14;
+      const inset = (1 - t) * size * 0.44;
+      ctx.fillStyle = `rgba(255, 228, 160, ${(0.075 * t * t).toFixed(4)})`;
+      roundRect(ctx, inset, inset, size - inset * 2, size - inset * 2, size * 0.3 * t);
+      ctx.fill();
+    }
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createWindowGlow(buildings: readonly TownBuilding[], mood: TownMoodName): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownWindowGlow';
+  if (mood === 'day') return group;
+  const glowTexture = createGlowCardTexture();
+  const material = new THREE.MeshBasicMaterial({
+    color: '#ffe4a0',
+    map: glowTexture,
+    transparent: true,
+    opacity: mood === 'night' ? 0.62 : 0.44,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+  });
+  const doorMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffca7a',
+    map: glowTexture,
+    transparent: true,
+    opacity: mood === 'night' ? 0.44 : 0.32,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+  });
+  for (const building of buildings) {
+    const slot = townPlazaSlot(building.id);
+    const yaw = Math.atan2(slot.approach.x - building.position.x, slot.approach.z - building.position.z);
+    const face = building.footprint.d * 0.5 + 0.06;
+    const parcel = new THREE.Group();
+    parcel.name = `TownWindowGlow:${building.id}`;
+    parcel.position.set(building.position.x, 0, building.position.z);
+    parcel.rotation.y = yaw;
+    for (const [index, window] of TOWN_WINDOW_GLOW[building.id].entries()) {
+      const card = new THREE.Mesh(new THREE.PlaneGeometry(window.w * 1.5, window.h * 1.4), material);
+      card.name = `TownWindowGlow:${building.id}:${index}`;
+      card.position.set(window.x, window.y, face);
+      card.renderOrder = RenderLayers.gameplayFade;
+      parcel.add(card);
+    }
+    // The doorway spills onto the porch, wider and dimmer than a window.
+    const door = new THREE.Mesh(new THREE.PlaneGeometry(1.3, 1.5), doorMaterial);
+    door.name = `TownDoorGlow:${building.id}`;
+    door.position.set(0, 0.66, face);
+    door.renderOrder = RenderLayers.gameplayFade;
+    parcel.add(door);
+    group.add(parcel);
+  }
+  return group;
+}
+
+// U8 — LANTERN STRINGS. Runs strung between lantern posts the layout already authored: the gate
+// span a visitor walks under, and the two trail spans that close the top of the square. Sim-inert
+// and hung at 2.5u minimum, so nothing can walk into one. The cord is one instanced mesh of short
+// segments rather than three tube meshes — same silhouette, a third of the draw calls.
+const TOWN_LANTERN_RUNS: readonly (readonly [string, string])[] = [
+  ['lantern-gate-west', 'lantern-gate-east'],
+  ['lantern-tavern-trail', 'lantern-store-trail'],
+  ['lantern-store-trail', 'lantern-claim-trail'],
+];
+const LANTERN_RUN_HEIGHT = 2.9;
+const LANTERN_RUN_SAG = 0.4;
+const LANTERN_RUN_BEADS = 6;
+
+function lanternRunPoints(): Array<{ from: THREE.Vector3; to: THREE.Vector3 }> {
+  const posts = new Map(townPropRing.props.filter((prop) => prop.kind === 'lantern_post').map((prop) => [prop.id, prop]));
+  return TOWN_LANTERN_RUNS.flatMap(([fromId, toId]) => {
+    const from = posts.get(fromId);
+    const to = posts.get(toId);
+    if (!from || !to) return [];
+    return [{
+      from: new THREE.Vector3(from.position.x, LANTERN_RUN_HEIGHT, from.position.z),
+      to: new THREE.Vector3(to.position.x, LANTERN_RUN_HEIGHT, to.position.z),
+    }];
+  });
+}
+
+function catenaryAt(from: THREE.Vector3, to: THREE.Vector3, t: number, out: THREE.Vector3): THREE.Vector3 {
+  return out.lerpVectors(from, to, t).setY(LANTERN_RUN_HEIGHT - LANTERN_RUN_SAG * 4 * t * (1 - t));
+}
+
+function createLanternStrings(mood: TownMoodName, eraOrder: number): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownLanternStrings';
+  const runs = lanternRunPoints();
+  if (!runs.length) return group;
+  const segmentsPerRun = 14;
+  const cord = new THREE.InstancedMesh(
+    new THREE.CylinderGeometry(1, 1, 1, 5),
+    new THREE.MeshStandardMaterial({ color: '#3b2416', roughness: 0.88, metalness: 0.04 }),
+    runs.length * segmentsPerRun,
+  );
+  cord.name = 'TownLanternCord';
+  const beadPositions: THREE.Vector3[] = [];
+  const object = new THREE.Object3D();
+  const head = new THREE.Vector3();
+  const tail = new THREE.Vector3();
+  const middle = new THREE.Vector3();
+  let index = 0;
+  for (const run of runs) {
+    for (let step = 0; step < segmentsPerRun; step += 1) {
+      catenaryAt(run.from, run.to, step / segmentsPerRun, head);
+      catenaryAt(run.from, run.to, (step + 1) / segmentsPerRun, tail);
+      middle.addVectors(head, tail).multiplyScalar(0.5);
+      object.position.copy(middle);
+      object.scale.set(0.022, head.distanceTo(tail) * 1.02, 0.022);
+      object.quaternion.setFromUnitVectors(UP, tail.clone().sub(head).normalize());
+      object.updateMatrix();
+      cord.setMatrixAt(index++, object.matrix);
+    }
+    for (let bead = 0; bead < LANTERN_RUN_BEADS; bead += 1) {
+      beadPositions.push(catenaryAt(run.from, run.to, (bead + 0.5) / LANTERN_RUN_BEADS, new THREE.Vector3()).clone().setY(
+        catenaryAt(run.from, run.to, (bead + 0.5) / LANTERN_RUN_BEADS, middle).y - 0.13,
+      ));
+    }
+  }
+  cord.count = index;
+  cord.castShadow = mood === 'day';
+  group.add(cord, createLanternBeads(beadPositions, mood, townEraAccent(eraOrder)));
+  return group;
+}
+
+// Not createLanternGlow: that mesh is sized for a post-top lamp (0.18 sphere, 1.35x at night) and
+// strung eighteen-up across a plaza it read as a row of golf balls. A bead is a bead.
+function createLanternBeads(
+  positions: readonly THREE.Vector3[],
+  mood: TownMoodName,
+  accent: { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number },
+): THREE.InstancedMesh {
+  const lit = mood !== 'day';
+  const mesh = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(0.075, 10, 7),
+    new THREE.MeshBasicMaterial({
+      color: lit ? accent.lanternNightGlass : accent.lanternGlass,
+      transparent: true,
+      opacity: lit ? 0.92 : Math.min(0.55, accent.lanternOpacity + 0.1),
+      depthWrite: false,
+      ...(lit ? { blending: THREE.AdditiveBlending } : {}),
+    }),
+    Math.max(1, positions.length),
+  );
+  mesh.name = 'TownLanternStringBeads';
+  const object = new THREE.Object3D();
+  positions.forEach((position, index) => {
+    object.position.copy(position);
+    object.scale.setScalar(lit ? 1.25 : 1);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = positions.length;
+  mesh.renderOrder = RenderLayers.worldUi;
+  return mesh;
+}
+
+// Real light, capped. Six PointLights at most, distance-bounded, no shadow maps: enough to make
+// the lantern posts and the strings mean something after sundown without opening a night-lighting
+// budget. Run midpoints are lit first — a lit string with a dark middle is worse than no string.
+function createLanternLights(mood: TownMoodName): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownLanternLights';
+  if (mood === 'day') return group;
+  const midpoints = lanternRunPoints().map((run, index) => ({
+    id: `run-${index}`,
+    at: new THREE.Vector3().lerpVectors(run.from, run.to, 0.5).setY(LANTERN_RUN_HEIGHT - LANTERN_RUN_SAG),
+  }));
+  const posts = townPropRing.props
+    .filter((prop) => prop.kind === 'lantern_post')
+    .map((prop) => ({ id: prop.id, at: new THREE.Vector3(prop.position.x, 1.5 * (prop.scale ?? 1), prop.position.z) }));
+  for (const source of [...midpoints, ...posts].slice(0, TOWN_LANTERN_LIGHT_CAP)) {
+    const light = new THREE.PointLight(mood === 'night' ? '#ffd28a' : '#ffb672', mood === 'night' ? 2.6 : 1.9, 7.2, 2);
+    light.name = `TownLanternLight:${source.id}`;
+    light.castShadow = false;
+    light.position.copy(source.at);
+    group.add(light);
+  }
+  return group;
+}
+
 function createParcelDressing(buildings: readonly TownBuilding[]): THREE.Group {
   const group = new THREE.Group();
   group.name = 'TownParcelDressing';
@@ -4211,6 +4477,7 @@ function wearRing(ctx: CanvasRenderingContext2D, center: WearPoint, radius: numb
 // own don'ts put zoom clamps and default framing on the owner's desk (F-1203-2). The sky and
 // ring were reverted; what stayed from U6 is the late-afternoon sun, which does reach the
 // screen. The palette below is what survives: it feeds the fog and background in one place.
+type TownMoodName = 'day' | 'dusk' | 'night';
 type TownMoodPalette = {
   zenith: string;
   band: string;
@@ -4218,6 +4485,13 @@ type TownMoodPalette = {
   ridge: string;
   dune: string;
 };
+
+function readTownMood(): TownMoodName {
+  const search = new URLSearchParams(window.location.search);
+  if (search.has('townNight')) return 'night';
+  if (search.has('townDusk')) return 'dusk';
+  return 'day';
+}
 
 function createAmbientDust(tier: PerformanceTier, night: boolean): THREE.InstancedMesh | null {
   if (tier === 'lite' || night) return null;
