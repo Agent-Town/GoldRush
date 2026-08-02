@@ -503,6 +503,14 @@
               "mergeHash": "eec90e2b79a0ae34c37406df4e0a259798ba09f6"
             },
             {
+              "id": "e1-claim-geometry-reland-gt05-shape",
+              "title": "Let gt-05-water-depth accept the claim geometry its sibling declares — change one matcher from toEqual to toMatchObject",
+              "taskFile": "e1-claim-geometry-reland-gt05-shape.md",
+              "status": "queued",
+              "reason": "FIRE-AUTHORED s1393 to lane-c as the corrective for F-1393-1, on top of the undrained predecessor e676addf. The s1393 gate DERIVED its adjacent suites by grep instead of trusting the master's self-check (the F-1392-2 lesson) and surfaced three suites the master never named; one of them, gt-05-water-depth:333, pins the EXACT shape of contract tileParams via toEqual, which the predecessor deliberately widens with size/fords/harvestAnchors/water. Measured: RED on both projects on the merged tree, GREEN on both on the clean-main control, failure diff purely additive (-0/+40) with no changed value. That assertion is the test's FIRST, so its impassability, wade-speed and depth-sample assertions had never run; s1393 ran the repair as a probe in a detached worktree and got 2/2 green in 28.2s with those assertions executing. So the cure is one word AND the behaviour underneath is measured, not assumed. The predecessor merges together with this fix.",
+              "blockedReason": ""
+            },
+            {
               "id": "e1-claim-geometry-declared-reland",
               "title": "RE-LAND claim-geometry-declared on current main — five of its six paths apply CLEAN as per-commit patches (including BOTH files F-1381-3 flagged as contaminated), leaving one real 3-way lift in ContractFamilies.ts at :1489",
               "taskFile": "e1-claim-geometry-declared-reland.md",
