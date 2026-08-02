@@ -466,7 +466,9 @@
               "id": "pc-01c-drill-yard-practice-derivation",
               "title": "PC-01c: the Drill Yard's practice mechanics are DERIVED, not invisible — lift the src-only staging into practice.stations/practice.targets, teach deriveMechanicsManifest to read practice, and close the unvalidated practice key hole (AP-11 NO-UNDECLARED-MECHANICS at the derivation; F-1383-2 rec (a), the changed premise f1328-1-drill-yard-census-debt requires)",
               "taskFile": "lane-a-drill-yard-practice-derivation.md",
-              "status": "queued"
+              "status": "merged",
+              "reason": "s1386 drain. The five hardcoded TARGET_POSITIONS and the faucet/bell literals left src/game/DrillYard.ts; practice.stations + practice.targets now carry them, and deriveMechanicsManifest COUNTS them from the data (straw_man 3, rolling_log 2) instead of asserting a hand-authored number — the AP-11 lie the one-step version would have required. Lift verified BEHAVIOUR-IDENTICAL element-by-element against the constants it replaced: faucet (-8,12), bell (8,12), and all five targets in the exact order and kinds the old index-parity rule produced. Gated on the merged tree in a detached worktree (F-1295-1 custody): tsc clean, build green, drill-yard-manifest 2/2, drill-yard.spec UNMODIFIED 4/4 matching s1385 baseline, contract suites 16/16, release config 26/26 MEASURED not inherited, node-guards 226/226 rc=0. The runner reported 224/226 rc=1; that red was its lane base predating s1385 law-pointer-baseline.json and vanished on the merged tree — measured, not argued. agent-view.spec.ts:266 stays RED in both projects: INTENDED SUPERSESSION, the fixture is owned by the blocked leaf f1328-1-drill-yard-census-debt and the master pre-authorised it. F-1385-1 CURED here: AUTHORED_PRACTICE_KEYS now validates practice inner keys, with a planted practice.bogus violation asserting both the throw and the exact reason object.",
+              "mergeHash": "eec90e2b79a0ae34c37406df4e0a259798ba09f6"
             }
           ]
         },
