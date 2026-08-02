@@ -617,6 +617,8 @@ export type ContractPracticeMode = {
   bellWaveSize: number;
   dummyRespawnSeconds: number;
   buildables: BuildableId[];
+  stations: { id: string; op: string; x: number; z: number }[];
+  targets: { kind: 'straw-man' | 'rolling-log'; x: number; z: number }[];
 };
 export type ContractManifest = {
   id: string;
@@ -1522,6 +1524,10 @@ const AUTHORED_TWIST_KEYS = [
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
   'scheduledRelocation', 'persistentCanalChoices',
 ] as const;
+const AUTHORED_PRACTICE_KEYS = [
+  'scheduledWaves', 'scores', 'metaProgress', 'runHistory', 'standings', 'tapes', 'goldGrant', 'bellWaveSize',
+  'dummyRespawnSeconds', 'buildables', 'stations', 'targets',
+] as const;
 const AUTHORED_LANE_KEYS = ['spawnEdges', 'territoryRingBiasWaves', 'territoryRingLaneBias', 'patrolRoutes'] as const;
 const AUTHORED_ENEMY_KEYS = [
   'id', 'label', 'waveMin', 'hpScale', 'speedMult', 'visualScale', 'tint', 'boltDamageMult', 'thief', 'wrecker',
@@ -1634,6 +1640,11 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
     addDescriptorReason(reasons, reason('field_section', 'The lane section has the wrong shape.', 'tileParams.lanes'));
   } else {
     addUnknownFieldReasons(tileParams.lanes, AUTHORED_LANE_KEYS, 'tileParams.lanes', reasons);
+  }
+  if (isRecord(value.practice) && !Array.isArray(value.practice)) {
+    addUnknownFieldReasons(value.practice, AUTHORED_PRACTICE_KEYS, 'practice', reasons);
+  } else if (value.practice !== undefined) {
+    addDescriptorReason(reasons, reason('field_section', 'The practice section has the wrong shape.', 'practice'));
   }
   if (Array.isArray(twist.enemyRoster)) {
     twist.enemyRoster.forEach((entry, index) => {

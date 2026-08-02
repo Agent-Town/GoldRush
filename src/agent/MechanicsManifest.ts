@@ -9,7 +9,7 @@ export type MechanicsManifest = {
     id: string;
     count: number;
     operations: readonly string[];
-    source: 'tileParams.prePlacedBuildables';
+    source: 'tileParams.prePlacedBuildables' | 'practice.stations' | 'practice.targets';
   }[];
   rules: readonly {
     id: string;
@@ -30,6 +30,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   const rules: MechanicsManifest['rules'][number][] = [];
   const tile = contract.tileParams;
   const twist = contract.twist;
+  const practice = contract.practice;
 
   if (tile.river) rules.push(rule('river', 'tileParams.river'));
   if (tile.ford) {
@@ -75,10 +76,23 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       }));
     }
   }
+  if (practice) {
+    const suppressed = Object.entries(practice)
+      .filter(([, value]) => value === false)
+      .map(([key]) => key)
+      .sort();
+    rules.push(rule('ledger_free_practice', 'practice', { suppressed }));
+    rules.push(rule('practice_gold_grant', 'practice.goldGrant', { amount: practice.goldGrant }));
+    rules.push(rule('drill_wave', 'practice.bellWaveSize', { size: practice.bellWaveSize }));
+    rules.push(rule('practice_target_respawn', 'practice.dummyRespawnSeconds', { seconds: practice.dummyRespawnSeconds }));
+    rules.push(rule('practice_buildables', 'practice.buildables', { ids: [...practice.buildables].sort() }));
+  }
 
   const waves: MechanicsManifest['posting']['waves'][number][] = [];
-  if (twist.secureWave !== undefined) waves.push({ event: 'secure', wave: twist.secureWave, source: 'twist.secureWave' });
-  if (twist.baron) waves.push({ event: 'baron', wave: twist.baron.wave, source: 'twist.baron.wave' });
+  if (practice?.scheduledWaves !== false) {
+    if (twist.secureWave !== undefined) waves.push({ event: 'secure', wave: twist.secureWave, source: 'twist.secureWave' });
+    if (twist.baron) waves.push({ event: 'baron', wave: twist.baron.wave, source: 'twist.baron.wave' });
+  }
 
   return {
     schema: 'goldrush.mechanics.v1',
@@ -116,14 +130,38 @@ function interactables(contract: ContractManifest): MechanicsManifest['interacta
     if (fixture.wrecked && entry.operations.size === 0) entry.operations.add('repair');
     grouped.set(fixture.id, entry);
   }
-  return [...grouped]
+  const result: MechanicsManifest['interactables'][number][] = [...grouped]
     .map(([id, { count, operations }]) => ({
       id,
       count,
       operations: [...operations].sort(),
       source: 'tileParams.prePlacedBuildables' as const,
-    }))
-    .sort(byId);
+    }));
+  if (contract.practice) {
+    const stations = new Map<string, { count: number; operations: Set<string> }>();
+    for (const station of contract.practice.stations) {
+      const entry = stations.get(station.id) ?? { count: 0, operations: new Set<string>() };
+      entry.count += 1;
+      entry.operations.add(station.op);
+      stations.set(station.id, entry);
+    }
+    result.push(...[...stations].map(([id, { count, operations }]) => ({
+      id,
+      count,
+      operations: [...operations].sort(),
+      source: 'practice.stations' as const,
+    })));
+
+    const targets = new Map<string, number>();
+    for (const target of contract.practice.targets) targets.set(target.kind, (targets.get(target.kind) ?? 0) + 1);
+    result.push(...[...targets].map(([kind, count]) => ({
+      id: toSnakeCase(kind),
+      count,
+      operations: ['strike'],
+      source: 'practice.targets' as const,
+    })));
+  }
+  return result.sort(byId);
 }
 
 function rule(id: string, source: string, data: Readonly<Record<string, MechanicValue>> = {}): MechanicsManifest['rules'][number] {
@@ -135,7 +173,7 @@ function humanize(id: string): string {
 }
 
 function toSnakeCase(value: string): string {
-  return value.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
+  return value.replace(/([a-z0-9])([A-Z])/g, '$1_$2').replaceAll('-', '_').toLowerCase();
 }
 
 function byId<T extends { id: string }>(left: T, right: T): number {
