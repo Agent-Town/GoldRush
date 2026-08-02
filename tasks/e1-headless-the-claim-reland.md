@@ -57,7 +57,7 @@ The s1381 review's recommendation — *"re-author both masters against current m
 6. `git diff --name-only main...HEAD` → paste the **full** list (scope item 3).
 7. `grep -rn "lossCondition" src/ scripts/ e2e/` → report the count. Expected **0** in the files you touched.
 
-⚠️ **`e2e/night3d-perf.spec.ts:67` is a KNOWN PRE-EXISTING RED on clean main** (F-1390-1; s1391 control-measured ratio **1.6491** on clean main). It is not yours. Do not run it, do not fix it, do not report it as a failure.
+⚠️ **`e2e/night3d-perf.spec.ts:67` ("daylight matrix and Night Shift pressure stay within the painted 115% p95 gate") is a KNOWN PRE-EXISTING RED on clean main** (F-1390-1; s1391 control-measured ratio **1.6491** on clean main). It is not yours. Do not run it, do not fix it, do not report it as a failure.
 
 This slice is headless simulation code with **no rendering surface**, so no screenshots are expected. Say so in your report rather than omitting it.
 
