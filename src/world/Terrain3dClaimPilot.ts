@@ -74,6 +74,7 @@ import { trackedGltfLoader } from '../assets/AssetLoading';
 import * as Terrain from './Terrain';
 import { installVisualHeightSource } from './Terrain';
 import { createSculptWater, type SculptWater } from './Water';
+import { createSunMotes, type SunMotes } from './SunMotes';
 
 type Contract = {
   tileId: string;
@@ -103,6 +104,8 @@ type Host = {
   paintedGround?: THREE.Object3D;
   nightMode?: boolean;
   nightLighting?: () => LightFieldSnapshot;
+  /** True while a post-secure "Stay for the Rush" run is live (RunManager owns it). */
+  rushActive?: () => boolean;
   onVisualHeightSourceInstalled?: () => void;
 };
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
@@ -192,6 +195,11 @@ const SCULPT_WATER_EDGE_FADE = 7;
 const SCULPT_WATER_FORD_SKIM = 0.11;
 /** U3: contracts whose mounted landmarks get soft contact ellipses. */
 const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim']);
+/** U5: contracts that get the drifting mote field, and its hard cap. */
+const SUN_MOTE_CONTRACTS = new Set(['the-claim']);
+const SUN_MOTE_CAP = 200;
+/** Embers on the claim stake while the Rush is live. */
+const RUSH_EMBER_COUNT = 26;
 /** Ellipse radius as a fraction of the model's footprint — a pool, not a slab. */
 const LANDMARK_CONTACT_SPREAD = 0.46;
 /** How far the pool leans away from the body, as a fraction of the body's height. */
@@ -504,6 +512,101 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
   return water;
 }
 
+/**
+ * U5 — living air over the Claim, plus the Rush's one visible reward note.
+ *
+ * Motes: a capped additive point field drifting along the key light. One draw call,
+ * one buffer, all motion in the vertex shader.
+ * Ember: while a post-secure Rush run is live, the claim-stake mount gets a warm
+ * lift — the map says out loud that the player chose to press their luck. It is
+ * driven from RunManager's own rush flag through the host, never inferred.
+ */
+function mountSunMotes(host: Host, bounds: THREE.Box3): SunMotes | undefined {
+  if (isMapBeautyDisabled() || !SUN_MOTE_CONTRACTS.has(host.contractId)) return undefined;
+  const mobile = typeof window !== 'undefined' && window.innerWidth <= 430;
+  const lean = ledgerSunShadowDirection();
+  const motes = createSunMotes({
+    count: mobile ? Math.round(SUN_MOTE_CAP * 0.45) : SUN_MOTE_CAP,
+    halfX: Math.min(Math.abs(bounds.min.x), Math.abs(bounds.max.x)) * 0.62,
+    halfZ: 13,
+    centerZ: 4,
+    minY: 0.4,
+    maxY: 5.0,
+    drift: new THREE.Vector2(lean.x * 0.55, lean.y * 0.55),
+    color: '#ffd9a2',
+    size: 2.1,
+    seed: 0x1c1a,
+  });
+  let lastFrame = -1;
+  let lastAt = 0;
+  motes.points.onBeforeRender = (renderer) => {
+    const frame = renderer.info.render.frame;
+    if (frame === lastFrame) return;
+    const now = performance.now() / 1000;
+    const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+    lastFrame = frame;
+    lastAt = now;
+    motes.advance(delta);
+  };
+  host.scene.add(motes.points);
+  host.canvas.dataset.terrain3dPilotMotes = String(motes.count);
+  return motes;
+}
+
+/**
+ * U5b — the Rush's reward note: a warm ember lift off the claim-stake ring, live
+ * only while the player has chosen to press their luck. Same point field as the
+ * motes, one draw call, hidden (and therefore near-free) the rest of the time.
+ */
+function mountRushEmbers(
+  host: Host,
+  mounts: Array<{ id: string; model: THREE.Object3D }>,
+  heightAt: (x: number, z: number) => number,
+): SunMotes | undefined {
+  if (isMapBeautyDisabled() || !SUN_MOTE_CONTRACTS.has(host.contractId) || !host.rushActive) return undefined;
+  const stake = mounts.find(({ id }) => id === 'claim_stake')?.model;
+  if (!stake) return undefined;
+  const embers = createSunMotes({
+    count: RUSH_EMBER_COUNT,
+    halfX: 1.15,
+    halfZ: 1.15,
+    centerZ: stake.position.z,
+    minY: heightAt(stake.position.x, stake.position.z) + 0.15,
+    maxY: heightAt(stake.position.x, stake.position.z) + 2.7,
+    drift: new THREE.Vector2(0, 0),
+    rise: 0.55,
+    color: '#ff9a3c',
+    size: 2.4,
+    seed: 0x5715,
+  });
+  embers.points.name = 'ClaimStakeRushEmbers';
+  embers.points.position.x = stake.position.x;
+  embers.points.visible = false;
+  let lastFrame = -1;
+  let lastAt = 0;
+  embers.points.onBeforeRender = (renderer) => {
+    const frame = renderer.info.render.frame;
+    if (frame === lastFrame) return;
+    const now = performance.now() / 1000;
+    const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+    lastFrame = frame;
+    lastAt = now;
+    embers.advance(delta);
+  };
+  // visible is polled off the run state on the frame BEFORE the draw, so an ended
+  // Rush stops costing anything at all rather than fading out over seconds.
+  const poll = () => {
+    if (!embers.points.parent) return;
+    embers.points.visible = host.rushActive?.() === true;
+    host.canvas.dataset.terrain3dPilotRushEmbers = embers.points.visible ? String(RUSH_EMBER_COUNT) : '0';
+    requestAnimationFrame(poll);
+  };
+  host.scene.add(embers.points);
+  requestAnimationFrame(poll);
+  host.canvas.dataset.terrain3dPilotRushEmbers = '0';
+  return embers;
+}
+
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
 function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Host): void {
   const materials = new Set<THREE.Material>();
@@ -719,6 +822,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let landmarks: THREE.Group | undefined;
   let skirt: THREE.Object3D | undefined;
   let sculptWater: SculptWater | undefined;
+  let sunMotes: SunMotes | undefined;
+  let rushEmbers: SunMotes | undefined;
   let landmarkContacts: THREE.InstancedMesh | undefined;
   let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
@@ -791,6 +896,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         sculptWater = mountSculptWater(host, heightAt, terrainMetrics.bounds);
       } catch (error) {
         host.canvas.dataset.terrain3dPilotSculptWater = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+      }
+      try {
+        sunMotes = mountSunMotes(host, terrainMetrics.bounds);
+      } catch (error) {
+        host.canvas.dataset.terrain3dPilotMotes = `failed:${error instanceof Error ? error.message : 'unknown'}`;
       }
       host.canvas.dataset.terrain3dPilotTerrainLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'mounted';
@@ -866,6 +976,15 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         } catch (error) {
           host.canvas.dataset.terrain3dPilotContactShadows = `failed:${error instanceof Error ? error.message : 'unknown'}`;
         }
+        try {
+          rushEmbers = mountRushEmbers(
+            host,
+            nextLandmarks.children.map((model) => ({ id: model.name, model })),
+            heightAt,
+          );
+        } catch (error) {
+          host.canvas.dataset.terrain3dPilotRushEmbers = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        }
         host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'mounted';
         host.canvas.dataset.terrain3dPilotLandmarkEmissive = String(LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT);
         host.canvas.dataset.terrain3dPilotLandmarks = String(nextLandmarks.children.length);
@@ -931,6 +1050,18 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       sculptWater.dispose();
       sculptWater = undefined;
       delete host.canvas.dataset.terrain3dPilotSculptWater;
+    }
+    if (rushEmbers) {
+      host.scene.remove(rushEmbers.points);
+      rushEmbers.dispose();
+      rushEmbers = undefined;
+      delete host.canvas.dataset.terrain3dPilotRushEmbers;
+    }
+    if (sunMotes) {
+      host.scene.remove(sunMotes.points);
+      sunMotes.dispose();
+      sunMotes = undefined;
+      delete host.canvas.dataset.terrain3dPilotMotes;
     }
     if (landmarkContacts) {
       host.scene.remove(landmarkContacts);

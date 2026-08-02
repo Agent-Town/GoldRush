@@ -1690,6 +1690,7 @@ export class Game {
         paintedGround: this.terrainView?.group.children.find((child) => child.userData.terrainRelief === true),
         nightMode: this.isNightShiftContract(),
         nightLighting: () => this.lightField.snapshot(),
+        rushActive: () => this.runManager?.diagnostics.rush === true,
         onVisualHeightSourceInstalled: () => this.resampleVisualHeights(),
       });
     });
