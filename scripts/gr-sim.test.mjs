@@ -74,6 +74,38 @@ test('gr-sim deterministically runs the Claim objective', () => {
   );
 });
 
+test('gr-sim boots escort mode from data instead of URL state', async () => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const location = new URL('http://gr-sim.local/?debug&contract=e2-hill-mine&seed=e2-escort-headless');
+  globalThis.location = location;
+  globalThis.window = { location };
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const sim = new HeadlessContractSim({ contractId: 'e2-hill-mine', seed: 'e2-escort-headless', mode: 'escort' });
+    assert.equal(location.searchParams.has('mode'), false);
+    assert.deepEqual(sim.currentTurn().view.stablePrefix.mechanics.modes, sim.manifest.modes);
+    assert.equal(sim.escortDiagnostics.enabled, true);
+    assert.equal(sim.escortDiagnostics.enabled && sim.escortDiagnostics.required, 1);
+    assert.equal(sim.escortDiagnostics.enabled && sim.escortDiagnostics.payout, 40);
+  } finally {
+    await vite.close();
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
+
+  const cli = spawnSync(
+    process.execPath,
+    ['scripts/gr-sim.mjs', '--contract', 'e2-hill-mine', '--seed', 'e2-escort-headless', '--mode', 'escort', '--policy=idle'],
+    { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
+  );
+  assert.equal(cli.status, 0, cli.stderr);
+  assert.equal(JSON.parse(cli.stdout.split('\n', 1)[0]).stablePrefix.mechanics.modes[0].id, 'escort');
+});
+
 test('the Claim driver consumes declared water and posts RunManager secure at wave 10', async () => {
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
@@ -110,7 +142,7 @@ test('the Claim driver consumes declared water and posts RunManager secure at wa
 
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     const run = () => {
-      const sim = new HeadlessContractSim('the-claim', 'e1-the-claim-01');
+      const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'e1-the-claim-01' });
       sim.hero.applyStats(10_000, 1);
       sim.hero.heal(10_000);
       let turn = sim.currentTurn();

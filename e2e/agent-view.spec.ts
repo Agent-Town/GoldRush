@@ -48,6 +48,7 @@ const WAVE_THREE_SNAPSHOT = `{
           }
         }
       ],
+      "modes": [],
       "posting": {
         "waves": [
           {
@@ -277,6 +278,9 @@ test('all five E1 mechanics manifests match their byte-stable fixture', async ()
   expect(deriveMechanicsManifest('e1-twin-banks').rules).toContainEqual(
     expect.objectContaining({ id: 'water_crossings', data: expect.objectContaining({ count: 2 }) }),
   );
+  expect(deriveMechanicsManifest('e2-hill-mine').modes).toEqual([
+    expect.objectContaining({ id: 'escort', cartsRequired: 1, payout: 40, railRouteIndex: 0 }),
+  ]);
   for (const id of ['the-claim', 'e1-night-shift', 'e1-baron']) {
     expect(deriveMechanicsManifest(id).rules).toContainEqual(
       expect.objectContaining({ id: 'water_crossings', data: { count: 1, ids: ['center-ford'] } }),

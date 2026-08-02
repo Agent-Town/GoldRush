@@ -30,7 +30,7 @@ const vite = await createServer({
 let input;
 try {
   const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
-  const sim = new HeadlessContractSim(options.contract, options.seed);
+  const sim = new HeadlessContractSim({ contractId: options.contract, seed: options.seed, mode: options.mode });
   Object.assign(console, originalConsole);
 
   input = options.policy === 'idle'
@@ -77,7 +77,7 @@ function parseArgs(args) {
     const raw = args[index];
     const match = /^--([^=]+)=(.*)$/.exec(raw);
     const key = match?.[1] ?? raw.replace(/^--/, '');
-    if (!raw.startsWith('--') || !['contract', 'seed', 'policy'].includes(key)) {
+    if (!raw.startsWith('--') || !['contract', 'seed', 'policy', 'mode'].includes(key)) {
       throw new Error(`Unknown argument: ${raw}`);
     }
     const value = match?.[2] ?? args[++index];
@@ -87,5 +87,6 @@ function parseArgs(args) {
   if (!values.contract) throw new Error('--contract is required.');
   const policy = values.policy ?? 'stdin';
   if (policy !== 'stdin' && policy !== 'idle') throw new Error('--policy must be stdin or idle.');
-  return { contract: values.contract, seed: values.seed ?? 'gold-rush', policy };
+  if (values.mode !== undefined && values.mode !== 'escort') throw new Error('--mode must be escort.');
+  return { contract: values.contract, seed: values.seed ?? 'gold-rush', policy, mode: values.mode };
 }

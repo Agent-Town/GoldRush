@@ -184,11 +184,11 @@ test('an imported later ledger heals to the frontier and plays', async ({ page }
   expectNoConsoleErrors(watch);
 });
 
-test('later flagship URLs decline to the Claim', async ({ page }) => {
+test('later contract URLs and modes decline to the Claim', async ({ page }) => {
   const watch = watchErrors(page);
   await seedProfile(page, { unlocked: true });
-  for (const contractId of ['e7-relay-valley', 'e10-last-claim']) {
-    await page.goto(`/?contract=${contractId}`);
+  for (const query of ['contract=e2-hill-mine&mode=escort', 'contract=e7-relay-valley', 'contract=e10-last-claim']) {
+    await page.goto(`/?${query}`);
     await waitForContract(page, 'the-claim');
   }
   expectNoConsoleErrors(watch);

@@ -36,6 +36,7 @@ import {
   loadEpoch,
   raiseActiveEpochMegaproject,
   type ContractManifest,
+  type ContractRunBoot,
 } from '../meta/ContractFamilies';
 import {
   ensureMegaprojectProject,
@@ -279,7 +280,7 @@ type TownSceneOptions = {
   openBoard?: boolean;
   initialBoardContractId?: string;
   returnResult?: 'secured' | 'overrun';
-  onLaunchContract?: (id: string) => void;
+  onLaunchContract?: (id: string, boot?: ContractRunBoot) => void;
 };
 
 type HiddenButtonState = {
@@ -1138,10 +1139,7 @@ export class TownScene {
     if (id && !launch.disabled) {
       if (!this.confirmFreshContractLaunch(id)) return;
       clearRunSuspend();
-      const search = new URLSearchParams(window.location.search);
-      launch.dataset.contractMode ? search.set('mode', launch.dataset.contractMode) : search.delete('mode');
-      history.replaceState(null, '', `${window.location.pathname}?${search.toString()}${window.location.hash}`);
-      this.options.onLaunchContract?.(id);
+      this.options.onLaunchContract?.(id, { mode: launch.dataset.contractMode === 'escort' ? 'escort' : undefined });
     }
   };
 

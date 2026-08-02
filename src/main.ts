@@ -9,7 +9,14 @@ import { FIRST_CLAIM_DONE_KEY } from './game/ProfileStorage';
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
-import { activeContract, DEFAULT_CONTRACT_ID, loadContract, readCharterLaunch, stagePlayerContractLaunch } from './meta/ContractFamilies';
+import {
+  activeContract,
+  DEFAULT_CONTRACT_ID,
+  loadContract,
+  readCharterLaunch,
+  stagePlayerContractLaunch,
+  type ContractRunBoot,
+} from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
 import { installClaimLedgerRequestHandler } from './encyclopedia/events';
 import { installEpochLedgerDiscovery } from './encyclopedia/state';
@@ -119,7 +126,7 @@ async function startGame(): Promise<void> {
   applyStoredDifficultyPreset();
   applyStoredPerformanceTier(activeContract().id);
   applyUpgradeBudgetsFromBalance();
-  game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback);
+  game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback, runBootFromSearch(currentSearch));
   game.start();
   if (!__GR_RELEASE_E1__ && currentSearch.has('editor')) {
     void import('./editor/DescriptorInspector').then(({ installDescriptorInspector }) => installDescriptorInspector(app));
@@ -210,14 +217,19 @@ function continueSavedRun(): void {
   startWithProfiles({ skipTitle: true });
 }
 
-function launchContract(contractId: string): void {
+function launchContract(contractId: string, boot: ContractRunBoot = {}): void {
   advanceStream.pause();
   if (!loadContract(contractId).practice) markFirstClaimDone();
   stagePlayerContractLaunch(contractId);
   const nextSearch = new URLSearchParams(window.location.search);
   nextSearch.set('contract', contractId);
+  boot.mode ? nextSearch.set('mode', boot.mode) : nextSearch.delete('mode');
   history.pushState(null, '', `${window.location.pathname}?${nextSearch.toString()}${window.location.hash}`);
   window.location.reload();
+}
+
+function runBootFromSearch(search: URLSearchParams): ContractRunBoot {
+  return { mode: search.get('mode') === 'escort' && search.get('mp') !== 'dev' ? 'escort' : undefined };
 }
 
 function markFirstClaimDone(): void {

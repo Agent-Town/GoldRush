@@ -21,7 +21,7 @@ import { Balance } from '../game/Balance';
 import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
-import { loadContract, type ContractManifest } from '../meta/ContractFamilies';
+import { loadContract, type ContractManifest, type ContractRunBoot } from '../meta/ContractFamilies';
 import { stableHash } from '../mp/LockstepClient';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
@@ -47,6 +47,11 @@ export type GrSimOutcome = {
 export type GrSimTurn = {
   view: AgentView;
   terminal: boolean;
+};
+
+export type HeadlessContractBoot = ContractRunBoot & {
+  contractId: string;
+  seed: string;
 };
 
 const NO_AUDIO = {
@@ -76,6 +81,8 @@ const IDLE_INTENTS: Intents = {
 
 export class HeadlessContractSim {
   readonly manifest: ContractManifest;
+  readonly contractId: string;
+  readonly seed: string;
 
   private readonly events = new EventBus();
   private readonly economy = new Economy();
@@ -117,11 +124,15 @@ export class HeadlessContractSim {
   private prospectorHarvesting = false;
   private buildingHits = 0;
 
-  constructor(readonly contractId: string, readonly seed: string) {
-    if (!SUPPORTED_CONTRACTS.has(contractId)) {
-      throw new Error(`AP-07 supports only ${[...SUPPORTED_CONTRACTS].join(', ')}; received ${contractId}.`);
+  constructor(readonly boot: HeadlessContractBoot) {
+    this.contractId = boot.contractId;
+    this.seed = boot.seed;
+    this.manifest = loadContract(this.contractId);
+    const mode = this.manifest.modes?.find(({ id }) => id === boot.mode);
+    if (boot.mode && !mode) throw new Error(`${this.contractId} does not declare mode ${boot.mode}.`);
+    if (!SUPPORTED_CONTRACTS.has(this.contractId) && !mode) {
+      throw new Error(`AP-07 supports only ${[...SUPPORTED_CONTRACTS].join(', ')}; received ${this.contractId}.`);
     }
-    this.manifest = loadContract(contractId);
     const stake = this.manifest.tileParams.stakeMarkers?.find((marker) => marker.heroStart);
     const start = new THREE.Vector3(stake?.x ?? 0, 0.06, stake?.z ?? 12);
     this.hero.resetRun(start);
@@ -130,7 +141,7 @@ export class HeadlessContractSim {
     this.harvest = new HarvestSystem(
       this.economy,
       this.manifest.tileParams.harvestAnchors ?? Terrain.nodeAnchors,
-      createRng(`${seed}:harvest`),
+      createRng(`${this.seed}:harvest`),
     );
     this.harvest.applyStats(1, 0, 0, this.manifest.twist.seamYieldMult ?? 1);
     this.harvestSnapshot = this.harvest.snapshot;
@@ -168,11 +179,12 @@ export class HeadlessContractSim {
     this.waves = new WaveSystem(
       this.enemies,
       this.hero.group.position,
-      createRng(`${seed}:waves`),
+      createRng(`${this.seed}:waves`),
       (text, at, wave) => this.replayEvents.push({ type: 'announcement', at, wave: wave ?? null, text }),
       (wave, at) => this.startWave(wave, at),
       () => false,
       () => this.manifest,
+      boot,
       () => this.build.diagnostics.stockpilesState.some((entry) => entry.active),
       () => this.build.hasAnyBuildable,
       () => this.enemies.all.filter((enemy) => enemy.isAlive && enemy.isThief).length,
@@ -275,6 +287,10 @@ export class HeadlessContractSim {
 
   get wavesPerSecond(): number {
     return this.advanceCpuMs > 0 ? this.waves.diagnostics.wave / (this.advanceCpuMs / 1000) : 0;
+  }
+
+  get escortDiagnostics() {
+    return this.waves.escortDiagnostics;
   }
 
   private get terminal(): boolean {
