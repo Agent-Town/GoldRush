@@ -7,6 +7,22 @@ import * as Terrain from './Terrain';
 
 export type ShadowsQuality = 'soft' | 'blob';
 export type NightShiftPhase = 'full' | 'dusk' | 'dark' | 'dawn';
+
+// Night Shift pool-light colours (render-side; §4.6). The hero and the Prospector carry a cooler
+// light than the lanterns so your own reach stays tellable from theirs at a glance; #8fded3 read as
+// a mint disc against the warm map, so it moves to a steel blue at matched luminance.
+//
+// The WARM one deliberately stays #ffd28a even though warming it is what the night-mode-truth
+// review asked for. Under ACES, saturation added to a light this bright costs post-tonemap
+// luminance, and this light sets how bright a relit lantern's build island reads. Measured at the
+// sample points e1-night-shift.spec.ts:435 uses for that property (higher is better):
+//   #ffd28a 0.1053   #ffd94d (luma-matched, +52% chroma) 0.1045   #ff9e3d 0.0957
+// Amber here would dim the build island ~6% for very little gain: the ground's colour is set by the
+// terrain emissive, not by this light (swapping it alone moved measured lit-ground warmth by 0.73
+// of ~7). So the amber lives in the terrain emissive, and this stays bright.
+const WARM_POOL_LIGHT = '#ffd28a';
+const COOL_POOL_LIGHT = '#b3d4ec';
+
 export type LightRigRampPalette = {
   background: THREE.Color;
   fog: THREE.Color;
@@ -73,18 +89,21 @@ export class LightRig {
   private readonly dayBackground = new THREE.Color('#f1c887');
   private readonly duskBackground = new THREE.Color('#8a6b6c');
   private readonly darkBackground = new THREE.Color('#000000');
-  private readonly dawnBackground = new THREE.Color('#f5cfa0');
+  private readonly dawnBackground = new THREE.Color('#ecc9bd');
   private readonly dayFog = new THREE.Color('#ead2a3');
   private readonly duskFog = new THREE.Color('#8b6c6c');
   private readonly darkFog = new THREE.Color('#000000');
   private readonly dawnFog = new THREE.Color('#f5d7b2');
   private readonly daySun = new THREE.Color('#ffd28a');
-  private readonly dawnSun = new THREE.Color('#ffd6a2');
+  private readonly dawnSun = new THREE.Color('#ffc9a4');
+  // Silver-rose dawn: the fill goes cool BEFORE the sun warms back up, which is what makes first
+  // light read as relief rather than as a second noon.
+  private readonly dawnFill = new THREE.Color('#dfe3ee');
   private readonly darkSun = new THREE.Color('#40516f');
   private readonly dayFill = new THREE.Color('#fff2cc');
   private readonly darkFill = new THREE.Color('#28324a');
   private readonly dayGround = new THREE.Color('#8b6c3f');
-  private readonly dawnGround = new THREE.Color('#a6815c');
+  private readonly dawnGround = new THREE.Color('#a08a86');
   private readonly darkGround = new THREE.Color('#000000');
   private readonly blobShadows = new SpriteBlobShadows();
   private readonly post = new LedgerPostPass();
@@ -314,7 +333,7 @@ export class LightRig {
       this.fog.color.copy(this.dawnFog);
       this.sun.color.copy(this.dawnSun);
       this.sun.intensity = 2.05;
-      this.fill.color.copy(this.dayFill);
+      this.fill.color.copy(this.dawnFill);
       this.fill.groundColor.copy(this.dawnGround);
       this.fill.intensity = 1.2;
       this.sun.position.y = 18;
@@ -372,7 +391,10 @@ export class LightRig {
       if (!light.visible || !source) continue;
       light.userData.kind = source.kind;
       const warm = source.kind === 'lantern' || source.kind === 'powered-lamp' || source.kind === 'enemy-lantern';
-      light.color.set(warm ? '#ffd28a' : '#8fded3');
+      // The pools ARE this map's composition, so they carry its colour. #ffd28a read as pale tan
+      // once ACES compressed it — the amber the night-mode-truth review asked for lives here, in the
+      // dynamic pool lights, not only in the terrain shader's emissive core.
+      light.color.set(warm ? WARM_POOL_LIGHT : COOL_POOL_LIGHT);
       const flicker = source.kind === 'lantern' ? this.nightShift.lampIntensityMult ?? 1 : 1;
       light.intensity = this.nightPoolIntensity(source.kind) * darkness * flicker;
       light.distance = source.radius;
