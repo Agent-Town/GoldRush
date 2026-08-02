@@ -466,6 +466,13 @@
               "id": "run3d-15-gold-nodes",
               "title": "RUN-3D rider 15: the Gold Seam in 3D — the first rider of the contract-buildables ladder, wired read-only off the existing HarvestSystem snapshot (spec RUN-RECIPE.md:24 names gold nodes fire-authorable once 07 lands; 07 verified landed)",
               "taskFile": "run3d-15-gold-nodes.md",
+              "status": "queued",
+              "reason": "ATTEMPT 1 GATED AND REJECTED s1387 (review reviews/run3d-15-gold-nodes.md, F-1387-3). The model and the rider wiring are exemplary — tsc/build clean, own spec 8/8, sluice 8/8 unmodified, node-guards 226/226, 720 tris, byte-identical re-export — but src/game/Run3dPilot.ts:43-46 adds an early return that publishes 'off' whenever the run3dPilot param is ABSENT, which short-circuits the landed `?? 'all'` default and turns 3D buildings OFF in a plain boot (Mistake #10). Measured red on the MERGED tree, both projects: m2-05-base-damage-repair.spec.ts:353 and night3d-perf.spec.ts:118 waitForFunction timeouts, neither fingerprint-matched. ATTEMPT 2 re-dispatched same fire with a CHANGED PREMISE (retry law): the corrective deletes the early return and re-points the flag-off assertion, since the :48 gold_seam filter already delivers the exclusion the master asked for."
+            },
+            {
+              "id": "run3d-15b-gold-nodes-flagoff-fix",
+              "title": "RUN-3D rider 15b (corrective, attempt 2): restore the plain-boot 3D-buildings default that rider 15 turned off — delete the flag-absent early return in Run3dPilot.ts and re-point the flag-off assertion, keeping the gated-good GLB and rider wiring intact (F-1387-3)",
+              "taskFile": "run3d-15b-gold-nodes-flagoff-fix.md",
               "status": "queued"
             },
             {
