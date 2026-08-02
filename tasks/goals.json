@@ -22,7 +22,7 @@
               "taskFile": "lane-claim-geometry-declared.md",
               "status": "blocked",
               "blockClass": "gate-side",
-        "blockedReason": "F-1381-3 + F-1381-4 (s1381 gate, reviews/lane-m4-claim-geometry-and-headless.md) — GATE-SIDE HOLD, NOT AN OWNER GATE. (1) lane/m4 is founded on the owner-BLOCKED commit 7c4f132f (f1328-1-drill-yard-census-debt), so any branch-level merge or main..lane/m4 diff sweeps blocked content into main. (2) lane/m4 base 46033151 is 270 commits behind main and PREDATES 69984c6a (stakeMarkers.lossCondition -> heroStart, repo-wide, drained s1329); lifting the slice onto clean main fails tsc with TS2339 on lossCondition. RE-LAND against current main per Mistake #15; keep lane/m4 as salvage-ref and DO NOT reset it."
+              "blockedReason": "F-1381-3 + F-1381-4 (s1381 gate, reviews/lane-m4-claim-geometry-and-headless.md) — GATE-SIDE HOLD, NOT AN OWNER GATE. (1) lane/m4 is founded on the owner-BLOCKED commit 7c4f132f (f1328-1-drill-yard-census-debt), so any branch-level merge or main..lane/m4 diff sweeps blocked content into main. (2) lane/m4 base 46033151 is 270 commits behind main and PREDATES 69984c6a (stakeMarkers.lossCondition -> heroStart, repo-wide, drained s1329); lifting the slice onto clean main fails tsc with TS2339 on lossCondition. RE-LAND against current main per Mistake #15; keep lane/m4 as salvage-ref and DO NOT reset it."
             },
             {
               "id": "e1-authored-bundle-validation",
@@ -35,17 +35,18 @@
               "id": "e1-headless-the-claim",
               "title": "Headless sim covers The Claim (attended census wave 2026-08-02)",
               "taskFile": "lane-headless-the-claim.md",
-              "status": "blocked",
-              "blockClass": "gate-side",
-        "blockedReason": "F-1381-3 + F-1381-4 (s1381 gate, reviews/lane-m4-claim-geometry-and-headless.md) — GATE-SIDE HOLD, NOT AN OWNER GATE. (1) lane/m4 is founded on the owner-BLOCKED commit 7c4f132f (f1328-1-drill-yard-census-debt), so any branch-level merge or main..lane/m4 diff sweeps blocked content into main. (2) lane/m4 base 46033151 is 270 commits behind main and PREDATES 69984c6a (stakeMarkers.lossCondition -> heroStart, repo-wide, drained s1329); lifting the slice onto clean main fails tsc with TS2339 on lossCondition. RE-LAND against current main per Mistake #15; keep lane/m4 as salvage-ref and DO NOT reset it."
+              "status": "merged",
+              "mergeHash": "8e20d8ca20cd9782d8a0851834e1ff435d121f2f",
+              "reason": "GATE-SIDE HOLD LIFTED AND SLICE MERGED s1392 at 8e20d8ca. The hold was fire-recorded, not owner-owed, and both of its stated conditions were discharged BY MEASUREMENT, not by argument. (1) \"any branch-level merge sweeps blocked content into main\": the re-land was applied as a PATCH, never a merge — git merge-base --is-ancestor reports that BOTH the owner-blocked 7c4f132f AND the salvage-ref cce99524 are NOT ancestors of the landed commit 66f12233, which touches exactly the 5 declared paths and none of the 8 forbidden ones. lane/m4 was never checked out and remains the untouched salvage-ref for the still-owed sibling. (2) \"lifting onto clean main fails tsc with TS2339 on lossCondition\": tsc --noEmit rc 0. The cure is one identifier — stakeMarkers.lossCondition -> heroStart — and that single hunk is the ONLY difference between the salvage-ref and the re-land across all five files. Gates: build rc0, gr-sim 5/5, node-guards 228/228, and 44/44 across m3-01 + m3-05b + m3-05d + m4-08 + m2-05 desktop+mobile at --workers=1 (four of those five adjacent suites were derived by grep, not named by the master — F-1392-2). Review: reviews/e1-headless-the-claim-reland.md"
             },
-              {
-                "id": "e1-headless-the-claim-reland",
-                "title": "RE-LAND headless-the-claim on current main — apply the cce99524 salvage-ref patch (5 files, disjoint from the owner-blocked 7c4f132f) and translate the single stale lossCondition reference to heroStart, discharging the gate-side hold F-1381-4",
-                "taskFile": "e1-headless-the-claim-reland.md",
-                "status": "queued",
-                "reason": "FIRE-AUTHORED s1391 to lane-c. RE-LAND of the cce99524 salvage-ref onto current main, discharging the GATE-SIDE hold on e1-headless-the-claim. Both of that holds conditions were re-measured this fire rather than inherited. Condition (1) blocked-foundation DOES NOT APPLY to this slice: cce99524 touches 5 files, none of which the owner-blocked 7c4f132f touched, and none of which the sibling c876f675 touched either — textually disjoint in both directions. Condition (2) staleness IS real but is EXACTLY ONE IDENTIFIER: git show cce99524 piped to git apply --check against main 32cfc878 APPLIES CLEANLY 270 commits later, and lossCondition appears in the cce99524 versions of the five slice files exactly ONCE (src/sim/HeadlessContractSim.ts), while mains own copy of that same file already holds heroStart exactly once in its place. The s1381 review recommendation to re-author BOTH masters is correct for the sibling c876f675, which genuinely fails git apply at src/meta/ContractFamilies.ts:1489 and does import blocked content — that slice is NOT in this masters scope and is still owed. GATE: tsc rc 0 (the check F-1381-4 predicted would fail) + gr-sim.test.mjs green + node guards rc 0 + m2-05 14/14 + git diff --name-only main...HEAD lists EXACTLY the five files and nothing else."
-              },
+            {
+              "id": "e1-headless-the-claim-reland",
+              "title": "RE-LAND headless-the-claim on current main — apply the cce99524 salvage-ref patch (5 files, disjoint from the owner-blocked 7c4f132f) and translate the single stale lossCondition reference to heroStart, discharging the gate-side hold F-1381-4",
+              "taskFile": "e1-headless-the-claim-reland.md",
+              "status": "merged",
+              "reason": "MERGED s1392 at 8e20d8ca. Executed exactly as authored: the runner applied the cce99524 salvage-ref as a patch to 5 files and translated the single stale lossCondition reference to heroStart, with git diff cce99524..66f12233 over those five paths showing that one hunk and nothing else. tsc rc0 — the gate F-1381-4 predicted would fail. This master existed to discharge the gate-side hold on e1-headless-the-claim, and it did; that leaf is flipped in this same commit. The sibling slice c876f675 (e1-claim-geometry-declared) was explicitly NOT in scope and remains owed. Review: reviews/e1-headless-the-claim-reland.md",
+              "mergeHash": "8e20d8ca20cd9782d8a0851834e1ff435d121f2f"
+            },
             {
               "id": "e1-seam-yield-single-source-orig",
               "title": "Dry Gulch seam yield single-source — ORIGINAL master, unachievable as written (F-1380-1); superseded by the firewall-lifted re-author",
