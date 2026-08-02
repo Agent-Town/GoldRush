@@ -45,8 +45,24 @@ while true; do
       rm -f "$pidfile"
       echo "[lane-runner-v3] $slot: stale run cleaned (crash salvaged to failed/)"
     fi
-    if [ "$slot" = "main" ] && head -2 "$ROOT/STATUS.md" 2>/dev/null | grep -q "ACTIVE 2"; then
-      continue  # a gate fire holds main (v2 rule restored) — lanes keep running, main waits
+    # s1402 / F-1402-1: the main lock lives on LINE 1 ONLY (§1.2 writes it, §4 clears it).
+    # This gate used to read `head -2 | grep "ACTIVE 2"`, which was wrong in BOTH directions:
+    #   FALSE-BLOCK   — §4 archives the replaced line-1 as a bullet on line 2, and a lock archive
+    #                   reads "ACTIVE 2026-...", so every handoff satisfied this gate and the main
+    #                   slot was skipped while nothing held it. Measured: continuously from s1393
+    #                   (2026-08-02 14:42) to s1402, ~6h, with a cure sitting in tasks/queue/main.
+    #   FALSE-RELEASE — the literal "ACTIVE 2" misses lock lines written "... (s1392 fire) ACTIVE —",
+    #                   a form 31 of 58 measured lock states used. Those left main OPEN to dispatch
+    #                   while a fire owned the tree — two writers on main, the Mistake #12 shape.
+    #                   Never observed to fire (1 main-slot run in factory history, and that one
+    #                   dispatched cleanly at a handoff boundary), but a main task is queued now.
+    # Line-1 + "says ACTIVE, does not say lock CLEARED" scored 0 false-blocks / 0 false-releases
+    # across 120 STATUS.md commits (logs/_s1402_predicate_compare.mjs). It also fails SAFE: a
+    # handoff that forgot "lock CLEARED" would hold main, never open it.
+    # Verified by fixture, both directions: scripts/main-lock-gate-guard.test.sh
+    l1=$(head -1 "$ROOT/STATUS.md" 2>/dev/null || true)
+    if [ "$slot" = "main" ] && [[ "$l1" == *ACTIVE* && "$l1" != *"lock CLEARED"* ]]; then
+      continue  # a gate fire holds main — lanes keep running, main waits
     fi
     q="$ROOT/tasks/queue/$slot"
     f=$(ls "$q"/*.md 2>/dev/null | head -1)
