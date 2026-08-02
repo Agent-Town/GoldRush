@@ -113,3 +113,48 @@ s1330 already established the pattern for exactly this situation, carving the ce
 ## Re-derivation
 
 Raw logs parked under `logs/_s1396_*` per the Retention Law: `cp01cp03_w1`, `072_w1`, `parent_control`, `cp03_birth`, `bisect`, `class_probe`, `heldspecs`.
+
+---
+
+# DRAIN — s1397 (2026-08-02)
+
+**Slice:** `f1396-1-cp01-roster-census` · **branch:** `lane/e2-arsenal` · **lane tip:** `59dacbd3` · **merge:** `0195da9f`
+
+**VERDICT: MERGED.** The cp01 half of F-1396-1 is closed.
+
+## What it does
+
+`f0bf5251` landed `e1-drill-yard`, the owner-ratified 6th E1 contract. `cp01-charter-roundtrip.spec.ts:27` asserts the E1 roster **exhaustively** against live-derived data (`listContracts('epoch-1-frontier')`), so the new contract reddened it with a pure-arithmetic diff. The slice adds `'e1-drill-yard'` at index 1 and retitles the test five→six. **Two lines, one file, test-only — no product code touched.**
+
+Worth recording: the roster literal also drives a parameterised loop, so the fix does not merely silence an assertion — it **adds a genuinely executed case**, `round-trip: e1-drill-yard`, which passes. cp01 went 18→20 project-results.
+
+## Evidence (merged tree, detached gate worktree per §3.0b, `--workers=1` per §3.1)
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | clean |
+| `npm run build` | green, built in 1.10s |
+| `cp01-charter-roundtrip` | **20/20** desktop + mobile |
+| Adjacent — grep-derived (`listContracts` consumers + both drill-yard specs, 10 files) | **104 passed / 8 red** |
+| Boot probes (`_s106-prospector`, `profile-first-boot`, `f1297-2-plain-boot`) | **16/16** desktop + 390px, zero console/page errors |
+
+Adjacency was **derived by grep, not inherited from the runner's list**: `grep -rln listContracts e2e/` returns the nine specs that actually read the roster. The broader `epoch-1-frontier` string match (40 files) is mostly incidental and was not used as the denominator.
+
+## The 8 remaining reds — fingerprint, not hand-wave
+
+| Spec | Projects | Owner |
+|---|---|---|
+| `072-era-activation.spec.ts:226` | desktop + mobile | held in owner-BLOCKED `7c4f132f` → **F-1396-4** |
+| `agent-view.spec.ts:263` | desktop + mobile | held in owner-BLOCKED `7c4f132f` → **F-1396-4** |
+| `e1-baron.spec.ts:343` | desktop + mobile | held in owner-BLOCKED `7c4f132f` → **F-1396-4** |
+| `cp03-press-loop.spec.ts:25` | desktop + mobile | RF-05b design fork → **F-1396-2**, attended |
+
+s1396 measured the roster debt at **10 red project-results** (cp01, 072, agent-view, e1-baron × 2, plus cp03 × 2). I measure **8** on the merged tree. **10 − 8 = 2 = exactly cp01's own**, which is the arithmetic this merge predicts and nothing more. The diff touches one test file, so it is structurally incapable of moving the other four specs.
+
+⚠️ **A measurement note against my own first number.** The line reporter's summary for the 10-spec adjacent run said `7 failed`; a per-test JSON walk over the four suspect specs said **8**. I did not average them or pick the convenient one — the JSON count enumerates test-by-test with project names and line numbers and is the one reproduced in the table above. The line-reporter's 7 is most likely a retry being counted as a pass. **Flagged rather than smoothed over: if a future fire sees this discrepancy again it is the reporter, not the suite.**
+
+## Findings
+
+- **F-1397-1** 🟢 — playwright's `line` reporter summary count disagreed with a per-test JSON walk on the same tree (7 vs 8) in the fire shell. Low severity, instrument-side, **not** a product defect. Recorded so the next fire that meets it does not re-diagnose it as a flaky suite. Use `--reporter=json` + a per-test walk when an exact red count matters.
+
+No blocking findings. Nothing in this slice touches the owner-blocked files, the six iteration-list coverage holes (F-1396-3), or the cp03 fork (F-1396-2) — all three were firewalled OUT by the master and stayed out.
