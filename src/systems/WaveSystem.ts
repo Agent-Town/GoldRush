@@ -10,6 +10,7 @@ import {
   type ContractEnemySpawnGate,
   type ContractEnemyVariant,
   type ContractManifest,
+  type ContractRunBoot,
   type RailPathPoint,
 } from '../meta/ContractFamilies';
 import * as Terrain from '../world/Terrain';
@@ -142,6 +143,7 @@ export class WaveSystem {
     private readonly onWaveStarted: (wave: number, atSim: number) => boolean | void,
     private readonly scheduledDisabled: () => boolean,
     private readonly liveContract: () => ContractManifest = activeContract,
+    private readonly boot: ContractRunBoot = {},
     private readonly canSpawnThieves: () => boolean = () => false,
     private readonly canSpawnWreckers: () => boolean = () => false,
     private readonly liveThiefCount: () => number = () => 0,
@@ -181,8 +183,7 @@ export class WaveSystem {
   }
 
   private get escortMode() {
-    const params = new URLSearchParams(globalThis.location?.search ?? '');
-    if (params.get('mode') !== 'escort' || params.get('mp') === 'dev') return undefined;
+    if (this.boot.mode !== 'escort') return undefined;
     return this.contract.modes?.find((mode) => mode.id === 'escort');
   }
 

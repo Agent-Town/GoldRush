@@ -608,6 +608,9 @@ export type ContractEscortMode = {
   payout: number;
   railRouteIndex: number;
 };
+export type ContractRunBoot = {
+  mode?: ContractEscortMode['id'];
+};
 export type ContractPracticeMode = {
   scheduledWaves: false;
   scores: false;

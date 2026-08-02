@@ -1,4 +1,4 @@
-import { loadContract, type ContractManifest } from '../meta/ContractFamilies';
+import { loadContract, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
 
 type MechanicValue = boolean | number | string | readonly string[];
 
@@ -16,6 +16,7 @@ export type MechanicsManifest = {
     source: string;
     data: Readonly<Record<string, MechanicValue>>;
   }[];
+  modes: readonly ContractEscortMode[];
   posting: {
     waves: readonly { event: string; wave: number; source: string }[];
     spawnEdges: readonly string[];
@@ -99,6 +100,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     contractId: contract.id,
     interactables: interactables(contract),
     rules: rules.sort(byId),
+    modes: (contract.modes ?? []).map((mode) => ({ ...mode })),
     posting: {
       waves: waves.sort((left, right) => left.wave - right.wave || compare(left.event, right.event)),
       spawnEdges: [...tile.lanes.spawnEdges].sort(),

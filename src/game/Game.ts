@@ -24,6 +24,7 @@ import {
   type ContractLightKeyframe,
   type ContractManifest,
   type ContractPowerGrid,
+  type ContractRunBoot,
   type RailPathDescriptor,
 } from '../meta/ContractFamilies';
 import {
@@ -753,41 +754,8 @@ export class Game {
     reachRadius: 0,
   };
   private baronSpawnImpulses = 0;
-  private readonly waveSystem = new WaveSystem(
-    this.enemies,
-    this.primaryActor.group.position,
-    createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
-    (text, atSim, wave) => {
-      if (wave === 1) this.speakTrailGuide('first-wave');
-      this.announceWaveBanner(text, atSim);
-    },
-    (wave, atSim) => {
-      this.events.emit({ type: 'wave_started', at: atSim, wave });
-      this.spawnMothSeasonWave(wave);
-      this.advanceMegaprojectOnWave(atSim);
-      return !this.secureClaimChoicePending();
-    },
-    () => areWavesDisabled() || this.deepwaterClaim !== null || this.activeContract.practice?.scheduledWaves === false,
-    () => this.activeContract,
-    () => !isStealDisabled() && this.hasBuiltStockpile(),
-    () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active || this.ferrisWheel?.target.active === true),
-    () => this.liveThiefCount(),
-    () => this.territoryRingPresent,
-    this.heroStart,
-    (position) => {
-      this.baronSpawnImpulses += 1;
-      this.cameraRig.impulse(position, 0.12);
-    },
-    (target) => this.goldTargeting.registerBuilding(target),
-    (amount, position, atSim) => {
-      this.economy.apply({ id: crypto.randomUUID(), at: atSim, type: 'gold_granted', source: 'escort', amount });
-      this.vfx.floatText(position, `+${amount}`, '#c4883a');
-    },
-    () => [
-      this.localActor.group.position,
-      ...((this.agentStub?.state.permissionLevel ?? 0) >= 1 ? [this.prospector.position] : []),
-    ],
-  );
+  private readonly boot: ContractRunBoot;
+  private readonly waveSystem: WaveSystem;
   private readonly crawlerBoss = new CrawlerBossSystem(
     () => this.enemies.all,
     () => this.powerGraph?.snapshot().nodes ?? [],
@@ -1213,7 +1181,45 @@ export class Game {
     private readonly canvas: HTMLCanvasElement,
     private readonly openAssayBench?: () => void,
     private readonly onReturnToMenu?: (result: RunReturnResult) => void,
+    boot: ContractRunBoot = {},
   ) {
+    this.boot = boot;
+    this.waveSystem = new WaveSystem(
+      this.enemies,
+      this.primaryActor.group.position,
+      createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
+      (text, atSim, wave) => {
+        if (wave === 1) this.speakTrailGuide('first-wave');
+        this.announceWaveBanner(text, atSim);
+      },
+      (wave, atSim) => {
+        this.events.emit({ type: 'wave_started', at: atSim, wave });
+        this.spawnMothSeasonWave(wave);
+        this.advanceMegaprojectOnWave(atSim);
+        return !this.secureClaimChoicePending();
+      },
+      () => areWavesDisabled() || this.deepwaterClaim !== null || this.activeContract.practice?.scheduledWaves === false,
+      () => this.activeContract,
+      boot,
+      () => !isStealDisabled() && this.hasBuiltStockpile(),
+      () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active || this.ferrisWheel?.target.active === true),
+      () => this.liveThiefCount(),
+      () => this.territoryRingPresent,
+      this.heroStart,
+      (position) => {
+        this.baronSpawnImpulses += 1;
+        this.cameraRig.impulse(position, 0.12);
+      },
+      (target) => this.goldTargeting.registerBuilding(target),
+      (amount, position, atSim) => {
+        this.economy.apply({ id: crypto.randomUUID(), at: atSim, type: 'gold_granted', source: 'escort', amount });
+        this.vfx.floatText(position, `+${amount}`, '#c4883a');
+      },
+      () => [
+        this.localActor.group.position,
+        ...((this.agentStub?.state.permissionLevel ?? 0) >= 1 ? [this.prospector.position] : []),
+      ],
+    );
     resetAssetLoading(canvas, 'the claim');
     this.assertActorMode();
     this.renderer = createRenderer(canvas);
@@ -3757,8 +3763,7 @@ export class Game {
   }
 
   private activeEscortMode(): ContractEscortMode | undefined {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('mode') !== 'escort' || params.get('mp') === 'dev') return undefined;
+    if (this.boot.mode !== 'escort') return undefined;
     return this.activeContract.modes?.find((mode) => mode.id === 'escort');
   }
 
