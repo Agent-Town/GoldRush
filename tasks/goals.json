@@ -176,6 +176,17 @@
               "authorNotes": "FIRE-AUTHORED from measured evidence: s1330 counted assets/contracts/*/contracts.json directly (42 total, E1=6) and re-ran the census grep itself rather than inheriting s1328s list. Both sites compare a live-derived array (listEpochs()/loadEpoch()) against the literal 41, so both are red by arithmetic. Queued lane-c ONLY AFTER proving the lane contains f0bf5251 (git merge-base --is-ancestor f0bf5251 lane/e2-arsenal = YES), because on a pre-drill-yard tree the 41 is CORRECT and the edit would manufacture a red; the master carries that premise check in its pre-flight too. Deliberately disjoint from the five files HELD on lane/m4. The master FORBIDS running law-pointer-guard --update on the lane (stale ledger would emit a baseline missing every pointer main added since) - the drain re-bases scripts/law-pointer-baseline.json on main, where the ledger is complete."
             },
             {
+              "id": "f1396-1-cp01-roster-census",
+              "title": "F-1396-1 — cp01-charter-roundtrip.spec.ts:28 asserts a five-name E1 roster; the data ships six (main RED both projects since f0bf5251, control-proven s1396)",
+              "taskFile": "f1396-1-cp01-roster-census.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "review": "reviews/f1396-drill-yard-roster-debt.md",
+              "authoredBy": "s1396",
+              "registeredBy": "s1396",
+              "authorNotes": "FIRE-AUTHORED from measured evidence. CAUSE PROVEN BY CONTROL RUN, not by reading the diff: in a detached worktree at f0bf5251^ (467ed904), same harness, --workers=1, cp01 is GREEN and on main it is RED both projects, failing with the pure-arithmetic diff + \"e1-drill-yard\" at index 1. This is the ROSTER-shaped half of the drill-yard census debt; f1330-1-count-shaped-censuses swept the COUNT-shaped half with a denominator (toHaveLength(41) etc.) that a roster literal is structurally invisible to. Three sibling specs carry the same defect and are also RED on main (072-era-activation:241, agent-view:263, e1-baron:343) but their fixes already exist inside the owner-BLOCKED 7c4f132f on lane/m4, so they are DELIBERATELY out of scope: a fire may not lift a block. cp01 is not among that commit five files (verified git show --stat 7c4f132f), which is exactly why it is the authorable member of the class. Queued lane-c only after proving git merge-base --is-ancestor f0bf5251 lane/e2-arsenal = YES, because on a pre-drill-yard tree adding the sixth name would manufacture a red; the master carries that premise check in its own pre-flight too. The six ITERATION-LIST roster sites are coverage holes rather than reds (F-1396-3) and are firewalled OUT — adding drill-yard to them is an unmeasured behaviour change."
+            },
+            {
               "id": "e1-trail-guide-plain-boot-proof",
               "title": "Prove the teaching path in a plain boot (Trail Guide + greenhorn offer), F-E1-2. OWNER GATE LIFTED 2026-07-29 — promoted from DRAFT and queued lane-b.",
               "taskFile": "lane-b-trail-guide-plain-boot-seam-approach.md",
