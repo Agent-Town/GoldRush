@@ -585,11 +585,13 @@
               "id": "f1404-1-make-the-wave-scaling-cross-engine-deterministic",
               "title": "CURE F-1404-2 — replace the five sim-reachable Math.pow(base, wave) calls in WaveSystem with repeated multiplication so wave scaling is bit-identical across V8 versions, re-derive every bench pin that moves, and make the acceptance test cross-engine identity rather than a single pinned number. Unblocks the twin-banks re-land (E1 driver 4 of 5) and pre-empts the identical failure on the baron (5 of 5).",
               "taskFile": "f1404-1-make-the-wave-scaling-cross-engine-deterministic.md",
-              "status": "queued",
+              "status": "stopped",
               "lane": "main",
               "authoredBy": "s1404",
               "registeredBy": "s1404",
-              "note": "FIRE-AUTHORED from the s1404 drain gate (attended review welcome). Authored from the f1403-1 run report plus the s1404 gate measurements, not from a new premise: the run diagnosed the mechanism and ruled 5(a) STOP, and this is the fix it was forbidden to make. The cure was VERIFIED BEFORE BEING PROPOSED — 63 values across 3 bases and waves 0..20 are identical on Node 23.11.1 and Node 26.4.0 under repeated multiplication, because IEEE-754 multiplication is exactly specified where Math.pow precision is implementation-defined. Scope covers all FIVE sites, not the one the run named, and :838/:839 are included deliberately because they are the baron component-HP path. Scope 4 makes cross-engine identity the acceptance test so a fourth single-engine green cannot happen. Collides with lane-c (lane/e2-arsenal HOLDS src/systems/WaveSystem.ts) — the baron re-graft must follow this, never reset over it."
+              "note": "FIRE-AUTHORED from the s1404 drain gate (attended review welcome). Authored from the f1403-1 run report plus the s1404 gate measurements, not from a new premise: the run diagnosed the mechanism and ruled 5(a) STOP, and this is the fix it was forbidden to make. The cure was VERIFIED BEFORE BEING PROPOSED — 63 values across 3 bases and waves 0..20 are identical on Node 23.11.1 and Node 26.4.0 under repeated multiplication, because IEEE-754 multiplication is exactly specified where Math.pow precision is implementation-defined. Scope covers all FIVE sites, not the one the run named, and :838/:839 are included deliberately because they are the baron component-HP path. Scope 4 makes cross-engine identity the acceptance test so a fourth single-engine green cannot happen. Collides with lane-c (lane/e2-arsenal HOLDS src/systems/WaveSystem.ts) — the baron re-graft must follow this, never reset over it. ⏹️ s1405 DRAIN: RUN ACCEPTED, NO CODE — the run implemented the cure, hit its own scope 6(b) gate when the Claim kill count moved 140->137, refused to re-pin and reverted byte-clean (verified vs HEAD). F-1405-1: scope 6(b) is UNSATISFIABLE by any cross-engine-deterministic arithmetic and is self-refuted by reviews/f1403-1-twin-banks-hash-divergence.md:81, which documents a 1-ULP shift flipping enemy_killed to hero_damaged. DO NOT re-queue this master unchanged (Mistake #5 identical retry). Superseded by f1405-1-land-the-cross-engine-wave-scaling-cure.",
+              "drainedBy": "s1405",
+              "supersededBy": "f1405-1-land-the-cross-engine-wave-scaling-cure"
             },
             {
               "id": "e1-headless-baron",
@@ -612,6 +614,16 @@
               "authoredBy": "s1401",
               "registeredBy": "s1401",
               "note": "FIRE-AUTHORED from the s1401 diagnosis (attended review welcome; reviews/f1401-1-baron-escort-nontermination.md). Three-arm control proves the cause is autoSecureWaveForRun returning Number.MAX_SAFE_INTEGER for any contract declaring twist.baron, plus an unbounded while(true) in scripts/gr-sim.mjs. s1400 escortsSpawned hypothesis REFUTED by reading. The slice likely matches production (Game.ts waitsForBaronDefeat returns true for e2-hill-mine, which has no variantId), so the master rules the divergence with evidence rather than reverting the baron. Main slot, not lane-c: lane-c HOLDS the refused baron work and a lane pre-flight reset would destroy it. TOUCH-ONLY the driver and its test - the master forbids touching the baron lane files so it cannot pre-empt the slice it unblocks."
+            },
+            {
+              "id": "f1405-1-land-the-cross-engine-wave-scaling-cure",
+              "title": "CURE F-1405-1 — re-land the verified cross-engine wave-scaling cure with a satisfiable gate: replace the five sim-reachable Math.pow(base, wave) calls with repeated multiplication, re-derive every bench pin that moves, assert cross-engine identity as the acceptance test, and ACCEPT a kills delta within 10% that is identical on both engines instead of stopping on it. Unblocks the twin-banks re-land (E1 driver 4 of 5) and the baron (5 of 5).",
+              "taskFile": "f1405-1-land-the-cross-engine-wave-scaling-cure.md",
+              "status": "queued",
+              "lane": "main",
+              "authoredBy": "s1405",
+              "registeredBy": "s1405",
+              "note": "FIRE-AUTHORED from the s1405 drain gate (attended review welcome). Same cure as f1404-1, which the runner implemented successfully and then correctly refused under a gate that cannot be met: scope 6(b) demanded no non-hash gameplay change, while the diagnosis that authored it proved a 1-ULP shift flips a kill. Preserve-current-behaviour is undefined here because current behaviour differs per interpreter. VERIFIED s1405 before proposing: repeated multiplication is bit-identical on Node 23.11.1 and Node 26.4.0 across all three bases including trickleDecay to exponent 29 (the prior check stopped at 20), and differs from Math.pow at 34 of 71 reachable exponents, worst 3 ULP / 3.459e-16. Four of the five outcome invariants (secured, waves, gold, timeMs, calls) are unchanged on both engines; only kills moves, 140->137 = 2.1%. Balance.ts untouched. OWNER VETO WINDOW open per CLAUDE.md 7.4 — reversible, one revert. Collides with lane-c (lane/e2-arsenal HOLDS src/systems/WaveSystem.ts) — the baron re-graft must FOLLOW this, never reset over it."
             }
           ]
         },
