@@ -77,6 +77,7 @@ import {
   townEraPropFootprints,
   townPlazaLayout,
   townPlazaSlot,
+  townTrailLayout,
   townPropFootprints,
   townPropRing,
   type TownBuilding,
@@ -682,6 +683,7 @@ export class TownScene {
       this.scene.add(createShell(building));
     }
     this.scene.add(createContactSkirts(this.contactSkirtPlacements()));
+    this.scene.add(createWearDecals(this.wearDecalPlacements()));
     for (const building of townBuildings) {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
@@ -2599,6 +2601,20 @@ export class TownScene {
     return placements;
   }
 
+  // Only the doorsteps that exist: an approach whose building is still a survey plot has nobody
+  // walking to it, and a wear mark there would be a lie the plaza tells about itself.
+  private wearDecalPlacements(): Array<{ x: number; z: number; radius: number }> {
+    const earned = new Set<string>(this.visibleBuildings.map((building) => building.id));
+    if (this.stampMill.visible) earned.add(STAMP_MILL_ID);
+    return [
+      ...townPlazaLayout.slots.filter((slot) => earned.has(slot.id)).map((slot) => ({ x: slot.approach.x, z: slot.approach.z, radius: 1.6 })),
+      { x: townPlazaLayout.gate.x, z: townPlazaLayout.gate.z, radius: 2.1 },
+      { x: townPlazaLayout.center.x, z: townPlazaLayout.center.z, radius: 2.6 },
+      { x: TAILOR_WAGON_APPROACH.x, z: TAILOR_WAGON_APPROACH.z, radius: 1.15 },
+      ...this.visibleActors.filter((actor) => !actor.loop).map((actor) => ({ x: actor.position.x, z: actor.position.z, radius: 0.9 })),
+    ];
+  }
+
   // Rebuilt from the live actor list every frame: the cast walks authored loops, so a static
   // matrix would strand shadows on the plaza while their owners kept walking.
   private syncBlobShadows(): void {
@@ -3511,6 +3527,52 @@ function createContactSkirts(placements: readonly SkirtPlacement[]): THREE.Insta
   return mesh;
 }
 
+// U3b — WEAR THE PLATE CANNOT CARRY. The painted ground above is only ever seen on lite and the
+// 2D fallback: when the plate GLB loads it hides TownSquareGround entirely, and the plate's road
+// wear is baked and untouchable. These are the dwell marks — doorstep aprons, the gate mouth, the
+// monument ring — laid over whichever ground is underneath. One instanced mesh, ~11 quads.
+function createWearDecalTexture(): THREE.CanvasTexture {
+  const size = 256;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    const rng = mulberry32(0x77_65_61_72);
+    ctx.clearRect(0, 0, size, size);
+    wearBlotch(ctx, size / 2, size / 2, size * 0.46, 0.62, rng);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createWearDecals(placements: readonly { x: number; z: number; radius: number }[]): THREE.InstancedMesh {
+  const material = new THREE.MeshBasicMaterial({
+    map: createWearDecalTexture(),
+    transparent: true,
+    opacity: 0.82,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+  const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1), material, Math.max(1, placements.length));
+  mesh.name = 'TownWearDecals';
+  mesh.renderOrder = RenderLayers.groundDecals;
+  const object = new THREE.Object3D();
+  const rng = mulberry32(0x64_65_63_01);
+  placements.forEach((placement, index) => {
+    object.position.set(placement.x, 0.015, placement.z);
+    object.rotation.set(-Math.PI / 2, 0, rng() * Math.PI * 2);
+    object.scale.set(placement.radius * 2, placement.radius * 2 * (0.82 + rng() * 0.3), 1);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = placements.length;
+  return mesh;
+}
+
 function createShell(building: TownBuilding): THREE.Group {
   const group = new THREE.Group();
   group.name = `TownShell:${building.id}`;
@@ -3738,7 +3800,9 @@ function stampMillPlaqueLines(manifest: MegaprojectManifest, project: Megaprojec
 }
 
 function createGroundTexture(): THREE.CanvasTexture {
-  const size = 1024;
+  // 2048: at 1024 the plate was ~34px per world unit, and the new zoom reaches 0.36 — the wear
+  // was mush before a player ever got close enough to read it.
+  const size = 2048;
   const canvas = document.createElement('canvas');
   canvas.width = size;
   canvas.height = size;
@@ -3755,51 +3819,177 @@ function createGroundTexture(): THREE.CanvasTexture {
     ctx.fillRect(0, 0, size, size);
 
     ctx.fillStyle = 'rgba(196, 136, 58, 0.16)';
-    for (let i = 0; i < 1_800; i += 1) {
+    for (let i = 0; i < 7_200; i += 1) {
       const x = (i * 71) % size;
       const y = (i * 149) % size;
-      ctx.fillRect(x, y, i % 5 === 0 ? 2 : 1, 1);
+      ctx.fillRect(x, y, i % 5 === 0 ? 3 : 2, 2);
     }
 
+    const rng = mulberry32(0x70_77_6e_01);
+    const px = size / (TOWN_HALF * 2);
     const point = ({ x, z }: { x: number; z: number }) => ({
       x: ((x + TOWN_HALF) / (TOWN_HALF * 2)) * size,
       y: ((TOWN_HALF - z) / (TOWN_HALF * 2)) * size,
     });
-    const center = point(townPlazaLayout.center);
-    const trails = [...townPlazaLayout.slots.map((slot) => slot.approach), townPlazaLayout.gate];
-    for (const [index, destination] of trails.entries()) {
-      const end = point(destination);
-      const dx = end.x - center.x;
-      const dy = end.y - center.y;
-      const length = Math.max(1, Math.hypot(dx, dy));
-      const ox = (-dy / length) * 5.5;
-      const oy = (dx / length) * 5.5;
-      const bend = (index % 2 === 0 ? 1 : -1) * 10;
-      ctx.strokeStyle = 'rgba(93, 57, 31, 0.2)';
-      ctx.lineWidth = 3.2;
-      ctx.lineCap = 'round';
+    // WHERE FEET GO, not where a draughtsman would put a road. The wear follows the authored
+    // trail curves (townTrailLayout) and the cast's walking loops, in three layers: a wide
+    // compaction band, two dashed wheel ruts, and scattered kicked grit at the edges. The old
+    // ground drew two clean parallel quadratics per spoke — perfectly regular, perfectly dead.
+    for (const route of [...townTrailLayout.radial, townTrailLayout.ringRoad]) {
+      const path = route.points.map(point);
+      const ring = route.id === townTrailLayout.ringRoad.id;
+      wearBand(ctx, path, { width: (ring ? 0.72 : 0.95) * px, alpha: ring ? 0.09 : 0.13, rng, jitter: 0.42 * px });
       for (const side of [-1, 1]) {
-        ctx.beginPath();
-        ctx.moveTo(center.x + ox * side, center.y + oy * side);
-        ctx.quadraticCurveTo((center.x + end.x) / 2 + ox * side + bend, (center.y + end.y) / 2 + oy * side - bend * 0.35, end.x + ox * side, end.y + oy * side);
-        ctx.stroke();
+        wearRut(ctx, path, {
+          offset: side * (ring ? 0.3 : 0.42) * px,
+          width: 0.12 * px,
+          alpha: ring ? 0.07 : 0.11,
+          rng,
+        });
       }
+      wearGrit(ctx, path, { spread: (ring ? 0.9 : 1.2) * px, count: ring ? 150 : 90, rng });
     }
 
-    ctx.strokeStyle = 'rgba(93, 57, 31, 0.16)';
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.arc(center.x, center.y, (8 / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.strokeStyle = 'rgba(255, 235, 180, 0.4)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(center.x, center.y, (townPlazaLayout.clearRadius / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
-    ctx.stroke();
+    // Trampled aprons: the doorsteps, the gate, the monument, and every spot a townsperson
+    // stands all day. These are dwell points, so the compaction is a blotch, not a stripe.
+    const aprons: Array<{ at: { x: number; z: number }; radius: number; alpha: number }> = [
+      ...townPlazaLayout.slots.map((slot) => ({ at: slot.approach, radius: 1.5, alpha: 0.14 })),
+      { at: townPlazaLayout.gate, radius: 1.9, alpha: 0.13 },
+      { at: townPlazaLayout.center, radius: 2.5, alpha: 0.09 },
+      ...TOWN_ACTORS.filter((actor) => !actor.loop).map((actor) => ({ at: actor.position, radius: 0.85, alpha: 0.12 })),
+    ];
+    for (const apron of aprons) {
+      const at = point(apron.at);
+      wearBlotch(ctx, at.x, at.y, apron.radius * px, apron.alpha, rng);
+    }
+
+    // The plaza still reads as swept — but as a worn rim, not a drafted circle.
+    wearRing(ctx, point(townPlazaLayout.center), townPlazaLayout.clearRadius * px, rng);
   }
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 8;
   return texture;
+}
+
+// A deterministic stream, so the ground is the same grit on every boot and every screenshot
+// board compares like with like (the run rigs use the same generator, e2e/charter-press.rig.ts).
+function mulberry32(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+type WearPoint = { x: number; y: number };
+
+function strokeAlong(ctx: CanvasRenderingContext2D, path: readonly WearPoint[], offset = 0, jitter = 0, rng?: () => number): void {
+  const shifted = path.map((current, index) => {
+    const previous = path[Math.max(0, index - 1)]!;
+    const next = path[Math.min(path.length - 1, index + 1)]!;
+    const dx = next.x - previous.x;
+    const dy = next.y - previous.y;
+    const length = Math.max(1, Math.hypot(dx, dy));
+    const wobble = rng && jitter ? (rng() - 0.5) * 2 * jitter : 0;
+    return { x: current.x + (-dy / length) * (offset + wobble), y: current.y + (dx / length) * (offset + wobble) };
+  });
+  ctx.beginPath();
+  ctx.moveTo(shifted[0]!.x, shifted[0]!.y);
+  for (let index = 1; index < shifted.length - 1; index += 1) {
+    const current = shifted[index]!;
+    const next = shifted[index + 1]!;
+    ctx.quadraticCurveTo(current.x, current.y, (current.x + next.x) / 2, (current.y + next.y) / 2);
+  }
+  ctx.lineTo(shifted[shifted.length - 1]!.x, shifted[shifted.length - 1]!.y);
+  ctx.stroke();
+}
+
+function wearBand(ctx: CanvasRenderingContext2D, path: readonly WearPoint[], options: { width: number; alpha: number; rng: () => number; jitter: number }): void {
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.setLineDash([]);
+  // Three passes from soft-and-wide to tight-and-dark: compacted earth has no single edge.
+  for (const [widthMul, alphaMul] of [[1.9, 0.34], [1.25, 0.55], [0.7, 1]] as const) {
+    ctx.strokeStyle = `rgba(93, 57, 31, ${(options.alpha * alphaMul).toFixed(3)})`;
+    ctx.lineWidth = options.width * widthMul;
+    strokeAlong(ctx, path, 0, options.jitter, options.rng);
+  }
+  ctx.restore();
+}
+
+function wearRut(ctx: CanvasRenderingContext2D, path: readonly WearPoint[], options: { offset: number; width: number; alpha: number; rng: () => number }): void {
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = `rgba(74, 42, 23, ${options.alpha.toFixed(3)})`;
+  ctx.lineWidth = options.width;
+  // Dashed, never a drafted line: a rut is where a wheel bit, and a wheel does not bite evenly.
+  ctx.setLineDash([options.width * 5 + options.rng() * 40, options.width * 3 + options.rng() * 26]);
+  ctx.lineDashOffset = options.rng() * 60;
+  strokeAlong(ctx, path, options.offset, options.width * 0.9, options.rng);
+  ctx.restore();
+}
+
+function wearGrit(ctx: CanvasRenderingContext2D, path: readonly WearPoint[], options: { spread: number; count: number; rng: () => number }): void {
+  ctx.save();
+  for (let index = 0; index < options.count; index += 1) {
+    const t = options.rng() * (path.length - 1);
+    const from = path[Math.floor(t)]!;
+    const to = path[Math.min(path.length - 1, Math.floor(t) + 1)]!;
+    const mix = t - Math.floor(t);
+    const side = options.rng() < 0.5 ? -1 : 1;
+    const distance = (0.55 + options.rng() * 0.75) * options.spread * side;
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const length = Math.max(1, Math.hypot(dx, dy));
+    const x = from.x + dx * mix + (-dy / length) * distance;
+    const y = from.y + dy * mix + (dx / length) * distance;
+    ctx.fillStyle = options.rng() < 0.62 ? 'rgba(93, 57, 31, 0.16)' : 'rgba(255, 235, 180, 0.2)';
+    const radius = 1 + options.rng() * 3.2;
+    ctx.beginPath();
+    ctx.ellipse(x, y, radius, radius * (0.5 + options.rng() * 0.6), options.rng() * Math.PI, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function wearBlotch(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, alpha: number, rng: () => number): void {
+  const gradient = ctx.createRadialGradient(x, y, radius * 0.15, x, y, radius);
+  gradient.addColorStop(0, `rgba(93, 57, 31, ${alpha.toFixed(3)})`);
+  gradient.addColorStop(0.55, `rgba(93, 57, 31, ${(alpha * 0.55).toFixed(3)})`);
+  gradient.addColorStop(1, 'rgba(93, 57, 31, 0)');
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.ellipse(x, y, radius * (0.85 + rng() * 0.3), radius * (0.7 + rng() * 0.35), rng() * Math.PI, 0, Math.PI * 2);
+  ctx.fill();
+  // Scuffs: the individual boot-marks that keep the blotch from reading as an airbrush.
+  for (let index = 0; index < 26; index += 1) {
+    const angle = rng() * Math.PI * 2;
+    const distance = Math.sqrt(rng()) * radius * 0.95;
+    ctx.fillStyle = `rgba(74, 42, 23, ${(alpha * (0.3 + rng() * 0.5)).toFixed(3)})`;
+    ctx.beginPath();
+    ctx.ellipse(x + Math.cos(angle) * distance, y + Math.sin(angle) * distance, 2 + rng() * 4, 1.5 + rng() * 2.5, rng() * Math.PI, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function wearRing(ctx: CanvasRenderingContext2D, center: WearPoint, radius: number, rng: () => number): void {
+  ctx.save();
+  ctx.lineCap = 'round';
+  for (const [radiusMul, width, colour] of [[1, 9, 'rgba(93, 57, 31, 0.1)'], [1.02, 3, 'rgba(255, 235, 180, 0.22)']] as const) {
+    ctx.strokeStyle = colour;
+    ctx.lineWidth = width;
+    ctx.setLineDash([26 + rng() * 90, 14 + rng() * 40]);
+    ctx.lineDashOffset = rng() * 100;
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, radius * radiusMul, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
 }
 
 function createAmbientDust(tier: PerformanceTier, night: boolean): THREE.InstancedMesh | null {
