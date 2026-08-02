@@ -20,7 +20,8 @@
               "id": "e1-claim-geometry-declared",
               "title": "The Claim: geometry declared rather than inferred (attended census wave 2026-08-02)",
               "taskFile": "lane-claim-geometry-declared.md",
-              "status": "queued"
+              "status": "blocked",
+        "blockedReason": "F-1381-3 + F-1381-4 (s1381 gate, reviews/lane-m4-claim-geometry-and-headless.md) — GATE-SIDE HOLD, NOT AN OWNER GATE. (1) lane/m4 is founded on the owner-BLOCKED commit 7c4f132f (f1328-1-drill-yard-census-debt), so any branch-level merge or main..lane/m4 diff sweeps blocked content into main. (2) lane/m4 base 46033151 is 270 commits behind main and PREDATES 69984c6a (stakeMarkers.lossCondition -> heroStart, repo-wide, drained s1329); lifting the slice onto clean main fails tsc with TS2339 on lossCondition. RE-LAND against current main per Mistake #15; keep lane/m4 as salvage-ref and DO NOT reset it."
             },
             {
               "id": "e1-authored-bundle-validation",
@@ -33,7 +34,8 @@
               "id": "e1-headless-the-claim",
               "title": "Headless sim covers The Claim (attended census wave 2026-08-02)",
               "taskFile": "lane-headless-the-claim.md",
-              "status": "queued"
+              "status": "blocked",
+        "blockedReason": "F-1381-3 + F-1381-4 (s1381 gate, reviews/lane-m4-claim-geometry-and-headless.md) — GATE-SIDE HOLD, NOT AN OWNER GATE. (1) lane/m4 is founded on the owner-BLOCKED commit 7c4f132f (f1328-1-drill-yard-census-debt), so any branch-level merge or main..lane/m4 diff sweeps blocked content into main. (2) lane/m4 base 46033151 is 270 commits behind main and PREDATES 69984c6a (stakeMarkers.lossCondition -> heroStart, repo-wide, drained s1329); lifting the slice onto clean main fails tsc with TS2339 on lossCondition. RE-LAND against current main per Mistake #15; keep lane/m4 as salvage-ref and DO NOT reset it."
             },
             {
               "id": "e1-seam-yield-single-source-orig",
