@@ -90,6 +90,18 @@
       "fingerprint": "2a211a7c1a67",
       "excerpt": "🔓 **FIREWALL LIFT, EXPLICIT:** the predecessor's blanket \"**NO:** any other file under `src/`\" is *"
     },
+    "tasks/goals.json[e1-authored-bundle-validation] -> scripts/assert-release-build.mjs:48": {
+      "target": "scripts/assert-release-build.mjs",
+      "line": 48,
+      "fingerprint": "53850ca88a90",
+      "excerpt": "if (laterEraNamed.length) fail(`later era assets emitted: ${laterEraNamed.slice(0, 8).join(', ')}`);"
+    },
+    "tasks/goals.json[e1-authored-bundle-validation] -> src/meta/ContractFamilies.ts:9": {
+      "target": "src/meta/ContractFamilies.ts",
+      "line": 9,
+      "fingerprint": "e9c7ceda93af",
+      "excerpt": "import motorContracts from '../../assets/contracts/epoch-4-motor/contracts.json' with { type: 'json'"
+    },
     "tasks/goals.json[e1-hold-the-claim-defeat-fork] -> src/game/Game.ts:6640": {
       "target": "src/game/Game.ts",
       "line": 6640,
