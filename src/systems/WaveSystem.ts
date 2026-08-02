@@ -71,6 +71,12 @@ export type WaveDiagnostics = {
 
 const TELEGRAPH_SECONDS = 2;
 const TELEGRAPH_STAGGER_SECONDS = 0.5;
+const scalePerWave = (base: number, wave: number): number => {
+  let scale = 1;
+  const steps = Math.max(0, Math.floor(wave));
+  for (let i = 0; i < steps; i += 1) scale *= base;
+  return scale;
+};
 const DEFAULT_CONTRACT = activeContract();
 export const WAVE_SPAWN_EDGES: readonly CompassEdge[] = DEFAULT_CONTRACT.tileParams.lanes.spawnEdges;
 
@@ -576,10 +582,10 @@ export class WaveSystem {
 
     const speedScale = Math.min(
       Balance.waves.speedScaleCap,
-      Math.pow(Balance.waves.speedScalePerWave, wave) * this.speedVariance(),
+      scalePerWave(Balance.waves.speedScalePerWave, wave) * this.speedVariance(),
     );
     const enemy = this.enemies.spawn(this.spawnPosition, {
-      hpScale: Math.pow(Balance.waves.hpScalePerWave, wave) * (params.hpScale ?? 1),
+      hpScale: scalePerWave(Balance.waves.hpScalePerWave, wave) * (params.hpScale ?? 1),
       speedScale: params.speedScale ?? speedScale * (params.speedMult ?? 1),
       edge: params.edge,
       thief: params.thief === true,
@@ -741,7 +747,7 @@ export class WaveSystem {
     const decaySteps = Math.floor(Math.max(0, atSim - Balance.waves.graceSeconds) / Balance.waves.trickleDecayEvery);
     return Math.max(
       Balance.waves.trickleFloor,
-      Balance.waves.trickleInterval * Math.pow(Balance.waves.trickleDecay, decaySteps),
+      Balance.waves.trickleInterval * scalePerWave(Balance.waves.trickleDecay, decaySteps),
     );
   }
 
@@ -835,8 +841,8 @@ export class WaveSystem {
     const alongZ = dz / length;
     const sideX = -alongZ;
     const sideZ = alongX;
-    const waveHpScale = Math.pow(Balance.waves.hpScalePerWave, wave);
-    const waveSpeedScale = Math.min(Balance.waves.speedScaleCap, Math.pow(Balance.waves.speedScalePerWave, wave));
+    const waveHpScale = scalePerWave(Balance.waves.hpScalePerWave, wave);
+    const waveSpeedScale = Math.min(Balance.waves.speedScaleCap, scalePerWave(Balance.waves.speedScalePerWave, wave));
     const componentHp = (component: (typeof components)[number]) => {
       const exact = baron.variantId === 'homemaker_9000'
         ? Balance.homemaker.componentHp[component.id as keyof typeof Balance.homemaker.componentHp]

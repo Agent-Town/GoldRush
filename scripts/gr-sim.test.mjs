@@ -157,9 +157,9 @@ test('the Claim driver consumes declared water and posts RunManager secure at wa
       waves: 10,
       timeMs: 300000,
       gold: 0,
-      kills: 140,
+      kills: 137,
       calls: 0,
-      eventLogHash: 'fnv1a32:02561b7f',
+      eventLogHash: 'fnv1a32:b1eeb320',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {
