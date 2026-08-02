@@ -1,6 +1,7 @@
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { PNG } from 'pngjs';
 
 // THE BEAUTY SHIFT BOARD HARNESS — e1-twin-banks (docs/beauty/e1-twin-banks-brief.md §4).
 // One spec that is both the shot-list renderer and the permanent guard: the same boards
@@ -35,8 +36,8 @@ function collectErrors(page: Page): ErrorBucket {
   return bucket;
 }
 
-async function boot(page: Page): Promise<void> {
-  await page.goto(`/${QUERY}`);
+async function boot(page: Page, extra = ''): Promise<void> {
+  await page.goto(`/${QUERY}${extra}`);
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 12, undefined, {
     timeout: 60_000,
   });
@@ -136,6 +137,34 @@ test('twin banks beauty board: boot, braid run camera, ford, plait, overview', a
   expectClean(errors);
 });
 
+test('the beauty pass pays its frame budget, measured against its own build', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  const errors = collectErrors(page);
+  // Both arms are the SAME build at the SAME camera in the SAME session: `?nochannelwater`
+  // withholds only the dressing. That removes machine drift from the +15% law, which a
+  // before-commit/after-commit comparison cannot do.
+  const arms: Record<string, PerfSample> = {};
+  for (const [arm, extra] of [['without', '&nochannelwater'], ['with', '']] as const) {
+    await boot(page, extra);
+    await poseAt(page, RUN_CAMERA.x, RUN_CAMERA.z);
+    await hideGameChrome(page);
+    arms[arm] = await perf(page);
+  }
+  const [without, withWater] = [arms.without!, arms.with!];
+  await mkdir(ARTIFACT_DIR, { recursive: true });
+  await writeFile(
+    path.join(ARTIFACT_DIR, `perf-ab-${testInfo.project.name}.json`),
+    `${JSON.stringify({ stage: STAGE, project: testInfo.project.name, without, with: withWater }, null, 2)}\n`,
+  );
+  // Exact and deterministic: the dressing is two extra draw calls, nothing else.
+  expect(withWater.calls - without.calls).toBe(2);
+  expect(withWater.triangles).toBeGreaterThan(without.triangles);
+  // p95 is a worst-5%-of-180-frames sample and swings several ms between identical runs, so the
+  // spec guards a generous ceiling and the review reports the measured pair.
+  expect(withWater.avg).toBeLessThan(without.avg * 1.25 + 1);
+  expectClean(errors);
+});
+
 test('twin banks beauty board: west ford under pressure', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   test.skip(testInfo.project.name !== 'desktop-chrome', 'pressure board is a desktop composition judge');
@@ -179,5 +208,35 @@ test('the braid renders living water without touching the sculpt contract or the
   expect(samples.southBank?.zone).toBe('bank');
   expect(samples.water?.fordStones).toBe(14);
   expect(samples.water?.gravelBars).toBe(2);
+
+  // Both channels carry a mounted ribbon...
+  expect(await canvas.getAttribute('data-terrain3d-pilot-channel-water')).toBe('2');
+  // ...and the ribbons put WATER ON THE SCREEN. A mesh count is a claim, pixels are the fact:
+  // the first cut of this shift shipped two ribbons of zero width that passed every count.
+  await poseAt(page, RUN_CAMERA.x, RUN_CAMERA.z);
+  await hideGameChrome(page);
+  const probes = await page.evaluate(() =>
+    // Kept inside the 390px frame: the braid spans the whole tile, but mobile only sees the
+    // middle few metres of it at the run camera.
+    [{ x: -3, z: 2.43 }, { x: 0, z: 2 }, { x: 3, z: 2.43 }, { x: -3, z: -2.43 }, { x: 0, z: -2 }, { x: 3, z: -2.43 }].map((point) => ({
+      ...point,
+      screen: window.__GR_TEST__!.screenPoint(point.x, point.z, 0.037),
+    })),
+  );
+  const image = PNG.sync.read(await page.screenshot());
+  const viewport = page.viewportSize()!;
+  const readings = probes.map((probe) => {
+    const x = Math.round((probe.screen.x * image.width) / viewport.width);
+    const y = Math.round((probe.screen.y * image.height) / viewport.height);
+    const offset = (y * image.width + x) * 4;
+    return { ...probe, rgb: [image.data[offset]!, image.data[offset + 1]!, image.data[offset + 2]!] as const };
+  });
+  for (const reading of readings) {
+    expect(reading.screen.inView, JSON.stringify(reading)).toBe(true);
+    // Water is cool: green leads and blue is not crushed. The dry braid bed measured
+    // 33,21,10 and 17,13,8 at these very points on the BEFORE board.
+    expect(reading.rgb[1], JSON.stringify(reading)).toBeGreaterThan(reading.rgb[0]);
+    expect(reading.rgb[2] * 2, JSON.stringify(reading)).toBeGreaterThan(reading.rgb[0]);
+  }
   expectClean(errors);
 });

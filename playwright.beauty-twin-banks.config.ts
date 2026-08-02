@@ -9,9 +9,14 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   ...baseConfig,
   testIgnore: [],
-  testMatch: ['**/beauty-twin-banks.spec.ts'],
+  // GR_BEAUTY_SPECS lets this same private server gate the adjacent suites the shift touches
+  // (e1-twin-banks, terrain3d, tile-identity) without borrowing the shared 5188 dev server.
+  testMatch: (process.env.GR_BEAUTY_SPECS ?? '**/beauty-twin-banks.spec.ts').split(','),
   timeout: 180_000,
   use: { ...baseConfig.use, baseURL: 'http://127.0.0.1:5266' },
+  // Drop the webkit project: its own testMatch pulls in 058-device-tiers, which needs the
+  // release harness this config never starts (the same trap F-1296-3 named).
+  projects: baseConfig.projects?.filter((project) => project.name !== 'desktop-webkit'),
   webServer: {
     command: 'npx vite --host 127.0.0.1 --port 5266 --strictPort',
     url: 'http://127.0.0.1:5266',

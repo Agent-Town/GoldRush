@@ -69,6 +69,7 @@ import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
 import { disposeObject3D } from '../utils/dispose';
 import { trackedGltfLoader } from '../assets/AssetLoading';
 import { installVisualHeightSource } from './Terrain';
+import { createWaterRibbon, updateWaterMaterial } from './Water';
 
 type Contract = {
   tileId: string;
@@ -79,6 +80,15 @@ type Contract = {
   boundsMeters: { min: [number, number, number]; max: [number, number, number] };
   panoramaMount: Mount;
   landmarkMounts?: LandmarkMount[];
+  maskTruth?: { waterMask?: { id: string; regions: MaskRegion[] } };
+  maskAgreement?: { waterPlaneY?: number };
+};
+type MaskRegion = {
+  id: string;
+  kind: string;
+  zone: string;
+  halfWidth?: number;
+  points?: Array<{ x: number; z: number }>;
 };
 type PanoramaContract = Pick<Contract, 'vertices' | 'triangles' | 'meshCount' | 'materialCount'> & { renderOnly: boolean };
 type Mount = {
@@ -169,6 +179,33 @@ export async function contractPrefetchUrls(contractId: string): Promise<string[]
   );
   return [...new Set([selected.terrainUrl, selected.panoramaUrl, ...landmarks.filter(Boolean)])];
 }
+
+// RENDER-ONLY LIVING WATER OVER A SCULPTED CHANNEL (docs/beauty/e1-twin-banks-brief.md U1).
+//
+// The braid's two channels are cut into the mounted sculpt but painted near-black, because the
+// pilot hides every legacy living-water surface (LEGACY_GROUND_SLOTS below). This table names the
+// contracts whose sculpt carries polyline channels worth dressing, and how each channel reads.
+// The GEOMETRY is never authored here — it is read from the contract's own mask polylines, the
+// same table `build_twin_banks_braid.py` cut the relief from, so the water can only ever sit where
+// the sculpt is already below the water plane. Adopting that mask as SIM truth is a separate,
+// owner-gated decision (F-OP5-1): nothing here touches band classification, fords or crossings.
+type ChannelDressing = { depth: 'deep' | 'shallow'; glints?: Array<{ x: number; z: number }>; headFade: number; tailFade: number };
+const CONTRACT_CHANNEL_WATER: Record<string, { surfaceLift: number; edgeBleed: number; channels: Record<string, ChannelDressing> }> = {
+  'e1-twin-banks': {
+    surfaceLift: 0.012,
+    edgeBleed: 0.22,
+    channels: {
+      // North runs deep and fast — the gold rides it. South is the shallow plait side.
+      'north-channel': {
+        depth: 'deep',
+        glints: [{ x: -19.5, z: 3.4 }, { x: -6.2, z: 2.7 }, { x: 8.1, z: 2.9 }, { x: 19.8, z: 3.2 }],
+        headFade: 3.2,
+        tailFade: 2.6,
+      },
+      'south-channel': { depth: 'shallow', headFade: 3.2, tailFade: 2.6 },
+    },
+  },
+};
 
 const BOUNDS_EPSILON = 0.03;
 const CONTINUATION_SAMPLE_DEPTH = 8;
@@ -402,6 +439,54 @@ function hidePaintedRelief(host: Host): HiddenRelief[] {
   return hidden;
 }
 
+function createChannelWater(contractId: string, contract: Contract): THREE.Group | undefined {
+  const dressing = CONTRACT_CHANNEL_WATER[contractId];
+  const regions = contract.maskTruth?.waterMask?.regions ?? [];
+  if (!dressing || regions.length === 0) return undefined;
+  // `?nochannelwater` boots the identical build with the dressing withheld. It exists because a
+  // beauty claim is only worth what its A/B proves, and it also answers "is this render or sim?"
+  // in one reload: every suite behaves identically with it on, because the water is decoration.
+  if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('nochannelwater')) return undefined;
+  const wade = Balance.terrainSim.wadeDepth;
+  const deep = Balance.terrainSim.deepDepth;
+  const group = new THREE.Group();
+  group.name = 'Terrain3dChannelWater';
+  group.userData.renderOnly = true;
+  for (const region of regions) {
+    const channel = dressing.channels[region.id];
+    const points = region.points ?? [];
+    if (!channel || region.kind !== 'polyline_band' || region.zone !== 'river' || points.length < 2 || !region.halfWidth) continue;
+    group.add(createWaterRibbon({
+      name: `Terrain3dChannelWater.${region.id}`,
+      points,
+      halfWidth: region.halfWidth,
+      edgeBleed: dressing.edgeBleed,
+      // The mask agreement measured 0 dry ground inside the mask at this plane, so a surface
+      // just above it covers the cut channel and nothing else. Depth-tested, so wherever the
+      // ribbon would stray onto a bank the sculpt itself occludes it.
+      surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift,
+      // Render depth, not sim depth: it only picks a point on the shader's wade..deep colour
+      // ramp, so the contract's north-deeper-than-south ORDER reads as colour and foam.
+      depth: channel.depth === 'deep' ? deep : wade + (deep - wade) * 0.34,
+      glints: channel.glints ?? [],
+      headFade: channel.headFade,
+      tailFade: channel.tailFade,
+    }));
+  }
+  if (group.children.length === 0) return undefined;
+  const clock = { frame: -1, last: 0 };
+  const advance = (renderer: THREE.WebGLRenderer): void => {
+    if (renderer.info.render.frame === clock.frame) return;
+    clock.frame = renderer.info.render.frame;
+    const now = performance.now();
+    const delta = clock.last === 0 ? 0 : Math.min(0.1, Math.max(0, (now - clock.last) / 1000));
+    clock.last = now;
+    for (const child of group.children) updateWaterMaterial(child as THREE.Mesh, delta);
+  };
+  for (const child of group.children) (child as THREE.Mesh).onBeforeRender = advance;
+  return group;
+}
+
 function createContinuation(
   terrain: THREE.Object3D,
   panorama: THREE.Object3D,
@@ -515,6 +600,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let panorama: THREE.Object3D | undefined;
   let landmarks: THREE.Group | undefined;
   let skirt: THREE.Object3D | undefined;
+  let channelWater: THREE.Group | undefined;
   let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
   let loadedPanorama: THREE.Object3D | undefined;
@@ -570,15 +656,19 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds);
+      const nextChannelWater = createChannelWater(host.contractId, selected.contract);
       terrain = nextTerrain;
       panorama = nextPanorama;
       skirt = nextSkirt;
+      channelWater = nextChannelWater;
       loadedTerrain = undefined;
       loadedPanorama = undefined;
       uninstallHeightSource = installVisualHeightSource(heightAt);
       host.onVisualHeightSourceInstalled?.();
       host.scene.add(nextTerrain, nextPanorama);
       if (nextSkirt) host.scene.add(nextSkirt);
+      if (nextChannelWater) host.scene.add(nextChannelWater);
+      host.canvas.dataset.terrain3dPilotChannelWater = String(nextChannelWater?.children.length ?? 0);
       hiddenRelief = hidePaintedGround(host);
       host.canvas.dataset.terrain3dPilotTerrainLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'mounted';
@@ -701,7 +791,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       disposeObject3D(skirt);
       skirt = undefined;
     }
-    for (const model of [terrain, panorama, landmarks]) {
+    for (const model of [terrain, panorama, landmarks, channelWater]) {
       if (!model) continue;
       host.scene.remove(model);
       disposeObject3D(model);
@@ -709,6 +799,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     terrain = undefined;
     panorama = undefined;
     landmarks = undefined;
+    channelWater = undefined;
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
   };
 }
