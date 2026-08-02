@@ -17,6 +17,8 @@ export type DetailScatterClearPoint = {
 
 export type DetailScatterDiagnostics = {
   instanceClasses: number;
+  /** Ground-contact ellipses drawn in one call for every standing scatter class. */
+  contactShadows: number;
   totalInstances: number;
   seededInstances: number;
   densityTier: DetailDensityTier;
@@ -60,6 +62,8 @@ type DetailInstance = {
   hidden: boolean;
   mesh: THREE.InstancedMesh;
   index: number;
+  /** Slot in the shared contact-shadow mesh, or -1 for classes that lie flat on the ground. */
+  shadowIndex: number;
 };
 
 type DetailClass = {
@@ -70,6 +74,47 @@ type DetailClass = {
 
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const scratchObject = new THREE.Object3D();
+const scratchColor = new THREE.Color();
+
+/**
+ * SCRUB THAT STANDS IN THE LIGHT (brief U3).
+ *
+ * Two defects, one cause. Every instance of a class shares one flat colour, and nothing any of them
+ * casts touches the ground — so a few hundred props read as speckle printed on the terrain rather
+ * than objects standing on it, and the field looks flatter in play than the atlas promises.
+ *
+ * Both fixes are per-instance data on the SAME material, so the draw-call count per class stays 1:
+ * an instance-colour attribute for tint, and one shared contact-shadow mesh for the classes whose
+ * silhouettes are tall enough to owe the ground a shadow.
+ *
+ * TINT IS HASHED FROM POSITION, NOT DRAWN FROM THE PLACEMENT RNG. Pulling extra numbers out of
+ * `placeDetail`'s stream would shift every subsequent position and silently re-scatter all five
+ * maps — a beauty change is not allowed to move where things are.
+ */
+const TINT_JITTER: Partial<Record<DetailClassId, { warm: number; value: number }>> = {
+  rocks: { warm: 0.09, value: 0.16 },
+  stumps: { warm: 0.07, value: 0.13 },
+  dry_grass: { warm: 0.11, value: 0.22 },
+  claim_posts: { warm: 0.06, value: 0.12 },
+  cactus: { warm: 0.08, value: 0.18 },
+  reeds: { warm: 0.07, value: 0.16 },
+};
+
+/** Classes whose bodies stand up off the ground and therefore owe it a contact shadow. */
+const CONTACT_SHADOW_CLASSES: Partial<Record<DetailClassId, { radius: number; squash: number }>> = {
+  rocks: { radius: 0.55, squash: 0.62 },
+  cactus: { radius: 0.42, squash: 0.74 },
+  stumps: { radius: 0.44, squash: 0.7 },
+  dry_grass: { radius: 0.30, squash: 0.66 },
+  claim_posts: { radius: 0.24, squash: 0.8 },
+};
+/**
+ * The brief proposed ~0.14. Measured at the run camera that moved 0.2% of the frame — technically
+ * present, invisible in play, because the scatter is small and far at the shipped zoom. 0.19 with
+ * wider ellipses is the value that reads without turning the ground into a polka dot.
+ */
+const CONTACT_SHADOW_OPACITY = 0.19;
+const CONTACT_SHADOW_LIFT = 0.016;
 const BUILD_PAD_PROBE = { x: 0, z: 9 };
 const FORD_PROBE = { x: 0, z: 0 };
 const ROUTING_PROBE = { x: 0, z: -14 };
@@ -82,6 +127,7 @@ export class DetailScatter {
   private readonly seededInstances: DetailInstance[] = [];
   private readonly seed = scatterSeed();
   private readonly densityTier: DetailDensityTier;
+  private readonly contactShadows: THREE.InstancedMesh;
   private buildingClearings: readonly DetailScatterClearPoint[] = [];
   private clearingsSignature = '';
 
@@ -90,6 +136,8 @@ export class DetailScatter {
     this.densityTier = densityTier();
     const density = detailDensity(this.densityTier);
     this.classes = createProfiles().map((profile) => this.createClass(profile, density));
+    this.contactShadows = createContactShadows(this.seededInstances);
+    this.group.add(this.contactShadows);
     this.syncBuildingClearings([]);
   }
 
@@ -101,13 +149,21 @@ export class DetailScatter {
     this.clearingsSignature = signature;
     this.buildingClearings = clearings;
 
+    let shadowsChanged = false;
     for (const detail of this.seededInstances) {
       const hidden = isNearAny(detail, clearings);
       if (hidden === detail.hidden) continue;
       detail.hidden = hidden;
       writeInstance(detail.mesh, detail.index, detail, hidden);
+      // A building clears the scrub under it; a shadow left behind would be a stain with nothing
+      // casting it, which is worse than no shadow at all.
+      if (detail.shadowIndex >= 0 && this.contactShadows) {
+        writeContactShadow(this.contactShadows, detail.shadowIndex, detail, hidden);
+        shadowsChanged = true;
+      }
     }
     for (const entry of this.classes) entry.mesh.instanceMatrix.needsUpdate = true;
+    if (shadowsChanged) this.contactShadows.instanceMatrix.needsUpdate = true;
   }
 
   diagnostics(): DetailScatterDiagnostics {
@@ -120,6 +176,7 @@ export class DetailScatter {
     const totalInstances = classes.reduce((total, entry) => total + entry.visibleInstances, 0);
     return {
       instanceClasses: classes.filter((entry) => entry.instances > 0).length,
+      contactShadows: this.contactShadows.count,
       totalInstances,
       seededInstances: this.seededInstances.length,
       densityTier: this.densityTier,
@@ -181,12 +238,15 @@ export class DetailScatter {
         hidden: false,
         mesh,
         index,
+        shadowIndex: CONTACT_SHADOW_CLASSES[profile.id] ? this.seededInstances.length : -1,
       };
       writeInstance(mesh, index, detail, false);
+      mesh.setColorAt(index, instanceTint(profile.id, placed.x, placed.z));
       instances.push(detail);
       this.seededInstances.push(detail);
     }
     mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
     return { profile, mesh, instances };
   }
 }
@@ -278,7 +338,7 @@ function placeDetail(
   profile: DetailProfile,
   rng: Rng,
   placedInClass: readonly DetailInstance[],
-): Omit<DetailInstance, 'hidden' | 'mesh' | 'index'> | null {
+): Omit<DetailInstance, 'hidden' | 'mesh' | 'index' | 'shadowIndex'> | null {
   const attempts = Math.max(40, profile.baseCount * 80);
   for (let attempt = 0; attempt < attempts; attempt += 1) {
     const x = rng.range(Terrain.bounds.minX + 1, Terrain.bounds.maxX - 1);
@@ -366,6 +426,87 @@ function writeInstance(mesh: THREE.InstancedMesh, index: number, detail: DetailI
   scratchObject.scale.setScalar(detail.scale);
   scratchObject.updateMatrix();
   mesh.setMatrixAt(index, scratchObject.matrix);
+}
+
+/**
+ * One mesh, one material, one draw call for every contact shadow on the map. Sized to the exact
+ * number of standing instances rather than a guessed ceiling.
+ */
+function createContactShadows(details: readonly DetailInstance[]): THREE.InstancedMesh {
+  const shadowed = details.filter((detail) => detail.shadowIndex >= 0);
+  const mesh = new THREE.InstancedMesh(
+    new THREE.CircleGeometry(1, 14),
+    new THREE.MeshBasicMaterial({
+      color: '#2e1b0e',
+      transparent: true,
+      opacity: CONTACT_SHADOW_OPACITY,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
+    }),
+    Math.max(1, shadowed.length),
+  );
+  mesh.name = 'DetailScatter.contactShadows';
+  mesh.frustumCulled = false;
+  mesh.castShadow = false;
+  mesh.receiveShadow = false;
+  mesh.renderOrder = RenderLayers.groundShadows;
+  mesh.count = shadowed.length;
+  if (shadowed.length === 0) mesh.visible = false;
+  // shadowIndex is an index into `details`, so compact it down to the shadow mesh's own slots.
+  shadowed.forEach((detail, slot) => {
+    detail.shadowIndex = slot;
+    writeContactShadow(mesh, slot, detail, detail.hidden);
+  });
+  mesh.instanceMatrix.needsUpdate = true;
+  return mesh;
+}
+
+function writeContactShadow(
+  mesh: THREE.InstancedMesh,
+  slot: number,
+  detail: DetailInstance,
+  hidden: boolean,
+): void {
+  if (hidden) {
+    mesh.setMatrixAt(slot, hiddenMatrix);
+    return;
+  }
+  const profile = profileForMesh(detail.mesh);
+  const shape = profile ? CONTACT_SHADOW_CLASSES[profile.id] : undefined;
+  if (!shape) {
+    mesh.setMatrixAt(slot, hiddenMatrix);
+    return;
+  }
+  scratchObject.position.set(detail.x, Terrain.visualY(detail.x, detail.z, 0, 0.35) + CONTACT_SHADOW_LIFT, detail.z);
+  scratchObject.rotation.set(-Math.PI / 2, 0, detail.rotation);
+  scratchObject.scale.set(shape.radius * detail.scale, shape.radius * shape.squash * detail.scale, 1);
+  scratchObject.updateMatrix();
+  mesh.setMatrixAt(slot, scratchObject.matrix);
+}
+
+/**
+ * A warm/cool and light/dark nudge per instance, hashed from world position so it is stable across
+ * boots and independent of the placement stream. Multiplied onto the class colour by three's
+ * instance-colour attribute — same material, same single draw call.
+ */
+function instanceTint(id: DetailClassId, x: number, z: number): THREE.Color {
+  const jitter = TINT_JITTER[id];
+  if (!jitter) return scratchColor.setRGB(1, 1, 1);
+  const warm = hash01(x * 12.9898 + z * 78.233) - 0.5;
+  const value = hash01(x * 39.3468 - z * 11.135 + 7.31) - 0.5;
+  const scale = 1 + value * jitter.value * 2;
+  return scratchColor.setRGB(
+    scale * (1 + warm * jitter.warm),
+    scale,
+    scale * (1 - warm * jitter.warm),
+  );
+}
+
+function hash01(value: number): number {
+  const scaled = Math.sin(value) * 43758.5453;
+  return scaled - Math.floor(scaled);
 }
 
 function profileForMesh(mesh: THREE.InstancedMesh): DetailProfile | undefined {
