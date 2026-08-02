@@ -153,6 +153,20 @@ test('twin banks beauty board: boot, braid run camera, ford, plait, overview', a
     await page.evaluate(([path, next]) => window.__GR_TEST__?.setBalance(path as string, next as number), [key, value]);
   }
 
+  // SHOT 6 — the wide-aspect join. U5's standing check (MQ-2 matrix, aspect > 1.8:1): the pale
+  // sculpt corners meet the panorama differently on a wide monitor than on 16:10, and a visible
+  // band there is what makes a 64 m tile read as a tray instead of a valley.
+  // Scroll the zoom back to the shipped framing first: the ceiling was lowered again above, but
+  // the controller keeps whatever target it already holds until the next wheel event.
+  await page.mouse.wheel(0, -4_000);
+  await page.waitForTimeout(900);
+  await page.setViewportSize({ width: 1600, height: 800 });
+  await poseAt(page, 0, 6);
+  await hideGameChrome(page);
+  await shot(page, testInfo, '6-wide-aspect-join');
+  await page.setViewportSize(viewport);
+  await page.waitForTimeout(400);
+
   const bootPerf = await perf(page);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await writeFile(
