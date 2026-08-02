@@ -4,10 +4,13 @@
 
 **Role / workdir:** lane-a — `worktrees/lane-a` (branch `lane/m3`). NOT the repo root.
 
-**Pre-flight (SAFE-DUPE):** confirm the lane is clean vs main BEFORE any reset.
+**Pre-flight (SAFE-DUPE, runner-auto-commit aware):** confirm the lane is clean vs main BEFORE any reset.
 Run `node scripts/lane-usable.mjs lane-a` from the repo root. It must print **USABLE**.
-If it prints **HOLDS**, **DIRTY**, or **BUSY** — **STOP and report the word it printed.** Do not reset, do not `--cure`, do not proceed.
+If it prints **HOLDS** or **BUSY** — **STOP and report the word it printed.** Do not reset, do not `--cure`, do not proceed.
 > ⓘ At authoring time (s1417) lane-a measured `ahead=0 behind=0 paths=0 tracked-dirt=0` — fully current with main, not merely usable. If that has changed, something landed after this master was written and it must be ruled on before you work.
+> **FACTORY-CHURN EXCEPTION — these tracked classes are ALWAYS EXPECTED and are NEVER a STOP; list them, discard them, and PROCEED (F-1407-1, s1407):** (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`, `.goal-tree.html`, `.blocked-seen`), rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence (the **F-1266-1** exception the lane template has carried since s1266; screenshots are never byte-identity gated, so their bytes differ from main forever). So a **DIRTY** verdict caused *only* by these classes is **not** a STOP: discard them (`git checkout -- <paths>`) and proceed, listing what you discarded.
+> ⓘ Note `scripts/lane-usable.mjs` already ignores exactly two of these by name (its `CHURN` constant: `logs/factory-usage.json`, `logs/usage-history.jsonl`) and will say so — *"N churn-only path(s) ignored"*. **The other logs files are NOT in that constant and will read as tracked dirt**, which is why this exception is written out rather than assumed. 🚫 **Do not "fix" that by widening `CHURN`** — it mirrors the runner's own exclusion pathspec (`lane-runner-v3.sh:121`) and widening it unilaterally desyncs them (see the NO list).
+> ⓘ What still STOPs, unchanged and load-bearing: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — i.e. anything a live drain or a concurrent task could actually own.
 
 Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
