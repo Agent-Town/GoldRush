@@ -559,11 +559,24 @@
               "id": "f1400-1-twin-banks-rebase-and-repin",
               "title": "CURE F-1400-1 + F-1400-2 — re-land the twin-banks headless driver on current main. Graft the two BOTH-MOVED files (never raw-checkout them, that would discard the escort work of 372808f0), convert the .mjs call sites to the boot-object constructor, and RE-DERIVE the secure-run determinism hash rather than pasting one. Restores E1 driver 4 of 5 to a mergeable state.",
               "taskFile": "f1400-1-twin-banks-rebase-and-repin.md",
-              "status": "queued",
+              "status": "blocked",
               "lane": "main",
               "authoredBy": "s1400",
               "registeredBy": "s1400",
-              "note": "FIRE-AUTHORED from the s1400 drain gate evidence (attended review welcome). Main-slot rather than lane-a because lane-usable.mjs reports lane-a HOLDS: a lane pre-flight reset would destroy the very work being cured. The master forbids pasting the measured hash bfd79d2a and requires the runner to derive it, since pasting a number to make a test green is the exact defect F-1400-2 describes. Carries the F-1400-3 escort canary as a self-check so this cure cannot silently reintroduce the baron regression."
+              "note": "FIRE-AUTHORED from the s1400 drain gate evidence (attended review welcome). Main-slot rather than lane-a because lane-usable.mjs reports lane-a HOLDS: a lane pre-flight reset would destroy the very work being cured. The master forbids pasting the measured hash bfd79d2a and requires the runner to derive it, since pasting a number to make a test green is the exact defect F-1400-2 describes. Carries the F-1400-3 escort canary as a self-check so this cure cannot silently reintroduce the baron regression.",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE HOLD, NOT AN OWNER GATE — no owner word lifts this; a fire lifts it by landing the cure. REFUSED at the s1403 drain gate (F-1403-1, reviews/e1-twin-banks-reland-s1403.md). The graft is CORRECT and is preserved at save/f1400-1-twin-banks-reland-s1403 (2a54c386); main was restored clean and verified by blob hash. Refused because the pinned secure hash fnv1a32:5f57f7be reproduces only in the Codex runner process: measured fnv1a32:bfd79d2a EIGHT times (node --test x3, isolated, the runner own npm battery at 229/230, direct probe, cold vite cache, detached worktree), with eight hypotheses eliminated and a positive control (the-claim 02561b7f) reproducing exactly. Superseded by f1403-1, which diagnoses the divergence instead of re-pinning it.",
+              "blockedBy": "f1403-1-diagnose-the-twin-banks-hash-divergence"
+            },
+            {
+              "id": "f1403-1-diagnose-the-twin-banks-hash-divergence",
+              "title": "CURE F-1403-1 — find WHY the twin-banks secure-run hash differs between the Codex runner process (5f57f7be) and every other process (bfd79d2a) on a byte-identical tree, then pin the truth. Diff the two dumped input sets, name the first divergent replay event, read the mechanism, and rule: sim nondeterminism (a game defect, STOP) or an environment artefact (pin the correct side). Unblocks E1 driver 4 of 5.",
+              "taskFile": "f1403-1-diagnose-the-twin-banks-hash-divergence.md",
+              "status": "queued",
+              "lane": "main",
+              "authoredBy": "s1403",
+              "registeredBy": "s1403",
+              "note": "FIRE-AUTHORED from the s1403 drain gate (attended review welcome). Third attempt at this slice; the first two both re-derived and re-pinned, so the master FORBIDS that and requires the mechanism first. Ships with an instrument (scripts/twin-banks-hash-probe.mjs) and a reference dump (artifacts/twin-banks-probe-s1403-fire.json, 957 replay events) so the question is a mechanical diff rather than an argument about who measured correctly. Reuses the verified graft from save/f1400-1-twin-banks-reland-s1403 rather than re-grafting from lane/m3. Eight eliminated hypotheses are listed so the run does not re-test them. Explicitly states that measuring bfd79d2a is a welcome outcome that closes the finding, so the run has no incentive to report the expected value."
             },
             {
               "id": "e1-headless-baron",
