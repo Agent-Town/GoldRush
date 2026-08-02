@@ -1,3 +1,7 @@
+# CONTROL PROOF — adjacent reds are pre-existing at base c708f27d
+# Detached worktree /tmp/gr-control at c708f27d, own vite on 5242, --workers=1 on both arms.
+
+## Sweep A (10 specs): base = 23 failed / 55 passed
 [desktop-chrome] › e2e/064-river-continues.spec.ts:104:1 › river-zone, panning, and sluice sim contracts stay unchanged
 [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
 [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
@@ -21,3 +25,25 @@
 [mobile-chrome] › e2e/tile-identity-pass.spec.ts:121:1 › E1 contracts load place descriptors, render identity shots, and stay deterministic
 [mobile-chrome] › e2e/tile-identity-pass.spec.ts:71:1 › The Claim keeps the default tile params and seeded flat-claim fingerprint
 [mobile-chrome] › e2e/water-mask-engine.spec.ts:23:1 › the Claim keeps its legacy water contract byte-for-byte when no mask is authored
+
+## Sweep B (e1-night-shift + e1-dry-gulch): base = 8 failed / 22 passed
+[desktop-chrome] › e2e/e1-dry-gulch.spec.ts:79:1 › loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics
+[desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+[mobile-chrome] › e2e/e1-dry-gulch.spec.ts:79:1 › loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics
+[mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+
+## Treatment (beauty/dry-gulch) same sweep B specs + the two named suites: 10 failed / 40 passed
+[desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+[desktop-chrome] › e2e/tile-identity-pass.spec.ts:121:1 › E1 contracts load place descriptors, render identity shots, and stay deterministic
+[desktop-chrome] › e2e/tile-identity-pass.spec.ts:71:1 › The Claim keeps the default tile params and seeded flat-claim fingerprint
+[mobile-chrome] › e2e/e1-dry-gulch.spec.ts:79:1 › loads Dry Gulch via debug param and suppresses bad contract fallback to diagnostics
+[mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+[mobile-chrome] › e2e/tile-identity-pass.spec.ts:121:1 › E1 contracts load place descriptors, render identity shots, and stay deterministic
