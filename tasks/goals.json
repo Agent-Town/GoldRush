@@ -542,6 +542,26 @@
               "status": "merged",
               "reason": "MERGED s1394 at a3e199f4 together with its gt-05 corrective (the two lane commits e676addf + cc79feb1 landed as one path-scoped graft). Adjacent suites were re-derived by grep on the introduced identifiers rather than inherited: that surfaced cp02-charter-boot and cp03-press-loop, which toEqual runtime tileParams against the DOCUMENT tileParams and are therefore in the exact failure class this slice creates by backfilling size/fords/harvestAnchors/water — neither was in the s1393 set. Battery on the merged tree 79 pass / 13 fail vs clean-main CONTROL 79 pass / 11 fail; the 2-red delta was proved NOT a regression by a matched whole-file control (see reviews/e1-claim-geometry-declared-reland.md).",
               "mergeHash": "a3e199f4d117cc926d0ea1c8e873bda1a777057b"
+            },
+            {
+              "id": "e1-headless-twin-banks",
+              "title": "E1 DRIVER 4 of 5 — admit e1-twin-banks to GR-SIM. The census's best-declared E1 map (explicit fords, buildZones ENFORCED in sim, gravel bars sim-real at Terrain.ts:258-274) needs only its driver: two-bank water, fords, gravel bars, buildZone enforcement, secureWave 20, reusing browser systems headless. Ships a two-run determinism hash proof, 5 pinned bench seeds and a waves/sec figure. Reject-don't-stretch is explicit in the master: a system that cannot run headless is a STOP-and-report, never fabricated logic.",
+              "taskFile": "lane-headless-twin-banks.md",
+              "status": "building",
+              "lane": "lane-a",
+              "authoredBy": "attended-2026-08-02",
+              "registeredBy": "s1398",
+              "note": "Part of the E1-AND-SO-ON wave (owner 2026-08-02: \"How about the other maps? Are they getting updated as well?\"). With this and the baron driver, the E1 bench reaches 5/5. LEAF REGISTERED s1398, NOT s1398-authored: the master was authored and queued by the live attended session at 96fb9059, which committed it WITHOUT a leaf and wrote \"GOAL-LEAF DEBT (3 masters) next fire.\" verbatim at tasks/BACKLOG.md:2590. Status is \"building\" and not \"queued\" because the runner had already consumed the queue copy when I measured it: tasks/running/ held the master plus a live .pid at 18:22. I did not author, re-queue or alter the master, and I did not gate it — this discharges the Goal Registration Law bookkeeping only, so the slice is visible to drain-block-check and to every sweep that walks the goal tree instead of the queue directories."
+            },
+            {
+              "id": "e1-headless-baron",
+              "title": "E1 DRIVER 5 of 5 — admit e1-baron to GR-SIM, the FIRST boss driver. The entire baron block is data-declared and consumed (spawn/HP/escorts via WaveSystem.ts:750-780, tauntWaves, rocketVolley, pursuitRange, medal), so it completes the E1 bench AND sets the boss-driver pattern every later boss copies. The id-hardcoded E5/E7/E8/E9 bosses stay laddered until staging moves to data. Meta-mint asserted OFF headless.",
+              "taskFile": "lane-headless-baron.md",
+              "status": "building",
+              "lane": "lane-c",
+              "authoredBy": "attended-2026-08-02",
+              "registeredBy": "s1398",
+              "note": "Queued xhigh. Completes the E1 bench at 5/5 when drained. LEAF REGISTERED s1398, NOT s1398-authored: the master was authored and queued by the live attended session at 96fb9059, which committed it WITHOUT a leaf and wrote \"GOAL-LEAF DEBT (3 masters) next fire.\" verbatim at tasks/BACKLOG.md:2590. Status is \"building\" and not \"queued\" because the runner had already consumed the queue copy when I measured it: tasks/running/ held the master plus a live .pid at 18:22. I did not author, re-queue or alter the master, and I did not gate it — this discharges the Goal Registration Law bookkeeping only, so the slice is visible to drain-block-check and to every sweep that walks the goal tree instead of the queue directories."
             }
           ]
         },
@@ -594,6 +614,16 @@
               "title": "Era extra-map contracts+masks (campaign batch)",
               "status": "merged",
               "mergeHash": "94b215490a18034e13c0c2be2f6ee6cf3f6f322c"
+            },
+            {
+              "id": "e2-escort-mode-as-data",
+              "title": "F-CEN-8 (promoted out of the post-launch census ladder as the E2 BENCH PREREQUISITE) — the E2 escort stops living in the URL. Escort mode activates only via ?mode=escort (Game.ts:3725-3729, WaveSystem.ts:180-184; town injects it from modes[0].id), which makes it unreachable headless and undeclarable in a mechanics manifest. The mode becomes sim-boot state instead.",
+              "taskFile": "lane-escort-mode-as-data.md",
+              "status": "building",
+              "lane": "lane-d",
+              "authoredBy": "attended-2026-08-02",
+              "registeredBy": "s1398",
+              "note": "This is the one F-CEN rung that is NOT parked behind launch closure: it was deliberately promoted as a prerequisite for the E2 drivers (hill-mine/trestle/pressure-garden/incline). The remaining F-CEN-1..8 content repairs stay post-launch-gated — do not author them. LEAF REGISTERED s1398, NOT s1398-authored: the master was authored and queued by the live attended session at 96fb9059, which committed it WITHOUT a leaf and wrote \"GOAL-LEAF DEBT (3 masters) next fire.\" verbatim at tasks/BACKLOG.md:2590. Status is \"building\" and not \"queued\" because the runner had already consumed the queue copy when I measured it: tasks/running/ held the master plus a live .pid at 18:22. I did not author, re-queue or alter the master, and I did not gate it — this discharges the Goal Registration Law bookkeeping only, so the slice is visible to drain-block-check and to every sweep that walks the goal tree instead of the queue directories."
             }
           ]
         },
