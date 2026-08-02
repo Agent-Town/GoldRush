@@ -609,11 +609,13 @@
               "id": "f1401-1-bound-the-headless-driver-and-rule-the-escort-bench",
               "title": "CURE F-1400-3 (mechanism F-1401-1) — bound the gr-sim driver so a run that cannot auto-secure fails loudly instead of spinning, and rule whether the e2-hill-mine escort bench should assert secured:true at all. Clears the road for lane/e2-arsenal (the baron, E1 driver 5 of 5) without merging it.",
               "taskFile": "f1401-1-bound-the-headless-driver-and-rule-the-escort-bench.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "main",
               "authoredBy": "s1401",
               "registeredBy": "s1401",
-              "note": "FIRE-AUTHORED from the s1401 diagnosis (attended review welcome; reviews/f1401-1-baron-escort-nontermination.md). Three-arm control proves the cause is autoSecureWaveForRun returning Number.MAX_SAFE_INTEGER for any contract declaring twist.baron, plus an unbounded while(true) in scripts/gr-sim.mjs. s1400 escortsSpawned hypothesis REFUTED by reading. The slice likely matches production (Game.ts waitsForBaronDefeat returns true for e2-hill-mine, which has no variantId), so the master rules the divergence with evidence rather than reverting the baron. Main slot, not lane-c: lane-c HOLDS the refused baron work and a lane pre-flight reset would destroy it. TOUCH-ONLY the driver and its test - the master forbids touching the baron lane files so it cannot pre-empt the slice it unblocks."
+              "note": "FIRE-AUTHORED from the s1401 diagnosis (attended review welcome; reviews/f1401-1-baron-escort-nontermination.md). Three-arm control proves the cause is autoSecureWaveForRun returning Number.MAX_SAFE_INTEGER for any contract declaring twist.baron, plus an unbounded while(true) in scripts/gr-sim.mjs. s1400 escortsSpawned hypothesis REFUTED by reading. The slice likely matches production (Game.ts waitsForBaronDefeat returns true for e2-hill-mine, which has no variantId), so the master rules the divergence with evidence rather than reverting the baron. Main slot, not lane-c: lane-c HOLDS the refused baron work and a lane pre-flight reset would destroy it. TOUCH-ONLY the driver and its test - the master forbids touching the baron lane files so it cannot pre-empt the slice it unblocks. DRAINED s1410 e45cf7c5: scope 3 ruled (a) and VERIFIED independently (e2-hill-mine baron has no variantId anywhere in contracts.json, so Game.ts:4709 waitsForBaronDefeat is true and production withholds auto-secure). Ceiling secureWave+2=14; red path manufactured (ceiling forced to 3 -> rc=1, 2.1s, full diagnostic). Canary control-proven identical to the unbounded HEAD driver (fnv1a32:14d45400); the master s b3706fdc predates eaefdb24. Gates: tsc clean, build green, test:node-guards rc=0 235/232 pass/0 fail/3 skipped. Findings F-1410-1/2/3. reviews/f1401-1-bound-the-headless-driver.md",
+              "mergeHash": "e45cf7c5e05b57fc2eefbc5d7b40e8262ef8e90c",
+              "drainedBy": "s1410"
             },
             {
               "id": "f1405-1-land-the-cross-engine-wave-scaling-cure",
