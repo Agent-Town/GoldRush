@@ -34,9 +34,11 @@ import { execFileSync } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
 
 const ABSENT = Symbol('absent')
-// The runner itself excludes these from every lane commit (lane-runner-v3.sh:105),
-// so dirt confined to them can never be lane content.
-const CHURN = ['.wrangler', 'logs/factory-usage.json', 'logs/usage-history.jsonl']
+// The runner itself excludes these from every lane commit (lane-runner-v3.sh:121
+// — re-based s1416 by READING the file; the comment had said :105, and the
+// pathspec had drifted 16 lines down. Cite the CODE, the coordinate rots).
+// Dirt confined to them can never be lane content.
+export const CHURN = ['.wrangler', 'logs/factory-usage.json', 'logs/usage-history.jsonl']
 
 function git(args, opts = {}) {
   return execFileSync('git', args, { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024, ...opts })
@@ -153,23 +155,41 @@ function classify(branch) {
 // pre-flight does both. Only tracked dirt can be someone's unsaved work, so only
 // tracked dirt blocks. (Caught s1299 by running this script on lane-a, where two
 // untracked .pyc files were being reported under the words "tracked dirt".)
-function dirt(worktree) {
-  const out = git(['status', '--porcelain'], { cwd: worktree }).trim()
-  if (!out) return { tracked: [], untracked: [], churn: 0 }
+// F-1416-1 (s1416): the parse takes the porcelain TEXT, never the worktree, so it
+// is testable without a repo — the defect below was invisible for 117 sessions
+// precisely because no test could reach it.
+//
+// ⚠️ NEVER `.trim()` porcelain output. Every line is `XY<space>path`, and a
+// modified-unstaged line begins with a SPACE (" M path"). Trimming the whole
+// buffer strips that space from the FIRST line only, so `slice(3)` then eats the
+// first character of that one path — which is why s1415 saw "rtifacts/..." on
+// line 1 and "artifacts/..." on line 2 and filed it as cosmetic. It is not
+// cosmetic: the mangled path is what the CHURN test at the bottom compares, so
+// whenever the alphabetically-first dirty path is a churn path it fails to match
+// ("ogs/factory-usage.json" !== "logs/factory-usage.json") and the lane reports a
+// FALSE DIRTY. Measured s1416: with the artifact churn discarded, all four lanes
+// still read DIRTY on logs/factory-usage.json — a path lane-runner-v3.sh:121
+// excludes from every lane commit and which therefore can never be lane content.
+export function classifyDirt(porcelain) {
   const tracked = []
   const untracked = []
-  let churn = 0
-  for (const line of out.split('\n')) {
+  const churn = []
+  for (const line of porcelain.split('\n')) {
+    if (!line) continue
     const path = line.slice(3).trim()
     if (!path) continue
     if (CHURN.some((c) => path === c || path.startsWith(`${c}/`))) {
-      churn += 1
+      churn.push(path)
       continue
     }
     if (line.startsWith('??')) untracked.push(path)
     else tracked.push(path)
   }
   return { tracked, untracked, churn }
+}
+
+function dirt(worktree) {
+  return classifyDirt(git(['status', '--porcelain'], { cwd: worktree }).replace(/\n+$/, ''))
 }
 
 function sessionLabel() {
@@ -203,8 +223,11 @@ function report(r) {
   for (const h of r.held) console.log(`    HELD ${h.kind}  ${h.path}`)
   for (const p of r.dirt.tracked.slice(0, 10)) console.log(`    TRACKED-DIRT ${p}`)
   for (const p of r.dirt.untracked.slice(0, 10)) console.log(`    untracked (clean -fd) ${p}`)
-  if (r.dirt.churn > 0) {
-    console.log(`    (${r.dirt.churn} churn-only path(s) ignored: ${CHURN.join(', ')})`)
+  // Print the paths MATCHED, not the CHURN list — the old form printed all three
+  // constants beside a count of two, which reads as a mismatch and invites the
+  // next reader to distrust the number rather than the label (s1416).
+  if (r.dirt.churn.length > 0) {
+    console.log(`    (${r.dirt.churn.length} churn-only path(s) ignored: ${r.dirt.churn.join(', ')})`)
   }
   const note = {
     USABLE: 'refill freely — a master pre-flight will find main..branch empty',
@@ -275,6 +298,14 @@ function cure(r) {
   return 0
 }
 
+// Importing this module must not run the CLI — the guard exists so classifyDirt
+// can be tested without a repo, and it is keyed on the entry script's NAME so a
+// test importing it (process.argv[1] = the test file) never trips it (s1416).
+const isMain = /(^|\/)lane-usable\.mjs$/.test(process.argv[1] || '')
+if (!isMain) {
+  // exported-only use; nothing below runs
+} else {
+
 const argv = process.argv.slice(2)
 const doCure = argv.includes('--cure')
 const target = argv.find((a) => !a.startsWith('--'))
@@ -295,3 +326,5 @@ if (!lane) {
 const r = inspect(lane)
 report(r)
 process.exit(doCure ? cure(r) : RC[r.verdict])
+
+}
