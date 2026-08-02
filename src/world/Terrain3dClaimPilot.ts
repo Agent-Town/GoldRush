@@ -319,6 +319,10 @@ const DRY_GULCH_SPRING_EMISSIVE = 2.1;
  * vertices out to r 2.80) with the stone ring covering everything past r~2.0. So the live surface
  * sits a hair above 0.0875 and its water line is 2.35, with the damp margin reaching past 2.80 —
  * the whole baked cap has to be covered or its cyan rim survives as a halo around the new water.
+ *
+ * MEASURE, NEVER ASSUME: `build_landmark_packs.py -- dry-gulch` produces a DIFFERENT spring body
+ * than the one shipped (cap at 0.13, r 2.67), so these numbers are pinned to the committed GLB.
+ * Re-run the script above after any landmark rebuild — see reviews/beauty-dry-gulch.md, U4.
  * Re-measure with `scripts/beauty-spring-pool.mjs` if that body is ever replaced.
  */
 type LiveSpringPool = { surfaceY: number; radius: number };
