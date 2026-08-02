@@ -23,7 +23,7 @@
 The predecessor `e676addf` declares the E1 claim's geometry in the contract: three E1 contracts gain
 `size`, `fords`, `harvestAnchors` and `water` under `tileParams`. That is the slice's entire purpose.
 
-`e2e/gt-05-water-depth.spec.ts:338` asserts the **exact** shape of that object:
+`e2e/gt-05-water-depth.spec.ts:338` ("classic claim keeps deep water impassable while carrying equivalent depth data") asserts the **exact** shape of that object:
 
 ```ts
 expect(snapshot.tileParams).toEqual({ tileId: …, biome: …, river: true, ford: true, waterSources: [], lanes: {…} });
@@ -69,7 +69,7 @@ out, merge or reset `lane/m4`.
 4. `git diff --name-only main...HEAD` → must list **exactly seven** paths: the predecessor's six (`assets/contracts/epoch-1-frontier/contracts.json`, `e2e/agent-view.spec.ts`, `e2e/fixtures/e1-mechanics-manifests.json`, `e2e/tile-identity-pass.spec.ts`, `src/meta/ContractFamilies.ts`, `src/world/Terrain.ts`) plus `e2e/gt-05-water-depth.spec.ts`. Anything else → **STOP and report**.
 5. `git -C . log main..HEAD --oneline` → must print **exactly two** lines (predecessor + yours).
 
-⚠️ **Known pre-existing reds on clean main — NOT yours, do not run them, do not fix them, do not report them as failures:** `e2e/agent-view.spec.ts` byte-stable-fixture (F-1380-2) · `e2e/tile-identity-pass.spec.ts` "E1 contracts load place descriptors…" (nondeterministic hash) · `e2e/e2-hill-mine.spec.ts:131` · `e2e/072-era-activation.spec.ts:226` · `e2e/night3d-perf.spec.ts:67` (F-1390-1).
+⚠️ **Known pre-existing reds on clean main — NOT yours, do not run them, do not fix them, do not report them as failures:** `e2e/agent-view.spec.ts` byte-stable-fixture (F-1380-2) · `e2e/tile-identity-pass.spec.ts` "E1 contracts load place descriptors…" (nondeterministic hash) · `e2e/e2-hill-mine.spec.ts:131` ("Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone") · `e2e/072-era-activation.spec.ts:226` ("fresh E1 profile stays unchanged and the pre-flip determinism hash is identical") · `e2e/night3d-perf.spec.ts:67` ("daylight matrix and Night Shift pressure stay within the painted 115% p95 gate", F-1390-1).
 
 Commit path-scoped on `lane/e2-arsenal` with the prefix `e1-claim-geometry-reland:`. **Never `git add -A`.**
 
