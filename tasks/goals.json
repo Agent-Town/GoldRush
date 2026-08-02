@@ -740,6 +740,16 @@
               "review": "reviews/f1419-1.md"
             },
             {
+              "id": "f1420-1-cure-the-sibling-shrug-in-lane-absorbed-lines",
+              "title": "F-1420-2 — cure the absent-at-base shrug in lane-absorbed-lines.mjs, and defend the parity reference byte-identically",
+              "status": "queued",
+              "taskFile": "f1420-1-cure-the-sibling-shrug-in-lane-absorbed-lines.md",
+              "lane": "lane-a",
+              "authoredBy": "s1420",
+              "registeredBy": "s1421",
+              "note": "FIRE-AUTHORED s1420 from F-1420-2, reported by the f1419-1 runner in its own report and confirmed by the s1420 drain (reviews/f1419-1.md). The read-splitting cure landed in lane-usable.mjs at 5792b4c4; the twin script scripts/lane-absorbed-lines.mjs still collapses absent-at-base into UNDECIDABLE, on precisely the lane-created-file shape that holds the most content main has never seen. Scope 4 is the deliverable: the parity reference against archive/lane-m3-s1417-superseded-e1bff1e8 must be byte-identical before and after, and a difference is a STOP. s1420 measured that reference and found none of its three paths takes the cured branch, so the cure cannot move it — correcting this rows own first REC, which had demanded the reference be re-recorded. RE-AUTHORED: the first attempt was destroyed uncommitted by a concurrent attended beauty/* drain campaign clearing mains tree (F-1420-3); s1420 then landed it on save/f1420-1-master-s1420 (572de11a). RE-LANDED onto main by s1421 by hand rather than cherry-pick (the bash allowlist denies cherry-pick to fires), so this leaf is registered by s1421 against a master authored by s1420. s1421 verified lane-a HAS the subject commit 5792b4c4 before queueing, per the F-1320-2 behind=N hazard: the lane was 60 behind, but entirely on beauty-campaign e2e/scripts paths this master does not touch."
+            },
+            {
               "id": "f1417-3-surface-line-level-residue-in-the-lane-verdict",
               "title": "F-1417-3 — surface the line-level residue inside the lane verdict (report-only; verdict logic pinned unchanged)",
               "status": "merged",
