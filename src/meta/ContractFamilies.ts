@@ -597,7 +597,6 @@ export type ContractManifest = {
     pylonSites?: ContractPylonSite[];
     capacitorSites?: ContractCapacitorSite[];
     ridgeGlow?: { x: number; z: number; color: string; intensity: number };
-    damChannel?: { minX: number; maxX: number; minZ: number; maxZ: number };
     /** Birth-loader output only (tile-persistence sim entries) — never authored in contract JSON. */
     noSpawnZones?: Array<{ x: number; z: number; radius: number }>;
     lanes: {
@@ -607,7 +606,6 @@ export type ContractManifest = {
     };
   };
   twist: {
-    sluicesNeedWaterSource?: boolean;
     pressureEnabled?: boolean;
     seamYieldMult?: number;
     secureWave?: number;
@@ -657,8 +655,6 @@ export type TileElevationDescriptor = {
   cellSize: number;
   heightsRef?: string;
   analytic?: Record<string, number>;
-  slopeMax: number;
-  waterline?: number;
 };
 
 export type EpochTileDescriptor = {
@@ -734,7 +730,7 @@ const AUTHORED_TERRAIN_MAX_DELTA = 16;
 const AUTHORED_TERRAIN_MAX_ORIGIN = 512;
 
 // Future locked-stub example:
-// tile: { id: 'steamworks-forge-yard', biome: 'steamworks', elevation: { grid: { columns: 33, rows: 33 }, cellSize: 2, heightsRef: 'tiles/forge-yard.hf32', slopeMax: 0.7, waterline: -0.1 } }
+// tile: { id: 'steamworks-forge-yard', biome: 'steamworks', elevation: { grid: { columns: 33, rows: 33 }, cellSize: 2, heightsRef: 'tiles/forge-yard.hf32' } }
 const fallbackManifests: Record<string, EpochManifest> = RELEASE_E1 ? {
   '../../assets/contracts/epoch-1-frontier/manifest.json': frontierManifest as EpochManifest,
 } : {
@@ -904,7 +900,7 @@ export type ContractNumberRange = { min: number; max: number; step: number };
 
 export function contractNumberRange(path: string, value: number): ContractNumberRange {
   const key = path.split('.').at(-1) ?? '';
-  const signed = path.includes('.elevation.analytic.') || /^(?:.*X|.*Z|xOffset|zOffset|angle|rotation|waterline|.*Height)$/i.test(key);
+  const signed = path.includes('.elevation.analytic.') || /^(?:.*X|.*Z|xOffset|zOffset|angle|rotation|.*Height)$/i.test(key);
   const discrete = path.includes('.classCounts.') || /^(?:size|columns|rows|rotationSteps|territoryRingBiasWaves)$/i.test(key);
   const magnitude = Math.max(1, Math.abs(value) * 3);
   if (key === 'rotationSteps') return { min: 0, max: 3, step: 1 };

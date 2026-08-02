@@ -40,7 +40,6 @@ test('strings the gorge, holds the night, and restores a cut span', async ({ pag
     secureWave: 12,
     tileParams: {
       dimensions: { width: 96, height: 112 },
-      damChannel: { minX: -48, maxX: 48, minZ: -6.25, maxZ: 6.25 },
     },
     dayNightCycle: { waveSchedule: { duskWave: 4, darkWave: 8 } },
   });

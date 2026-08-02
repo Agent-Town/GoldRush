@@ -50,11 +50,6 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       banks: [...new Set(tile.buildZones.map(({ bank }) => bank))].sort(),
     }));
   }
-  if (twist.sluicesNeedWaterSource) {
-    rules.push(rule('sluices_need_water_source', 'twist.sluicesNeedWaterSource', {
-      sourceKinds: [...new Set(tile.waterSources.map(({ kind }) => kind))].sort(),
-    }));
-  }
   if (twist.seamYieldMult !== undefined) {
     rules.push(rule('seam_yield_multiplier', 'twist.seamYieldMult', { multiplier: twist.seamYieldMult }));
   }

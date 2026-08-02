@@ -93,22 +93,13 @@ function assertBoundsAndWater(mask, waterAgreement) {
     assert.deepEqual(waterAgreement, { river: false, waterSources: mask.waterSources });
     return;
   }
-  if (!mask.damChannel) {
-    // Steamworks river masks: the sim band is the global RIVER_MIN/MAX_Z ±5 with
-    // SHALLOWS_WIDTH 1.25 aprons (src/world/Terrain.ts:84-88); no dam channel exists.
-    assert.equal(waterAgreement.factoryVisualHalfWidth, mask.water.visualHalfWidth);
-    assert.equal(waterAgreement.shallowsEnd.minZ, -waterAgreement.shallowsEnd.maxZ);
-    assert.equal(waterAgreement.placeableBankStartsBeyondAbsZ, waterAgreement.shallowsEnd.maxZ);
-    assert.ok(waterAgreement.deepBand.minZ >= waterAgreement.shallowsEnd.minZ);
-    assert.ok(waterAgreement.deepBand.maxZ <= waterAgreement.shallowsEnd.maxZ);
-    for (const point of waterAgreement.sluiceSamples ?? []) inBounds(mask, point.x, point.z);
-    return;
-  }
-  assert.deepEqual(waterAgreement.shallowsEnd, { minZ: mask.damChannel.minZ, maxZ: mask.damChannel.maxZ });
+  // River masks use the global RIVER_MIN/MAX_Z band with SHALLOWS_WIDTH aprons.
   assert.equal(waterAgreement.factoryVisualHalfWidth, mask.water.visualHalfWidth);
-  assert.equal(waterAgreement.placeableBankStartsBeyondAbsZ, mask.water.visualHalfWidth);
+  assert.equal(waterAgreement.shallowsEnd.minZ, -waterAgreement.shallowsEnd.maxZ);
+  assert.equal(waterAgreement.placeableBankStartsBeyondAbsZ, waterAgreement.shallowsEnd.maxZ);
   assert.ok(waterAgreement.deepBand.minZ >= waterAgreement.shallowsEnd.minZ);
   assert.ok(waterAgreement.deepBand.maxZ <= waterAgreement.shallowsEnd.maxZ);
+  for (const point of waterAgreement.sluiceSamples ?? []) inBounds(mask, point.x, point.z);
 }
 
 test('published mask tables exactly track authored contract data', async () => {
@@ -139,7 +130,7 @@ test('published mask tables exactly track authored contract data', async () => {
     ],
     'e3-canyon-works': [
       'tileId', 'size', 'dimensions', 'river', 'ford', 'fords', 'buildZones', 'stakeMarkers',
-      'pylonSites', 'damChannel', 'rails', 'waterSources', 'harvestAnchors', 'prePlacedBuildables',
+      'pylonSites', 'rails', 'waterSources', 'harvestAnchors', 'prePlacedBuildables',
       'elevation', 'heightfield', 'water', 'lanes',
     ],
     'e3-moth-season': ['tileId', 'size', 'river', 'ford', 'buildZones', 'waterSources', 'lanes'],

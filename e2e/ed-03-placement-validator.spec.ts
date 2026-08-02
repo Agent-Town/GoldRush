@@ -51,6 +51,22 @@ test('069 rejects the retired stake marker field by name', () => {
   }]);
 });
 
+test('069 rejects unknown twist and elevation vocabulary with exact paths', () => {
+  const template = loadContract('e2-hill-mine');
+
+  const unknownTwist = structuredClone(template);
+  (unknownTwist.twist as Record<string, unknown>).forgottenRule = true;
+  expect(reasonKeys(parseFailure(contractDescriptorJson(unknownTwist), template))).toEqual([
+    ['field_unknown', 'twist.forgottenRule'],
+  ]);
+
+  const unknownElevation = structuredClone(template);
+  (unknownElevation.tileParams.elevation as unknown as Record<string, unknown>).forgottenContour = 0.35;
+  expect(reasonKeys(parseFailure(contractDescriptorJson(unknownElevation), template))).toEqual([
+    ['field_unknown', 'tileParams.elevation.forgottenContour'],
+  ]);
+});
+
 test('map reasons cover claim bounds, positive area, declared bank, and dry ground without a second terrain sampler', () => {
   const template = loadContract('the-claim');
   const invalid = structuredClone(template);

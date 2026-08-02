@@ -170,7 +170,6 @@
           { "id": "pylon-east-switch", "nodeId": "pylon-east-switch", "wireFrom": "pylon-east-base", "x": 24, "z": -20, "radius": 2.5 },
           { "id": "pylon-east-rim", "nodeId": "pylon-east-rim", "wireFrom": "pylon-east-switch", "x": 28, "z": 8, "radius": 2.5 }
         ],
-        "damChannel": { "minX": -48, "maxX": 48, "minZ": -6.25, "maxZ": 6.25 },
         "rails": [
           { "style": "steamworks", "points": [{ "x": -42, "z": -30 }, { "x": -18, "z": -34 }, { "x": 18, "z": -34 }, { "x": 42, "z": -30 }, { "x": 18, "z": -34 }, { "x": -18, "z": -34 }] },
           { "style": "steamworks", "points": [{ "x": -46, "z": 44 }, { "x": -36, "z": 32 }, { "x": -28, "z": 8 }, { "x": -24, "z": -20 }, { "x": -12, "z": -36 }] }
@@ -185,8 +184,6 @@
         ],
         "elevation": {
           "cellSize": 2,
-          "slopeMax": 0.35,
-          "waterline": -0.1,
           "analytic": {
             "hillMine": 1,
             "creekHeight": 0.5,
