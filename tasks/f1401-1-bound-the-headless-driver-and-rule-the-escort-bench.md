@@ -1,0 +1,46 @@
+CODEX: model=gpt-5.6-sol effort=high
+# f1401-1-bound-the-headless-driver-and-rule-the-escort-bench — the gr-sim driver must never spin, and the escort bench must assert the side of the divergence we actually mean (FIRE-AUTHORED, attended review welcome)
+ROLE: main-slot implementer. WORKDIR: repo root. One task, firewalled.
+
+WHY (F-1401-1, s1401 diagnosis of F-1400-3 — reviews/f1401-1-baron-escort-nontermination.md; supersedes the hypothesis in reviews/e1-headless-bench-twin-banks-baron-s1400.md:112):
+  s1400 refused `lane-headless-baron` (lane/e2-arsenal tip `9a9fb2bb`) because the merged tree makes `node scripts/gr-sim.mjs --contract e2-hill-mine --mode escort` never terminate (99.4% CPU). It filed a hypothesis — that the new `escortsSpawned` count threaded through `spawnBaronWave`/`spawnComponentBossWave` was to blame — and explicitly asked the next fire to confirm by reading. **That hypothesis is REFUTED.** The `WaveSystem.ts` diff is a pure count pass-through: it computes `escortsSpawned` from existing `spawnAt` return values and hands it to callbacks. There is no loop in it and it cannot spin.
+  **The real mechanism, proven by a three-arm control (s1401, detached worktree, same command and seed each arm):**
+   · clean main → `rc=0` in **4.5s**, `{"secured":true,"waves":12,...,"eventLogHash":"fnv1a32:b3706fdc"}`
+   · baron-merged → **never terminates** (alive past 150s, reaped by hand)
+   · baron-merged with ONLY the `Number.MAX_SAFE_INTEGER` branch of `autoSecureWaveForRun` neutralised → `rc=0` in **4.57s**, `{"secured":true,"waves":12,...}`
+  So the sole cause is that the baron slice adds `autoSecureWaveForRun` to `HeadlessContractSim` (`src/sim/HeadlessContractSim.ts:225` on the merged tree), which returns `Number.MAX_SAFE_INTEGER` while a baron is declared and unbeaten. `RunManager.ts:540` consumes it (`secureWave: () => host.autoSecureWaveForRun?.() ?? host.secureWaveForRun?.()`), the run therefore never auto-secures, and `scripts/gr-sim.mjs:40`'s `while (true)` has **no bound** — `advanceToTurn()`'s own `maxTicks` guard never trips because it returns early on every wave change.
+  ⚠️ **AND THE SLICE IS PROBABLY RIGHT, WHICH IS WHY THIS IS NOT A SIMPLE REVERT.** Production does the same thing: `Game.ts:4675` gates auto-secure on `waitsForBaronDefeat()` (`Game.ts:4709`), which for `e2-hill-mine` returns **true** — its baron carries no `variantId` (verified: `variantId` appears nowhere in `assets/contracts/epoch-2-steamworks/contracts.json`), so the predicate falls through to `baron.variantId !== 'dynamo_crawler'` → true. **Read-verified, not run-verified — confirming it is scope item 3.** If that reading holds, the baron slice is making the headless sim AGREE with production, and it is main's escort bench — which asserts `secured:true, waves:12` — that has been asserting something production would not produce. The baron slice did not regress escort; it exposed a pre-existing sim/production divergence and turned it fatal by removing the only thing that was accidentally ending the run.
+  ⓘ **A caller-side timeout is NOT a sufficient bound, measured twice.** The escort test at `scripts/gr-sim.test.mjs:103` already passes `timeout: 30_000` to `spawnSync`, and s1400 still watched the whole battery hang; s1401 independently ran the same child under `spawnSync` with `timeout: 90_000` and found it alive past **150s**, requiring a manual reap. With `--policy=idle` the driver loop contains no `await`, so it is fully synchronous CPU-bound JS that never yields — do not assume the caller can rescue you. The bound must live INSIDE the loop that spins.
+
+READ-FIRST (paths, read them, do not skim):
+ · `reviews/f1401-1-baron-escort-nontermination.md` — the three-arm control, the refutation, and the divergence argument.
+ · `scripts/gr-sim.mjs:34-50` — the unbounded driver loop; note there is no `await` on the `--policy=idle` path.
+ · `src/sim/HeadlessContractSim.ts:241-256` — `advanceToTurn()`, whose `maxTicks` bound never trips because it returns on wave change.
+ · `src/game/Game.ts:4669-4715` — `secureWaveForRun` / `autoSecureWaveForRun` / `waitsForBaronDefeat`, the production semantics you are being asked to match.
+ · `git show lane/e2-arsenal` — the slice this unblocks (4 files, 260+/10−). Do NOT merge it in this task.
+
+PRE-FLIGHT (main slot, tracked-clean): `git status --porcelain` must show no tracked dirt you did not create. If tracked dirt exists that belongs to no task, STOP and report.
+
+SCOPE (numbered, each testable):
+ 1. **Bound the driver.** `scripts/gr-sim.mjs`'s `while (true)` must gain a hard ceiling — a max-turn and/or max-wave cap derived from the contract (e.g. `twist.secureWave` plus a stated margin, or an absolute cap). On exceed it must exit NON-ZERO and write a diagnostic to stderr naming contract, mode, seed, the wave reached and the ceiling. It must NOT hang and must NOT exit 0. This is correct regardless of how scope 3 is ruled — do it first and independently.
+ 2. **Prove the bound with a manufactured non-terminating run**, not with a green. A passing driver never executes the new path, so its green says nothing about it. Construct a run that cannot auto-secure (the merged baron tree is the natural one; a temporary local stub is acceptable if you state it), show it now exits non-zero within the ceiling, and paste the stderr diagnostic and the elapsed time. Revert any probe edit and show `git status` clean afterwards.
+ 3. **Rule the divergence, with evidence.** Determine whether `e2-hill-mine` in the REAL GAME auto-secures at wave 12 with its baron alive. Read `Game.ts:4709` and confirm or refute my reading; state which. Then rule ONE of:
+      (a) production withholds → main's escort bench assertion (`cli.status === 0` at `scripts/gr-sim.test.mjs:105`, `secured:true`) is the thing that is wrong, and must be re-based onto the bounded, non-secured outcome; or
+      (b) production secures → the baron slice's predicate is too broad and must be narrowed to mirror `waitsForBaronDefeat()` rather than bare `twist.baron` truthiness.
+    **RECOMMENDATION: (a)** — the reading above supports it and it keeps the sim honest to production. But you must show the evidence for whichever you pick; do not adopt (a) because this master prefers it.
+ 4. **Keep what the escort test actually proves.** Its load-bearing assertion is `stablePrefix.mechanics.modes[0].id === 'escort'` (`:106`) — that escort mode boots from data, s1399's whole point. Whatever you rule in scope 3, that assertion must survive and must still be reached. Do not delete the escort case.
+ 5. **Do NOT paste any hash from this master.** If your work changes the escort event-log hash, RE-DERIVE it on your tree and pin what you measured. (For reference only, never to paste: the neutralised-predicate arm produced `fnv1a32:be31e9d2`, which differs from clean main's `b3706fdc` because the baron slice legitimately adds `baron_announcement` / `baron_spawned` replay events. That number came from a deliberately non-shipping shape and is NOT a target.)
+ 6. Give any node test you touch an explicit per-test timeout (F-1400-4: `test:node-guards` runs `node --test` with `--test-timeout=0`, so one non-terminating sim hangs the WHOLE battery unbounded).
+
+TOUCH-ONLY: `scripts/gr-sim.mjs` · `scripts/gr-sim.test.mjs`.
+NO: `src/sim/HeadlessContractSim.ts` and `src/systems/WaveSystem.ts` (those are the baron lane's files — this task must NOT merge or pre-empt lane/e2-arsenal; it clears the road for it) · `src/game/Game.ts` (production semantics are being READ here, never changed) · Balance · meta · any other contract's driver · any browser behaviour.
+
+SELF-CHECK (name the exact commands and paste real numbers):
+ · `npx tsc --noEmit` clean · `npm run build` green.
+ · `node --test scripts/gr-sim.test.mjs` — FULL FILE, and it must EXIT. Report pass/fail counts and wall time.
+ · `npm run test:node-guards` green.
+ · Regression canary, clean main behaviour must be unchanged: `node scripts/gr-sim.mjs --contract e2-hill-mine --seed e2-escort-headless --mode escort --policy=idle` still exits rc=0 with `eventLogHash: fnv1a32:b3706fdc` and `waves:12`. If your bound changed this, you bounded too tightly — STOP and report.
+ · The scope-2 transcript: the manufactured non-terminating run, its non-zero rc, its stderr diagnostic, its elapsed time.
+ · `npm run test:ledger-guards` green as your LAST act.
+
+READY-FOR-GATES + report: the scope-3 ruling with the evidence behind it, the bound's ceiling and where you put it, the manufactured-failure transcript, the canary rc/hash, and an explicit statement of whether lane/e2-arsenal is now merge-ready or still needs work.
