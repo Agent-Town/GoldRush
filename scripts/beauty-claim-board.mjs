@@ -16,6 +16,7 @@
 // let the camera lag settle rather than posing a private camera.
 import { chromium } from 'playwright';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { resolveBase } from '../rehearsal/base-url.mjs';
@@ -149,9 +150,11 @@ async function ready(page, { debug }) {
   );
   const briefing = page.getByTestId('contract-briefing-dismiss');
   if (await briefing.isVisible().catch(() => false)) await briefing.click();
+  await dismissBeats(page);
 }
 
 async function hideOverlays(page) {
+  await dismissBeats(page);
   await page.evaluate(() => {
     for (const selector of ['.lil-gui', '#hud', '#touch-controls', '.gr-hud', '#ui-root']) {
       document.querySelector(selector)?.style.setProperty('display', 'none');
@@ -212,6 +215,30 @@ async function pilotState(page) {
   });
 }
 
+/**
+ * The perf law, measured so the box cannot fake it. Both arms run in the SAME
+ * browser within seconds of each other: ?nobeauty holds the shift's additions back
+ * while everything else boots identically, so the delta is the additions and not
+ * the machine's load (F-1113-4: a control must share the treatment's conditions).
+ */
+async function perfAb(page, query, settle) {
+  const arms = {};
+  for (const arm of ['nobeauty', 'beauty']) {
+    await page.goto(`${base}/?${query}${arm === 'nobeauty' ? '&nobeauty' : ''}`);
+    await ready(page, { debug: true });
+    await settle(page);
+    await hideOverlays(page);
+    await page.waitForTimeout(600);
+    arms[arm] = { ...(await measure(page)), pilot: (await pilotState(page)).sculptWater };
+  }
+  const ratio = arms.nobeauty.rafP95Ms > 0 ? arms.beauty.rafP95Ms / arms.nobeauty.rafP95Ms : null;
+  return { ...arms, ratioP95: ratio === null ? null : Number(ratio.toFixed(3)), loadAverage: loadAverage() };
+}
+
+function loadAverage() {
+  return os.loadavg().map((value) => Number(value.toFixed(2)));
+}
+
 async function shoot(page, name) {
   const file = path.join(SHOT_DIR, `${PHASE}-${name}.png`);
   await page.screenshot({ path: file });
@@ -245,12 +272,17 @@ if (wanted('1') || wanted('2') || wanted('6')) {
         camera: await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.camera),
         pilot: await pilotState(page),
         perf: await measure(page),
+        perfAb: await perfAb(page, `${DEBUG_QUERY}&nowaves&seed=beauty-run-camera`, async (target) => {
+          await target.evaluate(() => window.__GR_TEST__.teleport(0, 12));
+          await target.waitForTimeout(2500);
+        }),
       };
+      // perfAb reloaded the page; restore the judged pose before the HUD frame.
+      await page.goto(`${base}/?${DEBUG_QUERY}&nowaves&seed=beauty-run-camera`);
+      await ready(page, { debug: true });
+      await page.evaluate(() => window.__GR_TEST__.teleport(0, 12));
+      await page.waitForTimeout(2500);
       // Same pose, HUD on — what a player actually sees at the readability judge.
-      await page.evaluate(() => {
-        for (const selector of ['#hud', '.gr-hud', '#ui-root']) document.querySelector(selector)?.style.removeProperty('display');
-      });
-      await page.waitForTimeout(300);
       metrics.shots.runCameraHud = { file: await shoot(page, 'run-camera-hud') };
     }
   }
@@ -308,12 +340,13 @@ if (wanted('4')) {
   await page.evaluate(() => {
     const test = window.__GR_TEST__;
     test.grantGold(4000);
-    test.teleport(0, 11);
-    // Sluices ride the river line; the stockpile sits on the near bank beside them.
-    test.placeFree('sluice', -4.5, 5.4);
-    test.placeFree('sluice', 4.5, 5.4);
-    test.placeFree('stockpile', 0, 9.5);
-    test.placeFree('sentry_beacon', -7.5, 9.0);
+    test.teleport(0, 8);
+    // Sluices ride the river line, wide enough apart to clear the secured panel;
+    // the stockpile and a beacon sit back on the near bank beside them.
+    test.placeFree('sluice', -12, 5.4);
+    test.placeFree('sluice', 12, 5.4);
+    test.placeFree('stockpile', -16, 9.5);
+    test.placeFree('sentry_beacon', 15, 10);
   });
   await page.waitForTimeout(900);
   await page.evaluate(() => window.__GR_TEST__.startWaveForTest(10));
@@ -346,6 +379,10 @@ if (wanted('5')) {
     file: await shoot(page, 'run-camera-mobile'),
     pilot: await pilotState(page),
     perf: await measure(page),
+    perfAb: await perfAb(page, `${DEBUG_QUERY}&nowaves&seed=beauty-mobile`, async (target) => {
+      await target.evaluate(() => window.__GR_TEST__.teleport(0, 12));
+      await target.waitForTimeout(2200);
+    }),
   };
   metrics.errors.mobile = errors;
   await context.close();

@@ -64,11 +64,14 @@ import seedRunPanoramaContractText from '../../assets/pilots/map-rebuild-spike/s
 import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json?raw';
 import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
+import { isMapBeautyDisabled } from '../core/DebugParams';
 import { Balance } from '../game/Balance';
 import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
 import { disposeObject3D } from '../utils/dispose';
 import { trackedGltfLoader } from '../assets/AssetLoading';
+import * as Terrain from './Terrain';
 import { installVisualHeightSource } from './Terrain';
+import { createSculptWater, type SculptWater } from './Water';
 
 type Contract = {
   tileId: string;
@@ -175,6 +178,17 @@ const CONTINUATION_SAMPLE_DEPTH = 8;
 const LEGACY_GROUND_SLOTS = new Set(['terrain.bank', 'terrain.river', 'terrain.ford']);
 const SKIRT_INSET = 2.5;
 const NIGHT_POOL_SHADER_CAP = 32;
+
+// U1, the-claim beauty shift (docs/beauty/the-claim-brief.md): the sculpt carves a
+// channel and then hides every painted water surface, so the map's one event has
+// been a static black slot. These contracts get a render-only living-water quad laid
+// into that channel. Per contract because each sculpt's bed sits at its own depth.
+const SCULPT_WATER_CONTRACTS = new Set(['the-claim']);
+/** Water fades out over the last stretch before the tile edge instead of cutting. */
+const SCULPT_WATER_EDGE_FADE = 7;
+/** How much water stands over the ford shelf: ankle deep, still obviously a crossing. */
+const SCULPT_WATER_FORD_SKIM = 0.11;
+const SCULPT_WATER_MAX_DELTA = 0.1;
 
 function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', source: 'painted' | 'glb', metrics?: Metrics, panorama?: THREE.Object3D, panoramaMetrics?: Metrics): void {
   canvas.dataset.terrain3dPilotState = state;
@@ -299,6 +313,101 @@ function keepLandmarkPaintReadable(model: THREE.Object3D): void {
     mesh.material.emissiveMap = mesh.material.map;
     mesh.material.emissiveIntensity = 3;
   });
+}
+
+/**
+ * Where the water line sits in a baked channel.
+ *
+ * Two truths compete: the channel wants to be full, and the ford has to stay a
+ * crossing. So the surface is the LOWER of "channel bed + fill" and "ford bed +
+ * skim" — the channel reads deep, the ford reads like a wet shelf you can walk.
+ * Both beds are read from the baked grid, so a re-sculpt moves the water with it.
+ */
+function sculptWaterSurfaceY(
+  heightAt: (x: number, z: number) => number,
+  halfX: number,
+  centerZ: number,
+  fordHalfWidth: number,
+): number {
+  const channel: number[] = [];
+  const ford: number[] = [];
+  for (let x = -halfX + 2; x <= halfX - 2; x += 1) {
+    for (const z of [-3.5, -2, -1, 0, 1, 2, 3.5]) {
+      (Math.abs(x) <= fordHalfWidth ? ford : channel).push(heightAt(x, centerZ + z));
+    }
+  }
+  const median = (values: number[]): number => {
+    const sorted = [...values].sort((a, b) => a - b);
+    return sorted[Math.floor(sorted.length / 2)] ?? 0;
+  };
+  const channelBed = channel.length ? median(channel) : 0;
+  const fordBed = ford.length ? median(ford) : channelBed;
+  return Math.min(channelBed + 0.42, fordBed + SCULPT_WATER_FORD_SKIM);
+}
+
+/**
+ * U1 — mount the render-only living-water surface for a sculpted contract.
+ * Sim-silent: every number below is read from the sim's own declarations or from
+ * the baked height grid; nothing is written back.
+ */
+function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number, bounds: THREE.Box3): SculptWater | undefined {
+  if (isMapBeautyDisabled() || !SCULPT_WATER_CONTRACTS.has(host.contractId) || !Terrain.hasRiverWater()) return undefined;
+  const river = Terrain.riverGeometry();
+  const centerZ = (river.minZ + river.maxZ) / 2;
+  const riverHalfWidth = (river.maxZ - river.minZ) / 2;
+  const fordHalfWidth = Terrain.fordRanges()[0]?.halfWidth ?? 3;
+  const halfX = Math.min(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
+  const surfaceY = sculptWaterSurfaceY(heightAt, halfX, centerZ, fordHalfWidth);
+  const water = createSculptWater({
+    ford: false,
+    depthTest: true,
+    heightAt,
+    // The carved channel runs ~0.45m below the water line at its deepest; the last
+    // ~15cm of depth is the damp margin where the surface fades into wet ground.
+    deepMeters: 0.5,
+    shoreMeters: 0.15,
+    // Style anchor: "the river writes the only dark line". The shipped shader is
+    // tuned over pale painted sand and reads as mint over this sculpt's umber bed,
+    // so the palette is multiplied warm and the surface let through enough for the
+    // bed's own darkness to carry the channel.
+    color: '#c9b892',
+    opacity: 0.7,
+    centerZ,
+    surfaceY,
+    halfLength: halfX,
+    riverHalfWidth,
+    visualHalfWidth: Terrain.visualWaterHalfWidth(),
+    lengthHalf: halfX,
+    fadeStart: Math.max(1, halfX - SCULPT_WATER_EDGE_FADE),
+    fordHalfWidth,
+    riverDepth: Terrain.waterDepth('river'),
+    fordDepth: Terrain.waterDepth('ford'),
+    wadeDepth: Balance.terrainSim.wadeDepth,
+    deepDepth: Balance.terrainSim.deepDepth,
+    // The gold glints belong on the sluice line: each harvest anchor pushed to its
+    // own bank lip, exactly as the painted river places them.
+    anchors: Terrain.nodeAnchors.map((anchor) => ({
+      x: anchor.x,
+      z: anchor.z < centerZ ? river.minZ + 0.55 : river.maxZ - 0.55,
+    })),
+  });
+  let lastFrame = -1;
+  let lastAt = 0;
+  water.mesh.onBeforeRender = (renderer) => {
+    const frame = renderer.info.render.frame;
+    if (frame === lastFrame) return;
+    const now = performance.now() / 1000;
+    const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+    lastFrame = frame;
+    lastAt = now;
+    water.advance(delta);
+  };
+  host.scene.add(water.mesh);
+  host.canvas.dataset.terrain3dPilotSculptWater = 'living-water-quad';
+  host.canvas.dataset.terrain3dPilotSculptWaterY = surfaceY.toFixed(4);
+  host.canvas.dataset.terrain3dPilotSculptWaterGlints = String(Terrain.nodeAnchors.length);
+  host.canvas.dataset.terrain3dPilotSculptWaterDeepest = water.deepestMeters.toFixed(3);
+  return water;
 }
 
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
@@ -515,6 +624,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let panorama: THREE.Object3D | undefined;
   let landmarks: THREE.Group | undefined;
   let skirt: THREE.Object3D | undefined;
+  let sculptWater: SculptWater | undefined;
   let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
   let loadedPanorama: THREE.Object3D | undefined;
@@ -580,6 +690,13 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.scene.add(nextTerrain, nextPanorama);
       if (nextSkirt) host.scene.add(nextSkirt);
       hiddenRelief = hidePaintedGround(host);
+      // A decoration must never cost the map its sculpt: if the water fails to
+      // build, the terrain stays mounted and the failure is published, not silent.
+      try {
+        sculptWater = mountSculptWater(host, heightAt, terrainMetrics.bounds);
+      } catch (error) {
+        host.canvas.dataset.terrain3dPilotSculptWater = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+      }
       host.canvas.dataset.terrain3dPilotTerrainLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotHiddenRelief = String(hiddenRelief.length);
@@ -700,6 +817,12 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.scene.remove(skirt);
       disposeObject3D(skirt);
       skirt = undefined;
+    }
+    if (sculptWater) {
+      host.scene.remove(sculptWater.mesh);
+      sculptWater.dispose();
+      sculptWater = undefined;
+      delete host.canvas.dataset.terrain3dPilotSculptWater;
     }
     for (const model of [terrain, panorama, landmarks]) {
       if (!model) continue;
