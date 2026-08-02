@@ -219,6 +219,10 @@ async function sampleLivePerf(page: Page, frames: number): Promise<PerfSample> {
   };
 }
 
+async function volleyVfx(page: Page): Promise<ThreeGameDiagnostics['vfx']['baronVolley']> {
+  return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.vfx.baronVolley);
+}
+
 async function writeMetrics(testInfo: TestInfo, name: string, payload: unknown): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await writeFile(path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.json`), `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
@@ -257,18 +261,44 @@ test('shot 2 — fixed fresh-eye run camera: warm home bank against cold company
 
 test('shot 3 — MID-VOLLEY: tracers, impact rings, embers, and the p95 evidence frame', async ({ page }, testInfo) => {
   const errors = await prepareKitedBaron(page, 'beauty-baron-volley');
+  await clearBriefing(page);
   await advanceUntil(page, (value) => value.telegraphActive);
   await advanceUntil(page, (value) => value.blastsAlive >= 3);
+  // Read the pools BEFORE the screenshot round-trip: a 0.2 s tracer can expire
+  // inside the capture, so the diagnostic is the proof and the frame is the
+  // illustration. Never claim a VFX shipped because a screenshot looked busy.
+  // Shoot first, read second: the tracer lives 0.2 s and any evaluate in front
+  // of the capture spends that budget. The monotonic spawn counters are what
+  // PROVES the beat fired; `active` only proves the caps hold.
   await shot(page, testInfo, 'mid-volley-arcs');
+  const airborne = await volleyVfx(page);
   await advance(page, 0.42);
   await shot(page, testInfo, 'mid-volley-impact');
+  const landed = await volleyVfx(page);
+  expect(airborne.tracers.spawned).toBeGreaterThan(0);
+  expect(airborne.tracers.active).toBeLessThanOrEqual(airborne.tracers.capacity);
+  expect(landed.rings.spawned).toBeGreaterThan(0);
+  expect(landed.rings.active).toBeLessThanOrEqual(landed.rings.capacity);
+  expect(landed.wisps.spawned).toBeGreaterThan(0);
+  expect(landed.wisps.active).toBeLessThanOrEqual(landed.wisps.capacity);
+  // U3's whole design is "zero new dynamic lights": impacts borrow the existing
+  // six-spotlight muzzle-flash pool. If that ever stops being true this fails.
+  const lighting = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.lighting);
+  expect(lighting?.muzzleFlashes ?? 0).toBeLessThanOrEqual(6);
+  expect(lighting?.muzzleFlashCount ?? 0).toBeGreaterThan(0);
 
   // Hand the clock back so the 2 s cadence keeps firing while RAF is sampled.
   await expect(page.evaluate(() => window.__GR_TEST__?.setManualSim(false))).resolves.toBe(false);
   await page.waitForTimeout(600);
   const perf = await sampleLivePerf(page, PERF_FRAMES);
   await shot(page, testInfo, 'mid-volley-live');
-  await writeMetrics(testInfo, 'mid-volley-perf', { stage: STAGE, viewport: page.viewportSize(), ...perf });
+  await writeMetrics(testInfo, 'mid-volley-perf', {
+    stage: STAGE,
+    viewport: page.viewportSize(),
+    ...perf,
+    volleyVfx: { airborne, landed, live: await volleyVfx(page) },
+    muzzleFlashPool: { live: lighting?.muzzleFlashes ?? 0, fired: lighting?.muzzleFlashCount ?? 0, cap: 6 },
+  });
 
   expect(perf.frames).toBe(PERF_FRAMES);
   expect(perf.volleys).toBeGreaterThan(0);

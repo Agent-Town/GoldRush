@@ -158,7 +158,8 @@ export class CombatSystem {
     private readonly onHeroDied: () => void,
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
     private readonly onEnemyKilled?: (position: THREE.Vector3, freedOrdinal: number) => void,
-    private readonly onShot?: (at: number, origin: THREE.Vector3, target: THREE.Vector3) => void,
+    private readonly onShot?: (at: number, origin: THREE.Vector3, target: THREE.Vector3, ownerId: string) => void,
+    private readonly onBlastImpact?: (at: number, position: THREE.Vector3, radius: number, ownerId: string) => void,
     private readonly onEnemyDamaged?: (enemy: ClaimJumperEnemy, amount: number, died: boolean, ownerId: string) => boolean | void,
     private readonly canDamageEnemy: (enemy: ClaimJumperEnemy) => boolean = () => true,
   ) {
@@ -437,7 +438,7 @@ export class CombatSystem {
     const launched = this.blastCharges.activate(origin, target, airTime, damage, radius, ownerId);
     if (!launched) return false;
     this.recordShot('lob', ownerId);
-    this.onShot?.(this.currentAt, origin, target);
+    this.onShot?.(this.currentAt, origin, target, ownerId);
     this.audio.playShot('lob', ownerId);
     return true;
   }
@@ -588,7 +589,7 @@ export class CombatSystem {
         if (this.blastCharges.activate(this.scratchOrigin, volleyTarget, airTime, damage, aoe.radius, ownerId)) {
           fired = true;
           this.recordShot('lob', ownerId);
-          this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint);
+          this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint, ownerId);
           handle.onFire?.(this.currentAt);
           this.audio.playShot('lob', ownerId);
         }
@@ -628,7 +629,7 @@ export class CombatSystem {
       ) {
         fired = true;
         this.recordShot('bolt', ownerId);
-        this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint);
+        this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint, ownerId);
         handle.onFire?.(this.currentAt);
         this.audio.playShot('bolt', ownerId);
       }
@@ -669,6 +670,7 @@ export class CombatSystem {
     this.lastBlastDetonationPosition.copy(position);
     this.hasLastBlastDetonation = true;
     this.vfx.detonationRing(position, radius);
+    this.onBlastImpact?.(this.currentAt, position, radius, ownerId);
     this.audio.playDetonation(ownerId);
     if (isCombatDamageDisabled()) return false;
 
