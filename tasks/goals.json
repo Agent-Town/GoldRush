@@ -566,17 +566,30 @@
               "note": "FIRE-AUTHORED from the s1400 drain gate evidence (attended review welcome). Main-slot rather than lane-a because lane-usable.mjs reports lane-a HOLDS: a lane pre-flight reset would destroy the very work being cured. The master forbids pasting the measured hash bfd79d2a and requires the runner to derive it, since pasting a number to make a test green is the exact defect F-1400-2 describes. Carries the F-1400-3 escort canary as a self-check so this cure cannot silently reintroduce the baron regression.",
               "blockClass": "gate-side",
               "blockedReason": "GATE-SIDE HOLD, NOT AN OWNER GATE — no owner word lifts this; a fire lifts it by landing the cure. REFUSED at the s1403 drain gate (F-1403-1, reviews/e1-twin-banks-reland-s1403.md). The graft is CORRECT and is preserved at save/f1400-1-twin-banks-reland-s1403 (2a54c386); main was restored clean and verified by blob hash. Refused because the pinned secure hash fnv1a32:5f57f7be reproduces only in the Codex runner process: measured fnv1a32:bfd79d2a EIGHT times (node --test x3, isolated, the runner own npm battery at 229/230, direct probe, cold vite cache, detached worktree), with eight hypotheses eliminated and a positive control (the-claim 02561b7f) reproducing exactly. Superseded by f1403-1, which diagnoses the divergence instead of re-pinning it.",
-              "blockedBy": "f1403-1-diagnose-the-twin-banks-hash-divergence"
+              "blockedBy": "f1404-1-make-the-wave-scaling-cross-engine-deterministic"
             },
             {
               "id": "f1403-1-diagnose-the-twin-banks-hash-divergence",
               "title": "CURE F-1403-1 — find WHY the twin-banks secure-run hash differs between the Codex runner process (5f57f7be) and every other process (bfd79d2a) on a byte-identical tree, then pin the truth. Diff the two dumped input sets, name the first divergent replay event, read the mechanism, and rule: sim nondeterminism (a game defect, STOP) or an environment artefact (pin the correct side). Unblocks E1 driver 4 of 5.",
               "taskFile": "f1403-1-diagnose-the-twin-banks-hash-divergence.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "76f7e565643fd83bef578f3eceb3335adb65eed2",
               "lane": "main",
               "authoredBy": "s1403",
               "registeredBy": "s1403",
+              "drainedBy": "s1404",
+              "closureReason": "DIAGNOSIS DELIVERED AND MERGED; the slice code was REFUSED. The run ruled scope 5(a) correctly and honoured its NO list. s1404 reproduced the diagnosis end-to-end (Node 23.11.1 -> 7/7 fnv1a32:5f57f7be vs Node 26.4.0 -> 6/7 fnv1a32:bfd79d2a on a byte-identical tree) and proved the mechanism at the ULP level (Math.pow(1.115,3) differs by 1 ULP between the two V8 versions). Merged: artifacts/twin-banks-probe-codex.json + reviews/f1403-1-twin-banks-hash-divergence.md. The four graft files were refused because the pin is a Node-23 value that would red test:node-guards in every fire shell; they are preserved byte-identically at save/f1400-1-twin-banks-reland-s1403 (2a54c386), verified by blob hash in both directions. Cure authored as f1404-1 (F-1404-2).",
               "note": "FIRE-AUTHORED from the s1403 drain gate (attended review welcome). Third attempt at this slice; the first two both re-derived and re-pinned, so the master FORBIDS that and requires the mechanism first. Ships with an instrument (scripts/twin-banks-hash-probe.mjs) and a reference dump (artifacts/twin-banks-probe-s1403-fire.json, 957 replay events) so the question is a mechanical diff rather than an argument about who measured correctly. Reuses the verified graft from save/f1400-1-twin-banks-reland-s1403 rather than re-grafting from lane/m3. Eight eliminated hypotheses are listed so the run does not re-test them. Explicitly states that measuring bfd79d2a is a welcome outcome that closes the finding, so the run has no incentive to report the expected value."
+            },
+            {
+              "id": "f1404-1-make-the-wave-scaling-cross-engine-deterministic",
+              "title": "CURE F-1404-2 — replace the five sim-reachable Math.pow(base, wave) calls in WaveSystem with repeated multiplication so wave scaling is bit-identical across V8 versions, re-derive every bench pin that moves, and make the acceptance test cross-engine identity rather than a single pinned number. Unblocks the twin-banks re-land (E1 driver 4 of 5) and pre-empts the identical failure on the baron (5 of 5).",
+              "taskFile": "f1404-1-make-the-wave-scaling-cross-engine-deterministic.md",
+              "status": "queued",
+              "lane": "main",
+              "authoredBy": "s1404",
+              "registeredBy": "s1404",
+              "note": "FIRE-AUTHORED from the s1404 drain gate (attended review welcome). Authored from the f1403-1 run report plus the s1404 gate measurements, not from a new premise: the run diagnosed the mechanism and ruled 5(a) STOP, and this is the fix it was forbidden to make. The cure was VERIFIED BEFORE BEING PROPOSED — 63 values across 3 bases and waves 0..20 are identical on Node 23.11.1 and Node 26.4.0 under repeated multiplication, because IEEE-754 multiplication is exactly specified where Math.pow precision is implementation-defined. Scope covers all FIVE sites, not the one the run named, and :838/:839 are included deliberately because they are the baron component-HP path. Scope 4 makes cross-engine identity the acceptance test so a fourth single-engine green cannot happen. Collides with lane-c (lane/e2-arsenal HOLDS src/systems/WaveSystem.ts) — the baron re-graft must follow this, never reset over it."
             },
             {
               "id": "e1-headless-baron",
