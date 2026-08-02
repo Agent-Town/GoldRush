@@ -32,6 +32,7 @@
 
 import { execFileSync } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
+import { residueFor } from './lane-residue.mjs'
 
 const ABSENT = Symbol('absent')
 // The runner itself excludes these from every lane commit (lane-runner-v3.sh:121
@@ -303,12 +304,37 @@ function inspect(lane) {
 
 const RC = { USABLE: 0, 'AHEAD-BUT-ABSORBED': 1, HOLDS: 2, DIRTY: 2, BUSY: 2 }
 
+function residueForHeld(r, held) {
+  try {
+    const diff = git(['diff', `${r.base}:${held.path}`, `${r.branch}:${held.path}`])
+    const mainText = git(['show', `main:${held.path}`])
+    return residueFor({ diff, mainText })
+  } catch {
+    return residueFor()
+  }
+}
+
+export function formatHeldResidue(held, residue) {
+  const prefix = `    HELD ${held.kind}  ${held.path}`
+  if (residue.status === 'BINARY' || residue.status === 'UNDECIDABLE') {
+    return [`${prefix}  (${residue.status})`]
+  }
+  const lines = [`${prefix}  (${residue.missing.length} of ${residue.added.length} added lines absent from main)`]
+  for (const missing of residue.missing.slice(0, 3)) {
+    const sample = missing.length > 100 ? `${missing.slice(0, 99)}…` : missing
+    lines.push(`      ${JSON.stringify(sample)}`)
+  }
+  return lines
+}
+
 function report(r) {
   console.log(
     `${r.slot}  ${r.branch}  ahead=${r.ahead}  behind=${r.behind ?? '?'}  paths=${r.paths ?? 0}` +
       `  tracked-dirt=${r.dirt.tracked.length}  untracked=${r.dirt.untracked.length}${r.busy ? '  BUSY' : ''}`,
   )
-  for (const h of r.held) console.log(`    HELD ${h.kind}  ${h.path}`)
+  for (const h of r.held) {
+    for (const line of formatHeldResidue(h, residueForHeld(r, h))) console.log(line)
+  }
   for (const p of r.dirt.tracked.slice(0, 10)) console.log(`    TRACKED-DIRT ${p}`)
   for (const p of r.dirt.untracked.slice(0, 10)) console.log(`    untracked (clean -fd) ${p}`)
   // Print the paths MATCHED, not the CHURN list — the old form printed all three
