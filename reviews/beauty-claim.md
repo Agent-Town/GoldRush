@@ -265,11 +265,15 @@ expected `state=failed` and got `state=lite`: that is the runtime auto-tier watc
 demoting the page because frames collapsed — a CPU-starvation signature, not a
 rendering one.
 
-What *did* pass, both arms, and matters most here: the contract-equality checks
-(1 mesh / 32,768 triangles / 1 material / 16,641 vertices), the landmark mount count
-and skip count, the LITE painted fallback, the disposal tests (scene children back to
-0, so the water quad, the contact pool and the mote field all unmount), and
-`terrain3d-claim-pilot` 4/5 with the only red control-proven.
+What *did* pass, and matters most here: `terrain3d-claim-pilot`'s
+"contract-valid GLB feeds every visualY consumer and keeps the water agreement"
+(1 mesh / 32,768 triangles / 1 material, every visualY consumer, the shallows
+agreement), its "planar simulation fingerprint unchanged", its "LITE and invalid bytes
+retain the painted fallback", and `terrain3d-registry`'s disposal tests — scene
+children back to **0** after dispose, which is what proves the water quad, the contact
+pool, the mote field and the ember field all unmount. Precision on one red:
+`terrain3d-registry:345` breaks on its *invalid-bytes* assertion (expected `failed`,
+got `lite`), not on its LITE assertion, and it breaks that way in both arms.
 
 Earlier in the shift, `map-census -g the-claim` alone: the census content passed
 **every cell** — boot, render, MQ-1, MQ-2, MQ-3, landmark brightness, 10 s budget —
