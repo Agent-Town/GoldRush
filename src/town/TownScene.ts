@@ -128,6 +128,12 @@ const TOWN_HALF = 15;
 const TOWN_SHADOW_EXTENT = 17;
 // How far the contact skirt spills past a footprint, total across both sides.
 const SKIRT_MARGIN = 1.5;
+// The town's sky/vista palettes. Canon §4.1 only — sky blue to parchment amber, dunes in
+// sandDeep. `horizon` doubles as the fog colour so the vista ring has no seam to give it away.
+const TOWN_MOOD: Record<'day' | 'night', TownMoodPalette> = {
+  day: { zenith: '#c2e6ff', band: '#ffe4a0', horizon: '#e9c98d', ridge: '#c9a469', dune: '#8b6c3f' },
+  night: { zenith: '#241d3a', band: '#4b3f68', horizon: '#41365a', ridge: '#3a3054', dune: '#2e2642' },
+};
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 2);
 const TAVERN_DOOR = new THREE.Vector3(townPlazaSlot('tavern').approach.x, 0.08, townPlazaSlot('tavern').approach.z);
@@ -768,8 +774,9 @@ export class TownScene {
   }
 
   private dressScene(): void {
-    this.scene.background = new THREE.Color(this.townNight ? '#41365a' : '#e9c98d');
-    this.scene.fog = new THREE.Fog(this.townNight ? '#41365a' : '#e9c98d', this.townNight ? 24 : 34, this.townNight ? 58 : 76);
+    const mood = this.townNight ? TOWN_MOOD.night : TOWN_MOOD.day;
+    this.scene.background = new THREE.Color(mood.horizon);
+    this.scene.fog = new THREE.Fog(mood.horizon, this.townNight ? 24 : 34, this.townNight ? 58 : 76);
     // U5: this fill now carries the warmth the GLB loader used to fake with a per-model emissive
     // lift (0x4a2a17 @ 0.2 on every building except the assay office). One light for the whole
     // square — shells, props and GLBs — instead of a tonal exception living in the asset path.
@@ -779,9 +786,11 @@ export class TownScene {
       this.townNight ? 0.7 : 1.3,
     );
     fill.name = 'TownFill';
-    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffd28a', this.townNight ? 0.82 : 1.85);
+    // U6: late afternoon, not noon. Dropping the sun from 18 to 12 units of height stretches
+    // every shadow U2 just switched on, which is what sells the hour.
+    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffca7a', this.townNight ? 0.82 : 1.68);
     sun.name = 'TownSun';
-    sun.position.set(-22, 18, -18);
+    sun.position.set(-24, 12, -20);
     sun.castShadow = true;
     // U2 — THE SHADOW CAMERA WAS NEVER AIMED. castShadow has been true since the town shipped,
     // but three.js defaults a directional shadow camera to a +/-5 frustum: a 10x10 patch of a
@@ -4185,6 +4194,30 @@ function wearRing(ctx: CanvasRenderingContext2D, center: WearPoint, radius: numb
   }
   ctx.restore();
 }
+
+// U6 — THE HORIZON THE CAMERA CANNOT SEE (kept as the record of a REVERT, not a leftover).
+// The brief asked for a gradient sky dome and a fog-matched dune ring at r30-45 to kill the
+// tabletop read. Both were built, shipped into the scene, and measured: +3 draw calls, +912
+// triangles, and not one pixel on screen at any framing the town allows.
+//
+// The geometry says why. Balance.camera.offset (0, 26.2, 18.3) over town scale 1.5 puts the
+// camera 17.5u up and 12.2u back; at fov 42 the TOP edge of the frame is 34.1 degrees below
+// horizontal, so the farthest ground any frame can contain is 25.8u from the camera — about
+// 15u past the hero at the widest allowed zoom (1.1). The plate ends at 15u. A vista at 33-44u
+// is off-frame by construction, and so is the horizon itself; three framings (default, widest,
+// mobile portrait) confirmed it with ground running to every frame edge.
+//
+// A visible horizon is therefore a CAMERA-PITCH decision, not a scenery one — and the brief's
+// own don'ts put zoom clamps and default framing on the owner's desk (F-1203-2). The sky and
+// ring were reverted; what stayed from U6 is the late-afternoon sun, which does reach the
+// screen. The palette below is what survives: it feeds the fog and background in one place.
+type TownMoodPalette = {
+  zenith: string;
+  band: string;
+  horizon: string;
+  ridge: string;
+  dune: string;
+};
 
 function createAmbientDust(tier: PerformanceTier, night: boolean): THREE.InstancedMesh | null {
   if (tier === 'lite' || night) return null;

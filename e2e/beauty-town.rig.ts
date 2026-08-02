@@ -29,6 +29,7 @@ const DESKTOP_SHOTS: readonly Shot[] = [
   { name: '2-plaza-center', camera: { x: 0, z: 2.6, zoom: 0.62 } },
   { name: '3-tavern-close', camera: { x: -4.9, z: -4.9, zoom: 0.36 } },
   { name: '4-assay-close', camera: { x: 6.6, z: 2.4, zoom: 0.36 } },
+  { name: '8-boot-widest', camera: { x: 0, z: 2.6, zoom: 1.1 } },
   { name: '5-dusk-plaza', query: '?townDusk', camera: { x: 0, z: 2.6, zoom: 0.62 } },
   { name: '7-night-plaza', query: '?townNight', camera: { x: 0, z: 2.6, zoom: 0.62 } },
 ];
