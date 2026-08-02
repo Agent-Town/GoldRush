@@ -18,8 +18,9 @@ import { ProspectorEmbodiment } from '../agent/Embodiment';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { XpMotePool } from '../entities/XpMote';
 import { Balance } from '../game/Balance';
-import { Economy, type EconomyEvent } from '../game/Economy';
+import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { isBuildableId } from '../game/buildables';
+import { RunManager } from '../game/RunManager';
 import { loadContract, type ContractManifest } from '../meta/ContractFamilies';
 import { stableHash } from '../mp/LockstepClient';
 import { BuildSystem } from '../systems/BuildSystem';
@@ -90,6 +91,7 @@ export class HeadlessContractSim {
   private readonly combat: CombatSystem;
   private readonly build: BuildSystem;
   private readonly waves: WaveSystem;
+  private readonly runManager: RunManager;
   private readonly stockpileHoldings: GoldHolding[] = Array.from(
     { length: Balance.stockpile.maxCount },
     (_, index) => ({
@@ -142,9 +144,7 @@ export class HeadlessContractSim {
       this.xpMotes,
       this.combatVfx,
       NO_AUDIO,
-      () => {
-        this.dead = true;
-      },
+      () => this.postHeroDeath(),
     );
     this.registerHeroShooter();
     this.build = new BuildSystem(
@@ -193,7 +193,20 @@ export class HeadlessContractSim {
     this.surface = install(adapter, { permissionLevel: 3 });
     this.bindEventLog();
     this.economy.apply(this.economyEvent({ type: 'run_reset' }));
-    this.replayEvents.push({ type: 'run_started', at: 0, contractId, seed });
+    const sim = this;
+    this.runManager = new RunManager(
+      {
+        events: this.events,
+        economy: this.economy,
+        waveSystem: this.waves,
+        activeContract: this.manifest,
+        secureWaveForRun: () => this.manifest.twist.secureWave ?? Balance.run.secureWave,
+        get timeAlive() {
+          return sim.timeAlive;
+        },
+      },
+      { now: () => Math.round(this.timeAlive * 1000) },
+    ).install();
   }
 
   currentTurn(): GrSimTurn {
@@ -313,20 +326,45 @@ export class HeadlessContractSim {
 
   private startWave(wave: number, at: number): boolean | void {
     this.events.emit({ type: 'wave_started', at, wave });
-    if (wave < (this.manifest.twist.secureWave ?? Balance.run.secureWave)) return;
-    this.secured = true;
-    this.replayEvents.push({ type: 'run_secured', at, wave });
-    return false;
+    if (this.runManager.diagnostics.secured) return false;
   }
 
   private bindEventLog(): void {
-    for (const type of ['hero_damaged', 'enemy_killed', 'wave_started', 'building_damaged', 'building_wrecked'] as const) {
+    for (const type of [
+      'hero_damaged',
+      'hero_died',
+      'enemy_killed',
+      'wave_started',
+      'building_damaged',
+      'building_wrecked',
+      'run_started',
+      'run_secured',
+      'run_ended',
+    ] as const) {
       this.events.on(type, (event) => {
         if (event.type === 'enemy_killed') this.kills += 1;
         if (event.type === 'building_damaged') this.buildingHits += 1;
+        if (event.type === 'run_secured') this.secured = true;
+        if (event.type === 'run_ended' && event.reason !== 'secured') this.dead = true;
         this.replayEvents.push(canonicalEvent(event));
       });
     }
+  }
+
+  private postHeroDeath(): void {
+    const summary = summarizeLog(this.economy.log);
+    this.events.emit({
+      type: 'hero_died',
+      at: this.timeAlive,
+      timeAlive: this.timeAlive,
+      kills: this.kills,
+      goldPanned: summary.panned,
+      spent: summary.spent,
+      beaconsBuilt: summary.beaconsBuilt,
+      wavesSurvived: this.waves.diagnostics.wave,
+      weaponToggles: 0,
+      blastTime: 0,
+    });
   }
 
   private registerHeroShooter(): void {

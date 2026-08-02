@@ -41,6 +41,7 @@ type RunManagerHost = {
 
 type InstallOptions = {
   storage?: MetaProgressStorage;
+  now?: () => number;
   onSecureChoice?: (choice: 'bank' | 'rush') => boolean;
   onRunStarted?: () => void;
   onRunEnded?: (run: { reason: RunEndReason; at: number; summary: RunSummary }) => void;
@@ -90,7 +91,9 @@ export class RunManager {
     this.storage = this.options.storage ?? browserStorage();
     this.meta = this.storage ? loadMetaProgress(this.storage) : freshMetaProgress();
     host.applyMetaProgress?.(this.meta);
-    this.runSuspend = new RunSuspendController(this.game, () => this.meta).install();
+    if (typeof document !== 'undefined') {
+      this.runSuspend = new RunSuspendController(this.game, () => this.meta).install();
+    }
     this.offHeroDied = host.events.on('hero_died', (event) =>
       this.endRun(this.stayedForRushRunId === this.runId ? 'rush' : 'death', event.at, event.wavesSurvived),
     );
@@ -294,7 +297,7 @@ export class RunManager {
     if (!this.host) return;
     this.securedRunId = this.runId;
     this.securedAtWave = Math.max(0, Math.min(wave, this.host.secureWave?.() ?? wave));
-    this.securedResultAt = Date.now();
+    this.securedResultAt = this.options.now?.() ?? Date.now();
     this.awardSecuredClaim();
     this.host.events.emit({
       type: 'run_secured',

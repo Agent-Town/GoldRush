@@ -10,7 +10,7 @@ This v0 `verifiers` environment maps one deterministic Gold Rush contract run to
 
 The wheel is pure Python, but the local environment starts the repository's Node runner. Hosted Environments Hub containers do not contain that runner or Node by default; a later publication slice must use a `SandboxEnv`/`CliAgentEnv` image. The package deliberately uses the documented v0 `MultiTurnEnv` API, accepting its future v1 migration risk.
 
-GR-SIM supports `e1-dry-gulch`, `the-claim`, and `e1-night-shift`. The frozen evaluation data still contains five Trail seeds each for Dry Gulch and The Claim, so all ten existing rows are runnable; Night Shift rows remain a separate dataset slice. The default five-example ordering remains the five Dry Gulch rows.
+GR-SIM supports `e1-dry-gulch`, `the-claim`, and `e1-night-shift`. The frozen evaluation data and bench seed set both contain the same five Trail seeds for The Claim; all ten existing Dry Gulch and Claim rows are runnable. Night Shift rows remain a separate dataset slice, and the default five-example ordering remains the five Dry Gulch rows.
 
 ## Local checks
 
