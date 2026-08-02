@@ -10,6 +10,37 @@
           "title": "E1 — Frontier",
           "tasks": [
             {
+              "id": "e1-dead-fields-sweep",
+              "title": "Contract vocabulary: retire the four dead fields (sluicesNeedWaterSource, slopeMax, waterline, damChannel)",
+              "taskFile": "lane-dead-fields-sweep.md",
+              "mergeHash": "8815e476b97b85eda0dad8906278e73d7e59c534",
+              "status": "merged"
+            },
+            {
+              "id": "e1-claim-geometry-declared",
+              "title": "The Claim: geometry declared rather than inferred (attended census wave 2026-08-02)",
+              "taskFile": "lane-claim-geometry-declared.md",
+              "status": "queued"
+            },
+            {
+              "id": "e1-authored-bundle-validation",
+              "title": "Authored bundle validation (attended census wave 2026-08-02)",
+              "taskFile": "lane-authored-bundle-validation.md",
+              "status": "queued"
+            },
+            {
+              "id": "e1-headless-the-claim",
+              "title": "Headless sim covers The Claim (attended census wave 2026-08-02)",
+              "taskFile": "lane-headless-the-claim.md",
+              "status": "queued"
+            },
+            {
+              "id": "e1-seam-yield-single-source-orig",
+              "title": "Dry Gulch seam yield single-source — ORIGINAL master, unachievable as written (F-1380-1); superseded by the firewall-lifted re-author",
+              "taskFile": "lane-seam-yield-single-source.md",
+              "status": "superseded"
+            },
+            {
               "id": "e1-seam-yield-single-source",
               "title": "Dry Gulch seam yield: the twist becomes the only source (re-authored s1380 with the e2e firewall lifted — F-1380-1)",
               "taskFile": "lane-seam-yield-single-source-lift.md",
