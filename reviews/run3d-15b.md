@@ -72,6 +72,19 @@ too old to belong to this slice. Not a blocker for this drain under the §3 "fin
 known-reds with proof" clause — the proof is the control run above. **Owed: a bisect to find which
 main commit crossed the bar.** Left open.
 
+**A green start point, and a trap, from opening the artifact instead of trusting it.**
+`artifacts/night3d-perf/p95-{desktop,mobile}-chrome.json` is tracked, last written at `1e9ffa1c`
+(2026-07-19), and records ratios of **0.12–0.31** across all four `PERF_CONTRACTS` — terrain3d was
+then 3–8× *faster* than painted. So the regression landed after 2026-07-19, and that commit is a
+known-green anchor to bisect from.
+
+The trap: **that artifact can never go red.** In `e2e/night3d-perf.spec.ts`, `report.push(...)` sits
+*after* the two `expect`s inside the loop, and `writeFile` runs only *after* the loop completes — so
+a failing run throws before recording anything and leaves the last passing snapshot in place. The
+committed artifact will advertise 0.12–0.31 indefinitely while the suite is red. I opened it
+expecting to read my own control run's output and it was a fortnight-stale checkout; the numbers in
+the table above come from the assertion errors, which is the only honest source here.
+
 ### F-1389-2 — `drain-block-check.mjs` matched a stale branch-keyed block; the commit-level check is what saved it.
 
 `node scripts/drain-block-check.mjs lane/m3` exits **1 / BLOCKED**, citing goal leaf
