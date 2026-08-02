@@ -60,6 +60,9 @@ const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
 const MAX_ANCHOR_PARTICLES = 128;
+// Close-zoom crispness: the town reaches 0.36 framing now, and 4x was visibly mushy on the
+// plate seams and facade planks at that distance. Lite keeps 4 (TownScene sets it there).
+const FACADE_ANISOTROPY = 8;
 
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement };
 type PilotState = 'loading' | 'loaded' | 'error' | 'failed';
@@ -272,7 +275,11 @@ function clearBuildingOrientation(canvas: HTMLCanvasElement, id: keyof typeof MO
   canvas.dataset.town3dPilotBuildingOrientations = JSON.stringify(orientations);
 }
 
-function inspect(model: THREE.Object3D, runtimeEmissive = true): {
+// U2 — `castShadow` used to be hard-false here, so the GLB town had zero ground contact even
+// after the sun's shadow camera was aimed. The pilots only ever install on full/balanced tiers
+// (TownScene gates the dynamic import on pilotLite), so switching the default on is already
+// tier-gated. The town PLATE opts out: a 30x30 ground slab casting into itself is pure acne.
+function inspect(model: THREE.Object3D, castShadow = true): {
   meshes: number;
   triangles: number;
   materials: number;
@@ -295,16 +302,18 @@ function inspect(model: THREE.Object3D, runtimeEmissive = true): {
     const geometry = mesh.geometry;
     triangles += Math.floor((geometry.index?.count ?? geometry.attributes.position?.count ?? 0) / 3);
     for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
-    mesh.castShadow = false;
+    mesh.castShadow = castShadow;
     mesh.receiveShadow = true;
     for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
       if (material instanceof THREE.MeshStandardMaterial) {
         material.roughness = Math.max(material.roughness, 0.82);
         material.metalness = 0;
-        if (runtimeEmissive) {
-          material.emissive.set(0x4a2a17);
-          material.emissiveIntensity = Math.max(material.emissiveIntensity, 0.2);
-        }
+        // U5 — TONAL UNITY. This used to lift every GLB with emissive 0x4a2a17 @0.2 — every GLB
+        // except the assay office, which opted out and has been visibly cooler than its
+        // neighbours ever since. A per-model emissive hack is a lighting decision made in the
+        // asset loader; the town's hemisphere fill now carries that warmth for shells, props
+        // and GLBs alike, so the whole square is lit by one thing.
+        if (material.map) material.map.anisotropy = Math.max(material.map.anisotropy, FACADE_ANISOTROPY);
       }
     }
   });
@@ -344,7 +353,7 @@ function installTownBuildingPilot(
     candidates[candidateIndex]!.url,
     (gltf) => {
       const loaded = gltf.scene;
-      const metrics = inspect(loaded, id !== 'assay_office');
+      const metrics = inspect(loaded);
       const valid =
         metrics.triangles <= MAX_TRIANGLES &&
         metrics.materials <= MAX_MATERIALS &&

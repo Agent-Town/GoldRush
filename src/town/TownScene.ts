@@ -77,6 +77,7 @@ import {
   townEraPropFootprints,
   townPlazaLayout,
   townPlazaSlot,
+  townTrailLayout,
   townPropFootprints,
   townPropRing,
   type TownBuilding,
@@ -123,12 +124,51 @@ const TOWN_ZOOM_MIN = 0.36;
 const TOWN_ZOOM_DEFAULT = 0.85;
 const TOWN_ZOOM_MAX = 1.1;
 const TOWN_HALF = 15;
+// Half-extent of the sun's shadow frustum: the 30x30 plate plus a margin for the gate wagons.
+const TOWN_SHADOW_EXTENT = 17;
+// How far the contact skirt spills past a footprint, total across both sides.
+const SKIRT_MARGIN = 1.5;
+// The town's sky/vista palettes. Canon §4.1 only — sky blue to parchment amber, dunes in
+// sandDeep. `horizon` doubles as the fog colour so the vista ring has no seam to give it away.
+const TOWN_MOOD: Record<TownMoodName, TownMoodPalette> = {
+  day: { zenith: '#c2e6ff', band: '#ffe4a0', horizon: '#e9c98d', ridge: '#c9a469', dune: '#8b6c3f' },
+  // U7: the run's authored dusk ramp family (LightRig.ts:74-90) read into town terms.
+  dusk: { zenith: '#7c6aa8', band: '#e0a06a', horizon: '#c98a5c', ridge: '#8f6a4d', dune: '#5f4930' },
+  night: { zenith: '#241d3a', band: '#4b3f68', horizon: '#41365a', ridge: '#3a3054', dune: '#2e2642' },
+};
+// U7 — THREE-STATE LOOK, FLAGS ONLY. The default day boot is byte-identical; dusk and night are
+// reached with ?townDusk / ?townNight and nothing else changes them (no clock, no owner ruling
+// spent). Fog near/far and the two lights per state; the sun swings low and amber at dusk.
+const TOWN_MOOD_LIGHT: Record<TownMoodName, {
+  fogNear: number;
+  fogFar: number;
+  sky: string;
+  ground: string;
+  fill: number;
+  sun: string;
+  sunIntensity: number;
+  sunPosition: readonly [number, number, number];
+  lit: boolean;
+}> = {
+  day: { fogNear: 34, fogFar: 76, sky: '#fff2cc', ground: '#8b6c3f', fill: 1.3, sun: '#ffca7a', sunIntensity: 1.68, sunPosition: [-24, 12, -20], lit: false },
+  dusk: { fogNear: 28, fogFar: 68, sky: '#ffd9a8', ground: '#6b4f38', fill: 0.91, sun: '#ff9f5a', sunIntensity: 1.12, sunPosition: [-26, 7, -18], lit: true },
+  night: { fogNear: 24, fogFar: 58, sky: '#ddc6a0', ground: '#2e2642', fill: 0.7, sun: '#bfa3ff', sunIntensity: 0.82, sunPosition: [-24, 12, -20], lit: true },
+};
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 2);
 const TAVERN_DOOR = new THREE.Vector3(townPlazaSlot('tavern').approach.x, 0.08, townPlazaSlot('tavern').approach.z);
 const FIRST_CLAIM_GREETING = "The valley's open. The tavern keeps the contracts. Go stake your first claim.";
 const FIRST_CLAIM_PENDING = 'pending';
 const APPROACH_RADIUS = 5.2;
+// U1: the cast used to float 8cm above the plate. With a blob shadow beneath them the gap reads as
+// hover, not as air — 2cm is the sprite-clip margin, nothing more.
+const FEET_CONTACT_Y = 0.02;
+// The player stands hero-height (1.85u) in town; 0.15 of that is the same ratio the cast uses.
+const HERO_BLOB_RADIUS = 0.28;
+// U7: the whole night-lighting budget the town is allowed to spend, in lights.
+const TOWN_LANTERN_LIGHT_CAP = 6;
+// A cylinder's own axis, for aiming string segments along their span.
+const UP = new THREE.Vector3(0, 1, 0);
 const STAMP_MILL_ID = 'stamp-mill';
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
 const DYNAMO_HALL_ID = 'dynamo-hall';
@@ -151,6 +191,38 @@ const STAMP_MILL_PROGRESS_LINES = [
   'The Stamp Mill rises: the boilers are seated.',
   'The Stamp Mill rises: the stamps are set.',
 ] as const;
+
+export type FrameStatSnapshot = { last: number; avg: number; p95: number; sampleCount: number };
+
+class FrameStats {
+  private readonly samples: number[] = [];
+  private cursor = 0;
+  private last = 0;
+
+  constructor(private readonly window = 180) {}
+
+  record(ms: number): void {
+    if (!Number.isFinite(ms) || ms < 0) return;
+    this.last = ms;
+    if (this.samples.length < this.window) this.samples.push(ms);
+    else {
+      this.samples[this.cursor] = ms;
+      this.cursor = (this.cursor + 1) % this.samples.length;
+    }
+  }
+
+  snapshot(): FrameStatSnapshot {
+    if (!this.samples.length) return { last: 0, avg: 0, p95: 0, sampleCount: 0 };
+    const sorted = [...this.samples].sort((left, right) => left - right);
+    const total = sorted.reduce((sum, sample) => sum + sample, 0);
+    return {
+      last: this.last,
+      avg: total / sorted.length,
+      p95: sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))] ?? 0,
+      sampleCount: sorted.length,
+    };
+  }
+}
 
 export type TownDiagnostics = {
   frame: number;
@@ -255,6 +327,21 @@ export type TownDiagnostics = {
     sign: 'asset' | 'placeholder';
   };
   ambientDust: { enabled: boolean; tier: PerformanceTier; count: number; drawCalls: number };
+  // THE BEAUTY-SHIFT DOOR: every visual U1-U8 added, countable from a plain boot without ?debug
+  // (Mistake #10 — a visual with no plain-boot door is a visual that does not exist).
+  contact: {
+    blobShadows: number;
+    skirts: number;
+    sunShadow: { enabled: boolean; mapSize: number; extent: number };
+  };
+  dressing: {
+    mood: TownMoodName;
+    wearDecals: number;
+    parcelPieces: number;
+    windowGlow: number;
+    lanternBeads: number;
+    lanternLights: number;
+  };
   firstClaimGuide: {
     active: boolean;
     done: boolean;
@@ -263,7 +350,13 @@ export type TownDiagnostics = {
     flagKey: typeof FIRST_CLAIM_DONE_KEY;
   };
   welcome: ReturnType<TownWelcome['snapshot']>;
-  renderer: { calls: number; geometries: number; textures: number };
+  // THE BEAUTY-SHIFT MEASURING STICK (docs/beauty/README.md: "frame p95 +15% max, measured").
+  // frameMs = wall-clock interval between presented frames (the house convention, Game.ts:2583).
+  // renderMs = CPU time inside renderer.render, shadow pass included — the interval is vsync-
+  // pinned at ~16.7ms on an idle scene, so it cannot see a cost the render pass actually pays.
+  frameMs: FrameStatSnapshot;
+  renderMs: FrameStatSnapshot;
+  renderer: { calls: number; geometries: number; textures: number; triangles: number };
   canvas: { width: number; height: number; dpr: number };
   camera: CameraZoomDiagnostics & {
     currentDistance: number;
@@ -361,12 +454,15 @@ export class TownScene {
     depthWrite: false,
   });
   private readonly propRingEnabled = !new URLSearchParams(window.location.search).has('noTownProps');
-  private readonly townNight = new URLSearchParams(window.location.search).has('townNight');
+  private readonly townMood: TownMoodName = readTownMood();
+  private readonly townNight = this.townMood === 'night';
   private readonly performanceTier = performanceTierDiagnostics().tier;
   private readonly eraOrder = loadEpoch(activeEpochId()).order;
   private readonly ambientDust = createAmbientDust(this.performanceTier, this.townNight);
   private readonly ambientDustObject = new THREE.Object3D();
   private readonly townActors: TownActorRuntime[] = [];
+  private readonly blobShadows = new TownBlobShadows(TOWN_ACTORS.length + 2, this.townNight);
+  private readonly blobCasters: { x: number; z: number; radius: number }[] = [];
   private readonly actorBarkVisits = new Map<TownActorId, number>();
   private readonly barkCard = document.createElement('div');
   private readonly welcome = new TownWelcome();
@@ -377,6 +473,9 @@ export class TownScene {
   private nameBeat?: HTMLElement;
   private frame = 0;
   private elapsed = 0;
+  private readonly frameStats = new FrameStats();
+  private readonly renderStats = new FrameStats();
+  private lastPresentAt = 0;
   private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | { id: typeof CHARTER_PRESS_ID; name: 'Charter Press' } | { id: typeof TAILOR_WAGON_ID; name: "The Tailor's Wagon" } | null = null;
   private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
   private activeBarkActor: TownActorRuntime | null = null;
@@ -518,6 +617,7 @@ export class TownScene {
     this.ceremonies.update(delta);
     if (this.heraldOpen) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
+      this.syncBlobShadows();
       this.lastExitIntent = rawExitIntent;
       this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
       this.publishDiagnostics();
@@ -525,6 +625,7 @@ export class TownScene {
     }
     if (this.boardOpen || this.schoolhouseOpen || this.wardrobeOpen || this.assayBenchOpen() || this.ceremonies.modalOpen() || this.e10Finale) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
+      this.syncBlobShadows();
       if (rawExitIntent && !this.lastExitIntent) {
         if (this.ceremonies.modalOpen()) this.ceremonies.requestLeave();
         else if (this.boardOpen) this.closeBoard();
@@ -566,6 +667,7 @@ export class TownScene {
           : undefined,
       );
     }
+    this.syncBlobShadows();
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.updateWelcome();
     this.updateFirstClaimGuide();
@@ -576,9 +678,13 @@ export class TownScene {
   }
 
   private render(): void {
+    const startedAt = performance.now();
+    if (this.lastPresentAt > 0) this.frameStats.record(startedAt - this.lastPresentAt);
+    this.lastPresentAt = startedAt;
     this.renderer.info.reset();
     this.renderer.render(this.scene, this.camera);
     flushRenderedFrameCaptures(this.canvas);
+    this.renderStats.record(performance.now() - startedAt);
   }
 
   private readonly sampleTown = (x: number, z: number) => {
@@ -616,6 +722,14 @@ export class TownScene {
     for (const building of this.visibleBuildings) {
       this.scene.add(createShell(building));
     }
+    this.scene.add(createContactSkirts(this.contactSkirtPlacements()));
+    this.scene.add(createWearDecals(this.wearDecalPlacements()));
+    this.scene.add(createParcelDressing(this.visibleBuildings));
+    this.scene.add(
+      createWindowGlow(this.visibleBuildings, this.townMood),
+      createLanternStrings(this.townMood, this.eraOrder),
+      createLanternLights(this.townMood),
+    );
     for (const building of townBuildings) {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
@@ -646,6 +760,8 @@ export class TownScene {
     }
 
     if (this.ambientDust) this.scene.add(this.ambientDust);
+    this.scene.add(this.blobShadows.mesh);
+    this.syncBlobShadows();
     this.hero.group.position.copy(HERO_START);
     this.scene.add(this.hero.group);
 
@@ -697,19 +813,44 @@ export class TownScene {
   }
 
   private dressScene(): void {
-    this.scene.background = new THREE.Color(this.townNight ? '#41365a' : '#e9c98d');
-    this.scene.fog = new THREE.Fog(this.townNight ? '#41365a' : '#e9c98d', this.townNight ? 24 : 34, this.townNight ? 58 : 76);
-    const fill = new THREE.HemisphereLight(
-      this.townNight ? '#ddc6a0' : '#fff2cc',
-      this.townNight ? '#2e2642' : '#8b6c3f',
-      this.townNight ? 0.62 : 1.15,
-    );
+    const mood = TOWN_MOOD[this.townMood];
+    const light = TOWN_MOOD_LIGHT[this.townMood];
+    this.scene.background = new THREE.Color(mood.horizon);
+    this.scene.fog = new THREE.Fog(mood.horizon, light.fogNear, light.fogFar);
+    // U5: this fill now carries the warmth the GLB loader used to fake with a per-model emissive
+    // lift (0x4a2a17 @ 0.2 on every building except the assay office). One light for the whole
+    // square — shells, props and GLBs — instead of a tonal exception living in the asset path.
+    const fill = new THREE.HemisphereLight(light.sky, light.ground, light.fill);
     fill.name = 'TownFill';
-    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffd28a', this.townNight ? 0.82 : 1.85);
+    // U6: late afternoon, not noon. Dropping the sun from 18 to 12 units of height stretches
+    // every shadow U2 just switched on, which is what sells the hour. Dusk drops it further.
+    const sun = new THREE.DirectionalLight(light.sun, light.sunIntensity);
     sun.name = 'TownSun';
-    sun.position.set(-22, 18, -18);
-    sun.castShadow = true;
-    this.scene.add(fill, sun);
+    sun.position.set(...light.sunPosition);
+    // LITE PAYS NO SHADOW PASS. Measured on the 390px lite boot: with the aimed frustum it costs
+    // 106 draw calls against 55 without — the shadow pass is HALF of everything lite draws, on
+    // the tier we picked precisely because the device is weak (and this box is a desktop GPU, so
+    // the real cost there is worse than what I can measure). Lite keeps its grounding from the
+    // contact skirt and the blob shadows, which are two draw calls between them, and lands
+    // CHEAPER than it was before this shift (55 vs 57) while gaining roofs, wear and dressing.
+    sun.castShadow = this.performanceTier !== 'lite';
+    // U2 — THE SHADOW CAMERA WAS NEVER AIMED. castShadow has been true since the town shipped,
+    // but three.js defaults a directional shadow camera to a +/-5 frustum: a 10x10 patch of a
+    // 30x30 town. Everything outside the plaza centre cast nothing, which is why nine handsome
+    // buildings all floated. +/-17 covers the whole plate with the map size the tier can afford.
+    sun.shadow.camera.left = -TOWN_SHADOW_EXTENT;
+    sun.shadow.camera.right = TOWN_SHADOW_EXTENT;
+    sun.shadow.camera.top = TOWN_SHADOW_EXTENT;
+    sun.shadow.camera.bottom = -TOWN_SHADOW_EXTENT;
+    sun.shadow.camera.near = 2;
+    sun.shadow.camera.far = 70;
+    const mapSize = this.performanceTier === 'full' ? 1536 : 1024;
+    sun.shadow.mapSize.set(mapSize, mapSize);
+    sun.shadow.bias = -0.0004;
+    sun.shadow.normalBias = 0.022;
+    sun.shadow.radius = 2;
+    sun.target.position.set(0, 0, 0);
+    this.scene.add(fill, sun, sun.target);
   }
 
   private createStampMillVignette(): void {
@@ -2183,6 +2324,10 @@ export class TownScene {
     emitStorySignal({ type: 'run-return-town', result: this.options.returnResult });
   }
 
+  private instanceCount(name: string): number {
+    return (this.scene.getObjectByName(name) as THREE.InstancedMesh | undefined)?.count ?? 0;
+  }
+
   private publishDiagnostics(): void {
     const dpr = this.renderer.getPixelRatio();
     const background = this.scene.background as THREE.Color;
@@ -2294,6 +2439,23 @@ export class TownScene {
         count: this.ambientDust?.count ?? 0,
         drawCalls: this.ambientDust ? 1 : 0,
       },
+      contact: {
+        blobShadows: this.blobShadows.mesh.count,
+        skirts: this.instanceCount('TownContactSkirts'),
+        sunShadow: {
+          enabled: !!sun?.castShadow,
+          mapSize: sun?.shadow.mapSize.x ?? 0,
+          extent: sun?.shadow.camera.right ?? 0,
+        },
+      },
+      dressing: {
+        mood: this.townMood,
+        wearDecals: this.instanceCount('TownWearDecals'),
+        parcelPieces: this.instanceCount('TownParcelBoxes') + this.instanceCount('TownParcelTurned'),
+        windowGlow: this.instanceCount('TownWindowGlowPanes') + this.instanceCount('TownDoorGlowPanes'),
+        lanternBeads: this.instanceCount('TownLanternStringBeads'),
+        lanternLights: this.scene.getObjectByName('TownLanternLights')?.children.length ?? 0,
+      },
       firstClaimGuide: {
         active: this.firstClaimGuideActive,
         done: firstClaimDone(),
@@ -2302,10 +2464,13 @@ export class TownScene {
         flagKey: FIRST_CLAIM_DONE_KEY,
       },
       welcome: this.welcome.snapshot(),
+      frameMs: this.frameStats.snapshot(),
+      renderMs: this.renderStats.snapshot(),
       renderer: {
         calls: this.renderer.info.render.calls,
         geometries: this.renderer.info.memory.geometries,
         textures: this.renderer.info.memory.textures,
+        triangles: this.renderer.info.render.triangles,
       },
       canvas: {
         width: this.canvas.width,
@@ -2475,6 +2640,59 @@ export class TownScene {
     this.scene.add(this.firstClaimGuideGroup);
   }
 
+  // Every standing thing that owns ground: the earned buildings, the two megaprojects once their
+  // site is real, and the era props the plaza accretes. Read-only over layout data — nothing here
+  // moves a position, it only asks where the authored ones are.
+  private contactSkirtPlacements(): SkirtPlacement[] {
+    const placements: SkirtPlacement[] = this.visibleBuildings.map((building) => {
+      const slot = townPlazaSlot(building.id);
+      return {
+        x: building.position.x,
+        z: building.position.z,
+        w: building.footprint.w,
+        d: building.footprint.d,
+        rotation: Math.atan2(slot.approach.x - building.position.x, slot.approach.z - building.position.z),
+      };
+    });
+    if (this.stampMill.visible) {
+      placements.push({ x: STAMP_MILL_TOWN_SITE.x, z: STAMP_MILL_TOWN_SITE.z, w: STAMP_MILL_TOWN_SITE.w, d: STAMP_MILL_TOWN_SITE.d, rotation: 0 });
+    }
+    const dynamoSite = this.dynamoHall.visible ? this.dynamoHall.manifest?.siteFootprint : undefined;
+    if (dynamoSite) placements.push({ x: dynamoSite.x, z: dynamoSite.z, w: dynamoSite.w, d: dynamoSite.d, rotation: 0 });
+    for (const prop of townEraPropsForOrder(this.eraOrder)) {
+      const footprint = townEraPropFootprints[prop.glb];
+      if (!footprint) continue;
+      const size = footprint.kind === 'rect' ? { w: footprint.w, d: footprint.d } : { w: footprint.radius * 2, d: footprint.radius * 2 };
+      placements.push({ x: prop.position.x, z: prop.position.z, w: size.w * prop.scale, d: size.d * prop.scale, rotation: prop.rotation });
+    }
+    return placements;
+  }
+
+  // Only the doorsteps that exist: an approach whose building is still a survey plot has nobody
+  // walking to it, and a wear mark there would be a lie the plaza tells about itself.
+  private wearDecalPlacements(): Array<{ x: number; z: number; radius: number }> {
+    const earned = new Set<string>(this.visibleBuildings.map((building) => building.id));
+    if (this.stampMill.visible) earned.add(STAMP_MILL_ID);
+    return [
+      ...townPlazaLayout.slots.filter((slot) => earned.has(slot.id)).map((slot) => ({ x: slot.approach.x, z: slot.approach.z, radius: 1.6 })),
+      { x: townPlazaLayout.gate.x, z: townPlazaLayout.gate.z, radius: 2.1 },
+      { x: townPlazaLayout.center.x, z: townPlazaLayout.center.z, radius: 2.6 },
+      { x: TAILOR_WAGON_APPROACH.x, z: TAILOR_WAGON_APPROACH.z, radius: 1.15 },
+      ...this.visibleActors.filter((actor) => !actor.loop).map((actor) => ({ x: actor.position.x, z: actor.position.z, radius: 0.9 })),
+    ];
+  }
+
+  // Rebuilt from the live actor list every frame: the cast walks authored loops, so a static
+  // matrix would strand shadows on the plaza while their owners kept walking.
+  private syncBlobShadows(): void {
+    this.blobCasters.length = 0;
+    for (const actor of this.townActors) {
+      this.blobCasters.push({ x: actor.position.x, z: actor.position.z, radius: actor.blobRadius });
+    }
+    this.blobCasters.push({ x: this.hero.group.position.x, z: this.hero.group.position.z, radius: HERO_BLOB_RADIUS });
+    this.blobShadows.sync(this.blobCasters);
+  }
+
   private updateAmbientDust(): void {
     if (!this.ambientDust) return;
     const object = this.ambientDustObject;
@@ -2510,6 +2728,48 @@ export class TownScene {
       dot.scale.setScalar(0.82 + phase * 0.22);
     });
     this.firstClaimPulseRing?.scale.setScalar(1 + phase * 0.08);
+  }
+}
+
+// U1 — THE CAST STOPS HOVERING. Ported from the run's SpriteBlobShadows (LightRig.ts:426): a
+// three.js Sprite is never drawn into the shadow map, so a painted ellipse under the feet is the
+// only contact a billboarded townsperson can have. One instanced mesh, one draw call, every actor
+// plus the player. Lite tier gets it too — it is the biggest thing lite can afford.
+class TownBlobShadows {
+  readonly mesh: THREE.InstancedMesh;
+  private readonly object = new THREE.Object3D();
+
+  constructor(capacity: number, night: boolean) {
+    const material = new THREE.MeshBasicMaterial({
+      color: '#2e1b0e',
+      transparent: true,
+      opacity: night ? 0.28 : 0.18,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
+    });
+    this.mesh = new THREE.InstancedMesh(new THREE.CircleGeometry(1, 24), material, Math.max(1, capacity));
+    this.mesh.name = 'TownCastBlobShadows';
+    this.mesh.frustumCulled = false;
+    this.mesh.renderOrder = RenderLayers.groundShadows;
+    this.mesh.count = 0;
+  }
+
+  sync(casters: readonly { x: number; z: number; radius: number }[]): void {
+    let index = 0;
+    for (const caster of casters) {
+      if (index >= this.mesh.instanceMatrix.count) break;
+      if (caster.radius <= 0) continue;
+      this.object.position.set(caster.x, 0.018, caster.z);
+      this.object.rotation.set(-Math.PI / 2, 0, -0.38);
+      this.object.scale.set(caster.radius, caster.radius * 0.62, 1);
+      this.object.updateMatrix();
+      this.mesh.setMatrixAt(index, this.object.matrix);
+      index += 1;
+    }
+    this.mesh.count = index;
+    this.mesh.instanceMatrix.needsUpdate = true;
   }
 }
 
@@ -2550,10 +2810,10 @@ class TownActorRuntime {
       this.group.add(createPortraitPost(cardSize));
     } else if (definition.id === 'prospector') {
       this.sprite.scale.setScalar(worldHeight);
-      this.sprite.position.y = worldHeight * 0.55 + 0.08;
+      this.sprite.position.y = worldHeight * 0.55 + FEET_CONTACT_Y;
     } else {
       this.sprite.scale.set(worldHeight * 0.42, worldHeight, 1);
-      this.sprite.position.y = worldHeight / 2 + 0.08;
+      this.sprite.position.y = worldHeight / 2 + FEET_CONTACT_Y;
     }
     this.sprite.renderOrder = RenderLayers.companion;
     this.sprite.visible = true;
@@ -2580,6 +2840,13 @@ class TownActorRuntime {
 
   get spriteHeight(): number {
     return this.sprite.scale.y;
+  }
+
+  // Sized off the billboard HEIGHT, not its width: walk-sheet cells carry a lot of empty margin,
+  // so a width-derived ellipse painted a puddle three times wider than the person standing in it.
+  // Height is the metrology the cast is authored against, so a child gets a child's shadow.
+  get blobRadius(): number {
+    return this.definition.fullBody ? this.sprite.scale.y * 0.15 : 0.2;
   }
 
   get frameKey(): string {
@@ -2700,7 +2967,7 @@ class TownActorRuntime {
     this.fitted = true;
     const targetHeight = this.definition.scale * TOWN_CAST_METROLOGY.worldUnitsPerHero;
     this.sprite.scale.set(targetHeight * (width / height), targetHeight, 1);
-    this.sprite.position.y = targetHeight / 2 + 0.08;
+    this.sprite.position.y = targetHeight / 2 + FEET_CONTACT_Y;
   }
 }
 
@@ -3271,6 +3538,515 @@ function createPonyExpressPictogram(): THREE.Mesh {
   return mesh;
 }
 
+// U2c — THE CONTACT SKIRT. A shadow map alone cannot ground a building on every tier: lite has
+// no GLB and the low sun throws its cast shadow away from the camera, leaving the near base
+// hanging. This is the painted pool of occlusion at the foot of a wall — soft-edged, keyed to
+// the footprint, and mounted OUTSIDE the shell group so `shell.visible = false` (the GLB swap,
+// TownTavernPilot.ts:378) can never take it down with the placeholder facade. One instanced mesh.
+type SkirtPlacement = { x: number; z: number; w: number; d: number; rotation: number };
+
+function createContactSkirtTexture(): THREE.CanvasTexture {
+  const size = 128;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, size, size);
+    // Nested rounded rects from the rim inward: a hand-rolled blur, because a canvas filter is
+    // the one step in this file that is not guaranteed on every browser we ship to.
+    const steps = 16;
+    for (let step = 0; step < steps; step += 1) {
+      const t = (step + 1) / steps;
+      const inset = (1 - t) * size * 0.3;
+      ctx.fillStyle = `rgba(46, 27, 14, ${(0.055 * t * t).toFixed(4)})`;
+      roundRect(ctx, inset, inset, size - inset * 2, size - inset * 2, size * 0.18 * t);
+      ctx.fill();
+    }
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createContactSkirts(placements: readonly SkirtPlacement[]): THREE.InstancedMesh {
+  const material = new THREE.MeshBasicMaterial({
+    map: createContactSkirtTexture(),
+    transparent: true,
+    opacity: 0.9,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+  const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1), material, Math.max(1, placements.length));
+  mesh.name = 'TownContactSkirts';
+  mesh.renderOrder = RenderLayers.groundShadows;
+  const object = new THREE.Object3D();
+  placements.forEach((placement, index) => {
+    object.position.set(placement.x, 0.014, placement.z);
+    object.rotation.set(-Math.PI / 2, 0, placement.rotation);
+    object.scale.set(placement.w + SKIRT_MARGIN, placement.d + SKIRT_MARGIN, 1);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = placements.length;
+  return mesh;
+}
+
+// U4 — LIVED-IN PARCELS. Each earned building gets 3-4 pieces of its own trade at its own
+// doorstep, authored in the building's LOCAL frame (+Z is the approach side, +X its right) and
+// transformed by the same yaw the shell uses, so the dressing turns with the building.
+//
+// This is deliberately NOT the plate's decoration yards. The plate GLB already bakes eight
+// audited clusters (artifacts/town-plate-3d/decoration-clearance.json: tavern-workyard,
+// claim-notice-yard, ...) — but they sit 2.7-4u out beside and behind each building, they are
+// invisible on lite because lite has no plate, and none of them is where a player standing at a
+// door actually looks. These hug the walls instead. The door lane (|local x| < 0.6) is left
+// clear so the route stays walkable-looking, nothing extends past 0.45u from the footprint, and
+// no townPropAt/collision entry changes — a keg here is scenery, not a wall.
+type ParcelParts = { wood: BoxPart[]; pale: BoxPart[]; brass: BoxPart[]; barrel: CylinderPart[]; iron: CylinderPart[] };
+
+function parcelDressing(building: TownBuilding, parts: ParcelParts): void {
+  const slot = townPlazaSlot(building.id);
+  const yaw = Math.atan2(slot.approach.x - building.position.x, slot.approach.z - building.position.z);
+  const frame = { position: building.position, rotation: yaw };
+  const halfX = building.footprint.w * 0.5;
+  const front = building.footprint.d * 0.5 + 0.28;
+  const box = (into: BoxPart[], lx: number, y: number, lz: number, sx: number, sy: number, sz: number, spin = 0): void => {
+    const at = localPoint(frame, lx, lz);
+    into.push({ x: at.x, y, z: at.z, sx, sy, sz, rotation: yaw + spin });
+  };
+  const cyl = (into: CylinderPart[], lx: number, y: number, lz: number, radius: number, height: number, tilt = 0, roll = 0): void => {
+    const at = localPoint(frame, lx, lz);
+    into.push({ x: at.x, y, z: at.z, scale: [radius, height, radius], rotation: new THREE.Euler(tilt, yaw, roll) });
+  };
+  const bench = (lx: number, lz: number, spin: number): void => {
+    box(parts.wood, lx, 0.36, lz, 1.1, 0.09, 0.32, spin);
+    box(parts.wood, lx - 0.42, 0.18, lz, 0.09, 0.34, 0.26, spin);
+    box(parts.wood, lx + 0.42, 0.18, lz, 0.09, 0.34, 0.26, spin);
+  };
+
+  if (building.id === 'tavern') {
+    // Hitching rail, two kegs off the porch, and a blank sign plank on its bracket (no letters).
+    box(parts.wood, -halfX + 0.35, 0.42, front - 0.1, 0.1, 0.84, 0.1);
+    box(parts.wood, -halfX + 1.45, 0.42, front - 0.1, 0.1, 0.84, 0.1);
+    box(parts.wood, -halfX + 0.9, 0.74, front - 0.1, 1.24, 0.09, 0.09);
+    cyl(parts.barrel, halfX - 0.55, 0.23, front - 0.2, 0.24, 0.46);
+    cyl(parts.barrel, halfX - 0.18, 0.21, front - 0.55, 0.21, 0.42);
+    box(parts.wood, halfX - 1.25, 1.44, front - 0.3, 0.56, 0.08, 0.08);
+    box(parts.brass, halfX - 1, 1.36, front - 0.3, 0.05, 0.18, 0.05);
+    box(parts.wood, halfX - 1, 1.08, front - 0.3, 0.46, 0.38, 0.06, 0.1);
+    return;
+  }
+  if (building.id === 'claim_office') {
+    // Survey tripod and a bundle of unplanted stakes: the office's whole job in two objects.
+    for (const [tilt, roll] of [[0.22, 0], [-0.11, 0.19], [-0.11, -0.19]] as const) {
+      cyl(parts.iron, -halfX + 0.55, 0.5, front - 0.1, 0.045, 1, tilt, roll);
+    }
+    box(parts.brass, -halfX + 0.55, 1.04, front - 0.1, 0.18, 0.12, 0.18, 0.4);
+    for (const [index, spin] of [0.16, -0.1, 0.05].entries()) {
+      cyl(parts.barrel, halfX - 0.55 + index * 0.1, 0.32, front - 0.3, 0.055, 0.72, 0.26 + spin, spin);
+    }
+    return;
+  }
+  if (building.id === 'general_store') {
+    // Delivery not yet carried in: two crates, a barrel, a slumped sack.
+    box(parts.wood, -halfX + 0.55, 0.24, front - 0.15, 0.52, 0.48, 0.5, 0.1);
+    box(parts.wood, -halfX + 0.5, 0.7, front - 0.2, 0.44, 0.42, 0.42, 0.34);
+    cyl(parts.barrel, halfX - 0.6, 0.31, front - 0.15, 0.28, 0.62);
+    box(parts.pale, halfX - 1.15, 0.18, front - 0.05, 0.46, 0.36, 0.34, -0.4);
+    return;
+  }
+  if (building.id === 'schoolhouse') {
+    bench(-halfX + 0.75, front - 0.05, 0);
+    cyl(parts.barrel, halfX - 0.6, 0.36, front - 0.2, 0.34, 0.06, 1.36);
+    box(parts.pale, halfX - 0.25, 0.28, front - 0.35, 0.42, 0.5, 0.05, 0.25);
+    return;
+  }
+  if (building.id === 'assay_office') {
+    // Ore apron: samples in, proof out. The brass beam is the only metal in the parcel set.
+    box(parts.wood, -halfX + 0.6, 0.24, front - 0.15, 0.5, 0.46, 0.48, 0.12);
+    box(parts.wood, -halfX + 1.15, 0.2, front - 0.28, 0.42, 0.4, 0.4, -0.35);
+    box(parts.wood, halfX - 0.85, 0.22, front - 0.12, 0.72, 0.44, 0.5);
+    box(parts.brass, halfX - 0.85, 0.62, front - 0.12, 0.06, 0.36, 0.06);
+    box(parts.brass, halfX - 0.85, 0.82, front - 0.12, 0.5, 0.05, 0.05);
+    box(parts.brass, halfX - 1.06, 0.73, front - 0.12, 0.2, 0.03, 0.16);
+    box(parts.brass, halfX - 0.64, 0.73, front - 0.12, 0.2, 0.03, 0.16);
+    return;
+  }
+  if (building.id === 'chapel') {
+    bench(-halfX + 0.75, front - 0.05, 0);
+    bench(halfX - 0.75, front - 0.05, 0);
+    // Bell-garden border: five stones set along one side, never across the door lane.
+    for (let index = 0; index < 5; index += 1) {
+      const t = index / 4;
+      cyl(parts.iron, -halfX + 0.3 + t * 1.35, 0.08, front + 0.16 - t * t * 0.24, 0.12, 0.17);
+    }
+  }
+}
+
+// U7 — WARM WINDOWS. Authored per building in its OBJECT frame and mounted outside the shell, so
+// they survive the GLB swap and they never billboard (Mistake #6: world things anchor in their
+// object's frame). Local x is measured from the building's centre, y off the ground, and every
+// card sits a few centimetres proud of the front face. Additive, so they read as light spilling
+// out rather than as paint. Day never builds them.
+const TOWN_WINDOW_GLOW: Record<TownBuildingId, readonly { x: number; y: number; w: number; h: number }[]> = {
+  tavern: [
+    { x: -1.55, y: 1.02, w: 0.5, h: 0.62 },
+    { x: -0.02, y: 1.02, w: 0.5, h: 0.62 },
+    { x: 1.52, y: 1.05, w: 0.5, h: 0.62 },
+    { x: -1.2, y: 2.35, w: 0.42, h: 0.5 },
+    { x: 1.2, y: 2.35, w: 0.42, h: 0.5 },
+  ],
+  general_store: [
+    { x: -1.3, y: 1.06, w: 0.62, h: 0.66 },
+    { x: 1.3, y: 1.06, w: 0.62, h: 0.66 },
+    { x: 0, y: 2.2, w: 0.46, h: 0.46 },
+  ],
+  claim_office: [
+    { x: -1.15, y: 1, w: 0.52, h: 0.6 },
+    { x: 1.15, y: 1, w: 0.52, h: 0.6 },
+  ],
+  assay_office: [
+    { x: -1.2, y: 1.02, w: 0.54, h: 0.58 },
+    { x: 1.24, y: 1.02, w: 0.54, h: 0.58 },
+    { x: 0, y: 2.1, w: 0.4, h: 0.44 },
+  ],
+  schoolhouse: [
+    { x: -1.1, y: 1.04, w: 0.5, h: 0.62 },
+    { x: 1.1, y: 1.04, w: 0.5, h: 0.62 },
+  ],
+  chapel: [
+    { x: 0, y: 1.5, w: 0.46, h: 0.9 },
+    { x: -1.05, y: 1.05, w: 0.34, h: 0.56 },
+    { x: 1.05, y: 1.05, w: 0.34, h: 0.56 },
+  ],
+};
+
+// A hard-edged additive rectangle is a decal, not a light — the first cut pasted pale white
+// cards across facades whose real windows are somewhere else entirely, because these offsets are
+// authored against the FOOTPRINT and the GLB does not have to agree. A soft-edged bloom reads as
+// warmth spilling from inside and forgives the couple of centimetres it is wrong by.
+function createGlowCardTexture(): THREE.CanvasTexture {
+  const size = 96;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, size, size);
+    for (let step = 0; step < 14; step += 1) {
+      const t = (step + 1) / 14;
+      const inset = (1 - t) * size * 0.44;
+      ctx.fillStyle = `rgba(255, 228, 160, ${(0.075 * t * t).toFixed(4)})`;
+      roundRect(ctx, inset, inset, size - inset * 2, size - inset * 2, size * 0.3 * t);
+      ctx.fill();
+    }
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createWindowGlow(buildings: readonly TownBuilding[], mood: TownMoodName): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownWindowGlow';
+  if (mood === 'day') return group;
+  const glowTexture = createGlowCardTexture();
+  const material = new THREE.MeshBasicMaterial({
+    color: '#ffe4a0',
+    map: glowTexture,
+    transparent: true,
+    opacity: mood === 'night' ? 0.62 : 0.44,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+  });
+  const doorMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffca7a',
+    map: glowTexture,
+    transparent: true,
+    opacity: mood === 'night' ? 0.44 : 0.32,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+  });
+  // Instanced, not a mesh per pane: the first cut built ~33 little planes and dusk measured 82
+  // draw calls against day's 45 — sixty of them for light spilling out of six buildings.
+  const windows: THREE.Matrix4[] = [];
+  const doors: THREE.Matrix4[] = [];
+  const object = new THREE.Object3D();
+  for (const building of buildings) {
+    const slot = townPlazaSlot(building.id);
+    const yaw = Math.atan2(slot.approach.x - building.position.x, slot.approach.z - building.position.z);
+    const face = building.footprint.d * 0.5 + 0.06;
+    const place = (local: { x: number; y: number }, width: number, height: number): THREE.Matrix4 => {
+      const at = localPoint({ position: building.position, rotation: yaw }, local.x, face);
+      object.position.set(at.x, local.y, at.z);
+      object.rotation.set(0, yaw, 0);
+      object.scale.set(width, height, 1);
+      object.updateMatrix();
+      return object.matrix.clone();
+    };
+    for (const window of TOWN_WINDOW_GLOW[building.id]) windows.push(place(window, window.w * 1.5, window.h * 1.4));
+    // The doorway spills onto the porch, wider and dimmer than a window.
+    doors.push(place({ x: 0, y: 0.66 }, 1.3, 1.5));
+  }
+  for (const [name, matrices, glowMaterial] of [
+    ['TownWindowGlowPanes', windows, material],
+    ['TownDoorGlowPanes', doors, doorMaterial],
+  ] as const) {
+    const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1), glowMaterial, Math.max(1, matrices.length));
+    mesh.name = name;
+    mesh.renderOrder = RenderLayers.gameplayFade;
+    matrices.forEach((matrix, index) => mesh.setMatrixAt(index, matrix));
+    mesh.count = matrices.length;
+    group.add(mesh);
+  }
+  return group;
+}
+
+// U8 — LANTERN STRINGS. Runs strung between lantern posts the layout already authored: the gate
+// span a visitor walks under, and the two trail spans that close the top of the square. Sim-inert
+// and hung at 2.5u minimum, so nothing can walk into one. The cord is one instanced mesh of short
+// segments rather than three tube meshes — same silhouette, a third of the draw calls.
+const TOWN_LANTERN_RUNS: readonly (readonly [string, string])[] = [
+  ['lantern-gate-west', 'lantern-gate-east'],
+  ['lantern-tavern-trail', 'lantern-store-trail'],
+  ['lantern-store-trail', 'lantern-claim-trail'],
+];
+const LANTERN_RUN_HEIGHT = 2.9;
+const LANTERN_RUN_SAG = 0.4;
+const LANTERN_RUN_BEADS = 6;
+
+function lanternRunPoints(): Array<{ from: THREE.Vector3; to: THREE.Vector3 }> {
+  const posts = new Map(townPropRing.props.filter((prop) => prop.kind === 'lantern_post').map((prop) => [prop.id, prop]));
+  return TOWN_LANTERN_RUNS.flatMap(([fromId, toId]) => {
+    const from = posts.get(fromId);
+    const to = posts.get(toId);
+    if (!from || !to) return [];
+    return [{
+      from: new THREE.Vector3(from.position.x, LANTERN_RUN_HEIGHT, from.position.z),
+      to: new THREE.Vector3(to.position.x, LANTERN_RUN_HEIGHT, to.position.z),
+    }];
+  });
+}
+
+function catenaryAt(from: THREE.Vector3, to: THREE.Vector3, t: number, out: THREE.Vector3): THREE.Vector3 {
+  return out.lerpVectors(from, to, t).setY(LANTERN_RUN_HEIGHT - LANTERN_RUN_SAG * 4 * t * (1 - t));
+}
+
+function createLanternStrings(mood: TownMoodName, eraOrder: number): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownLanternStrings';
+  const runs = lanternRunPoints();
+  if (!runs.length) return group;
+  const segmentsPerRun = 14;
+  const cord = new THREE.InstancedMesh(
+    new THREE.CylinderGeometry(1, 1, 1, 5),
+    new THREE.MeshStandardMaterial({ color: '#3b2416', roughness: 0.88, metalness: 0.04 }),
+    runs.length * segmentsPerRun,
+  );
+  cord.name = 'TownLanternCord';
+  const beadPositions: THREE.Vector3[] = [];
+  const object = new THREE.Object3D();
+  const head = new THREE.Vector3();
+  const tail = new THREE.Vector3();
+  const middle = new THREE.Vector3();
+  let index = 0;
+  for (const run of runs) {
+    for (let step = 0; step < segmentsPerRun; step += 1) {
+      catenaryAt(run.from, run.to, step / segmentsPerRun, head);
+      catenaryAt(run.from, run.to, (step + 1) / segmentsPerRun, tail);
+      middle.addVectors(head, tail).multiplyScalar(0.5);
+      object.position.copy(middle);
+      object.scale.set(0.022, head.distanceTo(tail) * 1.02, 0.022);
+      object.quaternion.setFromUnitVectors(UP, tail.clone().sub(head).normalize());
+      object.updateMatrix();
+      cord.setMatrixAt(index++, object.matrix);
+    }
+    for (let bead = 0; bead < LANTERN_RUN_BEADS; bead += 1) {
+      beadPositions.push(catenaryAt(run.from, run.to, (bead + 0.5) / LANTERN_RUN_BEADS, new THREE.Vector3()).clone().setY(
+        catenaryAt(run.from, run.to, (bead + 0.5) / LANTERN_RUN_BEADS, middle).y - 0.13,
+      ));
+    }
+  }
+  cord.count = index;
+  cord.castShadow = mood === 'day';
+  group.add(cord, createLanternBeads(beadPositions, mood, townEraAccent(eraOrder)));
+  return group;
+}
+
+// Not createLanternGlow: that mesh is sized for a post-top lamp (0.18 sphere, 1.35x at night) and
+// strung eighteen-up across a plaza it read as a row of golf balls. A bead is a bead.
+function createLanternBeads(
+  positions: readonly THREE.Vector3[],
+  mood: TownMoodName,
+  accent: { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number },
+): THREE.InstancedMesh {
+  const lit = mood !== 'day';
+  const mesh = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(0.075, 10, 7),
+    new THREE.MeshBasicMaterial({
+      color: lit ? accent.lanternNightGlass : accent.lanternGlass,
+      transparent: true,
+      opacity: lit ? 0.92 : Math.min(0.55, accent.lanternOpacity + 0.1),
+      depthWrite: false,
+      ...(lit ? { blending: THREE.AdditiveBlending } : {}),
+    }),
+    Math.max(1, positions.length),
+  );
+  mesh.name = 'TownLanternStringBeads';
+  const object = new THREE.Object3D();
+  positions.forEach((position, index) => {
+    object.position.copy(position);
+    object.scale.setScalar(lit ? 1.25 : 1);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = positions.length;
+  mesh.renderOrder = RenderLayers.worldUi;
+  return mesh;
+}
+
+// Real light, capped. Six PointLights at most, distance-bounded, no shadow maps: enough to make
+// the lantern posts and the strings mean something after sundown without opening a night-lighting
+// budget. Run midpoints are lit first — a lit string with a dark middle is worse than no string.
+function createLanternLights(mood: TownMoodName): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownLanternLights';
+  if (mood === 'day') return group;
+  const midpoints = lanternRunPoints().map((run, index) => ({
+    id: `run-${index}`,
+    at: new THREE.Vector3().lerpVectors(run.from, run.to, 0.5).setY(LANTERN_RUN_HEIGHT - LANTERN_RUN_SAG),
+  }));
+  const posts = townPropRing.props
+    .filter((prop) => prop.kind === 'lantern_post')
+    .map((prop) => ({ id: prop.id, at: new THREE.Vector3(prop.position.x, 1.5 * (prop.scale ?? 1), prop.position.z) }));
+  for (const source of [...midpoints, ...posts].slice(0, TOWN_LANTERN_LIGHT_CAP)) {
+    const light = new THREE.PointLight(mood === 'night' ? '#ffd28a' : '#ffb672', mood === 'night' ? 2.6 : 1.9, 7.2, 2);
+    light.name = `TownLanternLight:${source.id}`;
+    light.castShadow = false;
+    light.position.copy(source.at);
+    group.add(light);
+  }
+  return group;
+}
+
+function createParcelDressing(buildings: readonly TownBuilding[]): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownParcelDressing';
+  const parts: ParcelParts = { wood: [], pale: [], brass: [], barrel: [], iron: [] };
+  for (const building of buildings) parcelDressing(building, parts);
+  // Five palettes, but only TWO meshes: instanceColor tints each piece off one white material.
+  // Every mesh here is drawn twice (colour pass + shadow pass), so five meshes would have cost
+  // ten draw calls for forty small boxes — the whole point of instancing, thrown away.
+  const meshes = [
+    tintedInstances(
+      'TownParcelBoxes',
+      new THREE.BoxGeometry(1, 1, 1),
+      new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.84, metalness: 0.03 }),
+      [
+        ...parts.wood.map((part) => ({ part, colour: '#7a5132' })),
+        ...parts.pale.map((part) => ({ part, colour: '#e8d5a8' })),
+        ...parts.brass.map((part) => ({ part, colour: '#c4883a' })),
+      ],
+    ),
+    tintedInstances(
+      'TownParcelTurned',
+      new THREE.CylinderGeometry(1, 1, 1, 12),
+      new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.82, metalness: 0.03 }),
+      [
+        ...parts.barrel.map((part) => ({ part, colour: '#8b6c3f' })),
+        ...parts.iron.map((part) => ({ part, colour: '#5f4930' })),
+      ],
+    ),
+  ];
+  for (const mesh of meshes) {
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    group.add(mesh);
+  }
+  return group;
+}
+
+function tintedInstances(
+  name: string,
+  geometry: THREE.BufferGeometry,
+  material: THREE.Material,
+  entries: readonly { part: BoxPart | CylinderPart; colour: string }[],
+): THREE.InstancedMesh {
+  const mesh = new THREE.InstancedMesh(geometry, material, Math.max(1, entries.length));
+  mesh.name = name;
+  const object = new THREE.Object3D();
+  const colour = new THREE.Color();
+  entries.forEach(({ part, colour: hex }, index) => {
+    object.position.set(part.x, part.y, part.z);
+    if ('scale' in part) {
+      object.rotation.copy(part.rotation);
+      object.scale.set(...part.scale);
+    } else {
+      object.rotation.set(0, part.rotation ?? 0, 0);
+      object.scale.set(part.sx, part.sy, part.sz);
+    }
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+    // No convertSRGBToLinear here: three.js colour management already converts a hex string into
+    // the working space on Color.set. Doing it twice cubed the darkness and painted every crate,
+    // keg and stake in the town flat black — visible in reviews/shots-beauty-town/u4 history.
+    mesh.setColorAt(index, colour.set(hex));
+  });
+  mesh.count = entries.length;
+  return mesh;
+}
+
+// U3b — WEAR THE PLATE CANNOT CARRY. The painted ground above is only ever seen on lite and the
+// 2D fallback: when the plate GLB loads it hides TownSquareGround entirely, and the plate's road
+// wear is baked and untouchable. These are the dwell marks — doorstep aprons, the gate mouth, the
+// monument ring — laid over whichever ground is underneath. One instanced mesh, ~11 quads.
+function createWearDecalTexture(): THREE.CanvasTexture {
+  const size = 256;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    const rng = mulberry32(0x77_65_61_72);
+    ctx.clearRect(0, 0, size, size);
+    wearBlotch(ctx, size / 2, size / 2, size * 0.46, 0.62, rng);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createWearDecals(placements: readonly { x: number; z: number; radius: number }[]): THREE.InstancedMesh {
+  const material = new THREE.MeshBasicMaterial({
+    map: createWearDecalTexture(),
+    transparent: true,
+    opacity: 0.82,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+  const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1), material, Math.max(1, placements.length));
+  mesh.name = 'TownWearDecals';
+  mesh.renderOrder = RenderLayers.groundDecals;
+  const object = new THREE.Object3D();
+  const rng = mulberry32(0x64_65_63_01);
+  placements.forEach((placement, index) => {
+    object.position.set(placement.x, 0.015, placement.z);
+    object.rotation.set(-Math.PI / 2, 0, rng() * Math.PI * 2);
+    object.scale.set(placement.radius * 2, placement.radius * 2 * (0.82 + rng() * 0.3), 1);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = placements.length;
+  return mesh;
+}
+
 function createShell(building: TownBuilding): THREE.Group {
   const group = new THREE.Group();
   group.name = `TownShell:${building.id}`;
@@ -3338,7 +4114,35 @@ function createShell(building: TownBuilding): THREE.Group {
   cap.position.set(0, 1.58, halfZ - 0.02);
   cap.castShadow = true;
 
-  shell.add(base, ao, back, left, right, porch, front, cap);
+  // U5 — CLOSE THE CRATE. The lite shell was four walls and a painted front card with nothing on
+  // top: at the zoom the town now reaches, a player looked straight down into an empty box. This
+  // is the boomtown answer — a flat roof deck behind the false front, with a ridge beam for a
+  // silhouette. Lite is the roughest first impression we ship; it should at least be a building.
+  // A flat deck was the first try and it read as a table-top behind a billboard: every painted
+  // facade in the set depicts a PITCHED roof, so the lite shell now pitches too — two slopes
+  // meeting at a ridge just above the walls, eaves landing on them.
+  const eaveY = 1.5;
+  const ridgeY = 1.92;
+  const slopeDepth = Math.hypot(halfZ, ridgeY - eaveY) + 0.06;
+  const roofs = [-1, 1].map((side) => {
+    const slope = new THREE.Mesh(new THREE.BoxGeometry(building.footprint.w + 0.22, 0.1, slopeDepth), trimMaterial);
+    slope.name = `TownFacadeRoof:${building.id}:${side < 0 ? 'back' : 'front'}`;
+    slope.position.set(0, (eaveY + ridgeY) / 2, side * halfZ * 0.5);
+    slope.rotation.x = side * Math.atan2(ridgeY - eaveY, halfZ);
+    slope.castShadow = true;
+    slope.receiveShadow = true;
+    return slope;
+  });
+
+  const ridge = new THREE.Mesh(
+    new THREE.BoxGeometry(building.footprint.w + 0.26, 0.12, 0.18),
+    new THREE.MeshStandardMaterial({ color: building.accent, roughness: 0.8, metalness: 0.02 }),
+  );
+  ridge.name = `TownFacadeRidge:${building.id}`;
+  ridge.position.set(0, ridgeY + 0.02, 0);
+  ridge.castShadow = true;
+
+  shell.add(base, ao, back, left, right, porch, front, cap, ...roofs, ridge);
   group.add(shell);
   return group;
 }
@@ -3387,7 +4191,10 @@ function loadTownFacadeTexture(facade: { key: string; url: string }): Promise<TH
       facade.url,
       (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;
-        texture.anisotropy = 4;
+        // U5: 8x on full/balanced, 4 kept on lite. The facade planks are read at 0.36 framing now.
+        texture.anisotropy = performanceTierDiagnostics().tier === 'lite' ? 4 : 8;
+        texture.minFilter = THREE.LinearMipmapLinearFilter;
+        texture.generateMipmaps = true;
         resolve(texture);
       },
       undefined,
@@ -3498,7 +4305,9 @@ function stampMillPlaqueLines(manifest: MegaprojectManifest, project: Megaprojec
 }
 
 function createGroundTexture(): THREE.CanvasTexture {
-  const size = 1024;
+  // 2048: at 1024 the plate was ~34px per world unit, and the new zoom reaches 0.36 — the wear
+  // was mush before a player ever got close enough to read it.
+  const size = 2048;
   const canvas = document.createElement('canvas');
   canvas.width = size;
   canvas.height = size;
@@ -3515,51 +4324,209 @@ function createGroundTexture(): THREE.CanvasTexture {
     ctx.fillRect(0, 0, size, size);
 
     ctx.fillStyle = 'rgba(196, 136, 58, 0.16)';
-    for (let i = 0; i < 1_800; i += 1) {
+    for (let i = 0; i < 7_200; i += 1) {
       const x = (i * 71) % size;
       const y = (i * 149) % size;
-      ctx.fillRect(x, y, i % 5 === 0 ? 2 : 1, 1);
+      ctx.fillRect(x, y, i % 5 === 0 ? 3 : 2, 2);
     }
 
+    const rng = mulberry32(0x70_77_6e_01);
+    const px = size / (TOWN_HALF * 2);
     const point = ({ x, z }: { x: number; z: number }) => ({
       x: ((x + TOWN_HALF) / (TOWN_HALF * 2)) * size,
       y: ((TOWN_HALF - z) / (TOWN_HALF * 2)) * size,
     });
-    const center = point(townPlazaLayout.center);
-    const trails = [...townPlazaLayout.slots.map((slot) => slot.approach), townPlazaLayout.gate];
-    for (const [index, destination] of trails.entries()) {
-      const end = point(destination);
-      const dx = end.x - center.x;
-      const dy = end.y - center.y;
-      const length = Math.max(1, Math.hypot(dx, dy));
-      const ox = (-dy / length) * 5.5;
-      const oy = (dx / length) * 5.5;
-      const bend = (index % 2 === 0 ? 1 : -1) * 10;
-      ctx.strokeStyle = 'rgba(93, 57, 31, 0.2)';
-      ctx.lineWidth = 3.2;
-      ctx.lineCap = 'round';
+    // WHERE FEET GO, not where a draughtsman would put a road. The wear follows the authored
+    // trail curves (townTrailLayout) and the cast's walking loops, in three layers: a wide
+    // compaction band, two dashed wheel ruts, and scattered kicked grit at the edges. The old
+    // ground drew two clean parallel quadratics per spoke — perfectly regular, perfectly dead.
+    for (const route of [...townTrailLayout.radial, townTrailLayout.ringRoad]) {
+      const path = route.points.map(point);
+      const ring = route.id === townTrailLayout.ringRoad.id;
+      wearBand(ctx, path, { width: (ring ? 0.72 : 0.95) * px, alpha: ring ? 0.09 : 0.13, rng, jitter: 0.42 * px });
       for (const side of [-1, 1]) {
-        ctx.beginPath();
-        ctx.moveTo(center.x + ox * side, center.y + oy * side);
-        ctx.quadraticCurveTo((center.x + end.x) / 2 + ox * side + bend, (center.y + end.y) / 2 + oy * side - bend * 0.35, end.x + ox * side, end.y + oy * side);
-        ctx.stroke();
+        wearRut(ctx, path, {
+          offset: side * (ring ? 0.3 : 0.42) * px,
+          width: 0.12 * px,
+          alpha: ring ? 0.07 : 0.11,
+          rng,
+        });
       }
+      wearGrit(ctx, path, { spread: (ring ? 0.9 : 1.2) * px, count: ring ? 150 : 90, rng });
     }
 
-    ctx.strokeStyle = 'rgba(93, 57, 31, 0.16)';
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.arc(center.x, center.y, (8 / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
-    ctx.stroke();
-    ctx.strokeStyle = 'rgba(255, 235, 180, 0.4)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.arc(center.x, center.y, (townPlazaLayout.clearRadius / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
-    ctx.stroke();
+    // Trampled aprons: the doorsteps, the gate, the monument, and every spot a townsperson
+    // stands all day. These are dwell points, so the compaction is a blotch, not a stripe.
+    const aprons: Array<{ at: { x: number; z: number }; radius: number; alpha: number }> = [
+      ...townPlazaLayout.slots.map((slot) => ({ at: slot.approach, radius: 1.5, alpha: 0.14 })),
+      { at: townPlazaLayout.gate, radius: 1.9, alpha: 0.13 },
+      { at: townPlazaLayout.center, radius: 2.5, alpha: 0.09 },
+      ...TOWN_ACTORS.filter((actor) => !actor.loop).map((actor) => ({ at: actor.position, radius: 0.85, alpha: 0.12 })),
+    ];
+    for (const apron of aprons) {
+      const at = point(apron.at);
+      wearBlotch(ctx, at.x, at.y, apron.radius * px, apron.alpha, rng);
+    }
+
+    // The plaza still reads as swept — but as a worn rim, not a drafted circle.
+    wearRing(ctx, point(townPlazaLayout.center), townPlazaLayout.clearRadius * px, rng);
   }
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 8;
   return texture;
+}
+
+// A deterministic stream, so the ground is the same grit on every boot and every screenshot
+// board compares like with like (the run rigs use the same generator, e2e/charter-press.rig.ts).
+function mulberry32(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+type WearPoint = { x: number; y: number };
+
+function strokeAlong(ctx: CanvasRenderingContext2D, path: readonly WearPoint[], offset = 0, jitter = 0, rng?: () => number): void {
+  const shifted = path.map((current, index) => {
+    const previous = path[Math.max(0, index - 1)]!;
+    const next = path[Math.min(path.length - 1, index + 1)]!;
+    const dx = next.x - previous.x;
+    const dy = next.y - previous.y;
+    const length = Math.max(1, Math.hypot(dx, dy));
+    const wobble = rng && jitter ? (rng() - 0.5) * 2 * jitter : 0;
+    return { x: current.x + (-dy / length) * (offset + wobble), y: current.y + (dx / length) * (offset + wobble) };
+  });
+  ctx.beginPath();
+  ctx.moveTo(shifted[0]!.x, shifted[0]!.y);
+  for (let index = 1; index < shifted.length - 1; index += 1) {
+    const current = shifted[index]!;
+    const next = shifted[index + 1]!;
+    ctx.quadraticCurveTo(current.x, current.y, (current.x + next.x) / 2, (current.y + next.y) / 2);
+  }
+  ctx.lineTo(shifted[shifted.length - 1]!.x, shifted[shifted.length - 1]!.y);
+  ctx.stroke();
+}
+
+function wearBand(ctx: CanvasRenderingContext2D, path: readonly WearPoint[], options: { width: number; alpha: number; rng: () => number; jitter: number }): void {
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.setLineDash([]);
+  // Three passes from soft-and-wide to tight-and-dark: compacted earth has no single edge.
+  for (const [widthMul, alphaMul] of [[1.9, 0.34], [1.25, 0.55], [0.7, 1]] as const) {
+    ctx.strokeStyle = `rgba(93, 57, 31, ${(options.alpha * alphaMul).toFixed(3)})`;
+    ctx.lineWidth = options.width * widthMul;
+    strokeAlong(ctx, path, 0, options.jitter, options.rng);
+  }
+  ctx.restore();
+}
+
+function wearRut(ctx: CanvasRenderingContext2D, path: readonly WearPoint[], options: { offset: number; width: number; alpha: number; rng: () => number }): void {
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = `rgba(74, 42, 23, ${options.alpha.toFixed(3)})`;
+  ctx.lineWidth = options.width;
+  // Dashed, never a drafted line: a rut is where a wheel bit, and a wheel does not bite evenly.
+  ctx.setLineDash([options.width * 5 + options.rng() * 40, options.width * 3 + options.rng() * 26]);
+  ctx.lineDashOffset = options.rng() * 60;
+  strokeAlong(ctx, path, options.offset, options.width * 0.9, options.rng);
+  ctx.restore();
+}
+
+function wearGrit(ctx: CanvasRenderingContext2D, path: readonly WearPoint[], options: { spread: number; count: number; rng: () => number }): void {
+  ctx.save();
+  for (let index = 0; index < options.count; index += 1) {
+    const t = options.rng() * (path.length - 1);
+    const from = path[Math.floor(t)]!;
+    const to = path[Math.min(path.length - 1, Math.floor(t) + 1)]!;
+    const mix = t - Math.floor(t);
+    const side = options.rng() < 0.5 ? -1 : 1;
+    const distance = (0.55 + options.rng() * 0.75) * options.spread * side;
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+    const length = Math.max(1, Math.hypot(dx, dy));
+    const x = from.x + dx * mix + (-dy / length) * distance;
+    const y = from.y + dy * mix + (dx / length) * distance;
+    ctx.fillStyle = options.rng() < 0.62 ? 'rgba(93, 57, 31, 0.16)' : 'rgba(255, 235, 180, 0.2)';
+    const radius = 1 + options.rng() * 3.2;
+    ctx.beginPath();
+    ctx.ellipse(x, y, radius, radius * (0.5 + options.rng() * 0.6), options.rng() * Math.PI, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function wearBlotch(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, alpha: number, rng: () => number): void {
+  const gradient = ctx.createRadialGradient(x, y, radius * 0.15, x, y, radius);
+  gradient.addColorStop(0, `rgba(93, 57, 31, ${alpha.toFixed(3)})`);
+  gradient.addColorStop(0.55, `rgba(93, 57, 31, ${(alpha * 0.55).toFixed(3)})`);
+  gradient.addColorStop(1, 'rgba(93, 57, 31, 0)');
+  ctx.fillStyle = gradient;
+  ctx.beginPath();
+  ctx.ellipse(x, y, radius * (0.85 + rng() * 0.3), radius * (0.7 + rng() * 0.35), rng() * Math.PI, 0, Math.PI * 2);
+  ctx.fill();
+  // Scuffs: the individual boot-marks that keep the blotch from reading as an airbrush.
+  for (let index = 0; index < 26; index += 1) {
+    const angle = rng() * Math.PI * 2;
+    const distance = Math.sqrt(rng()) * radius * 0.95;
+    ctx.fillStyle = `rgba(74, 42, 23, ${(alpha * (0.3 + rng() * 0.5)).toFixed(3)})`;
+    ctx.beginPath();
+    ctx.ellipse(x + Math.cos(angle) * distance, y + Math.sin(angle) * distance, 2 + rng() * 4, 1.5 + rng() * 2.5, rng() * Math.PI, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function wearRing(ctx: CanvasRenderingContext2D, center: WearPoint, radius: number, rng: () => number): void {
+  ctx.save();
+  ctx.lineCap = 'round';
+  for (const [radiusMul, width, colour] of [[1, 9, 'rgba(93, 57, 31, 0.1)'], [1.02, 3, 'rgba(255, 235, 180, 0.22)']] as const) {
+    ctx.strokeStyle = colour;
+    ctx.lineWidth = width;
+    ctx.setLineDash([26 + rng() * 90, 14 + rng() * 40]);
+    ctx.lineDashOffset = rng() * 100;
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, radius * radiusMul, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// U6 — THE HORIZON THE CAMERA CANNOT SEE (kept as the record of a REVERT, not a leftover).
+// The brief asked for a gradient sky dome and a fog-matched dune ring at r30-45 to kill the
+// tabletop read. Both were built, shipped into the scene, and measured: +3 draw calls, +912
+// triangles, and not one pixel on screen at any framing the town allows.
+//
+// The geometry says why. Balance.camera.offset (0, 26.2, 18.3) over town scale 1.5 puts the
+// camera 17.5u up and 12.2u back; at fov 42 the TOP edge of the frame is 34.1 degrees below
+// horizontal, so the farthest ground any frame can contain is 25.8u from the camera — about
+// 15u past the hero at the widest allowed zoom (1.1). The plate ends at 15u. A vista at 33-44u
+// is off-frame by construction, and so is the horizon itself; three framings (default, widest,
+// mobile portrait) confirmed it with ground running to every frame edge.
+//
+// A visible horizon is therefore a CAMERA-PITCH decision, not a scenery one — and the brief's
+// own don'ts put zoom clamps and default framing on the owner's desk (F-1203-2). The sky and
+// ring were reverted; what stayed from U6 is the late-afternoon sun, which does reach the
+// screen. The palette below is what survives: it feeds the fog and background in one place.
+type TownMoodName = 'day' | 'dusk' | 'night';
+type TownMoodPalette = {
+  zenith: string;
+  band: string;
+  horizon: string;
+  ridge: string;
+  dune: string;
+};
+
+function readTownMood(): TownMoodName {
+  const search = new URLSearchParams(window.location.search);
+  if (search.has('townNight')) return 'night';
+  if (search.has('townDusk')) return 'dusk';
+  return 'day';
 }
 
 function createAmbientDust(tier: PerformanceTier, night: boolean): THREE.InstancedMesh | null {
