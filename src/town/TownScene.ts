@@ -123,6 +123,10 @@ const TOWN_ZOOM_MIN = 0.36;
 const TOWN_ZOOM_DEFAULT = 0.85;
 const TOWN_ZOOM_MAX = 1.1;
 const TOWN_HALF = 15;
+// Half-extent of the sun's shadow frustum: the 30x30 plate plus a margin for the gate wagons.
+const TOWN_SHADOW_EXTENT = 17;
+// How far the contact skirt spills past a footprint, total across both sides.
+const SKIRT_MARGIN = 1.5;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 2);
 const TAVERN_DOOR = new THREE.Vector3(townPlazaSlot('tavern').approach.x, 0.08, townPlazaSlot('tavern').approach.z);
@@ -292,6 +296,12 @@ export type TownDiagnostics = {
     sign: 'asset' | 'placeholder';
   };
   ambientDust: { enabled: boolean; tier: PerformanceTier; count: number; drawCalls: number };
+  // U1/U2 ground-contact door: what a plain boot can prove without ?debug (Mistake #10).
+  contact: {
+    blobShadows: number;
+    skirts: number;
+    sunShadow: { enabled: boolean; mapSize: number; extent: number };
+  };
   firstClaimGuide: {
     active: boolean;
     done: boolean;
@@ -671,6 +681,7 @@ export class TownScene {
     for (const building of this.visibleBuildings) {
       this.scene.add(createShell(building));
     }
+    this.scene.add(createContactSkirts(this.contactSkirtPlacements()));
     for (const building of townBuildings) {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
@@ -766,7 +777,23 @@ export class TownScene {
     sun.name = 'TownSun';
     sun.position.set(-22, 18, -18);
     sun.castShadow = true;
-    this.scene.add(fill, sun);
+    // U2 — THE SHADOW CAMERA WAS NEVER AIMED. castShadow has been true since the town shipped,
+    // but three.js defaults a directional shadow camera to a +/-5 frustum: a 10x10 patch of a
+    // 30x30 town. Everything outside the plaza centre cast nothing, which is why nine handsome
+    // buildings all floated. +/-17 covers the whole plate with the map size the tier can afford.
+    sun.shadow.camera.left = -TOWN_SHADOW_EXTENT;
+    sun.shadow.camera.right = TOWN_SHADOW_EXTENT;
+    sun.shadow.camera.top = TOWN_SHADOW_EXTENT;
+    sun.shadow.camera.bottom = -TOWN_SHADOW_EXTENT;
+    sun.shadow.camera.near = 2;
+    sun.shadow.camera.far = 70;
+    const mapSize = this.performanceTier === 'full' ? 1536 : 1024;
+    sun.shadow.mapSize.set(mapSize, mapSize);
+    sun.shadow.bias = -0.0004;
+    sun.shadow.normalBias = 0.022;
+    sun.shadow.radius = 2;
+    sun.target.position.set(0, 0, 0);
+    this.scene.add(fill, sun, sun.target);
   }
 
   private createStampMillVignette(): void {
@@ -2351,6 +2378,15 @@ export class TownScene {
         count: this.ambientDust?.count ?? 0,
         drawCalls: this.ambientDust ? 1 : 0,
       },
+      contact: {
+        blobShadows: this.blobShadows.mesh.count,
+        skirts: (this.scene.getObjectByName('TownContactSkirts') as THREE.InstancedMesh | undefined)?.count ?? 0,
+        sunShadow: {
+          enabled: !!sun?.castShadow,
+          mapSize: sun?.shadow.mapSize.x ?? 0,
+          extent: sun?.shadow.camera.right ?? 0,
+        },
+      },
       firstClaimGuide: {
         active: this.firstClaimGuideActive,
         done: firstClaimDone(),
@@ -2533,6 +2569,34 @@ export class TownScene {
     this.firstClaimPulseRing = ring;
     this.firstClaimGuideGroup.add(ring);
     this.scene.add(this.firstClaimGuideGroup);
+  }
+
+  // Every standing thing that owns ground: the earned buildings, the two megaprojects once their
+  // site is real, and the era props the plaza accretes. Read-only over layout data — nothing here
+  // moves a position, it only asks where the authored ones are.
+  private contactSkirtPlacements(): SkirtPlacement[] {
+    const placements: SkirtPlacement[] = this.visibleBuildings.map((building) => {
+      const slot = townPlazaSlot(building.id);
+      return {
+        x: building.position.x,
+        z: building.position.z,
+        w: building.footprint.w,
+        d: building.footprint.d,
+        rotation: Math.atan2(slot.approach.x - building.position.x, slot.approach.z - building.position.z),
+      };
+    });
+    if (this.stampMill.visible) {
+      placements.push({ x: STAMP_MILL_TOWN_SITE.x, z: STAMP_MILL_TOWN_SITE.z, w: STAMP_MILL_TOWN_SITE.w, d: STAMP_MILL_TOWN_SITE.d, rotation: 0 });
+    }
+    const dynamoSite = this.dynamoHall.visible ? this.dynamoHall.manifest?.siteFootprint : undefined;
+    if (dynamoSite) placements.push({ x: dynamoSite.x, z: dynamoSite.z, w: dynamoSite.w, d: dynamoSite.d, rotation: 0 });
+    for (const prop of townEraPropsForOrder(this.eraOrder)) {
+      const footprint = townEraPropFootprints[prop.glb];
+      if (!footprint) continue;
+      const size = footprint.kind === 'rect' ? { w: footprint.w, d: footprint.d } : { w: footprint.radius * 2, d: footprint.radius * 2 };
+      placements.push({ x: prop.position.x, z: prop.position.z, w: size.w * prop.scale, d: size.d * prop.scale, rotation: prop.rotation });
+    }
+    return placements;
   }
 
   // Rebuilt from the live actor list every frame: the cast walks authored loops, so a static
@@ -3388,6 +3452,62 @@ function createPonyExpressPictogram(): THREE.Mesh {
     new THREE.MeshBasicMaterial({ map: texture, transparent: true, alphaTest: 0.04, depthWrite: false, side: THREE.DoubleSide }),
   );
   mesh.renderOrder = RenderLayers.worldUi;
+  return mesh;
+}
+
+// U2c — THE CONTACT SKIRT. A shadow map alone cannot ground a building on every tier: lite has
+// no GLB and the low sun throws its cast shadow away from the camera, leaving the near base
+// hanging. This is the painted pool of occlusion at the foot of a wall — soft-edged, keyed to
+// the footprint, and mounted OUTSIDE the shell group so `shell.visible = false` (the GLB swap,
+// TownTavernPilot.ts:378) can never take it down with the placeholder facade. One instanced mesh.
+type SkirtPlacement = { x: number; z: number; w: number; d: number; rotation: number };
+
+function createContactSkirtTexture(): THREE.CanvasTexture {
+  const size = 128;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, size, size);
+    // Nested rounded rects from the rim inward: a hand-rolled blur, because a canvas filter is
+    // the one step in this file that is not guaranteed on every browser we ship to.
+    const steps = 16;
+    for (let step = 0; step < steps; step += 1) {
+      const t = (step + 1) / steps;
+      const inset = (1 - t) * size * 0.3;
+      ctx.fillStyle = `rgba(46, 27, 14, ${(0.055 * t * t).toFixed(4)})`;
+      roundRect(ctx, inset, inset, size - inset * 2, size - inset * 2, size * 0.18 * t);
+      ctx.fill();
+    }
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+function createContactSkirts(placements: readonly SkirtPlacement[]): THREE.InstancedMesh {
+  const material = new THREE.MeshBasicMaterial({
+    map: createContactSkirtTexture(),
+    transparent: true,
+    opacity: 0.9,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+  const mesh = new THREE.InstancedMesh(new THREE.PlaneGeometry(1, 1), material, Math.max(1, placements.length));
+  mesh.name = 'TownContactSkirts';
+  mesh.renderOrder = RenderLayers.groundShadows;
+  const object = new THREE.Object3D();
+  placements.forEach((placement, index) => {
+    object.position.set(placement.x, 0.014, placement.z);
+    object.rotation.set(-Math.PI / 2, 0, placement.rotation);
+    object.scale.set(placement.w + SKIRT_MARGIN, placement.d + SKIRT_MARGIN, 1);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = placements.length;
   return mesh;
 }
 

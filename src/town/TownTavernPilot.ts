@@ -272,7 +272,11 @@ function clearBuildingOrientation(canvas: HTMLCanvasElement, id: keyof typeof MO
   canvas.dataset.town3dPilotBuildingOrientations = JSON.stringify(orientations);
 }
 
-function inspect(model: THREE.Object3D, runtimeEmissive = true): {
+// U2 — `castShadow` used to be hard-false here, so the GLB town had zero ground contact even
+// after the sun's shadow camera was aimed. The pilots only ever install on full/balanced tiers
+// (TownScene gates the dynamic import on pilotLite), so switching the default on is already
+// tier-gated. The town PLATE opts out: a 30x30 ground slab casting into itself is pure acne.
+function inspect(model: THREE.Object3D, runtimeEmissive = true, castShadow = true): {
   meshes: number;
   triangles: number;
   materials: number;
@@ -295,7 +299,7 @@ function inspect(model: THREE.Object3D, runtimeEmissive = true): {
     const geometry = mesh.geometry;
     triangles += Math.floor((geometry.index?.count ?? geometry.attributes.position?.count ?? 0) / 3);
     for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
-    mesh.castShadow = false;
+    mesh.castShadow = castShadow;
     mesh.receiveShadow = true;
     for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
       if (material instanceof THREE.MeshStandardMaterial) {
@@ -493,7 +497,7 @@ export function installTownPlatePilot({ scene, canvas }: Host): () => void {
   setState('loading', 'painted');
 
   trackedGltfLoader(canvas, 'the town').load(TOWN_PLATE_MODEL_URL, ({ scene: loaded }) => {
-    const metrics = inspect(loaded, false);
+    const metrics = inspect(loaded, false, false);
     const valid = metrics.triangles <= 20_000 && metrics.materials === 1 && metrics.forbiddenNodes === 0;
     if (disposed || !valid) {
       disposeObject3D(loaded);
