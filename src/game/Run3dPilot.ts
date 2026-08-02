@@ -8,6 +8,7 @@ import { performanceTierDiagnostics } from './PerformanceTier';
 const registry = {
   assay_office: { url: new URL('../../assets/pilots/run3d/assay-bench.glb', import.meta.url).href, fallback: 'AssayOfficeTimberShell', groundPad: 1 },
   boiler_house: { url: new URL('../../assets/pilots/run3d/boiler-house.glb', import.meta.url).href, fallback: 'BoilerHousePool', groundPad: 1.1 },
+  gold_seam: { url: new URL('../../assets/pilots/run3d/gold-seam.glb', import.meta.url).href, fallback: 'GoldSeamVisualBatch', groundPad: 0 },
   lantern_post: { url: new URL('../../assets/pilots/run3d/lantern-post.glb', import.meta.url).href, fallback: 'LanternPostPool', groundPad: 0.4 },
   palisade: { url: new URL('../../assets/pilots/run3d/palisade.glb', import.meta.url).href, fallback: 'PalisadePool', groundPad: 1.5 },
   sluice: { url: new URL('../../assets/pilots/run3d/sluice.glb', import.meta.url).href, fallback: 'SluicePool', groundPad: 0.9 },
@@ -16,18 +17,18 @@ const registry = {
   sentry_beacon: { url: new URL('../../assets/pilots/run3d/sentry-beacon.glb', import.meta.url).href, fallback: 'SentryBeaconPool', groundPad: 0.4 },
 } as const;
 
-type Buildable3dId = keyof typeof registry;
+type Run3dId = keyof typeof registry;
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement; diagnostics: () => BuildDiagnostics };
 
 export type Run3dPilot = { update: () => void; dispose: () => void };
 
-function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', meshes = 0, triangles = 0): void {
+function publish(canvas: HTMLCanvasElement, state: 'off' | 'loading' | 'ready' | 'lite' | 'failed', meshes = 0, triangles = 0): void {
   canvas.dataset.run3dPilotState = state;
   canvas.dataset.run3dPilotMeshes = String(meshes);
   canvas.dataset.run3dPilotTriangles = String(triangles);
 }
 
-function fallback(host: Host, id: Buildable3dId): THREE.Object3D | undefined {
+function fallback(host: Host, id: Run3dId): THREE.Object3D | undefined {
   const object = host.scene.getObjectByName(registry[id].fallback);
   return id === 'assay_office' ? object?.parent ?? undefined : object;
 }
@@ -39,13 +40,17 @@ export function installRun3dPilot(host: Host): Run3dPilot {
     publish(host.canvas, 'lite');
     return { update: () => undefined, dispose: () => publish(host.canvas, 'lite') };
   }
+  if (!params.has('run3dPilot')) {
+    publish(host.canvas, 'off');
+    return { update: () => undefined, dispose: () => publish(host.canvas, 'off') };
+  }
 
-  const ids = (selection === 'all' ? Object.keys(registry) : [selection]).filter(
-    (id): id is Buildable3dId => typeof id === 'string' && id in registry,
+  const ids = (selection === 'all' ? Object.keys(registry).filter((id) => id !== 'gold_seam') : [selection]).filter(
+    (id): id is Run3dId => typeof id === 'string' && id in registry,
   );
   const group = new THREE.Group();
-  const templates = new Map<Buildable3dId, THREE.Object3D>();
-  const triangleCounts = new Map<Buildable3dId, number>();
+  const templates = new Map<Run3dId, THREE.Object3D>();
+  const triangleCounts = new Map<Run3dId, number>();
   const instances = new Map<string, THREE.Object3D>();
   const matrix = new THREE.Matrix4();
   const matrixPosition = new THREE.Vector3();
@@ -118,12 +123,12 @@ export function installRun3dPilot(host: Host): Run3dPilot {
     const alive = new Set<string>();
     const diagnostics = host.diagnostics();
     for (const entry of diagnostics.hp) {
-      if (!ids.includes(entry.id as Buildable3dId) || entry.wrecked || entry.hp <= 0) continue;
+      if (!ids.includes(entry.id as Run3dId) || entry.wrecked || entry.hp <= 0) continue;
       const key = `${entry.id}:${entry.index}`;
       alive.add(key);
       let instance = instances.get(key);
       if (!instance) {
-        instance = templates.get(entry.id as Buildable3dId)!.clone(true);
+        instance = templates.get(entry.id as Run3dId)!.clone(true);
         if (entry.id === 'palisade') {
           instance.traverse((node) => {
             const mesh = node as THREE.Mesh;
@@ -135,7 +140,7 @@ export function installRun3dPilot(host: Host): Run3dPilot {
       }
       instance.position.set(
         entry.position.x,
-        Terrain.visualY(entry.position.x, entry.position.z, 0, registry[entry.id as Buildable3dId].groundPad),
+        Terrain.visualY(entry.position.x, entry.position.z, 0, registry[entry.id as Run3dId].groundPad),
         entry.position.z,
       );
       if (entry.id === 'lantern_post') instance.rotation.y = (diagnostics.lanternPostRotations[entry.index] ?? 0) * Math.PI / 2;
@@ -153,13 +158,27 @@ export function installRun3dPilot(host: Host): Run3dPilot {
         }
       }
     }
+    if (ids.includes('gold_seam')) {
+      for (const node of window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes ?? []) {
+        if (!node.active || node.respawnScheduled) continue;
+        const key = `gold_seam:${node.id}`;
+        alive.add(key);
+        let instance = instances.get(key);
+        if (!instance) {
+          instance = templates.get('gold_seam')!.clone(true);
+          instances.set(key, instance);
+          group.add(instance);
+        }
+        instance.position.set(node.position.x, Terrain.visualY(node.position.x, node.position.z, 0.05), node.position.z);
+      }
+    }
     for (const [key, instance] of instances) {
       if (alive.has(key)) continue;
       group.remove(instance);
       if (key.startsWith('palisade:')) instance.traverse((node) => (node as THREE.Mesh).isMesh && ((node as THREE.Mesh).material as THREE.Material).dispose());
       instances.delete(key);
     }
-    const triangles = [...instances.keys()].reduce((total, key) => total + (triangleCounts.get(key.split(':')[0] as Buildable3dId) ?? 0), 0);
+    const triangles = [...instances.keys()].reduce((total, key) => total + (triangleCounts.get(key.split(':')[0] as Run3dId) ?? 0), 0);
     publish(host.canvas, 'ready', instances.size, triangles);
   }
 
