@@ -53,7 +53,7 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
     { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
   );
   assert.notEqual(unsupported.status, 0);
-  assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift/);
+  assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks/);
 });
 
 test('gr-sim deterministically runs the Claim objective', () => {
@@ -172,6 +172,98 @@ test('the Claim driver consumes declared water and posts RunManager secure at wa
       kills: 137,
       calls: 0,
       eventLogHash: 'fnv1a32:b1eeb320',
+    });
+    assert.equal(first.terminalLog.outcome, 'secured');
+  } finally {
+    await vite.close();
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
+});
+
+test('Twin Banks consumes its declared crossings and build zones before securing at wave 20', { timeout: 45_000 }, async () => {
+  const runCli = () => spawnSync(
+    process.execPath,
+    ['scripts/gr-sim.mjs', '--contract', 'e1-twin-banks', '--seed', 'e1-twin-banks-01', '--policy=idle'],
+    { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
+  );
+  const firstCli = runCli();
+  const secondCli = runCli();
+  assert.equal(firstCli.status, 0, firstCli.stderr);
+  assert.equal(secondCli.status, 0, secondCli.stderr);
+  assert.equal(secondCli.stdout, firstCli.stdout);
+  const transcript = firstCli.stdout.trim().split('\n').map(JSON.parse);
+  assert.deepEqual(transcript[0].stablePrefix.mechanics.rules, [
+    { id: 'build_zones', source: 'tileParams.buildZones', data: { count: 2, banks: ['north', 'south'] } },
+    { id: 'river', source: 'tileParams.river', data: {} },
+    { id: 'water_crossings', source: 'tileParams.ford', data: { count: 2, ids: ['east-ford', 'west-ford'] } },
+  ]);
+  assert.deepEqual(transcript[0].stablePrefix.mechanics.posting.waves, [
+    { event: 'secure', wave: 20, source: 'twist.secureWave' },
+  ]);
+  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:bdd90123');
+
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const location = new URL('http://gr-sim.local/?debug&contract=e1-twin-banks&seed=e1-twin-banks-01');
+  globalThis.location = location;
+  globalThis.window = { location };
+  const vite = await createServer({
+    root: ROOT,
+    appType: 'custom',
+    logLevel: 'silent',
+    server: { middlewareMode: true },
+  });
+  try {
+    const Terrain = await vite.ssrLoadModule('/src/world/Terrain.ts');
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const probe = new HeadlessContractSim({ contractId: 'e1-twin-banks', seed: 'e1-twin-banks-01' });
+    const { buildZones, fords, water } = probe.manifest.tileParams;
+
+    assert.deepEqual(
+      Terrain.fordRanges(),
+      fords.map(({ id, x, halfWidth }) => ({
+        id,
+        minX: x - halfWidth,
+        maxX: x + halfWidth,
+        centerX: x,
+        halfWidth,
+      })),
+    );
+    assert.equal(Terrain.sample(0, 0).zone, 'river');
+    for (const ford of fords) assert.equal(Terrain.sample(ford.x, 0).zone, 'ford');
+    for (const bar of water.gravelBars) assert.equal(Terrain.isCrossingStructure(bar.x, bar.z), true);
+
+    for (const zone of buildZones) {
+      const position = { x: (zone.minX + zone.maxX) / 2, z: (zone.minZ + zone.maxZ) / 2 };
+      assert.equal(Terrain.isBuildable(position.x, position.z), true);
+      assert.equal(probe.build.placeFree('palisade', position), true);
+    }
+    assert.equal(probe.build.diagnostics.palisades, buildZones.length);
+    assert.equal(Terrain.isBuildable(buildZones[0].maxX + 1, -12), false);
+    assert.equal(probe.build.placeFree('palisade', { x: buildZones[0].maxX + 1, z: -12 }), false);
+
+    const run = () => {
+      const sim = new HeadlessContractSim({ contractId: 'e1-twin-banks', seed: 'e1-twin-banks-01' });
+      sim.hero.applyStats(10_000, 1);
+      sim.hero.heal(10_000);
+      let turn = sim.currentTurn();
+      while (!turn.terminal) turn = sim.advanceToTurn();
+      return { outcome: sim.outcome(), terminalLog: turn.view.appendLog.at(-1) };
+    };
+    const first = run();
+    const second = run();
+    assert.deepEqual(second, first);
+    assert.deepEqual(first.outcome, {
+      secured: true,
+      waves: 20,
+      timeMs: 600000,
+      gold: 0,
+      kills: 176,
+      calls: 0,
+      eventLogHash: 'fnv1a32:d5895547',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {

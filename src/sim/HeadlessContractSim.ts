@@ -32,7 +32,7 @@ import { WaveSystem } from '../systems/WaveSystem';
 import * as Terrain from '../world/Terrain';
 
 const STEP_SECONDS = 1 / 30;
-const SUPPORTED_CONTRACTS = new Set(['e1-dry-gulch', 'the-claim', 'e1-night-shift']);
+const SUPPORTED_CONTRACTS = new Set(['e1-dry-gulch', 'the-claim', 'e1-night-shift', 'e1-twin-banks']);
 
 export type GrSimOutcome = {
   secured: boolean;
