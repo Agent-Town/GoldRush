@@ -335,6 +335,60 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
   });
 }
 
+/**
+ * U4 — banners in the wind. The Baron's claim-jumping company brand reads in the
+ * HUD every time he taunts, and hung dead in the world. This is a vertex-shader
+ * sway: no new draws, no new geometry, no CPU per-frame work beyond one uniform.
+ *
+ * The displacement is gated on the vertex's own HEIGHT, so poles stay planted in
+ * the ground and only cloth moves, and its phase comes from the vertex's own X —
+ * which means the six banners strung along one 29 m body each breathe on their
+ * own beat without a single per-instance attribute.
+ *
+ * Amplitudes are per-mount: the banner line gets a real flap, the siege line gets
+ * a third of it (its geometry is mostly stakes, and a swaying palisade would read
+ * as a bug rather than as weather).
+ */
+const BARON_SWAY_AMPLITUDE: Record<string, number> = { oxblood_banners: 0.185, siege_line: 0.06 };
+const BARON_SWAY_FLOOR = 2.2;
+const baronSwayTime = { value: 0 };
+
+function installBannerSway(model: THREE.Object3D, amplitude: number): void {
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.Material>;
+    if (!mesh.isMesh || Array.isArray(mesh.material)) return;
+    const material = mesh.material;
+    if (material.userData.baronSwayAmplitude === amplitude) return;
+    material.userData.baronSwayAmplitude = amplitude;
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.uBaronSwayTime = baronSwayTime;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nuniform float uBaronSwayTime;')
+        .replace(
+          '#include <begin_vertex>',
+          `#include <begin_vertex>
+float baronSwayLift = clamp((position.y - ${BARON_SWAY_FLOOR.toFixed(2)}) / 3.2, 0.0, 1.0);
+baronSwayLift *= baronSwayLift;
+float baronSwayPhase = position.x * 0.55;
+float baronSway = sin(uBaronSwayTime * 1.7 + baronSwayPhase) * 0.72 + sin(uBaronSwayTime * 2.9 + baronSwayPhase * 1.9 + 1.3) * 0.28;
+transformed.x += baronSway * baronSwayLift * ${amplitude.toFixed(3)};
+transformed.z += sin(uBaronSwayTime * 1.31 + baronSwayPhase * 0.7) * baronSwayLift * ${(amplitude * 0.45).toFixed(3)};
+transformed.y -= abs(baronSway) * baronSwayLift * ${(amplitude * 0.16).toFixed(3)};`,
+        );
+    };
+    // Two banner bodies must not share one compiled program, or the second one
+    // silently inherits the first one's amplitude (Water.ts:82 pattern).
+    material.customProgramCacheKey = () => `baron-sway:${amplitude}`;
+    material.needsUpdate = true;
+    mesh.frustumCulled = false;
+    mesh.onBeforeRender = () => {
+      baronSwayTime.value = performance.now() * 0.001;
+    };
+  });
+}
+
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
 function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Host): void {
   const materials = new Set<THREE.Material>();
@@ -662,6 +716,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           inspect(model, false);
           if (host.contractId !== 'e1-night-shift') {
             keepLandmarkPaintReadable(model, LANDMARK_PAINT[host.contractId]?.[mount.id] ?? DEFAULT_LANDMARK_PAINT);
+          }
+          if (host.contractId === 'e1-baron' && BARON_SWAY_AMPLITUDE[mount.id] !== undefined) {
+            installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
           }
           return model;
         } catch {

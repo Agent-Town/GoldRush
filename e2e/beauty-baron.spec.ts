@@ -310,8 +310,12 @@ test('shot 4 — siege-line close-up: banners, wreck margin, scorch pads', async
   const errors = await openGame(page, '?debug&contract=e1-baron&timescale=1&nolevel&nowaves&nokill&nosteal&nowreck&tier=full&seed=e1-baron-siege-line');
   await expectGlbTerrain(page);
   await clearBriefing(page);
-  await pinCamera(page, 2.5, 13.5, 13.0);
+  await pinCamera(page, -6.5, 15.0, 15.0);
   await shot(page, testInfo, 'siege-line');
+  // A still cannot show a sway. Two stills a beat apart can: the pair is the
+  // evidence, and beauty-imgdiff over them is the measurement.
+  await page.waitForTimeout(900);
+  await shot(page, testInfo, 'siege-line-sway');
   assertNoErrors(errors);
 });
 
