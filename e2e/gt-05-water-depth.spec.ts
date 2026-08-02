@@ -335,7 +335,7 @@ test('classic claim keeps deep water impassable while carrying equivalent depth 
   await mkdir(ARTIFACT_DIR, { recursive: true });
   const errors = await openClassic(page, `gt-05-classic-${testInfo.project.name}`);
   const snapshot = await classicSnapshot(page);
-  expect(snapshot.tileParams).toEqual({
+  expect(snapshot.tileParams).toMatchObject({
     tileId: 'frontier-river-claim',
     biome: 'river-claim',
     river: true,

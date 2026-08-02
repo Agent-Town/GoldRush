@@ -577,6 +577,8 @@ export type ContractGravelBar = {
 export type ContractWaterZone = 'river' | 'ford' | 'shallows' | 'springPond';
 export type ContractWaterDescriptor = {
   id: string;
+  centerZ?: number;
+  halfWidth?: number;
   visualHalfWidth?: number;
   gravelBars?: ContractGravelBar[];
   depths?: Partial<Record<ContractWaterZone, number>>;
@@ -1815,19 +1817,25 @@ function normalizeContractDescriptor(
     addDescriptorReason(reasons, reason('field_section', 'The terrain section has the wrong shape.', 'tileParams'));
     return null;
   }
-  const candidateShape = withoutAuthoredTerrain(value);
+  const candidate = structuredClone(value) as Record<string, unknown> & { tileParams: Record<string, unknown> };
+  for (const key of ['size', 'fords', 'harvestAnchors', 'water'] as const) {
+    if (!Object.hasOwn(candidate.tileParams, key) && Object.hasOwn(template.tileParams, key)) {
+      candidate.tileParams[key] = structuredClone(template.tileParams[key]);
+    }
+  }
+  const candidateShape = withoutAuthoredTerrain(candidate);
   const templateShape = withoutAuthoredTerrain(template as unknown as Record<string, unknown>);
   if (!sameDescriptorShape(candidateShape, templateShape, '', reasons, template.id === 'e10-river')) return null;
 
-  const rawLayer = Object.hasOwn(value.tileParams, 'authoredTerrain') ? value.tileParams.authoredTerrain : undefined;
-  const claimSize = typeof value.tileParams.size === 'number' ? value.tileParams.size : 64;
+  const rawLayer = Object.hasOwn(candidate.tileParams, 'authoredTerrain') ? candidate.tileParams.authoredTerrain : undefined;
+  const claimSize = typeof candidate.tileParams.size === 'number' ? candidate.tileParams.size : 64;
   const authoredTerrain = rawLayer === undefined ? undefined : decodeAuthoredTerrainLayer(rawLayer, claimSize);
   if (rawLayer !== undefined && !authoredTerrain) {
     addDescriptorReason(reasons, reason('authored_terrain', 'The authored terrain marks do not fit this claim.', 'tileParams.authoredTerrain'));
     return null;
   }
 
-  const normalized = structuredClone(value) as unknown as ContractManifest;
+  const normalized = candidate as unknown as ContractManifest;
   if (authoredTerrain) normalized.tileParams.authoredTerrain = authoredTerrain;
   else delete normalized.tileParams.authoredTerrain;
   const semanticStart = reasons.length;
@@ -1985,6 +1993,14 @@ function validateContractMap(contract: ContractManifest, reasons: ContractDescri
   validateEngineDependencies(contract, reasons);
   validateLightRamp(contract.twist.lightRamp, reasons);
   validateWaterMask(contract.tileParams.waterMask, reasons);
+  const water = contract.tileParams.water;
+  if (water && (
+    (water.centerZ !== undefined && !Number.isFinite(water.centerZ))
+    || (water.halfWidth !== undefined && (!Number.isFinite(water.halfWidth) || water.halfWidth <= 0))
+    || (water.halfWidth !== undefined && water.visualHalfWidth !== undefined && water.visualHalfWidth < water.halfWidth)
+  )) {
+    addDescriptorReason(reasons, reason('water_geometry', 'River water needs a finite center and positive channel width within its visible banks.', 'tileParams.water'));
+  }
   const orbit = contract.tileParams.orbitSpawn;
   if (orbit && (
     ![orbit.center.x, orbit.center.z, orbit.radius, orbit.angularSpeed, orbit.lapsBeforePeel, orbit.peelSpeed, orbit.telegraphSeconds].every(Number.isFinite)

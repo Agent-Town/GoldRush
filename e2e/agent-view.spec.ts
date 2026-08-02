@@ -42,7 +42,9 @@ const WAVE_THREE_SNAPSHOT = `{
           "source": "tileParams.ford",
           "data": {
             "count": 1,
-            "ids": []
+            "ids": [
+              "center-ford"
+            ]
           }
         }
       ],
@@ -104,7 +106,7 @@ const WAVE_THREE_SNAPSHOT = `{
         "river": true,
         "ford": true,
         "sources": 0,
-        "descriptor": null
+        "descriptor": "frontier-river-depth"
       },
       "spawnGates": [
         {
@@ -275,6 +277,11 @@ test('all five E1 mechanics manifests match their byte-stable fixture', async ()
   expect(deriveMechanicsManifest('e1-twin-banks').rules).toContainEqual(
     expect.objectContaining({ id: 'water_crossings', data: expect.objectContaining({ count: 2 }) }),
   );
+  for (const id of ['the-claim', 'e1-night-shift', 'e1-baron']) {
+    expect(deriveMechanicsManifest(id).rules).toContainEqual(
+      expect.objectContaining({ id: 'water_crossings', data: { count: 1, ids: ['center-ford'] } }),
+    );
+  }
 
   const pressed = structuredClone(listContracts().find(({ id }) => id === 'e1-night-shift')!);
   pressed.twist.secureWave = 24;

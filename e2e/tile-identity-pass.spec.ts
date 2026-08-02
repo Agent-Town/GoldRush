@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { Balance } from '../src/game/Balance';
+import { contractDescriptorJson, loadContract, parseContractDescriptor } from '../src/meta/ContractFamilies';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type DetailClass = 'rocks' | 'stumps' | 'dry_grass' | 'wagon_ruts' | 'claim_posts' | 'cactus' | 'reeds';
@@ -21,6 +22,19 @@ const NIGHT_LANTERNS = [
   { id: 'lantern_post', x: 10, z: -24, rotationSteps: 2, wrecked: true, relightCost: NIGHT_RELIGHT_COST },
 ] as const;
 const NIGHT_LANTERN_POSITIONS = NIGHT_LANTERNS.map(({ x, z }) => ({ x, z }));
+const DEFAULT_CLAIM_GEOMETRY = {
+  size: 64,
+  fords: [{ id: 'center-ford', x: 0, halfWidth: 3 }],
+  harvestAnchors: [
+    { x: -22, z: -6.8 },
+    { x: -9, z: 6.7 },
+    { x: -1.5, z: -6.4 },
+    { x: 7.5, z: 6.5 },
+    { x: 18, z: -7 },
+    { x: 25, z: 6.9 },
+  ],
+  water: { id: 'frontier-river-depth', centerZ: 0, halfWidth: 5, visualHalfWidth: 6.25 },
+} as const;
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.clear());
@@ -64,6 +78,7 @@ test('The Claim keeps the default tile params and seeded flat-claim fingerprint'
   expect(first.payload.tileParams).toEqual({
     tileId: 'frontier-river-claim',
     biome: 'river-claim',
+    ...DEFAULT_CLAIM_GEOMETRY,
     river: true,
     ford: true,
     waterSources: [],
@@ -76,6 +91,31 @@ test('The Claim keeps the default tile params and seeded flat-claim fingerprint'
   expect(first.payload.sim.flat).toBe(true);
   expect(second.hash).toBe(first.hash);
   expectClean(errors);
+});
+
+test('Claim, Night Shift, and Baron declare the exact shared geometry and reject a collapsed river', () => {
+  for (const id of ['the-claim', 'e1-night-shift', 'e1-baron']) {
+    const tile = loadContract(id).tileParams;
+    expect({
+      size: tile.size,
+      fords: tile.fords,
+      harvestAnchors: tile.harvestAnchors,
+      water: tile.water,
+    }).toEqual(DEFAULT_CLAIM_GEOMETRY);
+  }
+
+  const invalid = structuredClone(loadContract('the-claim'));
+  invalid.tileParams.water!.halfWidth = 0;
+  expect(parseContractDescriptor(contractDescriptorJson(invalid), loadContract('the-claim'))).toMatchObject({
+    ok: false,
+    reasons: [expect.objectContaining({ code: 'water_geometry', path: 'tileParams.water' })],
+  });
+
+  const legacy = structuredClone(loadContract('the-claim'));
+  for (const key of ['size', 'fords', 'harvestAnchors', 'water'] as const) delete legacy.tileParams[key];
+  const parsedLegacy = parseContractDescriptor(contractDescriptorJson(legacy), loadContract('the-claim'));
+  expect(parsedLegacy.ok).toBe(true);
+  if (parsedLegacy.ok) expect(parsedLegacy.contract.tileParams).toMatchObject(DEFAULT_CLAIM_GEOMETRY);
 });
 
 test('E1 contracts load place descriptors, render identity shots, and stay deterministic', async ({ page }, testInfo) => {

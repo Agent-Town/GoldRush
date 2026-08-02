@@ -8,9 +8,20 @@
       "tileParams": {
         "tileId": "frontier-river-claim",
         "biome": "river-claim",
+        "size": 64,
         "river": true,
         "ford": true,
+        "fords": [{ "id": "center-ford", "x": 0, "halfWidth": 3 }],
         "waterSources": [],
+        "harvestAnchors": [
+          { "x": -22, "z": -6.8 },
+          { "x": -9, "z": 6.7 },
+          { "x": -1.5, "z": -6.4 },
+          { "x": 7.5, "z": 6.5 },
+          { "x": 18, "z": -7 },
+          { "x": 25, "z": 6.9 }
+        ],
+        "water": { "id": "frontier-river-depth", "centerZ": 0, "halfWidth": 5, "visualHalfWidth": 6.25 },
         "lanes": {
           "spawnEdges": ["north", "south", "east", "west"],
           "territoryRingBiasWaves": 3,
@@ -161,9 +172,20 @@
       "tileParams": {
         "tileId": "frontier-river-claim",
         "biome": "river-claim",
+        "size": 64,
         "river": true,
         "ford": true,
+        "fords": [{ "id": "center-ford", "x": 0, "halfWidth": 3 }],
         "waterSources": [],
+        "harvestAnchors": [
+          { "x": -22, "z": -6.8 },
+          { "x": -9, "z": 6.7 },
+          { "x": -1.5, "z": -6.4 },
+          { "x": 7.5, "z": 6.5 },
+          { "x": 18, "z": -7 },
+          { "x": 25, "z": 6.9 }
+        ],
+        "water": { "id": "frontier-river-depth", "centerZ": 0, "halfWidth": 5, "visualHalfWidth": 6.25 },
         "palette": {
           "id": "night-shift-dusk",
           "tint": [0.74, 0.78, 0.86],
@@ -308,9 +330,20 @@
       "tileParams": {
         "tileId": "frontier-river-claim",
         "biome": "river-claim",
+        "size": 64,
         "river": true,
         "ford": true,
+        "fords": [{ "id": "center-ford", "x": 0, "halfWidth": 3 }],
         "waterSources": [],
+        "harvestAnchors": [
+          { "x": -22, "z": -6.8 },
+          { "x": -9, "z": 6.7 },
+          { "x": -1.5, "z": -6.4 },
+          { "x": 7.5, "z": 6.5 },
+          { "x": 18, "z": -7 },
+          { "x": 25, "z": 6.9 }
+        ],
+        "water": { "id": "frontier-river-depth", "centerZ": 0, "halfWidth": 5, "visualHalfWidth": 6.25 },
         "prebuiltPalisades": false,
         "lanes": {
           "spawnEdges": ["north", "south", "east", "west"],

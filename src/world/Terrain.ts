@@ -78,6 +78,7 @@ export type FordRange = {
 const ACTIVE_CONTRACT = activeContract();
 const LANDMARK_BLOCKERS = landmarkBlockersFor(ACTIVE_CONTRACT.id);
 const ACTIVE_TILE = activeTileDescriptor();
+const TILE_WATER = activeWaterDescriptor();
 export const DEFAULT_CLAIM_SIZE = 64;
 export const CLAIM_SIZE = ACTIVE_CONTRACT.tileParams.size ?? DEFAULT_CLAIM_SIZE;
 export const CLAIM_HALF = CLAIM_SIZE / 2;
@@ -85,8 +86,12 @@ export const CLAIM_WIDTH = ACTIVE_CONTRACT.tileParams.dimensions?.width ?? CLAIM
 export const CLAIM_HEIGHT = ACTIVE_CONTRACT.tileParams.dimensions?.height ?? CLAIM_SIZE;
 export const CLAIM_HALF_X = CLAIM_WIDTH / 2;
 export const CLAIM_HALF_Z = CLAIM_HEIGHT / 2;
-export const RIVER_MIN_Z = -5;
-export const RIVER_MAX_Z = 5;
+export const RIVER_MIN_Z = TILE_WATER?.centerZ !== undefined && TILE_WATER.halfWidth !== undefined
+  ? TILE_WATER.centerZ - TILE_WATER.halfWidth
+  : -5;
+export const RIVER_MAX_Z = TILE_WATER?.centerZ !== undefined && TILE_WATER.halfWidth !== undefined
+  ? TILE_WATER.centerZ + TILE_WATER.halfWidth
+  : 5;
 export const FORD_MIN_X = -3;
 export const FORD_MAX_X = 3;
 export const SHALLOWS_WIDTH = 1.25;
@@ -100,7 +105,6 @@ let editorPreviewTerrain: ContractAuthoredTerrainLayer | undefined;
 let editorPreviewContract: ContractManifest | null = null;
 let refreshEditorPreview: ((contract: ContractManifest) => void) | null = null;
 let runtimeVisualHeightSource: ((x: number, z: number) => number) | null = null;
-const TILE_WATER = activeWaterDescriptor();
 const WATER_MASK = ACTIVE_TILE.waterMask?.regions.length ? ACTIVE_TILE.waterMask : undefined;
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
 const FORD_RANGES = resolveFordRanges();
