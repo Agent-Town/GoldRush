@@ -466,14 +466,17 @@
               "id": "run3d-15-gold-nodes",
               "title": "RUN-3D rider 15: the Gold Seam in 3D — the first rider of the contract-buildables ladder, wired read-only off the existing HarvestSystem snapshot (spec RUN-RECIPE.md:24 names gold nodes fire-authorable once 07 lands; 07 verified landed)",
               "taskFile": "run3d-15-gold-nodes.md",
-              "status": "queued",
-              "reason": "ATTEMPT 1 GATED AND REJECTED s1387 (review reviews/run3d-15-gold-nodes.md, F-1387-3). The model and the rider wiring are exemplary — tsc/build clean, own spec 8/8, sluice 8/8 unmodified, node-guards 226/226, 720 tris, byte-identical re-export — but src/game/Run3dPilot.ts:43-46 adds an early return that publishes 'off' whenever the run3dPilot param is ABSENT, which short-circuits the landed `?? 'all'` default and turns 3D buildings OFF in a plain boot (Mistake #10). Measured red on the MERGED tree, both projects: m2-05-base-damage-repair.spec.ts:353 and night3d-perf.spec.ts:118 waitForFunction timeouts, neither fingerprint-matched. ATTEMPT 2 re-dispatched same fire with a CHANGED PREMISE (retry law): the corrective deletes the early return and re-points the flag-off assertion, since the :48 gold_seam filter already delivers the exclusion the master asked for."
+              "status": "shipped",
+              "reason": "SHIPPED s1389 as the FIRST HALF of a two-commit drain (d0a861a9 = the gated-good rider content kept from attempt 1; 96e60415 = the corrective). ATTEMPT 1 GATED AND REJECTED s1387 (review reviews/run3d-15-gold-nodes.md, F-1387-3): the model and rider wiring were exemplary — tsc/build clean, own spec 8/8, sluice 8/8 unmodified, node-guards 226/226, 720 tris, byte-identical re-export — but src/game/Run3dPilot.ts:43-46 added an early return publishing 'off' whenever the run3dPilot param is ABSENT, short-circuiting the landed `?? 'all'` default and turning 3D buildings OFF in a plain boot (Mistake #10). ATTEMPT 2 re-dispatched same fire with a CHANGED PREMISE (retry law) and SUCCEEDED. s1389 re-measured both of s1387's red fingerprints on the merged tree at --workers=1: m2-05-base-damage-repair 14/14 and night3d-perf:98 (whose :118 oracle waits for run3dPilotState==='ready') GREEN in BOTH projects — the exact pair whose timeouts caused the rejection. Review reviews/run3d-15b.md.",
+              "mergeHash": "9ee3b710c09f5bb6575d2fe754af47e111c0ac80"
             },
             {
               "id": "run3d-15b-gold-nodes-flagoff-fix",
               "title": "RUN-3D rider 15b (corrective, attempt 2): restore the plain-boot 3D-buildings default that rider 15 turned off — delete the flag-absent early return in Run3dPilot.ts and re-point the flag-off assertion, keeping the gated-good GLB and rider wiring intact (F-1387-3)",
               "taskFile": "run3d-15b-gold-nodes-flagoff-fix.md",
-              "status": "queued"
+              "status": "shipped",
+              "reason": "SHIPPED s1389. The corrective did exactly its two named acts and nothing else: deleted the flag-absent early return in Run3dPilot.ts (and the now-unreachable 'off' state from publish()'s union) and re-pointed e2e/run3d-gold-seam.spec.ts:58 from 'off' to 'ready' — 7 lines of src, 1 line of spec. VERIFIED AT THE GATE, because s1387 measured that this slice's own spec passed BECAUSE of the defect, so a green own-spec proves nothing here: the two suites that actually witness the regression, m2-05-base-damage-repair (14/14) and night3d-perf:98 (readiness oracle at :118), are GREEN in BOTH projects at --workers=1. Plain-boot probes 4/4 zero console/page errors desktop+390px. RUN 2 OF THE DUPLICATE DISPATCH (F-1388-2) was a clean pre-flight STOP — 15,410 tokens, zero edits, correct refusal on a tip that already held the work — not a failure.",
+              "mergeHash": "9ee3b710c09f5bb6575d2fe754af47e111c0ac80"
             },
             {
               "id": "pc-01c-drill-yard-practice-derivation",
