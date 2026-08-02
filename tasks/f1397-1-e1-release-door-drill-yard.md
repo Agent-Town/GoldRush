@@ -34,7 +34,7 @@ s1397 re-read all six sites and their constant definitions rather than inheritin
 3. **Premise check, AFTER any reset:** count the contracts in `assets/contracts/epoch-1-frontier/contracts.json`. It must be **6** and include `e1-drill-yard`. If it is 5, this lane predates `f0bf5251`: the task is **not applicable here — STOP and report the number you got.** ⓘ s1397 verified `git merge-base --is-ancestor f0bf5251 lane/e2-arsenal` = **YES** at authoring time (lane-c is 17 commits behind main but with **zero run-surface drift** — `node scripts/lane-usable.mjs lane-c`); re-check rather than trusting this line.
 
 ## SCOPE (numbered, each testable)
-1. **MEASURE FIRST, BEFORE EDITING ANYTHING.** Add `'e1-drill-yard'` to `CONTRACTS` at `e2e/release-build.spec.ts:18` (order: index **1**, immediately after `'the-claim'`, matching `contracts.json`), then run **only** the release-door test:
+1. **MEASURE FIRST, BEFORE EDITING ANYTHING.** Add `'e1-drill-yard'` to the `CONTRACTS` array at `e2e/release-build.spec.ts:18` — the one consumed at `:100` by `for (const contractId of CONTRACTS) {`. Order: index **1**, immediately after the-claim, matching `contracts.json`. Then run **only** the release-door test:
    `npx playwright test e2e/release-build.spec.ts --workers=1 -g "boots through the E1 release door"`
 2. **BRANCH ON THAT RESULT — this is the whole point of the task.**
    - **All green (expected):** keep the edit. Report the per-project pass counts. Proceed to the full self-check.
