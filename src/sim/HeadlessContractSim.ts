@@ -21,7 +21,7 @@ import { Balance } from '../game/Balance';
 import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
-import { loadContract, type ContractManifest, type ContractRunBoot } from '../meta/ContractFamilies';
+import { loadContract, type ContractBaronTwist, type ContractManifest, type ContractRunBoot } from '../meta/ContractFamilies';
 import { stableHash } from '../mp/LockstepClient';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
@@ -34,6 +34,21 @@ import * as Terrain from '../world/Terrain';
 const STEP_SECONDS = 1 / 30;
 const SUPPORTED_CONTRACTS = new Set(['e1-dry-gulch', 'the-claim', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
+
+export function bossKillSecuresRun(
+  baron: ContractBaronTwist | undefined,
+  contractId: string,
+  event: Extract<GameEvent, { type: 'enemy_killed' }>,
+): boolean {
+  const expectedKind = baron?.bossKind ?? 'baron';
+  const expectedGroupId = baron?.components?.length
+    ? `${contractId}:wave-${baron.wave}:${(baron.variantId ?? 'baron_railcar') === 'baron_railcar' ? 'railcar' : 'component-boss'}`
+    : undefined;
+  const groupDown = expectedGroupId === undefined
+    ? event.bossGroupId === undefined
+    : event.bossGroupId === expectedGroupId && event.bossRemaining === 0;
+  return event.eliteKind === expectedKind && groupDown;
+}
 
 export type GrSimOutcome = {
   secured: boolean;
@@ -391,14 +406,7 @@ export class HeadlessContractSim {
         this.replayEvents.push(canonicalEvent(event));
         if (event.type === 'enemy_killed') {
           const baron = this.manifest.twist.baron;
-          const expectedKind = baron?.bossKind ?? 'baron';
-          const expectedGroupId = baron?.components?.length
-            ? `${this.contractId}:wave-${baron.wave}:${(baron.variantId ?? 'baron_railcar') === 'baron_railcar' ? 'railcar' : 'component-boss'}`
-            : undefined;
-          const groupDown = expectedGroupId === undefined
-            ? event.bossGroupId === undefined
-            : event.bossGroupId === expectedGroupId && event.bossRemaining === 0;
-          if (event.eliteKind === expectedKind && groupDown) this.postBaronDefeat(event.at);
+          if (bossKillSecuresRun(baron, this.contractId, event)) this.postBaronDefeat(event.at);
         }
       });
     }
