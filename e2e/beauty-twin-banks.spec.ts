@@ -118,15 +118,40 @@ test('twin banks beauty board: boot, braid run camera, ford, plait, overview', a
     height: Math.round(viewport.height * 0.42),
   });
 
-  // SHOT 5 — both banks at once, player zoom pushed to the tile scale.
-  await page.evaluate(() => window.__GR_TEST__?.setBalance('camera.zoom.maxDistanceScale', 2.6));
+  // SHOT 5 — both banks at once. This is the composition judge, so the harness pushes the
+  // player zoom past its shipped 1.6x ceiling AND holds the distance fog off: at 2.6x the
+  // camera stands 68 m out, where the shipped fog (near 42, far 88) erases the tile into a
+  // cream sheet and judges nothing. Documented harness settings, not a render change — the
+  // fresh eye's own overview pass hid the panorama for exactly this reason.
+  for (const [key, value] of [
+    ['camera.zoom.maxDistanceScale', 2.6],
+    ['world.fogNear', 400],
+    ['world.fogFar', 900],
+  ] as const) {
+    await page.evaluate(([path, next]) => window.__GR_TEST__?.setBalance(path as string, next as number), [key, value]);
+  }
   await poseAt(page, 0, 2);
   await page.mouse.move(viewport.width / 2, viewport.height / 2);
   await page.mouse.wheel(0, 2_400);
   await page.waitForTimeout(1_200);
   await hideGameChrome(page);
-  await shot(page, testInfo, '5-both-banks-overview');
-  await page.evaluate(() => window.__GR_TEST__?.setBalance('camera.zoom.maxDistanceScale', 1.6));
+  // Cropped to the tile: above the shipped zoom ceiling the panorama ring — which is authored
+  // fog-exempt on purpose — reads as a flat cream band across the far edge. That is this
+  // harness leaving the shipped envelope, not a defect a player can reach (at 1.6x with fog on
+  // it is invisible), and it is the same trap the fresh eye's own sweep hit and corrected for.
+  await shot(page, testInfo, '5-both-banks-overview', {
+    x: Math.round(viewport.width * 0.08),
+    y: Math.round(viewport.height * 0.19),
+    width: Math.round(viewport.width * 0.84),
+    height: Math.round(viewport.height * 0.72),
+  });
+  for (const [key, value] of [
+    ['camera.zoom.maxDistanceScale', 1.6],
+    ['world.fogNear', 42],
+    ['world.fogFar', 88],
+  ] as const) {
+    await page.evaluate(([path, next]) => window.__GR_TEST__?.setBalance(path as string, next as number), [key, value]);
+  }
 
   const bootPerf = await perf(page);
   await mkdir(ARTIFACT_DIR, { recursive: true });
@@ -208,6 +233,18 @@ test('the braid renders living water without touching the sculpt contract or the
   expect(samples.southBank?.zone).toBe('bank');
   expect(samples.water?.fordStones).toBe(14);
   expect(samples.water?.gravelBars).toBe(2);
+
+  // The dressing is hung on the channel the contract says it is. waterTruth calls the NORTH
+  // channel the deep one (0.48 against the south's 0.35) and the plait dry; the deep channel
+  // carries the gold glints and the dark bed, so a mirrored re-export would silently teach the
+  // player the wrong crossing. Measured on the mounted sculpt, in game coordinates.
+  const beds = await page.evaluate(() => ({
+    north: window.__GR_TEST__!.terrainVisualY(0, 2),
+    south: window.__GR_TEST__!.terrainVisualY(0, -2),
+    plait: window.__GR_TEST__!.terrainVisualY(-7.5, 0.2),
+  }));
+  expect(beds.north, JSON.stringify(beds)).toBeLessThan(beds.south);
+  expect(beds.plait, JSON.stringify(beds)).toBeGreaterThan(0.4);
 
   // Both channels carry a mounted ribbon...
   expect(await canvas.getAttribute('data-terrain3d-pilot-channel-water')).toBe('2');

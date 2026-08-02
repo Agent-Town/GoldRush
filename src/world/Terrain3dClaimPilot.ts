@@ -195,10 +195,13 @@ const CONTRACT_CHANNEL_WATER: Record<string, { surfaceLift: number; edgeBleed: n
     surfaceLift: 0.012,
     edgeBleed: 0.22,
     channels: {
-      // North runs deep and fast — the gold rides it. South is the shallow plait side.
+      // North runs deep and fast — the gold rides it, and only it: an asymmetric sparkle is how
+      // a player learns which channel is the dangerous one without a line of UI. Anchors sit ON
+      // the mask centreline (the shader draws each glint as a thin line at the anchor's z, so an
+      // anchor off the centreline lights the bank instead of the current).
       'north-channel': {
         depth: 'deep',
-        glints: [{ x: -19.5, z: 3.4 }, { x: -6.2, z: 2.7 }, { x: 8.1, z: 2.9 }, { x: 19.8, z: 3.2 }],
+        glints: [{ x: -19.5, z: 2.43 }, { x: -6.2, z: 2.89 }, { x: 8.1, z: 3.16 }, { x: 19.8, z: 2.34 }],
         headFade: 3.2,
         tailFade: 2.6,
       },
