@@ -41,6 +41,7 @@ control plus three arms, and **the control was wrong**.
 | 11 | `npx tsc --noEmit` | ✅ clean |
 | 12 | `npm run test:node-guards` (incl. 3 new cases) | ✅ **rc=0 GREEN** |
 | 13 | **New tests RED at the pre-fix guard** | ✅ **only test 8 reds**; controls 9/10 stay green |
+| 14 | **`playwright.release.config.ts --workers=1` on main + fix** | ✅ **26 passed (1.9 m)** — the suite runs again |
 
 Item 9 is the one that matters. A gate that turns green is not evidence until you show it went green
 for the right reason — here, with a **byte-for-byte identical asset set**.
@@ -73,7 +74,14 @@ That is the likely start of the window (**INFERRED — I did not bisect it**).
   exposed; `laterEpoch` matches file **contents** for the literal `epoch-N-`, which a hash cannot mint.
   So the exposure was genuinely one check, not a family — recorded so the next reader need not re-derive it.
 - **F-1381-1 → REFUTED.** The lane-d slice does not regress the release build.
-- **F-1381-2 → still open**, and now sharper: the release suite could not have run on *either* tree.
+- **F-1381-2 → EXPLAINED, not refuted.** The suite is **exactly 26 tests**, and it now runs **26/26 green**
+  on main (item 14). So the lane report's *"release suite 26/26"* names the right magnitude, and
+  s1381's inference — *"either measured before the last edits, or the label is wrong"* — resolves to
+  the **first** branch, with a mechanism it could not have known: while the door's verdict was a
+  function of **content-hash text**, the same slice could genuinely pass the release build at one edit
+  and fail at the next, with no change to which assets were emitted. The green was probably real when
+  taken and was falsified by a later edit that moved only hashes. **A flaky gate does not merely produce
+  wrong verdicts; it retroactively discredits true ones.**
 
 ## What did NOT change
 
