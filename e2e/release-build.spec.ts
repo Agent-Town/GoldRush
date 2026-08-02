@@ -15,7 +15,7 @@ import { moveHeroTo } from './helpers/hero-approach';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const FRONTIER = 'epoch-1-frontier';
-const CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'] as const;
+const CONTRACTS = ['the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'] as const;
 const LAUNCH_KEY = 'gr.contract.launch.v1';
 const SEEDED_KEY = 'gr.release-build.seeded';
 
