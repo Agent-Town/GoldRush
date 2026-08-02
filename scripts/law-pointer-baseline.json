@@ -36,9 +36,9 @@
       "fingerprint": "5a95e83cbbe1",
       "excerpt": "if (leaf.mergeHash) assert.match(leaf.mergeHash, /^[0-9a-f]{40}$/);"
     },
-    "scripts/fire.md -> scripts/drain-block-check.mjs:330": {
+    "scripts/fire.md -> scripts/drain-block-check.mjs:385": {
       "target": "scripts/drain-block-check.mjs",
-      "line": 330,
+      "line": 385,
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
@@ -66,9 +66,9 @@
       "fingerprint": "c11d5b8cacd2",
       "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
     },
-    ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:330": {
+    ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:385": {
       "target": "scripts/drain-block-check.mjs",
-      "line": 330,
+      "line": 385,
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },

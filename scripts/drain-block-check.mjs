@@ -37,6 +37,52 @@ const BACKLOG = 'tasks/BACKLOG.md';
 // ("OWNER-GATED-...-do-not-drain-...") is a second, cheaper line of defence, and a fire that
 // renames a file but forgets the leaf should still be stopped.
 const FILENAME_BLOCK_MARKERS = [/do-not-drain/i, /OWNER-GATED/i];
+
+// F-1383-1 (s1383). `status:"blocked"` is OVERLOADED across two opposite kinds of refusal, and
+// until now the ONLY discriminator was free prose inside blockedReason — so it could be, and was,
+// silently omitted. MEASURED s1383 across all 9 blocked leaves: 5 are genuine OWNER forks/banks,
+// 3 are fire-recorded readiness HOLDS ("this has not been gated yet"), 1 asserts both. s1381's
+// handoff states it flipped "all three" of its leaves to blocked with an explicit
+// "GATE-SIDE HOLD, NOT AN OWNER GATE" reason "so the next fire cannot misread them as owner
+// forks"; the label actually reached TWO of the three, and the leaf it missed —
+// e1-authored-bundle-validation — is the one the next two handoffs each named as the #1 priority
+// and "the cheapest real merge on the board". Meanwhile the closing verdict below printed
+// "A block is lifted by the OWNER" UNCONDITIONALLY, asserting the owner-only reading on behalf of
+// leaves whose own text denied it. That is the [misapplied owner-gate] shape that once cost 19
+// days: mis-scoping UP is far more expensive than mis-scoping down, because an owner-gate tag
+// halts every fire that reads it and nothing re-checks a parked question.
+//
+// ⚠️ THIS FIELD CHANGES NO EXIT CODE. Every class below still exits 1 and still refuses the drain.
+// It changes only WHO THE READER IS TOLD CAN LIFT IT, which is the thing that was wrong. A
+// gate-side hold is lifted by SATISFYING its stated condition and re-registering the leaf in the
+// same commit — never by merging first, and never by an owner word that will never come.
+// UNCLASSIFIED fails SAFE (treated as owner-fork), so forgetting the field cannot unblock anything.
+const BLOCK_CLASS_VERDICTS = {
+  'owner-fork': [
+    `  blockClass=owner-fork — a block is lifted by the OWNER, never by a green gate`,
+    `  battery or a sound runner report. If you believe it is stale, re-verify the`,
+    `  leaf and say so in the handoff — do not merge first.`,
+  ],
+  'gate-side': [
+    `  blockClass=gate-side — a FIRE-RECORDED readiness hold, NOT an owner debt. No`,
+    `  owner word exists that would lift this one, so carrying it to the desk parks it`,
+    `  forever. It still refuses the drain (rc=1): lift it by SATISFYING the condition`,
+    `  printed above and re-registering the leaf IN THE SAME COMMIT — not by merging`,
+    `  first, and not by a green battery that answers a narrower question than the hold.`,
+  ],
+  disputed: [
+    `  blockClass=disputed — this leaf's OWN reason asserts both an owner gate and a`,
+    `  gate-side hold. Treat it as owner-gated (fail-safe) and put the contradiction on`,
+    `  the desk for an attended ruling; do not resolve it yourself by picking a reading.`,
+  ],
+};
+const BLOCK_CLASS_UNCLASSIFIED = [
+  `  ⚠️ blockClass MISSING — this blocked leaf never declared which kind of refusal it`,
+  `  is. Treated as owner-fork (fail-safe), but that is a Goal Registration bookkeeping`,
+  `  finding, not a verdict: classify it (owner-fork | gate-side | disputed) in the same`,
+  `  commit as whatever you do next, so the next fire is not told an owner owes a word`,
+  `  that no owner has ever been asked for.`,
+];
 const TERMINAL_SHIPPED_STATUSES = new Set(['merged', 'shipped']);
 // F-1123-3 (s1123). The two refusal arms below both assume a terminal task LEFT A COMMIT:
 // status merged/shipped, or a mergeHash that is an ancestor of main. A master whose question is
@@ -296,9 +342,18 @@ function main() {
       console.log(`\n  BACKLOG context:`);
       for (const { line, n } of mentions) console.log(`    ${BACKLOG}:${n}  ${line.trim().slice(0, 150)}`);
     }
-    console.log(`\n  A block is lifted by the OWNER, never by a green gate battery or a sound`);
-    console.log(`  runner report. If you believe it is stale, re-verify the leaf and say so`);
-    console.log(`  in the handoff — do not merge first.\n`);
+    // F-1383-1: the verdict is now class-specific. A filename-marker-only refusal (no leaf) keeps
+    // the owner-fork wording, because the "OWNER-GATED-...-do-not-drain-..." rename convention is
+    // itself an owner-gate marker — that arm was never the overloaded one.
+    const declared = blockedHit ? blockedHit.blockClass : 'owner-fork';
+    const verdict = BLOCK_CLASS_VERDICTS[declared] || BLOCK_CLASS_VERDICTS['owner-fork'];
+    console.log('');
+    if (blockedHit && !declared) for (const line of BLOCK_CLASS_UNCLASSIFIED) console.log(line);
+    else if (blockedHit && !BLOCK_CLASS_VERDICTS[declared]) {
+      console.log(`  ⚠️ blockClass="${declared}" is not a known class — treated as owner-fork.`);
+    }
+    for (const line of verdict) console.log(line);
+    console.log('');
     process.exit(1);
   }
 
