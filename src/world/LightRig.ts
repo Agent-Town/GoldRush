@@ -7,6 +7,13 @@ import * as Terrain from './Terrain';
 
 export type ShadowsQuality = 'soft' | 'blob';
 export type NightShiftPhase = 'full' | 'dusk' | 'dark' | 'dawn';
+
+// Night Shift pool-light colours (render-side; §4.6). Carried lanterns and lamp posts burn amber —
+// the same warm the terrain shader's core mixes toward — while the hero and the Prospector carry a
+// cooler light so your own reach stays tellable from theirs at a glance.
+const WARM_POOL_LIGHT = '#ff9e3d';
+const COOL_POOL_LIGHT = '#9ec7e0';
+
 export type LightRigRampPalette = {
   background: THREE.Color;
   fog: THREE.Color;
@@ -372,7 +379,10 @@ export class LightRig {
       if (!light.visible || !source) continue;
       light.userData.kind = source.kind;
       const warm = source.kind === 'lantern' || source.kind === 'powered-lamp' || source.kind === 'enemy-lantern';
-      light.color.set(warm ? '#ffd28a' : '#8fded3');
+      // The pools ARE this map's composition, so they carry its colour. #ffd28a read as pale tan
+      // once ACES compressed it — the amber the night-mode-truth review asked for lives here, in the
+      // dynamic pool lights, not only in the terrain shader's emissive core.
+      light.color.set(warm ? WARM_POOL_LIGHT : COOL_POOL_LIGHT);
       const flicker = source.kind === 'lantern' ? this.nightShift.lampIntensityMult ?? 1 : 1;
       light.intensity = this.nightPoolIntensity(source.kind) * darkness * flicker;
       light.distance = source.radius;
