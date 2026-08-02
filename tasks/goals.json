@@ -20,9 +20,9 @@
               "id": "e1-claim-geometry-declared",
               "title": "The Claim: geometry declared rather than inferred (attended census wave 2026-08-02)",
               "taskFile": "lane-claim-geometry-declared.md",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "F-1381-3 + F-1381-4 (s1381 gate, reviews/lane-m4-claim-geometry-and-headless.md) — GATE-SIDE HOLD, NOT AN OWNER GATE. (1) lane/m4 is founded on the owner-BLOCKED commit 7c4f132f (f1328-1-drill-yard-census-debt), so any branch-level merge or main..lane/m4 diff sweeps blocked content into main. (2) lane/m4 base 46033151 is 270 commits behind main and PREDATES 69984c6a (stakeMarkers.lossCondition -> heroStart, repo-wide, drained s1329); lifting the slice onto clean main fails tsc with TS2339 on lossCondition. RE-LAND against current main per Mistake #15; keep lane/m4 as salvage-ref and DO NOT reset it."
+              "status": "merged",
+              "mergeHash": "a3e199f4d117cc926d0ea1c8e873bda1a777057b",
+              "reason": "GATE-SIDE HOLD DISCHARGED AND MERGED s1394 at a3e199f4 via the re-land on lane/e2-arsenal. Both stated conditions were re-verified BY COMMAND, not inherited from s1393: (1) git merge-base --is-ancestor shows neither the owner-BLOCKED 7c4f132f NOR the salvage-ref c876f675 is an ancestor of the landed tip cc79feb1 — it was applied as per-commit PATCHES, so no blocked content entered main; (2) tsc --noEmit rc=0 on the merged tree, the exact gate F-1381-4 predicted would fail on TS2339 lossCondition. lane/m4 remains untouched as salvage-ref."
             },
             {
               "id": "e1-authored-bundle-validation",
@@ -506,16 +506,17 @@
               "id": "e1-claim-geometry-reland-gt05-shape",
               "title": "Let gt-05-water-depth accept the claim geometry its sibling declares — change one matcher from toEqual to toMatchObject",
               "taskFile": "e1-claim-geometry-reland-gt05-shape.md",
-              "status": "queued",
-              "reason": "FIRE-AUTHORED s1393 to lane-c as the corrective for F-1393-1, on top of the undrained predecessor e676addf. The s1393 gate DERIVED its adjacent suites by grep instead of trusting the master's self-check (the F-1392-2 lesson) and surfaced three suites the master never named; one of them, gt-05-water-depth:333, pins the EXACT shape of contract tileParams via toEqual, which the predecessor deliberately widens with size/fords/harvestAnchors/water. Measured: RED on both projects on the merged tree, GREEN on both on the clean-main control, failure diff purely additive (-0/+40) with no changed value. That assertion is the test's FIRST, so its impassability, wade-speed and depth-sample assertions had never run; s1393 ran the repair as a probe in a detached worktree and got 2/2 green in 28.2s with those assertions executing. So the cure is one word AND the behaviour underneath is measured, not assumed. The predecessor merges together with this fix.",
-              "blockedReason": ""
+              "status": "merged",
+              "reason": "MERGED s1394 at a3e199f4 with its predecessor. Verified cured: gt-05-water-depth is GREEN on both projects on the merged tree, and the one-matcher change (toEqual -> toMatchObject at :338) was read in full — 1 file, 1 insertion, 1 deletion, exactly the authored scope.",
+              "mergeHash": "a3e199f4d117cc926d0ea1c8e873bda1a777057b"
             },
             {
               "id": "e1-claim-geometry-declared-reland",
               "title": "RE-LAND claim-geometry-declared on current main — five of its six paths apply CLEAN as per-commit patches (including BOTH files F-1381-3 flagged as contaminated), leaving one real 3-way lift in ContractFamilies.ts at :1489",
               "taskFile": "e1-claim-geometry-declared-reland.md",
-              "status": "queued",
-              "reason": "FIRE-AUTHORED s1392 to lane-c, finishing the pair whose first half (e1-headless-the-claim) merged at 8e20d8ca this same fire. F-1381-3 recorded that this slices versions of e2e/agent-view.spec.ts and e2e/fixtures/e1-mechanics-manifests.json are built on the owner-BLOCKED 7c4f132f, so a path-scoped COPY would import the block. s1392 measured that this is true of a COPY and NOT of a per-commit PATCH: git show c876f675 -- <path> emits only that commits own delta, and BOTH of those files apply CLEAN that way, as do three others. Their hunks were READ, not merely applied — they add center-ford ids, a frontier-river-depth descriptor and a water_crossings assertion, i.e. this slices own claim-geometry subject, with nothing from the drill-yard census. The single genuine conflict is src/meta/ContractFamilies.ts at :1489, because main moved that file by ~355 lines at cbf0e143 (authored-bundle validation); the master scopes that as an explicit hand 3-way lift of two readable hunks, with a STOP instruction if the insertion point is no longer obvious. All five pre-flight checks dry-run rc 0."
+              "status": "merged",
+              "reason": "MERGED s1394 at a3e199f4 together with its gt-05 corrective (the two lane commits e676addf + cc79feb1 landed as one path-scoped graft). Adjacent suites were re-derived by grep on the introduced identifiers rather than inherited: that surfaced cp02-charter-boot and cp03-press-loop, which toEqual runtime tileParams against the DOCUMENT tileParams and are therefore in the exact failure class this slice creates by backfilling size/fords/harvestAnchors/water — neither was in the s1393 set. Battery on the merged tree 79 pass / 13 fail vs clean-main CONTROL 79 pass / 11 fail; the 2-red delta was proved NOT a regression by a matched whole-file control (see reviews/e1-claim-geometry-declared-reland.md).",
+              "mergeHash": "a3e199f4d117cc926d0ea1c8e873bda1a777057b"
             }
           ]
         },
