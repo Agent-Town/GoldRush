@@ -76,71 +76,6 @@ type WaterMaterialConfig = {
   bedDepth?: { map: THREE.Texture; deepMeters: number; shoreMeters: number };
 };
 
-/**
- * The shared water field: one glint, one hash, one value-noise, used by the river/ford surface and
- * by the spring pond. Extracted verbatim from the river shader so the two surfaces cannot drift
- * apart — a pond that ripples on different noise than the river reads as a different game's water.
- */
-const WATER_FIELD_GLSL = `
-float waterGlint(vec2 world, vec2 center, float phase) {
-  vec2 delta = world - center;
-  float sparkle = 1.0 - smoothstep(0.0, 1.8, dot(delta, delta));
-  float pulse = smoothstep(0.72, 0.99, sin(phase + center.x * 0.37) * 0.5 + 0.5);
-  float line = 1.0 - smoothstep(0.018, 0.09, abs(delta.y + sin(delta.x * 2.6 + phase) * 0.05));
-  return sparkle * pulse * line;
-}
-
-float waterHash(vec2 p) {
-  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
-  p3 += dot(p3, p3.yzx + 33.33);
-  return fract((p3.x + p3.y) * p3.z);
-}
-
-float waterNoise(vec2 p) {
-  vec2 i = floor(p);
-  vec2 f = fract(p);
-  f = f * f * (3.0 - 2.0 * f);
-  float a = waterHash(i);
-  float b = waterHash(i + vec2(1.0, 0.0));
-  float c = waterHash(i + vec2(0.0, 1.0));
-  float d = waterHash(i + vec2(1.0, 1.0));
-  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
-}`;
-export type WaterRibbonConfig = {
-  /** Centreline in world X/Z, read from the sculpt contract's own mask polyline. */
-  points: ReadonlyArray<{ x: number; z: number }>;
-  halfWidth: number;
-  /** Metres the sheet over-reaches its mask band so the sculpt, not the mesh, cuts the waterline. */
-  edgeBleed: number;
-  surfaceY: number;
-  /** Declared depth fed to the shader's wade..deep colour ramp. Render-only. */
-  depth: number;
-  glints: ReadonlyArray<{ x: number; z: number }>;
-  headFade: number;
-  tailFade: number;
-  name: string;
-};
-
-export type WaterFordConfig = {
-  pans: ReadonlyArray<{ minX: number; maxX: number; minZ: number; maxZ: number }>;
-  halfDepth: number;
-  surfaceY: number;
-  depth: number;
-  name: string;
-};
-
-// A braid channel is ~3 m wide, where the shared river shader's cross-section profile — a
-// 0.95-unit alpha ramp in from the visual edge, and a banked-foam line 0.72 units either side
-// of the river half-width — would swallow the whole ribbon in fade and foam. Rather than fork
-// the shader, the ribbon feeds it a STRETCHED half-width: shader units = metres * scale, so
-// both features land where a 3 m channel wants them. Measured on the first U1 board: at the
-// unstretched profile the outer half of every ribbon was pale foam and the water read as a
-// plastic plank.
-const RIBBON_EDGE_FADE_METRES = 0.34;
-const RIBBON_FOAM_INSET_METRES = 0.16;
-/** Cool multiplier: the sun is #ffd28a, which drags a teal river straight to olive. */
-const RIBBON_TINT = { r: 0.74, g: 1.0, b: 1.18 };
-
 export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.MeshStandardMaterial {
   const uniforms: WaterUniforms = {
     time: { value: 0 },
@@ -182,11 +117,6 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     config.anchors.map((anchor) => `${anchor.x.toFixed(2)},${anchor.z.toFixed(2)}`).join('_') || 'noglints',
     config.bedDepth ? `bed${config.bedDepth.deepMeters.toFixed(3)}_${config.bedDepth.shoreMeters.toFixed(3)}` : 'nobed',
   ].join('-');
-  // The shader bakes this config's constants into its source, so two materials may only
-  // share a compiled program when those constants match. Twin Banks mounts two channel
-  // ribbons whose depth and gold-glint anchors differ — under a config-blind cache key
-  // the second one silently renders with the first one's braid.
-  material.customProgramCacheKey = () => `living-water-${config.ford ? 'ford' : 'river'}-${shaderSignature(config)}`;
   material.onBeforeCompile = (shader) => {
     shader.uniforms.waterTime = uniforms.time;
     if (config.bedDepth) {
@@ -219,13 +149,37 @@ uniform float waterDeepDepth;
 ${config.bedDepth ? 'uniform sampler2D waterBedMap;\nuniform float waterBedDeep;\nuniform float waterBedShore;' : ''}
 varying vec2 vWaterUv;
 varying vec2 vWaterWorld;
-${WATER_FIELD_GLSL}
+
+float waterGlint(vec2 world, vec2 center, float phase) {
+  vec2 delta = world - center;
+  float sparkle = 1.0 - smoothstep(0.0, 1.8, dot(delta, delta));
+  float pulse = smoothstep(0.72, 0.99, sin(phase + center.x * 0.37) * 0.5 + 0.5);
+  float line = 1.0 - smoothstep(0.018, 0.09, abs(delta.y + sin(delta.x * 2.6 + phase) * 0.05));
+  return sparkle * pulse * line;
+}
 
 float waterGoldGlints(vec2 world) {
   if (waterQuality < 0.75) return 0.0;
   float glint = 0.0;
 ${glintShaderLines(config.anchors)}
   return glint;
+}
+
+float waterHash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+float waterNoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float a = waterHash(i);
+  float b = waterHash(i + vec2(1.0, 0.0));
+  float c = waterHash(i + vec2(0.0, 1.0));
+  float d = waterHash(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
 }`)
       .replace('#include <map_fragment>', `
 #ifdef USE_MAP
@@ -392,49 +346,6 @@ export function createSculptWater(config: SculptWaterConfig & {
   mesh.name = 'SculptLivingWater';
   mesh.rotation.x = -Math.PI / 2;
   mesh.position.set(0, config.surfaceY, config.centerZ);
-/**
- * A render-only living-water strip that follows a sculpted channel's own centreline.
- *
- * The mesh is a mitre-joined band of the SAME half-width the sculpt was cut from, laid at
- * the mask's water plane, so it can never cover ground the mask calls dry. Nothing here is
- * simulation: band classification, fords and crossings stay engine truth.
- */
-export function createWaterRibbon(config: WaterRibbonConfig): THREE.Mesh {
-  const geometry = ribbonGeometry(config);
-  const shaderUnitsPerMetre = 0.95 / RIBBON_EDGE_FADE_METRES;
-  const material = createLivingWaterMaterial({
-    ford: false,
-    // Foam rides the mask's own bank line; the fade rides the bled mesh edge.
-    riverHalfWidth: (config.halfWidth - RIBBON_FOAM_INSET_METRES) * shaderUnitsPerMetre,
-    visualHalfWidth: (config.halfWidth + config.edgeBleed) * shaderUnitsPerMetre,
-    // The ends are shaped by vertex alpha (each channel meets the tile differently), so the
-    // shader's symmetric |x| length fade is pushed off the tile instead of fighting it.
-    lengthHalf: 512,
-    fadeStart: 511,
-    // A braid's fords are pans at |x|=16, not a band at x=0: the shared ford tint stays off.
-    fordHalfWidth: -1,
-    riverDepth: config.depth,
-    fordDepth: config.depth,
-    wadeDepth: Balance.terrainSim.wadeDepth,
-    deepDepth: Balance.terrainSim.deepDepth,
-    anchors: [...config.glints],
-  });
-  // Ribbons ride ON a sculpt: the dry plait between the channels has to occlude the far one.
-  // That same depth test is the water's safety law — a ribbon may over-reach its mask band and
-  // the sculpt clips it at the exact contour where the bed crosses the water plane, so the
-  // waterline is the sculpt's own and water can never be painted onto ground the mask calls dry.
-  material.depthTest = true;
-  material.vertexColors = true;
-  material.color.setRGB(RIBBON_TINT.r, RIBBON_TINT.g, RIBBON_TINT.b, THREE.LinearSRGBColorSpace);
-  material.roughness = 0.5;
-  // The shared river tiles its flow map 8x along a 64 m band; a 58 m braid channel needs the
-  // same ~2.5 m tile or the current smears into one flat sheet. Uniform, not shader source.
-  const uniforms = material.userData.waterUniforms as { repeat: THREE.IUniform<number> };
-  uniforms.repeat.value = Math.max(4, Math.round(centrelineLength(config.points) / 2.5));
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.name = config.name;
-  mesh.userData.renderOnly = true;
-  mesh.userData.visualHalfWidth = config.halfWidth;
   mesh.renderOrder = RenderLayers.groundDecals;
   mesh.receiveShadow = false;
   mesh.castShadow = false;
@@ -452,151 +363,6 @@ export function createWaterRibbon(config: WaterRibbonConfig): THREE.Mesh {
       material.dispose();
     },
   };
-}
-
-
-  return mesh;
-}
-
-/**
- * The shallow sheet over a mask's ford rects — the crossing a player reads before stepping.
- *
- * One mesh for every pan on the tile, carrying the shipped ford water config, so a braid's
- * crossings read wet-but-passable instead of brown gravel with a stripe of river through them.
- * Depth-tested like the channel ribbons: the sculpt cuts the waterline, not this geometry.
- */
-export function createFordSheet(config: WaterFordConfig): THREE.Mesh {
-  const positions: number[] = [];
-  const uvs: number[] = [];
-  const indices: number[] = [];
-  for (const pan of config.pans) {
-    const base = positions.length / 3;
-    for (const [x, z] of [[pan.minX, pan.minZ], [pan.maxX, pan.minZ], [pan.minX, pan.maxZ], [pan.maxX, pan.maxZ]] as const) {
-      positions.push(x, config.surfaceY, z);
-      uvs.push((x - pan.minX) / Math.max(0.001, pan.maxX - pan.minX), (z - pan.minZ) / Math.max(0.001, pan.maxZ - pan.minZ));
-    }
-    indices.push(base, base + 2, base + 1, base + 1, base + 2, base + 3);
-  }
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
-  geometry.setIndex(indices);
-  geometry.computeVertexNormals();
-  geometry.computeBoundingSphere();
-  // The ford branch of the shared shader already does what a pan needs: it reads across in WORLD
-  // z (so visualHalfWidth is the pan's own half-depth) and fades the sheet at both ends of its uv
-  // span, which is how the shipped centre ford stops dead against dry gravel.
-  const material = createLivingWaterMaterial({
-    ford: true,
-    riverHalfWidth: config.halfDepth * 0.72,
-    visualHalfWidth: config.halfDepth,
-    lengthHalf: 512,
-    fadeStart: 511,
-    fordHalfWidth: config.halfDepth,
-    riverDepth: config.depth,
-    fordDepth: config.depth,
-    wadeDepth: Balance.terrainSim.wadeDepth,
-    deepDepth: Balance.terrainSim.deepDepth,
-    anchors: [],
-  });
-  material.color.setRGB(RIBBON_TINT.r, RIBBON_TINT.g, RIBBON_TINT.b, THREE.LinearSRGBColorSpace);
-  const mesh = new THREE.Mesh(geometry, material);
-  mesh.name = config.name;
-  mesh.userData.renderOnly = true;
-  mesh.renderOrder = RenderLayers.groundDecals;
-  mesh.receiveShadow = false;
-  mesh.castShadow = false;
-  mesh.frustumCulled = false;
-  return mesh;
-}
-
-function ribbonGeometry(config: WaterRibbonConfig): THREE.BufferGeometry {
-  const points = config.points;
-  const directions = points.slice(0, -1).map((point, index) => {
-    const next = points[index + 1]!;
-    const length = Math.hypot(next.x - point.x, next.z - point.z) || 1;
-    return { x: (next.x - point.x) / length, z: (next.z - point.z) / length };
-  });
-  const arcLengths = points.map((point, index) => (index === 0 ? 0 : Math.hypot(point.x - points[index - 1]!.x, point.z - points[index - 1]!.z)));
-  const distances = arcLengths.reduce<number[]>((all, step, index) => [...all, (all[index - 1] ?? 0) + step], []);
-  const total = distances[distances.length - 1] ?? 1;
-  // Mitre offset per joint: m = (nA + nB) / (1 + nA.nB) keeps both edges parallel to their
-  // own segment, which is exactly the band the sculpt's polyline_band region was cut from.
-  const offsets = points.map((_, index) => {
-    const before = directions[Math.max(0, index - 1)]!;
-    const after = directions[Math.min(directions.length - 1, index)]!;
-    const normalBefore = { x: -before.z, z: before.x };
-    const normalAfter = { x: -after.z, z: after.x };
-    const cosine = normalBefore.x * normalAfter.x + normalBefore.z * normalAfter.z;
-    const scale = 1 / Math.max(0.4, 1 + cosine);
-    return { x: (normalBefore.x + normalAfter.x) * scale, z: (normalBefore.z + normalAfter.z) * scale };
-  });
-
-  const positions: number[] = [];
-  const uvs: number[] = [];
-  const colors: number[] = [];
-  const indices: number[] = [];
-  const pushRow = (index: number, mix: number): void => {
-    const next = Math.min(points.length - 1, index + 1);
-    const point = { x: lerp(points[index]!.x, points[next]!.x, mix), z: lerp(points[index]!.z, points[next]!.z, mix) };
-    const offset = { x: lerp(offsets[index]!.x, offsets[next]!.x, mix), z: lerp(offsets[index]!.z, offsets[next]!.z, mix) };
-    const distance = lerp(distances[index]!, distances[next]!, mix);
-    const alpha = Math.min(
-      smoothstep(0, Math.max(0.001, config.headFade), distance),
-      smoothstep(0, Math.max(0.001, config.tailFade), total - distance),
-    );
-    for (const side of [1, -1]) {
-      const reach = (config.halfWidth + config.edgeBleed) * side;
-      positions.push(point.x + offset.x * reach, config.surfaceY, point.z + offset.z * reach);
-      uvs.push(distance / total, side > 0 ? 0 : 1);
-      colors.push(1, 1, 1, alpha);
-    }
-  };
-  for (let index = 0; index < points.length - 1; index += 1) {
-    const steps = Math.max(2, Math.ceil(arcLengths[index + 1]! / 1.6));
-    for (let step = 0; step < steps; step += 1) pushRow(index, step / steps);
-  }
-  pushRow(points.length - 1, 0);
-  // Wound so the face normal is +Y: each row is [+offset, -offset] and the material is single-sided.
-  for (let row = 0; row < positions.length / 6 - 1; row += 1) {
-    const a = row * 2;
-    indices.push(a, a + 2, a + 1, a + 1, a + 2, a + 3);
-  }
-
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
-  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 4));
-  geometry.setIndex(indices);
-  geometry.computeVertexNormals();
-  geometry.computeBoundingSphere();
-  return geometry;
-}
-
-function centrelineLength(points: ReadonlyArray<{ x: number; z: number }>): number {
-  return points.reduce((total, point, index) => (index === 0 ? 0 : total + Math.hypot(point.x - points[index - 1]!.x, point.z - points[index - 1]!.z)), 0);
-}
-
-function lerp(from: number, to: number, mix: number): number {
-  return from + (to - from) * mix;
-}
-
-function smoothstep(edge0: number, edge1: number, value: number): number {
-  const t = THREE.MathUtils.clamp((value - edge0) / (edge1 - edge0), 0, 1);
-  return t * t * (3 - 2 * t);
-}
-
-function shaderSignature(config: WaterMaterialConfig): string {
-  return [
-    config.riverHalfWidth,
-    config.visualHalfWidth,
-    config.lengthHalf,
-    config.fadeStart,
-    config.fordHalfWidth,
-    ...config.anchors.flatMap((anchor) => [anchor.x, anchor.z]),
-  ]
-    .map((value) => value.toFixed(3))
-    .join(':');
 }
 
 export function createFordStones(waterY: number, offsetX = 0): THREE.InstancedMesh {
@@ -775,10 +541,44 @@ function round3(value: number): number {
 }
 
 
+
+/**
+ * The shared water field: one glint, one hash, one value-noise, used by the river/ford surface and
+ * by the spring pond. Extracted verbatim from the river shader so the two surfaces cannot drift
+ * apart — a pond that ripples on different noise than the river reads as a different game's water.
+ */
+const WATER_FIELD_GLSL = `
+float waterGlint(vec2 world, vec2 center, float phase) {
+  vec2 delta = world - center;
+  float sparkle = 1.0 - smoothstep(0.0, 1.8, dot(delta, delta));
+  float pulse = smoothstep(0.72, 0.99, sin(phase + center.x * 0.37) * 0.5 + 0.5);
+  float line = 1.0 - smoothstep(0.018, 0.09, abs(delta.y + sin(delta.x * 2.6 + phase) * 0.05));
+  return sparkle * pulse * line;
+}
+
+float waterHash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+float waterNoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float a = waterHash(i);
+  float b = waterHash(i + vec2(1.0, 0.0));
+  float c = waterHash(i + vec2(0.0, 1.0));
+  float d = waterHash(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+}`;
+
+
 export type SpringPondSurface = {
   group: THREE.Group;
   dispose: () => void;
 };
+
 
 type SpringPondConfig = {
   x: number;
@@ -789,13 +589,17 @@ type SpringPondConfig = {
   surfaceY: number;
 };
 
+
 /**
  * How far past the water line the damp ground reads, as a multiple of the pool radius. Kept tight:
  * the margin has to stay inside the landmark's own stone ring, and wet stone at a waterline is
  * right where dark ground drawn over dry sand would be a smear.
  */
 const POND_MARGIN_SCALE = 1.42;
+
+
 const POND_SURFACE_LIFT = 0.02;
+
 
 /**
  * ONE LIVE POOL IN A BONE-DRY MAP (brief U1).
@@ -945,6 +749,7 @@ ${WATER_FIELD_GLSL}`)
   };
 }
 
+
 /**
  * Three darker reed clumps on the wet margin. Desaturated on purpose: desert law says cacti and dry
  * brush, and a bright green fringe would turn the one spring into an oasis the map does not have.
@@ -983,6 +788,7 @@ function createPondReedTufts(config: SpringPondConfig): THREE.InstancedMesh {
   return mesh;
 }
 
+
 function reedTuftGeometry(): THREE.BufferGeometry {
   const width = 0.16;
   const height = 0.82;
@@ -997,4 +803,223 @@ function reedTuftGeometry(): THREE.BufferGeometry {
   geometry.computeVertexNormals();
   return geometry;
 }
+
+
+export type WaterRibbonConfig = {
+  /** Centreline in world X/Z, read from the sculpt contract's own mask polyline. */
+  points: ReadonlyArray<{ x: number; z: number }>;
+  halfWidth: number;
+  /** Metres the sheet over-reaches its mask band so the sculpt, not the mesh, cuts the waterline. */
+  edgeBleed: number;
+  surfaceY: number;
+  /** Declared depth fed to the shader's wade..deep colour ramp. Render-only. */
+  depth: number;
+  glints: ReadonlyArray<{ x: number; z: number }>;
+  headFade: number;
+  tailFade: number;
+  name: string;
+};
+
+
+export type WaterFordConfig = {
+  pans: ReadonlyArray<{ minX: number; maxX: number; minZ: number; maxZ: number }>;
+  halfDepth: number;
+  surfaceY: number;
+  depth: number;
+  name: string;
+};
+
+
+const RIBBON_EDGE_FADE_METRES = 0.34;
+
+
+const RIBBON_FOAM_INSET_METRES = 0.16;
+
+
+const RIBBON_TINT = { r: 0.74, g: 1.0, b: 1.18 };
+
+
+/**
+ * A render-only living-water strip that follows a sculpted channel's own centreline.
+ *
+ * The mesh is a mitre-joined band of the SAME half-width the sculpt was cut from, laid at
+ * the mask's water plane, so it can never cover ground the mask calls dry. Nothing here is
+ * simulation: band classification, fords and crossings stay engine truth.
+ */
+export function createWaterRibbon(config: WaterRibbonConfig): THREE.Mesh {
+  const geometry = ribbonGeometry(config);
+  const shaderUnitsPerMetre = 0.95 / RIBBON_EDGE_FADE_METRES;
+  const material = createLivingWaterMaterial({
+    ford: false,
+    // Foam rides the mask's own bank line; the fade rides the bled mesh edge.
+    riverHalfWidth: (config.halfWidth - RIBBON_FOAM_INSET_METRES) * shaderUnitsPerMetre,
+    visualHalfWidth: (config.halfWidth + config.edgeBleed) * shaderUnitsPerMetre,
+    // The ends are shaped by vertex alpha (each channel meets the tile differently), so the
+    // shader's symmetric |x| length fade is pushed off the tile instead of fighting it.
+    lengthHalf: 512,
+    fadeStart: 511,
+    // A braid's fords are pans at |x|=16, not a band at x=0: the shared ford tint stays off.
+    fordHalfWidth: -1,
+    riverDepth: config.depth,
+    fordDepth: config.depth,
+    wadeDepth: Balance.terrainSim.wadeDepth,
+    deepDepth: Balance.terrainSim.deepDepth,
+    anchors: [...config.glints],
+  });
+  // Ribbons ride ON a sculpt: the dry plait between the channels has to occlude the far one.
+  // That same depth test is the water's safety law — a ribbon may over-reach its mask band and
+  // the sculpt clips it at the exact contour where the bed crosses the water plane, so the
+  // waterline is the sculpt's own and water can never be painted onto ground the mask calls dry.
+  material.depthTest = true;
+  material.vertexColors = true;
+  material.color.setRGB(RIBBON_TINT.r, RIBBON_TINT.g, RIBBON_TINT.b, THREE.LinearSRGBColorSpace);
+  material.roughness = 0.5;
+  // The shared river tiles its flow map 8x along a 64 m band; a 58 m braid channel needs the
+  // same ~2.5 m tile or the current smears into one flat sheet. Uniform, not shader source.
+  const uniforms = material.userData.waterUniforms as { repeat: THREE.IUniform<number> };
+  uniforms.repeat.value = Math.max(4, Math.round(centrelineLength(config.points) / 2.5));
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.name = config.name;
+  mesh.userData.renderOnly = true;
+  mesh.userData.visualHalfWidth = config.halfWidth;
+  mesh.renderOrder = RenderLayers.groundDecals;
+  mesh.receiveShadow = false;
+  mesh.castShadow = false;
+  mesh.frustumCulled = false;
+  return mesh;
+}
+
+
+/**
+ * The shallow sheet over a mask's ford rects — the crossing a player reads before stepping.
+ *
+ * One mesh for every pan on the tile, carrying the shipped ford water config, so a braid's
+ * crossings read wet-but-passable instead of brown gravel with a stripe of river through them.
+ * Depth-tested like the channel ribbons: the sculpt cuts the waterline, not this geometry.
+ */
+export function createFordSheet(config: WaterFordConfig): THREE.Mesh {
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const indices: number[] = [];
+  for (const pan of config.pans) {
+    const base = positions.length / 3;
+    for (const [x, z] of [[pan.minX, pan.minZ], [pan.maxX, pan.minZ], [pan.minX, pan.maxZ], [pan.maxX, pan.maxZ]] as const) {
+      positions.push(x, config.surfaceY, z);
+      uvs.push((x - pan.minX) / Math.max(0.001, pan.maxX - pan.minX), (z - pan.minZ) / Math.max(0.001, pan.maxZ - pan.minZ));
+    }
+    indices.push(base, base + 2, base + 1, base + 1, base + 2, base + 3);
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  geometry.computeBoundingSphere();
+  // The ford branch of the shared shader already does what a pan needs: it reads across in WORLD
+  // z (so visualHalfWidth is the pan's own half-depth) and fades the sheet at both ends of its uv
+  // span, which is how the shipped centre ford stops dead against dry gravel.
+  const material = createLivingWaterMaterial({
+    ford: true,
+    riverHalfWidth: config.halfDepth * 0.72,
+    visualHalfWidth: config.halfDepth,
+    lengthHalf: 512,
+    fadeStart: 511,
+    fordHalfWidth: config.halfDepth,
+    riverDepth: config.depth,
+    fordDepth: config.depth,
+    wadeDepth: Balance.terrainSim.wadeDepth,
+    deepDepth: Balance.terrainSim.deepDepth,
+    anchors: [],
+  });
+  material.color.setRGB(RIBBON_TINT.r, RIBBON_TINT.g, RIBBON_TINT.b, THREE.LinearSRGBColorSpace);
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.name = config.name;
+  mesh.userData.renderOnly = true;
+  mesh.renderOrder = RenderLayers.groundDecals;
+  mesh.receiveShadow = false;
+  mesh.castShadow = false;
+  mesh.frustumCulled = false;
+  return mesh;
+}
+
+
+function ribbonGeometry(config: WaterRibbonConfig): THREE.BufferGeometry {
+  const points = config.points;
+  const directions = points.slice(0, -1).map((point, index) => {
+    const next = points[index + 1]!;
+    const length = Math.hypot(next.x - point.x, next.z - point.z) || 1;
+    return { x: (next.x - point.x) / length, z: (next.z - point.z) / length };
+  });
+  const arcLengths = points.map((point, index) => (index === 0 ? 0 : Math.hypot(point.x - points[index - 1]!.x, point.z - points[index - 1]!.z)));
+  const distances = arcLengths.reduce<number[]>((all, step, index) => [...all, (all[index - 1] ?? 0) + step], []);
+  const total = distances[distances.length - 1] ?? 1;
+  // Mitre offset per joint: m = (nA + nB) / (1 + nA.nB) keeps both edges parallel to their
+  // own segment, which is exactly the band the sculpt's polyline_band region was cut from.
+  const offsets = points.map((_, index) => {
+    const before = directions[Math.max(0, index - 1)]!;
+    const after = directions[Math.min(directions.length - 1, index)]!;
+    const normalBefore = { x: -before.z, z: before.x };
+    const normalAfter = { x: -after.z, z: after.x };
+    const cosine = normalBefore.x * normalAfter.x + normalBefore.z * normalAfter.z;
+    const scale = 1 / Math.max(0.4, 1 + cosine);
+    return { x: (normalBefore.x + normalAfter.x) * scale, z: (normalBefore.z + normalAfter.z) * scale };
+  });
+
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const colors: number[] = [];
+  const indices: number[] = [];
+  const pushRow = (index: number, mix: number): void => {
+    const next = Math.min(points.length - 1, index + 1);
+    const point = { x: lerp(points[index]!.x, points[next]!.x, mix), z: lerp(points[index]!.z, points[next]!.z, mix) };
+    const offset = { x: lerp(offsets[index]!.x, offsets[next]!.x, mix), z: lerp(offsets[index]!.z, offsets[next]!.z, mix) };
+    const distance = lerp(distances[index]!, distances[next]!, mix);
+    const alpha = Math.min(
+      smoothstep(0, Math.max(0.001, config.headFade), distance),
+      smoothstep(0, Math.max(0.001, config.tailFade), total - distance),
+    );
+    for (const side of [1, -1]) {
+      const reach = (config.halfWidth + config.edgeBleed) * side;
+      positions.push(point.x + offset.x * reach, config.surfaceY, point.z + offset.z * reach);
+      uvs.push(distance / total, side > 0 ? 0 : 1);
+      colors.push(1, 1, 1, alpha);
+    }
+  };
+  for (let index = 0; index < points.length - 1; index += 1) {
+    const steps = Math.max(2, Math.ceil(arcLengths[index + 1]! / 1.6));
+    for (let step = 0; step < steps; step += 1) pushRow(index, step / steps);
+  }
+  pushRow(points.length - 1, 0);
+  // Wound so the face normal is +Y: each row is [+offset, -offset] and the material is single-sided.
+  for (let row = 0; row < positions.length / 6 - 1; row += 1) {
+    const a = row * 2;
+    indices.push(a, a + 2, a + 1, a + 1, a + 2, a + 3);
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 4));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  geometry.computeBoundingSphere();
+  return geometry;
+}
+
+
+function centrelineLength(points: ReadonlyArray<{ x: number; z: number }>): number {
+  return points.reduce((total, point, index) => (index === 0 ? 0 : total + Math.hypot(point.x - points[index - 1]!.x, point.z - points[index - 1]!.z)), 0);
+}
+
+
+function lerp(from: number, to: number, mix: number): number {
+  return from + (to - from) * mix;
+}
+
+
+function smoothstep(edge0: number, edge1: number, value: number): number {
+  const t = THREE.MathUtils.clamp((value - edge0) / (edge1 - edge0), 0, 1);
+  return t * t * (3 - 2 * t);
+}
+
 
