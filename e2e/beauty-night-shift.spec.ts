@@ -173,7 +173,9 @@ async function shoot(page: Page, testInfo: TestInfo, moment: string, metrics: Me
 }
 
 test('night shift beauty board', async ({ page }, testInfo) => {
-  test.setTimeout(240_000);
+  // Generous: this worktree shares a machine with other shifts' dev servers and probes, and the
+  // p95 sampler alone is 180 real frames per moment.
+  test.setTimeout(900_000);
   const metrics: Metrics[] = [];
   const errors = await boot(page, 'beauty-night-shift');
   await page.evaluate(([x, z]) => window.__GR_TEST__!.teleport(x!, z!), HERO);
