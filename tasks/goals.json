@@ -479,6 +479,13 @@
               "mergeHash": "9ee3b710c09f5bb6575d2fe754af47e111c0ac80"
             },
             {
+              "id": "run3d-16-rail-elements",
+              "title": "RUN-3D rider 16: rail elements in 3D — one baked straight-element GLB instanced per tie off the existing RailPath diagnostics, additive over the procedural ground-decal layer (spec RUN-RECIPE.md:20 names rail elements fire-authorable once 07 lands; 07 verified landed)",
+              "taskFile": "run3d-16-rail-elements.md",
+              "status": "queued",
+              "reason": "FIRE-AUTHORED s1389 to lane-c, from specs/town-3d/RUN-RECIPE.md:20 plus the research F-1387-1 banked — every coordinate RE-VERIFIED at source against merged main 9ee3b710, because s1387 measured it BEFORE the Buildable3dId->Run3dId rename landed. Authorable only now: F-1387-1 held lane-c closed precisely until gold-nodes merged, since a master written against the pre-rename shape would have landed as a stale-base graft. FOUR DESIGN POINTS SETTLED IN THE MASTER rather than left to the runner: (1) R2 for rails means the PROCEDURAL instanced boxes, not a sprite, since rails have no billboard; (2) composition is one GLB per TIE oriented by that tie's own yaw (RailPath.ts:139 Math.atan2(dirX,dirZ)) — NOT from diagnostics.samples, which flat-concatenates multiple paths with no boundary marker and would yield a wrong yaw at every path seam; (3) InstancedMesh not N clones, because a path is routinely 100+ ties, so the gold-seam clone-per-instance pattern does not transfer and the tri budget tightens from R7's 4000 to 800; (4) only the STRAIGHT r0c0 cell is in scope — ore carts imply motion and are an attended design fork. The rider is EXCLUDED from the 'all' selection exactly like gold_seam, which is what keeps it off the F-1387-3 plain-boot regression path, and m2-05 + night3d-perf are named in the self-check as the oracle that proves it."
+            },
+            {
               "id": "pc-01c-drill-yard-practice-derivation",
               "title": "PC-01c: the Drill Yard's practice mechanics are DERIVED, not invisible — lift the src-only staging into practice.stations/practice.targets, teach deriveMechanicsManifest to read practice, and close the unvalidated practice key hole (AP-11 NO-UNDECLARED-MECHANICS at the derivation; F-1383-2 rec (a), the changed premise f1328-1-drill-yard-census-debt requires)",
               "taskFile": "lane-a-drill-yard-practice-derivation.md",
