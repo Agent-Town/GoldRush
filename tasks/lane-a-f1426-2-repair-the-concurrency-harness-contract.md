@@ -14,7 +14,7 @@ WHY (F-1426-1 + F-1426-2, measured s1426 while draining `f1424-4`; every coordin
 
 So for a bare-file subject, `missing` is both bare keys, `extras` is every line-qualified row, and it throws — deterministically, on the first run, forever. There is no input for which a bare-file subject can succeed.
 
-**AND ITS OWN SELF-TEST CANNOT SEE THIS.** `--self-test` passes today and still passed on the merged tree at drain time. Its fixture (`:304`) asserts `assertComplete(executions, ['e2e/a.spec.ts:4'])` — a `file:line` subject only. **A green self-test certified an instrument that could not perform the job it was pointed at.** Closing that coverage gap is as much the deliverable as the fix.
+**AND ITS OWN SELF-TEST CANNOT SEE THIS.** `--self-test` passes today and still passed on the merged tree at drain time. Its fixture (`:304`) asserts `assertComplete` against a synthetic one-test report using a **`file:line`-shaped subject only** — never a bare file. **A green self-test certified an instrument that could not perform the job it was pointed at.** Closing that coverage gap is as much the deliverable as the fix.
 
 **DEFECT 2 (F-1426-1) — the instrument cannot refuse an arm that measures nothing.**
 `playwright.config.ts` contains **no `fullyParallel` key** (verify yourself: `grep -c fullyParallel playwright.config.ts` → `0`), so Playwright's default `fullyParallel: false` applies and **parallelism is per-FILE, not per-test**. One spec file × two projects = **2 schedulable jobs**, so a run against a single spec file obtains **M=2 whatever `--workers` says**.
