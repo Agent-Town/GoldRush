@@ -109,12 +109,40 @@ specs' console-error collectors and timing assertions, each of which then reads 
 regression. F-1435-1's prescribed cures (pin the loader / scope the collector) should be scoped to the
 **class**, not to `run-suspend.spec.ts` alone (`cured-defect-survives-in-the-sibling-script`).
 
-**F-1436-2 (🟢, ledger).** The always-red-on-main census keeps growing and is now spread across three
-findings with no single home: F-1434-2 named `water-mask-engine:23`, `terrain3d-claim-pilot:166`,
-`e1-twin-banks:103`/`:122`; F-1435-2 named `restore-validation:656`, `bt-01-tiers:205`/`:430`; this drain
-re-confirms `restore-validation:656` and adds `world-info-notes:196`/`:293`/`:322` — **ten guards** that are
-red on main in both projects. Every drain now pays to re-control them. A guard that is always red cannot warn
-anyone; the set wants one inventory row and a fix-or-retire ruling, not a fourth finding next fire.
+**F-1436-2 (🟢, factory instrument) — THE INVENTORY EXISTS AND THE FACTORY STOPPED READING IT. THE FIRST
+DRAFT OF THIS FINDING WAS WRONG, AND HOW IT WAS WRONG IS THE FINDING.**
+
+It was first written as *"the always-red census is spread across three findings with no single home; it wants
+one inventory row"* — F-1434-2 named `water-mask-engine:23`, `terrain3d-claim-pilot:166`, `e1-twin-banks:103`/
+`:122`; F-1435-2 named `restore-validation:656`, `bt-01-tiers:205`/`:430`; this drain re-confirmed
+`restore-validation:656` and added `world-info-notes:196`/`:293`/`:322`. Ten guards, three findings, three
+fires. Then the premise was checked instead of asserted (`verify-your-own-claims`), and it collapsed:
+
+`logs/suite-red-inventory.md` — the deliverable of `lane-d-suite-red-inventory`, fire-authored s1159 and
+**SHIPPED** — already lists **303 failing tests of 2388**, and **every one of those ten is in it**, with a
+`BOTH`/`MOBILE-ONLY`/`DESKTOP-ONLY` bucket *and* a measured **blast radius** (how much of the spec sits
+unexercised behind the red: `world-info-notes` town-shells **15/29 = 51.7%**, 390px **17/19 = 89.5%**,
+`water-mask-engine` **16/26 = 61.5%**, `restore-validation` wrecker-refs **52/59 = 88.1%**). It goes further:
+`restore-validation:186` — the red this drain spent four isolation runs characterising as "moves between
+projects run to run" — is already recorded there as **`~25%: 3/12 desktop, 3/12 mobile — measured s1297,
+interleaved, order-reversed, --workers=1; F-1297-1`**. That measurement is ~140 fires old and I re-derived it
+from scratch.
+
+⚠️ **The reason is mechanical, not careless, which is why a fourth finding would not have fixed it.**
+Reviews cite reds by `file:line`. The inventory records `file:line` too — *as of its run*. Grepping all ten
+cited coordinates against the inventory returns **0 of 10**; grepping the same ten by **test title** returns
+**10 of 10** (`world-info-notes` 335→322, 111→196, 301→293; `restore-validation` 708→656, 32→186;
+`water-mask-engine` 39→23). The inventory is not missing and it is not stale in substance — it is
+**unfindable by the only key anybody uses**. This is F-1310-1/F-1425-2 (*cite by content, coordinates rot*)
+biting the factory's own instrument rather than its law files.
+
+**Cure (fire-authorable, lane-d, sharply scoped):** a title-keyed lookup — `scripts/red-inventory-lookup.mjs
+<spec-file>` — so a drain asks *"which of my reds are already known, and what is behind them?"* in one second
+instead of paying ~8 minutes of control runs per drain to re-derive rows that already exist. The control run
+stays mandatory for reds the lookup does **not** know; what it removes is the re-derivation of the ones it
+does. 🚫 Do **not** cure this by re-running the whole inventory (hours, and the coordinates would rot again
+the next merge) and do **not** cure it by deleting the `file:line` column — the line is still useful once the
+title has found the row.
 
 **F-1433-2 remains open and untouched**, exactly as the master's firewall required (`prebuiltPalisades` now has
 zero consumers; it is owner-adjacent because it encodes his July gold-tax ruling).
