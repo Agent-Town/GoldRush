@@ -619,6 +619,7 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
   };
   host.scene.add(water.mesh);
   host.canvas.dataset.terrain3dPilotSculptWater = 'living-water-quad';
+  host.canvas.dataset.terrain3dPilotSculptWaterHalfWidth = Terrain.visualWaterHalfWidth().toFixed(3);
   host.canvas.dataset.terrain3dPilotSculptWaterY = surfaceY.toFixed(4);
   host.canvas.dataset.terrain3dPilotSculptWaterGlints = String(Terrain.nodeAnchors.length);
   host.canvas.dataset.terrain3dPilotSculptWaterDeepest = water.deepestMeters.toFixed(3);
@@ -743,9 +744,9 @@ const DRY_GULCH_SPRING_EMISSIVE = 2.1;
  * Re-run the script above after any landmark rebuild — see reviews/beauty-dry-gulch.md, U4.
  * Re-measure with `scripts/beauty-spring-pool.mjs` if that body is ever replaced.
  */
-type LiveSpringPool = { surfaceY: number; radius: number };
+type LiveSpringPool = { surfaceY: number; dampBaseRadius: number };
 const LIVE_SPRING_POND_CONTRACTS = new Map<string, LiveSpringPool>([
-  ['e1-dry-gulch', { surfaceY: 0.0875, radius: 2.35 }],
+  ['e1-dry-gulch', { surfaceY: 0.0875, dampBaseRadius: 2.35 }],
 ]);
 
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
@@ -834,9 +835,8 @@ function isWarmPool(source: LightSource | undefined): boolean {
 /**
  * The 3D pilot hides `SpringPonds` along with every other painted ground layer, which on a map whose
  * whole story is one spring leaves the water as baked atlas paint. Contracts in
- * `LIVE_SPRING_POND_CONTRACTS` get that surface back as render-only geometry, sized to the pool the
- * atlas already draws rather than to the sim's smaller `waterSources[].radius` — the sim radius is
- * where the spring COUNTS, the atlas pool is where it LOOKS, and this touches only the second.
+ * `LIVE_SPRING_POND_CONTRACTS` get that surface back as render-only geometry. Water uses the sim's
+ * `waterSources[].radius`; the measured atlas cap only sizes the separate damp-ground cover.
  */
 function createLiveSpringPonds(host: Host, heightAt: (x: number, z: number) => number): SpringPondSurface[] {
   const pool = LIVE_SPRING_POND_CONTRACTS.get(host.contractId);
@@ -846,7 +846,8 @@ function createLiveSpringPonds(host: Host, heightAt: (x: number, z: number) => n
     .map((source) => createSpringPondSurface({
       x: source.x,
       z: source.z,
-      radius: pool.radius,
+      radius: source.radius,
+      dampBaseRadius: pool.dampBaseRadius,
       surfaceY: heightAt(source.x, source.z) + pool.surfaceY,
     }));
 }
@@ -1126,12 +1127,19 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPonds = [];
       for (const pond of ponds) host.scene.add(pond.group);
       host.canvas.dataset.terrain3dPilotSpringPonds = String(ponds.length);
+      host.canvas.dataset.terrain3dPilotSpringPondWaterRadii = JSON.stringify(ponds.map((pond) => pond.waterRadius));
+      host.canvas.dataset.terrain3dPilotSpringPondDampGroundRadii = JSON.stringify(ponds.map((pond) => pond.dampGroundRadius));
       if (nextChannelWater) host.scene.add(nextChannelWater);
       host.canvas.dataset.terrain3dPilotChannelWater = String(
         nextChannelWater?.children.filter((child) => child.name.includes('-channel')).length ?? 0,
       );
       host.canvas.dataset.terrain3dPilotFordWater = String(
         nextChannelWater?.children.filter((child) => child.name.endsWith('.fords')).length ?? 0,
+      );
+      host.canvas.dataset.terrain3dPilotChannelWaterHalfWidths = JSON.stringify(
+        nextChannelWater?.children
+          .filter((child) => child.name.includes('-channel'))
+          .map((child) => child.userData.visualHalfWidth) ?? [],
       );
       hiddenRelief = hidePaintedGround(host);
       // A decoration must never cost the map its sculpt: if the water fails to
@@ -1310,6 +1318,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       sculptWater.dispose();
       sculptWater = undefined;
       delete host.canvas.dataset.terrain3dPilotSculptWater;
+      delete host.canvas.dataset.terrain3dPilotSculptWaterHalfWidth;
     }
     if (rushEmbers) {
       host.scene.remove(rushEmbers.points);
@@ -1334,6 +1343,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       pond.dispose();
     }
     ponds = [];
+    delete host.canvas.dataset.terrain3dPilotSpringPondWaterRadii;
+    delete host.canvas.dataset.terrain3dPilotSpringPondDampGroundRadii;
     for (const pond of nextPonds) pond.dispose();
     nextPonds = [];
     for (const model of [terrain, panorama, landmarks, channelWater]) {
@@ -1345,6 +1356,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     panorama = undefined;
     landmarks = undefined;
     channelWater = undefined;
+    delete host.canvas.dataset.terrain3dPilotChannelWaterHalfWidths;
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
   };
 }

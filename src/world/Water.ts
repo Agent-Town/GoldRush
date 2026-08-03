@@ -576,6 +576,8 @@ float waterNoise(vec2 p) {
 
 export type SpringPondSurface = {
   group: THREE.Group;
+  waterRadius: number;
+  dampGroundRadius: number;
   dispose: () => void;
 };
 
@@ -583,15 +585,17 @@ export type SpringPondSurface = {
 type SpringPondConfig = {
   x: number;
   z: number;
-  /** Water-line radius in metres — the visible pool, not the sim's spring radius. */
+  /** Water-line radius in metres — identical to the sim's spring radius. */
   radius: number;
+  /** Measured atlas cap radius; only the ground dressing may cover it. */
+  dampBaseRadius?: number;
   /** World height of the water plane itself — measured off the pool the atlas already paints. */
   surfaceY: number;
 };
 
 
 /**
- * How far past the water line the damp ground reads, as a multiple of the pool radius. Kept tight:
+ * How far past the atlas cap the damp ground reads, as a multiple of the measured cap radius. Kept tight:
  * the margin has to stay inside the landmark's own stone ring, and wet stone at a waterline is
  * right where dark ground drawn over dry sand would be a smear.
  */
@@ -604,8 +608,8 @@ const POND_SURFACE_LIFT = 0.02;
 /**
  * ONE LIVE POOL IN A BONE-DRY MAP (brief U1).
  *
- * Render-only: a disc of moving water at a spring the sim already declares, plus the damp margin
- * that says the water reaches past its own edge, plus a few reed tufts. Nothing here is read by the
+ * Render-only: a disc of moving water at a spring the sim already declares, plus a separate damp
+ * ground margin and a few reed tufts. Nothing here is read by the
  * simulation — the spring's position, radius and zone stay exactly where `tileParams.waterSources`
  * put them, and this surface only draws what that declaration already means.
  *
@@ -621,7 +625,7 @@ export function createSpringPondSurface(config: SpringPondConfig): SpringPondSur
 
   const time = { value: 0 };
   const quality = { value: waterQuality() };
-  const outerRadius = config.radius * POND_MARGIN_SCALE;
+  const outerRadius = Math.max(config.radius, config.dampBaseRadius ?? config.radius) * POND_MARGIN_SCALE;
   const material = new THREE.MeshStandardMaterial({
     color: '#ffffff',
     transparent: true,
@@ -692,25 +696,15 @@ ${WATER_FIELD_GLSL}`)
     waterGlint(pondGlintUv, vec2(-0.3, -2.9), pondTime * 1.15 + 2.4);
   pondColor += vec3(1.0, 0.94, 0.72) * pondGlint * pondQuality * 1.5;
   pondColor = mix(pondColor, pondTexel.rgb * 0.6, 0.10);
-  // Wet sand: past the water line the disc stops being water and starts being damp ground.
-  float pondWet = smoothstep(1.0, 0.92, pondR);
-  vec3 pondDamp = vec3(0.19, 0.115, 0.065);
-  pondColor = mix(pondDamp, pondColor, pondWet);
   // Nearly opaque on purpose. The landmark bakes a bright cyan pool bed into a single-material
   // body that cannot be hidden separately, so anything translucent here just tints that cyan.
   float pondAlpha = mix(0.88, 0.985, pondDepth);
-  // The margin also has a job the brief did not have to name: the landmark's baked cap keeps
-  // drawing bright cyan out to r 2.80, past any sane water line, and it shows in the gaps between
-  // the stones. So the damp band holds near-full alpha all the way past the cap before it fades —
-  // it covers that ring and reads as wet sand at the same time.
-  float pondMarginAlpha = 0.90 * (1.0 - smoothstep(${(outerRadius * 0.86).toFixed(3)}, ${outerRadius.toFixed(3)}, pondDist));
-  pondAlpha = mix(pondMarginAlpha, pondAlpha, pondWet);
   vec4 sampledDiffuseColor = vec4(pondColor, pondAlpha);
   diffuseColor *= sampledDiffuseColor;
 #endif`);
   };
 
-  const water = new THREE.Mesh(new THREE.CircleGeometry(outerRadius, 56), material);
+  const water = new THREE.Mesh(new THREE.CircleGeometry(config.radius, 56), material);
   water.name = 'SpringPondLiveSurface';
   water.rotation.x = -Math.PI / 2;
   water.position.set(config.x, config.surfaceY + POND_SURFACE_LIFT, config.z);
@@ -719,6 +713,19 @@ ${WATER_FIELD_GLSL}`)
   water.castShadow = false;
   water.frustumCulled = false;
   group.add(water);
+
+  const dampGround = new THREE.Mesh(
+    new THREE.RingGeometry(config.radius, outerRadius, 56),
+    new THREE.MeshStandardMaterial({ color: '#7a5133', roughness: 1, metalness: 0, side: THREE.DoubleSide }),
+  );
+  dampGround.name = 'SpringPondDampGround';
+  dampGround.rotation.x = -Math.PI / 2;
+  dampGround.position.set(config.x, config.surfaceY + POND_SURFACE_LIFT - 0.002, config.z);
+  dampGround.renderOrder = RenderLayers.groundDecals;
+  dampGround.receiveShadow = true;
+  dampGround.castShadow = false;
+  dampGround.frustumCulled = false;
+  group.add(dampGround);
 
   // The 3D pilot has no per-frame pump and giving it one would mean editing Game.ts, which this
   // surface has no business touching. Three already calls onBeforeRender once per mesh per render;
@@ -739,10 +746,14 @@ ${WATER_FIELD_GLSL}`)
 
   return {
     group,
+    waterRadius: config.radius,
+    dampGroundRadius: outerRadius,
     dispose: () => {
       material.map?.dispose();
       material.dispose();
       water.geometry.dispose();
+      (dampGround.material as THREE.Material).dispose();
+      dampGround.geometry.dispose();
       (reeds.material as THREE.Material).dispose();
       reeds.geometry.dispose();
     },
@@ -1021,5 +1032,3 @@ function smoothstep(edge0: number, edge1: number, value: number): number {
   const t = THREE.MathUtils.clamp((value - edge0) / (edge1 - edge0), 0, 1);
   return t * t * (3 - 2 * t);
 }
-
-
