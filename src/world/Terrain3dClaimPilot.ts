@@ -296,11 +296,93 @@ const NIGHT_POOL_SHADER_CAP = 32;
 // channel and then hides every painted water surface, so the map's one event has
 // been a static black slot. These contracts get a render-only living-water quad laid
 // into that channel. Per contract because each sculpt's bed sits at its own depth.
-const SCULPT_WATER_CONTRACTS = new Set(['the-claim']);
+//
+// e2-hill-mine joins at the E2 beauty shift (docs/beauty/e2-hill-mine-brief.md U1): its flooded
+// gallery is the same disease with a different bed. Everything below is DRESSING — the surface's
+// height is still measured off the baked sculpt and the ford/river widths still come from the
+// sim's own declarations, so a re-sculpt or a rules change moves the water and nothing here
+// argues with it.
+type SculptWaterDressing = {
+  /**
+   * Multiplies the shader's water palette (shallow/mid/deep/ford, foam and glints alike). White
+   * keeps the shipped mint. The claim pulls it warm sepia; the hill mine pulls it toward wet slate
+   * so the E2 family's "murky working water" reads as worked, not as a mountain stream.
+   */
+  color: string;
+  opacity: number;
+  /** How far the channel fills above its own measured bed. */
+  fill: number;
+  /** How much water stands over the ford shelf: ankle deep, still obviously a crossing. */
+  fordSkim: number;
+  /** Metres of standing water that read as fully deep in the bed-depth bake. */
+  deepMeters: number;
+  /** Metres of the last, shallowest water — the damp margin the surface fades out across. */
+  shoreMeters: number;
+  /**
+   * Half width of the water quad in Z. Defaults to the tile's declared visual water half width;
+   * a map whose painted bed is narrower than that declaration overrides it, or the surface floods
+   * ground the atlas paints dry.
+   */
+  visualHalfWidth?: number;
+  /**
+   * Where the sun catches the surface. `harvest` puts one on each harvest anchor's near bank (the
+   * claim's sluice line); an explicit list is for maps whose anchors are nowhere near the water.
+   */
+  glints: 'harvest' | Array<{ x: number; z: number }>;
+  rippleStrength?: number;
+  /** Blend weight for the procedural canvas map. See the note on the hill mine's entry. */
+  textureBlend?: number;
+};
+const SCULPT_WATER: Record<string, SculptWaterDressing> = {
+  // Shipped values, unchanged: this map's water is signed off and must render byte for byte.
+  // Style anchor: "the river writes the only dark line". The shipped shader is tuned over pale
+  // painted sand and reads as mint over this sculpt's umber bed, so the palette is multiplied warm
+  // and the surface let through enough for the bed's own darkness to carry the channel.
+  'the-claim': {
+    color: '#c9b892',
+    opacity: 0.7,
+    // The carved channel runs ~0.45m below the water line at its deepest; the last
+    // ~15cm of depth is the damp margin where the surface fades into wet ground.
+    fill: 0.42,
+    fordSkim: 0.11,
+    deepMeters: 0.5,
+    shoreMeters: 0.15,
+    glints: 'harvest',
+  },
+  // THE FLOODED GALLERY. Measured, not guessed (logs/session-scratch/e2-hill-mine-band-scan.mjs):
+  // the atlas paints the bed near-black across EXACTLY the sim's declared river band — luma 16-26
+  // for z in [-5.5, 5.5] against 49-77 on the ochre either side — over a floor that is dead flat at
+  // y -0.18 with lips at |z| ~ 6 (-0.062 south, +0.057 north). Three consequences:
+  //   * the fill/skim pair lands the surface at -0.070, i.e. UNDER both lips, so the water is
+  //     contained by the cut instead of spilling onto the lower south bench (which is 0.4 m BELOW
+  //     the gallery floor and painted dry — a flat quad would have flooded it invisibly);
+  //   * the quad is narrowed to the painted band. The tile declares a visual half width of 10, and
+  //     water out to |z| = 10 would sit on lit ochre ground;
+  //   * the bed is flat, so DEPTH cannot come from the bake the way it does on the claim. It comes
+  //     from the near-black paint reading through a surface that is deliberately not very opaque —
+  //     which is what "murky working water" is, and why deepMeters is 0.12 (the real standing
+  //     depth) rather than the claim's 0.5.
+  'e2-hill-mine': {
+    color: '#8a8177',
+    opacity: 0.72,
+    fill: 0.42,
+    fordSkim: 0.11,
+    deepMeters: 0.12,
+    shoreMeters: 0.05,
+    visualHalfWidth: 5.9,
+    // Sparse and at the wet edge only: the harvest anchors on this map are up on the terraces
+    // (z 25..39), nowhere near the gallery, so they are no use as a glint line here.
+    glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }],
+    rippleStrength: 1.15,
+    // Zero, and measured: the canvas map's strokes are authored for a river-shaped quad. This one is
+    // 96 m by 11.8 m, so at waterRepeat 8 they stretch into chevrons the size of the trestle —
+    // column luma spread across the band went 2.1 (the painted void) to 10.5 with the map blended
+    // in, i.e. the surface read as tiling rather than as water. Ripple and foam carry it instead.
+    textureBlend: 0,
+  },
+};
 /** Water fades out over the last stretch before the tile edge instead of cutting. */
 const SCULPT_WATER_EDGE_FADE = 7;
-/** How much water stands over the ford shelf: ankle deep, still obviously a crossing. */
-const SCULPT_WATER_FORD_SKIM = 0.11;
 /** U3: contracts whose mounted landmarks get soft contact ellipses. */
 const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim']);
 /** U5: contracts that get the drifting mote field, and its hard cap. */
@@ -582,6 +664,7 @@ function sculptWaterSurfaceY(
   halfX: number,
   centerZ: number,
   fordHalfWidth: number,
+  dressing: SculptWaterDressing,
 ): number {
   const channel: number[] = [];
   const ford: number[] = [];
@@ -596,7 +679,7 @@ function sculptWaterSurfaceY(
   };
   const channelBed = channel.length ? median(channel) : 0;
   const fordBed = ford.length ? median(ford) : channelBed;
-  return Math.min(channelBed + 0.42, fordBed + SCULPT_WATER_FORD_SKIM);
+  return Math.min(channelBed + dressing.fill, fordBed + dressing.fordSkim);
 }
 
 /**
@@ -605,32 +688,30 @@ function sculptWaterSurfaceY(
  * the baked height grid; nothing is written back.
  */
 function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number, bounds: THREE.Box3): SculptWater | undefined {
-  if (isMapBeautyDisabled() || !SCULPT_WATER_CONTRACTS.has(host.contractId) || !Terrain.hasRiverWater()) return undefined;
+  const dressing = SCULPT_WATER[host.contractId];
+  if (isMapBeautyDisabled() || !dressing || !Terrain.hasRiverWater()) return undefined;
   const river = Terrain.riverGeometry();
   const centerZ = (river.minZ + river.maxZ) / 2;
   const riverHalfWidth = (river.maxZ - river.minZ) / 2;
   const fordHalfWidth = Terrain.fordRanges()[0]?.halfWidth ?? 3;
   const halfX = Math.min(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
-  const surfaceY = sculptWaterSurfaceY(heightAt, halfX, centerZ, fordHalfWidth);
+  const surfaceY = sculptWaterSurfaceY(heightAt, halfX, centerZ, fordHalfWidth, dressing);
+  const visualHalfWidth = dressing.visualHalfWidth ?? Terrain.visualWaterHalfWidth();
   const water = createSculptWater({
     ford: false,
     depthTest: true,
     heightAt,
-    // The carved channel runs ~0.45m below the water line at its deepest; the last
-    // ~15cm of depth is the damp margin where the surface fades into wet ground.
-    deepMeters: 0.5,
-    shoreMeters: 0.15,
-    // Style anchor: "the river writes the only dark line". The shipped shader is
-    // tuned over pale painted sand and reads as mint over this sculpt's umber bed,
-    // so the palette is multiplied warm and the surface let through enough for the
-    // bed's own darkness to carry the channel.
-    color: '#c9b892',
-    opacity: 0.7,
+    deepMeters: dressing.deepMeters,
+    shoreMeters: dressing.shoreMeters,
+    color: dressing.color,
+    opacity: dressing.opacity,
+    rippleStrength: dressing.rippleStrength,
+    textureBlend: dressing.textureBlend,
     centerZ,
     surfaceY,
     halfLength: halfX,
     riverHalfWidth,
-    visualHalfWidth: Terrain.visualWaterHalfWidth(),
+    visualHalfWidth,
     lengthHalf: halfX,
     fadeStart: Math.max(1, halfX - SCULPT_WATER_EDGE_FADE),
     fordHalfWidth,
@@ -640,10 +721,12 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     deepDepth: Balance.terrainSim.deepDepth,
     // The gold glints belong on the sluice line: each harvest anchor pushed to its
     // own bank lip, exactly as the painted river places them.
-    anchors: Terrain.nodeAnchors.map((anchor) => ({
-      x: anchor.x,
-      z: anchor.z < centerZ ? river.minZ + 0.55 : river.maxZ - 0.55,
-    })),
+    anchors: dressing.glints === 'harvest'
+      ? Terrain.nodeAnchors.map((anchor) => ({
+        x: anchor.x,
+        z: anchor.z < centerZ ? river.minZ + 0.55 : river.maxZ - 0.55,
+      }))
+      : dressing.glints,
   });
   let lastFrame = -1;
   let lastAt = 0;
@@ -658,9 +741,14 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
   };
   host.scene.add(water.mesh);
   host.canvas.dataset.terrain3dPilotSculptWater = 'living-water-quad';
-  host.canvas.dataset.terrain3dPilotSculptWaterHalfWidth = Terrain.visualWaterHalfWidth().toFixed(3);
+  // The MOUNTED half width, not the tile's declaration — a map that narrows its quad has to say so,
+  // and e2e/shore-truth.spec.ts's law is "never wider than the sim declares", which narrowing keeps.
+  host.canvas.dataset.terrain3dPilotSculptWaterHalfWidth = visualHalfWidth.toFixed(3);
+  host.canvas.dataset.terrain3dPilotSculptWaterSimHalfWidth = Terrain.visualWaterHalfWidth().toFixed(3);
   host.canvas.dataset.terrain3dPilotSculptWaterY = surfaceY.toFixed(4);
-  host.canvas.dataset.terrain3dPilotSculptWaterGlints = String(Terrain.nodeAnchors.length);
+  host.canvas.dataset.terrain3dPilotSculptWaterGlints = String(water.mesh.material instanceof THREE.Material
+    ? (water.mesh.material.userData.waterGlints ?? 0)
+    : 0);
   host.canvas.dataset.terrain3dPilotSculptWaterDeepest = water.deepestMeters.toFixed(3);
   return water;
 }
