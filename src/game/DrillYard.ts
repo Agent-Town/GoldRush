@@ -3,10 +3,16 @@ import type { ClaimJumperEnemy } from '../entities/Enemy';
 import type { EnemyPool } from '../entities/pools';
 import type { ContractPracticeMode } from '../meta/ContractFamilies';
 import type { WaveSystem } from '../systems/WaveSystem';
+import type { WorldInfoNoteTarget } from '../ui/WorldInfoNotes';
 import * as Terrain from '../world/Terrain';
 import type { Economy } from './Economy';
 
 const INTERACTION_RADIUS = 3;
+const stationArt = import.meta.glob<string>([
+  '../../assets/processed/prop-drill-faucet-station.png',
+  '../../assets/processed/prop-drill-bell-post.png',
+  '../../assets/processed/prop-straw-man-stand.png',
+], { query: '?url', import: 'default', eager: true });
 
 type TargetKind = ContractPracticeMode['targets'][number]['kind'];
 type PracticeStation = ContractPracticeMode['stations'][number] & { position: THREE.Vector3 };
@@ -50,6 +56,7 @@ export class DrillYard {
   private readonly targets: TargetState[];
   private readonly geometries = new Set<THREE.BufferGeometry>();
   private readonly materials = new Set<THREE.Material>();
+  private readonly textures = new Set<THREE.Texture>();
   private readonly prompt = document.createElement('div');
   private readonly promptTitle = document.createElement('span');
   private readonly actionButton = document.createElement('button');
@@ -59,6 +66,7 @@ export class DrillYard {
   private lastGrant = 0;
   private rings = 0;
   private currentAt = 0;
+  private disposed = false;
 
   constructor(
     private readonly config: ContractPracticeMode,
@@ -138,12 +146,18 @@ export class DrillYard {
     }
     this.nearby = this.stationAt(heroPosition);
     this.promptTitle.textContent = this.nearby?.id === 'assay_tent_faucet'
-      ? 'Assay tent practice lever'
+      ? 'The county desk lends practice gold.'
       : this.nearby?.id === 'drill_bell'
-        ? 'Drill Bell'
+        ? 'The drill bell calls one practice wave.'
         : 'The Drill Yard';
     this.actionButton.hidden = this.nearby === null;
-    this.actionButton.textContent = this.nearby?.id === 'assay_tent_faucet' ? 'Top up practice gold' : 'Ring one drill wave';
+    this.actionButton.textContent = this.nearby?.id === 'assay_tent_faucet' ? 'Draw practice gold' : 'Ring for a practice wave';
+  }
+
+  nearestInfoTarget(position: THREE.Vector3): WorldInfoNoteTarget | null {
+    return this.targets.some((target) => target.kind === 'straw-man' && flatDistance(position, target.position) <= INTERACTION_RADIUS)
+      ? { objectClass: 'drill_straw_man' }
+      : null;
   }
 
   interact(heroPosition: THREE.Vector3): boolean {
@@ -217,11 +231,13 @@ export class DrillYard {
   }
 
   dispose(): void {
+    this.disposed = true;
     for (const target of this.targets) if (target.enemy?.isAlive) this.enemies.recycle(target.enemy);
     this.prompt.remove();
     this.group.removeFromParent();
     for (const geometry of this.geometries) geometry.dispose();
     for (const material of this.materials) material.dispose();
+    for (const texture of this.textures) texture.dispose();
   }
 
   private spawnTarget(target: TargetState): void {
@@ -262,13 +278,19 @@ export class DrillYard {
     group.name = 'DrillAssayTent';
     const position = this.stationPosition('assay_tent_faucet');
     group.position.set(position.x, Terrain.visualY(position.x, position.z, 0), position.z);
-    const canvas = this.mesh(new THREE.ConeGeometry(2.1, 2.8, 4), new THREE.MeshStandardMaterial({ color: '#d8c08c', roughness: 0.95 }));
-    canvas.position.y = 1.35;
-    canvas.rotation.y = Math.PI * 0.25;
+    const parchment = new THREE.MeshStandardMaterial({ color: '#f5e6c8', roughness: 0.96 });
+    const wood = new THREE.MeshStandardMaterial({ color: '#6a4728', roughness: 0.9 });
+    const crate = this.mesh(new THREE.BoxGeometry(2.3, 1.2, 1.35), parchment);
+    crate.position.y = 0.62;
+    const topRail = this.mesh(new THREE.BoxGeometry(2.5, 0.16, 1.5), wood);
+    topRail.position.y = 1.25;
+    const lowerRail = this.mesh(new THREE.BoxGeometry(2.5, 0.14, 1.5), wood);
+    lowerRail.position.y = 0.12;
     const lever = this.mesh(new THREE.CylinderGeometry(0.08, 0.08, 1.1, 8), new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.45, metalness: 0.42 }));
-    lever.position.set(2.2, 0.7, 0);
+    lever.position.set(0, 1.72, 0);
     lever.rotation.z = -0.45;
-    group.add(canvas, lever);
+    group.add(crate, topRail, lowerRail, lever);
+    this.applyStationArt(group, 'prop-drill-faucet-station.png', 3.4);
     return group;
   }
 
@@ -286,6 +308,7 @@ export class DrillYard {
     const bell = this.mesh(new THREE.ConeGeometry(0.48, 0.72, 18, 1, true), brass);
     bell.position.set(-1, 2.18, 0);
     group.add(post, arm, bell);
+    this.applyStationArt(group, 'prop-drill-bell-post.png', 3.5);
     return group;
   }
 
@@ -303,6 +326,7 @@ export class DrillYard {
     const head = this.mesh(new THREE.SphereGeometry(0.31, 10, 8), straw);
     head.position.y = 2.05;
     group.add(post, arms, body, head);
+    this.applyStationArt(group, 'prop-straw-man-stand.png', 3.1);
     return group;
   }
 
@@ -324,6 +348,27 @@ export class DrillYard {
     this.geometries.add(geometry);
     this.materials.add(material);
     return new THREE.Mesh(geometry, material);
+  }
+
+  private applyStationArt(group: THREE.Group, filename: string, height: number): void {
+    const url = stationArt[`../../assets/processed/${filename}`];
+    if (!url) return;
+    new THREE.TextureLoader().load(url, (texture) => {
+      if (this.disposed) {
+        texture.dispose();
+        return;
+      }
+      texture.colorSpace = THREE.SRGBColorSpace;
+      this.textures.add(texture);
+      const material = new THREE.SpriteMaterial({ map: texture, transparent: true, alphaTest: 0.04, depthWrite: false });
+      this.materials.add(material);
+      for (const child of group.children) child.visible = false;
+      const sprite = new THREE.Sprite(material);
+      sprite.name = `DrillStationArt:${filename}`;
+      sprite.position.y = height / 2;
+      sprite.scale.set(height, height, 1);
+      group.add(sprite);
+    });
   }
 
   private stationAt(position: THREE.Vector3): PracticeStation | null {

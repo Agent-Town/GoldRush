@@ -18,6 +18,7 @@ export type WorldInfoObjectClass =
   | 'territory_ring_gap'
   | 'baron_standard'
   | 'megaproject_site'
+  | 'drill_straw_man'
   | 'prospector'
   | 'town_tavern'
   | 'town_claim_office'
@@ -29,6 +30,7 @@ export type WorldInfoNote = {
   title: string;
   lines: readonly string[];
   actionHint?: string;
+  persistent?: false;
 };
 
 export type WorldInfoNoteTarget = {
@@ -120,6 +122,12 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
     actionHint: 'The site signboard carries the dedicated mill readout.',
   },
   {
+    objectClass: 'drill_straw_man',
+    title: 'Straw men',
+    lines: ["Straw men — they don't mind."],
+    persistent: false,
+  },
+  {
     objectClass: 'capacitor_bank',
     title: 'Capacitor Bank',
     lines: ['Stores surplus current, then keeps the lights breathing through a cut trunk.'],
@@ -189,8 +197,8 @@ export class WorldInfoNotePrompt {
 
     if (this.activeClass !== note.objectClass) {
       this.activeClass = note.objectClass;
-      this.visibleFull = seenCount(note.objectClass, this.storage) < FULL_APPROACHES;
-      if (this.visibleFull) markApproach(note.objectClass, this.storage);
+      this.visibleFull = note.persistent === false || seenCount(note.objectClass, this.storage) < FULL_APPROACHES;
+      if (this.visibleFull && note.persistent !== false) markApproach(note.objectClass, this.storage);
     }
 
     this.root.dataset.objectClass = note.objectClass;
