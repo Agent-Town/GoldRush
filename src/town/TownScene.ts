@@ -491,7 +491,6 @@ export class TownScene {
   private readonly eraOrder: number;
   private readonly skyVariant: TownSkyVariant = readTownSkyVariant();
   private sky: TownSkyBuild = { variant: 'off', background: null, objects: [], triangles: 0, follow: () => {}, dispose: () => {} };
-  private readonly eraOrder = loadEpoch(activeEpochId()).order;
   private readonly ambientDust = createAmbientDust(this.performanceTier, this.townNight);
   private readonly ambientDustObject = new THREE.Object3D();
   private readonly townActors: TownActorRuntime[] = [];

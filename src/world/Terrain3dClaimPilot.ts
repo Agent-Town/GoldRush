@@ -65,7 +65,6 @@ import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom
 import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { reportRenderDemotion } from '../telemetry/runBeacon';
-import { isMapBeautyDisabled } from '../core/DebugParams';
 import { isMapBeautyDisabled, isPoolGradeDisabled } from '../core/DebugParams';
 import { RenderLayers } from '../core/RenderLayers';
 import { horizonApronProfile, paintHorizonApron } from './HorizonApron';
@@ -1236,10 +1235,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.rotation.set(...mount.rotation);
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
-      const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds);
-      const nextChannelWater = createChannelWater(host.contractId, selected.contract, heightAt);
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
-      const nextChannelWater = createChannelWater(host.contractId, selected.contract);
+      const nextChannelWater = createChannelWater(host.contractId, selected.contract, heightAt);
       terrain = nextTerrain;
       panorama = nextPanorama;
       skirt = nextSkirt;
