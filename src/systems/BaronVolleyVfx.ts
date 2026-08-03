@@ -10,8 +10,7 @@ import * as Terrain from '../world/Terrain';
  * This adds the three beats the brief asks for (docs/beauty/e1-baron-brief.md U3)
  * and nothing else:
  *
- *   1. a thin additive TRACER drawn as two straight segments through the lob's
- *      apex, so the shot reads as an arc instead of a teleport (~0.2 s),
+ *   1. a banded rocket following the lob arc with a short smoke-and-ember tail,
  *   2. a warm IMPACT DUST RING that lands ON the ground at Terrain.visualAnchorY
  *      and is laid flat in the WORLD frame — never camera-billboarded (owner
  *      ruling, CLAUDE.md Mistake #6),
@@ -28,14 +27,10 @@ import * as Terrain from '../world/Terrain';
 type PoolCaps = { tracers: number; rings: number; wisps: number };
 
 /**
- * The brief says "~0.2 s". This is 0.3 s, and the reason is worth writing down:
- * at 0.2 s the streak is real in play (12 frames at 60 Hz) but it cannot be
- * caught in an automated still — a playwright screenshot round-trip spends the
- * whole life — so the one beat that most needed a before/after pair was the one
- * beat with no picture of it. 0.3 s is still a flick against a 2 s cadence and
- * makes the shot provable. Disclosed in reviews/beauty-baron.md as a deviation.
+ * The visual lifetime follows the manifest air time passed by Game. This keeps
+ * the model and its trail on the actual lob instead of drawing a predictive arc.
  */
-const TRACER_LIFE = 0.3;
+const MIN_TRACER_LIFE = 0.35;
 const RING_LIFE = 0.62;
 const WISP_LIFE = 2.6;
 /** Only the freshest impact points keep smoking — the brief's "last 2". */
@@ -43,9 +38,13 @@ const WISP_SITES = 2;
 
 const EMBER = new THREE.Color('#e8853a');
 const SMOKE = new THREE.Color('#6b5a4d');
+const TRAIL_SMOKE = new THREE.Color('#aa9078');
+const TRAIL_EMBER = new THREE.Color('#ffad4d');
+const ROCKET_FORWARD = new THREE.Vector3(0, 0, 1);
 
 export type BaronVolleyVfxDiagnostics = {
   tracers: { active: number; capacity: number; spawned: number };
+  rockets: { active: number; capacity: number; modelReady: boolean };
   rings: { active: number; capacity: number; spawned: number };
   wisps: { active: number; capacity: number; spawned: number };
   detail: boolean;
@@ -55,15 +54,20 @@ export class BaronVolleyVfx {
   readonly group = new THREE.Group();
 
   private readonly caps: PoolCaps;
-  private readonly tracerGeometry = new THREE.BoxGeometry(1, 1, 1);
+  private readonly tracerGeometry = new THREE.SphereGeometry(0.5, 6, 4);
+  private rocketGeometry: THREE.BufferGeometry = new THREE.CylinderGeometry(0.08, 0.11, 0.5, 8).rotateX(Math.PI / 2);
   private readonly ringGeometry = new THREE.RingGeometry(0.62, 1, 30);
   private readonly wispGeometry = new THREE.CircleGeometry(0.5, 16);
   private readonly tracerMaterial = new THREE.MeshBasicMaterial({
-    color: '#ffd9a0',
+    color: '#ffffff',
     transparent: true,
-    opacity: 0.85,
-    blending: THREE.AdditiveBlending,
+    opacity: 0.84,
     depthWrite: false,
+  });
+  private rocketMaterial: THREE.Material = new THREE.MeshStandardMaterial({
+    color: '#c4883a',
+    roughness: 0.58,
+    metalness: 0.12,
   });
   private readonly ringMaterial = new THREE.MeshBasicMaterial({
     color: '#d0a066',
@@ -90,10 +94,12 @@ export class BaronVolleyVfx {
   });
 
   private readonly tracers: THREE.InstancedMesh;
+  private readonly rockets: THREE.InstancedMesh;
   private readonly rings: THREE.InstancedMesh;
   private readonly wisps: THREE.InstancedMesh;
 
   private readonly tracerAge: number[] = [];
+  private readonly tracerLife: number[] = [];
   private readonly tracerFrom: THREE.Vector3[] = [];
   private readonly tracerTo: THREE.Vector3[] = [];
   private readonly ringAge: number[] = [];
@@ -115,7 +121,11 @@ export class BaronVolleyVfx {
   private readonly scratchColor = new THREE.Color();
   private readonly scratchFrom = new THREE.Vector3();
   private readonly scratchApex = new THREE.Vector3();
+  private readonly scratchTo = new THREE.Vector3();
+  private readonly scratchTangent = new THREE.Vector3();
   private detail = true;
+  private rocketModelReady = false;
+  private rocketMaterialOwned = true;
 
   constructor(caps: PoolCaps = { tracers: 16, rings: 8, wisps: 8 }) {
     this.caps = {
@@ -125,9 +135,10 @@ export class BaronVolleyVfx {
     };
     this.group.name = 'BaronVolleyVfx';
     this.tracers = new THREE.InstancedMesh(this.tracerGeometry, this.tracerMaterial, this.caps.tracers * 2);
+    this.rockets = new THREE.InstancedMesh(this.rocketGeometry, this.rocketMaterial, this.caps.tracers);
     this.rings = new THREE.InstancedMesh(this.ringGeometry, this.ringMaterial, this.caps.rings);
     this.wisps = new THREE.InstancedMesh(this.wispGeometry, this.wispMaterial, this.caps.wisps);
-    for (const mesh of [this.tracers, this.rings, this.wisps]) {
+    for (const mesh of [this.tracers, this.rockets, this.rings, this.wisps]) {
       mesh.frustumCulled = false;
       mesh.renderOrder = RenderLayers.impactVfx;
       mesh.visible = false;
@@ -135,6 +146,7 @@ export class BaronVolleyVfx {
     }
     for (let index = 0; index < this.caps.tracers; index += 1) {
       this.tracerAge.push(Number.POSITIVE_INFINITY);
+      this.tracerLife.push(MIN_TRACER_LIFE);
       this.tracerFrom.push(new THREE.Vector3());
       this.tracerTo.push(new THREE.Vector3());
     }
@@ -166,11 +178,24 @@ export class BaronVolleyVfx {
     }
   }
 
+  setRocketModel(geometry: THREE.BufferGeometry, material: THREE.Material): void {
+    this.rocketGeometry.dispose();
+    if (this.rocketMaterialOwned) this.rocketMaterial.dispose();
+    this.rocketGeometry = geometry.clone();
+    this.rocketGeometry.computeBoundingSphere();
+    this.rocketMaterial = material;
+    this.rocketMaterialOwned = false;
+    this.rockets.geometry = this.rocketGeometry;
+    this.rockets.material = material;
+    this.rocketModelReady = true;
+  }
+
   /** One lobbed rocket left the cart. Oldest slot is recycled — never grows. */
-  tracer(origin: THREE.Vector3, target: THREE.Vector3): void {
+  tracer(origin: THREE.Vector3, target: THREE.Vector3, life = 1.1): void {
     const index = this.oldest(this.tracerAge);
     this.tracersSpawned += 1;
     this.tracerAge[index] = 0;
+    this.tracerLife[index] = Math.max(MIN_TRACER_LIFE, life);
     this.tracerFrom[index]?.set(origin.x, Terrain.visualAnchorY(origin, 1.35), origin.z);
     this.tracerTo[index]?.set(target.x, Terrain.visualAnchorY(target, 0.18), target.z);
   }
@@ -204,9 +229,10 @@ export class BaronVolleyVfx {
     for (let index = 0; index < this.caps.tracers; index += 1) {
       const age = (this.tracerAge[index] ?? Number.POSITIVE_INFINITY) + delta;
       this.tracerAge[index] = age;
-      if (age >= TRACER_LIFE || !Number.isFinite(age)) {
+      if (age >= (this.tracerLife[index] ?? MIN_TRACER_LIFE) || !Number.isFinite(age)) {
         this.tracers.setMatrixAt(index * 2, this.hiddenMatrix);
         this.tracers.setMatrixAt(index * 2 + 1, this.hiddenMatrix);
+        this.rockets.setMatrixAt(index, this.hiddenMatrix);
         continue;
       }
       tracerAlive += 1;
@@ -236,12 +262,15 @@ export class BaronVolleyVfx {
     }
 
     this.tracers.visible = tracerAlive > 0;
+    this.rockets.visible = tracerAlive > 0;
     this.rings.visible = ringAlive > 0;
     this.wisps.visible = wispAlive > 0;
     this.tracers.instanceMatrix.needsUpdate = true;
+    this.rockets.instanceMatrix.needsUpdate = true;
     this.rings.instanceMatrix.needsUpdate = true;
     this.wisps.instanceMatrix.needsUpdate = true;
     if (this.wisps.instanceColor) this.wisps.instanceColor.needsUpdate = true;
+    if (this.tracers.instanceColor) this.tracers.instanceColor.needsUpdate = true;
   }
 
   reset(): void {
@@ -254,17 +283,21 @@ export class BaronVolleyVfx {
 
   dispose(): void {
     this.tracerGeometry.dispose();
+    this.rocketGeometry.dispose();
     this.ringGeometry.dispose();
     this.wispGeometry.dispose();
     this.tracerMaterial.dispose();
+    if (this.rocketMaterialOwned) this.rocketMaterial.dispose();
     this.ringMaterial.dispose();
     this.wispMaterial.dispose();
   }
 
   diagnostics(): BaronVolleyVfxDiagnostics {
     const live = (ages: number[], life: number) => ages.filter((age) => age >= -1 && age < life).length;
+    const liveTracers = this.tracerAge.filter((age, index) => age >= 0 && age < (this.tracerLife[index] ?? MIN_TRACER_LIFE)).length;
     return {
-      tracers: { active: live(this.tracerAge, TRACER_LIFE), capacity: this.caps.tracers, spawned: this.tracersSpawned },
+      tracers: { active: liveTracers, capacity: this.caps.tracers, spawned: this.tracersSpawned },
+      rockets: { active: liveTracers, capacity: this.caps.tracers, modelReady: this.rocketModelReady },
       rings: { active: live(this.ringAge, RING_LIFE), capacity: this.caps.rings, spawned: this.ringsSpawned },
       wisps: { active: live(this.wispAge, WISP_LIFE), capacity: this.caps.wisps, spawned: this.wispsSpawned },
       detail: this.detail,
@@ -284,33 +317,51 @@ export class BaronVolleyVfx {
     return index;
   }
 
-  /**
-   * Two straight segments through the lob's apex. A single chord reads as a
-   * laser; the bend is what makes it read as something thrown.
-   */
+  /** Actual rocket plus two short particles behind it; no predictive line. */
   private syncTracer(index: number, age: number): void {
     const from = this.tracerFrom[index];
     const to = this.tracerTo[index];
     if (!from || !to) return;
-    const fade = 1 - age / TRACER_LIFE;
-    const width = 0.07 + fade * 0.05;
+    const life = this.tracerLife[index] ?? MIN_TRACER_LIFE;
+    const progress = THREE.MathUtils.clamp(age / life, 0, 1);
+    const fade = Math.min(1, (1 - progress) * 3.5);
     this.scratchApex.copy(from).lerp(to, 0.5);
     this.scratchApex.y = Math.max(from.y, to.y) + from.distanceTo(to) * 0.22;
-    // The streak draws itself in from the cart, so the eye follows the shot out.
-    const reach = THREE.MathUtils.clamp(0.35 + age / TRACER_LIFE, 0, 1);
-    this.scratchFrom.copy(from).lerp(this.scratchApex, 1 - reach);
-    this.writeSegment(index * 2, this.scratchFrom, this.scratchApex, width * fade);
-    this.writeSegment(index * 2 + 1, this.scratchApex, to, width * fade * reach);
+    this.sampleArc(from, to, progress, this.scratchTo);
+    const tangentAt = Math.min(1, progress + 0.01);
+    this.sampleArc(from, to, tangentAt, this.scratchTangent);
+    this.scratchTangent.sub(this.scratchTo).normalize();
+    this.sampleArc(from, to, Math.max(0, progress - 0.13), this.scratchFrom);
+    this.writePuff(index * 2, this.scratchFrom, this.scratchTangent, 0.30 * fade, 0.48 * fade);
+    this.tracers.setColorAt(index * 2, this.scratchColor.copy(TRAIL_SMOKE).multiplyScalar(0.55 + fade * 0.45));
+    this.sampleArc(from, to, Math.max(0, progress - 0.055), this.scratchFrom);
+    this.writePuff(index * 2 + 1, this.scratchFrom, this.scratchTangent, 0.15 * fade, 0.30 * fade);
+    this.tracers.setColorAt(index * 2 + 1, this.scratchColor.copy(TRAIL_EMBER).multiplyScalar(0.7 + fade * 0.3));
+
+    this.syncObject.position.copy(this.scratchTo);
+    this.syncObject.quaternion.setFromUnitVectors(ROCKET_FORWARD, this.scratchTangent);
+    this.syncObject.rotateY(0.3);
+    this.syncObject.scale.setScalar(1.22);
+    this.syncObject.updateMatrix();
+    this.rockets.setMatrixAt(index, this.syncObject.matrix);
   }
 
-  private writeSegment(slot: number, from: THREE.Vector3, to: THREE.Vector3, width: number): void {
-    const length = from.distanceTo(to);
-    if (length <= 1e-4 || width <= 1e-4) {
+  private sampleArc(from: THREE.Vector3, to: THREE.Vector3, t: number, out: THREE.Vector3): THREE.Vector3 {
+    const inverse = 1 - t;
+    return out.set(
+      inverse * inverse * from.x + 2 * inverse * t * this.scratchApex.x + t * t * to.x,
+      inverse * inverse * from.y + 2 * inverse * t * this.scratchApex.y + t * t * to.y,
+      inverse * inverse * from.z + 2 * inverse * t * this.scratchApex.z + t * t * to.z,
+    );
+  }
+
+  private writePuff(slot: number, at: THREE.Vector3, direction: THREE.Vector3, width: number, length: number): void {
+    if (width <= 1e-4 || length <= 1e-4) {
       this.tracers.setMatrixAt(slot, this.hiddenMatrix);
       return;
     }
-    this.syncObject.position.copy(from).lerp(to, 0.5);
-    this.syncObject.lookAt(to);
+    this.syncObject.position.copy(at);
+    this.syncObject.quaternion.setFromUnitVectors(ROCKET_FORWARD, direction);
     this.syncObject.scale.set(width, width, length);
     this.syncObject.updateMatrix();
     this.tracers.setMatrixAt(slot, this.syncObject.matrix);
@@ -352,15 +403,18 @@ export class BaronVolleyVfx {
 
   private hideAll(): void {
     for (let slot = 0; slot < this.caps.tracers * 2; slot += 1) this.tracers.setMatrixAt(slot, this.hiddenMatrix);
+    for (let slot = 0; slot < this.caps.tracers; slot += 1) this.rockets.setMatrixAt(slot, this.hiddenMatrix);
     for (let slot = 0; slot < this.caps.rings; slot += 1) this.rings.setMatrixAt(slot, this.hiddenMatrix);
     for (let slot = 0; slot < this.caps.wisps; slot += 1) {
       this.wisps.setMatrixAt(slot, this.hiddenMatrix);
       this.wisps.setColorAt(slot, this.scratchColor.copy(EMBER));
     }
     this.tracers.visible = false;
+    this.rockets.visible = false;
     this.rings.visible = false;
     this.wisps.visible = false;
     this.tracers.instanceMatrix.needsUpdate = true;
+    this.rockets.instanceMatrix.needsUpdate = true;
     this.rings.instanceMatrix.needsUpdate = true;
     this.wisps.instanceMatrix.needsUpdate = true;
     if (this.wisps.instanceColor) this.wisps.instanceColor.needsUpdate = true;

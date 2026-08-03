@@ -567,6 +567,14 @@ interface ThreeGameDiagnostics {
     lastOwnerId: string;
     lastTarget: { x: number; z: number };
     target: { x: number; z: number };
+    props: {
+      state: 'off' | 'loading' | 'ready' | 'failed' | 'disposed';
+      source: 'glb' | 'placeholder';
+      launcher: boolean;
+      rocket: boolean;
+      powderKeg: boolean;
+      triangles: { launcher: number; rocket: number; powder_keg: number };
+    };
     manifest: GrContractManifest['twist']['baron'] extends infer Baron
       ? Baron extends { rocketVolley?: infer Volley }
         ? Volley | null

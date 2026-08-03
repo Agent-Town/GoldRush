@@ -36,7 +36,9 @@ The master demanded both rulings be written side by side so a later session does
 
 ## Evidence
 
-All playwright runs `--workers=1` (§3.1), scratch port **5199** (5188 and 5199 both verified free by `lsof` before gating; no playwright or lane-runner Codex process live). Gates run in detached worktree `gate-s1443` (§3.0b — undecided content never entered main's working tree), removed after.
+All playwright runs `--workers=1` (§3.1). Gates run in detached worktree `gate-s1443` (§3.0b — undecided content never entered main's working tree), removed after.
+
+⚠️ **CORRECTION, filed against my own first draft of this file (F-1443-4).** This section originally read *"scratch port **5199**"*. That was **false**: I passed `PORT=5199` in the environment, but `playwright.config.ts:4` hardcodes `const baseURL = captureBaseURL ?? 'http://127.0.0.1:5188'` and reads no `PORT` variable, so **every run in this gate actually used port 5188**. I caught it only in the next drain, when a failure message quoted a `blob:http://127.0.0.1:5188/…` URL. **The measurement is still sound and the correction does not change the verdict** — 5188 was verified FREE by `lsof` before gating (no playwright, no lane-runner Codex live), and playwright's own `webServer` therefore started `npm run dev` with cwd = this gate worktree. **Positive proof it served the right tree, not another one:** the own spec asserts `data-boss-bar-anchor = 'head-screen'`, a string that exists only in the grafted tree, and it passed. What was wrong was the *label*, not the *number* — and a review that names the wrong port teaches the next fire a scratch-port habit that does not exist. The scratch-port family (5199/5231/5234) requires `GR_CAPTURE_BASE_URL`, not `PORT`.
 
 | Gate | Result |
 |---|---|
@@ -62,7 +64,7 @@ All four live in `e2e/e2-enemies.spec.ts` and **none** is in the boss-bar path.
 | `:113` "wave pulses spawn…" → asserts at **`:125`**, `maxHp` **34.02** vs **37.9323** | FAILS desktop + mobile | **FAILS desktop + mobile, byte-identical numbers** | `logs/suite-red-inventory.md:102-103` |
 | `:314` "same seed keeps the E2 roster wave deterministic" → asserts at **`:317`**, hash mismatch | FAILS desktop + mobile | **FAILS desktop + mobile** | `logs/suite-red-inventory.md:100-101` |
 
-The control was proven main-equivalent, not assumed: `HEAD == main` (`5c509edf`) with an **EMPTY** `git status --porcelain -- src e2e reviews`, run in the same worktree, against the same server, on the same port.
+The control was proven main-equivalent, not assumed: `HEAD == main` (`5c509edf`) with an **EMPTY** `git status --porcelain -- src e2e reviews`, run in the same worktree, against the same server, on the same port (5188 — see the correction above).
 
 Per F-1441-2 / F-1440-3, the discriminator is the **inner assertion line**, and both match exactly (`:125`, `:317`). Per the F-1442-1 standing, the reporter was read **raw** — no filter was applied to any run that decided this merge. `:314`'s hashes differ between arms and between runs; that is the defect itself (it compares two fresh sessions to each other, so it has no pinned baseline), and its assertion line and failure mode match the inventory exactly.
 

@@ -238,6 +238,7 @@ import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
+import { disposeObject3D } from '../utils/dispose';
 import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
@@ -326,6 +327,8 @@ const BARON_DEFEAT_TITLE = 'THE BARON IS DEFEATED';
 const BARON_KILL_STOP_SECONDS = 2.2;
 const BARON_DEFEAT_CARD_SECONDS = 4;
 const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
+const BARON_PROPS_3D_URL = new URL('../../assets/pilots/baron-props-3d/baron-props.glb', import.meta.url).href;
+const BARON_PROPS_3D_TRIANGLES = { launcher: 2_020, rocket: 876, powder_keg: 704 } as const;
 const TRAIL_GUIDE_DWELL_MS = 4_000;
 const GREEN_WAYPOINT_CONTRACT_ID = 'e1-dry-gulch';
 const COUNTY_ANON_ID_KEY = 'gr.countyStandings.anonId.v1';
@@ -365,6 +368,7 @@ type MultiplayerRunSuspendSnapshot = RunSuspendEnvelope & {
 };
 type BaronRocketTargetKind = 'hero' | 'building';
 type BaronRocketVolleyConfig = NonNullable<ContractBaronTwist['rocketVolley']>;
+type BaronProps3dState = 'off' | 'loading' | 'ready' | 'failed' | 'disposed';
 
 export type RunReturnResult = 'secured' | 'overrun';
 
@@ -433,6 +437,9 @@ export class Game {
     side: THREE.DoubleSide,
   });
   private readonly baronRocketCartGroup = new THREE.Group();
+  private baronProps3dState: BaronProps3dState = 'off';
+  private baronProps3dLoadSerial = 0;
+  private baronProps3dModel?: THREE.Group;
   private readonly baronRocketCartBodyGeometry = new THREE.BoxGeometry(0.92, 0.3, 0.58);
   private readonly baronRocketCartWheelGeometry = new THREE.CylinderGeometry(0.16, 0.16, 0.08, 14);
   private readonly baronRocketCartRailGeometry = new THREE.BoxGeometry(1.12, 0.08, 0.08);
@@ -484,7 +491,9 @@ export class Game {
     (position, freedOrdinal) => this.onEnemyKilled(position, freedOrdinal),
     (at, origin, target, ownerId) => {
       this.lightRig?.triggerMuzzleFlash(at, origin, target);
-      if (ownerId.startsWith(BARON_ROCKET_OWNER_PREFIX)) this.baronVolleyVfx.tracer(origin, target);
+      if (ownerId.startsWith(BARON_ROCKET_OWNER_PREFIX)) {
+        this.baronVolleyVfx.tracer(origin, target, this.baronRocketConfig()?.airTime);
+      }
       const actor = this.nearestActorTo(origin);
       if (this.weaponForActor(actor) === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
     },
@@ -2312,6 +2321,10 @@ export class Game {
     this.baronStandardClothGeometry.dispose();
     this.baronStandardPoleMaterial.dispose();
     this.baronStandardClothMaterial.dispose();
+    this.baronProps3dLoadSerial += 1;
+    this.baronProps3dState = 'disposed';
+    if (this.baronProps3dModel) disposeObject3D(this.baronProps3dModel);
+    this.baronProps3dModel = undefined;
     this.baronRocketCartGroup.clear();
     this.baronRocketCartBodyGeometry.dispose();
     this.baronRocketCartWheelGeometry.dispose();
@@ -2333,6 +2346,7 @@ export class Game {
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
+    this.baronVolleyVfx.dispose();
     this.combat.dispose();
     this.audio.dispose();
     this.prospector.dispose();
@@ -3921,6 +3935,78 @@ export class Game {
 
     this.baronRocketCartGroup.add(railLeft, railRight, ...rockets);
     tagPlaceholder(this.baronRocketCartGroup, assetSlots.propRocketCart);
+    if (this.activeContractUsesBaronPresentation()) this.loadBaronProps3d();
+  }
+
+  private loadBaronProps3d(): void {
+    if (this.baronProps3dState !== 'off') return;
+    const serial = ++this.baronProps3dLoadSerial;
+    this.baronProps3dState = 'loading';
+    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+      if (serial !== this.baronProps3dLoadSerial) return;
+      new GLTFLoader().load(BARON_PROPS_3D_URL, ({ scene }) => {
+        if (serial !== this.baronProps3dLoadSerial) {
+          disposeObject3D(scene);
+          return;
+        }
+        scene.updateMatrixWorld(true);
+        const sources = new Map<string, THREE.Mesh>();
+        const materials = new Set<THREE.Material>();
+        scene.traverse((node) => {
+          const mesh = node as THREE.Mesh;
+          if (!mesh.isMesh || !(mesh.name in BARON_PROPS_3D_TRIANGLES)) return;
+          sources.set(mesh.name, mesh);
+          for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
+        });
+        const valid = sources.size === 3 && materials.size === 1 && Object.entries(BARON_PROPS_3D_TRIANGLES).every(([name, triangles]) => {
+          const mesh = sources.get(name);
+          return mesh && Math.floor((mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position')?.count ?? 0) / 3) === triangles;
+        });
+        if (!valid) {
+          disposeObject3D(scene);
+          this.baronProps3dState = 'failed';
+          return;
+        }
+
+        const baked = (name: keyof typeof BARON_PROPS_3D_TRIANGLES) => {
+          const source = sources.get(name)!;
+          return source.geometry.clone().applyMatrix4(source.matrixWorld);
+        };
+        const sourceMaterial = [...materials][0] as THREE.MeshStandardMaterial;
+        const material = sourceMaterial.clone();
+        material.emissiveMap = material.map;
+        material.emissive.set('#fff3de');
+        material.emissiveIntensity = 0.72;
+        const launcher = new THREE.Mesh(baked('launcher'), material);
+        launcher.name = 'BaronShoulderLauncher';
+        launcher.position.set(0.48, 0.88, 0.08);
+        launcher.rotation.z = -0.42;
+        launcher.scale.setScalar(0.8);
+        const powderKeg = new THREE.Mesh(baked('powder_keg'), material);
+        powderKeg.name = 'BaronPowderKeg';
+        powderKeg.position.set(-0.76, -0.02, 0.18);
+        powderKeg.rotation.z = 0.16;
+        powderKeg.scale.setScalar(0.82);
+        const rocketGeometry = baked('rocket');
+
+        this.baronProps3dModel = new THREE.Group();
+        this.baronProps3dModel.name = 'BaronProps3d';
+        this.baronProps3dModel.add(launcher, powderKeg);
+        this.baronRocketCartGroup.clear();
+        this.baronRocketCartGroup.add(this.baronProps3dModel);
+        this.baronVolleyVfx.setRocketModel(rocketGeometry, material);
+        rocketGeometry.dispose();
+        for (const mesh of sources.values()) mesh.geometry.dispose();
+        sourceMaterial.dispose();
+        this.baronProps3dState = 'ready';
+      }, undefined, () => {
+        if (serial !== this.baronProps3dLoadSerial) return;
+        this.baronProps3dState = 'failed';
+      });
+    }).catch(() => {
+      if (serial !== this.baronProps3dLoadSerial) return;
+      this.baronProps3dState = 'failed';
+    });
   }
 
   private createStampMillSiteDressing(manifest: MegaprojectManifest): void {
@@ -5162,6 +5248,14 @@ export class Game {
       target: {
         x: this.baronRocketTarget.x,
         z: this.baronRocketTarget.z,
+      },
+      props: {
+        state: this.baronProps3dState,
+        source: this.baronProps3dState === 'ready' ? 'glb' as const : 'placeholder' as const,
+        launcher: this.baronProps3dState === 'ready',
+        rocket: this.baronProps3dState === 'ready',
+        powderKeg: this.baronProps3dState === 'ready',
+        triangles: { ...BARON_PROPS_3D_TRIANGLES },
       },
       manifest: manifest ? { ...manifest } : null,
     };

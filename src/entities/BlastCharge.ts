@@ -25,6 +25,7 @@ const FLOATS_PER_SEGMENT = 6;
 const LAUNCH_Y = 0.78;
 const IMPACT_Y = 0.08;
 const MARKER_Y = 0.07;
+const DETAILED_ROCKET_OWNER_PREFIX = 'baron_rocket';
 
 export class BlastChargePool {
   readonly group = new THREE.Group();
@@ -258,6 +259,10 @@ export class BlastChargePool {
     const target = this.targets[index];
     const position = this.positions[index];
     if (!origin || !target || !position) return;
+    if ((this.ownerIds[index] ?? '').startsWith(DETAILED_ROCKET_OWNER_PREFIX)) {
+      this.hide(index);
+      return;
+    }
 
     const t = Math.min(1, (this.age[index] ?? 0) / Math.max(0.1, this.duration[index] ?? 0.1));
     const radius = this.radius[index] ?? Balance.blast.radius;

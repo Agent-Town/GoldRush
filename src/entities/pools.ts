@@ -1401,7 +1401,7 @@ export class EnemyPool {
       part.instanceMatrix.needsUpdate = true;
     }
     const railcar3dMounted = this.railcar3dState === 'ready' && this.railcar3dGroupId === enemy.bossGroupId;
-    const carryMarkerVisible = enemy.isAlive && (enemy.carriedAmount > 0 || enemy.isWrecker)
+    const carryMarkerVisible = enemy.isAlive && enemy.eliteKind !== 'baron' && (enemy.carriedAmount > 0 || enemy.isWrecker)
       && (enemy.eliteKind !== 'railcar' || (this.railcarVisible(enemy) && !railcar3dMounted));
     this.instanceMatrix.multiplyMatrices(carryMarkerVisible ? this.syncObject.matrix : this.hiddenMatrix, this.sackLocalMatrix);
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
