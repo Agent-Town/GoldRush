@@ -101,7 +101,7 @@ ROW ABOVE STANDS UNCHANGED AND IS STILL BINDING:** lane-b is still 636 behind un
 failures than the tree it merged into.** ⚠️ **My prior was that the slice caused the `tl-01-run-telemetry` red** — deterministic, both projects, in a suite
 whose name matches this slice’s subject exactly — **and the control refuted it.** A plausible attribution is not a measured one.
 
-🔬 **F-1431-3 (new, s1431, non-blocking) — `e2e/tl-01-run-telemetry.spec.ts:229` IS RED ON CLEAN MAIN, BOTH PROJECTS.** Fingerprint, recorded so the next
+🔬 **F-1431-3 (new, s1431, non-blocking) — `e2e/tl-01-run-telemetry.spec.ts:229` ("plain no-debug secure return keeps telemetry invisible to gameplay") IS RED ON CLEAN MAIN, BOTH PROJECTS.** Fingerprint, recorded so the next
 reader matches it rather than re-derives it: `expect(page.getByTestId('claim-secured')).toBeVisible()` at **`:236`**, "element(s) not found", 18s timeout.
 **Note WHERE it fails — a gameplay-progression step, not a telemetry assertion**; the test never reaches its telemetry checks at all, which is why a telemetry
 slice cannot be its cause. 🚫 **Do not "cure" it by raising the timeout** until someone has established whether the claim genuinely fails to secure.
@@ -111,7 +111,7 @@ slice cannot be its cause. 🚫 **Do not "cure" it by raising the timeout** unti
 isolation.** The isolated re-run is exactly how a fire would wrongly implicate its own merge — s1431 nearly did, and only a **same-batch control on clean
 main** settled it. Same family as F-1431-4. 🚫 Do not loosen the assertions; measure the load ceiling.
 
-🔬 **F-1431-4 (new, s1431, non-blocking) — `e2e/terrain3d-default.spec.ts:81 › promoted terrain stays inside the 115% p95 budget` REDDENED ON CLEAN MAIN and
+🔬 **F-1431-4 (new, s1431, non-blocking) — `e2e/terrain3d-default.spec.ts:81` ("promoted terrain stays inside the 115% p95 budget") REDDENED ON CLEAN MAIN and
 passed on the merged tree** in the same 4-suite batch. A perf-budget assertion that flips on an unrelated tree is a **load-ceiling signal**, not a line defect.
 Worth measuring together with F-1431-1 — both are "the instrument, not the subject" reds, and both cost a fire a control run to disprove.
 
