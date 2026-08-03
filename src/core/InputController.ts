@@ -10,7 +10,16 @@ export const HERO_INPUT_BINDINGS = {
   rotateBuild: ['KeyR', 'TouchRotate'],
   weaponToggle: ['KeyQ', 'TouchWeaponToggle'],
   build: ['KeyB'],
+  buildSlots: [
+    ['Digit1', 'Numpad1'],
+    ['Digit2', 'Numpad2'],
+    ['Digit3', 'Numpad3'],
+    ['Digit4', 'Numpad4'],
+    ['Digit5', 'Numpad5'],
+    ['Digit6', 'Numpad6'],
+  ],
   cancel: ['Escape'],
+  restart: ['KeyR'],
   pause: ['KeyP', 'Escape'],
   mute: ['KeyM'],
   debugSpawn: ['KeyT'],
@@ -209,43 +218,31 @@ export class InputController {
     this.previousConfirm = HERO_INPUT_BINDINGS.confirm.some((code) => this.keys.has(code));
     const upgradeHeld = anyDown(HERO_INPUT_BINDINGS.upgrade);
     this.intents.upgrade = upgradeHeld && !this.previousUpgrade;
-    this.previousUpgrade = this.keys.has('KeyU');
+    this.previousUpgrade = HERO_INPUT_BINDINGS.upgrade.some((code) => this.keys.has(code));
     const rotateHeld = anyDown(HERO_INPUT_BINDINGS.rotateBuild);
     this.intents.rotateBuild = rotateHeld && !this.previousRotateBuild;
-    this.previousRotateBuild = this.keys.has('KeyR') || this.keys.has('TouchRotate');
+    this.previousRotateBuild = HERO_INPUT_BINDINGS.rotateBuild.some((code) => this.keys.has(code));
     const weaponHeld = anyDown(HERO_INPUT_BINDINGS.weaponToggle);
     this.intents.weaponToggle = weaponHeld && !this.previousWeaponToggle;
-    this.previousWeaponToggle = this.keys.has('KeyQ') || this.keys.has('TouchWeaponToggle');
+    this.previousWeaponToggle = HERO_INPUT_BINDINGS.weaponToggle.some((code) => this.keys.has(code));
     const buildHeld = anyDown(HERO_INPUT_BINDINGS.build);
     this.intents.build = buildHeld && !this.previousBuild;
-    this.previousBuild = this.keys.has('KeyB');
+    this.previousBuild = HERO_INPUT_BINDINGS.build.some((code) => this.keys.has(code));
     this.intents.cancel = anyDown(HERO_INPUT_BINDINGS.cancel);
-    this.intents.buildSlot =
-      down('Digit1') || down('Numpad1')
-        ? 0
-        : down('Digit2') || down('Numpad2')
-          ? 1
-          : down('Digit3') || down('Numpad3')
-            ? 2
-            : down('Digit4') || down('Numpad4')
-              ? 3
-              : down('Digit5') || down('Numpad5')
-                ? 4
-                : down('Digit6') || down('Numpad6')
-                  ? 5
-                  : null;
-    this.intents.restart = down('KeyR');
+    const buildSlot = HERO_INPUT_BINDINGS.buildSlots.findIndex(anyDown);
+    this.intents.buildSlot = buildSlot < 0 ? null : buildSlot;
+    this.intents.restart = anyDown(HERO_INPUT_BINDINGS.restart);
     this.intents.pause = anyDown(HERO_INPUT_BINDINGS.pause);
     const muteHeld = anyDown(HERO_INPUT_BINDINGS.mute);
     this.intents.mute = muteHeld && !this.previousMute;
-    this.previousMute = this.keys.has('KeyM');
+    this.previousMute = HERO_INPUT_BINDINGS.mute.some((code) => this.keys.has(code));
     this.intents.debugSpawn = anyDown(HERO_INPUT_BINDINGS.debugSpawn);
     const debugXpHeld = anyDown(HERO_INPUT_BINDINGS.debugXp);
     this.intents.debugXp = debugXpHeld && !this.previousDebugXp;
-    this.previousDebugXp = this.keys.has('KeyX');
+    this.previousDebugXp = HERO_INPUT_BINDINGS.debugXp.some((code) => this.keys.has(code));
     const debugPlantHeld = anyDown(HERO_INPUT_BINDINGS.debugPlant);
     this.intents.debugPlant = debugPlantHeld && !this.previousDebugPlant;
-    this.previousDebugPlant = this.keys.has('KeyG');
+    this.previousDebugPlant = HERO_INPUT_BINDINGS.debugPlant.some((code) => this.keys.has(code));
     this.tapped.clear();
     return this.intents;
   }

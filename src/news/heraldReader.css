@@ -133,6 +133,15 @@
   border-bottom: 0;
 }
 
+.claim-herald__guide-panel:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  border-right: 0;
+}
+
+.claim-herald__guide-panel:nth-last-child(2):nth-child(even) {
+  border-bottom: 1px solid rgba(77, 49, 25, 0.24);
+}
+
 .claim-herald__art-slot {
   display: grid;
   place-items: center;

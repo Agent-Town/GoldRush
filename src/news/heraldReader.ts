@@ -1,6 +1,11 @@
 import './heraldReader.css';
 import { readHeraldItems, type HeraldClass, type HeraldItem } from './herald';
 import { activeProfile, markHintSeen, type ProfileStorage } from '../game/ProfileStorage';
+import {
+  greenhornGazetteControlCopy,
+  PROSPECTORS_HANDS_PANEL_ID,
+  type GazetteInputMode,
+} from './greenhornGazette';
 
 const heraldEngravingUrls = import.meta.glob<string>('../../assets/processed/herald-engraving-*.webp', {
   eager: true,
@@ -23,56 +28,68 @@ const HERALD_ENGRAVINGS: Record<HeraldClass, string | undefined> = {
   ceremony: heraldEngravingUrls['../../assets/processed/herald-engraving-ceremony.webp'],
 };
 const FIRST_ISSUE_SEEN_KEY = 'story:greenhorn-gazette-issue-1';
-const FIRST_ISSUE_PANELS = [
-  {
-    id: 'claim-goal',
-    headline: 'THE CLAIM AND THE GOAL',
-    lines: [
-      'Hold the claim through every posted wave.',
-      'Secure it and the win is banked; each claim carries the town forward.',
-    ],
-  },
-  {
-    id: 'seams-gold',
-    headline: 'SEAMS GIVE GOLD',
-    lines: [
-      'Pan the glittering seams to put gold in your pouch.',
-      'Raise a sluice beside running water and it keeps washing while you fight.',
-    ],
-  },
-  {
-    id: 'the-works',
-    headline: 'THE WORKS',
-    lines: [
-      'Gold raises the works: palisades slow trouble; turrets and beacons watch the night.',
-      'Build where the trouble walks.',
-    ],
-  },
-  {
-    id: 'the-arms',
-    headline: 'THE ARMS',
-    lines: [
-      'Your brass-and-teal frontier rig fires when trouble comes in range.',
-      'When the trail pauses for a fitting, choose the upgrade your claim needs.',
-    ],
-  },
-  {
-    id: 'freeing-fevered',
-    headline: 'FREEING THE FEVERED',
-    lines: [
-      "The bandits are neighbors caught in the Baron's Gold Fever.",
-      'Turn them back and break the hunger; they are victims, never villains.',
-    ],
-  },
-  {
-    id: 'town-serves',
-    headline: 'THE TOWN SERVES YOU',
-    lines: [
-      'The tavern board posts claims; the schoolhouse charts science; the tailor dresses both partners.',
-      'The complaints desk pays bounties for trouble reported.',
-    ],
-  },
-] as const;
+
+function firstIssuePanels(mode: GazetteInputMode) {
+  const controls = greenhornGazetteControlCopy(mode);
+  return [
+    {
+      id: 'claim-goal',
+      headline: 'THE CLAIM AND THE GOAL',
+      lines: [
+        'Hold the claim through every posted wave.',
+        'Secure it and the win is banked; each claim carries the town forward.',
+      ],
+    },
+    {
+      id: 'seams-gold',
+      headline: 'SEAMS GIVE GOLD',
+      lines: [
+        'Pan the glittering seams to put gold in your pouch.',
+        'Raise a sluice beside running water and it keeps washing while you fight.',
+      ],
+    },
+    {
+      id: 'the-works',
+      headline: 'THE WORKS',
+      lines: [
+        'Gold raises the works: palisades slow trouble; turrets and beacons watch the night.',
+        'Build where the trouble walks.',
+        controls.works,
+      ],
+    },
+    {
+      id: 'the-arms',
+      headline: 'THE ARMS',
+      lines: [
+        'Your brass-and-teal frontier rig fires when trouble comes in range.',
+        controls.arms,
+        'When the trail pauses for a fitting, choose the upgrade your claim needs.',
+      ],
+    },
+    {
+      id: 'freeing-fevered',
+      headline: 'FREEING THE FEVERED',
+      lines: [
+        "The bandits are neighbors caught in the Baron's Gold Fever.",
+        'Turn them back and break the hunger; they are victims, never villains.',
+      ],
+    },
+    {
+      id: 'town-serves',
+      headline: 'THE TOWN SERVES YOU',
+      lines: [
+        'The tavern board posts claims; the schoolhouse charts science; the tailor dresses both partners.',
+        'The complaints desk pays bounties for trouble reported.',
+      ],
+    },
+    {
+      id: PROSPECTORS_HANDS_PANEL_ID,
+      engravingId: 'the-arms',
+      headline: "THE PROSPECTOR'S HANDS",
+      lines: controls.hands,
+    },
+  ];
+}
 
 let currentRoot: HTMLElement | null = null;
 let currentOnClose: (() => void) | undefined;
@@ -123,6 +140,8 @@ export function markClaimHeraldFirstIssueRead(storage = browserStorage()): void 
 }
 
 function renderHerald(items: readonly HeraldItem[]): string {
+  const inputMode = prefersTouchControls() ? 'touch' : 'keyboard';
+  const panels = firstIssuePanels(inputMode);
   return `
     <article class="claim-herald__paper">
       <header class="claim-herald__masthead">
@@ -136,10 +155,10 @@ function renderHerald(items: readonly HeraldItem[]): string {
       <section class="claim-herald__first-issue" data-testid="gazette-first-issue" aria-labelledby="gazette-first-issue-title">
         <header class="claim-herald__issue-header">
           <p>Issue No. 1 · Pinned greenhorn edition</p>
-          <h3 id="gazette-first-issue-title">SIX THINGS EVERY CLAIM-HOLDER SHOULD KNOW</h3>
+          <h3 id="gazette-first-issue-title">SEVEN THINGS EVERY CLAIM-HOLDER SHOULD KNOW</h3>
         </header>
-        <div class="claim-herald__guide-panels">
-          ${FIRST_ISSUE_PANELS.map(renderFirstIssuePanel).join('')}
+        <div class="claim-herald__guide-panels" data-input-mode="${inputMode}">
+          ${panels.map(renderFirstIssuePanel).join('')}
         </div>
       </section>
       ${
@@ -151,8 +170,8 @@ function renderHerald(items: readonly HeraldItem[]): string {
   `;
 }
 
-function renderFirstIssuePanel(panel: (typeof FIRST_ISSUE_PANELS)[number]): string {
-  const engravingUrl = gazettePanelUrls[`../../assets/processed/gazette-panel-${panel.id}.webp`];
+function renderFirstIssuePanel(panel: ReturnType<typeof firstIssuePanels>[number]): string {
+  const engravingUrl = gazettePanelUrls[`../../assets/processed/gazette-panel-${panel.engravingId ?? panel.id}.webp`];
   return `
     <article class="claim-herald__guide-panel" data-panel-id="${panel.id}" data-testid="gazette-panel">
       ${engravingUrl ? `<img class="claim-herald__art-slot" src="${engravingUrl}" alt="" aria-hidden="true" data-testid="gazette-panel-engraving">` : '<div class="claim-herald__art-slot" aria-hidden="true">Engraving reserved</div>'}
@@ -160,6 +179,10 @@ function renderFirstIssuePanel(panel: (typeof FIRST_ISSUE_PANELS)[number]): stri
       ${panel.lines.map((line) => `<p>${line}</p>`).join('')}
     </article>
   `;
+}
+
+function prefersTouchControls(): boolean {
+  return globalThis.matchMedia?.('(pointer: coarse), (max-width: 760px)').matches === true;
 }
 
 function renderItem(item: HeraldItem): string {
