@@ -126,6 +126,18 @@ export function isMapBeautyDisabled(): boolean {
   return new URLSearchParams(window.location.search).has('nobeauty');
 }
 
+/**
+ * ?nopoolgrade — hold back the night-pool grade/exposure seam (F-BEAUTY-2) while everything
+ * else boots identically, for the same F-1113-4 reason as ?nobeauty: a p95 or hue A/B taken
+ * from two separate runs on this shared box measures the box, not the change. With the flag,
+ * both arms run in the same browser seconds apart and the terrain shader compiles byte-identical
+ * to main when disabled.
+ */
+export function isPoolGradeDisabled(): boolean {
+  if (typeof window === 'undefined') return false;
+  return new URLSearchParams(window.location.search).has('nopoolgrade');
+}
+
 function getSearch(): string {
   if (typeof window === 'undefined') {
     return '';

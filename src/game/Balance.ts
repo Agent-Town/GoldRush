@@ -882,6 +882,15 @@ export const Balance = {
       nightAmbientFloorIntensity: 0.22,
       nightLightDecay: 1.25,
       terrainPoolIntensity: 0.85,
+      // F-BEAUTY-2 pool grade seam (render-only, terrain shader, warm pools x darkness).
+      // strength: how far ground chroma re-anchors to the pool's warm axis at preserved luma —
+      // the measured wash is the hero/prospector cool light collapsing warm-core saturation
+      // 0.52->0.19 (reviews/beauty-pools.md), and no luminance-only curve can undo an additive
+      // hue shift. knee/ceiling: hue-preserving shoulder on the pre-tonemap max channel, the
+      // pool's own exposure guard against ACES bleaching over-range sums.
+      poolGradeStrength: 0.85,
+      poolGradeKnee: 0.85,
+      poolGradeCeiling: 1.6,
       muzzleFlashSeconds: 0.1,
       muzzleFlashIntensity: 18,
     },
