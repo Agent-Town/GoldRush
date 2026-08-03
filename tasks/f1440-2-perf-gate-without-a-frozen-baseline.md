@@ -73,6 +73,18 @@ in this repo.
 Verify this worktree is clean vs main before resetting; if any tracked blob here is unreachable in git,
 **STOP and report** rather than resetting.
 
+> **FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1):**
+> (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`,
+> `task-stats.jsonl`, `dashboard.html`), rewritten every cycle by the factory itself;
+> (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence, rewritten by every
+> drain gate that runs playwright. **What still STOPs, unchanged:** modified tracked `src/**`,
+> `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — anything a live drain or a
+> concurrent task could actually own.
+>
+> ⓘ Retro-fitted s1450 by `scripts/banked-master-preflight-guard.test.mjs`, which reddened the
+> moment this leaf was flipped to `queued`. The dispatch itself survived only because the lane had
+> been reset to a clean main seconds earlier — i.e. by luck, not by the master being correct.
+
 ## SELF-CHECK
 - `npx tsc --noEmit` clean · `npm run build` green
 - `e2e/e1-perf-pass.spec.ts` green in the **default** path, both projects, `--workers=1`
