@@ -56,6 +56,45 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron/);
 });
 
+test('gr-sim hashes a fractional-yield run identically twice', async () => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const location = new URL('http://gr-sim.local/?debug&contract=e1-dry-gulch&seed=gold-quantization');
+  globalThis.location = location;
+  globalThis.window = { location };
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  let Balance;
+  let originalTickGold;
+  try {
+    ({ Balance } = await vite.ssrLoadModule('/src/game/Balance.ts'));
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    originalTickGold = Balance.goldSeam.tickGold;
+    Balance.goldSeam.tickGold = 1;
+    const run = () => {
+      const sim = new HeadlessContractSim({ contractId: 'e1-dry-gulch', seed: 'gold-quantization' });
+      assert.equal(sim.submitOrders([{ verb: 'HARVEST', seam: 'gold-seam-1' }]).outcome.ok, true);
+      let turn = sim.currentTurn();
+      while (!turn.terminal) turn = sim.advanceToTurn();
+      return {
+        outcome: sim.outcome(),
+        fractionalYield: sim.economy.log.some((event) => event.type === 'gold_panned' && !Number.isInteger(event.amount)),
+      };
+    };
+    const first = run();
+    const second = run();
+    assert.deepEqual(second, first);
+    assert.equal(first.fractionalYield, true);
+    assert.equal(Number.isInteger(first.outcome.gold), true);
+  } finally {
+    if (Balance && originalTickGold !== undefined) Balance.goldSeam.tickGold = originalTickGold;
+    await vite.close();
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
+});
+
 test('gr-sim deterministically runs the Claim objective', () => {
   const run = () => spawnSync(
     process.execPath,

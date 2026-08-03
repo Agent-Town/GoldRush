@@ -42,6 +42,7 @@ export type EconomyState = {
   gold: number;
   bankCap: number;
   resources: Record<EconomyResourceId, ResourceBalance>;
+  goldDust?: Record<EconomyActor, number>;
 };
 
 export type EconomySummary = {
@@ -70,22 +71,25 @@ export const resourceCaps: Record<EconomyResourceId, number> = {
   pressure: 100,
 };
 
+// ponytail: millionth-coin precision covers authored yields; raise only if content needs finer accrual.
+export const GOLD_DUST_PER_COIN = 1_000_000;
+
 export const initialEconomyState: EconomyState = createEconomyState();
 
 export function reduce(state: EconomyState, event: EconomyEvent): EconomyState {
   switch (event.type) {
     case 'gold_panned':
-      return withGold(state, state.gold + event.amount);
+      return accrueGold(state, event.amount, event.actor);
     case 'gold_sluiced':
-      return withGold(state, state.gold + event.amount);
+      return accrueGold(state, event.amount, event.actor);
     case 'gold_capped':
       return state;
     case 'gold_granted':
-      return withGold(state, state.gold + event.amount);
+      return accrueGold(state, event.amount);
     case 'gold_stolen':
       return withGold(state, state.gold - event.amount);
     case 'gold_reclaimed':
-      return withGold(state, state.gold + event.amount);
+      return accrueGold(state, event.amount, event.actor);
     case 'palisade_kit_granted':
       return state;
     case 'gold_spent':
@@ -194,7 +198,7 @@ export class Economy {
   }
 
   get state(): EconomyState {
-    return createEconomyState(this.current.gold, this.bankCap, this.current.resources);
+    return createEconomyState(this.current.gold, this.bankCap, this.current.resources, this.current.goldDust);
   }
 
   get bankCap(): number {
@@ -217,13 +221,16 @@ export class Economy {
   }
 
   apply(event: EconomyEvent): EconomyApplyResult {
+    if ((event.type === 'gold_spent' || event.type === 'gold_stolen') && !Number.isInteger(event.amount)) {
+      throw new Error(`${event.type} amount must be an integer; received ${event.amount}`);
+    }
     if (event.type === 'gold_spent' && event.amount > this.current.gold) {
       return { ok: false, reason: 'OUT_OF_RESOURCES' };
     }
     if (event.type === 'gold_stolen' && event.amount > this.current.gold) {
       return { ok: false, reason: 'OUT_OF_RESOURCES' };
     }
-    if (isBankedIncome(event) && !this.canReceiveIncome(event.amount)) {
+    if (isBankedIncome(event) && !this.canReceiveIncome(event.amount, event.actor)) {
       return { ok: false, reason: 'BANK_CAP' };
     }
     if (event.type === 'resource_spent' && event.amount > resourceAmount(this.current, event.resource)) {
@@ -242,8 +249,8 @@ export class Economy {
     return { ok: true, gold: this.current.gold };
   }
 
-  canReceiveIncome(amount: number): boolean {
-    return amount <= 0 || this.current.gold + amount <= this.bankCap;
+  canReceiveIncome(amount: number, actor: EconomyActor = 'player'): boolean {
+    return amount <= 0 || (this.current.gold < this.bankCap && this.current.gold + mintedCoins(this.current, amount, actor) <= this.bankCap);
   }
 
   canReceiveResource(resource: EconomyResourceId, amount: number): boolean {
@@ -272,19 +279,27 @@ export function createEconomyState(
   gold: number = 0,
   bankCap: number = Balance.economy.bankCap,
   resources: Partial<Record<EconomyResourceId, Partial<ResourceBalance>>> = {},
+  goldDust: Partial<Record<EconomyActor, number>> = {},
 ): EconomyState {
   const pressure = resources.pressure;
-  return {
-    gold,
+  const wholeGold = Math.floor(gold);
+  const playerDust = cleanGoldDust(goldDust.player) + Math.round((gold - wholeGold) * GOLD_DUST_PER_COIN);
+  const normalizedGold = wholeGold + Math.floor(playerDust / GOLD_DUST_PER_COIN);
+  const normalizedDust = {
+    player: playerDust % GOLD_DUST_PER_COIN,
+    prospector: cleanGoldDust(goldDust.prospector),
+  };
+  return withGoldDust({
+    gold: normalizedGold,
     bankCap,
     resources: {
-      gold: { amount: gold, cap: bankCap },
+      gold: { amount: normalizedGold, cap: bankCap },
       pressure: {
         amount: cleanNonNegativeNumber(pressure?.amount) ?? 0,
         cap: cleanPositiveNumber(pressure?.cap) ?? resourceCaps.pressure,
       },
     },
-  };
+  }, normalizedDust);
 }
 
 export function isEconomyResourceId(value: string): value is EconomyResourceId {
@@ -301,6 +316,29 @@ function withGold(state: EconomyState, gold: number, bankCap: number = state.ban
       gold: { amount: gold, cap: bankCap },
     },
   };
+}
+
+function accrueGold(state: EconomyState, amount: number, actor: EconomyActor = 'player'): EconomyState {
+  const totalDust = (state.goldDust?.[actor] ?? 0) + Math.round(amount * GOLD_DUST_PER_COIN);
+  const next = withGold(state, state.gold + Math.floor(totalDust / GOLD_DUST_PER_COIN));
+  return withGoldDust(next, {
+    player: state.goldDust?.player ?? 0,
+    prospector: state.goldDust?.prospector ?? 0,
+    [actor]: totalDust % GOLD_DUST_PER_COIN,
+  });
+}
+
+function mintedCoins(state: EconomyState, amount: number, actor: EconomyActor): number {
+  return Math.floor(((state.goldDust?.[actor] ?? 0) + Math.round(amount * GOLD_DUST_PER_COIN)) / GOLD_DUST_PER_COIN);
+}
+
+function withGoldDust(state: EconomyState, goldDust: Record<EconomyActor, number>): EconomyState {
+  const { goldDust: _oldDust, ...plain } = state;
+  return goldDust.player > 0 || goldDust.prospector > 0 ? { ...plain, goldDust } : plain;
+}
+
+function cleanGoldDust(value: unknown): number {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 0 ? value % GOLD_DUST_PER_COIN : 0;
 }
 
 function withResource(state: EconomyState, resource: EconomyResourceId, amount: number): EconomyState {

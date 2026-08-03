@@ -417,9 +417,9 @@ export class Hud {
   }
 
   private goldText(snapshot: UiSnapshot): string {
-    return snapshot.gold >= snapshot.bankCap * 0.8 || snapshot.stockpileCount > 0
-      ? `${snapshot.gold}/${snapshot.bankCap}`
-      : snapshot.gold.toString();
+    const gold = Math.trunc(snapshot.gold);
+    const cap = Math.trunc(snapshot.bankCap);
+    return gold >= cap * 0.8 || snapshot.stockpileCount > 0 ? `${gold}/${cap}` : gold.toString();
   }
 
   private updatePressure(snapshot: UiSnapshot): void {

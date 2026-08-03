@@ -22,10 +22,12 @@ import { buildableDefs, type BuildableId } from './buildables';
 import { effectiveStats } from './StatSheet';
 import {
   initialEconomyState,
+  GOLD_DUST_PER_COIN,
   createEconomyState,
   reduce as reduceEconomy,
   summarizeLog,
   type EconomyEvent,
+  type EconomyActor,
   type EconomySummary,
 } from './Economy';
 import type { MetaPayout, MetaProgress } from './MetaProgress';
@@ -60,6 +62,7 @@ export type RunSuspendEnvelope = {
     gold: number;
     bankCap: number;
     resources?: Record<string, { amount: number; cap: number }>;
+    goldDust?: Record<EconomyActor, number>;
     log: EconomyEvent[];
     summary: EconomySummary;
   };
@@ -414,6 +417,7 @@ export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
       gold: snapshot.economy.gold,
       bankCap: snapshot.economy.bankCap,
       resources: snapshot.economy.resources,
+      ...(snapshot.economy.goldDust ? { goldDust: snapshot.economy.goldDust } : {}),
       log: snapshot.economy.log.map(({ id: _id, ...event }) => event),
     },
     hero: snapshot.hero,
@@ -558,6 +562,7 @@ function captureSnapshot(
       gold: cleanNumber(game.economy?.gold),
       bankCap: cleanNumber(game.economy?.bankCap),
       resources: deepClone(game.economy?.resources ?? {}),
+      ...(game.economy?.state?.goldDust ? { goldDust: deepClone(game.economy.state.goldDust) } : {}),
       log: economyLog,
       summary: summarizeLog(economyLog),
     },
@@ -1060,7 +1065,7 @@ function restoreEconomy(game: AnyGame, snapshot: RunSuspendEnvelope): void {
     ...createEconomyState(snapshot.economy.gold, bankCap, {
       ...resourceSnapshot(replay.resources),
       ...resourceSnapshot(snapshot.economy.resources),
-    }),
+    }, snapshot.economy.goldDust),
   };
   if (Array.isArray(economy.events)) {
     economy.events.splice(0, economy.events.length, ...cloneEvents(snapshot.economy.log));
@@ -1270,6 +1275,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
       gold: economy.gold,
       bankCap: economy.bankCap,
       resources: economy.resources,
+      ...(economy.goldDust ? { goldDust: economy.goldDust } : {}),
       log: economy.log,
       summary: summarizeLog(economy.log),
     },
@@ -1308,7 +1314,7 @@ function decodeEconomy(
   value: unknown,
   reasons: string[],
   requireV2: boolean,
-): { gold: number; bankCap: number; resources: Record<string, { amount: number; cap: number }>; log: EconomyEvent[]; dropped: number } | null {
+): { gold: number; bankCap: number; resources: Record<string, { amount: number; cap: number }>; goldDust?: Record<EconomyActor, number>; log: EconomyEvent[]; dropped: number } | null {
   const record = requiredRecord(value, 'economy', reasons);
   if (!record) return null;
   const gold = requiredNumber(record.gold, 0, MAX_ECONOMY_AMOUNT, 'economy.gold', reasons);
@@ -1319,6 +1325,7 @@ function decodeEconomy(
   }
   if (record.log.length > MAX_ECONOMY_EVENTS) reasons.push('economy.log is too long');
   const resources = decodeResources(record.resources, reasons, requireV2);
+  const goldDust = decodeGoldDust(record.goldDust, reasons);
   const log: EconomyEvent[] = [];
   let dropped = 0;
   for (const entry of record.log.slice(0, MAX_ECONOMY_EVENTS)) {
@@ -1335,7 +1342,22 @@ function decodeEconomy(
     reasons.push('economy.resources.gold must match economy.gold and economy.bankCap');
     return null;
   }
-  return { gold, bankCap, resources: normalizedResources, log, dropped };
+  return { gold, bankCap, resources: normalizedResources, ...(goldDust ? { goldDust } : {}), log, dropped };
+}
+
+function decodeGoldDust(value: unknown, reasons: string[]): Record<EconomyActor, number> | undefined {
+  if (value === undefined) return undefined;
+  if (!isRecord(value)) {
+    reasons.push('economy.goldDust must be an object');
+    return undefined;
+  }
+  const player = integerInRange(value.player, 0, GOLD_DUST_PER_COIN - 1);
+  const prospector = integerInRange(value.prospector, 0, GOLD_DUST_PER_COIN - 1);
+  if (player === null || prospector === null) {
+    reasons.push('economy.goldDust must contain integer player and prospector dust');
+    return undefined;
+  }
+  return player > 0 || prospector > 0 ? { player, prospector } : undefined;
 }
 
 function decodeEconomyEvent(value: unknown): EconomyEvent | null {
@@ -1367,14 +1389,14 @@ function decodeEconomyEvent(value: unknown): EconomyEvent | null {
       }
       return null;
     case 'gold_stolen':
-      return amount !== null ? { id, at, type: value.type, amount } : null;
+      return amount !== null && Number.isInteger(amount) ? { id, at, type: value.type, amount } : null;
     case 'gold_reclaimed':
       return amount !== null ? (compactEvent({ id, at, type: value.type, amount, actor }) as EconomyEvent) : null;
     case 'palisade_kit_granted':
       return amount !== null ? { id, at, type: value.type, amount } : null;
     case 'gold_spent': {
       const sink = stringInRange(value.sink, 1, 160);
-      return amount !== null && sink
+      return amount !== null && Number.isInteger(amount) && sink
         ? (compactEvent({ id, at, type: value.type, sink, amount, kit: value.kit === true ? true : undefined }) as EconomyEvent)
         : null;
     }
