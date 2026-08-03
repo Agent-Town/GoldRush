@@ -64,7 +64,7 @@ import seedRunPanoramaContractText from '../../assets/pilots/map-rebuild-spike/s
 import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json?raw';
 import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
-import { isMapBeautyDisabled } from '../core/DebugParams';
+import { isMapBeautyDisabled, isPoolGradeDisabled } from '../core/DebugParams';
 import { RenderLayers } from '../core/RenderLayers';
 import { ledgerSunShadowDirection } from './LightRig';
 import { Balance } from '../game/Balance';
@@ -746,6 +746,42 @@ const LIVE_SPRING_POND_CONTRACTS = new Map<string, LiveSpringPool>([
   ['e1-dry-gulch', { surfaceY: 0.0875, radius: 2.35 }],
 ]);
 
+/**
+ * THE POOL GRADE (F-BEAUTY-2, reviews/beauty-pools.md) — a pre-tonemap grade + exposure shoulder
+ * for the warm night pools, on the terrain fragment only, right before ACES sees it.
+ *
+ * Measured mechanism (transect rig, e2e/beauty-pools.spec.ts): the warm pool ground is already
+ * amber in isolation (sat 0.52-0.63 at hue ~40 deg), and warm+warm overlap stays amber — but the
+ * hero's/prospector's cool light standing in a pool collapses the same pixels to sat ~0.20 at
+ * hue ~14 deg, a pale hueless disc exactly where the player looks. An additive hue shift cannot
+ * be undone by any luminance curve, so the seam has two parts:
+ *  1. re-anchor the fragment's chroma toward the pool's own warm axis at PRESERVED luma — the
+ *     ground under a lantern belongs to the lantern; figures above it keep the cool light;
+ *  2. a hue-preserving Reinhard shoulder on the pre-tonemap max channel (knee -> ceiling), the
+ *     pool's own exposure treatment, so any over-range sum rolls off before ACES can bleach it.
+ * Both scale with warm-pool coverage x darkness: zero at day, zero outside pools, zero on cool
+ * pools, and the whole block is compiled out under ?nopoolgrade (byte-identical shader control).
+ */
+const POOL_GRADE_GLSL = `
+float terrain3dGradeAmount = uTerrain3dNightPoolGradeStrength * terrain3dPoolGradeMask * uTerrain3dNightPoolDarkness;
+if (terrain3dGradeAmount > 0.001) {
+  vec3 terrain3dGradeLumaW = vec3(0.2126, 0.7152, 0.0722);
+  float terrain3dGradeLuma = dot(outgoingLight, terrain3dGradeLumaW);
+  vec3 terrain3dGradeAnchor = terrain3dPoolGradeTint
+    * (terrain3dGradeLuma / max(dot(terrain3dPoolGradeTint, terrain3dGradeLumaW), 1e-4));
+  vec3 terrain3dGraded = mix(outgoingLight, terrain3dGradeAnchor, terrain3dGradeAmount);
+  float terrain3dGradeMax = max(terrain3dGraded.r, max(terrain3dGraded.g, terrain3dGraded.b));
+  if (terrain3dGradeMax > uTerrain3dNightPoolGradeKnee) {
+    float terrain3dGradeCompressed = uTerrain3dNightPoolGradeKnee
+      + (terrain3dGradeMax - uTerrain3dNightPoolGradeKnee)
+      / (1.0 + (terrain3dGradeMax - uTerrain3dNightPoolGradeKnee)
+        / max(uTerrain3dNightPoolGradeCeiling - uTerrain3dNightPoolGradeKnee, 1e-3));
+    terrain3dGraded *= terrain3dGradeCompressed / terrain3dGradeMax;
+  }
+  outgoingLight = terrain3dGraded;
+}
+`;
+
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
 function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Host): void {
   const materials = new Set<THREE.Material>();
@@ -762,10 +798,18 @@ function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Hos
   const poolDarkness = { value: 0 };
   const poolIntensity = { value: Balance.contracts.nightShift.terrainPoolIntensity };
   const poolFalloff = { value: Balance.contracts.nightShift.lightFalloff };
+  const poolGradeStrength = { value: Balance.contracts.nightShift.poolGradeStrength };
+  const poolGradeKnee = { value: Balance.contracts.nightShift.poolGradeKnee };
+  const poolGradeCeiling = { value: Balance.contracts.nightShift.poolGradeCeiling };
+  const poolGradeEnabled = !isPoolGradeDisabled();
   let lastUpdatedFrame = -1;
   const updateNightPools = (renderer: THREE.WebGLRenderer) => {
     if (renderer.info.render.frame === lastUpdatedFrame) return;
     lastUpdatedFrame = renderer.info.render.frame;
+    // Live Balance reads so the capture rig can A/B the grade in one session via setBalance.
+    poolGradeStrength.value = Balance.contracts.nightShift.poolGradeStrength;
+    poolGradeKnee.value = Balance.contracts.nightShift.poolGradeKnee;
+    poolGradeCeiling.value = Balance.contracts.nightShift.poolGradeCeiling;
     const snapshot = host.nightLighting?.();
     poolDarkness.value = snapshot?.darkness ?? 0;
     const sources = snapshot?.sources
@@ -791,6 +835,9 @@ function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Hos
       shader.uniforms.uTerrain3dNightPoolIntensity = poolIntensity;
       shader.uniforms.uTerrain3dNightPoolFalloff = poolFalloff;
       shader.uniforms.uTerrain3dNightPools = { value: poolSources };
+      shader.uniforms.uTerrain3dNightPoolGradeStrength = poolGradeStrength;
+      shader.uniforms.uTerrain3dNightPoolGradeKnee = poolGradeKnee;
+      shader.uniforms.uTerrain3dNightPoolGradeCeiling = poolGradeCeiling;
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec2 vTerrain3dWorld;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\nvTerrain3dWorld = (modelMatrix * vec4(position, 1.0)).xz;');
@@ -807,6 +854,25 @@ function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Hos
           '#include <color_fragment>',
           `#include <color_fragment>\nfloat terrain3dEdge = max(abs(vTerrain3dWorld.x) / ${halfX.toFixed(3)}, abs(vTerrain3dWorld.y) / ${halfZ.toFixed(3)});\ndiffuseColor.a *= 1.0 - smoothstep(${((halfX - SKIRT_INSET) / halfX).toFixed(4)}, 1.0, terrain3dEdge);`,
         );
+      if (poolGradeEnabled) {
+        // Second-stage rewrites over the block above: track the strongest warm pool's coverage
+        // and per-fragment warm tint through the existing loop, then grade outgoingLight right
+        // before ACES. Under ?nopoolgrade none of these run and the shader is byte-identical.
+        shader.fragmentShader = shader.fragmentShader
+          .replace(
+            'uniform vec4 uTerrain3dNightPools',
+            'uniform float uTerrain3dNightPoolGradeStrength;\nuniform float uTerrain3dNightPoolGradeKnee;\nuniform float uTerrain3dNightPoolGradeCeiling;\nuniform vec4 uTerrain3dNightPools',
+          )
+          .replace(
+            'vec3 terrain3dPoolLight = vec3(0.0);',
+            'vec3 terrain3dPoolLight = vec3(0.0);\nfloat terrain3dPoolGradeMask = 0.0;\nvec3 terrain3dPoolGradeTint = vec3(1.00, 0.62, 0.20);',
+          )
+          .replace(
+            'terrain3dPoolLight = max(terrain3dPoolLight, terrain3dPoolTint * terrain3dPoolFalloff);',
+            'terrain3dPoolLight = max(terrain3dPoolLight, terrain3dPoolTint * terrain3dPoolFalloff);\n  float terrain3dPoolWarmCoverage = terrain3dPoolFalloff * step(0.5, terrain3dPool.w);\n  if (terrain3dPoolWarmCoverage > terrain3dPoolGradeMask) {\n    terrain3dPoolGradeMask = terrain3dPoolWarmCoverage;\n    terrain3dPoolGradeTint = terrain3dPoolWarm;\n  }',
+          )
+          .replace('#include <opaque_fragment>', `${POOL_GRADE_GLSL}\n#include <opaque_fragment>`);
+      }
     };
     material.needsUpdate = true;
   }
