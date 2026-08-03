@@ -67,6 +67,7 @@ import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { reportRenderDemotion } from '../telemetry/runBeacon';
 import { isMapBeautyDisabled } from '../core/DebugParams';
 import { RenderLayers } from '../core/RenderLayers';
+import { horizonApronProfile, paintHorizonApron } from './HorizonApron';
 import { ledgerSunShadowDirection } from './LightRig';
 import { Balance } from '../game/Balance';
 import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
@@ -988,6 +989,7 @@ function createContinuation(
   panorama: THREE.Object3D,
   heightAt: (x: number, z: number) => number,
   bounds: THREE.Box3,
+  contractId: string,
 ): THREE.Mesh | undefined {
   const source = terrain.getObjectByProperty('isMesh', true) as THREE.Mesh | undefined;
   if (!source || Array.isArray(source.material)) return undefined;
@@ -1070,7 +1072,13 @@ function createContinuation(
       '#include <project_vertex>\ngl_Position.z = gl_Position.w * 0.99999;',
     );
   };
+  // THE ATMOSPHERICS SHIFT: this apron — not the panorama — is what a run frame's top edge
+  // actually contains once the player crosses onto the far bank. Measured, per contract, in
+  // src/world/HorizonApron.ts.
+  const apron = horizonApronProfile(contractId);
+  if (apron) paintHorizonApron(material, apron);
   const continuation = new THREE.Mesh(geometry, material);
+  continuation.userData.horizonApron = apron ? 'painted' : 'plain';
   continuation.frustumCulled = false;
   continuation.renderOrder = -50;
   continuation.name = 'Terrain3dSculptContinuation';
@@ -1163,6 +1171,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       preparePanorama(nextPanorama);
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds);
       const nextChannelWater = createChannelWater(host.contractId, selected.contract, heightAt);
+      const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
+      const nextChannelWater = createChannelWater(host.contractId, selected.contract);
       terrain = nextTerrain;
       panorama = nextPanorama;
       skirt = nextSkirt;
@@ -1214,6 +1224,10 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         .filter(Boolean)
         .join('|');
       host.canvas.dataset.terrain3dPilotContinuation = nextSkirt ? 'sculpt-edge-continuation' : 'panorama-owned-continuation';
+      // THE ATMOSPHERICS SHIFT's plain-boot door: the apron is the only horizon surface a run
+      // frame can reach (the panorama measured 0% at every hero position, both viewports), so
+      // whether it is painted has to be readable without ?debug.
+      host.canvas.dataset.terrain3dPilotHorizonApron = String(nextSkirt?.userData.horizonApron ?? 'none');
       host.canvas.dataset.terrain3dPilotPanoramaFraming = 'world-projected-horizon';
       // Keep the original probe values until the registry contract is migrated.
       host.canvas.dataset.terrain3dPilotSkirtBlend = 'painted-underlay-alpha-rim';
