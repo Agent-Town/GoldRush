@@ -954,12 +954,12 @@ function restoreAgent(game: AnyGame, snapshot: RunSuspendEnvelope, hero: AnyGame
   return true;
 }
 
-function restoreControls(game: AnyGame, controls: ControlsSuspend | null, meta: MetaProgress): void {
+function restoreControls(game: AnyGame, controls: ControlsSuspend | null, _meta: MetaProgress): void {
   const restored = controls ?? {
     runState: 'playing',
     paused: false,
     playerPauseActive: false,
-    territoryRingPresent: meta.tracks.territory >= Balance.meta.territoryTier1,
+    territoryRingPresent: false, // F-1433-3: the af463bd9 kit merge means Territory I no longer implies a ring.
     charm: { active: false, remaining: 0, cooldown: 0 },
     blastAim: { ready: false, pointer: { x: 0, z: 0 }, target: { x: 0, z: 2 } },
     latches: {

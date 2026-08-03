@@ -1,6 +1,7 @@
 import { mkdirSync } from 'node:fs';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { RUN_SUSPEND_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 const QUERY = '?debug&timescale=10&nokill&nolevel&nosteal&nowreck&seed=run-suspend';
@@ -274,6 +275,75 @@ test('wave-boundary suspend restores state and matches the uninterrupted seeded 
   await page.waitForFunction((wave) => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave === wave, saved.wave);
   await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold)).resolves.toBe(saved.economy.gold);
 
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('legacy no-controls restore at Territory I keeps the removed ring and its hints absent', async ({ page }) => {
+  await clearStorage(page);
+  const errors = await openGame(page, '?debug&nowaves&nolevel&seed=run-suspend-legacy-ring');
+  const legacy = await page.evaluate(
+    async ({ territoryTier1 }) => {
+      const snapshot = window.__GR_TEST__!.captureSuspend() as any;
+      snapshot.v = 1;
+      delete snapshot.controls;
+      snapshot.meta.tracks.territory = territoryTier1;
+      snapshot.research.progress.tracks.territory = territoryTier1;
+      const { RunManager } = (await Function('return import("/src/game/RunManager.ts")')()) as typeof import('../src/game/RunManager');
+      const prototype = RunManager.prototype as any;
+      const restoreSuspend = prototype.restoreSuspend;
+      let fallbackRingPresent: boolean | null = null;
+      prototype.restoreSuspend = function restoreSuspendWithProbe(...args: unknown[]) {
+        fallbackRingPresent = this.game.territoryRingPresent;
+        return restoreSuspend.apply(this, args);
+      };
+      try {
+        const restored = window.__GR_TEST__!.restoreSuspend(snapshot);
+        return {
+          raw: JSON.stringify(snapshot),
+          wave: snapshot.wave as number,
+          meta: JSON.stringify(snapshot.meta),
+          restored,
+          fallbackRingPresent,
+          finalRingPresent: window.__GR_TEST__!.captureSuspend().controls?.territoryRingPresent,
+        };
+      } finally {
+        prototype.restoreSuspend = restoreSuspend;
+      }
+    },
+    { territoryTier1: Balance.meta.territoryTier1 },
+  );
+  expect(legacy).toMatchObject({ restored: true, fallbackRingPresent: false, finalRingPresent: false });
+
+  await page.goto('/');
+  await writeSuspend(page, legacy.raw);
+  await page.evaluate(([key, meta]) => localStorage.setItem(key, meta), [profileDataKey('robin', META_PROGRESS_KEY), legacy.meta] as const);
+  await page.goto('/?debug&nowaves&nolevel&seed=run-suspend-legacy-ring');
+  await page.waitForFunction(
+    (restoredWave) =>
+      window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restored === true &&
+      window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave === restoredWave,
+    legacy.wave,
+  );
+  const restored = await page.evaluate(() => window.__GR_TEST__!.captureSuspend());
+  expect(restored.meta.tracks.territory).toBe(Balance.meta.territoryTier1);
+  expect(restored.controls?.territoryRingPresent).toBe(false);
+
+  const gap = await page.evaluate(
+    ({ gapHalf, depth, width }) => {
+      const contract = window.__THREE_GAME_DIAGNOSTICS__!.contract.tileParams;
+      const stake = contract.stakeMarkers?.find((marker) => marker.heroStart) ?? { x: 0, z: 12 };
+      const edge = contract.lanes.spawnEdges[0] ?? 'north';
+      const capOffset = gapHalf + depth - width / 2;
+      const sideOffset = gapHalf + depth + width / 2;
+      if (edge === 'north' || edge === 'south') return { x: stake.x, z: stake.z + (edge === 'north' ? capOffset : -capOffset) };
+      return { x: stake.x + (edge === 'east' ? sideOffset : -sideOffset), z: stake.z };
+    },
+    { gapHalf: Balance.meta.territoryRingGapHalfWidth, depth: Balance.palisade.depth, width: Balance.palisade.width },
+  );
+  await page.evaluate((point) => window.__GR_TEST__!.teleport(point.x, point.z), gap);
+  await page.waitForTimeout(80);
+  await expect(page.locator('[data-testid="world-info-note"][data-object-class="territory_ring_gap"]')).toHaveCount(0);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
