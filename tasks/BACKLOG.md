@@ -101,6 +101,23 @@ ROW ABOVE STANDS UNCHANGED AND IS STILL BINDING:** lane-b is still 636 behind un
 failures than the tree it merged into.** ⚠️ **My prior was that the slice caused the `tl-01-run-telemetry` red** — deterministic, both projects, in a suite
 whose name matches this slice’s subject exactly — **and the control refuted it.** A plausible attribution is not a measured one.
 
+🔬 **F-1432-1 (new, s1432, non-blocking, ACTED ON THE SAME FIRE) — A FROZEN LANE COSTS A FULL RUN PER DISPATCH, AND THE STOP IS INVISIBLE ON THE BOARD.**
+`lane-water-shore-truth` was dispatched into lane-b, which is 650 behind main with 5 unique ahead commits and a standing DO-NOT-RESET. The runner stopped correctly at
+pre-flight — `src/world/Water.ts` there is **370 lines with no `createSpringPondSurface`, no `pondGeometry`, no `POND_MARGIN_SCALE` at all** — having spent **74,724
+tokens for zero files touched and zero history changed**. This is the THIRD instance of the F-1298-4 family (s1298 lane/m4 26,940 tokens; s1424 lane-c 44,007 tokens;
+now 74,724) and the cost is rising because the gap is widening. ⚠️ **The dangerous part is not the tokens, it is the BOOKKEEPING SHAPE:** a STOP arrives in
+`tasks/done/` looking exactly like a completed run, and its only distinguishing mark is a prefix a fire has to think to add. s1431 predicted this recurrence by name and
+it happened anyway, because **the prediction lived in a handoff and nothing in the dispatch path reads handoffs.** ➡️ Acted on rather than merely filed: re-routed to
+lane-c (refreshed to `7b133ada`, `behind=0` verified), done-move re-prefixed `stopped-…`, leaf registered `queued`. 🚫 **Do not read this as an argument for resetting
+lane-b** — it holds 21 paths main has never absorbed and its leaf is `disputed`; the cure is to stop DISPATCHING into it, which no instrument currently prevents.
+
+🔬 **F-1432-2 (new, s1432, non-blocking) — A MASTER'S PRE-FLIGHT NEEDS TWO KINDS OF CHECK, AND THE CHEAPER ONE CANNOT SUBSTITUTE FOR THE OTHER.**
+Measured while re-routing F-1432-1. A **subject-presence grep** ("is the code I am here to change here?") and an **ancestry check** ("did this lane drift?") answer
+different questions, and each is blind where the other sees. Proof, both directions on the same day: lane-b failed **subject-presence** (no pond APIs) while a pure
+ancestry test would only have said "behind", which every lane always is; and the **stale, 61-behind lane-c already carried both subject lines verbatim**, so
+subject-presence alone would have passed it and reported a current tree. The re-routed master therefore carries both, plus the F-1425-2 discipline of proving each grep
+key returns exactly **1 against main** before writing it down. ⓘ Worth generalising into `/author-task`, but **not yet mechanised** — one measurement, one master.
+
 🔬 **F-1431-3 (new, s1431, non-blocking) — `e2e/tl-01-run-telemetry.spec.ts:229` ("plain no-debug secure return keeps telemetry invisible to gameplay") IS RED ON CLEAN MAIN, BOTH PROJECTS.** Fingerprint, recorded so the next
 reader matches it rather than re-derives it: `expect(page.getByTestId('claim-secured')).toBeVisible()` at **`:236`**, "element(s) not found", 18s timeout.
 **Note WHERE it fails — a gameplay-progression step, not a telemetry assertion**; the test never reaches its telemetry checks at all, which is why a telemetry
