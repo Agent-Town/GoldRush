@@ -5,7 +5,8 @@ import { PNG } from 'pngjs';
 import { Balance } from '../src/game/Balance';
 
 const ARTIFACT_DIR = path.resolve(process.env.E1_PERF_ARTIFACT_DIR ?? 'artifacts/e1-perf-pass');
-const STAGE = process.env.E1_PERF_STAGE ?? 'after';
+// `before` and `after` are retained evidence; ordinary runs publish regenerable output to `latest`.
+const STAGE = process.env.E1_PERF_STAGE ?? 'latest';
 // Cross-run timing, draw-call, and pixel baselines are machine-specific; enable only for a deliberate
 // A/B run. The default gate stays machine-independent and never reads committed before artifacts.
 const COMPARE_BASELINE = process.env.E1_PERF_COMPARE_BASELINE === '1';
