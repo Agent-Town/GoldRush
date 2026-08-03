@@ -5112,7 +5112,8 @@ export class Game {
       return;
     }
 
-    const suppressed = this.baronRocketMeleeSuppressed(baron);
+    const blockingPalisade = this.baronBlockingPalisade(baron);
+    const suppressed = this.baronRocketMeleeSuppressed(baron, blockingPalisade);
     this.baronRocketSuppressed = suppressed;
     if (suppressed) {
       this.clearBaronRocketTelegraph();
@@ -5120,16 +5121,22 @@ export class Game {
     }
 
     if (this.baronRocketTelegraphStartedAt >= 0) {
-      const telegraphSeconds = Math.max(0.1, config.telegraphSeconds);
+      const telegraphSeconds = Math.max(
+        0.1,
+        blockingPalisade ? Balance.baron.blockedVolleyTelegraphSeconds : config.telegraphSeconds,
+      );
       if (this.timeAlive - this.baronRocketTelegraphStartedAt < telegraphSeconds) return;
       this.launchBaronRocketVolley(baron, config);
       this.clearBaronRocketTelegraph();
-      this.baronRocketNextAt = this.timeAlive + Math.max(0.2, config.cadenceSeconds);
+      this.baronRocketNextAt = this.timeAlive + Math.max(
+        0.2,
+        blockingPalisade ? Balance.baron.blockedVolleyCadenceSeconds : config.cadenceSeconds,
+      );
       return;
     }
 
     if (this.timeAlive < this.baronRocketNextAt) return;
-    if (!this.acquireBaronRocketTarget(baron)) {
+    if (!this.acquireBaronRocketTarget(baron, blockingPalisade)) {
       this.baronRocketNextAt = this.timeAlive + 0.25;
       return;
     }
@@ -5152,12 +5159,19 @@ export class Game {
     this.baronRocketTargetKind = null;
   }
 
-  private baronRocketMeleeSuppressed(baron: ClaimJumperEnemy): boolean {
+  private baronBlockingPalisade(baron: ClaimJumperEnemy): BuildingTarget | null {
+    const hero = this.nearestActorTo(baron.position).group.position;
+    const clearance = Balance.palisade.avoidancePad + baron.hitRadius - Balance.enemy.touchRadius;
+    return this.buildSystem.palisadeRoute(baron.position, hero, clearance)?.blocker ?? null;
+  }
+
+  private baronRocketMeleeSuppressed(baron: ClaimJumperEnemy, blockingPalisade: BuildingTarget | null): boolean {
     const heroRadius = baron.hitRadius + Balance.hero.radius + 0.35;
     const hero = this.nearestActorTo(baron.position).group.position;
     if (distanceSq2(baron.position.x, baron.position.z, hero.x, hero.z) <= heroRadius * heroRadius) {
       return true;
     }
+    if (blockingPalisade) return false;
 
     const building = this.goldTargeting.nearestBuilding(baron.position);
     if (!building) return false;
@@ -5165,7 +5179,12 @@ export class Game {
     return distanceSqToBuildingPoint(baron.position, building) <= reach * reach;
   }
 
-  private acquireBaronRocketTarget(baron: ClaimJumperEnemy): boolean {
+  private acquireBaronRocketTarget(baron: ClaimJumperEnemy, blockingPalisade: BuildingTarget | null): boolean {
+    if (blockingPalisade) {
+      this.baronRocketTarget.copy(blockingPalisade.position);
+      this.baronRocketTargetKind = 'building';
+      return true;
+    }
     const building = this.goldTargeting.nearestBuilding(baron.position);
     const hero = this.nearestActorTo(baron.position).group.position;
     const heroRange = Math.max(16, baron.heroPursuitRange || 45);

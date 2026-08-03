@@ -949,6 +949,15 @@ export class ClaimJumperEnemy {
     const thiefTarget = this.updateThief(delta, thiefContext);
     if (thiefTarget) return thiefTarget;
     if (this.wrecker && this.shouldPursueHero(heroPosition)) {
+      if (this.elite === 'baron' && wreckerContext) {
+        const clearance = Balance.palisade.avoidancePad + this.hitRadius - Balance.enemy.touchRadius;
+        const blocker = wreckerContext.palisadeRoute(this.group.position, heroPosition, clearance)?.blocker ?? null;
+        if (this.isBuildingValid(blocker)) {
+          this.currentBuilding = blocker;
+          this.wreckerRetargetTimer = WRECKER_RETARGET_SECONDS;
+          return this.updateWrecker(delta, wreckerContext) ?? heroPosition;
+        }
+      }
       this.currentBuilding = null;
       this.wreckerState = 'seekBuilding';
       this.spriteClip = 'walk';

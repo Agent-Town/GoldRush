@@ -751,6 +751,10 @@ export const Balance = {
       { cost: 300, damageMult: 1.9, fireRateMult: 1.35 }, // task-047; old 400.
     ],
   },
+  baron: {
+    blockedVolleyCadenceSeconds: 3.2,
+    blockedVolleyTelegraphSeconds: 0.8,
+  },
   wreck: {
     hp: {
       sentry_beacon: 40,
