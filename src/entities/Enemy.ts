@@ -3,7 +3,7 @@ import { OrientationResolver, rotationDirections, type RotationDirection } from 
 import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
-import { activeTileDescriptor } from '../meta/ContractFamilies';
+import { activeTileDescriptor, activeWaterDescriptor, type ContractGravelBar } from '../meta/ContractFamilies';
 import { hasElevationTile, resolveTerrainMove, terrainDetourWaypoint, terrainSpeedMultiplier } from '../sim/TileHeight';
 import type { PalisadeRoute } from '../systems/BuildSystem';
 import type { BuildingTarget, GoldHolding } from '../systems/TargetingSystem';
@@ -143,11 +143,12 @@ const THIEF_RETARGET_SECONDS = 0.35;
 const WRECKER_RETARGET_SECONDS = 0.35;
 const FORD_ENTRY_INSET = 0.1;
 const FLEE_EDGE = 37.5;
+const ACTIVE_TILE_ID = activeTileDescriptor().id;
 const FORMATION_STEER = 0.38;
 const FORMATION_GAP_CLEARANCE = 0.25;
 const FORMATION_LANES = 7;
 const FORMATION_JITTER = 0.16;
-const ENEMY_FLAT_WATER_SPEED = activeTileDescriptor().id !== 'frontier-river-claim';
+const ENEMY_FLAT_WATER_SPEED = ACTIVE_TILE_ID !== 'frontier-river-claim';
 
 export function createClaimJumperAssets(): ClaimJumperAssets {
   return {
@@ -1134,13 +1135,13 @@ export class ClaimJumperEnemy {
     const currentSample = Terrain.sample(current.x, current.z);
     const currentZone = currentSample.zone;
     const targetSide = riverSide(target.z);
-    const ford = Terrain.nearestFordRange(current.x);
+    const crossing = goalSideCrossing(target.x, current.x);
     if (currentZone === 'ford') {
       if (targetSide === 'north' && current.z < Terrain.RIVER_MAX_Z - 0.1) {
-        return this.routeTarget.set(ford.centerX, Balance.enemy.groundY, Terrain.RIVER_MAX_Z);
+        return this.routeTarget.set(crossing.centerX, Balance.enemy.groundY, Terrain.RIVER_MAX_Z);
       }
       if (targetSide === 'south' && current.z > Terrain.RIVER_MIN_Z + 0.1) {
-        return this.routeTarget.set(ford.centerX, Balance.enemy.groundY, Terrain.RIVER_MIN_Z);
+        return this.routeTarget.set(crossing.centerX, Balance.enemy.groundY, Terrain.RIVER_MIN_Z);
       }
       return target;
     }
@@ -1149,11 +1150,11 @@ export class ClaimJumperEnemy {
     if (currentSide && targetSide && currentSide !== targetSide && riverBlocksEnemyCrossingAt(current.x)) {
       const entryZ =
         currentSide === 'north' ? Terrain.RIVER_MAX_Z - FORD_ENTRY_INSET : Terrain.RIVER_MIN_Z + FORD_ENTRY_INSET;
-      return this.routeTarget.set(ford.centerX, Balance.enemy.groundY, entryZ);
+      return this.routeTarget.set(crossing.centerX, Balance.enemy.groundY, entryZ);
     }
 
     if (currentZone === 'river' && riverBlocksEnemyAt(current.x, current.z)) {
-      return this.routeTarget.set(THREE.MathUtils.clamp(current.x, ford.minX, ford.maxX), Balance.enemy.groundY, current.z);
+      return this.routeTarget.set(THREE.MathUtils.clamp(current.x, crossing.minX, crossing.maxX), Balance.enemy.groundY, current.z);
     }
 
     return target;
@@ -1174,12 +1175,21 @@ export class ClaimJumperEnemy {
       const steps = blockers.length > 0 || Balance.pathing.riverBlocksEnemies ? Math.max(1, Math.min(8, Math.ceil(maxDistance / 0.25))) : 1;
       const stepDelta = delta / steps;
       for (let step = 0; step < steps; step += 1) {
-        const waterSpeed = ENEMY_FLAT_WATER_SPEED ? Terrain.sample(this.group.position.x, this.group.position.z).speedMul : 1;
+        const waterSample = Terrain.sample(this.group.position.x, this.group.position.z);
+        const waterSpeed = ENEMY_FLAT_WATER_SPEED
+          ? waterSample.speedMul || (ACTIVE_TILE_ID === 'e1-twin-banks'
+              ? waterSample.zone === 'bank'
+                ? 1
+                : resolverCrossingAt(this.group.position.x, this.group.position.z)
+                  ? crossingData().speed
+                  : 0
+              : 0)
+          : 1;
         const stepDistance = speed * waterSpeed * stepDelta;
         this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
         for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance, moveTarget);
         if (authoredWaterMask) this.resolveTerrain(moveTarget);
-        else this.resolveRiver(stepDistance);
+        else this.resolveRiver(stepDistance, moveTarget);
         this.group.position.copy(this.nextPosition);
       }
       return;
@@ -1194,7 +1204,7 @@ export class ClaimJumperEnemy {
         speed * waterSpeed * terrainSpeedMultiplier(this.group.position.x, this.group.position.z, this.velocity.x, this.velocity.z) * stepDelta;
       this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
       for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance, moveTarget);
-      if (!authoredWaterMask) this.resolveRiver(stepDistance);
+      if (!authoredWaterMask) this.resolveRiver(stepDistance, moveTarget);
       this.resolveTerrain(moveTarget);
       this.group.position.copy(this.nextPosition);
     }
@@ -1310,27 +1320,27 @@ export class ClaimJumperEnemy {
     this.nextPosition.set(resolved.x, this.nextPosition.y, resolved.z);
   }
 
-  private resolveRiver(stepDistance: number): void {
+  private resolveRiver(stepDistance: number, moveTarget: THREE.Vector3): void {
     if (!Balance.pathing.riverBlocksEnemies || !riverBlocksEnemyAt(this.nextPosition.x, this.nextPosition.z)) return;
 
     const outsideNudge = 0.05;
     const previous = this.group.position;
     if (previous.z <= Terrain.RIVER_MIN_Z) {
       this.nextPosition.z = Terrain.RIVER_MIN_Z - outsideNudge;
-      const ford = Terrain.nearestFordRange(previous.x);
-      this.nextPosition.x += Math.sign(ford.centerX - this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
+      const crossing = goalSideCrossing(moveTarget.x, previous.x);
+      this.nextPosition.x += Math.sign(crossing.centerX - this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
     } else if (previous.z >= Terrain.RIVER_MAX_Z) {
       this.nextPosition.z = Terrain.RIVER_MAX_Z + outsideNudge;
-      const ford = Terrain.nearestFordRange(previous.x);
-      this.nextPosition.x += Math.sign(ford.centerX - this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
+      const crossing = goalSideCrossing(moveTarget.x, previous.x);
+      this.nextPosition.x += Math.sign(crossing.centerX - this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
     } else {
-      const ford = Terrain.nearestFordRange(previous.x);
-      if (previous.x < ford.minX) {
-        this.nextPosition.x = ford.minX + outsideNudge;
-      } else if (previous.x > ford.maxX) {
-        this.nextPosition.x = ford.maxX - outsideNudge;
+      const crossing = goalSideCrossing(moveTarget.x, previous.x);
+      if (previous.x < crossing.minX) {
+        this.nextPosition.x = crossing.minX + outsideNudge;
+      } else if (previous.x > crossing.maxX) {
+        this.nextPosition.x = crossing.maxX - outsideNudge;
       } else {
-        this.nextPosition.x = THREE.MathUtils.clamp(this.nextPosition.x, ford.minX, ford.maxX);
+        this.nextPosition.x = THREE.MathUtils.clamp(this.nextPosition.x, crossing.minX, crossing.maxX);
       }
     }
   }
@@ -1350,19 +1360,27 @@ export class ClaimJumperEnemy {
     const fromEast = previous.x >= maxX;
     const fromSouth = previous.z <= minZ;
     const fromNorth = previous.z >= maxZ;
+    const targetSlideX = this.blockerSlideDirection('x', moveTarget);
+    const targetSlideZ = this.blockerSlideDirection('z', moveTarget);
+    const slideX = ACTIVE_TILE_ID === 'e1-twin-banks' && moveTarget.x >= minX && moveTarget.x <= maxX
+      ? Math.sign(moveTarget.x - blocker.x) || this.avoidanceSide()
+      : targetSlideX;
+    const slideZ = ACTIVE_TILE_ID === 'e1-twin-banks' && moveTarget.z >= minZ && moveTarget.z <= maxZ
+      ? Math.sign(moveTarget.z - blocker.z) || this.avoidanceSide()
+      : targetSlideZ;
 
     if (fromWest) {
       this.nextPosition.x = minX - outsideNudge;
-      this.nextPosition.z += this.blockerSlideDirection('z', moveTarget) * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.z += slideZ * stepDistance * Balance.palisade.slideBias;
     } else if (fromEast) {
       this.nextPosition.x = maxX + outsideNudge;
-      this.nextPosition.z += this.blockerSlideDirection('z', moveTarget) * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.z += slideZ * stepDistance * Balance.palisade.slideBias;
     } else if (fromSouth) {
       this.nextPosition.z = minZ - outsideNudge;
-      this.nextPosition.x += this.blockerSlideDirection('x', moveTarget) * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.x += slideX * stepDistance * Balance.palisade.slideBias;
     } else if (fromNorth) {
       this.nextPosition.z = maxZ + outsideNudge;
-      this.nextPosition.x += this.blockerSlideDirection('x', moveTarget) * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.x += slideX * stepDistance * Balance.palisade.slideBias;
     } else {
       depenetrateFromBlockers(this.nextPosition, [blocker], pad, stepDistance);
     }
@@ -1392,18 +1410,61 @@ function riverSide(z: number): 'north' | 'south' | null {
 }
 
 function riverBlocksEnemyAt(x: number, z: number): boolean {
+  if (resolverCrossingAt(x, z)) return false;
   const sample = Terrain.sample(x, z);
   return sample.zone === 'river' && !riverDepthWadeableForEnemy(sample.waterDepth);
 }
 
 function riverBlocksEnemyCrossingAt(x: number): boolean {
   const riverCenterZ = (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2;
+  if (crossingData().crossings.length > 1 && resolverCrossingAt(x, riverCenterZ)) return false;
   const sample = Terrain.sample(x, riverCenterZ);
   if (sample.zone !== 'ford') return sample.zone === 'river' && !riverDepthWadeableForEnemy(sample.waterDepth);
-  const ford = Terrain.nearestFordRange(x);
-  const westX = ford.minX - 0.5;
-  const eastX = ford.maxX + 0.5;
+  const crossing = goalSideCrossing(x, x);
+  const westX = crossing.minX - 0.5;
+  const eastX = crossing.maxX + 0.5;
   return riverBlocksEnemyAt(Math.abs(x - westX) < Math.abs(x - eastX) ? westX : eastX, riverCenterZ);
+}
+
+function resolverCrossingAt(x: number, z: number): boolean {
+  return (
+    Terrain.fordRanges().some((crossing) => x >= crossing.minX && x <= crossing.maxX) ||
+    crossingData().gravelBars.some((bar) => Terrain.gravelBarContains(bar, x, z))
+  );
+}
+
+function goalSideCrossing(targetX: number, currentX: number): ReturnType<typeof Terrain.nearestFordRange> {
+  const fords = Terrain.fordRanges();
+  const crossings = fords.length > 0 ? fords : crossingData().crossings;
+  return crossings.reduce((best, crossing) => {
+    const goalDelta = Math.abs(crossing.centerX - targetX) - Math.abs(best.centerX - targetX);
+    if (Math.abs(goalDelta) > 0.25) return goalDelta < 0 ? crossing : best;
+    return Math.abs(crossing.centerX - currentX) < Math.abs(best.centerX - currentX) ? crossing : best;
+  }, crossings[0] ?? Terrain.nearestFordRange(targetX));
+}
+
+let cachedCrossingData: {
+  gravelBars: ContractGravelBar[];
+  crossings: ReturnType<typeof Terrain.nearestFordRange>[];
+  speed: number;
+} | undefined;
+
+function crossingData(): NonNullable<typeof cachedCrossingData> {
+  if (cachedCrossingData) return cachedCrossingData;
+  const gravelBars = activeWaterDescriptor()?.gravelBars ?? [];
+  const fords = Terrain.fordRanges();
+  const crossings = [
+    ...fords,
+    ...gravelBars.map((bar) => {
+      const halfWidth = Math.abs(Math.cos(bar.rotation)) * bar.length * 0.5 + Math.abs(Math.sin(bar.rotation)) * bar.width * 0.5;
+      return { id: bar.id, minX: bar.x - halfWidth, maxX: bar.x + halfWidth, centerX: bar.x, halfWidth };
+    }),
+  ];
+  return (cachedCrossingData = {
+    gravelBars,
+    crossings,
+    speed: Terrain.sample(fords[0]?.centerX ?? 0, (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2).speedMul,
+  });
 }
 
 function riverDepthWadeableForEnemy(depth: number | undefined): boolean {
