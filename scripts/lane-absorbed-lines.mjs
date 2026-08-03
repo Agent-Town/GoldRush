@@ -17,65 +17,63 @@
 // Binary paths are reported UNDECIDABLE, never silently passed.
 
 import { execFileSync } from 'node:child_process'
-import { residueFor } from './lane-residue.mjs'
+import { residueForHeld } from './lane-usable.mjs'
+
+const QUIET = { stdio: ['ignore', 'pipe', 'ignore'] }
 
 function git(args, opts = {}) {
   return execFileSync('git', args, { encoding: 'utf8', maxBuffer: 256 * 1024 * 1024, ...opts })
 }
 
-const [branch, ...paths] = process.argv.slice(2)
-if (!branch || paths.length === 0) {
-  console.error('usage: lane-absorbed-lines.mjs <branch> <path> [<path> ...]')
-  process.exit(2)
-}
+export function absorbedLinesForPath(base, branch, path, runGit = git) {
+  const residue = residueForHeld({ base, branch }, { path }, runGit)
+  if (residue.status === 'UNDECIDABLE') {
+    return { lines: [`${path}: UNDECIDABLE (path unreadable at lane tip)`], unresolved: true }
+  }
+  if (residue.status === 'BINARY') {
+    return { lines: [`${path}: BINARY — line evidence impossible, judge by provenance`], unresolved: true }
+  }
 
-const base = git(['merge-base', 'main', branch]).trim()
-let unresolved = 0
-
-for (const path of paths) {
-  let diff
   try {
-    diff = git(['diff', `${base}:${path}`, `${branch}:${path}`])
+    runGit(['cat-file', '-e', `main:${path}`], QUIET)
   } catch {
-    console.log(`${path}: UNDECIDABLE (path absent at base or lane tip)`)
-    unresolved++
-    continue
+    return {
+      lines: [`${path}: MISSING IN MAIN — lane holds ${residue.added.length} added line(s) main has never seen`],
+      unresolved: true,
+    }
   }
-  const binary = residueFor({ diff, mainText: '' })
-  if (binary.status === 'BINARY') {
-    console.log(`${path}: BINARY — line evidence impossible, judge by provenance`)
-    unresolved++
-    continue
-  }
-
-  let mainText
-  try {
-    mainText = git(['show', `main:${path}`])
-  } catch {
-    const added = residueFor({ diff, mainText: '' }).added
-    console.log(`${path}: MISSING IN MAIN — lane holds ${added.length} added line(s) main has never seen`)
-    unresolved++
-    continue
-  }
-  const residue = residueFor({ diff, mainText })
   if (residue.status === 'ABSORBED') {
-    console.log(`${path}: ABSORBED — all ${residue.added.length} added line(s) present in main`)
-    continue
+    return { lines: [`${path}: ABSORBED — all ${residue.added.length} added line(s) present in main`], unresolved: false }
   }
   if (residue.status === 'ABSORBED_TOKEN') {
-    console.log(
+    return { lines: [
       `${path}: ABSORBED (token-level) — ${residue.wholeLineMissing.length} line(s) differ whole-line, ` +
         `but every token they add appears in a single main line (main is a superset)`,
-    )
-    continue
+    ], unresolved: false }
   }
 
-  console.log(
+  const lines = [
     `${path}: NOT ABSORBED — ${residue.missing.length}/${residue.added.length} added line(s) absent from main:`,
-  )
-  for (const l of residue.missing.slice(0, 20)) console.log(`    ${JSON.stringify(l)}`)
-  if (residue.missing.length > 20) console.log(`    ... ${residue.missing.length - 20} more`)
-  unresolved++
+    ...residue.missing.slice(0, 20).map((line) => `    ${JSON.stringify(line)}`),
+  ]
+  if (residue.missing.length > 20) lines.push(`    ... ${residue.missing.length - 20} more`)
+  return { lines, unresolved: true }
 }
 
-process.exit(unresolved === 0 ? 0 : 1)
+const isMain = /(^|\/)lane-absorbed-lines\.mjs$/.test(process.argv[1] || '')
+if (isMain) {
+  const [branch, ...paths] = process.argv.slice(2)
+  if (!branch || paths.length === 0) {
+    console.error('usage: lane-absorbed-lines.mjs <branch> <path> [<path> ...]')
+    process.exit(2)
+  }
+
+  const base = git(['merge-base', 'main', branch]).trim()
+  let unresolved = 0
+  for (const path of paths) {
+    const result = absorbedLinesForPath(base, branch, path)
+    for (const line of result.lines) console.log(line)
+    if (result.unresolved) unresolved++
+  }
+  process.exit(unresolved === 0 ? 0 : 1)
+}

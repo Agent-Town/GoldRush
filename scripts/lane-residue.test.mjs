@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { formatHeldResidue, residueForHeld } from './lane-usable.mjs'
 import { residueFor } from './lane-residue.mjs'
+import { absorbedLinesForPath } from './lane-absorbed-lines.mjs'
 
 test('all added lines present in main are absorbed', () => {
   assert.deepEqual(residueFor({ diff: '+const answer = 42', mainText: 'const answer = 42' }), {
@@ -122,4 +123,43 @@ test('zero residue remains HELD rather than changing the verdict', () => {
   )
   assert.match(lines[0], /^    HELD BOTH-MOVED/)
   assert.match(lines[0], /\(0 of 1 added lines absent from main\)$/)
+})
+
+test('absorbed-lines counts a lane-created text file missing in main', () => {
+  const calls = []
+  const runGit = (args, opts) => {
+    calls.push({ args, opts })
+    if (args[0] === 'diff' && args[1].includes(':')) throw new Error('absent at base')
+    if (args[0] === 'cat-file' && args[2].startsWith('lane:')) return ''
+    if (args[0] === 'diff') return 'diff --git a/new.txt b/new.txt\nnew file mode 100644\n--- /dev/null\n+++ b/new.txt\n+first\n+second'
+    throw new Error('absent in main')
+  }
+  assert.deepEqual(absorbedLinesForPath('base', 'lane', 'new.txt', runGit), {
+    lines: ['new.txt: MISSING IN MAIN — lane holds 2 added line(s) main has never seen'],
+    unresolved: true,
+  })
+  assert.ok(calls.every(({ opts }) => opts.stdio[2] === 'ignore'))
+})
+
+test('absorbed-lines keeps a lane-created binary file binary', () => {
+  const runGit = (args) => {
+    if (args[0] === 'diff' && args[1].includes(':')) throw new Error('absent at base')
+    if (args[0] === 'cat-file') return ''
+    if (args[0] === 'diff') return 'Binary files /dev/null and b/new.png differ'
+    throw new Error('absent in main')
+  }
+  assert.deepEqual(absorbedLinesForPath('base', 'lane', 'new.png', runGit), {
+    lines: ['new.png: BINARY — line evidence impossible, judge by provenance'],
+    unresolved: true,
+  })
+})
+
+test('absorbed-lines narrows undecidable to an unreadable lane tip', () => {
+  const runGit = () => {
+    throw new Error('unreadable')
+  }
+  assert.deepEqual(absorbedLinesForPath('base', 'lane', 'gone.txt', runGit), {
+    lines: ['gone.txt: UNDECIDABLE (path unreadable at lane tip)'],
+    unresolved: true,
+  })
 })
