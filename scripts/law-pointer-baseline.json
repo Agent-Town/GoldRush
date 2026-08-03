@@ -102,12 +102,6 @@
       "fingerprint": "18ae39970869",
       "excerpt": "await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullP"
     },
-    "tasks/goals.json[e1-hold-the-claim-defeat-fork] -> src/game/Game.ts:6664": {
-      "target": "src/game/Game.ts",
-      "line": 6664,
-      "fingerprint": "f477e73e1bbf",
-      "excerpt": "private endRun(): void {"
-    },
     "tasks/goals.json[f1328-1-drill-yard-census-debt] -> board-card-images.spec.ts:37": {
       "target": "e2e/board-card-images.spec.ts",
       "line": 37,
@@ -132,9 +126,9 @@
       "fingerprint": "7df3c6561555",
       "excerpt": "- **Exact first divergent write:** `Game.ts:6669`, reached from `RunSuspend.ts:837`."
     },
-    "tasks/goals.json[rf-34-hero-y-restore-roundtrip] -> RunSuspend.ts:837": {
+    "tasks/goals.json[rf-34-hero-y-restore-roundtrip] -> RunSuspend.ts:842": {
       "target": "src/game/RunSuspend.ts",
-      "line": 837,
+      "line": 842,
       "fingerprint": "7bb0d5a91e63",
       "excerpt": "game.syncHeroVisualHeight?.();"
     },
