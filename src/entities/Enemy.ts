@@ -1177,7 +1177,7 @@ export class ClaimJumperEnemy {
         const waterSpeed = ENEMY_FLAT_WATER_SPEED ? Terrain.sample(this.group.position.x, this.group.position.z).speedMul : 1;
         const stepDistance = speed * waterSpeed * stepDelta;
         this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
-        for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
+        for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance, moveTarget);
         if (authoredWaterMask) this.resolveTerrain(moveTarget);
         else this.resolveRiver(stepDistance);
         this.group.position.copy(this.nextPosition);
@@ -1193,7 +1193,7 @@ export class ClaimJumperEnemy {
       const stepDistance =
         speed * waterSpeed * terrainSpeedMultiplier(this.group.position.x, this.group.position.z, this.velocity.x, this.velocity.z) * stepDelta;
       this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
-      for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
+      for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance, moveTarget);
       if (!authoredWaterMask) this.resolveRiver(stepDistance);
       this.resolveTerrain(moveTarget);
       this.group.position.copy(this.nextPosition);
@@ -1335,7 +1335,7 @@ export class ClaimJumperEnemy {
     }
   }
 
-  private resolveBlocker(blocker: PalisadeBlocker, stepDistance: number): void {
+  private resolveBlocker(blocker: PalisadeBlocker, stepDistance: number, moveTarget: THREE.Vector3): void {
     const pad = Balance.palisade.avoidancePad + this.hitRadius - Balance.enemy.touchRadius;
     const minX = blocker.x - blocker.halfX - pad;
     const maxX = blocker.x + blocker.halfX + pad;
@@ -1353,27 +1353,27 @@ export class ClaimJumperEnemy {
 
     if (fromWest) {
       this.nextPosition.x = minX - outsideNudge;
-      this.nextPosition.z += this.blockerSlideDirection('z') * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.z += this.blockerSlideDirection('z', moveTarget) * stepDistance * Balance.palisade.slideBias;
     } else if (fromEast) {
       this.nextPosition.x = maxX + outsideNudge;
-      this.nextPosition.z += this.blockerSlideDirection('z') * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.z += this.blockerSlideDirection('z', moveTarget) * stepDistance * Balance.palisade.slideBias;
     } else if (fromSouth) {
       this.nextPosition.z = minZ - outsideNudge;
-      this.nextPosition.x += this.blockerSlideDirection('x') * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.x += this.blockerSlideDirection('x', moveTarget) * stepDistance * Balance.palisade.slideBias;
     } else if (fromNorth) {
       this.nextPosition.z = maxZ + outsideNudge;
-      this.nextPosition.x += this.blockerSlideDirection('x') * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.x += this.blockerSlideDirection('x', moveTarget) * stepDistance * Balance.palisade.slideBias;
     } else {
       depenetrateFromBlockers(this.nextPosition, [blocker], pad, stepDistance);
     }
   }
 
-  private blockerSlideDirection(axis: 'x' | 'z'): number {
+  private blockerSlideDirection(axis: 'x' | 'z', moveTarget: THREE.Vector3): number {
     if (this.gapBlockerId !== null) {
       const delta = this.gapWaypoint[axis] - this.group.position[axis];
       return Math.abs(delta) > 0.01 ? Math.sign(delta) : 0;
     }
-    return this.avoidanceSide();
+    return Math.sign(moveTarget[axis] - this.group.position[axis]) || this.avoidanceSide();
   }
 
   private avoidanceSide(): number {

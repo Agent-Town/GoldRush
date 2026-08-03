@@ -85,6 +85,79 @@ test('hero and enemies escape a run landmark center within bounded ticks', async
   expect(errors).toEqual([]);
 });
 
+test('Night Shift enemies always make goal progress around object footprints', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('/?debug&terrain2d&contract=e1-night-shift&nowaves&nolevel&nokill&nopause&nosteal&nowreck&seed=night-object-fuzz');
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 16);
+  const result = await page.evaluate(async () => {
+    const api = window.__GR_TEST__!;
+    const terrain = await Function('return import("/src/world/Terrain.ts")')() as typeof import('../src/world/Terrain');
+    const blockers = terrain.landmarkBlockers();
+    let state = 0x6702b;
+    const random = () => {
+      state += 0x6d2b79f5;
+      let value = state;
+      value = Math.imul(value ^ (value >>> 15), value | 1);
+      value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+      return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+    };
+    const rows = [];
+    api.setManualSim(true);
+    api.teleport(-30, -30);
+
+    for (const blocker of blockers) {
+      for (let index = 0; index < 24; index += 1) {
+        api.clearEnemies();
+        const slot = index % 2;
+        if (slot === 1) api.spawnEnemyAt(-30, -30);
+        const face = Math.floor(random() * 4);
+        const tangentSide = random() < 0.5 ? -1 : 1;
+        const jitter = random() * 0.6 - 0.3;
+        const margin = 2;
+        const northSouth = face < 2;
+        const normal = face % 2 === 0 ? 1 : -1;
+        const start = northSouth
+          ? { x: blocker.x + jitter, z: blocker.z + normal * (blocker.halfZ + margin) }
+          : { x: blocker.x + normal * (blocker.halfX + margin), z: blocker.z + jitter };
+        const target = northSouth
+          ? { x: blocker.x + tangentSide * (blocker.halfX + margin), z: blocker.z - normal * (blocker.halfZ + margin) }
+          : { x: blocker.x - normal * (blocker.halfX + margin), z: blocker.z + tangentSide * (blocker.halfZ + margin) };
+        api.scriptEnemyAt(start.x, start.z, target.x, target.z, 2.7);
+        const previous = api.enemyPositions().find((enemy) => enemy.id === slot)!;
+        let previousDistance = Math.hypot(target.x - previous.x, target.z - previous.z);
+        const windows = [];
+        let reached = false;
+        for (let window = 0; window < 4; window += 1) {
+          api.advanceSim(3);
+          const after = api.enemyPositions().find((enemy) => enemy.id === slot)!;
+          const distance = Math.hypot(target.x - after.x, target.z - after.z);
+          if (distance <= 1.25) {
+            reached = true;
+            break;
+          }
+          windows.push(previousDistance - distance);
+          previousDistance = distance;
+        }
+        rows.push({
+          blocker: blocker.id,
+          index,
+          reached,
+          windows,
+        });
+      }
+    }
+    return { blockerCount: blockers.length, rows };
+  });
+
+  expect(result.blockerCount).toBeGreaterThan(0);
+  expect(result.rows).toHaveLength(result.blockerCount * 24);
+  for (const row of result.rows) {
+    for (const progress of row.windows) expect(progress, `${row.blocker} route ${row.index}`).toBeGreaterThan(0.35);
+    expect(row.reached, `${row.blocker} route ${row.index}`).toBe(true);
+  }
+  expect(errors).toEqual([]);
+});
+
 async function openTown(page: Page): Promise<void> {
   await page.addInitScript(({ profile, town, meta, guide }) => {
     localStorage.clear();
