@@ -8,6 +8,20 @@
 
 ## VERDICT: HOLD — NOT MERGED
 
+> ⚠️ **SUPERSEDED s1454 (F-1454-1) — THIS VERDICT LINE IS STALE AND WAS ONLY EVER TRUE FOR ~2 HOURS.**
+> The slice **MERGED at `65e3aaec`** ("merge(lane-c): f1441-2 crossings-keep-their-z + f1448-1
+> hero-crossing cure"), verified by ancestry (`git merge-base --is-ancestor 65e3aaec main` rc=0), and
+> its goal leaf `f1441-2-crossings-keep-their-z` carries `mergeHash 65e3aaec16`. The one owed item —
+> **F-1448-1** — was cured by the successor slice `f1448-1-crossings-keep-the-hero-out-of-it`, whose
+> review records `VERDICT: MERGED — both slices` and holds the merged-tree evidence.
+> ➡️ **Read `reviews/f1448-1-crossings-keep-the-hero-out-of-it.md` for the shipped verdict.** The
+> HOLD text below is KEPT deliberately (retention law: supersede, never delete) because it is the
+> record of *why* the first attempt was withheld — but a fire that reads only line 9 will conclude
+> this slice is unmerged and owed work, which is the Mistake #8 shape (re-queueing shipped work).
+> ⓘ **The general hazard, worth carrying:** a HOLD verdict has no enforcement surface, and nothing
+> retires it when the hold is satisfied by a *different* file — the successor review records the
+> merge, and this one is never revisited.
+
 The slice **does what it was asked to do**, and its acceptance criterion is met and independently
 re-measured. It is withheld on **one merge-caused regression that the red inventory would have
 exonerated** (F-1448-1), found only by a matched control run.
@@ -156,6 +170,11 @@ worth stating before a future map has both. Non-blocking.
 override discards them. Trivial; noted only so it is not mistaken for intent later.
 
 ## What is owed before this merges
+
+> ✅ **DISCHARGED s1450, recorded s1454 (F-1454-1).** All three items below were satisfied by
+> `f1448-1-crossings-keep-the-hero-out-of-it` and merged together in `65e3aaec`. Item 3 in particular
+> was honoured: the successor's review carries the matched 6-spec battery on both arms
+> (clean main 4 reds → merged tree 2 reds, the survivors pre-existing on both). **Nothing is owed.**
 
 1. Explain or cure **F-1448-1** — the `gt-05:181` red is reproducible (2/2) and absent on main (0/2).
    Test **F-1448-2** first: it is the only mechanism in the diff that can move the hero.
