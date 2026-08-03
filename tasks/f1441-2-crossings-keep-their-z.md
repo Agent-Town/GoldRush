@@ -26,7 +26,8 @@ DIFFERENT from the archive's:**
 
 🚫 **DO NOT restore the archive's `blockerSlideDirection`, and do not re-add the `blocker`
 parameter.** Main's variant is the shipped fix for **F-BW-10, an owner-reported defect**, proved at
-s1445 by a manufactured defect (`e2e/never-trap.spec.ts:88` reds on clean main and passes with it).
+s1445 by a manufactured defect. It reds on clean main and passes with it:
+`e2e/never-trap.spec.ts:88` ("Night Shift enemies always make goal progress around object footprints")
 Restoring the archive's form would **silently revert a merged owner fix** while looking like faithful
 salvage. The archive's form is **SUPERSEDED, not withheld.**
 
