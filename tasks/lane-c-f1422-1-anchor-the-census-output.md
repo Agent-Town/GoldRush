@@ -1,0 +1,39 @@
+CODEX: model=gpt-5.6-sol effort=high
+# lane-c-f1422-1-anchor-the-census-output — the census must write where the repo is, not where you were standing (F-1422-1)
+FIRE-AUTHORED s1422 (attended review welcome)
+ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
+
+WHY (F-1422-1, measured by the s1422 fire this morning — quoted from tasks/BACKLOG.md, and every number below was taken by that fire, not inherited):
+`scripts/factory-usage-census.mjs:11-12` declares `const CACHE = 'logs/.usage-census-cache.json'` and `const OUT = 'logs/factory-usage.json'`, and `:74` writes `logs/usage-history.jsonl` — all three are **relative** paths resolved against `process.cwd()`. The census therefore writes into whichever directory its caller happened to be standing in. When that directory is a lane worktree, the output becomes dirty tracked content reachable from no ref, and the NEXT task dispatched to that lane is refused by its own lane-safety pre-flight.
+THAT ALREADY HAPPENED, AND IT COST A REAL SLICE: at 2026-08-02T20:54 the census ran with cwd = `worktrees/lane-b`. The dirt sat unreachable for ~10 hours. At 06:51 on 08-03 the owner-playtest master `lane-actor-building-clip` (F-BW-1, "There is a person's head stuck in the Complaints Desk house.") was dispatched to lane-b and returned **BLOCKED in 63 seconds after burning 44,562 tokens for ZERO edits**, naming exactly `logs/factory-usage.json` blob `785f1c73` and `logs/usage-history.jsonl` blob `3b88988f`. The pre-flight was RIGHT to refuse; the bug is upstream of it.
+THE PROOF THAT THE LOCAL WRITER IS THE CAUSE (not some other source of dirt) IS A STAMP COMPARISON: lane-b's blob reads `"stamped":"2026-08-02T20:54"` while main's reads `"19:51"` — the lane copy is NEWER than main's, which only a write executed in that worktree explains.
+THE CALLER MATTERS AND DECIDES THE FIX: `scripts/dashboard-gen.sh:214` launches it as `nohup "$NODE_BIN" scripts/factory-usage-census.mjs` — a RELATIVE script path, backgrounded, inheriting dashboard-gen.sh's cwd. So the census can be launched *from a lane worktree using that lane's own copy of the script*. Anchoring to the script's own location (`import.meta.url`) therefore does NOT cure this: the lane's copy would still resolve to the lane. Measured by s1422 in all three worktrees:
+  `git rev-parse --show-toplevel`  → the WORKTREE root (`.../worktrees/lane-c`) — the obvious choice, and the WRONG one here.
+  `git rev-parse --git-common-dir` → `/Users/robin/Claude/Projects/Gold Rush/.git` from EVERY worktree, and the bare relative string `.git` when cwd is already the main repo root.
+The main repo root is the PARENT of `--git-common-dir`, once that value is resolved against cwd.
+
+READ-FIRST (paths, read them before editing):
+- `scripts/factory-usage-census.mjs` — all of it; note `:11` CACHE, `:12` OUT, `:71-72` the two `writeFileSync` calls, `:74` the usage-history append (which both READS and WRITES the same relative path — all four sites move together or the cure is half-done).
+- `scripts/dashboard-gen.sh:205-232` — the only caller; how it invokes the census and how it reads the output back.
+- `tasks/BACKLOG.md` finding **F-1422-1** (cited BY CONTENT: grep `A CENSUS SCRIPT WRITES TO A CWD-RELATIVE PATH`).
+- `scripts/lane-runner-v3.sh:121` — the runner already excludes both log paths from its auto-commit; understand that this is a NARROWER act than what you are fixing (it stops a sweep; it does not stop the dirt).
+
+PRE-FLIGHT (LANE-SAFETY invariant): verify this worktree is clean vs main before touching anything — `git status --porcelain` empty and `git log --oneline main..HEAD` empty. If either is non-empty, STOP and report; do NOT reset over it.
+
+SCOPE (each item is separately checkable):
+1. ANCHOR the three output paths in `scripts/factory-usage-census.mjs` to the main repo root, derived as the parent of `git rev-parse --git-common-dir` resolved against cwd. Apply it to ALL FOUR sites (`CACHE`, `OUT`, and BOTH the read and the write of `logs/usage-history.jsonl`). If the `git` call fails for any reason, fall back to the CURRENT cwd-relative behaviour rather than throwing — a telemetry script must never become a hard dependency of anything that calls it.
+2. PROVE THE CURE BY MANUFACTURING THE DEFECT, which is the deliverable and not a formality. With the repo clean, run the census with cwd set to a lane worktree that is NOT this one, twice:
+   (a) on the PRE-cure script (stash or `git stash`/checkout your change) — show that `worktrees/<lane>/logs/factory-usage.json` becomes dirty. Capture `git -C worktrees/<lane> status --porcelain`.
+   (b) on the POST-cure script — show that the SAME command leaves that worktree CLEAN and that the main repo's `logs/factory-usage.json` is what moved instead.
+   Paste both `git status --porcelain` outputs. A report without the pre-cure dirty arm is a pre-declared REJECT: a script that writes to the right place is indistinguishable from one that wrote nothing, and only the (a) arm tells them apart.
+   CLEAN UP AFTER YOURSELF: whatever the (a) arm dirtied in the other worktree must be restored (`git -C worktrees/<lane> checkout -- logs/`) and shown clean at the end. Do NOT commit anything into another lane's worktree.
+3. VERIFY THE OUTPUT IS STILL CORRECT, not merely relocated: the post-cure `logs/factory-usage.json` must still parse as JSON, still carry a `stamped` field, and its totals must be >= the previous file's (the census is cumulative). Report the before/after `stamped` values and one totals field. If the numbers go DOWN, STOP and report — that means the cache anchor moved and the incremental pass lost its history, which is a bigger bug than the one you were sent for.
+4. VERIFY THE CALLER STILL WORKS: `bash scripts/dashboard-gen.sh` (or the narrowest invocation that exercises `:205-232`) still produces a dashboard that reads the census back. Report that the census block renders rather than falling into the `(factory census not yet run: ...)` branch at `:229`.
+
+TOUCH-ONLY: `scripts/factory-usage-census.mjs`. If and only if scope 4 proves `dashboard-gen.sh` genuinely broken by the relocation, you may also touch `scripts/dashboard-gen.sh:205-232` — and you must say so explicitly in the report.
+NO: `scripts/lane-runner-v3.sh` (its `:121` exclusion is correct and is NOT the fix — do not touch it) · `scripts/lane-usable.mjs` (especially its `CHURN` set — widening it re-opens F-1212-4, standing prohibition) · `scripts/lane-freeze-classify.mjs` · `scripts/lane-absorbed-lines.mjs` · `scripts/lane-residue.mjs` · any `src/**` or `e2e/**` · `tasks/goals.json` · `tasks/BACKLOG.md` · any other worktree's committed state.
+DO NOT "fix" this by deleting the two log files, by gitignoring them, or by adding them to any exclusion list. They are NOT disposable: `lane/m4`'s `usage-history.jsonl` holds one row main lacks (`t=2026-08-02T20:54`, verified by set-differencing the blobs — main 34 rows, lane 31, one lane-only), so discarding them violates the RETENTION LAW. The file must keep being written; it must be written in ONE place.
+
+SELF-CHECK before READY: `npx tsc --noEmit` rc 0 · `npm run build` green · `npm run test:node-guards` unmodified-green (no new reds; fingerprint-match any pre-existing red to `logs/suite-red-inventory.md` by test name AND failure text) · both arms of scope 2 pasted, including the pre-cure dirty one · the other worktree left CLEAN · zero `src/` diff (`git diff --stat -- src` must be EMPTY). No Playwright is required and none should be run: this slice touches no rendering surface — say so rather than omitting it silently.
+
+READY-FOR-GATES + report: the two `git status --porcelain` arms from scope 2, the before/after `stamped` + totals from scope 3, the dashboard result from scope 4, and an explicit statement of which of the four write sites you moved.
