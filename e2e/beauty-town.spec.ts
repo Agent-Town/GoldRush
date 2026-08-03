@@ -1,6 +1,9 @@
+import { mkdir } from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 
 // THE TOWN BEAUTY SHIFT's plain-boot door (docs/beauty/town-brief.md; Mistake #10: "where does
 // the PLAYER see this, in a plain boot?"). Every visual U1-U8 added is counted from
@@ -8,13 +11,14 @@ import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type 
 // screenshots that judge how it LOOKS live in the capture rig (e2e/beauty-town.rig.ts); this
 // spec only defends that the things exist, on both viewports, with a clean console.
 
-test('the day town boots with ground contact, wear and parcel dressing — and no night dressing', async ({ page }) => {
+test('the day town boots with ground contact, wear and parcel dressing — and no night dressing', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const errors = collectErrors(page);
   await seedProfile(page);
   await enterTown(page);
 
   const town = await snapshot(page);
+  await saveEraLightShot(page, testInfo.project.name, 'day');
   expect(town.dressing.mood).toBe('day');
 
   // U1: one blob per visible townsperson plus the player.
@@ -43,11 +47,19 @@ test('the day town boots with ground contact, wear and parcel dressing — and n
   expect(town.dressing.windowGlow).toBe(0);
   expect(town.dressing.lanternLights).toBe(0);
   expect(town.dressing.lanternBeads).toBeGreaterThan(0);
+  expect(town.dressing.lightGrammar).toMatchObject({
+    eraOrder: 1,
+    family: 'flame',
+    lit: false,
+    fixtureColor: '#b97a3d',
+    coolWhiteEmissiveFixtures: 0,
+    flickerScale: 1,
+  });
 
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
-test('?townDusk reaches the town from a plain URL and lights windows, strings and lanterns', async ({ page }) => {
+test('?townDusk reaches the town from a plain URL and lights windows, strings and lanterns', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const errors = collectErrors(page);
   await seedProfile(page);
@@ -61,11 +73,36 @@ test('?townDusk reaches the town from a plain URL and lights windows, strings an
   await enterTown(page, { alreadyLoaded: true });
 
   const town = await snapshot(page);
+  await saveEraLightShot(page, testInfo.project.name, 'dusk');
   expect(town.dressing.mood).toBe('dusk');
   expect(town.dressing.windowGlow).toBeGreaterThanOrEqual(town.buildings.filter((building) => building.visible).length * 2);
   expect(town.dressing.lanternLights).toBeGreaterThan(0);
   expect(town.dressing.lanternLights).toBeLessThanOrEqual(6);
   expect(town.dressing.lanternBeads).toBeGreaterThan(0);
+  expect(town.dressing.lightGrammar).toMatchObject({
+    eraOrder: 1,
+    family: 'flame',
+    lit: true,
+    fixtureColor: '#ffb45c',
+    windowColor: '#ffb45c',
+    flickerDepth: 0.055,
+  });
+  const flicker = await page.evaluate(async () => {
+    let min = Infinity;
+    let max = -Infinity;
+    const startedAt = performance.now();
+    await new Promise<void>((resolve) => {
+      const sample = (now: number) => {
+        const scale = window.__GR_TOWN_DIAGNOSTICS__?.dressing.lightGrammar.flickerScale ?? 1;
+        min = Math.min(min, scale);
+        max = Math.max(max, scale);
+        if (now - startedAt < 1_250) requestAnimationFrame(sample); else resolve();
+      };
+      requestAnimationFrame(sample);
+    });
+    return { min, max };
+  });
+  expect(flicker.max - flicker.min).toBeGreaterThan(0.02);
   // Contact survives the mood: the same blobs, skirts and aimed shadow camera.
   expect(town.contact.sunShadow.enabled).toBe(true);
   expect(town.contact.skirts).toBeGreaterThan(0);
@@ -73,8 +110,27 @@ test('?townDusk reaches the town from a plain URL and lights windows, strings an
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
-async function seedProfile(page: Page): Promise<void> {
-  await page.addInitScript(({ profileKey, townKey, metaKey, guideKey, flatMetaKey, flatTownKey, flatGuideKey }) => {
+test('Voltage town earns a cooler, steady arc-light accent from the era table', async ({ page }) => {
+  const errors = collectErrors(page);
+  await seedProfile(page, 'epoch-3-voltage');
+  await page.goto('/?townDusk&tier=lite');
+  await enterTown(page, { alreadyLoaded: true });
+
+  expect((await snapshot(page)).dressing.lightGrammar).toMatchObject({
+    eraOrder: 3,
+    family: 'arc',
+    lit: true,
+    fixtureColor: '#bfe8ff',
+    windowColor: '#d5efff',
+    pointColor: '#a9ddff',
+    flickerDepth: 0,
+    flickerScale: 1,
+  });
+  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
+async function seedProfile(page: Page, epoch?: string): Promise<void> {
+  await page.addInitScript(({ profileKey, townKey, metaKey, guideKey, epochKey, flatMetaKey, flatTownKey, flatGuideKey, flatEpochKey, activeEpoch }) => {
     localStorage.clear();
     sessionStorage.clear();
     const profile: ProfileState = {
@@ -90,14 +146,21 @@ async function seedProfile(page: Page): Promise<void> {
     localStorage.setItem(flatMetaKey, meta);
     localStorage.setItem(flatTownKey, 'Quartz Hill');
     localStorage.setItem(flatGuideKey, '1');
+    if (activeEpoch) {
+      localStorage.setItem(epochKey, activeEpoch);
+      localStorage.setItem(flatEpochKey, activeEpoch);
+    }
   }, {
     profileKey: PROFILE_KEY,
     townKey: profileDataKey('robin', TOWN_NAME_KEY),
     metaKey: profileDataKey('robin', META_PROGRESS_KEY),
     guideKey: profileDataKey('robin', FIRST_CLAIM_DONE_KEY),
+    epochKey: profileDataKey('robin', ACTIVE_EPOCH_KEY),
     flatMetaKey: META_PROGRESS_KEY,
     flatTownKey: TOWN_NAME_KEY,
     flatGuideKey: FIRST_CLAIM_DONE_KEY,
+    flatEpochKey: ACTIVE_EPOCH_KEY,
+    activeEpoch: epoch,
   });
 }
 
@@ -128,4 +191,14 @@ function collectErrors(page: Page): { consoleErrors: string[]; pageErrors: strin
   });
   page.on('pageerror', (error) => errors.pageErrors.push(error.message));
   return errors;
+}
+
+async function saveEraLightShot(page: Page, project: string, mood: 'day' | 'dusk'): Promise<void> {
+  await page.waitForFunction(() => {
+    const town = window.__GR_TOWN_DIAGNOSTICS__;
+    return (town?.elapsed ?? 0) > 4;
+  }, undefined, { timeout: 30_000 });
+  const directory = path.resolve('artifacts/era-lights', process.env.GR_ERA_LIGHT_PHASE ?? 'after');
+  await mkdir(directory, { recursive: true });
+  await page.locator('canvas').screenshot({ path: path.join(directory, `${project}-${mood}.png`) });
 }
