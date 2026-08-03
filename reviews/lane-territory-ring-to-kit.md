@@ -42,7 +42,7 @@ The graft was mandatory, not defensive: the lane's base predates both of main's 
 | | merged tree | clean main |
 |---|---|---|
 | `bt-01-tiers:205`, `bt-01-tiers:430`, `tile-identity-pass:121` (×2 each) | RED | RED — pre-existing |
-| `restore-validation:86` (×2) | **RED** | **GREEN** |
+| `restore-validation` → *economy log rows are validated before replay…* (×2) | **RED** | **GREEN** |
 | `restore-validation:656` | RED | RED in isolation (mobile) — pre-existing |
 | `restore-validation:186` (×2), `run-suspend:193`, `tile-identity-pass:71` | green | RED — main-only |
 
@@ -51,7 +51,7 @@ The graft was mandatory, not defensive: the lane's base predates both of main's 
 ## Findings
 
 ### F-1433-1 (BLOCKING) — the kit grant writes an economy row on runs that earned no kit
-`BuildSystem.setPalisadeKitCredits()` applies a `palisade_kit_granted` event whenever the log holds no prior grant — **including when the granted amount is 0**. Its only caller, `src/game/Game.ts:6229`, passes no options, so the branch is taken on **every boot**. A tier-0 run therefore gains one economy log row it never earned, carrying a `crypto.randomUUID()` id.
+`BuildSystem.setPalisadeKitCredits()` applies a `palisade_kit_granted` event whenever the log holds no prior grant — **including when the granted amount is 0**. Its only caller in `src/game/Game.ts` — the line `if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);` — passes no options, so the branch is taken on **every boot**. A tier-0 run therefore gains one economy log row it never earned, carrying a `crypto.randomUUID()` id.
 
 Measured on `?contract=the-claim` with **no territory progress at all**: `logLength: 2`, expected `1` (`gold: 20` and `storedLogLength: 1` both correct — only the row count is wrong).
 
