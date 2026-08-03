@@ -5,11 +5,15 @@
 // Per-file totals cached by size+mtime → incremental after the first pass.
 import { createReadStream, readFileSync, writeFileSync, existsSync, statSync, readdirSync } from 'node:fs';
 import { createInterface } from 'node:readline';
-import { join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { homedir } from 'node:os';
+import { execFileSync } from 'node:child_process';
 
-const CACHE = 'logs/.usage-census-cache.json';
-const OUT = 'logs/factory-usage.json';
+let repoRoot = process.cwd();
+try { repoRoot = dirname(resolve(repoRoot, execFileSync('git', ['rev-parse', '--git-common-dir'], { encoding: 'utf8' }).trim())); } catch {}
+const CACHE = join(repoRoot, 'logs/.usage-census-cache.json');
+const OUT = join(repoRoot, 'logs/factory-usage.json');
+const HISTORY = join(repoRoot, 'logs/usage-history.jsonl');
 const cache = existsSync(CACHE) ? JSON.parse(readFileSync(CACHE, 'utf8')) : {};
 
 const walk = (dir, out = []) => {
@@ -71,7 +75,7 @@ for (const f of existsSync(codexDir) ? walk(codexDir) : []) {
 writeFileSync(CACHE, JSON.stringify(cache));
 writeFileSync(OUT, JSON.stringify(agg, null, 1));
 const histRow = JSON.stringify({ t: agg.stamped, att_in: agg.attended.in, att_out: agg.attended.out, fire_in: agg.fires.in, fire_out: agg.fires.out, cdx_in: agg.codexGR.in, cdx_out: agg.codexGR.out, cdx_cached: agg.codexGR.cached || 0 });
-try { const prev = existsSync('logs/usage-history.jsonl') ? readFileSync('logs/usage-history.jsonl','utf8').trim().split('\n').pop() : ''; if (!prev || JSON.parse(prev).cdx_out !== agg.codexGR.out || JSON.parse(prev).att_out !== agg.attended.out) writeFileSync('logs/usage-history.jsonl', (existsSync('logs/usage-history.jsonl') ? readFileSync('logs/usage-history.jsonl','utf8') : '') + histRow + '\n'); } catch { writeFileSync('logs/usage-history.jsonl', histRow + '\n'); }
+try { const prev = existsSync(HISTORY) ? readFileSync(HISTORY,'utf8').trim().split('\n').pop() : ''; if (!prev || JSON.parse(prev).cdx_out !== agg.codexGR.out || JSON.parse(prev).att_out !== agg.attended.out) writeFileSync(HISTORY, (existsSync(HISTORY) ? readFileSync(HISTORY,'utf8') : '') + histRow + '\n'); } catch { writeFileSync(HISTORY, histRow + '\n'); }
 const M = (n) => (n / 1e6).toFixed(1) + 'M';
 console.log(`CENSUS ${agg.stamped}`);
 console.log(`attended (Fable/Claude): ${agg.attended.files} sessions · in ${M(agg.attended.in)} · out ${M(agg.attended.out)}`);
