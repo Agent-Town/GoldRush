@@ -38,6 +38,8 @@ diff`, not from memory), it is a SAFE DUPE → `git checkout -B lane/perf main &
 STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY
 it), or the worktree holds uncommitted edits you did not make.
 
+> **FACTORY-CHURN EXCEPTION — these two tracked classes are ALWAYS EXPECTED and are NEVER a STOP; list them and proceed (F-1407-1):** (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`, `.goal-tree.html`, `.blocked-seen`), rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence. ⚠️ **The fire that authors a master creates this dirt in the same fire and cannot see it**, which is why it lives in the template rather than in anyone's memory. ⓘ What still STOPs, unchanged and load-bearing: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — anything a live drain or concurrent task could actually own. ⚠️ **`logs/suite-red-inventory.md` is THIS TASK'S SUBJECT and is NOT covered by exception (a)** — if it is modified in your worktree, that IS a STOP.
+
 Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 ## Why (F-1436-2, s1436, 2026-08-03 — measured, not inferred)

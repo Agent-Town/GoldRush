@@ -81,7 +81,11 @@ that is a STOP, not something to work around.
 
 **LANE-SAFETY (safe-dupe, runner-auto-commit aware):** the lane branch being ahead is NORMAL — the
 runner auto-commits. For each ahead commit: if its content is already merged to main (verify with
-`git log`/`git diff`, not from memory), it is a SAFE DUPE → reset to main and PROCEED. ⚠️ **`9236e9ba`
+`git log`/`git diff`, not from memory), it is a SAFE DUPE → reset to main and PROCEED.
+
+> **FACTORY-CHURN EXCEPTION — these two tracked classes are ALWAYS EXPECTED and are NEVER a STOP; list them and proceed (F-1407-1):** (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`, `.goal-tree.html`, `.blocked-seen`), rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence. ⚠️ **The fire that authors a master creates this dirt in the same fire and cannot see it**, which is why it lives in the template rather than in anyone's memory. ⓘ What still STOPs, unchanged and load-bearing: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — anything a live drain or concurrent task could actually own.
+
+⚠️ **`9236e9ba`
 is the exception and it is EXPECTED:** its `src/entities/Enemy.ts` and
 `e2e/twin-banks-never-wedged.spec.ts` are deliberately NOT on main (withheld s1441, F-1441-2) and are
 preserved at `archive/lane-e2-arsenal-s1441-9236e9ba`. Resetting over it loses nothing. STOP-and-report
