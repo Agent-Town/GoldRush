@@ -1,5 +1,9 @@
 #!/usr/bin/env node
 
+// F-1424-4 successor: fullyParallel is unset, so the ceiling is files × projects;
+// a 6-worker arm needs at least 3 spec files (3 × 2 projects). `--workers` de-duplicates
+// repeated arms (F-1426-3), so express repetitions with `--runs`.
+
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -115,6 +119,14 @@ function parseArgs(args) {
     || !values.output) {
     throw new Error('Required: --subjects file:line,... --workers 1,2,4 --runs N (>=8) --port PORT (not 5188) --output DIR');
   }
+  const fileCount = new Set(subjects.map(subjectFile)).size;
+  const ceiling = fileCount * PROJECTS.length;
+  // Exact while playwright.config.ts leaves fullyParallel unset/false. If it becomes true,
+  // this deliberately conservative check may refuse legitimate arms instead of measuring a false null.
+  const offending = [...new Set(workers.filter((value) => value > ceiling))];
+  if (offending.length) {
+    throw new Error(`Worker arm(s) ${offending.join(', ')} exceed schedulable-job ceiling ${ceiling} (${fileCount} distinct file(s) × ${PROJECTS.length} projects); arms above the ceiling are identical runs wearing different labels`);
+  }
   return { subjects: [...new Set(subjects)], workers: [...new Set(workers)], runs, port, output: values.output };
 }
 
@@ -123,6 +135,14 @@ function normalizeSubject(value) {
   const e2e = normalized.lastIndexOf('/e2e/');
   const relative = (e2e >= 0 ? normalized.slice(e2e + 1) : normalized).replace(/^\.\//, '');
   return /^[^/]+\.spec\.ts(?::\d+)?$/.test(relative) ? `e2e/${relative}` : relative;
+}
+
+function subjectFile(subject) {
+  return subject.replace(/:\d+$/, '');
+}
+
+function subjectMatches(actual, expected) {
+  return subjectFile(expected) === expected ? subjectFile(actual) === expected : actual === expected;
 }
 
 async function runPlaywright(subjects, workers, baseURL, outputDir) {
@@ -181,12 +201,24 @@ function collectExecutions(report) {
 }
 
 function assertComplete(executions, subjects) {
-  const found = new Set(executions.map(({ subject, project }) => `${subject}\0${project}`));
-  const expected = subjects.flatMap((subject) => PROJECTS.map((project) => `${subject}\0${project}`));
-  const missing = expected.filter((key) => !found.has(key));
-  const extras = [...found].filter((key) => !expected.includes(key));
-  if (missing.length || extras.length || executions.length !== expected.length) {
-    throw new Error(`Incomplete run: missing=${JSON.stringify(missing)} extras=${JSON.stringify(extras)} executions=${executions.length}/${expected.length}`);
+  const required = subjects.flatMap((subject) => PROJECTS.map((project) => ({ subject, project })));
+  const missing = required.filter(({ subject, project }) =>
+    !executions.some((execution) => execution.project === project && subjectMatches(execution.subject, subject))
+  ).map(({ subject, project }) => `${subject}\0${project}`);
+  const extras = executions.filter(({ subject, project }) =>
+    !PROJECTS.includes(project) || !subjects.some((expected) => subjectMatches(subject, expected))
+  ).map(({ subject, project }) => `${subject}\0${project}`);
+  const exactCountMismatch = required.some(({ subject, project }) =>
+    subjectFile(subject) !== subject
+    && executions.filter((execution) => execution.project === project && execution.subject === subject).length !== 1
+  );
+  const expectedCount = required.reduce((count, { subject, project }) => {
+    if (subjectFile(subject) !== subject) return count + 1;
+    const matches = executions.filter((execution) => execution.project === project && subjectMatches(execution.subject, subject)).length;
+    return count + Math.max(1, matches);
+  }, 0);
+  if (missing.length || extras.length || exactCountMismatch) {
+    throw new Error(`Incomplete run: missing=${JSON.stringify(missing)} extras=${JSON.stringify(extras)} executions=${executions.length}/${expectedCount}`);
   }
 }
 
@@ -216,6 +248,10 @@ function writeSummary(outputDir, state) {
   const rateRows = rates(state.runs);
   fs.writeFileSync(path.join(outputDir, 'rates.json'), `${JSON.stringify({ ...state, rateRows }, null, 2)}\n`);
   const labels = new Map(state.subjects.map((subject, index) => [subject, `S${index + 1}`]));
+  const labelFor = (subject) => {
+    const expected = state.subjects.find((candidate) => subjectMatches(subject, candidate));
+    return `${labels.get(expected)}${expected === subject ? '' : subject.slice(expected.length)}`;
+  };
   const lines = [
     '# Concurrency-class failure rates',
     '',
@@ -231,7 +267,7 @@ function writeSummary(outputDir, state) {
     '| Subject | Project | Workers | Failures / executions | Rate |',
     '|---|---|---:|---:|---:|',
     ...rateRows.map((row) =>
-      `| ${labels.get(row.subject)} | ${row.project} | ${row.workers} | **${row.failures}/${row.executions}** | ${(100 * row.failures / row.executions).toFixed(1)}% |`
+      `| ${labelFor(row.subject)} | ${row.project} | ${row.workers} | **${row.failures}/${row.executions}** | ${(100 * row.failures / row.executions).toFixed(1)}% |`
     ),
     '',
     '## Per-run observations',
@@ -241,9 +277,10 @@ function writeSummary(outputDir, state) {
   ];
   for (const run of state.runs) {
     for (const project of PROJECTS) {
-      const outcomes = state.subjects.map((subject) =>
-        run.executions.find((execution) => execution.subject === subject && execution.project === project)?.status.toUpperCase() ?? 'MISSING'
-      );
+      const outcomes = state.subjects.map((subject) => {
+        const matches = run.executions.filter((execution) => execution.project === project && subjectMatches(execution.subject, subject));
+        return matches.length ? matches.map(({ status }) => status.toUpperCase()).join('/') : 'MISSING';
+      });
       lines.push(`| ${run.cycle} | ${run.workers} | ${project} | ${run.loadavgStart[0].toFixed(2)} → ${run.loadavgEnd[0].toFixed(2)} | ${outcomes.join(' | ')} |`);
     }
   }
@@ -293,16 +330,32 @@ function selfTest() {
     '--subjects', 'e2e/a.spec.ts:4', '--workers', '1', '--runs', '8',
     '--port', '5188', '--output', 'x',
   ]), /not 5188/);
-  const report = {
-    suites: [{ specs: [{ file: 'a.spec.ts', line: 4, title: 'a', tests: PROJECTS.map((projectName) => ({
+  const makeSpec = (line, title = `a:${line}`) => ({ file: 'a.spec.ts', line, title, tests: PROJECTS.map((projectName) => ({
       projectName,
       status: projectName === 'desktop-chrome' ? 'expected' : 'unexpected',
       results: [{ status: projectName === 'desktop-chrome' ? 'passed' : 'failed' }],
-    })) }] }],
-  };
+    })) });
+  const report = { suites: [{ specs: [makeSpec(4), makeSpec(9, 'a:9:first'), makeSpec(9, 'a:9:second')] }] };
   const executions = collectExecutions(report);
-  assertComplete(executions, ['e2e/a.spec.ts:4']);
-  assert.deepEqual(executions.map(({ status }) => status), ['pass', 'fail']);
-  assert.deepEqual(rates([{ workers: 2, executions }]).map(({ failures, executions: count }) => [failures, count]), [[0, 1], [1, 1]]);
+  assertComplete(executions, ['e2e/a.spec.ts']);
+  console.log('self-test bare-file multi-test arm passed');
+  const exactExecutions = executions.filter(({ subject }) => subject === 'e2e/a.spec.ts:4');
+  assertComplete(exactExecutions, ['e2e/a.spec.ts:4']);
+  assert.throws(() => assertComplete(executions, ['e2e/a.spec.ts:4']), /extras=.*a\.spec\.ts:9/);
+  console.log('self-test file:line exact-match arm passed');
+  assert.throws(() => assertComplete(executions.filter(({ project }) => project === PROJECTS[0]), ['e2e/a.spec.ts']), /missing=.*mobile-chrome/);
+  console.log('self-test incomplete-run rejection arm passed');
+  assert.throws(() => parseArgs([
+    '--subjects', 'e2e/a.spec.ts', '--workers', '3,6', '--runs', '8',
+    '--port', '5267', '--output', 'x',
+  ]), /arm\(s\) 3, 6 exceed schedulable-job ceiling 2.*identical runs wearing different labels/);
+  const bounded = parseArgs([
+    '--subjects', 'e2e/a.spec.ts', '--workers', '1,2', '--runs', '8',
+    '--port', '5267', '--output', 'x',
+  ]);
+  assert.deepEqual(bounded.workers, [1, 2]);
+  console.log('self-test worker-ceiling arms passed (accepted 1,2; rejected 3,6 at ceiling 2)');
+  assert.deepEqual(exactExecutions.map(({ status }) => status), ['pass', 'fail']);
+  assert.deepEqual(rates([{ workers: 2, executions: exactExecutions }]).map(({ failures, executions: count }) => [failures, count]), [[0, 1], [1, 1]]);
   console.log('concurrency-class-rate self-check passed');
 }
