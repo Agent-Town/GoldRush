@@ -277,7 +277,7 @@ export function isCrossingStructure(x: number, z: number): boolean {
   return ACTIVE_CONTRACT.tileParams.ford === true && fordAt(x, z) !== null;
 }
 
-function gravelBarContains(bar: ContractGravelBar, x: number, z: number): boolean {
+export function gravelBarContains(bar: ContractGravelBar, x: number, z: number): boolean {
   const dx = x - bar.x;
   const dz = z - bar.z;
   const cos = Math.cos(bar.rotation);

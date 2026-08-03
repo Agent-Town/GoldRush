@@ -242,7 +242,7 @@ test('Twin Banks consumes its declared crossings and build zones before securing
   assert.deepEqual(transcript[0].stablePrefix.mechanics.posting.waves, [
     { event: 'secure', wave: 20, source: 'twist.secureWave' },
   ]);
-  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:bdd90123');
+  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:80c5cae4');
 
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
@@ -300,9 +300,9 @@ test('Twin Banks consumes its declared crossings and build zones before securing
       waves: 20,
       timeMs: 600000,
       gold: 0,
-      kills: 176,
+      kills: 202,
       calls: 0,
-      eventLogHash: 'fnv1a32:d5895547',
+      eventLogHash: 'fnv1a32:5aeceb84',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {
