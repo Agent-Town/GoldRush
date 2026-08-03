@@ -9,12 +9,14 @@ import { expect, test, type Page } from '@playwright/test';
 //   2. it does NOT leak to another map that shares the same continuation code;
 //   3. ?baronHorizon=off is a real control arm, not a no-op.
 
-const BOOT = 'debug&contract=%s&timescale=1&nolevel&nowaves&nosteal&nowreck&nokill&tier=full&seed=atmos-horizon';
+// No `tier=` here on purpose: readPerformanceTierOverride reads `tier` BEFORE `performance`, so
+// a template that pinned tier=full silently overrode every per-test tier this file tries to set.
+const BOOT = 'debug&contract=%s&timescale=1&nolevel&nowaves&nosteal&nowreck&nokill&seed=atmos-horizon';
 
 test('e1-baron paints its horizon apron in a plain contract boot', async ({ page }) => {
   test.setTimeout(180_000);
   const errors = collectErrors(page);
-  await boot(page, 'e1-baron');
+  await boot(page, 'e1-baron', '&tier=full');
   const data = await pilot(page);
   // The apron must still be the runtime-built one. If the panorama ever grows the builder's
   // county ground skirt, this flips to 'panorama-owned-continuation' and the paint stops
@@ -28,21 +30,57 @@ test('e1-baron paints its horizon apron in a plain contract boot', async ({ page
 
 test('?baronHorizon=off is a real control arm', async ({ page }) => {
   test.setTimeout(180_000);
-  await boot(page, 'e1-baron', '&baronHorizon=off');
+  await boot(page, 'e1-baron', '&tier=full&baronHorizon=off');
   const data = await pilot(page);
   expect(data.continuation).toBe('sculpt-edge-continuation');
   expect(data.horizonApron).toBe('plain');
 });
 
-test('the apron paint does not leak to another map on the same continuation code', async ({ page }) => {
+test('e1-dry-gulch gets its own noon horizon — the same mechanism, a different climate', async ({ page }) => {
   test.setTimeout(180_000);
   const errors = collectErrors(page);
-  await boot(page, 'e1-dry-gulch');
+  await boot(page, 'e1-dry-gulch', '&tier=full');
+  const data = await pilot(page);
+  expect(data.continuation).toBe('sculpt-edge-continuation');
+  expect(data.horizonApron).toBe('painted');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('the apron paint does not leak to a map with no profile', async ({ page }) => {
+  test.setTimeout(180_000);
+  const errors = collectErrors(page);
+  await boot(page, 'the-claim', '&tier=full');
   const data = await pilot(page);
   expect(data.continuation).toBe('sculpt-edge-continuation');
   expect(data.horizonApron).toBe('plain');
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
+});
+
+// DRY GULCH U5, RE-SCOPED. The shift that shipped the heat shimmer and the dust devils gave them
+// no spec, no dataset key and no assertion anywhere (grep: the only four mentions of
+// `heatShimmer` in the repo are its own four lines in LightRig.ts). Measured on this branch:
+// headless chromium reports SwiftShader, PerformanceTier resolves 'balanced', and LightRig
+// decides `heatAllowed` ONCE in its constructor — so U5 is dark in every capture ever taken of
+// this map, which is why its own boards show +0 draw calls for it. It is not broken; it is
+// gated, and nothing said so. This test says so.
+test('U5 heat is FULL-tier only, and that gate is the reason every captured board shows it dark', async ({ page }) => {
+  test.setTimeout(240_000);
+  // Both arms FORCE the tier. Left to itself this box resolves 'balanced' (SwiftShader) most of
+  // the time and 'full' sometimes, which is exactly the flakiness that let U5 be dark in every
+  // captured board without a single red — so the gate asserts the CAUSE, not the weather.
+  await boot(page, 'e1-dry-gulch', '&tier=balanced');
+  const balanced = await lighting(page);
+  expect(balanced.tier).toBe('balanced');
+  expect(balanced.heatShimmer).toBe(false);
+  expect(balanced.dustDevilQuads).toBe(0);
+
+  await boot(page, 'e1-dry-gulch', '&tier=full');
+  const full = await lighting(page);
+  expect(full.tier).toBe('full');
+  expect(full.heatShimmer).toBe(true);
+  expect(full.dustDevilQuads).toBeGreaterThan(0);
 });
 
 async function boot(page: Page, contract: string, extra = ''): Promise<void> {
@@ -63,6 +101,18 @@ async function pilot(page: Page) {
       continuation: data.terrain3dPilotContinuation,
       horizonApron: data.terrain3dPilotHorizonApron,
       renderSource: data.terrain3dPilotRenderSource,
+    };
+  });
+}
+
+async function lighting(page: Page) {
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 90, undefined, { timeout: 60_000 });
+  return page.evaluate(() => {
+    const game = window.__THREE_GAME_DIAGNOSTICS__!;
+    return {
+      tier: game.performance?.tier,
+      heatShimmer: game.lighting?.heatShimmer,
+      dustDevilQuads: game.lighting?.dustDevilQuads,
     };
   });
 }

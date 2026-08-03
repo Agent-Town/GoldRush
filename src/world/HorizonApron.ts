@@ -66,10 +66,30 @@ const PROFILES = new Map<string, HorizonApronProfile>([
     smokeWidth: 0.26,
     smokeStrength: 0.4,
   }],
+  // DRY GULCH — the same mechanism answering that shift's own honest line: "the run camera
+  // pitches ~50 degrees down, so there is NO SKY AND NO HORIZON LINE in any shot — the effect
+  // distorts distant ground instead of a skyline, which is the weaker version of the idea"
+  // (reviews/beauty-dry-gulch.md section 7). The heat shimmer covers the top 45% of the frame.
+  // This gives that 45% a horizon to be heat over: bleached noon distance, mesa banding instead
+  // of foothills, and no company smoke — the gulch is empty, and its emptiness is the point.
+  ['e1-dry-gulch', {
+    innerRadius: 34,
+    outerRadius: 68,
+    haze: '#e8cfa4',
+    // Never black, and at noon never dark: the gulch's far edge bleaches out, it does not bruise.
+    ceiling: '#cbb489',
+    ridgeWavelength: 19,
+    ridgeDepth: 0.34,
+    smokeAzimuths: [],
+    smokeWidth: 0.2,
+    smokeStrength: 0,
+  }],
 ]);
 
 export function horizonApronProfile(contractId: string): HorizonApronProfile | undefined {
-  if (new URLSearchParams(window.location.search).get('baronHorizon') === 'off') return undefined;
+  const search = new URLSearchParams(window.location.search);
+  // `baronHorizon` was the first name, kept because the baron board was shot with it.
+  if (search.get('horizonApron') === 'off' || search.get('baronHorizon') === 'off') return undefined;
   return PROFILES.get(contractId);
 }
 
@@ -89,7 +109,10 @@ export function paintHorizonApron(material: THREE.Material, profile: HorizonApro
     shader.uniforms.apronCeiling = { value: new THREE.Color(profile.ceiling) };
     shader.uniforms.apronRidge = { value: new THREE.Vector2(profile.ridgeWavelength, profile.ridgeDepth) };
     shader.uniforms.apronSmoke = { value: new THREE.Vector3(profile.smokeWidth, profile.smokeStrength, 0) };
-    shader.uniforms.apronSmokeAt = { value: profile.smokeAzimuths.slice(0, 3) };
+    // Always exactly three: `uniform float apronSmokeAt[3]` is a fixed-length declaration, and a
+    // map with no smoke (Dry Gulch is empty on purpose) still has to fill it.
+    const smokeAt = [0, 1, 2].map((index) => profile.smokeAzimuths[index] ?? 0);
+    shader.uniforms.apronSmokeAt = { value: smokeAt };
 
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nvarying vec3 vApronPos;')

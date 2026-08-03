@@ -678,6 +678,11 @@ interface ThreeGameDiagnostics {
       darkness: number;
       lampIntensityMult?: number;
     };
+    // Dry Gulch U5 published these from LightRigDiagnostics and they never reached this
+    // declaration, so no spec could read them and none did — which is how the heat came to be
+    // dark in every captured board without anyone noticing (reviews/beauty-atmos.md).
+    heatShimmer?: boolean;
+    dustDevilQuads?: number;
     dayNight: import('./systems/DayNightCycle').DayNightSnapshot | null;
     coverage: import('./systems/LightField').LightFieldDiagnostics;
   };
