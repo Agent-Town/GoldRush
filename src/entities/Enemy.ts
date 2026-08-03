@@ -3,7 +3,7 @@ import { OrientationResolver, rotationDirections, type RotationDirection } from 
 import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
-import { activeTileDescriptor, activeWaterDescriptor } from '../meta/ContractFamilies';
+import { activeTileDescriptor, activeWaterDescriptor, type ContractGravelBar } from '../meta/ContractFamilies';
 import { hasElevationTile, resolveTerrainMove, terrainDetourWaypoint, terrainSpeedMultiplier } from '../sim/TileHeight';
 import type { PalisadeRoute } from '../systems/BuildSystem';
 import type { BuildingTarget, GoldHolding } from '../systems/TargetingSystem';
@@ -144,15 +144,6 @@ const WRECKER_RETARGET_SECONDS = 0.35;
 const FORD_ENTRY_INSET = 0.1;
 const FLEE_EDGE = 37.5;
 const ACTIVE_TILE_ID = activeTileDescriptor().id;
-const GRAVEL_BAR_CROSSINGS = activeWaterDescriptor()?.gravelBars ?? [];
-const RIVER_CROSSINGS = [
-  ...Terrain.fordRanges(),
-  ...GRAVEL_BAR_CROSSINGS.map((bar) => {
-    const halfWidth = Math.abs(Math.cos(bar.rotation)) * bar.length * 0.5 + Math.abs(Math.sin(bar.rotation)) * bar.width * 0.5;
-    return { id: bar.id, minX: bar.x - halfWidth, maxX: bar.x + halfWidth, centerX: bar.x, halfWidth };
-  }),
-];
-const CROSSING_SPEED = Terrain.sample(Terrain.fordRanges()[0]?.centerX ?? 0, (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2).speedMul;
 const FORMATION_STEER = 0.38;
 const FORMATION_GAP_CLEARANCE = 0.25;
 const FORMATION_LANES = 7;
@@ -1190,7 +1181,7 @@ export class ClaimJumperEnemy {
               ? waterSample.zone === 'bank'
                 ? 1
                 : resolverCrossingAt(this.group.position.x, this.group.position.z)
-                  ? CROSSING_SPEED
+                  ? crossingData().speed
                   : 0
               : 0)
           : 1;
@@ -1426,7 +1417,7 @@ function riverBlocksEnemyAt(x: number, z: number): boolean {
 
 function riverBlocksEnemyCrossingAt(x: number): boolean {
   const riverCenterZ = (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2;
-  if (RIVER_CROSSINGS.length > 1 && resolverCrossingAt(x, riverCenterZ)) return false;
+  if (crossingData().crossings.length > 1 && resolverCrossingAt(x, riverCenterZ)) return false;
   const sample = Terrain.sample(x, riverCenterZ);
   if (sample.zone !== 'ford') return sample.zone === 'river' && !riverDepthWadeableForEnemy(sample.waterDepth);
   const crossing = goalSideCrossing(x, x);
@@ -1438,17 +1429,42 @@ function riverBlocksEnemyCrossingAt(x: number): boolean {
 function resolverCrossingAt(x: number, z: number): boolean {
   return (
     Terrain.fordRanges().some((crossing) => x >= crossing.minX && x <= crossing.maxX) ||
-    GRAVEL_BAR_CROSSINGS.some((bar) => Terrain.gravelBarContains(bar, x, z))
+    crossingData().gravelBars.some((bar) => Terrain.gravelBarContains(bar, x, z))
   );
 }
 
-function goalSideCrossing(targetX: number, currentX: number): (typeof RIVER_CROSSINGS)[number] {
-  const crossings = Terrain.fordRanges().length > 0 ? Terrain.fordRanges() : RIVER_CROSSINGS;
+function goalSideCrossing(targetX: number, currentX: number): ReturnType<typeof Terrain.nearestFordRange> {
+  const fords = Terrain.fordRanges();
+  const crossings = fords.length > 0 ? fords : crossingData().crossings;
   return crossings.reduce((best, crossing) => {
     const goalDelta = Math.abs(crossing.centerX - targetX) - Math.abs(best.centerX - targetX);
     if (Math.abs(goalDelta) > 0.25) return goalDelta < 0 ? crossing : best;
     return Math.abs(crossing.centerX - currentX) < Math.abs(best.centerX - currentX) ? crossing : best;
   }, crossings[0] ?? Terrain.nearestFordRange(targetX));
+}
+
+let cachedCrossingData: {
+  gravelBars: ContractGravelBar[];
+  crossings: ReturnType<typeof Terrain.nearestFordRange>[];
+  speed: number;
+} | undefined;
+
+function crossingData(): NonNullable<typeof cachedCrossingData> {
+  if (cachedCrossingData) return cachedCrossingData;
+  const gravelBars = activeWaterDescriptor()?.gravelBars ?? [];
+  const fords = Terrain.fordRanges();
+  const crossings = [
+    ...fords,
+    ...gravelBars.map((bar) => {
+      const halfWidth = Math.abs(Math.cos(bar.rotation)) * bar.length * 0.5 + Math.abs(Math.sin(bar.rotation)) * bar.width * 0.5;
+      return { id: bar.id, minX: bar.x - halfWidth, maxX: bar.x + halfWidth, centerX: bar.x, halfWidth };
+    }),
+  ];
+  return (cachedCrossingData = {
+    gravelBars,
+    crossings,
+    speed: Terrain.sample(fords[0]?.centerX ?? 0, (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2).speedMul,
+  });
 }
 
 function riverDepthWadeableForEnemy(depth: number | undefined): boolean {
