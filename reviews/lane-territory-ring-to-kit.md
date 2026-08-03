@@ -5,6 +5,11 @@
 
 ## VERDICT: HOLD — NOT MERGED. One attributable regression (F-1433-1), precisely located and cheap to fix.
 
+> ⏭️ **SUPERSEDED — see the s1435 ADDENDUM at the foot of this file.** The hold's written lift condition was
+> satisfied (`f1433-1` landed as `d9235027`, the named test green 2/2 both projects and proven load-bearing by
+> manufacturing the defect), and the stack **MERGED as `af463bd9`**. This section is kept as the record of why
+> the slice was held, not as its current state. **The owner fork it surfaced is still OPEN.**
+
 The slice is good work and the design is right. It is held on a single defect that its own master forbids in writing.
 
 ## What it does
@@ -65,3 +70,113 @@ Game.ts now only ever assigns it `false`, but `RunSuspend.ts:962` still computes
 
 ## Owner fork — OPEN, and this review does not close it
 The BACKLOG row records: *"If the owner prefers plain removal over the kit, one word flips the master — that word is still UNGIVEN, and a green gate battery is not it; the drain must surface the fork, not close it."* Surfaced accordingly. The kit is built and works; whether the earned reward should survive **as a kit** or simply be **removed** remains the owner's call, and nothing in this gate speaks to it.
+
+---
+
+# s1435 ADDENDUM — THE HOLD IS LIFTED BY SATISFACTION. VERDICT: MERGED `af463bd9`
+
+**Drained by:** s1435 fire, 2026-08-03, in detached worktree `gate-s1435` (§3.0b — main's working tree never held undecided content)
+**Stack merged:** `lane/perf` `44eda5bd` (kit slice) + `d9235027` (f1433-1 corrective) → main `af463bd97abf7f1552f0825a2b21d5c6fd6748d2`
+**`main..lane/perf` after merge: EMPTY.**
+
+## The hold was lifted by satisfying its written condition, not by a green battery
+
+s1433 wrote the lift condition into the goal leaf: land `f1433-1` on `lane/perf @ 44eda5bd`, then re-run
+`restore-validation.spec.ts → economy log rows are validated before replay and hostile deltas are dropped`
+green **both projects**. That is exactly what was measured, in that order:
+
+| Step | Result |
+|---|---|
+| `f1433-1` landed on the lane | `d9235027`, runner-committed 15:45:18, done-move un-prefixed (clean run) |
+| Lift-condition test, merged tree | **2/2 passed both projects, 5.2s** |
+| Lift-condition test, guard removed (manufactured defect) | **2 FAILED both projects** |
+| Probe reverted | blob `acea8f8ecf0cdf24f6d53d7799b348ac37929226` — **byte-identical to the lane blob** |
+
+⚠️ **The middle row is the one that matters.** A passing test never executes its violation path, so its green
+is not evidence about the red (the s1299/s1300/s1434 standard). Removing the `granted > 0` guard from
+`BuildSystem.setPalisadeKitCredits` reproduced s1433's F-1433-1 exactly — so this green is load-bearing, and
+the corrective is the thing carrying it.
+
+## The cure
+
+`BuildSystem.ts` — the `palisade_kit_granted` economy row is now applied **only when the grant is positive**.
+A tier-0 run that earned no kit writes no row, restoring the `logLength` the slice master required be unchanged.
+One line, plus the spec assertions that pin it (`kitGrantAmounts` → `[]` at T0, `[KIT_SIZE]` at T1, and an
+explicit `economy.logLength` → `0` at T0).
+
+## Evidence table
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | clean |
+| `npm run build` | green, **1.04s** |
+| `task-046-territory-ring-pacing.spec.ts` (own spec) | **4/4 both projects, 19.7s** |
+| Lift-condition test | **2/2 both projects, 5.2s** |
+| Battery A — 5 lane-modified specs | 33 passed / 8 failed / 1 skipped, 4.7m |
+| Battery B — 4 economy-log + territoryRing consumers | 62 passed / 12 failed, 9.0m |
+
+Every playwright command `--workers=1` (§3.1). No red was accepted on reasoning — each was controlled.
+
+## Every red controlled to clean main
+
+**Battery A's 8 reds all reproduce on clean main by test NAME**, at the pre-lane line numbers exactly as s1433
+predicted the shift (`town-t2-naming` 169→166, `world-info-notes` 293→290, 322→319, `:196` unchanged).
+**Main carried one MORE than the merge does** — `town-t2-naming.spec.ts:82 › fresh town naming persists…` —
+so the merged tree is strictly *less* red here.
+
+**Battery B is the instructive one, and counting would have got it wrong** (12 merged vs 10 main — different
+totals *and* different sets). Set-differenced, then each difference isolated:
+
+| Red | Verdict | How it was decided |
+|---|---|---|
+| `bt-01-tiers:205`, `:430` (×2 each) · `restore-validation:656` (×2) · `tile-identity-pass:121` (×2) | pre-existing | present on clean main, same names |
+| `tile-identity-pass:71` desktop | **main-only** | red on main, green on the merge |
+| `restore-validation:186` mobile | load artifact | **passes in isolation**; only red inside the 4-spec battery |
+| `run-suspend:193` desktop | pre-existing | **reproduces in isolation on clean main** |
+| `run-suspend:193` mobile | **flake, not attributable** | see below |
+
+### The one red that looked attributable — and wasn't
+
+`run-suspend:193` mobile passed on main (battery *and* isolated) but failed on the merge (battery *and*
+isolated). Two-for-two each way is a real signal, so it was read rather than reasoned about:
+
+```
+> 277 |   expect(errors.consoleErrors).toEqual([]);
++   "THREE.GLTFLoader: Couldn't load texture blob:http://127.0.0.1:5188/d4a237c7-…"   (×3)
+```
+
+The failure is **not** an economy assertion — `economy.gold` passes two lines earlier at `:275`, and the economy
+log is the only surface this slice touches. It is the console-error collector catching GLTF texture-blob load
+failures, the flake class the corrective's own run log had already named. **Re-run on the same merged tree: passed
+in 43.3s.** Non-deterministic, no causal path to the kit, not attributable.
+
+## Merge classification
+
+Base `0f7f45fd`. Of 19 changed paths, **exactly one is BOTH-MOVED**: `src/game/Game.ts`. Everything else is
+LANE-TOUCHED only (main never moved them since the base — measured, not assumed).
+
+Main's three Game.ts hunks since the base are the drill-yard practice save line, the `reportRenderDemotion`
+import, and its call site. The `ort` 3-way merge auto-resolved; the graft was then **verified by invariant count
+against main**, because this is the fourth consecutive lane-d drain to hit this trap:
+
+| Invariant | merged | main |
+|---|---|---|
+| `reportRenderDemotion` | 2 | 2 |
+| `Practice resets when you leave.` | 1 | 1 |
+| `activeContract.practice` | 16 | 16 |
+| `runtime-tier-shed-` | 1 | 1 |
+
+`setPalisadeKitCredits`: **1 in the merged tree, 0 on main** — confirming s1434's dispatch hazard was real and
+that the corrective's subject genuinely existed only on the lane.
+
+## ⚖️ THE OWNER FORK IS STILL OPEN AND THIS DRAIN DID NOT TOUCH IT
+
+The kit is now **built, gated and shipped**. Whether the earned Territory I reward should survive **as a kit** or
+simply be **removed** remains the owner's call. The BACKLOG row's word is still ungiven, and a green battery is
+not it. Merging the implementation does not choose; it only means the implementation works.
+
+## Findings carried forward from s1433 — still open, still non-blocking
+
+**F-1433-2** (`prebuiltPalisades` now has zero consumers — a flag that would silently lie) and **F-1433-3**
+(`territoryRingPresent` can still restore true with no ring, via the legacy no-`controls` path) both shipped
+unchanged in this merge. Neither is a live regression; both remain owed cleanups.
