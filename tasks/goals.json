@@ -2821,11 +2821,11 @@
               "title": "F-1433-3: the legacy no-controls restore path stops resurrecting territoryRingPresent for a ring the kit design never builds (stale territory_ring_gap hints)",
               "taskFile": "f1435-1-ring-hints-for-a-ring-that-is-gone.md",
               "lane": "lane-c",
-              "status": "planned",
+              "status": "queued",
               "attempts": 0,
               "authoredBy": "s1435 fire (FIRE-AUTHORED, attended review welcome) — corrective for a non-blocking finding of its own F-BW-6 drain (af463bd9)",
               "registeredBy": "s1435 fire, same commit as the master (Goal Registration Law)",
-              "drainNotes": "NOT YET DISPATCHED, DELIBERATELY. This task is only correct on a lane that CONTAINS the kit merge af463bd97abf7f1552f0825a2b21d5c6fd6748d2: before it, Territory I really did spawn a ring and the legacy default was right; after it, Game.ts only ever assigns the flag false. lane-c was 9 behind main at authoring time, so a refresh-lane lane-c request was filed in the SAME commit. The next fire must prove the refresh landed before the cp: git -C worktrees/lane-c merge-base --is-ancestor af463bd9... HEAD (exit 0 = dispatch lawful, exit 1 = STOP and wait). Finding re-verified against live main by s1435 by READING restoreControls, not inherited from the s1433 review."
+              "drainNotes": "DISPATCHED into lane-c by s1435 after its STOP pre-condition was PROVEN, not assumed. This task is only correct on a lane containing the kit merge af463bd97abf7f1552f0825a2b21d5c6fd6748d2: before it, Territory I really did spawn a palisade ring and the legacy restore default was RIGHT; after it, Game.ts only ever assigns the flag false. lane-c was 9 behind at authoring, so refresh-lane lane-c was filed; the janitor consumed it and the lane reset to main (ea046813). Verified before the cp: merge-base --is-ancestor af463bd9 HEAD exits 0, and all four citation keys grep 1 in the lane AND 1 on main (F-1425-2 — a key that matches nowhere is a paraphrase, and a false 0 would accuse the wrong subject). Order followed per F-1424-3: master+leaf committed (d3a835df) BEFORE the queue copy. Finding re-verified against live main by s1435 by READING restoreControls, not inherited from s1433."
             }
           ]
         }
