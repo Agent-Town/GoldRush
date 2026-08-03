@@ -10,6 +10,12 @@
  * grays (hat shadows, gunmetal, stone) are never eaten. Edge alpha is feathered
  * with a distance ramp for soft antialiased edges.
  *
+ * Every keyed output then gets an ALPHA BLEED (`bleedEdges`, s1449/F-1449-1): the colour of
+ * the visible art is propagated outward under the transparent region, so GPU bilinear
+ * filtering and mipmaps have real colour to average instead of the key. Without it every
+ * sprite draws a halo of its own key colour in-game. Alpha is untouched, so the cut-out is
+ * bit-for-bit the same shape.
+ *
  * Usage:
  *   node scripts/extract-alpha.mjs [options] <input.png> [...more]
  * Options:
@@ -256,6 +262,65 @@ function despillSaturatedKey(png, all = true) {
 }
 
 /**
+ * Alpha bleed / edge extend (s1449, F-1449-1). Propagates the colour of visible pixels
+ * OUTWARD into the fully transparent region. Alpha is never touched — only RGB — so this
+ * is invisible in any alpha-aware viewer and changes nothing about the cut-out.
+ *
+ * WHY IT IS NOT COSMETIC: keying sets alpha 0 but left the key colour sitting in RGB, and
+ * the GPU does not consult alpha when it filters. `SpriteMaterial({transparent, alphaTest})`
+ * with bilinear filtering and mipmaps averages RGB across neighbouring texels, so pure
+ * #ff00ff under the transparency bled back into every edge texel that survived alphaTest.
+ * Measured s1449 on the drill-yard props: 100% of transparent pixels were rgb(255,0,255),
+ * including 3982 / 1540 / 1755 that directly touched visible art — and in-game that drew a
+ * bright magenta halo around every silhouette, worst on thin features (table legs, bell
+ * frame posts) where downscaling averages a real texel against several key texels.
+ * `despillSaturatedKey` could never fix it: it skips transparent pixels by design (`if
+ * (!data[idx + 3]) continue;`), because it corrects spill ON the art, not under it.
+ *
+ * Fills to exhaustion rather than a fixed band: mip level N averages 2^N texels, so a
+ * few-pixel skirt still bleeds at the small on-screen sizes these sprites render at.
+ */
+function bleedEdges(png) {
+  const { width: w, height: h, data } = png;
+  const valid = new Uint8Array(w * h);
+  for (let i = 0; i < w * h; i++) if (data[(i << 2) + 3] > 0) valid[i] = 1;
+
+  let filledTotal = 0;
+  for (;;) {
+    const added = [];
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const i = y * w + x;
+        if (valid[i]) continue;
+        let r = 0, g = 0, b = 0, n = 0;
+        for (let dy = -1; dy <= 1; dy++) {
+          const ny = y + dy;
+          if (ny < 0 || ny >= h) continue;
+          for (let dx = -1; dx <= 1; dx++) {
+            const nx = x + dx;
+            if (nx < 0 || nx >= w || (dx === 0 && dy === 0)) continue;
+            const ni = ny * w + nx;
+            if (!valid[ni]) continue;
+            const nidx = ni << 2;
+            r += data[nidx]; g += data[nidx + 1]; b += data[nidx + 2]; n++;
+          }
+        }
+        if (!n) continue;
+        added.push([i, Math.round(r / n), Math.round(g / n), Math.round(b / n)]);
+      }
+    }
+    if (!added.length) break;
+    for (const [i, r, g, b] of added) {
+      const idx = i << 2;
+      data[idx] = r; data[idx + 1] = g; data[idx + 2] = b;
+      valid[i] = 1;
+    }
+    filledTotal += added.length;
+  }
+  return filledTotal;
+}
+
+/**
  * Interior near-key alpha clear (s15, saturated keys only): opaque pixels whose
  * max-channel distance to the key is < thr go transparent (ramped to thr+feather).
  * Catches magenta spill BLOBS painted over gaps (between legs, under poncho
@@ -365,9 +430,10 @@ for (const input of opts.inputs) {
     const saturated = keySaturation() > 60;
     const cleared = saturated ? interiorKeyClear(png, opts.interiorKey, opts.feather) : 0;
     const despilled = saturated ? despillSaturatedKey(png) : 0;
+    const bled = bleedEdges(png);
     const emitted = sliceGrid(png, cols, rows, opts.cell, base, opts.out, opts.scaleOverride);
     console.log(
-      `${path.basename(input)}: ${native}, keyed ${((keyed / total) * 100).toFixed(1)}%, spill-cleared ${cleared} px, despilled ${despilled} px -> ` +
+      `${path.basename(input)}: ${native}, keyed ${((keyed / total) * 100).toFixed(1)}%, spill-cleared ${cleared} px, despilled ${despilled} px, bled ${bled} px -> ` +
       `${emitted.filter((e) => !e.empty).length}/${emitted.length} cells @${opts.cell}px + ${base}.frames.json`,
     );
   } else {
@@ -378,7 +444,8 @@ for (const input of opts.inputs) {
       const saturated = keySaturation() > 60;
       const cleared = saturated ? interiorKeyClear(png, opts.interiorKey, opts.feather) : 0;
       const despilled = saturated ? despillSaturatedKey(png) : 0;
-      stat = `keyed ${keyed}/${total} px (${((keyed / total) * 100).toFixed(1)}%)${cleared ? `, spill-cleared ${cleared} px` : ''}${despilled ? `, despilled ${despilled} px` : ''}`;
+      const bled = bleedEdges(png);
+      stat = `keyed ${keyed}/${total} px (${((keyed / total) * 100).toFixed(1)}%)${cleared ? `, spill-cleared ${cleared} px` : ''}${despilled ? `, despilled ${despilled} px` : ''}${bled ? `, bled ${bled} px` : ''}`;
     }
     const outFile = path.join(opts.out, path.basename(input));
     fs.writeFileSync(outFile, PNG.sync.write(png));
