@@ -85,6 +85,7 @@ test('?townDusk reaches the town from a plain URL and lights windows, strings an
     lit: true,
     fixtureColor: '#ffb45c',
     windowColor: '#ffb45c',
+    coolWhiteEmissiveFixtures: 0,
     flickerDepth: 0.055,
   });
   const flicker = await page.evaluate(async () => {
