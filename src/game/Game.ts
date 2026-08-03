@@ -1937,9 +1937,12 @@ export class Game {
           this.publishDiagnostics();
           return placed;
         },
-        confirmBuild: () => {
+        confirmBuild: (x?: number, z?: number) => {
           const id = this.buildSystem.diagnostics.selectedBuildable;
-          const placed = !this.deepwaterClaim && this.buildSystem.confirm(this.timeAlive);
+          const placed = !this.deepwaterClaim && this.buildSystem.confirm(
+            this.timeAlive,
+            typeof x === 'number' && Number.isFinite(x) && typeof z === 'number' && Number.isFinite(z) ? { x, z } : undefined,
+          );
           if (placed) this.recordLedgerBuildable(id);
           this.publishDiagnostics();
           return placed;
@@ -6413,50 +6416,10 @@ export class Game {
 
   applyMetaProgress(meta: MetaProgress, options: { placeDefenses?: boolean } = {}): void {
     this.appliedMetaProgress = cloneMetaProgress(meta);
-    if (options.placeDefenses === false || this.activeContract.tileParams.prebuiltPalisades === false) return;
     this.territoryRingPresent = false;
-    if (meta.tracks.territory < Balance.meta.territoryTier1) return;
-    let placed = 0;
-    for (const segment of this.territoryRingSegments()) {
-      const candidates = [
-        segment,
-        { ...segment, z: segment.z - 1 },
-        { ...segment, z: segment.z + 1 },
-        { ...segment, x: segment.x - 1 },
-        { ...segment, x: segment.x + 1 },
-      ];
-      if (candidates.some((candidate) => this.buildSystem.placeFree('palisade', candidate, segment.rotationSteps))) placed += 1;
-    }
-    this.territoryRingPresent = placed > 0;
-  }
-
-  private territoryRingSegments(): Array<{ x: number; z: number; rotationSteps: number }> {
-    const center = this.heroStart;
-    const gapHalf = Balance.meta.territoryRingGapHalfWidth;
-    const segmentHalf = Balance.palisade.depth / 2;
-    const wallHalf = Balance.palisade.width / 2;
-    const segmentOffset = gapHalf + segmentHalf;
-    const capOffset = gapHalf + Balance.palisade.depth - wallHalf;
-    const sideOffset = gapHalf + Balance.palisade.depth + wallHalf;
-    const segments: Array<{ x: number; z: number; rotationSteps: number }> = [];
-    for (const edge of this.activeContract.tileParams.lanes.spawnEdges) {
-      for (const side of [-1, 1] as const) {
-        if (edge === 'north' || edge === 'south') {
-          segments.push({
-            x: center.x + side * segmentOffset,
-            z: center.z + (edge === 'north' ? capOffset : -capOffset),
-            rotationSteps: 1,
-          });
-        } else {
-          segments.push({
-            x: center.x + (edge === 'east' ? sideOffset : -sideOffset),
-            z: center.z + side * segmentOffset,
-            rotationSteps: 0,
-          });
-        }
-      }
-    }
-    return segments;
+    this.buildSystem.setPalisadeKitCredits(
+      options.placeDefenses !== false && meta.tracks.territory >= Balance.meta.territoryTier1 ? Balance.meta.territoryRing.length : 0,
+    );
   }
 
   /**
@@ -7479,7 +7442,7 @@ export class Game {
       manualSave: this.manualSaveSnapshot(),
       contract: this.contractBriefingSnapshot(),
       science: `Science: ${meter.steps}/${meter.threshold} steps; banked +${meter.overflow}`,
-      territory: territoryPauseLine(this.metaProgressForPresence()),
+      territory: territoryPauseLine(this.metaProgressForPresence(), this.buildSystem.diagnostics.palisadeKitCredits),
       boons: activeResearchBoons(this.researchState).map(({ name, effect }) => ({ name, effect })),
       mastery: this.masteryProgressLines(),
     };
@@ -7766,7 +7729,7 @@ function runStartMetaRecap(meta: MetaProgress, research: ResearchState, townName
   const items: string[] = [];
   if (contract.id === 'e1-baron') items.push("The Baron's outfit rides at 20 — cadence runs hot (+15%).");
   if (meta.tracks.territory >= Balance.meta.territoryTier1) {
-    items.push(`palisade ring (Territory ${romanNumeral(meta.tracks.territory)})`);
+    items.push(`palisade kit (Territory ${romanNumeral(meta.tracks.territory)}; ${Balance.meta.territoryRing.length} free)`);
   }
   for (const boon of activeResearchBoons(research)) items.push(boon.recap);
   const prefix = townName ? `${townName} remembers` : 'Your claim remembers';
@@ -7786,11 +7749,11 @@ function runSuspendEmptyLine(): string {
   return "The ledger saves at each wave's end.";
 }
 
-function territoryPauseLine(meta: MetaProgress): string {
+function territoryPauseLine(meta: MetaProgress, kitCredits: number): string {
   if (meta.tracks.territory >= Balance.meta.territoryTier1) {
-    return `Territory ${romanNumeral(meta.tracks.territory)}: palisade ring active (${Balance.meta.territoryRing.length} segments)`;
+    return `Territory ${romanNumeral(meta.tracks.territory)}: palisade kit ${kitCredits > 0 ? 'ready' : 'unavailable this run'} (${kitCredits} free placements)`;
   }
-  return `Territory 0/${Balance.meta.territoryTier1}: palisade ring not earned`;
+  return `Territory 0/${Balance.meta.territoryTier1}: palisade kit not earned`;
 }
 
 function activeResearchBoons(state: ResearchState): MetaPresenceLine[] {

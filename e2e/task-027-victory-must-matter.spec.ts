@@ -83,7 +83,8 @@ test('real victory pays meta, opens Claim Office, and tier one changes the next 
   await expect(page.getByTestId('claim-payout-science')).toContainText('+1');
   await expect(page.getByTestId('claim-payout-hero')).toContainText('+1');
   await expect(page.getByTestId('claim-payout-agent')).toContainText('+1');
-  await expect(page.getByTestId('territory-tier-one')).toContainText('palisade ring');
+  await expect(page.getByTestId('territory-tier-one')).toContainText('palisade kit');
+  await expect(page.getByTestId('territory-tier-one')).toContainText('unused pieces expire');
   await page.waitForTimeout(800);
   await page.screenshot({ path: 'artifacts/task-027-payout.png', fullPage: true });
 
@@ -97,16 +98,10 @@ test('real victory pays meta, opens Claim Office, and tier one changes the next 
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? -1)).toBe(0);
   await finishSecuredLedger(page);
 
-  await expect
-    .poll(() =>
-      page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.filter((entry) => entry.id === 'palisade').length ?? 0),
-    )
-    .toBe(Balance.meta.territoryRing.length);
-  const palisades = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.filter((entry) => entry.id === 'palisade') ?? []);
-  for (const palisade of palisades) {
-    expect(palisade.hp).toBe(palisade.maxHp);
-    expect(palisade.wrecked).toBe(false);
-  }
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisades)).resolves.toBe(0);
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisadeKitCredits)).resolves.toBe(
+    Balance.meta.territoryRing.length,
+  );
 
   const scores = await readJson<Array<{ secured?: boolean; waves?: number }>>(page, SCORE_STORAGE_KEY, '[]');
   expect(scores.some((row: { secured?: boolean; waves?: number }) => row.secured === true && row.waves === secureWave)).toBe(

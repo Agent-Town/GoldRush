@@ -407,6 +407,7 @@ interface ThreeGameDiagnostics {
     selectedBuildable: GrBuildableId;
     beacons: number;
     palisades: number;
+    palisadeKitCredits: number;
     sluices: number;
     stockpiles: number;
     turrets: number;
@@ -1193,7 +1194,7 @@ interface Window {
     placeBoatBuilding: (padId: string, buildingId: string) => boolean;
     reanchorClaimBoat: (anchorId: string) => boolean;
     placeFree: (id: GrBuildableId, x: number, z: number, rotationSteps?: number) => boolean;
-    confirmBuild: () => boolean;
+    confirmBuild: (x?: number, z?: number) => boolean;
     confirmBuildDiagnostics: () => GrConfirmBuildDiagnostics;
     testAudio: (name: string) => void;
     enemyPositions: () => Array<{

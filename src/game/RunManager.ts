@@ -402,7 +402,7 @@ export class RunManager {
             ).join('')}
           </ul>
           <p class="claim-office__tier" data-testid="territory-tier-one">${
-            territoryReady ? 'Next claim: palisade ring ready; the gaps are your kill-lanes.' : 'Next claim: territory ledger banked.'
+            territoryReady ? "Next claim: a palisade kit is yours to place where the gold runs; unused pieces expire when the wagon rolls home." : 'Next claim: territory ledger banked.'
           }</p>
           <button class="death-overlay__button death-overlay__button--secondary" type="button" data-testid="open-run-ledger">Run Ledger</button>
         </section>

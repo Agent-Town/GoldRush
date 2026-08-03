@@ -63,6 +63,7 @@ export type UiSnapshot = {
     iconSlot: `ui.build.icon.${BuildableId}`;
     portraitSlug?: string;
     tierLine?: string;
+    kitCredits?: number;
   }>;
   stockpileCount: number;
   beaconCount: number;

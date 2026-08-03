@@ -1370,9 +1370,13 @@ function decodeEconomyEvent(value: unknown): EconomyEvent | null {
       return amount !== null ? { id, at, type: value.type, amount } : null;
     case 'gold_reclaimed':
       return amount !== null ? (compactEvent({ id, at, type: value.type, amount, actor }) as EconomyEvent) : null;
+    case 'palisade_kit_granted':
+      return amount !== null ? { id, at, type: value.type, amount } : null;
     case 'gold_spent': {
       const sink = stringInRange(value.sink, 1, 160);
-      return amount !== null && sink ? ({ id, at, type: value.type, sink, amount } as EconomyEvent) : null;
+      return amount !== null && sink
+        ? (compactEvent({ id, at, type: value.type, sink, amount, kit: value.kit === true ? true : undefined }) as EconomyEvent)
+        : null;
     }
     case 'resource_granted':
       return amount !== null && value.resource === 'pressure' && (value.source === 'debug' || value.source === 'exchange')

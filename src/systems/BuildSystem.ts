@@ -39,6 +39,7 @@ export type BuildableSnapshot = {
   iconSlot: `ui.build.icon.${BuildableId}`;
   portraitSlug?: string;
   tierLine?: string;
+  kitCredits?: number;
 };
 
 export type ConfirmBuildDiagnostics = {
@@ -82,6 +83,7 @@ export type BuildDiagnostics = {
   ghostFootprint: { w: number; d: number };
   beacons: number;
   palisades: number;
+  palisadeKitCredits: number;
   sluices: number;
   stockpiles: number;
   boilerHouses: number;
@@ -426,6 +428,7 @@ export class BuildSystem {
   private tierUpgrades = 0;
   private repairs = 0;
   private repairGold = 0;
+  private palisadeKitCredits = 0;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -511,7 +514,7 @@ export class BuildSystem {
   get buildableSnapshots(): BuildableSnapshot[] {
     return buildableDefs.filter((def) => this.isBuildableEnabled(def.id)).map((def) => {
       const count = this.countFor(def.id);
-      const cost = def.costCurve(count);
+      const cost = this.costFor(def);
       const breachSeal = def.id === 'palisade' && this.e8BreachSeals;
       const maxCount = this.maxCountFor(def);
       return {
@@ -526,8 +529,26 @@ export class BuildSystem {
         iconSlot: def.iconSlot,
         portraitSlug: def.portraitSlug,
         tierLine: buildableTierEffectLine(def.id, this.menuTierFor(def.id)),
+        kitCredits: def.id === 'palisade' ? this.palisadeKitCredits : undefined,
       };
     });
+  }
+
+  setPalisadeKitCredits(total: number): void {
+    let granted: number | undefined;
+    let used = 0;
+    for (const event of this.economy.log) {
+      if (event.type === 'run_reset') {
+        granted = undefined;
+        used = 0;
+      } else if (event.type === 'palisade_kit_granted') granted = event.amount;
+      else if (event.type === 'gold_spent' && event.sink === 'build_palisade' && event.kit) used += 1;
+    }
+    if (granted === undefined) {
+      granted = Math.max(0, Math.floor(total));
+      if (granted > 0) this.economy.apply({ id: crypto.randomUUID(), at: this.currentAt, type: 'palisade_kit_granted', amount: granted });
+    }
+    this.palisadeKitCredits = Math.max(0, granted - used);
   }
 
   get buildableCounts(): Array<{ id: BuildableId; count: number }> {
@@ -656,8 +677,7 @@ export class BuildSystem {
   }
 
   get nextCost(): number {
-    const def = this.selectedDef();
-    return def.costCurve(this.countFor(def.id));
+    return this.costFor(this.selectedDef());
   }
 
   get canAffordNext(): boolean {
@@ -685,6 +705,7 @@ export class BuildSystem {
       ghostFootprint: footprint,
       beacons: this.beaconCount,
       palisades: this.palisades.activeCount,
+      palisadeKitCredits: this.palisadeKitCredits,
       sluices: this.sluices.activeCount,
       stockpiles: this.stockpiles.activeCount,
       boilerHouses: this.boilerHouses.activeCount,
@@ -841,7 +862,7 @@ export class BuildSystem {
     const def = this.selectedDef();
     const count = this.countFor(def.id);
     const maxCount = this.maxCountFor(def);
-    const cost = def.costCurve(count);
+    const cost = this.costFor(def);
     const economyOk = this.economy.gold >= cost;
     const placementOk = this.matchesPlacement(def, this.ghostPos);
     const dx = this.ghostPos.x - this.heroPosition.x;
@@ -906,13 +927,15 @@ export class BuildSystem {
     }
 
     const def = this.selectedDef();
-    const cost = def.costCurve(this.countFor(def.id));
+    const kit = def.id === 'palisade' && this.palisadeKitCredits > 0;
+    const cost = this.costFor(def);
     const result = this.economy.apply({
       id: crypto.randomUUID(),
       at,
       type: 'gold_spent',
       sink: buildSink(def.id),
       amount: cost,
+      ...(kit ? { kit: true } : {}),
     });
     if (!result.ok) {
       this.lastConfirmFailure = 'economy_rejected';
@@ -925,6 +948,7 @@ export class BuildSystem {
       return this.invalidBuild();
     }
     this.finishPlacement(def.id, placed, cost);
+    if (kit) this.palisadeKitCredits -= 1;
     this.onSound?.('build-place', this.ghostPos);
     if (def.id === 'boiler_house') this.onSound?.('agent-works', this.ghostPos);
     this.valid = this.computeValid();
@@ -1078,6 +1102,7 @@ export class BuildSystem {
     this.activeRuins = 0;
     this.tierUpgrades = 0;
     this.repairs = 0;
+    this.palisadeKitCredits = 0;
     this.repairGold = 0;
     this.repairRing.visible = false;
     this.repairRing.geometry.setDrawRange(0, 0);
@@ -1485,7 +1510,7 @@ export class BuildSystem {
   private computeValid(origin: THREE.Vector3 = this.heroPosition): boolean {
     const def = this.selectedDef();
     if (this.countFor(def.id) >= this.maxCountFor(def)) return false;
-    if (this.economy.gold < def.costCurve(this.countFor(def.id))) return false;
+    if (this.economy.gold < this.costFor(def)) return false;
     if (!this.matchesPlacement(def, this.ghostPos)) return false;
     const dx = this.ghostPos.x - origin.x;
     const dz = this.ghostPos.z - origin.z;
@@ -1728,6 +1753,10 @@ export class BuildSystem {
 
   private selectedDef(): BuildableDef {
     return getBuildableDef(this.selectedId) ?? buildableDefs[0];
+  }
+
+  private costFor(def: BuildableDef): number {
+    return def.id === 'palisade' && this.palisadeKitCredits > 0 ? 0 : def.costCurve(this.countFor(def.id));
   }
 
   private activePositions(

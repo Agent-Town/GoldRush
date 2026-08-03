@@ -122,7 +122,7 @@ test('earned meta is visible in run recap, pause ledger, and boosted cards', asy
   const recap = page.getByTestId('run-meta-recap');
   await expect(recap).toBeVisible();
   await expect(recap).toHaveText(
-    `Your claim remembers: palisade ring (Territory III) | Prospecting cards +${Balance.research.assayGradingStockpileCapBonus} cap/stack (Assay Grading) | +1 order slot (Second Order Slot)`,
+    `Your claim remembers: palisade kit (Territory III; ${Balance.meta.territoryRing.length} free) | Prospecting cards +${Balance.research.assayGradingStockpileCapBonus} cap/stack (Assay Grading) | +1 order slot (Second Order Slot)`,
   );
   await shot(page, testInfo, 'recap-banner');
 
@@ -131,7 +131,9 @@ test('earned meta is visible in run recap, pause ledger, and boosted cards', asy
   await expect(page.getByTestId('pause-meta-panel')).toHaveCSS('pointer-events', 'auto');
   await expect(page.getByTestId('pause-meta-panel')).toHaveCSS('overflow-y', 'auto');
   await expect(page.getByTestId('pause-meta-science')).toHaveText('Science: 2/6 steps; banked +0');
-  await expect(page.getByTestId('pause-meta-territory')).toHaveText('Territory III: palisade ring active (8 segments)');
+  await expect(page.getByTestId('pause-meta-territory')).toHaveText(
+    `Territory III: palisade kit ready (${Balance.meta.territoryRing.length} free placements)`,
+  );
   await expect(page.getByTestId('pause-meta-boons')).toContainText('Assay Grading');
   await expect(page.getByTestId('pause-meta-boons')).toContainText('+35 stockpile cap');
   await expect(page.getByTestId('pause-meta-boons')).toContainText('Second Order Slot');
@@ -213,7 +215,7 @@ test('stay for the rush does not call newly banked territory active', async ({ p
   await page.keyboard.press('KeyP');
   await expect(page.getByTestId('pause-meta-panel')).toBeVisible();
   await expect(page.getByTestId('pause-meta-territory')).toHaveText(
-    `Territory 0/${Balance.meta.territoryTier1}: palisade ring not earned`,
+    `Territory 0/${Balance.meta.territoryTier1}: palisade kit not earned`,
   );
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.meta?.tracks.territory)).toBe(1);
   await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisades)).resolves.toBe(0);
@@ -274,6 +276,8 @@ test('secured new claim shows recap after research ledger closes', async ({ page
   await page.getByTestId('run-secondary-action').click();
   await expect(page.getByTestId('death-overlay')).toHaveAttribute('aria-hidden', 'true');
   await expect(page.getByTestId('run-meta-recap')).toBeVisible();
-  await expect(page.getByTestId('run-meta-recap')).toContainText('palisade ring (Territory I)');
+  await expect(page.getByTestId('run-meta-recap')).toContainText(
+    `palisade kit (Territory I; ${Balance.meta.territoryRing.length} free)`,
+  );
   assertNoErrors(errors);
 });
