@@ -2508,6 +2508,16 @@
               "attempts": 1,
               "authoredBy": "attended session 2026-08-03 11:36",
               "drainNotes": "REGISTERED RETROACTIVELY BY s1431 — this master reached the runner with NO goal leaf, so drain-block-check returned UNKNOWN (a Goal Registration Law bookkeeping finding, not a clearance). RE-LANDED on fresh main per Mistake #15 rather than merged from lane/m4 (636 behind, standing DO-NOT-RESET). F-1430-2 DISSOLVED UNDER MEASUREMENT: s1430 read this as a 754-line hunk needing an owner hand, having measured the patch against the LANE base; against MAIN the pilot blob is +15/-7, and lane-absorbed-lines reports 14 of 713 added lines absent from main — main had already absorbed 699 of them via the beauty ladder, so the --3way conflict was a diff replayed against a 634-commit stale base, not a disagreement about code. CLASSIFICATION: 3 files LANE-TOUCHED (clean copy); the pilot copied clean after verifying every deletion is the same line extended (zero main content removed, beauty ladder intact); Game.ts GRAFTED 2 lines only, because a wholesale copy there would have reverted 9 main commits — anchors asserted unique before writing, and the graft landed at :4607 on main vs :4584 on the lane. No predecessor touches any of the five files, and the owner-gated 7c4f132f is disjoint, so lane-b disputed leaf is untouched and no owner word was owed. GATES (detached worktree gate-s1431, every playwright --workers=1): tsc 0, build 1.85s, own spec plus 3 grep-derived adjacent suites 26 passed / 2 failed — and BOTH reds proven pre-existing by a same-batch control run on clean main, which was 3 failed / 23 passed. The merged tree carries strictly FEWER failures than the tree it merged into. My prior said the slice caused the tl-01 red (deterministic, both projects, name matching the subject exactly) and the control refuted it. F-1431-3 (tl-01:229 red on main at the gameplay-progression assertion :236, claim-secured never visible) and F-1431-4 (terrain3d-default:81 p95 budget red on main, green here) filed. Review: reviews/lane-pilot-fallback-telemetry.md"
+            },
+            {
+              "id": "water-shore-truth",
+              "title": "F-BW-7: painted water ends where sim water ends — pond surface radius = config.radius, the 1.42 margin becomes damp GROUND, and an e2e places a sluice where the eye aims",
+              "taskFile": "lane-water-shore-truth.md",
+              "lane": "lane-c",
+              "status": "queued",
+              "attempts": 1,
+              "authoredBy": "attended session 2026-08-03 12:47; RE-ROUTED lane-b to lane-c by s1432",
+              "drainNotes": "REGISTERED BY s1432 AT RE-DISPATCH — this master reached the runner with NO leaf, so drain-block-check returned UNKNOWN (a Goal Registration Law bookkeeping finding, not a clearance; same shape as its sibling above). ATTEMPT 1 was a clean pre-flight STOP, not a failure: dispatched into lane-b, where src/world/Water.ts was 370 lines with no createSpringPondSurface, no pondGeometry and no POND_MARGIN_SCALE at all. 74,724 tokens, zero files touched, zero history changed — the runner did exactly the right thing. Cause is F-1298-4/F-1430-2, not the master: lane-b is 650 behind main with 5 unique ahead commits and a standing DO-NOT-RESET, so work queued into it is built on a base 650 commits stale. s1431 named this recurrence in its handoff (F). RE-ROUTED to lane-c per the reroute-around-a-jammed-lane rule, refreshed to main tip 7b133ada at dispatch, with the pre-flight upgraded from one line to four checks: lane-safety, ancestry-freshness on 7b133ada, and two subject-presence greps each verified to return exactly 1 against main before being written down (F-1425-2). The two kinds are NOT interchangeable and the master says so — the stale lane-c already carried both subject lines, so subject-presence alone could not have detected drift, while lane-b failed subject-presence specifically. SUBJECT VERIFIED ON MAIN BY READING: Water.ts 1025 lines, POND_MARGIN_SCALE = 1.42 at :598 used at :624, createSpringPondSurface at :617, Terrain.isWaterSourceAdjacent at :319, reviews/beauty-dry-gulch.md present. Owner origin: playtest 2026-08-03, 'Can't build sluices next to the pond in Dry Gulch — will have to win by kiting now.'"
             }
           ]
         },
@@ -2767,6 +2777,28 @@
               "spec": "tasks/BACKLOG.md OWNER MORNING TRIPLE item (1), owner verbatim 2026-07-29: \"The zooming and size of the characters in town... Things still feel small in Town. I would like to see the inhabitants close up.\" — and a friend asked for zoom on 2026-07-24. Absence verified by the attended session at source: no wheel/pinch/distance handling in TownScene.ts.",
               "registeredBy": "s1203 fire (Goal Registration Law debt deferred to this fire by b70e410d)",
               "note_s1203": "Registered beside town-store-collider and wardrobe-preview because all three are owner-walk town fixes on the same surface. THE ACCEPTANCE TEST IS THE OWNER'S EYE, NOT THE CLAMP NUMBERS: the master's scope 1 fixes the close clamp only as \"a townsfolk sprite reads ~2.5-3x today's size\" and the default framing as \"one notch CLOSER\", both of which are judgements — so the drain must carry the min/default/max screenshots (artifacts/town-zoom/) and expect a possible owner re-tune rather than treating a green spec as the verdict. Watch for the sprite-crispness clause (no blurry magnification) — it is the one requirement a passing e2e will not notice."
+            },
+            {
+              "id": "drill-yard-separation",
+              "title": "F-BW-5: the drill yard leaves the contract list — own TRAINING GROUND board section, distinct dress, 'Enter the yard' button, in-run DRILL YARD tag and a no-stakes pause line",
+              "taskFile": "lane-drill-yard-separation.md",
+              "lane": "lane-a",
+              "status": "building",
+              "attempts": 1,
+              "authoredBy": "attended session 2026-08-03 12:37 (owner verbatim in master)",
+              "registeredBy": "s1432 fire — the BACKLOG row 2828 recorded 'GOAL-LEAF DEBT next fire' and this is that fire",
+              "drainNotes": "LEAF DEBT DISCHARGED AT s1432, NOT AT DISPATCH. Registered while the lane-a runner was still LIVE on it (run log 20260803-123732, growing at 13:09), so this leaf is bookkeeping ahead of a drain, not a drain record — status 'building' is the honest word and the next fire must re-read the run log rather than trust it. Owner origin: 2026-08-03 playtest, accidental-launch finding. Placed under playtest-fixes beside town-zoom/town-store-collider/wardrobe-preview because it is an owner-walk corrective on the board surface. NOTE FOR THE DRAIN: the sibling F-BW-7 leaf sits under world-terrain instead, beside its own sibling F-BW-4 — the same 2026-08-03 owner batch is deliberately SPLIT across two subgoals by mechanism, not by batch, so do not conclude a leaf is missing when you find only two of the three here."
+            },
+            {
+              "id": "territory-ring-to-kit",
+              "title": "F-BW-6: the T1 territory ring becomes a placeable KIT — the earned reward converts to N free anywhere-placements through the normal economy, expiring at run end, auto-repair tax gone by construction",
+              "taskFile": "lane-territory-ring-to-kit.md",
+              "lane": "lane-d",
+              "status": "building",
+              "attempts": 1,
+              "authoredBy": "attended session 2026-08-03 12:41 (owner verbatim in master)",
+              "registeredBy": "s1432 fire — the BACKLOG row 2829 recorded 'GOAL-LEAF DEBT next fire' and this is that fire",
+              "drainNotes": "LEAF DEBT DISCHARGED AT s1432, NOT AT DISPATCH. Registered while the lane-d runner was still LIVE on it (run log 20260803-124117, growing at 13:09) — status 'building' is bookkeeping ahead of a drain, so re-read the run log rather than trusting this row. Owner origin: 2026-08-03 playtest, position-freedom ruling; the diagnosis in the BACKLOG row is that the walls are the T1 TERRITORY META REWARD auto-ringed at start (Game ~6104), NOT map data — they appeared because his fresh public ledger had just earned T1. ⚠️ AN OWNER FORK IS EXPLICITLY LEFT OPEN AND IS NOT YET RULED: the BACKLOG row records 'if the owner prefers plain removal over the kit, one word flips the master.' That word has not been given. This is NOT a status:'blocked' leaf — the kit implementation is the ratified default and is proceeding — but a drain must not read a green battery as the owner having chosen the kit over plain removal. Surface the fork in the drain, do not close it."
             }
           ]
         }
