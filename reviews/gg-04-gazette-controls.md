@@ -126,9 +126,26 @@ is to give the table touch codes for those actions (or a parallel touch-label ta
 consumes), not to widen the copy. Laddered, not blocking: the panel is correct as shipped.
 
 **F-1427-3 — a spec went red in a 4-file batch and green alone on both trees (non-blocking,
-instrument).** §3.1 settled *worker count*; this is *batch size*, which it does not address. The
-practical rule for gates: attribute a red only after the spec runs alone, and never let a batch red
-stand as a merge verdict without a control.
+instrument).** §3.1 settled *worker count*; this is *batch size*, which it does not address.
+
+⚠️ **I nearly filed this with an uncontrolled confound, and the check is the point.** The s1138
+lesson on this class says isolation moves *two* variables at once: your own worker count says
+nothing about a **lane runner** on the same box. So I went back and timed the arms against the run
+logs rather than assuming:
+
+| Arm | When | `lane-a` (finished **09:51:08**) | `lane-d` (finished **10:10:13**) |
+|---|---|---|---|
+| 4-file batch — **RED** | ~09:56–10:00 | done | **LIVE** |
+| tp02 alone, clean main — green 6/6 | 10:01:28 | done | **LIVE** |
+| tp02 alone, merged tree — green 6/6 | 10:03:00 | done | **LIVE** |
+
+`lane-d` was live across **all three** arms, so the external contender is held roughly constant and
+**batch size is the term that actually varied**. That is what makes this a finding rather than a
+guess. Residual caveat, stated rather than buried: `lane-d`'s own load profile varies over its run,
+so this is a controlled-enough comparison, not a matched-pair measurement.
+
+The practical rule for gates: attribute a red only after the spec runs alone, never let a batch red
+stand as a merge verdict without a control — **and record what else was running when you took it.**
 
 ---
 
