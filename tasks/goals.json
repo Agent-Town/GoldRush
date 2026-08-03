@@ -2815,6 +2815,17 @@
               "registeredBy": "s1433 fire, same commit as the master (Goal Registration Law)",
               "drainNotes": "DRAINED s1435 in the same merge as its subject slice (af463bd9) — the corrective and the slice it unblocks are one stack on lane/perf. Cure: BuildSystem.setPalisadeKitCredits writes the palisade_kit_granted economy row only when the grant is positive, so a tier-0 run that earned no kit writes no row. Verified by CONTROL, not by assertion: with the guard the lift-condition test passes 2/2 both projects; with the guard removed it fails 2/2.",
               "mergeHash": "af463bd97abf7f1552f0825a2b21d5c6fd6748d2"
+            },
+            {
+              "id": "f1435-1-ring-hints-for-a-ring-that-is-gone",
+              "title": "F-1433-3: the legacy no-controls restore path stops resurrecting territoryRingPresent for a ring the kit design never builds (stale territory_ring_gap hints)",
+              "taskFile": "f1435-1-ring-hints-for-a-ring-that-is-gone.md",
+              "lane": "lane-c",
+              "status": "planned",
+              "attempts": 0,
+              "authoredBy": "s1435 fire (FIRE-AUTHORED, attended review welcome) — corrective for a non-blocking finding of its own F-BW-6 drain (af463bd9)",
+              "registeredBy": "s1435 fire, same commit as the master (Goal Registration Law)",
+              "drainNotes": "NOT YET DISPATCHED, DELIBERATELY. This task is only correct on a lane that CONTAINS the kit merge af463bd97abf7f1552f0825a2b21d5c6fd6748d2: before it, Territory I really did spawn a ring and the legacy default was right; after it, Game.ts only ever assigns the flag false. lane-c was 9 behind main at authoring time, so a refresh-lane lane-c request was filed in the SAME commit. The next fire must prove the refresh landed before the cp: git -C worktrees/lane-c merge-base --is-ancestor af463bd9... HEAD (exit 0 = dispatch lawful, exit 1 = STOP and wait). Finding re-verified against live main by s1435 by READING restoreControls, not inherited from the s1433 review."
             }
           ]
         }
