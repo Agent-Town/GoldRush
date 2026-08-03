@@ -343,6 +343,28 @@ function selfTest() {
   assertComplete(exactExecutions, ['e2e/a.spec.ts:4']);
   assert.throws(() => assertComplete(executions, ['e2e/a.spec.ts:4']), /extras=.*a\.spec\.ts:9/);
   console.log('self-test file:line exact-match arm passed');
+  const sharedLineExecutions = executions.filter(({ subject }) => subject === 'e2e/a.spec.ts:9');
+  assert.throws(() => assertComplete(sharedLineExecutions, ['e2e/a.spec.ts:9']), /executions=4\/2/);
+  console.log('self-test file:line duplicate-count rejection arm passed (executions=4/2)');
+  const summaryRoot = path.join(ROOT, 'logs', 'session-scratch');
+  fs.mkdirSync(summaryRoot, { recursive: true });
+  const summaryDir = fs.mkdtempSync(path.join(summaryRoot, 'concurrency-class-rate-self-test-'));
+  try {
+    writeSummary(summaryDir, {
+      subjects: ['e2e/a.spec.ts'],
+      workers: [1],
+      initialHead: 'self-test',
+      baseURL: 'http://127.0.0.1:5267',
+      runs: [{ cycle: 1, workers: 1, loadavgStart: [0], loadavgEnd: [0], executions }],
+    });
+    const summary = fs.readFileSync(path.join(summaryDir, 'rates.md'), 'utf8');
+    assert.doesNotMatch(summary, /undefined/);
+    assert.match(summary, /\| S1:4 \|/);
+    assert.match(summary, /\| S1:9 \|/);
+  } finally {
+    fs.rmSync(summaryDir, { recursive: true, force: true });
+  }
+  console.log('self-test bare-file summary-label arm passed (S1:4 / S1:9; no undefined)');
   assert.throws(() => assertComplete(executions.filter(({ project }) => project === PROJECTS[0]), ['e2e/a.spec.ts']), /missing=.*mobile-chrome/);
   console.log('self-test incomplete-run rejection arm passed');
   assert.throws(() => parseArgs([
