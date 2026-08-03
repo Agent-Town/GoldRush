@@ -185,6 +185,9 @@ Geometry untouched: **16641 vertices, 32768 triangles**, `boundsMeters`, `meshCo
 | `npm run test:ledger-guards` | **42 tests / 42 pass / 0 fail** (run after the BACKLOG edit) |
 | Console / page errors | **zero** across every board capture (the rig asserts `errors == []`) |
 | Draw calls | 112 → 112 at the dark pool; ±1 elsewhere, i.e. the enemy count |
+| Boot health on the new art | `terrain3dPilotState=ready` · `renderSource=glb` · **landmarks 5** · 32768 triangles / 16641 vertices · zero errors |
+
+**Mistake #10, and a trap I walked into answering it.** *Where does the player see this in a plain boot?* U5 is the ground the player stands on at day, dusk and dawn — the boards are that answer. But my first attempt at the check booted `/?contract=e1-night-shift` **without `?debug`** and cheerfully reported `ready / glb / landmarks 5` for **the-claim**: `?contract=` is debug-gated, so a no-debug URL silently falls back to the default contract, and the terrain counts happen to be identical (both are 128×128 grids). The screenshot is kept, honestly named, at `…/proof/plain-boot-falls-back-to-the-claim.png`. Anyone writing a plain-boot probe for a *specific* contract has to drive the contract UI; a query parameter will lie to them.
 
 ### The reds are pre-existing, and one of them was worth the trouble to prove
 
