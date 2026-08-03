@@ -3049,6 +3049,17 @@
               "authoredBy": "s1452 fire — FIRE-AUTHORED successor to the CORRECT s1439 STOP, attended review welcome",
               "registeredBy": "s1452 fire, same commit as the master (Goal Registration Law)",
               "reason": "AUTHORED s1452. Supersedes nothing: e1-baron-fort-solidity stays stopped and lane-baron-fort-solidity.md must NOT be re-queued unchanged. MECHANISM RE-DERIVED BY READING THE CODE AT AUTHORING TIME, not inherited from the STOP prose: enemies ALREADY receive every registered landmark as a collider (Game.ts passes [...palisadeBlockers, ...heroBlockers()] and heroBlockers() spreads Terrain.landmarkBlockers()), and respond to it with local slide+depenetration in resolveBlocker; but enemy ROUTING asks BuildSystem.palisadeRoute, which iterates this.targets.palisade only — as do its three helpers — so a landmark is structurally invisible to the route graph. A long fort wall is therefore something an enemy can bump into but never plan around, which is exactly the 1,400-fixed-tick stall the s1439 STOP measured. The asymmetry is visible one screen apart in BuildSystem: the collision getter deliberately admits static footprints via blocksRouting !== false, the router does not. Scope: (1) give the route graph a static-blocker source, (2) THEN close the four registry gaps the STOP census measured, (3) prove the stall is gone by a spec shown to FAIL without scope 1 (manufactured red), (4) never-trap + four-face walk probes. CONSTRAINT the master states explicitly: PalisadeRoute.blocker is consumed as a wrecker GNAW TARGET (Enemy.ts route.blocker/isBuildingValid), and a LandmarkBlocker has no hp/family/position — so a static body must yield a waypoint WITHOUT becoming gnawable. Whether enemies may ever damage a landmark fort is an OWNER/CANON question, explicitly OUT OF SCOPE and to be reported rather than decided. All eight pre-flight citation keys were proved to match exactly once on main before dispatch (F-1425-2)."
+            },
+            {
+              "id": "f1453-1-crossings-hygiene",
+              "title": "F-1448-3/-5 + F-1450-2: close three latent crossing traps; F-1448-4 deliberately EXCLUDED as a routing behaviour change on the baseline map (F-1453-1)",
+              "taskFile": "f1453-1-crossings-hygiene.md",
+              "lane": "lane-d",
+              "status": "queued",
+              "attempts": 0,
+              "authoredBy": "s1453 fire — FIRE-AUTHORED from the carried findings of reviews/f1441-2 and reviews/f1448-1, attended review welcome",
+              "registeredBy": "s1453 fire, same commit as the master (Goal Registration Law)",
+              "reason": "AUTHORED s1453. Scope is three inert items (F-1448-5 lazy slide calls, F-1450-2 cache reset seam, F-1448-3 principled fordless speed fallback). F-1448-4 is FIREWALLED OUT: s1453 measured that both reviews justified it with a false premise (they say Twin Banks has no fords; the contract declares tileParams.ford=true with 2 fords AND 2 gravel bars, so fordRanges().length=2 and the bars can never be a routing target there). Curing it would change enemy routing on the very map whose stall census (0 stalls, 70/70 reaching, 202 kills) is the acceptance baseline — that needs its own census, not a hygiene pass. Acceptance is a before/after census with IDENTICAL numbers, because every item is behaviour-neutral by design and a green cannot distinguish correct from did-nothing."
             }
           ]
         }
