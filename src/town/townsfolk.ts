@@ -104,6 +104,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     scale: TOWN_CAST_METROLOGY.elder,
     barkRadius: 5.4,
     fullBody: { sheet: townActorSheets.elder, animated: true },
+    portraitPost: { offset: { x: 2.68, z: 1.55 } },
     e1Barks: ['{town} learns faster when the children ask why.', 'Science is patience written clearly.', 'Bring questions; leave with a plan.'],
   },
   {
@@ -147,6 +148,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     scale: TOWN_CAST_METROLOGY.adult,
     barkRadius: 3.05,
     fullBody: { sheet: townActorSheets.assay_clerk, animated: true },
+    portraitPost: { offset: { x: -2.4, z: 0 } },
     e1Barks: ['Ore talks. My scale makes it honest.', 'Bring the odd bits here before they become trouble.', 'Gold in, proof out. That is the office bargain.'],
   },
   {

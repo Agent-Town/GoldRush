@@ -3,9 +3,21 @@ import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
-import { TOWN_CAST_METROLOGY } from '../src/town/townsfolk';
+import { TOWN_ACTORS, TOWN_CAST_METROLOGY, type TownActorDefinition } from '../src/town/townsfolk';
+import { townBuildings, townPlazaLayout, townPlazaSlot } from '../src/town/townLayout';
 
 const artifactDir = path.resolve('artifacts/cast-metrology');
+const assayArtifactDir = path.resolve('artifacts/town-zoom');
+const MIN_BUILDING_CLEARANCE = 0.3;
+
+test('every authored town actor post clears every visual building footprint', () => {
+  for (const actor of TOWN_ACTORS) {
+    for (const point of actor.loop?.points ?? [actorPost(actor)]) {
+      const nearest = Math.min(...townBuildings.map((building) => visualFootprintClearance(point, building)));
+      expect(nearest, `${actor.id} post (${point.x.toFixed(2)}, ${point.z.toFixed(2)})`).toBeGreaterThanOrEqual(MIN_BUILDING_CLEARANCE);
+    }
+  }
+});
 
 async function bootTown(page: Page): Promise<void> {
   await page.goto('/');
@@ -49,7 +61,17 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
   expect(height('prospector')).toBeCloseTo(TOWN_CAST_METROLOGY.prospector, 2);
   expect(height('preacher')).toBeCloseTo(TOWN_CAST_METROLOGY.tallAdult, 2);
   for (const id of ['schoolteacher', 'assay_clerk'] as const) expect(height(id)).toBeCloseTo(TOWN_CAST_METROLOGY.adult, 2);
-  expect(before.find((actor) => actor.id === 'assay_clerk')?.position).toEqual({ x: 8.35, z: 5.5 });
+  expect(before.find((actor) => actor.id === 'assay_clerk')?.position).toEqual({ x: 7, z: 3.4 });
+  await page.waitForFunction(() => document.querySelector('canvas')?.dataset.town3dPilotLoadedIds?.split(',').includes('assay_office'));
+  await focusAssayOffice(page);
+  await setEvidenceUi(page, true);
+  await mkdir(assayArtifactDir, { recursive: true });
+  await assayShot(page, testInfo.project.name, 'default');
+  await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.camera.setZoom(0.36));
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.camera.framingDistanceScale)).toBeCloseTo(0.36, 2);
+  await assayShot(page, testInfo.project.name, 'close');
+  await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.camera.setZoom(0.85));
+  await setEvidenceUi(page, false);
   const presentations = before
     .filter((actor) => actor.id !== 'prospector')
     .map((actor) => actor.frameKey.replace(/-r\d+c\d+\.png$/, ''));
@@ -85,3 +107,43 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible).every((actor) => actor.loaded && actor.spriteAspect > 0 && actor.spriteAspect <= 1.6))).toBe(true);
   expect(errors).toEqual([]);
 });
+
+function actorPost(actor: TownActorDefinition): { x: number; z: number } {
+  const offset = actor.portraitPost?.offset ?? townPlazaLayout.actorOffsets[actor.id as keyof typeof townPlazaLayout.actorOffsets];
+  const anchor = townBuildings.find((building) => building.id === actor.anchor);
+  return offset && anchor
+    ? { x: anchor.position.x + offset.x, z: anchor.position.z + offset.z }
+    : actor.position;
+}
+
+function visualFootprintClearance(
+  point: { x: number; z: number },
+  building: (typeof townBuildings)[number],
+): number {
+  const approach = townPlazaSlot(building.id).approach;
+  const yaw = Math.atan2(approach.x - building.position.x, approach.z - building.position.z);
+  const dx = point.x - building.position.x;
+  const dz = point.z - building.position.z;
+  const outsideX = Math.abs(Math.cos(yaw) * dx - Math.sin(yaw) * dz) - building.footprint.w / 2;
+  const outsideZ = Math.abs(Math.sin(yaw) * dx + Math.cos(yaw) * dz) - building.footprint.d / 2;
+  return outsideX <= 0 && outsideZ <= 0
+    ? -Math.min(-outsideX, -outsideZ)
+    : Math.hypot(Math.max(0, outsideX), Math.max(0, outsideZ));
+}
+
+async function focusAssayOffice(page: Page): Promise<void> {
+  const target = await page.evaluate(() => innerWidth <= 500 ? { x: 6.4, z: 7.4 } : { x: 4.8, z: 6.2 });
+  await page.evaluate(({ x, z }) => window.__GR_TOWN_DIAGNOSTICS__!.teleport(x, z), target);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.player)).toEqual(target);
+  await page.waitForTimeout(400);
+}
+
+async function setEvidenceUi(page: Page, hidden: boolean): Promise<void> {
+  for (const testId of ['town-approach-prompt', 'world-info-note', 'town-bark-card', 'story-beat-layer']) {
+    await page.getByTestId(testId).evaluate((element, hide) => { element.style.visibility = hide ? 'hidden' : ''; }, hidden);
+  }
+}
+
+async function assayShot(page: Page, project: string, zoom: string): Promise<void> {
+  await page.screenshot({ path: path.join(assayArtifactDir, `${project}-assay-${zoom}.png`) });
+}
