@@ -2497,6 +2497,17 @@
               "title": "Map reconciliation vs plates+chapters (late: 6 milestones; early: 42-shot survey)",
               "status": "merged",
               "mergeHash": "3538ae9ab6cf605ca12af1e5a2aaee983579f01c"
+            },
+            {
+              "id": "pilot-fallback-telemetry",
+              "title": "F-BW-4: silent render demotions learn to speak — one render_demotion beacon per fail-soft path (contract unavailable, load failure, sculpt-water failure, WebGL context loss, runtime tier shed)",
+              "taskFile": "lane-pilot-fallback-telemetry.md",
+              "lane": "lane-b",
+              "status": "merged",
+              "mergeHash": "e49fc4e3f32205809603d670baec1f8d3c3f3f63",
+              "attempts": 1,
+              "authoredBy": "attended session 2026-08-03 11:36",
+              "drainNotes": "REGISTERED RETROACTIVELY BY s1431 — this master reached the runner with NO goal leaf, so drain-block-check returned UNKNOWN (a Goal Registration Law bookkeeping finding, not a clearance). RE-LANDED on fresh main per Mistake #15 rather than merged from lane/m4 (636 behind, standing DO-NOT-RESET). F-1430-2 DISSOLVED UNDER MEASUREMENT: s1430 read this as a 754-line hunk needing an owner hand, having measured the patch against the LANE base; against MAIN the pilot blob is +15/-7, and lane-absorbed-lines reports 14 of 713 added lines absent from main — main had already absorbed 699 of them via the beauty ladder, so the --3way conflict was a diff replayed against a 634-commit stale base, not a disagreement about code. CLASSIFICATION: 3 files LANE-TOUCHED (clean copy); the pilot copied clean after verifying every deletion is the same line extended (zero main content removed, beauty ladder intact); Game.ts GRAFTED 2 lines only, because a wholesale copy there would have reverted 9 main commits — anchors asserted unique before writing, and the graft landed at :4607 on main vs :4584 on the lane. No predecessor touches any of the five files, and the owner-gated 7c4f132f is disjoint, so lane-b disputed leaf is untouched and no owner word was owed. GATES (detached worktree gate-s1431, every playwright --workers=1): tsc 0, build 1.85s, own spec plus 3 grep-derived adjacent suites 26 passed / 2 failed — and BOTH reds proven pre-existing by a same-batch control run on clean main, which was 3 failed / 23 passed. The merged tree carries strictly FEWER failures than the tree it merged into. My prior said the slice caused the tl-01 red (deterministic, both projects, name matching the subject exactly) and the control refuted it. F-1431-3 (tl-01:229 red on main at the gameplay-progression assertion :236, claim-secured never visible) and F-1431-4 (terrain3d-default:81 p95 budget red on main, green here) filed. Review: reviews/lane-pilot-fallback-telemetry.md"
             }
           ]
         },
