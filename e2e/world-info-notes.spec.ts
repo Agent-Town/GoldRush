@@ -233,7 +233,7 @@ test('building notes sit with existing assay and upgrade prompts', async ({ page
   assertNoErrors(errors);
 });
 
-test('contract-specific world notes cover Dry Gulch water, territory gaps, and Night Shift lanterns', async ({ page }) => {
+test('contract-specific world notes cover Dry Gulch water without a phantom territory ring', async ({ page }) => {
   const errors = await openGame(
     page,
     '?debug&contract=e1-dry-gulch&timescale=4&nowaves&nolevel&nokill&seed=world-info-dry-gulch',
@@ -258,7 +258,10 @@ test('contract-specific world notes cover Dry Gulch water, territory gaps, and N
     { gapHalf: Balance.meta.territoryRingGapHalfWidth, depth: Balance.palisade.depth, width: Balance.palisade.width },
   );
   await teleport(page, gap.x, gap.z);
-  await expectNote(page, 'territory_ring_gap', 'Enemies funnel here');
+  await expect(page.getByTestId('world-info-note')).not.toHaveAttribute('data-object-class', 'territory_ring_gap');
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisadeKitCredits)).resolves.toBe(
+    Balance.meta.territoryRing.length,
+  );
 
   assertNoErrors(errors);
 });

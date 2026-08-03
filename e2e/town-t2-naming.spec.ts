@@ -1,5 +1,6 @@
 import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { Balance } from '../src/game/Balance';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 
@@ -126,7 +127,9 @@ test('fresh town naming persists, renames, and appears in recap and run ledger',
   }, profileDataKey('robin', META_PROGRESS_KEY));
   await page.goto('/?debug&timescale=3&nowaves&nolevel&seed=town-t2-recap');
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
-  await expect(page.getByTestId('run-meta-recap')).toHaveText('Quartz Hill remembers: palisade ring (Territory III)');
+  await expect(page.getByTestId('run-meta-recap')).toHaveText(
+    `Quartz Hill remembers: palisade kit (Territory III; ${Balance.meta.territoryRing.length} free)`,
+  );
   await shot(page, testInfo, 'named-recap');
 
   await forceDeath(page);

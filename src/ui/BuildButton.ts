@@ -69,7 +69,7 @@ export class BuildButton {
     const menuSignature = snapshot.buildables
       .map(
         (item) =>
-          `${item.id}:${item.cost}:${item.count}:${item.maxCount}:${item.canAfford}:${item.selected}:${item.iconSlot}:${item.portraitSlug ?? ''}:${item.blurb ?? ''}:${item.tierLine ?? ''}`,
+          `${item.id}:${item.cost}:${item.count}:${item.maxCount}:${item.canAfford}:${item.selected}:${item.iconSlot}:${item.portraitSlug ?? ''}:${item.blurb ?? ''}:${item.tierLine ?? ''}:${item.kitCredits ?? 0}`,
       )
       .join('|');
     if (menuSignature !== this.menuSignature) {
@@ -96,7 +96,7 @@ export class BuildButton {
             <span class="hud-build-tile__copy">
               <span class="hud-build-tile__key">${index + 1}</span>
               <span class="hud-build-tile__name">${this.escape(item.displayName)}</span>
-              <span class="hud-build-tile__meta">${item.count}/${item.maxCount} - ${item.cost}g</span>
+              <span class="hud-build-tile__meta">${item.count}/${item.maxCount} - ${item.cost}g${item.kitCredits ? `<br>Palisade kit: ${item.kitCredits} free` : ''}</span>
             </span>
           </button>
         `,

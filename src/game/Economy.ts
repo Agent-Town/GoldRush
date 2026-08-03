@@ -30,7 +30,8 @@ export type EconomyEvent = EconomyEventBase &
     | { type: 'gold_granted'; source: 'demolish'; amount: number; buildCost?: number }
     | { type: 'gold_stolen'; amount: number }
     | { type: 'gold_reclaimed'; amount: number; actor?: EconomyActor }
-    | { type: 'gold_spent'; sink: BuildSink; amount: number }
+    | { type: 'palisade_kit_granted'; amount: number }
+    | { type: 'gold_spent'; sink: BuildSink; amount: number; kit?: true }
     | { type: 'resource_granted'; resource: Exclude<EconomyResourceId, 'gold'>; source: 'debug' | 'exchange'; amount: number; actor?: EconomyActor }
     | { type: 'resource_spent'; resource: Exclude<EconomyResourceId, 'gold'>; sink: string; amount: number; actor?: EconomyActor }
     | { type: 'resource_capped'; resource: Exclude<EconomyResourceId, 'gold'>; amount: 0 }
@@ -85,6 +86,8 @@ export function reduce(state: EconomyState, event: EconomyEvent): EconomyState {
       return withGold(state, state.gold - event.amount);
     case 'gold_reclaimed':
       return withGold(state, state.gold + event.amount);
+    case 'palisade_kit_granted':
+      return state;
     case 'gold_spent':
       return withGold(state, state.gold - event.amount);
     case 'resource_granted':

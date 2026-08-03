@@ -2,7 +2,6 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { Balance } from '../src/game/Balance';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
@@ -24,7 +23,7 @@ type FormationMetrics = {
 };
 
 const ARTIFACT_DIR = path.resolve('artifacts/048');
-const META_WITH_RING = { version: 1, tracks: { territory: 1, science: 0, hero: 0, agent: 0 } };
+const META_WITH_KIT = { version: 1, tracks: { territory: 1, science: 0, hero: 0, agent: 0 } };
 const QUERY = '?debug&timescale=6&nowaves&nolevel&nokill&nopause&nosteal&nowreck';
 
 function collectErrors(page: Page): ErrorBucket {
@@ -42,7 +41,7 @@ async function installMetaSwitch(page: Page): Promise<void> {
       localStorage.clear();
       localStorage.setItem(key, JSON.stringify(meta));
     },
-    { key: META_PROGRESS_KEY, meta: META_WITH_RING },
+    { key: META_PROGRESS_KEY, meta: META_WITH_KIT },
   );
 }
 
@@ -50,13 +49,7 @@ async function openGame(page: Page, seed: string): Promise<ErrorBucket> {
   const errors = collectErrors(page);
   await page.goto(`${QUERY}&seed=${seed}`);
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 4);
-  await expect
-    .poll(
-      () =>
-        page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.filter((entry) => entry.id === 'palisade').length ?? 0),
-      { timeout: 8_000 },
-    )
-    .toBe(Balance.meta.territoryRing.length);
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisades)).resolves.toBe(0);
   return errors;
 }
 
