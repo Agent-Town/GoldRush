@@ -48,6 +48,13 @@ export type DrillYardDiagnostics = {
     standings: false;
     tapes: false;
   };
+  /**
+   * Filenames whose processed sprite actually loaded and replaced the procedural station.
+   * Empty means the art is DORMANT: the eager glob resolved nothing, `applyStationArt`
+   * returned early, and the player sees placeholder geometry (F-1437-3 — a rename does this
+   * silently). Observable so a plain boot can assert the art is really on screen.
+   */
+  stationArt: string[];
 };
 
 export class DrillYard {
@@ -56,6 +63,7 @@ export class DrillYard {
   private readonly targets: TargetState[];
   private readonly geometries = new Set<THREE.BufferGeometry>();
   private readonly materials = new Set<THREE.Material>();
+  private readonly stationArtLoaded = new Set<string>();
   private readonly textures = new Set<THREE.Texture>();
   private readonly prompt = document.createElement('div');
   private readonly promptTitle = document.createElement('span');
@@ -129,6 +137,7 @@ export class DrillYard {
         standings: false,
         tapes: false,
       },
+      stationArt: [...this.stationArtLoaded].sort(),
     };
   }
 
@@ -368,6 +377,7 @@ export class DrillYard {
       sprite.position.y = height / 2;
       sprite.scale.set(height, height, 1);
       group.add(sprite);
+      this.stationArtLoaded.add(filename);
     });
   }
 
