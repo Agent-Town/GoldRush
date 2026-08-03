@@ -24,7 +24,7 @@ stale lane and **not** debris.
    ⓘ This file is on **main**, not in your lane. Read it with
    `git show main:reviews/f1441-2-crossings-keep-their-z.md`.
 2. `src/entities/Enemy.ts` in your lane — specifically the module-scope constants around `:143-155`.
-3. `e2e/gt-05-water-depth.spec.ts:181` — the failing test, and `:209`, the failing assertion.
+3. `e2e/gt-05-water-depth.spec.ts:181` ("deep water blocks hero and enemy through the shared resolver") — the failing test, and `e2e/gt-05-water-depth.spec.ts:209` ("deep water blocks hero and enemy through the shared resolver"), the failing assertion inside it.
 
 ## Pre-flight
 
@@ -50,7 +50,8 @@ All three must print **1**. The first two are **absent from main** (verified s14
 ## Why (F-1448-1, measured s1448 — not inferred)
 
 The f1441-2 slice fixes what it set out to fix: its acceptance criterion
-`e2e/e1-twin-banks.spec.ts:213` reads `deepSamples === 0` on both projects, `gr-sim` is 9/9, and the
+`e2e/e1-twin-banks.spec.ts:213` ("routes enemies through both west and east fords") reads
+`deepSamples === 0` on both projects, `gr-sim` is 9/9, and the
 F-BW-10 witness `never-trap.spec.ts` is 8/8. **It was withheld for one reason only.**
 
 Under an identical 6-spec / 58-test / `--workers=1` battery, in the same shell within the same hour:
@@ -62,7 +63,7 @@ Under an identical 6-spec / 58-test / `--workers=1` battery, in the same shell w
 | clean main | 8 | **GREEN** |
 
 The other eight reds are identical by name on both arms and are pre-existing. The failing assertion
-is `e2e/gt-05-water-depth.spec.ts:209`:
+is `e2e/gt-05-water-depth.spec.ts:209` ("deep water blocks hero and enemy through the shared resolver"):
 
 ```
 expect(heroSample.sample).toMatchObject({ zone: 'ford', waterClass: 'wade' })
