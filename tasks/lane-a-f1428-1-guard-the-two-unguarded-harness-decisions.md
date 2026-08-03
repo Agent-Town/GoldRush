@@ -51,7 +51,8 @@ SCOPE (each item separately checkable):
 
 1. **ADD A SELF-TEST ARM THAT FAILS WHEN `exactCountMismatch` IS DELETED.** Construct the case it
    defends: a report whose fixture contains **two distinct tests sharing one line**, with the
-   subject qualified to that line (`e2e/a.spec.ts:9`). Assert `assertComplete` **throws**, and
+   subject qualified to that shared line (in the synthetic `a.spec.ts` fixture, line 9 — a
+   self-test fixture string, not a real spec). Assert `assertComplete` **throws**, and
    assert on the `executions=4/2` shape so the arm names *why* it threw rather than merely that it
    did.
    ⚠️ **The existing `file:line` arm does NOT cover this** — it throws on `extras`, a different
