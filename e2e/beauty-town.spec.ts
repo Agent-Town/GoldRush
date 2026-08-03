@@ -53,6 +53,7 @@ test('the day town boots with ground contact, wear and parcel dressing — and n
     lit: false,
     fixtureColor: '#b97a3d',
     coolWhiteEmissiveFixtures: 0,
+    uninspectableFixtures: 0,
     flickerScale: 1,
   });
 
@@ -86,6 +87,7 @@ test('?townDusk reaches the town from a plain URL and lights windows, strings an
     fixtureColor: '#ffb45c',
     windowColor: '#ffb45c',
     coolWhiteEmissiveFixtures: 0,
+    uninspectableFixtures: 0,
     flickerDepth: 0.055,
   });
   const flicker = await page.evaluate(async () => {

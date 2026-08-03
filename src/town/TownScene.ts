@@ -349,6 +349,7 @@ export type TownDiagnostics = {
       windowColor: string;
       pointColor: string;
       coolWhiteEmissiveFixtures: number;
+      uninspectableFixtures: number;
       flickerDepth: number;
       flickerScale: number;
     };
@@ -2543,9 +2544,13 @@ export class TownScene {
     const fixtures = ['TownPropLanternGlow', 'TownLanternStringBeads']
       .map((name) => this.scene.getObjectByName(name) as THREE.Mesh | undefined)
       .filter((fixture): fixture is THREE.Mesh => !!fixture);
+    let uninspectableFixtures = 0;
     const coolWhiteEmissiveFixtures = fixtures.filter((fixture) => {
       const color = (fixture.material as THREE.Material & { color?: THREE.Color }).color;
-      if (!color) throw new Error(`${fixture.name} light fixture material has no color`);
+      if (!color) {
+        uninspectableFixtures += 1;
+        return false;
+      }
       const hsl = { h: 0, s: 0, l: 0 };
       color.getHSL(hsl);
       return hsl.s < 0.25 && hsl.l > 0.65;
@@ -2558,6 +2563,7 @@ export class TownScene {
       windowColor: accent.windowLight,
       pointColor: accent.pointLight,
       coolWhiteEmissiveFixtures,
+      uninspectableFixtures,
       flickerDepth: accent.flickerDepth,
       flickerScale: this.townLightFlickerScale(),
     };
