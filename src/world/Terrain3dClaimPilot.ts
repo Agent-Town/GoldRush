@@ -77,7 +77,7 @@ import { createSculptWater, type SculptWater } from './Water';
 import { createSunMotes, type SunMotes } from './SunMotes';
 import { installVisualHeightSource, waterSources } from './Terrain';
 import { createSpringPondSurface, type SpringPondSurface } from './Water';
-import { createFordSheet, createWaterRibbon, updateWaterMaterial } from './Water';
+import { createFordSheet, createWaterConfluence, createWaterRibbon, updateWaterMaterial } from './Water';
 
 type Contract = {
   tileId: string;
@@ -203,11 +203,48 @@ export async function contractPrefetchUrls(contractId: string): Promise<string[]
 // same table `build_twin_banks_braid.py` cut the relief from, so the water can only ever sit where
 // the sculpt is already below the water plane. Adopting that mask as SIM truth is a separate,
 // owner-gated decision (F-OP5-1): nothing here touches band classification, fords or crossings.
-type ChannelDressing = { depth: 'deep' | 'shallow'; glints?: Array<{ x: number; z: number }>; headFade: number; tailFade: number };
-const CONTRACT_CHANNEL_WATER: Record<string, { surfaceLift: number; edgeBleed: number; fordDepth?: number; channels: Record<string, ChannelDressing> }> = {
+type ChannelDressing = {
+  depth: 'deep' | 'shallow';
+  glints?: Array<{ x: number; z: number }>;
+  headInset: number;
+  tailInset: number;
+  headFade: number;
+  tailFade: number;
+};
+const CONTRACT_CHANNEL_WATER: Record<string, {
+  surfaceLift: number;
+  edgeBleed: number;
+  bed: { deepMeters: number; shoreMeters: number };
+  confluences: Array<{ points: Array<{ x: number; z: number; halfWidth: number; alpha: number }> }>;
+  fordDepth?: number;
+  channels: Record<string, ChannelDressing>;
+}> = {
   'e1-twin-banks': {
     surfaceLift: 0.012,
-    edgeBleed: 0.22,
+    // Geometry-only overdraw: the spline can sit 0.21 m inside the piecewise-linear cut at a
+    // corner. The sculpt's depth buffer still clips the visible shoreline to the 1.5 m mask.
+    edgeBleed: 0.45,
+    bed: { deepMeters: 0.52, shoreMeters: 0.035 },
+    confluences: [
+      { points: [
+        { x: -34, z: 0, halfWidth: 1.9, alpha: 0 },
+        { x: -32, z: 0, halfWidth: 1.75, alpha: 0.58 },
+        { x: -30.5, z: 0, halfWidth: 1.6, alpha: 1 },
+        { x: -28, z: 0, halfWidth: 1.5, alpha: 1 },
+        { x: -26.5, z: 0, halfWidth: 1.85, alpha: 1 },
+        { x: -25.2, z: 0, halfWidth: 2.25, alpha: 0.62 },
+        { x: -23.8, z: 0, halfWidth: 2.5, alpha: 0 },
+      ] },
+      { points: [
+        { x: 23.8, z: 0, halfWidth: 2.5, alpha: 0 },
+        { x: 25.2, z: 0, halfWidth: 2.25, alpha: 0.62 },
+        { x: 26.5, z: 0, halfWidth: 1.85, alpha: 1 },
+        { x: 28, z: 0, halfWidth: 1.5, alpha: 1 },
+        { x: 30.5, z: 0, halfWidth: 1.6, alpha: 1 },
+        { x: 32, z: 0, halfWidth: 1.75, alpha: 0.58 },
+        { x: 34, z: 0, halfWidth: 1.9, alpha: 0 },
+      ] },
+    ],
     // Ford depth as a fraction of the wade..deep ramp: a pan a hero walks through, not a channel.
     fordDepth: 0.06,
     channels: {
@@ -218,10 +255,12 @@ const CONTRACT_CHANNEL_WATER: Record<string, { surfaceLift: number; edgeBleed: n
       'north-channel': {
         depth: 'deep',
         glints: [{ x: -19.5, z: 2.43 }, { x: -6.2, z: 2.89 }, { x: 8.1, z: 3.16 }, { x: 19.8, z: 2.34 }],
-        headFade: 3.2,
-        tailFade: 2.6,
+        headInset: 2.4,
+        tailInset: 2.4,
+        headFade: 2,
+        tailFade: 2,
       },
-      'south-channel': { depth: 'shallow', headFade: 3.2, tailFade: 2.6 },
+      'south-channel': { depth: 'shallow', headInset: 2.4, tailInset: 2.4, headFade: 2, tailFade: 2 },
     },
   },
 };
@@ -872,7 +911,7 @@ function hidePaintedRelief(host: Host): HiddenRelief[] {
   return hidden;
 }
 
-function createChannelWater(contractId: string, contract: Contract): THREE.Group | undefined {
+function createChannelWater(contractId: string, contract: Contract, heightAt: (x: number, z: number) => number): THREE.Group | undefined {
   const dressing = CONTRACT_CHANNEL_WATER[contractId];
   const regions = contract.maskTruth?.waterMask?.regions ?? [];
   if (!dressing || regions.length === 0) return undefined;
@@ -902,10 +941,19 @@ function createChannelWater(contractId: string, contract: Contract): THREE.Group
       // ramp, so the contract's north-deeper-than-south ORDER reads as colour and foam.
       depth: channel.depth === 'deep' ? deep : wade + (deep - wade) * 0.34,
       glints: channel.glints ?? [],
+      headInset: channel.headInset,
+      tailInset: channel.tailInset,
       headFade: channel.headFade,
       tailFade: channel.tailFade,
+      bed: { heightAt, ...dressing.bed },
     }));
   }
+  group.add(createWaterConfluence({
+    name: 'Terrain3dChannelWater.confluences',
+    paths: dressing.confluences.map((confluence) => confluence.points),
+    surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift + 0.001,
+    depth: wade + (deep - wade) * 0.58,
+  }));
   // THE CROSSINGS READ WET (beauty U2's affordance half). Both fords are cut below the water plane
   // across an 11 m band while only a 3.4 m ribbon crosses them, so the pans rendered as brown
   // gravel with a stripe of river through it and the pressure board showed enemies wading dry
@@ -1114,7 +1162,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds);
-      const nextChannelWater = createChannelWater(host.contractId, selected.contract);
+      const nextChannelWater = createChannelWater(host.contractId, selected.contract, heightAt);
       terrain = nextTerrain;
       panorama = nextPanorama;
       skirt = nextSkirt;

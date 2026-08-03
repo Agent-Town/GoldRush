@@ -22,6 +22,10 @@ const QUERY = '?debug&contract=e1-twin-banks&timescale=1&nolevel&nowaves&nokill&
 const RUN_CAMERA = { x: 0, z: 12 };
 const WEST_FORD = { x: -16, z: 6 };
 const PLAIT = { x: -7.5, z: 4.4 };
+const WEST_END = { x: -25, z: 0 };
+const EAST_END = { x: 25, z: 0 };
+const WEST_END_PROBE = { x: -29, z: 6 };
+const EAST_END_PROBE = { x: 29, z: 6 };
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.clear());
@@ -167,6 +171,14 @@ test('twin banks beauty board: boot, braid run camera, ford, plait, overview', a
   await page.setViewportSize(viewport);
   await page.waitForTimeout(400);
 
+  // SHOTS 7/8 — both places where the braid leaves the tile. These used to be triangular dead
+  // stops surrounded by the near-black sculpt bed; the shipped camera must read a continuing
+  // channel at desktop and 390px, not a river cut off by the map boundary.
+  await poseAt(page, WEST_END.x, WEST_END.z);
+  await shot(page, testInfo, '7-west-end');
+  await poseAt(page, EAST_END.x, EAST_END.z);
+  await shot(page, testInfo, '8-east-end');
+
   const bootPerf = await perf(page);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await writeFile(
@@ -195,8 +207,8 @@ test('the beauty pass pays its frame budget, measured against its own build', as
     path.join(ARTIFACT_DIR, `perf-ab-${testInfo.project.name}.json`),
     `${JSON.stringify({ stage: STAGE, project: testInfo.project.name, without, with: withWater }, null, 2)}\n`,
   );
-  // Exact and deterministic: two channel ribbons and one sheet over both ford pans.
-  expect(withWater.calls - without.calls).toBe(3);
+  // Exact and deterministic: two channel ribbons, one shared confluence, and one ford sheet.
+  expect(withWater.calls - without.calls).toBe(4);
   expect(withWater.triangles).toBeGreaterThan(without.triangles);
   // p95 is a worst-5%-of-180-frames sample and swings several ms between identical runs, so the
   // spec guards a generous ceiling and the review reports the measured pair.
@@ -280,7 +292,7 @@ test('twin banks beauty board: west ford under pressure', async ({ page }, testI
   expectClean(errors);
 });
 
-test('the braid renders living water without touching the sculpt contract or the frame budget', async ({ page }) => {
+test('the braid renders living water without touching the sculpt contract or the frame budget', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);
   await boot(page);
@@ -344,6 +356,63 @@ test('the braid renders living water without touching the sculpt contract or the
     expect(reading.screen.inView, JSON.stringify(reading)).toBe(true);
     // Water is cool: green leads and blue is not crushed. The dry braid bed measured
     // 33,21,10 and 17,13,8 at these very points on the BEFORE board.
+    expect(reading.rgb[1], JSON.stringify(reading)).toBeGreaterThan(reading.rgb[0]);
+    expect(reading.rgb[2] * 2, JSON.stringify(reading)).toBeGreaterThan(reading.rgb[0]);
+  }
+
+  // The original six points catch a zero-width ribbon, but not the defects the owner saw at the
+  // tile edges: both branches ended in a mitred wedge and left the black sculpt bed exposed. Probe
+  // each shared mouth, its continuation, and both former void flanks from an end-local camera.
+  const endReadings: Array<{ label: string; x: number; z: number; rgb: [number, number, number] }> = [];
+  for (const end of [
+    {
+      camera: WEST_END_PROBE,
+      probes: [
+        { label: 'west-junction', x: -27, z: 0 },
+        { label: 'west-continuation', x: -31, z: 0 },
+        { label: 'west-void-north', x: -29, z: 1.1 },
+        { label: 'west-void-south', x: -29, z: -1.1 },
+      ],
+    },
+    {
+      camera: EAST_END_PROBE,
+      probes: [
+        { label: 'east-junction', x: 27, z: 0 },
+        { label: 'east-continuation', x: 31, z: 0 },
+        { label: 'east-void-north', x: 29, z: 1.1 },
+        { label: 'east-void-south', x: 29, z: -1.1 },
+      ],
+    },
+  ] as const) {
+    await poseAt(page, end.camera.x, end.camera.z);
+    const projected = await page.evaluate((points) => points.map((point) => ({
+      ...point,
+      screen: window.__GR_TEST__!.screenPoint(point.x, point.z, 0.037),
+    })), end.probes);
+    const endImage = PNG.sync.read(await page.screenshot());
+    for (const probe of projected) {
+      expect(probe.screen.inView, JSON.stringify(probe)).toBe(true);
+      const centerX = Math.round((probe.screen.x * endImage.width) / viewport.width);
+      const centerY = Math.round((probe.screen.y * endImage.height) / viewport.height);
+      const rgb: [number, number, number] = [0, 0, 0];
+      for (let y = centerY - 1; y <= centerY + 1; y += 1) {
+        for (let x = centerX - 1; x <= centerX + 1; x += 1) {
+          const offset = (y * endImage.width + x) * 4;
+          rgb[0] += endImage.data[offset]! / 9;
+          rgb[1] += endImage.data[offset + 1]! / 9;
+          rgb[2] += endImage.data[offset + 2]! / 9;
+        }
+      }
+      endReadings.push({ label: probe.label, x: probe.x, z: probe.z, rgb: rgb.map(Math.round) as [number, number, number] });
+    }
+  }
+  await mkdir(ARTIFACT_DIR, { recursive: true });
+  await writeFile(
+    path.join(ARTIFACT_DIR, `water-probes-${testInfo.project.name}.json`),
+    `${JSON.stringify({ stage: STAGE, center: readings, ends: endReadings }, null, 2)}\n`,
+  );
+  for (const reading of endReadings) {
+    expect(reading.rgb[0] + reading.rgb[1] + reading.rgb[2], JSON.stringify(reading)).toBeGreaterThan(115);
     expect(reading.rgb[1], JSON.stringify(reading)).toBeGreaterThan(reading.rgb[0]);
     expect(reading.rgb[2] * 2, JSON.stringify(reading)).toBeGreaterThan(reading.rgb[0]);
   }

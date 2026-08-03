@@ -66,6 +66,11 @@ type WaterMaterialConfig = {
   color?: string;
   /** Surface opacity. Lower lets a sculpted bed's own darkness ground the water. */
   opacity?: number;
+  /** Blend weight for the procedural canvas map. Narrow ribbons set this to zero: its six fixed
+   * horizontal strokes become metre-wide bands when squeezed across a three-metre channel. */
+  textureBlend?: number;
+  /** Multiplies the sine-ripple contribution without changing flow speed. */
+  rippleStrength?: number;
   /**
    * Optional baked bed-depth map (red channel, 0..1 == 0..deepMeters below the
    * surface). Present only for sculpted channels: the painted river floats over
@@ -115,6 +120,8 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     config.fadeStart.toFixed(3),
     config.lengthHalf.toFixed(3),
     config.anchors.map((anchor) => `${anchor.x.toFixed(2)},${anchor.z.toFixed(2)}`).join('_') || 'noglints',
+    `texture${(config.textureBlend ?? 0.12).toFixed(3)}`,
+    `ripple${(config.rippleStrength ?? 1).toFixed(2)}`,
     config.bedDepth ? `bed${config.bedDepth.deepMeters.toFixed(3)}_${config.bedDepth.shoreMeters.toFixed(3)}` : 'nobed',
   ].join('-');
   material.onBeforeCompile = (shader) => {
@@ -208,7 +215,7 @@ ${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * wa
   depth = mix(clamp(bedMetres / waterBedDeep, 0.0, 1.0), depth, fordBand);
   bedShore = max(smoothstep(0.0, waterBedShore, bedMetres), fordBand);` : ''}
   float rippleFreq = mix(1.05, 2.45, lengthNoise);
-  float rippleAmp = mix(0.06, 0.17, crossNoise);
+  float rippleAmp = mix(0.06, 0.17, crossNoise) * ${(config.rippleStrength ?? 1).toFixed(2)};
   float ripple = sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise)) * 0.5 + 0.5;
   float fineRipple = 0.0;
   if (waterQuality > 0.7) {
@@ -224,17 +231,17 @@ ${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * wa
   vec3 waterColor = mix(shallow, deep, depth);
   waterColor = mix(waterColor, mid, ripple * rippleAmp * waterQuality);
   waterColor = mix(waterColor, ford, fordBand * 0.72);
-  waterColor += vec3(0.08, 0.10, 0.08) * fineRipple * waterQuality * (1.0 - fordBand) * 0.22;
+  waterColor += vec3(0.08, 0.10, 0.08) * fineRipple * waterQuality * (1.0 - fordBand) * 0.22 * ${(config.rippleStrength ?? 1).toFixed(2)};
   waterColor = mix(waterColor, vec3(0.92, 0.84, 0.62), bankFoam * 0.58);
   waterColor += vec3(1.0, 0.72, 0.20) * waterGoldGlints(vWaterWorld) * 0.42;
-  waterColor = mix(waterColor, baseTexel.rgb, 0.12);
+  waterColor = mix(waterColor, baseTexel.rgb, ${(config.textureBlend ?? 0.12).toFixed(3)});
 ${config.bedDepth ? `  // Sculpt-only. The declared band's foam line sits where the SIM says the bank is;
   // over a carved channel the real edge is wherever the bed comes up, so foam is
   // driven by measured depth. The ripple is also lifted: at the run camera the
   // surface is seen almost face-on, where a flat diffuse sheet reads as glass.
-  float shoreFoam = (1.0 - smoothstep(0.02, 0.26, bedMetres)) * foamNoise * (0.45 + waterQuality * 0.55);
+  float shoreFoam = (1.0 - smoothstep(waterBedShore * 0.125, waterBedShore * 1.625, bedMetres)) * foamNoise * (0.45 + waterQuality * 0.55);
   waterColor = mix(waterColor, vec3(0.94, 0.88, 0.70), shoreFoam * 0.5 * (1.0 - fordBand));
-  waterColor += vec3(0.10, 0.11, 0.08) * pow(ripple, 2.0) * waterQuality * (1.0 - fordBand);` : ''}
+  waterColor += vec3(0.10, 0.11, 0.08) * pow(ripple, 2.0) * waterQuality * (1.0 - fordBand) * ${(config.rippleStrength ?? 1).toFixed(2)};` : ''}
   float alpha = mix(0.74, 0.94, depth);
   alpha = mix(alpha, 0.58, fordBand * 0.72);
   alpha = mix(alpha, 0.72, bankFoam * 0.4);
@@ -826,8 +833,17 @@ export type WaterRibbonConfig = {
   /** Declared depth fed to the shader's wade..deep colour ramp. Render-only. */
   depth: number;
   glints: ReadonlyArray<{ x: number; z: number }>;
+  /** Metres yielded to a shared confluence surface at either endpoint. */
+  headInset?: number;
+  tailInset?: number;
   headFade: number;
   tailFade: number;
+  /** The sculpt's sampled bed, matching the depth treatment used by the Claim river. */
+  bed?: {
+    heightAt: (x: number, z: number) => number;
+    deepMeters: number;
+    shoreMeters: number;
+  };
   name: string;
 };
 
@@ -841,13 +857,33 @@ export type WaterFordConfig = {
 };
 
 
-const RIBBON_EDGE_FADE_METRES = 0.34;
+export type WaterConfluenceConfig = {
+  paths: ReadonlyArray<ReadonlyArray<{ x: number; z: number; halfWidth: number; alpha: number }>>;
+  surfaceY: number;
+  depth: number;
+  name: string;
+};
+
+
+const RIBBON_EDGE_FADE_METRES = 0.18;
+
+
+const CONFLUENCE_EDGE_FADE_METRES = 0.45;
 
 
 const RIBBON_FOAM_INSET_METRES = 0.16;
 
 
 const RIBBON_TINT = { r: 0.74, g: 1.0, b: 1.18 };
+
+
+const RIBBON_SEGMENT_METRES = 0.45;
+
+
+const RIBBON_BED_MAP_WIDTH = 256;
+
+
+const RIBBON_BED_MAP_HEIGHT = 16;
 
 
 /**
@@ -858,7 +894,9 @@ const RIBBON_TINT = { r: 0.74, g: 1.0, b: 1.18 };
  * simulation: band classification, fords and crossings stay engine truth.
  */
 export function createWaterRibbon(config: WaterRibbonConfig): THREE.Mesh {
-  const geometry = ribbonGeometry(config);
+  const samples = ribbonSamples(config);
+  const geometry = ribbonGeometry(config, samples);
+  const bedMap = config.bed ? bakeRibbonBedDepth(samples, config, config.bed) : undefined;
   const shaderUnitsPerMetre = 0.95 / RIBBON_EDGE_FADE_METRES;
   const material = createLivingWaterMaterial({
     ford: false,
@@ -876,23 +914,72 @@ export function createWaterRibbon(config: WaterRibbonConfig): THREE.Mesh {
     wadeDepth: Balance.terrainSim.wadeDepth,
     deepDepth: Balance.terrainSim.deepDepth,
     anchors: [...config.glints],
+    opacity: 1,
+    textureBlend: 0,
+    rippleStrength: 0.34,
+    bedDepth: bedMap && config.bed ? {
+      map: bedMap,
+      deepMeters: config.bed.deepMeters,
+      shoreMeters: config.bed.shoreMeters,
+    } : undefined,
   });
   // Ribbons ride ON a sculpt: the dry plait between the channels has to occlude the far one.
   // That same depth test is the water's safety law — a ribbon may over-reach its mask band and
   // the sculpt clips it at the exact contour where the bed crosses the water plane, so the
   // waterline is the sculpt's own and water can never be painted onto ground the mask calls dry.
   material.depthTest = true;
+  material.depthWrite = false;
   material.vertexColors = true;
   material.color.setRGB(RIBBON_TINT.r, RIBBON_TINT.g, RIBBON_TINT.b, THREE.LinearSRGBColorSpace);
   material.roughness = 0.5;
   // The shared river tiles its flow map 8x along a 64 m band; a 58 m braid channel needs the
   // same ~2.5 m tile or the current smears into one flat sheet. Uniform, not shader source.
   const uniforms = material.userData.waterUniforms as { repeat: THREE.IUniform<number> };
-  uniforms.repeat.value = Math.max(4, Math.round(centrelineLength(config.points) / 2.5));
+  uniforms.repeat.value = Math.max(4, Math.round(samples[samples.length - 1]!.distance / 2.5));
+  if (bedMap) material.addEventListener('dispose', () => bedMap.dispose());
   const mesh = new THREE.Mesh(geometry, material);
   mesh.name = config.name;
   mesh.userData.renderOnly = true;
   mesh.userData.visualHalfWidth = config.halfWidth;
+  mesh.renderOrder = RenderLayers.groundDecals;
+  mesh.receiveShadow = false;
+  mesh.castShadow = false;
+  mesh.frustumCulled = false;
+  return mesh;
+}
+
+
+/** One shared surface where the two braid branches rejoin and leave the tile. */
+export function createWaterConfluence(config: WaterConfluenceConfig): THREE.Mesh {
+  const geometry = confluenceGeometry(config);
+  const maxWidth = Math.max(...config.paths.flatMap((path) => path.map((point) => point.halfWidth)));
+  const shaderUnitsPerMetre = 0.95 / CONFLUENCE_EDGE_FADE_METRES;
+  const material = createLivingWaterMaterial({
+    ford: false,
+    riverHalfWidth: (maxWidth - RIBBON_FOAM_INSET_METRES) * shaderUnitsPerMetre,
+    visualHalfWidth: maxWidth * shaderUnitsPerMetre,
+    lengthHalf: 512,
+    fadeStart: 511,
+    fordHalfWidth: -1,
+    riverDepth: config.depth,
+    fordDepth: config.depth,
+    wadeDepth: Balance.terrainSim.wadeDepth,
+    deepDepth: Balance.terrainSim.deepDepth,
+    anchors: [],
+    depthTest: false,
+    opacity: 1,
+    textureBlend: 0,
+    rippleStrength: 0.26,
+  });
+  material.vertexColors = true;
+  material.depthWrite = false;
+  material.color.setRGB(RIBBON_TINT.r, RIBBON_TINT.g, RIBBON_TINT.b, THREE.LinearSRGBColorSpace);
+  material.roughness = 0.46;
+  const uniforms = material.userData.waterUniforms as { repeat: THREE.IUniform<number> };
+  uniforms.repeat.value = Math.max(4, Math.round(Math.max(...config.paths.map(centrelineLength)) / 2.5));
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.name = config.name;
+  mesh.userData.renderOnly = true;
   mesh.renderOrder = RenderLayers.groundDecals;
   mesh.receiveShadow = false;
   mesh.castShadow = false;
@@ -954,55 +1041,57 @@ export function createFordSheet(config: WaterFordConfig): THREE.Mesh {
 }
 
 
-function ribbonGeometry(config: WaterRibbonConfig): THREE.BufferGeometry {
-  const points = config.points;
-  const directions = points.slice(0, -1).map((point, index) => {
-    const next = points[index + 1]!;
-    const length = Math.hypot(next.x - point.x, next.z - point.z) || 1;
-    return { x: (next.x - point.x) / length, z: (next.z - point.z) / length };
-  });
-  const arcLengths = points.map((point, index) => (index === 0 ? 0 : Math.hypot(point.x - points[index - 1]!.x, point.z - points[index - 1]!.z)));
-  const distances = arcLengths.reduce<number[]>((all, step, index) => [...all, (all[index - 1] ?? 0) + step], []);
-  const total = distances[distances.length - 1] ?? 1;
-  // Mitre offset per joint: m = (nA + nB) / (1 + nA.nB) keeps both edges parallel to their
-  // own segment, which is exactly the band the sculpt's polyline_band region was cut from.
-  const offsets = points.map((_, index) => {
-    const before = directions[Math.max(0, index - 1)]!;
-    const after = directions[Math.min(directions.length - 1, index)]!;
-    const normalBefore = { x: -before.z, z: before.x };
-    const normalAfter = { x: -after.z, z: after.x };
-    const cosine = normalBefore.x * normalAfter.x + normalBefore.z * normalAfter.z;
-    const scale = 1 / Math.max(0.4, 1 + cosine);
-    return { x: (normalBefore.x + normalAfter.x) * scale, z: (normalBefore.z + normalAfter.z) * scale };
-  });
+type RibbonSample = { x: number; z: number; nx: number; nz: number; distance: number };
 
+
+function ribbonSamples(config: WaterRibbonConfig): RibbonSample[] {
+  const controls = config.points.map((point) => ({ ...point }));
+  const divisions = Math.max(2, Math.ceil(centrelineLength(controls) / RIBBON_SEGMENT_METRES));
+  const points = controls.length === 2
+    ? Array.from({ length: divisions + 1 }, (_, index) => ({
+        x: lerp(controls[0]!.x, controls[1]!.x, index / divisions),
+        z: lerp(controls[0]!.z, controls[1]!.z, index / divisions),
+      }))
+    : new THREE.CatmullRomCurve3(
+        controls.map((point) => new THREE.Vector3(point.x, 0, point.z)),
+        false,
+        'centripetal',
+      ).getSpacedPoints(divisions).map((point) => ({ x: point.x, z: point.z }));
+  let distance = 0;
+  const samples = points.map((point, index) => {
+    if (index > 0) distance += Math.hypot(point.x - points[index - 1]!.x, point.z - points[index - 1]!.z);
+    const before = points[Math.max(0, index - 1)]!;
+    const after = points[Math.min(points.length - 1, index + 1)]!;
+    const length = Math.hypot(after.x - before.x, after.z - before.z) || 1;
+    return { x: point.x, z: point.z, nx: -(after.z - before.z) / length, nz: (after.x - before.x) / length, distance };
+  });
+  const end = samples[samples.length - 1]!.distance - (config.tailInset ?? 0);
+  const trimmed = samples.filter((sample) => sample.distance >= (config.headInset ?? 0) && sample.distance <= end);
+  const start = trimmed[0]?.distance ?? 0;
+  return trimmed.map((sample) => ({ ...sample, distance: sample.distance - start }));
+}
+
+
+function ribbonGeometry(config: WaterRibbonConfig, samples: readonly RibbonSample[]): THREE.BufferGeometry {
+  const total = samples[samples.length - 1]!.distance || 1;
   const positions: number[] = [];
   const uvs: number[] = [];
   const colors: number[] = [];
   const indices: number[] = [];
-  const pushRow = (index: number, mix: number): void => {
-    const next = Math.min(points.length - 1, index + 1);
-    const point = { x: lerp(points[index]!.x, points[next]!.x, mix), z: lerp(points[index]!.z, points[next]!.z, mix) };
-    const offset = { x: lerp(offsets[index]!.x, offsets[next]!.x, mix), z: lerp(offsets[index]!.z, offsets[next]!.z, mix) };
-    const distance = lerp(distances[index]!, distances[next]!, mix);
+  for (const sample of samples) {
     const alpha = Math.min(
-      smoothstep(0, Math.max(0.001, config.headFade), distance),
-      smoothstep(0, Math.max(0.001, config.tailFade), total - distance),
+      config.headFade > 0 ? smoothstep(0, config.headFade, sample.distance) : 1,
+      config.tailFade > 0 ? smoothstep(0, config.tailFade, total - sample.distance) : 1,
     );
     for (const side of [1, -1]) {
       const reach = (config.halfWidth + config.edgeBleed) * side;
-      positions.push(point.x + offset.x * reach, config.surfaceY, point.z + offset.z * reach);
-      uvs.push(distance / total, side > 0 ? 0 : 1);
+      positions.push(sample.x + sample.nx * reach, config.surfaceY, sample.z + sample.nz * reach);
+      uvs.push(sample.distance / total, side > 0 ? 0 : 1);
       colors.push(1, 1, 1, alpha);
     }
-  };
-  for (let index = 0; index < points.length - 1; index += 1) {
-    const steps = Math.max(2, Math.ceil(arcLengths[index + 1]! / 1.6));
-    for (let step = 0; step < steps; step += 1) pushRow(index, step / steps);
   }
-  pushRow(points.length - 1, 0);
   // Wound so the face normal is +Y: each row is [+offset, -offset] and the material is single-sided.
-  for (let row = 0; row < positions.length / 6 - 1; row += 1) {
+  for (let row = 0; row < samples.length - 1; row += 1) {
     const a = row * 2;
     indices.push(a, a + 2, a + 1, a + 1, a + 2, a + 3);
   }
@@ -1015,6 +1104,81 @@ function ribbonGeometry(config: WaterRibbonConfig): THREE.BufferGeometry {
   geometry.computeVertexNormals();
   geometry.computeBoundingSphere();
   return geometry;
+}
+
+
+function confluenceGeometry(config: WaterConfluenceConfig): THREE.BufferGeometry {
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const colors: number[] = [];
+  const indices: number[] = [];
+  for (const path of config.paths) {
+    const base = positions.length / 3;
+    const distances = path.map((point, index) => index === 0 ? 0 : Math.hypot(point.x - path[index - 1]!.x, point.z - path[index - 1]!.z));
+    for (let index = 1; index < distances.length; index += 1) distances[index] += distances[index - 1]!;
+    const total = distances[distances.length - 1] || 1;
+    for (let index = 0; index < path.length; index += 1) {
+      const point = path[index]!;
+      const before = path[Math.max(0, index - 1)]!;
+      const after = path[Math.min(path.length - 1, index + 1)]!;
+      const length = Math.hypot(after.x - before.x, after.z - before.z) || 1;
+      const nx = -(after.z - before.z) / length;
+      const nz = (after.x - before.x) / length;
+      for (const side of [1, -1]) {
+        positions.push(point.x + nx * point.halfWidth * side, config.surfaceY, point.z + nz * point.halfWidth * side);
+        uvs.push(distances[index]! / total, side > 0 ? 0 : 1);
+        colors.push(1, 1, 1, point.alpha);
+      }
+    }
+    for (let row = 0; row < path.length - 1; row += 1) {
+      const a = base + row * 2;
+      indices.push(a, a + 2, a + 1, a + 1, a + 2, a + 3);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 4));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  geometry.computeBoundingSphere();
+  return geometry;
+}
+
+
+function bakeRibbonBedDepth(
+  samples: readonly RibbonSample[],
+  config: WaterRibbonConfig,
+  bed: NonNullable<WaterRibbonConfig['bed']>,
+): THREE.DataTexture {
+  const data = new Uint8Array(RIBBON_BED_MAP_WIDTH * RIBBON_BED_MAP_HEIGHT);
+  const reach = config.halfWidth + config.edgeBleed;
+  for (let column = 0; column < RIBBON_BED_MAP_WIDTH; column += 1) {
+    const sampleIndex = ((column + 0.5) / RIBBON_BED_MAP_WIDTH) * (samples.length - 1);
+    const before = samples[Math.floor(sampleIndex)]!;
+    const after = samples[Math.min(samples.length - 1, Math.ceil(sampleIndex))]!;
+    const mix = sampleIndex - Math.floor(sampleIndex);
+    const x = lerp(before.x, after.x, mix);
+    const z = lerp(before.z, after.z, mix);
+    const nx = lerp(before.nx, after.nx, mix);
+    const nz = lerp(before.nz, after.nz, mix);
+    const normalLength = Math.hypot(nx, nz) || 1;
+    for (let row = 0; row < RIBBON_BED_MAP_HEIGHT; row += 1) {
+      const side = 1 - ((row + 0.5) / RIBBON_BED_MAP_HEIGHT) * 2;
+      const depth = Math.max(0, config.surfaceY - bed.heightAt(x + (nx / normalLength) * reach * side, z + (nz / normalLength) * reach * side));
+      data[row * RIBBON_BED_MAP_WIDTH + column] = Math.round(THREE.MathUtils.clamp(depth / bed.deepMeters, 0, 1) * 255);
+    }
+  }
+  const texture = new THREE.DataTexture(data, RIBBON_BED_MAP_WIDTH, RIBBON_BED_MAP_HEIGHT, THREE.RedFormat, THREE.UnsignedByteType);
+  texture.name = `${config.name}.BedDepth`;
+  texture.magFilter = THREE.LinearFilter;
+  texture.minFilter = THREE.LinearFilter;
+  texture.wrapS = THREE.ClampToEdgeWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
+  texture.generateMipmaps = false;
+  texture.colorSpace = THREE.NoColorSpace;
+  texture.needsUpdate = true;
+  return texture;
 }
 
 
