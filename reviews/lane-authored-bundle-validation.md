@@ -8,6 +8,17 @@
 
 ## VERDICT: HOLD — NOT MERGED
 
+> ⚠️ **SUPERSEDED s1454 (F-1454-2) — STALE VERDICT LINE.** The slice **MERGED at `cbf0e143c0`**
+> (*"lane-d: authored-bundle validation across 10 epochs — RE-GATED against the repaired E1 re…"*),
+> verified **IN-MAIN by ancestry** (`git merge-base --is-ancestor cbf0e143c0 main` rc=0); leaf
+> `e1-authored-bundle-validation` carries `status: merged`, `mergeHash cbf0e143c0`. The hold below
+> was discharged the honest way — **re-gated against the repaired base**, not waived. `scripts/fire.md`
+> §3.0 names this same `cbf0e143` as the code commit of the F-1384-1 two-commit sequence.
+> ⓘ This leaf is also the subject of **F-1383-1**: it spent days frozen because its `blocked` status
+> carried no `blockClass`, so a `gate-side` hold read as an owner fork nobody would ever lift. The
+> HOLD text below is KEPT (retention law: supersede, never delete) — it is the record of a real
+> regression correctly caught.
+
 The slice regresses the **E1 release build**, reproducibly, at its own base. `npm run build:release`
 (`GR_RELEASE=e1`) fails at `scripts/assert-release-build.mjs:48`:
 

@@ -6,6 +6,15 @@
 
 ## VERDICT: **HELD — not merged.** The deliverable is PROVEN; the slice's own spec cannot be taken green while another lane saturates the CPU.
 
+> ⚠️ **SUPERSEDED s1454 (F-1454-2) — STALE VERDICT LINE.** The hold lasted exactly one fire: **s1039
+> drained it at `6316127857`** (*"s1039: drain perf-05-startup-attribution — the hold falls to an A/B,
+> because main fails …"*), verified **IN-MAIN by ancestry** s1454; leaf `perf-05-startup-attribution`
+> carries `status: shipped`, `mergeHash 6316127857`.
+> ⭐ **The hold fell the right way — by a better instrument, not by waiting for an idle box.** This
+> review asked for "one clean re-run on an idle machine"; s1039 instead ran an **A/B** and found the
+> `ttiMs < 3000` red reproduces on **clean main**, which is decisive at any load: a red on the control
+> arm cannot have been caused by the slice. The HELD text below is KEPT (retention law).
+
 The task's two questions are both answered with measured evidence, reproduced four independent times.
 The single remaining red is `ttiMs < 3000`, an assertion this change cannot causally affect, measured
 under a concurrently-running lane-c task. Merging on a red own-spec would break the evidence law

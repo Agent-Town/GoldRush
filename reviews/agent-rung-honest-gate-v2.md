@@ -7,6 +7,24 @@
 
 ## VERDICT: **HOLD — NOT MERGED.** Code accepted on its own evidence; blocked only on adjacent-battery attribution, which needs an idle box.
 
+> ⚠️ **SUPERSEDED s1454 (F-1454-2) — STALE VERDICT LINE, AND THE MOST INSTRUCTIVE ONE ON THE BOARD.**
+> The content was **already in main when this HOLD was written** — swept in at **`b37c1fc6ca`**
+> (*"rehearsal round 2 launched (shipped pipeline, vein-hunter card)"*, 2026-07-31 16:59:12) by a
+> concurrent attended session's broad `git add`, **thirteen minutes before** the handoff that said main
+> was never modified. That is **F-1295-1**, now written into `scripts/fire.md` §3.0b as the custody law
+> (*never check foreign content into MAIN's tree to gate it — gate in a detached worktree*).
+> ✅ **The hold's own condition was then DISCHARGED, not waived:** s1295 ran the attribution the arms of
+> which no longer existed by re-deriving them as **PRE-sweep (`00e4c074` blobs) vs POST-sweep (`HEAD`)**,
+> arm identity asserted by blob hash before every run, detached worktree, `--workers=1`, port 5241,
+> interleaved with round 2 order-reversed — **12 runs, all three suites EQUAL on both arms**
+> (`ap-standing-orders` 0/2 vs 0/2 · `ss-01-beats` 2/2 vs 2/2 · `trail-guide-beat-priority` 0/2 vs 0/2).
+> **F-1294-2 CLOSED; the slice is clean.** Leaf `agent-rung-honest-gate-v2` → `merged`,
+> `mergeHash b37c1fc6ca`, with the irregular provenance stated **on the leaf** rather than laundered
+> into a normal-looking drain. Verified IN-MAIN by ancestry s1454.
+> ⚖️ **Why this one matters most:** a HOLD verdict has no enforcement surface. This slice was
+> exonerated *afterwards* — had the control gone the other way, a defect would have shipped past a
+> verdict that said no, with the fire that wrote the verdict still believing it held.
+
 The slice is sound and I found nothing wrong with it. I am not merging it **this fire** because the
 adjacent battery produced **5 reds I cannot attribute with proof**, measured on a box carrying two
 live Codex lane runs. The gate bar is *"adjacent suites unmodified-green, or failures
