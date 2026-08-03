@@ -1,6 +1,9 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { onRequest as telemetryRoute } from '../functions/api/telemetry';
+import { TELEMETRY_DEV_SEND_STORAGE_KEY } from '../src/telemetry/payload';
+import type { RenderDemotionPayload } from '../src/telemetry/runBeacon';
 
 type Errors = { console: string[]; page: string[] };
 
@@ -75,6 +78,67 @@ test('3D terrain, landmarks, and building models are the honest defaults', async
   await boot(page, 'the-claim', '&tier=full&terrain2d');
   await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'off');
   await expect(canvas).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('failed terrain pilot emits one render demotion beacon and warning', async ({ page }) => {
+  const posts: RenderDemotionPayload[] = [];
+  const warnings: RenderDemotionPayload[] = [];
+  const errors = collectErrors(page);
+  page.on('console', (message) => {
+    if (message.type() !== 'warning' || !message.text().startsWith('[gold-rush] render demotion')) return;
+    const payload = message.args()[1];
+    if (payload) void payload.jsonValue().then((value) => warnings.push(value as RenderDemotionPayload));
+  });
+  await page.route('**/api/telemetry', async (route) => {
+    const payload = JSON.parse(route.request().postData() ?? '{}') as RenderDemotionPayload;
+    if (payload.event === 'render_demotion') posts.push(payload);
+    await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
+  });
+  await page.goto('/?debug&tier=full');
+  await page.evaluate((key) => localStorage.setItem(key, '1'), TELEMETRY_DEV_SEND_STORAGE_KEY);
+
+  const fallback = await page.evaluate(async () => {
+    const THREE = await Function('return import("/@id/three")')() as typeof import('three');
+    const { installTerrain3dClaimPilot } = await Function('return import("/src/world/Terrain3dClaimPilot.ts")')() as typeof import('../src/world/Terrain3dClaimPilot');
+    const canvas = document.createElement('canvas');
+    const scene = new THREE.Scene();
+    installTerrain3dClaimPilot({ scene, canvas, contractId: 'unknown-contract', tileId: 'unknown-tile' });
+    return { dataset: { ...canvas.dataset }, sceneChildren: scene.children.length };
+  });
+
+  await expect.poll(() => posts.length).toBe(1);
+  await expect.poll(() => warnings.length).toBe(1);
+  expect(fallback).toMatchObject({
+    dataset: { terrain3dPilotState: 'failed', terrain3dPilotRenderSource: 'painted' },
+    sceneChildren: 0,
+  });
+  expect(posts[0]).toMatchObject({
+    event: 'render_demotion',
+    reason: 'pilot-contract-unavailable',
+    contractId: 'unknown-contract',
+    buildId: 'dev',
+    tier: 'FULL',
+    dataset: { terrain3dPilotState: 'failed', terrain3dPilotRenderSource: 'painted' },
+  });
+  expect(warnings[0]).toEqual(posts[0]);
+  const stored = new Map<string, string>();
+  const response = await telemetryRoute({
+    request: new Request('http://127.0.0.1/api/telemetry', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(posts[0]),
+    }),
+    env: { TELEMETRY: {
+      get: async (key) => stored.get(key) ?? null,
+      put: async (key, value) => { stored.set(key, value); },
+      list: async () => ({ keys: [], list_complete: true }),
+    } },
+  });
+  expect(response.status).toBe(200);
+  expect(stored.get('telemetry:render-demotion:total')).toBe('1');
+  expect(JSON.parse(stored.get('telemetry:render-demotion:latest:unknown-contract') ?? '{}')).toMatchObject(posts[0]!);
+  console.log(`render-demotion sample ${JSON.stringify(posts[0])}`);
   expect(errors).toEqual({ console: [], page: [] });
 });
 

@@ -64,6 +64,7 @@ import seedRunPanoramaContractText from '../../assets/pilots/map-rebuild-spike/s
 import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json?raw';
 import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
+import { reportRenderDemotion } from '../telemetry/runBeacon';
 import { isMapBeautyDisabled } from '../core/DebugParams';
 import { RenderLayers } from '../core/RenderLayers';
 import { ledgerSunShadowDirection } from './LightRig';
@@ -274,7 +275,7 @@ const LANDMARK_CONTACT_SPREAD = 0.46;
 const LANDMARK_CONTACT_THROW = 0.30;
 const SCULPT_WATER_MAX_DELTA = 0.1;
 
-function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', source: 'painted' | 'glb', metrics?: Metrics, panorama?: THREE.Object3D, panoramaMetrics?: Metrics): void {
+function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', source: 'painted' | 'glb', metrics?: Metrics, panorama?: THREE.Object3D, panoramaMetrics?: Metrics, demotionReason?: string): void {
   canvas.dataset.terrain3dPilotState = state;
   canvas.dataset.terrain3dPilotRenderSource = source;
   canvas.dataset.terrain3dPilotHeightSource = source === 'glb' ? 'baked-grid' : 'painted';
@@ -287,6 +288,7 @@ function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' 
   canvas.dataset.terrain3dPilotPanoramaTriangles = String(panoramaMetrics?.triangles ?? 0);
   canvas.dataset.terrain3dPilotPanoramaMaterials = String(panoramaMetrics?.materials ?? 0);
   canvas.dataset.terrain3dPilotPanoramaVertices = String(panoramaMetrics?.vertices ?? 0);
+  if (demotionReason) reportRenderDemotion(canvas, demotionReason);
 }
 
 function inspect(model: THREE.Object3D, receiveShadow: boolean): Metrics {
@@ -1035,7 +1037,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   }
   if (!selected || selected.contract.tileId !== host.tileId) {
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'off';
-    publish(host.canvas, 'failed', 'painted');
+    publish(host.canvas, 'failed', 'painted', undefined, undefined, undefined, 'pilot-contract-unavailable');
     return () => undefined;
   }
   let disposed = false;
@@ -1055,6 +1057,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let loadedPanorama: THREE.Object3D | undefined;
   let loadFailed = false;
   let uninstallHeightSource: (() => void) | undefined;
+  const onContextLost = () => reportRenderDemotion(host.canvas, 'webgl-context-lost');
+  host.canvas.addEventListener('webglcontextlost', onContextLost);
   host.canvas.dataset.terrain3dPilotTerrainLoadState = 'pending';
   host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'pending';
   host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'pending';
@@ -1072,10 +1076,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     loadedTerrain = undefined;
     loadedPanorama = undefined;
   };
-  const failLoad = () => {
+  const failLoad = (error: unknown) => {
+    if (loadFailed) return;
     loadFailed = true;
     disposeLoaded();
-    if (!disposed) publish(host.canvas, 'failed', 'painted');
+    if (!disposed) publish(host.canvas, 'failed', 'painted', undefined, undefined, undefined, `pilot-load-failed:${error instanceof Error ? error.message : 'unknown'}`);
   };
   const installLoaded = () => {
     if (!loadedTerrain || !loadedPanorama || loadFailed) return;
@@ -1134,7 +1139,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       try {
         sculptWater = mountSculptWater(host, heightAt, terrainMetrics.bounds);
       } catch (error) {
-        host.canvas.dataset.terrain3dPilotSculptWater = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        const message = error instanceof Error ? error.message : 'unknown';
+        host.canvas.dataset.terrain3dPilotSculptWater = `failed:${message}`;
+        reportRenderDemotion(host.canvas, `sculpt-water-failed:${message}`);
       }
       try {
         sunMotes = mountSunMotes(host, terrainMetrics.bounds);
@@ -1261,14 +1268,14 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         }));
         publish(host.canvas, 'ready', 'glb', terrainMetrics, nextPanorama, panoramaMetrics);
       });
-    } catch {
+    } catch (error) {
       disposeObject3D(nextTerrain);
       disposeObject3D(nextPanorama);
       for (const pond of nextPonds) pond.dispose();
       nextPonds = [];
       loadedTerrain = undefined;
       loadedPanorama = undefined;
-      if (!disposed) publish(host.canvas, 'failed', 'painted', terrainMetrics, undefined, panoramaMetrics);
+      if (!disposed) publish(host.canvas, 'failed', 'painted', terrainMetrics, undefined, panoramaMetrics, `pilot-install-failed:${error instanceof Error ? error.message : 'unknown'}`);
     }
   };
   const receive = (kind: 'terrain' | 'panorama', model: THREE.Object3D) => {
@@ -1287,6 +1294,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
 
   return () => {
     disposed = true;
+    host.canvas.removeEventListener('webglcontextlost', onContextLost);
     disposeLoaded();
     uninstallHeightSource?.();
     uninstallHeightSource = undefined;

@@ -254,7 +254,7 @@ import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { createDeepwaterClaimTile, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
 import { readTownName } from '../town/TownNaming';
 import { gameApiUrl } from '../app/GameApi';
-import { installRunTelemetry } from '../telemetry/runBeacon';
+import { installRunTelemetry, reportRenderDemotion } from '../telemetry/runBeacon';
 import { readTelemetryOptIn, TELEMETRY_DEV_SEND_STORAGE_KEY } from '../telemetry/payload';
 import { GameState } from './GameState';
 import { DrillYard } from './DrillYard';
@@ -4607,6 +4607,7 @@ export class Game {
       'Switching to the painted map for smoothness.',
     ][this.runtimePerformanceVerdict]!, this.timeAlive, null, 4);
     if (this.runtimePerformanceVerdict >= 3) this.fallbackToLiteRendering();
+    reportRenderDemotion(this.canvas, `runtime-tier-shed-${this.runtimePerformanceVerdict}`);
   }
 
   private fallbackToLiteRendering(): void {

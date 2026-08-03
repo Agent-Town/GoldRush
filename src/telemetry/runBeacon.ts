@@ -4,15 +4,26 @@ import {
   TELEMETRY_DEV_SEND_STORAGE_KEY,
   buildRunTelemetryPayload,
   readTelemetryOptIn,
+  type RunTelemetryTier,
   type RunEndedEvent,
   type RunSecuredEvent,
   type RunTelemetryPayload,
 } from './payload';
+import { performanceTierDiagnostics } from '../game/PerformanceTier';
 
 type RunTelemetryHost = {
   events: EventBus;
   contract: () => string;
   upgradeStacks: () => Record<string, number>;
+};
+
+export type RenderDemotionPayload = {
+  event: 'render_demotion';
+  reason: string;
+  contractId: string;
+  buildId: string;
+  tier: RunTelemetryTier;
+  dataset: Record<string, string>;
 };
 
 export function installRunTelemetry(host: RunTelemetryHost): () => void {
@@ -54,6 +65,26 @@ export function installRunTelemetry(host: RunTelemetryHost): () => void {
 }
 
 export async function postRunTelemetry(payload: RunTelemetryPayload): Promise<void> {
+  await postTelemetry(payload);
+}
+
+export function reportRenderDemotion(canvas: HTMLCanvasElement, reason: string): void {
+  const payload: RenderDemotionPayload = {
+    event: 'render_demotion',
+    reason,
+    contractId: canvas.dataset.terrain3dPilotContract ?? new URLSearchParams(globalThis.location?.search ?? '').get('contract') ?? 'unknown',
+    buildId: __APP_BUILD__,
+    tier: performanceTierDiagnostics().tier.toUpperCase() as RunTelemetryTier,
+    dataset: Object.fromEntries(Object.entries(canvas.dataset).filter((entry): entry is [string, string] =>
+      typeof entry[1] === 'string' && (entry[0].startsWith('terrain3dPilot') || entry[0].startsWith('run3dPilot')),
+    )),
+  };
+  console.warn('[gold-rush] render demotion', payload);
+  if (!readTelemetryOptIn() || !shouldPostTelemetry()) return;
+  void postTelemetry(payload);
+}
+
+async function postTelemetry(payload: RunTelemetryPayload | RenderDemotionPayload): Promise<void> {
   try {
     await fetch(gameApiUrl('/api/telemetry'), {
       method: 'POST',
@@ -62,7 +93,7 @@ export async function postRunTelemetry(payload: RunTelemetryPayload): Promise<vo
       keepalive: true,
     });
   } catch {
-    // Telemetry must never affect the run-return flow.
+    // Telemetry must never affect play or fallback rendering.
   }
 }
 

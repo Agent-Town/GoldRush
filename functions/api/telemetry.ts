@@ -21,7 +21,7 @@ type TelemetryContext = {
 
 type JsonRecord = Record<string, unknown>;
 
-type TelemetryPayload = {
+type RunTelemetryPayload = {
   contract: string;
   stage: 'secure' | 'end' | 'legacy';
   waves: number;
@@ -36,13 +36,24 @@ type TelemetryPayload = {
   nonce: string;
 };
 
+type RenderDemotionPayload = {
+  event: 'render_demotion';
+  reason: string;
+  contractId: string;
+  buildId: string;
+  tier: 'FULL' | 'BALANCED' | 'LITE';
+  dataset: Record<string, string>;
+};
+
+type TelemetryPayload = RunTelemetryPayload | RenderDemotionPayload;
+
 const MAX_JSON_BYTES = 4 * 1024;
 const DEDUP_TTL_SECONDS = 62 * 24 * 60 * 60;
 const RATE_TTL_SECONDS = 60 * 60;
 const MAX_REQUESTS_PER_IP = 30;
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 const IDENTIFIER_KEYS = new Set(['email', 'profile', 'profileid', 'profilename', 'wallet', 'ip', 'name', 'userid', 'user_id']);
-const ALLOWED_PAYLOAD_KEYS = new Set([
+const ALLOWED_RUN_PAYLOAD_KEYS = new Set([
   'contract',
   'stage',
   'waves',
@@ -56,6 +67,7 @@ const ALLOWED_PAYLOAD_KEYS = new Set([
   'buildHash',
   'nonce',
 ]);
+const ALLOWED_RENDER_DEMOTION_KEYS = new Set(['event', 'reason', 'contractId', 'buildId', 'tier', 'dataset']);
 const KNOWN_CONTRACTS = new Set(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron', 'e2-hill-mine']);
 const OTHER_CONTRACT = 'other';
 
@@ -76,7 +88,9 @@ export async function onRequest(context: TelemetryContext): Promise<Response> {
     const ipAllowed = await bumpCounter(kv, `telemetry:ratelimit:${await clientIpHash(context.request)}`, MAX_REQUESTS_PER_IP, RATE_TTL_SECONDS);
     if (!ipAllowed) return error(cors, 429, 'rate_limited', 'The wire is busy. Try again later.');
 
-    const duplicate = await storeAggregate(kv, payload);
+    const duplicate = 'event' in payload
+      ? await storeRenderDemotion(kv, payload)
+      : await storeAggregate(kv, payload);
     return json(cors, { ok: true, stored: true, duplicate });
   } catch (err) {
     if (err instanceof HttpError) return error(cors, err.status, err.code, err.message);
@@ -84,7 +98,7 @@ export async function onRequest(context: TelemetryContext): Promise<Response> {
   }
 }
 
-async function storeAggregate(kv: KVNamespaceLike, payload: TelemetryPayload): Promise<boolean> {
+async function storeAggregate(kv: KVNamespaceLike, payload: RunTelemetryPayload): Promise<boolean> {
   const day = new Date().toISOString().slice(0, 10);
   const month = day.slice(0, 7);
   const dedupKey = `telemetry:dedup:${month}:${await digestPayload(payload)}`;
@@ -117,6 +131,20 @@ async function storeAggregate(kv: KVNamespaceLike, payload: TelemetryPayload): P
   return false;
 }
 
+async function storeRenderDemotion(kv: KVNamespaceLike, payload: RenderDemotionPayload): Promise<boolean> {
+  const day = new Date().toISOString().slice(0, 10);
+  await Promise.all([
+    bump(kv, 'telemetry:render-demotion:total'),
+    bump(kv, `telemetry:render-demotion:day:${day}`),
+    bump(kv, `telemetry:render-demotion:reason:${reasonBucket(payload.reason)}`),
+    bump(kv, `telemetry:render-demotion:contract:${payload.contractId}`),
+    bump(kv, `telemetry:render-demotion:tier:${payload.tier}`),
+    kv.put(`telemetry:render-demotion:latest:${payload.contractId}`, JSON.stringify({ ...payload, receivedAt: new Date().toISOString() })),
+  ]);
+  await kv.put('telemetry:updatedAt', new Date().toISOString());
+  return false;
+}
+
 async function bump(kv: KVNamespaceLike, key: string): Promise<void> {
   const current = Number(await kv.get(key));
   await kv.put(key, String((Number.isFinite(current) && current > 0 ? current : 0) + 1));
@@ -128,6 +156,7 @@ async function maxValue(kv: KVNamespaceLike, key: string, value: number): Promis
 }
 
 function validatePayload(value: JsonRecord): TelemetryPayload | null {
+  if (value.event === 'render_demotion') return validateRenderDemotionPayload(value);
   const waves = integerInRange(value.waves, 0, 10000);
   const payload = {
     contract: typeof value.contract === 'string' && /^[a-z0-9][a-z0-9-]{0,80}$/.test(value.contract) ? value.contract : '',
@@ -146,7 +175,35 @@ function validatePayload(value: JsonRecord): TelemetryPayload | null {
   if (!payload.contract || !payload.stage || payload.waves === null || payload.duration === null || payload.upgradesTaken === null) return null;
   if (!payload.tier || payload.frameP95 === null || !payload.deviceClass || !payload.buildHash || !payload.nonce) return null;
   if (payload.secureWave === null || payload.deepestWave === null || payload.deepestWave < payload.secureWave) return null;
-  return payload as TelemetryPayload;
+  return payload as RunTelemetryPayload;
+}
+
+function validateRenderDemotionPayload(value: JsonRecord): RenderDemotionPayload | null {
+  const dataset = validateDataset(value.dataset);
+  if (
+    typeof value.reason !== 'string' || value.reason.length < 1 || value.reason.length > 240 || /[\u0000-\u001f\u007f]/.test(value.reason) ||
+    typeof value.contractId !== 'string' || !/^[a-z0-9][a-z0-9-]{0,80}$/.test(value.contractId) ||
+    typeof value.buildId !== 'string' || !/^(dev|[a-f0-9]{7,16})$/i.test(value.buildId) ||
+    (value.tier !== 'FULL' && value.tier !== 'BALANCED' && value.tier !== 'LITE') || !dataset
+  ) return null;
+  return {
+    event: 'render_demotion',
+    reason: value.reason,
+    contractId: value.contractId,
+    buildId: value.buildId,
+    tier: value.tier,
+    dataset,
+  };
+}
+
+function validateDataset(value: unknown): Record<string, string> | null {
+  if (!isRecord(value)) return null;
+  const entries = Object.entries(value);
+  if (entries.length > 50) return null;
+  for (const [key, item] of entries) {
+    if (!/^[A-Za-z0-9]{1,80}$/.test(key) || typeof item !== 'string' || item.length > MAX_JSON_BYTES) return null;
+  }
+  return Object.fromEntries(entries) as Record<string, string>;
 }
 
 function contractBucket(contract: string): string {
@@ -188,7 +245,7 @@ function waveBucket(value: number): string {
   return '40plus';
 }
 
-async function digestPayload(payload: TelemetryPayload): Promise<string> {
+async function digestPayload(payload: RunTelemetryPayload): Promise<string> {
   const text = [
     payload.nonce,
     payload.contract,
@@ -218,7 +275,12 @@ function hasIdentifierKey(value: unknown): boolean {
 }
 
 function hasOnlyAllowedPayloadKeys(value: JsonRecord): boolean {
-  return Object.keys(value).every((key) => ALLOWED_PAYLOAD_KEYS.has(key));
+  const allowed = value.event === 'render_demotion' ? ALLOWED_RENDER_DEMOTION_KEYS : ALLOWED_RUN_PAYLOAD_KEYS;
+  return Object.keys(value).every((key) => allowed.has(key));
+}
+
+function reasonBucket(reason: string): string {
+  return reason.split(':', 1)[0]!.toLowerCase().replace(/[^a-z0-9-]/g, '-').slice(0, 80) || 'other';
 }
 
 async function readJson(request: Request, maxBytes: number): Promise<JsonRecord> {
