@@ -15,7 +15,13 @@
 import { strict as assert } from 'node:assert'
 import test from 'node:test'
 import { execFileSync } from 'node:child_process'
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { isSlotBusy } from './lane-usable.mjs'
+
+const script = fileURLToPath(new URL('./lane-usable.mjs', import.meta.url))
 
 const ppid = (pid) => {
   const out = execFileSync('ps', ['-o', 'ppid=', '-p', String(pid)], { encoding: 'utf8' }).trim()
@@ -57,4 +63,46 @@ test('fail safe: anything we cannot establish reads busy', () => {
 test('an unrelated pid that is merely NUMERIC is not trusted', () => {
   // A pid that does not exist at all: not our ancestor, so the slot reads held.
   assert.equal(isSlotBusy(() => '999999'), true)
+})
+
+test('bookkeeping reassurance narrows only when tasks are behind', (t) => {
+  const repo = mkdtempSync(join(tmpdir(), 'lane-usable-ledger-'))
+  t.after(() => rmSync(repo, { recursive: true, force: true }))
+  const git = (args) => execFileSync('git', args, { cwd: repo, encoding: 'utf8' })
+
+  git(['init', '-b', 'main'])
+  git(['config', 'user.name', 'Lane Usable Guard'])
+  git(['config', 'user.email', 'lane-usable@example.invalid'])
+  mkdirSync(join(repo, 'tasks'))
+  writeFileSync(join(repo, 'tasks/BACKLOG.md'), 'base\n')
+  git(['add', '.'])
+  git(['commit', '-m', 'base'])
+  const ledgerBase = git(['rev-parse', 'HEAD']).trim()
+
+  writeFileSync(join(repo, 'tasks/BACKLOG.md'), 'base\nnew finding\n')
+  git(['commit', '-am', 'ledger update'])
+  const docsBase = git(['rev-parse', 'HEAD']).trim()
+  mkdirSync(join(repo, 'docs'))
+  writeFileSync(join(repo, 'docs/note.md'), 'bookkeeping only\n')
+  git(['add', '.'])
+  git(['commit', '-m', 'docs update'])
+
+  git(['branch', 'tmp-ledger-drift', ledgerBase])
+  git(['branch', 'tmp-no-ledger-drift', docsBase])
+  mkdirSync(join(repo, 'worktrees'))
+  git(['worktree', 'add', join(repo, 'worktrees/tmp-ledger-slot'), 'tmp-ledger-drift'])
+  git(['worktree', 'add', join(repo, 'worktrees/tmp-no-ledger-slot'), 'tmp-no-ledger-drift'])
+
+  const ledger = execFileSync('node', [script, 'tmp-ledger-drift'], { cwd: repo, encoding: 'utf8' })
+  assert.match(ledger, /ledger drift: 1 file\(s\) main has moved that this lane lacks:/)
+  assert.match(ledger, /tasks\/BACKLOG\.md/)
+  assert.match(ledger, /READ-FIRST cites the ledger BY CONTENT will fail its grep in this lane/)
+  assert.doesNotMatch(ledger, /nothing here can stop a task running/)
+
+  const noLedger = execFileSync('node', [script, 'tmp-no-ledger-drift'], { cwd: repo, encoding: 'utf8' })
+  assert.match(
+    noLedger,
+    /byte-identical to main\. The gap is bookkeeping only — nothing here can stop a task running\./,
+  )
+  assert.doesNotMatch(noLedger, /ledger drift:/)
 })

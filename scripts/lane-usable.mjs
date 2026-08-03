@@ -142,6 +142,11 @@ function surfaceDrift(branch) {
   return out ? out.split('\n').filter(Boolean) : []
 }
 
+function ledgerDrift(branch) {
+  const out = git(['diff', '--name-only', branch, 'main', '--', 'tasks']).trim()
+  return out ? out.split('\n').filter(Boolean) : []
+}
+
 function classify(branch) {
   const ahead = git(['rev-list', `main..${branch}`]).trim().split('\n').filter(Boolean)
   if (ahead.length === 0) return { ahead: 0, behind: behindCount(branch), held: [], paths: 0 }
@@ -375,10 +380,22 @@ function report(r) {
     // usually a far smaller and more actionable number (F-1343-2).
     const drift = surfaceDrift(r.branch)
     if (drift.length === 0) {
-      console.log(
-        `     ✅ ...but NONE of it is run-surface: src/ e2e/ functions/ scripts/ and the configs are\n` +
-          `        byte-identical to main. The gap is bookkeeping only — nothing here can stop a task running.`,
-      )
+      const ledger = ledgerDrift(r.branch)
+      if (ledger.length === 0) {
+        console.log(
+          `     ✅ ...but NONE of it is run-surface: src/ e2e/ functions/ scripts/ and the configs are\n` +
+            `        byte-identical to main. The gap is bookkeeping only — nothing here can stop a task running.`,
+        )
+      } else {
+        console.log(
+          `     ✅ ...but NONE of it is run-surface: src/ e2e/ functions/ scripts/ and the configs are\n` +
+            `        byte-identical to main.`,
+        )
+        console.log(`     📒 ledger drift: ${ledger.length} file(s) main has moved that this lane lacks:`)
+        for (const p of ledger.slice(0, 8)) console.log(`          ${p}`)
+        if (ledger.length > 8) console.log(`          … and ${ledger.length - 8} more`)
+        console.log(`        ⚠️  A master whose READ-FIRST cites the ledger BY CONTENT will fail its grep in this lane.`)
+      }
     } else {
       console.log(`     📋 run-surface drift: ${drift.length} file(s) main has moved that this lane lacks:`)
       for (const p of drift.slice(0, 8)) console.log(`          ${p}`)
