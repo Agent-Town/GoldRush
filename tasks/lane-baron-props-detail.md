@@ -1,0 +1,10 @@
+CODEX: model=gpt-5.6-sol effort=xhigh
+# lane-baron-props-detail — F-BW-18: the Baron's luggage earns his coat
+ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
+WHY (owner, gate walk 2026-08-03, verbatim: "His objects (the rockets and the stone) are not optimal right now, but I can also not exactly say how to improve them."): the Baron sprite is gorgeous; his carried props (the launcher, the brown low-poly chunk, the rocket projectiles) read placeholder-grade beside him and beside the detail-duel bosses. The owner cannot name the fix — THE CRAFT NAMES IT: apply the boss-detail bar to his props.
+READ-FIRST: the boss-detail duel/adoption reviews + craftbooks (the deterministic blender pipeline, byte-identical re-export, single atlas, tri budgets) · the Baron prop meshes as shipped (find what "the stone" IS — name it in the report; if it is a thrown boulder, it becomes an iron-banded powder keg or engraved boulder per frontier-tech canon; NO firearm reads, ADR-001) · his rocket/tracer visuals (F-BW-16 coordination: the siege task owns cadence, you own LOOK) · the carried-launcher screenshots in artifacts/baron-presence/.
+PRE-FLIGHT (LANE-SAFETY invariant): dirty tracked blobs must be reachable in git, else STOP. Blender at /Applications/Blender.app/Contents/MacOS/Blender.
+SCOPE: 1. Detail-pass the prop set: the shoulder launcher (banded timber+brass, powder-rocket rack), the rockets in flight (engraved banded rockets with honest smoke-ember trails — reuse the muzzle/ember budgets), "the stone" (identify → redesign per canon). Budgets: ≤3k tris per prop, one atlas, deterministic re-export, contract counts regenerated same-commit if any GLB contract guards them. 2. In-fight screenshots vs before at the run camera. 3. p95 within +15% mid-volley.
+TOUCH-ONLY: the prop assets + their mount wiring + contracts JSONs for counts + specs. NO: fight behavior, the Baron SPRITE (settled art), volley cadence.
+SELF-CHECK: baron 22/22 + release suites green · perf table · boards into artifacts/baron-props/.
+READY-FOR-GATES + report: before/after boards + what the stone turned out to be.
