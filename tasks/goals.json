@@ -2796,11 +2796,24 @@
               "title": "F-BW-6: the T1 territory ring becomes a placeable KIT — the earned reward converts to N free anywhere-placements through the normal economy, expiring at run end, auto-repair tax gone by construction",
               "taskFile": "lane-territory-ring-to-kit.md",
               "lane": "lane-d",
-              "status": "building",
+              "status": "blocked",
               "attempts": 1,
               "authoredBy": "attended session 2026-08-03 12:41 (owner verbatim in master)",
               "registeredBy": "s1432 fire — the BACKLOG row 2829 recorded 'GOAL-LEAF DEBT next fire' and this is that fire",
-              "drainNotes": "LEAF DEBT DISCHARGED AT s1432, NOT AT DISPATCH. Registered while the lane-d runner was still LIVE on it (run log 20260803-124117, growing at 13:09) — status 'building' is bookkeeping ahead of a drain, so re-read the run log rather than trusting this row. Owner origin: 2026-08-03 playtest, position-freedom ruling; the diagnosis in the BACKLOG row is that the walls are the T1 TERRITORY META REWARD auto-ringed at start (Game ~6104), NOT map data — they appeared because his fresh public ledger had just earned T1. ⚠️ AN OWNER FORK IS EXPLICITLY LEFT OPEN AND IS NOT YET RULED: the BACKLOG row records 'if the owner prefers plain removal over the kit, one word flips the master.' That word has not been given. This is NOT a status:'blocked' leaf — the kit implementation is the ratified default and is proceeding — but a drain must not read a green battery as the owner having chosen the kit over plain removal. Surface the fork in the drain, do not close it."
+              "drainNotes": "LEAF DEBT DISCHARGED AT s1432, NOT AT DISPATCH. Registered while the lane-d runner was still LIVE on it (run log 20260803-124117, growing at 13:09) — status 'building' is bookkeeping ahead of a drain, so re-read the run log rather than trusting this row. Owner origin: 2026-08-03 playtest, position-freedom ruling; the diagnosis in the BACKLOG row is that the walls are the T1 TERRITORY META REWARD auto-ringed at start (Game ~6104), NOT map data — they appeared because his fresh public ledger had just earned T1. ⚠️ AN OWNER FORK IS EXPLICITLY LEFT OPEN AND IS NOT YET RULED: the BACKLOG row records 'if the owner prefers plain removal over the kit, one word flips the master.' That word has not been given. This is NOT a status:'blocked' leaf — the kit implementation is the ratified default and is proceeding — but a drain must not read a green battery as the owner having chosen the kit over plain removal. Surface the fork in the drain, do not close it. — s1433: gated, HELD on F-1433-1 (see blockedReason). The graft story is in the review: Game.ts was BOTH-MOVED and needed 5 hunks re-applied onto main, because the lane base predates both 9240479c and e49fc4e3; a wholesale copy would have reverted the drill-yard separation and the render-demotion telemetry.",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE HOLD, NOT AN OWNER GATE — no owner word will lift this and it must not be carried to the desk. s1433 gated the slice in detached worktree gate-s1433 and found F-1433-1: BuildSystem.setPalisadeKitCredits() applies a palisade_kit_granted economy row even when the grant is 0, and its only caller (Game.ts:6229) passes no options, so EVERY boot writes it. Measured both projects, isolated: e2e/restore-validation.spec.ts:86 reads logLength 2 vs an asserted 1 on a tier-0 the-claim run, while clean main passes the same test in 5.6s. That contradicts the slice master’s own \"T0 profile unchanged\" requirement. LIFT CONDITION: land tasks/f1433-1-kit-grant-no-row-at-tier-zero.md on lane/perf @ 44eda5bd (see its DISPATCH HAZARD header — the subject does not exist on main), re-run restore-validation:86 green both projects, then flip this leaf and merge. Everything else gated CLEAN: tsc, build 970ms, and every other red fingerprint-matched to clean main by a same-arrangement control run. SEPARATELY AND STILL OPEN: the owner fork (kit vs plain removal) is UNRULED — a green battery is not the owner choosing; see reviews/lane-territory-ring-to-kit.md."
+            },
+            {
+              "id": "f1433-1-kit-grant-no-row-at-tier-zero",
+              "title": "F-1433-1: the palisade-kit grant stops writing an economy row on runs that earned no kit (tier-0 logLength regression found gating F-BW-6)",
+              "taskFile": "f1433-1-kit-grant-no-row-at-tier-zero.md",
+              "lane": "lane-d",
+              "status": "authored",
+              "attempts": 0,
+              "authoredBy": "s1433 fire (FIRE-AUTHORED, attended review welcome) — corrective for the blocking finding of its own drain",
+              "registeredBy": "s1433 fire, same commit as the master (Goal Registration Law)",
+              "drainNotes": "NOT YET DISPATCHED, and it must not be queued by a routine lane refill: its subject (BuildSystem.setPalisadeKitCredits) exists ONLY on lane/perf @ 44eda5bd, which is undrained and absent from main. A lane reset to main would hit the subject-absent STOP that has already cost three runs (s1298 26,940 / s1424 44,007 / s1432 74,724 tokens). Dispatch onto the existing lane-d tip with the reset suppressed, or merge F-BW-6 first and then run this against main."
             }
           ]
         }

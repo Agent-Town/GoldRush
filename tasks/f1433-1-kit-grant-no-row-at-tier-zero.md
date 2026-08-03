@@ -1,0 +1,25 @@
+CODEX: model=gpt-5.6-sol effort=high
+# f1433-1 — the kit grant stops writing a row on runs that earned no kit
+> ⚠️ **FIRE-AUTHORED (attended review welcome).**
+> 🚨 **DISPATCH HAZARD — READ BEFORE QUEUEING. This master's subject exists ONLY on `lane/perf` @ `44eda5bd`, which is UNDRAINED and NOT on main.** It must run in **lane-d on top of that tip**, never on a lane reset to main and never in a fresh lane: `BuildSystem.setPalisadeKitCredits` does not exist on main, so a reset lane would hit the subject-absent STOP that has now cost the factory three runs (s1298 26,940 · s1424 44,007 · s1432 74,724 tokens). Do NOT queue this via a normal lane refill. Either dispatch it into lane-d with the reset suppressed, or merge F-BW-6 first and then run this against main.
+
+ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
+
+WHY (drain finding **F-1433-1**, s1433, gating `lane-territory-ring-to-kit` — see `reviews/lane-territory-ring-to-kit.md`): `BuildSystem.setPalisadeKitCredits()` applies a `palisade_kit_granted` economy event whenever the log holds no prior grant — **including when the granted amount is 0**. Its only caller, `src/game/Game.ts:6229` (`if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress)`), passes no options, so the branch is taken on EVERY boot. A tier-0 run gains one economy log row it never earned, carrying a `crypto.randomUUID()` id.
+MEASURED, both projects, isolated, `--workers=1`: on `?contract=the-claim` with no territory progress, `e2e/restore-validation.spec.ts:86` reads `logLength: 2` against an asserted `1` (`gold: 20` and `storedLogLength: 1` are both correct — only the row count is wrong). The same test passes on clean main in 5.6 s. The slice's own master required "**T0 profile unchanged**"; this is the line that breaks it.
+
+READ-FIRST: `src/systems/BuildSystem.ts` → `setPalisadeKitCredits()` (the `if (granted === undefined)` branch) · `src/game/Game.ts:6229` (the sole caller) · `src/game/Economy.ts` (`palisade_kit_granted` reduces to `state` — no gold delta; keep it that way) · `src/game/RunSuspend.ts` `decodeEconomyEvent` (already decodes the event and the `kit` flag) · `e2e/restore-validation.spec.ts:86`.
+
+PRE-FLIGHT (LANE-SAFETY invariant): dirty tracked blobs must be reachable in git, else STOP. **AND assert the subject is present before doing anything:** `grep -n "setPalisadeKitCredits" src/systems/BuildSystem.ts` must return ≥1. If it returns 0 the lane is on the wrong base — STOP and report "subject absent", do not implement.
+
+SCOPE:
+1. Do not apply the event when the computed grant is 0 — a run that earned no kit writes no row. Preserve idempotence for runs that DID earn one: a re-entrant `setPalisadeKitCredits` must never double-grant, and `run_reset` must still clear the tally.
+2. Keep `palisade_kit_granted` in the reducer and in `decodeEconomyEvent` — saves already written by the pre-fix build must still restore. Do NOT narrow the decoder.
+3. e2e: a tier-0 boot's `economy.logLength` matches the pre-kit value · a T1 boot grants exactly one row and 8 credits · a T1 boot carried through suspend→restore still shows 8 minus used, never 16.
+
+TOUCH-ONLY: `src/systems/BuildSystem.ts` (the grant branch) · the kit/territory e2e spec. NO: the Economy reducer's gold math, `decodeEconomyEvent`, `costFor`, the HUD kit badge, `src/game/Game.ts`.
+
+SELF-CHECK: `npx tsc --noEmit` clean · `npm run build` green · `--workers=1`, BOTH projects: `e2e/restore-validation.spec.ts` + `e2e/task-046-territory-ring-pacing.spec.ts` + `e2e/run-suspend.spec.ts` green · zero console/page errors.
+⚠️ **Known pre-existing reds on main — do NOT try to fix them and do NOT read them as your regression** (measured s1433, both projects, control run on clean main): `bt-01-tiers:205`, `bt-01-tiers:430`, `tile-identity-pass:121`, and `restore-validation:656` on mobile.
+
+READY-FOR-GATES + report: the tier-0 `logLength` before and after your fix, and the T1 grant count across a suspend/restore cycle.
