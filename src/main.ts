@@ -321,7 +321,10 @@ function replaceRunRoute(scene: 'town' | 'menu'): void {
 // shipped and has never had a door: /?townNight fell through to startWithProfiles and booted
 // a CONTRACT RUN, so the only way to see the night town was to enter it and then rewrite
 // history. A visual flag nobody can reach is a visual that does not exist (Mistake #10).
-const MENU_SAFE_PARAMS = new Set(['town3dPilot', 'run3dPilot', 'tier', 'townDusk', 'townNight']);
+// townSky joins the town's look flags for the same reason townDusk/townNight did (F-BT-1): a
+// search key that is not menu-safe falls through to startWithProfiles() and launches a contract
+// run, so a sky variant nobody can reach by typing its URL is a variant that does not exist.
+const MENU_SAFE_PARAMS = new Set(['town3dPilot', 'run3dPilot', 'tier', 'townDusk', 'townNight', 'townSky']);
 if (history.state?.goldRushScene === 'town') {
   openTown();
 } else if (history.state?.goldRushScene === 'menu') {

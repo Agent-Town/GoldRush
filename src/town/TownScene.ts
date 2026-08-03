@@ -15,6 +15,7 @@ import { Loop } from '../core/Loop';
 import { createRenderer, flushRenderedFrameCaptures, resizeRenderer } from '../core/Renderer';
 import { RenderLayers } from '../core/RenderLayers';
 import { palette } from '../assets/palette';
+import { createTownSky, readTownSkyVariant, type TownSkyBuild, type TownSkyVariant } from './TownSky';
 import { depenetrateToWalkable } from '../world/LandmarkCollision';
 import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
@@ -124,6 +125,10 @@ const TOWN_ZOOM_MIN = 0.36;
 const TOWN_ZOOM_DEFAULT = 0.85;
 const TOWN_ZOOM_MAX = 1.1;
 const TOWN_HALF = 15;
+// The painted fallback ground is 30x30, but the plate GLB that replaces it on every non-lite
+// boot spans +/-22 (accessor bounds of assets/pilots/town-plate-3d/town-plate.glb). That 22 —
+// not 15 — is where the world visibly ends, and it is the number the sky variants answer.
+const TOWN_PLATE_HALF = 22;
 // Half-extent of the sun's shadow frustum: the 30x30 plate plus a margin for the gate wagons.
 const TOWN_SHADOW_EXTENT = 17;
 // How far the contact skirt spills past a footprint, total across both sides.
@@ -327,6 +332,19 @@ export type TownDiagnostics = {
     sign: 'asset' | 'placeholder';
   };
   ambientDust: { enabled: boolean; tier: PerformanceTier; count: number; drawCalls: number };
+  // THE ATMOSPHERICS DOOR. `topEdgePitchDeg` is the number the whole three-skies question turns
+  // on: it is negative at every framing the town allows, so nothing above the horizon can ever
+  // be seen, and `topEdgeGroundZ` is where the top row of pixels lands on the ground — past
+  // +/-22 (the plate) it lands on nothing, and that nothing is what a sky variant paints.
+  sky: {
+    variant: TownSkyVariant;
+    objects: number;
+    triangles: number;
+    background: 'flat' | 'ramp';
+    topEdgePitchDeg: number;
+    topEdgeGroundZ: number;
+    beyondPlate: boolean;
+  };
   // THE BEAUTY-SHIFT DOOR: every visual U1-U8 added, countable from a plain boot without ?debug
   // (Mistake #10 — a visual with no plain-boot door is a visual that does not exist).
   contact: {
@@ -396,6 +414,7 @@ export class TownScene {
   private readonly cameraRig = new CameraRig(this.camera, Balance.town.scale);
   private readonly cameraZoom: CameraZoomController;
   private readonly heroCameraProbe = new THREE.Vector3();
+  private readonly skyProbe = new THREE.Vector3();
   private readonly hero = new Hero();
   private readonly input: InputController;
   private readonly loop = new Loop((delta) => this.update(delta), () => this.render());
@@ -457,6 +476,8 @@ export class TownScene {
   private readonly townMood: TownMoodName = readTownMood();
   private readonly townNight = this.townMood === 'night';
   private readonly performanceTier = performanceTierDiagnostics().tier;
+  private readonly skyVariant: TownSkyVariant = readTownSkyVariant();
+  private sky: TownSkyBuild = { variant: 'off', background: null, objects: [], triangles: 0, follow: () => {}, dispose: () => {} };
   private readonly eraOrder = loadEpoch(activeEpochId()).order;
   private readonly ambientDust = createAmbientDust(this.performanceTier, this.townNight);
   private readonly ambientDustObject = new THREE.Object3D();
@@ -599,6 +620,7 @@ export class TownScene {
     this.canvas.dataset.town3dPilotState = 'disposed';
     this.town3dPilotDispose?.();
     disposeObject3D(this.scene);
+    this.sky.dispose();
     this.scene.clear();
     this.renderer.dispose();
     window.__GR_TOWN_DIAGNOSTICS__ = undefined;
@@ -682,6 +704,7 @@ export class TownScene {
     if (this.lastPresentAt > 0) this.frameStats.record(startedAt - this.lastPresentAt);
     this.lastPresentAt = startedAt;
     this.renderer.info.reset();
+    this.sky.follow(this.camera);
     this.renderer.render(this.scene, this.camera);
     flushRenderedFrameCaptures(this.canvas);
     this.renderStats.record(performance.now() - startedAt);
@@ -817,6 +840,13 @@ export class TownScene {
     const light = TOWN_MOOD_LIGHT[this.townMood];
     this.scene.background = new THREE.Color(mood.horizon);
     this.scene.fog = new THREE.Fog(mood.horizon, light.fogNear, light.fogFar);
+    // THE ATMOSPHERICS SHIFT — three skies behind ?townSky=a|b|c, default boot untouched.
+    // The band they paint is the void past the 44x44 plate: measured at up to 34.7% of the
+    // desktop frame from the town's north side and 0% from the plaza, which is why round one
+    // measured "zero pixels" (F-BT-2). See src/town/TownSky.ts for the cone arithmetic.
+    this.sky = createTownSky(this.skyVariant, mood, this.performanceTier);
+    if (this.sky.background) this.scene.background = this.sky.background;
+    for (const object of this.sky.objects) this.scene.add(object);
     // U5: this fill now carries the warmth the GLB loader used to fake with a per-model emissive
     // lift (0x4a2a17 @ 0.2 on every building except the assay office). One light for the whole
     // square — shells, props and GLBs — instead of a tonal exception living in the asset path.
@@ -2330,7 +2360,12 @@ export class TownScene {
 
   private publishDiagnostics(): void {
     const dpr = this.renderer.getPixelRatio();
-    const background = this.scene.background as THREE.Color;
+    // A sky variant replaces the flat colour with an equirect ramp, so this can no longer assume
+    // a Color. Existing readers keep a hex string on the default boot; a ramp names itself.
+    const background = this.scene.background;
+    const backgroundLabel = background instanceof THREE.Color
+      ? `#${background.getHexString()}`
+      : (background as THREE.Texture | null)?.name ?? 'none';
     const fog = this.scene.fog as THREE.Fog;
     const sun = this.scene.getObjectByName('TownSun') as THREE.DirectionalLight | undefined;
     const fill = this.scene.getObjectByName('TownFill') as THREE.HemisphereLight | undefined;
@@ -2372,7 +2407,7 @@ export class TownScene {
       },
       lighting: {
         night: this.townNight,
-        background: `#${background.getHexString()}`,
+        background: backgroundLabel,
         fog: `#${fog.color.getHexString()}`,
         fogNear: fog.near,
         fogFar: fog.far,
@@ -2439,6 +2474,7 @@ export class TownScene {
         count: this.ambientDust?.count ?? 0,
         drawCalls: this.ambientDust ? 1 : 0,
       },
+      sky: this.skyDiagnostics(),
       contact: {
         blobShadows: this.blobShadows.mesh.count,
         skirts: this.instanceCount('TownContactSkirts'),
@@ -2508,6 +2544,29 @@ export class TownScene {
     if (Math.abs(this.camera.zoom - zoom) < 0.0001) return;
     this.camera.zoom = zoom;
     this.camera.updateProjectionMatrix();
+  }
+
+  // Unproject the centre of the frame's TOP edge and drop it on y = 0. This is the instrument
+  // the reverted U6 did not have: it answers "can this framing contain anything that is not the
+  // plate?" with a number instead of an argument, and it costs one ray per diagnostics publish.
+  private skyDiagnostics(): TownDiagnostics['sky'] {
+    this.camera.updateMatrixWorld();
+    const direction = this.skyProbe.set(0, 1, 0.5).unproject(this.camera).sub(this.camera.position).normalize();
+    const pitchDeg = THREE.MathUtils.radToDeg(Math.asin(THREE.MathUtils.clamp(direction.y, -1, 1)));
+    const groundZ = direction.y < -1e-6
+      ? this.camera.position.z + direction.z * (-this.camera.position.y / direction.y)
+      : Number.NEGATIVE_INFINITY;
+    return {
+      variant: this.sky.variant,
+      // PARENTED, not merely built. A sky variant that never reached the scene graph would
+      // otherwise publish the same 1 as one that did.
+      objects: this.sky.objects.filter((object) => object.parent === this.scene).length,
+      triangles: this.sky.triangles,
+      background: this.sky.background ? 'ramp' : 'flat',
+      topEdgePitchDeg: Math.round(pitchDeg * 100) / 100,
+      topEdgeGroundZ: Number.isFinite(groundZ) ? Math.round(groundZ * 100) / 100 : groundZ,
+      beyondPlate: !(Math.abs(groundZ) <= TOWN_PLATE_HALF),
+    };
   }
 
   private heroRenderedHeight(): number {
