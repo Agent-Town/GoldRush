@@ -879,24 +879,24 @@
               "id": "f1441-2-crossings-keep-their-z",
               "title": "F-1441-2 — a crossing is a place, not an x-band: make the enemy resolvers crossing test z-aware so the stall fix stops letting bandits swim",
               "taskFile": "f1441-2-crossings-keep-their-z.md",
-              "status": "blocked",
+              "status": "merged",
               "lane": "lane-c",
               "authoredBy": "s1441",
               "registeredBy": "s1441",
               "refreshedBy": "s1446 — main absorbed 6 of 9236e9ba 55 Enemy.ts lines via 531bd923 (F-BW-10) since authoring; scope 2 REVERSED so the runner does not restore the archive blockerSlideDirection and silently revert a shipped owner fix. Two new pre-flight keys added, both re-proved =1 on main at dispatch.",
               "authorNotes": "FIRE-AUTHORED from measured evidence (reviews/lane-tb-stall-census.md), not from a spec slice. NOT DISPATCHED by s1441: lane/e2-arsenal still holds the withheld 9236e9ba, so a refill pre-flight would stop on it; the content is archived at archive/lane-e2-arsenal-s1441-9236e9ba so a cure loses nothing. Three citation keys were each proven to return exactly 1 against the SOURCE FILE ON MAIN at authoring time and each sits on one line (F-1425-2); re-prove them in the lane after refresh, then cp (F-1424-3 order).",
-              "blockClass": "gate-side",
-              "blockedReason": "GATE-SIDE HOLD, NOT AN OWNER FORK — no owner will ever lift this; a fire lifts it with evidence. s1448 gated lane/e2-arsenal 5c27a1b5 in detached worktree gate-s1448: tsc clean, build green, gr-sim 9/9, acceptance e1-twin-banks.spec.ts:213 deepSamples===0 GREEN both projects (RED on the clean-main control), never-trap 8/8 as the F-BW-10 witness, blockerSlideDirection byte-identical to main. WITHHELD on F-1448-1 only: e2e/gt-05-water-depth.spec.ts:181 [mobile-chrome] is RED on the merged tree 2/2 and GREEN on clean main 2/2 under an identical 6-spec/58-test --workers=1 battery; the assertion is the HERO one at :209 (zone bank, expected ford). red-inventory-lookup answers KNOWN-RED MOBILE-ONLY for it, which would have wrongly exonerated it (F-1444-2). Prime suspect F-1448-2: Enemy.ts now calls Terrain.sample/fordRanges at MODULE LOAD. Lift by explaining or curing that red and re-running both arms. Full evidence: reviews/f1441-2-crossings-keep-their-z.md"
+              "mergeHash": "65e3aaec16610b563a4c0cccc5fcaffc70e4e504"
             },
             {
               "id": "f1448-1-crossings-keep-the-hero-out-of-it",
               "title": "an enemy-pathing fix must not move the hero (cures F-1448-1 so f1441-2 can merge)",
               "taskFile": "f1448-1-crossings-keep-the-hero-out-of-it.md",
-              "status": "planned",
+              "status": "merged",
               "lane": "lane-c",
               "authoredBy": "s1448",
               "registeredBy": "s1448",
-              "authorNotes": "Cures F-1448-1, the sole blocker on f1441-2 (leaf blocked/gate-side). Measured s1448: e2e/gt-05-water-depth.spec.ts:181 [mobile-chrome] RED on the merged tree 2/2, GREEN on clean main 2/2, identical 6-spec/58-test --workers=1 battery; failing assertion is the HERO one at :209 (received zone bank, expected ford). Prime suspect F-1448-2: f1441-2 moved activeWaterDescriptor()/Terrain.fordRanges()/Terrain.sample() to MODULE SCOPE in Enemy.ts, forcing Terrain init at import — the only path in the diff that can reach the hero. Lane-c must NOT be reset: it holds 5c27a1b5 (also at archive/lane-e2-arsenal-s1448-5c27a1b5-held-f1448-1) and the master continues that branch. Evidence: reviews/f1441-2-crossings-keep-their-z.md"
+              "authorNotes": "Cures F-1448-1, the sole blocker on f1441-2 (leaf blocked/gate-side). Measured s1448: e2e/gt-05-water-depth.spec.ts:181 [mobile-chrome] RED on the merged tree 2/2, GREEN on clean main 2/2, identical 6-spec/58-test --workers=1 battery; failing assertion is the HERO one at :209 (received zone bank, expected ford). Prime suspect F-1448-2: f1441-2 moved activeWaterDescriptor()/Terrain.fordRanges()/Terrain.sample() to MODULE SCOPE in Enemy.ts, forcing Terrain init at import — the only path in the diff that can reach the hero. Lane-c must NOT be reset: it holds 5c27a1b5 (also at archive/lane-e2-arsenal-s1448-5c27a1b5-held-f1448-1) and the master continues that branch. Evidence: reviews/f1441-2-crossings-keep-their-z.md",
+              "mergeHash": "65e3aaec16610b563a4c0cccc5fcaffc70e4e504"
             }
           ]
         },
