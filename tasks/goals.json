@@ -869,10 +869,11 @@
               "id": "f1441-2-crossings-keep-their-z",
               "title": "F-1441-2 — a crossing is a place, not an x-band: make the enemy resolvers crossing test z-aware so the stall fix stops letting bandits swim",
               "taskFile": "f1441-2-crossings-keep-their-z.md",
-              "status": "planned",
+              "status": "queued",
               "lane": "lane-c",
               "authoredBy": "s1441",
               "registeredBy": "s1441",
+              "refreshedBy": "s1446 — main absorbed 6 of 9236e9ba 55 Enemy.ts lines via 531bd923 (F-BW-10) since authoring; scope 2 REVERSED so the runner does not restore the archive blockerSlideDirection and silently revert a shipped owner fix. Two new pre-flight keys added, both re-proved =1 on main at dispatch.",
               "authorNotes": "FIRE-AUTHORED from measured evidence (reviews/lane-tb-stall-census.md), not from a spec slice. NOT DISPATCHED by s1441: lane/e2-arsenal still holds the withheld 9236e9ba, so a refill pre-flight would stop on it; the content is archived at archive/lane-e2-arsenal-s1441-9236e9ba so a cure loses nothing. Three citation keys were each proven to return exactly 1 against the SOURCE FILE ON MAIN at authoring time and each sits on one line (F-1425-2); re-prove them in the lane after refresh, then cp (F-1424-3 order)."
             }
           ]

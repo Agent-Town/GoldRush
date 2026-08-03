@@ -3,6 +3,38 @@ CODEX: model=gpt-5.6-sol effort=xhigh
 
 **FIRE-AUTHORED (attended review welcome)** — s1441, 2026-08-03. Corrective for **F-1441-2** and
 **F-1441-3**, filed when `lane-tb-stall-census` was drained PARTIAL.
+**🔄 REFRESHED s1446, 2026-08-04, BEFORE FIRST DISPATCH — main absorbed part of this task's subject
+in the interim. Read "WHAT MAIN NOW OWNS" below before scope 2; it reverses one of the original
+instructions.** (§2E stale-check: refresh, never blind-queue.)
+
+## ⚠️ WHAT MAIN NOW OWNS — read this before scope 2 (measured s1446, not inferred)
+
+This master was authored at s1441. **Main has since moved `src/entities/Enemy.ts` twice**:
+`e4ea0993` (s1444, baron-siege) and **`531bd923` (s1445, night-stuck-census, F-BW-10 — the owner's
+"opponents get stuck on objects")**. Measured with `lane-absorbed-lines.mjs`: **6 of `9236e9ba`'s 55
+added `Enemy.ts` lines are now ON MAIN**; 49 are still absent. The 6 are the overlap, and they are
+the ones the original scope 2 told you to restore.
+
+**`blockerSlideDirection` and the `moveTarget` threading are now MAIN'S, and main's version is
+DIFFERENT from the archive's:**
+
+| | archive `9236e9ba` | **main `531bd923` (shipped, gated, control-proven)** |
+|---|---|---|
+| signature | `(axis, moveTarget, blocker)` | `(axis, moveTarget)` |
+| return | `Math.sign(moveTarget[axis] - blocker[axis])` | `Math.sign(moveTarget[axis] - this.group.position[axis])` |
+| measured from | the blocker's position | **the enemy's own position** |
+
+🚫 **DO NOT restore the archive's `blockerSlideDirection`, and do not re-add the `blocker`
+parameter.** Main's variant is the shipped fix for **F-BW-10, an owner-reported defect**, proved at
+s1445 by a manufactured defect (`e2e/never-trap.spec.ts:88` reds on clean main and passes with it).
+Restoring the archive's form would **silently revert a merged owner fix** while looking like faithful
+salvage. The archive's form is **SUPERSEDED, not withheld.**
+
+➡️ **So take from `9236e9ba` only what main LACKS**: `goalSideCrossing`, `RIVER_CROSSINGS`,
+`resolverCrossingAtX`, `CROSSING_SPEED`, the crossing-selection logic in the router, and
+`resolveRiver`'s crossing arguments — **and make the containment z-aware per scope 1.** Where main
+and the archive both changed a line, **main wins by default**; if you believe a specific archive line
+must override main's, say so in your report with the reason. Do not decide it silently.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c`
 (branch `lane/e2-arsenal`).
@@ -32,12 +64,20 @@ three greps from the repo root of your worktree. Each must print exactly `1`:
 grep -c "function gravelBarContains(bar: ContractGravelBar, x: number, z: number): boolean {" src/world/Terrain.ts
 grep -c "const ACTIVE_CONTRACT = activeContract();" src/world/Terrain.ts
 grep -c "  expect(track?.deepSamples).toBe(0);" e2e/e1-twin-banks.spec.ts
+grep -c "private blockerSlideDirection(axis: 'x' | 'z', moveTarget: THREE.Vector3): number {" src/entities/Enemy.ts
+grep -c "return Math.sign(moveTarget\[axis\] - this.group.position\[axis\]) || this.avoidanceSide();" src/entities/Enemy.ts
 ```
 
-All three were verified to return `1` on main at authoring time (s1441). A `0` means your lane is
+All five were **re-verified to return `1` against current main at s1446, immediately before
+dispatch** (the first three were originally proven at s1441 and still hold). A `0` means your lane is
 behind main and does not yet contain this task's subject — **STOP and report "lane stale at
 dispatch", do not improvise.** (F-1424-3 / F-1425-2: each key was proven against the source file on
 main before being written here, and each sits on one line, so a `0` really does mean the lane.)
+
+⚠️ **Keys 4 and 5 are the F-BW-10 guard added by the s1446 refresh.** They assert that main's
+enemy-relative `blockerSlideDirection` is present in your tree. If either returns `0`, your lane
+predates `531bd923` and **any salvage you do from the archive will revert a shipped owner fix** —
+that is a STOP, not something to work around.
 
 **LANE-SAFETY (safe-dupe, runner-auto-commit aware):** the lane branch being ahead is NORMAL — the
 runner auto-commits. For each ahead commit: if its content is already merged to main (verify with
@@ -82,9 +122,15 @@ reading the inner assertion line told them apart.
    fords are z-spanning by construction and bars are not, and that difference is the whole bug. The
    `RIVER_CROSSINGS` record may keep its x-band for *choosing* a crossing; it must not be what
    *authorises passage*.
-2. **Keep `goalSideCrossing`.** The goal-side bias, the commit-to-one-crossing behaviour, and the
-   `moveTarget` threading through `resolveBlocker`/`resolveRiver`/`blockerSlideDirection` are the
-   good part of `9236e9ba` and are why the stalls clear. They are not the defect. Do not revert them.
+2. **Keep `goalSideCrossing` — but NOT the archive's `blockerSlideDirection` (REVISED s1446).**
+   The goal-side bias and the commit-to-one-crossing behaviour are the good part of `9236e9ba`, they
+   are why the stalls clear, and they are still absent from main — **restore those.**
+   🚫 **The `moveTarget` threading is NO LONGER YOURS TO RESTORE: main owns it as of `531bd923`, in a
+   different and control-proven form.** Thread your crossing work through **main's existing**
+   `resolveBlocker(blocker, stepDistance, moveTarget)` / `blockerSlideDirection(axis, moveTarget)`
+   signatures. **Do not re-add the `blocker` parameter and do not change what
+   `blockerSlideDirection` returns** — see "WHAT MAIN NOW OWNS" above. `resolveRiver` is the one you
+   may extend, since main's copy has no crossing argument yet.
 3. **`e1-twin-banks` must reach `:213` and read `deepSamples === 0`.** Both projects. That is the
    acceptance criterion, and it is a criterion the predecessor could not have met by accident.
 4. **Re-pin what genuinely moved, and only that (F-1441-3).** `scripts/gr-sim.test.mjs` is **9/9 on
@@ -107,6 +153,8 @@ reading the inner assertion line told them apart.
 Water sim classification · ford/bar POSITIONS or geometry · the `e1-twin-banks` spec itself (it is
 the judge — **do not edit the thing measuring you**, and do not touch `:213`) · `logs/suite-red-inventory.md` ·
 night-census scope · Balance tuning · anything on another lane.
+🚫 **ADDED s1446: `blockerSlideDirection`'s signature and return expression are OFF LIMITS** — they
+are main's F-BW-10 fix (`531bd923`), not your salvage surface. Call it; do not reshape it.
 
 ## Self-check
 
@@ -116,6 +164,9 @@ night-census scope · Balance tuning · anything on another lane.
 - `e2e/task-025-bandits-dont-swim.spec.ts` — green both projects (it was green under `9236e9ba` too;
   keep it that way).
 - `e2e/twin-banks-never-wedged.spec.ts` — green both projects.
+- **`e2e/never-trap.spec.ts` — green both projects, and call it out explicitly in your report
+  (ADDED s1446).** `:88` is the manufactured-defect witness for main's F-BW-10 fix: it reds on a tree
+  without it. If it goes red, you have reverted `531bd923` — stop and say so rather than adjusting it.
 - Adjacent by grep, not from a list: `e2e/e2-enemies.spec.ts`, `e2e/never-trap.spec.ts`,
   `e2e/enemy-gap-flow.spec.ts`, `e2e/run3d-palisade.spec.ts`, `e2e/task-048-funnel-formation-spread.spec.ts`,
   `e2e/064-river-continues.spec.ts`, `e2e/gt-05-water-depth.spec.ts`, `e2e/shore-truth.spec.ts`.
