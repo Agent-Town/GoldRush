@@ -2091,8 +2091,10 @@ export class TownScene {
     const pageIndex = clampBoardPage(this.boardPageIndex, chapters.length);
     this.boardPageIndex = pageIndex;
     const chapter = chapters[pageIndex];
-    const contracts = chapter?.contracts ?? [];
-    for (const contract of contracts) discoverLedgerContract(contract.id);
+    const entries = chapter?.contracts ?? [];
+    const contracts = entries.filter((contract) => !contract.practice);
+    const trainingGround = entries.find((contract) => contract.practice);
+    for (const contract of entries) discoverLedgerContract(contract.id);
     const boardEpochId = chapter?.id ?? activeEpoch.id;
     const accent = townEraAccent(chapter?.order ?? activeEpoch.order);
     const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');
@@ -2115,24 +2117,27 @@ export class TownScene {
           <button class="town-ui__catalog-arrow town-ui__catalog-arrow--prev" type="button" data-contract-page-step="-1" data-testid="contract-page-prev" aria-label="Previous chapter" ${
             pageIndex === 0 ? 'disabled' : ''
           }>&lsaquo;</button>
-          ${
-            chapter
-              ? `<section class="town-ui__book-chapter" tabindex="-1" data-testid="contract-chapter-${escapeHtml(chapter.id)}" data-contract-chapter="${escapeHtml(
-                  chapter.id,
-                )}" style="--town-era-accent:${escapeHtml(accent.lanternLight)}">
-                  <header class="town-ui__chapter-header">
-                    <div>
-                      <p class="town-ui__board-eyebrow">Chapter ${chapter.order}</p>
-                      <h3>${escapeHtml(chapter.displayName)}</h3>
+          <div class="town-ui__board-sections">
+            ${
+              chapter
+                ? `<section class="town-ui__book-chapter" tabindex="-1" data-testid="contract-chapter-${escapeHtml(chapter.id)}" data-contract-chapter="${escapeHtml(
+                    chapter.id,
+                  )}" style="--town-era-accent:${escapeHtml(accent.lanternLight)}">
+                    <header class="town-ui__chapter-header">
+                      <div>
+                        <p class="town-ui__board-eyebrow">Chapter ${chapter.order}</p>
+                        <h3>${escapeHtml(chapter.displayName)}</h3>
+                      </div>
+                      <span>${contracts.length} claim${contracts.length === 1 ? '' : 's'}</span>
+                    </header>
+                    <div class="town-ui__chapter-contracts">
+                      ${contracts.map((contract, index) => this.renderContractCard(contract, scores, index, contracts.length)).join('')}
                     </div>
-                    <span>${contracts.length} contract${contracts.length === 1 ? '' : 's'}</span>
-                  </header>
-                  <div class="town-ui__chapter-contracts">
-                    ${contracts.map((contract, index) => this.renderContractCard(contract, scores, index, contracts.length)).join('')}
-                  </div>
-                </section>`
-              : ''
-          }
+                  </section>`
+                : ''
+            }
+            ${trainingGround ? this.renderTrainingGround(trainingGround) : ''}
+          </div>
           <button class="town-ui__catalog-arrow town-ui__catalog-arrow--next" type="button" data-contract-page-step="1" data-testid="contract-page-next" aria-label="Next chapter" ${
             pageIndex >= chapters.length - 1 ? 'disabled' : ''
           }>&rsaquo;</button>
@@ -2217,6 +2222,38 @@ export class TownScene {
           </button>
         </div>
       </article>
+    `;
+  }
+
+  private renderTrainingGround(contract: ContractManifest): string {
+    const unlock = contractUnlock(contract);
+    return `
+      <section class="town-ui__training-ground" data-testid="training-ground" aria-labelledby="training-ground-title">
+        <header class="town-ui__training-ground-header">
+          <span aria-hidden="true">Drill bell · straw targets</span>
+          <h3 id="training-ground-title">THE TRAINING GROUND</h3>
+        </header>
+        <article class="town-ui__contract town-ui__training-card" tabindex="-1" data-testid="contract-card-${escapeHtml(
+          contract.id,
+        )}" data-contract-locked="${unlock.unlocked ? 'false' : 'true'}" data-training-ground="true" aria-label="${escapeHtml(
+          contract.boardRow.name,
+        )}">
+          ${renderContractArt(contract)}
+          <div class="town-ui__contract-copy">
+            <div class="town-ui__contract-topline">
+              <span class="town-ui__contract-tag">Training</span>
+              <span class="town-ui__contract-state">No stakes</span>
+            </div>
+            <h3>${escapeHtml(contract.boardRow.name)}</h3>
+            <p class="town-ui__contract-flavor" data-testid="contract-flavor-${escapeHtml(contract.id)}">${escapeHtml(
+              contract.boardRow.ledgerBlurb,
+            )}</p>
+            <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
+              contract.id,
+            )}" ${unlock.unlocked ? '' : 'disabled'}>${escapeHtml(unlock.unlocked ? 'Enter the yard' : (unlock.action ?? unlock.condition))}</button>
+          </div>
+        </article>
+      </section>
     `;
   }
 

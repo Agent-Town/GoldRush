@@ -78,7 +78,7 @@ function firstIssuePanels(mode: GazetteInputMode) {
       id: 'town-serves',
       headline: 'THE TOWN SERVES YOU',
       lines: [
-        'The tavern board posts claims; the schoolhouse charts science; the tailor dresses both partners.',
+        'The tavern board posts claims; the separate Drill Yard is practice with nothing at stake.',
         'The complaints desk pays bounties for trouble reported.',
       ],
     },

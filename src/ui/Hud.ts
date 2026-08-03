@@ -35,6 +35,7 @@ export type ContractBriefingSnapshot = ContractBriefing & {
 };
 
 export type PauseMetaSnapshot = {
+  training: boolean;
   save: string;
   goalProgress: string | null;
   manualSave: {
@@ -52,6 +53,7 @@ export type PauseMetaSnapshot = {
 
 type HudElements = {
   root: HTMLElement;
+  trainingTag: HTMLElement;
   contractBriefing: HTMLElement;
   metaRecap: HTMLElement;
   pauseMeta: HTMLElement;
@@ -108,6 +110,8 @@ export class Hud {
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
+      <p class="hud-training-tag" data-testid="drill-yard-training-tag" hidden>DRILL YARD — training</p>
+
       <section class="contract-briefing" data-testid="contract-briefing" aria-live="polite" role="status" hidden></section>
 
       <div class="hud-meta-recap" data-testid="run-meta-recap" aria-live="polite" hidden></div>
@@ -198,6 +202,7 @@ export class Hud {
 
     this.elements = {
       root,
+      trainingTag: this.get(root, '[data-testid="drill-yard-training-tag"]'),
       contractBriefing: this.get(root, '[data-testid="contract-briefing"]'),
       metaRecap: this.get(root, '[data-testid="run-meta-recap"]'),
       pauseMeta: this.get(root, '[data-testid="pause-meta-panel"]'),
@@ -246,6 +251,7 @@ export class Hud {
   }
 
   update(snapshot: UiSnapshot, meta: PauseMetaSnapshot, showPauseMeta = snapshot.paused): void {
+    this.elements.trainingTag.hidden = !meta.training;
     this.elements.hpText.textContent = `${Math.ceil(snapshot.hp)} / ${Math.round(snapshot.maxHp)}`;
     this.elements.hpFill.style.width = `${this.percent(snapshot.hp, snapshot.maxHp)}%`;
     this.elements.goldText.textContent = this.goldText(snapshot);
@@ -539,6 +545,7 @@ export class Hud {
     this.elements.pauseMeta.innerHTML = `
       <p class="hud-meta__eyebrow">Claim Memory</p>
       <h2 class="hud-meta__pause-title">Claim Paused</h2>
+      ${meta.training ? '<p class="hud-meta__training" data-testid="pause-drill-yard-training">This is practice. Nothing is at stake. Leave anytime.</p>' : ''}
       <button class="hud-meta__chip" type="button" data-testid="pause-open-ledger">Claim Ledger</button>
       <button class="hud-meta__chip" type="button" data-testid="pause-back-to-town">Back to Town - the claim keeps your place</button>
       <p class="hud-meta__line" data-testid="pause-meta-save">${this.escape(meta.save)}</p>

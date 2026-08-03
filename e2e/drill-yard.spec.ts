@@ -19,8 +19,8 @@ import { loadEpoch } from '../src/meta/ContractFamilies';
 import { RESEARCH_STATE_KEY } from '../src/meta/ResearchTree';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
-const ARTIFACT_DIR = path.resolve('artifacts/pc-01b-drill-yard-parity');
-const E1_CONTRACT_COUNT = loadEpoch('epoch-1-frontier').contracts.length;
+const ARTIFACT_DIR = path.resolve('artifacts/drill-yard-separation');
+const E1_CLAIM_COUNT = loadEpoch('epoch-1-frontier').contracts.filter((contract) => !contract.practice).length;
 const PRACTICE_BUILDABLES = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office', 'lantern_post'] as const;
 const BUILD_SITES: Record<(typeof PRACTICE_BUILDABLES)[number], { x: number; z: number }> = {
   sentry_beacon: { x: -24, z: 18 },
@@ -77,22 +77,35 @@ test('plain boot keeps the Drill Yard visible and launchable on both sides of th
   await page.evaluate((key) => localStorage.setItem(key, '0'), profileDataKey('robin', TOWN_WELCOME_SEEN_KEY));
   await page.getByTestId('town-open-board').click();
   const preWelcomeCount = await page.getByTestId('contract-card-list').locator('[data-contract-id]').count();
-  console.log(`PC-01b parity pre-welcome: manifest=${E1_CONTRACT_COUNT} rendered=${preWelcomeCount}`);
-  expect(preWelcomeCount).toBe(E1_CONTRACT_COUNT);
+  expect(preWelcomeCount).toBe(E1_CLAIM_COUNT);
 
   await page.getByTestId('contract-board-close').click();
   await page.evaluate((key) => localStorage.setItem(key, '1'), profileDataKey('robin', TOWN_WELCOME_SEEN_KEY));
   await page.getByTestId('town-open-board').click();
   const postWelcomeCount = await page.getByTestId('contract-card-list').locator('[data-contract-id]').count();
-  console.log(`PC-01b parity post-welcome: manifest=${E1_CONTRACT_COUNT} rendered=${postWelcomeCount}`);
-  expect(postWelcomeCount).toBe(E1_CONTRACT_COUNT);
+  expect(postWelcomeCount).toBe(E1_CLAIM_COUNT);
 
+  await expect(page.getByTestId('contract-chapter-epoch-1-frontier').getByTestId('contract-card-e1-drill-yard')).toHaveCount(0);
+  await expect(page.getByTestId('training-ground')).toContainText('THE TRAINING GROUND');
   await expect(page.getByTestId('contract-card-e1-drill-yard')).toBeVisible();
-  await expect(page.getByTestId('contract-launch-e1-drill-yard')).toBeEnabled();
-  await shot(page, testInfo, 'plain-boot-card', 'e1-drill-yard');
+  await expect(page.getByTestId('contract-card-e1-drill-yard')).toHaveAttribute('data-training-ground', 'true');
+  await expect(page.getByTestId('contract-board-briefing-e1-drill-yard')).toHaveCount(0);
+  await expect(page.getByTestId('contract-best-e1-drill-yard')).toHaveCount(0);
+  await expect(page.getByTestId('contract-flavor-e1-drill-yard')).toHaveText(
+    'Practice ground — no stakes, no claim. The county lends the gold; the straw men lend their patience.',
+  );
+  await expect(page.getByTestId('contract-launch-e1-drill-yard')).toHaveText('Enter the yard');
+  await shot(page, testInfo, 'after-board', 'e1-drill-yard');
   await page.getByTestId('contract-launch-e1-drill-yard').click();
   await expect.poll(() => new URL(page.url()).searchParams.get('contract')).toBe('e1-drill-yard');
   await expect(page.getByTestId('drill-yard-exit')).toBeVisible({ timeout: 15_000 });
+  const trainingTag = page.getByTestId('drill-yard-training-tag');
+  await expect(trainingTag).toBeVisible();
+  await expect(trainingTag).toHaveText('DRILL YARD — training');
+  await page.keyboard.press('KeyP');
+  const pauseTraining = page.getByTestId('pause-drill-yard-training');
+  await expect(pauseTraining).toBeVisible();
+  await expect(pauseTraining).toHaveText('This is practice. Nothing is at stake. Leave anytime.');
   expectNoConsoleErrors(watch);
 });
 
@@ -112,7 +125,7 @@ test('The Drill Yard is a resettable, ledger-free practice claim', async ({ page
   const card = page.getByTestId('contract-card-e1-drill-yard');
   await expect(card).toBeVisible();
   await expect(card).toContainText('The Drill Yard');
-  await expect(card).toContainText('The county lends the gold; the straw men lend their patience.');
+  await expect(card).toContainText('Practice ground — no stakes, no claim.');
   await expect(card).toHaveAttribute('data-contract-locked', 'false');
   await shot(page, testInfo, 'card');
   const storageBeforeLaunch = await persistenceSnapshot(page);

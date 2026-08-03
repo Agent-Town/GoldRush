@@ -7471,7 +7471,8 @@ export class Game {
     const meter = scienceMeter(this.researchState);
     const secureWave = this.secureWaveForRun();
     return {
-      save: this.runSuspendSaveLine,
+      training: this.activeContract.practice !== undefined,
+      save: this.activeContract.practice ? 'Practice resets when you leave.' : this.runSuspendSaveLine,
       goalProgress: secureWave > 0 && this.autoSecureWaveForRun() === secureWave
         ? `Secure the claim at wave ${secureWave} — wave ${Math.min(this.waveSystem.diagnostics.wave, secureWave)}/${secureWave}`
         : null,

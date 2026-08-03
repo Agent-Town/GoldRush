@@ -84,11 +84,13 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
 
 async function expectChapter(page: Page, index: number): Promise<void> {
   const epoch = EPOCHS[index]!;
+  const claims = epoch.contracts.filter((contract) => !contract.practice);
   await page.getByTestId(`contract-chapter-tab-${epoch.id}`).click();
   const chapter = page.getByTestId(`contract-chapter-${epoch.id}`);
   await expect(chapter).toBeVisible();
-  await expect(chapter.locator('[data-contract-id]')).toHaveCount(epoch.contracts.length);
-  await expect(chapter.locator('[data-contract-launch]')).toHaveCount(epoch.contracts.length);
+  await expect(chapter.locator('[data-contract-id]')).toHaveCount(claims.length);
+  await expect(chapter.locator('[data-contract-launch]')).toHaveCount(claims.length);
+  await expect(page.getByTestId('training-ground')).toHaveCount(epoch.contracts.some((contract) => contract.practice) ? 1 : 0);
 }
 
 function expectNoErrors(errors: ErrorBucket): void {

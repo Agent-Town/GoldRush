@@ -61,7 +61,7 @@ test('the board hides future epochs and keeps reached-era contract gates', async
   await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(1);
   await expect(page.getByTestId('contract-chapter-count')).toHaveText('1 / 1');
   await expect(page.getByTestId('contract-chapter-epoch-1-frontier').locator('[data-contract-id]')).toHaveCount(
-    loadEpoch('epoch-1-frontier').contracts.length,
+    loadEpoch('epoch-1-frontier').contracts.filter((contract) => !contract.practice).length,
   );
   for (const epochId of [
     'epoch-2-steamworks',

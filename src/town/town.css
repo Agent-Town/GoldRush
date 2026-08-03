@@ -495,6 +495,13 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.town-ui__board-sections {
+  display: grid;
+  align-self: start;
+  gap: 18px;
+  min-width: 0;
+}
+
 .town-ui__book-chapter {
   align-self: start;
   min-width: 0;
@@ -534,6 +541,61 @@
   display: grid;
   gap: 12px;
   padding: 12px;
+}
+
+.town-ui__training-ground {
+  display: grid;
+  gap: 10px;
+  border-top: 4px double rgba(91, 138, 138, 0.82);
+  padding-top: 14px;
+}
+
+.town-ui__training-ground-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 4px;
+}
+
+.town-ui__training-ground-header h3,
+.town-ui__training-ground-header span {
+  margin: 0;
+}
+
+.town-ui__training-ground-header h3 {
+  color: #355f5f;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+}
+
+.town-ui__training-ground-header span {
+  color: rgba(46, 27, 14, 0.7);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.town-ui__contract.town-ui__training-card {
+  border: 3px solid #5b8a8a;
+  background:
+    linear-gradient(135deg, rgba(236, 238, 207, 0.98), rgba(206, 222, 194, 0.98)),
+    #e4e3c2;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 248, 232, 0.68),
+    0 3px 0 rgba(53, 95, 95, 0.6);
+}
+
+.town-ui__training-card .town-ui__contract-tag {
+  background: #8b7d3c;
+}
+
+.town-ui__training-card .town-ui__contract-state {
+  background: #d7e5c6;
+}
+
+.town-ui__training-card .town-ui__contract-action {
+  background: #8b7d3c;
 }
 
 .town-ui__catalog-arrow {
@@ -1248,6 +1310,21 @@ figure:has(> .town-ui__contract-art-image--interim)::after {
 
   .town-ui__chapter-contracts {
     padding: 8px;
+  }
+
+  .town-ui__board-sections {
+    gap: 12px;
+  }
+
+  .town-ui__training-ground {
+    gap: 8px;
+    padding-top: 10px;
+  }
+
+  .town-ui__training-ground-header {
+    align-items: start;
+    flex-direction: column-reverse;
+    gap: 3px;
   }
 
   .town-ui__chapter-tabs {

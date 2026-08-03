@@ -369,7 +369,7 @@ test('plain no-debug board launch still briefs The Claim', async ({ page }) => {
 test('board cards show the same briefing data', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await openBoard(page, true);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(6);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
   for (const contract of CONTRACTS) await assertBoardBriefing(page, contract);
   await page.getByTestId('contract-chapter-tab-epoch-1-frontier').click();
   await shot(page, testInfo, 'board-briefings');

@@ -29,6 +29,26 @@
   display: none !important;
 }
 
+.hud-training-tag {
+  position: absolute;
+  top: 50%;
+  left: max(16px, env(safe-area-inset-left));
+  z-index: 2;
+  margin: 0;
+  border: 2px solid var(--at-teal-600);
+  border-radius: 6px;
+  padding: 5px 10px;
+  color: var(--at-wood-950);
+  background: rgba(236, 238, 207, 0.94);
+  box-shadow: 0 3px 0 rgba(46, 27, 14, 0.58);
+  font: 900 0.72rem/1 Wellfleet, Georgia, serif;
+  letter-spacing: 0.05em;
+  max-width: 144px;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translateY(-50%);
+}
+
 .asset-loading-cue {
   position: absolute;
   bottom: max(14px, env(safe-area-inset-bottom));
@@ -567,6 +587,14 @@
 .hud-meta__line {
   margin: 0;
   font-weight: 800;
+}
+
+.hud-meta__training {
+  margin: 0;
+  border-left: 3px solid var(--at-teal-600);
+  padding: 6px 8px;
+  background: rgba(91, 138, 138, 0.12);
+  font-weight: 900;
 }
 
 .hud-meta__save {
@@ -1609,6 +1637,10 @@
 }
 
 @media (max-width: 760px) {
+  .hud-training-tag {
+    left: max(12px, env(safe-area-inset-left));
+  }
+
   .hud-panel {
     padding: 8px 10px;
   }

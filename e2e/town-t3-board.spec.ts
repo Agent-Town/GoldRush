@@ -4,11 +4,12 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
+import { expectNoConsoleErrors, watchErrors, type ErrorWatch } from './support/console-watch';
 
 const ARTIFACT_DIR = path.resolve('artifacts/board-full-picture');
-const E1_CONTRACT_COUNT = loadEpoch('epoch-1-frontier').contracts.length;
+const E1_CONTRACT_COUNT = loadEpoch('epoch-1-frontier').contracts.filter((contract) => !contract.practice).length;
 
-type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+type ErrorBucket = ErrorWatch;
 type SeedScore = {
   waves: number;
   kills?: number;
@@ -36,12 +37,7 @@ const BOARD_CONTRACTS = [
 ] as const;
 
 function collectErrors(page: Page): ErrorBucket {
-  const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
-  page.on('console', (message) => {
-    if (message.type() === 'error') bucket.consoleErrors.push(message.text());
-  });
-  page.on('pageerror', (error) => bucket.pageErrors.push(error.message));
-  return bucket;
+  return watchErrors(page);
 }
 
 async function seedStorage(page: Page, seed: SeedState = {}): Promise<void> {
@@ -154,8 +150,7 @@ function contractHash(diagnostics: NonNullable<Window['__THREE_GAME_DIAGNOSTICS_
 }
 
 function assertNoErrors(errors: ErrorBucket): void {
-  expect(errors.consoleErrors).toEqual([]);
-  expect(errors.pageErrors).toEqual([]);
+  expectNoConsoleErrors(errors);
 }
 
 test('contract board renders manifest rows, locks, conditions, and per-contract bests', async ({ page }, testInfo) => {
