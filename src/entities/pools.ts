@@ -41,6 +41,15 @@ const BOSS_HP_STYLE = {
 const RAILCAR_DAMAGE_THRESHOLD = 0.5;
 const RAILCAR_RAIL_HEAD_Y = 0.125;
 const RAILCAR_3D_HEIGHT = 1.202;
+const BOSS_BAR_HEAD_ANCHORS = {
+  baron: { scale: 1.5, clearance: 0.35 },
+  baron_railcar: { scale: 1.5, clearance: 0.95, mountedClearance: 0.35 },
+  dredge_queen: { scale: 1.5, clearance: 0.95 },
+  homemaker_9000: { scale: 1.5, clearance: 0.95 },
+  salvage_claw: { scale: 1.5, clearance: 0.95 },
+  old_digger: { scale: 1.5, clearance: 0.95 },
+} as const;
+const DEFAULT_BOSS_BAR_HEAD_ANCHOR = { scale: 1.5, clearance: 0.95 } as const;
 const RAILCAR_3D_URL = new URL('../../assets/pilots/railcar-3d/railcar.glb', import.meta.url).href;
 const RAILCAR_3D_TRIANGLES = 10_948;
 const RAILCAR_3D_COMPONENTS = {
@@ -218,7 +227,6 @@ type BossBarState = {
   y: number;
   z: number;
   scale: number;
-  yaw: number | null;
   ratio: number;
   segments: number;
   groupId: string | null;
@@ -1068,6 +1076,8 @@ export class EnemyPool {
       }
     }
     if (grouped?.bossGroupId) {
+      const anchor = BOSS_BAR_HEAD_ANCHORS[grouped.variantId as keyof typeof BOSS_BAR_HEAD_ANCHORS]
+        ?? DEFAULT_BOSS_BAR_HEAD_ANCHOR;
       let hp = 0;
       let totalHp = grouped.bossGroupTotalHp;
       let x = 0;
@@ -1084,7 +1094,7 @@ export class EnemyPool {
         maxHp += enemy.maxHp;
         x += enemy.position.x;
         z += enemy.position.z;
-        y = Math.max(y, enemy.position.y + 1.5 * enemy.visualScale);
+        y = Math.max(y, enemy.position.y + anchor.scale * enemy.visualScale + anchor.clearance);
         scale = Math.max(scale, enemy.visualScale * 0.74);
         components?.push({
           id: enemy.bossComponentId ?? enemy.variantId ?? `part-${enemy.id}`,
@@ -1098,10 +1108,9 @@ export class EnemyPool {
       const segments = Math.max(1, Math.min(BOSS_HP_MAX_SEGMENTS, grouped.bossGroupSize || members));
       return {
         x: x / members,
-        y: y + 0.95,
+        y,
         z: z / members,
         scale: Math.max(1, scale),
-        yaw: null,
         ratio: THREE.MathUtils.clamp(hp / Math.max(1, totalHp), 0, 1),
         segments,
         groupId: grouped.bossGroupId,
@@ -1114,12 +1123,12 @@ export class EnemyPool {
 
     const baron = this.activeBaron();
     if (!baron) return null;
+    const anchor = BOSS_BAR_HEAD_ANCHORS.baron;
     return {
       x: baron.position.x,
-      y: baron.position.y + 2.45 * baron.visualScale,
+      y: baron.position.y + anchor.scale * baron.visualScale + anchor.clearance,
       z: baron.position.z,
       scale: Math.max(1, baron.visualScale * 0.88),
-      yaw: baron.group.rotation.y,
       ratio: THREE.MathUtils.clamp(baron.currentHp / Math.max(1, baron.maxHp), 0, 1),
       segments: BOSS_HP_MAX_SEGMENTS,
       groupId: null,
@@ -1296,11 +1305,15 @@ export class EnemyPool {
     const railcarMounted = this.railcar3dState === 'ready' && this.railcar3dGroupId === state.groupId;
     this.bossHpGroup.position.set(
       railcarMounted ? this.railcar3dCenter.x : state.x,
-      railcarMounted ? this.railcar3dModel!.position.y + RAILCAR_3D_HEIGHT + 0.35 : state.y,
+      railcarMounted
+        ? this.railcar3dModel!.position.y + RAILCAR_3D_HEIGHT + BOSS_BAR_HEAD_ANCHORS.baron_railcar.mountedClearance
+        : state.y,
       railcarMounted ? this.railcar3dCenter.z : state.z,
     );
-    if (state.yaw === null && this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
-    else this.bossHpGroup.rotation.set(0, state.yaw ?? 0, 0);
+    // Mistake #6 still stands for building damage bars: world things anchor in the building's frame.
+    // Boss readability overrides orientation only: follow the head position, but never inherit body sway/rotation.
+    if (this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
+    else this.bossHpGroup.quaternion.identity();
     this.bossHpGroup.scale.setScalar(railcarMounted ? 1 : state.scale);
     this.bossHpFill.scale.x = state.ratio;
     this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - state.ratio) * 0.5;
@@ -1324,7 +1337,13 @@ export class EnemyPool {
     canvas.dataset.bossBarRemainingColor = `#${this.bossHpFillMaterial.color.getHexString()}`;
     canvas.dataset.bossBarDepletedColor = `#${this.bossHpBackMaterial.color.getHexString()}`;
     canvas.dataset.bossBarComponent = 'shared';
-    canvas.dataset.bossBarAnchor = state ? (state.yaw === null ? 'camera' : 'object') : 'none';
+    canvas.dataset.bossBarAnchor = state ? 'head-screen' : 'none';
+    canvas.dataset.bossBarOrientation = state
+      ? this.bossHpGroup.quaternion.toArray().map(round3).join(',')
+      : 'none';
+    canvas.dataset.bossBarPosition = state
+      ? this.bossHpGroup.position.toArray().map(round3).join(',')
+      : 'none';
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {

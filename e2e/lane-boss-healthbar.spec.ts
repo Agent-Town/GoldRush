@@ -25,7 +25,7 @@ test('boss damage leaves green life over red loss', async ({ page }, testInfo) =
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-visible', 'true');
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-semantic', 'health');
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-component', 'shared');
-  await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-anchor', 'object');
+  await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-anchor', 'head-screen');
   const bar = await page.locator('#game-canvas').evaluate((canvas: HTMLCanvasElement) => ({
     remaining: Number(canvas.dataset.bossBarRemaining),
     depleted: Number(canvas.dataset.bossBarDepleted),
@@ -40,7 +40,32 @@ test('boss damage leaves green life over red loss', async ({ page }, testInfo) =
   expect(bar.remaining).toBeLessThan(1);
   expect(bar.depleted).toBeCloseTo(1 - bar.remaining, 3);
 
-  await page.waitForTimeout(2_000);
+  const motion = await page.evaluate(async () => {
+    const test = window.__GR_TEST__!;
+    const samples: Array<{ orientation: string; bar: number[] }> = [];
+    for (const [x, z, rotationY] of [[-8, -3, -1.1], [9, -1, 2.2], [0, 12, 0.4]] as const) {
+      const snapshot = structuredClone(test.captureSuspend());
+      const boss = snapshot.enemies.active.find((enemy) => enemy.eliteKind === 'baron');
+      if (!boss) throw new Error('missing moving boss');
+      boss.position.x = x;
+      boss.position.z = z;
+      boss.rotationY = rotationY;
+      if (!test.restoreSuspend(snapshot)) throw new Error('failed to script boss movement');
+      test.advanceSim(1 / 30);
+      await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+      const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas')!;
+      samples.push({
+        orientation: canvas.dataset.bossBarOrientation ?? '',
+        bar: (canvas.dataset.bossBarPosition ?? '').split(',').map(Number),
+      });
+    }
+    return samples;
+  });
+  expect(new Set(motion.map(({ orientation }) => orientation)).size).toBe(1);
+  expect(new Set(motion.map(({ bar }) => `${bar[0]},${bar[2]}`)).size).toBe(3);
+  expect(motion.every(({ bar }) => bar[1]! > 0), JSON.stringify(motion)).toBe(true);
+
+  await page.waitForTimeout(4_500);
   await mkdir(SHOT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(SHOT_DIR, `${testInfo.project.name}-mid-fight.png`) });
   expect(errors).toEqual([]);
