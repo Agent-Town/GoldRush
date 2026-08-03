@@ -65,12 +65,21 @@ async function palisades(page: Page): Promise<number> {
   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisades ?? -1);
 }
 
+async function kitGrantAmounts(page: Page): Promise<number[]> {
+  return page.evaluate(() =>
+    ((window.__GR_TEST__?.economyLog() ?? []) as EconomyEvent[])
+      .filter((event) => event.type === 'palisade_kit_granted')
+      .map((event) => event.amount),
+  );
+}
+
 test('T1 banks the old ring as a run-scoped palisade kit and spends it before gold', async ({ page }, testInfo: TestInfo) => {
   test.setTimeout(45_000);
   const errors = await openGame(page, 1, `territory-kit-${testInfo.project.name}`);
 
   await expect.poll(() => palisades(page)).toBe(0);
   await expect.poll(() => kitCredits(page)).toBe(KIT_SIZE);
+  expect(await kitGrantAmounts(page)).toEqual([KIT_SIZE]);
 
   await page.keyboard.press('KeyB');
   await expect(page.getByTestId('hud-build-tile-palisade')).toContainText(`Palisade kit: ${KIT_SIZE} free`);
@@ -92,6 +101,7 @@ test('T1 banks the old ring as a run-scoped palisade kit and spends it before go
   await dismissBriefing(page);
   await expect.poll(() => palisades(page)).toBe(1);
   await expect.poll(() => kitCredits(page)).toBe(KIT_SIZE - 1);
+  expect(await kitGrantAmounts(page)).toEqual([KIT_SIZE]);
   for (let index = 1; index < KIT_SIZE; index += 1) await placePalisade(page, PALISADE_SITES[index]!);
 
   await expect.poll(() => kitCredits(page)).toBe(0);
@@ -125,6 +135,8 @@ test('T0 keeps ordinary paid palisade placement unchanged', async ({ page }) => 
   const errors = await openGame(page, 0, 'territory-kit-t0');
   await expect.poll(() => palisades(page)).toBe(0);
   await expect.poll(() => kitCredits(page)).toBe(0);
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.logLength)).resolves.toBe(0);
+  expect(await kitGrantAmounts(page)).toEqual([]);
 
   await page.keyboard.press('KeyB');
   await expect(page.getByTestId('hud-build-tile-palisade')).not.toContainText('Palisade kit:');

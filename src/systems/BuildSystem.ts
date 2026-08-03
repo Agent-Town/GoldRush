@@ -546,7 +546,7 @@ export class BuildSystem {
     }
     if (granted === undefined) {
       granted = Math.max(0, Math.floor(total));
-      this.economy.apply({ id: crypto.randomUUID(), at: this.currentAt, type: 'palisade_kit_granted', amount: granted });
+      if (granted > 0) this.economy.apply({ id: crypto.randomUUID(), at: this.currentAt, type: 'palisade_kit_granted', amount: granted });
     }
     this.palisadeKitCredits = Math.max(0, granted - used);
   }
