@@ -159,10 +159,11 @@ while true; do
       clean-tests)
         rm -rf "$ROOT/test-results" "$ROOT/playwright-report" 2>/dev/null
         echo "[janitor] cleaned test artifacts" ;;
-      *) echo "[janitor] unknown op in $(basename "$req") — ignored" ;;
+      *) echo "[janitor] REJECTED $(basename "$req"): unknown op \"$op\" (expected line1=op, line2=arg)"
+         archive_prefix=janitor-REJECTED ;;
     esac
     if [ "$consume" = 1 ]; then
-      mv "$req" "$ROOT/tasks/done/janitor-$(date +%s)-$(basename "$req")" 2>/dev/null
+      mv "$req" "$ROOT/tasks/done/${archive_prefix:-janitor}-$(date +%s)-$(basename "$req")" 2>/dev/null; unset archive_prefix
     fi
   done
   find "$ROOT/.git" -maxdepth 2 \( -name '*.stale*' -o -name 'tmp_obj_*' \) -type f -delete 2>/dev/null
