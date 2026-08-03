@@ -2544,10 +2544,10 @@ export class TownScene {
       .map((name) => this.scene.getObjectByName(name) as THREE.Mesh | undefined)
       .filter((fixture): fixture is THREE.Mesh => !!fixture);
     const coolWhiteEmissiveFixtures = fixtures.filter((fixture) => {
-      const material = fixture.material as THREE.MeshBasicMaterial;
-      if (!material.isMeshBasicMaterial) return false;
+      const color = (fixture.material as THREE.Material & { color?: THREE.Color }).color;
+      if (!color) throw new Error(`${fixture.name} light fixture material has no color`);
       const hsl = { h: 0, s: 0, l: 0 };
-      material.color.getHSL(hsl);
+      color.getHSL(hsl);
       return hsl.s < 0.25 && hsl.l > 0.65;
     }).length;
     return {
