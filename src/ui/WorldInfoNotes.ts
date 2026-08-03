@@ -1,5 +1,7 @@
 import { activeProfile, markHintSeen, type ProfileStorage } from '../game/ProfileStorage';
 
+const RELEASE_E1 = typeof __GR_RELEASE_E1__ !== 'undefined' && __GR_RELEASE_E1__;
+
 export type WorldInfoObjectClass =
   | 'gold_seam'
   | 'sentry_beacon'
@@ -117,9 +119,9 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
   },
   {
     objectClass: 'megaproject_site',
-    title: 'Stamp Mill Site',
-    lines: ['The Steamworks door. Fund stages, hold waves, and the mill rises.'],
-    actionHint: 'The site signboard carries the dedicated mill readout.',
+    title: RELEASE_E1 ? 'The Stamp Mill stands ready.' : 'Stamp Mill Site',
+    lines: [RELEASE_E1 ? 'The era turns when the wider world sends word.' : 'The Steamworks door. Fund stages, hold waves, and the mill rises.'],
+    actionHint: RELEASE_E1 ? undefined : 'The site signboard carries the dedicated mill readout.',
   },
   {
     objectClass: 'drill_straw_man',

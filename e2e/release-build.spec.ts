@@ -1,4 +1,6 @@
 import { execFileSync } from 'node:child_process';
+import { mkdirSync } from 'node:fs';
+import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import {
@@ -124,6 +126,31 @@ test('the schoolhouse ledger opens clean on a progressed frontier save', async (
   await page.waitForTimeout(500);
   expectNoConsoleErrors(watch);
   await expect(page.getByTestId('schoolhouse-close')).toBeVisible({ timeout: 10_000 });
+});
+
+test('the in-run Stamp Mill site explains the release horizon without funding controls', async ({ page }, testInfo) => {
+  const watch = watchErrors(page);
+  await seedProfile(page, { contractId: 'the-claim', unlocked: true });
+  await page.goto('/?contract=the-claim');
+  await waitForContract(page, 'the-claim');
+  if (await page.getByTestId('contract-briefing').isVisible().catch(() => false)) {
+    await page.getByTestId('contract-briefing-dismiss').click();
+  }
+  const footprint = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.megaproject.siteFootprint ?? null);
+  expect(footprint).toBeTruthy();
+  await moveHeroTo(page, footprint!.x, footprint!.z - footprint!.d * 0.5 - 0.72);
+
+  await expect(page.getByTestId('world-info-note-title')).toHaveText('The Stamp Mill stands ready.');
+  await expect(page.getByTestId('world-info-note-body')).toHaveText('The era turns when the wider world sends word.');
+  await expect(page.getByTestId('building-context-prompt')).toBeHidden();
+  await expect(page.getByTestId('stamp-site-fund')).toBeHidden();
+  await page.keyboard.press('Enter');
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.megaproject.funded)).toBe(false);
+
+  const artifactDir = path.resolve('artifacts/mill-horizon-copy');
+  mkdirSync(artifactDir, { recursive: true });
+  await page.screenshot({ path: path.join(artifactDir, `${testInfo.project.name}-in-run.png`) });
+  expectNoConsoleErrors(watch);
 });
 
 test('debug and era query seams are inert', async ({ page }) => {

@@ -4203,6 +4203,7 @@ export class Game {
   }
 
   private fundMegaprojectStage(position?: THREE.Vector3): boolean {
+    if (__GR_RELEASE_E1__) return false;
     const manifest = this.megaprojectManifest;
     const project = this.megaprojectProject;
     if (!manifest || !project || !this.megaprojectUnlocked() || megaprojectComplete(manifest, project) || project.funded) return false;
@@ -4300,6 +4301,7 @@ export class Game {
   }
 
   private megaprojectFundCandidate(position: THREE.Vector3): MegaprojectFundCandidate | null {
+    if (__GR_RELEASE_E1__) return null;
     const manifest = this.megaprojectManifest;
     const project = this.megaprojectProject;
     if (!manifest || !project || !this.megaprojectUnlocked() || megaprojectComplete(manifest, project) || project.funded) return null;
