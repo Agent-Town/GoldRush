@@ -783,6 +783,26 @@
               "status": "merged",
               "mergeHash": "a20055dbb6b7a36bd36f993c6a9204315d03fe94",
               "reason": "Registered and flipped in the same fire (s1438): the 2026-08-03 attended gate-walk campaign authored this master with no leaf, so drain-block-check answered UNKNOWN for it and for all six done-moves in the pile (F-1438-3). Merged a20055db after the night3d-perf:67 red was refuted by a control run on clean main."
+            },
+            {
+              "id": "tb-stall-census",
+              "title": "F-BW-14 — Twin Banks stall census + goal-side crossing choice (owner: \"the opponents have a lot of trouble finding their way\")",
+              "taskFile": "lane-tb-stall-census.md",
+              "status": "stopped",
+              "lane": "lane-c",
+              "authoredBy": "attended-gate-walk",
+              "registeredBy": "s1441",
+              "authorNotes": "REGISTERED RETROACTIVELY BY THE DRAIN (F-1441-1): drain-block-check answered UNKNOWN on 20260803-181625-lane-tb-stall-census.md, rc=0 by default, which is NOT a clearance (3.0). Fifth consecutive fire to find a gate-walk-campaign master unregistered (F-1438-3, F-1439-2, F-1440-1, F-1441-1). STATUS IS \"stopped\", NOT \"merged\", and carries no mergeHash on purpose: s1441 drained it PARTIAL. Only scripts/twin-banks-stall-census.mjs landed (banked evidence, commit 1b9c2f0c7dc91e11500c593d7af0c7d6f6f3c895, not gate-wired, not executed on main). src/entities/Enemy.ts and e2e/twin-banks-never-wedged.spec.ts were WITHHELD per F-1441-2 and are preserved at archive/lane-e2-arsenal-s1441-9236e9ba. DO NOT RE-QUEUE THIS MASTER — its successor is f1441-2-crossings-keep-their-z.md, which starts from the archived commit."
+            },
+            {
+              "id": "f1441-2-crossings-keep-their-z",
+              "title": "F-1441-2 — a crossing is a place, not an x-band: make the enemy resolvers crossing test z-aware so the stall fix stops letting bandits swim",
+              "taskFile": "f1441-2-crossings-keep-their-z.md",
+              "status": "planned",
+              "lane": "lane-c",
+              "authoredBy": "s1441",
+              "registeredBy": "s1441",
+              "authorNotes": "FIRE-AUTHORED from measured evidence (reviews/lane-tb-stall-census.md), not from a spec slice. NOT DISPATCHED by s1441: lane/e2-arsenal still holds the withheld 9236e9ba, so a refill pre-flight would stop on it; the content is archived at archive/lane-e2-arsenal-s1441-9236e9ba so a cure loses nothing. Three citation keys were each proven to return exactly 1 against the SOURCE FILE ON MAIN at authoring time and each sits on one line (F-1425-2); re-prove them in the lane after refresh, then cp (F-1424-3 order)."
             }
           ]
         },
