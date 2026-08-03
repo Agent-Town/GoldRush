@@ -765,22 +765,24 @@ function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Hos
   const poolDarkness = { value: 0 };
   const poolIntensity = { value: Balance.contracts.nightShift.terrainPoolIntensity };
   const poolFalloff = { value: Balance.contracts.nightShift.lightFalloff };
+  const poolCandidates: LightSource[] = [];
   let lastUpdatedFrame = -1;
   const updateNightPools = (renderer: THREE.WebGLRenderer) => {
     if (renderer.info.render.frame === lastUpdatedFrame) return;
     lastUpdatedFrame = renderer.info.render.frame;
     const snapshot = host.nightLighting?.();
     poolDarkness.value = snapshot?.darkness ?? 0;
-    const sources = snapshot?.sources
-      .filter((source) => source.kind !== 'watch')
-      .sort((a, b) => nightPoolPriority(a) - nightPoolPriority(b) || a.id.localeCompare(b.id))
-      .slice(0, NIGHT_POOL_SHADER_CAP) ?? [];
-    poolCount.value = sources.length;
+    poolCandidates.length = 0;
+    for (const source of snapshot?.sources ?? []) {
+      if (source.kind !== 'watch') poolCandidates.push(source);
+    }
+    poolCandidates.sort((a, b) => nightPoolPriority(a) - nightPoolPriority(b) || a.id.localeCompare(b.id));
+    poolCount.value = Math.min(poolCandidates.length, NIGHT_POOL_SHADER_CAP);
     for (let index = 0; index < NIGHT_POOL_SHADER_CAP; index += 1) {
-      const source = sources[index];
+      const source = index < poolCount.value ? poolCandidates[index] : undefined;
       poolSources[index]!.set(source?.x ?? 0, source?.z ?? 0, source?.radius ?? 0, isWarmPool(source) ? 1 : 0);
     }
-    host.canvas.dataset.terrain3dPilotNightPoolSources = String(sources.length);
+    host.canvas.dataset.terrain3dPilotNightPoolSources = String(poolCount.value);
   };
   for (const material of materials) {
     if (!(material as THREE.MeshStandardMaterial).isMeshStandardMaterial) continue;

@@ -1109,6 +1109,25 @@ interface Window {
         droppedTicks: number;
       };
     };
+    renderCensus: () => {
+      renderer: { calls: number; triangles: number; programs: number; geometries: number; textures: number };
+      scene: {
+        singletonMeshes: number;
+        instancedMeshes: number;
+        instances: number;
+        sprites: number;
+        points: number;
+        lines: number;
+        uniqueGeometries: number;
+        uniqueMaterials: number;
+        shadowCasters: number;
+        shadowReceivers: number;
+        animatedObjects: number;
+        topSingletons: Array<{ name: string; count: number }>;
+        topInstances: Array<{ name: string; instances: number }>;
+        topMaterials: Array<{ label: string; uses: number }>;
+      };
+    };
     triggerDamSurge: () => boolean;
     damSurge: () => import('./systems/DamSurgeEvent').DamSurgeDiagnostics | null;
     resetRun: () => void;

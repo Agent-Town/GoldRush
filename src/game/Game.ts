@@ -1098,9 +1098,11 @@ export class Game {
   private charmPauseCooldown = 0;
   private charmPauseActive = false;
   private readonly frameMsSamples: number[] = [];
+  private readonly sortedFrameMsSamples: number[] = [];
   private readonly profileFrameMs: number[] = [];
   private readonly profileDrawCalls: number[] = [];
   private frameMsCursor = 0;
+  private frameMsTotal = 0;
   private frameMsLast = 0;
   private frameMsAvg = 0;
   private frameMsP95 = 0;
@@ -1818,6 +1820,7 @@ export class Game {
           diagnostics: () => this.e10StaticBoss.diagnostics(),
         },
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
+        renderCensus: () => this.renderCensus(),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
         damSurge: () => this.damSurge?.diagnostics() ?? null,
         resetRun: () => this.resetRun(),
@@ -4566,18 +4569,22 @@ export class Game {
     const windowFrames = Math.max(12, Math.floor(Balance.render.night.windowFrames));
     if (this.frameMsSamples.length < windowFrames) {
       this.frameMsSamples.push(frameMs);
+      this.frameMsTotal += frameMs;
     } else {
+      this.frameMsTotal += frameMs - (this.frameMsSamples[this.frameMsCursor] ?? 0);
       this.frameMsSamples[this.frameMsCursor] = frameMs;
       this.frameMsCursor = (this.frameMsCursor + 1) % this.frameMsSamples.length;
     }
 
-    let total = 0;
-    for (const sample of this.frameMsSamples) total += sample;
-    this.frameMsAvg = total / this.frameMsSamples.length;
+    this.frameMsAvg = this.frameMsTotal / this.frameMsSamples.length;
 
-    const sorted = [...this.frameMsSamples].sort((a, b) => a - b);
-    const p95Index = Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95));
-    this.frameMsP95 = sorted[p95Index] ?? 0;
+    this.sortedFrameMsSamples.length = this.frameMsSamples.length;
+    for (let index = 0; index < this.frameMsSamples.length; index += 1) {
+      this.sortedFrameMsSamples[index] = this.frameMsSamples[index]!;
+    }
+    this.sortedFrameMsSamples.sort((a, b) => a - b);
+    const p95Index = Math.min(this.sortedFrameMsSamples.length - 1, Math.floor(this.sortedFrameMsSamples.length * 0.95));
+    this.frameMsP95 = this.sortedFrameMsSamples[p95Index] ?? 0;
     this.updateRuntimePerformanceVerdict(frameMs);
   }
 
@@ -4640,7 +4647,9 @@ export class Game {
 
   private resetFrameWindow(): void {
     this.frameMsSamples.length = 0;
+    this.sortedFrameMsSamples.length = 0;
     this.frameMsCursor = 0;
+    this.frameMsTotal = 0;
     this.frameMsAvg = 0;
     this.frameMsP95 = 0;
     this.renderCollapseSeconds = 0;
@@ -5420,6 +5429,78 @@ export class Game {
     this.profileElapsed = 0;
     this.profileFrameMs.length = 0;
     this.profileDrawCalls.length = 0;
+  }
+
+  private renderCensus() {
+    const materials = new Map<string, { label: string; uses: number }>();
+    const geometries = new Set<string>();
+    const singletonLabels = new Map<string, number>();
+    const instanceMeshes: Array<{ name: string; instances: number }> = [];
+    let singletonMeshes = 0;
+    let instancedMeshes = 0;
+    let instances = 0;
+    let sprites = 0;
+    let points = 0;
+    let lines = 0;
+    let shadowCasters = 0;
+    let shadowReceivers = 0;
+    let animatedObjects = 0;
+
+    this.scene.traverseVisible((object) => {
+      if (object.onBeforeRender !== THREE.Object3D.prototype.onBeforeRender) animatedObjects += 1;
+      if (object instanceof THREE.InstancedMesh) {
+        instancedMeshes += 1;
+        instances += object.count;
+        instanceMeshes.push({ name: object.name || object.parent?.name || 'InstancedMesh', instances: object.count });
+      } else if (object instanceof THREE.Mesh) {
+        singletonMeshes += 1;
+        const label = object.name || object.parent?.name || object.type;
+        singletonLabels.set(label, (singletonLabels.get(label) ?? 0) + 1);
+      } else if (object instanceof THREE.Sprite) sprites += 1;
+      else if (object instanceof THREE.Points) points += 1;
+      else if (object instanceof THREE.Line) lines += 1;
+
+      const renderable = object as THREE.Object3D & {
+        geometry?: THREE.BufferGeometry;
+        material?: THREE.Material | THREE.Material[];
+        castShadow?: boolean;
+        receiveShadow?: boolean;
+      };
+      if (renderable.geometry) geometries.add(renderable.geometry.uuid);
+      for (const material of renderable.material ? (Array.isArray(renderable.material) ? renderable.material : [renderable.material]) : []) {
+        const entry = materials.get(material.uuid) ?? { label: material.name || material.type, uses: 0 };
+        entry.uses += 1;
+        materials.set(material.uuid, entry);
+      }
+      shadowCasters += Number(renderable.castShadow === true);
+      shadowReceivers += Number(renderable.receiveShadow === true);
+    });
+
+    return {
+      renderer: {
+        calls: this.renderer.info.render.calls,
+        triangles: this.renderer.info.render.triangles,
+        programs: this.renderer.info.programs?.length ?? 0,
+        geometries: this.renderer.info.memory.geometries,
+        textures: this.renderer.info.memory.textures,
+      },
+      scene: {
+        singletonMeshes,
+        instancedMeshes,
+        instances,
+        sprites,
+        points,
+        lines,
+        uniqueGeometries: geometries.size,
+        uniqueMaterials: materials.size,
+        shadowCasters,
+        shadowReceivers,
+        animatedObjects,
+        topSingletons: [...singletonLabels].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([name, count]) => ({ name, count })),
+        topInstances: instanceMeshes.sort((a, b) => b.instances - a.instances).slice(0, 12),
+        topMaterials: [...materials.values()].sort((a, b) => b.uses - a.uses).slice(0, 12),
+      },
+    };
   }
 
   private fadeOverlaysActive(): number {

@@ -266,6 +266,7 @@ export class EnemyPool {
   private readonly previousRotations: number[] = [];
   private readonly currentRotations: number[] = [];
   private readonly renderRotations: number[] = [];
+  private readonly renderedLightFactors = Array<number>(Balance.enemy.poolSize).fill(1);
   private readonly renderParts: THREE.InstancedMesh[] = [];
   private readonly railcarParts: Array<{ id: string; healthy: THREE.InstancedMesh; damaged: THREE.InstancedMesh }> = [];
   private readonly railcarLocalMatrices: THREE.Matrix4[] = [];
@@ -431,12 +432,13 @@ export class EnemyPool {
   private readonly nightIgnitionColor = new THREE.Color();
   private readonly nightLitTint = new THREE.Color(Balance.contracts.nightShift.nightSpriteTint);
   private readonly herdBias = new THREE.Vector2();
+  private readonly lightDimmingSources: EnemyLightSource[] = [];
   private lightDimming: EnemyLightDimmingConfig = {
     enabled: false,
     darkness: 0,
     minLight: 1,
     falloff: 1,
-    sources: [],
+    sources: this.lightDimmingSources,
   };
   private readonly gridSize: number;
   private readonly gridMin: number;
@@ -587,18 +589,19 @@ export class EnemyPool {
   }
 
   setLightDimming(config: EnemyLightDimmingConfig): void {
-    this.lightDimming = {
-      enabled: config.enabled,
-      darkness: THREE.MathUtils.clamp(config.darkness, 0, 1),
-      minLight: THREE.MathUtils.clamp(config.minLight, 0, 1),
-      falloff: Math.max(0.1, config.falloff),
-      sources: config.sources.map((source) => ({
-        x: source.x,
-        z: source.z,
-        radius: Math.max(0.1, source.radius),
-        kind: source.kind,
-      })),
-    };
+    this.lightDimming.enabled = config.enabled;
+    this.lightDimming.darkness = THREE.MathUtils.clamp(config.darkness, 0, 1);
+    this.lightDimming.minLight = THREE.MathUtils.clamp(config.minLight, 0, 1);
+    this.lightDimming.falloff = Math.max(0.1, config.falloff);
+    for (let index = 0; index < config.sources.length; index += 1) {
+      const source = config.sources[index]!;
+      const target = this.lightDimmingSources[index] ??= { x: 0, z: 0, radius: 0 };
+      target.x = source.x;
+      target.z = source.z;
+      target.radius = Math.max(0.1, source.radius);
+      target.kind = source.kind;
+    }
+    this.lightDimmingSources.length = config.sources.length;
   }
 
   lightFactorFor(enemy: ClaimJumperEnemy): number {
@@ -624,7 +627,7 @@ export class EnemyPool {
     return this.isWatchPainted(enemy);
   }
 
-  feverAccentFor(enemy: ClaimJumperEnemy): FeverAccentDiagnostics {
+  feverAccentFor(enemy: ClaimJumperEnemy, physicalLight = this.lightFactorFor(enemy)): FeverAccentDiagnostics {
     return feverAccentState(
       {
         alive: enemy.isAlive,
@@ -632,7 +635,7 @@ export class EnemyPool {
         variantId: enemy.variantId,
         stealState: enemy.stealState,
         wreckState: enemy.wreckState,
-        visible: this.renderLightFactor(this.lightFactorFor(enemy)) > 0,
+        visible: this.renderLightFactor(physicalLight) > 0,
       },
       this.feverPulse + enemy.id * 0.73,
     );
@@ -1325,7 +1328,9 @@ export class EnemyPool {
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
-    const lightFactor = this.renderLightFactor(this.lightFactorFor(enemy));
+    const physicalLight = this.lightFactorFor(enemy);
+    this.renderedLightFactors[enemy.id] = physicalLight;
+    const lightFactor = this.renderLightFactor(physicalLight);
     const watchPainted = this.isWatchPainted(enemy);
     const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
     const motion =
@@ -1383,7 +1388,7 @@ export class EnemyPool {
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
     this.setInstanceColor(this.sackMesh, enemy.id, enemy.isWrecker ? this.wreckerMarkerColor : this.sackColor, lightFactor);
     this.sackMesh.instanceMatrix.needsUpdate = true;
-    this.syncWatchPaint(enemy, watchPainted);
+    this.syncWatchPaint(enemy, watchPainted, physicalLight);
     this.syncBanner(enemy, lightFactor);
     const railcarBase = this.railcarVisible(enemy) && !railcar3dMounted ? this.syncObject.matrix : this.hiddenMatrix;
     for (let index = 0; index < this.railcarParts.length; index += 1) {
@@ -1564,8 +1569,8 @@ export class EnemyPool {
     this.bannerClothMesh.instanceMatrix.needsUpdate = true;
   }
 
-  private syncWatchPaint(enemy: ClaimJumperEnemy, visible: boolean): void {
-    const fever = this.feverAccentFor(enemy);
+  private syncWatchPaint(enemy: ClaimJumperEnemy, visible: boolean, physicalLight: number): void {
+    const fever = this.feverAccentFor(enemy, physicalLight);
     this.watchPaintBaseMatrix.multiplyMatrices(visible || fever.active ? this.baseMatrix : this.hiddenMatrix, this.watchPaintScaleMatrix);
     for (let index = 0; index < this.watchPaintMeshes.length; index += 1) {
       const mesh = this.watchPaintMeshes[index];
@@ -1602,7 +1607,7 @@ export class EnemyPool {
     // physicalLight is the pool light the enemy actually stands in (1 inside a radius, decaying
     // cubically across the falloff band). renderLightFactor then applies the visibility cutoff and
     // boost — that gate is sim-coupled and stays exactly where it was.
-    const physicalLight = this.lightFactorFor(enemy);
+    const physicalLight = this.renderedLightFactors[enemy.id] ?? 1;
     const lightFactor = this.renderLightFactor(physicalLight);
     const fullDark = this.fullDarkRenderCutoffActive();
     const kindled = fullDark && lightFactor > 0;

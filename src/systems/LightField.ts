@@ -31,13 +31,15 @@ export type LightFieldConfig = Readonly<{
 
 export class LightField {
   private darkness = 0;
-  private sources: readonly LightSource[] = [];
+  private readonly sources: LightSource[] = [];
 
   constructor(private readonly config: LightFieldConfig) {}
 
   update(darkness: number, sources: readonly LightSource[]): void {
     this.darkness = clamp01(darkness);
-    this.sources = [...sources].sort((a, b) => a.id.localeCompare(b.id));
+    this.sources.length = 0;
+    for (const source of sources) this.sources.push(source);
+    this.sources.sort((a, b) => a.id.localeCompare(b.id));
   }
 
   coverageAt(x: number, z: number): number {
@@ -55,15 +57,20 @@ export class LightField {
   }
 
   diagnostics(): LightFieldDiagnostics {
-    const infrastructure = this.sources.filter((source) => source.kind === 'lantern' || source.kind === 'powered-lamp');
+    let lanterns = 0;
+    let poweredLamps = 0;
+    for (const source of this.sources) {
+      lanterns += Number(source.kind === 'lantern');
+      poweredLamps += Number(source.kind === 'powered-lamp');
+    }
     return {
       darkness: this.darkness,
       minLight: this.config.minLight,
       falloff: this.config.falloff,
       litThreshold: this.config.litThreshold,
-      sources: infrastructure.length,
-      lanterns: infrastructure.filter((source) => source.kind === 'lantern').length,
-      poweredLamps: infrastructure.filter((source) => source.kind === 'powered-lamp').length,
+      sources: lanterns + poweredLamps,
+      lanterns,
+      poweredLamps,
     };
   }
 

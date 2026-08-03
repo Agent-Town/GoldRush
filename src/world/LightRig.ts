@@ -219,6 +219,8 @@ export class LightRig {
   private stressFallback = false;
   private nightPoolSources = 0;
   private nightLightLimit: number | null = null;
+  private readonly renderSources: LightSource[] = [];
+  private readonly selectedSources: LightSource[] = [];
   private nightShift: LightRigNightShiftState = { enabled: false, phase: 'full', darkness: 0 };
 
   private readonly dayPalette: LightRigDayPalette | undefined;
@@ -315,13 +317,12 @@ export class LightRig {
   }
 
   setNightShift(state: LightRigNightShiftState, sources: readonly LightSource[] = []): void {
-    this.nightShift = {
-      enabled: state.enabled,
-      phase: state.phase,
-      darkness: THREE.MathUtils.clamp(state.darkness, 0, 1),
-      lampIntensityMult: THREE.MathUtils.clamp(state.lampIntensityMult ?? 1, 0, 1),
-      ...(state.palette ? { palette: state.palette } : {}),
-    };
+    this.nightShift.enabled = state.enabled;
+    this.nightShift.phase = state.phase;
+    this.nightShift.darkness = THREE.MathUtils.clamp(state.darkness, 0, 1);
+    this.nightShift.lampIntensityMult = THREE.MathUtils.clamp(state.lampIntensityMult ?? 1, 0, 1);
+    if (state.palette) this.nightShift.palette = state.palette;
+    else delete this.nightShift.palette;
     this.syncNightPools(sources);
   }
 
@@ -346,6 +347,19 @@ export class LightRig {
   diagnostics(): LightRigDiagnostics {
     const quality = effectiveShadowQuality(this.stressFallback);
     const shadowTargetSize = this.sun.shadow.map?.width ?? 0;
+    let nightPools = 0;
+    let prospectorLights = 0;
+    for (const light of this.nightPoolLights) {
+      if (!light.visible) continue;
+      nightPools += 1;
+      prospectorLights += Number(light.userData.kind === 'prospector');
+    }
+    let muzzleFlashes = 0;
+    for (const flash of this.muzzleFlashes) muzzleFlashes += Number(flash.light.intensity > 0);
+    let billboardLights = 0;
+    for (const object of this.group.children) {
+      billboardLights += Number(object instanceof THREE.Mesh && object.geometry instanceof THREE.PlaneGeometry);
+    }
     return {
       sunPresent: this.sun.visible && this.sun.intensity > 0,
       shadowsQuality: quality,
@@ -373,17 +387,15 @@ export class LightRig {
         lampIntensityMult: this.nightShift.lampIntensityMult ?? 1,
         ...(this.nightShift.palette ? { spriteTint: `#${this.nightShift.palette.spriteTint.getHexString()}` } : {}),
       },
-      nightPools: this.nightPoolLights.filter((light) => light.visible).length,
+      nightPools,
       nightPoolCap: this.nightLightCap(),
       nightPoolSources: this.nightPoolSources,
       enemyLanterns: this.lanternBulbs.count,
       enemyLanternCones: this.lanternCones.count,
-      prospectorLights: this.nightPoolLights.filter((light) => light.visible && light.userData.kind === 'prospector').length,
-      muzzleFlashes: this.muzzleFlashes.filter((flash) => flash.light.intensity > 0).length,
+      prospectorLights,
+      muzzleFlashes,
       muzzleFlashCount: this.firedMuzzleFlashes,
-      billboardLights: this.group.children.filter(
-        (object) => object instanceof THREE.Mesh && object.geometry instanceof THREE.PlaneGeometry,
-      ).length,
+      billboardLights,
     };
   }
 
@@ -475,18 +487,26 @@ export class LightRig {
   private syncNightPools(sources: readonly LightSource[]): void {
     const darkness = this.nightShift.enabled ? this.nightShift.darkness : 0;
     this.nightPoolSources = sources.length;
-    const renderSources = sources.filter((source) => source.kind !== 'watch');
-    const lightCount = Math.min(renderSources.length, this.nightLightCap());
-    const hero = renderSources.find((source) => source.kind === 'hero');
-    const priority = (source: LightSource) => source.kind === 'hero' ? 0 : source.kind === 'prospector' ? 1 : 2;
-    const selectedSources = !hero || renderSources.length <= lightCount
-      ? renderSources
-      : [...renderSources].sort((a, b) => {
-          return priority(a) - priority(b) ||
+    this.renderSources.length = 0;
+    let hero: LightSource | undefined;
+    for (const source of sources) {
+      if (source.kind === 'watch') continue;
+      this.renderSources.push(source);
+      if (!hero && source.kind === 'hero') hero = source;
+    }
+    const lightCount = Math.min(this.renderSources.length, this.nightLightCap());
+    let selectedSources = this.renderSources;
+    if (hero && this.renderSources.length > lightCount) {
+      this.selectedSources.length = 0;
+      for (const source of this.renderSources) this.selectedSources.push(source);
+      this.selectedSources.sort((a, b) => {
+          return nightLightPriority(a) - nightLightPriority(b) ||
             ((a.x - hero.x) ** 2 + (a.z - hero.z) ** 2) - ((b.x - hero.x) ** 2 + (b.z - hero.z) ** 2);
-        }).slice(0, lightCount);
+        });
+      selectedSources = this.selectedSources;
+    }
     let lanternCount = 0;
-    for (const source of renderSources) {
+    for (const source of this.renderSources) {
       if (source.kind !== 'enemy-lantern' || lanternCount >= this.lanternBulbs.instanceMatrix.count) continue;
       this.lightMatrix.position.set(source.x, Terrain.visualY(source.x, source.z, source.height ?? 0.82), source.z);
       this.lightMatrix.scale.setScalar(1);
@@ -553,6 +573,10 @@ export class LightRig {
           );
     }
   }
+}
+
+function nightLightPriority(source: LightSource): number {
+  return source.kind === 'hero' ? 0 : source.kind === 'prospector' ? 1 : 2;
 }
 
 type BlobShadowFamily = 'hero' | 'claimJumper' | 'beacon' | 'prospector';
