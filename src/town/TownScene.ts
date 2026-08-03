@@ -341,6 +341,17 @@ export type TownDiagnostics = {
     windowGlow: number;
     lanternBeads: number;
     lanternLights: number;
+    lightGrammar: {
+      eraOrder: number;
+      family: TownLightFamily;
+      lit: boolean;
+      fixtureColor: string;
+      windowColor: string;
+      pointColor: string;
+      coolWhiteEmissiveFixtures: number;
+      flickerDepth: number;
+      flickerScale: number;
+    };
   };
   firstClaimGuide: {
     active: boolean;
@@ -457,7 +468,7 @@ export class TownScene {
   private readonly townMood: TownMoodName = readTownMood();
   private readonly townNight = this.townMood === 'night';
   private readonly performanceTier = performanceTierDiagnostics().tier;
-  private readonly eraOrder = loadEpoch(activeEpochId()).order;
+  private readonly eraOrder: number;
   private readonly ambientDust = createAmbientDust(this.performanceTier, this.townNight);
   private readonly ambientDustObject = new THREE.Object3D();
   private readonly townActors: TownActorRuntime[] = [];
@@ -522,6 +533,7 @@ export class TownScene {
   ) {
     resetAssetLoading(canvas, 'the town');
     reconcileActiveEpoch();
+    this.eraOrder = loadEpoch(activeEpochId()).order;
     this.selectedResearchEpochId = activeEpochId();
     this.boardPageIndex = boardPageIndexForContract(options.initialBoardContractId);
     this.renderer = createRenderer(canvas);
@@ -608,6 +620,7 @@ export class TownScene {
     syncAssetLoadingCue(this.canvas, this.assetLoadingCue);
     this.frame += 1;
     this.elapsed += delta;
+    this.updateTownLights();
     this.updateAmbientDust();
     this.cameraZoom.update(delta);
     this.syncTownZoomProjection();
@@ -725,10 +738,11 @@ export class TownScene {
     this.scene.add(createContactSkirts(this.contactSkirtPlacements()));
     this.scene.add(createWearDecals(this.wearDecalPlacements()));
     this.scene.add(createParcelDressing(this.visibleBuildings));
+    const lightAccent = townEraAccent(this.eraOrder);
     this.scene.add(
-      createWindowGlow(this.visibleBuildings, this.townMood),
-      createLanternStrings(this.townMood, this.eraOrder),
-      createLanternLights(this.townMood),
+      createWindowGlow(this.visibleBuildings, this.townMood, lightAccent),
+      createLanternStrings(this.townMood, lightAccent),
+      createLanternLights(this.townMood, lightAccent),
     );
     for (const building of townBuildings) {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
@@ -740,7 +754,7 @@ export class TownScene {
       // The props pilot replaces wagons/trough/pan with GLBs; building their
       // primitives too double-renders (owner saw the old frame atop Sol's pan).
       this.canvas.dataset.townEraAccent = String(this.eraOrder);
-      this.scene.add(createTownPropRing(this.townNight, propsPiloted, this.eraOrder));
+      this.scene.add(createTownPropRing(this.townMood, propsPiloted, lightAccent));
       this.scene.add(createTailorWagonSign());
     }
     this.createStampMillVignette();
@@ -2104,7 +2118,7 @@ export class TownScene {
             chapter
               ? `<section class="town-ui__book-chapter" tabindex="-1" data-testid="contract-chapter-${escapeHtml(chapter.id)}" data-contract-chapter="${escapeHtml(
                   chapter.id,
-                )}" style="--town-era-accent:${escapeHtml(accent.lanternNightGlass)}">
+                )}" style="--town-era-accent:${escapeHtml(accent.lanternLight)}">
                   <header class="town-ui__chapter-header">
                     <div>
                       <p class="town-ui__board-eyebrow">Chapter ${chapter.order}</p>
@@ -2455,6 +2469,7 @@ export class TownScene {
         windowGlow: this.instanceCount('TownWindowGlowPanes') + this.instanceCount('TownDoorGlowPanes'),
         lanternBeads: this.instanceCount('TownLanternStringBeads'),
         lanternLights: this.scene.getObjectByName('TownLanternLights')?.children.length ?? 0,
+        lightGrammar: this.townLightDiagnostics(),
       },
       firstClaimGuide: {
         active: this.firstClaimGuideActive,
@@ -2508,6 +2523,53 @@ export class TownScene {
     if (Math.abs(this.camera.zoom - zoom) < 0.0001) return;
     this.camera.zoom = zoom;
     this.camera.updateProjectionMatrix();
+  }
+
+  private updateTownLights(): void {
+    const flickerScale = this.townLightFlickerScale();
+    for (const name of ['TownPropLanternGlow', 'TownLanternStringBeads', 'TownWindowGlowPanes', 'TownDoorGlowPanes']) {
+      const material = (this.scene.getObjectByName(name) as THREE.Mesh | undefined)?.material as THREE.Material & { opacity?: number } | undefined;
+      const baseOpacity = material?.userData.townLightOpacity as number | undefined;
+      if (material && baseOpacity !== undefined) material.opacity = baseOpacity * flickerScale;
+    }
+    for (const object of this.scene.getObjectByName('TownLanternLights')?.children ?? []) {
+      const light = object as THREE.PointLight;
+      light.intensity = (light.userData.townLightIntensity as number | undefined ?? light.intensity) * flickerScale;
+    }
+  }
+
+  private townLightDiagnostics(): TownDiagnostics['dressing']['lightGrammar'] {
+    const accent = townEraAccent(this.eraOrder);
+    const fixtures = ['TownPropLanternGlow', 'TownLanternStringBeads']
+      .map((name) => this.scene.getObjectByName(name) as THREE.Mesh | undefined)
+      .filter((fixture): fixture is THREE.Mesh => !!fixture);
+    const coolWhiteEmissiveFixtures = fixtures.filter((fixture) => {
+      const material = fixture.material as THREE.MeshBasicMaterial;
+      if (!material.isMeshBasicMaterial) return false;
+      const hsl = { h: 0, s: 0, l: 0 };
+      material.color.getHSL(hsl);
+      return hsl.s < 0.25 && hsl.l > 0.65;
+    }).length;
+    return {
+      eraOrder: this.eraOrder,
+      family: accent.family,
+      lit: this.townMood !== 'day',
+      fixtureColor: this.townMood === 'day' ? accent.lanternGlass : accent.lanternLight,
+      windowColor: accent.windowLight,
+      pointColor: accent.pointLight,
+      coolWhiteEmissiveFixtures,
+      flickerDepth: accent.flickerDepth,
+      flickerScale: this.townLightFlickerScale(),
+    };
+  }
+
+  private townLightFlickerScale(): number {
+    if (this.townMood === 'day') return 1;
+    const accent = townEraAccent(this.eraOrder);
+    return 1 + accent.flickerDepth * (
+      Math.sin(this.elapsed * Math.PI * 2 * accent.flickerHz) * 0.7 +
+      Math.sin(this.elapsed * Math.PI * accent.flickerHz + 1.7) * 0.3
+    );
   }
 
   private heroRenderedHeight(): number {
@@ -3299,17 +3361,64 @@ function megaprojectAt(
 type BoxPart = { x: number; y: number; z: number; sx: number; sy: number; sz: number; rotation?: number };
 type CylinderPart = { x: number; y: number; z: number; scale: [number, number, number]; rotation: THREE.Euler };
 
-const townEraAccents: Record<number, { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number }> = {
-  1: { lanternGlass: '#fff0bd', lanternNightGlass: '#ffe4a0', lanternOpacity: 0.48 },
-  2: { lanternGlass: '#d9975b', lanternNightGlass: '#f1b56f', lanternOpacity: 0.62 },
+type TownLightFamily = 'flame' | 'arc';
+type TownEraAccent = {
+  family: TownLightFamily;
+  lanternGlass: string;
+  lanternLight: string;
+  windowLight: string;
+  doorLight: string;
+  pointLight: string;
+  lanternOpacity: number;
+  lanternLightOpacity: { dusk: number; night: number };
+  lanternLightScale: { dusk: number; night: number };
+  pointIntensity: { dusk: number; night: number };
+  pointDistance: number;
+  flickerDepth: number;
+  flickerHz: number;
 };
 
-function townEraAccent(eraOrder: number): { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number } {
+// E2 inherits E1's flame grammar. Voltage is the first era whose authored arc hardware earns a
+// cooler, steady read; later eras inherit it until their own row says otherwise.
+const townEraAccents: Record<number, TownEraAccent> = {
+  1: {
+    family: 'flame',
+    lanternGlass: '#b97a3d',
+    lanternLight: '#ffb45c',
+    windowLight: '#ffb45c',
+    doorLight: '#ef8f3f',
+    pointLight: '#ff9f45',
+    lanternOpacity: 0.72,
+    lanternLightOpacity: { dusk: 0.62, night: 0.78 },
+    lanternLightScale: { dusk: 1.08, night: 1.18 },
+    pointIntensity: { dusk: 1.75, night: 2.35 },
+    pointDistance: 7.2,
+    flickerDepth: 0.055,
+    flickerHz: 0.85,
+  },
+  3: {
+    family: 'arc',
+    lanternGlass: '#819b9a',
+    lanternLight: '#bfe8ff',
+    windowLight: '#d5efff',
+    doorLight: '#9fdcff',
+    pointLight: '#a9ddff',
+    lanternOpacity: 0.7,
+    lanternLightOpacity: { dusk: 0.86, night: 0.94 },
+    lanternLightScale: { dusk: 1.2, night: 1.3 },
+    pointIntensity: { dusk: 1.95, night: 2.65 },
+    pointDistance: 8,
+    flickerDepth: 0,
+    flickerHz: 0,
+  },
+};
+
+function townEraAccent(eraOrder: number): TownEraAccent {
   const key = Math.max(...Object.keys(townEraAccents).map(Number).filter((order) => order <= eraOrder));
   return townEraAccents[key] ?? townEraAccents[1]!;
 }
 
-function createTownPropRing(night: boolean, propsPiloted = false, eraOrder = 1): THREE.Group {
+function createTownPropRing(mood: TownMoodName, propsPiloted = false, accent = townEraAccent(1)): THREE.Group {
   const group = new THREE.Group();
   group.name = 'TownPropRing';
   const woodParts: BoxPart[] = [];
@@ -3388,7 +3497,7 @@ function createTownPropRing(night: boolean, propsPiloted = false, eraOrder = 1):
     createBoxInstances('TownPropCanvasInstances', canvasParts, new THREE.MeshStandardMaterial({ color: '#e8d5a8', roughness: 0.88, metalness: 0.01 })),
     createCylinderInstances('TownPropWagonWheels', new THREE.CylinderGeometry(1, 1, 1, 16), wheelParts, new THREE.MeshStandardMaterial({ color: '#3b2416', roughness: 0.82 })),
     createCylinderInstances('TownPropCacti', new THREE.CylinderGeometry(1, 1, 1, 10), cactusParts, new THREE.MeshStandardMaterial({ color: '#5b8a72', roughness: 0.9 })),
-    createLanternGlow(lanternPositions, night, townEraAccent(eraOrder)),
+    createLanternGlow(lanternPositions, mood, accent),
     createPanMonumentLegacy(),
   );
   return group;
@@ -3462,21 +3571,21 @@ function createCylinderInstances(name: string, geometry: THREE.BufferGeometry, p
 
 function createLanternGlow(
   positions: readonly THREE.Vector3[],
-  night: boolean,
-  accent: { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number },
+  mood: TownMoodName,
+  accent: TownEraAccent,
 ): THREE.InstancedMesh {
-  const material = new THREE.MeshBasicMaterial({
-    color: night ? accent.lanternNightGlass : accent.lanternGlass,
-    transparent: true,
-    opacity: night ? 0.86 : accent.lanternOpacity,
-    depthWrite: false,
-  });
+  const lit = mood !== 'day';
+  const opacity = lit ? accent.lanternLightOpacity[mood] : accent.lanternOpacity;
+  const material = lit
+    ? new THREE.MeshBasicMaterial({ color: accent.lanternLight, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending })
+    : new THREE.MeshStandardMaterial({ color: accent.lanternGlass, transparent: true, opacity, roughness: 0.82, metalness: 0, depthWrite: false });
+  material.userData.townLightOpacity = opacity;
   const mesh = new THREE.InstancedMesh(new THREE.SphereGeometry(0.18, 12, 8), material, Math.max(1, positions.length));
   mesh.name = 'TownPropLanternGlow';
   const object = new THREE.Object3D();
   positions.forEach((position, index) => {
     object.position.copy(position);
-    object.scale.setScalar(night ? 1.35 : 1);
+    object.scale.setScalar(lit ? accent.lanternLightScale[mood] : 1);
     object.updateMatrix();
     mesh.setMatrixAt(index, object.matrix);
   });
@@ -3739,7 +3848,7 @@ function createGlowCardTexture(): THREE.CanvasTexture {
     for (let step = 0; step < 14; step += 1) {
       const t = (step + 1) / 14;
       const inset = (1 - t) * size * 0.44;
-      ctx.fillStyle = `rgba(255, 228, 160, ${(0.075 * t * t).toFixed(4)})`;
+      ctx.fillStyle = `rgba(255, 255, 255, ${(0.075 * t * t).toFixed(4)})`;
       roundRect(ctx, inset, inset, size - inset * 2, size - inset * 2, size * 0.3 * t);
       ctx.fill();
     }
@@ -3749,29 +3858,33 @@ function createGlowCardTexture(): THREE.CanvasTexture {
   return texture;
 }
 
-function createWindowGlow(buildings: readonly TownBuilding[], mood: TownMoodName): THREE.Group {
+function createWindowGlow(buildings: readonly TownBuilding[], mood: TownMoodName, accent: TownEraAccent): THREE.Group {
   const group = new THREE.Group();
   group.name = 'TownWindowGlow';
   if (mood === 'day') return group;
   const glowTexture = createGlowCardTexture();
+  const windowOpacity = mood === 'night' ? 0.62 : 0.44;
   const material = new THREE.MeshBasicMaterial({
-    color: '#ffe4a0',
+    color: accent.windowLight,
     map: glowTexture,
     transparent: true,
-    opacity: mood === 'night' ? 0.62 : 0.44,
+    opacity: windowOpacity,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
     side: THREE.DoubleSide,
   });
+  material.userData.townLightOpacity = windowOpacity;
+  const doorOpacity = mood === 'night' ? 0.44 : 0.32;
   const doorMaterial = new THREE.MeshBasicMaterial({
-    color: '#ffca7a',
+    color: accent.doorLight,
     map: glowTexture,
     transparent: true,
-    opacity: mood === 'night' ? 0.44 : 0.32,
+    opacity: doorOpacity,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
     side: THREE.DoubleSide,
   });
+  doorMaterial.userData.townLightOpacity = doorOpacity;
   // Instanced, not a mesh per pane: the first cut built ~33 little planes and dusk measured 82
   // draw calls against day's 45 — sixty of them for light spilling out of six buildings.
   const windows: THREE.Matrix4[] = [];
@@ -3837,7 +3950,7 @@ function catenaryAt(from: THREE.Vector3, to: THREE.Vector3, t: number, out: THRE
   return out.lerpVectors(from, to, t).setY(LANTERN_RUN_HEIGHT - LANTERN_RUN_SAG * 4 * t * (1 - t));
 }
 
-function createLanternStrings(mood: TownMoodName, eraOrder: number): THREE.Group {
+function createLanternStrings(mood: TownMoodName, accent: TownEraAccent): THREE.Group {
   const group = new THREE.Group();
   group.name = 'TownLanternStrings';
   const runs = lanternRunPoints();
@@ -3874,7 +3987,7 @@ function createLanternStrings(mood: TownMoodName, eraOrder: number): THREE.Group
   }
   cord.count = index;
   cord.castShadow = mood === 'day';
-  group.add(cord, createLanternBeads(beadPositions, mood, townEraAccent(eraOrder)));
+  group.add(cord, createLanternBeads(beadPositions, mood, accent));
   return group;
 }
 
@@ -3883,25 +3996,24 @@ function createLanternStrings(mood: TownMoodName, eraOrder: number): THREE.Group
 function createLanternBeads(
   positions: readonly THREE.Vector3[],
   mood: TownMoodName,
-  accent: { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number },
+  accent: TownEraAccent,
 ): THREE.InstancedMesh {
   const lit = mood !== 'day';
+  const opacity = lit ? accent.lanternLightOpacity[mood] : accent.lanternOpacity;
+  const material = lit
+    ? new THREE.MeshBasicMaterial({ color: accent.lanternLight, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending })
+    : new THREE.MeshStandardMaterial({ color: accent.lanternGlass, transparent: true, opacity, roughness: 0.82, metalness: 0, depthWrite: false });
+  material.userData.townLightOpacity = opacity;
   const mesh = new THREE.InstancedMesh(
     new THREE.SphereGeometry(0.075, 10, 7),
-    new THREE.MeshBasicMaterial({
-      color: lit ? accent.lanternNightGlass : accent.lanternGlass,
-      transparent: true,
-      opacity: lit ? 0.92 : Math.min(0.55, accent.lanternOpacity + 0.1),
-      depthWrite: false,
-      ...(lit ? { blending: THREE.AdditiveBlending } : {}),
-    }),
+    material,
     Math.max(1, positions.length),
   );
   mesh.name = 'TownLanternStringBeads';
   const object = new THREE.Object3D();
   positions.forEach((position, index) => {
     object.position.copy(position);
-    object.scale.setScalar(lit ? 1.25 : 1);
+    object.scale.setScalar(lit ? accent.lanternLightScale[mood] : 1);
     object.updateMatrix();
     mesh.setMatrixAt(index, object.matrix);
   });
@@ -3913,7 +4025,7 @@ function createLanternBeads(
 // Real light, capped. Six PointLights at most, distance-bounded, no shadow maps: enough to make
 // the lantern posts and the strings mean something after sundown without opening a night-lighting
 // budget. Run midpoints are lit first — a lit string with a dark middle is worse than no string.
-function createLanternLights(mood: TownMoodName): THREE.Group {
+function createLanternLights(mood: TownMoodName, accent: TownEraAccent): THREE.Group {
   const group = new THREE.Group();
   group.name = 'TownLanternLights';
   if (mood === 'day') return group;
@@ -3925,8 +4037,10 @@ function createLanternLights(mood: TownMoodName): THREE.Group {
     .filter((prop) => prop.kind === 'lantern_post')
     .map((prop) => ({ id: prop.id, at: new THREE.Vector3(prop.position.x, 1.5 * (prop.scale ?? 1), prop.position.z) }));
   for (const source of [...midpoints, ...posts].slice(0, TOWN_LANTERN_LIGHT_CAP)) {
-    const light = new THREE.PointLight(mood === 'night' ? '#ffd28a' : '#ffb672', mood === 'night' ? 2.6 : 1.9, 7.2, 2);
+    const intensity = accent.pointIntensity[mood];
+    const light = new THREE.PointLight(accent.pointLight, intensity, accent.pointDistance, 2);
     light.name = `TownLanternLight:${source.id}`;
+    light.userData.townLightIntensity = intensity;
     light.castShadow = false;
     light.position.copy(source.at);
     group.add(light);
