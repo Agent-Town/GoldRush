@@ -19,7 +19,7 @@ import { loadEpoch } from '../src/meta/ContractFamilies';
 import { RESEARCH_STATE_KEY } from '../src/meta/ResearchTree';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
-const ARTIFACT_DIR = path.resolve('artifacts/drill-yard-separation');
+const ARTIFACT_DIR = path.resolve('artifacts/drill-yard-affordances');
 const E1_CLAIM_COUNT = loadEpoch('epoch-1-frontier').contracts.filter((contract) => !contract.practice).length;
 const PRACTICE_BUILDABLES = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office', 'lantern_post'] as const;
 const BUILD_SITES: Record<(typeof PRACTICE_BUILDABLES)[number], { x: number; z: number }> = {
@@ -154,7 +154,9 @@ test('The Drill Yard is a resettable, ledger-free practice claim', async ({ page
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.waveSpawnedTotal)).toBe(0);
 
   await page.evaluate(() => window.__GR_TEST__!.teleport(-8, 12));
-  await expect(page.getByTestId('drill-yard-action')).toHaveText('Top up practice gold');
+  await expect(page.getByTestId('drill-yard-prompt')).toContainText('The county desk lends practice gold.');
+  await expect(page.getByTestId('drill-yard-action')).toHaveText('Draw practice gold');
+  await shot(page, testInfo, 'faucet-prompt');
   await page.getByTestId('drill-yard-action').click();
   const faucet = await page.evaluate(() => ({
     gold: window.__THREE_GAME_DIAGNOSTICS__!.economy.gold,
@@ -173,6 +175,13 @@ test('The Drill Yard is a resettable, ledger-free practice claim', async ({ page
   await page.evaluate(() => {
     window.__GR_TEST__!.setManualSim(true);
     window.__GR_TEST__!.setBalance('blast.damage', 999);
+    window.__GR_TEST__!.teleport(-9, -9);
+    window.__GR_TEST__!.advanceSim(0.1);
+  });
+  await expect(page.getByTestId('world-info-note-title')).toHaveText('Straw men');
+  await expect(page.getByTestId('world-info-note-body')).toHaveText("Straw men — they don't mind.");
+  await shot(page, testInfo, 'straw-men-prompt');
+  await page.evaluate(() => {
     window.__GR_TEST__!.teleport(0, -5);
     window.__GR_TEST__!.launchBlastAt(0, -9, 0.01);
     window.__GR_TEST__!.advanceSim(0.3);
@@ -190,7 +199,9 @@ test('The Drill Yard is a resettable, ledger-free practice claim', async ({ page
     window.__GR_TEST__!.teleport(8, 12);
     window.__GR_TEST__!.advanceSim(0.1);
   });
-  await expect(page.getByTestId('drill-yard-action')).toHaveText('Ring one drill wave');
+  await expect(page.getByTestId('drill-yard-prompt')).toContainText('The drill bell calls one practice wave.');
+  await expect(page.getByTestId('drill-yard-action')).toHaveText('Ring for a practice wave');
+  await shot(page, testInfo, 'bell-prompt');
   await page.getByTestId('drill-yard-action').click();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.drillYard!.bell.waveActive)).toBe(true);
   const basicJumpers = await page.evaluate(() => window.__GR_TEST__!.enemyPositions().filter((enemy) => !enemy.variantId?.startsWith('drill_')));

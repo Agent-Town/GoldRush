@@ -5979,6 +5979,8 @@ export class Game {
   }
 
   private nearestWorldInfoTarget(position: THREE.Vector3): WorldInfoNoteTarget | null {
+    const drillTarget = this.drillYard?.nearestInfoTarget(position);
+    if (drillTarget) return drillTarget;
     const candidates: Array<{ objectClass: WorldInfoObjectClass; distanceSq: number; priority: number }> = [];
     const add = (objectClass: WorldInfoObjectClass, x: number, z: number, radius: number, priority = 0) => {
       const distanceSq = distanceSq2(position.x, position.z, x, z);
