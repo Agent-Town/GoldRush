@@ -875,6 +875,8 @@ export const Balance = {
       nightSpriteLightBoost: 1.15,
       nightSpriteScale: 1.18,
       nightSpriteTint: '#ffd1a0',
+      nightAmbientFloorIntensity: 0.22,
+      nightLightDecay: 1.25,
       terrainPoolIntensity: 0.85,
       muzzleFlashSeconds: 0.1,
       muzzleFlashIntensity: 18,

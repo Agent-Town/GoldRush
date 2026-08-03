@@ -260,7 +260,7 @@ export class LightRig {
     this.group.add(this.lanternBulbs, this.lanternCones);
     for (const light of this.nightPoolLights) {
       light.castShadow = false;
-      light.decay = 2;
+      light.decay = Balance.contracts.nightShift.nightLightDecay;
       light.visible = false;
       this.group.add(light);
     }
@@ -439,7 +439,10 @@ export class LightRig {
       this.sun.position.y = palette.sunHeight;
       this.fill.color.copy(palette.fill);
       this.fill.groundColor.copy(palette.ground);
-      this.fill.intensity = palette.fillIntensity;
+      this.fill.intensity = Math.max(
+        palette.fillIntensity,
+        Balance.contracts.nightShift.nightAmbientFloorIntensity * darkness,
+      );
       setWorldSpriteTint(palette.spriteTint);
       return;
     }
