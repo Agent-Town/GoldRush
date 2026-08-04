@@ -36,7 +36,10 @@ import type { RunManagerSuspendState } from './RunManager';
 import { isUpgradeId, upgradeDefById } from './Upgrades';
 
 export const RUN_SUSPEND_REJECTION_KEY = `${RUN_SUSPEND_KEY}.rejected`;
-export const RUN_SUSPEND_REJECTION_LINE = 'This page of the ledger is water-damaged. The saved claim was set aside.';
+// Internal diagnostics only — the player never sees this (owner ruling 2026-08-04: "this is
+// more internal information for you rather than the player. If things are good anyways, no
+// need to add confusion"). A rejected snapshot simply isn't offered; durable state survives.
+export const RUN_SUSPEND_REJECTION_LINE = 'Saved claim set aside — snapshot from an older build.';
 let lastRestoreFailure: string | null = null;
 
 export type RunSuspendEnvelope = {
@@ -301,9 +304,6 @@ export class RunSuspendController {
   private restoreIfAvailable(): boolean {
     const snapshot = readRunSuspend(this.storage);
     const game = this.game as AnyGame;
-    if (readRunSuspendRejection(this.storage)) {
-      game.uiBridge?.announce?.(RUN_SUSPEND_REJECTION_LINE, cleanNumber(game.timeAlive), null, 5.5);
-    }
     if (!snapshot) return false;
     if (snapshot.contractId !== game.activeContract?.id) return false;
     if (!restoreSnapshot(game, snapshot)) return false;

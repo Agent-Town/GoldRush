@@ -9,7 +9,7 @@ const RESTORE_QUERY = '?debug&nowaves&nolevel&nokill&nosteal&nowreck&seed=save-s
 const SHOT_DIR = 'artifacts/save-slots';
 const AUTO_SAVE_SLOT_NAME = "The Ledger's Copy";
 const SAVE_SLOTS_RECOVERY_KEY = `${SAVE_SLOTS_KEY}.recovery`;
-const RUN_SUSPEND_REJECTION_LINE = 'This page of the ledger is water-damaged. The saved claim was set aside.';
+// Owner ruling 2026-08-04: snapshot rejections are internal-only — the menu shows NO notice.
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type SavedSuspend = {
@@ -269,7 +269,8 @@ test('corrupt manual save store is preserved for recovery and does not block re-
   const errors = collectErrors(page);
   await page.goto('/');
 
-  await expect(page.getByTestId('start-menu-rejected-claim')).toContainText(RUN_SUSPEND_REJECTION_LINE);
+  await expect(page.getByTestId('start-menu-wordmark')).toBeVisible();
+  await expect(page.getByTestId('start-menu-rejected-claim')).toHaveCount(0);
   const preserved = await page.evaluate(
     ([profileKey, slotsKey, recoveryKey]) => ({
       original: localStorage.getItem(`${profileKey}.robin.${slotsKey}`),
