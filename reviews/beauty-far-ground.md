@@ -178,7 +178,7 @@ At 1.6× the numbers are exactly what was wanted: **structure nearly doubles whi
 
 ### A hypothesis TESTED AND REFUTED, recorded because I believed it twice
 
-Looking at the boards I twice concluded the apron meets the terrain in a hard horizontal seam — once on `dry-gulch`, once on `baron`, and on baron I was ready to file it. Measured as a row-to-row luminance profile down the middle 40% of the frame:
+Looking at the boards I twice concluded the apron meets the terrain in a hard horizontal seam — once on `dry-gulch`, once on `baron`, and on baron I was ready to file it. Measured as a row-to-row luminance profile down the middle of the frame (dry-gulch on the atmospherics shift's own pair, `artifacts/beauty-atmos/dry-gulch/{before,after}-far.png`, columns 400–900; baron on this shift's pair, `reviews/shots-beauty-far-ground/{before,after}/baron-desktop-chrome-far-half.png`, middle 40%):
 
 | frame | max row-to-row luma jump, picture area | verdict |
 |---|---|---|
@@ -217,7 +217,8 @@ Full frames: `reviews/shots-beauty-far-ground/{before,after}/`. Probe census fra
 | `verify_e1_panoramas.py` (the byte-pin guard) | **all 8 E1 panorama artefacts reproduce byte for byte** (rc=0) for the four maps in scope |
 | `e2e/beauty-far-ground.spec.ts` (new) | **14/14**, desktop + mobile |
 | Required suite battery — `night-mode-truth`, `night3d-perf`, `beauty-pools`, `panorama-framing`, `map-beauty-dry-gulch`, `e1-{baron,dry-gulch,twin-banks,night-shift,perf-pass}` | **93 passed / 10 failed** in one 15.7-minute run, `--workers=1`, both projects (`artifacts/beauty-far-ground/gate-battery.txt`) — **all 10 control-proven pre-existing**, below |
-| `night-mode-truth` · `beauty-pools` · `panorama-framing` · `map-beauty-dry-gulch` · `e1-baron` · `e1-dry-gulch` · `e1-perf-pass` | **green, untouched** — including `panorama-framing`, the suite that asserts the upper rows of a run frame carry world detail, which is exactly the band this shift paints |
+| `night-mode-truth` (4) · `beauty-pools` (2) · `panorama-framing` (12) · `map-beauty-dry-gulch` (4) · `e1-dry-gulch` (12) · `e1-perf-pass` (2) | **green, untouched** — including `panorama-framing`, the suite that asserts the upper rows of a run frame carry world detail, which is exactly the band this shift paints |
+| `e1-baron` (11 tests x 2 projects) | **green, none failing** — worth saying out loud: `reviews/beauty-atmos.md` §5b left **`e1-baron:343`** (*contract board requires science plus two secured claims and always shows an earned medal*) open and RED on both projects, F-BEAUTY-BARON-1, *"the E1 launch door is still measuring something that no longer passes"*. It ran on both projects in this battery (entries 10/104 and 62/104) and **passed**. Not this shift's doing and observed once, not re-proved — but the door is shut. |
 | Panorama atlas bytes | **unchanged, 0.00%**, all four maps (§2) |
 | Draw calls / triangles | **equal, apron on vs off**, all four maps x both projects — asserted |
 | Frame p95 | worst paired row **+8.3%**, against a +15% law |
@@ -312,3 +313,33 @@ The F-1440-2 cure is "machine-independent **by code path**, not by luck", so eve
 - **The two hearth columns on twin-banks are a guess I could not judge.** `smokeStrength 0.22` against baron's 0.4 is reasoned from the brief ("a family holds both banks", not a company) and it is not visible enough in the boards to say it reads as smoke rather than as a soft darkening. The atmospherics shift said the same of its three columns and shipped them anyway. Two shifts have now paid for azimuthal smoke without either being able to show it working.
 - **Nothing here was judged by a human playing it.** Every verdict is a measured render at a pinned camera and my own eye on a still. My eye was wrong twice in one afternoon about a seam that a row-profile refuted in seconds — which is the argument for the instruments and against the eye, including mine on the parts nobody measured.
 - **The rejected arms are the most useful thing here for whoever comes next.** The ridged haze is not a hypothesis any more: it is a mechanism with two measured coefficients and a known failure mode on one specific map.
+
+---
+
+## 9. FOR THE DRAIN — ledger lines, ready to lift
+
+This shift never touches `tasks/BACKLOG.md`, `STATUS.md` or `tasks/queue/` (brief §Role). The lines
+below are written to be lifted verbatim by whoever drains this branch, following the pattern the
+atmospherics shift used (`logs/session-scratch/atmos-backlog-lines.md`).
+
+**OWNER'S DESK — one line, one recommendation, no blocking.**
+> 🔺 **The panorama clause should be struck from every remaining beauty brief.** Measured on four E1
+> maps, both viewports, 56 samples plus a hidden-occluder control: **the ring's foot stands 61–65 m
+> above the top edge of the frame at its own radius**, and no panorama pixel reaches any run frame.
+> This is a property of `Balance.camera`, not of a map, so re-measuring it per map is waste. ~30 MB
+> of authored horizon art across 34 panorama GLBs has no viewer at the shipped camera.
+> **Recommendation: stop briefing panoramas; brief the apron.** Reversible in one word if the camera
+> question (F-1203-2) is ever answered the other way — `e2e/beauty-far-ground.spec.ts` goes red on
+> that day by construction and points here.
+
+**FINDINGS TO CARRY.** F-FG-1 (cured), F-FG-2 🔺 (renderer counters unsettled — every board in this
+program reads them after a fixed wait; corrective is six lines), F-FG-4 🔺 (the apron flattens the
+band it brightens, unmeasured on two shipped maps until now), F-FG-5 🟡 (the ridged haze works and
+wants a per-profile coefficient — both arms banked), F-FG-6 🟡 (the published −27.9° is short),
+F-FG-7 🟡 (TASK.md's premise wrong for two of four maps; briefs amended), **F-FG-8 🟡 —
+`e1-twin-banks:103` is a pre-existing red on no known-red list; it wants a line on the inventory.**
+
+**GATE for the one upgrade left on the table (F-FG-5):** a `ridgeHazeCoefficient` per profile is
+retired when `the-claim`'s far-edge top-quarter stdev is ≥ 9 **and** `e1-baron`'s far-half frame
+carries no diagonal banding at the same coefficient — both arms of that comparison are already in
+`reviews/shots-beauty-far-ground/ridged16/`.
