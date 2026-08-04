@@ -5647,6 +5647,13 @@ export class Game {
       const original = object.onBeforeRender;
       taps.push({ object, owned: Object.hasOwn(object, 'onBeforeRender'), original });
       object.onBeforeRender = function (this: THREE.Object3D, renderer, scene, camera, geometry, material, group) {
+        // three.js runs onBeforeRender for an InstancedMesh before discovering count === 0, and
+        // renderInstances then returns without issuing a draw. Counting those would over-attribute
+        // (the E1 instanced arm read 97 attributed against 78 real calls), so they are not charged.
+        if (object instanceof THREE.InstancedMesh && object.count === 0) {
+          original.call(this, renderer, scene, camera, geometry, material, group);
+          return;
+        }
         const materialName = material.name || material.type;
         const key = `${kind} ${label} ${materialName}`;
         const row = rows.get(key) ?? {

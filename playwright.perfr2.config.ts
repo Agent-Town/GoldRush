@@ -8,7 +8,7 @@ const baseURL = process.env.GR_PERFR2_BASE_URL ?? 'http://127.0.0.1:5247';
 
 export default defineConfig({
   testDir: './e2e',
-  testMatch: ['**/perf-r2-census.rig.ts'],
+  testMatch: ['**/perf-r2-*.rig.ts'],
   timeout: 900_000,
   workers: 1,
   expect: { timeout: 10_000 },
