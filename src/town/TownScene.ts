@@ -1069,7 +1069,7 @@ export class TownScene {
         <div class="claim-herald-actions">
           ${
             herald.showBadge
-              ? `<button class="claim-herald-badge" type="button" data-testid="town-herald-badge" data-unread="${herald.unread}" aria-label="Read issue one of The Claim Herald"><span>Issue No. 1</span>Claim Herald</button>`
+              ? `<button class="claim-herald-badge" type="button" data-testid="town-herald-badge" data-unread="${herald.unread}" data-edition-number="${herald.editionNumber}" aria-label="Read ${herald.editionLabel} of The Claim Herald"><span>${herald.editionLabel}</span>Claim Herald</button>`
               : ''
           }
           <button class="town-ui__exit" type="button" data-testid="town-exit">Exit</button>
