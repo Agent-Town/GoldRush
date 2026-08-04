@@ -1025,7 +1025,7 @@ export class ClaimJumperEnemy {
     } else {
       this.watchdogElapsed += delta;
     }
-    if (this.watchdogElapsed >= Balance.pathing.stuckWatchdogSeconds) {
+    if (this.watchdogElapsed >= Balance.pathing.stuckWatchdogSeconds && route.blocker) {
       this.watchdogTrips += 1;
       this.watchdogElapsed = 0;
       this.gnawTarget = route.blocker;
