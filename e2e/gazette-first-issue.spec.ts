@@ -54,21 +54,23 @@ async function expectFirstIssue(page: Page, projectName: string): Promise<void> 
   const controls = page.locator('[data-panel-id="prospectors-hands"]');
   const arms = page.locator('[data-panel-id="the-arms"]');
   const works = page.locator('[data-panel-id="the-works"]');
+  // Owner ruling 2026-08-04: keys are taught ONLY in THE PROSPECTOR'S HANDS — the topic
+  // panels must not repeat them ("duplicate items... Please keep only one of them").
   if (projectName === 'mobile-chrome') {
     await expect(page.locator('[data-input-mode="touch"]')).toBeVisible();
     await expect(controls).toContainText('Touch Stick');
     await expect(controls).toContainText('Weapon Toggle');
     await expect(controls).toContainText('Build');
     await expect(controls).not.toContainText(/\bQ\b|\bB\b/);
-    await expect(arms).toContainText('Weapon Toggle');
-    await expect(works).toContainText('Build');
+    await expect(arms).not.toContainText('Weapon Toggle');
+    await expect(works).not.toContainText('Tap Build');
     await expect(page.getByTestId('gazette-first-issue')).not.toContainText(/\bQ\b|\bB\b/);
   } else {
     await expect(page.locator('[data-input-mode="keyboard"]')).toBeVisible();
     await expect(controls).toContainText(/\bQ\b/);
     await expect(controls).toContainText(/\bB\b/);
-    await expect(arms).toContainText(/\bQ\b/);
-    await expect(works).toContainText(/\bB\b/);
+    await expect(arms).not.toContainText(/\bQ\b/);
+    await expect(works).not.toContainText(/\bB\b/);
   }
 }
 

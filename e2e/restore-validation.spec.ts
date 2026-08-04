@@ -52,13 +52,15 @@ async function seedProfile(page: Page, runDatum: unknown, options: { raw?: boole
   );
 }
 
-test('continue-run rejects truncated suspend JSON with a ledger card and no crash', async ({ page }) => {
+// Owner ruling 2026-08-04: rejections are internal-only — no menu notice, the run simply isn't offered.
+test('continue-run rejects truncated suspend JSON silently and without a crash', async ({ page }) => {
   await seedProfile(page, '{"v":1,"wave":3,', { raw: true });
   const errors = collectErrors(page);
 
   await page.goto('/');
 
-  await expect(page.getByTestId('start-menu-rejected-claim')).toContainText(RUN_SUSPEND_REJECTION_LINE);
+  await expect(page.getByTestId('start-menu-wordmark')).toBeVisible();
+  await expect(page.getByTestId('start-menu-rejected-claim')).toHaveCount(0);
   await expect(page.getByTestId('start-menu-continue')).toHaveCount(0);
   await expect(page.evaluate((key) => localStorage.getItem(key), RUN_SUSPEND_KEY)).resolves.toBeNull();
   assertNoErrors(errors);

@@ -1,0 +1,21 @@
+# TAPE-02 SEMANTICS — how the Lantern Show replays a tape
+Status: RATIFIED 2026-08-04 (attended; derives from the owner's AP-09 ratification of 2026-07-31 — THE LANTERN SHOW, "period-correct replay theater, version-law strict" — and discharges the GATE the TAPE-01 runner correctly raised: "needs a ratified input-semantics extension for initial-state, cursor-aim and non-lockstep tool replay before TAPE-02 is buildable." Owner pull, 2026-08-04: "I saw that I can record tapes now, but I did not see where I can replay them in town. I thought you worked on that already? This seems interesting.")
+
+## The one law: THE SHOW REPLAYS THE SIM, NOT THE HAND
+A tape (`src/game/RunTape.ts`) is `(contract, seed, difficulty, simVersion, inputLog, eventLogHash, outcome)`. TAPE-01 already proves a recorded tape re-simulates to a byte-identical `eventLogHash`. The Lantern Show is therefore a RE-SIMULATION rendered live — never a video, never an approximation. Everything below follows from that.
+
+1. **Initial state: the tape is profile-portable.** A replay boots the sim from `(contract, seed, difficulty)` + the inputLog's per-stream `start` positions — exactly the state TAPE-01's determinism proof already uses. No profile, no meta-progress, no account is read: upgrade choices, builds and every other decision arrive as recorded input entries. GATE: a replay in a FRESH profile (and in a second browser) reproduces the tape's `eventLogHash`.
+2. **Version law, strict and in-voice.** Replay requires `simVersion` equal to the running build's sim version. On mismatch the theater refuses with a period line (the projectionist "cannot thread a reel cut for another machine") — never a silent wrong replay. No cross-version migration in TAPE-02; a refused reel stays listed with its recorded date and outcome.
+3. **Cursor-aim is not reconstructed.** Aim was never a sim input and is not in the tape; shots, hits and effects are sim facts and re-render from the re-simulation. The show uses its own camera: follow the primary slot's hero, with the player free to pan (the same camera grammar as spectating). Nothing is added to the tape format for this.
+4. **Non-lockstep tools (agent orders) replay as CARDS, not calls.** An agent's verbs/standing orders already land in the sim as recorded inputs — the re-simulation needs nothing more. For the TEACHING value (AP-09: order-notes are teaching text), the tape format gains ONE optional additive field: `annotations?: Array<{ atMs: number; text: string }>` — order-notes, examiner remarks, chapter marks. Rendered as intertitle cards during replay; absent = plain show. Additive-optional: `RUN_TAPE_VERSION` is unchanged; validators accept-and-preserve the field (`hasOnlyKeys` lists it), emitters may omit it.
+5. **Playback controls are presentation-only.** Pause, 1×/2×/4×, restart, and wave-skip (fast-simulate to the next wave boundary — lockstep guarantees identity at any speed). No scrubbing backward in TAPE-02 (needs state snapshots — parked, named debt).
+6. **Where (TAPE-02's surface):** the tape shelf (the existing "Keep this tape" collection + latest ring) gains a WATCH action; a standings row that carries a tape gains WATCH THIS RUN (that half is TAPE-03 and rides the same viewer). The full-screen show runs the run-map renderer with a lantern-frame vignette. A dedicated THEATER BUILDING in town is an art/placement slice, explicitly NOT this ratification.
+
+## Integration map
+Touches: `src/game/RunTape.ts` (annotations field, validator), a new replay bootstrapping path in the run loader (boot-from-tape, no profile writes), viewer UI + controls, tape-shelf WATCH wiring. Does NOT touch: recording, standings write path, Balance, Economy, the sim itself (replay uses the existing lockstep machinery or it is wrong).
+
+## Non-negotiable gates (any TAPE-02 master copies these)
+- Determinism: replayed `eventLogHash` equals the tape's, asserted in e2e on a fresh profile, both projects.
+- Zero writes: a replay leaves localStorage byte-identical (no meta progress, no economy, no tapes minted from watching).
+- Version refusal: a doctored `simVersion` shows the period-refusal line, never a wrong replay.
+- Mistake #10: a plain no-debug boot reaches WATCH from the tape shelf.
