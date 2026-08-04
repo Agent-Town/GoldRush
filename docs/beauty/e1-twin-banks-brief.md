@@ -35,6 +35,12 @@ WHY: the map's story is one family holding two banks; at the run camera and espe
 PERF: low. The winch pair gets the same treatment budget only if tris allow; bodies-first ID law: the mount ids own the story roles, don't rename them.
 
 **U5 — The braid continues to the horizon (panorama + edge).**
+> **STATUS 2026-08-04 — RETARGETED AT THE FAR GROUND, NOT THE SKY (THE FAR GROUND SHIFT, `reviews/beauty-far-ground.md`).**
+> Measured on this map: the ring's foot stands **64.9 m above the top edge of the frame** at its own radius, and the panorama is **0.00% of the frame at 14 of 14 pose x viewport samples**. The 'two distant smoke columns echoing the two-homestead motif' and the desaturated cottonwood line ship as apron paint; the split-rejoin glint threads do not, because the surface that could carry them is the one the camera cannot reach.
+> The panorama atlas is **not** repainted and its bytes are unchanged; what this slice asked the sky to say is now said by
+> `src/world/HorizonApron.ts` on the sculpt continuation, at +0 draw calls and +0 triangles. **Do not re-brief this as sky art
+> until `Balance.camera` changes** — `e2e/beauty-far-ground.spec.ts` guards the arithmetic and goes red the day it does.
+
 WHERE: `twin-banks-panorama-atlas.png` + blend, identical geometry. Paint the river re-braiding downstream to the east — split-rejoin glint threads, a desaturated cottonwood line, two distant smoke columns echoing the two-homestead motif (asymmetric placement — the Echo law; busy at horizon, quiet zenith — the Ceiling law). Check the pale sculpt corners against the panorama at wide aspect and feather the join if the band shows (MQ-2 matrix, aspect >1.8:1).
 WHY: the map's idea should not stop at the tile edge; a braid that visibly continues makes the 64m tile feel like a valley.
 PERF: low (texture swap).

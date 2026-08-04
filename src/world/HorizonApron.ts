@@ -84,6 +84,47 @@ const PROFILES = new Map<string, HorizonApronProfile>([
     smokeWidth: 0.2,
     smokeStrength: 0,
   }],
+  // THE FAR GROUND SHIFT adds the two maps the atmospherics shift did not reach. Both were briefed
+  // at the SKY (the-claim U4, twin-banks U5) and both are measured unreachable there: the ring's
+  // foot stands 61.4 m (the-claim) and 64.9 m (twin-banks) above the top edge of the frame at its
+  // own radius, on both viewports (reviews/beauty-far-ground.md section 1). The brief each of them
+  // wrote for a horizon is answered on the only surface that carries one.
+  //
+  // THE CLAIM — "the first page of the ledger: sunlit parchment banks where the river writes the
+  // only dark line". Its U4 asked for "downstream river valley ridges... density falling to quiet
+  // parchment", and its DON'T list forbids scarring this map: no wreckage, no siege grammar, and
+  // therefore NO COMPANY SMOKE. The calm is the identity; this adds distance to it, not incident.
+  ['the-claim', {
+    innerRadius: 34,
+    outerRadius: 68,
+    // Sunlit parchment, the map's own value, thinned by air.
+    haze: '#dcb98c',
+    // The calm first page never bruises: the far edge goes quiet and grey-warm, not dark.
+    ceiling: '#b9a68b',
+    // Long, soft shoulders: a river valley continuing downstream, not a gulch and not a fortress.
+    ridgeWavelength: 22,
+    ridgeDepth: 0.22,
+    smokeAzimuths: [],
+    smokeWidth: 0.2,
+    smokeStrength: 0,
+  }],
+  // TWIN BANKS — "one river that chose two paths around a gravel plait... a single family holds both
+  // banks". Its U5 asked for the braid to re-braid downstream with "a desaturated cottonwood line,
+  // two distant smoke columns echoing the two-homestead motif (asymmetric placement — the Echo
+  // law)". Two columns, not three, and weak: these are hearths, not the Baron's works.
+  ['e1-twin-banks', {
+    innerRadius: 34,
+    outerRadius: 68,
+    haze: '#dcc096',
+    // The cottonwood line: desaturated green-grey, per the E1 canon rule that greens stay dusty.
+    ceiling: '#8f9a86',
+    ridgeWavelength: 26,
+    ridgeDepth: 0.26,
+    // Asymmetric by construction (Echo law) and both inside the -z wedge the run camera looks into.
+    smokeAzimuths: [-1.75, -1.05],
+    smokeWidth: 0.2,
+    smokeStrength: 0.22,
+  }],
 ]);
 
 export function horizonApronProfile(contractId: string): HorizonApronProfile | undefined {

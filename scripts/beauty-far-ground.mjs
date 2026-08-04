@@ -24,6 +24,7 @@
 // anyway, and inView tests NDC z in [-1,1]. Judge by canvas x/y only.
 import { chromium, devices } from 'playwright';
 import { PNG } from 'pngjs';
+import sharp from 'sharp';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
@@ -251,7 +252,10 @@ for (const contract of CONTRACTS) {
       if (z !== null) await page.evaluate((pz) => window.__GR_TEST__.teleport(0, pz), z);
       await settle(page, 150);
       const file = `${OUT}/probe${MODE === 'solo' ? '-solo' : ''}-${artKey}-${viewport}-${name.replace(/[^a-z0-9+-]+/gi, '_')}.png`;
-      const shot = await page.screenshot(SHOT ? { path: file } : {});
+      const shot = await page.screenshot();
+      // The census reads the full-resolution buffer; the file is written at CSS size so a mobile
+      // probe frame is 390 px rather than 1072 px. Same reason as the board: evidence weight.
+      if (SHOT) await sharp(shot).resize(options.viewport.width, options.viewport.height).png({ compressionLevel: 9 }).toFile(file);
       poses.push({ pose: name, z, ...census(shot), shot: SHOT ? file.replace(`${ROOT}/`, '') : null });
     }
     await context.close();

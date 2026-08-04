@@ -31,6 +31,12 @@ WHY: the treatment exists because landmarks once went dark — do NOT remove it,
 PERF: low. No new lights; 4 instanced shadow quads.
 
 **U4 — The horizon gets a story (panorama repaint).**
+> **STATUS 2026-08-04 — RETARGETED AT THE FAR GROUND, NOT THE SKY (THE FAR GROUND SHIFT, `reviews/beauty-far-ground.md`).**
+> Measured on this map: the ring's foot stands **61.4 m above the top edge of the frame** at its own radius (161.5 m), and the panorama is **0.00% of the frame at 14 of 14 pose x viewport samples** — including with the terrain and apron hidden. (TASK.md called this slice U5; it is U4. The label is corrected here rather than quietly followed.)
+> The panorama atlas is **not** repainted and its bytes are unchanged; what this slice asked the sky to say is now said by
+> `src/world/HorizonApron.ts` on the sculpt continuation, at +0 draw calls and +0 triangles. **Do not re-brief this as sky art
+> until `Balance.camera` changes** — `e2e/beauty-far-ground.spec.ts` guards the arithmetic and goes red the day it does.
+
 WHERE: `assets/pilots/map-rebuild-spike/the-claim-panorama-atlas.png` + blend, re-export at IDENTICAL geometry (panorama contract counts unchanged). Paint per the craftbook's panorama laws: busy near the horizon — downstream river valley ridges, a timber line, one faint distant headframe in sepia engraving — with density falling to quiet parchment at the zenith (the Ceiling fix); irregular ridge + haze band at the join (the Painted Wall fix); no repeated silhouettes around the ring (the Echo fix).
 WHY: every boot and every zoom-out frames this sky; the first page of the book currently opens on fog-grey nothing.
 PERF: low (texture swap). Verify MQ-2's wide-aspect case: no backplate band at aspect >1.8:1 (the `cam-claim-wide.png` fingerprint in the register).
