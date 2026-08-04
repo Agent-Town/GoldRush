@@ -9,6 +9,7 @@ export class CameraRig {
   private readonly trackedTarget = new THREE.Vector3();
   private distanceScale = 1;
   private impulseRemaining = 0;
+  private glanceTarget: { position: THREE.Vector3; velocity: THREE.Vector3 } | null = null;
 
   constructor(
     private readonly camera: THREE.PerspectiveCamera,
@@ -22,11 +23,16 @@ export class CameraRig {
     this.distanceScale = scale;
   }
 
-  diagnostics(): { baseDistance: number; actualDistance: number } {
+  diagnostics(): { baseDistance: number; actualDistance: number; glanceActive: boolean } {
     return {
       baseDistance: Balance.camera.offset.length() / this.sceneScale,
       actualDistance: this.camera.position.distanceTo(this.trackedTarget),
+      glanceActive: this.glanceTarget !== null,
     };
+  }
+
+  setGlanceTarget(position: THREE.Vector3 | null, velocity?: THREE.Vector3): void {
+    this.glanceTarget = position && velocity ? { position, velocity } : null;
   }
 
   snapTo(target: THREE.Vector3): void {
@@ -53,6 +59,8 @@ export class CameraRig {
   }
 
   update(delta: number, target: THREE.Vector3, velocity: THREE.Vector3): void {
+    target = this.glanceTarget?.position ?? target;
+    velocity = this.glanceTarget?.velocity ?? velocity;
     this.trackedTarget.copy(target);
     this.setDesiredPosition(target);
     const factor = 1 - Math.exp(-delta / Balance.camera.lag);

@@ -16,6 +16,7 @@ export type CameraZoomDiagnostics = {
   baseDistance: number;
   targetDistance: number;
   actualDistance: number;
+  glanceActive: boolean;
 };
 
 export class CameraZoomController {
@@ -63,6 +64,7 @@ export class CameraZoomController {
       baseDistance: rig.baseDistance,
       targetDistance: rig.baseDistance * this.targetDistanceScale,
       actualDistance: rig.actualDistance,
+      glanceActive: rig.glanceActive,
     };
   }
 

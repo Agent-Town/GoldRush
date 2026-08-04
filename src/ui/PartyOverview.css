@@ -1,0 +1,125 @@
+.party-overview {
+  position: absolute;
+  top: calc(max(16px, env(safe-area-inset-top)) + 126px);
+  left: max(16px, env(safe-area-inset-left));
+  z-index: 3;
+  width: min(560px, calc(100vw - 32px));
+  color: var(--at-wood-950);
+  font: 700 0.72rem/1.1 Wellfleet, Georgia, serif;
+  pointer-events: auto;
+}
+
+.party-overview__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 5px;
+  padding-inline: 3px;
+  color: var(--at-cream-50);
+  text-shadow: 0 1px 2px rgba(46, 27, 14, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.party-overview__pot {
+  color: var(--at-sun-200);
+  white-space: nowrap;
+}
+
+.party-overview__cards {
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding: 0 0 5px;
+  scrollbar-width: none;
+}
+
+.party-overview__cards::-webkit-scrollbar {
+  display: none;
+}
+
+.party-rider-card {
+  flex: 0 0 126px;
+  min-height: 54px;
+  border: 2px solid var(--at-wood-950);
+  border-radius: 7px;
+  padding: 6px 8px;
+  color: var(--at-wood-950);
+  background: linear-gradient(135deg, rgba(255, 248, 232, 0.94), rgba(245, 230, 200, 0.96));
+  box-shadow: inset 0 0 0 1px rgba(139, 125, 60, 0.38), 0 3px 0 rgba(46, 27, 14, 0.68);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.party-rider-card[data-self='true'] {
+  border-color: var(--at-teal-600);
+  box-shadow: inset 0 0 0 1px rgba(91, 138, 138, 0.55), 0 3px 0 rgba(46, 27, 14, 0.68);
+}
+
+.party-rider-card[data-glancing='true'] {
+  outline: 3px solid var(--at-sun-200);
+  outline-offset: 1px;
+  transform: translateY(-1px);
+}
+
+.party-rider-card__topline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 5px;
+  min-width: 0;
+}
+
+.party-rider-card__topline strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.party-rider-card__topline span {
+  color: var(--at-teal-600);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+}
+
+.party-rider-card__hp {
+  display: block;
+  height: 6px;
+  margin-top: 5px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(46, 27, 14, 0.2);
+}
+
+.party-rider-card__hp span {
+  display: block;
+  height: 100%;
+  background: var(--at-teal-600);
+  transition: width 120ms linear;
+}
+
+.party-rider-card__value {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.62rem;
+  text-align: right;
+}
+
+@media (max-width: 760px) {
+  .party-overview {
+    top: calc(max(12px, env(safe-area-inset-top)) + 280px);
+    left: max(12px, env(safe-area-inset-left));
+    width: calc(100vw - max(12px, env(safe-area-inset-left)) - max(12px, env(safe-area-inset-right)));
+  }
+
+  .hud--announcement-visible[data-announcement-kind='baron'] .party-overview {
+    top: calc(max(12px, env(safe-area-inset-top)) + 390px);
+  }
+
+  .party-rider-card {
+    flex-basis: 112px;
+    min-height: 50px;
+  }
+}

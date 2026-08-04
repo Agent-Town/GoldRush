@@ -233,6 +233,7 @@ import {
   type DeathRunStatsSnapshot,
 } from '../ui/DeathOverlay';
 import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
+import { PartyOverview, type PartyOverviewSnapshot } from '../ui/PartyOverview';
 import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
@@ -597,6 +598,7 @@ export class Game {
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
+  private readonly partyOverview: PartyOverview;
   private readonly assetLoadingCue = createAssetLoadingCue();
   private readonly promptStack = document.createElement('div');
   private readonly assayOfficePrompt: AssayOfficePrompt;
@@ -1426,6 +1428,7 @@ export class Game {
     const confirmButton = this.getElement('#confirm-button');
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
+    this.partyOverview = new PartyOverview(this.getElement('#hud'), (playerId) => this.glanceAtRider(playerId));
     this.getElement('#hud').append(this.assetLoadingCue);
     this.e7SignalSystem.mount(this.getElement('#hud'));
     if (this.activeEpoch.order >= 7) {
@@ -2265,6 +2268,7 @@ export class Game {
     this.playbookSurface?.dispose();
     this.e7SignalSystem.dispose();
     this.hud.dispose();
+    this.partyOverview.dispose();
     this.assayOfficePrompt.dispose();
     this.buildingContextPrompt.dispose();
     this.worldInfoNotePrompt.dispose();
@@ -5651,10 +5655,30 @@ export class Game {
       this.agentUiState(),
     );
     this.hud.update(this.uiSnapshot, this.pauseMetaSnapshot(), this.playerPauseActive && this.state.isPaused);
+    this.partyOverview.update(this.partyOverviewSnapshot());
     this.hud.setWeaponDisarmReason(
       this.heroWeaponsDisarmed() ? (this.deepwaterClaim ? 'Hands full of sea.' : 'Hands full of river.') : null,
     );
     this.playbookSurface?.update();
+  }
+
+  private partyOverviewSnapshot(): PartyOverviewSnapshot {
+    return {
+      riders: this.actors.flatMap((actor) => {
+        const meta = this.mpActorMeta.get(actor);
+        return meta && actor.group.visible
+          ? [{ playerId: meta.playerId, name: meta.name, hp: actor.hp, maxHp: actor.maxHp, local: meta.local }]
+          : [];
+      }),
+      sharedGold: this.economy.gold,
+    };
+  }
+
+  private glanceAtRider(playerId: string | null): void {
+    const target = playerId
+      ? this.actors.find((actor) => this.mpActorMeta.get(actor)?.playerId === playerId && actor.group.visible)
+      : undefined;
+    this.cameraRig.setGlanceTarget(target?.renderPosition ?? null, target?.velocity);
   }
 
   private activeResourceSnapshots(): UiSnapshot['resources'] {
