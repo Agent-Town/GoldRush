@@ -13,3 +13,10 @@ script_name = "gold-rush-mp-room"
 [[kv_namespaces]]
 binding = "TELEMETRY"
 id = "f22215557bbe46e0a283953b8a0cfb4b"
+
+# Same never-bound class, found minutes later: _multiplayer.ts requires MULTIPLAYER_RATE_LIMITS
+# (mp:ratelimit:* keys) and 503s "riding together isn't saddled yet" without it — production
+# co-op was gated off since the ladder merged. Shares the telemetry namespace; keys are prefixed.
+[[kv_namespaces]]
+binding = "MULTIPLAYER_RATE_LIMITS"
+id = "f22215557bbe46e0a283953b8a0cfb4b"
