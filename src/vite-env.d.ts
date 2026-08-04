@@ -1141,6 +1141,20 @@ interface Window {
         topMaterials: Array<{ label: string; uses: number }>;
       };
     };
+    // perf-r2: what the draw calls ARE, not just how many. Renders one attributed frame.
+    drawCallCensus: () => {
+      totalCalls: number;
+      sceneCalls: number;
+      postCalls: number;
+      attributedCalls: number;
+      unattributedCalls: number;
+      byObject: Array<{
+        label: string; material: string; kind: string; calls: number;
+        triangles: number; transparent: boolean; renderOrder: number;
+      }>;
+      byKind: Array<{ kind: string; calls: number; objects: number }>;
+      mergeCandidates: Array<{ material: string; renderOrder: number; calls: number; labels: string[] }>;
+    };
     triggerDamSurge: () => boolean;
     damSurge: () => import('./systems/DamSurgeEvent').DamSurgeDiagnostics | null;
     resetRun: () => void;
