@@ -1360,14 +1360,12 @@ export class ClaimJumperEnemy {
     const fromEast = previous.x >= maxX;
     const fromSouth = previous.z <= minZ;
     const fromNorth = previous.z >= maxZ;
-    const targetSlideX = this.blockerSlideDirection('x', moveTarget);
-    const targetSlideZ = this.blockerSlideDirection('z', moveTarget);
     const slideX = ACTIVE_TILE_ID === 'e1-twin-banks' && moveTarget.x >= minX && moveTarget.x <= maxX
       ? Math.sign(moveTarget.x - blocker.x) || this.avoidanceSide()
-      : targetSlideX;
+      : this.blockerSlideDirection('x', moveTarget);
     const slideZ = ACTIVE_TILE_ID === 'e1-twin-banks' && moveTarget.z >= minZ && moveTarget.z <= maxZ
       ? Math.sign(moveTarget.z - blocker.z) || this.avoidanceSide()
-      : targetSlideZ;
+      : this.blockerSlideDirection('z', moveTarget);
 
     if (fromWest) {
       this.nextPosition.x = minX - outsideNudge;
@@ -1449,10 +1447,19 @@ let cachedCrossingData: {
   speed: number;
 } | undefined;
 
-function crossingData(): NonNullable<typeof cachedCrossingData> {
+// ACTIVE_TILE_ID is an import-time const, so this cache is page-load scoped today; a future soft contract switch must reset it.
+export function resetCrossingData(): void {
+  cachedCrossingData = undefined;
+}
+
+export function crossingData(): NonNullable<typeof cachedCrossingData> {
   if (cachedCrossingData) return cachedCrossingData;
   const gravelBars = activeWaterDescriptor()?.gravelBars ?? [];
   const fords = Terrain.fordRanges();
+  const sampledSpeed = Terrain.sample(
+    fords[0]?.centerX ?? gravelBars[0]?.x ?? 0,
+    (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2,
+  ).speedMul;
   const crossings = [
     ...fords,
     ...gravelBars.map((bar) => {
@@ -1463,7 +1470,7 @@ function crossingData(): NonNullable<typeof cachedCrossingData> {
   return (cachedCrossingData = {
     gravelBars,
     crossings,
-    speed: Terrain.sample(fords[0]?.centerX ?? 0, (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2).speedMul,
+    speed: sampledSpeed > 0 ? sampledSpeed : 1,
   });
 }
 
