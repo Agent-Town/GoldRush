@@ -75,6 +75,7 @@ import { trackedGltfLoader } from '../assets/AssetLoading';
 import * as Terrain from './Terrain';
 import { createSculptWater, type SculptWater } from './Water';
 import { createSunMotes, type SunMotes } from './SunMotes';
+import { createSteamPlume, type SteamPlume } from './SteamPlume';
 import { installVisualHeightSource, waterSources } from './Terrain';
 import { createSpringPondSurface, type SpringPondSurface } from './Water';
 import { createFordSheet, createWaterConfluence, createWaterRibbon, updateWaterMaterial } from './Water';
@@ -122,6 +123,12 @@ type Host = {
   nightLighting?: () => LightFieldSnapshot;
   /** True while a post-secure "Stay for the Rush" run is live (RunManager owns it). */
   rushActive?: () => boolean;
+  /**
+   * The live MQ-4 runtime verdict (0 = healthy, rising as the p95 watchdog degrades). Read-only,
+   * polled — the pilot's decorations register themselves in the shed order through this and drop
+   * out first, before anything the player is aiming at.
+   */
+  detailBudget?: () => number;
   onVisualHeightSourceInstalled?: () => void;
 };
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
@@ -384,10 +391,60 @@ const SCULPT_WATER: Record<string, SculptWaterDressing> = {
 /** Water fades out over the last stretch before the tile edge instead of cutting. */
 const SCULPT_WATER_EDGE_FADE = 7;
 /** U3: contracts whose mounted landmarks get soft contact ellipses. */
-const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim']);
-/** U5: contracts that get the drifting mote field, and its hard cap. */
-const SUN_MOTE_CONTRACTS = new Set(['the-claim']);
+const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim', 'e2-hill-mine']);
+/**
+ * U5: contracts that get the drifting mote field, and its hard cap.
+ *
+ * TINT, DON'T COUNT-CUT. The claim's shift recorded that its own motes first read as snow over the
+ * dark water, and that the fix was the colour rather than the number — a thinner field of the wrong
+ * colour still reads as the wrong weather. So the hill mine keeps the claim's cap and takes its
+ * air from the era instead: this is coal country, and what hangs in its low sun is umber soot, not
+ * gold dust. The box is the map's own working ground (the gallery and the base bench), not a copy
+ * of the claim's river box.
+ */
+type SunMoteDressing = { color: string; halfZ: number; centerZ: number; minY: number; maxY: number; size: number; seed: number };
+const SUN_MOTES: Record<string, SunMoteDressing> = {
+  'the-claim': { color: '#ffd9a2', halfZ: 13, centerZ: 4, minY: 0.4, maxY: 5.0, size: 2.1, seed: 0x1c1a },
+  'e2-hill-mine': { color: '#a8794a', halfZ: 17, centerZ: 7, minY: 0.3, maxY: 5.6, size: 2.3, seed: 0x2e57 },
+};
+/** U5b is the CLAIM's reward note, not every mote map's: the embers need a claim stake to sit on. */
+const RUSH_EMBER_CONTRACTS = new Set(['the-claim']);
 const SUN_MOTE_CAP = 200;
+
+/**
+ * U4 — THE ERA BREATHES. Steam anchored to the map's own named steam bodies.
+ *
+ * Placement is expressed as FRACTIONS of the mounted body's world bounding box, never as world
+ * coordinates, so the emitter follows the body if a mount ever moves or a pack is re-scaled — the
+ * `dressLandmark` lamp precedent, and the reason the dry-gulch spring's hard-coded pool numbers
+ * needed a re-measure note. The fractions themselves are measured off the shipped GLBs
+ * (`logs/session-scratch/hill-mine-landmark-boxes.mjs`): the boiler house's tallest column is its
+ * stack, at local x -2.0 / z -1.25 of a body spanning ±4.09 x ±3.73, i.e. 0.255 / 0.332 across its
+ * own box; the mine mouth vents at its foot, not its headframe top.
+ */
+type SteamAnchor = {
+  mount: string;
+  /** 0..1 across the body's own bounding box. */
+  acrossX: number;
+  acrossZ: number;
+  upY: number;
+  rise: number;
+  spread: number;
+  size: number;
+  life: number;
+  puffs: number;
+  opacity: number;
+};
+const STEAM_ANCHORS: Record<string, readonly SteamAnchor[]> = {
+  'e2-hill-mine': [
+    // The stack: a real column, because this is the map's poster and the era's name.
+    { mount: 'boiler-house-site', acrossX: 0.255, acrossZ: 0.332, upY: 1.0, rise: 8.0, spread: 3.0, size: 46, life: 5.4, puffs: 34, opacity: 0.5 },
+    // The adit: a slow seep at the foot of the headframe, not a second chimney.
+    { mount: 'mine-mouth-and-ruined-headframe', acrossX: 0.5, acrossZ: 0.62, upY: 0.1, rise: 3.2, spread: 1.7, size: 30, life: 8.2, puffs: 14, opacity: 0.3 },
+  ],
+};
+/** Warm white, the shipped `BoilerHouse.ts` plume colour. Steam is WHITE (bundle §A1). */
+const STEAM_COLOUR = '#fff8e8';
 /** Embers on the claim stake while the Rush is live. */
 const RUSH_EMBER_COUNT = 26;
 /** Ellipse radius as a fraction of the model's footprint — a pool, not a slab. */
@@ -520,7 +577,7 @@ function preparePanorama(model: THREE.Object3D): void {
  * and the emissive only keeps the paint off the floor.
  */
 const LANDMARK_EMISSIVE_DEFAULT = 3;
-const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45 };
+const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45 };
 
 function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
   const dressing = CONTRACT_LANDMARK_DRESSING[contractId]?.[mountId];
@@ -552,6 +609,16 @@ function dressLandmark(model: THREE.Object3D, contractId: string, mountId: strin
   model.add(lamp);
 }
 
+/**
+ * CALL THIS ONCE PER BODY. F-BHM-1 (found by this shift, 2026-08-04): between `10586b90` — the
+ * baron drain, whose merge resolution kept both the new per-contract block and the old single-line
+ * call it replaced — and this commit, the pilot called it TWICE, the second time with the default
+ * paint. Every per-contract intensity on main was therefore silently reset to 3: the-claim's 1.45
+ * (shipped `59655724`), the baron's 1.7/1.9/2.1/3.4 AND its emissive grade, and dry gulch's
+ * isolated_spring 2.1. Three signed-off upgrades were defeated and every gate stayed green, because
+ * the dataset published the TABLE's number rather than the material's. It now publishes the
+ * material's (see terrain3dPilotLandmarkMaterials).
+ */
 function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint = DEFAULT_LANDMARK_PAINT): void {
   // An untinted body must not even round-trip its colour through getHex/setHex —
   // that quantises to 8 bits per channel, and every map except e1-baron is
@@ -763,20 +830,21 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
  * driven from RunManager's own rush flag through the host, never inferred.
  */
 function mountSunMotes(host: Host, bounds: THREE.Box3): SunMotes | undefined {
-  if (isMapBeautyDisabled() || !SUN_MOTE_CONTRACTS.has(host.contractId)) return undefined;
+  const dressing = SUN_MOTES[host.contractId];
+  if (isMapBeautyDisabled() || !dressing) return undefined;
   const mobile = typeof window !== 'undefined' && window.innerWidth <= 430;
   const lean = ledgerSunShadowDirection();
   const motes = createSunMotes({
     count: mobile ? Math.round(SUN_MOTE_CAP * 0.45) : SUN_MOTE_CAP,
     halfX: Math.min(Math.abs(bounds.min.x), Math.abs(bounds.max.x)) * 0.62,
-    halfZ: 13,
-    centerZ: 4,
-    minY: 0.4,
-    maxY: 5.0,
+    halfZ: dressing.halfZ,
+    centerZ: dressing.centerZ,
+    minY: dressing.minY,
+    maxY: dressing.maxY,
     drift: new THREE.Vector2(lean.x * 0.55, lean.y * 0.55),
-    color: '#ffd9a2',
-    size: 2.1,
-    seed: 0x1c1a,
+    color: dressing.color,
+    size: dressing.size,
+    seed: dressing.seed,
   });
   let lastFrame = -1;
   let lastAt = 0;
@@ -795,6 +863,77 @@ function mountSunMotes(host: Host, bounds: THREE.Box3): SunMotes | undefined {
 }
 
 /**
+ * U4 — mount the contract's steam column(s).
+ *
+ * FULL tier only, and registered in the MQ-4 shed order: the field goes invisible (and therefore
+ * costs nothing at all, rather than fading) the moment the runtime p95 watchdog returns a verdict.
+ * Decoration is the first thing that should go and the last thing that should argue about it.
+ */
+function mountSteamPlume(
+  host: Host,
+  mounts: Array<{ id: string; model: THREE.Object3D }>,
+): SteamPlume | undefined {
+  const anchors = STEAM_ANCHORS[host.contractId];
+  if (isMapBeautyDisabled() || !anchors?.length) return undefined;
+  if (performanceTierDiagnostics().tier !== 'full') {
+    host.canvas.dataset.terrain3dPilotSteam = 'tier-withheld';
+    return undefined;
+  }
+  const box = new THREE.Box3();
+  const emitters = anchors.flatMap((anchor) => {
+    const model = mounts.find(({ id }) => id === anchor.mount)?.model;
+    if (!model) return [];
+    box.setFromObject(model);
+    return [{
+      x: THREE.MathUtils.lerp(box.min.x, box.max.x, anchor.acrossX),
+      y: THREE.MathUtils.lerp(box.min.y, box.max.y, anchor.upY),
+      z: THREE.MathUtils.lerp(box.min.z, box.max.z, anchor.acrossZ),
+      rise: anchor.rise,
+      spread: anchor.spread,
+      size: anchor.size,
+      life: anchor.life,
+      puffs: anchor.puffs,
+      opacity: anchor.opacity,
+    }];
+  });
+  if (!emitters.length) {
+    host.canvas.dataset.terrain3dPilotSteam = 'no-anchor-body';
+    return undefined;
+  }
+  const lean = ledgerSunShadowDirection();
+  const plume = createSteamPlume({ emitters, wind: new THREE.Vector2(lean.x, lean.y), color: STEAM_COLOUR, seed: 0x57ea });
+  let lastFrame = -1;
+  let lastAt = 0;
+  plume.points.onBeforeRender = (renderer) => {
+    const frame = renderer.info.render.frame;
+    if (frame === lastFrame) return;
+    const now = performance.now() / 1000;
+    const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+    lastFrame = frame;
+    lastAt = now;
+    plume.advance(delta);
+  };
+  // Polled on the frame BEFORE the draw, exactly as the Rush embers are, so a shed field stops
+  // costing anything rather than fading out over seconds.
+  const poll = () => {
+    if (!plume.points.parent) return;
+    const shed = (host.detailBudget?.() ?? 0) >= 1;
+    plume.points.visible = !shed;
+    host.canvas.dataset.terrain3dPilotSteam = shed ? 'shed' : `${emitters.length}x${plume.count}`;
+    requestAnimationFrame(poll);
+  };
+  host.scene.add(plume.points);
+  requestAnimationFrame(poll);
+  host.canvas.dataset.terrain3dPilotSteam = `${emitters.length}x${plume.count}`;
+  host.canvas.dataset.terrain3dPilotSteamAnchors = JSON.stringify(emitters.map((emitter) => ({
+    x: +emitter.x.toFixed(2),
+    y: +emitter.y.toFixed(2),
+    z: +emitter.z.toFixed(2),
+  })));
+  return plume;
+}
+
+/**
  * U5b — the Rush's reward note: a warm ember lift off the claim-stake ring, live
  * only while the player has chosen to press their luck. Same point field as the
  * motes, one draw call, hidden (and therefore near-free) the rest of the time.
@@ -804,7 +943,7 @@ function mountRushEmbers(
   mounts: Array<{ id: string; model: THREE.Object3D }>,
   heightAt: (x: number, z: number) => number,
 ): SunMotes | undefined {
-  if (isMapBeautyDisabled() || !SUN_MOTE_CONTRACTS.has(host.contractId) || !host.rushActive) return undefined;
+  if (isMapBeautyDisabled() || !RUSH_EMBER_CONTRACTS.has(host.contractId) || !host.rushActive) return undefined;
   const stake = mounts.find(({ id }) => id === 'claim_stake')?.model;
   if (!stake) return undefined;
   const embers = createSunMotes({
@@ -1187,6 +1326,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let sculptWater: SculptWater | undefined;
   let sunMotes: SunMotes | undefined;
   let rushEmbers: SunMotes | undefined;
+  let steamPlume: SteamPlume | undefined;
   let landmarkContacts: THREE.InstancedMesh | undefined;
   let ponds: SpringPondSurface[] = [];
   let nextPonds: SpringPondSurface[] = [];
@@ -1352,7 +1492,6 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           if (host.contractId === 'e1-baron' && BARON_SWAY_AMPLITUDE[mount.id] !== undefined) {
             installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
           }
-          if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
           dressLandmark(model, host.contractId, mount.id);
           return model;
         } catch {
@@ -1388,6 +1527,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         } catch (error) {
           host.canvas.dataset.terrain3dPilotRushEmbers = `failed:${error instanceof Error ? error.message : 'unknown'}`;
         }
+        try {
+          steamPlume = mountSteamPlume(host, nextLandmarks.children.map((model) => ({ id: model.name, model })));
+        } catch (error) {
+          host.canvas.dataset.terrain3dPilotSteam = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        }
         host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'mounted';
         host.canvas.dataset.terrain3dPilotLandmarkEmissive = String(LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT);
         host.canvas.dataset.terrain3dPilotLandmarks = String(nextLandmarks.children.length);
@@ -1405,11 +1549,21 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
             const mesh = node as THREE.Mesh;
             if (mesh.isMesh) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
           });
+          // emissiveIntensity is PUBLISHED, not inferred from the table, because the paint is
+          // applied by traversal after the body loads and a later pass can silently overwrite it —
+          // which is exactly the defect F-BHM-1 found here (two keepLandmarkPaintReadable calls, the
+          // second one resetting every per-contract intensity back to the default). A table lookup
+          // in the dataset would have kept reporting the intended number while the map rendered the
+          // other one.
+          const standard = [...materials].filter((material): material is THREE.MeshStandardMaterial =>
+            (material as THREE.MeshStandardMaterial).isMeshStandardMaterial);
+          const intensities = standard.map((material) => +material.emissiveIntensity.toFixed(3));
           return {
             id: model.name,
             total: materials.size,
             transparent: [...materials].filter((material) => material.transparent).length,
             depthWriteDisabled: [...materials].filter((material) => !material.depthWrite).length,
+            emissiveIntensity: intensities.length ? [Math.min(...intensities), Math.max(...intensities)] : [],
           };
         }));
         publish(host.canvas, 'ready', 'glb', terrainMetrics, nextPanorama, panoramaMetrics);
@@ -1470,6 +1624,13 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       sunMotes = undefined;
       delete host.canvas.dataset.terrain3dPilotMotes;
     }
+    if (steamPlume) {
+      host.scene.remove(steamPlume.points);
+      steamPlume.dispose();
+      steamPlume = undefined;
+      delete host.canvas.dataset.terrain3dPilotSteam;
+      delete host.canvas.dataset.terrain3dPilotSteamAnchors;
+    }
     if (landmarkContacts) {
       host.scene.remove(landmarkContacts);
       disposeObject3D(landmarkContacts);
@@ -1523,6 +1684,20 @@ const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
     siege_line: { intensity: 1.9, tint: '#9ba5ab' },
     seized_headframe: { intensity: 2.1, tint: '#a9a9a6' },
     oxblood_banners: { intensity: 3.4, tint: '#ffd2b4' },
+  },
+  // THE ROOF THAT SHOUTS (docs/beauty/e2-hill-mine-brief.md U3). Measured at the run camera, the
+  // boiler-house roof is the loudest pixel field on the map: mean rgb 139,38,15 over the roof
+  // window, warmth (R-B) 124 where the whole rest of the frame lives between 10 and 97. That is the
+  // baron's "circus tents" disease, and it is a paint problem, not a body problem — the pack must
+  // not be rebuilt (F-BTB-1 class), so this is tuned through the per-contract paint argument.
+  //
+  // A colour multiply can only ever take light away, so it cannot repaint crimson as iron. What it
+  // CAN do is take the red channel down harder than the other two, which is what turns a signal red
+  // into an oxide: the tint's blue is above its red for the same reason the baron's fort tint is.
+  // The intensity does the rest of the work — at 3 the colour map is its own light source, so the
+  // roof is emitting rather than being lit, and the low sun models nothing on it.
+  'e2-hill-mine': {
+    'boiler-house-site': { intensity: 2, tint: '#9aa6a6' },
   },
 };
 
