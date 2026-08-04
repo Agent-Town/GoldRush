@@ -101,10 +101,20 @@ async function openTown(page: Page): Promise<void> {
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
 }
 
+/**
+ * THE DOOR (owner ruling 2026-08-04): the top-right town badge opens the editions MENU once the
+ * town has printed more than one edition, and opens the single edition when it has not.
+ */
 async function openHerald(page: Page): Promise<void> {
   await openTown(page);
   await page.getByTestId('town-herald-badge').click();
   await expect(page.getByTestId('claim-herald')).toBeVisible();
+}
+
+async function openEditionFromMenu(page: Page, editionNumber: number): Promise<void> {
+  await expect(page.getByTestId('claim-herald-editions')).toBeVisible();
+  await page.getByTestId('claim-herald-edition-entry').filter({ hasText: `Issue No. ${editionNumber}` }).click();
+  await expect(page.getByTestId('claim-herald-edition')).toHaveAttribute('data-edition-number', String(editionNumber));
 }
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
@@ -151,7 +161,8 @@ test('securing contracts changes the paper: the lead is the newest claim, the ar
   ]);
   await openHerald(page);
 
-  // Two secured claims that print => the ladder is arrival + 2, and the CURRENT edition opens.
+  // Two secured claims that print => the ladder is arrival + 2, so the door opens the INDEX.
+  await openEditionFromMenu(page, 3);
   const edition = page.getByTestId('claim-herald-edition');
   await expect(edition).toHaveAttribute('data-edition-number', '3');
   await expect(edition).toHaveAttribute('data-edition-kind', 'claim');
@@ -201,6 +212,16 @@ test('beating the Baron prints the finale and the badge counts the new edition',
 
   await badge.click();
   await expect(page.getByTestId('claim-herald')).toBeVisible();
+
+  // The door is the index: every edition listed, newest on top, and all five unread.
+  const entries = page.getByTestId('claim-herald-edition-entry');
+  await expect(entries).toHaveCount(5);
+  await expect(entries.first()).toContainText('THE BARON IS TURNED BACK');
+  await expect(entries.last()).toContainText('NEW HANDS, WELCOME');
+  await expect(entries.first()).toHaveAttribute('data-unread', 'true');
+  await shot(page, testInfo, 'editions-menu');
+
+  await openEditionFromMenu(page, 5);
   const edition = page.getByTestId('claim-herald-edition');
   await expect(edition).toHaveAttribute('data-edition-kind', 'baron');
   await expect(edition).toHaveAttribute('data-edition-number', '5');
@@ -227,14 +248,41 @@ test('the paper is a function of the profile: same facts, identical reader DOM',
   const scores = [securedRun('the-claim', 1_000), securedRun('e1-dry-gulch', 2_000)];
   await seedProfile(page, scores);
   await openHerald(page);
-  const first = await page.getByTestId('claim-herald').innerHTML();
+  const firstMenu = await page.getByTestId('claim-herald').innerHTML();
+  await openEditionFromMenu(page, 3);
+  const firstEdition = await page.getByTestId('claim-herald').innerHTML();
 
   // A second boot of the same profile — no timers, no clocks, no boot-time writes in between.
   await seedProfile(page, scores);
   await openHerald(page);
-  const second = await page.getByTestId('claim-herald').innerHTML();
+  expect(await page.getByTestId('claim-herald').innerHTML()).toBe(firstMenu);
+  await openEditionFromMenu(page, 3);
+  expect(await page.getByTestId('claim-herald').innerHTML()).toBe(firstEdition);
+  expectNoErrors(errors);
+});
 
-  expect(second).toBe(first);
+test('the door: one edition opens the paper, several open the index, and reading marks only what was read', async ({ page }) => {
+  const errors = collectErrors(page);
+  await seedProfile(page, [securedRun('the-claim', 1_000), securedRun('e1-dry-gulch', 2_000)]);
+  await openHerald(page);
+
+  // Listing an edition is not reading it: the index writes nothing.
+  await expect(page.getByTestId('claim-herald-editions')).toBeVisible();
+  expect(await page.evaluate((key) => localStorage.getItem(key), profileDataKey('robin', HERALD_LAST_READ_KEY))).toBeNull();
+
+  // Read the MIDDLE edition — the marker is monotonic and must not claim the newest.
+  await openEditionFromMenu(page, 2);
+  expect(await page.evaluate((key) => localStorage.getItem(key), profileDataKey('robin', HERALD_LAST_READ_KEY))).toBe('2');
+
+  // Back to the index from any edition; the one just read has lost its unread mark.
+  await page.getByTestId('claim-herald-all-editions').click();
+  const entries = page.getByTestId('claim-herald-edition-entry');
+  await expect(entries.filter({ hasText: 'Issue No. 2' })).toHaveAttribute('data-unread', 'false');
+  await expect(entries.filter({ hasText: 'Issue No. 3' })).toHaveAttribute('data-unread', 'true');
+
+  // Still unread overall, because edition 3 has never been opened.
+  await page.getByTestId('claim-herald-close').click();
+  await expect(page.getByTestId('town-herald-badge')).toHaveAttribute('data-unread', 'true');
   expectNoErrors(errors);
 });
 

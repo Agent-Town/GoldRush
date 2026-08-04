@@ -99,6 +99,9 @@ function firstIssuePanels(mode: GazetteInputMode) {
   ];
 }
 
+/** 'menu' is the editions index (the door); a number is an index into the ladder. */
+type HeraldView = 'menu' | number;
+
 let currentRoot: HTMLElement | null = null;
 let currentOnClose: (() => void) | undefined;
 let currentLadder: readonly Edition[] = [];
@@ -113,14 +116,27 @@ export function openClaimHerald(onClose?: () => void): void {
   root.setAttribute('role', 'dialog');
   root.setAttribute('aria-modal', 'true');
   root.setAttribute('aria-label', 'The Claim Herald');
-  // Law 1: the ladder is derived here, once, from profile facts. The current edition opens
-  // first (law 4); the archive strip keeps every earlier one one click away.
+  // Law 1: the ladder is derived here, once, from profile facts. With several editions the
+  // door opens the MENU (owner ruling 2026-08-04); with one it opens that one (law 4 keeps
+  // every earlier issue reachable either way).
   currentLadder = claimHeraldLadder();
-  root.innerHTML = renderHerald(readHeraldItems(), currentLadder, currentLadder.length - 1);
+  renderView(root, currentLadder.length > 1 ? 'menu' : currentLadder.length - 1);
   root.addEventListener('click', onHeraldClick);
   root.addEventListener('keydown', onHeraldKeyDown);
   (document.querySelector<HTMLElement>('#app') ?? document.body).append(root);
   root.querySelector<HTMLButtonElement>('[data-herald-close]')?.focus({ preventScroll: true });
+}
+
+/**
+ * Renders one view and, when that view is an actual edition, marks it read — the slice's only
+ * write, and only ever downstream of a player click. Opening the MENU marks nothing: listing
+ * an edition is not reading it.
+ */
+function renderView(root: HTMLElement, view: HeraldView): void {
+  root.innerHTML = renderHerald(readHeraldItems(), currentLadder, view);
+  if (view === 'menu') return;
+  const edition = currentLadder[view] ?? currentLadder[0];
+  if (edition) markEditionRead(browserStorage(), edition.number);
 }
 
 /** The ladder as this profile would read it today. Exported for the reader's own e2e. */
@@ -170,14 +186,14 @@ export function claimHeraldTownStatus(storage = browserStorage()): ClaimHeraldTo
 }
 
 export function markClaimHeraldFirstIssueRead(storage = browserStorage()): void {
-  if (!storage) return;
-  markHintSeen(storage, FIRST_ISSUE_SEEN_KEY);
-  markEditionRead(storage, currentEdition(claimHeraldLadder(storage))?.number ?? 1);
+  // Only the greenhorn hint: an edition is marked read when the reader actually renders it,
+  // so opening the editions MENU never claims you read the news it is offering you.
+  if (storage) markHintSeen(storage, FIRST_ISSUE_SEEN_KEY);
 }
 
-function renderHerald(items: readonly HeraldItem[], ladder: readonly Edition[], index: number): string {
+function renderHerald(items: readonly HeraldItem[], ladder: readonly Edition[], view: HeraldView): string {
   const inputMode = prefersTouchControls() ? 'touch' : 'keyboard';
-  const edition = ladder[index] ?? ladder[0];
+  const edition = view === 'menu' ? undefined : (ladder[view] ?? ladder[0]);
   return `
     <article class="claim-herald__paper">
       <header class="claim-herald__masthead">
@@ -188,16 +204,49 @@ function renderHerald(items: readonly HeraldItem[], ladder: readonly Edition[], 
         </div>
         <button class="claim-herald__close" type="button" data-herald-close data-testid="claim-herald-close">Back</button>
       </header>
-      ${renderArchiveStrip(ladder, edition)}
-      ${edition ? renderEdition(edition) : ''}
+      ${edition ? renderArchiveStrip(ladder, edition) : ''}
+      ${edition ? renderEdition(edition) : renderEditionsMenu(ladder)}
       ${edition?.kind === 'arrival' ? renderFirstIssue(inputMode) : ''}
       ${
-        items.length > 0
+        edition && items.length > 0
           ? `<section class="claim-herald__latest"><h3>Around town</h3><div class="claim-herald__items" data-testid="claim-herald-items">${items.map(renderItem).join('')}</div></section>`
-          : '<p class="claim-herald__empty" data-testid="claim-herald-empty">No fresh ink today.</p>'
+          : ''
       }
+      ${edition && items.length === 0 ? '<p class="claim-herald__empty" data-testid="claim-herald-empty">No fresh ink today.</p>' : ''}
     </article>
   `;
+}
+
+/**
+ * THE DOOR (owner ruling 2026-08-04, verbatim, mid-build: "There is a button now in the top
+ * right of the screen for the first edition (while in town) - this could be extended into a
+ * menu for the other editions.")
+ *
+ * The badge the owner already found opens THIS when there is more than one edition to choose
+ * between — newest on top, unread marked. With a single edition a menu would be a worse button,
+ * so the door still opens straight into the paper; that is also what keeps the greenhorn
+ * first-issue e2e green unmodified.
+ */
+function renderEditionsMenu(ladder: readonly Edition[]): string {
+  const lastRead = readLastReadEdition(browserStorage());
+  return `
+      <section class="claim-herald__editions" data-testid="claim-herald-editions" aria-labelledby="claim-herald-editions-title">
+        <h3 id="claim-herald-editions-title">THE EDITIONS</h3>
+        <p class="claim-herald__standfirst">Every issue this town has printed since you came. The latest is on top.</p>
+        <ol class="claim-herald__edition-list">
+          ${[...ladder]
+            .reverse()
+            .map((edition) => {
+              const unread = edition.number > lastRead;
+              return `<li><button class="claim-herald__edition-entry" type="button" data-herald-edition="${escapeHtml(edition.id)}" data-testid="claim-herald-edition-entry" data-edition-number="${edition.number}" data-unread="${unread}">
+            <span class="claim-herald__edition-entry-number">Issue No. ${edition.number}${unread ? ' · Unread' : ''}</span>
+            <span class="claim-herald__edition-entry-headline">${escapeHtml(edition.headline)}</span>
+            <span class="claim-herald__edition-entry-standfirst">${escapeHtml(edition.standfirst)}</span>
+          </button></li>`;
+            })
+            .join('')}
+        </ol>
+      </section>`;
 }
 
 // Law 3: Issue No. 1 keeps BOTH duties. The arrival lead prints above; this block is the
@@ -240,6 +289,7 @@ function renderArchiveStrip(ladder: readonly Edition[], current: Edition | undef
   if (ladder.length < 2) return '';
   return `
       <nav class="claim-herald__archive" data-testid="claim-herald-archive" aria-label="Back issues of The Claim Herald">
+        <button class="claim-herald__back-issue claim-herald__back-issue--menu" type="button" data-herald-menu data-testid="claim-herald-all-editions"><span>Index</span>All editions</button>
         ${ladder
           .map((edition) => {
             const showing = edition.id === current?.id;
@@ -253,7 +303,7 @@ function showEdition(editionId: string): void {
   const root = currentRoot;
   const index = currentLadder.findIndex((edition) => edition.id === editionId);
   if (!root || index < 0) return;
-  root.innerHTML = renderHerald(readHeraldItems(), currentLadder, index);
+  renderView(root, index);
   root.querySelector<HTMLElement>('.claim-herald__paper')?.scrollTo({ top: 0 });
   for (const button of root.querySelectorAll<HTMLButtonElement>('[data-herald-edition]')) {
     if (button.dataset.heraldEdition === editionId) {
@@ -261,6 +311,14 @@ function showEdition(editionId: string): void {
       return;
     }
   }
+}
+
+function showEditionsMenu(): void {
+  const root = currentRoot;
+  if (!root) return;
+  renderView(root, 'menu');
+  root.querySelector<HTMLElement>('.claim-herald__paper')?.scrollTo({ top: 0 });
+  root.querySelector<HTMLButtonElement>('[data-herald-edition]')?.focus({ preventScroll: true });
 }
 
 function renderFirstIssuePanel(panel: ReturnType<typeof firstIssuePanels>[number]): string {
@@ -299,6 +357,10 @@ function onHeraldClick(event: MouseEvent): void {
   const target = event.target instanceof Element ? event.target : null;
   if (target?.closest('[data-herald-close]')) {
     closeClaimHerald();
+    return;
+  }
+  if (target?.closest('[data-herald-menu]')) {
+    showEditionsMenu();
     return;
   }
   const backIssue = target?.closest<HTMLElement>('[data-herald-edition]');

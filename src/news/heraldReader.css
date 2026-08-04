@@ -119,6 +119,81 @@
   outline-offset: 2px;
 }
 
+.claim-herald__back-issue--menu {
+  background: rgba(91, 138, 138, 0.16);
+}
+
+/* THE DOOR (owner ruling 2026-08-04): the town badge opens this index when the town has
+   printed more than one edition. Newest on top; unread carries its own word. */
+.claim-herald__editions {
+  display: grid;
+  gap: 8px;
+  padding: 16px 0 4px;
+}
+
+.claim-herald__editions h3 {
+  margin: 0;
+  padding-bottom: 8px;
+  border-bottom: 4px double rgba(46, 27, 14, 0.52);
+  font-size: 1.15rem;
+  text-transform: uppercase;
+}
+
+.claim-herald__edition-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.claim-herald__edition-entry {
+  display: grid;
+  gap: 3px;
+  width: 100%;
+  min-height: 44px;
+  border: 2px solid rgba(46, 27, 14, 0.62);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #2e1b0e;
+  background: rgba(255, 248, 232, 0.72);
+  font-family: Wellfleet, Georgia, serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.claim-herald__edition-entry[data-unread='true'] {
+  background: #ffe4a0;
+  box-shadow: inset 3px 0 0 #5b8a8a;
+}
+
+.claim-herald__edition-entry:hover,
+.claim-herald__edition-entry:focus-visible {
+  outline: 3px solid rgba(91, 138, 138, 0.72);
+  outline-offset: 2px;
+}
+
+.claim-herald__edition-entry-number {
+  color: #5b8a8a;
+  font-size: 0.62rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.claim-herald__edition-entry-headline {
+  font-size: 1.05rem;
+  font-weight: 900;
+  line-height: 1.06;
+}
+
+.claim-herald__edition-entry-standfirst {
+  color: rgba(46, 27, 14, 0.82);
+  font-size: 0.8rem;
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1.28;
+}
+
 .claim-herald__edition {
   display: grid;
   gap: 8px;

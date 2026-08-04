@@ -1226,8 +1226,21 @@ export class TownScene {
 
   private markHeraldRead(): void {
     markClaimHeraldFirstIssueRead();
+    this.syncHeraldBadge();
+  }
+
+  // The badge used to be hardcoded to "read" the moment the paper opened, which was true when
+  // there was exactly one issue. Since the editions ladder it has to be ASKED: opening the index
+  // does not read the news in it, so a player who leaves edition 5 unopened keeps their nudge.
+  private syncHeraldBadge(): void {
     const badge = this.ui.querySelector<HTMLElement>('[data-testid="town-herald-badge"]');
-    if (badge) badge.dataset.unread = 'false';
+    if (!badge) return;
+    const herald = claimHeraldTownStatus();
+    badge.dataset.unread = String(herald.unread);
+    badge.dataset.editionNumber = String(herald.editionNumber);
+    badge.setAttribute('aria-label', `Read ${herald.editionLabel} of The Claim Herald`);
+    const label = badge.querySelector('span');
+    if (label) label.textContent = herald.editionLabel;
   }
 
   private readonly onHeraldClose = () => {
@@ -1239,6 +1252,7 @@ export class TownScene {
     this.ui.removeAttribute('aria-hidden');
     this.welcome.paperClosed();
     this.welcomeRenderKey = '';
+    this.syncHeraldBadge();
     if (this.ui.isConnected) {
       const fallback = this.ui.querySelector<HTMLButtonElement>('[data-testid="town-herald-badge"]');
       (opener?.isConnected ? opener : fallback)?.focus({ preventScroll: true });
