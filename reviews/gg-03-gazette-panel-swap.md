@@ -8,6 +8,25 @@
 
 ## VERDICT: ⛔ BLOCKED — do not merge. The slice is well-built and it breaks a sibling suite at the canonical worker count.
 
+> ⚠️ **SUPERSEDED s1455 (F-1455-1) — THE BLOCK WAS RIGHT AND IT HAS BEEN DISCHARGED; THE PANEL SWAP IS LIVE ON MAIN.**
+> The corrective this review's own title promised (*"REJECTED (corrective queued)"*) landed as the **GG-03b →
+> GG-03c** ladder: `5563bfc4` *"drain: GG-03c herald art dev-path weight — 9,443,241 B -> 962,188 B on a plain
+> boot"*, whose **code commit is `b5be7ab3`**. ⚠️ Read that commit by `--stat`, never by its subject line: it is
+> headlined *"fix: goals.json schema — two violations turned test:node-guards red on main (F-1211-2)"* and in fact
+> carries the six `assets/processed/gazette-panel-*.webp` plates, the herald engravings and the dev-path report —
+> a commit headline names intent, `--stat` names content.
+> **Verified in main, not inferred from the leaf:** `src/news/heraldReader.ts:177` carries exactly the swap
+> described below — `<img class="claim-herald__art-slot" … data-testid="gazette-panel-engraving">` with the
+> `<div …>Engraving reserved</div>` placeholder retained as the fallback. The blocking defect (the sibling suite
+> reddening at the canonical worker count) was answered by routing the plates through `assets/processed/*.webp`
+> instead of an eager raw glob, which is also what took the plain boot from 9.44 MB to 0.96 MB.
+> ➡️ **Read `artifacts/gg-03c-herald-dev-path/report.md` for the shipped evidence.**
+> ⓘ **Leaf caveat, recorded rather than silently fixed:** the leaf `gg-03-gazette-panel-swap` carries
+> `taskFile: lane-gg-03c-herald-art-dev-path-weight.md` — i.e. the leaf id names the blocked slice while its
+> taskFile names the successor that discharged it. That is why a `taskFile`-keyed lookup alone would not find this
+> row. The BLOCKED text below is KEPT deliberately (retention law): it is the record of *why* the first attempt
+> was correctly refused, and the refusal is the reason the cheaper `.webp` path exists at all.
+
 ## What it does
 
 Wires the six GG-02 engravings into the `data-panel` slots GG-01 reserved. `renderFirstIssuePanel` swaps the
