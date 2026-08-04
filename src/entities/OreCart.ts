@@ -35,6 +35,24 @@ export class OreCart {
   private readonly path: THREE.Vector3[];
   private readonly bodyMaterial = new THREE.MeshStandardMaterial({ color: '#8b7d3c', roughness: 0.72, metalness: 0.2 });
   private readonly fillMaterial = new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.88 });
+  /**
+   * U5b, e2-hill-mine beauty shift: the cart carries a lamp.
+   *
+   * Unlit on purpose — a lantern that is merely a lit-from-outside sphere reads as a pebble, and
+   * ACES walks a bright white one to a hole in the air. This is the E2 warm-glow accent, iron-amber
+   * rather than E1's pale gold: `townEraAccents[2]` lantern glass, #d9975b day / #f1b56f night.
+   *
+   * NOT contract-scoped, deliberately. The cart is one shared body used by every escort map, and
+   * the brief's own rule for shared program-level geometry is flag-it-do-not-fork-it — a lamp on
+   * the escort cart is right on all of them, so it is added once, here, rather than per map.
+   */
+  private readonly lanternMaterial = new THREE.MeshBasicMaterial({ color: '#f1b56f' });
+  private readonly lanternGlowMaterial = new THREE.MeshBasicMaterial({
+    color: '#d9975b',
+    transparent: true,
+    opacity: 0.28,
+    depthWrite: false,
+  });
   private segment = 1;
   private stateValue: OreCartState = 'moving';
   private hp: number;
@@ -56,9 +74,18 @@ export class OreCart {
     this.target.hp = maxHp;
     this.target.maxHp = maxHp;
     this.group.name = 'OreCart';
+    const lantern = new THREE.Mesh(new THREE.SphereGeometry(0.12, 8, 6), this.lanternMaterial);
+    lantern.name = 'OreCartLantern';
+    lantern.position.set(0.62, 1.02, 0.5);
+    const lanternGlow = new THREE.Mesh(new THREE.SphereGeometry(0.3, 10, 8), this.lanternGlowMaterial);
+    lanternGlow.name = 'OreCartLanternGlow';
+    lanternGlow.position.copy(lantern.position);
+    for (const part of [lantern, lanternGlow]) part.userData.renderOnly = true;
     this.group.add(
       new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.65, 1.25), this.bodyMaterial),
       new THREE.Mesh(new THREE.BoxGeometry(1.35, 0.55, 0.9), this.fillMaterial),
+      lantern,
+      lanternGlow,
     );
     this.group.children[0]!.position.y = 0.48;
     this.group.children[1]!.position.y = 0.93;
@@ -171,5 +198,10 @@ export class OreCart {
 
   private syncDamageColor(): void {
     this.bodyMaterial.color.set(this.stateValue === 'destroyed' ? '#4b2a17' : this.stateValue === 'stopped' ? '#a0522d' : '#8b7d3c');
+    // A wrecked cart's lamp is out. The glow is what a player reads at a glance, so it carries most
+    // of the state: full while rolling, banked while stopped for repair, dead when the cart is.
+    const alive = this.stateValue !== 'destroyed';
+    this.lanternMaterial.color.set(alive ? '#f1b56f' : '#3a2a1c');
+    this.lanternGlowMaterial.opacity = this.stateValue === 'moving' ? 0.28 : alive ? 0.14 : 0;
   }
 }
