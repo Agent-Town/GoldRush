@@ -7,7 +7,7 @@ import { PNG } from 'pngjs';
 //
 // Round 1's pixel test compared against a PNG one machine recorded on another day, which is why it
 // could only ever answer "is this host the baseline host". This one compares two arms of the SAME
-// run, same window, same build, same pinned clock -- instancing on vs `?nospriteinstancing`. That
+// run, same window, same build, same pinned clock -- `?spriteinstancing` vs the shipped path. That
 // makes the verdict machine-independent by construction: any host can run it and the question it
 // answers is always "did instancing change the picture", never "is this host fast".
 //
@@ -88,7 +88,10 @@ test('sprite instancing is pixel-equivalent to individual sprites', async ({ pag
     for (const pressure of [false, true]) {
       const label = `${testInfo.project.name}-${contract}${pressure ? '-pressure' : ''}`;
 
-      await bootSnapshot(page, contract, pressure, '');
+      // `?spriteinstancing` is the OPT-IN arm: instancing was measured, failed this gate on mobile
+      // the-claim-pressure and is OFF in every shipped boot (see generated.ts's verdict comment).
+      // The rig stays so the rejected option keeps costing one command to re-measure.
+      await bootSnapshot(page, contract, pressure, '&spriteinstancing');
       const instanced = await page.locator('#game-canvas').screenshot();
       await writeFile(path.join(ARTIFACT_DIR, `${label}-instanced.png`), instanced);
 
@@ -97,11 +100,13 @@ test('sprite instancing is pixel-equivalent to individual sprites', async ({ pag
       // an on-vs-off number means nothing until it is read against on-vs-on. Without this arm the
       // rig cannot tell "instancing changed the picture" from "booting twice changed the picture",
       // which is the same mistake in a new coat that made round 1's pixel gate uninterpretable.
-      await bootSnapshot(page, contract, pressure, '');
+      await bootSnapshot(page, contract, pressure, '&spriteinstancing');
       const rebooted = await page.locator('#game-canvas').screenshot();
       await writeFile(path.join(ARTIFACT_DIR, `${label}-instanced-reboot.png`), rebooted);
 
-      await bootSnapshot(page, contract, pressure, '&nospriteinstancing');
+      // The SHIPPED path: no flag, individual sprites, each depth-sorted against every other
+      // transparent object at its renderOrder.
+      await bootSnapshot(page, contract, pressure, '');
       const individual = await page.locator('#game-canvas').screenshot();
       await writeFile(path.join(ARTIFACT_DIR, `${label}-sprites.png`), individual);
 

@@ -312,11 +312,27 @@ const SPRITE_ANCHOR_MV = 'vec4 mvPosition = modelViewMatrix[ 3 ];';
 const SPRITE_ANCHOR_SCALE = 'vec2 scale = vec2( length( modelMatrix[ 0 ].xyz ), length( modelMatrix[ 1 ].xyz ) );';
 const SPRITE_ANCHOR_DIFFUSE = 'vec4 diffuseColor = vec4( diffuse, opacity );';
 
-// The A/B lever. This box swings 6x on background load, so before/after must be measured in one
-// window; `?nospriteinstancing` turns the batch back into individual sprites on the same build,
-// which is the only honest way to attribute a delta to this change rather than to the machine.
-export function spriteInstancingDisabled(): boolean {
-  return new URLSearchParams(globalThis.location?.search ?? '').has('nospriteinstancing');
+// THE VERDICT, 2026-08-04 (perf-r2 item 1): OPT-IN, i.e. OFF in every shipped boot.
+//
+// Instancing works and it is -60 draw calls/map, but it collapses a batch into ONE render-list
+// item, and three.js sorts render-list items -- not the sprites inside them. The census proves the
+// cost is not hypothetical: at renderOrder 2 the per-Sprite arm draws 60 GeneratedClaimJumperSprites
+// individually depth-sorted AGAINST EnemyPool (10 calls), GeneratedGoldSeamSprites and
+// GeneratedHeroHomesteader; instanced, all 60 land at one depth and can no longer interleave with
+// any of them. Sorting instances WITHIN the batch -- which uploadInstances does correctly -- cannot
+// restore cross-batch interleaving, because one object can only occupy one place in the queue.
+// That is round 1's failure class, surviving at reduced amplitude: it fails the pixel gate on
+// mobile the-claim-pressure (1.53% of CSS pixels, mean channel delta 0.50 against a same-build
+// reboot control of 0.089% / 0.019) while passing all ten desktop scenes.
+//
+// Kept behind `?spriteinstancing` rather than deleted: the -60 calls are real and reproducible, and
+// the redesign that would make them legal is known -- give every gameplay-renderOrder sprite batch
+// ONE shared atlas+material so a single instanced draw contains all of them and cross-batch
+// interleaving stops being a question. Until then the shipped path is the per-Sprite path.
+// The flag is also the A/B lever: this box swings 6x on background load, so on/off must be measured
+// in one window, on one build.
+export function spriteInstancingEnabled(): boolean {
+  return new URLSearchParams(globalThis.location?.search ?? '').has('spriteinstancing');
 }
 
 function instancedSpriteGeometry(): THREE.BufferGeometry {
@@ -394,7 +410,7 @@ export class GeneratedSpriteBatch {
   ) {
     this.group.name = options.name;
     const renderOrder = options.renderOrder ?? RenderLayers.gameplay;
-    const instanced = options.instanced === true && !spriteInstancingDisabled();
+    const instanced = options.instanced === true && spriteInstancingEnabled();
     for (let i = 0; i < capacity; i += 1) {
       const sprite = instanced ? new THREE.Object3D() : new THREE.Sprite(this.material);
       if (sprite instanceof THREE.Sprite) bindWorldSpriteTint(sprite, () => this.tintScalars[i] ?? 1, () => this.tintColors[i]);
