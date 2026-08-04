@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// When a GR-SIM run is submitted to county standings, callers may add stack.tokensIn,
+// stack.tokensOut, and stack.calls; use the outcome's calls value and omit unknown token counts.
+
 import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';

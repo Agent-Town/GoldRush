@@ -205,6 +205,122 @@
   font-style: italic;
 }
 
+.field-book__intro {
+  max-width: 680px;
+  margin: 0;
+  color: #684728;
+  line-height: 1.45;
+}
+
+.field-book__board {
+  max-height: 560px;
+}
+
+.field-book__matrix {
+  width: max-content;
+  min-width: 100%;
+}
+
+.field-book__matrix th,
+.field-book__matrix td,
+.field-book__matrix th:nth-child(2) {
+  width: auto;
+  min-width: 190px;
+  text-align: left;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.field-book__matrix th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 160px;
+  background: #f5e9ca;
+}
+
+.field-book__row > th,
+.field-book__row > td {
+  cursor: pointer;
+}
+
+.field-book__row--expanded > * {
+  background: rgba(91, 138, 138, 0.1);
+}
+
+.field-book__row button {
+  border: 0;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-weight: 900;
+  text-align: left;
+  cursor: pointer;
+}
+
+.field-book__row td > strong,
+.field-book__row td > span,
+.field-book__row td > time {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.field-book__row td > span,
+.field-book__row td > time {
+  color: #684728;
+  font-size: 0.76rem;
+}
+
+.field-book__row .county-standings__difficulty {
+  color: #315f5f;
+}
+
+.field-book__blank {
+  color: rgba(104, 71, 40, 0.55);
+  text-align: center !important;
+}
+
+.field-book__details > td {
+  padding: 14px;
+  background: rgba(91, 138, 138, 0.08);
+}
+
+.field-book__details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.field-book__details article {
+  padding: 10px;
+  border: 1px solid rgba(76, 48, 23, 0.24);
+  border-radius: 6px;
+  background: rgba(255, 252, 240, 0.72);
+}
+
+.field-book__details h4 {
+  margin: 0 0 8px;
+}
+
+.field-book__details dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 9px;
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+.field-book__details dt {
+  color: #684728;
+  font-weight: 800;
+}
+
+.field-book__details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .claim-ledger__shelves {
   display: grid;
   gap: 18px;
@@ -335,6 +451,11 @@
   .claim-ledger__shelves {
     padding-left: 12px;
     padding-right: 12px;
+  }
+
+  .claim-ledger__views {
+    flex-wrap: wrap;
+    overflow-x: visible;
   }
 
   .county-standings th,
