@@ -69,6 +69,7 @@ import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revea
 import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
 import { RunManager } from './RunManager';
 import {
+  RUN_TAPE_SIM_VERSION,
   RunTapeRecorder,
   appendRunTape,
   keepRunTape,
@@ -238,6 +239,7 @@ import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
+import { LanternShow, type LanternShowState } from '../ui/LanternShow';
 import { disposeObject3D } from '../utils/dispose';
 import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
@@ -371,6 +373,22 @@ type BaronRocketVolleyConfig = NonNullable<ContractBaronTwist['rocketVolley']>;
 type BaronProps3dState = 'off' | 'loading' | 'ready' | 'failed' | 'disposed';
 
 export type RunReturnResult = 'secured' | 'overrun';
+
+export type GameBoot = ContractRunBoot & {
+  replay?: {
+    tape: RunTape;
+    onClose: () => void;
+  };
+};
+
+type RunTapeReplayState = {
+  tape: RunTape;
+  sessions: Map<number, PlaybookReplaySession>;
+  speed: 1 | 2 | 4;
+  skipWave: number | null;
+  complete: boolean;
+  hash: string | null;
+};
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -605,13 +623,13 @@ export class Game {
   private readonly deathOverlay: DeathOverlay;
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
-  private readonly activeEpoch = selectActiveEpoch();
   // Tile persistence speaks once, at birth: the profile-scoped snapshot is read
   // here, before any system builds, and never again mid-run (Loader Contract).
   private readonly tileStateStore = new TileStateStore(safeLocalStorage());
   private readonly activeContract = bornContract(this.tileStateStore);
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
+  private readonly activeEpoch = this.contractEpoch ? loadEpoch(this.contractEpoch.id) : selectActiveEpoch();
   private readonly e6TileConsumers = new E6TileConsumerSystem(
     this.contractEpoch?.id === 'epoch-6-atomic' && this.activeContract.id === 'e6-glow-mesa',
     this.activeContract.id,
@@ -776,7 +794,8 @@ export class Game {
     reachRadius: 0,
   };
   private baronSpawnImpulses = 0;
-  private readonly boot: ContractRunBoot;
+  private readonly boot: GameBoot;
+  private readonly runSeed: string;
   private readonly waveSystem: WaveSystem;
   private readonly crawlerBoss = new CrawlerBossSystem(
     () => this.enemies.all,
@@ -1079,6 +1098,10 @@ export class Game {
   private readonly countyStandingsEnabled = readTelemetryOptIn() && shouldPostCountyStanding();
   private runTapeRecorder: RunTapeRecorder | null = null;
   private lastRunTape: RunTape | null = null;
+  private runTapeReplay: RunTapeReplayState | null = null;
+  private lanternShow?: LanternShow;
+  private readonly replayCameraPan = new THREE.Vector3();
+  private readonly replayCameraTarget = new THREE.Vector3();
   private elapsed = 0;
   private fixedTickElapsed = 0;
   private activeTickElapsed = 0;
@@ -1205,13 +1228,14 @@ export class Game {
     private readonly canvas: HTMLCanvasElement,
     private readonly openAssayBench?: () => void,
     private readonly onReturnToMenu?: (result: RunReturnResult) => void,
-    boot: ContractRunBoot = {},
+    boot: GameBoot = {},
   ) {
     this.boot = boot;
+    this.runSeed = boot.replay?.tape.seed ?? getDebugSeed() ?? 'gold-rush';
     this.waveSystem = new WaveSystem(
       this.enemies,
       this.primaryActor.group.position,
-      createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
+      createRng(`${this.runSeed}:waves`),
       (text, atSim, wave) => {
         if (wave === 1) this.speakTrailGuide('first-wave');
         this.announceWaveBanner(text, atSim);
@@ -1391,7 +1415,7 @@ export class Game {
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
       state: this.state,
-      rng: createRng(`${getDebugSeed() ?? 'gold-rush'}:upgrades`),
+      rng: createRng(`${this.runSeed}:upgrades`),
       getBeaconCount: () => this.buildSystem.beaconCount,
       getWave: () => this.waveSystem.diagnostics.wave,
       getMaxHp: () => this.primaryActor.maxHp,
@@ -1473,6 +1497,7 @@ export class Game {
       this.speakTrailGuide('first-hurt');
     });
     this.events.on('run_secured', (event) => {
+      if (this.runTapeReplay) return;
       this.securedScoreAt = event.resultAt;
       const { score } = this.recordRunScore(
         event.summary.deepestWave ?? event.summary.wavesSurvived,
@@ -1486,6 +1511,7 @@ export class Game {
       if (!this.baronBeatenThisRun) this.audio.play('victory-sting');
     });
     this.events.on('hero_died', (event) => {
+      if (this.runTapeReplay) return;
       this.audio.play('defeat-sting');
       this.audio.play('ledger-open', 0.75);
       const secured = this.runWasSecured(event.wavesSurvived);
@@ -2108,6 +2134,14 @@ export class Game {
     }
     this.cameraRig.snapTo(this.localActor.group.position);
     this.state.transition('playing');
+    if (this.boot.replay) {
+      this.startRunTapeReplay(this.boot.replay.tape);
+      resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
+      this.applyStats(this.progression.stats, null);
+      this.syncUi();
+      this.publishDiagnostics();
+      return;
+    }
     this.uiBridge.announce('Stake your claim.', 0);
     this.prefetchContractPresentation();
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
@@ -2211,7 +2245,7 @@ export class Game {
     window.addEventListener('resize', this.syncViewport);
     this.resizeFrame = requestAnimationFrame(this.syncViewport);
     this.loop.start();
-    this.speakTrailGuide('first-run');
+    if (!this.runTapeReplay) this.speakTrailGuide('first-run');
   }
 
   openClaimLedger(entryId?: LedgerEntryId): void {
@@ -2263,6 +2297,7 @@ export class Game {
     this.input.dispose();
     this.cameraZoom.dispose();
     this.playbookSurface?.dispose();
+    this.lanternShow?.dispose();
     this.e7SignalSystem.dispose();
     this.hud.dispose();
     this.assayOfficePrompt.dispose();
@@ -2368,7 +2403,7 @@ export class Game {
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
-    const sampledIntents = this.input.readIntents();
+    const sampledIntents = this.runTapeReplay ? intentsFromLockstepInput(null) : this.input.readIntents();
     if (this.mpClient && this.manualLockstepPausedForTest) return false;
     const cancelConsumed =
       this.mpClient || this.playbookLiveRecording() ? this.applyLocalMultiplayerPresentation(sampledIntents) : false;
@@ -2607,6 +2642,7 @@ export class Game {
     } else {
       this.captureRenderState();
     }
+    this.finishRunTapeReplayIfComplete();
     this.finishMultiplayerTick();
     return true;
   }
@@ -2697,7 +2733,7 @@ export class Game {
     // the pan-channel slowdown must follow the actor that actually channels
     // (per-actor channel state) — the mpActionSlot proxy stays untouched for
     // multiplayer to avoid any lockstep behavior change.
-    const playbookReplayActive = !this.mpClient && this.playbookReplay?.active === true;
+    const playbookReplayActive = !this.mpClient && (this.playbookReplay?.active === true || this.runTapeReplay !== null);
     for (let slot = 0; slot < this.actors.length; slot += 1) {
       const actor = this.actors[slot];
       if (!actor?.group.visible) continue;
@@ -2767,7 +2803,10 @@ export class Game {
       this.waveSystem.diagnostics.wave >= Balance.world.detailStressWaveThreshold;
     this.detailScatter?.syncBuildingClearings(this.detailClearings());
     this.cameraZoom.update(delta);
-    this.cameraRig.update(delta, this.localActor.renderPosition, this.localActor.velocity);
+    const cameraTarget = this.runTapeReplay
+      ? this.replayCameraTarget.copy(this.localActor.renderPosition).add(this.replayCameraPan)
+      : this.localActor.renderPosition;
+    this.cameraRig.update(delta, cameraTarget, this.localActor.velocity);
     this.syncMultiplayerNameChips();
     this.baronVolleyVfx.setDetailBudget(this.runtimePerformanceVerdict);
     this.lightRig?.setStressFallback(visualStress || this.runtimePerformanceVerdict >= 1);
@@ -2782,6 +2821,7 @@ export class Game {
     this.syncAssayOfficePrompt();
     this.syncBuildingContextPrompt();
     this.syncWorldInfoNotePrompt();
+    this.syncLanternShow();
     this.publishDiagnostics();
   }
 
@@ -2931,6 +2971,7 @@ export class Game {
    */
   private consumePlaybookTick(sampledIntents: Intents, cancelConsumed: boolean): Intents {
     if (this.mpClient) return sampledIntents;
+    if (this.runTapeReplay) return this.consumeRunTapeReplayTick();
     // Tape time follows active simulation time. The manual-sim harness, player
     // pauses, and level-up choices freeze it; world-driven charm hit-stop stays
     // recorded because the sim remains active and deterministically recreates it.
@@ -2999,7 +3040,7 @@ export class Game {
     this.playbookRecorder = new PlaybookRecorderSession(
       {
         contractId: this.activeContract.id,
-        seed: getDebugSeed() ?? 'gold-rush',
+        seed: this.runSeed,
         difficultyPreset: this.difficultyPreset,
         start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
       },
@@ -3048,7 +3089,7 @@ export class Game {
     const playbook = parsed.playbook;
     // The determinism contract holds on the same tile+seed only (spec law 2).
     if (playbook.contractId !== this.activeContract.id) return { ok: false, reason: 'contract-mismatch' };
-    if (playbook.seed !== (getDebugSeed() ?? 'gold-rush')) return { ok: false, reason: 'seed-mismatch' };
+    if (playbook.seed !== this.runSeed) return { ok: false, reason: 'seed-mismatch' };
     if (playbook.difficultyPreset !== this.difficultyPreset) return { ok: false, reason: 'difficulty-mismatch' };
     const actor = this.ensurePlaybookReplayActor();
     const slot = this.actors.indexOf(actor);
@@ -5205,7 +5246,7 @@ export class Game {
     const radius = Math.max(0.2, config.radius);
     const spreadRadius = Math.max(0, config.spreadRadius);
     const ownerId = `${BARON_ROCKET_OWNER_PREFIX}:${baron.id}`;
-    const seed = getDebugSeed() ?? 'gold-rush';
+    const seed = this.runSeed;
     const origin = baron.position;
     const target = new THREE.Vector3();
     this.baronRocketLastOwnerId = ownerId;
@@ -5810,6 +5851,160 @@ export class Game {
     return { scoreAt, economySummary, runStats, score, scores };
   }
 
+  private startRunTapeReplay(tape: RunTape): void {
+    if (tape.simVersion !== RUN_TAPE_SIM_VERSION) throw new Error('Run tape sim version mismatch.');
+    const recordings = [
+      { slot: tape.inputLog.primarySlot, start: tape.inputLog.start, entries: tape.inputLog.entries },
+      ...tape.inputLog.streams,
+    ];
+    const maxSlot = Math.max(...recordings.map((entry) => entry.slot));
+    while (this.actors.length <= maxSlot) {
+      const actor = new Hero(RUN_CAST_SCALE);
+      actor.group.name = `RunTapeHero-${this.actors.length}`;
+      this.actors.push(actor);
+      this.registerHeroShooters(actor);
+      this.scene.add(actor.group);
+    }
+    const sessions = new Map<number, PlaybookReplaySession>();
+    for (const { slot, start, entries } of recordings) {
+      const playbook: PlaybookRecording = {
+        version: PLAYBOOK_VERSION,
+        name: `${tape.id}:${slot}`,
+        contractId: tape.contract,
+        seed: tape.seed,
+        difficultyPreset: tape.difficulty,
+        stepSeconds: PLAYBOOK_STEP_SECONDS,
+        start: { ...start },
+        durationTicks: tape.inputLog.durationTicks,
+        entries: entries.map((entry) => ({ ...entry, a: entry.a.map((action) => structuredClone(action)) })),
+        truncated: tape.inputLog.truncated,
+      };
+      sessions.set(slot, new PlaybookReplaySession(playbook, undefined, true));
+      const actor = this.actors[slot]!;
+      actor.group.visible = true;
+      actor.resetRun(new THREE.Vector3(start.x, Terrain.visualY(start.x, start.z, this.heroStart.y), start.z));
+      this.setWeaponForActor(actor, 'rig');
+      actor.snapRenderState();
+    }
+    for (let slot = 0; slot < this.actors.length; slot += 1) {
+      if (!sessions.has(slot)) this.actors[slot]!.group.visible = false;
+    }
+    this.mpLocalSlot = tape.inputLog.primarySlot;
+    this.mpActionSlot = 0;
+    this.runTapeReplay = { tape, sessions, speed: 1, skipWave: null, complete: false, hash: null };
+    this.replayCameraPan.set(0, 0, 0);
+    this.prospector.reset(this.primaryActor.group.position);
+    this.cameraRig.snapTo(this.localActor.group.position);
+    this.lanternShow ??= new LanternShow(this.getElement('#app'), tape, {
+      pause: (paused) => this.setRunTapeReplayPaused(paused),
+      speed: (speed) => this.setRunTapeReplaySpeed(speed),
+      restart: () => this.restartRunTapeReplay(),
+      skipWave: () => this.skipRunTapeReplayWave(),
+      close: () => this.boot.replay?.onClose(),
+      pan: (dx, dz) => {
+        this.replayCameraPan.x = THREE.MathUtils.clamp(this.replayCameraPan.x + dx, -24, 24);
+        this.replayCameraPan.z = THREE.MathUtils.clamp(this.replayCameraPan.z + dz, -24, 24);
+      },
+    });
+    this.syncLanternShow();
+  }
+
+  private consumeRunTapeReplayTick(): Intents {
+    const replay = this.runTapeReplay;
+    const idle = intentsFromLockstepInput(null);
+    if (!replay || replay.complete || this.state.isPaused || (this.state.current !== 'playing' && this.state.current !== 'levelup')) return idle;
+    const actorIntents = this.actors.map(() => intentsFromLockstepInput(null));
+    for (const [slot, session] of replay.sessions) {
+      const actor = this.actors[slot];
+      const input = session.step(actor?.group.position ?? null);
+      actorIntents[slot] = intentsFromLockstepInput(input);
+      if (input?.actions.length) {
+        this.mpActionsThisTick.push(...input.actions.map((action) => ({ slot, action })));
+      }
+    }
+    this.mpActorIntents = actorIntents;
+    return actorIntents[this.mpLocalSlot] ?? idle;
+  }
+
+  private finishRunTapeReplayIfComplete(): void {
+    const replay = this.runTapeReplay;
+    if (!replay || replay.complete) return;
+    if (replay.skipWave !== null && this.waveSystem.diagnostics.wave >= replay.skipWave) {
+      replay.skipWave = null;
+      this.loop.setTimeScale(replay.speed);
+    }
+    if ([...replay.sessions.values()].some((session) => !session.complete)) return;
+    const primary = replay.sessions.get(replay.tape.inputLog.primarySlot);
+    replay.hash = runTapeEventLogHash({
+      probes: primary ? [...primary.probeSamples] : [],
+      kills: this.kills,
+      gold: this.economy.gold,
+      wave: this.waveSystem.diagnostics.wave,
+      economy: summarizeLog(this.economy.log),
+    });
+    replay.complete = true;
+    replay.skipWave = null;
+    this.state.setPaused(true);
+    this.loop.setTimeScale(1);
+    this.syncLanternShow();
+  }
+
+  private setRunTapeReplayPaused(paused: boolean): void {
+    const replay = this.runTapeReplay;
+    if (!replay || replay.complete) return;
+    replay.skipWave = null;
+    this.state.setPaused(paused);
+    this.loop.setTimeScale(replay.speed);
+    this.syncLanternShow();
+  }
+
+  private setRunTapeReplaySpeed(speed: 1 | 2 | 4): void {
+    const replay = this.runTapeReplay;
+    if (!replay || replay.complete) return;
+    replay.speed = speed;
+    replay.skipWave = null;
+    this.loop.setTimeScale(speed);
+    this.syncLanternShow();
+  }
+
+  private skipRunTapeReplayWave(): void {
+    const replay = this.runTapeReplay;
+    if (!replay || replay.complete) return;
+    replay.skipWave = this.waveSystem.diagnostics.wave + 1;
+    this.state.setPaused(false);
+    this.loop.setTimeScale(16);
+    this.syncLanternShow();
+  }
+
+  private restartRunTapeReplay(): void {
+    const tape = this.runTapeReplay?.tape;
+    if (!tape) return;
+    this.runTapeReplay = null;
+    this.loop.setTimeScale(1);
+    this.mpLocalSlot = 0;
+    this.resetRun();
+    this.startRunTapeReplay(tape);
+  }
+
+  private syncLanternShow(): void {
+    const replay = this.runTapeReplay;
+    if (!replay || !this.lanternShow) return;
+    const primary = replay.sessions.get(replay.tape.inputLog.primarySlot);
+    const status = primary?.status();
+    const state: LanternShowState = {
+      tick: Math.min(status?.tick ?? 0, replay.tape.inputLog.durationTicks),
+      durationTicks: replay.tape.inputLog.durationTicks,
+      wave: this.waveSystem.diagnostics.wave,
+      paused: !replay.complete && this.state.isPaused,
+      speed: replay.speed,
+      skipping: replay.skipWave !== null,
+      complete: replay.complete,
+      hash: replay.hash,
+      expectedHash: replay.tape.eventLogHash,
+    };
+    this.lanternShow.update(state);
+  }
+
   private recordRunTapeInput(intents: Intents): void {
     if (!this.state.simActive || (this.manualSimForTest && !this.manualAdvanceForTest)) return;
     const slot = this.playbookReplay?.active ? this.playbookReplaySlot : this.mpLocalSlot;
@@ -5840,7 +6035,7 @@ export class Game {
     this.lastRunTape = null;
     this.runTapeRecorder = new RunTapeRecorder({
       contract: this.activeContract.id,
-      seed: getDebugSeed() ?? 'gold-rush',
+      seed: this.runSeed,
       difficulty: this.difficultyPreset,
       start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
     });
@@ -6514,14 +6709,16 @@ export class Game {
     this.playerPauseActive = false;
     this.prospector.reset(this.primaryActor.group.position);
     this.prefetchContractPresentation();
-    this.showProspectorIntro();
-    this.uiBridge.announce('Stake your claim.', 0);
     this.syncUi();
-    this.showContractBriefing();
-    if (deferMetaRecap) {
-      this.runStartMetaRecapPending = true;
-    } else {
-      this.showRunStartMetaRecap();
+    if (!this.boot.replay) {
+      this.showProspectorIntro();
+      this.uiBridge.announce('Stake your claim.', 0);
+      this.showContractBriefing();
+      if (deferMetaRecap) {
+        this.runStartMetaRecapPending = true;
+      } else {
+        this.showRunStartMetaRecap();
+      }
     }
     this.upgradeOverlay.hide();
     this.buildingContextPrompt.update(null, null, false);
@@ -6734,7 +6931,7 @@ export class Game {
       version: PLAYBOOK_VERSION,
       name: 'survey-of-the-base-as-built',
       contractId: this.activeContract.id,
-      seed: getDebugSeed() ?? 'gold-rush',
+      seed: this.runSeed,
       difficultyPreset: this.difficultyPreset,
       stepSeconds: PLAYBOOK_STEP_SECONDS,
       start: { x: quantizePlaybookCoordinate(hero.x), z: quantizePlaybookCoordinate(hero.z) },
@@ -6846,6 +7043,11 @@ export class Game {
 
   private finishPendingDeath(): boolean {
     if (!this.deathPending) return false;
+    if (this.runTapeReplay) {
+      this.deathPending = false;
+      this.finishRunTapeReplayIfComplete();
+      return true;
+    }
     this.endRun();
     this.finishMultiplayerTick();
     return true;

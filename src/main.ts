@@ -14,6 +14,7 @@ import {
   DEFAULT_CONTRACT_ID,
   loadContract,
   readCharterLaunch,
+  stageReplayContract,
   stagePlayerContractLaunch,
   type ContractRunBoot,
 } from './meta/ContractFamilies';
@@ -28,6 +29,8 @@ import { reconcileActiveEpoch } from './meta/ResearchTree';
 
 type AssayBench = ReturnType<(typeof import('./crafting/AssayBench'))['install']>;
 type Game = import('./game/Game').Game;
+type GameBoot = import('./game/Game').GameBoot;
+type RunTape = import('./game/RunTape').RunTape;
 type StartMenu = import('./ui/menu/StartMenu').StartMenu;
 type TownScene = import('./town/TownScene').TownScene;
 
@@ -106,19 +109,20 @@ let assayBench: AssayBench | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
 let town: TownScene | undefined;
+let restoreReplayStorage: (() => void) | undefined;
 const uninstallBuildFreshness = installBuildFreshness(app, () => !game && !profiles && Boolean(startMenu || town));
 const uninstallClaimLedgerRequest = installClaimLedgerRequestHandler((entryId) => openClaimLedger(entryId));
 installEpochLedgerDiscovery();
 
-const RUN_ROUTE_PARAMS = ['contract', 'seed', 'mode', 'press'] as const;
+const RUN_ROUTE_PARAMS = ['contract', 'seed', 'difficulty', 'mode', 'press', 'replay'] as const;
 
 afterFirstFrame(() => {
   void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));
 });
 
-async function startGame(): Promise<void> {
+async function startGame(boot: GameBoot = {}): Promise<void> {
   if (__GR_RELEASE_E1__) reconcileActiveEpoch();
-  reverifyStagedContractLaunch();
+  if (!boot.replay) reverifyStagedContractLaunch();
   seedDebugEraFromSearch(gameCanvas);
   advanceStream.enter({ kind: 'run', contractId: activeContract().id });
   const currentSearch = new URLSearchParams(window.location.search);
@@ -126,21 +130,23 @@ async function startGame(): Promise<void> {
   applyStoredDifficultyPreset();
   applyStoredPerformanceTier(activeContract().id);
   applyUpgradeBudgetsFromBalance();
-  game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback, runBootFromSearch(currentSearch));
+  game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback, { ...runBootFromSearch(currentSearch), ...boot });
   game.start();
   if (!__GR_RELEASE_E1__ && currentSearch.has('editor')) {
     void import('./editor/DescriptorInspector').then(({ installDescriptorInspector }) => installDescriptorInspector(app));
   }
   releaseStartupAssetGateOnFirstGameFrame();
   installWaveTelegraphPrefetch();
-  afterFirstFrame(() => {
-    void import('./crafting/AssayBench').then(({ install }) => {
-      if (!game) return;
-      assayBench = install(app, {
-        initiallyOpen: currentSearch.has('profile') || currentSearch.has('queueNow'),
+  if (!boot.replay) {
+    afterFirstFrame(() => {
+      void import('./crafting/AssayBench').then(({ install }) => {
+        if (!game) return;
+        assayBench = install(app, {
+          initiallyOpen: currentSearch.has('profile') || currentSearch.has('queueNow'),
+        });
       });
     });
-  });
+  }
 }
 
 function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; onBack?: () => void } = {}): void {
@@ -346,9 +352,45 @@ function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult
   void import('./town/TownScene').then(({ TownScene }) => {
     if (game || profiles) return;
     town?.dispose();
-    town = new TownScene(gameCanvas, returnToStartMenu, { ...options, onLaunchContract: launchContract });
+    town = new TownScene(gameCanvas, returnToStartMenu, {
+      ...options,
+      onLaunchContract: launchContract,
+      onOpenTapeShelf: openRunTapeShelf,
+    });
     town.start();
   });
+}
+
+function openRunTapeShelf(): void {
+  void import('./ui/LanternShow').then(({ openTapeShelf }) => openTapeShelf(localStorage, watchRunTape));
+}
+
+async function watchRunTape(tape: RunTape): Promise<void> {
+  teardownActiveScene();
+  stageReplayContract(tape.contract);
+  const search = new URLSearchParams();
+  search.set('contract', tape.contract);
+  search.set('seed', tape.seed);
+  search.set('difficulty', tape.difficulty);
+  search.set('replay', tape.id);
+  history.replaceState({ goldRushScene: 'replay' }, '', `${window.location.pathname}?${search.toString()}${window.location.hash}`);
+  const { isolateReplayStorage } = await import('./ui/LanternShow');
+  restoreReplayStorage = isolateReplayStorage(localStorage);
+  try {
+    await startGame({ replay: { tape, onClose: closeRunTapeReplay } });
+  } catch (error) {
+    closeRunTapeReplay();
+    throw error;
+  }
+}
+
+function closeRunTapeReplay(): void {
+  teardownActiveScene();
+  restoreReplayStorage?.();
+  restoreReplayStorage = undefined;
+  stageReplayContract(null);
+  replaceRunRoute('town');
+  openTown();
 }
 
 function openClaimLedger(entryId?: LedgerEntryId): void {

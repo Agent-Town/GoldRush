@@ -242,6 +242,7 @@ export class PlaybookReplaySession {
   constructor(
     readonly playbook: PlaybookRecording,
     private readonly probeEvery = PLAYBOOK_PROBE_EVERY_TICKS,
+    private readonly replayAllActions = false,
   ) {
     this.hash = playbookHash(playbook);
   }
@@ -279,7 +280,7 @@ export class PlaybookReplaySession {
       this.mx = entry.mx;
       this.my = entry.my;
       for (const action of entry.a) {
-        if (REPLAYABLE_PLAYBOOK_ACTIONS.has(action.type)) {
+        if (this.replayAllActions || REPLAYABLE_PLAYBOOK_ACTIONS.has(action.type)) {
           actions.push(cloneAction(action));
         } else {
           // No privileged paths AND no silent drops: unsupported verbs are logged.

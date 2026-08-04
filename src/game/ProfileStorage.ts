@@ -116,6 +116,15 @@ const inertStorage: Storage = {
 let scopedStorage: Storage | null = null;
 let sessionProfileId = '';
 let storageScopeInstalled = false;
+let isolatedStorage: Storage | null = null;
+
+export function isolateProfileStorage(storage: Storage): () => void {
+  const previous = isolatedStorage;
+  isolatedStorage = storage;
+  return () => {
+    if (isolatedStorage === storage) isolatedStorage = previous;
+  };
+}
 
 export function ensureProfileState(storage: ProfileStorage): ProfileState {
   const saved = loadProfileState(storage);
@@ -504,6 +513,7 @@ export function safeLocalStorage(): Storage {
 }
 
 export function rawGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {
+  if (storage === isolatedStorage) return null;
   try {
     return nativeStorage.getItem && isNativeStorage(storage) ? nativeStorage.getItem.call(storage, key) : storage.getItem(key);
   } catch {
@@ -512,6 +522,7 @@ export function rawGet(storage: Pick<Storage, 'getItem'>, key: string): string |
 }
 
 export function rawSet(storage: Pick<Storage, 'setItem'>, key: string, value: string): void {
+  if (storage === isolatedStorage) return;
   try {
     if (nativeStorage.setItem && isNativeStorage(storage)) nativeStorage.setItem.call(storage, key, value);
     else storage.setItem(key, value);

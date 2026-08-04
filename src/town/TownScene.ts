@@ -404,6 +404,7 @@ type TownSceneOptions = {
   initialBoardContractId?: string;
   returnResult?: 'secured' | 'overrun';
   onLaunchContract?: (id: string, boot?: ContractRunBoot) => void;
+  onOpenTapeShelf?: () => void;
 };
 
 type HiddenButtonState = {
@@ -1379,6 +1380,10 @@ export class TownScene {
       requestOpenClaimLedger();
       return;
     }
+    if (target?.closest('[data-schoolhouse-tapes]')) {
+      this.options.onOpenTapeShelf?.();
+      return;
+    }
     if (target?.closest('[data-raise-stamp-mill]')) {
       this.raiseStampMill();
       return;
@@ -1849,6 +1854,7 @@ export class TownScene {
           </div>
           <button class="town-ui__board-close" type="button" data-schoolhouse-close data-testid="schoolhouse-close">Back</button>
           <button class="town-ui__board-close" type="button" data-schoolhouse-ledger data-testid="schoolhouse-open-ledger">Claim Ledger</button>
+          <button class="town-ui__board-close" type="button" data-schoolhouse-tapes data-testid="schoolhouse-open-tapes">Tape Shelf</button>
         </header>
         <div class="town-ui__surface-body">
           ${this.renderEpochActivationAction()}

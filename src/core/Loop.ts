@@ -32,6 +32,7 @@ export class Loop {
   private lastTime = 0;
   private running = false;
   private accumulator = 0;
+  private timeScale = 1;
   private readonly frame: LoopFrame = {
     deltaSeconds: 0,
     presentationDeltaSeconds: 0,
@@ -92,6 +93,10 @@ export class Loop {
     this.state.droppedTicks = 0;
   }
 
+  setTimeScale(scale: number): void {
+    this.timeScale = Number.isFinite(scale) ? Math.max(0, scale) : 1;
+  }
+
   /** Drives the same frame path as requestAnimationFrame; debug gates use this after stop(). */
   advanceFrame(deltaSeconds: number): void {
     this.runFrame(deltaSeconds, false);
@@ -118,7 +123,7 @@ export class Loop {
       this.frame.alpha = 1;
       this.state.totalSteps += 1;
     } else {
-      this.accumulator += delta;
+      this.accumulator += delta * this.timeScale;
       while (
         this.accumulator + STEP_EPSILON >= this.stepSeconds &&
         this.frame.steps < this.maxStepsPerFrame &&
