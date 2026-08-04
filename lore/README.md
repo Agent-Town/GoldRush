@@ -15,6 +15,7 @@ Created 2026-07-09 by owner order: "a story wiki where we keep all this informat
 - `canon-rules.md` — the guardrails digest: persistence + two-chains exception, one-town law, warmth definition, cure-arms lexicon, ADR-001, household/family-business laws.
 - `world-dispatches.md` — the dispatch content tables E1–E10 (Mei's barks · World Outside ledger pages · ceremony postscripts): the single source for dispatch text; WD-02..04 wire FROM it.
 - `agent-town-heritage.md` — the five Agent Town buildings and their Gold Rush ancestors (fountain = the Pan Monument, ruling #16).
+- `claim-herald.md` — the town's newspaper: why an arrival is news (THE SPARING keeps the road empty, owner-ruled 2026-08-04), the E1 hand-copied form, the printing laws (clock law, cure-arms lexicon, hero≠Prospector), and the shipped edition ladder.
 - `third-printing-brief.md` — HISTORICAL: the 2026-07-16 full-read review + decision sheet, cleared 2026-07-18 by the twenty rulings.
 - PLANNED, not yet populated (promised at creation; fire-authorable per POPULATION below): `institutions.md` · `places.md` · `eras.md` — until then, institution/place facts live in characters.md + STORYBOOK chapters, and era depth lives in STORYBOOK.md + specs/epoch-saga bundles.
 POPULATION: fire-authorable task mines specs/, docs/playtests/, ADRs, and the beat tables into pages (cited). Seed = characters.md (today's canon), created alongside this file.
