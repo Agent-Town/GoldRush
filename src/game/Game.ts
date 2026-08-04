@@ -1859,6 +1859,7 @@ export class Game {
         },
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         renderCensus: () => this.renderCensus(),
+        drawCallCensus: () => this.drawCallCensus(),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
         damSurge: () => this.damSurge?.diagnostics() ?? null,
         resetRun: () => this.resetRun(),
@@ -5660,6 +5661,106 @@ export class Game {
         topInstances: instanceMeshes.sort((a, b) => b.instances - a.instances).slice(0, 12),
         topMaterials: [...materials.values()].sort((a, b) => b.uses - a.uses).slice(0, 12),
       },
+    };
+  }
+
+  // Test-only draw-call attribution (perf-r2). renderCensus() says HOW MANY calls; this says WHAT
+  // they are. One extra frame is rendered with a per-object `onBeforeRender` tap installed, so every
+  // buffer render — which is exactly one WebGL draw call — is charged to the object that issued it.
+  // Every tap is removed before returning and no profile sample is recorded, so the watchdog never
+  // sees this frame. Rendering-only, reachable solely through the test API.
+  private drawCallCensus() {
+    type Row = {
+      label: string; material: string; kind: string; calls: number;
+      triangles: number; transparent: boolean; renderOrder: number;
+    };
+    const rows = new Map<string, Row>();
+    const taps: Array<{ object: THREE.Object3D; owned: boolean; original: THREE.Object3D['onBeforeRender'] }> = [];
+
+    this.scene.traverseVisible((object) => {
+      const renderable = object as THREE.Object3D & {
+        geometry?: THREE.BufferGeometry;
+        material?: THREE.Material | THREE.Material[];
+      };
+      if (!renderable.geometry || !renderable.material) return;
+      const kind = object instanceof THREE.InstancedMesh ? 'instanced'
+        : object instanceof THREE.Sprite ? 'sprite'
+        : object instanceof THREE.Points ? 'points'
+        : object instanceof THREE.Line ? 'line'
+        : 'mesh';
+      const label = object.name || object.parent?.name || object.type;
+      const original = object.onBeforeRender;
+      taps.push({ object, owned: Object.hasOwn(object, 'onBeforeRender'), original });
+      object.onBeforeRender = function (this: THREE.Object3D, renderer, scene, camera, geometry, material, group) {
+        // three.js runs onBeforeRender for an InstancedMesh before discovering count === 0, and
+        // renderInstances then returns without issuing a draw. Counting those would over-attribute
+        // (the E1 instanced arm read 97 attributed against 78 real calls), so they are not charged.
+        if (object instanceof THREE.InstancedMesh && object.count === 0) {
+          original.call(this, renderer, scene, camera, geometry, material, group);
+          return;
+        }
+        const materialName = material.name || material.type;
+        const key = `${kind} ${label} ${materialName}`;
+        const row = rows.get(key) ?? {
+          label, material: materialName, kind, calls: 0, triangles: 0,
+          transparent: material.transparent === true, renderOrder: object.renderOrder,
+        };
+        const vertices = geometry.index?.count ?? geometry.getAttribute('position')?.count ?? 0;
+        const instances = object instanceof THREE.InstancedMesh ? object.count : 1;
+        row.calls += 1;
+        row.triangles += Math.round((vertices / 3) * instances);
+        rows.set(key, row);
+        // The tap has to be transparent: whatever the object already did before rendering
+        // (billboarding, uniform pushes) must still happen, or the censused frame is not the
+        // frame the game actually draws.
+        original.call(this, renderer, scene, camera, geometry, material, group);
+      };
+    });
+
+    let sceneCalls = 0;
+    let postCalls = 0;
+    try {
+      this.renderer.info.reset();
+      this.renderer.render(this.scene, this.camera);
+      sceneCalls = this.renderer.info.render.calls;
+      this.lightRig?.renderPost(this.renderer);
+      postCalls = this.renderer.info.render.calls - sceneCalls;
+    } finally {
+      for (const tap of taps) {
+        if (tap.owned) tap.object.onBeforeRender = tap.original;
+        else delete (tap.object as Partial<Pick<THREE.Object3D, 'onBeforeRender'>>).onBeforeRender;
+      }
+    }
+
+    const byObject = [...rows.values()].sort((a, b) => b.calls - a.calls);
+    const attributed = byObject.reduce((sum, row) => sum + row.calls, 0);
+    // Merge candidates: distinct singleton meshes that already share one material and one render
+    // order, so a BufferGeometryUtils merge would collapse them into a single call.
+    const mergeable = new Map<string, { material: string; renderOrder: number; calls: number; labels: string[] }>();
+    for (const row of byObject) {
+      if (row.kind !== 'mesh') continue;
+      const key = `${row.material} ${row.renderOrder}`;
+      const entry = mergeable.get(key) ?? { material: row.material, renderOrder: row.renderOrder, calls: 0, labels: [] };
+      entry.calls += row.calls;
+      entry.labels.push(row.label);
+      mergeable.set(key, entry);
+    }
+
+    return {
+      totalCalls: sceneCalls + postCalls,
+      sceneCalls,
+      postCalls,
+      attributedCalls: attributed,
+      unattributedCalls: sceneCalls - attributed,
+      byObject,
+      byKind: ['mesh', 'instanced', 'sprite', 'points', 'line'].map((kind) => ({
+        kind,
+        calls: byObject.filter((row) => row.kind === kind).reduce((sum, row) => sum + row.calls, 0),
+        objects: byObject.filter((row) => row.kind === kind).length,
+      })),
+      mergeCandidates: [...mergeable.values()]
+        .filter((entry) => entry.calls >= 5)
+        .sort((a, b) => b.calls - a.calls),
     };
   }
 

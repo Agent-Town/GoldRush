@@ -182,10 +182,10 @@ export function feverAccentState(
 
 function createEnemySpritePresentation(variantId: string, slotId: AssetSlotId, tintFromVariant = false): EnemySpritePresentation {
   const sprites = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
-    name: `${variantId}Sprites`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplay, lazy: true,
+    name: `${variantId}Sprites`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplay, lazy: true, instanced: true,
   });
   const fades = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
-    name: `${variantId}SpriteFades`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplayFade, lazy: true,
+    name: `${variantId}SpriteFades`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplayFade, lazy: true, instanced: true,
   });
   return { variantId, sprites, fades, animator: new SpriteAnimator(slotId, sprites.material, undefined, fades.material), tintFromVariant };
 }
@@ -338,6 +338,7 @@ export class EnemyPool {
   private bossHpCanvas?: HTMLCanvasElement | null;
   private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
+    instanced: true,
     y: ENEMY_SPRITE_Y,
     scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplay,
@@ -345,6 +346,7 @@ export class EnemyPool {
   });
   private readonly generatedSpriteFades = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSpriteFades',
+    instanced: true,
     y: ENEMY_SPRITE_Y,
     scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplayFade,
@@ -357,12 +359,14 @@ export class EnemyPool {
   );
   private readonly thiefSprites = new GeneratedSpriteBatch(assetSlots.charBanditThief, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperThiefSprites',
+    instanced: true,
     y: ENEMY_SPRITE_Y,
     scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplay,
   });
   private readonly thiefSpriteFades = new GeneratedSpriteBatch(assetSlots.charBanditThief, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperThiefSpriteFades',
+    instanced: true,
     y: ENEMY_SPRITE_Y,
     scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplayFade,

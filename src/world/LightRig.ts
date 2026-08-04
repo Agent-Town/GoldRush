@@ -292,6 +292,14 @@ export class LightRig {
     this.renderer.shadowMap.type = THREE.PCFShadowMap;
     const mapSize = shadowMapSize(quality);
     this.sun.castShadow = quality === 'soft';
+    // perf-r2: a directional light of zero intensity contributes exactly zero radiance, so its
+    // shadow term is multiplied away -- but three.js's shadow pass has no intensity guard
+    // (WebGLShadowMap.js:158-170 checks only `shadow === undefined` and the autoUpdate/needsUpdate
+    // pair), so a full depth pass over every caster keeps running through the whole dark phase.
+    // `applyNightShiftPalette` above has already lerped `sun.intensity` to 0 at darkness 1.
+    // Parking autoUpdate skips the pass while leaving `castShadow` alone, so no material's
+    // shadow-count program key changes and nothing recompiles at the dusk boundary.
+    this.sun.shadow.autoUpdate = this.sun.intensity > 1e-3;
     this.applyShadowMapSize(mapSize);
     this.sun.shadow.mapSize.set(mapSize, mapSize);
     this.blobShadows.update(this.scene);
