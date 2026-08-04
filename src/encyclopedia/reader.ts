@@ -23,7 +23,7 @@ type OpenClaimLedgerOptions = {
   onClose?: () => void;
 };
 
-type LedgerView = 'ledger' | 'standings';
+type LedgerView = 'ledger' | 'standings' | 'field-book';
 type StandingsDifficulty = DifficultyPresetId | 'all';
 
 type CountyStanding = {
@@ -36,6 +36,29 @@ type CountyStanding = {
   baseValue: number;
   difficulty: DifficultyPresetId;
   defaulted?: true;
+};
+
+type FieldBookCell = {
+  contractId: string;
+  score: Omit<CountyStanding, 'rank' | 'profileName' | 'difficulty' | 'defaulted'>;
+  difficulty: DifficultyPresetId;
+  submittedAt: number;
+  tokensIn?: number;
+  tokensOut?: number;
+  calls?: number;
+  harness?: string;
+  harnessVersion?: string;
+  config?: string;
+};
+
+type FieldBookRow = {
+  model: string;
+  contracts: FieldBookCell[];
+};
+
+type FieldBook = {
+  contracts: string[];
+  rows: FieldBookRow[];
 };
 
 const DIFFICULTY_LABELS: Record<DifficultyPresetId, string> = {
@@ -111,6 +134,12 @@ function renderCurrentLedger(): void {
     void loadCountyStandings();
     return;
   }
+  if (currentView === 'field-book') {
+    currentLiveReads = [];
+    root.innerHTML = renderFieldBookLedger();
+    void loadFieldBook();
+    return;
+  }
   root.innerHTML = renderLedger(currentEntryId, currentEpochId);
   currentLiveReads = currentEpochId === 'epoch-1-frontier' ? [installAssayOfficeRecordsLiveRead(root)] : [];
   const renderedEpochId = currentEpochId;
@@ -164,6 +193,7 @@ function renderViewRow(): string {
     <nav class="claim-ledger__views" aria-label="Claim Ledger pages">
       <button type="button" data-ledger-view="ledger" data-testid="claim-ledger-pages" aria-pressed="${currentView === 'ledger'}">Claim Pages</button>
       <button type="button" data-ledger-view="standings" data-testid="claim-ledger-county-standings" aria-pressed="${currentView === 'standings'}">County Standings</button>
+      <button type="button" data-ledger-view="field-book" data-testid="claim-ledger-field-book" aria-pressed="${currentView === 'field-book'}">The Field Book</button>
     </nav>
   `;
 }
@@ -208,6 +238,135 @@ function renderStandingsLedger(): string {
       </section>
     </div>
   `;
+}
+
+function renderFieldBookLedger(): string {
+  const epochId = activeEpochId();
+  return `
+    <div class="claim-ledger__shell">
+      ${renderHeader()}
+      ${renderViewRow()}
+      <section class="county-standings field-book" data-testid="field-book">
+        <p class="claim-ledger__eyebrow">County Record</p>
+        <h3>The Field Book</h3>
+        <p class="county-standings__epoch">${escapeHtml(eraName(epochId as LedgerEpochId))}</p>
+        <p class="field-book__intro">The county's field book of rigs and their showings — cost is recorded, never ranked.</p>
+        <div class="county-standings__board field-book__board" data-testid="field-book-board" aria-live="polite">
+          <p class="county-standings__empty">The county clerk turns the field book's pages.</p>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+async function loadFieldBook(): Promise<void> {
+  const root = currentRoot;
+  const epochId = activeEpochId();
+  if (!root) return;
+  if (globalThis.navigator?.onLine === false) {
+    const board = root.querySelector<HTMLElement>('[data-testid="field-book-board"]');
+    if (board) board.innerHTML = renderFieldBook({ contracts: [], rows: [] });
+    return;
+  }
+  const url = new URL(gameApiUrl('/api/standings'));
+  url.searchParams.set('view', 'byStack');
+  url.searchParams.set('epoch', epochId);
+  let fieldBook: FieldBook = { contracts: [], rows: [] };
+  try {
+    const response = await fetch(url);
+    if (response.ok) fieldBook = readFieldBook(await response.json());
+  } catch {
+    // The field book stays usable offline.
+  }
+  if (currentRoot !== root || currentView !== 'field-book') return;
+  const board = root.querySelector<HTMLElement>('[data-testid="field-book-board"]');
+  if (board) board.innerHTML = renderFieldBook(fieldBook);
+}
+
+function readFieldBook(value: unknown): FieldBook {
+  if (!value || typeof value !== 'object') return { contracts: [], rows: [] };
+  const payload = value as { contracts?: unknown; byStack?: unknown };
+  if (!Array.isArray(payload.contracts) || !Array.isArray(payload.byStack)) return { contracts: [], rows: [] };
+  const contracts = payload.contracts.filter((contract): contract is string => typeof contract === 'string').slice(0, 100);
+  const rows = payload.byStack.slice(0, 100).flatMap((value): FieldBookRow[] => {
+    if (!value || typeof value !== 'object') return [];
+    const row = value as { model?: unknown; contracts?: unknown };
+    if (typeof row.model !== 'string' || !Array.isArray(row.contracts)) return [];
+    return [{ model: row.model, contracts: row.contracts.filter(isFieldBookCell) }];
+  });
+  return { contracts, rows };
+}
+
+function isFieldBookCell(value: unknown): value is FieldBookCell {
+  if (!value || typeof value !== 'object') return false;
+  const cell = value as Partial<FieldBookCell>;
+  const score = cell.score;
+  return typeof cell.contractId === 'string' && Boolean(score) && score?.secured === true
+    && finiteNonNegative(score.waves) && finiteNonNegative(score.timeAlive) && finiteNonNegative(score.gold)
+    && finiteNonNegative(score.baseValue) && isDifficultyPreset(cell.difficulty)
+    && Number.isInteger(cell.submittedAt) && (cell.submittedAt ?? -1) >= 0
+    && validOptionalCost(cell.tokensIn) && validOptionalCost(cell.tokensOut) && validOptionalCost(cell.calls)
+    && validOptionalString(cell.harness) && validOptionalString(cell.harnessVersion) && validOptionalString(cell.config);
+}
+
+function renderFieldBook(fieldBook: FieldBook): string {
+  if (fieldBook.rows.length === 0) return '<p class="county-standings__empty">No rigs have signed the field book yet.</p>';
+  const contractNames = new Map(listContracts(activeEpochId()).map((contract) => [contract.id, contract.boardRow.name]));
+  return `
+    <table class="field-book__matrix" data-testid="field-book-matrix">
+      <thead><tr><th scope="col">Rig</th>${fieldBook.contracts.map((id) => `<th scope="col">${escapeHtml(contractNames.get(id) ?? id)}</th>`).join('')}</tr></thead>
+      <tbody>
+        ${fieldBook.rows.map((row, index) => renderFieldBookRow(row, index, fieldBook.contracts, contractNames)).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderFieldBookRow(row: FieldBookRow, index: number, contracts: readonly string[], names: ReadonlyMap<string, string>): string {
+  const cells = new Map(row.contracts.map((cell) => [cell.contractId, cell]));
+  const rowSlug = slug(row.model) || 'unregistered-rig';
+  return `
+    <tr class="field-book__row" data-field-book-key="${index}" data-testid="field-book-row-${rowSlug}">
+      <th scope="row"><button type="button" data-field-book-toggle aria-expanded="false">${escapeHtml(row.model)}<span aria-hidden="true"> +</span></button></th>
+      ${contracts.map((contractId) => renderFieldBookCell(cells.get(contractId), rowSlug, contractId)).join('')}
+    </tr>
+    <tr class="field-book__details" data-field-book-details="${index}" hidden>
+      <td colspan="${contracts.length + 1}">
+        <div class="field-book__details-grid">
+          ${row.contracts.map((cell) => renderFieldBookDetails(cell, names.get(cell.contractId) ?? cell.contractId, rowSlug)).join('')}
+        </div>
+      </td>
+    </tr>
+  `;
+}
+
+function renderFieldBookCell(cell: FieldBookCell | undefined, rowSlug: string, contractId: string): string {
+  if (!cell) return '<td class="field-book__blank" aria-label="No showing">&mdash;</td>';
+  const costs = [
+    cell.tokensIn === undefined ? undefined : `${formatCount(cell.tokensIn)} in`,
+    cell.tokensOut === undefined ? undefined : `${formatCount(cell.tokensOut)} out`,
+    cell.calls === undefined ? undefined : `${formatCount(cell.calls)} calls`,
+  ].filter((value): value is string => value !== undefined);
+  return `<td data-testid="field-book-cell-${rowSlug}-${escapeHtml(contractId)}">
+    <strong>Secured &middot; ${Math.floor(cell.score.waves)} waves</strong>
+    <span>${Math.floor(cell.score.baseValue)} works &middot; ${Math.floor(cell.score.gold)} gold</span>
+    <span class="county-standings__difficulty" data-difficulty="${cell.difficulty}">${DIFFICULTY_LABELS[cell.difficulty]}</span>
+    <span>${costs.length ? costs.join(' &middot; ') : 'Cost not declared'}</span>
+    <time datetime="${safeIsoDate(cell.submittedAt)}">${relativeAge(cell.submittedAt)}</time>
+  </td>`;
+}
+
+function renderFieldBookDetails(cell: FieldBookCell, name: string, rowSlug: string): string {
+  const harness = [cell.harness, cell.harnessVersion].filter(Boolean).join(' ') || 'Not declared';
+  return `<article data-testid="field-book-detail-${rowSlug}-${escapeHtml(cell.contractId)}">
+    <h4>${escapeHtml(name)}</h4>
+    <dl>
+      <dt>Harness</dt><dd>${escapeHtml(harness)}</dd>
+      <dt>Configuration</dt><dd>${escapeHtml(cell.config || 'Not declared')}</dd>
+      <dt>Result</dt><dd>${Math.floor(cell.score.waves)} waves &middot; ${formatTime(cell.score.timeAlive)} &middot; ${Math.floor(cell.score.gold)} gold</dd>
+      <dt>Submitted</dt><dd><time datetime="${safeIsoDate(cell.submittedAt)}">${safeIsoDate(cell.submittedAt)}</time></dd>
+    </dl>
+  </article>`;
 }
 
 async function loadCountyStandings(): Promise<void> {
@@ -290,6 +449,14 @@ function finiteNonNegative(value: unknown): value is number {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0;
 }
 
+function validOptionalCost(value: unknown): boolean {
+  return value === undefined || (Number.isInteger(value) && (value as number) >= 0 && (value as number) <= 1_000_000_000_000);
+}
+
+function validOptionalString(value: unknown): boolean {
+  return value === undefined || (typeof value === 'string' && value.length <= 256);
+}
+
 function isDifficultyPreset(value: unknown): value is DifficultyPresetId {
   return value === 'greenhorn' || value === 'trail' || value === 'vein-hunter';
 }
@@ -298,6 +465,23 @@ function formatTime(secondsAlive: number): string {
   const minutes = Math.floor(secondsAlive / 60).toString().padStart(2, '0');
   const seconds = Math.floor(secondsAlive % 60).toString().padStart(2, '0');
   return `${minutes}:${seconds}`;
+}
+
+function formatCount(value: number): string {
+  return Math.floor(value).toLocaleString('en-US');
+}
+
+function relativeAge(submittedAt: number): string {
+  const seconds = Math.max(0, Math.floor((Date.now() - submittedAt) / 1000));
+  if (seconds < 60) return 'just now';
+  if (seconds < 3_600) return `${Math.floor(seconds / 60)}m ago`;
+  if (seconds < 86_400) return `${Math.floor(seconds / 3_600)}h ago`;
+  return `${Math.floor(seconds / 86_400)}d ago`;
+}
+
+function safeIsoDate(submittedAt: number): string {
+  const date = new Date(submittedAt);
+  return Number.isNaN(date.getTime()) ? 'Date unavailable' : date.toISOString();
 }
 
 function renderShelf(
@@ -520,6 +704,17 @@ function onLedgerClick(event: MouseEvent): void {
     currentStandingsContractId = contractId;
     renderCurrentLedger();
     currentRoot?.querySelector<HTMLElement>(`[data-standings-contract="${contractId}"]`)?.focus();
+    return;
+  }
+  const fieldBookRow = target?.closest<HTMLElement>('[data-field-book-key]');
+  if (fieldBookRow && currentView === 'field-book') {
+    const key = fieldBookRow.dataset.fieldBookKey;
+    const details = [...(currentRoot?.querySelectorAll<HTMLElement>('[data-field-book-details]') ?? [])]
+      .find((row) => row.dataset.fieldBookDetails === key);
+    const expanded = details?.hidden === false;
+    if (details) details.hidden = expanded;
+    fieldBookRow.classList.toggle('field-book__row--expanded', !expanded);
+    fieldBookRow.querySelector<HTMLElement>('[data-field-book-toggle]')?.setAttribute('aria-expanded', String(!expanded));
     return;
   }
   const eraButton = target?.closest<HTMLButtonElement>('[data-ledger-era-state="open"]');

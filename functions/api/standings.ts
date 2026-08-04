@@ -40,6 +40,9 @@ type SelfDeclaredStack = {
   harness?: string;
   harnessVersion?: string;
   config?: string;
+  tokensIn?: number;
+  tokensOut?: number;
+  calls?: number;
 };
 
 type StoredRow = ScoreRow & {
@@ -87,9 +90,11 @@ const SHA256 = /^[a-f0-9]{64}$/;
 const ANON_ID = /^[a-f0-9]{32}$/;
 const MAX_SEED_LENGTH = 256;
 const MAX_STACK_FIELD_LENGTH = 256;
-const STACK_FIELDS = ['model', 'harness', 'harnessVersion', 'config'] as const;
-const STACK_KEYS = new Set<string>(STACK_FIELDS);
-const STORED_STACK_KEYS = new Set([...STACK_FIELDS, 'declaredBy']);
+const MAX_STACK_COST = 1_000_000_000_000;
+const STACK_TEXT_FIELDS = ['model', 'harness', 'harnessVersion', 'config'] as const;
+const STACK_COST_FIELDS = ['tokensIn', 'tokensOut', 'calls'] as const;
+const STACK_KEYS = new Set<string>([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS]);
+const STORED_STACK_KEYS = new Set([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'declaredBy']);
 const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack', 'tape']);
 const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue']);
 
@@ -110,8 +115,54 @@ export async function onRequest(context: StandingsContext): Promise<Response> {
 
 async function getBoard(context: StandingsContext, cors: Record<string, string>): Promise<Response> {
   const url = new URL(context.request.url);
-  const contractId = url.searchParams.get('contract') ?? '';
   const epochId = url.searchParams.get('epoch') ?? '';
+  const view = url.searchParams.get('view');
+  if (view !== null) {
+    const contracts = epochContracts(epochId);
+    if (view !== 'byStack' || url.searchParams.size !== 2 || !contracts) {
+      return error(cors, 400, 'bad_view', 'Field book view not accepted.');
+    }
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? await readBoard(kv, epochId, contractId, true) : []] as const));
+    const groups = new Map<string, { latestSubmittedAt: number; contracts: Map<string, unknown> }>();
+    for (const [contractId, rows] of boards) {
+      for (const row of rows) {
+        const model = row.stack?.model?.trim() || 'unregistered rig';
+        const group = groups.get(model) ?? { latestSubmittedAt: 0, contracts: new Map<string, unknown>() };
+        if (group.contracts.has(contractId)) continue;
+        group.latestSubmittedAt = Math.max(group.latestSubmittedAt, row.submittedAt);
+        group.contracts.set(contractId, {
+          contractId,
+          score: {
+            secured: row.secured,
+            waves: row.waves,
+            timeAlive: row.timeAlive,
+            gold: row.gold,
+            baseValue: row.baseValue,
+          },
+          difficulty: row.difficulty,
+          submittedAt: row.submittedAt,
+          ...(row.stack?.tokensIn === undefined ? {} : { tokensIn: row.stack.tokensIn }),
+          ...(row.stack?.tokensOut === undefined ? {} : { tokensOut: row.stack.tokensOut }),
+          ...(row.stack?.calls === undefined ? {} : { calls: row.stack.calls }),
+          ...(row.stack?.harness === undefined ? {} : { harness: row.stack.harness }),
+          ...(row.stack?.harnessVersion === undefined ? {} : { harnessVersion: row.stack.harnessVersion }),
+          ...(row.stack?.config === undefined ? {} : { config: row.stack.config }),
+        });
+        groups.set(model, group);
+      }
+    }
+    return json(cors, {
+      ok: true,
+      view: 'byStack',
+      epochId,
+      contracts,
+      byStack: [...groups.entries()]
+        .map(([model, group]) => ({ model, contracts: [...group.contracts.values()], latestSubmittedAt: group.latestSubmittedAt }))
+        .sort((a, b) => b.latestSubmittedAt - a.latestSubmittedAt || a.model.localeCompare(b.model)),
+    });
+  }
+  const contractId = url.searchParams.get('contract') ?? '';
   const difficultyParam = url.searchParams.get('difficulty');
   if (url.searchParams.size !== (difficultyParam === null ? 2 : 3) || !knownContract(epochId, contractId)) {
     return error(cors, 400, 'bad_contract', 'Contract and epoch not accepted.');
@@ -280,6 +331,10 @@ function knownContract(epochId: string, contractId: string): boolean {
   return CONTRACT_EPOCHS.get(contractId) === epochId;
 }
 
+function epochContracts(epochId: string): string[] | null {
+  return CONTRACT_BUNDLES.find((bundle) => bundle.epochId === epochId)?.contracts.map((contract) => contract.id) ?? null;
+}
+
 function isDifficultyPreset(value: unknown): value is DifficultyPresetId {
   return value === 'greenhorn' || value === 'trail' || value === 'vein-hunter';
 }
@@ -292,11 +347,18 @@ function validateStack(value: unknown, stored = false): SelfDeclaredStack | null
   if (!isRecord(value) || !hasOnlyKeys(value, stored ? STORED_STACK_KEYS : STACK_KEYS)) return null;
   if (stored && value.declaredBy !== 'self') return null;
   const stack: SelfDeclaredStack = { declaredBy: 'self' };
-  for (const field of STACK_FIELDS) {
+  for (const field of STACK_TEXT_FIELDS) {
     const fieldValue = value[field];
     if (fieldValue === undefined) continue;
     if (typeof fieldValue !== 'string' || fieldValue.length > MAX_STACK_FIELD_LENGTH) return null;
     stack[field] = fieldValue;
+  }
+  for (const field of STACK_COST_FIELDS) {
+    const fieldValue = value[field];
+    if (fieldValue === undefined) continue;
+    const cost = integerInRange(fieldValue, 0, MAX_STACK_COST);
+    if (cost === null) return null;
+    stack[field] = cost;
   }
   return stack;
 }
