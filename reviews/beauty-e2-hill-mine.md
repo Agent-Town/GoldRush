@@ -276,6 +276,7 @@ Full-resolution captures and their dataset reports are in `artifacts/beauty-e2-h
 
 | board | shows |
 |---|---|
+| **`shift-run-camera.png`** | **the whole shift at the run camera: base main → tip** |
 | `u1-desktop-chrome-*.png` | before → U1: the void becomes water (5 framings) |
 | `u345-desktop-chrome-*.png` | U1 → U1+U3+U4+U5a: the roof, the pools, the steam, the soot |
 | `u2-desktop-chrome-upper-terraces.png` | U2's own before/after at the terraces |
@@ -312,7 +313,16 @@ Branch `beauty2/e2-hill-mine` off `8f65062e`. Commits:
 | `86ed0db9` | U1 — the flooded gallery becomes murky working water |
 | `bc14d54c` | U3 + U4 + U5a, and F-BHM-1 |
 | `fb43408e` | U2 — the terraces read as cut ground, carry-forward ported first |
-| *this one* | U5b, the review, and the shift's boards |
+| `8e202d06` | U5b, the review, and the shift's boards |
+| *this one* | the whole-shift board and this ledger |
+
+**The one number that answers the brief.** The gallery — the map's named story, its central band, and
+the thing the run camera is pointed at — measured over the same window in the same framing:
+
+```
+base main   luma 18.82   greenExcess 0.68    colLumaSd 2.07    a painted hole
+tip         luma 37.30   greenExcess 6.21    colLumaSd 10.11   working water, moving
+```
 
 **Note on `fb43408e`'s message:** it was committed through a shell that ate three backtick-quoted
 words (`files`, `heroStart`, `lossCondition`) as command substitutions. The commit's content is
