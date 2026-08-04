@@ -216,12 +216,43 @@ Full frames: `reviews/shots-beauty-far-ground/{before,after}/`. Probe census fra
 | `npm run build` | **green**, asset diet inside its ceilings |
 | `verify_e1_panoramas.py` (the byte-pin guard) | **all 8 E1 panorama artefacts reproduce byte for byte** (rc=0) for the four maps in scope |
 | `e2e/beauty-far-ground.spec.ts` (new) | **14/14**, desktop + mobile |
-| Required suite battery — `night-mode-truth`, `night3d-perf`, `beauty-pools`, `panorama-framing`, `map-beauty-dry-gulch`, `e1-{baron,dry-gulch,twin-banks,night-shift,perf-pass}` | **RUNNING at the time this review was committed** — 104 tests, `--workers=1`, both projects. Result appended in the next commit rather than predicted here. |
+| Required suite battery — `night-mode-truth`, `night3d-perf`, `beauty-pools`, `panorama-framing`, `map-beauty-dry-gulch`, `e1-{baron,dry-gulch,twin-banks,night-shift,perf-pass}` | **93 passed / 10 failed** in one 15.7-minute run, `--workers=1`, both projects (`artifacts/beauty-far-ground/gate-battery.txt`) — **all 10 control-proven pre-existing**, below |
+| `night-mode-truth` · `beauty-pools` · `panorama-framing` · `map-beauty-dry-gulch` · `e1-baron` · `e1-dry-gulch` · `e1-perf-pass` | **green, untouched** — including `panorama-framing`, the suite that asserts the upper rows of a run frame carry world detail, which is exactly the band this shift paints |
 | Panorama atlas bytes | **unchanged, 0.00%**, all four maps (§2) |
 | Draw calls / triangles | **equal, apron on vs off**, all four maps x both projects — asserted |
 | Frame p95 | worst paired row **+8.3%**, against a +15% law |
 | Console / page errors | **zero** across all 96 board frames and all 112 probe frames |
 | Sim bytes | **zero** — see §6 |
+
+### The 10 reds are 10 pre-existing — control-proven, not inherited
+
+Detached worktree at **`7c833197`** (this branch's base), its own vite on scratch port **5352**,
+`GR_CAPTURE_EXTERNAL_SERVER=1` so it never shares the branch's server, `--workers=1`, each spec run
+**alone** rather than inside a 104-test battery. Full transcripts and every error context:
+`artifacts/beauty-far-ground/control-7c833197/`.
+
+| Test | control at `7c833197` | this branch | verdict |
+|---|---|---|---|
+| `e1-night-shift:271` x2 projects | ✘ ✘ | ✘ ✘ | pre-existing |
+| `e1-night-shift:372` x2 | ✘ ✘ | ✘ ✘ | pre-existing |
+| `e1-night-shift:435` x2 | ✘ ✘ | ✘ ✘ | pre-existing — the flicker-phase coin flip, F-10/F-5b |
+| `night3d-perf:67` x2 | ✘ ✘ | ✘ ✘ | pre-existing |
+| **`e1-twin-banks:103` x2** | ✘ ✘ | ✘ ✘ | pre-existing — **and it was on no known-red list** |
+
+**10 of 10. No red on this branch survives a control run at the base commit.**
+
+`e1-twin-banks:103` is the one that had to be proved rather than argued: **twin-banks is a map this
+shift added a profile to**, so "a fragment shader cannot break a sluice placement" is exactly the
+kind of confident reasoning Mistake #4 exists to stop. It fails identically on a tree that has never
+seen this branch — same assert, same `Timeout 5000ms exceeded while waiting on the predicate` inside
+`placeBuildableAt` — running alone, on both viewports. **It belongs on the known-red list and is not
+on it** (F-FG-8). The other eight were already documented as pre-existing in
+`reviews/beauty-night-shift-r2.md`; they are re-proved here rather than inherited.
+
+**One battery side effect, not mine and already filed.** The run left 12 tracked evidence PNGs
+modified under `artifacts/baron-presence/`, `reviews/shots-night/` and `reviews/shots-panorama/` —
+**F-1451-1** verbatim ("an ordinary battery run OVERWRITES retained tracked evidence"). All were
+restored to HEAD before committing, so nothing here carries another suite's re-published artefacts.
 
 ### What the new spec asserts, and why each line is machine-independent
 
@@ -267,6 +298,8 @@ The F-1440-2 cure is "machine-independent **by code path**, not by luck", so eve
 **F-FG-5 🟡 — the ridged haze works and needs a per-profile coefficient. MEASURED, REVERTED, HANDED ON.** §3. At 1.6× depth, `the-claim`'s far-edge stdev goes 5.1 → 9.87 and buckets 3 → 7 while the mean moves 2.5 luma; the same coefficient puts two diagonal smears across `e1-baron`. Both arms kept whole. **A `ridgeHazeCoefficient` per profile, and one 48-shot board, is the whole remaining task.**
 
 **F-FG-6 🟡 — the published frame-top angle is short by 0.5-1.6°. CORRECTED.** `beauty-night-shift-r2.md` F-7's **−27.9°** assumed a 26.2 m eye and measured the distance from the *hero*, while the eye stands 18.3 m further back. Measured from two probes on one ray: **−28.4° to −29.5°**, implied eye 25.96-26.75 m. The conclusion was right; the number should not be re-quoted.
+
+**F-FG-8 🟡 — `e1-twin-banks:103` is a pre-existing red that is on no known-red list. FILED.** It fails on the untouched base commit, both projects, running alone on its own server, with a 5 s predicate timeout inside `placeBuildableAt`. Every other red this battery produced is documented somewhere; this one is not, so the next shift that touches twin-banks will spend the same hour I did proving it is not theirs. **The corrective is a line on the known-red inventory, not a fix** — diagnosing a build-placement timeout is not a beauty shift's to take.
 
 **F-FG-7 🟡 — TASK.md's premise is wrong for two of its four maps. NOTED, AND THE BRIEFS NOW SAY SO.** It funds "the four E1 maps whose **U5** slices were mistargeted at sky". `the-claim`'s sky slice is **U4**, not U5 (its U5 is motes and glints), and **`e1-dry-gulch` has no panorama slice at all** — its U5 is the heat shimmer, and its far ground was already shipped by the atmospherics shift. Two of the four "mistargeted U5 slices" do not exist as described. The work was done on the maps rather than on the labels, and all four briefs now carry a dated block saying which slice was answered and how.
 

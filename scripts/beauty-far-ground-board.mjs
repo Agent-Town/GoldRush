@@ -35,7 +35,7 @@ const BANDS = [0.12, 0.25, 0.33];
 
 // The poses the far-ground probe showed to be the ones that matter: the frame the player boots into,
 // the fresh-eye judge camera every E1 brief names, and the three that walk the horizon into frame.
-const POSES = [
+const ALL_POSES = [
   ['boot', null],
   ['fresh-eye', 8.65],
   ['centre', 0],
@@ -43,6 +43,10 @@ const POSES = [
   ['far-half', -22],
   ['far-edge', -30],
 ];
+// GR_POSES=far-half,far-edge narrows a tuning A/B to the poses where the apron is on camera.
+const POSES = process.env.GR_POSES
+  ? ALL_POSES.filter(([name]) => process.env.GR_POSES.split(',').includes(name))
+  : ALL_POSES;
 
 const VIEWPORTS = [
   ['desktop-chrome', { viewport: { width: 1280, height: 800 } }],
