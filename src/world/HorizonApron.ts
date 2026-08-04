@@ -84,13 +84,150 @@ const PROFILES = new Map<string, HorizonApronProfile>([
     smokeWidth: 0.2,
     smokeStrength: 0,
   }],
+  // THE FAR GROUND SHIFT adds the two maps the atmospherics shift did not reach. Both were briefed
+  // at the SKY (the-claim U4, twin-banks U5) and both are measured unreachable there: the ring's
+  // foot stands 61.4 m (the-claim) and 64.9 m (twin-banks) above the top edge of the frame at its
+  // own radius, on both viewports (reviews/beauty-far-ground.md section 1). The brief each of them
+  // wrote for a horizon is answered on the only surface that carries one.
+  //
+  // THE CLAIM — "the first page of the ledger: sunlit parchment banks where the river writes the
+  // only dark line". Its U4 asked for "downstream river valley ridges... density falling to quiet
+  // parchment", and its DON'T list forbids scarring this map: no wreckage, no siege grammar, and
+  // therefore NO COMPANY SMOKE. The calm is the identity; this adds distance to it, not incident.
+  ['the-claim', {
+    innerRadius: 34,
+    outerRadius: 68,
+    // Sunlit parchment, the map's own value, thinned by air.
+    haze: '#dcb98c',
+    // The calm first page never bruises: the far edge goes quiet and grey-warm, not dark.
+    ceiling: '#b9a68b',
+    // Long, soft shoulders: a river valley continuing downstream, not a gulch and not a fortress.
+    ridgeWavelength: 22,
+    ridgeDepth: 0.22,
+    smokeAzimuths: [],
+    smokeWidth: 0.2,
+    smokeStrength: 0,
+  }],
+  // TWIN BANKS — "one river that chose two paths around a gravel plait... a single family holds both
+  // banks". Its U5 asked for the braid to re-braid downstream with "a desaturated cottonwood line,
+  // two distant smoke columns echoing the two-homestead motif (asymmetric placement — the Echo
+  // law)". Two columns, not three, and weak: these are hearths, not the Baron's works.
+  ['e1-twin-banks', {
+    innerRadius: 34,
+    outerRadius: 68,
+    haze: '#dcc096',
+    // The cottonwood line: desaturated green-grey, per the E1 canon rule that greens stay dusty.
+    ceiling: '#8f9a86',
+    ridgeWavelength: 26,
+    ridgeDepth: 0.26,
+    // Asymmetric by construction (Echo law) and both inside the -z wedge the run camera looks into.
+    smokeAzimuths: [-1.75, -1.05],
+    smokeWidth: 0.2,
+    smokeStrength: 0.22,
+  }],
 ]);
 
 export function horizonApronProfile(contractId: string): HorizonApronProfile | undefined {
   const search = new URLSearchParams(window.location.search);
   // `baronHorizon` was the first name, kept because the baron board was shot with it.
   if (search.get('horizonApron') === 'off' || search.get('baronHorizon') === 'off') return undefined;
+  // The probe below measures the SURFACE, not the paint on it: a ridged, hazed apron is not a
+  // flat primary and cannot be counted by hue. Probing therefore implies apron=off.
+  if (farGroundProbeEnabled()) return undefined;
   return PROFILES.get(contractId);
+}
+
+// ---------------------------------------------------------------------------------------------
+// THE FAR GROUND SHIFT — the instrument, COMMITTED this time.
+//
+// The comment at the top of this file cites `?horizonProbe` as the measurement that retargeted the
+// baron brief. That flag was never committed: it lived in the atmospherics shift's working tree and
+// died with it (`git log -S horizonProbe -- src/` finds exactly one commit, and it is this file's
+// docstring). The load-bearing number of two reviews was therefore unreproducible. This is the same
+// instrument, in the tree, under a name that says what it measures.
+//
+//   ?farGroundProbe   repaints the three candidate horizon surfaces in flat, tone-mapping-exempt
+//                     primaries, so a screenshot can be COUNTED rather than argued about:
+//
+//                       panorama ring         magenta  #ff00ff   (the sky brief's target)
+//                       sculpt continuation   cyan     #00ffff   (the apron: ring foot -> tile)
+//                       the terrain tile      green    #00ff00   (the map the player stands on)
+//
+// `toneMapped = false` is the load-bearing flag: ACES washes an emissive primary toward pastel, and
+// the atmospherics shift's first classifier scored a full-frame cyan apron as 0.00% because of it
+// (logs/session-scratch/atmos-baron-horizon.mjs:23). Exempting the probe from tone mapping makes the
+// three hues separable by a margin test that cannot drift.
+//
+// Colour only: no geometry, no draw calls, no material swaps (the panorama's material carries the
+// `gl_Position.z = w * 0.999999` far-plane pin from preparePanorama, and replacing it would clip a
+// 190 m ring against a 100 m far plane and report "not on camera" for the wrong reason).
+// ---------------------------------------------------------------------------------------------
+
+// THE POSITIVE CONTROL, and why this probe has one where its two predecessors did not.
+//
+// "0.00% of the frame is panorama" is the same reading whether the ring is off camera or the tint
+// silently failed to reach it, and BOTH prior measurements of this fact rest on a bare zero. So:
+//
+//   ?farGroundProbe        paints all three surfaces and REPORTS HOW MANY MATERIALS IT PAINTED,
+//                          published to the canvas — a nonzero panorama count is proof the ring
+//                          really is flat magenta while the census reads zero.
+//   ?farGroundProbe=solo   additionally hides the terrain and the apron, so nothing whatsoever can
+//                          occlude the ring. If it is inside the frustum at all, it is the frame.
+//
+// A zero from `solo`, with `panorama=1` painted, is the only form of this claim that cannot be a
+// broken instrument.
+export type FarGroundSurface = 'panorama' | 'apron' | 'terrain';
+
+const FAR_GROUND_PROBE_COLORS: Record<FarGroundSurface, number> = {
+  panorama: 0xff00ff,
+  apron: 0x00ffff,
+  terrain: 0x00ff00,
+};
+
+export function farGroundProbeMode(): 'off' | 'on' | 'solo' {
+  const value = new URLSearchParams(window.location.search).get('farGroundProbe');
+  if (value === null) return 'off';
+  return value === 'solo' ? 'solo' : 'on';
+}
+
+export function farGroundProbeEnabled(): boolean {
+  return farGroundProbeMode() !== 'off';
+}
+
+/**
+ * Flatten one mounted surface to its probe primary. No-op unless `?farGroundProbe` is set.
+ * Returns the number of distinct materials repainted — the probe's own receipt.
+ */
+export function paintFarGroundProbe(object: THREE.Object3D | undefined, surface: FarGroundSurface): number {
+  if (!object) return 0;
+  const hex = FAR_GROUND_PROBE_COLORS[surface];
+  const painted = new Set<THREE.Material>();
+  object.traverse((node) => {
+    const mesh = node as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+      if (!material || painted.has(material)) continue;
+      painted.add(material);
+      const paint = material as THREE.Material & {
+        color?: THREE.Color;
+        map?: THREE.Texture | null;
+        emissive?: THREE.Color;
+        emissiveIntensity?: number;
+        emissiveMap?: THREE.Texture | null;
+      };
+      // Drop the atlas: a textured primary is a textured primary, and the margin test wants flat.
+      paint.map = null;
+      paint.emissiveMap = null;
+      paint.color?.setHex(hex);
+      // Unlit materials (the panorama is KHR_materials_unlit) have no emissive; lit ones need it,
+      // or a surface facing away from the low sun reads as near-black and counts as nothing.
+      paint.emissive?.setHex(hex);
+      if (paint.emissiveIntensity !== undefined) paint.emissiveIntensity = 1;
+      material.toneMapped = false;
+      material.needsUpdate = true;
+    }
+  });
+  return painted.size;
 }
 
 /**

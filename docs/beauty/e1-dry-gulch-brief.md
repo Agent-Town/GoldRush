@@ -35,6 +35,8 @@ WHY: these two silhouettes ARE Dry Gulch at the run camera; next to the adopted 
 PERF: low–med (still hundreds-to-low-thousands of tris; well under the landmark ceiling).
 
 **U5 — Heat you can see (shimmer band + dust devils, strictly tiered).**
+> **NOTE 2026-08-04 (THE FAR GROUND SHIFT).** TASK.md for that shift lists this map among "the four E1 maps whose U5 slices were mistargeted at sky". **This brief has no panorama slice** — U5 is the heat shimmer, and this map's far ground was already retargeted and shipped by the atmospherics shift. The far-ground shift re-measured it (ring foot **60.9 m above the frame top**, panorama **0.00% at 14 of 14 samples**) and boarded it before/after; nothing here changed. See `reviews/beauty-far-ground.md`.
+
 WHERE: `LightRig.ts` `LedgerPostPass` — add a uniform-gated horizontal heat-wobble strip (tiny UV distortion, top third of frame only, amplitude ~2px) enabled ONLY for this contract at FULL tier; plus 1–2 wandering dust-devil sprites (instanced additive quads, spawn far from hero, despawn on approach, ≤60 quads total).
 WHY: motion sells the heat the still atlas already promises; the horizon shimmer is the one effect that makes a desert read hot rather than merely orange.
 PERF: med — post-pass touches every frame; gate per-contract + FULL tier, register it FIRST in the MQ-4 auto-tier shed order, and include before/after p95 in the review table.

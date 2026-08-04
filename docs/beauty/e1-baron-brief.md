@@ -35,6 +35,12 @@ WHY: the Baron's claim-jumping company brand should read in the WORLD the way hi
 PERF: low — vertex shader only, no new draws.
 
 **U5 — A horizon that answers the finale (panorama repaint + drifting smoke).**
+> **STATUS 2026-08-04 — RETARGETED AT THE FAR GROUND, NOT THE SKY (THE FAR GROUND SHIFT, `reviews/beauty-far-ground.md`).**
+> Already retargeted and shipped by the atmospherics shift (`reviews/beauty-atmos.md` section 3). The far-ground shift re-measured it independently: ring foot **61.4 m above the frame top**, panorama **0.00% at 14 of 14 samples**, and boarded the apron before/after at six poses on both viewports.
+> The panorama atlas is **not** repainted and its bytes are unchanged; what this slice asked the sky to say is now said by
+> `src/world/HorizonApron.ts` on the sculpt continuation, at +0 draw calls and +0 triangles. **Do not re-brief this as sky art
+> until `Balance.camera` changes** — `e2e/beauty-far-ground.spec.ts` guards the arithmetic and goes red the day it does.
+
 WHERE: `baron-panorama-atlas.png` + blend, identical geometry. Paint the Baron's supply road switchbacking into smoky foothills, two-three distant company derricks (sepia engraving, asymmetric — Echo law), a bruised storm-amber sky band warm at the horizon rim and falling near-black at the zenith (Ceiling law). Optionally two very-slow scrolling-UV smoke strips on the existing panorama material (uniform-driven, FULL tier only).
 WHY: the last page of Epoch One currently plays against blank brown nothing; the horizon should say his operation is BIGGER than this fight — that is what makes beating him matter.
 PERF: low (texture + tiny shader; smoke strips gated FULL tier).

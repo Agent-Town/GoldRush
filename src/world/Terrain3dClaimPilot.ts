@@ -67,7 +67,7 @@ import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { reportRenderDemotion } from '../telemetry/runBeacon';
 import { isMapBeautyDisabled, isPoolGradeDisabled } from '../core/DebugParams';
 import { RenderLayers } from '../core/RenderLayers';
-import { horizonApronProfile, paintHorizonApron } from './HorizonApron';
+import { farGroundProbeMode, horizonApronProfile, paintFarGroundProbe, paintHorizonApron } from './HorizonApron';
 import { ledgerSunShadowDirection } from './LightRig';
 import { Balance } from '../game/Balance';
 import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
@@ -1292,6 +1292,26 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       // frame can reach (the panorama measured 0% at every hero position, both viewports), so
       // whether it is painted has to be readable without ?debug.
       host.canvas.dataset.terrain3dPilotHorizonApron = String(nextSkirt?.userData.horizonApron ?? 'none');
+      // THE FAR GROUND SHIFT's instrument (src/world/HorizonApron.ts). Colour only, last thing
+      // mounted so nothing downstream re-touches the materials it flattens. The painted-material
+      // counts are published because they are the probe's positive control: a census that reads
+      // 0.00% panorama means "off camera" only if the ring was provably repainted.
+      const probeMode = farGroundProbeMode();
+      if (probeMode === 'off') host.canvas.dataset.terrain3dPilotFarGroundProbe = 'off';
+      else {
+        const painted = {
+          panorama: paintFarGroundProbe(nextPanorama, 'panorama'),
+          apron: paintFarGroundProbe(nextSkirt, 'apron'),
+          terrain: paintFarGroundProbe(nextTerrain, 'terrain'),
+        };
+        // solo: nothing left that could occlude the ring. If it is in the frustum, it IS the frame.
+        if (probeMode === 'solo') {
+          nextTerrain.visible = false;
+          if (nextSkirt) nextSkirt.visible = false;
+        }
+        host.canvas.dataset.terrain3dPilotFarGroundProbe =
+          `${probeMode}:panorama=${painted.panorama},apron=${painted.apron},terrain=${painted.terrain}`;
+      }
       host.canvas.dataset.terrain3dPilotPanoramaFraming = 'world-projected-horizon';
       // Keep the original probe values until the registry contract is migrated.
       host.canvas.dataset.terrain3dPilotSkirtBlend = 'painted-underlay-alpha-rim';
