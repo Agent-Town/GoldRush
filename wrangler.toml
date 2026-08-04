@@ -6,3 +6,10 @@ compatibility_date = "2026-07-08"
 name = "MULTIPLAYER_ROOMS"
 class_name = "MultiplayerRoom"
 script_name = "gold-rush-mp-room"
+
+# F-LBKV-1 (2026-08-04): standings/bugs/stats read `env.TELEMETRY ?? env.ACCOUNTS`; no KV
+# was ever bound, so every write fail-softed to `stored:false` since LB-01 shipped. This
+# top-level block binds BOTH environments (Pages toml semantics) on every deploy.
+[[kv_namespaces]]
+binding = "TELEMETRY"
+id = "f22215557bbe46e0a283953b8a0cfb4b"
