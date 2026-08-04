@@ -48,13 +48,14 @@ function firstIssuePanels(mode: GazetteInputMode) {
         'Raise a sluice beside running water and it keeps washing while you fight.',
       ],
     },
+    // Owner ruling 2026-08-04 ("duplicate items... Please keep only one of them"): key
+    // instructions live ONLY in THE PROSPECTOR'S HANDS; topic panels teach the concept.
     {
       id: 'the-works',
       headline: 'THE WORKS',
       lines: [
         'Gold raises the works: palisades slow trouble; turrets and beacons watch the night.',
         'Build where the trouble walks.',
-        controls.works,
       ],
     },
     {
@@ -62,7 +63,6 @@ function firstIssuePanels(mode: GazetteInputMode) {
       headline: 'THE ARMS',
       lines: [
         'Your brass-and-teal frontier rig fires when trouble comes in range.',
-        controls.arms,
         'When the trail pauses for a fitting, choose the upgrade your claim needs.',
       ],
     },
