@@ -65,10 +65,11 @@ export type RunTape = {
   contract: string;
   seed: string;
   difficulty: string;
-  simVersion: typeof RUN_TAPE_SIM_VERSION;
+  simVersion: number;
   inputLog: RunTapeInputLog;
   eventLogHash: string;
   outcome: RunTapeOutcome;
+  annotations?: Array<{ atMs: number; text: string }>;
 };
 
 type RunTapeHeader = Pick<RunTape, 'contract' | 'seed' | 'difficulty'> & {
@@ -283,8 +284,8 @@ function writeRing(storage: TapeStorage, tapes: RunTape[]): boolean {
 }
 
 function validateRunTape(value: unknown): RunTape | null {
-  if (!isRecord(value) || !hasOnlyKeys(value, ['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'inputLog', 'eventLogHash', 'outcome'])) return null;
-  if (value.version !== RUN_TAPE_VERSION || value.simVersion !== RUN_TAPE_SIM_VERSION) return null;
+  if (!isRecord(value) || !hasOnlyKeys(value, ['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'inputLog', 'eventLogHash', 'outcome', 'annotations'])) return null;
+  if (value.version !== RUN_TAPE_VERSION || !Number.isSafeInteger(value.simVersion) || (value.simVersion as number) < 1) return null;
   if (typeof value.id !== 'string' || !value.id || typeof value.createdAt !== 'number' || !Number.isSafeInteger(value.createdAt)) return null;
   if (typeof value.kept !== 'boolean' || typeof value.contract !== 'string' || !value.contract) return null;
   if (typeof value.seed !== 'string' || typeof value.difficulty !== 'string' || !value.difficulty) return null;
@@ -292,7 +293,8 @@ function validateRunTape(value: unknown): RunTape | null {
   const parsed = validatePlaybook(value.inputLog);
   const streams = validateInputStreams(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0);
   const outcome = validateOutcome(value.outcome);
-  if (!parsed.ok || !streams || !outcome || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
+  const annotations = validateAnnotations(value.annotations);
+  if (!parsed.ok || !streams || !outcome || annotations === null || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
   return {
     version: RUN_TAPE_VERSION,
     id: value.id,
@@ -301,11 +303,24 @@ function validateRunTape(value: unknown): RunTape | null {
     contract: value.contract,
     seed: value.seed,
     difficulty: value.difficulty,
-    simVersion: RUN_TAPE_SIM_VERSION,
+    simVersion: value.simVersion as number,
     inputLog: { ...parsed.playbook, ...streams },
     eventLogHash: value.eventLogHash,
     outcome,
+    ...(annotations ? { annotations } : {}),
   };
+}
+
+function validateAnnotations(value: unknown): RunTape['annotations'] | null {
+  if (value === undefined) return undefined;
+  if (!Array.isArray(value)) return null;
+  const annotations: NonNullable<RunTape['annotations']> = [];
+  for (const annotation of value) {
+    if (!isRecord(annotation) || !hasOnlyKeys(annotation, ['atMs', 'text'])) return null;
+    if (!nonNegativeNumber(annotation.atMs) || typeof annotation.text !== 'string') return null;
+    annotations.push({ atMs: annotation.atMs, text: annotation.text });
+  }
+  return annotations;
 }
 
 function validateInputStreams(value: unknown, durationTicks: number): Pick<RunTapeInputLog, 'primarySlot' | 'streams'> | null {

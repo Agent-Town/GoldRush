@@ -2292,3 +2292,82 @@ body:has(.gr-profile-title) #touch-controls {
 .hud-build-tile__copy {
   min-width: 0;
 }
+
+.tape-shelf,
+.lantern-show {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  color: var(--at-wood-950, #2e1b0e);
+  font-family: "Wellfleet", serif;
+}
+
+.tape-shelf {
+  display: grid;
+  place-items: center;
+  padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  background: rgba(23, 12, 5, 0.82);
+}
+
+.tape-shelf__panel {
+  width: min(920px, 100%);
+  max-height: 92vh;
+  overflow: auto;
+  padding: 22px;
+  border: 3px solid #8b7d3c;
+  border-radius: 12px;
+  background: #f5e6c8;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55), inset 0 0 0 2px #2e1b0e;
+}
+
+.tape-shelf__header,
+.tape-shelf__reel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.tape-shelf__header p,
+.tape-shelf__reel p,
+.lantern-show__title p { margin: 0; color: #8b5d24; text-transform: uppercase; letter-spacing: 0.08em; }
+.tape-shelf__header h2,
+.tape-shelf__reel h3,
+.lantern-show__title h1 { margin: 2px 0; }
+.tape-shelf button,
+.lantern-show button { min-height: 42px; border: 2px solid #2e1b0e; border-radius: 6px; padding: 8px 14px; color: #2e1b0e; background: #fff8e8; font: inherit; font-weight: 800; }
+.tape-shelf button:hover,
+.lantern-show button:hover,
+.lantern-show button[aria-pressed="true"] { background: #c4883a; }
+.tape-shelf__message { min-height: 1.5em; color: #7f2633; font-weight: 800; }
+.tape-shelf__list { display: grid; gap: 10px; margin: 16px 0 0; padding: 0; list-style: none; }
+.tape-shelf__reel { flex-wrap: wrap; padding: 14px; border: 1px solid rgba(46, 27, 14, 0.35); border-radius: 8px; background: rgba(255, 248, 232, 0.62); }
+.tape-shelf__reel[data-refused="true"] { border-color: #a0522d; }
+.tape-shelf__reel span { flex: 1 1 260px; }
+
+.lantern-show { color: #fff8e8; pointer-events: none; }
+.lantern-show__stage { position: absolute; inset: 0; pointer-events: auto; cursor: grab; }
+.lantern-show__stage:active { cursor: grabbing; }
+.lantern-show__frame { position: absolute; inset: 0; border: clamp(10px, 2.2vw, 28px) solid #2e1b0e; box-shadow: inset 0 0 0 5px #8b7d3c, inset 0 0 80px 38px rgba(20, 9, 2, 0.74); pointer-events: none; }
+.lantern-show__frame::before,
+.lantern-show__frame::after { content: ""; position: absolute; top: 18px; bottom: 18px; width: 14px; background: radial-gradient(circle, #ffe4a0 0 22%, #8b7d3c 25% 45%, transparent 48%) 0 0 / 14px 46px; filter: drop-shadow(0 0 7px #c4883a); }
+.lantern-show__frame::before { left: 10px; }
+.lantern-show__frame::after { right: 10px; }
+.lantern-show__title { position: absolute; top: max(24px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); min-width: min(540px, 78vw); padding: 10px 20px; text-align: center; text-shadow: 0 2px 8px #000; pointer-events: none; }
+.lantern-show__title h1 { font-size: clamp(24px, 4vw, 44px); }
+.lantern-show__intertitle { position: absolute; top: 42%; left: 50%; width: min(620px, 82vw); transform: translate(-50%, -50%); padding: 24px; border: 3px double #c4883a; background: rgba(46, 27, 14, 0.92); color: #fff8e8; text-align: center; font-size: clamp(18px, 3vw, 30px); box-shadow: 0 12px 38px rgba(0, 0, 0, 0.62); pointer-events: none; }
+.lantern-show__controls { position: absolute; right: max(24px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom)); left: max(24px, env(safe-area-inset-left)); display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; padding: 10px; border: 2px solid #8b7d3c; border-radius: 8px; background: rgba(46, 27, 14, 0.92); pointer-events: auto; }
+.lantern-show__speeds { display: flex; gap: 4px; }
+.lantern-show__controls output { flex: 1 1 220px; text-align: center; }
+.lantern-show-active #hud { opacity: 0; pointer-events: none; }
+
+@media (max-width: 560px) {
+  .tape-shelf__panel { max-height: 96vh; padding: 16px; }
+  .tape-shelf__header { align-items: flex-start; }
+  .tape-shelf__reel { align-items: stretch; flex-direction: column; }
+  .tape-shelf__reel span { flex: none; }
+  .lantern-show__title { top: max(14px, env(safe-area-inset-top)); }
+  .lantern-show__controls { right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); left: max(12px, env(safe-area-inset-left)); max-height: 34vh; overflow: auto; }
+  .lantern-show__controls button { min-height: 40px; padding: 6px 10px; }
+  .lantern-show__controls output { flex-basis: 100%; }
+}

@@ -1222,6 +1222,7 @@ function toMeta(manifest: EpochManifest): EpochMeta {
 let activeSelection: { contract: ContractManifest; diagnostics: ActiveContractDiagnostics } | null = null;
 let activeSelectionSearch = '';
 let stagedLaunchClear: ActiveContractDiagnostics['stagedLaunchClear'] = null;
+let replayContractId: string | null = null;
 
 export function recordStagedContractLaunchClear(diagnostics: ActiveContractDiagnostics['stagedLaunchClear']): void {
   stagedLaunchClear = diagnostics;
@@ -1235,6 +1236,12 @@ export function stagePlayerContractLaunch(id: string): void {
     globalThis.sessionStorage?.setItem(PLAYER_CONTRACT_LAUNCH_KEY, id);
     globalThis.sessionStorage?.removeItem(CHARTER_LAUNCH_KEY);
   } catch {}
+}
+
+export function stageReplayContract(id: string | null): void {
+  replayContractId = id;
+  activeSelection = null;
+  activeSelectionSearch = '';
 }
 
 export function stagedPlayerContractLaunch(): string | null {
@@ -1306,14 +1313,15 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
   const requestedId = params.get('contract');
   const debug = !RELEASE_E1 && (params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase');
   const launched = requestedId ? isPlayerContractLaunch(requestedId) : false;
+  const replayed = requestedId !== null && requestedId === replayContractId;
   const liveSagaFlagship = !RELEASE_E1 && requestedId !== null && requestedId in LIVE_SAGA_FLAGSHIPS;
   let contract = fallback;
   let fallbackReason: ActiveContractDiagnostics['fallbackReason'] = null;
 
-  if (requestedId && !debug && !launched && !liveSagaFlagship) {
+  if (requestedId && !debug && !launched && !replayed && !liveSagaFlagship) {
     fallbackReason = 'debug-disabled';
   } else if (requestedId) {
-    const candidates = debug || launched || liveSagaFlagship ? listBoardContracts() : contracts;
+    const candidates = debug || launched || replayed || liveSagaFlagship ? listBoardContracts() : contracts;
     const requested = candidates.find((entry) => entry.id === requestedId);
     if (!requested) {
       fallbackReason = 'unknown-contract';
