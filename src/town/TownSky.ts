@@ -23,8 +23,9 @@ import type { PerformanceTier } from '../game/PerformanceTier';
 // scene.background, the fog colour and the dirt are all #e9c98d: the town has a horizon and
 // paints it the same colour as the ground.
 //
-// So: three ways to answer that band, all behind ?townSky, default boot byte-identical, for the
-// owner to pick from one board.
+// So: three ways to answer that band, all behind ?townSky. The owner picked from the board
+// (owner directive, 2026-08-04: "c") — ONLY AIR is now the default boot; a and b stay as
+// ?townSky previews and ?townSky=off restores the pre-sky boot.
 //
 //   a  THE LAND GOES ON   sky ramp + a lit, fogged dune belt standing just past the plate rim.
 //                         Real geometry in the world's own light. The rim stops being an edge.
@@ -63,7 +64,9 @@ const SKY_PARAM = 'townSky';
 
 export function readTownSkyVariant(search: string = window.location.search): TownSkyVariant {
   const value = new URLSearchParams(search).get(SKY_PARAM);
-  return value === 'a' || value === 'b' || value === 'c' ? value : 'off';
+  if (value === 'a' || value === 'b' || value === 'c') return value;
+  if (value === 'off') return 'off';
+  return 'c';
 }
 
 // WHERE THE HORIZON IS ALLOWED TO SIT, and why it is not at v = 0.5.

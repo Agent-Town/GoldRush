@@ -855,7 +855,8 @@ export class TownScene {
     const light = TOWN_MOOD_LIGHT[this.townMood];
     this.scene.background = new THREE.Color(mood.horizon);
     this.scene.fog = new THREE.Fog(mood.horizon, light.fogNear, light.fogFar);
-    // THE ATMOSPHERICS SHIFT — three skies behind ?townSky=a|b|c, default boot untouched.
+    // THE ATMOSPHERICS SHIFT — three skies; the owner picked c as the default boot (owner
+    // directive, 2026-08-04: "c"); ?townSky=a|b previews stay, ?townSky=off is the escape.
     // The band they paint is the void past the 44x44 plate: measured at up to 34.7% of the
     // desktop frame from the town's north side and 0% from the plaza, which is why round one
     // measured "zero pixels" (F-BT-2). See src/town/TownSky.ts for the cone arithmetic.

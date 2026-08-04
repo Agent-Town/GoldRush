@@ -12,11 +12,27 @@ import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type 
 const PLAZA = { x: 0, z: 2 };
 const NORTH_GATE = { x: 0, z: -13 };
 
-test('the default town boot is untouched by the sky work', async ({ page }) => {
+// The owner picked from the three-skies board (owner directive, 2026-08-04: "c") — ONLY AIR
+// is the default boot. The plain boot now answers Mistake #10 by SHOWING the sky: the ramp
+// background with zero geometry. ?townSky=off remains the escape back to the pre-sky boot.
+test('the default town boot carries the owner-picked sky c: ramp background, zero geometry', async ({ page }) => {
   test.setTimeout(90_000);
   const errors = collectErrors(page);
   await seedProfile(page);
   await enterTown(page, '');
+  const town = await snapshot(page);
+  expect(town.sky.variant).toBe('c');
+  expect(town.sky.objects).toBe(0);
+  expect(town.sky.triangles).toBe(0);
+  expect(town.sky.background).toBe('ramp');
+  expectClean(errors);
+});
+
+test('?townSky=off restores the pre-sky boot untouched', async ({ page }) => {
+  test.setTimeout(90_000);
+  const errors = collectErrors(page);
+  await seedProfile(page);
+  await enterTown(page, '?townSky=off');
   const town = await snapshot(page);
   expect(town.sky.variant).toBe('off');
   expect(town.sky.objects).toBe(0);
