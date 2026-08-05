@@ -6,7 +6,9 @@ CODEX: model=gpt-5.6-sol effort=high
 
 ROLE: implementer on lane-a. WORKDIR: worktrees/lane-a (branch lane/a). Commit prefix `nulfix:`. Never touch STATUS.md, reviews/, tasks/queue/, other lanes.
 
-PRE-FLIGHT (LANE-SAFETY INVARIANT): `git branch --show-current` = `lane/a`; dirty tracked blob not reachable in git → STOP. `git checkout -B lane/a origin/main` ONLY when clean.
+PRE-FLIGHT (LANE-SAFETY, runner-auto-commit aware): `git branch --show-current` = `lane/a`. The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via `git log`/`git diff`), it is a SAFE DUPE → `git checkout -B lane/a origin/main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make.
+
+> **FACTORY-CHURN / EVIDENCE-ARTIFACT EXCEPTION (F-1407-1 + F-1266-1) — these tracked classes are ALWAYS EXPECTED and are NEVER a STOP; list them and proceed:** (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`), rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence, whether as uncommitted dirt or as the whole content of an ahead commit. Screenshots are never byte-identity gated, so their bytes differ from main forever: discard them (`git checkout -- <paths>` / reset) and PROCEED, listing what you discarded. ⚠️ Without this, the fire that AUTHORS a master creates the dirt that blocks it, in the same fire, and cannot see it — f1406-1 died exactly that way for 54,875 tokens and zero edits. ⓘ What still STOPs, unchanged: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — anything a live drain or concurrent task could actually own.
 
 PRE-FLIGHT (CURRENCY + SAFE-DUPE, ONE COMMAND — deliberately not a grep, because grep is the very thing that is broken here, and deliberately not a shell-quoted `node -e`, because F-1425-2 showed quoting can fake a stale lane):
 
