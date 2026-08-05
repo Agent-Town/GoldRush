@@ -27,6 +27,7 @@ import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
+import { PressureSystem } from '../systems/PressureSystem';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
 import * as Terrain from '../world/Terrain';
@@ -38,7 +39,9 @@ const SUPPORTED_CONTRACTS = new Set([
   'e1-night-shift',
   'e1-twin-banks',
   'e1-baron',
+  'e2-hill-mine',
   'e2-trestle',
+  'e2-pressure-garden',
   'e2-incline',
 ]);
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
@@ -121,6 +124,7 @@ export class HeadlessContractSim {
   private readonly harvest: HarvestSystem;
   private readonly combat: CombatSystem;
   private readonly build: BuildSystem;
+  private readonly pressure: PressureSystem;
   private readonly waves: WaveSystem;
   private readonly runManager: RunManager;
   private readonly stockpileHoldings: GoldHolding[] = Array.from(
@@ -195,6 +199,9 @@ export class HeadlessContractSim {
       this.targeting,
       this.prospector.position,
       () => this.waves?.diagnostics.wave ?? 0,
+      undefined,
+      undefined,
+      (id) => id !== 'boiler_house' || this.manifest.twist.pressureEnabled === true,
     );
     for (const fixture of this.manifest.tileParams.prePlacedBuildables ?? []) {
       this.build.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
@@ -204,6 +211,15 @@ export class HeadlessContractSim {
       });
     }
     for (const holding of this.stockpileHoldings) this.targeting.registerGoldHolding(holding);
+    this.pressure = new PressureSystem(
+      this.economy,
+      this.build.boilerHouses,
+      () => this.manifest.twist.pressureEnabled === true,
+      (index) => this.build.buildingTarget('boiler_house', index)?.active === true,
+      () => false,
+      () => undefined,
+      () => undefined,
+    );
 
     this.waves = new WaveSystem(
       this.enemies,
@@ -348,6 +364,7 @@ export class HeadlessContractSim {
       () => undefined,
       this.prospector.position,
     );
+    this.pressure.update(STEP_SECONDS, this.timeAlive, [this.hero.group.position], this.waves.diagnostics.wave);
     this.syncStockpileHoldings();
     this.enemies.update(STEP_SECONDS, this.hero.group.position, (enemy) => {
       this.combat.handleEnemyContact(enemy);
@@ -597,6 +614,7 @@ export class HeadlessContractSim {
         hitsResolved: this.buildingHits,
       },
       harvest: this.harvestSnapshot,
+      pressure: this.pressure.diagnostics,
       kills: this.kills,
       runState: this.dead ? 'dead' : this.secured ? 'secured' : 'playing',
       run: { secured: this.secured },

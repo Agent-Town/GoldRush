@@ -1,10 +1,20 @@
 import { loadContract, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
+import { Balance } from '../game/Balance';
+import { buildableBlurb, getBuildableDef } from '../game/buildables';
 
 type MechanicValue = boolean | number | string | readonly string[];
 
 export type MechanicsManifest = {
   schema: 'goldrush.mechanics.v1';
   contractId: string;
+  buildables?: readonly {
+    id: string;
+    operation: 'BUILD';
+    meaning: string;
+    cost: number;
+    maxCount: number;
+    source: 'twist.pressureEnabled';
+  }[];
   interactables: readonly {
     id: string;
     count: number;
@@ -77,6 +87,27 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       }));
     }
   }
+  if (twist.pressureEnabled) {
+    rules.push(rule('pressure_auto_vent', 'PressureSystem.vent', {
+      above: Balance.boilerHouse.safeMax,
+      loss: Balance.boilerHouse.ventLoss,
+      cooldownSeconds: Balance.boilerHouse.ventCooldownSeconds,
+    }));
+    rules.push(rule('pressure_bands', 'PressureSystem.band', {
+      bands: ['empty:<=0', `low:>0,<${Balance.boilerHouse.safeMin}`, `working:>=${Balance.boilerHouse.safeMin},<=${Balance.boilerHouse.safeMax}`, `high:>${Balance.boilerHouse.safeMax}`],
+    }));
+    rules.push(rule('pressure_generation', 'PressureSystem.update', {
+      buildable: 'boiler_house',
+      input: 'coal',
+      coalSeconds: Balance.boilerHouse.coalSeconds,
+      tickSeconds: Balance.boilerHouse.tickSeconds,
+      pressurePerTick: Balance.boilerHouse.pressurePerTick,
+    }));
+    rules.push(rule('pressure_powers', 'PressureArsenalSystem', {
+      spends: ['auto_pan', 'boiler_lance', 'pressure_mortar', 'sky_rocket_battery'],
+      bandBoosts: ['boiler_battery'],
+    }));
+  }
   if (practice) {
     const suppressed = Object.entries(practice)
       .filter(([, value]) => value === false)
@@ -95,9 +126,20 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     if (twist.baron) waves.push({ event: 'baron', wave: twist.baron.wave, source: 'twist.baron.wave' });
   }
 
+  const boilerHouse = twist.pressureEnabled ? getBuildableDef('boiler_house') : undefined;
   return {
     schema: 'goldrush.mechanics.v1',
     contractId: contract.id,
+    ...(boilerHouse ? {
+      buildables: [{
+        id: boilerHouse.id,
+        operation: 'BUILD' as const,
+        meaning: buildableBlurb(boilerHouse) ?? '',
+        cost: boilerHouse.costCurve(0),
+        maxCount: boilerHouse.maxCount,
+        source: 'twist.pressureEnabled' as const,
+      }],
+    } : {}),
     interactables: interactables(contract),
     rules: rules.sort(byId),
     modes: (contract.modes ?? []).map((mode) => ({ ...mode })),

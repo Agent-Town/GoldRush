@@ -42,17 +42,48 @@ for (const contract of steamworks.contracts) {
       restoreRig = () => Object.assign(Balance.sparkRig, rig);
 
       expect(seeds).toHaveLength(2);
-      if (contract.twist.pressureEnabled) {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
-        expect(consoleErrors).toEqual([]);
-        return;
-      }
-
       const probe = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] });
       expect(probe.currentTurn().view.stablePrefix.mechanics).toMatchObject({
         contractId: contract.id,
         interactables: [],
       });
+      if (contract.twist.pressureEnabled) {
+        expect(probe.currentTurn().view.stablePrefix.mechanics).toMatchObject({
+          buildables: [{
+            id: 'boiler_house',
+            operation: 'BUILD',
+            meaning: 'Feeds coal into the Steamworks pressure line.',
+            cost: 70,
+            maxCount: 3,
+            source: 'twist.pressureEnabled',
+          }],
+          rules: expect.arrayContaining([
+            {
+              id: 'pressure_auto_vent',
+              source: 'PressureSystem.vent',
+              data: { above: 80, loss: 35, cooldownSeconds: 3 },
+            },
+            {
+              id: 'pressure_bands',
+              source: 'PressureSystem.band',
+              data: { bands: ['empty:<=0', 'low:>0,<25', 'working:>=25,<=80', 'high:>80'] },
+            },
+            {
+              id: 'pressure_generation',
+              source: 'PressureSystem.update',
+              data: { buildable: 'boiler_house', input: 'coal', coalSeconds: 12, tickSeconds: 1, pressurePerTick: 4 },
+            },
+            {
+              id: 'pressure_powers',
+              source: 'PressureArsenalSystem',
+              data: {
+                spends: ['auto_pan', 'boiler_lance', 'pressure_mortar', 'sky_rocket_battery'],
+                bandBoosts: ['boiler_battery'],
+              },
+            },
+          ]),
+        });
+      }
       expect(probe.manifest.tileParams.engineDependencies).toEqual([
         expect.objectContaining({ status: 'missing' }),
       ]);
@@ -63,15 +94,20 @@ for (const contract of steamworks.contracts) {
         const sim = new HeadlessContractSim({ contractId: contract.id, seed });
         sim.hero.applyStats(100_000, 1);
         sim.hero.heal(100_000);
+        if (contract.twist.pressureEnabled) {
+          for (const x of [-4, 4]) expect(sim.build.placeFree('boiler_house', { x, z: 12 }, 0)).toBe(true);
+          sim.hero.group.position.set(-12, 0.06, 39);
+        }
         let turn = sim.currentTurn();
         while (!turn.terminal) turn = sim.advanceToTurn();
-        return sim.outcome();
+        return { ...sim.outcome(), pressure: sim.pressure.diagnostics };
       };
 
       for (const seed of seeds) {
         const first = run(seed);
         const second = run(seed);
         expect(first).toMatchObject({ secured: true, waves: contract.twist.secureWave, calls: 0 });
+        if (contract.twist.pressureEnabled) expect(first.pressure.vents).toBeGreaterThan(0);
         expect(second.eventLogHash).toBe(first.eventLogHash);
       }
       expect(consoleErrors).toEqual([]);
