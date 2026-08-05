@@ -317,6 +317,87 @@ test('REFUSES (rc=2) when no subject matches the gate patterns', () => {
 });
 
 // ---------------------------------------------------------------------------
+// AN ESCALATION WRITTEN INTO A REASON STRING (F-1473-2, s1473)
+//
+// Everything above tests key PRESENCE in the baseline. s1473 measured that the
+// reason CONTENT was never parsed, so three entries routed a gate-cost decision
+// to Robin by writing "owner\u2019s desk" into a JSON value -- and one of them
+// (F-1470-3) had no BACKLOG row at all, making it invisible to every visibility
+// guard. A no-op that reads like an escalation is worse than no escalation: the
+// audit PASSes and the fire believes it discharged the duty.
+// ---------------------------------------------------------------------------
+
+const ESC_FILES = (ledger) => ({ ...BASE_FILES, "tasks/BACKLOG.md": ledger });
+
+test("an owner escalation whose cited F-ID has no ledger row exits 1", () => {
+  const dir = fixture({
+    scripts: { ...BASE_SCRIPTS, "test:lonely": "node scripts/lonely-guard.mjs" },
+    files: ESC_FILES("- F-1111-1 something else entirely\n"),
+    baseline: JSON.stringify({
+      grandfathered: {
+        "npm:test:lonely": "s0000 F-9999-9: cost ruling, owner\u2019s desk.",
+        "scripts/lonely-guard.mjs": "deliberate: reached only through the hand-run gate above",
+      },
+    }),
+  });
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stderr, /route a decision to the owner with no ledger row/);
+  assert.match(r.stderr, /F-9999-9/);
+});
+
+test("the SAME escalation goes green once the F-ID has a ledger row -- the control", () => {
+  const dir = fixture({
+    scripts: { ...BASE_SCRIPTS, "test:lonely": "node scripts/lonely-guard.mjs" },
+    files: ESC_FILES("- F-9999-9 (s0000) gate-cost question, on the desk with a recommendation\n"),
+    baseline: JSON.stringify({
+      grandfathered: {
+        "npm:test:lonely": "s0000 F-9999-9: cost ruling, owner\u2019s desk.",
+        "scripts/lonely-guard.mjs": "deliberate: reached only through the hand-run gate above",
+      },
+    }),
+  });
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /owner escalations\s+:\s+1\s+unrouted:\s+0/);
+});
+
+test("escalating with NO F-ID cited at all exits 1 -- it can never be found", () => {
+  const dir = fixture({
+    scripts: { ...BASE_SCRIPTS, "test:lonely": "node scripts/lonely-guard.mjs" },
+    files: ESC_FILES("- F-9999-9 present, but the reason never names it\n"),
+    baseline: JSON.stringify({
+      grandfathered: {
+        "npm:test:lonely": "No caller. This is gate policy, not a drive-by: owner\u2019s desk.",
+        "scripts/lonely-guard.mjs": "deliberate: reached only through the hand-run gate above",
+      },
+    }),
+  });
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stderr, /no F-ID cited/);
+});
+
+test("all four desk spellings are matched, so the check cannot be dodged by an apostrophe", () => {
+  // F-1471-3 shipped because a guard knew ONE spelling of the desk word while the
+  // corpus used four. That lesson is asserted here rather than assumed.
+  for (const spelling of ["owner\u2019s desk", "owner\u0027s desk", "owners desk", "OWNER DESK"]) {
+    const dir = fixture({
+      scripts: { ...BASE_SCRIPTS, "test:lonely": "node scripts/lonely-guard.mjs" },
+      files: ESC_FILES("- nothing relevant here\n"),
+      baseline: JSON.stringify({
+        grandfathered: {
+          "npm:test:lonely": "s0000 F-9999-9: " + spelling + ".",
+          "scripts/lonely-guard.mjs": "deliberate: reached only through the hand-run gate above",
+        },
+      }),
+    });
+    const r = run(dir);
+    assert.equal(r.status, 1, spelling + " was not recognised as an escalation: " + r.stdout + r.stderr);
+  }
+});
+
+// ---------------------------------------------------------------------------
 // POSITIVE CONTROL — the arms above all run on fixtures, so at least one must
 // prove the script works on the tree it actually gates (s1252's harness lesson:
 // validate the harness before believing its numbers).

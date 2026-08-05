@@ -329,5 +329,50 @@ if (fresh.length) {
   process.exit(1);
 }
 
+// --- AN ESCALATION WRITTEN HERE IS NOT AN ESCALATION (F-1473-2, s1473) ---------
+// Everything above tests only `s.key in baseline` — key PRESENCE. The reason string
+// is printed and never parsed, so a fire that writes "owner's desk" into a reason has
+// performed a NO-OP THAT READS LIKE AN ESCALATION: this audit PASSes, the fire feels
+// it discharged §7.3, and Robin is never asked. Measured s1473 across all 9 entries:
+// THREE route a gate-cost decision to the owner, and `F-1470-3` appeared ZERO times in
+// tasks/BACKLOG.md — no board row, so invisible to findings-state, blocker-panel and
+// desk-declaration alike. That is F-1334-2's class one level further out: not a desk
+// item missing from the board, but an escalation that never became a desk item at all.
+//
+// The rule is deliberately WEAK — it demands a ledger ROW, not a desk line. A row is
+// what the visibility guards can see; whether an item is currently on the desk is
+// desk-declaration-guard's question, and duplicating it here would red the board every
+// time Robin disposed of something. This asks only: can the escalation be FOUND?
+const OWNER_ROUTE = /owner['’]?s? desk/i;
+const escalations = Object.entries(baseline).filter(([, reason]) => OWNER_ROUTE.test(String(reason)));
+if (escalations.length) {
+  let ledger = '';
+  try {
+    ledger = fs.readFileSync(path.join(ROOT, 'tasks/BACKLOG.md'), 'utf8');
+  } catch (error) {
+    console.error('gate-caller-audit: REFUSING — baseline escalates to the owner but the ledger is unreadable: ' + error.message);
+    process.exit(2);
+  }
+  const unrouted = [];
+  for (const [key, reason] of escalations) {
+    const ids = String(reason).match(/F-\d+-\d+/g) || [];
+    if (!ids.length) { unrouted.push([key, '(no F-ID cited)']); continue; }
+    const missing = ids.filter((id) => !ledger.includes(id));
+    if (missing.length === ids.length) unrouted.push([key, missing.join(', ')]);
+  }
+  console.log('  owner escalations   : ' + escalations.length + '   unrouted: ' + unrouted.length);
+  if (unrouted.length) {
+    console.error('\nFAIL — ' + unrouted.length + ' baseline reason(s) route a decision to the owner with no ledger row:');
+    for (const [key, ids] of unrouted) console.error('  ' + key.padEnd(42) + ids);
+    console.error(
+      '\n  Writing "owner\'s desk" into a JSON reason string routes NOTHING — this audit reads\n' +
+        '  key presence only, so the sentence is inert prose in a file no desk guard reads.\n' +
+        '  File the finding in tasks/BACKLOG.md (§7.3: one line on the desk with a\n' +
+        '  recommendation), then cite that F-ID here.',
+    );
+    process.exit(1);
+  }
+}
+
 console.log('\nPASS — every gate-shaped subject is either reached or grandfathered with a reason.');
 process.exit(0);
