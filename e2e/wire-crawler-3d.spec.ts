@@ -69,7 +69,7 @@ async function setOnlyComponentHp(page: Page, componentId: string, ratio: number
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.1));
 }
 
-async function destroyComponent(page: Page, componentId: string) {
+async function destroyComponent(page: Page, componentId: string, awaitState: 'ready' | 'lite' | 'failed' = 'ready') {
   expect(await page.evaluate((id) => {
     const test = window.__GR_TEST__!;
     const snapshot = structuredClone(test.captureSuspend()) as any;
@@ -82,7 +82,8 @@ async function destroyComponent(page: Page, componentId: string) {
     return found && test.restoreSuspend(snapshot);
   }, componentId)).toBe(true);
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.1));
-  await awaitMounted(page);
+  if (awaitState === 'ready') await awaitMounted(page);
+  else await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-state', awaitState, { timeout: 15_000 });
   const loaded = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.renderer);
   const target = (await crawlerParts(page)).find((enemy) => enemy.bossComponentId === componentId) ?? null;
   expect(target).not.toBeNull();
@@ -157,6 +158,10 @@ test('LITE keeps the placeholder and never requests the Crawler GLB', async ({ p
   await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-state', 'lite');
   await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-source', 'placeholder');
   expect(requests).toBe(0);
+  for (const componentId of COMPONENTS) await destroyComponent(page, componentId, 'lite');
+  await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-state', 'disposed');
+  await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-source', 'placeholder');
+  await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-mounted', 'false');
   expect(errors).toEqual([]);
 });
 
@@ -166,5 +171,9 @@ test('invalid Crawler GLB bytes keep the placeholder presentation', async ({ pag
   await spawnCrawler(page);
   await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-state', 'failed', { timeout: 15_000 });
   await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-source', 'placeholder');
+  for (const componentId of COMPONENTS) await destroyComponent(page, componentId, 'failed');
+  await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-state', 'disposed');
+  await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-source', 'placeholder');
+  await expect(page.locator('canvas')).toHaveAttribute('data-crawler3d-mounted', 'false');
   expect(errors).toEqual([]);
 });
