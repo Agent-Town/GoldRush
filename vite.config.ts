@@ -168,6 +168,10 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
         '../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png',
       );
       if (id.endsWith('/src/world/Terrain3dClaimPilot.ts')) {
+        // THE SINGLE-LINE LAW (F-RB-1, 2026-08-05): this strip removes LINES, so every
+        // 'e2-'..'e10-' table entry in the pilot MUST be single-line — a multi-line entry
+        // gets beheaded and the release build dies on the orphaned block (hill-mine's
+        // water entry did exactly that). assert-release-build is the gate that catches it.
         transformed = transformed.replace(/^\s*'e(?:[2-9]|10)-[^\n]+\n/gm, '');
       }
       return transformed === code ? null : { code: transformed, map: null };

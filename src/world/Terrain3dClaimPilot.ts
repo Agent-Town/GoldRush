@@ -370,24 +370,7 @@ const SCULPT_WATER: Record<string, SculptWaterDressing> = {
   //     from the near-black paint reading through a surface that is deliberately not very opaque —
   //     which is what "murky working water" is, and why deepMeters is 0.12 (the real standing
   //     depth) rather than the claim's 0.5.
-  'e2-hill-mine': {
-    color: '#8a8177',
-    opacity: 0.72,
-    fill: 0.42,
-    fordSkim: 0.11,
-    deepMeters: 0.12,
-    shoreMeters: 0.05,
-    visualHalfWidth: 5.9,
-    // Sparse and at the wet edge only: the harvest anchors on this map are up on the terraces
-    // (z 25..39), nowhere near the gallery, so they are no use as a glint line here.
-    glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }],
-    rippleStrength: 1.15,
-    // Zero, and measured: the canvas map's strokes are authored for a river-shaped quad. This one is
-    // 96 m by 11.8 m, so at waterRepeat 8 they stretch into chevrons the size of the trestle —
-    // column luma spread across the band went 2.1 (the painted void) to 10.5 with the map blended
-    // in, i.e. the surface read as tiling rather than as water. Ripple and foam carry it instead.
-    textureBlend: 0,
-  },
+  'e2-hill-mine': { color: '#8a8177', opacity: 0.72, fill: 0.42, fordSkim: 0.11, deepMeters: 0.12, shoreMeters: 0.05, visualHalfWidth: 5.9, glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }], rippleStrength: 1.15, textureBlend: 0, },
 };
 /** Water fades out over the last stretch before the tile edge instead of cutting. */
 const SCULPT_WATER_EDGE_FADE = 7;
@@ -437,12 +420,7 @@ type SteamAnchor = {
   opacity: number;
 };
 const STEAM_ANCHORS: Record<string, readonly SteamAnchor[]> = {
-  'e2-hill-mine': [
-    // The stack: a real column, because this is the map's poster and the era's name.
-    { mount: 'boiler-house-site', acrossX: 0.255, acrossZ: 0.332, upY: 1.0, rise: 8.0, spread: 3.0, size: 46, life: 5.4, puffs: 34, opacity: 0.5 },
-    // The adit: a slow seep at the foot of the headframe, not a second chimney.
-    { mount: 'mine-mouth-and-ruined-headframe', acrossX: 0.5, acrossZ: 0.62, upY: 0.1, rise: 3.2, spread: 1.7, size: 30, life: 8.2, puffs: 14, opacity: 0.3 },
-  ],
+  'e2-hill-mine': [ { mount: 'boiler-house-site', acrossX: 0.255, acrossZ: 0.332, upY: 1.0, rise: 8.0, spread: 3.0, size: 46, life: 5.4, puffs: 34, opacity: 0.5 }, { mount: 'mine-mouth-and-ruined-headframe', acrossX: 0.5, acrossZ: 0.62, upY: 0.1, rise: 3.2, spread: 1.7, size: 30, life: 8.2, puffs: 14, opacity: 0.3 }, ],
 };
 /** Warm white, the shipped `BoilerHouse.ts` plume colour. Steam is WHITE (bundle §A1). */
 const STEAM_COLOUR = '#fff8e8';
@@ -1794,9 +1772,7 @@ const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
   // into an oxide: the tint's blue is above its red for the same reason the baron's fort tint is.
   // The intensity does the rest of the work — at 3 the colour map is its own light source, so the
   // roof is emitting rather than being lit, and the low sun models nothing on it.
-  'e2-hill-mine': {
-    'boiler-house-site': { intensity: 2, tint: '#9aa6a6' },
-  },
+  'e2-hill-mine': { 'boiler-house-site': { intensity: 2, tint: '#9aa6a6' }, },
 };
 
 
