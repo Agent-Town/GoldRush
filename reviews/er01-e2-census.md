@@ -3,11 +3,27 @@
 **Slice:** `lane-er01-e2-census` · **branch:** `lane/b` · **tip:** `ecee66cd` · **base:** `dad6fbff`
 **Drained by:** s1458 fire, 2026-08-05 · **Gate worktree:** `gate-s1458/` (detached, §3.0b custody — main's working tree was never touched)
 
-## VERDICT: REFUSED — NOT MERGED
+## VERDICT: ✅ MERGED `96d409889e4bdd502431da48a7386a5fcc90d1f8` — after being REFUSED and CURED in the same fire
 
-The slice's substance is **sound and valuable**, and every census assertion it makes holds. It is refused on one narrow, fully-diagnosed defect: **its own new spec fails 8/8 under the house playwright command on the repo's pinned Node**, and that is a NEW failure, not a documented known-red (drain SKILL §44: *"Any NEW failure → the drain FAILS"*).
+> ⏸️ **SUPERSEDED — THE ORIGINAL VERDICT IS RETAINED BELOW, NOT DELETED, because the refusal is the load-bearing half of this review.**
+> **First verdict (s1458, ~19:50): REFUSED — NOT MERGED.** *"The slice's substance is sound and valuable, and every census assertion it makes holds. It is refused on one narrow, fully-diagnosed defect: its own new spec fails 8/8 under the house playwright command on the repo's pinned Node, and that is a NEW failure, not a documented known-red (drain SKILL §44)."*
+> **What changed:** the corrective `f1458-1` was authored, dispatched and returned **within the same fire** (`f7632e33`, 64,865 tokens, one file, +4/-1). The gate-side hold was then lifted by **satisfying its stated condition**, never by an owner word — and the merge and both leaf flips moved together (F-1384-1, two commits, one fire).
 
-A measured cure exists and is recorded below. The next dispatch is mechanical, not exploratory.
+**Final tip gated:** `f7632e33` (= `ecee66cd` census + `f7632e33` cure).
+
+## Final gate battery — on the merged tree, detached worktree `gate2-s1458/` (§3.0b), `--workers=1` (F-1270-1)
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | **rc=0** |
+| `npm run build` | **green, 1.20s** |
+| `e2e/er01-e2-census.spec.ts`, plain house command, Node 26.4.0 | ✅ **8/8** desktop + mobile (35.4s) |
+| **Guard teeth, planted on the PINNED Node** | ✅ planted `console.error` → **4/4 RED**, captured verbatim; removed → green. The narrow filter is not a blanket silence. |
+| `gr-sim` + `bench-seeds` + `cross-engine-skip` | **13 pass / 1 fail** — the one red **control-proven pre-existing** |
+
+**The red, proven rather than labelled** (a known-red claim is not exoneration): `gr-sim.test.mjs` → *"the Baron driver runs the declared fight and keeps medal writes off headless"*. Same worktree, same hour, same command, reset to clean main `2d6da94f`: **identical 13/1**, and identical **to the digit** — received `kills: 861` vs pinned `869`, `eventLogHash: fnv1a32:36004eab` vs `fnv1a32:b9566c6d` in **both arms**. This is the **F-1403-1 / F-1404-2 cross-engine class** (the same Node 23-vs-26 split this review's own F-1458-2 is about), not this merge.
+
+ⓘ The lane's own `tasks/BACKLOG.md` line was **deliberately not landed**: it read *"READY-FOR-GATES on lane/b"*, which the merge makes false. The merged verdict is written directly instead, so no half-retired entry is left behind.
 
 ## What it does
 
@@ -89,4 +105,4 @@ This is F-1457-1 one turn further out: not "a fire can pick the wrong instrument
 
 ## Custody
 
-Nothing was merged. Main's working tree was never touched — the entire gate ran in the detached `gate-s1458/` worktree, which is removed at handoff. `lane/b` remains **HOLDS** at `ecee66cd`, unreset, with its content intact for the corrective to build on.
+Both gate batteries ran entirely in detached worktrees (`gate-s1458/`, `gate2-s1458/`), removed at handoff — **main's working tree was never used to evaluate undecided content** (§3.0b, F-1295-1). `lane/b` was never reset: it held `ecee66cd` throughout the refusal, the corrective built the second commit on top of it, and both landed together. The corrective's master was made **self-contained** (the cure inlined) precisely because the lane deliberately was not refreshed and could not see `reviews/` or `artifacts/` on main — the F-1424-3 failure mode, avoided by checking rather than assuming.
