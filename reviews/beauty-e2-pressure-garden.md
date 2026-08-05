@@ -247,3 +247,29 @@ The trap that would have deleted this map's landmarks is still armed on `e2-incl
 **Two dead fields remain, and neither is mine to fix.** The continuation ring beyond the tile edge is still near-black wherever the band crosses it — the ten-metre overhang covers the water, not the ground either side of it. And the map still has no sky: `HorizonApron` has profiles for `e1-baron` and `e1-dry-gulch` only, and the pipe headers at x ±50 stand on ground with nothing behind it.
 
 **And the method confession, because it is the same one every shift in this program has had to make.** Nothing here was judged by a human. Every verdict above is a measured render at a pinned camera, driven by a script that teleports a hero to a coordinate and waits 240 frames. **The pinned camera is a good instrument and a poor player.** It never turns, never gets hit, never stands in the ford, and never sees the map at the moment it matters — which is somewhere in wave nine with three boilers venting and something coming out of the north gate. The one frame in this review that comes close is `u4-hot/desktop-2-boilers-hot.png`, and it is staged.
+
+---
+
+## DRAIN VERDICT — s1457 (2026-08-05)
+
+**Verdict:** ✅ **MERGED to main as `25890bae024059f47d15c42fd76558d190994c1e`** (re-land of the shift above, ported onto the moved world per `tasks/lane-e2-pressure-garden-reland.md`).
+
+**Merge classification.** Lane base `02bea28c`; `git log main..lane/c` held exactly one commit (`8c72ca0e`). Twelve of thirteen paths were **LANE-ONLY** (main had moved none of them since the base); the thirteenth, `tasks/BACKLOG.md`, was **BOTH-MOVED** (3 main commits) and auto-merged by `ort` with no conflict — the two sides append different rows.
+
+**Gates, on the MERGED tree, in a detached scratch worktree (§3.0b custody) against a scratch dev server on :5197 (Mistake #12 attribution), every playwright command at `--workers=1` (§3.1 / F-1270-1):**
+
+| Gate | Result |
+| --- | --- |
+| `npx tsc --noEmit` | clean |
+| `npm run build` | green (16.2s) |
+| `GR_RELEASE=e1 npm run build:release` | green — **F-RB-1 mandatory gate for pilot-touching work** |
+| `e2e/e2-pressure-garden.spec.ts` | **2/2 passed** (desktop-1280x800 + mobile-390x844) |
+| `e2e/e2-trestle.spec.ts` | 2/2 passed — landed map unmodified |
+| `e2e/night-mode-truth.spec.ts` | 4/4 passed |
+| `e2e/e2-hill-mine.spec.ts` | 10 passed / 2 skipped / **2 failed** — see control below |
+| console/page errors | zero unsuppressed across all four map boots (watcher reported `0 known GLTFLoader blob error(s)` suppressed) |
+| F-RB-1 single-line law | verified by reading: every `e2-pressure-garden` pilot entry is single-line (`:164`, `:387`, `:415`, `:591`, `:2140`) |
+
+**The Hill Mine red is PRE-EXISTING, established by a CONTROL RUN, not by a label.** The runner's report claimed the documented F-BHM-3 baseline. A known-red claim is not exoneration, so the same worktree was reset to clean main (`302a5792`) and the same spec re-run on the same server at the same worker count: **identical 10 passed / 2 skipped / 2 failed, same test (`:131`), same assertion site (`:166`), and the same received value to the last digit — `-0.45728564262390137` against an expected `-0.5`.** The merge does not cause it.
+
+**F-1457-1 (instrument, non-blocking, cure recorded here) — a `vite preview` scratch server MANUFACTURES reds in this suite.** My first gate attempt served the production build on the scratch port and `e2-pressure-garden.spec.ts` went **2 failed in 129s** on `locator.click` 60s timeouts. `playwright.config.ts:60` shows the house webServer is `npm run dev`. Re-run on a dev server, same tree, same flags: **2 passed in 18s.** The reds were the instrument's, not the slice's. Any fire using `GR_CAPTURE_EXTERNAL_SERVER=1` must start `npm run dev -- --port <scratch> --strictPort`, never `vite preview` — the config's own webServer command is the specification.
