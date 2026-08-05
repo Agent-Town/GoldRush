@@ -56,6 +56,14 @@ export default defineConfig({
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
+  // F-1457-1 (stated s1457, mechanised s1463). The `undefined` branch below hands the whole
+  // question of WHAT is listening to the caller, and nothing used to check the answer. s1457 gated
+  // against a production `vite preview` on the scratch port: e2-pressure-garden went 2 failed in
+  // 129s on 60s click timeouts, and 2 passed in 18s on `npm run dev`. The reds were the
+  // instrument's. This globalSetup probes the external server and refuses early with a message
+  // naming the fix, instead of letting the suite manufacture reds that read as ordinary tree reds.
+  // Inert unless GR_CAPTURE_EXTERNAL_SERVER=1, so lanes and ordinary runs pay nothing.
+  globalSetup: './scripts/external-server-guard.mjs',
   webServer: process.env.GR_CAPTURE_EXTERNAL_SERVER === '1' ? undefined : {
     command: 'npm run dev',
     url: baseURL,
