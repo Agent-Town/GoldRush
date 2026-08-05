@@ -124,6 +124,8 @@ type Host = {
   nightLighting?: () => LightFieldSnapshot;
   /** True while a post-secure "Stay for the Rush" run is live (RunManager owns it). */
   rushActive?: () => boolean;
+  /** Published pressure diagnostic; render-only consumers never write it. */
+  hotBoilers?: () => number;
   /**
    * The live MQ-4 runtime verdict (0 = healthy, rising as the p95 watchdog degrades). Read-only,
    * polled — the pilot's decorations register themselves in the shed order through this and drop
@@ -341,6 +343,15 @@ type SculptWaterDressing = {
   rippleStrength?: number;
   /** Blend weight for the procedural canvas map. See the note on the hill mine's entry. */
   textureBlend?: number;
+  /** Skip the baked bed map when the authored bed is a flat pan. */
+  bed?: boolean;
+  fordTint?: number;
+  shoreFadeMeters?: number;
+  surfaceLift?: boolean;
+  overhangMeters?: number;
+  emissive?: string;
+  /** Foam collars where landmark piers meet the surface. */
+  collars?: ReadonlyArray<{ mount: string; radius: number }>;
 };
 const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
   // Shipped values, unchanged: this map's water is signed off and must render byte for byte.
@@ -373,11 +384,12 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
   //     depth) rather than the claim's 0.5.
   'e2-hill-mine': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#8a8177', opacity: 0.72, fordSkim: 0.11, deepMeters: 0.12, shoreMeters: 0.05, visualHalfWidth: 5.9, glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }], rippleStrength: 1.15, textureBlend: 0, },
   'e2-trestle': { surface: { kind: 'below-gorge-floor', quantile: 0.8, drop: 0.006 }, color: '#7e8480', opacity: 0.86, fordSkim: 0.11, deepMeters: 0.42, shoreMeters: 0.16, glints: [{ x: -15.5, z: -4.3 }, { x: -4.5, z: -4.5 }], rippleStrength: 0.4, textureBlend: 0.05, },
+  'e2-pressure-garden': { surface: { kind: 'channel-fill', fill: 0.11 }, color: '#d6f0ee', opacity: 0.8, fordSkim: 0.11, deepMeters: 0.5, shoreMeters: 0.15, bed: false, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: -12, z: 4.45 }, { x: 12, z: 4.45 }, { x: 30, z: 4.45 }], rippleStrength: 0.75, textureBlend: 0.04, fordTint: 0.44, shoreFadeMeters: 2.2, surfaceLift: true, overhangMeters: 10, emissive: '#0d2a33', collars: [{ mount: 'garden-pressure-manifold', radius: 2.9 }, { mount: 'water-band-pump-station', radius: 2.6 }], },
 };
 /** Water fades out over the last stretch before the tile edge instead of cutting. */
 const SCULPT_WATER_EDGE_FADE = 7;
 /** U3: contracts whose mounted landmarks get soft contact ellipses. */
-const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim', 'e2-hill-mine', 'e2-trestle']);
+const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim', 'e2-hill-mine', 'e2-trestle', 'e2-pressure-garden']);
 type SpanShadowDressing = { mountId: string; widthScale: number; lengthScale: number; throw: number; opacity: number; color: string };
 const SPAN_SHADOW_CONTRACTS: Record<string, SpanShadowDressing> = {
   'e2-trestle': { mountId: 'trestle-crossing', widthScale: 0.38, lengthScale: 0.48, throw: 0.62, opacity: 0.42, color: '#1d1206' },
@@ -400,6 +412,7 @@ const SUN_MOTES: Record<string, SunMoteDressing> = {
   'the-claim': { color: '#ffd9a2', halfZ: 13, centerZ: 4, minY: 0.4, maxY: 5.0, size: 2.1, seed: 0x1c1a },
   'e2-hill-mine': { color: '#a8794a', halfZ: 17, centerZ: 7, minY: 0.3, maxY: 5.6, size: 2.3, seed: 0x2e57 },
   'e2-trestle': { color: '#c39a68', halfZ: 14, centerZ: 0, minY: 0.2, maxY: 5.6, size: 2.3, seed: 0x3b12 },
+  'e2-pressure-garden': { color: '#c9a279', halfZ: 15, centerZ: 31, minY: 0.9, maxY: 6.4, size: 2.3, seed: 0x2e07 },
 };
 /** U5b is the CLAIM's reward note, not every mote map's: the embers need a claim stake to sit on. */
 const RUSH_EMBER_CONTRACTS = new Set(['the-claim']);
@@ -575,7 +588,7 @@ function preparePanorama(model: THREE.Object3D): void {
  * and the emissive only keeps the paint off the floor.
  */
 const LANDMARK_EMISSIVE_DEFAULT = 3;
-const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5 };
+const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5, 'e2-pressure-garden': 1.45 };
 
 function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
   const dressing = CONTRACT_LANDMARK_DRESSING[contractId]?.[mountId];
@@ -657,6 +670,7 @@ function mountLandmarkContacts(
   mounts: Array<{ id: string; model: THREE.Object3D }>,
   heightAt: (x: number, z: number) => number,
   waterY: number | undefined,
+  bounds: THREE.Box3,
 ): THREE.InstancedMesh | undefined {
   if (isMapBeautyDisabled() || !LANDMARK_CONTACT_CONTRACTS.has(host.contractId) || !mounts.length) return undefined;
   const geometry = new THREE.CircleGeometry(1, 24);
@@ -681,9 +695,15 @@ function mountLandmarkContacts(
   // building is simply covered by the building and never reads.
   const lean = ledgerSunShadowDirection();
   let written = 0;
-  for (const { model } of mounts) {
+  const collared = new Set((SCULPT_WATER_DRESSING[host.contractId]?.collars ?? []).map(({ mount }) => mount));
+  for (const { id, model } of mounts) {
     box.setFromObject(model);
     box.getSize(size);
+    if (
+      model.position.x < bounds.min.x || model.position.x > bounds.max.x ||
+      model.position.z < bounds.min.z || model.position.z > bounds.max.z ||
+      collared.has(id)
+    ) continue;
     const ground = heightAt(model.position.x, model.position.z);
     // No contact shadow on a body standing in water: the riparian pack sits in the
     // channel, and a hard ellipse under the surface reads as a hole, not a shadow.
@@ -850,23 +870,29 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     ? sculptWaterSurfaceY(heightAt, halfX, centerZ, fordHalfWidth, dressing.surface.fill, dressing.fordSkim)
     : sculptWaterFloorY(heightAt, halfX, centerZ, dressing.surface.quantile, dressing.surface.drop);
   const visualHalfWidth = dressing.visualHalfWidth ?? Terrain.visualWaterHalfWidth();
+  const overhang = Math.max(0, dressing.overhangMeters ?? 0);
   const water = createSculptWater({
     ford: false,
     depthTest: true,
     heightAt,
+    bed: dressing.bed,
     deepMeters: dressing.deepMeters,
     shoreMeters: dressing.shoreMeters,
     color: dressing.color,
     opacity: dressing.opacity,
     rippleStrength: dressing.rippleStrength,
     textureBlend: dressing.textureBlend,
+    fordTint: dressing.fordTint,
+    shoreFadeMeters: dressing.shoreFadeMeters,
+    surfaceLift: dressing.surfaceLift,
+    emissive: dressing.emissive,
     centerZ,
     surfaceY,
-    halfLength: halfX,
+    halfLength: halfX + overhang,
     riverHalfWidth,
     visualHalfWidth,
-    lengthHalf: halfX,
-    fadeStart: Math.max(1, halfX - SCULPT_WATER_EDGE_FADE),
+    lengthHalf: halfX + overhang,
+    fadeStart: overhang > 0 ? halfX : Math.max(1, halfX - SCULPT_WATER_EDGE_FADE),
     fordHalfWidth,
     riverDepth: Terrain.waterDepth('river'),
     fordDepth: Terrain.waterDepth('ford'),
@@ -904,6 +930,52 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     : 0);
   host.canvas.dataset.terrain3dPilotSculptWaterDeepest = water.deepestMeters.toFixed(3);
   return water;
+}
+
+/** Foam collars ground water-mounted landmarks without drawing a dark pool under the surface. */
+function mountWaterCollars(
+  host: Host,
+  mounts: ReadonlyArray<{ id: string; model: THREE.Object3D }>,
+  waterY: number | undefined,
+): THREE.InstancedMesh | undefined {
+  const collars = SCULPT_WATER_DRESSING[host.contractId]?.collars;
+  if (isMapBeautyDisabled() || !collars?.length || waterY === undefined) return undefined;
+  const geometry = new THREE.RingGeometry(0.4, 1, 32, 1);
+  const material = new THREE.MeshBasicMaterial({
+    color: '#efe6cd',
+    transparent: true,
+    opacity: 0.14,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending,
+  });
+  const ring = new THREE.InstancedMesh(geometry, material, collars.length);
+  ring.name = 'Terrain3dWaterCollars';
+  ring.userData.renderOnly = true;
+  ring.frustumCulled = false;
+  ring.renderOrder = RenderLayers.groundDecals;
+  const placer = new THREE.Object3D();
+  let written = 0;
+  for (const collar of collars) {
+    const model = mounts.find(({ id }) => id === collar.mount)?.model;
+    if (!model) continue;
+    placer.position.set(model.position.x, waterY + 0.012, model.position.z);
+    placer.rotation.set(-Math.PI / 2, 0, 0);
+    placer.scale.set(collar.radius, collar.radius, 1);
+    placer.updateMatrix();
+    ring.setMatrixAt(written, placer.matrix);
+    written += 1;
+  }
+  ring.count = written;
+  ring.instanceMatrix.needsUpdate = true;
+  if (!written) {
+    geometry.dispose();
+    material.dispose();
+    return undefined;
+  }
+  host.scene.add(ring);
+  host.canvas.dataset.terrain3dPilotWaterCollars = String(written);
+  return ring;
 }
 
 /**
@@ -1031,6 +1103,64 @@ function mountCrossingBreath(host: Host, waterY: number | undefined): CrossingBr
       cart = undefined;
     },
   };
+}
+
+const STEAM_WISP_JOINTS = ['garden-pressure-manifold', 'west-terrace-pipe-header', 'east-terrace-pipe-header'];
+const STEAM_WISP_COUNT = 8;
+const STEAM_WISP_HOT_BOILERS = 2;
+
+/** Pressure Garden steam follows the same hot-boiler count published by its HUD. */
+function mountSteamWisps(
+  host: Host,
+  mounts: ReadonlyArray<{ id: string; model: THREE.Object3D }>,
+): SunMotes[] {
+  if (isMapBeautyDisabled() || host.contractId !== 'e2-pressure-garden' || !host.hotBoilers) return [];
+  const built: SunMotes[] = [];
+  for (const id of STEAM_WISP_JOINTS) {
+    const joint = mounts.find((mount) => mount.id === id)?.model;
+    if (!joint) continue;
+    const base = joint.position.y;
+    const wisps = createSunMotes({
+      count: STEAM_WISP_COUNT,
+      halfX: 1.35,
+      halfZ: 1,
+      centerZ: joint.position.z,
+      minY: base + 1.1,
+      maxY: base + 4.2,
+      drift: new THREE.Vector2(0.18, 0.05),
+      rise: 0.42,
+      color: '#f4f2ec',
+      size: 3.4,
+      seed: 0x71c0 + id.length,
+    });
+    wisps.points.name = `${id}.SteamWisps`;
+    wisps.points.position.x = joint.position.x;
+    wisps.points.visible = false;
+    let lastFrame = -1;
+    let lastAt = 0;
+    wisps.points.onBeforeRender = (renderer) => {
+      const frame = renderer.info.render.frame;
+      if (frame === lastFrame) return;
+      const now = performance.now() / 1000;
+      const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+      lastFrame = frame;
+      lastAt = now;
+      wisps.advance(delta);
+    };
+    host.scene.add(wisps.points);
+    built.push(wisps);
+  }
+  if (!built.length) return built;
+  const poll = () => {
+    if (!built[0]!.points.parent) return;
+    const hot = (host.hotBoilers?.() ?? 0) >= STEAM_WISP_HOT_BOILERS;
+    for (const wisps of built) wisps.points.visible = hot;
+    host.canvas.dataset.terrain3dPilotSteamWisps = hot ? String(built.length * STEAM_WISP_COUNT) : '0';
+    requestAnimationFrame(poll);
+  };
+  requestAnimationFrame(poll);
+  host.canvas.dataset.terrain3dPilotSteamWisps = '0';
+  return built;
 }
 
 /**
@@ -1571,7 +1701,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let sunMotes: SunMotes | undefined;
   let rushEmbers: SunMotes | undefined;
   let steamPlume: SteamPlume | undefined;
+  let steamWisps: SunMotes[] = [];
   let landmarkContacts: THREE.InstancedMesh | undefined;
+  let waterCollars: THREE.InstancedMesh | undefined;
   let spanShadow: THREE.Mesh | undefined;
   let crossingBreath: CrossingBreath | undefined;
   let ponds: SpringPondSurface[] = [];
@@ -1789,9 +1921,19 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
             nextLandmarks.children.map((model) => ({ id: model.name, model })),
             heightAt,
             sculptWater?.mesh.position.y,
+            terrainMetrics.bounds,
           );
         } catch (error) {
           host.canvas.dataset.terrain3dPilotContactShadows = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        }
+        try {
+          waterCollars = mountWaterCollars(
+            host,
+            nextLandmarks.children.map((model) => ({ id: model.name, model })),
+            sculptWater?.mesh.position.y,
+          );
+        } catch (error) {
+          host.canvas.dataset.terrain3dPilotWaterCollars = `failed:${error instanceof Error ? error.message : 'unknown'}`;
         }
         try {
           spanShadow = mountSpanShadow(
@@ -1815,6 +1957,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           steamPlume = mountSteamPlume(host, nextLandmarks.children.map((model) => ({ id: model.name, model })));
         } catch (error) {
           host.canvas.dataset.terrain3dPilotSteam = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        }
+        try {
+          steamWisps = mountSteamWisps(host, nextLandmarks.children.map((model) => ({ id: model.name, model })));
+        } catch (error) {
+          host.canvas.dataset.terrain3dPilotSteamWisps = `failed:${error instanceof Error ? error.message : 'unknown'}`;
         }
         host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'mounted';
         host.canvas.dataset.terrain3dPilotLandmarkEmissive = String(LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT);
@@ -1915,11 +2062,25 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       delete host.canvas.dataset.terrain3dPilotSteam;
       delete host.canvas.dataset.terrain3dPilotSteamAnchors;
     }
+    for (const wisps of steamWisps) {
+      host.scene.remove(wisps.points);
+      wisps.dispose();
+    }
+    if (steamWisps.length) {
+      steamWisps = [];
+      delete host.canvas.dataset.terrain3dPilotSteamWisps;
+    }
     if (landmarkContacts) {
       host.scene.remove(landmarkContacts);
       disposeObject3D(landmarkContacts);
       landmarkContacts = undefined;
       delete host.canvas.dataset.terrain3dPilotContactShadows;
+    }
+    if (waterCollars) {
+      host.scene.remove(waterCollars);
+      disposeObject3D(waterCollars);
+      waterCollars = undefined;
+      delete host.canvas.dataset.terrain3dPilotWaterCollars;
     }
     if (spanShadow) {
       host.scene.remove(spanShadow);
@@ -1976,6 +2137,7 @@ type LandmarkPaint = { intensity: number; tint: string };
  */
 const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
   'e2-trestle': { 'south-boiler-site': { intensity: 1.45, tint: '#d6cfc4' }, 'north-boiler-site': { intensity: 1.45, tint: '#d3ccc4' }, 'mine-spur-kit': { intensity: 1.3, tint: '#e6d6bc' }, },
+  'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 1.3, tint: '#efe0d2' }, 'water-band-pump-station': { intensity: 1.3, tint: '#efe0d2' }, },
   'e1-baron': {
     fortified_far_bank: { intensity: 1.7, tint: '#93a0aa' },
     siege_line: { intensity: 1.9, tint: '#9ba5ab' },

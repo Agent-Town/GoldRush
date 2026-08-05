@@ -1744,6 +1744,7 @@ export class Game {
         nightMode: this.isNightShiftContract(),
         nightLighting: () => this.lightField.snapshot(),
         rushActive: () => this.runManager?.diagnostics.rush === true,
+        hotBoilers: () => this.pressureSystem.diagnostics.objective.hotBoilers,
         detailBudget: () => this.runtimePerformanceVerdict,
         onVisualHeightSourceInstalled: () => this.resampleVisualHeights(),
       });

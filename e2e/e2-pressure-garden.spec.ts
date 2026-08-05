@@ -90,6 +90,31 @@ test('Pressure Garden unlocks after Trestle and teaches the pressure loop', asyn
   const debugBegin = page.getByRole('button', { name: 'Begin' });
   if (await debugBegin.isVisible()) await debugBegin.click();
 
+  await expect.poll(() => page.evaluate(() => {
+    const data = document.querySelector<HTMLCanvasElement>('#game-canvas')?.dataset;
+    return {
+      state: data?.terrain3dPilotState,
+      water: data?.terrain3dPilotSculptWater,
+      halfWidth: data?.terrain3dPilotSculptWaterHalfWidth,
+      glints: data?.terrain3dPilotSculptWaterGlints,
+      collars: data?.terrain3dPilotWaterCollars,
+      contacts: data?.terrain3dPilotContactShadows,
+      motes: data?.terrain3dPilotMotes,
+      landmarks: data?.terrain3dPilotLandmarks,
+      skipped: data?.terrain3dPilotLandmarkSkipped,
+    };
+  })).toEqual({
+    state: 'ready',
+    water: 'living-water-quad',
+    halfWidth: '6.250',
+    glints: '4',
+    collars: '2',
+    contacts: '1',
+    motes: testInfo.project.name === 'mobile-chrome' ? '90' : '200',
+    landmarks: '5',
+    skipped: '0',
+  });
+
   const garden = await page.evaluate(async ({ x, z }) => {
     const terrain = (await Function('return import("/src/world/Terrain.ts")')()) as typeof import('../src/world/Terrain');
     const { Balance } = (await Function('return import("/src/game/Balance.ts")')()) as typeof import('../src/game/Balance');
@@ -132,6 +157,7 @@ test('Pressure Garden unlocks after Trestle and teaches the pressure loop', asyn
     window.__GR_TEST__?.advanceSim(1.2);
   });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressure.objective.hotBoilers)).toBe(3);
+  await expect.poll(() => page.evaluate(() => document.querySelector<HTMLCanvasElement>('#game-canvas')?.dataset.terrain3dPilotSteamWisps)).toBe('24');
   await shot(page, testInfo, 'boilers-hot');
 
   await page.evaluate(() => {

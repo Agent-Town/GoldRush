@@ -66,11 +66,20 @@ type WaterMaterialConfig = {
   color?: string;
   /** Surface opacity. Lower lets a sculpted bed's own darkness ground the water. */
   opacity?: number;
+  /** Light-independent chroma for water under the warm Ledger key light. */
+  emissive?: string;
+  emissiveIntensity?: number;
   /** Blend weight for the procedural canvas map. Narrow ribbons set this to zero: its six fixed
    * horizontal strokes become metre-wide bands when squeezed across a three-metre channel. */
   textureBlend?: number;
   /** Multiplies the sine-ripple contribution without changing flow speed. */
   rippleStrength?: number;
+  /** Strength of the pale ford wash. */
+  fordTint?: number;
+  /** Metres of alpha ramp at the band's outer edge. */
+  shoreFadeMeters?: number;
+  /** Face-on ripple lift; defaults to on when a bed map is present. */
+  surfaceLift?: boolean;
   /**
    * Optional baked bed-depth map (red channel, 0..1 == 0..deepMeters below the
    * surface). Present only for sculpted channels: the painted river floats over
@@ -101,6 +110,8 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     depthWrite: false,
     roughness: config.ford ? 0.58 : 0.36,
     metalness: 0.01,
+    emissive: config.emissive ?? '#000000',
+    emissiveIntensity: config.emissiveIntensity ?? 1,
   });
   material.map = createWaterTexture(config.ford);
   configureWaterMap(material.map);
@@ -122,6 +133,9 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     config.anchors.map((anchor) => `${anchor.x.toFixed(2)},${anchor.z.toFixed(2)}`).join('_') || 'noglints',
     `texture${(config.textureBlend ?? 0.12).toFixed(3)}`,
     `ripple${(config.rippleStrength ?? 1).toFixed(2)}`,
+    `ford${(config.fordTint ?? 0.72).toFixed(3)}`,
+    `shorefade${(config.shoreFadeMeters ?? 0.95).toFixed(3)}`,
+    (config.surfaceLift ?? config.bedDepth !== undefined) ? 'lift' : 'nolift',
     config.bedDepth ? `bed${config.bedDepth.deepMeters.toFixed(3)}_${config.bedDepth.shoreMeters.toFixed(3)}` : 'nobed',
   ].join('-');
   material.onBeforeCompile = (shader) => {
@@ -230,22 +244,22 @@ ${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * wa
   vec3 ford = vec3(0.70, 0.69, 0.50);
   vec3 waterColor = mix(shallow, deep, depth);
   waterColor = mix(waterColor, mid, ripple * rippleAmp * waterQuality);
-  waterColor = mix(waterColor, ford, fordBand * 0.72);
+  waterColor = mix(waterColor, ford, fordBand * ${(config.fordTint ?? 0.72).toFixed(3)});
   waterColor += vec3(0.08, 0.10, 0.08) * fineRipple * waterQuality * (1.0 - fordBand) * 0.22 * ${(config.rippleStrength ?? 1).toFixed(2)};
   waterColor = mix(waterColor, vec3(0.92, 0.84, 0.62), bankFoam * 0.58);
   waterColor += vec3(1.0, 0.72, 0.20) * waterGoldGlints(vWaterWorld) * 0.42;
   waterColor = mix(waterColor, baseTexel.rgb, ${(config.textureBlend ?? 0.12).toFixed(3)});
 ${config.bedDepth ? `  // Sculpt-only. The declared band's foam line sits where the SIM says the bank is;
   // over a carved channel the real edge is wherever the bed comes up, so foam is
-  // driven by measured depth. The ripple is also lifted: at the run camera the
-  // surface is seen almost face-on, where a flat diffuse sheet reads as glass.
+  // driven by measured depth.
   float shoreFoam = (1.0 - smoothstep(waterBedShore * 0.125, waterBedShore * 1.625, bedMetres)) * foamNoise * (0.45 + waterQuality * 0.55);
-  waterColor = mix(waterColor, vec3(0.94, 0.88, 0.70), shoreFoam * 0.5 * (1.0 - fordBand));
+  waterColor = mix(waterColor, vec3(0.94, 0.88, 0.70), shoreFoam * 0.5 * (1.0 - fordBand));` : ''}
+${(config.surfaceLift ?? config.bedDepth !== undefined) ? `  // Lift face-on ripples independently of the bed-depth path.
   waterColor += vec3(0.10, 0.11, 0.08) * pow(ripple, 2.0) * waterQuality * (1.0 - fordBand) * ${(config.rippleStrength ?? 1).toFixed(2)};` : ''}
   float alpha = mix(0.74, 0.94, depth);
-  alpha = mix(alpha, 0.58, fordBand * 0.72);
+  alpha = mix(alpha, 0.58, fordBand * ${(config.fordTint ?? 0.72).toFixed(3)});
   alpha = mix(alpha, 0.72, bankFoam * 0.4);
-  alpha *= smoothstep(0.0, 0.95, visualEdgeDist);
+  alpha *= smoothstep(0.0, ${(config.shoreFadeMeters ?? 0.95).toFixed(3)}, visualEdgeDist);
   alpha *= mix(1.0 - smoothstep(${config.fadeStart.toFixed(3)}, ${config.lengthHalf.toFixed(3)}, abs(vWaterWorld.x)), 1.0, waterFord);
   float fordOverlayFade = smoothstep(0.0, 0.18, vWaterUv.x) * (1.0 - smoothstep(0.82, 1.0, vWaterUv.x));
   alpha *= mix(1.0, fordOverlayFade, waterFord);
@@ -335,8 +349,10 @@ export function createSculptWater(config: SculptWaterConfig & {
   heightAt: (x: number, z: number) => number;
   deepMeters: number;
   shoreMeters: number;
+  /** False for a flat pan that must use the declared band geometry for depth. */
+  bed?: boolean;
 }): SculptWater {
-  const bed = bakeBedDepth(
+  const bed = config.bed === false ? undefined : bakeBedDepth(
     config.heightAt,
     config.surfaceY,
     config.halfLength,
@@ -346,7 +362,7 @@ export function createSculptWater(config: SculptWaterConfig & {
   );
   const material = createLivingWaterMaterial({
     ...config,
-    bedDepth: { map: bed.texture, deepMeters: config.deepMeters, shoreMeters: config.shoreMeters },
+    bedDepth: bed ? { map: bed.texture, deepMeters: config.deepMeters, shoreMeters: config.shoreMeters } : undefined,
   });
   const geometry = new THREE.PlaneGeometry(config.halfLength * 2, config.visualHalfWidth * 2, 1, 1);
   const mesh = new THREE.Mesh(geometry, material);
@@ -361,11 +377,11 @@ export function createSculptWater(config: SculptWaterConfig & {
   mesh.userData.visualHalfWidth = config.visualHalfWidth;
   return {
     mesh,
-    deepestMeters: bed.deepest,
+    deepestMeters: bed?.deepest ?? 0,
     advance: (delta: number) => updateWaterMaterial(mesh, delta),
     dispose: () => {
       geometry.dispose();
-      bed.texture.dispose();
+      bed?.texture.dispose();
       material.map?.dispose();
       material.dispose();
     },
