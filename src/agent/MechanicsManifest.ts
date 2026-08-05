@@ -13,7 +13,7 @@ export type MechanicsManifest = {
     meaning: string;
     cost: number;
     maxCount: number;
-    source: 'twist.pressureEnabled';
+    source: 'twist.pressureEnabled' | 'twist.powerGrid';
   }[];
   interactables: readonly {
     id: string;
@@ -108,6 +108,47 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       bandBoosts: ['boiler_battery'],
     }));
   }
+  const voltageSocket = contract.id === 'e3-blackout-ridge' && twist.powerGrid && twist.dayNightCycle
+    ? { powerGrid: twist.powerGrid, dayNight: twist.dayNightCycle }
+    : undefined;
+  if (voltageSocket) {
+    const producers = voltageSocket.powerGrid.nodes
+      .filter((node) => node.kind === 'producer')
+      .map((node) => `${node.id}:${node.outputWatts}W`)
+      .sort();
+    const consumers = voltageSocket.powerGrid.nodes
+      .filter((node) => node.kind === 'consumer')
+      .map((node) => `${node.id}:${node.role}:${node.drawWatts}W:priority${node.priority}`)
+      .sort();
+    const stores = voltageSocket.powerGrid.nodes
+      .filter((node) => node.kind === 'storage')
+      .map((node) => `${node.id}:${node.capacityWh}Wh:charge${node.chargeWatts}W:discharge${node.dischargeWatts}W`)
+      .sort();
+    rules.push(rule('current_allocation', 'PowerGraphSystem.step', {
+      producers,
+      consumers,
+      connectedBy: 'intact-wires-between-online-nodes',
+      allocationOrder: 'ascending-priority',
+      nodeStates: ['powered', 'browned-out', 'dark'],
+    }));
+    rules.push(rule('current_construction', 'Game.syncContractPowerGrid', {
+      relayBuildable: 'sentry_beacon',
+      pylonSites: (tile.pylonSites ?? []).map(({ id }) => id).sort(),
+      repairOperation: 'REPAIR_UNDER',
+      storageBuildable: 'capacitor_bank',
+      capacitorSites: (tile.capacitorSites ?? []).map(({ id }) => id).sort(),
+    }));
+    rules.push(rule('current_storage', 'PowerGraphSystem.step', { stores }));
+    rules.push(rule('locked_night', 'DayNightCycle.sample', {
+      periodSeconds: voltageSocket.dayNight.periodSeconds,
+      duskRampSeconds: voltageSocket.dayNight.duskRampSeconds,
+      dawnRampSeconds: voltageSocket.dayNight.dawnRampSeconds,
+      nightDepth: voltageSocket.dayNight.nightDepth,
+      minimumDarkness: voltageSocket.dayNight.nightDepth * 0.75,
+      phases: ['dusk', 'dark', 'dawn'],
+      fullLight: false,
+    }));
+  }
   if (practice) {
     const suppressed = Object.entries(practice)
       .filter(([, value]) => value === false)
@@ -127,18 +168,23 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   }
 
   const boilerHouse = twist.pressureEnabled ? getBuildableDef('boiler_house') : undefined;
+  const capacitorBank = voltageSocket ? getBuildableDef('capacitor_bank') : undefined;
+  const buildables = [
+    ...(boilerHouse ? [{ def: boilerHouse, source: 'twist.pressureEnabled' as const }] : []),
+    ...(capacitorBank ? [{ def: capacitorBank, source: 'twist.powerGrid' as const }] : []),
+  ];
   return {
     schema: 'goldrush.mechanics.v1',
     contractId: contract.id,
-    ...(boilerHouse ? {
-      buildables: [{
-        id: boilerHouse.id,
+    ...(buildables.length > 0 ? {
+      buildables: buildables.map(({ def, source }) => ({
+        id: def.id,
         operation: 'BUILD' as const,
-        meaning: buildableBlurb(boilerHouse) ?? '',
-        cost: boilerHouse.costCurve(0),
-        maxCount: boilerHouse.maxCount,
-        source: 'twist.pressureEnabled' as const,
-      }],
+        meaning: buildableBlurb(def) ?? '',
+        cost: def.costCurve(0),
+        maxCount: def.maxCount,
+        source,
+      })),
     } : {}),
     interactables: interactables(contract),
     rules: rules.sort(byId),
