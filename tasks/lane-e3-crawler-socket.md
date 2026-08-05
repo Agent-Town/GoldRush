@@ -27,9 +27,11 @@ Expect **1**. If **0**, step 1 did not take — STOP and report "refresh did not
 
 **STEP 3 — SAFE-DUPE:**
 ```
-grep -c "crawler" src/sim/HeadlessContractSim.ts
+grep -c "CrawlerBossSystem" src/sim/HeadlessContractSim.ts
 ```
 Expect **0**. If **≥1**, a Crawler path is already socketed — STOP and report; do not re-derive.
+
+⚠️ *The obvious probe here — `grep -c "crawler"` — is WRONG, and s1471 only found that out by running its own pre-flight before dispatch. It returns **1** on a perfectly healthy lane, matching `'crawler-drain'` at `HeadlessContractSim.ts:877`, a **power-graph node role** that has nothing to do with socketing the boss. Shipped, it would have STOPped this run on arrival and reported "already socketed" about work that does not exist. Case-sensitive `CrawlerBossSystem` is the discriminating key: measured **0** on main **and** in the refreshed lane at dispatch.*
 
 **STEP 4 — LANE SAFETY:** `git branch --show-current` = `lane/a`. Any dirty *tracked* blob not reachable in git → STOP.
 ⚠️ **FACTORY-CHURN EXCEPTION (F-1407-1 / F-1266-1):** modifications under `logs/**` and `artifacts/**` are the factory's own background churn and are **NOT** lane dirt. Ignore them in step 4; they must never STOP this run.
