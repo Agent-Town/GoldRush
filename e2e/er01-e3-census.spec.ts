@@ -40,7 +40,7 @@ for (const contract of voltage.contracts) {
         const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
         const rig = { ...Balance.sparkRig };
         restoreRig = () => Object.assign(Balance.sparkRig, rig);
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
+        for (const seed of seeds) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
         expect(mechanics.buildables).toBeUndefined();
         expect(mechanics.interactables.flatMap(({ operations }: { operations: string[] }) => operations)).toEqual([]);
         expect(mechanics.rules).toEqual(expect.arrayContaining([
@@ -117,6 +117,65 @@ for (const contract of voltage.contracts) {
         powerGalleries(failed);
         failed.step();
         expect(failed.surface.tools.get_state().outcome.state.canyonConnect).toEqual({ powered: 2, required: 2, byWave: 6, complete: false, failed: true });
+
+        const runCrawler = (seed: string) => {
+          Object.assign(Balance.sparkRig, { damage: 1_000, fireRate: 60, range: 300, boltSpeed: 30, boltLife: 5 });
+          const sim = new HeadlessContractSim({ contractId: contract.id, seed });
+          sim.hero.applyStats(100_000, 1);
+          sim.hero.heal(100_000);
+          powerGalleries(sim);
+          const crawler3dStates = new Set<string>([sim.crawler.diagnostics().crawler3dState]);
+          const step = () => {
+            sim.step();
+            crawler3dStates.add(sim.crawler.diagnostics().crawler3dState);
+          };
+          const stepCrawlerToWave = (target: number) => {
+            const maxTicks = Math.ceil(((target + 1) * Balance.waves.waveInterval) / (1 / 30));
+            for (let tick = 0; sim.waves.diagnostics.wave < target && tick < maxTicks; tick += 1) step();
+            expect(sim.waves.diagnostics.wave).toBe(target);
+          };
+          const killComponent = (id: string) => {
+            const enemy = sim.enemies.all.find((entry: any) => entry.isAlive && entry.variantId === 'dynamo_crawler' && entry.bossComponentId === id);
+            expect(enemy).toBeTruthy();
+            sim.combat.killEnemy(enemy, sim.timeAlive, 'hero');
+            crawler3dStates.add(sim.crawler.diagnostics().crawler3dState);
+            step();
+            return structuredClone(sim.surface.tools.get_state().outcome.state.crawler);
+          };
+
+          stepCrawlerToWave(13);
+          while (sim.waves.diagnostics.wave === 13 && sim.waves.diagnostics.nextWaveInSim > 6) step();
+          Object.assign(Balance.sparkRig, { damage: 0, fireRate: 1 });
+          stepCrawlerToWave(14);
+          const act1 = structuredClone(sim.surface.tools.get_state().outcome.state.crawler);
+          const act2 = killComponent('drain_mast');
+          for (let tick = 0; tick < Math.ceil((Balance.crawler.burstIntervalSeconds + 0.1) / (1 / 30)); tick += 1) step();
+          const burst = structuredClone(sim.surface.tools.get_state().outcome.state.crawler);
+          const tracks = killComponent('tracks');
+          const act3 = killComponent('capacitor_bank');
+          const outcome = sim.outcome();
+          sim.crawler.crawler3dState = act3.crawler3dState === 'lite' ? 'off' : 'lite';
+          const rendererVariantHash = sim.outcome().eventLogHash;
+          return { act1, act2, burst, tracks, act3, outcome, rendererVariantHash, crawler3dStates: [...crawler3dStates] };
+        };
+
+        const crawlerFirst = runCrawler(seeds[0]!);
+        const crawlerSecond = runCrawler(seeds[0]!);
+        expect(crawlerSecond.outcome.eventLogHash).toBe(crawlerFirst.outcome.eventLogHash);
+        expect(crawlerFirst.rendererVariantHash).toBe(crawlerFirst.outcome.eventLogHash);
+        expect(crawlerFirst.act1).toMatchObject({ act: 1, drainActive: true, drainWatts: 18, drainTarget: expect.any(String), destroyed: [] });
+        expect(crawlerFirst.act2).toMatchObject({ act: 2, drainActive: false, destroyed: ['drain_mast'] });
+        expect(crawlerFirst.burst.bursts).toBeGreaterThanOrEqual(1);
+        expect(crawlerFirst.tracks).toMatchObject({ act: 2, tracksPinned: true, destroyed: ['drain_mast', 'tracks'] });
+        expect(crawlerFirst.act3).toMatchObject({
+          act: 3,
+          tracksPinned: true,
+          overchargeRemaining: expect.any(Number),
+          destroyed: ['drain_mast', 'tracks', 'capacitor_bank'],
+        });
+        expect(crawlerFirst.act3.overchargeRemaining).toBeGreaterThan(0);
+        expect(crawlerFirst.crawler3dStates).toEqual([crawlerFirst.act1.crawler3dState]);
+        expect(crawlerFirst.outcome).toMatchObject({ secured: true, waves: 14, calls: 0 });
       } else if (contract.id === 'e3-blackout-ridge') {
         const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
         const rig = { ...Balance.sparkRig };

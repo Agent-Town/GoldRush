@@ -35,6 +35,8 @@ export type CrawlerBossDiagnostics = {
   overchargeRemaining: number;
   turretFireRateMult: number;
   wreckRemains: boolean;
+  destroyed: CrawlerComponentId[];
+  crawler3dState: Crawler3dState;
 };
 
 export type CrawlerBossSuspendSnapshot = Readonly<{
@@ -136,13 +138,17 @@ export class CrawlerBossSystem {
     this.destroyed.add(componentId);
     this.destroyedPositions.set(componentId, position.clone());
     this.advanceActs(at);
-    if (this.destroyed.size === COMPONENT_IDS.length) this.disposeCrawler3d('disposed');
+    if (typeof document !== 'undefined' && this.destroyed.size === COMPONENT_IDS.length) this.syncPresentation(at);
   }
 
   update(at: number): void {
+    this.step(at);
+    this.syncPresentation(at);
+  }
+
+  step(at: number): void {
     this.lastAt = at;
     const components = this.liveComponents();
-    if (components.size > 0) this.ensureCrawler3d();
     if (!this.seenBoss && components.size > 0) {
       this.seenBoss = true;
       this.act = 1;
@@ -154,8 +160,54 @@ export class CrawlerBossSystem {
     }
     this.advanceActs(at);
     if (this.act === 2 && components.has('capacitor_bank')) this.updateBurst(at, components.get('capacitor_bank')!);
-    this.syncPresentation(components, at);
-    if (components.size === 0 && (this.crawler3dState === 'loading' || this.crawler3dState === 'ready')) this.disposeCrawler3d('disposed');
+    const mast = components.get('drain_mast');
+    this.syncDrainTarget(mast ? this.nearestRelay(mast.position) : null);
+  }
+
+  syncPresentation(at: number): void {
+    const components = this.liveComponents();
+    if (!this.seenBoss) return;
+    if (components.size > 0) this.ensureCrawler3d();
+    this.updateCrawler3d(components);
+    const modelMounted = this.crawler3dState === 'ready' && this.crawler3dGroupId !== null;
+    for (const [id, mesh] of this.componentMeshes) {
+      const enemy = components.get(id);
+      mesh.visible = Boolean(enemy) && !modelMounted;
+      if (!enemy) continue;
+      mesh.position.copy(enemy.position);
+      mesh.position.y = Terrain.visualY(enemy.position.x, enemy.position.z, 0);
+    }
+    const mast = components.get('drain_mast');
+    const target = mast && this.drainTarget
+      ? this.powerNodes().find((node) => node.id === this.drainTarget) ?? null
+      : null;
+    this.beam.visible = this.drainActive && Boolean(mast && target);
+    if (mast && target) {
+      const start = new THREE.Vector3(target.x, Terrain.visualY(target.x, target.z, 1.8), target.z);
+      const end = new THREE.Vector3(mast.position.x, Terrain.visualY(mast.position.x, mast.position.z, 3.2), mast.position.z);
+      const middle = start.clone().lerp(end, 0.5);
+      this.placeBeamSegment(this.beamTeal, start, middle);
+      this.placeBeamSegment(this.beamAmber, middle, end);
+    }
+    const capacitor = components.get('capacitor_bank');
+    const dialVisible = this.act === 2 && Boolean(capacitor) && at >= this.nextBurstAt - Balance.crawler.burstDialSeconds;
+    this.dial.visible = dialVisible;
+    if (capacitor) {
+      this.dial.position.set(capacitor.position.x, Terrain.visualY(capacitor.position.x, capacitor.position.z, 2.2), capacitor.position.z);
+      const progress = THREE.MathUtils.clamp(1 - (this.nextBurstAt - at) / Balance.crawler.burstDialSeconds, 0, 1);
+      this.dial.scale.setScalar(0.75 + progress * 0.5);
+      this.dialPointer.rotation.y = -Math.PI * 0.75 + progress * Math.PI * 1.5;
+    }
+    if (this.wreckRemains) {
+      const position = this.destroyedPositions.get('capacitor_bank');
+      if (position) {
+        this.wreck.position.copy(position);
+        this.wreck.position.y = Terrain.visualY(position.x, position.z, 0.8);
+      }
+    }
+    this.wreck.visible = this.wreckRemains;
+    this.publishCrawler3d(components);
+    if (components.size === 0 && this.crawler3dState !== 'disposed') this.disposeCrawler3d('disposed');
   }
 
   get lampIntensityMult(): number {
@@ -205,6 +257,8 @@ export class CrawlerBossSystem {
       overchargeRemaining: Math.max(0, this.overchargeUntil - this.lastAt),
       turretFireRateMult: this.turretFireRateMult,
       wreckRemains: this.wreckRemains,
+      destroyed: COMPONENT_IDS.filter((id) => this.destroyed.has(id)),
+      crawler3dState: this.crawler3dState,
     };
   }
 
@@ -321,10 +375,6 @@ export class CrawlerBossSystem {
     this.stopDrain(at);
     this.overchargeUntil = at + Balance.crawler.overchargeSeconds;
     this.wreckRemains = true;
-    const position = this.destroyedPositions.get('capacitor_bank') ?? new THREE.Vector3();
-    this.wreck.position.copy(position);
-    this.wreck.position.y = Terrain.visualY(position.x, position.z, 0.8);
-    this.wreck.visible = true;
   }
 
   private pinTracks(): void {
@@ -339,39 +389,6 @@ export class CrawlerBossSystem {
     const position = capacitor.position.clone();
     if (this.launchBurst(position, position, Balance.crawler.burstDamage, Balance.crawler.burstRadius)) this.bursts += 1;
     this.nextBurstAt = at + Balance.crawler.burstIntervalSeconds;
-  }
-
-  private syncPresentation(components: ReadonlyMap<CrawlerComponentId, ClaimJumperEnemy>, at: number): void {
-    this.updateCrawler3d(components);
-    const modelMounted = this.crawler3dState === 'ready' && this.crawler3dGroupId !== null;
-    for (const [id, mesh] of this.componentMeshes) {
-      const enemy = components.get(id);
-      mesh.visible = Boolean(enemy) && !modelMounted;
-      if (!enemy) continue;
-      mesh.position.copy(enemy.position);
-      mesh.position.y = Terrain.visualY(enemy.position.x, enemy.position.z, 0);
-    }
-    const mast = components.get('drain_mast');
-    const target = mast ? this.nearestRelay(mast.position) : null;
-    this.syncDrainTarget(target);
-    this.beam.visible = this.drainActive && Boolean(mast && target);
-    if (mast && target) {
-      const start = new THREE.Vector3(target.x, Terrain.visualY(target.x, target.z, 1.8), target.z);
-      const end = new THREE.Vector3(mast.position.x, Terrain.visualY(mast.position.x, mast.position.z, 3.2), mast.position.z);
-      const middle = start.clone().lerp(end, 0.5);
-      this.placeBeamSegment(this.beamTeal, start, middle);
-      this.placeBeamSegment(this.beamAmber, middle, end);
-    }
-    const capacitor = components.get('capacitor_bank');
-    const dialVisible = this.act === 2 && Boolean(capacitor) && at >= this.nextBurstAt - Balance.crawler.burstDialSeconds;
-    this.dial.visible = dialVisible;
-    if (capacitor) {
-      this.dial.position.set(capacitor.position.x, Terrain.visualY(capacitor.position.x, capacitor.position.z, 2.2), capacitor.position.z);
-      const progress = THREE.MathUtils.clamp(1 - (this.nextBurstAt - at) / Balance.crawler.burstDialSeconds, 0, 1);
-      this.dial.scale.setScalar(0.75 + progress * 0.5);
-      this.dialPointer.rotation.y = -Math.PI * 0.75 + progress * Math.PI * 1.5;
-    }
-    this.publishCrawler3d(components);
   }
 
   private ensureCrawler3d(): void {
@@ -489,6 +506,7 @@ export class CrawlerBossSystem {
   }
 
   private publishCrawler3d(components: ReadonlyMap<CrawlerComponentId, ClaimJumperEnemy> = this.liveComponents()): void {
+    if (typeof document === 'undefined') return;
     const canvas = document.querySelector('canvas');
     if (!canvas) return;
     canvas.dataset.crawler3dState = this.crawler3dState;

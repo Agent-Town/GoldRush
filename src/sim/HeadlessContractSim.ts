@@ -26,6 +26,7 @@ import { stableHash } from '../mp/LockstepClient';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
+import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
 import { LightField, type LightSource } from '../systems/LightField';
@@ -49,6 +50,7 @@ const SUPPORTED_CONTRACTS = new Set([
   'e2-incline',
   'e3-blackout-ridge',
   'e3-moth-season',
+  'e3-canyon-works',
 ]);
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
 
@@ -135,6 +137,7 @@ export class HeadlessContractSim {
   private readonly dayNightCycle: DayNightCycle | null;
   private readonly lightField: LightField | null;
   private readonly mothSwarm: MothSwarm | null;
+  private readonly crawler: CrawlerBossSystem | null;
   private readonly waves: WaveSystem;
   private readonly runManager: RunManager;
   private readonly stockpileHoldings: GoldHolding[] = Array.from(
@@ -240,6 +243,14 @@ export class HeadlessContractSim {
     const powerGrid = this.manifest.twist.powerGrid;
     this.powerGraph = powerGrid
       ? new PowerGraphSystem(contractPowerDefinition(this.contractId, powerGrid), powerGrid.maxSpanLength)
+      : null;
+    this.crawler = this.manifest.twist.baron?.variantId === 'dynamo_crawler'
+      ? new CrawlerBossSystem(
+          () => this.enemies.all,
+          () => this.powerGraph?.snapshot().nodes ?? [],
+          (command) => this.powerGraph?.queueCommand(command) === true,
+          (origin, target, damage, radius) => this.combat.launchLob(origin, target, 0.05, damage, radius, 'baron_rocket:-3'),
+        )
       : null;
     this.dayNightCycle = this.manifest.twist.dayNightCycle
       ? new DayNightCycle(this.manifest.twist.dayNightCycle)
@@ -364,6 +375,7 @@ export class HeadlessContractSim {
     if (!this.terminal) throw new Error('Outcome requested before the contract terminated.');
     const waves = this.waves.diagnostics.wave;
     const canyonConnect = this.canyonConnectDiagnostics();
+    const crawler = this.crawler?.diagnostics();
     const base = {
       secured: this.secured,
       waves,
@@ -389,6 +401,7 @@ export class HeadlessContractSim {
         ...(this.powerGraph ? { power: this.powerGraph.snapshot() } : {}),
         ...(this.dayNightSnapshot ? { dayNight: this.dayNightSnapshot } : {}),
         ...(canyonConnect ? { canyonConnect } : {}),
+        ...(crawler ? { crawler: (({ crawler3dState: _, ...simulation }) => simulation)(crawler) } : {}),
       },
     });
     return { ...base, eventLogHash };
@@ -412,6 +425,7 @@ export class HeadlessContractSim {
     this.hero.update(STEP_SECONDS, IDLE_INTENTS, { bounds: Terrain.bounds, sample: Terrain.sample });
     this.combat.setTime(this.timeAlive);
     this.waves.update(this.timeAlive);
+    this.crawler?.step(this.timeAlive);
     this.build.update(
       STEP_SECONDS,
       this.timeAlive,
@@ -491,6 +505,14 @@ export class HeadlessContractSim {
         if (event.type === 'building_damaged') this.buildingHits += 1;
         if (event.type === 'run_secured') this.secured = true;
         if (event.type === 'run_ended' && event.reason !== 'secured') this.dead = true;
+        if (event.type === 'enemy_killed' && event.variantId === 'dynamo_crawler') {
+          const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+          this.crawler?.onComponentKilled(event.bossComponentId, enemy?.position ?? this.hero.group.position, event.at);
+        }
+        if (event.type === 'wave_started') {
+          const baron = this.manifest.twist.baron;
+          this.crawler?.onWaveStarted(event.wave, baron?.variantId === 'dynamo_crawler' ? baron.wave : Number.POSITIVE_INFINITY, event.at);
+        }
         this.replayEvents.push(canonicalEvent(event));
         if (event.type === 'enemy_killed') {
           const baron = this.manifest.twist.baron;
@@ -684,6 +706,7 @@ export class HeadlessContractSim {
       power: this.powerGraph?.snapshot() ?? null,
       dayNight: this.dayNightSnapshot,
       ...(canyonConnect ? { canyonConnect } : {}),
+      crawler: this.crawler?.diagnostics() ?? null,
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,
       kills: this.kills,
