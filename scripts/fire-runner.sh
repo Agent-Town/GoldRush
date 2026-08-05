@@ -9,6 +9,11 @@ cd "$REPO" || exit 1
 mkdir -p logs
 LOG="logs/fire-$(date +%Y%m%d).log"
 
+# FIRE AUTH (owner-minted subscription token, 2026-08-05): launchd cannot unlock the keychain
+# the interactive CLI uses, so headless fires authenticate via CLAUDE_CODE_OAUTH_TOKEN from
+# .env.local (chmod 600; same file deploy.sh already sources for CF). Never echo values here.
+if [ -f "$REPO/.env.local" ]; then set -a; . "$REPO/.env.local"; set +a; fi
+
 # single instance (stale after 50 min = crashed fire, reap it)
 if ! mkdir "$LOCKDIR" 2>/dev/null; then
   if [ -n "$(find "$LOCKDIR" -maxdepth 0 -mmin +50 2>/dev/null)" ]; then
