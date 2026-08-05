@@ -5149,6 +5149,22 @@
               "title": "AP-06d The Field Book — model×contract×cost matrix + optional token self-declaration",
               "status": "merged",
               "mergeHash": "ba78dad5efba7fb9a72a084ed09bf5714800584d"
+            },
+            {
+              "id": "er-01-e2-census",
+              "title": "ER-01 E2 readiness census — admit the Steamworks board contracts to the headless sim, pin bench seeds, publish the census table",
+              "taskFile": "lane-er01-e2-census.md",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE HOLD, NOT AN OWNER GATE — no owner word is owed and none will lift this. Registered s1458 (the leaf never existed; drain-block-check returned UNKNOWN and F-1458-3 records the Goal Registration debt). The s1458 drain REFUSED the merge of lane/b tip ecee66cd on F-1458-1: the slice census substance is sound and fully gated GREEN (tsc rc=0, build green, and all 8 census instances pass once the console channel is corrected), but e2e/er01-e2-census.spec.ts fails 8/8 under the plain house playwright command on the .nvmrc-pinned Node 26.4.0, because its zero-console assertion captures Node own default warning handler output. That is a NEW failure, not a documented known-red, so drain SKILL 44 fails the drain. LIFT THIS by draining the corrective f1458-1-er01-census-console-capture and then re-gating this slice; the merge and the leaf flip move together (F-1384-1, two commits, one fire). Evidence: reviews/er01-e2-census.md.",
+              "reason": "FIRE-AUTHORED leaf registration s1458. Runner report was honest and its green was real in ITS shell (Node 23.11.1, off the repo pin) — see F-1458-2, which is the reusable half and is an OWNER question about aligning the runner onto .nvmrc."
+            },
+            {
+              "id": "f1458-1-er01-census-console-capture",
+              "title": "F-1458-1 corrective: the ER-01 census spec zero-console assertion captures Node process warnings, so it reds 8/8 on the pinned interpreter",
+              "taskFile": "f1458-1-er01-census-console-capture.md",
+              "status": "queued",
+              "reason": "FIRE-AUTHORED s1458 from the s1458 drain refusal (reviews/er01-e2-census.md F-1458-1). Diagnosis and a cure measured 8/8 GREEN under the plain house command are both recorded before dispatch (artifacts/f1458-1/er01-console-capture-cure.patch), and the FAILED cure is recorded too so the runner cannot re-derive the dead end: stubbing globalThis.localStorage leaves it still 8/8 red because the triggering read happens inside the vite-SSR module graph. The master deliberately does NOT pre-decide between suppress-all-warnings and filter-one-warning — that trade weakens the gate either way and the runner must justify its pick, which is exactly why this is a corrective rather than a drain-time drive-by."
             }
           ]
         }
