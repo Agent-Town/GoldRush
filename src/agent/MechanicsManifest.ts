@@ -13,7 +13,7 @@ export type MechanicsManifest = {
     meaning: string;
     cost: number;
     maxCount: number;
-    source: 'twist.pressureEnabled' | 'twist.powerGrid';
+    source: 'twist.pressureEnabled' | 'twist.powerGrid' | 'twist.mothSeason';
   }[];
   interactables: readonly {
     id: string;
@@ -108,8 +108,8 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       bandBoosts: ['boiler_battery'],
     }));
   }
-  const voltageSocket = contract.id === 'e3-blackout-ridge' && twist.powerGrid && twist.dayNightCycle
-    ? { powerGrid: twist.powerGrid, dayNight: twist.dayNightCycle }
+  const voltageSocket = contract.id === 'e3-blackout-ridge' && twist.powerGrid
+    ? { powerGrid: twist.powerGrid }
     : undefined;
   if (voltageSocket) {
     const producers = voltageSocket.powerGrid.nodes
@@ -139,12 +139,43 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       capacitorSites: (tile.capacitorSites ?? []).map(({ id }) => id).sort(),
     }));
     rules.push(rule('current_storage', 'PowerGraphSystem.step', { stores }));
+  }
+  const mothSocket = contract.id === 'e3-moth-season' && twist.mothSeason
+    ? twist.mothSeason
+    : undefined;
+  if (mothSocket) {
+    rules.push(rule('moth_attachment', 'MothSwarm.update+dimSources', {
+      damageTarget: 'decoy_shed',
+      damagePerAttachedPerSecond: mothSocket.attachDamagePerSecond,
+      radiusLossPerAttached: 0.3,
+      minimumRadiusMultiplier: 0.35,
+    }));
+    rules.push(rule('moth_targeting', 'MothSwarm.update', {
+      score: 'coverageAt(source.x,source.z) * source.radius * radiusWeight * (source.targetWeight ?? 1)',
+      radiusWeight: mothSocket.radiusWeight,
+      defaultTargetWeight: 1,
+      decoyTargetWeight: mothSocket.decoyWeight,
+      selection: 'highest-score',
+      tieBreak: 'ascending-source-id',
+    }));
+    rules.push(rule('moth_wave', 'Game.spawnMothSeasonWave', {
+      lightKinds: ['lantern', 'powered-lamp'],
+      mothsPerLightPerWave: mothSocket.mothsPerLightPerWave,
+      minimumMoths: 2,
+      minimumDarkness: 0.5,
+      count: 'max(2,floor(max(1,lightSources)*mothsPerLightPerWave))',
+    }));
+  }
+  const dayNightSocket = (contract.id === 'e3-blackout-ridge' || contract.id === 'e3-moth-season')
+    ? twist.dayNightCycle
+    : undefined;
+  if (dayNightSocket?.nightLocked) {
     rules.push(rule('locked_night', 'DayNightCycle.sample', {
-      periodSeconds: voltageSocket.dayNight.periodSeconds,
-      duskRampSeconds: voltageSocket.dayNight.duskRampSeconds,
-      dawnRampSeconds: voltageSocket.dayNight.dawnRampSeconds,
-      nightDepth: voltageSocket.dayNight.nightDepth,
-      minimumDarkness: voltageSocket.dayNight.nightDepth * 0.75,
+      periodSeconds: dayNightSocket.periodSeconds,
+      duskRampSeconds: dayNightSocket.duskRampSeconds,
+      dawnRampSeconds: dayNightSocket.dawnRampSeconds,
+      nightDepth: dayNightSocket.nightDepth,
+      minimumDarkness: dayNightSocket.nightDepth * 0.75,
       phases: ['dusk', 'dark', 'dawn'],
       fullLight: false,
     }));
@@ -169,18 +200,30 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
 
   const boilerHouse = twist.pressureEnabled ? getBuildableDef('boiler_house') : undefined;
   const capacitorBank = voltageSocket ? getBuildableDef('capacitor_bank') : undefined;
+  const lanternPost = mothSocket ? getBuildableDef('lantern_post') : undefined;
+  const decoyShed = mothSocket ? getBuildableDef('decoy_shed') : undefined;
   const buildables = [
     ...(boilerHouse ? [{ def: boilerHouse, source: 'twist.pressureEnabled' as const }] : []),
     ...(capacitorBank ? [{ def: capacitorBank, source: 'twist.powerGrid' as const }] : []),
+    ...(lanternPost ? [{
+      def: lanternPost,
+      source: 'twist.mothSeason' as const,
+      meaning: `Light radius ${Balance.contracts.nightShift.lanternPostLightRadius}; moth target score is coverage x radius x ${mothSocket!.radiusWeight}.`,
+    }] : []),
+    ...(decoyShed ? [{
+      def: decoyShed,
+      source: 'twist.mothSeason' as const,
+      meaning: `Light radius ${Balance.decoyShed.lightRadius} with target weight ${mothSocket!.decoyWeight}; takes ${mothSocket!.attachDamagePerSecond} damage per attached swarm each second.`,
+    }] : []),
   ];
   return {
     schema: 'goldrush.mechanics.v1',
     contractId: contract.id,
     ...(buildables.length > 0 ? {
-      buildables: buildables.map(({ def, source }) => ({
+      buildables: buildables.map(({ def, source, meaning }) => ({
         id: def.id,
         operation: 'BUILD' as const,
-        meaning: buildableBlurb(def) ?? '',
+        meaning: meaning ?? buildableBlurb(def) ?? '',
         cost: def.costCurve(0),
         maxCount: def.maxCount,
         source,
