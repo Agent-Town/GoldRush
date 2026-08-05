@@ -4,7 +4,6 @@ import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json
 import voltage from '../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 
 const SOCKET_GAPS: Record<string, readonly string[]> = {
-  'e3-canyon-works': ['dayNightCycle', 'mothSeason', 'powerGrid'],
   'e3-fairground': ['dayNightCycle', 'fairground', 'powerGrid'],
 };
 
@@ -37,7 +36,88 @@ for (const contract of voltage.contracts) {
       const sources = mechanics.rules.map(({ source }: { source: string }) => source);
 
       expect(seeds).toHaveLength(2);
-      if (contract.id === 'e3-blackout-ridge') {
+      if (contract.id === 'e3-canyon-works') {
+        const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
+        const rig = { ...Balance.sparkRig };
+        restoreRig = () => Object.assign(Balance.sparkRig, rig);
+        expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
+        expect(mechanics.buildables).toBeUndefined();
+        expect(mechanics.interactables.flatMap(({ operations }: { operations: string[] }) => operations)).toEqual([]);
+        expect(mechanics.rules).toEqual(expect.arrayContaining([
+          {
+            id: 'connect_objective',
+            source: 'Game.syncCanyonConnectObjective',
+            data: {
+              consumerRole: 'gallery',
+              poweredState: 'powered',
+              required: 2,
+              byWave: 6,
+              completionLatch: 'one-way-at-or-before-deadline',
+              failureLatch: 'one-way-after-deadline',
+              missedDeadline: 'run-unsecurable',
+            },
+          },
+          {
+            id: 'darkness_cycle',
+            source: 'Game.nightShiftLightingState',
+            data: {
+              duskWave: 4,
+              darkWave: 8,
+              nightDepth: 1,
+              phases: ['full', 'dusk', 'dark'],
+              progression: 'clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)',
+              returnsToFull: false,
+            },
+          },
+        ]));
+
+        Object.assign(Balance.sparkRig, { damage: 1_000, fireRate: 60, range: 300, boltSpeed: 30, boltLife: 5 });
+        const stepToWave = (sim: any, target: number) => {
+          const maxTicks = Math.ceil(((target + 1) * Balance.waves.waveInterval) / (1 / 30));
+          for (let tick = 0; sim.waves.diagnostics.wave < target && tick < maxTicks; tick += 1) sim.step();
+          expect(sim.waves.diagnostics.wave).toBe(target);
+          return structuredClone(sim.dayNightSnapshot);
+        };
+        const powerGalleries = (sim: any) => {
+          expect(contract.tileParams.pylonSites).toHaveLength(6);
+          for (const site of contract.tileParams.pylonSites ?? []) {
+            expect(sim.build.placeFree('sentry_beacon', site, 0)).toBe(true);
+          }
+        };
+        const runPowered = (seed: string) => {
+          const sim = new HeadlessContractSim({ contractId: contract.id, seed, mode: 'escort' });
+          sim.hero.applyStats(100_000, 1);
+          sim.hero.heal(100_000);
+          powerGalleries(sim);
+          const darkness = new Map<number, any>([[0, structuredClone(sim.dayNightSnapshot)]]);
+          for (const wave of [3, 4, 6, 8, 12]) darkness.set(wave, stepToWave(sim, wave));
+          const state = sim.surface.tools.get_state().outcome.state;
+          sim.postHeroDeath();
+          return { darkness, state, outcome: sim.outcome() };
+        };
+
+        const first = runPowered(seeds[0]!);
+        const second = runPowered(seeds[0]!);
+        expect(second.outcome.eventLogHash).toBe(first.outcome.eventLogHash);
+        expect(first.outcome).toMatchObject({ secured: false, waves: 12, calls: 0 });
+        expect(first.darkness.get(3)).toMatchObject({ phase: 'full', darkness: 0, phaseProgress: 0, cycleProgress: 0, cycle: 0 });
+        expect(first.darkness.get(4)).toMatchObject({ phase: 'dusk', darkness: 0, phaseProgress: 0, cycleProgress: 0, cycle: 0 });
+        expect(first.darkness.get(6)).toMatchObject({ phase: 'dusk', darkness: 0.5, phaseProgress: 0.5, cycleProgress: 0.5, cycle: 0 });
+        expect(first.darkness.get(8)).toMatchObject({ phase: 'dark', darkness: 1, phaseProgress: 1, cycleProgress: 1, cycle: 0 });
+        expect(first.darkness.get(12)).toMatchObject({ phase: 'dark', darkness: 1, phaseProgress: 1, cycleProgress: 1, cycle: 0 });
+        expect(first.state.canyonConnect).toEqual({ powered: 2, required: 2, byWave: 6, complete: true, failed: false });
+
+        const failed = new HeadlessContractSim({ contractId: contract.id, seed: seeds[1]!, mode: 'escort' });
+        failed.hero.applyStats(100_000, 1);
+        failed.hero.heal(100_000);
+        stepToWave(failed, 6);
+        expect(failed.surface.tools.get_state().outcome.state.canyonConnect).toEqual({ powered: 0, required: 2, byWave: 6, complete: false, failed: false });
+        stepToWave(failed, 7);
+        expect(failed.surface.tools.get_state().outcome.state.canyonConnect).toEqual({ powered: 0, required: 2, byWave: 6, complete: false, failed: true });
+        powerGalleries(failed);
+        failed.step();
+        expect(failed.surface.tools.get_state().outcome.state.canyonConnect).toEqual({ powered: 2, required: 2, byWave: 6, complete: false, failed: true });
+      } else if (contract.id === 'e3-blackout-ridge') {
         const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
         const rig = { ...Balance.sparkRig };
         restoreRig = () => Object.assign(Balance.sparkRig, rig);

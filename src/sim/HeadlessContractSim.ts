@@ -169,6 +169,8 @@ export class HeadlessContractSim {
   private baronRocketTelegraphAt = -1;
   private baronRocketVolleys = 0;
   private readonly baronRocketTarget = new THREE.Vector3();
+  private canyonConnectCompletedByDeadline = false;
+  private canyonConnectFailed = false;
 
   constructor(readonly boot: HeadlessContractBoot) {
     this.contractId = boot.contractId;
@@ -309,7 +311,8 @@ export class HeadlessContractSim {
         waveSystem: this.waves,
         activeContract: this.manifest,
         secureWaveForRun: () => this.manifest.twist.secureWave ?? Balance.run.secureWave,
-        autoSecureWaveForRun: () => this.manifest.twist.baron && !this.baronBeaten
+        autoSecureWaveForRun: () => (this.manifest.twist.baron && !this.baronBeaten)
+          || (this.manifest.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -360,6 +363,7 @@ export class HeadlessContractSim {
   outcome(): GrSimOutcome {
     if (!this.terminal) throw new Error('Outcome requested before the contract terminated.');
     const waves = this.waves.diagnostics.wave;
+    const canyonConnect = this.canyonConnectDiagnostics();
     const base = {
       secured: this.secured,
       waves,
@@ -384,6 +388,7 @@ export class HeadlessContractSim {
         buildings: this.build.diagnostics.hp,
         ...(this.powerGraph ? { power: this.powerGraph.snapshot() } : {}),
         ...(this.dayNightSnapshot ? { dayNight: this.dayNightSnapshot } : {}),
+        ...(canyonConnect ? { canyonConnect } : {}),
       },
     });
     return { ...base, eventLogHash };
@@ -418,6 +423,7 @@ export class HeadlessContractSim {
     this.pressure.update(STEP_SECONDS, this.timeAlive, [this.hero.group.position], this.waves.diagnostics.wave);
     this.syncContractPowerGrid();
     this.powerGraph?.step(this.simTick);
+    this.syncCanyonConnectObjective();
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
     this.enemies.update(STEP_SECONDS, this.hero.group.position, (enemy) => {
@@ -439,7 +445,7 @@ export class HeadlessContractSim {
     this.updateBaronRocketVolley();
     this.combat.update(STEP_SECONDS, this.timeAlive);
     this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
-    this.dayNightSnapshot = this.dayNightCycle?.sample(this.timeAlive) ?? null;
+    this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncMothLightState();
     observeStandingOrders();
   }
@@ -515,7 +521,9 @@ export class HeadlessContractSim {
     const baron = this.manifest.twist.baron;
     if (!baron || this.baronBeaten) return;
     this.baronBeaten = true;
-    const secured = this.runManager.diagnostics.secured || this.runManager.secureCurrentRun(this.waves.diagnostics.wave);
+    const objectiveAllowsSecure = !this.manifest.twist.powerGrid || this.canyonConnectCompletedByDeadline;
+    const secured = this.runManager.diagnostics.secured
+      || (objectiveAllowsSecure && this.runManager.secureCurrentRun(this.waves.diagnostics.wave));
     if (!secured) {
       this.baronBeaten = false;
       return;
@@ -643,6 +651,7 @@ export class HeadlessContractSim {
   private diagnostics(): unknown {
     const wave = this.waves.diagnostics;
     const orders = snapshotStandingOrders();
+    const canyonConnect = this.canyonConnectDiagnostics();
     return {
       contract: {
         activeId: this.manifest.id,
@@ -674,6 +683,7 @@ export class HeadlessContractSim {
       pressure: this.pressure.diagnostics,
       power: this.powerGraph?.snapshot() ?? null,
       dayNight: this.dayNightSnapshot,
+      ...(canyonConnect ? { canyonConnect } : {}),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,
       kills: this.kills,
@@ -724,6 +734,42 @@ export class HeadlessContractSim {
         graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
       }
     }
+  }
+
+  private canyonConnectDiagnostics(): null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean } {
+    const grid = this.manifest.twist.powerGrid;
+    if (!grid?.connect || !this.powerGraph) return null;
+    const galleries = new Set(grid.nodes.filter((node) => node.kind === 'consumer' && node.role === 'gallery').map((node) => node.id));
+    const powered = this.powerGraph.snapshot().nodes.filter((node) => galleries.has(node.id) && node.state === 'powered').length;
+    return {
+      powered,
+      required: grid.connect.required,
+      byWave: grid.connect.byWave,
+      complete: this.canyonConnectCompletedByDeadline,
+      failed: this.canyonConnectFailed,
+    };
+  }
+
+  private syncCanyonConnectObjective(): void {
+    const connect = this.canyonConnectDiagnostics();
+    if (!connect) return;
+    const wave = this.waves.diagnostics.wave;
+    if (!this.canyonConnectCompletedByDeadline && !this.canyonConnectFailed && wave <= connect.byWave && connect.powered >= connect.required) {
+      this.canyonConnectCompletedByDeadline = true;
+    }
+    if (!this.canyonConnectCompletedByDeadline && wave > connect.byWave) this.canyonConnectFailed = true;
+  }
+
+  private sampleDayNightSnapshot(): DayNightSnapshot | null {
+    const cycle = this.manifest.twist.dayNightCycle;
+    const waveSchedule = cycle?.waveSchedule;
+    if (!waveSchedule) return this.dayNightCycle?.sample(this.timeAlive) ?? null;
+    const wave = this.waves.diagnostics.wave;
+    const span = Math.max(1, waveSchedule.darkWave - waveSchedule.duskWave);
+    const progress = Math.max(0, Math.min(1, (wave - waveSchedule.duskWave) / span));
+    const phase = wave < waveSchedule.duskWave ? 'full' : wave < waveSchedule.darkWave ? 'dusk' : 'dark';
+    const darkness = phase === 'full' ? 0 : progress * cycle.nightDepth;
+    return { phase, darkness, phaseProgress: progress, cycleProgress: progress, cycle: 0, simTime: this.timeAlive };
   }
 
   private spawnMothSeasonWave(wave: number): void {

@@ -65,7 +65,17 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   if (twist.seamYieldMult !== undefined) {
     rules.push(rule('seam_yield_multiplier', 'twist.seamYieldMult', { multiplier: twist.seamYieldMult }));
   }
-  if (twist.lightRamp) {
+  const waveSchedule = twist.dayNightCycle?.waveSchedule;
+  if (waveSchedule) {
+    rules.push(rule('darkness_cycle', 'Game.nightShiftLightingState', {
+      duskWave: waveSchedule.duskWave,
+      darkWave: waveSchedule.darkWave,
+      nightDepth: twist.dayNightCycle!.nightDepth,
+      phases: ['full', 'dusk', 'dark'],
+      progression: 'clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)',
+      returnsToFull: false,
+    }));
+  } else if (twist.lightRamp) {
     rules.push(rule('darkness_cycle', 'twist.lightRamp', {
       duskWave: twist.lightRamp.duskWave,
       darkWave: twist.lightRamp.darkWave,
@@ -139,6 +149,17 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       capacitorSites: (tile.capacitorSites ?? []).map(({ id }) => id).sort(),
     }));
     rules.push(rule('current_storage', 'PowerGraphSystem.step', { stores }));
+  }
+  if (twist.powerGrid?.connect) {
+    rules.push(rule('connect_objective', 'Game.syncCanyonConnectObjective', {
+      consumerRole: 'gallery',
+      poweredState: 'powered',
+      required: twist.powerGrid.connect.required,
+      byWave: twist.powerGrid.connect.byWave,
+      completionLatch: 'one-way-at-or-before-deadline',
+      failureLatch: 'one-way-after-deadline',
+      missedDeadline: 'run-unsecurable',
+    }));
   }
   const mothSocket = contract.id === 'e3-moth-season' && twist.mothSeason
     ? twist.mothSeason
