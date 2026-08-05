@@ -4486,8 +4486,11 @@
             },
             {
               "id": "beauty2-e2-incline",
-              "title": "E2 Incline beauty — committed on branch, drain pending (fires)",
-              "status": "building"
+              "title": "E2 Incline beauty — re-landed and MERGED s1459 (ladder 3, final rung of the re-land set)",
+              "status": "merged",
+              "taskFile": "lane-e2-incline-reland.md",
+              "mergeHash": "fa5ed7cae87aa01418aefb81702002b76733f1c3",
+              "reason": "Ladder 3 and LAST of the Mistake #15 re-land set, merged s1459. 4 of 5 upgrades KEPT; U5 PARTIAL and frame p95 UNMEASURED — the review reports both as unmeasured rather than passed (F-BI-6, non-blocking). taskFile added this drain: the leaf existed but carried none, so drain-block-check.mjs (which keys on taskFile) returned UNKNOWN for it — F-1459-1."
             }
           ]
         }
