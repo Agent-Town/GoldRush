@@ -3819,6 +3819,13 @@
               "status": "merged",
               "mergeHash": "1a2871fd310b5bfd1f6ea085ce9d8a7a4b36272d",
               "notes": "Drained s1466. Lane tip 79826160. Gates on the merged tree (detached worktree gate-s1466, fire shell, --workers=1): tsc clean, build green, test:node-guards rc=0 with nul-audit CLEAN running as the final leaf, and the slice's only consumer e2e/perf-r2-census.rig.ts 2 passed desktop + 390px at a 240s timeout (67.8s wall). THE RIG'S 2 FAILED AT THE CONFIG'S 30s DEFAULT IS THE FIRE SHELL'S CPU CEILING, NOT THE SLICE: a control run with src/game/Game.ts ALONE reverted to pre-cure failed IDENTICALLY (F-1269-1 / F-1440-2). Runtime proven unmoved — both cure sites byte-identical (6100620063, 610062). nul-audit on main post-merge: 3 raw NULs -> 0. F-1466-1 FILED AGAINST F-1465-1'S SCOPE CLAIM (not its cure): the blindness is Claude Code's grep SHADOW passing -I (ignore binary files) to an embedded ugrep (shell snapshot :4721-:4730), not grep itself. /usr/bin/grep — the only grep on the box — reads the pre-cure file at 134, so Codex and the lane shell were NEVER affected, contrary to the s1465 record. Review: reviews/f1465-1-nul-delimiters.md"
+            },
+            {
+              "id": "e3-voltage-socket",
+              "title": "E3 Voltage socket — make current + locked night agent-visible for Blackout Ridge (cures F-ER01-E3-1)",
+              "taskFile": "lane-e3-voltage-socket.md",
+              "status": "queued",
+              "notes": "FIRE-AUTHORED s1466 from merged evidence: docs/bench/e3-readiness-census.md F-ER01-E3-1 (merged 0c4168a2) plus the ERA-SOCKET template tasks/lane-e2-pressure-socket.md, authored by fire s1460 and drained clean at 24c6600f (review reviews/e2-pressure-socket.md). Scoped to e3-blackout-ridge ONLY — its twist is secureWave/dayNightCycle/powerGrid/enemyRoster (verified s1466), so F-ER01-E3-2 (MothSwarm), -E3-3 (Canyon Works crawler/tram/baron/lightRamp) and -E3-4 (Fairground + its missing crowd objective) firewall out cleanly. Paths verified before authoring: the class is PowerGraphSystem at src/systems/PowerGraph.ts:193 — the file is PowerGraph.ts, NOT PowerGraphSystem.ts, which is exactly the kind of miss that STOPs a runner. Pre-flight puts the lane refresh as unconditional STEP 1 and the currency probe as STEP 2 (F-1465-2), carries the FACTORY-CHURN EXCEPTION (F-1407-1/F-1266-1), and its citation key was proved to return exactly 1 on main before being written down (F-1425-2). Census \"attended fix master\" phrasing verified s1466 to be boilerplate a fire has already lawfully overridden on E2, not an owner gate."
             }
           ]
         }
