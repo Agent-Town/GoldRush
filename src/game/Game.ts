@@ -1746,6 +1746,10 @@ export class Game {
         rushActive: () => this.runManager?.diagnostics.rush === true,
         hotBoilers: () => this.pressureSystem.diagnostics.objective.hotBoilers,
         detailBudget: () => this.runtimePerformanceVerdict,
+        haulCart: () => {
+          const cart = this.waveSystem.escortDiagnostics;
+          return cart.enabled && cart.active ? { x: cart.x, z: cart.z, moving: cart.state === 'moving' } : undefined;
+        },
         onVisualHeightSourceInstalled: () => this.resampleVisualHeights(),
       });
     });

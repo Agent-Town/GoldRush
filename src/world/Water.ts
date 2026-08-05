@@ -52,6 +52,8 @@ type WaterMaterialConfig = {
   wadeDepth: number;
   deepDepth: number;
   anchors: Array<{ x: number; z: number }>;
+  /** World-X centres of every declared ford. Omitted preserves the shipped origin crossing. */
+  fordCenters?: readonly number[];
   /**
    * The painted river floats over flat ground, so it ships with depth testing OFF.
    * A surface laid into a sculpted channel needs it ON or it paints straight over
@@ -128,6 +130,7 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     config.visualHalfWidth.toFixed(3),
     config.riverHalfWidth.toFixed(3),
     config.fordHalfWidth.toFixed(3),
+    (config.fordCenters ?? [0]).map((center) => center.toFixed(2)).join('|'),
     config.fadeStart.toFixed(3),
     config.lengthHalf.toFixed(3),
     config.anchors.map((anchor) => `${anchor.x.toFixed(2)},${anchor.z.toFixed(2)}`).join('_') || 'noglints',
@@ -218,7 +221,7 @@ float waterNoise(vec2 p) {
   float riverAcross = mix((vWaterUv.y - 0.5) * ${(config.visualHalfWidth * 2).toFixed(3)}, vWaterWorld.y, waterFord);
   float visualEdgeDist = max(0.0, ${config.visualHalfWidth.toFixed(3)} - abs(riverAcross));
   float riverDist = max(0.0, ${config.riverHalfWidth.toFixed(3)} - abs(riverAcross));
-  float fordBand = max(waterFord, 1.0 - smoothstep(${config.fordHalfWidth.toFixed(3)}, ${(config.fordHalfWidth + 0.9).toFixed(3)}, abs(vWaterWorld.x)));
+  float fordBand = max(waterFord, ${fordBandExpression(config.fordCenters ?? [0], config.fordHalfWidth)});
   float channelDepth = mix(waterWadeDepth * 0.5, waterRiverDepth, smoothstep(0.05, ${config.riverHalfWidth.toFixed(3)}, riverDist));
   float declaredDepth = mix(channelDepth, waterFordDepth, fordBand);
   float depth = smoothstep(max(0.001, waterWadeDepth), max(waterWadeDepth + 0.001, waterDeepDepth), declaredDepth);
@@ -517,6 +520,17 @@ function glintShaderLines(anchors: Array<{ x: number; z: number }>): string {
       return `  glint += waterGlint(world, vec2(${anchor.x.toFixed(3)}, ${anchor.z.toFixed(3)}), waterTime * 1.65 + ${phase});`;
     })
     .join('\n');
+}
+
+/** Fold every declared crossing into one non-additive shader band. */
+function fordBandExpression(centers: readonly number[], halfWidth: number): string {
+  const near = halfWidth.toFixed(3);
+  const far = (halfWidth + 0.9).toFixed(3);
+  const terms = (centers.length ? centers : [0]).map((center) => {
+    const across = center === 0 ? 'abs(vWaterWorld.x)' : `abs(vWaterWorld.x - ${center.toFixed(3)})`;
+    return `1.0 - smoothstep(${near}, ${far}, ${across})`;
+  });
+  return terms.length === 1 ? terms[0]! : terms.map((term) => `(${term})`).reduce((left, right) => `max(${left}, ${right})`);
 }
 
 function configureWaterMap(texture: THREE.Texture): void {
