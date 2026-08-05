@@ -1,7 +1,8 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { verifyAndWriteRendererCounts } from './renderer-count-artifact';
 
 const QUERY = '/?debug&epoch=epoch-3-voltage&contract=e3-canyon-works&nolevel&nopause&seed=wire-crawler-3d';
 const ARTIFACT_DIR = path.resolve('artifacts/wire-crawler-3d');
@@ -143,8 +144,13 @@ test('mounts the Crawler GLB, flips all three damage morphs, and disposes on kil
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.renderer.geometries)).toBe(presentationBaseline.geometries);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.renderer.textures)).toBeLessThanOrEqual(presentationBaseline.textures);
   const disposed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.renderer);
-  await mkdir(ARTIFACT_DIR, { recursive: true });
-  await writeFile(path.join(ARTIFACT_DIR, `renderer-counts-${testInfo.project.name}.json`), `${JSON.stringify({ coldBaseline: baseline, mounted, loadedBeforeKill, presentationBaseline, disposed }, null, 2)}\n`);
+  await verifyAndWriteRendererCounts(path.join(ARTIFACT_DIR, `renderer-counts-${testInfo.project.name}.json`), {
+    coldBaseline: baseline,
+    mounted,
+    loadedBeforeKill,
+    presentationBaseline,
+    disposed,
+  });
   await shot(page, testInfo, 'post-kill-baseline');
   expect(errors).toEqual([]);
 });
