@@ -8,6 +8,8 @@ ROLE: implementer on lane-b. WORKDIR: worktrees/lane-b (branch lane/b). Commit p
 
 PRE-FLIGHT: `git branch --show-current` = `lane/b`. ⚠️ **THIS LANE DELIBERATELY HOLDS UNMERGED WORK — DO NOT RESET IT.** `lane/b` sits ahead of main at `ecee66cd` (the ER-01 census, refused by the s1458 drain for the defect this task cures). **Do NOT run `git checkout -B lane/b origin/main`** — that would destroy the very slice you are fixing (CLAUDE.md Mistake #2). Verify instead: `git log --oneline -1` must print `ecee66cd er01: census Steamworks headless readiness`. If it does not, STOP and report. Any dirty tracked blob → STOP and report.
 
+> **FACTORY-CHURN EXCEPTION — these two tracked classes are ALWAYS EXPECTED and are NEVER a STOP; list them and proceed (F-1407-1, s1407):** (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`, `.goal-tree.html`, `.blocked-seen`), rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence. ⓘ What still STOPs, unchanged and load-bearing: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — anything a live drain or a concurrent task could actually own.
+
 ## WHY (evidence, quoted)
 `reviews/er01-e2-census.md` §F-1458-1, measured s1458 on the merged tree in a detached gate worktree:
 
