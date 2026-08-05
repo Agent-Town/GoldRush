@@ -98,10 +98,46 @@ order asked me to confirm the baselines were "byte-unchanged"; against the *comm
 and a fire that checked only that would have wrongly blocked this slice. Against the **control**, which is
 the question that discriminates, they are identical.
 
+**⚠️ CORRECTION, measured later in this same fire — the paragraph above this one was right, the cure I
+first proposed was not.** My original recommendation was to "refresh the baselines in a commit that names
+the main-side change responsible". I then tried to name it, and **for the `calls`/`triangles` component
+there is no such change.**
+
+I built the bisect harness and proved it constructible *before* scoping any work (the F-1475-1 lesson):
+a detached worktree with the **instrument pinned and the subject varied** — today's spec +
+`playwright.config.ts` + `scripts/external-server-guard.mjs` overlaid on each candidate commit, 14.4 s a
+step. That third file matters: today's config requires the F-1457-1 guard that only landed 08-05, so
+without it every old commit dies `MODULE_NOT_FOUND` — a harness that fails identically at all 1,092
+commits and converges on an innocent one.
+
+Then the predicate failed its own validation, both ways:
+
+| commit | date | desktop `coldBaseline` |
+|---|---|---|
+| committed artifact | 07-25 | `calls 72, triangles 146026, geometries 80` |
+| `f727cb75c` | 07-31 | `calls 73, triangles 146028, geometries 80` |
+| `a1ec923b8` | 08-02 | `calls 72, triangles 146026, geometries 80` |
+| `a1ec923b8` **re-run, same shell** | 08-02 | `calls 73, triangles 146028, geometries 80` |
+| main | 08-06 | `calls 74, triangles 147708, geometries 81` |
+
+Non-monotonic, so bisect's precondition is violated — and the last two rows are the control that explains
+why: **the same commit measured twice gives two different answers.** The ±1 `calls` / ±2 `triangles`
+component is **noise, not drift**, and no commit can be blamed for it.
+
+What survives as possibly real: `geometries 80→81` was stable at 80 across both runs at `a1ec923b8` and
+reads 81 on main, as does the `+1682` triangle step. Those are **unattributed and not bisectable by this
+predicate** — naming them needs a denoised statistic (n runs per commit, compare distributions), not a
+byte comparison.
+
+**The reusable lesson is bigger than this artifact: a number committed as "retained evidence" implies a
+reproducibility it was never measured to have.** Every reader since 07-25 — including this review's own
+first draft, and the standing order to confirm these baselines "byte-unchanged" — treated byte-equality as
+the pass condition for a quantity that is not byte-stable.
+
 Two owed acts, neither in this slice's firewall (test-only, single file):
-1. **Refresh the baselines** deliberately, in a commit that names the main-side change responsible —
-   *not* as a drive-by here. The uniform `+1 geometry` is worth an eyeball first: it could equally be a
-   scene addition or a leak, and overwriting the evidence destroys the ability to tell.
+1. **Do NOT refresh these baselines as a drive-by.** It would bless one sample of a noisy quantity as
+   truth and restart exactly this misreading. Either re-characterise the counts with a measured noise band
+   and record a tolerance, or stop writing them into the tracked tree.
 2. **The churn itself** is the F-1407-1 artifact-churn class: any lane or fire that runs this spec is left
    with 12 dirty tracked files, which can trip a pre-flight's clean-vs-main test. Candidate cure is a
    scratch output dir under `GR_CAPTURE_*`, but note the standing warning that a scratch-dir override is
