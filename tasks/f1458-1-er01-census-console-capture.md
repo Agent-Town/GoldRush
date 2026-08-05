@@ -18,15 +18,40 @@ Measured, same tree, `--workers=1`, plain house command: **8 failed / 8**. With 
 The warning is `ExperimentalWarning: localStorage is not available because --localstorage-file was not provided`, emitted by Node ≥ 26 on first read of `globalThis.localStorage`. `.nvmrc` pins **26.4.0**; the Codex runner executes **23.11.1**, which does not emit it (F-1458-2). **That is why your shell will show this spec GREEN before you change anything — believe the review, not your shell.**
 
 ## READ-FIRST
-1. `reviews/er01-e2-census.md` §F-1458-1 — the diagnosis, the failed cure, and the measured one.
-2. `artifacts/f1458-1/er01-console-capture-cure.patch` — a cure measured **8/8 green under the plain house command on Node 26.4.0**. Lane blob `0867a696` → cured blob `06fd7284`.
-3. `e2e/er01-e2-census.spec.ts` — the subject; note it already stubs `location`/`window` and restores them in `finally`.
-4. `scripts/gr-sim.test.mjs` — the house `previousStorage` stub pattern. ⚠️ **It does NOT solve this case** — see scope 1.
+1. `e2e/er01-e2-census.spec.ts` — the subject, present in your lane. Note it already stubs `location`/`window` and restores them in `finally`.
+2. `scripts/gr-sim.test.mjs` — the house `previousStorage` stub pattern, present in your lane. ⚠️ **It does NOT solve this case** — see scope 1.
+3. ⓘ **`reviews/er01-e2-census.md` and `artifacts/f1458-1/er01-console-capture-cure.patch` are on MAIN and are deliberately NOT in your lane** (your lane holds unmerged work and was not refreshed, so as not to disturb it). **You do not need them** — everything load-bearing is inlined below. Do not go looking for them and do not stop because they are absent.
+
+### The measured cure, inlined (option (a) of scope 2)
+
+Measured s1458 on the merged tree: **8/8 green** under `npx playwright test e2e/er01-e2-census.spec.ts --workers=1` on Node 26.4.0, with no `NODE_OPTIONS`.
+
+```diff
+@@ inside the test body, BEFORE the console hooks are installed @@
+     let vite: ViteDevServer | undefined;
+     let restoreRig: (() => void) | undefined;
+ 
++    const previousWarningListeners = process.listeners('warning');
++    process.removeAllListeners('warning');
++    process.on('warning', () => {});
++
+     host.location = location;
+     host.window = { location };
+     console.error = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+@@ in the finally block, alongside the existing restores @@
+       if (previousWindow === undefined) delete host.window;
+       else host.window = previousWindow;
++      process.removeAllListeners('warning');
++      for (const listener of previousWarningListeners) {
++        process.on('warning', listener as (warning: Error) => void);
++      }
+     }
+```
 
 ## SCOPE
 1. **Do not re-derive the dead end.** Stubbing `globalThis.localStorage` before the access was measured s1458 and left the spec **still 8/8 red**: the triggering read happens inside the vite-SSR module graph, before the test body runs. Do not spend a cycle there.
 2. **Choose between two cures and JUSTIFY the choice in your report** — this is the real work of this task, and it is deliberately not pre-decided:
-   - **(a)** Own the warning channel: save `process.listeners('warning')`, `removeAllListeners('warning')`, install a no-op, restore in `finally`. This is the patch in READ-FIRST 2. **Cost: suppresses ALL process warnings**, so a genuine deprecation from app code would no longer red this spec.
+   - **(a)** Own the warning channel: save `process.listeners('warning')`, `removeAllListeners('warning')`, install a no-op, restore in `finally`. This is the inlined patch above, measured green. **Cost: suppresses ALL process warnings**, so a genuine deprecation from app code would no longer red this spec.
    - **(b)** Filter narrowly: keep the console hook, but drop only strings matching Node's localStorage ExperimentalWarning before pushing to `consoleErrors`. **Cost: pins the assertion to one warning's exact text**, which future Node versions may reword.
    Pick one, state the trade you accepted, and say plainly what your choice stops catching.
 3. The zero-console assertion must still **fail** on genuine app-side `console.error`/`console.warn`. **Prove it by planting one** — add a temporary `console.error('planted')` inside the test, show the spec goes RED, remove it, show GREEN. A cure that cannot demonstrate its own violation path has certified nothing (the s1299/s1300 standard). Report both outcomes.
