@@ -4,14 +4,14 @@ import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json
 import voltage from '../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 
 const SOCKET_GAPS: Record<string, readonly string[]> = {
-  'e3-blackout-ridge': ['dayNightCycle', 'powerGrid'],
   'e3-moth-season': ['dayNightCycle', 'mothSeason'],
   'e3-canyon-works': ['dayNightCycle', 'mothSeason', 'powerGrid'],
   'e3-fairground': ['dayNightCycle', 'fairground', 'powerGrid'],
 };
 
 for (const contract of voltage.contracts) {
-  test(`${contract.id} stays rejected until its Voltage socket exists`, async () => {
+  test(`${contract.id} census support is explicit and deterministic`, async () => {
+    test.setTimeout(90_000);
     const seeds = (benchSeeds as Record<string, string[]>)[contract.id]!;
     const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
     const previousLocation = host.location;
@@ -21,6 +21,7 @@ for (const contract of voltage.contracts) {
     const originalError = console.error;
     const originalWarn = console.warn;
     let vite: ViteDevServer | undefined;
+    let restoreRig: (() => void) | undefined;
 
     host.location = location;
     host.window = { location };
@@ -37,15 +38,111 @@ for (const contract of voltage.contracts) {
       const sources = mechanics.rules.map(({ source }: { source: string }) => source);
 
       expect(seeds).toHaveLength(2);
-      for (const field of SOCKET_GAPS[contract.id]!) {
-        expect(Object.hasOwn(contract.twist, field)).toBe(true);
-        expect(sources).not.toContain(`twist.${field}`);
-      }
-      for (const seed of seeds) {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(/AP-07 supports only/);
+      if (contract.id === 'e3-blackout-ridge') {
+        const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
+        const rig = { ...Balance.sparkRig };
+        restoreRig = () => Object.assign(Balance.sparkRig, rig);
+        expect(mechanics).toMatchObject({
+          buildables: [{
+            id: 'capacitor_bank',
+            operation: 'BUILD',
+            meaning: 'Stores 0.05 Wh and returns up to 12 W when the trunk is cut.',
+            cost: 75,
+            maxCount: 4,
+            source: 'twist.powerGrid',
+          }],
+          interactables: expect.arrayContaining([
+            { id: 'lantern_post', count: 2, operations: [], source: 'tileParams.prePlacedBuildables' },
+            { id: 'sentry_beacon', count: 3, operations: [], source: 'tileParams.prePlacedBuildables' },
+          ]),
+          rules: expect.arrayContaining([
+            {
+              id: 'current_allocation',
+              source: 'PowerGraphSystem.step',
+              data: {
+                producers: ['off-map-current:36W'],
+                consumers: ['lamp-ridge:lamp:6W:priority10', 'lamp-yard:lamp:6W:priority10'],
+                connectedBy: 'intact-wires-between-online-nodes',
+                allocationOrder: 'ascending-priority',
+                nodeStates: ['powered', 'browned-out', 'dark'],
+              },
+            },
+            {
+              id: 'current_construction',
+              source: 'Game.syncContractPowerGrid',
+              data: {
+                relayBuildable: 'sentry_beacon',
+                pylonSites: ['trunk-middle', 'trunk-ridge', 'trunk-west'],
+                repairOperation: 'REPAIR_UNDER',
+                storageBuildable: 'capacitor_bank',
+                capacitorSites: ['breath-bank-east', 'breath-bank-west'],
+              },
+            },
+            {
+              id: 'current_storage',
+              source: 'PowerGraphSystem.step',
+              data: {
+                stores: [
+                  'capacitor-east:0.05Wh:charge18W:discharge12W',
+                  'capacitor-west:0.05Wh:charge18W:discharge12W',
+                ],
+              },
+            },
+            {
+              id: 'locked_night',
+              source: 'DayNightCycle.sample',
+              data: {
+                periodSeconds: 24,
+                duskRampSeconds: 2,
+                dawnRampSeconds: 2,
+                nightDepth: 0.86,
+                minimumDarkness: 0.645,
+                phases: ['dusk', 'dark', 'dawn'],
+                fullLight: false,
+              },
+            },
+          ]),
+        });
+
+        Object.assign(Balance.sparkRig, { damage: 1_000, fireRate: 60, range: 300, boltSpeed: 30, boltLife: 5 });
+        const run = (seed: string) => {
+          const sim = new HeadlessContractSim({ contractId: contract.id, seed });
+          sim.hero.applyStats(100_000, 1);
+          sim.hero.heal(100_000);
+          expect(sim.build.placeFree('capacitor_bank', { x: 6, z: 4 }, 0)).toBe(true);
+          expect(sim.build.placeFree('capacitor_bank', { x: 16, z: 4 }, 0)).toBe(true);
+          let turn = sim.advanceToTurn();
+          const socket = {
+            power: sim.powerGraph.snapshot(),
+            dayNight: sim.dayNightSnapshot,
+          };
+          while (!turn.terminal) turn = sim.advanceToTurn();
+          return { outcome: sim.outcome(), socket };
+        };
+
+        for (const seed of seeds) {
+          const first = run(seed);
+          const second = run(seed);
+          expect(first.outcome).toMatchObject({ secured: true, waves: contract.twist.secureWave, calls: 0 });
+          expect(second.outcome.eventLogHash).toBe(first.outcome.eventLogHash);
+          expect(first.socket.power).toMatchObject({ totalSupplyWatts: 36, totalDemandWatts: 12 });
+          expect(first.socket.power.nodes.filter(({ kind }: { kind: string }) => kind === 'relay').every(({ online }: { online: boolean }) => online)).toBe(true);
+          expect(first.socket.dayNight.phase).not.toBe('full');
+          expect(first.socket.dayNight.darkness).toBeGreaterThanOrEqual(0.645);
+          expect(first.socket.dayNight.darkness).toBeLessThanOrEqual(0.86);
+        }
+      } else {
+        for (const field of SOCKET_GAPS[contract.id]!) {
+          expect(Object.hasOwn(contract.twist, field)).toBe(true);
+          expect(sources).not.toContain(`twist.${field}`);
+        }
+        for (const seed of seeds) {
+          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(/AP-07 supports only/);
+        }
       }
       expect(consoleErrors).toEqual([]);
     } finally {
+      restoreRig?.();
       await vite?.close();
       console.error = originalError;
       console.warn = originalWarn;

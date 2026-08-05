@@ -21,12 +21,14 @@ import { Balance } from '../game/Balance';
 import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
-import { loadContract, type ContractBaronTwist, type ContractManifest, type ContractRunBoot } from '../meta/ContractFamilies';
+import { loadContract, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
 import { stableHash } from '../mp/LockstepClient';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
+import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
+import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureSystem } from '../systems/PressureSystem';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
@@ -43,6 +45,7 @@ const SUPPORTED_CONTRACTS = new Set([
   'e2-trestle',
   'e2-pressure-garden',
   'e2-incline',
+  'e3-blackout-ridge',
 ]);
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
 
@@ -125,6 +128,8 @@ export class HeadlessContractSim {
   private readonly combat: CombatSystem;
   private readonly build: BuildSystem;
   private readonly pressure: PressureSystem;
+  private readonly powerGraph: PowerGraphSystem | null;
+  private readonly dayNightCycle: DayNightCycle | null;
   private readonly waves: WaveSystem;
   private readonly runManager: RunManager;
   private readonly stockpileHoldings: GoldHolding[] = Array.from(
@@ -140,6 +145,8 @@ export class HeadlessContractSim {
   private readonly replayEvents: unknown[] = [];
   private readonly surface: GoldRushToolSurface;
   private harvestSnapshot: HarvestSnapshot;
+  private dayNightSnapshot: DayNightSnapshot | null = null;
+  private simTick = 0;
   private timeAlive = 0;
   private kills = 0;
   private calls = 0;
@@ -201,7 +208,9 @@ export class HeadlessContractSim {
       () => this.waves?.diagnostics.wave ?? 0,
       undefined,
       undefined,
-      (id) => id !== 'boiler_house' || this.manifest.twist.pressureEnabled === true,
+      (id) => id === 'boiler_house'
+        ? this.manifest.twist.pressureEnabled === true
+        : id !== 'capacitor_bank' || this.contractId === 'e3-blackout-ridge',
     );
     for (const fixture of this.manifest.tileParams.prePlacedBuildables ?? []) {
       this.build.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
@@ -220,6 +229,14 @@ export class HeadlessContractSim {
       () => undefined,
       () => undefined,
     );
+    const powerGrid = this.manifest.twist.powerGrid;
+    this.powerGraph = powerGrid
+      ? new PowerGraphSystem(contractPowerDefinition(this.contractId, powerGrid), powerGrid.maxSpanLength)
+      : null;
+    this.dayNightCycle = this.manifest.twist.dayNightCycle
+      ? new DayNightCycle(this.manifest.twist.dayNightCycle)
+      : null;
+    this.dayNightSnapshot = this.dayNightCycle?.sample(0) ?? null;
 
     this.waves = new WaveSystem(
       this.enemies,
@@ -334,6 +351,8 @@ export class HeadlessContractSim {
           .filter((enemy) => enemy.isAlive)
           .map((enemy) => ({ id: enemy.id, hp: round(enemy.currentHp), position: point(enemy.position) })),
         buildings: this.build.diagnostics.hp,
+        ...(this.powerGraph ? { power: this.powerGraph.snapshot() } : {}),
+        ...(this.dayNightSnapshot ? { dayNight: this.dayNightSnapshot } : {}),
       },
     });
     return { ...base, eventLogHash };
@@ -352,6 +371,7 @@ export class HeadlessContractSim {
   }
 
   private step(): void {
+    this.simTick += 1;
     this.timeAlive += STEP_SECONDS;
     this.hero.update(STEP_SECONDS, IDLE_INTENTS, { bounds: Terrain.bounds, sample: Terrain.sample });
     this.combat.setTime(this.timeAlive);
@@ -365,6 +385,8 @@ export class HeadlessContractSim {
       this.prospector.position,
     );
     this.pressure.update(STEP_SECONDS, this.timeAlive, [this.hero.group.position], this.waves.diagnostics.wave);
+    this.syncContractPowerGrid();
+    this.powerGraph?.step(this.simTick);
     this.syncStockpileHoldings();
     this.enemies.update(STEP_SECONDS, this.hero.group.position, (enemy) => {
       this.combat.handleEnemyContact(enemy);
@@ -385,6 +407,7 @@ export class HeadlessContractSim {
     this.updateBaronRocketVolley();
     this.combat.update(STEP_SECONDS, this.timeAlive);
     this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
+    this.dayNightSnapshot = this.dayNightCycle?.sample(this.timeAlive) ?? null;
     observeStandingOrders();
   }
 
@@ -615,6 +638,8 @@ export class HeadlessContractSim {
       },
       harvest: this.harvestSnapshot,
       pressure: this.pressure.diagnostics,
+      power: this.powerGraph?.snapshot() ?? null,
+      dayNight: this.dayNightSnapshot,
       kills: this.kills,
       runState: this.dead ? 'dead' : this.secured ? 'secured' : 'playing',
       run: { secured: this.secured },
@@ -636,6 +661,33 @@ export class HeadlessContractSim {
         embodiment: this.prospector.snapshot,
       },
     };
+  }
+
+  private syncContractPowerGrid(): void {
+    const sites = this.manifest.tileParams.pylonSites;
+    const graph = this.powerGraph;
+    if (!sites?.length || !graph) return;
+    const buildings = this.build.diagnostics.hp;
+    const snapshot = graph.snapshot();
+    for (const site of sites) {
+      const online = buildings.some((entry) => entry.id === 'sentry_beacon' && entry.hp > 0 && !entry.wrecked
+        && Math.hypot(entry.position.x - site.x, entry.position.z - site.z) <= site.radius);
+      if (snapshot.nodes.find((node) => node.id === site.nodeId)?.online !== online) {
+        graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
+      }
+      const wireId = powerWireId({ a: site.wireFrom, b: site.nodeId });
+      const state = online ? 'intact' : 'cut';
+      if (snapshot.wires.find((wire) => wire.id === wireId)?.state !== state) {
+        graph.queueCommand({ type: 'set-wire-state', wireId, state });
+      }
+    }
+    for (const site of this.manifest.tileParams.capacitorSites ?? []) {
+      const online = buildings.some((entry) => entry.id === 'capacitor_bank' && entry.hp > 0 && !entry.wrecked
+        && Math.hypot(entry.position.x - site.x, entry.position.z - site.z) <= site.radius);
+      if (snapshot.nodes.find((node) => node.id === site.nodeId)?.online !== online) {
+        graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
+      }
+    }
   }
 
   private repairBuilding(ref: AgentBuildingRef): unknown {
@@ -691,6 +743,20 @@ export class HeadlessContractSim {
       ...event,
     } as EconomyEvent;
   }
+}
+
+function contractPowerDefinition(contractId: string, grid: ContractPowerGrid): PowerGraphDefinition {
+  return {
+    id: `${contractId}-grid`,
+    nodes: grid.nodes.map((node) => node.kind === 'producer'
+      ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: true, outputWatts: node.outputWatts }
+      : node.kind === 'relay'
+        ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: false }
+        : node.kind === 'storage'
+          ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: false, capacityWh: node.capacityWh, chargeWatts: node.chargeWatts, dischargeWatts: node.dischargeWatts }
+          : { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: node.role !== 'crawler-drain', drawWatts: node.drawWatts, priority: node.priority }),
+    wires: grid.wires.map((wire) => ({ ...wire, state: 'intact' })),
+  };
 }
 
 function canonicalEvent(event: GameEvent): unknown {
