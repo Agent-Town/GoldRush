@@ -28,6 +28,8 @@ import { CombatSystem } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
+import { LightField, type LightSource } from '../systems/LightField';
+import { MothSwarm } from '../systems/MothSwarm';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureSystem } from '../systems/PressureSystem';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
@@ -46,6 +48,7 @@ const SUPPORTED_CONTRACTS = new Set([
   'e2-pressure-garden',
   'e2-incline',
   'e3-blackout-ridge',
+  'e3-moth-season',
 ]);
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
 
@@ -130,6 +133,8 @@ export class HeadlessContractSim {
   private readonly pressure: PressureSystem;
   private readonly powerGraph: PowerGraphSystem | null;
   private readonly dayNightCycle: DayNightCycle | null;
+  private readonly lightField: LightField | null;
+  private readonly mothSwarm: MothSwarm | null;
   private readonly waves: WaveSystem;
   private readonly runManager: RunManager;
   private readonly stockpileHoldings: GoldHolding[] = Array.from(
@@ -146,6 +151,7 @@ export class HeadlessContractSim {
   private readonly surface: GoldRushToolSurface;
   private harvestSnapshot: HarvestSnapshot;
   private dayNightSnapshot: DayNightSnapshot | null = null;
+  private mothLightSources: LightSource[] = [];
   private simTick = 0;
   private timeAlive = 0;
   private kills = 0;
@@ -237,6 +243,31 @@ export class HeadlessContractSim {
       ? new DayNightCycle(this.manifest.twist.dayNightCycle)
       : null;
     this.dayNightSnapshot = this.dayNightCycle?.sample(0) ?? null;
+    const mothSeason = this.manifest.twist.mothSeason;
+    this.lightField = mothSeason
+      ? new LightField({
+          minLight: Balance.contracts.nightShift.minLight,
+          falloff: Balance.contracts.nightShift.lightFalloff,
+          litThreshold: Balance.contracts.nightShift.renderVisibilityCutoff,
+        })
+      : null;
+    this.mothSwarm = mothSeason && this.lightField
+      ? new MothSwarm(
+          true,
+          this.enemies.capacity,
+          (x, z) => this.lightField!.coverageAt(x, z),
+          {
+            radiusWeight: mothSeason.radiusWeight,
+            attachDamagePerSecond: mothSeason.attachDamagePerSecond,
+          },
+          (sourceId, amount) => {
+            if (!sourceId.startsWith('decoy:')) return;
+            const target = this.build.buildingTarget('decoy_shed', Number.parseInt(sourceId.slice(6), 10));
+            if (target?.active) this.combat.damageBuilding(target, amount, -1);
+          },
+        )
+      : null;
+    this.syncMothLightState();
 
     this.waves = new WaveSystem(
       this.enemies,
@@ -388,6 +419,7 @@ export class HeadlessContractSim {
     this.syncContractPowerGrid();
     this.powerGraph?.step(this.simTick);
     this.syncStockpileHoldings();
+    this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
     this.enemies.update(STEP_SECONDS, this.hero.group.position, (enemy) => {
       this.combat.handleEnemyContact(enemy);
       return this.dead;
@@ -408,6 +440,7 @@ export class HeadlessContractSim {
     this.combat.update(STEP_SECONDS, this.timeAlive);
     this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
     this.dayNightSnapshot = this.dayNightCycle?.sample(this.timeAlive) ?? null;
+    this.syncMothLightState();
     observeStandingOrders();
   }
 
@@ -421,6 +454,7 @@ export class HeadlessContractSim {
 
   private startWave(wave: number, at: number): boolean | void {
     this.events.emit({ type: 'wave_started', at, wave });
+    this.spawnMothSeasonWave(wave);
     const baron = this.manifest.twist.baron;
     if (baron && (wave === baron.wave || baron.tauntWaves.includes(wave))) {
       this.replayEvents.push({
@@ -640,6 +674,8 @@ export class HeadlessContractSim {
       pressure: this.pressure.diagnostics,
       power: this.powerGraph?.snapshot() ?? null,
       dayNight: this.dayNightSnapshot,
+      mothSwarm: this.mothSwarm?.diagnostics() ?? null,
+      lightField: this.lightField?.diagnostics() ?? null,
       kills: this.kills,
       runState: this.dead ? 'dead' : this.secured ? 'secured' : 'playing',
       run: { secured: this.secured },
@@ -688,6 +724,44 @@ export class HeadlessContractSim {
         graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
       }
     }
+  }
+
+  private spawnMothSeasonWave(wave: number): void {
+    const config = this.manifest.twist.mothSeason;
+    if (!config || !this.mothSwarm || wave <= 0 || (this.dayNightSnapshot?.darkness ?? 0) < 0.5) return;
+    const count = Math.max(2, Math.floor(Math.max(1, this.mothLightSources.length) * config.mothsPerLightPerWave));
+    const stake = this.manifest.tileParams.stakeMarkers?.find((marker) => marker.heroStart);
+    this.mothSwarm.spawn(this.enemies, count, stake?.x ?? 0, (stake?.z ?? 12) - 12);
+  }
+
+  private syncMothLightState(): void {
+    const config = this.manifest.twist.mothSeason;
+    if (!config || !this.mothSwarm || !this.lightField) return;
+    const buildings = this.build.diagnostics.hp;
+    const positions = (id: 'lantern_post' | 'decoy_shed') => buildings
+      .filter((entry) => entry.id === id && entry.hp > 0 && !entry.wrecked)
+      .map((entry) => ({ index: entry.index, ...entry.position }));
+    this.mothLightSources = [
+      ...positions('lantern_post').map((position) => ({
+        id: `lantern:${position.index}`,
+        kind: 'lantern' as const,
+        x: position.x,
+        z: position.z,
+        radius: Balance.contracts.nightShift.lanternPostLightRadius,
+      })),
+      ...positions('decoy_shed').map((position) => ({
+        id: `decoy:${position.index}`,
+        kind: 'powered-lamp' as const,
+        x: position.x,
+        z: position.z,
+        radius: Balance.decoyShed.lightRadius,
+        targetWeight: config.decoyWeight,
+      })),
+    ];
+    this.lightField.update(
+      this.dayNightSnapshot?.darkness ?? 0,
+      this.mothSwarm.dimSources(this.mothLightSources),
+    );
   }
 
   private repairBuilding(ref: AgentBuildingRef): unknown {
