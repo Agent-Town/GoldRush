@@ -5706,7 +5706,7 @@ export class Game {
           return;
         }
         const materialName = material.name || material.type;
-        const key = `${kind} ${label} ${materialName}`;
+        const key = `${kind}\u0000${label}\u0000${materialName}`;
         const row = rows.get(key) ?? {
           label, material: materialName, kind, calls: 0, triangles: 0,
           transparent: material.transparent === true, renderOrder: object.renderOrder,
@@ -5745,7 +5745,7 @@ export class Game {
     const mergeable = new Map<string, { material: string; renderOrder: number; calls: number; labels: string[] }>();
     for (const row of byObject) {
       if (row.kind !== 'mesh') continue;
-      const key = `${row.material} ${row.renderOrder}`;
+      const key = `${row.material}\u0000${row.renderOrder}`;
       const entry = mergeable.get(key) ?? { material: row.material, renderOrder: row.renderOrder, calls: 0, labels: [] };
       entry.calls += row.calls;
       entry.labels.push(row.label);
