@@ -390,14 +390,25 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
       const first = run();
       const second = run();
       assert.deepEqual(second, first);
+      // NAMED-CAUSE RE-PIN (F-1460-1, re-measured and landed s1462). kills/eventLogHash moved
+      // 869/b9566c6d -> 861/36004eab at 4ab48743 (runner output of f1452-1 fort-solidity), which
+      // gates the stuck-watchdog on route.blocker in src/entities/Enemy.ts and rewrites +139/-31 of
+      // src/systems/BuildSystem.ts. Different routing -> different engagement -> 8 fewer kills over
+      // 20 waves. Deliberate and spec-green, merely unpinned; f1452-1 reached main via drain
+      // 07213c73, whose evidence was its own specs only, so nothing re-took this cross-cutting pin.
+      // This is NOT the F-1403-1/F-1404-2 cross-engine class: that class means two engines
+      // DISAGREEING, and they do not. Measured s1462 on the pinned 26.4.0 AND the runner's 23.11.1
+      // -- both return 861/36004eab byte-identical, and the determinism assert above (second ===
+      // first) passes on both. Re-pin only ever with a named cause; a blind re-pin is forbidden
+      // (F-1441-3).
       assert.deepEqual(first.outcome, {
         secured: true,
         waves: baron.wave,
         timeMs: 528_433,
         gold: 0,
-        kills: 869,
+        kills: 861,
         calls: 0,
-        eventLogHash: 'fnv1a32:b9566c6d',
+        eventLogHash: 'fnv1a32:36004eab',
       });
       assert.equal(first.payout.science, Balance.meta.victoryPayout.science * baron.sciencePayoutMult);
       assert.deepEqual(first.transcript.filter(({ type }) => type === 'baron_announcement').map(({ wave }) => wave), [5, 12, 18, 20]);
