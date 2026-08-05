@@ -12,7 +12,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const GUARD = path.join(HERE, 'desk-declaration-guard.mjs');
@@ -141,8 +141,125 @@ test('the entrypoint actually RUNS — a space in the repo path must not no-op i
 });
 
 test('the live board is green under this guard (baseline is honest)', () => {
+  // Green in BOTH live modes: mid-fire line-1 is an ACTIVE lock (SKIP, exit 0),
+  // post-handoff it is a CLEARED line whose desk must parse and be declared.
   const r = run(REPO);
   assert.equal(r.status, 0, r.stdout + r.stderr);
+});
+
+// ───────────────────────────────────────────────────────────────────────────
+// F-1471-3 — THE FAIL-OPEN. Every test below manufactures the exact shape that
+// let this guard report "desk F-IDs: 145 · undeclared: 0 · PASS" off a desk
+// three days stale. A green here would have been indistinguishable from the bug,
+// which is why each one drives a specific exit code on a fixture built for it.
+// ───────────────────────────────────────────────────────────────────────────
+
+/** A STATUS.md whose line-1 is `line1` and which carries archived handoff bullets. */
+const withArchives = (line1, archiveDesk) =>
+  line1 +
+  '\n- **s0 handoff (line-1 archive):** Last updated: s0 handoff, lock CLEARED — ' +
+  `old work. 🔺 **OWNER DESK — settled.** ${archiveDesk}\n`;
+
+test('MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard', (t) => {
+  // The precise incident. Line-1 is a handoff with NO desk header; an archive
+  // bullet below carries a fully-declared desk in the bare spelling. The old
+  // selector found that archive and PASSED. Line 1 or nothing.
+  const dir = fixture(
+    t,
+    withArchives('Last updated: s1 handoff, lock CLEARED — work happened, no desk written.', '🔺 **F-7777-1**'),
+    '- 🟡 **F-7777-1 (s0) — declared long ago.** body\n',
+  );
+  const r = run(dir);
+  assert.equal(r.status, 2, 'a headerless handoff must REFUSE, never read an archive');
+  assert.match(r.stderr, /no desk header/);
+});
+
+test('MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item', (t) => {
+  // The costly half. Line-1 carries a real desk in the POSSESSIVE spelling with
+  // an UNDECLARED item; the archive below uses the bare spelling and is clean.
+  // Old guard: matched the bare archive first, reported PASS, and the live item
+  // stayed invisible. New guard: reads line-1 and names it.
+  const dir = fixture(
+    t,
+    withArchives(
+      "Last updated: s1 handoff, lock CLEARED — work. 🔺 **OWNER'S DESK — one new.** 🔺 **F-9101-1**",
+      '🔺 **F-7777-1**',
+    ),
+    '- 🟡 **F-7777-1 (s0) — declared long ago.** body\n',
+  );
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stderr, /F-9101-1/);
+});
+
+test('all four desk spellings are read — the majority form was invisible', (t) => {
+  // Measured on STATUS.md s1472: bare 243 · "OWNER'S" 484 · curly "OWNER’S" 15 ·
+  // "OWNERS" 9. The guard matched ONLY the bare form, i.e. missed the spelling
+  // fires use most. Each variant must find the same undeclared id.
+  for (const word of ['OWNER DESK', "OWNER'S DESK", 'OWNER’S DESK', 'OWNERS DESK']) {
+    const dir = fixture(
+      t,
+      `Last updated: s1 handoff, lock CLEARED — work. 🔺 **${word} — one new.** 🔺 **F-9102-1**\n`,
+      '- 🟡 **F-8888-8 (s1) — unrelated.** body\n',
+    );
+    const r = run(dir);
+    assert.equal(r.status, 1, `spelling "${word}" must be read: ${r.stdout}${r.stderr}`);
+    assert.match(r.stderr, /F-9102-1/, `spelling "${word}" must surface the id`);
+  }
+});
+
+test('an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time', (t) => {
+  // test:node-guards runs mid-fire, when line-1 is the fire's own ACTIVE lock.
+  // Refusing there would red every drain battery in the factory. The real gate
+  // is test:ledger-guards, run as the LAST act after the handoff commit.
+  const dir = fixture(
+    t,
+    withArchives('ACTIVE 2026-01-01T00:00Z (s1 fire) — draining something.', '🔺 **F-7777-1**'),
+    '- 🟡 **F-7777-1 (s0) — declared.** body\n',
+  );
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /SKIP/);
+});
+
+test('a lock line that MENTIONS the desk in prose is still a lock, not a desk', (t) => {
+  // s1472 wrote exactly such a lock line while curing this guard, and the old
+  // bare-substring selector was hijacked by it.
+  const dir = fixture(
+    t,
+    'ACTIVE 2026-01-01T00:00Z (s1 fire) — curing the OWNER DESK guard fail-open.\n',
+    '- 🟡 **F-8888-8** body\n',
+  );
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /SKIP/);
+});
+
+test('MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail', (t) => {
+  // The desk is the TAIL of the handoff, so the LAST occurrence wins. Were the
+  // first taken, this line would parse from the narrative mention, sweep up
+  // F-9103-9 (a finding merely being reported CLOSED) and demand a row for it.
+  const dir = fixture(
+    t,
+    'Last updated: s1 handoff, lock CLEARED — I cleared the OWNER DESK item ' +
+      "F-9103-9 and shipped it. 🔺 **OWNER'S DESK — one new.** 🔺 **F-9103-1**\n",
+    '- 🟡 **F-8888-8 (s1) — unrelated.** body\n',
+  );
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stderr, /F-9103-1/);
+  assert.doesNotMatch(r.stderr, /F-9103-9/, 'the upstream prose mention must not be read as a desk item');
+});
+
+test('a handoff whose desk header has no F-IDs after it REFUSES (exit 2)', (t) => {
+  const dir = fixture(
+    t,
+    "Last updated: s1 handoff, lock CLEARED — work. 🔺 **OWNER'S DESK — nothing today.**\n",
+    '- 🟡 **F-8888-8** body\n',
+  );
+  const r = run(dir);
+  assert.equal(r.status, 2);
+  assert.match(r.stderr, /zero F-IDs/);
 });
 
 // THE BASELINE IS A CEILING, NOT A FLOOR (F-1335-1, s1335).
@@ -168,15 +285,23 @@ test('the grandfather list may only SHRINK — never grows past the s1334 baseli
   );
 });
 
-test('every grandfathered id is still on the desk — the list must not rot', () => {
+test('every grandfathered id is still on the desk — the list must not rot', async () => {
   // A grandfathered id that has left the desk is dead weight that hides nothing;
   // worse, it would silently absolve a future re-listing of the same finding.
   // Vacuously true at length 0, which is the CORRECT reading: nothing is excused.
+  //
+  // THIS TEST CARRIED THE BUG IT WAS MEANT TO POLICE (F-1471-3's second instance,
+  // cured s1472). It re-implemented the selector by hand — find the first line
+  // containing the bare "OWNER DESK", slice from there — so it read the same
+  // 3-day-stale ARCHIVED desk as the guard did. Two copies of one broken parser,
+  // and the copy lived in the file whose job is to prove the parser works. Import
+  // the real one; a guard's test must not fork its subject's logic.
   const src = fs.readFileSync(GUARD, 'utf8');
   const listed = [...src.matchAll(/^\s*'(F-\d{3,4}-\d+)',/gm)].map((m) => m[1]);
   const status = fs.readFileSync(path.join(REPO, 'STATUS.md'), 'utf8');
-  const deskLine = status.split('\n').find((l) => l.includes('OWNER DESK'));
-  const onDesk = new Set(deskLine.slice(deskLine.indexOf('OWNER DESK')).match(/F-\d{3,4}-\d+/g) || []);
+  const { deskIds } = await import(pathToFileURL(GUARD).href);
+  const desk = deskIds(status);
+  const onDesk = new Set(desk.kind === 'desk' ? desk.ids : []);
   const stale = listed.filter((id) => !onDesk.has(id));
   assert.deepEqual(stale, [], `grandfathered ids no longer on the desk: ${stale.join(', ')}`);
 });
