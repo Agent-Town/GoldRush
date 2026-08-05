@@ -3816,7 +3816,9 @@
               "id": "f1465-1-nul-delimiters",
               "title": "Raw NUL bytes make grep silently blind to src/game/Game.ts — re-encode the delimiters as \\u0000",
               "taskFile": "lane-f1465-1-nul-delimiters.md",
-              "status": "queued"
+              "status": "merged",
+              "mergeHash": "1a2871fd310b5bfd1f6ea085ce9d8a7a4b36272d",
+              "notes": "Drained s1466. Lane tip 79826160. Gates on the merged tree (detached worktree gate-s1466, fire shell, --workers=1): tsc clean, build green, test:node-guards rc=0 with nul-audit CLEAN running as the final leaf, and the slice's only consumer e2e/perf-r2-census.rig.ts 2 passed desktop + 390px at a 240s timeout (67.8s wall). THE RIG'S 2 FAILED AT THE CONFIG'S 30s DEFAULT IS THE FIRE SHELL'S CPU CEILING, NOT THE SLICE: a control run with src/game/Game.ts ALONE reverted to pre-cure failed IDENTICALLY (F-1269-1 / F-1440-2). Runtime proven unmoved — both cure sites byte-identical (6100620063, 610062). nul-audit on main post-merge: 3 raw NULs -> 0. F-1466-1 FILED AGAINST F-1465-1'S SCOPE CLAIM (not its cure): the blindness is Claude Code's grep SHADOW passing -I (ignore binary files) to an embedded ugrep (shell snapshot :4721-:4730), not grep itself. /usr/bin/grep — the only grep on the box — reads the pre-cure file at 134, so Codex and the lane shell were NEVER affected, contrary to the s1465 record. Review: reviews/f1465-1-nul-delimiters.md"
             }
           ]
         }
