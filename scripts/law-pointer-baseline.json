@@ -12,12 +12,6 @@
       "fingerprint": "8c859fddc1a9",
       "excerpt": "# It was: find \"$ROOT/tasks/runs\" -name '*.log' -mtime +3 -delete 2>/dev/null"
     },
-    "CLAUDE.md -> fire-runner.sh:88": {
-      "target": "scripts/fire-runner.sh",
-      "line": 88,
-      "fingerprint": "514fb8d7b116",
-      "excerpt": "# It was: find logs -name 'fire-*.log' -mtime +14 -delete 2>/dev/null"
-    },
     "CLAUDE.md -> lane-runner-v2.sh:76": {
       "target": "scripts/lane-runner-v2.sh",
       "line": 76,
@@ -65,12 +59,6 @@
       "line": 50,
       "fingerprint": "03b4031fea20",
       "excerpt": "workers: isFireShell ? 1 : undefined,"
-    },
-    "scripts/fire.md -> scripts/fire-runner.sh:81": {
-      "target": "scripts/fire-runner.sh",
-      "line": 81,
-      "fingerprint": "c11d5b8cacd2",
-      "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
     },
     ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:385": {
       "target": "scripts/drain-block-check.mjs",
@@ -149,6 +137,18 @@
       "line": 50,
       "fingerprint": "03b4031fea20",
       "excerpt": "workers: isFireShell ? 1 : undefined,"
+    },
+    "CLAUDE.md -> fire-runner.sh:93": {
+      "target": "scripts/fire-runner.sh",
+      "line": 93,
+      "fingerprint": "514fb8d7b116",
+      "excerpt": "# It was: find logs -name 'fire-*.log' -mtime +14 -delete 2>/dev/null"
+    },
+    "scripts/fire.md -> scripts/fire-runner.sh:86": {
+      "target": "scripts/fire-runner.sh",
+      "line": 86,
+      "fingerprint": "c11d5b8cacd2",
+      "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."
