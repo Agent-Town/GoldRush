@@ -36,6 +36,3 @@ READY-FOR-GATES. Report: the census table verbatim, findings count, which refere
 
 ## ERA-SOCKET LAW (learned from E2, `96d40988`)
 An era's signature mechanic that only the browser runs is NOT yours to socket — it is a DATA-GAP row citing the missing consumer (E2's pressure precedent: F-ER01-1/-3 refused admission; the socket became its own attended-authored master, `lane-e2-pressure-socket`). If epoch-3's contracts gate on a voltage-class system `HeadlessContractSim` lacks, your census REFUSES those contracts with the same shape: name the system, the manifest hole, and the socket the fix master needs. Reject-don't-stretch.
-
-## PARALLEL-CENSUS DRAIN NOTE (owner throughput call, 2026-08-05: "I think we can handle a lot of throughput")
-E3/E4/E5/E6 censuses run on PARALLEL lanes and will all touch two shared append-only surfaces: the `SUPPORTED_CONTRACTS` set in `src/sim/HeadlessContractSim.ts` and `assets/contracts/bench-seeds.json`. Expected drain conflicts there are the TRIVIAL union kind — the drainer keeps ALL epochs' members (union-merge discipline; both sides are pure additions). Do not let this note tempt you into touching other epochs' entries: add ONLY yours.
