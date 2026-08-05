@@ -13,7 +13,7 @@ PRE-FLIGHT: `git branch --show-current` = `lane/b`. ⚠️ **THIS LANE DELIBERAT
 ## WHY (evidence, quoted)
 `reviews/er01-e2-census.md` §F-1458-1, measured s1458 on the merged tree in a detached gate worktree:
 
-> `e2e/er01-e2-census.spec.ts:32-33` ("… census support is explicit and deterministic") hooks `console.error`/`console.warn` into a `consoleErrors` array, then asserts `expect(consoleErrors).toEqual([])` at `:44` and `:74`. **Node's default `'warning'` handler prints through `console.error`**, so a process-level warning lands in that array and reds the assertion.
+> `e2e/er01-e2-census.spec.ts` (test "… census support is explicit and deterministic") hooks `console.error`/`console.warn` into a `consoleErrors` array, then asserts `expect(consoleErrors).toEqual([])`. **Node's default `'warning'` handler prints through `console.error`**, so a process-level warning lands in that array and reds the assertion.
 
 Measured, same tree, `--workers=1`, plain house command: **8 failed / 8**. With `NODE_OPTIONS=--no-warnings`: **8 passed (47.1s)**. So every substantive assertion the slice makes already holds — only the console channel is wrong.
 
