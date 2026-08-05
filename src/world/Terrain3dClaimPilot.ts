@@ -311,6 +311,9 @@ const NIGHT_POOL_SHADER_CAP = 32;
 // sim's own declarations, so a re-sculpt or a rules change moves the water and nothing here
 // argues with it.
 type SculptWaterDressing = {
+  surface:
+    | { kind: 'channel-fill'; fill: number }
+    | { kind: 'below-gorge-floor'; quantile: number; drop: number };
   /**
    * Multiplies the shader's water palette (shallow/mid/deep/ford, foam and glints alike). White
    * keeps the shipped mint. The claim pulls it warm sepia; the hill mine pulls it toward wet slate
@@ -318,8 +321,6 @@ type SculptWaterDressing = {
    */
   color: string;
   opacity: number;
-  /** How far the channel fills above its own measured bed. */
-  fill: number;
   /** How much water stands over the ford shelf: ankle deep, still obviously a crossing. */
   fordSkim: number;
   /** Metres of standing water that read as fully deep in the bed-depth bake. */
@@ -341,17 +342,17 @@ type SculptWaterDressing = {
   /** Blend weight for the procedural canvas map. See the note on the hill mine's entry. */
   textureBlend?: number;
 };
-const SCULPT_WATER: Record<string, SculptWaterDressing> = {
+const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
   // Shipped values, unchanged: this map's water is signed off and must render byte for byte.
   // Style anchor: "the river writes the only dark line". The shipped shader is tuned over pale
   // painted sand and reads as mint over this sculpt's umber bed, so the palette is multiplied warm
   // and the surface let through enough for the bed's own darkness to carry the channel.
   'the-claim': {
+    surface: { kind: 'channel-fill', fill: 0.42 },
     color: '#c9b892',
     opacity: 0.7,
     // The carved channel runs ~0.45m below the water line at its deepest; the last
     // ~15cm of depth is the damp margin where the surface fades into wet ground.
-    fill: 0.42,
     fordSkim: 0.11,
     deepMeters: 0.5,
     shoreMeters: 0.15,
@@ -370,12 +371,20 @@ const SCULPT_WATER: Record<string, SculptWaterDressing> = {
   //     from the near-black paint reading through a surface that is deliberately not very opaque —
   //     which is what "murky working water" is, and why deepMeters is 0.12 (the real standing
   //     depth) rather than the claim's 0.5.
-  'e2-hill-mine': { color: '#8a8177', opacity: 0.72, fill: 0.42, fordSkim: 0.11, deepMeters: 0.12, shoreMeters: 0.05, visualHalfWidth: 5.9, glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }], rippleStrength: 1.15, textureBlend: 0, },
+  'e2-hill-mine': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#8a8177', opacity: 0.72, fordSkim: 0.11, deepMeters: 0.12, shoreMeters: 0.05, visualHalfWidth: 5.9, glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }], rippleStrength: 1.15, textureBlend: 0, },
+  'e2-trestle': { surface: { kind: 'below-gorge-floor', quantile: 0.8, drop: 0.006 }, color: '#7e8480', opacity: 0.86, fordSkim: 0.11, deepMeters: 0.42, shoreMeters: 0.16, glints: [{ x: -15.5, z: -4.3 }, { x: -4.5, z: -4.5 }], rippleStrength: 0.4, textureBlend: 0.05, },
 };
 /** Water fades out over the last stretch before the tile edge instead of cutting. */
 const SCULPT_WATER_EDGE_FADE = 7;
 /** U3: contracts whose mounted landmarks get soft contact ellipses. */
-const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim', 'e2-hill-mine']);
+const LANDMARK_CONTACT_CONTRACTS = new Set(['the-claim', 'e2-hill-mine', 'e2-trestle']);
+type SpanShadowDressing = { mountId: string; widthScale: number; lengthScale: number; throw: number; opacity: number; color: string };
+const SPAN_SHADOW_CONTRACTS: Record<string, SpanShadowDressing> = {
+  'e2-trestle': { mountId: 'trestle-crossing', widthScale: 0.38, lengthScale: 0.48, throw: 0.62, opacity: 0.42, color: '#1d1206' },
+};
+const SPAN_SHADOW_ROWS = 28;
+const SPAN_SHADOW_END_TAPER = 0.16;
+const SPAN_SHADOW_LIFT = 0.012;
 /**
  * U5: contracts that get the drifting mote field, and its hard cap.
  *
@@ -390,6 +399,7 @@ type SunMoteDressing = { color: string; halfZ: number; centerZ: number; minY: nu
 const SUN_MOTES: Record<string, SunMoteDressing> = {
   'the-claim': { color: '#ffd9a2', halfZ: 13, centerZ: 4, minY: 0.4, maxY: 5.0, size: 2.1, seed: 0x1c1a },
   'e2-hill-mine': { color: '#a8794a', halfZ: 17, centerZ: 7, minY: 0.3, maxY: 5.6, size: 2.3, seed: 0x2e57 },
+  'e2-trestle': { color: '#c39a68', halfZ: 14, centerZ: 0, minY: 0.2, maxY: 5.6, size: 2.3, seed: 0x3b12 },
 };
 /** U5b is the CLAIM's reward note, not every mote map's: the embers need a claim stake to sit on. */
 const RUSH_EMBER_CONTRACTS = new Set(['the-claim']);
@@ -422,6 +432,15 @@ type SteamAnchor = {
 const STEAM_ANCHORS: Record<string, readonly SteamAnchor[]> = {
   'e2-hill-mine': [ { mount: 'boiler-house-site', acrossX: 0.255, acrossZ: 0.332, upY: 1.0, rise: 8.0, spread: 3.0, size: 46, life: 5.4, puffs: 34, opacity: 0.5 }, { mount: 'mine-mouth-and-ruined-headframe', acrossX: 0.5, acrossZ: 0.62, upY: 0.1, rise: 3.2, spread: 1.7, size: 30, life: 8.2, puffs: 14, opacity: 0.3 }, ],
 };
+type CrossingBreathDressing = {
+  wisps: { count: number; halfX: number; halfZ: number; lift: number; size: number; rise: number; color: string };
+  plume: { count: number; radius: number; height: number; size: number; rise: number; color: string };
+};
+const CROSSING_BREATH_CONTRACTS: Record<string, CrossingBreathDressing> = {
+  'e2-trestle': { wisps: { count: 7, halfX: 17, halfZ: 4, lift: 3.1, size: 46, rise: 0.34, color: '#575049' }, plume: { count: 12, radius: 0.7, height: 3.4, size: 26, rise: 1.15, color: '#efe9de' } },
+};
+const CROSSING_BREATH_POLL_FRAMES = 30;
+type CrossingBreath = { dispose: () => void };
 /** Warm white, the shipped `BoilerHouse.ts` plume colour. Steam is WHITE (bundle §A1). */
 const STEAM_COLOUR = '#fff8e8';
 /** Embers on the claim stake while the Rush is live. */
@@ -556,7 +575,7 @@ function preparePanorama(model: THREE.Object3D): void {
  * and the emissive only keeps the paint off the floor.
  */
 const LANDMARK_EMISSIVE_DEFAULT = 3;
-const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45 };
+const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5 };
 
 function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
   const dressing = CONTRACT_LANDMARK_DRESSING[contractId]?.[mountId];
@@ -710,7 +729,8 @@ function sculptWaterSurfaceY(
   halfX: number,
   centerZ: number,
   fordHalfWidth: number,
-  dressing: SculptWaterDressing,
+  fill: number,
+  fordSkim: number,
 ): number {
   const channel: number[] = [];
   const ford: number[] = [];
@@ -725,7 +745,92 @@ function sculptWaterSurfaceY(
   };
   const channelBed = channel.length ? median(channel) : 0;
   const fordBed = ford.length ? median(ford) : channelBed;
-  return Math.min(channelBed + dressing.fill, fordBed + dressing.fordSkim);
+  return Math.min(channelBed + fill, fordBed + fordSkim);
+}
+
+/** Derive a flat-floored gorge's water line from its baked centreline. */
+function sculptWaterFloorY(
+  heightAt: (x: number, z: number) => number,
+  halfX: number,
+  centerZ: number,
+  quantile: number,
+  drop: number,
+): number {
+  const samples: number[] = [];
+  for (let x = -halfX + 1; x <= halfX - 1; x += 0.5) samples.push(heightAt(x, centerZ));
+  samples.sort((a, b) => a - b);
+  return (samples[Math.min(samples.length - 1, Math.floor(samples.length * quantile))] ?? 0) - drop;
+}
+
+function createSpanShadowBand(halfWidth: number, halfLength: number, color: string, opacity: number): THREE.Mesh {
+  const columns = [-1, -0.62, 0, 0.62, 1];
+  const columnAlpha = [0, 1, 1, 1, 0];
+  const positions: number[] = [];
+  const colors: number[] = [];
+  const indices: number[] = [];
+  for (let row = 0; row <= SPAN_SHADOW_ROWS; row += 1) {
+    const t = row / SPAN_SHADOW_ROWS;
+    const taper = Math.min(
+      THREE.MathUtils.smoothstep(t, 0, SPAN_SHADOW_END_TAPER),
+      THREE.MathUtils.smoothstep(1 - t, 0, SPAN_SHADOW_END_TAPER),
+    );
+    for (let column = 0; column < columns.length; column += 1) {
+      positions.push(columns[column]! * halfWidth, 0, THREE.MathUtils.lerp(-halfLength, halfLength, t));
+      colors.push(1, 1, 1, columnAlpha[column]! * taper);
+    }
+  }
+  for (let row = 0; row < SPAN_SHADOW_ROWS; row += 1) {
+    for (let column = 0; column < columns.length - 1; column += 1) {
+      const a = row * columns.length + column;
+      const b = a + 1;
+      const c = a + columns.length;
+      const d = c + 1;
+      indices.push(a, c, b, b, c, d);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 4));
+  geometry.setIndex(indices);
+  geometry.computeBoundingSphere();
+  const mesh = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({
+    color,
+    vertexColors: true,
+    transparent: true,
+    opacity,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  }));
+  mesh.name = 'Terrain3dSpanShadow';
+  mesh.userData.renderOnly = true;
+  mesh.frustumCulled = false;
+  mesh.renderOrder = RenderLayers.groundDecals + 0.05;
+  return mesh;
+}
+
+function mountSpanShadow(
+  host: Host,
+  mounts: Array<{ id: string; model: THREE.Object3D }>,
+  waterY: number | undefined,
+): THREE.Mesh | undefined {
+  const dressing = SPAN_SHADOW_CONTRACTS[host.contractId];
+  if (isMapBeautyDisabled() || !dressing || waterY === undefined) return undefined;
+  const span = mounts.find(({ id }) => id === dressing.mountId)?.model;
+  if (!span) return undefined;
+  const box = new THREE.Box3().setFromObject(span);
+  const size = box.getSize(new THREE.Vector3());
+  if (size.x <= 0 || size.z <= 0) return undefined;
+  const shadow = createSpanShadowBand(size.x * dressing.widthScale, size.z * dressing.lengthScale, dressing.color, dressing.opacity);
+  const lean = ledgerSunShadowDirection();
+  const drop = Math.max(0, box.max.y - waterY);
+  shadow.position.set(
+    (box.min.x + box.max.x) / 2 + lean.x * drop * dressing.throw,
+    waterY + SPAN_SHADOW_LIFT,
+    (box.min.z + box.max.z) / 2 + lean.y * drop * dressing.throw,
+  );
+  host.scene.add(shadow);
+  host.canvas.dataset.terrain3dPilotSpanShadow = `${(size.z * dressing.lengthScale * 2).toFixed(2)}x${(size.x * dressing.widthScale * 2).toFixed(2)}@${drop.toFixed(2)}`;
+  return shadow;
 }
 
 /**
@@ -734,14 +839,16 @@ function sculptWaterSurfaceY(
  * the baked height grid; nothing is written back.
  */
 function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number, bounds: THREE.Box3): SculptWater | undefined {
-  const dressing = SCULPT_WATER[host.contractId];
+  const dressing = SCULPT_WATER_DRESSING[host.contractId];
   if (isMapBeautyDisabled() || !dressing || !Terrain.hasRiverWater()) return undefined;
   const river = Terrain.riverGeometry();
   const centerZ = (river.minZ + river.maxZ) / 2;
   const riverHalfWidth = (river.maxZ - river.minZ) / 2;
   const fordHalfWidth = Terrain.fordRanges()[0]?.halfWidth ?? 3;
   const halfX = Math.min(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
-  const surfaceY = sculptWaterSurfaceY(heightAt, halfX, centerZ, fordHalfWidth, dressing);
+  const surfaceY = dressing.surface.kind === 'channel-fill'
+    ? sculptWaterSurfaceY(heightAt, halfX, centerZ, fordHalfWidth, dressing.surface.fill, dressing.fordSkim)
+    : sculptWaterFloorY(heightAt, halfX, centerZ, dressing.surface.quantile, dressing.surface.drop);
   const visualHalfWidth = dressing.visualHalfWidth ?? Terrain.visualWaterHalfWidth();
   const water = createSculptWater({
     ford: false,
@@ -839,6 +946,91 @@ function mountSunMotes(host: Host, bounds: THREE.Box3): SunMotes | undefined {
   host.scene.add(motes.points);
   host.canvas.dataset.terrain3dPilotMotes = String(motes.count);
   return motes;
+}
+
+/** Trestle gorge wisps plus cart-local steam, both shed before gameplay VFX. */
+function mountCrossingBreath(host: Host, waterY: number | undefined): CrossingBreath | undefined {
+  const dressing = CROSSING_BREATH_CONTRACTS[host.contractId];
+  if (isMapBeautyDisabled() || !dressing || waterY === undefined || performanceTierDiagnostics().tier !== 'full') return undefined;
+  const wisps = createSunMotes({
+    count: dressing.wisps.count,
+    halfX: dressing.wisps.halfX,
+    halfZ: dressing.wisps.halfZ,
+    centerZ: 0,
+    minY: waterY + 0.04,
+    maxY: waterY + dressing.wisps.lift,
+    drift: new THREE.Vector2(0, 0),
+    rise: dressing.wisps.rise,
+    color: dressing.wisps.color,
+    size: dressing.wisps.size,
+    seed: 0x7e51,
+  });
+  wisps.points.name = 'TrestleGorgeWisps';
+  let plume: SunMotes | undefined;
+  let cart: THREE.Object3D | undefined;
+  let lastFrame = -1;
+  let lastAt = 0;
+  const advance = (renderer: THREE.WebGLRenderer) => {
+    const frame = renderer.info.render.frame;
+    if (frame === lastFrame) return;
+    const now = performance.now() / 1000;
+    const delta = lastFrame < 0 ? 0 : Math.min(SCULPT_WATER_MAX_DELTA, Math.max(0, now - lastAt));
+    lastFrame = frame;
+    lastAt = now;
+    wisps.advance(delta);
+    plume?.advance(delta);
+  };
+  wisps.points.onBeforeRender = advance;
+  host.scene.add(wisps.points);
+
+  let ticks = 0;
+  const poll = () => {
+    if (!wisps.points.parent) return;
+    if (ticks % CROSSING_BREATH_POLL_FRAMES === 0) {
+      const verdict = host.detailBudget?.() ?? 0;
+      wisps.points.visible = verdict < 1;
+      if (!cart) {
+        const found = host.scene.getObjectByName('OreCart');
+        if (found) {
+          cart = found;
+          plume = createSunMotes({
+            count: dressing.plume.count,
+            halfX: dressing.plume.radius,
+            halfZ: dressing.plume.radius,
+            centerZ: 0,
+            minY: 1.65,
+            maxY: 1.65 + dressing.plume.height,
+            drift: new THREE.Vector2(0, 0),
+            rise: dressing.plume.rise,
+            color: dressing.plume.color,
+            size: dressing.plume.size,
+            seed: 0x2c07,
+          });
+          plume.points.name = 'TrestleCartSteam';
+          plume.points.onBeforeRender = advance;
+          cart.add(plume.points);
+        }
+      }
+      if (plume) plume.points.visible = verdict < 2;
+      host.canvas.dataset.terrain3dPilotGorgeWisps = wisps.points.visible ? String(dressing.wisps.count) : '0';
+      host.canvas.dataset.terrain3dPilotSteam = plume?.points.visible ? String(dressing.plume.count) : '0';
+    }
+    ticks += 1;
+    requestAnimationFrame(poll);
+  };
+  requestAnimationFrame(poll);
+  host.canvas.dataset.terrain3dPilotGorgeWisps = String(dressing.wisps.count);
+  host.canvas.dataset.terrain3dPilotSteam = '0';
+  return {
+    dispose: () => {
+      host.scene.remove(wisps.points);
+      wisps.dispose();
+      plume?.points.removeFromParent();
+      plume?.dispose();
+      plume = undefined;
+      cart = undefined;
+    },
+  };
 }
 
 /**
@@ -1380,6 +1572,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let rushEmbers: SunMotes | undefined;
   let steamPlume: SteamPlume | undefined;
   let landmarkContacts: THREE.InstancedMesh | undefined;
+  let spanShadow: THREE.Mesh | undefined;
+  let crossingBreath: CrossingBreath | undefined;
   let ponds: SpringPondSurface[] = [];
   let nextPonds: SpringPondSurface[] = [];
   let channelWater: THREE.Group | undefined;
@@ -1485,6 +1679,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         sunMotes = mountSunMotes(host, terrainMetrics.bounds);
       } catch (error) {
         host.canvas.dataset.terrain3dPilotMotes = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+      }
+      try {
+        crossingBreath = mountCrossingBreath(host, sculptWater?.mesh.position.y);
+      } catch (error) {
+        host.canvas.dataset.terrain3dPilotSteam = `failed:${error instanceof Error ? error.message : 'unknown'}`;
       }
       host.canvas.dataset.terrain3dPilotTerrainLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'mounted';
@@ -1593,6 +1792,15 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           );
         } catch (error) {
           host.canvas.dataset.terrain3dPilotContactShadows = `failed:${error instanceof Error ? error.message : 'unknown'}`;
+        }
+        try {
+          spanShadow = mountSpanShadow(
+            host,
+            nextLandmarks.children.map((model) => ({ id: model.name, model })),
+            sculptWater?.mesh.position.y,
+          );
+        } catch (error) {
+          host.canvas.dataset.terrain3dPilotSpanShadow = `failed:${error instanceof Error ? error.message : 'unknown'}`;
         }
         try {
           rushEmbers = mountRushEmbers(
@@ -1713,6 +1921,18 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       landmarkContacts = undefined;
       delete host.canvas.dataset.terrain3dPilotContactShadows;
     }
+    if (spanShadow) {
+      host.scene.remove(spanShadow);
+      disposeObject3D(spanShadow);
+      spanShadow = undefined;
+      delete host.canvas.dataset.terrain3dPilotSpanShadow;
+    }
+    if (crossingBreath) {
+      crossingBreath.dispose();
+      crossingBreath = undefined;
+      delete host.canvas.dataset.terrain3dPilotGorgeWisps;
+      delete host.canvas.dataset.terrain3dPilotSteam;
+    }
     for (const pond of ponds) {
       host.scene.remove(pond.group);
       pond.dispose();
@@ -1755,6 +1975,7 @@ type LandmarkPaint = { intensity: number; tint: string };
  * body drops below 1.5 and the silhouette edges stay lit.
  */
 const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
+  'e2-trestle': { 'south-boiler-site': { intensity: 1.45, tint: '#d6cfc4' }, 'north-boiler-site': { intensity: 1.45, tint: '#d3ccc4' }, 'mine-spur-kit': { intensity: 1.3, tint: '#e6d6bc' }, },
   'e1-baron': {
     fortified_far_bank: { intensity: 1.7, tint: '#93a0aa' },
     siege_line: { intensity: 1.9, tint: '#9ba5ab' },
