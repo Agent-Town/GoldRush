@@ -74,7 +74,7 @@ Expect **0**. If **≥1**, a Fair Wheel path is already socketed — STOP and re
 3. `src/sim/HeadlessContractSim.ts` — how `2256ee58` and `a172eed0` socketed `syncCanyonConnectObjective()` and the Crawler. **Mirror that shape.**
 4. `src/game/Game.ts` — the five sites in the chain above (`:2592`, `:2593`, `:3770`, `:4848`, `:5337`, `:5894`). This is your reference implementation.
 5. `src/agent/MechanicsManifest.ts` — how the two cured sockets derive rules from consumers. ⚠️ **I did not trace this file's derivation logic; READ it rather than assuming the rules appear on their own.** The census asserts the manifest currently exposes none of `dayNightCycle` / `fairground` / `powerGrid` for this contract, so something must change here — find out what, from the precedents.
-6. `e2e/er01-e3-census.spec.ts:6` — `SOCKET_GAPS` names those exact three twist sources as fairground's expected gaps. Your slice moves that list; see scope 5.
+6. `e2e/er01-e3-census.spec.ts` — find the `SOCKET_GAPS` record near the top of the file; its `'e3-fairground'` entry names those exact three twist sources as fairground's expected gaps. Your slice moves that list; see scope 5. *(Cited by content, not by line: coordinates rot — F-1310-1.)*
 7. `scripts/gr-sim.test.mjs` — the stub block around `:60–:94`. This is the environment your sim half must survive in. **It stubs `location` and `window`. It does not stub `document`.**
 
 ## SCOPE — numbered, each independently testable
