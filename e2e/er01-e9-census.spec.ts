@@ -47,11 +47,69 @@ for (const contract of redfields.contracts) {
 
       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
       const { deriveMechanicsManifest } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts');
+      const { EnemyPool } = await vite.ssrLoadModule('/src/entities/pools.ts');
+      const { Economy } = await vite.ssrLoadModule('/src/game/Economy.ts');
+      const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+      const { E9CanalSocket } = await vite.ssrLoadModule('/src/sim/E9CanalSocket.ts');
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
       const mechanics = deriveMechanicsManifest(contract.id);
 
       expect(mechanics.interactables).toEqual([]);
       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(['build_zones']);
+      if (contract.id === 'e9-dome-basin') {
+        const drive = () => {
+          const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e9-canal-probe' });
+          const socket = E9CanalSocket.create(loadContract(contract.id), new EnemyPool(), new Economy());
+          expect(socket).not.toBeNull();
+          const initialStage = socket.diagnostics.stage;
+          const actor = { position: sim.hero.group.position, speed: 0 };
+          let ticks = 0;
+          const advance = (steps: number) => {
+            for (let step = 0; step < steps; step += 1) {
+              ticks += 1;
+              socket.advance(1 / 30, ticks / 30, [actor]);
+            }
+          };
+          const stages: number[] = [];
+          for (const gate of socket.diagnostics.gates) {
+            actor.position.set(gate.x, 0, gate.z);
+            advance(45);
+            stages.push(socket.diagnostics.stage);
+          }
+          const node = socket.diagnostics.quarry.nodes[0];
+          actor.position.set(node.x, 0, node.z);
+          advance(30);
+          for (let step = 0; step < 45; step += 1) {
+            const position = socket.diagnostics.dustDevil.position;
+            if (position) actor.position.set(position.x, 0, position.z);
+            advance(1);
+          }
+          return { socket, initialStage, stages, ticks };
+        };
+        const first = drive();
+        const second = drive();
+        const diagnostics = first.socket.diagnostics;
+
+        expect([first.initialStage, second.initialStage]).toEqual([0, 0]);
+        expect(first.stages).toEqual([1, 2, 3]);
+        expect(diagnostics).toMatchObject({
+          stage: 3,
+          canal: { wet: true },
+          quarry: { harvested: 1 },
+          dustDevil: { phase: 'storm' },
+          refusedConsumers: ['OldDiggerBossSystem', 'E9ArsenalSystem'],
+        });
+        expect(diagnostics.receipts.map(({ id }: { id: string }) => id)).toContain('e9-canal-quarry-payout-ice-pack-1');
+        expect(diagnostics.dustDevil.shoves).toBeGreaterThan(0);
+        expect(diagnostics.dustDevil.pushedDistance).toBeGreaterThan(0);
+        expect(first.ticks).toBe(second.ticks);
+        expect(JSON.stringify(second.socket.simulationSnapshot)).toBe(JSON.stringify(first.socket.simulationSnapshot));
+        expect(diagnostics.bossStepsRefused).toBeGreaterThan(0);
+        expect(diagnostics.arsenalStepsRefused).toBeGreaterThan(0);
+        expect(E9CanalSocket.create(loadContract('e1-dry-gulch'), new EnemyPool(), new Economy())).toBeNull();
+      } else {
+        expect(E9CanalSocket.create(loadContract(contract.id), new EnemyPool(), new Economy())).toBeNull();
+      }
       for (const suffix of ['01', '02']) {
         expect(() => new HeadlessContractSim({ contractId: contract.id, seed: `${contract.id}-${suffix}` })).toThrow(
           new RegExp(`AP-07 supports only .*received ${contract.id}`),
