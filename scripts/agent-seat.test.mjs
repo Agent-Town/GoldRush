@@ -119,6 +119,10 @@ test('the seat carries BUILD and refuses to stretch for the rest', { timeout: 60
     const malformed = driver.submit([{ verb: 'BUILD', what: 'not_a_building', where: { x: 0, z: 0 }, when: { goldGte: 1 } }]);
     assert.equal(malformed.ok, false);
     assert.equal(malformed.reason, 'INVALID_ARGS');
+    // The two reasons must be decidable WITHOUT reading the copy back. An earlier draft
+    // classified by substring-matching its own message, which fails open the first time
+    // anyone rewords it — so pin that the messages do not overlap.
+    assert.doesNotMatch(malformed.message, /cannot ride the lockstep wire yet/);
     assert.equal(driver.submit('not an array').ok, false);
   });
 });

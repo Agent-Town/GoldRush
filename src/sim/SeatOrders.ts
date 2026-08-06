@@ -64,10 +64,8 @@ export class SeatOrdersDriver {
     const parsed: SeatBuildOrder[] = [];
     for (let index = 0; index < value.length; index += 1) {
       const outcome = parseSeatOrder(value[index], index);
-      if (typeof outcome === 'string') {
-        return { ok: false, reason: unspeakable(outcome) ? 'UNSPEAKABLE_ON_THE_WIRE' : 'INVALID_ARGS', message: outcome };
-      }
-      parsed.push(outcome);
+      if (!outcome.ok) return outcome;
+      parsed.push(outcome.order);
     }
     this.held = parsed.map((order) => ({ order, fired: false }));
     return { ok: true, accepted: parsed.length };
@@ -104,14 +102,30 @@ function conditionMet(condition: SeatBuildCondition, state: SeatRunState): boole
   return 'goldGte' in condition ? state.gold >= condition.goldGte : state.wave >= condition.waveGte;
 }
 
-function parseSeatOrder(value: unknown, index: number): SeatBuildOrder | string {
-  if (!isRecord(value) || typeof value.verb !== 'string') return `orders[${index}] requires a verb.`;
-  if (value.verb !== 'BUILD') return unspeakableMessage(index, value.verb);
-  if (!exactKeys(value, BUILD_KEYS)) return `orders[${index}] does not match the BUILD schema.`;
-  if (!isBuildableId(value.what) || !validPos(value.where)) return `orders[${index}] does not match the BUILD schema.`;
+/**
+ * The two refusals are STRUCTURALLY distinct, not distinguished by reading the prose
+ * back. An earlier draft decided the reason by substring-matching its own message —
+ * a selector that fails OPEN the first time anyone rewords the copy, silently
+ * reclassifying "the door is unbuilt" as "you made a typo". They are different things
+ * to a rider: one is worth fixing, the other is worth waiting for.
+ */
+type ParsedSeatOrder =
+  | { ok: true; order: SeatBuildOrder }
+  | { ok: false; reason: 'INVALID_ARGS' | 'UNSPEAKABLE_ON_THE_WIRE'; message: string };
+
+function parseSeatOrder(value: unknown, index: number): ParsedSeatOrder {
+  if (!isRecord(value) || typeof value.verb !== 'string') return malformed(`orders[${index}] requires a verb.`);
+  if (value.verb !== 'BUILD') return unspeakable(index, value.verb);
+  const schemaError = malformed(`orders[${index}] does not match the BUILD schema.`);
+  if (!exactKeys(value, BUILD_KEYS)) return schemaError;
+  if (!isBuildableId(value.what) || !validPos(value.where)) return schemaError;
   const when = validCondition(value.when);
-  if (!when) return `orders[${index}] does not match the BUILD schema.`;
-  return { verb: 'BUILD', what: value.what, where: { x: value.where.x, z: value.where.z }, when };
+  if (!when) return schemaError;
+  return { ok: true, order: { verb: 'BUILD', what: value.what, where: { x: value.where.x, z: value.where.z }, when } };
+}
+
+function malformed(message: string): ParsedSeatOrder {
+  return { ok: false, reason: 'INVALID_ARGS', message };
 }
 
 /**
@@ -119,15 +133,15 @@ function parseSeatOrder(value: unknown, index: number): SeatBuildOrder | string 
  * verb, names why, and names the rung that would fix it — so a rider reading this
  * knows the door is unbuilt rather than broken.
  */
-function unspeakableMessage(index: number, verb: string): string {
-  return `orders[${index}].verb "${verb}" cannot ride the lockstep wire yet. `
-    + 'A seated rig may only send acts the shared vocabulary already speaks, and today that is BUILD alone. '
-    + 'Panning, repairing and the position verbs command a body the wire has no word for — '
-    + 'they wait on a standing-orders act in the lockstep vocabulary itself.';
-}
-
-function unspeakable(message: string): boolean {
-  return message.includes('cannot ride the lockstep wire yet');
+function unspeakable(index: number, verb: string): ParsedSeatOrder {
+  return {
+    ok: false,
+    reason: 'UNSPEAKABLE_ON_THE_WIRE',
+    message: `orders[${index}].verb "${verb}" cannot ride the lockstep wire yet. `
+      + 'A seated rig may only send acts the shared vocabulary already speaks, and today that is BUILD alone. '
+      + 'Panning, repairing and the position verbs command a body the wire has no word for — '
+      + 'they wait on a standing-orders act in the lockstep vocabulary itself.',
+  };
 }
 
 function validCondition(value: unknown): SeatBuildCondition | null {
