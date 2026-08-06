@@ -48,14 +48,88 @@ for (const contract of redfields.contracts) {
       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
       const { deriveMechanicsManifest } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts');
       const { EnemyPool } = await vite.ssrLoadModule('/src/entities/pools.ts');
+      const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
       const { Economy } = await vite.ssrLoadModule('/src/game/Economy.ts');
       const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+      const { E9ArsenalSocket } = await vite.ssrLoadModule('/src/sim/E9ArsenalSocket.ts');
       const { E9CanalSocket } = await vite.ssrLoadModule('/src/sim/E9CanalSocket.ts');
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
       const mechanics = deriveMechanicsManifest(contract.id);
 
       expect(mechanics.interactables).toEqual([]);
       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(['build_zones']);
+      const driveArsenal = (hasResearch: boolean) => {
+        const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e9-arsenal-probe' });
+        const enemies = new EnemyPool();
+        const socket = E9ArsenalSocket.create(
+          loadContract(contract.id),
+          sim.combat,
+          sim.events,
+          enemies,
+          () => sim.hero.group.position,
+          (index: number) => sim.build.turretPosition(index),
+          () => hasResearch,
+        );
+        expect(socket).not.toBeNull();
+        let chargeDuringStorm = 0;
+        for (let step = 1; step <= 180; step += 1) {
+          socket.advance(1 / 30, step / 30);
+          if (step === 120) chargeDuringStorm = socket.diagnostics.weather.charge;
+        }
+        return { sim, enemies, socket, chargeDuringStorm };
+      };
+      const locked = driveArsenal(false);
+      expect(locked.socket.diagnostics.items).toEqual([]);
+      expect(locked.socket.deployFence()).toBe(false);
+
+      const firstArsenal = driveArsenal(true);
+      const secondArsenal = driveArsenal(true);
+      for (const driven of [firstArsenal, secondArsenal]) {
+        expect(driven.chargeDuringStorm).toBeGreaterThan(0);
+        expect(driven.chargeDuringStorm).toBeLessThan(Balance.e9Arsenal.weather.chargeCapacity);
+        expect(driven.socket.diagnostics.items).toEqual([
+          'stormDraw',
+          'stormLance',
+          'stormFence',
+          'terraformCannon',
+        ]);
+        expect(driven.socket.diagnostics.weather).toMatchObject({
+          phase: 'storm',
+          charge: Balance.e9Arsenal.weather.chargeCapacity,
+          capacity: Balance.e9Arsenal.weather.chargeCapacity,
+        });
+        expect(driven.socket.deployFence()).toBe(true);
+        const enemy = driven.enemies.spawn(driven.sim.hero.group.position.clone());
+        expect(enemy).not.toBeNull();
+        driven.socket.advance(1 / 30, 181 / 30);
+        expect(driven.socket.movementMultiplier(enemy)).toBe(Balance.e9Arsenal.stormFence.slowMultiplier);
+        expect(driven.socket.diagnostics).toMatchObject({
+          fenceDeployments: 1,
+          refusedConsumers: ['CombatSystem.update', 'EnemyPool.update'],
+          combatTicksRefused: 181,
+          enemyIntegrationTicksRefused: 181,
+          fires: { stormDraw: 0, stormLance: 0, terraformCannon: 0 },
+          outcomes: [],
+        });
+        expect(driven.socket.diagnostics.pushedDistance).toBeGreaterThan(0);
+        expect(driven.socket.diagnostics.denialTicks).toBeGreaterThan(0);
+      }
+      expect(JSON.stringify(secondArsenal.socket.simulationSnapshot)).toBe(
+        JSON.stringify(firstArsenal.socket.simulationSnapshot),
+      );
+      expect(firstArsenal.socket.diagnostics.combatTicksRefused).toBeGreaterThan(0);
+      expect(firstArsenal.socket.diagnostics.enemyIntegrationTicksRefused).toBeGreaterThan(0);
+      for (const control of ['e1-dry-gulch', 'e5-deepwater-claim']) {
+        expect(E9ArsenalSocket.create(
+          loadContract(control),
+          firstArsenal.sim.combat,
+          firstArsenal.sim.events,
+          firstArsenal.enemies,
+          () => firstArsenal.sim.hero.group.position,
+          (index: number) => firstArsenal.sim.build.turretPosition(index),
+          () => true,
+        )).toBeNull();
+      }
       if (contract.id === 'e9-dome-basin') {
         const drive = () => {
           const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e9-canal-probe' });
