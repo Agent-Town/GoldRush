@@ -26,8 +26,12 @@ them wrongly — that is F-1492-1, verbatim.
 
 ## READ FIRST (paths, in this order)
 
-- `reviews/f1492-2-secure-wave-reframed.md` — **the whole WHY of this task**, with the measurements. Read it before touching anything.
-- `reviews/f-seed-1-front-door-parity.md` — s1492's gate on the cure you are extending (F-1492-1 is the finding this task closes).
+⚠️ **The first two files are on `main` and are NOT in this worktree** — `lane/a` is 24 commits behind and **must not be refreshed** (see the pre-flight). Read them without changing your tree:
+`git show main:reviews/f1492-2-secure-wave-reframed.md` · `git show main:reviews/f-seed-1-front-door-parity.md`.
+Everything you strictly need is also restated in the WHY section below, so a `git show` failure is not a blocker — but read them if you can.
+
+- `reviews/f1492-2-secure-wave-reframed.md` (via `git show main:`) — **the whole WHY of this task**, with the measurements.
+- `reviews/f-seed-1-front-door-parity.md` (via `git show main:`) — s1492's gate on the cure you are extending (F-1492-1 is the finding this task closes).
 - `e2e/er01-e2-census.spec.ts` — the row you are correcting (line ~109).
 - `scripts/gr-sim.test.mjs` — the six expectations you are re-pinning.
 - `src/sim/HeadlessContractSim.ts:325-328` and `src/game/Game.ts:4844` — the `autoSecureWaveForRun` bypass that makes the census equality unsound on baron contracts. **Read these two before you edit the assertion**, so you are implementing a measured conclusion rather than trusting this file.
