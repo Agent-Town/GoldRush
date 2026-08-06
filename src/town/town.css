@@ -1357,6 +1357,11 @@ figure:has(> .town-ui__contract-art-image--interim)::after {
     padding: 8px;
   }
 
+  .town-ui__contract.town-ui__training-card {
+    grid-template-rows: 120px auto;
+    gap: 6px;
+  }
+
   .town-ui__contract-art {
     min-height: 120px;
   }
