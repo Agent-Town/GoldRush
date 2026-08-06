@@ -20,6 +20,8 @@ The headless socket that would complete the admission is blocked by one property
 | `npx tsc --noEmit` | **rc=0**, clean |
 | `npm run build` | **rc=0**, `✓ built in 1.17s`, asset-diet green (235 GLBs 84% cut, 54 PNGs 87% cut) |
 | `er01-e4-census` + `er01-e2/e3/e5/e6-census` + `drill-yard-manifest`, **both** projects | **42 passed / 0 failed / 3.5m** (`--workers=1`, desktop-chrome + mobile-chrome) |
+| `npm run test:node-guards` (mandatory — touches `src/agent/`, F-1460-1) | **rc=0**, `tests 305 · pass 302 · fail 0`. Worth noting: the **F-1460-1 Baron pin red that every earlier era-socket drain reported (`280 pass / 1 fail`) is not present** — the battery has grown to 305 and is fully green. I did not cure it and make no claim to; recorded so the next drain does not go looking for an expected red. |
+| `npm run test:ledger-guards` (run **last**, F-1300-4 — it gates my own BACKLOG row) | **rc=0**, all PASS: goal/closure/ruling/law-pointer/gate-caller/block-class guards, citation guard (462 scanned, no new bare `spec:line`), main-lock gate 7/7 fixtures, janitor rejection a/b/c, `nul-audit` CLEAN |
 | Manifest determinism | `deriveMechanicsManifest('e4-dust-flats')` byte-identical across two calls |
 | Blast radius | `land_yacht` rule count: `e4-long-road` **0**, `e4-gusher-county` **0**, `e4-boneyard` **0**, and **0** for all five E1 fixture contracts |
 | Adjacent red, control-proven | `agent-view.spec.ts:264` + `:297` — **PRE-EXISTING**, see below |
