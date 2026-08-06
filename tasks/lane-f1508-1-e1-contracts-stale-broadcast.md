@@ -6,7 +6,7 @@
 - `e2e/072-era-activation.spec.ts:23` — the subject: `const E1_CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'];` — a **pasted** list of five.
 - `e2e/072-era-activation.spec.ts:226-241` — the failing test, `fresh E1 profile stays unchanged and the pre-flip determinism hash is identical`, whose `expect(...).toEqual(E1_CONTRACTS)` is the red.
 - `assets/contracts/epoch-1-frontier/contracts.json` — the manifest. It lists **six** ids, in order: `the-claim`, `e1-drill-yard`, `e1-dry-gulch`, `e1-night-shift`, `e1-twin-banks`, `e1-baron`.
-- `e2e/drill-yard.spec.ts:80-100` — the sibling spec. It boots **fresh** (`page.goto('/')`, no `?replay=`) and asserts the Drill Yard card **is visible**, carries `data-training-ground="true"`, and is **NOT** inside the `contract-chapter-epoch-1-frontier` chapter.
+- `e2e/drill-yard.spec.ts:80-100` ("plain boot keeps the Drill Yard visible and launchable on both sides of the welcome", the test opening at `:68`) — the sibling spec. It boots **fresh** (`page.goto('/')`, no `?replay=`) and asserts the Drill Yard card **is visible**, carries `data-training-ground="true"`, and is **NOT** inside the `contract-chapter-epoch-1-frontier` chapter.
 - `reviews/f1504-1-drill-yard-stale-absence.md` — the shipped precedent for **exactly this class** of cure, merged `9559633aa136abb8c91b3293d4d1198ffc128172`.
 - `logs/suite-red-inventory.md:577` — the inventory's provenance block. **Read the date.**
 
@@ -74,7 +74,7 @@ owed: the first-bad commit is already named above by `git log -S`, and its chang
 - ❌ **Never touch `logs/suite-red-inventory.md` or `logs/suite-red-inventory-compact.json`.** Refreshing the
   ledger here would write a *stale broadcast* into it as an accepted known-red and destroy the dated evidence
   this task's WHY depends on.
-- ❌ Do not "fix" the other red in this family (`e2e/landmark-collision.spec.ts:68`). It is a **genuine**
+- ❌ Do not "fix" the other red in this family (`e2e/landmark-collision.spec.ts:68` — "enemy blocker routing is deterministic and goes around a county landmark"). It is a **genuine**
   unexplained regression and is a separate slice — see the handoff. Report it if you see it; do not touch it.
 - ❌ Do not delete or weaken the `toEqual` into a `toContain`/subset check. That would drop the leakage
   invariant scope 3 exists to protect.
