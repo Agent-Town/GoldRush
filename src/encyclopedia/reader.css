@@ -66,10 +66,15 @@
 }
 
 .claim-ledger__views,
-.county-standings__contracts {
+.county-standings__contracts,
+.county-standings__parties {
   display: flex;
   gap: 8px;
   overflow-x: auto;
+}
+
+.county-standings__parties {
+  margin-top: 12px;
 }
 
 .county-standings__contracts {
@@ -96,7 +101,8 @@
 }
 
 .claim-ledger__views button,
-.county-standings__contracts button {
+.county-standings__contracts button,
+.county-standings__parties button {
   flex: 0 0 auto;
   border: 1px solid rgba(76, 48, 23, 0.44);
   border-radius: 6px;
@@ -109,10 +115,31 @@
 }
 
 .claim-ledger__views button[aria-pressed='true'],
-.county-standings__contracts button[aria-pressed='true'] {
+.county-standings__contracts button[aria-pressed='true'],
+.county-standings__parties button[aria-pressed='true'] {
   border-color: #5b8a8a;
   background: #5b8a8a;
   color: #fff8e8;
+}
+
+.county-standings__parties-hint,
+.county-standings__message {
+  margin: 6px 0 0;
+  color: #684728;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.county-standings__message:empty {
+  display: none;
+}
+
+.county-standings__message {
+  max-width: 680px;
+  margin-top: 12px;
+  color: #7a3a1c;
+  font-style: italic;
+  line-height: 1.4;
 }
 
 .county-standings {
@@ -172,6 +199,38 @@
   line-height: 1.2;
   text-transform: uppercase;
   vertical-align: 1px;
+}
+
+.county-standings__riders {
+  display: block;
+  margin-top: 3px;
+  color: #684728;
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: normal;
+}
+
+.county-standings__watch {
+  border: 1px solid rgba(76, 48, 23, 0.44);
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: #f4d9a2;
+  color: #2e1b0e;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.county-standings__no-reel {
+  color: #8b7355;
+  font-size: 0.74rem;
+  font-style: italic;
+}
+
+.county-standings tr[data-refused='true'] > * {
+  background: rgba(122, 58, 28, 0.08);
 }
 
 .county-standings table {
@@ -471,6 +530,18 @@
     text-align: right;
     font-size: 0.75rem;
     font-weight: 800;
+  }
+
+  /* Four party chips do not fit a 390px row; wrapping keeps every posse size one tap away
+     instead of hiding sizes 3 and 4 behind a horizontal scroll the board does not advertise. */
+  .county-standings__parties {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .county-standings__parties button {
+    padding: 7px 9px;
+    font-size: 0.82rem;
   }
 
   .claim-ledger__cards {
