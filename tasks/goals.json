@@ -4048,9 +4048,12 @@
               "title": "F-1504-1: e2e/drill-yard.spec.ts:92 asserts the Drill Yard briefing is ABSENT (toHaveCount(0)) — the pre-AP-11 shape. f1501-1 merged at abcfffb88127640c1709d6ec37033e84f9106ced makes the card render its briefing, so the assertion is stale by construction and red on both projects; a pre-merge control at bef7788c8 returned 4 passed, proving the red is merge-caused. Invert it into a positive check that the briefing is present and carries every authored rule (derived from loadEpoch, not hardcoded copy). f1501-1 could not do this: its firewall forbade e2e/**, deliberately.",
               "taskFile": "lane-f1504-1-drill-yard-stale-absence.md",
               "lane": "lane-a",
-              "status": "queued",
+              "status": "merged",
               "attempts": 0,
-              "authoredBy": "s1504 fire"
+              "authoredBy": "s1504 fire",
+              "mergeHash": "9559633aa136abb8c91b3293d4d1198ffc128172",
+              "drainedBy": "s1505 fire",
+              "note_s1505": "MERGED 9559633aa. CURES F-1504-1. Gates on the merged tree in the detached gate-s1505 worktree: tsc clean, build 1.08s, own spec drill-yard 4 passed (2 tests x 2 projects, the DERIVED count), adjacent RE-DERIVED from the tree (11 specs, not the runners 4) 106 passed / 0 failed. test:node-guards not triggered: the merge touches zero src bytes. LOAD-BEARING PROBE RE-RUN BY THE DRAIN rather than accepted from the report (s1299/s1301 standard): TownScene.ts:2302 emptied -> Expected 1 / Received 0 on BOTH projects and only the :68 test; restored byte-identically, blob 496a2fec557c13d7e2522bb13a75bdf52b89199b before and after. The rules are DERIVED from loadEpoch, not pasted, so the owner-flagged straw mans prose fix (F-1501-4) will need no test edit. Review: reviews/f1504-1-drill-yard-stale-absence.md"
             },
             {
               "id": "e9-dome-basin-socket",
