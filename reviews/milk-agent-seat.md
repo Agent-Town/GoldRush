@@ -81,9 +81,11 @@ Caught at the exact tick the lie was told, at both seats, in under a second. Nei
 - the seat carries BUILD and refuses to stretch for the other five verbs, with a malformed BUILD reported as a *different* failure from an unspeakable one;
 - the throttle ceiling is **read out of `functions/api/_multiplayer.ts` at test time**, so if the relay's rate limit ever moves, this reds instead of rotting.
 
-### 4. Human + rig boot probe — `e2e/agent-seat.spec.ts`, **1 pass**, desktop-chrome
+### 4. Human + rig boot probe — `e2e/agent-seat.spec.ts`, **1 pass / 1 skipped**, 7.1 s
 
-A human opens a room in a real browser, gets claim word `CB3EB35D00B39D4FF1F52EE5`, and a headless rig takes the empty chair. The human's own roster reads **`["Robin of Dawn Claim", "Rig of Calculating House"]`** and the screenshot (`artifacts/agent-seat/seat-desktop.png`, 1280×800) shows the RIDERS panel with both names and the rig's name chip standing in the world beside the host.
+A human opens a room in a real browser, gets a claim word (`CB3EB35D00B39D4FF1F52EE5` on the first run, `362E36DFA4814136E86CE2CD` on the second — it reproduced), and a headless rig takes the empty chair. The human's own roster reads **`["Robin of Dawn Claim", "Rig of Calculating House"]`** and the screenshot (`artifacts/agent-seat/seat-desktop.png`, 1280×800) shows the RIDERS panel with both names and the rig's name chip standing in the world beside the host.
+
+The probe runs on `desktop-chrome` only and the skip lives in the `beforeAll` **as well as** the test body — standing up two wranglers for the other projects just to skip the body is a minute of nothing.
 
 Then the engines declare their disagreement and the rig resigns at tick 0 (F-SEAT-2). The 390px capture (`artifacts/agent-seat/seat-390px.png`, 390×844) is the nicest accident of this shift: the human's client shows **"RIDE TOGETHER — Holding the trail. Rig has 60 seconds to return."** The game already has vocabulary for a rider leaving the table; it treats a resigned rig exactly like a friend who dropped.
 
@@ -99,7 +101,7 @@ Then the engines declare their disagreement and the rig resigns at tick 0 (F-SEA
 | collection guards, re-run **after** adding `e2e/agent-seat.spec.ts` | 23/23 |
 | `node scripts/gate-caller-audit.mjs` | PASS — 9 orphans, all grandfathered, **unchanged** by this slice (verified by execution, not inference) |
 
-Zero console or page errors in the boot probe.
+**Zero console errors and zero page errors in the boot probe — ASSERTED, not observed.** The first draft of this review claimed it while the spec merely attached an artifact; the spec now collects both buckets and `expect`s them empty, and `artifacts/agent-seat/boot-probe.json` records `"consoleErrors": []` / `"pageErrors": []` from the run that produced this line. A rig joining a human's room and then resigning costs the host nothing.
 
 ---
 

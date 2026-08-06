@@ -2,7 +2,7 @@ import { spawn } from 'node:child_process';
 import { mkdir, rm, writeFile } from 'node:fs/promises';
 import net from 'node:net';
 import path from 'node:path';
-import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 /**
@@ -41,7 +41,13 @@ let worker: RelayProcess;
 
 test.describe.configure({ mode: 'serial' });
 
-test.beforeAll(async () => {
+// The probe runs on ONE project — a door either opens or it does not, and standing up
+// two wranglers for the other two projects only to skip the body is 60s of nothing.
+// The skip therefore lives in the hook as well as in the test.
+const PROBE_PROJECT = 'desktop-chrome';
+
+test.beforeAll(async ({}, testInfo) => {
+  if (testInfo.project.name !== PROBE_PROJECT) return;
   await rm(STATE_ROOT, { recursive: true, force: true });
   worker = await startRoomWorker();
   try {
@@ -57,10 +63,11 @@ test.afterAll(async () => {
   await worker?.stop();
 });
 
-test('a rig takes the empty chair at a human hostesss table, then resigns rather than ride a world it cannot hash', async ({ page }, testInfo) => {
-  test.skip(testInfo.project.name !== 'desktop-chrome', 'one door proof is enough; the 390px arm is captured in-test');
+test('a rig takes the empty chair at a human host table, then resigns rather than ride a world it cannot hash', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== PROBE_PROJECT, 'one door proof is enough; the 390px arm is captured in-test');
   test.setTimeout(180_000);
   await mkdir(ARTIFACT_DIR, { recursive: true });
+  const errors = watchErrors(page);
 
   // The human opens the room from their own browser and is handed the claim word.
   await seedProfile(page);
@@ -112,12 +119,33 @@ test('a rig takes the empty chair at a human hostesss table, then resigns rather
     { message: 'the browser rider registered the mismatch too', timeout: 30_000 },
   ).toBeGreaterThan(0);
 
+  // A rig joining and then resigning must not cost the human a clean boot. This is the
+  // shift's zero-console law, ASSERTED — the review may not claim it otherwise.
+  expect(errors.consoleErrors, 'the host boots without console errors').toEqual([]);
+  expect(errors.pageErrors, 'the host boots without page errors').toEqual([]);
+
   await writeFile(
     path.join(ARTIFACT_DIR, 'boot-probe.json'),
-    `${JSON.stringify({ code, roster: envelope.roster, ticks: envelope.ticks, resigned: envelope.resigned, exitCode: run.exitCode }, null, 2)}\n`,
+    `${JSON.stringify(
+      { code, roster: envelope.roster, ticks: envelope.ticks, resigned: envelope.resigned, exitCode: run.exitCode, ...errors },
+      null,
+      2,
+    )}\n`,
   );
-  await attachConsoleFreeOfNewErrors(testInfo);
+  await testInfo.attach('agent-seat-boot-probe', {
+    path: path.join(ARTIFACT_DIR, 'boot-probe.json'),
+    contentType: 'application/json',
+  });
 });
+
+function watchErrors(page: Page): { consoleErrors: string[]; pageErrors: string[] } {
+  const bucket = { consoleErrors: [] as string[], pageErrors: [] as string[] };
+  page.on('console', (message) => {
+    if (message.type() === 'error') bucket.consoleErrors.push(message.text());
+  });
+  page.on('pageerror', (error) => bucket.pageErrors.push(error.message));
+  return bucket;
+}
 
 function seatEnvelope(run: SeatRun): {
   roster: string[];
@@ -187,13 +215,6 @@ async function seedProfile(page: Page): Promise<void> {
       seeded: HOST,
     },
   );
-}
-
-async function attachConsoleFreeOfNewErrors(testInfo: TestInfo): Promise<void> {
-  await testInfo.attach('agent-seat-boot-probe', {
-    path: path.join(ARTIFACT_DIR, 'boot-probe.json'),
-    contentType: 'application/json',
-  });
 }
 
 // ---------------------------------------------------------------------------
