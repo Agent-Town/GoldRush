@@ -2299,6 +2299,7 @@ export class TownScene {
             <p class="town-ui__contract-flavor" data-testid="contract-flavor-${escapeHtml(contract.id)}">${escapeHtml(
               contract.boardRow.ledgerBlurb,
             )}</p>
+            ${renderContractBriefing(contract)}
             <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
               contract.id,
             )}" ${unlock.unlocked ? '' : 'disabled'}>${escapeHtml(unlock.unlocked ? 'Enter the yard' : (unlock.action ?? unlock.condition))}</button>
