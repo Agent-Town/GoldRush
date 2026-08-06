@@ -3,6 +3,43 @@
 **Slice:** era-socket class, E5 + E6 · **Branch:** `milk/twin-sockets` · **Base:** `18b2ef276` (main, s1482)
 **Date:** 2026-08-06 · **Shift:** final-milk fleet
 
+> ## ✅ DRAINED s1498 — MERGED `c41ba89d`
+>
+> Gated on the merged tree in detached `gate-s1498` (§3.0b), `--workers=1`, both projects: **tsc rc=0 ·
+> build green 994ms · `er01-e5` + `er01-e6` 16/16 · adjacent `er01` e2/e3/e4/e7/e8/e9/e10 56/56 ·
+> `test:node-guards` 341 tests / 338 pass / 0 fail / 3 skipped** (F-1460-1 fired — the diff touches
+> `src/sim/` and `src/agent/`) **· slice control `gr-sim` 10/10 pass 0 fail · plain-boot 14/14
+> desktop+390px, zero console/page errors.** The control pinned **9/9** in this review and the tree
+> gave **10** — main added the F-1493-2 Baron drift pin since; the count grew and nothing redded.
+>
+> ⚠️ **THIS REVIEW'S MERGE CLASSIFICATION WAS FALSE BY THE TIME IT WAS DRAINED, EXACTLY AS F-1497-1
+> PREDICTED.** It records *"Base `18b2ef276`. All six paths LANE-TOUCHED only — main moved none of them"*
+> and *"No conflicts."* True when written; **13 hunks across all 6 files** at drain time, because the two
+> milk drains ahead of this one in the queue are what moved four of its six paths. s1497 mapped it
+> (`artifacts/s1497-twin-sockets-conflict-map.txt`) and this fire re-measured before trusting the map —
+> main had moved only `STATUS.md` and `artifacts/` since, so the map held exactly.
+>
+> **Three resolutions a later reader should not have to re-derive:**
+> 1. **F-ID COLLISION.** This branch and `milk/deepwater-surgery` were authored in parallel against the
+>    same E5 census and **both minted `F-ER01-E5-5`** for different findings. The socket-shape stub keeps
+>    the number (two banners and `reviews/milk-deepwater-surgery.md` cite it by name); this branch's
+>    finding is **renumbered `F-ER01-E5-7`** in place. Nothing dropped.
+> 2. **Two stale asserts dropped from `er01-e5-census.spec.ts`.** This branch asserted the Claim carries
+>    **no** `engineDependencies` (`toBeUndefined()`) — true at its base, false once `deepwater-surgery`
+>    landed the declaration. Main's ADMISSION GATE 1 is **strictly stronger** (it pins the exact `dep`
+>    name for all four contracts; this branch pinned only `status` for three), so the two lines were
+>    superseded rather than merged. **Keeping them would have redded.** The reasoning is at the call site.
+> 3. **`BROKEN: 1 of 4` struck, not deleted.** This branch's E5 rows carry the Regatta six-vs-five beacon
+>    defect that `7bfd62ee` had already cured. Resolved to **0 of 4**, the stale claim struck in place
+>    under a bridging banner that names why it was stale.
+>
+> The E6 census was rebuilt deliberately from both blobs rather than untangling git's interleaving: this
+> branch's socket-live findings are LIVE, `saga-surgeon`'s declaration-cure banners and the pre-socket
+> originals are RETAINED beneath each, and main-only `F-MILK-SS-1`/`F-MILK-SS-2` are preserved whole.
+>
+> 🔺 **`F-MTS-2` went to the OWNER'S DESK this fire** — it is a governed-surface decision (a new verb in
+> the agent grammar) and the review correctly filed rather than fixed it.
+
 ## VERDICT
 
 **SHIPPED — two era sockets, zero admissions, and the zero is the finding.**
