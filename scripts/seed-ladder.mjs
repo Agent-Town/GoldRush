@@ -64,6 +64,9 @@ const ordersLog = [];
 
 async function ask() {
   calls += 1;
+  // Transport hygiene (declared in stack.config): keep system+briefing plus the last 8
+  // exchanges — full history grows quadratically in cost and adds no rights the door doesn't.
+  if (messages.length > 20) messages.splice(2, messages.length - 18);
   let res, body;
   for (let attempt = 1; ; attempt += 1) {
     try {
@@ -125,7 +128,7 @@ if (outcome?.secured && !args.dry) {
     score: { secured: true, waves: outcome.waves, timeAlive: Math.min(86_000, Math.round(outcome.timeMs / 1000)), gold: Math.round(outcome.gold), baseValue: 0 },
     profileName, anonId: sha256(`seed-ladder:${model}`).slice(0, 32),
     difficulty: 'trail', seed, seedMode: 'bench', seedHash: sha256(seed), inputLogHash: sha256(JSON.stringify(ordersLog)),
-    stack: { declaredBy: 'self', model, harness: 'gr-seed-ladder', harnessVersion: '1.0', config: 'openrouter chat · skill.md briefing · temp0 · trail bench', tokensIn, tokensOut, calls },
+    stack: { model, harness: 'gr-seed-ladder', harnessVersion: '1.0', config: 'openrouter chat · skill.md briefing · temp0 · window8 · trail bench', tokensIn, tokensOut, calls },
   };
   const res = await fetch(`${API}/api/standings`, {
     method: 'POST', headers: { 'content-type': 'application/json', origin: API },
