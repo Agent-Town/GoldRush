@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -22,6 +24,50 @@ test('skill.md buildables match BuildableId', () => {
 
 test('skill.md bench seeds match the source registry', () => {
   assert.deepEqual(jsonBlock('seeds'), benchSeeds);
+});
+
+// F-1492-4 (s1493): the three tests above are the guard PASSING, and a passing guard never
+// executes its violation path — so their green is not evidence about the red. s1492 proved this
+// guard bites by manufacturing a defect BY HAND through the SKILLMD_PATH redirect, and recorded
+// the result in a review file; a proof that lives in prose is re-run by nobody. This is that
+// same probe, mechanised, so the claim "add a verb and forget the door and the battery reds" is
+// re-established on every run instead of being remembered.
+//
+// It must spawn a child: `skill` is read at module load (top of this file), so an in-process
+// env swap would be read too late. The child re-runs this same file, which would recurse
+// forever — hence the skip below, keyed on the redirect the child itself is given.
+test('the guard BITES a drifted skill.md (positive control, manufactured defect)', { skip: process.env.SKILLMD_PATH ? 'running as the manufactured-defect child' : false }, () => {
+  const source = readFileSync(path.resolve(root, 'public/skill.md'), 'utf8');
+  const fence = /(<!-- skillmd-guard:grammar:start -->[\s\S]*?```text\s*)([\s\S]*?)(\s*```)/.exec(source);
+  assert.ok(fence, 'could not locate the grammar fence to manufacture a defect in');
+  const lines = fence[2].split('\n').filter(Boolean);
+  assert.ok(lines.length > 1, 'the grammar fence needs more than one line for this control to mean anything');
+
+  const dir = mkdtempSync(path.join(tmpdir(), 'skillmd-control-'));
+  const drifted = path.join(dir, 'skill.md');
+  try {
+    // Drop exactly one grammar line — the smallest drift a forgotten verb can produce.
+    writeFileSync(drifted, source.replace(fence[0], fence[1] + lines.slice(1).join('\n') + fence[3]));
+    // NODE_TEST_CONTEXT MUST BE STRIPPED, and this is the whole reason this control is subtle.
+    // When we are ourselves running under `node --test`, that variable is set in our env; a child
+    // that inherits it believes it is a test-runner child, reports its results over IPC to a
+    // parent that is not listening, and EXITS 0 EVEN THOUGH ITS ASSERTIONS FAILED. Measured
+    // s1493: status 0 with the variable at either 'child-v8' or 'child', status 1 with it unset.
+    // So the naive version of this control passes when you run this file by hand and is VACUOUS
+    // inside `test:node-guards` — green in the only context that matters, for the wrong reason.
+    const env = { ...process.env, SKILLMD_PATH: drifted };
+    delete env.NODE_TEST_CONTEXT;
+    const child = spawnSync(process.execPath, ['--test', fileURLToPath(import.meta.url)], {
+      cwd: root,
+      encoding: 'utf8',
+      env,
+    });
+    assert.notEqual(child.status, 0, 'a skill.md missing a grammar line did NOT red the guard');
+    assert.match(`${child.stdout}${child.stderr}`, /grammar matches every StandingOrder source form/,
+      'the guard reddened, but not on the grammar test — this control is measuring the wrong failure');
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 function typeAliases(source, filename) {
