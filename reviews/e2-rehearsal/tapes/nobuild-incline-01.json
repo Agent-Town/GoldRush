@@ -1,0 +1,81 @@
+{
+ "version": 1,
+ "id": "er02-e2-incline-card",
+ "createdAt": null,
+ "kept": true,
+ "contract": "e2-incline",
+ "seed": "e2-incline-01",
+ "difficulty": "trail",
+ "simVersion": null,
+ "inputLog": null,
+ "orderLog": [
+  {
+   "turn": 0,
+   "wave": 0,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 1,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 2,
+   "wave": 2,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "wave": 2,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 30,
+      "z": -20
+     }
+    }
+   ]
+  }
+ ],
+ "eventLogHash": "fnv1a32:51f426d5",
+ "outcome": {
+  "reason": "death",
+  "secured": false,
+  "waves": 2,
+  "timeAlive": 82.633,
+  "gold": 60
+ }
+}

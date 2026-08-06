@@ -1,0 +1,13225 @@
+{
+ "version": 1,
+ "id": "er02-bait-v1",
+ "createdAt": null,
+ "kept": true,
+ "contract": "e2-trestle",
+ "seed": "e2-trestle-01",
+ "difficulty": "trail",
+ "simVersion": null,
+ "inputLog": null,
+ "orderLog": [
+  {
+   "turn": 0,
+   "wave": 0,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 1,
+   "wave": 1,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 2,
+   "wave": 2,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 3,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 4,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 5,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 6,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 7,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 8,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 9,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 10,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 11,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 12,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 13,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 14,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 15,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 16,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 17,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 18,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 19,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 20,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 21,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 22,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 23,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 24,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 25,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 26,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 27,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 28,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 29,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 30,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 31,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 32,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 33,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 34,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 35,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 36,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 37,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 38,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 39,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 40,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 41,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 42,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 43,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 44,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 45,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 46,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 47,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 48,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 49,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 50,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 51,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 52,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 53,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 54,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 55,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 56,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 57,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 58,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 59,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 60,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 61,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 62,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 63,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 64,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 65,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 66,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 67,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 68,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 69,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 70,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 71,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 72,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 73,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 74,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 75,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 76,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 77,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 78,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 79,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 80,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 81,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 82,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 83,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 84,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 85,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 86,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 87,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 88,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 89,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 90,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 91,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 92,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 93,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 94,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 95,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 96,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 97,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 98,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 99,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 100,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 101,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 102,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 103,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 104,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 105,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 106,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 107,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 108,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 109,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 110,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 111,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 112,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 113,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 114,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 115,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 116,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 117,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 118,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 119,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 120,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 121,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 122,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 123,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 124,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 125,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 126,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 127,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 128,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 129,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 130,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 131,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 132,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 133,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 134,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 135,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 136,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 137,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 138,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 139,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 140,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 141,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 142,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 143,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 144,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 145,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 146,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 147,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 148,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 149,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 150,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 151,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 152,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 153,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 154,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 155,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 156,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 157,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 158,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 159,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 160,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 161,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 162,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 163,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 164,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 165,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 166,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 167,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 168,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 169,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 170,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 171,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 172,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 173,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 174,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 175,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 176,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 177,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 178,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 179,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 180,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 181,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 182,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 183,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 184,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 185,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 186,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 187,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 188,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 189,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 190,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 191,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 192,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 193,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 194,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 195,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 196,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 197,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 198,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 199,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 200,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 201,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 202,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 203,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 204,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 205,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 206,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 207,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 208,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 209,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 210,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 211,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 212,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 213,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 214,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 215,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 216,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 217,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 218,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 219,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 220,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 221,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 222,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 223,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 224,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 225,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 226,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 227,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 228,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 229,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 230,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 231,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 232,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 233,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 234,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 235,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 236,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 237,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 238,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 239,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 240,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 241,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 242,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 243,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 244,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 245,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 246,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 247,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 248,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 249,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 250,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 251,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 252,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 253,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 254,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 255,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 256,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 257,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 258,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 259,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 260,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 261,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 262,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 263,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 264,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 265,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 266,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 267,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 268,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 269,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 270,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 271,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 272,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 273,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 274,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 275,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 276,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 277,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 278,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 279,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 280,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 281,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 282,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 283,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 284,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 285,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 286,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 287,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 288,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 289,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 290,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 291,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 292,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 293,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 294,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 295,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 296,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 297,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 298,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 299,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 300,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 301,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 302,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 303,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 304,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 305,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 306,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 307,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 308,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 309,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 310,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 311,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 312,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 313,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 314,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 24
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 315,
+   "wave": 3,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 20
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 24,
+      "z": 16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 316,
+   "wave": 4,
+   "riderCall": true,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 317,
+   "wave": 4,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 318,
+   "wave": 4,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 319,
+   "wave": 4,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 320,
+   "wave": 4,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 321,
+   "wave": 5,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 322,
+   "wave": 5,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 323,
+   "wave": 6,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 324,
+   "wave": 6,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 325,
+   "wave": 7,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 326,
+   "wave": 7,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 327,
+   "wave": 8,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 328,
+   "wave": 8,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 329,
+   "wave": 9,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 330,
+   "wave": 9,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 331,
+   "wave": 10,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 332,
+   "wave": 10,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 333,
+   "wave": 11,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 334,
+   "wave": 11,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 335,
+   "wave": 12,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 336,
+   "wave": 12,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 337,
+   "wave": 13,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 338,
+   "wave": 13,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 339,
+   "wave": 14,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "turn": 340,
+   "wave": 14,
+   "riderCall": false,
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  }
+ ],
+ "eventLogHash": null,
+ "outcome": {
+  "reason": "death",
+  "secured": false,
+  "waves": 14,
+  "timeAlive": 0,
+  "gold": 0
+ }
+}
