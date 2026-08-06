@@ -4109,6 +4109,15 @@
               "authorNotes": "Authored after REFUTING the inherited F-1503-3 recommendation rather than adopting it. Both bisect endpoints were MEASURED this fire in one worktree/shell at --workers=1: 6 passed at b66905c64 (the commit the suite-red-inventory run measured), 4 failed / 2 passed at current main. red-inventory-lookup returns CLEAN-IN-INVENTORY and that verdict is CORRECT - the two inventory halves are the SAME run (compact stats.expected 2006 == markdown \"Total passed: 2006\", as logs/suite-red-inventory.md:581 claims), so CLEAN means \"ran and passed\", which the re-run independently confirms. F-1503-3 diagnosed a stale ledger and REC-d refreshing it; two later fires transcribed the verdict as NOT-IN-INVENTORY (opposite meaning). Refreshing would have written a live regression into the exoneration ledger as an accepted known-red. The master therefore FORBIDS refreshing the inventory and FORBIDS editing e2e/e9-roster.spec.ts, validates the predicate on both known outcomes before bisecting (a predicate not shown to distinguish the endpoints is not a predicate), and lets the runner STOP at a named culprit rather than guess a cure.",
               "mergeHash": "39987a4252dad31fb8ba3d267dde1c288dc6dc42",
               "drainNotes": "Drained s1507. Bisect named first-bad f3e2d102 (lane-tape-02-lantern-show): contract-derived activeEpoch sent every ordinary boot to the E1 fallback contract, and E9ArsenalSystem gates on activeEpoch.order >= 9. Cure keeps contract-derived epochs for ?replay routes only. Own spec 6 passed (matches the GOOD endpoint); culprit's own tape-02-lantern-show 2 passed. Both forbidden cures refused - the diff never touches e2e/e9-roster.spec.ts or the red inventory. 25-spec adjacent set derived by grep at drain time: 146 passed / 15 failed; 6 fingerprint-matched KNOWN-RED, 072-era-activation and landmark-collision red IDENTICALLY in a pre-merge control arm (filed F-1507-2), and the one candidate delta (town-dynamo-hall-blender:97) is 6/6 green alone and reds in the CONTROL arm under the same composition, whose failure count is itself unstable on a fixed commit (3 then 6) - filed F-1507-3. No red attributable to the merge."
+            },
+            {
+              "id": "f1508-1-e1-contracts-stale-broadcast",
+              "title": "F-1508-1: e2e/072-era-activation.spec.ts:23 hardcodes E1_CONTRACTS as five ids; the epoch-1 manifest has listed six since 2026-08-01 (f0bf5251b added e1-drill-yard), so :226 reds with Expected -0 / Received +1 on desktop-chrome. NOT a regression: the red inventory's snapshot is dated 2026-07-29 and listContracts() has not changed since 2026-07-07, so CLEAN-IN-INVENTORY means green nine days ago. Derive the list from the epoch-1 manifest (the f1504-1 precedent, merged 9559633aa) and prove by manufactured defect that the toEqual still catches later-epoch leakage.",
+              "taskFile": "lane-f1508-1-e1-contracts-stale-broadcast.md",
+              "lane": "lane-a",
+              "status": "queued",
+              "attempts": 0,
+              "authoredBy": "s1508 fire"
             }
           ]
         }
