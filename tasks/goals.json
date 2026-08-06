@@ -4115,9 +4115,11 @@
               "title": "F-1508-1: e2e/072-era-activation.spec.ts:23 hardcodes E1_CONTRACTS as five ids; the epoch-1 manifest has listed six since 2026-08-01 (f0bf5251b added e1-drill-yard), so :226 reds with Expected -0 / Received +1 on desktop-chrome. NOT a regression: the red inventory's snapshot is dated 2026-07-29 and listContracts() has not changed since 2026-07-07, so CLEAN-IN-INVENTORY means green nine days ago. Derive the list from the epoch-1 manifest (the f1504-1 precedent, merged 9559633aa) and prove by manufactured defect that the toEqual still catches later-epoch leakage.",
               "taskFile": "lane-f1508-1-e1-contracts-stale-broadcast.md",
               "lane": "lane-a",
-              "status": "queued",
-              "attempts": 0,
-              "authoredBy": "s1508 fire"
+              "status": "merged",
+              "attempts": 1,
+              "authoredBy": "s1508 fire",
+              "mergeHash": "f679b7de447fb38bd7aebdbb5928651764bcacda",
+              "drainNotes": "Drained s1509. E1_CONTRACTS now derives from loadEpoch(FRONTIER).contracts; two lines, one file. Gated on the merged tree in a detached gate-s1509 worktree (§3.0b custody) at --workers=1: tsc rc0, build rc0, 072-era-activation 9 passed / 1 skipped both projects, adjacent drill-yard + drill-yard-manifest + field-book + sci-04-contract-registry + contract-bundle-validation 18 passed both projects, zero console/page errors (only the known e1-drill-yard render_demotion warns). Determinism artifact ef44d2c0 independently reproduced on a clean tree, matching the lane's value. Merge classification: base 244e13448, main moved NONE of the lane's paths, so LANE-TOUCHED / MAIN-UNMOVED - clean apply, no graft; the lane's two PNG deltas were NOT merged (F-1330-3 evidence churn). F-1509-1 filed non-blocking: the runner's manufactured-defect probe is TRUE but narrower than its wording reads. listContracts(epochId = DEFAULT_EPOCH_ID) is literally loadEpoch(epochId).contracts (src/meta/ContractFamilies.ts:981-983), so both sides of the toEqual now derive from the same manifest. Measured by manufacturing the defect: removing e1-twin-banks from assets/contracts/epoch-1-frontier/contracts.json leaves 072:226 GREEN (blind to roster drift) and reds field-book.spec.ts:66, whose literal six-id list at :104 caught it. The probe proves cross-epoch LEAKAGE detection, not roster drift. Coverage is not lost - it moved - but field-book.spec.ts:104 is now the ONLY assertion of the E1 roster, and applying this same cure there would delete it silently. Probe reverted, assets/ verified clean, and the mid-probe determinism value (5bd0340c) was regenerated away before merge."
             }
           ]
         }
