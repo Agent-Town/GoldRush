@@ -4085,6 +4085,16 @@
               "mergeHash": "f315ecd2bb39e33f8ad1c44022dc5731e0566e4d",
               "drainedBy": "s1505 fire",
               "note_s1505": "MERGED f315ecd2b. Gates on the merged tree in a detached gate-s1505 worktree: tsc clean, build 978ms, own spec er01-e9-census 8 passed (4 desktop + 4 mobile, the DERIVED count), test:node-guards rc=0 fail 0 skipped 3 with the gr-sim Baron pin unmoved (mandatory per F-1460-1, the diff adds src/sim/). Headline PROVABLY unmoved: AGENT-READY 0 of 4 byte-identical, all 8 fnv1a32 hashes identical, spec diff purely additive (0 deletions) so the throws-assertion at :55-59 is unedited by construction. Six adjacent reds (e9-arsenal Cure-Arms x2, e9-roster x4) exonerated by a CONTROL RUN at clean main d8ed9805d failing identically -- same 6 tests, same 3 titles, both projects. Review: reviews/e9-arsenal-socket.md"
+            },
+            {
+              "id": "f1501-4-manifest-plural",
+              "title": "F-1501-4: the Drill Yard card says \"straw mans\". Cure the naive +s pluraliser at RENDER time in mechanicsManifestLine with a small irregular map; manifest data and the byte-stable fixture stay untouched.",
+              "taskFile": "lane-f1501-4-manifest-plural.md",
+              "lane": "lane-c",
+              "status": "planned",
+              "attempts": 0,
+              "authoredBy": "s1505 fire (FIRE-AUTHORED)",
+              "authorNotes": "Gate OPENED by abcfffb88 (s1504) - the card now prints the line to any player. s1505 SWEPT ALL 42 CONTRACTS rather than inheriting the class-fix warning: the pluraliser emits exactly FIVE terms board-wide and exactly ONE is wrong (straw_man x3, e1-drill-yard, via practice.targets). Correct today: lantern posts (x7 e1-night-shift, x2 e3-blackout-ridge/e3-canyon-works), rolling logs (x2 e1-drill-yard), sentry beacons (x3 e3-blackout-ridge), turrets (x2 e3-canyon-works). count===1 appends nothing so singulars are out of scope. MEASURING TRAP recorded in the master: ids reach the pluraliser from THREE sources and are NOT normalised alike - prePlacedBuildables and practice.stations use the id raw, practice.targets passes kind through toSnakeCase which also maps - to _ ; a probe that forgets it reports straw-mans/rolling-logs and sends the runner hunting a hyphen bug that does not exist (this caught the author first). FIXTURE SAFETY VERIFIED not assumed: e2e/fixtures/e1-mechanics-manifests.json holds raw ids (straw_man present) and never the rendered sentence (This claim speaks absent from all 7459 bytes), so a render-time cure cannot move it - which is what keeps the open f1328-1 owner fork closed. THE CRUX: the existing check at agent-view.spec.ts:348-352 compares the DOM against mechanicsManifestLine computed IN-TEST, i.e. the renderer against itself - tautological for this defect, it passed while the card said straw mans. The master therefore requires an assertion pinning the literal words plus rolling logs as the sharp control (the other practice.targets entry on the same card, currently correct)."
             }
           ]
         }
