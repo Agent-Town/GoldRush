@@ -26,6 +26,8 @@ A map with **zero harvest anchors** has nothing to mine, so the game correctly d
 
 **This is the F-1368-1 shape again, pointing the other way.** That finding caught the ledger *under*-claiming and repaired it. The repair was honest about what it measured — and the columns it measured cannot see this.
 
+> ⚠️ **The sibling ledger is NOT edited by this shift.** `docs/MAP-CAMPAIGN-LEDGER.md` still presents all 25 rows as awaiting only your verdict, and its four build columns remain correct as defined. Editing it is outside this shift's firewall, so the correction lives here instead. **The follow-up that shift did not have authority to do: add an `opens?` column to that ledger, derived from the door and not from the registry** — otherwise the next reader repeats the inference.
+
 ---
 
 ## WHAT YOUR EVENING ACTUALLY LOOKS LIKE
@@ -91,7 +93,7 @@ Two independent columns decide what a verdict means, and they do **not** move to
 **Cost:** the single largest owner ask on the board (`F-1368-1` desk row, `BACKLOG:2872`) asks for 25 verdicts. Twelve are possible.
 **Not new to the factory, new to the desk:** the E5 and E7 census docs each recorded the mechanism for their own era. No document joins it to the 25-map ask, and no owner-facing document mentions harvest anchors at all.
 **GATE: OWNER — one ruling, and it is a scope question, not a bug report.** Opening a map is a small data edit (`harvestAnchors` is a list of `{x, z}`; `The Eclipse` has six and opens, `Low Orbit` has zero and does not — the two contracts are otherwise structurally alike). But *placing* gold veins on a map is a design act, and for 11 of the 13 the map's signature mechanic is also unbuilt, so anchors alone would make them **openable but not the map you greenlit**. The three options, cheapest first:
-- **(a) Do nothing yet** — verdict the 12 that open; the 13 come back when their mechanics land. Zero risk, and the campaign ledger gets a truthful readiness column this shift either way.
+- **(a) Do nothing yet** — verdict the 12 that open; the 13 come back when their mechanics land. Zero risk.
 - **(b) Anchors-only pass on the 2 that declare nothing missing** (Half-Life Hollow, The Picnic) — smallest possible slice, makes 2 more maps walkable tonight-ish. ⚠️ *Undeclared is not proof that nothing is missing (F-1480-2); the first act of that task must be to probe for an undeclared consumer.*
 - **(c) Anchors on all 13** — you could walk every map, but 11 would play as generic claims wearing the right scenery, which is a worse basis for a verdict than not playing them at all. **I do not recommend this**, and I would want your word before any fire did it.
 **RECOMMENDED: (a), plus the ledger correction this shift already landed.**
