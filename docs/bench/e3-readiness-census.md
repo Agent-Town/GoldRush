@@ -52,3 +52,33 @@ The headless state exposes `crawler { act, bursts, drainActive, drainTarget, tra
 ### F-ER01-E3-4 — Fairground has two independent missing consumers
 
 The browser mounts the Fair Wheel into `PowerGraphSystem`, but GR-SIM has neither system, while `engineDependencies` separately declares that the advertised crowd-flock escort objective has no consumer at all. The attended fix master must keep those gaps separate: socket deterministic wheel/current behavior for agents, and author the missing crowd objective on its own governed surface before Fairground can be admitted.
+
+### F-MILK-SS-4 — E3 swept for the two cross-epoch defect classes: CLEAN on both (2026-08-06, milk/saga-surgeon)
+
+**No E3 finding is opened by this entry. It is recorded so the next session does not re-run a sweep that has already been run.**
+
+**1. Briefing-vs-data contradictions (the E5-Regatta / F-MILK-SS-3 class).** Every countable claim in all four Voltage briefings was compared against the structured data. All match:
+
+| Contract | Claim | Data | |
+|---|---|---|---|
+| `e3-blackout-ridge` | "trunk brings 36 W" | `powerGrid.nodes[off-map-current].outputWatts` 36 | ✅ |
+| | "each bank stores 0.05 Wh" | two nodes, `capacityWh` 0.05 | ✅ |
+| | "returns up to 12 W" | `dischargeWatts` 12 | ✅ |
+| | "the **three** pre-authored frames" | exactly 3 relay nodes labelled `… Trunk Frame` | ✅ |
+| | "80 by 96 ridge" | `dimensions` 80 × 96 | ✅ |
+| `e3-moth-season` | "Decoy Shed counts **double**" | `mothSeason.decoyWeight` 2 | ✅ |
+| | "**6** damage per attached swarm each second" | `attachDamagePerSecond` 6 | ✅ |
+| | "**12%** faster outside light below **35%** coverage" | `nightSpeedOutsideLight` 1.12, `litThreshold` 0.35 | ✅ |
+| | "two-second dusks" | `duskRampSeconds` 2 | ✅ |
+| | "**two** lit yards flank **one** unlit corridor" | `west-lit-yard`, `dark-corridor`, `east-tithe-yard` | ✅ |
+| `e3-canyon-works` | "CONNECT **both** cliff galleries by wave **6**" | `powerGrid.connect` `{required: 2, byWave: 6}`; zones `west-gallery`+`east-gallery` | ✅ |
+| | "96 by 112 gorge" | `dimensions` 96 × 112 | ✅ |
+| `e3-fairground` | "wheel makes **24 W**" | `fairground.wheel.outputWatts` 24 | ✅ |
+| | "watch radius to **18** units" | `wheel.viewRadius` 18 | ✅ |
+| | "**three** festival flocks" | `crowdFlocks.count` 3 | ✅ |
+| | "Copper and Silver pavilion lamps widen by **3** units each night" | both pavilions `radiusPerNight` 3 | ✅ |
+| | "88 by 88 bowl" | `dimensions` 88 × 88 | ✅ |
+
+⚠️ **Instrument note for whoever repeats this:** the pavilion row first read as a defect because the probe guessed the field name `nightRadiusBonus` and got `null` for both pavilions. The real key is `radiusPerNight`. **A `null` from a guessed key is not a negative result** — read the object before recording an absence.
+
+**2. The `engineDependencies` mandate (F-MILK-SS-1 class).** E3 is compliant, and for the right reasons: `e3-canyon-works` and `e3-fairground` declare (`elevation-advisory-fields`, `fairground-crowd-flock-consumer`), while `e3-blackout-ridge` and `e3-moth-season` correctly declare nothing — both are **AGENT-READY** with no missing consumer left to name. Notably `e3-canyon-works` carries **zero** `DECLARED_INERT_PATHS` keys, so nothing forced its declaration; it is the fleet's only voluntary declarant and the precedent the E6 cure follows.
