@@ -21,29 +21,57 @@
 > defect as prose inside F-ER01-E5-1. Both were cured anyway, so the order's intent is met — but the
 > count it asserted was wrong, and a later reader must not inherit it.
 
+
+> ## 🔌 RE-MEASURED AGAIN 2026-08-06 — `milk/twin-sockets`. **THE DEEPWATER SOCKET IS BUILT.**
+>
+> Merged s1498 on top of the `milk/deepwater-surgery` banner above. **Both passes are 2026-08-06 and both are
+> retained**: the surgery pass cured two CONTENT defects, this pass built the SIM SOCKET. They are disjoint in
+> substance and they agree on every number they share — **with one exception, resolved in favour of the surgery**
+> **pass because it is strictly newer.** `milk/twin-sockets` was authored against a base where the Regatta
+> briefing still promised six beacon gates, so its own rows below read **BROKEN: 1 of 4**. That defect was cured
+> at `7bfd62ee` before this branch merged. ➡️ **BROKEN IS 0 of 4.** Every twin-sockets sentence asserting
+> otherwise is struck in place below, never deleted — F-1497-1: a review’s claims about a shared document are
+> perishable, and draining a pile in order is what perishes them.
+
 Measured 2026-08-05 against all four board contracts in `epoch-5-deepwater`. Training/drill maps are excluded by the ratified ER-01 default. No contract can be admitted without inventing an E5 mechanic: the flagship's live boat, storm, arsenal, and Dredge-Queen consumers do not run headlessly, while the three variants declare their defining consumers missing. Forced generic GR-SIM runs were used only to record the idle Trail baseline below; each hash reproduced on a second run, but none is an acceptance pin because the support gate correctly rejects these contracts.
+
+Re-measured 2026-08-06 (`milk/twin-sockets`) after the Deepwater era socket landed. The 2026-08-05 pass could measure nothing but forced generic diagnostics; this pass runs the flagship's real tile and arsenal consumers headlessly and narrows its blocker from "browser-only systems" to one named line. Training/drill maps are excluded by the ratified ER-01 default. No contract is admitted, so no hash below is an acceptance pin.
+
+## WHAT CHANGED SINCE 2026-08-05
+
+`src/sim/DeepwaterSocket.ts` runs two of the flagship's three named consumers headlessly, in the browser's own relative order (`Game.syncDeepwaterClaim → arsenal.update → waveSystem.update → recycleCorsairsAtExit → combat.update → arsenal.resolveTreatments`):
+
+- **`DeepwaterClaimTile`** — water regions, the Claim-Boat, and the storm/corsair scheduler. Constructible, tickable, and **deterministic**: two independent instances advanced 18,000 fixed steps (600 s) produced byte-identical snapshots, 25 corsair waves each.
+- **`DeepwaterArsenal`** — constructible against the real headless `CombatSystem`, registering all three shooters, with the shared `depth_charge` munition at 12/12 and dive-zone sealing wired to the tile's own depth sample.
+
+`HeadlessContractSim` now also honours `Game.ts:1251` — a socketed Deepwater contract runs **no** generic wave schedule, because its storm track is the clock.
+
+The third consumer could not be socketed, and that is this census's central result. See F-ER01-E5-1.
 
 ## EXECUTIVE SUMMARY
 
-- **AGENT-READY: 0 of 4.** (Unmoved 2026-08-06 — admission needs the socket; see the banner.)
-- **DATA-GAP: 4 of 4** — the E5 signature systems have no complete manifest vocabulary or headless consumer. ~~Regatta, Stillwater, and Flotilla declare their missing consumer; the Deepwater Claim does not yet declare its missing headless dependencies.~~ ✅ **CURED 2026-08-06 — all four now declare it.** The Claim declares `deepwater-claim-consumer`, naming the browser-only `DeepwaterClaimTile` / `DeepwaterArsenal` / `DredgeQueenBossSystem` path. Re-measured: the derived manifests still expose **0 buildables · 0 interactables · 0 operations** (Claim 3 rules — `twist.baron`, `tileParams.buildZones`, `tileParams.waterSources`; the other three 2 rules each), so the declaration added **no vocabulary** — it only stopped the contract lying by omission.
-- ~~**BROKEN: 1 of 4 (also DATA-GAP)** — Regatta's briefing promises six beacon gates, but `raceCourse.beacons` and the terrain contract contain five.~~ ✅ **BROKEN: 0 of 4 — CURED 2026-08-06.** The briefing now reads *"Five beacon gates mark the out-and-back course."* **Five was the load-bearing number on four independent surfaces** (`contracts.json` `raceCourse.beacons`, the mask table `maskTruth.raceCourse.beacons`, `regatta-terrain-contract.json`, and that file's own `maskAgreement.beacons`: *"five submerged foundation rises follow the published checkpoint centers and radii"*) against **one** prose string — and the E5 bundle spec, `lore/STORYBOOK.md:282`, and every owner directive are **silent on the count**, so nothing ruled six. Six would have required inventing a beacon position with no terrain mount and re-baking the mesh. The authored bundles otherwise load without console/page errors. Regatta and Flotilla deliberately remain unavailable (`harvestAnchors: []`), so active contract selection falls back to the Claim rather than booting a false contract.
-- All four derived manifests expose zero interactable operations and omit `tileParams.deepwater` plus their variant fields. The seven standing-order grammar forms therefore cannot express the defining mechanics; generic verb acceptance would not be coverage. **Re-measured 2026-08-06 and unchanged** — `0 buildables / 0 interactables / 0 operations` on all four; rule sources are only `twist.baron` (Claim), `tileParams.buildZones`, `tileParams.waterSources`.
-- Both diagnostic seeds were forced through the generic path and repeated byte-identically. They remain outside the production bench registry because no E5 contract was admitted. The focused spec passed 8/8 across desktop and mobile projects, including both-seed support rejection and zero captured `console.error`/`console.warn` output. **Still 8/8 on 2026-08-06** with the two new admission-gate asserts added.
+- **AGENT-READY: 0 of 4.** Unmoved by both passes — admission needs a *terminating* contract, not just a socket.
+- **DATA-GAP: 3 of 4** — Regatta, Stillwater and Flotilla, each declaring a consumer that exists nowhere in the codebase. **Down from 4 of 4** because the Deepwater Claim’s consumers are no longer *missing*, they are *unreachable* (next bullet). ✅ The surgery pass’s declaration cure STANDS and is unaffected: all four contracts now declare `engineDependencies`, the Claim naming `deepwater-claim-consumer`. Re-measured across both passes, the derived manifests still expose **0 buildables · 0 interactables · 0 operations** for the three variants, so that declaration added no vocabulary — it only stopped the contract lying by omission.
+- **BLOCKED-ON-BROWSER-ONLY-CONSTRUCTION: 1 of 4** — the Deepwater Claim. `DredgeQueenBossSystem` cannot be constructed outside a browser at all, and it owns the contract’s only secure condition. This verdict is NEW in this pass and replaces the Claim’s former DATA-GAP row.
+- ~~**BROKEN: 1 of 4 (Regatta, also DATA-GAP)** — unchanged: the briefing promises six beacon gates while `raceCourse.beacons` and the terrain contract define five.~~ ⛔ **STRUCK — STALE ON ARRIVAL.** ✅ **BROKEN: 0 of 4.** The briefing now reads *"Five beacon gates mark the out-and-back course."* Five was load-bearing on four independent surfaces (`contracts.json` `raceCourse.beacons`, `mask-tables/e5-regatta.json`, `regatta-terrain-contract.json`, and that file’s `maskAgreement.beacons`) against one prose string, and canon is silent on the count. Pinned by ADMISSION GATE 2. **Regatta’s verdict is DATA-GAP only.**
+- The Claim’s derived manifest now carries six consumer-derived rules covering boat pads and anchors, water depth classes and the dive zone, the storm track and its corsair cadence, the arsenal and its shared munition, and — explicitly — the two levers an agent cannot reach. The three variants remain silent by design; their defining data must not become vocabulary while their consumers do not exist (reject-don’t-stretch).
+- Both boat levers were exercised and are real: `reanchor` moved `lagoon → open-water` and rejected a repeat of the current anchor; `placeBoatBuilding` placed on `bow` and rejected a second placement on the occupied pad.
+- All four derived manifests expose zero interactable **agent** operations. The seven standing-order grammar forms cannot express the defining mechanics of the three variants; generic verb acceptance would not be coverage.
+- Both diagnostic seeds were forced through the generic path and repeated byte-identically. They remain outside the production bench registry because no E5 contract was admitted. The focused spec passed 8/8 across desktop and mobile projects, including both-seed support rejection and zero captured `console.error`/`console.warn` output.
 - **The forced diagnostic is a temporary, reverted probe, not a code path.** `SUPPORTED_CONTRACTS` was patched in a scratch copy to let `gr-sim` construct these contracts, then `src/sim/HeadlessContractSim.ts` was restored and **verified byte-identical by sha256** (`a455db64…1098` both sides). Nothing about the support gate shipped.
 
 ## CENSUS
 
 | Contract | Admitted? | Boots? | Verbs? | Determinism? | Naive Trail outcome | Verdict + reason |
 |---|---|---|---|---|---|---|
-| `e5-deepwater-claim` | **NO** — support gate rejects it (re-verified 2026-08-06: `gr-sim` throws `AP-07 supports only …; received e5-deepwater-claim`) | **BLOCKED** — `DeepwaterClaimTile`, `DeepwaterArsenal`, and `DredgeQueenBossSystem` are browser-only here; ~~headless dependencies are undeclared~~ ✅ **now DECLARED** as `deepwater-claim-consumer` | **FAIL** — no boat, reanchor, storm, depth, arsenal, or Dredge-Queen operation is exposed (re-measured 2026-08-06: **0 operations**, 3 generic rules) | **N/A for admission** — forced hashes repeated twice; **both reproduced 2026-08-06** | Forced generic diagnostic: `01` **died**, wave 3, 0 calls, `fnv1a32:9d449cc4`;<br>`02` **died**, wave 3, 0 calls, `fnv1a32:96c6e567`<br>✅ **both re-run 2026-08-06, identical** | **DATA-GAP** — ~~the era socket and dependency declaration must land~~ ✅ **declaration CURED 2026-08-06**; the era socket alone still gates admission (F-ER01-E5-5) |
+| `e5-deepwater-claim` | **NO** — support gate rejects it | **PARTIAL** — `DeepwaterClaimTile` and `DeepwaterArsenal` run headlessly; `DredgeQueenBossSystem` cannot be constructed. ✅ Its dependency is **DECLARED** as `deepwater-claim-consumer` (surgery pass, `7bfd62ee`) — the declaration cure stands and is orthogonal to the socket | **PARTIAL** — boat, reanchor, storm, depth and arsenal vocabulary now derived from the consumers; no agent operation exists for any of it | **YES for the socketed half** — two independent tiles, 18,000 steps each, byte-identical snapshots, 25 corsair waves | Not re-run: the contract's secure condition is unreachable, so a terminal outcome would be a death statistic, not evidence | **BLOCKED — the boss cannot exist headlessly.** `DredgeQueenBossSystem.ts:77-80` calls `document.createElement('canvas')` from instance field initializers, before its own `enabled` flag is read |
 | `e5-regatta` | **NO** — support gate rejects it (re-verified 2026-08-06) | **BLOCKED** — the declared race consumer is missing, and empty harvest anchors make active selection fall back to `the-claim` | **FAIL** — no checkpoint, race, fast-water, or racer-loot operation is exposed (re-measured 2026-08-06: **0 operations**, 2 generic rules) | **N/A for admission** — forced hashes repeated twice; **both reproduced 2026-08-06** | Forced generic diagnostic: `01` **died**, wave 2, 0 calls, `fnv1a32:348721b8`;<br>`02` **died**, wave 2, 0 calls, `fnv1a32:3a51716f`<br>✅ **both re-run 2026-08-06, identical** | ~~**DATA-GAP + BROKEN** — the consumer is missing and the briefing says six gates while both data surfaces define five~~<br>✅ **BROKEN CURED 2026-08-06** — briefing now says five, matching all four data surfaces. **Verdict is now DATA-GAP only**: the race consumer still gates admission |
 | `e5-stillwater` | **NO** — support gate rejects it | **BLOCKED** — `noise-hunt-consumer` is declared missing | **FAIL** — no quiet/noise, permanent-fog, storm-suppression, or leviathan-hunt operation is exposed | **N/A for admission** — forced hashes repeated twice | Forced generic diagnostic: `01` **died**, wave 3, 0 calls, `fnv1a32:5eb24494`;<br>`02` **died**, wave 3, 0 calls, `fnv1a32:92ce69e7` | **DATA-GAP** — reject-don't-stretch until noise hunting is consumed and derivable |
 | `e5-flotilla` | **NO** — support gate rejects it | **BLOCKED** — the declared distributed-base consumer is missing, and empty harvest anchors make active selection fall back to `the-claim` | **FAIL** — no hull ownership, formation, straggler, hull-loss, or rider-assignment operation is exposed | **N/A for admission** — forced hashes repeated twice | Forced generic diagnostic: `01` **died**, wave 2, 0 calls, `fnv1a32:eb38173a`;<br>`02` **died**, wave 3, 0 calls, `fnv1a32:18ddc919` | **DATA-GAP** — reject-don't-stretch until the distributed-base consumer exists |
 
 ## FINDINGS
 
-### F-ER01-E5-1 — The Deepwater Claim has no honest headless socket
+### F-ER01-E5-1 — The Deepwater Claim's socket exists; its boss cannot (REWRITTEN)
 
 > 🟡 **PARTIALLY CURED 2026-08-06 (`milk/deepwater-surgery`).** The **declaration half is CLOSED**: `e5-deepwater-claim` now carries
 > `engineDependencies: [{ dep: 'deepwater-claim-consumer', status: 'missing', … }]`, naming the browser-only path verbatim, in the exact
@@ -51,8 +79,21 @@ Measured 2026-08-05 against all four board contracts in `epoch-5-deepwater`. Tra
 > ADMISSION GATE 1, **proven by deleting the declaration again → exactly the 2 Claim tests red, 6 green**.
 > The **socket half stays OPEN and is deliberately untouched** — it edits `SUPPORTED_CONTRACTS` and `HeadlessContractSim`, which this
 > shift's firewall forbids. Its shape is now written down as **F-ER01-E5-5** so the next author does not have to re-derive it.
+> ✅ **SOCKET HALF NOW CLOSED TOO (`milk/twin-sockets`, merged s1498)** — see the rewritten body directly below. The
+> stub this banner points at, **F-ER01-E5-5**, is DISCHARGED; the socket it specified was built.
 
-The browser boots the flagship through `DeepwaterClaimTile`, disables generic scheduled waves, advances its storm and corsair scheduler, fastens builds to Claim-Boat pads, runs the E5 arsenal, and resolves the Dredge-Queen through its dedicated boss system. `HeadlessContractSim` runs none of those consumers, while the mechanics manifest advertises only generic build zones, spring cells, and a Baron row; the contract also lacks the `engineDependencies` declaration AP-11 requires for this gap. The attended fix master needs a Deepwater consumer socket plus consumer-derived boat/storm/depth/arsenal/boss vocabulary and the missing dependency declaration; ER-01 must not certify the generic WaveSystem diagnostic as the same contract.
+Two thirds of the original finding are discharged: the tile consumer and the arsenal both run headlessly, deterministically, in browser tick order, and their vocabulary is derived from them rather than from `tileParams`.
+
+The remaining third is not a wiring gap and cannot be closed by wiring. `DredgeQueenBossSystem` builds its presentation in **instance field initializers** — `lootCounter = counterSprite()` and three `labelSprite(...)` calls at `src/systems/DredgeQueenBossSystem.ts:77-80` — and both helpers call `document.createElement('canvas')` (`:736`). Those initializers run before the constructor body, and therefore before the system's own `enabled` flag is ever consulted: **constructing the class outside a browser throws regardless of whether the boss is wanted.** Measured directly: `ReferenceError: document is not defined at counterSprite (DredgeQueenBossSystem.ts:661)`.
+
+That matters more than a missing socket, because the boss owns the contract's only exit. `twist.baron.variantId` is `dredge_queen` at wave 1, and `RunManager.autoSecureWaveForRun` withholds securing while a declared baron is unbeaten — so with no Dredge-Queen there is no secure condition at all, and the generic `WaveSystem` must never be allowed to stand in for it.
+
+The socket refuses that substitution *visibly* rather than silently: every storm wave that would have been handed to the boss is counted in `DeepwaterSocket.diagnostics.bossHandoffsRefused`, so a census can assert the gap instead of inferring it from an absence.
+
+The fix master must make the presentation lazy — build the sprites on first `syncPresentation`, or behind `enabled`, not in field initializers — before any admission is possible. `src/systems/**` is outside this shift's firewall.
+
+> 🗄️ **SUPERSEDED 2026-08-05 TEXT, retained per the Retention Law** — accurate when written, before either 2026-08-06 pass:
+> The browser boots the flagship through `DeepwaterClaimTile`, disables generic scheduled waves, advances its storm and corsair scheduler, fastens builds to Claim-Boat pads, runs the E5 arsenal, and resolves the Dredge-Queen through its dedicated boss system. `HeadlessContractSim` runs none of those consumers, while the mechanics manifest advertises only generic build zones, spring cells, and a Baron row; the contract also lacks the `engineDependencies` declaration AP-11 requires for this gap. The attended fix master needs a Deepwater consumer socket plus consumer-derived boat/storm/depth/arsenal/boss vocabulary and the missing dependency declaration; ER-01 must not certify the generic WaveSystem diagnostic as the same contract.
 
 ### F-ER01-E5-2 — The Regatta facade has no consumer and disagrees on its gate count
 
@@ -70,9 +111,14 @@ The browser boots the flagship through `DeepwaterClaimTile`, disables generic sc
 
 Regatta declares `regatta-race-consumer` missing for checkpoint progress and competing-racer loot, and its derived manifest exposes neither those mechanics nor its fast-water course. Its empty harvest-anchor list also makes normal active-contract selection return the Claim fallback, so a forced GR-SIM run combines Regatta diagnostics with the wrong global mechanics manifest. Separately, the player-facing briefing promises six beacon gates while `raceCourse.beacons` and `regatta-terrain-contract.json` define five. The attended fix master must reconcile that count, land the race consumer, derive the course vocabulary from it, and make the contract selectable before headless admission.
 
+> ⛔ **The `milk/twin-sockets` copy of this finding opened *"Unchanged … the briefing promises six beacon gates"* and was
+> **STALE ON ARRIVAL** — the surgery pass had already cured it at `7bfd62ee`. Struck rather than merged; the banner above is
+> the live text. The branch's remaining sentences about the missing consumer, the manifest and selectability are identical
+> in substance to the body above and add nothing, so nothing else was lost (F-1497-1).
+
 ### F-ER01-E5-3 — Stillwater's quiet hunt is data without a consumer
 
-Stillwater declares `noise-hunt-consumer` missing for permanent fog, storm suppression, machine-noise emission, and leviathan attraction. The current headless path can generically fight an enemy roster, but the manifest exposes none of the quiet/noise choices that define the contract, so a deterministic death on both seeds is not playability evidence. The attended fix master must provide the consuming system and its agent/headless action surface before ER-01 can admit the map.
+Unchanged. Stillwater declares `noise-hunt-consumer` missing for permanent fog, storm suppression, machine-noise emission, and leviathan attraction. The current headless path can generically fight an enemy roster, but the manifest exposes none of the quiet/noise choices that define the contract, so a deterministic death on both seeds is not playability evidence. The attended fix master must provide the consuming system and its agent/headless action surface before ER-01 can admit the map.
 
 ### F-ER01-E5-4 — The Flotilla has no distributed-base owner
 
@@ -97,3 +143,14 @@ So the three variants were caught by their *variant* fields, never by the deepwa
 **Not fixed here: `src/meta/ContractFamilies.ts` is outside this shift's firewall.** But the sweep the fix would need **has already been run, so the next author does not have to.** Measured 2026-08-06 across all ten `assets/contracts/*/contracts.json`: `tileParams.deepwater` occurs in **exactly four contracts, all of them E5, and after today's cure all four declare `engineDependencies`.** So adding `tileParams.deepwater` to `DECLARED_INERT_PATHS` **reds nothing today** — it is a one-line change with a measured zero-fallout window, and that window closes the moment an E11+ epoch or a new variant authors a `deepwater` block. Land it soon and it is free; land it late and it is a migration.
 
 ⚠️ **Do not read the zero-fallout as "the guard was fine."** The order matters: the content cure came first and made the corpus clean, so the guard would now pass **because of** the fix rather than because it was ever watching. That is precisely the shape of a guard that passes by reading a subject that has already been repaired.
+
+> ⚠️ **F-ID COLLISION, RESOLVED AT MERGE (s1498).** `milk/deepwater-surgery` and `milk/twin-sockets` were authored in
+> parallel against this same census and **both minted `F-ER01-E5-5` for different findings** — the surgery pass for the
+> socket-shape stub above, the socket pass for the finding below. Neither branch could see the other. The stub keeps the
+> number (it is cited by name from two banners above and from `reviews/milk-deepwater-surgery.md`); the socket pass's
+> finding is **renumbered E5-7** here, with its text otherwise untouched. Nothing was dropped.
+### F-ER01-E5-7 — The Claim's levers exist on the consumer and not on the agent surface (NEW)
+
+`ClaimBoat.placeBuilding` and `ClaimBoat.reanchor` are real, tested levers — both were exercised headlessly, both accept a valid move and reject an invalid one. Neither is reachable by an agent: `AgentGameAdapter` (`src/agent/ToolSurface.ts:82`) carries `placeBuilding`, `panAt`, `repair`, `chaseMark`, `collectXp` and `collectGold`, and the browser reaches the boat through contract-specific actions (`Game.ts:1973`, `:1978`) that have no agent equivalent.
+
+Rather than advertise operations an agent cannot invoke, the manifest states the gap: rule `deepwater_levers_unreachable` names the two consumer levers and an empty `agentOperations` list. This is the same shape as F-ER01-E6-5 in the Atomic census — two epochs, independently measured, whose sockets both land on the agent verb list. Adding verbs to `AgentGameAdapter` is a governed-surface decision and belongs on the owner's desk, not in an era-socket slice.

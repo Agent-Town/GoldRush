@@ -3,11 +3,16 @@ import { createServer, type ViteDevServer } from 'vite';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 import atomic from '../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
 
+// Post-socket rule lists. `wrangle_*` appears on every Atomic contract because the browser
+// enables WrangleSystem for the whole epoch (Game.ts:646); the two tile rules are Glow Mesa's.
 const EXPECTED_RULES: Record<string, string[]> = {
-  'e6-glow-mesa': ['baron', 'build_zones'],
-  'e6-showroom': ['build_zones'],
-  'e6-half-life-hollow': ['build_zones'],
-  'e6-picnic': ['build_zones'],
+  'e6-glow-mesa': [
+    'baron', 'build_zones', 'decay_field_windows', 'night_vein_ring',
+    'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down',
+  ],
+  'e6-showroom': ['build_zones', 'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-half-life-hollow': ['build_zones', 'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-picnic': ['build_zones', 'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
 };
 
 // Each Atomic contract declares the era socket it is missing (AP-11 engineDependencies mandate).
@@ -20,7 +25,8 @@ const EXPECTED_DEPENDENCY: Record<string, string> = {
 };
 
 for (const contract of atomic.contracts) {
-  test(`${contract.id} census rejects the unsocketed Atomic mechanics`, async () => {
+  test(`${contract.id} census socket runs and still refuses admission`, async () => {
+    test.setTimeout(60_000);
     const seeds = (benchSeeds as Record<string, string[]>)[contract.id]!;
     const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
     const previousLocation = host.location;
@@ -42,6 +48,12 @@ for (const contract of atomic.contracts) {
       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
       const { deriveMechanicsManifest } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts');
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+      const { AtomicSocket } = await vite.ssrLoadModule('/src/sim/AtomicSocket.ts');
+      const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+      const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
+      const { EventBus } = await vite.ssrLoadModule('/src/core/EventBus.ts');
+      const { Economy } = await vite.ssrLoadModule('/src/game/Economy.ts');
+      const { EnemyPool } = await vite.ssrLoadModule('/src/entities/pools.ts');
       const mechanics = deriveMechanicsManifest(contract);
 
       expect(seeds).toEqual([`${contract.id}-01`, `${contract.id}-02`]);
@@ -52,12 +64,62 @@ for (const contract of atomic.contracts) {
       expect(contract.twist.enemyRoster.some(({ id }) => id === 'feral_toaster' || id === 'lawn_shepherd')).toBe(true);
       expect(mechanics.interactables).toEqual([]);
       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
+
+      // The socket is REAL: it constructs for this contract, and it is epoch-gated, not
+      // contract-gated — the same test the browser applies at Game.ts:646.
+      const events = new EventBus();
+      const enemies = new EnemyPool();
+      const socket = AtomicSocket.create(loadContract(contract.id), events, enemies, new Economy());
+      expect(socket).not.toBeNull();
+      expect(socket.diagnostics.epochId).toBe('epoch-6-atomic');
+      expect(socket.diagnostics.wrangle.enabled).toBe(true);
+      expect(AtomicSocket.create(loadContract('e1-dry-gulch'), new EventBus(), new EnemyPool(), new Economy())).toBeNull();
+
+      // F-ER01-E6-5, demonstrated on real objects rather than asserted in prose.
+      // Spawn the machines this contract's roster carries, wind them down, and show the board
+      // fills with enemies that can be neither fought nor cleared.
+      const machines = ['feral_toaster', 'lawn_shepherd']
+        .filter((id) => contract.twist.enemyRoster.some((entry) => entry.id === id));
+      // Borrow a vector from the pool itself: importing `three` into the spec loads a SECOND
+      // copy of the library, and its console warning reds the zero-console assertion below.
+      const at = (x: number) => enemies.all[0].position.clone().set(x, Balance.enemy.groundY, 0);
+      const spawned = machines.map((variantId, index) => enemies.spawn(at(index * 4), { variantId }));
+      expect(spawned.every(Boolean)).toBe(true);
+      expect(spawned.every((enemy) => socket.isHostile(enemy))).toBe(true);
+
+      const windDownFrames = Math.round(Balance.wrangle.windDownSeconds / (1 / 30)) + 30;
+      for (let frame = 0; frame < windDownFrames; frame += 1) {
+        socket.tickDecay();
+        socket.updateWrangle(1 / 30, frame / 30);
+      }
+
+      const active = socket.diagnostics.wrangle.active;
+      expect(active.map(({ variantId }: { variantId: string }) => variantId).sort()).toEqual([...machines].sort());
+      expect(active.every(({ state }: { state: string }) => state === 'exhausted')).toBe(true);
+      // Exhausted: harmless to the hero AND immune to it (Game.ts:536 and :2606 share the
+      // predicate), and still alive, so each one holds a spawn slot against Balance.waves.aliveCap.
+      expect(spawned.every((enemy) => socket.isHostile(enemy))).toBe(false);
+      expect(spawned.every((enemy) => enemy.isAlive)).toBe(true);
+      expect(spawned.every((enemy) => socket.movementMultiplier(enemy) === Balance.wrangle.exhaustedSpeedMultiplier)).toBe(true);
+      // Nothing captured them, because nothing CAN: the pen stays empty for the whole run.
+      expect(socket.diagnostics.wrangle.pen.total).toBe(0);
+      expect(socket.diagnostics.captureLever).toBe('absent-from-agent-surface');
+
+      // The manifest must keep saying so, in the consumer's own numbers.
+      const captureRule = mechanics.rules.find(({ id }: { id: string }) => id === 'wrangle_capture_unreachable');
+      expect(captureRule.data.aliveCap).toBe(Balance.waves.aliveCap);
+      expect(captureRule.data.agentOperations).toEqual([]);
+      expect(mechanics.buildables).toBeUndefined();
+
+      // Admission is still refused, and that is the point: three of these four now run
+      // deterministically, and running them is what proved they are not agent-ready.
       for (const seed of seeds) {
         expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
           new RegExp(`AP-07 supports only .*received ${contract.id}`),
         );
       }
       if (contract.id === 'e6-picnic') expect(mechanics.posting.lossStakes).toHaveLength(3);
+      if (contract.id === 'e6-half-life-hollow') expect(mechanics.posting.lossStakes).toEqual([]);
       expect(consoleErrors).toEqual([]);
     } finally {
       await vite?.close();
