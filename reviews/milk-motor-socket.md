@@ -1,3 +1,32 @@
+> **DRAIN RECEIPT — s1496, merged `d66bdbe35b6c700ad70a97bd8490a545aa451a0b`.** This shift's verdict below is
+> preserved verbatim (retention law: supersede, never delete). Gated on the MERGED tree in a detached
+> worktree (`gate-s1496`, §3.0b custody). **Battery:** `tsc` rc=0 · `build` rc=0, 1.17s · own spec
+> `er01-e4-census` **8/8** · adjacent **68/68** (the eight remaining `er01-e*-census` + `drill-yard-manifest`
+> + `contract-bundle-validation`) · `test:node-guards` rc=0, **zero `not ok`** (mandatory — touches
+> `src/agent/`). All `--workers=1`; Node **v26.4.0** per `.nvmrc`.
+>
+> ✅ **THE CONTROL RUN WAS RE-DONE ON CLEAN MAIN, AND IT VINDICATES THIS REVIEW'S CONCLUSION.** The s1495
+> drain order named this slice as the one to *"CONTROL-RUN before blaming"*, and the answer is that the
+> `agent-view.spec.ts` reds are **main's, not this slice's**: at clean main `6f8deccbe`, **4 failed / 4
+> passed**; on the merged tree, **the same 4** — `:264` and `:297`, both projects — with **12 passed**.
+> Identical fingerprint on both sides, so the merge introduces no red. F-MOTOR-1's root cause is confirmed
+> as stated: `e1-drill-yard` became the sixth E1 contract while the spec and `e1-mechanics-manifests.json`
+> fixture still expect five.
+>
+> 🟥 **ONE CORRECTION — F-1496-1: this review under-counts its own red.** It reports *"2 desktop reds"* and
+> *"the same two tests failed on the pristine tree"*. Measured at clean main, it is **4 across BOTH
+> projects** — `:264` and `:297` fail on desktop-chrome *and* mobile-chrome alike. The review's control arm
+> evidently ran one project while its first battery ran both, which is why its own text reads *"4 failures"*
+> in one place and *"two tests"* in another. **The substance is right and the finding stands; only the
+> count was wrong** — and a next reader fixing the fixture would have gated on 2 greens and left 2 red.
+> *This is the same shape as this shift's own F-MOTOR-2 (a miscount inherited from a grep), which makes it
+> worth naming rather than quietly fixing: a control arm must match the ORIGINAL run in composition, not
+> just in flags.*
+>
+> ⓘ The review's note that the **F-1460-1 Baron pin red is no longer present** is confirmed independently:
+> `test:node-guards` is green here with zero `not ok`. It was cured s1462; no future drain should go looking
+> for that expected red.
+
 # milk/motor-socket — THE MOTOR SOCKET
 
 **Slice:** E4's signature mechanic becomes visible to agents
