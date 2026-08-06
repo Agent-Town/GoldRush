@@ -254,7 +254,11 @@ while IFS= read -r line; do
   BLOCKED="$BLOCKED$(printf '%s
     ⏳ blocked %s min (tracked since first sighting)' "$txt" "$(mins_ago "$first")")
 "
-done < <(grep -E 'GATE:|AUTHOR (after|from)' tasks/BACKLOG.md 2>/dev/null | grep -v '^#' | grep -vE 'CLOSED|SHIPPED|superseded|RESOLVED|✅|~~|GATE✅|RETIRED|AUTHORED|QUEUED to|DO NOT QUEUE|Non-blocking|no action owed|^<br>|^ *<br>')
+done < <(grep -E 'GATE: ' tasks/BACKLOG.md 2>/dev/null | grep -v '^#' | grep -viE 'CLOSED|GATE: *closed|SHIPPED|superseded|RESOLVED|✅|🟢|~~|RETIRED|AUTHORED|QUEUED|DO NOT QUEUE|non-blocking|no action owed|RULED|CURED|DRAINED|MERGED|LANDED|DISCHARGED|^<br>|^ *<br>')
+# F-DASH-2: the old pattern matched EVERY ledger row whose prose contains "GATE:" — this week's
+# finding style writes gates into closed rows constantly, so the panel showed ~200 ghosts.
+# Only rows whose gate is still genuinely pending survive the filter above; the OWNER'S DESK
+# section below remains the authoritative owner-blocking list.
 [ -z "$BLOCKED" ] && BLOCKED="(nothing blocked — everything startable is queued or running)"
 BLOCKED=$(printf '%s' "$BLOCKED" | esc)
 
