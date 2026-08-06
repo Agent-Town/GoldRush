@@ -962,6 +962,14 @@
               "note": "This is the one F-CEN rung that is NOT parked behind launch closure: it was deliberately promoted as a prerequisite for the E2 drivers (hill-mine/trestle/pressure-garden/incline). The remaining F-CEN-1..8 content repairs stay post-launch-gated — do not author them. LEAF REGISTERED s1398, NOT s1398-authored: the master was authored and queued by the live attended session at 96fb9059, which committed it WITHOUT a leaf and wrote \"GOAL-LEAF DEBT (3 masters) next fire.\" verbatim at tasks/BACKLOG.md:2590. Status is \"building\" and not \"queued\" because the runner had already consumed the queue copy when I measured it: tasks/running/ held the master plus a live .pid at 18:22. I did not author, re-queue or alter the master, and I did not gate it — this discharges the Goal Registration Law bookkeeping only, so the slice is visible to drain-block-check and to every sweep that walks the goal tree instead of the queue directories.",
               "mergeHash": "372808f0ae2cf6dd025623b2b7872dadd4454f3d",
               "review": "reviews/e2-escort-mode-as-data.md"
+            },
+            {
+              "id": "er02-steamworks-rehearsal",
+              "title": "ER-02 The Steamworks rehearsal ✅ — standing-orders riders played both AGENT-READY E2 contracts headless; 8 metered runs, 0 secured, 19 findings (F-ER02-1..19)",
+              "status": "merged",
+              "taskFile": "er-02-steamworks-rehearsal-commission.md",
+              "mergeHash": "bb969fb3d918f29aebf27062a7d0ee17ea675a83",
+              "review": "reviews/standing-orders-rehearsal-e2.md"
             }
           ]
         },
