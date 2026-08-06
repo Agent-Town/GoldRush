@@ -5,7 +5,7 @@ Role: implementer. Workdir: `worktrees/lane-b` (slot lane-b, branch `lane/m4`).
 
 ## READ FIRST (paths, in this order)
 - `reviews/lane-survive-copy.md` §Findings — F-1328-1, where the blast radius was measured.
-- `e2e/agent-view.spec.ts:261-270` ("all five E1 mechanics manifests match their byte-stable fixture") — the failing test.
+- `e2e/agent-view.spec.ts:261-270` ("all five E1 mechanics manifests match their byte-stable fixture") (that test was RENAMED at commit 8fa0133f and is now titled "all six E1 mechanics manifests match their byte-stable fixture" — the count in the old title was the defect) — the failing test.
 - `e2e/fixtures/e1-mechanics-manifests.json` — the fixture that needs a 6th entry.
 - `e2e/072-era-activation.spec.ts:23` and `:236-241` ("fresh E1 profile stays unchanged and the pre-flip determinism hash is identical") — the second failing census.
 - `tasks/BACKLOG.md` — the AP-11 row (2026-07-31): "THE MECHANICS MANIFEST — verbs are grammar, mechanics are DERIVED per-contract vocabulary … NO-UNDECLARED-MECHANICS assayer law (hand-written manifests forbidden so it cannot rot)". **This is the law that governs how you produce the fixture.**

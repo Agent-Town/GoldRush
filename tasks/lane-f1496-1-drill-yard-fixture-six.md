@@ -120,7 +120,7 @@ license touching the separate census-count debt (`board-card-images.spec.ts:37`,
    existing file's JSON formatting exactly (same indentation, same trailing-newline convention) — a
    formatting-only diff on the five existing entries is acceptable **only** if their *semantic*
    content is unchanged; prove that (see self-check 4).
-2. **Update the id assertion at `e2e/agent-view.spec.ts:269`** ("all five E1 mechanics manifests match their byte-stable fixture") to the six ids in registry order.
+2. **Update the id assertion at `e2e/agent-view.spec.ts:269`** ("all five E1 mechanics manifests match their byte-stable fixture") (that test was RENAMED at commit 8fa0133f and is now titled "all six E1 mechanics manifests match their byte-stable fixture" — the count in the old title was the defect) to the six ids in registry order.
 3. **Update the test title at `:264`** — it says *"all five E1 mechanics manifests"*. Make the number
    match reality. **A title that lies is how this stayed invisible**: fires reading a passing-sounding
    name never asked whether the count was still true.
