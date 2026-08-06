@@ -64,3 +64,17 @@ s1397 re-read all six sites and their constant definitions rather than inheritin
 - ⚠️ **Report, do not commit, any tracked PNG under `artifacts/` or `reviews/` that your runs modify** (F-1328-3/F-1329-3: gate runs rewrite shipped evidence in place). `release-build.spec.ts` is screenshot-heavy — expect this to fire. Restore with `git checkout --` before committing.
 
 READY-FOR-GATES + report: the contract count your pre-flight measured and whether `e1-drill-yard` was present; **which branch of scope item 2 you took**; per-project pass counts for the release-door `-g` run, the full `release-build` suite, and the three adjacent suites; the `test:node-guards` count; and the list of tracked PNGs your runs dirtied and restored.
+
+---
+
+**CORRECTION APPENDED s1482 (F-1398-1 — do not edit the lines above; citations quote them).**
+The commands at `:38` and `:61` name `e2e/release-build.spec.ts` without naming a config, so they
+run under the DEFAULT harness — and `playwright.config.ts` `testIgnore`s that spec (it sits in the
+`claimedByAnotherConfig` array, landed `c8ed271c4` 2026-07-31, the F-1296-3 cure). Measured s1482:
+`npx playwright test e2e/release-build.spec.ts --list` prints **"No tests found" / "Total: 0 tests in
+0 files"** and exits rc=1. It fails loudly rather than falsely green, so nothing shipped on a false
+pass — the cost was a runner cycle spent diagnosing a harness error. This master postdates
+`c8ed271c4` by two days, so it was wrong when written; that is why it is not grandfathered.
+**The correct invocation names the owning config:**
+`npx playwright test --config playwright.release.config.ts --workers=1` (or `npm run test:release`).
+Guarded since s1482 by `scripts/claimed-spec-harness-guard.mjs`.

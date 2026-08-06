@@ -45,3 +45,18 @@ NO: `src/**` (this is test infrastructure — if you find yourself editing `src/
 SELF-CHECK: `npx tsc --noEmit` clean · `npm run build` green · `npm run test:node-guards` green **including your new guard** · `e2e/agent-view.spec.ts` green both projects · the 15 migrated specs green-or-fingerprint-matched-to-known-reds both projects (several carry documented reds — `release-build.spec.ts:160/107/165/199/393` are in `logs/suite-red-inventory.md:192-200`; **match them by failure REASON, and note that `:107`/`:165` are recorded as TIMEOUTs, not this transient**) · **every playwright command passes `--workers=1`** (§3.1 — at default workers the fire shell manufactures drift reds, so a red seen without it is not evidence).
 
 READY-FOR-GATES + report: the shared module's predicate verbatim · the count of local definitions remaining in `e2e/` (should be 5, all named above) · the manufactured-defect proof for the guard (rc, message, and the clean revert) · the suppressed counts you observed per spec — **and if they are all `0`, say so plainly: that is the expected and honest result, it is exactly what s1305 measured, and it is NOT evidence the change is wrong.** Do **not** report a run-count as proof of correctness (F-1305-1).
+
+---
+
+**CORRECTION APPENDED s1482 (F-1398-1 — do not edit the lines above; citations quote them).**
+The SELF-CHECK at `:45` orders "the 15 migrated specs green-or-fingerprint-matched", and
+`e2e/release-build.spec.ts` is one of those 15 (named at `:25` as the densest, 9 `watchErrors(`
+occurrences). Under the DEFAULT harness that spec collects **zero tests**: `playwright.config.ts`
+`testIgnore`s it via `claimedByAnotherConfig` (landed `c8ed271c4` 2026-07-31T21:34, the F-1296-3
+cure) — and this master was authored `187d26736` 2026-08-01T00:23, **under three hours later**, so
+the instruction was already impossible when written. Measured s1482:
+`npx playwright test e2e/release-build.spec.ts --list` -> "No tests found" / "Total: 0 tests in 0
+files", rc=1. The cited red lines `:160/:107/:165/:199/:393` therefore cannot be reproduced under
+the default config at all; they are reachable only via the owning config,
+`playwright.release.config.ts` (`npm run test:release`).
+Guarded since s1482 by `scripts/claimed-spec-harness-guard.mjs`.
