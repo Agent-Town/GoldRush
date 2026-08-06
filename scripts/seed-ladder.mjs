@@ -10,7 +10,7 @@
 
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { appendFileSync, mkdirSync } from 'node:fs';
+import { appendFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
 
@@ -70,7 +70,7 @@ async function ask() {
       res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
-        body: JSON.stringify({ model, messages, temperature: 0.2, max_tokens: 2000 }),
+        body: JSON.stringify({ model, messages, temperature: 0, max_tokens: 3200 }),
         signal: AbortSignal.timeout(180_000),
       });
       body = await res.json();
@@ -89,18 +89,21 @@ async function ask() {
   return m ? m[0] : text.trim();
 }
 
-let outcome = null; let endReason = 'unknown';
+let outcome = null; let endReason = 'unknown'; let consecutiveRejects = 0;
 try {
   for (;;) {
     const item = await next();
     if (item.kind === 'exit') { endReason = outcome ? endReason : `sim-exit-${item.value}`; break; }
     if (item.kind === 'rejected') {
+      consecutiveRejects += 1;
+      if (consecutiveRejects > 6) { endReason = 'reject-loop'; sim.kill(); break; }
       messages.push({ role: 'user', content: JSON.stringify({ error: item.value, note: 'Orders rejected. Reply with one corrected JSON array only.' }) });
       if (calls >= maxCalls) { endReason = 'call-cap'; sim.kill(); break; }
       sim.stdin.write((await ask()).replace(/\n/g, ' ') + '\n');
       continue;
     }
     const view = item.value;
+    consecutiveRejects = 0;
     if (typeof view.secured === 'boolean' && !view.now) { outcome = view; endReason = 'terminal'; continue; }
     if ((view.now?.hero?.hp ?? 1) <= 0) continue; // death view — the outcome line follows, don't ask
     messages.push({ role: 'user', content: JSON.stringify({ view }) });
@@ -122,7 +125,7 @@ if (outcome?.secured && !args.dry) {
     score: { secured: true, waves: outcome.waves, timeAlive: Math.min(86_000, Math.round(outcome.timeMs / 1000)), gold: Math.round(outcome.gold), baseValue: 0 },
     profileName, anonId: sha256(`seed-ladder:${model}`).slice(0, 32),
     difficulty: 'trail', seed, seedMode: 'bench', seedHash: sha256(seed), inputLogHash: sha256(JSON.stringify(ordersLog)),
-    stack: { declaredBy: 'self', model, harness: 'gr-seed-ladder', harnessVersion: '1.0', config: 'openrouter chat · dataset briefing · trail bench', tokensIn, tokensOut, calls },
+    stack: { declaredBy: 'self', model, harness: 'gr-seed-ladder', harnessVersion: '1.0', config: 'openrouter chat · skill.md briefing · temp0 · trail bench', tokensIn, tokensOut, calls },
   };
   const res = await fetch(`${API}/api/standings`, {
     method: 'POST', headers: { 'content-type': 'application/json', origin: API },
@@ -135,5 +138,10 @@ if (outcome?.secured && !args.dry) {
 
 mkdirSync('logs/seed-ladder', { recursive: true });
 appendFileSync(`logs/seed-ladder/${new Date().toISOString().slice(0, 10)}.jsonl`, JSON.stringify(row) + '\n');
+if (args.transcript) {
+  const stamp = `${contract}-${seed}-${model.split('/').pop()}-${process.pid}`;
+  appendFileSync(`logs/seed-ladder/transcript-${stamp}.json`, JSON.stringify({ row, messages }, null, 1));
+  console.error(`transcript: logs/seed-ladder/transcript-${stamp}.json`);
+}
 console.log(JSON.stringify(row));
 process.exit(0);
