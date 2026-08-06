@@ -1,7 +1,36 @@
 # THE COUNTY BOARD, COMPLETE — posse standings + watch-this-run
 
 **Slice:** milk shift 2026-08-06 (`TASK.md` in this worktree) · **Branch:** `milk/county-board` · **Base:** `565a145a5` · **Tip:** see `git log -1` at read time
-**Verdict:** BUILT AND PUSHED, **NOT MERGED**. Every scope item is implemented, gated and mutation-proved on the branch. Nothing has landed on main; a drain is owed.
+~~**Verdict:** BUILT AND PUSHED, **NOT MERGED**. Every scope item is implemented, gated and mutation-proved on the branch. Nothing has landed on main; a drain is owed.~~
+
+> ## ✅ DRAINED s1498 — MERGED `38791378` (6 of 8 off the milk pile). The drain that was owed is paid.
+>
+> Gated on the merged tree in detached `gate-s1498` (§3.0b), `--workers=1`, both projects: **tsc rc=0 ·
+> build green 1.23s · own spec `e2e/milk-county-board.spec.ts` 14/14 · adjacent `tape-01` / `tape-02` /
+> `f1297-2-plain-boot-tape-button` / `run3d-lantern-post` / `profile-first-boot` 32/32 ·
+> `test:node-guards` 341 tests / 338 pass / 0 fail / 3 skipped.**
+>
+> **Merge surface re-measured at drain time per F-1497-1, and it was cheap:** 19 files on the branch,
+> only **two** overlapping main (`tasks/BACKLOG.md`, `tasks/goals.json`), both append-surfaces resolved
+> as unions — the county row newest-first in BACKLOG, the leaf appended after the er-01 census leaves.
+>
+> ⚠️ **THE FIRST MERGE ATTEMPT WAS ABORTED AND REDONE, AND THE REASON IS THE REUSABLE HALF.** The gate
+> worktree was still detached at the `twin-sockets` **merge** commit — one behind main's `twin-sockets`
+> **bookkeeping** commit — so the `goals.json` union silently dropped the `milk-twin-sockets` leaf. It
+> was caught only because the resolution script asserted the merged JSON still contained **named
+> leaves**, not merely that it **parsed**: a parse-only check goes green on a lossy union, because
+> valid JSON is exactly what a dropped object leaves behind. Re-detached to main HEAD, redone, all four
+> leaves re-verified PRESENT. Same class as *refresh the lane AFTER the evidence commit, not before*.
+>
+> 🔒 **Security posture READ, not assumed** — `functions/api/standings.ts` is a new public endpoint:
+> allowlist key validation (`hasOnlyKeys`) on every nested shape, CORS origin allowlist, per-IP **and**
+> per-anon rate limiting, 64KB tape cap, 100-row board cap, regex-validated hashes and ids, KV keys
+> built only from `knownContract`-validated ids, no secrets client-side. **AP-06 species-blindness is
+> structural rather than conventional**: `boardRow` hands the ladder rider NAMES only, and a declared
+> stack is visible exclusively in the field book.
+>
+> 📰 **GZ-01 filed** in `marketing/outbox/gazette-queue.md` — this is a player-visible merge, so it owed
+> a news item and has one. **DEPLOY runs this fire** for the same reason.
 
 ---
 
