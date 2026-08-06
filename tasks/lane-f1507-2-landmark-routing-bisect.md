@@ -10,7 +10,7 @@
 - `src/systems/BuildSystem.ts` — the other half of the `4ab487437` diff (+139/-31).
 
 ## WHY (evidence, quoted and dated)
-**F-1507-2 (s1507)** recorded `e2e/landmark-collision.spec.ts:68` red on **both projects**, controlled
+**F-1507-2 (s1507)** recorded `e2e/landmark-collision.spec.ts:68` ("enemy blocker routing is deterministic and goes around a county landmark") red on **both projects**, controlled
 against a pre-merge arm at `a4556dca5` in the same worktree and shell, so it is **not** attributable to
 the f1506-2 merge. **s1508 overturned the OTHER half of F-1507-2** (`072-era-activation`) by dating the
 ledger — that spec's red was a stale pasted literal, not a regression.
