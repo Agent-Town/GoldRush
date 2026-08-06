@@ -28,11 +28,25 @@
  * `scripts/capture-footage.mjs:6` (`npx vite`), `scripts/concurrency-class-rate.mjs:39` (vite's
  * `createServer`), and the beauty/mkt `.rig.ts` header recipes. So this guard codifies what the
  * factory already does; it forbids nothing anyone currently relies on.
- * ⓘ `scripts/deploy.sh:61` also sets the flag and DOES serve a production build — legitimately, to
- * measure the shipped asset budget. It is untouched here because it passes
- * `--config playwright.preview.config.ts`, a different config that this globalSetup never runs for.
- * That near-miss is why the rule is scoped to the default config rather than to the env var: stated
- * as a universal, it would have aborted every deploy.
+ * ⚠️ THE PARAGRAPH THAT USED TO SIT HERE WAS WRONG, AND IT COST THE FACTORY THE ASSET BUDGET GATE
+ * FOR SIX DEPLOYS (F-1489-3, measured s1490). It read: deploy.sh "is untouched here because it
+ * passes `--config playwright.preview.config.ts`, a different config that this globalSetup never
+ * runs for." ❌ `playwright.preview.config.ts` is `{ ...baseConfig, webServer: <its own> }` — the
+ * spread CARRIES `globalSetup` across. A different config file is NOT a different globalSetup, and
+ * overriding `webServer` does not override this. So the exemption never existed: from 2474c51ac
+ * onward every deploy armed a probe of :5188 while the preview server was on :5189, the guard
+ * refused in globalSetup, and the budget gate — which only WARNs — measured nothing at all while
+ * still looking like it had run. The same paragraph names the exact damage it was ruling out
+ * ("stated as a universal, it would have aborted every deploy"); the reasoning was sound and the
+ * fact was simply never checked. 💡 One line would have settled it, and is the lesson worth
+ * keeping: resolve the config and LOOK —
+ *     node -e "import('./playwright.preview.config.ts').then(m => console.log(m.default.globalSetup))"
+ * ✅ CURED s1490 by removing the flag from `scripts/deploy.sh` (it was inert there anyway: nothing
+ * ever listened on :5188 for it to mean, and the preview config always started its own server).
+ * deploy.sh now matches `npm run test:asset-diet`, which has always run WITHOUT the flag.
+ * ⓘ So the live rule stands, but for the honest reason: this guard is scoped to callers that set
+ * the env var without serving anything. Any NEW caller pairing the flag with the preview config
+ * will be refused by it — correctly.
  *
  * NO BYPASS FLAG, DELIBERATELY. Gating the default config against a production build is already a
  * supported thing to want, and it already has a door: `playwright.preview.config.ts`. An opt-out env

@@ -58,12 +58,20 @@ trap 'rm -f "$CAPTURE"; rm -rf "$BUDGET_CWD"; [ -z "$SNAPSHOT" ] || rm -rf "$SNA
 note "checking first-town asset budget…"
 if (
   cd "$BUDGET_CWD" || exit 1
-  GR_CAPTURE_EXTERNAL_SERVER=1 GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1 npm --prefix "$ROOT" exec -- playwright test \
+  # NO GR_CAPTURE_EXTERNAL_SERVER here (F-1489-3, s1490). The preview config starts its OWN
+  # server on :5189; the flag never suppressed it (preview overrides webServer) and there was
+  # never anything listening on :5188 for it to mean. It was inert for 132 measurements, then
+  # 2474c51ac wired external-server-guard into the BASE config — which the preview config
+  # inherits via `...baseConfig` — and the flag started arming a :5188 probe that refuses.
+  # This now matches `npm run test:asset-diet`, which has always run without the flag.
+  GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1 npm --prefix "$ROOT" exec -- playwright test \
     --config "$ROOT/playwright.preview.config.ts" "$ROOT/e2e/asset-diet.spec.ts" --workers=1 \
     --grep "honest town and claim cues"
 ) > "$CAPTURE" 2>&1; then BUDGET_RC=0; else BUDGET_RC=$?; fi
 cat "$CAPTURE" >> "$LOG"
+BUDGET_MEASURED=0
 while read -r project bytes; do
+  BUDGET_MEASURED=$((BUDGET_MEASURED + 1))
   if [ "$bytes" -lt "$BUDGET_LIMIT" ]; then
     note "asset budget $project: $bytes bytes ($((BUDGET_LIMIT - bytes)) bytes headroom)"
   else
@@ -71,7 +79,13 @@ while read -r project bytes; do
     note "asset budget $project: $bytes bytes ($((bytes - BUDGET_LIMIT)) bytes OVER)"
   fi
 done < <(sed -nE 's/.*\[asset-diet\] ([^ ]+) townResponses: ([0-9]+) bytes.*/\1 \2/p' "$CAPTURE")
-if [ "$BUDGET_RC" -ne 0 ] || [ "$BUDGET_OVER" -ne 0 ]; then
+# F-1489-3: a gate that measured NOTHING used to emit the same WARN as a gate that measured an
+# OVERAGE, so six deploys shipped past an unmeasured budget and looked exactly like a pass.
+# Zero parsed projects is a failure of the instrument and is now said in its own words.
+if [ "$BUDGET_MEASURED" -eq 0 ]; then
+  note "MEASURED NOTHING: asset budget parsed 0 projects (playwright rc=$BUDGET_RC) — this is NOT a pass"
+fi
+if [ "$BUDGET_RC" -ne 0 ] || [ "$BUDGET_OVER" -ne 0 ] || [ "$BUDGET_MEASURED" -eq 0 ]; then
   if [ "$STRICT" -eq 1 ]; then note "ABORT: asset budget check failed in strict mode"; finish budget_failed 5; fi
   note "WARN: asset budget check failed — default mode continues"
 fi
