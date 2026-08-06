@@ -41,6 +41,15 @@ export const ROOM_TICK_RATE = 30;
  */
 export const SEAT_TICK_RATE_CEILING = 45;
 
+/**
+ * Acts that change WHICH RUN the table is in. `Game.applyMultiplayerActions` breaks out of
+ * the bundle for each of these (Game.ts ~2855, via the boolean `applyMultiplayerAction`
+ * returns) — they restart, end or suspend the run for everyone. A headless seat can honour
+ * none of them, and shrugging one off is not a dropped detail, it is the seat and the table
+ * ending up in different runs. Sorted by the criterion, not by the enum.
+ */
+const UNHONOURABLE_ON_A_SEAT = new Set<string>(['restart', 'death_action', 'secure_choice', 'set_pause']);
+
 /** Beyond this much lag the seat walks back to the room's rate instead of bursting. */
 const MAX_LAG_MS = 1_000;
 const DEFAULT_START_TIMEOUT_MS = 60_000;
@@ -196,6 +205,16 @@ export class AgentSeat {
           break;
         }
 
+        // OUR socket dropped, not a slow peer. `beginReconnect` clears `error` and pauses,
+        // so the stall timer below would otherwise wait out 30s and then blame the room.
+        // A headless seat cannot rejoin anyway — it holds no run-suspend snapshot, so both
+        // of LockstepClient's restore branches end in failSession — which makes waiting
+        // dead time AND the reason wrong. Say the true thing immediately.
+        if (this.client.state().reconnecting) {
+          this.resign('connection_lost', 'this seat holds no run-suspend snapshot, so it cannot rejoin the ride it dropped out of');
+          break;
+        }
+
         const bundle = this.client.pump({ ...EMPTY_SAMPLE, queuedActions: this.pending.splice(0) });
         if (!bundle) {
           const idleMs = performance.now() - lastBundleAt;
@@ -212,6 +231,9 @@ export class AgentSeat {
         this.sim.advanceOneTick();
         ticks += 1;
         if (this.client.shouldExchangeHash(bundle.tick)) {
+          // `lastHash` is what this seat COMPUTED. Under --desync-at the client transmits
+          // `${hash}:injected` instead, so the two deliberately differ there — and that is
+          // the useful reading: it shows the sims still agreed and only the wire lied.
           const hash = this.sim.tickHash(bundle.tick);
           this.lastHash = { tick: bundle.tick, hash };
           this.client.afterSimTick(bundle.tick, hash, null);
@@ -237,9 +259,12 @@ export class AgentSeat {
       unhonouredActions: Object.fromEntries([...this.unhonoured.entries()].sort()),
       lastHash: this.lastHash,
       resigned: this.resignation,
-      // Only a run that actually ended has an outcome; a seat stopped by --max-ticks
-      // reports its last determinism hash instead of inventing a verdict.
-      outcome: this.sim.isTerminal ? this.sim.outcome() : null,
+      // Only a run that actually ended, at a seat that never resigned, has an outcome.
+      // BOTH clauses are load-bearing: a desync detected on the very tick that ends the
+      // run resigns and breaks in the same iteration, so a terminality-only test would
+      // hand back a real-looking verdict alongside exit 3. A seat stopped by --max-ticks
+      // reports its last determinism hash instead of inventing one.
+      outcome: this.resignation === null && this.sim.isTerminal ? this.sim.outcome() : null,
     };
   }
 
@@ -248,24 +273,44 @@ export class AgentSeat {
   }
 
   /**
-   * Every rider's acts, in roster order — the relay sorts the roster by join time, so
+   * Every rider's input, in roster order — the relay sorts the roster by join time, so
    * that order is the same at every seat and the application order is deterministic.
+   *
+   * A browser rider speaks a wider vocabulary than a headless sim can honour, and the
+   * whole point of tallying the difference is that a silently-dropped peer input desyncs
+   * the room at the next hash with nobody able to say which one did it. So NOTHING leaves
+   * here uncounted — including movement, which is the highest-frequency thing on the wire
+   * and has no home in this sim (`HeadlessContractSim` walks its hero on IDLE_INTENTS).
    */
   private consume(bundle: LockstepTick): void {
     const byPlayer = new Map(bundle.inputs.map((entry) => [entry.playerId, entry.input]));
     for (const player of bundle.roster) {
-      for (const action of byPlayer.get(player.playerId)?.actions ?? []) {
+      const input = byPlayer.get(player.playerId);
+      if (input && (input.mx !== 0 || input.my !== 0)) this.tally('move');
+      for (const action of input?.actions ?? []) {
         if (action.type === 'place_build') {
           if (this.sim.applyWireAction(action)) this.builds.placed += 1;
           else this.builds.refused += 1;
           continue;
         }
-        // A browser rider speaks a wider vocabulary than a headless sim can honour.
-        // Counting the difference is the point: a silently-dropped peer act would
-        // desync the room at the next hash, and nobody would know which act did it.
-        this.unhonoured.set(action.type, (this.unhonoured.get(action.type) ?? 0) + 1);
+        this.tally(action.type);
+        // A run-transition act is not merely unhonoured, it is UNHONOURABLE: `Game.ts`
+        // cancels the rest of the bundle and changes what run everyone is in, so a seat
+        // that shrugged and rode on would be simulating a run the table has left. That is
+        // the zombie rider this whole slice exists to make impossible — resign instead.
+        if (UNHONOURABLE_ON_A_SEAT.has(action.type)) {
+          this.resign(
+            'unhonourable_peer_act',
+            `${player.name} sent "${action.type}" at tick ${bundle.tick}; it changes the run and a headless seat has no way to follow`,
+          );
+          return;
+        }
       }
     }
+  }
+
+  private tally(key: string): void {
+    this.unhonoured.set(key, (this.unhonoured.get(key) ?? 0) + 1);
   }
 
   private emitTurn(): void {

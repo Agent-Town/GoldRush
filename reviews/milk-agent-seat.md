@@ -35,9 +35,24 @@ Three properties are load-bearing and all three are proven by execution below, n
 
 ## Evidence
 
-### 1. Two seats, one shared run — `node scripts/agent-seat-room.mjs`, **37/37 checks**
+### 0. An adversarial pass found six real defects; all six are fixed
 
-Real relay (wrangler room worker + `pages dev`, the same pair `scripts/test-multiplayer.mjs` stands up), two `gr-sim` seats in one room, orders handed to **one** of them.
+An independent reviewer was pointed at `SeatedLockstepSim.ts`, `SeatOrders.ts`, the `HeadlessContractSim` diff, `gr-sim.mjs` and the unchanged `LockstepClient.ts`, and told to hunt rather than praise. It cleared categories 1 (lockstep/determinism ordering), 2 (lifecycle/hang) and 3 (solo-path regression) **by execution** — including an A/B of the seated CLI against `main`'s own `gr-sim.mjs` on both policies, byte-identical stdout (`fnv1a32:27d33b38` and `fnv1a32:79bdeed2`) — and reproduced the 37/37 room proof independently. It also found six things I had wrong:
+
+| # | Defect | Fix |
+|---|---|---|
+| 1 | **A resigned seat could report an outcome.** `outcome` was gated on terminality alone. A desync detected on the very tick that ends the run resigns and breaks in the *same* iteration, so the envelope would have carried a real-looking verdict beside exit 3 — and reddened both my own `outcome === null` assertions. | `resignation === null && isTerminal`, with both clauses' reasons in the comment |
+| 2 | **`consume()` dropped every peer's movement, uncounted.** `mx`/`my` are the highest-frequency thing on the wire and had no tally, so `unhonouredActions: {}` read as "nothing was dropped" — the exact clean reading §1's table leans on. | movement is tallied as `move`; the doc comment now says *nothing* leaves uncounted |
+| 3 | **The stall timer killed a seat mid-reconnect and blamed the peer.** `beginReconnect()` clears `error` and pauses, so a seat whose *own* socket dropped waited out 30 s and resigned `peer_stalled`. `state().reconnecting` was sitting there unread. | resigns `connection_lost` immediately, saying why a headless seat cannot rejoin |
+| 4 | **No short-circuit on run-transition acts.** `Game.applyMultiplayerActions` breaks the bundle for `restart`/`death_action`/`secure_choice`; the seat tallied them and rode on — in a *different run* than the table. | `UNHONOURABLE_ON_A_SEAT` (those three plus `set_pause`) now **resigns**, because unhonourable is not the same as unhonoured |
+| 5 | **My control-arm proof passed only because every build was refused.** "A seated ride equals a solo ride" is true only while no wire act changed the world — so curing F-SEAT-3 would have flipped a green into a mystery red. Two claims were conflated. | the harness now asserts the **precondition** (`builds.placed === 0`) beside it and says in-line which claim is expected to move |
+| 6 | `lastHash` reports what the seat **computed**, which under `--desync-at` differs from what it **sent**. | kept — it is the useful reading (the sims agreed; only the wire lied) — and now documented as deliberate |
+
+Only #1, #3 and #4 are behaviour changes; #2 is accounting, #5 is the test's own honesty, #6 is a comment. The reviewer explicitly withdrew one suspected bug (`--desync-at 0` reaching the parser guard) after tracing it, and confirmed no busy-loop, no readline hang, and no solo-path regression.
+
+### 1. Two seats, one shared run — `node scripts/agent-seat-room.mjs`, **51/51 checks**
+
+Real relay (wrangler room worker + `pages dev`, the same pair `scripts/test-multiplayer.mjs` stands up), two `gr-sim` seats in one room, orders handed to **one** of them. Reproduced across three independent runs of the harness (22 checks, then 37, then 51 as arms were added), with identical tick counts and hashes each time.
 
 | | Rig A (ordered) | Rig B (`--policy=idle`, never given an order) |
 |---|---|---|
@@ -74,6 +89,21 @@ One seat is told to corrupt its own hash at tick 30 (`--desync-at`, test-only). 
 
 Caught at the exact tick the lie was told, at both seats, in under a second. Neither claims an outcome it did not earn.
 
+### 2b. A bounded ride — the third arm, added because `skill.md` promised something untested
+
+`skill.md` documents `--max-ticks` and promises that a seat which stopped early *"reports its hash and no outcome — it will not name a verdict it did not earn"*. That was a claim in the agents' door with no test behind it. Two seats at `--max-ticks 60`:
+
+| | Rig Short A | Rig Short B |
+|---|---|---|
+| exit | 0 | 0 |
+| ticks | **exactly 60** | **exactly 60** |
+| resigned | `null` | `null` |
+| outcome | **`null`** | **`null`** |
+| last hash | `tick 30 → fnv1a32:7424b99b` | *identical* |
+| wall clock | 1.358 s | 1.359 s |
+
+A free cross-check falls out: that hash is the *same value* the desync arm's seats computed at tick 30 in a **different room** — same contract, same seed, same tick, same fingerprint, across independent rides.
+
 ### 3. The seam's contract — `node --test scripts/agent-seat.test.mjs`, **4 pass / 0 fail, 2.76 s**
 
 - a wire act crosses into the sim and changes it (and every other vocabulary word is *reported*, never swallowed);
@@ -94,9 +124,9 @@ Then the engines declare their disagreement and the rig resigns at tick 0 (F-SEA
 | Gate | Result |
 |---|---|
 | `npx tsc --noEmit` | rc=0 |
-| `npm run build` | green, **1.20 s** |
+| `npm run build` | green, **1.10 s** |
 | `GR_RELEASE=e1 npm run build:release` | green — 1883 files, 110,044,576 bytes, zero later-era assets |
-| `npm run test:node-guards` | **306 pass / 0 fail / 3 skip over 309**, 155.075 s — includes `gr-sim.test.mjs`, whose determinism pins are intact |
+| `npm run test:node-guards` | **306 pass / 0 fail / 3 skip over 309**, 145.0 s (re-run after the six fixes; 155.1 s before) — includes `gr-sim.test.mjs`, whose determinism pins are intact |
 | solo `gr-sim` pin, re-run by hand | `{secured:false, waves:4, timeMs:135667, gold:4, kills:37, calls:5, eventLogHash:"fnv1a32:68b99428"}` — byte-identical to `scripts/gr-sim.test.mjs:37` |
 | collection guards, re-run **after** adding `e2e/agent-seat.spec.ts` | 23/23 |
 | `node scripts/gate-caller-audit.mjs` | PASS — 9 orphans, all grandfathered, **unchanged** by this slice (verified by execution, not inference — but see F-SEAT-4 for why that PASS is weaker than it looks) |

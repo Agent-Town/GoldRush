@@ -49,6 +49,9 @@ const BUILD_ORDERS = [
 const UNSPEAKABLE_ORDERS = [{ verb: 'HARVEST', seam: 'gold-seam-1' }];
 // The first hash exchange after tick 0, so the fail-loud arm costs a second, not a ride.
 const DESYNC_TICK = 30;
+// Long enough to cross a hash exchange (every 30 ticks) so the bounded arm still has a
+// determinism hash to report, short enough to cost the gate ~1.5s.
+const BOUNDED_TICKS = 60;
 
 const checks = [];
 const measured = {};
@@ -61,6 +64,7 @@ async function main() {
   try {
     await checkSharedRun();
     await checkDesyncResignation();
+    await checkBoundedRide();
     await writeSummary('passed');
     console.log(`agent seat checks passed (${checks.length})`);
   } catch (err) {
@@ -104,17 +108,28 @@ async function checkSharedRun() {
     assertEqual(a.envelope.roster.join(' + '), b.envelope.roster.join(' + '), 'both seats read the same roster in the same order');
 
     assert(a.envelope.outcome && b.envelope.outcome, 'both seats reached a real outcome');
+
+    // THE LOAD-BEARING ASSERTION: two seats, one tick stream, one world. This one holds
+    // no matter what the orders do, and it is the claim the slice actually makes.
     assertEqual(
       b.envelope.outcome.eventLogHash,
       a.envelope.outcome.eventLogHash,
       'both seats ended on the same event-log hash',
     );
+    assertEqual(JSON.stringify(b.envelope.outcome), JSON.stringify(a.envelope.outcome), 'both seats agree on every outcome field');
+
+    // THE CONTROL ARM, AND ITS PRECONDITION SAID OUT LOUD. "A seated ride equals a solo
+    // ride" is only true while no wire act CHANGED the world — which today is guaranteed
+    // by F-SEAT-3 (a build costs gold, gold needs HARVEST, HARVEST cannot ride, so every
+    // ordered build is refused). Cure that and this assertion SHOULD flip. Asserting the
+    // precondition alongside it means the next reader gets told which claim moved instead
+    // of finding a mystery red where a proof used to be.
+    assertEqual(a.envelope.builds.placed, 0, 'PRECONDITION for the solo comparison: no wire act changed the world');
     assertEqual(
       a.envelope.outcome.eventLogHash,
       solo.eventLogHash,
-      'the shared ride reproduces the solo headless run bit for bit',
+      'a seated ride that changed nothing reproduces the solo headless run bit for bit',
     );
-    assertEqual(JSON.stringify(b.envelope.outcome), JSON.stringify(a.envelope.outcome), 'both seats agree on every outcome field');
     assertEqual(JSON.stringify(a.envelope.outcome), JSON.stringify(solo), 'the seated outcome equals the solo control outcome');
 
     // THE TRANSPORT PROOF. Only Rig A was ever handed orders; Rig B's tally can only be
@@ -169,6 +184,40 @@ async function checkDesyncResignation() {
   }
 }
 
+/**
+ * A BOUNDED RIDE. `--max-ticks` is documented in skill.md, and skill.md also promises that
+ * a seat which stopped early "reports its hash and no outcome — it will not name a verdict
+ * it did not earn". A promise in the agents' door with no test behind it is a claim, so
+ * this arm is the shortest one that can falsify it.
+ */
+async function checkBoundedRide() {
+  const relay = await startRelayEnv();
+  try {
+    const created = await post(relay.url, '/api/multiplayer/create', { setup: SETUP });
+    assertEqual(created.status, 200, 'the host opens a third room for the bounded arm');
+    const code = created.body.code;
+
+    const seats = [
+      startSeat(relay.url, code, { name: 'Rig Short A', policy: 'idle', maxTicks: BOUNDED_TICKS }),
+      startSeat(relay.url, code, { name: 'Rig Short B', policy: 'idle', maxTicks: BOUNDED_TICKS }),
+    ];
+    const [a, b] = await Promise.all(seats.map((seat) => seat.finished));
+    measured.bounded = { a: summary(a), b: summary(b) };
+
+    for (const [label, seat] of [['the first bounded seat', a], ['the second bounded seat', b]]) {
+      assertEqual(seat.exitCode, 0, `${label} stopped cleanly`);
+      assertEqual(seat.envelope.ticks, BOUNDED_TICKS, `${label} rode exactly the ticks it was given`);
+      assertEqual(JSON.stringify(seat.envelope.resigned), 'null', `${label} did not resign`);
+      assert(seat.envelope.outcome === null, `${label} named no verdict it did not earn`);
+      assert(seat.envelope.lastHash !== null, `${label} still reports a determinism hash`);
+    }
+    assertEqual(b.envelope.lastHash.hash, a.envelope.lastHash.hash, 'both bounded seats agreed on the hash they stopped at');
+    assertEqual(b.envelope.lastHash.tick, a.envelope.lastHash.tick, 'both bounded seats stopped at the same tick');
+  } finally {
+    await relay.stop();
+  }
+}
+
 function summary(seat) {
   return {
     exitCode: seat.exitCode,
@@ -195,7 +244,7 @@ function soloOutcome() {
   return JSON.parse(run.stdout.trim().split('\n').at(-1));
 }
 
-function startSeat(baseUrl, code, { name, policy, desyncAt }) {
+function startSeat(baseUrl, code, { name, policy, desyncAt, maxTicks }) {
   const args = [
     'scripts/gr-sim.mjs',
     '--room', code,
@@ -205,6 +254,7 @@ function startSeat(baseUrl, code, { name, policy, desyncAt }) {
     '--tick-rate', String(TICK_RATE),
     `--policy=${policy}`,
     ...(desyncAt === undefined ? [] : ['--desync-at', String(desyncAt)]),
+    ...(maxTicks === undefined ? [] : ['--max-ticks', String(maxTicks)]),
   ];
   const child = spawn(process.execPath, args, { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] });
   let stdout = '';
