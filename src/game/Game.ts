@@ -631,7 +631,9 @@ export class Game {
   private readonly activeContract = bornContract(this.tileStateStore);
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
-  private readonly activeEpoch = this.contractEpoch ? loadEpoch(this.contractEpoch.id) : selectActiveEpoch();
+  private readonly activeEpoch = new URLSearchParams(window.location.search).has('replay') && this.contractEpoch
+    ? loadEpoch(this.contractEpoch.id)
+    : selectActiveEpoch();
   private readonly e6TileConsumers = new E6TileConsumerSystem(
     this.contractEpoch?.id === 'epoch-6-atomic' && this.activeContract.id === 'e6-glow-mesa',
     this.activeContract.id,
