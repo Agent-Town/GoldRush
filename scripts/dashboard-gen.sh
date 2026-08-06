@@ -149,10 +149,15 @@ for path in sorted(glob.glob('tasks/runs/*.log'), key=os.path.getmtime, reverse=
     tail=''
     try: tail=open(path,errors='ignore').read()[-600:]
     except: pass
-    if hit: outcome=f'MERGED {hit}'
+    drained=glob.glob(f'tasks/done/drained-*-{taskfile}')
+    if drained: outcome='MERGED '+os.path.basename(drained[0]).split('-')[1][:9]
+    elif hit: outcome=f'MERGED {hit}'
     elif shipped: outcome='MERGED '+shipped[0].rsplit('-',1)[-1][:8]
     elif rc: outcome='FAILED (rc marker)'
-    elif 'STOP' in tail or 'no changes' in tail.lower() or 'nothing to commit' in tail.lower(): outcome='STOP/NO-OP (guard)'
+    # 'nothing to commit'/'no changes' removed from this heuristic (F-DASH-1): every successful
+    # runner log ENDS with git status output, so those phrases branded real merges as no-ops
+    # whenever the commit-grep missed. Only the pre-flight's uppercase STOP verdict counts.
+    elif 'STOP' in tail: outcome='STOP/NO-OP (guard)'
     elif os.path.exists(f'tasks/running/{stamp[:15]}') or glob.glob(f'tasks/running/*{taskfile}'): outcome='RUNNING'
     rows.append(f"{name[:42]:42} · {lane:6} · started {stamp[9:11]}:{stamp[11:13]} · {dur:4d} min · {outcome}")
 print('\n'.join(rows) if rows else '(no task runs in the last 24 hours)')
