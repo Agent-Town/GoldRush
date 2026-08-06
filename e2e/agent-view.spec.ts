@@ -261,12 +261,12 @@ test('the zero-error rider suppresses only the known transient', async ({ page }
   expect(() => expectNoConsoleErrors(watch, 'mutation control')).toThrow();
 });
 
-test('all five E1 mechanics manifests match their byte-stable fixture', async () => {
+test('all six E1 mechanics manifests match their byte-stable fixture', async () => {
   const fixtures = JSON.parse(await readFile(path.resolve('e2e/fixtures/e1-mechanics-manifests.json'), 'utf8')) as MechanicsManifest[];
   const ids = listContracts().map(({ id }) => id);
   const manifests = ids.map(deriveMechanicsManifest);
 
-  expect(ids).toEqual(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+  expect(ids).toEqual(['the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
   expect(manifests).toEqual(fixtures);
   expect(JSON.stringify(manifests)).toBe(JSON.stringify(fixtures));
   for (const id of ids) expect(JSON.stringify(deriveMechanicsManifest(id))).toBe(JSON.stringify(deriveMechanicsManifest(id)));
