@@ -20,7 +20,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+// realpathSync because macOS `os.tmpdir()` is /var/folders/... — a symlink into /private/var.
+// `pwd` in the child prints the RESOLVED path, so comparing against the unresolved one would
+// fail for a driver that is working perfectly.
+import { mkdtempSync, readFileSync, realpathSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import path from 'node:path';
@@ -130,4 +133,120 @@ test('misuse exits 2 rather than reporting a vacuous green', () => {
 
   const empty = spawnSync(process.execPath, [DRIVER, '[]'], { encoding: 'utf8', timeout: 30_000 });
   assert.equal(empty.status, 2, 'an empty battery measured nothing and must not exit 0');
+});
+
+// ---------------------------------------------------------------------------------------
+// (6) THE --cwd / --env PROPERTIES (F-1481-1, s1481).
+//
+// These exist because their ABSENCE is what kept fires re-minting this driver AFTER it was
+// made permanent — s1455 and s1480 each hand-rolled a 19-line untracked `run-gate.mjs` for
+// exactly these two capabilities (§3.0b needs a detached gate worktree; the port law needs
+// GR_CAPTURE_BASE_URL, and a fire cannot set it inline because the bash allowlist refuses
+// that form). A driver that silently ran in the WRONG tree would still print a verdict, so
+// every assertion below checks the OBSERVED subject, not the flag's presence.
+
+test('--cwd actually runs the job in that directory', () => {
+  withTmp((dir) => {
+    const transcript = path.join(dir, 'transcript.txt');
+    const r = spawnSync(
+      process.execPath,
+      [DRIVER, '--transcript', transcript, '--cwd', dir, JSON.stringify([['pwd', 'pwd']])],
+      { encoding: 'utf8', timeout: 60_000 },
+    );
+    assert.equal(r.status, 0, 'the job itself must succeed');
+    const body = readFileSync(transcript, 'utf8');
+    // `pwd` prints the real cwd — this is the observation, not `--cwd` echoed back at us.
+    assert.match(body, new RegExp(realpathSync(dir).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.match(body, /^cwd=/m, 'the transcript must NAME the tree it measured');
+  });
+});
+
+test('--env reaches the child process', () => {
+  withTmp((dir) => {
+    const transcript = path.join(dir, 'transcript.txt');
+    const r = spawnSync(
+      process.execPath,
+      [
+        DRIVER,
+        '--transcript', transcript,
+        '--env', 'GR_GUARD_PROBE=marker-8842',
+        JSON.stringify([['echo-env', process.execPath, '-e', 'console.log("SAW=" + process.env.GR_GUARD_PROBE)']]),
+      ],
+      { encoding: 'utf8', timeout: 60_000 },
+    );
+    assert.equal(r.status, 0);
+    const body = readFileSync(transcript, 'utf8');
+    // `SAW=` PREFIX, DELIBERATELY. A bare /marker-8842/ is ALSO matched by the `env+` header
+    // this driver writes itself — so it passes for a driver that records the arrangement and
+    // then never passes it to the child. Caught s1481 by deleting `env: childEnv` and watching
+    // the test stay green: the assertion was reading my own bookkeeping, not the observation.
+    assert.match(body, /SAW=marker-8842/, 'the child must actually SEE the injected variable');
+    assert.match(body, /^env\+ GR_GUARD_PROBE=marker-8842$/m, 'the arrangement must be in the record');
+  });
+});
+
+// MERGED OVER, never replacing: a battery that lost PATH/HOME/CLAUDE_CONFIG_DIR would break
+// the fire-shell serialisation keyed on the last of those (F-1270-3).
+test('--env is merged over the inherited environment, not a replacement', () => {
+  withTmp((dir) => {
+    const transcript = path.join(dir, 'transcript.txt');
+    const r = spawnSync(
+      process.execPath,
+      [
+        DRIVER,
+        '--transcript', transcript,
+        '--env', 'GR_GUARD_PROBE=x',
+        JSON.stringify([['inherit', process.execPath, '-e', 'console.log("PATH_PRESENT=" + Boolean(process.env.PATH))']]),
+      ],
+      { encoding: 'utf8', timeout: 60_000, env: { ...process.env, GR_GUARD_INHERITED: 'yes' } },
+    );
+    assert.equal(r.status, 0);
+    assert.match(readFileSync(transcript, 'utf8'), /PATH_PRESENT=true/);
+  });
+});
+
+// FAIL CLOSED. A silent fallback to REPO_ROOT would gate main's tree while the reviewer
+// believed a worktree was measured — a real verdict about the wrong subject.
+test('a non-existent --cwd exits 2 rather than falling back to the repo root', () => {
+  const r = spawnSync(
+    process.execPath,
+    [DRIVER, '--cwd', '/gr-no-such-dir-8842', JSON.stringify([['pwd', 'pwd']])],
+    { encoding: 'utf8', timeout: 30_000 },
+  );
+  assert.equal(r.status, 2, 'a missing gate worktree must measure NOTHING');
+});
+
+test('a malformed --env exits 2 rather than dropping the variable silently', () => {
+  for (const bad of ['NOEQUALS', '=novalue']) {
+    const r = spawnSync(
+      process.execPath,
+      [DRIVER, '--env', bad, JSON.stringify([['pwd', 'pwd']])],
+      { encoding: 'utf8', timeout: 30_000 },
+    );
+    assert.equal(r.status, 2, `--env ${bad} must exit 2`);
+  }
+});
+
+// The positional filter has to know EVERY value-consuming flag, or a flag's VALUE gets read
+// as the jobs spec. This is the one-character-class of bug the whole file guards against.
+test('the jobs spec is still found when the new flags precede it', () => {
+  withTmp((dir) => {
+    const transcript = path.join(dir, 'transcript.txt');
+    const r = spawnSync(
+      process.execPath,
+      [
+        DRIVER,
+        '--cwd', dir,
+        '--env', 'A=1',
+        '--env', 'B=2',
+        '--label', 'flag ordering',
+        '--transcript', transcript,
+        JSON.stringify([['ok', process.execPath, '-e', 'process.exit(0)']]),
+      ],
+      { encoding: 'utf8', timeout: 60_000 },
+    );
+    assert.equal(r.status, 0, `flag values must not be mistaken for the jobs spec: ${r.stderr}`);
+    const body = readFileSync(transcript, 'utf8');
+    assert.match(body, /env\+ A=1 B=2/, '--env must be REPEATABLE, not first-wins');
+  });
 });

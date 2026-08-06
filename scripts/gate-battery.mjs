@@ -34,11 +34,33 @@
  *  4. maxBuffer 256 MB. spawnSync silently truncates stdout under load, and a truncated
  *     transcript is a lie told by an evidence file.
  *  5. THE VERDICT IS AN EXIT CODE, never a parse of stdout — for the same truncation reason.
+ *  6. `--cwd` AND `--env`, BECAUSE WITHOUT THEM THIS FILE CANNOT BE USED BY A MODERN DRAIN
+ *     (F-1481-1, s1481). The two capabilities are not conveniences; each is forced by a law:
+ *       · `--cwd` by §3.0b CUSTODY — undecided content is gated in a DETACHED WORKTREE, never
+ *         in main's tree. This driver hardcoded `cwd: REPO_ROOT`, so §3.0b was unreachable
+ *         through it. No workaround existed.
+ *       · `--env` by the port law — `playwright.config.ts` hardcodes 5188 under strictPort and
+ *         `PORT` sets NOTHING, so a scratch-port gate needs `GR_CAPTURE_BASE_URL` +
+ *         `GR_CAPTURE_EXTERNAL_SERVER`. A fire cannot set those inline (`FOO=1 node ...`): the
+ *         bash allowlist refuses that form. The gate denies the fire, not the factory.
+ *     THE MEASUREMENT: this file landed s1275 to stop fires re-minting the driver, and they
+ *     kept re-minting it anyway — s1455 and s1480 each hand-rolled a 19-line `run-gate.mjs`,
+ *     both untracked, both dead with their worktree, both carrying the same "the gate denies
+ *     me, not the factory" sentence (F-1480-3). s1481 read them and found the cause is not
+ *     that fires don't know this file exists: it is that this file could not do the job.
+ *     F-1480-3's own REC was to mint a THIRD tracked sibling; that would have re-opened
+ *     F-1275-1 under a new name. A permanent home only ends re-derivation while it stays
+ *     wide enough for the work — so extend it here rather than fork it.
+ *     THE TRANSCRIPT NOW RECORDS BOTH, because a gate run against another tree that does not
+ *     SAY which tree it measured is evidence for an unnamed subject.
  *
  * usage:
  *   node scripts/gate-battery.mjs '[["tsc","npx","tsc","--noEmit"],["build","npm","run","build"]]'
  *   node scripts/gate-battery.mjs --transcript artifacts/my-drain.txt '<jobsJSON>'
  *   node scripts/gate-battery.mjs --label "lane-b drain" '<jobsJSON>'
+ *   node scripts/gate-battery.mjs --cwd gate-s1481 \
+ *     --env GR_CAPTURE_EXTERNAL_SERVER=1 --env GR_CAPTURE_BASE_URL=http://127.0.0.1:5234 \
+ *     '[["own spec","npx","playwright","test","e2e/foo.spec.ts"]]'
  *
  * A job is [label, cmd, ...args]. Exit 0 = every job returned 0; exit 1 = at least one
  * job failed; exit 2 = the driver was misused (nothing was measured).
@@ -75,8 +97,38 @@ export function resolveTranscript(p) {
   return abs;
 }
 
-export function runBattery(jobs, { transcript, label = '', now = () => new Date() } = {}) {
+/**
+ * (6) Resolve the working directory a battery runs in. Relative paths resolve against the
+ * REPO ROOT, so `--cwd gate-s1481` means the sibling worktree and not wherever the shell
+ * happened to be. A missing directory is MISUSE, not a failed job: silently falling back to
+ * REPO_ROOT would gate main's tree while the transcript claimed a worktree — the exact lie
+ * §3.0b exists to prevent.
+ */
+export function resolveCwd(dir) {
+  if (!dir) return REPO_ROOT;
+  const abs = path.isAbsolute(dir) ? dir : path.join(REPO_ROOT, dir);
+  if (!existsSync(abs)) return null;
+  return abs;
+}
+
+/** (6) `KEY=VALUE` pairs → an object. A pair with no `=`, or an empty key, is misuse. */
+export function parseEnvPairs(pairs) {
+  const env = {};
+  for (const pair of pairs) {
+    const i = String(pair).indexOf('=');
+    if (i <= 0) return null;
+    env[String(pair).slice(0, i)] = String(pair).slice(i + 1);
+  }
+  return env;
+}
+
+export function runBattery(jobs, { transcript, label = '', cwd, env, now = () => new Date() } = {}) {
   const out = resolveTranscript(transcript);
+  const workdir = cwd ?? REPO_ROOT;
+  // Extra env is MERGED OVER the inherited environment, never replacing it — a battery still
+  // needs PATH, HOME and the shell's CLAUDE_CONFIG_DIR (which is what keys the fire-shell
+  // serialisation in playwright.config.ts, F-1270-3).
+  const childEnv = env && Object.keys(env).length ? { ...process.env, ...env } : process.env;
 
   // (1) THE RETENTION PROPERTY. Create only if absent; every battery is appended under its
   // own stamp. This single `existsSync` is the whole of F-1255-3's cure, and the guard
@@ -85,6 +137,15 @@ export function runBattery(jobs, { transcript, label = '', now = () => new Date(
     writeFileSync(out, 'gate battery transcript (append-only — see scripts/gate-battery.mjs)\n');
   }
   appendFileSync(out, `\n\n######## BATTERY ${now().toISOString()}${label ? ` — ${label}` : ''} ########\n`);
+  // (6) NAME THE SUBJECT. A battery run in another tree, or against another server, is
+  // evidence about THAT arrangement — the transcript has to say so or a later reader will
+  // attribute it to main. Env VALUES are recorded too: a base-URL port is the whole
+  // difference between measuring your gate worktree and measuring someone else's dev server.
+  appendFileSync(out, `cwd=${workdir}\n`);
+  if (childEnv !== process.env) {
+    const shown = Object.entries(env).map(([k, v]) => `${k}=${v}`).join(' ');
+    appendFileSync(out, `env+ ${shown}\n`);
+  }
 
   const results = {};
   let overall = 0;
@@ -93,7 +154,12 @@ export function runBattery(jobs, { transcript, label = '', now = () => new Date(
     const args = withSerialWorkers(cmd, rawArgs);
     const t0 = Date.now();
     // (4) 256 MB — a truncated transcript is a lie told by an evidence file.
-    const r = spawnSync(cmd, args, { cwd: REPO_ROOT, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
+    const r = spawnSync(cmd, args, {
+      cwd: workdir,
+      env: childEnv,
+      encoding: 'utf8',
+      maxBuffer: 256 * 1024 * 1024,
+    });
     const secs = ((Date.now() - t0) / 1000).toFixed(1);
     const body = `${r.stdout ?? ''}${r.stderr ?? ''}`;
 
@@ -124,16 +190,31 @@ function flag(name, fallback = null) {
   return i === -1 ? fallback : process.argv[i + 1];
 }
 
+/** (6) `--env` is REPEATABLE — one pair per occurrence. `flag()` would see only the first. */
+function repeatedFlag(name) {
+  const values = [];
+  for (let i = 0; i < process.argv.length; i += 1) {
+    if (process.argv[i] === name && process.argv[i + 1] !== undefined) values.push(process.argv[i + 1]);
+  }
+  return values;
+}
+
+/** Every flag that consumes the NEXT argv entry — the positional filter must know all of them. */
+const VALUE_FLAGS = new Set(['--transcript', '--label', '--cwd', '--env']);
+
 // Run only when invoked directly, so the guard can import the helpers.
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const spec = process.argv.slice(2).filter((a, i, all) => {
-    if (a === '--transcript' || a === '--label') return false;
-    const prev = all[i - 1];
-    return prev !== '--transcript' && prev !== '--label';
+    if (VALUE_FLAGS.has(a)) return false;
+    return !VALUE_FLAGS.has(all[i - 1]);
   })[0];
 
+  const USAGE =
+    'usage: node scripts/gate-battery.mjs [--transcript <path>] [--label <text>] ' +
+    "[--cwd <dir>] [--env KEY=VALUE ...] '[[\"label\",\"cmd\",\"arg\"]]'";
+
   if (!spec) {
-    console.error('usage: node scripts/gate-battery.mjs [--transcript <path>] [--label <text>] \'[["label","cmd","arg"]]\'');
+    console.error(USAGE);
     process.exit(2); // (5) nothing was measured — never exit 0 on misuse.
   }
 
@@ -149,9 +230,26 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     process.exit(2);
   }
 
+  // (6) Both new flags fail CLOSED on rc=2 — "nothing was measured" — rather than falling
+  // back to REPO_ROOT or to an empty env. A silent fallback would run a real battery and
+  // report a real verdict about the WRONG subject, which is worse than not running at all.
+  const cwd = resolveCwd(flag('--cwd', ''));
+  if (cwd === null) {
+    console.error(`--cwd does not exist: ${flag('--cwd', '')}`);
+    process.exit(2);
+  }
+
+  const env = parseEnvPairs(repeatedFlag('--env'));
+  if (env === null) {
+    console.error('--env expects KEY=VALUE (non-empty key)');
+    process.exit(2);
+  }
+
   const { overall } = runBattery(jobs, {
     transcript: flag('--transcript', 'artifacts/gate-battery-transcript.txt'),
     label: flag('--label', ''),
+    cwd,
+    env,
   });
   process.exit(overall);
 }
