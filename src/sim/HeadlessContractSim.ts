@@ -23,6 +23,8 @@ import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
 import { loadContract, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
 import { stableHash } from '../mp/LockstepClient';
+import { AtomicSocket } from './AtomicSocket';
+import { DeepwaterSocket } from './DeepwaterSocket';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
@@ -51,6 +53,9 @@ const SUPPORTED_CONTRACTS = new Set([
   'e3-blackout-ridge',
   'e3-moth-season',
   'e3-canyon-works',
+  // E5/E6 stay out DESPITE their era sockets now running headlessly (DeepwaterSocket,
+  // AtomicSocket). Admission was attempted and MEASURED, and the measurement refused it:
+  // see reviews/milk-twin-sockets.md and the two census docs for the four numbers.
 ]);
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
 
@@ -138,6 +143,8 @@ export class HeadlessContractSim {
   private readonly lightField: LightField | null;
   private readonly mothSwarm: MothSwarm | null;
   private readonly crawler: CrawlerBossSystem | null;
+  private readonly deepwater: DeepwaterSocket | null;
+  private readonly atomic: AtomicSocket | null;
   private readonly waves: WaveSystem;
   private readonly runManager: RunManager;
   private readonly stockpileHoldings: GoldHolding[] = Array.from(
@@ -197,6 +204,9 @@ export class HeadlessContractSim {
     this.harvest.applyStats(1, 0, 0, this.manifest.twist.seamYieldMult ?? 1);
     this.harvestSnapshot = this.harvest.snapshot;
 
+    // The Atomic socket is built before combat because the browser routes two of its
+    // couplings THROUGH CombatSystem's own hooks (Game.ts:534 and Game.ts:536).
+    this.atomic = AtomicSocket.create(this.manifest, this.events, this.enemies, this.economy);
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -207,6 +217,12 @@ export class HeadlessContractSim {
       this.combatVfx,
       NO_AUDIO,
       () => this.postHeroDeath(),
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      (enemy, amount, died) => this.atomic?.onEnemyDamaged(enemy, amount, died),
+      (enemy) => this.atomic?.isHostile(enemy) !== false,
     );
     this.registerHeroShooter();
     this.build = new BuildSystem(
@@ -281,6 +297,13 @@ export class HeadlessContractSim {
         )
       : null;
     this.syncMothLightState();
+    this.deepwater = DeepwaterSocket.create(
+      this.manifest,
+      this.enemies,
+      this.combat,
+      () => this.hero.group.position,
+      (wave, at) => this.events.emit({ type: 'wave_started', at, wave }),
+    );
 
     this.waves = new WaveSystem(
       this.enemies,
@@ -288,7 +311,8 @@ export class HeadlessContractSim {
       createRng(`${this.seed}:waves`),
       (text, at, wave) => this.replayEvents.push({ type: 'announcement', at, wave: wave ?? null, text }),
       (wave, at) => this.startWave(wave, at),
-      () => false,
+      // Game.ts:1251 — the Deepwater Claim runs no generic schedule; its storm track is the clock.
+      () => this.deepwater !== null,
       () => this.manifest,
       boot,
       () => this.build.diagnostics.stockpilesState.some((entry) => entry.active),
@@ -402,6 +426,8 @@ export class HeadlessContractSim {
         ...(this.dayNightSnapshot ? { dayNight: this.dayNightSnapshot } : {}),
         ...(canyonConnect ? { canyonConnect } : {}),
         ...(crawler ? { crawler: (({ crawler3dState: _, ...simulation }) => simulation)(crawler) } : {}),
+        ...(this.deepwater ? { deepwater: this.deepwater.simulationSnapshot } : {}),
+        ...(this.atomic ? { atomic: this.atomic.diagnostics } : {}),
       },
     });
     return { ...base, eventLogHash };
@@ -422,9 +448,17 @@ export class HeadlessContractSim {
   private step(): void {
     this.simTick += 1;
     this.timeAlive += STEP_SECONDS;
+    // Era sockets keep the browser's own relative order (Game.ts:2527-2541):
+    //   decay.tick -> syncDeepwaterClaim -> actors -> e6TileConsumers -> arsenal -> waves -> wrangle.
+    // Every call is null-guarded, so no already-admitted contract's tick changes.
+    this.atomic?.tickDecay();
+    this.deepwater?.advance(this.timeAlive);
     this.hero.update(STEP_SECONDS, IDLE_INTENTS, { bounds: Terrain.bounds, sample: Terrain.sample });
+    this.atomic?.updateTileConsumers(STEP_SECONDS, this.timeAlive, this.harvestTargets());
+    this.deepwater?.updateArsenal(this.timeAlive);
     this.combat.setTime(this.timeAlive);
     this.waves.update(this.timeAlive);
+    this.atomic?.updateWrangle(STEP_SECONDS, this.timeAlive);
     this.crawler?.step(this.timeAlive);
     this.build.update(
       STEP_SECONDS,
@@ -441,7 +475,7 @@ export class HeadlessContractSim {
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
     this.enemies.update(STEP_SECONDS, this.hero.group.position, (enemy) => {
-      this.combat.handleEnemyContact(enemy);
+      if (this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
     }, this.build.palisadeBlockers, {
       nearestGoldHolding: (from) => this.targeting.nearestGoldHolding(from),
@@ -454,10 +488,12 @@ export class HeadlessContractSim {
       nearestBuilding: (from) => this.waves.preferredEscortTarget(from) ?? this.targeting.nearestBuilding(from),
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
-    });
+    }, (enemy) => this.atomic?.movementMultiplier(enemy) ?? 1);
+    this.deepwater?.recycleCorsairsAtExit();
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
     this.updateBaronRocketVolley();
     this.combat.update(STEP_SECONDS, this.timeAlive);
+    this.deepwater?.resolveTreatments();
     this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncMothLightState();
@@ -707,6 +743,8 @@ export class HeadlessContractSim {
       dayNight: this.dayNightSnapshot,
       ...(canyonConnect ? { canyonConnect } : {}),
       crawler: this.crawler?.diagnostics() ?? null,
+      deepwater: this.deepwater?.diagnostics ?? null,
+      atomic: this.atomic?.diagnostics ?? null,
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,
       kills: this.kills,
