@@ -10,6 +10,15 @@ const EXPECTED_RULES: Record<string, string[]> = {
   'e6-picnic': ['build_zones'],
 };
 
+// Each Atomic contract declares the era socket it is missing (AP-11 engineDependencies mandate).
+// The declaration is honesty, not admission: every contract below stays rejected by the support gate.
+const EXPECTED_DEPENDENCY: Record<string, string> = {
+  'e6-glow-mesa': 'glow-mesa-contract-consumers',
+  'e6-showroom': 'atomic-wrangle-consumer',
+  'e6-half-life-hollow': 'half-life-hollow-contract-consumers',
+  'e6-picnic': 'picnic-contract-consumers',
+};
+
 for (const contract of atomic.contracts) {
   test(`${contract.id} census rejects the unsocketed Atomic mechanics`, async () => {
     const seeds = (benchSeeds as Record<string, string[]>)[contract.id]!;
@@ -36,7 +45,10 @@ for (const contract of atomic.contracts) {
       const mechanics = deriveMechanicsManifest(contract);
 
       expect(seeds).toEqual([`${contract.id}-01`, `${contract.id}-02`]);
-      expect('engineDependencies' in contract.tileParams).toBe(false);
+      expect(contract.tileParams.engineDependencies).toEqual([
+        expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
+      ]);
+      expect(contract.tileParams.engineDependencies[0].description.trim()).not.toEqual('');
       expect(contract.twist.enemyRoster.some(({ id }) => id === 'feral_toaster' || id === 'lawn_shepherd')).toBe(true);
       expect(mechanics.interactables).toEqual([]);
       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);

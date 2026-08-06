@@ -99,6 +99,9 @@
           "id": "glow-mesa-two-level",
           "mode": "visual"
         },
+        "engineDependencies": [
+          { "dep": "glow-mesa-contract-consumers", "status": "missing", "description": "Needs the declared timed decay-field walkability, six-vein night harvest, epoch-wide appliance wrangle, and Homemaker boss consumers; the browser composes E6TileConsumerSystem, WrangleSystem, and HomemakerBossSystem while the headless sim composes none." }
+        ],
         "lanes": {
           "spawnEdges": [
             "north",
@@ -245,6 +248,9 @@
           "id": "showroom-village-grade",
           "mode": "visual"
         },
+        "engineDependencies": [
+          { "dep": "atomic-wrangle-consumer", "status": "missing", "description": "Needs the epoch-wide appliance wrangle consumer: feral machines wind down when kited long enough and may then be captured alive. The browser enables WrangleSystem for the whole Atomic epoch, while the headless sim has no wrangle consumer and the mechanics manifest exposes no capture operation." }
+        ],
         "lanes": {
           "spawnEdges": [
             "north",
@@ -349,6 +355,9 @@
           "id": "half-life-hollow-expiry-course",
           "mode": "visual"
         },
+        "engineDependencies": [
+          { "dep": "half-life-hollow-contract-consumers", "status": "missing", "description": "Needs the epoch-wide appliance wrangle consumer plus a crossing consumer for the two glow bridges, the central causeway, and the west and east shelves the briefing promises; those crossings are advertised in briefing prose alone and carry no tileParams data for any consumer to read." }
+        ],
         "lanes": {
           "spawnEdges": [
             "west",
@@ -448,6 +457,9 @@
           "id": "glow-mesa-two-level",
           "mode": "visual"
         },
+        "engineDependencies": [
+          { "dep": "picnic-contract-consumers", "status": "missing", "description": "Needs the epoch-wide appliance wrangle consumer plus a three-stake hold objective consumer; the manifest lists all three stakeMarkers as loss stakes while Game.contractHeroStart and HeadlessContractSim each select only the first marker and neither implements a three-stake hold." }
+        ],
         "lanes": {
           "spawnEdges": [
             "north",
