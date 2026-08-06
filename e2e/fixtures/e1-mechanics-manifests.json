@@ -40,6 +40,120 @@
   },
   {
     "schema": "goldrush.mechanics.v1",
+    "contractId": "e1-drill-yard",
+    "interactables": [
+      {
+        "id": "assay_tent_faucet",
+        "count": 1,
+        "operations": [
+          "top_up"
+        ],
+        "source": "practice.stations"
+      },
+      {
+        "id": "drill_bell",
+        "count": 1,
+        "operations": [
+          "ring"
+        ],
+        "source": "practice.stations"
+      },
+      {
+        "id": "rolling_log",
+        "count": 2,
+        "operations": [
+          "strike"
+        ],
+        "source": "practice.targets"
+      },
+      {
+        "id": "straw_man",
+        "count": 3,
+        "operations": [
+          "strike"
+        ],
+        "source": "practice.targets"
+      }
+    ],
+    "rules": [
+      {
+        "id": "drill_wave",
+        "source": "practice.bellWaveSize",
+        "data": {
+          "size": 8
+        }
+      },
+      {
+        "id": "ledger_free_practice",
+        "source": "practice",
+        "data": {
+          "suppressed": [
+            "metaProgress",
+            "runHistory",
+            "scheduledWaves",
+            "scores",
+            "standings",
+            "tapes"
+          ]
+        }
+      },
+      {
+        "id": "practice_buildables",
+        "source": "practice.buildables",
+        "data": {
+          "ids": [
+            "assay_office",
+            "lantern_post",
+            "palisade",
+            "sentry_beacon",
+            "sluice",
+            "stockpile",
+            "turret"
+          ]
+        }
+      },
+      {
+        "id": "practice_gold_grant",
+        "source": "practice.goldGrant",
+        "data": {
+          "amount": 100
+        }
+      },
+      {
+        "id": "practice_target_respawn",
+        "source": "practice.dummyRespawnSeconds",
+        "data": {
+          "seconds": 1.5
+        }
+      },
+      {
+        "id": "river",
+        "source": "tileParams.river",
+        "data": {}
+      },
+      {
+        "id": "water_crossings",
+        "source": "tileParams.ford",
+        "data": {
+          "count": 1,
+          "ids": []
+        }
+      }
+    ],
+    "modes": [],
+    "posting": {
+      "waves": [],
+      "spawnEdges": [
+        "east",
+        "north",
+        "south",
+        "west"
+      ],
+      "lossStakes": []
+    }
+  },
+  {
+    "schema": "goldrush.mechanics.v1",
     "contractId": "e1-dry-gulch",
     "interactables": [],
     "rules": [
