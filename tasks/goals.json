@@ -3930,6 +3930,18 @@
               "mergeHash": "3ab612ed647f8e2fe7a697faa2213ba9cdbf433e",
               "drainedBy": "s1478",
               "review": "reviews/f1476-1-renderer-count-tolerance.md"
+            },
+            {
+              "id": "f1493-1-parity-repin",
+              "title": "F-1493-1: land the F-SEED-1 parity cure adjacent assertions WITH the slice — correct the e2-hill-mine census equality (unsound on baron contracts) and re-pin the six gr-sim expectations with their named cause. REPLACES the owner-forked F-1492-2, which asked an unanswerable question.",
+              "taskFile": "lane-f1493-1-parity-repin.md",
+              "lane": "lane-a",
+              "status": "queued",
+              "review": "reviews/f1492-2-secure-wave-reframed.md",
+              "attempts": 0,
+              "authoredBy": "s1493 fire (FIRE-AUTHORED)",
+              "authorNotes": "EXTENDS lane/a ON TOP OF THE UNMERGED CURE — the master SUSPENDS the safe-dupe pre-flight by explicit authorization and forbids every reset/clean/pull verb in that worktree, because lane/a correctly reads HOLDS and its content (src/sim/HeadlessContractSim.ts + e2e/front-door-parity.spec.ts) exists nowhere else. This is F-1492-1 route (a): the numbers being pinned DO NOT EXIST without the cure, so a fresh lane would compute the old ones and fix them wrongly. THE CONTENT QUESTION WAS RETIRED BY MEASUREMENT, NOT DECIDED: s1493 read autoSecureWaveForRun in BOTH engines (Game.ts:4844 browser, HeadlessContractSim.ts:325-328 headless) and found it returns Number.MAX_SAFE_INTEGER while twist.baron && !baronBeaten, so a baron contract never secures at its declared secureWave at all — the census equality waves === contract.twist.secureWave is structurally guaranteed on exactly ONE of the four E2 contracts (e2-pressure-garden, the only baron-less one) and was a combat-speed coincidence on the other three. Hill Mine is the unique cell with BOTH a baron and pressureEnabled and is the one that broke; measured 6 passed / 2 failed on the merged tree, the 2 being e2-hill-mine desktop+mobile, received { calls: 0, secured: true, waves: 14 } — still secured, still zero calls, still hash-deterministic. Raising secureWave to 14 is REJECTED BY NAME in the firewall: it would change no behaviour it appears to describe (the threshold is already bypassed), it would widen the sim tick budget and edit the player-facing DeathOverlay secured wave N line, and it is the F-1441-3 re-pin reflex wearing a data file clothes. DETERMINISM PROVEN BEFORE PRESCRIBING ANY PIN: gr-sim.test.mjs run twice on the same commit 714de7ebb, all six failing actual objects byte-identical (artifacts/s1493-grsim.txt vs -2.txt) — two disagreeing runs would have meant no pin was legitimate. The master orders the runner to take numbers from its OWN run, never from the review table.",
+              "authorNotesSuccessor": "When this branch is drained it lands the parity cure AND its assertions as ONE slice, which is what F-1492-1 requires. The drain must run the FULL test:node-guards (the reds sat inside it) and should retire the F-1492-2 desk row at the same time. F-1493-2 (declared, not fixed): the corrected row no longer catches baron-map tuning drift, because it never did except by accident on 3 of 4 — a real ratchet would be a new deliverable. F-1493-3 is a NON-BLOCKING owner note, not a gate."
             }
           ]
         }
