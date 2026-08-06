@@ -17,6 +17,7 @@ them wrongly — that is F-1492-1, verbatim.
 **So the normal safe-dupe pre-flight is SUSPENDED for this task, by explicit authorization:**
 
 1. `git -C worktrees/lane-a status --short` → must be **clean** (no tracked dirt). If it is dirty, **STOP** and report.
+   > **FACTORY-CHURN EXCEPTION — these two tracked classes are ALWAYS EXPECTED and are NEVER a STOP; list them and proceed (F-1407-1, s1407):** (a) `logs/**` — the fire/runner accounting (`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`, `.goal-tree.html`, `.blocked-seen`), rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence. ⓘ What still STOPs, unchanged and load-bearing here: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — i.e. anything a live drain or a concurrent task could actually own. **On this lane that clause is doing real work**: the branch holds unmerged content that exists nowhere else, so unexplained dirt in those paths is a genuine STOP, not a formality.
 2. `git -C worktrees/lane-a rev-parse HEAD` → must be **`1e19a7d58`**. If it is anything else, **STOP** and report the tip you found; do not reset, do not pull, do not rebase.
 3. `grep -c "waves: contract.twist.secureWave, calls: 0" worktrees/lane-a/e2e/er01-e2-census.spec.ts` → must print **`1`**.
    If it prints `0`, the lane drifted from the tree this task was written against — **STOP** and report. (s1493 verified this key returns 1 on main AND in the lane at authoring time.)
