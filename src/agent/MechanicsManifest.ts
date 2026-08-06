@@ -201,6 +201,57 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       fullLight: false,
     }));
   }
+  // E4 Motor. The Land Yacht's ORBIT road is the one Motor-era mechanic that already has a
+  // live browser consumer: Game.ts constructs LandYachtBossSystem unconditionally and updates
+  // it in the sim loop, and that system reads tileParams.orbitSpawn to drive the boss.
+  // AP-11 admits a mechanic only when it is BOTH declared and consumed, so this derives the
+  // three orbit fields the consumer actually reads and nothing else — the tile's tar seams,
+  // road corridors, dry wash, weather, and peel vocabulary stay undeclared because no booted
+  // system reads them. Gated on the DATA, never the contract id (AP-11 amendment 1:
+  // "staging belongs in data ... id-hardcode is a manifest hole").
+  const landYacht = twist.baron?.variantId === 'land_yacht' && tile.orbitSpawn
+    ? { baron: twist.baron, orbit: tile.orbitSpawn }
+    : undefined;
+  if (landYacht) {
+    const { baron, orbit } = landYacht;
+    rules.push(rule('land_yacht_orbit', 'LandYachtBossSystem.installOrbitRoute', {
+      centerX: orbit.center.x,
+      centerZ: orbit.center.z,
+      radius: orbit.radius,
+      angularSpeed: orbit.angularSpeed,
+      waypoints: 25,
+      speed: 'radius*angularSpeed',
+      startAngle: 'atan2(component.z-centerZ,component.x-centerX)',
+      installedOn: 'first-tick-with-a-live-land_yacht-component',
+      ignoresTerrain: true,
+    }));
+    rules.push(rule('land_yacht_acts', 'LandYachtBossSystem.advanceActs', {
+      components: (baron.components ?? []).map(({ id }) => id).sort(),
+      act1: 'orbits the road while the wheels live',
+      act2: 'wheels destroyed: beached, remaining components pinned where they stand',
+      act3: 'crane and wheelhouse destroyed: salvage ready, wreck remains',
+    }));
+    rules.push(rule('land_yacht_head_loot', 'LandYachtBossSystem.updateOrbit', {
+      intervalSeconds: Balance.landYacht.lootIntervalSeconds,
+      heads: 4,
+      headRing: 'radius+4',
+      escortVariant: 'motor_gang',
+      requires: 'a live crane component',
+      retrySeconds: 0.25,
+    }));
+    rules.push(rule('land_yacht_crane', 'LandYachtBossSystem.updateCrane', {
+      reach: Balance.landYacht.craneReach,
+      cooldownSeconds: Balance.landYacht.craneGrabCooldownSeconds,
+      targets: 'turret',
+      damage: 'target.maxHp',
+      activeIn: 'act2',
+    }));
+    rules.push(rule('land_yacht_dread', 'LandYachtBossSystem.onWaveStarted', {
+      wave: baron.wave - 2,
+      seconds: Balance.landYacht.dreadSeconds,
+      requires: 'a ready watchtower',
+    }));
+  }
   if (practice) {
     const suppressed = Object.entries(practice)
       .filter(([, value]) => value === false)
