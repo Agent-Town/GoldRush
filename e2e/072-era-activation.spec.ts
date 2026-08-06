@@ -12,7 +12,7 @@ import {
   profileDataKey,
   type ProfileState,
 } from '../src/game/ProfileStorage';
-import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY } from '../src/meta/ContractFamilies';
+import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY, loadEpoch } from '../src/meta/ContractFamilies';
 import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
 import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
 
@@ -20,7 +20,7 @@ const ARTIFACT_DIR = path.resolve('artifacts/072-era-activation');
 const SITE_ARTIFACT_DIR = path.resolve('artifacts/raise-at-site');
 const FRONTIER = 'epoch-1-frontier';
 const STEAMWORKS = 'epoch-2-steamworks';
-const E1_CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'];
+const E1_CONTRACTS = loadEpoch(FRONTIER).contracts.map(({ id }) => id);
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 function collectErrors(page: Page): ErrorBucket {
