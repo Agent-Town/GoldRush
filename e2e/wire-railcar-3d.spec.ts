@@ -1,6 +1,7 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { verifyAndWriteRendererCounts } from './renderer-count-artifact';
 
 const ARTIFACT_DIR = path.resolve('artifacts/wire-railcar-3d');
 const QUERY = '/?debug&contract=e2-hill-mine&nolevel&nopause&nosteal&nowreck&timescale=1&seed=wire-railcar-3d';
@@ -149,17 +150,12 @@ test('GLB rides the rail, exposes all three damage morphs, preserves wreckage, a
   await expect(page.locator('canvas')).toHaveAttribute('data-railcar3d-state', 'disposed');
   const disposedCounts = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.renderer);
   expect(disposedCounts.geometries - baseline.geometries).toBeLessThan(8);
-  await mkdir(ARTIFACT_DIR, { recursive: true });
-  await writeFile(path.join(ARTIFACT_DIR, `renderer-counts-${testInfo.project.name}.json`), `${JSON.stringify({
+  await verifyAndWriteRendererCounts(path.join(ARTIFACT_DIR, `renderer-counts-${testInfo.project.name}.json`), {
     baseline,
     mounted: loadedCounts,
     despawned: despawnCounts,
-    despawnDelta: {
-      geometries: despawnCounts.geometries - loadedCounts.geometries,
-      textures: despawnCounts.textures - loadedCounts.textures,
-    },
     combatDeath: disposedCounts,
-  }, null, 2)}\n`);
+  });
   await shot(page, testInfo, 'post-kill-baseline');
   expect(errors).toEqual([]);
 });
