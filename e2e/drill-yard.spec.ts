@@ -21,6 +21,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const ARTIFACT_DIR = path.resolve('artifacts/drill-yard-affordances');
 const E1_CLAIM_COUNT = loadEpoch('epoch-1-frontier').contracts.filter((contract) => !contract.practice).length;
+const DRILL_YARD_RULES = loadEpoch('epoch-1-frontier').contracts.find(({ id }) => id === 'e1-drill-yard')!.briefing.rules;
 const PRACTICE_BUILDABLES = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office', 'lantern_post'] as const;
 const BUILD_SITES: Record<(typeof PRACTICE_BUILDABLES)[number], { x: number; z: number }> = {
   sentry_beacon: { x: -24, z: 18 },
@@ -89,7 +90,9 @@ test('plain boot keeps the Drill Yard visible and launchable on both sides of th
   await expect(page.getByTestId('training-ground')).toContainText('THE TRAINING GROUND');
   await expect(page.getByTestId('contract-card-e1-drill-yard')).toBeVisible();
   await expect(page.getByTestId('contract-card-e1-drill-yard')).toHaveAttribute('data-training-ground', 'true');
-  await expect(page.getByTestId('contract-board-briefing-e1-drill-yard')).toHaveCount(0);
+  const briefing = page.getByTestId('contract-board-briefing-e1-drill-yard');
+  await expect(briefing).toHaveCount(1);
+  for (const rule of DRILL_YARD_RULES) await expect(briefing).toContainText(rule);
   await expect(page.getByTestId('contract-best-e1-drill-yard')).toHaveCount(0);
   await expect(page.getByTestId('contract-flavor-e1-drill-yard')).toHaveText(
     'Practice ground — no stakes, no claim. The county lends the gold; the straw men lend their patience.',
