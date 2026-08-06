@@ -415,9 +415,15 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   };
 }
 
+const IRREGULAR_PLURALS: Readonly<Record<string, string>> = {
+  straw_man: 'straw men',
+};
+
 export function mechanicsManifestLine(manifest: MechanicsManifest): string {
   const terms = [
-    ...manifest.interactables.map(({ id, count }) => `${humanize(id)}${count === 1 ? '' : 's'}`),
+    ...manifest.interactables.map(({ id, count }) => count === 1
+      ? humanize(id)
+      : IRREGULAR_PLURALS[id] ?? `${humanize(id)}s`),
     ...manifest.rules.map(({ id }) => id === 'river' ? 'the river' : humanize(id)),
     ...(manifest.posting.lossStakes.length > 0 ? ['loss stakes'] : []),
   ];
