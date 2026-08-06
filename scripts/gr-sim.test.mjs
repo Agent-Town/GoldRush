@@ -473,3 +473,85 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
     else globalThis.localStorage = previousStorage;
   }
 });
+
+test('the E2 Baron fights keep their pinned outcomes', { timeout: 45_000 }, async () => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const contractIds = ['e2-hill-mine', 'e2-trestle', 'e2-incline'];
+  const contracts = JSON.parse(readFileSync(new URL('../assets/contracts/epoch-2-steamworks/contracts.json', import.meta.url), 'utf8'))
+    .contracts.filter(({ id }) => contractIds.includes(id));
+  const outcomes = {};
+  try {
+    for (const contract of contracts) {
+      const seed = benchSeeds[contract.id][0];
+      const location = new URL(`http://gr-sim.local/?debug&contract=${contract.id}&seed=${seed}`);
+      globalThis.location = location;
+      globalThis.window = { location };
+      const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+      try {
+        const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
+        const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+        const rig = { ...Balance.sparkRig };
+        Object.assign(Balance.sparkRig, { damage: 1_000, fireRate: 60, range: 300, boltSpeed: 30, boltLife: 5 });
+        try {
+          const run = () => {
+            const sim = new HeadlessContractSim({ contractId: contract.id, seed });
+            sim.hero.applyStats(100_000, 1);
+            sim.hero.heal(100_000);
+            let turn = sim.currentTurn();
+            while (!turn.terminal) turn = sim.advanceToTurn();
+            return sim.outcome();
+          };
+          const first = run();
+          const second = run();
+          assert.deepEqual(second, first);
+          // autoSecureWaveForRun() returns Number.MAX_SAFE_INTEGER while twist.baron && !baronBeaten.
+          assert.ok(first.waves >= contract.twist.secureWave);
+          outcomes[contract.id] = first;
+        } finally {
+          Object.assign(Balance.sparkRig, rig);
+        }
+      } finally {
+        await vite.close();
+      }
+    }
+    // NAMED-CAUSE PIN (F-1493-2, lane-f1493-2-baron-drift-pin, 2026-08-06): the census
+    // equality that used to catch baron-map drift was unsound and was correctly relaxed at
+    // ff628a132; this is its replacement. A red requires a named cause; blind re-pinning is
+    // forbidden (F-1441-3).
+    assert.deepEqual(outcomes, {
+      'e2-hill-mine': {
+        secured: true,
+        waves: 12,
+        timeMs: 366_933,
+        gold: 0,
+        kills: 445,
+        calls: 0,
+        eventLogHash: 'fnv1a32:a3b2c95e',
+      },
+      'e2-trestle': {
+        secured: true,
+        waves: 12,
+        timeMs: 365_067,
+        gold: 0,
+        kills: 448,
+        calls: 0,
+        eventLogHash: 'fnv1a32:94275d9a',
+      },
+      'e2-incline': {
+        secured: true,
+        waves: 12,
+        timeMs: 360_767,
+        gold: 0,
+        kills: 424,
+        calls: 0,
+        eventLogHash: 'fnv1a32:3362e2f0',
+      },
+    });
+  } finally {
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
+});
