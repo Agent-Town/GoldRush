@@ -1,3 +1,11 @@
+> **DRAIN RECEIPT — s1495, merged `aaecce624fb3331c30736aeabe5460fc7aa82ded`.** This shift's own verdict below is preserved
+> verbatim (retention law: supersede, never delete). The drain verified its central merge claim rather
+> than inheriting it: `git diff --name-status main...milk/surveyors-dossier` returns **35 A and exactly one M
+> (`tasks/BACKLOG.md`)** — so "no file that existed before this shift was modified" is true of every file
+> except the ledger, which the review does not mention. Gated in a detached worktree (§3.0b), not in main's
+> tree. Battery: tsc rc=0 · build rc=0 · test:node-guards rc=0 · plain-boot 2/2 desktop+mobile, all
+> `--workers=1`; transcript `artifacts/s1495-drain-gate.txt`.
+
 # Review — THE SURVEYOR'S DOSSIER (milk shift, 2026-08-06)
 
 **Slice:** `milk/surveyors-dossier` (worktree `gr-milk-surveyors-dossier`), tip `0e9d85a1e` + this review
