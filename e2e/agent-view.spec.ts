@@ -350,6 +350,11 @@ test('the derived manifest rides THE VIEW and every E1 briefing speaks it', asyn
       mechanicsManifestLine(deriveMechanicsManifest(id)),
     );
   }
+  const drillYardLine = page.getByTestId('contract-board-mechanics-e1-drill-yard');
+  await expect(drillYardLine).toContainText('straw men');
+  await expect(drillYardLine).not.toContainText('straw mans');
+  await expect(drillYardLine).toContainText('rolling logs');
+  await expect(page.getByTestId('contract-board-mechanics-e1-night-shift')).toContainText('lantern posts');
   expectNoConsoleErrors(watch, 'manifest view');
 });
 
