@@ -1,0 +1,2574 @@
+{
+ "summary": {
+  "label": "e2-trestle-card",
+  "contract": "e2-trestle",
+  "seed": "e2-trestle-02",
+  "preset": "vein-hunter",
+  "mode": null,
+  "transport": "inproc",
+  "carry": "remainder-noretry",
+  "outcome": {
+   "secured": false,
+   "waves": 15,
+   "timeMs": 450000,
+   "gold": 63,
+   "kills": 0,
+   "calls": 38,
+   "eventLogHash": null
+  },
+  "riderCalls": 20,
+  "submissions": 38,
+  "turns": 38,
+  "viewBytes": 156924,
+  "estMarginalTokens": 39231,
+  "ceilingHit": true,
+  "presetProof": {
+   "applied": "vein-hunter",
+   "enemyHp": 28,
+   "xpPerKill": 3,
+   "investBonus": 0
+  }
+ },
+ "turns": [
+  {
+   "turn": 0,
+   "wave": 0,
+   "runSeconds": 0,
+   "gold": 0,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 0,
+    "standing": 0,
+    "wrecked": 0,
+    "byKind": {}
+   },
+   "threats": {
+    "alive": 0,
+    "state": "quiet",
+    "edge": null,
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "seams": [
+    "gold-seam-1",
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:2f7999bf"
+   },
+   "riderCall": true,
+   "note": "arm the panner, earn at anchor1",
+   "submitted": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 2859
+  },
+  {
+   "turn": 1,
+   "wave": 1,
+   "runSeconds": 30,
+   "gold": 0,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 0,
+    "standing": 0,
+    "wrecked": 0,
+    "byKind": {}
+   },
+   "threats": {
+    "alive": 8,
+    "state": "warning",
+    "edge": "south",
+    "thieves": 0,
+    "wreckers": 6
+   },
+   "seams": [
+    "gold-seam-1",
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-1-1",
+     "verb": "HARVEST",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-1-2",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:ad81af6a"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 3203
+  },
+  {
+   "turn": 2,
+   "wave": 2,
+   "runSeconds": 60.03,
+   "gold": 0,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 0,
+    "standing": 0,
+    "wrecked": 0,
+    "byKind": {}
+   },
+   "threats": {
+    "alive": 13,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 3,
+    "wreckers": 4
+   },
+   "seams": [
+    "gold-seam-1",
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-2-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:f40e9ea5"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor2",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 3153
+  },
+  {
+   "turn": 3,
+   "wave": 3,
+   "runSeconds": 90.03,
+   "gold": 0,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 0,
+    "standing": 0,
+    "wrecked": 0,
+    "byKind": {}
+   },
+   "threats": {
+    "alive": 23,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 3,
+    "wreckers": 10
+   },
+   "seams": [
+    "gold-seam-1",
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-3-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 4,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:a4fafd7c"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor3",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3262
+  },
+  {
+   "turn": 4,
+   "wave": 4,
+   "runSeconds": 120.03,
+   "gold": 30,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 0,
+    "standing": 0,
+    "wrecked": 0,
+    "byKind": {}
+   },
+   "threats": {
+    "alive": 39,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 6,
+    "wreckers": 19
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-4-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 8,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:20fa2653"
+   },
+   "riderCall": true,
+   "note": "palisade #1 at (8, -9) (afforded 10), then earn at anchor2",
+   "submitted": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -9
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 8,
+      "z": -9
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 3376
+  },
+  {
+   "turn": 5,
+   "wave": 4,
+   "runSeconds": 129.1,
+   "gold": 17,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 60,
+    "maxHp": 60,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 44,
+    "state": "active",
+    "edge": "south",
+    "thieves": 6,
+    "wreckers": 22
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-5-1",
+     "verb": "MOVE_TO",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-5-2",
+     "verb": "BUILD",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-5-3",
+     "verb": "REPAIR_UNDER",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-5-4",
+     "verb": "HOLD",
+     "status": "pending",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 8,
+    "expectedWorksDamage": 60,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:20fa2653"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor4",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3957
+  },
+  {
+   "turn": 6,
+   "wave": 4,
+   "runSeconds": 129.53,
+   "gold": 17,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 40,
+    "maxHp": 60,
+    "standing": 1,
+    "wrecked": 0,
+    "byKind": {
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 44,
+    "state": "active",
+    "edge": "south",
+    "thieves": 6,
+    "wreckers": 22
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-6-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 8,
+    "expectedWorksDamage": 40,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:20fa2653"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3388
+  },
+  {
+   "turn": 7,
+   "wave": 4,
+   "runSeconds": 130,
+   "gold": 17,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 60,
+    "standing": 0,
+    "wrecked": 1,
+    "byKind": {
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 45,
+    "state": "active",
+    "edge": "south",
+    "thieves": 6,
+    "wreckers": 23
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-7-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 8,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:20fa2653"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3377
+  },
+  {
+   "turn": 8,
+   "wave": 5,
+   "runSeconds": 150.03,
+   "gold": 47,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 60,
+    "standing": 0,
+    "wrecked": 1,
+    "byKind": {
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 8,
+    "wreckers": 34
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-8-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 12,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:879972be"
+   },
+   "riderCall": true,
+   "note": "sentry_beacon #2 at (8, -16) (afforded 25), then earn at anchor4",
+   "submitted": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3544
+  },
+  {
+   "turn": 9,
+   "wave": 5,
+   "runSeconds": 158.33,
+   "gold": 15,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 40,
+    "maxHp": 100,
+    "standing": 1,
+    "wrecked": 1,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "active",
+    "edge": "east",
+    "thieves": 7,
+    "wreckers": 34
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-9-1",
+     "verb": "MOVE_TO",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-9-2",
+     "verb": "BUILD",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-9-3",
+     "verb": "REPAIR_UNDER",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-9-4",
+     "verb": "HOLD",
+     "status": "pending",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 5,
+    "expectedWorksDamage": 40,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:879972be"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor1",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4146
+  },
+  {
+   "turn": 10,
+   "wave": 5,
+   "runSeconds": 158.57,
+   "gold": 15,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 20,
+    "maxHp": 100,
+    "standing": 1,
+    "wrecked": 1,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "active",
+    "edge": "east",
+    "thieves": 7,
+    "wreckers": 34
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-10-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 5,
+    "expectedWorksDamage": 20,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:879972be"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 3568
+  },
+  {
+   "turn": 11,
+   "wave": 5,
+   "runSeconds": 158.77,
+   "gold": 15,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 100,
+    "standing": 0,
+    "wrecked": 2,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "active",
+    "edge": "east",
+    "thieves": 7,
+    "wreckers": 34
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-11-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 12,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:879972be"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 3567
+  },
+  {
+   "turn": 12,
+   "wave": 6,
+   "runSeconds": 180.03,
+   "gold": 45,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 100,
+    "standing": 0,
+    "wrecked": 2,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "north",
+    "thieves": 7,
+    "wreckers": 36
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-12-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 16,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:2479fbf5"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor2",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 3732
+  },
+  {
+   "turn": 13,
+   "wave": 7,
+   "runSeconds": 210.03,
+   "gold": 75,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 100,
+    "standing": 0,
+    "wrecked": 2,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 7,
+    "wreckers": 33
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-13-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 20,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:e5633eec"
+   },
+   "riderCall": true,
+   "note": "turret #3 at (14, -10) (afforded 50), then earn at anchor2",
+   "submitted": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 14,
+      "z": -10
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 14,
+      "z": -10
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 3849
+  },
+  {
+   "turn": 14,
+   "wave": 7,
+   "runSeconds": 213.03,
+   "gold": 75,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 100,
+    "standing": 0,
+    "wrecked": 2,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "active",
+    "edge": "west",
+    "thieves": 7,
+    "wreckers": 33
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-14-1",
+     "verb": "MOVE_TO",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-14-2",
+     "verb": "BUILD",
+     "status": "failed",
+     "reason": "FAILED: BUILD action was rejected."
+    },
+    {
+     "id": "orders-14-3",
+     "verb": "REPAIR_UNDER",
+     "status": "pending",
+     "reason": null
+    },
+    {
+     "id": "orders-14-4",
+     "verb": "HOLD",
+     "status": "pending",
+     "reason": null
+    }
+   ],
+   "newFailures": [
+    {
+     "id": "orders-14-2",
+     "reason": "FAILED: BUILD action was rejected."
+    }
+   ],
+   "almanac": {
+    "expectedLeaks": 20,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:e5633eec"
+   },
+   "riderCall": true,
+   "note": "turret #4 at (8, -22) (afforded 70), then earn at anchor4",
+   "submitted": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -22
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -22
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 4529
+  },
+  {
+   "turn": 15,
+   "wave": 7,
+   "runSeconds": 217,
+   "gold": 18,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 66,
+    "maxHp": 166,
+    "standing": 1,
+    "wrecked": 2,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "east",
+    "thieves": 7,
+    "wreckers": 33
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-15-1",
+     "verb": "MOVE_TO",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-15-2",
+     "verb": "BUILD",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-15-3",
+     "verb": "REPAIR_UNDER",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-15-4",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 2,
+    "expectedWorksDamage": 16,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:e5633eec"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor3",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 4423
+  },
+  {
+   "turn": 16,
+   "wave": 7,
+   "runSeconds": 218.57,
+   "gold": 18,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 46,
+    "maxHp": 166,
+    "standing": 1,
+    "wrecked": 2,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "active",
+    "edge": "east",
+    "thieves": 8,
+    "wreckers": 32
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-16-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 2,
+    "expectedWorksDamage": 16,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:e5633eec"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3859
+  },
+  {
+   "turn": 17,
+   "wave": 7,
+   "runSeconds": 218.77,
+   "gold": 18,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 26,
+    "maxHp": 166,
+    "standing": 1,
+    "wrecked": 2,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "active",
+    "edge": "east",
+    "thieves": 8,
+    "wreckers": 31
+   },
+   "seams": [
+    "gold-seam-1",
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-17-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 2,
+    "expectedWorksDamage": 16,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:e5633eec"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3859
+  },
+  {
+   "turn": 18,
+   "wave": 7,
+   "runSeconds": 219.03,
+   "gold": 18,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 6,
+    "maxHp": 166,
+    "standing": 1,
+    "wrecked": 2,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 58,
+    "state": "active",
+    "edge": "east",
+    "thieves": 8,
+    "wreckers": 31
+   },
+   "seams": [
+    "gold-seam-1",
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-18-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 2,
+    "expectedWorksDamage": 6,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:e5633eec"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3857
+  },
+  {
+   "turn": 19,
+   "wave": 7,
+   "runSeconds": 219.5,
+   "gold": 18,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 166,
+    "standing": 0,
+    "wrecked": 3,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "active",
+    "edge": "east",
+    "thieves": 9,
+    "wreckers": 31
+   },
+   "seams": [
+    "gold-seam-1",
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-19-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 20,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:e5633eec"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 3855
+  },
+  {
+   "turn": 20,
+   "wave": 8,
+   "runSeconds": 240.03,
+   "gold": 48,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 166,
+    "standing": 0,
+    "wrecked": 3,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 30
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-20-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 24,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:5155c1b7"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor4",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 4069
+  },
+  {
+   "turn": 21,
+   "wave": 9,
+   "runSeconds": 270.03,
+   "gold": 78,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 166,
+    "standing": 0,
+    "wrecked": 3,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "east",
+    "thieves": 10,
+    "wreckers": 29
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-21-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 27,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:3e6bc889"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor1",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4187
+  },
+  {
+   "turn": 22,
+   "wave": 10,
+   "runSeconds": 300,
+   "gold": 108,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 166,
+    "standing": 0,
+    "wrecked": 3,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 11,
+    "wreckers": 27
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-22-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 30,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:0a843fba"
+   },
+   "riderCall": true,
+   "note": "turret #5 at (10, -9) (afforded 95), then earn at anchor2",
+   "submitted": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 10,
+      "z": -9
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 10,
+      "z": -9
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4303
+  },
+  {
+   "turn": 23,
+   "wave": 10,
+   "runSeconds": 307.53,
+   "gold": 38,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 50,
+    "maxHp": 256,
+    "standing": 1,
+    "wrecked": 3,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "warning",
+    "edge": "north",
+    "thieves": 10,
+    "wreckers": 27
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-23-1",
+     "verb": "MOVE_TO",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-23-2",
+     "verb": "BUILD",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-23-3",
+     "verb": "REPAIR_UNDER",
+     "status": "active",
+     "reason": null
+    },
+    {
+     "id": "orders-23-4",
+     "verb": "HOLD",
+     "status": "pending",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 17,
+    "expectedWorksDamage": 50,
+    "expectedGold": 56.67,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:0a843fba"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor2",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4891
+  },
+  {
+   "turn": 24,
+   "wave": 10,
+   "runSeconds": 308,
+   "gold": 38,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 30,
+    "maxHp": 256,
+    "standing": 1,
+    "wrecked": 3,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "active",
+    "edge": "north",
+    "thieves": 10,
+    "wreckers": 28
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-24-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 17,
+    "expectedWorksDamage": 30,
+    "expectedGold": 56.67,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:0a843fba"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4301
+  },
+  {
+   "turn": 25,
+   "wave": 10,
+   "runSeconds": 308.23,
+   "gold": 38,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 10,
+    "maxHp": 256,
+    "standing": 1,
+    "wrecked": 3,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "active",
+    "edge": "north",
+    "thieves": 10,
+    "wreckers": 28
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-25-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 17,
+    "expectedWorksDamage": 10,
+    "expectedGold": 56.67,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:0a843fba"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4310
+  },
+  {
+   "turn": 26,
+   "wave": 10,
+   "runSeconds": 308.4,
+   "gold": 38,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 256,
+    "standing": 0,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "active",
+    "edge": "north",
+    "thieves": 10,
+    "wreckers": 28
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-26-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 30,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:0a843fba"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4305
+  },
+  {
+   "turn": 27,
+   "wave": 11,
+   "runSeconds": 330,
+   "gold": 68,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 256,
+    "standing": 0,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 10,
+    "wreckers": 28
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-27-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 43,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:b64bec1b"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor3",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 4580
+  },
+  {
+   "turn": 28,
+   "wave": 12,
+   "runSeconds": 360,
+   "gold": 68,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 256,
+    "standing": 0,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 63,
+    "state": "warning",
+    "edge": "east",
+    "thieves": 11,
+    "wreckers": 30
+   },
+   "seams": [
+    "gold-seam-1",
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-28-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 32,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:9ab35e44"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor4",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 4597
+  },
+  {
+   "turn": 29,
+   "wave": 13,
+   "runSeconds": 390,
+   "gold": 98,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 256,
+    "standing": 0,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 10,
+    "wreckers": 28
+   },
+   "seams": [
+    "gold-seam-1"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-29-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 34,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:3a4214f9"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor1",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4714
+  },
+  {
+   "turn": 30,
+   "wave": 14,
+   "runSeconds": 420,
+   "gold": 128,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 256,
+    "standing": 0,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 25
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": false,
+   "orderStates": [
+    {
+     "id": "orders-30-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 34,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:1a3d30da"
+   },
+   "riderCall": true,
+   "note": "turret #6 at (10, -16) (afforded 125), then earn at anchor4",
+   "submitted": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 10,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 10,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "REPAIR_UNDER",
+     "pct": 60
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "viewBytes": 4837
+  },
+  {
+   "turn": 31,
+   "wave": 14,
+   "runSeconds": 427.2,
+   "gold": 33,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 102,
+    "maxHp": 378,
+    "standing": 1,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 3
+    }
+   },
+   "threats": {
+    "alive": 57,
+    "state": "warning",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 22
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-31-1",
+     "verb": "MOVE_TO",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-31-2",
+     "verb": "BUILD",
+     "status": "done",
+     "reason": null
+    },
+    {
+     "id": "orders-31-3",
+     "verb": "REPAIR_UNDER",
+     "status": "active",
+     "reason": null
+    },
+    {
+     "id": "orders-31-4",
+     "verb": "HOLD",
+     "status": "pending",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 25,
+    "expectedWorksDamage": 102,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:1a3d30da"
+   },
+   "riderCall": true,
+   "note": "rotate to anchor2",
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 5425
+  },
+  {
+   "turn": 32,
+   "wave": 14,
+   "runSeconds": 428.1,
+   "gold": 33,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 82,
+    "maxHp": 378,
+    "standing": 1,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 3
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "active",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 22
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-32-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 25,
+    "expectedWorksDamage": 82,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:1a3d30da"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4840
+  },
+  {
+   "turn": 33,
+   "wave": 14,
+   "runSeconds": 428.13,
+   "gold": 33,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 62,
+    "maxHp": 378,
+    "standing": 1,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 3
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "active",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 22
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-33-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 25,
+    "expectedWorksDamage": 62,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:1a3d30da"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4843
+  },
+  {
+   "turn": 34,
+   "wave": 14,
+   "runSeconds": 428.47,
+   "gold": 33,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 42,
+    "maxHp": 378,
+    "standing": 1,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 3
+    }
+   },
+   "threats": {
+    "alive": 59,
+    "state": "active",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 22
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-34-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 25,
+    "expectedWorksDamage": 42,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:1a3d30da"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4843
+  },
+  {
+   "turn": 35,
+   "wave": 14,
+   "runSeconds": 429,
+   "gold": 33,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 22,
+    "maxHp": 378,
+    "standing": 1,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 3
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "active",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 23
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-35-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 25,
+    "expectedWorksDamage": 22,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:1a3d30da"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4834
+  },
+  {
+   "turn": 36,
+   "wave": 14,
+   "runSeconds": 429.03,
+   "gold": 33,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 2,
+    "maxHp": 378,
+    "standing": 1,
+    "wrecked": 4,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 3
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "active",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 23
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-36-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 25,
+    "expectedWorksDamage": 2,
+    "expectedGold": 54.99,
+    "currentWorks": 1,
+    "harnessHash": "fnv1a32:1a3d30da"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4841
+  },
+  {
+   "turn": 37,
+   "wave": 14,
+   "runSeconds": 429.37,
+   "gold": 33,
+   "heroHp": 100,
+   "heroAt": {
+    "x": 12,
+    "z": -12
+   },
+   "works": {
+    "hp": 0,
+    "maxHp": 378,
+    "standing": 0,
+    "wrecked": 5,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 1,
+     "turret": 3
+    }
+   },
+   "threats": {
+    "alive": 60,
+    "state": "active",
+    "edge": "west",
+    "thieves": 9,
+    "wreckers": 23
+   },
+   "seams": [
+    "gold-seam-2"
+   ],
+   "needsRider": true,
+   "orderStates": [
+    {
+     "id": "orders-37-1",
+     "verb": "HOLD",
+     "status": "active",
+     "reason": null
+    }
+   ],
+   "newFailures": [],
+   "almanac": {
+    "expectedLeaks": 34,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 0,
+    "harnessHash": "fnv1a32:1a3d30da"
+   },
+   "riderCall": false,
+   "note": null,
+   "submitted": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "viewBytes": 4841
+  }
+ ]
+}

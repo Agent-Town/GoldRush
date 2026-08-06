@@ -1,0 +1,70 @@
+{
+ "label": "surv-rear",
+ "carry": "remainder-noretry",
+ "answers": [
+  {
+   "at": {
+    "turn": 0
+   },
+   "orders": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "at": {
+    "wave": 2
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ]
+  },
+  {
+   "at": {
+    "wave": 3
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -28
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -28
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ]
+  }
+ ]
+}

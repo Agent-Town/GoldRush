@@ -1,0 +1,262 @@
+{
+ "label": "trestle-trail-01-v1",
+ "carry": "remainder-noretry",
+ "answers": [
+  {
+   "at": {
+    "turn": 0
+   },
+   "orders": [
+    {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "arm the panner at anchor2"
+  },
+  {
+   "at": {
+    "wave": 2
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "earn at anchor1"
+  },
+  {
+   "at": {
+    "wave": 3
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -9
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -9
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "turret at (8, -9), then earn at anchor1"
+  },
+  {
+   "at": {
+    "wave": 4
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "earn at anchor3"
+  },
+  {
+   "at": {
+    "wave": 5
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 12,
+      "z": -12
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 12,
+      "z": -12
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "turret at (12, -12), then earn at anchor3"
+  },
+  {
+   "at": {
+    "wave": 6
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "earn at anchor4"
+  },
+  {
+   "at": {
+    "wave": 7
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "earn at anchor2"
+  },
+  {
+   "at": {
+    "wave": 8
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "earn at anchor1"
+  },
+  {
+   "at": {
+    "wave": 9
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 8,
+      "z": -16
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 8,
+      "z": -16
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "turret at (8, -16), then earn at anchor4"
+  },
+  {
+   "at": {
+    "wave": 10
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": -24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "earn at anchor3"
+  },
+  {
+   "at": {
+    "wave": 11
+   },
+   "orders": [
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": 20
+     }
+    }
+   ],
+   "note": "earn at anchor4"
+  },
+  {
+   "at": {
+    "wave": 12
+   },
+   "orders": [
+    {
+     "verb": "MOVE_TO",
+     "pos": {
+      "x": 14,
+      "z": -8
+     }
+    },
+    {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 14,
+      "z": -8
+     },
+     "when": {
+      "waveGte": 0
+     }
+    },
+    {
+     "verb": "HOLD",
+     "pos": {
+      "x": 24,
+      "z": -20
+     }
+    }
+   ],
+   "note": "turret at (14, -8), then earn at anchor2"
+  }
+ ]
+}
