@@ -60,8 +60,37 @@ so the assert cannot drift the way the prose did, and it cross-checks the mask t
 | `npm run test:node-guards` | **rc=0 — 305 tests / 302 pass / 0 fail / 3 skipped**, zero `not ok` |
 | Node | **v26.4.0**, matching `.nvmrc` — the pinned interpreter (F-1458-2) |
 
-No screenshots: headless bench infrastructure, zero player-visible surface. The spec's own
-zero-`console.error`/`console.warn` assert passed on all 8.
+The spec's own zero-`console.error`/`console.warn` assert passed on all 8.
+
+### "Where does the PLAYER see this, in a plain boot?" (Mistake #10) — answered, and it is why there are no screenshots
+
+The beacon line is player-facing prose, so this question is owed. **Measured answer: nowhere yet, and not
+by accident.**
+
+- `assets/contracts/epoch-5-deepwater/manifest.json` carries **`locked: true`, `scienceThreshold: 14`** — the
+  whole epoch is gated. (`epoch-1-frontier` is `locked: false`; that is the contrast.)
+- The Regatta is unreachable *even inside* E5, and this is **measured, not inferred**: the census spec's
+  `EXPECTED_ACTIVE_CONTRACT` asserts that booting `?debug&contract=e5-regatta` resolves `activeContract()` to
+  **`the-claim`** — and that assert passes. Its empty `harvestAnchors` makes selection fall back rather than
+  boot a false contract.
+
+So a screenshot today could only be manufactured from a state the player cannot reach, which is the
+*inverse* of the evidence Mistake #10 asks for. The string is verified where it can be verified — at the data
+layer, by ADMISSION GATE 2, against four surfaces. **It becomes player-visible when the E5 socket lands and
+the epoch unlocks (F-ER01-E5-5), and the assert will be waiting for it then.**
+
+### Evidence hygiene: these gates measured THIS tree, and that was checked, not assumed
+
+`lsof` at gate time showed **port 5188 held by pid 83909, whose cwd is
+`/Users/robin/Claude/Projects/gr-milk-motor-socket`** — a *sibling milk shift*, not this worktree. Under the
+default config's `webServer` that is exactly the setup where a browser gate silently measures someone else's
+tree and reports a confident green.
+
+**It cannot have contaminated anything here, and the reason is structural rather than lucky:** none of the
+census specs use `page`, `goto`, or `baseURL` — each stands up its *own* in-process Vite server with
+`root: process.cwd()` and SSR-loads the modules directly. Every one of the 42 assertions ran against this
+worktree's files. That is also the reason a browser probe was not improvised on the shared port while a fire
+and three sibling shifts were live.
 
 ### The cures were proven by manufacturing the old defects, not by a green
 
