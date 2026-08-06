@@ -543,7 +543,11 @@ export class HeadlessContractSim {
     const baron = this.manifest.twist.baron;
     if (!baron || this.baronBeaten) return;
     this.baronBeaten = true;
-    const objectiveAllowsSecure = !this.manifest.twist.powerGrid || this.canyonConnectCompletedByDeadline;
+    // Keys on `connect`, not on any powerGrid (F-1471-1): only syncCanyonConnectObjective sets the
+    // flag below, and it early-returns on `!grid?.connect` — so a powerGrid without a connect
+    // objective would pin this false forever and beating the Baron would silently fail to secure.
+    // Mirrors src/game/Game.ts byte-for-byte; the browser moved first.
+    const objectiveAllowsSecure = !this.manifest.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
     const secured = this.runManager.diagnostics.secured
       || (objectiveAllowsSecure && this.runManager.secureCurrentRun(this.waves.diagnostics.wave));
     if (!secured) {

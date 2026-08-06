@@ -5108,7 +5108,10 @@ export class Game {
     this.baronBeatenThisRun = true;
     const runWave = this.currentRunWave();
     const alreadySecured = this.runManager?.diagnostics.secured === true;
-    const objectiveAllowsSecure = !this.activeContract.twist.powerGrid || this.canyonConnectCompletedByDeadline;
+    // Keys on `connect`, not on any powerGrid (F-1471-1): only syncCanyonConnectObjective sets the
+    // flag below, and it early-returns on `!grid?.connect` — so a powerGrid without a connect
+    // objective would pin this false forever and beating the Baron would silently fail to secure.
+    const objectiveAllowsSecure = !this.activeContract.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
       || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
