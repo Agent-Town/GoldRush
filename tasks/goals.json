@@ -4048,7 +4048,7 @@
               "title": "F-1504-1: e2e/drill-yard.spec.ts:92 asserts the Drill Yard briefing is ABSENT (toHaveCount(0)) — the pre-AP-11 shape. f1501-1 merged at abcfffb88127640c1709d6ec37033e84f9106ced makes the card render its briefing, so the assertion is stale by construction and red on both projects; a pre-merge control at bef7788c8 returned 4 passed, proving the red is merge-caused. Invert it into a positive check that the briefing is present and carries every authored rule (derived from loadEpoch, not hardcoded copy). f1501-1 could not do this: its firewall forbade e2e/**, deliberately.",
               "taskFile": "lane-f1504-1-drill-yard-stale-absence.md",
               "lane": "lane-a",
-              "status": "planned",
+              "status": "queued",
               "attempts": 0,
               "authoredBy": "s1504 fire"
             },
