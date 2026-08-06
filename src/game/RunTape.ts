@@ -283,7 +283,9 @@ function writeRing(storage: TapeStorage, tapes: RunTape[]): boolean {
   }
 }
 
-function validateRunTape(value: unknown): RunTape | null {
+// Exported for TAPE-03: a reel fetched from the county board is untrusted bytes off the network
+// and gets the same validator the local ring already trusts, rather than a second, weaker one.
+export function validateRunTape(value: unknown): RunTape | null {
   if (!isRecord(value) || !hasOnlyKeys(value, ['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'inputLog', 'eventLogHash', 'outcome', 'annotations'])) return null;
   if (value.version !== RUN_TAPE_VERSION || !Number.isSafeInteger(value.simVersion) || (value.simVersion as number) < 1) return null;
   if (typeof value.id !== 'string' || !value.id || typeof value.createdAt !== 'number' || !Number.isSafeInteger(value.createdAt)) return null;

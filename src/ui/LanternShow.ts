@@ -2,12 +2,33 @@ import { PLAYBOOK_STEP_SECONDS } from '../playbook/PlaybookFormat';
 import {
   RUN_TAPE_SIM_VERSION,
   readRunTapes,
+  validateRunTape,
   type RunTape,
 } from '../game/RunTape';
 import { isolateProfileStorage } from '../game/ProfileStorage';
 
 export const LANTERN_VERSION_REFUSAL =
   'This projectionist cannot thread a reel cut for another machine. The show stays dark, but the reel remains on the shelf.';
+
+export const LANTERN_REEL_UNAVAILABLE =
+  'The county clerk cannot find that reel. The standing keeps its place on the board.';
+
+export type ReelVerdict = { ok: true; tape: RunTape } | { ok: false; reason: 'version' | 'unavailable' };
+
+/**
+ * TAPE-03's half of the version law. A reel arriving from `/api/standings?reel=` is parsed by the
+ * SAME validator as a local tape and then judged by the SAME rule the shelf applies, so a standings
+ * row and a shelved reel can never disagree about whether a show is threadable.
+ */
+export function readStandingsReel(payload: unknown): ReelVerdict {
+  const tape = validateRunTape(isRecord(payload) ? payload.reel : null);
+  if (!tape) return { ok: false, reason: 'unavailable' };
+  return tape.simVersion === RUN_TAPE_SIM_VERSION ? { ok: true, tape } : { ok: false, reason: 'version' };
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
 
 let openShelf: HTMLElement | null = null;
 

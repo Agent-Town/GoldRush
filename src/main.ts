@@ -398,7 +398,10 @@ function openClaimLedger(entryId?: LedgerEntryId): void {
     game.openClaimLedger(entryId);
     return;
   }
-  void import('./encyclopedia/reader').then(({ openClaimLedger }) => openClaimLedger({ entryId }));
+  // TAPE-03: WATCH THIS RUN on a standings row rides the SAME viewer as the tape shelf's WATCH.
+  // Only this out-of-game path hands it in — Game.ts's in-run ledger deliberately does not, so a
+  // reel can never tear down a live run from behind the modal.
+  void import('./encyclopedia/reader').then(({ openClaimLedger }) => openClaimLedger({ entryId, onWatchTape: watchRunTape }));
 }
 
 function afterFirstFrame(task: () => void): void {

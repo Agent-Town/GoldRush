@@ -45,6 +45,19 @@ type SelfDeclaredStack = {
   calls?: number;
 };
 
+// A posse rides as one row. The rider list is what the FIELD BOOK reads for composition; the
+// county board is only ever handed the names (see boardRow) because a declared stack is a
+// species tell and the ladder stays species-blind (AP-06).
+type PartyRider = {
+  name: string;
+  stack?: SelfDeclaredStack;
+};
+
+type SubmittedParty = {
+  riderCount: number;
+  riders: PartyRider[];
+};
+
 type StoredRow = ScoreRow & {
   profileName: string;
   anonId: string;
@@ -56,8 +69,11 @@ type StoredRow = ScoreRow & {
   inputLogHash: string;
   submittedAt: number;
   stack?: SelfDeclaredStack;
+  party?: SubmittedParty;
   tape?: JsonRecord;
 };
+
+type BoardGroup = { latestSubmittedAt: number; contracts: Map<string, unknown> };
 
 type ContractBundle = {
   epochId: string;
@@ -95,8 +111,18 @@ const STACK_TEXT_FIELDS = ['model', 'harness', 'harnessVersion', 'config'] as co
 const STACK_COST_FIELDS = ['tokensIn', 'tokensOut', 'calls'] as const;
 const STACK_KEYS = new Set<string>([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS]);
 const STORED_STACK_KEYS = new Set([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'declaredBy']);
-const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack', 'tape']);
+const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack', 'party', 'tape']);
 const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue']);
+const PARTY_KEYS = new Set(['riderCount', 'riders']);
+const RIDER_KEYS = new Set(['name', 'stack']);
+// Two riders is the smallest posse; four is the lockstep slot ceiling the tape format already
+// enforces (primarySlot 0..3 + at most three extra streams), so the board can never advertise a
+// party size the replay machinery could not have produced.
+const MIN_PARTY_RIDERS = 2;
+const MAX_PARTY_RIDERS = 4;
+const PARTY_FILTERS = new Set(['solo', '2', '3', '4']);
+const UNREGISTERED_RIG = 'unregistered rig';
+const MAX_REEL_ID_LENGTH = 64;
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
   const cors = corsHeaders(context.request);
@@ -119,53 +145,57 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   const view = url.searchParams.get('view');
   if (view !== null) {
     const contracts = epochContracts(epochId);
-    if (view !== 'byStack' || url.searchParams.size !== 2 || !contracts) {
+    if ((view !== 'byStack' && view !== 'byParty') || url.searchParams.size !== 2 || !contracts) {
       return error(cors, 400, 'bad_view', 'Field book view not accepted.');
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
     const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? await readBoard(kv, epochId, contractId, true) : []] as const));
-    const groups = new Map<string, { latestSubmittedAt: number; contracts: Map<string, unknown> }>();
-    for (const [contractId, rows] of boards) {
-      for (const row of rows) {
-        const model = row.stack?.model?.trim() || 'unregistered rig';
-        const group = groups.get(model) ?? { latestSubmittedAt: 0, contracts: new Map<string, unknown>() };
-        if (group.contracts.has(contractId)) continue;
-        group.latestSubmittedAt = Math.max(group.latestSubmittedAt, row.submittedAt);
-        group.contracts.set(contractId, {
-          contractId,
-          score: {
-            secured: row.secured,
-            waves: row.waves,
-            timeAlive: row.timeAlive,
-            gold: row.gold,
-            baseValue: row.baseValue,
-          },
-          difficulty: row.difficulty,
-          submittedAt: row.submittedAt,
-          ...(row.stack?.tokensIn === undefined ? {} : { tokensIn: row.stack.tokensIn }),
-          ...(row.stack?.tokensOut === undefined ? {} : { tokensOut: row.stack.tokensOut }),
-          ...(row.stack?.calls === undefined ? {} : { calls: row.stack.calls }),
-          ...(row.stack?.harness === undefined ? {} : { harness: row.stack.harness }),
-          ...(row.stack?.harnessVersion === undefined ? {} : { harnessVersion: row.stack.harnessVersion }),
-          ...(row.stack?.config === undefined ? {} : { config: row.stack.config }),
-        });
-        groups.set(model, group);
-      }
+    if (view === 'byParty') {
+      return json(cors, {
+        ok: true,
+        view: 'byParty',
+        epochId,
+        contracts,
+        // Composition is INFORMATION, never ranking: no rank is minted here and the groups sort by
+        // recency, exactly as byStack does (owner 2026-08-05 — detail lives in the field book).
+        byParty: groupRows(boards, (row) => (row.party ? partyComposition(row.party) : null), partyCell)
+          .map(([composition, group]) => ({
+            composition,
+            riderCount: composition.split('+').length,
+            contracts: [...group.contracts.values()],
+            latestSubmittedAt: group.latestSubmittedAt,
+          })),
+      });
     }
     return json(cors, {
       ok: true,
       view: 'byStack',
       epochId,
       contracts,
-      byStack: [...groups.entries()]
-        .map(([model, group]) => ({ model, contracts: [...group.contracts.values()], latestSubmittedAt: group.latestSubmittedAt }))
-        .sort((a, b) => b.latestSubmittedAt - a.latestSubmittedAt || a.model.localeCompare(b.model)),
+      byStack: groupRows(boards, (row) => row.stack?.model?.trim() || UNREGISTERED_RIG, stackCell)
+        .map(([model, group]) => ({ model, contracts: [...group.contracts.values()], latestSubmittedAt: group.latestSubmittedAt })),
     });
   }
   const contractId = url.searchParams.get('contract') ?? '';
+  const reelId = url.searchParams.get('reel');
+  if (reelId !== null) {
+    if (url.searchParams.size !== 3 || reelId.length === 0 || reelId.length > MAX_REEL_ID_LENGTH || !knownContract(epochId, contractId)) {
+      return error(cors, 400, 'bad_reel', 'Reel not accepted.');
+    }
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    const rows = kv ? await readBoard(kv, epochId, contractId, true) : [];
+    const reel = rows.find((row) => row.tape?.id === reelId)?.tape;
+    if (!reel) return error(cors, 404, 'reel_not_found', 'That reel is not on the shelf.');
+    return json(cors, { ok: true, epochId, contractId, reel });
+  }
   const difficultyParam = url.searchParams.get('difficulty');
-  if (url.searchParams.size !== (difficultyParam === null ? 2 : 3) || !knownContract(epochId, contractId)) {
+  const partyParam = url.searchParams.get('party');
+  const expectedParams = 2 + (difficultyParam === null ? 0 : 1) + (partyParam === null ? 0 : 1);
+  if (url.searchParams.size !== expectedParams || !knownContract(epochId, contractId)) {
     return error(cors, 400, 'bad_contract', 'Contract and epoch not accepted.');
+  }
+  if (partyParam !== null && !PARTY_FILTERS.has(partyParam)) {
+    return error(cors, 400, 'bad_party', 'Party size not accepted.');
   }
   const difficulty = difficultyParam ?? 'all';
   if (difficulty !== 'all' && !isDifficultyPreset(difficulty)) {
@@ -173,23 +203,108 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   }
   const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
   const rows = kv ? await readBoard(kv, epochId, contractId, true) : [];
-  const board = rows.map(({ profileName, secured, waves, timeAlive, gold, baseValue, difficulty: rowDifficulty, defaulted }, index) => ({
-    rank: index + 1,
-    profileName,
-    secured,
-    waves,
-    timeAlive,
-    gold,
-    baseValue,
-    difficulty: rowDifficulty,
-    ...(defaulted ? { defaulted: true } : {}),
-  }));
+  // Posses rank WITHIN their size and nowhere else (owner 2026-08-05), so the size partitions the
+  // field BEFORE ranks are minted: a posse row can never move a solo rank, and an omitted party
+  // param is the solo board — which is byte-identical to the board this endpoint served before.
+  const partySize = partyParam === null || partyParam === 'solo' ? 1 : Number(partyParam);
+  const board = rows.filter((row) => (row.party?.riderCount ?? 1) === partySize).map(boardRow);
   return json(cors, {
     ok: true,
     epochId,
     contractId,
+    party: partyParam === null ? 'solo' : partyParam,
     board: difficulty === 'all' ? board : board.filter((row) => row.difficulty === difficulty),
   });
+}
+
+function boardRow(row: StoredRow, index: number): JsonRecord {
+  const reel = row.tape === undefined ? undefined : { id: row.tape.id as string, simVersion: row.tape.simVersion as number };
+  return {
+    rank: index + 1,
+    profileName: row.profileName,
+    secured: row.secured,
+    waves: row.waves,
+    timeAlive: row.timeAlive,
+    gold: row.gold,
+    baseValue: row.baseValue,
+    difficulty: row.difficulty,
+    ...(row.defaulted ? { defaulted: true } : {}),
+    // Names only. A rider's declared stack stays out of the board by construction — it says agent.
+    ...(row.party ? { party: { riderCount: row.party.riderCount, riders: row.party.riders.map((rider) => rider.name) } } : {}),
+    // A handle to the reel, never the reel: the tape blob is fetched on demand by ?reel=<id>.
+    ...(reel ? { reel } : {}),
+  };
+}
+
+function groupRows(
+  boards: ReadonlyArray<readonly [string, StoredRow[]]>,
+  keyOf: (row: StoredRow) => string | null,
+  cellOf: (row: StoredRow, contractId: string) => JsonRecord,
+): Array<[string, BoardGroup]> {
+  const groups = new Map<string, BoardGroup>();
+  for (const [contractId, rows] of boards) {
+    for (const row of rows) {
+      const key = keyOf(row);
+      if (key === null) continue;
+      const group = groups.get(key) ?? { latestSubmittedAt: 0, contracts: new Map<string, unknown>() };
+      if (group.contracts.has(contractId)) continue;
+      group.latestSubmittedAt = Math.max(group.latestSubmittedAt, row.submittedAt);
+      group.contracts.set(contractId, cellOf(row, contractId));
+      groups.set(key, group);
+    }
+  }
+  return [...groups.entries()].sort((a, b) => b[1].latestSubmittedAt - a[1].latestSubmittedAt || a[0].localeCompare(b[0]));
+}
+
+function showing(row: StoredRow, contractId: string): JsonRecord {
+  return {
+    contractId,
+    score: {
+      secured: row.secured,
+      waves: row.waves,
+      timeAlive: row.timeAlive,
+      gold: row.gold,
+      baseValue: row.baseValue,
+    },
+    difficulty: row.difficulty,
+    submittedAt: row.submittedAt,
+  };
+}
+
+function stackCell(row: StoredRow, contractId: string): JsonRecord {
+  return {
+    ...showing(row, contractId),
+    ...(row.stack?.tokensIn === undefined ? {} : { tokensIn: row.stack.tokensIn }),
+    ...(row.stack?.tokensOut === undefined ? {} : { tokensOut: row.stack.tokensOut }),
+    ...(row.stack?.calls === undefined ? {} : { calls: row.stack.calls }),
+    ...(row.stack?.harness === undefined ? {} : { harness: row.stack.harness }),
+    ...(row.stack?.harnessVersion === undefined ? {} : { harnessVersion: row.stack.harnessVersion }),
+    ...(row.stack?.config === undefined ? {} : { config: row.stack.config }),
+  };
+}
+
+function partyCell(row: StoredRow, contractId: string): JsonRecord {
+  return {
+    ...showing(row, contractId),
+    profileName: row.profileName,
+    riders: row.party?.riders.map((rider) => rider.name) ?? [],
+    rigs: row.party ? partyRigs(row.party) : [],
+  };
+}
+
+// 'h+a', 'h+h+a', 'a+a+a' — humans first so the key is stable however the riders were ordered.
+// A rider is read as an agent when it DECLARED a stack; self-declaration is the only evidence
+// this endpoint has, and the field book is where declarations are allowed to be seen.
+function partyComposition(party: SubmittedParty): string {
+  const agents = party.riders.filter((rider) => rider.stack !== undefined).length;
+  return [
+    ...Array.from({ length: party.riders.length - agents }, () => 'h'),
+    ...Array.from({ length: agents }, () => 'a'),
+  ].join('+');
+}
+
+function partyRigs(party: SubmittedParty): string[] {
+  return party.riders.flatMap((rider) => (rider.stack ? [rider.stack.model?.trim() || UNREGISTERED_RIG] : []));
 }
 
 async function submitScore(context: StandingsContext, cors: Record<string, string>): Promise<Response> {
@@ -207,8 +322,9 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   const seedHash = typeof body.seedHash === 'string' && SHA256.test(body.seedHash) ? body.seedHash : '';
   const inputLogHash = typeof body.inputLogHash === 'string' && SHA256.test(body.inputLogHash) ? body.inputLogHash : '';
   const stack = body.stack === undefined ? undefined : validateStack(body.stack);
+  const party = body.party === undefined ? undefined : validateParty(body.party);
   const tape = body.tape === undefined ? undefined : validateTape(body.tape, contractId, seed, difficulty);
-  if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null || tape === null) {
+  if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null || party === null || tape === null) {
     return error(cors, 400, 'bad_payload', 'Standing not accepted.');
   }
   if (!difficulty || (seedMode === 'bench' && defaulted)) {
@@ -246,6 +362,7 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     inputLogHash,
     submittedAt: Date.now(),
     ...(stack ? { stack } : {}),
+    ...(party ? { party } : {}),
     ...(tape ? { tape } : {}),
   };
   const prior = current.find((row) => row.anonId === anonId);
@@ -288,7 +405,8 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   if (typeof value.seedHash !== 'string' || !SHA256.test(value.seedHash)) return null;
   if (typeof value.inputLogHash !== 'string' || !SHA256.test(value.inputLogHash)) return null;
   const stack = value.stack === undefined ? undefined : validateStack(value.stack, true);
-  if (stack === null) return null;
+  const party = value.party === undefined ? undefined : validateParty(value.party, true);
+  if (stack === null || party === null) return null;
   const tape = value.tape === undefined ? undefined : validateTape(value.tape, contractId, value.seed, difficulty);
   const submittedAt = integerInRange(value.submittedAt, 0, Number.MAX_SAFE_INTEGER);
   if (submittedAt === null || tape === null || (tape && !tapeMatchesScore(tape, score))) return null;
@@ -303,6 +421,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     submittedAt,
     ...(hasSeedFields ? { seed: value.seed as string, seedMode: value.seedMode as SeedMode } : {}),
     ...(stack ? { stack } : {}),
+    ...(party ? { party } : {}),
     ...(tape ? { tape } : {}),
   };
 }
@@ -361,6 +480,25 @@ function validateStack(value: unknown, stored = false): SelfDeclaredStack | null
     stack[field] = cost;
   }
   return stack;
+}
+
+// NEVER required (F-1216-2's lesson: a solo post predating this merge must keep posting cleanly),
+// but strict once offered: riders.length must equal riderCount, or a posse of four that names two
+// riders would make its own composition unreadable — reject-don't-stretch (Mistake #14).
+// A rider NAME is coerced, not rejected, because that is exactly what the clerk already does to
+// profileName (cleanName); a garbled name must not cost a stored row its whole standing.
+function validateParty(value: unknown, stored = false): SubmittedParty | null {
+  if (!isRecord(value) || !hasOnlyKeys(value, PARTY_KEYS)) return null;
+  const riderCount = integerInRange(value.riderCount, MIN_PARTY_RIDERS, MAX_PARTY_RIDERS);
+  if (riderCount === null || !Array.isArray(value.riders) || value.riders.length !== riderCount) return null;
+  const riders: PartyRider[] = [];
+  for (const candidate of value.riders) {
+    if (!isRecord(candidate) || !hasOnlyKeys(candidate, RIDER_KEYS)) return null;
+    const stack = candidate.stack === undefined ? undefined : validateStack(candidate.stack, stored);
+    if (stack === null) return null;
+    riders.push({ name: cleanName(candidate.name), ...(stack ? { stack } : {}) });
+  }
+  return { riderCount, riders };
 }
 
 function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): JsonRecord | null {

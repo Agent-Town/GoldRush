@@ -1,6 +1,7 @@
 import './reader.css';
 import { gameApiUrl } from '../app/GameApi';
 import type { DifficultyPresetId } from '../game/Balance';
+import type { RunTape } from '../game/RunTape';
 import { activeEpochId, listContracts, listEpochs, loadEpoch } from '../meta/ContractFamilies';
 import { loadEraBackdrop } from '../ui/EraBackdrop';
 import { installAssayOfficeRecordsLiveRead } from './liveStats';
@@ -21,10 +22,17 @@ export const LEDGER_FACT_LINE_CAP = 4;
 type OpenClaimLedgerOptions = {
   entryId?: LedgerEntryId;
   onClose?: () => void;
+  /**
+   * TAPE-03: the shipped Lantern Show, handed in rather than rebuilt. Only the out-of-game ledger
+   * passes it, so a standing's WATCH THIS RUN cannot appear over a live run and tear it down.
+   */
+  onWatchTape?: (tape: RunTape) => void;
 };
 
 type LedgerView = 'ledger' | 'standings' | 'field-book';
+type FieldBookView = 'byStack' | 'byParty';
 type StandingsDifficulty = DifficultyPresetId | 'all';
+type StandingsParty = 'solo' | '2' | '3' | '4';
 
 type CountyStanding = {
   rank: number;
@@ -36,6 +44,8 @@ type CountyStanding = {
   baseValue: number;
   difficulty: DifficultyPresetId;
   defaulted?: true;
+  party?: { riderCount: number; riders: string[] };
+  reel?: { id: string; simVersion: number };
 };
 
 type FieldBookCell = {
@@ -61,10 +71,44 @@ type FieldBook = {
   rows: FieldBookRow[];
 };
 
+type PartyBookShowing = FieldBookCell & {
+  profileName: string;
+  riders: string[];
+  rigs: string[];
+};
+
+type PartyBookRow = {
+  composition: string;
+  riderCount: number;
+  contracts: PartyBookShowing[];
+};
+
+type PartyBook = {
+  contracts: string[];
+  rows: PartyBookRow[];
+};
+
 const DIFFICULTY_LABELS: Record<DifficultyPresetId, string> = {
   greenhorn: 'Greenhorn',
   trail: 'Trail',
   'vein-hunter': 'Vein-Hunter',
+};
+
+const PARTY_LABELS: Record<StandingsParty, string> = {
+  solo: 'Solo',
+  '2': 'Posse of 2',
+  '3': 'Posse of 3',
+  '4': 'Posse of 4',
+};
+
+// NOT Object.keys(PARTY_LABELS): JS orders integer-like keys first, so '2','3','4' would jump
+// ahead of 'solo' and the default board would render as the LAST chip. Measured, not guessed —
+// the first screenshot of this row read "Posse of 2 · Posse of 3 · Posse of 4 · Solo".
+const PARTY_ORDER: readonly StandingsParty[] = ['solo', '2', '3', '4'];
+
+const FIELD_BOOK_VIEW_LABELS: Record<FieldBookView, string> = {
+  byStack: 'By rig',
+  byParty: 'By posse',
 };
 
 let currentRoot: HTMLElement | null = null;
@@ -76,6 +120,10 @@ let currentEpochId: LedgerEpochId = 'epoch-1-frontier';
 let currentView: LedgerView = 'ledger';
 let currentStandingsContractId = '';
 let currentStandingsDifficulty: StandingsDifficulty = 'all';
+let currentStandingsParty: StandingsParty = 'solo';
+let currentStandingsRows: CountyStanding[] = [];
+let currentFieldBookView: FieldBookView = 'byStack';
+let currentWatchTape: ((tape: RunTape) => void) | undefined;
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   backfillReachedWorldOutsideEntries();
@@ -89,6 +137,10 @@ export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   currentView = 'ledger';
   currentStandingsContractId = '';
   currentStandingsDifficulty = 'all';
+  currentStandingsParty = 'solo';
+  currentStandingsRows = [];
+  currentFieldBookView = 'byStack';
+  currentWatchTape = options.onWatchTape;
   root.className = 'claim-ledger';
   root.dataset.testid = 'claim-ledger';
   root.setAttribute('role', 'dialog');
@@ -115,6 +167,8 @@ export function closeClaimLedger(notify = true): void {
   currentEntryId = undefined;
   currentLiveReads = [];
   currentRestoreFocus = null;
+  currentStandingsRows = [];
+  currentWatchTape = undefined;
   for (const dispose of liveReads) dispose();
   root.removeEventListener('click', onLedgerClick);
   root.removeEventListener('change', onLedgerChange);
@@ -130,6 +184,7 @@ function renderCurrentLedger(): void {
   for (const dispose of currentLiveReads) dispose();
   if (currentView === 'standings') {
     currentLiveReads = [];
+    currentStandingsRows = [];
     root.innerHTML = renderStandingsLedger();
     void loadCountyStandings();
     return;
@@ -223,6 +278,17 @@ function renderStandingsLedger(): string {
             .join('')}
         </nav>
         <p class="county-standings__contracts-hint" aria-hidden="true">Swipe for more contracts &rarr;</p>
+        <nav class="county-standings__parties" aria-label="County standings party sizes">
+          ${PARTY_ORDER
+            .map(
+              (party) =>
+                `<button type="button" data-standings-party="${party}" data-testid="county-standings-party-${party}" aria-pressed="${
+                  party === currentStandingsParty
+                }">${PARTY_LABELS[party]}</button>`,
+            )
+            .join('')}
+        </nav>
+        <p class="county-standings__parties-hint">A posse is ranked only against posses its own size.</p>
         <label class="county-standings__filter">
           Difficulty
           <select data-standings-difficulty data-testid="county-standings-difficulty-filter">
@@ -232,6 +298,7 @@ function renderStandingsLedger(): string {
               .join('')}
           </select>
         </label>
+        <p class="county-standings__message" data-testid="county-standings-message" role="status" aria-live="polite"></p>
         <div class="county-standings__board" data-testid="county-standings-board" aria-live="polite">
           <p class="county-standings__empty">The county clerk turns the pages.</p>
         </div>
@@ -250,7 +317,21 @@ function renderFieldBookLedger(): string {
         <p class="claim-ledger__eyebrow">County Record</p>
         <h3>The Field Book</h3>
         <p class="county-standings__epoch">${escapeHtml(eraName(epochId as LedgerEpochId))}</p>
-        <p class="field-book__intro">The county's field book of rigs and their showings — cost is recorded, never ranked.</p>
+        <p class="field-book__intro">${
+          currentFieldBookView === 'byParty'
+            ? "Who rode with whom, as the riders declared themselves — the field book counts hands, the board never does."
+            : "The county's field book of rigs and their showings — cost is recorded, never ranked."
+        }</p>
+        <nav class="county-standings__contracts field-book__views" aria-label="Field book views">
+          ${(Object.keys(FIELD_BOOK_VIEW_LABELS) as FieldBookView[])
+            .map(
+              (view) =>
+                `<button type="button" data-field-book-view="${view}" data-testid="field-book-view-${view}" aria-pressed="${
+                  view === currentFieldBookView
+                }">${FIELD_BOOK_VIEW_LABELS[view]}</button>`,
+            )
+            .join('')}
+        </nav>
         <div class="county-standings__board field-book__board" data-testid="field-book-board" aria-live="polite">
           <p class="county-standings__empty">The county clerk turns the field book's pages.</p>
         </div>
@@ -262,25 +343,28 @@ function renderFieldBookLedger(): string {
 async function loadFieldBook(): Promise<void> {
   const root = currentRoot;
   const epochId = activeEpochId();
+  const view = currentFieldBookView;
+  const render = (payload: unknown): string =>
+    view === 'byParty' ? renderPartyBook(readPartyBook(payload)) : renderFieldBook(readFieldBook(payload));
   if (!root) return;
   if (globalThis.navigator?.onLine === false) {
     const board = root.querySelector<HTMLElement>('[data-testid="field-book-board"]');
-    if (board) board.innerHTML = renderFieldBook({ contracts: [], rows: [] });
+    if (board) board.innerHTML = render(null);
     return;
   }
   const url = new URL(gameApiUrl('/api/standings'));
-  url.searchParams.set('view', 'byStack');
+  url.searchParams.set('view', view);
   url.searchParams.set('epoch', epochId);
-  let fieldBook: FieldBook = { contracts: [], rows: [] };
+  let payload: unknown = null;
   try {
     const response = await fetch(url);
-    if (response.ok) fieldBook = readFieldBook(await response.json());
+    if (response.ok) payload = await response.json();
   } catch {
     // The field book stays usable offline.
   }
-  if (currentRoot !== root || currentView !== 'field-book') return;
+  if (currentRoot !== root || currentView !== 'field-book' || currentFieldBookView !== view) return;
   const board = root.querySelector<HTMLElement>('[data-testid="field-book-board"]');
-  if (board) board.innerHTML = renderFieldBook(fieldBook);
+  if (board) board.innerHTML = render(payload);
 }
 
 function readFieldBook(value: unknown): FieldBook {
@@ -356,6 +440,79 @@ function renderFieldBookCell(cell: FieldBookCell | undefined, rowSlug: string, c
   </td>`;
 }
 
+function readPartyBook(value: unknown): PartyBook {
+  if (!value || typeof value !== 'object') return { contracts: [], rows: [] };
+  const payload = value as { contracts?: unknown; byParty?: unknown };
+  if (!Array.isArray(payload.contracts) || !Array.isArray(payload.byParty)) return { contracts: [], rows: [] };
+  const contracts = payload.contracts.filter((contract): contract is string => typeof contract === 'string').slice(0, 100);
+  const rows = payload.byParty.slice(0, 100).flatMap((value): PartyBookRow[] => {
+    if (!value || typeof value !== 'object') return [];
+    const row = value as { composition?: unknown; riderCount?: unknown; contracts?: unknown };
+    if (typeof row.composition !== 'string' || !/^[ha](\+[ha]){1,3}$/.test(row.composition)) return [];
+    if (!Number.isInteger(row.riderCount) || !Array.isArray(row.contracts)) return [];
+    return [{ composition: row.composition, riderCount: row.riderCount as number, contracts: row.contracts.filter(isPartyBookShowing) }];
+  });
+  return { contracts, rows };
+}
+
+function isPartyBookShowing(value: unknown): value is PartyBookShowing {
+  if (!isFieldBookCell(value)) return false;
+  const showing = value as Partial<PartyBookShowing>;
+  return typeof showing.profileName === 'string' && isNameList(showing.riders) && isNameList(showing.rigs);
+}
+
+function isNameList(value: unknown): value is string[] {
+  return Array.isArray(value) && value.length <= 4 && value.every((entry) => typeof entry === 'string' && entry.length <= 64);
+}
+
+function renderPartyBook(partyBook: PartyBook): string {
+  if (partyBook.rows.length === 0) {
+    return '<p class="county-standings__empty">No posse has signed the field book yet.</p>';
+  }
+  const contractNames = new Map(listContracts(activeEpochId()).map((contract) => [contract.id, contract.boardRow.name]));
+  return `
+    <table class="field-book__matrix" data-testid="field-book-party-matrix">
+      <thead><tr><th scope="col">Posse</th>${partyBook.contracts
+        .map((id) => `<th scope="col">${escapeHtml(contractNames.get(id) ?? id)}</th>`)
+        .join('')}</tr></thead>
+      <tbody>
+        ${partyBook.rows.map((row) => renderPartyBookRow(row, partyBook.contracts)).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function renderPartyBookRow(row: PartyBookRow, contracts: readonly string[]): string {
+  const showings = new Map(row.contracts.map((showing) => [showing.contractId, showing]));
+  const rowSlug = slug(row.composition);
+  return `
+    <tr class="field-book__row" data-testid="field-book-party-row-${rowSlug}">
+      <th scope="row">${escapeHtml(compositionLabel(row.composition))}<span class="county-standings__difficulty">${row.riderCount} riders</span></th>
+      ${contracts.map((contractId) => renderPartyBookCell(showings.get(contractId), rowSlug, contractId)).join('')}
+    </tr>
+  `;
+}
+
+function renderPartyBookCell(showing: PartyBookShowing | undefined, rowSlug: string, contractId: string): string {
+  if (!showing) return '<td class="field-book__blank" aria-label="No showing">&mdash;</td>';
+  return `<td data-testid="field-book-party-cell-${rowSlug}-${escapeHtml(contractId)}">
+    <strong>Secured &middot; ${Math.floor(showing.score.waves)} waves</strong>
+    <span>${escapeHtml(showing.riders.join(', ')) || 'Riders not named'}</span>
+    <span class="county-standings__difficulty" data-difficulty="${showing.difficulty}">${DIFFICULTY_LABELS[showing.difficulty]}</span>
+    <span>${showing.rigs.length ? showing.rigs.map(escapeHtml).join(' &middot; ') : 'No rig declared'}</span>
+    <time datetime="${safeIsoDate(showing.submittedAt)}">${relativeAge(showing.submittedAt)}</time>
+  </td>`;
+}
+
+// 'h+a' reads as "Human + Agent". The letters come from self-declaration alone (a rider who
+// declared a stack), which is why this label lives in the field book and never on the board.
+function compositionLabel(composition: string): string {
+  return composition
+    .split('+')
+    .map((rider) => (rider === 'a' ? 'Agent' : 'Human'))
+    .join(' + ');
+}
+
 function renderFieldBookDetails(cell: FieldBookCell, name: string, rowSlug: string): string {
   const harness = [cell.harness, cell.harnessVersion].filter(Boolean).join(' ') || 'Not declared';
   return `<article data-testid="field-book-detail-${rowSlug}-${escapeHtml(cell.contractId)}">
@@ -374,16 +531,21 @@ async function loadCountyStandings(): Promise<void> {
   const epochId = activeEpochId();
   const contractId = currentStandingsContractId;
   const difficulty = currentStandingsDifficulty;
+  const party = currentStandingsParty;
   if (!root || !contractId) return;
   if (globalThis.navigator?.onLine === false) {
+    currentStandingsRows = [];
     const board = root.querySelector<HTMLElement>('[data-testid="county-standings-board"]');
-    if (board) board.innerHTML = renderCountyRows([]);
+    if (board) board.innerHTML = renderCountyRows([], party);
     return;
   }
   const url = new URL(gameApiUrl('/api/standings'));
   url.searchParams.set('contract', contractId);
   url.searchParams.set('epoch', epochId);
   if (difficulty !== 'all') url.searchParams.set('difficulty', difficulty);
+  // Solo is the endpoint's default, so the solo request stays byte-identical to the one this
+  // reader has always sent — the posse boards are the only new traffic.
+  if (party !== 'solo') url.searchParams.set('party', party);
   let rows: CountyStanding[] = [];
   try {
     const response = await fetch(url);
@@ -394,9 +556,56 @@ async function loadCountyStandings(): Promise<void> {
   } catch {
     // The county book stays usable offline.
   }
-  if (currentRoot !== root || currentView !== 'standings' || currentStandingsContractId !== contractId || currentStandingsDifficulty !== difficulty) return;
+  if (
+    currentRoot !== root
+    || currentView !== 'standings'
+    || currentStandingsContractId !== contractId
+    || currentStandingsDifficulty !== difficulty
+    || currentStandingsParty !== party
+  ) {
+    return;
+  }
+  currentStandingsRows = rows;
   const board = root.querySelector<HTMLElement>('[data-testid="county-standings-board"]');
-  if (board) board.innerHTML = renderCountyRows(rows);
+  if (board) board.innerHTML = renderCountyRows(rows, party);
+}
+
+async function watchStandingsReel(rank: number): Promise<void> {
+  const root = currentRoot;
+  const onWatch = currentWatchTape;
+  const row = currentStandingsRows.find((entry) => entry.rank === rank);
+  const contractId = currentStandingsContractId;
+  if (!root || !onWatch || !row?.reel || !contractId) return;
+  const url = new URL(gameApiUrl('/api/standings'));
+  url.searchParams.set('contract', contractId);
+  url.searchParams.set('epoch', activeEpochId());
+  url.searchParams.set('reel', row.reel.id);
+  let payload: unknown = null;
+  try {
+    const response = await fetch(url);
+    if (response.ok) payload = await response.json();
+  } catch {
+    // A dark projector is not a broken ledger; the refusal below says so in voice.
+  }
+  const { LANTERN_REEL_UNAVAILABLE, LANTERN_VERSION_REFUSAL, readStandingsReel } = await import('../ui/LanternShow');
+  const verdict = readStandingsReel(payload);
+  if (currentRoot !== root || currentView !== 'standings') return;
+  if (!verdict.ok) {
+    const refused = verdict.reason === 'version';
+    setStandingsMessage(root, refused ? LANTERN_VERSION_REFUSAL : LANTERN_REEL_UNAVAILABLE, refused);
+    if (refused) root.querySelector<HTMLElement>(`[data-standings-watch="${rank}"]`)?.closest('tr')?.setAttribute('data-refused', 'true');
+    return;
+  }
+  closeClaimLedger();
+  onWatch(verdict.tape);
+}
+
+function setStandingsMessage(root: HTMLElement, text: string, refused: boolean): void {
+  const message = root.querySelector<HTMLElement>('[data-testid="county-standings-message"], [data-testid="tape-version-refusal"]');
+  if (!message) return;
+  message.textContent = text;
+  // The shelf's own refusal marker, reused verbatim: one testid for one law, both surfaces.
+  message.dataset.testid = refused ? 'tape-version-refusal' : 'county-standings-message';
 }
 
 function countyRows(value: unknown): CountyStanding[] {
@@ -419,30 +628,68 @@ function isCountyStanding(value: unknown): value is CountyStanding {
     finiteNonNegative(row.gold) &&
     finiteNonNegative(row.baseValue) &&
     isDifficultyPreset(row.difficulty) &&
-    (row.defaulted === undefined || row.defaulted === true)
+    (row.defaulted === undefined || row.defaulted === true) &&
+    isCountyParty(row.party) &&
+    isCountyReel(row.reel)
   );
 }
 
-function renderCountyRows(rows: readonly CountyStanding[]): string {
-  if (rows.length === 0) return '<p class="county-standings__empty">The county waits for its first name.</p>';
+function isCountyParty(value: unknown): boolean {
+  if (value === undefined) return true;
+  if (!value || typeof value !== 'object') return false;
+  const party = value as Partial<NonNullable<CountyStanding['party']>>;
+  return Number.isInteger(party.riderCount) && (party.riderCount ?? 0) >= 2 && (party.riderCount ?? 0) <= 4 && isNameList(party.riders);
+}
+
+function isCountyReel(value: unknown): boolean {
+  if (value === undefined) return true;
+  if (!value || typeof value !== 'object') return false;
+  const reel = value as Partial<NonNullable<CountyStanding['reel']>>;
+  return typeof reel.id === 'string' && reel.id.length > 0 && reel.id.length <= 64 && Number.isInteger(reel.simVersion);
+}
+
+function renderCountyRows(rows: readonly CountyStanding[], party: StandingsParty): string {
+  if (rows.length === 0) {
+    return party === 'solo'
+      ? '<p class="county-standings__empty">The county waits for its first name.</p>'
+      : `<p class="county-standings__empty">No ${PARTY_LABELS[party].toLowerCase()} has signed the county book yet.</p>`;
+  }
+  const watchable = currentWatchTape !== undefined && rows.some((row) => row.reel);
   return `
     <table>
-      <thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th scope="col">Waves</th><th scope="col">Time</th><th scope="col">Gold</th></tr></thead>
+      <thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th scope="col">Waves</th><th scope="col">Time</th><th scope="col">Gold</th>${
+        watchable ? '<th scope="col">Reel</th>' : ''
+      }</tr></thead>
       <tbody>
-        ${rows
-          .map(
-            (row) => `<tr data-testid="county-standings-row-${row.rank}">
-              <td>${row.rank}</td>
-              <th scope="row">${escapeHtml(row.profileName)}<span class="county-standings__difficulty" data-testid="county-standings-difficulty-${row.rank}" data-difficulty="${row.difficulty}"${row.defaulted ? ' title="Trail preset defaulted for an older standing"' : ''}>${DIFFICULTY_LABELS[row.difficulty]}</span></th>
-              <td>${Math.floor(row.waves)}</td>
-              <td>${formatTime(row.timeAlive)}</td>
-              <td>${Math.floor(row.gold)}</td>
-            </tr>`,
-          )
-          .join('')}
+        ${rows.map((row) => renderCountyRow(row, watchable)).join('')}
       </tbody>
     </table>
   `;
+}
+
+function renderCountyRow(row: CountyStanding, watchable: boolean): string {
+  return `<tr data-testid="county-standings-row-${row.rank}">
+    <td>${row.rank}</td>
+    <th scope="row">${escapeHtml(row.profileName)}<span class="county-standings__difficulty" data-testid="county-standings-difficulty-${row.rank}" data-difficulty="${row.difficulty}"${row.defaulted ? ' title="Trail preset defaulted for an older standing"' : ''}>${DIFFICULTY_LABELS[row.difficulty]}</span>${
+      row.party
+        ? `<span class="county-standings__riders" data-testid="county-standings-riders-${row.rank}">${row.party.riders
+            .map(escapeHtml)
+            .join(', ')}</span>`
+        : ''
+    }</th>
+    <td>${Math.floor(row.waves)}</td>
+    <td>${formatTime(row.timeAlive)}</td>
+    <td>${Math.floor(row.gold)}</td>
+    ${
+      watchable
+        ? `<td>${
+            row.reel
+              ? `<button class="county-standings__watch" type="button" data-standings-watch="${row.rank}" data-testid="county-standings-watch-${row.rank}">Watch this run</button>`
+              : '<span class="county-standings__no-reel">No reel</span>'
+          }</td>`
+        : ''
+    }
+  </tr>`;
 }
 
 function finiteNonNegative(value: unknown): value is number {
@@ -704,6 +951,25 @@ function onLedgerClick(event: MouseEvent): void {
     currentStandingsContractId = contractId;
     renderCurrentLedger();
     currentRoot?.querySelector<HTMLElement>(`[data-standings-contract="${contractId}"]`)?.focus();
+    return;
+  }
+  const watchRank = Number(target?.closest<HTMLButtonElement>('[data-standings-watch]')?.dataset.standingsWatch);
+  if (Number.isInteger(watchRank) && watchRank > 0) {
+    void watchStandingsReel(watchRank);
+    return;
+  }
+  const party = target?.closest<HTMLButtonElement>('[data-standings-party]')?.dataset.standingsParty as StandingsParty | undefined;
+  if (party && party !== currentStandingsParty) {
+    currentStandingsParty = party;
+    renderCurrentLedger();
+    currentRoot?.querySelector<HTMLElement>(`[data-standings-party="${party}"]`)?.focus();
+    return;
+  }
+  const fieldBookView = target?.closest<HTMLButtonElement>('[data-field-book-view]')?.dataset.fieldBookView as FieldBookView | undefined;
+  if (fieldBookView && fieldBookView !== currentFieldBookView) {
+    currentFieldBookView = fieldBookView;
+    renderCurrentLedger();
+    currentRoot?.querySelector<HTMLElement>(`[data-field-book-view="${fieldBookView}"]`)?.focus();
     return;
   }
   const fieldBookRow = target?.closest<HTMLElement>('[data-field-book-key]');
