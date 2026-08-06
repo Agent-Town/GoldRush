@@ -31,7 +31,13 @@ const RULES = [
   { flag: 'pilot failure', when: (r) => Boolean(r.pilot?.failure), detail: (r) => r.pilot.failure },
   { flag: 'not GLB', when: (r) => r.pilot?.renderSource !== 'glb', detail: (r) => `render=${r.pilot?.renderSource}` },
   { flag: 'landmarks short', when: (r) => r.pilot && r.pilot.landmarks < r.pilot.landmarkExpected, detail: (r) => `${r.pilot.landmarks}/${r.pilot.landmarkExpected}` },
-  { flag: 'landmarks skipped', when: (r) => (r.pilot?.landmarkSkipped ?? 0) > 0, detail: (r) => r.pilot.landmarkDiagnostics || `${r.pilot.landmarkSkipped}` },
+  // The full diagnostic string is four clauses long; a table cell that carries all of it stops
+  // being readable, and the detail is preserved verbatim in the probe artifact either way.
+  {
+    flag: 'landmarks skipped',
+    when: (r) => (r.pilot?.landmarkSkipped ?? 0) > 0,
+    detail: (r) => `${r.pilot.landmarkSkipped}× ${(r.pilot.landmarkDiagnostics.split(': ')[1] ?? '').split(';')[0] || 'see artifact'}`,
+  },
   { flag: 'no panorama', when: (r) => !r.pilot?.panorama || r.pilot.panorama === 'off' || r.pilot.panoramaMeshes === 0, detail: (r) => `panorama=${r.pilot?.panorama}` },
   // 0.30 m is the house relief floor: e2e/w1-01-terrain-relief.spec.ts asserts max-min > 0.3 on the
   // painted heightfield. Below it the ground reads as a flat plate to the eye.
