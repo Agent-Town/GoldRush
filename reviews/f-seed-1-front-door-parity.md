@@ -8,6 +8,15 @@
 
 ## VERDICT: HOLD — NOT MERGED
 
+> ⚠️ **SUPERSEDED s1494 — the hold was DISCHARGED, not overturned. Merged at `ff628a132`** (ancestry
+> verified: `git merge-base --is-ancestor ff628a132 main`), together with the fire-authored successor
+> `lane-f1493-1-parity-repin`, as **one slice** — which is F-1492-1 route (a), exactly as the finding
+> below prescribed. The verdict above is kept **verbatim** (retention law: supersede, never delete)
+> and it was **correct when written**: at the time of this gate the eight adjacent assertions really
+> were unrepaired. What changed is the tree, not the judgement. **Full `test:node-guards` is now
+> `rc=0` (340 tests / 337 pass / 0 fail / 3 skipped) and `er01-e2-census` is 8/8** on the merged tree.
+> Landing review: `reviews/f-seed-1-plus-f1493-1-landing.md`.
+
 The cure itself is real and its own spec proves it. It is held because it leaves **eight reds in two adjacent suites**, every one of them **attributed to this slice by a clean control run**, and none of them repaired by the slice.
 
 ## What it does
