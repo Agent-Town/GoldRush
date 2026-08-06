@@ -1,3 +1,32 @@
+> **DRAIN RECEIPT — s1496, merged `7bfd62ee0427eaf5a31bb30266a3b538b08be5d0`.** This shift's verdict below is preserved
+> verbatim (retention law: supersede, never delete). Gated on the MERGED tree in a detached worktree
+> (`gate-s1496`, §3.0b custody — undecided content never entered main's working tree), not on the branch.
+> **Battery:** `tsc` rc=0 (zero output) · `build` rc=0, 2.61s · own spec `er01-e5-census` **8/8** ·
+> adjacent **74/74** · `test:node-guards` rc=0, **zero `not ok`**. All `--workers=1` (§3.1); Node **v26.4.0**
+> matching `.nvmrc`. `src/` **byte-unchanged**, **zero deletions**, five files.
+>
+> **Three claims were re-derived rather than inherited.** (1) The **adjacent set had GROWN since this review
+> was written** — it names "all five `er01-e*-census` specs", but s1480 drained the E7–E10 censuses in the
+> meantime, so the drain ran **nine** census specs plus `contract-bundle-validation` (74 tests, both
+> projects, 5.4m) rather than the six the review gated on. A review's adjacent list ages; re-enumerate it.
+> (2) The **beacon cure was re-counted at both surfaces** on the merged tree: `contracts.json` →
+> `raceCourse.beacons` = **5** (`start-beacon`, `northwest-checkpoint`, `midcourse-checkpoint`,
+> `northeast-checkpoint`, `finish-beacon`) and `mask-tables/e5-regatta.json` → `maskTruth.raceCourse.beacons`
+> = **5, the same five ids**. The prose now matches its data. All four E5 contracts carry exactly one
+> `engineDependencies` entry. (3) The review's **contamination-immunity argument was verified independently**,
+> not taken on trust: port 5188 was **free** at gate time (`lsof` rc=1), and the spec contains **0**
+> `page.goto` and **0** `baseURL` against **2** `createServer` — it is genuinely in-process, so it cannot
+> measure a sibling worktree.
+>
+> **Trial merge re-run at the live tip as the review demanded** (`git merge-tree --write-tree`, rc=0, clean —
+> the review's own was evidence about a tip that had already moved). `tasks/BACKLOG.md` auto-merged.
+> **Goal leaf `milk-deepwater-surgery` registered retroactively in the drain's bookkeeping commit** — this
+> shift was owner-launched outside the task-master pipeline and so never tripped the Goal Registration Law
+> (F-1495-2, the structural blind spot).
+>
+> ⚖️ **The veto window below is LIVE and unexpired:** the five-beacon ruling was an unarbitrated authoring
+> call, not a canon citation. One word from Robin reverses it.
+
 # DEEPWATER SURGERY — cure E5's BROKEN contracts (milk shift, 2026-08-06)
 
 - **Slice:** `milk/deepwater-surgery` — the deepwater-surgery milk shift
