@@ -23,6 +23,7 @@ Both epochs' signature consumers now run headlessly in the browser's own tick or
 |---|---|
 | `npx tsc --noEmit` | **rc=0** |
 | `npm run build` | **rc=0** (asset-diet: 235 GLBs 592.0 MB → 92.7 MB, 54 PNGs 187.0 MB → 24.8 MB) |
+| `GR_RELEASE=e1 npm run build:release` (F-RB-1) | **rc=0** — E1-only: 1,883 files, 110,044,251 bytes, **zero later manifest ids or plate/GLB assets** against 262 later-asset stems. Run because the sockets add `WrangleSystem`, `E6TileConsumerSystem`, `DeepwaterClaimTile` and `DeepwaterArsenal` to the sim's import graph; the E1 release door is unaffected |
 | `e2e/er01-e5-census.spec.ts` | **8/8** desktop-chrome + mobile-chrome, zero captured console |
 | `e2e/er01-e6-census.spec.ts` | **8/8** desktop-chrome + mobile-chrome, zero captured console |
 | Adjacent `er01-e2/e3/e4/e7/e8/e9/e10` | **56/56**, unmodified-green |
