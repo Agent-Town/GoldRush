@@ -22,7 +22,7 @@ import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
 import { loadContract, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
-import { stableHash } from '../mp/LockstepClient';
+import { stableHash, type LockstepAction } from '../mp/LockstepClient';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
@@ -53,6 +53,13 @@ const SUPPORTED_CONTRACTS = new Set([
   'e3-canyon-works',
 ]);
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
+/**
+ * Names the engine inside every seated determinism hash. A browser rider hashes a
+ * run-suspend snapshot (Game.multiplayerStateHash); this sim hashes its own planar
+ * state. Two DIFFERENT engines will disagree by construction, and when they do the
+ * seat must be able to say WHICH — an unlabelled mismatch reads like corruption.
+ */
+export const SEAT_HASH_ENGINE = 'gr-sim.headless.v1';
 
 export function bossKillSecuresRun(
   baron: ContractBaronTwist | undefined,
@@ -405,6 +412,76 @@ export class HeadlessContractSim {
       },
     });
     return { ...base, eventLogHash };
+  }
+
+  // ---------------------------------------------------------------------------
+  // TRANSPORT SEAM — the agent seat (src/sim/SeatedLockstepSim.ts).
+  // Purely additive: `advanceToTurn()`, `outcome()` and every pinned hash above are
+  // untouched, so the gr-sim determinism pins keep meaning what they meant.
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Advances exactly ONE fixed step — the grain a lockstep tick bundle buys.
+   * `advanceToTurn()` runs a whole wave of these on its own authority; a seated sim
+   * may only ever run the one tick the room has already agreed on.
+   */
+  advanceOneTick(): void {
+    if (!this.terminal) this.step();
+  }
+
+  /** True once the run has ended — secured, or the rider went down. */
+  get isTerminal(): boolean {
+    return this.terminal;
+  }
+
+  /**
+   * True when the rider is owed a turn: the same wave-boundary / surprise trigger
+   * `advanceToTurn()` fires on, asked WITHOUT advancing the sim. A seated loop cannot
+   * use `advanceToTurn()` — it would run ticks the room has not handed it.
+   */
+  turnDue(): boolean {
+    const orders = snapshotStandingOrders();
+    return this.terminal
+      || this.waves.diagnostics.wave !== this.lastTurnWave
+      || latestSurpriseSeq(orders) > this.lastSurpriseSeq;
+  }
+
+  /**
+   * The per-tick determinism fingerprint exchanged on the lockstep wire: the same
+   * planar state `outcome()` folds into its terminal hash, minus the event log (which
+   * only exists once, at the end). Two seats running this engine over one shared tick
+   * stream MUST agree on this value, tick for tick — that agreement is the whole
+   * desync test, and `SEAT_HASH_ENGINE` makes a cross-engine disagreement legible.
+   */
+  tickHash(tick: number): string {
+    return stableHash({
+      engine: SEAT_HASH_ENGINE,
+      tick,
+      contractId: this.contractId,
+      seed: this.seed,
+      wave: this.waves.diagnostics.wave,
+      timeMs: Math.round(this.timeAlive * 1000),
+      gold: round(this.economy.gold),
+      kills: this.kills,
+      hero: point(this.hero.group.position),
+      hp: round(this.hero.hp),
+      enemies: this.enemies.all
+        .filter((enemy) => enemy.isAlive)
+        .map((enemy) => ({ id: enemy.id, hp: round(enemy.currentHp), position: point(enemy.position) })),
+      buildings: this.build.diagnostics.hp,
+    });
+  }
+
+  /**
+   * Applies one lockstep action arriving in a shared tick bundle — the ONLY door
+   * through which another rider's act may touch this sim. Mirrors
+   * `Game.applyMultiplayerAction` for the subset a headless sim can honour. Returns
+   * false for everything else so the seat can REPORT what it could not honour rather
+   * than swallow it; a silently-dropped peer action is a desync waiting to happen.
+   */
+  applyWireAction(action: LockstepAction): boolean {
+    if (action.type !== 'place_build') return false;
+    return this.build.confirmPlacement(this.timeAlive, action);
   }
 
   get wavesPerSecond(): number {
