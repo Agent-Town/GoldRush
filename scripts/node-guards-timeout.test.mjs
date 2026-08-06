@@ -110,13 +110,30 @@ test('explicitly bounded sibling', { timeout: 10_000 }, async () => { await slee
     );
     const out = `${child.stdout}${child.stderr}`;
 
-    assert.equal(child.status, 1, `the unbounded sibling should have failed the run:\n${out}`);
-    assert.match(out, /test timed out after 1000ms/, `the CLI default should have fired:\n${out}`);
-    assert.match(out, /✔ explicitly bounded sibling/, `the declared budget should have won:\n${out}`);
+    // F-1507-1: when this fails, say WHY in the message. Two fires read the bare regex mismatch
+    // as a load flake / a "1000ms fixture finished at 1003ms" timing boundary and recommended
+    // loosening the assertion. It is neither. On node <= v23.x, `--test-timeout` is applied at
+    // FILE granularity: the whole fixture is cancelled as one unit, so NEITHER sibling ever runs
+    // and a per-test `{ timeout }` is never consulted. The tell is in the child's own summary —
+    // `tests 1 / cancelled 1` with the FILE as the failing entry, vs `tests 2` when per-test
+    // bounds apply. Measured s1507 across v23.3.0 / v23.4.0 / v23.11.1 (file-level) and
+    // v24.14.0 / v26.4.0 (per-test, under every --experimental-test-isolation setting).
+    const fileLevel = /^ℹ tests 1$/m.test(out) && !/explicitly bounded sibling/.test(out);
+    const why = fileLevel
+      ? `\n\nDIAGNOSIS: this node (${process.version}) bounds --test-timeout at FILE granularity, ` +
+        'so the fixture was cancelled whole and no per-test budget was consulted. This is NOT a ' +
+        'timing flake and must NOT be cured by loosening the assertion — on such a node the ' +
+        "battery's declared budgets (the escort test's 120 s, protected by F-1410-2) are not " +
+        'honoured per-test at all. Cure the NODE, not the test: .nvmrc pins 26.4.0. See F-1507-1.'
+      : '';
+
+    assert.equal(child.status, 1, `the unbounded sibling should have failed the run:\n${out}${why}`);
+    assert.match(out, /test timed out after 1000ms/, `the CLI default should have fired:\n${out}${why}`);
+    assert.match(out, /✔ explicitly bounded sibling/, `the declared budget should have won:\n${out}${why}`);
     assert.doesNotMatch(
       out,
       /✖ explicitly bounded sibling/,
-      `a per-test timeout must override the CLI default, else declared budgets silently tighten:\n${out}`,
+      `a per-test timeout must override the CLI default, else declared budgets silently tighten:\n${out}${why}`,
     );
   });
 });
