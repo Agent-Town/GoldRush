@@ -30,6 +30,13 @@
           "depths": { "springPond": 0.2 },
           "speedMul": { "springPond": 1 }
         },
+        "engineDependencies": [
+          {
+            "dep": "deepwater-claim-consumer",
+            "status": "missing",
+            "description": "Needs a headless Deepwater consumer for claim-boat anchoring and re-anchoring, deck-pad building, the storm and corsair scheduler, the depth ladder, the E5 arsenal, and Dredge-Queen resolution; these run browser-only through DeepwaterClaimTile, DeepwaterArsenal, and DredgeQueenBossSystem."
+          }
+        ],
         "deepwater": {
           "waterTile": {
             "id": "e5-deepwater-claim",
@@ -258,7 +265,7 @@
       "briefing": {
         "goals": ["Cross the north-bending beacon course.", "Build from the Claim-Boat deck while watching the western water."],
         "rules": [
-          "Six beacon gates mark the out-and-back course.",
+          "Five beacon gates mark the out-and-back course.",
           "The Claim-Boat deck is the only surveyed build ground.",
           "Waves enter from the west."
         ],
