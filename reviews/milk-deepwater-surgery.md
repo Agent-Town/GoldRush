@@ -149,10 +149,42 @@ any. `gr-sim` against `e5-deepwater-claim` still throws `AP-07 supports only …
 
 ## Merge classification
 
-Merge base `565a145a5`, verified with `git merge-base`. Branch was **0 commits ahead** of `main` at start,
-so every hunk here is this shift's. All three files are **LANE-ONLY** — `main` moved on none of them during
-the shift (`main` was held by the s1479 fire, which was authoring, not touching E5 contracts). No conflicts,
-no three-way resolution needed. `reviews/milk-deepwater-surgery.md` is a pure add.
+Merge base `565a145a5`, verified with `git merge-base`. Branch was **0 commits ahead** at fork, so every hunk
+here is this shift's.
+
+⚠️ **`main` MOVED UNDER THIS SHIFT — measure three-dot, or you will read phantom deletions.** The s1480 fire
+drained the E7/E8/E9/E10 censuses while this work was in flight (~14 commits; tip went `565a145a5` →
+`bf758302e` and was still moving at write time). **`git diff main --stat` therefore reports ~844 deletions —
+`e7`/`e8`/`e9`/`e10` census docs, specs, reviews, `goals.json`, `STATUS.md` — none of which this branch
+touches.** They are main's *newer* content read backwards through a stale base (Mistake #15 / the
+phantom-deletion class). The three-dot truth:
+
+```
+git diff main...HEAD --stat            → 5 files, +331/−11
+git diff main...HEAD --diff-filter=D   → EMPTY: this branch deletes nothing
+```
+
+Per-file classification, measured with `git log <base>..main -- <path>` rather than eyeballed:
+
+| Path | main commits since base | Class |
+|---|---|---|
+| `assets/contracts/epoch-5-deepwater/contracts.json` | 0 | **LANE-ONLY** |
+| `docs/bench/e5-readiness-census.md` | 0 | **LANE-ONLY** |
+| `e2e/er01-e5-census.spec.ts` | 0 | **LANE-ONLY** |
+| `reviews/milk-deepwater-surgery.md` | 0 | **LANE-ONLY** (pure add) |
+| `tasks/BACKLOG.md` | **12** | **BOTH-MOVED** |
+
+`BOTH-MOVED` is a bucket, not a loss verdict. A non-destructive trial merge (`git merge-tree --write-tree`,
+which writes nothing and touches neither branch) returned **rc=0, clean**, auto-merging `tasks/BACKLOG.md` —
+this shift's leaf sits by the E5 row, the fire's rows sit by E7–E10.
+
+➡️ **For the drain: `main` is LIVE, so re-run that trial merge at your own tip; this one is evidence about a
+tip that has already moved.** And a clean merge is not evidence the merged tree works — re-run the battery on
+the merged tree, not on this branch.
+
+`git add` was path-scoped to the five TOUCH-ONLY paths on both commits; `src/` is untouched
+(`git diff main --stat -- src/` is empty). `node_modules/` was untracked-present on arrival and is left
+exactly as found.
 
 `git add` is path-scoped to the four TOUCH-ONLY paths. `node_modules/` was untracked-present on arrival and
 is left exactly as found.
