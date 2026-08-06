@@ -11,7 +11,7 @@
 
 ## WHY (evidence, quoted and dated)
 
-**s1510 bisected `e2e/landmark-collision.spec.ts:68` to a single commit** —
+**s1510 bisected the test at `e2e/landmark-collision.spec.ts:68` ("enemy blocker routing is deterministic and goes around a county landmark") to a single commit** —
 `531bd923adc97d9c288310f7f94f549e994c3f29` (*drain(s1445): lane-night-stuck-census MERGED — F-BW-10,
 enemies slide toward their goal, not their sign*, 2026-08-04T00:48+07). All arms `--workers=1`,
 both projects, detached worktree:
@@ -40,7 +40,7 @@ Measured by the s1507-2 runner's read-only probe: 180 samples pinned at `z=-8.65
 
 ⚠️ **The culprit was a CORRECT fix for a real, owner-raised problem** (gate walk 2026-08-03, owner
 verbatim: *"the opponents get stuck a lot on the different objects"*). **Reverting it is FORBIDDEN** —
-that re-opens F-BW-10 and `never-trap:88`. The goal is to satisfy **both**.
+that re-opens F-BW-10 and `e2e/never-trap.spec.ts:88` ("Night Shift enemies always make goal progress around object footprints"). The goal is to satisfy **both**.
 
 ## THE PROPOSED CURE (a hypothesis — validate it, and reject it if it does not hold)
 

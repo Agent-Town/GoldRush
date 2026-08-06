@@ -128,7 +128,8 @@ over a longer horizon or in a real wave.
 **This is likely NOT a design fork.** The two behaviours look reconcilable by a deadband: keep the
 goal-relative sign as the primary, but fall back to `avoidanceSide()` when
 `|moveTarget[axis] - position[axis]|` is below a threshold, rather than only when it is exactly
-zero. That is an engineering fix with a checkable gate (both `never-trap:88` and
+zero. That is an engineering fix with a checkable gate (both `e2e/never-trap.spec.ts:88`
+("Night Shift enemies always make goal progress around object footprints") and
 `landmark-collision:68` green in one battery), so it is fire-authorable. **The owner word that IS
 wanted:** whether "goes around the landmark" is still the intended enemy read at all, or whether
 the E2-era routing is meant to be blunter. Parked as a desk item, not blocking the corrective.
