@@ -106,7 +106,10 @@ for (const contract of steamworks.contracts) {
       for (const seed of seeds) {
         const first = run(seed);
         const second = run(seed);
-        expect(first).toMatchObject({ secured: true, waves: contract.twist.secureWave, calls: 0 });
+        expect(first).toMatchObject({ secured: true, calls: 0 });
+        // F-1493-1: autoSecureWaveForRun bypasses secureWave until a declared Baron dies.
+        if (contract.twist.baron) expect(first.waves).toBeGreaterThanOrEqual(contract.twist.secureWave);
+        else expect(first.waves).toBe(contract.twist.secureWave);
         if (contract.twist.pressureEnabled) expect(first.pressure.vents).toBeGreaterThan(0);
         expect(second.eventLogHash).toBe(first.eventLogHash);
       }
