@@ -21,6 +21,11 @@ export async function verifyAndWriteRendererCounts(
   artifactPath: string,
   actual: Record<string, RendererPhase>,
 ): Promise<void> {
+  // F-1478-1 (s1478): the artifact is a REQUIRED INPUT, not an output. Missing file =
+  // ENOENT, on purpose. Do NOT "fix" this by writing a baseline when it is absent: a
+  // self-creating baseline cannot detect a regression on its first run, it just blesses
+  // whatever it saw — which is the write-only behaviour F-1476-1 was filed against.
+  // A new spec adds its expectations by MEASURING them (see artifacts/f1476-1/measure.mjs).
   const artifact = JSON.parse(await readFile(artifactPath, 'utf8')) as RendererCountArtifact;
 
   for (const [phase, metrics] of Object.entries(artifact.phases)) {
