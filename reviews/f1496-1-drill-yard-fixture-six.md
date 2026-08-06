@@ -67,6 +67,26 @@ bespoke card that renders `renderContractArt` and the flavor line but never call
 *Failure text, identical in both arms:* `Error: element(s) not found — waiting for
 getByTestId('contract-board-mechanics-e1-drill-yard')`.
 
+**Confirmed by the DOM, not only by the exception** — the failure's accessibility snapshot
+(`error-context.md:120–124`) shows the card is rendered and reachable, and simply has no briefing:
+
+```
+- region "THE TRAINING GROUND":
+  - heading "THE TRAINING GROUND" [level=3]
+  - article "The Drill Yard":
+    - text: Training No stakes
+    - heading "The Drill Yard" [level=3]
+```
+
+That distinction mattered: the desktop screenshot
+(`reviews/shots-f1496-1/f1501-1-drill-yard-card-no-briefing-desktop.png`) shows the board header reading
+**"5 claims"** and no training ground in frame, which looks at first glance like the section is not
+rendered at all — in which case the cure I authored would have been aimed at the wrong thing. It is not:
+`renderBoard()` splits `entries` into `contracts` (`:2146`, `!contract.practice` → the five claims the
+header counts) and `trainingGround` (`:2147`, the one `practice` contract), and renders the latter
+unconditionally at `:2190`, below the chapter section and below the fold. **The "5 claims" label is
+correct and is not a defect** — I checked before filing one.
+
 **This is a ratified-spec violation, not a design fork**, which is why it is fire-authorable:
 `specs/agent-play/README.md:149` (AP-11 §1) — *"every contract carries a machine-readable mechanics
 declaration DERIVED FROM ITS OWN SIM DATA … **It rides the briefing**, THE VIEW's stable prefix, and
