@@ -99,7 +99,16 @@ Then the engines declare their disagreement and the rig resigns at tick 0 (F-SEA
 | `npm run test:node-guards` | **306 pass / 0 fail / 3 skip over 309**, 155.075 s — includes `gr-sim.test.mjs`, whose determinism pins are intact |
 | solo `gr-sim` pin, re-run by hand | `{secured:false, waves:4, timeMs:135667, gold:4, kills:37, calls:5, eventLogHash:"fnv1a32:68b99428"}` — byte-identical to `scripts/gr-sim.test.mjs:37` |
 | collection guards, re-run **after** adding `e2e/agent-seat.spec.ts` | 23/23 |
-| `node scripts/gate-caller-audit.mjs` | PASS — 9 orphans, all grandfathered, **unchanged** by this slice (verified by execution, not inference) |
+| `node scripts/gate-caller-audit.mjs` | PASS — 9 orphans, all grandfathered, **unchanged** by this slice (verified by execution, not inference — but see F-SEAT-4 for why that PASS is weaker than it looks) |
+| CLI arg probes, 11 arms | every misuse errors with a named message at rc=1; the solo path's `--contract/--seed/--policy` arm still rc=0 |
+| adjacent e2e: `agent-seat` + `mp-reconnect` + `second-rider` | 2 passed, **1 failed — `second-rider.spec.ts:96`, control-proven pre-existing** (below) |
+
+**The one adjacent red, and how it was settled.** `e2e/second-rider.spec.ts:96` (`TimeoutError: page.waitForFunction` in `openHostRide`) failed on the merged tree. It is inventory entry #5 (`logs/suite-red-inventory.md:212-213`, BOTH projects, 5/47 = 10.6%) — **and a known-red lookup was not treated as exoneration.** A matched control was run in a detached worktree at `565a145a5` (this branch's parent, none of this slice present), same spec, same project, `--workers=1`:
+
+- control run 1 (**cold** cache): failed **earlier**, at `:85` (the town→tavern wait, 10 s);
+- control run 2 (**warm** cache): failed at **`:96`, 20 s timeout — byte-identical to the merged tree's failure and to the inventory line.**
+
+The file is provably untouched by this slice: `git diff 565a145a5 HEAD -- e2e/second-rider.spec.ts` is empty and both trees hash the blob to `2431121be33ee7e0f7021f7f345ad8650a084ab3`. **So the red exists without this change.** The cold/warm split is worth keeping: the first control arm looked like a *different* red purely because the dev server was cold, and had I stopped there I would have reported "not the same failure" about the same defect. **Control arms must be warmth-matched, not just tree-matched.**
 
 **Zero console errors and zero page errors in the boot probe — ASSERTED, not observed.** The first draft of this review claimed it while the spec merely attached an artifact; the spec now collects both buckets and `expect`s them empty, and `artifacts/agent-seat/boot-probe.json` records `"consoleErrors": []` / `"pageErrors": []` from the run that produced this line. A rig joining a human's room and then resigning costs the host nothing.
 
