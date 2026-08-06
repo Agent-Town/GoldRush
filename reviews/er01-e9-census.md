@@ -65,8 +65,20 @@ while its three siblings each declare one honest missing dependency. The census 
 asymmetry rather than editing contract content, which is the correct firewall call.
 
 Combined with `e7-relay-valley` (same omission, this fire) and the E5 Deepwater Claim (s1461),
-that is **three instances across three epochs**, and in every case the offender is *the epoch's
-flagship contract* — the one with the most real browser machinery behind it. A reader of contract
-data alone would rank exactly the wrong contract as most ready. This is now a pattern with a
-predictable shape, not three coincidences; it belongs in the attended socket masters as a
-declaration fix, not just a socket fix.
+that is **three instances across three epochs**.
+
+> ~~and in every case the offender is *the epoch's flagship contract* — the one with the most real
+> browser machinery behind it… This is now a pattern with a predictable shape, not three
+> coincidences.~~
+>
+> ⚠️ **STRUCK — FALSIFIED ~15 MINUTES LATER BY THE E10 CENSUS, same fire.** E10's flagship
+> `e10-last-claim` **declares its missing dependency correctly**; the offender there is
+> `e10-ember-shore`, which is not the flagship. I generalised from n=3 with the fourth data point
+> already sitting in an undrained lane. See `reviews/er01-e10-census.md` for the corrected
+> finding: the omission **is** systematic (one per epoch, 4 for 4), but its victim is **not**
+> predictable from flagship status.
+
+What survives, and is the part worth acting on: a reader of contract data alone cannot distinguish
+"no missing dependency" from "missing dependency not declared", so an undeclared contract reads as
+*more* ready than its honest siblings. It belongs in the attended socket masters as a declaration
+fix, not just a socket fix.
