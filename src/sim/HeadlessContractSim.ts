@@ -19,12 +19,16 @@ import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { XpMotePool } from '../entities/XpMote';
 import { Balance } from '../game/Balance';
 import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
+import { GameState } from '../game/GameState';
+import { Progression } from '../game/Progression';
+import type { EffectiveStats } from '../game/StatSheet';
+import { upgradeDefById } from '../game/Upgrades';
 import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
 import { loadContract, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
 import { stableHash } from '../mp/LockstepClient';
 import { BuildSystem } from '../systems/BuildSystem';
-import { CombatSystem } from '../systems/CombatSystem';
+import { CombatSystem, type ShooterHandle } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
@@ -80,8 +84,33 @@ export type GrSimOutcome = {
 };
 
 export type GrSimTurn = {
-  view: AgentView;
+  view: HeadlessAgentView;
   terminal: boolean;
+};
+
+export type HeadlessAgentView = AgentView & {
+  now: AgentView['now'] & {
+    hero: AgentView['now']['hero'] & {
+      level: number;
+      upgradesTaken: Record<string, number>;
+      upgradeChoiceRule: 'first-offer';
+    };
+    threats: AgentView['now']['threats'] & {
+      spawnedTotal: number;
+      defeatedTotal: number;
+      defeatedBasis: 'all enemies, including continuous tricklers';
+    };
+  };
+  almanac: AgentView['almanac'] & {
+    nextWave: AgentView['almanac']['nextWave'] & {
+      compositionScope: 'wave-horn packs only; continuous tricklers are additional';
+      continuousTrickle: {
+        currentIntervalSeconds: number;
+        includedInComposition: false;
+        includedInDefeatedTotal: true;
+      };
+    };
+  };
 };
 
 export type HeadlessContractBoot = ContractRunBoot & {
@@ -129,6 +158,18 @@ export class HeadlessContractSim {
   private readonly xpMotes = new XpMotePool();
   private readonly combatVfx = new CombatVfx();
   private readonly targeting = new TargetingSystem();
+  private readonly heroShooter: ShooterHandle = {
+    id: 'hero',
+    resumeKey: 'hero:0:rig',
+    enabled: () => !this.dead,
+    getPos: () => this.hero.group.position,
+    range: Balance.sparkRig.range,
+    cooldown: 1 / Balance.sparkRig.fireRate,
+    damage: Balance.sparkRig.damage,
+    projSpeed: Balance.sparkRig.boltSpeed,
+    volley: Balance.sparkRig.volley,
+  };
+  private readonly progressionState = new GameState();
   private readonly harvest: HarvestSystem;
   private readonly combat: CombatSystem;
   private readonly build: BuildSystem;
@@ -139,6 +180,7 @@ export class HeadlessContractSim {
   private readonly mothSwarm: MothSwarm | null;
   private readonly crawler: CrawlerBossSystem | null;
   private readonly waves: WaveSystem;
+  private readonly progression: Progression;
   private readonly runManager: RunManager;
   private readonly stockpileHoldings: GoldHolding[] = Array.from(
     { length: Balance.stockpile.maxCount },
@@ -165,7 +207,6 @@ export class HeadlessContractSim {
   private lastTurnWave = -1;
   private lastSurpriseSeq = 0;
   private advanceCpuMs = 0;
-  private prospectorHarvesting = false;
   private buildingHits = 0;
   private baronBeaten = false;
   private baronRocketNextAt = 0;
@@ -298,6 +339,22 @@ export class HeadlessContractSim {
       this.hero.group.position,
       (position, at, escorts) => this.postBaronSpawn(position, at, escorts),
     );
+    this.progressionState.transition('playing');
+    this.progression = new Progression({
+      state: this.progressionState,
+      rng: createRng(`${this.seed}:upgrades`),
+      getBeaconCount: () => this.build.beaconCount,
+      getWave: () => this.waves.diagnostics.wave,
+      getMaxHp: () => this.hero.maxHp,
+      onStatsChanged: (stats, pickedId) => this.applyProgressionStats(stats, pickedId),
+      onGoldGranted: (amount) => this.economy.apply(this.economyEvent({
+        type: 'gold_granted',
+        source: 'upgrade_assay',
+        amount,
+      })),
+      onHeal: (amount) => this.hero.heal(amount),
+    });
+    this.applyProgressionStats(this.progression.stats, null);
 
     const adapter: AgentGameAdapter = {
       diagnostics: () => this.diagnostics(),
@@ -458,6 +515,8 @@ export class HeadlessContractSim {
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
     this.updateBaronRocketVolley();
     this.combat.update(STEP_SECONDS, this.timeAlive);
+    this.progression.consumeXpTotal(this.combat.xpCount);
+    while (this.progression.offer?.[0]) this.progression.applyUpgrade(this.progression.offer[0].id);
     this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncMothLightState();
@@ -469,7 +528,27 @@ export class HeadlessContractSim {
     this.lastSurpriseSeq = latestSurpriseSeq(orders);
     const receipt = this.surface.tools.view();
     if (!receipt.outcome.ok || !receipt.outcome.state) throw new Error('THE VIEW was unavailable.');
-    return { view: receipt.outcome.state as AgentView, terminal: this.terminal };
+    const view = receipt.outcome.state as HeadlessAgentView;
+    const progression = this.progression.snapshot;
+    Object.assign(view.now.hero, {
+      level: progression.level,
+      upgradesTaken: progression.stacks,
+      upgradeChoiceRule: 'first-offer' as const,
+    });
+    Object.assign(view.now.threats, {
+      spawnedTotal: this.waves.diagnostics.waveSpawnedTotal,
+      defeatedTotal: this.kills,
+      defeatedBasis: 'all enemies, including continuous tricklers' as const,
+    });
+    Object.assign(view.almanac.nextWave, {
+      compositionScope: 'wave-horn packs only; continuous tricklers are additional' as const,
+      continuousTrickle: {
+        currentIntervalSeconds: round(this.waves.diagnostics.trickleInterval),
+        includedInComposition: false as const,
+        includedInDefeatedTotal: true as const,
+      },
+    });
+    return { view, terminal: this.terminal };
   }
 
   private startWave(wave: number, at: number): boolean | void {
@@ -661,17 +740,7 @@ export class HeadlessContractSim {
   }
 
   private registerHeroShooter(): void {
-    this.combat.registerShooter({
-      id: 'hero',
-      resumeKey: 'hero:0:rig',
-      enabled: () => !this.dead,
-      getPos: () => this.hero.group.position,
-      range: Balance.sparkRig.range,
-      cooldown: 1 / Balance.sparkRig.fireRate,
-      damage: Balance.sparkRig.damage,
-      projSpeed: Balance.sparkRig.boltSpeed,
-      volley: Balance.sparkRig.volley,
-    });
+    this.combat.registerShooter(this.heroShooter);
   }
 
   private diagnostics(): unknown {
@@ -716,17 +785,7 @@ export class HeadlessContractSim {
       kills: this.kills,
       runState: this.dead ? 'dead' : this.secured ? 'secured' : 'playing',
       run: { secured: this.secured },
-      progression: {
-        stats: {
-          damageMult: 1,
-          fireRateMult: 1,
-          rangeMult: 1,
-          moveSpeedMult: 1,
-          panTickMult: 1,
-          maxHpBonus: 0,
-          beaconFireRateMult: 1,
-        },
-      },
+      progression: { ...this.progression.snapshot, choiceRule: 'first-offer' },
       agent: {
         needsRider: orders.needsRider,
         orders: orders.orders,
@@ -849,17 +908,59 @@ export class HeadlessContractSim {
     const sluice = sluiceIndex ? this.build.diagnostics.sluicePositions[Number(sluiceIndex) - 1] : undefined;
     const position = seam?.position ?? sluice;
     if (!position) return false;
-    this.prospectorHarvesting = Boolean(seam);
-    this.prospector.assignWork(position);
-    return { node, position };
+    if (!seam) return { node, position };
+
+    const before = seam.remaining;
+    const previous = this.harvest.captureFutureState(this.timeAlive);
+    const panned = this.harvest.update(
+      Balance.goldSeam.tickSeconds * Math.max(0.1, this.progression.stats.panTickMult),
+      this.timeAlive,
+      [{ actorId: 'prospector', position: new THREE.Vector3(position.x, 0, position.z), speed: 0 }],
+    );
+    const pannedTarget = panned.activeNodes.find((entry) => entry.id === node);
+    const nodes = previous.nodes.map((entry) => entry.id === node && pannedTarget ? pannedTarget : entry);
+    const activeNodes = new Set(nodes.filter((entry) => entry.active).map((entry) => entry.id));
+    const channels = previous.channels?.map((channel) =>
+      channel.channelNodeId === null || activeNodes.has(channel.channelNodeId)
+        ? channel
+        : { ...channel, channelNodeId: null, progress: 0, panCapBlocked: false, channeling: false },
+    );
+    const primary = channels?.find((channel) => channel.actorId === '0');
+    const channelNodeId = primary?.channelNodeId
+      ?? (previous.channelNodeId !== null && activeNodes.has(previous.channelNodeId) ? previous.channelNodeId : null);
+    this.harvest.restoreFutureState({
+      ...previous,
+      nodes,
+      channelNodeId,
+      progress: channelNodeId === null ? 0 : (primary?.progress ?? previous.progress),
+      panCapBlocked: channelNodeId === null ? false : (primary?.panCapBlocked ?? previous.panCapBlocked),
+      channels,
+    }, this.timeAlive);
+    this.harvestSnapshot = this.harvest.update(0, this.timeAlive, this.harvestTargets());
+    return (pannedTarget?.remaining ?? before) < before;
   }
 
   private harvestTargets(): HarvestTarget[] {
-    const targets: HarvestTarget[] = [{ actorId: '0', position: this.hero.group.position, speed: this.hero.velocity.length() }];
-    if (this.prospectorHarvesting) {
-      targets.push({ actorId: 'prospector', position: this.prospector.position, speed: 0 });
-    }
-    return targets;
+    return [{ actorId: '0', position: this.hero.group.position, speed: this.hero.velocity.length() }];
+  }
+
+  private applyProgressionStats(stats: EffectiveStats, pickedId: string | null): void {
+    this.heroShooter.cooldown = 1 / (Balance.sparkRig.fireRate * stats.fireRateMult);
+    this.heroShooter.damage = Balance.sparkRig.damage * stats.damageMult;
+    this.heroShooter.range = Balance.sparkRig.range * stats.rangeMult;
+    this.heroShooter.projSpeed = Balance.sparkRig.boltSpeed * stats.boltSpeedMult;
+    this.heroShooter.volley = Balance.sparkRig.volley + stats.volleyBonus;
+    this.hero.applyStats(Math.max(stats.maxHpBonus, this.hero.maxHp - Balance.hero.maxHp), stats.moveSpeedMult);
+    if (pickedId === 'tinkers_plating') this.hero.heal(upgradeDefById.tinkers_plating.deltas.heal ?? 0);
+    this.harvest.applyStats(
+      stats.panTickMult,
+      stats.seamCapacityBonus,
+      stats.seamRespawnReduction,
+      this.manifest.twist.seamYieldMult ?? 1,
+    );
+    this.build.applyStats(stats.beaconFireRateMult, 1);
+    if (stats.stockpileCapBonus > 0) this.economy.addCapSource('upgrade:stockpile_cap', stats.stockpileCapBonus);
+    else this.economy.removeCapSource('upgrade:stockpile_cap');
   }
 
   private syncStockpileHoldings(): void {

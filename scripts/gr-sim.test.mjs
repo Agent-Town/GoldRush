@@ -34,6 +34,7 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   const lines = first.stdout.trim().split('\n').map((line) => JSON.parse(line));
   assert.equal(lines[0].schema, 'goldrush.view.v1');
   assert.deepEqual(Object.keys(lines.at(-1)), ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'eventLogHash']);
+  // F-1493-1: headless progression parity, s1493.
   assert.deepEqual(lines.at(-1), {
     secured: false,
     waves: 4,
@@ -41,7 +42,7 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
     gold: 4,
     kills: 37,
     calls: 5,
-    eventLogHash: 'fnv1a32:68b99428',
+    eventLogHash: 'fnv1a32:f63d981b',
   });
   assert.equal(lines.at(-1).calls, 5);
   assert.ok(lines.some((line) => line.schema === 'goldrush.view.v1' && line.now.works.byKind.palisade === 1));
@@ -110,12 +111,13 @@ test('gr-sim deterministically runs the Claim objective', () => {
   assert.deepEqual(lines[0].stablePrefix.mechanics.posting.waves, [
     { event: 'secure', wave: 10, source: 'twist.secureWave' },
   ]);
+  // F-1493-1: headless progression parity, s1493.
   assert.deepEqual(lines.at(-2).appendLog.at(-1), {
-    wave: 2,
+    wave: 3,
     outcome: 'rider-down',
     goldDelta: 0,
     worksHp: { current: 0, max: 0, delta: 0 },
-    kills: 13,
+    kills: 7,
     surprises: ['hero_down'],
   });
   assert.equal(lines.at(-1).secured, false);
@@ -203,14 +205,15 @@ test('the Claim driver consumes declared water and posts RunManager secure at wa
     const first = run();
     const second = run();
     assert.deepEqual(second, first);
+    // F-1493-1: headless progression parity, s1493.
     assert.deepEqual(first.outcome, {
       secured: true,
       waves: 10,
       timeMs: 300000,
       gold: 0,
-      kills: 137,
+      kills: 297,
       calls: 0,
-      eventLogHash: 'fnv1a32:b1eeb320',
+      eventLogHash: 'fnv1a32:fa8a49e7',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {
@@ -242,7 +245,8 @@ test('Twin Banks consumes its declared crossings and build zones before securing
   assert.deepEqual(transcript[0].stablePrefix.mechanics.posting.waves, [
     { event: 'secure', wave: 20, source: 'twist.secureWave' },
   ]);
-  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:80c5cae4');
+  // F-1493-1: headless progression parity, s1493.
+  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:bd7fa297');
 
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
@@ -295,14 +299,15 @@ test('Twin Banks consumes its declared crossings and build zones before securing
     const first = run();
     const second = run();
     assert.deepEqual(second, first);
+    // F-1493-1: headless progression parity, s1493.
     assert.deepEqual(first.outcome, {
       secured: true,
       waves: 20,
       timeMs: 600000,
       gold: 0,
-      kills: 202,
+      kills: 805,
       calls: 0,
-      eventLogHash: 'fnv1a32:5aeceb84',
+      eventLogHash: 'fnv1a32:9548ee84',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {
@@ -339,14 +344,15 @@ test('gr-sim places Night Shift fixtures from the contract', () => {
   const firstLines = first.stdout.trim().split('\n').map(JSON.parse);
   const secondOutcome = JSON.parse(second.stdout.trim().split('\n').at(-1));
   assert.deepEqual(secondOutcome, firstLines.at(-1));
+  // F-1493-1: headless progression parity, s1493.
   assert.deepEqual(firstLines.at(-1), {
     secured: false,
-    waves: 4,
-    timeMs: 126167,
+    waves: 5,
+    timeMs: 155300,
     gold: 0,
-    kills: 65,
+    kills: 95,
     calls: 0,
-    eventLogHash: 'fnv1a32:0bbf2fec',
+    eventLogHash: 'fnv1a32:7a7c1e7b',
   });
   const firstView = firstLines[0];
   assert.equal(firstView.now.works.byKind.lantern_post, contract.tileParams.prePlacedBuildables.length);
@@ -401,14 +407,15 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
       // -- both return 861/36004eab byte-identical, and the determinism assert above (second ===
       // first) passes on both. Re-pin only ever with a named cause; a blind re-pin is forbidden
       // (F-1441-3).
+      // F-1493-1: headless progression parity, s1493.
       assert.deepEqual(first.outcome, {
         secured: true,
         waves: baron.wave,
-        timeMs: 528_433,
+        timeMs: 528_400,
         gold: 0,
-        kills: 861,
+        kills: 862,
         calls: 0,
-        eventLogHash: 'fnv1a32:36004eab',
+        eventLogHash: 'fnv1a32:61d8cfd9',
       });
       assert.equal(first.payout.science, Balance.meta.victoryPayout.science * baron.sciencePayoutMult);
       assert.deepEqual(first.transcript.filter(({ type }) => type === 'baron_announcement').map(({ wave }) => wave), [5, 12, 18, 20]);
