@@ -3946,6 +3946,18 @@
               "authorNotesSuccessor": "Landed as ONE slice with f1493-1-parity-repin (same merge hash ff628a132, same review file) — F-1492-1 route (a). The cure lives in src/sim/HeadlessContractSim.ts; its own spec is e2e/front-door-parity.spec.ts (4/4 desktop+mobile at the gate)."
             },
             {
+              "id": "f1493-2-baron-drift-pin",
+              "title": "F-1493-2: the E2 baron maps have no drift tripwire — the census equality that used to catch it by accident was unsound and was correctly relaxed at ff628a132. Pin the three baron contracts' run outcomes in scripts/gr-sim.test.mjs, where outcome pinning already lives, with a named cause at the call site.",
+              "taskFile": "lane-f1493-2-baron-drift-pin.md",
+              "lane": "lane-a",
+              "status": "queued",
+              "attempts": 0,
+              "authoredBy": "s1494 fire (FIRE-AUTHORED)",
+              "review": "reviews/f-seed-1-plus-f1493-1-landing.md",
+              "authorNotes": "AUTHORED FROM A FINDING ITS OWN AUTHOR DECLARED BEFORE IT SHIPPED (F-1493-2, declared in this leaf's predecessor f1493-1-parity-repin authorNotesSuccessor) AND CONFIRMED ON THE MERGED TREE BY THE DRAIN THAT LANDED IT (s1494, reviews/f-seed-1-plus-f1493-1-landing.md). VERIFIED BY READING, NOT INFERRED: (1) er01-e2-census.spec.ts now asserts only secured/calls:0/hash-determinism/waves>=secureWave on a baron map, so a Hill Mine fight drifting 14 -> 25 waves would PASS; (2) scripts/gr-sim.test.mjs DOES contain an e2-hill-mine test, but it is 'gr-sim boots escort mode from data instead of URL state' — a boot/mode test that never advances to a terminal turn and pins only escortDiagnostics and the modes list; (3) the ONLY byte-exact baron outcome pin anywhere is e1-baron. Measured from the contract data: 3 of the 4 E2 contracts declare a baron (e2-hill-mine, e2-trestle, e2-incline); e2-pressure-garden is baron-less and keeps its strict equality, which the engine genuinely guarantees there. THE DESIGN CHOICE IS MADE IN THE MASTER AND FIREWALLED AGAINST RE-OPENING: the pin goes in gr-sim.test.mjs, NOT back into the census — a readiness instrument must assert what the engine GUARANTEES, and re-conflating the two is what caused F-1492-1. THE MASTER STATES NO EXPECTED VALUES BY DESIGN (the s1493 precedent): the runner takes every number from its own run, proves determinism in-process AND cross-process BEFORE pinning, and is told that two disagreeing runs are a FINDING that forbids any pin rather than a nuisance. A HARD BUDGET CLAUSE is included because gr-sim.test.mjs is already ~55.6s of the every-fire test:node-guards battery (measured s1462): three new fights must cost <= ~30s or the runner drops to e2-hill-mine alone AND SAYS SO — silent truncation of coverage is called out as a failure, silent budget overrun likewise.",
+              "authorNotesSuccessor": "Named consumer, so the drain can price a red: the E1/E2 contracts are the seed corpus the AP-10d harness ablation is measured against — a silently drifting baseline breaks a comparison whose whole value is that the game is held fixed while the harness varies. If the runner reports a determinism failure instead of a pin, that STOP is the more valuable outcome and should be drained as a finding, not re-queued."
+            },
+            {
               "id": "f1493-1-parity-repin",
               "title": "F-1493-1: land the F-SEED-1 parity cure adjacent assertions WITH the slice — correct the e2-hill-mine census equality (unsound on baron contracts) and re-pin the six gr-sim expectations with their named cause. REPLACES the owner-forked F-1492-2, which asked an unanswerable question.",
               "taskFile": "lane-f1493-1-parity-repin.md",
