@@ -33,11 +33,19 @@ report the tip you found and what that line looks like now. (s1504 verified this
 returns 1 on main after the merge, per F-1425-2: a key spanning a wrapped line matches nowhere. This one
 visibly sits on a single line.)
 
-**STEP 3 — PREDECESSOR GATE. Must print `1`:**
+**STEP 3 — PREDECESSOR GATE. Must print `2`:**
 ```
 grep -c '${renderContractBriefing(contract)}' src/town/TownScene.ts
 ```
-If it prints `0`, f1501-1 is not on your base and this task's premise does not hold — **STOP** and say so.
+ⓘ *The expected number is **2**, and here is the derivation so you can check it rather than inherit it
+(F-1501-2).* The shared renderer now has **two** call sites: `:2253`, the ordinary contract-card path
+inside its `showDetails` branch, which predates this ladder entirely; and `:2302`, the training-card call
+that f1501-1 added. s1504 measured both against `origin/main` — the exact ref STEP 1 checks out — after
+the merge landed.
+
+- **If it prints `1`**, only the ordinary path is present: **f1501-1 is not on your base**, this task's
+  premise does not hold, and the assertion in STEP 2 is *correct* rather than stale. **STOP** and say so.
+- **If it prints `0`**, something larger is wrong with the board. **STOP** and report what you found.
 
 **STEP 4 — CLEANLINESS:** `git -C worktrees/lane-a status --short` → must be clean.
 > **FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1):**
