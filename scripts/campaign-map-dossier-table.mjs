@@ -124,7 +124,10 @@ for (const row of rows) {
     ? `👀 **LOOK AGAIN** — ${fired.map((f) => f.flag).join(', ')}`
     : consumer.state === 'missing'
       ? '🎨 **LOOK ONLY** — walkable and clean; its mechanic is not built yet'
-      : '✅ **SHIP-SHAPE** — plays and looks finished';
+      // NOT "looks finished". These rules measure presence and counts — mounts, triangles, relief,
+      // luma, error streams. None of them can see whether a map looks RIGHT, and the human-eye pass
+      // in the dossier found things they passed. Say what was measured, and no more.
+      : '✅ **OPENS CLEAN** — plays; every measured signal good';
   summary[fired.length || consumer.state === 'missing' ? 'lookOnly' : 'shipShape'] += 1;
   lines.push(
     `| E${row.era} | **${row.name}** | ✅ yes | ${consumer.text} | ${row.pilot.triangles.toLocaleString()} tri | ` +

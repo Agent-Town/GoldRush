@@ -34,7 +34,7 @@ A map with **zero harvest anchors** has nothing to mine, so the game correctly d
 
 | what you can do | how many | which |
 |---|---|---|
-| ✅ **Full verdict** — plays and looks finished | **3** | Blackout Ridge · Moth Season · The Showroom |
+| ✅ **Full verdict** — plays, and every measured signal is clean | **3** | Blackout Ridge · Moth Season · The Showroom |
 | 🎨 **Look-verdict only** — walk it and judge the ground, art and mood; its signature mechanic is not built yet | **8** | The Trestle · The Pressure Garden · The Incline · The Fairground · The Long Road · Gusher County · The Boneyard · The Eclipse |
 | 👀 **Look again** — opens, but something measurable is off | **1** | Stillwater (0 of 4 landmarks render) |
 | 🚫 **Nothing to verdict** — the door will not open it | **13** | Flotilla · Regatta · Half-Life Hollow · Picnic · Echo Canyon · Dead Band · Relay Rush · Far Side · Low Orbit · Seed Run · Devil's Alley · Old Canal · Archive World |
@@ -59,16 +59,16 @@ Two independent columns decide what a verdict means, and they do **not** move to
 | E2 | **The Trestle** | ✅ yes | 🟠 missing: `elevation-advisory-fields` | 32,768 tri | 2.054 m | 6/6 | own | — none | [spawn](../reviews/shots-campaign-dossier/e2-trestle.png) · [landmark](../reviews/shots-campaign-dossier/e2-trestle-landmark.png) | 🎨 **LOOK ONLY** — walkable and clean; its mechanic is not built yet | — |
 | E2 | **The Pressure Garden** | ✅ yes | 🟠 missing: `elevation-advisory-fields` | 32,768 tri | 2.792 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e2-pressure-garden.png) · [landmark](../reviews/shots-campaign-dossier/e2-pressure-garden-landmark.png) | 🎨 **LOOK ONLY** — walkable and clean; its mechanic is not built yet | — |
 | E2 | **The Incline** | ✅ yes | 🟠 missing: `elevation-advisory-fields` | 32,768 tri | 4.324 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e2-incline.png) · [landmark](../reviews/shots-campaign-dossier/e2-incline-landmark.png) | 🎨 **LOOK ONLY** — walkable and clean; its mechanic is not built yet | — |
-| E3 | **Blackout Ridge** | ✅ yes | ⚪ *undeclared* | 32,768 tri | 7.327 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e3-blackout-ridge.png) · [landmark](../reviews/shots-campaign-dossier/e3-blackout-ridge-landmark.png) | ✅ **SHIP-SHAPE** — plays and looks finished | — |
+| E3 | **Blackout Ridge** | ✅ yes | ⚪ *undeclared* | 32,768 tri | 7.327 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e3-blackout-ridge.png) · [landmark](../reviews/shots-campaign-dossier/e3-blackout-ridge-landmark.png) | ✅ **OPENS CLEAN** — plays; every measured signal good | — |
 | E3 | **The Fairground** | ✅ yes | 🟠 missing: `fairground-crowd-flock-consumer` | 32,768 tri | 4.651 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e3-fairground.png) · [landmark](../reviews/shots-campaign-dossier/e3-fairground-landmark.png) | 🎨 **LOOK ONLY** — walkable and clean; its mechanic is not built yet | — |
-| E3 | **Moth Season** | ✅ yes | ⚪ *undeclared* | 32,768 tri | 3.659 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e3-moth-season.png) · [landmark](../reviews/shots-campaign-dossier/e3-moth-season-landmark.png) | ✅ **SHIP-SHAPE** — plays and looks finished | — |
+| E3 | **Moth Season** | ✅ yes | ⚪ *undeclared* | 32,768 tri | 3.659 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e3-moth-season.png) · [landmark](../reviews/shots-campaign-dossier/e3-moth-season-landmark.png) | ✅ **OPENS CLEAN** — plays; every measured signal good | — |
 | E4 | **The Long Road** | ✅ yes | 🟠 missing: `convoy-claim-consumer` | 32,768 tri | 1.671 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e4-long-road.png) · [landmark](../reviews/shots-campaign-dossier/e4-long-road-landmark.png) | 🎨 **LOOK ONLY** — walkable and clean; its mechanic is not built yet | — |
 | E4 | **Gusher County** | ✅ yes | 🟠 missing: `wild-derrick-consumer` | 32,768 tri | 0.747 m | 10/10 | own | — none | [spawn](../reviews/shots-campaign-dossier/e4-gusher-county.png) · [landmark](../reviews/shots-campaign-dossier/e4-gusher-county-landmark.png) | 🎨 **LOOK ONLY** — walkable and clean; its mechanic is not built yet | — |
 | E4 | **The Boneyard** | ✅ yes | 🟠 missing: `salvage-race-consumer` | 32,768 tri | 1.354 m | 12/12 | own | — none | [spawn](../reviews/shots-campaign-dossier/e4-boneyard.png) · [landmark](../reviews/shots-campaign-dossier/e4-boneyard-landmark.png) | 🎨 **LOOK ONLY** — walkable and clean; its mechanic is not built yet | — |
 | E5 | **The Flotilla** | ❌ **no** — `unavailable-contract`; opens *the-claim* instead | 🟠 missing: `distributed-base-consumer` | — | — | — | — | **0 harvest anchors** | [host sculpt](../reviews/shots-campaign-dossier/e5-deepwater-claim.png) | 🚫 **NOTHING TO VERDICT** — the door will not open it | — |
 | E5 | **Stillwater** | ✅ yes | 🟠 missing: `noise-hunt-consumer` | 32,768 tri | 5.4 m | 0/4 | — | landmarks short (0/4); landmarks skipped (4× asset unavailable) | [spawn](../reviews/shots-campaign-dossier/e5-stillwater.png) | 👀 **LOOK AGAIN** — landmarks short, landmarks skipped | — |
 | E5 | **The Regatta** | ❌ **no** — `unavailable-contract`; opens *the-claim* instead | 🟠 missing: `regatta-race-consumer` | — | — | — | — | **0 harvest anchors** | — | 🚫 **NOTHING TO VERDICT** — the door will not open it | — |
-| E6 | **The Showroom** | ✅ yes | ⚪ *undeclared* | 32,768 tri | 1.801 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e6-showroom.png) · [landmark](../reviews/shots-campaign-dossier/e6-showroom-landmark.png) | ✅ **SHIP-SHAPE** — plays and looks finished | — |
+| E6 | **The Showroom** | ✅ yes | ⚪ *undeclared* | 32,768 tri | 1.801 m | 5/5 | own | — none | [spawn](../reviews/shots-campaign-dossier/e6-showroom.png) · [landmark](../reviews/shots-campaign-dossier/e6-showroom-landmark.png) | ✅ **OPENS CLEAN** — plays; every measured signal good | — |
 | E6 | **Half-Life Hollow** | ❌ **no** — `unavailable-contract`; opens *the-claim* instead | ⚪ *undeclared* | — | — | — | — | **0 harvest anchors** | — | 🚫 **NOTHING TO VERDICT** — the door will not open it | — |
 | E6 | **The Picnic** | ❌ **no** — `unavailable-contract`; opens *the-claim* instead | ⚪ *undeclared* | — | — | — | — | **0 harvest anchors** | [host sculpt](../reviews/shots-campaign-dossier/e6-glow-mesa.png) | 🚫 **NOTHING TO VERDICT** — the door will not open it | — |
 | E7 | **Echo Canyon** | ❌ **no** — `unavailable-contract`; opens *the-claim* instead | 🟠 missing: `broadcast-mirror-consumer` | — | — | — | — | **0 harvest anchors** | — | 🚫 **NOTHING TO VERDICT** — the door will not open it | — |
@@ -83,6 +83,18 @@ Two independent columns decide what a verdict means, and they do **not** move to
 | E10 | **The Archive World** | ❌ **no** — `unavailable-contract`; opens *the-claim* instead | 🟠 missing: `archive-world-consumers` | — | — | — | — | **0 harvest anchors** | — | 🚫 **NOTHING TO VERDICT** — the door will not open it | — |
 
 <!-- derived from 29 probed boots: 25 campaign rows — 3 ship-shape, 9 look-only/look-again, 13 refused by the door, 0 broken -->
+
+---
+
+## THE HUMAN-EYE PASS — what I saw that no rule in this dossier can measure
+
+**Read this as opinion, not measurement.** Every verdict in the table above is a predicate over a number: mounts, triangles, relief, luma, error counts. **Not one of them can see whether a map looks *right*** — which is precisely why the last column is yours. I opened the screenshots and looked. Three things I would want a second pair of eyes on, none of them a finding, none of them blocking:
+
+- **Blackout Ridge** — a large soft grey disc and a hard-edged floating plane sit around the lit rig ([landmark shot](../reviews/shots-campaign-dossier/e3-blackout-ridge-landmark.png)). It may be an intentional light volume on a night map. It measured perfectly clean, and it is the reason this section exists: my rules called it OPENS CLEAN without ever looking at it.
+- **The Showroom** and **The Eclipse** — both show an abrupt horizon seam where the panorama meets the sculpt, with a streaked backdrop above it. The pilot reports `continuation` and `panorama-framing` correctly set on both, so this is plausibly the designed sculpt-edge continuation rather than a defect. I have no design reference to judge it against, so I am describing it rather than calling it.
+- **Moth Season** — for contrast, and so this section is not only complaints: the lamp cage against the dark with the teal bloom reads as fully intentional and is the best-looking frame in the set.
+
+**What this section is really for.** A dossier whose verdicts are all derived looks more authoritative than one that admits a gap, and that is exactly the trap: *a generated verdict only ever checks the boxes it was given.* Mine were given presence and counts. Appearance was never in them.
 
 ---
 
