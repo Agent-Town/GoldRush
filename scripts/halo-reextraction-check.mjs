@@ -12,17 +12,11 @@ const HELD_SHEETS = new Set([
   'char-baron-sheet-walk8',
   'char-e9-feral_terraformer-sheet-walk8',
   'char-elder-sheet-walk8',
-  'char-hero-sheet-back-f',
-  'char-hero-sheet-front-f',
-  'char-hero-sheet-rotation2-f',
-  'char-hero-sheet-side-actions-f',
-  'char-hero-sheet-side-f',
   'char-hero-sheet-walk8',
   'char-newsie-mei-sheet-walk8',
   'char-storekeeper-sheet-walk8',
   'char-youngster-f-sheet-walk8',
   'char-youngster-m-sheet-walk8',
-  'ter-rail-elements',
 ]);
 
 const gitShow = (file) => execFileSync('git', ['show', `${BASE}:${file}`], { maxBuffer: 20 * 1024 * 1024 });
@@ -33,8 +27,8 @@ const cured = baseline.suspects.filter(({ file }) => !HELD_SHEETS.has(stem(file)
 
 assert.equal(baseline.scanned, 1314);
 assert.equal(baseline.suspects.length, 1075);
-assert.equal(expectedResidual.length, 301);
-assert.equal(cured.length, 774);
+assert.equal(expectedResidual.length, 264);
+assert.equal(cured.length, 811);
 
 const savedSweep = fs.readFileSync(SWEEP);
 let current;
