@@ -43,7 +43,10 @@ assert.equal(current.scanned, 1314, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
-  'halo residue differs from the 301 cells held to preserve shipped mends/geometry',
+  // F-1489-2: this message hardcoded "301" and survived the 301 -> 264 re-pin, handing a future
+  // reader the wrong denominator from the instrument itself. Derived from the same array the
+  // assertion compares, so it cannot rot away from the pin again.
+  `halo residue differs from the ${expectedResidual.length} cells held to preserve shipped mends/geometry`,
 );
 
 const loaded = execFileSync('node', ['artifacts/f1450-4/halo-loaded-check.mjs'], { encoding: 'utf8' });
