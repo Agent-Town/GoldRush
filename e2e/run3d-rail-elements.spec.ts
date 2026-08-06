@@ -67,7 +67,15 @@ test('pilot loads once and instances one rail element per tie', async ({ page },
   expect(Number(await page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotTriangles))).toBeLessThanOrEqual(tieCount * 800);
   expect(requests).toBe(1);
   await mkdir(ARTIFACT_DIR, { recursive: true });
-  await writeFile(path.join(ARTIFACT_DIR, `instances-${testInfo.project.name}.json`), `${JSON.stringify({ tieCount, instanceCount, layerDrawCalls: 1 }, null, 2)}\n`);
+  // NO `layerDrawCalls` FIELD HERE, DELIBERATELY (F-1391-1, closed s1483). It used to be the
+  // literal `1` — never read from the renderer — so an artifact appeared to evidence run3d-16
+  // design point 3 ("one draw call for the rail-element layer") while measuring nothing. The
+  // point is still true by construction (a single InstancedMesh, one geometry, one material)
+  // and `tieCount`/`instanceCount` beside it ARE real measurements, which is exactly what made
+  // the fake third field credible. If you want it back, MEASURE it: expose a draw-call datum on
+  // the pilot canvas the way `run3dPilotMeshes` is exposed, then assert a delta around the
+  // mount. Do not re-add a constant to an evidence file — a field that cannot fail is not proof.
+  await writeFile(path.join(ARTIFACT_DIR, `instances-${testInfo.project.name}.json`), `${JSON.stringify({ tieCount, instanceCount }, null, 2)}\n`);
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-rail-elements.png`) });
   expect(bucket).toEqual({ console: [], page: [] });
 });
