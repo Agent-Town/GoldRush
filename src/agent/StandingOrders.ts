@@ -92,6 +92,7 @@ export class StandingOrdersExecutor {
   private sequence = 0;
   private previousState: RuntimeState | null = null;
   private expectedWaveAt: number | null = null;
+  private readonly failureReasons = new Map<string, string>();
 
   constructor(
     private readonly surface: GoldRushToolSurface,
@@ -167,6 +168,7 @@ export class StandingOrdersExecutor {
     this.sequence = 0;
     this.previousState = null;
     this.expectedWaveAt = null;
+    this.failureReasons.clear();
   }
 
   snapshot(): StandingOrdersView {
@@ -255,12 +257,16 @@ export class StandingOrdersExecutor {
 
   private fail(record: StandingOrderRecord, reason: string, at: number): void {
     this.status(record, 'failed', at, reason);
+    const order = standingOrderIdentity(record.order);
+    if (this.failureReasons.get(order) === reason) return;
+    this.failureReasons.set(order, reason);
     this.surprise('order_failure', at, record.id, reason);
   }
 
   private status(record: StandingOrderRecord, status: StandingOrderStatus, at: number, reason?: string): void {
     if (record.status === status && record.reason === reason) return;
     record.status = status;
+    if (status === 'done') this.failureReasons.delete(standingOrderIdentity(record.order));
     if (reason) record.reason = reason;
     this.append({ at, type: 'order_status', orderId: record.id, status, ...(reason ? { reason } : {}) });
   }
@@ -546,6 +552,17 @@ function copyRecords(records: StandingOrderRecord[]): StandingOrderRecord[] {
     ...record,
     order: structuredClone(record.order),
   }));
+}
+
+function standingOrderIdentity(order: StandingOrder): string {
+  if (order.verb === 'BUILD') {
+    const when = 'goldGte' in order.when ? ['goldGte', order.when.goldGte] : ['waveGte', order.when.waveGte];
+    return JSON.stringify([order.verb, order.what, order.where.x, order.where.z, ...when]);
+  }
+  if (order.verb === 'REPAIR_UNDER') return JSON.stringify([order.verb, order.pct]);
+  if (order.verb === 'MOVE_TO' || order.verb === 'HOLD') return JSON.stringify([order.verb, order.pos.x, order.pos.z]);
+  if (order.verb === 'HARVEST') return JSON.stringify([order.verb, 'seam' in order ? order.seam : order.sluice]);
+  return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
 }
 
 function exactKeys(value: Record<string, unknown>, keys: string[]): boolean {

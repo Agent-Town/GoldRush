@@ -570,3 +570,86 @@ test('the E2 Baron fights keep their pinned outcomes', { timeout: 45_000 }, asyn
     else globalThis.window = previousWindow;
   }
 });
+
+test('identical order failures coalesce across submissions without hiding a new failure', { timeout: 45_000 }, async () => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const location = new URL('http://gr-sim.local/?debug&contract=the-claim&seed=e1-the-claim-01');
+  globalThis.location = location;
+  globalThis.window = { location };
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'e1-the-claim-01' });
+    const impossible = [{ verb: 'HARVEST', seam: 'gold-seam-999' }];
+    let turn = sim.currentTurn();
+    while (!turn.terminal) {
+      assert.equal(sim.submitOrders(impossible).outcome.ok, true);
+      turn = sim.advanceToTurn();
+    }
+    assert.ok(sim.outcome().calls <= 8, `expected at most 8 calls, got ${sim.outcome().calls}`);
+
+    const { StandingOrdersExecutor } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
+    let buildSucceeds = false;
+    const state = () => ({
+      timeAlive: 0,
+      runState: 'playing',
+      hp: 100,
+      maxHp: 100,
+      enemiesAlive: 0,
+      wave: 1,
+      nextWaveInSim: 30,
+      economy: { gold: 100 },
+      wreck: { hitsResolved: 0 },
+      build: { hp: [], sluicePositions: [] },
+      harvest: { activeNodes: [] },
+    });
+    const executor = new StandingOrdersExecutor({
+      permissionLevel: () => 3,
+      tools: {
+        place_building: (def, pos) => ({
+          tool: 'et.goldrush.place_building',
+          args: { def, pos, rot: 0 },
+          outcome: buildSucceeds
+            ? { ok: true, economyLog: [] }
+            : { ok: false, reason: 'FAILED', economyLog: [] },
+        }),
+      },
+    }, state);
+    const order = [{ verb: 'BUILD', what: 'palisade', where: { x: 1, z: 2 }, when: { goldGte: 0 } }];
+    const reorderedOrder = [{ verb: 'BUILD', what: 'palisade', where: { z: 2, x: 1 }, when: { goldGte: 0 } }];
+    executor.submit(order, 1);
+    executor.tick(1, { x: 0, z: 0 });
+    const firstFailureSeq = executor.snapshot().log.findLast((event) => event.surprise === 'order_failure').seq;
+
+    executor.submit(reorderedOrder, 2);
+    executor.tick(2, { x: 0, z: 0 });
+    const repeated = executor.snapshot().log.filter((event) => event.surprise === 'order_failure');
+    assert.equal(repeated.length, 1);
+    assert.equal(repeated.at(-1).seq, firstFailureSeq);
+
+    buildSucceeds = true;
+    executor.submit(order, 3);
+    executor.tick(3, { x: 0, z: 0 });
+    assert.equal(executor.snapshot().orders[0].status, 'done');
+
+    buildSucceeds = false;
+    executor.submit(reorderedOrder, 4);
+    executor.tick(4, { x: 0, z: 0 });
+    const newFailure = executor.snapshot();
+    assert.equal(newFailure.needsRider, true);
+    assert.equal(newFailure.log.filter((event) => event.surprise === 'order_failure').length, 2);
+    assert.ok(newFailure.log.findLast((event) => event.surprise === 'order_failure').seq > firstFailureSeq);
+
+    executor.reset();
+    executor.submit(order, 5);
+    executor.tick(5, { x: 0, z: 0 });
+    assert.equal(executor.snapshot().log.filter((event) => event.surprise === 'order_failure').length, 1);
+  } finally {
+    await vite.close();
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
+});
