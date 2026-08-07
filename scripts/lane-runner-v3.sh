@@ -70,6 +70,36 @@ while true; do
     name=$(basename "$f")
     wd="$(dir_for_slot "$slot")"
     if [ -z "$wd" ] || [ ! -d "$wd" ]; then echo "[lane-runner-v3] $slot dir missing, skip $name"; continue; fi
+    # BEGIN F-1522-1 LANE-SAFETY GUARD
+    # F-1522-1: lane/a lost ee61f25ee when the next master's pre-flight reset the lane before
+    # its undrained commit was gated. Safety belongs here, where every dispatch passes.
+    # This is deliberately NOT a bare `main..HEAD` check: squash-merged lane commits remain
+    # ahead forever, so refusing every ahead lane recreates F-1027-1's permanent brick.
+    # lane-usable distinguishes those safe AHEAD-BUT-ABSORBED commits from actual HOLDS.
+    # The bounded probe fails open; only a completed, exact HOLDS verdict may stop dispatch.
+    if [ "$slot" != "main" ] && [ "$wd" != "$ROOT" ]; then
+      lane_probe=$(
+        cd "$ROOT" && /usr/bin/perl -e '
+          $seconds = shift;
+          $pid = fork;
+          exit 125 unless defined $pid;
+          if ($pid == 0) { setpgrp(0, 0); exec @ARGV or exit 126 }
+          $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 };
+          alarm $seconds;
+          waitpid $pid, 0;
+          alarm 0;
+          exit $? >> 8;
+        ' 10 node scripts/lane-usable.mjs "$slot" 2>&1
+      )
+      lane_probe_rc=$?
+      lane_verdict=$(printf '%s\n' "$lane_probe" | sed -n 's/^  => \([A-Z-]*\):.*/\1/p' | tail -1)
+      if [ "$lane_probe_rc" -eq 2 ] && [ "$lane_verdict" = "HOLDS" ]; then
+        echo "[lane-runner-v3] $slot: REFUSE $name — HOLDS undrained paths:"
+        printf '%s\n' "$lane_probe" | sed -n '/^[[:space:]]*HELD /p'
+        continue
+      fi
+    fi
+    # END F-1522-1 LANE-SAFETY GUARD
     stamp=$(date +%Y%m%d-%H%M%S)
     run="$ROOT/tasks/running/$slot--$stamp-$name"
     mv "$f" "$run"
