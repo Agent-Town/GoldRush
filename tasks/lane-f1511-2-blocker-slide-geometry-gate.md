@@ -23,8 +23,8 @@ The grep MUST print `1`. If it prints `0`, the lane is stale — **STOP and repo
 
 ## WHY (evidence, measured — not hypothesised)
 
-`e2e/landmark-collision.spec.ts:68` ("enemy blocker routing is deterministic and goes around a county
-landmark") has been RED on main since `531bd923adc97d9c288310f7f94f549e994c3f29` (bisected s1510).
+`e2e/landmark-collision.spec.ts:68` ("enemy blocker routing is deterministic and goes around a county landmark")
+has been RED on main since `531bd923adc97d9c288310f7f94f549e994c3f29` (bisected s1510).
 That commit made `blockerSlideDirection()` **enemy-relative**:
 
 ```
@@ -36,7 +36,7 @@ against the blocker face instead of going around.
 
 ⚠️ **Reverting `531bd923a` is FORBIDDEN.** It was a correct fix for a real owner complaint (gate walk
 2026-08-03, owner verbatim: *"the opponents get stuck a lot on the different objects"*) and is guarded
-by `e2e/never-trap.spec.ts:88`. The cure must satisfy **both** judges.
+by `e2e/never-trap.spec.ts:88` ("Night Shift enemies always make goal progress around object footprints"). The cure must satisfy **both** judges.
 
 ⛔ **The scalar-deadband axis is CLOSED** (s1511, F-1511-3): six thresholds measured, none separates
 the two invariants, and the only green arm was a de facto revert. **Do not re-open it.**
