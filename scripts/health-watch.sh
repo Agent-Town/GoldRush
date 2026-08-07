@@ -65,7 +65,13 @@ dashboard() {
   #   git show --stat <sha>   then   git diff --stat <branch> main -- <its files>
   # Empty diff on the touched files = SAFE DUPE, not a drain.
   echo "lanes ahead of main (commit count — may be squash-merged dupes, verify by content):"
-  for b in lane/m3 lane/m4 lane/polish lane/perf lane/m6-r3a-apply; do
+  # F-1536-1 (s1536): the lanes are resolved from git, never hardcoded — the old list
+  # named lane/m3..lane/m6-r3a-apply and reported two phantom lanes ahead while saying
+  # NOTHING about lane/a..lane/d, which is where the lanes actually live.
+  . "$ROOT/scripts/lane-branches.sh"
+  LANE_BRANCHES="$(lane_branches)"
+  [ -z "$LANE_BRANCHES" ] && echo "  (no lane worktree resolved — check 'git worktree list')"
+  for b in $LANE_BRANCHES; do
     n=$(git log --oneline "main..$b" 2>/dev/null | wc -l | tr -d ' ')
     [ "${n:-0}" != "0" ] && echo "  $b: $n commit(s) ahead"
   done

@@ -277,7 +277,13 @@ OWNERS=$(printf '%s' "$OWNERS" | esc)
 
 LANES=""
 RETIRED=""
-for b in lane/m3 lane/m4 lane/polish lane/perf lane/m6-r3a-apply save/w1-04-scatter save/demo-profiles-v1 save/m4-embodiment-voice-v1; do
+# F-1536-1 (s1536): lanes resolved from git, never hardcoded (see scripts/lane-branches.sh).
+# The three save/* names below are LEFT AS THEY WERE ON PURPOSE and are all three GONE —
+# that is F-1536-2, a separate finding (66 save/* refs exist and this panel sees none of
+# them). Fixing it means ruling which are genuinely re-land-pending vs owed an archive/*
+# rename, which is a ledger call, not a drive-by edit.
+. "$ROOT/scripts/lane-branches.sh"
+for b in $(lane_branches) save/w1-04-scatter save/demo-profiles-v1 save/m4-embodiment-voice-v1; do
   N=$(git log --oneline "main..$b" 2>/dev/null | wc -l | tr -d ' ')
   if [ "${N:-0}" != "0" ]; then
     AGE=$(git log -1 --format=%ct "$b" 2>/dev/null || echo "$NOW_EPOCH")

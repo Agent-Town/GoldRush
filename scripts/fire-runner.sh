@@ -60,9 +60,25 @@ skips=$(cat "$SKIPCOUNT_F" 2>/dev/null || echo 0)
 dry=1
 ls tasks/queue/*/* >/dev/null 2>&1 && dry=0
 [ -n "$(ls tasks/running/ 2>/dev/null | grep -v '\.pid$')" ] && dry=0
-for b in lane/m3 lane/m4 lane/e2-arsenal lane/perf; do
-  [ "$(git rev-list --count origin/main..$b 2>/dev/null || echo 1)" != "0" ] && dry=0
-done
+# F-1536-1 (s1536): resolve the lanes from git, NEVER from a hardcoded list. The old
+# list (lane/m3 lane/m4 lane/e2-arsenal lane/perf) outlived the lanes it named; m3/m4
+# sit permanently ahead of main as absorbed-but-never-fast-forwarded dupes, so this
+# loop forced dry=0 on every tick and the skip below was unreachable for 7 days.
+# Fail OPEN in both doubt cases (helper missing, or no lane worktree resolved):
+# "any doubt runs the fire" is this guard's stated philosophy.
+if [ -r scripts/lane-branches.sh ]; then
+  . scripts/lane-branches.sh
+  LANE_BRANCHES="$(lane_branches)"
+  if [ -z "$LANE_BRANCHES" ]; then
+    dry=0
+  else
+    for b in $LANE_BRANCHES; do
+      [ "$(git rev-list --count "origin/main..$b" 2>/dev/null || echo 1)" != "0" ] && dry=0
+    done
+  fi
+else
+  dry=0
+fi
 [ -n "$(find tasks/done -type f -mmin -60 2>/dev/null | head -1)" ] && dry=0
 head -1 STATUS.md 2>/dev/null | grep -q "lock ACTIVE" && dry=0
 if [ "$dry" = "1" ] && [ "$skips" -lt 11 ]; then
