@@ -13,10 +13,12 @@
 ```
 cd worktrees/lane-c
 git fetch origin 2>/dev/null || true
-git status --porcelain          # expect EMPTY. If not, STOP and report.
+git status --short               # see the FACTORY-CHURN EXCEPTION below before reading this
 git log main..HEAD --oneline    # expect EMPTY. If not, STOP and report — the lane holds undrained work.
 grep -c "const slideX = ACTIVE_TILE_ID === 'e1-twin-banks' && moveTarget.x >= minX && moveTarget.x <= maxX" src/entities/Enemy.ts
 ```
+**FACTORY-CHURN EXCEPTION — these tracked classes are ALWAYS EXPECTED and are NEVER a STOP; list them and proceed (F-1407-1):** (a) `logs/**` — the fire/runner accounting, rewritten every cycle by the factory itself; (b) `artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence, never byte-identity gated, so their bytes differ from main forever. **What still STOPs:** modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` that you did not make, or any non-empty `git log main..HEAD` (undrained work — resetting would DESTROY it).
+
 The grep MUST print `1`. If it prints `0`, the lane is stale — **STOP and report "lane stale, needs refresh"**; do not attempt the edit.
 
 ## WHY (evidence, measured — not hypothesised)
