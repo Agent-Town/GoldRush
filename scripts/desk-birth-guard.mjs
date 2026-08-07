@@ -1,0 +1,259 @@
+#!/usr/bin/env node
+/**
+ * desk-birth-guard.mjs — did every OWNER-GATED row filed this window reach a desk
+ * AT ALL? (F-1541-2, priced s1542, built s1542.)
+ *
+ * THE HOLE THIS FILLS, and why the sibling guard cannot see it.
+ * desk-carryforward-guard compares desk N -> desk N+1 and asks what was DROPPED.
+ * An item that never reached a FIRST desk is therefore invisible to it — not for
+ * a while, but in EVERY future fire, because it can only ever be missing from
+ * both sides of the comparison. The population this actually bites is attended
+ * sessions: they file ledger rows and never compose a desk, so an owner fork
+ * filed at 04:08 reaches Robin only if the next fire happens to notice it.
+ * s1541 noticed (F-BAL-1, F-AH-1's owner half). This is the mechanism for the
+ * fire that doesn't.
+ *
+ * WHY THIS IS NOT THE CHECK s1533 MEASURED AND REJECTED.
+ * s1533 rejected a ledger<->desk cross-check on the finding that "nobody fails to
+ * declare — items are declared correctly, desked correctly, carried for dozens of
+ * fires, and then dropped", with a 23% false-positive rate from KEY DRIFT
+ * (F-1096-2 <-> rf-34-hero-y-restore-roundtrip and friends re-keyed across
+ * desks). That failure mode is specific to re-keying an OLD item across many
+ * desks. This guard never does that: it looks only at rows BORN in this window,
+ * which have no prior desk key to drift from. Different population, different
+ * failure mode — and s1533's measurement was taken over fire-authored rows,
+ * which is exactly the set that does not exhibit the defect.
+ *
+ * PRICED BEFORE IT WAS BUILT, as its own finding's GATE demanded (s1542, over the
+ * last 25 handoff windows, 96 rows added — artifacts/f1541-2-pricing/):
+ *
+ *     selector/membership   qualifying   hits   false positives
+ *     loose  / forgiving        20         2          0
+ *     loose  / strict           20         4          2   <- F-FD3-1, F-ER02-11
+ *     tight  / forgiving        15         2          0
+ *     tight  / strict           15         2          0   <- BUILT
+ *
+ * Both hits in the built cell are real and were the two items s1541 had found by
+ * hand: F-AH-1's owner half and F-BAL-1. The two false positives in the loose
+ * row are rows whose gate merely CONTAINS the word owner while turning on a
+ * drain ("GATE: drain when lane-b reports ... owner ...") — which is why the
+ * selector below matches an owner ACT, not the word.
+ *
+ * ⓘ The strict column only became usable this same fire: until F-1542-1, a
+ * backtick apostrophe in s1529's header made its desk unreadable and produced a
+ * third, phantom hit. A membership test is only as good as the desk parser under
+ * it — do not loosen this one to work around a header the parser cannot read;
+ * teach the parser the header.
+ *
+ * USAGE
+ *   node scripts/desk-birth-guard.mjs            # gate: exit 1 on an undesked owner row
+ *   node scripts/desk-birth-guard.mjs --report   # never gates; prints the window
+ *   node scripts/desk-birth-guard.mjs --root <d> # for fixtures (a real git tree)
+ *
+ * ESCAPE HATCH. A gate can name an owner act and still not be owed to him this
+ * fire (it may be superseded, or already sitting on the desk under another key).
+ * Say so on line-1 and this passes:
+ *
+ *     DESK-NOT-OWED: F-1234-5 — <already desked as X | superseded by Y | ruled <when>>
+ *
+ * It is scoped to 400 characters after the mark, like desk-carryforward-guard's
+ * DESK-DROPPED, so one acknowledgement cannot silently cover an unrelated id.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { execFileSync } from 'node:child_process';
+
+function arg(flag) {
+  const i = process.argv.indexOf(flag);
+  return i === -1 ? null : process.argv[i + 1];
+}
+const ROOT = path.resolve(arg('--root') || process.cwd());
+const REPORT = process.argv.includes('--report');
+
+/**
+ * Identical literal to desk-declaration-guard.mjs and desk-carryforward-guard.mjs.
+ * Five spellings: four measured s1472, the backtick (U+0060) added s1542 after a
+ * real handoff wrote it — F-1542-1. Keep all three in step.
+ */
+const DESK_WORD = /OWNER(?:'S|’S|S|`S)? DESK/g;
+
+/** Same id shapes the sibling guards key on, including the alpha families. */
+const FINDING = /F-(?:[A-Z0-9]{1,8}-)+\d+/;
+const SLUG = /`([a-z0-9][a-z0-9-]{6,})`/;
+
+/**
+ * An OWNER GATE — a gate that turns on an owner ACT, not one that merely says the
+ * word. Measured s1542: the loose form ("owner" appears anywhere in the gate)
+ * admits rows gated on a DRAIN whose prose happens to mention him, at a 2-in-20
+ * false-positive rate; this form scores 0 in 15 over the same corpus.
+ */
+export const OWNER_GATE =
+  /owner(?:'s|’s)?\s+(?:word|answers?|rules?|ruling|picks?|verdict|decision|names?|triage)/i;
+const OWNER_GATE_ALT = [
+  /\bGATE:\s*\**\s*OWNER\b/i,
+  /(?:closes|retires|rules?)\s+(?:on|when)\s+(?:an?\s+)?(?:attended\s+or\s+)?owner/i,
+];
+export function isOwnerGate(gateText) {
+  return OWNER_GATE.test(gateText) || OWNER_GATE_ALT.some((re) => re.test(gateText));
+}
+
+/** Line-1 is a live lock, not a handoff, when it says ACTIVE and not lock CLEARED. */
+export function isLockLine(line1) {
+  return /\bACTIVE\b/.test(line1) && !/lock CLEARED/.test(line1);
+}
+
+/** The desk tail of a line: everything after its LAST desk word (prose mentions lose). */
+export function deskTail(line) {
+  const hits = [...line.matchAll(DESK_WORD)];
+  return hits.length ? line.slice(hits[hits.length - 1].index) : null;
+}
+
+/** A row's GATE clause — the LAST one, since row prose quotes earlier gates. */
+export function gateOf(rowText) {
+  const i = rowText.toUpperCase().lastIndexOf('GATE:');
+  return i === -1 ? '' : rowText.slice(i);
+}
+
+/** A row's own key: the first id shape it introduces. */
+export function rowId(rowText) {
+  const f = rowText.match(FINDING);
+  const s = rowText.match(SLUG);
+  if (f && (!s || f.index <= s.index)) return f[0];
+  return s ? s[1] : null;
+}
+
+/** An explicit "this one is not owed" acknowledgement, scoped like DESK-DROPPED. */
+export function notOwed(line1, id) {
+  return [...line1.matchAll(/DESK-NOT-OWED/g)].some((m) =>
+    line1.slice(m.index, m.index + 400).includes(id),
+  );
+}
+
+/** Rows added to a diff hunk — the ledger's row glyphs, or any row keyed by an F-ID. */
+export function addedRows(diffText) {
+  return diffText
+    .split('\n')
+    .filter((l) => l.startsWith('+') && !l.startsWith('+++'))
+    .map((l) => l.slice(1))
+    .filter((l) => /^\s*(\u{1F53A}|✅|⛔|\u{1F7E1})/u.test(l) || /\*\*F-/.test(l));
+}
+
+/**
+ * The pure core, so the arms can drive it without a git tree.
+ * Returns {kind:'lock'} | {kind:'no-desk'} | {kind:'window', qualifying, missing}
+ */
+export function analyse(line1, addedRowTexts) {
+  if (isLockLine(line1)) return { kind: 'lock' };
+  const tail = deskTail(line1);
+  if (tail === null) return { kind: 'no-desk' };
+  const qualifying = [];
+  for (const text of addedRowTexts) {
+    if (!isOwnerGate(gateOf(text))) continue;
+    const id = rowId(text);
+    if (!id) continue;
+    qualifying.push({ id, text });
+  }
+  const missing = qualifying.filter((r) => !tail.includes(r.id) && !notOwed(line1, r.id));
+  return { kind: 'window', qualifying, missing };
+}
+
+function git(args) {
+  return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+}
+
+/**
+ * The window is [previous handoff commit .. HEAD]. This guard is a fire's LAST
+ * act, so HEAD already carries this fire's handoff; the PREVIOUS handoff is the
+ * second entry, not the first.
+ */
+export function previousHandoffCommit() {
+  const log = git(['log', '--format=%H\t%s', '--', 'STATUS.md']).trim().split('\n');
+  const handoffs = log
+    .map((l) => { const [sha, ...s] = l.split('\t'); return { sha, subj: s.join('\t') }; })
+    .filter((c) => /^s\d+ handoff/.test(c.subj));
+  return handoffs.length >= 2 ? handoffs[1].sha : null;
+}
+
+function main() {
+  const statusPath = path.join(ROOT, 'STATUS.md');
+  if (!fs.existsSync(statusPath)) {
+    console.error(`desk-birth-guard: REFUSING — cannot read ${statusPath}`);
+    process.exit(2);
+  }
+  const line1 = fs.readFileSync(statusPath, 'utf8').split('\n')[0] || '';
+
+  console.log('=== desk-birth-guard ===');
+
+  if (isLockLine(line1)) {
+    console.log('SKIP — STATUS.md line-1 is a live ACTIVE lock, not a handoff.');
+    console.log('  The desk is written at handoff time; test:ledger-guards gates it then.');
+    return;
+  }
+
+  const prev = previousHandoffCommit();
+  if (!prev) {
+    console.error('desk-birth-guard: REFUSING — no PREVIOUS handoff commit could be found.');
+    console.error('  The window is [previous handoff .. HEAD]; without its start there is');
+    console.error('  no set of newly-filed rows to check, and a pass would mean "I read');
+    console.error('  nothing" — the fail-open mode that hid F-1471-3 for 137 fires.');
+    process.exit(2);
+  }
+
+  let diff = '';
+  try {
+    diff = git(['diff', `${prev}..HEAD`, '--', 'tasks/BACKLOG.md']);
+  } catch (err) {
+    console.error(`desk-birth-guard: REFUSING — could not diff the window: ${err.message}`);
+    process.exit(2);
+  }
+
+  const result = analyse(line1, addedRows(diff));
+
+  if (result.kind === 'no-desk') {
+    console.error('desk-birth-guard: REFUSING — line-1 is a handoff with no desk header.');
+    console.error('  desk-declaration-guard reports this too, and with more detail; fix it there.');
+    process.exit(2);
+  }
+
+  console.log(`window start              : ${prev.slice(0, 8)} (previous handoff)`);
+  console.log(`owner-gated rows filed    : ${result.qualifying.length}`);
+  console.log(`of those, undesked        : ${result.missing.length}`);
+
+  if (REPORT) {
+    for (const r of result.qualifying) {
+      const mark = result.missing.some((m) => m.id === r.id) ? 'UNDESKED' : '  desked';
+      console.log(`  ${mark}  ${r.id}`);
+    }
+    return;
+  }
+
+  if (!result.missing.length) {
+    console.log('PASS — every owner-gated row filed this window reached the desk.');
+    return;
+  }
+
+  console.error('');
+  console.error(`FAIL — ${result.missing.length} owner-gated row(s) were filed this window and`);
+  console.error('reached no desk. An owner fork on no desk is on no board Robin reads:');
+  for (const r of result.missing) {
+    console.error(`  ${r.id}`);
+    console.error(`      ${gateOf(r.text).replace(/\s+/g, ' ').slice(0, 160)}`);
+  }
+  console.error('');
+  console.error('Put each on the desk at the END of line-1, or say why it is not owed:');
+  console.error('');
+  console.error('    DESK-NOT-OWED: <id> — <already desked as X | superseded by Y | ruled <when>>');
+  console.error('');
+  console.error('Attended sessions file rows and never compose a desk (F-1541-2), so the');
+  console.error('rows this catches are usually not yours — carry them anyway.');
+  process.exit(1);
+}
+
+// The house entrypoint form, copied from desk-declaration-guard.mjs rather than
+// re-invented — NOT `file://${process.argv[1]}`. This repo's path contains a
+// space, which import.meta.url percent-encodes and process.argv[1] does not (the
+// s1334 trap: main() silently never ran and the guard "passed" everything). The
+// argv[1] presence check is the sibling half (s1533): with no argv[1] —
+// `node -e "import(...)"`, some harnesses — pathToFileURL THROWS.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
