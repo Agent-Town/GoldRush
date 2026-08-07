@@ -44,6 +44,7 @@ export type AgentView = {
     timers: { runSeconds: number; nextWaveInSeconds: number };
     gold: number;
     hero: { hp: number; maxHp: number; x: number; z: number };
+    prospector: { x: number; z: number } | null;
     works: {
       hp: number;
       maxHp: number;
@@ -241,6 +242,12 @@ function buildNow(
   boundary: Boundary,
 ): AgentView['now'] {
   const hero = point(diagnostics.heroPos);
+  const prospectorPosition = record(record(record(diagnostics.agent).embodiment).position);
+  const prospector =
+    typeof prospectorPosition.x === 'number' && Number.isFinite(prospectorPosition.x) &&
+    typeof prospectorPosition.z === 'number' && Number.isFinite(prospectorPosition.z)
+      ? { x: round(prospectorPosition.x), z: round(prospectorPosition.z) }
+      : null;
   const steal = record(diagnostics.steal);
   const wreck = record(diagnostics.wreck);
   return {
@@ -256,6 +263,7 @@ function buildNow(
       x: round(hero.x),
       z: round(hero.z),
     },
+    prospector,
     works: boundary.works,
     threats: {
       alive: integer(diagnostics.enemiesAlive),

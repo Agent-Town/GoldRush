@@ -165,6 +165,7 @@ const WAVE_THREE_SNAPSHOT = `{
       "x": 0,
       "z": 12
     },
+    "prospector": "<point>",
     "works": {
       "hp": 40,
       "maxHp": 40,
@@ -358,6 +359,36 @@ test('the derived manifest rides THE VIEW and every E1 briefing speaks it', asyn
   expectNoConsoleErrors(watch, 'manifest view');
 });
 
+test('THE VIEW publishes the Prospector and hero as different bodies', async ({ page }) => {
+  const watch = watchErrors(page);
+  await page.goto('/?debug&nowaves&nolevel&terrain2d&seed=prospector-view');
+  await page.waitForFunction(() => Boolean(window.__GR_AGENT__ && 'view' in window.__GR_AGENT__));
+
+  const bodies = await page.evaluate(async () => {
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__!;
+    const position = diagnostics.agent!.embodiment!.position;
+    const view = window.__GR_AGENT__!.view;
+    const { buildView } = await import('../src/agent/View');
+    return {
+      hero: { x: view.now.hero.x, z: view.now.hero.z },
+      prospector: view.now.prospector,
+      embodiment: {
+        x: Math.round(position.x * 100) / 100,
+        z: Math.round(position.z * 100) / 100,
+      },
+      malformed: buildView({
+        diagnostics: () => ({ agent: { embodiment: { position: { x: Number.POSITIVE_INFINITY, z: 1 } } } }),
+      }).now.prospector,
+    };
+  });
+
+  expect(bodies.prospector).not.toBeNull();
+  expect(bodies.prospector).toEqual(bodies.embodiment);
+  expect(bodies.prospector).not.toEqual(bodies.hero);
+  expect(bodies.malformed).toBeNull();
+  expectNoConsoleErrors(watch, 'prospector view');
+});
+
 test('the seeded rider view stays cache-shaped and grows one honest wave at a time', async ({ page }) => {
   const watch = watchErrors(page);
   await page.goto('/?debug&nowaves&nolevel&nopause&seed=ap-view');
@@ -430,15 +461,17 @@ test('the seeded rider view stays cache-shaped and grows one honest wave at a ti
     },
   });
 
-  const snapshot: AgentView | (Omit<AgentView, 'now'> & {
-    now: Omit<AgentView['now'], 'timers'> & {
+  const snapshot: Omit<AgentView, 'now'> & {
+    now: Omit<AgentView['now'], 'timers' | 'prospector'> & {
       timers: { runSeconds: '<number>'; nextWaveInSeconds: number };
+      prospector: '<point>';
     };
-  }) = {
+  } = {
     ...views.wave3,
     now: {
       ...views.wave3.now,
       timers: { ...views.wave3.now.timers, runSeconds: '<number>' },
+      prospector: '<point>',
     },
   };
   expect(JSON.stringify(snapshot, null, 2)).toBe(WAVE_THREE_SNAPSHOT);
