@@ -92,6 +92,28 @@ test('a citation carrying an exact test title passes', (t) => {
   assert.match(result.stdout, /PASS/);
 });
 
+test('a short code span cannot consume the following quoted title', (t) => {
+  const dir = fixture(
+    t,
+    'Previously titled "a retired title that is definitely long enough", then `old` and is now titled "hash mismatch pauses, shows the wire card, and restores from relay snapshot" at e2e/fixture.spec.ts:8.\n',
+  );
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /CARRIES-TITLE\s+1/);
+});
+
+test('a bare apostrophe cannot consume the following quoted title', (t) => {
+  const dir = fixture(
+    t,
+    'Previously titled "a retired title that is definitely long enough"; the scanner\'s own record now calls it "hash mismatch pauses, shows the wire card, and restores from relay snapshot" at e2e/fixture.spec.ts:8.\n',
+  );
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /CARRIES-TITLE\s+1/);
+});
+
 // The shape this repo's prose actually uses. s1224 scored this exact form NUMBER-ONLY and
 // caught the false negative only by reading the entry by hand; the branch is load-bearing.
 test('a citation carrying an ELIDED test title passes', (t) => {
