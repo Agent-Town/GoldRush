@@ -4172,11 +4172,13 @@
             {
               "id": "f1510-3-inventory-names-its-commit",
               "title": "F-1510-3 residue: logs/suite-red-inventory.md still does not NAME the commit it was taken at. f1508-2 (2c495181) added --snapshot, which DERIVES the commit at query time and cured the archaeology cost, but the gate says the inventory names its own commit and it does not. Teach the generator header array in scripts/suite-red-inventory.mjs to emit a Snapshot commit line from git rev-parse HEAD at generation time, degrading to \"unrecorded\" (never empty), plus a dirty/clean tree marker. CORRECTION folded in: the finding REC says \"write HEAD into the provenance block\", but there IS no generated provenance block — the md section at :577 was hand-appended and no code emits it; the generator emits provenance LINES in its header array.",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-f1510-3-inventory-names-its-commit.md",
               "lane": "lane-a",
               "attempts": 0,
-              "authoredBy": "s1513 fire (FIRE-AUTHORED)"
+              "authoredBy": "s1513 fire (FIRE-AUTHORED)",
+              "mergeHash": "8134ec30762cde75a298edcec47629d6f25df19a",
+              "closureReason": "MERGED s1514 as a NEGATIVE RESULT, and F-1510-3 STAYS OPEN — the task shipped its licensed measurement, not its cure. Deliverable: docs/bench/f1510-3-inventory-snapshot-commit-negative-result.md (86 lines, docs-only). FINDING: `git rev-parse HEAD` at generation time cannot name the tested tree. RE-VERIFIED at the drain from the generator's own code, not from the report: scripts/suite-red-inventory.mjs:12-17 derives `runRoot` and `runTreePresent` FROM `report.config.rootDir`, using its own ROOT only as a fallback — i.e. the generator is BY DESIGN a reducer of a report produced in another tree, and :121 resolves test bodies out of that other tree. The tracked snapshot names rootDir=worktrees/lane-d/e2e with stats.startTime=2026-07-28T02:26:03.534Z, so the prescribed line would have emitted the REDUCING checkout's sha. The runner correctly refused to manufacture guard arms for output it had proved false. Gates on the merged tree: tsc rc=0; test:node-guards rc=0, 346 tests / 343 pass / 0 fail / 3 skipped at Node 26.4.0 (byte-identical to the s1513 supervisor tally); build + browser NOT owed, docs-only diff. SUCCESSOR: see F-1514-1 — the gate sentence itself is wrong and is revised in the same commit; the cure must thread the revision from the Playwright run, not derive it at reduce time."
             }
           ]
         }
