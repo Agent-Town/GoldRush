@@ -292,13 +292,13 @@ test('plain boot: an offline county clerk leaves the posse board and field book 
   await page.goto('/');
   await page.getByTestId('start-menu-claim-ledger').click();
   await page.getByTestId('claim-ledger-county-standings').click();
-  await expect(page.getByTestId('county-standings-board')).toHaveText('The county waits for its first name.');
+  await expect(page.getByTestId('county-standings-board')).toHaveText('No standings yet — the door is open.');
   await page.getByTestId('county-standings-party-3').click();
-  await expect(page.getByTestId('county-standings-board')).toHaveText('No posse of 3 has signed the county book yet.');
+  await expect(page.getByTestId('county-standings-board')).toHaveText('No posse of 3 standings yet — the door is open.');
   await expect(page.getByTestId('county-standings-watch-1')).toHaveCount(0);
   await page.getByTestId('claim-ledger-field-book').click();
   await page.getByTestId('field-book-view-byParty').click();
-  await expect(page.getByTestId('field-book-board')).toHaveText('No posse has signed the field book yet.');
+  await expect(page.getByTestId('field-book-board')).toHaveText('No posses in the field book yet — the door is open.');
   expect(errors).toEqual({ console: [], page: [] });
 });
 
@@ -314,12 +314,12 @@ test('plain boot: a failing standings request adds no error of the application o
   await page.goto('/');
   await page.getByTestId('start-menu-claim-ledger').click();
   await page.getByTestId('claim-ledger-county-standings').click();
-  await expect(page.getByTestId('county-standings-board')).toHaveText('The county waits for its first name.');
+  await expect(page.getByTestId('county-standings-board')).toHaveText('No standings yet — the door is open.');
   await page.getByTestId('county-standings-party-2').click();
-  await expect(page.getByTestId('county-standings-board')).toHaveText('No posse of 2 has signed the county book yet.');
+  await expect(page.getByTestId('county-standings-board')).toHaveText('No posse of 2 standings yet — the door is open.');
   await page.getByTestId('claim-ledger-field-book').click();
   await page.getByTestId('field-book-view-byParty').click();
-  await expect(page.getByTestId('field-book-board')).toHaveText('No posse has signed the field book yet.');
+  await expect(page.getByTestId('field-book-board')).toHaveText('No posses in the field book yet — the door is open.');
   // Chromium logs its OWN transport failure for every aborted request, so this arm cannot claim a
   // clean console. What it CAN claim, and what matters, is that every line is that transport log —
   // the app adds nothing of its own, and throws nothing at all.
