@@ -260,6 +260,7 @@ const lines = [
   `- MOBILE-ONLY: **${bucketCounts['MOBILE-ONLY']}**`,
   `- DESKTOP-ONLY: **${bucketCounts['DESKTOP-ONLY']}**`,
   `- Harness: configured workers **${report.config?.workers ?? 'unrecorded'}**; actual workers **${report.config?.metadata?.actualWorkers ?? 'unrecorded'}**; fully parallel **${report.config?.fullyParallel ?? 'unrecorded'}**; shard **${report.config?.shard === undefined ? 'unrecorded' : JSON.stringify(report.config.shard)}**; Playwright **${report.config?.version ?? 'unrecorded'}**`,
+  `- Revision: **${report.config?.metadata?.revision ?? 'unrecorded'}**; dirty **${report.config?.metadata?.dirty ?? 'unrecorded'}**`,
   `- Run tree: **${recordedRoot ?? 'unrecorded'}**; status **${recordedRoot && !runTreePresent ? 'unavailable' : 'present'}**; resolved masking-row test bodies **${resolvedBodyCount}/${totalBodyCount}**`,
   '',
   '_Bucket sizes count logical tests; totals count desktop/mobile project executions._',

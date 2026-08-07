@@ -115,6 +115,41 @@ test('reducer reports absent harness config as unrecorded', (t) => {
   ));
 });
 
+test('reducer reports the captured revision', (t) => {
+  const revision = '0123456789abcdef0123456789abcdef01234567';
+  const { dir, input } = fixture(t, { metadata: { revision, dirty: false } });
+  const output = path.join(dir, 'revision.md');
+  const result = run(ROOT, input, output);
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.ok(fs.readFileSync(output, 'utf8').includes(
+    `- Revision: **${revision}**; dirty **false**`,
+  ));
+});
+
+test('reducer reports an absent revision as unrecorded', (t) => {
+  const { dir, input } = fixture(t);
+  const output = path.join(dir, 'revision-unrecorded.md');
+  const result = run(ROOT, input, output);
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.ok(fs.readFileSync(output, 'utf8').includes(
+    '- Revision: **unrecorded**; dirty **unrecorded**',
+  ));
+});
+
+test('reducer reports a dirty captured revision', (t) => {
+  const revision = '0123456789abcdef0123456789abcdef01234567';
+  const { dir, input } = fixture(t, { metadata: { revision, dirty: true } });
+  const output = path.join(dir, 'revision-dirty.md');
+  const result = run(ROOT, input, output);
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.ok(fs.readFileSync(output, 'utf8').includes(
+    `- Revision: **${revision}**; dirty **true**`,
+  ));
+});
+
 test('reducer output is script-root-invariant', (t) => {
   const { dir, input } = fixture(t);
   const scripts = scriptCopies(t);
