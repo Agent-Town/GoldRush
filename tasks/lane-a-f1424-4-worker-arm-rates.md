@@ -54,7 +54,7 @@ SCOPE (each item separately checkable, and **in this order** — scope 1 decides
    ```
    - **Bare files, deliberately** — that is the `f1426-2` capability, and it makes every test in all three files a measured subject.
    - **Port 5267, never 5188** (5188 is held by live lanes under `strictPort`; the instrument refuses it anyway).
-   - Report the rate table, and call out the row for the actual subject of F-1424-4: **`e2e/town-t5-townsfolk.spec.ts:203`** — *approach barks identify sampled speakers and the Prospector greets by town name* — for **both** projects, at each arm.
+   - Report the rate table, and call out the row for the actual subject of F-1424-4: **`e2e/town-t5-townsfolk.spec.ts:203`** ("approach barks identify sampled speakers and the Prospector greets by town name") — for **both** projects, at each arm.
 
 4. **WRITE AN HONEST VERDICT, INCLUDING A NULL.** State plainly which of these the numbers support:
    (a) the lane shell's parallelism manufactures the approach-barks red (rate rises with the arm);
