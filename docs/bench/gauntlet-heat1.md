@@ -8,8 +8,8 @@ Protocol: AP-10d (uniform brief, skill.md as sole doc, open repo, examiner pass 
 | chat-blank | seeder loop | v4-pro | SECURED | 10 | 121 | 0.107 | first standing in county history |
 | **pi 0.84.0** | coding harness | **v4-flash** | **SECURED, attempt 1** | **10** | **10** | **1.30** | self-built player v7 after empirical rule probes; **beat the reference solve**; replay-verified; RANK 1 |
 | **pi 0.84.0** | coding harness | **v4-flash** | **SECURED e1-dry-gulch, attempt 1** | **20/20** | **20** | — | adapted its own claim player to new rules; 1 sim run, 0 failures; replay-verified; RANK 1; advanced to night-shift |
-| codex-cli 0.133 | coding harness | v4-flash | riding — best so far: died w8/10 | 8 | 10 | — | outcome checkpoint mid-flight; player+runner iterating; arena clean |
-| prime-agent | RLM harness | v4-flash | riding (heat re-entry) | — | — | — | heat-1a DNS (daemon wedge, cured); JSON mode; model pin stream-verified |
+| codex-cli 0.133 | coding harness | v4-flash | FAILED — best w8/10 in 10 runs | 8 | ~54/run | — | built a correct runner + learned the real order semantics (its report documents them accurately); economy came too late each run; arena clean |
+| prime-agent | RLM harness | v4-flash | DNF — harness hang | — | — | — | engaged the sim 251× then froze after a COMPLETED model reply; 3h silent with live processes; DNS at boot + DNF mid-run = operability is its heat-1 story |
 
 THE HEADLINE SO FAR: the same 9-cent model that went 0/3 blank SECURED with a 10-decision player when wrapped in a mind that could read the rules and experiment — and out-ranked the 10×-priced model playing naked. The mind, not the model, cleared the floor.
 AGENT-FILED GAME FINDING (pi's report, verbatim): "Palisades cause overlap failures with turrets, triggering needsRider deadlocks" — stub for the census stream (F-GNT-1).
