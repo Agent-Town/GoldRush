@@ -11,6 +11,10 @@ const SCRIPT = fileURLToPath(new URL('./citation-title-guard.mjs', import.meta.u
 const SPEC = `
 import { test, expect } from '@playwright/test';
 
+test.setBalance('a balance key long enough to masquerade as a title', 20);
+test.describe.serial.only('serial group title long enough for the guard', () => {});
+test.describe.parallel.only('parallel group title long enough for the guard', () => {});
+
 test('hero stops in the shallows and keeps weapons armed at the deep channel', async () => {
   expect(1).toBe(1);
 });
@@ -112,6 +116,39 @@ test('a bare apostrophe cannot consume the following quoted title', (t) => {
 
   assert.equal(result.status, 0, result.stdout + result.stderr);
   assert.match(result.stdout, /CARRIES-TITLE\s+1/);
+});
+
+test('an odd same-kind delimiter cannot consume the following quoted title', (t) => {
+  const dir = fixture(
+    t,
+    'He said "foo and then some prose "hash mismatch pauses, shows the wire card, and restores from relay snapshot" at e2e/fixture.spec.ts:10.\n',
+  );
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /CARRIES-TITLE\s+1/);
+});
+
+test('a test helper string is not harvested as a title', (t) => {
+  const dir = fixture(
+    t,
+    'KNOWN RED: e2e/fixture.spec.ts:4 ("a balance key long enough to masquerade as a title") fails.\n',
+  );
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(result.stdout, /NUMBER-ONLY\s+1/);
+});
+
+test('chained describe modifiers remain title declarations', (t) => {
+  const dir = fixture(
+    t,
+    'See e2e/fixture.spec.ts:5 ("serial group title long enough for the guard") and e2e/fixture.spec.ts:6 ("parallel group title long enough for the guard").\n',
+  );
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /CARRIES-TITLE\s+2/);
 });
 
 // The shape this repo's prose actually uses. s1224 scored this exact form NUMBER-ONLY and

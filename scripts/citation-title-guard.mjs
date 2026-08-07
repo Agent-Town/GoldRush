@@ -62,9 +62,16 @@ const REPORT = process.argv.includes('--report');
 const UPDATE = process.argv.includes('--update-baseline');
 
 const CITE = /((?:[\w./-]*\/)?e2e\/[\w.-]+\.spec\.ts):(\d+)/g;
-const TITLE_DECL = /^\s*(?:test|it)(?:\.\w+)*\s*\(\s*(['"`])([\s\S]*?)\1/gm;
+const TITLE_DECL =
+  /^\s*(?:test|it)(?:\.(?:skip|only|fixme|slow|fail|describe(?:\.(?:skip|only|configure|(?:serial|parallel)(?:\.only)?))?))?\s*\(\s*(['"`])([\s\S]*?)\1/gm;
 const QUOTED = /["“”'‘’`]([^"“”'‘’`\n]{12,160})["“”'‘’`]/g;
-const QUOTED_BY_KIND = /"([^"\n]{12,160})"|“([^”\n]{12,160})”|'([^'\n]{12,160})'|‘([^’\n]{12,160})’|`([^`\n]{12,160})`/g;
+const QUOTED_BY_KIND = [
+  ['"', '"'],
+  ['“', '”'],
+  ["'", "'"],
+  ['‘', '’'],
+  ['`', '`'],
+];
 
 const WINDOW = 400;
 const MIN_PREFIX = 20;
@@ -160,12 +167,23 @@ function matchesATitle(quote, titles) {
 }
 
 function matchingQuote(win, subjects) {
-  for (const pattern of [QUOTED, QUOTED_BY_KIND]) {
-    pattern.lastIndex = 0;
-    let match;
-    while ((match = pattern.exec(win))) {
-      const found = matchesATitle(match.slice(1).find((capture) => capture !== undefined), subjects);
-      if (found) return found;
+  QUOTED.lastIndex = 0;
+  let match;
+  while ((match = QUOTED.exec(win))) {
+    const found = matchesATitle(match[1], subjects);
+    if (found) return found;
+  }
+
+  // ponytail: O(k²) over at most a 400-char window; index pairs only if the window grows.
+  for (const [opening, closing] of QUOTED_BY_KIND) {
+    for (let start = win.indexOf(opening); start >= 0; start = win.indexOf(opening, start + 1)) {
+      for (let end = win.indexOf(closing, start + 1); end >= 0; end = win.indexOf(closing, end + 1)) {
+        const quote = win.slice(start + 1, end);
+        if (quote.length > 160) break;
+        if (quote.length < 12 || quote.includes('\n')) continue;
+        const found = matchesATitle(quote, subjects);
+        if (found) return found;
+      }
     }
   }
   return null;
