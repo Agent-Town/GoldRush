@@ -23,7 +23,10 @@
 #
 # NEVER HARDCODE A LANE BRANCH LIST AGAIN — ask git. A lane rename cannot rot this.
 # (Same lesson as F-1464-3, which found scripts/fire.md's PROSE naming the stale
-# mapping; the cure reached the prose and lane-usable.mjs and missed these three.)
+# mapping; the cure reached the prose and missed these three. ⚠️ This line read "the
+# cure reached the prose AND lane-usable.mjs" until s1540 checked: no commit after
+# ~s1422 touched that file, and its comment still named lane/perf. A false "already
+# cured" note is worse than none — it stops the next auditor from looking. F-1540-2.)
 #
 # Prints one branch name per line; prints NOTHING if no lane worktree exists.
 # Callers must treat empty as "could not resolve" and fail OPEN — see fire-runner.sh.

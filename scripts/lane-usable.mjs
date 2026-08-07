@@ -72,9 +72,11 @@ function blob(rev, path) {
 }
 
 // slot -> {slot, branch, worktree}, read from git itself so a renamed branch can
-// never desync from the slot it is checked out in (lane slot names are NOT branch
-// names: lane-a is lane/m3, lane-b is lane/m4, lane-c is lane/e2-arsenal, lane-d
-// is lane/perf — and that mapping has burned fires before).
+// never desync from the slot it is checked out in. Lane slot names are NOT branch
+// names, and the mapping ROTS: this comment asserted lane-a=lane/m3, lane-b=lane/m4,
+// lane-c=lane/e2-arsenal, lane-d=lane/perf until F-1464-3 measured it FALSE (the lanes
+// sit on lane/a..lane/d) and s1540 finally cured it HERE — the code below always asked
+// git and was never wrong; only this comment was. ASK GIT, never prose. (F-1540-2.)
 function fleet() {
   const out = git(['worktree', 'list', '--porcelain'])
   const lanes = []
