@@ -19,10 +19,18 @@ Sequence, reconstructed from run logs and `git`:
 | 11:17:03 | runner dispatches `lane-a-f1424-4-worker-arm-rates` on lane-a |
 | 12:39:32 | run completes; runner auto-commits `ee61f25ee` to `lane/a` (28 files, 39,847 insertions) |
 | 12:39:43 | runner **re-dispatches the same master**; its pre-flight correctly **STOPS** — "lane/a contains undrained commit ee61f25ee, not present on main" |
-| 12:41:13 | runner dispatches a **different** master (`lane-fd1-front-desk-card`) into the same lane; that pre-flight **resets lane/a to main**, orphaning `ee61f25ee` |
+| 12:41:13 | runner dispatches a **different** master (`lane-fd1-front-desk-card`) into the same lane; Codex prints `## lane/a...origin/main [ahead 1, behind 20]` and then runs `git checkout -B lane/a origin/main` anyway, orphaning `ee61f25ee` |
 | 12:46 | s1522 finds `lane/a` reading `ahead=0 behind=0`, and `ee61f25ee` on **no branch and not on main** |
 
 **The safe-dupe pre-flight worked perfectly — and then was bypassed by the very next dispatch.** The protection is per-task, so the task that STOPPED protected the work, and the *next* task, which had never heard of it, reset the lane out from under it. Mistake #2 (the Reset Massacre) in its exact original shape, one dispatch later.
+
+**Read from the logs rather than inferred, because the precise mechanism changes where the cure belongs:**
+- The **runner does not reset lanes at dispatch.** `scripts/lane-runner-v3.sh:154`'s `git reset --hard main` is reachable only from the **janitor `refresh-lane` request** path, and no such request was involved here.
+- The reset was performed by **Codex, executing the master's own pre-flight prose.** `tasks/lane-fd1-front-desk-card.md:6` reads: *"dirty tracked blob not reachable in git → STOP. `git checkout -B lane/a origin/main` ONLY when clean."* It guards **uncommitted dirt**, and says nothing about **committed-but-undrained** commits.
+- The lane *was* clean — the runner had already auto-committed the work — so fd1's condition was satisfied and the reset was, by its own instructions, correct.
+- **Codex had the information and was never asked the question:** at log line 328 it printed `## lane/a...origin/main [ahead 1, behind 20]`, and at line 331 ran the reset. `ahead 1` was on screen. Nothing in the master told it that number mattered.
+
+So this is not a Codex failure and not a runner-script failure. It is a **gap between two masters**, and the only defense that does not depend on which master is dispatched next must live outside the masters.
 
 The commit survived only as a reflog-reachable object. It was rescued to `save/f1424-4-worker-arm-rates-s1522` as this fire's first act, before the lock was even taken. Had a `git gc` run in that window, **24 Playwright runs / 387,484 Codex tokens / 82 minutes of measurement** would have been unrecoverable, and the board would have shown a "done-move" for work that no longer existed anywhere.
 
@@ -84,9 +92,13 @@ Per project: desktop 3/8, 1/8, 5/8 · mobile 3/8, 5/8, 7/8.
 ## Findings
 
 **F-1522-1 — A LANE'S SAFE-DUPE PRE-FLIGHT PROTECTS ONLY ITS OWN DISPATCH; THE NEXT TASK INTO THAT LANE RESETS IT ANYWAY. [BLOCKING-CLASS, corrective owed]**
-Measured above. The pre-flight that STOPPED at 12:39:43 and the pre-flight that reset the lane at 12:41:13 were reading the same branch 90 seconds apart and reached opposite conclusions, because **the protection is a clause in each master, not a property of the lane.** Any master whose pre-flight text is older, weaker, or simply differently worded re-opens Mistake #2 in full. `lane-fd1-front-desk-card` was authored 2026-08-05 (`44b1a7cf1`), before several of the current pre-flight hardenings.
-**This is not curable by editing one master** — that is the instance, not the class. The cure belongs in `scripts/lane-runner-v3.sh`, which is the one place every dispatch passes through: refuse to dispatch into a lane whose branch holds commits absent from main, regardless of what the task file says. `scripts/lane-usable.mjs` already computes exactly this verdict (`HOLDS`, rc 2) and is already trusted by fires; the runner does not consult it.
-**Recommended:** a runner-side pre-dispatch call to `lane-usable.mjs`, refusing on rc 2. Owner-visible because it touches the runner Robin runs in his own Terminal.
+Measured above. The pre-flight that STOPPED at 12:39:43 and the pre-flight that reset the lane at 12:41:13 were reading the same branch 90 seconds apart and reached opposite conclusions, because **the protection is a clause in each master, not a property of the lane.** Any master whose pre-flight text is older, weaker, or simply differently worded re-opens Mistake #2 in full. `lane-fd1-front-desk-card` was authored 2026-08-05 (`44b1a7cf1`), before several of the current pre-flight hardenings — and its wording guards *dirt* where the current template guards *undrained commits*.
+
+**This is not curable by editing `lane-fd1-front-desk-card.md`** — that is the instance, not the class. Roughly 190+ lane masters each carry their own copy of this wording; the lane's safety is only ever as strong as whichever one is dispatched next. **The cure must live outside the masters, in the one place every dispatch passes through: `scripts/lane-runner-v3.sh`** — refuse to dispatch into a lane whose branch holds commits absent from main, regardless of what the task file says.
+
+**`scripts/lane-usable.mjs` already computes exactly this verdict** (`HOLDS`, rc 2) and is already trusted by fires at refill time. The runner simply never consults it. A pre-dispatch call rejecting on rc 2 is a few lines.
+
+**Recommended:** runner-side pre-dispatch `lane-usable.mjs` check, refusing on rc 2. **Owner-visible on two counts:** it edits the runner Robin runs in his own Terminal, and it needs a **runner restart** to take effect (editing the live script is inert until then).
 
 **F-1522-2 — `rates.md` renders its schedule as `[object Object]`. [NON-BLOCKING, cosmetic]**
 The generated report's Schedule line stringifies an array of objects: `[object Object],[object Object],…` ×24. The failure-rate table below it is complete and correct, and `rates.json` carries the structured truth. The runner **correctly reported this rather than fixing it** — it was outside the task's firewall. Cheap one-line fix in `writeSummary` whenever that script is next opened; not worth a task of its own.
