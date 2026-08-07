@@ -343,7 +343,13 @@ if (fresh.length) {
 // what the visibility guards can see; whether an item is currently on the desk is
 // desk-declaration-guard's question, and duplicating it here would red the board every
 // time Robin disposed of something. This asks only: can the escalation be FOUND?
-const OWNER_ROUTE = /owner['’]?s? desk/i;
+// The backtick (U+0060) is the fifth spelling a fire has actually written — see
+// F-1542-1 and the identical literals in desk-declaration-guard.mjs /
+// desk-carryforward-guard.mjs. Here a miss fails OPEN (an escalation simply is
+// not checked for a ledger row) rather than loud, which is why it could sit
+// here unnoticed; measured on the live baseline s1542, widening matches 0 new
+// entries, so this is preventive and changes no verdict today.
+const OWNER_ROUTE = /owner['’`]?s? desk/i;
 const escalations = Object.entries(baseline).filter(([, reason]) => OWNER_ROUTE.test(String(reason)));
 if (escalations.length) {
   let ledger = '';

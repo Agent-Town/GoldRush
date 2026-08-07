@@ -213,12 +213,35 @@ const SLUG = /`([a-z0-9][a-z0-9-]{6,})`/;
 const KEY_ZONE = 120;
 
 /**
- * All four spellings a fire has actually written, measured on STATUS.md s1472:
- * "OWNER DESK" 243 · "OWNER'S DESK" 484 · "OWNER’S DESK" (curly) 15 ·
+ * All FIVE spellings a fire has actually written. Four measured on STATUS.md
+ * s1472: "OWNER DESK" 243 · "OWNER'S DESK" 484 · "OWNER’S DESK" (curly) 15 ·
  * "OWNERS DESK" 9. Case-sensitive on purpose — the header is always shouted,
  * and lowercasing would admit ordinary prose about the owner's desk.
+ *
+ * ⚠️ THE FIFTH IS A BACKTICK, U+0060 — "OWNER`S DESK" (F-1542-1, s1542).
+ * s1529 wrote a perfectly well-formed desk of 8 items with a grave accent where
+ * the apostrophe goes, and BOTH desk guards went blind to it at once:
+ *   - this guard REFUSED (rc=2) with "line-1 is a handoff with no desk header",
+ *     which is a false diagnosis — there was a header, and a reader sent to
+ *     write one would be fixing a thing that was not broken;
+ *   - desk-carryforward-guard read "this desk: 0 items" and reported all 7
+ *     inherited items as SILENTLY DROPPED (rc=1) — the guard built to catch
+ *     drops accusing a fire of dropping its entire desk.
+ * Both fail SAFE in direction (nothing greened over, no owner item lost) and
+ * both name the wrong cause, which is the false-first-blocker class: an
+ * investigator who believes the message never looks for the backtick.
+ *
+ * It is invisible in today's STATUS.md because s1530 normalised the character
+ * while archiving s1529's line-1 — so grepping the live file can never find
+ * this class. It was recovered by replaying the handoff commits (aab5dfb3).
+ *
+ * WHY THE SET KEEPS GROWING RATHER THAN BEING GUESSED: the s1472 cure
+ * enumerated the spellings it had measured, which is right, but an enumeration
+ * of observed spellings is a floor and not a ceiling. Add the variant when a
+ * fire writes one; do NOT relax to a wildcard separator, which would let
+ * "OWNER-DESK" (41 occurrences, all prose) supply the tail.
  */
-const DESK_WORD = /OWNER(?:'S|’S|S)? DESK/g;
+const DESK_WORD = /OWNER(?:'S|’S|S|`S)? DESK/g;
 
 /** Line-1 is a live lock, not a handoff, when it says ACTIVE and not lock CLEARED. */
 export function isLockLine(line1) {
@@ -335,7 +358,9 @@ function main() {
     console.error('');
     console.error('  Write the desk as an explicit, greppable segment at the END of line-1,');
     console.error('  e.g. "🔺 **OWNER\'S DESK — <n> awaiting a word.** 🔺 **F-xxxx-x** …".');
-    console.error('  Any of OWNER DESK / OWNER\'S DESK / OWNERS DESK is matched.');
+    console.error('  Any of OWNER DESK / OWNER\'S DESK / OWNERS DESK / OWNER`S DESK is matched.');
+    console.error('  (If you believe you DID write one, check the apostrophe: a backtick,');
+    console.error('   a stray glyph, or a lowercased header all read as "no desk" — F-1542-1.)');
     console.error('');
     console.error('  WHY THIS IS A REFUSAL AND NOT A PASS (F-1471-3/F-1472-1): routing items');
     console.error('  to Robin as loose prose leaves nothing any guard can check, which is the');

@@ -378,10 +378,13 @@ test("escalating with NO F-ID cited at all exits 1 -- it can never be found", ()
   assert.match(r.stderr, /no F-ID cited/);
 });
 
-test("all four desk spellings are matched, so the check cannot be dodged by an apostrophe", () => {
+test("all five desk spellings are matched, so the check cannot be dodged by an apostrophe", () => {
   // F-1471-3 shipped because a guard knew ONE spelling of the desk word while the
-  // corpus used four. That lesson is asserted here rather than assumed.
-  for (const spelling of ["owner\u2019s desk", "owner\u0027s desk", "owners desk", "OWNER DESK"]) {
+  // corpus used four. That lesson is asserted here rather than assumed — and the
+  // FIFTH (backtick, U+0060) was added s1542 after a real fire wrote it into a
+  // live handoff and two sibling guards went blind at once: F-1542-1. Here a miss
+  // fails OPEN, so nothing would ever have complained.
+  for (const spelling of ["owner\u2019s desk", "owner\u0027s desk", "owners desk", "OWNER DESK", "owner\u0060s desk"]) {
     const dir = fixture({
       scripts: { ...BASE_SCRIPTS, "test:lonely": "node scripts/lonely-guard.mjs" },
       files: ESC_FILES("- nothing relevant here\n"),

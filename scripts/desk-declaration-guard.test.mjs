@@ -106,6 +106,24 @@ test('the markdown list bullet is stripped: bulleted and unbulleted rows read al
   }
 });
 
+test('GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk"', (t) => {
+  // F-1542-1, the incident replayed rather than mocked. s1529 (aab5dfb3) wrote
+  // "OWNER`S DESK" — U+0060 where the apostrophe goes — over a well-formed desk
+  // of 8 items, and this guard refused with "line-1 is a handoff with no desk
+  // header": fail-safe in direction, but a FALSE DIAGNOSIS. An investigator who
+  // believes that message goes off to write a header that is already there and
+  // never looks at the glyph. The refusal above (no header at all) is the case
+  // this must stay distinguishable from.
+  const dir = fixture(
+    t,
+    'Last updated: s1 handoff, lock CLEARED — work. 🔺 **OWNER`S DESK — one new.** 🔺 **F-9102-1**\n',
+    '- 🟡 **F-8888-8 (s1) — unrelated.** body\n',
+  );
+  const r = run(dir);
+  assert.notEqual(r.status, 2, `a backtick header must not refuse: ${r.stdout}${r.stderr}`);
+  assert.match(r.stderr, /F-9102-1/, 'and the desk it holds must be read');
+});
+
 test('REFUSES (exit 2) rather than greening when there is no OWNER DESK segment', (t) => {
   const dir = fixture(t, 'Last updated: s1 handoff — no desk here.\n', '- 🟡 **F-1-1** x\n');
   const r = run(dir);
@@ -194,11 +212,15 @@ test('MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE i
   assert.match(r.stderr, /F-9101-1/);
 });
 
-test('all four desk spellings are read — the majority form was invisible', (t) => {
+test('all five desk spellings are read — the majority form was invisible', (t) => {
   // Measured on STATUS.md s1472: bare 243 · "OWNER'S" 484 · curly "OWNER’S" 15 ·
   // "OWNERS" 9. The guard matched ONLY the bare form, i.e. missed the spelling
   // fires use most. Each variant must find the same undeclared id.
-  for (const word of ['OWNER DESK', "OWNER'S DESK", 'OWNER’S DESK', 'OWNERS DESK']) {
+  //
+  // The BACKTICK form (U+0060) is the fifth, added s1542 after the real s1529
+  // handoff wrote it and both desk guards went blind at once — see F-1542-1 and
+  // the replay test below, which drives the historical line rather than a mock.
+  for (const word of ['OWNER DESK', "OWNER'S DESK", 'OWNER’S DESK', 'OWNERS DESK', 'OWNER`S DESK']) {
     const dir = fixture(
       t,
       `Last updated: s1 handoff, lock CLEARED — work. 🔺 **${word} — one new.** 🔺 **F-9102-1**\n`,

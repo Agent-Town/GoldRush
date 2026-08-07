@@ -99,8 +99,16 @@ function arg(flag) {
 const ROOT = path.resolve(arg('--root') || process.cwd());
 const REPORT = process.argv.includes('--report');
 
-/** Same four spellings desk-declaration-guard matches (measured s1472). */
-const DESK_WORD = /OWNER(?:'S|’S|S)? DESK/g;
+/**
+ * Same FIVE spellings desk-declaration-guard matches — four measured s1472, the
+ * backtick U+0060 added s1542 (F-1542-1). Keep these two literals identical:
+ * this guard's failure mode on a missed header is the loudest one in the
+ * factory. deskTail() returns null, deskItems(null) returns [], so `live` is
+ * empty and EVERY inherited item reads as silently dropped — measured on the
+ * real s1529 handoff (aab5dfb3): "this desk: 0 items · dropped: 7", rc=1,
+ * against a fire that had in fact carried all 8 forward correctly.
+ */
+const DESK_WORD = /OWNER(?:'S|’S|S|`S)? DESK/g;
 /**
  * Finding ids, including the MULTI-SEGMENT alpha shapes the milk pile uses.
  * Caught by this guard's own ground-truth fixture (s1533): the first draft was

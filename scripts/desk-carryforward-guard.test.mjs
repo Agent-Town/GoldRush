@@ -95,6 +95,32 @@ test('GROUND TRUTH — the real s1526 -> s1527 event reds, and names ten, not th
   assert.ok(!r.silent.includes('F-1096-2'), 'a declared re-key is not a drop');
 });
 
+test('GROUND TRUTH — the real s1529 backtick header is read, not scored as a mass drop', () => {
+  // F-1542-1. s1529 (aab5dfb3) wrote "OWNER`S DESK" — a grave accent, U+0060,
+  // where the apostrophe goes — over a perfectly well-formed desk of 8 items.
+  // The four-spelling regex missed it, deskTail returned null, deskItems(null)
+  // returned [], and the guard reported the ENTIRE inherited desk as silently
+  // dropped: "this desk: 0 items · dropped: 7", rc=1. The guard built to catch
+  // dropped items accused a fire of dropping all of them.
+  //
+  // This is the incident replayed, not a mock of it: the header below is the
+  // exact byte sequence from that commit. It cannot be found by grepping the
+  // live STATUS.md — s1530 normalised the character while archiving s1529.
+  const BACKTICK = '🔺 **OWNER`S DESK — 8 awaiting a word.**';
+  assert.equal(BACKTICK.charCodeAt(BACKTICK.indexOf('OWNER') + 5), 0x60, 'fixture must hold U+0060');
+
+  assert.notEqual(deskTail(BACKTICK + ' 🔺 **F-1000-1 OPEN**'), null, 'the desk must be findable');
+
+  const r = analyse(
+    status(handoff(`${BACKTICK} 🔺 **F-1000-1 OPEN** 🔺 **F-1000-2 OPEN**`),
+           archive(1528, `${HEADER} 🔺 **F-1000-1 OPEN** 🔺 **F-1000-2 OPEN**`)),
+    BACKLOG,
+  );
+  assert.equal(r.kind, 'desk');
+  assert.deepEqual(r.live, ['F-1000-1', 'F-1000-2']);
+  assert.deepEqual(r.silent, [], 'a carried desk must not read as dropped over one glyph');
+});
+
 test('a BACKLOG closure row excuses a drop, in the wide vocabulary', () => {
   const r = analyse(
     status(handoff(`${HEADER} 🔺 **F-1000-1 OPEN**`),
