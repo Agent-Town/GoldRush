@@ -87,6 +87,7 @@ async function main() {
           exitCode: result.code,
           executions,
         };
+        assertActualWorkers(runNumber, run);
         runs.push(run);
         fs.appendFileSync(path.join(outputDir, 'runs.jsonl'), `${JSON.stringify(run)}\n`);
         writeSummary(outputDir, { ...options, initialHead, baseURL, runs });
@@ -219,6 +220,12 @@ function assertComplete(executions, subjects) {
   }, 0);
   if (missing.length || extras.length || exactCountMismatch) {
     throw new Error(`Incomplete run: missing=${JSON.stringify(missing)} extras=${JSON.stringify(extras)} executions=${executions.length}/${expectedCount}`);
+  }
+}
+
+function assertActualWorkers(runNumber, run) {
+  if (run.actualWorkers !== run.workers) {
+    throw new Error(`Run ${runNumber}: requested arm ${run.workers}, obtained M ${String(run.actualWorkers)}`);
   }
 }
 
@@ -377,6 +384,11 @@ function selfTest() {
   ]);
   assert.deepEqual(bounded.workers, [1, 2]);
   console.log('self-test worker-ceiling arms passed (accepted 1,2; rejected 3,6 at ceiling 2)');
+  assert.throws(
+    () => assertActualWorkers(8, { workers: 6, actualWorkers: 2 }),
+    /Run 8: requested arm 6, obtained M 2/,
+  );
+  console.log('self-test obtained-workers mismatch rejection arm passed (run 8: requested 6, obtained 2)');
   assert.deepEqual(exactExecutions.map(({ status }) => status), ['pass', 'fail']);
   assert.deepEqual(rates([{ workers: 2, executions: exactExecutions }]).map(({ failures, executions: count }) => [failures, count]), [[0, 1], [1, 1]]);
   console.log('concurrency-class-rate self-check passed');
