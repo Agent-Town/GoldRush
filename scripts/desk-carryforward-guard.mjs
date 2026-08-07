@@ -1,0 +1,283 @@
+#!/usr/bin/env node
+/**
+ * desk-carryforward-guard.mjs — did this handoff SILENTLY drop an item that the
+ * previous handoff had on the OWNER'S DESK?
+ *
+ * WHY THIS EXISTS (F-1533-1, s1533; the class was opened by F-1532-1, s1532)
+ * ------------------------------------------------------------------------
+ * s1532 found F-1167-1 sitting `OWNER'S DESK` in tasks/BACKLOG.md for ~10 days
+ * without appearing on a single handoff desk, and asked for a guard that
+ * cross-checks the ledger against the desk. s1533 measured that proposal before
+ * building it and REFUTED it: F-1167-1 was declared AND desked by its own fire,
+ * riding 40 consecutive desks (F-1120-2 rode 168, F-1328-3 rode 83) before
+ * vanishing. Nobody fails to declare. Items are declared correctly, desked
+ * correctly, carried for dozens of fires — and then dropped.
+ *
+ * So the defect is CARRY-FORWARD, and it is not diffuse attrition. One event
+ * dominates the whole post-cure era: s1526 handed over a 17-item desk and s1527
+ * wrote a 7-item one. Ten items went out in a single handoff with no closure
+ * anywhere and no sentence saying why, among them "13 of 25 campaign maps cannot
+ * be opened" (F-MSD-1), the 527.89 MB retention hole (F-1501-3), and F-1522-5,
+ * which that very desk called "still the cheapest win on this list".
+ *
+ * A desk is not a summary a fire recomposes from what is fresh in its context.
+ * It is a QUEUE with the owner at the far end, and the only lawful ways off it
+ * are a ruling or a closure — never a rewrite.
+ *
+ * WHAT THIS GUARD DELIBERATELY DOES NOT DO — AND THE MEASUREMENT THAT DECIDED IT
+ * -----------------------------------------------------------------------------
+ * The obvious design is "every id on desk N is on desk N+1 unless the ledger
+ * says closed". DO NOT BUILD THAT AS A BARE ID COMPARISON. Measured s1533 on the
+ * one event with ground truth, it reports 13 drops where 10 occurred, because
+ * THE SAME DESK ITEM IS CARRIED UNDER DIFFERENT KEYS BY DIFFERENT FIRES:
+ *
+ *     s1526 "🔺 **F-1096-2** rf-34 hero-Y: (A) merge as-is [rec]..."
+ *     s1527 "🔺 **`rf-34-hero-y-restore-roundtrip` OPEN** (the reserved fork...)"
+ *
+ *     s1526 "🔺 **F-1475-1** e3-fairground diagnostics-only construction path"
+ *     s1527 "🔺 **`e3-fairground-socket` OPEN**"
+ *
+ *     s1526 "🔺 **F-1294-1** calibrate-suite-workers-v2 — worth a v3?"
+ *     s1527 "🔺 **F-1101-1 / `calibrate-suite-workers-v2` OPEN"
+ *
+ * Three of thirteen — a 23% false-positive rate on the single event this guard
+ * is built to catch. A gate that cries wolf on a quarter of its hits gets
+ * routed around, and then it protects nothing.
+ *
+ * The cure is NOT a parser that resolves aliases (it cannot: F-1294-1 and
+ * F-1101-1 share no substring, and only prose says they are one thread). The
+ * cure is to stop asking the PARSER to decide identity and ask the FIRE. A
+ * dropped item is fine — silence about it is not. So a drop passes when the fire
+ * writes one clause naming it:
+ *
+ *     DESK-DROPPED: F-1096-2 re-keyed to `rf-34-hero-y-restore-roundtrip`
+ *
+ * That is a sentence a re-keying fire can write in five seconds and a fire
+ * rewriting the desk from context cannot write by accident. It converts the
+ * failure mode from SILENCE (unfalsifiable) into a CLAIM (checkable by the next
+ * reader). Same reasoning as F-1383-1's blockClass: the field changes no exit
+ * code, it changes who is told what happened.
+ *
+ * A drop ALSO passes when tasks/BACKLOG.md records the id closed. That path uses
+ * findings-state-guard's EXPORTED scan() rather than a second implementation of
+ * "closed" — F-1261-1 measured a re-implementation disagreeing with the original
+ * on 4 of 14 rows, and there is one implementation of that word in this repo.
+ *
+ * ⓘ The `wide` vocabulary is used deliberately: the commonest closure shape in
+ * this ledger is the bullet-led "- ✅ **F-x", which `narrow` cannot see (56 ids
+ * closed only by a row the narrow census misses, measured s1291). A guard that
+ * reds because it cannot READ a closure would train fires to route around it.
+ *
+ * REFUSES RATHER THAN GREENING OVER AN UNREAD SUBJECT (F-1251-2's class)
+ * ---------------------------------------------------------------------
+ * The nasty vacuous mode here is a parse that finds an EMPTY previous desk:
+ * every comparison then trivially passes and the guard reports a clean board
+ * having read nothing. That is exactly how desk-declaration-guard failed open
+ * for 137 fires. So: no previous handoff desk, or a previous desk with zero
+ * items, exits 2 and says the parser is broken.
+ *
+ * MID-FIRE IT SKIPS, exactly like desk-declaration-guard: line-1 is an ACTIVE
+ * lock for a fire's whole run and the desk is written at handoff time, so
+ * test:node-guards (which runs inside drain batteries) must not gate on it. The
+ * real gate is test:ledger-guards, every fire's LAST act, after the handoff
+ * commit has replaced line-1 (F-1300-4's order).
+ *
+ * usage:
+ *   node scripts/desk-carryforward-guard.mjs            # gate
+ *   node scripts/desk-carryforward-guard.mjs --report   # never gates; prints both desks
+ *   node scripts/desk-carryforward-guard.mjs --root <dir>
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { scan } from './findings-state-guard.mjs';
+
+function arg(flag) {
+  const i = process.argv.indexOf(flag);
+  return i === -1 ? null : process.argv[i + 1];
+}
+const ROOT = path.resolve(arg('--root') || process.cwd());
+const REPORT = process.argv.includes('--report');
+
+/** Same four spellings desk-declaration-guard matches (measured s1472). */
+const DESK_WORD = /OWNER(?:'S|’S|S)? DESK/g;
+/**
+ * Finding ids, including the MULTI-SEGMENT alpha shapes the milk pile uses.
+ * Caught by this guard's own ground-truth fixture (s1533): the first draft was
+ * /F-[A-Z0-9]{2,4}-\d+/, which reads F-MTS-2 and F-ER02-5 but NOT F-MILK-SS-3 —
+ * so s1526's 17-item desk parsed as 16 and one real dropped item was invisible
+ * to the very guard built to find dropped items.
+ */
+const FINDING = /F-(?:[A-Z0-9]{1,8}-)+\d+/;
+/** A backticked slug item, e.g. `rf-34-hero-y-restore-roundtrip`. */
+const SLUG = /`([a-z0-9][a-z0-9-]{6,})`/;
+/**
+ * How far into a 🔺 segment the item's own key may sit. The convention is
+ * "🔺 **<key> …", so the key is always at the very front; anything further in is
+ * that item's PROSE, which routinely cites other findings.
+ */
+const KEY_ZONE = 120;
+
+export function isLockLine(line1) {
+  return /\bACTIVE\b/.test(line1) && !/lock CLEARED/.test(line1);
+}
+
+/** The desk tail of a line: everything after its LAST desk word (prose mentions lose). */
+export function deskTail(line) {
+  const hits = [...line.matchAll(DESK_WORD)];
+  if (!hits.length) return null;
+  return line.slice(hits[hits.length - 1].index);
+}
+
+/**
+ * The items on a desk tail. The desk's own convention introduces each item with
+ * 🔺, so anchor on that and take the first F-ID in the segment, else its first
+ * backticked slug.
+ *
+ * VALIDATED AGAINST THE FIRES' OWN COUNTS rather than trusted (s1533): this
+ * parser returns 7 for s1527 / 8 for s1529-s1531 / 9 for s1532, matching the
+ * "— <n> awaiting a word" each of those fires wrote in its own header. A parser
+ * whose denominator nobody checks is how the 145-id misread survived.
+ */
+export function deskItems(tail) {
+  if (!tail) return [];
+  const out = [];
+  for (const seg of tail.split('🔺').slice(1)) {
+    // The key is whichever id shape comes FIRST, inside the segment's opening
+    // only. Two bugs this replaces, both found by the ground-truth fixture:
+    //   (1) preferring F-IDs BY TYPE mis-keys a slug item whose prose cites a
+    //       finding — "🔺 **`f1328-1-…` OPEN** … F-1096-2 …" keyed as F-1096-2,
+    //       inventing a drop of f1328-1 and a phantom carry of F-1096-2;
+    //   (2) unbounded scanning let a trailing DESK-DROPPED clause supply the
+    //       key for the LAST item, so acknowledging a drop silently dropped
+    //       something else. A guard whose own escape hatch corrupts its input
+    //       is worse than no guard.
+    const head = seg.slice(0, KEY_ZONE);
+    const f = head.match(FINDING);
+    const s = head.match(SLUG);
+    if (f && (!s || f.index <= s.index)) out.push(f[0]);
+    else if (s) out.push(s[1]);
+  }
+  return [...new Set(out)];
+}
+
+/** The newest ARCHIVED handoff desk — the one this fire must carry forward. */
+export function previousDesk(statusText) {
+  for (const line of statusText.split('\n')) {
+    const m = line.match(/^- \*\*s(\d+) handoff \(line-1 archive\)/);
+    if (!m) continue;
+    const tail = deskTail(line);
+    if (!tail) continue;
+    return { session: Number(m[1]), items: deskItems(tail), line };
+  }
+  return null;
+}
+
+/** An explicit acknowledgement of a drop, anywhere on line-1. */
+export function acknowledged(line1, id) {
+  const marks = [...line1.matchAll(/DESK-DROPPED/g)];
+  return marks.some((m) => line1.slice(m.index, m.index + 400).includes(id));
+}
+
+export function analyse(statusText, backlogText) {
+  const line1 = statusText.split('\n')[0] || '';
+  if (isLockLine(line1)) return { kind: 'lock' };
+
+  const prev = previousDesk(statusText);
+  if (!prev || prev.items.length === 0) return { kind: 'no-previous', prev };
+
+  const live = deskItems(deskTail(line1));
+  const closed = scan(backlogText, { closedVocabulary: 'wide' });
+
+  const dropped = prev.items.filter((id) => !live.includes(id));
+  const silent = dropped.filter(
+    (id) => !acknowledged(line1, id) && !closed.get(id)?.closed.length,
+  );
+  // How many items the previous desk SAID it had, vs how many this parser could
+  // key. Reported, never gated on — see the note at the print site.
+  const declaredMatch = deskTail(prev.line || '')?.match(/DESK\s*[—–-]\s*(\d+)\s+awaiting/);
+  const declared = declaredMatch ? Number(declaredMatch[1]) : null;
+  const unkeyed = declared === null ? 0 : Math.max(0, declared - prev.items.length);
+  return { kind: 'desk', prev, live, dropped, silent, declared, unkeyed };
+}
+
+function main() {
+  const statusPath = path.join(ROOT, 'STATUS.md');
+  const backlogPath = path.join(ROOT, 'tasks', 'BACKLOG.md');
+  for (const p of [statusPath, backlogPath]) {
+    if (!fs.existsSync(p)) {
+      console.error(`desk-carryforward-guard: REFUSING — cannot read ${p}`);
+      process.exit(2);
+    }
+  }
+  const result = analyse(
+    fs.readFileSync(statusPath, 'utf8'),
+    fs.readFileSync(backlogPath, 'utf8'),
+  );
+
+  console.log('=== desk-carryforward-guard ===');
+
+  if (result.kind === 'lock') {
+    console.log('SKIP — STATUS.md line-1 is a live ACTIVE lock, not a handoff.');
+    console.log('  The desk is written at handoff time; test:ledger-guards gates it then.');
+    return;
+  }
+
+  if (result.kind === 'no-previous') {
+    console.error('desk-carryforward-guard: REFUSING — no previous handoff desk could be read.');
+    console.error('  Expected a "- **sNNNN handoff (line-1 archive):**" bullet carrying a desk.');
+    console.error('  A pass here would mean "I compared against nothing", which is the');
+    console.error('  fail-open mode that hid F-1471-3 for 137 fires.');
+    process.exit(2);
+  }
+
+  console.log(`previous desk (s${result.prev.session}):`, result.prev.items.length, 'items');
+  console.log('this desk                 :', result.live.length, 'items');
+  if (result.unkeyed > 0) {
+    // ADVISORY, NEVER A REFUSAL, and the corpus is why. The parser keys an item
+    // by an F-ID or a BACKTICKED slug; the previous desk's header declares its
+    // own count. Measured s1533 across the 60 post-cure desks that state a
+    // count: 11 agree and 49 do not, nearly all by exactly one — the item
+    // written "🔺 **f1328-1** —" with no backticks, which rode ~20 desks that
+    // way. Refusing on a mismatch would fail CLOSED on 82% of legitimate desks,
+    // which is the mistake desk-declaration-guard's separator whitelist avoided
+    // by measuring first. So say it plainly and keep going.
+    console.log(
+      `ⓘ the previous desk declares ${result.declared} item(s) but ${result.unkeyed} could not be keyed` +
+        ' — key desk items by an F-ID or a `backticked-slug` so they can be carry-checked.',
+    );
+  }
+  console.log('dropped                   :', result.dropped.length,
+    `(${result.dropped.length - result.silent.length} accounted for)`);
+  if (REPORT) {
+    console.log('  prev:', result.prev.items.join(' '));
+    console.log('  live:', result.live.join(' '));
+  }
+
+  if (result.silent.length) {
+    console.error('');
+    console.error(`FAIL — ${result.silent.length} item(s) left the OWNER'S DESK with no reason given:`);
+    for (const id of result.silent) console.error(`  ${id}`);
+    console.error('');
+    console.error('The desk is a QUEUE with the owner at the far end. The only lawful exits are');
+    console.error('a ruling or a closure. If one of these was RE-KEYED, closed, or genuinely');
+    console.error('retired, say so on line-1 and this passes:');
+    console.error('');
+    console.error(`    DESK-DROPPED: ${result.silent[0]} — <re-keyed to X | closed by <hash> | ruled <when>>`);
+    console.error('');
+    console.error('Otherwise carry it forward. s1527 dropped ten this way, including');
+    console.error('"13 of 25 campaign maps cannot be opened" and the item its own desk called');
+    console.error('"the cheapest win on this list" (F-1533-1).');
+    process.exit(1);
+  }
+
+  console.log("PASS — every item on the previous desk is carried, closed, or accounted for.");
+}
+
+// NOT `file://${process.argv[1]}` — this repo's path contains a space, which
+// import.meta.url percent-encodes and process.argv[1] does not (the s1334 trap:
+// that comparison is false here, so the guard ran as a no-op and exited 0).
+// The argv[1] guard is not decoration either: `node -e "import(...)"` leaves it
+// undefined and pathToFileURL then THROWS, so an unguarded compare turns any
+// programmatic import into a crash (found s1533 while debugging this file).
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

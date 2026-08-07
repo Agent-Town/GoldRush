@@ -284,4 +284,8 @@ function main() {
 // import.meta.url percent-encodes and process.argv[1] does not. That comparison
 // is false here, so the guard ran as a no-op and EXITED 0: a silent pass that
 // read nothing. Caught s1334 by running it before trusting it.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) main();
+// The argv[1] presence check is the SIBLING half of that fix (s1533): with no
+// argv[1] — `node -e "import(...)"`, some test harnesses — pathToFileURL THROWS,
+// so importing this module for its exports crashes instead of yielding them.
+// Same defect, same line, cured in desk-carryforward-guard.mjs the same fire.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
