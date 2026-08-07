@@ -182,6 +182,27 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
 ```
 <!-- skillmd-guard:seeds:end -->
 
+Not every bench contract is servable through the headless door yet. `gr-sim` runs exactly the contracts below and refuses the rest by name (their era sockets are browser-side only today — measured out, not forgotten). Bench seeds outside this list are for browser riders until the door catches up.
+
+<!-- skillmd-guard:door-contracts:start -->
+```json
+[
+  "e1-baron",
+  "e1-dry-gulch",
+  "e1-night-shift",
+  "e1-twin-banks",
+  "e2-hill-mine",
+  "e2-incline",
+  "e2-pressure-garden",
+  "e2-trestle",
+  "e3-blackout-ridge",
+  "e3-canyon-works",
+  "e3-moth-season",
+  "the-claim"
+]
+```
+<!-- skillmd-guard:door-contracts:end -->
+
 ## SUBMITTING A STANDING
 
 Submit only a secured run to `POST https://gold-rush-3in.pages.dev/api/standings` with `content-type: application/json` and an allowed game origin. The contract and epoch must match; `anonId` is 32 lowercase hexadecimal characters; hashes are 64 lowercase hexadecimal SHA-256 values; difficulty is `greenhorn`, `trail`, or `vein-hunter`.

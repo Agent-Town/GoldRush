@@ -26,6 +26,18 @@ test('skill.md bench seeds match the source registry', () => {
   assert.deepEqual(jsonBlock('seeds'), benchSeeds);
 });
 
+// F-DOOR-4 (2026-08-08): bench-seeds advertised e3-fairground + the four e6 contracts while
+// gr-sim's SUPPORTED_CONTRACTS refused them — a real entrant burned a session discovering it.
+// The door doc now names exactly what the door serves, and this pin keeps it true.
+test('skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim', () => {
+  const source = read('src/sim/HeadlessContractSim.ts');
+  const match = /const SUPPORTED_CONTRACTS = new Set\(\[([\s\S]*?)\]\);/.exec(source);
+  assert.ok(match, 'SUPPORTED_CONTRACTS set literal must exist in HeadlessContractSim.ts');
+  const supported = [...match[1].matchAll(/'([^']+)'/g)].map(([, id]) => id).sort();
+  assert.ok(supported.length > 0, 'SUPPORTED_CONTRACTS must not parse empty');
+  assert.deepEqual(jsonBlock('door-contracts'), supported);
+});
+
 // F-1492-4 (s1493): the three tests above are the guard PASSING, and a passing guard never
 // executes its violation path — so their green is not evidence about the red. s1492 proved this
 // guard bites by manufacturing a defect BY HAND through the SKILLMD_PATH redirect, and recorded
