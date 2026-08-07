@@ -1,0 +1,5 @@
+# Daemon wedges at boot: "Timed out draining daemon mutations for idle eviction" loop; client never served
+**Environment:** macOS (Darwin 25.5.0, arm64) · node v26.4.0 · built from source at `0e0d233` (npm ci + npm run build; IPython runtime lazy-prep path) · isolated $HOME · provider openrouter, model deepseek/deepseek-v4-flash · headless via --mode json unless noted
+**What happened:** On first launch (`prime-agent -p "..."`), the daemon started and logged its socket, then the supervisor entered a permanent loop from minute one — `supervisor: Idle eviction sweep failed: Error: Timed out draining daemon mutations for idle eviction` every ~5 minutes — and the print-mode client produced zero output for 40+ minutes. `doctor --fix` reported only "kept … default background service"; a later `shutdown --force` + fresh start cleared it ("removed stale socket file").
+**Expected:** the client is served, or a fatal error reaches the client/stdout.
+**Evidence:** daemon + worker logs retained (timestamps 2026-08-06T23:0x–23:4xZ); can share on request.
