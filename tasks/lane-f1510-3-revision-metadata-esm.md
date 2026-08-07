@@ -9,8 +9,8 @@ and this master hands you the answer** — see READ FIRST. Your job is smaller t
 ## PRE-FLIGHT (STOP conditions — run these before you touch anything)
 
 1. The lane must carry this fire's evidence commit, which is the freshness proof:
-   `git merge-base --is-ancestor <EVIDENCE_SHA> HEAD`
-   → **non-zero = STOP.** Report `LANE STALE — missing <EVIDENCE_SHA>` and do nothing else.
+   `git merge-base --is-ancestor 263ee338c HEAD`
+   → **non-zero = STOP.** Report `LANE STALE — missing 263ee338c` and do nothing else.
 2. Prove each subject region is present and unmoved. All three greps are **file-scoped**, so nothing
    written in `tasks/**` or `docs/**` — including this master — can move them (F-1310-1 / F-1425-2):
    - `grep -c "configured workers \*\*" scripts/suite-red-inventory.mjs` → must print exactly **1**
