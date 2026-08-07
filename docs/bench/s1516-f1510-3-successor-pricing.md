@@ -1,5 +1,24 @@
 # F-1510-3 successor — PRICING (s1516, 2026-08-07)
 
+> ⛔ **CORRECTION, SAME FIRE — §2's PRESCRIPTION OF `__dirname` IS REFUTED. DO NOT FOLLOW IT.**
+> The lane run this document priced STOPPED as a licensed negative result (`f9c0e498`, report
+> `docs/bench/f1510-3-inventory-revision-metadata-negative-result.md`, review
+> `reviews/f1510-3-inventory-revision-metadata.md`). Playwright loads this repo's TS config as **ESM**
+> (`package.json:5` is `"type": "module"`), so **`__dirname` is undefined** and the mechanism
+> serialised `revision: "unrecorded"`.
+> **Why this document got it wrong (F-1516-1):** the probe in §2 ran in `/tmp/s1516-pw-probe`, which
+> has **no `package.json`**, so its config transpiled to **CommonJS** where `__dirname` exists. The
+> probe matched the subject on flags but **not on composition**, and validated the right mechanism
+> through the wrong module system.
+> ✅ **WHAT STANDS, and it is most of this document:** the *threading channel* is real and is now
+> confirmed **twice, in two trees** — user-declared `metadata` keys ride into the JSON report verbatim
+> alongside Playwright's injected `actualWorkers` (the failing run itself emitted
+> `{"revision":"unrecorded","dirty":"unrecorded","actualWorkers":1}`, which is exactly that
+> co-existence). §1, §3, §4, §5 and §6 are unaffected.
+> ➡️ **The successor is SMALLER than the task this priced:** swap the directory source for
+> `import.meta.dirname` (available on the pinned 26.4.0) or `fileURLToPath(import.meta.url)`, then
+> re-run the JSON-reporter proof the runner has already built and documented.
+
 The BACKLOG row's scope note ends: *"this is no longer the trivial one-line change this row was
 filed as, because it reaches the run harness, not just the reducer — **price it before queueing
 it**."* This is that pricing. Every number below was measured this fire; nothing is inherited.
