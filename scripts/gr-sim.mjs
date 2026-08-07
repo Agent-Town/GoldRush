@@ -15,8 +15,9 @@ import { createServer } from 'vite';
 
 // Declared above the first call: `parseArgs` runs at module top level, so a `const`
 // further down is still in its temporal dead zone by then.
-const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode'];
+const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty'];
 const SEAT_KEYS = ['room', 'origin', 'name', 'town', 'party', 'tick-rate', 'max-ticks', 'desync-at'];
+const DIFFICULTY_VALUES = ['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', 'hard'];
 
 const options = parseArgs(process.argv.slice(2));
 // A seat cannot pick its own contract: it boots whatever the host already committed the
@@ -51,6 +52,12 @@ try {
     input = await rideSeated(vite, options, seatSetup);
   } else {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    if (options.preset !== undefined || options.difficulty !== undefined) {
+      const { Balance, applyDifficultyPreset, normalizeDifficultyPreset } = await vite.ssrLoadModule('/src/game/Balance.ts');
+      const preset = normalizeDifficultyPreset(options.preset ?? options.difficulty);
+      applyDifficultyPreset(preset);
+      process.stderr.write(`gr-sim preset: ${preset} enemy.hp=${Balance.enemy.hp}\n`);
+    }
     const sim = new HeadlessContractSim({ contractId: options.contract, seed: options.seed, mode: options.mode });
     const waveCeiling = (sim.manifest.twist.secureWave ?? 20) + 2;
     Object.assign(console, originalConsole);
@@ -174,17 +181,35 @@ function parseArgs(args) {
   const policy = values.policy ?? 'stdin';
   if (policy !== 'stdin' && policy !== 'idle') throw new Error('--policy must be stdin or idle.');
   if (values.mode !== undefined && values.mode !== 'escort') throw new Error('--mode must be escort.');
+  for (const key of ['preset', 'difficulty']) {
+    if (values[key] !== undefined && !DIFFICULTY_VALUES.includes(values[key])) {
+      throw new Error(`--${key} must be one of: ${DIFFICULTY_VALUES.join(', ')}.`);
+    }
+  }
+  if (values.preset !== undefined && values.difficulty !== undefined && values.preset !== values.difficulty) {
+    throw new Error('--preset and --difficulty must have the same value when both are given.');
+  }
 
   if (values.room === undefined) {
     for (const key of SEAT_KEYS) {
       if (values[key] !== undefined) throw new Error(`--${key} needs --room.`);
     }
     if (!values.contract) throw new Error('--contract is required.');
-    return { contract: values.contract, seed: values.seed ?? 'gold-rush', policy, mode: values.mode };
+    return {
+      contract: values.contract,
+      seed: values.seed ?? 'gold-rush',
+      policy,
+      mode: values.mode,
+      preset: values.preset,
+      difficulty: values.difficulty,
+    };
   }
 
   // The room already agreed on these. Accepting a second opinion here would only let a
   // seat boot a different world than the one it is about to hash against.
+  if (values.preset !== undefined || values.difficulty !== undefined) {
+    throw new Error('--preset and --difficulty cannot be used with --room; the host room owns difficulty.');
+  }
   for (const key of ['contract', 'seed', 'mode']) {
     if (values[key] !== undefined) throw new Error(`--${key} is decided by the room; drop it when using --room.`);
   }
