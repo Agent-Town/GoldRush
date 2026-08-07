@@ -2,6 +2,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -17,6 +18,15 @@ function specPath(value) {
   const normalized = path.resolve(value).replaceAll(path.sep, '/');
   const e2e = normalized.lastIndexOf('/e2e/');
   return e2e >= 0 ? normalized.slice(e2e + 1) : `e2e/${path.basename(normalized)}`;
+}
+
+function existingSpec(value) {
+  const spec = specPath(value);
+  const candidate = path.join(ROOT, spec);
+  if (!spec.endsWith('.spec.ts') || !fs.statSync(candidate, { throwIfNoEntry: false })?.isFile()) {
+    fail(`spec does not exist: ${spec}; use an existing e2e/*.spec.ts path (bare names need the .spec.ts suffix)`);
+  }
+  return spec;
 }
 
 function cells(line) {
@@ -111,18 +121,51 @@ function readCoverage() {
     }
   }
   walk(report.suites);
-  return { specs, tests };
+  const start = new Date(typeof report.stats?.startTime === 'string' ? report.stats.startTime : NaN);
+  return {
+    specs,
+    tests,
+    snapshotDate: Number.isNaN(start.valueOf()) ? 'UNKNOWN' : start.toISOString().slice(0, 10),
+    snapshotStartTime: Number.isNaN(start.valueOf()) ? null : start.toISOString(),
+    snapshotDuration: Number.isFinite(report.stats?.duration) ? report.stats.duration : null,
+  };
 }
 
 function usage() {
-  fail('usage: node scripts/red-inventory-lookup.mjs <spec-path> [--title "<exact test title>"] [--json] [--strict]');
+  fail('usage: node scripts/red-inventory-lookup.mjs <spec-path> [--title "<exact test title>"] [--json] [--strict] | --snapshot');
 }
 
 const args = process.argv.slice(2);
 const titleIndex = args.indexOf('--title');
 const title = titleIndex >= 0 ? args[titleIndex + 1] : undefined;
 const positional = args.filter((arg, index) => !arg.startsWith('--') && (titleIndex < 0 || index !== titleIndex + 1));
-if (positional.length !== 1 || titleIndex >= 0 && !title) usage();
+const snapshot = args.includes('--snapshot');
+if (snapshot ? positional.length !== 0 || titleIndex >= 0 : positional.length !== 1 || titleIndex >= 0 && !title) usage();
+
+if (snapshot) {
+  let coverage;
+  try {
+    coverage = readCoverage();
+  } catch (error) {
+    fail(`snapshot date UNKNOWN — ${error.message}`);
+  }
+  if (!coverage.snapshotStartTime) fail('snapshot date UNKNOWN — compact inventory has no valid stats.startTime');
+  const end = coverage.snapshotDuration === null
+    ? 'UNKNOWN'
+    : new Date(Date.parse(coverage.snapshotStartTime) + coverage.snapshotDuration).toISOString();
+  const command = `git rev-list -1 --before=${coverage.snapshotStartTime} main`;
+  const git = spawnSync('git', ['rev-list', '-1', `--before=${coverage.snapshotStartTime}`, 'main'], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
+  console.log(`SNAPSHOT ${coverage.snapshotStartTime} to ${end} — duration ${coverage.snapshotDuration ?? 'UNKNOWN'} ms`);
+  console.log(git.status === 0 && git.stdout.trim()
+    ? `SNAPSHOT main commit ${git.stdout.trim()}`
+    : `SNAPSHOT main commit UNKNOWN — run: ${command}`);
+  process.exit(0);
+}
+
+const spec = existingSpec(positional[0]);
 
 let inventory;
 let coverage;
@@ -130,10 +173,9 @@ try {
   inventory = readInventory();
   coverage = readCoverage();
 } catch (error) {
-  fail(error.message);
+  fail(error.code === 'ENOENT' && error.path === COMPACT ? `snapshot date UNKNOWN — ${error.message}` : error.message);
 }
 
-const spec = specPath(positional[0]);
 const key = title === undefined ? undefined : `${spec}\0${title}`;
 const rows = inventory.failures.filter((row) => row.spec === spec && (title === undefined || row.title === title));
 const blastByTest = new Map(inventory.blast.map((row) => [`${row.spec}\0${row.title}`, row]));
@@ -142,6 +184,7 @@ const outcome = rows.length ? 'KNOWN-RED' : covered ? 'CLEAN-IN-INVENTORY' : 'NO
 const result = {
   outcome,
   query: { spec, ...(title === undefined ? {} : { title }) },
+  snapshotDate: coverage.snapshotDate,
   inventory: path.relative(ROOT, INVENTORY).replaceAll(path.sep, '/'),
   rowsParsed: inventory.failures.length + inventory.blast.length,
   failureRowsParsed: inventory.failures.length,
@@ -159,7 +202,7 @@ if (args.includes('--json')) {
   console.log(JSON.stringify(result, null, 2));
 } else {
   console.log(`INVENTORY ${result.inventory} — rows parsed ${result.rowsParsed} (${result.failureRowsParsed} failure, ${result.blastRadiusRowsParsed} blast-radius) — Total tests run ${result.totalTestsRun} — Total failed ${result.totalFailed}`);
-  console.log(`${outcome} — ${spec}${title === undefined ? '' : ` — ${title}`}`);
+  console.log(`${outcome} — ${spec}${title === undefined ? '' : ` — ${title}`} — snapshot date ${result.snapshotDate}`);
   for (const row of result.rows) {
     console.log(`- ${row.title} [${row.project}]`);
     console.log(`  ${row.location} (recorded at inventory run — may have rotted) — ${row.bucket} — ${row.duration}`);
