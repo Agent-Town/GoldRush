@@ -31,6 +31,7 @@ type StandingPost = {
 
 const ARTIFACT_DIR = path.resolve('artifacts/county-standings');
 const FD3_SHOTS = path.resolve('reviews/shots-fd3');
+const FD3_1_SHOTS = path.resolve('reviews/shots-fd3-1');
 const CLAIM_BENCH_SEED = benchSeeds['the-claim'][0]!;
 const WRONG_CONTRACT_BENCH_SEED = benchSeeds['e1-dry-gulch'][0]!;
 const PROFILE_STATE: ProfileState = {
@@ -163,6 +164,53 @@ function expectNoErrors(errors: ErrorBucket): void {
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 }
+
+test('public county rows carry submitted time while legacy rows keep the missing-time fallback', async ({ page }, testInfo) => {
+  const kv = makeKv();
+  const submitted = await standingsRoute({
+    request: apiRequest('POST', '', validPost('5'.repeat(32))),
+    env: { TELEMETRY: kv },
+  });
+  expect(submitted.status).toBe(200);
+
+  const response = await standingsRoute({
+    request: apiRequest('GET', '?contract=the-claim&epoch=epoch-1-frontier'),
+    env: { TELEMETRY: kv },
+  });
+  const body = (await response.json()) as { board: Array<Record<string, unknown>> };
+  const projected = body.board[0]!;
+  const stored = JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]') as Array<Record<string, unknown>>;
+  expect(projected.submittedAt).toBe(stored[0]?.submittedAt);
+  expect(projected.submittedAt).toEqual(expect.any(Number));
+
+  const { submittedAt: _submittedAt, ...legacyRow } = projected;
+  let board = [legacyRow];
+  await seedProfile(page);
+  const errors = collectErrors(page);
+  await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true, board }) }),
+  );
+  await page.goto('/');
+  await page.getByTestId('start-menu-claim-ledger').click();
+  await page.getByTestId('claim-ledger-county-standings').click();
+
+  const row = page.getByTestId('county-standings-row-1');
+  await expect(row.locator('.county-standings__when-missing')).toHaveAttribute('aria-label', 'Submission time unavailable');
+  await expect(row.locator('time')).toHaveCount(0);
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+  await mkdir(FD3_1_SHOTS, { recursive: true });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD3_1_SHOTS, `before-missing-${testInfo.project.name}.png`) });
+
+  board = [projected];
+  await page.getByTestId('county-standings-difficulty-filter').selectOption('trail');
+  await expect(row.locator('time')).toHaveText('just now');
+  await page.getByTestId('county-standings-difficulty-filter').selectOption('all');
+  await expect(row.locator('time')).toHaveText('just now');
+  await expect(row.locator('.county-standings__when-missing')).toHaveCount(0);
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD3_1_SHOTS, `after-submitted-${testInfo.project.name}.png`) });
+  expectNoErrors(errors);
+});
 
 test('endpoint stores optional self-declared stack and keeps the public board stack-blind', async () => {
   const kv = makeKv();

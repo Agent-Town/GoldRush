@@ -228,6 +228,7 @@ function boardRow(row: StoredRow, index: number): JsonRecord {
     gold: row.gold,
     baseValue: row.baseValue,
     difficulty: row.difficulty,
+    ...(Number.isFinite(row.submittedAt) && row.submittedAt >= 0 ? { submittedAt: row.submittedAt } : {}),
     ...(row.defaulted ? { defaulted: true } : {}),
     // Names only. A rider's declared stack stays out of the board by construction — it says agent.
     ...(row.party ? { party: { riderCount: row.party.riderCount, riders: row.party.riders.map((rider) => rider.name) } } : {}),
