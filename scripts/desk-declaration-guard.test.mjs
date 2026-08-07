@@ -275,9 +275,18 @@ test('a handoff whose desk header has no F-IDs after it REFUSES (exit 2)', (t) =
 // measured s1334 baseline without a new measurement, and may reach 0 freely.
 const S1334_BASELINE = 9;
 
+// BOTH extractors below were WIDENED s1534 alongside the guard's own FINDING
+// regex (F-1533-2 / F-1534-1). They were the THIRD instance of the same
+// digits-only blindness: had a future fire grandfathered an alpha-coded id —
+// F-ER02-5, F-MSD-1, anything in the F-BW-* family — this ceiling test and the
+// no-rot test below would both have read the list as EMPTY and passed, silently
+// excusing an entry neither could see. The list is empty today, so nothing
+// changes on the live board; the point is that the invariant now has the same
+// vocabulary as the thing it polices.
+
 test('the grandfather list may only SHRINK — never grows past the s1334 baseline', () => {
   const src = fs.readFileSync(GUARD, 'utf8');
-  const listed = [...src.matchAll(/^\s*'(F-\d{3,4}-\d+)',/gm)].map((m) => m[1]);
+  const listed = [...src.matchAll(/^\s*'(F-(?:[A-Z0-9]{1,8}-)+\d+)',/gm)].map((m) => m[1]);
   assert.ok(
     listed.length <= S1334_BASELINE,
     `grandfather list grew to ${listed.length} (baseline ${S1334_BASELINE}); ` +
@@ -297,7 +306,7 @@ test('every grandfathered id is still on the desk — the list must not rot', as
   // and the copy lived in the file whose job is to prove the parser works. Import
   // the real one; a guard's test must not fork its subject's logic.
   const src = fs.readFileSync(GUARD, 'utf8');
-  const listed = [...src.matchAll(/^\s*'(F-\d{3,4}-\d+)',/gm)].map((m) => m[1]);
+  const listed = [...src.matchAll(/^\s*'(F-(?:[A-Z0-9]{1,8}-)+\d+)',/gm)].map((m) => m[1]);
   const status = fs.readFileSync(path.join(REPO, 'STATUS.md'), 'utf8');
   const { deskIds } = await import(pathToFileURL(GUARD).href);
   const desk = deskIds(status);

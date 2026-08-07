@@ -141,7 +141,27 @@ const GRANDFATHERED = new Set([
   // monotonic-ceiling note in the test. Adding a name here requires a measurement.
 ]);
 
-const FINDING = /F-\d{3,4}-\d+/g;
+/**
+ * WIDENED s1534 (F-1533-2 measured it, F-1534-1 priced it) from /F-\d{3,4}-\d+/.
+ *
+ * The digits-only shape was blind to ALPHA-CODED ids — F-MSD-1, F-MILK-SS-3,
+ * F-ER02-5, the whole F-BW-* family — and blind on BOTH SIDES AT ONCE: never
+ * counted as desk items, never counted as declarations. The two blindnesses
+ * cancelled, so the guard reported PASS while carrying undeclared items. That is
+ * the F-1471-3 fail-open shape one axis over.
+ *
+ * THE COST WAS MEASURED BEFORE THE CHANGE, NOT AFTER (F-1534-1): running this
+ * regex against the live board first said 21 desk ids / 5 undeclared where the
+ * narrow one said 14 / 0. F-1533-2 had prescribed backfilling THREE rows; the
+ * corpus named FIVE, and one of its four accused ids (F-MTS-2) already had a row
+ * at BACKLOG.md:155. Widening on the prescription alone would have reddened the
+ * battery on two ids nobody had named. All five now have rows.
+ *
+ * Shape shared with desk-carryforward-guard.mjs, which already validates it
+ * against every post-cure desk. It is a strict SUPERSET of the old pattern
+ * ([A-Z0-9]{1,8} matches "1533"), so no previously-seen id can be lost.
+ */
+const FINDING = /F-(?:[A-Z0-9]{1,8}-)+\d+/g;
 const SUBJECT_CHARS = 90; // same subject zone as findings-state-guard.mjs
 
 /**
