@@ -1360,10 +1360,12 @@ export class ClaimJumperEnemy {
     const fromEast = previous.x >= maxX;
     const fromSouth = previous.z <= minZ;
     const fromNorth = previous.z >= maxZ;
-    const slideX = ACTIVE_TILE_ID === 'e1-twin-banks' && moveTarget.x >= minX && moveTarget.x <= maxX
+    // F-1511-2/F-1512-1: a goal inside the padded span is head-on, so Math.sign(moveTarget.x - blocker.x)
+    // is ~0 and the fallback gives a stable go-around; outside it, enemy-relative wedge routing stays intact.
+    const slideX = moveTarget.x >= minX && moveTarget.x <= maxX
       ? Math.sign(moveTarget.x - blocker.x) || this.avoidanceSide()
       : this.blockerSlideDirection('x', moveTarget);
-    const slideZ = ACTIVE_TILE_ID === 'e1-twin-banks' && moveTarget.z >= minZ && moveTarget.z <= maxZ
+    const slideZ = moveTarget.z >= minZ && moveTarget.z <= maxZ
       ? Math.sign(moveTarget.z - blocker.z) || this.avoidanceSide()
       : this.blockerSlideDirection('z', moveTarget);
 
