@@ -9,7 +9,7 @@ type MockKV = {
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
 };
 
-const SHOTS = path.resolve('reviews/shots-field-book');
+const SHOTS = path.resolve('reviews/shots-fd3');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'field-book',
@@ -142,7 +142,7 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
         ok: true,
         view: 'byStack',
         epochId: 'epoch-1-frontier',
-        contracts: ['the-claim', 'e1-dry-gulch'],
+        contracts: ['the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'],
         byStack: [
           {
             model: 'gpt-5.6-sol',
@@ -179,6 +179,16 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
               submittedAt: now - 120_000,
             }],
           },
+          {
+            model: 'pi-v4',
+            latestSubmittedAt: now - 180_000,
+            contracts: [{
+              contractId: 'e1-dry-gulch',
+              score: { secured: true, waves: 20, timeAlive: 700, gold: 260, baseValue: 420 },
+              difficulty: 'trail',
+              submittedAt: now - 180_000,
+            }],
+          },
         ],
       }),
     });
@@ -189,6 +199,9 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
   await page.getByTestId('start-menu-claim-ledger').click();
   await page.getByTestId('claim-ledger-field-book').click();
   await expect(page.getByTestId('field-book-matrix')).toBeVisible();
+  await expect(page.getByTestId('field-book-matrix')).toContainText('3 rigs · 2 contracts with showings');
+  await expect(page.getByTestId('field-book-matrix').locator('thead th')).toHaveCount(3);
+  await expect(page.getByTestId('field-book-matrix')).not.toContainText('Night Shift');
   await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-the-claim')).toContainText('90,000 in');
   await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-e1-dry-gulch')).toContainText('Cost not declared');
   await expect(page.getByTestId('field-book-row-unregistered-rig')).toBeVisible();
@@ -197,6 +210,26 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('medium');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText(new Date(now - 60_000).toISOString());
   await mkdir(SHOTS, { recursive: true });
-  await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `${testInfo.project.name}.png`) });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `after-field-book-${testInfo.project.name}.png`) });
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('plain boot renders the honest empty Field Book state', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.addInitScript(({ key, state }) => {
+    localStorage.clear();
+    sessionStorage.clear();
+    localStorage.setItem(key, JSON.stringify(state));
+  }, { key: PROFILE_KEY, state: PROFILE_STATE });
+  await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ ok: true, view: 'byStack', epochId: 'epoch-1-frontier', contracts: [], byStack: [] }),
+  }));
+
+  await page.goto('/');
+  await page.getByTestId('start-menu-claim-ledger').click();
+  await page.getByTestId('claim-ledger-field-book').click();
+  await expect(page.getByTestId('field-book-board')).toHaveText('No rigs in the field book yet — the door is open.');
   expect(errors).toEqual({ console: [], page: [] });
 });

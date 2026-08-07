@@ -2,6 +2,7 @@ import './reader.css';
 import { gameApiUrl } from '../app/GameApi';
 import type { DifficultyPresetId } from '../game/Balance';
 import type { RunTape } from '../game/RunTape';
+import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { activeEpochId, listContracts, listEpochs, loadEpoch } from '../meta/ContractFamilies';
 import { loadEraBackdrop } from '../ui/EraBackdrop';
 import { installAssayOfficeRecordsLiveRead } from './liveStats';
@@ -43,6 +44,7 @@ type CountyStanding = {
   gold: number;
   baseValue: number;
   difficulty: DifficultyPresetId;
+  submittedAt?: number;
   defaulted?: true;
   party?: { riderCount: number; riders: string[] };
   reel?: { id: string; simVersion: number };
@@ -50,7 +52,7 @@ type CountyStanding = {
 
 type FieldBookCell = {
   contractId: string;
-  score: Omit<CountyStanding, 'rank' | 'profileName' | 'difficulty' | 'defaulted'>;
+  score: Omit<CountyStanding, 'rank' | 'profileName' | 'difficulty' | 'submittedAt' | 'defaulted'>;
   difficulty: DifficultyPresetId;
   submittedAt: number;
   tokensIn?: number;
@@ -299,6 +301,9 @@ function renderStandingsLedger(): string {
           </select>
         </label>
         <p class="county-standings__message" data-testid="county-standings-message" role="status" aria-live="polite"></p>
+        ${renderLocalClaims(contracts)}
+        <p class="county-standings__board-label"><strong>County board</strong><span class="county-standings__difficulty">Global</span></p>
+        <p class="county-standings__provenance">Rig and posse declarations stay one tap away in The Field Book — never in the rank.</p>
         <div class="county-standings__board" data-testid="county-standings-board" aria-live="polite">
           <p class="county-standings__empty">The county clerk turns the pages.</p>
         </div>
@@ -394,13 +399,16 @@ function isFieldBookCell(value: unknown): value is FieldBookCell {
 }
 
 function renderFieldBook(fieldBook: FieldBook): string {
-  if (fieldBook.rows.length === 0) return '<p class="county-standings__empty">No rigs have signed the field book yet.</p>';
+  if (fieldBook.rows.length === 0) return '<p class="county-standings__empty">No rigs in the field book yet — the door is open.</p>';
   const contractNames = new Map(listContracts(activeEpochId()).map((contract) => [contract.id, contract.boardRow.name]));
+  const contracts = fieldBook.contracts.filter((contractId) => fieldBook.rows.some((row) => row.contracts.some((cell) => cell.contractId === contractId)));
   return `
+    ${contracts.length > 1 ? '<p class="field-book__swipe">Swipe the book for another contract &rarr;</p>' : ''}
     <table class="field-book__matrix" data-testid="field-book-matrix">
-      <thead><tr><th scope="col">Rig</th>${fieldBook.contracts.map((id) => `<th scope="col">${escapeHtml(contractNames.get(id) ?? id)}</th>`).join('')}</tr></thead>
+      <caption>${fieldBook.rows.length} ${fieldBook.rows.length === 1 ? 'rig' : 'rigs'} &middot; ${contracts.length} ${contracts.length === 1 ? 'contract' : 'contracts'} with showings</caption>
+      <thead><tr><th scope="col">Rig</th>${contracts.map((id) => `<th scope="col">${escapeHtml(contractNames.get(id) ?? id)}</th>`).join('')}</tr></thead>
       <tbody>
-        ${fieldBook.rows.map((row, index) => renderFieldBookRow(row, index, fieldBook.contracts, contractNames)).join('')}
+        ${fieldBook.rows.map((row, index) => renderFieldBookRow(row, index, contracts, contractNames)).join('')}
       </tbody>
     </table>
   `;
@@ -467,16 +475,19 @@ function isNameList(value: unknown): value is string[] {
 
 function renderPartyBook(partyBook: PartyBook): string {
   if (partyBook.rows.length === 0) {
-    return '<p class="county-standings__empty">No posse has signed the field book yet.</p>';
+    return '<p class="county-standings__empty">No posses in the field book yet — the door is open.</p>';
   }
   const contractNames = new Map(listContracts(activeEpochId()).map((contract) => [contract.id, contract.boardRow.name]));
+  const contracts = partyBook.contracts.filter((contractId) => partyBook.rows.some((row) => row.contracts.some((cell) => cell.contractId === contractId)));
   return `
+    ${contracts.length > 1 ? '<p class="field-book__swipe">Swipe the book for another contract &rarr;</p>' : ''}
     <table class="field-book__matrix" data-testid="field-book-party-matrix">
-      <thead><tr><th scope="col">Posse</th>${partyBook.contracts
+      <caption>${partyBook.rows.length} ${partyBook.rows.length === 1 ? 'posse' : 'posses'} &middot; ${contracts.length} ${contracts.length === 1 ? 'contract' : 'contracts'} with showings</caption>
+      <thead><tr><th scope="col">Posse</th>${contracts
         .map((id) => `<th scope="col">${escapeHtml(contractNames.get(id) ?? id)}</th>`)
         .join('')}</tr></thead>
       <tbody>
-        ${partyBook.rows.map((row) => renderPartyBookRow(row, partyBook.contracts)).join('')}
+        ${partyBook.rows.map((row) => renderPartyBookRow(row, contracts)).join('')}
       </tbody>
     </table>
   `;
@@ -628,6 +639,7 @@ function isCountyStanding(value: unknown): value is CountyStanding {
     finiteNonNegative(row.gold) &&
     finiteNonNegative(row.baseValue) &&
     isDifficultyPreset(row.difficulty) &&
+    (row.submittedAt === undefined || (Number.isInteger(row.submittedAt) && row.submittedAt >= 0)) &&
     (row.defaulted === undefined || row.defaulted === true) &&
     isCountyParty(row.party) &&
     isCountyReel(row.reel)
@@ -651,13 +663,13 @@ function isCountyReel(value: unknown): boolean {
 function renderCountyRows(rows: readonly CountyStanding[], party: StandingsParty): string {
   if (rows.length === 0) {
     return party === 'solo'
-      ? '<p class="county-standings__empty">The county waits for its first name.</p>'
-      : `<p class="county-standings__empty">No ${PARTY_LABELS[party].toLowerCase()} has signed the county book yet.</p>`;
+      ? '<p class="county-standings__empty">No standings yet — the door is open.</p>'
+      : `<p class="county-standings__empty">No ${PARTY_LABELS[party].toLowerCase()} standings yet — the door is open.</p>`;
   }
   const watchable = currentWatchTape !== undefined && rows.some((row) => row.reel);
   return `
     <table>
-      <thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th scope="col">Waves</th><th scope="col">Time</th><th scope="col">Gold</th>${
+      <thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th scope="col">Result</th><th scope="col">When</th>${
         watchable ? '<th scope="col">Reel</th>' : ''
       }</tr></thead>
       <tbody>
@@ -677,9 +689,10 @@ function renderCountyRow(row: CountyStanding, watchable: boolean): string {
             .join(', ')}</span>`
         : ''
     }</th>
-    <td>${Math.floor(row.waves)}</td>
-    <td>${formatTime(row.timeAlive)}</td>
-    <td>${Math.floor(row.gold)}</td>
+    <td class="county-standings__result">${Math.floor(row.waves)} waves &middot; ${formatTime(row.timeAlive)} &middot; ${Math.floor(row.gold)} gold</td>
+    <td>${row.submittedAt === undefined
+      ? '<span class="county-standings__when-missing" aria-label="Submission time unavailable">&mdash;</span>'
+      : `<time datetime="${safeIsoDate(row.submittedAt)}">${relativeAge(row.submittedAt)}</time>`}</td>
     ${
       watchable
         ? `<td>${
@@ -690,6 +703,36 @@ function renderCountyRow(row: CountyStanding, watchable: boolean): string {
         : ''
     }
   </tr>`;
+}
+
+function renderLocalClaims(contracts: ReturnType<typeof listContracts>): string {
+  const names = new Map(contracts.map((contract) => [contract.id, contract.boardRow.name]));
+  const bests = new Map<string, ScoreRecord>();
+  for (const score of loadScores()) {
+    const contractId = score.contractId?.trim() || 'the-claim';
+    if (names.has(contractId) && !bests.has(contractId)) bests.set(contractId, score);
+  }
+  return `
+    <section class="county-standings__local" data-testid="county-standings-local" aria-labelledby="county-standings-local-title">
+      <div class="county-standings__local-heading">
+        <div><p class="claim-ledger__eyebrow">Local ledger</p><h4 id="county-standings-local-title">Your Claims</h4></div>
+        <span class="county-standings__difficulty">Only this profile</span>
+      </div>
+      <div class="county-standings__local-list">
+        ${bests.size === 0
+          ? '<p class="county-standings__local-empty">No claims in your ledger yet — ride one and make your mark.</p>'
+          : [...bests].map(([contractId, score]) => renderLocalClaim(contractId, names.get(contractId)!, score)).join('')}
+      </div>
+    </section>
+  `;
+}
+
+function renderLocalClaim(contractId: string, name: string, score: ScoreRecord): string {
+  return `<article class="county-standings__local-claim" data-testid="county-standings-local-${escapeHtml(contractId)}">
+    <strong>${escapeHtml(name)}</strong>
+    <span>${score.secured ? 'Secured' : `Wave ${Math.floor(score.waves)}`} &middot; ${Math.floor(score.baseValue ?? 0)} works</span>
+    <time datetime="${safeIsoDate(score.at)}">${relativeAge(score.at)}</time>
+  </article>`;
 }
 
 function finiteNonNegative(value: unknown): value is number {

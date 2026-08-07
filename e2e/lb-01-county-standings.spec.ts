@@ -5,7 +5,7 @@ import { expect, test, type Page } from '@playwright/test';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 import { onRequest as standingsRoute } from '../functions/api/standings';
 import type { DifficultyPresetId } from '../src/game/Balance';
-import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
+import { PROFILE_KEY, SCOREBOARD_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import type { RunTape } from '../src/game/RunTape';
 import { TELEMETRY_DEV_SEND_STORAGE_KEY, TELEMETRY_OPT_IN_STORAGE_KEY } from '../src/telemetry/payload';
 
@@ -30,6 +30,7 @@ type StandingPost = {
 };
 
 const ARTIFACT_DIR = path.resolve('artifacts/county-standings');
+const FD3_SHOTS = path.resolve('reviews/shots-fd3');
 const CLAIM_BENCH_SEED = benchSeeds['the-claim'][0]!;
 const WRONG_CONTRACT_BENCH_SEED = benchSeeds['e1-dry-gulch'][0]!;
 const PROFILE_STATE: ProfileState = {
@@ -100,18 +101,21 @@ function validTape(seed: string, difficulty: DifficultyPresetId): RunTape {
   };
 }
 
-async function seedProfile(page: Page, optIn = true, devSend = true): Promise<void> {
+async function seedProfile(page: Page, optIn = true, devSend = true, scores?: unknown[]): Promise<void> {
   await page.addInitScript(
-    ({ profileKey, profileState, telemetryKey, devSendKey, optIn, devSend }) => {
+    ({ profileKey, profileState, scoreKey, scores, telemetryKey, devSendKey, optIn, devSend }) => {
       localStorage.clear();
       sessionStorage.clear();
       localStorage.setItem(profileKey, JSON.stringify(profileState));
+      if (scores) localStorage.setItem(scoreKey, JSON.stringify(scores));
       localStorage.setItem(telemetryKey, optIn ? '1' : '0');
       if (devSend) localStorage.setItem(devSendKey, '1');
     },
     {
       profileKey: PROFILE_KEY,
       profileState: PROFILE_STATE,
+      scoreKey: profileDataKey(PROFILE_STATE.activeId, SCOREBOARD_KEY),
+      scores,
       telemetryKey: TELEMETRY_OPT_IN_STORAGE_KEY,
       devSendKey: TELEMETRY_DEV_SEND_STORAGE_KEY,
       optIn,
@@ -493,7 +497,11 @@ test('offline standings failure stays silent through the secure ceremony', async
 });
 
 test('Claim Ledger renders the seeded county board and its empty contract state', async ({ page }, testInfo) => {
-  await seedProfile(page);
+  const now = Date.now();
+  await seedProfile(page, true, true, [{
+    waves: 10, kills: 22, gold: 120, timeAlive: 300, at: now - 120_000,
+    baseValue: 180, secured: true, contractId: 'the-claim', profileName: 'Robin',
+  }]);
   const errors = collectErrors(page);
   await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
     const url = new URL(route.request().url());
@@ -502,9 +510,9 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
     const board =
       url.searchParams.get('contract') === 'the-claim'
         ? [
-            { rank: 1, profileName: 'Ada', secured: true, waves: 27, timeAlive: 754, gold: 318, baseValue: 240, difficulty: 'greenhorn' },
-            { rank: 2, profileName: 'Cedar Jack', secured: true, waves: 23, timeAlive: 621, gold: 251, baseValue: 180, difficulty: 'vein-hunter' },
-            { rank: 3, profileName: 'Robin', secured: true, waves: 19, timeAlive: 518, gold: 211, baseValue: 150, difficulty: 'trail', defaulted: true },
+            { rank: 1, profileName: 'Ada', secured: true, waves: 27, timeAlive: 754, gold: 318, baseValue: 240, difficulty: 'greenhorn', submittedAt: now - 60_000 },
+            { rank: 2, profileName: 'Cedar Jack', secured: true, waves: 23, timeAlive: 621, gold: 251, baseValue: 180, difficulty: 'vein-hunter', submittedAt: now - 3_600_000 },
+            { rank: 3, profileName: 'Robin', secured: true, waves: 19, timeAlive: 518, gold: 211, baseValue: 150, difficulty: 'trail', submittedAt: now - 86_400_000, defaulted: true },
           ].filter((row) => !difficulty || row.difficulty === difficulty)
         : [];
     await route.fulfill({
@@ -522,6 +530,12 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   await expect(page.getByTestId('county-standings-row-1')).toContainText('27');
   await expect(page.getByTestId('county-standings-row-1')).toContainText('12:34');
   await expect(page.getByTestId('county-standings-row-1')).toContainText('318');
+  await expect(page.getByTestId('county-standings-row-1')).toContainText('1m ago');
+  await expect(page.getByRole('columnheader', { name: 'Result' })).toBeVisible();
+  await expect(page.getByRole('columnheader', { name: 'When' })).toBeVisible();
+  await expect(page.getByTestId('county-standings-local')).toContainText('Your Claims');
+  await expect(page.getByTestId('county-standings-local')).toContainText('Only this profile');
+  await expect(page.getByTestId('county-standings-local-the-claim')).toContainText('Secured · 180 works');
   await expect(page.getByTestId('county-standings-difficulty-1')).toHaveText('Greenhorn');
   await expect(page.getByTestId('county-standings-difficulty-2')).toHaveText('Vein-Hunter');
   await expect(page.getByTestId('county-standings-difficulty-3')).toHaveText('Trail');
@@ -529,6 +543,8 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
 
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}.png`), fullPage: true });
+  await mkdir(FD3_SHOTS, { recursive: true });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD3_SHOTS, `after-standings-${testInfo.project.name}.png`) });
 
   await page.getByTestId('county-standings-difficulty-filter').selectOption('greenhorn');
   await page.getByTestId('county-standings-difficulty-filter').selectOption('vein-hunter');
@@ -539,6 +555,8 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   await expect(page.getByTestId('county-standings-row-3')).toHaveCount(0);
 
   await page.getByTestId('county-standings-contract-e1-dry-gulch').click();
-  await expect(page.getByTestId('county-standings-board')).toHaveText('The county waits for its first name.');
+  await expect(page.getByTestId('county-standings-board')).toHaveText('No standings yet — the door is open.');
+  await page.getByTestId('claim-ledger-field-book').click();
+  await expect(page.getByTestId('field-book')).toBeVisible();
   expectNoErrors(errors);
 });

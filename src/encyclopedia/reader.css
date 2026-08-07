@@ -130,6 +130,74 @@
   font-weight: 800;
 }
 
+.county-standings__local {
+  margin-top: 16px;
+  padding: 12px;
+  border: 1px solid rgba(91, 138, 138, 0.58);
+  border-radius: 8px;
+  background: rgba(91, 138, 138, 0.09);
+}
+
+.county-standings__local-heading,
+.county-standings__board-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.county-standings__local-heading h4,
+.county-standings__board-label {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.county-standings__local-heading h4 {
+  font-size: 1rem;
+}
+
+.county-standings__local-heading .county-standings__difficulty,
+.county-standings__board-label .county-standings__difficulty {
+  margin: 0;
+}
+
+.county-standings__local-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.county-standings__local-claim {
+  display: grid;
+  gap: 3px;
+  padding: 9px 10px;
+  border-left: 3px solid #5b8a8a;
+  background: rgba(255, 252, 240, 0.72);
+}
+
+.county-standings__local-claim span,
+.county-standings__local-claim time,
+.county-standings__local-empty,
+.county-standings__provenance {
+  color: #684728;
+  font-size: 0.76rem;
+}
+
+.county-standings__local-empty {
+  margin: 0;
+  font-style: italic;
+}
+
+.county-standings__board-label {
+  margin-top: 18px;
+  text-transform: uppercase;
+}
+
+.county-standings__provenance {
+  margin: 4px 0 0;
+}
+
 .county-standings__message:empty {
   display: none;
 }
@@ -159,7 +227,7 @@
 }
 
 .county-standings__board {
-  margin-top: 16px;
+  margin-top: 8px;
   overflow-x: auto;
   border: 1px solid rgba(76, 48, 23, 0.36);
   border-radius: 8px;
@@ -256,6 +324,15 @@
   border-bottom: 0;
 }
 
+.county-standings__result {
+  min-width: 180px;
+  white-space: normal !important;
+}
+
+.county-standings__when-missing {
+  color: #8b7355;
+}
+
 .county-standings__empty {
   margin: 0;
   padding: 28px 18px;
@@ -278,6 +355,18 @@
 .field-book__matrix {
   width: max-content;
   min-width: 100%;
+}
+
+.field-book__matrix caption {
+  padding: 9px 12px;
+  color: #684728;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-align: left;
+}
+
+.field-book__swipe {
+  display: none;
 }
 
 .field-book__matrix th,
@@ -519,8 +608,36 @@
 
   .county-standings th,
   .county-standings td {
-    padding: 9px 8px;
+    padding: 8px 6px;
     font-size: 0.82rem;
+  }
+
+  .county-standings__result {
+    min-width: 118px;
+    font-size: 0.76rem !important;
+  }
+
+  .county-standings__local-list {
+    grid-template-columns: 1fr;
+  }
+
+  .field-book__matrix th,
+  .field-book__matrix td,
+  .field-book__matrix th:nth-child(2) {
+    min-width: 156px;
+  }
+
+  .field-book__matrix th:first-child {
+    min-width: 120px;
+  }
+
+  .field-book__swipe {
+    display: block;
+    margin: 8px 10px;
+    color: #684728;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-align: right;
   }
 
   .county-standings__contracts-hint {
