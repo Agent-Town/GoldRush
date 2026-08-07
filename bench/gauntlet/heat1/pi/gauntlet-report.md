@@ -1,16 +1,15 @@
-# Gauntlet Report
+# Gauntlet Report — Dry Gulch (e1-dry-gulch-01)
 
-Failed after 10 attempts.
+Secured on attempt 1!
 
-Last outcome:
 ```json
 {
-  "secured": false,
-  "waves": 5,
-  "timeMs": 168433,
-  "gold": 21,
-  "kills": 116,
-  "calls": 12,
-  "eventLogHash": "fnv1a32:fbfe91c0"
+  "secured": true,
+  "waves": 20,
+  "timeMs": 600000,
+  "gold": 138,
+  "kills": 366,
+  "calls": 20,
+  "eventLogHash": "fnv1a32:87ff176c"
 }
 ```

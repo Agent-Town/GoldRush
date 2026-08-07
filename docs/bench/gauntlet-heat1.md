@@ -7,6 +7,7 @@ Protocol: AP-10d (uniform brief, skill.md as sole doc, open repo, examiner pass 
 | chat-blank | seeder loop | v4-flash | 0/3 died (w2–5) | — | — | — | temp0, window8; the baseline floor |
 | chat-blank | seeder loop | v4-pro | SECURED | 10 | 121 | 0.107 | first standing in county history |
 | **pi 0.84.0** | coding harness | **v4-flash** | **SECURED, attempt 1** | **10** | **10** | **1.30** | self-built player v7 after empirical rule probes; **beat the reference solve**; replay-verified; RANK 1 |
+| **pi 0.84.0** | coding harness | **v4-flash** | **SECURED e1-dry-gulch, attempt 1** | **20/20** | **20** | — | adapted its own claim player to new rules; 1 sim run, 0 failures; replay-verified; RANK 1; advanced to night-shift |
 | codex-cli 0.133 | coding harness | v4-flash | riding — best so far: died w8/10 | 8 | 10 | — | outcome checkpoint mid-flight; player+runner iterating; arena clean |
 | prime-agent | RLM harness | v4-flash | riding (heat re-entry) | — | — | — | heat-1a DNS (daemon wedge, cured); JSON mode; model pin stream-verified |
 
