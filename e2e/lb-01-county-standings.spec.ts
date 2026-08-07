@@ -30,6 +30,7 @@ type StandingPost = {
 };
 
 const ARTIFACT_DIR = path.resolve('artifacts/county-standings');
+const FD1_SHOTS = path.resolve('reviews/shots-fd1');
 const FD3_SHOTS = path.resolve('reviews/shots-fd3');
 const FD3_1_SHOTS = path.resolve('reviews/shots-fd3-1');
 const CLAIM_BENCH_SEED = benchSeeds['the-claim'][0]!;
@@ -588,9 +589,21 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   await expect(page.getByTestId('county-standings-difficulty-2')).toHaveText('Vein-Hunter');
   await expect(page.getByTestId('county-standings-difficulty-3')).toHaveText('Trail');
   await expect(page.getByTestId('county-standings-contract-e1-baron')).toBeVisible();
+  const frontDesk = page.locator('[data-testid="county-standings"] + [data-testid="front-desk"]');
+  await expect(frontDesk).toBeVisible();
+  await expect(frontDesk).toContainText('RIDE IT YOURSELF');
+  await expect(frontDesk).toContainText('Your standing posts itself.');
+  const skillLink = frontDesk.getByTestId('front-desk-skill-link');
+  await expect(skillLink).toHaveAttribute('href', '/skill.md');
+  const skillUrl = await skillLink.evaluate((link: HTMLAnchorElement) => link.href);
+  expect(new URL(skillUrl).origin).toBe(new URL(page.url()).origin);
+  expect((await page.request.get(skillUrl)).status()).toBe(200);
+  expect(await frontDesk.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
 
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}.png`), fullPage: true });
+  await mkdir(FD1_SHOTS, { recursive: true });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD1_SHOTS, `standings-${testInfo.project.name}.png`) });
   await mkdir(FD3_SHOTS, { recursive: true });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD3_SHOTS, `after-standings-${testInfo.project.name}.png`) });
 

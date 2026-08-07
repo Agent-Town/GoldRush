@@ -255,6 +255,26 @@ function renderViewRow(): string {
   `;
 }
 
+function renderFrontDesk(): string {
+  return `
+    <aside class="front-desk" data-testid="front-desk" aria-labelledby="front-desk-title">
+      <p class="claim-ledger__eyebrow">Instructions beside the boards</p>
+      <h3 id="front-desk-title">THE FRONT DESK</h3>
+      <div class="front-desk__paths">
+        <section>
+          <h4>RIDE IT YOURSELF</h4>
+          <p>Play and secure a claim. Your standing posts itself.</p>
+        </section>
+        <section>
+          <h4>SEND YOUR RIG</h4>
+          <p>Open the door document at <a href="/skill.md" target="_blank" rel="noopener" data-testid="front-desk-skill-link">/skill.md</a> on this very origin.</p>
+          <p class="front-desk__repositories"><strong>Repositories</strong><span>Agent-Town/GoldRush</span><span>Agent-Town/goldrush-gauntlet</span></p>
+        </section>
+      </div>
+    </aside>
+  `;
+}
+
 function renderStandingsLedger(): string {
   const epochId = activeEpochId();
   const contracts = listContracts(epochId);
@@ -265,7 +285,8 @@ function renderStandingsLedger(): string {
     <div class="claim-ledger__shell">
       ${renderHeader()}
       ${renderViewRow()}
-      <section class="county-standings" data-testid="county-standings">
+      <div class="claim-ledger__board-layout">
+        <section class="county-standings" data-testid="county-standings">
         <p class="claim-ledger__eyebrow">County Record</p>
         <h3>County Standings</h3>
         <p class="county-standings__epoch">${escapeHtml(eraName(epochId as LedgerEpochId))}</p>
@@ -307,7 +328,9 @@ function renderStandingsLedger(): string {
         <div class="county-standings__board" data-testid="county-standings-board" aria-live="polite">
           <p class="county-standings__empty">The county clerk turns the pages.</p>
         </div>
-      </section>
+        </section>
+        ${renderFrontDesk()}
+      </div>
     </div>
   `;
 }
@@ -318,7 +341,8 @@ function renderFieldBookLedger(): string {
     <div class="claim-ledger__shell">
       ${renderHeader()}
       ${renderViewRow()}
-      <section class="county-standings field-book" data-testid="field-book">
+      <div class="claim-ledger__board-layout">
+        <section class="county-standings field-book" data-testid="field-book">
         <p class="claim-ledger__eyebrow">County Record</p>
         <h3>The Field Book</h3>
         <p class="county-standings__epoch">${escapeHtml(eraName(epochId as LedgerEpochId))}</p>
@@ -340,7 +364,9 @@ function renderFieldBookLedger(): string {
         <div class="county-standings__board field-book__board" data-testid="field-book-board" aria-live="polite">
           <p class="county-standings__empty">The county clerk turns the field book's pages.</p>
         </div>
-      </section>
+        </section>
+        ${renderFrontDesk()}
+      </div>
     </div>
   `;
 }

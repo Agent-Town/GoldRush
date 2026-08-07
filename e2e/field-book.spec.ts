@@ -10,6 +10,7 @@ type MockKV = {
 };
 
 const SHOTS = path.resolve('reviews/shots-fd3');
+const FD1_SHOTS = path.resolve('reviews/shots-fd1');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'field-book',
@@ -209,6 +210,16 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('codex 2026.08');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('medium');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText(new Date(now - 60_000).toISOString());
+  const frontDesk = page.locator('[data-testid="field-book"] + [data-testid="front-desk"]');
+  await expect(frontDesk).toBeVisible();
+  await expect(frontDesk).toContainText('SEND YOUR RIG');
+  await expect(frontDesk).toContainText('Agent-Town/GoldRush');
+  await expect(frontDesk).toContainText('Agent-Town/goldrush-gauntlet');
+  await expect(frontDesk.getByTestId('front-desk-skill-link')).toHaveAttribute('href', '/skill.md');
+  expect(await frontDesk.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+  await page.locator('.claim-ledger__shell').evaluate((element) => { element.scrollTop = 0; });
+  await mkdir(FD1_SHOTS, { recursive: true });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD1_SHOTS, `field-book-${testInfo.project.name}.png`) });
   await mkdir(SHOTS, { recursive: true });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `after-field-book-${testInfo.project.name}.png`) });
   expect(errors).toEqual({ console: [], page: [] });

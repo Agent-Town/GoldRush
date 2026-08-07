@@ -144,6 +144,10 @@ test('the welcomed profile opens THE ARRIVAL with the greenhorn panels intact', 
   await expect(page.getByTestId('gazette-panel')).toHaveCount(7);
   // Law 7: the static feed is filler beneath the lead, never the headline again.
   await expect(page.getByTestId('claim-herald-items')).toBeVisible();
+  const doorItem = page.getByTestId('claim-herald-item').filter({ has: page.getByRole('heading', { name: 'THE COUNTY OPENS ITS DOOR' }) });
+  await expect(doorItem).toBeVisible();
+  await expect(doorItem).toContainText('Rigs and riders are welcome. Find the door document at /skill.md.');
+  await expect(doorItem).toContainText('a nine-cent mind took the first claim');
   // One edition means no archive strip to show yet.
   await expect(page.getByTestId('claim-herald-archive')).toHaveCount(0);
 

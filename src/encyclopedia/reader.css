@@ -210,6 +210,87 @@
   line-height: 1.4;
 }
 
+.claim-ledger__board-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  align-items: start;
+  gap: 16px;
+  padding: 20px;
+}
+
+.claim-ledger__board-layout > .county-standings {
+  min-width: 0;
+  padding: 0;
+}
+
+.front-desk {
+  box-sizing: border-box;
+  padding: 14px;
+  border: 1px solid rgba(76, 48, 23, 0.48);
+  border-top: 5px double #8b7d3c;
+  border-radius: 8px;
+  background: rgba(255, 252, 240, 0.78);
+  box-shadow: 0 5px 14px rgba(46, 27, 14, 0.12);
+}
+
+.front-desk h3 {
+  margin: 0 0 12px;
+  font-size: 1.08rem;
+  text-transform: uppercase;
+}
+
+.front-desk__paths {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 10px;
+}
+
+.front-desk__paths section {
+  align-self: start;
+  min-width: 0;
+  padding-left: 9px;
+  border-left: 3px solid #5b8a8a;
+}
+
+.front-desk__paths h4 {
+  margin: 0 0 5px;
+  color: #315f5f;
+  font-size: 0.75rem;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.front-desk__paths p {
+  margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
+.front-desk__paths a {
+  color: #315f5f;
+  font-weight: 800;
+}
+
+.front-desk__repositories {
+  display: grid;
+  gap: 2px;
+  margin-top: 8px !important;
+  overflow-wrap: anywhere;
+}
+
+.front-desk__repositories strong {
+  text-transform: uppercase;
+}
+
+.claim-ledger__board-layout .county-standings__contracts-hint {
+  display: block;
+  margin: 3px 0 0;
+  color: #684728;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-align: right;
+}
+
 .county-standings {
   padding: 20px;
 }
@@ -606,6 +687,15 @@
     overflow-x: visible;
   }
 
+  .claim-ledger__board-layout {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px;
+  }
+
+  .front-desk {
+    order: -1;
+  }
+
   .county-standings th,
   .county-standings td {
     padding: 8px 6px;
@@ -638,15 +728,6 @@
     font-size: 0.75rem;
     font-weight: 800;
     text-align: right;
-  }
-
-  .county-standings__contracts-hint {
-    display: block;
-    margin: 3px 0 0;
-    color: #684728;
-    text-align: right;
-    font-size: 0.75rem;
-    font-weight: 800;
   }
 
   /* Four party chips do not fit a 390px row; wrapping keeps every posse size one tap away
