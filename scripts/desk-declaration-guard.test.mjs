@@ -113,11 +113,13 @@ test('REFUSES (exit 2) rather than greening when there is no OWNER DESK segment'
   assert.match(r.stderr, /REFUSING/);
 });
 
-test('REFUSES (exit 2) when the desk segment holds zero F-IDs', (t) => {
+test('REFUSES (exit 2) when the desk segment holds zero keyed items', (t) => {
+  // Wording widened s1535: the refusal now covers BOTH key shapes, so a desk with
+  // no F-IDs but a real slug item is no longer "empty" and must NOT refuse.
   const dir = fixture(t, 's1 handoff 🔺 **OWNER DESK — nothing today.**\n', '- 🟡 **F-1-1** x\n');
   const r = run(dir);
   assert.equal(r.status, 2);
-  assert.match(r.stderr, /zero F-IDs/);
+  assert.match(r.stderr, /zero keyed items/);
 });
 
 test('REFUSES (exit 2) when BACKLOG.md is missing', (t) => {
@@ -259,7 +261,104 @@ test('a handoff whose desk header has no F-IDs after it REFUSES (exit 2)', (t) =
   );
   const r = run(dir);
   assert.equal(r.status, 2);
-  assert.match(r.stderr, /zero F-IDs/);
+  assert.match(r.stderr, /zero keyed items/);
+});
+
+// ───────────────────────────────────────────────────────────────────────────
+// F-1534-2 / F-1535-1 — THE SECOND KEY SHAPE. The desk routes items under two
+// shapes and this guard knew only one, so a fifth of the live desk was read
+// past entirely. Every test below drives the SLUG axis specifically; the F-ID
+// tests above must all keep passing unchanged, since the flat F-ID scan is
+// deliberately untouched (its extra hits are the F-1193-2 feature).
+// ───────────────────────────────────────────────────────────────────────────
+
+/** A desk whose items are keyed by backticked slugs rather than F-IDs. */
+const SLUG_DESK = (items) =>
+  'Last updated: s1 handoff, lock CLEARED — work. 🔺 **OWNER\'S DESK — some awaiting a word.** ' +
+  items.map((i) => `🔺 **\`${i}\` OPEN** — needs a ruling.`).join(' ') +
+  '\n- **s0 handoff (line-1 archive):** older text\n';
+
+test('a SLUG-keyed desk item WITH a declaring row passes', (t) => {
+  const dir = fixture(t, SLUG_DESK(['rf-99-some-fork']), '🔺 **`rf-99-some-fork` (s1) — a thing.** body\n');
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /desk slugs\s*:\s*1/);
+});
+
+test('MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug', (t) => {
+  // The precise live defect: four slug-keyed items sat undeclared and the guard
+  // could not see them at all, reporting PASS while a fifth of the desk was
+  // invisible. Before s1535 this fixture exited 0.
+  const dir = fixture(t, SLUG_DESK(['bt-99-homestead-thing']), '🔺 **F-8888-1 (s1) — unrelated.** body\n');
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stderr, /bt-99-homestead-thing/);
+});
+
+test('the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared', (t) => {
+  const dir = fixture(
+    t,
+    SLUG_DESK(['e9-some-socket']),
+    '🔺 **`e9-other-socket` (s1) — blocked behind `e9-some-socket`.** body\n',
+  );
+  const r = run(dir);
+  assert.equal(r.status, 1, 'a mention inside another item\'s row must not declare');
+  assert.match(r.stderr, /e9-some-socket/);
+});
+
+test('F-1535-1: a backtick in an item\'s PROSE is not a desk item (the flat-scan trap)', (t) => {
+  // Reusing the SLUG *pattern* in this guard's flat tail scan — the literal
+  // reading of F-1534-2's prescription — invents desk items out of ordinary
+  // markup. Measured s1535 on the live desk: flat found 7 slugs, 3 spurious
+  // (`e2-incline`, a MAP NAME inside F-1529-4's prose, plus two aliases of
+  // F-keyed items). Each would have demanded a BACKLOG row and RED the battery.
+  const line1 =
+    'Last updated: s1 handoff, lock CLEARED — work. 🔺 **OWNER\'S DESK — 1 awaiting a word.** ' +
+    '🔺 **F-9100-1 OPEN** — the storm trigger costs 7.75× on `e2-incline` and needs a pick.' +
+    '\n- **s0 handoff (line-1 archive):** older\n';
+  const dir = fixture(t, line1, '🔺 **F-9100-1 (s1) — a thing.** body\n');
+  const r = run(dir);
+  assert.equal(r.status, 0, `e2-incline must not be demanded as a desk item:\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /desk slugs\s*:\s*0/);
+});
+
+test('F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item', (t) => {
+  // "🔺 **F-1101-1 / `calibrate-suite-workers-v2` OPEN**" — first-key-wins inside
+  // KEY_ZONE, so this is an F-ID item, not a slug item needing its own row.
+  const line1 =
+    'Last updated: s1 handoff, lock CLEARED — work. 🔺 **OWNER\'S DESK — 1 awaiting a word.** ' +
+    '🔺 **F-9101-1 / `calibrate-some-thing-v2` OPEN** — retire the thread.' +
+    '\n- **s0 handoff (line-1 archive):** older\n';
+  const dir = fixture(t, line1, '🔺 **F-9101-1 (s1) — a thing.** body\n');
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /desk slugs\s*:\s*0/);
+});
+
+test('a desk of ONLY slug items does not trip the zero-keyed-items refusal', (t) => {
+  // The refusal used to be "zero F-IDs", which would have REFUSED a legitimate
+  // all-slug desk the moment the guard learned to read one.
+  const dir = fixture(t, SLUG_DESK(['xx-only-slug-item']), '🔺 **`xx-only-slug-item` (s1) — a thing.** body\n');
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /desk F-IDs\s*:\s*0/);
+  assert.match(r.stdout, /desk slugs\s*:\s*1/);
+});
+
+test('the live desk carries BOTH shapes — the slug axis is not vacuously green', async () => {
+  // A green on an axis with zero members proves nothing (the s1299 standard).
+  // Assert the live board actually exercises the new path.
+  const { deskIds } = await import(pathToFileURL(GUARD).href);
+  const status = fs.readFileSync(path.join(REPO, 'STATUS.md'), 'utf8');
+  const desk = deskIds(status);
+  if (desk.kind === 'lock') return; // mid-fire: no desk written yet
+  assert.equal(desk.kind, 'desk');
+  assert.ok(
+    (desk.slugs?.length ?? 0) > 0,
+    'the live desk should carry at least one slug-keyed item; if it genuinely ' +
+      'does not, this assertion is the thing to revisit — but check first that ' +
+      'the parser has not silently stopped keying slugs (F-1534-2 was exactly that)',
+  );
 });
 
 // THE BASELINE IS A CEILING, NOT A FLOOR (F-1335-1, s1335).

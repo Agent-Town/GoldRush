@@ -162,7 +162,55 @@ const GRANDFATHERED = new Set([
  * ([A-Z0-9]{1,8} matches "1533"), so no previously-seen id can be lost.
  */
 const FINDING = /F-(?:[A-Z0-9]{1,8}-)+\d+/g;
+/** Non-global twin of FINDING — `.match` only reports `.index` when NOT global. */
+const FINDING_ONE = /F-(?:[A-Z0-9]{1,8}-)+\d+/;
 const SUBJECT_CHARS = 90; // same subject zone as findings-state-guard.mjs
+
+/**
+ * THE SECOND KEY SHAPE (F-1534-2 measured it, F-1535-1 priced it).
+ *
+ * The desk routes items under TWO shapes, and until s1535 this guard knew only
+ * one. `desk-carryforward-guard` has always carried both; the divergence hid
+ * because on the s1533 desk each guard reported 21 and they were DIFFERENT 21s
+ * (carryforward: 17 F-IDs + 4 slugs; this guard: 21 F-IDs, picking up riding ids
+ * the other cannot key and dropping all four slugs). Matching totals, disjoint
+ * membership — two guards can agree on the count and disagree on the SET.
+ *
+ * ⚠️ REUSING THE PATTERN IS NOT REUSING THE PARSER, AND THAT IS THE WHOLE
+ * DESIGN NOTE. F-1534-2 prescribed "add the SLUG shape reusing the pattern in
+ * desk-carryforward-guard.mjs". Taken literally — dropping SLUG into this
+ * guard's FLAT tail scan the way FINDING is used — it is WRONG, and s1535
+ * measured the cost before building it rather than after:
+ *
+ *   ARM A (flat, this guard's F-ID reading):  7 slug hits → 3 spurious
+ *   ARM B (🔺-segment anchored, KEY_ZONE 120): 4 slug hits → 0 spurious
+ *
+ * The three ARM A invents are `e2-incline` (a MAP NAME inside F-1529-4's prose)
+ * and `calibrate-suite-workers-v2` / `vp-02e-jumper-8way-activation` (aliases of
+ * items already keyed by their F-ID: "🔺 **F-1101-1 / `calibrate-…`"). None is a
+ * desk item; all three would have demanded a BACKLOG row and RED the battery.
+ *
+ * WHY THE ASYMMETRY IS CORRECT RATHER THAN AN INCONSISTENCY: an F-ID appearing
+ * anywhere in the tail is ALWAYS a real finding, so the flat scan's extra hits
+ * are a FEATURE — that is how F-1193-2 was caught riding inside F-1242-1's item
+ * (s1334), and narrowing it would lose that. A BACKTICK, by contrast, is this
+ * repo's ordinary prose markup for paths, scripts, ids and map names, so the
+ * same flat scan on slugs is nearly all noise. Different shapes, different
+ * signal-to-noise, therefore different parsers — deliberately.
+ *
+ * ARM B validated against ground truth: it keys 21 of 21 segments with 0
+ * unkeyed, matching the "— 21 awaiting a word" the s1534 desk wrote in its own
+ * header. A parser whose denominator nobody checks is how the 145-id misread
+ * survived (F-1471-3).
+ */
+const SLUG = /`([a-z0-9][a-z0-9-]{6,})`/;
+/**
+ * How far into a 🔺 segment the item's own key may sit — shared with
+ * desk-carryforward-guard.mjs. The convention is "🔺 **<key> …", so the key is
+ * at the very front; anything further in is that item's PROSE, which routinely
+ * cites other findings and other files.
+ */
+const KEY_ZONE = 120;
 
 /**
  * All four spellings a fire has actually written, measured on STATUS.md s1472:
@@ -199,7 +247,31 @@ export function deskIds(statusText) {
   if (!hits.length) return { kind: 'none' };
   const last = hits[hits.length - 1]; // the desk is the TAIL; prose mentions lose
   const tail = line1.slice(last.index);
-  return { kind: 'desk', ids: [...new Set(tail.match(FINDING) || [])] };
+  return {
+    kind: 'desk',
+    ids: [...new Set(tail.match(FINDING) || [])],
+    slugs: deskSlugs(tail),
+  };
+}
+
+/**
+ * The SLUG-keyed desk items in a tail: one per 🔺 segment whose key is a
+ * backticked slug rather than an F-ID (see the SLUG note above for why this is
+ * segment-anchored while the F-ID scan is flat).
+ *
+ * First-key-wins inside KEY_ZONE, exactly as desk-carryforward-guard does it:
+ * "🔺 **F-1101-1 / `calibrate-suite-workers-v2` OPEN**" is an F-ID item that
+ * happens to cite its slug, NOT a slug item, so it must not be keyed here.
+ */
+export function deskSlugs(tail) {
+  const out = [];
+  for (const seg of String(tail).split('🔺').slice(1)) {
+    const head = seg.slice(0, KEY_ZONE);
+    const f = head.match(FINDING_ONE);
+    const s = head.match(SLUG);
+    if (s && (!f || s.index < f.index)) out.push(s[1]);
+  }
+  return [...new Set(out)];
 }
 
 /**
@@ -213,6 +285,23 @@ export function declaredIds(backlogText) {
     const body = line.trim().replace(/^[-*]\s+/, '');
     const first = (body.slice(0, SUBJECT_CHARS).match(FINDING) || [])[0];
     if (first && !found.has(first)) found.set(first, i + 1);
+  });
+  return found;
+}
+
+/**
+ * The same question on the slug axis: a slug is DECLARED when some BACKLOG row
+ * carries it as the first backticked slug of its 90-char subject zone. Same zone
+ * and same bullet-stripping as declaredIds, so "- 🔺 **`slug`" and "🔺 **`slug`"
+ * read identically, and a slug merely CITED deep inside another item's row does
+ * not count — the F-1328-3 discriminator, one shape over.
+ */
+export function declaredSlugs(backlogText) {
+  const found = new Map();
+  backlogText.split('\n').forEach((line, i) => {
+    const body = line.trim().replace(/^[-*]\s+/, '');
+    const m = body.slice(0, SUBJECT_CHARS).match(SLUG);
+    if (m && !found.has(m[1])) found.set(m[1], i + 1);
   });
   return found;
 }
@@ -257,26 +346,40 @@ function main() {
   }
 
   const ids = desk.ids;
-  if (ids.length === 0) {
-    console.error('desk-declaration-guard: REFUSING — the desk segment holds zero F-IDs.');
+  const slugs = desk.slugs ?? [];
+  if (ids.length === 0 && slugs.length === 0) {
+    console.error('desk-declaration-guard: REFUSING — the desk segment holds zero keyed items.');
+    console.error('  Neither an F-ID nor a `backticked-slug` was found after the desk header.');
     console.error('  Either the desk format changed or the parser is broken; both need a human.');
     console.error('  (A prose mention of the desk with no list after it lands here too.)');
     process.exit(2);
   }
 
-  const declared = declaredIds(fs.readFileSync(backlogPath, 'utf8'));
+  const backlogText = fs.readFileSync(backlogPath, 'utf8');
+  const declared = declaredIds(backlogText);
+  const declaredSlug = declaredSlugs(backlogText);
   const undeclared = ids.filter((id) => !declared.has(id));
-  const fresh = undeclared.filter((id) => !GRANDFATHERED.has(id));
-  const retired = [...GRANDFATHERED].filter((id) => declared.has(id));
+  const undeclaredSlugs = slugs.filter((s) => !declaredSlug.has(s));
+  const fresh = [...undeclared, ...undeclaredSlugs].filter((id) => !GRANDFATHERED.has(id));
+  const retired = [...GRANDFATHERED].filter((id) => declared.has(id) || declaredSlug.has(id));
 
   console.log('=== desk-declaration-guard ===');
   console.log('desk F-IDs        :', ids.length);
-  console.log('with a BACKLOG row:', ids.length - undeclared.length);
-  console.log('undeclared        :', undeclared.length, `(grandfathered ${GRANDFATHERED.size})`);
+  console.log('desk slugs        :', slugs.length);
+  console.log('with a BACKLOG row:', ids.length - undeclared.length + (slugs.length - undeclaredSlugs.length));
+  console.log(
+    'undeclared        :',
+    undeclared.length + undeclaredSlugs.length,
+    `(grandfathered ${GRANDFATHERED.size})`,
+  );
   if (REPORT) {
     for (const id of ids) {
       const at = declared.get(id);
       console.log(`  ${at ? 'ROW  @' + at : GRANDFATHERED.has(id) ? 'none (grandfathered)' : 'NONE'}  ${id}`);
+    }
+    for (const s of slugs) {
+      const at = declaredSlug.get(s);
+      console.log(`  ${at ? 'ROW  @' + at : GRANDFATHERED.has(s) ? 'none (grandfathered)' : 'NONE'}  ${s} (slug)`);
     }
   }
   if (retired.length) {
@@ -292,7 +395,8 @@ function main() {
     console.error('');
     console.error('The dashboard renders BACKLOG.md, so these are on no board the owner reads');
     console.error('(Completeness Law: "invisible = forgotten"). Give each one a row whose FIRST');
-    console.error(`F-ID, within the first ${SUBJECT_CHARS} characters, is that id. A mention inside`);
+    console.error(`key, within the first ${SUBJECT_CHARS} characters, is that item — its F-ID for an`);
+    console.error('F-keyed item, its `backticked-slug` for a slug-keyed one. A mention inside');
     console.error('another finding\'s row does NOT count — that is the F-1328-3 shape.');
     process.exit(1);
   }
