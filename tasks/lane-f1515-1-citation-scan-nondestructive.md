@@ -88,9 +88,22 @@ inflated by F-1515-2's pollution.** Curing F-1515-2 first makes F-1515-1's measu
    contribute a title.
 
 3. **Do not regress the corpus. Hard acceptance bar, not advice.**
-   Run `node scripts/citation-title-guard.mjs --report` before and after, and quote both.
-   - `citations scanned` must stay **511**.
-   - `CARRIES-TITLE` **must be ≥ 206** and `NUMBER-ONLY` **must be ≤ 262** (the post-`790a66f5` floor).
+   ⚠️ **THE BAR IS RELATIVE TO YOUR OWN BASELINE, NOT TO A NUMBER WRITTEN HERE — read why before you
+   start, because the first version of this master STOPPED a run on exactly this.** Attempt 1 fixed
+   the denominator at `511`; but the authoring commit `edbbb8f0a` *itself* added four citations (two
+   in `tasks/goals.json`, two in this master), so the corpus was `515` before any code changed and
+   **the bar was unsatisfiable the moment it was written.** The runner measured it, refused to
+   implement against an impossible gate, and was correct to do so (report:
+   `docs/bench/f1515-1-citation-scan-nondestructive-stop.md`). A gate that names an absolute count
+   any future ledger edit can move is a gate that rots.
+   - **FIRST**, before touching any code, run `node scripts/citation-title-guard.mjs --report` on the
+     lane as you found it and **paste it. That is your baseline** — call the numbers `B_scanned`,
+     `B_title`, `B_number`.
+   - **AFTER** your change: `scanned` **must equal `B_scanned`** · `CARRIES-TITLE` **must be ≥
+     `B_title`** · `NUMBER-ONLY` **must be ≤ `B_number`**.
+   - ⓘ *For orientation only, measured on main at authoring time and not a bar:* `515 / 262 / 210 / 43`.
+     If your baseline differs, **trust your baseline** — the ledger moves between fires and that is
+     expected, not a defect.
    - ⚠️ **Scope 2 predicts it moves NOTHING.** The 0-live measurement says no citation is carried by a
      polluted string, so removing the pollution must change no verdict. **If a count moves, that
      measurement was wrong — STOP and report which citation moved and why**, rather than adjusting a
@@ -117,7 +130,7 @@ your report under `docs/bench/`.
 - ❌ **Do NOT reword any citation in `tasks/**` to move a count.** The corpus is the measurement
   subject; editing it is measuring your own edit.
 - ❌ Do NOT change `CITE`, `WINDOW` or `MIN_PREFIX` — a different denominator makes the before/after
-  table meaningless. `citations == 511` is the tripwire.
+  table meaningless. **`scanned == B_scanned`** (scope 3's baseline, not a fixed number) is the tripwire.
 - ❌ Do NOT edit any `e2e/*.spec.ts`. Scope 2 changes how titles are *parsed*, never what the specs
   *say* — renaming a `test.setBalance` helper to dodge the regex would be laundering.
 - ❌ Do NOT re-pin `scripts/gr-sim.test.mjs` (F-1441-3). Do NOT touch `src/`.
