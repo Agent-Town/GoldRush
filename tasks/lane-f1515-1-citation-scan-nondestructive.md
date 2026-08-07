@@ -47,8 +47,16 @@ Measured s1515 by replaying both regexes from the merged guard:
 
 `he said "foo and then some prose "<title>".` yields `"foo and then some prose "` from **both** arms.
 **Priced against the live corpus: 2 genuine citations**, both verified by reading the spec —
-`e2e/tl-01-run-telemetry.spec.ts:229` and `e2e/asset-diet.spec.ts:73`. That is a **lower bound**: the
-probe's matcher was stricter than the shipped `matchesATitle`.
+`e2e/tl-01-run-telemetry.spec.ts:229` ("plain no-debug secure return keeps telemetry invisible to gameplay")
+and `e2e/asset-diet.spec.ts:73` ("honest town and claim cues appear while GLBs are throttled and leave at ready").
+That is a **lower bound**: the probe's matcher was stricter than the shipped `matchesATitle`.
+
+ⓘ *Those two titles are quoted here because this master was caught by `test:citations` without them —
+the guard you are about to change refused the task that changes it. **And the first fix failed too:
+the titles were wrapped across a line break, and `QUOTED` excludes `\n`, so a title that wraps is
+invisible to the scanner even when it is quoted correctly.** Each must sit on ONE line. Do not reflow
+these two lines to fit a margin; that is what keeps this file green — and it is a third facet of the
+same defect class, noted in the handoff.*
 
 **F-1515-2 (s1515)** — `TITLE_DECL`'s `(?:\.\w+)*` matches **any** dotted helper, not just the real
 modifiers, so `test.setBalance('e10Static.arrivalZ', 20)` is parsed as a test declaration and its first
