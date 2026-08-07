@@ -11,8 +11,12 @@
 //
 // THE PRICING, MEASURED s1521 BEFORE A LINE OF THIS FILE WAS WRITTEN (the whole point of the ask):
 //
-//   1. THE TELL IS NOT WHERE IT WAS ASSUMED TO BE. The phrase "supersedes nothing" lives in
-//      tasks/BACKLOG.md:3024 and STATUS.md:122 — PROSE LEDGERS — not in tasks/goals.json. A parser
+//   1. THE TELL IS NOT WHERE IT WAS ASSUMED TO BE. The phrase "supersedes nothing" lives in the
+//      PROSE LEDGERS — grep `supersedes nothing` (tasks/BACKLOG.md, STATUS.md; the dispatch row
+//      reads "its STOP was correct and this supersedes nothing" in BACKLOG and "...was CORRECT and
+//      this supersedes nothing" in STATUS — the capitalisation differs, which is exactly why the
+//      shared span is the citable one). Cited by content, not coordinate, because this fire's own
+//      handoff bullet shifts STATUS.md line numbers (F-1310-1). It is NOT in tasks/goals.json. A parser
 //      for expired dispatch-time claims would have to read the handoff corpus and understand future
 //      tense. That is the expensive guard s1520 feared, and it is correctly NOT built here.
 //
