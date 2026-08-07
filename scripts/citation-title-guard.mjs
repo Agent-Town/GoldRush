@@ -64,6 +64,7 @@ const UPDATE = process.argv.includes('--update-baseline');
 const CITE = /((?:[\w./-]*\/)?e2e\/[\w.-]+\.spec\.ts):(\d+)/g;
 const TITLE_DECL = /^\s*(?:test|it)(?:\.\w+)*\s*\(\s*(['"`])([\s\S]*?)\1/gm;
 const QUOTED = /["“”'‘’`]([^"“”'‘’`\n]{12,160})["“”'‘’`]/g;
+const QUOTED_BY_KIND = /"([^"\n]{12,160})"|“([^”\n]{12,160})”|'([^'\n]{12,160})'|‘([^’\n]{12,160})’|`([^`\n]{12,160})`/g;
 
 const WINDOW = 400;
 const MIN_PREFIX = 20;
@@ -158,6 +159,18 @@ function matchesATitle(quote, titles) {
   return null;
 }
 
+function matchingQuote(win, subjects) {
+  for (const pattern of [QUOTED, QUOTED_BY_KIND]) {
+    pattern.lastIndex = 0;
+    let match;
+    while ((match = pattern.exec(win))) {
+      const found = matchesATitle(match.slice(1).find((capture) => capture !== undefined), subjects);
+      if (found) return found;
+    }
+  }
+  return null;
+}
+
 export function scan(root = ROOT) {
   const rows = [];
   for (const file of trackedTaskDocs()) {
@@ -184,27 +197,16 @@ export function scan(root = ROOT) {
       if (titles === null) {
         verdict = 'SPEC-GONE';
       } else {
-        let q;
-        QUOTED.lastIndex = 0;
-        while ((q = QUOTED.exec(win))) {
-          const t = matchesATitle(q[1], titles);
-          if (t) {
-            verdict = 'CARRIES-TITLE';
-            carried = t;
-            break;
-          }
+        carried = matchingQuote(win, titles);
+        if (carried) {
+          verdict = 'CARRIES-TITLE';
         }
         // Titles first, then any real source line of the same spec (F-1252-3).
         if (verdict === 'NUMBER-ONLY') {
           const lines = sourceLinesOf(spec) || [];
-          QUOTED.lastIndex = 0;
-          while ((q = QUOTED.exec(win))) {
-            const t = matchesATitle(q[1], lines);
-            if (t) {
-              verdict = 'CARRIES-LINE';
-              carried = t;
-              break;
-            }
+          carried = matchingQuote(win, lines);
+          if (carried) {
+            verdict = 'CARRIES-LINE';
           }
         }
       }
