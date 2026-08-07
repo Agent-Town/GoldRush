@@ -48,6 +48,7 @@ export default defineConfig({
   testMatch: captureRun ? ['**/*.rig.ts'] : undefined,
   timeout: 30_000,
   workers: isFireShell ? 1 : undefined,
+  metadata: captureRevision(),
   expect: {
     timeout: 5_000,
   },
@@ -102,3 +103,17 @@ export default defineConfig({
     },
   ],
 });
+
+import { execFileSync } from 'node:child_process';
+
+function captureRevision(): { revision: string; dirty: string | boolean } {
+  try {
+    const cwd = import.meta.dirname;
+    const revision = execFileSync('git', ['rev-parse', 'HEAD'], { cwd, encoding: 'utf8' }).trim();
+    const dirty = execFileSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd, encoding: 'utf8' }).trim().length > 0;
+    return { revision, dirty };
+  } catch (error) {
+    console.error('revision metadata could not be recorded: ' + String(error));
+    return { revision: 'unrecorded', dirty: 'unrecorded' };
+  }
+}
