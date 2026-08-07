@@ -57,6 +57,21 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron/);
 });
 
+test('gr-sim keeps standing orders through free blank and null turns', () => {
+  const plan = JSON.stringify([{ verb: 'HOLD', pos: { x: 12, z: 12 } }]);
+  const run = spawnSync(
+    process.execPath,
+    ['scripts/gr-sim.mjs', '--contract', 'e1-dry-gulch', '--seed', 'bench-001'],
+    { cwd: ROOT, encoding: 'utf8', input: [plan, '', 'null', ...Array(20).fill('null')].join('\n') + '\n', timeout: 30_000 },
+  );
+  assert.equal(run.status, 0, run.stderr);
+
+  const lines = run.stdout.trim().split('\n').map(JSON.parse);
+  const views = lines.filter((line) => line.schema === 'goldrush.view.v1');
+  assert.equal(lines.at(-1).calls, 1);
+  assert.deepEqual(views.slice(1, 4).map((view) => view.now.orders[0]?.status), ['active', 'active', 'active']);
+});
+
 test('gr-sim hashes a fractional-yield run identically twice', async () => {
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;

@@ -152,6 +152,7 @@ async function readOrders(lines, sim) {
   while (true) {
     const next = await lines.next();
     if (next.done) throw new Error('stdin ended while gr-sim was waiting for standing orders.');
+    if (!next.value.trim()) return;
     let orders;
     try {
       orders = JSON.parse(next.value);
@@ -159,6 +160,7 @@ async function readOrders(lines, sim) {
       process.stderr.write(`gr-sim rejected orders: ${error instanceof Error ? error.message : String(error)}\n`);
       continue;
     }
+    if (orders === null) return;
     const receipt = sim.submitOrders(orders);
     if (receipt.outcome.ok) return;
     process.stderr.write(`gr-sim rejected orders: ${receipt.outcome.message ?? receipt.outcome.reason}\n`);
