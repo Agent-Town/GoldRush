@@ -94,9 +94,68 @@ while true; do
       lane_probe_rc=$?
       lane_verdict=$(printf '%s\n' "$lane_probe" | sed -n 's/^  => \([A-Z-]*\):.*/\1/p' | tail -1)
       if [ "$lane_probe_rc" -eq 2 ] && [ "$lane_verdict" = "HOLDS" ]; then
-        echo "[lane-runner-v3] $slot: REFUSE $name — HOLDS undrained paths:"
-        printf '%s\n' "$lane_probe" | sed -n '/^[[:space:]]*HELD /p'
-        continue
+        lane_branch=$(printf '%s\n' "$lane_probe" | sed -n 's/^[^ ]*  \([^ ]*\)  ahead=.*/\1/p' | head -1)
+        held_count=$(printf '%s\n' "$lane_probe" | sed -n '/^[[:space:]]*HELD /p' | wc -l | tr -d ' ')
+        held_paths=()
+        while IFS= read -r held_path; do
+          [ -n "$held_path" ] && held_paths+=("$held_path")
+        done < <(printf '%s\n' "$lane_probe" | sed -n 's/^[[:space:]]*HELD [^ ]*  \(.*\)  (.*)$/\1/p')
+
+        # The outer instrument fails open so it cannot brick dispatch. Once HOLDS is proven,
+        # this narrower instrument fails closed because only positive absorption clears it.
+        residue_probe='' residue_probe_rc=125 residue_absorbed_count=0 residue_line_count=0
+        deletion_probe='' deletion_probe_rc=125 deletion_path_count=0 deletion_numeric_count=0 deletion_count=0
+        if [ -n "$lane_branch" ] && [ "$held_count" -gt 0 ] && [ "${#held_paths[@]}" -eq "$held_count" ]; then
+          residue_probe=$(
+            cd "$ROOT" && /usr/bin/perl -e '
+              $seconds = shift;
+              $pid = fork;
+              exit 125 unless defined $pid;
+              if ($pid == 0) { setpgrp(0, 0); exec @ARGV or exit 126 }
+              $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 };
+              alarm $seconds;
+              waitpid $pid, 0;
+              alarm 0;
+              exit $? >> 8;
+            ' 10 node scripts/lane-absorbed-lines.mjs "$lane_branch" "${held_paths[@]}" 2>&1
+          )
+          residue_probe_rc=$?
+          residue_absorbed_count=$(printf '%s\n' "$residue_probe" | awk '
+            /: ABSORBED — all [1-9][0-9]* added line/ || /: ABSORBED \(token-level\)/ { n++ }
+            END { print n+0 }
+          ')
+          residue_line_count=$(printf '%s\n' "$residue_probe" | sed '/^$/d' | wc -l | tr -d ' ')
+          deletion_probe=$(
+            cd "$ROOT" && /usr/bin/perl -e '
+              $seconds = shift;
+              $pid = fork;
+              exit 125 unless defined $pid;
+              if ($pid == 0) { setpgrp(0, 0); exec @ARGV or exit 126 }
+              $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 };
+              alarm $seconds;
+              waitpid $pid, 0;
+              alarm 0;
+              exit $? >> 8;
+            ' 10 git diff --numstat "main...$lane_branch" -- "${held_paths[@]}" 2>&1
+          )
+          deletion_probe_rc=$?
+          deletion_path_count=$(printf '%s\n' "$deletion_probe" | awk 'NF { n++ } END { print n+0 }')
+          deletion_numeric_count=$(printf '%s\n' "$deletion_probe" | awk '$1 ~ /^[0-9]+$/ && $2 ~ /^[0-9]+$/ { n++ } END { print n+0 }')
+          deletion_count=$(printf '%s\n' "$deletion_probe" | awk '$2 ~ /^[0-9]+$/ { n += $2 } END { print n+0 }')
+        fi
+        if [ "$residue_probe_rc" -eq 0 ] &&
+           [ "$residue_absorbed_count" -eq "$held_count" ] &&
+           [ "$residue_line_count" -eq "$held_count" ] &&
+           [ "$deletion_probe_rc" -eq 0 ] &&
+           [ "$deletion_path_count" -eq "$held_count" ] &&
+           [ "$deletion_numeric_count" -eq "$held_count" ] &&
+           [ "$deletion_count" -eq 0 ]; then
+          echo "[lane-runner-v3] $slot: HOLDS paths fully absorbed by main — dispatching $name: ${held_paths[*]}"
+        else
+          echo "[lane-runner-v3] $slot: REFUSE $name — HOLDS undrained paths:"
+          printf '%s\n' "$lane_probe" | sed -n '/^[[:space:]]*HELD /p'
+          continue
+        fi
       fi
     fi
     # END F-1522-1 LANE-SAFETY GUARD
