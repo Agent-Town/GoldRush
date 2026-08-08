@@ -26,14 +26,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { deskItems, deskTail } from './desk-carryforward-guard.mjs';
 import { scan } from './findings-state-guard.mjs';
 
 const SUBJECT_CHARS = 90;
-const FINDING = /\bF-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d+\b/g;
 const FINDING_ONE = /\bF-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d+\b/;
-const SLUG = /`([a-z0-9][a-z0-9-]{6,})`/;
-const DESK_WORD = /OWNER(?:'S|’S|S|`S)? DESK/g;
-const KEY_ZONE = 120;
 
 function value(flag, fallback) {
   const index = process.argv.indexOf(flag);
@@ -43,18 +40,9 @@ function value(flag, fallback) {
 export function desk(statusText) {
   const line1 = statusText.split('\n')[0] || '';
   if (line1.startsWith('ACTIVE')) return { kind: 'lock', items: [] };
-  const hits = [...line1.matchAll(DESK_WORD)];
-  if (!hits.length) return { kind: 'none', items: [] };
-  const tail = line1.slice(hits.at(-1).index);
-  const items = [...new Set(tail.match(FINDING) || [])].map((id) => ({ id, type: 'finding' }));
-  for (const segment of tail.split('🔺').slice(1)) {
-    const head = segment.slice(0, KEY_ZONE);
-    const finding = head.match(FINDING_ONE);
-    const slug = head.match(SLUG);
-    if (slug && (!finding || slug.index < finding.index) && !items.some(({ id }) => id === slug[1])) {
-      items.push({ id: slug[1], type: 'slug' });
-    }
-  }
+  const tail = deskTail(line1);
+  if (!tail) return { kind: 'none', items: [] };
+  const items = deskItems(tail).map((id) => ({ id, type: FINDING_ONE.test(id) ? 'finding' : 'slug' }));
   return { kind: 'desk', items };
 }
 
