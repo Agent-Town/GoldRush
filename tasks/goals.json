@@ -4556,6 +4556,13 @@
               "status": "queued",
               "taskFile": "lane-c-f1575-1-m4-06-drift-tick-budget.md",
               "gate": "none — fire-authorable from F-1575-1/F-1572-1/F-1560-1/F-1285-2 in tasks/BACKLOG.md plus reviews/f1572-1-lane-arm-uncensored-drift.md"
+            },
+            {
+              "id": "f1576-1-guard-rooting-at-authoring",
+              "title": "F-1576-1: a new guard-shaped script is invisible to the battery that ships it — add an opt-in --include-untracked to gate-caller-audit and make /author-task decide a new guard's rooting in the master",
+              "status": "queued",
+              "taskFile": "lane-b-f1576-1-guard-rooting-at-authoring.md",
+              "gate": "none — fire-authorable from the F-1576-1 BACKLOG row and the Drain section of reviews/f1574-1-review-evidence-audit.md; third instance of a shape the gate-caller baseline already records twice in its own prose (desk-carryforward-guard s1533, desk-state-audit s1566)"
             }
           ]
         }
