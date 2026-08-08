@@ -19,7 +19,8 @@ Hermes (heat 2) discovered and we verified at source: `panAt` (HeadlessContractS
 
 ## Firewall
 Touch ONLY: `src/sim/HeadlessContractSim.ts`, `scripts/gr-sim.test.mjs`, `e2e/front-door-parity.spec.ts` (fixture orders only, per scope 5), `scripts/fixtures/moth-season-orders.json` (same), `public/skill.md`.
-NO changes to: the BROWSER harvest system (you port FROM it, never edit it); `src/agent/StandingOrders.ts` grammar; Balance values; seat/lockstep files; standings; other tasks' fresh work.
+🔓 FIREWALL LIFT (granted 2026-08-08 after the first run's honest STOP — the HARVEST executor lives at `src/agent/StandingOrders.ts:225`): `src/agent/StandingOrders.ts` may be edited for the HARVEST EXECUTOR/ROUTING PATH ONLY — the grammar, validation ranges, and every other verb's behaviour stay byte-identical, and the report names each hunk's purpose.
+NO changes to: the BROWSER harvest system (you port FROM it, never edit it); the order GRAMMAR or validation in `StandingOrders.ts`; Balance values; seat/lockstep files; standings; other tasks' fresh work.
 If you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate.
 
 ## Self-check (evidence, not vibes)
