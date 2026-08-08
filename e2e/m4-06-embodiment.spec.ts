@@ -415,10 +415,11 @@ test('permission-denied receipts do not send the Prospector to the denied target
   expect(after.moving).toBe(false);
   expect(distance(after.target, before.target)).toBeLessThan(0.01);
   expect(distance(after.target, node!.position)).toBeGreaterThan(0.5);
-  // artifacts/f1559-1-m4-06-deterministic-drift/samples.txt: gapClosed max 0.371391 (0.029 margin);
-  // driftAbs max 0.372200 (0.028 margin).
+  // F-1560-1 two-window evidence: artifacts/f1560-1-drift-ceiling/samples.txt.
+  // This 0.4 ceiling depends on Balance.agent.moveSpeed (4.8), the 0.58 idle multiplier,
+  // the -1.8 follow offset, and the ±0.22 / 0.78 Hz oscillation in Embodiment.ts:288–299.
+  // Changing any of them moves this bound; both equal 0.4 checks guard the same geometric drift.
   expect(gapClosed).toBeLessThan(0.4);
-  // Loose absolute-drift sanity bound, not the permission rule.
   expect(driftAbs).toBeLessThan(0.4);
   // F-1558-1: Embodiment.updateSimulation's idle-survey branch may replace the denial bark after
   // surveyCooldownSeconds (19 s), so after.lastLine is deliberately not asserted here.
