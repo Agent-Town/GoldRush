@@ -110,3 +110,58 @@ for (const phase of [35, 39, 43, 47]) {
     expect(errors.pageErrors).toEqual([]);
   });
 }
+
+test('maps denied-receipt drift through the deterministic live render schedule', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('/?debug&timescale=4&nowaves&nolevel&seed=m4-06-denied');
+  await page.waitForFunction(() => Boolean(window.__GR_AGENT__) && Boolean(window.__GR_TEST__));
+
+  const sweep = await page.evaluate(() => {
+    const testApi = window.__GR_TEST__!;
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__!;
+    const node = diagnostics.harvest.activeNodes.find((entry) => entry.active)!;
+    const receipt = window.__GR_AGENT__?.panAt(node.id);
+    const before = {
+      position: diagnostics.agent.embodiment.position,
+      simTick: diagnostics.simulation.tick,
+      timeAlive: diagnostics.timeAlive,
+    };
+    const samples = [];
+    let lastTick = before.simTick;
+    while (samples.length < 120) {
+      const schedule = testApi.driveRenderSchedule(1 / 30, 60);
+      const sample = window.__THREE_GAME_DIAGNOSTICS__!;
+      if (sample.simulation.tick === lastTick) continue;
+      lastTick = sample.simulation.tick;
+      samples.push({
+        position: sample.agent.embodiment.position,
+        simTick: sample.simulation.tick,
+        timeAlive: sample.timeAlive,
+        renderFrames: schedule.renderFrames,
+        simTicks: schedule.simTicks,
+        droppedTicks: schedule.loop.droppedTicks,
+      });
+    }
+    return { before, node, receipt, samples };
+  });
+
+  expect((sweep.receipt as { outcome?: { ok?: boolean; reason?: string } } | undefined)?.outcome).toMatchObject({
+    ok: false,
+    reason: 'PERMISSION_DENIED',
+  });
+  for (const [index, sample] of sweep.samples.entries()) {
+    const tickDelta = sample.simTick - sweep.before.simTick;
+    const driftAbs = distance(sample.position, sweep.before.position);
+    const gapClosed = distance(sweep.before.position, sweep.node.position) - distance(sample.position, sweep.node.position);
+    expect(tickDelta).toBe(index + 1);
+    expect(sample.renderFrames).toBe(2);
+    expect(sample.simTicks).toBe(1);
+    expect(sample.droppedTicks).toBe(0);
+    console.log(
+      `[f1579-1-live-sweep] tickBefore=${sweep.before.simTick} timeBefore=${sweep.before.timeAlive} simTick=${sample.simTick} timeAlive=${sample.timeAlive} tickDelta=${tickDelta} positionX=${sample.position.x} positionZ=${sample.position.z} driftAbs=${driftAbs} gapClosed=${gapClosed} renderFrames=${sample.renderFrames} simTicks=${sample.simTicks} droppedTicks=${sample.droppedTicks}`,
+    );
+  }
+  expect(sweep.samples.at(-1)!.simTick - sweep.before.simTick).toBeGreaterThanOrEqual(120);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
