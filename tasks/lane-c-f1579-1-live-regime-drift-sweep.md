@@ -37,7 +37,7 @@ f1577-3 pinned `simulation.tick` at P=35/39/43/47 and swept 70 windows × 3 runs
 
 ➡️ **At a given tick count, `advanceSim` has advanced the simulation's own clock four times less far than the live loop had.** That is why `timeBefore` varied at a fixed `tickBefore` in f1577-3 (at P=35: 2.466667 / 2.566667 / 3.066667) and why its curve has a different shape.
 
-⛔ **THE TRAP THAT ATE TWO EXPLANATIONS BEFORE YOURS — DO NOT BLAME THE IDLE BOB.** It is tempting, and it is impossible. The bob is a **Y-axis** displacement of amplitude **`0.045`** (`src/game/Balance.ts:252`, applied through `floatY` at `src/agent/Embodiment.ts:316`), driven by `presentationAt` (`Embodiment.ts:160`) — while the sweep's `distance()` is `Math.hypot(a.x - b.x, a.z - b.z)`, **x/z only** (`e2e/f1575-1-drift-tick-budget.spec.ts:15`). **A vertical bob cannot move a planar metric.** If your analysis ends at the idle bob, it is wrong; look at `timeAlive`-driven sim behaviour instead.
+⛔ **THE TRAP THAT ATE TWO EXPLANATIONS BEFORE YOURS — DO NOT BLAME THE IDLE BOB.** It is tempting, and it is impossible. The bob is a **Y-axis** displacement of amplitude **`0.045`** (`src/game/Balance.ts:252`, applied through `floatY` at `src/agent/Embodiment.ts:316`), driven by `presentationAt` (`Embodiment.ts:160`) — while the sweep's `distance()` helper in `e2e/f1575-1-drift-tick-budget.spec.ts` is `return Math.hypot(a.x - b.x, a.z - b.z);` — **x/z only** (grep that line; it is not a test, so it carries no title). **A vertical bob cannot move a planar metric.** If your analysis ends at the idle bob, it is wrong; look at `timeAlive`-driven sim behaviour instead.
 
 ## The instrument — CONSTRUCTIBLE WITH NO `src/**` CHANGE, ✓ verified by reading the code at authoring
 
