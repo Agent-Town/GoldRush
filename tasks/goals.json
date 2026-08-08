@@ -4586,9 +4586,11 @@
             {
               "id": "f1581-1-build-confirm-position",
               "title": "F-1581-1: a build confirm rejected at one position is re-evaluated at another one frame later and succeeds there — make the confirm intent carry the position it was issued at",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-c-f1581-1-build-confirm-position.md",
-              "gate": "none — fire-authorable from the F-1581-1 BACKLOG row and artifacts/f1580-1-batch-red/FINDINGS.md; root cause verified by reading main (InputController.ts:102/107/246, Game.ts:2394, BuildSystem.ts:993 and :1585-1590) and the defect reproduces 2/10 on mobile-chrome in 90 seconds"
+              "gate": "none — fire-authorable from the F-1581-1 BACKLOG row and artifacts/f1580-1-batch-red/FINDINGS.md; root cause verified by reading main (InputController.ts:102/107/246, Game.ts:2394, BuildSystem.ts:993 and :1585-1590) and the defect reproduces 2/10 on mobile-chrome in 90 seconds",
+              "mergeHash": "5e32bcc5c187ea95e8c23d8944e028b91d0666dd",
+              "drainNotes": "s1583: cure (b) — a confirm invalid at issue time is discarded, not re-resolved one frame later. Acceptance mobile 20/20, desktop 10/10; regression assertion proved RED 5/5 against unfixed src (Expected 1, Received 2 palisades); m2-01 14/14 both projects; adjacent battery widened to all confirm sinks 99 pass/2 skip/0 fail; test:node-guards rc=0. Review reviews/f1581-1-build-confirm-position.md. tapped-retention untouched. Mobile/desktop asymmetry remains UNMEASURED."
             },
             {
               "id": "f1578-1-findings-state-open-vocabulary",
