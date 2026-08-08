@@ -4495,6 +4495,13 @@
               "mergeHash": "3d4651f91175b30dc57d19db46e407b411e69abf"
             },
             {
+              "id": "f1571-1-m4-06-uncensored-drift-sample",
+              "title": "A bark race must not delete the drift sample: move the two PURE assertions below the drift log so a receipt/bark failure cannot suppress a drift observation, curing the censoring half of F-1565-2 without touching the arrangement under test",
+              "status": "queued",
+              "taskFile": "lane-b-f1571-1-m4-06-uncensored-drift-sample.md",
+              "gate": "none — fire-authorable; mechanism re-verified s1571 by reading e2e/m4-06-embodiment.spec.ts:402-413 on main (receipt and immediate are CAPTURED at :402/:403 and only ASSERTED at :404/:408, so moving those assertions below the :413 log line is pure and cannot change the arrangement F-1565-2 forbids disturbing)"
+            },
+            {
               "id": "f1570-1-no-trace-banner-column",
               "title": "The residual bucket is named for what was checked (NO-TRACE, not TRULY-BANKED) and declares the masters that forbid their own queueing: add a BANNER column and split the headline into residual vs candidates (F-1570-1)",
               "status": "merged",
