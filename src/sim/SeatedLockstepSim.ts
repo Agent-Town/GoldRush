@@ -1,5 +1,6 @@
 import {
   LockstepClient,
+  normalizeLockstepAction,
   type LockstepAction,
   type LockstepSample,
   type LockstepTick,
@@ -8,14 +9,14 @@ import {
 } from '../mp/LockstepClient';
 import { HeadlessContractSim, SEAT_HASH_ENGINE, type GrSimOutcome, type GrSimTurn } from './HeadlessContractSim';
 import { SeatOrdersDriver, type SeatOrdersVerdict, type SeatRunState } from './SeatOrders';
+import { validateStandingOrders } from '../agent/StandingOrders';
+import type { AgentView } from '../agent/View';
 
 /**
  * THE AGENT SEAT — a headless rig rides in a live room.
  *
- * GR-SIM already runs the full deterministic sim; a lockstep room already carries only
- * inputs. So a seat is a TRANSPORT, not a second engine: the same sim, stepped one tick
- * per tick-bundle the room agrees on, hashing what it computes and resigning the moment
- * that hash stops matching the table's.
+ * Headless-only rooms retain the full deterministic sim. In a browser room this class is
+ * a thin transport: browser-served views come in and standing orders go back as acts.
  *
  * It wires INTO `LockstepClient` — the same client the browser rider uses, unchanged.
  * Nothing here touches the relay: a seat takes its chair through the doors that already
@@ -41,7 +42,7 @@ export const ROOM_TICK_RATE = 30;
  * being limited. The throttle has to sit in front of the wire, not behind it.
  */
 export const SEAT_TICK_RATE_CEILING = 45;
-export const MIXED_ROOM_STRICT_MESSAGE = "a headless seat and a browser rider run different engines and would disagree at the first hash — full mixed play arrives with MP-07c, where the agent rides the browser's world";
+export const MIXED_ROOM_STRICT_MESSAGE = '--strict refuses browser rooms; omit it to ride the browser world as a thin seat';
 
 /**
  * Acts that change WHICH RUN the table is in. `Game.applyMultiplayerActions` breaks out of
@@ -89,10 +90,11 @@ export type AgentSeatResult = {
   lastHash: { tick: number; hash: string } | null;
   resigned: SeatResignation | null;
   outcome: GrSimOutcome | null;
+  observedOutcome?: { result: 'secured' | 'lost'; wave: number };
   advisory?: true;
 };
 
-type AgentSeatTurn = GrSimTurn & { view: GrSimTurn['view'] & { advisory?: true } };
+type AgentSeatTurn = { view: (GrSimTurn['view'] | AgentView) & { advisory?: true }; terminal: boolean };
 
 export type AgentSeatOptions = {
   origin: string;
@@ -130,12 +132,14 @@ export class AgentSeat {
   private lastHash: { tick: number; hash: string } | null = null;
   private resignation: SeatResignation | null = null;
   private advisory: boolean;
+  private observedOutcome: AgentSeatResult['observedOutcome'];
+  private submission = 0;
   private tick = 0;
 
   private constructor(
     private readonly options: AgentSeatOptions,
     readonly setup: MultiplayerSetup,
-    readonly sim: HeadlessContractSim,
+    readonly sim: HeadlessContractSim | null,
     private readonly client: LockstepClient,
     advisory: boolean,
   ) {
@@ -157,7 +161,7 @@ export class AgentSeat {
     const setup = options.setup ?? room.setup;
     const advisory = room.roster.some((player) => player.client === 'browser');
     if (advisory && options.strict) throw new Error(MIXED_ROOM_STRICT_MESSAGE);
-    const sim = new HeadlessContractSim({ contractId: setup.contractId, seed: setup.seed });
+    const sim = advisory ? null : new HeadlessContractSim({ contractId: setup.contractId, seed: setup.seed });
     // The client needs a desync hook and the hook needs the seat, so the callback is
     // late-bound. Nothing can fire it before `connect()` below.
     let seated: AgentSeat | null = null;
@@ -171,6 +175,7 @@ export class AgentSeat {
       desyncAtTick: options.desyncAtTick ?? null,
       onDesync: (tick) => seated?.noteDesync(tick),
       exchangeHashes: () => seated?.advisory !== true,
+      onView: (body) => seated?.receiveView(body),
       // A headless seat holds no run-suspend snapshot, so it can neither heal a peer
       // nor be healed by one. Saying so plainly beats a silent restore that lies.
       onSnapshot: () => false,
@@ -178,8 +183,8 @@ export class AgentSeat {
     const seat = new AgentSeat(options, setup, sim, client, advisory);
     seated = seat;
     await client.connect();
-    if (advisory) seat.options.onNotice?.('scout mode: builds still travel, this seat\'s view is approximate, and determinism hashes are off');
-    seat.emitTurn();
+    if (advisory) seat.options.onNotice?.('thin seat: the browser serves this rider\'s view; orders travel as lockstep acts and determinism hashes stay off');
+    else seat.emitTurn();
     return seat;
   }
 
@@ -195,6 +200,20 @@ export class AgentSeat {
 
   /** The rider's door. Rejections are the driver's, verbatim — see `SeatOrders`. */
   submitOrders(value: unknown): SeatOrdersVerdict {
+    if (this.advisory) {
+      const validated = validateStandingOrders(value);
+      if (!validated.ok) return { ok: false, reason: 'INVALID_ARGS', message: validated.message };
+      const action = normalizeLockstepAction({
+        type: 'agent_orders',
+        version: 1,
+        orders: validated.orders,
+        submissionId: `seat-${this.submission + 1}`,
+      });
+      if (!action) return { ok: false, reason: 'INVALID_ARGS', message: 'orders exceed the 3 KiB wire limit.' };
+      this.submission += 1;
+      this.pending.push(action);
+      return { ok: true, accepted: validated.orders.length };
+    }
     const verdict = this.orders.submit(value);
     if (verdict.ok) this.pending.push(...this.orders.fire(this.runState));
     return verdict;
@@ -243,19 +262,21 @@ export class AgentSeat {
 
         lastBundleAt = performance.now();
         this.tick = bundle.tick;
-        this.consume(bundle);
-        this.sim.advanceOneTick();
+        if (!this.advisory) {
+          this.consume(bundle);
+          this.sim!.advanceOneTick();
+        }
         ticks += 1;
-        if (this.client.shouldExchangeHash(bundle.tick)) {
+        if (!this.advisory && this.client.shouldExchangeHash(bundle.tick)) {
           // `lastHash` is what this seat COMPUTED. Under --desync-at the client transmits
           // `${hash}:injected` instead, so the two deliberately differ there — and that is
           // the useful reading: it shows the sims still agreed and only the wire lied.
-          const hash = this.sim.tickHash(bundle.tick);
+          const hash = this.sim!.tickHash(bundle.tick);
           this.lastHash = { tick: bundle.tick, hash };
           this.client.afterSimTick(bundle.tick, hash, null);
         }
-        if (this.sim.turnDue()) this.emitTurn();
-        if (this.sim.isTerminal) break;
+        if (!this.advisory && this.sim!.turnDue()) this.emitTurn();
+        if ((!this.advisory && this.sim!.isTerminal) || this.observedOutcome) break;
         if (this.maxTicks !== null && ticks >= this.maxTicks) break;
       }
     } finally {
@@ -280,7 +301,8 @@ export class AgentSeat {
       // run resigns and breaks in the same iteration, so a terminality-only test would
       // hand back a real-looking verdict alongside exit 3. A seat stopped by --max-ticks
       // reports its last determinism hash instead of inventing one.
-      outcome: this.resignation === null && this.sim.isTerminal ? this.sim.outcome() : null,
+      outcome: this.resignation === null && !this.advisory && this.sim?.isTerminal ? this.sim.outcome() : null,
+      ...(this.observedOutcome ? { observedOutcome: this.observedOutcome } : {}),
       ...(this.advisory ? { advisory: true as const } : {}),
     };
   }
@@ -306,7 +328,7 @@ export class AgentSeat {
       if (input && (input.mx !== 0 || input.my !== 0)) this.tally('move');
       for (const action of input?.actions ?? []) {
         if (action.type === 'place_build') {
-          if (this.sim.applyWireAction(action)) this.builds.placed += 1;
+          if (this.sim!.applyWireAction(action)) this.builds.placed += 1;
           else this.builds.refused += 1;
           continue;
         }
@@ -331,17 +353,25 @@ export class AgentSeat {
   }
 
   private emitTurn(): void {
-    const turn = this.sim.currentTurn();
+    const turn = this.sim!.currentTurn();
     this.runState = { wave: turn.view.now.wave, gold: turn.view.now.gold };
     this.pending.push(...this.orders.fire(this.runState));
     this.options.onTurn?.(this.advisory ? { ...turn, view: { ...turn.view, advisory: true } } : turn);
+  }
+
+  private receiveView(value: unknown): void {
+    if (!this.advisory || !isAgentView(value)) return;
+    const terminal = [...value.appendLog].reverse().find((entry) =>
+      entry.outcome === 'secured' || entry.outcome === 'rider-down' || entry.outcome === 'works-lost');
+    if (terminal) this.observedOutcome = { result: terminal.outcome === 'secured' ? 'secured' : 'lost', wave: terminal.wave };
+    this.options.onTurn?.({ view: value, terminal: terminal !== undefined });
   }
 
   private updateRoomMode(): void {
     if (this.advisory || !this.client.state().roster.some((player) => player.client === 'browser')) return;
     if (this.options.strict) return this.resign('mixed_room', MIXED_ROOM_STRICT_MESSAGE);
     this.advisory = true;
-    this.options.onNotice?.('browser rider arrived; switching to scout mode (builds still travel, this view is approximate, determinism hashes are off)');
+    this.options.onNotice?.('browser rider arrived; switching to a thin seat (the browser serves views and determinism hashes stay off)');
   }
 
   private resign(reason: string, detail?: string): void {
@@ -349,6 +379,12 @@ export class AgentSeat {
     this.resignation = { reason, tick: this.tick, detail };
     this.options.onNotice?.(`seat resigned at tick ${this.tick}: ${reason}${detail ? ` — ${detail}` : ''}`);
   }
+}
+
+function isAgentView(value: unknown): value is AgentView & { advisory?: true } {
+  return typeof value === 'object' && value !== null
+    && (value as { schema?: unknown }).schema === 'goldrush.view.v1'
+    && Array.isArray((value as { appendLog?: unknown }).appendLog);
 }
 
 /**

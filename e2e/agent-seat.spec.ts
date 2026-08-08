@@ -6,7 +6,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 /**
- * THE BOOT PROBE — a human-shaped browser rider and one agent seat, one room.
+ * THE BOOT PROBE — a human-shaped browser rider and one thin agent seat, one room.
  *
  * scripts/agent-seat-room.mjs proves two SEATS share a run. This proves the other half
  * of the owner's sentence — "people and agents could play the game together" — as far as
@@ -15,18 +15,8 @@ import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../s
  *   1. THE DOOR OPENS. A host opens a room in a browser, shares the claim word, and a
  *      headless rig takes the empty chair. The human's own roster shows the rig by name
  *      and town. That is the join flow skill.md documents, exercised end to end.
- *   2. AND THE RIG RIDES AS A SCOUT (mp-07a, owner-ruled 2026-08-08: "I would like the
- *      player to be able to invite his agent or multiple agents if they want"). The two
- *      engines still hash different fingerprints of the world, so the seat detects the
- *      browser rider and enters scout mode: no determinism hashes, "(scout)" on the
- *      roster, builds still travel, its own view declared advisory — and the human's
- *      client registers ZERO desyncs. Until mp-07a this spec asserted the opposite (a
- *      tick-0 desync and a named resignation — see this file's git history and the
- *      archived boot-probe artifact); the resignation is now the --strict path only.
- *
- * Anyone reading a green here should read it as: the chair exists, the rig can sit in it
- * and stay for a bounded ride without disturbing the table; the SHARED world — the agent's
- * hero embodied in the browser's own sim — is MP-07c, and its first rung is in the lanes.
+ *   2. THE ROOM SERVES THE VIEW. The seat boots no second sim and sends no hashes, so the
+ *      browser remains the only world while the NDJSON door keeps its existing shape.
  */
 
 type RelayProcess = { url: string; logs: () => string; stop: () => Promise<void> };
@@ -67,7 +57,7 @@ test.afterAll(async () => {
   await worker?.stop();
 });
 
-test('a rig takes the empty chair at a human host table and rides as a scout — zero desyncs', async ({ page }, testInfo) => {
+test('a thin rig takes the empty chair and receives the browser world without desyncing it', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== PROBE_PROJECT, 'one door proof is enough; the 390px arm is captured in-test');
   test.setTimeout(180_000);
   await mkdir(ARTIFACT_DIR, { recursive: true });
@@ -91,11 +81,10 @@ test('a rig takes the empty chair at a human host table and rides as a scout —
   // and boots the contract and seed the host already committed to.
   const seat = startSeat(code);
 
-  // 1. THE DOOR OPENS: the human's own roster names the rig — wearing its scout suffix,
-  // because a seat that finds a browser rider at the table declares itself (mp-07a).
+  // 1. THE DOOR OPENS: the human's own roster names the rig.
   await expect.poll(
     () => page.evaluate(() => (window.__GR_MP__?.state()?.roster ?? []).map((player) => `${player.name} of ${player.town}`)),
-    { message: 'the rig appears on the human roster as a scout', timeout: 60_000 },
+    { message: 'the rig appears on the human roster', timeout: 60_000 },
   ).toEqual([`${HOST.name} of ${HOST.town}`, `${RIG.name} (scout) of ${RIG.town}`]);
 
   await page.screenshot({ path: path.join(ARTIFACT_DIR, 'seat-desktop.png'), fullPage: false });
@@ -103,24 +92,23 @@ test('a rig takes the empty chair at a human host table and rides as a scout —
   await page.waitForTimeout(500);
   await page.screenshot({ path: path.join(ARTIFACT_DIR, 'seat-390px.png'), fullPage: false });
 
-  // 2. AND THE RIG STAYS FOR A BOUNDED RIDE, DECLARED AND HARMLESS.
+  // 2. THE BROWSER SERVES THE WORLD; the bounded thin seat exits without inventing an outcome.
   const run = await seat.finished;
   const envelope = seatEnvelope(run);
-  expect(envelope.roster, 'the rig read the same table the human did, scout suffix and all').toEqual([
+  expect(envelope.roster, 'the rig read the same table the human did').toEqual([
     `${HOST.name} of ${HOST.town}`,
     `${RIG.name} (scout) of ${RIG.town}`,
   ]);
-  expect(envelope.advisory, 'the rig declares its view approximate').toBe(true);
-  expect(envelope.resigned, 'a scout rides — it does not resign').toBeNull();
-  expect(envelope.ticks, 'the ride crossed several hash-exchange boundaries').toBeGreaterThanOrEqual(120);
-  expect(envelope.outcome, 'a max-ticks stop claims no outcome it did not earn').toBeNull();
-  expect(run.exitCode, 'a scout ride ends clean').toBe(0);
-  expect(run.stderr, 'the rig announced scout mode out loud').toMatch(/scout mode/);
+  expect(envelope.resigned, 'the thin rig never resigned').toBeNull();
+  expect(envelope.outcome, 'a bounded thin rig claims no outcome it did not observe').toBeNull();
+  expect(envelope.lastHash, 'a thin rig computes no determinism hash').toBeNull();
+  expect(run.exitCode, 'the bounded thin rig exits cleanly').toBe(0);
+  expect(run.stdout, 'the room served the NDJSON view schema').toContain('"schema":"goldrush.view.v1"');
 
-  // The human's client never saw a single disagreement — the cured surface, ASSERTED.
-  expect(
-    await page.evaluate(() => window.__GR_MP__?.state()?.desyncs ?? 0),
-    'zero desyncs on the human side across the whole ride',
+  // The browser keeps its own hash lane and sees no cross-engine disagreement.
+  await expect.poll(
+    () => page.evaluate(() => window.__GR_MP__?.state()?.desyncs ?? 0),
+    { message: 'the browser rider registered the mismatch too', timeout: 30_000 },
   ).toBe(0);
 
   // A rig joining and then resigning must not cost the human a clean boot. This is the
@@ -131,7 +119,7 @@ test('a rig takes the empty chair at a human host table and rides as a scout —
   await writeFile(
     path.join(ARTIFACT_DIR, 'boot-probe.json'),
     `${JSON.stringify(
-      { code, roster: envelope.roster, ticks: envelope.ticks, advisory: envelope.advisory ?? false, resigned: envelope.resigned, desyncs: 0, exitCode: run.exitCode, ...errors },
+      { code, roster: envelope.roster, ticks: envelope.ticks, resigned: envelope.resigned, exitCode: run.exitCode, ...errors },
       null,
       2,
     )}\n`,
@@ -154,7 +142,7 @@ function watchErrors(page: Page): { consoleErrors: string[]; pageErrors: string[
 function seatEnvelope(run: SeatRun): {
   roster: string[];
   ticks: number;
-  advisory?: boolean;
+  lastHash: { tick: number; hash: string } | null;
   resigned: { reason: string; tick: number; detail?: string } | null;
   outcome: unknown;
 } {
@@ -169,7 +157,7 @@ function seatEnvelope(run: SeatRun): {
 function startSeat(code: string): { finished: Promise<SeatRun> } {
   const child = spawn(
     process.execPath,
-    ['scripts/gr-sim.mjs', '--room', code, '--origin', relay.url, '--name', RIG.name, '--town', RIG.town, '--policy=idle', '--max-ticks', '150'],
+    ['scripts/gr-sim.mjs', '--room', code, '--origin', relay.url, '--name', RIG.name, '--town', RIG.town, '--policy=idle', '--max-ticks', '120'],
     { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] },
   );
   let stdout = '';
