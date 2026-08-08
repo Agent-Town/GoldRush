@@ -34,6 +34,35 @@ import {
 // is whole-repo discovery. The guard asserts this value by EXECUTING the harness, not importing it.
 const NODE_GUARDS_TEST_TIMEOUT_MS = 300_000;
 
+function contentionStamp() {
+  try {
+    const found = spawnSync('pgrep', ['-f', 'run-node-guards'], { encoding: 'utf8' });
+    if (found.error || found.status !== 0) return undefined;
+
+    const pids = new Set(found.stdout.trim().split(/\s+/).map(Number));
+    if (pids.size === 0 || [...pids].some((pid) => !Number.isSafeInteger(pid) || pid < 1)) {
+      return undefined;
+    }
+
+    const listed = spawnSync('ps', ['-o', 'pid=,ppid=', '-p', [...pids].join(',')], {
+      encoding: 'utf8',
+    });
+    if (listed.error || listed.status !== 0) return undefined;
+
+    const rows = listed.stdout.trim().split('\n').map((line) => line.match(/^\s*(\d+)\s+(\d+)\s*$/));
+    if (rows.some((row) => row === null)) return undefined;
+
+    // npm's matching `sh -c` wrapper parents its matching `node` child, so count only roots in
+    // the matching process forest. Directly-launched batteries are already single roots.
+    const processes = rows.map((row) => ({ pid: Number(row[1]), ppid: Number(row[2]) }));
+    if (processes.length !== pids.size || processes.some(({ pid }) => !pids.has(pid))) return undefined;
+    const siblings = processes.filter(({ ppid }) => !pids.has(ppid)).length;
+    return siblings > 0 ? `CONTENDED — ${siblings + 1} concurrent batteries` : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 const concurrency = nodeGuardsConcurrency(process.env);
 const args = ['--test', `--test-timeout=${NODE_GUARDS_TEST_TIMEOUT_MS}`];
 
@@ -44,6 +73,10 @@ if (concurrency !== undefined) {
 
 args.push(...process.argv.slice(2));
 
+const contention = contentionStamp();
+if (contention) console.error(contention);
+
 const child = spawnSync(process.execPath, args, { stdio: 'inherit' });
 if (child.error) throw child.error;
+if (contention) console.error(contention);
 process.exit(child.status ?? 1);
