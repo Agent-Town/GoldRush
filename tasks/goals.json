@@ -3088,6 +3088,12 @@
               "taskFile": "lane-town-music.md",
               "mergeHash": "c0b80b314f185863b61af327bf9721ac5fff6ba2",
               "drainNotes": "MERGED s1587. Own spec 8/8 both projects (plain boot, no ?debug); adjacent town+minimums 46/46; the five run-side audio specs green, so the run-music firewall is verified not asserted. The five audio-integration reds were proved PRE-EXISTING by a control run on the pre-merge tree c66d90f64: four are deterministic on both trees, and the fifth (pool-cap, mobile) is a ~57% bimodal flake measured 4-of-7 on BOTH trees with --repeat-each=7. Findings F-1587-1 (red inventory records that flake as DESKTOP-ONLY; it fails on mobile too) and F-1587-2 (first test against a cold vite server can time out and read as a tree red) are non-blocking. Review: reviews/town-music.md."
+            },
+            {
+              "id": "gazette-unique",
+              "title": "Gazette: bespoke E1 editions + stale local-news retirement (owner playtest 2026-08-09)",
+              "status": "planned",
+              "taskFile": "lane-gazette-unique.md"
             }
           ]
         }
@@ -4602,16 +4608,16 @@
             },
             {
               "id": "f1586-1-desk-count-refusal",
-              "title": "F-1586-1: the desk's declared count is prose no guard reads — gate the LIVE desk on declared-vs-keyed at the ±1 tolerance the corpus justifies, not the zero tolerance s1533 correctly refused",
+              "title": "F-1586-1: the desk's declared count is prose no guard reads \u2014 gate the LIVE desk on declared-vs-keyed at the \u00b11 tolerance the corpus justifies, not the zero tolerance s1533 correctly refused",
               "status": "queued",
               "taskFile": "lane-a-f1586-1-desk-count-refusal.md",
-              "gate": "none — fire-authorable from the F-1586-1 BACKLOG row, discharging the cure F-1584-2 specified and left unauthored; measured s1586 across all 112 counted desks in STATUS.md (delta histogram has an EMPTY 2-3 band, so ±1 separates noise from defect), priced at 2 refusals in the last 25 desks (s1583, s1585) with zero false positives, and the four unkeyed segments of s1585's own desk read verbatim"
+              "gate": "none \u2014 fire-authorable from the F-1586-1 BACKLOG row, discharging the cure F-1584-2 specified and left unauthored; measured s1586 across all 112 counted desks in STATUS.md (delta histogram has an EMPTY 2-3 band, so \u00b11 separates noise from defect), priced at 2 refusals in the last 25 desks (s1583, s1585) with zero false positives, and the four unkeyed segments of s1585's own desk read verbatim"
             },
             {
               "id": "f1584-1-banked-master-banner-vocabulary",
               "title": "F-1584-1: the banked-master probe reads one spelling of a refusal the masters write three ways \u2014 widen the queueability banner so the dry-board headline is trustworthy",
               "status": "merged",
-      "mergeHash": "706fb82395f9bb463fe4816341d2476df3801d66",
+              "mergeHash": "706fb82395f9bb463fe4816341d2476df3801d66",
               "taskFile": "lane-c-f1584-1-banked-master-banner-vocabulary.md",
               "gate": "none \u2014 fire-authorable from the F-1584-1 BACKLOG row; measured s1584 by running scripts/master-shipped-classifier.mjs on the live corpus (3 candidates) and reading all three flagged masters first six lines verbatim against the banner regex (NO MATCH, three times); blast radius re-measured at exactly 3 newly-captured masters across all 979, zero collateral"
             },
