@@ -4554,7 +4554,7 @@
               "id": "f1575-1-m4-06-drift-tick-budget",
               "title": "F-1575-1: the m4-06 drift window is deterministic for its last 11 ticks only — record the tick count three page round trips add, and map drift against it (joint re-verdict of F-1285-2 + F-1563-3)",
               "status": "merged",
-      "mergeHash": "7fbcd423d3fc818c8e651f708e292d1b7a7b9d65",
+              "mergeHash": "7fbcd423d3fc818c8e651f708e292d1b7a7b9d65",
               "taskFile": "lane-c-f1575-1-m4-06-drift-tick-budget.md",
               "gate": "none — fire-authorable from F-1575-1/F-1572-1/F-1560-1/F-1285-2 in tasks/BACKLOG.md plus reviews/f1572-1-lane-arm-uncensored-drift.md"
             },
@@ -4569,9 +4569,16 @@
               "id": "f1576-1-guard-rooting-at-authoring",
               "title": "F-1576-1: a new guard-shaped script is invisible to the battery that ships it — add an opt-in --include-untracked to gate-caller-audit and make /author-task decide a new guard's rooting in the master",
               "status": "merged",
-      "mergeHash": "234891aab6f9b2f2e3f3d79addbe893b96328026",
+              "mergeHash": "234891aab6f9b2f2e3f3d79addbe893b96328026",
               "taskFile": "lane-b-f1576-1-guard-rooting-at-authoring.md",
               "gate": "none — fire-authorable from the F-1576-1 BACKLOG row and the Drain section of reviews/f1574-1-review-evidence-audit.md; third instance of a shape the gate-caller baseline already records twice in its own prose (desk-carryforward-guard s1533, desk-state-audit s1566)"
+            },
+            {
+              "id": "f1578-1-findings-state-open-vocabulary",
+              "title": "F-1578-1: findings-state-guard admits only 🟡/✅-led rows, so 165 marker-led ledger rows are invisible and its double-state:0 is a false green — add a fail-safe OPEN vocabulary axis and an always-printed advisory line that cannot change the exit code",
+              "status": "queued",
+              "taskFile": "lane-b-f1578-1-findings-state-open-vocabulary.md",
+              "gate": "none — fire-authorable from the F-1578-1 BACKLOG row and scripts/findings-state-guard.mjs; measured s1578 with the guard own exported scan() against the live ledger (5 F-IDs declared OPEN on skipped rows, 1 of them a missed conflict: F-1563-3)"
             }
           ]
         }
