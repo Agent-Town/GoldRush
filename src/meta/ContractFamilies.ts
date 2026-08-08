@@ -262,6 +262,7 @@ export type ContractDayNightCycle = {
 export type ContractMothSeason = {
   radiusWeight: number;
   decoyWeight: number;
+  mothsBaselinePerWave?: number;
   mothsPerLightPerWave: number;
   nightSpeedOutsideLight: number;
   litThreshold: number;

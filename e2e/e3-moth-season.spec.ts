@@ -28,6 +28,7 @@ test('locks the night, scales the moth wave with light, and pays the decoy tithe
       mothSeason: {
         radiusWeight: 1,
         decoyWeight: 2,
+        mothsBaselinePerWave: 4,
         mothsPerLightPerWave: 1,
         nightSpeedOutsideLight: 1.12,
         litThreshold: 0.35,
@@ -60,9 +61,9 @@ test('locks the night, scales the moth wave with light, and pays the decoy tithe
     window.__GR_TEST__!.startWaveForTest(1);
     window.__GR_TEST__!.advanceSim(4);
   });
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.mothSwarm.alive)).toBe(2);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.mothSwarm.alive)).toBe(4);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.mothSwarm.attachCounts), { timeout: 15_000 })
-    .toContainEqual({ sourceId: 'decoy:0', count: 2, radius: 11, targetWeight: 2 });
+    .toContainEqual({ sourceId: 'decoy:0', count: 4, radius: 11, targetWeight: 2 });
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.mothSwarm.attachCounts))
     .toContainEqual({ sourceId: 'lantern:0', count: 0, radius: 7, targetWeight: 1 });
 

@@ -336,6 +336,8 @@ export class HeadlessContractSim {
           {
             radiusWeight: mothSeason.radiusWeight,
             attachDamagePerSecond: mothSeason.attachDamagePerSecond,
+            mothsBaselinePerWave: mothSeason.mothsBaselinePerWave ?? 0,
+            mothsPerLightPerWave: mothSeason.mothsPerLightPerWave,
           },
           (sourceId, amount) => {
             if (!sourceId.startsWith('decoy:')) return;
@@ -976,7 +978,7 @@ export class HeadlessContractSim {
   private spawnMothSeasonWave(wave: number): void {
     const config = this.manifest.twist.mothSeason;
     if (!config || !this.mothSwarm || wave <= 0 || (this.dayNightSnapshot?.darkness ?? 0) < 0.5) return;
-    const count = Math.max(2, Math.floor(Math.max(1, this.mothLightSources.length) * config.mothsPerLightPerWave));
+    const count = this.mothSwarm.waveSize(this.mothLightSources.length);
     const stake = this.manifest.tileParams.stakeMarkers?.find((marker) => marker.heroStart);
     this.mothSwarm.spawn(this.enemies, count, stake?.x ?? 0, (stake?.z ?? 12) - 12);
   }

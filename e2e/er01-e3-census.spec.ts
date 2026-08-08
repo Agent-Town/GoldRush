@@ -333,10 +333,10 @@ for (const contract of voltage.contracts) {
               source: 'Game.spawnMothSeasonWave',
               data: {
                 lightKinds: ['lantern', 'powered-lamp'],
+                mothsBaselinePerWave: 4,
                 mothsPerLightPerWave: 1,
-                minimumMoths: 2,
                 minimumDarkness: 0.5,
-                count: 'max(2,floor(max(1,lightSources)*mothsPerLightPerWave))',
+                count: 'max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)',
               },
             },
           ]),

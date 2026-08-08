@@ -673,6 +673,8 @@ export class Game {
     {
       radiusWeight: this.activeContract.twist.mothSeason?.radiusWeight ?? 1,
       attachDamagePerSecond: this.activeContract.twist.mothSeason?.attachDamagePerSecond ?? 0,
+      mothsBaselinePerWave: this.activeContract.twist.mothSeason?.mothsBaselinePerWave ?? 0,
+      mothsPerLightPerWave: this.activeContract.twist.mothSeason?.mothsPerLightPerWave ?? 0,
     },
     (sourceId, amount) => {
       if (!sourceId.startsWith('decoy:')) return;
@@ -4995,7 +4997,7 @@ export class Game {
   private spawnMothSeasonWave(wave: number): void {
     const config = this.activeContract.twist.mothSeason;
     if (!config || wave <= 0 || this.nightShiftLightingState().darkness < 0.5) return;
-    const count = Math.max(2, Math.floor(Math.max(1, this.mothLightSources.length) * config.mothsPerLightPerWave));
+    const count = this.mothSwarm.waveSize(this.mothLightSources.length);
     this.mothSwarm.spawn(this.enemies, count, this.heroStart.x, this.heroStart.z - 12);
   }
 

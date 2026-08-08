@@ -181,10 +181,10 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     }));
     rules.push(rule('moth_wave', 'Game.spawnMothSeasonWave', {
       lightKinds: ['lantern', 'powered-lamp'],
+      mothsBaselinePerWave: mothSocket.mothsBaselinePerWave ?? 0,
       mothsPerLightPerWave: mothSocket.mothsPerLightPerWave,
-      minimumMoths: 2,
       minimumDarkness: 0.5,
-      count: 'max(2,floor(max(1,lightSources)*mothsPerLightPerWave))',
+      count: 'max(mothsBaselinePerWave,floor(lightSources)*mothsPerLightPerWave)',
     }));
   }
   const dayNightSocket = (contract.id === 'e3-blackout-ridge' || contract.id === 'e3-moth-season')
