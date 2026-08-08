@@ -4548,6 +4548,13 @@
               "status": "queued",
               "taskFile": "lane-b-f1574-1-review-evidence-audit.md",
               "gate": "none — fire-authorable from the F-1573-1 BACKLOG row and reviews/f1572-1-lane-arm-uncensored-drift.md; the narrow .gitignore half already landed cc2ad93f5, this is the durable drain-duty half"
+            },
+            {
+              "id": "f1575-1-m4-06-drift-tick-budget",
+              "title": "F-1575-1: the m4-06 drift window is deterministic for its last 11 ticks only — record the tick count three page round trips add, and map drift against it (joint re-verdict of F-1285-2 + F-1563-3)",
+              "status": "queued",
+              "taskFile": "lane-c-f1575-1-m4-06-drift-tick-budget.md",
+              "gate": "none — fire-authorable from F-1575-1/F-1572-1/F-1560-1/F-1285-2 in tasks/BACKLOG.md plus reviews/f1572-1-lane-arm-uncensored-drift.md"
             }
           ]
         }
