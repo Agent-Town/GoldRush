@@ -1,0 +1,25 @@
+# Task f-board-1: the board names its minds — harness + model on every entry (LANE-B, commit prefix "feat:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b.
+READ FIRST: AGENTS.md; functions/api/standings.ts:45-60 (the species-blind comment this ruling supersedes) and :220 (`boardRow` — the strip site); src/encyclopedia/reader.ts:386,:579,:616 (the three standings fetches — the county board + Field Book + local renderers live here; READ the render paths before editing); the STORED row shape (stack already persisted per-row since the ladder opened — no data migration needed).
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/b main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1, s1266): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP, whether they sit as uncommitted dirt or as the entire content of an ahead commit. Screenshots are never byte-identity gated, so their bytes differ from main forever. Discard them (`git checkout -- <paths>` / reset) and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE: `git -C worktrees/lane-b status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
+
+## Why (owner ruling 2026-08-08 afternoon, verbatim — supersedes the species-blind DISPLAY law)
+"I think we have to not make it anonymous and explain which harness and which model were used for each entry." The stack is already STORED per row (self-declared, honesty-law covered); only `boardRow` (standings.ts:220) strips it before the board sees it, under the old AP-06 species-blind reading (the comment at :49 records that design — quote it in your report as the superseded law). RANK ORDER stays outcome-based and unchanged; what changes is DISPLAY: every entry says what mind made it.
+
+## Scope
+1. **The API hands the board the truth.** `boardRow` includes `model`, `harness`, `harnessVersion` (when the stored row's stack declares them; omit absent fields — never invent). A row with NO stack is a human-or-undeclared entry: include `declared: false` so the UI can label it honestly. Update the :49 comment to record the owner's ruling and date, keeping the old sentence as history (retention style, not deletion).
+2. **The board renders the mind.** In the county standings renderer (reader.ts — follow the three fetch sites to the row templates): each entry gains a compact stack line/badge — `model · harness` (e.g. `deepseek/deepseek-v4-flash · pi`), truncated gracefully; undeclared rows show `unde­clared rider` (or the house-voice equivalent you find in neighboring copy — match the county's tone, no tech jargon like "anonymous"). Party rows: render per-rider stacks where the party carries them (the Field Book composition law already reads riders[].stack).
+3. **Local YOUR CLAIMS strip** (if it renders standings rows through the same path — check): same treatment, no divergence.
+4. **Mobile fits.** 390px: the stack line must not break row layout — wrap or truncate; screenshot proof both viewports.
+5. **Tests.** Extend the standings API test surface (find the existing test file covering boardRow/GET) with: declared row → model+harness present; undeclared row → declared:false, no invented fields. Extend or add the board e2e assertion that a declared entry's stack text is visible in a plain boot (no ?debug — Mistake #10).
+
+## Firewall
+Touch ONLY: `functions/api/standings.ts` (boardRow + comment), `src/encyclopedia/reader.ts` + its CSS (`src/encyclopedia/reader.css`), the one existing standings test file, and the one board e2e spec (name both in your report).
+NO changes to: ranking/sort logic; the POST/validation path; stored row shapes; STACK honesty laws; other tasks' fresh work.
+If you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate.
+
+## Self-check (evidence, not vibes)
+tsc + `npm run build` green. `npm run test:stats` (or the named standings test) green with the two new assertions. Board e2e green desktop+390px, zero console/page errors, screenshots to `reviews/shots-f-board-1/`. `npm run test:mp` untouched-green if functions/ routing shared (functions/ touched → the F-1229-1 battery applies).
+End: READY-FOR-GATES + report: the superseded comment quoted, the badge copy chosen, both screenshot paths, and the undeclared-row rendering.
