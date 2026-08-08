@@ -12,8 +12,8 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## Why (F-1559-1, s1559 2026-08-08 — measured, not reasoned)
 
-`e2e/m4-06-embodiment.spec.ts:395` **("permission-denied receipts do not send the Prospector to the
-denied target")** samples the Prospector's position after `await page.waitForTimeout(350)` (`:409`)
+`e2e/m4-06-embodiment.spec.ts:395` **("permission-denied receipts … the denied target")**
+samples the Prospector's position after `await page.waitForTimeout(350)` (`:409`)
 and asserts two numeric bounds on the result (`:420` `gapClosed < 0.45`, `:422` `driftAbs < 0.6`).
 
 **That sample is load-dependent, and it has cost the factory 274 fires of argument:**
