@@ -4593,6 +4593,13 @@
               "drainNotes": "s1583: cure (b) — a confirm invalid at issue time is discarded, not re-resolved one frame later. Acceptance mobile 20/20, desktop 10/10; regression assertion proved RED 5/5 against unfixed src (Expected 1, Received 2 palisades); m2-01 14/14 both projects; adjacent battery widened to all confirm sinks 99 pass/2 skip/0 fail; test:node-guards rc=0. Review reviews/f1581-1-build-confirm-position.md. tapped-retention untouched. Mobile/desktop asymmetry remains UNMEASURED."
             },
             {
+              "id": "f1584-1-banked-master-banner-vocabulary",
+              "title": "F-1584-1: the banked-master probe reads one spelling of a refusal the masters write three ways — widen the queueability banner so the dry-board headline is trustworthy",
+              "status": "queued",
+              "taskFile": "lane-c-f1584-1-banked-master-banner-vocabulary.md",
+              "gate": "none — fire-authorable from the F-1584-1 BACKLOG row; measured s1584 by running scripts/master-shipped-classifier.mjs on the live corpus (3 candidates) and reading all three flagged masters first six lines verbatim against the banner regex (NO MATCH, three times); blast radius re-measured at exactly 3 newly-captured masters across all 979, zero collateral"
+            },
+            {
               "id": "f1578-1-findings-state-open-vocabulary",
               "title": "F-1578-1: findings-state-guard admits only 🟡/✅-led rows, so 165 marker-led ledger rows are invisible and its double-state:0 is a false green — add a fail-safe OPEN vocabulary axis and an always-printed advisory line that cannot change the exit code",
               "status": "merged",
