@@ -4495,6 +4495,13 @@
               "mergeHash": "3d4651f91175b30dc57d19db46e407b411e69abf"
             },
             {
+              "id": "f1570-1-no-trace-banner-column",
+              "title": "The residual bucket is named for what was checked (NO-TRACE, not TRULY-BANKED) and declares the masters that forbid their own queueing: add a BANNER column and split the headline into residual vs candidates (F-1570-1)",
+              "status": "queued",
+              "taskFile": "lane-c-f1570-1-no-trace-banner-column.md",
+              "gate": "none — fire-authorable; premise measured s1570 at the drain of f1569-1 on the merged tree (67 of 335 TRULY-BANKED masters carry an explicit DO NOT QUEUE in their own first six lines, and 70.5% of every bannered master board-wide lands in that bucket)"
+            },
+            {
               "id": "f1569-1-master-shipped-classifier",
               "title": "Shipped-ness is answered by a probe, never by a filename: classify every master SHIPPED / RAN-UNMERGED / TRULY-BANKED with evidence, retiring the 107-vs-66 filename artefact (F-1568-1, F-1569-1)",
               "status": "merged",
