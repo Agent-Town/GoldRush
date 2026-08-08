@@ -78,8 +78,17 @@ async function companion(page: Page): Promise<{
   target: Point;
   terrainY: number;
   clearance: number;
+  simTick: number;
+  timeAlive: number;
 }> {
-  return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.agent.embodiment);
+  return page.evaluate(() => {
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__!;
+    return {
+      ...diagnostics.agent.embodiment,
+      simTick: diagnostics.simulation.tick,
+      timeAlive: diagnostics.timeAlive,
+    };
+  });
 }
 
 function distance(a: Point, b: Point): number {
@@ -405,7 +414,7 @@ test('permission-denied receipts do not send the Prospector to the denied target
   const after = await companion(page);
   const driftAbs = distance(after.position, before.position);
   const gapClosed = distance(before.position, node!.position) - distance(after.position, node!.position);
-  console.log(`[m4-06-denied] driftAbs=${driftAbs} gapClosed=${gapClosed}`);
+  console.log(`[m4-06-denied] driftAbs=${driftAbs} gapClosed=${gapClosed} tickBefore=${before.simTick} tickAfter=${after.simTick} tickDelta=${after.simTick - before.simTick} simSecondsDelta=${after.timeAlive - before.timeAlive}`);
   // F-1565-2: assertions follow the drift log so receipt or bark failures cannot suppress its sample.
   expect((receipt as { outcome?: { ok?: boolean; reason?: string } } | undefined)?.outcome).toMatchObject({
     ok: false,
