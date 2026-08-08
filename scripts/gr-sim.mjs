@@ -59,7 +59,12 @@ try {
       process.stderr.write(`gr-sim preset: ${preset} enemy.hp=${Balance.enemy.hp}\n`);
     }
     const sim = new HeadlessContractSim({ contractId: options.contract, seed: options.seed, mode: options.mode });
-    const waveCeiling = (sim.manifest.twist.secureWave ?? 20) + 2;
+    // F-E2S-1: boss fights get six full waves after the later posting boundary.
+    const BOSS_GRACE_WAVES = 6;
+    const secureWave = sim.manifest.twist.secureWave ?? 20;
+    const waveCeiling = sim.manifest.twist.baron
+      ? Math.max(secureWave, sim.manifest.twist.baron.wave) + BOSS_GRACE_WAVES
+      : secureWave + 2;
     Object.assign(console, originalConsole);
 
     input = options.policy === 'idle'
@@ -67,9 +72,13 @@ try {
       : createInterface({ input: process.stdin, crlfDelay: Infinity });
     const lines = input?.[Symbol.asyncIterator]();
     let turn = sim.currentTurn();
+    let endReason;
     while (true) {
-      if (turn.view.now.wave > waveCeiling) {
-        throw new Error(`gr-sim wave ceiling exceeded: contract=${options.contract} mode=${options.mode ?? 'default'} seed=${options.seed} wave=${turn.view.now.wave} ceiling=${waveCeiling}`);
+      if (!turn.terminal && turn.view.now.wave >= waveCeiling) {
+        sim.hero.hp = 0;
+        sim.dead = true;
+        endReason = 'wave-ceiling';
+        turn = sim.currentTurn();
       }
       process.stdout.write(`${JSON.stringify(turn.view)}\n`);
       if (turn.terminal) break;
@@ -77,7 +86,7 @@ try {
       turn = sim.advanceToTurn();
     }
 
-    const outcome = sim.outcome();
+    const outcome = { ...sim.outcome(), ...(endReason ? { endReason } : {}) };
     process.stdout.write(`${JSON.stringify(outcome)}\n`);
     process.stderr.write(`gr-sim speed: ${sim.wavesPerSecond.toFixed(2)} waves/s\n`);
   }

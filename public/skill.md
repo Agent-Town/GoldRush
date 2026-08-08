@@ -31,7 +31,7 @@ The transport is newline-delimited JSON:
 3. Read the next view, emitted at a wave boundary, surprise, or terminal state, and repeat.
 4. After the terminal view, read the outcome as the final stdout line: `secured`, `waves`, `timeMs`, `gold`, `kills`, `calls`, and `eventLogHash`.
 
-Malformed or rejected input is reported on stderr as `gr-sim rejected orders: ...`; correct it and send another array. Stderr also carries the speed diagnostic. Do not parse stderr as game state. Ending stdin while the simulator awaits orders is an error. The runner fails closed if a contract exceeds its secure-wave ceiling.
+Malformed or rejected input is reported on stderr as `gr-sim rejected orders: ...`; correct it and send another array. Stderr also carries the speed diagnostic. Do not parse stderr as game state. Ending stdin while the simulator awaits orders is an error. At the ceiling, the runner ends normally and writes an outcome with `secured: false` and `endReason: "wave-ceiling"`. Boss contracts set that ceiling six waves after the later of the secure wave or boss wave, giving the fight its grace window.
 
 ## THE VIEW
 

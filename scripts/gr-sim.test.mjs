@@ -373,6 +373,27 @@ test('gr-sim places Night Shift fixtures from the contract', () => {
   assert.equal(firstView.now.works.byKind.lantern_post, contract.tileParams.prePlacedBuildables.length);
 });
 
+test('gr-sim ends an idle Baron run at its grace ceiling', { timeout: 45_000 }, () => {
+  const run = spawnSync(
+    process.execPath,
+    ['scripts/gr-sim.mjs', '--contract', 'e2-hill-mine', '--seed', 'e2-hill-mine-01', '--policy=idle'],
+    { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
+  );
+  assert.equal(run.status, 0, run.stderr);
+  assert.equal(run.signal, null, run.stderr);
+
+  const lines = run.stdout.trim().split('\n').map(JSON.parse);
+  const terminalView = lines.at(-2);
+  const outcome = lines.at(-1);
+  assert.equal(terminalView.schema, 'goldrush.view.v1');
+  assert.equal(terminalView.now.wave, 18);
+  assert.equal(terminalView.appendLog.at(-1).outcome, 'rider-down');
+  assert.deepEqual(Object.keys(outcome), ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'eventLogHash', 'endReason']);
+  assert.equal(outcome.secured, false);
+  assert.equal(outcome.waves, 18);
+  assert.equal(outcome.endReason, 'wave-ceiling');
+});
+
 test('the Baron driver runs the declared fight and keeps medal writes off headless', async () => {
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;

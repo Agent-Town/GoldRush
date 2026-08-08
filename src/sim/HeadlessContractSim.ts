@@ -44,6 +44,8 @@ import { WaveSystem } from '../systems/WaveSystem';
 import * as Terrain from '../world/Terrain';
 
 const STEP_SECONDS = 1 / 30;
+// F-E2S-1: boss fights get six full waves after the later posting boundary.
+const BOSS_GRACE_WAVES = 6;
 const SUPPORTED_CONTRACTS = new Set([
   'e1-dry-gulch',
   'the-claim',
@@ -445,7 +447,10 @@ export class HeadlessContractSim {
   advanceToTurn(): GrSimTurn {
     const started = performance.now();
     const secureWave = this.manifest.twist.secureWave ?? Balance.run.secureWave;
-    const maxTicks = Math.ceil(((secureWave + 2) * Balance.waves.waveInterval) / STEP_SECONDS);
+    const finalWave = this.manifest.twist.baron
+      ? Math.max(secureWave, this.manifest.twist.baron.wave) + BOSS_GRACE_WAVES
+      : secureWave + 2;
+    const maxTicks = Math.ceil((finalWave * Balance.waves.waveInterval) / STEP_SECONDS);
     for (let tick = 0; tick < maxTicks && !this.terminal; tick += 1) {
       this.step();
       const orders = snapshotStandingOrders();
