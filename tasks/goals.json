@@ -4486,6 +4486,12 @@
               "mergeHash": "6001f3a577805ee5fd6ab3af02f9c6ece492bf98",
               "taskFile": "lane-b-f1565-1-desk-state-audit.md",
               "gate": "none — fire-authorable; merged s1566 after 15/124 ledger-guard tests + 12/12 chained leaves green on the merged tree, and a live run over s1565 desk: CLOSED=0 OPEN=5 OPEN-DESK-ONLY=17 UNRECORDED=0"
+            },
+            {
+              "id": "f1566-3-desk-guard-subject-first",
+              "title": "Close desk-carryforward-guard's citation-shaped fail-open: closure exit asks the subject-first reader, not the raw census (21 of 343 ids closed by citation only)",
+              "status": "queued",
+              "taskFile": "lane-b-f1566-3-desk-guard-subject-first.md"
             }
           ]
         }
