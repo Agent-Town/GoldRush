@@ -4584,6 +4584,13 @@
               "drainNotes": "Drained s1580. THE BREACH REPRODUCES IN THE LIVE REGIME AND THE CURVE OSCILLATES: via driveRenderSchedule (the real live path), drift rises through 0.4, decays to a measured minimum of 0.021095023109728415 (desktop, absolute simTick 82-85) and rises again — two breach bands desktop, one mobile; 720 samples, every one renderFrames=2 simTicks=1 droppedTicks=0. This is the LADDER curve shape, NOT the monotone fixed-phase one (f1577-3 measured zero decreases in 1,656 transitions), which CONFIRMS F-1579-1: the 0.353 fixed-phase margin must NOT be carried into a re-pin of the live-loop m4-06 bounds. ⚖️ THE REVIEW DECLINES TO OVERCLAIM AND THAT IS THE DELIVERABLE S1579 ASKED FOR, HALF-ANSWERED HONESTLY: s1579 asked WHICH CLOCK predicts the breach; the sweep shows timeAlive = simTick x 2/15 within float error in EVERY sample, so the two clocks are PERFECTLY COLLINEAR and no instrument of this shape can identify one over the other. The question as posed is unanswerable, not unanswered. Gates on the merged tree in detached worktree gate-s1580 (§3.0b), --workers=1 throughout: tsc rc=0, build 1.17s, slice spec 12 passed both projects, adjacent m4-06+task-025+m1-01+m2-01 51/52, run-guards 5/5 (node-guards 292s, power-budget p95 0.322ms). Spec diff VERIFIED purely additive by counting the diff, not by trusting the review: 55 added, 0 removed, one new test. The single adjacent red (m1-01:29 desktop) is F-1580-1, NOT attributable to this slice — see the review."
             },
             {
+              "id": "f1581-1-build-confirm-position",
+              "title": "F-1581-1: a build confirm rejected at one position is re-evaluated at another one frame later and succeeds there — make the confirm intent carry the position it was issued at",
+              "status": "queued",
+              "taskFile": "lane-c-f1581-1-build-confirm-position.md",
+              "gate": "none — fire-authorable from the F-1581-1 BACKLOG row and artifacts/f1580-1-batch-red/FINDINGS.md; root cause verified by reading main (InputController.ts:102/107/246, Game.ts:2394, BuildSystem.ts:993 and :1585-1590) and the defect reproduces 2/10 on mobile-chrome in 90 seconds"
+            },
+            {
               "id": "f1578-1-findings-state-open-vocabulary",
               "title": "F-1578-1: findings-state-guard admits only 🟡/✅-led rows, so 165 marker-led ledger rows are invisible and its double-state:0 is a false green — add a fail-safe OPEN vocabulary axis and an always-printed advisory line that cannot change the exit code",
               "status": "merged",
