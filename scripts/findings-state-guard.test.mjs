@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { scan } from './findings-state-guard.mjs';
 
 const SCRIPT = path.join(import.meta.dirname, 'findings-state-guard.mjs');
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -66,4 +67,61 @@ test('prose citations are not declarations, only struck declarations close, and 
   assert.equal(result.status, 0, result.stdout + result.stderr);
   assert.deepEqual(offenders(result.stdout), ['F-9000-3', 'F-9000-5']);
   assert.doesNotMatch(result.stdout, /^F-9000-(?:1|4)\s+closed lines/m);
+});
+
+test('regression arm: narrow open vocabulary is byte-identical when explicitly selected', () => {
+  const backlog = [
+    '🟡 **F-9100-1 — OPEN.**',
+    '✅ **F-9100-2 — CLOSED.**',
+    '🔨 ~~**F-9100-3 — ✅ CLOSED; struck s9100.**~~',
+    '- ✅ **F-9100-4 — CLOSED.**',
+  ].join('\n');
+
+  assert.equal(
+    JSON.stringify([...scan(backlog)]),
+    JSON.stringify([...scan(backlog, { openVocabulary: 'narrow' })]),
+  );
+});
+
+test('wide open vocabulary admits an explicit 🟠 OPEN declaration', () => {
+  const backlog = '🟠 **F-9200-1 — OPEN.**';
+  assert.equal(scan(backlog).size, 0);
+  assert.deepEqual(scan(backlog, { openVocabulary: 'wide' }).get('F-9200-1')?.open, [1]);
+});
+
+test('🟢 RULING without a state word is not an open declaration', () => {
+  const backlog = '🟢 **F-9200-2 — RULING: keep the current contract.**';
+  assert.equal(scan(backlog).size, 0);
+  assert.equal(scan(backlog, { openVocabulary: 'wide' }).size, 0);
+});
+
+test('wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow', (t) => {
+  const backlog = ['✅ **F-9200-3 — CLOSED.**', '🔬 **F-9200-3 — OPEN.**'].join('\n');
+  const narrow = scan(backlog).get('F-9200-3');
+  const wide = scan(backlog, { openVocabulary: 'wide' }).get('F-9200-3');
+  assert.deepEqual(narrow, { closed: [1], open: [] });
+  assert.deepEqual(wide, { closed: [1], open: [2] });
+
+  const result = run(fixture(t, backlog));
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /double-state\s+:\s+0/);
+  assert.match(result.stdout, /1 narrow closed-only/);
+});
+
+test('wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs', (t) => {
+  const backlog = [
+    '✅ **F-9300-1 — CLOSED.**',
+    '🔴 **F-9300-1 — OPEN.**',
+    '🟣 **F-9300-2 — OPEN.**',
+    '🟢 **F-9300-3 — RULING: resolved.**',
+    '⛔ **F-9300-4 — BLOCKED.**',
+    '🔺 **F-9300-5 — OPEN-DESK-ONLY.**',
+  ].join('\n');
+  const result = run(fixture(t, backlog));
+
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(
+    result.stdout,
+    /wide-open advisory : 4 skipped marker-led rows; 2 F-IDs open only there; 1 narrow closed-only/,
+  );
 });

@@ -13,7 +13,8 @@
 //   open unless struck; a leading ✅ row or struck 🟡 row is closed. This does
 //   not decide whether either claim is true in code, or scan incidental F-IDs.
 //   s1259 measured 🟡 as only 22 of 424 declaration rows (5%): zero here means
-//   zero in that narrow vocabulary, not a clean ledger. Widening needs triage.
+//   zero in that narrow vocabulary, not a clean ledger. Widening CLOSED needs
+//   triage; widening OPEN can only add declarations and conflicts, so fails safe.
 //
 // USAGE
 //   node scripts/findings-state-guard.mjs
@@ -33,7 +34,7 @@ const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 
 const ROOT = path.resolve(arg('--root') || DEFAULT_ROOT);
 const REPORT = process.argv.includes('--report');
 const SUBJECT_CHARS = 90;
-const FINDING = /\bF-\d+-\d+\b/g;
+export const FINDING = /\bF-\d+-\d+\b/g;
 
 // Exported so a second guard can EXECUTE this closure rule rather than copy it.
 // F-1261-1: a re-implementation of a ledger rule disagreed with the original on
@@ -48,22 +49,41 @@ const FINDING = /\bF-\d+-\d+\b/g;
 //   s1291) is denominated in the narrow vocabulary. Callers opt in and say why.
 //   Wide widens CLOSED ONLY, never open — see blocker-panel-closed-guard.mjs,
 //   whose panel row is itself the open claim.
+// OPEN VOCABULARY — 'narrow' (default) vs 'wide'.
+//   Narrow is byte-identical to the historical 🟡-only reading. Wide also
+//   accepts 🟠/🔬/🔴/🟢/🟣-led rows whose 90-character subject
+//   explicitly says OPEN. The marker is only an admission gate: 🟢 also leads
+//   RULING rows that are resolutions, so its marker alone cannot mean open. 🔺 desk
+//   rows stay excluded because ownership routing is not finding state.
+//   Wide OPEN is advisory only: like desk-state-audit.mjs and
+//   attended-owed-audit.mjs, a printed backlog must not become a pre-merge red.
+//   Reuse this file's exported scan() and FINDING for probes; emoji classes need
+//   the `u` flag and broader ID patterns can silently exclude single-letter F-.
 const BULLET_CLOSED = /^[-*•]\s*✅/;
+const WIDE_OPEN_MARKERS = ['🟠', '🔬', '🔴', '🟢', '🟣'];
 
-export function scan(text, { closedVocabulary = 'narrow' } = {}) {
+function rowState(subject, lead, wide, wideOpen) {
+  const struck =
+    /^[^A-Za-z0-9]*~~/.test(lead) ||
+    /✅\s*(?:CLOSED|RETIRED)/i.test(subject) ||
+    /struck s\d+/i.test(subject);
+  const bulletClosed = wide && BULLET_CLOSED.test(lead);
+  const markerOpen =
+    lead.startsWith('🟡') ||
+    (wideOpen && /\bOPEN\b/i.test(subject) && WIDE_OPEN_MARKERS.some((marker) => lead.startsWith(marker)));
+  if (!markerOpen && !lead.startsWith('✅') && !struck && !bulletClosed) return null;
+  return lead.startsWith('✅') || struck || bulletClosed ? 'closed' : 'open';
+}
+
+export function scan(text, { closedVocabulary = 'narrow', openVocabulary = 'narrow' } = {}) {
   const wide = closedVocabulary === 'wide';
+  const wideOpen = openVocabulary === 'wide';
   const states = new Map();
   for (const [index, line] of text.split('\n').entries()) {
     const subject = line.slice(0, SUBJECT_CHARS);
     const lead = line.trimStart();
-    const struck =
-      /^[^A-Za-z0-9]*~~/.test(lead) ||
-      /✅\s*(?:CLOSED|RETIRED)/i.test(subject) ||
-      /struck s\d+/i.test(subject);
-    const bulletClosed = wide && BULLET_CLOSED.test(lead);
-    if (!lead.startsWith('🟡') && !lead.startsWith('✅') && !struck && !bulletClosed) continue;
-
-    const state = lead.startsWith('✅') || struck || bulletClosed ? 'closed' : 'open';
+    const state = rowState(subject, lead, wide, wideOpen);
+    if (!state) continue;
     const ids = new Set(subject.match(FINDING) || []);
 
     for (const id of ids) {
@@ -95,6 +115,26 @@ function print(states) {
   return conflicts;
 }
 
+function printOpenAdvisory(text, narrow, wide) {
+  const skippedRows = text.split('\n').filter((line) => {
+    const lead = line.trimStart();
+    return (
+      [...WIDE_OPEN_MARKERS, '⛔'].some((marker) => lead.startsWith(marker)) &&
+      rowState(line.slice(0, SUBJECT_CHARS), lead, false, false) === null
+    );
+  }).length;
+  const hiddenOpen = [...wide.entries()].filter(
+    ([id, state]) => state.open.length && !narrow.get(id)?.open.length,
+  );
+  const closedOnly = hiddenOpen.filter(([id]) => {
+    const state = narrow.get(id);
+    return state?.closed.length && !state.open.length;
+  });
+  console.log(
+    `wide-open advisory : ${skippedRows} skipped marker-led rows; ${hiddenOpen.length} F-IDs open only there; ${closedOnly.length} narrow closed-only`,
+  );
+}
+
 function main() {
   const backlog = path.join(ROOT, 'tasks', 'BACKLOG.md');
   let text;
@@ -105,7 +145,10 @@ function main() {
     process.exit(REPORT ? 0 : 2);
   }
 
-  const conflicts = print(scan(text));
+  const narrow = scan(text);
+  const wideOpen = scan(text, { openVocabulary: 'wide' });
+  const conflicts = print(narrow);
+  printOpenAdvisory(text, narrow, wideOpen);
   if (REPORT) process.exit(0);
   if (conflicts.length) {
     console.error('findings-state-guard: FAIL — a finding is declared both closed and open.');
