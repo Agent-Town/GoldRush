@@ -1,6 +1,7 @@
 import { spawn } from 'node:child_process';
-import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, rm, symlink, writeFile } from 'node:fs/promises';
 import net from 'node:net';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -24,6 +25,7 @@ const SETUP = {
   },
 };
 const checks = [];
+let wranglerVersion = 'unknown';
 
 await main();
 
@@ -32,6 +34,7 @@ async function main() {
   await rm(STATE_ROOT, { recursive: true, force: true });
 
   try {
+    wranglerVersion = await getWranglerVersion();
     await checkUnconfigured503();
     await checkRelayFlow();
     await checkRateLimits();
@@ -47,8 +50,8 @@ async function checkUnconfigured503() {
   const server = await startPages('unconfigured');
   try {
     const response = await post(server.url, '/api/multiplayer/create', {});
-    assertEqual(response.status, 503, 'create returns 503 without Durable Object binding');
-    assertEqual(response.body.message, "riding together isn't saddled yet", '503 message is the saddle copy');
+    assertEqual(response.status, 503, 'create returns 503 without Durable Object binding', response);
+    assertEqual(response.body.message, "riding together isn't saddled yet", '503 message is the saddle copy', response);
   } finally {
     await server.stop();
   }
@@ -235,10 +238,20 @@ async function startRoomWorker() {
 async function startPages(name, doScriptName) {
   const port = await freePort();
   const persistPath = path.join(STATE_ROOT, `pages-${name}`);
+  const unconfigured = name === 'unconfigured';
+  // Wrangler 4.107 loads the repo's production DO binding for in-repo fixtures.
+  const fixtureRoot = unconfigured ? await mkdtemp(path.join(tmpdir(), 'gold-rush-mp-unconfigured-')) : ROOT;
+  if (unconfigured) {
+    await symlink(path.join(ROOT, 'functions'), path.join(fixtureRoot, 'functions'));
+    await writeFile(
+      path.join(fixtureRoot, 'wrangler.toml'),
+      `name = "gold-rush-unconfigured-test"\npages_build_output_dir = ${JSON.stringify(path.join(ROOT, 'public'))}\ncompatibility_date = "2026-07-08"\n`,
+    );
+  }
   const args = [
     'pages',
     'dev',
-    'public',
+    unconfigured ? path.join(ROOT, 'public') : 'public',
     '--port',
     String(port),
     '--ip',
@@ -249,11 +262,18 @@ async function startPages(name, doScriptName) {
     'error',
     '--show-interactive-dev-session=false',
   ];
+  if (unconfigured) args.push('--cwd', fixtureRoot);
   if (doScriptName) args.push('--do', `MULTIPLAYER_ROOMS=MultiplayerRoom@${doScriptName}`, '--kv', 'MULTIPLAYER_RATE_LIMITS');
   const child = spawnWrangler(args, `pages ${name}`);
   const url = `http://127.0.0.1:${port}`;
   await waitForServer(url, child, '/api/multiplayer/create');
-  return { url, stop: child.stop };
+  return {
+    url,
+    async stop() {
+      await child.stop();
+      if (unconfigured) await rm(fixtureRoot, { recursive: true, force: true });
+    },
+  };
 }
 
 function spawnWrangler(args, label) {
@@ -321,12 +341,21 @@ async function post(baseUrl, route, body, origin = ORIGIN, extraHeaders = {}) {
     headers: { 'content-type': 'application/json', Origin: origin, ...extraHeaders },
     body: JSON.stringify(body),
   });
-  return { status: response.status, body: await response.json().catch(() => ({})) };
+  return readResponse(response);
 }
 
 async function get(baseUrl, route, origin = ORIGIN, extraHeaders = {}) {
   const response = await fetch(`${baseUrl}${route}`, { headers: { Origin: origin, ...extraHeaders } });
-  return { status: response.status, body: await response.json().catch(() => ({})) };
+  return readResponse(response);
+}
+
+async function readResponse(response) {
+  const rawBody = await response.text();
+  try {
+    return { status: response.status, body: JSON.parse(rawBody), rawBody };
+  } catch {
+    return { status: response.status, body: {}, rawBody };
+  }
 }
 
 async function connectClient(baseUrl, code, name, town) {
@@ -418,8 +447,12 @@ function assert(value, label) {
   checks.push(label);
 }
 
-function assertEqual(actual, expected, label) {
-  if (actual !== expected) throw new Error(`${label}: expected ${expected}, got ${actual}`);
+function assertEqual(actual, expected, label, response) {
+  if (actual !== expected) {
+    const err = new Error(`${label}: expected ${expected}, got ${actual}`);
+    if (response) err.response = response;
+    throw err;
+  }
   checks.push(label);
 }
 
@@ -435,12 +468,30 @@ async function writeSummary(status, err) {
         status,
         checks,
         error: err instanceof Error ? err.message : undefined,
+        wranglerVersion,
+        failureResponse: err?.response
+          ? {
+              status: err.response.status,
+              rawBody: err.response.rawBody.slice(0, 4096),
+              truncated: err.response.rawBody.length > 4096,
+            }
+          : undefined,
         generatedAt: new Date().toISOString(),
       },
       null,
       2,
     )}\n`,
   );
+}
+
+async function getWranglerVersion() {
+  const child = spawn('wrangler', ['--version'], { cwd: ROOT, env: cleanEnv(), stdio: ['ignore', 'pipe', 'pipe'] });
+  let output = '';
+  child.stdout.on('data', (chunk) => (output += chunk));
+  child.stderr.on('data', (chunk) => (output += chunk));
+  const exitCode = await new Promise((resolve) => child.once('exit', resolve));
+  if (exitCode !== 0) throw new Error(`wrangler --version failed (${exitCode}): ${output.trim()}`);
+  return output.trim();
 }
 
 async function freePort() {
