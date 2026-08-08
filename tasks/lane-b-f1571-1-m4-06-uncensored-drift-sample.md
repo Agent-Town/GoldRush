@@ -21,7 +21,7 @@ Both must print `1`. **If either prints `0`, STOP and report "lane drifted or pr
 
 F-1565-2 states the hazard and three fires have left it standing: *"the bark assertion executes BEFORE the drift log line, so a run that loses the bark race yields no drift sample at all — censored in the direction that HIDES the problem"*, and *"the runs most starved of CPU are exactly the ones most likely to both lose that race and drift furthest. A mean over surviving samples is not the mean."*
 
-✓ **CONFIRMED by reading `e2e/m4-06-embodiment.spec.ts:402–413` on main, not inferred:**
+✓ **CONFIRMED by reading `e2e/m4-06-embodiment.spec.ts:402` ("permission-denied receipts do not send the Prospector to the denied target") through `:413` on main, not inferred:**
 
 ```
 :402  const receipt = await page.evaluate(... panAt(nodeId) ...)
