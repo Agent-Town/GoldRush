@@ -81,41 +81,49 @@ const HAND_COPIED_EYEBROW = 'Hand-copied at the claim office board';
 const CLAIM_COPY: Readonly<Record<string, ClaimCopy>> = {
   'the-claim': {
     name: 'The Claim',
+    // assets/contracts/epoch-1-frontier/contracts.json:33-41 — name, river, ford, wave ten.
     headline: 'THE RIVER CLAIM HOLDS',
     standfirst: 'The classic river claim, split around one center ford, stood through every posted wave.',
     engraving: 'river',
     lead: ({ hero, town }) => [
       `The river ground at ${town} — the old claim, split around its one center ford — is held, and it is held with ${hero} standing on it.`,
+      // lore/STORYBOOK.md:39 + contracts.json:25-31 — turned-back register; four edges; tenth horn.
       'Pressure came from all four edges until the tenth horn sealed the ground. The ford held. The works held. The claim office has entered it secured.',
     ],
   },
   'e1-dry-gulch': {
     name: 'The Dry Gulch',
+    // assets/contracts/epoch-1-frontier/contracts.json:153-166 — mesa, washes, spring, sluice.
     headline: 'THE DRY GULCH ANSWERS',
     standfirst: 'Mesa country, where every wash falls to one sunken spring — and a sluice works nowhere else.',
     engraving: 'trail',
     lead: ({ hero, town }) => [
       `Mesa country gave up its washes to ${hero} this season: the dry gulch above ${town}, where the ground falls every direction toward one sunken spring and a sluice will work nowhere else on the map.`,
+      // contracts.json:143-166 + lore/STORYBOOK.md:39 — every edge, spring economy, held ground.
       'No river to lean on and every edge open. The spring kept washing all the while the trouble came, and the gulch is held.',
     ],
   },
   'e1-night-shift': {
     name: 'Night Shift',
+    // assets/contracts/epoch-1-frontier/contracts.json:232-245 — darkness, cold lanterns, dawn.
     headline: 'THE CLAIM KEEPS ITS LIGHT',
     standfirst: 'Beyond the lamplight the night owned the claim. The posts stayed lit until dawn.',
     engraving: null,
     lead: ({ hero, town }) => [
       `${hero} worked the claim at ${town} through a night that owned everything past the lamplight, relighting cold lanterns as they went, and did not put the work down until dawn.`,
+      // lore/STORYBOOK.md:39 — Fevered are turned back and walk home; contracts.json:238-245.
       'Beyond the light there was nothing to see and plenty to meet. The posts stayed lit. The fevered who came out of the dark were turned back, and in the morning they walked home.',
     ],
   },
   'e1-twin-banks': {
     name: 'Twin Banks',
+    // assets/contracts/epoch-1-frontier/contracts.json:311-324 — braided river, twin fords, reeds.
     headline: 'BOTH BANKS HELD',
     standfirst: 'A braided river, twin fords, and two ways across for anyone with an appetite.',
     engraving: 'river',
     lead: ({ hero, town }) => [
       `The braided ground above ${town} is held on both sides of the water. ${hero} built on either bank and watched both fords, which is two claims' work counted by the office as one.`,
+      // contracts.json:264-301,317-324 — paired markers, gravel bars, reeds, two crossings.
       'Gravel bars, damp reeds, and two crossings to keep. The stake on the south bank and the marker across the braid are both still standing.',
     ],
   },
