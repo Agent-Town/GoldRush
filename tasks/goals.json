@@ -4497,9 +4497,10 @@
             {
               "id": "f1569-1-master-shipped-classifier",
               "title": "Shipped-ness is answered by a probe, never by a filename: classify every master SHIPPED / RAN-UNMERGED / TRULY-BANKED with evidence, retiring the 107-vs-66 filename artefact (F-1568-1, F-1569-1)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-c-f1569-1-master-shipped-classifier.md",
-              "gate": "none — fire-authorable; premise re-measured s1569 before authoring (same repo, same minute: stem-only match yields 107 never-ran, slot-stripped yields 66 — a 41-master, 38% swing decided by an undeclared string transform)"
+              "mergeHash": "8efbb0eac51ad961f8fc476d0b3934a7f0cc9570",
+              "gate": "none — fire-authorable; premise re-measured s1569 before authoring (same repo, same minute: stem-only match yields 107 never-ran, slot-stripped yields 66 — a 41-master, 38% swing decided by an undeclared string transform). DRAINED s1570: live CLI independently reproduced 969/550/84/335/92 on the merged tree; F-1570-1 filed non-blocking (67 of 335 TRULY-BANKED masters carry an explicit DO NOT QUEUE banner)"
             },
             {
               "id": "f1568-1-desk-audit-subject-first-keying",
