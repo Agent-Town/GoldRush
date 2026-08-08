@@ -125,3 +125,50 @@ No Playwright was owed or run: the slice touches no `src/**`, `e2e/**`, `src/sim
 The ambient shell was Node 23.11.1; its file-level `--test-timeout` semantics intentionally red `node-guards-timeout.test.mjs` with the diagnostic “Cure the NODE, not the test: .nvmrc pins 26.4.0.” I changed no runtime or test for that known environment mismatch; the required full battery passed under the repo-pinned Node 26.4.0.
 
 The firewall held: only the three declared existing files and this review were changed. `scripts/gate-caller-baseline.json`, package scripts, drain law, fire law, source, e2e, specs, tasks, and status were not edited.
+
+---
+
+# DRAIN GATE — s1577
+
+**Slice:** `f1576-1-guard-rooting-at-authoring` · **branch:** `lane/b` @ `f2f5b0f` · **base:** `3e9934f80` · **merge:** `--no-ff` onto main at **`234891aab6f9b2f2e3f3d79addbe893b96328026`**
+
+**VERDICT: MERGED.** Both of the slice's load-bearing promises were re-proved here rather than inherited — the default subject set is unchanged, and the opt-in has teeth — and the second was proved the way this factory requires, **by manufacturing the defect**.
+
+## Merge classification — DISJOINT
+
+Main moved **68** files since the base, all of them **this same fire's drain-1 output** (the f1575-1 artifacts, the two e2e specs, its review, `tasks/BACKLOG.md`, `tasks/goals.json`, `STATUS.md`, three `logs/**`). The lane touched **4**: `scripts/gate-caller-audit.mjs`, `scripts/gate-caller-audit.test.mjs`, `.claude/skills/author-task/SKILL.md`, and this review. **Overlap: 0.** All 4 LANE-TOUCHED, no graft.
+
+ⓘ Draining two slices in one fire decays the second one's classification against a base that has moved underneath it — so this was recomputed against main **after** drain 1 landed, not carried over from the runner's dispatch-time reading.
+
+## Evidence — measured on the MERGED tree (fire shell)
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | rc=0 |
+| `npm run build` | green, Vite **1.41 s**, asset diet `1158214 / 1500000` bytes |
+| `node --test scripts/gate-caller-audit.test.mjs` | **25 tests / 25 pass / 0 fail / 0 skipped** (2.6 s) |
+| `gate-caller-audit` DEFAULT | **PASS** rc=0 — `301 files (27 guard-shaped) · 50 subjects · 12 orphans · 12 grandfathered · 3 escalations, 0 unrouted` |
+| `gate-caller-audit --include-untracked` | **PASS** rc=0 — `(+0 untracked)`, every other figure identical |
+| `--update-baseline --include-untracked` | **REFUSES rc=2**, and `gate-caller-baseline.json` bytes **hash-verified unchanged** (`3a324785bafe…` before and after) |
+| `law-pointer-guard` | **PASS** — 7 surfaces, 26 pointers (23 checked, 2 illustrative, 1 known-rotten); the §0 `four facts`→`five facts` heading change rotted nothing |
+| `test:ledger-guards` | see below, run after the bookkeeping commit (F-1300-4) |
+
+✅ **THE DEFAULT IS PROVABLY UNCHANGED, and this is a stronger check than it looks:** the DEFAULT figures above are byte-for-byte the ones I measured on main **during drain 1, before this slice existed** (`301 (27 guard-shaped) · 50 · 12 · 12 · 3/0`). The comparison is against an independently-taken pre-merge reading, not against the runner's own report of one.
+
+## The teeth, proved by manufacturing the defect
+
+A passing guard never executes its violation path, so its green says nothing about its red (the s1299/s1300 standard). I wrote an untracked guard-shaped file `scripts/zzz-s1577-probe-audit.mjs`, confirmed `git status` reported it `?? `, and ran both modes:
+
+    DEFAULT rc=0   301 files (27 guard-shaped)          — does not mention the probe   (correct: tracked-only preserved)
+    OPTIN   rc=1   302 files (28 guard-shaped) (+1 untracked)
+                   NEW    scripts/zzz-s1577-probe-audit.mjs         NO CALLER
+
+Probe removed, existence re-checked `false`. ➡️ **This is precisely the s1576 incident replayed on the merged tree**: the file the lane runner had not yet committed is invisible by default and visible on request. Both directions demonstrated, not just the safe one.
+
+## Findings
+
+**None blocking.** The firewall held — I verified by reading the diff that the four declared files are the only ones changed, and that `scripts/gate-caller-baseline.json` was *not* edited (the slice adds a way to ask the question, and deliberately grandfathers nothing new).
+
+ⓘ The runner's adjacent note is confirmed and is an environment fact, not a defect: `node-guards-timeout.test.mjs` reds under an ambient Node 23 shell and passes under the repo-pinned 26.4.0. Its diagnostic already says *"Cure the NODE, not the test"*. Nothing owed.
+
+⚖️ **`test:node-guards` (436 s) not re-run at this gate, with the reason stated rather than skipped silently:** F-1460-1's trigger is `src/sim/` · `src/systems/` · `src/entities/` and this diff touches none of them (no `src/**` or `e2e/**` at all). The runner ran the full battery on the lane under pinned Node — **405 tests / 405 pass / 0 fail** — and the only file this merge changes that any battery reads is `gate-caller-audit.mjs`, whose own 25-test suite and both live modes are green above.
