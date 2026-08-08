@@ -84,6 +84,8 @@ const SMALL_JSON_BYTES = 8 * 1024;
 const MAX_MESSAGE_BYTES = 220 * 1024;
 const MAX_SNAPSHOT_BYTES = 200 * 1024;
 const MAX_INPUT_BYTES = 4 * 1024;
+const MAX_VIEW_BYTES = 64 * 1024;
+const MIN_VIEW_INTERVAL_MS = 2_000;
 const MAX_REJOIN_BOOTSTRAP_BYTES = 512 * 1024;
 const MAX_FUTURE_TICKS = 512;
 const ROOM_UNAVAILABLE_MESSAGE = "riding together isn't saddled yet";
@@ -165,6 +167,7 @@ export class MultiplayerRoom {
   private setup: RoomSetup | null = null;
   private nextFlushTick = 0;
   private nextPlayerNumber = 1;
+  private readonly lastViewAt = new Map<string, number>();
   private emptySince = 0;
   private emptyTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -386,6 +389,7 @@ export class MultiplayerRoom {
     if (message.type === 'join' || message.type === 'rejoin') return;
     if (message.type === 'input') return this.handleInput(playerId, message);
     if (message.type === 'hash') return this.forward(playerId, 'hash', message);
+    if (message.type === 'view') return this.forwardView(playerId, message);
     if (message.type === 'snapshot-push') return this.handleSnapshot(playerId, message);
     if (message.type === 'snapshot-request') return this.sendSnapshot(player);
     if (message.type === 'ping' && player.socket) return send(player.socket, { v: PROTOCOL_VERSION, type: 'pong', now: Date.now() });
@@ -441,6 +445,24 @@ export class MultiplayerRoom {
       hash: typeof message.hash === 'string' ? message.hash.slice(0, 128) : undefined,
       payload: message.payload,
     }, from);
+  }
+
+  private forwardView(from: string, message: JsonRecord): void {
+    const host = this.roster()[0];
+    if (host?.playerId !== from || host.client !== 'browser') throw new Error('view_authority_required');
+    const to = typeof message.to === 'string' ? message.to : '';
+    const target = this.players.get(to);
+    const seq = normalizeTick(message.seq);
+    if (!target || target.client !== 'headless') throw new Error('view_target_required');
+    if (seq === null) throw new Error('bad_view_seq');
+    const body = message.body ?? null;
+    if (utf8Length(JSON.stringify(body)) > MAX_VIEW_BYTES) throw new Error('view_too_large');
+    if (!target.socket) return;
+    const route = `${from}:${to}`;
+    const now = Date.now();
+    if (now - (this.lastViewAt.get(route) ?? 0) < MIN_VIEW_INTERVAL_MS) throw new Error('view_rate_limited');
+    this.lastViewAt.set(route, now);
+    send(target.socket, { v: PROTOCOL_VERSION, type: 'view', from, to, seq, body });
   }
 
   private handleSnapshot(from: string, message: JsonRecord): void {
@@ -547,6 +569,7 @@ export class MultiplayerRoom {
       this.inputTicks.clear();
       this.replayBundles.clear();
       this.latestSnapshot = null;
+      this.lastViewAt.clear();
       this.setup = null;
       this.nextFlushTick = 0;
       this.nextPlayerNumber = 1;

@@ -269,27 +269,27 @@ The room decides the contract, the seed and the clock, so `--contract`, `--seed`
 
 Optional: `--name` / `--town` (how you appear on the roster, default `Rig of Calculating House`), `--party` (how many riders the room waits for before tick 0, 2–4), `--tick-rate` (see the pace note below), `--max-ticks`, and `--policy=idle` for a rig that watches without ordering.
 
-### Scout seats in browser rooms
+### Riding the browser's world
 
-An invited seat in a room with browser riders rides as a scout: its builds still land, but its own view is approximate and it sends no determinism hashes. Use `--strict` to refuse that mixed-engine room instead. Full mixed play arrives with MP-07c, where the agent rides the browser's world.
+An invited seat in a browser room is thin: it does not boot or advance another sim. The room's first browser serves the same `goldrush.view.v1` NDJSON view this door already speaks; each order array you write to stdin returns as an `agent_orders` lockstep act and drives that seat's embodied Prospector in the browser world. Views remain advisory transport, while all state changes travel only as ordered wire acts. The roster keeps the `(scout)` mark for compatibility. `--strict` is unchanged and refuses mixed rooms.
 
 ### What the seat does, and what it will not do
 
-- **It runs the same sim everyone else runs**, one tick per tick-bundle the room agrees on. Nothing but inputs travels.
-- **It paces itself to the room.** A headless sim is hundreds of times faster than real time; a seated one must not be. The relay allows each rider 600 messages per 10 seconds, and a seat spends one per tick, so the pace is 30 ticks/second by default and 45 at the very most. Ask for more and it is refused, not silently obeyed.
-- **It asks you for orders only at wave boundaries**, exactly as a solo headless run does. Between your answers it streams empty ticks — the room never waits on your thinking, and you never have to answer at tick rate.
-- **It resigns rather than ride on.** Every rider exchanges a determinism hash; if this seat's stops matching the table's, it stops, says which tick and which engine, and exits non-zero. There is no such thing here as a rig that quietly plays a different game than the people it is sitting with.
+- **In a browser room it runs no sim and sends no hashes.** It supplies empty tick inputs so the room never waits on inference; browser riders keep their existing cross-browser hash exchange.
+- **In a headless-only room it keeps the full deterministic seat unchanged:** one sim tick per agreed bundle, hashes included, paced at 30 ticks/second by default and 45 at most.
+- **The host serves views at wave boundaries and when the rider needs help.** You answer on your own clock; the room keeps moving between answers.
+- **The relay addresses each view to its seat.** Views are capped at 64 KiB and at one per seat every two seconds.
 
 ### The order door, and its honest edge
 
-Orders arrive on stdin as one JSON array per line — the same standing-orders grammar a solo run reads. **Today a seated rig can only send `BUILD`.** That is not an oversight: only inputs travel on a lockstep wire, and the shared vocabulary has a word for placing a building and no word yet for panning, repairing or moving a body. Send `HARVEST`, `REPAIR_UNDER`, `MOVE_TO`, `HOLD` or `FALLBACK_IF` and the seat refuses the whole submission and tells you so, rather than pretending to carry it. Those verbs come back when the wire itself learns to speak them.
+Orders arrive on stdin as one JSON array per line — the same standing-orders grammar a solo run reads. In a browser room the full array rides as one replace-semantics `agent_orders` act, so `BUILD`, `HARVEST`, `REPAIR_UNDER`, `MOVE_TO`, `HOLD` and `FALLBACK_IF` reach the embodied rider's existing executor. Headless-only rooms keep their older BUILD-only act translation.
 
 ```
 [{"verb":"BUILD","what":"palisade","where":{"x":0,"z":10},"when":{"goldGte":10}}]
 ```
 
-The `when` clause is read against `gold` and `wave` — two numbers every seat in the room already agrees on — so the seat evaluates it locally and sends only the decision. That is the same thing a human's client does: the human decides, the click travels.
+In a browser room the executor reads `when` against the browser world's state. The thin seat does not evaluate or mutate that state.
 
 ### What comes back
 
-One `goldrush.view.v1` line per turn, then a final `goldrush.seat.v1` line: the roster you rode with, the ticks you rode, the pace you held, the acts applied, the last determinism hash, whether you resigned and why, and the run's outcome if it reached one. A seat that stopped early reports its hash and no outcome — it will not name a verdict it did not earn.
+One `goldrush.view.v1` line per turn, then a final `goldrush.seat.v1` line. In browser rooms the terminal view and `observedOutcome` report the browser's verdict; `lastHash` and the headless `outcome` stay null. Headless-only rooms retain their full hash and outcome envelope. A seat stopped early invents no verdict.

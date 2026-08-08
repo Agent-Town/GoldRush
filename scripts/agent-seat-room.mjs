@@ -68,6 +68,7 @@ async function main() {
   await rm(STATE_ROOT, { recursive: true, force: true });
   const browserEnv = await startBrowserEnv();
   try {
+    await checkThinBrowserRide(browserEnv);
     await checkScoutRide(browserEnv);
     await checkTwoScoutRoom(browserEnv);
     await checkBrowserAgentOrders(browserEnv);
@@ -82,6 +83,54 @@ async function main() {
     throw err;
   } finally {
     await browserEnv.stop();
+  }
+}
+
+async function checkThinBrowserRide(browserEnv) {
+  const relay = await startRelayEnv();
+  let host;
+  try {
+    const created = await post(relay.url, '/api/multiplayer/create', {});
+    assertEqual(created.status, 200, 'the browser host opens the thin-seat room');
+    host = await startBrowserHost(browserEnv, relay.url, created.body.code, 2, 'Browser Host', { nowaves: '' });
+    const seat = startSeat(relay.url, created.body.code, { name: 'Thin Rig', policy: 'stdin' });
+    await seat.firstView;
+    await host.page.evaluate(() => window.__GR_TEST__?.grantGold(25));
+    seat.write(Array.from({ length: 32 }, (_, index) => ({ verb: 'HARVEST', seam: `${'x'.repeat(79)}${index % 10}` })));
+    seat.write([{ verb: 'BUILD', what: 'palisade', where: { x: 0, z: 10 }, when: { goldGte: 0 } }]);
+    await host.page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.build.palisades ?? 0) >= 1, undefined, { timeout: 15_000 });
+
+    for (const wave of [1, 2, 10]) {
+      await sleep(2_100);
+      await host.page.evaluate((next) => window.__GR_TEST__?.startWaveForTest(next), wave);
+    }
+
+    const result = await seat.finished;
+    const state = await host.page.evaluate(() => window.__GR_MP__?.state());
+    const browserRun = await host.page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run);
+    const viewBytes = result.turns.map((view) => Buffer.byteLength(JSON.stringify(view)));
+    measured.thin = {
+      seat: summary(result),
+      browser: { ...browserSummary(state), run: browserRun },
+      views: result.views,
+      viewBytes: { min: Math.min(...viewBytes), max: Math.max(...viewBytes) },
+    };
+
+    assertEqual(result.exitCode, 0, 'the thin seat exits cleanly on the browser outcome');
+    assert(result.turns.every((view) => view.schema === 'goldrush.view.v1'), 'every thin-seat stdout view keeps the door schema');
+    assert(result.turns.every((view) => Array.isArray(view.now?.orders)), 'every thin-seat view carries rider-specific now.orders');
+    assert(/orders exceed the 3 KiB wire limit/.test(result.stderr), 'an oversized valid order array is refused before the wire');
+    assert(result.views >= 3, `three browser boundaries produced at least three views (${result.views})`);
+    assertEqual(await host.page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisades ?? 0), 1,
+      'a BUILD from the thin seat stdin landed in the browser world');
+    assertEqual(result.envelope.observedOutcome?.result, 'secured', 'the thin seat observed CONTRACT SECURED');
+    assertEqual(browserRun?.secured, true, 'the browser reached its own secured end state');
+    assertEqual(state.desyncs, 0, 'the thin ride produced zero desyncs');
+    assertEqual(host.errors.consoleErrors.length, 0, 'the thin-seat browser logged zero console errors');
+    assertEqual(host.errors.pageErrors.length, 0, 'the thin-seat browser logged zero page errors');
+  } finally {
+    await host?.stop();
+    await relay.stop();
   }
 }
 
@@ -124,8 +173,8 @@ async function checkTwoScoutRoom(browserEnv) {
     first.write([{ verb: 'BUILD', what: 'palisade', where: { x: 0, z: 10 }, when: { goldGte: 0 } }]);
     second.write([{ verb: 'BUILD', what: 'palisade', where: { x: 2.5, z: 10 }, when: { goldGte: 0 } }]);
     await host.page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.build.palisades ?? 0) >= 2, undefined, { timeout: 15_000 });
-    const [a, b] = await Promise.all([first.finished, second.finished]);
     const state = await host.page.evaluate(() => window.__GR_MP__?.state());
+    const [a, b] = await Promise.all([first.finished, second.finished]);
     const palisades = await host.page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisades ?? 0);
     measured.twoScouts = { a: summary(a), b: summary(b), browser: { ...browserSummary(state), palisades } };
 
@@ -216,7 +265,7 @@ async function checkStrictRefusal(browserEnv) {
     const strict = await runStrictSeat(relay.url, created.body.code);
     measured.strict = strict;
     assert(strict.exitCode !== 0, 'the strict mixed-engine seat refuses the room');
-    assert(/full mixed play arrives with MP-07c/.test(strict.stderr), 'the strict refusal names MP-07c');
+    assert(/--strict refuses browser rooms/.test(strict.stderr), 'the strict refusal explains the mixed-room boundary');
   } finally {
     await host?.stop();
     await relay.stop();
@@ -492,7 +541,7 @@ async function startBrowserEnv() {
   };
 }
 
-async function startBrowserHost(browserEnv, relayBase, code, partySize, name) {
+async function startBrowserHost(browserEnv, relayBase, code, partySize, name, extraQuery = {}) {
   const context = await browserEnv.browser.newContext({ viewport: { width: 1280, height: 800 } });
   const page = await context.newPage();
   const errors = { consoleErrors: [], pageErrors: [] };
@@ -509,6 +558,7 @@ async function startBrowserHost(browserEnv, relayBase, code, partySize, name) {
     mpName: name,
     mpTown: 'Browser Camp',
     mpParty: String(partySize),
+    ...extraQuery,
   });
   await page.goto(`${browserEnv.url}/?${query}`);
   await page.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 30_000 });

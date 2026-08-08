@@ -5,9 +5,8 @@
 //
 // TWO DRIVERS, ONE SIM.
 //   default            — the solo headless run: advance a whole wave, print THE VIEW, read orders.
-//   --room <code>      — THE AGENT SEAT: the same sim rides in a live lockstep room, one tick per
-//                        tick-bundle the room agrees on. The room owns the contract, the seed and
-//                        the clock; see src/sim/SeatedLockstepSim.ts.
+//   --room <code>      — THE AGENT SEAT: full sim in headless-only rooms; thin view/order wire
+//                        when a browser owns the world. See src/sim/SeatedLockstepSim.ts.
 
 import { createInterface } from 'node:readline';
 import { fileURLToPath } from 'node:url';
@@ -22,7 +21,7 @@ const DIFFICULTY_VALUES = ['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', '
 if (process.argv.includes('--help')) {
   process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle]\n'
     + '       gr-sim --room <code> --origin <url> [--party 2-4] [--max-ticks N] [--strict]\n\n'
-    + 'A headless seat invited into a browser room rides as a scout by default: builds travel, its view is advisory, and it sends no determinism hashes. --strict refuses mixed-engine rooms until full mixed play arrives with MP-07c.\n');
+    + 'A seat invited into a browser room rides that browser world: room-served NDJSON views arrive on stdout and stdin order arrays travel as agent_orders acts. --strict still refuses mixed rooms.\n');
   process.exit(0);
 }
 const options = parseArgs(process.argv.slice(2));

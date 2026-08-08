@@ -117,6 +117,7 @@ export type LockstepClientOptions = {
   onReconnectFromInitialState?: (snapshot: unknown) => boolean;
   onReconnectToken?: (token: string | null) => void;
   exchangeHashes?: () => boolean;
+  onView?: (body: unknown, seq: number, from: string) => void;
 };
 
 const VERSION = 3;
@@ -355,6 +356,10 @@ export class LockstepClient {
     this.recordHash(tick, sentHash);
   }
 
+  sendView(to: string, seq: number, body: unknown): void {
+    this.send({ v: VERSION, type: 'view', to, seq, body });
+  }
+
   private recordHash(tick: number, sentHash: string): void {
     this.localHashes.set(tick, sentHash);
     this.hashLog.push({ tick, hash: sentHash });
@@ -470,6 +475,12 @@ export class LockstepClient {
       peers.set(from, message.hash);
       this.remoteHashes.set(tick, peers);
       this.compareHashes(tick);
+      return;
+    }
+    if (message.type === 'view') {
+      const seq = normalizeTick(message.seq);
+      const from = cleanToken(message.from, 32);
+      if (seq !== null && from) this.options.onView?.(message.body, seq, from);
       return;
     }
     if (message.type === 'snapshot') {

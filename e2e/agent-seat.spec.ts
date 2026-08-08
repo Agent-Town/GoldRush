@@ -6,7 +6,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 /**
- * THE BOOT PROBE — a human-shaped browser rider and one agent seat, one room.
+ * THE BOOT PROBE — a human-shaped browser rider and one thin agent seat, one room.
  *
  * scripts/agent-seat-room.mjs proves two SEATS share a run. This proves the other half
  * of the owner's sentence — "people and agents could play the game together" — as far as
@@ -15,14 +15,8 @@ import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../s
  *   1. THE DOOR OPENS. A host opens a room in a browser, shares the claim word, and a
  *      headless rig takes the empty chair. The human's own roster shows the rig by name
  *      and town. That is the join flow skill.md documents, exercised end to end.
- *   2. AND THEN THE ENGINES DECLARE THEIR DISAGREEMENT. A browser rider hashes a
- *      run-suspend snapshot; a headless seat hashes its own planar state. Those are
- *      different fingerprints of the same world, so the very first exchange mismatches —
- *      and the seat RESIGNS, names the tick and names the engine, instead of riding on as
- *      a zombie. Fail-loud is the feature being gated here, not a disappointment.
- *
- * Anyone reading a green here should read it as: the chair exists and the rig can sit in
- * it; a shared hash basis between the two engines is the next rung and is not built.
+ *   2. THE ROOM SERVES THE VIEW. The seat boots no second sim and sends no hashes, so the
+ *      browser remains the only world while the NDJSON door keeps its existing shape.
  */
 
 type RelayProcess = { url: string; logs: () => string; stop: () => Promise<void> };
@@ -63,7 +57,7 @@ test.afterAll(async () => {
   await worker?.stop();
 });
 
-test('a rig takes the empty chair at a human host table, then resigns rather than ride a world it cannot hash', async ({ page }, testInfo) => {
+test('a thin rig takes the empty chair and receives the browser world without desyncing it', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== PROBE_PROJECT, 'one door proof is enough; the 390px arm is captured in-test');
   test.setTimeout(180_000);
   await mkdir(ARTIFACT_DIR, { recursive: true });
@@ -91,33 +85,31 @@ test('a rig takes the empty chair at a human host table, then resigns rather tha
   await expect.poll(
     () => page.evaluate(() => (window.__GR_MP__?.state()?.roster ?? []).map((player) => `${player.name} of ${player.town}`)),
     { message: 'the rig appears on the human roster', timeout: 60_000 },
-  ).toEqual([`${HOST.name} of ${HOST.town}`, `${RIG.name} of ${RIG.town}`]);
+  ).toEqual([`${HOST.name} of ${HOST.town}`, `${RIG.name} (scout) of ${RIG.town}`]);
 
   await page.screenshot({ path: path.join(ARTIFACT_DIR, 'seat-desktop.png'), fullPage: false });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.waitForTimeout(500);
   await page.screenshot({ path: path.join(ARTIFACT_DIR, 'seat-390px.png'), fullPage: false });
 
-  // 2. AND THEN THE ENGINES DECLARE THEIR DISAGREEMENT.
+  // 2. THE BROWSER SERVES THE WORLD; the bounded thin seat exits without inventing an outcome.
   const run = await seat.finished;
   const envelope = seatEnvelope(run);
   expect(envelope.roster, 'the rig read the same table the human did').toEqual([
     `${HOST.name} of ${HOST.town}`,
-    `${RIG.name} of ${RIG.town}`,
+    `${RIG.name} (scout) of ${RIG.town}`,
   ]);
-  expect(envelope.resigned, 'the rig resigned rather than ride on').not.toBeNull();
-  expect(envelope.resigned!.reason).toBe('desync');
-  expect(envelope.resigned!.detail, 'the resignation names the engine that produced the hash')
-    .toContain('gr-sim.headless.v1');
-  expect(envelope.outcome, 'a resigned rig claims no outcome it did not earn').toBeNull();
-  expect(run.exitCode, 'a resigned rig exits non-zero').toBe(3);
-  expect(run.stderr, 'the rig said so out loud').toMatch(/seat resigned at tick/);
+  expect(envelope.resigned, 'the thin rig never resigned').toBeNull();
+  expect(envelope.outcome, 'a bounded thin rig claims no outcome it did not observe').toBeNull();
+  expect(envelope.lastHash, 'a thin rig computes no determinism hash').toBeNull();
+  expect(run.exitCode, 'the bounded thin rig exits cleanly').toBe(0);
+  expect(run.stdout, 'the room served the NDJSON view schema').toContain('"schema":"goldrush.view.v1"');
 
-  // The human's client saw the same disagreement from its own side of the wire.
+  // The browser keeps its own hash lane and sees no cross-engine disagreement.
   await expect.poll(
     () => page.evaluate(() => window.__GR_MP__?.state()?.desyncs ?? 0),
     { message: 'the browser rider registered the mismatch too', timeout: 30_000 },
-  ).toBeGreaterThan(0);
+  ).toBe(0);
 
   // A rig joining and then resigning must not cost the human a clean boot. This is the
   // shift's zero-console law, ASSERTED — the review may not claim it otherwise.
@@ -150,6 +142,7 @@ function watchErrors(page: Page): { consoleErrors: string[]; pageErrors: string[
 function seatEnvelope(run: SeatRun): {
   roster: string[];
   ticks: number;
+  lastHash: { tick: number; hash: string } | null;
   resigned: { reason: string; tick: number; detail?: string } | null;
   outcome: unknown;
 } {
@@ -164,7 +157,7 @@ function seatEnvelope(run: SeatRun): {
 function startSeat(code: string): { finished: Promise<SeatRun> } {
   const child = spawn(
     process.execPath,
-    ['scripts/gr-sim.mjs', '--room', code, '--origin', relay.url, '--name', RIG.name, '--town', RIG.town, '--policy=idle'],
+    ['scripts/gr-sim.mjs', '--room', code, '--origin', relay.url, '--name', RIG.name, '--town', RIG.town, '--policy=idle', '--max-ticks', '120'],
     { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] },
   );
   let stdout = '';

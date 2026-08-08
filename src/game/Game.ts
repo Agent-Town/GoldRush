@@ -83,6 +83,7 @@ import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrac
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
+import { buildView, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
@@ -423,6 +424,9 @@ export class Game {
   private mpHoldCardVisible = false;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
   private readonly agentRiderBodies = new Map<string, AgentRiderBody>();
+  private readonly agentRiderViewState = new Map<string, { wave: number; needsRider: boolean; terminal: boolean; sentAt: number }>();
+  private readonly agentRiderViewSources = new Map<string, AgentViewSource>();
+  private agentRiderViewSequence = 0;
   private readonly actorWeapons = new Map<Hero, HeroWeapon>();
   // Playbook engine (PB-01/PB-02, ?debug-only surface): the recorder pins the
   // solo session to the lockstep intent seam; the replay session drives a
@@ -481,6 +485,14 @@ export class Game {
   private readonly audio = new SoundSystem();
   private readonly state = new GameState();
   private readonly economy = new Economy();
+
+  diagnostics(): unknown {
+    return window.__THREE_GAME_DIAGNOSTICS__;
+  }
+
+  economyLog(): readonly unknown[] {
+    return this.economy.log;
+  }
   private readonly goldTargeting = new TargetingSystem();
   private readonly stockpileHoldingPositions = Array.from(
     { length: Balance.stockpile.maxCount },
@@ -2936,6 +2948,63 @@ export class Game {
     return undefined;
   }
 
+  private serveAgentRiderViews(): void {
+    const state = this.mpClient?.state();
+    const host = state?.roster[0];
+    if (!state?.connected || host?.client !== 'browser' || host.playerId !== state.playerId) return;
+    const terminal = this.state.current === 'dead' || this.runManager?.diagnostics.secured === true;
+    for (const player of state.roster) {
+      if (player.client !== 'headless') continue;
+      const rider = this.agentRiderBodies.get(player.playerId);
+      if (!rider) continue;
+      const orders = rider.snapshot();
+      const previous = this.agentRiderViewState.get(player.playerId);
+      const due = !previous
+        || this.waveSystem.diagnostics.wave !== previous.wave
+        || (orders.needsRider && !previous.needsRider)
+        || (terminal && !previous.terminal);
+      const now = performance.now();
+      if (!due || (previous && now - previous.sentAt < 2_000)) continue;
+      const view = buildView(this.agentRiderViewSource(player.playerId));
+      this.mpClient!.sendView(player.playerId, this.agentRiderViewSequence++, {
+        ...view,
+        advisory: true,
+        now: { ...view.now, orders: orders.orders, needsRider: orders.needsRider },
+      });
+      this.agentRiderViewState.set(player.playerId, {
+        wave: view.now.wave,
+        needsRider: orders.needsRider,
+        terminal,
+        sentAt: now,
+      });
+    }
+  }
+
+  private agentRiderViewSource(playerId: string): AgentViewSource {
+    let source = this.agentRiderViewSources.get(playerId);
+    if (source) return source;
+    source = {
+      diagnostics: () => {
+        const base = this.diagnostics() as Record<string, unknown>;
+        const actor = this.agentRiderActor(playerId);
+        const agent = base.agent as Record<string, unknown>;
+        const embodiment = agent?.embodiment as Record<string, unknown>;
+        const position = actor ? pointFromVector(actor.group.position) : null;
+        return {
+          ...base,
+          hp: actor?.hp ?? 0,
+          maxHp: actor?.maxHp ?? 0,
+          heroPos: position,
+          agent: { ...agent, embodiment: { ...embodiment, position } },
+        };
+      },
+      economyLog: () => this.economy.log,
+      standingOrders: () => this.agentRiderBodies.get(playerId)?.snapshot(),
+    };
+    this.agentRiderViewSources.set(playerId, source);
+    return source;
+  }
+
   private repairAgentRiderBuilding(playerId: string, building: AgentBuildingRef): unknown {
     const actor = this.agentRiderActor(playerId);
     const id = buildableIdFromString(building.id);
@@ -3540,7 +3609,11 @@ export class Game {
 
     const headlessIds = new Set(roster.filter((player) => player.client === 'headless').map((player) => player.playerId));
     for (const playerId of this.agentRiderBodies.keys()) {
-      if (!headlessIds.has(playerId)) this.agentRiderBodies.delete(playerId);
+      if (!headlessIds.has(playerId)) {
+        this.agentRiderBodies.delete(playerId);
+        this.agentRiderViewState.delete(playerId);
+        this.agentRiderViewSources.delete(playerId);
+      }
     }
     for (const playerId of headlessIds) {
       if (!this.agentRiderBodies.has(playerId)) {
@@ -4765,6 +4838,7 @@ export class Game {
         sampleCount: this.frameMsSamples.length,
       },
     };
+    this.serveAgentRiderViews();
   }
 
   private recordFrameMs(frameMs: number): void {
@@ -6892,6 +6966,8 @@ export class Game {
     this.progression.reset();
     this.agentConsent.reset();
     this.agentRiderBodies.clear();
+    this.agentRiderViewState.clear();
+    this.agentRiderViewSources.clear();
     const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
     if (roster.length >= 2) {
       this.syncMultiplayerActors();
