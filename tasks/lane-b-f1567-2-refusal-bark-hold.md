@@ -4,7 +4,7 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b`.
 
-READ FIRST: `AGENTS.md`; `src/agent/Embodiment.ts` — **`handleReceipt` (`:110-124`) and `updateSimulation` (`:126-144`) together, in one sitting, because the bug is in how they compose, not in either one**; `src/agent/Voice.ts:5-48` (the two vocabularies and `barkForReceipt`); `e2e/m4-06-embodiment.spec.ts:395-430` (the existing denied-receipt test — **read the comment at `:426-427`, it documents this defect and works around it**); `tasks/BACKLOG.md` row **F-1565-1**; `reviews/f1564-1-m4-06-ceiling.md` (the trace's origin).
+READ FIRST: `AGENTS.md`; `src/agent/Embodiment.ts` — **`handleReceipt` (`:110-124`) and `updateSimulation` (`:126-144`) together, in one sitting, because the bug is in how they compose, not in either one**; `src/agent/Voice.ts:5-48` (the two vocabularies and `barkForReceipt`); `e2e/m4-06-embodiment.spec.ts:395-430` ("permission-denied receipts do not send the Prospector to the denied target") — the existing denied-receipt test; **read the comment at `:426-427`, it documents this defect and works around it**; `tasks/BACKLOG.md` row **F-1565-1**; `reviews/f1564-1-m4-06-ceiling.md` (the trace's origin).
 
 **Pre-flight (LANE-SAFETY, runner-auto-commit aware):** the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/b main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to `artifacts/**`, `reviews/shots-*` and any `.png` are NEVER "work" and NEVER a STOP** — discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. Then `git -C worktrees/lane-b status --short` → must be clean, with the **FACTORY-CHURN EXCEPTION (F-1407-1), always expected and never a STOP: (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*`, any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.**
 
@@ -42,7 +42,7 @@ That early return skips `this.moving = true`. So **a refused agent stays idle by
 
 ⚖️ **THE ACCEPTED REFUSAL SET IS CORRECT AND IS NOT THE BUG.** s1565 established this by tracing the one writer, and it is why this task changes the game and not the test. Do not "fix" this by widening `['held', 'ask me', 'no trust']` to admit `ledger` — that would make the test agree with a product defect.
 
-📌 **THE TEST ALREADY KNOWS.** `e2e/m4-06-embodiment.spec.ts:426-427` reads:
+📌 **THE TEST ALREADY KNOWS.** `e2e/m4-06-embodiment.spec.ts:426-427` ("permission-denied receipts do not send the Prospector to the denied target") reads:
 
 ```
 // F-1558-1: Embodiment.updateSimulation's idle-survey branch may replace the denial bark after
