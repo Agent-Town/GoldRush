@@ -4437,6 +4437,13 @@
               "status": "merged",
               "closureReason": "s1558 drain: reorder delivered (rule asserted before any proxy, 100/100); metric change measured inert (gapClosed = driftAbs - 0.00105) and flake NOT cured — relocated to a pre-existing lastLine flake at :421, ~3% over 100 runs. F-1558-1/2/3 in reviews/f1557-3-m4-06-denied-drift-differential.md",
               "mergeHash": "beddce2fac143829d1574c0dd15ca000098cb4d0"
+            },
+            {
+              "id": "f1558-1-m4-06-denied-lastline-race",
+              "title": "M4-06 permission-denied: assert the refusal line when it is said, not after an idle survey bark can overwrite it",
+              "taskFile": "lane-b-f1558-1-m4-06-denied-lastline-race.md",
+              "status": "queued",
+              "gate": "none — fire-authorable; mechanism verified by reading src/agent/Embodiment.ts + Voice.ts, rate predicted (1.4s window / 19s cooldown = 7%) and measured (3/100)"
             }
           ]
         }
