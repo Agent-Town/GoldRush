@@ -3,6 +3,7 @@ import { mkdir, rm, writeFile } from 'node:fs/promises';
 import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assertWranglerVersion } from './wrangler-binary.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
@@ -15,6 +16,7 @@ const checks = [];
 await main();
 
 async function main() {
+  assertWranglerVersion('test:stats');
   await rm(STATE_ROOT, { recursive: true, force: true });
   await mkdir(STATE_ROOT, { recursive: true });
 

@@ -5,6 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import { createServer } from 'vite';
+import { assertWranglerVersion } from './wrangler-binary.mjs';
 
 // TWO SEATS, ONE SHARED RUN.
 //
@@ -64,6 +65,7 @@ const measured = {};
 await main();
 
 async function main() {
+  assertWranglerVersion('agent-seat-room');
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await rm(STATE_ROOT, { recursive: true, force: true });
   const browserEnv = await startBrowserEnv();
