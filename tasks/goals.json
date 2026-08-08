@@ -4439,11 +4439,18 @@
               "mergeHash": "beddce2fac143829d1574c0dd15ca000098cb4d0"
             },
             {
+              "id": "f1559-1-m4-06-deterministic-drift-sample",
+              "title": "M4-06 permission-denied: sample the drift after a fixed number of sim steps, not 350ms of wall clock",
+              "taskFile": "lane-b-f1559-1-m4-06-deterministic-drift-sample.md",
+              "status": "queued",
+              "gate": "none — fire-authorable; F-1559-1 quantisation measured from artifacts/f1557-3-m4-06-denied/distribution.txt, harness window.__GR_TEST__.advanceSim verified at src/game/Game.ts:6823"
+            },
+            {
               "id": "f1558-1-m4-06-denied-lastline-race",
               "title": "M4-06 permission-denied: assert the refusal line when it is said, not after an idle survey bark can overwrite it",
               "taskFile": "lane-b-f1558-1-m4-06-denied-lastline-race.md",
               "status": "merged",
-      "mergeHash": "88e00904ac7d8d33ac7dc3fea010a45cf07e196d",
+              "mergeHash": "88e00904ac7d8d33ac7dc3fea010a45cf07e196d",
               "gate": "none — fire-authorable; mechanism verified by reading src/agent/Embodiment.ts + Voice.ts, rate predicted (1.4s window / 19s cooldown = 7%) and measured (3/100)"
             }
           ]
