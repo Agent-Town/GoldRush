@@ -1,5 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   analyse,
   acknowledged,
@@ -17,6 +22,27 @@ const status = (line1, ...rest) => [line1, ...rest].join('\n');
 // A ledger with one genuine closure row, in the bullet-led shape the `wide`
 // vocabulary exists to see (measured s1291 as the commonest closure shape).
 const BACKLOG = ['- ✅ **F-9001-1 CLOSED s1533 — cured by `abc1234`.**', ''].join('\n');
+
+function runGuard(statusText, backlogText = '') {
+  const root = mkdtempSync(path.join(tmpdir(), 'desk-carryforward-'));
+  mkdirSync(path.join(root, 'tasks'));
+  writeFileSync(path.join(root, 'STATUS.md'), statusText);
+  writeFileSync(path.join(root, 'tasks', 'BACKLOG.md'), backlogText);
+  try {
+    return spawnSync(
+      process.execPath,
+      [fileURLToPath(new URL('./desk-carryforward-guard.mjs', import.meta.url)), '--root', root],
+      { encoding: 'utf8' },
+    );
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+}
+
+const droppedStatus = (line1 = handoff(HEADER)) => status(
+  line1,
+  archive(1533, `${HEADER} 🔺 **F-1541-2 OPEN**`),
+);
 
 test('deskItems reproduces the counts the fires wrote in their own headers', () => {
   // s1532's real desk shape: 5 F-ID items + 4 backticked slug items = 9, which
@@ -150,4 +176,36 @@ test('REFUSES rather than greening over an unreadable previous desk', () => {
   assert.equal(r.kind, 'no-previous');
   // ...and an archive bullet that carries no desk is not a desk either.
   assert.equal(previousDesk(['- **s1533 handoff (line-1 archive):** no desk here'].join('\n')), null);
+});
+
+test('citation-only closure cannot silently excuse a dropped desk item', () => {
+  const result = runGuard(
+    droppedStatus(),
+    '- ✅ **F-1542-1 CLOSED — supersedes F-1541-2.**\n',
+  );
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /F-1541-2/);
+});
+
+test('subject-led closure still excuses a dropped desk item', () => {
+  const result = runGuard(droppedStatus(), '- ✅ **F-1541-2 CLOSED — shipped.**\n');
+  assert.equal(result.status, 0);
+});
+
+test('DESK-DROPPED remains an independent lawful exit', () => {
+  const result = runGuard(droppedStatus(handoff(`${HEADER} DESK-DROPPED: F-1541-2 — re-keyed.`)));
+  assert.equal(result.status, 0);
+});
+
+test('REFUSES both absent and empty previous desks at the CLI boundary', () => {
+  const absent = runGuard(handoff(HEADER));
+  const empty = runGuard(status(handoff(HEADER), archive(1533, HEADER)));
+  assert.equal(absent.status, 2);
+  assert.equal(empty.status, 2);
+});
+
+test('ACTIVE line-1 still skips mid-fire', () => {
+  const result = runGuard(droppedStatus('ACTIVE 2026-08-08T18:40Z (s1566 fire) — working'));
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /SKIP/);
 });

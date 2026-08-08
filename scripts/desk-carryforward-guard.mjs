@@ -62,6 +62,8 @@
  * findings-state-guard's EXPORTED scan() rather than a second implementation of
  * "closed" — F-1261-1 measured a re-implementation disagreeing with the original
  * on 4 of 14 rows, and there is one implementation of that word in this repo.
+ * Attribution is subject-first through desk-state-audit: the raw wide census
+ * misattributed 21 of 343 closures to ids merely cited by another row.
  *
  * ⓘ The `wide` vocabulary is used deliberately: the commonest closure shape in
  * this ledger is the bullet-led "- ✅ **F-x", which `narrow` cannot see (56 ids
@@ -90,7 +92,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { scan } from './findings-state-guard.mjs';
+import { subjectLedClosure } from './desk-state-audit.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -195,11 +197,9 @@ export function analyse(statusText, backlogText) {
   if (!prev || prev.items.length === 0) return { kind: 'no-previous', prev };
 
   const live = deskItems(deskTail(line1));
-  const closed = scan(backlogText, { closedVocabulary: 'wide' });
-
   const dropped = prev.items.filter((id) => !live.includes(id));
   const silent = dropped.filter(
-    (id) => !acknowledged(line1, id) && !closed.get(id)?.closed.length,
+    (id) => !acknowledged(line1, id) && !subjectLedClosure(backlogText, id).length,
   );
   // How many items the previous desk SAID it had, vs how many this parser could
   // key. Reported, never gated on — see the note at the print site.
