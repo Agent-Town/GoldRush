@@ -251,7 +251,10 @@ export class StandingOrdersExecutor {
     at: number,
   ): StandingOrderTickResult {
     if (receipt.outcome.ok) this.status(record, 'done', at);
-    else this.fail(record, `${receipt.outcome.reason}: ${record.order.verb} action was rejected.`, at);
+    else {
+      const detail = record.order.verb === 'BUILD' ? receipt.outcome.detail : undefined;
+      this.fail(record, `${receipt.outcome.reason}${detail ? ` (${detail})` : ''}: ${record.order.verb} action was rejected.`, at);
+    }
     return { receipt, receiptPoint: point };
   }
 

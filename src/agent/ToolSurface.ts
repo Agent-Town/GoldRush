@@ -14,6 +14,7 @@ import {
   type StandingOrdersSubmission,
 } from './StandingOrders';
 import { buildView, type AgentView } from './View';
+import { takeBuildRejectionDetail } from '../systems/BuildSystem';
 
 export type AgentVec2 = { x: number; z: number };
 export type AgentBuildingRef = { id: string; index?: number };
@@ -65,6 +66,7 @@ export type ToolOutcome =
   | {
       ok: false;
       reason: 'PERMISSION_DENIED' | 'NO_SYSTEM_API' | 'INVALID_ARGS' | 'FAILED';
+      detail?: string;
       message?: string;
       level?: AgentPermissionLevel;
       requiredLevel?: AgentPermissionLevel;
@@ -243,7 +245,9 @@ function runSideEffect<TName extends SideEffectToolName, TArgs>(
   }
 
   const before = readEconomyLog(game);
+  if (tool === 'et.goldrush.place_building') takeBuildRejectionDetail();
   const result = call();
+  const detail = tool === 'et.goldrush.place_building' ? takeBuildRejectionDetail() : undefined;
   if (isInvalid(result)) {
     return makeReceipt(tool, args, {
       ok: false,
@@ -264,6 +268,7 @@ function runSideEffect<TName extends SideEffectToolName, TArgs>(
     return makeReceipt(tool, args, {
       ok: false,
       reason: 'FAILED',
+      ...(detail ? { detail } : {}),
       economyLog: after,
     });
   }
