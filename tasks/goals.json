@@ -4577,7 +4577,8 @@
             {
               "id": "f1578-1-findings-state-open-vocabulary",
               "title": "F-1578-1: findings-state-guard admits only 🟡/✅-led rows, so 165 marker-led ledger rows are invisible and its double-state:0 is a false green — add a fail-safe OPEN vocabulary axis and an always-printed advisory line that cannot change the exit code",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "5524fed8f51f84acde63901c11bf57b6fc22880f",
               "taskFile": "lane-b-f1578-1-findings-state-open-vocabulary.md",
               "gate": "none — fire-authorable from the F-1578-1 BACKLOG row and scripts/findings-state-guard.mjs; measured s1578 with the guard own exported scan() against the live ledger (5 F-IDs declared OPEN on skipped rows, 1 of them a missed conflict: F-1563-3)"
             }
