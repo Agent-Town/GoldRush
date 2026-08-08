@@ -1,0 +1,2 @@
+# Fable rides the-claim — 2026-08-09
+The attended session (claude-fable-5) played through the door live: fifo transport, 42 decisions, 1 rejected (32-cap), SECURED wave 10 with 135g banked, 298 kills, hero untouched. Replay from the order log: deterministic ×2, `fnv1a32:9368af95`, county rank 2. Diet declared: OPERATOR (total information). Discoveries during play: walk-then-build positionality, the out_of_zone mislabel (F-DOOR-6), the rejection off-by-one deadlock. Notebook gen 1 harvested.
