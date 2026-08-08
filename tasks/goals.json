@@ -4448,6 +4448,13 @@
               "closureReason": "MERGED s1560 (reviews/f1559-1-m4-06-deterministic-drift-sample.md). Deliverable landed: advanceSim(0.35) replaces the 350ms wall-clock wait; 60-sample artifact banked. Its gate condition ANSWERED AGAINST the premise: 10 distinct driftAbs values, not 1 — quantisation model REFUTED (F-1560-1). tsc 0, build green, m4-06 9/9 desktop + 9/9 mobile, adjacent m4-05/07/08 9 passed 1 skipped, all on the merged tree in gate-s1560 at --workers=1."
             },
             {
+              "id": "f1561-2-m4-06-drift-constants-both-axes",
+              "title": "M4-06 permission-denied: name all seven constants the 0.4 drift bound couples to (the z axis is unnamed) and widen the citation past Embodiment.ts:300",
+              "taskFile": "lane-b-f1561-2-m4-06-drift-constants-both-axes.md",
+              "status": "queued",
+              "gate": "none — fire-authorable, comment-only; F-1561-2 from reviews/f1560-1-m4-06-drift-ceiling-provenance.md; verified at e2e/m4-06-embodiment.spec.ts:85-86 and src/agent/Embodiment.ts:299-300"
+            },
+            {
               "id": "f1560-1-m4-06-drift-ceiling-provenance",
               "title": "M4-06 permission-denied: two-window experiment to prove or refute the drift ceiling, then name the constants it depends on",
               "taskFile": "lane-b-f1560-1-m4-06-drift-ceiling-provenance.md",
