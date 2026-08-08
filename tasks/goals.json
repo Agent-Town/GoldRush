@@ -4423,11 +4423,12 @@
               "title": "F-1554-1 corrective: stamp CONTENDED — n concurrent batteries on a test:node-guards run that is not alone, so a contended RED is unattributable by construction (advisory, never a gate)",
               "taskFile": "lane-c-f1554-1-node-guards-contention-stamp.md",
               "lane": "lane-c",
-              "status": "queued",
+              "status": "merged",
               "attempts": 0,
               "authoredBy": "s1556 fire (FIRE-AUTHORED)",
               "authorNotes": "Authored from the F-1554-1 BACKLOG row (s1554), premise RE-MEASURED s1556 rather than inherited. VERIFIED BY READING: scripts/run-node-guards.mjs is 49 lines with no pgrep, no CONTEND, no sibling detection — the gap is live. VERIFIED BY MEASURING, and it corrects the arithmetic the naive cure would do: one battery presents TWO matching processes to an external observer (92951 'sh -c node scripts/run-node-guards.mjs …' -> 92952 'node scripts/run-node-guards.mjs …'), because npm run interposes a sh -c wrapper whose command line also contains the harness path. So pgrep -f run-node-guards | wc -l reports 2 for a battery running perfectly ALONE, and F-1554-1's own evidence — the pairs 34453/34454 and 69380/69381 — is two batteries, not four. The cure must count BATTERIES, not pids. Also verified: macOS pgrep excludes the caller and its ancestors by default (-a re-includes them), which is why self-detection is a non-issue; the master requires that be re-proved by execution, not cited. Queued to lane-c on a MEASURED merge-safety ground rather than the slot table: scope edits the single very long test:node-guards line in package.json, and lane-c is the only lane whose package.json is byte-identical to main (a/b/d differ by 32/13/13 lines), so on any other lane that edit would collide on the one line it must touch. All five in-scope files are identical between main and lane/c, so the lane's 30-commit drift does not intersect this task's surface.",
-              "gate": "none — no spec, design fork or owner ruling needed (F-1554-1 is GATE: none, fire-authorable)"
+              "gate": "none — no spec, design fork or owner ruling needed (F-1554-1 is GATE: none, fire-authorable)",
+              "mergeHash": "82a4c15c4ed5981a95090f35dcf3da11c381147a"
             }
           ]
         }
