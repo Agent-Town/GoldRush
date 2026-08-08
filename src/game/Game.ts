@@ -1471,7 +1471,12 @@ export class Game {
     const stick = this.getElement('#touch-stick');
     const knob = this.getElement('#touch-knob');
     const confirmButton = this.getElement('#confirm-button');
-    this.input = new InputController(stick, knob, confirmButton);
+    this.input = new InputController(
+      stick,
+      knob,
+      confirmButton,
+      () => !this.buildSystem.isBuildMode || this.buildSystem.captureConfirmValidity(),
+    );
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
     this.partyOverview = new PartyOverview(this.getElement('#hud'), (playerId) => this.glanceAtRider(playerId));
     this.getElement('#hud').append(this.assetLoadingCue);
@@ -2476,7 +2481,9 @@ export class Game {
     ) {
       this.plantGreenWaypoint();
     }
-    if (intents.confirm && !this.lastConfirmIntent && !upgradedThisFrame) this.confirmAction();
+    if (intents.confirm && !this.lastConfirmIntent && !upgradedThisFrame) {
+      this.confirmAction(this.input.confirmAllowedAtIssue);
+    }
     this.lastPauseIntent = intents.pause;
     this.lastRestartIntent = intents.restart;
     this.lastBuildIntent = intents.build;
@@ -3027,6 +3034,7 @@ export class Game {
     }
     if (!intents.confirm) return actions;
     if (this.buildSystem.isBuildMode) {
+      if (!this.input.confirmAllowedAtIssue) return actions;
       const build = this.buildSystem.diagnostics;
       actions.push({
         type: 'place_build',
@@ -7876,8 +7884,9 @@ export class Game {
     this.buildMenuOpen = false;
   }
 
-  private confirmAction(): void {
+  private confirmAction(confirmAllowedAtIssue = true): void {
     if (this.buildSystem.isBuildMode) {
+      if (!confirmAllowedAtIssue) return;
       if (this.deepwaterClaim) return;
       const build = this.buildSystem.diagnostics;
       const id = build.selectedBuildable;

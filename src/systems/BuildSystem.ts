@@ -940,6 +940,14 @@ export class BuildSystem {
     return { x: this.ghostPos.x, z: this.ghostPos.z };
   }
 
+  captureConfirmValidity(): boolean {
+    this.updateGhostPosition();
+    this.valid = this.computeValid();
+    if (this.valid) return true;
+    this.lastConfirmFailure = 'invalid';
+    return this.invalidBuild();
+  }
+
   get confirmDiagnostics(): ConfirmBuildDiagnostics {
     const def = this.selectedDef();
     const count = this.countFor(def.id);

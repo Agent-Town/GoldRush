@@ -75,6 +75,7 @@ export class InputController {
   private previousMute = false;
   private previousDebugXp = false;
   private previousDebugPlant = false;
+  private confirmIssueAllowed = true;
   private readonly intents: Intents = {
     move: new THREE.Vector2(),
     confirm: false,
@@ -100,8 +101,12 @@ export class InputController {
   };
 
   private readonly onKeyDown = (event: KeyboardEvent) => {
+    const firstPress = !this.keys.has(event.code);
     this.keys.add(event.code);
     this.tapped.add(event.code);
+    if (firstPress && HERO_INPUT_BINDINGS.confirm.some((code) => code === event.code)) {
+      this.confirmIssueAllowed = this.canConfirmAtIssue();
+    }
   };
 
   private readonly onKeyUp = (event: KeyboardEvent) => {
@@ -141,6 +146,7 @@ export class InputController {
 
   private readonly onConfirmDown = (event: PointerEvent) => {
     event.preventDefault();
+    if (!this.keys.has('TouchConfirm')) this.confirmIssueAllowed = this.canConfirmAtIssue();
     this.keys.add('TouchConfirm');
     this.tapped.add('TouchConfirm');
   };
@@ -179,6 +185,7 @@ export class InputController {
     private readonly stick: HTMLElement,
     private readonly knob: HTMLElement,
     private readonly confirmButton: HTMLElement,
+    private readonly canConfirmAtIssue: () => boolean = () => true,
   ) {
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
@@ -207,6 +214,10 @@ export class InputController {
     this.weaponButton.addEventListener('pointercancel', this.onWeaponUp);
     this.weaponButton.addEventListener('pointerleave', this.onWeaponUp);
     this.confirmButton.before(this.rotateButton, this.weaponButton);
+  }
+
+  get confirmAllowedAtIssue(): boolean {
+    return this.confirmIssueAllowed;
   }
 
   readIntents(): Intents {
