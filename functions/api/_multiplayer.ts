@@ -34,6 +34,7 @@ type Player = {
   id: string;
   name: string;
   town: string;
+  client: 'browser' | 'headless';
   joinedAt: number;
   lastSeen: number;
   socket: WebSocket | null;
@@ -261,6 +262,7 @@ export class MultiplayerRoom {
       setup: this.setup,
       started: this.nextFlushTick > 0,
       players: this.players.size,
+      roster: this.roster(),
     });
   }
 
@@ -283,12 +285,14 @@ export class MultiplayerRoom {
     this.setup ??= setup;
 
     const player = normalizePlayer(message.player);
+    const client = normalizeClient(message.client);
     const id = `p${this.nextPlayerNumber}`;
     this.nextPlayerNumber += 1;
     this.players.set(id, {
       id,
       name: player.name,
       town: player.town,
+      client,
       joinedAt: Date.now(),
       lastSeen: Date.now(),
       socket,
@@ -557,7 +561,7 @@ export class MultiplayerRoom {
   private roster(): JsonRecord[] {
     return [...this.players.values()]
       .sort((a, b) => a.joinedAt - b.joinedAt)
-      .map(({ id, name, town }) => ({ playerId: id, name, town }));
+      .map(({ id, name, town, client }) => ({ playerId: id, name, town, client }));
   }
 
   private broadcastRoster(): void {
@@ -686,6 +690,10 @@ function normalizePlayer(value: unknown): { name: string; town: string } {
   const name = cleanName(record.name, 'Rider', 24);
   const town = cleanName(record.town, 'Home Claim', 32);
   return { name, town };
+}
+
+function normalizeClient(value: unknown): 'browser' | 'headless' {
+  return value === 'headless' ? 'headless' : 'browser';
 }
 
 function normalizeSetup(value: unknown): RoomSetup | null {

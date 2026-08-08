@@ -16,9 +16,15 @@ import { createServer } from 'vite';
 // Declared above the first call: `parseArgs` runs at module top level, so a `const`
 // further down is still in its temporal dead zone by then.
 const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty'];
-const SEAT_KEYS = ['room', 'origin', 'name', 'town', 'party', 'tick-rate', 'max-ticks', 'desync-at'];
+const SEAT_KEYS = ['room', 'origin', 'name', 'town', 'party', 'tick-rate', 'max-ticks', 'desync-at', 'strict'];
 const DIFFICULTY_VALUES = ['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', 'hard'];
 
+if (process.argv.includes('--help')) {
+  process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle]\n'
+    + '       gr-sim --room <code> --origin <url> [--party 2-4] [--max-ticks N] [--strict]\n\n'
+    + 'A headless seat invited into a browser room rides as a scout by default: builds travel, its view is advisory, and it sends no determinism hashes. --strict refuses mixed-engine rooms until full mixed play arrives with MP-07c.\n');
+  process.exit(0);
+}
 const options = parseArgs(process.argv.slice(2));
 // A seat cannot pick its own contract: it boots whatever the host already committed the
 // room to, which is why the setup is read BEFORE any game module is loaded.
@@ -49,7 +55,13 @@ const vite = await createServer({
 let input;
 try {
   if (seatSetup) {
-    input = await rideSeated(vite, options, seatSetup);
+    try {
+      input = await rideSeated(vite, options, seatSetup);
+    } catch (error) {
+      Object.assign(console, originalConsole);
+      process.stderr.write(`gr-sim refused room: ${error instanceof Error ? error.message : String(error)}\n`);
+      process.exitCode = 1;
+    }
   } else {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     if (options.preset !== undefined || options.difficulty !== undefined) {
@@ -116,6 +128,7 @@ async function rideSeated(vite, options, setup) {
     tickRate: options.tickRate,
     maxTicks: options.maxTicks,
     desyncAtTick: options.desyncAt,
+    strict: options.strict,
     onTurn: (turn) => process.stdout.write(`${JSON.stringify(turn.view)}\n`),
     onNotice: (line) => process.stderr.write(`gr-sim ${line}\n`),
   });
@@ -185,6 +198,11 @@ function parseArgs(args) {
     if (!raw.startsWith('--') || ![...SOLO_KEYS, ...SEAT_KEYS].includes(key)) {
       throw new Error(`Unknown argument: ${raw}`);
     }
+    if (key === 'strict') {
+      if (match) throw new Error('--strict does not take a value.');
+      values[key] = true;
+      continue;
+    }
     const value = match?.[2] ?? args[++index];
     if (!value || value.startsWith('--')) throw new Error(`--${key} requires a value.`);
     values[key] = value;
@@ -237,6 +255,7 @@ function parseArgs(args) {
     maxTicks: integerArg(values, 'max-ticks', null, 1, 10_000_000),
     // Test-only: corrupts this seat's own hash so the resignation path can be exercised.
     desyncAt: integerArg(values, 'desync-at', null, 0, 10_000_000),
+    strict: values.strict === true,
   };
 }
 

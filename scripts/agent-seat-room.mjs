@@ -3,6 +3,8 @@ import { mkdir, rm, writeFile } from 'node:fs/promises';
 import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright';
+import { createServer } from 'vite';
 
 // TWO SEATS, ONE SHARED RUN.
 //
@@ -52,6 +54,8 @@ const DESYNC_TICK = 30;
 // Long enough to cross a hash exchange (every 30 ticks) so the bounded arm still has a
 // determinism hash to report, short enough to cost the gate ~1.5s.
 const BOUNDED_TICKS = 60;
+const SCOUT_TICKS = 120;
+const TWO_SCOUT_TICKS = 900;
 
 const checks = [];
 const measured = {};
@@ -61,7 +65,11 @@ await main();
 async function main() {
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await rm(STATE_ROOT, { recursive: true, force: true });
+  const browserEnv = await startBrowserEnv();
   try {
+    await checkScoutRide(browserEnv);
+    await checkTwoScoutRoom(browserEnv);
+    await checkStrictRefusal(browserEnv);
     await checkSharedRun();
     await checkDesyncResignation();
     await checkBoundedRide();
@@ -70,6 +78,82 @@ async function main() {
   } catch (err) {
     await writeSummary('failed', err);
     throw err;
+  } finally {
+    await browserEnv.stop();
+  }
+}
+
+async function checkScoutRide(browserEnv) {
+  const relay = await startRelayEnv();
+  let host;
+  try {
+    const created = await post(relay.url, '/api/multiplayer/create', {});
+    assertEqual(created.status, 200, 'the browser host opens the scout room');
+    host = await startBrowserHost(browserEnv, relay.url, created.body.code, 2, 'Browser Host');
+    const seat = startSeat(relay.url, created.body.code, { name: 'Rig Scout', policy: 'idle', maxTicks: SCOUT_TICKS });
+    const result = await seat.finished;
+    const state = await host.page.evaluate(() => window.__GR_MP__?.state());
+    measured.scout = { seat: summary(result), browser: browserSummary(state) };
+
+    assertEqual(result.exitCode, 0, 'the invited scout rides cleanly');
+    assertEqual(result.envelope.advisory, true, 'the invited seat declares its result advisory');
+    assert(result.turns.length > 0 && result.turns.every((turn) => turn.advisory === true), 'every scout turn declares itself advisory');
+    assert(result.envelope.roster.some((name) => name.includes('Rig Scout (scout)')), 'the roster declares the scout');
+    assert(result.envelope.lastHash === null, 'the scout sends no determinism hashes');
+    assert(state.tick >= 90, `the browser and scout rode at least 90 ticks (${state.tick})`);
+    assertEqual(state.desyncs, 0, 'the browser saw zero scout desyncs');
+  } finally {
+    await host?.stop();
+    await relay.stop();
+  }
+}
+
+async function checkTwoScoutRoom(browserEnv) {
+  const relay = await startRelayEnv();
+  let host;
+  try {
+    const created = await post(relay.url, '/api/multiplayer/create', {});
+    assertEqual(created.status, 200, 'the browser host opens the two-scout room');
+    host = await startBrowserHost(browserEnv, relay.url, created.body.code, 3, 'Party Host');
+    const first = startSeat(relay.url, created.body.code, { name: 'Scout One', policy: 'stdin', maxTicks: TWO_SCOUT_TICKS, party: 3 });
+    const second = startSeat(relay.url, created.body.code, { name: 'Scout Two', policy: 'stdin', maxTicks: TWO_SCOUT_TICKS, party: 3 });
+    await Promise.all([first.firstView, second.firstView]);
+    await panGold(host.page, 25);
+    first.write([{ verb: 'BUILD', what: 'palisade', where: { x: 0, z: 10 }, when: { goldGte: 0 } }]);
+    second.write([{ verb: 'BUILD', what: 'palisade', where: { x: 2.5, z: 10 }, when: { goldGte: 0 } }]);
+    await host.page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.build.palisades ?? 0) >= 2, undefined, { timeout: 15_000 });
+    const [a, b] = await Promise.all([first.finished, second.finished]);
+    const state = await host.page.evaluate(() => window.__GR_MP__?.state());
+    const palisades = await host.page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.palisades ?? 0);
+    measured.twoScouts = { a: summary(a), b: summary(b), browser: { ...browserSummary(state), palisades } };
+
+    assertEqual(a.envelope.advisory, true, 'the first of two seats declares scout mode');
+    assertEqual(b.envelope.advisory, true, 'the second of two seats declares scout mode');
+    assert(a.turns.every((turn) => turn.advisory === true) && b.turns.every((turn) => turn.advisory === true), 'both scouts declare every turn advisory');
+    assertEqual(palisades, 2, 'both scouts\' build acts landed in the browser world');
+    assertEqual(state.desyncs, 0, 'the three-rider browser saw zero desyncs');
+    assertEqual(host.errors.consoleErrors.length, 0, 'the two-scout browser logged zero console errors');
+    assertEqual(host.errors.pageErrors.length, 0, 'the two-scout browser logged zero page errors');
+  } finally {
+    await host?.stop();
+    await relay.stop();
+  }
+}
+
+async function checkStrictRefusal(browserEnv) {
+  const relay = await startRelayEnv();
+  let host;
+  try {
+    const created = await post(relay.url, '/api/multiplayer/create', {});
+    assertEqual(created.status, 200, 'the browser host opens the strict room');
+    host = await startBrowserHost(browserEnv, relay.url, created.body.code, 2, 'Strict Host');
+    const strict = await runStrictSeat(relay.url, created.body.code);
+    measured.strict = strict;
+    assert(strict.exitCode !== 0, 'the strict mixed-engine seat refuses the room');
+    assert(/full mixed play arrives with MP-07c/.test(strict.stderr), 'the strict refusal names MP-07c');
+  } finally {
+    await host?.stop();
+    await relay.stop();
   }
 }
 
@@ -230,7 +314,12 @@ function summary(seat) {
     lastHash: seat.envelope?.lastHash,
     resigned: seat.envelope?.resigned,
     outcome: seat.envelope?.outcome,
+    advisory: seat.envelope?.advisory,
   };
+}
+
+function browserSummary(state) {
+  return { tick: state?.tick, desyncs: state?.desyncs, roster: state?.roster };
 }
 
 /** The control arm: the same contract and seed, ridden alone, in this same harness. */
@@ -244,13 +333,14 @@ function soloOutcome() {
   return JSON.parse(run.stdout.trim().split('\n').at(-1));
 }
 
-function startSeat(baseUrl, code, { name, policy, desyncAt, maxTicks }) {
+function startSeat(baseUrl, code, { name, policy, desyncAt, maxTicks, party = 2 }) {
   const args = [
     'scripts/gr-sim.mjs',
     '--room', code,
     '--origin', baseUrl,
     '--name', name,
     '--town', 'Calculating House',
+    '--party', String(party),
     '--tick-rate', String(TICK_RATE),
     `--policy=${policy}`,
     ...(desyncAt === undefined ? [] : ['--desync-at', String(desyncAt)]),
@@ -291,7 +381,7 @@ function startSeat(baseUrl, code, { name, policy, desyncAt, maxTicks }) {
         reject(new Error(`${name} wrote no seat envelope (exit ${exitCode}):\n${stderr}`));
         return;
       }
-      resolve({ exitCode, envelope, stderr, views: lines.length - 1 });
+      resolve({ exitCode, envelope, stderr, views: lines.length - 1, turns: lines.slice(0, -1).map((line) => JSON.parse(line)) });
     });
   });
   return {
@@ -299,6 +389,100 @@ function startSeat(baseUrl, code, { name, policy, desyncAt, maxTicks }) {
     finished,
     write: (orders) => child.stdin.write(`${JSON.stringify(orders)}\n`),
   };
+}
+
+async function runStrictSeat(baseUrl, code) {
+  const child = spawn(process.execPath, [
+    'scripts/gr-sim.mjs', '--room', code, '--origin', baseUrl, '--name', 'Rig Strict', '--strict', '--policy=idle',
+  ], { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+  let stdout = '';
+  let stderr = '';
+  child.stdout.on('data', (chunk) => { stdout += chunk; });
+  child.stderr.on('data', (chunk) => { stderr += chunk; });
+  const exitCode = await new Promise((resolve, reject) => {
+    const timer = setTimeout(() => { child.kill('SIGKILL'); reject(new Error('strict seat did not refuse promptly')); }, 30_000);
+    child.once('error', reject);
+    child.once('exit', (code) => { clearTimeout(timer); resolve(code); });
+  });
+  return { exitCode, stdout, stderr };
+}
+
+async function startBrowserEnv() {
+  const port = await freePort();
+  const vite = await createServer({
+    root: ROOT,
+    logLevel: 'error',
+    server: { host: '127.0.0.1', port, strictPort: true },
+  });
+  await vite.listen();
+  const browser = await chromium.launch({ channel: 'chromium', headless: true });
+  return {
+    browser,
+    url: `http://127.0.0.1:${port}`,
+    async stop() {
+      await browser.close();
+      await vite.close();
+    },
+  };
+}
+
+async function startBrowserHost(browserEnv, relayBase, code, partySize, name) {
+  const context = await browserEnv.browser.newContext({ viewport: { width: 1280, height: 800 } });
+  const page = await context.newPage();
+  const errors = { consoleErrors: [], pageErrors: [] };
+  page.on('console', (message) => { if (message.type() === 'error') errors.consoleErrors.push(message.text()); });
+  page.on('pageerror', (error) => errors.pageErrors.push(error.message));
+  const query = new URLSearchParams({
+    debug: '',
+    contract: CONTRACT,
+    seed: SEED,
+    tier: 'low',
+    mp: 'dev',
+    mpCode: code,
+    mpRelay: relayBase,
+    mpName: name,
+    mpTown: 'Browser Camp',
+    mpParty: String(partySize),
+  });
+  await page.goto(`${browserEnv.url}/?${query}`);
+  await page.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 30_000 });
+  const briefing = page.getByTestId('contract-briefing-dismiss');
+  if (await briefing.isVisible().catch(() => false)) await briefing.click();
+  return { page, errors, stop: () => context.close() };
+}
+
+async function panGold(page, targetGold) {
+  const pressed = new Set();
+  const setKeys = async (keys) => {
+    const wanted = new Set(keys);
+    for (const key of pressed) if (!wanted.has(key)) { await page.keyboard.up(key); pressed.delete(key); }
+    for (const key of wanted) if (!pressed.has(key)) { await page.keyboard.down(key); pressed.add(key); }
+  };
+  const deadline = Date.now() + 25_000;
+  try {
+    while (Date.now() < deadline) {
+      const state = await page.evaluate(() => {
+        const game = window.__THREE_GAME_DIAGNOSTICS__;
+        const node = game?.harvest.activeNodes.filter((entry) => entry.active)
+          .sort((a, b) => Math.hypot(a.position.x - game.player.position.x, a.position.z - game.player.position.z)
+            - Math.hypot(b.position.x - game.player.position.x, b.position.z - game.player.position.z))[0];
+        return game && node ? { gold: game.economy.gold, player: game.player.position, node: node.position } : null;
+      });
+      if (!state) { await sleep(100); continue; }
+      if (state.gold >= targetGold) return;
+      const dx = state.node.x - state.player.x;
+      const dz = state.node.z - state.player.z;
+      const near = Math.hypot(dx, dz) < 1.2;
+      await setKeys(near ? ['Space'] : [
+        ...(dx < -0.35 ? ['KeyA'] : dx > 0.35 ? ['KeyD'] : []),
+        ...(dz < -0.35 ? ['KeyW'] : dz > 0.35 ? ['KeyS'] : []),
+      ]);
+      await sleep(100);
+    }
+    throw new Error(`browser host did not pan ${targetGold} gold`);
+  } finally {
+    await setKeys([]);
+  }
 }
 
 // ---------------------------------------------------------------------------

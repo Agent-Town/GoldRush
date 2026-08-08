@@ -3,6 +3,7 @@ import {
   type LockstepAction,
   type LockstepSample,
   type LockstepTick,
+  type MultiplayerPlayer,
   type MultiplayerSetup,
 } from '../mp/LockstepClient';
 import { HeadlessContractSim, SEAT_HASH_ENGINE, type GrSimOutcome, type GrSimTurn } from './HeadlessContractSim';
@@ -40,6 +41,7 @@ export const ROOM_TICK_RATE = 30;
  * being limited. The throttle has to sit in front of the wire, not behind it.
  */
 export const SEAT_TICK_RATE_CEILING = 45;
+export const MIXED_ROOM_STRICT_MESSAGE = "a headless seat and a browser rider run different engines and would disagree at the first hash — full mixed play arrives with MP-07c, where the agent rides the browser's world";
 
 /**
  * Acts that change WHICH RUN the table is in. `Game.applyMultiplayerActions` breaks out of
@@ -87,7 +89,10 @@ export type AgentSeatResult = {
   lastHash: { tick: number; hash: string } | null;
   resigned: SeatResignation | null;
   outcome: GrSimOutcome | null;
+  advisory?: true;
 };
+
+type AgentSeatTurn = GrSimTurn & { view: GrSimTurn['view'] & { advisory?: true } };
 
 export type AgentSeatOptions = {
   origin: string;
@@ -107,7 +112,8 @@ export type AgentSeatOptions = {
   maxTicks?: number | null;
   startTimeoutMs?: number;
   stallTimeoutMs?: number;
-  onTurn?: (turn: GrSimTurn) => void;
+  strict?: boolean;
+  onTurn?: (turn: AgentSeatTurn) => void;
   onNotice?: (line: string) => void;
 };
 
@@ -123,6 +129,7 @@ export class AgentSeat {
   private runState: SeatRunState = { wave: 0, gold: 0 };
   private lastHash: { tick: number; hash: string } | null = null;
   private resignation: SeatResignation | null = null;
+  private advisory: boolean;
   private tick = 0;
 
   private constructor(
@@ -130,11 +137,13 @@ export class AgentSeat {
     readonly setup: MultiplayerSetup,
     readonly sim: HeadlessContractSim,
     private readonly client: LockstepClient,
+    advisory: boolean,
   ) {
     this.tickRate = Math.min(SEAT_TICK_RATE_CEILING, Math.max(1, options.tickRate ?? ROOM_TICK_RATE));
     this.maxTicks = options.maxTicks ?? null;
     this.startTimeoutMs = options.startTimeoutMs ?? DEFAULT_START_TIMEOUT_MS;
     this.stallTimeoutMs = options.stallTimeoutMs ?? DEFAULT_STALL_TIMEOUT_MS;
+    this.advisory = advisory;
   }
 
   /**
@@ -144,7 +153,10 @@ export class AgentSeat {
    * to arrive already agreeing, and `inspect` is where that agreement is published.
    */
   static async take(options: AgentSeatOptions): Promise<AgentSeat> {
-    const setup = options.setup ?? (await fetchRoomSetup(options.origin, options.code));
+    const room = await fetchRoomInfo(options.origin, options.code);
+    const setup = options.setup ?? room.setup;
+    const advisory = room.roster.some((player) => player.client === 'browser');
+    if (advisory && options.strict) throw new Error(MIXED_ROOM_STRICT_MESSAGE);
     const sim = new HeadlessContractSim({ contractId: setup.contractId, seed: setup.seed });
     // The client needs a desync hook and the hook needs the seat, so the callback is
     // late-bound. Nothing can fire it before `connect()` below.
@@ -152,18 +164,21 @@ export class AgentSeat {
     const client = new LockstepClient({
       relayBase: trimOrigin(options.origin),
       code: options.code,
-      player: options.player,
+      player: { ...options.player, name: advisory ? scoutName(options.player.name) : options.player.name },
+      client: 'headless',
       partySize: options.partySize ?? 2,
       setup,
       desyncAtTick: options.desyncAtTick ?? null,
       onDesync: (tick) => seated?.noteDesync(tick),
+      exchangeHashes: () => seated?.advisory !== true,
       // A headless seat holds no run-suspend snapshot, so it can neither heal a peer
       // nor be healed by one. Saying so plainly beats a silent restore that lies.
       onSnapshot: () => false,
     });
-    const seat = new AgentSeat(options, setup, sim, client);
+    const seat = new AgentSeat(options, setup, sim, client, advisory);
     seated = seat;
     await client.connect();
+    if (advisory) seat.options.onNotice?.('scout mode: builds still travel, this seat\'s view is approximate, and determinism hashes are off');
     seat.emitTurn();
     return seat;
   }
@@ -199,6 +214,7 @@ export class AgentSeat {
         dueAt += stepMs;
         if (performance.now() - dueAt > MAX_LAG_MS) dueAt = performance.now();
 
+        this.updateRoomMode();
         const error = this.client.state().error;
         if (error) {
           this.resign('relay_error', error);
@@ -265,6 +281,7 @@ export class AgentSeat {
       // hand back a real-looking verdict alongside exit 3. A seat stopped by --max-ticks
       // reports its last determinism hash instead of inventing one.
       outcome: this.resignation === null && this.sim.isTerminal ? this.sim.outcome() : null,
+      ...(this.advisory ? { advisory: true as const } : {}),
     };
   }
 
@@ -317,7 +334,14 @@ export class AgentSeat {
     const turn = this.sim.currentTurn();
     this.runState = { wave: turn.view.now.wave, gold: turn.view.now.gold };
     this.pending.push(...this.orders.fire(this.runState));
-    this.options.onTurn?.(turn);
+    this.options.onTurn?.(this.advisory ? { ...turn, view: { ...turn.view, advisory: true } } : turn);
+  }
+
+  private updateRoomMode(): void {
+    if (this.advisory || !this.client.state().roster.some((player) => player.client === 'browser')) return;
+    if (this.options.strict) return this.resign('mixed_room', MIXED_ROOM_STRICT_MESSAGE);
+    this.advisory = true;
+    this.options.onNotice?.('browser rider arrived; switching to scout mode (builds still travel, this view is approximate, determinism hashes are off)');
   }
 
   private resign(reason: string, detail?: string): void {
@@ -333,17 +357,26 @@ export class AgentSeat {
  * before the handshake beats a socket that closes for reasons the rider has to decode.
  */
 export async function fetchRoomSetup(origin: string, code: string): Promise<MultiplayerSetup> {
+  return (await fetchRoomInfo(origin, code)).setup;
+}
+
+async function fetchRoomInfo(origin: string, code: string): Promise<{ setup: MultiplayerSetup; roster: MultiplayerPlayer[] }> {
   const response = await fetch(`${trimOrigin(origin)}/api/multiplayer/inspect?code=${encodeURIComponent(code)}`);
   const body = (await response.json().catch(() => ({}))) as {
     ok?: boolean;
     setup?: MultiplayerSetup | null;
     started?: boolean;
     error?: string;
+    roster?: MultiplayerPlayer[];
   };
   if (!response.ok || !body.ok) throw new Error(`the relay would not open room ${code}: ${body.error ?? `http ${response.status}`}`);
   if (!body.setup) throw new Error(`room ${code} has no ride setup — the host has not picked a contract yet.`);
   if (body.started) throw new Error(`room ${code} already left the post; a seat has to be taken before tick 0.`);
-  return body.setup;
+  return { setup: body.setup, roster: body.roster ?? [] };
+}
+
+function scoutName(name: string): string {
+  return name.endsWith(' (scout)') ? name : `${name.slice(0, 16).trimEnd()} (scout)`;
 }
 
 function trimOrigin(origin: string): string {
