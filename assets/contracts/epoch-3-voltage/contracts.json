@@ -115,6 +115,7 @@
         "mothSeason": {
           "radiusWeight": 1,
           "decoyWeight": 2,
+          "mothsBaselinePerWave": 4,
           "mothsPerLightPerWave": 1,
           "nightSpeedOutsideLight": 1.12,
           "litThreshold": 0.35,
@@ -123,7 +124,7 @@
         "enemyRoster": [
           { "id": "moth_swarm", "label": "Fever Moths", "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
           { "id": "moth_swarm", "label": "Fever Moths", "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
-          { "id": "night_runner", "label": "Fevered Runner", "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
+          { "id": "night_runner", "label": "Fevered Runner", "hpScale": 1.75, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
         ]
       },
       "boardRow": {

@@ -18,6 +18,8 @@ type MothState = {
 export type MothTargetingConfig = Readonly<{
   radiusWeight: number;
   attachDamagePerSecond: number;
+  mothsBaselinePerWave: number;
+  mothsPerLightPerWave: number;
 }>;
 
 export class MothSwarm {
@@ -36,7 +38,12 @@ export class MothSwarm {
     private readonly enabled: boolean,
     capacity: number,
     private readonly coverageAt: (x: number, z: number) => number,
-    private readonly config: MothTargetingConfig = { radiusWeight: 1, attachDamagePerSecond: 0 },
+    private readonly config: MothTargetingConfig = {
+      radiusWeight: 1,
+      attachDamagePerSecond: 0,
+      mothsBaselinePerWave: 0,
+      mothsPerLightPerWave: 0,
+    },
     private readonly damageSource: (sourceId: string, amount: number) => void = () => {},
   ) {
     this.group.name = 'MothSwarmPool';
@@ -45,6 +52,13 @@ export class MothSwarm {
     this.mesh.frustumCulled = false;
     this.group.add(this.mesh);
     this.hideUnused();
+  }
+
+  waveSize(lightSources: number): number {
+    return Math.max(
+      Math.max(0, Math.floor(this.config.mothsBaselinePerWave)),
+      Math.floor(Math.max(0, lightSources) * Math.max(0, this.config.mothsPerLightPerWave)),
+    );
   }
 
   spawn(pool: EnemyPool, count: number, x: number, z: number): number {
