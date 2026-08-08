@@ -209,3 +209,67 @@ test('ACTIVE line-1 still skips mid-fire', () => {
   assert.equal(result.status, 0);
   assert.match(result.stdout, /SKIP/);
 });
+
+test('live declared count delta 0 passes', () => {
+  const desk = "🔺 **OWNER'S DESK — 2 awaiting a word.** 🔺 **F-1000-1 OPEN** 🔺 **F-1000-2 OPEN**";
+  assert.equal(runGuard(status(handoff(desk), archive(1584, desk))).status, 0);
+});
+
+test('s1533 protection — live declared count deltas +1 and -1 pass', () => {
+  const plusOne = "🔺 **OWNER'S DESK — 2 awaiting a word.** 🔺 **F-1000-1 OPEN**";
+  const minusOne = "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-1000-1 OPEN** 🔺 **F-1000-2 OPEN**";
+  assert.equal(runGuard(status(handoff(plusOne), archive(1584, plusOne))).status, 0);
+  assert.equal(runGuard(status(handoff(minusOne), archive(1584, minusOne))).status, 0);
+});
+
+test('s1585 live delta +4 refuses and names its four real unkeyed slugs', () => {
+  const keyed = Array.from({ length: 20 }, (_, i) => `🔺 **F-2000-${i + 1} OPEN**`).join(' ');
+  const unkeyed = [
+    'rf-34-hero-y-restore-roundtrip BLOCKED owner-fork',
+    'e3-fairground-socket BLOCKED owner-fork',
+    'bt-04-homestead-automation BLOCKED owner-fork',
+    'f1328-1-drill-yard-census-debt BLOCKED disputed',
+  ];
+  const live = `🔺 **OWNER'S DESK — 24 awaiting a word.** ${keyed} ` +
+    unkeyed.map((item) => `🔺 **${item}**`).join(' ');
+  const previous = `🔺 **OWNER'S DESK — 20 awaiting a word.** ${keyed}`;
+  const result = runGuard(status(handoff(live), archive(1584, previous)));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /declares 24 item\(s\), but 20 can be keyed/);
+  for (const item of unkeyed) assert.match(result.stderr, new RegExp(item));
+  assert.match(result.stderr, /F-ID or a `backticked-slug` at the very front/);
+});
+
+test('s1583 dot-separated live delta +22 refuses', () => {
+  const run = Array.from({ length: 23 }, (_, i) => `**F-3000-${i + 1} OPEN**`).join(' · ');
+  const live = `🔺 **OWNER'S DESK — 23 awaiting a word.** 🔺 ${run}`;
+  const previous = "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-3000-1 OPEN**";
+  const result = runGuard(status(handoff(live), archive(1584, previous)));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /declares 23 item\(s\), but 1 can be keyed/);
+});
+
+test('a live desk with no declared count still passes', () => {
+  const desk = "🔺 **OWNER'S DESK.** 🔺 **F-1000-1 OPEN**";
+  assert.equal(runGuard(status(handoff(desk), archive(1584, desk))).status, 0);
+});
+
+test('a live ACTIVE lock still skips before declared-count evaluation', () => {
+  const result = runGuard(status(
+    "ACTIVE 2026-08-09T05:37Z (s1586 fire) — OWNER'S DESK — 24 awaiting a word",
+    archive(1585, "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-1000-1 OPEN**"),
+  ));
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /SKIP/);
+});
+
+test('a collapsed previous desk remains advisory when the live desk is clean', () => {
+  const live = "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-1000-1 OPEN**";
+  const previous =
+    "🔺 **OWNER'S DESK — 5 awaiting a word.** 🔺 **F-1000-1 OPEN**" +
+    ' 🔺 **rf-34-hero-y-restore-roundtrip BLOCKED** 🔺 **e3-fairground-socket BLOCKED**' +
+    ' 🔺 **bt-04-homestead-automation BLOCKED** 🔺 **f1328-1-drill-yard-census-debt BLOCKED**';
+  const result = runGuard(status(handoff(live), archive(1585, previous)));
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /previous desk declares 5 item\(s\) but 4 could not be keyed/);
+});

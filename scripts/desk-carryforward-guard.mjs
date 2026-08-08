@@ -196,7 +196,15 @@ export function analyse(statusText, backlogText) {
   const prev = previousDesk(statusText);
   if (!prev || prev.items.length === 0) return { kind: 'no-previous', prev };
 
-  const live = deskItems(deskTail(line1));
+  const liveTail = deskTail(line1);
+  const live = deskItems(liveTail);
+  const liveDeclaredMatch = liveTail?.match(/DESK\s*[—–-]\s*(\d+)\s+awaiting/);
+  const liveDeclared = liveDeclaredMatch ? Number(liveDeclaredMatch[1]) : null;
+  const liveUnkeyed = liveTail
+    ? liveTail.split('🔺').slice(1)
+      .filter((segment) => deskItems(`🔺${segment}`).length === 0)
+      .map((segment) => segment.trim().slice(0, KEY_ZONE))
+    : [];
   const dropped = prev.items.filter((id) => !live.includes(id));
   const silent = dropped.filter(
     (id) => !acknowledged(line1, id) && !subjectLedClosure(backlogText, id).length,
@@ -206,7 +214,7 @@ export function analyse(statusText, backlogText) {
   const declaredMatch = deskTail(prev.line || '')?.match(/DESK\s*[—–-]\s*(\d+)\s+awaiting/);
   const declared = declaredMatch ? Number(declaredMatch[1]) : null;
   const unkeyed = declared === null ? 0 : Math.max(0, declared - prev.items.length);
-  return { kind: 'desk', prev, live, dropped, silent, declared, unkeyed };
+  return { kind: 'desk', prev, live, liveDeclared, liveUnkeyed, dropped, silent, declared, unkeyed };
 }
 
 function main() {
@@ -242,18 +250,29 @@ function main() {
   console.log(`previous desk (s${result.prev.session}):`, result.prev.items.length, 'items');
   console.log('this desk                 :', result.live.length, 'items');
   if (result.unkeyed > 0) {
-    // ADVISORY, NEVER A REFUSAL, and the corpus is why. The parser keys an item
-    // by an F-ID or a BACKTICKED slug; the previous desk's header declares its
-    // own count. Measured s1533 across the 60 post-cure desks that state a
-    // count: 11 agree and 49 do not, nearly all by exactly one — the item
-    // written "🔺 **f1328-1** —" with no backticks, which rode ~20 desks that
-    // way. Refusing on a mismatch would fail CLOSED on 82% of legitimate desks,
-    // which is the mistake desk-declaration-guard's separator whitelist avoided
-    // by measuring first. So say it plainly and keep going.
+    // ADVISORY, NEVER A REFUSAL: archived desks are immutable history, so a red
+    // here would freeze the board. s1533 measured 60 post-cure counted desks:
+    // 11 agreed and 49 did not, nearly all by one; that correctly refuted a
+    // ZERO-TOLERANCE gate. The s1586 full-corpus histogram over 112 desks is
+    // -1:1, 0:48, +1:30, +4:1, +7:7, +8:2, +9:10, +16:4, +18:1, +19:7,
+    // +22:1. Its empty 2-3 band separates the +/-1 noise from defects, so the
+    // live gate below admits every desk s1533's measurement was protecting.
     console.log(
       `ⓘ the previous desk declares ${result.declared} item(s) but ${result.unkeyed} could not be keyed` +
         ' — key desk items by an F-ID or a `backticked-slug` so they can be carry-checked.',
     );
+  }
+
+  if (result.liveDeclared !== null && Math.abs(result.liveDeclared - result.live.length) > 1) {
+    console.error('');
+    console.error(
+      `desk-carryforward-guard: REFUSING — the live OWNER'S DESK declares ${result.liveDeclared} item(s),` +
+        ` but ${result.live.length} can be keyed (tolerance: +/-1).`,
+    );
+    console.error('Unkeyed segment opening text:');
+    for (const segment of result.liveUnkeyed) console.error(`  ${segment}`);
+    console.error('Repair: key each item by an F-ID or a `backticked-slug` at the very front of its 🔺 segment.');
+    process.exit(1);
   }
   console.log('dropped                   :', result.dropped.length,
     `(${result.dropped.length - result.silent.length} accounted for)`);
