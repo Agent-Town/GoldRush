@@ -401,16 +401,17 @@ test('permission-denied receipts do not send the Prospector to the denied target
 
   const receipt = await page.evaluate((nodeId) => window.__GR_AGENT__?.panAt(nodeId), node!.id);
   const immediate = await companion(page);
-  expect((receipt as { outcome?: { ok?: boolean; reason?: string } } | undefined)?.outcome).toMatchObject({
-    ok: false,
-    reason: 'PERMISSION_DENIED',
-  });
-  expect(['held', 'ask me', 'no trust']).toContain(immediate.lastLine);
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.35));
   const after = await companion(page);
   const driftAbs = distance(after.position, before.position);
   const gapClosed = distance(before.position, node!.position) - distance(after.position, node!.position);
   console.log(`[m4-06-denied] driftAbs=${driftAbs} gapClosed=${gapClosed}`);
+  // F-1565-2: assertions follow the drift log so receipt or bark failures cannot suppress its sample.
+  expect((receipt as { outcome?: { ok?: boolean; reason?: string } } | undefined)?.outcome).toMatchObject({
+    ok: false,
+    reason: 'PERMISSION_DENIED',
+  });
+  expect(['held', 'ask me', 'no trust']).toContain(immediate.lastLine);
 
   expect(after.moving).toBe(false);
   expect(distance(after.target, before.target)).toBeLessThan(0.01);
