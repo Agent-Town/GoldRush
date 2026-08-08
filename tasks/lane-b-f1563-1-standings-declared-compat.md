@@ -69,6 +69,6 @@ The previous runner satisfied a self-check that said *"board e2e green"* by runn
 - Zero console/page errors; screenshots desktop + 390px to `reviews/shots-f1563-1/` showing a board rendered from rows **without** `declared`.
 - `test:node-guards` is NOT required: this diff touches `src/encyclopedia/` only — no `src/sim/`, `src/systems/`, `src/entities/` — so F-1460-1 does not bind. Say so rather than implying coverage.
 
-⚠️ **Known-red, do not chase and do not "fix":** `e2e/m4-06-embodiment.spec.ts:395` fails intermittently on clean main under full-spec load (F-1563-3, s1563: 2 of 2 control runs). It is unrelated to this task. If you see it, name it and move on.
+⚠️ **Known-red, do not chase and do not "fix":** `e2e/m4-06-embodiment.spec.ts:395` ("permission-denied receipts do not send the Prospector to the denied target") fails intermittently on clean main under full-spec load (F-1563-3, s1563: 2 of 2 control runs). It is unrelated to this task. If you see it, name it and move on.
 
 End: **READY-FOR-GATES** + report: the exact `isStandingStack` predicate you settled on, your ruling on scope 2's undeclared-carries-no-stack invariant, the rendered text for an absent `declared`, the pass counts for all five suites by path, and both screenshot paths.
