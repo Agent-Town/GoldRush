@@ -60,6 +60,48 @@ test('the day town boots with ground contact, wear and parcel dressing — and n
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
+test('the plain town plays its era music after a gesture and exposes persistent audio settings', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await seedProfile(page);
+  await page.goto('/');
+
+  expect(await page.evaluate(() => performance.getEntriesByType('resource').some((entry) => entry.name.includes('era-e1-frontier-loop')))).toBe(false);
+  await enterTown(page, { alreadyLoaded: true });
+  await expect.poll(() => page.evaluate(() => window.__GR_AUDIO_DIAGNOSTICS__?.unlocked)).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__GR_AUDIO_DIAGNOSTICS__?.loops)).toContain('era-e1-frontier-loop');
+
+  await page.getByTestId('town-settings-toggle').click();
+  await expect(page.getByTestId('town-settings-panel')).toBeVisible();
+  const music = page.getByTestId('town-music-volume');
+  await music.evaluate((element) => {
+    const input = element as HTMLInputElement;
+    input.value = '20';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await expect(page.getByTestId('town-music-volume-value')).toHaveText('20%');
+  await expect(page.evaluate(() => localStorage.getItem('gr.audio.music-volume.v1'))).resolves.toBe('0.2');
+
+  const playerBeforeSliderKey = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.player);
+  await music.press('ArrowRight');
+  await expect(page.getByTestId('town-music-volume-value')).toHaveText('25%');
+  await expect(page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.player)).resolves.toEqual(playerBeforeSliderKey);
+  await music.press('Escape');
+  await expect(page.getByTestId('town-settings-panel')).toBeHidden();
+  await page.getByTestId('town-settings-toggle').click();
+
+  const mute = page.getByTestId('town-mute');
+  await mute.check();
+  await expect.poll(() => page.evaluate(() => window.__GR_AUDIO_DIAGNOSTICS__?.loops)).not.toContain('era-e1-frontier-loop');
+  await expect(page.evaluate(() => window.__GR_AUDIO_DIAGNOSTICS__?.musicVolume)).resolves.toBe(0.25);
+  await mute.uncheck();
+  await expect.poll(() => page.evaluate(() => window.__GR_AUDIO_DIAGNOSTICS__?.loops)).toContain('era-e1-frontier-loop');
+
+  const directory = path.resolve('reviews/shots-town-music');
+  await mkdir(directory, { recursive: true });
+  await page.screenshot({ path: path.join(directory, `settings-${testInfo.project.name}.png`) });
+  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
 test('?townDusk reaches the town from a plain URL and lights windows, strings and lanterns', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const errors = collectErrors(page);
@@ -118,6 +160,8 @@ test('Voltage town earns a cooler, steady arc-light accent from the era table', 
   await seedProfile(page, 'epoch-3-voltage');
   await page.goto('/?townDusk&tier=lite');
   await enterTown(page, { alreadyLoaded: true });
+
+  await expect.poll(() => page.evaluate(() => window.__GR_AUDIO_DIAGNOSTICS__?.loops)).toContain('era-e3-voltage-loop');
 
   expect((await snapshot(page)).dressing.lightGrammar).toMatchObject({
     eraOrder: 3,
