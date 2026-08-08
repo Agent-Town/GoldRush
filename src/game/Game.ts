@@ -359,6 +359,7 @@ type MultiplayerActorMeta = {
   name: string;
   town: string;
   local: boolean;
+  agent: boolean;
 };
 type MultiplayerActorSnapshot = {
   hp: number;
@@ -3598,7 +3599,7 @@ export class Game {
       actor.group.visible = true;
       const local = player.playerId === state.playerId;
       const previous = this.mpActorMeta.get(actor);
-      this.mpActorMeta.set(actor, { playerId: player.playerId, slot, name: player.name, town: player.town, local });
+      this.mpActorMeta.set(actor, { playerId: player.playerId, slot, name: player.name, town: player.town, local, agent: player.client === 'headless' });
       actor.setIdentityTint(local ? null : multiplayerTint(slot));
       if (!previous || previous.playerId !== player.playerId || previous.slot !== slot) {
         this.setWeaponForActor(actor, 'rig');
@@ -5960,7 +5961,7 @@ export class Game {
       riders: this.actors.flatMap((actor) => {
         const meta = this.mpActorMeta.get(actor);
         return meta && actor.group.visible
-          ? [{ playerId: meta.playerId, name: meta.name, hp: actor.hp, maxHp: actor.maxHp, local: meta.local }]
+          ? [{ playerId: meta.playerId, name: meta.name, hp: actor.hp, maxHp: actor.maxHp, local: meta.local, agent: meta.agent }]
           : [];
       }),
       sharedGold: this.economy.gold,

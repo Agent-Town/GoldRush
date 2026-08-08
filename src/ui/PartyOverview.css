@@ -58,6 +58,11 @@
   box-shadow: inset 0 0 0 1px rgba(91, 138, 138, 0.55), 0 3px 0 rgba(46, 27, 14, 0.68);
 }
 
+.party-rider-card[data-agent='true'] {
+  border-color: var(--at-teal-600);
+  background: linear-gradient(135deg, rgba(224, 243, 238, 0.96), rgba(245, 230, 200, 0.96));
+}
+
 .party-rider-card[data-glancing='true'] {
   outline: 3px solid var(--at-sun-200);
   outline-offset: 1px;

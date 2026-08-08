@@ -86,6 +86,10 @@ test('a thin rig takes the empty chair and receives the browser world without de
     () => page.evaluate(() => (window.__GR_MP__?.state()?.roster ?? []).map((player) => `${player.name} of ${player.town}`)),
     { message: 'the rig appears on the human roster', timeout: 60_000 },
   ).toEqual([`${HOST.name} of ${HOST.town}`, `${RIG.name} (scout) of ${RIG.town}`]);
+  await expect(page.getByTestId('party-rider-card')).toHaveCount(2);
+  expect(await page.getByTestId('party-rider-card').locator('[data-rider-name]').allTextContents()).toEqual([HOST.name, RIG.name]);
+  await expect(page.getByTestId('party-rider-card').filter({ hasText: RIG.name })).toHaveAttribute('data-agent', 'true');
+  await expect(page.getByTestId('party-rider-card').filter({ hasText: RIG.name }).locator('[data-rider-agent]')).toHaveText('Agent');
 
   await page.screenshot({ path: path.join(ARTIFACT_DIR, 'seat-desktop.png'), fullPage: false });
   await page.setViewportSize({ width: 390, height: 844 });

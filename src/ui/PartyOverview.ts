@@ -6,6 +6,7 @@ export type PartyRiderSnapshot = {
   hp: number;
   maxHp: number;
   local: boolean;
+  agent: boolean;
 };
 
 export type PartyOverviewSnapshot = {
@@ -52,7 +53,7 @@ export class PartyOverview {
       return;
     }
 
-    const rosterKey = riders.map((rider) => `${rider.playerId}:${rider.name}:${rider.local}`).join('|');
+    const rosterKey = riders.map((rider) => `${rider.playerId}:${rider.name}:${rider.local}:${rider.agent}`).join('|');
     if (rosterKey !== this.rosterKey) {
       this.rosterKey = rosterKey;
       this.cards.replaceChildren(...riders.map((rider) => this.createCard(rider)));
@@ -79,6 +80,7 @@ export class PartyOverview {
     card.innerHTML = `
       <span class="party-rider-card__topline">
         <strong data-rider-name></strong>
+        <span data-rider-agent hidden>Agent</span>
         <span data-rider-self hidden>You</span>
       </span>
       <span class="party-rider-card__hp"><span data-rider-hp-fill></span></span>
@@ -92,12 +94,15 @@ export class PartyOverview {
     const card = this.cards.querySelector<HTMLButtonElement>(`[data-player-id="${CSS.escape(rider.playerId)}"]`);
     if (!card) return;
     const percent = rider.maxHp > 0 ? Math.max(0, Math.min(100, rider.hp / rider.maxHp * 100)) : 0;
+    const name = rider.agent ? rider.name.replace(/ \(scout\)$/, '') : rider.name;
     card.dataset.self = String(rider.local);
+    card.dataset.agent = String(rider.agent);
     card.dataset.glancing = String(this.selectedPlayerId === rider.playerId);
     card.dataset.hp = String(Math.ceil(rider.hp));
     card.setAttribute('aria-pressed', String(this.selectedPlayerId === rider.playerId));
-    card.setAttribute('aria-label', `${rider.local ? 'You, ' : ''}${rider.name}: ${Math.ceil(rider.hp)} of ${Math.round(rider.maxHp)} health${rider.local ? '' : '. Glance at rider'}`);
-    card.querySelector<HTMLElement>('[data-rider-name]')!.textContent = rider.name;
+    card.setAttribute('aria-label', `${rider.local ? 'You, ' : ''}${name}${rider.agent ? ', agent rider' : ''}: ${Math.ceil(rider.hp)} of ${Math.round(rider.maxHp)} health${rider.local ? '' : '. Glance at rider'}`);
+    card.querySelector<HTMLElement>('[data-rider-name]')!.textContent = name;
+    card.querySelector<HTMLElement>('[data-rider-agent]')!.hidden = !rider.agent;
     card.querySelector<HTMLElement>('[data-rider-self]')!.hidden = !rider.local;
     card.querySelector<HTMLElement>('[data-rider-hp-fill]')!.style.width = `${percent}%`;
     card.querySelector<HTMLElement>('[data-rider-hp]')!.textContent = `${Math.ceil(rider.hp)} / ${Math.round(rider.maxHp)}`;
