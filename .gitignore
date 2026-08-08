@@ -42,6 +42,20 @@ reviews/eight-winds/gen/_misclaimed/
 # re-derivable. The repo-wide *.log rule at line 7 was swallowing them.
 !reviews/eight-winds/gen/*.codex.log
 
+# ...and the SAME rule was swallowing measurement evidence, which is the sibling case the
+# negation above was written too narrow to cover (F-1573-1, s1573). A measurement task's raw
+# per-run logs ARE its evidence: f1572-1 wrote 24 run-NN.log files whose review cited them by
+# path, and only the 2-byte .rc companions reached git — silently, because `git status` shows
+# an ignored file as nothing at all. That is a RETENTION LAW (CLAUDE.md 10b) hole: a drain can
+# only re-derive a runner's numbers if the runner's raw output survives, and re-deriving them
+# is exactly how the s1573 drain corroborated f1572-1 value-for-value.
+# BLAST RADIUS MEASURED BEFORE LANDING, not assumed: at s1573 main's tree held 40 *.log files
+# under artifacts/, ALL 40 already tracked, and `git ls-files --others --ignored` returned 0 —
+# so this rule newly tracks NOTHING today and is purely forward-looking. Scoped to artifacts/
+# on purpose: a blanket !**/*.log would sweep in every playwright/vite log repo-wide, which is
+# the F-1027-2 black-hole shape. Reversible with one word.
+!artifacts/**/*.log
+
 # transient runner state — masters (tasks/*.md, tasks/BACKLOG.md) stay tracked,
 # but queue/running/done/failed are ephemeral filesystem state the runner manages.
 tasks/running/
