@@ -57,7 +57,7 @@ function verdictFor(name, goalEvidence, reviews, drained, traces) {
     .map((file) => ({ kind: 'trace', path: file, transform: name }));
   return ran.length
     ? { verdict: 'RAN-UNMERGED', evidence: ran }
-    : { verdict: 'TRULY-BANKED', evidence: [] };
+    : { verdict: 'NO-TRACE', evidence: [] };
 }
 
 export function classifyRoot(root) {
@@ -84,6 +84,8 @@ export function classifyRoot(root) {
 
   const verdicts = masters.map((master) => {
     const fullStem = stem(master);
+    const masterText = fs.readFileSync(path.join(tasksDir, master), 'utf8');
+    const banner = masterText.split('\n').slice(0, 6).join('\n').match(/DO NOT QUEUE|DO-NOT-QUEUE/i)?.[0] ?? '';
     const goalEvidence = goals
       .filter((goal) => goal.taskFile === master && SHIPPED.has(goal.status))
       .map((goal) => ({ kind: 'goal', path: 'tasks/goals.json', id: goal.id, ...(goal.mergeHash && { hash: goal.mergeHash }) }));
@@ -96,27 +98,35 @@ export function classifyRoot(root) {
       ? 'SHIPPED'
       : full.verdict === 'RAN-UNMERGED' || bare.verdict === 'RAN-UNMERGED'
         ? 'RAN-UNMERGED'
-        : 'TRULY-BANKED';
+        : 'NO-TRACE';
     const evidence = [full, bare].filter((item) => item.verdict === winning).flatMap((item) => item.evidence).filter(
       (item, index, all) => index === all.findIndex((other) => JSON.stringify(other) === JSON.stringify(item)),
     );
     return {
       master,
-      title: fs.readFileSync(path.join(tasksDir, master), 'utf8').split('\n', 1)[0].replace(/^#+\s*/, '').trim(),
+      title: masterText.split('\n', 1)[0].replace(/^#+\s*/, '').trim(),
       verdict: winning,
-      evidence: winning === 'TRULY-BANKED' ? [] : evidence,
-      evidenceSummary: winning === 'TRULY-BANKED' ? 'empty set' : evidence.map(formatEvidence).join('; '),
+      banner,
+      evidence: winning === 'NO-TRACE' ? [] : evidence,
+      evidenceSummary: winning === 'NO-TRACE' ? 'empty set' : evidence.map(formatEvidence).join('; '),
       transforms: { full: full.verdict, slotStripped: bare.verdict },
       disagrees: full.verdict !== bare.verdict,
     };
   });
   const counts = Object.fromEntries(
-    ['SHIPPED', 'RAN-UNMERGED', 'TRULY-BANKED'].map((verdict) => [
+    ['SHIPPED', 'RAN-UNMERGED', 'NO-TRACE'].map((verdict) => [
       verdict,
       verdicts.filter((item) => item.verdict === verdict).length,
     ]),
   );
-  return { counts: { ...counts, DISAGREES: verdicts.filter((item) => item.disagrees).length }, verdicts };
+  return {
+    counts: {
+      ...counts,
+      CANDIDATES: verdicts.filter((item) => item.verdict === 'NO-TRACE' && !item.banner).length,
+      DISAGREES: verdicts.filter((item) => item.disagrees).length,
+    },
+    verdicts,
+  };
 }
 
 function formatEvidence(item) {
@@ -124,15 +134,16 @@ function formatEvidence(item) {
 }
 
 function printTable(result) {
-  console.log('VERDICT       DISAGREES  MASTER                                    TITLE                                                                    EVIDENCE');
+  console.log('VERDICT       DISAGREES  BANNER        MASTER                                    TITLE                                                                    EVIDENCE');
   for (const item of result.verdicts) {
     const title = item.title.length > 72 ? `${item.title.slice(0, 69)}...` : item.title;
     console.log(
-      `${item.verdict.padEnd(13)} ${String(item.disagrees).padEnd(10)} ${item.master.padEnd(41)} ${title.padEnd(72)} ${item.evidenceSummary}`,
+      `${item.verdict.padEnd(13)} ${String(item.disagrees).padEnd(10)} ${item.banner.padEnd(13)} ${item.master.padEnd(41)} ${title.padEnd(72)} ${item.evidenceSummary}`,
     );
   }
+  const bannered = result.counts['NO-TRACE'] - result.counts.CANDIDATES;
   console.log(
-    `\nTOTAL ${result.verdicts.length} · SHIPPED ${result.counts.SHIPPED} · RAN-UNMERGED ${result.counts['RAN-UNMERGED']} · TRULY-BANKED ${result.counts['TRULY-BANKED']} · DISAGREES ${result.counts.DISAGREES}`,
+    `\nTOTAL ${result.verdicts.length} · SHIPPED ${result.counts.SHIPPED} · RAN-UNMERGED ${result.counts['RAN-UNMERGED']} · NO-TRACE ${result.counts['NO-TRACE']}, of which ${bannered} self-declare DO NOT QUEUE → ${result.counts.CANDIDATES} candidates · DISAGREES ${result.counts.DISAGREES}`,
   );
 }
 
@@ -142,7 +153,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   try {
     const result = classifyRoot(root);
     process.argv.includes('--json') ? console.log(JSON.stringify(result, null, 2)) : printTable(result);
-    process.exitCode = process.argv.includes('--strict') && result.counts['TRULY-BANKED'] ? 1 : 0;
+    process.exitCode = process.argv.includes('--strict') && result.counts.CANDIDATES ? 1 : 0;
   } catch (error) {
     console.error(`master-shipped-classifier: ${error.message}`);
     process.exitCode = 0; // advisory: never block a drain on our own absence
