@@ -406,11 +406,18 @@ test('permission-denied receipts do not send the Prospector to the denied target
   });
   await page.waitForTimeout(350);
   const after = await companion(page);
+  const driftAbs = distance(after.position, before.position);
+  const gapClosed = distance(before.position, node!.position) - distance(after.position, node!.position);
+  console.log(`[m4-06-denied] driftAbs=${driftAbs} gapClosed=${gapClosed}`);
 
-  expect(distance(after.position, before.position)).toBeLessThan(0.45);
   expect(after.moving).toBe(false);
   expect(distance(after.target, before.target)).toBeLessThan(0.01);
   expect(distance(after.target, node!.position)).toBeGreaterThan(0.5);
+  // artifacts/f1557-3-m4-06-denied/distribution.txt: gapClosed max 0.352253 (0.098 margin);
+  // driftAbs max 0.352933 (0.247 margin).
+  expect(gapClosed).toBeLessThan(0.45);
+  // Loose absolute-drift sanity bound, not the permission rule.
+  expect(driftAbs).toBeLessThan(0.6);
   expect(['held', 'ask me', 'no trust']).toContain(after.lastLine);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
