@@ -4575,6 +4575,13 @@
               "gate": "none — fire-authorable from the F-1576-1 BACKLOG row and the Drain section of reviews/f1574-1-review-evidence-audit.md; third instance of a shape the gate-caller baseline already records twice in its own prose (desk-carryforward-guard s1533, desk-state-audit s1566)"
             },
             {
+              "id": "f1579-1-live-regime-drift-sweep",
+              "title": "F-1579-1: the fixed-phase harness measured a regime the live loop never enters (both clocks run 4x slower per tick under advanceSim) — re-sweep the denied-receipt drift deterministically via driveRenderSchedule and name which clock predicts the breach",
+              "status": "queued",
+              "taskFile": "lane-c-f1579-1-live-regime-drift-sweep.md",
+              "gate": "none — fire-authorable from the F-1579-1 BACKLOG row and the DRAIN GATE — s1579 section of reviews/f1577-3-fixed-phase-drift-sweep.md; harness proved constructible at authoring by reading driveRenderScheduleForTest (src/game/Game.ts:6868), which drives the real live-loop path with no src change"
+            },
+            {
               "id": "f1578-1-findings-state-open-vocabulary",
               "title": "F-1578-1: findings-state-guard admits only 🟡/✅-led rows, so 165 marker-led ledger rows are invisible and its double-state:0 is a false green — add a fail-safe OPEN vocabulary axis and an always-printed advisory line that cannot change the exit code",
               "status": "merged",
