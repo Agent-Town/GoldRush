@@ -94,8 +94,41 @@ const OWNER_GATE_ALT = [
   /\bGATE:\s*\**\s*OWNER\b/i,
   /(?:closes|retires|rules?)\s+(?:on|when)\s+(?:an?\s+)?(?:attended\s+or\s+)?owner/i,
 ];
+
+/**
+ * Negation tokens that turn an owner-verb mention into a DISCLAIMER (F-1551-4).
+ * OWNER_GATE has no negation handling, so "no spec, design fork or owner ruling
+ * needed" — a row declaring that NO owner act is required — read as asserting one.
+ * The tightened s1542 form scored "0 in 15" over its corpus, but that corpus
+ * contained no NEGATED gate: every arm tested was a gate that did or did not turn
+ * on an owner act, never one that says an owner act is not required.
+ */
+const NEGATION = /\b(?:none|no|not|never|nor|without)\b/i;
+
+/**
+ * True when an owner verb appears in the gate WITHOUT a negation between it and
+ * the start of its sentence. Every match is checked, not just the first, so a
+ * multi-clause gate ("no owner ruling for the measurement. Owner verdict on the
+ * plist edit") keeps its positive clause.
+ *
+ * Measured on the live BACKLOG corpus s1552 before landing: 61 gates flagged by
+ * the old form -> 49 by this one; all 12 cleared were read by hand and every one
+ * is a genuine disclaimer; 0 rows are NEWLY flagged.
+ */
+function hasPositiveOwnerVerb(gateText) {
+  for (const m of gateText.matchAll(new RegExp(OWNER_GATE.source, 'gi'))) {
+    const before = gateText.slice(0, m.index);
+    let sentenceStart = 0;
+    for (const ch of ['.', ';', '!', '?']) {
+      sentenceStart = Math.max(sentenceStart, before.lastIndexOf(ch) + 1);
+    }
+    if (!NEGATION.test(before.slice(sentenceStart))) return true;
+  }
+  return false;
+}
+
 export function isOwnerGate(gateText) {
-  return OWNER_GATE.test(gateText) || OWNER_GATE_ALT.some((re) => re.test(gateText));
+  return hasPositiveOwnerVerb(gateText) || OWNER_GATE_ALT.some((re) => re.test(gateText));
 }
 
 /** Line-1 is a live lock, not a handoff, when it says ACTIVE and not lock CLEARED. */

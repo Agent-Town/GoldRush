@@ -48,6 +48,48 @@ test('the SELECTOR admits an owner ACT and refuses a gate that merely says the w
   assert.equal(isOwnerGate(G_ER0211), false, 'a drain gate is not owed to Robin');
 });
 
+// --- F-1551-4: a NEGATED gate is a disclaimer, not an assertion --------------
+// Every string below is REAL gate text quoted from tasks/BACKLOG.md, and the
+// first one is the row that found the bug: F-1550-1's gate, on a row the fire
+// had just CLOSED as merged, read as owner-gated and failed that fire's handoff.
+// The old corpus scored "0 in 15" because it contained no negated gate at all —
+// a tightened predicate inherits its corpus's blind spots, and "0 in 15" reads
+// like a completeness claim when it is a sample.
+const G_NEGATED = [
+  'GATE: none — no spec, design fork or owner ruling needed.',
+  'GATE: none — no spec, design fork or owner word needed.',
+  'GATE: none — no owner ruling, no code change.',
+  'GATE: none — test-tooling only, no spec or owner ruling needed.',
+  'GATE: none — this is a measurement, not an owner decision — any fire can run it.',
+];
+
+test('a NEGATED owner gate is a disclaimer and must NOT flag (F-1551-4)', () => {
+  for (const g of G_NEGATED) {
+    assert.equal(isOwnerGate(g), false, `negated gate read as owner-gated: ${g}`);
+  }
+});
+
+test('negation handling does not disarm the guard — every positive still flags', () => {
+  // The violation arm. A predicate that returns false for everything would pass
+  // the test above, so the cure is only proved by BOTH directions holding.
+  assert.equal(isOwnerGate(G_BAL1), true, 'a pure owner fork must survive the negation rule');
+  assert.equal(isOwnerGate(G_AH1), true, 'an owner half must survive the negation rule');
+  assert.equal(
+    isOwnerGate('GATE: owner word on (c) alone unblocks it under §7.4.'),
+    true,
+    'an unqualified owner word must still flag',
+  );
+});
+
+test('a negation is scoped to its own sentence, so a mixed gate keeps its owner half', () => {
+  // F-1268-4's real shape: the measurement needs nobody, the follow-up needs Robin.
+  // Checking only the FIRST owner verb would let the negated clause hide the positive one.
+  const mixed =
+    'GATE: none for the measurement — no owner ruling needed. If the reading lands in the ' +
+    '~7–12× row, the plist edit that follows needs an owner decision.';
+  assert.equal(isOwnerGate(mixed), true, 'a later positive clause must not be masked by an earlier disclaimer');
+});
+
 test('the selector reads the other real owner-gate phrasings on the board', () => {
   for (const g of [
     'GATE: OWNER — a scope question, not a bug report.',
