@@ -4,6 +4,7 @@ import net from 'node:net';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assertWranglerVersion } from './wrangler-binary.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
@@ -34,7 +35,7 @@ async function main() {
   await rm(STATE_ROOT, { recursive: true, force: true });
 
   try {
-    wranglerVersion = await getWranglerVersion();
+    wranglerVersion = assertWranglerVersion('test:mp');
     await checkUnconfigured503();
     await checkRelayFlow();
     await checkRateLimits();
@@ -482,16 +483,6 @@ async function writeSummary(status, err) {
       2,
     )}\n`,
   );
-}
-
-async function getWranglerVersion() {
-  const child = spawn('wrangler', ['--version'], { cwd: ROOT, env: cleanEnv(), stdio: ['ignore', 'pipe', 'pipe'] });
-  let output = '';
-  child.stdout.on('data', (chunk) => (output += chunk));
-  child.stderr.on('data', (chunk) => (output += chunk));
-  const exitCode = await new Promise((resolve) => child.once('exit', resolve));
-  if (exitCode !== 0) throw new Error(`wrangler --version failed (${exitCode}): ${output.trim()}`);
-  return output.trim();
 }
 
 async function freePort() {
