@@ -36,7 +36,7 @@ type StandingsDifficulty = DifficultyPresetId | 'all';
 type StandingsParty = 'solo' | '2' | '3' | '4';
 
 type StandingStack = {
-  declared: boolean;
+  declared?: boolean;
   model?: string;
   harness?: string;
   harnessVersion?: string;
@@ -696,11 +696,11 @@ function isCountyParty(value: unknown): boolean {
 }
 
 function isStandingStack(value: Partial<StandingStack>): boolean {
-  return typeof value.declared === 'boolean'
+  return (value.declared === undefined || typeof value.declared === 'boolean')
     && validOptionalString(value.model)
     && validOptionalString(value.harness)
     && validOptionalString(value.harnessVersion)
-    && (value.declared || (value.model === undefined && value.harness === undefined && value.harnessVersion === undefined));
+    && (value.declared === true || (value.model === undefined && value.harness === undefined && value.harnessVersion === undefined));
 }
 
 function isCountyReel(value: unknown): boolean {

@@ -22,6 +22,7 @@ type BoardRow = {
 };
 
 const SHOTS = path.resolve('reviews/shots-f-board-1');
+const COMPAT_SHOTS = path.resolve('reviews/shots-f1563-1');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'posse',
@@ -334,6 +335,48 @@ test('plain boot: a failing standings request adds no error of the application o
   expect(errors.page).toEqual([]);
   expect(errors.console.length).toBeGreaterThan(0);
   expect(errors.console.filter((line) => !line.includes('net::ERR_FAILED'))).toEqual([]);
+});
+
+test('plain boot: standings accept pre-declaration rows but reject malformed or dishonest stacks', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await page.addInitScript(({ key, state }) => {
+    localStorage.clear();
+    sessionStorage.clear();
+    localStorage.setItem(key, JSON.stringify(state));
+  }, { key: PROFILE_KEY, state: PROFILE_STATE });
+  const base = { profileName: 'Legacy rider', secured: true, waves: 12, timeAlive: 400, gold: 90, baseValue: 100, difficulty: 'trail' };
+  await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      ok: true,
+      board: [
+        { ...base, rank: 1 },
+        { ...base, rank: 2, profileName: 'Legacy posse', party: { riderCount: 2, riders: [{ name: 'Ada' }, { name: 'Robin' }] } },
+        { ...base, rank: 3, declared: 'yes' },
+        { ...base, rank: 4, model: 7 },
+        { ...base, rank: 5, harness: {} },
+        { ...base, rank: 6, harnessVersion: 1 },
+        { ...base, rank: 7, model: 'stack without a declaration' },
+        { ...base, rank: 8, declared: false, model: 'stack while undeclared' },
+      ],
+    }),
+  }));
+
+  await page.goto('/');
+  await page.getByTestId('start-menu-claim-ledger').click();
+  await page.getByTestId('claim-ledger-county-standings').click();
+  await expect(page.getByTestId('county-standings-row-1')).toContainText('Legacy rider');
+  await expect(page.getByTestId('county-standings-stack-1')).toHaveText('Undeclared rider');
+  await expect(page.getByTestId('county-standings-row-2')).toContainText('Legacy posse');
+  await expect(page.getByTestId('county-standings-stack-2-1')).toHaveText('Undeclared rider');
+  await expect(page.getByTestId('county-standings-stack-2-2')).toHaveText('Undeclared rider');
+  await expect(page.locator('[data-testid^="county-standings-row-"]')).toHaveCount(2);
+  await expect(page.getByTestId('county-standings-board')).not.toContainText('undefined');
+  expect(errors).toEqual({ console: [], page: [] });
+
+  await mkdir(COMPAT_SHOTS, { recursive: true });
+  await page.getByTestId('county-standings-board').screenshot({ path: path.join(COMPAT_SHOTS, `county-board-${testInfo.project.name}.png`) });
 });
 
 test('plain boot: posse chips rank within size, the field book counts hands, and a row watches its run', async ({ page }, testInfo) => {
