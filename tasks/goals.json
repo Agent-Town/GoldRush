@@ -6135,7 +6135,7 @@
               "status": "blocked",
               "taskFile": "lane-fboard1-named-minds.md",
               "blockClass": "gate-side",
-              "blockedReason": "s1563 gate HOLD (F-1563-1): the new client validator in reader.ts hard-requires `declared`, so every row of the payload production serves today is silently dropped and the county board renders empty. lb-01-county-standings.spec.ts:550 red on BOTH projects; clean main greens the same test (control, 3.5s). NOT an owner fork — no owner word can lift this; it lifts when the corrective f1563-1 lands and lb-01 passes UNMODIFIED. Lane tip preserved at archive/lane-b-s1563-fboard1-0a1fa333e; lane/b must not be refilled while it holds that commit."
+              "blockedReason": "s1563 gate HOLD (F-1563-1): the new client validator in reader.ts hard-requires `declared`, so every row of the payload production serves today is silently dropped and the county board renders empty. The e2e test titled \"Claim Ledger renders the seeded county board and its empty contract state\" (in e2e/lb-01-county-standings.spec.ts) is red on BOTH projects; clean main greens the same test (control, 3.5s). Cited by TEST NAME, not by line: the coordinate differs between main and the merged tree, which is how it rotted the moment it was written. NOT an owner fork — no owner word can lift this; it lifts when the corrective f1563-1 lands and that test passes UNMODIFIED. Lane tip preserved at archive/lane-b-s1563-fboard1-0a1fa333e; lane/b must not be refilled while it holds that commit."
             },
             {
               "id": "f1563-1-standings-declared-compat",

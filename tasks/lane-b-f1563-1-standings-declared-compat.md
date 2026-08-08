@@ -8,7 +8,7 @@ READ FIRST:
 - `reviews/f-board-1.md` — the gate that produced this task, finding **F-1563-1** (read it before editing anything).
 - `src/encyclopedia/reader.ts` — `isStandingStack`, `isCountyStanding`, and `countyRows` (the `filter` at the call site is the whole mechanism; read all three together).
 - `src/app/GameApi.ts` — 4 lines. `GAME_API_ORIGIN` is a **hardcoded production origin**; this is why the compatibility direction matters and is not hypothetical.
-- `e2e/lb-01-county-standings.spec.ts` around **`:550`** — the fixture that fails today. **You are not allowed to change it** (see Firewall); read it to understand what shape it serves.
+- `e2e/lb-01-county-standings.spec.ts` — the test titled **`Claim Ledger renders the seeded county board and its empty contract state`** is the one that fails today. **Find it by that title, not by a line number**: the coordinate differs between this lane and main (`:550` here, `:548` there), which is exactly how a line-keyed citation rots. **You are not allowed to change this file** (see Firewall); read it to understand what shape it serves.
 
 ## ⛔ PRE-FLIGHT — THIS LANE IS NOT TO BE RESET. READ THIS FIRST; IT INVERTS THE USUAL RULE.
 
@@ -33,7 +33,7 @@ return board.slice(0, 100).filter(isCountyStanding);   // reader.ts:661
 
 So every row lacking `declared` is discarded without a word. **Production serves exactly such rows today**, and `GAME_API_ORIGIN` is hardcoded to production, so dev builds, preview builds, and any client newer than the deployed function all address it. Measured at the gate:
 
-- `e2e/lb-01-county-standings.spec.ts:550` — **2 failed / 32**, desktop AND mobile.
+- `e2e/lb-01-county-standings.spec.ts`, the test named above — **2 failed / 32**, desktop AND mobile.
 - **CONTROL, same test, clean main, same shell — 1 passed (3.5s).** The red is the slice's.
 - Failure is **silent**: no console error, no page error, `expectNoErrors` passes. The board renders *"No standings yet – the door is open."* directly beneath the slice's own new copy, *"Every rider names the mind and rig they declared."* Three rows were served. Screenshot: `reviews/shots-f-board-1-hold/blank-county-board-desktop-chrome.png`.
 
