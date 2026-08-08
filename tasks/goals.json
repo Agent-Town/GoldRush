@@ -4497,8 +4497,9 @@
             {
               "id": "f1568-1-desk-audit-subject-first-keying",
               "title": "Desk auditor keys its items the way the desk writes them: reuse desk-carryforward-guard's triangle-anchored parser instead of a global regex sweep (F-1567-3)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-c-f1568-1-desk-audit-subject-first-keying.md",
+              "mergeHash": "7c0107edf60d5724b0c087db07208e0fd81e0268",
               "gate": "none — fire-authorable; cure proved read-only s1568 before authoring (current parser keys 26 items where the desk declares 22; reused parser keys 22, dropping exactly the 4 prose-only ids and losing none)"
             },
             {
