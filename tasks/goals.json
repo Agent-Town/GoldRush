@@ -4442,8 +4442,10 @@
               "id": "f1559-1-m4-06-deterministic-drift-sample",
               "title": "M4-06 permission-denied: sample the drift after a fixed number of sim steps, not 350ms of wall clock",
               "taskFile": "lane-b-f1559-1-m4-06-deterministic-drift-sample.md",
-              "status": "queued",
-              "gate": "none — fire-authorable; F-1559-1 quantisation measured from artifacts/f1557-3-m4-06-denied/distribution.txt, harness window.__GR_TEST__.advanceSim verified at src/game/Game.ts:6823"
+              "status": "merged",
+              "gate": "none — fire-authorable; F-1559-1 quantisation measured from artifacts/f1557-3-m4-06-denied/distribution.txt, harness window.__GR_TEST__.advanceSim verified at src/game/Game.ts:6823",
+              "mergeHash": "93e13a8b7e93f7a7f758672c322705cc87c59be8",
+              "closureReason": "MERGED s1560 (reviews/f1559-1-m4-06-deterministic-drift-sample.md). Deliverable landed: advanceSim(0.35) replaces the 350ms wall-clock wait; 60-sample artifact banked. Its gate condition ANSWERED AGAINST the premise: 10 distinct driftAbs values, not 1 — quantisation model REFUTED (F-1560-1). tsc 0, build green, m4-06 9/9 desktop + 9/9 mobile, adjacent m4-05/07/08 9 passed 1 skipped, all on the merged tree in gate-s1560 at --workers=1."
             },
             {
               "id": "f1558-1-m4-06-denied-lastline-race",
