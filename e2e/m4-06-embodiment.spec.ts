@@ -417,8 +417,9 @@ test('permission-denied receipts do not send the Prospector to the denied target
   expect(distance(after.target, node!.position)).toBeGreaterThan(0.5);
   // F-1560-1 two-window evidence: artifacts/f1560-1-drift-ceiling/samples.txt.
   // This 0.4 ceiling depends on Balance.agent.moveSpeed (4.8), the 0.58 idle multiplier,
-  // the -1.8 follow offset, and the ±0.22 / 0.78 Hz oscillation in Embodiment.ts:288–299.
-  // Changing any of them moves this bound; both equal 0.4 checks guard the same geometric drift.
+  // the -1.8 x follow offset and ±0.22 / 0.78 Hz x oscillation, and the -1.25 z follow offset
+  // and ±0.18 / 0.52 Hz z oscillation in Embodiment.ts:288–300. driftAbs is Math.hypot(dx, dz),
+  // so changing either axis moves this bound; both equal 0.4 checks guard the same geometric drift.
   expect(gapClosed).toBeLessThan(0.4);
   expect(driftAbs).toBeLessThan(0.4);
   // F-1558-1: Embodiment.updateSimulation's idle-survey branch may replace the denial bark after
