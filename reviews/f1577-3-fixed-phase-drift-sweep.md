@@ -56,3 +56,67 @@ The independent `codex review --uncommitted` run found the tick/`timeAlive` mism
 ## Adjacent finding deliberately not fixed
 
 The task calls `simulation.tick` the start phase, but the Prospector oscillation actually consumes `timeAlive`. This is a test-design defect in the prescribed measurement, not a request for `src/**` changes. No source, m4-06 assertion, threshold, package, config, or other e2e file was changed.
+
+---
+
+## DRAIN GATE — s1579
+
+**VERDICT: MERGED** at `bc64e04895add67e0525a1382b54443c40489d59`. Base clean main `25d9be0af`; gated in a detached scratch worktree (`worktrees/gate-s1579`, §3.0b custody) so undecided content never entered main's working tree.
+
+`drain-block-check`: **CLEAR** — leaf `f1577-3-fixed-phase-drift-sweep` matched with `status="queued"` (a real leaf, not the advisory UNKNOWN path).
+
+### Merge classification
+
+Merge-base `9d4182c9d`. Main moved **9** files since that base (`.claude/skills/author-task/SKILL.md`, `STATUS.md`, `logs/**`, `scripts/law-pointer-baseline.json`, `tasks/BACKLOG.md`, `tasks/goals.json`, `tasks/lane-b-f1578-1-*.md`); the lane touched **40**. **The intersection is EMPTY** — every lane path is LANE-TOUCHED, nothing is MAIN-MOVED, no BOTH-MOVED file exists, and no three-way graft was needed. `git merge --no-ff` reported zero conflicts.
+
+Firewall: clean. Outside `artifacts/f1577-3-fixed-phase-sweep/**` the lane touched exactly the two permitted paths — `e2e/f1575-1-drift-tick-budget.spec.ts` and this review. The spec diff is **purely additive** (one hunk, `@@ -56,3 +56,57 @@`, 54 insertions / 0 deletions), so the banked f1575-1 test at `:19` is byte-unchanged — verified from the diff shape at the gate, not from the report's `cmp`.
+
+### Gate battery (merged tree, `--workers=1`, serial)
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | rc=0, no output |
+| `npm run build` | green, Vite `1.17s`; Herald `1158214 / 1500000`; 235 GLBs `592044952 -> 92718740` (84%); 54 PNGs `187042157 -> 24822346` (87%) |
+| `e2e/f1575-1-drift-tick-budget.spec.ts` desktop | **5 passed (12.6s)** |
+| `e2e/f1575-1-drift-tick-budget.spec.ts` mobile 390px | **5 passed (11.7s)** |
+| adjacent `e2e/m4-06-embodiment.spec.ts` desktop, whole file | **10 passed (42.4s)**; `[m4-06-denied] driftAbs=0.20800000000000016 gapClosed=0.20675740724312952 tickBefore=30 tickAfter=55 tickDelta=25` |
+| adjacent `e2e/m4-06-embodiment.spec.ts` mobile, whole file | **10 passed (42.7s)**; `[m4-06-denied] driftAbs=0.3722002149381437 gapClosed=0.37139096406706074 tickBefore=26 tickAfter=50 tickDelta=24` |
+| console / page errors | zero, asserted in-spec, both projects |
+| `npm run test:node-guards` | **not owed** — F-1460-1's trigger is `src/sim/`, `src/systems/`, `src/entities/`; this diff is `e2e/** + artifacts/** + reviews/**` only, confirmed by `git diff --name-only` rather than by the report's say-so |
+| screenshots | not owed; this slice renders nothing new |
+
+No denied-drift breach occurred in either adjacent run, so there is no red to fingerprint or excuse.
+
+### Evidence re-derived at the gate, not inherited
+
+All 24 raw sample files were reparsed independently:
+
+- **1,680 samples**, 420 per phase — matches the report's claimed count.
+- **The pin held on every single sample**: no line's `tickBefore` differed from its file's `P`. The exact-phase assertion is real, and the harness reports a miss rather than silently accepting one (`expect(before.simTick, \`phase ${phase} was unreachable...\`).toBe(phase)`).
+- **Per-phase maxima match the report to 6 dp**: P=35 `0.380000` · P=39 `0.368978` · P=43 `0.346144` · P=47 `0.323360`.
+- **Global max `driftAbs` = 0.37999999999999995** (desktop P=35 run-03, window 69). **No breach — the negative result is confirmed.**
+- **The named target is the true optimum**, not merely a good one: of every measured `(phase, window>=11)` pair, **zero** have a smaller worst-case than `(P=35, w=11)` at `0.046754678910244166`, margin `0.35324532108975587`.
+- **The second axis reproduces**: at P=35 the same pinned tick yielded `timeBefore` of 2.466667 / 2.566667 / 3.066667. The gate's own fresh mobile run added a **fifth** value at P=47 (`3.4666666666666632`, outside the report's stated 3.566667–3.966667 range) — widening the spread rather than contradicting it.
+- Corroboration the report did not claim: the gate's fresh mobile m4-06 run produced `driftAbs=0.3722002149381437`, **identical to 16 digits** to the report's banked mobile figure, at a **different** `tickBefore` (26 vs 25). Same drift, different start tick, is direct independent evidence that `simulation.tick` is not the determinant.
+
+### F-1579-1 — the pinned harness suppresses the very oscillation it was built to locate (NON-BLOCKING)
+
+The report's verdict and its hedge are both correct, and it names the mechanism (`timeAlive` vs `simulation.tick`). This finding follows that mechanism through to its consequence, because the **Named target** section can otherwise be read as a ready-to-use cure parameter.
+
+✓ **MEASURED at the gate over all 24 runs / 1,656 sample-to-sample transitions:**
+
+- `driftAbs` is **monotonically non-decreasing in every run** — **zero** decreases; the largest decrease observed is exactly `0`.
+- Motion **saturates and stops** between window **51 and 69** in all 24 runs; `maxDrift == finalDrift` everywhere.
+- `|driftAbs - gapClosed| <= 0.0144` across all 1,680 samples — the displacement is essentially **net travel toward the node**.
+
+⚠️ **That is a qualitatively different curve from the one this task exists to explain.** The ladder curve quoted in the master rises to a **0.459 peak**, decays to **0.008** (the Prospector returns almost exactly to where it started), then rises again to 0.215 — an **oscillation**. The pinned sweep never returns: it walks, then freezes.
+
+➡️ **Reading.** `setManualSim(true)` is latched *before* the pin, and under manual sim `advanceSim` advances `timeAlive` at 1/timescale of the live loop's rate. Since `Embodiment.ts` drives idle oscillation from `timeAlive`, the pinned regime advances the oscillation phase ~4x more slowly per tick, so the oscillation is largely **switched off**. What remains is the net walk, which saturates below 0.4 at every phase.
+
+**Therefore:** *"no band at any start phase"* is a sound statement **about the manual-sim regime**, and **not** evidence that start phase is irrelevant in the live regime where the breach was observed. Correspondingly the `0.35324532108975587` margin was measured with the **dominant error term suppressed**, and **must not be carried into a re-pin of the live-loop `m4-06` assertion**. The report already says the target is "safe only inside the requested tick-pinned harness"; this records *why*, with numbers, so the next task cannot mistake it for a transferable budget.
+
+**This is not a defect in the slice.** The master prescribed a tick-pinned harness; the runner built exactly that, banked every sample, reported the negative result without laundering it, and flagged its own narrowness unprompted. The measurement still owed — a sweep with the **motion clock** pinned too, or one under the live loop — is new scope, not a rework.
+
+### Adjacent, upheld and deliberately not fixed
+
+The runner's own adjacent finding (the master calls `simulation.tick` "the start phase" while the oscillation actually consumes `timeAlive`) is **upheld**, and is the same root as F-1579-1.
