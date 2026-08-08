@@ -4559,6 +4559,13 @@
               "gate": "none — fire-authorable from F-1575-1/F-1572-1/F-1560-1/F-1285-2 in tasks/BACKLOG.md plus reviews/f1572-1-lane-arm-uncensored-drift.md"
             },
             {
+              "id": "f1577-3-fixed-phase-drift-sweep",
+              "title": "F-1577-3: drift is oscillatory so the m4-06 breach is a BAND not a threshold — pin the start phase, separate it from the window, and name the target tick count the determinism cure needs",
+              "status": "queued",
+              "taskFile": "lane-c-f1577-3-fixed-phase-drift-sweep.md",
+              "gate": "none — fire-authorable from the F-1577-3 BACKLOG row and the DRAIN GATE section of reviews/f1575-1-m4-06-drift-tick-budget.md (oscillation curve + the first instrumented breach)"
+            },
+            {
               "id": "f1576-1-guard-rooting-at-authoring",
               "title": "F-1576-1: a new guard-shaped script is invisible to the battery that ships it — add an opt-in --include-untracked to gate-caller-audit and make /author-task decide a new guard's rooting in the master",
               "status": "merged",
