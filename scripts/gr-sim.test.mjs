@@ -373,6 +373,37 @@ test('gr-sim places Night Shift fixtures from the contract', () => {
   assert.equal(firstView.now.works.byKind.lantern_post, contract.tileParams.prePlacedBuildables.length);
 });
 
+test('Night Shift wreckers outrun lantern light headlessly', async () => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const location = new URL('http://gr-sim.local/?debug&contract=e1-night-shift&seed=night-speed');
+  globalThis.location = location;
+  globalThis.window = { location };
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const sim = new HeadlessContractSim({ contractId: 'e1-night-shift', seed: 'night-speed' });
+    sim.lightField.update(1, [{ id: 'lantern:0', kind: 'lantern', x: 0, z: 0, radius: 7 }]);
+    const wrecker = { variantId: 'bandit_wrecker', isWrecker: true };
+    assert.equal(sim.nightSpeedMultiplier({ ...wrecker, position: { x: 0, z: 0 } }), 1);
+    assert.equal(
+      sim.nightSpeedMultiplier({ ...wrecker, position: { x: 20, z: 0 } }),
+      Balance.contracts.nightShift.nightSpeedOutsideLight,
+    );
+    assert.equal(sim.nightSpeedMultiplier({ variantId: 'rusher', isWrecker: false, position: { x: 20, z: 0 } }), 1);
+    assert.equal(sim.nightSpeedMultiplier({ variantId: 'moth_swarm', isWrecker: true, position: { x: 20, z: 0 } }), 1);
+    const mothSim = new HeadlessContractSim({ contractId: 'e3-moth-season', seed: 'night-speed' });
+    assert.ok(mothSim.lightField.snapshot().sources.some((source) => source.kind === 'hero'));
+  } finally {
+    await vite.close();
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
+});
+
 test('gr-sim ends an idle Baron run at its grace ceiling', { timeout: 45_000 }, () => {
   const run = spawnSync(
     process.execPath,

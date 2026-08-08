@@ -323,7 +323,7 @@ export class HeadlessContractSim {
       : null;
     this.dayNightSnapshot = this.dayNightCycle?.sample(0) ?? null;
     const mothSeason = this.manifest.twist.mothSeason;
-    this.lightField = mothSeason
+    this.lightField = mothSeason || this.isNightShiftContract()
       ? new LightField({
           minLight: Balance.contracts.nightShift.minLight,
           falloff: Balance.contracts.nightShift.lightFalloff,
@@ -346,7 +346,7 @@ export class HeadlessContractSim {
           },
         )
       : null;
-    this.syncMothLightState();
+    this.syncLightState();
     this.deepwater = DeepwaterSocket.create(
       this.manifest,
       this.enemies,
@@ -627,7 +627,7 @@ export class HeadlessContractSim {
       nearestBuilding: (from) => this.waves.preferredEscortTarget(from) ?? this.targeting.nearestBuilding(from),
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
-    }, (enemy) => this.atomic?.movementMultiplier(enemy) ?? 1);
+    }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1));
     this.deepwater?.recycleCorsairsAtExit();
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
     this.updateBaronRocketVolley();
@@ -637,7 +637,7 @@ export class HeadlessContractSim {
     while (this.progression.offer?.[0]) this.progression.applyUpgrade(this.progression.offer[0].id);
     this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
-    this.syncMothLightState();
+    this.syncLightState();
     observeStandingOrders();
   }
 
@@ -978,6 +978,30 @@ export class HeadlessContractSim {
     return { phase, darkness, phaseProgress: progress, cycleProgress: progress, cycle: 0, simTime: this.timeAlive };
   }
 
+  private lightRampDarkness(): number {
+    const ramp = this.manifest.twist.lightRamp;
+    if (!ramp) return 0;
+    const waveInterval = Math.max(0.1, Balance.waves.waveInterval / Math.max(0.1, this.manifest.twist.waveCadenceMult ?? 1));
+    const diagnostics = this.waves?.diagnostics;
+    if (!diagnostics) return 0;
+    const wave = Math.max(0, diagnostics.wave + Math.min(1, Math.max(0, 1 - diagnostics.nextWaveInSim / waveInterval)));
+    if (wave >= ramp.dawnWave) return 0;
+    const keyframes = ramp.keyframes;
+    if (!keyframes?.length) {
+      if (wave < ramp.duskWave) return 0;
+      if (wave >= ramp.darkWave) return Balance.contracts.nightShift.darkDarkness;
+      const progress = Math.min(1, Math.max(0, (wave - ramp.duskWave) / Math.max(1, ramp.darkWave - ramp.duskWave)));
+      return Balance.contracts.nightShift.duskDarkness
+        + (Balance.contracts.nightShift.darkDarkness - Balance.contracts.nightShift.duskDarkness) * progress;
+    }
+    const clampedWave = Math.min(keyframes.at(-1)!.wave, Math.max(keyframes[0]!.wave, wave));
+    const nextIndex = Math.max(1, keyframes.findIndex((keyframe) => keyframe.wave >= clampedWave));
+    const previous = keyframes[nextIndex - 1]!;
+    const next = keyframes[nextIndex]!;
+    const progress = Math.min(1, Math.max(0, (clampedWave - previous.wave) / Math.max(0.001, next.wave - previous.wave)));
+    return previous.darkness + (next.darkness - previous.darkness) * progress;
+  }
+
   private spawnMothSeasonWave(wave: number): void {
     const config = this.manifest.twist.mothSeason;
     if (!config || !this.mothSwarm || wave <= 0 || (this.dayNightSnapshot?.darkness ?? 0) < 0.5) return;
@@ -986,34 +1010,88 @@ export class HeadlessContractSim {
     this.mothSwarm.spawn(this.enemies, count, stake?.x ?? 0, (stake?.z ?? 12) - 12);
   }
 
-  private syncMothLightState(): void {
+  private syncLightState(): void {
+    if (!this.lightField) return;
     const config = this.manifest.twist.mothSeason;
-    if (!config || !this.mothSwarm || !this.lightField) return;
     const buildings = this.build.diagnostics.hp;
     const positions = (id: 'lantern_post' | 'decoy_shed') => buildings
       .filter((entry) => entry.id === id && entry.hp > 0 && !entry.wrecked)
       .map((entry) => ({ index: entry.index, ...entry.position }));
-    this.mothLightSources = [
-      ...positions('lantern_post').map((position) => ({
+    const lanterns: LightSource[] = positions('lantern_post')
+      .filter((position) => this.powerConsumerAt(position.x, position.z, 'lamp'))
+      .map((position) => ({
         id: `lantern:${position.index}`,
-        kind: 'lantern' as const,
+        kind: 'lantern',
         x: position.x,
         z: position.z,
         radius: Balance.contracts.nightShift.lanternPostLightRadius,
-      })),
-      ...positions('decoy_shed').map((position) => ({
-        id: `decoy:${position.index}`,
-        kind: 'powered-lamp' as const,
-        x: position.x,
-        z: position.z,
-        radius: Balance.decoyShed.lightRadius,
-        targetWeight: config.decoyWeight,
-      })),
+      }));
+    const decoys: LightSource[] = positions('decoy_shed').map((position) => ({
+      id: `decoy:${position.index}`,
+      kind: 'powered-lamp',
+      x: position.x,
+      z: position.z,
+      radius: Balance.decoyShed.lightRadius,
+      targetWeight: config?.decoyWeight ?? 1,
+    }));
+    this.mothLightSources = [
+      ...lanterns,
+      ...decoys,
     ];
-    this.lightField.update(
-      this.dayNightSnapshot?.darkness ?? 0,
-      this.mothSwarm.dimSources(this.mothLightSources),
-    );
+    const darkness = this.dayNightSnapshot?.darkness ?? this.lightRampDarkness();
+    const enemyLanterns: LightSource[] = this.enemies.all
+      .filter((enemy) => enemy.isAlive && enemy.carriesLantern)
+      .map((enemy) => {
+        const swing = Math.sin(this.timeAlive * 3.4 + enemy.id * 1.7) * Balance.contracts.nightShift.enemyLanternSwing;
+        const offset = Balance.contracts.nightShift.enemyLanternHandOffset + swing;
+        return {
+          id: `enemy:${enemy.id}`,
+          kind: 'enemy-lantern',
+          x: enemy.position.x + Math.cos(enemy.group.rotation.y) * offset,
+          z: enemy.position.z + Math.sin(enemy.group.rotation.y) * offset,
+          radius: Balance.contracts.nightShift.enemyLanternRadius,
+          height: Balance.contracts.nightShift.enemyLanternConeHeight,
+        };
+      });
+    const sources: LightSource[] = [{
+        id: 'hero:0',
+        kind: 'hero',
+        x: this.hero.group.position.x,
+        z: this.hero.group.position.z,
+        radius: Balance.contracts.nightShift.heroLightRadius,
+      }, ...this.mothLightSources, ...enemyLanterns];
+    if (config && this.mothSwarm) {
+      const dimmed = new Map(this.mothSwarm.dimSources(this.mothLightSources).map((source) => [source.id, source]));
+      this.lightField.update(darkness, sources.map((source) => dimmed.get(source.id) ?? source));
+      return;
+    }
+    this.lightField.update(darkness, sources);
+  }
+
+  private isNightShiftContract(): boolean {
+    return Boolean(this.manifest.twist.lightRamp || this.manifest.twist.dayNightCycle);
+  }
+
+  private nightSpeedMultiplier(enemy: { variantId?: string | null; isWrecker: boolean; position: { x: number; z: number } }): number {
+    const config = this.manifest.twist.mothSeason;
+    if (enemy.variantId === 'moth_swarm') return 1;
+    if (!config && (!this.isNightShiftContract() || !enemy.isWrecker)) return 1;
+    const multiplier = config?.nightSpeedOutsideLight
+      ?? Balance.contracts.nightShift.nightSpeedOutsideLight;
+    const threshold = config?.litThreshold ?? Balance.contracts.nightShift.renderVisibilityCutoff;
+    return (this.lightField?.coverageAt(enemy.position.x, enemy.position.z) ?? 1) < threshold ? multiplier : 1;
+  }
+
+  private powerConsumerAt(x: number, z: number, role: 'lamp' | 'turret'): boolean {
+    const grid = this.manifest.twist.powerGrid;
+    const graph = this.powerGraph;
+    if (!grid || !graph) return true;
+    const candidates = grid.nodes.filter((node) => node.kind === 'consumer' && node.role === role);
+    const target = candidates.reduce<(typeof candidates)[number] | null>((best, node) => {
+      if (!best) return node;
+      return Math.hypot(node.x - x, node.z - z) < Math.hypot(best.x - x, best.z - z) ? node : best;
+    }, null);
+    return !target || graph.snapshot().nodes.find((node) => node.id === target.id)?.state === 'powered';
   }
 
   private repairBuilding(ref: AgentBuildingRef): unknown {
