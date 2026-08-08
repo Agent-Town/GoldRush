@@ -30,6 +30,40 @@ const WAVE_THREE_SNAPSHOT = `{
     "mechanics": {
       "schema": "goldrush.mechanics.v1",
       "contractId": "the-claim",
+      "buildables": [
+        {
+          "id": "sentry_beacon",
+          "operation": "BUILD",
+          "meaning": "Lights the dark and slows what it touches — radius 8wu.",
+          "cost": 25,
+          "costs": [
+            25,
+            35,
+            45,
+            55,
+            75,
+            95
+          ],
+          "costRule": "ceil-to-5",
+          "maxCount": 6,
+          "source": "buildables.registry"
+        },
+        {
+          "id": "turret",
+          "operation": "BUILD",
+          "meaning": "Spark bolts, line-of-sight, 16wu range.",
+          "cost": 50,
+          "costs": [
+            50,
+            70,
+            95,
+            125
+          ],
+          "costRule": "ceil-to-5",
+          "maxCount": 4,
+          "source": "buildables.registry"
+        }
+      ],
       "interactables": [],
       "rules": [
         {
