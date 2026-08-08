@@ -86,6 +86,7 @@ import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
+import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { FerrisWheel } from '../entities/FerrisWheel';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { DEV_TRAM_CONSUMER, TramPath, devTramPowerGraphDefinition } from '../entities/TramPath';
@@ -95,6 +96,7 @@ import type {
   AgentCollectGoldResult,
   AgentCollectXpOptions,
   AgentCollectXpResult,
+  AgentGameAdapter,
   ToolReceipt,
 } from '../agent/ToolSurface';
 import {
@@ -368,6 +370,7 @@ type MultiplayerActorSnapshot = {
 };
 type MultiplayerRunSuspendSnapshot = RunSuspendEnvelope & {
   mpActors?: MultiplayerActorSnapshot[];
+  agentRiders?: AgentRiderBodyFutureState[];
 };
 type BaronRocketTargetKind = 'hero' | 'building';
 type BaronRocketVolleyConfig = NonNullable<ContractBaronTwist['rocketVolley']>;
@@ -419,6 +422,7 @@ export class Game {
   private mpCard?: HTMLElement;
   private mpHoldCardVisible = false;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
+  private readonly agentRiderBodies = new Map<string, AgentRiderBody>();
   private readonly actorWeapons = new Map<Hero, HeroWeapon>();
   // Playbook engine (PB-01/PB-02, ?debug-only surface): the recorder pins the
   // solo session to the lockstep intent seam; the replay session drives a
@@ -2186,52 +2190,8 @@ export class Game {
       {
         diagnostics: () => window.__THREE_GAME_DIAGNOSTICS__,
         economyLog: () => this.economy.log,
-        placeBuilding: (id, position, rotation = 0) => {
-          if (this.state.current !== 'playing' || this.state.isPaused || this.deepwaterClaim) return false;
-          const rotationSteps = Number.isFinite(rotation)
-            ? Number.isInteger(rotation) ? rotation : Math.round(rotation / (Math.PI / 2))
-            : 0;
-          const placed = this.buildSystem.confirmPlacement(this.timeAlive, { id, position, rotationSteps });
-          if (placed) {
-            this.recordLedgerBuildable(id);
-            this.recordRunTapeAction({ type: 'place_build', id, position, rotationSteps });
-          }
-          return placed;
-        },
-        panAt: (node) => {
-          if (this.state.current !== 'playing' || this.state.isPaused) return false;
-          const target = this.harvestSnapshot.activeNodes.find((entry) => entry.id === node && entry.active);
-          if (!target) return false;
-          const before = target.remaining;
-          const previous = this.harvestSystem.captureFutureState(this.timeAlive);
-          const position = new THREE.Vector3(target.position.x, 0, target.position.z);
-          const panned = this.harvestSystem.update(
-            Balance.goldSeam.tickSeconds * Math.max(0.1, this.progression.snapshot.stats.panTickMult),
-            this.timeAlive,
-            [{ actorId: 'prospector', position, speed: 0 }],
-          );
-          const pannedTarget = panned.activeNodes.find((entry) => entry.id === node);
-          const nodes = previous.nodes.map((entry) => entry.id === node && pannedTarget ? pannedTarget : entry);
-          const activeNodes = new Set(nodes.filter((entry) => entry.active).map((entry) => entry.id));
-          const channels = previous.channels?.map((channel) =>
-            channel.channelNodeId === null || activeNodes.has(channel.channelNodeId)
-              ? channel
-              : { ...channel, channelNodeId: null, progress: 0, panCapBlocked: false, channeling: false },
-          );
-          const primary = channels?.find((channel) => channel.actorId === '0');
-          const channelNodeId = primary?.channelNodeId ??
-            (previous.channelNodeId !== null && activeNodes.has(previous.channelNodeId) ? previous.channelNodeId : null);
-          this.harvestSystem.restoreFutureState({
-            ...previous,
-            nodes,
-            channelNodeId,
-            progress: channelNodeId === null ? 0 : (primary?.progress ?? previous.progress),
-            panCapBlocked: channelNodeId === null ? false : (primary?.panCapBlocked ?? previous.panCapBlocked),
-            channels,
-          }, this.timeAlive);
-          this.harvestSnapshot = this.harvestSystem.update(0, this.timeAlive, this.visibleHarvestTargets());
-          return (panned.activeNodes.find((entry) => entry.id === node)?.remaining ?? before) < before;
-        },
+        placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation),
+        panAt: (node) => this.panAgentAt(node),
         repair: (building) => this.repairProspectorBuilding(building),
         collectXp: (options) => this.collectProspectorXp(options),
         collectGold: () => this.collectProspectorGold(),
@@ -2853,11 +2813,16 @@ export class Game {
   }
 
   private applyMultiplayerActions(): void {
+    let transitioning = false;
     for (const entry of this.mpActionsThisTick) {
       this.mpActionSlot = entry.slot;
       this.updateActionActorPosition();
-      if (this.applyMultiplayerAction(entry.action)) break;
+      if (this.applyMultiplayerAction(entry.action)) {
+        transitioning = true;
+        break;
+      }
     }
+    if (!transitioning && this.state.simActive) this.applyAgentRiderMovement();
     this.mpActionSlot = 0;
     this.updateActionActorPosition();
     this.updateBuildingContextCandidates(this.localActor.group.position);
@@ -2865,6 +2830,13 @@ export class Game {
 
   /** Returns true when the action schedules a run transition and later actions from this tick must be ignored. */
   private applyMultiplayerAction(action: LockstepAction): boolean {
+    if (action.type === 'agent_orders') {
+      const player = this.mpClient?.state().roster[this.mpActionSlot];
+      if (player?.client === 'headless') {
+        this.agentRiderBodies.get(player.playerId)?.submit(action.orders, action.submissionId, this.timeAlive);
+      }
+      return false;
+    }
     if (action.type === 'place_build' && !this.deepwaterClaim) {
       if (this.buildSystem.confirmPlacement(this.timeAlive, action)) this.recordLedgerBuildable(action.id as BuildableId);
     }
@@ -2921,6 +2893,61 @@ export class Game {
     if (action.type === 'set_agent_rung') this.agentConsent.setRung(action.level as AgentPermissionLevel, action.granted);
     if (action.type === 'set_agent_ability') this.agentConsent.setAbility(action.ability as AgentAbility, action.granted);
     return false;
+  }
+
+  private applyAgentRiderMovement(): void {
+    if (this.agentRiderBodies.size === 0 || !this.mpActorIntents) return;
+    for (const [playerId, body] of this.agentRiderBodies) {
+      const entry = [...this.mpActorMeta].find(([, meta]) => meta.playerId === playerId);
+      if (!entry) continue;
+      const [actor, meta] = entry;
+      const intents = this.mpActorIntents[meta.slot] ?? intentsFromLockstepInput(null);
+      this.mpActorIntents[meta.slot] = { ...intents, move: body.movement(this.timeAlive, actor.group.position) };
+    }
+  }
+
+  private agentRiderAdapter(playerId: string): AgentGameAdapter {
+    return {
+      diagnostics: () => {
+        const actor = this.agentRiderActor(playerId);
+        return {
+          timeAlive: this.timeAlive,
+          runState: this.state.current,
+          hp: actor?.hp ?? 0,
+          maxHp: actor?.maxHp ?? 0,
+          enemiesAlive: this.enemies.activeCount,
+          wave: this.waveSystem.diagnostics.wave,
+          nextWaveInSim: this.waveSystem.diagnostics.nextWaveInSim,
+          economy: { gold: this.economy.gold },
+          wreck: this.wreckDiagnostics(),
+          build: this.buildSystem.diagnostics,
+          harvest: this.harvestSnapshot,
+        };
+      },
+      economyLog: () => this.economy.log,
+      placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation),
+      panAt: (node) => this.panAgentAt(node),
+      repair: (building) => this.repairAgentRiderBuilding(playerId, building),
+    };
+  }
+
+  private agentRiderActor(playerId: string): Hero | undefined {
+    for (const [actor, meta] of this.mpActorMeta) if (meta.playerId === playerId) return actor;
+    return undefined;
+  }
+
+  private repairAgentRiderBuilding(playerId: string, building: AgentBuildingRef): unknown {
+    const actor = this.agentRiderActor(playerId);
+    const id = buildableIdFromString(building.id);
+    const index = Number.isInteger(building.index) ? building.index! : 0;
+    if (!actor || !id || index < 0) return false;
+    const start = pointFromVector(actor.group.position);
+    const result = this.buildSystem.repairBuilding(id, index, this.timeAlive, actor.group.position);
+    if (!result) return false;
+    this.depenetrateRepairOverlap();
+    this.syncStockpileHoldings();
+    this.publishDiagnostics();
+    return { ...result, collector: 'prospector', agentPath: [start, result.position] };
   }
 
   private multiplayerSampleActions(intents: Intents): LockstepAction[] {
@@ -3283,6 +3310,7 @@ export class Game {
         weapon: this.weaponForActor(actor),
       }));
     }
+    snapshot.agentRiders = [...this.agentRiderBodies.values()].map((body) => body.captureFutureState());
     return snapshot;
   }
 
@@ -3296,7 +3324,8 @@ export class Game {
     if (mpActors && mpActors.length > this.actors.length) this.syncMultiplayerActors();
     const restored = restoreRunSuspendSnapshot(this, normalized, { persistProfile: false });
     if (!restored) return false;
-    return this.restoreMultiplayerActorSnapshots(mpActors);
+    if (!this.restoreMultiplayerActorSnapshots(mpActors)) return false;
+    return this.restoreAgentRiderSnapshots(snapshot);
   }
 
   private restoreMultiplayerInitialState(snapshot: unknown): boolean {
@@ -3310,6 +3339,7 @@ export class Game {
     this.mpActorMeta.clear();
     this.syncMultiplayerActors();
     if (!this.restoreMultiplayerActorSnapshots(mpActors)) return false;
+    if (!this.restoreAgentRiderSnapshots(snapshot)) return false;
     this.updateActionActorPosition();
     return true;
   }
@@ -3342,12 +3372,27 @@ export class Game {
     return true;
   }
 
+  private restoreAgentRiderSnapshots(value: unknown): boolean {
+    if (!value || typeof value !== 'object') return false;
+    const states = (value as { agentRiders?: unknown }).agentRiders;
+    if (!Array.isArray(states) || states.length !== this.agentRiderBodies.size) return false;
+    const restored = new Set<string>();
+    for (const state of states) {
+      if (!isAgentRiderFutureState(state) || restored.has(state.playerId)) return false;
+      const body = this.agentRiderBodies.get(state.playerId);
+      if (!body?.restoreFutureState(state, this.timeAlive)) return false;
+      restored.add(state.playerId);
+    }
+    return true;
+  }
+
   private multiplayerStateHash(tick: number, snapshot: MultiplayerRunSuspendSnapshot): string {
     const state = planarHashState({
       tick,
-      roster: (this.mpClient?.state().roster ?? []).map(({ playerId, name, town }) => ({ playerId, name, town })),
+      roster: (this.mpClient?.state().roster ?? []).map(({ playerId, name, town, client }) => ({ playerId, name, town, client })),
       run: multiplayerRunSuspendFutureState(snapshot),
       actors: snapshot.mpActors ?? null,
+      agentRiders: snapshot.agentRiders ?? null,
     });
     if (isDebugEnabled()) {
       this.lastMultiplayerHashState = { tick, state };
@@ -3454,6 +3499,7 @@ export class Game {
         }
       }
       this.mpActorMeta.clear();
+      this.agentRiderBodies.clear();
       this.removeAllMultiplayerChips();
       return;
     }
@@ -3491,6 +3537,16 @@ export class Game {
       }
     }
     if (createdActor) this.applyStats(this.progression.stats, null);
+
+    const headlessIds = new Set(roster.filter((player) => player.client === 'headless').map((player) => player.playerId));
+    for (const playerId of this.agentRiderBodies.keys()) {
+      if (!headlessIds.has(playerId)) this.agentRiderBodies.delete(playerId);
+    }
+    for (const playerId of headlessIds) {
+      if (!this.agentRiderBodies.has(playerId)) {
+        this.agentRiderBodies.set(playerId, new AgentRiderBody(playerId, this.agentRiderAdapter(playerId)));
+      }
+    }
 
     for (const [playerId, chip] of this.mpHeroChips) {
       if (roster.some((player) => player.playerId === playerId)) continue;
@@ -4605,7 +4661,15 @@ export class Game {
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
-      },
+        riders: [...this.agentRiderBodies].map(([playerId, body]) => {
+          const actor = this.agentRiderActor(playerId);
+          return {
+            ...body.snapshot(),
+            position: actor ? pointFromVector(actor.group.position) : null,
+            visible: actor?.group.visible === true,
+          };
+        }),
+      } as ThreeGameDiagnostics['agent'] & { riders: unknown[] },
       audio: this.audio.diagnostics(),
       build: {
         ...buildDiagnostics,
@@ -6290,6 +6354,54 @@ export class Game {
     return { before, after };
   }
 
+  private placeAgentBuilding(id: BuildableId, position: ProspectorPoint, rotation = 0): boolean {
+    if (this.state.current !== 'playing' || this.state.isPaused || this.deepwaterClaim) return false;
+    const rotationSteps = Number.isFinite(rotation)
+      ? Number.isInteger(rotation) ? rotation : Math.round(rotation / (Math.PI / 2))
+      : 0;
+    const placed = this.buildSystem.confirmPlacement(this.timeAlive, { id, position, rotationSteps });
+    if (placed) {
+      this.recordLedgerBuildable(id);
+      this.recordRunTapeAction({ type: 'place_build', id, position, rotationSteps });
+    }
+    return placed;
+  }
+
+  private panAgentAt(node: string): boolean {
+    if (this.state.current !== 'playing' || this.state.isPaused) return false;
+    const target = this.harvestSnapshot.activeNodes.find((entry) => entry.id === node && entry.active);
+    if (!target) return false;
+    const before = target.remaining;
+    const previous = this.harvestSystem.captureFutureState(this.timeAlive);
+    const position = new THREE.Vector3(target.position.x, 0, target.position.z);
+    const panned = this.harvestSystem.update(
+      Balance.goldSeam.tickSeconds * Math.max(0.1, this.progression.snapshot.stats.panTickMult),
+      this.timeAlive,
+      [{ actorId: 'prospector', position, speed: 0 }],
+    );
+    const pannedTarget = panned.activeNodes.find((entry) => entry.id === node);
+    const nodes = previous.nodes.map((entry) => entry.id === node && pannedTarget ? pannedTarget : entry);
+    const activeNodes = new Set(nodes.filter((entry) => entry.active).map((entry) => entry.id));
+    const channels = previous.channels?.map((channel) =>
+      channel.channelNodeId === null || activeNodes.has(channel.channelNodeId)
+        ? channel
+        : { ...channel, channelNodeId: null, progress: 0, panCapBlocked: false, channeling: false },
+    );
+    const primary = channels?.find((channel) => channel.actorId === '0');
+    const channelNodeId = primary?.channelNodeId ??
+      (previous.channelNodeId !== null && activeNodes.has(previous.channelNodeId) ? previous.channelNodeId : null);
+    this.harvestSystem.restoreFutureState({
+      ...previous,
+      nodes,
+      channelNodeId,
+      progress: channelNodeId === null ? 0 : (primary?.progress ?? previous.progress),
+      panCapBlocked: channelNodeId === null ? false : (primary?.panCapBlocked ?? previous.panCapBlocked),
+      channels,
+    }, this.timeAlive);
+    this.harvestSnapshot = this.harvestSystem.update(0, this.timeAlive, this.visibleHarvestTargets());
+    return (panned.activeNodes.find((entry) => entry.id === node)?.remaining ?? before) < before;
+  }
+
   private showProspectorIntro(): void {
     if (this.prospectorIntroShown || !this.agentStub) return;
     const { permissionLevel } = this.agentStub.state;
@@ -6779,6 +6891,7 @@ export class Game {
     this.weaponsWereDisarmed = false;
     this.progression.reset();
     this.agentConsent.reset();
+    this.agentRiderBodies.clear();
     const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
     if (roster.length >= 2) {
       this.syncMultiplayerActors();
@@ -8461,6 +8574,16 @@ function multiplayerActorsForRestore(
     return null;
   }
   return mpActors;
+}
+
+function isAgentRiderFutureState(value: unknown): value is AgentRiderBodyFutureState {
+  if (!value || typeof value !== 'object') return false;
+  const state = value as Partial<AgentRiderBodyFutureState>;
+  return (
+    typeof state.playerId === 'string' &&
+    (state.submissionId === null || typeof state.submissionId === 'string') &&
+    Array.isArray(state.orders)
+  );
 }
 
 function isMultiplayerActorSnapshot(value: unknown): value is MultiplayerActorSnapshot {

@@ -56,6 +56,7 @@ const DESYNC_TICK = 30;
 const BOUNDED_TICKS = 60;
 const SCOUT_TICKS = 120;
 const TWO_SCOUT_TICKS = 900;
+const AGENT_RIDER_TICKS = 300;
 
 const checks = [];
 const measured = {};
@@ -69,6 +70,7 @@ async function main() {
   try {
     await checkScoutRide(browserEnv);
     await checkTwoScoutRoom(browserEnv);
+    await checkBrowserAgentOrders(browserEnv);
     await checkStrictRefusal(browserEnv);
     await checkSharedRun();
     await checkDesyncResignation();
@@ -136,6 +138,70 @@ async function checkTwoScoutRoom(browserEnv) {
     assertEqual(host.errors.pageErrors.length, 0, 'the two-scout browser logged zero page errors');
   } finally {
     await host?.stop();
+    await relay.stop();
+  }
+}
+
+async function checkBrowserAgentOrders(browserEnv) {
+  const relay = await startRelayEnv();
+  let left;
+  let right;
+  let agent;
+  try {
+    const created = await post(relay.url, '/api/multiplayer/create', {});
+    assertEqual(created.status, 200, 'the browser pair opens an agent-rider room');
+    left = await startBrowserHost(browserEnv, relay.url, created.body.code, 3, 'Browser Left');
+    right = await startBrowserHost(browserEnv, relay.url, created.body.code, 3, 'Browser Right');
+    const setup = await left.page.evaluate(() => window.__GR_MP__?.state().setup);
+    agent = await startHeadlessOrderClient(browserEnv, relay.url, created.body.code, setup);
+    await Promise.all([left, right].map(({ page }) => page.waitForFunction(
+      () => window.__GR_MP__?.state()?.roster.length === 3 && window.__THREE_GAME_DIAGNOSTICS__?.agent.riders?.length === 1,
+      undefined,
+      { timeout: 30_000 },
+    )));
+
+    await panGold(left.page, 25);
+    const before = await riderState(left.page);
+    const submittedTick = before.tick;
+    await agent.send([
+      { verb: 'BUILD', what: 'palisade', where: { x: 0, z: 10 }, when: { goldGte: 0 } },
+      { verb: 'MOVE_TO', pos: { x: 8, z: 8 } },
+    ], 'browser-order-arm-1');
+    await Promise.all([left, right].map(({ page }) => page.waitForFunction(
+      ({ tick }) => {
+        const game = window.__THREE_GAME_DIAGNOSTICS__;
+        return (game?.mp?.tick ?? 0) >= tick + 300 && (game?.build.palisades ?? 0) >= 1;
+      },
+      { tick: submittedTick },
+      { timeout: 30_000 },
+    )));
+
+    const [a, b] = await Promise.all([riderState(left.page), riderState(right.page)]);
+    const commonTick = Math.max(...a.hashes.map((entry) => entry.tick).filter((tick) => b.hashes.some((entry) => entry.tick === tick)));
+    const aHash = a.hashes.find((entry) => entry.tick === commonTick)?.hash;
+    const bHash = b.hashes.find((entry) => entry.tick === commonTick)?.hash;
+    measured.agentOrders = { ticks: a.tick - submittedTick, commonTick, left: a, right: b };
+
+    assert(a.rider.visible && b.rider.visible, 'the agent rider is a visible hero in both browser worlds');
+    assert(Math.hypot(a.rider.position.x - before.rider.position.x, a.rider.position.z - before.rider.position.z) > 1,
+      'MOVE_TO changes the agent hero position');
+    assertEqual(JSON.stringify(a.rider.position), JSON.stringify(b.rider.position), 'both browsers place the agent hero identically');
+    assertEqual(a.palisades, 1, 'the agent rider BUILD lands once in the first browser');
+    assertEqual(b.palisades, 1, 'the agent rider BUILD lands once in the second browser');
+    assert(a.tick - submittedTick >= AGENT_RIDER_TICKS, `the embodied order channel runs at least ${AGENT_RIDER_TICKS} ticks`);
+    assertEqual(a.desyncs, 0, 'the first browser reports zero agent-rider desyncs');
+    assertEqual(b.desyncs, 0, 'the second browser reports zero agent-rider desyncs');
+    assert(Number.isFinite(commonTick) && commonTick >= submittedTick, 'the browsers produced a shared post-order hash');
+    assert(typeof aHash === 'string' && typeof bHash === 'string', 'the shared post-order hashes are present');
+    assertEqual(aHash, bHash, `both browsers agree at hash tick ${commonTick}`);
+    for (const host of [left, right]) {
+      assertEqual(host.errors.consoleErrors.length, 0, 'an agent-rider browser logs zero console errors');
+      assertEqual(host.errors.pageErrors.length, 0, 'an agent-rider browser logs zero page errors');
+    }
+  } finally {
+    await agent?.stop();
+    await left?.stop();
+    await right?.stop();
     await relay.stop();
   }
 }
@@ -449,6 +515,69 @@ async function startBrowserHost(browserEnv, relayBase, code, partySize, name) {
   const briefing = page.getByTestId('contract-briefing-dismiss');
   if (await briefing.isVisible().catch(() => false)) await briefing.click();
   return { page, errors, stop: () => context.close() };
+}
+
+async function startHeadlessOrderClient(browserEnv, relayBase, code, setup) {
+  const context = await browserEnv.browser.newContext();
+  const page = await context.newPage();
+  await page.goto(`${browserEnv.url}/skill.md`);
+  await page.evaluate(async ({ relayBase, code, setup }) => {
+    const { LockstepClient } = await import('/src/mp/LockstepClient.ts');
+    const client = new LockstepClient({
+      relayBase,
+      code,
+      player: { name: 'Order Rider', town: 'Calculating House' },
+      client: 'headless',
+      partySize: 3,
+      setup,
+      exchangeHashes: () => false,
+    });
+    const pending = [];
+    const sample = () => ({
+      mx: 0, my: 0, confirm: false, upgrade: false, rotateBuild: false, weaponToggle: false,
+      build: false, cancel: false, buildSlot: null, restart: false, pause: false, pauseTarget: null,
+      debugSpawn: false, debugXp: false, queuedActions: pending.splice(0),
+    });
+    await client.connect();
+    window.__AGENT_RIDER_CLIENT__ = client;
+    window.__AGENT_RIDER_SEND__ = (orders, submissionId) => pending.push({
+      type: 'agent_orders', version: 1, orders, submissionId,
+    });
+    window.__AGENT_RIDER_TIMER__ = window.setInterval(() => client.pump(sample()), 8);
+  }, { relayBase, code, setup });
+  await page.waitForFunction(() => {
+    const state = window.__AGENT_RIDER_CLIENT__?.state();
+    return state?.error || state?.roster.length === 3;
+  }, undefined, { timeout: 30_000 });
+  const state = await page.evaluate(() => window.__AGENT_RIDER_CLIENT__?.state());
+  if (state.error) throw new Error(`headless order client failed to join: ${state.error}`);
+  return {
+    send: (orders, submissionId) => page.evaluate(
+      ({ orders, submissionId }) => window.__AGENT_RIDER_SEND__(orders, submissionId),
+      { orders, submissionId },
+    ),
+    async stop() {
+      await page.evaluate(() => {
+        window.clearInterval(window.__AGENT_RIDER_TIMER__);
+        window.__AGENT_RIDER_CLIENT__?.dispose();
+      }).catch(() => undefined);
+      await context.close();
+    },
+  };
+}
+
+async function riderState(page) {
+  return page.evaluate(() => {
+    const game = window.__THREE_GAME_DIAGNOSTICS__;
+    const mp = window.__GR_MP__?.state();
+    return {
+      tick: mp?.tick ?? 0,
+      desyncs: mp?.desyncs ?? -1,
+      hashes: mp?.hashes ?? [],
+      palisades: game?.build.palisades ?? 0,
+      rider: game?.agent.riders?.[0] ?? null,
+    };
+  });
 }
 
 async function panGold(page, targetGold) {

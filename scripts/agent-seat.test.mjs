@@ -57,6 +57,22 @@ test('a wire act crosses into the sim and changes it', { timeout: 60_000 }, asyn
   });
 });
 
+test('agent_orders validates the standing-order grammar and wire bounds', { timeout: 60_000 }, async () => {
+  await withSim(async (vite) => {
+    const { normalizeLockstepAction } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+    const orders = [{ verb: 'MOVE_TO', pos: { x: 4, z: -3 } }];
+    assert.deepEqual(normalizeLockstepAction({ type: 'agent_orders', version: 1, orders, submissionId: 'move-1' }), {
+      type: 'agent_orders', version: 1, orders, submissionId: 'move-1',
+    });
+    assert.equal(normalizeLockstepAction({ type: 'agent_orders', version: 2, orders, submissionId: 'move-2' }), null);
+    assert.equal(normalizeLockstepAction({ type: 'agent_orders', version: 1, orders: Array(33).fill(orders[0]), submissionId: 'too-many' }), null);
+    assert.equal(normalizeLockstepAction({
+      type: 'agent_orders', version: 1, orders: [{ verb: 'restart', padding: 'x'.repeat(4_000) }], submissionId: 'too-large',
+    }), null);
+    assert.equal(normalizeLockstepAction({ type: 'future_action' }), null, 'unknown action types are ignored');
+  });
+});
+
 test('two independently booted sims agree tick for tick', { timeout: 60_000 }, async () => {
   await withSim(async (vite) => {
     const { HeadlessContractSim, SEAT_HASH_ENGINE } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
