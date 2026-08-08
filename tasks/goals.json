@@ -6144,6 +6144,12 @@
               "taskFile": "lane-b-f1563-1-standings-declared-compat.md",
               "mergeHash": "964978bad24053c6513968b7786b90e7db1408cd",
               "reason": "Cured F-1563-1 in 6 lines of src/encyclopedia/reader.ts: `declared` optional on StandingStack, validator accepts undefined, and the stack-implies-declaration invariant re-keyed to `=== true` so rows carrying a stack while undeclared are still rejected. Bidirectional proof in e2e/milk-county-board.spec.ts:340 (8-row payload, toHaveCount(2)). Gates on the merged tree, --workers=1: tsc rc=0, build 1.08s, lb-01 18/18, milk+field-book 22/22, test-stats 87/87, test-multiplayer 462/462."
+            },
+            {
+              "id": "f1564-1-m4-06-ceiling-measurement",
+              "title": "MEASURE the m4-06 0.4 drift ceiling instead of annotating it (F-1563-3; 12 runs, two arms, no re-pin)",
+              "status": "queued",
+              "taskFile": "lane-c-f1564-1-m4-06-ceiling-measurement.md"
             }
           ]
         }
