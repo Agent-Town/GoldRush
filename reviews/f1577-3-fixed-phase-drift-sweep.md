@@ -111,7 +111,26 @@ The report's verdict and its hedge are both correct, and it names the mechanism 
 
 ⚠️ **That is a qualitatively different curve from the one this task exists to explain.** The ladder curve quoted in the master rises to a **0.459 peak**, decays to **0.008** (the Prospector returns almost exactly to where it started), then rises again to 0.215 — an **oscillation**. The pinned sweep never returns: it walks, then freezes.
 
-➡️ **Reading.** `setManualSim(true)` is latched *before* the pin, and under manual sim `advanceSim` advances `timeAlive` at 1/timescale of the live loop's rate. Since `Embodiment.ts` drives idle oscillation from `timeAlive`, the pinned regime advances the oscillation phase ~4x more slowly per tick, so the oscillation is largely **switched off**. What remains is the net walk, which saturates below 0.4 at every phase.
+➡️ **Reading — CORRECTED in the same fire, before any successor scope was written.**
+
+⛔ **The first version of this section was wrong, and it is left here named rather than quietly swapped:** it said *"`Embodiment.ts` drives idle oscillation from `timeAlive`, so the pinned regime advances the oscillation phase ~4x more slowly per tick and the oscillation is switched off."* That inherited the runner's attribution and added confidence to it. ✓ **Refuted by reading the code** (prompted by `/author-task` §0.2, which requires verifying a premise on current main before writing scope from it):
+
+1. The idle bob is driven by **`presentationAt`**, not `timeAlive` — `src/agent/Embodiment.ts:160`.
+2. **`presentationAt` advances at the same rate per tick in both regimes.** Manual: `presentationDelta = (steps × FIXED_SIM_STEP_SECONDS) / scale = (1/30)/4 = 1/120` per tick (`src/game/Game.ts:6831`). Live: ticks per real second `= timeScale / stepSeconds = 4 × 30 = 120`, so also **1/120 s per tick**. The bob phase is **not slowed at all**.
+3. **The bob cannot enter `driftAbs` even in principle.** It is a **Y-axis** displacement of amplitude **0.045** (`src/game/Balance.ts:252`, applied via `floatY` at `Embodiment.ts:316`), while the spec's `distance()` is `Math.hypot(a.x - b.x, a.z - b.z)` — **x/z only** (`e2e/f1575-1-drift-tick-budget.spec.ts:15`). A 0.045 vertical bob was never going to explain a 0.459 planar drift.
+
+✅ **The correct mechanism — the runner's headline was right where its attribution was wrong, and the factor is exactly 4.** It is the **simulation** clock, not the cosmetic bob:
+
+| arm | update() delta | `timeAlive` per tick |
+|---|---|---|
+| live loop | `Loop.ts:132` `update(stepSeconds)`, `stepSeconds = 1/30` | `Game.ts:2499` `simDelta = (1/30) × 4` = **2/15** |
+| manual sim | `Game.ts:6843` `frameDelta = FIXED_SIM_STEP_SECONDS / scale = 1/120` | `simDelta = (1/120) × 4` = **1/30** |
+
+Ratio exactly `(2/15) / (1/30)` = **4**. So per simulation tick the pinned harness runs **the simulation's own clock four times slower** than the live loop, and `timeAlive` is what feeds sim-side behaviour (`echoBoss.observe(…, this.timeAlive)`, `decay`, `StandingOrders`) — not the cosmetic bob.
+
+**The conclusion is unchanged and now rests on the right evidence:** the pinned sweep explores a genuinely different simulation regime, so its null result and its margin belong to that regime and not to the live one.
+
+💡 **The lesson is worth more than the correction.** The runner asserted a mechanism, this gate elaborated it confidently, and both inherited the same unchecked attribution. **A wrong cause survived two careful readers because neither opened `Embodiment.ts`.** It cost nothing only because the successor's authoring check forced the file open before scope was written — which is precisely the job that check exists to do.
 
 **Therefore:** *"no band at any start phase"* is a sound statement **about the manual-sim regime**, and **not** evidence that start phase is irrelevant in the live regime where the breach was observed. Correspondingly the `0.35324532108975587` margin was measured with the **dominant error term suppressed**, and **must not be carried into a re-pin of the live-loop `m4-06` assertion**. The report already says the target is "safe only inside the requested tick-pinned harness"; this records *why*, with numbers, so the next task cannot mistake it for a transferable budget.
 
