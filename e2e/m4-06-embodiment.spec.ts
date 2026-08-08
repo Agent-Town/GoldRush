@@ -400,10 +400,12 @@ test('permission-denied receipts do not send the Prospector to the denied target
   expect(node).toBeTruthy();
 
   const receipt = await page.evaluate((nodeId) => window.__GR_AGENT__?.panAt(nodeId), node!.id);
+  const immediate = await companion(page);
   expect((receipt as { outcome?: { ok?: boolean; reason?: string } } | undefined)?.outcome).toMatchObject({
     ok: false,
     reason: 'PERMISSION_DENIED',
   });
+  expect(['held', 'ask me', 'no trust']).toContain(immediate.lastLine);
   await page.waitForTimeout(350);
   const after = await companion(page);
   const driftAbs = distance(after.position, before.position);
@@ -418,7 +420,8 @@ test('permission-denied receipts do not send the Prospector to the denied target
   expect(gapClosed).toBeLessThan(0.45);
   // Loose absolute-drift sanity bound, not the permission rule.
   expect(driftAbs).toBeLessThan(0.6);
-  expect(['held', 'ask me', 'no trust']).toContain(after.lastLine);
+  // F-1558-1: Embodiment.updateSimulation's idle-survey branch may replace the denial bark after
+  // surveyCooldownSeconds (19 s), so after.lastLine is deliberately not asserted here.
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
