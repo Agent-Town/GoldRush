@@ -71,6 +71,31 @@ export type ConfirmBuildDiagnostics = {
   placeRadius: number;
 };
 
+export type BuildRejectionDetail =
+  | 'insufficient_gold'
+  | 'invalid_position'
+  | 'collision'
+  | 'out_of_zone'
+  | 'cap_reached';
+
+let pendingBuildRejectionDetail: BuildRejectionDetail | undefined;
+
+// ponytail: Synchronous handoff preserves boolean adapters; return structured results if build calls become async.
+export function takeBuildRejectionDetail(): BuildRejectionDetail | undefined {
+  const detail = pendingBuildRejectionDetail;
+  pendingBuildRejectionDetail = undefined;
+  return detail;
+}
+
+function rejectionDetail(reason: ConfirmBuildDiagnostics['reason']): BuildRejectionDetail | undefined {
+  if (reason === 'invalid_max_count') return 'cap_reached';
+  if (reason === 'invalid_economy' || reason === 'economy_rejected') return 'insufficient_gold';
+  if (reason === 'invalid_placement') return 'invalid_position';
+  if (reason === 'invalid_range') return 'out_of_zone';
+  if (reason === 'invalid_overlap') return 'collision';
+  return undefined;
+}
+
 export type BuildDiagnostics = {
   mode: boolean;
   selectedBuildable: BuildableId;
@@ -1042,7 +1067,9 @@ export class BuildSystem {
       if (!this.selectBuildable(placement.id, true)) return false;
       this.ghostRotationSteps = ((Math.round(placement.rotationSteps) % 4) + 4) % 4;
       this.syncGhostShape();
-      return this.confirm(at, placement.position);
+      const placed = this.confirm(at, placement.position);
+      if (!placed) pendingBuildRejectionDetail = rejectionDetail(this.confirmDiagnostics.reason);
+      return placed;
     } finally {
       this.selectedId = previous.id;
       this.ghostRotationSteps = previous.rotationSteps;

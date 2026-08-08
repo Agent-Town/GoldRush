@@ -612,6 +612,7 @@ test('identical order failures coalesce across submissions without hiding a new 
 
     const { StandingOrdersExecutor } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
     let buildSucceeds = false;
+    let buildDetail = 'insufficient_gold';
     const state = () => ({
       timeAlive: 0,
       runState: 'playing',
@@ -633,7 +634,7 @@ test('identical order failures coalesce across submissions without hiding a new 
           args: { def, pos, rot: 0 },
           outcome: buildSucceeds
             ? { ok: true, economyLog: [] }
-            : { ok: false, reason: 'FAILED', economyLog: [] },
+            : { ok: false, reason: 'FAILED', detail: buildDetail, economyLog: [] },
         }),
       },
     }, state);
@@ -641,6 +642,7 @@ test('identical order failures coalesce across submissions without hiding a new 
     const reorderedOrder = [{ verb: 'BUILD', what: 'palisade', where: { z: 2, x: 1 }, when: { goldGte: 0 } }];
     executor.submit(order, 1);
     executor.tick(1, { x: 0, z: 0 });
+    assert.equal(executor.snapshot().orders[0].reason, 'FAILED (insufficient_gold): BUILD action was rejected.');
     const firstFailureSeq = executor.snapshot().log.findLast((event) => event.surprise === 'order_failure').seq;
 
     executor.submit(reorderedOrder, 2);
@@ -655,9 +657,11 @@ test('identical order failures coalesce across submissions without hiding a new 
     assert.equal(executor.snapshot().orders[0].status, 'done');
 
     buildSucceeds = false;
+    buildDetail = 'collision';
     executor.submit(reorderedOrder, 4);
     executor.tick(4, { x: 0, z: 0 });
     const newFailure = executor.snapshot();
+    assert.equal(newFailure.orders[0].reason, 'FAILED (collision): BUILD action was rejected.');
     assert.equal(newFailure.needsRider, true);
     assert.equal(newFailure.log.filter((event) => event.surprise === 'order_failure').length, 2);
     assert.ok(newFailure.log.findLast((event) => event.surprise === 'order_failure').seq > firstFailureSeq);
