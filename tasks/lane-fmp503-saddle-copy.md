@@ -1,3 +1,5 @@
+> ⛔ SUPERSEDED — DO NOT QUEUE (a fire authored + ran its own F-MP503-1 master 10 minutes ahead; cure merged — see reviews/f-mp503-1-unconfigured-503-copy.md; this copy lane-safety-stopped as designed)
+
 # Task f-mp503-1: the unconfigured relay must still speak the saddle copy (LANE-C, commit prefix "fix:")
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.
