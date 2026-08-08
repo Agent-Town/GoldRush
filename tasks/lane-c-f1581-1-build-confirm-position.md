@@ -12,8 +12,8 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## Why (F-1581-1, s1581 2026-08-09 — measured, then read in the code)
 
-`e2e/m2-01-build-menu.spec.ts:178` ("palisade footprint rejects overlap while allowing edge-touch
-chaining") fails **2/10 on `mobile-chrome`, 0/10 on `desktop-chrome`**, on a clean tree at
+`e2e/m2-01-build-menu.spec.ts:178` ("palisade footprint rejects overlap while allowing edge-touch chaining")
+fails **2/10 on `mobile-chrome`, 0/10 on `desktop-chrome`**, on a clean tree at
 `--workers=1` with no batch and no load. Durations are bimodal — passing 2.7–2.8 s, failing
 18.7–18.9 s, never between. All three captured failures show the identical page state: **Gold = 30**,
 i.e. **two palisades were purchased** where the test pressed the build key for only one.
@@ -92,7 +92,8 @@ described · `src/systems/BuildPlacement.ts` placement RULES (the geometry is co
 ## Self-check (evidence, not vibes)
 
 - `npx tsc --noEmit` rc=0; `npm run build` green.
-- **The acceptance measurement, which is the whole point of this task:**
+- **The acceptance measurement, which is the whole point of this task** — the target is
+  `e2e/m2-01-build-menu.spec.ts:178` ("palisade footprint rejects overlap while allowing edge-touch chaining"):
   `npx playwright test e2e/m2-01-build-menu.spec.ts:178 --project=mobile-chrome --workers=1 --repeat-each=20`
   → **20/20 green**, and the same command with `--project=desktop-chrome` → **10/10 green**.
   Report both as counts, not as "passes".
