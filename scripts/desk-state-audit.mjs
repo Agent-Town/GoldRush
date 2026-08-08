@@ -75,7 +75,7 @@ function fallbackState(row, id) {
   return scan(line, { closedVocabulary: 'wide' }).get(numeric);
 }
 
-function classifyFinding(id, rows, census) {
+function subjectState(id, rows, census) {
   const ownRows = rows.get(id) || [];
   const shared = census.get(id) || { closed: [], open: [] };
   const ownLines = new Set(ownRows.map(({ number }) => number));
@@ -90,12 +90,24 @@ function classifyFinding(id, rows, census) {
     }
   }
 
+  return { ownRows, closed, open };
+}
+
+function classifyFinding(id, rows, census) {
+  const { ownRows, closed, open } = subjectState(id, rows, census);
+
   const evidence = [...new Set([...closed, ...open])].sort((a, b) => a - b);
   if (closed.length && open.length) return { verdict: 'BOTH', evidence };
   if (closed.length) return { verdict: 'CLOSED', evidence };
   if (open.length) return { verdict: 'OPEN', evidence };
   if (ownRows.length) return { verdict: 'OPEN-DESK-ONLY', evidence: ownRows.map(({ number }) => number) };
   return { verdict: 'UNRECORDED', evidence: [] };
+}
+
+export function subjectLedClosure(backlogText, id) {
+  const rows = subjectRows(backlogText);
+  const census = scan(backlogText, { closedVocabulary: 'wide' });
+  return subjectState(id, rows, census).closed;
 }
 
 function findGoal(value, id) {
