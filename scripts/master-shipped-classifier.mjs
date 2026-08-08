@@ -8,6 +8,8 @@ import { pathToFileURL } from 'node:url';
 
 const SHIPPED = new Set(['merged', 'shipped']);
 const TRACE_DIRS = new Set(['done', 'failed', 'running', 'runs', 'stopped', 'queue-paused']);
+// Gates CANDIDATES only for NO-TRACE masters; widening can only shrink that list, so the risk is hiding real work.
+const NOT_QUEUEABLE = /DO[- ]NOT[- ]QUEUE|NEVER QUEUE|NOT[- ](?:FIRE[- ])?QUEUEABLE/i;
 
 const stem = (file) => path.basename(file, path.extname(file));
 const bareStem = (name) => name.replace(/^lane-[a-d]?-?/, '');
@@ -85,7 +87,7 @@ export function classifyRoot(root) {
   const verdicts = masters.map((master) => {
     const fullStem = stem(master);
     const masterText = fs.readFileSync(path.join(tasksDir, master), 'utf8');
-    const banner = masterText.split('\n').slice(0, 6).join('\n').match(/DO NOT QUEUE|DO-NOT-QUEUE/i)?.[0] ?? '';
+    const banner = masterText.split('\n').slice(0, 6).join('\n').match(NOT_QUEUEABLE)?.[0] ?? '';
     const goalEvidence = goals
       .filter((goal) => goal.taskFile === master && SHIPPED.has(goal.status))
       .map((goal) => ({ kind: 'goal', path: 'tasks/goals.json', id: goal.id, ...(goal.mergeHash && { hash: goal.mergeHash }) }));
