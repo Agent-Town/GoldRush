@@ -67,6 +67,46 @@ test('a no-trace master records its DO NOT QUEUE banner and is not a candidate',
   assert.equal(result.counts.CANDIDATES, 0);
 });
 
+test('archive-CODEX-WALL real NEVER QUEUE wording is a banner', (t) => {
+  const root = fixture('archive-CODEX-WALL-dead-flag-s915.md', [], [], '# NOT A WORK MASTER — NEVER QUEUE\n');
+  t.after(() => fs.rmSync(root, { recursive: true }));
+  const result = classifyRoot(root);
+  assert.equal(result.verdicts[0].banner, 'NEVER QUEUE');
+  assert.equal(result.counts.CANDIDATES, 0);
+});
+
+test('art-era-motion real NOT QUEUEABLE wording is a banner', (t) => {
+  const root = fixture('art-era-motion-hero-e2.md', [], [], '# OPEN BUT NOT QUEUEABLE — ITS INPUT DOES NOT EXIST AND ITS PIPELINE IS CREDIT-GATED\n');
+  t.after(() => fs.rmSync(root, { recursive: true }));
+  const result = classifyRoot(root);
+  assert.equal(result.verdicts[0].banner, 'NOT QUEUEABLE');
+  assert.equal(result.counts.CANDIDATES, 0);
+});
+
+test('058b real NOT FIRE-QUEUEABLE wording is a banner', (t) => {
+  const root = fixture('058b-adjacent-reds-fingerprint.md', [], [], '# OPEN BY DELIBERATE CHOICE — ATTENDED/OWNER, NOT FIRE-QUEUEABLE\n');
+  t.after(() => fs.rmSync(root, { recursive: true }));
+  const result = classifyRoot(root);
+  assert.equal(result.verdicts[0].banner, 'NOT FIRE-QUEUEABLE');
+  assert.equal(result.counts.CANDIDATES, 0);
+});
+
+test('regression: DO NOT QUEUE and DO-NOT-QUEUE remain banners', (t) => {
+  for (const wording of ['DO NOT QUEUE', 'DO-NOT-QUEUE']) {
+    const root = fixture(`lane-c-${wording.replaceAll(' ', '-').toLowerCase()}.md`, [], [], `# ${wording}\n`);
+    t.after(() => fs.rmSync(root, { recursive: true }));
+    assert.equal(classifyRoot(root).verdicts[0].banner, wording);
+  }
+});
+
+test('queue this after the drain mentions queueing without refusing it', (t) => {
+  const root = fixture('lane-c-foo.md', [], [], '# Queue this after the drain\n');
+  t.after(() => fs.rmSync(root, { recursive: true }));
+  const result = classifyRoot(root);
+  assert.equal(result.verdicts[0].banner, '');
+  assert.equal(result.counts.CANDIDATES, 1);
+});
+
 test('the banner window ends after line six', (t) => {
   const root = fixture('lane-c-foo.md', [], [], '1\n2\n3\n4\n5\n6\n7\n8\nDO-NOT-QUEUE\n');
   t.after(() => fs.rmSync(root, { recursive: true }));
