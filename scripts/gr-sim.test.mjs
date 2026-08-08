@@ -42,7 +42,7 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
     gold: 4,
     kills: 37,
     calls: 5,
-    eventLogHash: 'fnv1a32:f63d981b',
+    eventLogHash: 'fnv1a32:07fd38b9',
   });
   assert.equal(lines.at(-1).calls, 5);
   assert.ok(lines.some((line) => line.schema === 'goldrush.view.v1' && line.now.works.byKind.palisade === 1));
@@ -55,6 +55,45 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   );
   assert.notEqual(unsupported.status, 0);
   assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron/);
+});
+
+test('a distant HARVEST walks before it pays', async () => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const location = new URL('http://gr-sim.local/?debug&contract=e1-dry-gulch&seed=harvest-walk');
+  globalThis.location = location;
+  globalThis.window = { location };
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const sim = new HeadlessContractSim({ contractId: 'e1-dry-gulch', seed: 'harvest-walk' });
+    const start = sim.prospector.position;
+    const seam = sim.harvestSnapshot.activeNodes
+      .filter(({ active }) => active)
+      .sort((a, b) => Math.hypot(b.position.x - start.x, b.position.z - start.z)
+        - Math.hypot(a.position.x - start.x, a.position.z - start.z))[0];
+    assert.ok(Math.hypot(seam.position.x - start.x, seam.position.z - start.z) > Balance.goldSeam.channelRange);
+    assert.equal(sim.submitOrders([{ verb: 'HARVEST', seam: seam.id }]).outcome.ok, true);
+
+    sim.advanceOneTick();
+    // The old teleport world paid 7 gold on this same order set and fixed one-tick horizon.
+    assert.equal(sim.economy.gold, 0);
+    assert.equal(sim.currentTurn().view.now.orders[0].status, 'active');
+    assert.equal(sim.prospector.snapshot.moving, true);
+
+    for (let ticks = 0; sim.economy.gold === 0 && ticks < 1_000; ticks += 1) sim.advanceOneTick();
+    assert.ok(sim.economy.gold > 0);
+    assert.ok(Math.hypot(seam.position.x - sim.prospector.position.x, seam.position.z - sim.prospector.position.z)
+      <= Balance.goldSeam.channelRange);
+    assert.equal(sim.currentTurn().view.now.orders[0].status, 'done');
+  } finally {
+    await vite.close();
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
 });
 
 test('gr-sim keeps standing orders through free blank and null turns', () => {

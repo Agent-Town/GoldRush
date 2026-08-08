@@ -5,9 +5,10 @@ const HARVEST = (seam: string) => Array.from({ length: 6 }, () => ({ verb: 'HARV
 const HOLD = [{ verb: 'HOLD', pos: { x: 0, z: 12 } }];
 const SECURING_ORDERS = [
   [
-    ...HARVEST('gold-seam-1'),
     ...HARVEST('gold-seam-2'),
     ...HARVEST('gold-seam-3'),
+    ...HARVEST('gold-seam-1'),
+    { verb: 'MOVE_TO', pos: { x: 0, z: 12 } },
     { verb: 'BUILD', what: 'turret', where: { x: -3, z: 8 }, when: { goldGte: 50 } },
     { verb: 'BUILD', what: 'palisade', where: { x: -3, z: 10 }, when: { goldGte: 10 } },
     { verb: 'BUILD', what: 'palisade', where: { x: 0, z: 10 }, when: { goldGte: 10 } },

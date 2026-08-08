@@ -1108,6 +1108,9 @@ export class HeadlessContractSim {
     const sluice = sluiceIndex ? this.build.diagnostics.sluicePositions[Number(sluiceIndex) - 1] : undefined;
     const position = seam?.position ?? sluice;
     if (!position) return false;
+    if (Math.hypot(this.prospector.position.x - position.x, this.prospector.position.z - position.z) > Balance.goldSeam.channelRange) {
+      return false;
+    }
     if (!seam) return { node, position };
 
     const before = seam.remaining;
@@ -1115,7 +1118,7 @@ export class HeadlessContractSim {
     const panned = this.harvest.update(
       Balance.goldSeam.tickSeconds * Math.max(0.1, this.progression.stats.panTickMult),
       this.timeAlive,
-      [{ actorId: 'prospector', position: new THREE.Vector3(position.x, 0, position.z), speed: 0 }],
+      this.harvestTargets(),
     );
     const pannedTarget = panned.activeNodes.find((entry) => entry.id === node);
     const nodes = previous.nodes.map((entry) => entry.id === node && pannedTarget ? pannedTarget : entry);
@@ -1141,7 +1144,12 @@ export class HeadlessContractSim {
   }
 
   private harvestTargets(): HarvestTarget[] {
-    return [{ actorId: '0', position: this.hero.group.position, speed: this.hero.velocity.length() }];
+    const prospector = this.prospector.snapshot;
+    return [{
+      actorId: '0',
+      position: this.prospector.position,
+      speed: prospector.moving || prospector.drifting ? Balance.agent.moveSpeed : 0,
+    }];
   }
 
   private applyProgressionStats(stats: EffectiveStats, pickedId: string | null): void {
