@@ -61,6 +61,61 @@
   outline-offset: 3px;
 }
 
+.town-ui__settings {
+  position: relative;
+  pointer-events: auto;
+}
+
+.town-ui__settings > summary {
+  display: block;
+  list-style: none;
+}
+
+.town-ui__settings > summary::-webkit-details-marker {
+  display: none;
+}
+
+.town-ui__settings-panel {
+  position: fixed;
+  top: calc(max(14px, env(safe-area-inset-top)) + 54px);
+  right: max(14px, env(safe-area-inset-right));
+  display: grid;
+  gap: 12px;
+  width: min(320px, calc(100vw - 28px));
+  border: 2px solid #2e1b0e;
+  border-radius: 8px;
+  padding: 14px;
+  color: #2e1b0e;
+  background: rgba(245, 230, 200, 0.98);
+  box-shadow: 0 6px 0 rgba(46, 27, 14, 0.62), 0 18px 32px rgba(46, 27, 14, 0.3);
+}
+
+.town-ui__settings-panel h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.town-ui__settings-panel label {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px 10px;
+  font-weight: 900;
+}
+
+.town-ui__settings-panel input[type='range'] {
+  grid-column: 1 / -1;
+  width: 100%;
+  accent-color: #5b8a8a;
+}
+
+.town-ui__settings-panel input[type='checkbox'] {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: #5b8a8a;
+}
+
 .town-ui__prompt-stack {
   position: absolute;
   left: 50%;

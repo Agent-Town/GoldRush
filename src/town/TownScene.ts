@@ -94,6 +94,8 @@ import { takeMeiWorldDispatch } from './worldDispatches';
 import { takeTrailGuideBark } from '../story/trailGuide';
 import { contractUnlockStatus as contractUnlock } from '../meta/ContractUnlock';
 import { deriveMechanicsManifest, mechanicsManifestLine } from '../agent/MechanicsManifest';
+import { SoundSystem } from '../audio/SoundSystem';
+import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
 
 const contractPlateUrls = import.meta.glob<string>('../../assets/raw/plate-contract-*.png', {
   eager: true,
@@ -172,6 +174,14 @@ const FEET_CONTACT_Y = 0.02;
 const HERO_BLOB_RADIUS = 0.28;
 // U7: the whole night-lighting budget the town is allowed to spend, in lights.
 const TOWN_LANTERN_LIGHT_CAP = 6;
+const TOWN_MUSIC_VOLUME = 0.7;
+const TOWN_AUDIO_SETTINGS_IDS = {
+  volume: 'town-volume',
+  volumeValue: 'town-volume-value',
+  mute: 'town-mute',
+  music: 'town-music-volume',
+  musicValue: 'town-music-volume-value',
+};
 // A cylinder's own axis, for aiming string segments along their span.
 const UP = new THREE.Vector3(0, 1, 0);
 const STAMP_MILL_ID = 'stamp-mill';
@@ -421,6 +431,16 @@ type TownMegaproject = {
 };
 
 export class TownScene {
+  private readonly audio = new SoundSystem();
+  private disposeAudioSettings: () => void = () => undefined;
+  private settings?: HTMLDetailsElement;
+  private readonly onSettingsKeyDown = (event: KeyboardEvent) => {
+    event.stopPropagation();
+    if (event.key !== 'Escape' || !this.settings?.open) return;
+    event.preventDefault();
+    this.settings.open = false;
+    this.settings.querySelector<HTMLElement>('summary')?.focus({ preventScroll: true });
+  };
   private readonly renderer: THREE.WebGLRenderer;
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
@@ -559,6 +579,15 @@ export class TownScene {
     reconcileActiveEpoch();
     this.eraOrder = loadEpoch(activeEpochId()).order;
     this.selectedResearchEpochId = activeEpochId();
+    this.audio.setLoop(
+      activeEpochId() === STEAMWORKS_EPOCH_ID
+        ? 'era-e2-steamworks-loop'
+        : this.eraOrder >= 3
+          ? 'era-e3-voltage-loop'
+          : 'era-e1-frontier-loop',
+      true,
+      TOWN_MUSIC_VOLUME,
+    );
     this.boardPageIndex = boardPageIndexForContract(options.initialBoardContractId);
     this.renderer = createRenderer(canvas);
     this.cameraZoom = new CameraZoomController(canvas, 'town', this.cameraRig);
@@ -622,6 +651,9 @@ export class TownScene {
     this.wardrobe.removeEventListener('click', this.onWardrobeClick);
     this.wardrobe.removeEventListener('keydown', this.onWardrobeKeyDown);
     this.disposeWardrobe();
+    this.settings?.removeEventListener('keydown', this.onSettingsKeyDown);
+    this.disposeAudioSettings();
+    this.audio.dispose();
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
     this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
     this.infoNote?.dispose();
@@ -1069,6 +1101,13 @@ export class TownScene {
           <span data-testid="town-subtitle">Four doors stand ready.</span>
         </div>
         <div class="claim-herald-actions">
+          <details class="town-ui__settings" data-testid="town-settings">
+            <summary class="town-ui__exit" data-testid="town-settings-toggle">Settings</summary>
+            <section class="town-ui__settings-panel" data-testid="town-settings-panel" aria-label="Audio settings">
+              <h2>Sound</h2>
+              ${renderAudioSettingsControls(TOWN_AUDIO_SETTINGS_IDS)}
+            </section>
+          </details>
           ${
             herald.showBadge
               ? `<button class="claim-herald-badge" type="button" data-testid="town-herald-badge" data-unread="${herald.unread}" data-edition-number="${herald.editionNumber}" aria-label="Read ${herald.editionLabel} of The Claim Herald"><span>${herald.editionLabel}</span>Claim Herald</button>`
@@ -1081,6 +1120,8 @@ export class TownScene {
     `;
     this.townTitle = this.ui.querySelector<HTMLElement>('[data-testid="town-name"]') ?? undefined;
     this.townSubtitle = this.ui.querySelector<HTMLElement>('[data-testid="town-subtitle"]') ?? undefined;
+    this.settings = this.ui.querySelector<HTMLDetailsElement>('[data-testid="town-settings"]') ?? undefined;
+    this.settings?.addEventListener('keydown', this.onSettingsKeyDown);
     this.prompt.className = 'town-ui__prompt';
     this.prompt.dataset.testid = 'town-approach-prompt';
     this.prompt.setAttribute('role', 'status');
@@ -1121,6 +1162,7 @@ export class TownScene {
     this.nameMessage = this.nameCard.querySelector<HTMLElement>('[data-testid="town-name-error"]') ?? undefined;
     this.nameBeat = this.nameCard.querySelector<HTMLElement>('[data-testid="town-name-beat"]') ?? undefined;
     this.nameInput?.addEventListener('keydown', stopKeyPropagation);
+    this.disposeAudioSettings = bindAudioSettingsControls(this.ui, TOWN_AUDIO_SETTINGS_IDS);
     const promptStack = this.ui.querySelector<HTMLElement>('[data-testid="town-prompt-stack"]');
     promptStack?.append(this.prompt);
     if (promptStack) this.infoNote = new WorldInfoNotePrompt(promptStack);
