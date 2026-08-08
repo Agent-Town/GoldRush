@@ -45,9 +45,9 @@ type SelfDeclaredStack = {
   calls?: number;
 };
 
-// A posse rides as one row. The rider list is what the FIELD BOOK reads for composition; the
-// county board is only ever handed the names (see boardRow) because a declared stack is a
-// species tell and the ladder stays species-blind (AP-06).
+// History (AP-06): the county board was only ever handed rider names because a declared stack
+// was treated as a species tell and the ladder stayed species-blind. Owner ruling 2026-08-08
+// supersedes that display law: rank stays outcome-only, but every row names its declared mind.
 type PartyRider = {
   name: string;
   stack?: SelfDeclaredStack;
@@ -230,10 +230,25 @@ function boardRow(row: StoredRow, index: number): JsonRecord {
     difficulty: row.difficulty,
     ...(Number.isFinite(row.submittedAt) && row.submittedAt >= 0 ? { submittedAt: row.submittedAt } : {}),
     ...(row.defaulted ? { defaulted: true } : {}),
-    // Names only. A rider's declared stack stays out of the board by construction — it says agent.
-    ...(row.party ? { party: { riderCount: row.party.riderCount, riders: row.party.riders.map((rider) => rider.name) } } : {}),
+    ...boardStack(row.stack),
+    ...(row.party ? {
+      party: {
+        riderCount: row.party.riderCount,
+        riders: row.party.riders.map((rider) => ({ name: rider.name, ...boardStack(rider.stack) })),
+      },
+    } : {}),
     // A handle to the reel, never the reel: the tape blob is fetched on demand by ?reel=<id>.
     ...(reel ? { reel } : {}),
+  };
+}
+
+function boardStack(stack?: SelfDeclaredStack): JsonRecord {
+  if (!stack) return { declared: false };
+  return {
+    declared: true,
+    ...(stack.model === undefined ? {} : { model: stack.model }),
+    ...(stack.harness === undefined ? {} : { harness: stack.harness }),
+    ...(stack.harnessVersion === undefined ? {} : { harnessVersion: stack.harnessVersion }),
   };
 }
 

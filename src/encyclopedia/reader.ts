@@ -35,7 +35,16 @@ type FieldBookView = 'byStack' | 'byParty';
 type StandingsDifficulty = DifficultyPresetId | 'all';
 type StandingsParty = 'solo' | '2' | '3' | '4';
 
-type CountyStanding = {
+type StandingStack = {
+  declared?: boolean;
+  model?: string;
+  harness?: string;
+  harnessVersion?: string;
+};
+
+type CountyRider = StandingStack & { name: string };
+
+type CountyStanding = StandingStack & {
   rank: number;
   profileName: string;
   secured: true;
@@ -46,7 +55,7 @@ type CountyStanding = {
   difficulty: DifficultyPresetId;
   submittedAt?: number;
   defaulted?: true;
-  party?: { riderCount: number; riders: string[] };
+  party?: { riderCount: number; riders: CountyRider[] };
   reel?: { id: string; simVersion: number };
 };
 
@@ -324,7 +333,7 @@ function renderStandingsLedger(): string {
         <p class="county-standings__message" data-testid="county-standings-message" role="status" aria-live="polite"></p>
         ${renderLocalClaims(contracts)}
         <p class="county-standings__board-label"><strong>County board</strong><span class="county-standings__difficulty">Global</span></p>
-        <p class="county-standings__provenance">Rig and posse declarations stay one tap away in The Field Book — never in the rank.</p>
+        <p class="county-standings__provenance">Every rider names the mind and rig they declared. Rank still follows the result alone.</p>
         <div class="county-standings__board" data-testid="county-standings-board" aria-live="polite">
           <p class="county-standings__empty">The county clerk turns the pages.</p>
         </div>
@@ -667,6 +676,7 @@ function isCountyStanding(value: unknown): value is CountyStanding {
     isDifficultyPreset(row.difficulty) &&
     (row.submittedAt === undefined || (Number.isInteger(row.submittedAt) && row.submittedAt >= 0)) &&
     (row.defaulted === undefined || row.defaulted === true) &&
+    isStandingStack(row) &&
     isCountyParty(row.party) &&
     isCountyReel(row.reel)
   );
@@ -676,7 +686,21 @@ function isCountyParty(value: unknown): boolean {
   if (value === undefined) return true;
   if (!value || typeof value !== 'object') return false;
   const party = value as Partial<NonNullable<CountyStanding['party']>>;
-  return Number.isInteger(party.riderCount) && (party.riderCount ?? 0) >= 2 && (party.riderCount ?? 0) <= 4 && isNameList(party.riders);
+  return Number.isInteger(party.riderCount)
+    && (party.riderCount ?? 0) >= 2
+    && (party.riderCount ?? 0) <= 4
+    && Array.isArray(party.riders)
+    && party.riders.length === party.riderCount
+    && party.riders.every((rider) => Boolean(rider) && typeof rider === 'object'
+      && typeof rider.name === 'string' && rider.name.length <= 64 && isStandingStack(rider));
+}
+
+function isStandingStack(value: Partial<StandingStack>): boolean {
+  return (value.declared === undefined || typeof value.declared === 'boolean')
+    && validOptionalString(value.model)
+    && validOptionalString(value.harness)
+    && validOptionalString(value.harnessVersion)
+    && (value.declared === true || (value.model === undefined && value.harness === undefined && value.harnessVersion === undefined));
 }
 
 function isCountyReel(value: unknown): boolean {
@@ -711,9 +735,9 @@ function renderCountyRow(row: CountyStanding, watchable: boolean): string {
     <th scope="row">${escapeHtml(row.profileName)}<span class="county-standings__difficulty" data-testid="county-standings-difficulty-${row.rank}" data-difficulty="${row.difficulty}"${row.defaulted ? ' title="Trail preset defaulted for an older standing"' : ''}>${DIFFICULTY_LABELS[row.difficulty]}</span>${
       row.party
         ? `<span class="county-standings__riders" data-testid="county-standings-riders-${row.rank}">${row.party.riders
-            .map(escapeHtml)
-            .join(', ')}</span>`
-        : ''
+            .map((rider, index) => `<span>${escapeHtml(rider.name)}${renderCountyStack(rider, `${row.rank}-${index + 1}`)}</span>`)
+            .join('')}</span>`
+        : renderCountyStack(row, String(row.rank))
     }</th>
     <td class="county-standings__result">${Math.floor(row.waves)} waves &middot; ${formatTime(row.timeAlive)} &middot; ${Math.floor(row.gold)} gold</td>
     <td>${row.submittedAt === undefined
@@ -729,6 +753,12 @@ function renderCountyRow(row: CountyStanding, watchable: boolean): string {
         : ''
     }
   </tr>`;
+}
+
+function renderCountyStack(stack: StandingStack, testId: string): string {
+  const harness = [stack.harness, stack.harnessVersion].filter(Boolean).join(' ');
+  const label = stack.declared ? [stack.model, harness].filter(Boolean).join(' · ') || 'Declared rider' : 'Undeclared rider';
+  return `<span class="county-standings__stack" data-testid="county-standings-stack-${testId}" title="${escapeHtml(label)}">${escapeHtml(label)}</span>`;
 }
 
 function renderLocalClaims(contracts: ReturnType<typeof listContracts>): string {
