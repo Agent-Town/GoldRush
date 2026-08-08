@@ -16,6 +16,12 @@ Heat 1 never gave the entrants the same exam: pi drew the-claim + dry-gulch (won
 
 **The owner's surprise, resolved:** with the same exam, ALL THREE coding harnesses secure the-claim on their first try. "Codex can't beat the levels" was night-shift's difficulty (a map no mind has secured), not codex's weakness. pi's edge is real but it is an EFFICIENCY edge, not a capability cliff.
 
+### Late heat-2 rows (OpenClaw + Hermes, after their setup gates)
+| entrant | result | sim decisions | note |
+|---|---|---|---|
+| OpenClaw (openclaw@2026.7.1-2) | **SECURED, attempt 1** | **10 — ties pi's record** | **OPEN-BOOK**: read the archived heat-1 field book in the clone and adapted pi's strategy, citing it honestly. Spawned protocol rule F-GNT-3 (exam clones for future heats). Setup: flawless (no stdin bug, no daemons). |
+| Hermes (NousResearch/hermes-agent) | running at press time | — | oneshot mode, setup clean |
+
 ## The crack experiments (exploratory — model ceiling probes, never benchmark rows)
 Owner-fired, on the expiring Codex window; big models vs the UNSOLVED maps:
 | model | map | result |
