@@ -4601,7 +4601,8 @@
             {
               "id": "f1584-1-banked-master-banner-vocabulary",
               "title": "F-1584-1: the banked-master probe reads one spelling of a refusal the masters write three ways \u2014 widen the queueability banner so the dry-board headline is trustworthy",
-              "status": "queued",
+              "status": "merged",
+      "mergeHash": "706fb82395f9bb463fe4816341d2476df3801d66",
               "taskFile": "lane-c-f1584-1-banked-master-banner-vocabulary.md",
               "gate": "none \u2014 fire-authorable from the F-1584-1 BACKLOG row; measured s1584 by running scripts/master-shipped-classifier.mjs on the live corpus (3 candidates) and reading all three flagged masters first six lines verbatim against the banner regex (NO MATCH, three times); blast radius re-measured at exactly 3 newly-captured masters across all 979, zero collateral"
             },
