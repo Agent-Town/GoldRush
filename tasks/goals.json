@@ -4541,6 +4541,13 @@
               "status": "merged",
               "mergeHash": "661e13d9b34e2270eeb99fbf19ee3fc4d0fe35bc",
               "taskFile": "lane-b-f1567-2-refusal-bark-hold.md"
+            },
+            {
+              "id": "f1574-1-review-evidence-audit",
+              "title": "Cross-reference the evidence paths a review CITES against what the merge actually TRACKS, WARN-level — so a drain notices when a citation is true of the disk and false of the repo (F-1573-1 residue)",
+              "status": "queued",
+              "taskFile": "lane-b-f1574-1-review-evidence-audit.md",
+              "gate": "none — fire-authorable from the F-1573-1 BACKLOG row and reviews/f1572-1-lane-arm-uncensored-drift.md; the narrow .gitignore half already landed cc2ad93f5, this is the durable drain-duty half"
             }
           ]
         }
