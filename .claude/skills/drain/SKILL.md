@@ -53,6 +53,7 @@ npx playwright test <the-slice's-spec> <adjacent-suites> -c <self-booting scratc
 
 ## 4. The review file — `reviews/<slice>.md` (model: reviews/sci-04.md)
 Sections, all mandatory: Slice/branch/tip → Verdict → What it does (one paragraph) → Evidence (real numbers: suite counts, timings) → Merge classification (base hash, per-file table, conflict resolutions) → Findings (F-IDs; each non-blocking-with-reason or spawning a corrective in this same commit).
+- Before committing it, run `node scripts/review-evidence-audit.mjs reviews/<slice>.md`. For each `ON-DISK-UNTRACKED` path inside the task's declared TOUCH-ONLY scope, `git add -f <path>`; report paths outside that scope without adding them.
 
 ## 5. Commit + ledger (one event, one commit set)
 - [ ] Merge commit message: `<prefix>: <slice> — <one-line>` + evidence line.
