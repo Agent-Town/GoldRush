@@ -4495,6 +4495,13 @@
               "mergeHash": "3d4651f91175b30dc57d19db46e407b411e69abf"
             },
             {
+              "id": "f1568-1-desk-audit-subject-first-keying",
+              "title": "Desk auditor keys its items the way the desk writes them: reuse desk-carryforward-guard's triangle-anchored parser instead of a global regex sweep (F-1567-3)",
+              "status": "queued",
+              "taskFile": "lane-c-f1568-1-desk-audit-subject-first-keying.md",
+              "gate": "none — fire-authorable; cure proved read-only s1568 before authoring (current parser keys 26 items where the desk declares 22; reused parser keys 22, dropping exactly the 4 prose-only ids and losing none)"
+            },
+            {
               "id": "f1567-2-refusal-bark-hold",
               "title": "A refusal bark must not be overwritten by the idle survey line (F-1565-1: handleReceipt returns early for a refusal, leaving the agent idle, so the same tick can overwrite the denial)",
               "status": "queued",
