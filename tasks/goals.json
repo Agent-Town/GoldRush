@@ -4599,6 +4599,13 @@
               "drainNotes": "s1583: cure (b) \u2014 a confirm invalid at issue time is discarded, not re-resolved one frame later. Acceptance mobile 20/20, desktop 10/10; regression assertion proved RED 5/5 against unfixed src (Expected 1, Received 2 palisades); m2-01 14/14 both projects; adjacent battery widened to all confirm sinks 99 pass/2 skip/0 fail; test:node-guards rc=0. Review reviews/f1581-1-build-confirm-position.md. tapped-retention untouched. Mobile/desktop asymmetry remains UNMEASURED."
             },
             {
+              "id": "f1586-1-desk-count-refusal",
+              "title": "F-1586-1: the desk's declared count is prose no guard reads — gate the LIVE desk on declared-vs-keyed at the ±1 tolerance the corpus justifies, not the zero tolerance s1533 correctly refused",
+              "status": "queued",
+              "taskFile": "lane-a-f1586-1-desk-count-refusal.md",
+              "gate": "none — fire-authorable from the F-1586-1 BACKLOG row, discharging the cure F-1584-2 specified and left unauthored; measured s1586 across all 112 counted desks in STATUS.md (delta histogram has an EMPTY 2-3 band, so ±1 separates noise from defect), priced at 2 refusals in the last 25 desks (s1583, s1585) with zero false positives, and the four unkeyed segments of s1585's own desk read verbatim"
+            },
+            {
               "id": "f1584-1-banked-master-banner-vocabulary",
               "title": "F-1584-1: the banked-master probe reads one spelling of a refusal the masters write three ways \u2014 widen the queueability banner so the dry-board headline is trustworthy",
               "status": "merged",
