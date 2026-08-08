@@ -14,7 +14,7 @@ import {
   type StandingOrdersSubmission,
 } from './StandingOrders';
 import { buildView, type AgentView } from './View';
-import { takeBuildRejectionDetail } from '../systems/BuildSystem';
+import { takeBuildRejectionDetail } from '../systems/buildRejectionDetail';
 
 export type AgentVec2 = { x: number; z: number };
 export type AgentBuildingRef = { id: string; index?: number };

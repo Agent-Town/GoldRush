@@ -26,6 +26,7 @@ import { RenderLayers } from '../core/RenderLayers';
 import { hasElevationTile, highGroundRange, terrainLineOfSight } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import { matchesPlacement, overlapsExisting, type PlacementDescriptor } from './BuildPlacement';
+import { setBuildRejectionDetail, type BuildRejectionDetail } from './buildRejectionDetail';
 
 export type BuildableSnapshot = {
   id: BuildableId;
@@ -70,22 +71,6 @@ export type ConfirmBuildDiagnostics = {
   distanceSq: number;
   placeRadius: number;
 };
-
-export type BuildRejectionDetail =
-  | 'insufficient_gold'
-  | 'invalid_position'
-  | 'collision'
-  | 'out_of_zone'
-  | 'cap_reached';
-
-let pendingBuildRejectionDetail: BuildRejectionDetail | undefined;
-
-// ponytail: Synchronous handoff preserves boolean adapters; return structured results if build calls become async.
-export function takeBuildRejectionDetail(): BuildRejectionDetail | undefined {
-  const detail = pendingBuildRejectionDetail;
-  pendingBuildRejectionDetail = undefined;
-  return detail;
-}
 
 function rejectionDetail(reason: ConfirmBuildDiagnostics['reason']): BuildRejectionDetail | undefined {
   if (reason === 'invalid_max_count') return 'cap_reached';
@@ -1068,7 +1053,7 @@ export class BuildSystem {
       this.ghostRotationSteps = ((Math.round(placement.rotationSteps) % 4) + 4) % 4;
       this.syncGhostShape();
       const placed = this.confirm(at, placement.position);
-      if (!placed) pendingBuildRejectionDetail = rejectionDetail(this.confirmDiagnostics.reason);
+      if (!placed) setBuildRejectionDetail(rejectionDetail(this.confirmDiagnostics.reason));
       return placed;
     } finally {
       this.selectedId = previous.id;
