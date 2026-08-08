@@ -90,6 +90,8 @@ Validation ranges: `goldGte` 0–1,000,000; `waveGte` 0–10,000; repair percent
 
 Availability is contract-specific. A roster entry is grammar, not a promise that the current map permits or can legally place it.
 
+Instance prices grow for `turret` and `sentry_beacon`; the current claim's `stablePrefix.mechanics.buildables[].costs` array is the pricing truth. Further instances continue that curve rounded UP to the nearest 5, as declared by `costRule: "ceil-to-5"`.
+
 ## BENCH SEEDS
 
 These public, pinned seeds make county-bench runs comparable. `seedMode: "bench"` accepts only a seed listed for that contract and requires an explicit difficulty. `seedMode: "live"` is the open county and is not a bench claim.

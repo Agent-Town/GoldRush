@@ -2,6 +2,40 @@
   {
     "schema": "goldrush.mechanics.v1",
     "contractId": "the-claim",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "operation": "BUILD",
+        "meaning": "Lights the dark and slows what it touches — radius 8wu.",
+        "cost": 25,
+        "costs": [
+          25,
+          35,
+          45,
+          55,
+          75,
+          95
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 6,
+        "source": "buildables.registry"
+      },
+      {
+        "id": "turret",
+        "operation": "BUILD",
+        "meaning": "Spark bolts, line-of-sight, 16wu range.",
+        "cost": 50,
+        "costs": [
+          50,
+          70,
+          95,
+          125
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 4,
+        "source": "buildables.registry"
+      }
+    ],
     "interactables": [],
     "rules": [
       {
@@ -41,6 +75,40 @@
   {
     "schema": "goldrush.mechanics.v1",
     "contractId": "e1-drill-yard",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "operation": "BUILD",
+        "meaning": "Lights the dark and slows what it touches — radius 8wu.",
+        "cost": 25,
+        "costs": [
+          25,
+          35,
+          45,
+          55,
+          75,
+          95
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 6,
+        "source": "buildables.registry"
+      },
+      {
+        "id": "turret",
+        "operation": "BUILD",
+        "meaning": "Spark bolts, line-of-sight, 16wu range.",
+        "cost": 50,
+        "costs": [
+          50,
+          70,
+          95,
+          125
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 4,
+        "source": "buildables.registry"
+      }
+    ],
     "interactables": [
       {
         "id": "assay_tent_faucet",
@@ -155,6 +223,40 @@
   {
     "schema": "goldrush.mechanics.v1",
     "contractId": "e1-dry-gulch",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "operation": "BUILD",
+        "meaning": "Lights the dark and slows what it touches — radius 8wu.",
+        "cost": 25,
+        "costs": [
+          25,
+          35,
+          45,
+          55,
+          75,
+          95
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 6,
+        "source": "buildables.registry"
+      },
+      {
+        "id": "turret",
+        "operation": "BUILD",
+        "meaning": "Spark bolts, line-of-sight, 16wu range.",
+        "cost": 50,
+        "costs": [
+          50,
+          70,
+          95,
+          125
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 4,
+        "source": "buildables.registry"
+      }
+    ],
     "interactables": [],
     "rules": [
       {
@@ -196,6 +298,40 @@
   {
     "schema": "goldrush.mechanics.v1",
     "contractId": "e1-night-shift",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "operation": "BUILD",
+        "meaning": "Lights the dark and slows what it touches — radius 8wu.",
+        "cost": 25,
+        "costs": [
+          25,
+          35,
+          45,
+          55,
+          75,
+          95
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 6,
+        "source": "buildables.registry"
+      },
+      {
+        "id": "turret",
+        "operation": "BUILD",
+        "meaning": "Spark bolts, line-of-sight, 16wu range.",
+        "cost": 50,
+        "costs": [
+          50,
+          70,
+          95,
+          125
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 4,
+        "source": "buildables.registry"
+      }
+    ],
     "interactables": [
       {
         "id": "lantern_post",
@@ -263,6 +399,40 @@
   {
     "schema": "goldrush.mechanics.v1",
     "contractId": "e1-twin-banks",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "operation": "BUILD",
+        "meaning": "Lights the dark and slows what it touches — radius 8wu.",
+        "cost": 25,
+        "costs": [
+          25,
+          35,
+          45,
+          55,
+          75,
+          95
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 6,
+        "source": "buildables.registry"
+      },
+      {
+        "id": "turret",
+        "operation": "BUILD",
+        "meaning": "Spark bolts, line-of-sight, 16wu range.",
+        "cost": 50,
+        "costs": [
+          50,
+          70,
+          95,
+          125
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 4,
+        "source": "buildables.registry"
+      }
+    ],
     "interactables": [],
     "rules": [
       {
@@ -321,6 +491,40 @@
   {
     "schema": "goldrush.mechanics.v1",
     "contractId": "e1-baron",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "operation": "BUILD",
+        "meaning": "Lights the dark and slows what it touches — radius 8wu.",
+        "cost": 25,
+        "costs": [
+          25,
+          35,
+          45,
+          55,
+          75,
+          95
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 6,
+        "source": "buildables.registry"
+      },
+      {
+        "id": "turret",
+        "operation": "BUILD",
+        "meaning": "Spark bolts, line-of-sight, 16wu range.",
+        "cost": 50,
+        "costs": [
+          50,
+          70,
+          95,
+          125
+        ],
+        "costRule": "ceil-to-5",
+        "maxCount": 4,
+        "source": "buildables.registry"
+      }
+    ],
     "interactables": [],
     "rules": [
       {

@@ -1,4 +1,4 @@
-import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
+import { listContracts, listEpochs, loadContract, loadEpoch, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
 import { Balance } from '../game/Balance';
 import { buildableBlurb, getBuildableDef } from '../game/buildables';
 
@@ -12,8 +12,10 @@ export type MechanicsManifest = {
     operation: 'BUILD';
     meaning: string;
     cost: number;
+    costs: readonly number[];
+    costRule?: 'ceil-to-5';
     maxCount: number;
-    source: 'twist.pressureEnabled' | 'twist.powerGrid' | 'twist.mothSeason';
+    source: 'buildables.registry' | 'twist.pressureEnabled' | 'twist.powerGrid' | 'twist.mothSeason';
   }[];
   interactables: readonly {
     id: string;
@@ -374,7 +376,11 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   const capacitorBank = voltageSocket ? getBuildableDef('capacitor_bank') : undefined;
   const lanternPost = mothSocket ? getBuildableDef('lantern_post') : undefined;
   const decoyShed = mothSocket ? getBuildableDef('decoy_shed') : undefined;
+  const registryBuildables = listContracts().some(({ id }) => id === contract.id)
+    ? ['sentry_beacon', 'turret'].map((id) => ({ def: getBuildableDef(id)!, source: 'buildables.registry' as const, meaning: undefined }))
+    : [];
   const buildables = [
+    ...registryBuildables,
     ...(boilerHouse ? [{ def: boilerHouse, source: 'twist.pressureEnabled' as const }] : []),
     ...(capacitorBank ? [{ def: capacitorBank, source: 'twist.powerGrid' as const }] : []),
     ...(lanternPost ? [{
@@ -397,6 +403,8 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         operation: 'BUILD' as const,
         meaning: meaning ?? buildableBlurb(def) ?? '',
         cost: def.costCurve(0),
+        costs: Array.from({ length: Math.min(def.maxCount, 6) }, (_, index) => def.costCurve(index)),
+        ...((def.id === 'sentry_beacon' || def.id === 'turret') ? { costRule: 'ceil-to-5' as const } : {}),
         maxCount: def.maxCount,
         source,
       })),
