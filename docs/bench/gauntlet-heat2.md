@@ -22,5 +22,5 @@ Owner-fired, on the expiring Codex window; big models vs the UNSOLVED maps:
 |---|---|---|
 | gpt-5.6-luna (high) | e1-twin-banks (pi went 0/6) | **SECURED, FIRST RUN** — wave 20, 920 kills, 47 decisions, `fnv1a32:aac516a9`. The first twin-banks agent secure ever. |
 | gpt-5.6-terra (xhigh) | e1-night-shift (nobody's crown) | running at press time |
-| gpt-5.6-sol (xhigh) | e2-hill-mine railcar (open crown; F-E2S-2 economy question) | running at press time — tasked to secure OR prove impossibility by economy audit |
+| gpt-5.6-sol (xhigh) | e2-hill-mine railcar | **IMPOSSIBILITY PROVEN (F-E2S-3)**: the board sells only boiler_house and headless has no pressure-to-damage consumer — railcar components at full HP through every measured wave; real size 10,916 eHP; kills pay 0 gold; wallet caps 200. The crown was never reachable. 4 runs + diagnostic; full audit in the report. |
 Artifacts: `bench/gauntlet/heat2/`.
