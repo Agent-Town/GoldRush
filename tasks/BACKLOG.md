@@ -3313,3 +3313,9 @@ Note `src/ui/ComplaintDesk.ts` is **CLEAN** here — s1080's warning that it was
 - 📋 **mp-07a** `tasks/lane-mp07a-honest-door.md` (lane-b) — mixed-engine room refuses cleanly or rides `--advisory` declared; cures the owner-hit F-AH-1 surface. Veto window: owner may answer mp-07 Q1 differently in the morning; the master ships refusal + flag so either answer is one default away. GATE: merged with the extended agent-seat-room harness green (refusal · advisory zero-desync · seat+seat unchanged).
 - 📋 **mp-07b** `tasks/lane-mp07b-night-parity.md` (lane-d) — headless night-shift gains the wrecker outside-light speed law; re-pins night-shift bench on both Node engines (F-AH-2). GATE: merged, pins byte-identical across v23.11.1/v26.4.0, red-then-green proof on the new wrecker test.
 - 📋 **f-door-1** `tasks/lane-fdoor1-cost-curve.md` (lane-b, after mp-07a if same-lane) — manifest publishes per-instance `costs` + `costRule`, skill.md states the round-up-to-5 law, E1 fixture re-derived fields-only (F-DOOR-1). GATE: merged, agent-view fixture spec green, skillmd guard green.
+
+## OWNER RULINGS 2026-08-08 MORNING (all four mp-07/moth questions ANSWERED — recorded verbatim in specs/multiplayer/mp-07-one-engine-at-the-table.md)
+- MP-07a: "I would like the player to be able to invite his agent or multiple agents if they want." → master amended: invited seat AUTO-RIDES scout mode, multiple scouts legal, --strict keeps the refusal. F-AH-1's cure shape is now RATIFIED.
+- MP-07b: "Yes, land it." → night parity master ratified as authored.
+- MP-07c: "Yes, the player and their agent have to play together - if that means they play in the user's world, then that is ok for me." → browser-as-engine-of-record RATIFIED; attended spec pass in flight.
+- F-BAL-1: "Tighten it" → `tasks/lane-fbal1-moth-pressure.md` authored (lane-c): baseline migration floor so darkness is not safety; idle must fail, competent orders fixture must still secure; both engines.
