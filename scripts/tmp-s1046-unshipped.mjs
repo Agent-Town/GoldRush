@@ -1,3 +1,5 @@
+// SUPERSEDED by master-shipped-classifier.mjs. This filename-only method is the
+// F-1568-1/F-1569-1 defect; its output must never be used to re-queue anything.
 import { readdirSync, readFileSync } from 'node:fs';
 
 const R = '/Users/robin/Claude/Projects/Gold Rush/';
