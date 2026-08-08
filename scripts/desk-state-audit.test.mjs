@@ -5,6 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { desk } from './desk-state-audit.mjs';
+import { deskItems, deskTail } from './desk-carryforward-guard.mjs';
 import { scan } from './findings-state-guard.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -80,6 +82,21 @@ test('ACTIVE line 1 skips with exit 0', (t) => {
   const result = run(dir);
   assert.equal(result.status, 0);
   assert.match(result.stdout, /^SKIP — line-1 is a lock line, no desk to audit/);
+});
+
+test('prose-only finding outside a desk segment is not an item', () => {
+  const status = `${STATUS(['F-1567-2'])} This is not on the desk: F-1567-3.`;
+  assert.deepEqual(desk(status).items.map(({ id }) => id), ['F-1567-2']);
+});
+
+test('a late finding citation does not replace the segment key', () => {
+  const status = STATUS([`F-1567-2 ${'x'.repeat(121)} F-1567-3`]);
+  assert.deepEqual(desk(status).items.map(({ id }) => id), ['F-1567-2']);
+});
+
+test('desk audit and carryforward guard use the same item keys', () => {
+  const line1 = `${STATUS(['F-1567-2', '`rf-34-hero-y-restore-roundtrip`', 'F-MILK-SS-3'])} Prose cites F-1300-4.`;
+  assert.deepEqual(desk(line1).items.map(({ id }) => id), deskItems(deskTail(line1)));
 });
 
 test('goal slugs resolve merged and blocked states', (t) => {
