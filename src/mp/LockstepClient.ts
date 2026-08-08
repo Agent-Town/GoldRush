@@ -61,6 +61,7 @@ export type MultiplayerPlayer = {
   playerId: string;
   name: string;
   town: string;
+  client: 'browser' | 'headless';
 };
 
 export type LockstepTick = {
@@ -101,6 +102,7 @@ export type LockstepClientOptions = {
   relayBase: string;
   code: string | null;
   player: { name: string; town: string };
+  client?: 'browser' | 'headless';
   inputDelayTicks?: number;
   hashEveryTicks?: number;
   partySize?: number;
@@ -112,6 +114,7 @@ export type LockstepClientOptions = {
   captureReconnectInitialState?: () => unknown;
   onReconnectFromInitialState?: (snapshot: unknown) => boolean;
   onReconnectToken?: (token: string | null) => void;
+  exchangeHashes?: () => boolean;
 };
 
 const VERSION = 3;
@@ -246,8 +249,8 @@ export class LockstepClient {
         socket.addEventListener('error', () => reject(new Error('websocket_error')), { once: true });
       });
       this.send(this.reconnectToken
-        ? { v: VERSION, type: 'rejoin', code: this.code, reconnectToken: this.reconnectToken }
-        : { v: VERSION, type: 'join', code: this.code, player: this.options.player, setup: this.options.setup });
+        ? { v: VERSION, type: 'rejoin', code: this.code, reconnectToken: this.reconnectToken, client: this.options.client ?? 'browser' }
+        : { v: VERSION, type: 'join', code: this.code, player: this.options.player, setup: this.options.setup, client: this.options.client ?? 'browser' });
       handshakeSent = true;
     } catch (error) {
       if (this.reconnectToken) this.beginReconnect();
@@ -308,7 +311,7 @@ export class LockstepClient {
   }
 
   shouldExchangeHash(tick: number): boolean {
-    return tick >= 0 && tick % this.hashEveryTicks === 0;
+    return this.options.exchangeHashes?.() !== false && tick >= 0 && tick % this.hashEveryTicks === 0;
   }
 
   afterSimTick(tick: number, hash: string, snapshot: unknown | null): void {
@@ -451,6 +454,7 @@ export class LockstepClient {
       return;
     }
     if (message.type === 'hash') {
+      if (this.options.exchangeHashes?.() === false) return;
       const tick = normalizeTick(message.tick);
       if (tick === null || typeof message.hash !== 'string') return;
       if (this.hashFloorTick !== null && tick <= this.hashFloorTick) return;
@@ -950,6 +954,7 @@ function normalizeRoster(value: unknown): MultiplayerPlayer[] {
           playerId: String(entry.playerId ?? ''),
           name: String(entry.name ?? 'Rider'),
           town: String(entry.town ?? 'Home Claim'),
+          client: entry.client === 'headless' ? 'headless' as const : 'browser' as const,
         }))
         .filter((entry) => entry.playerId)
     : [];
@@ -964,7 +969,7 @@ function isOrderedRosterSubset(next: readonly MultiplayerPlayer[], previous: rea
       previousIndex += 1;
       if (candidate?.playerId === player.playerId) match = candidate;
     }
-    if (!match || match.name !== player.name || match.town !== player.town) return false;
+    if (!match || match.name !== player.name || match.town !== player.town || match.client !== player.client) return false;
   }
   return true;
 }

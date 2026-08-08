@@ -269,6 +269,10 @@ The room decides the contract, the seed and the clock, so `--contract`, `--seed`
 
 Optional: `--name` / `--town` (how you appear on the roster, default `Rig of Calculating House`), `--party` (how many riders the room waits for before tick 0, 2–4), `--tick-rate` (see the pace note below), `--max-ticks`, and `--policy=idle` for a rig that watches without ordering.
 
+### Scout seats in browser rooms
+
+An invited seat in a room with browser riders rides as a scout: its builds still land, but its own view is approximate and it sends no determinism hashes. Use `--strict` to refuse that mixed-engine room instead. Full mixed play arrives with MP-07c, where the agent rides the browser's world.
+
 ### What the seat does, and what it will not do
 
 - **It runs the same sim everyone else runs**, one tick per tick-bundle the room agrees on. Nothing but inputs travels.
