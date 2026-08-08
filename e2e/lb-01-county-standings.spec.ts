@@ -213,7 +213,7 @@ test('public county rows carry submitted time while legacy rows keep the missing
   expectNoErrors(errors);
 });
 
-test('endpoint stores optional self-declared stack and keeps the public board stack-blind', async () => {
+test('endpoint stores optional self-declared stack and publishes only its board-safe declaration', async () => {
   const kv = makeKv();
   await kv.put('standings:epoch-1-frontier:the-claim', JSON.stringify([
     {
@@ -296,10 +296,15 @@ test('endpoint stores optional self-declared stack and keeps the public board st
   const body = (await response.json()) as { board: Array<Record<string, unknown>> };
   expect(response.status).toBe(200);
   expect(body.board).toMatchObject([
-    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail' },
-    { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', defaulted: true },
-    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter' },
+    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false },
+    { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', defaulted: true, declared: false },
+    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion },
   ]);
+  for (const row of body.board.slice(0, 2)) {
+    expect(row).not.toHaveProperty('model');
+    expect(row).not.toHaveProperty('harness');
+    expect(row).not.toHaveProperty('harnessVersion');
+  }
   for (const row of body.board) {
     expect(row).not.toHaveProperty('anonId');
     expect(row).not.toHaveProperty('seed');
@@ -308,9 +313,6 @@ test('endpoint stores optional self-declared stack and keeps the public board st
     expect(row).not.toHaveProperty('inputLogHash');
     expect(row).not.toHaveProperty('stack');
     expect(row).not.toHaveProperty('tape');
-    expect(row).not.toHaveProperty('model');
-    expect(row).not.toHaveProperty('harness');
-    expect(row).not.toHaveProperty('harnessVersion');
     expect(row).not.toHaveProperty('config');
     expect(row).not.toHaveProperty('declaredBy');
     expect(row).not.toHaveProperty('species');

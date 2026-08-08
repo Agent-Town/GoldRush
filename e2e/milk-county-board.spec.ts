@@ -13,11 +13,15 @@ type MockKV = {
 type BoardRow = {
   rank: number;
   profileName: string;
-  party?: { riderCount: number; riders: string[] };
+  declared: boolean;
+  model?: string;
+  harness?: string;
+  harnessVersion?: string;
+  party?: { riderCount: number; riders: Array<{ name: string; declared: boolean; model?: string; harness?: string; harnessVersion?: string }> };
   reel?: { id: string; simVersion: number };
 };
 
-const SHOTS = path.resolve('reviews/shots-milk-county-board');
+const SHOTS = path.resolve('reviews/shots-f-board-1');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'posse',
@@ -114,7 +118,7 @@ const RIDERS = {
 
 test('a posse ranks only within its own size and never disturbs the solo board', async () => {
   const kv = makeKv();
-  expect((await post(kv, standing('1'.repeat(32), 20))).status).toBe(200);
+  expect((await post(kv, standing('1'.repeat(32), 20, { stack: { model: 'deepseek/deepseek-v4-flash', harness: 'pi', harnessVersion: '0.84.1' } }))).status).toBe(200);
   expect((await post(kv, standing('2'.repeat(32), 10))).status).toBe(200);
   // The strongest run in the county is a posse of two. If size did not partition the field it
   // would take rank 1 from the solo board; the whole point of the ruling is that it cannot.
@@ -126,26 +130,30 @@ test('a posse ranks only within its own size and never disturbs the solo board',
   expect(solo.status).toBe(200);
   expect(solo.body.party).toBe('solo');
   expect(solo.body.board).toMatchObject([
-    { rank: 1, waves: 20 },
-    { rank: 2, waves: 10 },
+    { rank: 1, waves: 20, declared: true, model: 'deepseek/deepseek-v4-flash', harness: 'pi', harnessVersion: '0.84.1' },
+    { rank: 2, waves: 10, declared: false },
   ]);
+  expect(solo.body.board?.[1]).not.toHaveProperty('model');
+  expect(solo.body.board?.[1]).not.toHaveProperty('harness');
+  expect(solo.body.board?.[1]).not.toHaveProperty('harnessVersion');
   for (const row of solo.body.board ?? []) expect(row).not.toHaveProperty('party');
 
   const posseOfTwo = await board(kv, '?contract=the-claim&epoch=epoch-1-frontier&party=2');
   expect(posseOfTwo.body.party).toBe('2');
   // Re-ranked from 1 inside the size, not carrying a global rank down.
   expect(posseOfTwo.body.board).toMatchObject([
-    { rank: 1, waves: 40, party: { riderCount: 2, riders: ['Ada', 'Cedar Jack'] } },
-    { rank: 2, waves: 30, party: { riderCount: 2, riders: ['Ada', 'Robin'] } },
+    { rank: 1, waves: 40, party: { riderCount: 2, riders: [{ name: 'Ada', declared: false }, { name: 'Cedar Jack', declared: true, model: 'gpt-5.6-sol', harness: 'codex' }] } },
+    { rank: 2, waves: 30, party: { riderCount: 2, riders: [{ name: 'Ada', declared: false }, { name: 'Robin', declared: false }] } },
   ]);
   const posseOfThree = await board(kv, '?contract=the-claim&epoch=epoch-1-frontier&party=3');
   expect(posseOfThree.body.board).toMatchObject([{ rank: 1, waves: 35, party: { riderCount: 3 } }]);
   expect((await board(kv, '?contract=the-claim&epoch=epoch-1-frontier&party=4')).body.board).toEqual([]);
 
-  // Species-blindness on the board is BY CONSTRUCTION: the rider list carries names only, so a
-  // declared stack cannot ride the ladder even though the field book will read it below.
+  // Display provenance rides the board now, while private storage and honesty markers do not.
   const serialized = JSON.stringify(posseOfTwo.body.board);
-  for (const tell of ['gpt-5.6-sol', 'codex', 'stack', 'declaredBy', 'model', 'harness', 'species', 'agent', 'anonId']) {
+  expect(serialized).toContain('gpt-5.6-sol');
+  expect(serialized).toContain('codex');
+  for (const tell of ['stack', 'declaredBy', 'species', 'agent', 'anonId']) {
     expect(serialized).not.toContain(tell);
   }
 
@@ -388,17 +396,17 @@ test('plain boot: posse chips rank within size, the field book counts hands, and
               ok: true,
               party: '2',
               board: [
-                { rank: 1, profileName: 'Ada', secured: true, waves: 30, timeAlive: 630, gold: 300, baseValue: 600, difficulty: 'trail', party: { riderCount: 2, riders: ['Ada', 'Cedar Jack'] } },
-                { rank: 2, profileName: 'Robin', secured: true, waves: 25, timeAlive: 625, gold: 250, baseValue: 500, difficulty: 'greenhorn', party: { riderCount: 2, riders: ['Ada', 'Robin'] } },
+                { rank: 1, profileName: 'Ada', secured: true, waves: 30, timeAlive: 630, gold: 300, baseValue: 600, difficulty: 'trail', declared: false, party: { riderCount: 2, riders: [{ name: 'Ada', declared: false }, { name: 'Cedar Jack', declared: true, model: 'deepseek/deepseek-v4-flash', harness: 'pi' }] } },
+                { rank: 2, profileName: 'Robin', secured: true, waves: 25, timeAlive: 625, gold: 250, baseValue: 500, difficulty: 'greenhorn', declared: false, party: { riderCount: 2, riders: [{ name: 'Ada', declared: false }, { name: 'Robin', declared: false }] } },
               ],
             }
           : {
               ok: true,
               party: 'solo',
               board: [
-                { rank: 1, profileName: 'Cedar Jack', secured: true, waves: 19, timeAlive: 518, gold: 211, baseValue: 150, difficulty: 'trail', reel: { id: playable.id, simVersion: 1 } },
-                { rank: 2, profileName: 'Grace', secured: true, waves: 17, timeAlive: 500, gold: 180, baseValue: 140, difficulty: 'vein-hunter', reel: { id: foreign.id, simVersion: 2 } },
-                { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 400, gold: 90, baseValue: 100, difficulty: 'trail' },
+                { rank: 1, profileName: 'Cedar Jack', secured: true, waves: 19, timeAlive: 518, gold: 211, baseValue: 150, difficulty: 'trail', declared: true, model: 'deepseek/deepseek-v4-flash', harness: 'pi', reel: { id: playable.id, simVersion: 1 } },
+                { rank: 2, profileName: 'Grace', secured: true, waves: 17, timeAlive: 500, gold: 180, baseValue: 140, difficulty: 'vein-hunter', declared: true, model: 'gpt-5.6-sol', harness: 'codex', reel: { id: foreign.id, simVersion: 2 } },
+                { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 400, gold: 90, baseValue: 100, difficulty: 'trail', declared: false },
               ],
             };
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(body) });
@@ -417,21 +425,23 @@ test('plain boot: posse chips rank within size, the field book counts hands, and
 
   // Solo looks exactly like it always did, plus the reel column.
   await expect(page.getByTestId('county-standings-row-1')).toContainText('Cedar Jack');
+  await expect(page.getByTestId('county-standings-stack-1')).toHaveText('deepseek/deepseek-v4-flash · pi');
+  await expect(page.getByTestId('county-standings-stack-3')).toHaveText('Undeclared rider');
   await expect(page.getByTestId('county-standings-watch-1')).toBeVisible();
   await expect(page.getByTestId('county-standings-row-3')).toContainText('No reel');
   expect(seen.at(-1)).not.toContain('party=');
 
   await page.getByTestId('county-standings-party-2').click();
   await expect(page.getByTestId('county-standings-row-1')).toContainText('Ada');
-  await expect(page.getByTestId('county-standings-riders-1')).toHaveText('Ada, Cedar Jack');
-  await expect(page.getByTestId('county-standings-riders-2')).toHaveText('Ada, Robin');
-  // Species-blind: the posse board shows names, never the rig that says which hands were code.
-  await expect(page.getByTestId('county-standings-board')).not.toContainText('gpt-5.6-sol');
+  await expect(page.getByTestId('county-standings-riders-1')).toContainText('Ada');
+  await expect(page.getByTestId('county-standings-riders-1')).toContainText('Cedar Jack');
+  await expect(page.getByTestId('county-standings-stack-1-2')).toHaveText('deepseek/deepseek-v4-flash · pi');
+  await expect(page.getByTestId('county-standings-stack-2-2')).toHaveText('Undeclared rider');
   expect(seen.at(-1)).toContain('party=2');
   await expect(page.getByTestId('county-standings-party-4')).toBeVisible();
 
   await mkdir(SHOTS, { recursive: true });
-  await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `posse-board-${testInfo.project.name}.png`) });
+  await page.getByTestId('county-standings-board').screenshot({ path: path.join(SHOTS, `posse-board-${testInfo.project.name}.png`) });
 
   // The Field Book counts hands — information, and no rank anywhere in it.
   await page.getByTestId('claim-ledger-field-book').click();

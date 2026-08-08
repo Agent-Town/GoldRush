@@ -359,6 +359,27 @@
   white-space: normal;
 }
 
+.county-standings__riders > span,
+.county-standings__stack {
+  display: block;
+  max-width: min(220px, 45vw);
+  overflow: hidden;
+  color: #684728;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.county-standings__riders > span + span {
+  margin-top: 4px;
+}
+
+.county-standings__riders .county-standings__stack {
+  color: #315f5f;
+  font-size: 0.68rem;
+}
+
 .county-standings__watch {
   border: 1px solid rgba(76, 48, 23, 0.44);
   border-radius: 6px;
