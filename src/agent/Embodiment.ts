@@ -6,7 +6,7 @@ import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 import type { GoldRushToolName, ToolReceipt } from './ToolSurface';
-import { agentBark, barkForReceipt } from './Voice';
+import { agentBark, barkForReceipt, voiceKindForReceipt, type AgentVoiceKind } from './Voice';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { observeStandingOrders, resetStandingOrders, tickStandingOrders } from './StandingOrders';
 
@@ -60,6 +60,7 @@ export class ProspectorEmbodiment {
   private moving = false;
   private drifting = false;
   private workRemaining = 0;
+  private simulationAt = 0;
   private presentationAt = 0;
   private nextWorkSeconds: number = Balance.agent.workSeconds;
   private nextSurveyAt: number = Balance.agent.surveyFirstSeconds;
@@ -93,6 +94,7 @@ export class ProspectorEmbodiment {
     this.moving = false;
     this.drifting = false;
     this.workRemaining = 0;
+    this.simulationAt = 0;
     this.presentationAt = 0;
     this.nextWorkSeconds = Balance.agent.workSeconds;
     this.nextSurveyAt = Balance.agent.surveyFirstSeconds;
@@ -112,8 +114,9 @@ export class ProspectorEmbodiment {
     this.lastReceiptTool = receipt.tool;
     if (receipt.tool === 'et.goldrush.get_state') return;
 
+    const kind = voiceKindForReceipt(receipt);
     const line = barkForReceipt(receipt, this.receiptCount);
-    if (line) this.say(line);
+    if (line && kind) this.say(line, kind);
     if (!receipt.outcome.ok && receipt.outcome.reason !== 'NO_SYSTEM_API') return;
 
     const target = point ?? { x: Balance.agent.homeX, z: Balance.agent.homeZ };
@@ -124,6 +127,7 @@ export class ProspectorEmbodiment {
   }
 
   updateSimulation(delta: number, at: number, hero?: ProspectorPoint): void {
+    this.simulationAt = at;
     const order = tickStandingOrders(at, this.group.position);
     if (order.receipt) this.handleReceipt(order.receipt, order.receiptPoint);
     else if (order.movement) this.assignWork(order.movement, 0);
@@ -220,6 +224,7 @@ export class ProspectorEmbodiment {
     this.workRemaining = state.workRemaining;
     this.nextWorkSeconds = state.nextWorkSeconds;
     this.nextSurveyAt = at + state.nextSurveyIn;
+    this.simulationAt = at;
     this.receiptCount = state.receiptCount;
     this.orientationResolver.reset();
     this.snapRenderState();
@@ -312,7 +317,10 @@ export class ProspectorEmbodiment {
     return Terrain.visualY(x, z, Balance.agent.groundY + Balance.agent.spriteScale * 0.5 + 0.12) + bob;
   }
 
-  private say(line: string): void {
+  private say(line: string, kind?: AgentVoiceKind): void {
+    if (kind === 'refusal') {
+      this.nextSurveyAt = Math.max(this.nextSurveyAt, this.simulationAt + Balance.agent.refusalHoldSeconds);
+    }
     this.lastLine = line;
     const anchor = this.group.position.clone();
     anchor.y += Balance.agent.spriteScale * (RUN_CAST_SCALE - 1);

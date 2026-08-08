@@ -255,6 +255,8 @@ export const Balance = {
     workSeconds: 0.9,
     surveyFirstSeconds: 7,
     surveyCooldownSeconds: 19,
+    // F-1565-1 / f1567-2: keep a refusal readable through the first idle-survey deadline.
+    refusalHoldSeconds: 8,
     xpMoteAgeS: 4,
     priorityChaseMark: 40,
     priorityRepair: 30,

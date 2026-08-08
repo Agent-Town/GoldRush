@@ -423,8 +423,35 @@ test('permission-denied receipts do not send the Prospector to the denied target
   // so changing either axis moves this bound; both equal 0.4 checks guard the same geometric drift.
   expect(gapClosed).toBeLessThan(0.4);
   expect(driftAbs).toBeLessThan(0.4);
-  // F-1558-1: Embodiment.updateSimulation's idle-survey branch may replace the denial bark after
-  // surveyCooldownSeconds (19 s), so after.lastLine is deliberately not asserted here.
+  // F-1565-1: Balance.agent.refusalHoldSeconds now keeps the denial bark readable while this
+  // short drift window advances; the dedicated hold test crosses the first survey deadline.
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('permission-denied bark survives the first idle survey', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&timescale=4&nowaves&nolevel&seed=m4-06-denied-hold');
+  await page.waitForFunction(() => Boolean(window.__GR_AGENT__));
+  await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
+  const at = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.timeAlive);
+  expect(at).toBeLessThan(Balance.agent.surveyFirstSeconds);
+  const node = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((entry) => entry.active));
+  expect(node).toBeTruthy();
+
+  const receipt = await page.evaluate((nodeId) => window.__GR_AGENT__?.panAt(nodeId), node!.id);
+  expect((receipt as { outcome?: { ok?: boolean; reason?: string } } | undefined)?.outcome).toMatchObject({
+    ok: false,
+    reason: 'PERMISSION_DENIED',
+  });
+  expect(['held', 'ask me', 'no trust']).toContain((await companion(page)).lastLine);
+
+  await page.evaluate(
+    (seconds) => window.__GR_TEST__!.advanceSim(seconds),
+    Balance.agent.surveyFirstSeconds - at + 0.25,
+  );
+  expect(['held', 'ask me', 'no trust']).toContain((await companion(page)).lastLine);
+  mkdirSync('reviews/shots-f1567-2', { recursive: true });
+  await page.screenshot({ path: `reviews/shots-f1567-2/${testInfo.project.name}-held-refusal.png`, fullPage: true });
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
