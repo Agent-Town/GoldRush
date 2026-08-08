@@ -1001,6 +1001,29 @@ figure:has(> .town-ui__contract-art-image--interim)::after {
   gap: 8px;
 }
 
+.town-ui__ride-agent {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 6px;
+}
+
+.town-ui__ride-agent-command {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.town-ui__ride-agent-command textarea {
+  min-width: 0;
+  resize: none;
+  border: 2px solid rgba(46, 27, 14, 0.58);
+  border-radius: 8px;
+  padding: 8px;
+  color: #2e1b0e;
+  background: rgba(255, 248, 232, 0.88);
+  font: 700 0.76rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
 .town-ui__ride-code {
   min-width: 0;
   border: 2px dashed rgba(46, 27, 14, 0.58);
@@ -1432,6 +1455,10 @@ figure:has(> .town-ui__contract-art-image--interim)::after {
 
   .town-ui__ride-actions {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .town-ui__ride-agent-command {
+    grid-template-columns: 1fr;
   }
 
   .town-ui__ride-card h3 {

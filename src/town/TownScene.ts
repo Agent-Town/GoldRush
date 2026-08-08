@@ -545,6 +545,7 @@ export class TownScene {
     this.hideBark();
   };
   private ridePhrase: string | null = null;
+  private rideCode: string | null = null;
   private rideStatus = '';
   private rideBusy = false;
   private rideExpanded = sessionStorage.getItem(RIDE_DISCLOSURE_KEY) === '1';
@@ -1330,6 +1331,10 @@ export class TownScene {
     }
     if (target?.closest('[data-ride-start]')) {
       this.launchRideTogether();
+      return;
+    }
+    if (target?.closest('[data-ride-agent-copy]')) {
+      void this.copyRideAgentCommand();
       return;
     }
     if (target?.closest('[data-ride-join]')) {
@@ -2311,6 +2316,9 @@ export class TownScene {
 
   private renderRideTogetherCard(): string {
     const phrase = this.ridePhrase;
+    const agentCommand = phrase && this.rideCode
+      ? `node scripts/gr-sim.mjs --room ${this.rideCode} --origin ${new URL(relayBaseFromTownSearch(), window.location.href).origin} # claim ${phrase}`
+      : null;
     const status = this.rideStatus || (phrase ? 'Give this claim word to the other rider.' : 'Open a claim or join with a claim word.');
     return `
       <details class="town-ui__ride-card" data-ride-disclosure data-testid="ride-together-card" ${this.rideExpanded ? 'open' : ''}>
@@ -2339,6 +2347,17 @@ export class TownScene {
             ? `<output class="town-ui__ride-code" data-testid="ride-code-word">${escapeHtml(phrase)}</output>`
             : '<output class="town-ui__ride-code town-ui__ride-code--empty" data-testid="ride-code-word">No claim open</output>'
         }
+        ${
+          agentCommand
+            ? `<div class="town-ui__ride-agent">
+                <p>Invite your agent from the Calculating House; run this once for each agent riding along.</p>
+                <div class="town-ui__ride-agent-command">
+                  <textarea readonly rows="4" data-testid="ride-agent-command" aria-label="Agent invitation command">${escapeHtml(agentCommand)}</textarea>
+                  <button class="town-ui__contract-action" type="button" data-ride-agent-copy data-testid="ride-agent-copy">Copy command</button>
+                </div>
+              </div>`
+            : ''
+        }
         <div class="town-ui__ride-join">
           <input class="town-ui__name-input" data-ride-join-input data-testid="ride-join-input" aria-label="Claim word" autocomplete="off" spellcheck="false" />
           <button class="town-ui__contract-action" type="button" data-ride-join data-testid="ride-join-submit" ${this.rideBusy ? 'disabled' : ''}>
@@ -2359,6 +2378,7 @@ export class TownScene {
     try {
       const ride = await createRideRoom(relayBaseFromTownSearch(), this.ridePlayer());
       this.ridePhrase = ride.phrase;
+      this.rideCode = ride.code;
       this.rideStatus = 'Claim open. Give this word to the other rider.';
     } catch {
       this.rideStatus = "The claim wire isn't ready yet.";
@@ -2373,6 +2393,26 @@ export class TownScene {
     if (!this.confirmFreshContractLaunch(DEFAULT_CONTRACT_ID)) return;
     clearRunSuspend();
     this.options.onLaunchContract?.(DEFAULT_CONTRACT_ID);
+  }
+
+  private async copyRideAgentCommand(): Promise<void> {
+    const command = this.board.querySelector<HTMLTextAreaElement>('[data-testid="ride-agent-command"]');
+    const status = this.board.querySelector<HTMLElement>('[data-testid="ride-status"]');
+    if (!command || !status) return;
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('clipboard_unavailable');
+      await navigator.clipboard.writeText(command.value);
+      this.rideStatus = 'Agent invitation copied.';
+    } catch {
+      try {
+        command.select();
+        command.setSelectionRange(0, command.value.length);
+      } catch {
+        // The command remains visible for manual copying.
+      }
+      this.rideStatus = 'Agent invitation selected. Copy it from here.';
+    }
+    status.textContent = this.rideStatus;
   }
 
   private async joinRideTogether(): Promise<void> {
