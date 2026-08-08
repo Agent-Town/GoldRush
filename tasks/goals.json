@@ -4503,6 +4503,13 @@
               "mergeHash": "14b3c927c5d1d2d2bf96584d0f7731b72c816c66"
             },
             {
+              "id": "f1572-1-lane-arm-uncensored-drift",
+              "title": "Measure the lane-shell driftAbs distribution UNCENSORED for the first time, so F-1564-1's '0 breaches in 24' can be told apart from a property of the censoring it was measured through",
+              "status": "queued",
+              "taskFile": "lane-b-f1572-1-lane-arm-uncensored-drift.md",
+              "gate": "none — fire-authorable; the fire arm was run s1572 (artifacts/f1572-1-fire-shell-drift/measurement.md, 12 obs, 0 breaches, max 0.3722002149381437) and the cure it depends on merged at 14b3c927c5d1d2d2bf96584d0f7731b72c816c66"
+            },
+            {
               "id": "f1570-1-no-trace-banner-column",
               "title": "The residual bucket is named for what was checked (NO-TRACE, not TRULY-BANKED) and declares the masters that forbid their own queueing: add a BANNER column and split the headline into residual vs candidates (F-1570-1)",
               "status": "merged",
