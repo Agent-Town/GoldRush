@@ -1,3 +1,5 @@
+> ⏸️ ARCHIVE, NOT WORK — DO NOT QUEUE (s1545 mirrored the lifted CODEX-WALL here per the retention law; disposition added by the attended f-bal-1 drain when task-guard-audit flagged it invisible)
+
 THE WALL IS LIFTED — 2026-08-08 07:2x, owner word: Codex shows 96% REMAINING, resets 11:00. The 1AM "resets at 11 AM" meant unused capacity EXPIRES then, not that codex was exhausted — the wall was the attended session's misread, corrected by the owner. Fires: BURN THE WINDOW — refill lanes per the ladders, drains outrank refills, keep queues 1-2 deep. After 11:00 this file is history; leave it as the record of the misread (retention law).
 
 ---
