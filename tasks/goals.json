@@ -4456,6 +4456,13 @@
               "gate": "none \u2014 fire-authorable, comment-only; F-1561-2 from reviews/f1560-1-m4-06-drift-ceiling-provenance.md; verified at e2e/m4-06-embodiment.spec.ts:85-86 and src/agent/Embodiment.ts:299-300"
             },
             {
+              "id": "f1562-1-m4-06-drift-deadband-constant",
+              "title": "M4-06 permission-denied: the widened 288-300 citation spans a NINTH constant (the 0.06 drift deadband at Embodiment.ts:288) that the comment does not name",
+              "taskFile": "lane-c-f1562-1-m4-06-drift-deadband-constant.md",
+              "status": "queued",
+              "gate": "none — fire-authorable, comment-only; F-1562-1 from reviews/f1561-2-m4-06-drift-constants-both-axes.md; verified by reading src/agent/Embodiment.ts:285-301 (this.drifting = distance > 0.06)"
+            },
+            {
               "id": "f1560-1-m4-06-drift-ceiling-provenance",
               "title": "M4-06 permission-denied: two-window experiment to prove or refute the drift ceiling, then name the constants it depends on",
               "taskFile": "lane-b-f1560-1-m4-06-drift-ceiling-provenance.md",
