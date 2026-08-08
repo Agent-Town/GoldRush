@@ -416,9 +416,10 @@ test('permission-denied receipts do not send the Prospector to the denied target
   expect(distance(after.target, before.target)).toBeLessThan(0.01);
   expect(distance(after.target, node!.position)).toBeGreaterThan(0.5);
   // F-1560-1 two-window evidence: artifacts/f1560-1-drift-ceiling/samples.txt.
-  // This 0.4 ceiling depends on Balance.agent.moveSpeed (4.8), the 0.58 idle multiplier,
+  // This 0.4 ceiling depends on Balance.agent.moveSpeed (4.8) and Embodiment.ts:288–300's 0.06
+  // drift deadband—the threshold below which the agent stops correcting—plus the 0.58 idle multiplier,
   // the -1.8 x follow offset and ±0.22 / 0.78 Hz x oscillation, and the -1.25 z follow offset
-  // and ±0.18 / 0.52 Hz z oscillation in Embodiment.ts:288–300. driftAbs is Math.hypot(dx, dz),
+  // and ±0.18 / 0.52 Hz z oscillation. driftAbs is Math.hypot(dx, dz),
   // so changing either axis moves this bound; both equal 0.4 checks guard the same geometric drift.
   expect(gapClosed).toBeLessThan(0.4);
   expect(driftAbs).toBeLessThan(0.4);
