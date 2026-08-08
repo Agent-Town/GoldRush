@@ -102,3 +102,70 @@ The target start condition deliberately means immediately after the denied recei
 The live start clock varies before the first deterministic schedule call. A future cure that wants a numerically fixed start phase must pin that arrangement explicitly; this evidence does not authorize a `src/**` change or any change to the `m4-06` bounds.
 
 READY-FOR-GATES
+
+---
+
+## DRAIN GATE — s1580 fire, 2026-08-09
+
+**Merged to main:** `4e39003ebec29d9d3fa22f6fbbc4e085f5d26bda` (`--no-ff`, ort strategy, clean)
+**Branch/tip:** `lane/c` @ `466cf12a6` · **Merge base:** `1ac739184d22b76037287f35fc94db66c6872a92`
+**Gated by:** s1580 fire in detached worktree `worktrees/gate-s1580` (§3.0b custody) · `--workers=1` throughout (§3.1)
+**§3.0 block-check:** ✅ CLEAR — a real leaf, `status:"queued"` (not UNKNOWN)
+
+### VERDICT: **MERGED** — the deliverable s1579 asked for, with its second half answered honestly as unanswerable.
+
+### What the gate re-derived rather than inherited
+
+- **The "existing tests byte-unchanged" claim was COUNTED, not trusted.** `git diff main lane/c` on the spec:
+  **55 added, 0 removed**, exactly one new `test(` title. The original line-19 test and the four line-59
+  phase tests are untouched by construction, not by assertion.
+- **The oscillation claim reproduced live at the gate.** The re-run's own tail shows the second rise in
+  progress — `driftAbs` 0.2870 → 0.2875 → 0.3032 across absolute `simTick` 123→130 — consistent with the
+  banked `0.021095023109728415` minimum at `simTick` 82–85 and the later climb.
+
+### Merge classification
+
+Main moved **only** `STATUS.md`, `logs/.goal-tree.html`, `logs/dashboard.html`, `logs/task-stats.jsonl`,
+`tasks/BACKLOG.md` since the base. The lane touched **only** `e2e/f1575-1-drift-tick-budget.spec.ts`,
+`artifacts/f1579-1-live-regime-sweep/**` and this review. **Fully disjoint — zero BOTH-MOVED files**, so
+the merge needed no three-way judgement and none was invented.
+
+| File | Class |
+|---|---|
+| `e2e/f1575-1-drift-tick-budget.spec.ts` | LANE-TOUCHED only (additive, +55/-0) |
+| `artifacts/f1579-1-live-regime-sweep/*.txt` (6) | NEW |
+| `reviews/f1579-1-live-regime-drift-sweep.md` | NEW |
+
+### Evidence (merged tree)
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | rc=0 |
+| `npm run build` | rc=0, Vite **1.17s** |
+| slice spec `f1575-1-drift-tick-budget` | **12 passed (27.4s)**, both projects |
+| adjacent `m4-06-embodiment` + `task-025` + `m1-01` + `m2-01` | **51 passed / 1 failed (3.7m)**, both projects — see F-1580-1 |
+| `run-guards.mjs --changed-since <base>` | **5/5 PASS** — node-guards 292s, power-budget p95 **0.322ms**, task-guards, citations, gate-callers |
+
+Boot probe not run separately: the diff is `e2e/**` + evidence only, touches no `src/`, and the new test
+itself asserts zero console and zero page errors on desktop and 390 px mobile.
+
+### Findings
+
+**F-1580-1 (s1580, NON-BLOCKING, NOT ATTRIBUTABLE TO THIS SLICE) — `m1-01-claim-jumpers-death.spec.ts:29`
+desktop-chrome is load-sensitive: it reds late in a 52-test batch and passes 4/4 in isolation on the very
+same tree.**
+
+⚖️ **Why this did not block the merge, argued mechanically rather than by plausibility:** the failing batch
+was `m4-06` + `task-025` + `m1-01` + `m2-01` — **it did not include the modified spec at all** — and the lane
+changed **no `src/`** (verified by `--name-status`: only `e2e/f1575-1`, `artifacts/**`, this review). No file
+that any of those four specs loads differs between main and the merged tree. The red is therefore
+independent of the slice by construction, which is a stronger statement than a control run would have given.
+
+⚠️ **What is NOT claimed: that this is a benign flake.** `red-inventory-lookup` returns
+`CLEAN-IN-INVENTORY … snapshot date 2026-07-28` — a green on a date twelve days stale, which is **not** an
+exoneration today (the standing caution that CLEAN means green *on the snapshot date*). The isolation re-run
+passed 4/4 in 24.1s while the batch run took 3.7m, which fits a **load ceiling** rather than a bad line —
+the shape a documented "flake" often turns out to be. ⓘ **The error text is unrecoverable:** the passing
+re-run cleared `test-results/`, and this fire chose not to spend another 3.7m batch reproducing it. A
+successor wanting to characterise it should re-run the same four-spec batch and capture the failure before
+re-running anything in isolation.
