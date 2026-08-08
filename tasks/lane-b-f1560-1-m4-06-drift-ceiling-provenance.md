@@ -56,7 +56,7 @@ with 6.9% of margin, and F-1560-2's whole justification for accepting the narrow
    readings **whether the test passes or fails** — use the printed `driftAbs` lines, which are emitted
    before any assertion. If a run aborts before printing, say so and report how many samples you actually got.
 
-3. **RESTORE.** Put `e2e/m4-06-embodiment.spec.ts:409` back to `advanceSim(0.35)`. This is verifiable and it
+3. **RESTORE.** Put `e2e/m4-06-embodiment.spec.ts:409` ("permission-denied receipts do not send the Prospector to the denied target") back to `advanceSim(0.35)`. This is verifiable and it
    will be verified: after scope 5, `git diff main -- e2e/m4-06-embodiment.spec.ts` must show **no changed
    line containing `expect(` and no changed line containing `advanceSim`** — comment lines only.
 
@@ -71,7 +71,7 @@ with 6.9% of margin, and F-1560-2's whole justification for accepting the narrow
    - **INCONCLUSIVE** if `max_B` lands between those two — report it plainly as inconclusive with both
      numbers. Do not round it into whichever verdict looks tidier.
 
-5. **THE F-1560-2 CURE (comment-only).** At `e2e/m4-06-embodiment.spec.ts:418`–`:422`, replace the comment
+5. **THE F-1560-2 CURE (comment-only).** At `e2e/m4-06-embodiment.spec.ts:418` ("permission-denied receipts do not send the Prospector to the denied target")–`:422`, replace the comment
    block so that it names **what the ceiling actually depends on**, not just a sample max. It must name:
    `Balance.agent.moveSpeed` (4.8), the `0.58` idle multiplier and the `-1.8` follow offset and
    `±0.22 / 0.78 Hz` oscillation (all `src/agent/Embodiment.ts:288`–`:299`), and it must state that
