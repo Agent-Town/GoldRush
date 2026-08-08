@@ -96,3 +96,54 @@ Lane-touched paths are limited to:
 - `reviews/f1584-1-banked-master-banner-vocabulary.md`
 
 Main advanced to `f5397843f` after the lane reset, but changed none of these three paths: each is LANE-TOUCHED and none is MAIN-MOVED. No conflicts were resolved and no out-of-firewall path was changed.
+
+---
+
+> ## ✅ DRAINED s1585 — MERGED `706fb82395f9bb463fe4816341d2476df3801d66`
+>
+> **Custody (§3.0b):** gated in a detached worktree `gate-s1585`, never in main's working tree. The three
+> lane blobs were installed by `git show lane/c:<path>` and **verified by `hash-object` against
+> `git rev-parse lane/c:<path>` before any gate ran** — `c54f36c3` / `4f91a67a` / `e5f26b1b`, three OKs.
+> Since `lane-freeze-classify` reports all three paths **LANE-ONLY with `main == base` blobs**, main-at-HEAD
+> plus those three paths *is* the merged tree exactly.
+>
+> **Battery on the merged tree:** `npx tsc --noEmit` **rc=0** · `npm run build` **green, Vite 1.30s**,
+> asset-diet green · slice suite `master-shipped-classifier.test.mjs` **12 tests / 12 pass / 0 fail** ·
+> `test:node-guards` **410 tests / 407 pass / 0 fail / 3 skipped, 318.8s, run ALONE** (F-1537-1's
+> "run it alone" rule observed; `law-pointer-guard` is inside this battery and **did not redden**, so nothing
+> was re-based). **No Playwright owed or claimed** — zero `src/**`, `e2e/**`, `src/sim/`, `src/systems/`,
+> `src/entities/` paths, so neither the slice-spec rule nor F-1460-1 binds.
+>
+> **Acceptance re-derived by the drain rather than inherited (the master asked for exactly this):** the cured
+> script was run against the **live corpus** via `--root .` — the gate worktree has no corpus, because
+> `tasks/done/` is untracked and therefore empty in any fresh worktree, which would have made this
+> measurement vacuous. Before `→ 3 candidates`, after `→ 0 candidates`; bannered **60 → 63**; `TOTAL 980`,
+> `SHIPPED 566`, `RAN-UNMERGED 351`, `NO-TRACE 63`, `DISAGREES 96` **all unchanged**. **Newly matched:
+> exactly 3** — the master's predicted count, independently confirmed.
+>
+> ⓘ **ONE CLARIFICATION THE DRAIN ADDS, because a careless reader will otherwise measure 13 and conclude the
+> blast radius was understated.** Diffing the *banner string* across all 980 masters shows **13 changes**, not
+> 3: the extra ten are `storybook-e2..e10` + `storybook-appendices`, whose banner text moves from
+> `'do not queue'` to `'NEVER QUEUE'`. **They were already bannered** — the old pattern matched them
+> case-insensitively — and the widened alternation merely captures a different phrase from the same
+> first-six-line window. **Truthiness is unchanged for all ten, `CANDIDATES` is unchanged for all ten, and
+> `0 of 980` verdicts moved.** The runner's "newly captured 3" counts *matches*, which is the correct figure
+> for the number the banner actually gates; the 13 is a display-text delta with no consumer. *This drain
+> raised it as a suspected under-report and disproved it by measurement — recorded so the next reader does
+> not re-open it.*
+>
+> **Merge classification re-verified at drain time** (a review's classification is perishable):
+> `lane-freeze-classify lane/c` → `paths=3 · DUPLICATE 0 · LANE-ONLY 3 · MAIN-ONLY 0 · BOTH-MOVED 0`. Main
+> advanced past the review's `f5397843f` to `1963f8dc7` during this fire and still moved none of the three.
+> **No conflicts.**
+>
+> **One environmental difference from the runner's report, stated rather than smoothed over:** the runner
+> recorded `410 pass / 0 skipped`; this drain measured `407 pass / 3 skipped` on the same battery. **Zero
+> failures on both sides**, so the merge is unaffected; the delta is which arms self-skip in the fire shell
+> versus the lane shell (F-1269-1 — they are not the same instrument). Not a finding, not a red.
+>
+> **GZ-01:** no news item written, deliberately. This slice changes a **factory probe**, not the game — no
+> player-visible surface, so the filter law excludes it. This is the same judgement F-1585-1 documents for
+> seven other merges in this window.
+>
+> **F-1584-1 CLOSED**; goal leaf `f1584-1-banked-master-banner-vocabulary` is `status:"merged"`.
