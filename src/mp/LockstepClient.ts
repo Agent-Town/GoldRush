@@ -3,6 +3,7 @@ import { GAME_API_ORIGIN } from '../app/GameApi';
 import type { Intents } from '../core/InputController';
 import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
 import { isBuildableId } from '../game/buildables';
+import { validateStandingOrders, type StandingOrder } from '../agent/StandingOrders';
 
 export type LockstepPoint = { x: number; z: number };
 export type LockstepBuildingRef = { id: string; index: number };
@@ -23,7 +24,8 @@ export type LockstepAction =
   | { type: 'context_action'; action: 'upgrade' | 'demolish'; target: LockstepBuildingRef }
   | { type: 'context_action'; action: 'fund' }
   | { type: 'set_agent_rung'; level: number; granted: boolean }
-  | { type: 'set_agent_ability'; ability: string; granted: boolean };
+  | { type: 'set_agent_ability'; ability: string; granted: boolean }
+  | { type: 'agent_orders'; version: 1; orders: StandingOrder[]; submissionId: string };
 
 export type LockstepInput = {
   mx: number;
@@ -125,6 +127,9 @@ const RECONNECT_RETRY_MS = 10_000;
 const HEARTBEAT_EVERY_MS = 15_000;
 const MAX_HASH_HISTORY = 128;
 const MAX_ACTIONS_PER_TICK = 24;
+const MAX_INPUT_BYTES = 4 * 1024;
+// Leave room beneath the relay's 4 KiB whole-input ceiling for the action envelope.
+const MAX_AGENT_ORDERS_BYTES = 3 * 1024;
 const SNAPSHOT_RAW_LIMIT_BYTES = 180 * 1024;
 const SNAPSHOT_WIRE_LIMIT_BYTES = 190 * 1024;
 const SNAPSHOT_CODEC = 'gzip-base64-v1';
@@ -285,10 +290,12 @@ export class LockstepClient {
     if (this.roster.length < 2 && !this.reconnectSoloAfterReplay) return null;
     if (this.nextSimTick === 0 && this.roster.length < (this.options.partySize ?? 2)) return null;
     while (!this.reconnectSoloAfterReplay && this.nextInputTick <= this.nextSimTick + this.inputDelayTicks) {
+      const mx = roundAxis(localInput.mx);
+      const my = roundAxis(localInput.my);
       const input: LockstepInput = {
-        mx: roundAxis(localInput.mx),
-        my: roundAxis(localInput.my),
-        actions: this.pendingActions.splice(0, MAX_ACTIONS_PER_TICK),
+        mx,
+        my,
+        actions: this.takePendingActions(mx, my),
       };
       this.send({ v: VERSION, type: 'input', tick: this.nextInputTick, input });
       this.sendTimes.set(this.nextInputTick, performance.now());
@@ -791,6 +798,16 @@ export class LockstepClient {
     this.previousSample = next;
   }
 
+  private takePendingActions(mx: number, my: number): LockstepAction[] {
+    const actions: LockstepAction[] = [];
+    while (actions.length < MAX_ACTIONS_PER_TICK && this.pendingActions.length > 0) {
+      const next = this.pendingActions[0]!;
+      if (jsonBytes({ mx, my, actions: [...actions, next] }) > MAX_INPUT_BYTES) break;
+      actions.push(this.pendingActions.shift()!);
+    }
+    return actions;
+  }
+
 }
 
 export type LockstepSampleEdgeState = SampleActionState;
@@ -1059,7 +1076,22 @@ function normalizeAction(value: unknown): LockstepAction | null {
       ? { type: 'set_agent_ability', ability, granted: value.granted }
       : null;
   }
+  if (value.type === 'agent_orders' && value.version === 1) {
+    const submissionId = cleanToken(value.submissionId, 96);
+    if (!submissionId || jsonBytes(value.orders) > MAX_AGENT_ORDERS_BYTES) return null;
+    const validated = validateStandingOrders(value.orders);
+    return validated.ok ? { type: 'agent_orders', version: 1, orders: validated.orders, submissionId } : null;
+  }
+  // Forward-compatible wire law: unknown action types are ignored.
   return null;
+}
+
+function jsonBytes(value: unknown): number {
+  try {
+    return new TextEncoder().encode(JSON.stringify(value)).byteLength;
+  } catch {
+    return Number.POSITIVE_INFINITY;
+  }
 }
 
 function normalizePoint(value: unknown): LockstepPoint | null {
