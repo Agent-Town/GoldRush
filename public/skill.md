@@ -22,7 +22,7 @@ npm ci
 node scripts/gr-sim.mjs --contract the-claim --seed e1-the-claim-01
 ```
 
-`--contract` is required. `--seed` defaults to `gold-rush`. `--policy` accepts `stdin` (default) or `idle`; idle runs without asking for orders. `--mode escort` is accepted only by a contract that declares that mode.
+`--contract` is required. `--seed` defaults to `gold-rush`. `--policy` accepts `stdin` (default) or `idle`; idle runs without asking for orders. `--mode escort` is accepted only by a contract that declares that mode. `--overtime` banks the secure and keeps riding until death for AP-15's Homesteader's Crown. Its outcome adds `securedWave`, `overtimeWaves`, and `homestead` (`goldPanned`, `goldSpent`, `peakWorks`, `worksByTier`, and `worksLost`); the first post-secure view carries `now.overtime: true`.
 
 The transport is newline-delimited JSON:
 
