@@ -4495,6 +4495,13 @@
               "mergeHash": "3d4651f91175b30dc57d19db46e407b411e69abf"
             },
             {
+              "id": "f1569-1-master-shipped-classifier",
+              "title": "Shipped-ness is answered by a probe, never by a filename: classify every master SHIPPED / RAN-UNMERGED / TRULY-BANKED with evidence, retiring the 107-vs-66 filename artefact (F-1568-1, F-1569-1)",
+              "status": "queued",
+              "taskFile": "lane-c-f1569-1-master-shipped-classifier.md",
+              "gate": "none — fire-authorable; premise re-measured s1569 before authoring (same repo, same minute: stem-only match yields 107 never-ran, slot-stripped yields 66 — a 41-master, 38% swing decided by an undeclared string transform)"
+            },
+            {
               "id": "f1568-1-desk-audit-subject-first-keying",
               "title": "Desk auditor keys its items the way the desk writes them: reuse desk-carryforward-guard's triangle-anchored parser instead of a global regex sweep (F-1567-3)",
               "status": "merged",
