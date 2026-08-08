@@ -44,9 +44,14 @@
  *
  * usage:
  *   node scripts/gate-caller-audit.mjs                  # gate (exit 1 on a new orphan)
+ *   node scripts/gate-caller-audit.mjs --include-untracked
  *   node scripts/gate-caller-audit.mjs --report         # never gates; prints the graph
  *   node scripts/gate-caller-audit.mjs --update-baseline
  *   node scripts/gate-caller-audit.mjs --root <dir>     # for fixtures
+ *
+ * --include-untracked adds `git ls-files --others --exclude-standard` to the
+ * subject set. It REFUSES with --update-baseline: an uncommitted path cannot be
+ * grandfathered because it may never enter git.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -60,6 +65,13 @@ const ROOT = path.resolve(arg('--root') || process.cwd());
 const BASELINE = arg('--baseline') || path.join(ROOT, 'scripts', 'gate-caller-baseline.json');
 const REPORT = process.argv.includes('--report');
 const UPDATE = process.argv.includes('--update-baseline');
+const INCLUDE_UNTRACKED = process.argv.includes('--include-untracked');
+
+if (UPDATE && INCLUDE_UNTRACKED) {
+  console.error('gate-caller-audit: REFUSING — --update-baseline cannot be combined with --include-untracked.');
+  console.error('  An uncommitted path cannot be grandfathered because it may never enter git.');
+  process.exit(2);
+}
 
 // ---------------------------------------------------------------------------
 // Subject: which names are GATES? Not every npm script is one. `dev`, `preview`,
@@ -80,10 +92,20 @@ const ANCHORS = ['npm:test:node-guards', 'npm:test:task-guards', 'scripts/run-gu
 const EDGE_SOURCES = ['package.json scripts', 'scripts/**.mjs', 'scripts/**.sh', '*.config.ts', '.github/**'];
 
 // ---------------------------------------------------------------------------
+let untracked = [];
 function tracked() {
   const r = spawnSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   if (r.status !== 0) return null;
-  return r.stdout.split('\n').filter(Boolean);
+  const files = r.stdout.split('\n').filter(Boolean);
+  if (!INCLUDE_UNTRACKED) return files;
+  const u = spawnSync('git', ['ls-files', '--others', '--exclude-standard'], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  if (u.status !== 0) return null;
+  untracked = u.stdout.split('\n').filter(Boolean);
+  return [...new Set([...files, ...untracked])];
 }
 
 function readIf(rel) {
@@ -263,7 +285,7 @@ if (subjects.length === 0) {
 console.log('gate-caller-audit — who calls each gate?');
 console.log('  root                : ' + ROOT);
 console.log('  npm scripts         : ' + Object.keys(scripts).length + ' (' + subjects.filter((s) => s.kind === 'npm script').length + ' gate-shaped)');
-console.log('  scripts/ files      : ' + scriptFiles.length + ' (' + subjects.filter((s) => s.kind === 'guard script').length + ' guard-shaped)');
+console.log('  scripts/ files      : ' + scriptFiles.length + ' (' + subjects.filter((s) => s.kind === 'guard script').length + ' guard-shaped)' + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter((f) => f.startsWith('scripts/') && /\.(mjs|sh)$/.test(f)).length + ' untracked)' : ''));
 console.log('  config.ts read      : ' + configFiles.length + '   .github/ files: ' + workflowFiles.length);
 console.log('  edge vocabulary     : ' + EDGE_SOURCES.join(', '));
 console.log('  roots               : ' + roots.size + '   reached: ' + reached.size);

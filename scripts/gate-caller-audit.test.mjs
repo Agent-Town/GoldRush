@@ -222,6 +222,67 @@ test('--report never gates, even with a fresh orphan present', () => {
   assert.match(r.stdout, /--- orphans ---[\s\S]*npm:test:lonely/);
 });
 
+test('REGRESSION: an untracked guard-shaped file is byte-invisible by default', () => {
+  const dir = fixture({ scripts: BASE_SCRIPTS, files: BASE_FILES, baseline: EMPTY_BASELINE });
+  const before = run(dir);
+  fs.writeFileSync(path.join(dir, 'scripts', 'x-audit.mjs'), 'console.log("untracked");\n');
+  const after = run(dir);
+  assert.deepEqual(
+    { status: after.status, stdout: after.stdout, stderr: after.stderr },
+    { status: before.status, stdout: before.stdout, stderr: before.stderr },
+  );
+});
+
+test('--include-untracked reports an untracked guard-shaped file as NEW with no caller', () => {
+  const dir = fixture({ scripts: BASE_SCRIPTS, files: BASE_FILES, baseline: EMPTY_BASELINE });
+  fs.writeFileSync(path.join(dir, 'scripts', 'x-audit.mjs'), 'console.log("untracked");\n');
+  const r = run(dir, '--include-untracked');
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stdout, /scripts\/ files\s+: \d+ \(\d+ guard-shaped\) \(\+1 untracked\)/);
+  assert.match(r.stdout, /NEW\s+scripts\/x-audit\.mjs\s+NO CALLER/);
+});
+
+test('a tracked baselined orphan stays known under --include-untracked', () => {
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'scripts/known-audit.mjs': 'console.log("known");\n' },
+    baseline: JSON.stringify({ grandfathered: { 'scripts/known-audit.mjs': 'deliberate hand-run audit' } }),
+  });
+  const r = run(dir, '--include-untracked');
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /known\s+scripts\/known-audit\.mjs\s+deliberate hand-run audit/);
+});
+
+test('--include-untracked still excludes untracked SCRATCH_FILE probes', () => {
+  const dir = fixture({ scripts: BASE_SCRIPTS, files: BASE_FILES, baseline: EMPTY_BASELINE });
+  fs.writeFileSync(path.join(dir, 'scripts', 'tmp-s999-probe-audit.mjs'), 'console.log("scratch");\n');
+  const r = run(dir, '--include-untracked');
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.doesNotMatch(r.stdout + r.stderr, /tmp-s999-probe-audit/);
+});
+
+test('--include-untracked excludes gitignored guard-shaped files', () => {
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, '.gitignore': 'scripts/ignored-audit.mjs\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  fs.writeFileSync(path.join(dir, 'scripts', 'ignored-audit.mjs'), 'console.log("ignored");\n');
+  const r = run(dir, '--include-untracked');
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.doesNotMatch(r.stdout + r.stderr, /ignored-audit/);
+});
+
+test('--update-baseline --include-untracked REFUSES without writing baseline bytes', () => {
+  const dir = fixture({ scripts: BASE_SCRIPTS, files: BASE_FILES, baseline: EMPTY_BASELINE });
+  const baseline = path.join(dir, 'scripts', 'gate-caller-baseline.json');
+  const before = fs.readFileSync(baseline);
+  const r = run(dir, '--update-baseline', '--include-untracked');
+  assert.equal(r.status, 2, r.stdout + r.stderr);
+  assert.match(r.stderr, /REFUSING — --update-baseline cannot be combined with --include-untracked/);
+  assert.deepEqual(fs.readFileSync(baseline), before);
+});
+
 // ---------------------------------------------------------------------------
 // REFUSALS — F-1251-2's class. Fifth subject to be held to it.
 // ---------------------------------------------------------------------------
