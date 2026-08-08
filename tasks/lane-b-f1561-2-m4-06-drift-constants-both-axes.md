@@ -27,7 +27,7 @@ fire would reach for the tolerance — the loop F-1285-2 has been in for 275 fir
 
 f1560-1 landed that cure and it is **half a cure**. ✓ **VERIFIED BY READING, not inferred:**
 
-- `e2e/m4-06-embodiment.spec.ts:85–86` — `distance()` is `Math.hypot(a.x - b.x, a.z - b.z)`, i.e.
+- `e2e/m4-06-embodiment.spec.ts:85–86` ("function distance(a: Point, b: Point): number") — `distance()` is `Math.hypot(a.x - b.x, a.z - b.z)`, i.e.
   **x AND z**; and `driftAbs = distance(after.position, before.position)`.
 - `src/agent/Embodiment.ts:299` — x anchor: `hero.x - 1.8 + Math.sin(at * 0.78) * 0.22`
 - `src/agent/Embodiment.ts:300` — z anchor: `hero.z - 1.25 + Math.cos(at * 0.52) * 0.18`
