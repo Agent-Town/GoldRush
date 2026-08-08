@@ -71,6 +71,7 @@ type RuntimeState = {
   nextWaveInSim: number;
   gold: number;
   claimHits: number;
+  actorMoving: boolean;
   consent: null | {
     rungs: Record<string, { earned: boolean; granted: boolean }>;
     abilities: Record<string, { allowed: boolean }>;
@@ -231,6 +232,7 @@ export class StandingOrdersExecutor {
         return {};
       }
       this.status(record, 'active', at);
+      if (distance(actor, point) > Balance.agent.arriveRadius || state.actorMoving) return { movement: point };
       const receipt = this.surface.tools.pan_at('seam' in order ? order.seam : `sluice-${order.sluice + 1}`);
       return this.finishAction(record, receipt, point, at);
     }
@@ -440,6 +442,8 @@ function runtimeState(
   const wreck = isRecord(state.wreck) ? state.wreck : {};
   const build = isRecord(state.build) ? state.build : {};
   const harvest = isRecord(state.harvest) ? state.harvest : {};
+  const agent = isRecord(state.agent) ? state.agent : {};
+  const embodiment = isRecord(agent.embodiment) ? agent.embodiment : {};
   const observedAt = finite(state.timeAlive, at ?? 0);
   const wave = predictedWave(state, at, observedAt);
   return {
@@ -452,6 +456,7 @@ function runtimeState(
     nextWaveInSim: wave.nextIn,
     gold: currentGold(finite(economy.gold, 0), observedAt, economyLog),
     claimHits: finite(wreck.hitsResolved, 0),
+    actorMoving: embodiment.moving === true || embodiment.drifting === true,
     consent: consentState(state),
     buildings: includeActions ? buildingStates(build.hp) : [],
     seams: includeActions ? seamStates(harvest.activeNodes) : [],

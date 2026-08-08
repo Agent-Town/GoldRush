@@ -65,7 +65,7 @@ The source-locked forms are:
 ```
 <!-- skillmd-guard:grammar:end -->
 
-Orders are evaluated in array order; the first actionable order owns that tick. Put waiting work and conditional actions before a persistent `HOLD`. `BUILD` waits for its gold or wave condition, then uses the same affordability, placement, terrain, cap, and collision rules as a player build. `REPAIR_UNDER` selects damaged or wrecked works below the requested percentage. `MOVE_TO` completes on arrival; `HOLD` remains active. `HARVEST` names an active seam from the view or a zero-based sluice index. `FALLBACK_IF` activates at the named live-enemy threshold.
+Orders are evaluated in array order; the first actionable order owns that tick. Put waiting work and conditional actions before a persistent `HOLD`. `BUILD` waits for its gold or wave condition, then uses the same affordability, placement, terrain, cap, and collision rules as a player build. `REPAIR_UNDER` selects damaged or wrecked works below the requested percentage. `MOVE_TO` completes on arrival; `HOLD` remains active. `HARVEST` names an active seam from the view or a zero-based sluice index; panning happens where the Prospector stands, so the order walks there first and travel time is real. `FALLBACK_IF` activates at the named live-enemy threshold.
 
 Gold seams deplete and then come back, so `remaining` climbing is normal. A depleted seam returns after its respawn wait refilled to capacity, and the `seamRespawnReduction` stat shortens that wait.
 
