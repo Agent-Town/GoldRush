@@ -14,12 +14,12 @@ import { createServer } from 'vite';
 
 // Declared above the first call: `parseArgs` runs at module top level, so a `const`
 // further down is still in its temporal dead zone by then.
-const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty'];
+const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty', 'overtime'];
 const SEAT_KEYS = ['room', 'origin', 'name', 'town', 'party', 'tick-rate', 'max-ticks', 'desync-at', 'strict'];
 const DIFFICULTY_VALUES = ['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', 'hard'];
 
 if (process.argv.includes('--help')) {
-  process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle]\n'
+  process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle] [--overtime]\n'
     + '       gr-sim --room <code> --origin <url> [--party 2-4] [--max-ticks N] [--strict]\n\n'
     + 'A seat invited into a browser room rides that browser world: room-served NDJSON views arrive on stdout and stdin order arrays travel as agent_orders acts. --strict still refuses mixed rooms.\n');
   process.exit(0);
@@ -69,13 +69,15 @@ try {
       applyDifficultyPreset(preset);
       process.stderr.write(`gr-sim preset: ${preset} enemy.hp=${Balance.enemy.hp}\n`);
     }
-    const sim = new HeadlessContractSim({ contractId: options.contract, seed: options.seed, mode: options.mode });
+    const sim = new HeadlessContractSim({ contractId: options.contract, seed: options.seed, mode: options.mode, overtime: options.overtime });
     // F-E2S-1: boss fights get six full waves after the later posting boundary.
     const BOSS_GRACE_WAVES = 6;
     const secureWave = sim.manifest.twist.secureWave ?? 20;
     const waveCeiling = sim.manifest.twist.baron
       ? Math.max(secureWave, sim.manifest.twist.baron.wave) + BOSS_GRACE_WAVES
       : secureWave + 2;
+    // AP-15: wave scaling should end overtime first; this is only an anti-hang bound.
+    const OVERTIME_CEILING_WAVES = 50;
     Object.assign(console, originalConsole);
 
     input = options.policy === 'idle'
@@ -85,10 +87,12 @@ try {
     let turn = sim.currentTurn();
     let endReason;
     while (true) {
-      if (!turn.terminal && turn.view.now.wave >= waveCeiling) {
+      const overtimeCeiling = options.overtime && sim.bankedSecureWave !== null
+        && turn.view.now.wave >= sim.bankedSecureWave + OVERTIME_CEILING_WAVES;
+      if (!turn.terminal && (overtimeCeiling || (!options.overtime && turn.view.now.wave >= waveCeiling))) {
         sim.hero.hp = 0;
         sim.dead = true;
-        endReason = 'wave-ceiling';
+        endReason = overtimeCeiling ? 'overtime-ceiling' : 'wave-ceiling';
         turn = sim.currentTurn();
       }
       process.stdout.write(`${JSON.stringify(turn.view)}\n`);
@@ -197,8 +201,8 @@ function parseArgs(args) {
     if (!raw.startsWith('--') || ![...SOLO_KEYS, ...SEAT_KEYS].includes(key)) {
       throw new Error(`Unknown argument: ${raw}`);
     }
-    if (key === 'strict') {
-      if (match) throw new Error('--strict does not take a value.');
+    if (key === 'strict' || key === 'overtime') {
+      if (match) throw new Error(`--${key} does not take a value.`);
       values[key] = true;
       continue;
     }
@@ -230,6 +234,7 @@ function parseArgs(args) {
       mode: values.mode,
       preset: values.preset,
       difficulty: values.difficulty,
+      overtime: values.overtime === true,
     };
   }
 
@@ -238,7 +243,7 @@ function parseArgs(args) {
   if (values.preset !== undefined || values.difficulty !== undefined) {
     throw new Error('--preset and --difficulty cannot be used with --room; the host room owns difficulty.');
   }
-  for (const key of ['contract', 'seed', 'mode']) {
+  for (const key of ['contract', 'seed', 'mode', 'overtime']) {
     if (values[key] !== undefined) throw new Error(`--${key} is decided by the room; drop it when using --room.`);
   }
   if (!values.origin) throw new Error('--room requires --origin.');

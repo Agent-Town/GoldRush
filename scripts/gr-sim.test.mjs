@@ -1,12 +1,18 @@
 import assert from 'node:assert/strict';
-import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
+const NODE_ENGINES = [
+  '/opt/homebrew/bin/node',
+  join(homedir(), '.nvm/versions/node/v23.11.1/bin/node'),
+].filter(existsSync);
 
 const ORDERS = [
   [{ verb: 'HARVEST', seam: 'gold-seam-1' }],
@@ -179,6 +185,80 @@ test('gr-sim deterministically runs the Claim objective', () => {
     Object.keys(lines.at(-1)),
     ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'eventLogHash'],
   );
+});
+
+test('overtime banks the Claim secure and measures the homestead on both Node engines', {
+  skip: NODE_ENGINES.length < 2 ? 'two installed Node engines are required' : false,
+  timeout: 240_000,
+}, async () => {
+  const positions = {
+    sentry_beacon: [{ x: 0, z: 13 }, { x: 0, z: 11 }, { x: 3, z: 12 }, { x: -3, z: 12 }, { x: 0, z: 15 }, { x: 0, z: 9 }],
+    turret: [{ x: 4, z: 14 }, { x: -4, z: 14 }, { x: 4, z: 10 }, { x: -4, z: 10 }],
+  };
+  const costs = { sentry_beacon: [25, 35, 45, 55, 75, 95], turret: [50, 70, 95, 125] };
+  const ordersFor = (view) => {
+    const orders = [];
+    for (const kind of ['sentry_beacon', 'turret']) {
+      const built = view.now.works.byKind[kind] ?? 0;
+      for (let index = built; index < positions[kind].length; index += 1) {
+        orders.push({ verb: 'BUILD', what: kind, where: positions[kind][index], when: { goldGte: costs[kind][index] } });
+      }
+    }
+    for (const seam of view.now.seams.filter(({ active, remaining }) => active && remaining > 0)) {
+      for (let count = 0; count < 4; count += 1) orders.push({ verb: 'HARVEST', seam: seam.id });
+    }
+    if (view.now.works.hp > 0 && view.now.works.hp < view.now.works.maxHp * 0.6) {
+      orders.push({ verb: 'REPAIR_UNDER', pct: 80 });
+    }
+    orders.push({ verb: 'HOLD', pos: { x: 0, z: 12 } });
+    return orders.slice(0, 32);
+  };
+  const run = (node) => new Promise((resolve, reject) => {
+    const child = spawn(node, [
+      'scripts/gr-sim.mjs', '--contract', 'the-claim', '--seed', 'e1-the-claim-02', '--overtime',
+    ], { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] });
+    let stdout = '';
+    let stderr = '';
+    let buffer = '';
+    child.stdout.on('data', (chunk) => {
+      stdout += chunk;
+      buffer += chunk;
+      let newline;
+      while ((newline = buffer.indexOf('\n')) >= 0) {
+        const line = buffer.slice(0, newline);
+        buffer = buffer.slice(newline + 1);
+        if (!line) continue;
+        const message = JSON.parse(line);
+        if (message.schema === 'goldrush.view.v1') child.stdin.write(`${JSON.stringify(ordersFor(message))}\n`);
+      }
+    });
+    child.stderr.on('data', (chunk) => { stderr += chunk; });
+    child.on('error', reject);
+    child.on('close', (code) => code === 0 ? resolve({ stdout, stderr }) : reject(new Error(stderr)));
+  });
+  const hashes = [];
+
+  for (const node of NODE_ENGINES) {
+    const first = await run(node);
+    const second = await run(node);
+    assert.equal(second.stdout, first.stdout);
+    const lines = first.stdout.trim().split('\n').map(JSON.parse);
+    const outcome = lines.at(-1);
+    const postSecure = lines.find((line) => line.schema === 'goldrush.view.v1' && line.now.overtime === true);
+    assert.ok(postSecure.now.wave >= 10);
+    assert.equal(postSecure.now.overtime, true);
+    assert.equal(outcome.secured, true);
+    assert.equal(outcome.securedWave, 10);
+    assert.ok(outcome.waves > 10);
+    assert.equal(outcome.overtimeWaves, outcome.waves - 10);
+    assert.ok(outcome.homestead.goldPanned > 0);
+    assert.ok(outcome.homestead.goldSpent > 0);
+    assert.ok(outcome.homestead.peakWorks > 0);
+    assert.ok(Object.keys(outcome.homestead.worksByTier).length > 0);
+    assert.ok(outcome.homestead.worksLost >= 0);
+    hashes.push(outcome.eventLogHash);
+  }
+  assert.equal(new Set(hashes).size, 1, hashes.join(' !== '));
 });
 
 test('gr-sim boots escort mode from data instead of URL state', { timeout: 120_000 }, async () => {

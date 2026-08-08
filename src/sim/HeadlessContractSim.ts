@@ -95,6 +95,15 @@ export type GrSimOutcome = {
   kills: number;
   calls: number;
   eventLogHash: string;
+  securedWave?: number;
+  overtimeWaves?: number;
+  homestead?: {
+    goldPanned: number;
+    goldSpent: number;
+    peakWorks: number;
+    worksByTier: Record<string, number>;
+    worksLost: number;
+  };
 };
 
 export type GrSimTurn = {
@@ -104,6 +113,7 @@ export type GrSimTurn = {
 
 export type HeadlessAgentView = AgentView & {
   now: AgentView['now'] & {
+    overtime?: true;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -130,6 +140,7 @@ export type HeadlessAgentView = AgentView & {
 export type HeadlessContractBoot = ContractRunBoot & {
   contractId: string;
   seed: string;
+  overtime?: boolean;
 };
 
 const NO_AUDIO = {
@@ -163,7 +174,8 @@ export class HeadlessContractSim {
   readonly seed: string;
 
   private readonly events = new EventBus();
-  private readonly economy = new Economy();
+  // Overtime is capped at 50 waves, so retaining its full economy log is bounded and keeps lifetime totals exact.
+  private readonly economy = new Economy(Number.POSITIVE_INFINITY);
   private readonly enemies = new EnemyPool();
   private readonly hero = new Hero(RUN_CAST_SCALE);
   private readonly prospector = new ProspectorEmbodiment(() => undefined);
@@ -219,6 +231,7 @@ export class HeadlessContractSim {
   private calls = 0;
   private economySequence = 0;
   private secured = false;
+  private securedWave: number | null = null;
   private dead = false;
   private lastTurnWave = -1;
   private lastSurpriseSeq = 0;
@@ -479,6 +492,13 @@ export class HeadlessContractSim {
       kills: this.kills,
       calls: this.calls,
     };
+    const overtime = this.boot.overtime && this.securedWave !== null
+      ? {
+          securedWave: this.securedWave,
+          overtimeWaves: waves - this.securedWave,
+          homestead: this.homesteadOutcome(),
+        }
+      : {};
     const eventLogHash = stableHash({
       contractId: this.contractId,
       seed: this.seed,
@@ -501,7 +521,7 @@ export class HeadlessContractSim {
         ...(this.atomic ? { atomic: this.atomic.diagnostics } : {}),
       },
     });
-    return { ...base, eventLogHash };
+    return { ...base, eventLogHash, ...overtime };
   }
 
   // ---------------------------------------------------------------------------
@@ -582,8 +602,12 @@ export class HeadlessContractSim {
     return this.waves.escortDiagnostics;
   }
 
+  get bankedSecureWave(): number | null {
+    return this.securedWave;
+  }
+
   private get terminal(): boolean {
-    return this.secured || this.dead;
+    return this.dead || (this.secured && !this.boot.overtime);
   }
 
   private step(): void {
@@ -660,6 +684,7 @@ export class HeadlessContractSim {
       defeatedTotal: this.kills,
       defeatedBasis: 'all enemies, including continuous tricklers' as const,
     });
+    if (this.boot.overtime && this.secured) view.now.overtime = true;
     Object.assign(view.almanac.nextWave, {
       compositionScope: 'wave-horn packs only; continuous tricklers are additional' as const,
       continuousTrickle: {
@@ -684,7 +709,7 @@ export class HeadlessContractSim {
         text: baron.taunt,
       });
     }
-    if (this.runManager.diagnostics.secured) return false;
+    if (this.runManager.diagnostics.secured && !this.boot.overtime) return false;
   }
 
   private bindEventLog(): void {
@@ -702,7 +727,10 @@ export class HeadlessContractSim {
       this.events.on(type, (event) => {
         if (event.type === 'enemy_killed') this.kills += 1;
         if (event.type === 'building_damaged') this.buildingHits += 1;
-        if (event.type === 'run_secured') this.secured = true;
+        if (event.type === 'run_secured') {
+          this.secured = true;
+          this.securedWave = event.secureWave;
+        }
         if (event.type === 'run_ended' && event.reason !== 'secured') this.dead = true;
         if (event.type === 'enemy_killed' && event.variantId === 'dynamo_crawler') {
           const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
@@ -914,6 +942,21 @@ export class HeadlessContractSim {
         surprises: orders.log.flatMap((event) => event.type === 'surprise' && event.surprise ? [event.surprise] : []),
         embodiment: this.prospector.snapshot,
       },
+    };
+  }
+
+  private homesteadOutcome(): NonNullable<GrSimOutcome['homestead']> {
+    const summary = summarizeLog(this.economy.log);
+    const works = this.build.diagnostics.hp;
+    const worksByTier: Record<string, number> = {};
+    for (const work of works) worksByTier[work.tier] = (worksByTier[work.tier] ?? 0) + 1;
+    return {
+      goldPanned: round(summary.panned),
+      goldSpent: round(summary.spent),
+      peakWorks: works.length,
+      worksByTier,
+      worksLost: this.replayEvents.filter((event) =>
+        typeof event === 'object' && event !== null && 'type' in event && event.type === 'building_wrecked').length,
     };
   }
 
