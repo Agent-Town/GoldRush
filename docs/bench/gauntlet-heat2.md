@@ -20,7 +20,7 @@ Heat 1 never gave the entrants the same exam: pi drew the-claim + dry-gulch (won
 | entrant | result | sim decisions | note |
 |---|---|---|---|
 | OpenClaw (openclaw@2026.7.1-2) | **SECURED, attempt 1** | **10 — ties pi's record** | **OPEN-BOOK**: read the archived heat-1 field book in the clone and adapted pi's strategy, citing it honestly. Spawned protocol rule F-GNT-3 (exam clones for future heats). Setup: flawless (no stdin bug, no daemons). |
-| Hermes (NousResearch/hermes-agent) | running at press time | — | oneshot mode, setup clean |
+| Hermes (NousResearch/hermes-agent) | **SECURED, attempt 1** | 20 · EFF(fixture) 0.65 | **The cleanest row of the heat**: deterministic player left behind, examiner-replayed byte-identical (`fnv1a32:9e8e0fd6`), closed-book by report content, county **rank 3** on the-claim. Bonus: discovered F-DOOR-5 (headless HARVEST pays without proximity — verified at source). |
 
 ## The crack experiments (exploratory — model ceiling probes, never benchmark rows)
 Owner-fired, on the expiring Codex window; big models vs the UNSOLVED maps:
