@@ -6421,9 +6421,10 @@
             {
               "id": "f1612-1-gazette-sweep-purpose-split",
               "title": "F-1610-1: the GZ-01 sweep learns the difference between 'reported' and 'dismissed' (purpose marker + three numbers, WARN-level)",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "5624e6a7ff9633a61ac49c299da116f61f5759f0",
               "taskFile": "lane-f1612-1-gazette-sweep-purpose-split.md",
-              "gate": "none owed to the owner \u2014 fire-authorable corrective; F-1610-1's own gate says 'none owed \u2014 this row is a pointer' and invites exactly this build. Closes when the slice merges with: a declared PARAGRAPH-scoped marker (the four existing dismissals are wrapped prose at gazette-queue.md:1266-1269, so a line-scoped rule catches at most one); three numbers reported/dismissed/candidates with the dismissed list printed; the four retro-marked; a marker-removal control proving they fall back to REPORTED and not to CANDIDATES; a fixture-based classifier test rooted in test:node-guards with test:gate-callers green; and the sweep still exiting 0 in every state (F-1600-1 bars a red guard here)."
+              "gate": "MET s1613 \u2014 EXCEEDED. Merged 5624e6a7ff9633a61ac49c299da116f61f5759f0, review reviews/f1612-1-gazette-sweep-purpose-split.md. Every clause discharged: paragraph-scoped marker NOT PLAYER-VISIBLE; three numbers 71 -> reported 67 / dismissed 4 / candidates 0 with the dismissed list printed; the four retro-marked; marker-removal control re-run DRAIN-SIDE both directions (71/0/0 -> 67/4/0), the four falling back to REPORTED and never to candidates; fixture classifier test 1 test / 4 assertions rooted in test:node-guards, gate-caller-audit PASS; sweep exit 0 in every exercised state. test:node-guards rc=0, 424 tests / 419 pass / 0 fail / 5 skipped, 280.9s. Manufactured red proved the test non-vacuous: line-scope instead of paragraph-scope returns reported for the wrapped continuation, fail 1. EXCEEDED because the drain also measured F-1613-1 \u2014 the retro-mark blank line is load-bearing, and the tidy repair reads 62/9 including 88530e3ef, a merge that same roundup publishes as news; warning written into the sweep header."
             }
           ]
         }

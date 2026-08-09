@@ -14,6 +14,17 @@
 //
 // Therefore: grep the 8-char SHORT hash across the WHOLE of marketing/outbox/.
 //
+// ⚠️ PARAGRAPH SCOPE IS BLUNT, AND ONE RETRO-MARK'S BLANK LINE IS LOAD-BEARING (F-1613-1,
+// measured s1613). The marker in marketing/outbox/gazette-queue.md sits after a blank line
+// that SEVERS A SENTENCE mid-clause — on sight a typo in published prose, and it is not.
+// That roundup's own two REPORTED hashes (ba78dad5e, 88530e3ef) share a contiguous run of
+// prose with the four dismissed ones, so the blank line is the ONLY thing scoping the
+// marker to the four. The tidy repair (un-split the sentence, marker at the paragraph end)
+// was tested s1613 and reads reported 62 / dismissed 9 — it sweeps 88530e3ef, which that
+// same roundup PUBLISHES AS NEWS, into dismissed. DO NOT TIDY THAT PROSE without re-running
+// this sweep: nothing will red at you, because this tool is advisory and exits 0 always and
+// the classifier's test is fixture-driven and cannot see the live board.
+//
 // Advisory by design — exit 0 always. "Player-visible" is a JUDGEMENT, and F-1600-1
 // explicitly forbids mechanising this as a red guard: such a guard fires on every
 // bookkeeping and infrastructure merge and gets excused into uselessness within a week
