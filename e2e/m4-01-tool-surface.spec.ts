@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type ToolReceipt = {
@@ -8,6 +9,7 @@ type ToolReceipt = {
   outcome: {
     ok: boolean;
     reason?: string;
+    detail?: string;
     requiredLevel?: number;
     economyLog: unknown[];
     state?: unknown;
@@ -139,6 +141,48 @@ test('place_building delegates to the direct build path and receipts the exact e
   expect(JSON.stringify(receipt.outcome.economyLog)).toBe(JSON.stringify(directLog));
   expect(directLog.at(-1)).toMatchObject({ type: 'gold_spent', sink: 'build_sentry_beacon', amount: 25 });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.beacons ?? 0)).toBe(1);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('place_building reports out_of_reach beyond the selected buildable reach', async ({ page }) => {
+  await page.addInitScript((key) => {
+    localStorage.setItem(key, JSON.stringify({ version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 3 } }));
+  }, META_PROGRESS_KEY);
+  const errors = await openGame(page);
+  await grantGold(page, 30);
+
+  const target = { x: 0, z: 10 };
+  const placeRadius = await page.evaluate(() => {
+    window.__GR_TEST__?.selectBuildable('sentry_beacon');
+    return window.__GR_TEST__?.confirmBuildDiagnostics().placeRadius ?? 0;
+  });
+  await page.evaluate(
+    ({ x, z, reach }) => window.__GR_TEST__?.teleport(x + reach + 1, z),
+    { ...target, reach: placeRadius },
+  );
+
+  const receipt = await page.evaluate(
+    (position) => window.__GR_AGENT__?.placeBuilding('sentry_beacon', position, 0),
+    target,
+  ) as ToolReceipt;
+  const outOfZone = await page.evaluate(() => {
+    for (let x = -40; x <= 40; x += 2) {
+      for (let z = -40; z <= 40; z += 2) {
+        if (window.__GR_TEST__?.terrainSample(x, z).zone !== 'bank') return { x, z };
+      }
+    }
+    throw new Error('Expected deterministic non-bank terrain in the debug harness.');
+  });
+  await page.evaluate(({ x, z }) => window.__GR_TEST__?.teleport(x, z), outOfZone);
+  const zoneReceipt = await page.evaluate(
+    (position) => window.__GR_AGENT__?.placeBuilding('sentry_beacon', position, 0),
+    outOfZone,
+  ) as ToolReceipt;
+
+  expect(placeRadius).toBeGreaterThan(0);
+  expect(receipt.outcome).toMatchObject({ ok: false, reason: 'FAILED', detail: 'out_of_reach' });
+  expect(zoneReceipt.outcome).toMatchObject({ ok: false, reason: 'FAILED', detail: 'out_of_zone' });
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

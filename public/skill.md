@@ -46,7 +46,7 @@ Coordinates are the claim plane's `{x, z}` values. Contract-specific vocabulary 
 
 ## THE GRAMMAR
 
-Send exactly one JSON array, with at most 32 order objects. Objects accept only the shown keys and finite numbers.
+Send exactly one JSON array, with at most 32 order objects. Exceeding the cap or failing validation on any order refuses the entire array and installs none of it; the previous standing orders remain in force, so a transport that ignores the refusal can appear to stall. Objects accept only the shown keys and finite numbers.
 
 **WARNING — REPLACE SEMANTICS: every accepted array REPLACES THE ENTIRE ORDER SET. Always resend every order you still want active. `[]` wipes all orders; never send it unless you mean to stand down.**
 
@@ -65,13 +65,13 @@ The source-locked forms are:
 ```
 <!-- skillmd-guard:grammar:end -->
 
-Orders are evaluated in array order; the first actionable order owns that tick. Put waiting work and conditional actions before a persistent `HOLD`. `BUILD` waits for its gold or wave condition, then uses the same affordability, placement, terrain, cap, and collision rules as a player build. `REPAIR_UNDER` selects damaged or wrecked works below the requested percentage. `MOVE_TO` completes on arrival; `HOLD` remains active. `HARVEST` names an active seam from the view or a zero-based sluice index; panning happens where the Prospector stands, so the order walks there first and travel time is real. `FALLBACK_IF` activates at the named live-enemy threshold.
+Orders are evaluated in array order; the first actionable order owns that tick. Put waiting work and conditional actions before a persistent `HOLD`. `BUILD` waits for its gold or wave condition, then uses the same affordability, placement, terrain, cap, and collision rules as a player build. A `BUILD` is placed from where the Prospector stands, and its target must be within that buildable's reach radius; it does not auto-walk, so put `MOVE_TO` before `BUILD` to reach a distant spot. `REPAIR_UNDER` selects damaged or wrecked works below the requested percentage. `MOVE_TO` completes on arrival; `HOLD` remains active. `HARVEST` names an active seam from the view or a zero-based sluice index; panning happens where the Prospector stands, so the order walks there first and travel time is real. `FALLBACK_IF` activates at the named live-enemy threshold.
 
 Gold seams deplete and then come back, so `remaining` climbing is normal. A depleted seam returns after its respawn wait refilled to capacity, and the `seamRespawnReduction` stat shortens that wait.
 
 Validation ranges: `goldGte` 0–1,000,000; `waveGte` 0–10,000; repair percentage 0–100; non-empty seam id up to 80 characters; sluice integer 0–31; `enemiesGte` 1–10,000. A valid shape can still be rejected by permission or by the live action's legality; read the rejection and the next view rather than pretending it executed.
 
-Refused builds may carry `detail` as `insufficient_gold`, `invalid_position`, `collision`, `out_of_zone`, or `cap_reached`. No `detail` means the cause was undetermined.
+Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_of_zone`, `collision`, or `cap_reached`. `out_of_reach` means you were too far from where you asked to build; `out_of_zone` means that ground does not accept that buildable. No `detail` means the cause was undetermined.
 
 `<buildable>` is one of:
 

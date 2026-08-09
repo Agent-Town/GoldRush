@@ -1,8 +1,8 @@
 export type BuildRejectionDetail =
   | 'insufficient_gold'
-  | 'invalid_position'
-  | 'collision'
+  | 'out_of_reach'
   | 'out_of_zone'
+  | 'collision'
   | 'cap_reached';
 
 let pendingBuildRejectionDetail: BuildRejectionDetail | undefined;

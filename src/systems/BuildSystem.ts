@@ -75,8 +75,8 @@ export type ConfirmBuildDiagnostics = {
 function rejectionDetail(reason: ConfirmBuildDiagnostics['reason']): BuildRejectionDetail | undefined {
   if (reason === 'invalid_max_count') return 'cap_reached';
   if (reason === 'invalid_economy' || reason === 'economy_rejected') return 'insufficient_gold';
-  if (reason === 'invalid_placement') return 'invalid_position';
-  if (reason === 'invalid_range') return 'out_of_zone';
+  if (reason === 'invalid_placement') return 'out_of_zone';
+  if (reason === 'invalid_range') return 'out_of_reach';
   if (reason === 'invalid_overlap') return 'collision';
   return undefined;
 }
