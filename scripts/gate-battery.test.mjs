@@ -23,7 +23,7 @@ import { spawnSync } from 'node:child_process';
 // realpathSync because macOS `os.tmpdir()` is /var/folders/... — a symlink into /private/var.
 // `pwd` in the child prints the RESOLVED path, so comparing against the unresolved one would
 // fail for a driver that is working perfectly.
-import { mkdtempSync, readFileSync, realpathSync, rmSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, realpathSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
 import path from 'node:path';
@@ -133,6 +133,82 @@ test('misuse exits 2 rather than reporting a vacuous green', () => {
 
   const empty = spawnSync(process.execPath, [DRIVER, '[]'], { encoding: 'utf8', timeout: 30_000 });
   assert.equal(empty.status, 2, 'an empty battery measured nothing and must not exit 0');
+});
+
+// ---------------------------------------------------------------------------------------
+// (7) THE RELEASE-ENV PRECONDITION (F-1598-1, s1598).
+//
+// A `build:release` job with no GR_RELEASE=e1 cannot pass — the assertion script refuses a bare
+// invocation by design. The 2026-08-09 RELEASE GATE ran it bare, so the E1-leak check never
+// executed; the battery recorded a mere red leaf and the release shipped past it. These assert
+// the REFUSAL, and equally that a compliant caller is not refused — a guard that reds on the
+// legitimate form would be excused into uselessness within a week (F-1460-1).
+
+// ⚠️ EVERY ARM BELOW USES A STUB (`echo build:release`), NEVER `npm run build:release`.
+// The first draft of these tests spawned the REAL script, and in the pre-fix arm it executed:
+// a 15.2 s build that overwrote the repo's `dist/` — the very bytes that had just been deployed
+// and verified. A guard that clobbers a release artifact every time it runs is a worse defect
+// than the one it guards. The detector matches on ARGV, so `echo build:release` exercises it
+// exactly while touching nothing (s1598, found by running the probe).
+
+const RELEASE_JOB = [['build:release', 'echo', 'build:release']];
+
+test('a bare build:release job is refused as misuse, not run and reported as a red leaf', () => {
+  withTmp((dir) => {
+    const transcript = path.join(dir, 'refused.txt');
+    const r = spawnSync(
+      process.execPath,
+      [DRIVER, '--transcript', transcript, JSON.stringify(RELEASE_JOB)],
+      { encoding: 'utf8', timeout: 30_000, env: { ...process.env, GR_RELEASE: '' } },
+    );
+    assert.equal(r.status, 2, 'a release job with no GR_RELEASE=e1 must exit 2 (nothing measured)');
+    assert.match(r.stderr, /GR_RELEASE=e1/, 'the refusal must name the variable the caller has to set');
+    assert.match(r.stderr, /F-RB-1/, 'the refusal must point at the law that states the house form');
+    // "Nothing was measured" is the whole point: refusing AFTER running the job would still
+    // leave the release ungated, just with a tidier exit code.
+    assert.ok(!existsSync(transcript), 'a refused battery must not have run anything');
+  });
+});
+
+test('--env GR_RELEASE=e1 satisfies the precondition, so the lawful form is not refused', () => {
+  withTmp((dir) => {
+    const transcript = path.join(dir, 'ok.txt');
+    const r = spawnSync(
+      process.execPath,
+      [DRIVER, '--transcript', transcript, '--env', 'GR_RELEASE=e1', JSON.stringify(RELEASE_JOB)],
+      { encoding: 'utf8', timeout: 30_000, env: { ...process.env, GR_RELEASE: '' } },
+    );
+    assert.equal(r.status, 0, `the compliant form must run: ${r.stderr}`);
+    const text = readFileSync(transcript, 'utf8');
+    assert.match(text, /env\+ GR_RELEASE=e1/, 'the env must be named in the record');
+    assert.match(text, /===== build:release =====/, 'the job must actually have run');
+  });
+});
+
+test('an inherited GR_RELEASE=e1 also satisfies it — the check reads the RESOLVED environment', () => {
+  withTmp((dir) => {
+    const transcript = path.join(dir, 'inherited.txt');
+    const r = spawnSync(
+      process.execPath,
+      [DRIVER, '--transcript', transcript, JSON.stringify(RELEASE_JOB)],
+      { encoding: 'utf8', timeout: 30_000, env: { ...process.env, GR_RELEASE: 'e1' } },
+    );
+    assert.equal(r.status, 0, `an exported GR_RELEASE=e1 must not be refused: ${r.stderr}`);
+    assert.match(readFileSync(transcript, 'utf8'), /===== build:release =====/, 'the job must have run');
+  });
+});
+
+test('a battery with no release job is untouched by the precondition', () => {
+  withTmp((dir) => {
+    const transcript = path.join(dir, 'plain.txt');
+    const jobs = JSON.stringify([['build', 'echo', 'hello']]);
+    const r = spawnSync(process.execPath, [DRIVER, '--transcript', transcript, jobs], {
+      encoding: 'utf8',
+      timeout: 30_000,
+      env: { ...process.env, GR_RELEASE: '' },
+    });
+    assert.equal(r.status, 0, `a plain battery must not be refused: ${r.stderr}`);
+  });
 });
 
 // ---------------------------------------------------------------------------------------

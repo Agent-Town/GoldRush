@@ -111,6 +111,40 @@ export function resolveCwd(dir) {
   return abs;
 }
 
+/**
+ * (7) A RELEASE JOB WITH NO `GR_RELEASE=e1` CANNOT PASS, SO RUNNING IT IS MISUSE (F-1598-1, s1598).
+ *
+ * `scripts/assert-release-build.mjs:4` throws on a bare invocation, deliberately and under a
+ * POSITIVE CONTROL (`assert-release-build.test.mjs:136`) — the precondition exists so a plain
+ * build can never masquerade as a release build. The house form has always been the one F-RB-1
+ * writes down (`tasks/BACKLOG.md:3344`): `GR_RELEASE=e1 npm run build:release`.
+ *
+ * THE MEASUREMENT. The 2026-08-09 RELEASE GATE ran `npm run build:release` through this driver
+ * with no `--env`, so the leaf that proves no E2–E10 content leaked into the public build never
+ * executed. The battery recorded `OVERALL rc=1`, the release deployed anyway, and the ledger
+ * called it verified — leaving a red transcript as the release's only evidence file. The release
+ * itself was fine (re-checked s1598 against the SHIPPED dist: 1883 files, zero later ids), but
+ * that was luck, not the gate: a genuine leak would have sailed past the same hole.
+ *
+ * WHY REFUSE INSTEAD OF SUPPLYING IT. Defaulting `GR_RELEASE=e1` here would silently satisfy the
+ * precondition the guard exists to enforce, and would break the positive control that keeps a
+ * bare build honest. The caller must say it, exactly as F-RB-1 requires. Fails CLOSED on rc=2 —
+ * "nothing was measured" — like every other misuse in this file, so the hole can never again be
+ * recorded as a mere red leaf.
+ */
+export function releaseEnvMisuse(jobs, env) {
+  const NEEDS_RELEASE_ENV = ['build:release', 'assert-release-build.mjs'];
+  const offender = jobs.find(([, cmd, ...args]) =>
+    [cmd, ...args].some((a) => NEEDS_RELEASE_ENV.some((needle) => String(a).endsWith(needle))));
+  if (!offender) return null;
+  if (env.GR_RELEASE === 'e1') return null;
+  return (
+    `job "${offender[0]}" runs a release build without GR_RELEASE=e1, which cannot pass ` +
+    '(scripts/assert-release-build.mjs refuses a bare invocation by design). ' +
+    'Add --env GR_RELEASE=e1 to this battery — see F-RB-1, tasks/BACKLOG.md:3344.'
+  );
+}
+
 /** (6) `KEY=VALUE` pairs → an object. A pair with no `=`, or an empty key, is misuse. */
 export function parseEnvPairs(pairs) {
   const env = {};
@@ -242,6 +276,14 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   const env = parseEnvPairs(repeatedFlag('--env'));
   if (env === null) {
     console.error('--env expects KEY=VALUE (non-empty key)');
+    process.exit(2);
+  }
+
+  // (7) Checked against the RESOLVED environment — inherited plus --env — because a caller who
+  // exported GR_RELEASE=e1 in the shell is already compliant and must not be refused.
+  const releaseMisuse = releaseEnvMisuse(jobs, { ...process.env, ...env });
+  if (releaseMisuse) {
+    console.error(releaseMisuse);
     process.exit(2);
   }
 
