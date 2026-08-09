@@ -4661,6 +4661,12 @@
               "mergeHash": "b2457017f88fd5cedf2054b95106a6996c267c0a"
             },
             {
+              "id": "f1607-1-hill-mine-railcar-pacing",
+              "title": "F-1493-3 balance pass: the Hill Mine railcar dies sooner (owner 2026-08-09, verbatim \"Tune the fight shorter\") -- browser-side only; the map stays door-de-listed per F-E2S-3 until the socket. MEASURE-FIRST master: four instrumented numbers (wave of destruction, arrival-to-destruction seconds, per-component damage share across wheels/boiler/cabin, escorts alive) BEFORE any number moves, then tune the dominant term in the e2-hill-mine twist.baron block with a named cause per value changed (F-1441-3: never re-pin to make a red go away), then re-measure. SCOPE FIREWALL FOUND AT AUTHORING AND WRITTEN INTO THE MASTER: the identical baron block is shared by e2-hill-mine, e2-trestle and e2-incline (the hpScale-30 line returns 3 hits in that file) and the owner ruled about HILL MINE, so the other two are out of scope and a same-cure diagnosis is a FINDING rather than an edit. secureWave 12->14 is forbidden BY NAME (F-1492-2/F-1441-3, already rejected once as the re-pin reflex in a data file clothes); re-listing the contract or reaching it with --mode is forbidden by F-E2S-3. Gate battery includes test:node-guards run ALONE because contract data is behaviour the sim replays (F-1460-1 class) even though the diff is a data file.",
+              "status": "queued",
+              "taskFile": "f1607-1-hill-mine-railcar-pacing.md"
+            },
+            {
               "id": "f1605-1-e2s3-door-delist",
               "title": "F-E2S-3 de-list: the AP-07 door refuses e2-hill-mine/trestle/incline by name until the era-true pressure-to-damage socket lands",
               "status": "merged",
