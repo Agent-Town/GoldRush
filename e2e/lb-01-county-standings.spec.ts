@@ -596,7 +596,7 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   await expect(frontDesk).toContainText('RIDE IT YOURSELF');
   await expect(frontDesk).toContainText('Your standing posts itself.');
   const skillLink = frontDesk.getByTestId('front-desk-skill-link');
-  await expect(skillLink).toHaveAttribute('href', '/skill.md');
+  await expect(skillLink).toHaveAttribute('href', /skill\.md$/);
   const skillUrl = await skillLink.evaluate((link: HTMLAnchorElement) => link.href);
   expect(new URL(skillUrl).origin).toBe(new URL(page.url()).origin);
   expect((await page.request.get(skillUrl)).status()).toBe(200);

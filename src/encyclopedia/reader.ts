@@ -276,7 +276,7 @@ function renderFrontDesk(): string {
         </section>
         <section>
           <h4>SEND YOUR RIG</h4>
-          <p>Open the door document at <a href="/skill.md" target="_blank" rel="noopener" data-testid="front-desk-skill-link">/skill.md</a> on this very origin.</p>
+          <p>Open the door document at <a href="${import.meta.env.BASE_URL}skill.md" target="_blank" rel="noopener" data-testid="front-desk-skill-link">skill.md</a> on this very origin.</p>
           <p class="front-desk__repositories"><strong>Repositories</strong><span>Agent-Town/GoldRush</span><span>Agent-Town/goldrush-gauntlet</span></p>
         </section>
       </div>
