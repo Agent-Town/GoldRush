@@ -6409,6 +6409,13 @@
               "taskFile": "lane-c-f1564-1-m4-06-ceiling-measurement.md",
               "mergeHash": "fcc53a1a32a756648a90c1328f25fbe912b9ff47",
               "gate": "none \u2014 fire-authorable; MEASURED: 24 observations across 2 arms x 2 projects, 0 breaches of 0.4, 0 censored, max 0.3722002149381437 (headroom 0.0278). F-1563-3 does NOT reproduce in the lane shell (CLAUDE_CONFIG_DIR unset); localised to the fire shell. Firewall held: diff is artifacts-only, spec blob 3288767770f37005ca5b61002ccf9e36d77d0244 byte-identical, no re-pin. Gates on merged tree: tsc rc=0, build 1.20s."
+            },
+            {
+              "id": "f1611-1-stale-build-rejection-assertions",
+              "title": "F-1611-1: the two BUILD-rejection assertions in ap-standing-orders learn to read a detail (one red on main, one latent sibling)",
+              "status": "queued",
+              "taskFile": "lane-f1611-1-stale-build-rejection-assertions.md",
+              "gate": "none owed to the owner \u2014 fire-authorable corrective. Closes when the slice merges with e2e/ap-standing-orders.spec.ts green on desktop AND mobile at --workers=1, both sites widened, and a manufactured red proving the widened assertion still bites."
             }
           ]
         }
