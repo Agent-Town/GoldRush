@@ -25,7 +25,7 @@ type StandingPost = {
   seedMode: 'live' | 'bench';
   seedHash: string;
   inputLogHash: string;
-  stack?: { model?: string; harness?: string; harnessVersion?: string; config?: string };
+  stack?: { model?: string; harness?: string; harnessVersion?: string; config?: string; source?: string };
   tape?: RunTape;
 };
 
@@ -33,6 +33,7 @@ const ARTIFACT_DIR = path.resolve('artifacts/county-standings');
 const FD1_SHOTS = path.resolve('reviews/shots-fd1');
 const FD3_SHOTS = path.resolve('reviews/shots-fd3');
 const FD3_1_SHOTS = path.resolve('reviews/shots-fd3-1');
+const F_BOARD_2_SHOTS = path.resolve('reviews/shots-f-board-2');
 const CLAIM_BENCH_SEED = benchSeeds['the-claim'][0]!;
 const WRONG_CONTRACT_BENCH_SEED = benchSeeds['e1-dry-gulch'][0]!;
 const PROFILE_STATE: ProfileState = {
@@ -240,6 +241,7 @@ test('endpoint stores optional self-declared stack and publishes only its board-
     harness: 'codex',
     harnessVersion: '1.2.3',
     config: ' effort = medium ',
+    source: 'https://github.com/Agent-Town/GoldRush/tree/main/artifacts',
   };
   const firstPost: StandingPost = {
     ...validPost('1'.repeat(32), 12),
@@ -298,12 +300,13 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   expect(body.board).toMatchObject([
     { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false },
     { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', defaulted: true, declared: false },
-    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion },
+    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, source: stack.source },
   ]);
   for (const row of body.board.slice(0, 2)) {
     expect(row).not.toHaveProperty('model');
     expect(row).not.toHaveProperty('harness');
     expect(row).not.toHaveProperty('harnessVersion');
+    expect(row).not.toHaveProperty('source');
   }
   for (const row of body.board) {
     expect(row).not.toHaveProperty('anonId');
@@ -372,6 +375,16 @@ test('endpoint stores optional self-declared stack and publishes only its board-
       env: { TELEMETRY: kv },
     });
     expect(capped.status).toBe(400);
+  }
+  expect((await standingsRoute({
+    request: apiRequest('POST', '', { ...validPost('6'.repeat(32)), stack: { source: 'https://example.com/'.padEnd(256, 'a') } }),
+    env: { TELEMETRY: kv },
+  })).status).toBe(200);
+  for (const source of ['http://example.com/run', 'not a URL', `https://example.com/${'x'.repeat(257)}`]) {
+    expect((await standingsRoute({
+      request: apiRequest('POST', '', { ...validPost('7'.repeat(32)), stack: { source } }),
+      env: { TELEMETRY: kv },
+    })).status).toBe(400);
   }
 
   let boardWrites = 0;
@@ -561,7 +574,7 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
     const board =
       url.searchParams.get('contract') === 'the-claim'
         ? [
-            { rank: 1, profileName: 'Ada', secured: true, waves: 27, timeAlive: 754, gold: 318, baseValue: 240, difficulty: 'greenhorn', submittedAt: now - 60_000 },
+            { rank: 1, profileName: 'Ada', secured: true, waves: 27, timeAlive: 754, gold: 318, baseValue: 240, difficulty: 'greenhorn', submittedAt: now - 60_000, declared: true, model: 'gpt-5.6-sol', harness: 'codex', source: 'https://github.com/Agent-Town/GoldRush/tree/main/artifacts' },
             { rank: 2, profileName: 'Cedar Jack', secured: true, waves: 23, timeAlive: 621, gold: 251, baseValue: 180, difficulty: 'vein-hunter', submittedAt: now - 3_600_000 },
             { rank: 3, profileName: 'Robin', secured: true, waves: 19, timeAlive: 518, gold: 211, baseValue: 150, difficulty: 'trail', submittedAt: now - 86_400_000, defaulted: true },
           ].filter((row) => !difficulty || row.difficulty === difficulty)
@@ -582,6 +595,8 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   await expect(page.getByTestId('county-standings-row-1')).toContainText('12:34');
   await expect(page.getByTestId('county-standings-row-1')).toContainText('318');
   await expect(page.getByTestId('county-standings-row-1')).toContainText('1m ago');
+  await expect(page.getByTestId('county-standings-source-1')).toHaveAttribute('href', 'https://github.com/Agent-Town/GoldRush/tree/main/artifacts');
+  await expect(page.getByTestId('county-standings-row-2').locator('.county-standings__source')).toHaveCount(0);
   await expect(page.getByRole('columnheader', { name: 'Result' })).toBeVisible();
   await expect(page.getByRole('columnheader', { name: 'When' })).toBeVisible();
   await expect(page.getByTestId('county-standings-local')).toContainText('Your Claims');
@@ -600,6 +615,8 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   const skillUrl = await skillLink.evaluate((link: HTMLAnchorElement) => link.href);
   expect(new URL(skillUrl).origin).toBe(new URL(page.url()).origin);
   expect((await page.request.get(skillUrl)).status()).toBe(200);
+  await expect(frontDesk.getByRole('link', { name: 'Agent-Town/GoldRush', exact: true })).toHaveAttribute('href', 'https://github.com/Agent-Town/GoldRush');
+  await expect(frontDesk.getByRole('link', { name: 'Agent-Town/goldrush-gauntlet', exact: true })).toHaveAttribute('href', 'https://github.com/Agent-Town/goldrush-gauntlet');
   expect(await frontDesk.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
 
   await mkdir(ARTIFACT_DIR, { recursive: true });
@@ -608,6 +625,9 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD1_SHOTS, `standings-${testInfo.project.name}.png`) });
   await mkdir(FD3_SHOTS, { recursive: true });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD3_SHOTS, `after-standings-${testInfo.project.name}.png`) });
+  await mkdir(F_BOARD_2_SHOTS, { recursive: true });
+  await page.getByTestId('county-standings-row-1').screenshot({ path: path.join(F_BOARD_2_SHOTS, `with-source-${testInfo.project.name}.png`) });
+  await page.getByTestId('county-standings-row-2').screenshot({ path: path.join(F_BOARD_2_SHOTS, `without-source-${testInfo.project.name}.png`) });
 
   await page.getByTestId('county-standings-difficulty-filter').selectOption('greenhorn');
   await page.getByTestId('county-standings-difficulty-filter').selectOption('vein-hunter');
