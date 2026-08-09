@@ -42,9 +42,9 @@
       "fingerprint": "c5593bf5b9fb",
       "excerpt": "if (leaf.status === 'merged') assert.ok(leaf.mergeHash, `${leaf.id}: merged without Git evidence`);"
     },
-    "scripts/fire.md -> scripts/drain-block-check.mjs:385": {
+    "scripts/fire.md -> scripts/drain-block-check.mjs:431": {
       "target": "scripts/drain-block-check.mjs",
-      "line": 385,
+      "line": 431,
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
@@ -72,9 +72,9 @@
       "fingerprint": "c11d5b8cacd2",
       "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
     },
-    ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:385": {
+    ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:431": {
       "target": "scripts/drain-block-check.mjs",
-      "line": 385,
+      "line": 431,
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
@@ -107,24 +107,6 @@
       "line": 99,
       "fingerprint": "18ae39970869",
       "excerpt": "await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullP"
-    },
-    "tasks/goals.json[f1328-1-drill-yard-census-debt] -> board-card-images.spec.ts:37": {
-      "target": "e2e/board-card-images.spec.ts",
-      "line": 37,
-      "fingerprint": "a1a902edcf2e",
-      "excerpt": "expect(EPOCHS.flatMap((epoch) => epoch.contracts)).toHaveLength(42);"
-    },
-    "tasks/goals.json[f1328-1-drill-yard-census-debt] -> map-census.spec.ts:63": {
-      "target": "e2e/map-census.spec.ts",
-      "line": 63,
-      "fingerprint": "568233a95567",
-      "excerpt": "expect(CONTRACTS).toHaveLength(42);"
-    },
-    "tasks/goals.json[f1328-1-drill-yard-census-debt] -> e1-baron.spec.ts:349": {
-      "target": "e2e/e1-baron.spec.ts",
-      "line": 349,
-      "fingerprint": "535afa0ee339",
-      "excerpt": "// 330ba7bb: the Frontier chapter renders all five E1 cards together."
     },
     "tasks/goals.json[rf-34-hero-y-restore-roundtrip] -> reviews/rf-34.md:28": {
       "target": "reviews/rf-34.md",
