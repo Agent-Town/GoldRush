@@ -27,6 +27,23 @@ worktrees/
 scripts/_s*
 playwright.s*.config.ts
 .scratch/
+# §3.0b gate worktrees (F-1608-3, s1609) — the SAME broad-add class as the block above,
+# one directory over. §3.0b orders undecided content gated in a DETACHED WORKTREE, and the
+# permission gate requires that worktree INSIDE the repo root, so every fire that obeys the
+# law parks a nested repo at `gate-s<N>/` — where the ART slot's `git add -A` records it as a
+# `160000` GITLINK: a submodule-shaped pointer to a commit no clone can resolve, at a path
+# that stops existing the moment the worktree is removed. That is garbage in every future
+# clone, and it survives review as one boring line in a 20-file art commit (s1608 caught
+# `gate-s1608` -> `74bd34243` in `6c780b621` by eye, and removed it in `8b246eeeb`).
+# The collision is STRUCTURAL, not one runner's slip — obeying §3.0b is what creates the dir.
+# BLAST RADIUS MEASURED BEFORE LANDING, not assumed: `git ls-files | grep -E '^gate-'` = 0 at
+# s1609, so this un-tracks NOTHING today and is purely forward-looking. `gate-s<N>` is the
+# established convention (40+ fires, s1428..s1608); exactly one ever reached git.
+# PROVED BY MANUFACTURING THE DEFECT in a throwaway repo, never by a broad add here — the
+# hazard under test IS `git add -A` at a repo root: without the rule a real `worktree add
+# --detach gate-s9999` stages as `160000` (the s1608 shape exactly); with it, skipped — and a
+# CONTROL dir alongside is still added, so the rule cannot rot into an over-broad sweep.
+gate-*/
 # beauty-shift probe scratch (the-claim shift, 2026-08-02): throwaway page probes
 # used to measure the sculpt before deciding an upgrade. The BOARDS are history and
 # live in reviews/shots-beauty-claim/; these one-shot probes are not.
