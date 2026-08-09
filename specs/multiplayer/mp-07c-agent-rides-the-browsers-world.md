@@ -31,3 +31,9 @@ Untouched: headless-only rooms (seat+seat lockstep stays exactly as shipped, has
 1. Does an agent-ridden co-op secure count for the room's county standing like any co-op secure (with the agent declared in the stack), or should agent-assisted runs be a separate board flavor?
 2. May invited agents ride ranked bench seeds, or bench rooms stay human-plus-benchmark-agents-only?
 (Everything through 07c-3 proceeds without these answers.)
+
+
+## ANSWERS (owner, 2026-08-09 desk walkthrough — unblocks 07c-4)
+1. **Counts like any secure.** An agent-ridden co-op secure ranks on the county co-op board like any team secure, with the agent declared in the stack (species-blind ranking + the named-minds display rule carry the honesty).
+2. **Bench stays benchmark-only.** Invited agents do NOT ride ranked bench seeds; mixed human+agent teams play LIVE seeds for the open county. Bench rooms remain the controlled exam.
+MP-07c-4 (THE RECKONING) is now fire-authorable.
