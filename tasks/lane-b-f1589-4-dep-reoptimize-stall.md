@@ -11,7 +11,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## Why (F-1589-4, s1589 drain of f1587-2 — and a predecessor that correctly refused to guess)
 
-F-1587-2 (s1587) measured `e2e/beauty-town.spec.ts:14` failing at **41.8 s** as the first test against a fresh scratch server — timing out in `saveEraLightShot`'s `waitForFunction(() => town.elapsed > 4)` — while the SAME test on the SAME tree passed **warm in 5.0 s**. The cure proposed was "warm the server with one request".
+F-1587-2 (s1587) measured `e2e/beauty-town.spec.ts:14` ("the day town boots with ground contact, wear and parcel dressing — and no night dressing") failing at **41.8 s** as the first test against a fresh scratch server — timing out in `saveEraLightShot`'s `waitForFunction(() => town.elapsed > 4)` — while the SAME test on the SAME tree passed **warm in 5.0 s**. The cure proposed was "warm the server with one request".
 
 `f1587-2-cold-server-warm` (lane-b, merged as evidence `9371c1c8d`) tried to reproduce that on a genuinely cold server and **could not**: the test passed in **5.5 s** (suite 6.7 s, wall 7.19 s, rc=0) against a server that was ready in 115 ms and had received no HTTP request. It shipped no patch and reported the negative result, exactly as instructed. **A non-reproduction bounds a defect's rate, not its existence — so F-1587-2 is still OPEN.**
 
