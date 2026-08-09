@@ -57,6 +57,51 @@ test('disputed leaves are surfaced, not silently accumulated', () => {
   );
 });
 
+// F-1597-1 (s1597) — THE TWO DENOMINATORS MUST AGREE, OR ONE OF THEM IS LYING.
+//
+// This file's walker (above) deliberately does NOT require a taskFile, so it has always seen every
+// blocked leaf. `drain-block-check.mjs` — the §3.0 first-command-of-every-drain guard — collected
+// only nodes with a string taskFile, because that is what distinguishes a leaf from a parent goal.
+// So the two guards read one tree through two denominators and NOTHING compared them: measured
+// s1597, this file saw 5 blocked leaves and `--all` reported 4. The missing leaf,
+// bt-04-homestead-automation, carries FOUR unanswered owner forks and the sentence "DO NOT QUEUE
+// without a fresh owner ruling on all four forks" — and both the drain path and the --queue path
+// answered `? UNKNOWN` at rc=0 for every spelling of a bt-04 master, which §3.0 states in terms
+// "reads as permission ... the precise failure §3.0 exists to prevent".
+//
+// The lesson is not "that leaf was mis-registered" — it was registered exactly as intended, for
+// visibility, and had a valid blockClass, so THIS file passed it and the board read green. The
+// lesson is that a guard's green is only worth its denominator, and two guards over one subject
+// must be tied together or they drift apart silently. This test is that tie.
+test('every blocked leaf is visible to the §3.0 drain guard (denominator parity)', () => {
+  const mine = blockedLeaves();
+  const r = spawnSync('node', ['scripts/drain-block-check.mjs', '--all'], { encoding: 'utf8' });
+  const m = /Scanned \d+ goal leaves — (\d+) BLOCKED/.exec(r.stdout || '');
+  assert.ok(m, `--all did not print its census; got: ${(r.stdout || r.stderr || '').slice(0, 200)}`);
+  assert.strictEqual(
+    Number(m[1]),
+    mine.length,
+    `this guard sees ${mine.length} blocked leaves but drain-block-check --all reports ${m[1]}. ` +
+      `A blocked leaf invisible to that script cannot stop a drain or a queue, so the block is ` +
+      `decorative — F-1597-1. Fix the collector's denominator, never this assertion.`
+  );
+});
+
+// Every blocked leaf must be REACHABLE by the name a fire would actually type. An unkeyed leaf is
+// matched by its id (F-1597-1); a keyed one by its taskFile. Either way the answer must be rc=1.
+test('every blocked leaf refuses the drain under the name a fire would type', () => {
+  for (const leaf of blockedLeaves()) {
+    const needle = leaf.taskFile || leaf.id;
+    const r = spawnSync('node', ['scripts/drain-block-check.mjs', needle], { encoding: 'utf8' });
+    assert.strictEqual(
+      r.status,
+      1,
+      `"${needle}" (leaf ${leaf.id}) is status="blocked" but drain-block-check exited ${r.status}. ` +
+        `rc=0 on this path is an affirmative-looking clearance over an owner-reserved fork.`
+    );
+  }
+});
+
 // Integration: the print branch must actually differ by class. A field nothing reads is decoration.
 test('drain-block-check prints class-specific verdicts, and gate-side is not called owner debt', () => {
   const gateSide = blockedLeaves().find((l) => l.blockClass === 'gate-side' && l.taskFile);

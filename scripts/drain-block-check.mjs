@@ -181,17 +181,49 @@ function isMainAncestor(mergeHash) {
   }
 }
 
+// F-1597-1 (s1597) — A BLOCKED LEAF WITH NO `taskFile` WAS INVISIBLE TO THIS ENTIRE FILE.
+// The `typeof node.taskFile === 'string'` test is what distinguishes a LEAF from a parent goal, and
+// that is still its job — but it also silently dropped a leaf that is blocked and simply has no
+// master yet. Measured s1597: goals.json held 5 `status:"blocked"` leaves and `--all` reported 4.
+// The missing one, bt-04-homestead-automation, says in its own title that it was "REGISTERED AS
+// BLOCKED s1354 for Goal Registration Law visibility ONLY" — so the registration's whole purpose,
+// machine visibility, was the one thing it did not buy. `scripts/block-class-guard.test.mjs` walks
+// the tree WITHOUT the taskFile filter, saw all 5, and passed them (bt-04 declares a valid
+// blockClass), so the board read green while the §3.0 guard could not see the leaf at all: two
+// guards over one tree with two denominators, neither asserting the blocked set is reachable from
+// the drain path. This is F-1248-1's class one layer down — there the audit's vocabulary was too
+// narrow, here its INPUT is — so it is cured the same way: widen the denominator, keep the leaf/
+// parent distinction. A blocked leaf with no master is LEGITIMATE (it is how a fork gets registered
+// before anyone authors it); what is not legitimate is it claiming a visibility it does not have.
+// Such a leaf is keyed by `id` instead, so authoring `bt-04-homestead-automation.md` now STOPS.
+// The parent-goal exclusion is explicit rather than incidental: a container carries a child array.
+function isBlockedUnkeyedLeaf(node) {
+  return (
+    node.status === 'blocked' &&
+    typeof node.id === 'string' &&
+    !Array.isArray(node.tasks) &&
+    !Array.isArray(node.subgoals) &&
+    !Array.isArray(node.children)
+  );
+}
+
 function collectLeaves(node, out = []) {
   if (!node || typeof node !== 'object') return out;
   if (Array.isArray(node)) {
     for (const child of node) collectLeaves(child, out);
     return out;
   }
-  if (typeof node.taskFile === 'string') out.push(node);
+  if (typeof node.taskFile === 'string' || isBlockedUnkeyedLeaf(node)) out.push(node);
   for (const value of Object.values(node)) {
     if (value && typeof value === 'object') collectLeaves(value, out);
   }
   return out;
+}
+
+// An unkeyed leaf has no taskFile to print. Say so in the words the reader must act on, rather than
+// printing "undefined" — the whole finding is that this leaf's reachability is not what it looks.
+function leafLabel(leaf) {
+  return leaf.taskFile || `(no taskFile — id-keyed: ${leaf.id})`;
 }
 
 // Reduce any input shape to the bare slice name:
@@ -200,6 +232,10 @@ function collectLeaves(node, out = []) {
 //   tasks/lane-hero-y-restore-roundtrip.md                     (master)
 //   lane/m3                                                    (branch — matched loosely)
 function normalize(raw) {
+  // F-1597-1: an unkeyed blocked leaf reaches here as `undefined` via `leaf.taskFile ?? leaf.id`
+  // only when both are absent, which the collector already forbids — but callers also pass
+  // `l.taskFile` directly (the --queue arm), so tolerate nullish rather than throw.
+  if (raw == null) return '';
   return raw
     .replace(/^.*\//, '')            // drop any directory
     .replace(/\.md$/i, '')           // drop the extension
@@ -212,7 +248,9 @@ function findLeaves(leaves, needle) {
   const key = normalize(needle).toLowerCase();
   const hits = [];
   for (const leaf of leaves) {
-    const taskKey = normalize(leaf.taskFile).toLowerCase();
+    // F-1597-1: fall back to the id so a blocked leaf with no master is still matchable — that
+    // fallback IS the teeth of the cure, since it is what stops a future bt-04 master.
+    const taskKey = normalize(leaf.taskFile ?? leaf.id).toLowerCase();
     if (!taskKey) continue;
     // Substring either way: the done-move carries the taskFile, and an id may be the shorter side.
     if (key.includes(taskKey) || taskKey.includes(key)) hits.push({ leaf, taskKey });
@@ -275,7 +313,11 @@ function main() {
     const blocked = leaves.filter((l) => l.status === 'blocked');
     console.log(`Scanned ${leaves.length} goal leaves — ${blocked.length} BLOCKED.`);
     for (const leaf of blocked) {
-      console.log(`\n  BLOCKED  ${leaf.taskFile}  [${leaf.id}]`);
+      console.log(`\n  BLOCKED  ${leafLabel(leaf)}  [${leaf.id}]`);
+      if (!leaf.taskFile) {
+        console.log(`           ⚠️  NO MASTER YET (F-1597-1) — this leaf is matched by its id, not a`);
+        console.log(`           taskFile. Authoring a master whose name contains that id will STOP.`);
+      }
       console.log(`           ${leaf.blockedReason || '(no blockedReason recorded)'}`);
     }
     // F-1248-1: --all was the instrument F-1172-2 used to measure this guard's denominator ("--all
@@ -288,7 +330,7 @@ function main() {
       console.log(`\n  ALSO ${closed.length} TERMINAL-CLOSED — refused on BOTH the drain and --queue`);
       console.log(`  paths (F-1248-1). Not owner debt; listed so the audit's denominator is honest:`);
       for (const leaf of closed) {
-        console.log(`    ${String(leaf.status).padEnd(11)} ${leaf.taskFile}  [${leaf.id}]`);
+        console.log(`    ${String(leaf.status).padEnd(11)} ${leafLabel(leaf)}  [${leaf.id}]`);
       }
     }
     process.exit(blocked.length ? 1 : 0);
@@ -331,7 +373,7 @@ function main() {
       // lane-calibrate-suite-workers.md reported only the blocked -v2 leaf and never its own
       // superseded one. Say both, so the reader learns which question they actually asked.
       if (hits[0] && hits[0].id !== blockedHit.id) {
-        console.log(`  you asked about : ${hits[0].id}  status="${hits[0].status}" (${hits[0].taskFile})`);
+        console.log(`  you asked about : ${hits[0].id}  status="${hits[0].status}" (${leafLabel(hits[0])})`);
         console.log(`                    refused via the blocked SIBLING above, which also matched.`);
       }
     } else {
@@ -376,7 +418,11 @@ function main() {
   const branchShaped = /^[\w.-]+\/[\w.-]+$/.test(target.trim()) && !isTaskFileShaped;
   const queueTaskFile = queue && isTaskFileShaped;
   const leaf = queueTaskFile
-    ? hits.find((l) => normalize(l.taskFile).toLowerCase() === normalize(target).toLowerCase())
+    // F-1597-1: the id fallback is REQUIRED here, not cosmetic. This is the arm an AUTHOR hits
+    // (`--queue <master>.md`), and an unkeyed leaf whose taskFile normalizes to "" would fail this
+    // exact-equality find, fall through to UNKNOWN and exit 0 — an affirmative-looking clearance on
+    // the one path whose entire job is to refuse a master the owner has reserved.
+    ? hits.find((l) => normalize(l.taskFile ?? l.id).toLowerCase() === normalize(target).toLowerCase())
     : hits[0];
   const branchFallback = branchShaped && !queueTaskFile;
   if (!leaf || branchFallback) {
@@ -407,7 +453,7 @@ function main() {
   // would red a lawful re-check. Re-draining already-merged work is caught by the two-dot diff —
   // a policy word is not, which is the whole reason this file exists.
   if (!queue && TERMINAL_CLOSED_STATUSES.has(leaf.status)) {
-    console.log(`\n  ⛔ CLOSED — DO NOT DRAIN: ${leaf.taskFile} [${leaf.id}]`);
+    console.log(`\n  ⛔ CLOSED — DO NOT DRAIN: ${leafLabel(leaf)} [${leaf.id}]`);
     console.log(`    refusal arm     : status="${leaf.status}" (terminal-closed; the drain path now`);
     console.log(`                      consults the same set as --queue — F-1248-1)`);
     // The title is printed UNCONDITIONALLY, not as a fallback: §4.7 puts an owner's verbatim ruling
@@ -439,7 +485,7 @@ function main() {
     const shippedByAncestry = !shippedByStatus && isMainAncestor(leaf.mergeHash);
     const closedByStatus = TERMINAL_CLOSED_STATUSES.has(leaf.status);
     if (shippedByStatus || shippedByAncestry) {
-      console.log(`  ⛔ ALREADY SHIPPED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
+      console.log(`  ⛔ ALREADY SHIPPED — DO NOT QUEUE: ${leafLabel(leaf)} [${leaf.id}]`);
       console.log(`    mergeHash="${leaf.mergeHash || '(not recorded)'}"`);
       console.log(`    refusal arm=${shippedByStatus ? `status="${leaf.status}"` : `mergeHash is an ancestor of main (status="${leaf.status}")`}`);
       process.exit(1);
@@ -447,7 +493,7 @@ function main() {
     if (closedByStatus) {
       // Deliberately a DIFFERENT headline: "already shipped" would be a lie for a master that
       // never merged a line, and a wrong reason teaches the next fire the wrong lesson.
-      console.log(`  ⛔ CLOSED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
+      console.log(`  ⛔ CLOSED — DO NOT QUEUE: ${leafLabel(leaf)} [${leaf.id}]`);
       console.log(`    refusal arm=status="${leaf.status}" (terminal, and it left no commit to refuse it with)`);
       console.log(`    leaf title      : ${(leaf.title || '(untitled leaf)').trim().slice(0, 300)}`);
       console.log(`    ${closedReason(leaf)}`);
@@ -462,7 +508,7 @@ function main() {
     const citationStatus = checkQueuedMasterCitations(target);
     if (citationStatus !== 0) process.exit(citationStatus);
   }
-  console.log(`  ✅ CLEAR — ${leaf.taskFile} [${leaf.id}] status="${leaf.status}"`);
+  console.log(`  ✅ CLEAR — ${leafLabel(leaf)} [${leaf.id}] status="${leaf.status}"`);
   if (hits.length > 1) {
     // F-1250-1: "longest wins" was the whole rule and is now only the tie-break, so say the rule that
     // actually decided this. A CLEAR that names a leaf the reader did not ask about is the exact shape
