@@ -38,6 +38,11 @@ for (const contract of steamworks.contracts) {
       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
       const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+      if (contract.id !== 'e2-pressure-garden') {
+        expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
+        expect(consoleErrors).toEqual([]);
+        return;
+      }
       const rig = { ...Balance.sparkRig };
       restoreRig = () => Object.assign(Balance.sparkRig, rig);
 
