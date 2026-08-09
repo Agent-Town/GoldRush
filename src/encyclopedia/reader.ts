@@ -107,19 +107,19 @@ const DIFFICULTY_LABELS: Record<DifficultyPresetId, string> = {
 
 const PARTY_LABELS: Record<StandingsParty, string> = {
   solo: 'Solo',
-  '2': 'Posse of 2',
-  '3': 'Posse of 3',
-  '4': 'Posse of 4',
+  '2': 'Team of 2',
+  '3': 'Team of 3',
+  '4': 'Team of 4',
 };
 
 // NOT Object.keys(PARTY_LABELS): JS orders integer-like keys first, so '2','3','4' would jump
 // ahead of 'solo' and the default board would render as the LAST chip. Measured, not guessed —
-// the first screenshot of this row read "Posse of 2 · Posse of 3 · Posse of 4 · Solo".
+// the first screenshot of this row put every team size ahead of Solo.
 const PARTY_ORDER: readonly StandingsParty[] = ['solo', '2', '3', '4'];
 
 const FIELD_BOOK_VIEW_LABELS: Record<FieldBookView, string> = {
   byStack: 'By rig',
-  byParty: 'By posse',
+  byParty: 'By team',
 };
 
 let currentRoot: HTMLElement | null = null;
@@ -286,7 +286,7 @@ function renderFrontDesk(): string {
 
 function renderStandingsLedger(): string {
   const epochId = activeEpochId();
-  const contracts = listContracts(epochId);
+  const contracts = listContracts(epochId).filter((contract) => contract.id !== 'e1-drill-yard');
   if (!contracts.some((contract) => contract.id === currentStandingsContractId)) {
     currentStandingsContractId = contracts[0]?.id ?? '';
   }
@@ -310,7 +310,7 @@ function renderStandingsLedger(): string {
             .join('')}
         </nav>
         <p class="county-standings__contracts-hint" aria-hidden="true">Swipe for more contracts &rarr;</p>
-        <nav class="county-standings__parties" aria-label="County standings party sizes">
+        <nav class="county-standings__parties" aria-label="County standings team sizes">
           ${PARTY_ORDER
             .map(
               (party) =>
@@ -320,7 +320,7 @@ function renderStandingsLedger(): string {
             )
             .join('')}
         </nav>
-        <p class="county-standings__parties-hint">A posse is ranked only against posses its own size.</p>
+        <p class="county-standings__parties-hint">A team is ranked only against teams its own size.</p>
         <label class="county-standings__filter">
           Difficulty
           <select data-standings-difficulty data-testid="county-standings-difficulty-filter">
@@ -510,15 +510,15 @@ function isNameList(value: unknown): value is string[] {
 
 function renderPartyBook(partyBook: PartyBook): string {
   if (partyBook.rows.length === 0) {
-    return '<p class="county-standings__empty">No posses in the field book yet — the door is open.</p>';
+    return '<p class="county-standings__empty">No teams in the field book yet — the door is open.</p>';
   }
   const contractNames = new Map(listContracts(activeEpochId()).map((contract) => [contract.id, contract.boardRow.name]));
   const contracts = partyBook.contracts.filter((contractId) => partyBook.rows.some((row) => row.contracts.some((cell) => cell.contractId === contractId)));
   return `
     ${contracts.length > 1 ? '<p class="field-book__swipe">Swipe the book for another contract &rarr;</p>' : ''}
     <table class="field-book__matrix" data-testid="field-book-party-matrix">
-      <caption>${partyBook.rows.length} ${partyBook.rows.length === 1 ? 'posse' : 'posses'} &middot; ${contracts.length} ${contracts.length === 1 ? 'contract' : 'contracts'} with showings</caption>
-      <thead><tr><th scope="col">Posse</th>${contracts
+      <caption>${partyBook.rows.length} ${partyBook.rows.length === 1 ? 'team' : 'teams'} &middot; ${contracts.length} ${contracts.length === 1 ? 'contract' : 'contracts'} with showings</caption>
+      <thead><tr><th scope="col">Team</th>${contracts
         .map((id) => `<th scope="col">${escapeHtml(contractNames.get(id) ?? id)}</th>`)
         .join('')}</tr></thead>
       <tbody>

@@ -66,6 +66,19 @@ function collectErrors(page: Page): { console: string[]; page: string[] } {
 
 test('optional cost fields group the best score by model and never change county ranking', async () => {
   const kv = makeKv();
+  const drillYard = await post(kv, standing('0'.repeat(32), 'e1-drill-yard', 99));
+  expect(drillYard.status).toBe(400);
+  expect(await drillYard.json()).toMatchObject({
+    ok: false,
+    error: 'training_ground',
+    message: 'The Drill Yard is the training ground — practice is its own reward.',
+  });
+  expect(await kv.get('standings:epoch-1-frontier:e1-drill-yard')).toBeNull();
+  expect((await standingsRoute({
+    request: request('GET', '?contract=e1-drill-yard&epoch=epoch-1-frontier'),
+    env: { TELEMETRY: kv },
+  })).status).toBe(400);
+
   const expensiveBest = standing('1'.repeat(32), 'the-claim', 20, {
     model: 'gpt-5.6-sol', harness: 'codex', harnessVersion: '2026.08', config: 'medium',
     tokensIn: 90_000, tokensOut: 8_000, calls: 18,
@@ -102,7 +115,7 @@ test('optional cost fields group the best score by model and never change county
   };
   expect(response.status).toBe(200);
   expect(body.view).toBe('byStack');
-  expect(body.contracts).toEqual(['the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+  expect(body.contracts).toEqual(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
   expect(body.byStack.find((row) => row.model === 'gpt-5.6-sol')).toMatchObject({
     contracts: [
       {

@@ -21,7 +21,7 @@ type BoardRow = {
   reel?: { id: string; simVersion: number };
 };
 
-const SHOTS = path.resolve('reviews/shots-f-board-1');
+const SHOTS = path.resolve('reviews/shots-team-and-training');
 const COMPAT_SHOTS = path.resolve('reviews/shots-f1563-1');
 const PROFILE_STATE: ProfileState = {
   version: 2,
@@ -227,7 +227,7 @@ test('the field book reads composition from self-declared stacks, and ranks noth
     byParty: Array<{ composition: string; riderCount: number; contracts: Array<Record<string, unknown>> }>;
   };
   expect(body.view).toBe('byParty');
-  expect(body.contracts).toEqual(['the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+  expect(body.contracts).toEqual(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
   expect(body.byParty.map((row) => row.composition).sort()).toEqual(['a+a', 'h+a', 'h+h', 'h+h+a']);
 
   // Rider B declared a HARNESS but no model — an agent by declaration, an unregistered rig by name.
@@ -303,11 +303,11 @@ test('plain boot: an offline county clerk leaves the posse board and field book 
   await page.getByTestId('claim-ledger-county-standings').click();
   await expect(page.getByTestId('county-standings-board')).toHaveText('No standings yet — the door is open.');
   await page.getByTestId('county-standings-party-3').click();
-  await expect(page.getByTestId('county-standings-board')).toHaveText('No posse of 3 standings yet — the door is open.');
+  await expect(page.getByTestId('county-standings-board')).toHaveText('No team of 3 standings yet — the door is open.');
   await expect(page.getByTestId('county-standings-watch-1')).toHaveCount(0);
   await page.getByTestId('claim-ledger-field-book').click();
   await page.getByTestId('field-book-view-byParty').click();
-  await expect(page.getByTestId('field-book-board')).toHaveText('No posses in the field book yet — the door is open.');
+  await expect(page.getByTestId('field-book-board')).toHaveText('No teams in the field book yet — the door is open.');
   expect(errors).toEqual({ console: [], page: [] });
 });
 
@@ -325,10 +325,10 @@ test('plain boot: a failing standings request adds no error of the application o
   await page.getByTestId('claim-ledger-county-standings').click();
   await expect(page.getByTestId('county-standings-board')).toHaveText('No standings yet — the door is open.');
   await page.getByTestId('county-standings-party-2').click();
-  await expect(page.getByTestId('county-standings-board')).toHaveText('No posse of 2 standings yet — the door is open.');
+  await expect(page.getByTestId('county-standings-board')).toHaveText('No team of 2 standings yet — the door is open.');
   await page.getByTestId('claim-ledger-field-book').click();
   await page.getByTestId('field-book-view-byParty').click();
-  await expect(page.getByTestId('field-book-board')).toHaveText('No posses in the field book yet — the door is open.');
+  await expect(page.getByTestId('field-book-board')).toHaveText('No teams in the field book yet — the door is open.');
   // Chromium logs its OWN transport failure for every aborted request, so this arm cannot claim a
   // clean console. What it CAN claim, and what matters, is that every line is that transport log —
   // the app adds nothing of its own, and throws nothing at all.
@@ -463,7 +463,9 @@ test('plain boot: posse chips rank within size, the field book counts hands, and
   // Solo is the default board, so it is the FIRST chip. Asserted by ORDER, not presence: keying
   // the labels off an object put '2','3','4' ahead of 'solo' (integer-like keys sort first) and
   // every presence-only assertion stayed green while the default sat at the end of the row.
-  await expect(page.locator('[data-standings-party]')).toHaveText(['Solo', 'Posse of 2', 'Posse of 3', 'Posse of 4']);
+  await expect(page.locator('[data-standings-party]')).toHaveText(['Solo', 'Team of 2', 'Team of 3', 'Team of 4']);
+  await expect(page.locator('.county-standings__parties-hint')).toHaveText('A team is ranked only against teams its own size.');
+  await expect(page.getByTestId('county-standings-contract-e1-drill-yard')).toHaveCount(0);
   await expect(page.getByTestId('county-standings-party-solo')).toHaveAttribute('aria-pressed', 'true');
 
   // Solo looks exactly like it always did, plus the reel column.
@@ -484,7 +486,7 @@ test('plain boot: posse chips rank within size, the field book counts hands, and
   await expect(page.getByTestId('county-standings-party-4')).toBeVisible();
 
   await mkdir(SHOTS, { recursive: true });
-  await page.getByTestId('county-standings-board').screenshot({ path: path.join(SHOTS, `posse-board-${testInfo.project.name}.png`) });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `team-board-${testInfo.project.name}.png`) });
 
   // The Field Book counts hands — information, and no rank anywhere in it.
   await page.getByTestId('claim-ledger-field-book').click();
@@ -493,7 +495,7 @@ test('plain boot: posse chips rank within size, the field book counts hands, and
   await expect(page.getByTestId('field-book-party-row-h-a')).toContainText('Human + Agent');
   await expect(page.getByTestId('field-book-party-cell-h-a-the-claim')).toContainText('gpt-5.6-sol');
   await expect(page.getByTestId('field-book-party-cell-h-h-the-claim')).toContainText('No rig declared');
-  await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `field-book-posse-${testInfo.project.name}.png`) });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `field-book-team-${testInfo.project.name}.png`) });
   await page.getByTestId('field-book-view-byStack').click();
   await expect(page.getByTestId('field-book-party-matrix')).toHaveCount(0);
 
