@@ -64,7 +64,12 @@ function collectErrors(page: Page): { console: string[]; page: string[] } {
   return errors;
 }
 
-test('optional cost fields group the best score by model and never change county ranking', async () => {
+// The Drill Yard takes no entries and prints no ranks — owner ruling 2026-08-09, verbatim:
+// "the Drill Yard is not a contract that needs a ladder - it is the training ground". These
+// assertions used to live inside the cost-fields test below, where a grep for the Drill Yard
+// among test names could not find them and retiring the host would have deleted them silently
+// (F-1596-1). A ruling's only defence gets its own title.
+test('the Drill Yard is the training ground — standings refuse it on both POST and GET', async () => {
   const kv = makeKv();
   const drillYard = await post(kv, standing('0'.repeat(32), 'e1-drill-yard', 99));
   expect(drillYard.status).toBe(400);
@@ -78,7 +83,10 @@ test('optional cost fields group the best score by model and never change county
     request: request('GET', '?contract=e1-drill-yard&epoch=epoch-1-frontier'),
     env: { TELEMETRY: kv },
   })).status).toBe(400);
+});
 
+test('optional cost fields group the best score by model and never change county ranking', async () => {
+  const kv = makeKv();
   const expensiveBest = standing('1'.repeat(32), 'the-claim', 20, {
     model: 'gpt-5.6-sol', harness: 'codex', harnessVersion: '2026.08', config: 'medium',
     tokensIn: 90_000, tokensOut: 8_000, calls: 18,
