@@ -40,6 +40,7 @@ type SelfDeclaredStack = {
   harness?: string;
   harnessVersion?: string;
   config?: string;
+  source?: string;
   tokensIn?: number;
   tokensOut?: number;
   calls?: number;
@@ -109,8 +110,8 @@ const MAX_STACK_FIELD_LENGTH = 256;
 const MAX_STACK_COST = 1_000_000_000_000;
 const STACK_TEXT_FIELDS = ['model', 'harness', 'harnessVersion', 'config'] as const;
 const STACK_COST_FIELDS = ['tokensIn', 'tokensOut', 'calls'] as const;
-const STACK_KEYS = new Set<string>([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS]);
-const STORED_STACK_KEYS = new Set([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'declaredBy']);
+const STACK_KEYS = new Set<string>([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source']);
+const STORED_STACK_KEYS = new Set([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source', 'declaredBy']);
 const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack', 'party', 'tape']);
 const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue']);
 const PARTY_KEYS = new Set(['riderCount', 'riders']);
@@ -250,6 +251,7 @@ function boardStack(stack?: SelfDeclaredStack): JsonRecord {
     ...(stack.model === undefined ? {} : { model: stack.model }),
     ...(stack.harness === undefined ? {} : { harness: stack.harness }),
     ...(stack.harnessVersion === undefined ? {} : { harnessVersion: stack.harnessVersion }),
+    ...(stack.source === undefined ? {} : { source: stack.source }),
   };
 }
 
@@ -494,6 +496,15 @@ function validateStack(value: unknown, stored = false): SelfDeclaredStack | null
     if (fieldValue === undefined) continue;
     if (typeof fieldValue !== 'string' || fieldValue.length > MAX_STACK_FIELD_LENGTH) return null;
     stack[field] = fieldValue;
+  }
+  if (value.source !== undefined) {
+    if (typeof value.source !== 'string' || value.source.length > MAX_STACK_FIELD_LENGTH) return null;
+    try {
+      if (new URL(value.source).protocol !== 'https:') return null;
+    } catch {
+      return null;
+    }
+    stack.source = value.source;
   }
   for (const field of STACK_COST_FIELDS) {
     const fieldValue = value[field];

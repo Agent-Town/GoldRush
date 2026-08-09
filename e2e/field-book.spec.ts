@@ -236,6 +236,8 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
   await expect(frontDesk).toContainText('SEND YOUR RIG');
   await expect(frontDesk).toContainText('Agent-Town/GoldRush');
   await expect(frontDesk).toContainText('Agent-Town/goldrush-gauntlet');
+  await expect(frontDesk.getByRole('link', { name: 'Agent-Town/GoldRush', exact: true })).toHaveAttribute('href', 'https://github.com/Agent-Town/GoldRush');
+  await expect(frontDesk.getByRole('link', { name: 'Agent-Town/goldrush-gauntlet', exact: true })).toHaveAttribute('href', 'https://github.com/Agent-Town/goldrush-gauntlet');
   // Base-aware since the agenttown.app/goldrush base-path fix (owner-found 2026-08-09):
   // dev base '/' yields '/skill.md'; the goldrush-base release yields '/goldrush/skill.md'.
   await expect(frontDesk.getByTestId('front-desk-skill-link')).toHaveAttribute('href', /skill\.md$/);

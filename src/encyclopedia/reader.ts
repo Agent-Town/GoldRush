@@ -40,6 +40,7 @@ type StandingStack = {
   model?: string;
   harness?: string;
   harnessVersion?: string;
+  source?: string;
 };
 
 type CountyRider = StandingStack & { name: string };
@@ -277,7 +278,7 @@ function renderFrontDesk(): string {
         <section>
           <h4>SEND YOUR RIG</h4>
           <p>Open the door document at <a href="${import.meta.env.BASE_URL}skill.md" target="_blank" rel="noopener" data-testid="front-desk-skill-link">skill.md</a> on this very origin.</p>
-          <p class="front-desk__repositories"><strong>Repositories</strong><span>Agent-Town/GoldRush</span><span>Agent-Town/goldrush-gauntlet</span></p>
+          <p class="front-desk__repositories"><strong>Repositories</strong><a href="https://github.com/Agent-Town/GoldRush" target="_blank" rel="noopener">Agent-Town/GoldRush</a><a href="https://github.com/Agent-Town/goldrush-gauntlet" target="_blank" rel="noopener">Agent-Town/goldrush-gauntlet</a></p>
         </section>
       </div>
     </aside>
@@ -700,7 +701,8 @@ function isStandingStack(value: Partial<StandingStack>): boolean {
     && validOptionalString(value.model)
     && validOptionalString(value.harness)
     && validOptionalString(value.harnessVersion)
-    && (value.declared === true || (value.model === undefined && value.harness === undefined && value.harnessVersion === undefined));
+    && validOptionalSource(value.source)
+    && (value.declared === true || (value.model === undefined && value.harness === undefined && value.harnessVersion === undefined && value.source === undefined));
 }
 
 function isCountyReel(value: unknown): boolean {
@@ -758,7 +760,7 @@ function renderCountyRow(row: CountyStanding, watchable: boolean): string {
 function renderCountyStack(stack: StandingStack, testId: string): string {
   const harness = [stack.harness, stack.harnessVersion].filter(Boolean).join(' ');
   const label = stack.declared ? [stack.model, harness].filter(Boolean).join(' · ') || 'Declared rider' : 'Undeclared rider';
-  return `<span class="county-standings__stack" data-testid="county-standings-stack-${testId}" title="${escapeHtml(label)}">${escapeHtml(label)}</span>`;
+  return `<span class="county-standings__stack" data-testid="county-standings-stack-${testId}" title="${escapeHtml(label)}">${escapeHtml(label)}</span>${stack.source === undefined ? '' : `<a class="county-standings__source" data-testid="county-standings-source-${testId}" href="${escapeHtml(stack.source)}" target="_blank" rel="noopener">source &#8599;</a>`}`;
 }
 
 function renderLocalClaims(contracts: ReturnType<typeof listContracts>): string {
@@ -801,6 +803,16 @@ function validOptionalCost(value: unknown): boolean {
 
 function validOptionalString(value: unknown): boolean {
   return value === undefined || (typeof value === 'string' && value.length <= 256);
+}
+
+function validOptionalSource(value: unknown): boolean {
+  if (value === undefined) return true;
+  if (typeof value !== 'string' || value.length > 256) return false;
+  try {
+    return new URL(value).protocol === 'https:';
+  } catch {
+    return false;
+  }
 }
 
 function isDifficultyPreset(value: unknown): value is DifficultyPresetId {
