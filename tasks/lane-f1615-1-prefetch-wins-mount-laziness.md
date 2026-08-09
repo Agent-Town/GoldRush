@@ -44,8 +44,13 @@ Removing the exclusion at `src/town/TownTavernPilot.ts:49` (`.filter(([id]) => i
    - `e2e/town-tavern-blender.spec.ts:154` + `:205` — titles "Tavern pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate" and "LITE tier always keeps the facade and never fetches the GLB"
    - `e2e/town-plate-blender.spec.ts:71` + `:124` — "Town plate is lazy, contract-valid, keeps actors planar, and mounts in the owner all-view" and "LITE keeps painted ground and never fetches the Town plate"
    - `e2e/town-plaza-props-blender.spec.ts:48` + `:70` — "plaza props stay lazy by default and mount every layout instance with one fetch per family" and "LITE props make no model requests"
-   - `e2e/town-assay-office-blender.spec.ts:150` + `:202`, `e2e/town-chapel-blender.spec.ts:154` + `:207`, `e2e/town-claim-office-blender.spec.ts:154` + `:205`, `e2e/town-general-store-blender.spec.ts:156` + `:207`, `e2e/town-schoolhouse-blender.spec.ts:154` + `:206`, `e2e/town-tavern-blender.spec.ts` as above — each spec's own "…is lazy…" test and its "LITE…" test
-   - `e2e/town-dynamo-hall-blender.spec.ts:119` + `:130` — "LITE never requests the Dynamo Hall GLB" and "a pre-T2 profile never renders or requests the 3D Dynamo Hall"; and the equivalent sites in `e2e/town-stamp-mill-blender.spec.ts:158`, `:207`, `:232`
+   - `e2e/town-assay-office-blender.spec.ts:150` ("Assay Office pilot is lazy, contract-valid, visual-only, and stays inside the …") + `:202` ("LITE tier always keeps the Assay Office facade and never fetches the GLB")
+   - `e2e/town-chapel-blender.spec.ts:154` ("Chapel pilot is lazy, contract-valid, visual-only, and stays inside the frame-time …") + `:207` ("LITE tier always keeps the Chapel facade and never fetches the GLB")
+   - `e2e/town-claim-office-blender.spec.ts:154` ("Claim Office pilot is lazy, contract-valid, visual-only, and stays inside the …") + `:205` ("LITE tier always keeps the Claim Office facade and never fetches the GLB")
+   - `e2e/town-general-store-blender.spec.ts:156` ("General Store pilot is lazy, contract-valid, visual-only, and stays inside t…") + `:207` ("LITE tier always keeps the General Store facade and never fetches the GLB")
+   - `e2e/town-schoolhouse-blender.spec.ts:154` ("Schoolhouse pilot is lazy, contract-valid, visual-only, and stays inside the f…") + `:206` ("LITE tier always keeps the Schoolhouse facade and never fetches the GLB")
+   - `e2e/town-dynamo-hall-blender.spec.ts:119` ("LITE never requests the Dynamo Hall GLB") + `:130` ("a pre-T2 profile never renders or requests the 3D Dynamo Hall")
+   - `e2e/town-stamp-mill-blender.spec.ts:158` ("Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside the fra…") + `:207` ("LITE tier always keeps the Stamp Mill facade and never fetches the GLB") + `:232` ("a pre-complete Stamp Mill never mounts its 3D model")
 
    **Where a test's TITLE claims something the re-scoped body no longer asserts (e.g. "never fetches the GLB", "never requests"), rename the title to state what it now checks** (e.g. "LITE tier always keeps the facade and never MOUNTS the GLB"). A title that lies is a worse defect than the one you are fixing.
 
@@ -59,7 +64,7 @@ Removing the exclusion at `src/town/TownTavernPilot.ts:49` (`.filter(([id]) => i
 
 **NO changes to:**
 - `src/assets/AdvanceStream.ts` — the prefetch policy is a ratified owner directive and the subject of this measurement. If you believe it is wrong, that is a FINDING for your report, not an edit.
-- `e2e/asset-diet.spec.ts` — **explicitly out of scope by the F-1167-1 row's own warning.** Its `townResponseBytes < 25_000_000` budget (`e2e/asset-diet.spec.ts:101`) is a separate, real regression. Removing the exclusion adds two more prefetched models and may push it further red: **observe and report the number, do not fix it and do not re-pin it.**
+- `e2e/asset-diet.spec.ts` — **explicitly out of scope by the F-1167-1 row's own warning.** Its `townResponseBytes < 25_000_000` budget (`e2e/asset-diet.spec.ts:101`, in "honest town and claim cues appear while GLBs are throttled and leave at ready") is a separate, real regression. Removing the exclusion adds two more prefetched models and may push it further red: **observe and report the number, do not fix it and do not re-pin it.**
 - The specs' `?terrain2d` helper default, their `!url.search` collector filter, and their `page.goto('/')` boot — these are correct for the town phase (see Why). Changing them would suppress the prefetch and make the specs test a configuration no player is in, which is the opposite of the owner's ruling.
 - Sim semantics; any other file under `src/`; any other `e2e/*.spec.ts`; `playwright.config.ts`; `package.json`; `tasks/**`; `scripts/**`.
 
