@@ -6369,8 +6369,10 @@
             {
               "id": "f-door-6-reach-vs-zone",
               "title": "F-DOOR-6 (a)+(b): reach and zone stop sharing one word, and the door doc says builds land where the Prospector stands",
-              "status": "queued",
-              "taskFile": "lane-fdoor6-reach-vs-zone.md"
+              "status": "merged",
+              "taskFile": "lane-fdoor6-reach-vs-zone.md",
+      "mergeHash": "906ca396e3bf340c83668d2fc5c1bf5411f5feda",
+      "drainNotes": "s1611: gated in detached worktree gate-s1611 at --workers=1. tsc clean, build 1.03s, m4-01 12/12 both projects, adjacent 6 specs 19/20 both projects (single red control-confirmed pre-existing on main, F-1611-1), test:node-guards rc=0 285s run alone per F-1460-1. invalid_position retired with 0 residual hits across live surfaces. Review reviews/f-door-6-reach-vs-zone.md"
             },
             {
               "id": "ap-15-assay-of-minds",
