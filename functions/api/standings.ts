@@ -123,6 +123,7 @@ const MAX_PARTY_RIDERS = 4;
 const PARTY_FILTERS = new Set(['solo', '2', '3', '4']);
 const UNREGISTERED_RIG = 'unregistered rig';
 const MAX_REEL_ID_LENGTH = 64;
+const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
   const cors = corsHeaders(context.request);
@@ -328,6 +329,10 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   if (!hasOnlyKeys(body, POST_KEYS)) return error(cors, 400, 'bad_payload', 'Standing not accepted.');
   const contractId = typeof body.contractId === 'string' ? body.contractId : '';
   const epochId = typeof body.epochId === 'string' ? body.epochId : '';
+  // Training, not standings — the drill yard never ranks.
+  if (contractId === DRILL_YARD_CONTRACT_ID) {
+    return error(cors, 400, 'training_ground', 'The Drill Yard is the training ground — practice is its own reward.');
+  }
   const score = validateScore(body.score);
   const profileName = cleanName(body.profileName);
   const anonId = typeof body.anonId === 'string' && ANON_ID.test(body.anonId) ? body.anonId : '';
@@ -463,11 +468,13 @@ function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { s
 }
 
 function knownContract(epochId: string, contractId: string): boolean {
-  return CONTRACT_EPOCHS.get(contractId) === epochId;
+  return contractId !== DRILL_YARD_CONTRACT_ID && CONTRACT_EPOCHS.get(contractId) === epochId;
 }
 
 function epochContracts(epochId: string): string[] | null {
-  return CONTRACT_BUNDLES.find((bundle) => bundle.epochId === epochId)?.contracts.map((contract) => contract.id) ?? null;
+  return CONTRACT_BUNDLES.find((bundle) => bundle.epochId === epochId)?.contracts
+    .map((contract) => contract.id)
+    .filter((contractId) => contractId !== DRILL_YARD_CONTRACT_ID) ?? null;
 }
 
 function isDifficultyPreset(value: unknown): value is DifficultyPresetId {
