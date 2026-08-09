@@ -4627,6 +4627,13 @@
               "drainNotes": "s1590: MERGED as evidence 12190838aaf3415ad4c4b03e5c377c06af9c9919. Verdict COULD-NOT-ARM, and that was the only reachable verdict. F-1590-1: both levers the master prescribed are structurally incapable of printing vite's re-optimization line - deleting node_modules/.vite removes the cachedMetadata the message branch requires (vite/dist/node/chunks/node.js:31487), and touching the lockfile mtime cannot move a CONTENT hash (:32019-32031). The runner obeyed the firewall exactly (diff scoped to src, e2e, scripts, specs, tasks, package-lock.json and playwright.config.ts is EMPTY) and reported the negative honestly. Working lever proved by manufacture this fire (artifacts/f1590-1-arm-lever/): stale only lockfileHash inside node_modules/.vite/deps/_metadata.json - armed on run 1, converged control silent, self-healing, and it touches no tracked byte. F-1589-4 and F-1587-2 both stay OPEN."
             },
             {
+              "id": "f1590-1-dep-reoptimize-armed",
+              "title": "F-1590-1: the dep re-optimization A/B on a lever that provably arms - and a cure only if it confirms",
+              "status": "queued",
+              "taskFile": "lane-b-f1590-1-dep-reoptimize-armed.md",
+              "gate": "none - fire-authorable from F-1590-1, filed s1590 at the f1589-4 drain. Third attempt at F-1587-2, lawful under the changed-premise rule because the LEVER changed on measured grounds: f1589-4 returned COULD-NOT-ARM and the drain proved both of its prescribed levers structurally incapable (vite/dist/node/chunks/node.js:31487 gates the message on cachedMetadata, which deleting the cache removes; :32019-32031 hashes lockfile CONTENT, which an mtime touch cannot move). The working lever - stale only lockfileHash inside node_modules/.vite/deps/_metadata.json - was proved by manufacture, artifacts/f1590-1-arm-lever/. Arm A armed / Arm B disarmed, 3 repetitions each, arm proof required as a hard gate. Cure is CONDITIONAL on CONFIRMED and must be measured by an Arm C."
+            },
+            {
               "id": "f1587-2-cold-server-warm",
               "title": "F-1587-2: the first Playwright arm against a cold dev server can time out and read as a tree red \u2014 warm the server in the shared battery driver, and prove the warm-up reaches the chunk that was actually cold",
               "status": "stopped",
