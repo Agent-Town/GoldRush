@@ -4609,9 +4609,11 @@
             {
               "id": "f1586-1-desk-count-refusal",
               "title": "F-1586-1: the desk's declared count is prose no guard reads \u2014 gate the LIVE desk on declared-vs-keyed at the \u00b11 tolerance the corpus justifies, not the zero tolerance s1533 correctly refused",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-a-f1586-1-desk-count-refusal.md",
-              "gate": "none \u2014 fire-authorable from the F-1586-1 BACKLOG row, discharging the cure F-1584-2 specified and left unauthored; measured s1586 across all 112 counted desks in STATUS.md (delta histogram has an EMPTY 2-3 band, so \u00b11 separates noise from defect), priced at 2 refusals in the last 25 desks (s1583, s1585) with zero false positives, and the four unkeyed segments of s1585's own desk read verbatim"
+              "mergeHash": "b4dfe2d0228af9e6709a6c5ead1ec05075fec1ff",
+              "gate": "none \u2014 fire-authorable from the F-1586-1 BACKLOG row, discharging the cure F-1584-2 specified and left unauthored; measured s1586 across all 112 counted desks in STATUS.md (delta histogram has an EMPTY 2-3 band, so \u00b11 separates noise from defect), priced at 2 refusals in the last 25 desks (s1583, s1585) with zero false positives, and the four unkeyed segments of s1585's own desk read verbatim",
+              "drainNotes": "s1588: merged b4dfe2d0. All four paths LANE-ONLY (main untouched since merge-base ebc1cab1), so no 3-way graft. Gated on the MERGED tree in a detached worktree (\u00a73.0b), never in main's working tree. tsc rc=0; build 1.48s; focused suite 22/22 with all seven specified arms; test:ledger-guards root 145/145 + 12/12 chained leaves; test:node-guards 410 tests / 407 pass / 0 fail / 3 skipped (427.8s, run ALONE \u2014 the 3 skips are the fire-shell cross-engine arms, correctly self-declared as NOT coverage per F-1408-2). No Playwright owed or claimed: no src/**, e2e/**, sim, systems or entities path, so F-1460-1 does not bind. MANUFACTURED THE RED IN BOTH DIRECTIONS, which is more than the runner did: '> Infinity' reds exactly the two defect arms (0 !== 1, reproducing the runner's output), and '> 0' reds the s1533-protection arm \u2014 so the \u00b11 boundary is pinned from above AND below rather than merely documented. Restore verified byte-identical by sha256 53223da8..., and main's merged bytes hash the same. Runner's ambient-Node friction did NOT reproduce: this fire's shell is already Node 26.4.0 per .nvmrc, so that adjacent finding is a lane-shell property, not a repo defect."
             },
             {
               "id": "f1584-1-banked-master-banner-vocabulary",

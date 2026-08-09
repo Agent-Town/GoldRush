@@ -110,3 +110,45 @@ No Playwright was owed or claimed: this slice touched no `src/**`, `e2e/**`, sim
 
 - Ambient Node 23.11.1 violates the repository's pinned Node 26.4.0 test-timeout semantics.
 - Pinned Node 26 emits an experimental `localStorage` warning that one gr-sim assertion treats as stderr failure unless warnings are suppressed.
+
+---
+
+# DRAIN VERDICT — s1588
+
+**MERGED `b4dfe2d0228af9e6709a6c5ead1ec05075fec1ff`.** §3.0 `drain-block-check` CLEAR before classification.
+
+## Merge classification
+
+Merge-base `ebc1cab1adf9f8cb83faf360fc6b33e6c8b725ce`. All four paths **LANE-TOUCHED / MAIN-MOVED: none** — proved, not assumed, with `git diff --name-only ebc1cab1 main -- <the four paths>` returning empty. No 3-way graft was owed and none was performed. `git log main..lane/a` is empty after the merge.
+
+**Custody (§3.0b):** undecided content never entered main's working tree. The battery ran in a detached worktree at main's tip with lane/a's four blobs placed into it — which, main being untouched on all four, *is* the merge result. Main's post-merge `desk-carryforward-guard.mjs` hashes `53223da8…`, identical to the gated bytes.
+
+## Evidence (merged tree, this fire)
+
+| Gate | Result |
+|---|---|
+| `drain-block-check` | CLEAR |
+| `npx tsc --noEmit` | rc 0 |
+| `npm run build` | green, **1.48s** |
+| `node --test scripts/desk-carryforward-guard.test.mjs` | **22/22**, all seven specified arms (a)–(g) present |
+| `test:ledger-guards` root | **145/145** |
+| `test:ledger-guards` chained leaves | **12/12** green |
+| `test:node-guards` | **410 tests / 407 pass / 0 fail / 3 skipped**, 427.8s, run ALONE |
+| `law-pointer-guard` | did not red; nothing re-based |
+| Playwright | **not owed and not claimed** — no `src/**`, `e2e/**`, `src/sim/`, `src/systems/`, `src/entities/`, so F-1460-1 does not bind |
+
+The 3 node-guards skips are the fire-shell cross-engine arms, which annotate themselves as NOT coverage (F-1408-2). The runner saw 410/410 in a lane shell; the difference is the shell, not the tree.
+
+## What I verified beyond the runner's report
+
+**The red was manufactured in BOTH directions.** The runner probed only the loosening arm (`> Infinity` → the two defect arms fail `0 !== 1`), which I reproduced exactly. But that probe leaves the ±1 boundary unpinned from below: with tolerance disabled the s1533-protection arm still passes, so it discriminates nothing. I therefore also set the threshold to `> 0` — the zero-tolerance design s1533 refuted — and the protection arm reds alone (21 pass / 1 fail). So `> 1` is the *only* value that greens all 22: the tolerance is enforced by the suite from above and below, not merely described in a comment.
+
+Restore verified byte-identical by sha256 (`53223da8…`) after each probe.
+
+## Findings
+
+**F-1588-1 (non-blocking, filed).** The first live desk this gate will ever evaluate is s1587's, and it reads **declared 27 / keyed 26 / delta +1** with **zero unkeyed segments** — 26 🔺 segments, 26 unique ids, no duplicates. So the +1 is a plain off-by-one in the declared number, notable only because s1587's own declaring commit message asserts "delta 0". It PASSES at ±1, which is the vindication: shipped at zero tolerance, this guard would have reddened the very next handoff over a counting slip. The corpus argument for ±1 was confirmed by live data within one fire of landing.
+
+**F-1588-2 (non-blocking, filed).** The live-desk refusal is placed *before* the `dropped`/`silent` reporting and exits immediately. A desk that both miscounts by >1 and silently drops a carried item therefore reports only the count defect; the drop surfaces just on the next run, after the count is repaired. Both conditions exit 1, so no defect escapes the gate — this costs a round trip in diagnosis, not correctness. Not fixed here: it is a deliberate ordering choice inside the slice's own firewall and reordering it belongs to whoever next touches that site.
+
+**Runner's adjacent finding did not reproduce.** The ambient-Node friction is a lane-shell property: this fire's shell is already Node **26.4.0**, matching `.nvmrc`, so the runtime-contract test and the `localStorage` warning arm both passed here with no suppression needed beyond the battery's own `NODE_NO_WARNINGS`. Recorded so a later reader does not chase a repo defect that is a shell difference.
