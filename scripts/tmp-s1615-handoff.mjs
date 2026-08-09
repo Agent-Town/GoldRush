@@ -1,0 +1,50 @@
+import fs from 'node:fs';
+
+const p = 'STATUS.md';
+const lines = fs.readFileSync(p, 'utf8').split('\n');
+const lock = lines[0];
+if (!lock.startsWith('ACTIVE')) {
+  console.error('line 1 is not my ACTIVE lock:', lock.slice(0, 60));
+  process.exit(1);
+}
+
+const handoff =
+  'Last updated: 2026-08-10T04:47Z s1615 handoff, lock CLEARED — ' +
+  '🎯 **THE STRONGEST LEAD ON THE BOARD WAS RIGHT ABOUT THE DEFECT AND WRONG ABOUT ITS LOCATION. ACTING ON IT AS HANDED OVER WOULD HAVE RE-SCOPED SIXTEEN ASSERTIONS THAT ARE NOT THE BUG, AND LEFT THE BUG.** ' +
+  '📋 **BOARD ON ARRIVAL (04:26):** lock CLEARED (s1614, owning commit `16e206a00` — judged by the COMMIT per §1.1, never by stamp text) · **lane-b BUSY** running `f1614-1` with three untracked outputs already on disk (`artifacts/advance-stream-walkthrough.md`, `e2e/advance-stream-walkthrough.spec.ts`, `reviews/advance-stream-walkthrough.md`) · all other queues EMPTY · every done-move `drained-` prefixed · `tasks/failed/` holds only `shipped-` entries · no `tasks/CODEX-WALL` · assayer `pending/` **0** · ART slot untouched · lanes a/c/d `USABLE`, lane-b `BUSY`. ' +
+  '**No drain existed and none was invented** — a BUSY lane says nothing about its own unfinished output, and I counted `tasks/done/` directly rather than inferring. ' +
+  '🔎 **I INHERITED s1614 NEXT (C) AND VERIFIED IT INSTEAD OF ACTING ON IT (Mistake #4).** s1614 handed over *"prefetch wins" ⇒ the eight `town-*-blender` specs\' `expect(requests).toEqual([])` assertions are what gives*, with the honest caveat that it had not run the suite and was quoting F-1167-1\'s own text. ' +
+  '⭐ **[F-1615-1] FILED — AND THE STATIC READING WOULD HAVE FOOLED ANYONE, WHICH IS THE POINT.** ⓵ Every one of the 16 `toEqual([])` assertions sits behind a prefetch-**DISABLED** query: the helper defaults to `?terrain2d` (`e2e/town-tavern-blender.spec.ts:77`, same line in all eight) or the test passes `tier=lite`, and `src/assets/AdvanceStream.ts:250-252` disables the stream on exactly those two flags (`:217-218` then leaves `targets=[]`). **A careful reader stops here and concludes the contradiction was already cured. That is wrong.** ' +
+  '⓶ **The leak is the MENU boot, not the town phase.** All ten specs boot with a bare `await page.goto(\'/\')`; the gate reads `window.location.search` **at enter time** and is OPEN there; `advanceStreamPriority` adds the town at priority 1 for the menu scene (`src/assets/AdvanceStream.ts:62-63`); and `townPrefetchUrls()` (`src/town/TownTavernPilot.ts:43-57`) returns bare `new URL(...).href` values **with no query string** — exactly what every collector counts via `!url.search`. The later `history.replaceState` disables only SUBSEQUENT prefetch. ' +
+  '⓷ **REPRODUCED, not inferred:** `e2e/town-tavern-blender.spec.ts:205` ("LITE tier always keeps the facade and never fetches the GLB") **FAILED** on main, desktop-chrome, `--workers=1`, received `["http://127.0.0.1:5188/assets/pilots/tavern-3d/town-v3-tavern.glb"]`, while its sibling `:154` **PASSED in the same run** — the race the red inventory\'s own blast radii predicted (81.8% vs 20.4%). ' +
+  '⚠️ **TWO CONSEQUENCES A RUNNER MUST NOT GET WRONG, now written into the master and the ledger:** the `tier=lite` failures are **NOT** a lite-gate defect, and the specs\' `?terrain2d` default and `!url.search` filter are **NOT** the bug — "fixing" the helper would suppress the prefetch and make the specs test a configuration no player is in, i.e. the exact opposite of the owner\'s ruling. ' +
+  '🆕 **AUTHORED 1 of the 2 permitted on a dry board (I used one and say so rather than padding): `lane-f1615-1-prefetch-wins-mount-laziness` → lane-a, QUEUED.** It implements the owner\'s 2026-08-09 branch-(a) ruling **verbatim** — *"re-scope the eight `toEqual([])` specs to MOUNT-laziness and REMOVE the two-id exclusion at TownTavernPilot.ts:49 … FIRE-AUTHORABLE, one master"* — and covers **ten** specs, not eight, because removing the `:49` exclusion newly exposes `stamp-mill` and `dynamo-hall`, green today only because they are excluded. It also re-scopes the four `toHaveLength(N)` count sites, which run AFTER a prefetch-ENABLED `tier=full` nav and will now count prefetch traffic. ' +
+  '🚫 **FIREWALLED BY NAME:** `src/assets/AdvanceStream.ts` (ratified policy — a surprising measurement is a finding, not an edit) and `e2e/asset-diet.spec.ts` (the F-1167-1 row\'s own explicit warning: its `townResponseBytes` budget is a separate real regression — **observe and report the number, do not re-pin it**). ' +
+  '⚠️ **THE MASTER REQUIRES `--repeat-each=3` WITH A PER-SITE TALLY, because a single green here is not evidence** — the sibling site passes most runs. ' +
+  '✅ **F-1167-1 DISCHARGED AS A QUESTION: head flipped 🔺→🔧 (ruled, therefore work) and DROPPED from the desk.** s1614 carried it only because it could not verify the specs itself; I did, so the caveat is spent. Its fork text is kept verbatim as provenance rather than rewritten. ' +
+  '📮 **DISPATCH ORDER PER F-1424-3:** master+leaf+ledger committed FIRST (`fce8b8514`, rename `52fc62401`, citations `1c5359f62`), pre-queue gate run BEFORE the `cp`, then `cp`, then the queue copy verified byte-identical by sha256 (`b40c222d17923751`). **lane-a was NOT refreshed and that is a deliberate, measured call:** it is 56 behind, but `git diff lane/a main` over **all twelve** dependency files (the ten specs + `AdvanceStream.ts` + `TownTavernPilot.ts`) is **EMPTY** — the lane carries byte-identical content for everything this task touches, which is the "name the commit your task depends on and prove the lane has it" duty answered at file resolution instead of by sha. All three citation keys re-proved `=1` in the lane before the copy. ' +
+  '🧪 **GUARDS: the pre-queue gate EARNED ITS KEEP — `citation-title-guard` went rc=1 on my own master naming SEVEN bare `spec:line` citations, caught BEFORE dispatch (F-1311-2 ordering), all seven now carry test titles, re-run `✅ CLEAR`.** `test:ledger-guards` run as the last act per F-1300-4: **150 node tests / 0 fail (15.7 s)** plus the chained leaves. `test:node-guards` correctly OUT of battery per F-1460-1 — this fire\'s diff is ledger + one task master, **zero `src/`**. ' +
+  '📮 **STANDING DUTIES:** **GZ-01 — NO item owed, stated rather than skipped: I merged nothing.** · **TK-01 — the 2026-08-09 digest is NOT owed by me at 04:47 local; it belongs to the first fire after 06:00 and is the one hard-scheduled duty on the board** (latest on disk is `ticker-digest-2026-08-08.md`) · assayer `pending/` **0** · **ART slot untouched, so no staging audit owed** · **DEPLOY NOT OWED — no gameplay-affecting code merged** · backup push attempted at handoff. ' +
+  '🔭 **NEXT FIRE (A) DRAIN `f1614-1` when lane-b finishes** — gate it in a detached worktree (§3.0b) and merge as ONE act, never staged (F-1589-5). ' +
+  '**(B) THEN DRAIN `f1615-1` when lane-a finishes** — and read its report before believing any green: it is required to hand you a per-site `--repeat-each=3` tally precisely because these sites are bimodal. ' +
+  '**(C) THE COUPLING NEITHER MASTER CAN SEE, and the one thing I most want the next fire to know:** the owner\'s ruling ends *"F-1532-2\'s walkthrough table unblocks behind it (author as-is once **this** merges)"* — but s1614 authored that table (`f1614-1`, running now) **before** `f1615-1` merges. `f1615-1` **changes the prefetch set** (it removes the two-id exclusion), so `f1614-1`\'s door-by-door table measures a configuration `f1615-1` will alter. **Drain f1614-1 on its own terms, then RE-MEASURE the table after f1615-1 lands — do not treat the first table as final.** Neither fire did anything wrong; the sequencing clause simply outran the authoring. ' +
+  '**(D)** the TK-01 digest for 2026-08-09 if you run after 06:00. **(E)** lane-b refresh when it goes IDLE (s1614\'s standing warning: the live runner pid predates the F-1324-2 janitor fix, so a `.req` filed while busy is likely consumed-as-done without running — verify by measuring `behind=0`, never by seeing the `.req` in `tasks/done/`). ' +
+  '🔺 **OWNER\'S DESK — 13 awaiting a word.** ⓵ `desk-state-audit --status` against s1614\'s archived line-1: `CLOSED=0 · OPEN=0 · BOTH=0 · OPEN-DESK-ONLY=15 · UNRECORDED=0` — **nothing carried should have been dropped and no carried item is a ghost.** **DESK-DROPPED: F-1167-1** — ruled "Prefetch wins" on 2026-08-09, precondition discharged by reproduction this fire, and the work is authored as `f1615-1`; it is WORK now, not a question. **My new row F-1615-1 is deliberately NOT added: its GATE says none owed to the owner.** ' +
+  '🔺 **F-DOOR-6 OPEN** — unchanged: (a)+(b) merged at `906ca396e`, only **(c)**, publishing build zones in the map block, is yours; the head stays 🔬 on purpose, since a ✅ would make `desk-state-audit` return CLOSED and `--strict` order it dropped ' +
+  '🔺 **F-1608-2 OPEN** — the Trestle/Incline railcars are byte-identical to the Hill Mine one just tuned; *"probably the same"* is not a ruling ' +
+  '🔺 **F-1193-3 OPEN** — fourth premise spent and failed; **(a)** retire the diagonal ambition (REC) or **(b)** fund a premise changing the FIGURE-SIDE instruction ' +
+  '🔺 **F-1501-3 OPEN** — 582 files / 527.89 MB in no object database ' +
+  '🔺 **F-1601-1 OPEN** — the `gateClass` column needs an attended nod ' +
+  '🔺 **F-1510-1 OPEN** — mechanical gate MET s1609; *keep the go-around* (REC) or *the complaint moved* ' +
+  '🔺 **F-E2S-3 OPEN** — socket half needs its census-stream slice specced ' +
+  '🔺 **F-1536-2 OPEN** — census done; renames + dynamic panel need a word ' +
+  '🔺 **F-1591-1 OPEN** — Arm 0\'s gate MET, clamp unconfirmed below the knee; F-1593-2 counsels parking ' +
+  '🔺 **F-1507-1 OPEN** — both shells on one node version ' +
+  '🔺 **F-E2S-4 OPEN** — genuinely owner-gated ' +
+  '🔺 **F-1101-1 OPEN** — parked KNOWN-LIMITATION; one head flip closes it ' +
+  '🔺 **F-1166-1 OPEN** — unchanged, and it is the ONLY `blocked` leaf on the board';
+
+lines[0] = handoff;
+lines.splice(1, 0, '- **s1615 lock line (archived):** ' + lock);
+fs.writeFileSync(p, lines.join('\n'));
+console.log('handoff written');
