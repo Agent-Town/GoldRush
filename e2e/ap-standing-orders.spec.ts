@@ -215,7 +215,7 @@ test('seeded standing orders obey priority, gates, legal actions, surprises, and
 
   const lifecycle = await view(page);
   expect(lifecycle.orders.map((order) => order.status)).toEqual(['failed', 'done']);
-  expect(lifecycle.orders[0]?.reason).toContain('FAILED: BUILD action was rejected');
+  expect(lifecycle.orders[0]?.reason).toMatch(/^FAILED( \([a-z_]+\))?: BUILD action was rejected/);
   expect(lifecycle.needsRider).toBe(true);
   expect(lifecycle.log.some((event) => event.type === 'surprise' && event.surprise === 'order_failure')).toBe(true);
 
@@ -405,7 +405,10 @@ test('plain-boot production orders pan a seam and place a real building', async 
     };
   });
   expect(rejected.buildingCount).toBe(before.palisades + 1);
-  expect(rejected.order?.reason).toContain('FAILED: BUILD action was rejected');
+  expect(rejected.order?.reason).toMatch(/^FAILED( \([a-z_]+\))?: BUILD action was rejected/);
+  expect(['insufficient_gold', 'out_of_reach', 'out_of_zone', 'collision', 'cap_reached', undefined]).toContain(
+    rejected.order?.reason?.match(/^FAILED \(([a-z_]+)\):/)?.[1],
+  );
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
