@@ -273,3 +273,48 @@ test('a collapsed previous desk remains advisory when the live desk is clean', (
   assert.equal(result.status, 0);
   assert.match(result.stdout, /previous desk declares 5 item\(s\) but 4 could not be keyed/);
 });
+
+// F-1588-2 (cured s1603) — the count refusal used to exit(1) before the drop
+// report, so a doubly-broken desk diagnosed in two rounds. These manufacture
+// the doubly-broken desk rather than asserting the merge from a green.
+test('F-1588-2 — a doubly-broken desk reports BOTH defects in one run', () => {
+  const live = "🔺 **OWNER'S DESK — 5 awaiting a word.** 🔺 **F-9002-2 OPEN**" +
+    ' 🔺 **an unkeyed prose item** 🔺 **another unkeyed one**' +
+    ' 🔺 **third unkeyed** 🔺 **fourth unkeyed**';
+  const previous = "🔺 **OWNER'S DESK — 2 awaiting a word.** 🔺 **F-9002-2 OPEN** 🔺 **F-8001-1 OPEN**";
+  const result = runGuard(status(handoff(live), archive(1602, previous)));
+  assert.equal(result.status, 1);
+  // the count defect...
+  assert.match(result.stderr, /declares 5 item\(s\), but 1 can be keyed/);
+  // ...AND the silent drop, which before the cure surfaced only on the next run
+  assert.match(result.stderr, /left the OWNER'S DESK with no reason given/);
+  assert.match(result.stderr, /F-8001-1/);
+  assert.match(result.stderr, /2 defects reported above/);
+});
+
+test('F-1588-2 — an unkeyed segment can FAKE a drop, so the drop list says so', () => {
+  // The hazard the old ordering was accidentally hiding: deskItems() keys only
+  // the first KEY_ZONE chars, so an item carried in longer prose reads as
+  // dropped while plainly present on the very same desk.
+  const prose = '**carried, but the key sits far into the segment because the fire wrote a' +
+    ' long clause first and only then named it, which is ordinary prose** ';
+  const live = "🔺 **OWNER'S DESK — 5 awaiting a word.** 🔺 **F-9002-2 OPEN** " +
+    `🔺 ${prose}F-8001-1 OPEN 🔺 **x** 🔺 **y** 🔺 **z**`;
+  const previous = "🔺 **OWNER'S DESK — 2 awaiting a word.** 🔺 **F-9002-2 OPEN** 🔺 **F-8001-1 OPEN**";
+  const result = runGuard(status(handoff(live), archive(1602, previous)));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /F-8001-1/);
+  assert.match(result.stderr, /may name an item that IS carried/);
+});
+
+test('CONTROL — a real drop on a fully-keyed desk carries NO phantom caveat', () => {
+  // Without this the caveat could decay into an always-on banner that signals
+  // nothing (the s1602 doctrine): it must be absent when nothing is unkeyed.
+  const live = "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-9002-2 OPEN**";
+  const previous = "🔺 **OWNER'S DESK — 2 awaiting a word.** 🔺 **F-9002-2 OPEN** 🔺 **F-8001-1 OPEN**";
+  const result = runGuard(status(handoff(live), archive(1602, previous)));
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /F-8001-1/);
+  assert.doesNotMatch(result.stderr, /may name an item that IS carried/);
+  assert.doesNotMatch(result.stderr, /2 defects reported above/);
+});

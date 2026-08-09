@@ -263,7 +263,28 @@ function main() {
     );
   }
 
-  if (result.liveDeclared !== null && Math.abs(result.liveDeclared - result.live.length) > 1) {
+  // BOTH REFUSALS REPORT IN ONE RUN (F-1588-2, cured s1603)
+  // ------------------------------------------------------
+  // The count refusal used to `process.exit(1)` right here, BEFORE the drop
+  // report below. Nothing escaped the gate — both paths exit 1 — but a desk
+  // that was doubly broken diagnosed in two rounds: the drop surfaced only on
+  // the NEXT run, after the count was repaired. That is the exact cost this
+  // guard exists to avoid (F-1586-1: "a guard that says '24 != 20' and stops
+  // has made the fire do the diagnosis twice"). So both are collected and
+  // printed, and the exit happens once, at the end.
+  const countRefused =
+    result.liveDeclared !== null && Math.abs(result.liveDeclared - result.live.length) > 1;
+
+  console.log('dropped                   :', result.dropped.length,
+    `(${result.dropped.length - result.silent.length} accounted for)`);
+  if (REPORT) {
+    console.log('  prev:', result.prev.items.join(' '));
+    console.log('  live:', result.live.join(' '));
+  }
+
+  const refusals = [];
+
+  if (countRefused) {
     console.error('');
     console.error(
       `desk-carryforward-guard: REFUSING — the live OWNER'S DESK declares ${result.liveDeclared} item(s),` +
@@ -272,19 +293,31 @@ function main() {
     console.error('Unkeyed segment opening text:');
     for (const segment of result.liveUnkeyed) console.error(`  ${segment}`);
     console.error('Repair: key each item by an F-ID or a `backticked-slug` at the very front of its 🔺 segment.');
-    process.exit(1);
-  }
-  console.log('dropped                   :', result.dropped.length,
-    `(${result.dropped.length - result.silent.length} accounted for)`);
-  if (REPORT) {
-    console.log('  prev:', result.prev.items.join(' '));
-    console.log('  live:', result.live.join(' '));
+    refusals.push('live desk count');
   }
 
   if (result.silent.length) {
     console.error('');
     console.error(`FAIL — ${result.silent.length} item(s) left the OWNER'S DESK with no reason given:`);
     for (const id of result.silent) console.error(`  ${id}`);
+    // WHY THE SEQUENCING WAS NOT SIMPLY WRONG, and what replaces it.
+    // ------------------------------------------------------------
+    // Exiting early did protect against something F-1588-2 did not name, and a
+    // naive merge would have shipped it: an UNKEYED segment is a source of
+    // PHANTOM drops. An item can sit on this very desk and still read as
+    // dropped, because deskItems() only keys the first KEY_ZONE chars of a
+    // segment — measured s1603 on a manufactured desk where "F-8001-1", carried
+    // in prose past the zone, was reported dropped while plainly present. The
+    // same unkeyed segments therefore break the count AND fake the drops, which
+    // is why the two reports must arrive together rather than one silencing the
+    // other. Keyed on liveUnkeyed, not on countRefused: the +/-1 tolerance lets
+    // a single unkeyed segment through, and one is enough to invent one drop.
+    if (result.liveUnkeyed.length) {
+      console.error('');
+      console.error(`⚠️  ${result.liveUnkeyed.length} segment(s) on the live desk could not be keyed, so this`);
+      console.error('   list may name an item that IS carried, in prose the parser cannot read.');
+      console.error('   Key those segments first, then re-run: real drops survive that repair.');
+    }
     console.error('');
     console.error('The desk is a QUEUE with the owner at the far end. The only lawful exits are');
     console.error('a ruling or a closure. If one of these was RE-KEYED, closed, or genuinely');
@@ -295,6 +328,15 @@ function main() {
     console.error('Otherwise carry it forward. s1527 dropped ten this way, including');
     console.error('"13 of 25 campaign maps cannot be opened" and the item its own desk called');
     console.error('"the cheapest win on this list" (F-1533-1).');
+    refusals.push('silently dropped items');
+  }
+
+  if (refusals.length) {
+    if (refusals.length > 1) {
+      console.error('');
+      console.error(`desk-carryforward-guard: ${refusals.length} defects reported above (${refusals.join(' + ')}).`);
+      console.error('Both are repaired in one pass — this guard no longer makes you find them one at a time.');
+    }
     process.exit(1);
   }
 
