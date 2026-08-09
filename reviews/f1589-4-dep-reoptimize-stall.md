@@ -55,3 +55,36 @@ The evidence supports **no cure in this task**. It does not support adding a `GE
 - The required pre-flight `npm run build` passed. Per the task, no tsc/spec gate or suite rerun is owed for an evidence-only diff; the six subject invocations are measurements, not a claimed regression suite.
 - The subject test regenerated `artifacts/era-lights/after/desktop-chrome-day.png`; it was discarded under the evidence-artifact exception because it is outside this task's touch-only evidence directory.
 
+---
+
+## Drain verdict — s1590, 2026-08-09
+
+**MERGED as evidence: `12190838aaf3415ad4c4b03e5c377c06af9c9919`.** Slice: `lane/b` @ `14c744c8e`, one runner commit, 24 files, **+3788 / -0, zero executable bytes**.
+
+### The report is accurate, and the negative result is the right one
+
+Verified rather than inherited:
+
+- **Blast radius.** `git diff main...lane/b --name-only` is 23 files under `artifacts/f1589-4-dep-reoptimize/` plus this review. The same diff scoped to `src e2e scripts specs tasks package.json package-lock.json playwright.config.ts` returns **empty**. The firewall held exactly.
+- **The arm really was absent.** `arm-a-1-server.log` contains only the readiness banner; `arm-a-1-meta.txt` records `cache-deps-before-server=MISSING`, `optimization-line=` (empty), `rc=0`, test 5.9 s. The runner did not dress a miss as a hit.
+- **No cure shipped**, as the master required. The verdict is one of the three allowed words.
+
+Per the master's own terms and the `f1587-2` precedent, **no tsc/build/spec battery is owed** — the drain checks the diff rather than the claim, and the diff changes nothing executable. F-1460-1 does not bind: no `src/sim/`, `src/systems/` or `src/entities/` path is touched.
+
+### F-1590-1 — the runner could not have armed it, because both prescribed levers were structurally incapable
+
+This is the reusable half, and it moves the fault off the runner and onto the master. Read from vite's own source (`node_modules/vite/dist/node/chunks/node.js`) and then **proved by manufacture** (`artifacts/f1590-1-arm-lever/`, three runs, transcripts recorded):
+
+- `:31487` prints `Re-optimizing dependencies because lockfile has changed` **only inside `if (cachedMetadata)`**. Lever 1 — renaming `node_modules/.vite` away — deletes the very metadata whose mismatch produces the message, so the branch is unreachable **by construction**. A cold cache optimizes *silently*; it never *re*-optimizes.
+- `:32019-32031` — `getLockfileHash()` hashes the lockfile's **content** (`getHash(readFileSync(lockfilePath, 'utf-8'))`). Lever 2 — touching its mtime — cannot move it.
+
+So `COULD-NOT-ARM` was the only reachable verdict, and the runner reaching it honestly — rather than relabelling six unarmed runs as an A/B — is the task working as designed.
+
+**The lever that does work**, measured this fire: leave `deps/` intact and stale only the stored hash in `node_modules/.vite/deps/_metadata.json`. Run 1 printed the premise line verbatim (`8:21:45 AM [vite] (client) Re-optimizing dependencies because lockfile has changed`); the converged control run was silent. `node_modules/**` is untracked, so this arms the trigger **without touching `package-lock.json` at all** — it satisfies the firewall that blocked the runner rather than needing it lifted. It also self-heals: vite rewrites the correct hash as part of re-optimizing (`lockfileHash-after=6c42fd2c`, `self-healed=true`).
+
+### What the six runs DO establish, stated so it is not lost
+
+The table is not an armed-vs-disarmed comparison — the runner is right to refuse that reading. But it is not nothing: with the dep cache **fully absent**, first-test duration was 5.6–5.9 s against 5.6–5.7 s warm, all six rc=0. A from-scratch dep optimization on this tree therefore costs **~0.2 s, not ~36 s**. That bounds one branch of the hypothesis — bulk optimization work is not the stall — and leaves the *re*-optimization path (which additionally invalidates an existing cache while a client is attached) as the part still untested.
+
+**F-1589-4 remains OPEN. F-1587-2 remains OPEN.** Two non-reproductions from two premises bound the defect's rate; neither touches its existence.
+
