@@ -11,8 +11,8 @@ import {
 } from '../src/game/ProfileStorage';
 
 const THROTTLE_MS = 150;
-const CONTROL = process.env.GR_ADVANCE_STREAM_CONTROL === 'lite';
-const BOOT_FLAGS = `debug&timescale=24&nolevel&seed=advance-stream-walkthrough${CONTROL ? '&tier=lite' : ''}`;
+const CONTROL = process.env.GR_ADVANCE_STREAM_CONTROL !== undefined;
+const BOOT_FLAGS = 'debug&timescale=24&nolevel&seed=advance-stream-walkthrough';
 
 type Door = { name: string; openedAt: number; demands: Set<string> };
 
@@ -35,6 +35,10 @@ test('measures warm assets across menu, town, and two contracts', async ({ page 
     }
   });
   await page.route('**/*.glb', async (route) => {
+    if (CONTROL && route.request().headers()['x-gold-rush-prefetch'] === '1') {
+      await new Promise<void>(() => undefined);
+      return;
+    }
     if (isGlbRequest(route.request().url())) await new Promise((resolve) => setTimeout(resolve, THROTTLE_MS));
     await route.continue().catch(() => undefined);
   });
@@ -45,7 +49,7 @@ test('measures warm assets across menu, town, and two contracts', async ({ page 
   };
 
   openDoor('menu');
-  await page.goto(CONTROL ? '/?tier=lite' : '/');
+  await page.goto('/');
   if (!CONTROL) await expect.poll(() => completedPrefetch.size, { timeout: 20_000 }).toBeGreaterThan(0);
   await page.evaluate((flags) => history.replaceState(null, '', `/?${flags}`), BOOT_FLAGS);
 
@@ -77,7 +81,8 @@ test('measures warm assets across menu, town, and two contracts', async ({ page 
     const cold = urls.filter((url) => !warm.includes(url));
     return { name: door.name, warm: warm.length, cold: cold.length, coldUrls: cold.slice(0, 4).map(shortUrl) };
   });
-  if (!CONTROL) expect(rows.find(({ name }) => name === 'town')?.warm).toBeGreaterThan(0);
+  if (CONTROL) expect(rows.reduce((total, { cold }) => total + cold, 0)).toBeGreaterThan(0);
+  else expect(rows.find(({ name }) => name === 'town')?.warm).toBeGreaterThan(0);
   expect(errors).toEqual([]);
 
   const report = [
@@ -93,8 +98,7 @@ test('measures warm assets across menu, town, and two contracts', async ({ page 
   console.log(`\n${report}`);
   if (!CONTROL) {
     await mkdir('artifacts', { recursive: true });
-    await writeFile('artifacts/advance-stream-walkthrough.md', report);
-    await writeFile('reviews/advance-stream-walkthrough.md', report);
+    await writeFile(`artifacts/advance-stream-walkthrough-${testInfo.project.name}.md`, report);
   }
 });
 
