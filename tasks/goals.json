@@ -6417,6 +6417,13 @@
               "taskFile": "lane-f1611-1-stale-build-rejection-assertions.md",
               "mergeHash": "13d79edfad2860a0279c39585c32a449705eb65e",
               "gate": "MET s1612 \u2014 merged 13d79edfad2860a0279c39585c32a449705eb65e, review reviews/f1611-1-stale-build-rejection-assertions.md. All three clauses discharged: ap-standing-orders 6/6 desktop + 6/6 mobile at --workers=1; BOTH sites widened (:408 the red one, :218 the latent sibling); manufactured red re-run drain-side by file edit \u2014 removing 'insufficient_gold' from the vocabulary failed with Expected value: \"insufficient_gold\", which also proves the membership assertion is live rather than vacuous (undefined is a legal member, so a non-capturing regex would have passed silently). Adjacent m4-01/m4-05/m4-10 11/11 both projects; tsc clean; build 1.19s. test:node-guards correctly out of battery per F-1460-1 \u2014 the diff is e2e-only."
+            },
+            {
+              "id": "f1612-1-gazette-sweep-purpose-split",
+              "title": "F-1610-1: the GZ-01 sweep learns the difference between 'reported' and 'dismissed' (purpose marker + three numbers, WARN-level)",
+              "status": "queued",
+              "taskFile": "lane-f1612-1-gazette-sweep-purpose-split.md",
+              "gate": "none owed to the owner \u2014 fire-authorable corrective; F-1610-1's own gate says 'none owed \u2014 this row is a pointer' and invites exactly this build. Closes when the slice merges with: a declared PARAGRAPH-scoped marker (the four existing dismissals are wrapped prose at gazette-queue.md:1266-1269, so a line-scoped rule catches at most one); three numbers reported/dismissed/candidates with the dismissed list printed; the four retro-marked; a marker-removal control proving they fall back to REPORTED and not to CANDIDATES; a fixture-based classifier test rooted in test:node-guards with test:gate-callers green; and the sweep still exiting 0 in every state (F-1600-1 bars a red guard here)."
             }
           ]
         }
