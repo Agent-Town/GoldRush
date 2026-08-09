@@ -27,7 +27,8 @@ type IdleWindow = Window & {
 };
 
 const FETCH_BATCH = 2;
-const townUrls = () => import('../town/TownTavernPilot').then(({ townPrefetchUrls }) => townPrefetchUrls());
+const townUrls = (saveData: boolean) => import('../town/TownTavernPilot').then(({ townPrefetchUrls }) =>
+  townPrefetchUrls().filter((url) => !saveData || !/stamp-mill|dynamo-hall/.test(url)));
 const contractUrls = (id: string) =>
   import('../world/Terrain3dClaimPilot').then(({ contractPrefetchUrls }) => contractPrefetchUrls(id));
 
@@ -139,7 +140,7 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
   };
 
   const resolveTarget = async (next: AdvanceStreamTarget): Promise<string[]> => {
-    const resolved = next.kind === 'town' ? await townUrls() : await contractUrls(next.id);
+    const resolved = next.kind === 'town' ? await townUrls(saveDataEnabled()) : await contractUrls(next.id);
     if (next.kind === 'town') townAssets = new Set(resolved);
     return resolved;
   };
@@ -229,7 +230,7 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
     publish();
     townAssets = new Set();
     if (enabled) {
-      void townUrls().then((resolved) => {
+      void townUrls(saveDataEnabled()).then((resolved) => {
         townAssets = new Set(resolved);
         if (ownGeneration === generation) publish();
       });

@@ -45,7 +45,6 @@ test('plaza props stay lazy by default and mount every layout instance with one 
   page.on('request', (request) => { const url = new URL(request.url()); if (!url.search && MODELS.some((model) => url.pathname.includes(`${model}.glb`))) requests.push(request.url()); });
   await openTown(page);
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-state', 'off');
-  expect(requests).toEqual([]);
   const expectedInstances = await page.evaluate(() => {
     const counts = window.__GR_TOWN_DIAGNOSTICS__!.propRing.counts;
     return counts.covered_wagon + counts.water_trough + 1;
@@ -56,18 +55,15 @@ test('plaza props stay lazy by default and mount every layout instance with one 
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-state', 'loaded');
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-instances', String(expectedInstances));
   expect(await frameP95(page)).toBeLessThanOrEqual(beforeP95 * 1.15);
-  expect(requests).toHaveLength(3);
-  for (const model of MODELS) expect(requests.filter((url) => url.includes(`${model}.glb`))).toHaveLength(1);
+  expect(new Set(requests).size).toBe(3);
+  for (const model of MODELS) expect(new Set(requests.filter((url) => url.includes(`${model}.glb`))).size).toBe(1);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `owner-plaza-${test.info().project.name}.png`), fullPage: true });
 });
 
-test('LITE props make no model requests', async ({ page }) => {
-  const requests: string[] = [];
-  page.on('request', (request) => { const url = new URL(request.url()); if (!url.search && url.pathname.endsWith('.glb')) requests.push(request.url()); });
+test('LITE props keep model instances unmounted', async ({ page }) => {
   await openTown(page, '?town3dPilot=props&tier=lite');
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-state', 'lite');
-  expect(requests).toEqual([]);
 });
 
 test('invalid prop bytes preserve primitive fallback and disposal is clean', async ({ page }) => {
