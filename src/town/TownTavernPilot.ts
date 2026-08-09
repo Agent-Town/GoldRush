@@ -46,7 +46,6 @@ export function townPrefetchUrls(): string[] {
     .map(({ glb }) => BUNDLED_VARIANT_URLS[`../../assets/pilots/plaza-props-3d/${glb}`])
     .filter((url): url is string => !!url);
   const models = Object.entries(MODEL_PATHS)
-    .filter(([id]) => id !== 'stamp-mill' && id !== 'dynamo_hall')
     .map(([, paths]) => eraCandidates(paths)[0]!.url);
   const props = Object.entries(PROP_MODEL_URLS).map(([kind, base]) =>
     Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) =>

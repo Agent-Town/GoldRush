@@ -145,6 +145,19 @@ function assertNoErrors(errors: ErrorBucket): void {
   expect(errors.pageErrors).toEqual([]);
 }
 
+test('normal connections prefetch both bulk town halls', async ({ page }) => {
+  await installSeedAndWebglCounter(page);
+  const prefetched: string[] = [];
+  page.on('request', (request) => {
+    if (request.headers()['x-gold-rush-prefetch'] === '1') prefetched.push(request.url());
+  });
+  await page.goto('/');
+  await page.waitForFunction(() => document.querySelector('canvas')?.dataset.assetPrefetchState === 'ready', undefined, { timeout: 20_000 });
+  expect(prefetched.filter((url) => /stamp-mill|dynamo-hall/.test(url)).map((url) => new URL(url).pathname)).toEqual(
+    expect.arrayContaining([expect.stringContaining('stamp-mill'), expect.stringContaining('dynamo-hall')]),
+  );
+});
+
 test('Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate', async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   await installSeedAndWebglCounter(page);
@@ -155,7 +168,6 @@ test('Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside th
   await openTown(page);
   expect(await page.locator('canvas').getAttribute('data-town3d-pilot-state')).toBe('off');
   expect(await page.locator('canvas').getAttribute('data-town3d-pilot-render-source')).toBe('facade');
-  expect(modelRequests).toEqual([]);
   const before = await measure(page);
   await shot(page, testInfo, 'before-facade');
 
@@ -168,7 +180,7 @@ test('Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside th
   expect(Number(await canvas.getAttribute('data-town3d-pilot-triangles'))).toBeLessThanOrEqual(15_000);
   expect(Number(await canvas.getAttribute('data-town3d-pilot-materials'))).toBe(1);
   expect((await canvas.getAttribute('data-town3d-pilot-bounds'))?.split('x').map(Number)).toEqual([5.953, 4.56, 1.6]);
-  expect(modelRequests).toHaveLength(1);
+  expect(new Set(modelRequests).size).toBe(1);
   const after = await measure(page);
   await shot(page, testInfo, 'after-glb');
 
@@ -195,16 +207,13 @@ test('Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside th
   assertNoErrors(errors);
 });
 
-test('LITE tier always keeps the Stamp Mill facade and never fetches the GLB', async ({ page }, testInfo) => {
+test('LITE tier always keeps the Stamp Mill facade and never mounts the GLB', async ({ page }, testInfo) => {
   await installSeedAndWebglCounter(page);
   const errors = collectErrors(page);
-  const modelRequests: string[] = [];
-  page.on('request', (request) => { const url = new URL(request.url()); if (!url.search && url.pathname.includes(MODEL_MARKER) && url.pathname.endsWith('.glb')) modelRequests.push(request.url()); });
   await openTown(page, '?town3dPilot=stamp-mill&tier=lite');
   await page.waitForTimeout(500);
   expect(await page.locator('canvas').getAttribute('data-town3d-pilot-state')).toBe('lite');
   expect(await page.locator('canvas').getAttribute('data-town3d-pilot-render-source')).toBe('facade');
-  expect(modelRequests).toEqual([]);
   await shot(page, testInfo, 'lite-facade');
   assertNoErrors(errors);
 });
@@ -225,11 +234,8 @@ test('a failed Stamp Mill GLB load preserves its facade and interaction', async 
 test('a pre-complete Stamp Mill never mounts its 3D model', async ({ page }) => {
   await installSeedAndWebglCounter(page, false);
   const errors = collectErrors(page);
-  const modelRequests: string[] = [];
-  page.on('request', (request) => { const url = new URL(request.url()); if (!url.search && url.pathname.includes(MODEL_MARKER) && url.pathname.endsWith('.glb')) modelRequests.push(request.url()); });
   await openTown(page, '?town3dPilot=stamp-mill&tier=full');
   await page.waitForTimeout(500);
-  expect(modelRequests).toEqual([]);
   expect(await page.locator('canvas').getAttribute('data-town3d-pilot-render-source')).toBe('facade');
   assertNoErrors(errors);
 });

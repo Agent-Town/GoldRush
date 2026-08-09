@@ -106,28 +106,28 @@ test('complete Dynamo Hall loads one bounded painted mesh without changing its i
   await expect(canvas).toHaveAttribute('data-town3d-pilot-materials', '1');
   expect(Number(await canvas.getAttribute('data-town3d-pilot-triangles'))).toBeLessThanOrEqual(15_000);
   expect((await canvas.getAttribute('data-town3d-pilot-bounds'))?.split('x').map(Number)).toEqual([5.38, 4.148, 3.239]);
-  expect(requests).toHaveLength(1);
+  expect(new Set(requests).size).toBe(1);
   const after = await sample(page); expect(after.p95Ms).toBeLessThanOrEqual(before.p95Ms * 1.15);
   await writeFile(path.join(ARTIFACT_DIR, `renderer-delta-${info.project.name}.json`), JSON.stringify({ before, after, p95Ratio: Number((after.p95Ms/before.p95Ms).toFixed(4)) }, null, 2) + '\n');
   await shot(page, info, 'after-glb'); await walkToHall(page); await expect(page.getByTestId('crank-dynamo')).toBeVisible();
   await page.getByTestId('town-exit').click(); await expect(canvas).toHaveAttribute('data-town3d-pilot-state', 'disposed'); expect(found).toEqual({ console: [], page: [] });
 });
 
-test('LITE never requests the Dynamo Hall GLB', async ({ page }, info) => {
-  await seed(page); const found = errors(page); const requests: string[] = [];
-  page.on('request', request => { const url = new URL(request.url()); if (url.pathname.includes('dynamo-hall') && url.pathname.endsWith('.glb') && !url.search) requests.push(request.url()); });
-  await openTown(page, '?town3dPilot=dynamo_hall&tier=lite'); await shot(page, info, 'lite-facade'); expect(requests).toEqual([]);
+test('LITE never mounts the Dynamo Hall GLB', async ({ page }, info) => {
+  await seed(page); const found = errors(page);
+  await openTown(page, '?town3dPilot=dynamo_hall&tier=lite'); await shot(page, info, 'lite-facade');
+  await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-state', 'lite');
+  await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-render-source', 'facade');
   expect(found).toEqual({ console: [], page: [] });
 });
 
-test('a pre-T2 profile never renders or requests the 3D Dynamo Hall', async ({ page }) => {
-  await seed(page, false); const found = errors(page); const requests: string[] = [];
-  page.on('request', request => { const url = new URL(request.url()); if (url.pathname.includes('dynamo-hall') && url.pathname.endsWith('.glb') && !url.search) requests.push(request.url()); });
+test('a pre-T2 profile never renders or mounts the 3D Dynamo Hall', async ({ page }) => {
+  await seed(page, false); const found = errors(page);
   await openTown(page, '?town3dPilot=dynamo_hall&tier=full'); await page.waitForTimeout(500);
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-state', 'off');
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-render-source', 'facade');
   expect(await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.dynamoHall.visible)).toBe(false);
-  expect(requests).toEqual([]); expect(found).toEqual({ console: [], page: [] });
+  expect(found).toEqual({ console: [], page: [] });
 });
 
 test('a failed Dynamo Hall load preserves the complete-stage visual and crank', async ({ page }, info) => {
