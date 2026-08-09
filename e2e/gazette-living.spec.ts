@@ -11,14 +11,14 @@ import {
   type ProfileState,
 } from '../src/game/ProfileStorage';
 import type { ScoreRecord } from '../src/game/Scoreboard';
-import { isCleanHeraldLine } from '../src/news/herald';
+import { HERALD_FRESHNESS_DAYS, isCleanHeraldLine, readHeraldItems } from '../src/news/herald';
 import { editionLadder, HERALD_LAST_READ_KEY } from '../src/news/editionLadder';
 
 // THE LIVING PAPER — GZ-L1 (specs/gazette-house/living-paper.md; owner directive 2026-08-04:
 // "right now the newspaper never changes. Even after I beat the Baron, same newspaper.").
 // PLAIN BOOT ONLY — no `?debug` anywhere in this file (the Debug-Gate Leftover grave). Every
 // assertion here is a thing a player sees by walking into town and clicking the badge.
-const SHOT_DIR = path.resolve('reviews/shots-gazette-living');
+const SHOT_DIR = path.resolve('reviews/shots-gazette-unique');
 const HERO = 'Wren';
 const TOWN = 'Quartz Hill';
 
@@ -142,12 +142,11 @@ test('the welcomed profile opens THE ARRIVAL with the greenhorn panels intact', 
   // Law 3: Issue No. 1 keeps its tutorial duty, unchanged.
   await expect(page.getByTestId('gazette-first-issue')).toBeVisible();
   await expect(page.getByTestId('gazette-panel')).toHaveCount(7);
-  // Law 7: the static feed is filler beneath the lead, never the headline again.
-  await expect(page.getByTestId('claim-herald-items')).toBeVisible();
-  const doorItem = page.getByTestId('claim-herald-item').filter({ has: page.getByRole('heading', { name: 'THE COUNTY OPENS ITS DOOR' }) });
-  await expect(doorItem).toBeVisible();
-  await expect(doorItem).toContainText('Rigs and riders are welcome. Find the door document at /skill.md.');
-  await expect(doorItem).toContainText('a nine-cent mind took the first claim');
+  // Owner ruling 2026-08-09: the July local-news items have retired.
+  await expect(page.getByTestId('claim-herald')).not.toContainText('Board Becomes a Catalog');
+  await expect(page.getByTestId('claim-herald')).not.toContainText("River Runs Past the Claim's Edge");
+  await expect(page.getByTestId('claim-herald')).not.toContainText('Schoolhouse Chart Redrawn');
+  await expect(page.getByTestId('claim-herald')).not.toContainText('Claim Ledger Opens Its Pages');
   // One edition means no archive strip to show yet.
   await expect(page.getByTestId('claim-herald-archive')).toHaveCount(0);
 
@@ -334,6 +333,35 @@ test('the ladder covers every E1 contract that can print', async () => {
   expect(ladder.map((edition) => edition.contractId ?? edition.kind)).toEqual(['arrival', ...printable, 'baron']);
   for (const edition of ladder.slice(2, -1)) {
     expect(edition.headline, `${edition.contractId} has no authored headline`).not.toMatch(/ IS HELD$/);
+  }
+});
+
+test('every printable E1 edition has unique copy', async () => {
+  const raw = await readFile(path.resolve('assets/contracts/epoch-1-frontier/contracts.json'), 'utf8');
+  const contracts = (JSON.parse(raw).contracts as { id: string }[])
+    .map(({ id }) => id)
+    .filter((id) => id !== 'e1-drill-yard' && id !== 'e1-baron');
+  const editions = editionLadder({ heroName: HERO, townName: TOWN, securedContractIds: contracts, baronBeaten: true });
+  const unique = (values: readonly string[], field: string) => expect(new Set(values).size, `${field} repeated`).toBe(values.length);
+
+  expect(editions.map(({ contractId, kind }) => contractId ?? kind)).toEqual(['arrival', ...contracts, 'baron']);
+  unique(editions.map(({ headline }) => headline), 'headline');
+  unique(editions.map(({ standfirst }) => standfirst), 'standfirst');
+  unique(editions.flatMap(({ lead }) => lead), 'lead paragraph');
+});
+
+test('herald items retire after the 14-day freshness window', () => {
+  const date = (daysAgo: number) => new Date(Date.now() - daysAgo * 86_400_000).toISOString().slice(0, 10);
+  Object.defineProperty(globalThis, 'window', { configurable: true, value: { __GR_HERALD_FEED__: [
+    { headline: 'Fresh today', lines: ['Fresh line'], date: date(0), hash: 'today' },
+    { headline: 'Fresh boundary', lines: ['Boundary line'], date: date(HERALD_FRESHNESS_DAYS), hash: 'boundary' },
+    { headline: 'Stale ink', lines: ['Stale line'], date: date(HERALD_FRESHNESS_DAYS + 1), hash: 'stale' },
+  ] } });
+
+  try {
+    expect(readHeraldItems().map(({ hash }) => hash)).toEqual(['today', 'boundary']);
+  } finally {
+    delete (globalThis as { window?: Window }).window;
   }
 });
 
