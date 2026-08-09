@@ -120,23 +120,29 @@
       "fingerprint": "18ae39970869",
       "excerpt": "await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullP"
     },
-    "tasks/goals.json[rf-34-hero-y-restore-roundtrip] -> reviews/rf-34.md:28": {
-      "target": "reviews/rf-34.md",
-      "line": 28,
-      "fingerprint": "7df3c6561555",
-      "excerpt": "- **Exact first divergent write:** `Game.ts:6669`, reached from `RunSuspend.ts:837`."
+    "tasks/goals.json[f1615-1-prefetch-wins-mount-laziness] -> e2e/advance-stream.spec.ts:69": {
+      "target": "e2e/advance-stream.spec.ts",
+      "line": 69,
+      "fingerprint": "e69ea22721b3",
+      "excerpt": "expect(prefetched.some((url) => /stamp-mill|dynamo-hall/.test(url))).toBe(false);"
     },
-    "tasks/goals.json[rf-34-hero-y-restore-roundtrip] -> RunSuspend.ts:842": {
-      "target": "src/game/RunSuspend.ts",
-      "line": 842,
-      "fingerprint": "7bb0d5a91e63",
-      "excerpt": "game.syncHeroVisualHeight?.();"
+    "tasks/goals.json[f1615-1-prefetch-wins-mount-laziness] -> TownTavernPilot.ts:49": {
+      "target": "src/town/TownTavernPilot.ts",
+      "line": 49,
+      "fingerprint": "5fcd68de9cc7",
+      "excerpt": ".filter(([id]) => id !== 'stamp-mill' && id !== 'dynamo_hall')"
     },
-    "tasks/goals.json[calibrate-suite-workers-v2] -> playwright.config.ts:50": {
-      "target": "playwright.config.ts",
-      "line": 50,
-      "fingerprint": "03b4031fea20",
-      "excerpt": "workers: isFireShell ? 1 : undefined,"
+    "tasks/goals.json[f1615-1-prefetch-wins-mount-laziness] -> AdvanceStream.ts:30": {
+      "target": "src/assets/AdvanceStream.ts",
+      "line": 30,
+      "fingerprint": "ecd2829d3da7",
+      "excerpt": "const townUrls = () => import('../town/TownTavernPilot').then(({ townPrefetchUrls }) => townPrefetch"
+    },
+    "tasks/goals.json[f1615-1-prefetch-wins-mount-laziness] -> AdvanceStream.ts:219": {
+      "target": "src/assets/AdvanceStream.ts",
+      "line": 219,
+      "fingerprint": "2c16339757c9",
+      "excerpt": "if (saveDataEnabled()) targets = targets.filter(({ priority }) => priority === 1);"
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."
