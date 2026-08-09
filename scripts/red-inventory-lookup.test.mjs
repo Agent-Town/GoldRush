@@ -234,6 +234,158 @@ test('a correction is printed above the snapshot row it outranks', (t) => {
   assert.doesNotMatch(sibling.stdout, /CORRECTION/);
 });
 
+// F-1589-2 (s1602). A verdict is only as fresh as the run that produced it, and the snapshot rots:
+// wd02-barks returned CLEAN-IN-INVENTORY off a 12-day-old snapshot while failing on BOTH projects on
+// clean main. The clock is injected via RED_INVENTORY_NOW so these assertions are date-independent —
+// the fixture's own 2031 startTime is deliberately far-future and would otherwise drift with the calendar.
+const FRESH_NOW = '2031-12-26T01:02:03.000Z'; // 1 day after the fixture snapshot
+const STALE_NOW = '2032-01-25T01:02:03.000Z'; // 31 days after
+
+function runAt(files, now, ...args) {
+  return spawnSync(process.execPath, [SCRIPT, ...args], {
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      RED_INVENTORY_PATH: files.inventory,
+      RED_INVENTORY_COMPACT_PATH: files.compact,
+      RED_INVENTORY_NOW: now,
+    },
+  });
+}
+
+test('a stale snapshot warns and a fresh one does not', (t) => {
+  const files = fixture(t);
+
+  // THE CONTROL. Without it, an unconditionally-printed banner would pass every assertion below while
+  // telling the reader nothing — a warning that always fires is decoration, not a signal.
+  const fresh = runAt(files, FRESH_NOW, spec(files), '--title', CLEAN_TITLE);
+  assert.equal(fresh.status, 0, fresh.stderr);
+  assert.doesNotMatch(fresh.stdout, /STALE SNAPSHOT/);
+
+  const stale = runAt(files, STALE_NOW, spec(files), '--title', CLEAN_TITLE);
+  assert.equal(stale.status, 0, stale.stderr);
+  assert.match(stale.stdout, /! STALE SNAPSHOT — 31 days old, threshold 7/);
+
+  // The threshold is a convention, so it must be movable — and moving it past the age must silence it.
+  const raised = spawnSync(process.execPath, [SCRIPT, spec(files), '--title', CLEAN_TITLE], {
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      RED_INVENTORY_PATH: files.inventory,
+      RED_INVENTORY_COMPACT_PATH: files.compact,
+      RED_INVENTORY_NOW: STALE_NOW,
+      RED_INVENTORY_STALE_DAYS: '90',
+    },
+  });
+  assert.equal(raised.status, 0, raised.stderr);
+  assert.doesNotMatch(raised.stdout, /STALE SNAPSHOT/);
+});
+
+test('the staleness warning names the direction of the error, which differs by outcome', (t) => {
+  const files = fixture(t);
+
+  // A rotted CLEAN costs a FALSE BLOCKED MERGE; a rotted KNOWN-RED costs an EXCUSED REGRESSION. One
+  // generic "this is old" line would collapse two opposite hazards into a sentence naming neither.
+  const clean = runAt(files, STALE_NOW, spec(files), '--title', CLEAN_TITLE);
+  assert.match(clean.stdout, /may have rotted RED since/);
+  assert.match(clean.stdout, /take a control run before concluding your merge caused it/);
+  assert.doesNotMatch(clean.stdout, /may have been FIXED since/);
+
+  const red = runAt(files, STALE_NOW, spec(files), '--title', RED_TITLE);
+  assert.match(red.stdout, /may have been FIXED since/);
+  assert.doesNotMatch(red.stdout, /may have rotted RED since/);
+});
+
+test('the staleness warning prints above the snapshot rows and corrections it qualifies', (t) => {
+  const files = fixture(t);
+  withCorrections(files, `| e2e/${SPEC} | ${RED_TITLE} | 2031-12-26 | F-9999-9 | BUCKET IS BOTH, NOT DESKTOP-ONLY |`);
+
+  const result = runAt(files, STALE_NOW, spec(files), '--title', RED_TITLE);
+  assert.equal(result.status, 0, result.stderr);
+  assert.ok(
+    result.stdout.indexOf('STALE SNAPSHOT') < result.stdout.indexOf('CORRECTION'),
+    'staleness qualifies the verdict itself, so it must precede the corrections',
+  );
+  assert.ok(
+    result.stdout.indexOf('STALE SNAPSHOT') < result.stdout.indexOf(BUCKET),
+    'both warnings must precede the stale bucket a drainer would otherwise act on',
+  );
+});
+
+test('an uncomputable age is treated as STALE, never as fresh', (t) => {
+  // FAIL-CLOSED. Reporting "fresh" because the clock is unreadable is a guard failing OPEN — the
+  // desk-declaration failure mode, which reported a clean board for 137 fires. Both defects are
+  // MANUFACTURED here rather than inferred: a passing guard never executes its violation path.
+  const missing = fixture(t);
+  const report = JSON.parse(fs.readFileSync(missing.compact, 'utf8'));
+  delete report.stats.startTime;
+  fs.writeFileSync(missing.compact, JSON.stringify(report));
+  const unknown = runAt(missing, FRESH_NOW, spec(missing), '--title', CLEAN_TITLE);
+  assert.equal(unknown.status, 0, unknown.stderr);
+  assert.match(unknown.stdout, /! STALE SNAPSHOT — snapshot date UNKNOWN/);
+
+  // A snapshot dated in the FUTURE is a clock or file defect that makes the arithmetic meaningless.
+  // The fixture is 2031; asking as if it were 2026 reproduces it exactly.
+  const future = fixture(t);
+  const ahead = runAt(future, '2026-08-09T00:00:00.000Z', spec(future), '--title', CLEAN_TITLE);
+  assert.equal(ahead.status, 0, ahead.stderr);
+  assert.match(ahead.stdout, /! STALE SNAPSHOT — snapshot start .* is in the FUTURE/);
+});
+
+test('a bad threshold or clock override fails loudly instead of disabling the warning', (t) => {
+  const files = fixture(t);
+  const bad = (env) => spawnSync(process.execPath, [SCRIPT, spec(files), '--title', CLEAN_TITLE], {
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      RED_INVENTORY_PATH: files.inventory,
+      RED_INVENTORY_COMPACT_PATH: files.compact,
+      ...env,
+    },
+  });
+
+  // The dangerous outcome is not a crash: it is an rc=0 run whose staleness check silently never fires
+  // because NaN comparisons are false. That is the warning disabling itself by typo.
+  const threshold = bad({ RED_INVENTORY_STALE_DAYS: 'soon' });
+  assert.equal(threshold.status, 2, `expected a loud failure, got rc=${threshold.status}: ${threshold.stdout}`);
+  assert.match(threshold.stderr, /RED_INVENTORY_STALE_DAYS must be a non-negative number/);
+
+  const negative = bad({ RED_INVENTORY_STALE_DAYS: '-1' });
+  assert.equal(negative.status, 2, `expected a loud failure, got rc=${negative.status}: ${negative.stdout}`);
+
+  const clock = bad({ RED_INVENTORY_NOW: 'yesterday' });
+  assert.equal(clock.status, 2, `expected a loud failure, got rc=${clock.status}: ${clock.stdout}`);
+  assert.match(clock.stderr, /RED_INVENTORY_NOW must be an ISO date/);
+});
+
+test('staleness is advisory and changes no exit code', (t) => {
+  const files = fixture(t);
+  // F-1589-2 is explicitly non-blocking, and drain callers branch on these codes. A warning that
+  // silently turned a CLEAN lookup into rc=1 would block merges rather than inform them.
+  for (const now of [FRESH_NOW, STALE_NOW]) {
+    assert.equal(runAt(files, now, spec(files), '--title', CLEAN_TITLE).status, 0, 'clean stays 0');
+    assert.equal(runAt(files, now, spec(files), '--title', RED_TITLE).status, 0, 'known-red stays 0');
+    assert.equal(runAt(files, now, spec(files), '--title', RED_TITLE, '--strict').status, 1, 'strict known-red stays 1');
+    assert.equal(runAt(files, now, spec(files, '044-start-screen.spec.ts')).status, 1, 'absent stays 1');
+  }
+});
+
+test('json carries the staleness fields so a caller need not parse prose', (t) => {
+  const files = fixture(t);
+  const fresh = JSON.parse(runAt(files, FRESH_NOW, spec(files), '--title', CLEAN_TITLE, '--json').stdout);
+  assert.equal(fresh.stale, false);
+  assert.equal(fresh.snapshotAgeDays, 1);
+  assert.equal(fresh.staleThresholdDays, 7);
+  assert.equal(fresh.staleReason, null);
+  // Not merely absent: the drift probe must not run at all while the snapshot is fresh.
+  assert.equal(fresh.subjectCommitsSinceSnapshot, null);
+
+  const stale = JSON.parse(runAt(files, STALE_NOW, spec(files), '--title', CLEAN_TITLE, '--json').stdout);
+  assert.equal(stale.stale, true);
+  assert.equal(stale.snapshotAgeDays, 31);
+  assert.ok(stale.subjectCommitsSinceSnapshot === null || Number.isInteger(stale.subjectCommitsSinceSnapshot));
+});
+
 test('a malformed corrections table fails loudly instead of dropping the warning', (t) => {
   const files = fixture(t);
   // Present but broken: four cells where the header declares five. The dangerous outcome is not a

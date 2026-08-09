@@ -14,6 +14,66 @@ function fail(message) {
   process.exit(2);
 }
 
+// F-1589-2 (s1602). EVERY verdict this tool returns is a statement about what ONE run observed on
+// ONE date, and that observation rots. Measured at the s1589 gazette-unique drain: wd02-barks.spec.ts
+// returns CLEAN-IN-INVENTORY off the 2026-07-28 snapshot while failing on BOTH projects on clean main.
+// ⚠️ THE DIRECTION OF THE ERROR IS THE HAZARD, AND IT DIFFERS BY OUTCOME — which is why the warning
+// below is written per-outcome rather than as one generic line. A rotted CLEAN costs a FALSE BLOCKED
+// MERGE (the drainer concludes its own merge caused a red that was already there — the exact inversion
+// of what the inventory exists to prevent). A rotted KNOWN-RED costs the opposite and worse: a real
+// regression EXCUSED against a stale label, which is the false green.
+//
+// N is a CONVENTION, NOT A MEASURED ROT HALF-LIFE, and is written down as such so nobody later cites
+// it as evidence. Grounding for the default: between the live snapshot and s1602 main took 328 commits
+// touching e2e/ or src/ over 12 days (~27/day), so 7 days flags a snapshot before it is ~190
+// subject-touching commits behind. Override with RED_INVENTORY_STALE_DAYS.
+//
+// FAIL-CLOSED, deliberately, on the same doctrine as the corrections parser below: if the age CANNOT
+// be computed — no startTime, or a start in the FUTURE (a clock/file defect that makes the arithmetic
+// meaningless) — the verdict is treated as STALE. Reporting "fresh" because the clock is unreadable is
+// a guard failing OPEN, which is how the desk-declaration guard passed for 137 fires while items sat
+// undeclared. A bad threshold or clock override throws rather than silently disabling the warning.
+const DAY_MS = 86_400_000;
+const STALE_DAYS = process.env.RED_INVENTORY_STALE_DAYS === undefined
+  ? 7
+  : Number(process.env.RED_INVENTORY_STALE_DAYS);
+if (!Number.isFinite(STALE_DAYS) || STALE_DAYS < 0) {
+  fail(`RED_INVENTORY_STALE_DAYS must be a non-negative number, got: ${process.env.RED_INVENTORY_STALE_DAYS}`);
+}
+const NOW = process.env.RED_INVENTORY_NOW === undefined ? Date.now() : Date.parse(process.env.RED_INVENTORY_NOW);
+if (!Number.isFinite(NOW)) {
+  fail(`RED_INVENTORY_NOW must be an ISO date, got: ${process.env.RED_INVENTORY_NOW}`);
+}
+
+function staleness(snapshotStartTime) {
+  const start = snapshotStartTime === null ? NaN : Date.parse(snapshotStartTime);
+  if (!Number.isFinite(start)) {
+    return { ageDays: null, stale: true, reason: 'snapshot date UNKNOWN — age cannot be computed' };
+  }
+  const ageDays = Math.floor((NOW - start) / DAY_MS);
+  if (ageDays < 0) {
+    return { ageDays, stale: true, reason: `snapshot start ${snapshotStartTime} is in the FUTURE — age cannot be trusted` };
+  }
+  return { ageDays, stale: ageDays > STALE_DAYS, reason: null };
+}
+
+// Only paid for once a snapshot is ALREADY stale, so a fresh lookup spawns no subprocess. Days are the
+// human-readable figure; this is the quantity that actually predicts rot. Degrades to null, never throws.
+function subjectCommitsSince(snapshotStartTime) {
+  if (snapshotStartTime === null) return null;
+  const git = spawnSync('git', ['rev-list', '--count', `--since=${snapshotStartTime}`, 'main', '--', 'e2e', 'src'], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  });
+  return git.status === 0 && /^\d+$/.test(git.stdout.trim()) ? Number(git.stdout.trim()) : null;
+}
+
+const STALE_DIRECTION = {
+  'CLEAN-IN-INVENTORY': 'CLEAN means green ON THE SNAPSHOT DATE. It may have rotted RED since (F-1589-2), so a red you see now is NOT proven yours — take a control run before concluding your merge caused it.',
+  'KNOWN-RED': 'KNOWN-RED means red ON THE SNAPSHOT DATE. It may have been FIXED since — do NOT excuse a fresh red against this label without a control run (membership is never exoneration, F-1444-2).',
+  'NOT-IN-INVENTORY': 'The snapshot may simply predate this spec; absence here is not evidence either way.',
+};
+
 function specPath(value) {
   const normalized = path.resolve(value).replaceAll(path.sep, '/');
   const e2e = normalized.lastIndexOf('/e2e/');
@@ -179,6 +239,10 @@ if (snapshot) {
   console.log(git.status === 0 && git.stdout.trim()
     ? `SNAPSHOT main commit ${git.stdout.trim()}`
     : `SNAPSHOT main commit UNKNOWN — run: ${command}`);
+  const snapshotAge = staleness(coverage.snapshotStartTime);
+  const drift = subjectCommitsSince(coverage.snapshotStartTime);
+  console.log(`SNAPSHOT age ${snapshotAge.reason ?? `${snapshotAge.ageDays} days`} — threshold ${STALE_DAYS} — ${
+    snapshotAge.stale ? 'STALE' : 'fresh'}${drift === null ? '' : ` — ${drift} commit(s) touching e2e/ or src/ since`}`);
   process.exit(0);
 }
 
@@ -218,11 +282,26 @@ const result = {
   ),
 };
 
+const age = staleness(coverage.snapshotStartTime);
+result.snapshotAgeDays = age.ageDays;
+result.staleThresholdDays = STALE_DAYS;
+result.stale = age.stale;
+result.staleReason = age.reason;
+result.subjectCommitsSinceSnapshot = age.stale ? subjectCommitsSince(coverage.snapshotStartTime) : null;
+
 if (args.includes('--json')) {
   console.log(JSON.stringify(result, null, 2));
 } else {
   console.log(`INVENTORY ${result.inventory} — rows parsed ${result.rowsParsed} (${result.failureRowsParsed} failure, ${result.blastRadiusRowsParsed} blast-radius) — Total tests run ${result.totalTestsRun} — Total failed ${result.totalFailed}`);
   console.log(`${outcome} — ${spec}${title === undefined ? '' : ` — ${title}`} — snapshot date ${result.snapshotDate}`);
+  // Printed BETWEEN the verdict and everything else, for the same reason corrections print above the
+  // snapshot rows: the misreading happens at the instant the reader takes the verdict word as current.
+  if (result.stale) {
+    const drift = result.subjectCommitsSinceSnapshot;
+    console.log(`! STALE SNAPSHOT — ${age.reason ?? `${age.ageDays} days old, threshold ${STALE_DAYS}`}${
+      drift === null ? '' : `; ${drift} commit(s) have touched e2e/ or src/ since`}`);
+    console.log(`  ${STALE_DIRECTION[outcome]}`);
+  }
   for (const row of result.corrections) {
     console.log(`! CORRECTION (measured ${row.measured}, ${row.finding}) OUTRANKS THE SNAPSHOT BELOW — ${row.title}`);
     console.log(`  ${row.note}`);
