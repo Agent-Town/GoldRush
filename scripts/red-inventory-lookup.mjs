@@ -95,7 +95,24 @@ function readInventory() {
   if (blast.length !== totalBoth) {
     throw new Error(`header says ${totalBoth} BOTH tests but parsed ${blast.length} blast-radius rows`);
   }
-  return { markdown, totalRun, totalFailed, failures, blast };
+  // F-1587-1 (s1601). The snapshot tables record what ONE run observed on its date, and for a
+  // bimodal test that observation rots: the pool-cap row is filed DESKTOP-ONLY while mobile fails
+  // 6/7. A drainer who reads the Project column then classifies a mobile failure as NEW — the
+  // drain-fails condition — and reverts a sound merge. The snapshot is NOT rewritten (that would
+  // launder a real drift); corrections are additive and printed FIRST, where the misreading happens.
+  // OPTIONAL BY CONSTRUCTION: an inventory with no corrections section — every existing fixture —
+  // parses exactly as before, so this can never turn an old inventory into a malformed one.
+  // ⚠️ ABSENT and MALFORMED are different answers and must not share a branch. A bare try/catch
+  // would swallow a corrections table that is present but broken, silently dropping the very
+  // warning this section exists to deliver — a guard that fails OPEN reports a clean board while
+  // the thing it guards is broken. So: absence is decided by the header's presence, and anything
+  // present-but-unparseable still throws and fails the lookup loudly.
+  const CORRECTIONS_HEADER = '| Spec file | Test title | Measured | Finding | Correction |';
+  const corrections = markdown.split(/\r?\n/).includes(CORRECTIONS_HEADER)
+    ? table(markdown, CORRECTIONS_HEADER, 5)
+      .map(([spec, title, measured, finding, note]) => ({ spec, title, measured, finding, note }))
+    : [];
+  return { markdown, totalRun, totalFailed, failures, blast, corrections };
 }
 
 function readCoverage() {
@@ -196,6 +213,9 @@ const result = {
     locationNote: 'recorded at inventory run — may have rotted',
     blastRadius: blastByTest.get(`${row.spec}\0${row.title}`)?.ratio ?? null,
   })),
+  corrections: inventory.corrections.filter(
+    (row) => row.spec === spec && (title === undefined || row.title === title),
+  ),
 };
 
 if (args.includes('--json')) {
@@ -203,6 +223,10 @@ if (args.includes('--json')) {
 } else {
   console.log(`INVENTORY ${result.inventory} — rows parsed ${result.rowsParsed} (${result.failureRowsParsed} failure, ${result.blastRadiusRowsParsed} blast-radius) — Total tests run ${result.totalTestsRun} — Total failed ${result.totalFailed}`);
   console.log(`${outcome} — ${spec}${title === undefined ? '' : ` — ${title}`} — snapshot date ${result.snapshotDate}`);
+  for (const row of result.corrections) {
+    console.log(`! CORRECTION (measured ${row.measured}, ${row.finding}) OUTRANKS THE SNAPSHOT BELOW — ${row.title}`);
+    console.log(`  ${row.note}`);
+  }
   for (const row of result.rows) {
     console.log(`- ${row.title} [${row.project}]`);
     console.log(`  ${row.location} (recorded at inventory run — may have rotted) — ${row.bucket} — ${row.duration}`);

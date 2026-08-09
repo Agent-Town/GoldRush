@@ -190,3 +190,59 @@ test('bare names are misuse and verdict dates track the compact snapshot', (t) =
   assert.equal(nullDate.status, 0, nullDate.stderr);
   assert.match(nullDate.stdout, /snapshot date UNKNOWN/);
 });
+
+// F-1587-1 (s1601). The snapshot's Project/Bucket columns are ONE run's observation, and for a
+// bimodal test they rot: the pool-cap row is filed DESKTOP-ONLY while mobile fails 6/7. The value
+// of a correction is that the drainer is told BEFORE reading the stale bucket, so the ORDERING is
+// asserted here, not merely the presence. The base fixture carries no corrections section, so the
+// nine tests above already hold the absent-section path to its pre-F-1587-1 behaviour.
+function withCorrections(files, row) {
+  const markdown = fs.readFileSync(files.inventory, 'utf8').replace(
+    '## Failing tests',
+    [
+      '## Corrections since the snapshot',
+      '',
+      '| Spec file | Test title | Measured | Finding | Correction |',
+      '|---|---|---|---|---|',
+      row,
+      '',
+      '## Failing tests',
+    ].join('\n'),
+  );
+  fs.writeFileSync(files.inventory, markdown);
+}
+
+test('a correction is printed above the snapshot row it outranks', (t) => {
+  const files = fixture(t);
+  withCorrections(files, `| e2e/${SPEC} | ${RED_TITLE} | 2031-12-26 | F-9999-9 | BUCKET IS BOTH, NOT DESKTOP-ONLY |`);
+
+  const result = run(files, spec(files), '--title', RED_TITLE);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /CORRECTION \(measured 2031-12-26, F-9999-9\)/);
+  assert.ok(
+    result.stdout.indexOf('CORRECTION') < result.stdout.indexOf(BUCKET),
+    'the correction must print BEFORE the stale bucket a drainer would otherwise act on',
+  );
+
+  const json = JSON.parse(run(files, spec(files), '--title', RED_TITLE, '--json').stdout);
+  assert.equal(json.corrections.length, 1);
+  assert.equal(json.corrections[0].finding, 'F-9999-9');
+
+  // A correction is keyed to ONE test: a sibling query must not inherit it.
+  const sibling = run(files, spec(files), '--title', CLEAN_TITLE);
+  assert.equal(sibling.status, 0, sibling.stderr);
+  assert.doesNotMatch(sibling.stdout, /CORRECTION/);
+});
+
+test('a malformed corrections table fails loudly instead of dropping the warning', (t) => {
+  const files = fixture(t);
+  // Present but broken: four cells where the header declares five. The dangerous outcome is not a
+  // crash, it is an rc=0 run whose output silently omits the correction — a guard failing OPEN,
+  // which is how the desk-declaration guard passed for 137 fires while items sat undeclared.
+  withCorrections(files, `| e2e/${SPEC} | ${RED_TITLE} | 2031-12-26 | F-9999-9 |`);
+
+  const result = run(files, spec(files), '--title', RED_TITLE);
+  assert.equal(result.status, 2, `expected a loud failure, got rc=${result.status}: ${result.stdout}`);
+  assert.match(result.stderr, /expected 5 columns below/);
+  assert.doesNotMatch(result.stdout, /KNOWN-RED/);
+});
