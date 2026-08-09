@@ -54,3 +54,41 @@ The evidence rules out the proposed practical mechanism under the real serial fa
 Independent review raised two scope questions. First, the battery inherited this task's lane-runner process context, not a separately recreated launchd fire-parent context. That is the execution context the master assigns and its realism criterion is the real driver plus mandatory one-worker Chromium and Vite; this result does not separately claim a ruling about undocumented parent-process QoS.
 
 Second, each probe sampled the first 3.78 s of its 17.2 s battery. The battery was live at both sample boundaries and the original 41.8 s observation was itself the battery's first test, so this directly measures the concurrent early-battery condition named by the task. It does not exclude a different slowdown that begins only later in a much longer battery; such a late-only cumulative-load experiment would be new scope rather than a reinterpretation of these rows.
+
+## Drain verdict (s1593)
+
+**ACCEPTED AS WRITTEN — merged `b2457017f` from lane/b tip `b87c672a1`, base `003fac78a`.**
+
+### Merge classification
+
+Base `003fac78a`; `main..lane/b` was exactly **1 commit** ahead. All **11 files are `A` (new)** under `artifacts/f1592-3-battery-frame-supply/` and `reviews/` — **LANE-ONLY, no MAIN-MOVED file, no graft, no conflict resolution required**. Merged `--no-ff` and committed as one act (F-1589-5: never leave a merge staged on main).
+
+### Gate battery (on the MERGED tree)
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | **rc=0, clean** |
+| `npm run build` | **rc=0**, built in 2.61 s, asset-diet passed |
+| Product bytes in the merge | **ZERO** — `git diff --name-only b2457017f^1 b2457017f` matches nothing under `src/ e2e/ scripts/ functions/ public/ assets/` |
+| `test:node-guards` | **NOT OWED** — §3's path trigger (`src/sim`, `src/systems`, `src/entities`) is untouched, established by the line above rather than assumed |
+| `errors[]` across all five probe artifacts | **0, 0, 0, 0, 0** |
+| `armed` flags | `arm-p` **true**; `arm-b-1/2` and `arm-c-1/2` **false** — exactly the designed shape |
+
+### Numbers re-derived, not inherited
+
+The drain re-read the raw JSON and checked the runner's table against it rather than transcribing it: Arm P `fps 3.6284…` → **3.63** ✓, `meanFrameIntervalMs 275.60110…` → **275.601** ✓, `meanElapsedPerFrame 0.04999999999999982` → **0.050000** ✓; C-1 `119.69617…` → **119.70** ✓; B-1 → **119.59** ✓. **No row is overstated.**
+
+### Why this is a REFUTATION and not a fifth non-reproduction
+
+F-1590-1's corollary is binding here, and the distinction is the whole value: a run that merely fails to reproduce is *absence of evidence*; a run that **arms its instrument and still sees nothing** is *evidence of absence*. **Arm P ran first and armed** — in-page busy loop 140.8 ms against a requested 60×, with `Δelapsed/Δframe` pinned to the `0.05` cap on every frame — so the probe is a proven detector of exactly the starvation being hunted, and under the factory's real serial gate battery it detected none.
+
+⭐ **This is the first of five attempts at F-1587-2 carrying BOTH a proven lever AND a measurement of the real arrangement.**
+
+📐 **The margin is not marginal, which is what makes the refutation strong.** The real battery ran at **119.59–119.72 fps** against unloaded controls of **119.65–119.70** — a **0.05%** difference — with the battery arm's in-page busy loop (2.4 ms) sitting *inside* the control range (2.2–2.5 ms). The cliff that would produce F-1587-2's timeout sits at **~2.7 fps**, a **~44× gap**. Concurrent factory load does not move frame supply detectably, let alone by 44×.
+
+ⓘ **Worth recording for the next author: even Arm P did not time out.** At rate 60 the probe predicted a **22.3 s** wait against the spec's 30 s cap, so reproducing the 41.8 s failure needs throttling *beyond* rate 60 — far past anything the real battery approaches.
+
+### Findings
+
+- **F-1593-2** (filed to `tasks/BACKLOG.md` in the ledger commit that follows this merge): F-1590-2's Arm B is **REFUTED**, with the margin quantified and a recommendation on whether F-1587-2 earns a sixth attempt.
+- The runner's own **Evidence boundary** section is **accepted as written and is the correct standard**: it names the late-battery cumulative-load window as *unmeasured* rather than quietly claiming it, and declines to rule on parent-process QoS. **No finding is raised against it** — declaring a boundary is the behaviour the factory wants, not a gap.
