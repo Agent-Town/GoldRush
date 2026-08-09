@@ -8,7 +8,9 @@ READ FIRST: `AGENTS.md`; the owner ruling authorising this work — in `tasks/BA
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/b main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1, s1266): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP, whether they sit as uncommitted dirt or as the entire content of an ahead commit. Screenshots are never byte-identity gated, so their bytes differ from main forever. Discard them (`git checkout -- <paths>` / reset) and PROCEED, listing what you discarded.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. **THEN A CLEANLINESS LINE: `git -C worktrees/lane-b status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.**
 
-**DISPATCH CITATION CHECK (run FIRST, before any edit).** This master was committed to main before the lane was refreshed. Prove the lane has it:
+**LANE STALENESS — READ THIS BEFORE THE CITATION CHECK BELOW.** At authoring time (s1605) `node scripts/lane-usable.mjs lane-b` measured `lane/b` **ahead=0, tracked-dirt=0, untracked=0, behind=93** — i.e. the lane holds **nothing** main has not absorbed, and the reset in the pre-flight above is therefore verified loss-free, not merely hoped to be. **Because `ahead=0` makes the pre-flight's "for each ahead commit" clause vacuous, perform the reset ANYWAY: `git checkout -B lane/b main && git clean -fd`.** A 93-behind tree would otherwise be edited against files that no longer match main and the drain would conflict. ⚠️ **Re-measure before you trust that sentence** — if `git log main..lane/b` is now NON-empty, something landed after authoring: **STOP and report**, do not reset.
+
+**DISPATCH CITATION CHECK (run AFTER the reset above, before any edit).** The order matters and is the whole of F-1424-3: run these against a lane already at main, so a `0` means the key genuinely drifted on main rather than that the lane was merely stale. Each key was verified to return exactly **1 on main** at authoring time (F-1425-2 — keys chosen to sit on a single line, since `grep` is line-oriented and prose wraps):
 
 ```
 grep -cF 'const SUPPORTED_CONTRACTS = new Set([' src/sim/HeadlessContractSim.ts   # expect 1
@@ -17,7 +19,7 @@ grep -cF 'the E2 Baron fights keep their pinned outcomes' scripts/gr-sim.test.mj
 grep -cF 'census support is explicit and deterministic' e2e/er01-e2-census.spec.ts   # expect 1
 ```
 
-Any of these returning 0 means the lane drifted from the tree this master was written against — **STOP and report "lane stale: <which key>"**. Do not adapt.
+Any of these returning 0 **after** the reset means the key drifted on MAIN, not that the lane is stale — **STOP and report "key drifted on main: <which key>"**. Do not adapt, and do not go hunting for a replacement key: a master whose premise moved needs re-authoring by a fire, not repair by its runner.
 
 ## Why (owner ruling 2026-08-09 ~21:45, verbatim — grep `F-E2S-3 RULED: de-list now, socket later` in `tasks/BACKLOG.md`)
 
