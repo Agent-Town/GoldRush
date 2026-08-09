@@ -42,7 +42,7 @@ Every primitive was verified present on main at dispatch (s1614) by reading `e2e
 | menu→town | `getByTestId('start-menu-enter-town').click()` then wait `window.__GR_TOWN_DIAGNOSTICS__.frame > 10` | `:127–128` |
 | town→board→contract | the `openBoard` helper (hold `KeyA`/`KeyW` → `town-open-board` → `contract-board`), then `contract-launch-the-claim` | `:152–158`, `:130` |
 | run is up | `window.__THREE_GAME_DIAGNOSTICS__.frame > 10` | `:137` |
-| contract→town | drive the run under `timescale=24` to `claim-secured`, then `bank-secured-claim` ("Return to Town"); on death `stake-again` also returns and lands on `contract-board` | `e2e/story-loop.spec.ts:168–179`, boot flags at `:211` |
+| contract→town | drive the run under `timescale=24` to `claim-secured`, then `bank-secured-claim` ("Return to Town"); on death `stake-again` also returns and lands on `contract-board` | `e2e/story-loop.spec.ts:168–179` ("secured contract returns to town, fires the secured beat, and leaves the board open"), boot flags at `:211` |
 
 **The return leg is the only one this task has not seen executed under throttling.** Choose the cheapest proven path and **report which you used**; see the honest-partial clause in scope 4.
 
@@ -71,7 +71,7 @@ NO changes to: `src/**` — **especially `src/assets/AdvanceStream.ts`, `src/tow
 - `npx tsc --noEmit` clean; `npm run build` green.
 - `npx playwright test e2e/advance-stream-walkthrough.spec.ts --workers=1` green in **both** projects (desktop and 390px mobile). Report the run time — this is a long spec and the next fire needs to know its cost.
 - `npx playwright test e2e/advance-stream.spec.ts --workers=1` green — the adjacent suite you are most likely to have disturbed, since you reuse its primitives. Report pass counts.
-- **Prove the discriminator actually discriminates rather than the table merely printing.** Re-run once with prefetch disabled (`/?tier=lite` sets `data-asset-prefetch-enabled=false` — see `e2e/advance-stream.spec.ts:79–82`) and confirm the WARM column collapses toward zero. **Report both readings.** A table whose warm column is identical with the stream off is measuring nothing.
+- **Prove the discriminator actually discriminates rather than the table merely printing.** Re-run once with prefetch disabled (`/?tier=lite` sets `data-asset-prefetch-enabled=false` — see `e2e/advance-stream.spec.ts:79–82` in the test "lite rendering skips unused 3D prefetch") and confirm the WARM column collapses toward zero. **Report both readings.** A table whose warm column is identical with the stream off is measuring nothing.
 - Paste the final table into your report.
 - No screenshots and no perf table required: this slice renders nothing new. Zero console/page errors is asserted in-spec per scope 4.
 
