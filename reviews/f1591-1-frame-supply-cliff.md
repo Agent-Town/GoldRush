@@ -67,3 +67,54 @@ The evidence supports the source-derived upper bound in the tested healthy-frame
 The evidence does **not** show that clamped elapsed advances at 0.05 per frame, that an armed wait tracks `81 / fps`, that the wait crosses 30 s below 2.7 fps, or that sixth-in-battery position reaches the cliff. No cure is selected or shipped.
 
 Only the probe, raw traces, and this report changed. No executable product byte changed, so tsc/build/suites are provably unaffected beyond the recorded pre-flight build; no unrun suite is claimed, and `test:node-guards` is not owed.
+
+---
+
+## DRAIN VERDICT — s1592 (2026-08-09)
+
+**MERGED** as `c213694c0d19ae133c4243a39c6ac329c438fb3e`. Base: `main` at `7e533fc36`. Branch `lane/b` was `ahead=1 behind=3`, `tracked-dirt=0 untracked=0`; all 11 paths classified **LANE-ONLY** by `scripts/lane-usable.mjs` (nothing to graft, no MAIN-MOVED file, no conflict).
+
+**§3.0** `drain-block-check` → `CLEAR` (leaf `f1591-1-frame-supply-cliff`, was `status="queued"`).
+
+### Evidence
+
+| Gate | Result |
+|---|---|
+| `git diff --stat main...lane/b` | 11 files, **+1087 / -0**, entirely `artifacts/` + `reviews/` |
+| `npx tsc --noEmit` | **clean** (merged tree) |
+| `npm run build` | **rc=0**, 2,184 modules, built in 1.96 s, asset-diet passed |
+| Product bytes changed | **zero** — no `src/`, no `e2e/`, no `scripts/` |
+| `test:node-guards` | **not owed** — §3's path trigger (`src/sim`, `src/systems`, `src/entities`) is untouched |
+| Page/console errors in artifacts | `errors: []` in every run |
+
+The runner's central structural claim was **verified, not inherited**: the diff is additive evidence only, so tsc/build cannot be affected by it, and both were run on the merged tree anyway.
+
+Both spot-checked artifacts transcribe **exactly** into the report's tables (`arm-0-1`: mean 0.008368, max 0.008925, fps 119.47, 3.792 s; `arm-a-n16-1`: mean 0.008370, max 0.008900, fps 119.63, 3.837 s). No table row was found overstated.
+
+**The verdict is accepted as written.** `COULD-NOT-ARM` was a legitimate outcome declared in advance by the master, the runner honoured its own arm criterion instead of reporting an unarmed run as a null result, and it correctly declined to run Arm B once the stop condition was reached. It shipped no cure, by design.
+
+### F-1592-1 — THE ARM A LEVER IS STRUCTURALLY INCAPABLE OF ARMING THE CLAMP: THE LOOP IS VSYNC-PINNED AT 120 Hz
+
+The report says the N=2/4/8/16 loads "never reduced frame supply below 20 fps" and leaves it there. The artifacts say something much stronger, and it is the reusable half of this run.
+
+Across **all nine** recorded runs — 3 unloaded controls, 4 graded CPU loads (N=2→16), and 2 discarded runs that had **an entire second chromium** competing:
+
+| | fps range | mean frame interval range |
+|---|---|---|
+| All 9 runs | **119.42 – 119.97** (spread 0.46%) | **8.335 – 8.374 ms** (spread 0.47%) |
+
+The loaded runs are not merely "not slowed" — they are **statistically indistinguishable from the unloaded controls**, and so is the second-browser case. `8.33 ms = 1/120 s` exactly. **The render loop is pinned to a 120 Hz display refresh, not to CPU availability.**
+
+That reframes the null result. The arm criterion needs a frame interval **> 50 ms**, which is **6× the vsync budget**. `requestAnimationFrame` delivery is display-driven, and the main thread is evidently using a small fraction of its 8.3 ms budget, so *external* CPU hogs contend for cores without ever pushing main-thread frame time past vsync. **Adding more hogs cannot cross a 6× gap** — N=32 or N=64 would return the same table.
+
+⚠️ **This is F-1590-1's lesson one level deeper.** s1591 did the hard part right: it defined arming as an **observable** (mean frame interval > 50 ms) rather than assuming it. That observable is exactly what stopped this run from reporting a false null. But the *lever class* it chose could not move that observable — so the master proved its subject, stated its arm condition honestly, and still could not arm. **Defining the arm proof correctly saved the run; it did not make the lever work.**
+
+➡️ **The lever must inflate MAIN-THREAD frame time directly, not compete for cores.** The candidate is CDP `Emulation.setCPUThrottlingRate` via `page.context().newCDPSession(page)`.
+
+### F-1592-2 — THE ARTIFACTS RECORD NO EVIDENCE THE LOAD WAS LIVE (non-blocking)
+
+`probe.mjs` does not spawn the hogs; the runner spawned them externally, and the artifact JSON has **no `load` field** — no N, no CPU sample, no liveness check during the run. The only evidence the hogs existed is the report's prose plus a `ps` showing them **already dead**.
+
+This does not weaken the merged verdict: the arm criterion is measured *from the artifact*, and an unarmed run yields `COULD-NOT-ARM` whether or not the hogs ran. But it does not support the report's stronger sentence — *"up to 16 prescribed synthetic CPU hogs cannot engage the clamp on this machine"* — which requires the hogs to have actually been running. Given F-1592-1 that sentence is probably true for a different and better reason, but as recorded it is prose-backed, not artifact-backed.
+
+**Cure for the next probe: record the arming lever's own state inside the artifact** (N, spawn PIDs, and a during-run liveness sample), so the lever is evidenced by the same file that evidences the subject. Non-blocking.
