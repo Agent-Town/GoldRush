@@ -2201,13 +2201,13 @@
               "note": "s1099 DRAINED. mergeHash is the runner commit that landed the two raws + LEDGER + contact sheet on main; the fire-side drain then extracted 64 cells (extract-alpha --key ff00ff --grid 8x4 -> 32/32 cells @512px + frames.json per skin) and proved integration. Post-extract parity exact across all three sheets: cell=512 scale=1 maxDim=256, so no size-pop; 512px skin cells beside 256px stock cells match the shipped hero claimday precedent. Art QA re-measured on the merged tree and matched the run report to the pixel: 2240x1360 both, exact-key 75.6730%/76.0172%, ZERO near-key non-exact, bbox band w190-256 h186-220 identical to the stock base, 32/32 distinct with 0 mirrors. RETENTION intact -- the four hover4 raws and the edit base are hash-identical to the report. NO src/ change was needed: SpriteAnimator.ts:170 discovers cells via import.meta.glob('char-*.png'). Gates: tsc 0, build green, cosmetic-grants 10/10 desktop+mobile incl. the live Wrangler worker, tailor-wagon + m4-06-embodiment green, zero console/page errors. 066-walk8-engine:194,:208 red but FINGERPRINTED pre-existing (moved all 66 new files out, both failed identically) and corroborated by reviews/run-gait-stride.md. The old test 'a named coat falls back to the stock sheet while its art is absent' FAILED before I touched it -- that red is the merge's own evidence -- and was superseded to assert each coat resolves to its own sheet (4/4 green). Plain-boot in-world proof, no ?debug: sourceFrameKey = char-prospector-gilded-sheet-hover8-r0c1.png. F-1098-2 CLOSED. Review: reviews/art-batch-prospector-coats-hover8.md. ORIGINAL AUTHORING NOTE (s1098): ART-SLOT LAW discharged: art-staging-audit reports AT RISK 0 files / 0 KB and LOCAL-ONLY 0 files / 0 KB, and the buckets sum to the staging total (0+0+4 salvaged+16 diverged+181 shipped = 201), so the zero is arithmetically closed rather than merely trusted -- that audit has shipped a false zero twice (F-1054-1, F-1055-1). BACKLOG citation proving the batch is unshipped: F-1081-8 at BACKLOG:1163 says both coats still resolve to the stock sheet, and 0 processed gilded/complainant cells exist on disk. One batch in flight: queue/art was empty. Drain-side next step is extract-alpha --key ff00ff --grid 8x4 expecting 32 cells + frames.json per skin; the in-game proof needs no new code because SpriteAnimator.ts:886-887 already sets #game-canvas[data-prospector-sheet] to the skin id on resolve and 'stock' on fallback, so the assertion is data-prospector-sheet=gilded and it is red today."
             },
             {
-        "id": "team-and-training",
-        "title": "Owner rulings: \"Team of 2/3/4\" not Posse; Drill Yard = training ground, off the ladder",
-        "status": "merged",
-        "taskFile": "lane-team-and-training.md",
-        "mergeHash": "f18879c9ee1bbc1f79439d48cec9b45b4798152d",
-        "drainNotes": "s1596: merged f18879c9e. tsc+build clean; F-1229-1 battery stats 87 / accounts 43 / mp 462; own specs 22/22 and adjacent lb-01+drill-yard 24/24, desktop+390px, --workers=1. Drill Yard stays playable, only unranked. reviews/team-and-training.md; F-1596-1 non-blocking (refusal coverage housed under a cost-fields test title)."
-      }
+              "id": "team-and-training",
+              "title": "Owner rulings: \"Team of 2/3/4\" not Posse; Drill Yard = training ground, off the ladder",
+              "status": "merged",
+              "taskFile": "lane-team-and-training.md",
+              "mergeHash": "f18879c9ee1bbc1f79439d48cec9b45b4798152d",
+              "drainNotes": "s1596: merged f18879c9e. tsc+build clean; F-1229-1 battery stats 87 / accounts 43 / mp 462; own specs 22/22 and adjacent lb-01+drill-yard 24/24, desktop+390px, --workers=1. Drill Yard stays playable, only unranked. reviews/team-and-training.md; F-1596-1 non-blocking (refusal coverage housed under a cost-fields test title)."
+            }
           ]
         }
       ],
@@ -5862,17 +5862,17 @@
             },
             {
               "id": "ap-03-protocol",
-              "title": "AP-03 The Rider Protocol (versioned BYO-agent surface) \u2014 GATE IS A CONJUNCTION AND [REHEARSAL-GATED] NAMES ONLY THE HALF ALREADY MET (F-1364-1). Owner verbatim, specs/agent-play/README.md:2 (the STATUS line) + tasks/BACKLOG.md (CITED BY CONTENT per F-1310-1: grep 'AGENT PLAY pace set'): 'AP-03/04/05 may not be authored or queued until the Saga Rehearsal delivers its verdict AND the owner re-greenlights.' \u2713 REHEARSAL CONJUNCT SATISFIED \u2014 verdict merged 4d04e3b8 (2026-07-25), ancestor of main; grep 'UNBLOCKED ON ITS TECHNICAL GATE'. \u2717 OWNER RE-GREENLIGHT NOT GIVEN \u2014 no greenlight exists in any surface, and the newest AP-03 mention (grep 'STANDING-ORDERS IMPLEMENTATION GREENLIT', 2026-07-29) still reads 'AP-03 publish remains owner-gated'. DO NOT AUTHOR OR QUEUE on the strength of the rehearsal token: verifying it returns CLEARED, which is exactly the trap.",
+              "title": "AP-03 The Rider Protocol (versioned BYO-agent surface) \u2014 RE-GREENLIT (owner 2026-08-09: \"Greenlight all three\")",
               "status": "planned"
             },
             {
               "id": "ap-04-teach",
-              "title": "AP-04 Teach Mode (playbook tapes as priors; trust ladder) \u2014 SAME CONJUNCTIVE GATE AS AP-03, SAME DROPPED HALF (F-1364-1): owner verbatim 'AP-03/04/05 may not be authored or queued until the Saga Rehearsal delivers its verdict AND the owner re-greenlights' (specs/agent-play/README.md:2 + BACKLOG, grep 'AGENT PLAY pace set'). The rehearsal half is MET (4d04e3b8); the owner re-greenlight is NOT. DO NOT AUTHOR OR QUEUE. Sibling ap-05-publish carries the owner half in its own title \u2014 this leaf and ap-03 dropped it.",
+              "title": "AP-04 Teach Mode (playbook tapes as priors; trust ladder) \u2014 SAME CONJUNCTIVE GATE AS AP-03, SAME DROPPED HALF (F-1364-1): owner verbatim 'AP-03/04/05 may not be authored or queued until the Saga Rehearsal delivers its verdict AND the owner re-greenlights' (specs/agent-play/README.md:2 + BACKLOG, grep 'AGENT PLAY pace set'). The rehearsal half is MET (4d04e3b8); the owner re-greenlight is NOT. DO NOT AUTHOR OR QUEUE. Sibling ap-05-publish carries the owner half in its own title \u2014 this leaf and ap-03 dropped it. \u2014 RE-GREENLIT (owner 2026-08-09: \"Greenlight all three\")",
               "status": "planned"
             },
             {
               "id": "ap-05-publish",
-              "title": "AP-05 Publish (owner-gated; OpenClaw/Hermes/Milady adapters) [REHEARSAL-GATED]",
+              "title": "AP-05 Publish (owner-gated; OpenClaw/Hermes/Milady adapters) [REHEARSAL-GATED] \u2014 RE-GREENLIT (owner 2026-08-09: \"Greenlight all three\")",
               "status": "planned"
             },
             {
