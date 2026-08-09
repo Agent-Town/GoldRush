@@ -3453,6 +3453,7 @@ export class Game {
   private restoreAgentRiderSnapshots(value: unknown): boolean {
     if (!value || typeof value !== 'object') return false;
     const states = (value as { agentRiders?: unknown }).agentRiders;
+    if (states === undefined && this.agentRiderBodies.size === 0) return true;
     if (!Array.isArray(states) || states.length !== this.agentRiderBodies.size) return false;
     const restored = new Set<string>();
     for (const state of states) {

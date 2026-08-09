@@ -840,6 +840,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
     game.state?.setPaused?.(true);
   }
   game.syncHeroVisualHeight?.();
+  if (hero?.group?.position) hero.group.position.y = snapshot.hero.position.y;
   game.cameraRig?.snapTo?.(hero?.group?.position);
   game.syncStockpileHoldings?.();
   if (!restoreAgent(game, snapshot, hero)) return restoreFailed('agent');
