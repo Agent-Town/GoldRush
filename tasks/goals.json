@@ -6456,7 +6456,9 @@
             {
               "id": "agent-reels",
               "title": "Agent reels: gr-sim emits board-law tapes (execution-public ruling) + backfill of posted crowns",
-              "status": "planned",
+              "status": "blocked",
+              "blockClass": "owner-fork",
+              "blockedReason": "F-1617-1 (s1617): Codex ran this master and reported BLOCKED with ZERO repo changes, correctly and with its reasons written (run log tasks/runs/20260810-050232-lane-d-lane-agent-reels.md.log; 112,126 tokens). THE TAPE FORMAT CANNOT REPRESENT AN AGENT RUN: functions/api/standings.ts validTapeInput() accepts only PlaybookEntry keys {t,mx,my,a} and validTapeAction() has no standing-order action, while HeadlessContractSim.submitOrders() records accepted StandingOrder[] submissions with their submission times. There is no wave or order-array field. An empty-action tape WOULD validate and WOULD show WATCH THIS on the board, but would replay an idle actor - a tapeless run disguised as a valid reel, which is worse than no tape. Game.startRunTapeReplay() compounds it: it feeds only inputLog.entries + streams to PlaybookReplaySession and never installs standing orders. BOTH lawful cures - (a) a bounded validated agent_orders action taught to the reel player, or (b) a separate bounded standing-order submission log in the tape format - must touch functions/api/standings.ts, the playbook action schema, and the reel player, ALL THREE explicitly forbidden by this master's firewall. Codex recommends (a): it reuses the existing fixed-tick playbook timeline and is the smaller contract. THE OWNER HAS ALREADY RULED emit+backfill; what is OPEN is only the representation choice, and it changes a LIVE production validator that governs already-stored tapes - so it is an owner/attended fork, not fire-authorable (fire.md 2E HARD LIMIT). Not a failure and not a retry candidate: an identical re-queue would produce an identical block.",
               "taskFile": "lane-agent-reels.md"
             },
             {
