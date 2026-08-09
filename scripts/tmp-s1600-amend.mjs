@@ -1,0 +1,12 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+
+const p = 'tasks/BACKLOG.md';
+const lines = readFileSync(p, 'utf8').split('\n');
+if (!lines[0].startsWith('🟢 **F-1600-1**')) { console.error('row 1 is not F-1600-1'); process.exit(1); }
+if (lines[0].includes('A THIRD BLINDNESS')) { console.log('already amended'); process.exit(0); }
+
+const amend = ' ✅ **SWEEP DISCHARGED THIS FIRE WITH THE CORRECTED CHECK, WHICH IS HOW THE REST OF THIS ROW WAS LEARNED.** Of the 47 the narrow check called absent, **4** touch real player source once `e2e/` is dropped from the filter (a test is not a player-facing surface), and **3 of those 4 are genuine misses** — backfilled as one ROUNDUP per the ≤3/week rule: `c8807b4d` (THE FRONT DESK panel beside the county boards — `renderFrontDesk()` + 99 lines of `reader.css`), `7e5fae14` (the e2-trestle terrain rebuild, `Terrain3dClaimPilot.ts` +243 with new atlas/blend/glb), `d9cf6242` (a works with power lines but no connection to make would pin `objectiveAllowsSecure` false forever, so beating the Baron **won the contract and silently failed to secure it**). The 4th, `1a2871fd`, is factory hygiene (composite-key delimiters re-encoded so `grep` works in Claude shells) and is CORRECTLY absent. 🔎 **A THIRD BLINDNESS, found only by discharging the duty rather than measuring it — AND IT IS Mistake #16 SITTING INSIDE THE SWEEP’S OWN FILTER.** s1599 shaped its candidate set by commit-MESSAGE PREFIX (`fix|feat|perf|test|refactor`). **Two of my three genuine misses land under subjects that name something else entirely:** `c8807b4d` ships a whole new player-facing panel under *“bench: prime-agent heat 1 closes DNF×3 (operability trilogy)”*, and `7e5fae14` is a bare *“Merge branch ‘lane/c’ into HEAD”*. **A message-prefix filter cannot see either, and no amount of widening the sink fixes that** — it is the same law the house already wrote after w1-07 (never judge shipped-ness by commit messages), reappearing in the instrument that judges newsworthiness. ➡️ **Shape the candidate set by TOUCHED PATHS, never by subject.** 📐 **The trestle miss also has a sibling control, which is what raised it from “arguably” to “owed”:** `beauty-e2-pressure-garden` (`25890bae…`) and `beauty-e2-incline` (`fa5ed7ca…`) both carry gazette items; the trestle pass is the same class of work by the same hands and had none. Two of three announced is not a judgement call, it is a gap.';
+
+lines[0] = lines[0] + amend;
+writeFileSync(p, lines.join('\n'));
+console.log('amended; row now', lines[0].length, 'chars');
