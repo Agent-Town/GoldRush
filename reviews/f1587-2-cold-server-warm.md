@@ -26,3 +26,35 @@ None: `scripts/gate-battery.mjs` and `scripts/gate-battery.test.mjs` remain byte
 ## Adjacent finding
 
 The relevant town code is loaded by `main.ts` through a dynamic `import('./town/TownScene')` after Enter Town. A plain `GET /` cannot be assumed to compile that cold chunk. This was observed but not changed because Arm A did not reproduce and the task requires stopping at that point.
+
+---
+
+## DRAIN VERDICT — s1589, 2026-08-09
+
+**MERGED as evidence. The STOP was correct and the report is accurate.** This slice ships no driver patch and no cure; what it lands is a measured negative result, which is exactly what its master asked for — report a negative result as the result, rather than ship a plausible patch.
+
+**F-1587-2 stays OPEN.** A non-reproduction is not a refutation, and the runner says so itself: one cold run at 5.5 s bounds the defect's RATE, not its existence.
+
+### Verified, not inherited
+
+| Claim in the report | How I checked it | Result |
+|---|---|---|
+| Blast radius none; `gate-battery` untouched | `git diff main...lane/b -- scripts/` | **empty** |
+| No product code moved | same, for `src/` and `e2e/` | **both empty** |
+| The whole slice is evidence | `git diff --name-only main...lane/b` | **3 files** — 2 artifacts + this review |
+| 5.5 s test / 6.7 s suite / 7.19 s wall | read `arm-a-playwright.txt` directly | **all three match** |
+| The server was genuinely cold | read `arm-a-server.log` | ready in 115 ms, no probe before Playwright |
+
+No gate battery is owed and none is claimed: the diff contains zero executable bytes, so tsc, build and every suite are provably unaffected. That is the same evidence standard applied to a diff that cannot change behaviour — not a shortcut around it.
+
+### F-1589-4 — a better hypothesis, sitting in the runner's own server log. NEW, OPEN.
+
+Line 1 of `arm-a-server.log` reads **"[vite] (client) Re-optimizing dependencies because lockfile has changed"**. Dependency re-optimization is a well-known source of multi-second first-request stalls, and it is triggered by a **lockfile change**, not by server temperature. That fits every observation better than cold-vs-warm does:
+
+- it explains why s1587 saw **41.8 s** once and could never get it back;
+- it explains why Arm A, run after the optimize had already happened, saw **5.5 s**;
+- it predicts the defect is **episodic** — reachable only in the window after an install moves the lockfile — which is exactly why a straight cold/warm A/B cannot reproduce it on demand.
+
+This matters for the retry rule (§7.5: a third attempt needs a CHANGED premise). The next attempt should not re-run the same cold/warm A/B. It should test the re-optimization hypothesis directly — force a dep re-optimize (move the lockfile mtime, or clear `node_modules/.vite`), then time the first test — and only then decide whether a warm-up request is the right cure at all. A `GET /` would not fix this class in any case, which converges with the runner's own adjacent finding: the town scene is a lazily imported chunk that a document request never compiles.
+
+**Recommendation:** keep F-1587-2 open and **re-aim rather than re-run**. No corrective queued this fire — the re-aimed master needs an authoring slot, and one authored master per fire is the limit.
