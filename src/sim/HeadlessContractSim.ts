@@ -52,10 +52,9 @@ const SUPPORTED_CONTRACTS = new Set([
   'e1-night-shift',
   'e1-twin-banks',
   'e1-baron',
-  'e2-hill-mine',
-  'e2-trestle',
   'e2-pressure-garden',
-  'e2-incline',
+  // The three E2 railcar contracts stay out under the F-E2S-3 owner ruling of 2026-08-09 until
+  // the second master lands their era-true pressure-to-damage socket.
   'e3-blackout-ridge',
   'e3-moth-season',
   'e3-canyon-works',

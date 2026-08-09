@@ -523,7 +523,10 @@ test('Night Shift wreckers outrun lantern light headlessly', async () => {
   }
 });
 
-test('gr-sim ends an idle Baron run at its grace ceiling', { timeout: 45_000 }, () => {
+test('gr-sim ends an idle Baron run at its grace ceiling', {
+  timeout: 45_000,
+  skip: 'F-E2S-3 owner ruling 2026-08-09: no still-listed Baron contract reaches its ceiling under idle; the pressure-to-damage socket slice restores this test.',
+}, () => {
   const run = spawnSync(
     process.execPath,
     ['scripts/gr-sim.mjs', '--contract', 'e2-hill-mine', '--seed', 'e2-hill-mine-01', '--policy=idle'],
@@ -660,7 +663,10 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
   }
 });
 
-test('the E2 Baron fights keep their pinned outcomes', { timeout: 45_000 }, async () => {
+test('the E2 Baron fights keep their pinned outcomes', {
+  timeout: 45_000,
+  skip: 'F-E2S-3 owner ruling 2026-08-09: no still-listed Baron contract reaches its ceiling under idle; the pressure-to-damage socket slice restores these railcar pins.',
+}, async () => {
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
   const contractIds = ['e2-hill-mine', 'e2-trestle', 'e2-incline'];
