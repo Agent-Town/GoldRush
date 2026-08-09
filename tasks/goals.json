@@ -3092,8 +3092,10 @@
             {
               "id": "gazette-unique",
               "title": "Gazette: bespoke E1 editions + stale local-news retirement (owner playtest 2026-08-09)",
-              "status": "planned",
-              "taskFile": "lane-gazette-unique.md"
+              "status": "merged",
+              "taskFile": "lane-gazette-unique.md",
+              "mergeHash": "c742cd596bdfa890539d6fe5ed3039a6f37896e1",
+              "drainNotes": "MERGED s1589. Own spec green both projects; with the repaired adjacent spec, 30/30. HERALD_FRESHNESS_DAYS=14 retires the four 2026-07-10 items at READ time (retention: herald.json untouched); the 2026-08-07 item survives so the column thins rather than dies. Uniqueness now guarded: 6 headlines, 6 standfirsts, 17 lead paragraphs. F-1589-1: the slice manufactured a 2-test red in e2e/gazette-art-wiring.spec.ts (it asserted the four July items were live) which the runner's one-spec firewall correctly forbade it from fixing; the drain repaired it by feeding those items verbatim as a dated snapshot through the existing seedTown override, and ADDED a plain-boot test so the player-facing guarantee was not thinned. Adjacent reds all attributed off the slice by a clean-main control at 57d2d13c0: ss-03-beats fingerprint-matched KNOWN-RED; wd02-barks:104 pre-existing on both trees (F-1589-2: red inventory still calls that spec CLEAN — stale); wd02-barks:139 green in isolation on both trees, red only 6th in a batch (F-1589-3: load-sensitive). Review: reviews/gazette-unique.md."
             }
           ]
         }
