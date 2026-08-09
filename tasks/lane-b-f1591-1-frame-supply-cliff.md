@@ -22,7 +22,7 @@ F-1587-2 has survived three attempts, all of which measured **how long the subje
 - `src/core/Loop.ts:121` — on the variable-step path, `this.update(this.frame.presentationDeltaSeconds);`
 - `src/town/TownScene.ts:453` — `new Loop((delta) => this.update(delta), () => this.render())` is constructed **with no options**, so `stepSeconds = 0` and the town takes exactly that variable-step path.
 - `src/town/TownScene.ts:679` — `this.elapsed += delta`, where `delta` is that clamped presentation delta.
-- `e2e/beauty-town.spec.ts:244-247` — the wait is `waitForFunction(() => (town?.elapsed ?? 0) > 4)` with `{ timeout: 30_000 }`.
+- `e2e/beauty-town.spec.ts:244-247` — the wait, whose predicate line reads `    return (town?.elapsed ?? 0) > 4;` and which closes with `}, undefined, { timeout: 30_000 });`.
 
 **Therefore `town.elapsed` gains AT MOST 0.05 s per presented frame, so `elapsed > 4` requires AT LEAST 81 presented frames, no matter how much wall time passes.** The consequences are quantitative and falsifiable:
 
