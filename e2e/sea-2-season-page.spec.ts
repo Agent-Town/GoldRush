@@ -3,9 +3,9 @@ import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
-import { SEASONS } from '../src/seasons/registry';
+import { resolveSeasonAt, SEASONS } from '../src/seasons/registry';
 
-const SHOTS = path.resolve('reviews/shots-sea-2');
+const SHOTS = path.resolve('reviews/shots-mint-season-2');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'season-page',
@@ -52,9 +52,11 @@ function aggregate(submittedAt: number): Record<string, number> {
 
 test('plain boot opens the season list and a season page without losing legacy standings', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
-  const season = SEASONS[0];
+  const season = SEASONS[1];
   const seasonedAt = season.startsAt + 60_000;
   const legacyAt = season.startsAt - 60_000;
+  const seasonName = resolveSeasonAt(seasonedAt)?.name;
+  expect(seasonName).toBe('Season 2 — The Same Game');
   await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
     const params = new URL(route.request().url()).searchParams;
     const view = params.get('view');
@@ -63,8 +65,8 @@ test('plain boot opens the season list and a season page without losing legacy s
       const group = view === 'byStack' ? 'byStack' : 'byHarness';
       const rows = params.get('epoch') === 'epoch-1-frontier'
         ? [
-            { [name]: view === 'byStack' ? 'gpt-5.6-sol' : 'codex-cli', aggregate: aggregate(seasonedAt), contracts: [cell('the-claim', seasonedAt, season.name)] },
-            { [name]: view === 'byStack' ? 'Legacy Rider' : 'Legacy Rig', aggregate: aggregate(legacyAt), contracts: [cell('e1-dry-gulch', legacyAt)] },
+            { [name]: view === 'byStack' ? 'gpt-5.6-sol' : 'codex-cli', aggregate: aggregate(seasonedAt), contracts: [cell('the-claim', seasonedAt, seasonName)] },
+            { [name]: view === 'byStack' ? 'Founding Rider' : 'Founding Rig', aggregate: aggregate(legacyAt), contracts: [cell('e1-dry-gulch', legacyAt, resolveSeasonAt(legacyAt)?.name)] },
           ]
         : [];
       await route.fulfill({
@@ -89,7 +91,7 @@ test('plain boot opens the season list and a season page without losing legacy s
         contractId: 'the-claim',
         party: 'solo',
         board: [
-          { rank: 1, profileName: 'Seasoned Rider', secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400, difficulty: 'trail', submittedAt: seasonedAt, season: season.name, declared: false },
+          { rank: 1, profileName: 'Seasoned Rider', secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400, difficulty: 'trail', submittedAt: seasonedAt, season: seasonName, declared: false },
           { rank: 2, profileName: 'Legacy Rider', secured: true, waves: 10, timeAlive: 610, gold: 100, baseValue: 200, difficulty: 'trail', submittedAt: legacyAt, declared: false },
         ],
       }),
@@ -98,8 +100,8 @@ test('plain boot opens the season list and a season page without losing legacy s
 
   await plainBoot(page);
   await page.getByTestId('claim-ledger-seasons').click();
-  await expect(page.getByTestId('season-list').locator('[data-season-id]')).toHaveCount(SEASONS.length);
-  await expect(page.getByTestId(`season-link-${season.id}`)).toContainText('Since August 6, 2026 — still riding');
+  await expect(page.getByTestId('season-list').locator('[data-season-id]')).toHaveCount(2);
+  await expect(page.getByTestId(`season-link-${season.id}`)).toContainText('Since August 10, 2026 — still riding');
   await mkdir(SHOTS, { recursive: true });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `list-${testInfo.project.name}.png`) });
 
@@ -113,8 +115,8 @@ test('plain boot opens the season list and a season page without losing legacy s
   await expect(page.getByTestId('season-results')).toContainText('Minds and rigs are SELF-DECLARED');
   await expect(page.getByTestId('season-results-byStack')).toContainText('gpt-5.6-sol');
   await expect(page.getByTestId('season-results-byHarness')).toContainText('codex-cli');
-  await expect(page.getByTestId('season-results-board')).not.toContainText('Legacy Rider');
-  await expect(page.getByTestId('season-results-board')).not.toContainText('Legacy Rig');
+  await expect(page.getByTestId('season-results-board')).not.toContainText('Founding Rider');
+  await expect(page.getByTestId('season-results-board')).not.toContainText('Founding Rig');
   expect(await page.locator('body').evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
   await page.setViewportSize({ width: testInfo.project.name === 'mobile-chrome' ? 390 : 1280, height: testInfo.project.name === 'mobile-chrome' ? 1600 : 1000 });
   if (testInfo.project.name === 'desktop-chrome') {
