@@ -30,6 +30,18 @@
       "fingerprint": "48544d0754ff",
       "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
     },
+    "scripts/fire.md -> lane-runner-v3.sh:172": {
+      "target": "scripts/lane-runner-v3.sh",
+      "line": 172,
+      "fingerprint": "2fc4c563a6a1",
+      "excerpt": "# default gpt-5.6-sol@medium (owner ruling 2026-07-10: Sol over Terra, mid effort for normal tasks; "
+    },
+    "scripts/fire.md -> lane-runner-v3.sh:173": {
+      "target": "scripts/lane-runner-v3.sh",
+      "line": 173,
+      "fingerprint": "88aba7286854",
+      "excerpt": "cd \"$wd\" && codex exec -m \"${cx_model:-gpt-5.6-sol}\" -c model_reasoning_effort=\"${cx_effort:-medium}"
+    },
     "scripts/fire.md -> scripts/goal-tracker.test.mjs:80": {
       "target": "scripts/goal-tracker.test.mjs",
       "line": 80,
