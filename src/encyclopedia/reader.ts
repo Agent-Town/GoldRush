@@ -367,7 +367,7 @@ function renderFieldBookLedger(): string {
     <div class="claim-ledger__shell">
       ${renderHeader()}
       ${renderViewRow()}
-      <div class="claim-ledger__board-layout">
+      <div class="claim-ledger__board-layout claim-ledger__board-layout--field-book">
         <section class="county-standings field-book" data-testid="field-book">
         <p class="claim-ledger__eyebrow">County Record</p>
         <h3>The Field Book</h3>

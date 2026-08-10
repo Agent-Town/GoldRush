@@ -13,6 +13,7 @@ const SHOTS = path.resolve('reviews/shots-fd3');
 const FD1_SHOTS = path.resolve('reviews/shots-fd1');
 const MINDS_AND_RIGS_SHOTS = path.resolve('reviews/shots-minds-and-rigs');
 const STACK_DIRECTORY_SHOTS = path.resolve('reviews/shots-stack-directory');
+const FULL_WIDTH_SHOTS = path.resolve('reviews/shots-minds-rigs-full-width');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'field-book',
@@ -286,7 +287,14 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(STACK_DIRECTORY_SHOTS, `rigs-${testInfo.project.name}.png`) });
   await page.getByTestId('field-book-row-codex-cli').click();
   await expect(page.getByTestId('field-book-cell-codex-cli-the-claim')).toContainText('90,000 in');
+  const aggregateWrap = page.locator('.field-book__aggregate-wrap');
+  if (testInfo.project.name === 'desktop-chrome') {
+    expect(await aggregateWrap.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+    expect(await aggregateWrap.evaluate((element) => element.clientWidth)).toBeGreaterThanOrEqual(900);
+  }
   expect(await page.locator('body').evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+  await mkdir(FULL_WIDTH_SHOTS, { recursive: true });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(FULL_WIDTH_SHOTS, `rigs-${testInfo.project.name}.png`) });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(MINDS_AND_RIGS_SHOTS, `rigs-${testInfo.project.name}.png`) });
 
   await mkdir(FD1_SHOTS, { recursive: true });

@@ -282,6 +282,26 @@
   text-transform: uppercase;
 }
 
+@media (min-width: 561px) {
+  .claim-ledger__board-layout--field-book {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .claim-ledger__board-layout--field-book > .front-desk {
+    order: -1;
+  }
+
+  .claim-ledger__board-layout--field-book .front-desk__repositories {
+    grid-template-columns: auto auto;
+    justify-content: start;
+    column-gap: 12px;
+  }
+
+  .claim-ledger__board-layout--field-book .front-desk__repositories strong {
+    grid-column: 1 / -1;
+  }
+}
+
 .claim-ledger__board-layout .county-standings__contracts-hint {
   display: block;
   margin: 3px 0 0;
