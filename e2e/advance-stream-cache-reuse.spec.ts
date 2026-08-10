@@ -1,5 +1,10 @@
-import { mkdir, writeFile } from 'node:fs/promises';
-import { expect, test, type Page } from '@playwright/test';
+import { execFile } from 'node:child_process';
+import { access, mkdir, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { promisify } from 'node:util';
+import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { preview as startVitePreview, type PreviewServer } from 'vite';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import {
   FIRST_CLAIM_DONE_KEY,
@@ -13,8 +18,10 @@ import {
 // This probe asserts only that its instrument observed both sides of the cache
 // question. The answer itself becomes a regression assertion only after it is known.
 const BOOT_FLAGS = 'debug&timescale=24&nolevel&seed=advance-stream-walkthrough';
+const PRODUCTION_CACHE_CONTROL = 'public, max-age=31536000, immutable';
+const execFileAsync = promisify(execFile);
 
-type Bucket = 'DOUBLE-DOWNLOAD' | 'OVERLAP' | 'CACHE-HIT';
+type Bucket = 'DOUBLE-DOWNLOAD' | 'REVALIDATED' | 'OVERLAP' | 'CACHE-HIT';
 type Fetch = {
   requestId: string;
   url: string;
@@ -29,9 +36,53 @@ type Fetch = {
   finishedAt?: number;
   failedAt?: number;
   encodedDataLength?: number;
+  cacheControl?: string;
+};
+type DoorRow = {
+  door: string;
+  doubleDownload: number;
+  revalidated: number;
+  overlap: number;
+  cacheHit: number;
+  wireBytes: number;
+};
+type ProbeResult = {
+  arm: 'dev-server' | 'production-headers';
+  project: string;
+  cacheControl: string[];
+  doorRows: DoorRow[];
+  observed: Fetch[];
+  repeatedUrls: Array<{ url: string; fetches: Fetch[] }>;
 };
 
+const devResults = new Map<string, ProbeResult>();
+
 test('measures advance-stream cache reuse without route interception', async ({ page }, testInfo) => {
+  const result = await measure(page, testInfo, 'dev-server', '/');
+  devResults.set(testInfo.project.name, result);
+  await writeReport(`artifacts/advance-stream-cache-reuse-${testInfo.project.name}.md`, renderArm(result));
+});
+
+// The production answer is genuinely unknown: assert only instrument validity, never its outcome.
+test('compares advance-stream cache reuse under production headers', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  const preview = await startPreview();
+  try {
+    const production = await measure(page, testInfo, 'production-headers', preview.url);
+    const dev = devResults.get(testInfo.project.name);
+    expect(dev, 'the dev-server arm must run before the production arm').toBeDefined();
+    await writeReport(`artifacts/advance-stream-cache-reuse-headers-${testInfo.project.name}.md`, renderComparison(dev!, production));
+  } finally {
+    await preview.server.close();
+  }
+});
+
+async function measure(
+  page: Page,
+  testInfo: TestInfo,
+  arm: ProbeResult['arm'],
+  targetUrl: string,
+): Promise<ProbeResult> {
   test.setTimeout(180_000);
   await seedProfile(page);
   const errors = collectErrors(page);
@@ -65,7 +116,13 @@ test('measures advance-stream cache reuse without route interception', async ({ 
     if (!fetch) return;
     fetch.fromDiskCache = response.fromDiskCache ?? false;
     fetch.fromPrefetchCache = response.fromPrefetchCache ?? false;
-    fetch.status = response.status;
+    fetch.status ??= response.status;
+    const cacheControl = Object.entries(response.headers).find(([name]) => name.toLowerCase() === 'cache-control')?.[1];
+    if (cacheControl !== undefined) fetch.cacheControl = String(cacheControl);
+  });
+  cdp.on('Network.responseReceivedExtraInfo', ({ requestId, statusCode }) => {
+    const fetch = fetches.get(requestId);
+    if (fetch) fetch.status = statusCode;
   });
   cdp.on('Network.loadingFinished', ({ requestId, timestamp, encodedDataLength }) => {
     const fetch = fetches.get(requestId);
@@ -78,7 +135,7 @@ test('measures advance-stream cache reuse without route interception', async ({ 
     if (fetch) fetch.failedAt = timestamp;
   });
 
-  await page.goto('/');
+  await page.goto(targetUrl);
   await expect.poll(() => [...fetches.values()].filter(({ prefetch, finishedAt }) => prefetch && finishedAt !== undefined).length, { timeout: 20_000 }).toBeGreaterThan(0);
   await page.evaluate((flags) => history.replaceState(null, '', `/?${flags}`), BOOT_FLAGS);
 
@@ -114,6 +171,7 @@ test('measures advance-stream cache reuse without route interception', async ({ 
     return {
       door,
       doubleDownload: buckets.filter((bucket) => bucket === 'DOUBLE-DOWNLOAD').length,
+      revalidated: buckets.filter((bucket) => bucket === 'REVALIDATED').length,
       overlap: buckets.filter((bucket) => bucket === 'OVERLAP').length,
       cacheHit: buckets.filter((bucket) => bucket === 'CACHE-HIT').length,
       wireBytes: observed.filter((fetch) => fetch.door === door).reduce((sum, fetch) => sum + (fetch.encodedDataLength ?? 0), 0),
@@ -126,32 +184,15 @@ test('measures advance-stream cache reuse without route interception', async ({ 
   expect(errors).toEqual([]);
   expect(observed.some(({ prefetch, finishedAt }) => prefetch && finishedAt !== undefined)).toBe(true);
   expect(demands.length).toBeGreaterThan(0);
+  const cacheControl = [...new Set(observed.map((fetch) => fetch.cacheControl).filter((value): value is string => value !== undefined))];
+  expect(cacheControl.length, 'at least one GLB response must expose cache-control').toBeGreaterThan(0);
 
-  const report = [
-    '# Advance-stream cache reuse',
-    '',
-    `Boot flags: \`${BOOT_FLAGS}\` · route interception: none · network emulation: none · project: ${testInfo.project.name}`,
-    '',
-    '| Door | DOUBLE-DOWNLOAD | OVERLAP | CACHE-HIT | Wire bytes |',
-    '|---|---:|---:|---:|---:|',
-    ...doorRows.map(({ door, doubleDownload, overlap, cacheHit, wireBytes }) => `| ${door} | ${doubleDownload} | ${overlap} | ${cacheHit} | ${wireBytes} |`),
-    '',
-    '| URL | Prefetch bytes | Subsequent fetch bytes and bucket |',
-    '|---|---:|---|',
-    ...repeatedUrls.map(({ url, fetches: urlFetches }) => {
-      const prefetchBytes = urlFetches.filter(({ prefetch }) => prefetch).map(({ encodedDataLength }) => encodedDataLength ?? 0).join('<br>') || '—';
-      const subsequent = urlFetches.filter(({ prefetch }) => !prefetch).map((fetch) => `${fetch.encodedDataLength ?? 0} (${classify(fetch, observed)})`).join('<br>') || '—';
-      return `| ${shortUrl(url)} | ${prefetchBytes} | ${subsequent} |`;
-    }),
-    '',
-  ].join('\n');
-  console.log(`\n${report}`);
-  await mkdir('artifacts', { recursive: true });
-  await writeFile(`artifacts/advance-stream-cache-reuse-${testInfo.project.name}.md`, report);
   await cdp.detach();
-});
+  return { arm, project: testInfo.project.name, cacheControl, doorRows, observed, repeatedUrls };
+}
 
 function classify(fetch: Fetch, allFetches: Fetch[]): Bucket {
+  if (fetch.status === 304) return 'REVALIDATED';
   if (fetch.servedFromCache || fetch.fromDiskCache || fetch.fromPrefetchCache) return 'CACHE-HIT';
   const completedPrefetch = allFetches.some(
     (candidate) => candidate.url === fetch.url && candidate.prefetch && candidate.finishedAt !== undefined && candidate.finishedAt < fetch.startedAt,
@@ -159,6 +200,94 @@ function classify(fetch: Fetch, allFetches: Fetch[]): Bucket {
   return completedPrefetch && (fetch.encodedDataLength ?? 0) > 0
     ? 'DOUBLE-DOWNLOAD'
     : 'OVERLAP';
+}
+
+async function startPreview(): Promise<{ server: PreviewServer; url: string }> {
+  await ensureBuiltBundle();
+  const server = await startVitePreview({
+    logLevel: 'warn',
+    preview: {
+      host: '127.0.0.1',
+      port: 0,
+      strictPort: false,
+      headers: { 'Cache-Control': PRODUCTION_CACHE_CONTROL },
+    },
+  });
+  const address = server.httpServer.address();
+  if (!address || typeof address === 'string') throw new Error('Vite preview did not expose a TCP port');
+  return { server, url: `http://127.0.0.1:${address.port}` };
+}
+
+async function ensureBuiltBundle(): Promise<void> {
+  const lock = join(tmpdir(), `gold-rush-cache-reuse-${process.ppid}.lock`);
+  const ready = `${lock}.ready`;
+  if (await access(ready).then(() => true).catch(() => false)) return;
+  try {
+    await mkdir(lock);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error;
+    await expect.poll(() => access(ready).then(() => true).catch(() => false), { timeout: 120_000 }).toBe(true);
+    return;
+  }
+  try {
+    await execFileAsync('npm', ['run', 'build'], { cwd: process.cwd(), maxBuffer: 50 * 1024 * 1024 });
+    await writeFile(ready, 'ready');
+  } finally {
+    await rm(lock, { recursive: true, force: true });
+  }
+}
+
+async function writeReport(path: string, report: string): Promise<void> {
+  console.log(`\n${report}`);
+  await mkdir('artifacts', { recursive: true });
+  await writeFile(path, report);
+}
+
+function renderArm(result: ProbeResult): string {
+  return [
+    '# Advance-stream cache reuse',
+    '',
+    `Boot flags: \`${BOOT_FLAGS}\` · arm: ${result.arm} · route interception: none · network emulation: none · project: ${result.project}`,
+    `Observed \`cache-control\` via CDP \`Network.responseReceived\`: ${result.cacheControl.map((value) => `\`${value}\``).join(', ')}`,
+    '',
+    '| Door | DOUBLE-DOWNLOAD | REVALIDATED | OVERLAP | CACHE-HIT | Wire bytes |',
+    '|---|---:|---:|---:|---:|---:|',
+    ...result.doorRows.map(({ door, doubleDownload, revalidated, overlap, cacheHit, wireBytes }) => `| ${door} | ${doubleDownload} | ${revalidated} | ${overlap} | ${cacheHit} | ${wireBytes} |`),
+    '',
+    '| URL | Prefetch bytes | Subsequent fetch bytes and bucket |',
+    '|---|---:|---|',
+    ...result.repeatedUrls.map(({ url, fetches }) => {
+      const prefetchBytes = fetches.filter(({ prefetch }) => prefetch).map(({ encodedDataLength }) => encodedDataLength ?? 0).join('<br>') || '—';
+      const subsequent = fetches.filter(({ prefetch }) => !prefetch).map((fetch) => `${fetch.encodedDataLength ?? 0} (${classify(fetch, result.observed)})`).join('<br>') || '—';
+      return `| ${shortUrl(url)} | ${prefetchBytes} | ${subsequent} |`;
+    }),
+    '',
+  ].join('\n');
+}
+
+function renderComparison(dev: ProbeResult, production: ProbeResult): string {
+  const rows = dev.doorRows.map((devRow, index) => {
+    const productionRow = production.doorRows[index];
+    return `| ${devRow.door} | ${devRow.doubleDownload} | ${devRow.revalidated} | ${devRow.overlap} | ${devRow.cacheHit} | ${devRow.wireBytes} | ${productionRow.doubleDownload} | ${productionRow.revalidated} | ${productionRow.overlap} | ${productionRow.cacheHit} | ${productionRow.wireBytes} |`;
+  });
+  return [
+    '# Advance-stream cache reuse: dev vs production headers',
+    '',
+    `Boot flags: \`${BOOT_FLAGS}\` · route interception: none · network emulation: none · project: ${dev.project}`,
+    `Dev \`cache-control\` observed via CDP \`Network.responseReceived\`: ${dev.cacheControl.map((value) => `\`${value}\``).join(', ')}`,
+    `Production \`cache-control\` observed via CDP \`Network.responseReceived\` from Vite preview's native header option: ${production.cacheControl.map((value) => `\`${value}\``).join(', ')}`,
+    '',
+    '| Door | Dev DOUBLE-DOWNLOAD | Dev REVALIDATED | Dev OVERLAP | Dev CACHE-HIT | Dev wire bytes | Production DOUBLE-DOWNLOAD | Production REVALIDATED | Production OVERLAP | Production CACHE-HIT | Production wire bytes |',
+    '|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|',
+    ...rows,
+    '',
+    '## Dev-server detail',
+    '',
+    renderArm(dev),
+    '## Production-headers detail',
+    '',
+    renderArm(production),
+  ].join('\n');
 }
 
 async function seedProfile(page: Page): Promise<void> {
