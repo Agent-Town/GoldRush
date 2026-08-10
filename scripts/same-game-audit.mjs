@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createServer } from 'vite';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const read = (file) => fs.readFileSync(path.join(ROOT, file), 'utf8');
@@ -16,6 +17,14 @@ const source = Object.fromEntries([
   'functions/api/standings.ts',
   'src/meta/ContractFamilies.ts',
 ].map((file) => [file, read(file)]));
+
+const vite = await createServer({ root: ROOT, server: { middlewareMode: true }, appType: 'custom', logLevel: 'silent' });
+let mechanicsBuildableIds;
+try {
+  ({ mechanicsBuildableIds } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts'));
+} finally {
+  await vite.close();
+}
 
 function line(file, needle) {
   const index = source[file].indexOf(needle);
@@ -111,17 +120,6 @@ const tapeSurface = {
   place_build: 'verb',
 };
 
-function advertisedBuildables(contract) {
-  const ids = new Set(['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office']);
-  if (contract.twist?.powerGrid) ids.delete('turret');
-  for (const id of contract.practice?.buildables ?? []) ids.add(id);
-  if (contract.twist?.pressureEnabled) ids.add('boiler_house');
-  if (contract.id === 'e3-blackout-ridge' && contract.twist?.powerGrid) ids.add('capacitor_bank');
-  if (!contract.twist?.powerGrid && (contract.twist?.lightRamp || contract.twist?.dayNightCycle)) ids.add('lantern_post');
-  if (contract.id === 'e3-moth-season' && contract.twist?.mothSeason) ids.add('lantern_post').add('decoy_shed');
-  return ids;
-}
-
 function manifestEvidence(contract, id) {
   const file = 'src/agent/MechanicsManifest.ts';
   if (contract.practice?.buildables?.includes(id)) return line(file, "rule('practice_buildables'");
@@ -133,12 +131,38 @@ function manifestEvidence(contract, id) {
   return `${line(file, 'const registryBuildables =')} · ${line(file, 'const buildables = [')}`;
 }
 
-function doorAccepts(contract, id) {
-  return advertisedBuildables(contract).has(id);
+function predicateExpression(file, start, end) {
+  const expression = between(source[file], start, end).match(/\(id\) => ([^,\n]+)/)?.[1];
+  if (!expression) throw new Error(`Audit predicate shape missing: ${file}`);
+  return expression;
 }
 
-function browserAccepts(contract, id) {
-  return advertisedBuildables(contract).has(id);
+const browserMethod = 'private isBuildableEnabled(id: BuildableId): boolean {';
+const browserBody = between(
+  source['src/game/Game.ts'],
+  browserMethod,
+  '\n  }',
+).slice(browserMethod.length);
+if (!source['src/game/Game.ts'].includes('private readonly offeredBuildables = mechanicsBuildableIds(this.activeContract);')) {
+  throw new Error('Browser buildable source wiring changed');
+}
+const browserPredicate = Function('id', browserBody);
+
+if (!source['src/sim/HeadlessContractSim.ts'].includes('const offeredBuildables = mechanicsBuildableIds(this.manifest);')) {
+  throw new Error('Headless buildable source wiring changed');
+}
+const headlessPredicate = Function('offeredBuildables', 'id', `return ${predicateExpression(
+  'src/sim/HeadlessContractSim.ts',
+  'this.build = new BuildSystem(',
+  '\n    );',
+)};`);
+
+function browserAccepts(offeredBuildables, id) {
+  return browserPredicate.call({ offeredBuildables }, id);
+}
+
+function doorAccepts(offeredBuildables, id) {
+  return headlessPredicate(offeredBuildables, id);
 }
 
 function direction(human, agent) {
@@ -165,18 +189,18 @@ function audit() {
       `${line('src/sim/HeadlessContractSim.ts', 'const SUPPORTED_CONTRACTS = new Set([')} · ${line('src/sim/HeadlessContractSim.ts', 'if (!SUPPORTED_CONTRACTS.has(this.contractId) && !mode)')}`,
     ));
 
-    const advertised = advertisedBuildables(contract);
+    const advertised = mechanicsBuildableIds(contract);
     for (const id of buildableIds) {
       const manifest = advertised.has(id);
-      const browser = browserAccepts(contract, id);
-      const predicate = doorAccepts(contract, id);
-      const agent = predicate;
+      const browser = browserAccepts(advertised, id);
+      const predicate = doorAccepts(advertised, id);
+      const agent = agentCanEnter && predicate;
       rows.push(row(
         contract,
         'buildable',
         manifest ? `contract manifest advertises BUILD ${id}` : `contract manifest does not advertise ${id}`,
-        predicate ? `door predicate accepts BUILD ${id}` : `door predicate rejects BUILD ${id}`,
-        direction(manifest, predicate),
+        agent ? `door predicate accepts BUILD ${id}` : `door predicate rejects BUILD ${id}`,
+        direction(manifest, agent),
         `${manifestEvidence(contract, id)} · ${line('src/sim/HeadlessContractSim.ts', '(id) => offeredBuildables.has(id)')} · ${line('src/game/buildables.ts', `  | '${id}'`)}`,
       ));
       rows.push(row(
