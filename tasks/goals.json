@@ -6473,14 +6473,14 @@
               "gate": "GATE: closes when the probe is merged with both projects artifacts/advance-stream-cache-reuse-<project>.md tables reported, the DOUBLE-DOWNLOAD / OVERLAP / CACHE-HIT buckets separated, the unmodified walkthrough spec run as the comparison arm in the same shell, and a prose verdict recorded on F-1616-3. Undetermined-with-numbers-and-a-reason satisfies this gate; a confident guess does not, and neither does any edit to src/assets/AdvanceStream.ts."
             },
             {
-                            "id": "f1625-1-town-ceiling-recalibration",
-                            "title": "F-1625-2: the settled and cue-window town transfers share one name, so the release gate compares one against the other ceiling - name them apart, feed deploy.sh the quantity its 25MB was calibrated for, and record the settled figure ungated",
-                            "status": "queued",
-                            "taskFile": "lane-f1625-1-town-ceiling-recalibration.md",
-                            "lane": "lane-c",
-                            "note": "FIRE-AUTHORED s1625 from F-1625-2 at the f1623-1 drain (reviews/f1623-1-town-transfer-determinism.md, merged 9e4b09c09). Dispatching this in the same fire as the merge is the stated condition of that merge verdict: f1623-1 was merged at 2/6 and an unowned red acquires an excused label (F-1460-1). Scope is deliberately NON-DECIDING - the master forbids changing 25_000_000, editing deploy.sh, weakening any assertion, or reverting f1623-1, because whether the release budget should govern the cue-window or the settled quantity is an owner fork, filed separately as F-1625-4. It also orders F-1625-3 settled by measurement under two load conditions rather than assumed. All four citation keys proved on main before dispatch: git ls-files on the stability artifact resolves, settleCapHit=4, the currency warning=1, and the deploy.sh sed parser matched VERBATIM by fgrep=1 (a paraphrased regex would have tested a different parser than the gate uses)."
-                        },
-                        {
+              "id": "f1625-1-town-ceiling-recalibration",
+              "title": "F-1625-2: the settled and cue-window town transfers share one name, so the release gate compares one against the other ceiling - name them apart, feed deploy.sh the quantity its 25MB was calibrated for, and record the settled figure ungated",
+              "status": "queued",
+              "taskFile": "lane-f1625-1-town-ceiling-recalibration.md",
+              "lane": "lane-c",
+              "note": "FIRE-AUTHORED s1625 from F-1625-2 at the f1623-1 drain (reviews/f1623-1-town-transfer-determinism.md, merged 9e4b09c09). Dispatching this in the same fire as the merge is the stated condition of that merge verdict: f1623-1 was merged at 2/6 and an unowned red acquires an excused label (F-1460-1). Scope is deliberately NON-DECIDING - the master forbids changing 25_000_000, editing deploy.sh, weakening any assertion, or reverting f1623-1, because whether the release budget should govern the cue-window or the settled quantity is an owner fork, filed separately as F-1625-4. It also orders F-1625-3 settled by measurement under two load conditions rather than assumed. All four citation keys proved on main before dispatch: git ls-files on the stability artifact resolves, settleCapHit=4, the currency warning=1, and the deploy.sh sed parser matched VERBATIM by fgrep=1 (a paraphrased regex would have tested a different parser than the gate uses)."
+            },
+            {
               "id": "f1623-1-town-transfer-determinism",
               "title": "F-1623-1: the town-transfer instrument swings 3.08x at fixed configuration — make the measurement deterministic before anyone asserts on it again",
               "status": "merged",
@@ -6583,6 +6583,12 @@
               "title": "AP-16-0 same-game parity audit (owner law 2026-08-10)",
               "status": "queued",
               "taskFile": "lane-a-ap16-audit.md"
+            },
+            {
+              "id": "upgrade-clock",
+              "title": "The draft gets a clock — 30/20/10s pick timer by difficulty (owner ruling 2026-08-10)",
+              "status": "queued",
+              "taskFile": "lane-d-upgrade-clock.md"
             }
           ]
         }
