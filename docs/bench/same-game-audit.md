@@ -46,21 +46,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | the-claim | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | the-claim | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | the-claim | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| the-claim | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| the-claim | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| the-claim | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| the-claim | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| the-claim | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| the-claim | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| the-claim | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| the-claim | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| the-claim | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| the-claim | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| the-claim | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| the-claim | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| the-claim | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| the-claim | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| the-claim | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| the-claim | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| the-claim | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| the-claim | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| the-claim | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| the-claim | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| the-claim | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| the-claim | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| the-claim | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| the-claim | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| the-claim | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| the-claim | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| the-claim | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| the-claim | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| the-claim | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| the-claim | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | the-claim | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | the-claim | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | the-claim | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -86,21 +86,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e1-drill-yard | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e1-drill-yard | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e1-drill-yard | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e1-drill-yard | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e1-drill-yard | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e1-drill-yard | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e1-drill-yard | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e1-drill-yard | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e1-drill-yard | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e1-drill-yard | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e1-drill-yard | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -126,21 +126,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e1-dry-gulch | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e1-dry-gulch | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e1-dry-gulch | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e1-dry-gulch | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e1-dry-gulch | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e1-dry-gulch | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e1-dry-gulch | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e1-dry-gulch | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e1-dry-gulch | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e1-dry-gulch | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e1-dry-gulch | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -166,21 +166,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e1-night-shift | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e1-night-shift | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e1-night-shift | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e1-night-shift | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e1-night-shift | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e1-night-shift | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e1-night-shift | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e1-night-shift | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e1-night-shift | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e1-night-shift | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e1-night-shift | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -206,21 +206,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e1-twin-banks | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e1-twin-banks | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e1-twin-banks | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e1-twin-banks | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e1-twin-banks | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e1-twin-banks | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e1-twin-banks | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e1-twin-banks | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e1-twin-banks | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e1-twin-banks | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e1-twin-banks | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -246,21 +246,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e1-baron | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e1-baron | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e1-baron | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e1-baron | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-baron | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-baron | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-baron | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-baron | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-baron | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e1-baron | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e1-baron | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e1-baron | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-baron | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e1-baron | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e1-baron | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e1-baron | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e1-baron | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e1-baron | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e1-baron | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-baron | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-baron | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-baron | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-baron | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-baron | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e1-baron | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e1-baron | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e1-baron | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-baron | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e1-baron | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e1-baron | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e1-baron | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e1-baron | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e1-baron | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e1-baron | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e1-baron | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e1-baron | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -286,21 +286,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e10-ember-shore | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e10-ember-shore | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e10-ember-shore | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e10-ember-shore | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e10-ember-shore | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e10-ember-shore | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e10-ember-shore | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e10-ember-shore | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e10-ember-shore | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e10-ember-shore | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e10-ember-shore | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -326,21 +326,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e10-archive-world | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e10-archive-world | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e10-archive-world | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e10-archive-world | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e10-archive-world | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e10-archive-world | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e10-archive-world | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e10-archive-world | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e10-archive-world | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e10-archive-world | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e10-archive-world | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -366,21 +366,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e10-last-claim | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e10-last-claim | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e10-last-claim | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e10-last-claim | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e10-last-claim | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e10-last-claim | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e10-last-claim | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e10-last-claim | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e10-last-claim | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e10-last-claim | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e10-last-claim | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -406,21 +406,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e10-river | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e10-river | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e10-river | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e10-river | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-river | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-river | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-river | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-river | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-river | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e10-river | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e10-river | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e10-river | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e10-river | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e10-river | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e10-river | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e10-river | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e10-river | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e10-river | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e10-river | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-river | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-river | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-river | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-river | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-river | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e10-river | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e10-river | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e10-river | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e10-river | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e10-river | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e10-river | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e10-river | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e10-river | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e10-river | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e10-river | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e10-river | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e10-river | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -446,21 +446,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e2-hill-mine | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e2-hill-mine | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e2-hill-mine | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e2-hill-mine | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e2-hill-mine | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e2-hill-mine | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e2-hill-mine | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e2-hill-mine | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e2-hill-mine | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e2-hill-mine | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e2-hill-mine | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -486,21 +486,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e2-trestle | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e2-trestle | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e2-trestle | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e2-trestle | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e2-trestle | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e2-trestle | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e2-trestle | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e2-trestle | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e2-trestle | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e2-trestle | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e2-trestle | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -526,21 +526,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e2-pressure-garden | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e2-pressure-garden | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e2-pressure-garden | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e2-pressure-garden | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e2-pressure-garden | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e2-pressure-garden | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e2-pressure-garden | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e2-pressure-garden | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e2-pressure-garden | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e2-pressure-garden | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e2-pressure-garden | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -566,21 +566,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e2-incline | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e2-incline | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e2-incline | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e2-incline | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-incline | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-incline | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-incline | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-incline | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-incline | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e2-incline | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e2-incline | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e2-incline | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e2-incline | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e2-incline | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e2-incline | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e2-incline | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e2-incline | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e2-incline | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e2-incline | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-incline | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-incline | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-incline | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-incline | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-incline | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e2-incline | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e2-incline | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e2-incline | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e2-incline | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e2-incline | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e2-incline | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e2-incline | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e2-incline | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e2-incline | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e2-incline | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e2-incline | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e2-incline | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -606,21 +606,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e3-blackout-ridge | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e3-blackout-ridge | buildable | contract manifest advertises BUILD capacitor_bank | door predicate accepts BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e3-blackout-ridge | buildable | browser menu offers BUILD capacitor_bank | door accepts BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e3-blackout-ridge | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e3-blackout-ridge | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e3-blackout-ridge | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e3-blackout-ridge | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e3-blackout-ridge | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e3-blackout-ridge | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e3-blackout-ridge | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e3-blackout-ridge | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -646,21 +646,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e3-moth-season | buildable | browser menu offers BUILD decoy_shed | door accepts BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e3-moth-season | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e3-moth-season | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e3-moth-season | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e3-moth-season | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e3-moth-season | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e3-moth-season | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e3-moth-season | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e3-moth-season | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e3-moth-season | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e3-moth-season | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -686,21 +686,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e3-canyon-works | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e3-canyon-works | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e3-canyon-works | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e3-canyon-works | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e3-canyon-works | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e3-canyon-works | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | verb | tape action place_build includes rotationSteps 0..3 | BUILD order reaches placement but always defaults rotation to 0 | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e3-canyon-works | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e3-canyon-works | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e3-canyon-works | choice | XP opens a three-card draft; player picks a card | XP is consumed; headless sim silently takes offer[0] | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e3-canyon-works | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | headless automatic Spark Rig uses the same cooldown | equal | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e3-canyon-works | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -726,21 +726,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e3-fairground | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e3-fairground | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e3-fairground | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e3-fairground | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e3-fairground | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e3-fairground | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e3-fairground | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e3-fairground | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e3-fairground | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e3-fairground | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e3-fairground | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -766,21 +766,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e4-dust-flats | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e4-dust-flats | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e4-dust-flats | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e4-dust-flats | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e4-dust-flats | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e4-dust-flats | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e4-dust-flats | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e4-dust-flats | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e4-dust-flats | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e4-dust-flats | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e4-dust-flats | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -806,21 +806,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e4-long-road | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e4-long-road | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e4-long-road | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e4-long-road | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e4-long-road | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e4-long-road | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e4-long-road | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e4-long-road | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e4-long-road | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e4-long-road | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e4-long-road | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -846,21 +846,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e4-gusher-county | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e4-gusher-county | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e4-gusher-county | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e4-gusher-county | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e4-gusher-county | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e4-gusher-county | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e4-gusher-county | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e4-gusher-county | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e4-gusher-county | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e4-gusher-county | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e4-gusher-county | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -886,21 +886,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e4-boneyard | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e4-boneyard | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e4-boneyard | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e4-boneyard | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e4-boneyard | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e4-boneyard | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e4-boneyard | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e4-boneyard | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e4-boneyard | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e4-boneyard | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e4-boneyard | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -926,21 +926,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e5-deepwater-claim | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e5-deepwater-claim | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e5-deepwater-claim | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e5-deepwater-claim | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e5-deepwater-claim | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e5-deepwater-claim | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e5-deepwater-claim | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e5-deepwater-claim | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e5-deepwater-claim | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e5-deepwater-claim | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e5-deepwater-claim | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -966,21 +966,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e5-regatta | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e5-regatta | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e5-regatta | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e5-regatta | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e5-regatta | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e5-regatta | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e5-regatta | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e5-regatta | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e5-regatta | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e5-regatta | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e5-regatta | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1006,21 +1006,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e5-stillwater | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e5-stillwater | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e5-stillwater | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e5-stillwater | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e5-stillwater | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e5-stillwater | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e5-stillwater | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e5-stillwater | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e5-stillwater | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e5-stillwater | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e5-stillwater | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1046,21 +1046,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e5-flotilla | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e5-flotilla | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e5-flotilla | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e5-flotilla | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e5-flotilla | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e5-flotilla | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e5-flotilla | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e5-flotilla | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e5-flotilla | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e5-flotilla | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e5-flotilla | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1086,21 +1086,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e6-glow-mesa | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e6-glow-mesa | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e6-glow-mesa | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e6-glow-mesa | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e6-glow-mesa | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e6-glow-mesa | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e6-glow-mesa | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e6-glow-mesa | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e6-glow-mesa | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e6-glow-mesa | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e6-glow-mesa | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1126,21 +1126,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e6-showroom | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e6-showroom | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e6-showroom | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e6-showroom | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e6-showroom | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e6-showroom | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e6-showroom | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e6-showroom | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e6-showroom | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e6-showroom | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e6-showroom | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1166,21 +1166,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e6-half-life-hollow | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e6-half-life-hollow | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e6-half-life-hollow | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e6-half-life-hollow | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e6-half-life-hollow | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e6-half-life-hollow | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e6-half-life-hollow | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e6-half-life-hollow | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e6-half-life-hollow | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e6-half-life-hollow | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e6-half-life-hollow | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1206,21 +1206,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e6-picnic | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e6-picnic | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e6-picnic | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e6-picnic | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e6-picnic | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e6-picnic | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e6-picnic | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e6-picnic | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e6-picnic | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e6-picnic | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e6-picnic | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1246,21 +1246,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e7-relay-valley | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e7-relay-valley | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e7-relay-valley | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e7-relay-valley | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e7-relay-valley | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e7-relay-valley | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e7-relay-valley | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e7-relay-valley | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e7-relay-valley | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e7-relay-valley | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e7-relay-valley | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1286,21 +1286,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e7-echo-canyon | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e7-echo-canyon | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e7-echo-canyon | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e7-echo-canyon | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e7-echo-canyon | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e7-echo-canyon | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e7-echo-canyon | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e7-echo-canyon | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e7-echo-canyon | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e7-echo-canyon | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e7-echo-canyon | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1326,21 +1326,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e7-dead-band | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e7-dead-band | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e7-dead-band | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e7-dead-band | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e7-dead-band | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e7-dead-band | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e7-dead-band | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e7-dead-band | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e7-dead-band | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e7-dead-band | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e7-dead-band | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1366,21 +1366,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e7-relay-rush | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e7-relay-rush | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e7-relay-rush | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e7-relay-rush | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e7-relay-rush | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e7-relay-rush | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e7-relay-rush | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e7-relay-rush | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e7-relay-rush | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e7-relay-rush | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e7-relay-rush | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1406,21 +1406,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e8-mare-claim | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e8-mare-claim | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e8-mare-claim | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e8-mare-claim | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e8-mare-claim | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e8-mare-claim | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e8-mare-claim | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e8-mare-claim | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e8-mare-claim | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e8-mare-claim | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e8-mare-claim | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1446,21 +1446,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e8-far-side | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e8-far-side | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e8-far-side | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e8-far-side | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e8-far-side | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e8-far-side | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e8-far-side | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e8-far-side | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e8-far-side | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e8-far-side | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e8-far-side | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1486,21 +1486,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e8-low-orbit | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e8-low-orbit | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e8-low-orbit | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e8-low-orbit | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e8-low-orbit | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e8-low-orbit | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e8-low-orbit | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e8-low-orbit | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e8-low-orbit | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e8-low-orbit | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e8-low-orbit | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1526,21 +1526,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e8-eclipse | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e8-eclipse | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e8-eclipse | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e8-eclipse | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e8-eclipse | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e8-eclipse | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e8-eclipse | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e8-eclipse | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e8-eclipse | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e8-eclipse | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e8-eclipse | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1566,21 +1566,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e9-dome-basin | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e9-dome-basin | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e9-dome-basin | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e9-dome-basin | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e9-dome-basin | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e9-dome-basin | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e9-dome-basin | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e9-dome-basin | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e9-dome-basin | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e9-dome-basin | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e9-dome-basin | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1606,21 +1606,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e9-seed-run | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e9-seed-run | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e9-seed-run | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e9-seed-run | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e9-seed-run | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e9-seed-run | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e9-seed-run | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e9-seed-run | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e9-seed-run | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e9-seed-run | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e9-seed-run | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1646,21 +1646,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e9-devils-alley | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e9-devils-alley | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e9-devils-alley | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e9-devils-alley | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e9-devils-alley | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e9-devils-alley | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e9-devils-alley | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e9-devils-alley | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e9-devils-alley | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e9-devils-alley | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e9-devils-alley | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
@@ -1686,21 +1686,21 @@ The widest gates in the county are `e1-drill-yard` (34), `e10-archive-world` (32
 | e9-old-canal | buildable | browser menu hides decoy_shed | door rejects BUILD decoy_shed | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:12 |
 | e9-old-canal | buildable | contract manifest does not advertise capacitor_bank | door predicate rejects BUILD capacitor_bank | equal | src/agent/MechanicsManifest.ts:391 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
 | e9-old-canal | buildable | browser menu hides capacitor_bank | door rejects BUILD capacitor_bank | equal | src/game/Game.ts:5717 · src/sim/HeadlessContractSim.ts:302 · src/game/buildables.ts:13 |
-| e9-old-canal | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:656 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:658 · src/agent/StandingOrders.ts:196 |
-| e9-old-canal | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:662 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:664 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:666 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:674 · src/agent/StandingOrders.ts:9 |
-| e9-old-canal | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:676 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | ability | tape action weapon_toggle | no weapon_toggle standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | verb | tape action restart | no restart standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | verb | tape action debug_spawn | no debug_spawn standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | economy | tape action debug_xp | no debug_xp standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | choice | tape action skip_ceremony | no skip_ceremony standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | choice | tape action research_skip | no research_skip standing order | agent-lacks | functions/api/standings.ts:661 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | verb | tape action place_build includes rotationSteps 0..3 | no reachable BUILD order | agent-lacks | functions/api/standings.ts:663 · src/agent/StandingOrders.ts:196 |
+| e9-old-canal | verb | tape action set_pause | no set_pause standing order | agent-lacks | functions/api/standings.ts:667 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | choice | tape action pick_upgrade | no pick_upgrade standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | choice | tape action research_pick | no research_pick standing order | agent-lacks | functions/api/standings.ts:668 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | choice | tape action death_action | no death_action standing order | agent-lacks | functions/api/standings.ts:669 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | choice | tape action secure_choice | no secure_choice standing order | agent-lacks | functions/api/standings.ts:671 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | verb | tape action context_action | no context_action standing order | agent-lacks | functions/api/standings.ts:673 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | verb | tape action set_agent_rung | no set_agent_rung standing order | agent-lacks | functions/api/standings.ts:679 · src/agent/StandingOrders.ts:9 |
+| e9-old-canal | verb | tape action set_agent_ability | no set_agent_ability standing order | agent-lacks | functions/api/standings.ts:681 · src/agent/StandingOrders.ts:9 |
 | e9-old-canal | choice | XP opens a three-card draft; player picks a card | headless rejects the contract before an upgrade offer | agent-lacks | src/ui/UpgradeOverlay.ts:28 · src/sim/HeadlessContractSim.ts:662 |
 | e9-old-canal | ability | hero:0:rig (1 / Balance.sparkRig.fireRate) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:599 · src/sim/HeadlessContractSim.ts:189 |
 | e9-old-canal | ability | hero:0:blast (Balance.blast.cooldown) | no reachable standing-order path reaches this hero ability | agent-lacks | src/game/Game.ts:614 · src/agent/StandingOrders.ts:9 |
