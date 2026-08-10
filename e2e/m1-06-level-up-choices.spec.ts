@@ -175,6 +175,8 @@ test('first offer is deterministic for a fixed seed and has no duplicates', asyn
 });
 
 test('investment weighting prefers owned families without losing discovery', async ({ browser }) => {
+  // F-1630-1: 4 pages and 140 rolls took 27.2 s of the 30 s default in the fire shell.
+  test.setTimeout(45_000);
   const seed = 'm1-06-weighting-1';
   const firerateIds = ['double_tap_coil'];
   const blastIds = ['powder_charge', 'wide_ring', 'quick_fuse'];
