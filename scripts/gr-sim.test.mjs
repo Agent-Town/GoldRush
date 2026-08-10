@@ -20,6 +20,7 @@ const ORDERS = [
   [{ verb: 'BUILD', what: 'palisade', where: { x: 0, z: 10 }, when: { goldGte: 10 } }],
   [],
   [],
+  ...Array(20).fill(null),
 ].map(JSON.stringify).join('\n') + '\n';
 
 // F-1406-2: these terminal outcome pins are change detectors. A red means the
@@ -39,8 +40,9 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
 
   const lines = first.stdout.trim().split('\n').map((line) => JSON.parse(line));
   assert.equal(lines[0].schema, 'goldrush.view.v1');
-  assert.deepEqual(Object.keys(lines.at(-1)), ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'eventLogHash']);
-  // F-1493-1: headless progression parity, s1493.
+  assert.deepEqual(Object.keys(lines.at(-1)), ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'defaultedPicks', 'eventLogHash']);
+  // AP-16-2: bench-001 levels once; the first-option pick moves from immediate to the trail
+  // deadline, so the outcome gains one default and its terminal hash re-pins.
   assert.deepEqual(lines.at(-1), {
     secured: false,
     waves: 4,
@@ -48,7 +50,8 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
     gold: 4,
     kills: 37,
     calls: 5,
-    eventLogHash: 'fnv1a32:07fd38b9',
+    defaultedPicks: 1,
+    eventLogHash: 'fnv1a32:4e33eba1',
   });
   assert.equal(lines.at(-1).calls, 5);
   assert.ok(lines.some((line) => line.schema === 'goldrush.view.v1' && line.now.works.byKind.palisade === 1));
@@ -171,19 +174,20 @@ test('gr-sim deterministically runs the Claim objective', () => {
   assert.deepEqual(lines[0].stablePrefix.mechanics.posting.waves, [
     { event: 'secure', wave: 10, source: 'twist.secureWave' },
   ]);
-  // F-1493-1: headless progression parity, s1493.
+  // AP-16-2: this idle seed dies with its first offer still live instead of receiving an
+  // immediate upgrade, moving the terminal wave/kills and hash without a default.
   assert.deepEqual(lines.at(-2).appendLog.at(-1), {
-    wave: 3,
+    wave: 2,
     outcome: 'rider-down',
     goldDelta: 0,
     worksHp: { current: 0, max: 0, delta: 0 },
-    kills: 7,
+    kills: 13,
     surprises: ['hero_down'],
   });
   assert.equal(lines.at(-1).secured, false);
   assert.deepEqual(
     Object.keys(lines.at(-1)),
-    ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'eventLogHash'],
+    ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'defaultedPicks', 'eventLogHash'],
   );
 });
 
@@ -197,6 +201,7 @@ test('overtime banks the Claim secure and measures the homestead on both Node en
   };
   const costs = { sentry_beacon: [25, 35, 45, 55, 75, 95], turret: [50, 70, 95, 125] };
   const ordersFor = (view) => {
+    if (view.now.pendingOffer?.[0]) return [{ verb: 'PICK_UPGRADE', id: view.now.pendingOffer[0].id }];
     const orders = [];
     for (const kind of ['sentry_beacon', 'turret']) {
       const built = view.now.works.byKind[kind] ?? 0;
@@ -339,15 +344,17 @@ test('the Claim driver consumes declared water and posts RunManager secure at wa
     const first = run();
     const second = run();
     assert.deepEqual(second, first);
-    // F-1493-1: headless progression parity, s1493.
+    // AP-16-2: e1-the-claim-01 reaches eleven stable trail deadlines. Queued XP no longer
+    // refreshes a live offer, so defaults arrive sooner and move combat timing and the hash.
     assert.deepEqual(first.outcome, {
       secured: true,
       waves: 10,
       timeMs: 300000,
       gold: 0,
-      kills: 297,
+      kills: 291,
       calls: 0,
-      eventLogHash: 'fnv1a32:fa8a49e7',
+      defaultedPicks: 11,
+      eventLogHash: 'fnv1a32:6410fd15',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {
@@ -379,8 +386,9 @@ test('Twin Banks consumes its declared crossings and build zones before securing
   assert.deepEqual(transcript[0].stablePrefix.mechanics.posting.waves, [
     { event: 'secure', wave: 20, source: 'twist.secureWave' },
   ]);
-  // F-1493-1: headless progression parity, s1493.
-  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:bd7fa297');
+  // AP-16-2: idle e1-twin-banks-01 dies with its first offer still live instead of taking
+  // an immediate upgrade, so its terminal hash re-pins without a default.
+  assert.equal(transcript.at(-1).eventLogHash, 'fnv1a32:01e5173c');
 
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
@@ -433,15 +441,17 @@ test('Twin Banks consumes its declared crossings and build zones before securing
     const first = run();
     const second = run();
     assert.deepEqual(second, first);
-    // F-1493-1: headless progression parity, s1493.
+    // AP-16-2: the high-HP e1-twin-banks-01 arm reaches twenty-five stable trail
+    // deadlines; queued XP cannot refresh them, moving combat timing, kills, and the hash.
     assert.deepEqual(first.outcome, {
       secured: true,
       waves: 20,
       timeMs: 600000,
       gold: 0,
-      kills: 805,
+      kills: 771,
       calls: 0,
-      eventLogHash: 'fnv1a32:9548ee84',
+      defaultedPicks: 25,
+      eventLogHash: 'fnv1a32:ecec1077',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
   } finally {
@@ -478,15 +488,17 @@ test('gr-sim places Night Shift fixtures from the contract', () => {
   const firstLines = first.stdout.trim().split('\n').map(JSON.parse);
   const secondOutcome = JSON.parse(second.stdout.trim().split('\n').at(-1));
   assert.deepEqual(secondOutcome, firstLines.at(-1));
-  // F-1493-1: headless progression parity, s1493.
+  // AP-16-2: Night Shift reaches three stable trail deadlines. Queued XP cannot refresh
+  // them, moving its loss boundary and terminal hash while the kill count stays fixed.
   assert.deepEqual(firstLines.at(-1), {
     secured: false,
-    waves: 5,
-    timeMs: 155300,
+    waves: 4,
+    timeMs: 147933,
     gold: 0,
-    kills: 95,
+    kills: 86,
     calls: 0,
-    eventLogHash: 'fnv1a32:7a7c1e7b',
+    defaultedPicks: 3,
+    eventLogHash: 'fnv1a32:3bcb3c2d',
   });
   const firstView = firstLines[0];
   assert.equal(firstView.now.works.byKind.lantern_post, contract.tileParams.prePlacedBuildables.length);
@@ -596,7 +608,8 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
       // -- both return 861/36004eab byte-identical, and the determinism assert above (second ===
       // first) passes on both. Re-pin only ever with a named cause; a blind re-pin is forbidden
       // (F-1441-3).
-      // F-1493-1: headless progression parity, s1493.
+      // AP-16-2: e1-baron-01 reaches twenty-one stable trail deadlines. Queued XP cannot
+      // refresh them; choices stay deterministic while secure time and the hash re-pin.
       assert.deepEqual(first.outcome, {
         secured: true,
         waves: baron.wave,
@@ -604,7 +617,8 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
         gold: 0,
         kills: 862,
         calls: 0,
-        eventLogHash: 'fnv1a32:61d8cfd9',
+        defaultedPicks: 21,
+        eventLogHash: 'fnv1a32:5b1d21f1',
       });
       assert.equal(first.payout.science, Balance.meta.victoryPayout.science * baron.sciencePayoutMult);
       assert.deepEqual(first.transcript.filter(({ type }) => type === 'baron_announcement').map(({ wave }) => wave), [5, 12, 18, 20]);
