@@ -6508,8 +6508,10 @@
             {
               "id": "minds-and-rigs",
               "title": "MINDS + RIGS fan pages: aggregate model/harness stats in the Field Book (owner 2026-08-10; AP-15 axes 1-3+7 first rendering)",
-              "status": "planned",
-              "taskFile": "lane-minds-and-rigs.md"
+              "status": "merged",
+              "taskFile": "lane-minds-and-rigs.md",
+              "mergeHash": "48f217502f35c95b290e62710936d6213ebc2fcf",
+              "drainNotes": "DRAINED s1620, merge 48f217502f35c95b290e62710936d6213ebc2fcf, review reviews/minds-and-rigs.md. Attended-authored (Cowork orchestrator ac87deb31) from the owner directive of 2026-08-10; drained by the fire as ordinary runner output per the ATTENDED-COEXISTENCE LAW. GATE MET: tsc clean, build 2.38s, F-1229-1 functions battery (test:stats 87, test:accounts 43, test:mp 462), field-book.spec.ts 8/8 both projects including a plain no-debug boot test satisfying Mistake #10, adjacent lb-01-county-standings + milk-county-board 34/34 both projects, zero console/page errors, screenshots desktop and 390px for both pages. THE RANKING FIREWALL WAS PROVED RATHER THAN ASSERTED: 592 functions-side assertions plus 34 county-board e2e assertions hold, and all 11 removed lines in standings.ts were audited individually to the GET view-building path - no POST-handler line and no rank-minting line touched. 390px containment is asserted, not eyeballed: field-book.spec.ts:269 and :280 assert body.scrollWidth <= clientWidth. Aggregate honesty holds: sums cover only cells that DECLARE them, so absent costs stay absent rather than becoming zero. VOCABULARY CORRECTION, not a rename: FIELD_BOOK_VIEW_LABELS.byStack read By rig while grouping by MODEL; it now reads Minds (reader.ts:135-139) - a player-visible copy change, GZ-01 item filed this drain. F-1620-6 NON-BLOCKING: at desktop width the aggregate table scrolls horizontally while free width sits unused beside it, because the containment rule was written for 390px and applies at every width; outside this master scope, no owner word owed."
             }
           ]
         }
