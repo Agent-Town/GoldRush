@@ -638,6 +638,96 @@
   overflow-wrap: anywhere;
 }
 
+.seasons {
+  padding: 20px;
+}
+
+.seasons > h3,
+.season-page h3,
+.season-page h4,
+.season-page h5 {
+  margin: 0;
+}
+
+.seasons__intro,
+.seasons__prompt {
+  color: #684728;
+  line-height: 1.45;
+}
+
+.seasons__list {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.seasons__list button {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+  border: 1px solid rgba(76, 48, 23, 0.44);
+  border-left: 5px solid #8b7d3c;
+  border-radius: 6px;
+  padding: 12px;
+  background: rgba(255, 252, 240, 0.72);
+  color: inherit;
+  font: inherit;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.seasons__list button[aria-pressed='true'] {
+  border-color: #5b8a8a;
+  border-left-color: #5b8a8a;
+  background: rgba(91, 138, 138, 0.1);
+}
+
+.seasons__list button span {
+  color: #684728;
+}
+
+.season-page {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.season-page > section {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(76, 48, 23, 0.28);
+  border-radius: 6px;
+  background: rgba(255, 252, 240, 0.72);
+}
+
+.season-page > section > p {
+  margin: 8px 0 0;
+  color: #684728;
+  line-height: 1.45;
+}
+
+.season-results + .season-results {
+  margin-top: 18px;
+}
+
+.season-results h5 {
+  margin: 12px 0 8px;
+  font-size: 1rem;
+}
+
+.season-results .field-book__row > * {
+  cursor: default;
+}
+
+.seasons__empty {
+  margin: 0;
+  padding: 18px 8px;
+  color: #684728;
+  text-align: center;
+  font-style: italic;
+}
+
 .claim-ledger__shelves {
   display: grid;
   gap: 18px;
@@ -765,6 +855,7 @@
   .claim-ledger__header,
   .claim-ledger__views,
   .county-standings,
+  .seasons,
   .claim-ledger__shelves {
     padding-left: 12px;
     padding-right: 12px;
