@@ -6549,8 +6549,10 @@
             {
               "id": "stack-directory",
               "title": "County-curated learn-more links on Minds + Rigs (owner 2026-08-10)",
-              "status": "queued",
-              "taskFile": "lane-stack-directory.md"
+              "status": "merged",
+              "mergeHash": "be33951b9f2087e9fd793ec2fef8f9dedd3b3c94",
+              "taskFile": "lane-stack-directory.md",
+              "drainNotes": "MERGED s1624. Owner 2026-08-10 verbatim: \"Can we link from the harnesses and models also to a page on the internet where people can find more information about it?\" Third link class - county-curated editorial pointers, distinct from Front Desk repos and the rider-declared opt-in source chip. New src/encyclopedia/stackDirectory.ts resolves eight real board rig strings plus vendor/model minds to OpenRouter; unmatched names render NO link. Gates on the merged tree in detached worktree gate-s1624, all --workers=1: tsc rc=0, build rc=0, field-book.spec 4/4 desktop + 4/4 mobile-390px with zero console/page errors asserted in-spec, matcher unit 2/2, adjacent ledger family 12/12 and hygiene 6/6, test:node-guards rc=0. F-1624-1 NON-BLOCKING: the new matcher test lives under src/ and is rooted in no gate - gate-caller-audit is structurally blind to it because its subject set is scripts/**; corrective authored s1624. F-1624-2 observation: the slice re-keyed the inherited minds-and-rigs e2e fixture (codex/gr-sim to codex-cli/unknown-rig) to obtain a known and an unknown rig, inside its firewall."
             }
           ]
         }
