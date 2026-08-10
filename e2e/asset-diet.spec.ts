@@ -20,7 +20,9 @@
 // content-length control remains 27 absent / 0 unparseable in every arm; no GLB or PNG is absent.
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
 import path from 'node:path';
+import { promisify } from 'node:util';
 import { expect, test, type Page, type Request, type Response } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
@@ -42,6 +44,7 @@ type TownTransferMeasurements = {
   settled: SettledTownMeasurement;
 };
 
+const execFileAsync = promisify(execFile);
 const cueTestMeasurementsByProject = new Map<string, TownTransferMeasurements>();
 
 function measuredResponse(url: URL, contentLength: string | undefined): TownResponse {
@@ -109,6 +112,19 @@ function responseStats(responses: TownResponse[]) {
   const uniqueBytes = [...counts.values()].reduce((sum, response) => sum + response.bytes, 0);
   const duplicateUrls = [...counts.entries()].filter(([, response]) => response.count > 1);
   return { totalBytes, uniqueBytes, duplicateBytes: totalBytes - uniqueBytes, duplicateUrls };
+}
+
+async function matchesCommittedFile(filePath: string) {
+  const repoPath = path.relative(process.cwd(), filePath);
+  try {
+    const [{ stdout }, diskContents] = await Promise.all([
+      execFileAsync('git', ['show', `HEAD:${repoPath}`], { maxBuffer: 1_000_000 }),
+      readFile(filePath, 'utf8'),
+    ]);
+    return stdout === diskContents;
+  } catch {
+    return false;
+  }
 }
 
 async function throttleGlbs(page: Page, baseURL: string | undefined, cacheDisabled = false) {
@@ -349,8 +365,16 @@ test('town byte budget reports normal and saveData arms by URL', async ({ browse
     .sort((left, right) => Math.max(right[1], right[2]) - Math.max(left[1], left[2]));
   const rows = changedUrls.map(([url, normalUrlBytes, saveDataUrlBytes]) =>
     `| ${url.replaceAll('|', '\\|')} | ${normalUrlBytes} | ${saveDataUrlBytes} | ${normalUrlBytes - saveDataUrlBytes} |`);
+  const cueTestMeasurementsMeasuredInThisRun = cueTestMeasurementsByProject.has(testInfo.project.name);
+  const cueTestArtifactPath = path.join(ARTIFACT_DIR, `town-transfer-${testInfo.project.name}.json`);
+  // F-1629-1: map hit = this run's cue test measured it; clean map miss = committed town-transfer-<project>.json.
   const cueTestMeasurements = cueTestMeasurementsByProject.get(testInfo.project.name)
-    ?? JSON.parse(await readFile(path.join(ARTIFACT_DIR, `town-transfer-${testInfo.project.name}.json`), 'utf8')) as TownTransferMeasurements;
+    ?? JSON.parse(await readFile(cueTestArtifactPath, 'utf8')) as TownTransferMeasurements;
+  const cueTestMeasurementProvenance = cueTestMeasurementsMeasuredInThisRun
+    ? 'measured in this run'
+    : await matchesCommittedFile(cueTestArtifactPath)
+      ? 'read from the committed artifact'
+      : 'read from the on-disk fallback artifact (not measured in this run)';
   const cueTestStats = responseStats(cueTestMeasurements.cueWindowResponses);
   const settledMeasurements = [
     { label: 'cue test', measurement: cueTestMeasurements.settled },
@@ -367,9 +391,9 @@ test('town byte budget reports normal and saveData arms by URL', async ({ browse
     '',
     '## Release-gated cue-window transfer total',
     '',
-    '| Release-gated cue-window arm | cueWindowTotalBytes | cueWindowUniqueBytes | cueWindowDuplicateBytes | Headroom against 25,000,000 |',
-    '| --- | ---: | ---: | ---: | ---: |',
-    `| cue test | ${cueTestStats.totalBytes} | ${cueTestStats.uniqueBytes} | ${cueTestStats.duplicateBytes} | ${TOWN_TRANSFER_CEILING_BYTES - cueTestStats.totalBytes} |`,
+    '| Release-gated cue-window arm | provenance | cueWindowTotalBytes | cueWindowUniqueBytes | cueWindowDuplicateBytes | Headroom against 25,000,000 |',
+    '| --- | --- | ---: | ---: | ---: | ---: |',
+    `| cue test | ${cueTestMeasurementProvenance} | ${cueTestStats.totalBytes} | ${cueTestStats.uniqueBytes} | ${cueTestStats.duplicateBytes} | ${TOWN_TRANSFER_CEILING_BYTES - cueTestStats.totalBytes} |`,
     '',
     '## A/B cue-window transfer totals (recorded, not release-gated)',
     '',
@@ -434,6 +458,10 @@ test('town byte budget reports normal and saveData arms by URL', async ({ browse
   // totals stay recorded, not release-gated: F-1627-2 measured desktop normal at 24,604,025
   // (f1621-1), 26,115,186 (f1625-1 runner), and 23,259,297 (f1625-1 drain), straddling the ceiling.
   // Refusing that flaky gate is deliberate; F-1625-4 is the open owner fork.
-  expect(cueTestStats.totalBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
+  // F-1629-1: the assertion message names whether it gated fresh bytes or the fallback artifact.
+  expect(
+    cueTestStats.totalBytes,
+    `release-gated cue test bytes were ${cueTestMeasurementProvenance}`,
+  ).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
   expect(saveDataCueWindowBytes).toBeLessThanOrEqual(normalCueWindowBytes);
 });
