@@ -1,10 +1,20 @@
 // Measures the built, dieted production bundle; Vite's dev server serves undieted originals.
 // Run with GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet
+// Town-transfer reconciliation (F-1620-7; preview-config run, 2026-08-10):
+// - cue window enters before prefetch-ready and stops at town loading-ready:
+//   desktop 22,497,140 bytes; mobile 22,497,140 bytes.
+// - A/B normal waits for prefetch-ready, disables cache, then stops at loading-ready:
+//   desktop 24,604,025 bytes; mobile 26,542,805 bytes (1,542,805 over ceiling).
+// - the release gate reads only the cue-window townResponses line (the first pair above).
+// - with cache enabled, prefetch-wait adds desktop 6,171,255; mobile 1,981,581 bytes.
+// - without prefetch-wait, cache-disabled adds desktop 606,099; mobile 1,252,689 bytes.
+// - with prefetch-wait, cache-disabled adds desktop 417,397; mobile 2,887,709 bytes.
+// - false/false still differs from the cue window, so the cross-instrument gap remains partly unexplained.
 
 import { mkdir } from 'node:fs/promises';
 import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
@@ -12,6 +22,60 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 const ARTIFACT_DIR = path.resolve('artifacts/asset-diet');
 const MAPS = [{ id: 'the-claim', era: 1 }, { id: 'e1-dry-gulch', era: 1 }] as const;
 const BUILT_BUNDLE_ONLY = 'asset diet measures the BUILT production bundle; set GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet';
+export const TOWN_TRANSFER_CEILING_BYTES = 25_000_000;
+
+type TownResponse = { url: string; bytes: number; contentLengthIssue: 'absent' | 'unparseable' | null };
+
+const cueWindowResponsesByProject = new Map<string, TownResponse[]>();
+
+function measuredResponse(url: URL, contentLength: string | undefined): TownResponse {
+  const bytes = Number(contentLength ?? 0);
+  const contentLengthIssue = contentLength === undefined
+    ? 'absent'
+    : contentLength.trim() === '' || !Number.isFinite(bytes) || bytes < 0
+      ? 'unparseable'
+      : null;
+  return { url: `${url.pathname}${url.search}`, bytes, contentLengthIssue };
+}
+
+async function throttleGlbs(page: Page, baseURL: string | undefined, cacheDisabled = false) {
+  const cdp = await page.context().newCDPSession(page);
+  if (cacheDisabled) await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
+  await cdp.send('Network.emulateNetworkConditionsByRule', {
+    matchedNetworkConditions: [{
+      urlPattern: new URL('/assets/*.glb', baseURL).href,
+      latency: 600,
+      downloadThroughput: -1,
+      uploadThroughput: -1,
+    }],
+  });
+  return cdp;
+}
+
+function contentLengthAudit(label: string, responses: TownResponse[]): string[] {
+  const issues = responses.reduce((counts, response) => {
+    if (response.contentLengthIssue) {
+      const key = `${response.url}\n${response.contentLengthIssue}`;
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    return counts;
+  }, new Map<string, number>());
+  const count = [...issues.values()].reduce((sum, occurrences) => sum + occurrences, 0);
+  return [
+    `### ${label}`,
+    '',
+    `Missing or unparseable \`content-length\`: **${count} responses**.`,
+    '',
+    '| URL | reason | occurrences |',
+    '| --- | --- | ---: |',
+    ...([...issues.entries()].map(([key, occurrences]) => {
+      const [url, reason] = key.split('\n');
+      return `| ${url.replaceAll('|', '\\|')} | ${reason} | ${occurrences} |`;
+    })),
+    ...(count === 0 ? ['| _none_ | — | 0 |'] : []),
+    '',
+  ];
+}
 
 if (process.env.GR_ASSET_DIET_BUNDLE !== '1') console.warn(`[asset-diet] SKIPPED: ${BUILT_BUNDLE_ONLY}`);
 test.skip(process.env.GR_ASSET_DIET_BUNDLE !== '1', BUILT_BUNDLE_ONLY);
@@ -74,20 +138,17 @@ test('dieted output keeps two terrain census views and town within screenshot to
 test('honest town and claim cues appear while GLBs are throttled and leave at ready', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const watch = watchErrors(page);
-  const townResponses: number[] = [];
+  const cueWindowResponses: TownResponse[] = [];
   let countTownTransfer = true;
   let townOrigin = '';
   page.on('response', (response) => {
     const url = new URL(response.url());
     if (!townOrigin && response.request().isNavigationRequest()) townOrigin = url.origin;
     if (!countTownTransfer || url.protocol === 'blob:' || url.origin !== townOrigin) return;
-    townResponses.push(Number(response.headers()['content-length'] ?? 0));
+    cueWindowResponses.push(measuredResponse(url, response.headers()['content-length']));
   });
   await mkdir(ARTIFACT_DIR, { recursive: true });
-  await page.route('**/*.glb', async (route) => {
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    await route.continue();
-  });
+  const cdp = await throttleGlbs(page, testInfo.project.use.baseURL);
 
   await page.goto('/?town3dPilot=all&tier=full');
   await page.getByTestId('start-menu-enter-town').click();
@@ -98,9 +159,10 @@ test('honest town and claim cues appear while GLBs are throttled and leave at re
   await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
   await expect(cue).toBeHidden();
   countTownTransfer = false;
-  const townResponseBytes = townResponses.reduce((sum, bytes) => sum + bytes, 0);
-  console.info(`[asset-diet] ${testInfo.project.name} townResponses: ${townResponseBytes} bytes`);
-  expect(townResponseBytes).toBeLessThan(25_000_000);
+  cueWindowResponsesByProject.set(testInfo.project.name, cueWindowResponses);
+  const cueWindowResponseBytes = cueWindowResponses.reduce((sum, response) => sum + response.bytes, 0);
+  console.info(`[asset-diet] ${testInfo.project.name} townResponses: ${cueWindowResponseBytes} bytes`);
+  expect(cueWindowResponseBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
 
   await page.getByTestId('town-exit').click();
   await page.getByTestId('start-menu-enter-town').click();
@@ -115,30 +177,28 @@ test('honest town and claim cues appear while GLBs are throttled and leave at re
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-claim-throttled.png`) });
   await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
   await expect(cue).toBeHidden();
+  await cdp.detach();
   expectNoConsoleErrors(watch);
 });
 
 // A number worth measuring is not yet a number worth asserting: asset changes may move the totals and delta.
 test('town byte budget reports normal and saveData arms by URL', async ({ browser, page }, testInfo) => {
-  test.setTimeout(90_000);
-  const measureTown = async (armPage: typeof page) => {
+  test.setTimeout(240_000);
+  const measureTown = async (armPage: typeof page, options: { prefetchWait: boolean; cacheDisabled: boolean }) => {
     let townOrigin = '';
-    const responses: Array<{ url: string; bytes: number }> = [];
+    const responses: TownResponse[] = [];
     let countTownTransfer = true;
-    const cdp = await armPage.context().newCDPSession(armPage);
-    await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
+    const cdp = await throttleGlbs(armPage, testInfo.project.use.baseURL, options.cacheDisabled);
     armPage.on('response', (response) => {
       const url = new URL(response.url());
       if (!townOrigin && response.request().isNavigationRequest()) townOrigin = url.origin;
       if (!countTownTransfer || url.protocol === 'blob:' || url.origin !== townOrigin) return;
-      responses.push({ url: `${url.pathname}${url.search}`, bytes: Number(response.headers()['content-length'] ?? 0) });
-    });
-    await armPage.route('**/*.glb', async (route) => {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      await route.continue();
+      responses.push(measuredResponse(url, response.headers()['content-length']));
     });
     await armPage.goto('/?town3dPilot=all&tier=full');
-    await expect(armPage.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-town-state', 'ready', { timeout: 45_000 });
+    if (options.prefetchWait) {
+      await expect(armPage.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-town-state', 'ready', { timeout: 45_000 });
+    }
     await armPage.getByTestId('start-menu-enter-town').click();
     await expect.poll(() => armPage.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
     countTownTransfer = false;
@@ -184,16 +244,29 @@ test('town byte budget reports normal and saveData arms by URL', async ({ browse
   };
 
   const normalArm = await createArm(false);
-  const normal = await measureTown(normalArm.page);
+  const normal = await measureTown(normalArm.page, { prefetchWait: true, cacheDisabled: true });
   const saveDataArm = await createArm(true);
-  const saveData = await measureTown(saveDataArm.page);
-  const total = (responses: Array<{ bytes: number }>) => responses.reduce((sum, response) => sum + response.bytes, 0);
-  const byUrl = (responses: Array<{ url: string; bytes: number }>) => responses.reduce((urls, response) => {
+  const saveData = await measureTown(saveDataArm.page, { prefetchWait: true, cacheDisabled: true });
+  const decomposition: Array<{ prefetchWait: boolean; cacheDisabled: boolean; responses: TownResponse[] }> = [];
+  for (const prefetchWait of [false, true]) {
+    for (const cacheDisabled of [false, true]) {
+      const arm = await createArm(false);
+      const responses = await measureTown(arm.page, { prefetchWait, cacheDisabled });
+      expectNoConsoleErrors(arm.watch, `normal prefetchWait=${prefetchWait} cacheDisabled=${cacheDisabled}`);
+      await arm.context.close();
+      decomposition.push({ prefetchWait, cacheDisabled, responses });
+    }
+  }
+  const total = (responses: TownResponse[]) => responses.reduce((sum, response) => sum + response.bytes, 0);
+  const byUrl = (responses: TownResponse[]) => responses.reduce((urls, response) => {
     urls.set(response.url, (urls.get(response.url) ?? 0) + response.bytes);
     return urls;
   }, new Map<string, number>());
   const normalBytes = total(normal);
   const saveDataBytes = total(saveData);
+  const decompositionBytes = decomposition.map((cell) => ({ ...cell, townResponseBytes: total(cell.responses) }));
+  const decompositionBaseline = decompositionBytes.find((cell) => !cell.prefetchWait && !cell.cacheDisabled)?.townResponseBytes;
+  if (decompositionBaseline === undefined) throw new Error('missing town-budget decomposition baseline');
   const normalByUrl = byUrl(normal);
   const saveDataByUrl = byUrl(saveData);
   const changedUrls = [...new Set([...normalByUrl.keys(), ...saveDataByUrl.keys()])]
@@ -202,13 +275,15 @@ test('town byte budget reports normal and saveData arms by URL', async ({ browse
     .sort((left, right) => Math.max(right[1], right[2]) - Math.max(left[1], left[2]));
   const rows = changedUrls.map(([url, normalUrlBytes, saveDataUrlBytes]) =>
     `| ${url.replaceAll('|', '\\|')} | ${normalUrlBytes} | ${saveDataUrlBytes} | ${normalUrlBytes - saveDataUrlBytes} |`);
+  const cueWindowResponses = cueWindowResponsesByProject.get(testInfo.project.name);
+  if (!cueWindowResponses) throw new Error(`missing cue-window audit for ${testInfo.project.name}`);
   const report = [
     `# Town byte budget — ${testInfo.project.name}`,
     '',
     '| Arm | townResponseBytes | Headroom against 25,000,000 |',
     '| --- | ---: | ---: |',
-    `| normal | ${normalBytes} | ${25_000_000 - normalBytes} |`,
-    `| saveData | ${saveDataBytes} | ${25_000_000 - saveDataBytes} |`,
+    `| normal | ${normalBytes} | ${TOWN_TRANSFER_CEILING_BYTES - normalBytes} |`,
+    `| saveData | ${saveDataBytes} | ${TOWN_TRANSFER_CEILING_BYTES - saveDataBytes} |`,
     '',
     `Delta (normal - saveData): **${normalBytes - saveDataBytes} bytes**.`,
     '',
@@ -218,15 +293,31 @@ test('town byte budget reports normal and saveData arms by URL', async ({ browse
     '| --- | ---: | ---: | ---: |',
     ...rows,
     '',
+    '## Normal-arm decomposition',
+    '',
+    '| prefetchWait | cacheDisabled | townResponseBytes | delta from false/false |',
+    '| --- | --- | ---: | ---: |',
+    ...decompositionBytes.map((cell) =>
+      `| ${cell.prefetchWait} | ${cell.cacheDisabled} | ${cell.townResponseBytes} | ${cell.townResponseBytes - decompositionBaseline} |`),
+    '',
+    '## Missing or unparseable content-length audit',
+    '',
+    ...contentLengthAudit('Cue-window instrument', cueWindowResponses),
+    ...contentLengthAudit('A/B normal arm', normal),
+    ...contentLengthAudit('A/B saveData arm', saveData),
+    ...decompositionBytes.flatMap((cell) => contentLengthAudit(
+      `A/B normal cell (prefetchWait=${cell.prefetchWait}, cacheDisabled=${cell.cacheDisabled})`,
+      cell.responses,
+    )),
   ].join('\n');
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await writeFile(path.join(ARTIFACT_DIR, `town-budget-${testInfo.project.name}.md`), report);
 
-  expect(normalBytes).toBeLessThan(25_000_000);
-  expect(saveDataBytes).toBeLessThan(25_000_000);
-  expect(saveDataBytes).toBeLessThanOrEqual(normalBytes);
   expectNoConsoleErrors(normalArm.watch, 'normal');
   expectNoConsoleErrors(saveDataArm.watch, 'saveData');
   await normalArm.context.close();
   await saveDataArm.context.close();
+  expect(normalBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
+  expect(saveDataBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
+  expect(saveDataBytes).toBeLessThanOrEqual(normalBytes);
 });
