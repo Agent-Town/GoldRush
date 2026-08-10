@@ -6471,6 +6471,15 @@
               "gate": "GATE: closes when the probe is merged with both projects artifacts/advance-stream-cache-reuse-<project>.md tables reported, the DOUBLE-DOWNLOAD / OVERLAP / CACHE-HIT buckets separated, the unmodified walkthrough spec run as the comparison arm in the same shell, and a prose verdict recorded on F-1616-3. Undetermined-with-numbers-and-a-reason satisfies this gate; a confident guess does not, and neither does any edit to src/assets/AdvanceStream.ts."
             },
             {
+              "id": "f1621-1-town-budget-instrument-reconciliation",
+              "title": "F-1620-7: three instruments answer one 25 MB town ceiling 9.5 MB apart — attribute the gap and rename so it cannot recur",
+              "status": "queued",
+              "taskFile": "lane-f1621-1-town-budget-instrument-reconciliation.md",
+              "lane": "lane-a",
+              "note": "FIRE-AUTHORED s1621 from F-1620-7 (tasks/BACKLOG.md line 4), whose stated gate this task closes verbatim: the two townResponseBytes sites either measure the same thing or are renamed so they cannot be confused, AND f1615-1 figures restated against a named instrument. That row records GATE: none owed to the owner, so it is fire-authorable. MEASUREMENT + RENAME SLICE, NOT A TUNE. scripts/deploy.sh is firewalled BY NAME because it is the SUBJECT: verified s1621 by reading it, the budget step runs --grep \"honest town and claim cues\" and parses only that test console.info line, so the TIGHTEST of the three instruments (22,469,519 mobile) can never gate a deploy while the gate reports the second-most optimistic (15,218,288). src/** is firewalled so the asset set cannot move while it is being measured. The prefetch-wait / cache-disabled hypothesis is stated AS a hypothesis with a mechanism verified in src/assets/AssetLoading.ts (the townAlreadyWarm rule in syncAssetLoadingCue forces the throttled-cues test to enter town BEFORE prefetch completes, making its window a partial load by construction), and a four-cell decomposition either attributes the gap or REFUTES it — a null within ~2% is a PRE-AUTHORISED outcome that must be reported in those words. Also audits a latent under-count both instruments share: content-length absent scores 0 bytes silently.",
+              "gate": "GATE: closes when the merged file names all three instruments distinctly, no two different quantities share the name townResponseBytes, the deploy grep string [asset-diet] <project> townResponses: <n> bytes is proved intact by a post-edit grep, both projects artifacts carry the four-cell decomposition table AND the missing-content-length audit, and a prose verdict is recorded on F-1620-7 plus a named-instrument answer (or an explicit cannot-be-determined) on f1615-1. A refutation with numbers satisfies this gate; changing the 25,000,000 ceiling or removing any expect() FAILS it."
+            },
+            {
               "id": "f1619-2-asset-diet-town-budget-ab",
               "title": "Settle the ~1.9 MB mobile asset-diet growth: a saveData A/B on townResponseBytes, with the per-URL breakdown",
               "status": "merged",
