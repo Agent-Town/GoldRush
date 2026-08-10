@@ -1,56 +1,81 @@
-CODEX-WALL — raised s1631, 2026-08-10T16:09Z (local, Bangkok UTC+07)
+CODEX-WALL — raised s1631 2026-08-10T16:09Z; **NARROWED s1632 2026-08-10T16:24Z (F-1632-1)**
+(local, Bangkok UTC+07)
 
-## The fact, quoted verbatim from the run log
+## ⚠️ READ FIRST — THE WALL IS **MODEL-SCOPED**, NOT ACCOUNT-WIDE. THE IMPLEMENTER IS **NOT** OFFLINE.
 
-    ERROR: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage
-    to purchase more credits or try again at Aug 16th, 2026 3:30 AM.
+**`gpt-5.6-sol` is walled until 2026-08-16 03:30. `gpt-5.5` ANSWERS RIGHT NOW.**
 
-Source: `tasks/runs/20260810-160522-lane-c-lane-f1631-1-asset-diet-fallback-provenance.md.log`
-(printed twice, immediately after the UserPromptSubmit hook, before any tool call).
+Therefore, while this file exists:
 
-## Why this one is DIFFERENT from the usual wall — read before acting
+- ✅ **REFILLS AND DISPATCH CONTINUE** — §2E is **NOT** suspended. It was suspended s1631 on a
+  premise that has since been measured false.
+- 🔑 **EVERY master queued during the wall MUST carry, as a line of its own:**
 
-This is **NOT** the ordinary "turn interrupted + large token count" credit wall that §2C
-re-queues once per fire, and it is **NOT** the transient `rc1 at capacity` of the
-`codex-at-capacity-rc1-is-requeue-transient` class. Those are rolling-window walls that
-lift within hours.
+      CODEX: model=gpt-5.5 effort=high
 
-This one names an **explicit reset date six days out: Aug 16th, 2026 3:30 AM.**
-Re-queueing before then cannot succeed — it will burn a queue slot, a lane refresh and a
-run log to print the same two lines. The run that raised it died having touched
-**nothing**: zero files, zero commits, and `lane-usable lane-c` reads `ahead=0` clean.
+  (`effort=medium` for light work.) The runner reads this at `lane-runner-v3.sh:170–171` and it
+  **overrides the default at `:173`**. This needs **no runner restart** — the header is read from
+  the queued file at dispatch time, so it works with the runner Robin already has running.
+- ⛔ **DO NOT queue a master requesting `gpt-5.6-sol`, and do not queue one with NO header** —
+  no header ⇒ the `:173` default ⇒ `gpt-5.6-sol` ⇒ straight into the wall. **~1090 masters in
+  `tasks/` request `gpt-5.6-sol` explicitly**, so they are all wall-bound as written: re-queueing
+  one during this window means **edit its header first**.
+- 🚫 **NO fire buys credits and NO fire re-points the runner default.** Both stay owner-only
+  (F-1631-3). This file re-routes *individual masters* through a documented per-master mechanism;
+  it does not change a default or spend anything.
 
-## What is SUSPENDED (per scripts/fire.md §2.0)
+## The measurement (s1632 — every line reproducible)
 
-- **NO refills.** §2E is suspended. Do not `cp` anything into `tasks/queue/<slot>/`.
-- **NO re-queues of wall-class failures.** `tasks/failed/rc1-20260810-160522-lane-f1631-1-asset-diet-fallback-provenance.md`
-  is wall-class. Leave it. When the wall lifts it gets ONE re-queue, and that re-queue does
-  NOT count toward the twice-then-escalate rule.
+| # | Probe | Result |
+|---|-------|--------|
+| 1 | `codex exec -m gpt-5.5 "reply exactly: OK"` | **exit 0**, replied `OK`, tokens billed |
+| 2 | `codex exec` with the default model (→ `gpt-5.6-sol`) | exit 1, HTTP 400 *"The 'gpt-5.6-sol' model requires a newer version of Codex"* |
+| 3 | server's available-models list, captured during probe 2 | `gpt-5.5`, `gpt-5.4`, `gpt-5.4-mini`, `gpt-5.3-codex-spark`, `codex-auto-review` — **no 5.6 family at all** |
+| 4 | `codex --version` | `codex-cli 0.133.0`; `gpt-5.5` needs `minimal_client_version 0.124.0` ✅ |
+| 5 | `lane-runner-v3.sh:172` comment | *"CLI 0.144.1 knows 5.6 ids"* — installed CLI is **0.133.0**, older than the default model needs |
+| 6 | last SUCCESSFUL run, `20260810-153050` f1630-1 | `model: gpt-5.6-sol` — 5.6-sol worked at 15:30 and walled at 16:05: a **quota** event, not a break |
 
-## What CONTINUES (all Claude-side, unaffected by a Codex wall)
+**Stated conservatively:** the account exhausted a `gpt-5.6-sol`-tier quota that resets
+2026-08-16 03:30, and retains working access to `gpt-5.5`. Probes 2/3/5 additionally suggest the
+installed CLI could not address the 5.6 ids anyway once the model left the account's list — but the
+factory does not need that second question answered in order to keep working.
+
+## 🔧 THE PROBE INSTRUCTION IS FIXED — THE OLD ONE COULD NOT LIFT ITS OWN FLAG
+
+This file previously prescribed, per §2.0:
+
+    codex exec "reply exactly: OK"          # ← bare: resolves to the DEFAULT model
+
+A bare probe resolves to `gpt-5.6-sol`, i.e. **the walled model**, so it was guaranteed to fail for
+six days no matter how healthy the account was. **A flag whose own lifting-test routes through the
+thing it is flagging can never be lifted by evidence.** Probe with the model you intend to dispatch:
+
+    codex exec -m gpt-5.5 "reply exactly: OK"     # → currently exit 0
+    codex exec -m gpt-5.6-sol "reply exactly: OK" # → the question this flag is actually about
+
+**Delete this file only when the SECOND probe succeeds** (5.6-sol restored, on/after 2026-08-16, or
+sooner if the owner buys credits). Until then it stays, narrowed, and dispatch runs on `gpt-5.5`.
+
+## What CONTINUES (unchanged from s1631, and now larger)
 
 Drains · gates · merges · the assayer duty · bookkeeping · ledger upkeep · TK-01 digests ·
-GZ-01 items · **authoring**. A fire during the wall is not an idle fire: masters authored now
-are dispatched the moment it lifts, so authoring is the highest-value act available.
+GZ-01 items · authoring · **and now refills/dispatch on `gpt-5.5`**.
 
-## The probe, once per fire
+## What s1631 got right, and the one thing it did not
 
-    codex exec "reply exactly: OK"
+s1631 quoted its evidence verbatim, raised the flag, lost nothing, and left the board spotless —
+four lanes `ahead=0`, six queues empty, zero commits from the dead run. Its single miss is that the
+usage-limit message **names no model**, so *"you've hit your usage limit"* read as an account fact
+when it was a per-model one. The discriminating probe is one command with `-m`.
 
-On success: delete this file, re-queue wall-class failures ONCE each, resume refills, and
-note **CODEX-RESUMED** in the handoff. Do not delete this file on any other evidence —
-in particular, an idle `pgrep` proves nothing, because the wall kills runs instantly and
-an instantly-dead runner leaves no process to find.
+⚖️ **VETO WINDOW (§7.4):** narrowing this wall and dispatching on `gpt-5.5` is reversible with one
+word — re-raise the full wall and empty the queue. F-1631-3 stays OPEN on the owner's desk: buying
+credits is still money, still owner-only, and may still be worth it to get Sol-tier quality back
+before 2026-08-16.
 
-## Owner note
+## Standing inventory at the moment the wall was raised (s1631, still true s1632)
 
-If the six-day gap is not acceptable, the message names the remedy — purchasing credits at
-https://chatgpt.com/codex/settings/usage — which is **money, therefore an OWNER decision**
-(CLAUDE.md §7.3). It is on the owner's desk as F-1631-3; no fire should act on it.
-
-## Standing inventory at the moment the wall was raised
-
-- All six queues EMPTY.
-- Lanes a/b/c/d all `ahead=0` USABLE (nothing undrained, nothing at risk).
-- `tasks/lane-f1631-1-asset-diet-fallback-provenance.md` — the canonical master SURVIVES
-  and is correct; it is the first thing to re-dispatch when the wall lifts.
+- All six queues EMPTY · lanes a/b/c/d all `ahead=0` USABLE · nothing undrained, nothing at risk.
+- `tasks/lane-f1631-1-asset-diet-fallback-provenance.md` — the canonical master SURVIVES and is
+  correct. s1632 re-dispatched it to lane-c with a `gpt-5.5` header (its one permitted wall-class
+  re-queue, which does NOT count toward twice-then-escalate).

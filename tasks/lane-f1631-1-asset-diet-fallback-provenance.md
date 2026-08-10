@@ -1,6 +1,10 @@
 # Task f1631-1: make the town-budget ceiling assertion say WHICH bytes it just gated (LANE-C, commit prefix "test:")
 
+CODEX: model=gpt-5.5 effort=high
+
 **FIRE-AUTHORED s1631 (attended review welcome)** — from F-1629-1, measured s1629 at the f1627-1 drain and re-verified against main by this fire before authoring.
+
+⚙️ **WHY THIS MASTER IS ROUTED OFF THE HOUSE DEFAULT (s1632, F-1632-1 — not a preference, a wall):** the house default is `gpt-5.6-sol` (owner ruling 2026-07-10, `lane-runner-v3.sh:173`), and that model is **quota-walled until 2026-08-16 03:30** — it is what killed this master's first dispatch at 16:05:22 having touched nothing. `gpt-5.5` was measured answering (`codex exec -m gpt-5.5` → exit 0) and is the best model on the account's current list, so this run is routed there at `effort=high` to offset the lower tier. Read `tasks/CODEX-WALL` before queueing anything else. **Nothing about the scope, the firewall or the gate below changes because of the model** — if you cannot meet the GATE, STOP and report rather than lowering it.
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c`.
 
