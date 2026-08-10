@@ -27,7 +27,10 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
     'contract', 'surface', 'humans-get', 'agents-get', 'direction', 'evidence',
   ]);
   assert.ok(audit.rows.every((row) => ['buildable', 'ability', 'choice', 'verb', 'economy'].includes(row.surface)));
-  assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal'].includes(row.direction)));
+  assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 15);
+  assert.equal(audit.admission.measurements.length, 10);
+  assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
 test('same-game audit follows the door grammar after eba8d15ea blast and ap16-2b pick', () => {

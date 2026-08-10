@@ -3,14 +3,14 @@ import { createServer, type ViteDevServer } from 'vite';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 import motor from '../assets/contracts/epoch-4-motor/contracts.json' with { type: 'json' };
 
-// The Motor era's four contracts all stay OUTSIDE `SUPPORTED_CONTRACTS`: their signature
-// engine dependencies are still `missing`. One mechanic is the exception to the *manifest*
+// The Motor era's four contracts are admitted even though their signature engine dependencies
+// are still `missing`. One mechanic is the exception to the *manifest*
 // half of that: the Land Yacht's ORBIT road already has a live browser consumer
 // (Game.ts constructs LandYachtBossSystem unconditionally and updates it in the sim loop,
 // reading tileParams.orbitSpawn), so AP-11 — "declared AND consumed by a booted system" —
 // admits it to the manifest even while the headless socket remains blocked.
 for (const contract of motor.contracts) {
-  test(`${contract.id} is rejected while its signature engine dependency is missing, and declares only consumed vocabulary`, async () => {
+  test(`${contract.id} is admitted while its signature engine dependency is missing, and declares only consumed vocabulary`, async () => {
     const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
     const previousLocation = host.location;
     const previousWindow = host.window;
@@ -38,9 +38,8 @@ for (const contract of motor.contracts) {
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
       const manifest = deriveMechanicsManifest(contract.id);
       expect(manifest.interactables).toEqual([]);
-      // Reject-don't-stretch: no Motor contract mints an operation. Every rule below is a
-      // reading of an existing lever, so `buildables` stays empty for all four.
-      expect(manifest.buildables ?? []).toEqual([]);
+      // Admission does not mint a Motor-specific operation; the shared registry buildables remain.
+      expect(manifest.buildables?.every(({ source }: { source: string }) => source === 'buildables.registry')).toBe(true);
 
       const rules = manifest.rules as { id: string; source: string; data: Record<string, unknown> }[];
       const ruleIds = rules.map(({ id }) => id);
@@ -78,7 +77,8 @@ for (const contract of motor.contracts) {
         expect(ruleIds.filter((id) => id.startsWith('land_yacht'))).toEqual([]);
       }
 
-      expect(() => new HeadlessContractSim({ contractId: contract.id, seed: `${contract.id}-census-probe` })).toThrow(/AP-07 supports only/);
+      const admitted = new HeadlessContractSim({ contractId: contract.id, seed: `${contract.id}-census-probe` });
+      expect(admitted.currentTurn().view.stablePrefix.mechanics.contractId).toBe(contract.id);
       expect(consoleErrors).toEqual([]);
     } finally {
       await vite?.close();

@@ -39,7 +39,8 @@ for (const contract of steamworks.contracts) {
       const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
       if (contract.id !== 'e2-pressure-garden') {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
+        const admitted = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] });
+        expect(admitted.currentTurn().view.stablePrefix.mechanics.contractId).toBe(contract.id);
         expect(consoleErrors).toEqual([]);
         return;
       }
@@ -53,16 +54,15 @@ for (const contract of steamworks.contracts) {
         interactables: [],
       });
       if (contract.twist.pressureEnabled) {
-        expect(probe.currentTurn().view.stablePrefix.mechanics).toMatchObject({
-          buildables: [{
+        expect(probe.currentTurn().view.stablePrefix.mechanics.buildables).toEqual(expect.arrayContaining([expect.objectContaining({
             id: 'boiler_house',
             operation: 'BUILD',
             meaning: 'Feeds coal into the Steamworks pressure line.',
             cost: 70,
             maxCount: 3,
             source: 'twist.pressureEnabled',
-          }],
-          rules: expect.arrayContaining([
+          })]));
+        expect(probe.currentTurn().view.stablePrefix.mechanics.rules).toEqual(expect.arrayContaining([
             {
               id: 'pressure_auto_vent',
               source: 'PressureSystem.vent',
@@ -86,8 +86,7 @@ for (const contract of steamworks.contracts) {
                 bandBoosts: ['boiler_battery'],
               },
             },
-          ]),
-        });
+          ]));
       }
       expect(probe.manifest.tileParams.engineDependencies).toEqual([
         expect.objectContaining({ status: 'missing' }),

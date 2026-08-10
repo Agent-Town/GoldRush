@@ -6,10 +6,18 @@ import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
+import { createServer } from 'vite';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = (relative) => readFileSync(path.resolve(root, relative), 'utf8');
 const skill = readFileSync(process.env.SKILLMD_PATH ?? path.resolve(root, 'public/skill.md'), 'utf8');
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+let supportedContracts;
+try {
+  ({ supportedContractIds: supportedContracts } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts'));
+} finally {
+  await vite.close();
+}
 const standingAliases = typeAliases(read('src/agent/StandingOrders.ts'), 'StandingOrders.ts');
 const buildableAliases = typeAliases(read('src/game/buildables.ts'), 'buildables.ts');
 const benchSeeds = JSON.parse(read('assets/contracts/bench-seeds.json'));
@@ -30,10 +38,7 @@ test('skill.md bench seeds match the source registry', () => {
 // gr-sim's SUPPORTED_CONTRACTS refused them — a real entrant burned a session discovering it.
 // The door doc now names exactly what the door serves, and this pin keeps it true.
 test('skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim', () => {
-  const source = read('src/sim/HeadlessContractSim.ts');
-  const match = /const SUPPORTED_CONTRACTS = new Set\(\[([\s\S]*?)\]\);/.exec(source);
-  assert.ok(match, 'SUPPORTED_CONTRACTS set literal must exist in HeadlessContractSim.ts');
-  const supported = [...match[1].matchAll(/'([^']+)'/g)].map(([, id]) => id).sort();
+  const supported = supportedContracts();
   assert.ok(supported.length > 0, 'SUPPORTED_CONTRACTS must not parse empty');
   assert.deepEqual(jsonBlock('door-contracts'), supported);
 });
