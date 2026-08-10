@@ -17,6 +17,7 @@ import {
   type LedgerEpochId,
 } from './registry';
 import { backfillReachedWorldOutsideEntries, readLedgerDiscovered } from './state';
+import { mindInfoUrl, rigInfoUrl } from './stackDirectory';
 
 export const LEDGER_FACT_LINE_CAP = 4;
 
@@ -374,7 +375,7 @@ function renderFieldBookLedger(): string {
         <p class="field-book__intro">${
           currentFieldBookView === 'byParty'
             ? "Who rode with whom, as the riders declared themselves — the field book counts hands, the board never does."
-            : 'Minds and rigs are SELF-DECLARED — the county prints what riders claim; the boards rank results alone.'
+            : "Minds and rigs are SELF-DECLARED — the county prints what riders claim; the boards rank results alone; learn-more links are the county's own pointers."
         }</p>
         <nav class="county-standings__contracts field-book__views" aria-label="Field book views">
           ${(Object.keys(FIELD_BOOK_VIEW_LABELS) as FieldBookView[])
@@ -479,20 +480,21 @@ function renderFieldBook(fieldBook: FieldBook, view: Exclude<FieldBookView, 'byP
       <caption>${fieldBook.rows.length} ${fieldBook.rows.length === 1 ? noun : `${noun}s`} &middot; ${contracts.length} ${contracts.length === 1 ? 'contract' : 'contracts'} with showings</caption>
       <thead><tr><th scope="col">${view === 'byHarness' ? 'Rig' : 'Mind'}</th><th scope="col">Standings</th><th scope="col">Contracts</th><th scope="col">Crowns</th><th scope="col">Best waves</th><th scope="col">Declared cost</th><th scope="col">Last active</th></tr></thead>
       <tbody>
-        ${fieldBook.rows.map((row, index) => renderFieldBookRow(row, index, contracts, contractNames)).join('')}
+        ${fieldBook.rows.map((row, index) => renderFieldBookRow(row, index, contracts, contractNames, view)).join('')}
       </tbody>
     </table>
     </div>
   `;
 }
 
-function renderFieldBookRow(row: FieldBookRow, index: number, contracts: readonly string[], names: ReadonlyMap<string, string>): string {
+function renderFieldBookRow(row: FieldBookRow, index: number, contracts: readonly string[], names: ReadonlyMap<string, string>, view: Exclude<FieldBookView, 'byParty'>): string {
   const cells = new Map(row.contracts.map((cell) => [cell.contractId, cell]));
   const rowSlug = slug(row.name) || 'undeclared';
   const aggregate = row.aggregate;
+  const infoUrl = view === 'byHarness' ? rigInfoUrl(row.name) : mindInfoUrl(row.name);
   return `
     <tr class="field-book__row" data-field-book-key="${index}" data-testid="field-book-row-${rowSlug}">
-      <th scope="row"><button type="button" data-field-book-toggle aria-expanded="false">${escapeHtml(row.name)}<span aria-hidden="true"> +</span></button></th>
+      <th scope="row"><button type="button" data-field-book-toggle aria-expanded="false">${escapeHtml(row.name)}<span aria-hidden="true"> +</span></button>${infoUrl === undefined ? '' : `<a class="county-standings__source field-book__info-link" data-field-book-info data-testid="field-book-info-${rowSlug}" href="${escapeHtml(infoUrl)}" target="_blank" rel="noopener" aria-label="Learn more about ${escapeHtml(row.name)}">&#8599;</a>`}</th>
       <td>${aggregate.standings}</td><td>${aggregate.contracts}</td><td>${aggregate.crowns}</td><td>${formatCount(aggregate.bestWaves)}</td>
       <td>${renderAggregateCost(aggregate)}</td>
       <td><time datetime="${safeIsoDate(aggregate.latestSubmittedAt)}">${relativeAge(aggregate.latestSubmittedAt)}</time></td>
@@ -1140,6 +1142,7 @@ function onLedgerClick(event: MouseEvent): void {
     return;
   }
   const fieldBookRow = target?.closest<HTMLElement>('[data-field-book-key]');
+  if (target?.closest('[data-field-book-info]')) return;
   if (fieldBookRow && currentView === 'field-book') {
     const key = fieldBookRow.dataset.fieldBookKey;
     const details = [...(currentRoot?.querySelectorAll<HTMLElement>('[data-field-book-details]') ?? [])]
