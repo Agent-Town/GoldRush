@@ -143,6 +143,39 @@ test('the seat carries BUILD and refuses to stretch for the rest', { timeout: 60
   });
 });
 
+test('the seat carries the facing, and refuses a facing the county does not keep', { timeout: 60_000 }, async () => {
+  await withSim(async (vite) => {
+    const { SeatOrdersDriver } = await vite.ssrLoadModule('/src/sim/SeatOrders.ts');
+    const build = (rotationSteps) => ({
+      verb: 'BUILD',
+      what: 'palisade',
+      where: { x: 0, z: 10 },
+      when: { goldGte: 10 },
+      ...(rotationSteps === undefined ? {} : { rotationSteps }),
+    });
+
+    for (const rotationSteps of [0, 1, 2, 3]) {
+      const driver = new SeatOrdersDriver();
+      assert.deepEqual(driver.submit([build(rotationSteps)]), { ok: true, accepted: 1 });
+      assert.deepEqual(driver.fire({ wave: 1, gold: 10 }), [
+        { type: 'place_build', id: 'palisade', position: { x: 0, z: 10 }, rotationSteps },
+      ]);
+    }
+
+    for (const rotationSteps of [7, 'north']) {
+      const verdict = new SeatOrdersDriver().submit([build(rotationSteps)]);
+      assert.equal(verdict.ok, false);
+      assert.equal(verdict.reason, 'INVALID_ARGS');
+    }
+
+    const omitted = new SeatOrdersDriver();
+    assert.deepEqual(omitted.submit([build()]), { ok: true, accepted: 1 });
+    assert.deepEqual(omitted.fire({ wave: 1, gold: 10 }), [
+      { type: 'place_build', id: 'palisade', position: { x: 0, z: 10 }, rotationSteps: 0 },
+    ]);
+  });
+});
+
 test('the throttle ceiling is the relay rate limit, not a taste', { timeout: 60_000 }, async () => {
   await withSim(async (vite) => {
     const { ROOM_TICK_RATE, SEAT_TICK_RATE_CEILING } = await vite.ssrLoadModule('/src/sim/SeatedLockstepSim.ts');

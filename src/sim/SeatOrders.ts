@@ -33,6 +33,7 @@ export type SeatBuildOrder = {
   what: string;
   where: { x: number; z: number };
   when: SeatBuildCondition;
+  rotationSteps?: 0 | 1 | 2 | 3;
 };
 
 export type SeatOrdersVerdict =
@@ -86,7 +87,7 @@ export class SeatOrdersDriver {
         type: 'place_build',
         id: entry.order.what,
         position: { x: entry.order.where.x, z: entry.order.where.z },
-        rotationSteps: 0,
+        rotationSteps: entry.order.rotationSteps ?? 0,
       });
     }
     return actions;
@@ -117,11 +118,25 @@ function parseSeatOrder(value: unknown, index: number): ParsedSeatOrder {
   if (!isRecord(value) || typeof value.verb !== 'string') return malformed(`orders[${index}] requires a verb.`);
   if (value.verb !== 'BUILD') return unspeakable(index, value.verb);
   const schemaError = malformed(`orders[${index}] does not match the BUILD schema.`);
-  if (!exactKeys(value, BUILD_KEYS)) return schemaError;
+  const hasRotation = 'rotationSteps' in value;
+  if (!exactKeys(value, hasRotation ? [...BUILD_KEYS, 'rotationSteps'] : BUILD_KEYS)) return schemaError;
   if (!isBuildableId(value.what) || !validPos(value.where)) return schemaError;
+  const rotationSteps = value.rotationSteps;
+  if (hasRotation && (typeof rotationSteps !== 'number' || !Number.isInteger(rotationSteps) || rotationSteps < 0 || rotationSteps > 3)) {
+    return schemaError;
+  }
   const when = validCondition(value.when);
   if (!when) return schemaError;
-  return { ok: true, order: { verb: 'BUILD', what: value.what, where: { x: value.where.x, z: value.where.z }, when } };
+  return {
+    ok: true,
+    order: {
+      verb: 'BUILD',
+      what: value.what,
+      where: { x: value.where.x, z: value.where.z },
+      when,
+      ...(hasRotation ? { rotationSteps: rotationSteps as 0 | 1 | 2 | 3 } : {}),
+    },
+  };
 }
 
 function malformed(message: string): ParsedSeatOrder {
