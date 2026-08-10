@@ -21,9 +21,11 @@
  * Builds the reachable set of gates from the real entrypoints -- the GUARDS
  * roster in run-guards.mjs, the pipeline shells, the node --test roster, and the
  * drain minimum -- following edges through package.json script bodies,
- * scripts/**, AND *.config.ts webServer commands. Anything gate-shaped that the
- * closure never reaches is an ORPHAN. Known orphans are grandfathered in
- * scripts/gate-caller-baseline.json with a written reason; a NEW one exits 1.
+ * scripts/**, *.config.ts webServer commands, and .github/**. Every tracked
+ * *.test.mjs file is a subject alongside gate-shaped npm scripts and guard
+ * scripts. Anything in that subject set that the closure never reaches is an
+ * ORPHAN. Known orphans are grandfathered in scripts/gate-caller-baseline.json
+ * with a written reason; a NEW one exits 1.
  *
  * THE CONFIG EDGE IS NOT OPTIONAL (s1253, found in this script's own first draft):
  * `build:release` is invoked by NOTHING in package.json or scripts/ -- its only
@@ -132,6 +134,7 @@ function edgesOf(text) {
   const out = new Set();
   for (const m of body.matchAll(/npm(?:\s+run|['"\s,\]]+run)['"\s,\]]*['"]?([\w:-]+)/g)) out.add('npm:' + m[1]);
   for (const m of body.matchAll(/['"`]((?:test|verify|build):[\w:-]+)['"`]/g)) out.add('npm:' + m[1]);
+  for (const m of body.matchAll(/(?:[\w.-]+\/)+[\w.-]+\.test\.mjs/g)) out.add(m[0]);
   for (const m of body.matchAll(/scripts\/[\w.-]+\.(?:mjs|sh|ts)/g)) out.add(m[0]);
   for (const m of body.matchAll(/['"`]\.\/([\w.-]+\.(?:mjs|sh))['"`]/g)) out.add('scripts/' + m[1]);
   return out;
@@ -152,6 +155,7 @@ try {
 }
 const scripts = (pkg && pkg.scripts) || {};
 const scriptFiles = files.filter((f) => f.startsWith('scripts/') && /\.(mjs|sh)$/.test(f));
+const testFiles = files.filter((f) => f.endsWith('.test.mjs'));
 const configFiles = files.filter((f) => /(^|\/)[\w.-]*config\.ts$/.test(f));
 const workflowFiles = files.filter((f) => f.startsWith('.github/'));
 
@@ -265,6 +269,9 @@ for (const f of scriptFiles) {
   if (!GUARDISH_FILE.test(f) || SCRATCH_FILE.test(f)) continue;
   subjects.push({ key: f, kind: 'guard script', via: reached.get(f) || null });
 }
+for (const f of testFiles) {
+  subjects.push({ key: f, kind: 'test file', via: reached.get(f) || null });
+}
 const orphans = subjects.filter((s) => !s.via);
 
 if (subjects.length === 0) {
@@ -286,6 +293,7 @@ console.log('gate-caller-audit — who calls each gate?');
 console.log('  root                : ' + ROOT);
 console.log('  npm scripts         : ' + Object.keys(scripts).length + ' (' + subjects.filter((s) => s.kind === 'npm script').length + ' gate-shaped)');
 console.log('  scripts/ files      : ' + scriptFiles.length + ' (' + subjects.filter((s) => s.kind === 'guard script').length + ' guard-shaped)' + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter((f) => f.startsWith('scripts/') && /\.(mjs|sh)$/.test(f)).length + ' untracked)' : ''));
+console.log('  *.test.mjs files    : ' + testFiles.length + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter((f) => f.endsWith('.test.mjs')).length + ' untracked)' : ''));
 console.log('  config.ts read      : ' + configFiles.length + '   .github/ files: ' + workflowFiles.length);
 console.log('  edge vocabulary     : ' + EDGE_SOURCES.join(', '));
 console.log('  roots               : ' + roots.size + '   reached: ' + reached.size);

@@ -108,6 +108,17 @@ test('a gate nothing calls is reported as a NEW orphan and exits 1', () => {
   assert.match(r.stdout + r.stderr, /scripts\/lonely-guard\.mjs/);
 });
 
+test('a tracked test file nothing calls is reported as a NEW orphan and exits 1', () => {
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'src/lonely.test.mjs': 'console.log("nobody calls me");\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stdout + r.stderr, /NEW\s+src\/lonely\.test\.mjs\s+NO CALLER/);
+});
+
 test('grandfathering that orphan with a reason turns the gate green', () => {
   const dir = fixture({
     scripts: { ...BASE_SCRIPTS, 'test:lonely': 'node scripts/lonely-guard.mjs' },
