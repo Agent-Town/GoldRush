@@ -1,4 +1,8 @@
+import { mkdir } from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+
+const SHOT_DIR = path.resolve('reviews/shots-upgrade-clock');
 
 type ErrorBucket = {
   consoleErrors: string[];
@@ -96,6 +100,45 @@ test('X opens level-up and freezes sim clocks while enemies are alive', async ({
   await assertNoErrors(errors);
 });
 
+test('draft shows its clock and a normal pick beats expiry', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&nowaves&seed=upgrade-clock-click');
+  if (await page.getByTestId('contract-briefing-dismiss').isVisible()) {
+    await page.getByTestId('contract-briefing-dismiss').click();
+  }
+  await page.evaluate(() => window.__GR_GUI__?.hide());
+  await debugLevel(page);
+
+  await expect(page.getByTestId('upgrade-countdown')).toHaveText(/First invention files automatically in (19|20)s/);
+  await mkdir(SHOT_DIR, { recursive: true });
+  await page.screenshot({ path: path.join(SHOT_DIR, `${testInfo.project.name}-countdown.png`) });
+
+  const ids = await offerIds(page);
+  await page.getByTestId('upgrade-card-1').click();
+  await expect.poll(async () => (await diagnostics(page)).progression.stacks[ids[1]!] ?? 0).toBe(1);
+  expect(
+    await page.evaluate(
+      () => (window.__THREE_GAME_DIAGNOSTICS__ as ThreeGameDiagnostics & { defaultedPicks: number }).defaultedPicks,
+    ),
+  ).toBe(0);
+  await assertNoErrors(errors);
+});
+
+test('draft expiry files the first offer and the run continues', async ({ page }) => {
+  const errors = await openGame(page, '?debug&nowaves&seed=upgrade-clock-expiry');
+  await page.evaluate(() => window.__GR_TEST__?.setBalance('offers.pickSeconds', 1.2));
+  await debugLevel(page);
+  const first = (await offerIds(page))[0]!;
+
+  await expect.poll(async () => (await diagnostics(page)).progression.stacks[first] ?? 0).toBe(1);
+  await expect.poll(async () => (await diagnostics(page)).runState).toBe('playing');
+  expect(
+    await page.evaluate(
+      () => (window.__THREE_GAME_DIAGNOSTICS__ as ThreeGameDiagnostics & { defaultedPicks: number }).defaultedPicks,
+    ),
+  ).toBeGreaterThanOrEqual(1);
+  await assertNoErrors(errors);
+});
+
 test('picking a card applies stacks and resumes after pending choices without wave drift', async ({ page }) => {
   const errors = await openGame(page);
   const before = await diagnostics(page);
@@ -116,22 +159,19 @@ test('picking a card applies stacks and resumes after pending choices without wa
 });
 
 test('first offer is deterministic for a fixed seed and has no duplicates', async ({ browser }) => {
-  const pageA = await browser.newPage();
-  const pageB = await browser.newPage();
-  const errorsA = await openGame(pageA, '?debug&timescale=3&nowaves&seed=m1-06-determinism');
-  const errorsB = await openGame(pageB, '?debug&timescale=3&nowaves&seed=m1-06-determinism');
-
-  await debugLevel(pageA);
-  await debugLevel(pageB);
-  const a = await offerIds(pageA);
-  const b = await offerIds(pageB);
+  const samples: string[][] = [];
+  for (let run = 0; run < 2; run += 1) {
+    const page = await browser.newPage();
+    const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m1-06-determinism');
+    await debugLevel(page);
+    samples.push(await offerIds(page));
+    await assertNoErrors(errors);
+    await page.close();
+  }
+  const [a, b] = samples;
 
   expect(a).toEqual(b);
   expect(new Set(a).size).toBe(3);
-  await assertNoErrors(errorsA);
-  await assertNoErrors(errorsB);
-  await pageA.close();
-  await pageB.close();
 });
 
 test('investment weighting prefers owned families without losing discovery', async ({ browser }) => {

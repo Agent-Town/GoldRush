@@ -904,6 +904,7 @@ export const Balance = {
   },
   offers: {
     investBonus: 0.35,
+    pickSeconds: 20,
   },
   goldSeam: {
     activeMin: 2,
@@ -1027,6 +1028,7 @@ const TRAIL = {
   enemyHp: 25.2,
   xpPerKill: 4,
   offerInvestBonus: 0.35,
+  offerPickSeconds: 20,
   thiefMaxConcurrent: 2,
   thiefMaxConcurrentCap: 4,
   palisadeHp: 60,
@@ -1036,7 +1038,7 @@ const TRAIL = {
 type MutableBalance = {
   enemy: { hp: number };
   xp: { perKill: number };
-  offers: { investBonus: number };
+  offers: { investBonus: number; pickSeconds: number };
   steal: { maxConcurrent: number; maxConcurrentCap: number };
   wreck: { hp: { palisade: number } };
   upgrades: { doubleTapCoilMaxStacks: number };
@@ -1069,16 +1071,19 @@ export function applyDifficultyPreset(preset: DifficultyPresetId): DifficultyPre
   balance.enemy.hp = TRAIL.enemyHp;
   balance.xp.perKill = TRAIL.xpPerKill;
   balance.offers.investBonus = TRAIL.offerInvestBonus;
+  balance.offers.pickSeconds = TRAIL.offerPickSeconds;
   balance.steal.maxConcurrent = TRAIL.thiefMaxConcurrent;
   balance.steal.maxConcurrentCap = TRAIL.thiefMaxConcurrentCap;
   balance.wreck.hp.palisade = TRAIL.palisadeHp;
   balance.upgrades.doubleTapCoilMaxStacks = TRAIL.doubleTapCoilMaxStacks;
 
   if (preset === 'greenhorn') {
+    balance.offers.pickSeconds = 30;
     balance.steal.maxConcurrent = 1;
     balance.steal.maxConcurrentCap = 3;
     balance.wreck.hp.palisade = Math.round(TRAIL.palisadeHp * 1.2);
   } else if (preset === 'vein-hunter') {
+    balance.offers.pickSeconds = 10;
     balance.enemy.hp = 28;
     balance.xp.perKill = 3;
     balance.offers.investBonus = 0;
