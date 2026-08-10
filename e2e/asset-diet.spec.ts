@@ -1,15 +1,23 @@
 // Measures the built, dieted production bundle; Vite's dev server serves undieted originals.
 // Run with GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet
-// Town-transfer reconciliation (F-1620-7; preview-config run, 2026-08-10):
-// - cue window enters before prefetch-ready and stops at town loading-ready:
-//   desktop 22,497,140 bytes; mobile 22,497,140 bytes.
-// - A/B normal waits for prefetch-ready, disables cache, then stops at loading-ready:
-//   desktop 24,604,025 bytes; mobile 26,542,805 bytes (1,542,805 over ceiling).
-// - the release gate reads only the cue-window townResponses line (the first pair above).
-// - with cache enabled, prefetch-wait adds desktop 6,171,255; mobile 1,981,581 bytes.
-// - without prefetch-wait, cache-disabled adds desktop 606,099; mobile 1,252,689 bytes.
-// - with prefetch-wait, cache-disabled adds desktop 417,397; mobile 2,887,709 bytes.
-// - false/false still differs from the cue window, so the cross-instrument gap remains partly unexplained.
+// Town-transfer reconciliation (F-1620-7; preview-config, 2026-08-10). THREE instruments, one ceiling:
+// - cue window: enters BEFORE prefetch-ready, stops at town loading-ready. The release gate
+//   (scripts/deploy.sh) reads ONLY this test's `townResponses:` line — keep that string intact.
+// - A/B normal/saveData arms: wait for prefetch-ready, disable cache, stop at loading-ready.
+// - the four-cell decomposition below varies prefetch-wait and cache-disabled independently.
+// ⚠️ DO NOT QUOTE A SINGLE RUN OF THIS INSTRUMENT AS A FACT — it is unstable at FIXED configuration.
+// Two runs of THIS code, same machine, ~40 min apart (F-1623-1, s1623 drain control):
+//            cue window       A/B normal        decomposition false/false
+//   run 1    22,497,140 both  24,604,025 dsk / 26,542,805 mob   19,954,153 / 20,650,367
+//   run 2    12,376,473 dsk / 13,942,714 mob  21,297,362 / 22,469,496   6,471,185 both
+// Run 1's mobile arm was 1,542,805 OVER the ceiling; run 2 passed both projects. The spread at
+// fixed config reaches 3.08x (false/false) and straddles TOWN_TRANSFER_CEILING_BYTES, so the
+// pass/fail of `normalBytes` is presently a coin-flip, not a property of the bundle (F-1623-2).
+// Attribution of the original 9.5 MB cross-instrument gap is therefore NOT yet established:
+// prefetch-wait and cache-disabled both move bytes, but by less than the run-to-run noise.
+// The content-length audit is the one stable result: 27 absent, 0 unparseable, in BOTH runs and
+// every arm — all of them dev/preview-server JS/CSS/HTML, NO GLBs. The silent-zero worry is
+// refuted for asset bytes (F-1623-3).
 
 import { mkdir } from 'node:fs/promises';
 import { writeFile } from 'node:fs/promises';
