@@ -112,11 +112,12 @@ const tapeSurface = {
 };
 
 function advertisedBuildables(contract) {
-  const ids = new Set();
-  if (contract.epochId === 'epoch-1-frontier') ids.add('sentry_beacon').add('turret');
+  const ids = new Set(['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office']);
+  if (contract.twist?.powerGrid) ids.delete('turret');
   for (const id of contract.practice?.buildables ?? []) ids.add(id);
   if (contract.twist?.pressureEnabled) ids.add('boiler_house');
   if (contract.id === 'e3-blackout-ridge' && contract.twist?.powerGrid) ids.add('capacitor_bank');
+  if (!contract.twist?.powerGrid && (contract.twist?.lightRamp || contract.twist?.dayNightCycle)) ids.add('lantern_post');
   if (contract.id === 'e3-moth-season' && contract.twist?.mothSeason) ids.add('lantern_post').add('decoy_shed');
   return ids;
 }
@@ -133,18 +134,11 @@ function manifestEvidence(contract, id) {
 }
 
 function doorAccepts(contract, id) {
-  if (id === 'boiler_house') return contract.twist?.pressureEnabled === true;
-  return id !== 'capacitor_bank' || contract.id === 'e3-blackout-ridge';
+  return advertisedBuildables(contract).has(id);
 }
 
 function browserAccepts(contract, id) {
-  if (contract.practice?.buildables?.includes(id)) return true;
-  if (contract.twist?.powerGrid && (id === 'turret' || id === 'lantern_post')) return false;
-  if (id === 'lantern_post') return Boolean(contract.twist?.lightRamp || contract.twist?.dayNightCycle);
-  if (id === 'decoy_shed') return contract.id === 'e3-moth-season';
-  if (id === 'capacitor_bank') return contract.id === 'e3-blackout-ridge';
-  if (id === 'boiler_house') return contract.twist?.pressureEnabled === true;
-  return true;
+  return advertisedBuildables(contract).has(id);
 }
 
 function direction(human, agent) {
@@ -176,24 +170,22 @@ function audit() {
       const manifest = advertised.has(id);
       const browser = browserAccepts(contract, id);
       const predicate = doorAccepts(contract, id);
-      const agent = agentCanEnter && predicate;
+      const agent = predicate;
       rows.push(row(
         contract,
         'buildable',
         manifest ? `contract manifest advertises BUILD ${id}` : `contract manifest does not advertise ${id}`,
         predicate ? `door predicate accepts BUILD ${id}` : `door predicate rejects BUILD ${id}`,
         direction(manifest, predicate),
-        `${manifestEvidence(contract, id)} · ${line('src/sim/HeadlessContractSim.ts', "(id) => id === 'boiler_house'")} · ${line('src/game/buildables.ts', `  | '${id}'`)}`,
+        `${manifestEvidence(contract, id)} · ${line('src/sim/HeadlessContractSim.ts', '(id) => offeredBuildables.has(id)')} · ${line('src/game/buildables.ts', `  | '${id}'`)}`,
       ));
       rows.push(row(
         contract,
         'buildable',
         browser ? `browser menu offers BUILD ${id}` : `browser menu hides ${id}`,
-        agent
-          ? `reachable door accepts BUILD ${id}`
-          : (agentCanEnter ? `reachable door rejects BUILD ${id}` : 'headless rejects the contract before BUILD'),
+        agent ? `door accepts BUILD ${id}` : `door rejects BUILD ${id}`,
         direction(browser, agent),
-        `${line('src/game/Game.ts', 'private isBuildableEnabled(id: BuildableId): boolean')} · ${line('src/sim/HeadlessContractSim.ts', "(id) => id === 'boiler_house'")} · ${line('src/game/buildables.ts', `  | '${id}'`)}`,
+        `${line('src/game/Game.ts', 'private isBuildableEnabled(id: BuildableId): boolean')} · ${line('src/sim/HeadlessContractSim.ts', '(id) => offeredBuildables.has(id)')} · ${line('src/game/buildables.ts', `  | '${id}'`)}`,
       ));
     }
 
@@ -285,7 +277,7 @@ function markdown(result) {
     '',
     '## Worst offenders',
     '',
-    `The widest gates in the county are ${offenders.map(([id, count]) => `\`${id}\` (${count})`).join(', ')}. Most of that debt repeats the same two broken fences on every claim: the door accepts buildables the manifest never posts, while human tape choices have no standing-order trail at all.`,
+    `The widest gates in the county are ${offenders.map(([id, count]) => `\`${id}\` (${count})`).join(', ')}. Buildables now share one manifest rulebook; the remaining debt is contract reachability plus human choices and abilities without a standing-order trail.`,
     '',
     '## Full parity table',
     '',

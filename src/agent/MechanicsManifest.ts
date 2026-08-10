@@ -1,6 +1,6 @@
-import { listContracts, listEpochs, loadContract, loadEpoch, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
+import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
 import { Balance } from '../game/Balance';
-import { buildableBlurb, getBuildableDef } from '../game/buildables';
+import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
 
 type MechanicValue = boolean | number | string | readonly string[];
 
@@ -8,14 +8,14 @@ export type MechanicsManifest = {
   schema: 'goldrush.mechanics.v1';
   contractId: string;
   buildables?: readonly {
-    id: string;
+    id: BuildableId;
     operation: 'BUILD';
     meaning: string;
     cost: number;
     costs: readonly number[];
     costRule?: 'ceil-to-5';
     maxCount: number;
-    source: 'buildables.registry' | 'twist.pressureEnabled' | 'twist.powerGrid' | 'twist.mothSeason';
+    source: 'buildables.registry' | 'practice.buildables' | 'twist.pressureEnabled' | 'twist.powerGrid' | 'twist.mothSeason' | 'twist.lightRamp' | 'twist.dayNightCycle';
   }[];
   interactables: readonly {
     id: string;
@@ -374,19 +374,27 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
 
   const boilerHouse = twist.pressureEnabled ? getBuildableDef('boiler_house') : undefined;
   const capacitorBank = voltageSocket ? getBuildableDef('capacitor_bank') : undefined;
-  const lanternPost = mothSocket ? getBuildableDef('lantern_post') : undefined;
+  const lanternPost = !twist.powerGrid && (mothSocket || twist.lightRamp || twist.dayNightCycle)
+    ? getBuildableDef('lantern_post')
+    : undefined;
   const decoyShed = mothSocket ? getBuildableDef('decoy_shed') : undefined;
-  const registryBuildables = listContracts().some(({ id }) => id === contract.id)
-    ? ['sentry_beacon', 'turret'].map((id) => ({ def: getBuildableDef(id)!, source: 'buildables.registry' as const, meaning: undefined }))
-    : [];
+  const registryBuildables = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office']
+    .filter((id) => !twist.powerGrid || id !== 'turret')
+    .map((id) => ({ def: getBuildableDef(id)!, source: 'buildables.registry' as const, meaning: undefined }));
+  const practiceBuildables = (practice?.buildables ?? [])
+    .filter((id) => !registryBuildables.some(({ def }) => def.id === id))
+    .map((id) => ({ def: getBuildableDef(id)!, source: 'practice.buildables' as const, meaning: undefined }));
   const buildables = [
     ...registryBuildables,
+    ...practiceBuildables,
     ...(boilerHouse ? [{ def: boilerHouse, source: 'twist.pressureEnabled' as const }] : []),
     ...(capacitorBank ? [{ def: capacitorBank, source: 'twist.powerGrid' as const }] : []),
     ...(lanternPost ? [{
       def: lanternPost,
-      source: 'twist.mothSeason' as const,
-      meaning: `Light radius ${Balance.contracts.nightShift.lanternPostLightRadius}; moth target score is coverage x radius x ${mothSocket!.radiusWeight}.`,
+      source: mothSocket ? 'twist.mothSeason' as const : twist.lightRamp ? 'twist.lightRamp' as const : 'twist.dayNightCycle' as const,
+      meaning: mothSocket
+        ? `Light radius ${Balance.contracts.nightShift.lanternPostLightRadius}; moth target score is coverage x radius x ${mothSocket.radiusWeight}.`
+        : undefined,
     }] : []),
     ...(decoyShed ? [{
       def: decoyShed,
@@ -421,6 +429,11 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         .sort(byId),
     },
   };
+}
+
+export function mechanicsBuildableIds(source: string | ContractManifest): ReadonlySet<BuildableId> {
+  const manifest = deriveMechanicsManifest(typeof source === 'string' ? loadContract(source) : source);
+  return new Set((manifest.buildables ?? []).map(({ id }) => id));
 }
 
 const IRREGULAR_PLURALS: Readonly<Record<string, string>> = {
