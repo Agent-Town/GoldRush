@@ -262,6 +262,7 @@ function audit() {
 
     for (const action of tapeActions) {
       const placeBuild = action === 'place_build' && doorVerbs.includes('BUILD');
+      const rotationParity = placeBuild && source['src/agent/StandingOrders.ts'].includes('rotationSteps?: 0 | 1 | 2 | 3;');
       const doorVerb = action.toUpperCase();
       const reachable = agentCanEnter && (placeBuild || doorVerbs.includes(doorVerb));
       rows.push(row(
@@ -269,11 +270,11 @@ function audit() {
         tapeSurface[action] ?? 'verb',
         action === 'place_build' ? 'tape action place_build includes rotationSteps 0..3' : `tape action ${action}`,
         action === 'place_build'
-          ? (reachable ? 'BUILD order reaches placement but always defaults rotation to 0' : 'no reachable BUILD order')
+          ? (rotationParity ? 'BUILD order reaches placement with rotationSteps 0..3' : (reachable ? 'BUILD order reaches placement but always defaults rotation to 0' : 'no reachable BUILD order'))
           : (reachable ? `${doorVerb} standing order reaches ${action}` : `no ${action} standing order`),
-        action === 'place_build' ? 'agent-lacks' : direction(true, reachable),
+        action === 'place_build' ? direction(true, rotationParity) : direction(true, reachable),
         `${line('functions/api/standings.ts', action === 'place_build' ? "value.type === 'place_build'" : `'${action}'`)} · ${line('src/agent/StandingOrders.ts', action === 'place_build'
-          ? 'this.surface.tools.place_building(order.what, order.where)'
+          ? 'this.surface.tools.place_building(order.what, order.where, order.rotationSteps ?? 0)'
           : (reachable ? `| { verb: '${doorVerb}'` : 'export type StandingOrder ='))}`,
       ));
     }
@@ -366,7 +367,7 @@ function markdown(result) {
     '',
     `- **Contract reachability:** ${entryGaps} browser-offered contracts are rejected by the headless door; ${result.summary['not-offered']} contracts are refused by both species and sit outside the same-game universe.`,
     `- **Browser-menu versus door:** ${manifestMenuGaps} buildable rows disagree even after separating the browser menu from the contract manifest.`,
-    '- **Build orientation:** human `place_build` tapes carry `rotationSteps` 0..3; the standing-order `BUILD` path omits rotation and defaults to 0.',
+    '- **Build orientation:** human `place_build` tapes and standing-order `BUILD` both carry `rotationSteps` 0..3; omission defaults to 0.',
     `- **Additional tape-only actions:** ${newlyEnumeratedTapeActions.filter((action) => action !== 'place_build').map((action) => `\`${action}\``).join(', ')} have no matching standing-order verb.`,
     '',
     '## Worst offenders',

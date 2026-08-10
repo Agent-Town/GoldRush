@@ -12,6 +12,7 @@ export type StandingOrder =
       what: BuildableId;
       where: AgentVec2;
       when: BuildCondition;
+      rotationSteps?: 0 | 1 | 2 | 3;
     }
   | { verb: 'REPAIR_UNDER'; pct: number }
   | { verb: 'MOVE_TO'; pos: AgentVec2 }
@@ -216,7 +217,7 @@ export class StandingOrdersExecutor {
     if (order.verb === 'BUILD') {
       if (!conditionMet(order.when, state)) return null;
       this.status(record, 'active', at);
-      const receipt = this.surface.tools.place_building(order.what, order.where);
+      const receipt = this.surface.tools.place_building(order.what, order.where, order.rotationSteps ?? 0);
       return this.finishAction(record, receipt, order.where, at);
     }
 
@@ -407,10 +408,19 @@ export function requiredLevel(order: StandingOrder): AgentPermissionLevel {
 
 function validateOrder(value: Record<string, unknown>, index: number): StandingOrder | string {
   if (value.verb === 'BUILD') {
-    if (!exactKeys(value, ['verb', 'what', 'where', 'when'])) return schemaError(index, 'BUILD');
+    const hasRotation = 'rotationSteps' in value;
+    if (!exactKeys(value, hasRotation ? ['verb', 'what', 'where', 'when', 'rotationSteps'] : ['verb', 'what', 'where', 'when'])) {
+      return schemaError(index, 'BUILD');
+    }
     if (!isBuildableId(value.what) || !validPos(value.where)) return schemaError(index, 'BUILD');
+    const rotationSteps = value.rotationSteps;
+    if (hasRotation && (typeof rotationSteps !== 'number' || !Number.isInteger(rotationSteps) || rotationSteps < 0 || rotationSteps > 3)) {
+      return schemaError(index, 'BUILD');
+    }
     const when = validCondition(value.when);
-    return when ? { verb: 'BUILD', what: value.what, where: value.where, when } : schemaError(index, 'BUILD');
+    return when
+      ? { verb: 'BUILD', what: value.what, where: value.where, when, ...(hasRotation ? { rotationSteps: rotationSteps as 0 | 1 | 2 | 3 } : {}) }
+      : schemaError(index, 'BUILD');
   }
   if (value.verb === 'REPAIR_UNDER') {
     if (!exactKeys(value, ['verb', 'pct']) || !finiteInRange(value.pct, 0, 100)) return schemaError(index, 'REPAIR_UNDER');
@@ -621,10 +631,11 @@ function copyRecords(records: StandingOrderRecord[]): StandingOrderRecord[] {
   }));
 }
 
-function standingOrderIdentity(order: StandingOrder): string {
+export function standingOrderIdentity(order: StandingOrder): string {
   if (order.verb === 'BUILD') {
     const when = 'goldGte' in order.when ? ['goldGte', order.when.goldGte] : ['waveGte', order.when.waveGte];
-    return JSON.stringify([order.verb, order.what, order.where.x, order.where.z, ...when]);
+    return JSON.stringify([order.verb, order.what, order.where.x, order.where.z, ...when,
+      ...(order.rotationSteps ? ['rotationSteps', order.rotationSteps] : [])]);
   }
   if (order.verb === 'REPAIR_UNDER') return JSON.stringify([order.verb, order.pct]);
   if (order.verb === 'MOVE_TO' || order.verb === 'HOLD' || order.verb === 'BLAST_AT') {

@@ -100,11 +100,15 @@ function expand(node, aliases) {
     for (const member of node.members) {
       assert.ok(ts.isPropertySignature(member) && member.type && member.name, `unsupported grammar member: ${member.getText()}`);
       const key = ts.isIdentifier(member.name) || ts.isStringLiteral(member.name) ? member.name.text : member.name.getText();
-      rows = rows.flatMap((row) => expand(member.type, aliases).map((value) => `${row}${row ? ',' : ''}${JSON.stringify(key)}:${value}`));
+      rows = rows.flatMap((row) => [
+        ...(member.questionToken ? [row] : []),
+        ...expand(member.type, aliases).map((value) => `${row}${row ? ',' : ''}${JSON.stringify(key)}:${value}`),
+      ]);
     }
     return rows.map((row) => `{${row}}`);
   }
   if (ts.isLiteralTypeNode(node) && ts.isStringLiteral(node.literal)) return [JSON.stringify(node.literal.text)];
+  if (ts.isLiteralTypeNode(node) && ts.isNumericLiteral(node.literal)) return [node.literal.getText()];
   if (node.kind === ts.SyntaxKind.NumberKeyword) return ['N'];
   if (node.kind === ts.SyntaxKind.StringKeyword) return ['"<string>"'];
   if (ts.isTypeReferenceNode(node)) {
