@@ -6473,6 +6473,15 @@
               "gate": "GATE: closes when the probe is merged with both projects artifacts/advance-stream-cache-reuse-<project>.md tables reported, the DOUBLE-DOWNLOAD / OVERLAP / CACHE-HIT buckets separated, the unmodified walkthrough spec run as the comparison arm in the same shell, and a prose verdict recorded on F-1616-3. Undetermined-with-numbers-and-a-reason satisfies this gate; a confident guess does not, and neither does any edit to src/assets/AdvanceStream.ts."
             },
             {
+                "id": "f1623-1-town-transfer-determinism",
+                "title": "F-1623-1: the town-transfer instrument swings 3.08x at fixed configuration — make the measurement deterministic before anyone asserts on it again",
+                "status": "queued",
+                "taskFile": "lane-f1623-1-town-transfer-determinism.md",
+                "lane": "lane-a",
+                "note": "FIRE-AUTHORED s1623 from F-1623-1 (tasks/BACKLOG.md line 1), whose stated gate this task closes verbatim: one named town-transfer instrument returns the same figure within ~1% across three consecutive runs, and that instrument is the one the release gate reads. Evidence chain: the s1623 drain of f1621-1 ran the slice's own code as a control ~40 min after the runner and got a different answer — the mobile normal arm went 26,542,805 (RED) -> 22,469,496 (green) and the decomposition false/false cell swung 3.08x-3.19x, so the 25 MB ceiling sits inside the instrument noise and the assertion is a coin-flip. Hypothesis to be TESTED not assumed: both instruments stop counting at assetLoadingState===\"ready\" while the advance-stream prefetch is still issuing concurrently, so the total is whatever landed before a race resolved; plausibly the same root cause as F-1621-1 (OVERLAP) and F-1620-4. Test-only, firewalled to e2e/asset-diet.spec.ts and artifacts/asset-diet/** — src/assets/AdvanceStream.ts is READ-ONLY because it is the subject. A null result is pre-authorised: if nothing holds within 1%, REFUTED is the required word.",
+                "gate": "GATE: closes when the slice is merged with artifacts/asset-diet/town-transfer-stability.md reporting three consecutive runs of both projects, each quantity given as spread-percent-of-mean, and either a named quantity holding within +/-1% on both projects or the word REFUTED with the best actual percentage and what is left unexplained. No re-pin, no widened tolerance, no dropped run, and no edit to src/** satisfies this gate."
+              },
+              {
               "id": "f1621-1-town-budget-instrument-reconciliation",
               "title": "F-1620-7: three instruments answer one 25 MB town ceiling 9.5 MB apart — attribute the gap and rename so it cannot recur",
               "status": "merged",
