@@ -6705,8 +6705,10 @@
                 {
                   "id": "ap16-3-blast-verb",
                   "title": "AP-16-3: BLAST_AT \u2014 the blast charge through the door at human cost/cooldown; then the rest of the audit list",
-                  "status": "queued",
-                  "taskFile": "lane-c-ap16-3-blast-verb.md"
+                  "status": "merged",
+                  "mergeHash": "eba8d15ea5b6aee63a8aa5fd633a09e795e2f829",
+                  "taskFile": "lane-c-ap16-3-blast-verb.md",
+                  "drainNotes": "MERGED s1638 eba8d15ea5b6aee63a8aa5fd633a09e795e2f829. The seventh verb: BLAST_AT reaches the agent door with range and cooldown rejection, and HeadlessContractSim routes it through the SAME pooled CombatSystem.launchLob the browser hero uses, so damage/radius/wave-scaling/upgrade stats are human values rather than a parallel implementation. now.blastReadyInMs rides the view; public/skill.md documents the door. Gates: tsc clean, build green, test:node-guards 446 tests / 441 pass / 0 fail / 5 skipped (296.8s, run ALONE per F-1460-1 since the diff touches src/sim + src/agent) with ZERO gr-sim hash drift so no re-pins, ap16-3-blast-verb + ap-standing-orders + skillmd-door + front-door-parity 20/20 desktop+390px, plain boot 4/4 zero console errors, all --workers=1, gated in detached worktree gate-s1638. Classification: 5 paths, 4 LANE-ONLY, src/sim/HeadlessContractSim.ts BOTH-MOVED and auto-merged clean by ort (main had moved it via ap16-1), no graft. Post-merge main..lane/c empty. F-1638-3 RAISED (non-blocking, merged knowingly): all 42 blast ability rows still report no reachable standing-order path, which is now FALSE, and same-game-audit.test.mjs PINS that as must-remain-visible -- so whoever fixes the ability rows will see test:node-guards go red BECAUSE they fixed it. The finding is against the instrument, not the behaviour; same call as ap16-1. The runner stopped short of READY-FOR-GATES honestly at the F-1636-2 firewall contradiction. Review: reviews/ap16-3-blast-verb.md"
                 },
                 {
                   "id": "ap16-4-contract-reachability",
