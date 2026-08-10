@@ -30,7 +30,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal'].includes(row.direction)));
 });
 
-test('same-game audit keeps buildables equal while later parity gaps remain visible', () => {
+test('same-game audit measures reachable browser and headless buildables independently', () => {
   const result = run('--json');
   assert.equal(result.status, 0, result.stderr);
   const { rows } = JSON.parse(result.stdout);
@@ -38,7 +38,10 @@ test('same-game audit keeps buildables equal while later parity gaps remain visi
     row.contract === contract && row.surface === surface && row.direction === direction
       && `${row['humans-get']} ${row['agents-get']}`.includes(text));
 
-  assert.equal(rows.filter((row) => row.surface === 'buildable' && row.direction !== 'equal').length, 0);
+  const reachable = new Set(rows.filter((row) => row.surface === 'verb'
+    && row['humans-get'] === 'browser can launch the contract' && row.direction === 'equal').map((row) => row.contract));
+  assert.equal(rows.filter((row) => row.surface === 'buildable' && reachable.has(row.contract)
+    && row['humans-get'].startsWith('browser menu') && row.direction !== 'equal').length, 0);
   assert.ok(has('the-claim', 'choice', 'offer[0]', 'agent-lacks'), 'silent first upgrade must remain visible');
   assert.ok(has('the-claim', 'ability', 'hero:0:blast', 'agent-lacks'), 'blast-charge gap must remain visible');
   assert.ok(has('the-claim', 'ability', 'weapon_toggle', 'agent-lacks'), 'unenumerated human tape agency must remain visible');
