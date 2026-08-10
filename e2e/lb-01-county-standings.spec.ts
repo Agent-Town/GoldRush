@@ -155,10 +155,13 @@ async function secureClaim(page: Page, seed: string, beforeSecure?: () => Promis
 
 function interceptPosts(page: Page): StandingPost[] {
   const posts: StandingPost[] = [];
-  void page.route('https://gold-rush-3in.pages.dev/api/standings', async (route) => {
+  void page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
     if (route.request().method() === 'POST') posts.push(JSON.parse(route.request().postData() ?? '{}') as StandingPost);
     await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
   });
+  void page.route('**/api/telemetry', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }),
+  );
   return posts;
 }
 
@@ -184,8 +187,9 @@ test('public county rows carry submitted time while legacy rows keep the missing
   const stored = JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]') as Array<Record<string, unknown>>;
   expect(projected.submittedAt).toBe(stored[0]?.submittedAt);
   expect(projected.submittedAt).toEqual(expect.any(Number));
+  expect(projected.season).toBe('The Founding Season');
 
-  const { submittedAt: _submittedAt, ...legacyRow } = projected;
+  const { submittedAt: _submittedAt, season: _season, ...legacyRow } = projected;
   let board = [legacyRow];
   await seedProfile(page);
   const errors = collectErrors(page);
@@ -298,10 +302,11 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   const body = (await response.json()) as { board: Array<Record<string, unknown>> };
   expect(response.status).toBe(200);
   expect(body.board).toMatchObject([
-    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false },
+    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false, season: 'The Founding Season' },
     { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', defaulted: true, declared: false },
-    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, source: stack.source },
+    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, source: stack.source, season: 'The Founding Season' },
   ]);
+  expect(body.board[1]).not.toHaveProperty('season');
   for (const row of body.board.slice(0, 2)) {
     expect(row).not.toHaveProperty('model');
     expect(row).not.toHaveProperty('harness');
@@ -549,6 +554,7 @@ test('standings opt-out suppresses submission', async ({ page }) => {
 
 test('offline standings failure stays silent through the secure ceremony', async ({ page }) => {
   await seedProfile(page);
+  const posts = interceptPosts(page);
   const errors = collectErrors(page);
   await secureClaim(page, CLAIM_BENCH_SEED, () =>
     page.evaluate(() => {
@@ -556,6 +562,7 @@ test('offline standings failure stays silent through the secure ceremony', async
     }),
   );
   await page.waitForTimeout(500);
+  expect(posts).toEqual([]);
   await expect(page.getByTestId('claim-secured')).toBeVisible();
   expectNoErrors(errors);
 });
