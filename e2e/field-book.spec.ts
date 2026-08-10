@@ -11,6 +11,7 @@ type MockKV = {
 
 const SHOTS = path.resolve('reviews/shots-fd3');
 const FD1_SHOTS = path.resolve('reviews/shots-fd1');
+const MINDS_AND_RIGS_SHOTS = path.resolve('reviews/shots-minds-and-rigs');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'field-book',
@@ -85,24 +86,31 @@ test('the Drill Yard is the training ground — standings refuse it on both POST
   })).status).toBe(400);
 });
 
-test('optional cost fields group the best score by model and never change county ranking', async () => {
+test('minds and rigs aggregate the same standings without changing county ranking', async () => {
   const kv = makeKv();
-  const expensiveBest = standing('1'.repeat(32), 'the-claim', 20, {
-    model: 'gpt-5.6-sol', harness: 'codex', harnessVersion: '2026.08', config: 'medium',
-    tokensIn: 90_000, tokensOut: 8_000, calls: 18,
-  });
-  const cheapLower = standing('2'.repeat(32), 'the-claim', 10, {
-    model: 'gpt-5.6-sol', harness: 'codex', tokensIn: 1, tokensOut: 1, calls: 1,
-  });
-  const noCost = standing('3'.repeat(32), 'e1-dry-gulch', 14, {
-    model: 'gpt-5.6-sol', harness: 'gr-sim', harnessVersion: '1', config: 'idle',
-  });
-  const unregistered = standing('4'.repeat(32), 'e1-dry-gulch', 12);
-
-  for (const body of [expensiveBest, cheapLower, noCost, unregistered]) expect((await post(kv, body)).status).toBe(200);
+  const contracts = ['the-claim', 'e1-dry-gulch', 'e1-night-shift'];
+  const stacks = [
+    { model: 'mind-a', harness: 'rig-x', tokensIn: 10, tokensOut: 1, calls: 1 },
+    { model: 'mind-a', harness: 'rig-y', tokensIn: 20, tokensOut: 2, calls: 2 },
+    { model: 'mind-b', harness: 'rig-x', tokensIn: 30, tokensOut: 3, calls: 3 },
+    { model: 'mind-b', harness: 'rig-y' },
+  ];
+  const crownByContract = [0, 3, 1];
+  let fixtureIndex = 0;
+  for (const [contractIndex, contractId] of contracts.entries()) {
+    for (const [stackIndex, stack] of stacks.entries()) {
+      const costs = stack.tokensIn === undefined ? stack : {
+        ...stack,
+        tokensIn: stack.tokensIn + contractIndex,
+        tokensOut: stack.tokensOut + contractIndex,
+      };
+      expect((await post(kv, standing((fixtureIndex++).toString(16).repeat(32), contractId, crownByContract[contractIndex] === stackIndex ? 40 : 10 + stackIndex, costs))).status).toBe(200);
+    }
+  }
+  expect((await post(kv, standing('c'.repeat(32), 'the-claim', 1))).status).toBe(200);
   for (const field of ['tokensIn', 'tokensOut', 'calls']) {
     for (const value of [-1, 1.5, 1_000_000_000_001]) {
-      expect((await post(kv, standing('5'.repeat(32), 'the-claim', 1, { model: 'invalid', [field]: value }))).status).toBe(400);
+      expect((await post(kv, standing('d'.repeat(32), 'the-claim', 1, { model: 'invalid', [field]: value }))).status).toBe(400);
     }
   }
 
@@ -110,42 +118,59 @@ test('optional cost fields group the best score by model and never change county
     request: request('GET', '?contract=the-claim&epoch=epoch-1-frontier'),
     env: { TELEMETRY: kv },
   });
-  expect(await county.json()).toMatchObject({ board: [{ rank: 1, waves: 20 }, { rank: 2, waves: 10 }] });
+  const countyBody = await county.json() as { board: Array<Record<string, unknown>> };
+  expect(countyBody.board[0]).toMatchObject({ rank: 1, waves: 40, model: 'mind-a', harness: 'rig-x' });
 
-  const response = await standingsRoute({
+  const mindsResponse = await standingsRoute({
     request: request('GET', '?view=byStack&epoch=epoch-1-frontier'),
     env: { TELEMETRY: kv },
   });
-  const body = await response.json() as {
+  const minds = await mindsResponse.json() as {
     view: string;
-    contracts: string[];
-    byStack: Array<{ model: string; contracts: Array<Record<string, unknown>> }>;
+    byStack: Array<{ model: string; contracts: Array<Record<string, unknown>>; aggregate: Record<string, unknown> }>;
   };
-  expect(response.status).toBe(200);
-  expect(body.view).toBe('byStack');
-  expect(body.contracts).toEqual(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
-  expect(body.byStack.find((row) => row.model === 'gpt-5.6-sol')).toMatchObject({
-    contracts: [
-      {
-        contractId: 'the-claim',
-        score: { secured: true, waves: 20 },
-        difficulty: 'trail',
-        tokensIn: 90_000,
-        tokensOut: 8_000,
-        calls: 18,
-        harness: 'codex',
-        harnessVersion: '2026.08',
-      },
-      { contractId: 'e1-dry-gulch', score: { secured: true, waves: 14 }, harness: 'gr-sim' },
-    ],
+  expect(mindsResponse.status).toBe(200);
+  expect(minds.view).toBe('byStack');
+  expect(minds.byStack.find((row) => row.model === 'mind-a')?.aggregate).toMatchObject({
+    standings: 6, contracts: 3, crowns: 2, bestWaves: 40,
+    totalTokensIn: 96, totalTokensOut: 15, totalCalls: 9,
+    declaredCells: 6, undeclaredCells: 0,
   });
-  expect(body.byStack.find((row) => row.model === 'unregistered rig')).toMatchObject({
-    contracts: [{ contractId: 'e1-dry-gulch', score: { waves: 12 } }],
+  expect(minds.byStack.find((row) => row.model === 'mind-b')?.aggregate).toMatchObject({
+    standings: 6, contracts: 3, crowns: 1, bestWaves: 40,
+    totalTokensIn: 93, totalTokensOut: 12, totalCalls: 9,
+    declaredCells: 3, undeclaredCells: 3,
   });
-  expect(body.byStack.find((row) => row.model === 'gpt-5.6-sol')?.contracts[1]).not.toHaveProperty('tokensIn');
+  expect(minds.byStack.find((row) => row.model === 'undeclared rider')).toMatchObject({ aggregate: { standings: 1, contracts: 1, crowns: 0 } });
+  const absentCostCell = minds.byStack.find((row) => row.model === 'mind-b')?.contracts.find((cell) => cell.contractId === 'e1-dry-gulch');
+  for (const field of ['tokensIn', 'tokensOut', 'calls']) expect(absentCostCell).not.toHaveProperty(field);
+
+  const rigsResponse = await standingsRoute({
+    request: request('GET', '?view=byHarness&epoch=epoch-1-frontier'),
+    env: { TELEMETRY: kv },
+  });
+  const rigs = await rigsResponse.json() as {
+    view: string;
+    byHarness: Array<{ harness: string; contracts: Array<Record<string, unknown>>; aggregate: Record<string, unknown> }>;
+  };
+  expect(rigsResponse.status).toBe(200);
+  expect(rigs.view).toBe('byHarness');
+  expect(rigs.byHarness.find((row) => row.harness === 'rig-x')?.aggregate).toMatchObject({
+    standings: 6, contracts: 3, crowns: 1, bestWaves: 40,
+    totalTokensIn: 126, totalTokensOut: 18, totalCalls: 12,
+    declaredCells: 6, undeclaredCells: 0,
+  });
+  expect(rigs.byHarness.find((row) => row.harness === 'rig-y')?.aggregate).toMatchObject({
+    standings: 6, contracts: 3, crowns: 2, bestWaves: 40,
+    totalTokensIn: 63, totalTokensOut: 9, totalCalls: 6,
+    declaredCells: 3, undeclaredCells: 3,
+  });
+  const undeclaredRig = rigs.byHarness.find((row) => row.harness === 'undeclared rig');
+  expect(undeclaredRig).toMatchObject({ aggregate: { standings: 1, contracts: 1, crowns: 0, declaredCells: 0, undeclaredCells: 1 } });
+  expect(undeclaredRig?.aggregate).not.toHaveProperty('totalTokensIn');
 });
 
-test('plain boot renders and expands the Field Book matrix', async ({ page }, testInfo) => {
+test('plain boot renders and expands the Minds and Rigs tables', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   const now = Date.now();
   await page.addInitScript(({ key, state }) => {
@@ -155,63 +180,60 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
   }, { key: PROFILE_KEY, state: PROFILE_STATE });
   await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
     const url = new URL(route.request().url());
-    expect(url.searchParams.get('view')).toBe('byStack');
+    const view = url.searchParams.get('view');
+    expect(['byStack', 'byHarness']).toContain(view);
     expect(url.searchParams.get('epoch')).toBe('epoch-1-frontier');
+    const groups = view === 'byHarness'
+      ? {
+          byHarness: [
+            {
+              harness: 'codex',
+              aggregate: { standings: 1, contracts: 1, crowns: 1, bestWaves: 20, totalTokensIn: 90_000, totalTokensOut: 8_000, totalCalls: 18, declaredCells: 1, undeclaredCells: 0, latestSubmittedAt: now - 60_000 },
+              contracts: [{ contractId: 'the-claim', score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 }, difficulty: 'trail', tokensIn: 90_000, tokensOut: 8_000, calls: 18, harness: 'codex', harnessVersion: '2026.08', config: 'medium', submittedAt: now - 60_000 }],
+            },
+            {
+              harness: 'gr-sim',
+              aggregate: { standings: 1, contracts: 1, crowns: 0, bestWaves: 14, declaredCells: 0, undeclaredCells: 1, latestSubmittedAt: now - 86_400_000 },
+              contracts: [{ contractId: 'e1-dry-gulch', score: { secured: true, waves: 14, timeAlive: 614, gold: 140, baseValue: 280 }, difficulty: 'vein-hunter', harness: 'gr-sim', submittedAt: now - 86_400_000 }],
+            },
+            {
+              harness: 'undeclared rig',
+              aggregate: { standings: 1, contracts: 1, crowns: 0, bestWaves: 12, declaredCells: 0, undeclaredCells: 1, latestSubmittedAt: now - 120_000 },
+              contracts: [{ contractId: 'the-claim', score: { secured: true, waves: 12, timeAlive: 612, gold: 120, baseValue: 240 }, difficulty: 'greenhorn', submittedAt: now - 120_000 }],
+            },
+          ],
+        }
+      : {
+          byStack: [
+            {
+              model: 'gpt-5.6-sol',
+              aggregate: { standings: 2, contracts: 2, crowns: 1, bestWaves: 20, totalTokensIn: 90_000, totalTokensOut: 8_000, totalCalls: 18, declaredCells: 1, undeclaredCells: 1, latestSubmittedAt: now - 60_000 },
+              contracts: [
+                { contractId: 'the-claim', score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 }, difficulty: 'trail', tokensIn: 90_000, tokensOut: 8_000, calls: 18, harness: 'codex', harnessVersion: '2026.08', config: 'medium', submittedAt: now - 60_000 },
+                { contractId: 'e1-dry-gulch', score: { secured: true, waves: 14, timeAlive: 614, gold: 140, baseValue: 280 }, difficulty: 'vein-hunter', harness: 'gr-sim', submittedAt: now - 86_400_000 },
+              ],
+            },
+            {
+              model: 'pi-v4',
+              aggregate: { standings: 1, contracts: 1, crowns: 0, bestWaves: 20, declaredCells: 0, undeclaredCells: 1, latestSubmittedAt: now - 180_000 },
+              contracts: [{ contractId: 'e1-dry-gulch', score: { secured: true, waves: 20, timeAlive: 700, gold: 260, baseValue: 420 }, difficulty: 'trail', harness: 'pi', submittedAt: now - 180_000 }],
+            },
+            {
+              model: 'undeclared rider',
+              aggregate: { standings: 1, contracts: 1, crowns: 0, bestWaves: 12, declaredCells: 0, undeclaredCells: 1, latestSubmittedAt: now - 120_000 },
+              contracts: [{ contractId: 'the-claim', score: { secured: true, waves: 12, timeAlive: 612, gold: 120, baseValue: 240 }, difficulty: 'greenhorn', submittedAt: now - 120_000 }],
+            },
+          ],
+        };
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
         ok: true,
-        view: 'byStack',
+        view,
         epochId: 'epoch-1-frontier',
-        contracts: ['the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'],
-        byStack: [
-          {
-            model: 'gpt-5.6-sol',
-            latestSubmittedAt: now - 60_000,
-            contracts: [
-              {
-                contractId: 'the-claim',
-                score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 },
-                difficulty: 'trail',
-                tokensIn: 90_000,
-                tokensOut: 8_000,
-                calls: 18,
-                harness: 'codex',
-                harnessVersion: '2026.08',
-                config: 'medium',
-                submittedAt: now - 60_000,
-              },
-              {
-                contractId: 'e1-dry-gulch',
-                score: { secured: true, waves: 14, timeAlive: 614, gold: 140, baseValue: 280 },
-                difficulty: 'vein-hunter',
-                harness: 'gr-sim',
-                submittedAt: now - 86_400_000,
-              },
-            ],
-          },
-          {
-            model: 'unregistered rig',
-            latestSubmittedAt: now - 120_000,
-            contracts: [{
-              contractId: 'the-claim',
-              score: { secured: true, waves: 12, timeAlive: 612, gold: 120, baseValue: 240 },
-              difficulty: 'greenhorn',
-              submittedAt: now - 120_000,
-            }],
-          },
-          {
-            model: 'pi-v4',
-            latestSubmittedAt: now - 180_000,
-            contracts: [{
-              contractId: 'e1-dry-gulch',
-              score: { secured: true, waves: 20, timeAlive: 700, gold: 260, baseValue: 420 },
-              difficulty: 'trail',
-              submittedAt: now - 180_000,
-            }],
-          },
-        ],
+        contracts: ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'],
+        ...groups,
       }),
     });
   });
@@ -220,14 +242,16 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
   expect(new URL(page.url()).search).toBe('');
   await page.getByTestId('start-menu-claim-ledger').click();
   await page.getByTestId('claim-ledger-field-book').click();
-  await expect(page.getByTestId('field-book-matrix')).toBeVisible();
-  await expect(page.getByTestId('field-book-matrix')).toContainText('3 rigs · 2 contracts with showings');
-  await expect(page.getByTestId('field-book-matrix').locator('thead th')).toHaveCount(3);
-  await expect(page.getByTestId('field-book-matrix')).not.toContainText('Night Shift');
+  await expect(page.getByTestId('field-book-aggregate')).toBeVisible();
+  await expect(page.getByTestId('field-book-aggregate')).toContainText('3 minds · 2 contracts with showings');
+  await expect(page.getByTestId('field-book-aggregate')).toContainText('90,000 in · 8,000 out · 18 calls');
+  await expect(page.getByTestId('field-book')).toContainText('Minds and rigs are SELF-DECLARED');
+  await expect(page.getByTestId('field-book-view-byStack')).toHaveText('Minds');
+  await expect(page.getByTestId('field-book-view-byHarness')).toHaveText('Rigs');
+  await expect(page.getByTestId('field-book-row-undeclared-rider')).toBeVisible();
+  await page.getByTestId('field-book-row-gpt-5-6-sol').click();
   await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-the-claim')).toContainText('90,000 in');
   await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-e1-dry-gulch')).toContainText('Cost not declared');
-  await expect(page.getByTestId('field-book-row-unregistered-rig')).toBeVisible();
-  await page.getByTestId('field-book-row-gpt-5-6-sol').click();
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('codex 2026.08');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('medium');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText(new Date(now - 60_000).toISOString());
@@ -242,7 +266,20 @@ test('plain boot renders and expands the Field Book matrix', async ({ page }, te
   // dev base '/' yields '/skill.md'; the goldrush-base release yields '/goldrush/skill.md'.
   await expect(frontDesk.getByTestId('front-desk-skill-link')).toHaveAttribute('href', /skill\.md$/);
   expect(await frontDesk.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+  expect(await page.locator('body').evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
   await page.locator('.claim-ledger__shell').evaluate((element) => { element.scrollTop = 0; });
+  await mkdir(MINDS_AND_RIGS_SHOTS, { recursive: true });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(MINDS_AND_RIGS_SHOTS, `minds-${testInfo.project.name}.png`) });
+
+  await page.getByTestId('field-book-view-byHarness').click();
+  await expect(page.getByTestId('field-book-aggregate')).toContainText('3 rigs · 2 contracts with showings');
+  await expect(page.getByTestId('field-book-row-codex')).toContainText('1');
+  await expect(page.getByTestId('field-book-row-undeclared-rig')).toBeVisible();
+  await page.getByTestId('field-book-row-codex').click();
+  await expect(page.getByTestId('field-book-cell-codex-the-claim')).toContainText('90,000 in');
+  expect(await page.locator('body').evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(MINDS_AND_RIGS_SHOTS, `rigs-${testInfo.project.name}.png`) });
+
   await mkdir(FD1_SHOTS, { recursive: true });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(FD1_SHOTS, `field-book-${testInfo.project.name}.png`) });
   await mkdir(SHOTS, { recursive: true });
@@ -266,6 +303,6 @@ test('plain boot renders the honest empty Field Book state', async ({ page }) =>
   await page.goto('/');
   await page.getByTestId('start-menu-claim-ledger').click();
   await page.getByTestId('claim-ledger-field-book').click();
-  await expect(page.getByTestId('field-book-board')).toHaveText('No rigs in the field book yet — the door is open.');
+  await expect(page.getByTestId('field-book-board')).toHaveText('No minds in the field book yet — the door is open.');
   expect(errors).toEqual({ console: [], page: [] });
 });

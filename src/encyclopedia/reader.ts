@@ -31,7 +31,7 @@ type OpenClaimLedgerOptions = {
 };
 
 type LedgerView = 'ledger' | 'standings' | 'field-book';
-type FieldBookView = 'byStack' | 'byParty';
+type FieldBookView = 'byStack' | 'byHarness' | 'byParty';
 type StandingsDifficulty = DifficultyPresetId | 'all';
 type StandingsParty = 'solo' | '2' | '3' | '4';
 
@@ -73,9 +73,23 @@ type FieldBookCell = {
   config?: string;
 };
 
+type FieldBookAggregate = {
+  standings: number;
+  contracts: number;
+  crowns: number;
+  bestWaves: number;
+  totalTokensIn?: number;
+  totalTokensOut?: number;
+  totalCalls?: number;
+  declaredCells: number;
+  undeclaredCells: number;
+  latestSubmittedAt: number;
+};
+
 type FieldBookRow = {
-  model: string;
+  name: string;
   contracts: FieldBookCell[];
+  aggregate: FieldBookAggregate;
 };
 
 type FieldBook = {
@@ -119,7 +133,8 @@ const PARTY_LABELS: Record<StandingsParty, string> = {
 const PARTY_ORDER: readonly StandingsParty[] = ['solo', '2', '3', '4'];
 
 const FIELD_BOOK_VIEW_LABELS: Record<FieldBookView, string> = {
-  byStack: 'By rig',
+  byStack: 'Minds',
+  byHarness: 'Rigs',
   byParty: 'By team',
 };
 
@@ -359,7 +374,7 @@ function renderFieldBookLedger(): string {
         <p class="field-book__intro">${
           currentFieldBookView === 'byParty'
             ? "Who rode with whom, as the riders declared themselves — the field book counts hands, the board never does."
-            : "The county's field book of rigs and their showings — cost is recorded, never ranked."
+            : 'Minds and rigs are SELF-DECLARED — the county prints what riders claim; the boards rank results alone.'
         }</p>
         <nav class="county-standings__contracts field-book__views" aria-label="Field book views">
           ${(Object.keys(FIELD_BOOK_VIEW_LABELS) as FieldBookView[])
@@ -386,7 +401,7 @@ async function loadFieldBook(): Promise<void> {
   const epochId = activeEpochId();
   const view = currentFieldBookView;
   const render = (payload: unknown): string =>
-    view === 'byParty' ? renderPartyBook(readPartyBook(payload)) : renderFieldBook(readFieldBook(payload));
+    view === 'byParty' ? renderPartyBook(readPartyBook(payload)) : renderFieldBook(readFieldBook(payload, view), view);
   if (!root) return;
   if (globalThis.navigator?.onLine === false) {
     const board = root.querySelector<HTMLElement>('[data-testid="field-book-board"]');
@@ -408,18 +423,37 @@ async function loadFieldBook(): Promise<void> {
   if (board) board.innerHTML = render(payload);
 }
 
-function readFieldBook(value: unknown): FieldBook {
+function readFieldBook(value: unknown, view: Exclude<FieldBookView, 'byParty'>): FieldBook {
   if (!value || typeof value !== 'object') return { contracts: [], rows: [] };
-  const payload = value as { contracts?: unknown; byStack?: unknown };
-  if (!Array.isArray(payload.contracts) || !Array.isArray(payload.byStack)) return { contracts: [], rows: [] };
+  const payload = value as { contracts?: unknown; byStack?: unknown; byHarness?: unknown };
+  const grouped = view === 'byHarness' ? payload.byHarness : payload.byStack;
+  if (!Array.isArray(payload.contracts) || !Array.isArray(grouped)) return { contracts: [], rows: [] };
   const contracts = payload.contracts.filter((contract): contract is string => typeof contract === 'string').slice(0, 100);
-  const rows = payload.byStack.slice(0, 100).flatMap((value): FieldBookRow[] => {
+  const nameField = view === 'byHarness' ? 'harness' : 'model';
+  const undeclared = view === 'byHarness' ? 'undeclared rig' : 'undeclared rider';
+  const rows = grouped.slice(0, 100).flatMap((value): FieldBookRow[] => {
     if (!value || typeof value !== 'object') return [];
-    const row = value as { model?: unknown; contracts?: unknown };
-    if (typeof row.model !== 'string' || !Array.isArray(row.contracts)) return [];
-    return [{ model: row.model, contracts: row.contracts.filter(isFieldBookCell) }];
+    const row = value as Record<string, unknown>;
+    const aggregate = readFieldBookAggregate(row.aggregate);
+    if (typeof row[nameField] !== 'string' || !Array.isArray(row.contracts) || !aggregate) return [];
+    return [{ name: row[nameField], contracts: row.contracts.filter(isFieldBookCell), aggregate }];
+  }).sort((a, b) => {
+    if (a.name === undeclared) return b.name === undeclared ? 0 : 1;
+    if (b.name === undeclared) return -1;
+    return b.aggregate.crowns - a.aggregate.crowns
+      || b.aggregate.standings - a.aggregate.standings
+      || a.name.localeCompare(b.name);
   });
   return { contracts, rows };
+}
+
+function readFieldBookAggregate(value: unknown): FieldBookAggregate | null {
+  if (!value || typeof value !== 'object') return null;
+  const aggregate = value as Partial<FieldBookAggregate>;
+  if (![aggregate.standings, aggregate.contracts, aggregate.crowns, aggregate.bestWaves, aggregate.declaredCells,
+    aggregate.undeclaredCells, aggregate.latestSubmittedAt].every((entry) => Number.isInteger(entry) && (entry ?? -1) >= 0)) return null;
+  if (!validOptionalCost(aggregate.totalTokensIn) || !validOptionalCost(aggregate.totalTokensOut) || !validOptionalCost(aggregate.totalCalls)) return null;
+  return aggregate as FieldBookAggregate;
 }
 
 function isFieldBookCell(value: unknown): value is FieldBookCell {
@@ -434,38 +468,60 @@ function isFieldBookCell(value: unknown): value is FieldBookCell {
     && validOptionalString(cell.harness) && validOptionalString(cell.harnessVersion) && validOptionalString(cell.config);
 }
 
-function renderFieldBook(fieldBook: FieldBook): string {
-  if (fieldBook.rows.length === 0) return '<p class="county-standings__empty">No rigs in the field book yet — the door is open.</p>';
+function renderFieldBook(fieldBook: FieldBook, view: Exclude<FieldBookView, 'byParty'>): string {
+  const noun = view === 'byHarness' ? 'rig' : 'mind';
+  if (fieldBook.rows.length === 0) return `<p class="county-standings__empty">No ${noun}s in the field book yet — the door is open.</p>`;
   const contractNames = new Map(listContracts(activeEpochId()).map((contract) => [contract.id, contract.boardRow.name]));
   const contracts = fieldBook.contracts.filter((contractId) => fieldBook.rows.some((row) => row.contracts.some((cell) => cell.contractId === contractId)));
   return `
-    ${contracts.length > 1 ? '<p class="field-book__swipe">Swipe the book for another contract &rarr;</p>' : ''}
-    <table class="field-book__matrix" data-testid="field-book-matrix">
-      <caption>${fieldBook.rows.length} ${fieldBook.rows.length === 1 ? 'rig' : 'rigs'} &middot; ${contracts.length} ${contracts.length === 1 ? 'contract' : 'contracts'} with showings</caption>
-      <thead><tr><th scope="col">Rig</th>${contracts.map((id) => `<th scope="col">${escapeHtml(contractNames.get(id) ?? id)}</th>`).join('')}</tr></thead>
+    <div class="field-book__aggregate-wrap">
+    <table class="field-book__aggregate" data-testid="field-book-aggregate">
+      <caption>${fieldBook.rows.length} ${fieldBook.rows.length === 1 ? noun : `${noun}s`} &middot; ${contracts.length} ${contracts.length === 1 ? 'contract' : 'contracts'} with showings</caption>
+      <thead><tr><th scope="col">${view === 'byHarness' ? 'Rig' : 'Mind'}</th><th scope="col">Standings</th><th scope="col">Contracts</th><th scope="col">Crowns</th><th scope="col">Best waves</th><th scope="col">Declared cost</th><th scope="col">Last active</th></tr></thead>
       <tbody>
         ${fieldBook.rows.map((row, index) => renderFieldBookRow(row, index, contracts, contractNames)).join('')}
       </tbody>
     </table>
+    </div>
   `;
 }
 
 function renderFieldBookRow(row: FieldBookRow, index: number, contracts: readonly string[], names: ReadonlyMap<string, string>): string {
   const cells = new Map(row.contracts.map((cell) => [cell.contractId, cell]));
-  const rowSlug = slug(row.model) || 'unregistered-rig';
+  const rowSlug = slug(row.name) || 'undeclared';
+  const aggregate = row.aggregate;
   return `
     <tr class="field-book__row" data-field-book-key="${index}" data-testid="field-book-row-${rowSlug}">
-      <th scope="row"><button type="button" data-field-book-toggle aria-expanded="false">${escapeHtml(row.model)}<span aria-hidden="true"> +</span></button></th>
-      ${contracts.map((contractId) => renderFieldBookCell(cells.get(contractId), rowSlug, contractId)).join('')}
+      <th scope="row"><button type="button" data-field-book-toggle aria-expanded="false">${escapeHtml(row.name)}<span aria-hidden="true"> +</span></button></th>
+      <td>${aggregate.standings}</td><td>${aggregate.contracts}</td><td>${aggregate.crowns}</td><td>${formatCount(aggregate.bestWaves)}</td>
+      <td>${renderAggregateCost(aggregate)}</td>
+      <td><time datetime="${safeIsoDate(aggregate.latestSubmittedAt)}">${relativeAge(aggregate.latestSubmittedAt)}</time></td>
     </tr>
     <tr class="field-book__details" data-field-book-details="${index}" hidden>
-      <td colspan="${contracts.length + 1}">
+      <td colspan="7">
+        ${contracts.length > 1 ? '<p class="field-book__swipe">Swipe the book for another contract &rarr;</p>' : ''}
+        <div class="field-book__contract-wrap">
+          <table class="field-book__matrix" data-testid="field-book-contracts-${rowSlug}">
+            <thead><tr>${contracts.map((id) => `<th scope="col">${escapeHtml(names.get(id) ?? id)}</th>`).join('')}</tr></thead>
+            <tbody><tr>${contracts.map((contractId) => renderFieldBookCell(cells.get(contractId), rowSlug, contractId)).join('')}</tr></tbody>
+          </table>
+        </div>
         <div class="field-book__details-grid">
           ${row.contracts.map((cell) => renderFieldBookDetails(cell, names.get(cell.contractId) ?? cell.contractId, rowSlug)).join('')}
         </div>
       </td>
     </tr>
   `;
+}
+
+function renderAggregateCost(aggregate: FieldBookAggregate): string {
+  const costs = [
+    aggregate.totalTokensIn === undefined ? undefined : `${formatCount(aggregate.totalTokensIn)} in`,
+    aggregate.totalTokensOut === undefined ? undefined : `${formatCount(aggregate.totalTokensOut)} out`,
+    aggregate.totalCalls === undefined ? undefined : `${formatCount(aggregate.totalCalls)} calls`,
+  ].filter((value): value is string => value !== undefined);
+  if (costs.length === 0) return '&mdash;';
+  return `${costs.join(' &middot; ')}<small>${aggregate.declaredCells} declared &middot; ${aggregate.undeclaredCells} undeclared</small>`;
 }
 
 function renderFieldBookCell(cell: FieldBookCell | undefined, rowSlug: string, contractId: string): string {

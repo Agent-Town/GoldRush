@@ -463,6 +463,38 @@
   max-height: 560px;
 }
 
+.field-book__aggregate-wrap,
+.field-book__contract-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.field-book__aggregate {
+  width: max-content;
+  min-width: 100%;
+}
+
+.field-book__aggregate th,
+.field-book__aggregate td {
+  text-align: left;
+  vertical-align: top;
+}
+
+.field-book__aggregate small {
+  display: block;
+  margin-top: 4px;
+  color: #684728;
+  font-size: 0.68rem;
+}
+
+.field-book__aggregate caption {
+  padding: 9px 12px;
+  color: #684728;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-align: left;
+}
+
 .field-book__matrix {
   width: max-content;
   min-width: 100%;
@@ -549,6 +581,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 10px;
+  margin-top: 12px;
 }
 
 .field-book__details article {
