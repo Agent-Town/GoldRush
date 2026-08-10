@@ -12,6 +12,7 @@ type MockKV = {
 const SHOTS = path.resolve('reviews/shots-fd3');
 const FD1_SHOTS = path.resolve('reviews/shots-fd1');
 const MINDS_AND_RIGS_SHOTS = path.resolve('reviews/shots-minds-and-rigs');
+const STACK_DIRECTORY_SHOTS = path.resolve('reviews/shots-stack-directory');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'field-book',
@@ -187,14 +188,14 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
       ? {
           byHarness: [
             {
-              harness: 'codex',
+              harness: 'codex-cli',
               aggregate: { standings: 1, contracts: 1, crowns: 1, bestWaves: 20, totalTokensIn: 90_000, totalTokensOut: 8_000, totalCalls: 18, declaredCells: 1, undeclaredCells: 0, latestSubmittedAt: now - 60_000 },
-              contracts: [{ contractId: 'the-claim', score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 }, difficulty: 'trail', tokensIn: 90_000, tokensOut: 8_000, calls: 18, harness: 'codex', harnessVersion: '2026.08', config: 'medium', submittedAt: now - 60_000 }],
+              contracts: [{ contractId: 'the-claim', score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 }, difficulty: 'trail', tokensIn: 90_000, tokensOut: 8_000, calls: 18, harness: 'codex-cli', harnessVersion: '2026.08', config: 'medium', submittedAt: now - 60_000 }],
             },
             {
-              harness: 'gr-sim',
+              harness: 'unknown-rig',
               aggregate: { standings: 1, contracts: 1, crowns: 0, bestWaves: 14, declaredCells: 0, undeclaredCells: 1, latestSubmittedAt: now - 86_400_000 },
-              contracts: [{ contractId: 'e1-dry-gulch', score: { secured: true, waves: 14, timeAlive: 614, gold: 140, baseValue: 280 }, difficulty: 'vein-hunter', harness: 'gr-sim', submittedAt: now - 86_400_000 }],
+              contracts: [{ contractId: 'e1-dry-gulch', score: { secured: true, waves: 14, timeAlive: 614, gold: 140, baseValue: 280 }, difficulty: 'vein-hunter', harness: 'unknown-rig', submittedAt: now - 86_400_000 }],
             },
             {
               harness: 'undeclared rig',
@@ -246,6 +247,7 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
   await expect(page.getByTestId('field-book-aggregate')).toContainText('3 minds · 2 contracts with showings');
   await expect(page.getByTestId('field-book-aggregate')).toContainText('90,000 in · 8,000 out · 18 calls');
   await expect(page.getByTestId('field-book')).toContainText('Minds and rigs are SELF-DECLARED');
+  await expect(page.getByTestId('field-book')).toContainText("learn-more links are the county's own pointers");
   await expect(page.getByTestId('field-book-view-byStack')).toHaveText('Minds');
   await expect(page.getByTestId('field-book-view-byHarness')).toHaveText('Rigs');
   await expect(page.getByTestId('field-book-row-undeclared-rider')).toBeVisible();
@@ -273,10 +275,17 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
 
   await page.getByTestId('field-book-view-byHarness').click();
   await expect(page.getByTestId('field-book-aggregate')).toContainText('3 rigs · 2 contracts with showings');
-  await expect(page.getByTestId('field-book-row-codex')).toContainText('1');
+  await expect(page.getByTestId('field-book-row-codex-cli')).toContainText('1');
   await expect(page.getByTestId('field-book-row-undeclared-rig')).toBeVisible();
-  await page.getByTestId('field-book-row-codex').click();
-  await expect(page.getByTestId('field-book-cell-codex-the-claim')).toContainText('90,000 in');
+  await expect(page.getByTestId('field-book-info-codex-cli')).toHaveAttribute('href', 'https://github.com/openai/codex');
+  await expect(page.getByTestId('field-book-info-codex-cli')).toHaveAttribute('target', '_blank');
+  await expect(page.getByTestId('field-book-info-codex-cli')).toHaveAttribute('rel', 'noopener');
+  await expect(page.getByTestId('field-book-row-unknown-rig')).toBeVisible();
+  await expect(page.getByTestId('field-book-row-unknown-rig').locator('[data-field-book-info]')).toHaveCount(0);
+  await mkdir(STACK_DIRECTORY_SHOTS, { recursive: true });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(STACK_DIRECTORY_SHOTS, `rigs-${testInfo.project.name}.png`) });
+  await page.getByTestId('field-book-row-codex-cli').click();
+  await expect(page.getByTestId('field-book-cell-codex-cli-the-claim')).toContainText('90,000 in');
   expect(await page.locator('body').evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(MINDS_AND_RIGS_SHOTS, `rigs-${testInfo.project.name}.png`) });
 
