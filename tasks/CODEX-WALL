@@ -80,7 +80,7 @@ before 2026-08-16.
   correct. s1632 re-dispatched it to lane-c with a `gpt-5.5` header (its one permitted wall-class
   re-queue, which does NOT count toward twice-then-escalate).
 
-## s1635 PROBE (2026-08-10 ~18:35 local) — STILL WALLED, BUT THE ERROR NAMES A **FREE** REMEDY NOBODY HAS TRIED (F-1635-3)
+## s1635 PROBE — STILL WALLED. ⛔ THIS SECTION SELF-REFUTED; READ THE CORRECTION AT ITS FOOT BEFORE ACTING (F-1635-3)
 
 Ran the prescribed second probe, via node (the bash gate refuses `codex exec` to a fire, not to the factory):
 
@@ -117,3 +117,43 @@ an experiment that can wait minutes. It is also an ops change to Robin's machine
 captured the server's available-models list with **no 5.6 family at all**, which an upgrade would not change
 if the real cause is an account entitlement. So this is a cheap test to run first, not a diagnosis. What is
 now certain is only this: **the one remedy the server names has never been attempted, and it is free.**
+
+### ⛔ CORRECTION, SAME FIRE (s1635) — THE SECTION ABOVE IS WRONG. THE EXECUTING BINARY WAS NEVER STALE.
+
+Two minutes after writing the above onto the owner's desk, the SEA-1 dispatch log printed its banner:
+
+    OpenAI Codex v0.145.0
+
+**Not 0.133.0.** `codex --version` reports the **npm wrapper**; `codex exec` runs something else.
+
+| Instrument | Says |
+|---|---|
+| `npm ls -g @openai/codex` | 0.133.0 |
+| `codex --version` | `codex-cli 0.133.0` |
+| **run-log banner, `20260810-160522` (lane-c — THE RUN THAT RAISED THIS WALL)** | **OpenAI Codex v0.145.0** |
+| **run-log banner, `20260810-181709` (lane-a)** | **OpenAI Codex v0.145.0** |
+| **run-log banner, `20260810-183445` (lane-b)** | **OpenAI Codex v0.145.0** |
+
+**0.145.0 is ABOVE the `0.144.1` floor that `lane-runner-v3.sh:172` names for knowing 5.6 ids.**
+
+🔑 **DECISIVE:** the run that raised this wall was itself executing **v0.145.0** and died on
+*"You've hit your usage limit … try again at Aug 16th, 2026 3:30 AM"* — a **quota** message from an
+already-current client. A version that is already past the floor cannot be the cause.
+
+➡️ **CORRECTED CONCLUSION: the version theory is REFUTED. `npm i -g @openai/codex@latest` would change
+nothing operationally. F-1631-3's ORIGINAL quota reading stands: the owner's options are (a) buy credits
+or (b) wait for 2026-08-16 03:30. There is no free third door, and no fire should imply there is.**
+
+⚠️ **This also retires s1632's probe-4/5 hedge**, which cited the same `codex --version` = 0.133.0 against
+the 0.144.1 comment to suggest *"the installed CLI could not address the 5.6 ids anyway."* Same bad
+instrument, same unsound inference. **Do not carry it forward.**
+
+📐 **THE REUSABLE SHAPE — this is F-1632-1's own lesson, recurring inside the write-up of F-1632-1's own
+lesson: a probe that shares a defaulted parameter with the subject stops measuring the subject.** There the
+default was the MODEL (a bare `codex exec` routed through the walled model); here it is the BINARY
+(`codex --version` answers about the npm package, not about what runs). ✅ **The rule that would have
+caught both: ask the artifact the factory actually produced — the run-log banner — not the tool's
+self-report.**
+
+**The wall itself is UNCHANGED and STAYS.** `gpt-5.6-sol` remains unreachable; dispatch continues on
+`gpt-5.5`, which is working (SEA-1 dispatched on it at 18:34, `model: gpt-5.5`, `effort: high`).
