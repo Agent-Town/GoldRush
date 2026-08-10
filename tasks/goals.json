@@ -6736,7 +6736,8 @@
                 {
                   "id": "ap16-4-contract-reachability",
                   "title": "AP-16-4: the door opens every browser-launchable contract (audit class 5 \u2014 30 of 42 rejected; the owner's \"maps\" clause)",
-                  "status": "queued",
+                  "status": "merged",
+                  "mergeHash": "d4fcc3542fd92f768c1a9840c0c4d5b3fb7fa1ab",
                   "taskFile": "lane-a-ap16-4-same-game-admission.md",
                   "note_s1642": "FIRE-AUTHORED s1642 from the AP-16-4 spec slice, which the attended session wrote 6 minutes before this fire took the lock (eb961f2c8) and which marks the slice 'fire-authorable from this slice' in as many words \u2014 discharging F-1641-3's gate. The '30 of 42' in the title is now known to be HALF WRONG and the master says so: the audit's human side is a hardcoded true (scripts/same-game-audit.mjs, 'direction(true, agentCanEnter),'), so it never asked whether the browser offers the contract. Measured s1642: 15 of the 30 carry harvestAnchors: [] and the BROWSER refuses them too (src/meta/ContractFamilies.ts, \"fallbackReason = 'unavailable-contract';\"), which by the spec's own law puts them OUTSIDE the same-game universe rather than in debt. The 30 split exactly 15 outside-universe / 15 genuine candidates, and 0 contracts are door-admitted while browser-refused. Of the 15 genuine, 5 are already-ruled refusals the master forbids overturning (e5-deepwater-claim/e5-stillwater/e6-glow-mesa/e6-showroom measured-and-refused per reviews/milk-twin-sockets.md; e3-fairground is OWNER FORK F-1475-1), leaving 10 to attempt. Filed as F-1642-1."
                 },
