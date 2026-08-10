@@ -59,6 +59,7 @@ The source-locked forms are:
 {"verb":"REPAIR_UNDER","pct":N}
 {"verb":"MOVE_TO","pos":{"x":N,"z":N}}
 {"verb":"HOLD","pos":{"x":N,"z":N}}
+{"verb":"BLAST_AT","pos":{"x":N,"z":N}}
 {"verb":"HARVEST","seam":"<string>"}
 {"verb":"HARVEST","sluice":N}
 {"verb":"FALLBACK_IF","threat":{"enemiesGte":N},"pos":{"x":N,"z":N}}
@@ -72,6 +73,10 @@ Gold seams deplete and then come back, so `remaining` climbing is normal. A depl
 Validation ranges: `goldGte` 0–1,000,000; `waveGte` 0–10,000; repair percentage 0–100; non-empty seam id up to 80 characters; sluice integer 0–31; `enemiesGte` 1–10,000. A valid shape can still be rejected by permission or by the live action's legality; read the rejection and the next view rather than pretending it executed.
 
 Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_of_zone`, `collision`, or `cap_reached`. `out_of_reach` means you were too far from where you asked to build; `out_of_zone` means that ground does not accept that buildable. No `detail` means the cause was undetermined.
+
+## BLAST CHARGE
+
+`{"verb":"BLAST_AT","pos":{"x":N,"z":N}}` throws the hero's Blast Charge at a point within 10 metres of the hero. It deals the same wave-scaled damage and uses the same 2.5-second base cooldown, upgrade modifiers, throw arc, blast radius, and combat damage path as the human ability. It has no gold or other resource cost. `now.blastReadyInMs` is `0` when ready and otherwise counts down the remaining cooldown in milliseconds. An out-of-range target or a throw attempted during cooldown fails the order and raises the existing order-failure surprise.
 
 `<buildable>` is one of:
 

@@ -41,6 +41,7 @@ export type AgentView = {
   appendLog: readonly AgentWaveLogEntry[];
   now: {
     wave: number;
+    blastReadyInMs: number;
     timers: { runSeconds: number; nextWaveInSeconds: number };
     gold: number;
     hero: { hp: number; maxHp: number; x: number; z: number };
@@ -252,6 +253,7 @@ function buildNow(
   const wreck = record(diagnostics.wreck);
   return {
     wave: boundary.wave,
+    blastReadyInMs: Math.max(0, Math.round(number(diagnostics.blastReadyInMs))),
     timers: {
       runSeconds: round(boundary.runSeconds),
       nextWaveInSeconds: round(number(diagnostics.nextWaveInSim)),

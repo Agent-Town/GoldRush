@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { install, type AgentBuildingRef, type AgentGameAdapter, type GoldRushToolSurface, type ToolReceipt } from '../agent/ToolSurface';
 import {
+  bindStandingOrderBlast,
   observeStandingOrders,
   snapshotStandingOrders,
   type StandingOrdersView,
@@ -184,6 +185,7 @@ export class HeadlessContractSim {
   private readonly xpMotes = new XpMotePool();
   private readonly combatVfx = new CombatVfx();
   private readonly targeting = new TargetingSystem();
+  private blastReadyAt = 0;
   private readonly heroShooter: ShooterHandle = {
     id: 'hero',
     resumeKey: 'hero:0:rig',
@@ -416,6 +418,7 @@ export class HeadlessContractSim {
       repair: (building) => this.repairBuilding(building),
     };
     this.surface = install(adapter, { permissionLevel: 3 });
+    bindStandingOrderBlast((pos) => this.blastAt(pos));
     this.bindEventLog();
     this.economy.apply(this.economyEvent({ type: 'run_reset' }));
     const sim = this;
@@ -909,6 +912,7 @@ export class HeadlessContractSim {
       hp: this.hero.hp,
       maxHp: this.hero.maxHp,
       heroPos: point(this.hero.group.position),
+      blastReadyInMs: Math.max(0, Math.round((this.blastReadyAt - this.timeAlive) * 1000)),
       build: {
         hp: this.build.diagnostics.hp,
         sluicePositions: this.build.diagnostics.sluicePositions,
@@ -1211,6 +1215,29 @@ export class HeadlessContractSim {
     this.build.applyStats(stats.beaconFireRateMult, 1);
     if (stats.stockpileCapBonus > 0) this.economy.addCapSource('upgrade:stockpile_cap', stats.stockpileCapBonus);
     else this.economy.removeCapSource('upgrade:stockpile_cap');
+  }
+
+  private blastAt(pos: { x: number; z: number }): { ok: true } | { ok: false; reason: string } {
+    const readyInMs = Math.max(0, Math.round((this.blastReadyAt - this.timeAlive) * 1000));
+    if (readyInMs > 0) return { ok: false, reason: `COOLDOWN: Blast Charge ready in ${readyInMs}ms.` };
+    const origin = this.hero.group.position;
+    if (Math.hypot(pos.x - origin.x, pos.z - origin.z) > Balance.blast.range) {
+      return { ok: false, reason: `OUT_OF_RANGE: BLAST_AT must be within ${Balance.blast.range}m of the hero.` };
+    }
+    const stats = this.progression.stats;
+    const waveMult = 1 + Math.max(0, this.waves.diagnostics.wave) * Balance.blast.dmgPerWave;
+    const launched = this.combat.launchLob(
+      origin,
+      new THREE.Vector3(pos.x, Balance.enemy.groundY, pos.z),
+      Balance.blast.airTime,
+      Balance.blast.damage * stats.blastDamageMult * waveMult,
+      Balance.blast.radius * stats.blastRadiusMult,
+      'hero_blast',
+    );
+    if (!launched) return { ok: false, reason: 'BLAST_POOL_FULL: no blast charge slot is available.' };
+    this.blastReadyAt = this.timeAlive + Math.max(0.35, Balance.blast.cooldown * stats.blastCooldownMult);
+    this.replayEvents.push({ type: 'blast_at', at: round(this.timeAlive), pos: point(pos) });
+    return { ok: true };
   }
 
   private syncStockpileHoldings(): void {
