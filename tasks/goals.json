@@ -6678,8 +6678,16 @@
                 {
                   "id": "ap16-1-buildable-parity",
                   "title": "AP-16-1: door narrows to the manifest; parity becomes a guard (cuts against the merged audit table)",
+                  "status": "merged",
+                  "mergeHash": "8465f6b3313fb7e4ca2c4cad538b715994660cab",
+                  "taskFile": "lane-a-ap16-1-buildable-parity.md",
+                  "drainNotes": "s1636 drain. Behavioural unification is real: mechanicsBuildableIds(manifest) is now the single source both Game.ts:5717 and HeadlessContractSim.ts read. Gates: tsc clean, build green, test:node-guards 442/437 pass/0 fail, adjacent 32/32, plain-boot 4/4, all --workers=1. Buildable rows 520 diverging -> 0; ability/choice/economy/verb rows unchanged (firewall held). F-1636-1 RAISED: the audit generator now derives BOTH sides of the buildable comparison from the same advertisedBuildables() helper, so the 0-divergence headline is TAUTOLOGICAL and the new guard assertion cannot go red -- proven by forcing the browser predicate to offer nothing and still reading 840/840 equal. The number must NOT be cited as evidence of parity until f1636-1-same-game-audit-independence lands. Review: reviews/ap16-1-buildable-parity.md"
+                },
+                {
+                  "id": "f1636-1-same-game-audit-independence",
+                  "title": "F-1636-1: the same-game audit must MEASURE buildable parity again — both sides of the row come from the same helper, so 0-divergence is a tautology and its guard cannot go red",
                   "status": "queued",
-                  "taskFile": "lane-a-ap16-1-buildable-parity.md"
+                  "taskFile": "f1636-1-same-game-audit-independence.md"
                 },
                 {
                   "id": "ap16-2-draft-reaches-door",
