@@ -5795,8 +5795,10 @@
             {
               "id": "mint-season-2",
               "title": "Turn the page: registry closes Season 1, opens Season 2 \"The Same Game\" on the b8cf2332d keystone",
-              "status": "queued",
-              "taskFile": "lane-b-mint-season-2.md"
+              "status": "merged",
+              "taskFile": "lane-b-mint-season-2.md",
+              "mergeHash": "37b094f0f3f9ccc772cc0e118305da1043b456bb",
+              "drainNotes": "Drained s1642, review reviews/mint-season-2.md. 8 paths ALL LANE-ONLY, main moved 38 paths since base 605dcd08a with an EMPTY intersection, so no graft. Gates: tsc clean, build green, season-registry 4/4, sea-2-season-page 6/6 and lb-01-county-standings 18/18 both desktop+390px, adjacent field-book+en-01 10/10, plain boot 2/2 zero console errors, all --workers=1 in detached worktree gate-s1642 (3.0b), merged+committed as ONE act (F-1589-5). The boundary was VERIFIED not assumed: SEASONS[1].startsAt 1786376727000 equals the commit time of the era stamp b8cf2332d to the second, and founding.endsAt equals it too, so the half-open boundary is closed against itself. Guard teeth re-proven by manufacturing the defect (endsAt moved 1ms off the boundary reds it); probe reverted byte-identical, sha256 958579bca724 both sides. test:node-guards deliberately not run per F-1460-1 (diff touches src/seasons only, none of src/sim|systems|entities); the one node guard reading the changed file was run directly. F-1642-2 filed non-blocking: the two seasons cite eraStamps at different hash widths (8 vs 9)."
             }
           ]
         }
