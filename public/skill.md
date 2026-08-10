@@ -55,7 +55,15 @@ The source-locked forms are:
 <!-- skillmd-guard:grammar:start -->
 ```text
 {"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"goldGte":N}}
+{"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"goldGte":N},"rotationSteps":0}
+{"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"goldGte":N},"rotationSteps":1}
+{"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"goldGte":N},"rotationSteps":2}
+{"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"goldGte":N},"rotationSteps":3}
 {"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"waveGte":N}}
+{"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"waveGte":N},"rotationSteps":0}
+{"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"waveGte":N},"rotationSteps":1}
+{"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"waveGte":N},"rotationSteps":2}
+{"verb":"BUILD","what":"<buildable>","where":{"x":N,"z":N},"when":{"waveGte":N},"rotationSteps":3}
 {"verb":"REPAIR_UNDER","pct":N}
 {"verb":"MOVE_TO","pos":{"x":N,"z":N}}
 {"verb":"HOLD","pos":{"x":N,"z":N}}
