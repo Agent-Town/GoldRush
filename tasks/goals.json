@@ -6647,8 +6647,10 @@
             {
               "id": "minds-rigs-full-width",
               "title": "F-1620-6 cure per owner ruling B (2026-08-10): Field Book tables span full width below a Front Desk strip",
-              "status": "queued",
-              "taskFile": "lane-b-minds-rigs-full-width.md"
+              "status": "merged",
+              "mergeHash": "c5687d423931cd57118bb9314482f3ed1b58b784",
+              "taskFile": "lane-b-minds-rigs-full-width.md",
+              "drainNotes": "MERGED s1635 as c5687d423931cd57118bb9314482f3ed1b58b784. F-1620-6 cured per owner ruling \"B\" (2026-08-10). New .claim-ledger__board-layout--field-book modifier collapses the Field Book board to one column above 561px: Front Desk becomes a full-width strip with horizontal repo links, the aggregate table takes its own full-width row. County Standings renders from a DIFFERENT function (reader.ts:314) that never receives the modifier, so its two-column layout is preserved structurally rather than by care - verified by READING both render sites, not by trusting the runner report. Gated in detached worktree gate-s1635, all --workers=1: tsc rc=0, build rc=0, field-book.spec 8/8 both projects with zero console/page errors asserted in-spec at :296/:316 inside the two PLAIN-BOOT tests (Mistake #10), adjacent lb-01-county-standings + en-01-claim-ledger + 078-ux-hygiene + board-era-chapters 34/34 both projects. test:node-guards NOT required: diff is src/encyclopedia only, none of src/sim, src/systems, src/entities, so the F-1460-1 trigger is not met. CONTROL: reverting ONLY the two source files to main while keeping the new spec goes RED at field-book.spec.ts:292 (scrollWidth <= clientWidth returns false), proving the new assertion is load-bearing. The second assertion (clientWidth >= 900) is never reached because the first throws, so it is NOT independently proven - F-1635-2. Declared cost now renders whole: 90,000 in / 8,000 out / 18 calls, where the F-1620-6 evidence clipped it at 8,00."
             }
           ],
           "subgoals": [
