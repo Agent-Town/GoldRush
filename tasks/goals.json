@@ -6691,8 +6691,10 @@
                 {
                   "id": "f1636-1-same-game-audit-independence",
                   "title": "F-1636-1: the same-game audit must MEASURE buildable parity again \u2014 both sides of the row come from the same helper, so 0-divergence is a tautology and its guard cannot go red",
-                  "status": "queued",
-                  "taskFile": "f1636-1-same-game-audit-independence.md"
+                  "status": "merged",
+                  "mergeHash": "fef46f6877054fadf9d282026eb695a44a686fbb",
+                  "taskFile": "f1636-1-same-game-audit-independence.md",
+                  "drainNotes": "MERGED s1638 fef46f6877054fadf9d282026eb695a44a686fbb. The audit measures buildable parity independently again: one side is the real browser predicate (Game.ts isBuildableEnabled), the other the real headless predicate, both reading mechanicsBuildableIds through vite ssrLoadModule, with wiring anchors that throw if either engine moves. agentCanEnter gates the agent side again. Teeth PROVEN by the drain, not inherited: forcing isBuildableEnabled to return false reds the guard 76 !== 0, reverted byte-identical (sha256 4ac2949d...e35d8d, identical to the runner GREEN arm). Assertion denominator MEASURED at 120 reachable browser-menu rows, so it is not vacuous. Counts re-derived: buildable equal 480 / agent-lacks 360 (was equal 840 tautologically); 360 = 30 unenterable contracts x 12 buildables, the CORRECT result. Gates: tsc clean, build green, test:node-guards rc=0 (5 skipped, 396s), adjacent 32/32 desktop+390px, plain boot 4/4 zero console errors, all --workers=1, gated in detached worktree gate-s1638. F-1638-1 RAISED AND CURED in d1e360155: the lane generated the report against a base predating SEA-1, so 252 evidence cells read standings.ts:656 where the merged tree says :661 (630 differing lines) -- regenerated on the merged tree; no guard asserts report freshness. F-1638-2 RAISED (non-blocking): the bridge evaluates source text through Function(), which works only while isBuildableEnabled stays one line of plain JS. Review: reviews/f1636-1-same-game-audit-independence.md"
                 },
                 {
                   "id": "ap16-2-draft-reaches-door",
