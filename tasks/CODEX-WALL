@@ -79,3 +79,41 @@ before 2026-08-16.
 - `tasks/lane-f1631-1-asset-diet-fallback-provenance.md` — the canonical master SURVIVES and is
   correct. s1632 re-dispatched it to lane-c with a `gpt-5.5` header (its one permitted wall-class
   re-queue, which does NOT count toward twice-then-escalate).
+
+## s1635 PROBE (2026-08-10 ~18:35 local) — STILL WALLED, BUT THE ERROR NAMES A **FREE** REMEDY NOBODY HAS TRIED (F-1635-3)
+
+Ran the prescribed second probe, via node (the bash gate refuses `codex exec` to a fire, not to the factory):
+
+    codex exec -m gpt-5.6-sol "reply exactly: OK"   ->  status 1
+    HTTP 400 invalid_request_error:
+    "The 'gpt-5.6-sol' model requires a newer version of Codex. Please upgrade to the latest app or CLI and try again."
+
+**So the flag STAYS and dispatch continues on `gpt-5.5`.** But read what the server actually said.
+
+| Probe | Result |
+|---|---|
+| `codex --version` | **0.133.0** |
+| `npm view @openai/codex version` | **0.147.0** |
+| `lane-runner-v3.sh:172` comment | *"CLI 0.144.1 knows 5.6 ids"* |
+
+⚠️ **THE WALL MAY NOT BE A QUOTA WALL AT ALL, AND IF SO, WAITING UNTIL 2026-08-16 BUYS NOTHING.**
+s1632 stated *conservatively* that a `gpt-5.6-sol`-tier quota was exhausted and would reset 2026-08-16,
+while noting that probes 2/3/5 *additionally suggest* a CLI-version cause. Three hours later the direct
+`-m gpt-5.6-sol` probe returns **no usage-limit language whatsoever** — it returns a VERSION error, and it
+names exactly one remedy. The installed CLI is **14 minor versions behind latest** and **below the 0.144.1
+that the runner's own comment says is needed to address 5.6 ids**.
+
+➡️ **RECOMMENDATION (owner call, NOT taken by this fire): try `npm i -g @openai/codex@latest` BEFORE
+spending anything on credits.** It is free, reversible (pin back to 0.133.0), and it is the only remedy the
+server itself proposed. **F-1631-3 asks the owner to consider BUYING CREDITS; this finding says the cheaper
+experiment has not been run yet and should go first.**
+
+🚫 **WHY THIS FIRE DID NOT JUST DO IT:** three lane runs (ap16-1/2/3, lanes a/c/d) were LIVE at probe time,
+and the runner spawns `codex` per task — swapping the implementer binary mid-run risks three live runs for
+an experiment that can wait minutes. It is also an ops change to Robin's machine, not a repo change, and
+§7.3 reserves toolchain changes for the owner.
+
+⚖️ **HONEST LIMIT ON THE CLAIM:** an upgrade may be NECESSARY without being SUFFICIENT. s1632's probe 3
+captured the server's available-models list with **no 5.6 family at all**, which an upgrade would not change
+if the real cause is an account entitlement. So this is a cheap test to run first, not a diagnosis. What is
+now certain is only this: **the one remedy the server names has never been attempted, and it is free.**
