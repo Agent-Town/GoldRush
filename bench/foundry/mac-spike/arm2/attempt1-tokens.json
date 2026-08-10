@@ -1,0 +1,85 @@
+{
+  "n_calls": 4,
+  "total_input": 22581,
+  "total_output": 46736,
+  "total_cache_read": 0,
+  "total_reasoning": 32283,
+  "total_tokens": 69317,
+  "total_cost_usd": 0.066817547672,
+  "priced_calls": 4,
+  "unpriced_calls": 0,
+  "per_module": {
+    "node_spec_planner": {
+      "calls": 1,
+      "input": 2208,
+      "output": 7340,
+      "cache_read": 0,
+      "reasoning": 5626,
+      "total": 9548,
+      "cost_usd": 0.006349814074
+    },
+    "node_geometric_architect": {
+      "calls": 3,
+      "input": 20373,
+      "output": 39396,
+      "cache_read": 0,
+      "reasoning": 26657,
+      "total": 59769,
+      "cost_usd": 0.060467733598
+    }
+  },
+  "calls": [
+    {
+      "ts": 1786330812.147242,
+      "module": "node_spec_planner",
+      "model": "deepseek/deepseek-v4-pro",
+      "input": 2208,
+      "output_visible": 7340,
+      "output": 7340,
+      "cache_read": 0,
+      "reasoning": 5626,
+      "total": 9548,
+      "api_total": 9548,
+      "cost_usd": 0.006349814074
+    },
+    {
+      "ts": 1786330841.275531,
+      "module": "node_geometric_architect",
+      "model": "deepseek/deepseek-v4-pro",
+      "input": 6294,
+      "output_visible": 3236,
+      "output": 3236,
+      "cache_read": 0,
+      "reasoning": 0,
+      "total": 9530,
+      "api_total": 9530,
+      "cost_usd": 0.014438346
+    },
+    {
+      "ts": 1786331132.5139909,
+      "module": "node_geometric_architect",
+      "model": "deepseek/deepseek-v4-pro",
+      "input": 7345,
+      "output_visible": 14705,
+      "output": 14705,
+      "cache_read": 0,
+      "reasoning": 9953,
+      "total": 22050,
+      "api_total": 22050,
+      "cost_usd": 0.013204774798
+    },
+    {
+      "ts": 1786331502.711502,
+      "module": "node_geometric_architect",
+      "model": "deepseek/deepseek-v4-pro",
+      "input": 6734,
+      "output_visible": 21455,
+      "output": 21455,
+      "cache_read": 0,
+      "reasoning": 16704,
+      "total": 28189,
+      "api_total": 28189,
+      "cost_usd": 0.0328246128
+    }
+  ]
+}

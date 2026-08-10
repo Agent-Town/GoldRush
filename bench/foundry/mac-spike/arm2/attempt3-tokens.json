@@ -1,0 +1,14 @@
+{
+  "status": "tracker_not_flushed",
+  "reason": "The final stalled OpenRouter repair was interrupted before web_runner could flush MAC's in-memory token tracker.",
+  "total_tokens": null,
+  "total_cost_usd": null,
+  "known_log_evidence": {
+    "aider_calls": 15,
+    "input_approx": 427000,
+    "output_approx": 137800,
+    "total_approx": 564800,
+    "basis": "Sum of the fifteen rounded 'Tokens: Nk sent, Nk received' lines retained in run.log. Planner, architect, correction, direct-fallback, and interrupted-call usage is additional and uncounted."
+  },
+  "note": "The rounded Aider subtotal is a lower bound, not an exact provider total; exact usage and cost are deliberately not invented."
+}

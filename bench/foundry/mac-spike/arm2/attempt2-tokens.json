@@ -1,0 +1,20 @@
+{
+  "status": "tracker_not_flushed",
+  "reason": "The safety interrupt occurred before web_runner could flush MAC's in-memory token tracker.",
+  "total_tokens": null,
+  "total_cost_usd": null,
+  "known_log_evidence": [
+    {
+      "module": "hybrid_aider",
+      "input_approx": 13000,
+      "output_approx": 7000
+    },
+    {
+      "module": "repair_aider",
+      "input_approx": 19000,
+      "output_approx": 0,
+      "outcome": "model token-limit metadata failure"
+    }
+  ],
+  "note": "Planner, architect, architect correction, and direct fallback repair calls also occurred; exact usage and cost are deliberately not invented."
+}
