@@ -16,6 +16,7 @@ export type StandingOrder =
   | { verb: 'REPAIR_UNDER'; pct: number }
   | { verb: 'MOVE_TO'; pos: AgentVec2 }
   | { verb: 'HOLD'; pos: AgentVec2 }
+  | { verb: 'BLAST_AT'; pos: AgentVec2 }
   | { verb: 'HARVEST'; seam: string }
   | { verb: 'HARVEST'; sluice: number }
   | { verb: 'FALLBACK_IF'; threat: { enemiesGte: number }; pos: AgentVec2 };
@@ -82,6 +83,7 @@ type RuntimeState = {
 };
 
 type ValidationResult = { ok: true; orders: StandingOrder[] } | { ok: false; message: string };
+type BlastOrderResult = { ok: true } | { ok: false; reason: string };
 
 let installedExecutor: StandingOrdersExecutor | null = null;
 
@@ -94,6 +96,7 @@ export class StandingOrdersExecutor {
   private previousState: RuntimeState | null = null;
   private expectedWaveAt: number | null = null;
   private readonly failureReasons = new Map<string, string>();
+  private blastAt: ((pos: AgentVec2) => BlastOrderResult) | null = null;
 
   constructor(
     private readonly surface: GoldRushToolSurface,
@@ -172,6 +175,10 @@ export class StandingOrdersExecutor {
     this.failureReasons.clear();
   }
 
+  setBlastAt(handler: (pos: AgentVec2) => BlastOrderResult): void {
+    this.blastAt = handler;
+  }
+
   snapshot(): StandingOrdersView {
     return {
       needsRider: this.needsRiderValue,
@@ -220,6 +227,14 @@ export class StandingOrdersExecutor {
     if (order.verb === 'HOLD') {
       this.status(record, 'active', at);
       return { movement: order.pos };
+    }
+
+    if (order.verb === 'BLAST_AT') {
+      this.status(record, 'active', at);
+      const result = this.blastAt?.(order.pos) ?? { ok: false as const, reason: 'BLAST_AT is unavailable.' };
+      if (result.ok) this.status(record, 'done', at);
+      else this.fail(record, result.reason, at);
+      return {};
     }
 
     if (order.verb === 'HARVEST') {
@@ -320,6 +335,10 @@ export function bindStandingOrders(executor: StandingOrdersExecutor): void {
   installedExecutor = executor;
 }
 
+export function bindStandingOrderBlast(handler: (pos: AgentVec2) => BlastOrderResult): void {
+  installedExecutor?.setBlastAt(handler);
+}
+
 export function tickStandingOrders(at: number, actor: AgentVec2): StandingOrderTickResult {
   return installedExecutor?.tick(at, actor) ?? {};
 }
@@ -373,6 +392,10 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
   if (value.verb === 'MOVE_TO' || value.verb === 'HOLD') {
     if (!exactKeys(value, ['verb', 'pos']) || !validPos(value.pos)) return schemaError(index, value.verb);
     return { verb: value.verb, pos: value.pos };
+  }
+  if (value.verb === 'BLAST_AT') {
+    if (!exactKeys(value, ['verb', 'pos']) || !validPos(value.pos)) return schemaError(index, 'BLAST_AT');
+    return { verb: 'BLAST_AT', pos: value.pos };
   }
   if (value.verb === 'HARVEST') {
     if (exactKeys(value, ['verb', 'seam']) && typeof value.seam === 'string' && value.seam.length > 0 && value.seam.length <= 80) {
@@ -568,7 +591,9 @@ function standingOrderIdentity(order: StandingOrder): string {
     return JSON.stringify([order.verb, order.what, order.where.x, order.where.z, ...when]);
   }
   if (order.verb === 'REPAIR_UNDER') return JSON.stringify([order.verb, order.pct]);
-  if (order.verb === 'MOVE_TO' || order.verb === 'HOLD') return JSON.stringify([order.verb, order.pos.x, order.pos.z]);
+  if (order.verb === 'MOVE_TO' || order.verb === 'HOLD' || order.verb === 'BLAST_AT') {
+    return JSON.stringify([order.verb, order.pos.x, order.pos.z]);
+  }
   if (order.verb === 'HARVEST') return JSON.stringify([order.verb, 'seam' in order ? order.seam : order.sluice]);
   return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
 }
