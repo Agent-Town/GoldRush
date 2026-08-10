@@ -5764,6 +5764,27 @@
               "mergeHash": "16dff1dc59649da736ae64ca1d47754f560d4d0e"
             }
           ]
+        },
+        {
+          "id": "seasons",
+          "title": "SEASONS — the county's history manifested in the app (owner 2026-08-10, verbatim in specs/seasons/seasons-v1.md); Season 2 \"The Same Game\" opens on the AP-16 era stamp",
+          "tasks": [
+            {
+              "id": "sea-1-registry",
+              "title": "SEA-1: season registry + derived season label on rows (GET-only, additive)",
+              "status": "planned"
+            },
+            {
+              "id": "sea-2-season-page",
+              "title": "SEA-2: the Season Page in the Field Book family (narrative · results · commentary · lessons)",
+              "status": "planned"
+            },
+            {
+              "id": "sea-3-season1-content",
+              "title": "SEA-3: Season 1 \"The Founding Season\" written from the county's own ledgers",
+              "status": "planned"
+            }
+          ]
         }
       ]
     },
@@ -6588,20 +6609,77 @@
               "mergeHash": "be33951b9f2087e9fd793ec2fef8f9dedd3b3c94",
               "taskFile": "lane-stack-directory.md",
               "drainNotes": "MERGED s1624. Owner 2026-08-10 verbatim: \"Can we link from the harnesses and models also to a page on the internet where people can find more information about it?\" Third link class - county-curated editorial pointers, distinct from Front Desk repos and the rider-declared opt-in source chip. New src/encyclopedia/stackDirectory.ts resolves eight real board rig strings plus vendor/model minds to OpenRouter; unmatched names render NO link. Gates on the merged tree in detached worktree gate-s1624, all --workers=1: tsc rc=0, build rc=0, field-book.spec 4/4 desktop + 4/4 mobile-390px with zero console/page errors asserted in-spec, matcher unit 2/2, adjacent ledger family 12/12 and hygiene 6/6, test:node-guards rc=0. F-1624-1 NON-BLOCKING: the new matcher test lives under src/ and is rooted in no gate - gate-caller-audit is structurally blind to it because its subject set is scripts/**; corrective authored s1624. F-1624-2 observation: the slice re-keyed the inherited minds-and-rigs e2e fixture (codex/gr-sim to codex-cli/unknown-rig) to obtain a known and an unknown rig, inside its firewall."
+            }
+          ],
+          "subgoals": [
+            {
+              "id": "same-game-law",
+              "title": "THE SAME-GAME LAW (owner 2026-08-10): agents and humans play the same game — specs/agent-play/ap-16-same-game-law.md; ratified with SEASONS + the 30/20/10 pick clock + verbs the same day",
+              "tasks": [
+                {
+                  "id": "ap16-audit",
+                  "title": "AP-16-0 same-game parity audit (owner law 2026-08-10)",
+                  "status": "merged",
+                  "mergeHash": "df05e62588d845ee409b404e31104a3ea54deb47",
+                  "drainNotes": "DRAINED s1628, merge df05e62588d845ee409b404e31104a3ea54deb47, review reviews/ap16-audit.md. Gated in detached worktree gate-s1628 per 3.0b; main fast-forwarded to the gated commit itself, so the merge window was zero (F-1589-5 satisfied by construction rather than by speed). GATE MET: tsc rc=0, build 1.32s, own test 3/3, gate-caller-audit 26/26, test:node-guards rc=0 in 311.7s over 61 leaves with the new leaf enumerated at position 0 and OBSERVED EXECUTING (F-1624-1 caution discharged by running the runner on that leaf alone, not by trusting package.json). Report reproduces BYTE-IDENTICAL from a fresh harness run (342634 b), so the committed doc is the harness output and not a hand-edit. package.json was the only conflict and was resolved as a 3-way graft, both sides kept. NUMBERS VERIFIED INDEPENDENTLY, NOT INHERITED: the runner reported 1324 divergences and my run agrees, but the harness emits 1680 rows - the difference is 356 equal-parity rows the report deliberately excludes from the divergence count, and the doc states both figures, so the runners headline was precise rather than lucky. 340 agent-exceeds, 984 agent-lacks, 0 rows lacking file:line evidence, 42 contracts. Firewall clean: exactly the 4 declared files, zero src/e2e/functions, which is why no boot probe was run - the diff stat is the proof rather than a vacuous green.",
+                  "taskFile": "lane-a-ap16-audit.md"
+                },
+                {
+                  "id": "upgrade-clock",
+                  "title": "The draft gets a clock — 30/20/10s pick timer by difficulty (owner ruling 2026-08-10)",
+                  "status": "queued",
+                  "taskFile": "lane-d-upgrade-clock.md"
+                },
+                {
+                  "id": "ap16-1-buildable-parity",
+                  "title": "AP-16-1: door narrows to the manifest; parity becomes a guard (cuts against the merged audit table)",
+                  "status": "planned"
+                },
+                {
+                  "id": "ap16-2-draft-reaches-door",
+                  "title": "AP-16-2: upgrade offers ride the view; PICK_UPGRADE + the 30/20/10 clock, both species; defaultedPicks in outcomes",
+                  "status": "planned"
+                },
+                {
+                  "id": "ap16-3-blast-verb",
+                  "title": "AP-16-3: BLAST_AT — the blast charge through the door at human cost/cooldown; then the rest of the audit list",
+                  "status": "planned"
+                }
+              ]
             },
             {
-              "id": "ap16-audit",
-              "title": "AP-16-0 same-game parity audit (owner law 2026-08-10)",
-              "status": "merged",
-              "mergeHash": "df05e62588d845ee409b404e31104a3ea54deb47",
-              "drainNotes": "DRAINED s1628, merge df05e62588d845ee409b404e31104a3ea54deb47, review reviews/ap16-audit.md. Gated in detached worktree gate-s1628 per 3.0b; main fast-forwarded to the gated commit itself, so the merge window was zero (F-1589-5 satisfied by construction rather than by speed). GATE MET: tsc rc=0, build 1.32s, own test 3/3, gate-caller-audit 26/26, test:node-guards rc=0 in 311.7s over 61 leaves with the new leaf enumerated at position 0 and OBSERVED EXECUTING (F-1624-1 caution discharged by running the runner on that leaf alone, not by trusting package.json). Report reproduces BYTE-IDENTICAL from a fresh harness run (342634 b), so the committed doc is the harness output and not a hand-edit. package.json was the only conflict and was resolved as a 3-way graft, both sides kept. NUMBERS VERIFIED INDEPENDENTLY, NOT INHERITED: the runner reported 1324 divergences and my run agrees, but the harness emits 1680 rows - the difference is 356 equal-parity rows the report deliberately excludes from the divergence count, and the doc states both figures, so the runners headline was precise rather than lucky. 340 agent-exceeds, 984 agent-lacks, 0 rows lacking file:line evidence, 42 contracts. Firewall clean: exactly the 4 declared files, zero src/e2e/functions, which is why no boot probe was run - the diff stat is the proof rather than a vacuous green.",
-              "taskFile": "lane-a-ap16-audit.md"
-            },
-            {
-              "id": "upgrade-clock",
-              "title": "The draft gets a clock — 30/20/10s pick timer by difficulty (owner ruling 2026-08-10)",
-              "status": "queued",
-              "taskFile": "lane-d-upgrade-clock.md"
+              "id": "gauntlet-season-1",
+              "title": "THE GAUNTLET, Season 1 — heats, ablations, instruments (bench/gauntlet + bench/foundry evidence)",
+              "tasks": [
+                {
+                  "id": "omp-debut",
+                  "title": "omp debut: first-attempt the-claim secure, county rank 3; pi-family ablation complete on one map",
+                  "status": "shipped",
+                  "mergeHash": "95853b2d0f380e90d055c0db1cd410e4d4024070"
+                },
+                {
+                  "id": "prime-sol-ablation",
+                  "title": "prime × Sol: the-claim SECURED run 1 (posted rank 7, replayed 2x deterministic); Baron w23 postmortem seeded F-SAME-1",
+                  "status": "shipped",
+                  "mergeHash": "fb148073dd26afd56c73998611f052cf7fb42b6b"
+                },
+                {
+                  "id": "mac-foundry-verdict",
+                  "title": "MAC foundry spike: TWO-ARM NEGATIVE, model-proof (\"mass was not meaning\"); Aider network-reach caught + patched; shelved pending assembly-level semantic QA",
+                  "status": "shipped",
+                  "mergeHash": "149a10cc6882d37faac49d5141c0133f5994e87e"
+                },
+                {
+                  "id": "codex-bridge-instrument",
+                  "title": "codex-bridge v2: subscription OAuth → OpenAI-compatible localhost, tools both ways — seats any OpenAI-key harness on the owner's subscription (goldrush-gauntlet@13b73ed)",
+                  "status": "shipped"
+                },
+                {
+                  "id": "eliza-first-play",
+                  "title": "Eliza first-play: five-defect chain cured (timeout → misroute → zero-vector → models → tool calls); first orders ever submitted 2026-08-10, track live",
+                  "status": "building"
+                }
+              ]
             }
           ]
         }
