@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { install, type AgentBuildingRef, type AgentGameAdapter, type GoldRushToolSurface, type ToolReceipt } from '../agent/ToolSurface';
 import {
   observeStandingOrders,
@@ -287,6 +288,7 @@ export class HeadlessContractSim {
       (enemy) => this.atomic?.isHostile(enemy) !== false,
     );
     this.registerHeroShooter();
+    const offeredBuildables = mechanicsBuildableIds(this.manifest);
     this.build = new BuildSystem(
       headlessCanvas(),
       new THREE.PerspectiveCamera(),
@@ -297,9 +299,7 @@ export class HeadlessContractSim {
       () => this.waves?.diagnostics.wave ?? 0,
       undefined,
       undefined,
-      (id) => id === 'boiler_house'
-        ? this.manifest.twist.pressureEnabled === true
-        : id !== 'capacitor_bank' || this.contractId === 'e3-blackout-ridge',
+      (id) => offeredBuildables.has(id),
     );
     for (const fixture of this.manifest.tileParams.prePlacedBuildables ?? []) {
       this.build.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {

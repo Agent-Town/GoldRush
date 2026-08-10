@@ -83,6 +83,7 @@ import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrac
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
+import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
@@ -647,6 +648,7 @@ export class Game {
   // here, before any system builds, and never again mid-run (Loader Contract).
   private readonly tileStateStore = new TileStateStore(safeLocalStorage());
   private readonly activeContract = bornContract(this.tileStateStore);
+  private readonly offeredBuildables = mechanicsBuildableIds(this.activeContract);
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private readonly activeEpoch = new URLSearchParams(window.location.search).has('replay') && this.contractEpoch
@@ -5713,13 +5715,7 @@ export class Game {
   }
 
   private isBuildableEnabled(id: BuildableId): boolean {
-    if (this.activeContract.practice?.buildables.includes(id)) return true;
-    if (this.activeContract.twist.powerGrid && (id === 'turret' || id === 'lantern_post')) return false;
-    if (id === 'lantern_post') return this.isNightShiftContract();
-    if (id === 'decoy_shed') return this.activeContract.id === 'e3-moth-season';
-    if (id === 'capacitor_bank') return this.activeContract.id === 'e3-blackout-ridge';
-    if (id === 'boiler_house') return this.activeContract.twist.pressureEnabled === true && !this.multiplayerActive();
-    return true;
+    return this.offeredBuildables.has(id);
   }
 
   private detailClearings(): DetailScatterClearPoint[] {
