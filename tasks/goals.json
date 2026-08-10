@@ -6590,7 +6590,9 @@
             {
               "id": "ap16-audit",
               "title": "AP-16-0 same-game parity audit (owner law 2026-08-10)",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "df05e62588d845ee409b404e31104a3ea54deb47",
+              "drainNotes": "DRAINED s1628, merge df05e62588d845ee409b404e31104a3ea54deb47, review reviews/ap16-audit.md. Gated in detached worktree gate-s1628 per 3.0b; main fast-forwarded to the gated commit itself, so the merge window was zero (F-1589-5 satisfied by construction rather than by speed). GATE MET: tsc rc=0, build 1.32s, own test 3/3, gate-caller-audit 26/26, test:node-guards rc=0 in 311.7s over 61 leaves with the new leaf enumerated at position 0 and OBSERVED EXECUTING (F-1624-1 caution discharged by running the runner on that leaf alone, not by trusting package.json). Report reproduces BYTE-IDENTICAL from a fresh harness run (342634 b), so the committed doc is the harness output and not a hand-edit. package.json was the only conflict and was resolved as a 3-way graft, both sides kept. NUMBERS VERIFIED INDEPENDENTLY, NOT INHERITED: the runner reported 1324 divergences and my run agrees, but the harness emits 1680 rows - the difference is 356 equal-parity rows the report deliberately excludes from the divergence count, and the doc states both figures, so the runners headline was precise rather than lucky. 340 agent-exceeds, 984 agent-lacks, 0 rows lacking file:line evidence, 42 contracts. Firewall clean: exactly the 4 declared files, zero src/e2e/functions, which is why no boot probe was run - the diff stat is the proof rather than a vacuous green.",
               "taskFile": "lane-a-ap16-audit.md"
             },
             {
