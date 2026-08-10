@@ -6701,8 +6701,18 @@
                 {
                   "id": "ap16-2-draft-reaches-door",
                   "title": "AP-16-2: upgrade offers ride the view; PICK_UPGRADE + the 30/20/10 clock, both species; defaultedPicks in outcomes",
+                  "status": "stopped",
+                  "taskFile": "lane-d-ap16-2-draft-reaches-door.md",
+                  "supersededBy": "ap16-2b-reland-draft-reaches-door",
+                  "stopNote": "STOPPED s1639, SUPERSEDED BY ap16-2b-reland. Implemented correctly by its runner and never merged; the output is preserved forever on salvage ref save/ap16-2-s1639-73a0cfed (tip 73a0cfedc8379019a441d29d7375864967136e28, 5 files +209/-26). NOT abandoned and NOT lost. Two blockers, the second MEASURED s1639 rather than inherited: (1) its firewall omitted scripts/fixtures/moth-season-orders.json and scripts/moth-season-pressure.test.mjs, so completing its own scope was impossible inside its own TOUCH-ONLY -- that suite replays a 17-order prerecorded stream carrying ZERO PICK_UPGRADE orders (verified s1639), so it cannot express a pick and the delayed draft reportedly drops it from wave 12 to wave 6; (2) ap16-3 merged eba8d15ea into the SAME two files, and the salvage ref now CONFLICTS with main -- 5 conflict hunks, 3 in src/agent/StandingOrders.ts and 2 in src/sim/HeadlessContractSim.ts, measured by attempting the merge in a throwaway worktree and aborting it. Stale + conflicted = RE-LAND with the branch as salvage-ref (Mistake #15), never a hand-merge. Successor tasks/lane-d-ap16-2b-draft-reaches-door.md carries the identical scope PLUS the fixture (scope 7) and the same-game-audit ability rows (scope 8, retiring F-1638-3) inside its firewall."
+                },
+                {
+                  "id": "ap16-2b-reland-draft-reaches-door",
+                  "title": "AP-16-2b: RE-LAND the draft-reaches-door slice on fresh main, with the moth-season fixture and the same-game-audit ability rows inside the firewall",
                   "status": "queued",
-                  "taskFile": "lane-d-ap16-2-draft-reaches-door.md"
+                  "lane": "lane-d",
+                  "taskFile": "lane-d-ap16-2b-draft-reaches-door.md",
+                  "note_s1639": "FIRE-AUTHORED s1639 and dispatched to lane-d. RE-LAND of ap16-2 on fresh main with save/ap16-2-s1639-73a0cfed as the salvage-ref to reuse -- not a re-derivation (the 824k-flail hazard is named in the master). Adds the two scopes the original lacked: (7) the moth-season fixture must end GREEN by re-recording it with deliberate PICK_UPGRADE orders (preferred) or by a re-pin carrying a NAMED CAUSE at the pin site (F-1441-3), never by leaving it red or excused; (8) retire F-1638-3 -- scripts/same-game-audit.mjs hardcodes every non-:rig ability as unavailable so all 42 blast rows still claim agent-lacks after BLAST_AT merged, and same-game-audit.test.mjs PINS that falsehood under the title \"blast-charge gap must remain visible\", so the runner fixing it will watch test:node-guards go red BECAUSE it fixed it; the master says so in advance and requires a manufactured-defect teeth proof on the updated guard. This slice is the LAST of AP-16-1..3, so it meets the seasons-v1 condition for opening Season 2 -- the master orders the runner to REPORT that and mint NOTHING, since a season boundary is a canon + date decision. Citation keys were each verified against main before dispatch (F-1425-2); note the original master cited the auto-pick site as :661-662 and it is now :665 after ap16-3, so the successor cites it by content."
                 },
                 {
                   "id": "ap16-3-blast-verb",
