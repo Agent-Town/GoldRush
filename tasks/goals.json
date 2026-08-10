@@ -5780,7 +5780,10 @@
             {
               "id": "sea-2-season-page",
               "title": "SEA-2: the Season Page in the Field Book family (narrative \u00b7 results \u00b7 commentary \u00b7 lessons)",
-              "status": "planned"
+              "status": "queued",
+              "lane": "lane-b",
+              "taskFile": "lane-b-sea-2-season-page.md",
+              "note_s1637": "FIRE-AUTHORED s1637 and dispatched to lane-b. Unblocked by SEA-1 merging 726398e7 the same fire: the registry + the API label exist, and the drain verified whole-tree that NO browser surface reads the label (src/encyclopedia/reader.ts:58 types a standings row with submittedAt? and no season field), so the county has a season nobody can read \u2014 Mistake #10 in the making. Scoped to the SHELF, not the book: the four owed things (spec Law 3) each get a labelled section, but commentary + lessons render honest 'not yet written' county-voice states because that text is SEA-3's. Hard requirements: Law 5 removability behind ONE named switch (the owner's 'we can later remove it' must be a one-line act); REUSE the Minds/Rigs cell path rather than fork it (spec says so explicitly); no season data may be edited and Season 2 still gets no start date. Firewall names src/sim, src/agent and public/skill.md as NO precisely because lane-c and lane-d hold undrained commits on all three. package.json is IN Touch-ONLY per F-1637-1, this fire's own finding."
             },
             {
               "id": "sea-3-season1-content",
