@@ -6742,6 +6742,13 @@
                   "note_s1642": "FIRE-AUTHORED s1642 from the AP-16-4 spec slice, which the attended session wrote 6 minutes before this fire took the lock (eb961f2c8) and which marks the slice 'fire-authorable from this slice' in as many words \u2014 discharging F-1641-3's gate. The '30 of 42' in the title is now known to be HALF WRONG and the master says so: the audit's human side is a hardcoded true (scripts/same-game-audit.mjs, 'direction(true, agentCanEnter),'), so it never asked whether the browser offers the contract. Measured s1642: 15 of the 30 carry harvestAnchors: [] and the BROWSER refuses them too (src/meta/ContractFamilies.ts, \"fallbackReason = 'unavailable-contract';\"), which by the spec's own law puts them OUTSIDE the same-game universe rather than in debt. The 30 split exactly 15 outside-universe / 15 genuine candidates, and 0 contracts are door-admitted while browser-refused. Of the 15 genuine, 5 are already-ruled refusals the master forbids overturning (e5-deepwater-claim/e5-stillwater/e6-glow-mesa/e6-showroom measured-and-refused per reviews/milk-twin-sockets.md; e3-fairground is OWNER FORK F-1475-1), leaving 10 to attempt. Filed as F-1642-1."
                 },
                 {
+                  "id": "ap16-5-rotation-parity",
+                  "title": "AP-16-5: the rider may turn what it builds — BUILD gains optional rotationSteps (audit class 7)",
+                  "status": "queued",
+                  "taskFile": "lane-a-ap16-5-rotation-parity.md",
+                  "note_s1643": "FIRE-AUTHORED s1643 from the AP-16-5 spec slice (ap-16-same-game-law.md:34), authorable the moment ap16-4 merged (d4fcc354) and freed HeadlessContractSim/skill.md/same-game-audit from contention — s1642 had measured that collision and declined to author into it. Master names TWO hazards the one-line reading misses, both source-verified s1643: (1) standingOrderIdentity() at StandingOrders.ts:625-627 omits rotation, so adding the field without extending identity makes two differently-faced BUILD orders collide silently; (2) the human path NORMALIZES (LockstepClient.ts:1048) while the agent grammar VALIDATES — the master RULES for rejection, with its reason, rather than leaving the runner to guess. Load-bearing gate is scope 8: zero gr-sim hash drift proves the additive claim."
+                },
+                {
                   "id": "ap16-5-build-rotation",
                   "title": "AP-16-5: BUILD gains rotationSteps parity (audit class 7)",
                   "status": "planned"
