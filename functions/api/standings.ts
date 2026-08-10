@@ -10,6 +10,7 @@ import signalContracts from '../../assets/contracts/epoch-7-signal/contracts.jso
 import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
 import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
+import { resolveSeasonAt } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash, type KVNamespaceLike } from './_ratelimit';
 
 type StandingsEnv = {
@@ -246,6 +247,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
 
 function boardRow(row: StoredRow, index: number): JsonRecord {
   const reel = row.tape === undefined ? undefined : { id: row.tape.id as string, simVersion: row.tape.simVersion as number };
+  const season = resolveSeasonAt(row.submittedAt);
   return {
     rank: index + 1,
     profileName: row.profileName,
@@ -256,6 +258,7 @@ function boardRow(row: StoredRow, index: number): JsonRecord {
     baseValue: row.baseValue,
     difficulty: row.difficulty,
     ...(Number.isFinite(row.submittedAt) && row.submittedAt >= 0 ? { submittedAt: row.submittedAt } : {}),
+    ...(season ? { season: season.name } : {}),
     ...(row.defaulted ? { defaulted: true } : {}),
     ...boardStack(row.stack),
     ...(row.party ? {
@@ -329,6 +332,7 @@ function groupRows(
 }
 
 function showing(row: StoredRow, contractId: string): JsonRecord {
+  const season = resolveSeasonAt(row.submittedAt);
   return {
     contractId,
     score: {
@@ -340,6 +344,7 @@ function showing(row: StoredRow, contractId: string): JsonRecord {
     },
     difficulty: row.difficulty,
     submittedAt: row.submittedAt,
+    ...(season ? { season: season.name } : {}),
   };
 }
 
