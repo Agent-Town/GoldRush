@@ -184,10 +184,11 @@ test('investment weighting prefers owned families without losing discovery', asy
     pages.map((page) => openGame(page, `?debug&timescale=3&nowaves&seed=${seed}`)),
   );
 
-  await investedPage.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 5 }));
-  await repeatedPage.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 5 }));
+  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since d2279d325); "invested" must stay below it or the upgrade leaves the offer pool.
+  await investedPage.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 2 }));
+  await repeatedPage.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 2 }));
   await maxedPage.evaluate(() =>
-    window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 6, powder_charge: 2, wide_ring: 2, quick_fuse: 2 }),
+    window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 3, powder_charge: 2, wide_ring: 2, quick_fuse: 2 }),
   );
 
   const baseOffers = await rolledOffers(basePage, 40);
@@ -208,11 +209,12 @@ test('investment weighting prefers owned families without losing discovery', asy
 
 test('owned-family cards show a compact stack pip', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m1-06-pip-1');
-  await page.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 5 }));
+  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since d2279d325); this fixture must stay below it so its card renders.
+  await page.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 2 }));
   await debugLevel(page);
 
   const card = page.locator('[data-upgrade-id="double_tap_coil"]');
-  await expect(card.locator('.upgrade-card__stacks')).toHaveText('V');
+  await expect(card.locator('.upgrade-card__stacks')).toHaveText('II');
   const box = await card.boundingBox();
   expect(box?.width ?? 0).toBeLessThanOrEqual((page.viewportSize()?.width ?? 390) - 28);
   await assertNoErrors(errors);
@@ -237,15 +239,16 @@ test('maxed upgrades leave the offer pool', async ({ page }) => {
   test.setTimeout(45_000);
   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m1-06-maxed');
 
+  // Double-Tap Coil caps at Balance.upgrades.doubleTapCoilMaxStacks (3 since d2279d325); reaching it must remove the upgrade from the offer pool.
   for (let guard = 0; guard < 30; guard += 1) {
     const stacks = (await diagnostics(page)).progression.stacks.double_tap_coil ?? 0;
-    if (stacks >= 6) break;
+    if (stacks >= 3) break;
     await debugLevel(page);
     if (!(await pickOfferId(page, 'double_tap_coil'))) await pressChoice(page, 0);
     await drainChoices(page);
   }
 
-  expect((await diagnostics(page)).progression.stacks.double_tap_coil).toBe(6);
+  expect((await diagnostics(page)).progression.stacks.double_tap_coil).toBe(3);
   for (let sample = 0; sample < 3; sample += 1) {
     await debugLevel(page);
     expect(await offerIds(page)).not.toContain('double_tap_coil');
