@@ -15,7 +15,7 @@ export type LockstepAction =
   | { type: 'set_pause'; paused: boolean }
   | { type: 'debug_spawn' }
   | { type: 'debug_xp' }
-  | { type: 'pick_upgrade'; id: string }
+  | { type: 'pick_upgrade'; id: string; defaulted?: true }
   | { type: 'skip_ceremony' }
   | { type: 'death_action'; choice: 'done' | 'secondary' }
   | { type: 'research_pick'; id: string }
@@ -1061,7 +1061,7 @@ function normalizeAction(value: unknown): LockstepAction | null {
   if (value.type === 'set_pause' && typeof value.paused === 'boolean') return { type: 'set_pause', paused: value.paused };
   if (value.type === 'pick_upgrade') {
     const id = cleanToken(value.id, 64);
-    return id ? { type: 'pick_upgrade', id } : null;
+    return id ? { type: 'pick_upgrade', id, ...(value.defaulted === true ? { defaulted: true as const } : {}) } : null;
   }
   if (value.type === 'death_action' && (value.choice === 'done' || value.choice === 'secondary')) {
     return { type: 'death_action', choice: value.choice };

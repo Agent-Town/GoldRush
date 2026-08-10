@@ -377,6 +377,7 @@ type MultiplayerRunSuspendSnapshot = RunSuspendEnvelope & {
 type BaronRocketTargetKind = 'hero' | 'building';
 type BaronRocketVolleyConfig = NonNullable<ContractBaronTwist['rocketVolley']>;
 type BaronProps3dState = 'off' | 'loading' | 'ready' | 'failed' | 'disposed';
+type RunStatsSnapshot = DeathRunStatsSnapshot & { defaultedPicks: number };
 
 export type RunReturnResult = 'secured' | 'overrun';
 
@@ -1175,6 +1176,11 @@ export class Game {
   private reclaimedTotal = 0;
   private buildingHitsResolved = 0;
   private buildingsWrecked = 0;
+  private defaultedPicks = 0;
+  private upgradeOfferClockKey = '';
+  private upgradeOfferDeadlineMs = 0;
+  private upgradeOfferDeadlineTick = 0;
+  private upgradeExpiryQueued = false;
   private territoryRingPresent = false;
   private readonly thiefContext = {
     nearestGoldHolding: (from: THREE.Vector3) => this.goldTargeting.nearestGoldHolding(from),
@@ -2878,7 +2884,7 @@ export class Game {
     }
     if (action.type === 'pick_upgrade' && this.state.current === 'levelup') {
       const picked = this.progression.offer?.find((choice) => choice.id === action.id);
-      if (picked) this.progression.applyUpgrade(picked.id);
+      if (picked && this.progression.applyUpgrade(picked.id) && action.defaulted) this.defaultedPicks += 1;
     }
     if (action.type === 'skip_ceremony' && this.baronCeremony) this.finishBaronCeremony();
     if (action.type === 'death_action') {
@@ -3788,7 +3794,7 @@ export class Game {
     this.lastDebugPlantIntent = intents.debugPlant;
   }
 
-  private deathRunStats(summary: EconomySummary): DeathRunStatsSnapshot {
+  private deathRunStats(summary: EconomySummary): RunStatsSnapshot {
     return {
       sluiced: summary.sluiced,
       stolen: summary.stolen,
@@ -3801,6 +3807,7 @@ export class Game {
       buildingsRepaired: summary.repairs,
       damageByOwner: { ...this.combat.damageByOwner },
       upgradeStacks: { ...this.progression.snapshot.stacks },
+      defaultedPicks: this.defaultedPicks,
     };
   }
 
@@ -4847,6 +4854,7 @@ export class Game {
         sampleCount: this.frameMsSamples.length,
       },
     };
+    Object.assign(window.__THREE_GAME_DIAGNOSTICS__, { defaultedPicks: this.defaultedPicks });
     this.serveAgentRiderViews();
   }
 
@@ -6294,7 +6302,9 @@ export class Game {
     if (!this.state.simActive || (this.manualSimForTest && !this.manualAdvanceForTest)) return;
     const slot = this.playbookReplay?.active ? this.playbookReplaySlot : this.mpLocalSlot;
     const recordedIntents = this.mpActorIntents?.[slot] ?? intents;
-    const actions = this.mpActionsThisTick.filter((entry) => entry.slot === slot).map((entry) => entry.action);
+    const actions = this.mpActionsThisTick
+      .filter((entry) => entry.slot === slot)
+      .map((entry) => this.runTapeAction(entry.action));
     const actor = this.actors[slot] ?? this.localActor;
     const recorder = this.runTapeRecorder;
     recorder?.record(recordedIntents, actor.group.position, actions, slot);
@@ -6306,14 +6316,22 @@ export class Game {
         otherSlot,
         otherIntents,
         otherActor.group.position,
-        this.mpActionsThisTick.filter((entry) => entry.slot === otherSlot).map((entry) => entry.action),
+        this.mpActionsThisTick
+          .filter((entry) => entry.slot === otherSlot)
+          .map((entry) => this.runTapeAction(entry.action)),
       );
     }
     if (recorder?.truncated) recorder.freezeEventLog(this.runTapeEventLog());
   }
 
   private recordRunTapeAction(action: LockstepAction): void {
-    this.runTapeRecorder?.recordAction(action);
+    this.runTapeRecorder?.recordAction(this.runTapeAction(action));
+  }
+
+  private runTapeAction(action: LockstepAction): LockstepAction {
+    return action.type === 'pick_upgrade' && action.defaulted
+      ? { type: 'pick_upgrade', id: action.id }
+      : action;
   }
 
   private startRunTape(): void {
@@ -6817,15 +6835,18 @@ export class Game {
     });
   }
 
-  private handleUpgradeIntent(intent: UpgradeIntent): void {
+  private handleUpgradeIntent(intent: UpgradeIntent, defaulted = false): void {
     if (intent.type !== 'pick_upgrade' || this.state.current !== 'levelup') return;
     const picked = this.progression.offer?.[intent.index];
     if (!picked) return;
     if (this.mpClient) {
-      this.mpQueuedActions.push({ type: 'pick_upgrade', id: picked.id });
+      this.mpQueuedActions.push({ type: 'pick_upgrade', id: picked.id, ...(defaulted ? { defaulted: true } : {}) });
       return;
     }
-    if (this.progression.applyUpgrade(picked.id)) this.recordRunTapeAction({ type: 'pick_upgrade', id: picked.id });
+    if (this.progression.applyUpgrade(picked.id)) {
+      if (defaulted) this.defaultedPicks += 1;
+      this.recordRunTapeAction({ type: 'pick_upgrade', id: picked.id, ...(defaulted ? { defaulted: true } : {}) });
+    }
   }
 
   private advanceSimForTest(seconds: number, onTick?: (sample: GrSimulationTickSample) => void): void {
@@ -7024,6 +7045,9 @@ export class Game {
     this.reclaimedTotal = 0;
     this.buildingHitsResolved = 0;
     this.buildingsWrecked = 0;
+    this.defaultedPicks = 0;
+    this.upgradeOfferClockKey = '';
+    this.upgradeExpiryQueued = false;
     this.syncStockpileHoldings();
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
@@ -8302,9 +8326,28 @@ export class Game {
     if (this.state.current !== 'levelup' || !offer) {
       this.upgradeOverlay.hide();
       this.lastUpgradeOfferAudioKey = '';
+      this.upgradeOfferClockKey = '';
+      this.upgradeExpiryQueued = false;
       return;
     }
-    const offerKey = offer.map((def) => def.id).join('|');
+    const multiplayerState = this.mpClient?.state();
+    const offerKey = `${this.progression.snapshot.pendingLevels}:${offer.map((def) => def.id).join('|')}`;
+    if (offerKey !== this.upgradeOfferClockKey) {
+      this.upgradeOfferClockKey = offerKey;
+      this.upgradeOfferDeadlineMs = performance.now() + Balance.offers.pickSeconds * 1_000;
+      this.upgradeOfferDeadlineTick = (multiplayerState?.tick ?? 0) + Math.ceil(Balance.offers.pickSeconds / (this.mpClient?.stepSeconds ?? 1));
+      this.upgradeExpiryQueued = false;
+    }
+    // Solo uses wall time; MP uses its authoritative wall-paced ticks so every peer expires together.
+    // Neither opening settings nor pausing the already-frozen sim stops this clock.
+    const secondsRemaining = this.mpClient && multiplayerState
+      ? Math.max(0, Math.ceil((this.upgradeOfferDeadlineTick - multiplayerState.tick) * this.mpClient.stepSeconds))
+      : Math.max(0, Math.ceil((this.upgradeOfferDeadlineMs - performance.now()) / 1_000));
+    const multiplayerAuthority = !multiplayerState || multiplayerState.playerId === multiplayerState.roster[0]?.playerId;
+    if (secondsRemaining === 0 && !this.upgradeExpiryQueued && multiplayerAuthority) {
+      this.upgradeExpiryQueued = true;
+      this.handleUpgradeIntent({ type: 'pick_upgrade', index: 0 }, true);
+    }
     if (offerKey !== this.lastUpgradeOfferAudioKey) {
       this.audio.play('tier-up');
       this.speakTrailGuide('first-level');
@@ -8327,6 +8370,7 @@ export class Game {
           provenance: this.upgradeProvenance(def, effect),
         };
       }),
+      secondsRemaining,
     );
   }
 

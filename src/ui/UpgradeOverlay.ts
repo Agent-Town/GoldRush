@@ -31,6 +31,7 @@ export type UpgradeIntent = {
 
 export class UpgradeOverlay {
   private readonly root: HTMLElement;
+  private readonly countdown: HTMLElement;
   private readonly cards: HTMLButtonElement[] = [];
   private visible = false;
   private choices: UpgradeChoice[] = [];
@@ -46,10 +47,12 @@ export class UpgradeOverlay {
       <div class="upgrade-overlay__panel">
         <p class="upgrade-overlay__eyebrow">Patent Office</p>
         <h1>Choose an Invention</h1>
+        <p class="upgrade-overlay__eyebrow" data-testid="upgrade-countdown" aria-live="polite"></p>
         <div class="upgrade-overlay__cards"></div>
       </div>
     `;
 
+    this.countdown = this.get('[data-testid="upgrade-countdown"]');
     const mount = this.get('.upgrade-overlay__cards');
     for (let i = 0; i < 3; i += 1) {
       const card = document.createElement('button');
@@ -65,7 +68,9 @@ export class UpgradeOverlay {
     parent.append(this.root);
   }
 
-  show(choices: UpgradeChoice[]): void {
+  show(choices: UpgradeChoice[], secondsRemaining: number): void {
+    const countdown = `First invention files automatically in ${secondsRemaining}s`;
+    if (this.countdown.textContent !== countdown) this.countdown.textContent = countdown;
     const nextKey = choices
       .map((choice) => `${choice.def.id}:${choice.familyStacks}:${choice.provenance?.line ?? ''}`)
       .join('|');
@@ -103,6 +108,7 @@ export class UpgradeOverlay {
     this.visible = false;
     this.choices = [];
     this.offerKey = '';
+    this.countdown.textContent = '';
     this.root.classList.remove('upgrade-overlay--visible');
     this.root.setAttribute('aria-hidden', 'true');
   }
