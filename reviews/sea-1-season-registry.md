@@ -151,9 +151,24 @@ it touches every spec's harness and is not this slice's business.
 Mistake #10 asks of every merge: *where does the PLAYER see this, in a plain boot?* Here the honest
 answer is **nowhere yet**, and that is by design.
 
-✓ VERIFIED: `grep -rn "season" src/ui/ src/app/ src/game/` returns **zero** hits. The `season` label
-exists only in the `/api/standings` GET payload; no browser surface reads it. The Season Page that
-will render it is **SEA-2**, a later slice.
+✓ VERIFIED — and the first probe was too narrow, which is worth recording rather than hiding.
+
+My first check was `grep -rn "season" src/ui/ src/app/ src/game/` → zero. **That probe could not have
+answered the question:** the county board does not render from any of those three directories, it
+renders from `src/encyclopedia/reader.ts`, which the probe never looked at. A zero from the wrong
+directories is not a negative result.
+
+Re-run correctly, whole-tree:
+
+- `grep -rni "season" src/` (excluding `src/seasons/`) returns hits that are **all** `mothSeason` —
+  the unrelated contract twist — plus one line of scatter prose. None is the standings label.
+- `grep -rn "\.season\b|season:" src/encyclopedia/ src/ui/` excluding moth → **zero**.
+- `src/encyclopedia/reader.ts:58`: the `CountyStanding` type carries `submittedAt?: number` and
+  **no `season` field at all**, so the label is dropped on the floor at the type boundary.
+
+So the conclusion stands — no browser surface reads the label — but it now rests on a probe aimed at
+where the rendering actually lives. The Season Page that will render it is **SEA-2**, a later slice,
+and adding `season` to `CountyStanding` is that slice's first job.
 
 SEA-1 is therefore **substrate**, not a player-visible change, and the GZ-01 filter law (*"the review
 names a player-visible change"*) is not met. No gazette item is filed. The news belongs to SEA-2,
