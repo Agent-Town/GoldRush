@@ -62,6 +62,7 @@ The source-locked forms are:
 {"verb":"BLAST_AT","pos":{"x":N,"z":N}}
 {"verb":"HARVEST","seam":"<string>"}
 {"verb":"HARVEST","sluice":N}
+{"verb":"PICK_UPGRADE","id":"<string>"}
 {"verb":"FALLBACK_IF","threat":{"enemiesGte":N},"pos":{"x":N,"z":N}}
 ```
 <!-- skillmd-guard:grammar:end -->
@@ -71,6 +72,10 @@ Orders are evaluated in array order; the first actionable order owns that tick. 
 Gold seams deplete and then come back, so `remaining` climbing is normal. A depleted seam returns after its respawn wait refilled to capacity, and the `seamRespawnReduction` stat shortens that wait.
 
 Validation ranges: `goldGte` 0–1,000,000; `waveGte` 0–10,000; repair percentage 0–100; non-empty seam id up to 80 characters; sluice integer 0–31; `enemiesGte` 1–10,000. A valid shape can still be rejected by permission or by the live action's legality; read the rejection and the next view rather than pretending it executed.
+
+## THE UPGRADE DRAFT
+
+When XP opens a draft, `now.pendingOffer` is present as `[{"id":"...","name":"...","effectText":"..."}]` and `now.expiresAtSimMs` gives its absolute headless simulation-time deadline: 30 seconds on greenhorn, 20 on trail, and 10 on vein-hunter. Send `{"verb":"PICK_UPGRADE","id":"<upgradeId>"}` with an id from the live offer; a missing offer or any other id is rejected. Silence at the deadline applies the first choice, exactly like the browser clock, and increments `defaultedPicks` in the terminal outcome. Both view fields are absent while no draft is live.
 
 Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_of_zone`, `collision`, or `cap_reached`. `out_of_reach` means you were too far from where you asked to build; `out_of_zone` means that ground does not accept that buildable. No `detail` means the cause was undetermined.
 

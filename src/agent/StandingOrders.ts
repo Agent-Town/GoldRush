@@ -19,6 +19,7 @@ export type StandingOrder =
   | { verb: 'BLAST_AT'; pos: AgentVec2 }
   | { verb: 'HARVEST'; seam: string }
   | { verb: 'HARVEST'; sluice: number }
+  | { verb: 'PICK_UPGRADE'; id: string }
   | { verb: 'FALLBACK_IF'; threat: { enemiesGte: number }; pos: AgentVec2 };
 
 export type StandingOrderStatus = 'pending' | 'active' | 'done' | 'failed';
@@ -80,6 +81,7 @@ type RuntimeState = {
   buildings: Array<AgentBuildingRef & { hp: number; maxHp: number; wrecked: boolean; position: AgentVec2 }>;
   seams: Array<{ id: string; active: boolean; position: AgentVec2 }>;
   sluices: AgentVec2[];
+  pendingOffer: string[];
 };
 
 type ValidationResult = { ok: true; orders: StandingOrder[] } | { ok: false; message: string };
@@ -97,6 +99,7 @@ export class StandingOrdersExecutor {
   private expectedWaveAt: number | null = null;
   private readonly failureReasons = new Map<string, string>();
   private blastAt: ((pos: AgentVec2) => BlastOrderResult) | null = null;
+  private pickUpgrade: ((id: string) => boolean) | null = null;
 
   constructor(
     private readonly surface: GoldRushToolSurface,
@@ -111,6 +114,15 @@ export class StandingOrdersExecutor {
     if (!validated.ok) {
       this.append({ at: eventAt, type: 'orders_rejected', reason: validated.message });
       return { ok: false, reason: 'INVALID_ARGS', message: validated.message };
+    }
+
+    const invalidPick = validated.orders.find(
+      (order) => order.verb === 'PICK_UPGRADE' && !state.pendingOffer.includes(order.id),
+    );
+    if (invalidPick?.verb === 'PICK_UPGRADE') {
+      const message = `PICK_UPGRADE requires a live offered id; "${invalidPick.id}" is not available.`;
+      this.append({ at: eventAt, type: 'orders_rejected', reason: message });
+      return { ok: false, reason: 'INVALID_ARGS', message };
     }
 
     const level = this.surface.permissionLevel();
@@ -177,6 +189,10 @@ export class StandingOrdersExecutor {
 
   setBlastAt(handler: (pos: AgentVec2) => BlastOrderResult): void {
     this.blastAt = handler;
+  }
+
+  bindUpgradePicker(pick: (id: string) => boolean): void {
+    this.pickUpgrade = pick;
   }
 
   snapshot(): StandingOrdersView {
@@ -250,6 +266,13 @@ export class StandingOrdersExecutor {
       if (distance(actor, point) > Balance.agent.arriveRadius || state.actorMoving) return { movement: point };
       const receipt = this.surface.tools.pan_at('seam' in order ? order.seam : `sluice-${order.sluice + 1}`);
       return this.finishAction(record, receipt, point, at);
+    }
+
+    if (order.verb === 'PICK_UPGRADE') {
+      this.status(record, 'active', at);
+      if (!this.pickUpgrade?.(order.id)) this.fail(record, `INVALID_TARGET: ${order.id} is no longer offered.`, at);
+      else this.status(record, 'done', at);
+      return {};
     }
 
     if (state.enemiesAlive < order.threat.enemiesGte) return null;
@@ -339,6 +362,10 @@ export function bindStandingOrderBlast(handler: (pos: AgentVec2) => BlastOrderRe
   installedExecutor?.setBlastAt(handler);
 }
 
+export function bindStandingUpgradePicker(pick: (id: string) => boolean): void {
+  installedExecutor?.bindUpgradePicker(pick);
+}
+
 export function tickStandingOrders(at: number, actor: AgentVec2): StandingOrderTickResult {
   return installedExecutor?.tick(at, actor) ?? {};
 }
@@ -405,6 +432,12 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
       return { verb: 'HARVEST', sluice: value.sluice };
     }
     return schemaError(index, 'HARVEST');
+  }
+  if (value.verb === 'PICK_UPGRADE') {
+    if (!exactKeys(value, ['verb', 'id']) || typeof value.id !== 'string' || value.id.length === 0 || value.id.length > 80) {
+      return schemaError(index, 'PICK_UPGRADE');
+    }
+    return { verb: 'PICK_UPGRADE', id: value.id };
   }
   if (value.verb === 'FALLBACK_IF') {
     if (!exactKeys(value, ['verb', 'threat', 'pos']) || !validPos(value.pos) || !isRecord(value.threat)) {
@@ -484,6 +517,9 @@ function runtimeState(
     buildings: includeActions ? buildingStates(build.hp) : [],
     seams: includeActions ? seamStates(harvest.activeNodes) : [],
     sluices: includeActions ? pointArray(build.sluicePositions) : [],
+    pendingOffer: isRecord(state.progression) && Array.isArray(state.progression.offer)
+      ? state.progression.offer.filter((id): id is string => typeof id === 'string')
+      : [],
   };
 }
 
@@ -595,6 +631,7 @@ function standingOrderIdentity(order: StandingOrder): string {
     return JSON.stringify([order.verb, order.pos.x, order.pos.z]);
   }
   if (order.verb === 'HARVEST') return JSON.stringify([order.verb, 'seam' in order ? order.seam : order.sluice]);
+  if (order.verb === 'PICK_UPGRADE') return JSON.stringify([order.verb, order.id]);
   return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
 }
 

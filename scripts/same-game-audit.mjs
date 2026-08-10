@@ -215,16 +215,19 @@ function audit() {
 
     for (const action of tapeActions) {
       const placeBuild = action === 'place_build' && doorVerbs.includes('BUILD');
-      const reachable = agentCanEnter && placeBuild;
+      const doorVerb = action.toUpperCase();
+      const reachable = agentCanEnter && (placeBuild || doorVerbs.includes(doorVerb));
       rows.push(row(
         contract,
         tapeSurface[action] ?? 'verb',
         action === 'place_build' ? 'tape action place_build includes rotationSteps 0..3' : `tape action ${action}`,
         action === 'place_build'
           ? (reachable ? 'BUILD order reaches placement but always defaults rotation to 0' : 'no reachable BUILD order')
-          : `no ${action} standing order`,
-        'agent-lacks',
-        `${line('functions/api/standings.ts', action === 'place_build' ? "value.type === 'place_build'" : `'${action}'`)} · ${line('src/agent/StandingOrders.ts', action === 'place_build' ? 'this.surface.tools.place_building(order.what, order.where)' : 'export type StandingOrder =')}`,
+          : (reachable ? `${doorVerb} standing order reaches ${action}` : `no ${action} standing order`),
+        action === 'place_build' ? 'agent-lacks' : direction(true, reachable),
+        `${line('functions/api/standings.ts', action === 'place_build' ? "value.type === 'place_build'" : `'${action}'`)} · ${line('src/agent/StandingOrders.ts', action === 'place_build'
+          ? 'this.surface.tools.place_building(order.what, order.where)'
+          : (reachable ? `| { verb: '${doorVerb}'` : 'export type StandingOrder ='))}`,
       ));
     }
 
@@ -232,22 +235,28 @@ function audit() {
       contract,
       'choice',
       'XP opens a three-card draft; player picks a card',
-      agentCanEnter ? 'XP is consumed; headless sim silently takes offer[0]' : 'headless rejects the contract before an upgrade offer',
-      'agent-lacks',
-      `${line('src/ui/UpgradeOverlay.ts', "type: 'pick_upgrade'")} · ${line('src/sim/HeadlessContractSim.ts', 'while (this.progression.offer?.[0])')}`,
+      agentCanEnter && doorVerbs.includes('PICK_UPGRADE')
+        ? 'PICK_UPGRADE reaches any id in the live three-card offer'
+        : 'headless rejects the contract before an upgrade offer',
+      direction(true, agentCanEnter && doorVerbs.includes('PICK_UPGRADE')),
+      `${line('src/ui/UpgradeOverlay.ts', "type: 'pick_upgrade'")} · ${line('src/agent/StandingOrders.ts', "| { verb: 'PICK_UPGRADE'")}`,
     ));
 
     for (const ability of abilityRegistry) {
       const rig = ability.resumeKey.endsWith(':rig');
+      const doorVerb = `${ability.resumeKey.split(':').at(-1).toUpperCase()}_AT`;
+      const reachable = agentCanEnter && (rig || doorVerbs.includes(doorVerb));
       rows.push(row(
         contract,
         'ability',
         `${ability.resumeKey} (${ability.cooldown})`,
-        rig && agentCanEnter ? 'headless automatic Spark Rig uses the same cooldown' : 'no reachable standing-order path reaches this hero ability',
-        rig && agentCanEnter ? 'equal' : 'agent-lacks',
+        reachable
+          ? (rig ? 'headless automatic Spark Rig uses the same cooldown' : `${doorVerb} reaches this hero ability`)
+          : 'no reachable standing-order path reaches this hero ability',
+        direction(true, reachable),
         `${line('src/game/Game.ts', `resumeKey: '${ability.resumeKey}'`)} · ${rig
           ? line('src/sim/HeadlessContractSim.ts', "resumeKey: 'hero:0:rig'")
-          : line('src/agent/StandingOrders.ts', 'export type StandingOrder =')}`,
+          : line('src/agent/StandingOrders.ts', `| { verb: '${doorVerb}'`)}`,
       ));
     }
 
@@ -278,7 +287,8 @@ function markdown(result) {
   const manifestMenuGaps = result.rows.filter((entry) =>
     entry.surface === 'buildable' && entry['humans-get'].startsWith('browser menu') && entry.direction !== 'equal').length;
   const newlyEnumeratedTapeActions = tapeActions.filter((action) =>
-    !['weapon_toggle', 'research_pick', 'research_skip', 'death_action', 'secure_choice'].includes(action));
+    !['weapon_toggle', 'research_pick', 'research_skip', 'death_action', 'secure_choice'].includes(action)
+      && !doorVerbs.includes(action.toUpperCase()));
   return [
     '# Same-game audit',
     '',

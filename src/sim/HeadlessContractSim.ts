@@ -3,6 +3,7 @@ import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { install, type AgentBuildingRef, type AgentGameAdapter, type GoldRushToolSurface, type ToolReceipt } from '../agent/ToolSurface';
 import {
   bindStandingOrderBlast,
+  bindStandingUpgradePicker,
   observeStandingOrders,
   snapshotStandingOrders,
   type StandingOrdersView,
@@ -24,7 +25,7 @@ import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { GameState } from '../game/GameState';
 import { Progression } from '../game/Progression';
 import type { EffectiveStats } from '../game/StatSheet';
-import { upgradeDefById } from '../game/Upgrades';
+import { resolveFiller, upgradeDefById, upgradeEffect } from '../game/Upgrades';
 import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
 import { loadContract, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
@@ -95,6 +96,7 @@ export type GrSimOutcome = {
   gold: number;
   kills: number;
   calls: number;
+  defaultedPicks: number;
   eventLogHash: string;
   securedWave?: number;
   overtimeWaves?: number;
@@ -115,6 +117,8 @@ export type GrSimTurn = {
 export type HeadlessAgentView = AgentView & {
   now: AgentView['now'] & {
     overtime?: true;
+    pendingOffer?: Array<{ id: string; name: string; effectText: string }>;
+    expiresAtSimMs?: number;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -236,6 +240,7 @@ export class HeadlessContractSim {
   private securedWave: number | null = null;
   private dead = false;
   private lastTurnWave = -1;
+  private lastTurnOfferKey = '';
   private lastSurpriseSeq = 0;
   private advanceCpuMs = 0;
   private buildingHits = 0;
@@ -246,6 +251,9 @@ export class HeadlessContractSim {
   private readonly baronRocketTarget = new THREE.Vector3();
   private canyonConnectCompletedByDeadline = false;
   private canyonConnectFailed = false;
+  private upgradeOfferKey = '';
+  private upgradeOfferDeadlineSimMs = 0;
+  private defaultedPicks = 0;
 
   constructor(readonly boot: HeadlessContractBoot) {
     this.contractId = boot.contractId;
@@ -419,6 +427,14 @@ export class HeadlessContractSim {
     };
     this.surface = install(adapter, { permissionLevel: 3 });
     bindStandingOrderBlast((pos) => this.blastAt(pos));
+    bindStandingUpgradePicker((id) => {
+      const applied = this.progression.applyUpgrade(id);
+      if (applied) {
+        this.upgradeOfferKey = '';
+        this.syncUpgradeOfferClock();
+      }
+      return applied;
+    });
     this.bindEventLog();
     this.economy.apply(this.economyEvent({ type: 'run_reset' }));
     const sim = this;
@@ -472,7 +488,13 @@ export class HeadlessContractSim {
       this.step();
       const orders = snapshotStandingOrders();
       const surpriseSeq = latestSurpriseSeq(orders);
-      if (this.terminal || this.waves.diagnostics.wave !== this.lastTurnWave || surpriseSeq > this.lastSurpriseSeq) {
+      const offerKey = this.currentOfferKey();
+      if (
+        this.terminal
+        || this.waves.diagnostics.wave !== this.lastTurnWave
+        || surpriseSeq > this.lastSurpriseSeq
+        || (offerKey !== '' && offerKey !== this.lastTurnOfferKey)
+      ) {
         this.advanceCpuMs += performance.now() - started;
         return this.makeTurn(orders);
       }
@@ -493,6 +515,7 @@ export class HeadlessContractSim {
       gold: round(this.economy.gold),
       kills: this.kills,
       calls: this.calls,
+      defaultedPicks: this.defaultedPicks,
     };
     const overtime = this.boot.overtime && this.securedWave !== null
       ? {
@@ -555,6 +578,7 @@ export class HeadlessContractSim {
     const orders = snapshotStandingOrders();
     return this.terminal
       || this.waves.diagnostics.wave !== this.lastTurnWave
+      || (this.currentOfferKey() !== '' && this.currentOfferKey() !== this.lastTurnOfferKey)
       || latestSurpriseSeq(orders) > this.lastSurpriseSeq;
   }
 
@@ -662,7 +686,8 @@ export class HeadlessContractSim {
     this.combat.update(STEP_SECONDS, this.timeAlive);
     this.deepwater?.resolveTreatments();
     this.progression.consumeXpTotal(this.combat.xpCount);
-    while (this.progression.offer?.[0]) this.progression.applyUpgrade(this.progression.offer[0].id);
+    // AP-16-0 audit anchor, retired by AP-16-2: while (this.progression.offer?.[0])
+    this.syncUpgradeOfferClock();
     this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncLightState();
@@ -671,6 +696,7 @@ export class HeadlessContractSim {
 
   private makeTurn(orders = snapshotStandingOrders()): GrSimTurn {
     this.lastTurnWave = this.waves.diagnostics.wave;
+    this.lastTurnOfferKey = this.currentOfferKey();
     this.lastSurpriseSeq = latestSurpriseSeq(orders);
     const receipt = this.surface.tools.view();
     if (!receipt.outcome.ok || !receipt.outcome.state) throw new Error('THE VIEW was unavailable.');
@@ -681,6 +707,17 @@ export class HeadlessContractSim {
       upgradesTaken: progression.stacks,
       upgradeChoiceRule: 'first-offer' as const,
     });
+    const offer = this.progression.offer;
+    if (offer) {
+      view.now.pendingOffer = offer.map((def) => ({
+        id: def.id,
+        name: def.name,
+        effectText: def.filler
+          ? resolveFiller(def, { wave: this.waves.diagnostics.wave, maxHp: this.hero.maxHp }).effectText
+          : upgradeEffect(def),
+      }));
+      view.now.expiresAtSimMs = this.upgradeOfferDeadlineSimMs;
+    }
     Object.assign(view.now.threats, {
       spawnedTotal: this.waves.diagnostics.waveSpawnedTotal,
       defeatedTotal: this.kills,
@@ -696,6 +733,31 @@ export class HeadlessContractSim {
       },
     });
     return { view, terminal: this.terminal };
+  }
+
+  private currentOfferKey(): string {
+    return this.progression.offer
+      ? this.progression.offer.map(({ id }) => id).join('|')
+      : '';
+  }
+
+  private syncUpgradeOfferClock(): void {
+    const offer = this.progression.offer;
+    if (!offer) {
+      this.upgradeOfferKey = '';
+      this.upgradeOfferDeadlineSimMs = 0;
+      return;
+    }
+    const key = this.currentOfferKey();
+    if (key !== this.upgradeOfferKey) {
+      this.upgradeOfferKey = key;
+      this.upgradeOfferDeadlineSimMs = Math.round(this.timeAlive * 1000) + Balance.offers.pickSeconds * 1000;
+      return;
+    }
+    if (Math.round(this.timeAlive * 1000) < this.upgradeOfferDeadlineSimMs) return;
+    if (this.progression.applyUpgrade(offer[0].id)) this.defaultedPicks += 1;
+    this.upgradeOfferKey = '';
+    this.syncUpgradeOfferClock();
   }
 
   private startWave(wave: number, at: number): boolean | void {
