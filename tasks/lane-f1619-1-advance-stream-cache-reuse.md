@@ -4,7 +4,7 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c`.
 
-READ FIRST: `AGENTS.md`; `e2e/advance-stream-walkthrough.spec.ts` **in full, all 176 lines** — you are going to build a sibling of it and you must not change it; `tasks/BACKLOG.md` line 3 (**F-1616-3**, the finding this task exists to settle — quoted in the WHY below, cite it by content: grep `the WARM column measures request` ); `reviews/advance-stream-walkthrough-drain.md` section **F-1616-3**; `src/assets/AdvanceStream.ts` lines **180-205** (the prefetch `fetch(...)`, its `x-gold-rush-prefetch: 1` header and its `cache: 'force-cache'`) — **read it, do NOT change it**; `.claude/skills/author-task/SKILL.md` section 3 LANE pre-flight.
+READ FIRST: `AGENTS.md`; `e2e/advance-stream-walkthrough.spec.ts` **in full, all 176 lines** — you are going to build a sibling of it and you must not change it; `tasks/BACKLOG.md` (**F-1616-3**, the finding this task exists to settle — quoted in the WHY below; find it by content, never by line number: `grep -n "Distinguishing them costs one probe" tasks/BACKLOG.md`); `reviews/advance-stream-walkthrough-drain.md` section **F-1616-3**; `src/assets/AdvanceStream.ts` lines **180-205** (the prefetch `fetch(...)`, its `x-gold-rush-prefetch: 1` header and its `cache: 'force-cache'`) — **read it, do NOT change it**; `.claude/skills/author-task/SKILL.md` section 3 LANE pre-flight.
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE -> `git checkout -B lane/c main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` — are NEVER "work" and NEVER a STOP. Discard them and PROCEED, listing what you discarded.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. Then `git -C worktrees/lane-c status --short` -> must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
 
@@ -13,8 +13,9 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 grep -c "const THROTTLE_MS = 150;" e2e/advance-stream-walkthrough.spec.ts
 grep -c "currentDoor.demands.add(request.url());" e2e/advance-stream-walkthrough.spec.ts
 grep -c "x-gold-rush-prefetch" src/assets/AdvanceStream.ts
+grep -c "Distinguishing them costs one probe" tasks/BACKLOG.md
 ```
-All three must return **1** (each proved `=1` on main at dispatch, s1619, per F-1425-2). If any returns 0, the ground moved — **STOP and report which one, with the current text of that region.** Do NOT search for a replacement target and do not guess.
+All four must return **1** (each proved `=1` on main AND `=1` inside the refreshed lane at dispatch, s1619, per F-1425-2). If any returns 0, the ground moved — **STOP and report which one, with the current text of that region.** Do NOT search for a replacement target and do not guess.
 
 The one test in the walkthrough spec is titled **"measures warm assets across menu, town, and two contracts"**. Cite it by that title, never by a line number, when you report (F-1310-1: coordinates rot).
 
@@ -83,4 +84,4 @@ NO changes to: `src/**` — **especially `src/assets/AdvanceStream.ts`, `src/tow
 - `npm run test:node-guards` is **correctly OUT of this battery** per F-1460-1 — this diff is one new `e2e/` file and zero `src/sim`, `src/systems`, `src/entities`. State that you checked, do not run it.
 - No screenshots and no perf table: this slice renders nothing new.
 
-End: **READY-FOR-GATES** + report (a) the three pre-flight grep counts, (b) whether you needed `emulateNetworkConditions` and with what values, (c) both projects' full cache-reuse tables, (d) the comparison arm's WARM/COLD table, (e) **your prose verdict on F-1616-3 — artifact, real, or undetermined-and-why**, (f) the empty `git diff --stat` for the walkthrough spec, (g) all playwright runs' rc, pass counts and timings, (h) anything you noticed about the prefetch set or the stream — as a finding, never as an edit.
+End: **READY-FOR-GATES** + report (a) the four pre-flight grep counts, (b) whether you needed `emulateNetworkConditions` and with what values, (c) both projects' full cache-reuse tables, (d) the comparison arm's WARM/COLD table, (e) **your prose verdict on F-1616-3 — artifact, real, or undetermined-and-why**, (f) the empty `git diff --stat` for the walkthrough spec, (g) all playwright runs' rc, pass counts and timings, (h) anything you noticed about the prefetch set or the stream — as a finding, never as an edit.
