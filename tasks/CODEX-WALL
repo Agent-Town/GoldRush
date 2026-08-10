@@ -1,0 +1,56 @@
+CODEX-WALL — raised s1631, 2026-08-10T16:09Z (local, Bangkok UTC+07)
+
+## The fact, quoted verbatim from the run log
+
+    ERROR: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage
+    to purchase more credits or try again at Aug 16th, 2026 3:30 AM.
+
+Source: `tasks/runs/20260810-160522-lane-c-lane-f1631-1-asset-diet-fallback-provenance.md.log`
+(printed twice, immediately after the UserPromptSubmit hook, before any tool call).
+
+## Why this one is DIFFERENT from the usual wall — read before acting
+
+This is **NOT** the ordinary "turn interrupted + large token count" credit wall that §2C
+re-queues once per fire, and it is **NOT** the transient `rc1 at capacity` of the
+`codex-at-capacity-rc1-is-requeue-transient` class. Those are rolling-window walls that
+lift within hours.
+
+This one names an **explicit reset date six days out: Aug 16th, 2026 3:30 AM.**
+Re-queueing before then cannot succeed — it will burn a queue slot, a lane refresh and a
+run log to print the same two lines. The run that raised it died having touched
+**nothing**: zero files, zero commits, and `lane-usable lane-c` reads `ahead=0` clean.
+
+## What is SUSPENDED (per scripts/fire.md §2.0)
+
+- **NO refills.** §2E is suspended. Do not `cp` anything into `tasks/queue/<slot>/`.
+- **NO re-queues of wall-class failures.** `tasks/failed/rc1-20260810-160522-lane-f1631-1-asset-diet-fallback-provenance.md`
+  is wall-class. Leave it. When the wall lifts it gets ONE re-queue, and that re-queue does
+  NOT count toward the twice-then-escalate rule.
+
+## What CONTINUES (all Claude-side, unaffected by a Codex wall)
+
+Drains · gates · merges · the assayer duty · bookkeeping · ledger upkeep · TK-01 digests ·
+GZ-01 items · **authoring**. A fire during the wall is not an idle fire: masters authored now
+are dispatched the moment it lifts, so authoring is the highest-value act available.
+
+## The probe, once per fire
+
+    codex exec "reply exactly: OK"
+
+On success: delete this file, re-queue wall-class failures ONCE each, resume refills, and
+note **CODEX-RESUMED** in the handoff. Do not delete this file on any other evidence —
+in particular, an idle `pgrep` proves nothing, because the wall kills runs instantly and
+an instantly-dead runner leaves no process to find.
+
+## Owner note
+
+If the six-day gap is not acceptable, the message names the remedy — purchasing credits at
+https://chatgpt.com/codex/settings/usage — which is **money, therefore an OWNER decision**
+(CLAUDE.md §7.3). It is on the owner's desk as F-1631-3; no fire should act on it.
+
+## Standing inventory at the moment the wall was raised
+
+- All six queues EMPTY.
+- Lanes a/b/c/d all `ahead=0` USABLE (nothing undrained, nothing at risk).
+- `tasks/lane-f1631-1-asset-diet-fallback-provenance.md` — the canonical master SURVIVES
+  and is correct; it is the first thing to re-dispatch when the wall lifts.
