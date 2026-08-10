@@ -74,7 +74,20 @@ type StoredRow = ScoreRow & {
   tape?: JsonRecord;
 };
 
-type BoardGroup = { latestSubmittedAt: number; contracts: Map<string, unknown> };
+type GroupAggregate = {
+  standings: number;
+  contracts: number;
+  crowns: number;
+  bestWaves: number;
+  totalTokensIn?: number;
+  totalTokensOut?: number;
+  totalCalls?: number;
+  declaredCells: number;
+  undeclaredCells: number;
+  latestSubmittedAt: number;
+};
+
+type BoardGroup = { contracts: Map<string, unknown>; aggregate: GroupAggregate };
 
 type ContractBundle = {
   epochId: string;
@@ -122,6 +135,8 @@ const RIDER_KEYS = new Set(['name', 'stack']);
 const MIN_PARTY_RIDERS = 2;
 const MAX_PARTY_RIDERS = 4;
 const PARTY_FILTERS = new Set(['solo', '2', '3', '4']);
+const UNDECLARED_RIDER = 'undeclared rider';
+const UNDECLARED_RIG = 'undeclared rig';
 const UNREGISTERED_RIG = 'unregistered rig';
 const MAX_REEL_ID_LENGTH = 64;
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
@@ -147,7 +162,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   const view = url.searchParams.get('view');
   if (view !== null) {
     const contracts = epochContracts(epochId);
-    if ((view !== 'byStack' && view !== 'byParty') || url.searchParams.size !== 2 || !contracts) {
+    if ((view !== 'byStack' && view !== 'byHarness' && view !== 'byParty') || url.searchParams.size !== 2 || !contracts) {
       return error(cors, 400, 'bad_view', 'Field book view not accepted.');
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
@@ -165,17 +180,27 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
             composition,
             riderCount: composition.split('+').length,
             contracts: [...group.contracts.values()],
-            latestSubmittedAt: group.latestSubmittedAt,
+            latestSubmittedAt: group.aggregate.latestSubmittedAt,
           })),
       });
     }
+    const byHarness = view === 'byHarness';
+    const grouped = groupRows(
+      boards,
+      (row) => (byHarness ? row.stack?.harness?.trim() || UNDECLARED_RIG : row.stack?.model?.trim() || UNDECLARED_RIDER),
+      stackCell,
+    ).map(([name, group]) => ({
+      [byHarness ? 'harness' : 'model']: name,
+      contracts: [...group.contracts.values()],
+      latestSubmittedAt: group.aggregate.latestSubmittedAt,
+      aggregate: group.aggregate,
+    }));
     return json(cors, {
       ok: true,
-      view: 'byStack',
+      view,
       epochId,
       contracts,
-      byStack: groupRows(boards, (row) => row.stack?.model?.trim() || UNREGISTERED_RIG, stackCell)
-        .map(([model, group]) => ({ model, contracts: [...group.contracts.values()], latestSubmittedAt: group.latestSubmittedAt })),
+      [byHarness ? 'byHarness' : 'byStack']: grouped,
     });
   }
   const contractId = url.searchParams.get('contract') ?? '';
@@ -262,17 +287,45 @@ function groupRows(
 ): Array<[string, BoardGroup]> {
   const groups = new Map<string, BoardGroup>();
   for (const [contractId, rows] of boards) {
+    // County ranks are minted per contract x party size. Difficulty only filters that ranked board,
+    // so its matching preset cannot mint the same crown a second time.
+    const crownedParties = new Set<number>();
     for (const row of rows) {
+      const partySize = row.party?.riderCount ?? 1;
+      const crown = !crownedParties.has(partySize);
+      crownedParties.add(partySize);
       const key = keyOf(row);
       if (key === null) continue;
-      const group = groups.get(key) ?? { latestSubmittedAt: 0, contracts: new Map<string, unknown>() };
-      if (group.contracts.has(contractId)) continue;
-      group.latestSubmittedAt = Math.max(group.latestSubmittedAt, row.submittedAt);
-      group.contracts.set(contractId, cellOf(row, contractId));
+      const group = groups.get(key) ?? {
+        contracts: new Map<string, unknown>(),
+        aggregate: {
+          standings: 0,
+          contracts: 0,
+          crowns: 0,
+          bestWaves: 0,
+          declaredCells: 0,
+          undeclaredCells: 0,
+          latestSubmittedAt: 0,
+        },
+      };
+      const aggregate = group.aggregate;
+      aggregate.standings += 1;
+      aggregate.crowns += Number(crown);
+      aggregate.bestWaves = Math.max(aggregate.bestWaves, row.waves);
+      aggregate.latestSubmittedAt = Math.max(aggregate.latestSubmittedAt, row.submittedAt);
+      const costs = [row.stack?.tokensIn, row.stack?.tokensOut, row.stack?.calls];
+      costs.some((value) => value !== undefined) ? aggregate.declaredCells += 1 : aggregate.undeclaredCells += 1;
+      if (row.stack?.tokensIn !== undefined) aggregate.totalTokensIn = (aggregate.totalTokensIn ?? 0) + row.stack.tokensIn;
+      if (row.stack?.tokensOut !== undefined) aggregate.totalTokensOut = (aggregate.totalTokensOut ?? 0) + row.stack.tokensOut;
+      if (row.stack?.calls !== undefined) aggregate.totalCalls = (aggregate.totalCalls ?? 0) + row.stack.calls;
+      if (!group.contracts.has(contractId)) {
+        group.contracts.set(contractId, cellOf(row, contractId));
+        aggregate.contracts += 1;
+      }
       groups.set(key, group);
     }
   }
-  return [...groups.entries()].sort((a, b) => b[1].latestSubmittedAt - a[1].latestSubmittedAt || a[0].localeCompare(b[0]));
+  return [...groups.entries()].sort((a, b) => b[1].aggregate.latestSubmittedAt - a[1].aggregate.latestSubmittedAt || a[0].localeCompare(b[0]));
 }
 
 function showing(row: StoredRow, contractId: string): JsonRecord {
