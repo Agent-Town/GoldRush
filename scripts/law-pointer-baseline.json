@@ -84,6 +84,12 @@
       "fingerprint": "5df9337b3bb3",
       "excerpt": "🔺 **ONE OWNER CHOICE in this digest, and it is a good-news one.** The county's first standing means"
     },
+    "scripts/fire.md -> marketing/outbox/gazette-queue.md:1349": {
+      "target": "marketing/outbox/gazette-queue.md",
+      "line": 1349,
+      "fingerprint": "d7293afa016e",
+      "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
+    },
     ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:431": {
       "target": "scripts/drain-block-check.mjs",
       "line": 431,
@@ -119,30 +125,6 @@
       "line": 99,
       "fingerprint": "18ae39970869",
       "excerpt": "await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullP"
-    },
-    "tasks/goals.json[f1615-1-prefetch-wins-mount-laziness] -> e2e/advance-stream.spec.ts:69": {
-      "target": "e2e/advance-stream.spec.ts",
-      "line": 69,
-      "fingerprint": "e69ea22721b3",
-      "excerpt": "expect(prefetched.some((url) => /stamp-mill|dynamo-hall/.test(url))).toBe(false);"
-    },
-    "tasks/goals.json[f1615-1-prefetch-wins-mount-laziness] -> TownTavernPilot.ts:49": {
-      "target": "src/town/TownTavernPilot.ts",
-      "line": 49,
-      "fingerprint": "5fcd68de9cc7",
-      "excerpt": ".filter(([id]) => id !== 'stamp-mill' && id !== 'dynamo_hall')"
-    },
-    "tasks/goals.json[f1615-1-prefetch-wins-mount-laziness] -> AdvanceStream.ts:30": {
-      "target": "src/assets/AdvanceStream.ts",
-      "line": 30,
-      "fingerprint": "ecd2829d3da7",
-      "excerpt": "const townUrls = () => import('../town/TownTavernPilot').then(({ townPrefetchUrls }) => townPrefetch"
-    },
-    "tasks/goals.json[f1615-1-prefetch-wins-mount-laziness] -> AdvanceStream.ts:219": {
-      "target": "src/assets/AdvanceStream.ts",
-      "line": 219,
-      "fingerprint": "2c16339757c9",
-      "excerpt": "if (saveDataEnabled()) targets = targets.filter(({ priority }) => priority === 1);"
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."
