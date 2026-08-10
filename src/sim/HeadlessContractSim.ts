@@ -28,7 +28,7 @@ import type { EffectiveStats } from '../game/StatSheet';
 import { resolveFiller, upgradeDefById, upgradeEffect } from '../game/Upgrades';
 import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
-import { loadContract, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
+import { listBoardContracts, loadContract, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
 import { stableHash, type LockstepAction } from '../mp/LockstepClient';
 import { AtomicSocket } from './AtomicSocket';
 import { DeepwaterSocket } from './DeepwaterSocket';
@@ -49,22 +49,42 @@ import * as Terrain from '../world/Terrain';
 const STEP_SECONDS = 1 / 30;
 // F-E2S-1: boss fights get six full waves after the later posting boundary.
 const BOSS_GRACE_WAVES = 6;
-const SUPPORTED_CONTRACTS = new Set([
-  'e1-dry-gulch',
-  'the-claim',
-  'e1-night-shift',
-  'e1-twin-banks',
-  'e1-baron',
-  'e2-pressure-garden',
-  // The three E2 railcar contracts stay out under the F-E2S-3 owner ruling of 2026-08-09 until
-  // the second master lands their era-true pressure-to-damage socket.
-  'e3-blackout-ridge',
-  'e3-moth-season',
-  'e3-canyon-works',
-  // E5/E6 stay out DESPITE their era sockets now running headlessly (DeepwaterSocket,
-  // AtomicSocket). Admission was attempted and MEASURED, and the measurement refused it:
-  // see reviews/milk-twin-sockets.md and the two census docs for the four numbers.
-]);
+type AdmissionExemption = {
+  reason: string;
+  citation: `F-${string}` | `reviews/${string}.md`;
+};
+
+export const CONTRACT_ADMISSION_EXEMPTIONS = {
+  'e3-fairground': {
+    reason: 'Owner design fork: the advertised crowd-flock escort objective has no headless consumer.',
+    citation: 'F-1475-1',
+  },
+  'e5-deepwater-claim': {
+    reason: 'Measured Deepwater socket run did not reach a lawful terminal.',
+    citation: 'reviews/milk-twin-sockets.md',
+  },
+  'e5-stillwater': {
+    reason: 'Measured Deepwater socket run did not reach a lawful terminal.',
+    citation: 'reviews/milk-twin-sockets.md',
+  },
+  'e6-glow-mesa': {
+    reason: 'Measured Atomic socket run did not reach a lawful terminal.',
+    citation: 'reviews/milk-twin-sockets.md',
+  },
+  'e6-showroom': {
+    reason: 'Measured Atomic socket run did not reach a lawful terminal.',
+    citation: 'reviews/milk-twin-sockets.md',
+  },
+} as const satisfies Record<string, AdmissionExemption>;
+
+const SUPPORTED_CONTRACTS = new Set(listBoardContracts()
+  .filter((contract) => contract.tileParams.harvestAnchors?.length !== 0)
+  .filter((contract) => !(contract.id in CONTRACT_ADMISSION_EXEMPTIONS))
+  .map((contract) => contract.id));
+
+export function supportedContractIds(): string[] {
+  return [...SUPPORTED_CONTRACTS].sort();
+}
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
 /**
  * Names the engine inside every seated determinism hash. A browser rider hashes a
@@ -146,6 +166,8 @@ export type HeadlessContractBoot = ContractRunBoot & {
   contractId: string;
   seed: string;
   overtime?: boolean;
+  /** Measurement only: bypasses admission without making a playability claim. */
+  admissionProbe?: true;
 };
 
 const NO_AUDIO = {
@@ -261,8 +283,9 @@ export class HeadlessContractSim {
     this.manifest = loadContract(this.contractId);
     const mode = this.manifest.modes?.find(({ id }) => id === boot.mode);
     if (boot.mode && !mode) throw new Error(`${this.contractId} does not declare mode ${boot.mode}.`);
-    if (!SUPPORTED_CONTRACTS.has(this.contractId) && !mode) {
-      throw new Error(`AP-07 supports only ${[...SUPPORTED_CONTRACTS].join(', ')}; received ${this.contractId}.`);
+    if (!SUPPORTED_CONTRACTS.has(this.contractId) && !mode && boot.admissionProbe !== true) {
+      // Keep the pre-AP-16 diagnostic prefix stable; the complete membership remains derived above.
+      throw new Error(`AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the current derived door (${[...SUPPORTED_CONTRACTS].join(', ')}); received ${this.contractId}.`);
     }
     const stake = this.manifest.tileParams.stakeMarkers?.find((marker) => marker.heroStart);
     const start = new THREE.Vector3(stake?.x ?? 0, 0.06, stake?.z ?? 12);

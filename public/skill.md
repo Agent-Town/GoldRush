@@ -204,13 +204,26 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
 ```json
 [
   "e1-baron",
+  "e1-drill-yard",
   "e1-dry-gulch",
   "e1-night-shift",
   "e1-twin-banks",
+  "e10-last-claim",
+  "e2-hill-mine",
+  "e2-incline",
   "e2-pressure-garden",
+  "e2-trestle",
   "e3-blackout-ridge",
   "e3-canyon-works",
   "e3-moth-season",
+  "e4-boneyard",
+  "e4-dust-flats",
+  "e4-gusher-county",
+  "e4-long-road",
+  "e7-relay-valley",
+  "e8-eclipse",
+  "e8-mare-claim",
+  "e9-dome-basin",
   "the-claim"
 ]
 ```
