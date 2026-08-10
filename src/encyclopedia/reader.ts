@@ -5,6 +5,7 @@ import type { RunTape } from '../game/RunTape';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { activeEpochId, listContracts, listEpochs, loadEpoch } from '../meta/ContractFamilies';
 import { loadEraBackdrop } from '../ui/EraBackdrop';
+import { SEASONS, type Season } from '../seasons/registry';
 import { installAssayOfficeRecordsLiveRead } from './liveStats';
 import {
   LEDGER_CATEGORIES,
@@ -31,7 +32,7 @@ type OpenClaimLedgerOptions = {
   onWatchTape?: (tape: RunTape) => void;
 };
 
-type LedgerView = 'ledger' | 'standings' | 'field-book';
+type LedgerView = 'ledger' | 'standings' | 'field-book' | 'seasons';
 type FieldBookView = 'byStack' | 'byHarness' | 'byParty';
 type StandingsDifficulty = DifficultyPresetId | 'all';
 type StandingsParty = 'solo' | '2' | '3' | '4';
@@ -56,6 +57,7 @@ type CountyStanding = StandingStack & {
   baseValue: number;
   difficulty: DifficultyPresetId;
   submittedAt?: number;
+  season?: string;
   defaulted?: true;
   party?: { riderCount: number; riders: CountyRider[] };
   reel?: { id: string; simVersion: number };
@@ -63,9 +65,10 @@ type CountyStanding = StandingStack & {
 
 type FieldBookCell = {
   contractId: string;
-  score: Omit<CountyStanding, 'rank' | 'profileName' | 'difficulty' | 'submittedAt' | 'defaulted'>;
+  score: Omit<CountyStanding, 'rank' | 'profileName' | 'difficulty' | 'submittedAt' | 'season' | 'defaulted'>;
   difficulty: DifficultyPresetId;
   submittedAt: number;
+  season?: string;
   tokensIn?: number;
   tokensOut?: number;
   calls?: number;
@@ -139,6 +142,8 @@ const FIELD_BOOK_VIEW_LABELS: Record<FieldBookView, string> = {
   byParty: 'By team',
 };
 
+const SEASONS_ENABLED = true;
+
 let currentRoot: HTMLElement | null = null;
 let currentClose: (() => void) | undefined;
 let currentLiveReads: (() => void)[] = [];
@@ -151,6 +156,7 @@ let currentStandingsDifficulty: StandingsDifficulty = 'all';
 let currentStandingsParty: StandingsParty = 'solo';
 let currentStandingsRows: CountyStanding[] = [];
 let currentFieldBookView: FieldBookView = 'byStack';
+let currentSeasonId: string | null = null;
 let currentWatchTape: ((tape: RunTape) => void) | undefined;
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
@@ -168,6 +174,7 @@ export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   currentStandingsParty = 'solo';
   currentStandingsRows = [];
   currentFieldBookView = 'byStack';
+  currentSeasonId = null;
   currentWatchTape = options.onWatchTape;
   root.className = 'claim-ledger';
   root.dataset.testid = 'claim-ledger';
@@ -209,6 +216,7 @@ export function closeClaimLedger(notify = true): void {
 function renderCurrentLedger(): void {
   const root = currentRoot;
   if (!root) return;
+  if (!SEASONS_ENABLED && currentView === 'seasons') currentView = 'ledger';
   for (const dispose of currentLiveReads) dispose();
   if (currentView === 'standings') {
     currentLiveReads = [];
@@ -221,6 +229,12 @@ function renderCurrentLedger(): void {
     currentLiveReads = [];
     root.innerHTML = renderFieldBookLedger();
     void loadFieldBook();
+    return;
+  }
+  if (currentView === 'seasons') {
+    currentLiveReads = [];
+    root.innerHTML = renderSeasonsLedger();
+    if (currentSeasonId) void loadSeasonResults(currentSeasonId);
     return;
   }
   root.innerHTML = renderLedger(currentEntryId, currentEpochId);
@@ -277,6 +291,7 @@ function renderViewRow(): string {
       <button type="button" data-ledger-view="ledger" data-testid="claim-ledger-pages" aria-pressed="${currentView === 'ledger'}">Claim Pages</button>
       <button type="button" data-ledger-view="standings" data-testid="claim-ledger-county-standings" aria-pressed="${currentView === 'standings'}">County Standings</button>
       <button type="button" data-ledger-view="field-book" data-testid="claim-ledger-field-book" aria-pressed="${currentView === 'field-book'}">The Field Book</button>
+      ${SEASONS_ENABLED ? `<button type="button" data-ledger-view="seasons" data-testid="claim-ledger-seasons" aria-pressed="${currentView === 'seasons'}">Seasons</button>` : ''}
     </nav>
   `;
 }
@@ -397,6 +412,132 @@ function renderFieldBookLedger(): string {
   `;
 }
 
+function renderSeasonsLedger(): string {
+  const selected = SEASONS.find((season) => season.id === currentSeasonId);
+  return `
+    <div class="claim-ledger__shell">
+      ${renderHeader()}
+      ${renderViewRow()}
+      <main class="seasons" data-testid="seasons">
+        <p class="claim-ledger__eyebrow">County History</p>
+        <h3>Seasons</h3>
+        <p class="seasons__intro">Every season keeps the county's rides, changes, and hard-won lessons together.</p>
+        <div class="seasons__list" data-testid="season-list">
+          ${SEASONS.map((season) => `
+            <button type="button" data-season-id="${escapeHtml(season.id)}" data-testid="season-link-${escapeHtml(season.id)}" aria-pressed="${season.id === selected?.id}">
+              <strong>${escapeHtml(season.name)}</strong>
+              <span>${formatSeasonRange(season)}</span>
+              <span>${escapeHtml(season.summary)}</span>
+            </button>
+          `).join('')}
+        </div>
+        ${selected ? renderSeasonPage(selected) : '<p class="seasons__prompt">Choose a season to open its county page.</p>'}
+      </main>
+    </div>
+  `;
+}
+
+function renderSeasonPage(season: Season): string {
+  return `
+    <article class="season-page" data-testid="season-page-${escapeHtml(season.id)}">
+      <header>
+        <p class="claim-ledger__eyebrow">${formatSeasonRange(season)}</p>
+        <h3>${escapeHtml(season.name)}</h3>
+      </header>
+      <section data-testid="season-what-happened">
+        <h4>What happened</h4>
+        <p>${escapeHtml(season.summary)}</p>
+        <p><strong>Era stamps:</strong> ${season.eraStamps.length ? season.eraStamps.map(escapeHtml).join(' &middot; ') : 'No era stamps entered yet.'}</p>
+      </section>
+      <section data-testid="season-results">
+        <h4>Results</h4>
+        <p>Minds and rigs are <strong>SELF-DECLARED</strong> — the county prints what riders claim; the boards rank results alone.</p>
+        <div data-testid="season-results-board" aria-live="polite"><p class="seasons__empty">The county clerk turns the results pages.</p></div>
+      </section>
+      <section data-testid="season-commentary">
+        <h4>Commentary</h4>
+        <p>The county's commentary has not yet been written.</p>
+      </section>
+      <section data-testid="season-learned">
+        <h4>What we learned</h4>
+        <p>The lessons ledger has not yet been written.</p>
+      </section>
+    </article>
+  `;
+}
+
+async function loadSeasonResults(seasonId: string): Promise<void> {
+  const root = currentRoot;
+  const season = SEASONS.find((entry) => entry.id === seasonId);
+  if (!root || !season) return;
+  const load = async (epochId: string, view: 'byStack' | 'byHarness'): Promise<{ ok: boolean; payload: unknown }> => {
+    const url = new URL(gameApiUrl('/api/standings'));
+    url.searchParams.set('view', view);
+    url.searchParams.set('epoch', epochId);
+    try {
+      const response = await fetch(url);
+      return response.ok ? { ok: true, payload: await response.json() } : { ok: false, payload: null };
+    } catch {
+      return { ok: false, payload: null };
+    }
+  };
+  const results = globalThis.navigator?.onLine === false
+    ? null
+    : await Promise.all(listEpochs().map(({ id }) => Promise.all([load(id, 'byStack'), load(id, 'byHarness')])));
+  if (currentRoot !== root || currentView !== 'seasons' || currentSeasonId !== seasonId) return;
+  const board = root.querySelector<HTMLElement>('[data-testid="season-results-board"]');
+  if (!board) return;
+  if (!results || results.some((pair) => pair.some((result) => !result.ok))) {
+    board.innerHTML = '<p class="seasons__empty">The county results book is unavailable right now — try this page again when the trail clears.</p>';
+    return;
+  }
+  const minds = mergeFieldBooks(results.map(([result]) => readFieldBook(result.payload, 'byStack', season.name)));
+  const rigs = mergeFieldBooks(results.map(([, result]) => readFieldBook(result.payload, 'byHarness', season.name)));
+  board.innerHTML = minds.rows.length === 0 && rigs.rows.length === 0
+    ? '<p class="seasons__empty">No rides were posted for this season — the county page is ready when they are.</p>'
+    : `${renderSeasonMatrix(minds, 'byStack')}${renderSeasonMatrix(rigs, 'byHarness')}`;
+}
+
+function renderSeasonMatrix(fieldBook: FieldBook, view: 'byStack' | 'byHarness'): string {
+  if (fieldBook.rows.length === 0) return '';
+  const label = view === 'byHarness' ? 'Rigs' : 'Minds';
+  const names = new Map(listEpochs().flatMap(({ id }) => listContracts(id).map((contract) => [contract.id, contract.boardRow.name] as const)));
+  const contracts = fieldBook.contracts.filter((contractId) => fieldBook.rows.some((row) => row.contracts.some((cell) => cell.contractId === contractId)));
+  return `
+    <section class="season-results" data-testid="season-results-${view}">
+      <h5>${label}</h5>
+      <div class="field-book__contract-wrap">
+        <table class="field-book__matrix">
+          <thead><tr><th scope="col">${view === 'byHarness' ? 'Rig' : 'Mind'}</th>${contracts.map((id) => `<th scope="col">${escapeHtml(names.get(id) ?? id)}</th>`).join('')}</tr></thead>
+          <tbody>${fieldBook.rows.map((row) => {
+            const cells = new Map(row.contracts.map((cell) => [cell.contractId, cell]));
+            const rowSlug = slug(row.name) || 'undeclared';
+            return `<tr class="field-book__row"><th scope="row">${escapeHtml(row.name)}</th>${contracts.map((contractId) => renderFieldBookCell(cells.get(contractId), rowSlug, contractId)).join('')}</tr>`;
+          }).join('')}</tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function mergeFieldBooks(books: readonly FieldBook[]): FieldBook {
+  const rows = new Map<string, FieldBookRow>();
+  for (const book of books) {
+    for (const row of book.rows) {
+      const prior = rows.get(row.name);
+      rows.set(row.name, prior ? { ...prior, contracts: [...prior.contracts, ...row.contracts] } : row);
+    }
+  }
+  return { contracts: [...new Set(books.flatMap((book) => book.contracts))], rows: [...rows.values()] };
+}
+
+function formatSeasonRange(season: Season): string {
+  const start = new Date(season.startsAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  if (season.endsAt === null) return `Since ${start} — still riding`;
+  const end = new Date(season.endsAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+  return `${start} — ${end}`;
+}
+
 async function loadFieldBook(): Promise<void> {
   const root = currentRoot;
   const epochId = activeEpochId();
@@ -424,7 +565,7 @@ async function loadFieldBook(): Promise<void> {
   if (board) board.innerHTML = render(payload);
 }
 
-function readFieldBook(value: unknown, view: Exclude<FieldBookView, 'byParty'>): FieldBook {
+function readFieldBook(value: unknown, view: Exclude<FieldBookView, 'byParty'>, season?: string): FieldBook {
   if (!value || typeof value !== 'object') return { contracts: [], rows: [] };
   const payload = value as { contracts?: unknown; byStack?: unknown; byHarness?: unknown };
   const grouped = view === 'byHarness' ? payload.byHarness : payload.byStack;
@@ -437,7 +578,8 @@ function readFieldBook(value: unknown, view: Exclude<FieldBookView, 'byParty'>):
     const row = value as Record<string, unknown>;
     const aggregate = readFieldBookAggregate(row.aggregate);
     if (typeof row[nameField] !== 'string' || !Array.isArray(row.contracts) || !aggregate) return [];
-    return [{ name: row[nameField], contracts: row.contracts.filter(isFieldBookCell), aggregate }];
+    const contracts = row.contracts.filter(isFieldBookCell).filter((cell) => season === undefined || cell.season === season);
+    return season !== undefined && contracts.length === 0 ? [] : [{ name: row[nameField], contracts, aggregate }];
   }).sort((a, b) => {
     if (a.name === undeclared) return b.name === undeclared ? 0 : 1;
     if (b.name === undeclared) return -1;
@@ -465,6 +607,7 @@ function isFieldBookCell(value: unknown): value is FieldBookCell {
     && finiteNonNegative(score.waves) && finiteNonNegative(score.timeAlive) && finiteNonNegative(score.gold)
     && finiteNonNegative(score.baseValue) && isDifficultyPreset(cell.difficulty)
     && Number.isInteger(cell.submittedAt) && (cell.submittedAt ?? -1) >= 0
+    && validOptionalString(cell.season)
     && validOptionalCost(cell.tokensIn) && validOptionalCost(cell.tokensOut) && validOptionalCost(cell.calls)
     && validOptionalString(cell.harness) && validOptionalString(cell.harnessVersion) && validOptionalString(cell.config);
 }
@@ -734,6 +877,7 @@ function isCountyStanding(value: unknown): value is CountyStanding {
     finiteNonNegative(row.baseValue) &&
     isDifficultyPreset(row.difficulty) &&
     (row.submittedAt === undefined || (Number.isInteger(row.submittedAt) && row.submittedAt >= 0)) &&
+    validOptionalString(row.season) &&
     (row.defaulted === undefined || row.defaulted === true) &&
     isStandingStack(row) &&
     isCountyParty(row.party) &&
@@ -1113,6 +1257,13 @@ function onLedgerClick(event: MouseEvent): void {
     currentView = view;
     renderCurrentLedger();
     currentRoot?.querySelector<HTMLElement>(`[data-ledger-view="${view}"]`)?.focus();
+    return;
+  }
+  const seasonId = target?.closest<HTMLButtonElement>('[data-season-id]')?.dataset.seasonId;
+  if (seasonId && seasonId !== currentSeasonId && SEASONS.some((season) => season.id === seasonId)) {
+    currentSeasonId = seasonId;
+    renderCurrentLedger();
+    currentRoot?.querySelector<HTMLElement>(`[data-season-id="${seasonId}"]`)?.focus();
     return;
   }
   const contractId = target?.closest<HTMLButtonElement>('[data-standings-contract]')?.dataset.standingsContract;
