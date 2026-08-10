@@ -6576,7 +6576,9 @@
             {
               "id": "f1626-1-ghost-ladder-row-guard",
               "title": "Red the board when a lead-📋 ladder row advertises an already-SHIPPED master (F-1625-1)",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "f4022b8f8ea829a4d82b51386137441c02350444",
+              "drainNotes": "DRAINED s1628, merge f4022b8f8ea829a4d82b51386137441c02350444, review reviews/f1626-1-ghost-ladder-row-guard.md. Gated in detached worktree gate-s1628 per 3.0b; main fast-forwarded to the gated commit itself, so the merge window was zero. GATE MET: tsc rc=0, build 2.20s, own test 4/4, test:ledger-guards rc=0 in 19.0s, gate-caller-audit test 26/26 AND the binary rc=0 (121 subjects, 21 orphans, 21 grandfathered, both new baseline entries accepted), guard over the live merged BACKLOG 0 ghosts. Clean ort merge, exact 5-file firewall; package.json verified token-by-token (main 21 leaves -> merged 23, added exactly the two new files, lost nothing) and the BACKLOG edits are region-disjoint from this fires own ap16 edit at line 1. TEETH PROVED BY MANUFACTURING THE DEFECT rather than by the green: re-flipping row 7 to lead-clipboard gives rc=1 naming line 1757 and the master, BACKLOG restored byte-identical, control re-run rc=0. Retires the two real ghosts it was built to find: row 7 board-layout-full-picture (87d1b052) and row 8 map-beauty-dry-gulch (c505ee7a). CAUTION RECORDED FOR FUTURE PROBERS, because I got it wrong first: the guard is ADVISORY without --strict (exit code gated on the flag at :48, the drain-block-check UNKNOWN precedent) and test:ledger-guards wires it WITH --strict, so a bare invocation prints the ghost at rc=0 and briefly reads as detects-but-does-not-fail. Probe a guard the way its battery calls it; my first probe indicted the wrong subject, the slice was always correct.",
               "taskFile": "lane-f1626-1-ghost-ladder-row-guard.md"
             },
             {
