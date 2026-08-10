@@ -3,9 +3,13 @@ import test from 'node:test';
 import { resolveSeasonAt, SEASONS } from '../src/seasons/registry.ts';
 
 const founding = SEASONS[0];
+const sameGame = SEASONS[1];
 
-test('season resolver finds a date inside Season 1', () => {
-  assert.equal(resolveSeasonAt(1786034488337)?.id, 'founding-season');
+test('registry turns from Season 1 to Season 2 at the half-open boundary', () => {
+  assert.equal(SEASONS.length, 2);
+  assert.equal(founding.endsAt, sameGame.startsAt);
+  assert.equal(resolveSeasonAt(sameGame.startsAt - 1)?.id, 'founding-season');
+  assert.equal(resolveSeasonAt(sameGame.startsAt)?.id, 'same-game-season');
 });
 
 test('season resolver leaves dates before all seasons unlabelled', () => {
@@ -17,5 +21,5 @@ test('season resolver leaves missing timestamps unlabelled', () => {
 });
 
 test('season resolver treats null endsAt as open-ended', () => {
-  assert.equal(resolveSeasonAt(Date.UTC(2027, 0, 1))?.id, 'founding-season');
+  assert.equal(resolveSeasonAt(Date.UTC(2027, 0, 1))?.id, 'same-game-season');
 });

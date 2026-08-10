@@ -187,7 +187,7 @@ test('public county rows carry submitted time while legacy rows keep the missing
   const stored = JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]') as Array<Record<string, unknown>>;
   expect(projected.submittedAt).toBe(stored[0]?.submittedAt);
   expect(projected.submittedAt).toEqual(expect.any(Number));
-  expect(projected.season).toBe('The Founding Season');
+  expect(projected.season).toBe('Season 2 — The Same Game');
 
   const { submittedAt: _submittedAt, season: _season, ...legacyRow } = projected;
   let board = [legacyRow];
@@ -302,9 +302,9 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   const body = (await response.json()) as { board: Array<Record<string, unknown>> };
   expect(response.status).toBe(200);
   expect(body.board).toMatchObject([
-    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false, season: 'The Founding Season' },
+    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false, season: 'Season 2 — The Same Game' },
     { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', defaulted: true, declared: false },
-    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, source: stack.source, season: 'The Founding Season' },
+    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, source: stack.source, season: 'Season 2 — The Same Game' },
   ]);
   expect(body.board[1]).not.toHaveProperty('season');
   for (const row of body.board.slice(0, 2)) {
