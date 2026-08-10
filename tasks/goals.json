@@ -6565,6 +6565,12 @@
               "drainNotes": "DRAINED s1626, merge a7025f60109f42f117ee6a493f893810d9bac8c7, review reviews/f1624-1-orphan-test-rooting.md. Gated in detached worktree gate-s1626 per 3.0b, merged-and-committed as ONE act per F-1589-5. GATE MET: tsc rc=0, build 2.07s, gate-caller-audit PASS 50 subjects/12 orphans -> 117/19/19 grandfathered, test:node-guards rc=0 402.1s with ZERO failing tests and ZERO contention stamps, the two newly-rooted files plus gate-caller-audit.test.mjs 40/40, base 8e09b9daa with all 4 files LANE-TOUCHED and MAIN-UNMOVED, clean ort merge. NO UNPREDICTED ORPHAN, PROVED BY ARITHMETIC RATHER THAN BY THE RUNNER'S WORD: subjects rose by exactly +67 (the count of tracked *.test.mjs) and orphans by exactly +7, and 58 reached + 7 grandfathered + 2 rooted = 67, which leaves no room for an eighth. THE FIRST BATTERY WAS DISCARDED, NOT THE SLICE: it ran rc=1 in 447.5s ending CONTENDED - 2 concurrent batteries, the exact F-1537-1 collision s1625 deferred this drain to avoid, and it recurred because lane-a (ap16-audit) and lane-c (f1625-1) were cycling batteries continuously. Attribution was settled by a CONTROL rather than an argument - the same two red files run from MAIN's tree, carrying none of this slice's content, reproduced both reds identically at 28.3s/5.04s against 28.1s/5.04s - and the verdict then rests on a clean run obtained after a 103s tight poll, not on that control. F-1626-1 NON-BLOCKING cosmetic: the audit's orphan listing pads the name column to a fixed width, so names longer than it run into their reason (banked-master-preflight-guard.test.mjss1624 F-1624-1...), hitting 5 of the 7 new grandfather entries; rc and membership unaffected, worth one line in a later slice touching that file."
             },
             {
+              "id": "f1626-1-ghost-ladder-row-guard",
+              "title": "Red the board when a lead-📋 ladder row advertises an already-SHIPPED master (F-1625-1)",
+              "status": "queued",
+              "taskFile": "lane-f1626-1-ghost-ladder-row-guard.md"
+            },
+            {
               "id": "stack-directory",
               "title": "County-curated learn-more links on Minds + Rigs (owner 2026-08-10)",
               "status": "merged",
