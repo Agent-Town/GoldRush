@@ -13,7 +13,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## Why (F-1627-1 + F-1627-2, measured s1627 at the f1625-1 drain — every number re-derived from the live tree, not inherited)
 
-`f1625-1` correctly restored the release gate's feed. At the A/B test's assertion site it did something else: it **replaced** the two arms' ceiling checks with two byte-identical copies of a third measurement's check. `e2e/asset-diet.spec.ts:431–432` now read, twice:
+`f1625-1` correctly restored the release gate's feed. At the A/B test's assertion site it did something else: it **replaced** the two arms' ceiling checks with two byte-identical copies of a third measurement's check. At the tail of `e2e/asset-diet.spec.ts` ("town byte budget reports normal and saveData arms by URL") two adjacent lines now read, identically:
 
 ```ts
 expect(cueTestStats.totalBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
