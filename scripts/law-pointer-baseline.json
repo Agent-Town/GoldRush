@@ -90,6 +90,24 @@
       "fingerprint": "c11d5b8cacd2",
       "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
     },
+    "scripts/fire.md -> lane-usable.mjs:384": {
+      "target": "scripts/lane-usable.mjs",
+      "line": 384,
+      "fingerprint": "9e7150879216",
+      "excerpt": "if (drift.length === 0) {"
+    },
+    "scripts/fire.md -> gate-battery.mjs:16": {
+      "target": "scripts/gate-battery.mjs",
+      "line": 16,
+      "fingerprint": "ae4585f62273",
+      "excerpt": "* `scripts/tmp-s1146-gate.mjs:51` writes `artifacts/s1146-drain-gate.txt` with the same"
+    },
+    "scripts/fire.md -> tmp-s1146-gate.mjs:51": {
+      "target": "scripts/tmp-s1146-gate.mjs",
+      "line": 51,
+      "fingerprint": "39cf244b3b5a",
+      "excerpt": "writeFileSync('artifacts/s1146-drain-gate.txt', out.join('\\n'))"
+    },
     "scripts/fire.md -> marketing/outbox/ticker-digest-2026-08-06.md:27": {
       "target": "marketing/outbox/ticker-digest-2026-08-06.md",
       "line": 27,
