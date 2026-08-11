@@ -55,6 +55,18 @@ type AdmissionExemption = {
 };
 
 export const CONTRACT_ADMISSION_EXEMPTIONS = {
+  'e2-hill-mine': {
+    reason: 'Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar.',
+    citation: 'F-E2S-3',
+  },
+  'e2-incline': {
+    reason: 'Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar.',
+    citation: 'F-E2S-3',
+  },
+  'e2-trestle': {
+    reason: 'Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar.',
+    citation: 'F-E2S-3',
+  },
   'e3-fairground': {
     reason: 'Owner design fork: the advertised crowd-flock escort objective has no headless consumer.',
     citation: 'F-1475-1',

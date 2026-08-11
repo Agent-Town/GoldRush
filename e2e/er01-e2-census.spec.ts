@@ -39,8 +39,7 @@ for (const contract of steamworks.contracts) {
       const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
       if (contract.id !== 'e2-pressure-garden') {
-        const admitted = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] });
-        expect(admitted.currentTurn().view.stablePrefix.mechanics.contractId).toBe(contract.id);
+        expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
         expect(consoleErrors).toEqual([]);
         return;
       }
