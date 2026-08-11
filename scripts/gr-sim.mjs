@@ -9,17 +9,19 @@
 //                        when a browser owns the world. See src/sim/SeatedLockstepSim.ts.
 
 import { createInterface } from 'node:readline';
+import { writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 // Declared above the first call: `parseArgs` runs at module top level, so a `const`
 // further down is still in its temporal dead zone by then.
-const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty', 'overtime'];
+const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty', 'overtime', 'tape'];
 const SEAT_KEYS = ['room', 'origin', 'name', 'town', 'party', 'tick-rate', 'max-ticks', 'desync-at', 'strict'];
 const DIFFICULTY_VALUES = ['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', 'hard'];
 
 if (process.argv.includes('--help')) {
-  process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle] [--overtime]\n'
+  process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle] [--overtime] [--tape <path>]\n'
     + '       gr-sim --room <code> --origin <url> [--party 2-4] [--max-ticks N] [--strict]\n\n'
     + 'A seat invited into a browser room rides that browser world: room-served NDJSON views arrive on stdout and stdin order arrays travel as agent_orders acts. --strict still refuses mixed rooms.\n');
   process.exit(0);
@@ -63,11 +65,14 @@ try {
     }
   } else {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
-    if (options.preset !== undefined || options.difficulty !== undefined) {
+    let difficulty = 'trail';
+    if (options.preset !== undefined || options.difficulty !== undefined || options.tape !== undefined) {
       const { Balance, applyDifficultyPreset, normalizeDifficultyPreset } = await vite.ssrLoadModule('/src/game/Balance.ts');
-      const preset = normalizeDifficultyPreset(options.preset ?? options.difficulty);
-      applyDifficultyPreset(preset);
-      process.stderr.write(`gr-sim preset: ${preset} enemy.hp=${Balance.enemy.hp}\n`);
+      difficulty = normalizeDifficultyPreset(options.preset ?? options.difficulty);
+      if (options.preset !== undefined || options.difficulty !== undefined) {
+        applyDifficultyPreset(difficulty);
+        process.stderr.write(`gr-sim preset: ${difficulty} enemy.hp=${Balance.enemy.hp}\n`);
+      }
     }
     const sim = new HeadlessContractSim({ contractId: options.contract, seed: options.seed, mode: options.mode, overtime: options.overtime });
     // F-E2S-1: boss fights get six full waves after the later posting boundary.
@@ -85,6 +90,8 @@ try {
       : createInterface({ input: process.stdin, crlfDelay: Infinity });
     const lines = input?.[Symbol.asyncIterator]();
     let turn = sim.currentTurn();
+    const start = { x: turn.view.now.hero.x, z: turn.view.now.hero.z };
+    const submissions = [];
     let endReason;
     while (true) {
       const overtimeCeiling = options.overtime && sim.bankedSecureWave !== null
@@ -97,11 +104,18 @@ try {
       }
       process.stdout.write(`${JSON.stringify(turn.view)}\n`);
       if (turn.terminal) break;
-      if (options.policy !== 'idle') await readOrders(lines, sim);
+      if (options.policy !== 'idle') await readOrders(lines, sim, submissions);
       turn = sim.advanceToTurn();
     }
 
     const outcome = { ...sim.outcome(), ...(endReason ? { endReason } : {}) };
+    if (options.tape) await writeAgentTape(vite, resolve(options.tape), sim, outcome, {
+      contract: options.contract,
+      seed: options.seed,
+      difficulty,
+      start,
+      submissions,
+    });
     process.stdout.write(`${JSON.stringify(outcome)}\n`);
     process.stderr.write(`gr-sim speed: ${sim.wavesPerSecond.toFixed(2)} waves/s\n`);
   }
@@ -173,7 +187,7 @@ async function fetchRoomSetup(origin, code) {
   return body.setup;
 }
 
-async function readOrders(lines, sim) {
+async function readOrders(lines, sim, submissions) {
   while (true) {
     const next = await lines.next();
     if (next.done) throw new Error('stdin ended while gr-sim was waiting for standing orders.');
@@ -187,9 +201,54 @@ async function readOrders(lines, sim) {
     }
     if (orders === null) return;
     const receipt = sim.submitOrders(orders);
-    if (receipt.outcome.ok) return;
+    if (receipt.outcome.ok) {
+      submissions.push({ t: Math.round(sim.timeAlive * 30), orders: structuredClone(orders) });
+      return;
+    }
     process.stderr.write(`gr-sim rejected orders: ${receipt.outcome.message ?? receipt.outcome.reason}\n`);
   }
+}
+
+async function writeAgentTape(vite, path, sim, outcome, run) {
+  const { agentOrdersEventLogHash } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { stableHash } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+  const { snapshotStandingOrders } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
+  const durationTicks = Math.round((outcome.timeMs / 1000) * 30);
+  const eventLogHash = agentOrdersEventLogHash(snapshotStandingOrders());
+  const id = `agent-${stableHash({ contract: run.contract, seed: run.seed, difficulty: run.difficulty, eventLogHash }).slice('fnv1a32:'.length)}`;
+  const tape = {
+    version: 1,
+    id,
+    createdAt: 0,
+    kept: true,
+    contract: run.contract,
+    seed: run.seed,
+    difficulty: run.difficulty,
+    simVersion: 1,
+    inputLog: {
+      version: 1,
+      name: id,
+      contractId: run.contract,
+      seed: run.seed,
+      difficultyPreset: run.difficulty,
+      stepSeconds: 1 / 30,
+      start: run.start,
+      durationTicks,
+      entries: run.submissions.map(({ t, orders }) => ({ t, mx: 0, my: 0, a: [{ kind: 'agent_orders', orders }] })),
+      truncated: null,
+      primarySlot: 0,
+      streams: [],
+    },
+    eventLogHash,
+    outcome: {
+      reason: outcome.secured ? 'secured' : 'death',
+      secured: outcome.secured,
+      waves: outcome.waves,
+      timeAlive: outcome.timeMs / 1000,
+      gold: outcome.gold,
+    },
+  };
+  await writeFile(path, `${JSON.stringify(tape, null, 2)}\n`);
 }
 
 function parseArgs(args) {
@@ -235,6 +294,7 @@ function parseArgs(args) {
       preset: values.preset,
       difficulty: values.difficulty,
       overtime: values.overtime === true,
+      tape: values.tape,
     };
   }
 
@@ -243,7 +303,7 @@ function parseArgs(args) {
   if (values.preset !== undefined || values.difficulty !== undefined) {
     throw new Error('--preset and --difficulty cannot be used with --room; the host room owns difficulty.');
   }
-  for (const key of ['contract', 'seed', 'mode', 'overtime']) {
+  for (const key of ['contract', 'seed', 'mode', 'overtime', 'tape']) {
     if (values[key] !== undefined) throw new Error(`--${key} is decided by the room; drop it when using --room.`);
   }
   if (!values.origin) throw new Error('--room requires --origin.');

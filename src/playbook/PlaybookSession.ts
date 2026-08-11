@@ -13,10 +13,12 @@ import {
   PLAYBOOK_VERSION,
   canonicalPlaybookText,
   playbookHash,
+  isAgentOrdersAction,
   quantizePlaybookCoordinate,
   type PlaybookEntry,
   type PlaybookRecording,
   type PlaybookTruncation,
+  type AgentOrdersAction,
 } from './PlaybookFormat';
 
 // Semantic outcome probes ride the audit's representation boundary: quantized
@@ -114,7 +116,7 @@ export class PlaybookRecorderSession {
       const entry = this.script[this.scriptIndex];
       this.scriptMx = entry.mx;
       this.scriptMy = entry.my;
-      queuedActions.push(...entry.a);
+      queuedActions.push(...entry.a.filter((action): action is LockstepAction => !isAgentOrdersAction(action)));
       this.scriptIndex += 1;
     }
     return {
@@ -197,7 +199,7 @@ export class PlaybookRecorderSession {
         z: quantizePlaybookCoordinate(this.header.start.z),
       },
       durationTicks: this.truncation ? this.truncation.atTick : this.tick,
-      entries: this.entries.map((entry) => ({ ...entry, a: entry.a.map(cloneAction) })),
+      entries: this.entries.map((entry) => ({ ...entry, a: structuredClone(entry.a) })),
       truncated: this.truncation,
     };
     return { playbook, text: canonicalPlaybookText(playbook), hash: playbookHash(playbook) };
@@ -243,6 +245,7 @@ export class PlaybookReplaySession {
     readonly playbook: PlaybookRecording,
     private readonly probeEvery = PLAYBOOK_PROBE_EVERY_TICKS,
     private readonly replayAllActions = false,
+    private readonly applyAgentOrders?: (action: AgentOrdersAction, tick: number) => void,
   ) {
     this.hash = playbookHash(playbook);
   }
@@ -280,6 +283,12 @@ export class PlaybookReplaySession {
       this.mx = entry.mx;
       this.my = entry.my;
       for (const action of entry.a) {
+        if (isAgentOrdersAction(action)) {
+          this.applyAgentOrders?.(structuredClone(action), this.tick);
+          if (this.applyAgentOrders) this.applied += 1;
+          else this.skippedActions.push({ t: this.tick, type: action.kind });
+          continue;
+        }
         if (this.replayAllActions || REPLAYABLE_PLAYBOOK_ACTIONS.has(action.type)) {
           actions.push(cloneAction(action));
         } else {
