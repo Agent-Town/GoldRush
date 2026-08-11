@@ -8,17 +8,19 @@ READ FIRST: `AGENTS.md`; `tasks/BACKLOG.md` — grep `F-1662-2` and `F-1662-3` (
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/b main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP, whether they sit as uncommitted dirt or as the entire content of an ahead commit. Discard them and PROCEED, listing what you discarded.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. **THEN A CLEANLINESS LINE: `git -C worktrees/lane-b status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.**
 
-**STEP 1 (unconditional, F-1465-2): refresh the lane onto current `origin/main` before reading any source.** This lane was **19 commits behind** at authoring time. Then verify the cited code is present — each of these returned exactly **1** on main at authoring time (measured s1663, not remembered):
+**STEP 1 (unconditional, F-1465-2): refresh the lane onto current `origin/main` before reading any source.** This lane was **19 commits behind** at authoring time. Then verify the cited code is present — each of these returned exactly **1** on main at authoring time (measured s1663, not remembered; the fifth has since risen to **2** by lawful ledger-keeping and is satisfied by `>= 1` — see the note under the block before you read a count of 2 as staleness):
 
 ```
 grep -c "leaving five cited exemptions" scripts/same-game-audit.mjs                  # expect 1
 grep -c "ten of those fifteen passed below and were admitted" scripts/same-game-audit.mjs  # expect 1
 grep -c "### Cited exemptions" scripts/same-game-audit.mjs                           # expect 1
 grep -c "'e2-incline': {" src/sim/HeadlessContractSim.ts                             # expect 1
-grep -c "F-1662-2 MASTER AUTHORED s1663" tasks/BACKLOG.md                            # expect 1
+grep -c "F-1662-2 MASTER AUTHORED s1663" tasks/BACKLOG.md                            # expect >= 1  (NOT ==1 — see below)
 ```
 
 If any returns 0, **STOP and report "lane is stale or the cited code moved"** — do NOT improvise a replacement anchor. ⚠️ **The LAST key is a freshness probe, not a code anchor**: it proves the lane carries the commit that authored this master (F-1424-3 — a lane one commit behind the master's own commit produced a 44,007-token zero-file STOP). **The FIRST key is the defect itself**: if it returns 0, someone has already cured this — STOP and report that, rather than inventing a replacement task.
+
+⚠️ **THE FIFTH KEY IS SATISFIED BY `>= 1`, AND A COUNT ABOVE 1 IS NOT A DEFECT — DO NOT STOP ON IT (F-1668-1, measured s1668).** Its corpus is `tasks/BACKLOG.md`, a ledger **every fire writes to**, so any fire that records having verified this key — by quoting the key string in its own row, which is exactly what a careful evidence-citing row does — **increments the very count it is asserting.** That is not hypothetical: s1666 measured all five keys at exactly 1, wrote the F-1666-1 row asserting it, and **that row's own backticked quotation of the key string took the count to 2** (`tasks/BACKLOG.md:5` and `:9`, re-measured s1668). The probe's question is **presence** — *does this lane carry the authoring commit?* — and presence is answered by `>= 1` at any count. Reading it as `== 1` converts a correctly-kept ledger into a false STOP whose error text (*"lane is stale"*) accuses the wrong subject, sending the next fire chasing a phantom refresh. **The first four keys keep `== 1`**: their corpora are source files with a single site each, which no fire's bookkeeping touches.
 
 ---
 
