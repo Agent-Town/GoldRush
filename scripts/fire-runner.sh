@@ -90,6 +90,25 @@ fi
 echo 0 > "$SKIPCOUNT_F"
 
 FIRE_MODEL=${FIRE_MODEL:-claude-opus-5}
+# FIRE ENGINE SWITCH (owner 2026-08-12, verbatim: "could we switch the fires to be GPT 5.6 Sol
+# xhigh instead of Opus? The Anthropic subscription is running low and will only be replenished
+# on Saturday.") — engine 'codex' rides the owner's OpenAI subscription via the codex CLI
+# (model gpt-5.6-sol + xhigh from ~/.codex/config.toml). CLAUDE_CONFIG_DIR stays exported by
+# launchd, so the fire-shell playwright serialization (F-1270-1) holds for either engine.
+# REVERT SATURDAY: set FIRE_ENGINE=claude here or in the plist (the claude path below is intact).
+FIRE_ENGINE=${FIRE_ENGINE:-codex}
+if [ "$FIRE_ENGINE" = "codex" ]; then
+  CODEX_BIN="$(command -v codex || true)"
+  [ -z "$CODEX_BIN" ] && for c in /opt/homebrew/bin/codex /usr/local/bin/codex; do [ -x "$c" ] && CODEX_BIN="$c" && break; done
+  if [ -n "$CODEX_BIN" ]; then
+    echo "[fire-runner] $(date +%H:%M:%S) FIRE START (engine codex, model from ~/.codex config)" >> "$LOG"
+    "$CODEX_BIN" exec --sandbox workspace-write --skip-git-repo-check "$(cat scripts/fire.md)" >> "$LOG" 2>&1
+    RC=$?
+    echo "[fire-runner] $(date +%H:%M:%S) FIRE END rc=$RC (codex; ALT fallback is claude-only, skipped)" >> "$LOG"
+    exit 0
+  fi
+  echo "[fire-runner] $(date +%H:%M:%S) codex binary missing — falling through to claude engine" >> "$LOG"
+fi
 echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model $FIRE_MODEL)" >> "$LOG"
 "$CLAUDE_BIN" -p "$(cat scripts/fire.md)" \
   --model "$FIRE_MODEL" \
