@@ -21,20 +21,33 @@ import { spawnSync } from 'node:child_process';
 
 const VALID = new Set(['owner-fork', 'gate-side', 'disputed']);
 
+let lastVisited = 0;
+
 function blockedLeaves() {
   const g = JSON.parse(readFileSync('tasks/goals.json', 'utf8'));
   const out = [];
+  let visited = 0;
   (function walk(n) {
     if (!n || typeof n !== 'object') return;
+    visited += 1;
     if (n.status === 'blocked') out.push(n);
     for (const k of [].concat(n.subgoals || [], n.tasks || [])) walk(k);
   })({ subgoals: g.goals || [] });
+  lastVisited = visited;
   return out;
 }
 
 test('every blocked leaf declares a valid blockClass', () => {
   const leaves = blockedLeaves();
-  assert.ok(leaves.length > 0, 'expected at least one blocked leaf; walker may be broken');
+  // F-1657-4 (s1657): the canary asserts the WALKER is healthy, not that the board is unhappy.
+  // It used to be `leaves.length > 0` — "expected at least one blocked leaf; walker may be
+  // broken" — which conflates two different facts. s1657 lifted the LAST blocked leaf
+  // (f1643-2's gate-side hold, both its conditions finally met) and this guard went red on a
+  // board that was simply clean: zero blocked leaves is the state the factory is TRYING to
+  // reach, and a guard that reds on success teaches fires to avoid discharging blocks.
+  // The walker is still proven — a broken traversal visits nothing and still reds here — but
+  // an empty blocked set is now lawful and the class check below is vacuously true.
+  assert.ok(lastVisited > 1, `walker visited ${lastVisited} node(s); traversal looks broken`);
   const bad = leaves.filter((l) => !VALID.has(l.blockClass));
   assert.deepStrictEqual(
     bad.map((l) => `${l.id} -> ${JSON.stringify(l.blockClass)}`),
