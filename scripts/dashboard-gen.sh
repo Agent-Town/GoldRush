@@ -219,13 +219,21 @@ if [ -e logs/factory-usage.json ]; then
     nohup "$NODE_BIN" scripts/factory-usage-census.mjs >> logs/.census-refresh.log 2>&1 &
   fi
 fi
+# s1683 (F-1683-1): the census age below used to read `new Date(a.stamped)` bare. The writer,
+# factory-usage-census.mjs:64, is `new Date().toISOString().slice(0,16)` — true UTC with the "Z"
+# SLICED OFF — and ECMAScript parses an offset-less date-TIME form as LOCAL. On this Bangkok box
+# (+07) that made the displayed age exactly 7h too OLD: the board read "census age 12h" beside its
+# own promise "auto-refreshes >6h", so a reader concluded the refresh was broken. It is not — the
+# refresh trigger at line 217 compares mtime epoch to `date +%s`, one clock, and is correct. Only
+# this display line mixed two. Assume UTC for a zone-less stamp (which is what the writer emits)
+# and honour an explicit zone if one ever appears.
 FACTORY_BLOCK=$("$NODE_BIN" -e '
 try { const a=require("./logs/factory-usage.json"); const M=n=>(n/1e6).toFixed(1)+"M";
 console.log(`THE WHOLE FACTORY (census ${a.stamped}):`);
 console.log(`  attended (Fable):        ${String(a.attended.files).padStart(5)} sessions   fresh-in ${M(a.attended.in).padStart(9)}   out ${M(a.attended.out)}`);
 console.log(`  fires (headless):        ${String(a.fires.files).padStart(5)} sessions*  fresh-in ${M(a.fires.in).padStart(9)}   out ${M(a.fires.out)}   *older fires undercounted`);
 console.log(`  codex (Sol+runner):      ${String(a.codexGR.files).padStart(5)} sessions   fresh-in ${M(a.codexGR.in).padStart(9)}   out ${M(a.codexGR.out)}   (+${(a.codexGR.cached/1e9).toFixed(1)}B cached reads)`);
-const age=Math.round((Date.now()-new Date(a.stamped).getTime())/36e5);
+const st=String(a.stamped), age=Math.round((Date.now()-new Date(/(Z|[+-]\d\d:?\d\d)$/.test(st)?st:st+"Z").getTime())/36e5);
 const ti=a.attended.in+a.fires.in+a.codexGR.in, to=a.attended.out+a.fires.out+a.codexGR.out;
 console.log(`  TOTAL:                   fresh-in ${M(ti)} · out ${M(to)}   (census age ${age}h — auto-refreshes >6h)`);
 try { const h=require("fs").readFileSync("logs/usage-history.jsonl","utf8").trim().split("\n").slice(-5).map(l=>JSON.parse(l));
