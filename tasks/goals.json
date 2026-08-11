@@ -5953,7 +5953,13 @@
             {
               "id": "ap-03-protocol",
               "title": "AP-03 The Rider Protocol (versioned BYO-agent surface) \u2014 RE-GREENLIT (owner 2026-08-09: \"Greenlight all three\")",
-              "status": "planned"
+              "status": "planned",
+              "authoringBlock": {
+                "class": "attended-owed",
+                "finding": "F-1650-1",
+                "measuredBy": "s1650 2026-08-11",
+                "reason": "NOT fire-authorable: the named deliverable ALREADY SHIPPED under a different slice gate. public/skill.md is 323 lines, merged 4cdedebe9 (s1492 2026-08-06) from tasks/lane-skillmd-the-door-doc.md whose WHY cites AP-10d, not AP-03; source-locked by scripts/skillmd-guard.test.mjs + e2e/skillmd-door.spec.ts. This leaf reports as unbuilt a thing substantially built, which is what keeps re-advertising it as a free authoring slot. The only unbuilt half is Transport B RIDER-API, which the spec itself marks a design question (minimum viable tick-tolerance for a ~1Hz agent). AP-03 also has NO spec file at all."
+              }
             },
             {
               "id": "ap-04-teach",
@@ -6426,7 +6432,13 @@
             {
               "id": "ap-15-assay-of-minds",
               "title": "AP-15: the assay of minds \u2014 null-floor/frontier anchors + seven axes (owner metrics question, spec DRAFT, 3 ratification Qs)",
-              "status": "planned"
+              "status": "planned",
+              "authoringBlock": {
+                "class": "owner-gated",
+                "finding": "F-1653-2",
+                "measuredBy": "s1653 2026-08-11",
+                "reason": "Slice 2 (frontier registry) NOT fire-authorable: specs/agent-play/ap-15-assay-of-minds.md is Status DRAFT 2026-08-08 with 3 ratification questions open at its foot. Q2 (do frontier dethronements belong in the Herald?) bears directly on slice 2 own law 3, so a fire cannot build to a law whose question is open. Separately its premise seeded from the existing verified rows is UNPROVEN — the only frontier artifact found is the era named epoch-1-frontier, a naming collision. Slice 1 (ap15-1-null-floor-anchors) IS merged at 909c0d7c."
+              }
             },
             {
               "id": "ap15-1-null-floor-anchors",
@@ -6796,7 +6808,13 @@
                 {
                   "id": "ap16-6-action-verbs",
                   "title": "AP-16-6: remaining human actions get verbs where the law demands (audit class 8, scoped per action)",
-                  "status": "planned"
+                  "status": "planned",
+                  "authoringBlock": {
+                    "class": "attended-owed",
+                    "finding": "F-1649-1",
+                    "measuredBy": "s1649 2026-08-11",
+                    "reason": "NOT fire-authorable: all five OWED verbs (TOGGLE_WEAPON, RESEARCH_PICK, SECURE_CHOICE, DEATH_ACTION, CONTEXT_ACTION) have no headless system to attach to. weaponToggle is an inert struct member in src/sim/HeadlessContractSim.ts:186 read by nothing (outcome ledger reports weaponToggles: 0 as a hardcoded literal); research/secureChoice/deathAction return zero hits under src/sim/. Adding any verb means porting a system into the sim, which moves event-log hashes and contradicts the slice own additive promise — a design fork, reserved by fire.md 2E HARD LIMIT."
+                  }
                 }
               ]
             },
