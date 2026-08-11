@@ -707,6 +707,58 @@
   line-height: 1.45;
 }
 
+.season-commentary__block {
+  margin-top: 12px;
+}
+
+.season-commentary__block p,
+.season-lessons {
+  color: #684728;
+  line-height: 1.45;
+}
+
+.season-commentary__block p {
+  margin: 5px 0;
+}
+
+.season-citation {
+  display: block;
+  color: #5b6868;
+  font-size: 0.72rem;
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
+.season-chronicle-results {
+  max-width: 100%;
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.season-chronicle-results table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.season-chronicle-results th,
+.season-chronicle-results td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(76, 48, 23, 0.2);
+  text-align: left;
+  vertical-align: top;
+}
+
+.season-lessons {
+  margin: 10px 0 0;
+  padding-left: 20px;
+}
+
+.season-lessons li + li {
+  margin-top: 8px;
+}
+
 .season-results + .season-results {
   margin-top: 18px;
 }
