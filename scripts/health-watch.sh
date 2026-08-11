@@ -86,7 +86,13 @@ if [ "${1:-}" = "status" ]; then dashboard; exit 0; fi
 # 1. Runner dead -> restart headless (the one auto-remediation).
 if ! runner_alive; then
   alert "Runner was DEAD — restarting it headless"
-  nohup bash scripts/lane-runner-v3.sh >> logs/runner-headless.log 2>&1 &
+  # s1653 (F-1653-1): route through start-lane-runner.sh, which resolves a floor-meeting codex,
+  # prepends its bin dir to PATH (so the lane's node/npm/npx match the gate baseline) and scrubs
+  # CLAUDE_CONFIG_DIR/CLAUDECODE. The bare `nohup bash scripts/lane-runner-v3.sh` that stood here
+  # inherited this job's PATH — launchd's, with no nvm — i.e. the exact under-floor restart that
+  # cost the factory ~5h03m on 2026-08-11 (F-1652-1), performed automatically and unattended.
+  # The helper detaches and verifies on its own, so it is NOT backgrounded here.
+  bash scripts/start-lane-runner.sh >> logs/runner-headless.log 2>&1
   sleep 2
   runner_alive && note "runner restarted ok (headless, log: logs/runner-headless.log)" \
                || alert "runner restart FAILED — needs a human"

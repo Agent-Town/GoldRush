@@ -42,6 +42,12 @@
       "fingerprint": "808e0ab6983e",
       "excerpt": "cd \"$wd\" && \"$codex_bin\" exec -m \"${cx_model:-gpt-5.6-sol}\" -c model_reasoning_effort=\"${cx_effort:-"
     },
+    "scripts/fire.md -> lane-runner-v3.sh:60": {
+      "target": "scripts/lane-runner-v3.sh",
+      "line": 60,
+      "fingerprint": "b064925c8381",
+      "excerpt": "resolve_codex_bin() { # echoes the first client meeting CODEX_FLOOR; rc 1 if none does"
+    },
     "scripts/fire.md -> scripts/goal-tracker.test.mjs:80": {
       "target": "scripts/goal-tracker.test.mjs",
       "line": 80,
