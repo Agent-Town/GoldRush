@@ -30,6 +30,44 @@ dir_for_slot() {
   # then mkdir tasks/queue/<slot> — the runner picks it up next cycle. Lanes are UNCAPPED.)
   if [ "$1" = "main" ]; then echo "$ROOT"; else echo "$ROOT/worktrees/$1"; fi
 }
+# --- F-1651-1 (s1651, 2026-08-11): CODEX CLIENT FLOOR -------------------------------
+# This runner dispatches with BARE `codex`, resolved from the PATH of whatever shell
+# launched it. On 2026-08-11 it was restarted at 05:08:20 from a shell without nvm on
+# its PATH, so bare `codex` resolved to Homebrew's 0.133.0 — below the 0.144.1 floor
+# that knows gpt-5.6 ids — and the very next dispatch (ap15-1) died in 14 s with HTTP
+# 400 "requires a newer version", AFTER its master had already been consumed into
+# tasks/running/. The thirteen runs before it, same disk, were healthy at v0.145.0.
+# So: resolve a client that MEETS the floor before consuming anything (which also
+# SELF-HEALS a wrong-shell restart by falling through to nvm), and refuse loudly —
+# leaving the master in its queue — when none exists.
+# NEVER resolve by "highest node version": ~/.nvm/versions/node/v24.14.0/bin/codex is
+# present but its vendored binary is ENOENT, so that rule picks a corpse whose failure
+# is indistinguishable from a quota wall (F-1636-4).
+CODEX_FLOOR="0.144.1"
+
+codex_ver() {  # $1 = binary; echoes "x.y.z", or nothing if it cannot answer
+  "$1" --version 2>/dev/null | sed -n 's/.*[^0-9.]\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/p' | head -1
+}
+
+codex_ver_ge() {  # $1 >= $2, dotted numeric — no `sort -V` dependency (BSD/macOS)
+  awk -v a="$1" -v b="$2" 'BEGIN{
+    n=split(a,x,"."); m=split(b,y,".");
+    for(i=1;i<=3;i++){ xi=(i<=n)?x[i]+0:0; yi=(i<=m)?y[i]+0:0;
+      if(xi>yi) exit 0; if(xi<yi) exit 1 }
+    exit 0 }'
+}
+
+resolve_codex_bin() {  # echoes the first client meeting CODEX_FLOOR; rc 1 if none does
+  local c v
+  for c in $(command -v codex 2>/dev/null) "$HOME"/.nvm/versions/node/*/bin/codex; do
+    [ -x "$c" ] || continue
+    v=$(codex_ver "$c")
+    [ -n "${v:-}" ] || continue
+    if codex_ver_ge "$v" "$CODEX_FLOOR"; then printf '%s\n' "$c"; return 0; fi
+  done
+  return 1
+}
+# --- END F-1651-1 -------------------------------------------------------------------
 echo "[lane-runner-v3] watching $ROOT/tasks/queue — parallel slots — Ctrl+C to stop"
 while true; do
   for qdir in "$ROOT/tasks/queue"/*/; do
@@ -159,6 +197,15 @@ while true; do
       fi
     fi
     # END F-1522-1 LANE-SAFETY GUARD
+    # F-1651-1: prove the implementer CAN serve before consuming the master. A dispatch
+    # into an under-floor client destroys a queue slot in 14 s and leaves a rc1 corpse
+    # that reads exactly like a task defect; refusing here loses nothing at all.
+    if ! codex_bin=$(resolve_codex_bin); then
+      echo "[lane-runner-v3] $slot: REFUSE $name — no codex client >= $CODEX_FLOOR on PATH or in ~/.nvm."
+      echo "[lane-runner-v3]   master LEFT in queue (nothing consumed). Restart me from a shell where"
+      echo "[lane-runner-v3]   \`codex --version\` >= $CODEX_FLOOR. See tasks/CODEX-WALL (F-1651-1)."
+      continue
+    fi
     stamp=$(date +%Y%m%d-%H%M%S)
     run="$ROOT/tasks/running/$slot--$stamp-$name"
     mv "$f" "$run"
@@ -170,7 +217,7 @@ while true; do
       cx_model=$(grep -m1 '^CODEX:' "$run" 2>/dev/null | sed -n 's/.*model=\([^ ]*\).*/\1/p')
       cx_effort=$(grep -m1 '^CODEX:' "$run" 2>/dev/null | sed -n 's/.*effort=\([^ ]*\).*/\1/p')
       # default gpt-5.6-sol@medium (owner ruling 2026-07-10: Sol over Terra, mid effort for normal tasks; CLI 0.144.1 knows 5.6 ids)
-      cd "$wd" && codex exec -m "${cx_model:-gpt-5.6-sol}" -c model_reasoning_effort="${cx_effort:-medium}" "Do the task in the file at: $run" >"$log" 2>&1
+      cd "$wd" && "$codex_bin" exec -m "${cx_model:-gpt-5.6-sol}" -c model_reasoning_effort="${cx_effort:-medium}" "Do the task in the file at: $run" >"$log" 2>&1
       rc=$?
       if [ $rc -eq 0 ]; then
         # s76 ROOT-CAUSE FIX: persist LANE output to its branch so gate-fires can merge a
