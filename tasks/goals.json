@@ -5375,8 +5375,10 @@
         {
           "id": "art-jumper-rotation-regen",
           "title": "Jumper full-rotation sheet regen at true scale (batch-007 discharged; owner ruled (b) 2026-08-11)",
-          "status": "queued",
-          "taskFile": "art-jumper-rotation-regen.md"
+          "status": "merged",
+          "mergeHash": "961043c779ae899f3622725b25cc96ad466545a4",
+          "taskFile": "art-jumper-rotation-regen.md",
+          "note_s1689": "GOAL REGISTRATION LAW LAPSE, CURED s1689 (F-1689-1). This leaf read status:\"queued\" from its dispatch until now, but the task DRAINED 2026-08-11 11:46 at 961043c779ae899f3622725b25cc96ad466545a4 (s1656) — tasks/done/drained-961043c7-20260811-114616-art-jumper-rotation-regen.md. The drain updated assets/LEDGER.md and tasks/BACKLOG.md but never flipped the leaf, so the goal tree carried a queued leaf against an empty ART queue for 21 fires. VERIFIED BEFORE FLIPPING, not inferred: the done-move prefix names the commit; 961043c7 is on main and touches exactly assets/LEDGER.md + tasks/BACKLOG.md. READ THIS BEFORE CONCLUDING THE ART IS ON MAIN — IT IS NOT, AND THAT IS DELIBERATE: char-jumper-sheet-rotation2.png is UNTRACKED on main (git ls-files finds no jumper-sheet-rotation2 path); the sheet was generated, extracted and MEASURED fire-side, and the bytes were withheld with the raws salvaged to save/art-staging-20260811 (d84a3706e, pushed). merged here therefore records THE TASK DRAINED AND ITS MEASUREMENT LANDED, not that the sheet shipped. The art question is unresolved and lives on the owner desk as F-1656-3 (scale debt NOT cleared: effective heights 336-407px = 65.6-79.5% of cell, so the >=78% law is met by 1 of 12 cells; extract-alpha.mjs never upscales). The sibling leaf jumper-8way-wiring keeps its authoringBlock for exactly this reason — draining the regen and clearing the scale debt are different facts, and only the LEDGER row tells them apart. Do not read this flip as satisfying that gate."
         },
         {
           "id": "jumper-8way-wiring",
