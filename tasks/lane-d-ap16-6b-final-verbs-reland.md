@@ -25,7 +25,7 @@ grep -Fc "AP-16-6 (the remaining verbs" specs/agent-play/ap-16-same-game-law.md
 # must be 1
 ```
 
-Then run the normal clean-lane pre-flight, install, and baseline build. Factory churn under `logs/**`, `artifacts/**`, `reviews/shots-*`, and PNG evidence is discardable; tracked source/task/spec/review dirt is a STOP.
+Then run the normal clean-lane pre-flight, install, and baseline build. **FACTORY-CHURN EXCEPTION (F-1407-1):** `logs/**`, `artifacts/**`, `reviews/shots-*`, and PNG evidence are discardable; tracked source/task/spec/review dirt is a STOP.
 
 ## Read first
 
