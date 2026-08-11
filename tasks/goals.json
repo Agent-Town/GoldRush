@@ -6924,14 +6924,25 @@
                 {
                   "id": "ap16-6-action-verbs",
                   "title": "AP-16-6 MEASURED: three verbs build (SET_WEAPON, SECURE_CHOICE, CONTEXT_ACTION), four exempt cited \u2014 the last Same-Game debt; next gauntlet parked behind it (owner 2026-08-12)",
-                  "status": "queued",
+                  "status": "blocked",
+                  "blockClass": "gate-side",
+                  "blockedReason": "s1694 gate-side HOLD: the preserved candidate is not ready to merge. Independent review reproduced two blasts inside one cooldown, runtime SECURE_CHOICE rush still taking the non-overtime CLI ceiling, and unrelated orders executing inside the frozen secure window; it also found the browser-owned seat handlers, standalone funding input, and shared browser weapon view incomplete. The exact tip survives at save/ap16-6-s1694-6f928266. Successor ap16-6b-final-verbs-reland resolves F-1694-1 through F-1694-6 on fresh main. This is not an owner fork; lift only when that corrective gates and merges.",
                   "authoringBlock": {
                     "class": "attended-owed",
                     "finding": "F-1649-1",
                     "measuredBy": "s1649 2026-08-11",
                     "reason": "NOT fire-authorable: all five OWED verbs (TOGGLE_WEAPON, RESEARCH_PICK, SECURE_CHOICE, DEATH_ACTION, CONTEXT_ACTION) have no headless system to attach to. weaponToggle is an inert struct member in src/sim/HeadlessContractSim.ts:186 read by nothing (outcome ledger reports weaponToggles: 0 as a hardcoded literal); research/secureChoice/deathAction return zero hits under src/sim/. Adding any verb means porting a system into the sim, which moves event-log hashes and contradicts the slice own additive promise \u2014 a design fork, reserved by fire.md 2E HARD LIMIT."
                   },
-                  "taskFile": "lane-d-ap16-6-verbs.md"
+                  "taskFile": "lane-d-ap16-6-verbs.md",
+                  "stopNote": "STOPPED s1694 at the gate, never merged. Candidate tip 6f92826659e14261e83963aab30baceef7038b64 is preserved on save/ap16-6-s1694-6f928266; review reviews/ap16-6-final-verbs.md; full green pre-review battery artifacts/ap16-6-gate-s1694.txt. The green battery did not exercise the three reproduced P1 seams, which is why the independent review is load-bearing rather than advisory."
+                },
+                {
+                  "id": "ap16-6b-final-verbs-reland",
+                  "title": "AP-16-6b RE-LAND: final verbs share one blast cooldown and one runtime rush path, freeze every non-choice action at secure, and work through every advertised door",
+                  "status": "queued",
+                  "lane": "lane-d",
+                  "taskFile": "lane-d-ap16-6b-final-verbs-reland.md",
+                  "authorNotes": "FIRE-AUTHORED s1694 from the gate-side review of AP-16-6, not from speculative scope. The original runner output is preserved at save/ap16-6-s1694-6f928266 (exact tip 6f92826659e14261e83963aab30baceef7038b64) and this task orders a re-land on fresh main rather than a re-derivation. Four P1s and two P2s are measured in reviews/ap16-6-final-verbs.md. The adjacent agent-view snapshot is already red on clean main 9a57975c9 (4 pass / 1 fail), while the candidate adds its required weapon and works-entry fields; the corrective explicitly makes the snapshot truthful instead of deleting or weakening it."
                 }
               ]
             },
