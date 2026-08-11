@@ -16,10 +16,18 @@
 # Exit 0 = gate correct on every fixture. Exit 1 = at least one wrong verdict. Exit 2 = misuse.
 set -u
 
+# s1659 / F-1659-2 — WIDENED from one predicate to the CLASS. `scripts/health-watch.sh`
+# asks the same "is line-1 a live lock?" question for its stale-lock alarm, with its own
+# copy. F-1402-1 cured the runner's copy in s1402; the sibling sat uncured for 257 fires
+# and was measurably worse in BOTH directions (11 of 324 real locks missed, 134 of 1432
+# handoffs false-positive). Both are now extracted and evaluated against the SAME fixtures
+# below, so a future cure to one cannot silently leave the other behind.
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 RUNNER="$ROOT/scripts/lane-runner-v3.sh"
+HEALTH="$ROOT/scripts/health-watch.sh"
 
 [ -r "$RUNNER" ] || { echo "MISUSE: cannot read $RUNNER"; exit 2; }
+[ -r "$HEALTH" ] || { echo "MISUSE: cannot read $HEALTH"; exit 2; }
 
 # The gate must read line 1 ONLY. A `head -2` (or more) re-opens the false-block class no matter
 # how the string match is written, so assert the read width structurally as well as behaviourally.
@@ -28,20 +36,37 @@ if grep -q 'head -2 "\$ROOT/STATUS.md"' "$RUNNER"; then
   exit 1
 fi
 
+# The stale-lock alarm must not carry the retired anchored-prefix regex. That form cannot see
+# a lock line whose ACTIVE is not at the start (11 of 324 real locks in STATUS.md), so assert
+# its absence structurally as well as behaviourally — a missed lock is silent by nature.
+# Strip comments first. The cure's own comment NAMES the retired regex (that is how this
+# factory records provenance, and the RETENTION ethos says preserve it) — a bare grep reads
+# that disclaimer as a declaration and reds a correct file. Caught by this guard on its first
+# run against the fixed script: the F-1655-3 shape, reproduced inside the cure for it.
+if grep -v '^[[:space:]]*#' "$HEALTH" | grep -q "'\^Last updated\.\*ACTIVE"; then
+  echo "FAIL(structure): health-watch.sh still uses the anchored '^Last updated.*ACTIVE' regex (F-1659-2)"
+  exit 1
+fi
+
 cond=$(grep -o '\[\[ "\$l1" == .*\]\]' "$RUNNER" | head -1)
 [ -n "$cond" ] || { echo "MISUSE: could not extract the gate condition from $RUNNER"; exit 2; }
+hcond=$(grep -o '\[\[ "\$l1" == .*\]\]' "$HEALTH" | head -1)
+[ -n "$hcond" ] || { echo "MISUSE: could not extract the stale-lock condition from $HEALTH"; exit 2; }
 
 fail=0
+subject=""
+cur_cond=""
 check() { # check <expected HOLD|FREE> <description> <line-1 text>
   local want="$1" desc="$2" l1="$3" got
-  if eval "if $cond; then true; else false; fi"; then got=HOLD; else got=FREE; fi
+  if eval "if $cur_cond; then true; else false; fi"; then got=HOLD; else got=FREE; fi
   if [ "$got" != "$want" ]; then
-    echo "FAIL: expected $want, got $got — $desc"
+    echo "FAIL[$subject]: expected $want, got $got — $desc"
     echo "      line-1: ${l1:0:100}"
     fail=1
   fi
 }
 
+fixtures() {
 # --- lock lines: every historical form a fire has actually written. All must HOLD. ---
 check HOLD "form 1 lock (§1.2 canonical, s1402)" \
   'ACTIVE 2026-08-02T20:37Z (s1402 fire) — draining the twin-banks cure'
@@ -66,9 +91,30 @@ check FREE "handoff whose prose quotes an ACTIVE stamp — the false-block case"
 check HOLD "malformed handoff missing 'lock CLEARED' must fail SAFE (hold, not release)" \
   'Last updated: 2026-08-02T21:00Z s1403 handoff — ACTIVE work described but the clear phrase is absent'
 
+# --- F-1659-2: real lock forms lifted VERBATIM from STATUS.md that an anchored-prefix
+# predicate cannot see. These are the false-NEGATIVE fixtures — the direction that lets a
+# dead lock stall the factory unreported. 11 of 324 archived lock lines look like these. ---
+check HOLD "real lock, ACTIVE after the session tag (s908) — anchored-prefix blind spot" \
+  's908 fire, lock ACTIVE — re-verify board (expect drain-clean) + stale CODEX-WALL cleanup.'
+check HOLD "real lock, doubled stamp (s1274) — anchored-prefix blind spot" \
+  '2026-07-30T23:56Z ACTIVE 2026-07-30T23:56Z (s1274 fire) — transcribe drainNotes onto stopped leaves.'
+check HOLD "real lock, bare stamp then ACTIVE (s894-era) — anchored-prefix blind spot" \
+  '2026-07-22T11:27Z ACTIVE — drain the fresh second-rider done-move (lane/m4 d9a15e73).'
+
+# --- F-1659-2: a handoff whose prose discusses the lock mechanism itself. The modern house
+# voice does this constantly (15 of the last 98 handoffs), and each one is a false alarm
+# telling a reader a dead lock needs reclaiming when the board is cleanly handed off. ---
+check FREE "handoff discussing the ACTIVE predicate in prose — the modern false-alarm case" \
+  'Last updated: 2026-08-11T14:20Z s1658 handoff, lock CLEARED — desk-declaration correctly SKIPs under a live ACTIVE lock'
+}
+
+# Both scripts ask the same question; evaluate both against the same fixtures (F-1659-2).
+subject="lane-runner-v3.sh (main-slot dispatch gate)"; cur_cond="$cond";  fixtures
+subject="health-watch.sh (stale-lock alarm)";          cur_cond="$hcond"; fixtures
+
 if [ "$fail" -eq 0 ]; then
-  echo "PASS: main-lock gate correct on 7 fixtures (4 lock forms hold, 2 handoff forms release, 1 fails safe)"
+  echo "PASS: both lock predicates correct on 11 fixtures each (7 hold incl. 3 anchored-prefix blind spots, 3 release, 1 fails safe)"
   exit 0
 fi
-echo "main-lock gate is WRONG — see failures above"
+echo "a lock predicate is WRONG — see failures above"
 exit 1

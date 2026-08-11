@@ -124,7 +124,21 @@ else
 fi
 
 # 3. Stale fire lock: STATUS line-1 ACTIVE + no fire process + file untouched >50 min.
-if head -1 STATUS.md | grep -q '^Last updated.*ACTIVE\|^ACTIVE' && ! fire_proc; then
+# F-1659-2 (s1659): this asks the SAME question as the runner's main-slot lock gate
+# (lane-runner-v3.sh:102) and used to ask it with its own anchored-prefix regex,
+# '^Last updated.*ACTIVE\|^ACTIVE'. F-1402-1 cured the runner's copy and nobody brought
+# this one along — the sibling-script class. Measured against all of STATUS.md's archives:
+#   old predicate: 134/1432 handoff archives FALSE-POSITIVE (a cleared lock read as live),
+#                  and — the serious half — 11/324 real ACTIVE lock lines MISSED, because
+#                  the anchors cannot see 's908 fire, lock ACTIVE' or a doubled stamp.
+#                  Over the last 100 fires alone: 15 false positives in 98 handoffs.
+#   this one:      0 missed locks (324/324), 0 false positives over the last 100 fires.
+# A missed lock is a SAFETY failure: check 3 is the only thing that reports a dead lock,
+# and §1.1 tells the next fire to exit silently while one stands. Keep this predicate
+# byte-identical in shape to the runner's; scripts/main-lock-gate-guard.test.sh evaluates
+# BOTH by extraction against one shared fixture set, so they cannot drift apart again.
+l1="$(head -1 STATUS.md)"
+if [[ "$l1" == *ACTIVE* && "$l1" != *"lock CLEARED"* ]] && ! fire_proc; then
   if [ -n "$(find STATUS.md -mmin +50 2>/dev/null)" ]; then
     alert "Fire lock looks DEAD (ACTIVE >50min, no fire process) — next fire should reclaim; watch it"
   fi
