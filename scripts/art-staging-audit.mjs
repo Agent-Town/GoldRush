@@ -147,15 +147,24 @@ const walk = (dir, acc = []) => {
 // 1. The staging tree: `worktrees/art/assets/*` is enumerated, not listed. These
 //    dirs are gitignored, so git itself will never mention them and the only way
 //    to classify them is to hash every file.
+// F-1658-3 (s1658): walk the staging ROOT ITSELF, not merely its subdirectories.
+// The old loop kept only entries that were directories, so a file sitting LOOSE
+// at the root belonged to no area and was never scanned. That is this script's
+// own recurring class a FOURTH time (F-1054-1 name-vs-blob, F-1055-1 here-vs-
+// origin, F-1120-2 one-dir-vs-enumerated), and it had a live casualty: the ART
+// slot's own `worktrees/art/assets/LEDGER.md` — 62,822 bytes whose blob is in NO
+// object database, under a name main tracks at DIFFERENT bytes. The audit that
+// exists to find exactly that was structurally unable to see it.
 const scan = [];
-for (const name of existsSync(STAGING_ROOT) ? readdirSync(STAGING_ROOT) : []) {
-  if (name.startsWith('.')) continue;
-  const dir = join(STAGING_ROOT, name);
-  if (!statSync(dir).isDirectory()) continue;
-  for (const file of walk(dir)) {
-    // A staging file's counterpart on main is the same path under assets/.
-    scan.push({ file, mainPath: join('assets', relative(STAGING_ROOT, file)), area: `staging/${name}` });
-  }
+for (const file of walk(STAGING_ROOT)) {
+  // A staging file's counterpart on main is the same path under assets/.
+  const rel = relative(STAGING_ROOT, file);
+  const slash = rel.indexOf('/');
+  scan.push({
+    file,
+    mainPath: join('assets', rel),
+    area: `staging/${slash === -1 ? '(root)' : rel.slice(0, slash)}`,
+  });
 }
 // 2. MAIN's own assets/ tree. An ART run that writes to the repo root instead of
 //    the staging dir (the recurring F-071-1 defect) leaves untracked files here,

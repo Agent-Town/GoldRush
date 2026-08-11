@@ -115,19 +115,24 @@ const walk = (dir, acc = []) => {
   return acc;
 };
 
+// Walk the staging ROOT ITSELF, not merely its subdirectories: a file sitting
+// LOOSE at the root belongs to no area, and a directories-only enumeration can
+// never see it. Live casualty at s1658: `worktrees/art/assets/LEDGER.md`, the
+// ART slot's own batch ledger, 62,822 bytes in NO object database (F-1658-3).
 const scan = [];
-const areas = [];
-for (const name of existsSync(STAGING_ROOT) ? readdirSync(STAGING_ROOT).sort() : []) {
-  if (name.startsWith('.')) continue;
-  const dir = join(STAGING_ROOT, name);
-  if (!statSync(dir).isDirectory()) continue;
-  const files = walk(dir);
-  areas.push({ area: `staging/${name}`, count: files.length });
-  for (const file of files) {
-    // A staging file's counterpart on main is the same path under assets/.
-    scan.push({ file, mainPath: join('assets', relative(STAGING_ROOT, file)), area: `staging/${name}` });
-  }
+for (const file of walk(STAGING_ROOT)) {
+  // A staging file's counterpart on main is the same path under assets/.
+  const rel = relative(STAGING_ROOT, file);
+  const slash = rel.indexOf('/');
+  scan.push({
+    file,
+    mainPath: join('assets', rel),
+    area: `staging/${slash === -1 ? '(root)' : rel.slice(0, slash)}`,
+  });
 }
+const areas = [...scan.reduce((m, s) => m.set(s.area, (m.get(s.area) || 0) + 1), new Map())]
+  .sort()
+  .map(([area, count]) => ({ area, count }));
 
 if (!scan.length) {
   console.log(`nothing under ${relative(REPO, STAGING_ROOT)} — no salvage needed`);

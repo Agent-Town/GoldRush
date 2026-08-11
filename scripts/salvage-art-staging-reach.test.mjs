@@ -116,12 +116,50 @@ test('RED PATH PROVEN: the historical one-dir, non-recursive reader finds NONE o
     stage(repo, 'motion-pilot/pose-library/hero/frames/hero-01.png', 'NESTED-AT-RISK');
     // The s1045 shape: only `raw`, and only its top level.
     const old = mutate(
-      '  if (!statSync(dir).isDirectory()) continue;\n  const files = walk(dir);',
-      '  if (!statSync(dir).isDirectory() || name !== \'raw\') continue;\n' +
-        '  const files = readdirSync(dir).map((n) => join(dir, n)).filter((p) => statSync(p).isFile());',
+      'for (const file of walk(STAGING_ROOT)) {',
+      "const RAW = join(STAGING_ROOT, 'raw');\n" +
+        'for (const file of (existsSync(RAW)\n' +
+        '  ? readdirSync(RAW).map((n) => join(RAW, n)).filter((p) => statSync(p).isFile())\n' +
+        '  : [])) {',
     );
     const { out } = run(repo, ['save/x', '--dry-run'], old);
     assertUnderReached(out, 'hero-01.png');
+  } finally {
+    rmSync(repo, { recursive: true, force: true });
+  }
+});
+
+test('reaches a file sitting LOOSE at the staging root — the F-1658-3 class', () => {
+  const repo = makeRepo();
+  try {
+    // No subdirectory at all. The directories-only enumeration both this script
+    // and art-staging-audit.mjs used could never see this file; the live
+    // casualty was the ART slot's own LEDGER.md, 62,822 bytes in no object db.
+    stage(repo, 'LEDGER.md', 'ART LEDGER — UNIQUE BYTES, IN NO OBJECT DATABASE');
+    const { rc, out } = run(repo, ['save/x', '--dry-run']);
+    assert.equal(rc, 0, out);
+    assert.equal(atRiskCount(out), 1, out);
+    assert.match(out, /staging\/\(root\)/);
+    assert.match(out, /assets\/LEDGER\.md/);
+  } finally {
+    rmSync(repo, { recursive: true, force: true });
+  }
+});
+
+test('RED PATH PROVEN: a directories-only enumeration finds none of the root file', () => {
+  const repo = makeRepo();
+  try {
+    stage(repo, 'LEDGER.md', 'ART LEDGER — UNIQUE BYTES, IN NO OBJECT DATABASE');
+    stage(repo, 'raw/other.png', 'SO THE SCAN IS NOT EMPTY'); // isolates the root case
+    const old = mutate(
+      'for (const file of walk(STAGING_ROOT)) {',
+      'for (const file of readdirSync(STAGING_ROOT, { withFileTypes: true })\n' +
+        '  .filter((e) => e.isDirectory() && !e.name.startsWith(\'.\'))\n' +
+        '  .flatMap((e) => walk(join(STAGING_ROOT, e.name)))) {',
+    );
+    const { out } = run(repo, ['save/x', '--dry-run'], old);
+    assert.ok(!out.includes('assets/LEDGER.md'), `the mutant unexpectedly reached the root file:\n${out}`);
+    assert.equal(atRiskCount(out), 1, `expected only the subdir file to be found:\n${out}`);
   } finally {
     rmSync(repo, { recursive: true, force: true });
   }
