@@ -349,6 +349,14 @@ function markdown(result) {
   const reachability = result.rows.filter((entry) => entry.surface === 'verb'
     && (entry['humans-get'].includes('launch the contract') || entry['humans-get'].includes('unavailable contract')))
     .reduce((counts, entry) => ({ ...counts, [entry.direction]: (counts[entry.direction] ?? 0) + 1 }), {});
+  const admitted = result.admission.measurements.filter((entry) =>
+    entry.booted && entry.firstView && entry.terminal && !entry.error).length;
+  const modeExemptions = result.admission.exemptions.filter((exemption) => result.rows.some((entry) =>
+    entry.contract === exemption.contractId
+      && entry.surface === 'verb'
+      && entry['agents-get'].startsWith('headless accepts declared mode'))).length;
+  const legacyExemptions = result.admission.exemptions.length - modeExemptions;
+  const legacyRefusals = admitted + legacyExemptions;
   return [
     '# Same-game audit',
     '',
@@ -376,7 +384,7 @@ function markdown(result) {
     '',
     '## AP-16-4 admission measurement',
     '',
-    `Reachability before this slice was **equal 12 · divergence 30 · not-offered 0**, with the browser side hardcoded to \`true\`. The measured result is **equal ${reachability.equal ?? 0} · divergence ${(reachability['agent-exceeds'] ?? 0) + (reachability['agent-lacks'] ?? 0)} · not-offered ${reachability['not-offered'] ?? 0}**. The measured 15/15 split matches F-1642-1: 15 browser refusals and 15 browser-offered legacy door refusals; ten of those fifteen passed below and were admitted, leaving five cited exemptions.`,
+    `Reachability before this slice was **equal 12 · divergence 30 · not-offered 0**, with the browser side hardcoded to \`true\`. The measured result is **equal ${reachability.equal ?? 0} · divergence ${(reachability['agent-exceeds'] ?? 0) + (reachability['agent-lacks'] ?? 0)} · not-offered ${reachability['not-offered'] ?? 0}**. The measured ${reachability['not-offered'] ?? 0}/${legacyRefusals} split matches F-1642-1: ${reachability['not-offered'] ?? 0} browser refusals and ${legacyRefusals} browser-offered legacy door refusals; ${admitted} of those ${legacyRefusals} passed below and were admitted, while ${legacyExemptions} from that population remain cited exemptions. The county holds ${result.admission.exemptions.length} cited exemptions in total because ${modeExemptions} mode-declaring contracts remain reachable through their declared mode and were never in that legacy-refusal population.`,
     '',
     '| contract | booted | first view | terminal | turns | failure site |',
     '|---|---:|---:|---:|---:|---|',
