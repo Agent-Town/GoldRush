@@ -6,9 +6,9 @@
       "fingerprint": "8c859fddc1a9",
       "excerpt": "# It was: find \"$ROOT/tasks/runs\" -name '*.log' -mtime +3 -delete 2>/dev/null"
     },
-    "CLAUDE.md -> lane-runner-v3.sh:260": {
+    "CLAUDE.md -> lane-runner-v3.sh:307": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 260,
+      "line": 307,
       "fingerprint": "8c859fddc1a9",
       "excerpt": "# It was: find \"$ROOT/tasks/runs\" -name '*.log' -mtime +3 -delete 2>/dev/null"
     },
@@ -24,23 +24,23 @@
       "fingerprint": "48544d0754ff",
       "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
     },
-    "CLAUDE.md -> lane-runner-v3.sh:258": {
+    "CLAUDE.md -> lane-runner-v3.sh:305": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 258,
+      "line": 305,
       "fingerprint": "48544d0754ff",
       "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
     },
-    "scripts/fire.md -> lane-runner-v3.sh:172": {
+    "scripts/fire.md -> lane-runner-v3.sh:219": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 172,
+      "line": 219,
       "fingerprint": "2fc4c563a6a1",
       "excerpt": "# default gpt-5.6-sol@medium (owner ruling 2026-07-10: Sol over Terra, mid effort for normal tasks; "
     },
-    "scripts/fire.md -> lane-runner-v3.sh:173": {
+    "scripts/fire.md -> lane-runner-v3.sh:220": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 173,
-      "fingerprint": "88aba7286854",
-      "excerpt": "cd \"$wd\" && codex exec -m \"${cx_model:-gpt-5.6-sol}\" -c model_reasoning_effort=\"${cx_effort:-medium}"
+      "line": 220,
+      "fingerprint": "808e0ab6983e",
+      "excerpt": "cd \"$wd\" && \"$codex_bin\" exec -m \"${cx_model:-gpt-5.6-sol}\" -c model_reasoning_effort=\"${cx_effort:-"
     },
     "scripts/fire.md -> scripts/goal-tracker.test.mjs:80": {
       "target": "scripts/goal-tracker.test.mjs",
