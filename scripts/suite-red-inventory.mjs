@@ -352,4 +352,33 @@ if (abnormal.length) {
   lines.push('None.');
 }
 
-fs.writeFileSync(output, `${lines.join('\n')}\n`);
+const generatedHeadings = new Set(lines.filter((line) => line.startsWith('## ')));
+const existing = fs.existsSync(output) ? fs.readFileSync(output, 'utf8') : '';
+const matches = [...existing.matchAll(/^## [^\r\n]*/gm)];
+const sections = matches.map((match, index) => ({
+  heading: match[0],
+  text: existing.slice(match.index, matches[index + 1]?.index ?? existing.length),
+}));
+const oldFailingIndex = sections.findIndex(({ heading }) => heading === '## Failing tests');
+const preservedSections = sections
+  .map((section, index) => ({ ...section, before: oldFailingIndex >= 0 && index < oldFailingIndex }))
+  .filter(({ heading }) => !generatedHeadings.has(heading));
+const generated = `${lines.join('\n')}\n`;
+const failingIndex = generated.indexOf('## Failing tests');
+let assembled = generated.slice(0, failingIndex)
+  + preservedSections.filter(({ before }) => before).map(({ text }) => text).join('')
+  + generated.slice(failingIndex)
+  + preservedSections.filter(({ before }) => !before).map(({ text }) => text).join('');
+
+const preservedCounts = new Map();
+for (const section of preservedSections) {
+  const expected = (preservedCounts.get(section.text) ?? 0) + 1;
+  preservedCounts.set(section.text, expected);
+  const actual = assembled.split(section.text).length - 1;
+  if (actual < expected) {
+    throw new Error(`Reduction would lose preserved section: ${section.heading}`);
+  }
+}
+
+fs.writeFileSync(output, assembled);
+console.log(`Preserved ${preservedSections.length} section(s); regenerated ${generatedHeadings.size} section(s).`);

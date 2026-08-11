@@ -223,3 +223,83 @@ test('an unresolved masking row never outranks a resolved row', (t) => {
   assert.ok(markdown.indexOf('| 1 | e2e/fixture.spec.ts | Z resolved |')
     < markdown.indexOf('| — | e2e/missing.spec.ts | A unresolved |'));
 });
+
+test('reducer preserves an appended tail section byte-for-byte', (t) => {
+  const { dir, input } = fixture(t);
+  const output = path.join(dir, 'tail.md');
+  assert.equal(run(ROOT, input, output).status, 0);
+  const tail = '## Hand-authored tail\n\nkeep trailing spaces  \nkeep final line';
+  fs.appendFileSync(output, tail);
+
+  const result = run(ROOT, input, output);
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.ok(fs.readFileSync(output, 'utf8').endsWith(tail));
+});
+
+test('reducer preserves corrections before failing tests', (t) => {
+  const { dir, input } = fixture(t);
+  const output = path.join(dir, 'corrections.md');
+  assert.equal(run(ROOT, input, output).status, 0);
+  const failing = '## Failing tests';
+  const correction = '## Corrections since the snapshot\n\n| preserved  |\n\n';
+  const original = fs.readFileSync(output, 'utf8');
+  fs.writeFileSync(output, original.replace(failing, `${correction}${failing}`));
+
+  const result = run(ROOT, input, output);
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const markdown = fs.readFileSync(output, 'utf8');
+  assert.ok(markdown.includes(correction));
+  assert.ok(markdown.indexOf(correction) < markdown.indexOf(failing));
+});
+
+test('reducer replaces generated sections instead of duplicating them', (t) => {
+  const { dir, input } = fixture(t);
+  const output = path.join(dir, 'twice.md');
+  assert.equal(run(ROOT, input, output).status, 0);
+  fs.writeFileSync(
+    output,
+    fs.readFileSync(output, 'utf8').replace('## Failing tests\n', '## Failing tests\nSTALE GENERATED CONTENT\n'),
+  );
+
+  const result = run(ROOT, input, output);
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const markdown = fs.readFileSync(output, 'utf8');
+  assert.equal(markdown.match(/^## Failing tests$/gm)?.length, 1);
+  assert.ok(!markdown.includes('STALE GENERATED CONTENT'));
+});
+
+test('reducer keeps fresh-output behavior when output is absent', (t) => {
+  const { dir, input } = fixture(t);
+  const output = path.join(dir, 'fresh.md');
+
+  const result = run(ROOT, input, output);
+
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const markdown = fs.readFileSync(output, 'utf8');
+  assert.ok(markdown.startsWith('# Suite Red Inventory\n'));
+  assert.equal(markdown.match(/^## /gm)?.length, 6);
+});
+
+test('reducer loss guard fails closed without touching output', (t) => {
+  const { dir, input } = fixture(t);
+  const output = path.join(dir, 'guard.md');
+  const original = '# Existing report\n\n## Durable finding\n\nleave this untouched  \n';
+  fs.writeFileSync(output, original);
+  const script = scriptCopies(t)[0];
+  const source = fs.readFileSync(script, 'utf8');
+  const needle = 'for (const section of preservedSections) {';
+  assert.ok(source.includes(needle));
+  fs.writeFileSync(
+    script,
+    source.replace(needle, "assembled = assembled.replace(preservedSections[0].text, '');\n\n" + needle),
+  );
+
+  const result = run(ROOT, input, output, script);
+
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /would lose preserved section: ## Durable finding/);
+  assert.equal(fs.readFileSync(output, 'utf8'), original);
+});
