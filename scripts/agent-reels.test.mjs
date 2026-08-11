@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -23,17 +23,22 @@ test('agent reel validation reuses the door bounds and CLI tapes are byte determ
     await vite.close();
   }
 
+  // finally, not a trailing rmSync: a failed assertion below must still take the fixture with it.
   const directory = mkdtempSync(join(tmpdir(), 'gold-rush-agent-reels-'));
-  const first = join(directory, 'first.json');
-  const second = join(directory, 'second.json');
-  const input = `${JSON.stringify([hold])}\n${Array(20).fill('null').join('\n')}\n`;
-  for (const [output, prefix] of [[first, `${JSON.stringify([{ verb: 'NOPE' }])}\n`], [second, '']]) {
-    const run = spawnSync(process.execPath, [
-      'scripts/gr-sim.mjs', '--contract', 'the-claim', '--seed', 'e1-the-claim-01', '--tape', output,
-    ], { encoding: 'utf8', input: prefix + input, timeout: 30_000 });
-    assert.equal(run.status, 0, run.stderr);
+  try {
+    const first = join(directory, 'first.json');
+    const second = join(directory, 'second.json');
+    const input = `${JSON.stringify([hold])}\n${Array(20).fill('null').join('\n')}\n`;
+    for (const [output, prefix] of [[first, `${JSON.stringify([{ verb: 'NOPE' }])}\n`], [second, '']]) {
+      const run = spawnSync(process.execPath, [
+        'scripts/gr-sim.mjs', '--contract', 'the-claim', '--seed', 'e1-the-claim-01', '--tape', output,
+      ], { encoding: 'utf8', input: prefix + input, timeout: 30_000 });
+      assert.equal(run.status, 0, run.stderr);
+    }
+    assert.equal(readFileSync(second, 'utf8'), readFileSync(first, 'utf8'));
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
   }
-  assert.equal(readFileSync(second, 'utf8'), readFileSync(first, 'utf8'));
 });
 
 function fixture(orders) {
