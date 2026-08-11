@@ -68,7 +68,18 @@ test('denominator agrees with drain-block-check on the live tree', () => {
   const refusing = refusingLeaves(goals);
   const blocked = refusing.filter((l) => l.status === 'blocked');
   assert.ok(refusing.length >= blocked.length);
-  assert.ok(blocked.length > 0, 'the live tree is expected to carry real owner blocks');
+  // F-1657-4 (s1657), sibling of the same fix in block-class-guard.test.mjs: this canary was
+  // `blocked.length > 0` — "the live tree is expected to carry real owner blocks" — which reds
+  // on a board that has simply DISCHARGED all its blocks. s1657 lifted the last one (f1643-2's
+  // gate-side hold, both conditions finally met) and this test failed on success. Zero blocked
+  // leaves is the state the factory is trying to reach; a guard that punishes it teaches fires
+  // to leave holds standing. The subject here is DENOMINATOR AGREEMENT between this guard and
+  // drain-block-check, which the assertion above states and which holds at zero; what still
+  // needs proving is that the readers had a real tree to walk, not that the board is unhappy.
+  assert.ok(
+    Array.isArray(goals.goals) && goals.goals.length > 0,
+    'goal tree parsed empty — the two readers had nothing to compare, so their agreement is vacuous'
+  );
 });
 
 test('the live tree carries no stale refusal', () => {
