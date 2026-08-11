@@ -135,9 +135,22 @@ for (const sha of commits) {
   // verbatim at HEAD falsely condemns bullets that are present and readable: s1250's bullet is
   // right there on the board, but 11,612 chars of it are not byte-identical any more. The question
   // the next fire actually asks is "is my predecessor's handoff on the board at all?"
+  // ⚠️ DO NOT RE-HARDCODE THE WORD "handoff" HERE (F-1690-2, s1690). This predicate used to read
+  // `s<N> handoff \(line-1 archive`, which silently assumed every line-1 worth archiving is a
+  // HANDOFF line. It is not: a fire that DIES mid-work leaves a LOCK line as its last line-1, and
+  // its successor must archive THAT. This script already knows the difference -- it records
+  // `kind` at :115 and prints "destroyed s<N>'s lock line" at :146 -- so the old predicate
+  // contradicted the script's own output, demanding a "handoff" bullet for a fire that never
+  // wrote one. Measured s1690: s1689 reached FIRE END rc=0 mid-drain, s1690 archived its lock
+  // line honestly as `- **s1689 lock line (line-1 archive -- ...)`, and this guard reported it
+  // PERMANENTLY LOST. 🚫 The remedy the red implies -- relabel the bullet "handoff" -- would
+  // write a FALSEHOOD onto the board (that s1689 produced a handoff it never wrote) to satisfy a
+  // string match. A guard whose remedy is to corrupt a correct file is the guard that is wrong.
+  // The session number and the `(line-1 archive` phrase still bind; only the NOUN is free, which
+  // is what keeps this from being a loosening -- an unarchived line still reds.
   rec.permanent =
     rec.lostSession === null ||
-    !new RegExp(`s${rec.lostSession} handoff \\(line-1 archive`).test(headBlob);
+    !new RegExp(`s${rec.lostSession} [^(]*\\(line-1 archive`).test(headBlob);
   (rec.permanent ? drops : transient).push(rec);
 }
 
