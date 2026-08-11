@@ -237,7 +237,11 @@ while true; do
             # .wrangler/tmp bundles and logs/session-scratch/s1126-*, s1134-* staged DAYS earlier
             # by departed fires. Giving the commit its own pathspec makes it structurally unable
             # to publish anything this slot is not allowed to write.
-            ( cd "$wd" && git add -A -- assets artifacts && git commit -q -m "runner($slot): $name" -- assets artifacts ) >>"$log" 2>&1 || true
+            # F-1657-1 (s1657): `;` NOT `&&` between add and commit — see the long note on the
+            # lane branch below. `git add` exits 1 merely ADVISORILY when an ignored path matches
+            # its pathspec, having already staged everything legitimate, and the old `&&` then
+            # threw the finished run's work on the floor.
+            ( cd "$wd" && git add -A -- assets artifacts ; git commit -q -m "runner($slot): $name" -- assets artifacts ) >>"$log" 2>&1 || true
           else
             # F-1108-2 / F-1109-3 (fixed s1109): a bare `add -A` swept live scratch into lane
             # commits, so a run that truthfully reported "no repo change" still moved its branch
@@ -254,7 +258,30 @@ while true; do
             # commit here would publish a stale index exactly as the art branch above did. This
             # branch never exhibited it (its excludes kept the index clean), so this is the class
             # fix, not an incident fix.
-            ( cd "$wd" && git add -A -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' && git commit -q -m "runner($slot): $name" -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' ) >>"$log" 2>&1 || true
+            # F-1657-1 (s1657, from F-1656-1): the separator below is `;` and MUST NOT become `&&`.
+            # F-1656-1 recorded that this `git add` was "rejected" and "aborted", so the commit
+            # never happened and 110 lines of finished work sat as STAGED-BUT-UNCOMMITTED dirt in
+            # a lane the next refill would `reset --hard` (Mistake #2's precondition, reached by a
+            # route every commit-derived instrument — ahead/behind, main..branch,
+            # lane-freeze-classify — is structurally blind to, since a staged-only lane reads
+            # ahead=0 USABLE). MEASURED s1657 on a scratch repo, and the diagnosis was WRONG in the
+            # way that matters: the add does NOT abort. It stages every legitimate path correctly,
+            # excludes the ignored one correctly, and THEN exits 1 purely to advise that an ignored
+            # path matched its pathspec ("The following paths are ignored... hint: Use -f").
+            # The pathspec was never the defect — the `&&` was. It threw away a completed add.
+            #   ARM 1  add -A -- . ':(exclude).wrangler'      -> rc=1, file.txt STAGED
+            #   ARM 5  add && commit (the old line)           -> rc=1, work stranded, HEAD unmoved
+            #   ARM 6  add ;  commit (this line)              -> commit rc=0, index clean,
+            #                                                    ignored path did NOT leak in
+            # Decoupling is safe because `git commit -- <pathspec>` takes its content from the
+            # WORKING TREE through its own pathspec (that is what F-1154-1 above bought), so the
+            # commit can publish nothing the add would have withheld. The trailing `|| true` keeps
+            # an empty "nothing to commit" harmless, exactly as before.
+            # NOTE the two slots differ here: for ART, `$wd` is `worktrees/art`, which is gitignored
+            # (.gitignore:15) and is NOT a git worktree, so its `.` pathspec is ignored in full and
+            # this commit correctly stages nothing — that slot's output is untracked EVERY batch by
+            # design (F-1045-1) and wants the salvage cure, not this one.
+            ( cd "$wd" && git add -A -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' ; git commit -q -m "runner($slot): $name" -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' ) >>"$log" 2>&1 || true
           fi
         fi
         mv "$run" "$ROOT/tasks/done/$stamp-$name"
