@@ -6431,9 +6431,8 @@
             {
               "id": "ap15-1-null-floor-anchors",
               "title": "AP-15 slice 1: the null floor \u2014 pinned idle-run anchors for all 35 bench seeds across the 12 door-servable contracts (what the map gives away free; law 2 Goodhart clause depends on it)",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "s1651/F-1651-1: dispatched by s1650, died rc1 in 14 s without executing anything. The lane runner was restarted 2026-08-11T05:08:20 from a shell without nvm on PATH, so bare codex resolved to Homebrew 0.133.0 — under the 0.144.1 floor that knows gpt-5.6 ids — and the dispatch took HTTP 400 \"requires a newer version\". This is INFRASTRUCTURE, not a task defect and not a quota wall: lane/a is ahead=0 and clean, paths=0, and the master survives on main. It must NOT count toward the twice-then-escalate rule; the queued attempt never ran. LIFT: when tasks/CODEX-WALL clears (runner restarted from a floor-meeting shell, verified by a healthy run-log banner), re-queue tasks/lane-a-ap15-1-null-floor-anchors.md into tasks/queue/lane-a/ — that will be its FIRST real attempt.",
+              "status": "building",
+              "note_s1652": "s1652: LIFTED and DISPATCHED. The stated lift condition was met exactly — the pre-cure runner (pid 57599, started 05:08:20 from a fire shell, NO tty, PPID 1, holding no cycle) was stopped and a fresh one started detached at 10:11:02 with nvm v23.11.1 on PATH and CLAUDE_CONFIG_DIR scrubbed; the dispatch at 10:12:03 banners OpenAI Codex v0.145.0 / gpt-5.6-sol with zero version-400s. tasks/CODEX-WALL deleted. This is ap15-1 FIRST real attempt, not a retry.",
               "taskFile": "lane-a-ap15-1-null-floor-anchors.md"
             },
             {
