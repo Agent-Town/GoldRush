@@ -6431,7 +6431,9 @@
             {
               "id": "ap15-1-null-floor-anchors",
               "title": "AP-15 slice 1: the null floor \u2014 pinned idle-run anchors for all 35 bench seeds across the 12 door-servable contracts (what the map gives away free; law 2 Goodhart clause depends on it)",
-              "status": "building",
+              "status": "merged",
+              "mergeHash": "909c0d7cd55fb68b37f1805b2ea83e95ccaff294",
+              "note_s1653": "s1653: DRAINED and merged. Gated in a detached worktree per §3.0b: tsc clean, build green, own shape guard 1/1, test:node-guards ALONE rc=0 in 293.0s on the merged tree, and the --check bite PROVEN by manufacturing the defect on a copy (rc=1 in 113.9s naming the-claim/e1-the-claim-01 waves pinned=3 derived=2). package.json was BOTH-MOVED and both sides were asserted present after the merge. Non-blocking F-1653-3 recorded: eraStamp is git merge-base HEAD main, so a bookkeeping commit advances the sim era — left for the successor slice. Review: reviews/ap15-1-null-floor-anchors.md",
               "note_s1652": "s1652: LIFTED and DISPATCHED. The stated lift condition was met exactly — the pre-cure runner (pid 57599, started 05:08:20 from a fire shell, NO tty, PPID 1, holding no cycle) was stopped and a fresh one started detached at 10:11:02 with nvm v23.11.1 on PATH and CLAUDE_CONFIG_DIR scrubbed; the dispatch at 10:12:03 banners OpenAI Codex v0.145.0 / gpt-5.6-sol with zero version-400s. tasks/CODEX-WALL deleted. This is ap15-1 FIRST real attempt, not a retry.",
               "taskFile": "lane-a-ap15-1-null-floor-anchors.md"
             },
