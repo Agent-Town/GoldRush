@@ -39,9 +39,9 @@ NOT-IN-INVENTORY — e2e/front-door-parity.spec.ts — snapshot date 2026-07-28
 
 ## Scope
 
-1. **Produce the raw report** — the full suite, both target projects, at the lane's natural parallelism:
-   `PLAYWRIGHT_JSON_OUTPUT_NAME=logs/suite-red-inventory-raw.json npx playwright test --reporter=json`
-   **Do NOT pass `--workers=1`.** §3.1's serialisation law is a *fire-shell* correctness requirement; you are a LANE, where full parallelism is both faster and the instrument attended sessions actually use, and pinning it here would silently re-describe the suite under a load profile no one runs. The reducer records the worker count it observed, so the snapshot describes itself either way. Expect a **non-zero exit code** — the suite has known reds and that is the entire point; do not treat rc≠0 as a failure of this task, and **do not stop at the first red**.
+1. **Produce the raw report** — the full suite, both target projects, **under the OWNER'S THROTTLE LAW (2026-08-11, verbatim: "can we limit the amount of threads it uses? I was just surprised it took so long. I woke up in the middle of the night to it.")**:
+   `PLAYWRIGHT_JSON_OUTPUT_NAME=logs/suite-red-inventory-raw.json nice -n 19 npx playwright test --reporter=json --workers=3`
+   **Exactly `--workers=3` and `nice -n 19` — this REPLACES the earlier "lane's natural parallelism" guidance.** The prior 8-worker run saturated the owner's machine and woke him; 3 workers keeps it audible-quiet and usable, `nice` yields the CPU to anything interactive. Expect roughly 2.5-3× the 8-worker wall clock (this becomes a day-scale background hum — that is the deliberate trade, not a defect). The reducer records the observed worker count, so the snapshot self-describes its harness. Expect a **non-zero exit code** — the suite has known reds and that is the entire point; do not treat rc≠0 as a failure of this task, and **do not stop at the first red**.
 2. **Reduce it, with the positive control actually observed** — never with the flag simply asserted:
    a. First run `node scripts/suite-red-inventory.mjs logs/suite-red-inventory-raw.json logs/suite-red-inventory.md` **without** the flag, and confirm the output says `Positive control: **NOT RECORDED**`.
    b. Then perform the control the existing snapshot describes: inject **one synthetic mobile-only failure** into a copy of the raw JSON, reduce that copy to a scratch path, and **verify it produces exactly one MOBILE-ONLY row carrying your injected error marker**. Quote the row.
