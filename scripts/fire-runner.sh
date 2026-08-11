@@ -98,8 +98,16 @@ FIRE_MODEL=${FIRE_MODEL:-claude-opus-5}
 # REVERT SATURDAY: set FIRE_ENGINE=claude here or in the plist (the claude path below is intact).
 FIRE_ENGINE=${FIRE_ENGINE:-codex}
 if [ "$FIRE_ENGINE" = "codex" ]; then
-  CODEX_BIN="$(command -v codex || true)"
-  [ -z "$CODEX_BIN" ] && for c in /opt/homebrew/bin/codex /usr/local/bin/codex; do [ -x "$c" ] && CODEX_BIN="$c" && break; done
+  # Resolution PROBES, never trusts paths (F-1635-3 dual-install met again 2026-08-12, twice in
+  # one hour): launchd's PATH finds an orphaned homebrew 0.133; nvm-v24's wrapper is half-installed
+  # (native binary ENOENT); nvm-v23 carries the real 0.147+. A candidate qualifies only if
+  # --version RUNS and reports >= CODEX_MIN (Sol's server floor). None qualify -> claude fallthrough.
+  CODEX_BIN=""; CODEX_MIN="0.147.0"
+  for c in $(ls -1d "$HOME"/.nvm/versions/node/*/bin/codex 2>/dev/null | sort -rV) "$(command -v codex || true)" /opt/homebrew/bin/codex /usr/local/bin/codex; do
+    { [ -n "$c" ] && [ -x "$c" ]; } || continue
+    v=$("$c" --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+    [ -n "$v" ] && [ "$(printf '%s\n%s\n' "$CODEX_MIN" "$v" | sort -V | head -1)" = "$CODEX_MIN" ] && CODEX_BIN="$c" && break
+  done
   if [ -n "$CODEX_BIN" ]; then
     echo "[fire-runner] $(date +%H:%M:%S) FIRE START (engine codex, model from ~/.codex config)" >> "$LOG"
     "$CODEX_BIN" exec --sandbox workspace-write --skip-git-repo-check "$(cat scripts/fire.md)" >> "$LOG" 2>&1

@@ -12,9 +12,9 @@
       "fingerprint": "8c859fddc1a9",
       "excerpt": "# It was: find \"$ROOT/tasks/runs\" -name '*.log' -mtime +3 -delete 2>/dev/null"
     },
-    "CLAUDE.md -> fire-runner.sh:128": {
+    "CLAUDE.md -> fire-runner.sh:136": {
       "target": "scripts/fire-runner.sh",
-      "line": 128,
+      "line": 136,
       "fingerprint": "514fb8d7b116",
       "excerpt": "# It was: find logs -name 'fire-*.log' -mtime +14 -delete 2>/dev/null"
     },
@@ -84,9 +84,9 @@
       "fingerprint": "03b4031fea20",
       "excerpt": "workers: isFireShell ? 1 : undefined,"
     },
-    "scripts/fire.md -> scripts/fire-runner.sh:121": {
+    "scripts/fire.md -> scripts/fire-runner.sh:129": {
       "target": "scripts/fire-runner.sh",
-      "line": 121,
+      "line": 129,
       "fingerprint": "c11d5b8cacd2",
       "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
     },
@@ -138,9 +138,9 @@
       "fingerprint": "03b4031fea20",
       "excerpt": "workers: isFireShell ? 1 : undefined,"
     },
-    ".claude/skills/drain/SKILL.md -> fire-runner.sh:121": {
+    ".claude/skills/drain/SKILL.md -> fire-runner.sh:129": {
       "target": "scripts/fire-runner.sh",
-      "line": 121,
+      "line": 129,
       "fingerprint": "c11d5b8cacd2",
       "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
     },
