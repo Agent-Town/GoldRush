@@ -45,6 +45,31 @@ import { execFileSync } from 'node:child_process';
 // reworded-but-present exception must not red.
 const CURE_MARKER = /F-1407-1|FACTORY-CHURN EXCEPTION/;
 
+// F-1655-3 (s1655) — A DISCLAIMER IS NOT A DECLARATION.
+//
+// This test asked `/PRE-FLIGHT/i.test(body)`, a bare substring match, so a master that explicitly
+// says it has NO pre-flight read as one that declares one. It fired on `art-jumper-rotation-regen.md`,
+// whose line 3 is "You are Codex in the ART slot… No git pre-flight; no commits; no `src/` edits".
+// That master is CORRECT as written and there is nothing to retro-fit: the ART slot has no git
+// worktree at all (`worktrees/art/` is absent from `git worktree list` — scripts/fire.md §2E
+// ART-SLOT LAW), so a FACTORY-CHURN EXCEPTION about `git status --short` in a lane worktree is a
+// category error for it. The guard's own remedy message would have made a right file wrong.
+//
+// This is F-1551-4's shape in a second guard — "a NEGATED owner gate is a disclaimer and must NOT
+// flag" — which `desk-birth-guard` learned and this one never did.
+//
+// ⚠️ THE OBVIOUS NARROWING IS THE WRONG ONE, AND IT WAS MEASURED BEFORE BEING REJECTED (s1655).
+// Requiring the word at line-start (`/^\s*(>\s*)?\*{0,2}Pre-flight\b/im`) drops the art master — and
+// ALSO drops `lane-e3-fairground-socket.md`, a genuine banked LANE master whose pre-flight is the
+// heading `## PRE-FLIGHT — DO THESE IN ORDER`. Denominator would have gone 5 -> 3 on the live board:
+// one false positive removed and one REAL subject silently lost. That is the F-1539-2 vacuity trap,
+// so the cure scopes the NEGATION instead and keeps every affirmative mention, in any form.
+const NEGATED_PREFLIGHT = /\bno\s+(?:git\s+)?pre-?flight\b/gi;
+
+export function declaresPreflight(body) {
+  return /PRE-FLIGHT/i.test(body.replace(NEGATED_PREFLIGHT, ''));
+}
+
 // Authored-but-not-yet-dispatched. See the denominator note above for why BOTH words are required.
 const BANKED = new Set(['planned', 'queued']);
 
@@ -82,8 +107,9 @@ test('every banked master carries the current main-slot pre-flight exception', (
     // A queued leaf whose master is gone is a different defect (goal-tracker owns that question).
     if (!existsSync(path)) continue;
     const body = readFileSync(path, 'utf8');
-    // Only masters that actually declare a pre-flight can be missing its exception.
-    if (!/PRE-FLIGHT/i.test(body)) continue;
+    // Only masters that actually declare a pre-flight can be missing its exception (F-1655-3: a
+    // master that says it has NO pre-flight is disclaiming one, not declaring one).
+    if (!declaresPreflight(body)) continue;
     if (!CURE_MARKER.test(body)) offenders.push(leaf.taskFile);
   }
   assert.deepEqual(
@@ -93,6 +119,37 @@ test('every banked master carries the current main-slot pre-flight exception', (
     + `(F-1407-1). Retro-fit the FACTORY-CHURN EXCEPTION from .claude/skills/author-task/SKILL.md `
     + `before dispatching: ${offenders.join(', ')}`,
   );
+});
+
+// F-1655-3 — the negation scoping, each arm proved by MANUFACTURING the shape rather than by
+// observing a green. A passing guard never executes its violation path, so its green says nothing
+// about the red (the s1299/s1300 standard).
+test('MANUFACTURED: a master that disclaims a pre-flight is not treated as declaring one', () => {
+  // The exact line 3 of the master that reddened the board at s1655.
+  const art = 'You are Codex in the ART slot, generating with native `image_gen`. '
+    + 'No git pre-flight; no commits; no `src/` edits; no processing (fire-side extracts).';
+  assert.equal(declaresPreflight(art), false);
+  assert.equal(/PRE-FLIGHT/i.test(art), true, 'the OLD predicate must still match — else this proves nothing');
+});
+
+test('CONTROL: an affirmative pre-flight is still a declaration, in every form the corpus uses', () => {
+  // Heading form (lane-e3-fairground-socket.md), inline form (the lane template), blockquote form.
+  assert.equal(declaresPreflight('## PRE-FLIGHT — DO THESE IN ORDER. STEP 1 IS MANDATORY.'), true);
+  assert.equal(declaresPreflight('Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch…'), true);
+  assert.equal(declaresPreflight('> Pre-flight (tracked-clean): `git status --short` must be empty.'), true);
+});
+
+test('the negation is scoped — a master that disclaims one pre-flight but declares another still counts', () => {
+  const mixed = 'No git pre-flight is run in the ART slot.\n\n## PRE-FLIGHT\nThen `npm run build` green.';
+  assert.equal(declaresPreflight(mixed), true);
+});
+
+test('MANUFACTURED: an affirmative pre-flight WITHOUT the cure is still an offender', () => {
+  // The guard must not have been disarmed by the narrowing — this is the arm F-1407-1 exists for.
+  const uncured = 'Pre-flight (LANE-SAFETY): reset the lane, then `npm run build` green. '
+    + 'Then `git status --short` → must be clean, no exceptions.';
+  assert.equal(declaresPreflight(uncured), true);
+  assert.equal(CURE_MARKER.test(uncured), false, 'so a leaf pointing at this body WOULD be reported');
 });
 
 // F-1539-1 (s1539) — GUARD: a banked lane master must reset the branch its OWN worktree is on.
