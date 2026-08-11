@@ -6,6 +6,7 @@ import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { activeEpochId, listContracts, listEpochs, loadEpoch } from '../meta/ContractFamilies';
 import { loadEraBackdrop } from '../ui/EraBackdrop';
 import { SEASONS, type Season } from '../seasons/registry';
+import { SEASON_CONTENT, type SeasonCommentary } from '../seasons/content';
 import { installAssayOfficeRecordsLiveRead } from './liveStats';
 import {
   LEDGER_CATEGORIES,
@@ -438,6 +439,7 @@ function renderSeasonsLedger(): string {
 }
 
 function renderSeasonPage(season: Season): string {
+  const content = SEASON_CONTENT[season.id];
   return `
     <article class="season-page" data-testid="season-page-${escapeHtml(season.id)}">
       <header>
@@ -446,24 +448,37 @@ function renderSeasonPage(season: Season): string {
       </header>
       <section data-testid="season-what-happened">
         <h4>What happened</h4>
-        <p>${escapeHtml(season.summary)}</p>
+        ${content ? content.whatHappened.map(renderSeasonCommentary).join('') : `<p>${escapeHtml(season.summary)}</p>`}
         <p><strong>Era stamps:</strong> ${season.eraStamps.length ? season.eraStamps.map(escapeHtml).join(' &middot; ') : 'No era stamps entered yet.'}</p>
       </section>
       <section data-testid="season-results">
         <h4>Results</h4>
         <p>Minds and rigs are <strong>SELF-DECLARED</strong> — the county prints what riders claim; the boards rank results alone.</p>
+        ${content ? renderSeasonChronicleResults(content.results) : ''}
         <div data-testid="season-results-board" aria-live="polite"><p class="seasons__empty">The county clerk turns the results pages.</p></div>
       </section>
       <section data-testid="season-commentary">
         <h4>Commentary</h4>
-        <p>The county's commentary has not yet been written.</p>
+        ${content ? content.commentary.map(renderSeasonCommentary).join('') : '<p>The county\'s commentary has not yet been written.</p>'}
       </section>
       <section data-testid="season-learned">
         <h4>What we learned</h4>
-        <p>The lessons ledger has not yet been written.</p>
+        ${content ? `<ul class="season-lessons">${content.lessons.map((entry) => `<li><strong>${escapeHtml(entry.experiment)}:</strong> ${escapeHtml(entry.lesson)}${renderSeasonSources(entry.sources)}</li>`).join('')}</ul>` : '<p>The lessons ledger has not yet been written.</p>'}
       </section>
     </article>
   `;
+}
+
+function renderSeasonCommentary(entry: SeasonCommentary): string {
+  return `<div class="season-commentary__block"><h5>${escapeHtml(entry.subject)}</h5><p>${escapeHtml(entry.text)}</p>${renderSeasonSources(entry.sources)}</div>`;
+}
+
+function renderSeasonChronicleResults(results: typeof SEASON_CONTENT[string]['results']): string {
+  return `<div class="season-chronicle-results"><table><thead><tr><th scope="col">Rider</th><th scope="col">Mind / rig</th><th scope="col">Run</th><th scope="col">County reading</th></tr></thead><tbody>${results.map((row) => `<tr><th scope="row">${escapeHtml(row.rider)}</th><td>${escapeHtml(row.mind)}<br><small>${escapeHtml(row.rig)}</small></td><td>${escapeHtml(row.result)}</td><td>${escapeHtml(row.reading)}${renderSeasonSources(row.sources)}</td></tr>`).join('')}</tbody></table></div>`;
+}
+
+function renderSeasonSources(sources: readonly string[]): string {
+  return `<cite class="season-citation" data-season-citation>[${sources.map(escapeHtml).join(' · ')}]</cite>`;
 }
 
 async function loadSeasonResults(seasonId: string): Promise<void> {

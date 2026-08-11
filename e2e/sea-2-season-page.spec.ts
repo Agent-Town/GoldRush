@@ -6,6 +6,7 @@ import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { resolveSeasonAt, SEASONS } from '../src/seasons/registry';
 
 const SHOTS = path.resolve('reviews/shots-mint-season-2');
+const CHRONICLE_SHOTS = path.resolve('reviews/shots-sea-3');
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'season-page',
@@ -129,7 +130,7 @@ test('plain boot opens the season list and a season page without losing legacy s
   expect(errors).toEqual({ console: [], page: [] });
 });
 
-test('a season with no labelled rows says so plainly', async ({ page }) => {
+test('the Founding Season renders its cited chronicle at both viewports', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) => route.fulfill({
     status: 200,
@@ -139,7 +140,22 @@ test('a season with no labelled rows says so plainly', async ({ page }) => {
   await plainBoot(page);
   await page.getByTestId('claim-ledger-seasons').click();
   await page.getByTestId(`season-link-${SEASONS[0].id}`).click();
+  for (const sectionId of ['season-what-happened', 'season-results', 'season-commentary', 'season-learned']) {
+    const section = page.getByTestId(sectionId);
+    await expect(section).not.toBeEmpty();
+    await expect(section.locator('[data-season-citation]').first()).toBeVisible();
+  }
+  const commentary = page.getByTestId('season-commentary').locator('.season-commentary__block');
+  await expect(commentary).toHaveCount(4);
+  for (const block of await commentary.all()) await expect(block.locator('[data-season-citation]')).toHaveCount(1);
+  await expect(page.getByTestId('season-results')).toContainText('Robin');
+  await expect(page.getByTestId('season-results')).toContainText('Prime Sol');
   await expect(page.getByTestId('season-results-board')).toHaveText('No rides were posted for this season — the county page is ready when they are.');
+  expect(await page.locator('body').evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+  await mkdir(CHRONICLE_SHOTS, { recursive: true });
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(CHRONICLE_SHOTS, `chronicle-top-${testInfo.project.name}.png`) });
+  await page.getByTestId('season-commentary').scrollIntoViewIfNeeded();
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(CHRONICLE_SHOTS, `chronicle-commentary-${testInfo.project.name}.png`) });
   expect(errors).toEqual({ console: [], page: [] });
 });
 
