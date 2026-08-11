@@ -60,7 +60,7 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     citation: 'F-E2S-3',
   },
   'e2-incline': {
-    reason: 'Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar.',
+    reason: 'Measured modeless admission-probe idle run terminated unsecured at wave 2 after 61,767 ms; it did not reach the wave ceiling.',
     citation: 'F-E2S-3',
   },
   'e2-trestle': {

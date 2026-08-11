@@ -24,7 +24,7 @@ The widest gates in the county are `e5-deepwater-claim` (31), `e5-stillwater` (3
 
 ## AP-16-4 admission measurement
 
-Reachability before this slice was **equal 12 · divergence 30 · not-offered 0**, with the browser side hardcoded to `true`. The measured result is **equal 22 · divergence 5 · not-offered 15**. The measured 15/15 split matches F-1642-1: 15 browser refusals and 15 browser-offered legacy door refusals; ten of those fifteen passed below and were admitted, leaving five cited exemptions.
+Reachability before this slice was **equal 12 · divergence 30 · not-offered 0**, with the browser side hardcoded to `true`. The measured result is **equal 22 · divergence 5 · not-offered 15**. The measured 15/15 split matches F-1642-1: 15 browser refusals and 15 browser-offered legacy door refusals; 10 of those 15 passed below and were admitted, while 5 from that population remain cited exemptions. The county holds 8 cited exemptions in total because 3 mode-declaring contracts remain reachable through their declared mode and were never in that legacy-refusal population.
 
 | contract | booted | first view | terminal | turns | failure site |
 |---|---:|---:|---:|---:|---|
@@ -44,7 +44,7 @@ Reachability before this slice was **equal 12 · divergence 30 · not-offered 0*
 | contract | reason | citation |
 |---|---|---|
 | e2-hill-mine | Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar. | F-E2S-3 |
-| e2-incline | Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar. | F-E2S-3 |
+| e2-incline | Measured modeless admission-probe idle run terminated unsecured at wave 2 after 61,767 ms; it did not reach the wave ceiling. | F-E2S-3 |
 | e2-trestle | Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar. | F-E2S-3 |
 | e3-fairground | Owner design fork: the advertised crowd-flock escort objective has no headless consumer. | F-1475-1 |
 | e5-deepwater-claim | Measured Deepwater socket run did not reach a lawful terminal. | reviews/milk-twin-sockets.md |
