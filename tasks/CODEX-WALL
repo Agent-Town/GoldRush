@@ -1,0 +1,82 @@
+# CODEX-WALL — raised s1651, 2026-08-11T08:47Z
+
+## ⚠️ THIS IS **NOT** A QUOTA WALL. IT IS A **CLIENT-VERSION OUTAGE**.
+
+Read this whole file before acting. The §2.0 wall *procedure* applies (no refills, no
+re-queues of wall-class failures; drains / gates / merges / assayer / bookkeeping /
+authoring all CONTINUE, Claude-side, unaffected) — but the §2.0 *lift test* does NOT.
+Nothing about quota is wrong here. Probing quota will tell you nothing.
+
+## What is broken
+
+`scripts/lane-runner-v3.sh` dispatches by invoking **bare `codex`**, resolved from the
+PATH of whatever shell launched the runner. The runner process was **restarted at
+2026-08-11 05:08:20** (`ps -o lstart -p 57599`) from a shell that does **not** carry nvm
+on its PATH, so bare `codex` now resolves to:
+
+    /opt/homebrew/bin/codex   ->   codex-cli 0.133.0
+
+which is below the **0.144.1** floor that knows `gpt-5.6` model ids. Every dispatch
+therefore dies in ~14 seconds with:
+
+    ERROR: {"type":"error","status":400,"error":{"type":"invalid_request_error",
+     "message":"The 'gpt-5.6-sol' model requires a newer version of Codex. ..."}}
+
+## The evidence (measured s1651, not inherited)
+
+- 13 consecutive runs from 2026-08-10 18:17 through 2026-08-11 02:29 carry the banner
+  `OpenAI Codex v0.145.0` and ran normally.
+- The run at 2026-08-11 07:42 (`tasks/runs/20260811-074200-lane-a-lane-a-ap15-1-null-floor-anchors.md.log`)
+  carries `OpenAI Codex v0.133.0`, is **25 lines long**, and ends in the 400 above.
+- The runner's start time (05:08:20) falls **between** those two runs. Same pid 57599
+  throughout since — it was not restarted again.
+- Binaries on this disk, measured directly:
+  - `/opt/homebrew/bin/codex` → **0.133.0** (too old)
+  - `~/.nvm/versions/node/v23.11.1/bin/codex` → **0.145.0** ✅ (the only good one)
+  - `~/.nvm/versions/node/v24.14.0/bin/codex` → **BROKEN**, vendored binary `ENOENT`
+    (do NOT resolve by "highest node version" — it selects this one)
+
+## Casualties: exactly ONE, and nothing was lost
+
+`ap15-1-null-floor-anchors` (dispatched by s1650) is the only run that met the broken
+client. It died before touching a file: `lane/a` is `ahead=0`, clean, `paths=0`. Its
+master **survives on main** at `tasks/lane-a-ap15-1-null-floor-anchors.md`, and the
+run report sits in `tasks/failed/rc1-20260811-074200-lane-a-ap15-1-null-floor-anchors.md`.
+This failure is INFRASTRUCTURE, not a task defect — it must **not** count toward the
+twice-then-escalate rule for ap15-1.
+
+## HOW TO LIFT THIS (owner action — one command)
+
+Restart the lane runner from a shell where nvm is on PATH, i.e. Robin's normal Terminal:
+
+    # in the repo root, in a Terminal where `codex --version` prints >= 0.144.1
+    bash scripts/lane-runner-v3.sh
+
+Check first with `codex --version`; if it prints 0.133.0, that shell is the wrong one
+(`nvm use v23.11.1` fixes it).
+
+## HOW A FIRE VERIFIES THE LIFT — by the ARTIFACT, never by a bare probe
+
+Do **not** probe with bare `codex`: a fire's own PATH resolves to the 0.133.0 Homebrew
+binary and is structurally incapable of ever reporting this lifted (F-1636-4).
+
+Lift this flag when **either** holds:
+
+1. The newest `tasks/runs/*.log` banner reads `OpenAI Codex v0.144.1` or higher **and**
+   the run did not die on the 400 above; **or**
+2. The runner process start time is **newer than 2026-08-11 05:08:20**
+   (`ps -o pid,lstart -p $(pgrep -f lane-runner-v3)`) **and** a dispatch has since
+   produced a healthy banner.
+
+On lift: delete this file, re-queue `tasks/lane-a-ap15-1-null-floor-anchors.md` to
+`tasks/queue/lane-a/` (it was never executed — this is its first real attempt, not a
+retry), resume refills, and note CODEX-RESUMED in the handoff.
+
+## The durable cure (landed s1651, takes effect on the NEXT runner restart)
+
+`scripts/lane-runner-v3.sh` now resolves a codex client that meets the floor **before**
+consuming a master, and REFUSES the dispatch — leaving the master in its queue — when no
+such client exists. That converts this outage from "masters silently shredded at 14s
+each" into "runner refuses loudly and loses nothing". It is inert for the currently
+running instance, which parsed the script at 05:08; a restart is still required.
+Guarded by `scripts/codex-client-floor.test.sh`.
