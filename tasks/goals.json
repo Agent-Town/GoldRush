@@ -6705,8 +6705,10 @@
             {
               "id": "agent-reels-2",
               "title": "Agent reels via agent_orders tape action (owner fork resolved toward (a) 2026-08-11, veto window open) \u2014 emit, replay, board-accept, backfill crowns",
-              "status": "queued",
-              "taskFile": "lane-d-agent-reels-2.md"
+              "status": "merged",
+              "taskFile": "lane-d-agent-reels-2.md",
+              "mergeHash": "1578a2298a7ccd4420b4a7917eadf877adea5a7e",
+              "drainNotes": "s1657: PASS, merged 1578a2298. Arrived STAGED-BUT-UNCOMMITTED (F-1656-1 third occurrence) and was rescued byte-for-byte as b7b3ea2ae before gating. tsc clean, build green, own node 1/1, own e2e 2/2 both projects at --workers=1, test:stats 87 / test:accounts 43 / test:mp 462. Two adjacent specs (pb02-replay-actor:78, e7-playbook-surface:33/:54) are KNOWN-RED on a 14-day-stale snapshot and were exonerated by EQUALISED control runs at plain main, twice each, not by inventory membership (F-1444-2): pb02:78 red 4/4 in both arms, e7-surface:33 flaky in both arms. F-1657-2 (the slice shipped an unrooted gate) cured in the drain bookkeeping commit. F-1657-3 (backfilled crown tapes cannot honestly claim the historical secured rows) is on the owner desk. Review reviews/agent-reels-2.md."
             }
           ],
           "subgoals": [
