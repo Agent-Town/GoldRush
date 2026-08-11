@@ -1,0 +1,3752 @@
+{
+  "version": 1,
+  "id": "agent-054e8ccc",
+  "createdAt": 0,
+  "kept": true,
+  "contract": "the-claim",
+  "seed": "e1-the-claim-02",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "inputLog": {
+    "version": 1,
+    "name": "agent-054e8ccc",
+    "contractId": "the-claim",
+    "seed": "e1-the-claim-02",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 6607,
+    "entries": [
+      {
+        "t": 0,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 13
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 271,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 13
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 373,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 13
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 476,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 13
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 481,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 13
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 487,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 13
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 494,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 13
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 900,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 13
+                },
+                "when": {
+                  "goldGte": 25
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 11
+                },
+                "when": {
+                  "goldGte": 35
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 1801,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2701,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 2866,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3058,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3601,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 45
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 3639,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4081,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4108,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4200,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4239,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4501,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": -3,
+                  "z": 12
+                },
+                "when": {
+                  "goldGte": 55
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4564,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 4839,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5401,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5439,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5471,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5572,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5576,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5581,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5906,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 15
+                },
+                "when": {
+                  "goldGte": 75
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5933,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 5960,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6039,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": 6301,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "kind": "agent_orders",
+            "orders": [
+              {
+                "verb": "BUILD",
+                "what": "sentry_beacon",
+                "where": {
+                  "x": 0,
+                  "z": 9
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 50
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 14
+                },
+                "when": {
+                  "goldGte": 70
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": 4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 95
+                }
+              },
+              {
+                "verb": "BUILD",
+                "what": "turret",
+                "where": {
+                  "x": -4,
+                  "z": 10
+                },
+                "when": {
+                  "goldGte": 125
+                }
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-1"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HARVEST",
+                "seam": "gold-seam-2"
+              },
+              {
+                "verb": "HOLD",
+                "pos": {
+                  "x": 0,
+                  "z": 12
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": []
+  },
+  "eventLogHash": "fnv1a32:9947669f",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 7,
+    "timeAlive": 220.233,
+    "gold": 39
+  }
+}

@@ -10,6 +10,7 @@ import signalContracts from '../../assets/contracts/epoch-7-signal/contracts.jso
 import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
 import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
+import { validateStandingOrders } from '../../src/agent/StandingOrders';
 import { resolveSeasonAt } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash, type KVNamespaceLike } from './_ratelimit';
 
@@ -593,7 +594,7 @@ function validateParty(value: unknown, stored = false): SubmittedParty | null {
   return { riderCount, riders };
 }
 
-function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): JsonRecord | null {
+export function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): JsonRecord | null {
   if (!isRecord(value) || new TextEncoder().encode(JSON.stringify(value)).length > MAX_TAPE_BYTES) return null;
   if (!hasOnlyKeys(value, new Set(['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'inputLog', 'eventLogHash', 'outcome']))) return null;
   if (value.version !== 1 || value.simVersion !== 1 || typeof value.id !== 'string' || !value.id || value.id.length > 64) return null;
@@ -643,6 +644,7 @@ function validTapeEntries(entries: unknown, duration: number): boolean {
     const tick = integerInRange(entry.t, 0, Math.max(0, duration - 1));
     if (tick === null || tick <= prior || !quantizedAxis(entry.mx) || !quantizedAxis(entry.my) || !Array.isArray(entry.a) || entry.a.length > 24) return false;
     if (!entry.a.every(validTapeAction)) return false;
+    if (entry.a.some((action) => isRecord(action) && action.kind === 'agent_orders') && (entry.mx !== 0 || entry.my !== 0)) return false;
     prior = tick;
   }
   return true;
@@ -657,7 +659,11 @@ function validTapeTruncation(value: unknown, duration: number): boolean {
 }
 
 function validTapeAction(value: unknown): boolean {
-  if (!isRecord(value) || typeof value.type !== 'string') return false;
+  if (!isRecord(value)) return false;
+  if (value.kind === 'agent_orders') {
+    return hasOnlyKeys(value, new Set(['kind', 'orders'])) && validateStandingOrders(value.orders).ok;
+  }
+  if (typeof value.type !== 'string') return false;
   const simple = new Set(['weapon_toggle', 'restart', 'debug_spawn', 'debug_xp', 'skip_ceremony', 'research_skip']);
   if (simple.has(value.type)) return hasOnlyKeys(value, new Set(['type']));
   if (value.type === 'place_build') return hasOnlyKeys(value, new Set(['type', 'id', 'position', 'rotationSteps']))

@@ -33,6 +33,10 @@ The transport is newline-delimited JSON:
 
 Malformed or rejected input is reported on stderr as `gr-sim rejected orders: ...`; correct it and send another array. Stderr also carries the speed diagnostic. Do not parse stderr as game state. Ending stdin while the simulator awaits orders is an error. At the ceiling, the runner ends normally and writes an outcome with `secured: false` and `endReason: "wave-ceiling"`. Boss contracts set that ceiling six waves after the later of the secure wave or boss wave, giving the fight its grace window.
 
+## RUN REELS
+
+Add `--tape <path>` to a solo `gr-sim` command to write a deterministic RunTape when the run ends. The reel records every accepted standing-order replacement at its fixed simulation tick, plus the contract, seed, difficulty, terminal outcome, and execution-log hash; rejected submissions never enter it. Re-running the same deterministic player produces the same bytes. A reel attached to a leaderboard standing is public county execution so others can watch and learn; the private skill or harness that produced it stays private unless its owner separately opts in.
+
 ## THE VIEW
 
 Every decision view has `schema: "goldrush.view.v1"` and four parts:

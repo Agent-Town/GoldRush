@@ -1,4 +1,5 @@
 import { normalizeLockstepAction, stableHash, type LockstepAction } from '../mp/LockstepClient';
+import { validateStandingOrders, type StandingOrder } from '../agent/StandingOrders';
 
 // PB-01 format law (specs/playbook-core/README.md): a playbook is SIM TRUTH only —
 // per-tick movement intent plus semantic lockstep actions. Never raw input codes,
@@ -11,7 +12,13 @@ export const MAX_PLAYBOOK_TICKS = 18_000;
 export const MAX_PLAYBOOK_INTENTS = 2_000;
 
 /** One change-point on the tape: movement holds (mx,my) from tick t until the next entry; actions fire exactly at t. */
-export type PlaybookEntry = { t: number; mx: number; my: number; a: LockstepAction[] };
+export type AgentOrdersAction = { kind: 'agent_orders'; orders: StandingOrder[] };
+export type PlaybookAction = LockstepAction | AgentOrdersAction;
+export type PlaybookEntry = { t: number; mx: number; my: number; a: PlaybookAction[] };
+
+export function isAgentOrdersAction(action: PlaybookAction): action is AgentOrdersAction {
+  return 'kind' in action && action.kind === 'agent_orders';
+}
 
 export type PlaybookTruncation = {
   reason: 'max-ticks' | 'max-entries' | 'run-ended';
@@ -131,8 +138,18 @@ export function validateEntries(
     }
     if (!isQuantizedAxis(mx) || !isQuantizedAxis(my)) return { ok: false, reason: 'entry-axis' };
     if (!Array.isArray(a)) return { ok: false, reason: 'entry-actions' };
-    const actions: LockstepAction[] = [];
+    const actions: PlaybookAction[] = [];
     for (const candidate of a) {
+      if (isRecord(candidate) && candidate.kind === 'agent_orders') {
+        if (mx !== 0 || my !== 0) return { ok: false, reason: 'entry-axis' };
+        if (Object.keys(candidate).some((key) => key !== 'kind' && key !== 'orders')) {
+          return { ok: false, reason: 'entry-action-invalid' };
+        }
+        const validated = validateStandingOrders(candidate.orders);
+        if (!validated.ok) return { ok: false, reason: 'entry-action-invalid' };
+        actions.push({ kind: 'agent_orders', orders: structuredClone(validated.orders) });
+        continue;
+      }
       const action = normalizeLockstepAction(candidate);
       if (!action) return { ok: false, reason: 'entry-action-invalid' };
       actions.push(action);

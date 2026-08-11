@@ -71,6 +71,7 @@ import { RunManager } from './RunManager';
 import {
   RUN_TAPE_SIM_VERSION,
   RunTapeRecorder,
+  agentOrdersEventLogHash,
   appendRunTape,
   keepRunTape,
   readRunTapes,
@@ -87,6 +88,7 @@ import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
+import { snapshotStandingOrders } from '../agent/StandingOrders';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { FerrisWheel } from '../entities/FerrisWheel';
@@ -144,6 +146,7 @@ import {
   parsePlaybookText,
   PLAYBOOK_STEP_SECONDS,
   PLAYBOOK_VERSION,
+  isAgentOrdersAction,
   playbookHash,
   quantizePlaybookCoordinate,
   validateEntries,
@@ -396,6 +399,7 @@ type RunTapeReplayState = {
   skipWave: number | null;
   complete: boolean;
   hash: string | null;
+  agentTape: boolean;
 };
 
 export class Game {
@@ -2179,6 +2183,7 @@ export class Game {
     this.cameraRig.snapTo(this.localActor.group.position);
     this.state.transition('playing');
     if (this.boot.replay) {
+      this.installAgentDoor(false);
       this.startRunTapeReplay(this.boot.replay.tape);
       resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
       this.applyStats(this.progression.stats, null);
@@ -2211,6 +2216,10 @@ export class Game {
     this.showContractBriefing();
     this.showRunStartMetaRecap();
     // ADR-002 section 4: M4 exposes install(game); wiring happens at merge (m4-01 gate, s32).
+    this.installAgentDoor(true);
+  }
+
+  private installAgentDoor(showIntro: boolean): void {
     const game = this;
     this.agentStub = installAgentStub(
       {
@@ -2224,6 +2233,7 @@ export class Game {
       },
       {
         clock: () => this.timeAlive,
+        ...(showIntro ? {} : { permissionLevel: 3 as const }),
         metaProgress: {
           get agentAutonomyLevel() {
             return (game.runManager ? agentAutonomyLevel(game.runManager.metaProgress) : 0) + game.agentPolicySlotBonus;
@@ -2238,7 +2248,7 @@ export class Game {
       else if (receipt.outcome.reason !== 'NO_SYSTEM_API') this.audio.play('chirp-refuse');
     });
     this.agentStub.heartbeat();
-    this.showProspectorIntro();
+    if (showIntro) this.showProspectorIntro();
   }
 
   start(): void {
@@ -6156,6 +6166,8 @@ export class Game {
       this.scene.add(actor.group);
     }
     const sessions = new Map<number, PlaybookReplaySession>();
+    const agentTape = recordings.some((recording) =>
+      recording.entries.some((entry) => entry.a.some(isAgentOrdersAction)));
     for (const { slot, start, entries } of recordings) {
       const playbook: PlaybookRecording = {
         version: PLAYBOOK_VERSION,
@@ -6169,7 +6181,14 @@ export class Game {
         entries: entries.map((entry) => ({ ...entry, a: entry.a.map((action) => structuredClone(action)) })),
         truncated: tape.inputLog.truncated,
       };
-      sessions.set(slot, new PlaybookReplaySession(playbook, undefined, true));
+      sessions.set(slot, new PlaybookReplaySession(
+        playbook,
+        agentTape ? Number.POSITIVE_INFINITY : undefined,
+        true,
+        slot === tape.inputLog.primarySlot
+          ? (action) => { this.agentStub?.submitOrders(action.orders); }
+          : undefined,
+      ));
       const actor = this.actors[slot]!;
       actor.group.visible = true;
       actor.resetRun(new THREE.Vector3(start.x, Terrain.visualY(start.x, start.z, this.heroStart.y), start.z));
@@ -6181,7 +6200,7 @@ export class Game {
     }
     this.mpLocalSlot = tape.inputLog.primarySlot;
     this.mpActionSlot = 0;
-    this.runTapeReplay = { tape, sessions, speed: 1, skipWave: null, complete: false, hash: null };
+    this.runTapeReplay = { tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape };
     this.replayCameraPan.set(0, 0, 0);
     this.prospector.reset(this.primaryActor.group.position);
     this.cameraRig.snapTo(this.localActor.group.position);
@@ -6225,13 +6244,15 @@ export class Game {
     }
     if ([...replay.sessions.values()].some((session) => !session.complete)) return;
     const primary = replay.sessions.get(replay.tape.inputLog.primarySlot);
-    replay.hash = runTapeEventLogHash({
-      probes: primary ? [...primary.probeSamples] : [],
-      kills: this.kills,
-      gold: this.economy.gold,
-      wave: this.waveSystem.diagnostics.wave,
-      economy: summarizeLog(this.economy.log),
-    });
+    replay.hash = replay.agentTape
+      ? agentOrdersEventLogHash(snapshotStandingOrders())
+      : runTapeEventLogHash({
+          probes: primary ? [...primary.probeSamples] : [],
+          kills: this.kills,
+          gold: this.economy.gold,
+          wave: this.waveSystem.diagnostics.wave,
+          economy: summarizeLog(this.economy.log),
+        });
     replay.complete = true;
     replay.skipWave = null;
     this.state.setPaused(true);

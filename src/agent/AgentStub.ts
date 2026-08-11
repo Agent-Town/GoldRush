@@ -123,6 +123,12 @@ export class AgentStub {
     return receipt;
   }
 
+  submitOrders(orders: unknown): ToolReceipt<'et.goldrush.orders', { orders: unknown }> {
+    const receipt = this.surface.tools.submit_orders(orders);
+    this.record(receipt);
+    return receipt;
+  }
+
   dispose(): void {
     if (typeof window !== 'undefined' && window.__GR_AGENT__ === this) window.__GR_AGENT__ = undefined;
     this.marker?.remove();

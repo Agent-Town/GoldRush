@@ -293,6 +293,7 @@ export class EchoBossSystem {
         const movement = movementSignature(entry.mx, entry.my);
         if (movement) this.recordedPatterns.add(movement);
         for (const action of entry.a) {
+          if (!('type' in action)) continue;
           this.recordedPatterns.add(action.type === 'context_action' ? `${action.type}:${action.action}` : action.type);
         }
       }

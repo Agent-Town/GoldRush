@@ -23,6 +23,7 @@ import {
 } from '../playbook/PlaybookFormat';
 import type { PlaybookProbe } from '../playbook/PlaybookSession';
 import type { EconomySummary } from './Economy';
+import type { StandingOrdersView } from '../agent/StandingOrders';
 
 export const RUN_TAPES_KEY = 'gr.tapes.v1';
 export const RUN_TAPE_VERSION = 1 as const;
@@ -242,6 +243,12 @@ export class RunTapeRecorder {
 
 export function runTapeEventLogHash(eventLog: RunTapeEventLog): string {
   return stableHash(eventLog);
+}
+
+export function agentOrdersEventLogHash(orders: StandingOrdersView): string {
+  return stableHash({ orders: orders.log
+    .filter((event) => event.type === 'orders_replaced')
+    .map(({ at: _at, seq: _seq, ...event }) => event) });
 }
 
 export function submittedRunTape(tape: RunTape): RunTape | undefined {
