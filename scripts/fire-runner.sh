@@ -110,7 +110,7 @@ if [ "$FIRE_ENGINE" = "codex" ]; then
   done
   if [ -n "$CODEX_BIN" ]; then
     echo "[fire-runner] $(date +%H:%M:%S) FIRE START (engine codex, model from ~/.codex config)" >> "$LOG"
-    "$CODEX_BIN" exec --sandbox workspace-write --skip-git-repo-check "$(cat scripts/fire.md)" >> "$LOG" 2>&1
+    "$CODEX_BIN" exec --sandbox danger-full-access --skip-git-repo-check "$(cat scripts/fire.md)" >> "$LOG" 2>&1
     RC=$?
     echo "[fire-runner] $(date +%H:%M:%S) FIRE END rc=$RC (codex; ALT fallback is claude-only, skipped)" >> "$LOG"
     exit 0
