@@ -69,35 +69,35 @@ type AdmissionExemption = {
 
 export const CONTRACT_ADMISSION_EXEMPTIONS = {
   'e2-hill-mine': {
-    reason: 'Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar.',
+    reason: 'Scripted admission re-probe terminated unsecured at waves 1/2 because no weapon reaches the railcar.',
     citation: 'F-E2S-3',
   },
   'e2-incline': {
-    reason: 'Measured modeless admission-probe idle run terminated unsecured at wave 2 after 61,767 ms; it did not reach the wave ceiling.',
+    reason: 'Scripted admission re-probe terminated unsecured at waves 2/3 because no weapon reaches the railcar.',
     citation: 'F-E2S-3',
   },
   'e2-trestle': {
-    reason: 'Measured modeless idle run reached the wave ceiling without a lawful terminal because no weapon reaches the railcar.',
+    reason: 'Scripted admission re-probe terminated unsecured at wave 1 because no weapon reaches the railcar.',
     citation: 'F-E2S-3',
   },
   'e3-fairground': {
-    reason: 'Owner design fork: the advertised crowd-flock escort objective has no headless consumer.',
+    reason: 'Scripted admission re-probe terminated unsecured at waves 2/3; the crowd-flock escort objective has no headless consumer.',
     citation: 'F-1475-1',
   },
   'e5-deepwater-claim': {
-    reason: 'Measured Deepwater socket run did not reach a lawful terminal.',
+    reason: 'BOAT_BUILD and REANCHOR succeeded, but both seeds produced no terminal within 16,200 fixed steps because Dredge-Queen resolution is absent.',
     citation: 'reviews/milk-twin-sockets.md',
   },
   'e5-stillwater': {
-    reason: 'Measured Deepwater socket run did not reach a lawful terminal.',
+    reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
     citation: 'reviews/milk-twin-sockets.md',
   },
   'e6-glow-mesa': {
-    reason: 'Measured Atomic socket run did not reach a lawful terminal.',
+    reason: 'CAPTURE policy did not reach a lawful terminal because Homemaker boss resolution remains absent.',
     citation: 'reviews/milk-twin-sockets.md',
   },
   'e6-showroom': {
-    reason: 'Measured Atomic socket run did not reach a lawful terminal.',
+    reason: 'Idle and CAPTURE policy both reached the wave-20 false green with the 60-enemy alive cap still full.',
     citation: 'reviews/milk-twin-sockets.md',
   },
 } as const satisfies Record<string, AdmissionExemption>;
