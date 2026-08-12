@@ -556,6 +556,8 @@ function validateStack(value: unknown, stored = false): SelfDeclaredStack | null
     if (typeof fieldValue !== 'string' || fieldValue.length > MAX_STACK_FIELD_LENGTH) return null;
     stack[field] = fieldValue;
   }
+  // Stored rows are season history; never retro-judge version-less harness declarations.
+  if (!stored && stack.harness !== undefined && !stack.harnessVersion?.trim()) return null;
   if (value.source !== undefined) {
     if (typeof value.source !== 'string' || value.source.length > MAX_STACK_FIELD_LENGTH) return null;
     try {
