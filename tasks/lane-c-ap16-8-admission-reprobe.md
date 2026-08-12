@@ -1,0 +1,26 @@
+# Task ap16-8: the admission re-probe — measure what the verbs unlocked (LANE-C, commit prefix "fix:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.
+READ FIRST: AGENTS.md; specs/agent-play/ap-16-same-game-law.md AP-16-7 (the parity acceptance MOVED HERE by the F-1698-1 ruling — this slice owns the E5/E6 measurement) + AP-16-4 (the exemption law: an exemption is a debt; clearing one = deriving admission from the registry again); src/sim/HeadlessContractSim.ts `CONTRACT_ADMISSION_EXEMPTIONS` (the eight rows you re-measure) + the admission derivation below it; reviews/milk-twin-sockets.md (HOW the original refusals were measured — reuse its probe method: idle + policy runs per bench seed, twice, lawful-terminal required); the AP-16-7 review once merged (the verbs whose existence you are measuring); docs/bench/same-game-audit.md + scripts/same-game-audit.test.mjs (the E5/E6 rows that must flip HERE).
+SEQUENCING (hard): AP-16-7 must be MERGED (whole-log grep for its slice name; the leaf `ap16-7-epoch-levers` carries the hash). Unmerged → STOP "16-7 not landed".
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/c main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1, s1266): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP, whether they sit as uncommitted dirt or as the entire content of an ahead commit. Screenshots are never byte-identity gated, so their bytes differ from main forever. Discard them (`git checkout -- <paths>` / reset) and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE: `git -C worktrees/lane-c status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
+
+## Why (the chain)
+Owner clean-slate law (2026-08-12) + the F-1698-1 ruling (b): parity for E5/E6 is measurable only after admission, and admission is measurable only with the full verb grammar. AP-16-7 landed the grammar; this slice re-runs the milk-twin-sockets measurement with it and lets the register tell the truth.
+
+## Scope
+1. **Re-probe all EIGHT exemption rows** with the merged verb set, using milk-twin-sockets' own method (per bench seed, twice, deterministic agreement required; a scripted policy exercising the new verbs where idle cannot reach a lawful terminal — e.g., an E5 probe that BOAT_BUILDs + REANCHORs, an E6 probe that CAPTUREs; keep each probe ≤30 lines, checked in beside the census specs).
+2. **Let the register tell the truth**: a row whose refusal no longer reproduces is REMOVED (admission re-derives automatically — cite the passing probe in the removal's commit message); a row that still refuses gets its reason UPDATED to the new measurement (expected: the railcar trio and fairground remain, their engine slices still unwritten). Every change carries its evidence.
+3. **The audit flips HERE**: regenerated `docs/bench/same-game-audit.md` + test assertions — newly-admitted contracts' ability rows to parity; before/after divergence counts in the report.
+4. **The census specs** (er01-e5/e6 family) extend per their own conventions: admission gates that were pinned as refused flip to their measured new state.
+5. If ANY probe behaves non-deterministically (two runs disagree), that contract STAYS exempt with the flake documented — determinism is the door's constitution; never admit a flaky contract.
+
+## Firewall
+Touch ONLY: `src/sim/HeadlessContractSim.ts` (the exemption register ONLY), the probe scripts beside the census specs, the census specs themselves, `scripts/same-game-audit.test.mjs` + regenerated `docs/bench/same-game-audit.md`, `public/skill.md` door-contracts fence ONLY if admissions change it (guarded fence law).
+NO changes to: verbs/grammar/sockets (merged, done); ranking/API; browser code; other tasks' fresh work.
+If you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate.
+
+## Self-check (evidence, not vibes)
+tsc + `npm run build` green. Every probe run twice with identical outcomes (paste the pairs). `npm run test:node-guards` green (audit + skillmd). The gr-sim battery: newly-admitted contracts add pins, existing seeds drift zero. Adjacent: task-025 + m1-01 + m2-01 unmodified-green. Zero console/page errors.
+End: READY-FOR-GATES + report: the eight rows' before/after table with evidence per row, the audit's divergence delta, and the sentence the clean-slate row is waiting for: how many exemptions remain and why.

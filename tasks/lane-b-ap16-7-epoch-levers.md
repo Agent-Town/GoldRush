@@ -14,7 +14,7 @@ Owner 2026-08-12: "lets finish the verbs befor we run another gauntlet… finish
 2. **`BOAT_BUILD {"verb":"BOAT_BUILD","padId":"…","buildingId":"…"}`** — thin adapter onto `placeBoatBuilding` (its rejections pass through as surprises). Costs: whatever the browser `place_boat_build` action charges — mirror exactly, cite the line.
 3. **`REANCHOR {"verb":"REANCHOR","anchorId":"…"}`** — thin adapter onto `reanchor`, same law.
 4. **View**: surface the sockets' existing diagnostics additively (pads + occupancy, current anchor + known anchors, wrangle state) on E5/E6 contracts only — a rider must be able to SEE the levers it can pull.
-5. **Audit flip**: E5/E6 ability rows to parity in the audit test + regenerated report (before/after counts).
+5. **Audit flip — MOVED to the admission re-probe (F-1698-1 ruling (b), attended 2026-08-12):** this slice does NOT flip E5/E6 audit rows and does NOT touch the audit harness or MechanicsManifest — parity for unadmitted contracts is unmeasurable until the re-probe admits them. Acceptance here = the verbs + diagnostics + focused door tests + census extensions, exactly.
 6. **The door doc**: one self-contained skill.md section (three verbs + the epoch scoping). F-1541-1: never re-flow.
 7. **e2e** (door spec, name it): on an E5 seed — BOAT_BUILD occupies a pad (rejected on occupied), REANCHOR moves the anchor (rejected on current); on an E6 seed — CAPTURE under valid preconditions changes the wrangle roster, invalid rejects. Existing seeds without these verbs must NOT drift (unexplained hash change = STOP). Do NOT touch `SUPPORTED_CONTRACTS`/exemptions — the separate re-probe slice re-measures admission after you land.
 
