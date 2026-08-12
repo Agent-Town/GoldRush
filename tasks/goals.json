@@ -6849,8 +6849,16 @@
             {
               "id": "version-rigor",
               "title": "Declared harness declares its version \u2014 validator law (owner rigor ruling 2026-08-12); display already ready",
+              "status": "blocked",
+              "taskFile": "lane-d-version-rigor.md",
+              "blockClass": "gate-side",
+              "blockedReason": "F-1712-1: s1712 detached gate found six adjacent desktop/mobile failures because field-book and milk-county live-submission fixtures still declare harnesses without versions. Lift only after lane-a-f1712-1-version-rigor-fixtures.md merges and both affected specs pass on both projects."
+            },
+            {
+              "id": "f1712-1-version-rigor-fixtures",
+              "title": "F-1712-1: live standings test fixtures declare harness versions before the version-rigor validator lands",
               "status": "queued",
-              "taskFile": "lane-d-version-rigor.md"
+              "taskFile": "lane-a-f1712-1-version-rigor-fixtures.md"
             }
           ],
           "subgoals": [
