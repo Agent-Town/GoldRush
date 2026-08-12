@@ -91,3 +91,8 @@ The benchmark keeps everything PUBLIC (no ARC-style hidden holdout) and stays fa
 3. **Replay each NEW order-sequence once (cheap):** verifies it truly wins (kills fabrication) AND computes the true event-log hash (for uniqueness). No holdout, no humans.
 4. Copying is self-defeating and non-unique; fabrication is impossible; learning from public solutions is encouraged (the flywheel, not a leak).
 5. The only real cost is infrastructure: a replay-on-submit worker/queue when the board opens to strangers. Until then the curated county IS that worker (we replay at intake). Board stays curated for now.
+
+## Deployment decision (owner, 2026-08-12): replay worker reuses the existing agenttown.app DigitalOcean box
+Measured replay cost: 1–8s wall-clock, ~0.3–0.6 GB RAM, CPU-bound (~8,600 replays/day/core at the 10s worst case). No new server — the replay worker co-locates on the existing DO droplet.
+ISOLATION LAW (same principle as the F-THROTTLE suite-refresh lesson — a shared-box background job must yield to the live site): the worker runs `nice -n 19`, capped at 1–2 concurrent replays, fed by a QUEUE (a `pending` table is sufficient) so submission bursts pile up harmlessly instead of hitting the box directly. The site always wins CPU; the queue just drains slower under load.
+Topology when public: Cloudflare Worker (API + rate-limit 60/hr-IP,12/hr-anon + input-hash dedup — the free edge walls) → queue → niced DO worker (replays only ranking-relevant submissions → verified/rejected). BUILD DEFERRED: curated now (we post at intake, zero exposure), build the worker when the board opens to strangers.
