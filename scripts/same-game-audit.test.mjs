@@ -30,6 +30,8 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
   assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 15);
   assert.equal(audit.admission.measurements.length, 10);
+  assert.equal(audit.admission.exemptions.length, 8);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 373, equal: 707, 'not-offered': 15 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
