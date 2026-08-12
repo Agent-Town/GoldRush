@@ -42,6 +42,15 @@ export type AgentView = {
   now: {
     wave: number;
     blastReadyInMs: number;
+    weapon: 'rig' | 'blast';
+    pendingSecure?: true | { defaultChoice: 'bank' | 'rush'; expiresInMs: number };
+    megaproject?: {
+      id: string;
+      stage: number;
+      funded: boolean;
+      cost: number;
+      site: { x: number; z: number; w: number; d: number };
+    };
     timers: { runSeconds: number; nextWaveInSeconds: number };
     gold: number;
     hero: { hp: number; maxHp: number; x: number; z: number };
@@ -52,6 +61,15 @@ export type AgentView = {
       standing: number;
       wrecked: number;
       byKind: Readonly<Record<string, number>>;
+      entries: readonly {
+        id: string;
+        index: number;
+        tier: number;
+        hp: number;
+        maxHp: number;
+        wrecked: boolean;
+        position: { x: number; z: number };
+      }[];
     };
     threats: {
       alive: number;
@@ -93,7 +111,7 @@ type Boundary = {
   kills: number;
   works: Works;
   surprises: readonly string[];
-  secured: boolean;
+  endReason: string | null;
   terminal: boolean;
 };
 type ViewCache = {
@@ -251,9 +269,26 @@ function buildNow(
       : null;
   const steal = record(diagnostics.steal);
   const wreck = record(diagnostics.wreck);
+  const run = record(diagnostics.run);
+  const megaproject = record(diagnostics.megaproject);
+  const site = record(megaproject.siteFootprint);
+  const pendingSecure = run.pendingSecure === true ? true : undefined;
+  const project = megaproject.active === true && megaproject.unlocked === true && text(megaproject.id) &&
+    ['x', 'z', 'w', 'd'].every((key) => typeof site[key] === 'number' && Number.isFinite(site[key]))
+    ? {
+        id: text(megaproject.id)!,
+        stage: integer(megaproject.stage),
+        funded: megaproject.funded === true,
+        cost: integer(record(megaproject.materials).gold),
+        site: { x: number(site.x), z: number(site.z), w: number(site.w), d: number(site.d) },
+      }
+    : undefined;
   return {
     wave: boundary.wave,
     blastReadyInMs: Math.max(0, Math.round(number(diagnostics.blastReadyInMs))),
+    weapon: readWeapon(diagnostics),
+    ...(pendingSecure ? { pendingSecure } : {}),
+    ...(project ? { megaproject: project } : {}),
     timers: {
       runSeconds: round(boundary.runSeconds),
       nextWaveInSeconds: round(number(diagnostics.nextWaveInSim)),
@@ -283,6 +318,14 @@ function buildNow(
     })),
     score: summarizeRun(economyLog, boundary.wave),
   };
+}
+
+function readWeapon(diagnostics: Record<string, unknown>): 'rig' | 'blast' {
+  if (diagnostics.weapon === 'rig' || diagnostics.weapon === 'blast') return diagnostics.weapon;
+  const arsenal = record(diagnostics.arsenal).active;
+  if (arsenal === 'rig' || arsenal === 'blast') return arsenal;
+  const actor = records(diagnostics.actors).find((entry) => entry.local === true);
+  return actor?.weapon === 'blast' ? 'blast' : 'rig';
 }
 
 function buildAlmanac(
@@ -373,7 +416,8 @@ function readBoundary(
   standingOrders: Record<string, unknown>,
 ): Boundary {
   const runState = text(diagnostics.runState);
-  const secured = record(diagnostics.run).secured === true || runState === 'secured';
+  const run = record(diagnostics.run);
+  const endedReason = text(run.lastRunEndedReason);
   return {
     wave: integer(diagnostics.wave),
     runSeconds: number(diagnostics.timeAlive),
@@ -382,8 +426,8 @@ function readBoundary(
     kills: integer(diagnostics.kills),
     works: readWorks(diagnostics),
     surprises: readSurprises(diagnostics, standingOrders),
-    secured,
-    terminal: runState === 'dead' || secured || number(diagnostics.hp) <= 0,
+    endReason: endedReason,
+    terminal: runState === 'dead' || endedReason !== null || number(diagnostics.hp) <= 0,
   };
 }
 
@@ -402,7 +446,22 @@ function readWorks(diagnostics: Record<string, unknown>): Works {
     if (entry.wrecked === true || number(entry.hp) <= 0) wrecked += 1;
     else standing += 1;
   }
-  return { hp: round(current), maxHp: round(max), standing, wrecked, byKind };
+  return {
+    hp: round(current),
+    maxHp: round(max),
+    standing,
+    wrecked,
+    byKind,
+    entries: hp.map((entry) => ({
+      id: text(entry.id) ?? 'works',
+      index: integer(entry.index),
+      tier: integer(entry.tier),
+      hp: round(number(entry.hp)),
+      maxHp: round(number(entry.maxHp)),
+      wrecked: entry.wrecked === true,
+      position: point(entry.position),
+    })),
+  };
 }
 
 function waveEntry(before: Boundary, after: Boundary): AgentWaveLogEntry {
@@ -410,9 +469,9 @@ function waveEntry(before: Boundary, after: Boundary): AgentWaveLogEntry {
   return {
     wave: before.wave,
     outcome:
-      after.secured
+      after.endReason === 'secured'
         ? 'secured'
-        : after.heroHp <= 0
+        : after.endReason === 'rush' || after.endReason === 'death' || after.heroHp <= 0
         ? 'rider-down'
         : before.works.maxHp > 0 && after.works.hp <= 0
           ? 'works-lost'

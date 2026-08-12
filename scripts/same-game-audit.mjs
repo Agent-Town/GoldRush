@@ -139,6 +139,16 @@ const tapeSurface = {
   skip_ceremony: 'choice',
   place_build: 'verb',
 };
+const tapeDoorVerb = {
+  weapon_toggle: 'SET_WEAPON',
+};
+const tapeExemptions = [
+  { actions: 'death_action', reason: 'Post-death overlay transition; the headless terminal is already the run end.', citation: 'src/game/Game.ts:2902' },
+  { actions: 'research_pick / research_skip', reason: 'Between-run science progression lives outside the run window.', citation: 'src/game/Game.ts:2909' },
+  { actions: 'set_pause', reason: 'Pacing only; the agent door is turn-based.', citation: 'src/game/Game.ts:2886' },
+  { actions: 'skip_ceremony', reason: 'Baron ceremony is presentation-only; headless spawns the Baron directly without a ceremony gate.', citation: line('src/sim/HeadlessContractSim.ts', '(position, at, escorts) => this.postBaronSpawn(position, at, escorts)') },
+];
+const tapeExemptActions = new Set(tapeExemptions.flatMap(({ actions }) => actions.split(' / ')));
 
 function manifestEvidence(contract, id) {
   const file = 'src/agent/MechanicsManifest.ts';
@@ -263,7 +273,7 @@ function audit() {
     for (const action of tapeActions) {
       const placeBuild = action === 'place_build' && doorVerbs.includes('BUILD');
       const rotationParity = placeBuild && source['src/agent/StandingOrders.ts'].includes('rotationSteps?: 0 | 1 | 2 | 3;');
-      const doorVerb = action.toUpperCase();
+      const doorVerb = tapeDoorVerb[action] ?? action.toUpperCase();
       const reachable = agentCanEnter && (placeBuild || doorVerbs.includes(doorVerb));
       rows.push(row(
         contract,
@@ -328,6 +338,7 @@ function audit() {
       measurements: admissionMeasurement(),
       exemptions: Object.entries(admissionExemptions).map(([contractId, exemption]) => ({ contractId, ...exemption })),
     },
+    tapeExemptions,
   };
 }
 
@@ -376,7 +387,13 @@ function markdown(result) {
     `- **Contract reachability:** ${entryGaps} browser-offered contracts are rejected by the headless door; ${result.summary['not-offered']} contracts are refused by both species and sit outside the same-game universe.`,
     `- **Browser-menu versus door:** ${manifestMenuGaps} buildable rows disagree even after separating the browser menu from the contract manifest.`,
     '- **Build orientation:** human `place_build` tapes and standing-order `BUILD` both carry `rotationSteps` 0..3; omission defaults to 0.',
-    `- **Additional tape-only actions:** ${newlyEnumeratedTapeActions.filter((action) => action !== 'place_build').map((action) => `\`${action}\``).join(', ')} have no matching standing-order verb.`,
+    `- **Additional tape-only actions:** ${newlyEnumeratedTapeActions.filter((action) => action !== 'place_build' && !tapeExemptActions.has(action)).map((action) => `\`${action}\``).join(', ')} have no matching standing-order verb or cited exemption.`,
+    '',
+    '### Class-8 cited exemptions',
+    '',
+    '| tape action | reason | citation |',
+    '|---|---|---|',
+    ...result.tapeExemptions.map((entry) => `| ${cell(entry.actions)} | ${cell(entry.reason)} | ${cell(entry.citation)} |`),
     '',
     '## Worst offenders',
     '',

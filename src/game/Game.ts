@@ -88,7 +88,7 @@ import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
-import { snapshotStandingOrders } from '../agent/StandingOrders';
+import { snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { FerrisWheel } from '../entities/FerrisWheel';
@@ -431,9 +431,10 @@ export class Game {
   private mpHoldCardVisible = false;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
   private readonly agentRiderBodies = new Map<string, AgentRiderBody>();
-  private readonly agentRiderViewState = new Map<string, { wave: number; needsRider: boolean; terminal: boolean; sentAt: number }>();
+  private readonly agentRiderViewState = new Map<string, { wave: number; needsRider: boolean; pendingSecure: boolean; terminal: boolean; sentAt: number }>();
   private readonly agentRiderViewSources = new Map<string, AgentViewSource>();
   private agentRiderViewSequence = 0;
+  private agentRiderTerminal: { reason: RunEndReason; wave: number } | null = null;
   private readonly actorWeapons = new Map<Hero, HeroWeapon>();
   // Playbook engine (PB-01/PB-02, ?debug-only surface): the recorder pins the
   // solo session to the lockstep intent seam; the replay session drives a
@@ -1587,7 +1588,11 @@ export class Game {
       this.syncMultiplayerLedgerRiders();
     });
     // Write-at-end law: staged tile-state entries land when the run ends, whatever ended it.
-    this.events.on('run_ended', () => {
+    this.events.on('run_ended', (event) => {
+      this.agentRiderTerminal = {
+        reason: event.reason,
+        wave: event.summary.deepestWave ?? event.summary.wavesSurvived,
+      };
       this.tileStateStore.commitAtRunEnd();
     });
     this.events.on('run_ended', (event) => {
@@ -2860,7 +2865,7 @@ export class Game {
         break;
       }
     }
-    if (!transitioning && this.state.simActive) this.applyAgentRiderMovement();
+    if (!transitioning && (this.state.simActive || this.secureClaimChoicePending())) this.applyAgentRiderMovement();
     this.mpActionSlot = 0;
     this.updateActionActorPosition();
     this.updateBuildingContextCandidates(this.localActor.group.position);
@@ -2914,14 +2919,7 @@ export class Game {
       const research = this.mpResearchActionHandlers.skip?.();
       if (research) this.deathOverlay.updateResearch(research);
     }
-    if (action.type === 'secure_choice') {
-      if (action.choice === 'bank') {
-        this.deferMultiplayerTransition(() => this.runManager?.endSecuredRun());
-        return true;
-      }
-      this.deferMultiplayerTransition(() => this.runManager?.stayForRush());
-      return true;
-    }
+    if (action.type === 'secure_choice') return this.applySecureChoice(action.choice);
     if (action.type === 'context_action') {
       if (action.action !== 'fund' && !isBuildableId(action.target.id)) return false;
       if (action.action === 'upgrade') this.upgradeBuilding(action.target.id as BuildableId, action.target.index);
@@ -2940,32 +2938,47 @@ export class Game {
       if (!entry) continue;
       const [actor, meta] = entry;
       const intents = this.mpActorIntents[meta.slot] ?? intentsFromLockstepInput(null);
+      const deferredBefore = this.mpDeferredActions.length;
       this.mpActorIntents[meta.slot] = { ...intents, move: body.movement(this.timeAlive, actor.group.position) };
+      if (this.mpDeferredActions.length > deferredBefore) break;
     }
   }
 
   private agentRiderAdapter(playerId: string): AgentGameAdapter {
     return {
-      diagnostics: () => {
-        const actor = this.agentRiderActor(playerId);
-        return {
-          timeAlive: this.timeAlive,
-          runState: this.state.current,
-          hp: actor?.hp ?? 0,
-          maxHp: actor?.maxHp ?? 0,
-          enemiesAlive: this.enemies.activeCount,
-          wave: this.waveSystem.diagnostics.wave,
-          nextWaveInSim: this.waveSystem.diagnostics.nextWaveInSim,
-          economy: { gold: this.economy.gold },
-          wreck: this.wreckDiagnostics(),
-          build: this.buildSystem.diagnostics,
-          harvest: this.harvestSnapshot,
-        };
-      },
+      diagnostics: () => this.agentRiderDiagnostics(playerId),
       economyLog: () => this.economy.log,
       placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation),
       panAt: (node) => this.panAgentAt(node),
       repair: (building) => this.repairAgentRiderBuilding(playerId, building),
+    };
+  }
+
+  private agentRiderFinalVerbs(playerId: string) {
+    return {
+      setWeapon: (weapon: HeroWeapon) => {
+        const actor = this.agentRiderActor(playerId);
+        if (!actor) return { ok: false as const, reason: 'INVALID_ACTOR: the rider is not in this room.' };
+        this.setWeaponForActor(actor, weapon);
+        return { ok: true as const };
+      },
+      secureChoice: (choice: 'bank' | 'rush') => {
+        this.applySecureChoice(choice);
+        return { ok: true as const };
+      },
+      contextAction: (order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>) => {
+        const actor = this.agentRiderActor(playerId);
+        if (!actor) return { ok: false as const, reason: 'INVALID_ACTOR: the rider is not in this room.' };
+        const ok = order.action === 'fund'
+          ? this.fundMegaprojectStage(actor.group.position)
+          : order.action === 'upgrade'
+            ? this.buildSystem.upgradeBuilding(order.target.id, order.target.index, this.timeAlive, actor.group.position)
+            : this.buildSystem.demolish(order.target.id, order.target.index, this.timeAlive, actor.group.position);
+        if (!ok) return { ok: false as const, reason: `REJECTED: ${order.action} is not legal here.` };
+        this.syncStockpileHoldings();
+        this.publishDiagnostics();
+        return { ok: true as const };
+      },
     };
   }
 
@@ -2974,11 +2987,48 @@ export class Game {
     return undefined;
   }
 
+  private agentRiderDiagnostics(playerId: string): unknown {
+    const base = this.diagnostics() as Record<string, unknown>;
+    const actor = this.agentRiderActor(playerId);
+    const run = base.run as Record<string, unknown> | undefined;
+    const ui = base.ui as Record<string, unknown> | undefined;
+    const position = actor ? pointFromVector(actor.group.position) : null;
+    return {
+      ...base,
+      hp: actor?.hp ?? 0,
+      maxHp: actor?.maxHp ?? 0,
+      heroPos: position,
+      weapon: actor ? this.weaponForActor(actor) : 'rig',
+      run: {
+        ...run,
+        pendingSecure: this.secureClaimChoicePending(),
+        lastRunEndedReason: this.agentRiderTerminal?.reason ?? null,
+        terminalReceipt: this.agentRiderTerminal !== null,
+      },
+      ui: { ...ui, agent: null },
+      agent: {
+        embodiment: {
+          position,
+          moving: actor ? actor.velocity.lengthSq() > 0 : false,
+          drifting: false,
+        },
+      },
+    };
+  }
+
+  private applySecureChoice(choice: 'bank' | 'rush'): boolean {
+    if (choice === 'bank') this.deferMultiplayerTransition(() => this.runManager?.endSecuredRun());
+    else this.deferMultiplayerTransition(() => this.runManager?.stayForRush());
+    return true;
+  }
+
   private serveAgentRiderViews(): void {
     const state = this.mpClient?.state();
     const host = state?.roster[0];
     if (!state?.connected || host?.client !== 'browser' || host.playerId !== state.playerId) return;
-    const terminal = this.state.current === 'dead' || this.runManager?.diagnostics.secured === true;
+    const pendingSecure = this.secureClaimChoicePending();
+    const terminal = this.state.current === 'dead' || this.agentRiderTerminal !== null;
+    let sentTerminal = false;
     for (const player of state.roster) {
       if (player.client !== 'headless') continue;
       const rider = this.agentRiderBodies.get(player.playerId);
@@ -2988,42 +3038,48 @@ export class Game {
       const due = !previous
         || this.waveSystem.diagnostics.wave !== previous.wave
         || (orders.needsRider && !previous.needsRider)
+        || pendingSecure !== previous.pendingSecure
         || (terminal && !previous.terminal);
       const now = performance.now();
-      if (!due || (previous && now - previous.sentAt < 2_000)) continue;
+      if (!due || (previous && !terminal && now - previous.sentAt < 2_000)) continue;
       const view = buildView(this.agentRiderViewSource(player.playerId));
+      const terminalReceipt = this.agentRiderTerminal;
+      const terminalOutcome = terminalReceipt?.reason === 'secured' ? 'secured' : 'rider-down';
+      const appendLog = terminalReceipt && !view.appendLog.some((entry) =>
+        entry.wave === terminalReceipt.wave && entry.outcome === terminalOutcome
+      )
+        ? [...view.appendLog, {
+            wave: terminalReceipt.wave,
+            outcome: terminalOutcome,
+            goldDelta: null,
+            worksHp: null,
+            kills: null,
+            surprises: [],
+          }]
+        : view.appendLog;
       this.mpClient!.sendView(player.playerId, this.agentRiderViewSequence++, {
         ...view,
+        appendLog,
         advisory: true,
         now: { ...view.now, orders: orders.orders, needsRider: orders.needsRider },
       });
+      sentTerminal ||= terminalReceipt !== null;
       this.agentRiderViewState.set(player.playerId, {
         wave: view.now.wave,
         needsRider: orders.needsRider,
+        pendingSecure,
         terminal,
         sentAt: now,
       });
     }
+    if (sentTerminal) this.agentRiderTerminal = null;
   }
 
   private agentRiderViewSource(playerId: string): AgentViewSource {
     let source = this.agentRiderViewSources.get(playerId);
     if (source) return source;
     source = {
-      diagnostics: () => {
-        const base = this.diagnostics() as Record<string, unknown>;
-        const actor = this.agentRiderActor(playerId);
-        const agent = base.agent as Record<string, unknown>;
-        const embodiment = agent?.embodiment as Record<string, unknown>;
-        const position = actor ? pointFromVector(actor.group.position) : null;
-        return {
-          ...base,
-          hp: actor?.hp ?? 0,
-          maxHp: actor?.maxHp ?? 0,
-          heroPos: position,
-          agent: { ...agent, embodiment: { ...embodiment, position } },
-        };
-      },
+      diagnostics: () => this.agentRiderDiagnostics(playerId),
       economyLog: () => this.economy.log,
       standingOrders: () => this.agentRiderBodies.get(playerId)?.snapshot(),
     };
@@ -3645,7 +3701,10 @@ export class Game {
     }
     for (const playerId of headlessIds) {
       if (!this.agentRiderBodies.has(playerId)) {
-        this.agentRiderBodies.set(playerId, new AgentRiderBody(playerId, this.agentRiderAdapter(playerId)));
+        this.agentRiderBodies.set(
+          playerId,
+          new AgentRiderBody(playerId, this.agentRiderAdapter(playerId), this.agentRiderFinalVerbs(playerId)),
+        );
       }
     }
 

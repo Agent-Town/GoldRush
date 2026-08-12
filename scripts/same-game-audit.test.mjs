@@ -33,7 +33,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
-test('same-game audit follows the door grammar after eba8d15ea blast and ap16-2b pick', () => {
+test('same-game audit follows the door grammar through the final AP-16 verbs', () => {
   const result = run('--json');
   assert.equal(result.status, 0, result.stderr);
   const { rows } = JSON.parse(result.stdout);
@@ -49,7 +49,14 @@ test('same-game audit follows the door grammar after eba8d15ea blast and ap16-2b
     && row.direction === 'equal' && `${row['humans-get']} ${row['agents-get']}`.includes('PICK_UPGRADE')).length, 2,
   'ap16-2b pick must be reachable without a contradictory tape row');
   assert.ok(has('the-claim', 'ability', 'BLAST_AT', 'equal'), 'eba8d15ea blast must be reachable');
-  assert.ok(has('the-claim', 'ability', 'weapon_toggle', 'agent-lacks'), 'unenumerated human tape agency must remain visible');
+  assert.ok(has('the-claim', 'ability', 'SET_WEAPON', 'equal'), 'weapon selection must reach the door as an idempotent SET');
+  assert.ok(has('the-claim', 'choice', 'SECURE_CHOICE', 'equal'), 'the secure window must reach the door');
+  assert.ok(has('the-claim', 'verb', 'CONTEXT_ACTION', 'equal'), 'building context actions must reach the door');
+  const audit = JSON.parse(result.stdout);
+  assert.deepEqual(audit.tapeExemptions.map(({ actions }) => actions), [
+    'death_action', 'research_pick / research_skip', 'set_pause', 'skip_ceremony',
+  ]);
+  assert.ok(audit.tapeExemptions.every(({ reason, citation }) => reason.length > 20 && citation.length > 5));
 });
 
 test('same-game audit also emits a complete markdown table', () => {

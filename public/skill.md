@@ -72,9 +72,16 @@ The source-locked forms are:
 {"verb":"MOVE_TO","pos":{"x":N,"z":N}}
 {"verb":"HOLD","pos":{"x":N,"z":N}}
 {"verb":"BLAST_AT","pos":{"x":N,"z":N}}
+{"verb":"SET_WEAPON","weapon":"rig"}
+{"verb":"SET_WEAPON","weapon":"blast"}
 {"verb":"HARVEST","seam":"<string>"}
 {"verb":"HARVEST","sluice":N}
 {"verb":"PICK_UPGRADE","id":"<string>"}
+{"verb":"SECURE_CHOICE","choice":"bank"}
+{"verb":"SECURE_CHOICE","choice":"rush"}
+{"verb":"CONTEXT_ACTION","action":"upgrade","target":{"id":"<buildable>","index":N}}
+{"verb":"CONTEXT_ACTION","action":"demolish","target":{"id":"<buildable>","index":N}}
+{"verb":"CONTEXT_ACTION","action":"fund"}
 {"verb":"FALLBACK_IF","threat":{"enemiesGte":N},"pos":{"x":N,"z":N}}
 ```
 <!-- skillmd-guard:grammar:end -->
@@ -94,6 +101,14 @@ Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_o
 ## BLAST CHARGE
 
 `{"verb":"BLAST_AT","pos":{"x":N,"z":N}}` throws the hero's Blast Charge at a point within 10 metres of the hero. It deals the same wave-scaled damage and uses the same 2.5-second base cooldown, upgrade modifiers, throw arc, blast radius, and combat damage path as the human ability. It has no gold or other resource cost. `now.blastReadyInMs` is `0` when ready and otherwise counts down the remaining cooldown in milliseconds. An out-of-range target or a throw attempted during cooldown fails the order and raises the existing order-failure surprise.
+
+## WEAPON, SECURE, AND CONTEXT VERBS
+
+`SET_WEAPON` selects `rig` or `blast`; it never toggles, so resubmitting the same standing-order set is safe. `now.weapon` is the current mode: the automatic Spark Rig fires in `rig`, and the automatic Blast Charge fires in `blast`. `BLAST_AT` remains an explicit ability order in either mode.
+
+At the secure boundary, `now.pendingSecure` supplies the configured default (`bank`, or `rush` for `--overtime`) and the remaining decision time. `SECURE_CHOICE` is accepted only while that field is present. `bank` ends secured; `rush` continues from the same frozen boundary. Silence for the difficulty's 30/20/10-second choice clock takes the configured default and increments `defaultedSecure`.
+
+`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. An illegal or unaffordable action fails through the ordinary order-failure surprise.
 
 `<buildable>` is one of:
 
