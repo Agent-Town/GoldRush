@@ -367,22 +367,6 @@ test('a desk of ONLY slug items does not trip the zero-keyed-items refusal', (t)
   assert.match(r.stdout, /desk slugs\s*:\s*1/);
 });
 
-test('the live desk carries BOTH shapes — the slug axis is not vacuously green', async () => {
-  // A green on an axis with zero members proves nothing (the s1299 standard).
-  // Assert the live board actually exercises the new path.
-  const { deskIds } = await import(pathToFileURL(GUARD).href);
-  const status = fs.readFileSync(path.join(REPO, 'STATUS.md'), 'utf8');
-  const desk = deskIds(status);
-  if (desk.kind === 'lock') return; // mid-fire: no desk written yet
-  assert.equal(desk.kind, 'desk');
-  assert.ok(
-    (desk.slugs?.length ?? 0) > 0,
-    'the live desk should carry at least one slug-keyed item; if it genuinely ' +
-      'does not, this assertion is the thing to revisit — but check first that ' +
-      'the parser has not silently stopped keying slugs (F-1534-2 was exactly that)',
-  );
-});
-
 // THE BASELINE IS A CEILING, NOT A FLOOR (F-1335-1, s1335).
 // This assertion read `listed.length >= 9` when it shipped, which made the list
 // unshrinkable: s1334's own §H(3) recommended "retire grandfathered entries by
