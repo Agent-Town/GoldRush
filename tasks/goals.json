@@ -4825,12 +4825,16 @@
             {
               "id": "f1710-1-gate-caller-capture",
               "title": "F-1710-1: gate-caller's positive control captures complete child output under full battery load",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "a53af33ba02f4e2042a465e27e6f2be5543c444b",
               "lane": "lane-d",
               "taskFile": "lane-d-f1710-1-gate-caller-capture.md",
               "authoredBy": "s1710 fire, 2026-08-12",
               "gate": "none \u2014 fire-authorable factory corrective from a measured F-1202-1 capture recurrence; no owner or product semantics involved",
-              "authorNotes": "The full ledger battery passed 178/179 and lost only the audit's trailing PASS line from a status-0 child; direct audit output and the isolated 26/26 suite prove the subject is green and the spawnSync pipe capture is incomplete under load."
+              "authorNotes": "The full ledger battery passed 178/179 and lost only the audit's trailing PASS line from a status-0 child; direct audit output and the isolated 26/26 suite prove the subject is green and the spawnSync pipe capture is incomplete under load.",
+              "review": "reviews/f1710-1-gate-caller-capture.md",
+              "drainedBy": "s1711 fire, 2026-08-12",
+              "drainNotes": "Detached gates: tsc/build green; focused 26/26; direct audit emitted 22,428 bytes for 128 subjects and ended in PASS; complete ledger battery 179/179 plus every chained guard green; diff check clean. File-backed stdout/stderr capture preserved spawn verdict fields and left no temporary directories."
             }
           ]
         }
