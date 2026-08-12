@@ -254,3 +254,9 @@ test('a signal-killed guard is never a pass', (t) => {
   const rc = row.match(/^FAIL\s+rc=(\S+)/)?.[1];
   assert.ok(rc && rc !== '0', row);
 });
+
+test('each guard gets a 15-minute outer timeout', () => {
+  const source = fs.readFileSync(SCRIPT, 'utf8');
+  assert.match(source, /timeout: 15 \* 60 \* 1000,/);
+  assert.doesNotMatch(source, /timeout: 10 \* 60 \* 1000,/);
+});
