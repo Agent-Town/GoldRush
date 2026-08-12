@@ -6849,9 +6849,10 @@
             {
               "id": "version-rigor",
               "title": "Declared harness declares its version \u2014 validator law (owner rigor ruling 2026-08-12); display already ready",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-d-version-rigor.md",
-              "drainNotes": "s1713: F-1712-1 prerequisite merged at 5d705b603e88fc0bb7fc211c97fb73fd37839a5f after both affected suites passed on desktop and 390 px mobile. Gate-side hold lifted; re-gate lane/d candidate 16c050a20 in detached custody before merge."
+              "mergeHash": "b78a67967d3c6d25abd87a733b3d8d5a6dc9570b",
+              "drainNotes": "s1714: PASS, merged b78a67967d3c6d25abd87a733b3d8d5a6dc9570b from lane/d 16c050a20 after detached Node 26.4.0 gates. Policy CLEAR; tsc/build green; three standings suites 50/50 across desktop and 390 px mobile at one worker; power p95 0.329 ms; worker/task/citation/caller arms 7/7; standalone node guards 458 tests / 453 pass / 5 skipped / 0 fail in 508.5 s. Review reviews/version-rigor.md; transcript artifacts/version-rigor-gate-s1714.txt."
             },
             {
               "id": "f1712-1-version-rigor-fixtures",
