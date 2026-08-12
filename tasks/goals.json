@@ -7031,11 +7031,15 @@
                 {
                   "id": "ap16-8-admission-reprobe",
                   "title": "AP-16-8: re-probe the eight exemptions with the full verb set (owns the E5/E6 parity measurement per F-1698-1 ruling b); gated on 16-7",
-                  "status": "queued",
+                  "status": "merged",
+                  "mergeHash": "27a8efe8eaf314c2ab164653ea876fd3d7873c5b",
                   "lane": "lane-c",
                   "taskFile": "lane-c-ap16-8-admission-reprobe.md",
                   "authoredBy": "attended s1698, 2026-08-12; banked at b17e717af",
-                  "gate": "AP-16-7 merged at 031872e15fa06407be4c2170c458804a8dff2efb; the ratified AP-16 slice and F-1698-1 ruling explicitly move the E5/E6 parity measurement to this re-probe"
+                  "gate": "AP-16-7 merged at 031872e15fa06407be4c2170c458804a8dff2efb; the ratified AP-16 slice and F-1698-1 ruling explicitly move the E5/E6 parity measurement to this re-probe",
+                  "review": "reviews/ap16-8-admission-reprobe.md",
+                  "drainedBy": "s1711 fire, 2026-08-12",
+                  "drainNotes": "All eight exemptions remain after 64 deterministic seed-policy repeats. Detached gates: tsc/build green; focused guards 12/12; node guards 458 total / 453 pass / 0 fail / 5 intentional skips; browser census, adjacent suites and plain boot 50/50 desktop/mobile. Showroom's wave-20 secured result remains exempt because the alive cap stays full at 60."
                 }
               ]
             },
