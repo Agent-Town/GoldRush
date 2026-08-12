@@ -6939,16 +6939,30 @@
                 {
                   "id": "ap16-6b-final-verbs-reland",
                   "title": "AP-16-6b RE-LAND: final verbs share one blast cooldown and one runtime rush path, freeze every non-choice action at secure, and work through every advertised door",
-                  "status": "queued",
+                  "status": "blocked",
+                  "blockClass": "gate-side",
+                  "blockedReason": "s1697 gate-side HOLD: the AP-16-6B candidate resolves F-1694-1 through F-1694-6, but its shared view boundary now consumes run.lastRunEndedReason while HeadlessContractSim diagnostics omit that field. Existing Claim and Twin Banks drivers deterministically finish with agent receipt held instead of secured. Exact tip preserved at save/ap16-6b-s1697-9cf0bad0; review reviews/ap16-6b-final-verbs-reland.md; successor ap16-6c-terminal-receipt-reland applies the one-seam diagnostic cure. This is not an owner fork.",
                   "lane": "lane-d",
                   "taskFile": "lane-d-ap16-6b-final-verbs-reland.md",
-                  "authorNotes": "FIRE-AUTHORED s1694 from the gate-side review of AP-16-6, not from speculative scope. The original runner output is preserved at save/ap16-6-s1694-6f928266 (exact tip 6f92826659e14261e83963aab30baceef7038b64) and this task orders a re-land on fresh main rather than a re-derivation. Four P1s and two P2s are measured in reviews/ap16-6-final-verbs.md. The adjacent agent-view snapshot is already red on clean main 9a57975c9 (4 pass / 1 fail), while the candidate adds its required weapon and works-entry fields; the corrective explicitly makes the snapshot truthful instead of deleting or weakening it."
+                  "authorNotes": "FIRE-AUTHORED s1694 from the gate-side review of AP-16-6, not from speculative scope. The original runner output is preserved at save/ap16-6-s1694-6f928266 (exact tip 6f92826659e14261e83963aab30baceef7038b64) and this task orders a re-land on fresh main rather than a re-derivation. Four P1s and two P2s are measured in reviews/ap16-6-final-verbs.md. The adjacent agent-view snapshot is already red on clean main 9a57975c9 (4 pass / 1 fail), while the candidate adds its required weapon and works-entry fields; the corrective explicitly makes the snapshot truthful instead of deleting or weakening it.",
+                  "stopNote": "STOPPED s1697 at the drain gate, never merged. Candidate tip 9cf0bad00fd626c86fda3132d1a3696fc2e5ee66 is preserved on save/ap16-6b-s1697-9cf0bad0. Repo-pinned Node 26.4.0 test:node-guards reproduced two deterministic held-vs-secured failures; review reviews/ap16-6b-final-verbs-reland.md; transcript artifacts/ap16-6b-gate-s1697.txt."
+                },
+                {
+                  "id": "ap16-6c-terminal-receipt-reland",
+                  "title": "AP-16-6C RE-LAND: publish the headless bank terminal reason consumed by the shared agent view",
+                  "status": "queued",
+                  "lane": "lane-d",
+                  "taskFile": "lane-d-ap16-6c-terminal-receipt-reland.md",
+                  "authorNotes": "FIRE-AUTHORED s1697 from F-1697-1, reproduced by two existing deterministic gr-sim contract drivers during the detached AP-16-6B drain gate. Re-land exact saved tip 9cf0bad00fd626c86fda3132d1a3696fc2e5ee66, add the one missing HeadlessContractSim run.lastRunEndedReason diagnostic, and preserve pending/rush as nonterminal."
                 },
                 {
                   "id": "ap16-7-epoch-levers",
                   "title": "AP-16-7: CAPTURE/BOAT_BUILD/REANCHOR \u2014 the epoch levers reach the door (E5/E6 admission cure; discharges F-MTS-2)",
-                  "status": "queued",
-                  "taskFile": "lane-b-ap16-7-epoch-levers.md"
+                  "status": "blocked",
+                  "blockClass": "gate-side",
+                  "blockedReason": "s1697 sequencing hold: lane-b correctly stopped with zero code changes because AP-16-6B had not landed. AP-16-6B then failed its drain gate and successor AP-16-6C is queued. Re-queue this master only after AP-16-6C merges; no owner word is required.",
+                  "taskFile": "lane-b-ap16-7-epoch-levers.md",
+                  "stopNote": "STOPPED no-op in run 20260812-080147: the master's explicit sequencing check found AP-16-6B still unmerged. Preserve the master and re-queue after AP-16-6C lands."
                 }
               ]
             },
