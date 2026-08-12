@@ -4796,6 +4796,15 @@
               "drainedBy": "s1700 fire, 2026-08-12",
               "drainNotes": "Detached-gated and merged by path-scoped graft because runner tip b0caf31a also swept a pre-existing 158,154,953-byte raw log outside the task firewall. Typecheck and build rc=0; focused guard 28/28; manufactured slug arms remain. F-1700-1 records the runner/template class.",
               "gate": "none \u2014 fire-authorable from F-1696-1; test-only deletion of a stale live-population assertion"
+            },
+            {
+              "id": "f1700-1-runner-delta-autocommit",
+              "title": "F-1700-1: ordinary lane auto-commits withhold every path already dirty before the run",
+              "status": "queued",
+              "lane": "lane-d",
+              "taskFile": "lane-d-f1700-1-runner-delta-autocommit.md",
+              "authoredBy": "s1700 fire, 2026-08-12",
+              "gate": "none \u2014 fire-authorable factory corrective from the measured F-1700-1 runner sweep; no owner or product semantics involved"
             }
           ]
         }
