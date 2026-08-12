@@ -1,5 +1,5 @@
 #!/bin/bash
-# Guard for F-1657-1 (s1657, 2026-08-11) — THE RUNNER MUST NOT THROW AWAY A COMPLETED `git add`.
+# Guard for F-1657-1 / F-1700-1 — completed adds commit, baseline dirt does not.
 #
 # WHAT WENT WRONG (F-1656-1, s1656): the `f1655-1` run ended READY-FOR-GATES with correct output,
 # and `lane/a` read `ahead=0` while holding 110 lines of finished work as STAGED-BUT-UNCOMMITTED
@@ -101,6 +101,47 @@ if [ -z "$SELF_CHECK" ]; then
   rm -rf "$probe"
 fi
 
+# --- 1b. F-1700-1: a lane commit owns only paths dirtied after dispatch ----------------
+if :; then
+  delta_probe="$(mktemp -d "${TMPDIR:-/tmp}/s1700-guard-XXXXXX")"
+  (
+    cd "$delta_probe" || exit 1
+    git init -q .
+    git config user.email guard@local
+    git config user.name guard
+    mkdir -p logs
+    printf 'clean\n' > '*.txt'
+    printf 'tracked\n' > tracked-dirty.txt
+    git add '*.txt' tracked-dirty.txt
+    git commit -q -m init
+    printf 'pre-existing tracked dirt\n' >> tracked-dirty.txt
+    printf 'pre-existing raw evidence\n' > logs/raw.json
+    baseline="$(mktemp "${TMPDIR:-/tmp}/s1700-baseline-XXXXXX")"
+    LANE_RUNNER_COMMIT_PROBE=capture bash "$RUNNER" "$delta_probe" "$baseline"
+    cp tracked-dirty.txt 'tracked dirt moved.txt'
+    unlink tracked-dirty.txt
+    printf 'task output\n' >> '*.txt'
+    LANE_RUNNER_COMMIT_PROBE=commit bash "$RUNNER" "$delta_probe" "$baseline" \
+      'runner(probe): delta' "$delta_probe/runner.log"
+    rm -f "$baseline" "$baseline.ids" "$baseline.hashes"
+    git show --name-only --format='' HEAD | sed '/^$/d' > committed
+    printf '%s|%s|%s|%s\n' \
+      "$(git log -1 --format='%s')" \
+      "$(tr '\n' ',' < committed)" \
+      "$(git status --porcelain=v1 -z --untracked-files=all | tr '\0' '\n' | sed -n 's/^ D tracked-dirty.txt$/tracked-old/p; s/^?? tracked dirt moved.txt$/tracked-moved/p; s/^?? logs\/raw.json$/raw/p' | sort | tr '\n' ',')" \
+      "$(git diff --cached --name-only)" > result
+  )
+  if IFS='|' read -r delta_head delta_files delta_dirty delta_staged < "$delta_probe/result"; then
+    [ "$delta_head" = 'runner(probe): delta' ] && [ "$delta_files" = '*.txt,' ] \
+      && [ "$delta_dirty" = 'raw,tracked-moved,tracked-old,' ] && [ -z "$delta_staged" ] \
+      && ok "delta commit includes literal *.txt only; moved tracked/raw baseline dirt remains unstaged" \
+      || bad "delta ownership failed (head='$delta_head' files='$delta_files' dirty='$delta_dirty' staged='$delta_staged')"
+  else
+    bad "delta ownership probe did not run"
+  fi
+  rm -rf "$delta_probe"
+fi
+
 # --- 2. CLASS: neither commit site is gated on the add's exit code -------------------
 if grep -qE 'git add -A --.*&&[[:space:]]*git commit' "$RUNNER"; then
   bad "a commit site is still gated on the add's rc (\`&& git commit\`) — an ignored path will strand finished work"
@@ -108,10 +149,10 @@ else
   ok "no commit site is gated on the add's rc"
 fi
 sites="$(grep -cE 'git add -A --.*;[[:space:]]*git commit' "$RUNNER")"
-if [ "$sites" -eq 2 ]; then
-  ok "both commit sites (lane branch + art branch) use the decoupled \`; git commit\` form"
+if [ "$sites" -eq 2 ] && grep -q 'commit_lane_delta "\$wd" "\$baseline"' "$RUNNER"; then
+  ok "both art routes keep the decoupled form and ordinary lanes use the delta boundary"
 else
-  bad "expected 2 decoupled commit sites, found $sites — the sibling site may be uncured or a site was removed"
+  bad "expected two art decoupled sites plus the ordinary-lane delta boundary (art sites='$sites')"
 fi
 
 # --- 3. decoupling did not become a licence to sweep --------------------------------
@@ -129,6 +170,20 @@ if [ -z "$SELF_CHECK" ]; then
     bad "RED PATH DID NOT FIRE: a runner with \`&& git commit\` restored still passed this guard"
   else
     ok "red path fires — a runner with the \`&&\` restored is rejected"
+  fi
+  rm -rf "$scratch"
+fi
+
+
+# --- 5. F-1700-1 RED PATH: restore the old broad lane commit on a runner copy --------
+if [ -z "$SELF_CHECK" ]; then
+  scratch="$(mktemp -d "${TMPDIR:-/tmp}/s1700-red-XXXXXX")"
+  sed 's@commit_lane_delta "$1" "$2" "$3" "$4"@git -C "$1" add -A -- .; git -C "$1" commit -q -m "$3" -- .@' \
+    "$RUNNER" > "$scratch/lane-runner-v3.sh"
+  if bash "$0" "$scratch/lane-runner-v3.sh" >/dev/null 2>&1; then
+    bad "RED PATH DID NOT FIRE: a scratch runner with the old broad commit still passed"
+  else
+    ok "red path fires — restoring the old broad commit sweeps baseline dirt and is rejected"
   fi
   rm -rf "$scratch"
 fi
