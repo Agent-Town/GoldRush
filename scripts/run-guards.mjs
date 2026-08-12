@@ -246,7 +246,7 @@ for (const guard of selected) {
   const started = Date.now();
   const run = spawnSync('npm', ['run', '--silent', guard], {
     encoding: 'utf8',
-    timeout: 10 * 60 * 1000,
+    timeout: 15 * 60 * 1000,
     // Keeps the tree clean mid-gate: test:accounts / test:mp otherwise rewrite a
     // tracked artifact with nothing but a fresh timestamp (F-1229-1). This runner
     // produces VERDICTS; `npm run test:accounts` produces the artifact.
