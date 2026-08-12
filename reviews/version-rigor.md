@@ -1,8 +1,8 @@
 # Version rigor — declared harnesses name their version
 
-**Slice:** `lane-d-version-rigor.md`  
-**Branch / tip:** `lane/d` / `16c050a20abf6558dd89ad5336d8b680589a9f23`  
-**Merge:** `b78a67967d3c6d25abd87a733b3d8d5a6dc9570b`  
+**Slice:** `lane-d-version-rigor.md`
+**Branch / tip:** `lane/d` / `16c050a20abf6558dd89ad5336d8b680589a9f23`
+**Merge:** `b78a67967d3c6d25abd87a733b3d8d5a6dc9570b`
 **Verdict:** **MERGED — new standings cannot declare a harness without a non-blank version; stored Season-1 rows remain valid history.**
 
 ## What it does
