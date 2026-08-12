@@ -75,3 +75,19 @@ Wave 2/3 tables + intake (replay ×2, hash-audit vs Season-2 idle baselines, boa
 - **RETRACTED (owner caught it 2026-08-12): the '~10 don't reproduce' claim was MY INTAKE BUG, not a harness difference.** The sim is deterministic per seed; those secures DO reproduce byte-identically (proved: luna the-claim → `d83d719e` twice). There are two valid player styles — SELF-CONTAINED (spawns gr-sim itself: pi/omp/prime/hermes/Sol) and ORDER-GENERATOR (reads views, emits orders, needs cross-wiring: the codex-model arms). intake-v1 only ran the first style, so it ran order-generators with nothing feeding stdin → they hung → falsely marked 'no terminal'. intake-v2 (`crosswire.mjs`) handles both and re-posts the true secures. NO harness-quality difference existed; the examiner harness was incomplete.
 - **F-CONV-1 — the hash-collision audit false-positives on CONVERGENCE.** omp and hermes both secured the-claim on Sol with byte-identical event logs (`fnv1a32:96a77a79`) from DIFFERENT players (130 vs 145 lines). The anti-copy audit (F-GNT-4) rejected omp's as "copied play" — but sealed arenas make copying impossible; this is two minds finding the same canonical 4-turret ford solution. **The audit cannot distinguish copied-tape from independent-convergence; on simple maps with a canonical optimum, convergence is expected and should be ADMITTED (or flagged "convergent tie"), not rejected.** Board-policy decision owed to the owner. omp remains on the board via its dry-gulch g197 secure.
 - 3 verified secures hit a network blip on POST (sol-twin-banks, openclaw-the-claim, pi-dry-gulch) — retried separately.
+
+## Unique-solution analysis (owner term, 2026-08-12) — the metric that replaces "did they converge?"
+The measurable quantity is UNIQUENESS: an event-log hash is unique to the board or it is not. Credit goes to the FIRST rider to a unique solution; a shared hash is not-unique (convergence). Tonight's secures, per map:
+- **e1-dry-gulch**: 7 secures → **7 unique solutions** (every win its own way).
+- **e1-night-shift**: 4 secures → **4 unique**.
+- **e1-twin-banks**: 3 secures → **3 unique**.
+- **the-claim**: 9 secures → **8 unique** (one non-unique pair: omp·Sol = hermes·Sol, `96a77a79` — same model, two scaffolds, identical play; a genuine rarity, not a forced map).
+RETRACTION of an earlier overstatement: the-claim does NOT have a forced canonical solution — 8 of 9 secures are unique. Unique solutions are ABUNDANT across all maps, which is the point: there is wide room to reward finding a NEW/BETTER win with your name on it.
+
+## Integrity design (owner-reasoned, 2026-08-12 — ratified in principle, build deferred)
+The benchmark keeps everything PUBLIC (no ARC-style hidden holdout) and stays fabrication-proof by DETERMINISM:
+1. A tape is not a screenshot, it is a re-runnable proof — nothing self-reported is trusted; only the ORDER SEQUENCE, and only by executing it.
+2. **Dedup by input-hash (free):** a byte-exact resubmission of existing orders is caught by hashing `inputLogHash`, no replay — not unique, not credited.
+3. **Replay each NEW order-sequence once (cheap):** verifies it truly wins (kills fabrication) AND computes the true event-log hash (for uniqueness). No holdout, no humans.
+4. Copying is self-defeating and non-unique; fabrication is impossible; learning from public solutions is encouraged (the flywheel, not a leak).
+5. The only real cost is infrastructure: a replay-on-submit worker/queue when the board opens to strangers. Until then the curated county IS that worker (we replay at intake). Board stays curated for now.
