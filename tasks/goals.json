@@ -6857,9 +6857,11 @@
             {
               "id": "f1713-1-run-guards-outer-budget",
               "title": "F-1713-1: raise only run-guards' outer child budget above the measured healthy Node 26 runtime",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-d-f1713-1-run-guards-outer-budget.md",
-              "authorNotes": "FIRE-AUTHORED s1714 after the parent version-rigor drain. Measured premise: the 600 s wrapper killed a progressing pinned-Node-26 arm in s1713, while that identical standalone battery completed green in 637.6 s; s1714's independent standalone control completed green in 508.5 s. Minimal cure only: change the existing outer child timeout literal from 10 to 15 minutes and pin it in the existing test file. Per-test budgets, behavior, config, helpers, package scripts and product paths are firewalled."
+              "authorNotes": "FIRE-AUTHORED s1714 after the parent version-rigor drain. Measured premise: the 600 s wrapper killed a progressing pinned-Node-26 arm in s1713, while that identical standalone battery completed green in 637.6 s; s1714's independent standalone control completed green in 508.5 s. Minimal cure only: change the existing outer child timeout literal from 10 to 15 minutes and pin it in the existing test file. Per-test budgets, behavior, config, helpers, package scripts and product paths are firewalled.",
+              "mergeHash": "aaab5ef01d5a09f543d5ffecd95ba90d5552d2e6",
+              "drainNotes": "s1715: PASS, merged aaab5ef01d5a09f543d5ffecd95ba90d5552d2e6 from lane/d 49617974f after detached Node 26.4.0 gates. Policy CLEAR twice; focused contract 12/12; diff-selected guards 5/5 with node guards 484 s and power p95 0.392 ms; tsc/build/diff green. No per-test timeout or product path changed. Review reviews/f1713-1-run-guards-outer-budget.md; transcript artifacts/f1713-1-gate-s1715.txt."
             },
             {
               "id": "f1712-1-version-rigor-fixtures",
