@@ -4829,7 +4829,7 @@
               "lane": "lane-d",
               "taskFile": "lane-d-f1710-1-gate-caller-capture.md",
               "authoredBy": "s1710 fire, 2026-08-12",
-              "gate": "none — fire-authorable factory corrective from a measured F-1202-1 capture recurrence; no owner or product semantics involved",
+              "gate": "none \u2014 fire-authorable factory corrective from a measured F-1202-1 capture recurrence; no owner or product semantics involved",
               "authorNotes": "The full ledger battery passed 178/179 and lost only the audit's trailing PASS line from a status-0 child; direct audit output and the isolated 26/26 suite prove the subject is green and the spawnSync pipe capture is incomplete under load."
             }
           ]
@@ -6841,6 +6841,12 @@
               "taskFile": "lane-d-agent-reels-2.md",
               "mergeHash": "1578a2298a7ccd4420b4a7917eadf877adea5a7e",
               "drainNotes": "s1657: PASS, merged 1578a2298. Arrived STAGED-BUT-UNCOMMITTED (F-1656-1 third occurrence) and was rescued byte-for-byte as b7b3ea2ae before gating. tsc clean, build green, own node 1/1, own e2e 2/2 both projects at --workers=1, test:stats 87 / test:accounts 43 / test:mp 462. Two adjacent specs (pb02-replay-actor:78, e7-playbook-surface:33/:54) are KNOWN-RED on a 14-day-stale snapshot and were exonerated by EQUALISED control runs at plain main, twice each, not by inventory membership (F-1444-2): pb02:78 red 4/4 in both arms, e7-surface:33 flaky in both arms. F-1657-2 (the slice shipped an unrooted gate) cured in the drain bookkeeping commit. F-1657-3 (backfilled crown tapes cannot honestly claim the historical secured rows) is on the owner desk. Review reviews/agent-reels-2.md."
+            },
+            {
+              "id": "version-rigor",
+              "title": "Declared harness declares its version \u2014 validator law (owner rigor ruling 2026-08-12); display already ready",
+              "status": "queued",
+              "taskFile": "lane-d-version-rigor.md"
             }
           ],
           "subgoals": [
