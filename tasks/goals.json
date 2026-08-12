@@ -6849,16 +6849,17 @@
             {
               "id": "version-rigor",
               "title": "Declared harness declares its version \u2014 validator law (owner rigor ruling 2026-08-12); display already ready",
-              "status": "blocked",
+              "status": "queued",
               "taskFile": "lane-d-version-rigor.md",
-              "blockClass": "gate-side",
-              "blockedReason": "F-1712-1: s1712 detached gate found six adjacent desktop/mobile failures because field-book and milk-county live-submission fixtures still declare harnesses without versions. Lift only after the fixture corrective merges and both affected specs pass on both projects."
+              "drainNotes": "s1713: F-1712-1 prerequisite merged at 5d705b603e88fc0bb7fc211c97fb73fd37839a5f after both affected suites passed on desktop and 390 px mobile. Gate-side hold lifted; re-gate lane/d candidate 16c050a20 in detached custody before merge."
             },
             {
               "id": "f1712-1-version-rigor-fixtures",
               "title": "F-1712-1: live standings test fixtures declare harness versions before the version-rigor validator lands",
-              "status": "queued",
-              "taskFile": "lane-a-f1712-1-standings-fixtures.md"
+              "status": "merged",
+              "taskFile": "lane-a-f1712-1-standings-fixtures.md",
+              "mergeHash": "5d705b603e88fc0bb7fc211c97fb73fd37839a5f",
+              "drainNotes": "s1713: fixture-only corrective merged after Node 26.4.0 tsc/build, 56/56 browser matrix, all diff-selected non-node arms, and standalone full node guards 458 tests / 453 pass / 5 skipped / 0 fail. Review reviews/f1712-1-standings-fixtures.md."
             }
           ],
           "subgoals": [
