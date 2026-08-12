@@ -1123,7 +1123,11 @@ export class HeadlessContractSim {
       lightField: this.lightField?.diagnostics() ?? null,
       kills: this.kills,
       runState: this.dead ? 'dead' : this.secured ? 'secured' : 'playing',
-      run: { secured: this.secured, pendingSecure: this.secureChoice === 'pending' },
+      run: {
+        secured: this.secured,
+        pendingSecure: this.secureChoice === 'pending',
+        lastRunEndedReason: this.secureChoice === 'bank' ? 'secured' : null,
+      },
       progression: { ...this.progression.snapshot, choiceRule: 'first-offer' },
       agent: {
         needsRider: orders.needsRider,
