@@ -23,6 +23,36 @@ const ORDERS = [
   ...Array(20).fill(null),
 ].map(JSON.stringify).join('\n') + '\n';
 
+function scriptedCli(args, ordersFor, captureView = () => false) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, ['scripts/gr-sim.mjs', ...args], { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] });
+    let buffer = '';
+    let stderr = '';
+    let fundedAt;
+    let outcome;
+    child.stdout.on('data', (chunk) => {
+      buffer += chunk;
+      let newline;
+      while ((newline = buffer.indexOf('\n')) >= 0) {
+        const line = buffer.slice(0, newline);
+        buffer = buffer.slice(newline + 1);
+        if (!line) continue;
+        const message = JSON.parse(line);
+        if (message.schema === 'goldrush.view.v1') {
+          if (!fundedAt && captureView(message)) fundedAt = message.now;
+          child.stdin.write(`${JSON.stringify(ordersFor(message))}\n`);
+        } else outcome = message;
+      }
+    });
+    child.stderr.on('data', (chunk) => { stderr += chunk; });
+    child.on('error', reject);
+    child.on('close', (code) => {
+      if (code !== 0) reject(new Error(stderr));
+      else resolve({ ...outcome, ...(fundedAt ? { fundedAt } : {}) });
+    });
+  });
+}
+
 // F-1406-2: these terminal outcome pins are change detectors. A red means the
 // sim's behaviour moved; establish why before re-deriving, never paste over it.
 
@@ -40,7 +70,7 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
 
   const lines = first.stdout.trim().split('\n').map((line) => JSON.parse(line));
   assert.equal(lines[0].schema, 'goldrush.view.v1');
-  assert.deepEqual(Object.keys(lines.at(-1)), ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'defaultedPicks', 'eventLogHash']);
+  assert.deepEqual(Object.keys(lines.at(-1)), ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'defaultedPicks', 'defaultedSecure', 'eventLogHash']);
   // AP-16-2: bench-001 levels once; the first-option pick moves from immediate to the trail
   // deadline, so the outcome gains one default and its terminal hash re-pins.
   assert.deepEqual(lines.at(-1), {
@@ -51,6 +81,7 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
     kills: 37,
     calls: 5,
     defaultedPicks: 1,
+    defaultedSecure: 0,
     eventLogHash: 'fnv1a32:4e33eba1',
   });
   assert.equal(lines.at(-1).calls, 5);
@@ -187,7 +218,7 @@ test('gr-sim deterministically runs the Claim objective', () => {
   assert.equal(lines.at(-1).secured, false);
   assert.deepEqual(
     Object.keys(lines.at(-1)),
-    ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'defaultedPicks', 'eventLogHash'],
+    ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'defaultedPicks', 'defaultedSecure', 'eventLogHash'],
   );
 });
 
@@ -201,6 +232,7 @@ test('overtime banks the Claim secure and measures the homestead on both Node en
   };
   const costs = { sentry_beacon: [25, 35, 45, 55, 75, 95], turret: [50, 70, 95, 125] };
   const ordersFor = (view) => {
+    if (view.now.pendingSecure) return [{ verb: 'SECURE_CHOICE', choice: 'rush' }];
     if (view.now.pendingOffer?.[0]) return [{ verb: 'PICK_UPGRADE', id: view.now.pendingOffer[0].id }];
     const orders = [];
     for (const kind of ['sentry_beacon', 'turret']) {
@@ -264,6 +296,77 @@ test('overtime banks the Claim secure and measures the homestead on both Node en
     hashes.push(outcome.eventLogHash);
   }
   assert.equal(new Set(hashes).size, 1, hashes.join(' !== '));
+});
+
+test('runtime rush and --overtime use the same CLI ceiling and terminal stream', { timeout: 90_000 }, async () => {
+  const positions = {
+    sentry_beacon: [{ x: 0, z: 13 }, { x: 0, z: 11 }, { x: 3, z: 12 }, { x: -3, z: 12 }, { x: 0, z: 15 }, { x: 0, z: 9 }],
+    turret: [{ x: 4, z: 14 }, { x: -4, z: 14 }, { x: 4, z: 10 }, { x: -4, z: 10 }],
+  };
+  const costs = { sentry_beacon: [25, 35, 45, 55, 75, 95], turret: [50, 70, 95, 125] };
+  const ordersFor = (view) => {
+    if (view.now.pendingSecure) return [{ verb: 'SECURE_CHOICE', choice: 'rush' }];
+    if (view.now.pendingOffer?.[0]) return [{ verb: 'PICK_UPGRADE', id: view.now.pendingOffer[0].id }];
+    const orders = [];
+    for (const kind of ['sentry_beacon', 'turret']) {
+      const built = view.now.works.byKind[kind] ?? 0;
+      for (let index = built; index < positions[kind].length; index += 1) {
+        orders.push({ verb: 'BUILD', what: kind, where: positions[kind][index], when: { goldGte: costs[kind][index] } });
+      }
+    }
+    for (const seam of view.now.seams.filter(({ active, remaining }) => active && remaining > 0)) {
+      for (let count = 0; count < 4; count += 1) orders.push({ verb: 'HARVEST', seam: seam.id });
+    }
+    if (view.now.works.hp > 0 && view.now.works.hp < view.now.works.maxHp * 0.6) orders.push({ verb: 'REPAIR_UNDER', pct: 80 });
+    orders.push({ verb: 'HOLD', pos: { x: 0, z: 12 } });
+    return orders.slice(0, 32);
+  };
+  const run = (overtime) => scriptedCli(
+    ['--contract', 'the-claim', '--seed', 'e1-the-claim-02', ...(overtime ? ['--overtime'] : [])],
+    ordersFor,
+  );
+
+  const explicit = await run(false);
+  const flagged = await run(true);
+  assert.equal(explicit.endReason ?? null, flagged.endReason ?? null);
+  assert.notEqual(explicit.endReason, 'wave-ceiling');
+  assert.equal(explicit.eventLogHash, flagged.eventLogHash);
+  assert.equal(explicit.eventLogHash, 'fnv1a32:d62454c5');
+});
+
+test('the CLI science input reaches and funds the published megaproject cost', { timeout: 30_000 }, async () => {
+  let publishedCost = null;
+  const outcome = await scriptedCli(
+    ['--contract', 'the-claim', '--seed', 'ap16-6-cli-fund', '--science-steps', '100'],
+    (view) => {
+      const project = view.now.megaproject;
+      if (project) publishedCost ??= project.cost;
+      const fund = project && !project.funded && view.now.gold >= project.cost
+        ? [
+            { verb: 'MOVE_TO', pos: { x: project.site.x, z: project.site.z } },
+            { verb: 'CONTEXT_ACTION', action: 'fund' },
+          ]
+        : [];
+      if (view.now.pendingOffer?.[0]) return [{ verb: 'PICK_UPGRADE', id: view.now.pendingOffer[0].id }, ...fund];
+      if (view.now.pendingSecure) return [{ verb: 'SECURE_CHOICE', choice: 'bank' }];
+      if (fund.length > 0) return fund;
+      if (project && !project.funded) {
+        const seam = view.now.seams.find(({ active, remaining }) => active && remaining > 0);
+        if (seam) return Array.from({ length: 6 }, () => ({ verb: 'HARVEST', seam: seam.id }));
+      }
+      return [{ verb: 'HOLD', pos: { x: 0, z: 12 } }];
+    },
+    (view) => view.now.megaproject?.funded === true,
+  );
+  assert.equal(publishedCost, 90);
+  assert.equal(outcome.fundedAt.gold, 0);
+  assert.equal(outcome.fundedAt.megaproject.cost, publishedCost);
+
+  const invalid = spawnSync(process.execPath, [
+    'scripts/gr-sim.mjs', '--contract', 'the-claim', '--science-steps', '-1', '--policy=idle',
+  ], { cwd: ROOT, encoding: 'utf8', timeout: 30_000 });
+  assert.notEqual(invalid.status, 0);
+  assert.match(invalid.stderr, /--science-steps must be an integer between 0 and 9007199254740991/);
 });
 
 test('gr-sim boots escort mode from data instead of URL state', { timeout: 120_000 }, async () => {
@@ -354,6 +457,7 @@ test('the Claim driver consumes declared water and posts RunManager secure at wa
       kills: 291,
       calls: 0,
       defaultedPicks: 11,
+      defaultedSecure: 1,
       eventLogHash: 'fnv1a32:6410fd15',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
@@ -451,6 +555,7 @@ test('Twin Banks consumes its declared crossings and build zones before securing
       kills: 771,
       calls: 0,
       defaultedPicks: 25,
+      defaultedSecure: 1,
       eventLogHash: 'fnv1a32:ecec1077',
     });
     assert.equal(first.terminalLog.outcome, 'secured');
@@ -498,6 +603,7 @@ test('gr-sim places Night Shift fixtures from the contract', () => {
     kills: 86,
     calls: 0,
     defaultedPicks: 3,
+    defaultedSecure: 0,
     eventLogHash: 'fnv1a32:3bcb3c2d',
   });
   const firstView = firstLines[0];
@@ -618,6 +724,7 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
         kills: 862,
         calls: 0,
         defaultedPicks: 21,
+        defaultedSecure: 1,
         eventLogHash: 'fnv1a32:5b1d21f1',
       });
       assert.equal(first.payout.science, Balance.meta.victoryPayout.science * baron.sciencePayoutMult);

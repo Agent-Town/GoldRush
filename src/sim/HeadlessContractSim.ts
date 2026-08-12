@@ -3,9 +3,11 @@ import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { install, type AgentBuildingRef, type AgentGameAdapter, type GoldRushToolSurface, type ToolReceipt } from '../agent/ToolSurface';
 import {
   bindStandingOrderBlast,
+  bindStandingOrderFinalVerbs,
   bindStandingUpgradePicker,
   observeStandingOrders,
   snapshotStandingOrders,
+  type StandingOrder,
   type StandingOrdersView,
 } from '../agent/StandingOrders';
 import type { AgentView } from '../agent/View';
@@ -28,7 +30,18 @@ import type { EffectiveStats } from '../game/StatSheet';
 import { resolveFiller, upgradeDefById, upgradeEffect } from '../game/Upgrades';
 import { isBuildableId } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
-import { listBoardContracts, loadContract, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
+import { listBoardContracts, listEpochs, loadContract, loadEpoch, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
+import {
+  activeMegaprojectManifest,
+  ensureMegaprojectProject,
+  fundMegaprojectStage,
+  isMegaprojectUnlocked,
+  megaprojectComplete,
+  megaprojectDiagnostics,
+  megaprojectStageCost,
+  type MegaprojectManifest,
+  type MegaprojectProjectState,
+} from '../meta/Megaproject';
 import { stableHash, type LockstepAction } from '../mp/LockstepClient';
 import { AtomicSocket } from './AtomicSocket';
 import { DeepwaterSocket } from './DeepwaterSocket';
@@ -129,6 +142,7 @@ export type GrSimOutcome = {
   kills: number;
   calls: number;
   defaultedPicks: number;
+  defaultedSecure: number;
   eventLogHash: string;
   securedWave?: number;
   overtimeWaves?: number;
@@ -178,6 +192,7 @@ export type HeadlessContractBoot = ContractRunBoot & {
   contractId: string;
   seed: string;
   overtime?: boolean;
+  scienceSteps?: number;
   /** Measurement only: bypasses admission without making a playability claim. */
   admissionProbe?: true;
 };
@@ -223,17 +238,33 @@ export class HeadlessContractSim {
   private readonly xpMotes = new XpMotePool();
   private readonly combatVfx = new CombatVfx();
   private readonly targeting = new TargetingSystem();
-  private blastReadyAt = 0;
+  private weapon: 'rig' | 'blast' = 'rig';
   private readonly heroShooter: ShooterHandle = {
     id: 'hero',
     resumeKey: 'hero:0:rig',
-    enabled: () => !this.dead,
+    enabled: () => !this.dead && this.weapon === 'rig',
     getPos: () => this.hero.group.position,
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
     damage: Balance.sparkRig.damage,
     projSpeed: Balance.sparkRig.boltSpeed,
     volley: Balance.sparkRig.volley,
+  };
+  private readonly blastShooter: ShooterHandle = {
+    id: 'hero_blast',
+    resumeKey: 'hero:0:blast',
+    kind: 'lob',
+    enabled: () => !this.dead && this.weapon === 'blast',
+    getPos: () => this.hero.group.position,
+    range: Balance.blast.range,
+    cooldown: Balance.blast.cooldown,
+    damage: Balance.blast.damage,
+    getDamage: () => Balance.blast.damage * this.progression.stats.blastDamageMult
+      * (1 + Math.max(0, this.waves.diagnostics.wave) * Balance.blast.dmgPerWave),
+    targetPoint: (_origin, target) => target.position,
+    projSpeed: 0,
+    volley: Balance.blast.volley,
+    aoe: { radius: Balance.blast.radius, airTime: Balance.blast.airTime },
   };
   private readonly progressionState = new GameState();
   private readonly harvest: HarvestSystem;
@@ -269,6 +300,7 @@ export class HeadlessContractSim {
   private timeAlive = 0;
   private kills = 0;
   private calls = 0;
+  private secureChoiceCalls = 0;
   private economySequence = 0;
   private secured = false;
   private securedWave: number | null = null;
@@ -288,11 +320,24 @@ export class HeadlessContractSim {
   private upgradeOfferKey = '';
   private upgradeOfferDeadlineSimMs = 0;
   private defaultedPicks = 0;
+  private defaultedSecure = 0;
+  private secureChoice: 'pending' | 'bank' | 'rush' | null = null;
+  private secureChoiceElapsed = 0;
+  private lastTurnSecurePending = false;
+  private readonly megaprojectManifest: MegaprojectManifest | null;
+  private readonly megaprojectProject: MegaprojectProjectState | null;
+  private readonly megaprojectUnlocked: boolean;
 
   constructor(readonly boot: HeadlessContractBoot) {
     this.contractId = boot.contractId;
     this.seed = boot.seed;
     this.manifest = loadContract(this.contractId);
+    const epoch = listEpochs().map(({ id }) => loadEpoch(id)).find((entry) => entry.contracts.some(({ id }) => id === this.contractId));
+    this.megaprojectManifest = epoch ? activeMegaprojectManifest(epoch, '') : null;
+    this.megaprojectUnlocked = isMegaprojectUnlocked(this.megaprojectManifest, boot.scienceSteps ?? 0);
+    this.megaprojectProject = this.megaprojectManifest
+      ? ensureMegaprojectProject({ version: 1, projects: {} }, this.megaprojectManifest)
+      : null;
     const mode = this.manifest.modes?.find(({ id }) => id === boot.mode);
     if (boot.mode && !mode) throw new Error(`${this.contractId} does not declare mode ${boot.mode}.`);
     if (!SUPPORTED_CONTRACTS.has(this.contractId) && !mode && boot.admissionProbe !== true) {
@@ -462,6 +507,11 @@ export class HeadlessContractSim {
     };
     this.surface = install(adapter, { permissionLevel: 3 });
     bindStandingOrderBlast((pos) => this.blastAt(pos));
+    bindStandingOrderFinalVerbs({
+      setWeapon: (weapon) => this.setWeapon(weapon),
+      secureChoice: (choice) => this.answerSecureChoice(choice),
+      contextAction: (order) => this.contextAction(order),
+    });
     bindStandingUpgradePicker((id) => {
       const applied = this.progression.applyUpgrade(id);
       if (applied) {
@@ -502,6 +552,10 @@ export class HeadlessContractSim {
   submitOrders(orders: unknown): ToolReceipt<'et.goldrush.orders', { orders: unknown }> {
     this.calls += 1;
     const receipt = this.surface.tools.submit_orders(orders);
+    if (receipt.outcome.ok && Array.isArray(orders) && orders.length > 0
+      && orders.every((order) => typeof order === 'object' && order !== null && 'verb' in order && order.verb === 'SECURE_CHOICE')) {
+      this.secureChoiceCalls += 1;
+    }
     this.replayEvents.push({
       type: 'orders',
       at: round(this.timeAlive),
@@ -528,6 +582,7 @@ export class HeadlessContractSim {
         this.terminal
         || this.waves.diagnostics.wave !== this.lastTurnWave
         || surpriseSeq > this.lastSurpriseSeq
+        || (this.secureChoice === 'pending' && !this.lastTurnSecurePending)
         || (offerKey !== '' && offerKey !== this.lastTurnOfferKey)
       ) {
         this.advanceCpuMs += performance.now() - started;
@@ -551,8 +606,9 @@ export class HeadlessContractSim {
       kills: this.kills,
       calls: this.calls,
       defaultedPicks: this.defaultedPicks,
+      defaultedSecure: this.defaultedSecure,
     };
-    const overtime = this.boot.overtime && this.securedWave !== null
+    const overtime = this.secureChoice === 'rush' && this.securedWave !== null
       ? {
           securedWave: this.securedWave,
           overtimeWaves: waves - this.securedWave,
@@ -562,11 +618,12 @@ export class HeadlessContractSim {
     const eventLogHash = stableHash({
       contractId: this.contractId,
       seed: this.seed,
-      events: this.replayEvents,
+      events: canonicalReplayEvents(this.replayEvents),
       economy: this.economy.log.map(({ id: _id, ...event }) => event),
-      orders: snapshotStandingOrders(),
+      orders: canonicalStandingOrders(snapshotStandingOrders()),
       final: {
-        ...base,
+        ...(({ defaultedSecure: _defaultedSecure, ...hashed }) => hashed)(base),
+        calls: this.calls - this.secureChoiceCalls,
         hero: point(this.hero.group.position),
         hp: round(this.hero.hp),
         enemies: this.enemies.all
@@ -613,6 +670,7 @@ export class HeadlessContractSim {
     const orders = snapshotStandingOrders();
     return this.terminal
       || this.waves.diagnostics.wave !== this.lastTurnWave
+      || (this.secureChoice === 'pending' && !this.lastTurnSecurePending)
       || (this.currentOfferKey() !== '' && this.currentOfferKey() !== this.lastTurnOfferKey)
       || latestSurpriseSeq(orders) > this.lastSurpriseSeq;
   }
@@ -668,10 +726,20 @@ export class HeadlessContractSim {
   }
 
   private get terminal(): boolean {
-    return this.dead || (this.secured && !this.boot.overtime);
+    return this.dead || this.secureChoice === 'bank';
   }
 
   private step(): void {
+    if (this.secureChoice === 'pending') {
+      this.prospector.updateSimulation(0, this.timeAlive, this.hero.group.position);
+      if (this.secureChoice !== 'pending') return;
+      this.secureChoiceElapsed += STEP_SECONDS;
+      if (this.secureChoiceElapsed + Number.EPSILON >= Balance.offers.pickSeconds) {
+        this.defaultedSecure += 1;
+        this.answerSecureChoice(this.boot.overtime ? 'rush' : 'bank');
+      }
+      return;
+    }
     this.simTick += 1;
     this.timeAlive += STEP_SECONDS;
     // Era sockets keep the browser's own relative order (Game.ts:2527-2541):
@@ -733,6 +801,7 @@ export class HeadlessContractSim {
     this.lastTurnWave = this.waves.diagnostics.wave;
     this.lastTurnOfferKey = this.currentOfferKey();
     this.lastSurpriseSeq = latestSurpriseSeq(orders);
+    this.lastTurnSecurePending = this.secureChoice === 'pending';
     const receipt = this.surface.tools.view();
     if (!receipt.outcome.ok || !receipt.outcome.state) throw new Error('THE VIEW was unavailable.');
     const view = receipt.outcome.state as HeadlessAgentView;
@@ -753,12 +822,27 @@ export class HeadlessContractSim {
       }));
       view.now.expiresAtSimMs = this.upgradeOfferDeadlineSimMs;
     }
+    if (this.secureChoice === 'pending') {
+      view.now.pendingSecure = {
+        defaultChoice: this.boot.overtime ? 'rush' : 'bank',
+        expiresInMs: Math.max(0, Math.round((Balance.offers.pickSeconds - this.secureChoiceElapsed) * 1000)),
+      };
+    }
+    if (this.megaprojectUnlocked && this.megaprojectManifest && this.megaprojectProject) {
+      view.now.megaproject = {
+        id: this.megaprojectManifest.id,
+        stage: this.megaprojectProject.stage,
+        funded: this.megaprojectProject.funded,
+        cost: megaprojectStageCost(this.megaprojectManifest, this.megaprojectProject),
+        site: { ...this.megaprojectManifest.siteFootprint },
+      };
+    }
     Object.assign(view.now.threats, {
       spawnedTotal: this.waves.diagnostics.waveSpawnedTotal,
       defeatedTotal: this.kills,
       defeatedBasis: 'all enemies, including continuous tricklers' as const,
     });
-    if (this.boot.overtime && this.secured) view.now.overtime = true;
+    if (this.secureChoice === 'rush') view.now.overtime = true;
     Object.assign(view.almanac.nextWave, {
       compositionScope: 'wave-horn packs only; continuous tricklers are additional' as const,
       continuousTrickle: {
@@ -808,7 +892,7 @@ export class HeadlessContractSim {
         text: baron.taunt,
       });
     }
-    if (this.runManager.diagnostics.secured && !this.boot.overtime) return false;
+    if (this.runManager.diagnostics.secured && this.secureChoice !== 'rush') return false;
   }
 
   private bindEventLog(): void {
@@ -829,6 +913,8 @@ export class HeadlessContractSim {
         if (event.type === 'run_secured') {
           this.secured = true;
           this.securedWave = event.secureWave;
+          this.secureChoice = 'pending';
+          this.secureChoiceElapsed = 0;
         }
         if (event.type === 'run_ended' && event.reason !== 'secured') this.dead = true;
         if (event.type === 'enemy_killed' && event.variantId === 'dynamo_crawler') {
@@ -988,6 +1074,7 @@ export class HeadlessContractSim {
 
   private registerHeroShooter(): void {
     this.combat.registerShooter(this.heroShooter);
+    this.combat.registerShooter(this.blastShooter);
   }
 
   private diagnostics(): unknown {
@@ -1009,7 +1096,8 @@ export class HeadlessContractSim {
       hp: this.hero.hp,
       maxHp: this.hero.maxHp,
       heroPos: point(this.hero.group.position),
-      blastReadyInMs: Math.max(0, Math.round((this.blastReadyAt - this.timeAlive) * 1000)),
+      weapon: this.weapon,
+      blastReadyInMs: this.blastReadyInMs(),
       build: {
         hp: this.build.diagnostics.hp,
         sluicePositions: this.build.diagnostics.sluicePositions,
@@ -1030,11 +1118,16 @@ export class HeadlessContractSim {
       crawler: this.crawler?.diagnostics() ?? null,
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
+      megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,
       kills: this.kills,
       runState: this.dead ? 'dead' : this.secured ? 'secured' : 'playing',
-      run: { secured: this.secured },
+      run: {
+        secured: this.secured,
+        pendingSecure: this.secureChoice === 'pending',
+        lastRunEndedReason: this.secureChoice === 'bank' ? 'secured' : null,
+      },
       progression: { ...this.progression.snapshot, choiceRule: 'first-offer' },
       agent: {
         needsRider: orders.needsRider,
@@ -1301,6 +1394,8 @@ export class HeadlessContractSim {
     this.heroShooter.range = Balance.sparkRig.range * stats.rangeMult;
     this.heroShooter.projSpeed = Balance.sparkRig.boltSpeed * stats.boltSpeedMult;
     this.heroShooter.volley = Balance.sparkRig.volley + stats.volleyBonus;
+    this.blastShooter.cooldown = Math.max(0.35, Balance.blast.cooldown * stats.blastCooldownMult);
+    if (this.blastShooter.aoe) this.blastShooter.aoe.radius = Balance.blast.radius * stats.blastRadiusMult;
     this.hero.applyStats(Math.max(stats.maxHpBonus, this.hero.maxHp - Balance.hero.maxHp), stats.moveSpeedMult);
     if (pickedId === 'tinkers_plating') this.hero.heal(upgradeDefById.tinkers_plating.deltas.heal ?? 0);
     this.harvest.applyStats(
@@ -1314,8 +1409,57 @@ export class HeadlessContractSim {
     else this.economy.removeCapSource('upgrade:stockpile_cap');
   }
 
+  private setWeapon(weapon: 'rig' | 'blast'): { ok: true } {
+    if (this.weapon !== weapon) {
+      this.weapon = weapon;
+      this.replayEvents.push({ type: 'set_weapon', at: round(this.timeAlive), weapon });
+    }
+    return { ok: true };
+  }
+
+  private answerSecureChoice(choice: 'bank' | 'rush'): { ok: true } | { ok: false; reason: string } {
+    if (this.secureChoice !== 'pending') return { ok: false, reason: 'INVALID_WINDOW: no secure choice is pending.' };
+    this.secureChoice = choice;
+    if (choice === 'rush') this.runManager.stayForRush();
+    return { ok: true };
+  }
+
+  private contextAction(order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>): { ok: true } | { ok: false; reason: string } {
+    if (order.action === 'fund') return this.fundMegaproject();
+    const { id, index } = order.target;
+    const ok = order.action === 'upgrade'
+      ? this.build.upgradeBuilding(id, index, this.timeAlive, this.prospector.position)
+      : this.build.demolish(id, index, this.timeAlive, this.prospector.position);
+    if (!ok) return { ok: false, reason: `REJECTED: ${order.action} ${id}:${index} is not legal here.` };
+    this.syncStockpileHoldings();
+    this.replayEvents.push({ type: 'context_action', at: round(this.timeAlive), action: order.action, target: { id, index } });
+    return { ok: true };
+  }
+
+  private fundMegaproject(): { ok: true } | { ok: false; reason: string } {
+    const manifest = this.megaprojectManifest;
+    const project = this.megaprojectProject;
+    if (!manifest || !project || !this.megaprojectUnlocked || megaprojectComplete(manifest, project) || project.funded) {
+      return { ok: false, reason: 'REJECTED: no megaproject stage can be funded.' };
+    }
+    const { x, z, w, d } = manifest.siteFootprint;
+    const dx = Math.max(Math.abs(this.prospector.position.x - x) - w * 0.5, 0);
+    const dz = Math.max(Math.abs(this.prospector.position.z - z) - d * 0.5, 0);
+    if (dx * dx + dz * dz > 2.2 * 2.2) return { ok: false, reason: 'OUT_OF_REACH: the Prospector is not at the megaproject site.' };
+    const cost = megaprojectStageCost(manifest, project);
+    const spent = this.economy.apply(this.economyEvent({
+      type: 'gold_spent',
+      sink: `megaproject_${manifest.id}`,
+      amount: cost,
+    }));
+    if (!spent.ok) return { ok: false, reason: `INSUFFICIENT_GOLD: funding requires ${cost} gold.` };
+    if (!fundMegaprojectStage(manifest, project)) return { ok: false, reason: 'REJECTED: megaproject funding failed.' };
+    this.replayEvents.push({ type: 'context_action', at: round(this.timeAlive), action: 'fund', cost });
+    return { ok: true };
+  }
+
   private blastAt(pos: { x: number; z: number }): { ok: true } | { ok: false; reason: string } {
-    const readyInMs = Math.max(0, Math.round((this.blastReadyAt - this.timeAlive) * 1000));
+    const readyInMs = this.blastReadyInMs();
     if (readyInMs > 0) return { ok: false, reason: `COOLDOWN: Blast Charge ready in ${readyInMs}ms.` };
     const origin = this.hero.group.position;
     if (Math.hypot(pos.x - origin.x, pos.z - origin.z) > Balance.blast.range) {
@@ -1332,9 +1476,18 @@ export class HeadlessContractSim {
       'hero_blast',
     );
     if (!launched) return { ok: false, reason: 'BLAST_POOL_FULL: no blast charge slot is available.' };
-    this.blastReadyAt = this.timeAlive + Math.max(0.35, Balance.blast.cooldown * stats.blastCooldownMult);
+    const combat = this.combat.captureSuspend();
+    const shooter = combat.shooters.find(({ resumeKey }) => resumeKey === this.blastShooter.resumeKey);
+    if (!shooter) throw new Error('Blast Charge shooter is not registered.');
+    shooter.timer = this.blastShooter.cooldown;
+    if (!this.combat.restoreSuspend(combat)) throw new Error('Blast Charge cooldown could not be restored.');
     this.replayEvents.push({ type: 'blast_at', at: round(this.timeAlive), pos: point(pos) });
     return { ok: true };
+  }
+
+  private blastReadyInMs(): number {
+    const timer = this.combat.captureSuspend().shooters.find(({ resumeKey }) => resumeKey === this.blastShooter.resumeKey)?.timer ?? 0;
+    return Math.max(0, Math.round(timer * 1000));
   }
 
   private syncStockpileHoldings(): void {
@@ -1385,6 +1538,32 @@ function canonicalEvent(event: GameEvent): unknown {
   return structuredClone(event);
 }
 
+function canonicalReplayEvents(events: readonly unknown[]): unknown[] {
+  if (!events.some((event) => isRecord(event) && event.type === 'orders' && Array.isArray(event.orders)
+    && event.orders.some((order) => isRecord(order) && order.verb === 'SECURE_CHOICE'))) return [...events];
+  return events.flatMap((event) => {
+    if (!isRecord(event) || event.type !== 'orders' || !Array.isArray(event.orders)) return [event];
+    const orders = event.orders.filter((order) => !isRecord(order) || order.verb !== 'SECURE_CHOICE');
+    return orders.length > 0 ? [{ ...event, orders }] : [];
+  });
+}
+
+function canonicalStandingOrders(snapshot: StandingOrdersView): StandingOrdersView {
+  const secureIds = new Set<string>();
+  for (const record of snapshot.orders) if (record.order.verb === 'SECURE_CHOICE') secureIds.add(record.id);
+  for (const event of snapshot.log) {
+    for (const record of event.orders ?? []) if (record.order.verb === 'SECURE_CHOICE') secureIds.add(record.id);
+  }
+  if (secureIds.size === 0) return snapshot;
+  const log = snapshot.log.flatMap((event) => {
+    if (event.orderId && secureIds.has(event.orderId)) return [];
+    if (!event.orders) return [event];
+    const orders = event.orders.filter((record) => !secureIds.has(record.id));
+    return orders.length > 0 ? [{ ...event, orders }] : [];
+  }).map((event, index) => ({ ...event, seq: index + 1 }));
+  return { ...snapshot, orders: snapshot.orders.filter((record) => !secureIds.has(record.id)), log };
+}
+
 function latestSurpriseSeq(orders: StandingOrdersView): number {
   return orders.log.reduce((seq, event) => event.type === 'surprise' ? Math.max(seq, event.seq) : seq, 0);
 }
@@ -1401,6 +1580,10 @@ function point(value: { x: number; z: number }): { x: number; z: number } {
 
 function round(value: number): number {
   return Math.round(value * 1000) / 1000;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function headlessCanvas(): HTMLCanvasElement {

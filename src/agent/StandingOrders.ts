@@ -18,9 +18,13 @@ export type StandingOrder =
   | { verb: 'MOVE_TO'; pos: AgentVec2 }
   | { verb: 'HOLD'; pos: AgentVec2 }
   | { verb: 'BLAST_AT'; pos: AgentVec2 }
+  | { verb: 'SET_WEAPON'; weapon: 'rig' | 'blast' }
   | { verb: 'HARVEST'; seam: string }
   | { verb: 'HARVEST'; sluice: number }
   | { verb: 'PICK_UPGRADE'; id: string }
+  | { verb: 'SECURE_CHOICE'; choice: 'bank' | 'rush' }
+  | { verb: 'CONTEXT_ACTION'; action: 'upgrade' | 'demolish'; target: { id: BuildableId; index: number } }
+  | { verb: 'CONTEXT_ACTION'; action: 'fund' }
   | { verb: 'FALLBACK_IF'; threat: { enemiesGte: number }; pos: AgentVec2 };
 
 export type StandingOrderStatus = 'pending' | 'active' | 'done' | 'failed';
@@ -83,10 +87,18 @@ type RuntimeState = {
   seams: Array<{ id: string; active: boolean; position: AgentVec2 }>;
   sluices: AgentVec2[];
   pendingOffer: string[];
+  pendingSecure: boolean;
 };
 
 type ValidationResult = { ok: true; orders: StandingOrder[] } | { ok: false; message: string };
 type BlastOrderResult = { ok: true } | { ok: false; reason: string };
+export type ActionOrderResult = { ok: true } | { ok: false; reason: string };
+
+export type FinalVerbHandlers = {
+  setWeapon: (weapon: 'rig' | 'blast') => ActionOrderResult;
+  secureChoice: (choice: 'bank' | 'rush') => ActionOrderResult;
+  contextAction: (order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>) => ActionOrderResult;
+};
 
 let installedExecutor: StandingOrdersExecutor | null = null;
 
@@ -101,6 +113,9 @@ export class StandingOrdersExecutor {
   private readonly failureReasons = new Map<string, string>();
   private blastAt: ((pos: AgentVec2) => BlastOrderResult) | null = null;
   private pickUpgrade: ((id: string) => boolean) | null = null;
+  private setWeapon: ((weapon: 'rig' | 'blast') => ActionOrderResult) | null = null;
+  private secureChoice: ((choice: 'bank' | 'rush') => ActionOrderResult) | null = null;
+  private contextAction: ((order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>) => ActionOrderResult) | null = null;
 
   constructor(
     private readonly surface: GoldRushToolSurface,
@@ -122,6 +137,16 @@ export class StandingOrdersExecutor {
     );
     if (invalidPick?.verb === 'PICK_UPGRADE') {
       const message = `PICK_UPGRADE requires a live offered id; "${invalidPick.id}" is not available.`;
+      this.append({ at: eventAt, type: 'orders_rejected', reason: message });
+      return { ok: false, reason: 'INVALID_ARGS', message };
+    }
+    if (state.pendingSecure && (validated.orders.length !== 1 || validated.orders[0]?.verb !== 'SECURE_CHOICE')) {
+      const message = 'Only one SECURE_CHOICE is accepted while the secure window is open.';
+      this.append({ at: eventAt, type: 'orders_rejected', reason: message });
+      return { ok: false, reason: 'INVALID_ARGS', message };
+    }
+    if (validated.orders.some((order) => order.verb === 'SECURE_CHOICE') && !state.pendingSecure) {
+      const message = 'SECURE_CHOICE requires a live secure window.';
       this.append({ at: eventAt, type: 'orders_rejected', reason: message });
       return { ok: false, reason: 'INVALID_ARGS', message };
     }
@@ -157,6 +182,7 @@ export class StandingOrdersExecutor {
 
     for (const record of this.records) {
       if (record.status === 'done' || record.status === 'failed') continue;
+      if (state.pendingSecure && record.order.verb !== 'SECURE_CHOICE') continue;
       const level = this.surface.permissionLevel();
       const denial = permissionDenial(record.order, state, level);
       if (denial) {
@@ -194,6 +220,12 @@ export class StandingOrdersExecutor {
 
   bindUpgradePicker(pick: (id: string) => boolean): void {
     this.pickUpgrade = pick;
+  }
+
+  bindFinalVerbs(handlers: FinalVerbHandlers): void {
+    this.setWeapon = handlers.setWeapon;
+    this.secureChoice = handlers.secureChoice;
+    this.contextAction = handlers.contextAction;
   }
 
   snapshot(): StandingOrdersView {
@@ -254,6 +286,14 @@ export class StandingOrdersExecutor {
       return {};
     }
 
+    if (order.verb === 'SET_WEAPON') {
+      this.status(record, 'active', at);
+      const result = this.setWeapon?.(order.weapon) ?? { ok: false as const, reason: 'SET_WEAPON is unavailable.' };
+      if (result.ok) this.status(record, 'done', at);
+      else this.fail(record, result.reason, at);
+      return {};
+    }
+
     if (order.verb === 'HARVEST') {
       const point =
         'seam' in order
@@ -273,6 +313,22 @@ export class StandingOrdersExecutor {
       this.status(record, 'active', at);
       if (!this.pickUpgrade?.(order.id)) this.fail(record, `INVALID_TARGET: ${order.id} is no longer offered.`, at);
       else this.status(record, 'done', at);
+      return {};
+    }
+
+    if (order.verb === 'SECURE_CHOICE') {
+      this.status(record, 'active', at);
+      const result = this.secureChoice?.(order.choice) ?? { ok: false as const, reason: 'SECURE_CHOICE is unavailable.' };
+      if (result.ok) this.status(record, 'done', at);
+      else this.fail(record, result.reason, at);
+      return {};
+    }
+
+    if (order.verb === 'CONTEXT_ACTION') {
+      this.status(record, 'active', at);
+      const result = this.contextAction?.(order) ?? { ok: false as const, reason: 'CONTEXT_ACTION is unavailable.' };
+      if (result.ok) this.status(record, 'done', at);
+      else this.fail(record, result.reason, at);
       return {};
     }
 
@@ -367,6 +423,10 @@ export function bindStandingUpgradePicker(pick: (id: string) => boolean): void {
   installedExecutor?.bindUpgradePicker(pick);
 }
 
+export function bindStandingOrderFinalVerbs(handlers: Parameters<StandingOrdersExecutor['bindFinalVerbs']>[0]): void {
+  installedExecutor?.bindFinalVerbs(handlers);
+}
+
 export function tickStandingOrders(at: number, actor: AgentVec2): StandingOrderTickResult {
   return installedExecutor?.tick(at, actor) ?? {};
 }
@@ -402,6 +462,7 @@ export function validateStandingOrders(input: unknown): ValidationResult {
 
 export function requiredLevel(order: StandingOrder): AgentPermissionLevel {
   if (order.verb === 'BUILD') return 3;
+  if (order.verb === 'CONTEXT_ACTION') return 3;
   if (order.verb === 'HARVEST') return 2;
   return 2;
 }
@@ -434,6 +495,11 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     if (!exactKeys(value, ['verb', 'pos']) || !validPos(value.pos)) return schemaError(index, 'BLAST_AT');
     return { verb: 'BLAST_AT', pos: value.pos };
   }
+  if (value.verb === 'SET_WEAPON') {
+    // SET is deliberately idempotent: standing-order replacement may re-apply a whole tape.
+    if (!exactKeys(value, ['verb', 'weapon']) || (value.weapon !== 'rig' && value.weapon !== 'blast')) return schemaError(index, 'SET_WEAPON');
+    return { verb: 'SET_WEAPON', weapon: value.weapon };
+  }
   if (value.verb === 'HARVEST') {
     if (exactKeys(value, ['verb', 'seam']) && typeof value.seam === 'string' && value.seam.length > 0 && value.seam.length <= 80) {
       return { verb: 'HARVEST', seam: value.seam };
@@ -448,6 +514,21 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
       return schemaError(index, 'PICK_UPGRADE');
     }
     return { verb: 'PICK_UPGRADE', id: value.id };
+  }
+  if (value.verb === 'SECURE_CHOICE') {
+    if (!exactKeys(value, ['verb', 'choice']) || (value.choice !== 'bank' && value.choice !== 'rush')) return schemaError(index, 'SECURE_CHOICE');
+    return { verb: 'SECURE_CHOICE', choice: value.choice };
+  }
+  if (value.verb === 'CONTEXT_ACTION') {
+    if (value.action === 'fund' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'fund' };
+    if ((value.action !== 'upgrade' && value.action !== 'demolish') || !exactKeys(value, ['verb', 'action', 'target']) || !isRecord(value.target)) {
+      return schemaError(index, 'CONTEXT_ACTION');
+    }
+    if (!exactKeys(value.target, ['id', 'index']) || !isBuildableId(value.target.id)
+      || !Number.isInteger(value.target.index) || !finiteInRange(value.target.index, 0, 10_000)) {
+      return schemaError(index, 'CONTEXT_ACTION');
+    }
+    return { verb: 'CONTEXT_ACTION', action: value.action, target: { id: value.target.id, index: value.target.index } };
   }
   if (value.verb === 'FALLBACK_IF') {
     if (!exactKeys(value, ['verb', 'threat', 'pos']) || !validPos(value.pos) || !isRecord(value.threat)) {
@@ -530,6 +611,7 @@ function runtimeState(
     pendingOffer: isRecord(state.progression) && Array.isArray(state.progression.offer)
       ? state.progression.offer.filter((id): id is string => typeof id === 'string')
       : [],
+    pendingSecure: isRecord(state.run) && state.run.pendingSecure === true,
   };
 }
 
@@ -643,6 +725,10 @@ export function standingOrderIdentity(order: StandingOrder): string {
   }
   if (order.verb === 'HARVEST') return JSON.stringify([order.verb, 'seam' in order ? order.seam : order.sluice]);
   if (order.verb === 'PICK_UPGRADE') return JSON.stringify([order.verb, order.id]);
+  if (order.verb === 'SET_WEAPON') return JSON.stringify([order.verb, order.weapon]);
+  if (order.verb === 'SECURE_CHOICE') return JSON.stringify([order.verb, order.choice]);
+  if (order.verb === 'CONTEXT_ACTION') return JSON.stringify([order.verb, order.action,
+    ...('target' in order ? [order.target.id, order.target.index] : [])]);
   return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
 }
 

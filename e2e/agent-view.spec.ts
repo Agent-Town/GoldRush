@@ -49,6 +49,47 @@ const WAVE_THREE_SNAPSHOT = `{
           "source": "buildables.registry"
         },
         {
+          "id": "palisade",
+          "operation": "BUILD",
+          "meaning": "Timber that holds. Bandits break it before you.",
+          "cost": 10,
+          "costs": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "maxCount": 48,
+          "source": "buildables.registry"
+        },
+        {
+          "id": "sluice",
+          "operation": "BUILD",
+          "meaning": "Works the river for you — 3g per cycle beside water.",
+          "cost": 40,
+          "costs": [
+            40,
+            40,
+            40
+          ],
+          "maxCount": 3,
+          "source": "buildables.registry"
+        },
+        {
+          "id": "stockpile",
+          "operation": "BUILD",
+          "meaning": "Holds +150 gold above the pan cap.",
+          "cost": 60,
+          "costs": [
+            60,
+            60
+          ],
+          "maxCount": 2,
+          "source": "buildables.registry"
+        },
+        {
           "id": "turret",
           "operation": "BUILD",
           "meaning": "Spark bolts, line-of-sight, 16wu range.",
@@ -61,6 +102,17 @@ const WAVE_THREE_SNAPSHOT = `{
           ],
           "costRule": "ceil-to-5",
           "maxCount": 4,
+          "source": "buildables.registry"
+        },
+        {
+          "id": "assay_office",
+          "operation": "BUILD",
+          "meaning": "Write orders; the town's craftsmen answer. One per claim.",
+          "cost": 80,
+          "costs": [
+            80
+          ],
+          "maxCount": 1,
           "source": "buildables.registry"
         }
       ],
@@ -188,6 +240,8 @@ const WAVE_THREE_SNAPSHOT = `{
   ],
   "now": {
     "wave": 3,
+    "blastReadyInMs": 0,
+    "weapon": "rig",
     "timers": {
       "runSeconds": "<number>",
       "nextWaveInSeconds": 30
@@ -207,7 +261,21 @@ const WAVE_THREE_SNAPSHOT = `{
       "wrecked": 0,
       "byKind": {
         "sentry_beacon": 1
-      }
+      },
+      "entries": [
+        {
+          "id": "sentry_beacon",
+          "index": 0,
+          "tier": 1,
+          "hp": 40,
+          "maxHp": 40,
+          "wrecked": false,
+          "position": {
+            "x": -4,
+            "z": 9
+          }
+        }
+      ]
     },
     "threats": {
       "alive": 0,
@@ -495,6 +563,17 @@ test('the seeded rider view stays cache-shaped and grows one honest wave at a ti
     },
   });
 
+  const weapons = await page.evaluate(async () => {
+    const seen = [];
+    for (const weapon of ['rig', 'blast', 'rig'] as const) {
+      window.__GR_TEST__!.setLocalWeaponForTest(weapon);
+      await new Promise(requestAnimationFrame);
+      seen.push(window.__GR_AGENT__!.view.now.weapon);
+    }
+    return seen;
+  });
+  expect(weapons).toEqual(['rig', 'blast', 'rig']);
+
   const snapshot: Omit<AgentView, 'now'> & {
     now: Omit<AgentView['now'], 'timers' | 'prospector'> & {
       timers: { runSeconds: '<number>'; nextWaveInSeconds: number };
@@ -549,12 +628,12 @@ test('the seeded rider view stays cache-shaped and grows one honest wave at a ti
 
     diagnostics.runState = 'playing';
     diagnostics.hp = 100;
-    diagnostics.run = { secured: false };
+    diagnostics.run = { secured: false, lastRunEndedReason: null };
     diagnostics.timeAlive = 0;
     const securedSource = { diagnostics: () => diagnostics, economyLog: () => [] };
     buildView(securedSource);
     diagnostics.timeAlive = 8;
-    diagnostics.run = { secured: true };
+    diagnostics.run = { secured: false, lastRunEndedReason: 'secured' };
     const secured = buildView(securedSource).appendLog.at(-1);
     return { riderDown, secured };
   });
