@@ -42,10 +42,27 @@ const SCRIPT = path.join(import.meta.dirname, 'gate-caller-audit.mjs');
 const REAL_ROOT = path.resolve(import.meta.dirname, '..');
 
 function run(dir, ...extra) {
-  return spawnSync(process.execPath, [SCRIPT, '--root', dir, ...extra], {
-    encoding: 'utf8',
-    maxBuffer: 32 * 1024 * 1024,
-  });
+  const captureDir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-gate-caller-capture-')));
+  const stdoutPath = path.join(captureDir, 'stdout');
+  const stderrPath = path.join(captureDir, 'stderr');
+  let stdoutFd;
+  let stderrFd;
+  let result;
+  try {
+    stdoutFd = fs.openSync(stdoutPath, 'w');
+    stderrFd = fs.openSync(stderrPath, 'w');
+    result = spawnSync(process.execPath, [SCRIPT, '--root', dir, ...extra], {
+      stdio: ['ignore', stdoutFd, stderrFd],
+    });
+  } finally {
+    if (stdoutFd !== undefined) fs.closeSync(stdoutFd);
+    if (stderrFd !== undefined) fs.closeSync(stderrFd);
+  }
+  return {
+    ...result,
+    stdout: fs.readFileSync(stdoutPath, 'utf8'),
+    stderr: fs.readFileSync(stderrPath, 'utf8'),
+  };
 }
 
 /**
