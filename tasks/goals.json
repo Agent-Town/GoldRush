@@ -6943,6 +6943,12 @@
                   "lane": "lane-d",
                   "taskFile": "lane-d-ap16-6b-final-verbs-reland.md",
                   "authorNotes": "FIRE-AUTHORED s1694 from the gate-side review of AP-16-6, not from speculative scope. The original runner output is preserved at save/ap16-6-s1694-6f928266 (exact tip 6f92826659e14261e83963aab30baceef7038b64) and this task orders a re-land on fresh main rather than a re-derivation. Four P1s and two P2s are measured in reviews/ap16-6-final-verbs.md. The adjacent agent-view snapshot is already red on clean main 9a57975c9 (4 pass / 1 fail), while the candidate adds its required weapon and works-entry fields; the corrective explicitly makes the snapshot truthful instead of deleting or weakening it."
+                },
+                {
+                  "id": "ap16-7-epoch-levers",
+                  "title": "AP-16-7: CAPTURE/BOAT_BUILD/REANCHOR \u2014 the epoch levers reach the door (E5/E6 admission cure; discharges F-MTS-2)",
+                  "status": "queued",
+                  "taskFile": "lane-b-ap16-7-epoch-levers.md"
                 }
               ]
             },
