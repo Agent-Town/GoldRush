@@ -6934,7 +6934,7 @@
                   },
                   "taskFile": "lane-d-ap16-6-verbs.md",
                   "stopNote": "STOPPED s1694 at the gate, never merged. Candidate tip 6f92826659e14261e83963aab30baceef7038b64 is preserved on save/ap16-6-s1694-6f928266; review reviews/ap16-6-final-verbs.md; full green pre-review battery artifacts/ap16-6-gate-s1694.txt. The green battery did not exercise the three reproduced P1 seams, which is why the independent review is load-bearing rather than advisory.",
-                  "note_s1698": "SUPERSEDED by the fully gated AP-16-6C re-land merged at d599cd3ea030a1e6d699f106115b1d3fdf54d775; F-1694-1 through F-1694-6 closed."
+                  "note_s1698": "SUPERSEDED by the fully gated AP-16-6C re-land merged at d599cd3ea030a1e6d699f106115b1d3fdf54d775; F-1694-1 through F-1694-6 closed. The stopped candidate is archived as archive/ap16-6-s1694-6f928266."
                 },
                 {
                   "id": "ap16-6b-final-verbs-reland",
@@ -6945,7 +6945,7 @@
                   "taskFile": "lane-d-ap16-6b-final-verbs-reland.md",
                   "authorNotes": "FIRE-AUTHORED s1694 from the gate-side review of AP-16-6, not from speculative scope. The original runner output is preserved at save/ap16-6-s1694-6f928266 (exact tip 6f92826659e14261e83963aab30baceef7038b64) and this task orders a re-land on fresh main rather than a re-derivation. Four P1s and two P2s are measured in reviews/ap16-6-final-verbs.md. The adjacent agent-view snapshot is already red on clean main 9a57975c9 (4 pass / 1 fail), while the candidate adds its required weapon and works-entry fields; the corrective explicitly makes the snapshot truthful instead of deleting or weakening it.",
                   "stopNote": "STOPPED s1697 at the drain gate, never merged. Candidate tip 9cf0bad00fd626c86fda3132d1a3696fc2e5ee66 is preserved on save/ap16-6b-s1697-9cf0bad0. Repo-pinned Node 26.4.0 test:node-guards reproduced two deterministic held-vs-secured failures; review reviews/ap16-6b-final-verbs-reland.md; transcript artifacts/ap16-6b-gate-s1697.txt.",
-                  "note_s1698": "SUPERSEDED by AP-16-6C, which replayed this exact saved patch and added the one missing terminal diagnostic before merging at d599cd3ea030a1e6d699f106115b1d3fdf54d775."
+                  "note_s1698": "SUPERSEDED by AP-16-6C, which replayed this exact saved patch and added the one missing terminal diagnostic before merging at d599cd3ea030a1e6d699f106115b1d3fdf54d775. The completed salvage ref is archived as archive/ap16-6b-s1697-9cf0bad0."
                 },
                 {
                   "id": "ap16-6c-terminal-receipt-reland",
