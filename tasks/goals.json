@@ -6924,9 +6924,8 @@
                 {
                   "id": "ap16-6-action-verbs",
                   "title": "AP-16-6 MEASURED: three verbs build (SET_WEAPON, SECURE_CHOICE, CONTEXT_ACTION), four exempt cited \u2014 the last Same-Game debt; next gauntlet parked behind it (owner 2026-08-12)",
-                  "status": "blocked",
-                  "blockClass": "gate-side",
-                  "blockedReason": "s1694 gate-side HOLD: the preserved candidate is not ready to merge. Independent review reproduced two blasts inside one cooldown, runtime SECURE_CHOICE rush still taking the non-overtime CLI ceiling, and unrelated orders executing inside the frozen secure window; it also found the browser-owned seat handlers, standalone funding input, and shared browser weapon view incomplete. The exact tip survives at save/ap16-6-s1694-6f928266. Successor ap16-6b-final-verbs-reland resolves F-1694-1 through F-1694-6 on fresh main. This is not an owner fork; lift only when that corrective gates and merges.",
+                  "status": "superseded",
+                  "supersededBy": "ap16-6c-terminal-receipt-reland",
                   "authoringBlock": {
                     "class": "attended-owed",
                     "finding": "F-1649-1",
@@ -6934,35 +6933,37 @@
                     "reason": "NOT fire-authorable: all five OWED verbs (TOGGLE_WEAPON, RESEARCH_PICK, SECURE_CHOICE, DEATH_ACTION, CONTEXT_ACTION) have no headless system to attach to. weaponToggle is an inert struct member in src/sim/HeadlessContractSim.ts:186 read by nothing (outcome ledger reports weaponToggles: 0 as a hardcoded literal); research/secureChoice/deathAction return zero hits under src/sim/. Adding any verb means porting a system into the sim, which moves event-log hashes and contradicts the slice own additive promise \u2014 a design fork, reserved by fire.md 2E HARD LIMIT."
                   },
                   "taskFile": "lane-d-ap16-6-verbs.md",
-                  "stopNote": "STOPPED s1694 at the gate, never merged. Candidate tip 6f92826659e14261e83963aab30baceef7038b64 is preserved on save/ap16-6-s1694-6f928266; review reviews/ap16-6-final-verbs.md; full green pre-review battery artifacts/ap16-6-gate-s1694.txt. The green battery did not exercise the three reproduced P1 seams, which is why the independent review is load-bearing rather than advisory."
+                  "stopNote": "STOPPED s1694 at the gate, never merged. Candidate tip 6f92826659e14261e83963aab30baceef7038b64 is preserved on save/ap16-6-s1694-6f928266; review reviews/ap16-6-final-verbs.md; full green pre-review battery artifacts/ap16-6-gate-s1694.txt. The green battery did not exercise the three reproduced P1 seams, which is why the independent review is load-bearing rather than advisory.",
+                  "note_s1698": "SUPERSEDED by the fully gated AP-16-6C re-land merged at d599cd3ea030a1e6d699f106115b1d3fdf54d775; F-1694-1 through F-1694-6 closed."
                 },
                 {
                   "id": "ap16-6b-final-verbs-reland",
                   "title": "AP-16-6b RE-LAND: final verbs share one blast cooldown and one runtime rush path, freeze every non-choice action at secure, and work through every advertised door",
-                  "status": "blocked",
-                  "blockClass": "gate-side",
-                  "blockedReason": "s1697 gate-side HOLD: the AP-16-6B candidate resolves F-1694-1 through F-1694-6, but its shared view boundary now consumes run.lastRunEndedReason while HeadlessContractSim diagnostics omit that field. Existing Claim and Twin Banks drivers deterministically finish with agent receipt held instead of secured. Exact tip preserved at save/ap16-6b-s1697-9cf0bad0; review reviews/ap16-6b-final-verbs-reland.md; successor ap16-6c-terminal-receipt-reland applies the one-seam diagnostic cure. This is not an owner fork.",
+                  "status": "superseded",
+                  "supersededBy": "ap16-6c-terminal-receipt-reland",
                   "lane": "lane-d",
                   "taskFile": "lane-d-ap16-6b-final-verbs-reland.md",
                   "authorNotes": "FIRE-AUTHORED s1694 from the gate-side review of AP-16-6, not from speculative scope. The original runner output is preserved at save/ap16-6-s1694-6f928266 (exact tip 6f92826659e14261e83963aab30baceef7038b64) and this task orders a re-land on fresh main rather than a re-derivation. Four P1s and two P2s are measured in reviews/ap16-6-final-verbs.md. The adjacent agent-view snapshot is already red on clean main 9a57975c9 (4 pass / 1 fail), while the candidate adds its required weapon and works-entry fields; the corrective explicitly makes the snapshot truthful instead of deleting or weakening it.",
-                  "stopNote": "STOPPED s1697 at the drain gate, never merged. Candidate tip 9cf0bad00fd626c86fda3132d1a3696fc2e5ee66 is preserved on save/ap16-6b-s1697-9cf0bad0. Repo-pinned Node 26.4.0 test:node-guards reproduced two deterministic held-vs-secured failures; review reviews/ap16-6b-final-verbs-reland.md; transcript artifacts/ap16-6b-gate-s1697.txt."
+                  "stopNote": "STOPPED s1697 at the drain gate, never merged. Candidate tip 9cf0bad00fd626c86fda3132d1a3696fc2e5ee66 is preserved on save/ap16-6b-s1697-9cf0bad0. Repo-pinned Node 26.4.0 test:node-guards reproduced two deterministic held-vs-secured failures; review reviews/ap16-6b-final-verbs-reland.md; transcript artifacts/ap16-6b-gate-s1697.txt.",
+                  "note_s1698": "SUPERSEDED by AP-16-6C, which replayed this exact saved patch and added the one missing terminal diagnostic before merging at d599cd3ea030a1e6d699f106115b1d3fdf54d775."
                 },
                 {
                   "id": "ap16-6c-terminal-receipt-reland",
                   "title": "AP-16-6C RE-LAND: publish the headless bank terminal reason consumed by the shared agent view",
-                  "status": "queued",
+                  "status": "merged",
+                  "mergeHash": "d599cd3ea030a1e6d699f106115b1d3fdf54d775",
                   "lane": "lane-d",
                   "taskFile": "lane-d-ap16-6c-terminal-receipt-reland.md",
-                  "authorNotes": "FIRE-AUTHORED s1697 from F-1697-1, reproduced by two existing deterministic gr-sim contract drivers during the detached AP-16-6B drain gate. Re-land exact saved tip 9cf0bad00fd626c86fda3132d1a3696fc2e5ee66, add the one missing HeadlessContractSim run.lastRunEndedReason diagnostic, and preserve pending/rush as nonterminal."
+                  "authorNotes": "FIRE-AUTHORED s1697 from F-1697-1, reproduced by two existing deterministic gr-sim contract drivers during the detached AP-16-6B drain gate. Re-land exact saved tip 9cf0bad00fd626c86fda3132d1a3696fc2e5ee66, add the one missing HeadlessContractSim run.lastRunEndedReason diagnostic, and preserve pending/rush as nonterminal.",
+                  "note_s1698": "DRAINED s1698 at d599cd3ea030a1e6d699f106115b1d3fdf54d775. Detached Node 26.4.0 gates: tsc/build green; node guards 459 total / 454 pass / 0 fail / 5 skip; browser 51 pass / 1 skip plus 2/2 plain boots; Same-Game audit byte-identical twice. Review reviews/ap16-6c-terminal-receipt-reland.md; transcript artifacts/ap16-6c-gate-s1698.txt."
                 },
                 {
                   "id": "ap16-7-epoch-levers",
                   "title": "AP-16-7: CAPTURE/BOAT_BUILD/REANCHOR \u2014 the epoch levers reach the door (E5/E6 admission cure; discharges F-MTS-2)",
-                  "status": "blocked",
-                  "blockClass": "gate-side",
-                  "blockedReason": "s1697 sequencing hold: lane-b correctly stopped with zero code changes because AP-16-6B had not landed. AP-16-6B then failed its drain gate and successor AP-16-6C is queued. Re-queue this master only after AP-16-6C merges; no owner word is required.",
+                  "status": "queued",
                   "taskFile": "lane-b-ap16-7-epoch-levers.md",
-                  "stopNote": "STOPPED no-op in run 20260812-080147: the master's explicit sequencing check found AP-16-6B still unmerged. Preserve the master and re-queue after AP-16-6C lands."
+                  "stopNote": "STOPPED no-op in run 20260812-080147: the master's explicit sequencing check found AP-16-6B still unmerged. Preserve the master and re-queue after AP-16-6C lands.",
+                  "note_s1698": "Sequencing gate lifted by AP-16-6C merge d599cd3ea030a1e6d699f106115b1d3fdf54d775; re-queued once to lane-b after proving that lane usable."
                 }
               ]
             },
