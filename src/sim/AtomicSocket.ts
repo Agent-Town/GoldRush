@@ -27,11 +27,9 @@ import { WrangleSystem } from '../systems/WrangleSystem';
  *   - `EnemyPool.update` contact     -> !wrangle.isHarmless   (Game.ts:2606)
  *   - `EnemyPool.update` speed       -> wrangle.movementMultiplier (Game.ts:2614)
  *
- * The capture ceremony (`WrangleSystem.tryCapture`) is deliberately NOT driven from here.
- * The browser reaches it through a keybind and a dev bridge; `AgentGameAdapter` has no
- * capture verb, so an agent cannot pull that lever. Wiring a headless-only caller would
- * manufacture a mechanic the agent surface does not actually expose — reject-don't-stretch.
- * The pen roster therefore stays empty headlessly, and that is the honest reading.
+ * The capture ceremony (`WrangleSystem.tryCapture`) is driven only by the agent-surface
+ * `CAPTURE` verb. The socket remains a thin mirror of the browser keybind/dev bridge:
+ * it adds no target, range, or cost rule of its own — reject-don't-stretch.
  */
 type Positioned = { position: THREE.Vector3 };
 
@@ -40,7 +38,7 @@ export type AtomicSocketDiagnostics = Readonly<{
   wrangle: ReturnType<WrangleSystem['diagnostics']>;
   tiles: E6TileConsumerSystem['diagnostics'] | null;
   exhausted: number;
-  captureLever: 'absent-from-agent-surface';
+  captureLever: 'CAPTURE';
 }>;
 
 export class AtomicSocket {
@@ -129,13 +127,18 @@ export class AtomicSocket {
     return this.wrangle.movementMultiplier(enemy);
   }
 
+  /** Browser capture keybind/dev bridge — nearest exhausted machine in the authored radius. */
+  capture(position: THREE.Vector3): boolean {
+    return this.wrangle.tryCapture(position);
+  }
+
   get diagnostics(): AtomicSocketDiagnostics {
     return {
       epochId: this.epochId,
       wrangle: this.wrangle.diagnostics(),
       tiles: this.tiles?.diagnostics ?? null,
       exhausted: this.exhausted,
-      captureLever: 'absent-from-agent-surface',
+      captureLever: 'CAPTURE',
     };
   }
 }

@@ -25,6 +25,9 @@ export type StandingOrder =
   | { verb: 'SECURE_CHOICE'; choice: 'bank' | 'rush' }
   | { verb: 'CONTEXT_ACTION'; action: 'upgrade' | 'demolish'; target: { id: BuildableId; index: number } }
   | { verb: 'CONTEXT_ACTION'; action: 'fund' }
+  | { verb: 'CAPTURE' }
+  | { verb: 'BOAT_BUILD'; padId: string; buildingId: string }
+  | { verb: 'REANCHOR'; anchorId: string }
   | { verb: 'FALLBACK_IF'; threat: { enemiesGte: number }; pos: AgentVec2 };
 
 export type StandingOrderStatus = 'pending' | 'active' | 'done' | 'failed';
@@ -98,6 +101,9 @@ export type FinalVerbHandlers = {
   setWeapon: (weapon: 'rig' | 'blast') => ActionOrderResult;
   secureChoice: (choice: 'bank' | 'rush') => ActionOrderResult;
   contextAction: (order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>) => ActionOrderResult;
+  capture?: () => ActionOrderResult;
+  boatBuild?: (padId: string, buildingId: string) => ActionOrderResult;
+  reanchor?: (anchorId: string) => ActionOrderResult;
 };
 
 let installedExecutor: StandingOrdersExecutor | null = null;
@@ -116,6 +122,9 @@ export class StandingOrdersExecutor {
   private setWeapon: ((weapon: 'rig' | 'blast') => ActionOrderResult) | null = null;
   private secureChoice: ((choice: 'bank' | 'rush') => ActionOrderResult) | null = null;
   private contextAction: ((order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>) => ActionOrderResult) | null = null;
+  private capture: (() => ActionOrderResult) | null = null;
+  private boatBuild: ((padId: string, buildingId: string) => ActionOrderResult) | null = null;
+  private reanchor: ((anchorId: string) => ActionOrderResult) | null = null;
 
   constructor(
     private readonly surface: GoldRushToolSurface,
@@ -226,6 +235,9 @@ export class StandingOrdersExecutor {
     this.setWeapon = handlers.setWeapon;
     this.secureChoice = handlers.secureChoice;
     this.contextAction = handlers.contextAction;
+    this.capture = handlers.capture ?? null;
+    this.boatBuild = handlers.boatBuild ?? null;
+    this.reanchor = handlers.reanchor ?? null;
   }
 
   snapshot(): StandingOrdersView {
@@ -329,6 +341,18 @@ export class StandingOrdersExecutor {
       const result = this.contextAction?.(order) ?? { ok: false as const, reason: 'CONTEXT_ACTION is unavailable.' };
       if (result.ok) this.status(record, 'done', at);
       else this.fail(record, result.reason, at);
+      return {};
+    }
+
+    if (order.verb === 'CAPTURE' || order.verb === 'BOAT_BUILD' || order.verb === 'REANCHOR') {
+      this.status(record, 'active', at);
+      const result = order.verb === 'CAPTURE'
+        ? this.capture?.()
+        : order.verb === 'BOAT_BUILD'
+          ? this.boatBuild?.(order.padId, order.buildingId)
+          : this.reanchor?.(order.anchorId);
+      if (result?.ok) this.status(record, 'done', at);
+      else this.fail(record, result?.reason ?? `${order.verb} is unavailable.`, at);
       return {};
     }
 
@@ -530,6 +554,20 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     }
     return { verb: 'CONTEXT_ACTION', action: value.action, target: { id: value.target.id, index: value.target.index } };
   }
+  if (value.verb === 'CAPTURE') {
+    if (!exactKeys(value, ['verb'])) return schemaError(index, 'CAPTURE');
+    return { verb: 'CAPTURE' };
+  }
+  if (value.verb === 'BOAT_BUILD') {
+    if (!exactKeys(value, ['verb', 'padId', 'buildingId']) || !validId(value.padId) || !validId(value.buildingId)) {
+      return schemaError(index, 'BOAT_BUILD');
+    }
+    return { verb: 'BOAT_BUILD', padId: value.padId, buildingId: value.buildingId };
+  }
+  if (value.verb === 'REANCHOR') {
+    if (!exactKeys(value, ['verb', 'anchorId']) || !validId(value.anchorId)) return schemaError(index, 'REANCHOR');
+    return { verb: 'REANCHOR', anchorId: value.anchorId };
+  }
   if (value.verb === 'FALLBACK_IF') {
     if (!exactKeys(value, ['verb', 'threat', 'pos']) || !validPos(value.pos) || !isRecord(value.threat)) {
       return schemaError(index, 'FALLBACK_IF');
@@ -729,7 +767,14 @@ export function standingOrderIdentity(order: StandingOrder): string {
   if (order.verb === 'SECURE_CHOICE') return JSON.stringify([order.verb, order.choice]);
   if (order.verb === 'CONTEXT_ACTION') return JSON.stringify([order.verb, order.action,
     ...('target' in order ? [order.target.id, order.target.index] : [])]);
+  if (order.verb === 'CAPTURE') return JSON.stringify([order.verb]);
+  if (order.verb === 'BOAT_BUILD') return JSON.stringify([order.verb, order.padId, order.buildingId]);
+  if (order.verb === 'REANCHOR') return JSON.stringify([order.verb, order.anchorId]);
   return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
+}
+
+function validId(value: unknown): value is string {
+  return typeof value === 'string' && value.length > 0 && value.length <= 80;
 }
 
 function exactKeys(value: Record<string, unknown>, keys: string[]): boolean {

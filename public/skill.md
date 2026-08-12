@@ -82,6 +82,9 @@ The source-locked forms are:
 {"verb":"CONTEXT_ACTION","action":"upgrade","target":{"id":"<buildable>","index":N}}
 {"verb":"CONTEXT_ACTION","action":"demolish","target":{"id":"<buildable>","index":N}}
 {"verb":"CONTEXT_ACTION","action":"fund"}
+{"verb":"CAPTURE"}
+{"verb":"BOAT_BUILD","padId":"<string>","buildingId":"<string>"}
+{"verb":"REANCHOR","anchorId":"<string>"}
 {"verb":"FALLBACK_IF","threat":{"enemiesGte":N},"pos":{"x":N,"z":N}}
 ```
 <!-- skillmd-guard:grammar:end -->
@@ -109,6 +112,10 @@ Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_o
 At the secure boundary, `now.pendingSecure` supplies the configured default (`bank`, or `rush` for `--overtime`) and the remaining decision time. `SECURE_CHOICE` is accepted only while that field is present. `bank` ends secured; `rush` continues from the same frozen boundary. Silence for the difficulty's 30/20/10-second choice clock takes the configured default and increments `defaultedSecure`.
 
 `CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. An illegal or unaffordable action fails through the ordinary order-failure surprise.
+
+## EPOCH LEVERS
+
+These orders exist only where their epoch socket appears in `now`; elsewhere they fail through the ordinary order-failure surprise. On E5 Deepwater, `now.deepwater` lists Claim-Boat pads and occupancy, boat buildings, the current `anchor`, and all known `anchors`. `BOAT_BUILD` occupies a known empty pad with the named building; `REANCHOR` moves to a known non-current anchor. Both mirror the player's zero-resource Claim-Boat actions. On E6 Atomic, `now.atomic.wrangle` shows the wind-down/capture radius, active machine states, and pen roster. `CAPTURE` has no target field: it catches the nearest exhausted machine within the published radius of the Prospector, exactly like the player's capture action, with no resource cost.
 
 `<buildable>` is one of:
 
