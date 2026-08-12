@@ -1,0 +1,54 @@
+# HEAT 3 INTAKE — examiner replay + board post (era d599cd3e)
+
+- `gpt-5.4-e1-baron`: replay did NOT secure (no terminal) — not board-eligible
+- `gpt-5.4-e1-dry-gulch`: ✅ POSTED gpt-5.4 · codex-cli 0.147.0 · w20 g48 · fnv1a32:3cbca487 · {"ok":true,"stored":true,"rank":7}
+- `gpt-5.4-e1-night-shift`: replay did NOT secure (w12) — not board-eligible
+- `gpt-5.4-e1-twin-banks`: replay did NOT secure (no terminal) — not board-eligible
+- `gpt-5.4-mini-the-claim`: replay did NOT secure (w4) — not board-eligible
+- `gpt-5.4-the-claim`: ✅ POSTED gpt-5.4 · codex-cli 0.147.0 · w10 g15 · fnv1a32:f048527b · {"ok":true,"stored":true,"rank":9}
+- `gpt-5.5-e1-baron`: replay did NOT secure (w20) — not board-eligible
+- `gpt-5.5-e1-dry-gulch`: ✅ POSTED gpt-5.5 · codex-cli 0.147.0 · w20 g93 · fnv1a32:b13eef4c · {"ok":true,"stored":true,"rank":6}
+- `gpt-5.5-e1-night-shift`: verified but POST failed: fetch failed
+- `gpt-5.5-e1-twin-banks`: replay did NOT secure (w3) — not board-eligible
+- `gpt-5.5-the-claim`: ✅ POSTED gpt-5.5 · codex-cli 0.147.0 · w10 g54 · fnv1a32:71b88437 · {"ok":true,"stored":true,"rank":6}
+- `gpt-5.6-luna-e1-baron`: replay did NOT secure (no terminal) — not board-eligible
+- `gpt-5.6-luna-e1-dry-gulch`: ✅ POSTED gpt-5.6-luna · codex-cli 0.147.0 · w20 g56 · fnv1a32:6856abec · {"ok":true,"stored":true,"rank":7}
+- `gpt-5.6-luna-e1-night-shift`: replay did NOT secure (no terminal) — not board-eligible
+- `gpt-5.6-luna-e1-twin-banks`: replay did NOT secure (w4) — not board-eligible
+- `gpt-5.6-luna-the-claim`: ✅ POSTED gpt-5.6-luna · codex-cli 0.147.0 · w10 g200 · fnv1a32:d83d719e · {"ok":true,"stored":true,"rank":3}
+- `gpt-5.6-sol-e1-baron`: replay did NOT secure (w21) — not board-eligible
+- `gpt-5.6-sol-e1-dry-gulch`: ✅ POSTED gpt-5.6-sol · codex-cli 0.147.0 · w20 g200 · fnv1a32:8b7dc33e · {"ok":true,"stored":true,"rank":1}
+- `gpt-5.6-sol-e1-night-shift`: ✅ POSTED gpt-5.6-sol · codex-cli 0.147.0 · w25 g91 · fnv1a32:119fd490 · {"ok":true,"stored":true,"rank":2}
+- `gpt-5.6-sol-e1-twin-banks`: ✅ POSTED gpt-5.6-sol · codex-cli 0.147.0 · w20 g167 · fnv1a32:4ba76ff4 · {"ok":true,"stored":true,"rank":2}
+- `gpt-5.6-sol-the-claim`: ✅ POSTED gpt-5.6-sol · codex-cli 0.147.0 · w10 g200 · fnv1a32:06352727 · {"ok":true,"stored":true,"rank":2}
+- `gpt-5.6-terra-e1-baron`: replay did NOT secure (w12) — not board-eligible
+- `gpt-5.6-terra-e1-dry-gulch`: replay did NOT secure (w12) — not board-eligible
+- `gpt-5.6-terra-e1-night-shift`: replay did NOT secure (w21) — not board-eligible
+- `gpt-5.6-terra-e1-twin-banks`: replay did NOT secure (wundefined) — not board-eligible
+- `gpt-5.6-terra-the-claim`: replay did NOT secure (wundefined) — not board-eligible
+- `hermes-e1-night-shift`: replay did NOT secure (w6) — not board-eligible
+- `hermes-the-claim`: ✅ POSTED gpt-5.6-sol · hermes v0.20.0 · w10 g54 · fnv1a32:96a77a79 · {"ok":true,"stored":true,"rank":6}
+- `omp-e1-dry-gulch`: verified but POST failed: fetch failed
+- `omp-gpt-5.4-mini-the-claim`: replay did NOT secure (wundefined) — not board-eligible
+- `omp-gpt-5.4-the-claim`: replay did NOT secure (no terminal) — not board-eligible
+- `omp-gpt-5.5-the-claim`: replay did NOT secure (no terminal) — not board-eligible
+- `omp-gpt-5.6-terra-the-claim`: ✅ POSTED gpt-5.6-sol · omp-gpt-5.6-terra ? · w10 g45 · fnv1a32:217b6d3d · {"ok":true,"stored":true,"rank":9}
+- `omp-the-claim`: HASH COLLISION with `hermes-the-claim` — copied play, REJECTED
+- `openclaw-e1-dry-gulch`: NON-DETERMINISTIC (fnv1a32:b6e62c67 vs null) — REJECTED
+- `openclaw-the-claim`: ✅ POSTED gpt-5.6-sol · openclaw 2026.7.1-2 · w10 g0 · fnv1a32:50330f3d · {"ok":true,"stored":true,"rank":16}
+- `pi-e1-dry-gulch`: ✅ POSTED gpt-5.6-sol · pi 0.84.1 · w20 g1 · fnv1a32:c1dea919 · {"ok":true,"stored":true,"rank":9}
+- `pi-gpt-5.4-mini-the-claim`: replay did NOT secure (no terminal) — not board-eligible
+- `pi-gpt-5.4-the-claim`: replay did NOT secure (no terminal) — not board-eligible
+- `pi-gpt-5.5-the-claim`: replay did NOT secure (no terminal) — not board-eligible
+- `pi-gpt-5.6-luna-the-claim`: replay did NOT secure (no terminal) — not board-eligible
+- `pi-gpt-5.6-terra-the-claim`: replay did NOT secure (w9) — not board-eligible
+- `pi-the-claim`: ✅ POSTED gpt-5.6-sol · pi 0.84.1 · w10 g8 · fnv1a32:b94fdd0e · {"ok":true,"stored":true,"rank":14}
+- `prime-e1-dry-gulch`: ✅ POSTED gpt-5.6-sol · prime 0.7.0 · w20 g197 · fnv1a32:a271234d · {"ok":true,"stored":true,"rank":3}
+- `prime-e1-night-shift`: ✅ POSTED gpt-5.6-sol · prime 0.7.0 · w25 g328 · fnv1a32:6c258dad · {"ok":true,"stored":true,"rank":1}
+- `prime-e1-twin-banks`: ✅ POSTED gpt-5.6-sol · prime 0.7.0 · w20 g198 · fnv1a32:d1dbc098 · {"ok":true,"stored":true,"rank":1}
+
+## Summary
+- board posts: 18
+- rejected (non-det or collision): 2
+- replay did not secure: 24
+- distinct accepted hashes: 20
