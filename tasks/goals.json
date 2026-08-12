@@ -6960,10 +6960,12 @@
                 {
                   "id": "ap16-7-epoch-levers",
                   "title": "AP-16-7: CAPTURE/BOAT_BUILD/REANCHOR \u2014 the epoch levers reach the door (E5/E6 admission cure; discharges F-MTS-2)",
-                  "status": "queued",
+                  "status": "blocked",
+                  "blockClass": "gate-side",
+                  "blockedReason": "F-1698-1: runner completed candidate e36b8a2d but explicitly reported not READY-FOR-GATES. The master requires E5/E6 audit parity while forbidding SUPPORTED_CONTRACTS/exemptions and excluding scripts/same-game-audit.mjs plus src/agent/MechanicsManifest.ts; measured result remains equal 0 / agent-lacks 6. Candidate preserved at save/ap16-7-s1698-e36b8a2d; attended spec ruling must choose firewall widening or move parity to the admission re-probe before a corrective re-land.",
                   "taskFile": "lane-b-ap16-7-epoch-levers.md",
                   "stopNote": "STOPPED no-op in run 20260812-080147: the master's explicit sequencing check found AP-16-6B still unmerged. Preserve the master and re-queue after AP-16-6C lands.",
-                  "note_s1698": "Sequencing gate lifted by AP-16-6C merge d599cd3ea030a1e6d699f106115b1d3fdf54d775; re-queued once to lane-b after proving that lane usable."
+                  "note_s1698": "Sequencing gate lifted by AP-16-6C merge d599cd3ea030a1e6d699f106115b1d3fdf54d775; re-queued once to lane-b after proving that lane usable. Run 20260812-092833 produced e36b8a2d but explicitly ended blocked/not READY-FOR-GATES on F-1698-1, so s1698 recorded a gate-side hold and did not merge it."
                 }
               ]
             },
