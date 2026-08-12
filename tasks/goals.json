@@ -4783,6 +4783,15 @@
               "mergeHash": "5524fed8f51f84acde63901c11bf57b6fc22880f",
               "taskFile": "lane-b-f1578-1-findings-state-open-vocabulary.md",
               "gate": "none \u2014 fire-authorable from the F-1578-1 BACKLOG row and scripts/findings-state-guard.mjs; measured s1578 with the guard own exported scan() against the live ledger (5 F-IDs declared OPEN on skipped rows, 1 of them a missed conflict: F-1563-3)"
+            },
+            {
+              "id": "f1696-1-desk-live-shape-test",
+              "title": "F-1696-1: stop requiring a live slug-keyed owner-desk item; manufactured fixtures keep parser proof",
+              "status": "queued",
+              "lane": "lane-a",
+              "taskFile": "lane-a-f1696-1-desk-live-shape-test.md",
+              "authoredBy": "s1699 fire, 2026-08-12",
+              "gate": "none \u2014 fire-authorable from F-1696-1; test-only deletion of a stale live-population assertion"
             }
           ]
         }
@@ -6966,6 +6975,15 @@
                   "taskFile": "lane-b-ap16-7-epoch-levers.md",
                   "stopNote": "STOPPED no-op in run 20260812-080147: the master's explicit sequencing check found AP-16-6B still unmerged. Preserve the master and re-queue after AP-16-6C lands.",
                   "note_s1698": "Sequencing gate lifted by AP-16-6C merge d599cd3ea030a1e6d699f106115b1d3fdf54d775; re-queued once to lane-b after proving that lane usable. Run 20260812-092833 produced e36b8a2d but explicitly ended blocked/not READY-FOR-GATES on F-1698-1, so s1698 recorded a gate-side hold and did not merge it."
+                },
+                {
+                  "id": "ap16-menu-door-attribution",
+                  "title": "AP-16 audit follow-up: attribute 29 menu rows to contract reachability instead of a second buildable debt",
+                  "status": "queued",
+                  "lane": "lane-d",
+                  "taskFile": "lane-d-ap16-menu-door-attribution.md",
+                  "authoredBy": "s1699 fire, 2026-08-12",
+                  "gate": "none \u2014 owner CLEAN-SLATE ruling explicitly made this fire-authorable after AP-16-6C; audit-only and independent of blocked AP-16-7"
                 }
               ]
             },
