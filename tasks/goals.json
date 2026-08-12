@@ -7021,8 +7021,11 @@
                 {
                   "id": "ap16-8-admission-reprobe",
                   "title": "AP-16-8: re-probe the eight exemptions with the full verb set (owns the E5/E6 parity measurement per F-1698-1 ruling b); gated on 16-7",
-                  "status": "planned",
-                  "taskFile": "lane-c-ap16-8-admission-reprobe.md"
+                  "status": "queued",
+                  "lane": "lane-c",
+                  "taskFile": "lane-c-ap16-8-admission-reprobe.md",
+                  "authoredBy": "attended s1698, 2026-08-12; banked at b17e717af",
+                  "gate": "AP-16-7 merged at 031872e15fa06407be4c2170c458804a8dff2efb; the ratified AP-16 slice and F-1698-1 ruling explicitly move the E5/E6 parity measurement to this re-probe"
                 }
               ]
             },
