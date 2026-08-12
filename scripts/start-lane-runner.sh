@@ -35,6 +35,7 @@ cd "$(dirname "$0")/.." || exit 2
 ROOT="$(pwd)"
 CHECK_ONLY=0
 [ "${1:-}" = "--check" ] && CHECK_ONLY=1
+. "$ROOT/scripts/runner-processes.sh"
 
 # Kept in step with lane-runner-v3.sh's CODEX_FLOOR by scripts/runner-restart-recipe.test.sh,
 # which reds if the two drift. Deliberately NOT sourced from the runner: sourcing would execute
@@ -54,10 +55,10 @@ ver_ge() {  # $1 >= $2, dotted numeric (BSD awk; no sort -V)
 # So "another instance running. Remove if stale." at :20 means an instance GENUINELY IS running,
 # and `rmdir tasks/.runner.lock` + relaunch yields TWO runners on the same queues. That error
 # text invited the one action that compounds the damage (F-1652-1 §3); this is the cure.
-others=$(pgrep -f 'lane-runner-v3\.sh' | wc -l | tr -d ' ')
+others=$(runner_pids | wc -l | tr -d ' ')
 if [ "${others:-0}" != "0" ]; then
   echo "[start-lane-runner] REFUSING — a lane runner is already alive:"
-  pgrep -lf 'lane-runner-v3\.sh' | sed 's/^/[start-lane-runner]   /'
+  runner_pids | while read -r pid; do ps -o pid=,command= -p "$pid"; done | sed 's/^/[start-lane-runner]   /'
   echo "[start-lane-runner] Do NOT rmdir tasks/.runner.lock — the runner self-heals a real corpse"
   echo "[start-lane-runner] (lane-runner-v3.sh:13-18); a held lock means a LIVE instance."
   echo "[start-lane-runner] To replace it: kill -TERM <pid>  (its trap at :24 releases the lock),"
@@ -112,7 +113,7 @@ sleep 3
 # PPID 1 + TTY ?? is what a correctly-detached runner looks like: reparented to launchd, no
 # controlling terminal, survives this shell's exit. It is the CORRECT state, not a symptom
 # (s1651 mistook it for one and declined a safe restart for ~2h26m).
-live=$(pgrep -f 'lane-runner-v3\.sh' | head -1)
+live=$(runner_pids | head -1)
 if [ -z "${live:-}" ]; then
   echo "[start-lane-runner] FAILED — no runner process after 3s. See logs/runner-headless.log:"
   tail -5 "$ROOT/logs/runner-headless.log" | sed 's/^/[start-lane-runner]   /'

@@ -13,6 +13,7 @@ LOG="$ROOT/logs/health.log"
 STATE="$ROOT/logs/.health-state"
 mkdir -p "$ROOT/logs"
 cd "$ROOT" || exit 1
+. "$ROOT/scripts/runner-processes.sh"
 
 ts() { date +%H:%M:%S; }
 note() { echo "[health] $(date +%F) $(ts) $*" >> "$LOG"; }
@@ -21,7 +22,7 @@ alert() {
   osascript -e "display notification \"$*\" with title \"Gold Rush factory\"" >/dev/null 2>&1 || true
 }
 
-runner_alive() { pgrep -f "[l]ane-runner-v3.sh" >/dev/null 2>&1; }
+runner_alive() { [ -n "$(runner_pids)" ]; }
 fire_proc()    { pgrep -f "claude -p # Gold Rush FIRE" >/dev/null 2>&1; }
 
 queued_count()  { ls tasks/queue/main tasks/queue/lane-* tasks/queue/art 2>/dev/null | grep -c '\.md$'; }

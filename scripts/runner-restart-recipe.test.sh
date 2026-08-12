@@ -27,9 +27,19 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 HELPER="${1:-$ROOT/scripts/start-lane-runner.sh}"
 HEALTH="${2:-$ROOT/scripts/health-watch.sh}"
 RUNNER="$ROOT/scripts/lane-runner-v3.sh"
+PROCESSES="$ROOT/scripts/runner-processes.sh"
 fails=0
 ok()  { echo "  ok   — $1"; }
 bad() { echo "  FAIL — $1"; fails=$((fails+1)); }
+
+scratch="$(mktemp -d "${TMPDIR:-/tmp}/runner-processes.XXXXXX")" || exit 1
+fixture_pids=''
+cleanup() {
+  [ -z "$fixture_pids" ] || kill $fixture_pids 2>/dev/null || true
+  [ -z "$fixture_pids" ] || wait $fixture_pids 2>/dev/null || true
+  rm -rf "$scratch"
+}
+trap cleanup EXIT HUP INT TERM
 
 echo "runner-restart-recipe guard (F-1652-1 / F-1653-1)"
 
@@ -38,6 +48,48 @@ bash -n "$HELPER" 2>/dev/null && ok "start-lane-runner.sh parses" \
   || { bad "start-lane-runner.sh does not parse"; echo "RESULT: $fails failure(s)"; exit 1; }
 bash -n "$HEALTH" 2>/dev/null && ok "health-watch.sh parses" \
   || { bad "health-watch.sh does not parse"; echo "RESULT: $fails failure(s)"; exit 1; }
+bash -n "$PROCESSES" 2>/dev/null && ok "runner-processes.sh parses" \
+  || { bad "runner-processes.sh does not parse"; echo "RESULT: $fails failure(s)"; exit 1; }
+
+# --- 0a. PROCESS IDENTITY: protocol prose is not a runner ---------------------------
+. "$PROCESSES"
+printf '%s\n' '#!/bin/bash' 'while :; do sleep 1; done' > "$scratch/not-the-runner.sh"
+bash "$scratch/not-the-runner.sh" 'FIRE protocol text mentions scripts/lane-runner-v3.sh' &
+prompt_pid=$!; fixture_pids="$fixture_pids $prompt_pid"
+sleep 1
+if pgrep -f 'lane-runner-v3\.sh' | grep -qx "$prompt_pid"; then
+  ok "old broad pgrep goes red on the prompt carrier"
+else
+  bad "prompt carrier did not exercise the old broad pgrep false positive"
+fi
+if runner_pids | grep -qx "$prompt_pid"; then
+  bad "shared discriminator mistakes protocol prose for a runner"
+else
+  ok "shared discriminator rejects protocol prose"
+fi
+# --- 0b. PROCESS IDENTITY: real absolute and relative launches are runners ----------
+printf '%s\n' '#!/bin/bash' 'while :; do sleep 1; done' > "$scratch/lane-runner-v3.sh"
+bash "$scratch/lane-runner-v3.sh" &
+runner_pid=$!; fixture_pids="$fixture_pids $runner_pid"
+sleep 1
+fixture_matches="$(runner_pids | grep -x "$runner_pid")"
+[ "$(printf '%s\n' "$fixture_matches" | grep -cx "$runner_pid")" = "1" ] \
+  && ok "shared discriminator finds one absolute-path runner" \
+  || bad "shared discriminator did not find the absolute-path runner exactly once"
+[ "$(printf '%s\n' "$fixture_matches" | grep -v "^$runner_pid\$" | grep -cx .)" = "0" ] \
+  && ok "runner self-exclusion leaves zero fixture runners" \
+  || bad "runner self-exclusion left a fixture runner"
+kill "$runner_pid" 2>/dev/null; wait "$runner_pid" 2>/dev/null || true
+fixture_pids=" $prompt_pid"
+(
+  cd "$scratch" || exit 1
+  exec bash ./lane-runner-v3.sh
+) &
+runner_pid=$!; fixture_pids="$fixture_pids $runner_pid"
+sleep 1
+[ "$(runner_pids | grep -cx "$runner_pid")" = "1" ] \
+  && ok "shared discriminator accepts a relative runner path" \
+  || bad "shared discriminator rejected the relative runner path"
 
 # --- 1. CLASS: the automatic restart path goes through the helper --------------------
 if grep -qE '^[[:space:]]*nohup[[:space:]]+bash[[:space:]]+scripts/lane-runner-v3\.sh' "$HEALTH"; then

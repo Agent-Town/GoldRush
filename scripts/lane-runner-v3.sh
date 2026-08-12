@@ -5,6 +5,7 @@
 # Swap protocol: wait for current v2 task DONE -> Ctrl+C v2 -> start v3.
 set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+. "$ROOT/scripts/runner-processes.sh"
 
 lane_dirty_status() {
   git -C "$1" status --porcelain=v1 -z --untracked-files=all -- . \
@@ -119,7 +120,7 @@ LOCKDIR="$ROOT/tasks/.runner.lock"
 if ! mkdir "$LOCKDIR" 2>/dev/null; then
   # s284: self-heal a stale lock — if no OTHER runner process exists, the lock is a corpse
   # (kill→relaunch race, 2026-07-10 incident: new instance exited on the dying old one's lock).
-  others=$(pgrep -f "lane-runner-v3.sh" | grep -v "^$$\$" | wc -l | tr -d ' ')
+  others=$(runner_pids | grep -v "^$$\$" | wc -l | tr -d ' ')
   if [ "$others" = "0" ]; then
     rmdir "$LOCKDIR" 2>/dev/null
     if ! mkdir "$LOCKDIR" 2>/dev/null; then
