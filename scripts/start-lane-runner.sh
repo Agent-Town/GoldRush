@@ -51,7 +51,7 @@ ver_ge() {  # $1 >= $2, dotted numeric (BSD awk; no sort -V)
 }
 
 # ---- 1. REFUSE if a runner is already alive. NEVER clear the lock by hand. ----
-# lane-runner-v3.sh:13-18 SELF-HEALS a genuine corpse (no other runner process -> rmdir + retake).
+# lane-runner-v3.sh:120-129 SELF-HEALS a genuine corpse (no other runner process -> rmdir + retake).
 # So "another instance running. Remove if stale." at :20 means an instance GENUINELY IS running,
 # and `rmdir tasks/.runner.lock` + relaunch yields TWO runners on the same queues. That error
 # text invited the one action that compounds the damage (F-1652-1 §3); this is the cure.
@@ -60,8 +60,8 @@ if [ "${others:-0}" != "0" ]; then
   echo "[start-lane-runner] REFUSING — a lane runner is already alive:"
   runner_pids | while read -r pid; do ps -o pid=,command= -p "$pid"; done | sed 's/^/[start-lane-runner]   /'
   echo "[start-lane-runner] Do NOT rmdir tasks/.runner.lock — the runner self-heals a real corpse"
-  echo "[start-lane-runner] (lane-runner-v3.sh:13-18); a held lock means a LIVE instance."
-  echo "[start-lane-runner] To replace it: kill -TERM <pid>  (its trap at :24 releases the lock),"
+  echo "[start-lane-runner] (lane-runner-v3.sh:120-129); a held lock means a LIVE instance."
+  echo "[start-lane-runner] To replace it: kill -TERM <pid>  (its trap at :135 releases the lock),"
   echo "[start-lane-runner] wait for the lock to clear, then re-run me."
   # --check is a REPORT, not an action: it must stay runnable while the factory is healthy,
   # otherwise the only time you can exercise this script is the one time it matters.

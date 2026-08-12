@@ -4814,11 +4814,13 @@
             {
               "id": "f1701-1-runner-pid-discriminator",
               "title": "F-1701-1: runner liveness matches the actual bash script process, never a FIRE prompt containing its filename",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-d",
               "taskFile": "lane-d-f1701-1-runner-pid-discriminator.md",
               "authoredBy": "s1702 fire, 2026-08-12",
-              "gate": "none \u2014 fire-authorable factory corrective from the measured F-1701-1 restart failure; no owner or product semantics involved"
+              "gate": "none \u2014 fire-authorable factory corrective from the measured F-1701-1 restart failure; no owner or product semantics involved",
+              "mergeHash": "85ce8f22054fa51bb1e81cbb8eee28b2c45f8d8c",
+              "drainNotes": "Detached-gated and merged atomically. The shared FD-255 discriminator rejected protocol prose and found relative/absolute real Bash runners once; restart, lock, dispatch and commit-boundary fixtures stayed green. Node 23 reproduced its known file-timeout and power noise on clean main; pinned Node 26 controls passed. Five shifted law pointers were read, rebased and focused-green. Review: reviews/f1701-1-runner-pid-discriminator.md; transcript: artifacts/f1701-1-gate-s1704.txt."
             }
           ]
         }

@@ -126,7 +126,7 @@ fi
 
 # 3. Stale fire lock: STATUS line-1 ACTIVE + no fire process + file untouched >50 min.
 # F-1659-2 (s1659): this asks the SAME question as the runner's main-slot lock gate
-# (lane-runner-v3.sh:102) and used to ask it with its own anchored-prefix regex,
+# (lane-runner-v3.sh:213) and used to ask it with its own anchored-prefix regex,
 # '^Last updated.*ACTIVE\|^ACTIVE'. F-1402-1 cured the runner's copy and nobody brought
 # this one along — the sibling-script class. Measured against all of STATUS.md's archives:
 #   old predicate: 134/1432 handoff archives FALSE-POSITIVE (a cleared lock read as live),
