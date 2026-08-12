@@ -41,10 +41,16 @@ test('same-game audit follows the door grammar through the final AP-16 verbs', (
     row.contract === contract && row.surface === surface && row.direction === direction
       && `${row['humans-get']} ${row['agents-get']}`.includes(text));
 
-  const reachable = new Set(rows.filter((row) => row.surface === 'verb'
-    && row['humans-get'] === 'browser can launch the contract' && row.direction === 'equal').map((row) => row.contract));
-  assert.equal(rows.filter((row) => row.surface === 'buildable' && reachable.has(row.contract)
-    && row['humans-get'].startsWith('browser menu') && row.direction !== 'equal').length, 0);
+  const reachability = new Map(rows.filter((row) => row.surface === 'verb'
+    && (row['humans-get'].includes('launch the contract') || row['humans-get'].includes('unavailable contract')))
+    .map((row) => [row.contract, row.direction]));
+  const menuGaps = rows.filter((row) => row.surface === 'buildable'
+    && row['humans-get'].startsWith('browser menu') && row.direction !== 'equal');
+  const independentMenuGaps = menuGaps.filter((row) => reachability.get(row.contract) === 'equal');
+  const reachabilityDerivedMenuGaps = menuGaps.filter((row) => reachability.get(row.contract) === 'agent-lacks');
+  assert.equal(independentMenuGaps.length + reachabilityDerivedMenuGaps.length, menuGaps.length,
+    'every menu gap must be independently attributable or downstream of contract reachability');
+  assert.equal(independentMenuGaps.length, 0);
   assert.equal(rows.filter((row) => row.contract === 'the-claim' && row.surface === 'choice'
     && row.direction === 'equal' && `${row['humans-get']} ${row['agents-get']}`.includes('PICK_UPGRADE')).length, 2,
   'ap16-2b pick must be reachable without a contradictory tape row');
