@@ -5,6 +5,116 @@
 # Swap protocol: wait for current v2 task DONE -> Ctrl+C v2 -> start v3.
 set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+lane_dirty_status() {
+  git -C "$1" status --porcelain=v1 -z --untracked-files=all -- . \
+    ':(exclude).wrangler' \
+    ':(exclude)logs/factory-usage.json' \
+    ':(exclude)logs/usage-history.jsonl'
+}
+
+file_identity() {
+  if [ "$(uname -s)" = "Darwin" ]; then stat -f '%d:%i' "$1"; else stat -c '%d:%i' "$1"; fi
+}
+
+capture_lane_baseline() {
+  local wd="$1" baseline="$2" record xy path paired identity hash
+  lane_dirty_status "$wd" > "$baseline" || return 1
+  : > "$baseline.ids"
+  : > "$baseline.hashes"
+  while IFS= read -r -d '' record; do
+    xy="${record:0:2}"; path="${record:3}"
+    if [ -f "$wd/$path" ]; then
+      identity="$(file_identity "$wd/$path" 2>/dev/null)"
+      hash="$(git hash-object --no-filters -- "$wd/$path" 2>/dev/null)"
+      [ -z "$identity" ] || printf '%s\0%s\0' "$identity" "$path" >> "$baseline.ids"
+      [ -z "$hash" ] || printf '%s\0%s\0' "$hash" "$path" >> "$baseline.hashes"
+    fi
+    case "$xy" in *R*|*C*) IFS= read -r -d '' paired || true ;; esac
+  done < "$baseline"
+}
+
+commit_lane_delta() {
+  local wd="$1" baseline="$2" message="$3" log="$4"
+  local delta record xy path paired baseline_path identity hash baseline_identity baseline_hash ignored_path withheld=0
+  # Git paths cannot be empty; the sentinel keeps Bash 3.2 + `set -u` happy on a clean lane.
+  local -a baseline_paths=('')
+  local -a baseline_identities=('')
+  local -a baseline_hashes=('')
+  delta="$(mktemp "${TMPDIR:-/tmp}/lane-runner-delta-XXXXXX")" || return 1
+
+  while IFS= read -r -d '' record; do
+    xy="${record:0:2}"; path="${record:3}"
+    baseline_paths+=("$path")
+    case "$xy" in
+      *R*|*C*) IFS= read -r -d '' paired || true; baseline_paths+=("$paired") ;;
+    esac
+  done < "$baseline"
+  if [ -f "$baseline.ids" ]; then
+    while IFS= read -r -d '' baseline_identity && IFS= read -r -d '' ignored_path; do
+      baseline_identities+=("$baseline_identity")
+    done < "$baseline.ids"
+  fi
+  if [ -f "$baseline.hashes" ]; then
+    while IFS= read -r -d '' baseline_hash && IFS= read -r -d '' ignored_path; do
+      baseline_hashes+=("$baseline_hash")
+    done < "$baseline.hashes"
+  fi
+
+  is_baseline_path() {
+    local wanted="$1"
+    for baseline_path in "${baseline_paths[@]}"; do
+      [ "$baseline_path" = "$wanted" ] && return 0
+    done
+    return 1
+  }
+
+  has_baseline_identity() {
+    local candidate="$1"
+    [ -f "$wd/$candidate" ] || return 1
+    identity="$(file_identity "$wd/$candidate" 2>/dev/null)"
+    hash="$(git hash-object --no-filters -- "$wd/$candidate" 2>/dev/null)"
+    for baseline_identity in "${baseline_identities[@]}"; do
+      [ -n "$identity" ] && [ "$baseline_identity" = "$identity" ] && return 0
+    done
+    for baseline_hash in "${baseline_hashes[@]}"; do
+      [ -n "$hash" ] && [ "$baseline_hash" = "$hash" ] && return 0
+    done
+    return 1
+  }
+
+  while IFS= read -r -d '' record; do
+    xy="${record:0:2}"; path="${record:3}"; paired=''
+    case "$xy" in *R*|*C*) IFS= read -r -d '' paired || true ;; esac
+    if is_baseline_path "$path" || has_baseline_identity "$path" || \
+       { [ -n "$paired" ] && is_baseline_path "$paired"; }; then
+      printf '[lane-runner-v3] withheld baseline-dirty path: %s\n' "$path" >> "$log"
+      [ -n "$paired" ] && printf '[lane-runner-v3] withheld baseline-dirty path: %s\n' "$paired" >> "$log"
+      withheld=$((withheld+1))
+    else
+      printf '%s\0' "$path" >> "$delta"
+      [ -n "$paired" ] && printf '%s\0' "$paired" >> "$delta"
+    fi
+  done < <(lane_dirty_status "$wd")
+
+  if [ -s "$delta" ]; then
+    GIT_LITERAL_PATHSPECS=1 git -C "$wd" add -A --pathspec-from-file="$delta" --pathspec-file-nul 2>>"$log"
+    GIT_LITERAL_PATHSPECS=1 git -C "$wd" commit -q -m "$message" --pathspec-from-file="$delta" --pathspec-file-nul >>"$log" 2>&1 || true
+  fi
+  rm -f "$delta"
+  [ "$withheld" -eq 0 ] || printf '[lane-runner-v3] withheld %s baseline ownership collision(s)\n' "$withheld" >> "$log"
+}
+
+# The guard invokes only the commit boundary against scratch repositories.
+if [ "${LANE_RUNNER_COMMIT_PROBE:-}" = "commit" ]; then
+  commit_lane_delta "$1" "$2" "$3" "$4"
+  exit $?
+fi
+if [ "${LANE_RUNNER_COMMIT_PROBE:-}" = "capture" ]; then
+  capture_lane_baseline "$1" "$2"
+  exit $?
+fi
+
 LOCKDIR="$ROOT/tasks/.runner.lock"
 if ! mkdir "$LOCKDIR" 2>/dev/null; then
   # s284: self-heal a stale lock — if no OTHER runner process exists, the lock is a corpse
@@ -212,6 +322,15 @@ while true; do
     log="$ROOT/tasks/runs/$stamp-$slot-$name.log"
     echo "[lane-runner-v3] $stamp START $slot :: $name (log: $log)"
     (
+      baseline=''
+      if [ "$slot" != "main" ] && [ "$slot" != "art" ] && [ "$wd" != "$ROOT" ]; then
+        baseline="$(mktemp "${TMPDIR:-/tmp}/lane-runner-baseline-XXXXXX")" || exit 1
+        trap 'rm -f "$baseline" "$baseline.ids" "$baseline.hashes"' EXIT
+        if ! capture_lane_baseline "$wd" "$baseline"; then
+          echo "[lane-runner-v3] $slot: baseline capture failed; Codex not launched" >> "$log"
+          exit 1
+        fi
+      fi
       # s283 (owner-authorized 2026-07-10): per-master model/effort routing — masters may carry
       # a "CODEX: model=<m> effort=<e>" line; absent = terra@medium (sol@ultra is REQUESTED, never ambient).
       cx_model=$(grep -m1 '^CODEX:' "$run" 2>/dev/null | sed -n 's/.*model=\([^ ]*\).*/\1/p')
@@ -281,7 +400,11 @@ while true; do
             # (.gitignore:15) and is NOT a git worktree, so its `.` pathspec is ignored in full and
             # this commit correctly stages nothing — that slot's output is untracked EVERY batch by
             # design (F-1045-1) and wants the salvage cure, not this one.
-            ( cd "$wd" && git add -A -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' ; git commit -q -m "runner($slot): $name" -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' ) >>"$log" 2>&1 || true
+            if [ "$slot" = "art" ]; then
+              ( cd "$wd" && git add -A -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' ; git commit -q -m "runner($slot): $name" -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' ) >>"$log" 2>&1 || true
+            else
+              commit_lane_delta "$wd" "$baseline" "runner($slot): $name" "$log"
+            fi
           fi
         fi
         mv "$run" "$ROOT/tasks/done/$stamp-$name"
