@@ -35,6 +35,7 @@ export type DeepwaterSocketDiagnostics = Readonly<{
   tileId: string;
   size: number;
   anchor: { id: string; x: number; z: number };
+  anchors: readonly { id: string; x: number; z: number }[];
   pads: readonly { id: string; occupied: boolean }[];
   boatBuildings: readonly { buildingId: string; padId: string; x: number; z: number }[];
   storm: ReturnType<DeepwaterClaimTile['snapshot']>['storm'];
@@ -147,6 +148,7 @@ export class DeepwaterSocket {
       tileId: snapshot.tileId,
       size: snapshot.size,
       anchor: { ...snapshot.boat.anchor },
+      anchors: this.contract.tileParams.deepwater!.claimBoat.anchors.map((anchor) => ({ ...anchor })),
       pads: snapshot.boat.pads.map(({ id, occupied }) => ({ id, occupied })),
       boatBuildings: snapshot.boat.buildings.map((building) => ({ ...building })),
       storm: snapshot.storm,

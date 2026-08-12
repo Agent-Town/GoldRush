@@ -101,15 +101,17 @@ for (const contract of atomic.contracts) {
       expect(spawned.every((enemy) => socket.isHostile(enemy))).toBe(false);
       expect(spawned.every((enemy) => enemy.isAlive)).toBe(true);
       expect(spawned.every((enemy) => socket.movementMultiplier(enemy) === Balance.wrangle.exhaustedSpeedMultiplier)).toBe(true);
-      // Nothing captured them, because nothing CAN: the pen stays empty for the whole run.
+      // AP-16-7: the agent-surface lever now closes the consumer loop without changing its law.
       expect(socket.diagnostics.wrangle.pen.total).toBe(0);
-      expect(socket.diagnostics.captureLever).toBe('absent-from-agent-surface');
+      expect(socket.diagnostics.captureLever).toBe('CAPTURE');
+      expect(socket.capture(spawned[0].position)).toBe(true);
+      expect(socket.diagnostics.wrangle.pen.total).toBe(1);
 
       // The manifest must keep saying so, in the consumer's own numbers.
       const captureRule = mechanics.rules.find(({ id }: { id: string }) => id === 'wrangle_capture_unreachable');
       expect(captureRule.data.aliveCap).toBe(Balance.waves.aliveCap);
-      expect(captureRule.data.agentOperations).toEqual([]);
-      expect(mechanics.buildables).toBeUndefined();
+      expect(captureRule.data.consumerLever).toBe('WrangleSystem.tryCapture');
+      expect(mechanics.buildables).toEqual(expect.any(Array));
 
       // Admission is still refused, and that is the point: three of these four now run
       // deterministically, and running them is what proved they are not agent-ready.

@@ -148,8 +148,9 @@ for (const contract of deepwater.contracts) {
         // Dredge-Queen's wave was offered to a boss that cannot be constructed outside a browser.
         expect(first.diagnostics.bossHandoffsRefused).toBeGreaterThan(0);
 
-        // F-ER01-E5-5: both boat levers are real — each accepts a valid move and rejects an
-        // invalid one — and neither is reachable from the agent surface.
+        // F-ER01-E5-5, closed by AP-16-7: both boat levers keep the consumer's accept/reject
+        // law, and the headless door now exposes their diagnostics and verbs without admitting
+        // the contract ahead of the separate re-probe.
         const boat = contract.tileParams.deepwater.claimBoat;
         const other = boat.anchors.find(({ id }: { id: string }) => id !== boat.initialAnchorId)!;
         expect(first.reanchor(other.id)).toBe(true);
@@ -158,9 +159,19 @@ for (const contract of deepwater.contracts) {
         expect(first.placeBoatBuilding(boat.pads[0].id, 'turret')).toBe(true);
         expect(first.placeBoatBuilding(boat.pads[0].id, 'sentry_beacon')).toBe(false);
         expect(first.placeBoatBuilding('no-such-pad', 'turret')).toBe(false);
+        const door = new HeadlessContractSim({ contractId: contract.id, seed: 'ap16-7-e5-census', admissionProbe: true });
+        expect(door.currentTurn().view.now.deepwater).toMatchObject({
+          pads: expect.any(Array),
+          anchors: expect.any(Array),
+          anchor: expect.any(Object),
+        });
+        for (const order of [
+          { verb: 'BOAT_BUILD', padId: boat.pads[1].id, buildingId: 'turret' },
+          { verb: 'REANCHOR', anchorId: other.id },
+        ]) expect(door.submitOrders([order]).outcome.ok).toBe(true);
         const levers = manifest.rules.find(({ id }: { id: string }) => id === 'deepwater_levers_unreachable');
-        expect(levers.data.agentOperations).toEqual([]);
-        expect(manifest.buildables).toBeUndefined();
+        expect(levers.data.consumerLevers).toEqual(['ClaimBoat.placeBuilding', 'ClaimBoat.reanchor']);
+        expect(manifest.buildables).toEqual(expect.any(Array));
       } else {
         expect(socketRules).toEqual([]);
         // The variants carry `tileParams.deepwater` too. The socket must refuse them exactly as

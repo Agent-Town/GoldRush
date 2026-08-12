@@ -165,6 +165,8 @@ export type HeadlessAgentView = AgentView & {
     overtime?: true;
     pendingOffer?: Array<{ id: string; name: string; effectText: string }>;
     expiresAtSimMs?: number;
+    deepwater?: DeepwaterSocket['diagnostics'];
+    atomic?: AtomicSocket['diagnostics'];
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -511,6 +513,15 @@ export class HeadlessContractSim {
       setWeapon: (weapon) => this.setWeapon(weapon),
       secureChoice: (choice) => this.answerSecureChoice(choice),
       contextAction: (order) => this.contextAction(order),
+      capture: () => this.atomic?.capture(this.prospector.position)
+        ? { ok: true }
+        : { ok: false, reason: 'CAPTURE requires an exhausted machine within capture range.' },
+      boatBuild: (padId, buildingId) => this.deepwater?.placeBoatBuilding(padId, buildingId)
+        ? { ok: true }
+        : { ok: false, reason: 'BOAT_BUILD requires a known unoccupied pad and a building id.' },
+      reanchor: (anchorId) => this.deepwater?.reanchor(anchorId)
+        ? { ok: true }
+        : { ok: false, reason: 'REANCHOR requires a known anchor other than the current anchor.' },
     });
     bindStandingUpgradePicker((id) => {
       const applied = this.progression.applyUpgrade(id);
@@ -805,6 +816,8 @@ export class HeadlessContractSim {
     const receipt = this.surface.tools.view();
     if (!receipt.outcome.ok || !receipt.outcome.state) throw new Error('THE VIEW was unavailable.');
     const view = receipt.outcome.state as HeadlessAgentView;
+    if (this.deepwater) view.now.deepwater = this.deepwater.diagnostics;
+    if (this.atomic) view.now.atomic = this.atomic.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
