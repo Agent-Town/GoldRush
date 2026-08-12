@@ -4804,6 +4804,7 @@
               "lane": "lane-d",
               "taskFile": "lane-d-f1700-1-runner-delta-autocommit.md",
               "authoredBy": "s1700 fire, 2026-08-12",
+              "note_s1700": "The closing ledger battery ran after dispatch and caught one authoring defect: the banked master omitted the required F-1407-1 / FACTORY-CHURN pre-flight wording. Lane-d had been instrument-proven clean immediately before the copy and the live run was already past pre-flight, so no work was lost and implementation scope is unchanged. The banked master now carries the verbatim lane template plus the no-op guard. The strict queue gate correctly refuses because run 20260812-103037 is live: DO NOT re-copy or dispatch a second version; judge the current run on its own report and drain evidence.",
               "gate": "none \u2014 fire-authorable factory corrective from the measured F-1700-1 runner sweep; no owner or product semantics involved"
             }
           ]
