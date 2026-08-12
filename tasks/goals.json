@@ -6852,13 +6852,13 @@
               "status": "blocked",
               "taskFile": "lane-d-version-rigor.md",
               "blockClass": "gate-side",
-              "blockedReason": "F-1712-1: s1712 detached gate found six adjacent desktop/mobile failures because field-book and milk-county live-submission fixtures still declare harnesses without versions. Lift only after lane-a-f1712-1-version-rigor-fixtures.md merges and both affected specs pass on both projects."
+              "blockedReason": "F-1712-1: s1712 detached gate found six adjacent desktop/mobile failures because field-book and milk-county live-submission fixtures still declare harnesses without versions. Lift only after the fixture corrective merges and both affected specs pass on both projects."
             },
             {
               "id": "f1712-1-version-rigor-fixtures",
               "title": "F-1712-1: live standings test fixtures declare harness versions before the version-rigor validator lands",
               "status": "queued",
-              "taskFile": "lane-a-f1712-1-version-rigor-fixtures.md"
+              "taskFile": "lane-a-f1712-1-standings-fixtures.md"
             }
           ],
           "subgoals": [

@@ -41,4 +41,4 @@ All three candidate paths are LANE-TOUCHED only. Main did not move any of them a
 
 ## Findings
 
-- **F-1712-1 — BLOCKING, corrective queued.** `e2e/field-book.spec.ts:95-98` posts four harness-bearing stacks without `harnessVersion`; `e2e/milk-county-board.spec.ts:114-116` does the same in two shared party fixtures. The candidate returns 400 for those submissions, causing the Field Book aggregation test and two party tests to fail on both projects. Corrective: `tasks/lane-a-f1712-1-version-rigor-fixtures.md`. Add fixture versions only; do not weaken the validator or reclassify historical stored rows.
+- **F-1712-1 — BLOCKING, corrective queued.** `e2e/field-book.spec.ts:95-98` posts four harness-bearing stacks without `harnessVersion`; `e2e/milk-county-board.spec.ts:114-116` does the same in two shared party fixtures. The candidate returns 400 for those submissions, causing the Field Book aggregation test and two party tests to fail on both projects. Corrective: `tasks/lane-a-f1712-1-standings-fixtures.md`. Add fixture versions only; do not weaken the validator or reclassify historical stored rows.
