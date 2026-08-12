@@ -1,8 +1,8 @@
 # F-1713-1 — run-guards outer child budget
 
-**Slice:** `lane-d-f1713-1-run-guards-outer-budget.md`  
-**Branch / tip:** `lane/d` / `49617974f48f47131691cf784396654d90076b60`  
-**Merge:** `aaab5ef01d5a09f543d5ffecd95ba90d5552d2e6`  
+**Slice:** `lane-d-f1713-1-run-guards-outer-budget.md`
+**Branch / tip:** `lane/d` / `49617974f48f47131691cf784396654d90076b60`
+**Merge:** `aaab5ef01d5a09f543d5ffecd95ba90d5552d2e6`
 **Verdict:** **MERGED — each guard may now use up to 15 minutes without changing any per-test budget or guard behavior.**
 
 ## What it does
