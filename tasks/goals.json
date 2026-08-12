@@ -6983,10 +6983,14 @@
                 {
                   "id": "ap16-menu-door-attribution",
                   "title": "AP-16 audit follow-up: attribute 29 menu rows to contract reachability instead of a second buildable debt",
-                  "status": "queued",
+                  "status": "merged",
                   "lane": "lane-d",
                   "taskFile": "lane-d-ap16-menu-door-attribution.md",
                   "authoredBy": "s1699 fire, 2026-08-12",
+                  "mergeHash": "f07f57552fa3b7efb433674a75a13dff18076ed9",
+                  "review": "reviews/ap16-menu-door-attribution.md",
+                  "drainedBy": "s1700 fire, 2026-08-12",
+                  "drainNotes": "Merged after detached gating: typecheck and build rc=0, focused audit 3/3, full pre/post JSON SHA-256 identical, and node guards 458 tests / 453 pass / 0 fail / 5 intentional fire-shell skips. Report now states 0 independent menu gaps and 29 rows downstream of 5 admission refusals without changing any of 1,095 row records.",
                   "gate": "none \u2014 owner CLEAN-SLATE ruling explicitly made this fire-authorable after AP-16-6C; audit-only and independent of blocked AP-16-7"
                 }
               ]
