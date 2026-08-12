@@ -1,6 +1,6 @@
 # F-1701-1 — identify actual runner processes, not protocol text
 
-**FIRE-AUTHORED s1702 (attended review welcome).**  
+**FIRE-AUTHORED s1702 (attended review welcome).**
 **CODEX: model=gpt-5.6-sol effort=medium**
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-d`.
