@@ -351,15 +351,21 @@ function markdown(result) {
     if (entry.direction !== 'equal' && entry.direction !== 'not-offered') counts[entry.contract] = (counts[entry.contract] ?? 0) + 1;
     return counts;
   }, {})).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 5);
-  const entryGaps = result.rows.filter((entry) => entry['agents-get'] === 'headless rejects the contract before play').length;
-  const manifestMenuGaps = result.rows.filter((entry) =>
-    entry.surface === 'buildable' && entry['humans-get'].startsWith('browser menu') && entry.direction !== 'equal').length;
+  const reachabilityRows = result.rows.filter((entry) => entry.surface === 'verb'
+    && (entry['humans-get'].includes('launch the contract') || entry['humans-get'].includes('unavailable contract')));
+  const reachabilityByContract = new Map(reachabilityRows.map((entry) => [entry.contract, entry.direction]));
+  const browserOfferedDoorRefusals = reachabilityRows.filter((entry) => entry.direction === 'agent-lacks').length;
+  const jointlyNotOffered = reachabilityRows.filter((entry) => entry.direction === 'not-offered').length;
+  const divergentMenuRows = result.rows.filter((entry) =>
+    entry.surface === 'buildable' && entry['humans-get'].startsWith('browser menu') && entry.direction !== 'equal');
+  const independentMenuGaps = divergentMenuRows.filter((entry) => reachabilityByContract.get(entry.contract) === 'equal');
+  const reachabilityDerivedMenuGaps = divergentMenuRows.filter((entry) => reachabilityByContract.get(entry.contract) === 'agent-lacks');
+  const reachabilityDerivedRefusals = new Set(reachabilityDerivedMenuGaps.map((entry) => entry.contract)).size;
   const newlyEnumeratedTapeActions = tapeActions.filter((action) =>
     !['weapon_toggle', 'research_pick', 'research_skip', 'death_action', 'secure_choice'].includes(action)
       && !doorVerbs.includes(action.toUpperCase()));
-  const reachability = result.rows.filter((entry) => entry.surface === 'verb'
-    && (entry['humans-get'].includes('launch the contract') || entry['humans-get'].includes('unavailable contract')))
-    .reduce((counts, entry) => ({ ...counts, [entry.direction]: (counts[entry.direction] ?? 0) + 1 }), {});
+  const reachability = reachabilityRows.reduce((counts, entry) =>
+    ({ ...counts, [entry.direction]: (counts[entry.direction] ?? 0) + 1 }), {});
   const admitted = result.admission.measurements.filter((entry) =>
     entry.booted && entry.firstView && entry.terminal && !entry.error).length;
   const modeExemptions = result.admission.exemptions.filter((exemption) => result.rows.some((entry) =>
@@ -384,8 +390,8 @@ function markdown(result) {
     '',
     '## New divergence classes beyond the seed',
     '',
-    `- **Contract reachability:** ${entryGaps} browser-offered contracts are rejected by the headless door; ${result.summary['not-offered']} contracts are refused by both species and sit outside the same-game universe.`,
-    `- **Browser-menu versus door:** ${manifestMenuGaps} buildable rows disagree even after separating the browser menu from the contract manifest.`,
+    `- **Contract reachability:** ${browserOfferedDoorRefusals} browser-offered contracts are rejected by the headless door; ${jointlyNotOffered} contracts are refused by both species and sit outside the same-game universe.`,
+    `- **Browser-menu versus door:** ${independentMenuGaps.length} independent buildable rows disagree; ${reachabilityDerivedMenuGaps.length} rows are downstream of ${reachabilityDerivedRefusals} contract-admission refusals today.`,
     '- **Build orientation:** human `place_build` tapes and standing-order `BUILD` both carry `rotationSteps` 0..3; omission defaults to 0.',
     `- **Additional tape-only actions:** ${newlyEnumeratedTapeActions.filter((action) => action !== 'place_build' && !tapeExemptActions.has(action)).map((action) => `\`${action}\``).join(', ')} have no matching standing-order verb or cited exemption.`,
     '',
