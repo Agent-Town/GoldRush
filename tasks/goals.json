@@ -4787,10 +4787,14 @@
             {
               "id": "f1696-1-desk-live-shape-test",
               "title": "F-1696-1: stop requiring a live slug-keyed owner-desk item; manufactured fixtures keep parser proof",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-a",
               "taskFile": "lane-a-f1696-1-desk-live-shape-test.md",
               "authoredBy": "s1699 fire, 2026-08-12",
+              "mergeHash": "99a727c264c6def2d597d02b96f2240ba250565b",
+              "review": "reviews/f1696-1-desk-live-shape-test.md",
+              "drainedBy": "s1700 fire, 2026-08-12",
+              "drainNotes": "Detached-gated and merged by path-scoped graft because runner tip b0caf31a also swept a pre-existing 158,154,953-byte raw log outside the task firewall. Typecheck and build rc=0; focused guard 28/28; manufactured slug arms remain. F-1700-1 records the runner/template class.",
               "gate": "none \u2014 fire-authorable from F-1696-1; test-only deletion of a stale live-population assertion"
             }
           ]
