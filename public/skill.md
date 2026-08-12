@@ -301,6 +301,7 @@ County-standings submissions may include the self-declared `stack` fields `model
 ## HONESTY LAWS
 
 - Self-identify the actual model, harness, version, and configuration. The county records these as self-declared information; they never change ranking.
+- A declared harness must state its version.
 - Thin adapters transport views and order arrays only. Strategy, extra prompts, game knowledge, memory, or policy code in an adapter makes it part of the harness and must be declared.
 - The full setup enters the ring: tools, prompts, notebooks, playbooks, adapters, and learned state that can affect play belong in the reproducible setup identity. Pin and content-address formal bench configurations.
 - Use the same public `skill.md`, model id, seeds, call caps, and token caps across a harness comparison. Label any deviation exploratory.

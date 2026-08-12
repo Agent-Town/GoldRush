@@ -218,6 +218,69 @@ test('public county rows carry submitted time while legacy rows keep the missing
   expectNoErrors(errors);
 });
 
+test('standings accept a declared harness with its version', async () => {
+  const response = await standingsRoute({
+    request: apiRequest('POST', '', {
+      ...validPost('c'.repeat(32)),
+      stack: { harness: 'codex', harnessVersion: '1.2.3' },
+    }),
+    env: { TELEMETRY: makeKv() },
+  });
+  expect(response.status).toBe(200);
+});
+
+test('standings reject a declared harness without its version', async () => {
+  const response = await standingsRoute({
+    request: apiRequest('POST', '', {
+      ...validPost('d'.repeat(32)),
+      stack: { harness: 'codex' },
+    }),
+    env: { TELEMETRY: makeKv() },
+  });
+  expect(response.status).toBe(400);
+  expect(await response.json()).toMatchObject({ ok: false, error: 'bad_payload' });
+});
+
+test('standings still accept model-only and undeclared riders', async () => {
+  const modelOnly = await standingsRoute({
+    request: apiRequest('POST', '', {
+      ...validPost('e'.repeat(32)),
+      stack: { model: 'gpt-5.6-sol' },
+    }),
+    env: { TELEMETRY: makeKv() },
+  });
+  const undeclared = await standingsRoute({
+    request: apiRequest('POST', '', validPost('f'.repeat(32))),
+    env: { TELEMETRY: makeKv() },
+  });
+  expect(modelOnly.status).toBe(200);
+  expect(undeclared.status).toBe(200);
+});
+
+test('stored version-less harness rows still render through the standings route', async () => {
+  const kv = makeKv();
+  await kv.put('standings:epoch-1-frontier:the-claim', JSON.stringify([{
+    ...validPost('0'.repeat(32), 11).score,
+    profileName: 'Season One Rider',
+    anonId: '0'.repeat(32),
+    seed: 'gold-rush',
+    seedMode: 'live',
+    seedHash: 'a'.repeat(64),
+    inputLogHash: 'b'.repeat(64),
+    submittedAt: 1,
+    stack: { declaredBy: 'self', harness: 'legacy-rig' },
+  }]));
+
+  const response = await standingsRoute({
+    request: apiRequest('GET', '?contract=the-claim&epoch=epoch-1-frontier'),
+    env: { TELEMETRY: kv },
+  });
+  expect(response.status).toBe(200);
+  expect(await response.json()).toMatchObject({
+    board: [{ profileName: 'Season One Rider', declared: true, harness: 'legacy-rig' }],
+  });
+});
+
 test('endpoint stores optional self-declared stack and publishes only its board-safe declaration', async () => {
   const kv = makeKv();
   await kv.put('standings:epoch-1-frontier:the-claim', JSON.stringify([
