@@ -111,9 +111,9 @@ function collectErrors(page: Page): { console: string[]; page: string[] } {
 }
 
 const RIDERS = {
-  pair: [{ name: 'Ada' }, { name: 'Cedar Jack', stack: { model: 'gpt-5.6-sol', harness: 'codex' } }],
+  pair: [{ name: 'Ada' }, { name: 'Cedar Jack', stack: { model: 'gpt-5.6-sol', harness: 'codex', harnessVersion: 'test' } }],
   humans: [{ name: 'Ada' }, { name: 'Robin' }],
-  agents: [{ name: 'Rig A', stack: { model: 'gpt-5.6-sol' } }, { name: 'Rig B', stack: { harness: 'gr-sim' } }],
+  agents: [{ name: 'Rig A', stack: { model: 'gpt-5.6-sol' } }, { name: 'Rig B', stack: { harness: 'gr-sim', harnessVersion: 'test' } }],
   trio: [{ name: 'Ada' }, { name: 'Robin' }, { name: 'Cedar Jack', stack: { model: 'gpt-5.6-sol' } }],
 };
 

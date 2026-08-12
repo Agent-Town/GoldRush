@@ -92,10 +92,10 @@ test('minds and rigs aggregate the same standings without changing county rankin
   const kv = makeKv();
   const contracts = ['the-claim', 'e1-dry-gulch', 'e1-night-shift'];
   const stacks = [
-    { model: 'mind-a', harness: 'rig-x', tokensIn: 10, tokensOut: 1, calls: 1 },
-    { model: 'mind-a', harness: 'rig-y', tokensIn: 20, tokensOut: 2, calls: 2 },
-    { model: 'mind-b', harness: 'rig-x', tokensIn: 30, tokensOut: 3, calls: 3 },
-    { model: 'mind-b', harness: 'rig-y' },
+    { model: 'mind-a', harness: 'rig-x', harnessVersion: 'test', tokensIn: 10, tokensOut: 1, calls: 1 },
+    { model: 'mind-a', harness: 'rig-y', harnessVersion: 'test', tokensIn: 20, tokensOut: 2, calls: 2 },
+    { model: 'mind-b', harness: 'rig-x', harnessVersion: 'test', tokensIn: 30, tokensOut: 3, calls: 3 },
+    { model: 'mind-b', harness: 'rig-y', harnessVersion: 'test' },
   ];
   const crownByContract = [0, 3, 1];
   let fixtureIndex = 0;
