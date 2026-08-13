@@ -1,7 +1,8 @@
 # Task F-1742-1: release headless heroes from landmark starts (LANE-D, commit prefix `fix:`)
 
 **FIRE-AUTHORED s1744 (attended review welcome).**
-**CODEX: model=gpt-5.6-sol effort=high**
+**RE-DISPATCHED s1744 AS ATTEMPT 2 WITH A CHANGED PREMISE (§7.5):** attempt 1 was terminated before edits after its run banner proved the bold Markdown wrapper hid this routing header from the runner's exact `^CODEX:` parser. The zero-diff done-move is retained as evidence; attempt 2 carries the parseable header below.
+CODEX: model=gpt-5.6-sol effort=high
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-d`.
 
