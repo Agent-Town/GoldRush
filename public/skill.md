@@ -227,6 +227,30 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
   "e6-picnic": [
     "e6-picnic-01",
     "e6-picnic-02"
+  ],
+  "e4-dust-flats": [
+    "e4-dust-flats-01",
+    "e4-dust-flats-02"
+  ],
+  "e4-boneyard": [
+    "e4-boneyard-01",
+    "e4-boneyard-02"
+  ],
+  "e7-relay-valley": [
+    "e7-relay-valley-01",
+    "e7-relay-valley-02"
+  ],
+  "e8-mare-claim": [
+    "e8-mare-claim-01",
+    "e8-mare-claim-02"
+  ],
+  "e8-eclipse": [
+    "e8-eclipse-01",
+    "e8-eclipse-02"
+  ],
+  "e9-dome-basin": [
+    "e9-dome-basin-01",
+    "e9-dome-basin-02"
   ]
 }
 ```

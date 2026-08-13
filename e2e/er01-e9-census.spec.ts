@@ -30,7 +30,10 @@ for (const contract of redfields.contracts) {
     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
     try {
       const gap = SIGNATURE_GAPS[contract.id]!;
-      expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
+      const admitted = contract.id === 'e9-dome-basin';
+      const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+      if (admitted) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
+      else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
       if (gap.dependency) {
         expect(contract.tileParams.engineDependencies).toEqual([
           expect.objectContaining({ dep: gap.dependency, status: 'missing' }),
@@ -184,10 +187,13 @@ for (const contract of redfields.contracts) {
       } else {
         expect(E9CanalSocket.create(loadContract(contract.id), new EnemyPool(), new Economy())).toBeNull();
       }
-      for (const suffix of ['01', '02']) {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed: `${contract.id}-${suffix}` })).toThrow(
-          new RegExp(`AP-07 supports only .*received ${contract.id}`),
-        );
+      for (const seed of seeds) {
+        if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
+        else {
+          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
+            new RegExp(`AP-07 supports only .*received ${contract.id}`),
+          );
+        }
       }
       expect(consoleErrors).toEqual([]);
     } finally {

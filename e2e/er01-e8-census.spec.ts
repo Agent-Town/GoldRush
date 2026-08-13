@@ -29,10 +29,13 @@ for (const contract of orbital.contracts) {
     };
     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
     try {
+      const admitted = contract.id === 'e8-mare-claim' || contract.id === 'e8-eclipse';
       expect(contract.tileParams.engineDependencies).toEqual([
         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
       ]);
-      expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
+      const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+      if (admitted) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
+      else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
 
       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
       const { deriveMechanicsManifest } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts');
@@ -48,10 +51,13 @@ for (const contract of orbital.contracts) {
         contractId: contract.id,
         source: contract.id === 'e8-low-orbit' ? 'zero-gravity' : 'gravity',
       });
-      for (const seed of [`${contract.id}-01`, `${contract.id}-02`]) {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
-          new RegExp(`AP-07 supports only .*received ${contract.id}`),
-        );
+      for (const seed of seeds) {
+        if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
+        else {
+          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
+            new RegExp(`AP-07 supports only .*received ${contract.id}`),
+          );
+        }
       }
       expect(consoleErrors).toEqual([]);
     } finally {

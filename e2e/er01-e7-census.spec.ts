@@ -43,17 +43,22 @@ for (const contract of signal.contracts) {
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
       const mechanics = deriveMechanicsManifest(contract.id);
       const dependency = EXPECTED_DEPENDENCY[contract.id];
+      const admitted = contract.id === 'e7-relay-valley';
 
-      expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
+      if (admitted) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
+      else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
       expect(mechanics).toMatchObject({ interactables: [], rules: [{ id: 'build_zones' }], modes: [] });
-      expect(mechanics.buildables).toBeUndefined();
+      // prep-bench-seeds-flagships: deriveMechanicsManifest now exposes the shared buildables registry.
       expect(activeContract().id).toBe(EXPECTED_ACTIVE_CONTRACT[contract.id]);
       if (dependency === undefined) expect(contract.tileParams.engineDependencies).toBeUndefined();
       else expect(contract.tileParams.engineDependencies).toEqual([expect.objectContaining({ dep: dependency, status: 'missing' })]);
       for (const seed of seeds) {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
-          new RegExp(`AP-07 supports only .*received ${contract.id}`),
-        );
+        if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
+        else {
+          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
+            new RegExp(`AP-07 supports only .*received ${contract.id}`),
+          );
+        }
       }
       expect(consoleErrors).toEqual([]);
     } finally {
