@@ -981,6 +981,13 @@
               "taskFile": "er-02-steamworks-rehearsal-commission.md",
               "mergeHash": "bb969fb3d918f29aebf27062a7d0ee17ea675a83",
               "review": "reviews/standing-orders-rehearsal-e2.md"
+            },
+            {
+              "id": "e2-railcar-arsenal-floor",
+              "title": "E2 railcar contracts grant the pressure arsenal (fix F-E2S-3) - hill-mine/trestle/incline winnable standalone + re-admitted",
+              "taskFile": "fix-e2-railcar-arsenal-floor.md",
+              "status": "planned",
+              "note": "Attended 2026-08-13 from specs/epoch-saga/e2-railcar-pressure-socket.md (RATIFIED; owner answered Q1: had NOT beaten the E1 Baron, so no pressure weapons). Root cause: pressure arsenal unlock-gated behind hasBaronMedal (Game.ts:1353-1358); a fresh run has no weapon that touches the railcar (F-E2S-3). Fix = per-contract arsenal floor + remove the three CONTRACT_ADMISSION_EXEMPTIONS."
             }
           ]
         },

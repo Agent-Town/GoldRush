@@ -1,5 +1,5 @@
 # E2 Railcar Socket — making the Steamworks railcar beatable
-### Status: DRAFT 2026-08-13 · attended session · fixes F-E2S-3 · target: lane-b/main master after ratification
+### Status: RATIFIED 2026-08-13 (Q1 answered by owner; Q2 tunable in the balance slice) · attended session · fixes F-E2S-3 · buildable now
 
 ## Why (owner directive + finding)
 Owner, 2026-08-13, verbatim: *"I remember playing E2 and then I found a lot of things to fix. I think it is important to fix these things now. As we are basically ready to release the first epoch."*
@@ -10,13 +10,11 @@ F-E2S-3: `e2-hill-mine`, `e2-trestle`, `e2-incline` are de-listed from the bench
 - ✓ The E2 weapons themed to fight it are the **pressure arsenal** — `boilerLance`, `pressureMortar`, `skyRocket` (`PressureArsenalSystem.ts:7`) — which register as ordinary CombatSystem shooters (real damage, pressure-costed).
 - ⚠️ ROOT-CAUSE CANDIDATE (? INFERRED — Slice 1 pins it): the arsenal is behind **unlock gates** — `hasBaronMedal()`, research, and rocket-cart capture (`Game.ts:1353-1358`, `Medals.ts`, `hasRocketCartCaptured`). A headless probe starts with none → the arsenal never activates → "no weapon reaches the railcar." A human only holds these weapons **after beating the E1 Baron**.
 
-## THE FORK (owner ratification — the spec stays DRAFT until answered)
-**Q1 — is the progression gate intended?** Must you beat the E1 Baron to unlock the pressure arsenal you then need for the E2 railcar?
-- If **YES**: the human path is working-as-designed; the fix is only (a) grant the arsenal in the *headless/benchmark* context so agents can play these maps, and (b) balance. Small, safe.
-- If **NO**: E2's own board/science must grant the arsenal on these contracts; larger.
-- 🔑 **Diagnostic that answers it:** when you played E2 and couldn't beat the railcar — *had you already beaten the E1 Baron* (did you have the pressure weapons)? If you didn't, this gate IS the bug you hit. If you DID and still lost, it's a balance problem (Slice 3), not availability.
+## Q1 — ANSWERED (owner, 2026-08-13, verbatim: *"no, I did not have the weapons then"*)
+The owner played the E2 railcar maps **without** having beaten the E1 Baron, so the pressure arsenal was locked and nothing could touch the railcar. **This is the progression gate, confirmed — not a balance problem.**
+**Design ruling (attended, veto-window):** a contract that fields the railcar boss must itself provide the means to beat it — an unwinnable-by-construction contract is a bug. So the three E2 railcar contracts **grant the pressure arsenal as a floor**, making them winnable standalone (benchmark, direct pick, or debug), while the E1→E2 "earn the rockets by beating the Baron" narrative stays intact for normal campaign flow (the grant is a floor, not a removal of the reveal). Reverse with one word if the gate was meant to be hard.
 
-**Q2 — damage-feel:** which weapon should be the railcar-cracker — the arcing **skyRocket** salvo (matches the rocket weapon you remembered, E2 bundle §B2), or the **boiler lance / pressure mortar**?
+**Q2 — damage-feel (still open, non-blocking):** which weapon reads as the railcar-cracker — the arcing **skyRocket** salvo (matches the rocket weapon you remembered, E2 bundle §B2, my default), or the **boiler lance / pressure mortar**? The core fix grants all three; this only tunes which one *feels* like the finisher, and can be settled in the balance slice.
 
 ## Slices (each ends in a playable checkpoint + its gate)
 1. **Pin the reach failure** — repro on `e2-hill-mine` headless AND in dev: medal-holder-with-arsenal vs no-medal run → railcar HP delta. Confirm the gate (not range/immunity) is the cause; identify exactly which unlock(s) block it. Gate: a written repro table. No code change.
