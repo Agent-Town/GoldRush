@@ -57,6 +57,7 @@ import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../sys
 import { PressureSystem } from '../systems/PressureSystem';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
+import { depenetrateFromBlockers } from '../world/LandmarkCollision';
 import * as Terrain from '../world/Terrain';
 
 const STEP_SECONDS = 1 / 30;
@@ -758,7 +759,16 @@ export class HeadlessContractSim {
     // Every call is null-guarded, so no already-admitted contract's tick changes.
     this.atomic?.tickDecay();
     this.deepwater?.advance(this.timeAlive);
-    this.hero.update(STEP_SECONDS, IDLE_INTENTS, { bounds: Terrain.bounds, sample: Terrain.sample });
+    this.hero.update(STEP_SECONDS, IDLE_INTENTS, {
+      bounds: Terrain.bounds,
+      sample: Terrain.sample,
+      depenetrate: (point, maxDistance) => depenetrateFromBlockers(
+        point,
+        Terrain.landmarkBlockers(),
+        Balance.hero.radius + 0.08,
+        maxDistance,
+      ),
+    });
     this.atomic?.updateTileConsumers(STEP_SECONDS, this.timeAlive, this.harvestTargets());
     this.deepwater?.updateArsenal(this.timeAlive);
     this.combat.setTime(this.timeAlive);
