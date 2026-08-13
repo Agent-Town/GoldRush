@@ -47,12 +47,16 @@ export const classifyCitation = (full, outbox) => {
   ) ? 'dismissed' : 'reported'
 }
 
+export const normalizeSince = (since) => /^\d{4}-\d{2}-\d{2}$/.test(since) ? `${since}T00:00:00` : since
+
 // Player paths: a change the PLAYER could see. Excludes tests, scripts, tasks, docs,
 // reviews, logs, marketing — those are factory surfaces, not the game.
 const PLAYER = /^(src\/|assets\/|public\/|functions\/|index\.html)/
 
 const main = () => {
-  const since = process.argv.find((a) => a.startsWith('--since='))?.slice(8) ?? '2026-08-05'
+  // Git fills a date-only revision limit with the current clock time, shrinking the
+  // same calendar window during the day. Pin date-only inputs to local midnight.
+  const since = normalizeSince(process.argv.find((a) => a.startsWith('--since='))?.slice(8) ?? '2026-08-05')
   const git = (...a) => execFileSync('git', a, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
 
   const log = git('log', 'main', '--first-parent', `--since=${since}`, '--format=%H%x09%h%x09%cs%x09%s')
