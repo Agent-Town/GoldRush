@@ -97,6 +97,45 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron/);
 });
 
+test('headless landmark starts release before enemies can stall at the perimeter', { timeout: 120_000 }, () => {
+  const cases = [
+    ['e4-long-road', 'e4-long-road-01', -180, 0, 4, 41, 'fnv1a32:2b27b21d'],
+    ['e4-long-road', 'e4-long-road-02', -180, 0, 4, 48, 'fnv1a32:37ab9177'],
+    ['e4-gusher-county', 'e4-gusher-county-01', 0, -4, 5, 93, 'fnv1a32:95f5777c'],
+    ['e4-gusher-county', 'e4-gusher-county-02', 0, -4, 2, 29, 'fnv1a32:a9b7d153'],
+  ];
+
+  for (const [contract, seed, startX, startZ, waves, kills, eventLogHash] of cases) {
+    const run = () => spawnSync(
+      process.execPath,
+      ['scripts/gr-sim.mjs', '--contract', contract, '--seed', seed, '--policy=idle'],
+      { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
+    );
+    const first = run();
+    const second = run();
+    assert.equal(first.status, 0, first.stderr);
+    assert.equal(second.status, 0, second.stderr);
+
+    const firstLines = first.stdout.trim().split('\n');
+    const secondLines = second.stdout.trim().split('\n');
+    assert.equal(secondLines.at(-1), firstLines.at(-1));
+    const views = firstLines.slice(0, -1).map(JSON.parse);
+    const outcome = JSON.parse(firstLines.at(-1));
+    assert.deepEqual(
+      { waves: outcome.waves, kills: outcome.kills, eventLogHash: outcome.eventLogHash },
+      { waves, kills, eventLogHash },
+    );
+    assert.deepEqual(
+      { x: views[0].now.hero.x, z: views[0].now.hero.z },
+      { x: startX, z: startZ },
+    );
+    assert.ok(
+      views.slice(0, -1).some(({ now }) => now.hero.x !== startX || now.hero.z !== startZ),
+      `${seed} stayed at its landmark-centered start until terminal`,
+    );
+  }
+});
+
 test('a distant HARVEST walks before it pays', async () => {
   const previousLocation = globalThis.location;
   const previousWindow = globalThis.window;
