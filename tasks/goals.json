@@ -6880,6 +6880,13 @@
               "taskFile": "lane-a-f1712-1-standings-fixtures.md",
               "mergeHash": "5d705b603e88fc0bb7fc211c97fb73fd37839a5f",
               "drainNotes": "s1713: fixture-only corrective merged after Node 26.4.0 tsc/build, 56/56 browser matrix, all diff-selected non-node arms, and standalone full node guards 458 tests / 453 pass / 5 skipped / 0 fail. Review reviews/f1712-1-standings-fixtures.md."
+            },
+            {
+              "id": "prep-bench-seeds-flagships",
+              "title": "Seed + null-floor the six idle-safe benchmark contracts (e4-dust-flats/boneyard, e7-relay-valley, e8-mare-claim/eclipse, e9-dome-basin) + repair the three stale er01 census specs",
+              "taskFile": "prep-bench-seeds-flagships.md",
+              "status": "planned",
+              "note": "Attended 2026-08-13 from the E4 + E7/E8/E9 bench-readiness scouts. Data-only + census-spec hygiene; NO exemption changes. Law-2 safe (all six idle-DIE, secured:false verified). e4-long-road/gusher-county EXCLUDED (idle-secure targeting anomaly, routed to owner desk)."
             }
           ],
           "subgoals": [
