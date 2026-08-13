@@ -15,6 +15,7 @@ You are Codex, the **implementer** for Gold Rush, a three.js browser game. Claud
 ## Operating rules
 
 - One spec slice per task. If you find adjacent problems, report them; do not fix out of scope.
+- For queued MAIN-slot tasks only: if the runner claimed the task while `STATUS.md` line 1 was clear, a later FIRE `ACTIVE` lock does not revoke that claim; finish and report without polling for the lock to clear.
 - Do NOT touch `STATUS.md`, `specs/`, `reviews/`, existing e2e specs, or git history (no commits) unless the task explicitly says otherwise. The orchestrator integrates and records evidence.
 - Sandbox facts (binding when you run there): every bash call is interrupted/resumed; write files early; servers die between calls; NEVER `npx playwright install`; Playwright needs `LD_LIBRARY_PATH=~/locallibs/usr/lib/aarch64-linux-gnu`; reply `READY-FOR-GATES` when done — the supervisor runs the gates.
 
