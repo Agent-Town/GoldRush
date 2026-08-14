@@ -996,8 +996,11 @@
               "id": "e2-railcar-arsenal-floor-v2",
               "title": "E2 railcar beatable WITHOUT cheating (corrective to rejected v1) - 3 weapons, identical browser/headless, no global balance, lawful secure or honest economy-gap report",
               "taskFile": "fix-e2-railcar-arsenal-floor-v2.md",
-              "status": "planned",
-              "note": "Corrective to fix-e2-railcar-arsenal-floor (rejected s1741 F-1741-1..5 for cheating: headless-only pressure, research bypass, global 6x damage, debug-cheated proof). Tightened: identical resources both engines, only the 3 named weapons, no global balance, STOP-and-report at the economy gap rather than buff. Attended 2026-08-14."
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "s1755 HOLD, NOT MERGED; no owner word is owed yet. F-1755-1: the runner built one of three allowed boilers, spent the finite pressure before the wave-12 railcar, died wave 7, and therefore measured zero damage against a target that never spawned. The directly affected e2-arsenal suite is also red while the master forbids the assertion update. Cure in a detached worktree: survive to wave 12, exercise the lawful two/three-boiler ceiling with banked coal, measure actual railcar damage, and make the relevant arsenal assertion green; only a residual measured deficit becomes an owner balance fork.",
+              "note": "Corrective to fix-e2-railcar-arsenal-floor (rejected s1741 F-1741-1..5 for cheating: headless-only pressure, research bypass, global 6x damage, debug-cheated proof). Tightened: identical resources both engines, only the 3 named weapons, no global balance, STOP-and-report at the economy gap rather than buff. Attended 2026-08-14.",
+              "review": "reviews/fix-e2-railcar-arsenal-floor-v2.md"
             }
           ]
         },
