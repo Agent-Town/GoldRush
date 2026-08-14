@@ -63,3 +63,17 @@ The candidate is preserved on `save/build-campaign-harness-e1-s1771-hold`; undec
 committed to main. The original task now carries a narrow s1771 corrective rider. Re-run it after
 the attended-owned `tasks/goals.json` edit clears, then repeat the full sim-required battery before
 merge.
+
+## s1772 corrective rerun — custody green, merge still held
+
+Main rerun `20260814-214944` restored the banked candidate, renamed the focused test to
+`scripts/gr-sim-campaign.test.mjs`, and added that test to `test:node-guards`. The done-move is
+policy-clear. A detached gate at `/tmp/gr-s1772-gate.zLcJTk` was reconstructed from the banked ref;
+all six candidate paths byte-match main's runner output.
+
+Fresh drain-side evidence is green for `npx tsc --noEmit`, `npm run build`, the focused campaign
+suite (3/3), and `gate-caller-audit --include-untracked`. The complete Node battery has not yet
+produced admissible drain evidence: its first s1772 attempt self-reported `CONTENDED — 2 concurrent
+batteries` while the independently claimed lane-b run was executing its own Node battery, so s1772
+aborted it immediately. The slice remains **HOLD — NOT MERGED** until `npm run test:node-guards`
+runs alone; no source verdict is inferred from the aborted run.
