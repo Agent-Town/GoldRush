@@ -26,6 +26,7 @@ import { Balance } from '../game/Balance';
 import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { GameState } from '../game/GameState';
 import { Progression } from '../game/Progression';
+import { hasResearchNode, loadResearchState } from '../meta/ResearchTree';
 import type { EffectiveStats } from '../game/StatSheet';
 import { resolveFiller, upgradeDefById, upgradeEffect } from '../game/Upgrades';
 import { isBuildableId } from '../game/buildables';
@@ -200,6 +201,10 @@ export type HeadlessContractBoot = ContractRunBoot & {
   admissionProbe?: true;
 };
 
+export type HeadlessContractOptions = {
+  storage?: Storage;
+};
+
 const NO_AUDIO = {
   playBuildingDamage: () => undefined,
   playDetonation: () => undefined,
@@ -331,7 +336,7 @@ export class HeadlessContractSim {
   private readonly megaprojectProject: MegaprojectProjectState | null;
   private readonly megaprojectUnlocked: boolean;
 
-  constructor(readonly boot: HeadlessContractBoot) {
+  constructor(readonly boot: HeadlessContractBoot, options: HeadlessContractOptions = {}) {
     this.contractId = boot.contractId;
     this.seed = boot.seed;
     this.manifest = loadContract(this.contractId);
@@ -480,6 +485,7 @@ export class HeadlessContractSim {
       (position, at, escorts) => this.postBaronSpawn(position, at, escorts),
     );
     this.progressionState.transition('playing');
+    const research = options.storage ? loadResearchState(options.storage, options.storage) : null;
     this.progression = new Progression({
       state: this.progressionState,
       rng: createRng(`${this.seed}:upgrades`),
@@ -493,6 +499,7 @@ export class HeadlessContractSim {
         amount,
       })),
       onHeal: (amount) => this.hero.heal(amount),
+      ...(research ? { hasResearchNode: (id: string) => hasResearchNode(research, id) } : {}),
     });
     this.applyProgressionStats(this.progression.stats, null);
 
@@ -553,7 +560,7 @@ export class HeadlessContractSim {
           return sim.timeAlive;
         },
       },
-      { now: () => Math.round(this.timeAlive * 1000), storage: HEADLESS_META_STORAGE },
+      { now: () => Math.round(this.timeAlive * 1000), storage: options.storage ?? HEADLESS_META_STORAGE },
     ).install();
   }
 
