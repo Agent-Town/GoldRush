@@ -1,5 +1,7 @@
 declare const WebSocketPair: typeof import('@cloudflare/workers-types').WebSocketPair;
 
+import { normalizeSelfDeclaredStack, type SelfDeclaredStack } from '../../src/agent/DeclaredStack';
+
 type JsonRecord = Record<string, unknown>;
 type WebSocket = import('@cloudflare/workers-types').WebSocket;
 
@@ -35,6 +37,7 @@ type Player = {
   name: string;
   town: string;
   client: 'browser' | 'headless';
+  stack?: SelfDeclaredStack;
   joinedAt: number;
   lastSeen: number;
   socket: WebSocket | null;
@@ -296,6 +299,7 @@ export class MultiplayerRoom {
       name: player.name,
       town: player.town,
       client,
+      ...(player.stack ? { stack: player.stack } : {}),
       joinedAt: Date.now(),
       lastSeen: Date.now(),
       socket,
@@ -584,7 +588,7 @@ export class MultiplayerRoom {
   private roster(): JsonRecord[] {
     return [...this.players.values()]
       .sort((a, b) => a.joinedAt - b.joinedAt)
-      .map(({ id, name, town, client }) => ({ playerId: id, name, town, client }));
+      .map(({ id, name, town, client, stack }) => ({ playerId: id, name, town, client, ...(stack ? { stack } : {}) }));
   }
 
   private broadcastRoster(): void {
@@ -708,11 +712,13 @@ function socketText(raw: unknown): string {
   throw new Error('unsupported_message');
 }
 
-function normalizePlayer(value: unknown): { name: string; town: string } {
+function normalizePlayer(value: unknown): { name: string; town: string; stack?: SelfDeclaredStack } {
   const record = isRecord(value) ? value : {};
   const name = cleanName(record.name, 'Rider', 24);
   const town = cleanName(record.town, 'Home Claim', 32);
-  return { name, town };
+  const stack = record.stack === undefined ? undefined : normalizeSelfDeclaredStack(record.stack);
+  if (stack === null) throw new Error('bad_stack');
+  return { name, town, ...(stack ? { stack } : {}) };
 }
 
 function normalizeClient(value: unknown): 'browser' | 'headless' {

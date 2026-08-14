@@ -11,6 +11,7 @@ import { HeadlessContractSim, SEAT_HASH_ENGINE, type GrSimOutcome, type GrSimTur
 import { SeatOrdersDriver, type SeatOrdersVerdict, type SeatRunState } from './SeatOrders';
 import { validateStandingOrders } from '../agent/StandingOrders';
 import type { AgentView } from '../agent/View';
+import type { SelfDeclaredStack } from '../agent/DeclaredStack';
 
 /**
  * THE AGENT SEAT — a headless rig rides in a live room.
@@ -99,7 +100,7 @@ type AgentSeatTurn = { view: (GrSimTurn['view'] | AgentView) & { advisory?: true
 export type AgentSeatOptions = {
   origin: string;
   code: string;
-  player: { name: string; town: string };
+  player: { name: string; town: string; stack?: SelfDeclaredStack };
   partySize?: number;
   /** Pre-fetched ride setup. Omit and the seat reads it off the relay itself. */
   setup?: MultiplayerSetup;
