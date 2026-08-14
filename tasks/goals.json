@@ -6920,8 +6920,10 @@
               "id": "build-campaign-harness-e1",
               "title": "E1 campaign harness - thread a persistent profile through gr-sim across E1 DAG (continuous-campaign benchmark, provable first step)",
               "taskFile": "build-campaign-harness-e1.md",
-              "status": "planned",
-              "note": "Implements specs/agent-play/campaign-harness-e1.md (RATIFIED 2026-08-14, owner continuous-campaign direction). Layer 0+1 on E1 only; reuses ProfileTransfer/ContractUnlock/stableHash. Attended 2026-08-14."
+              "status": "merged",
+              "mergeHash": "9849623b6e27d4d64e2c8b28b747c503de6c4b97",
+              "note": "Implements specs/agent-play/campaign-harness-e1.md (RATIFIED 2026-08-14, owner continuous-campaign direction). Layer 0+1 on E1 only; reuses ProfileTransfer/ContractUnlock/stableHash. Attended 2026-08-14.",
+              "drainNotes": "s1773: PASS from detached custody and merged as 9849623b6e27d4d64e2c8b28b747c503de6c4b97. Policy CLEAR; six candidate paths byte-matched main; s1772 tsc/build/focused campaign/caller audit green; s1773 complete Node battery ran alone with 464 tests / 457 pass / 5 skip / 2 fail, both the same pre-existing news.html -> index.html#teaser anchor defect reproduced on fresh clean main. Campaign 3/3, control hash fnv1a32:b128731a unchanged, campaign hash fnv1a32:4f363fd5 twice, resume from Dry Gulch. Plain boot 1/1 desktop + 1/1 mobile at workers=1 with zero console/page errors. Review reviews/build-campaign-harness-e1.md."
             }
           ],
           "subgoals": [

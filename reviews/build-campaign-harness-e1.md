@@ -1,16 +1,16 @@
 # build-campaign-harness-e1 — E1 profile-threading campaign harness
 
 - **Task:** `tasks/build-campaign-harness-e1.md`
-- **Main-slot run:** `20260814-204651`
-- **Candidate:** `save/build-campaign-harness-e1-s1771-hold` at `87d16e350b21a90d40d9b0d500c5b23a5d971caf`
-- **Gated by:** s1771 in detached worktree `/tmp/gr-s1771-gate-20260814`
+- **Main-slot runs:** `20260814-204651`, corrective `20260814-214944`
+- **Candidate archive:** `archive/build-campaign-harness-e1-s1771-hold` at `87d16e350b21a90d40d9b0d500c5b23a5d971caf`
+- **Merge:** `9849623b6e27d4d64e2c8b28b747c503de6c4b97`
+- **Gated by:** s1771–s1773 in detached custody
 
-## VERDICT: HOLD — NOT MERGED
+## VERDICT: PASS — MERGED
 
-The five-file implementation is banked intact, but its focused test is named
-`scripts/gr-sim-campaign.tests.mjs`. That plural suffix excludes it from both the normal
-Node battery and the gate-caller audit. Renaming the same file to the repository's singular
-`.test.mjs` convention immediately produces the real result: `NO CALLER` (F-1771-1).
+The corrected six-file implementation is merged. F-1771-1 was cured at the gate topology:
+the focused test now uses the repository's singular `.test.mjs` convention and is explicitly
+called by `test:node-guards`.
 
 ## What the candidate does
 
@@ -77,3 +77,18 @@ produced admissible drain evidence: its first s1772 attempt self-reported `CONTE
 batteries` while the independently claimed lane-b run was executing its own Node battery, so s1772
 aborted it immediately. The slice remains **HOLD — NOT MERGED** until `npm run test:node-guards`
 runs alone; no source verdict is inferred from the aborted run.
+
+## s1773 final drain — PASS
+
+All six candidate paths were re-hashed against detached custody and matched byte-for-byte. The
+complete Node battery then ran alone: **464 tests / 457 passed / 5 skipped / 2 failed**. Both failures
+are one pre-existing site-anchor defect (`news.html` links to missing `index.html#teaser`), once
+directly and once through the fixture-owner wrapper; an isolated fresh worktree at clean main
+reproduced the exact same failure while every site input was unchanged from candidate custody.
+
+The campaign suite itself passed **3/3**, preserving the single-contract control hash
+`fnv1a32:b128731a`, producing whole-campaign hash `fnv1a32:4f363fd5` twice, and resuming at
+`e1-dry-gulch`. Plain-boot probes passed **1/1 desktop + 1/1 mobile** at `--workers=1`, including
+zero console/page errors. Independent diff review found exactly the six declared paths and no
+browser, balance, E2+, or single-contract change. The merge is bench infrastructure only; the
+optional storage argument defaults to the old null stub and no browser caller supplies it.
