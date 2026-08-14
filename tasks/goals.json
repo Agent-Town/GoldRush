@@ -6049,6 +6049,13 @@
               "authoredBy": "s1553 (fire)",
               "authorNotes": "FIRE-AUTHORED s1553 from spec slice MP-07c-3, on a dry board (six queues empty; lanes c+d BUSY, lanes a+b idle and USABLE). Both predecessors are merged (mp-07c-1 ddd3d55ef, mp-07c-2 6e203aaad), and the spec states explicitly that everything through 07c-3 proceeds without the two open owner questions (those gate only 07c-4), so this is unblocked. THE PREMISE WAS VERIFIED AT SOURCE, NOT INHERITED, AND ONE CHECK NEARLY KILLED THE SLICE: the spec calls the target \"the co-op room panel\", and src/ui/ contains NO room or invite UI at all - \"grep -rn -i invite src/\" returns nothing, and rooms are entered via URL params (multiplayerConfigFromSearch, LockstepClient.ts:905). Had that been the whole picture the slice would have needed a design fork (build a panel from scratch) and been UNAUTHORABLE per the section-2E hard limit. It is not: the Ride Together panel DOES exist, in src/town/TownScene.ts (a details block carrying data-testid ride-code-word / ride-join-input / ride-start, and the handlers openRideTogetherClaim, launchRideTogether, joinRideTogether), backed by src/mp/RideTogether.ts. So the slice is a real bounded edit to an existing surface. The gap it closes is the Mistake #10 shape caught one rung early: mp-07c-1 and mp-07c-2 shipped a working human+agent ride that NO PLAYER CAN REACH - the seat invocation is documented only in public/skill.md, i.e. in the door doc an agent reads, not the game a person plays. Dispatch followed F-1424-3: master committed first, two citation keys each proved to grep exactly 1 on main before the cp.",
               "mergeHash": "64ea699a3042c911e830886e9c83b2ca75c96084"
+            },
+            {
+              "id": "mp-07c-4-the-reckoning",
+              "title": "MP-07c-4 THE RECKONING - agent-ridden co-op run records the declared stack (AP-06 honesty); benchmark rooms unaffected",
+              "taskFile": "build-mp07c4-the-reckoning.md",
+              "status": "planned",
+              "note": "Final slice of MP-07c (07c-1/2/3 merged). Owner unblocked 2026-08-09 (the leaf owner-gated label was stale). Attended 2026-08-14; implements specs/multiplayer/mp-07c-agent-rides-the-browsers-world.md MP-07c-4."
             }
           ]
         },
