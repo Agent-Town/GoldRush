@@ -26,3 +26,27 @@ End: READY-FOR-GATES + report: control `eventLogHash` unchanged (before/after), 
 
 ## No-op / honesty guard
 If a slice can't meet its gate (profile doesn't thread cleanly, a `globalThis.localStorage` singleton collision, or the control `eventLogHash` shifts), STOP and report the exact blocker — do NOT hack around determinism or the single-contract-path invariant to force a green.
+
+## s1771 gate corrective rider — F-1771-1
+
+The first candidate is preserved at `save/build-campaign-harness-e1-s1771-hold`
+(`87d16e350b21a90d40d9b0d500c5b23a5d971caf`). Reuse that implementation; do not rebuild it.
+
+Its focused test was named `scripts/gr-sim-campaign.tests.mjs`, the only plural `*.tests.mjs`
+under `scripts/`. Both `test:node-guards` and `gate-caller-audit.mjs` recognize the repository's
+singular `*.test.mjs` convention, so the reported caller-audit green never inspected the new test.
+The manufactured control is retained at
+`artifacts/build-campaign-harness-e1-manufactured-red-s1771.txt`: rename-only to
+`scripts/gr-sim-campaign.test.mjs` exits 1 with `NO CALLER`.
+
+Correct only that gate topology:
+
+1. Restore the five candidate paths from the save ref.
+2. Rename the focused test to `scripts/gr-sim-campaign.test.mjs`.
+3. Add that exact file to the existing `test:node-guards` command in `package.json`.
+4. Run the focused test, `node scripts/gate-caller-audit.mjs --include-untracked`, and the complete
+   `npm run test:node-guards` battery alone. Preserve the control and campaign hashes above.
+
+For this corrective, `package.json` is added to the firewall. Touch nothing else beyond the five
+banked candidate paths. Do not baseline or grandfather the test; it is required coverage, not an
+advisory reader.
