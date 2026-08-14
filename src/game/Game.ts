@@ -89,6 +89,7 @@ import { buildView, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
+import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { FerrisWheel } from '../entities/FerrisWheel';
@@ -430,6 +431,7 @@ export class Game {
   private mpCard?: HTMLElement;
   private mpHoldCardVisible = false;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
+  private readonly multiplayerStandingRoster = new Map<string, MultiplayerPlayer>();
   private readonly agentRiderBodies = new Map<string, AgentRiderBody>();
   private readonly agentRiderViewState = new Map<string, { wave: number; needsRider: boolean; pendingSecure: boolean; terminal: boolean; sentAt: number }>();
   private readonly agentRiderViewSources = new Map<string, AgentViewSource>();
@@ -3658,6 +3660,7 @@ export class Game {
     }
 
     const roster: MultiplayerPlayer[] = state.roster.slice(0, 4);
+    for (const player of roster) this.multiplayerStandingRoster.set(player.playerId, player);
     const localSlot = roster.findIndex((player) => player.playerId === state.playerId);
     this.mpLocalSlot = localSlot >= 0 ? localSlot : 0;
 
@@ -6466,12 +6469,20 @@ export class Game {
   private async submitCountyStanding(score: ScoreRecord): Promise<void> {
     if (this.activeContract.practice?.standings === false) return;
     if (!this.countyStandingsEnabled || !score.secured || !readTelemetryOptIn() || globalThis.navigator?.onLine === false) return;
+    const multiplayerState = this.mpClient?.state();
+    if (multiplayerState?.connected && !isMultiplayerStandingSubmitter(multiplayerState.roster, multiplayerState.playerId)) return;
     try {
       const epoch = listEpochs().find((entry) => loadEpoch(entry.id).contracts.some((contract) => contract.id === this.activeContract.id));
       if (!epoch) return;
       const descriptor = contractDescriptorJson(this.activeContract);
       if (descriptor !== contractDescriptorJson(loadContract(this.activeContract.id, epoch.id))) return;
       const pinnedSeed = getDebugSeed();
+      const roster = [...this.multiplayerStandingRoster.values()];
+      const party = multiplayerStandingParty(roster);
+      const mixedAgentRide = roster.some((rider) => rider.client === 'browser')
+        && roster.some((rider) => rider.client === 'headless');
+      // Invited agents ride live county seeds. Pinned seeds remain the agents-only exam.
+      if (mixedAgentRide && pinnedSeed !== null) return;
       // A non-member pinned seed is neither comparable bench data nor live play; the owner may reverse this submission policy.
       if (pinnedSeed !== null && !(benchSeeds as Record<string, string[]>)[this.activeContract.id]?.includes(pinnedSeed)) return;
       const seed = pinnedSeed ?? 'gold-rush';
@@ -6513,6 +6524,7 @@ export class Game {
           seedMode: pinnedSeed === null ? 'live' : 'bench',
           seedHash,
           inputLogHash,
+          ...(party ? { party } : {}),
           ...(submittedTape ? { tape: submittedTape } : {}),
         }),
         keepalive: true,
@@ -7076,6 +7088,7 @@ export class Game {
     this.agentRiderViewState.clear();
     this.agentRiderViewSources.clear();
     const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
+    resetMultiplayerStandingRoster(this.multiplayerStandingRoster, roster);
     if (roster.length >= 2) {
       this.syncMultiplayerActors();
       for (let slot = 0; slot < this.actors.length; slot += 1) {

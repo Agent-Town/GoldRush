@@ -447,9 +447,13 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     ...(party ? { party } : {}),
     ...(tape ? { tape } : {}),
   };
-  const prior = current.find((row) => row.anonId === anonId);
+  const standingKind = party?.riderCount ?? 1;
+  const prior = current.find((row) => row.anonId === anonId && (row.party?.riderCount ?? 1) === standingKind);
   const kept = prior && compareScores(prior, candidate) < 0 ? prior : candidate;
-  const next = [...current.filter((row) => row.anonId !== anonId), kept].sort(compareScores).slice(0, MAX_ROWS);
+  const next = [
+    ...current.filter((row) => row.anonId !== anonId || (row.party?.riderCount ?? 1) !== standingKind),
+    kept,
+  ].sort(compareScores).slice(0, MAX_ROWS);
   // ponytail: KV read-modify-write; move this board to a Durable Object if concurrent submissions measurably collide.
   await kv.put(key, JSON.stringify(next));
   const index = next.indexOf(kept);

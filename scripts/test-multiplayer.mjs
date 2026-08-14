@@ -78,9 +78,15 @@ async function checkRelayFlow() {
       difficultyPreset: 'greenhorn',
     });
     assertEqual(mismatch.error, 'setup_mismatch', 'setup mismatch is rejected before roster mutation');
-    const bob = await connectClient(relay.url, code, 'Bob', 'River Bend');
+    const badStack = await rejectedJoin(relay.url, code, 'Mallory', 'Wrong Claim', SETUP, { stack: { model: 'x'.repeat(257) } });
+    assertEqual(badStack.error, 'bad_stack', 'an invalid declared stack is rejected at room admission');
+    const versionlessHarness = await rejectedJoin(relay.url, code, 'Mallory', 'Wrong Claim', SETUP, { stack: { harness: 'pi' } });
+    assertEqual(versionlessHarness.error, 'bad_stack', 'a harness declaration names its version at room admission');
+    const stack = { model: 'deepseek/deepseek-v4-flash', harness: 'pi', harnessVersion: '0.84.1' };
+    const bob = await connectClient(relay.url, code, 'Bob', 'River Bend', 'headless', stack);
     await alice.take('roster', (msg) => msg.players.length === 2);
-    await bob.take('roster', (msg) => msg.players.length === 2);
+    const mixedRoster = await bob.take('roster', (msg) => msg.players.length === 2);
+    assertEqual(JSON.stringify(mixedRoster.players[1].stack), JSON.stringify(stack), 'mixed room carries the agent declared stack');
 
     const aliceTicks = collectTicks(alice, 200);
     const bobTicks = collectTicks(bob, 200);
@@ -125,6 +131,18 @@ async function checkRelayFlow() {
 
     returnedBob.close();
     alice.close();
+
+    const benchmarkRoom = await post(relay.url, '/api/multiplayer/create', { setup: SETUP });
+    const benchA = await connectClient(relay.url, benchmarkRoom.body.code, 'Rig A', 'Calculating House', 'headless');
+    const benchB = await connectClient(relay.url, benchmarkRoom.body.code, 'Rig B', 'Calculating House', 'headless');
+    await benchA.take('roster', (msg) => msg.players.length === 2);
+    const benchmarkRoster = await benchB.take('roster', (msg) => msg.players.length === 2);
+    assertEqual(JSON.stringify(benchmarkRoster.players), JSON.stringify([
+      { playerId: 'p1', name: 'Rig A', town: 'Calculating House', client: 'headless' },
+      { playerId: 'p2', name: 'Rig B', town: 'Calculating House', client: 'headless' },
+    ]), 'agents-only benchmark roster is byte-unchanged');
+    benchB.close();
+    benchA.close();
   } finally {
     await relay.stop();
   }
@@ -359,9 +377,9 @@ async function readResponse(response) {
   }
 }
 
-async function connectClient(baseUrl, code, name, town) {
+async function connectClient(baseUrl, code, name, town, clientType = 'browser', stack) {
   const client = await openClientSocket(baseUrl, code);
-  client.send({ v: VERSION, type: 'join', code, player: { name, town }, setup: SETUP });
+  client.send({ v: VERSION, type: 'join', code, player: { name, town, ...(stack ? { stack } : {}) }, setup: SETUP, client: clientType });
   const joined = await client.take('joined');
   client.playerId = joined.playerId;
   client.reconnectToken = joined.reconnectToken;
@@ -423,14 +441,14 @@ async function openClientSocket(baseUrl, code) {
   };
 }
 
-async function rejectedJoin(baseUrl, code, name, town, setup = SETUP) {
+async function rejectedJoin(baseUrl, code, name, town, setup = SETUP, playerExtra = {}) {
   const url = `${baseUrl.replace(/^http/, 'ws')}/api/multiplayer/connect?code=${code}`;
   const socket = new WebSocket(url);
   await new Promise((resolve, reject) => {
     socket.addEventListener('open', resolve, { once: true });
     socket.addEventListener('error', reject, { once: true });
   });
-  socket.send(JSON.stringify({ v: VERSION, type: 'join', code, player: { name, town }, setup }));
+  socket.send(JSON.stringify({ v: VERSION, type: 'join', code, player: { name, town, ...playerExtra }, setup }));
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('timed out waiting for rejected join')), 5_000);
     socket.addEventListener('message', (event) => {

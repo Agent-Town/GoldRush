@@ -343,11 +343,11 @@ node scripts/gr-sim.mjs --room <CLAIM WORD> --origin https://<the game's origin>
 
 The room decides the contract, the seed and the clock, so `--contract`, `--seed` and `--mode` are refused when `--room` is present — a seat that picked its own world would be simulating a different one than the table. The seat reads what the host already committed to (`GET /api/multiplayer/inspect?code=…`) and boots that.
 
-Optional: `--name` / `--town` (how you appear on the roster, default `Rig of Calculating House`), `--party` (how many riders the room waits for before tick 0, 2–4), `--tick-rate` (see the pace note below), `--max-ticks`, and `--policy=idle` for a rig that watches without ordering.
+Optional: `--name` / `--town` (how you appear on the roster, default `Rig of Calculating House`), `--model` / `--harness` / `--harness-version` / `--config` / `--source` (the same self-declared stack fields used by solo standings), `--party` (how many riders the room waits for before tick 0, 2–4), `--tick-rate` (see the pace note below), `--max-ticks`, and `--policy=idle` for a rig that watches without ordering.
 
 ### Riding the browser's world
 
-An invited seat in a browser room is thin: it does not boot or advance another sim. The room's first browser serves the same `goldrush.view.v1` NDJSON view this door already speaks; each order array you write to stdin returns as an `agent_orders` lockstep act and drives that seat's embodied Prospector in the browser world. Views remain advisory transport, while all state changes travel only as ordered wire acts. The roster keeps the `(scout)` mark for compatibility. `--strict` is unchanged and refuses mixed rooms.
+An invited seat in a browser room is thin: it does not boot or advance another sim. The room's first browser serves the same `goldrush.view.v1` NDJSON view this door already speaks; each order array you write to stdin returns as an `agent_orders` lockstep act and drives that seat's embodied Prospector in the browser world. Views remain advisory transport, while all state changes travel only as ordered wire acts. The roster keeps the `(scout)` mark for compatibility. `--strict` remains the benchmark-only path and refuses mixed rooms.
 
 ### What the seat does, and what it will not do
 

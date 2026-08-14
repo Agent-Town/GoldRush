@@ -4,6 +4,7 @@ import type { Intents } from '../core/InputController';
 import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
 import { isBuildableId } from '../game/buildables';
 import { validateStandingOrders, type StandingOrder } from '../agent/StandingOrders';
+import { normalizeSelfDeclaredStack, type SelfDeclaredStack } from '../agent/DeclaredStack';
 
 export type LockstepPoint = { x: number; z: number };
 export type LockstepBuildingRef = { id: string; index: number };
@@ -64,6 +65,7 @@ export type MultiplayerPlayer = {
   name: string;
   town: string;
   client: 'browser' | 'headless';
+  stack?: SelfDeclaredStack;
 };
 
 export type LockstepTick = {
@@ -103,7 +105,7 @@ type WireMessage = Record<string, unknown>;
 export type LockstepClientOptions = {
   relayBase: string;
   code: string | null;
-  player: { name: string; town: string };
+  player: { name: string; town: string; stack?: SelfDeclaredStack };
   client?: 'browser' | 'headless';
   inputDelayTicks?: number;
   hashEveryTicks?: number;
@@ -978,12 +980,16 @@ function normalizeRoster(value: unknown): MultiplayerPlayer[] {
   return Array.isArray(value)
     ? value
         .filter(isRecord)
-        .map((entry) => ({
-          playerId: String(entry.playerId ?? ''),
-          name: String(entry.name ?? 'Rider'),
-          town: String(entry.town ?? 'Home Claim'),
-          client: entry.client === 'headless' ? 'headless' as const : 'browser' as const,
-        }))
+        .map((entry) => {
+          const stack = entry.stack === undefined ? undefined : normalizeSelfDeclaredStack(entry.stack);
+          return {
+            playerId: String(entry.playerId ?? ''),
+            name: String(entry.name ?? 'Rider'),
+            town: String(entry.town ?? 'Home Claim'),
+            client: entry.client === 'headless' ? 'headless' as const : 'browser' as const,
+            ...(stack ? { stack } : {}),
+          };
+        })
         .filter((entry) => entry.playerId)
     : [];
 }
@@ -997,7 +1003,7 @@ function isOrderedRosterSubset(next: readonly MultiplayerPlayer[], previous: rea
       previousIndex += 1;
       if (candidate?.playerId === player.playerId) match = candidate;
     }
-    if (!match || match.name !== player.name || match.town !== player.town || match.client !== player.client) return false;
+    if (!match || stableStringify(match) !== stableStringify(player)) return false;
   }
   return true;
 }
