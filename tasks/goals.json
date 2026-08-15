@@ -1963,7 +1963,8 @@
                 "finding": "F-1664-1",
                 "measuredBy": "s1664 2026-08-11 (re-verified at source; first measured s1373 as F-1373-1)",
                 "reason": "NOT fire-authorable, and the owner has taken the DELIVERABLE ITSELF in hand -- this is not a gate a fire can satisfy by building anything. OWNER VERBATIM, dated 2026-08-04 in the morning rulings session (tasks/BACKLOG.md, CITE BY CONTENT: grep \"RF-04 BOUNTY COPY\"): \"(3) don't worry about the bounty copy, I will handle it.\" The row marks it done-side and adds \"Retired from the attended list\", so it is owed by NOBODY inside the factory -- not a fire, not an attended session. THIS SUPERSEDES the older s1373 reading (F-1373-1 listed this leaf as \"owner copy + prizes\" among twelve gated leaves) with a later and far more explicit owner word. WHAT IS ALREADY BUILT, so the refusal is not overstated: the PRIZE half is ruled and was queued as work -- the owner ruled THE BOUNTY SKINS by name (everyone-who-reports = THE COMPLAINANT'S COAT; top-3 = THE GILDED PROSPECTOR) with an art batch plus a grant/redeem system queued off that ruling, and the RF-03b complaints-desk row records the submit path already rendering THE BOUNTY line (shipped s902). What remains under THIS leaf is the COPY, and he writes it. THE LEAF STAYS `planned` DELIBERATELY: the bounty text does not exist yet, so the GOAL is genuinely open even though the WORK is not the factory's. DO NOT flip it to merged/superseded on the strength of the retirement note -- that would claim a deliverable nobody has produced. WHAT WOULD CHANGE THIS: the owner supplying the copy, after which the WIRING (never the writing) may be fire-authorable under its own slice."
-              }
+              },
+              "note": "OWNER 2026-08-15 verbatim: \"I will make the bounty part of the announcement post for the game\" - RF-04 rides the announcement; attended offered a draft with a prize gap."
             },
             {
               "id": "rf-05-fixed-version",
@@ -1974,7 +1975,8 @@
                 "finding": "F-1664-1",
                 "measuredBy": "s1664 2026-08-11 (re-verified at source; first measured s1373 as F-1373-1)",
                 "reason": "NOT fire-authorable: every remaining act is the owner's, and he has explicitly DEFERRED the one that gates the rest. THE URL IS ALREADY LIVE -- the leaf's own title records PUBLIC URL LIVE 2026-07-28 (edge worker route agenttown.app/goldrush), and tasks/BACKLOG.md (CITE BY CONTENT: grep \"RELEASE ANNOUNCEMENT DEFERRED\") records a97ff79c live at agenttown.app/goldrush with the walkthrough fixes. THE RESIDUAL IS TWO OWNER ACTS, named by the title itself: the vE1.0 tag and the final E1 walk blessing. Both are on record as his. (1) THE TAG: BACKLOG (grep \"vE1.0 TAG ARMED\") carries owner verbatim \"(4) ok, if we are ready now and all the fixes have been made\" -- armed, and conditioned on HIS readiness, not on a factory gate. (2) THE BLESSING WALK: the owner ruled ONE final blessing walk on round-4 AFTER the fix wave (not before) -- a playtest only he can perform. (3) THE WHOLE RELEASE-DAY PROGRAM IS DEFERRED BY HIS LATER WORD, 2026-08-09 ~21:30, verbatim: \"we can stop this release day thing I see right now - I don't think this will happen today.\" That row states the consequence in as many words -- \"No fire action owed\" -- and moves the announcement, the repo-public flips and the X post to a later day of his choosing. THIS SUPERSEDES the s1373 reading with a later owner word pointing the same way. DO NOT read the live URL as the goal being met: the deploy standing is not the tag, and publishing is owner law twice over (fire.md 7.3 reserves publishing and external services). WHAT WOULD CHANGE THIS: the owner naming a release day, walking round-4, and cutting the tag."
-              }
+              },
+              "note": "OWNER 2026-08-15: final walk deferred (\"I can play another time\") - blessing+vE1.0 tag pending owner leisure."
             },
             {
               "id": "rf-05b-physical-frontier",
@@ -2290,8 +2292,15 @@
               "status": "merged",
               "mergeHash": "da2997b3e1b0e2fe9b2e4e954d938864dbd2f17a",
               "review": "reviews/assay-office-claim-ledger.md",
-              "note": "Owner verbatim 2026-08-15: \"I would put this into the claim ledger to be honest and not on the landing page.\" Landing section reverted same day (zero diff). Renders /api/stats (live, CORS-allowlisted) as a Claim Ledger page per the reader view pattern; graceful quiet state; e2e with stubbed route. Lane-a.",
+              "note": "Owner verbatim 2026-08-15: \"I would put this into the claim ledger to be honest and not on the landing page.\" Landing section reverted same day (zero diff). Renders /api/stats (live, CORS-allowlisted) as a Claim Ledger page per the reader view pattern; graceful quiet state; e2e with stubbed route. Lane-a. FOLLOW-UP (owner 2026-08-15 \"we also have an Assay office - maybe it should be there?\" + attended recommendation BOTH-ONE-RECORD, veto with a word): after this page merges, a small slice adds the Assay Office town building as a second ENTRANCE to the same ledger page (bench UI link) - one record, two doors.",
               "drainNotes": "s1787: merged from lane/lane-a after detached custody; tsc/build green, 48/48 browser checks across desktop and 390px mobile, release-base/API-origin green on scratch port 5231, and zero console/page errors in the new plain-boot coverage."
+            },
+            {
+              "id": "assay-worker",
+              "title": "THE ASSAY WORKER - server-side replay verification of board submissions (OWNER-RULED LAUNCH-GATING 2026-08-15)",
+              "taskFile": "NONE-YET (spec specs/agent-play/assay-worker.md DRAFT; slice-0 replay-door proof first; masters follow per slice)",
+              "status": "planned",
+              "note": "Owner verbatim 2026-08-15: \"the gauntlet verification worker queue has to be done before launch - people will play and submit results\". Verified holes: rows rank instantly unreplayed (standings.ts:434-456), tape optional (:408) - live board #3 ranks tapeless. 5 slices in the spec; DO box = worker home (owner access offered). Q1-Q4 policy rulings pending (recommendations in spec)."
             }
           ]
         }
