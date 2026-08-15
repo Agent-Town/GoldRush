@@ -6108,8 +6108,11 @@
               "id": "mp-ride-lobby",
               "title": "Ride Together panel becomes a lobby - live roster + contract/difficulty display + solo-card dismissal (F-RIDE-1/2/3)",
               "taskFile": "mp-ride-lobby.md",
-              "status": "planned",
-              "note": "Attended 2026-08-15 from the first mixed human+AI ride playtest (docs/playtests/2026-08-15-robin-playtest-01.md). Owner verbatim: \"but there is no lobby\" / \"I am also not sure which contract has been selected\". Server already serves roster via inspect (verified live)."
+              "status": "merged",
+              "mergeHash": "aaf434fba0ca84a0513a4f849dea7da96e95ba0e",
+              "review": "reviews/mp-ride-lobby.md",
+              "note": "Attended 2026-08-15 from the first mixed human+AI ride playtest (docs/playtests/2026-08-15-robin-playtest-01.md). Owner verbatim: \"but there is no lobby\" / \"I am also not sure which contract has been selected\". Server already serves roster via inspect (verified live).",
+              "drainNotes": "s1786: merged from lane/lane-c after detached custody; tsc/build green, multiplayer relay 466 checks, browser 36/36 across desktop and 390px mobile with zero console/page errors."
             },
             {
               "id": "investigate-seam-anim-mp",
