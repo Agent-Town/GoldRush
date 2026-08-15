@@ -2336,8 +2336,12 @@
               "id": "assay-replay-fidelity",
               "title": "F-ASSAY-1: live browser tapes diverge from their own replay - matrix, root cause, recorder-or-replay fix (launch keystone)",
               "taskFile": "assay-replay-fidelity.md",
-              "status": "planned",
-              "note": "Successor to assay-replay-door (instrument deterministic, reel diverges: f6390382 recorded vs 29454bf2 replayed, 3 restart actions in tape). Queue to lane-d ONLY after the door output drains. Worker loop blocked on this."
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "s1796 HOLD, NOT MERGED; no owner word alone lifts this. The required matrix disproved the restart hypothesis: new no-restart and real death-screen-restart tapes already reproduce, with a new tape UUID and tick origin per life. A fresh single-life Territory-I control still diverges because live boot applies saved meta progression while the v1 tape and assay replay carry no run-start profile/research state. The task's mandatory STOP-before-fix fired, so full Node and adjacent gates were not run. Partial diagnostic code is preserved at save/assay-replay-fidelity-s1796-hold (2ba06e494f74a0baee1edf414b804df8e7e8fc57). Cure by attended re-scope of the format-level run-start-state contract, then re-land and require the progressed-profile counterexample to reproduce before authoring the worker loop.",
+              "lane": "lane-d",
+              "review": "reviews/assay-replay-fidelity.md",
+              "note": "Successor to assay-replay-door. s1796 measured the real class: second live reel and progressed-profile fresh tape diverge; restart-only tapes do not. Worker loop remains blocked."
             }
           ]
         }
