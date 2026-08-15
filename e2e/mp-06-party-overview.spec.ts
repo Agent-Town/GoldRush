@@ -11,7 +11,7 @@ type RelayEnv = RelayProcess & { worker: RelayProcess; pages: RelayProcess };
 type Player = { id: string; name: string; town: string };
 
 const ROOT = process.cwd();
-const SHOT_DIR = path.join(ROOT, 'reviews/shots-mp-06');
+const SHOT_DIR = path.join(ROOT, 'artifacts/party-pot-anchor');
 const QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&seed=mp-06-party-overview';
 const ALICE: Player = { id: 'alice', name: 'Alice', town: 'Dawn Claim' };
 const BOB: Player = { id: 'bob', name: 'Bob', town: 'River Bend' };
@@ -41,6 +41,18 @@ test('party roster shows live shared truth and local camera glance', async ({ br
     await expectRiderOrder(bob, [BOB.name, ALICE.name]);
     await expect(alice.getByTestId('party-shared-gold')).toHaveCount(1);
     await expect(alice.getByTestId('party-shared-gold')).toHaveText('0');
+    const potAnchor = await alice.evaluate(() => {
+      const title = document.querySelector<HTMLElement>('.party-overview__header > span:first-child')?.getBoundingClientRect();
+      const pot = document.querySelector<HTMLElement>('.party-overview__pot')?.getBoundingClientRect();
+      const cards = [...document.querySelectorAll<HTMLElement>('[data-testid="party-rider-card"]')].map((card) => card.getBoundingClientRect());
+      if (!title || !pot || cards.length !== 2) return null;
+      return { titleGap: pot.left - title.right, potRight: pot.right, cardsRight: cards.at(-1)!.right };
+    });
+    expect(potAnchor).toBeTruthy();
+    expect(potAnchor!.titleGap).toBeGreaterThanOrEqual(0);
+    expect(potAnchor!.titleGap).toBeLessThanOrEqual(16);
+    expect(potAnchor!.potRight).toBeLessThanOrEqual(potAnchor!.cardsRight);
+    await shot(alice, testInfo, 'after');
 
     const aliceStart = await actorPosition(alice, ALICE.name);
     await bob.keyboard.down('KeyD');
