@@ -1209,7 +1209,7 @@
               "taskFile": "fix-e5-dredge-queen-headless-socket.md",
               "status": "blocked",
               "blockClass": "gate-side",
-              "blockedReason": "s1783 HOLD, NOT MERGED; no owner word alone lifts this. F-1783-1: the wired boss is unreachable from the headless Claim-Boat rig (16,200 ticks / 540 s, storm wave 23, zero kills, both paddles alive, no terminal). F-1783-2: the boolean Deepwater boss handoff drops the browser's Act-2 escort multiplier. F-1783-3: the candidate uses the storm clock but still omits the browser's Dredge-specific early-defeat deferral. Source is preserved at save/fix-e5-dredge-queen-headless-socket-s1783-hold (a179b3d27952a3c863f31446f0c737d245a8680f). Cure by attended re-scope plus a detached re-land; do not re-admit or dispatch E6 on top of this hold.",
+              "blockedReason": "s1815 GATE-SIDE HOLD, NOT MERGED. Attempt 3 closes F-1783-1..3 in the candidate: both public-action seeds secure at wave 12 with byte-identical same-seed hashes, idle reaches the existing unsecured ceiling, and escort/early-defeat parity is wired. Admission is still not READY because required E5 census/full-node assertions are stale outside the task firewall: they still require no E5 seeds/exemption and stale public skill/MechanicsManifest rows. Source is preserved at save/fix-e5-dredge-queen-headless-socket-s1815-admission-hold (4429ea26bbefedbc3b997f450cf9f5919d0cc188). Cure with an attended assertion/public-surface re-scope and detached re-land; E6 stays held.",
               "lane": "main",
               "authoredBy": "attended 2026-08-15",
               "registeredBy": "s1782",
@@ -2336,12 +2336,12 @@
               "id": "assay-replay-fidelity",
               "title": "F-ASSAY-1: live browser tapes diverge from their own replay - matrix, root cause, recorder-or-replay fix (launch keystone)",
               "taskFile": "assay-replay-fidelity.md",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "s1796 HOLD, NOT MERGED; no owner word alone lifts this. The required matrix disproved the restart hypothesis: new no-restart and real death-screen-restart tapes already reproduce, with a new tape UUID and tick origin per life. A fresh single-life Territory-I control still diverges because live boot applies saved meta progression while the v1 tape and assay replay carry no run-start profile/research state. The task's mandatory STOP-before-fix fired, so full Node and adjacent gates were not run. Partial diagnostic code is preserved at save/assay-replay-fidelity-s1796-hold (2ba06e494f74a0baee1edf414b804df8e7e8fc57). Cure by attended re-scope of the format-level run-start-state contract, then re-land and require the progressed-profile counterexample to reproduce before authoring the worker loop.",
+              "status": "merged",
+              "mergeHash": "3a4a5d15d95a40c275776c68802a605e24d7e619",
               "lane": "lane-d",
               "review": "reviews/assay-replay-fidelity.md",
-              "note": "Successor to assay-replay-door. s1796 measured the real class: second live reel and progressed-profile fresh tape diverge; restart-only tapes do not. Worker loop remains blocked."
+              "note": "Successor to assay-replay-door. s1796 measured the real class: second live reel and progressed-profile fresh tape diverge; restart-only tapes do not.",
+              "drainNotes": "s1815: merged tape v2 runStart {meta,research}, storage-isolated replay apply, strict client/server validation, and explicit v1 unverifiable-legacy reporting. The progressed-profile counterexample now reproduces twice at fnv1a32:9092c7a6 on desktop and mobile. tsc/build, focused Node 2/2, roundtrip 2/2, tape 4/4, adjacent 32/32, and clean boot 2/2 passed. Full Node under repository-pinned Node 26 passed 458 with only the exact inherited news.html #teaser red reproduced on untouched main."
             }
           ]
         }

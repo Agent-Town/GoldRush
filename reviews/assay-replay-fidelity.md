@@ -1,60 +1,55 @@
 ---
-verdict: HOLD-NOT-MERGED
+verdict: PASS-MERGED
 slice: assay-replay-fidelity
-base: b1f880c65d993fd845d78ac2b2090fbd7d06f0c7
-tip: 2ba06e494f74a0baee1edf414b804df8e7e8fc57
-saved: save/assay-replay-fidelity-s1796-hold
+base: 8f002fdaebc109fd79802fdbd290891a68409392
+lane-tip: ebe038295063f13cd04c06162d399203c2d8e7fe
+merge: 3a4a5d15d95a40c275776c68802a605e24d7e619
 date: 2026-08-15
 ---
 
-# Assay replay fidelity — gate-side hold
+# Assay replay fidelity — passed and merged
 
 ## Verdict
 
-**HOLD — NOT MERGED.** The investigation completed its required matrix and correctly fired the master's honesty stop. One tape per life already works; replay fidelity still fails for a fresh single-life tape whose recording boot applied saved progression state. The assay worker remains blocked.
+**PASS — MERGED.** Tape v2 now carries the ratified run-start `{meta,research}` snapshot, replay applies that snapshot in isolated storage before boot, and client plus CF validation accept the same bounded v1/v2 shapes. Existing v1 tapes remain storable but are reported as `unverifiable-legacy` rather than falsely assayed.
 
-The candidate adds a round-trip measurement spec and worker-isolated assay ports, but it deliberately asserts the progressed-profile mismatch as the expected counterexample. It is diagnostic evidence, not the green fidelity contract the launch gate requires, and the full Node/adjacent battery was not run after the stop.
+The progressed-profile Territory-I counterexample that forced the s1796 hold now reproduces twice at `fnv1a32:9092c7a6` on both desktop and mobile. Live-play semantics did not change.
 
-## Matrix
+## Matrix and root cause
 
-| Cell | Recorded | Replayed | Verdict |
-| --- | --- | --- | --- |
-| Second live reel | `a4025223`, secured, W10, 300g | `ae34aa2f`, unsecured, W1, 5g | Diverged |
-| Fresh, no restart | `39421f64`, unsecured, W0, 0g | Same hash/outcome | Clean |
-| Death-screen restart | `a251ce02`, unsecured, W0, 0g | Same hash/outcome | Clean; new UUID/tick origin |
-| Curated control | `6dff07d6` desktop / `6c397654` mobile | Matching hash/outcome per project | Clean |
-| Fresh Territory I | `d6ceecd8` | `168dafd5` | Diverged |
-| Original pinned reel | `f6390382`, secured, W10, 280g | `29454bf2`, unsecured, W4, 30g | Still diverged |
+| Cell | Before | After |
+| --- | --- | --- |
+| Second legacy live reel | `a4025223` → `ae34aa2f` | `unverifiable-legacy` |
+| Fresh single life | reproduced | reproduced |
+| Death-screen restart | reproduced with a fresh tape/life | reproduced |
+| Curated controls | reproduced | reproduced |
+| Fresh Territory I | `d6ceecd8` → `168dafd5` | `9092c7a6` twice |
 
-## Root cause
+Normal live boot installs `RunManager` and applies saved meta/research progression. The replay-only constructor path returned before that owner existed, so v1 replay started from empty progression. The fix captures the native progression snapshot at tape birth and applies it through the existing storage-backed boot path; it does not special-case Territory I.
 
-- `src/game/RunTape.ts` v1 stores contract, seed, difficulty, input streams, event hash, and outcome, but no deterministic run-start profile/research state.
-- Normal live boot installs `RunManager`, which loads saved meta progression and applies it to the run.
-- Assay replay takes the replay-only constructor path before `RunManager` installation, so it starts from empty progression state.
-- The Territory-I control makes the difference observable: live recording receives the free palisade kit; replay rejects the same placement and hashes a different event stream.
-- `RunManager.patchResetRun()` already calls `startRun()` after every reset, and `onRunStarted` creates a fresh `RunTapeRecorder`; the inherited restart-spanning hypothesis is false for current tapes.
-
-## Evidence and classification
+## Gate evidence
 
 | Check | Result |
 | --- | --- |
-| Policy | `drain-block-check --strict`: CLEAR / planned before this hold was recorded |
-| Candidate diff | exactly two paths: new `e2e/assay-replay-roundtrip.spec.ts`, modified `scripts/assay-replay.mjs`; `+125/-2` |
-| TypeScript / build | runner reports pass; build completed in 1.68 s |
-| Pinned assay test | runner reports pass |
-| New round-trip spec | desktop + mobile passed serially and at two workers; zero captured console/page errors |
-| Full Node / adjacent suites | intentionally not run after the mandatory stop fired |
+| Policy | `drain-block-check --strict` reported the inherited `gate-side` hold; this fire gathered detached evidence, merged, and removed the hold in the immediately following bookkeeping commit |
+| Custody | detached worktree at s1815 main; only the seven intended paths landed; 15 generated screenshot churn paths were excluded |
+| TypeScript / build | pass / pass |
+| Focused Node | 2/2 pass |
+| Round-trip desktop + mobile | 2/2 pass; progressed-profile hash `9092c7a6` twice |
+| Existing tape desktop | 4/4 pass |
+| Adjacent task-025 / m1-01 / m2-01 | 32/32 pass, both projects, `--workers=1` |
+| Plain boot desktop + mobile | 2/2 pass, zero captured console/page errors |
+| Full Node, repository-pinned Node 26.4.0 | 465 tests: 458 pass, 2 fail, 5 skip; both fail rows are the same inherited `news.html` link to missing `index.html#teaser` |
+| Untouched-main control | reproduces the same direct `site-contract` red and its fixture-teardown duplicate |
 
-Main did not move either candidate path after the base, so both are lane-only. No candidate content entered main's working tree or history.
+Full transcript: `artifacts/assay-replay-fidelity-s1815-gate.txt`.
 
 ## Finding
 
-### F-1796-1 — BLOCKING: a tape omits deterministic run-start state
+### F-1815-1 — runner restart and repository Node baselines disagree
 
-The owner-ratified replay-truth law cannot verify a claim when recording and replay begin from different progression/research state. Fixing one reel or only the Territory-I free kit would encode the symptom. The successor needs an attended, format-level contract for the minimal deterministic run-start snapshot, backward handling for v1/pre-fix tapes, and explicit size proof under the unchanged 64KB submission cap.
+The sanctioned runner helper selected Node 23.11.1, while `.nvmrc` pins 26.4.0 and `scripts/node-guards-timeout.test.mjs` deterministically rejects Node 23 because its per-test timeout behavior differs. The same candidate under Node 23 produced 455 pass / 3 fail / 1 cancelled / 4 skipped; Node 26 removed the timeout/gr-sim failures, leaving only the control-confirmed site-contract red. This is factory evidence for the existing F-1507-1 owner fork, not a replay-slice defect.
 
-## Custody and next action
+## Retention
 
-The partial candidate is preserved at `save/assay-replay-fidelity-s1796-hold` (`2ba06e494f74a0baee1edf414b804df8e7e8fc57`). The done marker is retained as `tasks/done/stopped-s1796-gate-side-20260815-165145-assay-replay-fidelity.md`, and the goal leaf is gate-side blocked.
-
-Attended should re-scope the run-start-state schema before a fresh re-land. The next proof must turn the progressed-profile counterexample into hash/outcome parity, run the full Node and adjacent browser battery, and only then unblock authoring of the worker loop. No owner word alone lifts this hold.
+The prior diagnostic save remains historical evidence at `save/assay-replay-fidelity-s1796-hold`; the merge is `3a4a5d15d95a40c275776c68802a605e24d7e619`. No generated screenshots were admitted.
