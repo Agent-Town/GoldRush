@@ -52,4 +52,4 @@ The sanctioned runner helper selected Node 23.11.1, while `.nvmrc` pins 26.4.0 a
 
 ## Retention
 
-The prior diagnostic save remains historical evidence at `save/assay-replay-fidelity-s1796-hold`; the merge is `3a4a5d15d95a40c275776c68802a605e24d7e619`. No generated screenshots were admitted.
+The prior diagnostic save was retired to `archive/assay-replay-fidelity-s1796-hold-s1815`; the merge is `3a4a5d15d95a40c275776c68802a605e24d7e619`. No generated screenshots were admitted.
