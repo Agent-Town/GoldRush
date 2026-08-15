@@ -2306,8 +2306,11 @@
               "id": "assay-cf-lifecycle",
               "title": "Assay lifecycle + worker endpoints on standings (Q1-Q4 ruled; tapeless never ranks; pending badged; rejects counted; retro-assay)",
               "taskFile": "assay-cf-lifecycle.md",
-              "status": "planned",
-              "note": "Slice 1 of specs/agent-play/assay-worker.md (RATIFIED + GO 2026-08-15). MAIN slot."
+              "status": "merged",
+              "mergeHash": "49aab8f1d63a2175e47e85b54659fead6caaa6da",
+              "review": "reviews/assay-cf-lifecycle.md",
+              "note": "Slice 1 of specs/agent-play/assay-worker.md (RATIFIED + GO 2026-08-15). MAIN slot.",
+              "drainNotes": "s1793: merged after detached gates and independent security review. Three pre-merge findings closed: unique verdict row identity, bounded unranked retention, and permanent assay-harness wiring. tsc/build green; stats 87, assay 31, accounts 43; clean desktop/mobile boot probes."
             },
             {
               "id": "assay-auto-tape",
