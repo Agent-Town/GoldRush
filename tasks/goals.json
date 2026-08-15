@@ -2342,6 +2342,20 @@
               "review": "reviews/assay-replay-fidelity.md",
               "note": "Successor to assay-replay-door. s1796 measured the real class: second live reel and progressed-profile fresh tape diverge; restart-only tapes do not.",
               "drainNotes": "s1815: merged tape v2 runStart {meta,research}, storage-isolated replay apply, strict client/server validation, and explicit v1 unverifiable-legacy reporting. The progressed-profile counterexample now reproduces twice at fnv1a32:9092c7a6 on desktop and mobile. tsc/build, focused Node 2/2, roundtrip 2/2, tape 4/4, adjacent 32/32, and clean boot 2/2 passed. Full Node under repository-pinned Node 26 passed 458 with only the exact inherited news.html #teaser red reproduced on untouched main."
+            },
+            {
+              "id": "assay-season-roll",
+              "title": "SEASON ROLL - archive pre-assay board as season 1 (read-only), launch season admits only v2-assayed rows (owner-ruled)",
+              "taskFile": "assay-season-roll.md",
+              "status": "planned",
+              "note": "Owner verbatim 2026-08-15: \"this kind of calls for a next season? Because we have to test the taping anyways again.\" MAIN slot; queue when main frees."
+            },
+            {
+              "id": "assay-worker-loop",
+              "title": "The assayer worker loop - poll assay-queue, replay via the instrument, post exact-match verdicts (slice 2)",
+              "taskFile": "assay-worker-loop.md",
+              "status": "planned",
+              "note": "Composes the merged instrument + endpoints. lane-d; queue AFTER assay-replay-fidelity drains. False-VERIFIED is the forbidden green."
             }
           ]
         }

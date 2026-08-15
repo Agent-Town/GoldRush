@@ -15,11 +15,9 @@ The fidelity matrix (`e2e/assay-replay-roundtrip.spec.ts`, lane-d `2ba06e494`) i
 6. **Bounds**: `runStart` adds ~1–2 KB (four int tracks + the taken-nodes list). The 64 KB tape cap is UNCHANGED; `validateTape` (v2) requires `runStart` well-formed and within the same total cap.
 7. **Legacy (v1) tapes are structurally unverifiable** — they omit `runStart`, so no replay can be faithful to an unknown starting state. No retro-fill is possible honestly.
 
-## The legacy board (owner line-item — the ONE open question, with a recommendation)
-Q4's "retro-assay the existing 17 rows" was ruled before we knew v1 tapes cannot verify. Two honest options:
-- **(a) RECOMMENDED — archive & fresh board at launch:** the pre-assay board is preserved as a named history page ("the county's first ledger", RETENTION LAW — nothing deleted), and the launch board starts empty and 100% assayed under v2. Clean trust story: every visible rank is a verified rank.
-- **(b) Legacy badge:** old rows stay, marked "pre-assay era, unverifiable"; new rows assay. Keeps continuity, dilutes the trust claim.
-Owner picks one word: **archive** or **badge**.
+## The legacy board — RULED: SEASON ROLL (owner, 2026-08-15, verbatim)
+*"no problem - but this means these tapes cannot be played, right? I think this kind of calls for a next season? Because we have to test the taping anyways again."*
+→ **The county board rolls to a NEW SEASON at launch.** The pre-assay board (all 17 rows, tapes included) is ARCHIVED as the closed first season — preserved read-only as a named history page (RETENTION LAW; the SEA-* season-chronicle machinery already gives seasons their story). The launch season starts empty and admits ONLY v2-assayed rows — every visible rank is a verified rank, and the new season's opening submissions double as the live test of v2 taping. Precision on "cannot be played": v1 tapes still REPLAY deterministically, but for progressed recordings the playback diverges from what happened (unknown start state) — they are kept as artifacts, not proofs.
 
 ## Sequencing
 Implemented by the re-landed `assay-replay-fidelity` master (recorder + replay + validateTape v2 + the roundtrip battery, salvaging lane-d `2ba06e494`); the worker loop (assay-worker slice 2) unblocks when the Territory-I counterexample reproduces and a fresh progressed-profile round-trip is green twice.
