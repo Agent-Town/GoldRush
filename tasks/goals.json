@@ -1211,7 +1211,8 @@
               "lane": "main",
               "authoredBy": "attended 2026-08-15",
               "registeredBy": "s1782",
-              "note": "Cures F-MTS-3 from reviews/milk-twin-sockets.md using the proven CrawlerBossSystem guard and wiring pattern. The attended handover explicitly staged this master for registration and queueing once the factory was clear; s1782 re-verified the DOM field-initializer crash and absent HeadlessContractSim boss wiring before dispatch. No balance change is permitted."
+              "note": "Cures F-MTS-3 from reviews/milk-twin-sockets.md using the proven CrawlerBossSystem guard and wiring pattern. The attended handover explicitly staged this master for registration and queueing once the factory was clear; s1782 re-verified the DOM field-initializer crash and absent HeadlessContractSim boss wiring before dispatch. No balance change is permitted.",
+              "dispatchNote": "s1782 attempt 1 stopped honestly with zero diff at mandatory preflight because the runner claimed after STATUS line 1 was rewritten to lock CLEARED but before that handoff was committed; tracked STATUS.md was therefore dirty. Re-queued once in the same fire with a changed premise: the recovery ACTIVE lock and all ledger edits are committed first, then the handoff commit makes STATUS clean before the runner's second preflight. Evidence: tasks/runs/20260815-075219-main-fix-e5-dredge-queen-headless-socket.md.log."
             }
           ]
         },
