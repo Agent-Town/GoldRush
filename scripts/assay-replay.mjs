@@ -27,7 +27,7 @@ try {
     server: { host: '127.0.0.1', port: 5234, strictPort: true },
   });
   await vite.listen();
-  browser = await chromium.launch({ headless: true });
+  browser = await chromium.launch({ headless: true, channel: 'chromium' });
   const page = await browser.newPage();
   const errors = [];
   page.on('console', (message) => {
@@ -39,6 +39,7 @@ try {
   const query = new URLSearchParams({
     debug: '',
     assayReplay: '',
+    replay: tape.id,
     contract: tape.contract,
     seed: tape.seed,
     difficulty: tape.difficulty,
@@ -65,7 +66,7 @@ try {
     return {
       eventLogHash: status.getAttribute('data-hash'),
       outcome: {
-        secured: diagnostics.hp > 0 && diagnostics.wave >= diagnostics.contract.secureWave,
+        secured: diagnostics.run.secured,
         waves: Math.floor(diagnostics.wave),
         gold: Math.floor(diagnostics.economy.summary.panned),
         timeAlive: Math.round(diagnostics.timeAlive * 1_000_000) / 1_000_000,
