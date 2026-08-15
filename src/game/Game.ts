@@ -2752,17 +2752,10 @@ export class Game {
       );
       return;
     }
-    // During a playbook replay the performing actor sits in a non-zero slot, so
-    // the pan-channel slowdown must follow the actor that actually channels
-    // (per-actor channel state) — the mpActionSlot proxy stays untouched for
-    // multiplayer to avoid any lockstep behavior change.
-    const playbookReplayActive = !this.mpClient && (this.playbookReplay?.active === true || this.runTapeReplay !== null);
     for (let slot = 0; slot < this.actors.length; slot += 1) {
       const actor = this.actors[slot];
       if (!actor?.group.visible) continue;
-      const channeling = playbookReplayActive
-        ? this.harvestSnapshot.channels.some((channel) => channel.actorId === String(slot) && channel.channeling)
-        : this.harvestSnapshot.channeling && slot === this.mpActionSlot;
+      const channeling = this.harvestSnapshot.channels.some((channel) => channel.actorId === String(slot) && channel.channeling);
       actor.update(
         simDelta,
         this.e8PhysicsIntents(slot, actor, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), simDelta),
