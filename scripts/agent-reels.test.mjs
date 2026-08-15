@@ -14,6 +14,12 @@ test('agent reel validation reuses the door bounds and CLI tapes are byte determ
     const { validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
     const tape = fixture(Array(32).fill(hold));
     assert.ok(validateTape(tape, tape.contract, tape.seed, tape.difficulty));
+    const v2 = { ...tape, version: 2, runStart: runStart() };
+    assert.ok(validateTape(v2, v2.contract, v2.seed, v2.difficulty));
+    assert.equal(validateTape({ ...tape, runStart: runStart() }, tape.contract, tape.seed, tape.difficulty), null);
+    assert.equal(validateTape({ ...v2, runStart: { ...v2.runStart, meta: {} } }, v2.contract, v2.seed, v2.difficulty), null);
+    assert.equal(validateTape({ ...v2, runStart: { ...v2.runStart, research: { ...v2.runStart.research, version: 2 } } }, v2.contract, v2.seed, v2.difficulty), null);
+    assert.equal(validateTape({ ...v2, runStart: undefined }, v2.contract, v2.seed, v2.difficulty), null);
     assert.equal(validateTape(fixture(Array(33).fill(hold)), tape.contract, tape.seed, tape.difficulty), null);
     assert.equal(validateTape(fixture([{ verb: 'HOLD', pos: { x: Number.NaN, z: 12 } }]), tape.contract, tape.seed, tape.difficulty), null);
     const moving = fixture([hold]);
@@ -40,6 +46,23 @@ test('agent reel validation reuses the door bounds and CLI tapes are byte determ
     rmSync(directory, { recursive: true, force: true });
   }
 });
+
+function runStart() {
+  const meta = { version: 1, tracks: { territory: 1, science: 0, hero: 0, agent: 0 } };
+  return {
+    meta,
+    research: {
+      version: 1,
+      epochId: 'epoch-1-frontier',
+      metaScienceCursor: 0,
+      progress: meta,
+      taken: [],
+      proposalSalt: 0,
+      pinnedTarget: null,
+      unlocks: {},
+    },
+  };
+}
 
 function fixture(orders) {
   return {

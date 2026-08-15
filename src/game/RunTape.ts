@@ -24,9 +24,11 @@ import {
 import type { PlaybookProbe } from '../playbook/PlaybookSession';
 import type { EconomySummary } from './Economy';
 import type { StandingOrdersView } from '../agent/StandingOrders';
+import { freshMetaProgress, type MetaProgress } from './MetaProgress';
+import { freshResearchState, type ResearchState } from '../meta/ResearchTree';
 
 export const RUN_TAPES_KEY = 'gr.tapes.v1';
-export const RUN_TAPE_VERSION = 1 as const;
+export const RUN_TAPE_VERSION = 2 as const;
 export const RUN_TAPE_SIM_VERSION = 1 as const;
 export const RUN_TAPE_RECENT_LIMIT = 10;
 export const MAX_SUBMITTED_TAPE_BYTES = 64 * 1024;
@@ -58,8 +60,13 @@ export type RunTapeInputLog = PlaybookRecording & {
   streams: RunTapeInputStream[];
 };
 
+export type RunTapeRunStart = {
+  meta: MetaProgress;
+  research: ResearchState;
+};
+
 export type RunTape = {
-  version: typeof RUN_TAPE_VERSION;
+  version: 1 | typeof RUN_TAPE_VERSION;
   id: string;
   createdAt: number;
   kept: boolean;
@@ -67,6 +74,7 @@ export type RunTape = {
   seed: string;
   difficulty: string;
   simVersion: number;
+  runStart?: RunTapeRunStart;
   inputLog: RunTapeInputLog;
   eventLogHash: string;
   outcome: RunTapeOutcome;
@@ -75,6 +83,7 @@ export type RunTape = {
 
 type RunTapeHeader = Pick<RunTape, 'contract' | 'seed' | 'difficulty'> & {
   start: { x: number; z: number };
+  runStart?: RunTapeRunStart;
 };
 
 type TapeStorage = Pick<Storage, 'getItem' | 'setItem'>;
@@ -85,6 +94,7 @@ type StreamState = RunTapeInputStream & {
 };
 
 const EVENT_HASH = /^fnv1a32:[a-f0-9]{8}$/;
+const RUN_TAPE_RING_VERSION = 1;
 
 export class RunTapeRecorder {
   private readonly id = crypto.randomUUID();
@@ -102,7 +112,12 @@ export class RunTapeRecorder {
   private primarySlot = 0;
   private stopped = false;
 
-  constructor(private readonly header: RunTapeHeader) {}
+  private readonly header: RunTapeHeader & { runStart: RunTapeRunStart };
+
+  constructor(header: RunTapeHeader) {
+    const meta = freshMetaProgress();
+    this.header = structuredClone({ ...header, runStart: header.runStart ?? { meta, research: freshResearchState(meta) } });
+  }
 
   record(intents: Intents, position: { x: number; z: number }, queuedActions: LockstepAction[] = [], primarySlot = 0): void {
     if (this.stopped || this.truncation) return;
@@ -201,6 +216,7 @@ export class RunTapeRecorder {
       seed: this.header.seed,
       difficulty: this.header.difficulty,
       simVersion: RUN_TAPE_SIM_VERSION,
+      runStart: structuredClone(this.header.runStart),
       inputLog,
       eventLogHash: runTapeEventLogHash(this.frozenEventLog ?? eventLog),
       outcome,
@@ -258,7 +274,7 @@ export function submittedRunTape(tape: RunTape): RunTape | undefined {
 export function readRunTapes(storage: TapeStorage): RunTape[] {
   try {
     const value = JSON.parse(storage.getItem(RUN_TAPES_KEY) ?? 'null') as unknown;
-    if (!isRecord(value) || value.version !== RUN_TAPE_VERSION || !Array.isArray(value.tapes)) return [];
+    if (!isRecord(value) || value.version !== RUN_TAPE_RING_VERSION || !Array.isArray(value.tapes)) return [];
     return value.tapes.map(validateRunTape).filter((tape): tape is RunTape => tape !== null);
   } catch {
     return [];
@@ -283,7 +299,7 @@ function writeRing(storage: TapeStorage, tapes: RunTape[]): boolean {
   const sorted = tapes.sort((a, b) => b.createdAt - a.createdAt || b.id.localeCompare(a.id));
   const kept = sorted.filter((tape, index) => index < RUN_TAPE_RECENT_LIMIT || tape.kept);
   try {
-    storage.setItem(RUN_TAPES_KEY, JSON.stringify({ version: RUN_TAPE_VERSION, tapes: kept }));
+    storage.setItem(RUN_TAPES_KEY, JSON.stringify({ version: RUN_TAPE_RING_VERSION, tapes: kept }));
     return true;
   } catch {
     return false;
@@ -293,8 +309,8 @@ function writeRing(storage: TapeStorage, tapes: RunTape[]): boolean {
 // Exported for TAPE-03: a reel fetched from the county board is untrusted bytes off the network
 // and gets the same validator the local ring already trusts, rather than a second, weaker one.
 export function validateRunTape(value: unknown): RunTape | null {
-  if (!isRecord(value) || !hasOnlyKeys(value, ['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'inputLog', 'eventLogHash', 'outcome', 'annotations'])) return null;
-  if (value.version !== RUN_TAPE_VERSION || !Number.isSafeInteger(value.simVersion) || (value.simVersion as number) < 1) return null;
+  if (!isRecord(value) || !hasOnlyKeys(value, ['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'runStart', 'inputLog', 'eventLogHash', 'outcome', 'annotations'])) return null;
+  if ((value.version !== 1 && value.version !== RUN_TAPE_VERSION) || !Number.isSafeInteger(value.simVersion) || (value.simVersion as number) < 1) return null;
   if (typeof value.id !== 'string' || !value.id || typeof value.createdAt !== 'number' || !Number.isSafeInteger(value.createdAt)) return null;
   if (typeof value.kept !== 'boolean' || typeof value.contract !== 'string' || !value.contract) return null;
   if (typeof value.seed !== 'string' || typeof value.difficulty !== 'string' || !value.difficulty) return null;
@@ -303,9 +319,10 @@ export function validateRunTape(value: unknown): RunTape | null {
   const streams = validateInputStreams(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0);
   const outcome = validateOutcome(value.outcome);
   const annotations = validateAnnotations(value.annotations);
-  if (!parsed.ok || !streams || !outcome || annotations === null || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
+  const runStart = validateRunStart(value.runStart);
+  if (!parsed.ok || !streams || !outcome || annotations === null || (value.version === RUN_TAPE_VERSION ? !runStart : value.runStart !== undefined) || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
   return {
-    version: RUN_TAPE_VERSION,
+    version: value.version,
     id: value.id,
     createdAt: value.createdAt,
     kept: value.kept,
@@ -313,11 +330,58 @@ export function validateRunTape(value: unknown): RunTape | null {
     seed: value.seed,
     difficulty: value.difficulty,
     simVersion: value.simVersion as number,
+    ...(runStart ? { runStart } : {}),
     inputLog: { ...parsed.playbook, ...streams },
     eventLogHash: value.eventLogHash,
     outcome,
     ...(annotations ? { annotations } : {}),
   };
+}
+
+function validateRunStart(value: unknown): RunTapeRunStart | null {
+  if (!isRecord(value) || !hasOnlyKeys(value, ['meta', 'research'])) return null;
+  const meta = validateMeta(value.meta);
+  if (!meta || !isRecord(value.research) || !hasOnlyKeys(value.research, ['version', 'epochId', 'metaScienceCursor', 'progress', 'taken', 'proposalSalt', 'pinnedTarget', 'unlocks'])) return null;
+  const researchMeta = validateMeta(value.research.progress);
+  const epochId = value.research.epochId;
+  const cursor = value.research.metaScienceCursor;
+  const taken = value.research.taken;
+  const salt = value.research.proposalSalt;
+  const target = value.research.pinnedTarget;
+  const unlocks = value.research.unlocks;
+  if (value.research.version !== 1 || !researchMeta || (epochId !== undefined && !token(epochId)) || (cursor !== undefined && !nonNegativeInteger(cursor))
+    || !Array.isArray(taken) || taken.length > 256 || !taken.every(token) || new Set(taken).size !== taken.length
+    || !nonNegativeInteger(salt) || (target !== null && !token(target))
+    || (unlocks !== undefined && (!isRecord(unlocks) || !hasOnlyKeys(unlocks, ['rocketCartCaptured']) || (unlocks.rocketCartCaptured !== undefined && typeof unlocks.rocketCartCaptured !== 'boolean')))) return null;
+  return {
+    meta,
+    research: {
+      version: 1,
+      ...(epochId === undefined ? {} : { epochId }),
+      ...(cursor === undefined ? {} : { metaScienceCursor: cursor }),
+      progress: researchMeta,
+      taken: [...taken],
+      proposalSalt: salt,
+      pinnedTarget: target,
+      ...(unlocks === undefined ? {} : { unlocks: { ...unlocks } }),
+    },
+  };
+}
+
+function validateMeta(value: unknown): MetaProgress | null {
+  if (!isRecord(value) || !hasOnlyKeys(value, ['version', 'tracks']) || value.version !== 1 || !isRecord(value.tracks)
+    || !hasOnlyKeys(value.tracks, ['territory', 'science', 'hero', 'agent'])) return null;
+  const { territory, science, hero, agent } = value.tracks;
+  if (!nonNegativeInteger(territory) || !nonNegativeInteger(science) || !nonNegativeInteger(hero) || !nonNegativeInteger(agent)) return null;
+  return { version: 1, tracks: { territory, science, hero, agent } };
+}
+
+function token(value: unknown): value is string {
+  return typeof value === 'string' && value.length > 0 && value.length <= 64;
+}
+
+function nonNegativeInteger(value: unknown): value is number {
+  return Number.isSafeInteger(value) && (value as number) >= 0;
 }
 
 function validateAnnotations(value: unknown): RunTape['annotations'] | null {

@@ -81,7 +81,7 @@ import {
   type RunTape,
   type RunTapeOutcome,
 } from './RunTape';
-import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
+import { META_PROGRESS_KEY, agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
@@ -2207,6 +2207,17 @@ export class Game {
     this.cameraRig.snapTo(this.localActor.group.position);
     this.state.transition('playing');
     if (this.boot.replay) {
+      const runStart = this.boot.replay.tape.runStart;
+      if (runStart) {
+        this.researchState = structuredClone(runStart.research);
+        const meta = JSON.stringify(runStart.meta);
+        this.runManager = new RunManager(this, {
+          storage: {
+            getItem: (key) => key === META_PROGRESS_KEY ? meta : null,
+            setItem: () => undefined,
+          },
+        }).install();
+      }
       this.installAgentDoor(false);
       this.startRunTapeReplay(this.boot.replay.tape);
       resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
@@ -6444,6 +6455,10 @@ export class Game {
       seed: this.runSeed,
       difficulty: this.difficultyPreset,
       start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
+      runStart: {
+        meta: this.appliedMetaProgress,
+        research: this.researchState,
+      },
     });
   }
 

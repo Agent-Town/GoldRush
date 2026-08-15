@@ -8,6 +8,7 @@ import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const inputPath = process.argv[2];
+const port = Number(process.env.GR_ASSAY_REPLAY_PORT ?? 5234);
 
 if (!inputPath) {
   process.stderr.write('Usage: node scripts/assay-replay.mjs <reel.json>\n');
@@ -20,11 +21,15 @@ try {
   const payload = JSON.parse(await readFile(path.resolve(inputPath), 'utf8'));
   const tape = payload?.reel ?? payload;
   if (!tape?.inputLog?.durationTicks) throw new Error('reel JSON does not contain a tape');
+  if (tape.version === 1) {
+    process.stdout.write(`${JSON.stringify({ status: 'unverifiable-legacy' })}\n`);
+    process.exit(0);
+  }
 
   vite = await createServer({
     root,
     logLevel: 'silent',
-    server: { host: '127.0.0.1', port: 5234, strictPort: true },
+    server: { host: '127.0.0.1', port, strictPort: true },
   });
   await vite.listen();
   browser = await chromium.launch({ headless: true, channel: 'chromium' });
@@ -45,7 +50,7 @@ try {
     difficulty: tape.difficulty,
   });
   const startedAt = performance.now();
-  await page.goto(`http://127.0.0.1:5234/?${query}`, { waitUntil: 'load', timeout: 60_000 });
+  await page.goto(`http://127.0.0.1:${port}/?${query}`, { waitUntil: 'load', timeout: 60_000 });
   await page.waitForFunction(() => Boolean(window.__GR_TEST__), undefined, { timeout: 60_000 });
   await page.evaluate((seconds) => {
     window.__GR_TEST__.setManualSim(true);
