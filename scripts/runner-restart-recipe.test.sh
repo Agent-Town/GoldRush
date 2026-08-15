@@ -32,6 +32,18 @@ fails=0
 ok()  { echo "  ok   — $1"; }
 bad() { echo "  FAIL — $1"; fails=$((fails+1)); }
 
+# F-1783-4: after the archive scan, macOS can take more than one second to expose fd 255 to
+# lsof. Poll the identity predicate itself so the aggregate gate measures identity, not timing.
+wait_for_runner_pid() {
+  local wanted="$1" attempt=0
+  while [ "$attempt" -lt 10 ]; do
+    runner_pids | grep -qx "$wanted" && return 0
+    attempt=$((attempt+1))
+    sleep 1
+  done
+  return 1
+}
+
 scratch="$(mktemp -d "${TMPDIR:-/tmp}/runner-processes.XXXXXX")" || exit 1
 fixture_pids=''
 cleanup() {
@@ -71,7 +83,7 @@ fi
 printf '%s\n' '#!/bin/bash' 'while :; do sleep 1; done' > "$scratch/lane-runner-v3.sh"
 bash "$scratch/lane-runner-v3.sh" &
 runner_pid=$!; fixture_pids="$fixture_pids $runner_pid"
-sleep 1
+wait_for_runner_pid "$runner_pid" || true
 fixture_matches="$(runner_pids | grep -x "$runner_pid")"
 [ "$(printf '%s\n' "$fixture_matches" | grep -cx "$runner_pid")" = "1" ] \
   && ok "shared discriminator finds one absolute-path runner" \
@@ -86,7 +98,7 @@ fixture_pids=" $prompt_pid"
   exec bash ./lane-runner-v3.sh
 ) &
 runner_pid=$!; fixture_pids="$fixture_pids $runner_pid"
-sleep 1
+wait_for_runner_pid "$runner_pid" || true
 [ "$(runner_pids | grep -cx "$runner_pid")" = "1" ] \
   && ok "shared discriminator accepts a relative runner path" \
   || bad "shared discriminator rejected the relative runner path"
