@@ -2326,8 +2326,11 @@
               "id": "assay-replay-door",
               "title": "Replay door: headless instrument replays a REAL live reel to its recorded hash, twice (slice-0 keystone)",
               "taskFile": "assay-replay-door.md",
-              "status": "planned",
-              "note": "Slice 0. Measured tape shape in-master; rob reel d3ab0f33 as proof material. lane-d. Worker-loop master authors AFTER this merges (its interface)."
+              "status": "merged",
+              "mergeHash": "ad429a117099550ae97eaf0a117c152e69162e08",
+              "review": "reviews/assay-replay-door.md",
+              "note": "Slice 0. Measured tape shape in-master; rob reel d3ab0f33 as proof material. lane-d. Worker-loop master authors AFTER this merges (its interface).",
+              "drainNotes": "s1794: merged the deterministic debug-only replay instrument after detached gates and independent review. F-1794-1..3 closed before merge (native epoch route, native secured result, supported Chromium channel). The live reel still replays to fnv1a32:29454bf2 instead of recorded fnv1a32:f6390382; F-ASSAY-1 remains open and the worker loop stays blocked on fidelity."
             }
           ]
         }
