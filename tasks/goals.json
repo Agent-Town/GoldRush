@@ -6121,8 +6121,11 @@
               "id": "investigate-seam-anim-mp",
               "title": "INVESTIGATE: seam-collect animation lost during MP ride (F-RIDE-4) - measurement matrix first, no blind fix",
               "taskFile": "investigate-seam-anim-mp.md",
-              "status": "planned",
-              "note": "Owner verbatim mid-ride 2026-08-15: \"collecting seams has lost its animation somehow\". Mechanism unknown; solo-vs-MP split unmeasured. Lane-c ladder position 2."
+              "status": "merged",
+              "mergeHash": "b89c2567bc175be728d765127d9fc34962075746",
+              "review": "reviews/investigate-seam-anim-mp.md",
+              "note": "Owner verbatim mid-ride 2026-08-15: \"collecting seams has lost its animation somehow\". Mechanism unknown; solo-vs-MP split unmeasured. Lane-c ladder position 2.",
+              "drainNotes": "s1787: merged from lane/lane-c after detached custody; per-rider harvest snapshot replaces the transient action-slot proxy. Tsc/build green; Playwright 39 passed + 1 expected mobile multiplayer skip across focused, adjacent, and plain-boot coverage."
             },
             {
               "id": "fix-party-pot-orphan",
