@@ -2282,6 +2282,13 @@
               "taskFile": "lane-f1615-1-prefetch-wins-mount-laziness.md",
               "lane": "lane-a",
               "note": "s1615 fire, authored under the owner ruling of 2026-08-09 (\"Prefetch wins\", branch (a), recorded at tasks/BACKLOG.md:1461 and explicitly marked FIRE-AUTHORABLE, one master). s1614 asked the next fire to confirm the eight assertions were still contradicting before authoring; s1615 REPRODUCED it on main rather than inheriting it: e2e/town-tavern-blender.spec.ts:205 (\"LITE tier always keeps the facade and never fetches the GLB\") failed desktop-chrome --workers=1 with received [\"http://127.0.0.1:5188/assets/pilots/tavern-3d/town-v3-tavern.glb\"], while its sibling at :154 passed in the same run. NEW MECHANISM not in the F-1167-1 row: the offending request is issued during the MENU phase (AdvanceStream.ts:62-63 add(town,town,1)) where the gate at :250-252 reads an EMPTY window.location.search on the specs bare page.goto(/), so the later replaceState to ?terrain2d / tier=lite disables only SUBSEQUENT prefetch. The lite gate is therefore NOT defective and the specs terrain2d default and !url.search filter are NOT the bug \u2014 which is why the cure is the assertions, per the owner ruling, and not the helper. Scope covers ten specs, not eight, because removing the :49 exclusion newly exposes stamp-mill and dynamo-hall."
+            },
+            {
+              "id": "assay-office-claim-ledger",
+              "title": "Assay Office stats page inside the game Claim Ledger (owner ruling 2026-08-15: in the claim ledger, not the landing page)",
+              "taskFile": "assay-office-claim-ledger.md",
+              "status": "planned",
+              "note": "Owner verbatim 2026-08-15: \"I would put this into the claim ledger to be honest and not on the landing page.\" Landing section reverted same day (zero diff). Renders /api/stats (live, CORS-allowlisted) as a Claim Ledger page per the reader view pattern; graceful quiet state; e2e with stubbed route. Lane-a."
             }
           ]
         }

@@ -25,6 +25,9 @@ Owner, verbatim: *"ok, the level is won - we won our first contract together!"* 
 - **F-RIDE-6 — BUG (verified): *"the shared gold kind of hangs in the air"***. The `SHARED POT 75G` text is the party HUD header's right half (`PartyOverview.ts:35`) flung to the far edge of an invisible 560px `space-between` row with no backdrop (`PartyOverview.css`) — visually severed from its "RIDERS" panel, reads as a world-floating label. Billboard-Mistake class (things must read anchored). → task `tasks/fix-party-pot-orphan.md` (lane-c ladder, after `mp-ride-lobby` + `investigate-seam-anim-mp`; screenshot in-repo).
 - **OBSERVED, question OPEN with the owner (no F-ID until he rules):** in the first-ride screenshot, Claude's rider body renders as a DARK-GREEN-tinted copy of the hero sprite next to the warm-sepia heroine. No tint/material code exists in `AgentRiderBody.ts` or the rider path (grep 0) — so it is either an unstyled-material artifact (bug) or an unrecorded intentional look. ASKED: "is the remote rider's dark tint intended?" His answer decides whether this becomes a finding.
 
+## Design ruling (owner, same session, verbatim)
+- **"I would put this into the claim ledger to be honest and not on the landing page."** — on the Assay Office statistics. The restored landing-page section was REVERTED same-day (site/index.html back to zero-diff vs its commit); the stats' home is the in-game **Claim Ledger** (`src/encyclopedia/reader.ts`, the Schoolhouse panel) → task `tasks/assay-office-claim-ledger.md` (lane-a). The old frontpage's widget (`site/assay-office.js` + legacy index §assay-office) is superseded by this ruling — retired, not deleted.
+
 ## Still open with the owner
 - The rider-tint question above.
 - If the owner wants Start Ride gated on party size in the lobby, that's a one-line follow-up ruling.
