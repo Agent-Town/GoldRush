@@ -27,4 +27,4 @@ MERGE. Taped rows enter `pending`; tapeless and rejected rows are retained but n
 - **F-1793-2 (P1, closed):** retained tapeless/rejected rows had lost the old board-size ceiling. Unranked retention is capped at 100 newest rows; the 101-row mutation keeps the newest and never grows the KV value unboundedly.
 - **F-1793-3 (P2, closed):** the new 29-check harness had no automated caller. It is now a 31-check harness chained into the established `test:stats` worker gate.
 
-No player-visible surface changed, so no screenshot or Gazette item is owed.
+The ranking policy is player-visible, so its Gazette item is filed. No visual assets changed, so no screenshot or deploy is owed.
