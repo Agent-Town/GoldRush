@@ -1207,12 +1207,15 @@
               "id": "fix-e5-dredge-queen-headless-socket",
               "title": "E5 Deepwater Claim: construct, wire, and resolve the Dredge Queen headlessly",
               "taskFile": "fix-e5-dredge-queen-headless-socket.md",
-              "status": "queued",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "s1783 HOLD, NOT MERGED; no owner word alone lifts this. F-1783-1: the wired boss is unreachable from the headless Claim-Boat rig (16,200 ticks / 540 s, storm wave 23, zero kills, both paddles alive, no terminal). F-1783-2: the boolean Deepwater boss handoff drops the browser's Act-2 escort multiplier. F-1783-3: the candidate uses the storm clock but still omits the browser's Dredge-specific early-defeat deferral. Source is preserved at save/fix-e5-dredge-queen-headless-socket-s1783-hold (a179b3d27952a3c863f31446f0c737d245a8680f). Cure by attended re-scope plus a detached re-land; do not re-admit or dispatch E6 on top of this hold.",
               "lane": "main",
               "authoredBy": "attended 2026-08-15",
               "registeredBy": "s1782",
               "note": "Cures F-MTS-3 from reviews/milk-twin-sockets.md using the proven CrawlerBossSystem guard and wiring pattern. The attended handover explicitly staged this master for registration and queueing once the factory was clear; s1782 re-verified the DOM field-initializer crash and absent HeadlessContractSim boss wiring before dispatch. No balance change is permitted.",
-              "dispatchNote": "s1782 attempt 1 stopped honestly with zero diff at mandatory preflight because the runner claimed after STATUS line 1 was rewritten to lock CLEARED but before that handoff was committed; tracked STATUS.md was therefore dirty. Re-queued once in the same fire with a changed premise: the recovery ACTIVE lock and all ledger edits are committed first, then the handoff commit makes STATUS clean before the runner's second preflight. Evidence: tasks/runs/20260815-075219-main-fix-e5-dredge-queen-headless-socket.md.log."
+              "dispatchNote": "s1782 attempt 1 stopped honestly with zero diff at mandatory preflight because the runner claimed after STATUS line 1 was rewritten to lock CLEARED but before that handoff was committed; tracked STATUS.md was therefore dirty. Re-queued once in the same fire with a changed premise: the recovery ACTIVE lock and all ledger edits are committed first, then the handoff commit makes STATUS clean before the runner's second preflight. Evidence: tasks/runs/20260815-075219-main-fix-e5-dredge-queen-headless-socket.md.log.",
+              "review": "reviews/fix-e5-dredge-queen-headless-socket.md"
             }
           ]
         },
