@@ -2287,8 +2287,11 @@
               "id": "assay-office-claim-ledger",
               "title": "Assay Office stats page inside the game Claim Ledger (owner ruling 2026-08-15: in the claim ledger, not the landing page)",
               "taskFile": "assay-office-claim-ledger.md",
-              "status": "planned",
-              "note": "Owner verbatim 2026-08-15: \"I would put this into the claim ledger to be honest and not on the landing page.\" Landing section reverted same day (zero diff). Renders /api/stats (live, CORS-allowlisted) as a Claim Ledger page per the reader view pattern; graceful quiet state; e2e with stubbed route. Lane-a."
+              "status": "merged",
+              "mergeHash": "da2997b3e1b0e2fe9b2e4e954d938864dbd2f17a",
+              "review": "reviews/assay-office-claim-ledger.md",
+              "note": "Owner verbatim 2026-08-15: \"I would put this into the claim ledger to be honest and not on the landing page.\" Landing section reverted same day (zero diff). Renders /api/stats (live, CORS-allowlisted) as a Claim Ledger page per the reader view pattern; graceful quiet state; e2e with stubbed route. Lane-a.",
+              "drainNotes": "s1787: merged from lane/lane-a after detached custody; tsc/build green, 48/48 browser checks across desktop and 390px mobile, release-base/API-origin green on scratch port 5231, and zero console/page errors in the new plain-boot coverage."
             }
           ]
         }
