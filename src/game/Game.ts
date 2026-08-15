@@ -430,6 +430,7 @@ export class Game {
   private mpPauseBeforeResync: { paused: boolean; playerPauseActive: boolean } | null = null;
   private mpCard?: HTMLElement;
   private mpHoldCardVisible = false;
+  private mpCardDismissTimer = 0;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
   private readonly multiplayerStandingRoster = new Map<string, MultiplayerPlayer>();
   private readonly agentRiderBodies = new Map<string, AgentRiderBody>();
@@ -1050,6 +1051,7 @@ export class Game {
     this.showMultiplayerCard(
       'Riding solo',
       failedBeforeRide ? "That claim's gone quiet. Starting this ride solo." : 'The other rider dropped. The next wave carries on solo.',
+      6_000,
     );
     return true;
   }
@@ -2305,6 +2307,7 @@ export class Game {
     this.loop.stop();
     window.clearTimeout(this.baronAnnouncementTimer);
     window.clearTimeout(this.trailGuideTimer);
+    window.clearTimeout(this.mpCardDismissTimer);
     window.removeEventListener('pointerdown', this.skipBaronCeremony);
     window.removeEventListener('keydown', this.skipBaronCeremony);
     window.removeEventListener('pointerdown', this.dismissTrailGuide);
@@ -3619,7 +3622,9 @@ export class Game {
     this.showMultiplayerCard('Back on the trail', 'The party is back. The claim is moving again.');
   }
 
-  private showMultiplayerCard(title: string, message: string): void {
+  private showMultiplayerCard(title: string, message: string, dismissAfterMs?: number): void {
+    window.clearTimeout(this.mpCardDismissTimer);
+    this.mpCardDismissTimer = 0;
     if (!this.mpCard) {
       const card = document.createElement('section');
       card.className = 'death-overlay death-overlay--visible gr-mp-card';
@@ -3637,7 +3642,17 @@ export class Game {
     }
     this.mpCard.querySelector('[data-mp-card-title]')!.textContent = title;
     this.mpCard.querySelector('[data-mp-card-message]')!.textContent = message;
+    this.mpCard.onclick = dismissAfterMs ? () => this.dismissMultiplayerCard() : null;
     this.mpCard.classList.add('death-overlay--visible');
+    this.mpCard.setAttribute('aria-hidden', 'false');
+    if (dismissAfterMs) this.mpCardDismissTimer = window.setTimeout(() => this.dismissMultiplayerCard(), dismissAfterMs);
+  }
+
+  private dismissMultiplayerCard(): void {
+    window.clearTimeout(this.mpCardDismissTimer);
+    this.mpCardDismissTimer = 0;
+    this.mpCard?.classList.remove('death-overlay--visible');
+    this.mpCard?.setAttribute('aria-hidden', 'true');
   }
 
   private syncMultiplayerActors(): void {

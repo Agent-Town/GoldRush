@@ -66,10 +66,13 @@ import { disposeObject3D } from '../utils/dispose';
 import {
   createRideRoom,
   currentMultiplayerSetup,
+  inspectRideRoom,
   probeRideRoom,
   relayBaseFromTownSearch,
   resolveJoinPhrase,
   stageRideConfig,
+  type RideRoomRider,
+  type RideTogetherConfig,
 } from '../mp/RideTogether';
 import {
   earnedTownBuildings,
@@ -569,6 +572,9 @@ export class TownScene {
   private rideStatus = '';
   private rideBusy = false;
   private rideExpanded = sessionStorage.getItem(RIDE_DISCLOSURE_KEY) === '1';
+  private rideSetup: RideTogetherConfig['setup'] | null = null;
+  private rideRoster: RideRoomRider[] = [];
+  private ridePollTimer = 0;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -615,6 +621,7 @@ export class TownScene {
 
   dispose(): void {
     this.disposed = true;
+    this.stopRideLobbyPoll();
     window.removeEventListener('resize', this.syncViewport);
     cancelAnimationFrame(this.resizeFrame);
     this.loop.stop();
@@ -2390,6 +2397,16 @@ export class TownScene {
             : '<output class="town-ui__ride-code town-ui__ride-code--empty" data-testid="ride-code-word">No claim open</output>'
         }
         ${
+          this.rideSetup
+            ? `<dl class="town-ui__ride-agent" data-testid="ride-contract">
+                <div><dt>Contract</dt><dd>${escapeHtml(this.rideSetup.contractId)}</dd></div>
+                <div><dt>Difficulty</dt><dd>${escapeHtml(this.rideSetup.difficultyPreset)}</dd></div>
+                <div><dt>Seed</dt><dd><small>${escapeHtml(this.rideSetup.seed)}</small></dd></div>
+              </dl>`
+            : ''
+        }
+        ${phrase ? this.renderRideRoster() : ''}
+        ${
           agentCommand
             ? `<div class="town-ui__ride-agent">
                 <p>Invite your agent from the Calculating House; run this once for each agent riding along.</p>
@@ -2414,6 +2431,11 @@ export class TownScene {
 
   private async openRideTogetherClaim(): Promise<void> {
     if (this.rideBusy) return;
+    this.stopRideLobbyPoll();
+    this.ridePhrase = null;
+    this.rideCode = null;
+    this.rideSetup = null;
+    this.rideRoster = [];
     this.rideBusy = true;
     this.rideStatus = 'Opening the claim wire...';
     this.renderBoard();
@@ -2421,18 +2443,54 @@ export class TownScene {
       const ride = await createRideRoom(relayBaseFromTownSearch(), this.ridePlayer());
       this.ridePhrase = ride.phrase;
       this.rideCode = ride.code;
+      this.rideSetup = ride.setup;
       this.rideStatus = 'Claim open. Give this word to the other rider.';
     } catch {
       this.rideStatus = "The claim wire isn't ready yet.";
     } finally {
       this.rideBusy = false;
       this.renderBoard();
+      if (this.rideCode) this.startRideLobbyPoll(relayBaseFromTownSearch(), this.rideCode);
     }
+  }
+
+  private renderRideRoster(): string {
+    return `<section class="town-ui__ride-agent" data-testid="ride-roster" aria-label="Riders">
+      <h4>Riders (${this.rideRoster.length})</h4>
+      ${
+        this.rideRoster.length
+          ? `<ul>${this.rideRoster.map((rider) => `<li data-testid="ride-roster-rider">${escapeHtml(rider.name)} · ${escapeHtml(rider.town)} · <small class="town-ui__contract-tag">${escapeHtml(rider.client)}</small></li>`).join('')}</ul>`
+          : '<p>Waiting for riders…</p>'
+      }
+    </section>`;
+  }
+
+  private startRideLobbyPoll(relayBase: string, code: string): void {
+    this.stopRideLobbyPoll();
+    const poll = async () => {
+      const room = await inspectRideRoom(relayBase, code);
+      if (this.disposed || this.rideCode !== code || !room) return;
+      if (room.started) {
+        this.stopRideLobbyPoll();
+        return;
+      }
+      this.rideRoster = room.roster;
+      const roster = this.board.querySelector<HTMLElement>('[data-testid="ride-roster"]');
+      if (roster) roster.outerHTML = this.renderRideRoster();
+    };
+    void poll();
+    this.ridePollTimer = window.setInterval(() => void poll(), 2_500);
+  }
+
+  private stopRideLobbyPoll(): void {
+    window.clearInterval(this.ridePollTimer);
+    this.ridePollTimer = 0;
   }
 
   private launchRideTogether(): void {
     if (!this.ridePhrase) return;
     if (!this.confirmFreshContractLaunch(DEFAULT_CONTRACT_ID)) return;
+    this.stopRideLobbyPoll();
     clearRunSuspend();
     this.options.onLaunchContract?.(DEFAULT_CONTRACT_ID);
   }

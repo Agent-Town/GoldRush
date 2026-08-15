@@ -12,6 +12,18 @@ export type RideTogetherConfig = Pick<LockstepClientOptions, 'relayBase' | 'code
   setup: MultiplayerSetup;
 };
 
+export type RideRoomRider = {
+  playerId: string;
+  name: string;
+  town: string;
+  client: 'browser' | 'headless';
+};
+
+export type RideRoomInspection = {
+  started: boolean;
+  roster: RideRoomRider[];
+};
+
 const STAGED_RIDE_KEY = 'gr.mp.ride.v1';
 const RECONNECT_RIDE_KEY = 'gr.mp.reconnect.v1';
 const CODE_WORDS_KEY = 'gr.mp.codeWords.v1';
@@ -155,6 +167,23 @@ export async function probeRideRoom(
     return roomSetup === null || stableStringify(roomSetup) === stableStringify(setup);
   } catch {
     return false;
+  }
+}
+
+export async function inspectRideRoom(relayBase: string, code: string): Promise<RideRoomInspection | null> {
+  try {
+    const response = await fetch(`${relayBase}/api/multiplayer/inspect?code=${encodeURIComponent(code)}`);
+    const body = (await response.json()) as { started?: unknown; roster?: unknown };
+    if (!response.ok || typeof body.started !== 'boolean' || !Array.isArray(body.roster)) return null;
+    if (!body.roster.every((rider): rider is RideRoomRider => {
+      if (!rider || typeof rider !== 'object' || Array.isArray(rider)) return false;
+      const entry = rider as Partial<RideRoomRider>;
+      return typeof entry.playerId === 'string' && typeof entry.name === 'string' && typeof entry.town === 'string'
+        && (entry.client === 'browser' || entry.client === 'headless');
+    })) return null;
+    return { started: body.started, roster: body.roster };
+  } catch {
+    return null;
   }
 }
 
