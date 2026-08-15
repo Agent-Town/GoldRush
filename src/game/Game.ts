@@ -77,6 +77,7 @@ import {
   readRunTapes,
   runTapeEventLogHash,
   submittedRunTape,
+  validateRunTape,
   type RunTape,
   type RunTapeOutcome,
 } from './RunTape';
@@ -392,6 +393,20 @@ export type GameBoot = ContractRunBoot & {
     onClose: () => void;
   };
 };
+
+const ASSAY_REPLAY_STORAGE_KEY = 'gr.assay-replay.v1';
+
+function assayReplayBoot(boot: GameBoot): GameBoot {
+  if (boot.replay || !isDebugEnabled() || !new URLSearchParams(window.location.search).has('assayReplay')) return boot;
+  try {
+    const tape = validateRunTape(JSON.parse(sessionStorage.getItem(ASSAY_REPLAY_STORAGE_KEY) ?? 'null'));
+    sessionStorage.removeItem(ASSAY_REPLAY_STORAGE_KEY);
+    if (!tape) throw new Error('invalid tape');
+    return { ...boot, replay: { tape, onClose: () => undefined } };
+  } catch {
+    throw new Error('Assay replay refused: invalid tape payload.');
+  }
+}
 
 type RunTapeReplayState = {
   tape: RunTape;
@@ -1270,8 +1285,8 @@ export class Game {
     private readonly onReturnToMenu?: (result: RunReturnResult) => void,
     boot: GameBoot = {},
   ) {
-    this.boot = boot;
-    this.runSeed = boot.replay?.tape.seed ?? getDebugSeed() ?? 'gold-rush';
+    this.boot = assayReplayBoot(boot);
+    this.runSeed = this.boot.replay?.tape.seed ?? getDebugSeed() ?? 'gold-rush';
     this.waveSystem = new WaveSystem(
       this.enemies,
       this.primaryActor.group.position,
@@ -1288,7 +1303,7 @@ export class Game {
       },
       () => areWavesDisabled() || this.deepwaterClaim !== null || this.activeContract.practice?.scheduledWaves === false,
       () => this.activeContract,
-      boot,
+      this.boot,
       () => !isStealDisabled() && this.hasBuiltStockpile(),
       () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active || this.ferrisWheel?.target.active === true),
       () => this.liveThiefCount(),
