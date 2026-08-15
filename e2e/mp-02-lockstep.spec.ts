@@ -21,6 +21,7 @@ const ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-02');
 const MP03_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-03');
 const MP04_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-04');
 const MP_QUAD_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-quad');
+const SEAM_ANIM_ARTIFACT_DIR = path.join(ROOT, 'artifacts/seam-anim-mp');
 const MP_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&nokill&seed=mp-02-lockstep';
 const MP_CONVERGENCE_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&seed=mp-02-convergence';
 const MP_ACTION_QUERY = 'debug&mp=dev&nowaves&nosteal&nowreck&nokill&seed=mp-05-actions';
@@ -39,6 +40,54 @@ test.beforeAll(async () => {
 
 test.afterAll(async () => {
   await relay?.stop();
+});
+
+test('seam collection plays the pan animation in solo desktop and mobile', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await page.goto('/?debug&nowaves&nolevel&nopause&seed=seam-anim-solo');
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  const seam = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((node) => node.active));
+  expect(seam).toBeTruthy();
+  await page.evaluate(({ x, z }) => window.__GR_TEST__!.teleport(x, z), seam!.position);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.clip)).toBe('pan');
+  await writeSeamAnimEvidence(page, `solo-${testInfo.project.name}`);
+  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
+test('a slot-one browser rider keeps the pan animation beside a headless rider', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one real mixed-room render proof is enough');
+  test.setTimeout(90_000);
+  const setupContext = await browser.newContext();
+  const setupPage = await setupContext.newPage();
+  await setupPage.goto('/?debug&nowaves&nolevel&nopause&seed=seam-anim-mp');
+  const setup = await setupPage.evaluate(async () => (await import('../src/mp/RideTogether')).currentMultiplayerSetup());
+  await setupContext.close();
+  const code = await createRoom(setup);
+  const agent = spawn('node', [
+    'scripts/gr-sim.mjs', '--room', code, '--origin', relay.url, '--policy=idle', '--max-ticks', '3000',
+    '--name', 'Ada', '--town', 'Calculating House',
+  ], { cwd: ROOT, env: cleanEnv(), stdio: ['ignore', 'pipe', 'pipe'] });
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const errors = collectErrors(page);
+  try {
+    await waitForRoomRoster(code, 1, 'headless');
+    await openClient(page, code, BOB, '', 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&nokill&seed=seam-anim-mp');
+    await waitRoster(page);
+    await waitForActors(page);
+    await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.actors.find((actor) => actor.local)?.slot)).toBe(1);
+    const seam = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((node) => node.active));
+    expect(seam).toBeTruthy();
+    await page.evaluate(({ x, z }) => window.__GR_TEST__!.teleport(x, z), seam!.position);
+    await expect.poll(() => page.evaluate(() => (window.__THREE_GAME_DIAGNOSTICS__?.harvest as unknown as { channels: Array<{ actorId: string; channeling: boolean }> }).channels.find((channel) => channel.actorId === '1')?.channeling)).toBe(true);
+    await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.clip)).toBe('pan');
+    await writeSeamAnimEvidence(page, 'mp-headless-present-slot-1');
+    expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+  } finally {
+    await context.close();
+    agent.kill('SIGTERM');
+  }
 });
 
 test('place-building consent is accepted on the multiplayer wire', async ({ page }) => {
@@ -1280,15 +1329,39 @@ function sharedScoreShape(score: ScoreRecord | undefined): Pick<ScoreRecord, 'wa
   };
 }
 
-async function createRoom(): Promise<string> {
+async function createRoom(setup?: unknown): Promise<string> {
   const response = await fetch(`${relay.url}/api/multiplayer/create`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', Origin: 'http://127.0.0.1:5188' },
-    body: '{}',
+    body: JSON.stringify(setup === undefined ? {} : { setup }),
   });
   const body = (await response.json()) as { code?: string; error?: string };
   if (!response.ok || !body.code) throw new Error(body.error ?? 'room_create_failed');
   return body.code;
+}
+
+async function waitForRoomRoster(code: string, count: number, client: 'browser' | 'headless'): Promise<void> {
+  await expect.poll(async () => {
+    const response = await fetch(`${relay.url}/api/multiplayer/inspect?code=${code}`);
+    const body = await response.json() as { roster?: Array<{ client?: string }> };
+    return body.roster?.filter((player) => player.client === client).length ?? 0;
+  }, { timeout: 30_000 }).toBe(count);
+}
+
+async function writeSeamAnimEvidence(page: Page, name: string): Promise<void> {
+  await mkdir(SEAM_ANIM_ARTIFACT_DIR, { recursive: true });
+  await page.screenshot({ path: path.join(SEAM_ANIM_ARTIFACT_DIR, `${name}.png`), fullPage: true });
+  await writeFile(
+    path.join(SEAM_ANIM_ARTIFACT_DIR, `${name}.json`),
+    `${JSON.stringify(await page.evaluate(() => ({
+      viewport: { width: innerWidth, height: innerHeight },
+      mp: window.__THREE_GAME_DIAGNOSTICS__?.mp,
+      actors: window.__THREE_GAME_DIAGNOSTICS__?.actors,
+      harvest: window.__THREE_GAME_DIAGNOSTICS__?.harvest,
+      heroAnimation: window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero'],
+      frameMs: window.__THREE_GAME_DIAGNOSTICS__?.frameMs,
+    })), null, 2)}\n`,
+  );
 }
 
 async function startRelayEnv(): Promise<RelayEnv> {
