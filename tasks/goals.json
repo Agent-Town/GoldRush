@@ -6131,8 +6131,11 @@
               "id": "fix-party-pot-orphan",
               "title": "SHARED POT label visually orphans from the party HUD (F-RIDE-6) - recompose header, both breakpoints",
               "taskFile": "fix-party-pot-orphan.md",
-              "status": "planned",
-              "note": "Owner verbatim 2026-08-15: \"the shared gold kind of hangs in the air\". Verified: PartyOverview.ts:35 header space-between across 560px, no backdrop. Screenshot in-repo. Lane-c ladder position 3."
+              "status": "merged",
+              "mergeHash": "add18f30b78f38fae19cabda3d82b4b204c9e9e5",
+              "review": "reviews/fix-party-pot-orphan.md",
+              "note": "Owner verbatim 2026-08-15: \"the shared gold kind of hangs in the air\". Verified: PartyOverview.ts:35 header space-between across 560px, no backdrop. Screenshot in-repo. Lane-c ladder position 3.",
+              "drainNotes": "s1788: merged from lane/lane-c after detached custody; the existing header now left-aligns SHARED POT beside RIDERS. Tsc/build/asset diet green; Playwright 38/38 across focused, adjacent, and plain-boot coverage."
             }
           ]
         },
