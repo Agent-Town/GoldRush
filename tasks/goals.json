@@ -2299,7 +2299,29 @@
               "id": "assay-worker",
               "title": "THE ASSAY WORKER - server-side replay verification of board submissions (OWNER-RULED LAUNCH-GATING 2026-08-15)",
               "status": "planned",
-              "note": "Owner verbatim 2026-08-15: \"the gauntlet verification worker queue has to be done before launch - people will play and submit results\". Verified holes: rows rank instantly unreplayed (standings.ts:434-456), tape optional (:408) - live board #3 ranks tapeless. 5 slices in the spec; DO box = worker home (owner access offered). Q1-Q4 policy rulings pending (recommendations in spec)."
+              "note": "Owner verbatim 2026-08-15: \"the gauntlet verification worker queue has to be done before launch - people will play and submit results\". Verified holes: rows rank instantly unreplayed (standings.ts:434-456), tape optional (:408) - live board #3 ranks tapeless. 5 slices in the spec; DO box = worker home (owner access offered). Q1-Q4 policy rulings pending (recommendations in spec).",
+              "taskFile": "PROGRAM (spec RATIFIED+GO): slices dispatched as assay-replay-door.md (0) + assay-cf-lifecycle.md (1) + assay-auto-tape.md (1b); worker-loop master after slice 0; DO deploy + prod e2e after."
+            },
+            {
+              "id": "assay-cf-lifecycle",
+              "title": "Assay lifecycle + worker endpoints on standings (Q1-Q4 ruled; tapeless never ranks; pending badged; rejects counted; retro-assay)",
+              "taskFile": "assay-cf-lifecycle.md",
+              "status": "planned",
+              "note": "Slice 1 of specs/agent-play/assay-worker.md (RATIFIED + GO 2026-08-15). MAIN slot."
+            },
+            {
+              "id": "assay-auto-tape",
+              "title": "Auto-tape: a qualifying run submits its tape with zero button presses (owner Q1 ruling verbatim in master)",
+              "taskFile": "assay-auto-tape.md",
+              "status": "planned",
+              "note": "Slice 1b. Measurement-first (startRunTape topology). lane-b."
+            },
+            {
+              "id": "assay-replay-door",
+              "title": "Replay door: headless instrument replays a REAL live reel to its recorded hash, twice (slice-0 keystone)",
+              "taskFile": "assay-replay-door.md",
+              "status": "planned",
+              "note": "Slice 0. Measured tape shape in-master; rob reel d3ab0f33 as proof material. lane-d. Worker-loop master authors AFTER this merges (its interface)."
             }
           ]
         }

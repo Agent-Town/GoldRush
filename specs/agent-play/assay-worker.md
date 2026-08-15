@@ -1,5 +1,5 @@
 # The Assay Worker — server-side replay verification for the public board
-### Status: DRAFT 2026-08-15 · attended · OWNER-RULED LAUNCH-GATING (verbatim, 2026-08-15: "the gauntlet verification worker queue has to be done before launch - people will play and submit results")
+### Status: RATIFIED 2026-08-15 (Q1–Q4 answered; build GO: owner verbatim "you can buld the five slices") · OWNER-RULED LAUNCH-GATING (verbatim, 2026-08-15: "the gauntlet verification worker queue has to be done before launch - people will play and submit results")
 
 ## Why (owner rulings + verified holes)
 Launch means strangers posting results. Verified today (`functions/api/standings.ts`): POST ranks a row IMMEDIATELY into the KV top-100 (`:434-456`); the submitted tape is shape-checked (`validateTape`, inputLog-hash match `:415`, `tapeMatchesScore` `:418`) and STORED (`:448`, served via `?reel=`) but **never replayed**; a row may omit the tape entirely (`:408-409` — only the hash is required) and still rank. Prior owner rulings bank the design: replay-truth ("a claimed secure is not a county secure until it reproduces byte-identically"), and the DigitalOcean agenttown box as the worker's home ("I am running a server for agenttown.app on DigitalOcean already, we can use that box"). The county's voice: submissions await **assay**; the worker is the county assayer.
@@ -23,11 +23,14 @@ Launch means strangers posting results. Verified today (`functions/api/standings
 3. **Deploy to the box** (owner session: SSH user/key, node, checkout, secret both sides, systemd; runbook committed).
 4. **End-to-end on production:** a fresh real submission goes pending → verified by the live worker within minutes; a deliberately corrupted tape goes rejected. Gate: both observed + screenshotted; board badges render. THEN the launch box is ticked.
 
-## Ratification questions (owner — batched, each with a recommendation)
-- **Q1 — tapeless rows:** may a row without a tape rank at all post-launch? *(Recommend NO — no tape, no assay, no rank; the tape cap is 64KB and every legit client already sends one.)*
-- **Q2 — pending visibility:** do pending rows show on the board (badged "pending assay") or hold off-board until verified? *(Recommend SHOW badged — submitters see themselves instantly, trust arrives minutes later; matches the county's "posted, then assayed" fiction.)*
-- **Q3 — rejects:** silently removed, or kept as a tombstone ("failed assay") for transparency? *(Recommend remove from ranking + a count in the office stats; no public shaming wall.)*
-- **Q4 — existing 17 rows:** grandfather as verified (they predate the law) or assay them retroactively? *(Recommend retro-assay — they all have tapes or die honestly; the board should launch 100% assayed.)*
+## Rulings — ANSWERED (owner, 2026-08-15, verbatim)
+- **Q1 — tapeless rows: NO RANK, but the tape must save ITSELF.** Owner: *"well, the creation of a tape is still a button press at the end of the human play, so if someone forgets to press it, then they are out? I think we then will have to include logic to save the tape automatically if the run qualifies for the leaderboard."* → Ruling: tape-required-to-rank stands, AND a new slice (1b below) makes the client attach the tape AUTOMATICALLY whenever a run qualifies for the board — forgetting a button can never cost a legitimate rank. The manual button remains as the explicit/manual path.
+- **Q2 — pending rows SHOW, badged "pending assay"** (owner: "yes, good idea").
+- **Q3 — rejects: removed from ranking + counted, no shaming wall** (owner: "yes").
+- **Q4 — the existing 17 rows: RETRO-ASSAY** so the board launches 100% assayed (owner: "yes"). Rows without tapes (e.g. today's tapeless #3) fall under Q1: they unrank until resubmitted with a tape.
+
+## Slice 1b (added by the Q1 ruling) — AUTO-TAPE on qualifying runs
+Client-side: when a finished run QUALIFIES for the county board (would enter the top-100 for its contract×party partition — the same `compareScores` the server applies), the standings submission carries the tape automatically — no button press required. Bounds: the existing 64KB tape cap and the existing schema (`validateTape`) are unchanged; a run that does not qualify keeps today's behavior (manual button only); the player-facing copy stays honest about what is sent (anonymous input-log, no personal data). Gate: an e2e where a qualifying run posts WITHOUT the button and its row carries a reel handle; a non-qualifying run posts nothing automatically.
 
 ## Integration map
 Touches: `functions/api/standings.ts` (+ its tests), new `scripts/assay-worker.mjs` (+ test), board badge in the client standings UI, `docs/` runbook. Untouched: ranking laws, the sim, gr-sim's contracts, skill.md's door, multiplayer, all gameplay.
