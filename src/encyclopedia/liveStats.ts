@@ -1,7 +1,6 @@
 import { gameApiUrl } from '../app/GameApi';
 import { loadScores } from '../game/Scoreboard';
 
-const ASSAY_REFRESH_MS = 60_000;
 const STATS_ENDPOINT = gameApiUrl('/api/stats');
 
 const DURATION_LABELS: Record<string, string> = {
@@ -42,32 +41,57 @@ export function installAssayOfficeRecordsLiveRead(root: ParentNode): () => void 
 
   let disposed = false;
   const controller = new AbortController();
-  const read = () => {
-    void readAssayStats(controller.signal).then((lines) => {
-      if (!disposed) renderRecords(card, lines);
-    });
-  };
-
-  read();
-  const interval = window.setInterval(read, ASSAY_REFRESH_MS);
+  void readAssayStats(STATS_ENDPOINT, controller.signal).then((payload) => {
+    if (!disposed) renderRecords(card, payload === 'empty' ? ['the office opens with the first assay.'] : payload ? formatStats(payload) : ['the wire is quiet.']);
+  });
   return () => {
     disposed = true;
     controller.abort();
-    window.clearInterval(interval);
   };
 }
 
-async function readAssayStats(signal: AbortSignal): Promise<string[]> {
+export function installAssayOfficePageRead(root: ParentNode): () => void {
+  const figures = root.querySelector<HTMLElement>('[data-testid="assay-ledger-figures"]');
+  if (!figures) return () => undefined;
+
+  let disposed = false;
+  const controller = new AbortController();
+  void readAssayStats(STATS_ENDPOINT, controller.signal).then((payload) => {
+    if (!disposed && payload && payload !== 'empty') renderAssayPage(figures, payload);
+  });
+  return () => {
+    disposed = true;
+    controller.abort();
+  };
+}
+
+async function readAssayStats(endpoint: string, signal: AbortSignal): Promise<StatsPayload | 'empty' | null> {
   try {
-    const response = await fetch(STATS_ENDPOINT, { headers: { accept: 'application/json' }, signal });
-    if (!response.ok) return ['the wire is quiet.'];
+    const response = await fetch(endpoint, { headers: { accept: 'application/json' }, signal });
+    if (!response.ok) return null;
     const payload = (await response.json()) as StatsPayload;
-    if (payload.ok !== true) return ['the wire is quiet.'];
-    if (payload.empty === true) return ['the office opens with the first assay.'];
-    return formatStats(payload);
+    if (payload.ok !== true) return null;
+    return payload.empty === true ? 'empty' : payload;
   } catch {
-    return signal.aborted ? [] : ['the wire is quiet.'];
+    return null;
   }
+}
+
+function renderAssayPage(root: HTMLElement, payload: StatsPayload): void {
+  const stats = payload.stats;
+  const runs = stats?.runs;
+  if (!stats || !runs || (runs.allTime ?? 0) <= 0) return;
+  const figures = [
+    ['runs-today', 'Runs today', formatCount(runs.today)],
+    ['runs-seven-days', 'Past seven days', formatCount(runs.sevenDays)],
+    ['runs-all-time', 'All time', formatCount(runs.allTime)],
+    ['deepest-wave', 'Deepest wave', formatCount(stats.deepestWave)],
+    ['typical-run', 'Typical run', DURATION_LABELS[stats.medianDurationBucket ?? ''] ?? 'still tallying'],
+    ['busiest-claim', 'Busiest claim', stats.busiestContract?.id ? titleCase(stats.busiestContract.id) : 'still tallying'],
+  ];
+  root.innerHTML = figures
+    .map(([id, label, value]) => `<section class="assay-ledger__figure" data-testid="assay-ledger-${id}"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></section>`)
+    .join('');
 }
 
 function formatStats(payload: StatsPayload): string[] {

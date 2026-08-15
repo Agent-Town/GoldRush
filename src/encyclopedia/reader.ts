@@ -7,7 +7,7 @@ import { activeEpochId, listContracts, listEpochs, loadEpoch } from '../meta/Con
 import { loadEraBackdrop } from '../ui/EraBackdrop';
 import { SEASONS, type Season } from '../seasons/registry';
 import { SEASON_CONTENT, type SeasonCommentary } from '../seasons/content';
-import { installAssayOfficeRecordsLiveRead } from './liveStats';
+import { installAssayOfficePageRead, installAssayOfficeRecordsLiveRead } from './liveStats';
 import {
   LEDGER_CATEGORIES,
   ledgerEntries,
@@ -33,7 +33,7 @@ type OpenClaimLedgerOptions = {
   onWatchTape?: (tape: RunTape) => void;
 };
 
-type LedgerView = 'ledger' | 'standings' | 'field-book' | 'seasons';
+type LedgerView = 'ledger' | 'standings' | 'field-book' | 'assay' | 'seasons';
 type FieldBookView = 'byStack' | 'byHarness' | 'byParty';
 type StandingsDifficulty = DifficultyPresetId | 'all';
 type StandingsParty = 'solo' | '2' | '3' | '4';
@@ -232,6 +232,11 @@ function renderCurrentLedger(): void {
     void loadFieldBook();
     return;
   }
+  if (currentView === 'assay') {
+    root.innerHTML = renderAssayOfficeLedger();
+    currentLiveReads = [installAssayOfficePageRead(root)];
+    return;
+  }
   if (currentView === 'seasons') {
     currentLiveReads = [];
     root.innerHTML = renderSeasonsLedger();
@@ -292,8 +297,27 @@ function renderViewRow(): string {
       <button type="button" data-ledger-view="ledger" data-testid="claim-ledger-pages" aria-pressed="${currentView === 'ledger'}">Claim Pages</button>
       <button type="button" data-ledger-view="standings" data-testid="claim-ledger-county-standings" aria-pressed="${currentView === 'standings'}">County Standings</button>
       <button type="button" data-ledger-view="field-book" data-testid="claim-ledger-field-book" aria-pressed="${currentView === 'field-book'}">The Field Book</button>
+      <button type="button" data-ledger-view="assay" data-testid="claim-ledger-assay-office" aria-pressed="${currentView === 'assay'}">Assay Office</button>
       ${SEASONS_ENABLED ? `<button type="button" data-ledger-view="seasons" data-testid="claim-ledger-seasons" aria-pressed="${currentView === 'seasons'}">Seasons</button>` : ''}
     </nav>
+  `;
+}
+
+function renderAssayOfficeLedger(): string {
+  return `
+    <div class="claim-ledger__shell">
+      ${renderHeader()}
+      ${renderViewRow()}
+      <main class="assay-ledger" data-testid="assay-ledger">
+        <p class="claim-ledger__eyebrow">County Tallying Clerk</p>
+        <h3>Assay Office</h3>
+        <p class="assay-ledger__intro">The clerk counts every ride that reaches the county book.</p>
+        <p class="assay-ledger__honesty">Anonymous gameplay statistics, no personal data, opt-out in Settings.</p>
+        <div class="assay-ledger__figures" data-testid="assay-ledger-figures" aria-live="polite">
+          <p class="assay-ledger__quiet" data-testid="assay-ledger-quiet">The clerk is off the desk&hellip; the county book will wait.</p>
+        </div>
+      </main>
+    </div>
   `;
 }
 

@@ -315,6 +315,63 @@
   padding: 20px;
 }
 
+.assay-ledger {
+  padding: 20px;
+}
+
+.assay-ledger h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+}
+
+.assay-ledger__intro,
+.assay-ledger__honesty {
+  max-width: 680px;
+  color: #684728;
+  line-height: 1.45;
+}
+
+.assay-ledger__honesty {
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+.assay-ledger__figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.assay-ledger__figure {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid rgba(76, 48, 23, 0.36);
+  border-radius: 8px;
+  background: rgba(255, 252, 240, 0.78);
+}
+
+.assay-ledger__figure span {
+  color: #684728;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.assay-ledger__figure strong {
+  color: #315f5f;
+  font-size: 1.2rem;
+}
+
+.assay-ledger__quiet {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #684728;
+  font-style: italic;
+}
+
 .county-standings h3 {
   margin: 0;
   font-size: 1.35rem;
@@ -907,6 +964,7 @@
   .claim-ledger__header,
   .claim-ledger__views,
   .county-standings,
+  .assay-ledger,
   .seasons,
   .claim-ledger__shelves {
     padding-left: 12px;
