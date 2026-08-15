@@ -2316,8 +2316,11 @@
               "id": "assay-auto-tape",
               "title": "Auto-tape: a qualifying run submits its tape with zero button presses (owner Q1 ruling verbatim in master)",
               "taskFile": "assay-auto-tape.md",
-              "status": "planned",
-              "note": "Slice 1b. Measurement-first (startRunTape topology). lane-b."
+              "status": "merged",
+              "mergeHash": "c5134f50be460ba14d16d8195b9b37145e3ccf9a",
+              "review": "reviews/assay-auto-tape.md",
+              "note": "Slice 1b. Measurement-first (startRunTape topology). lane-b.",
+              "drainNotes": "s1793: merged the test-only lane after detached custody. New auto-tape contract 4/4, plain tape-button boot 2/2, runner adjacent battery 32/32, and untouched-main desktop control 16/16. One contaminated long fire-shell run is documented as non-causal F-1793-4."
             },
             {
               "id": "assay-replay-door",
