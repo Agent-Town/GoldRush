@@ -18,6 +18,7 @@ Launch means strangers posting results. Verified today (`functions/api/standings
 
 ## Slices (each ends in a checkpoint + gate)
 0. **Prove the replay door (the load-bearing unknown):** take a REAL submitted tape off the live board (`?reel=`) — rob's the-claim row exists — and replay it headless to its recorded outcome. Gate: hash + outcome match, twice. If the browser-tape→headless-replay path needs an adapter, THIS slice builds it; nothing else proceeds until this gate is green.
+   **→ GATE RED 2026-08-15 (F-ASSAY-1): the instrument is built and DETERMINISTIC (two replays byte-identical: `fnv1a32:29454bf2`), but the live reel does NOT reproduce its recording (`f6390382` secured/w10/280g vs replayed unsecured/w4/30g; the tape contains 3 mid-run restart actions). Live tapes are not yet verifiable proofs. Successor: `tasks/assay-replay-fidelity.md` (measurement matrix → root cause → recorder-or-replay fix). The worker loop (slice 2) is BLOCKED on fidelity, not just the door. Slices 1 + 1b proceed unaffected.
 1. **CF assay lifecycle + endpoints** (factory master; functions/ battery green; existing rows default to `pending` — see Q2).
 2. **The worker script + tests** (factory master; replay fixture + verdict client mocked; `npm run test:node-guards` green).
 3. **Deploy to the box** (owner session: SSH user/key, node, checkout, secret both sides, systemd; runbook committed).

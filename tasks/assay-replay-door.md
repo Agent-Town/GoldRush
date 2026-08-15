@@ -24,3 +24,6 @@ End: READY-FOR-GATES + report: the seam used (or added), double-run hashes vs re
 
 ## No-op / honesty guard
 If a headless tape-replay instrument already exists (grep found none beyond the browser paths), WRITE WHY and extend it. The forbidden green: any change to replay/sim code whose purpose is making the hash match — divergence is a FINDING, report it.
+
+## Attended drain rider (2026-08-15, post-run — F-ASSAY-1)
+The run executed correctly and hit the mandated fidelity STOP: the live reel reproducibly DIVERGES (recorded `fnv1a32:f6390382` secured/w10/280g vs replayed `fnv1a32:29454bf2` unsecured/w4/30g — twice, byte-identical to each other, 3.8× realtime). That divergence is **F-ASSAY-1**, owned by the successor master `assay-replay-fidelity.md` — NOT a reason to reject this instrument. **Drain guidance:** land the instrument + fixture + `?assayReplay` seam as built, but the pinned test must assert what is TRUE — the instrument's own deterministic output on the fixture (`29454bf2`, twice) — with the recorded-vs-replayed mismatch referenced as the OPEN F-ASSAY-1 finding, so `test:node-guards` stays green while the gap stays visible. Do not leave a permanently-red guard in the battery; do not assert the recorded hash until fidelity lands.
