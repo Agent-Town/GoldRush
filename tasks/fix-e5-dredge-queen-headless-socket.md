@@ -1,0 +1,28 @@
+# Task fix-e5-dredge-queen-headless-socket: make the Deepwater Claim's boss resolve headless (MAIN slot, prefix "fix:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in the repo root (MAIN slot).
+READ FIRST: AGENTS.md; `reviews/milk-twin-sockets.md` (F-MTS-3 root cause); `src/systems/CrawlerBossSystem.ts` (the PROVEN in-repo guard + wiring precedent — copy it); `src/systems/DredgeQueenBossSystem.ts`; `src/sim/HeadlessContractSim.ts:418-424` (crawler construction template) and `:456-462` (DeepwaterSocket.create call) and `:928-957` (bindEventLog; anchors re-verified 2026-08-15 post-RECKONING merge); `src/game/Game.ts:858-869` (the browser constructor to mirror).
+
+Pre-flight: `git status --short` must show no staged/modified TRACKED file OUTSIDE factory-churn — STOP if so. FACTORY-CHURN EXCEPTION (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*`, `.png` — never a STOP. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+
+## Why (owner directive 2026-08-14 + measured scope)
+`e5-deepwater-claim` is door-exempted (F-MTS-3): `DredgeQueenBossSystem` calls `document.createElement('canvas')` in FIELD INITIALIZERS (run before the constructor's `enabled` check), so it throws `ReferenceError: document is not defined` before `new` returns — the boss can never construct headless, so no run reaches a secure terminal. The agent verbs already exist (F-MTS-2 closed by AP-16-7). This is pure headless-parity plumbing: guard the DOM, construct + wire the boss the way `CrawlerBossSystem` already is. No balance change, no new gameplay.
+
+## Scope (each numbered item testable; mirror CrawlerBossSystem exactly, do NOT invent)
+1. **Guard the construction-time DOM**: in `counterSprite()` (`DredgeQueenBossSystem.ts:721`) and `labelSprite()` (`:735`), add an early `if (typeof document === 'undefined') return new THREE.Sprite();` (bare sprite, no canvas/material) — this is the established convention (`SpriteAnimator.ts:774`, `pools.ts:1190`, etc.).
+2. **Guard the per-tick DOM**: `publishDredgeQueen3d()` (`:633`) — first line `if (typeof document === 'undefined') return;` (mirror `CrawlerBossSystem.ts:509`). `ensureDredgeQueen3d()` (`:528`) — same guard so the headless path never attempts the GLTF `file://` load.
+3. **Construct the boss headless**: in `HeadlessContractSim.ts`, adjacent to the existing `this.crawler = ...` block (`:418-424`), construct `DredgeQueenBossSystem` gated on `manifest.twist.baron?.variantId === 'dredge_queen'`, wiring closures analogous to `Game.ts:858-869` (enemies/spawn/recycle/wreckSites-from-`this.deepwater`/heroPosition/damageHero/economy-routed `spawnPickup`/`enabled`/in-memory persistence no-op).
+4. **Wire the storm handoff**: pass the boss's bound `.onStormWave` as the 6th `bossHandoff` arg to `DeepwaterSocket.create(...)` at `:456-462` (currently omitted, so `offerToBoss()` only counts refusals).
+5. **Forward its events**: in `bindEventLog()` (`:911-946`), add a branch keyed on `event.variantId === 'dredge_queen'` calling `.onComponentKilled(...)` and forward `.onWaveStarted`/tick `.update()` each frame — mirror the crawler's `:950-956` block. (`bossKillSecuresRun`/`postBaronDefeat` are already generic — no new secure logic needed.)
+6. **Re-admit** (only once measured secure): remove `e5-deepwater-claim` from `CONTRACT_ADMISSION_EXEMPTIONS`; regenerate `docs/bench/same-game-audit.md` (do not hand-edit); regenerate `assets/contracts/null-floors.json` for the newly-admitted contract (confirm its idle floor is `secured:false` — Law 2).
+
+## Firewall
+Touch ONLY: `src/systems/DredgeQueenBossSystem.ts`, `src/sim/HeadlessContractSim.ts`, `src/sim/DeepwaterSocket.ts` (constructor-arg wiring only), `assets/contracts/null-floors.json` (regenerated), `docs/bench/same-game-audit.md` (regenerated), `tasks/BACKLOG.md`.
+NO changes to: `src/game/Game.ts` (reference only), `CrawlerBossSystem.ts`/`SalvageClawBossSystem.ts` (siblings), `DeepwaterArsenal.ts`, `Balance.dredgeQueen.*` (no balance change), any other contract's exemption row, the fixed-timestep/determinism ordering, existing e2e assertions.
+
+## Self-check
+`DredgeQueenBossSystem` constructs headless without throwing. Both bench seeds reach a SECURE terminal (not just "no crash") within the existing step ceiling; two same-seed runs produce byte-identical event-log hashes (report them). `e5-deepwater-claim` removed from the exemption table; `scripts/same-game-report-guard.test.mjs` (two-armed) green; `npm run test:node-guards` green. `e2e/er01-e5-census.spec.ts` + adjacent E5/E6 specs green desktop+mobile. tsc + build clean. Zero console/page errors on a plain (non-`?debug`) boot, desktop + 390px.
+End: READY-FOR-GATES + report: construction fix confirmed, both seeds' secure waves + hashes, exemption removed, guard/census results.
+
+## No-op / honesty guard
+If the boss already constructs (a predecessor fixed it), WRITE WHY and proceed to the wiring/admission only. Do NOT add any balance change to force a secure — if the boss constructs+wires but the fight can't be won with current stats, STOP and report the gap (it becomes a separate balance decision).

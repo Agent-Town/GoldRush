@@ -1202,6 +1202,16 @@
               "title": "Arsenal \u2014 E5 lines (harpoon ballista, depth charges, pressure-sealed)",
               "status": "merged",
               "mergeHash": "20e01d14457ce2974baa8651e0dae15f3b4b98f5"
+            },
+            {
+              "id": "fix-e5-dredge-queen-headless-socket",
+              "title": "E5 Deepwater Claim: construct, wire, and resolve the Dredge Queen headlessly",
+              "taskFile": "fix-e5-dredge-queen-headless-socket.md",
+              "status": "queued",
+              "lane": "main",
+              "authoredBy": "attended 2026-08-15",
+              "registeredBy": "s1782",
+              "note": "Cures F-MTS-3 from reviews/milk-twin-sockets.md using the proven CrawlerBossSystem guard and wiring pattern. The attended handover explicitly staged this master for registration and queueing once the factory was clear; s1782 re-verified the DOM field-initializer crash and absent HeadlessContractSim boss wiring before dispatch. No balance change is permitted."
             }
           ]
         },
@@ -1314,6 +1324,16 @@
               "title": "Arsenal \u2014 E6 lines (sunline beam, caltrops, tongs)",
               "status": "merged",
               "mergeHash": "20e01d14457ce2974baa8651e0dae15f3b4b98f5"
+            },
+            {
+              "id": "fix-e6-homemaker-headless-socket",
+              "title": "E6 Glow Mesa: construct, wire, and resolve the Homemaker headlessly",
+              "taskFile": "fix-e6-homemaker-headless-socket.md",
+              "status": "planned",
+              "lane": "main",
+              "authoredBy": "attended 2026-08-15",
+              "registeredBy": "s1782",
+              "note": "Cures F-MTS-4 from reviews/milk-twin-sockets.md after a mandatory GoldPickupPool dependency probe. The attended handover explicitly staged this master for registration and later queueing. It remains planned behind the E5 MAIN-slot task because both touch HeadlessContractSim and a second queued MAIN task would hit the first task's undrained working-tree output."
             }
           ]
         },
