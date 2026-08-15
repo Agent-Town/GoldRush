@@ -17,6 +17,7 @@ import { bumpCounter, clientIpHash, type KVNamespaceLike } from './_ratelimit';
 type StandingsEnv = {
   TELEMETRY?: KVNamespaceLike;
   ACCOUNTS?: KVNamespaceLike;
+  ASSAY_WORKER_SECRET?: string;
 };
 
 type StandingsContext = {
@@ -74,6 +75,10 @@ type StoredRow = ScoreRow & {
   stack?: SelfDeclaredStack;
   party?: SubmittedParty;
   tape?: JsonRecord;
+  assay?: 'pending' | 'verified' | 'rejected';
+  assayedAt?: number;
+  assayHash?: string;
+  assayReason?: string;
 };
 
 type GroupAggregate = {
@@ -141,6 +146,12 @@ const UNDECLARED_RIDER = 'undeclared rider';
 const UNDECLARED_RIG = 'undeclared rig';
 const UNREGISTERED_RIG = 'unregistered rig';
 const MAX_REEL_ID_LENGTH = 64;
+const MAX_ASSAY_QUEUE = 100;
+const MAX_ASSAY_REASON_LENGTH = 256;
+const ASSAY_HASH = /^fnv1a32:[a-f0-9]{8}$/;
+const ASSAY_ROW_ID = /^[a-f0-9]{32}:[1-4]:\d{1,16}:[a-f0-9]{64}$/;
+const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason']);
+const ASSAY_LOCATOR_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId']);
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
@@ -158,6 +169,96 @@ export async function onRequest(context: StandingsContext): Promise<Response> {
   }
 }
 
+export async function onRequestAssayQueue(context: StandingsContext): Promise<Response> {
+  return assayRequest(context, async (cors) => {
+    if (context.request.method !== 'GET') return error(cors, 405, 'method_not_allowed', 'GET only');
+    const url = new URL(context.request.url);
+    const limitParam = url.searchParams.get('limit');
+    const limit = limitParam === null ? 10 : integerInRange(Number(limitParam), 1, MAX_ASSAY_QUEUE);
+    if (limit === null || url.searchParams.size !== (limitParam === null ? 0 : 1)) {
+      return error(cors, 400, 'bad_limit', 'Queue limit not accepted.');
+    }
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    if (!kv) return error(cors, 503, 'board_unavailable', 'The county book is unavailable.');
+    const boards = await Promise.all(CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
+      .filter((contract) => contract.id !== DRILL_YARD_CONTRACT_ID)
+      .map(async (contract) => ({
+        epochId: bundle.epochId,
+        contractId: contract.id,
+        rows: await readBoard(kv, bundle.epochId, contract.id),
+      }))));
+    const queue = boards.flatMap(({ epochId, contractId, rows }) => rows
+      .filter((row) => row.assay === 'pending' && row.tape)
+      .map((row) => ({
+        locator: { epochId, contractId, tapeId: row.tape!.id as string, rowId: assayRowId(row) },
+        tape: row.tape,
+        score: scoreOf(row),
+        submittedAt: row.submittedAt,
+      })))
+      .sort((a, b) => a.submittedAt - b.submittedAt)
+      .slice(0, limit);
+    return json(cors, { ok: true, queue });
+  });
+}
+
+export async function onRequestAssayVerdict(context: StandingsContext): Promise<Response> {
+  return assayRequest(context, async (cors) => {
+    if (context.request.method !== 'POST') return error(cors, 405, 'method_not_allowed', 'POST only');
+    const body = await readJson(context.request);
+    const locator = isRecord(body.locator) ? body.locator : null;
+    const reason = body.reason === undefined ? undefined : typeof body.reason === 'string' && body.reason.length <= MAX_ASSAY_REASON_LENGTH ? body.reason : null;
+    if (!hasOnlyKeys(body, ASSAY_VERDICT_KEYS) || !locator || !hasOnlyKeys(locator, ASSAY_LOCATOR_KEYS)
+      || (body.verdict !== 'verified' && body.verdict !== 'rejected')
+      || typeof body.replayedHash !== 'string' || !ASSAY_HASH.test(body.replayedHash)
+      || reason === null || typeof locator.epochId !== 'string' || typeof locator.contractId !== 'string'
+      || typeof locator.tapeId !== 'string' || locator.tapeId.length === 0 || locator.tapeId.length > MAX_REEL_ID_LENGTH
+      || typeof locator.rowId !== 'string' || !ASSAY_ROW_ID.test(locator.rowId)
+      || !knownContract(locator.epochId, locator.contractId)) {
+      return error(cors, 400, 'bad_verdict', 'Assay verdict not accepted.');
+    }
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    if (!kv) return error(cors, 503, 'board_unavailable', 'The county book is unavailable.');
+    const rows = await readBoard(kv, locator.epochId, locator.contractId);
+    const pending = rows.filter((candidate) => candidate.assay === 'pending'
+      && candidate.tape?.id === locator.tapeId && assayRowId(candidate) === locator.rowId);
+    const row = pending.find((candidate) => body.verdict === 'rejected' || candidate.tape?.eventLogHash === body.replayedHash);
+    if (!row && pending.length > 0) {
+      return error(cors, 400, 'bad_verdict', 'Verified replay hash does not match the submitted tape.');
+    }
+    if (!row) return error(cors, 404, 'assay_not_found', 'Pending assay not found.');
+    row.assay = body.verdict;
+    row.assayedAt = Date.now();
+    row.assayHash = body.replayedHash;
+    if (body.verdict === 'rejected' && reason) row.assayReason = reason;
+    await kv.put(boardKey(locator.epochId, locator.contractId), JSON.stringify(retainUnranked(rows)));
+    return json(cors, { ok: true, locator, assay: row.assay });
+  });
+}
+
+async function assayRequest(context: StandingsContext, handle: (cors: Record<string, string>) => Promise<Response>): Promise<Response> {
+  const cors = corsHeaders(context.request);
+  if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
+  const secret = context.env.ASSAY_WORKER_SECRET;
+  if (!secret) return error(cors, 503, 'assay_unavailable', 'The assay worker is not configured.');
+  if (!constantTimeEqual(context.request.headers.get('x-assay-key') ?? '', secret)) {
+    return error(cors, 401, 'unauthorized', 'Assay key not accepted.');
+  }
+  try {
+    return await handle(cors);
+  } catch (err) {
+    if (err instanceof HttpError) return error(cors, err.status, err.code, err.message);
+    return error(cors, 500, 'server_error', 'The county book is unavailable.');
+  }
+}
+
+function constantTimeEqual(left: string, right: string): boolean {
+  const a = new TextEncoder().encode(left);
+  const b = new TextEncoder().encode(right);
+  let mismatch = a.length ^ b.length;
+  for (let index = 0; index < Math.max(a.length, b.length); index += 1) mismatch |= (a[index] ?? 0) ^ (b[index] ?? 0);
+  return mismatch === 0;
+}
+
 async function getBoard(context: StandingsContext, cors: Record<string, string>): Promise<Response> {
   const url = new URL(context.request.url);
   const epochId = url.searchParams.get('epoch') ?? '';
@@ -168,7 +269,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
       return error(cors, 400, 'bad_view', 'Field book view not accepted.');
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? await readBoard(kv, epochId, contractId, true) : []] as const));
+    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? rankedRows(await readBoard(kv, epochId, contractId, true)) : []] as const));
     if (view === 'byParty') {
       return json(cors, {
         ok: true,
@@ -236,13 +337,18 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   // field BEFORE ranks are minted: a posse row can never move a solo rank, and an omitted party
   // param is the solo board — which is byte-identical to the board this endpoint served before.
   const partySize = partyParam === null || partyParam === 'solo' ? 1 : Number(partyParam);
-  const board = rows.filter((row) => (row.party?.riderCount ?? 1) === partySize).map(boardRow);
+  const partition = rows.filter((row) => (row.party?.riderCount ?? 1) === partySize);
+  const ranked = rankedRows(partition);
+  const board = ranked.map(boardRow);
+  const rejectedCount = partition.filter((row) => row.assay === 'rejected'
+    && (difficulty === 'all' || row.difficulty === difficulty)).length;
   return json(cors, {
     ok: true,
     epochId,
     contractId,
     party: partyParam === null ? 'solo' : partyParam,
     board: difficulty === 'all' ? board : board.filter((row) => row.difficulty === difficulty),
+    rejectedCount,
   });
 }
 
@@ -257,6 +363,7 @@ function boardRow(row: StoredRow, index: number): JsonRecord {
     timeAlive: row.timeAlive,
     gold: row.gold,
     baseValue: row.baseValue,
+    assay: row.assay,
     difficulty: row.difficulty,
     ...(Number.isFinite(row.submittedAt) && row.submittedAt >= 0 ? { submittedAt: row.submittedAt } : {}),
     ...(season ? { season: season.name } : {}),
@@ -446,24 +553,26 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     ...(stack ? { stack } : {}),
     ...(party ? { party } : {}),
     ...(tape ? { tape } : {}),
+    ...(tape ? { assay: 'pending' as const } : {}),
   };
   const standingKind = party?.riderCount ?? 1;
-  const prior = current.find((row) => row.anonId === anonId && (row.party?.riderCount ?? 1) === standingKind);
+  const sameStanding = (row: StoredRow) => row.anonId === anonId && (row.party?.riderCount ?? 1) === standingKind;
+  const prior = current.find((row) => sameStanding(row) && (tape ? isRankedRow(row) : row.tape === undefined));
   const kept = prior && compareScores(prior, candidate) < 0 ? prior : candidate;
-  const next = [
-    ...current.filter((row) => row.anonId !== anonId || (row.party?.riderCount ?? 1) !== standingKind),
+  const next = retainUnranked([
+    ...current.filter((row) => !sameStanding(row) || (!tape && row.tape !== undefined)),
     kept,
-  ].sort(compareScores).slice(0, MAX_ROWS);
+  ]);
   // ponytail: KV read-modify-write; move this board to a Durable Object if concurrent submissions measurably collide.
   await kv.put(key, JSON.stringify(next));
-  const index = next.indexOf(kept);
-  return json(cors, { ok: true, stored: index >= 0, rank: index >= 0 ? index + 1 : null });
+  const index = rankedRows(next).indexOf(kept);
+  return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null });
 }
 
 async function readBoard(kv: KVNamespaceLike, epochId: string, contractId: string, tolerateFailure = false): Promise<StoredRow[]> {
   try {
     const parsed = JSON.parse((await kv.get(boardKey(epochId, contractId))) ?? '[]') as unknown;
-    return Array.isArray(parsed) ? parsed.map((row) => validateStoredRow(row, contractId)).filter((row): row is StoredRow => row !== null).sort(compareScores).slice(0, MAX_ROWS) : [];
+    return Array.isArray(parsed) ? retainUnranked(parsed.map((row) => validateStoredRow(row, contractId)).filter((row): row is StoredRow => row !== null)) : [];
   } catch {
     if (tolerateFailure) return [];
     throw new HttpError(503, 'board_unavailable', 'The county book is unavailable.');
@@ -495,7 +604,18 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   if (stack === null || party === null) return null;
   const tape = value.tape === undefined ? undefined : validateTape(value.tape, contractId, value.seed, difficulty);
   const submittedAt = integerInRange(value.submittedAt, 0, Number.MAX_SAFE_INTEGER);
+  const assay = value.assay === undefined && tape ? 'pending'
+    : value.assay === 'pending' || value.assay === 'verified' || value.assay === 'rejected' ? value.assay : undefined;
+  const assayedAt = value.assayedAt === undefined ? undefined : integerInRange(value.assayedAt, 0, Number.MAX_SAFE_INTEGER);
+  const assayHash = typeof value.assayHash === 'string' && ASSAY_HASH.test(value.assayHash) ? value.assayHash : undefined;
+  const assayReason = typeof value.assayReason === 'string' && value.assayReason.length <= MAX_ASSAY_REASON_LENGTH ? value.assayReason : undefined;
   if (submittedAt === null || tape === null || (tape && !tapeMatchesScore(tape, score))) return null;
+  if ((!tape && (value.assay !== undefined || value.assayedAt !== undefined || value.assayHash !== undefined || value.assayReason !== undefined))
+    || (tape && !assay)
+    || (value.assayedAt !== undefined && assayedAt === null)
+    || (value.assayHash !== undefined && !assayHash)
+    || (value.assayReason !== undefined && assayReason === undefined)
+    || ((assay === 'verified' || assay === 'rejected') && (assayedAt === undefined || assayHash === undefined))) return null;
   return {
     ...score,
     profileName,
@@ -509,7 +629,35 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     ...(stack ? { stack } : {}),
     ...(party ? { party } : {}),
     ...(tape ? { tape } : {}),
+    ...(assay ? { assay } : {}),
+    ...(typeof assayedAt === 'number' ? { assayedAt } : {}),
+    ...(assayHash === undefined ? {} : { assayHash }),
+    ...(assayReason === undefined ? {} : { assayReason }),
   };
+}
+
+function rankedRows(rows: StoredRow[]): StoredRow[] {
+  return rows.filter(isRankedRow).sort(compareScores).slice(0, MAX_ROWS);
+}
+
+function isRankedRow(row: StoredRow): boolean {
+  return row.tape !== undefined && row.assay !== 'rejected';
+}
+
+function retainUnranked(rows: StoredRow[]): StoredRow[] {
+  const ranked = rankedRows(rows);
+  const unranked = rows.filter((row) => !isRankedRow(row))
+    .sort((a, b) => b.submittedAt - a.submittedAt)
+    .slice(0, MAX_ROWS);
+  return [...ranked, ...unranked];
+}
+
+function scoreOf(row: ScoreRow): ScoreRow {
+  return { secured: row.secured, waves: row.waves, timeAlive: row.timeAlive, gold: row.gold, baseValue: row.baseValue };
+}
+
+function assayRowId(row: StoredRow): string {
+  return `${row.anonId}:${row.party?.riderCount ?? 1}:${row.submittedAt}:${row.inputLogHash}`;
 }
 
 function validateScore(value: unknown): ScoreRow | null {
