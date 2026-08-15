@@ -31,11 +31,16 @@
 # USAGE:  bash scripts/start-lane-runner.sh          # start it
 #         bash scripts/start-lane-runner.sh --check  # report only, start nothing
 set -u
-cd "$(dirname "$0")/.." || exit 2
-ROOT="$(pwd)"
+ROOT="${GOLD_RUSH_ROOT:-$(cd "$(dirname "$0")/.." && pwd)}"
+cd "$ROOT" || exit 2
 CHECK_ONLY=0
 [ "${1:-}" = "--check" ] && CHECK_ONLY=1
-. "$ROOT/scripts/runner-processes.sh"
+# The guard overrides these three paths so it can execute this real helper without touching
+# the live runner; production uses the defaults.
+PROCESSES_SCRIPT="${LANE_RUNNER_PROCESSES_SCRIPT:-$ROOT/scripts/runner-processes.sh}"
+. "$PROCESSES_SCRIPT"
+RUNNER_SCRIPT="${LANE_RUNNER_SCRIPT:-$ROOT/scripts/lane-runner-v3.sh}"
+RUNNER_LOG="${LANE_RUNNER_LOG:-$ROOT/logs/runner-headless.log}"
 
 # Kept in step with lane-runner-v3.sh's CODEX_FLOOR by scripts/runner-restart-recipe.test.sh,
 # which reds if the two drift. Deliberately NOT sourced from the runner: sourcing would execute
@@ -103,27 +108,50 @@ if [ "$CHECK_ONLY" = "1" ]; then
 fi
 
 # ---- 4. Start DETACHED, so it survives the fire that started it. ----
-mkdir -p "$ROOT/logs"
-nohup bash "$ROOT/scripts/lane-runner-v3.sh" >> "$ROOT/logs/runner-headless.log" 2>&1 &
-started=$!
-disown "$started" 2>/dev/null || true
+mkdir -p "$(dirname "$RUNNER_LOG")"
+started=$( (
+  nohup /usr/bin/perl -MPOSIX -e 'POSIX::setsid() >= 0 or die "setsid: $!\n"; exec @ARGV or die "exec: $!\n"' \
+    bash "$RUNNER_SCRIPT" >> "$RUNNER_LOG" 2>&1 </dev/null &
+  echo $!
+) )
 sleep 3
 
 # ---- 5. VERIFY, and say plainly what was verified. ----
 # PPID 1 + TTY ?? is what a correctly-detached runner looks like: reparented to launchd, no
 # controlling terminal, survives this shell's exit. It is the CORRECT state, not a symptom
 # (s1651 mistook it for one and declined a safe restart for ~2h26m).
-live=$(runner_pids | head -1)
-if [ -z "${live:-}" ]; then
-  echo "[start-lane-runner] FAILED — no runner process after 3s. See logs/runner-headless.log:"
-  tail -5 "$ROOT/logs/runner-headless.log" | sed 's/^/[start-lane-runner]   /'
+live="$started"
+
+stop_rejected_runner() {
+  kill -TERM "$1" 2>/dev/null || return 0
+  for _ in {1..40}; do
+    kill -0 "$1" 2>/dev/null || return 0
+    sleep 0.25
+  done
+  kill -KILL "$1" 2>/dev/null || true
+  sleep 1
+  ! kill -0 "$1" 2>/dev/null
+}
+
+if ! runner_pids | grep -qx "$live"; then
+  echo "[start-lane-runner] FAILED — no runner process after 3s. See $RUNNER_LOG:"
+  stop_rejected_runner "$live" || echo "[start-lane-runner] FAILED — unverified pid $live survived TERM/KILL"
+  tail -5 "$RUNNER_LOG" | sed 's/^/[start-lane-runner]   /'
   exit 1
 fi
+
 echo "[start-lane-runner] runner UP at pid $live"
 ps -o pid,ppid,tty,stat,lstart -p "$live" | sed 's/^/[start-lane-runner]   /'
 ppid=$(ps -o ppid= -p "$live" | tr -d ' ')
 if [ "${ppid:-}" != "1" ]; then
-  echo "[start-lane-runner] WARNING — PPID is $ppid, not 1: this runner is NOT reparented to launchd"
-  echo "[start-lane-runner] and may die when this shell exits. Re-check after the fire ends."
+  echo "[start-lane-runner] FAILED — PPID is $ppid, not 1: runner custody was not transferred"
+  stop_rejected_runner "$live" || echo "[start-lane-runner] FAILED — rejected runner pid $live survived TERM/KILL"
+  exit 1
+fi
+tty=$(ps -o tty= -p "$live" | tr -d ' ')
+if [ "${tty:-}" != "??" ]; then
+  echo "[start-lane-runner] FAILED — TTY is ${tty:-unknown}, not ??: runner is not headless"
+  stop_rejected_runner "$live" || echo "[start-lane-runner] FAILED — rejected runner pid $live survived TERM/KILL"
+  exit 1
 fi
 echo "[start-lane-runner] OK — record the pid + start time in your handoff."

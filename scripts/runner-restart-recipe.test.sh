@@ -33,9 +33,12 @@ ok()  { echo "  ok   — $1"; }
 bad() { echo "  FAIL — $1"; fails=$((fails+1)); }
 
 scratch="$(mktemp -d "${TMPDIR:-/tmp}/runner-processes.XXXXXX")" || exit 1
+scratch="$(cd "$scratch" && pwd -P)"
 fixture_pids=''
 cleanup() {
   [ -z "$fixture_pids" ] || kill $fixture_pids 2>/dev/null || true
+  sleep 0.1
+  [ -z "$fixture_pids" ] || kill -KILL $fixture_pids 2>/dev/null || true
   [ -z "$fixture_pids" ] || wait $fixture_pids 2>/dev/null || true
   rm -rf "$scratch"
 }
@@ -90,6 +93,78 @@ sleep 1
 [ "$(runner_pids | grep -cx "$runner_pid")" = "1" ] \
   && ok "shared discriminator accepts a relative runner path" \
   || bad "shared discriminator rejected the relative runner path"
+
+# --- 0c. CUSTODY: execute the real helper from a PTY against an isolated runner -------
+isolated="$scratch/isolated"
+mkdir -p "$isolated"
+printf '%s\n' \
+  '#!/bin/bash' \
+  'if [ "${FAKE_REPLACE:-0}" = 1 ]; then' \
+  '  FAKE_REPLACE=0 bash "$0" &' \
+  '  echo $! > "$REPLACEMENT_PID_FILE"' \
+  '  exit 0' \
+  'fi' \
+  'if [ "${IGNORE_TERM:-0}" = 1 ]; then trap : TERM; else trap '\''exit 0'\'' TERM; fi' \
+  'while :; do sleep 1; done' > "$isolated/lane-runner-v3.sh"
+printf '%s\n' \
+  '#!/bin/bash' \
+  'runner_pids() {' \
+  '  local pid' \
+  '  ps -axo pid=,comm= | awk '\''$2 ~ /(^|\/)bash$/ { print $1 }'\'' | while read -r pid; do' \
+  "    lsof -a -p \"\$pid\" -d 255 -Fn 2>/dev/null | grep -Fqx 'n$isolated/lane-runner-v3.sh' && echo \"\$pid\"" \
+  '  done' \
+  '}' > "$scratch/runner-processes.sh"
+
+/usr/bin/script -q /dev/null /usr/bin/env \
+  GOLD_RUSH_ROOT="$ROOT" LANE_RUNNER_PROCESSES_SCRIPT="$scratch/runner-processes.sh" \
+  LANE_RUNNER_SCRIPT="$isolated/lane-runner-v3.sh" LANE_RUNNER_LOG="$scratch/control.log" \
+  /bin/bash "$HELPER" > "$scratch/control.out" 2>&1
+control_pid=$(sed -n 's/.*runner UP at pid \([0-9][0-9]*\).*/\1/p' "$scratch/control.out" | tail -1)
+fixture_pids="$fixture_pids $control_pid"
+control_ppid=$(ps -o ppid= -p "$control_pid" | tr -d ' ')
+control_tty=$(ps -o tty= -p "$control_pid" | tr -d ' ')
+if grep -q 'OK —' "$scratch/control.out" && runner_pids | grep -qx "$control_pid" && \
+   [ "$control_ppid" = "1" ] && [ "$control_tty" = "??" ]; then
+  ok "real helper launched its recorded PID at PPID 1 with no controlling terminal"
+else
+  bad "real helper custody failed: pid=${control_pid:-none} PPID=${control_ppid:-gone} TTY=${control_tty:-gone}"
+fi
+kill -TERM "$control_pid" 2>/dev/null || true
+for _ in {1..20}; do runner_pids | grep -qx "$control_pid" || break; sleep 0.1; done
+
+FAKE_REPLACE=1 REPLACEMENT_PID_FILE="$scratch/replacement.pid" \
+  /usr/bin/script -q /dev/null /usr/bin/env \
+  GOLD_RUSH_ROOT="$ROOT" LANE_RUNNER_PROCESSES_SCRIPT="$scratch/runner-processes.sh" \
+  LANE_RUNNER_SCRIPT="$isolated/lane-runner-v3.sh" LANE_RUNNER_LOG="$scratch/replacement.log" \
+  /bin/bash "$HELPER" > "$scratch/replacement.out" 2>&1
+replacement_pid=$(cat "$scratch/replacement.pid")
+fixture_pids="$fixture_pids $replacement_pid"
+if grep -q 'FAILED — no runner process' "$scratch/replacement.out" && ! grep -q 'OK —' "$scratch/replacement.out"; then
+  ok "helper rejects a substitute runner instead of verifying the wrong PID"
+else
+  bad "helper accepted a substitute runner after its recorded PID exited"
+fi
+kill -TERM "$replacement_pid" 2>/dev/null || true
+for _ in {1..20}; do runner_pids | grep -qx "$replacement_pid" || break; sleep 0.1; done
+
+stop_block=$(sed -n '/^stop_rejected_runner() {/,/^}/p' "$HELPER" | sed -e 's/#.*//' -e '/echo /d')
+if printf '%s\n' "$stop_block" | grep -q 'kill -TERM "$1"' && \
+   printf '%s\n' "$stop_block" | grep -q 'kill -0 "$1"' && \
+   printf '%s\n' "$stop_block" | grep -q 'kill -KILL "$1"'; then
+  ok "rejected-runner cleanup waits for exit and has bounded KILL escalation"
+else
+  bad "rejected-runner cleanup can return while the rejected runner is still alive"
+fi
+printf '%s\n' "$stop_block" > "$scratch/stop-rejected-runner.sh"
+. "$scratch/stop-rejected-runner.sh"
+IGNORE_TERM=1 bash "$isolated/lane-runner-v3.sh" &
+runner_pid=$!; fixture_pids="$fixture_pids $runner_pid"
+sleep 1
+if stop_rejected_runner "$runner_pid" && ! runner_pids | grep -qx "$runner_pid"; then
+  ok "rejected-runner cleanup returns only after the runner is gone"
+else
+  bad "rejected-runner cleanup returned with its runner still alive"
+fi
 
 # --- 1. CLASS: the automatic restart path goes through the helper --------------------
 if grep -qE '^[[:space:]]*nohup[[:space:]]+bash[[:space:]]+scripts/lane-runner-v3\.sh' "$HEALTH"; then
