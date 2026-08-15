@@ -50,6 +50,7 @@ import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem, type ShooterHandle } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
+import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
 import { LightField, type LightSource } from '../systems/LightField';
@@ -85,10 +86,6 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   'e3-fairground': {
     reason: 'Scripted admission re-probe terminated unsecured at waves 2/3; the crowd-flock escort objective has no headless consumer.',
     citation: 'F-1475-1',
-  },
-  'e5-deepwater-claim': {
-    reason: 'BOAT_BUILD and REANCHOR succeeded, but both seeds produced no terminal within 16,200 fixed steps because Dredge-Queen resolution is absent.',
-    citation: 'reviews/milk-twin-sockets.md',
   },
   'e5-stillwater': {
     reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
@@ -127,9 +124,11 @@ export function bossKillSecuresRun(
   event: Extract<GameEvent, { type: 'enemy_killed' }>,
 ): boolean {
   const expectedKind = baron?.bossKind ?? 'baron';
-  const expectedGroupId = baron?.components?.length
-    ? `${contractId}:wave-${baron.wave}:${(baron.variantId ?? 'baron_railcar') === 'baron_railcar' ? 'railcar' : 'component-boss'}`
-    : undefined;
+  const expectedGroupId = baron?.variantId === 'dredge_queen'
+    ? `${contractId}:dredge-queen-hold`
+    : baron?.components?.length
+      ? `${contractId}:wave-${baron.wave}:${(baron.variantId ?? 'baron_railcar') === 'baron_railcar' ? 'railcar' : 'component-boss'}`
+      : undefined;
   const groupDown = expectedGroupId === undefined
     ? event.bossGroupId === undefined
     : event.bossGroupId === expectedGroupId && event.bossRemaining === 0;
@@ -167,7 +166,9 @@ export type HeadlessAgentView = AgentView & {
     overtime?: true;
     pendingOffer?: Array<{ id: string; name: string; effectText: string }>;
     expiresAtSimMs?: number;
-    deepwater?: DeepwaterSocket['diagnostics'];
+    deepwater?: DeepwaterSocket['diagnostics'] & {
+      dredgeQueenBoss?: ReturnType<DredgeQueenBossSystem['diagnostics']>;
+    };
     atomic?: AtomicSocket['diagnostics'];
     hero: AgentView['now']['hero'] & {
       level: number;
@@ -251,7 +252,7 @@ export class HeadlessContractSim {
     id: 'hero',
     resumeKey: 'hero:0:rig',
     enabled: () => !this.dead && this.weapon === 'rig',
-    getPos: () => this.hero.group.position,
+    getPos: () => this.deepwater ? this.prospector.position : this.hero.group.position,
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
     damage: Balance.sparkRig.damage,
@@ -284,6 +285,7 @@ export class HeadlessContractSim {
   private readonly lightField: LightField | null;
   private readonly mothSwarm: MothSwarm | null;
   private readonly crawler: CrawlerBossSystem | null;
+  private readonly dredgeQueen: DredgeQueenBossSystem | null;
   private readonly deepwater: DeepwaterSocket | null;
   private readonly atomic: AtomicSocket | null;
   private readonly waves: WaveSystem;
@@ -428,6 +430,19 @@ export class HeadlessContractSim {
           (origin, target, damage, radius) => this.combat.launchLob(origin, target, 0.05, damage, radius, 'baron_rocket:-3'),
         )
       : null;
+    this.dredgeQueen = this.manifest.twist.baron?.variantId === 'dredge_queen'
+      ? new DredgeQueenBossSystem(
+          () => this.enemies.all,
+          (position, params) => this.enemies.spawn(position, params),
+          (enemy) => this.enemies.recycle(enemy),
+          () => this.deepwater?.tile.snapshot().wrecks ?? [],
+          () => this.hero.group.position,
+          (amount, sourceId) => this.combat.damageActor(amount, sourceId),
+          (_position, amount) => this.economy.apply(this.economyEvent({ type: 'gold_reclaimed', amount })).ok,
+          true,
+          { readAtBirth: () => null, writeAtCeremony: () => undefined },
+        )
+      : null;
     this.dayNightCycle = this.manifest.twist.dayNightCycle
       ? new DayNightCycle(this.manifest.twist.dayNightCycle)
       : null;
@@ -465,6 +480,11 @@ export class HeadlessContractSim {
       this.combat,
       () => this.hero.group.position,
       (wave, at) => this.events.emit({ type: 'wave_started', at, wave }),
+      this.dredgeQueen
+        ? (wave) => this.dredgeQueen!.onStormWave(wave, this.manifest.twist.baron!.wave)
+          ? this.dredgeQueen!.escortMultiplier
+          : false
+        : null,
     );
 
     this.waves = new WaveSystem(
@@ -599,7 +619,7 @@ export class HeadlessContractSim {
       const offerKey = this.currentOfferKey();
       if (
         this.terminal
-        || this.waves.diagnostics.wave !== this.lastTurnWave
+        || this.currentRunWave() !== this.lastTurnWave
         || surpriseSeq > this.lastSurpriseSeq
         || (this.secureChoice === 'pending' && !this.lastTurnSecurePending)
         || (offerKey !== '' && offerKey !== this.lastTurnOfferKey)
@@ -614,7 +634,7 @@ export class HeadlessContractSim {
 
   outcome(): GrSimOutcome {
     if (!this.terminal) throw new Error('Outcome requested before the contract terminated.');
-    const waves = this.waves.diagnostics.wave;
+    const waves = this.currentRunWave();
     const canyonConnect = this.canyonConnectDiagnostics();
     const crawler = this.crawler?.diagnostics();
     const base = {
@@ -688,7 +708,7 @@ export class HeadlessContractSim {
   turnDue(): boolean {
     const orders = snapshotStandingOrders();
     return this.terminal
-      || this.waves.diagnostics.wave !== this.lastTurnWave
+      || this.currentRunWave() !== this.lastTurnWave
       || (this.secureChoice === 'pending' && !this.lastTurnSecurePending)
       || (this.currentOfferKey() !== '' && this.currentOfferKey() !== this.lastTurnOfferKey)
       || latestSurpriseSeq(orders) > this.lastSurpriseSeq;
@@ -707,7 +727,7 @@ export class HeadlessContractSim {
       tick,
       contractId: this.contractId,
       seed: this.seed,
-      wave: this.waves.diagnostics.wave,
+      wave: this.currentRunWave(),
       timeMs: Math.round(this.timeAlive * 1000),
       gold: round(this.economy.gold),
       kills: this.kills,
@@ -733,7 +753,7 @@ export class HeadlessContractSim {
   }
 
   get wavesPerSecond(): number {
-    return this.advanceCpuMs > 0 ? this.waves.diagnostics.wave / (this.advanceCpuMs / 1000) : 0;
+    return this.advanceCpuMs > 0 ? this.currentRunWave() / (this.advanceCpuMs / 1000) : 0;
   }
 
   get escortDiagnostics() {
@@ -782,6 +802,7 @@ export class HeadlessContractSim {
     this.waves.update(this.timeAlive);
     this.atomic?.updateWrangle(STEP_SECONDS, this.timeAlive);
     this.crawler?.step(this.timeAlive);
+    this.dredgeQueen?.update(this.timeAlive);
     this.build.update(
       STEP_SECONDS,
       this.timeAlive,
@@ -826,14 +847,18 @@ export class HeadlessContractSim {
   }
 
   private makeTurn(orders = snapshotStandingOrders()): GrSimTurn {
-    this.lastTurnWave = this.waves.diagnostics.wave;
+    this.lastTurnWave = this.currentRunWave();
     this.lastTurnOfferKey = this.currentOfferKey();
     this.lastSurpriseSeq = latestSurpriseSeq(orders);
     this.lastTurnSecurePending = this.secureChoice === 'pending';
     const receipt = this.surface.tools.view();
     if (!receipt.outcome.ok || !receipt.outcome.state) throw new Error('THE VIEW was unavailable.');
     const view = receipt.outcome.state as HeadlessAgentView;
-    if (this.deepwater) view.now.deepwater = this.deepwater.diagnostics;
+    view.now.wave = this.currentRunWave();
+    if (this.deepwater) view.now.deepwater = {
+      ...this.deepwater.diagnostics,
+      ...(this.dredgeQueen ? { dredgeQueenBoss: this.dredgeQueen.diagnostics() } : {}),
+    };
     if (this.atomic) view.now.atomic = this.atomic.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
@@ -951,6 +976,10 @@ export class HeadlessContractSim {
           const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
           this.crawler?.onComponentKilled(event.bossComponentId, enemy?.position ?? this.hero.group.position, event.at);
         }
+        if (event.type === 'enemy_killed' && event.variantId === 'dredge_queen') {
+          const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+          this.dredgeQueen?.onComponentKilled(event.bossComponentId, enemy?.position ?? this.hero.group.position, event.at);
+        }
         if (event.type === 'wave_started') {
           const baron = this.manifest.twist.baron;
           this.crawler?.onWaveStarted(event.wave, baron?.variantId === 'dynamo_crawler' ? baron.wave : Number.POSITIVE_INFINITY, event.at);
@@ -990,16 +1019,19 @@ export class HeadlessContractSim {
     // objective would pin this false forever and beating the Baron would silently fail to secure.
     // Mirrors src/game/Game.ts byte-for-byte; the browser moved first.
     const objectiveAllowsSecure = !this.manifest.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
+    const runWave = this.currentRunWave();
+    const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen'
+      && runWave < (this.manifest.twist.secureWave ?? Balance.run.secureWave);
     const secured = this.runManager.diagnostics.secured
-      || (objectiveAllowsSecure && this.runManager.secureCurrentRun(this.waves.diagnostics.wave));
-    if (!secured) {
+      || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager.secureCurrentRun(runWave));
+    if (!secured && !defeatRecordedBeforeSecureWave) {
       this.baronBeaten = false;
       return;
     }
     this.replayEvents.push({
       type: 'baron_defeated',
       at,
-      wave: this.waves.diagnostics.wave,
+      wave: runWave,
       defeatBeat: baron.defeatBeat,
       sciencePayoutMult: baron.sciencePayoutMult,
       medal: {
@@ -1009,6 +1041,10 @@ export class HeadlessContractSim {
         sideEffects: false,
       },
     });
+  }
+
+  private currentRunWave(): number {
+    return this.deepwater?.diagnostics.corsairWaves ?? this.waves.diagnostics.wave;
   }
 
   private updateBaronRocketVolley(): void {
