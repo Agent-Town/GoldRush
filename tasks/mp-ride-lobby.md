@@ -1,0 +1,35 @@
+# Task mp-ride-lobby: the Ride Together panel becomes a real lobby — roster, contract display, solo-card dismissal (lane-c, commit prefix "feat:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.
+READ FIRST: AGENTS.md; `src/town/TownScene.ts:2366-2400` (the ride card DOM — `data-testid="ride-together-card"` / `ride-together-controls`); `src/mp/RideTogether.ts` (relayBase, `createRideRoom`, the staged `RideTogetherConfig` incl. `setup`); `functions/api/_multiplayer.ts:142-162` (`inspectRoom`) and `:261-273` (`inspect()` — the response shape); `src/game/Game.ts:1040-1056` (the `showMultiplayerCard('Riding solo', …)` call and `mpHoldCardVisible` lifecycle — READ `showMultiplayerCard`'s definition before touching it); `public/skill.md` §"Riding together" (the agent-seat protocol this lobby makes visible).
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/lane-c main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` — are NEVER "work" and NEVER a STOP; discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
+
+## Why (owner playtest, 2026-08-15, first live mixed human+AI ride — words verbatim)
+The first-ever mixed ride connected (roster server-side: Claude/headless + Robin/browser, room `28D9B45F…`, started:true) and the owner, hosting it, could not see any of that:
+- *"but there is no lobby"* — and earlier the same morning: *"It would be good to have something like a lobby, where it is possible to see who joined the game?"* The seated agent was CONNECTED and invisible; the panel gave the host no sign anyone had joined. (This blindness also produced the 2026-08-14 solo-fallback confusion — the host can't tell waiting-empty from waiting-with-a-rider.)
+- *"I am also not sure which contract has been selected"* — the room silently captured `contractId=the-claim, difficultyPreset=trail, seed=gold-rush` from the host's current selection and displayed none of it.
+- Carried from 2026-08-14 (screenshot): the *"Riding solo — That claim's gone quiet. Starting this ride solo."* card sits center-screen over live gameplay and never leaves.
+
+VERIFIED premises (2026-08-15, file:line):
+- The ride card (`TownScene.ts:2366+`) renders NO roster — `grep -c "roster|players"` over TownScene.ts = 0.
+- The client NEVER calls `/api/multiplayer/inspect` — zero references in `src/`.
+- The server already serves everything a lobby needs: `inspect()` (`_multiplayer.ts:261-273`) returns `{ok, v:3, type:'room-info', code, setup:{contractId, seed, difficultyPreset}, started, players, roster:[{playerId, name, town, client}]}` — verified LIVE against the deployed worker (2026-08-15, room `28D9B45F…`, 2-rider roster incl. `client:"headless"`).
+- The stuck card: `Game.ts:1050-1054` — `showMultiplayerCard('Riding solo', …)` with no auto-dismiss on this path.
+
+## Scope (each item independently testable)
+1. **Roster in the ride card (the lobby).** While a HOSTED claim is open and NOT started: poll `${relayBase}/api/multiplayer/inspect?code=<code>` (the same `relayBase` the config already carries) every 2–3s; render a "Riders" section in the ride card — one row per roster entry: name · town · a small client badge (browser/headless) — plus a count. A newly seated agent must appear within ≤5s of joining. Stop polling on ride start, claim close, solo fallback, or panel dispose (no leaked timers). Polling failures degrade silently to the last-known roster (never break the panel).
+2. **Show what the ride will play.** Render the room's `contractId` and `difficultyPreset` (seed smaller/secondary) in the ride card at host time — the data is already client-side in the staged `RideTogetherConfig.setup`; no fetch needed. The host must see WHAT they're about to start before pressing Start Ride.
+3. **The solo card dismisses.** The `'Riding solo'` card (`Game.ts:1050-1054`): auto-dismiss after ~6s AND dismissible by click, matching the game's existing card-dismissal convention (read `showMultiplayerCard` + `mpHoldCardVisible` first; the resync hold-card path must keep its current behavior — only the two 'Riding solo' variants gain the timeout).
+4. **e2e — the owner's exact scenarios, so they can never regress silently.** New `e2e/mp-ride-lobby.spec.ts` using playwright network interception to stub `/api/multiplayer/create` and `/inspect` (fixture roster: host + one `client:"headless"` rider): (a) hosting renders contract + difficulty in the card; (b) the roster section lists the riders pre-start, and a re-stubbed inspect adding a rider updates the list ("the seated agent appears on the host's panel before start"); (c) the 'Riding solo' card auto-dismisses within its window. Desktop + mobile projects.
+
+## Firewall
+Touch ONLY: `src/town/TownScene.ts` (ride card UI + poll lifecycle), `src/mp/RideTogether.ts` (a small poll/inspect helper + exposing the staged setup, if needed), `src/game/Game.ts` (ONLY the 'Riding solo' card lifecycle), new `e2e/mp-ride-lobby.spec.ts`.
+NO changes to: `functions/api/**` (the server already serves everything — verified); `src/mp/LockstepClient.ts`/`AgentRiderBody.ts` (lockstep/rider plumbing); the standings/recording path (THE RECKONING's surface, freshly merged); `scripts/gr-sim.mjs`; any balance; existing e2e assertions; `public/skill.md`.
+
+## Self-check (evidence, not vibes)
+`npx tsc --noEmit` + `npm run build` green. `e2e/mp-ride-lobby.spec.ts` green desktop AND mobile at `--workers=1`. `npm run test:mp` green (unchanged count — this task touches no server code; report the count). Adjacent `task-025` + `m1-01` + `m2-01` unmodified-green both projects. Zero console/page errors on a plain boot. Screenshot of the ride card showing a 2-rider roster (stubbed) → `artifacts/mp-ride-lobby/`.
+End: READY-FOR-GATES + report: roster poll cadence + teardown proof (no timer leaks), the contract-display source, the solo-card dismissal mechanism chosen, and all suite counts.
+
+## No-op / honesty guard
+If a roster surface already exists somewhere I missed (grep found none), WRITE WHY and extend it instead of duplicating. Do NOT add server-side changes to make the client easier — the inspect contract is live and sufficient. If the solo-card fix risks the resync hold-card path, STOP and report rather than widening scope.

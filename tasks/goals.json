@@ -6096,6 +6096,27 @@
               "authorNotes": "Corrective authored from s1773's detached custody review of saved tip 22b9a89636500e7b06026f1333ebca17923bf862. Scope is exactly F-1773-1..3; re-land source preserved at archive/mp07c4-reckoning-s1773-attribution-hold.",
               "review": "reviews/mp-07c-4-the-reckoning.md",
               "drainNotes": "s1774: corrective and original slice merged together at 6b194e6b674260643863dcb6110d609db288a2cb after detached custody discharged all three findings."
+            },
+            {
+              "id": "mp-ride-lobby",
+              "title": "Ride Together panel becomes a lobby - live roster + contract/difficulty display + solo-card dismissal (F-RIDE-1/2/3)",
+              "taskFile": "mp-ride-lobby.md",
+              "status": "planned",
+              "note": "Attended 2026-08-15 from the first mixed human+AI ride playtest (docs/playtests/2026-08-15-robin-playtest-01.md). Owner verbatim: \"but there is no lobby\" / \"I am also not sure which contract has been selected\". Server already serves roster via inspect (verified live)."
+            },
+            {
+              "id": "investigate-seam-anim-mp",
+              "title": "INVESTIGATE: seam-collect animation lost during MP ride (F-RIDE-4) - measurement matrix first, no blind fix",
+              "taskFile": "investigate-seam-anim-mp.md",
+              "status": "planned",
+              "note": "Owner verbatim mid-ride 2026-08-15: \"collecting seams has lost its animation somehow\". Mechanism unknown; solo-vs-MP split unmeasured. Lane-c ladder position 2."
+            },
+            {
+              "id": "fix-party-pot-orphan",
+              "title": "SHARED POT label visually orphans from the party HUD (F-RIDE-6) - recompose header, both breakpoints",
+              "taskFile": "fix-party-pot-orphan.md",
+              "status": "planned",
+              "note": "Owner verbatim 2026-08-15: \"the shared gold kind of hangs in the air\". Verified: PartyOverview.ts:35 header space-between across 560px, no backdrop. Screenshot in-repo. Lane-c ladder position 3."
             }
           ]
         },
