@@ -3372,3 +3372,4 @@ Fun verdict POSITIVE ("I enjoy it", reached wave 10). Directives: (1) upgrade ca
 
 ## Art batch-001 integrated 2026-07-03T23:42Z — 6/6 raw+processed+in-game
 All six batch-001 slots (hero-homesteader, enemy-claim-jumper, node-gold-seam, bld-sentry-beacon, terrain-bank-tile, terrain-river-tile) are generated (1254² raw PNGs), processed (1024² game-ready; cutouts alpha-keyed via `scripts/extract-alpha.mjs`, terrain full-bleed), and integrated in-game. Evidence: `assets/LEDGER.md`, `reviews/visual-polish-01-batch001-asset-integration.md`, screenshots in `reviews/shots-visual-polish-01/`. Fallback is covered by a forced failed-image Playwright check. Duplicate raws also sit in ~/Downloads (same filenames) — safe to delete.
+ACTIVE 2026-08-17T10:28Z (s1991 fire) — re-triage owner-gated dry board and factory health
