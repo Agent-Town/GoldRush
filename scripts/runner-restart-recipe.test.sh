@@ -30,6 +30,7 @@ RUNNER="$ROOT/scripts/lane-runner-v3.sh"
 PROCESSES="$ROOT/scripts/runner-processes.sh"
 fails=0
 ok()  { echo "  ok   — $1"; }
+skip() { echo "  SKIP — $1"; }
 bad() { echo "  FAIL — $1"; fails=$((fails+1)); }
 
 scratch="$(mktemp -d "${TMPDIR:-/tmp}/runner-processes.XXXXXX")" || exit 1
@@ -115,6 +116,10 @@ printf '%s\n' \
   '  done' \
   '}' > "$scratch/runner-processes.sh"
 
+if [ ! -t 0 ]; then
+  skip "real helper custody not run: no controlling terminal"
+  skip "substitute-runner custody not run: no controlling terminal"
+else
 /usr/bin/script -q /dev/null /usr/bin/env \
   GOLD_RUSH_ROOT="$ROOT" LANE_RUNNER_PROCESSES_SCRIPT="$scratch/runner-processes.sh" \
   LANE_RUNNER_SCRIPT="$isolated/lane-runner-v3.sh" LANE_RUNNER_LOG="$scratch/control.log" \
@@ -146,6 +151,7 @@ else
 fi
 kill -TERM "$replacement_pid" 2>/dev/null || true
 for _ in {1..20}; do runner_pids | grep -qx "$replacement_pid" || break; sleep 0.1; done
+fi
 
 stop_block=$(sed -n '/^stop_rejected_runner() {/,/^}/p' "$HELPER" | sed -e 's/#.*//' -e '/echo /d')
 if printf '%s\n' "$stop_block" | grep -q 'kill -TERM "$1"' && \
