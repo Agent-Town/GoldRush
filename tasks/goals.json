@@ -2357,8 +2357,8 @@
               "id": "assay-worker-loop",
               "title": "The assayer worker loop - poll assay-queue, replay via the instrument, post exact-match verdicts (slice 2)",
               "taskFile": "assay-worker-loop.md",
-              "status": "planned",
-              "note": "Composes the merged instrument + endpoints. lane-d; queue AFTER assay-replay-fidelity drains. False-VERIFIED is the forbidden green."
+              "status": "queued",
+              "note": "Composes the merged instrument + endpoints. lane-d; queue AFTER assay-replay-fidelity drains. False-VERIFIED is the forbidden green. DISPATCHED to tasks/queue/lane-d 2026-08-15T22:50 (predecessor assay-replay-fidelity merged); leaf left at planned until s2055 corrected it. Gate SATISFIED."
             }
           ]
         }
