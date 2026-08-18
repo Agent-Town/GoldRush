@@ -60,6 +60,10 @@ async function sumFile(path, kind) {
 }
 
 const claudeDir = join(homedir(), '.claude/projects/-Users-robin-Claude-Projects-Gold-Rush');
+// F-2054-2 (s2054): headless fires run under CLAUDE_CONFIG_DIR=~/.claude-fires (launchd), so their
+// transcripts NEVER land in claudeDir — this census claimed to count them (see header) while reading
+// a directory they cannot write to. Measured at filing: claudeDir 9 transcripts, fireDir 2032.
+const fireDir = join(homedir(), '.claude-fires/projects/-Users-robin-Claude-Projects-Gold-Rush');
 const codexDir = join(homedir(), '.codex/sessions');
 const agg = { attended: { in: 0, out: 0, files: 0 }, fires: { in: 0, out: 0, files: 0 }, codexGR: { in: 0, out: 0, files: 0 }, stamped: new Date().toISOString().slice(0, 16) };
 
@@ -68,6 +72,12 @@ for (const f of existsSync(claudeDir) ? walk(claudeDir) : []) {
   const b = t.fire ? agg.fires : agg.attended;
   b.in += t.in; b.out += t.out; b.files++;
 }
+// Everything under fireDir is a fire by construction (launchd owns that config dir), so it is
+// bucketed by ORIGIN rather than by the first-25-lines 'fire.md' sniff, which is a heuristic.
+for (const f of existsSync(fireDir) ? walk(fireDir) : []) {
+  const t = await sumFile(f, 'claude');
+  agg.fires.in += t.in; agg.fires.out += t.out; agg.fires.files++;
+}
 for (const f of existsSync(codexDir) ? walk(codexDir) : []) {
   const t = await sumFile(f, 'codex');
   if (t.gr) { agg.codexGR.in += t.in; agg.codexGR.out += t.out; agg.codexGR.cached = (agg.codexGR.cached||0) + (t.cached||0); agg.codexGR.files++; }
@@ -75,7 +85,7 @@ for (const f of existsSync(codexDir) ? walk(codexDir) : []) {
 writeFileSync(CACHE, JSON.stringify(cache));
 writeFileSync(OUT, JSON.stringify(agg, null, 1));
 const histRow = JSON.stringify({ t: agg.stamped, att_in: agg.attended.in, att_out: agg.attended.out, fire_in: agg.fires.in, fire_out: agg.fires.out, cdx_in: agg.codexGR.in, cdx_out: agg.codexGR.out, cdx_cached: agg.codexGR.cached || 0 });
-try { const prev = existsSync(HISTORY) ? readFileSync(HISTORY,'utf8').trim().split('\n').pop() : ''; if (!prev || JSON.parse(prev).cdx_out !== agg.codexGR.out || JSON.parse(prev).att_out !== agg.attended.out) writeFileSync(HISTORY, (existsSync(HISTORY) ? readFileSync(HISTORY,'utf8') : '') + histRow + '\n'); } catch { writeFileSync(HISTORY, histRow + '\n'); }
+try { const prev = existsSync(HISTORY) ? readFileSync(HISTORY,'utf8').trim().split('\n').pop() : ''; if (!prev || JSON.parse(prev).cdx_out !== agg.codexGR.out || JSON.parse(prev).att_out !== agg.attended.out || JSON.parse(prev).fire_out !== agg.fires.out) writeFileSync(HISTORY, (existsSync(HISTORY) ? readFileSync(HISTORY,'utf8') : '') + histRow + '\n'); } catch { writeFileSync(HISTORY, histRow + '\n'); }
 const M = (n) => (n / 1e6).toFixed(1) + 'M';
 console.log(`CENSUS ${agg.stamped}`);
 console.log(`attended (Fable/Claude): ${agg.attended.files} sessions · in ${M(agg.attended.in)} · out ${M(agg.attended.out)}`);
