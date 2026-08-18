@@ -96,7 +96,7 @@ FIRE_MODEL=${FIRE_MODEL:-claude-opus-5}
 # (model gpt-5.6-sol + xhigh from ~/.codex/config.toml). CLAUDE_CONFIG_DIR stays exported by
 # launchd, so the fire-shell playwright serialization (F-1270-1) holds for either engine.
 # REVERT SATURDAY: set FIRE_ENGINE=claude here or in the plist (the claude path below is intact).
-FIRE_ENGINE=${FIRE_ENGINE:-codex}
+FIRE_ENGINE=${FIRE_ENGINE:-claude}
 if [ "$FIRE_ENGINE" = "codex" ]; then
   # Resolution PROBES, never trusts paths (F-1635-3 dual-install met again 2026-08-12, twice in
   # one hour): launchd's PATH finds an orphaned homebrew 0.133; nvm-v24's wrapper is half-installed
