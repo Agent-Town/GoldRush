@@ -6,7 +6,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 READ FIRST:
 - `AGENTS.md`
-- `scripts/runner-restart-recipe.test.sh` — the subject. Find the discriminator by CONTENT, not by line: `grep -n 'no controlling terminal'` (2 hits — the two SKIP messages) and `grep -n 'if \[ ! -t 0 \]'` (1 hit — the predicate to replace).
+- `scripts/runner-restart-recipe.test.sh` — the subject. Find the discriminator by CONTENT, not by line: `grep -n 'custody not run: no controlling terminal'` (2 hits — the two SKIP messages) and `grep -n 'if \[ ! -t 0 \]'` (1 hit — the predicate to replace). ⚠️ Do NOT grep the bare phrase `no controlling terminal`: it returns **3**, because an unrelated passing assertion at the end of the custody arm also ends in those words. That third hit is a message you must leave alone.
 - `scripts/start-lane-runner.sh` — the helper under test. It is **healthy and must not be modified**.
 - `reviews/f2057-2-restart-guard-tty.md` — the drain that landed the predicate and measured why it is too wide. The four-shape table is the evidence for this task.
 - `artifacts/s2058-restart-guard-stdin-matrix.txt` — the raw transcripts behind that table.
@@ -16,7 +16,7 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): ahead commits already on mai
 
 **CITATION CHECK — run this BEFORE any edit; a wrong count means the lane drifted, so STOP and report:**
 ```
-grep -Fc 'no controlling terminal' scripts/runner-restart-recipe.test.sh                    # expect 2
+grep -Fc 'custody not run: no controlling terminal' scripts/runner-restart-recipe.test.sh   # expect 2 (the bare phrase returns 3 — see READ FIRST)
 grep -Fc '/usr/bin/script -q /dev/null /usr/bin/env' scripts/runner-restart-recipe.test.sh  # expect 2
 grep -Fc 'real helper custody failed: pid=' scripts/runner-restart-recipe.test.sh           # expect 1
 ```
