@@ -116,9 +116,15 @@ printf '%s\n' \
   '  done' \
   '}' > "$scratch/runner-processes.sh"
 
-if [ ! -t 0 ]; then
-  skip "real helper custody not run: no controlling terminal"
-  skip "substitute-runner custody not run: no controlling terminal"
+script_probe_out="$scratch/script-probe.out"
+/usr/bin/script -q /dev/null /usr/bin/true > "$script_probe_out" 2>&1
+script_probe_rc=$?
+script_probe_text=$(cat "$script_probe_out")
+if [ "$script_probe_rc" -ne 0 ]; then
+  script_probe_reason="/usr/bin/script is unusable in this shell (rc=$script_probe_rc)"
+  [ -z "$script_probe_text" ] || script_probe_reason="$script_probe_reason: $script_probe_text"
+  skip "real helper custody not run: $script_probe_reason"
+  skip "substitute-runner custody not run: $script_probe_reason"
 else
 /usr/bin/script -q /dev/null /usr/bin/env \
   GOLD_RUSH_ROOT="$ROOT" LANE_RUNNER_PROCESSES_SCRIPT="$scratch/runner-processes.sh" \
