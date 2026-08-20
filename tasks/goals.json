@@ -1370,8 +1370,10 @@
               "id": "b4-picnic-three-stake-hold",
               "title": "B4 Picnic: three-stake hold consumer + anchors -> door-ready (owner-ruled B-wave build)",
               "taskFile": "b4-picnic-three-stake-hold.md",
-              "status": "planned",
-              "note": "Ratified door-completion-sheet B4 (owner 2026-08-20: build, queue after A-wave; codex subscription reset -> B-wave rides lanes now). lane-b."
+              "status": "blocked",
+              "blockClass": "owner-fork",
+              "blockedReason": "F-2085-1: runner STOPPED per Law 2 (run 20260820-131454). The hold objective is unreachable BY CONSTRUCTION: all three sandwich stakes are heroStart:true, the hero spawns at the first marker (sandwich-west), enemies target the hero and so never enter the center/east discs, and the hero's own body permanently contests west. No stake can be claimed, so idle e6-picnic-01 FALSELY SECURES at wave 20 (fnv1a32:04391e7c) where it must lose. Prover half is fine (seed 01 wave 12 fnv1a32:e66807f6, seed 02 wave 10 fnv1a32:da62f7b9). Needs an OWNER ruling on enemy-to-stake assignment for heroStart:true multi-stake maps; no fire may author a routing design fork. Entangled with F-CAP-2 (pool recycle) per F-2085-2. lane/b HOLDS the WIP - do NOT refill or reset that lane.",
+              "note": "Ratified door-completion-sheet B4 (owner 2026-08-20: build, queue after A-wave; codex subscription reset -> B-wave rides lanes now). lane-b. s2085: drain attempted, verdict HOLD - NOT merged; see reviews/b4-picnic-three-stake-hold.md."
             },
             {
               "id": "showroom-cap-fix",
