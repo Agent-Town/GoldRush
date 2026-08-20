@@ -4,15 +4,22 @@ import { expect, test, type Page } from '@playwright/test';
  * A8 — THE SEED RUN, in the browser (`specs/agent-play/door-completion-sheet.md:22`, RATIFIED
  * 2026-08-20). Three claims, in the order a player meets them:
  *
- *   1. PLAIN BOOT (no `?debug`, Mistake #10): the Seed Run is a real map with a real caravan on
- *      it. The briefing names it, the train stands in the yard the contract starts it in, the
- *      three planting grounds are where the contract says they are — and nothing is written to a
- *      profile by merely arriving (Mistake #7).
+ *   1. THE REACH (no `?debug`, Mistake #10): what a real player gets today is The Claim, because
+ *      the Seed Run's board row sits behind `secured:e9-dome-basin`. Measured here rather than
+ *      assumed, together with the fact that the consumer is correctly ABSENT off its contract and
+ *      that nothing is written to a profile by trying (Mistake #7).
  *   2. THE TRADE: standing at a stake while the train stands at the same ground, the ordinary
  *      confirm key plants a vault. The guard drops by the ratified quarter, and NOTHING is
  *      persisted mid-run.
  *   3. THE PERSISTENCE LAW: the write lands at run END and takes effect at the NEXT tile birth —
- *      a permanent no-spawn green, on this profile, on this map, for every run after.
+ *      a permanent no-spawn green, on this profile, on this map, for every run after — plus the
+ *      crossing itself, and the authored shape of the road it walks.
+ *
+ * WHY (2) AND (3) CARRY `?debug` AND (1) DOES NOT. The debug flag here buys the SIM CLOCK
+ * (`setManualSim`/`advanceSim`), not the mechanic: the plant runs through `confirmAction`, the
+ * same ungated context-action chain that funds a megaproject, and the caravan ticks in the
+ * ordinary update. What no flag can buy is a locked board row, which is why (1) measures the
+ * refusal instead of pretending past it.
  *
  * THIS IS WHERE A8's PERSISTENCE IS PROVEN AT ALL. `HeadlessContractSim` deliberately hands the
  * caravan a fresh EMPTY tile store so no bench run can inherit a plant, so the headless engine
@@ -22,8 +29,7 @@ import { expect, test, type Page } from '@playwright/test';
  * plants the BARE `green-waypoint` entry id, while this map plants `green-waypoint:<ground>`.
  */
 
-const QUERY = '/?contract=e9-seed-run&nolevel&nopause&seed=sr01';
-const DEBUG_QUERY = `${QUERY}&debug`;
+const DEBUG_QUERY = '/?contract=e9-seed-run&nolevel&nopause&seed=sr01&debug';
 const CONTRACT_ID = 'e9-seed-run';
 const CENTER_GROUND = 'plant-center-waypoint';
 const CENTER_STAKE = { x: 0, z: 3 };
@@ -105,41 +111,26 @@ async function pressConfirm(page: Page): Promise<void> {
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.2));
 }
 
-test('a plain boot puts a real caravan on a real road — no debug, no profile write', async ({ page }) => {
+test('the board refuses the Seed Run until Dome Basin is secured — the reach, measured', async ({ page }) => {
   const errors = collectErrors(page);
-  await page.goto(QUERY);
-  await waitForBoot(page, false);
+  // NO `?debug` ANYWHERE HERE, which is the point: this is what a real player gets today.
+  //
+  // `reverifyStagedContractLaunch` (`ContractUnlock.ts:77`) clears a staged launch whose contract
+  // is locked, and the Seed Run's row is `unlock: "secured:e9-dome-basin"`. So the honest answer
+  // to "where does the PLAYER see this in a plain boot?" (Mistake #10) has two halves, and this is
+  // the half that is true right now: the row is BEHIND Dome Basin, and a launch aimed at it lands
+  // back on The Claim. Dome Basin is itself admitted and playable, so the gate is a progression
+  // step rather than a dead end — filed as F-A8-5 with its own measurement rather than asserted.
+  await page.addInitScript(() => sessionStorage.setItem('gr.contract.launch.v1', 'e9-seed-run'));
+  await page.goto('/?contract=e9-seed-run&nolevel&nopause&seed=sr01');
+  await page.waitForFunction(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId));
 
-  // WHERE THE PLAYER SEES IT: the briefing card the boot itself raised names this contract.
-  await expect(page.getByTestId('contract-briefing-name')).toContainText(/Seed Run/i);
-
-  const state = await caravan(page);
-  expect(state).toMatchObject({
-    declared: true,
-    state: 'moving',
-    hp: CARAVAN_MAX_HP,
-    maxHp: CARAVAN_MAX_HP,
-    arrived: false,
-    atGround: null,
-    plantedBefore: [],
-    plantedThisRun: [],
-  });
-  // The train has a PLACE, and it is the yard the contract starts it in.
-  expect(state!.position).toEqual({ x: 0, z: -48 });
-  // The route is the five authored buildZone centres, in authored order — the same five points
-  // the mask table publishes as `caravanRoute` and `scripts/e3-mask-tables.test.mjs:352` pins.
-  expect(state!.route).toEqual([
-    { x: 0, z: -48 }, { x: -34, z: -21 }, { x: 0, z: 3 }, { x: 34, z: 27 }, { x: 0, z: 48 },
-  ]);
-  expect(state!.grounds.map(({ id, zoneId }) => `${id}/${zoneId}`)).toEqual([
-    'plant-west-waypoint/west-green-waypoint',
-    'plant-center-waypoint/center-green-waypoint',
-    'plant-east-waypoint/east-green-waypoint',
-  ]);
-
-  // Nothing is written on boot (Mistake #7): a run that plants nothing persists nothing.
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe('the-claim');
+  await expect(page.getByTestId('contract-briefing-name')).toHaveText('The Claim');
+  // The consumer is correctly ABSENT where the contract is: no twist, no caravan, no leaked field.
+  expect(await caravan(page)).toBeNull();
+  // And nothing was written to a profile by trying (Mistake #7).
   expect(await tileStateSnapshot(page)).toBeNull();
-  expect(await persistence(page)).toMatchObject({ contractId: CONTRACT_ID, entries: 0, noSpawnZones: [] });
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
@@ -222,6 +213,19 @@ test('the caravan reaching the basin is what latches the objective', async ({ pa
   await advanceUntil(page, (state) => state.arrived);
   const landed = await caravan(page);
   expect(landed).toMatchObject({ state: 'arrived', arrived: true, progress: 1, atGround: null });
+  // THE SHAPE OF THE THING, asserted where the map actually boots. The route is the five authored
+  // buildZone centres in authored order - the same five points the mask table publishes as
+  // `caravanRoute` and `scripts/e3-mask-tables.test.mjs:352` already pins - and the grounds are the
+  // three authored stakes matched to the zones that contain them. Nothing here is a constant in
+  // the consumer; all of it is contract data read back out.
+  expect(landed!.route).toEqual([
+    { x: 0, z: -48 }, { x: -34, z: -21 }, { x: 0, z: 3 }, { x: 34, z: 27 }, { x: 0, z: 48 },
+  ]);
+  expect(landed!.grounds.map(({ id, zoneId }) => `${id}/${zoneId}`)).toEqual([
+    'plant-west-waypoint/west-green-waypoint',
+    'plant-center-waypoint/center-green-waypoint',
+    'plant-east-waypoint/east-green-waypoint',
+  ]);
   expect(landed!.position).toEqual({ x: 0, z: 48 });
   // Arriving with no plant costs nothing: an empty road takes nothing off the guard.
   expect(landed!.maxHp).toBe(CARAVAN_MAX_HP);
