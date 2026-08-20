@@ -287,15 +287,14 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       munitionCapacity: Balance.e5Arsenal.depthChargeMunition.capacity,
       sealedInDiveZone: true,
     }));
-    // NOT sourced to `tileParams.deepwater.wrecks`: raw data is not a mechanic. The wreck field
-    // is only meaningful through the consumer that anchors on it, and that consumer cannot exist
-    // outside a browser — so the row names the gap instead of dressing the data up as coverage.
-    rules.push(rule('deepwater_boss_socket_absent', 'DredgeQueenBossSystem', {
+    // NOT sourced to `tileParams.deepwater.wrecks`: raw data is not a mechanic. Vocabulary comes
+    // from the consumer that anchors on the wreck field, including its headless boss lifecycle.
+    rules.push(rule('deepwater_boss_socket', 'DredgeQueenBossSystem', {
       wreckSites: deepwater.wrecks.length,
       eras: deepwater.wrecks.map(({ era }) => era).sort(),
       bossWave: twist.baron?.wave ?? 0,
-      blocker: 'labelSprite/counterSprite call document.createElement from instance field initializers',
-      consequence: 'the contract has no reachable secure condition headlessly',
+      constructsHeadlessly: true,
+      secureConditionReachable: true,
     }));
     // The manifest must not imply an agent can work the boat: `AgentGameAdapter` carries
     // BUILD/PAN/REPAIR only. The levers exist on the consumer and not on the agent surface.
