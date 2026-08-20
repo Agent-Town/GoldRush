@@ -502,6 +502,8 @@ interface ThreeGameDiagnostics {
   e9Arsenal: import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
   e9Canal: import('./systems/E9CanalSystem').E9CanalDiagnostics;
   seedCaravan: import('./systems/SeedCaravanSystem').SeedCaravanDiagnostics | null;
+  /** A5: null on every contract that declares no discharge-able interference front. */
+  interferenceFront: import('./systems/InterferenceFrontSystem').InterferenceFrontDiagnostics | null;
   e10Finale: import('./systems/E10FinaleSystem').E10FinaleDiagnostics;
   e10Static: import('./systems/E10StaticBossSystem').E10StaticBossDiagnostics;
   e7Signal: import('./systems/E7SignalSystem').E7SignalDiagnostics;

@@ -88,7 +88,13 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ⚠️ SIXTH STACK (the A3 drain): the Flotilla layer above landed on main while A3 built, so both
   // sides of this merge again wrote identical-looking pins from different stacks. Pins below =
   // the SEXTUPLE-stacked merged tree's own regen output, verbatim, as every layer before.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 8);
+  // A5 (2026-08-20, `e7-relay-rush`) moves this one again, by the same one: an authored
+  // `harvestAnchors` list turns a `not-offered` contract into a measured one, whether or not the
+  // door then admits it. 10 -> 9, attributed by the same revert-and-reproduce recorded below.
+  // ⚠️ SEVENTH STACK (the A5 drain, same window as the sixth): relay-rush anchors take one more
+  // not-offered row while its exemption row (below) holds the headless door shut. Pins = the
+  // SEPTUPLE-stacked merged tree's own regen output, verbatim, as every layer before.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 7);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and none of the empty-data admissions was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -174,9 +180,42 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // context action appears in no contract's player menu to be compared against.
   // (A8 pins above were measured on its own pre-stack base; the pins below are the QUINTUPLE-stacked
   // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run + Flotilla — verbatim.
-  // The Flotilla adds no exemption, so the count stays at A8's 6; only the parity block moves.)
-  assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 422, equal: 938, 'not-offered': 8 });
+  // The Flotilla adds no exemption, so the count stayed at A8's 6 through that layer; the live
+  // pins now sit at the END of this block, after the A5 layer below.)
+  // DATA MOVE + EXEMPTION MOVE IN ONE SLICE (2026-08-20, `e7-relay-rush` A5 the interference
+  // front) — the SECOND instance of A8's shape directly above, and attributed the same way: two
+  // independent moves that happen to land together, so they are measured apart.
+  //
+  // (1) THE ANCHORS. Relay Rush's four `harvestAnchors` were authored, so it left the door's own
+  //     `harvestAnchors?.length !== 0` filter and became a measurable contract. That is the whole
+  //     parity movement: 402 -> 412 agent-lacks, 878 -> 908 equal, 10 -> 9 not-offered,
+  //     1290 -> 1329 rows — the SAME +10/+30/-1/+39 shape the Far Side and Low Orbit anchor moves
+  //     recorded, which is what a plain E7-ridge tile with no extra buildable kinds should cost.
+  // (2) THE EXEMPTION. Like the Seed Run and unlike A4's Dead Band, Relay Rush does not secure —
+  //     the best measured public-verb play terminated at wave 4 (seed 01) and wave 3 (seed 02)
+  //     against secureWave 20 — so it enters `CONTRACT_ADMISSION_EXEMPTIONS` (6 -> 7) rather than
+  //     the door. Worth exactly 21 rows flipping `equal` -> `agent-lacks` (412/908 -> 433/887),
+  //     the same 21-per-contract shape the Seed Run, glow-mesa and deepwater moves recorded.
+  //
+  // BOTH ATTRIBUTED BY REVERT-AND-REPRODUCE, not guessed, in three runs on this branch:
+  //   anchors + exemption (the shipped tree)  -> 0/433/887/9 over 1329 rows, 7 exemptions
+  //   anchors, exemption row removed          -> 0/412/908/9 over 1329 rows, 6 exemptions
+  //   anchors emptied, exemption row removed  -> 0/402/878/10 over 1290 rows, 6 exemptions
+  // The third run reproduced the pins below EXACTLY, with every other line of the slice still in
+  // place — the `InterferenceFrontSystem` consumer, both engines' objective latches, the
+  // `interference_front` manifest rule, the browser's band and its playbook/drone gates.
+  //
+  // SO THE CONSUMER MOVES NOTHING HERE, MEASURED RATHER THAN ASSUMED, and that is the expected
+  // shape for the third time: this audit's rows are buildable/ability/choice/verb/economy
+  // surfaces read PER CONTRACT, and `interference_front` is a mechanics RULE, which is not one of
+  // them (the A4 and A8 notes above found the same). A5 adds no standing-order verb at all — the
+  // mute rides `BuildSystem.isShooterPowered` and the existing playbook/drone gates — so there is
+  // no verb row for it to add either.
+  // (A5 pins above were measured on its own pre-stack base; the pins below are this branch's regen
+  // output verbatim. The attended drain re-measures the stack at merge — A3 echo-canyon is being
+  // built concurrently and would stack on top of these numbers.)
+  assert.equal(audit.admission.exemptions.length, 7);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 453, equal: 947, 'not-offered': 7 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

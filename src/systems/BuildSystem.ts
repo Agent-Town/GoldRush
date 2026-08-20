@@ -2134,7 +2134,15 @@ export class BuildSystem {
     const handle: ShooterHandle = {
       id: 'beacons',
       resumeKey: `building:sentry_beacon:${placed}`,
-      enabled: () => !this.suspendedBuildings.has(`sentry_beacon:${placed}`),
+      // A5: the beacon now consults `isShooterPowered` exactly as the turret below always has.
+      // The predicate's own signature has declared `'sentry_beacon' | 'turret'` since it was
+      // introduced, so this wires the half that was declared and never connected — and every
+      // existing caller is unchanged by it, because the browser's power closure answers
+      // `id !== 'turret' || powerConsumerAt(...)`, i.e. TRUE for every beacon (`Game.ts:1401`).
+      // What it buys is one seam for "this building's output is off right now" that both the
+      // power grid and the interference front can stand behind.
+      enabled: () => !this.suspendedBuildings.has(`sentry_beacon:${placed}`)
+        && this.isShooterPowered('sentry_beacon', placed, this.beacons.allPositions[placed] ?? this.ghostPos),
       getPos: () => this.shooterPos.copy(this.beacons.allPositions[placed] ?? this.ghostPos),
       range: Balance.beacon.range,
       cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),

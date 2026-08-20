@@ -58,6 +58,7 @@ import { CrowdFlockSystem, type CrowdFlockDiagnostics } from '../systems/CrowdFl
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
+import { InterferenceFrontSystem, type InterferenceFrontDiagnostics } from '../systems/InterferenceFrontSystem';
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -119,6 +120,34 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   'e6-showroom': {
     reason: 'Aimed CAPTURE closes the loop and the alive cap no longer clogs, but no secure is demonstrated: competent play dies at waves 14-19 against secureWave 20, and difficulty stands per the owner (2026-08-20). Idle still false-greens at wave 20 — exhausted machines released their spawn slot but still hold an enemy-POOL slot, so all 96 fill with harmless statues and nothing further can spawn.',
     citation: 'reviews/e6-showroom-cap-fix.md',
+  },
+  // A5 BUILT THE MECHANIC, DISCHARGED ITS OBJECTIVE, AND THE MAP STILL WON (2026-08-20,
+  // door-completion-sheet §A5). Second instance of the A8 shape, and the closest reading of it.
+  //
+  // THE CONSUMER IS NOT THE GAP AND THE OBJECTIVE IS NOT THE GAP EITHER — this row exists to say
+  // both. `e7-relay-rush`'s interference front, its mute, its relay lighting and its deadline
+  // latch are live in BOTH engines (`src/systems/InterferenceFrontSystem.ts`, proven in the
+  // browser and headless by `e2e/e7-relay-rush-front.spec.ts`). The ratified objective is
+  // discharge-able and was in fact PART-DISCHARGED in ordinary play before the hero fell: the
+  // public-verb prover lit three of the four relay sites by t=131.6s on seed 01 and two by t=90s
+  // on seed 02, against a deadline of t=270s. The wall's whole interference across both runs was
+  // 120 and 60 muted work-steps — four and two seconds of beacon time — so it is not what ends
+  // them either.
+  //
+  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry, exactly as it was for the
+  // Seed Run below. The claim stands at (0,12). The ONLY buildable ground on this tile is the
+  // four 10x10 relay boxes at z 36..46 — twenty-four world units north of the hero — against a
+  // turret range of 16 and a beacon range of 8, on a heightfield authored `mode: "visual"` so no
+  // high-ground range bonus applies (`TileHeight.highGroundRange` early-returns without an
+  // `elevation` block). There is NO legal placement that defends the body the run is scored on,
+  // and `HeadlessContractSim` drives slot 0 on IDLE_INTENTS, so the hero cannot walk to the guns.
+  //
+  // Measured across four policies (`artifacts/e7-relay-rush/`, preserved with its battery):
+  // objective-first, turret-first, all-turret and hero-only all terminate at wave 3 or 4 of 20,
+  // and the idle floor terminates at wave 2 — the whole spread is four waves wide.
+  'e7-relay-rush': {
+    reason: 'Best measured public-verb play terminated unsecured at wave 4 (seed 01) and wave 3 (seed 02) against secureWave 20 (fnv1a32:49f11d65 / fnv1a32:7fed3db1, each repeated identical). The front is not the obstacle: the ratified objective is discharge-able and the prover lit 3 of 4 relays by t=131.6s against a t=270s deadline, while the wall muted only 120 work-steps all run. The map is: the claim at (0,12) has NO buildable ground within 24wu, the four relay boxes are the only build zones on the tile, turret range is 16 and beacon range 8, and the visual-mode heightfield grants no high-ground reach — so no legal placement can defend the hero. The A5 front, mute, relay lighting and deadline latch are live in both engines; re-admit when both bench seeds secure.',
+    citation: 'reviews/e7-relay-rush.md',
   },
   // A8 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-20, door-completion-sheet §A8).
   //
@@ -266,6 +295,13 @@ export type HeadlessAgentView = AgentView & {
      * are how a rider knows whether to escort, to plant, or to give up on the crossing.
      */
     seedCaravan?: SeedCaravanDiagnostics;
+    /**
+     * A5. Present only where the contract declares `twist.interferenceFront` WITH a corridor and
+     * relay sites. This one IS the objective: `objectiveMet` is what opens the secure, and
+     * `phase`/`centerX`/`secondsToNextFront`/`sites` are how a rider knows whether to build, to
+     * wait out the wall, or to accept that the deadline is gone.
+     */
+    interferenceFront?: InterferenceFrontDiagnostics;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -471,6 +507,24 @@ export class HeadlessContractSim {
    * ground, which is exactly the isolation the floors need to mean anything.
    */
   private readonly seedCaravan: SeedCaravanSystem | null;
+  /**
+   * A5 — THE INTERFERENCE FRONT, and it is a REAL switch in this engine rather than a
+   * by-construction shadow like its A4 neighbour above.
+   *
+   * The wall's mute reaches the shooter seam both engines share: `BuildSystem` registers every
+   * turret and beacon with `CombatSystem`, and `isShooterPowered` (the twelfth constructor
+   * argument, injected below) is consulted before a shooter is allowed to fire. So a covered
+   * turret stops firing HERE for exactly as long as it stops firing in the browser, and starts
+   * again when the wall passes. Nothing takes damage: `muted != damaged` is ratified, and no
+   * line in this seam touches hp.
+   *
+   * The verb half is honest about its reach, in A4's manner: this engine has no drone slot
+   * (one `Hero`) and `src/agent/` carries no playbook verb, so `refuse('drones'|'playbooks')`
+   * has nothing to refuse here and its counters stay zero. The browser calls those two at its
+   * own gates. What is IDENTICAL across both engines is the schedule, the mute geometry, the
+   * relay lighting and the objective latch — the four things a secure depends on.
+   */
+  private readonly interferenceFront: InterferenceFrontSystem;
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -571,6 +625,9 @@ export class HeadlessContractSim {
     // A8: same read the browser performs at `Game.ts` — the contract's own twist and its own
     // authored zones/stakes. A fresh empty store per sim, so runs never inherit each other's greens.
     this.seedCaravan = SeedCaravanSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
+    // A5: same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. Built
+    // before `BuildSystem` below, which injects its mute into the shooter seam.
+    this.interferenceFront = InterferenceFrontSystem.create(this.manifest);
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -610,6 +667,14 @@ export class HeadlessContractSim {
       undefined,
       undefined,
       (id) => offeredBuildables.has(id),
+      undefined,
+      // A5 — THE MUTE, AT THE ONLY SEAM THAT CAN CARRY IT IN BOTH ENGINES. `isShooterPowered` is
+      // the browser's own per-shooter gate (`Game.ts:1401` answers it from the power grid); this
+      // sim declares no power grid on any contract, so until now it passed the default `() => true`.
+      // Now it answers the front: a turret or beacon standing under the wall is unpowered while
+      // the wall is over it, and powered again the moment it passes. Every contract that declares
+      // no front gets `muted() === false` and therefore the identical answer it always got.
+      (_id, _index, position) => !this.interferenceFront.muted(position.x, position.z),
     );
     for (const fixture of this.manifest.tileParams.prePlacedBuildables ?? []) {
       this.build.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
@@ -885,6 +950,11 @@ export class HeadlessContractSim {
           // canyon latch keys on `powerGrid.connect`. A Seed Run that never lands its train
           // cannot secure at any wave; a train that arrives opens the ordinary secure wave.
           || (this.seedCaravan && !this.seedCaravan.objectiveComplete)
+          // A5: the relay-rush deadline, keyed on the SUB-FIELDS exactly as the canyon latch keys
+          // on `powerGrid.connect` (F-1471-1). `InterferenceFrontSystem.create` refuses to arm
+          // without both a corridor and relay sites, so `objectiveAllowsSecure` is true on every
+          // contract that declares no discharge-able front and no admitted terminal moves.
+          || !this.interferenceFront.objectiveAllowsSecure
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -1013,6 +1083,11 @@ export class HeadlessContractSim {
         // facts — a claim won while three lobs were still in orbit is not the same run as one
         // won with none, and the hash should be able to say so.
         ...(this.lowOrbit.isDeclared ? { lowOrbit: this.lowOrbit.diagnostics } : {}),
+        // A5: spread-if-declared for the same reason — ABSENT on every contract that is not
+        // relay rush, so no pinned hash moves. Included because the deadline is the terminal fact
+        // that certifies the secure: a run that met it with three relays lit is not the same run
+        // as one that met it with four, and one that missed it could not have secured at all.
+        ...(this.interferenceFront.isDeclared ? { interferenceFront: this.interferenceFront.diagnostics } : {}),
       },
     });
     return { ...base, eventLogHash, ...overtime };
@@ -1180,6 +1255,10 @@ export class HeadlessContractSim {
     // enemy integration step). Reading the pool here means contact damage is resolved against
     // the positions the previous tick left, identically in both engines.
     this.seedCaravan?.update(STEP_SECONDS, this.enemies.all);
+    // A5: the wall advances beside the other objective syncs and on the SAME fixed step, so the
+    // schedule is a function of sim time alone. It reads the board's standing works from the
+    // targeting register (the same list the browser hands it) to decide which relays are lit.
+    this.interferenceFront.update(STEP_SECONDS, this.targeting.allBuildings);
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
     this.enemies.update(STEP_SECONDS, this.deepwater?.targetPosition(this.hero.group.position) ?? this.hero.group.position, (enemy) => {
@@ -1264,6 +1343,10 @@ export class HeadlessContractSim {
     // that cannot read it cannot escort — so it carries the live guard, the dwell clock and the
     // latch, and the grounds/route it needs to walk to a stake.
     if (this.seedCaravan) view.now.seedCaravan = this.seedCaravan.diagnostics;
+    // A5: only where DECLARED. Like the caravan's row this one MOVES every turn — the wall's
+    // position, the countdown to the next front, and the per-site lit/muted pair a rider needs to
+    // decide where to spend the next 25 gold before the deadline closes.
+    if (this.interferenceFront.isDeclared) view.now.interferenceFront = this.interferenceFront.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1434,7 +1517,9 @@ export class HeadlessContractSim {
       // here keeps the two secure paths from disagreeing the way F-1471-1 did.
       && this.probeRecovery.objectiveAllowsSecure
       // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
-      && (!this.seedCaravan || this.seedCaravan.objectiveComplete);
+      && (!this.seedCaravan || this.seedCaravan.objectiveComplete)
+      // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
+      && this.interferenceFront.objectiveAllowsSecure;
     const runWave = this.currentRunWave();
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen'
       && runWave < (this.manifest.twist.secureWave ?? Balance.run.secureWave);
@@ -1607,6 +1692,10 @@ export class HeadlessContractSim {
       probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
       lowOrbit: this.lowOrbit.isDeclared ? this.lowOrbit.diagnostics : null,
       seedCaravan: this.seedCaravan?.simulationSnapshot ?? null,
+      // A5: null off relay rush, exactly like its neighbours, so no other contract's diagnostics
+      // grow a field. The terminal half of the same object also rides the determinism hash
+      // (`outcome()` below) — this row is the per-turn read.
+      interferenceFront: this.interferenceFront.isDeclared ? this.interferenceFront.diagnostics : null,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,

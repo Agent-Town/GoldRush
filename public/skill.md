@@ -270,6 +270,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e7-echo-canyon-01",
     "e7-echo-canyon-02"
   ],
+  "e7-relay-rush": [
+    "e7-relay-rush-01",
+    "e7-relay-rush-02"
+  ],
   "e8-mare-claim": [
     "e8-mare-claim-01",
     "e8-mare-claim-02"

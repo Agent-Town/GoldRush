@@ -13,17 +13,38 @@ import signal from '../assets/contracts/epoch-7-signal/contracts.json' with { ty
  * (`specs/agent-play/door-completion-sheet.md:12`) and through the same door: four authored
  * `harvestAnchors`, its own bench seeds, and a public-verb prover that secured both seeds at
  * wave 20 twice each (`artifacts/e7-echo-canyon/`, `fnv1a32:7d877de5` / `fnv1a32:0a267a0b`)
- * while the idle floors stayed lost at wave 4 (Law 2). Relay Rush is unchanged and still
- * refused, so every assertion below stays keyed per id rather than shared — the E6 census's
- * shape.
+ * while the idle floors stayed lost at wave 4 (Law 2).
+ *
+ * RELAY RUSH MOVED HALFWAY, 2026-08-20, and its row is the reason this file's per-id shape earns
+ * its keep. A5 built the interference front (`src/systems/InterferenceFrontSystem.ts`), authored
+ * the map's four `harvestAnchors` and minted its bench seeds — so the BROWSER now resolves it and
+ * its manifest grows an `interference_front` rule — but the best measured public-verb play
+ * terminates unsecured at wave 4 of 20, so the HEADLESS door refuses it through a cited
+ * `CONTRACT_ADMISSION_EXEMPTIONS` row (`reviews/e7-relay-rush.md`). Seeded, resolved, and still
+ * refused: three different answers for one contract, which is exactly why nothing here is shared.
  */
 const ADMITTED = new Set(['e7-relay-valley', 'e7-dead-band', 'e7-echo-canyon']);
+
+/**
+ * A5, AND IT IS THE ONE ROW THAT NEEDED A THIRD CASE. `e7-relay-rush` now carries authored
+ * `harvestAnchors` and minted bench seeds — so it left the empty-data filter — but its best
+ * measured public-verb play terminates unsecured at wave 4 of 20, so it entered
+ * `CONTRACT_ADMISSION_EXEMPTIONS` instead of the door (`reviews/e7-relay-rush.md`). SEEDED and
+ * REFUSED at the same time, which no earlier E7 row was: it still throws on construction like
+ * Echo Canyon, and it still owns a seed set like the Dead Band.
+ */
+const EXEMPT_WITH_SEEDS = new Set(['e7-relay-rush']);
 
 const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
   'e7-relay-valley': 'e7-relay-valley',
   'e7-echo-canyon': 'e7-echo-canyon',
   'e7-dead-band': 'e7-dead-band',
-  'e7-relay-rush': 'the-claim',
+  // A5: authored anchors moved this one out of `activeContractSelection`'s
+  // `harvestAnchors?.length === 0` -> 'unavailable-contract' branch (`ContractFamilies.ts:1329`),
+  // so a `?debug&contract=` boot now resolves the map itself instead of falling back to The Claim.
+  // The BROWSER door and the HEADLESS door are separate gates and this proves they are: the same
+  // contract resolves here and is refused by `HeadlessContractSim` below.
+  'e7-relay-rush': 'e7-relay-rush',
 };
 
 /**
@@ -64,7 +85,9 @@ const EXPECTED_RULES: Record<string, string[]> = {
   'e7-relay-valley': ['build_zones'],
   'e7-echo-canyon': ['broadcast_mirror', 'build_zones'],
   'e7-dead-band': ['build_zones', 'signal_suppression'],
-  'e7-relay-rush': ['build_zones'],
+  // A5: sourced FROM `InterferenceFrontSystem`, so the row cannot promise a deadline the run
+  // does not enforce. Relay Rush is the only Signal contract that declares the front.
+  'e7-relay-rush': ['build_zones', 'interference_front'],
 };
 
 for (const contract of signal.contracts) {
@@ -95,7 +118,10 @@ for (const contract of signal.contracts) {
       const dependency = EXPECTED_DEPENDENCY[contract.id];
       const admitted = ADMITTED.has(contract.id);
 
-      if (admitted) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
+      // A5 splits what used to be one question into two: a seed set is minted by AUTHORING the
+      // map's data, while admission is decided by whether it can be WON. Relay Rush has the first
+      // and not the second.
+      if (admitted || EXEMPT_WITH_SEEDS.has(contract.id)) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
       else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
       expect(mechanics).toMatchObject({ interactables: [], modes: [] });
       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
@@ -235,6 +261,36 @@ for (const contract of signal.contracts) {
           const view = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] }).currentTurn().view;
           expect(view.now.broadcastMirror).toBeUndefined();
         }
+      }
+      // A5 — THE INTERFERENCE FRONT, ASSERTED BIDIRECTIONALLY for the same reason A4's row is:
+      // Relay Rush is the one Signal contract that carries `twist.interferenceFront`, so it is
+      // the one whose manifest grows an `interference_front` rule, and the field must not leak
+      // onto a contract that never asked for it. The run itself is measured through the DECLARED
+      // `admissionProbe` seam (`artifacts/e7-relay-rush/prover.mjs`), never here — this census
+      // asserts the refusal, which is the truth the exemption records.
+      if (contract.id === 'e7-relay-rush') {
+        const { InterferenceFrontSystem } = await vite.ssrLoadModule('/src/systems/InterferenceFrontSystem.ts');
+        const consumer = InterferenceFrontSystem.create(contract);
+        expect(consumer.isDeclared).toBe(true);
+        // The placeholder `"N"` resolved to the sheet's ratified 3 of 4 (A5 DEFAULTS).
+        expect(consumer.relayTarget).toBe(3);
+        expect(consumer.deadlineFront).toBe(3);
+        expect(consumer.objectiveAllowsSecure).toBe(false);
+        expect(consumer.diagnostics.sites.map(({ id }: { id: string }) => id))
+          .toEqual(['relay-site-r1', 'relay-site-r2', 'relay-site-r3', 'relay-site-r4']);
+        const rule = mechanics.rules.find(({ id }: { id: string }) => id === 'interference_front');
+        // Sourced FROM the consumer: the manifest row and the gate cannot disagree.
+        expect(rule.source).toBe('InterferenceFrontSystem.refuse');
+        expect(rule.data.relayTarget).toBe(consumer.relayTarget);
+        expect(rule.data.cadenceSeconds).toBe(90);
+        expect(rule.data.crossingSeconds).toBe(20);
+        // The door DATA is authored even though the door itself refuses: four anchors, so the
+        // map is playable, and a cited exemption, so the refusal is a measurement not a gap.
+        expect(contract.tileParams.harvestAnchors).toHaveLength(4);
+        const { CONTRACT_ADMISSION_EXEMPTIONS } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+        expect(CONTRACT_ADMISSION_EXEMPTIONS['e7-relay-rush'].citation).toBe('reviews/e7-relay-rush.md');
+      } else {
+        expect(mechanics.rules.some(({ id }: { id: string }) => id === 'interference_front')).toBe(false);
       }
       expect(consoleErrors).toEqual([]);
     } finally {
