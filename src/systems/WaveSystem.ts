@@ -167,6 +167,18 @@ export class WaveSystem {
      * below is one rule, not two implementations. Zero for every contract outside E6.
      */
     private readonly capExemptCount: () => number = () => 0,
+    /**
+     * A3 (door-completion-sheet §A3, RATIFIED 2026-08-20): the mirrored squads a contract's
+     * broadcast mirror fields at the START of a wave. Called EXACTLY ONCE per new wave, from
+     * `spawnDuePulses` below, and both engines seat the SAME reader (`Game.ts` and
+     * `HeadlessContractSim.ts` each hand `BroadcastMirror.fieldMirrors`), so the rule is one
+     * implementation rather than two. Empty on every contract that declares no mirror — which
+     * is every contract but `e7-echo-canyon` — so no other run's spawn stream moves by a byte.
+     *
+     * Typed in this file's own `SpawnPackOptions` on purpose: the consumer must not import this
+     * module as a VALUE (F-A8-7), so the currency travels one way, by type only.
+     */
+    private readonly mirrorSquadsForWave: (wave: number) => readonly { count: number; options: SpawnPackOptions }[] = () => [],
   ) {
     this.nextWaveAt = this.waveInterval();
     this.nextPlanWaveAt = this.nextWaveAt;
@@ -533,11 +545,32 @@ export class WaveSystem {
       }
 
       if (startedNewWave) {
+        this.spawnMirrorSquads(pulse.wave);
         this.spawnBaronWave(pulse.wave, pulse.edges[0] ?? this.pickEdge());
         return false;
       }
     }
     return true;
+  }
+
+  /**
+   * A3: the corrupted copies of the playbooks used during the PREVIOUS wave, fielded at the head
+   * of this one. Nothing here is a new spawn path — each body goes through the same `spawnAt` the
+   * roster path uses, so the alive cap still refuses, per-wave hp/speed scaling still applies, and
+   * the entry-damage table still reads. The squads are laid across the contract's own spawn edges
+   * by index rather than by an rng draw, so a mirrored wave stays as deterministic as a plain one.
+   */
+  private spawnMirrorSquads(wave: number): void {
+    const squads = this.mirrorSquadsForWave(wave);
+    if (squads.length === 0) return;
+    const edges = this.spawnEdges;
+    for (let squadIndex = 0; squadIndex < squads.length; squadIndex += 1) {
+      const squad = squads[squadIndex]!;
+      const edge = edges[squadIndex % Math.max(1, edges.length)] ?? 'west';
+      for (let i = 0; i < squad.count; i += 1) {
+        this.spawnAt(edge, i, wave, squad.count, false, false, squad.options);
+      }
+    }
   }
 
   private spawnAt(

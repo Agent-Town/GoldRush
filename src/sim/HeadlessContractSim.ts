@@ -68,6 +68,7 @@ import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } f
 import { LowOrbitSystem, type LowOrbitDiagnostics } from '../systems/LowOrbitSystem';
 import { SeedCaravanSystem, type SeedCaravanDiagnostics } from '../systems/SeedCaravanSystem';
 import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
+import { BroadcastMirror, type BroadcastMirrorDiagnostics } from '../systems/BroadcastMirror';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
 import { depenetrateFromBlockers } from '../world/LandmarkCollision';
@@ -232,6 +233,14 @@ export type HeadlessAgentView = AgentView & {
      * the browser's behaviour: this engine has none of the three systems to switch off.
      */
     signalSuppression?: SignalSuppressionDiagnostics;
+    /**
+     * A3. Present only where the contract declares `twist.broadcastMirror`, so a rider can SEE how
+     * many of its own habits are coming back, in what shape, and how much heavier each repeat has
+     * made them — rather than discovering the shadow by losing a wave to it. Read the honesty note
+     * beside `broadcastMirror` in the class below before treating a run of zeroes as a bug: this
+     * engine has no playbook verb to record a use FROM.
+     */
+    broadcastMirror?: BroadcastMirrorDiagnostics;
     /**
      * A6. Present only where the contract declares BOTH a playback trigger and a crater, so a
      * rider can see the objective, aim at the zone, and read the recovered line back. Absent
@@ -398,6 +407,22 @@ export class HeadlessContractSim {
    */
   private readonly signalSuppression: SignalSuppression;
   /**
+   * A3 — THE BROADCAST MIRROR, and the same honest note its A4 neighbour above carries.
+   *
+   * The SPAWN half is REAL here and identical to the browser's: this engine builds the same
+   * `WaveSystem` and hands it the same `fieldMirrors` reader (`:748` below), so a queued mirror
+   * fields here exactly as it fields there — same squad sizes, same hp scale, same edges, through
+   * the same `spawnAt` and under the same alive cap.
+   *
+   * The RECORD half cannot fire here, and the reason is a measurement rather than an omission:
+   * `src/agent/StandingOrders.ts` declares no playbook verb (re-verified 2026-08-20, the same
+   * measurement A4 recorded), so a rider driving this engine through the public grammar has no
+   * way to USE a playbook — and "no playbook use -> no mirrors" is the ratified rule, not a gap.
+   * A GR-SIM run therefore reads `recordedUses: 0` and fields nothing, truthfully. The day a
+   * playbook verb reaches the door, it calls `noteUse` and the canyon answers with no edit here.
+   */
+  private readonly broadcastMirror: BroadcastMirror;
+  /**
    * A6 — THE PROBE. Unlike its A4 neighbour above, this one is a REAL switch in this engine:
    * the Prospector is the body a rider can actually move (`:950`), the crater is ordinary
    * ground, and `CONTEXT_ACTION action:'recover'` reaches it through the public grammar. So
@@ -535,6 +560,9 @@ export class HeadlessContractSim {
     // Same read the browser performs at `Game.ts` (contract, never epoch), so the two engines
     // cannot disagree about which systems this contract declares off.
     this.signalSuppression = SignalSuppression.create(this.manifest);
+    // A3, same rule: one read of the CONTRACT, never the epoch, so the two engines cannot
+    // disagree about which contract casts a shadow.
+    this.broadcastMirror = BroadcastMirror.create(this.manifest);
     // A6, same rule: one read of the contract, shared by the recover verb and the latch below.
     this.probeRecovery = ProbeRecovery.create(this.manifest);
     // Same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. The policy
@@ -769,6 +797,10 @@ export class HeadlessContractSim {
       // Owner ruling 2026-08-20: exhausted machines stop holding spawn slots. The browser seats
       // the SAME reader off `Game.wrangle`, so the refusal is one rule in two engines.
       () => this.atomic?.exhaustedCount() ?? 0,
+      // A3: the browser seats this same reader off its own `BroadcastMirror` (`Game.ts`), so a
+      // queued mirror fields identically in both engines. Empty here in practice — see the note
+      // beside the field: this engine has no playbook verb to record a use from.
+      (wave) => this.broadcastMirror.fieldMirrors(wave),
     );
     this.progressionState.transition('playing');
     this.progression = new Progression({
@@ -1205,6 +1237,9 @@ export class HeadlessContractSim {
     // from the `final` hash — the flags are a constant of the contract and the counters are
     // constant zero here, so hashing them would add bytes and no discrimination.
     if (this.signalSuppression.diagnostics.declared) view.now.signalSuppression = this.signalSuppression.diagnostics;
+    // A3: only where DECLARED, same rule. Unlike the suppression row this one is real per-turn
+    // state — `pending` is what is about to arrive — so a rider polls it every turn.
+    if (this.broadcastMirror.isDeclared) view.now.broadcastMirror = this.broadcastMirror.diagnostics;
     // A6: only where DECLARED, same rule. This one DOES belong to the run rather than the
     // contract — `recovered` flips mid-run and gates the secure — so unlike the suppression
     // row above it is real per-turn state a rider must be able to poll.
@@ -1567,6 +1602,7 @@ export class HeadlessContractSim {
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
+      broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
       probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
       lowOrbit: this.lowOrbit.isDeclared ? this.lowOrbit.diagnostics : null,
       seedCaravan: this.seedCaravan?.simulationSnapshot ?? null,
