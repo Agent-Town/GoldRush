@@ -28,7 +28,10 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   ]);
   assert.ok(audit.rows.every((row) => ['buildable', 'ability', 'choice', 'verb', 'economy'].includes(row.surface)));
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 15);
+  // ADMISSION MOVE (2026-08-20, `b1-regatta-race`): five authored harvest anchors made
+  // e5-regatta browser-offered, moving exactly one row out of `not-offered`. Its newly admitted
+  // headless surface contributes 10 equal rows and 10 agent-lacks rows; no exemption moved.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 14);
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -38,7 +41,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // that row and nothing else did. The preceding move, for the record, was 8 -> 7 / 373 -> 352 /
   // 707 -> 728 when `e5-deepwater-claim` was admitted — 21 rows per contract, both times.
   assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 331, equal: 749, 'not-offered': 15 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 341, equal: 779, 'not-offered': 14 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

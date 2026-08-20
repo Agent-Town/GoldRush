@@ -92,6 +92,7 @@ import { install as installAgentStub, type AgentStub } from '../agent/AgentStub'
 import { snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
 import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
+import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { FerrisWheel } from '../entities/FerrisWheel';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
@@ -702,6 +703,7 @@ export class Game {
     },
   );
   private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
+  private readonly regattaRace = RegattaRaceSystem.create(this.activeContract);
   private deepwaterCorsairWavesSpawned = 0;
   private readonly dayNightCycle = createDayNightCycle(this.activeContract);
   private readonly lightField = new LightField({
@@ -2565,6 +2567,11 @@ export class Game {
       this.syncDeepwaterClaim();
       if (this.actors.some((actor) => actor.group.visible && this.weaponForActor(actor) === 'blast')) this.blastTime += simDelta;
       this.updateActors(simDelta, intents);
+      this.regattaRace?.advance(
+        this.timeAlive,
+        this.currentRunWave(),
+        [...this.actors.filter(({ group }) => group.visible).map(({ group }) => group.position), this.deepwaterClaim!.snapshot().boat.anchor],
+      );
       this.e6TileConsumers.update(simDelta, this.timeAlive, this.visibleHarvestTargets());
       this.syncPlaybookAnchor();
       this.syncHeroVisualHeight();
@@ -2805,7 +2812,8 @@ export class Game {
 
   private actorTerrainSample(x: number, z: number): Terrain.TerrainSample {
     const sample = Terrain.sample(x, z);
-    return this.e6TileConsumers.isWalkable(x, z) ? sample : { ...sample, walkable: false };
+    const raced = this.regattaRace ? { ...sample, speedMul: sample.speedMul * this.regattaRace.movementMultiplierAt(x, z) } : sample;
+    return this.e6TileConsumers.isWalkable(x, z) ? raced : { ...raced, walkable: false };
   }
 
   private heroBlockers() {
@@ -4831,7 +4839,10 @@ export class Game {
         medals: loadMedals(),
       },
       deepwaterClaim: this.deepwaterClaim
-        ? Object.assign(this.deepwaterClaim.snapshot(), { dredgeQueenBoss: this.dredgeQueenBoss.diagnostics() })
+        ? Object.assign(this.deepwaterClaim.snapshot(), {
+            dredgeQueenBoss: this.dredgeQueenBoss.diagnostics(),
+            ...(this.regattaRace ? { race: this.regattaRace.diagnostics } : {}),
+          })
         : null,
       tilePersistence: {
         contractId: this.activeContract.id,
@@ -5114,6 +5125,7 @@ export class Game {
     return this.waitsForBaronDefeat()
       || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
       || (this.activeContract.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
+      || (this.activeContract.tileParams.raceCourse && this.regattaRace?.diagnostics.finished !== true)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -5283,7 +5295,7 @@ export class Game {
   }
 
   private spawnDeepwaterCorsairs(wave: CorsairSkiffWave, bossEscort = false): void {
-    const roster = this.activeContract.twist.enemyRoster?.find((entry) => entry.id === 'corsair_skiff');
+    const roster = this.activeContract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat');
     const multiplier = bossEscort ? this.dredgeQueenBoss.escortMultiplier : 1;
     for (let copy = 0; copy < multiplier; copy += 1) {
       for (const skiff of wave.enemies) {
@@ -5304,8 +5316,9 @@ export class Game {
   private recycleDeepwaterCorsairsAtExit(): void {
     const lastWave = this.deepwaterClaim?.snapshot().corsairWaves.at(-1);
     if (!lastWave) return;
+    const variantId = this.activeContract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat')?.id;
     for (const enemy of this.enemies.all) {
-      if (enemy.isAlive && enemy.variantId === 'corsair_skiff' && enemy.position.x >= lastWave.toX - 2) {
+      if (enemy.isAlive && enemy.variantId === variantId && enemy.position.x >= lastWave.toX - 2) {
         this.enemies.recycle(enemy);
       }
     }
@@ -7086,6 +7099,7 @@ export class Game {
     this.waveSystem.reset();
     this.drillYard?.reset();
     this.deepwaterClaim?.reset();
+    this.regattaRace?.reset();
     this.deepwaterCorsairWavesSpawned = 0;
     this.buildMenuOpen = false;
     this.upgradeCandidate = null;

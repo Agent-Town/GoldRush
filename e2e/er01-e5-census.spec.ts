@@ -6,7 +6,7 @@ import regattaMask from '../assets/contracts/epoch-5-deepwater/mask-tables/e5-re
 
 const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
   'e5-deepwater-claim': 'e5-deepwater-claim',
-  'e5-regatta': 'the-claim',
+  'e5-regatta': 'e5-regatta',
   'e5-stillwater': 'e5-stillwater',
   'e5-flotilla': 'the-claim',
 };
@@ -17,11 +17,10 @@ const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
  * storm handoff is wired, and both bench seeds SECURE at wave 12 under public Deepwater verbs
  * (`REANCHOR`/`BOAT_BUILD` + the automatic Spark Rig). So the Claim is now ADMITTED and SEEDED.
  *
- * The other three E5 contracts are unchanged: their consumers are still absent, so they stay
- * refused and unseeded. This census is per-id from here on — a single blanket refusal would now
- * be a lie about the flagship, and a single blanket admission a lie about the other three.
+ * The Regatta now shares that deepwater socket and adds its declared race consumer. Stillwater
+ * and Flotilla remain refused and unseeded.
  */
-const ADMITTED = new Set(['e5-deepwater-claim']);
+const ADMITTED = new Set(['e5-deepwater-claim', 'e5-regatta']);
 
 /**
  * ADMISSION GATE 1 (F-ER01-E5-1) — every E5 contract must name the headless consumer it lacks.
@@ -51,16 +50,23 @@ const FORBIDDEN_SOURCE = [
   'twist.weather',
 ];
 
-// Only the flagship has a consumer, so only the flagship gets vocabulary. The three variants
-// declare their own consumer `missing` and must stay silent.
-const EXPECTED_SOCKET_RULES = [
-  'deepwater_arsenal',
-  'deepwater_boss_socket',
-  'deepwater_claim_boat',
-  'deepwater_levers_unreachable',
-  'deepwater_storm_track',
-  'deepwater_water_regions',
-];
+const EXPECTED_SOCKET_RULES: Record<string, string[]> = {
+  'e5-deepwater-claim': [
+    'deepwater_arsenal',
+    'deepwater_boss_socket',
+    'deepwater_claim_boat',
+    'deepwater_levers_unreachable',
+    'deepwater_storm_track',
+    'deepwater_water_regions',
+  ],
+  'e5-regatta': [
+    'deepwater_arsenal',
+    'deepwater_claim_boat',
+    'deepwater_levers_unreachable',
+    'deepwater_storm_track',
+    'deepwater_water_regions',
+  ],
+};
 
 for (const contract of deepwater.contracts) {
   test(`${contract.id} census admission is explicit`, async () => {
@@ -92,8 +98,7 @@ for (const contract of deepwater.contracts) {
       const { EnemyPool } = await vite.ssrLoadModule('/src/entities/pools.ts');
       const manifest = deriveMechanicsManifest(contract.id);
 
-      // Seeded exactly where admitted. The Claim's pair was added by the socket slice; the three
-      // variants must still be absent, or the door would advertise runs it refuses (F-DOOR-4).
+      // Seeded exactly where admitted; the door must never advertise a run it refuses (F-DOOR-4).
       if (admitted) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
       else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
       expect(manifest.interactables).toEqual([]);
@@ -133,8 +138,8 @@ for (const contract of deepwater.contracts) {
       const socketRules = manifest.rules
         .map(({ id }: { id: string }) => id)
         .filter((id: string) => id.startsWith('deepwater_'));
-      if (contract.id === 'e5-deepwater-claim') {
-        expect(socketRules).toEqual(EXPECTED_SOCKET_RULES);
+      if (admitted) {
+        expect(socketRules).toEqual(EXPECTED_SOCKET_RULES[contract.id]);
 
         // The socket is REAL and DETERMINISTIC. Two independent tiles, identical tick counts,
         // identical snapshots — the property that makes an event-log hash mean anything.
@@ -144,7 +149,7 @@ for (const contract of deepwater.contracts) {
         const drive = (steps: number) => {
           const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e5-probe' });
           const socket = DeepwaterSocket.create(
-            loadContract('e5-deepwater-claim'),
+            loadContract(contract.id),
             new EnemyPool(),
             sim.combat,
             () => sim.hero.group.position,
@@ -160,12 +165,13 @@ for (const contract of deepwater.contracts) {
         expect(first.diagnostics.corsairWaves).toBeGreaterThan(0);
         expect(first.diagnostics.corsairsSpawned).toBeGreaterThan(0);
 
-        // F-ER01-E5-1: a missing handoff is COUNTED, never skipped. `drive()` builds the socket
+        // F-ER01-E5-1: a missing boss handoff is COUNTED, never skipped. `drive()` builds the socket
         // with NO `bossHandoff` (the five-argument form), so every storm wave at or past the
         // Dredge-Queen's wave is still recorded as a refusal. That counter is the socket's honesty
         // mechanism and it must keep working now that a handoff EXISTS — the admitted sim below
         // wires one and therefore refuses nothing.
-        expect(first.diagnostics.bossHandoffsRefused).toBeGreaterThan(0);
+        if (contract.id === 'e5-deepwater-claim') expect(first.diagnostics.bossHandoffsRefused).toBeGreaterThan(0);
+        else expect(first.diagnostics.bossHandoffsRefused).toBe(0);
 
         // F-ER01-E5-5, closed by AP-16-7: both boat levers keep the consumer's accept/reject
         // law, and the headless door exposes their diagnostics and verbs. The re-probe that this
@@ -187,9 +193,15 @@ for (const contract of deepwater.contracts) {
           pads: expect.any(Array),
           anchors: expect.any(Array),
           anchor: expect.any(Object),
-          // The boss the census used to report as ABSENT now reports its own state.
-          dredgeQueenBoss: expect.objectContaining({ act: expect.any(Number), livePaddles: 2 }),
         });
+        if (contract.id === 'e5-deepwater-claim') {
+          expect(doorDeepwater).toMatchObject({ dredgeQueenBoss: expect.objectContaining({ act: expect.any(Number), livePaddles: 2 }) });
+        } else {
+          expect(doorDeepwater?.race).toMatchObject({ gatesPassed: expect.any(Array), finished: false });
+          // The bundle authors no competing-racer roster or loot zones. Record the remaining
+          // authoring honestly; this slice must not stretch one corsair racer into a loot system.
+          expect(manifest.rules.find(({ id }: { id: string }) => id === 'regatta_race')?.data.competingRacerLoot).toBe(false);
+        }
         // The wired sim hands every storm wave to a real boss, so nothing is refused.
         expect(doorDeepwater!.bossHandoffsRefused).toBe(0);
         for (const order of [
@@ -201,7 +213,7 @@ for (const contract of deepwater.contracts) {
         expect(manifest.buildables).toEqual(expect.any(Array));
       } else {
         expect(socketRules).toEqual([]);
-        // The variants carry `tileParams.deepwater` too. The socket must refuse them exactly as
+        // The remaining variants carry `tileParams.deepwater` too. The socket must refuse them exactly as
         // `createDeepwaterClaimTile` does, or their missing consumers would look socketed.
         const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e5-probe' });
         const socket = DeepwaterSocket.create(
@@ -214,8 +226,8 @@ for (const contract of deepwater.contracts) {
         expect(socket).toBeNull();
       }
 
-      // THE DOOR ITSELF. The Claim boots on its own bench seeds; the three variants are still
-      // refused BY NAME, which is what keeps the refusal honest rather than silent.
+      // THE DOOR ITSELF. Admitted contracts boot on their own bench seeds; the remainder are
+      // refused BY NAME, which keeps the refusal honest rather than silent.
       for (const seed of seeds) {
         if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
         else expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(/AP-07 supports only/);
