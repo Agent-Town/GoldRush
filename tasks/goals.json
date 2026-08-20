@@ -1386,8 +1386,10 @@
               "id": "b3-half-life-hollow-crossing",
               "title": "B3 Hollow: author the prose-only crossing data + consumer -> door-ready (pool-disease measured early)",
               "taskFile": "b3-half-life-hollow-crossing.md",
-              "status": "planned",
-              "note": "Ratified sheet B3 (owner: build). lane-d codex. If idle false-greens via the E6 pool disease, it queues behind the recycle ruling with Picnic+Showroom."
+              "status": "blocked",
+              "blockClass": "owner-fork",
+              "blockedReason": "F-2085-2 / F-CAP-2: RAN on lane-d (run 20260820-150023, commit ad49f9724) and STOPPED per Law 2 exactly as its master ordered. The pre-build admissionProbe idle measurement was decisive: seed e6-half-life-hollow-01 FALSE-SECURED at wave 20 (fnv1a32:c3f13eda, 210 kills, 0 calls) while seed -02 died honestly at wave 5 (fnv1a32:6e41317e, 83 kills). Runner's own words: 'No crossing implementation, admission changes, or gates run. Resume after F-CAP-2's pool-recycling ruling.' Its ledger row is merged to main at f256baf3c and lane/d is drained (main..lane/d empty). Needs the OWNER pool-recycle ruling; no fire may author it.",
+              "note": "Ratified sheet B3 (owner: build). lane-d codex. If idle false-greens via the E6 pool disease, it queues behind the recycle ruling with Picnic+Showroom. s2085: it DID false-green - the prediction held."
             }
           ]
         },

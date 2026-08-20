@@ -111,14 +111,29 @@ but still occupy the cap, so the map runs out of pressure rather than losing. **
 ruled together.** b3-half-life-hollow-crossing's master already anticipates this exact disease
 and instructs its runner to measure it early — so the ruling gates three maps, not one.
 
-**F-2085-3 — a phantom done-move for work that has never run.** OPEN, board hygiene, **not this
-slice's fault**. `tasks/done/20260820-150023-b3-half-life-hollow-crossing.md` is **byte-identical**
-to the still-planned master `tasks/b3-half-life-hollow-crossing.md` (verified `diff -q`, no
-output). b3 was authored 14:59 and this "done-move" is stamped 15:00:23 — 90 seconds later, and
-b3 has never been dispatched (lane-d queue empty, no `tasks/running/` entry, leaf `planned`).
-A next fire doing §2B triage would read it as runner output and gate a slice with **zero diff** —
-an armed Silent No-Op (Mistake #1). Left in place rather than moved: it belongs to the live
-attended session's in-flight thread. **Defused by naming it here and in the handoff.**
+**F-2085-3 — ❌ WITHDRAWN BY ITS OWN AUTHOR, SAME FIRE. I called a real done-move a phantom.**
+The claim was that `tasks/done/20260820-150023-b3-half-life-hollow-crossing.md` was a phantom for
+work that never ran. **False.** b3 was dispatched to lane-d at 15:00:23, **ran**, and **stopped on
+Law 2** — proven three ways: the run log `tasks/runs/20260820-150023-lane-d-b3-…log` exists and
+ends *"STOPPED per Law 2: seed `-01` idle-secured at wave 20 (`fnv1a32:c3f13eda`); seed `-02` died
+at wave 5"*; `lane/d` carries `ad49f9724` timestamped 15:02:51; and that commit's ledger row is
+**merged to main by this same fire** (`f256baf3c`).
+
+Two reasoning errors, both worth more than the row was:
+
+1. I treated `diff -q done-move master` returning **identical** as evidence of a phantom. It is
+   the **normal** state — a done-move *is* a copy of the master, which stays in `tasks/`. I read a
+   property of the mechanism as a property of this instance, never controlling the hit against a
+   known-good done-move.
+2. I read "queue empty, no `tasks/running/` entry, leaf still `planned`" as **never-dispatched**,
+   when all three are equally consistent with **completed** — more so, since a finished run empties
+   exactly those two places. Every probe was true; the inference was not.
+
+💡 **The part that stings: F-2085-1's own standing lesson — *read the run log's tail before judging
+a slice* — was written by me, in this fire, minutes earlier, and I did not apply it to b3.** One
+`ls tasks/runs/ | grep hollow` would have refuted the row before it was committed. **A lesson
+learned on one artifact does not transfer to the next by itself; the surface a lesson names
+(`tasks/runs/`) must be checked for every subject in the fire, not just the one that taught it.**
 
 ## Disposition
 
