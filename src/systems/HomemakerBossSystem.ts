@@ -552,6 +552,7 @@ export class HomemakerBossSystem {
   }
 
   private ensureHomemaker3d(): void {
+    if (typeof document === 'undefined') return;
     if (this.homemaker3dState !== 'off' && this.homemaker3dState !== 'disposed') return;
     const serial = ++this.homemaker3dLoadSerial;
     this.homemaker3dState = 'loading';
@@ -639,6 +640,7 @@ export class HomemakerBossSystem {
   }
 
   private publishHomemaker3d(): void {
+    if (typeof document === 'undefined') return;
     const canvas = document.querySelector('canvas');
     if (!canvas) return;
     canvas.dataset.homemaker3dState = this.homemaker3dState;
@@ -708,6 +710,7 @@ function chair(): THREE.Group {
 }
 
 function pictogramSprite(): THREE.Sprite {
+  if (typeof document === 'undefined') return new THREE.Sprite();
   const canvas = document.createElement('canvas');
   canvas.width = 384;
   canvas.height = 128;
@@ -722,8 +725,12 @@ function pictogramSprite(): THREE.Sprite {
 
 function renderPictogram(sprite: THREE.Sprite, text: string): void {
   if (sprite.userData.text === text) return;
+  // Headless companion to the guard in `pictogramSprite()`: outside a browser that factory
+  // returns a bare sprite with no 2-d canvas parked on `userData`, and `syncPresentation()`
+  // calls through here every tick. Guarding only the factory would move the crash, not remove it.
+  const canvas = sprite.userData.canvas as HTMLCanvasElement | undefined;
+  if (!canvas) return;
   sprite.userData.text = text;
-  const canvas = sprite.userData.canvas as HTMLCanvasElement;
   const context = canvas.getContext('2d')!;
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillStyle = '#211a16';
