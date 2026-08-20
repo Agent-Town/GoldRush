@@ -532,6 +532,12 @@ interface ThreeGameDiagnostics {
     lastGoldGain: number;
     lastGoldPosition: { x: number; y: number; z: number } | null;
   };
+  /**
+   * RENDER-side seam heights (browser only — the headless engine has no visuals and omits this).
+   * `visualY` is where the seam's sprite is standing, `groundY` where the terrain now is; a gap
+   * between them is a buried seam, which is what shipped before 2026-08-20.
+   */
+  harvestVisuals?: import('./systems/HarvestSystem').HarvestVisualDiagnostics;
   steal: {
     thieves: number;
     fleeing: number;

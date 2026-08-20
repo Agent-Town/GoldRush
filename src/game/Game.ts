@@ -5223,6 +5223,7 @@ export class Game {
       },
       progression: this.progression.snapshot,
       harvest: this.harvestSnapshot,
+      harvestVisuals: this.harvestSystem.visualDiagnostics,
       steal: this.stealDiagnostics(),
       wreck: this.wreckDiagnostics(),
       charmPause: this.charmPauseActive,
@@ -5431,6 +5432,11 @@ export class Game {
     this.seedCaravan?.resampleTerrain();
     this.e6TileConsumers.resampleTerrain();
     this.resampleHollowCrossingVisuals();
+    // The gold seams belong on this list and were missing from it, which is why 29 of the 33
+    // seam-bearing sculpted maps shipped their seams off the ground entirely — buried up to
+    // 6.18 m, floating up to 5.63 m (owner, 2026-08-20: "There is not gold to be collected").
+    // Render-only; see HarvestSystem.resampleTerrain.
+    this.harvestSystem.resampleTerrain();
   }
 
   private resetFrameWindow(): void {
