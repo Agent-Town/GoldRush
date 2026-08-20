@@ -25,6 +25,10 @@ export type StandingOrder =
   | { verb: 'SECURE_CHOICE'; choice: 'bank' | 'rush' }
   | { verb: 'CONTEXT_ACTION'; action: 'upgrade' | 'demolish'; target: { id: BuildableId; index: number } }
   | { verb: 'CONTEXT_ACTION'; action: 'fund' }
+  // A6: recover the crashed probe standing in a `probeRecoveryZones` crater. Targetless for
+  // the same reason `fund` is — the WORLD names the target, so the body's position is the
+  // whole argument and there is nothing for a rider to mis-index.
+  | { verb: 'CONTEXT_ACTION'; action: 'recover' }
   | { verb: 'CAPTURE' }
   | { verb: 'BOAT_BUILD'; padId: string; buildingId: string }
   | { verb: 'REANCHOR'; anchorId: string }
@@ -545,6 +549,7 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
   }
   if (value.verb === 'CONTEXT_ACTION') {
     if (value.action === 'fund' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'fund' };
+    if (value.action === 'recover' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'recover' };
     if ((value.action !== 'upgrade' && value.action !== 'demolish') || !exactKeys(value, ['verb', 'action', 'target']) || !isRecord(value.target)) {
       return schemaError(index, 'CONTEXT_ACTION');
     }

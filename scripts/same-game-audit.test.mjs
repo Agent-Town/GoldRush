@@ -37,7 +37,14 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // 351/809/13 over 1173 rows: the Regatta contributes +10 agent-lacks and +30 equal and takes the
   // one not-offered row, on top of the Dead Band's own move. Neither side's arithmetic was edited
   // into agreement — the audit was re-run on the merged tree and its output pinned verbatim.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 13);
+  // ⚠️ AND THE SAME TRAP RECURRED ONE LEVEL UP (2026-08-20, A6 `e8-far-side` drain): the A6 branch
+  // measured its own move from the SAME pre-Regatta base (341/779/14 -> 351/809/13), so both sides
+  // of that merge pinned identical numbers while each missing the other's admission — git even
+  // auto-merged the `measurements.length` pin because both sides wrote the same digit. Every pin
+  // below is therefore the MERGED tree's own regen output (Regatta + Far Side stacked), verbatim.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 12);
+  // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
+  // and the Far Side entered through the empty-anchors door, never that population.
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -71,8 +78,25 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // empty-data door the Dead Band came through. The lane's own pin of 6 was correct against its
   // base (before `e2-pressure-arsenal-headless` took hill-mine out, 6 -> 5) and is stale here;
   // the merged tree measures 5, which is main's count, unmoved by this slice.
+  // ADMISSION MOVE (2026-08-20, `e8-far-side` A6 the crossing and the probe): the Far Side's
+  // `harvestAnchors` were authored — together with the attended-authorized `heroStart` stake
+  // that its own briefing already commanded — so it left the door's `harvestAnchors?.length
+  // !== 0` filter and entered `supportedContractIds()`. Same shape as the Dead Band directly
+  // above: THE EXEMPTION COUNT DOES NOT MOVE, because the Far Side was never exempted either
+  // — it was excluded by empty data. The parity block moved +10 agent-lacks, +30 equal,
+  // -1 not-offered, +40 rows measured against the A6 branch's own pre-Regatta base.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, not guessed: with the four anchors emptied and EVERY
+  // other line of the slice still in place — the `ProbeRecovery` consumer, the `recover`
+  // context action, both engines' objective latches, the manifest rule and the hero stake —
+  // this audit reproduced the base numbers EXACTLY. So the whole movement belongs to
+  // the anchors and the A6 consumer moves NOTHING here. Expected, for two reasons: the audit's
+  // rows are buildable/ability/choice/verb/economy surfaces and `probe_recovery` is a mechanics
+  // RULE, and its verb row is keyed on CONTEXT_ACTION itself, which already existed — adding an
+  // ACTION to a verb the door already carried cannot add a verb row.
+  // (Summary pinned from the MERGED tree's regen — Regatta + Far Side stacked; see the stack
+  // warning at the top of this file's admission block.)
   assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 351, equal: 809, 'not-offered': 13 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 361, equal: 839, 'not-offered': 12 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

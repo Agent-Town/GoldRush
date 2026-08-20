@@ -82,6 +82,7 @@ The source-locked forms are:
 {"verb":"CONTEXT_ACTION","action":"upgrade","target":{"id":"<buildable>","index":N}}
 {"verb":"CONTEXT_ACTION","action":"demolish","target":{"id":"<buildable>","index":N}}
 {"verb":"CONTEXT_ACTION","action":"fund"}
+{"verb":"CONTEXT_ACTION","action":"recover"}
 {"verb":"CAPTURE"}
 {"verb":"BOAT_BUILD","padId":"<string>","buildingId":"<string>"}
 {"verb":"REANCHOR","anchorId":"<string>"}
@@ -111,7 +112,7 @@ Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_o
 
 At the secure boundary, `now.pendingSecure` supplies the configured default (`bank`, or `rush` for `--overtime`) and the remaining decision time. `SECURE_CHOICE` is accepted only while that field is present. `bank` ends secured; `rush` continues from the same frozen boundary. Silence for the difficulty's 30/20/10-second choice clock takes the configured default and increments `defaultedSecure`.
 
-`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. An illegal or unaffordable action fails through the ordinary order-failure surprise.
+`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. `recover` also has no target: where `now.probeRecovery` is present, it lifts the crashed probe if the Prospector is standing in one of the published `zones`, and the run cannot secure until it does. It is one-time — a second call is refused. An illegal or unaffordable action fails through the ordinary order-failure surprise.
 
 ## EPOCH LEVERS
 
@@ -268,6 +269,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e8-eclipse-01",
     "e8-eclipse-02"
   ],
+  "e8-far-side": [
+    "e8-far-side-01",
+    "e8-far-side-02"
+  ],
   "e9-dome-basin": [
     "e9-dome-basin-01",
     "e9-dome-basin-02"
@@ -302,6 +307,7 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
   "e7-dead-band",
   "e7-relay-valley",
   "e8-eclipse",
+  "e8-far-side",
   "e8-mare-claim",
   "e9-dome-basin",
   "the-claim"

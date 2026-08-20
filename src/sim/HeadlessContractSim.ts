@@ -62,6 +62,7 @@ import { MothSwarm } from '../systems/MothSwarm';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
+import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } from '../systems/ProbeRecovery';
 import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
@@ -199,6 +200,12 @@ export type HeadlessAgentView = AgentView & {
      * the browser's behaviour: this engine has none of the three systems to switch off.
      */
     signalSuppression?: SignalSuppressionDiagnostics;
+    /**
+     * A6. Present only where the contract declares BOTH a playback trigger and a crater, so a
+     * rider can see the objective, aim at the zone, and read the recovered line back. Absent
+     * everywhere else — silence means "no probe out there", and it must keep meaning that.
+     */
+    probeRecovery?: ProbeRecoveryDiagnostics;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -337,6 +344,13 @@ export class HeadlessContractSim {
    * composed into this sim, it gates on THIS object and the note above becomes a real switch.
    */
   private readonly signalSuppression: SignalSuppression;
+  /**
+   * A6 — THE PROBE. Unlike its A4 neighbour above, this one is a REAL switch in this engine:
+   * the Prospector is the body a rider can actually move (`:950`), the crater is ordinary
+   * ground, and `CONTEXT_ACTION action:'recover'` reaches it through the public grammar. So
+   * the headless door proves the whole objective, not a by-construction shadow of it.
+   */
+  private readonly probeRecovery: ProbeRecovery;
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -426,6 +440,8 @@ export class HeadlessContractSim {
     // Same read the browser performs at `Game.ts` (contract, never epoch), so the two engines
     // cannot disagree about which systems this contract declares off.
     this.signalSuppression = SignalSuppression.create(this.manifest);
+    // A6, same rule: one read of the contract, shared by the recover verb and the latch below.
+    this.probeRecovery = ProbeRecovery.create(this.manifest);
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -688,6 +704,11 @@ export class HeadlessContractSim {
         autoSecureWaveForRun: () => (this.manifest.twist.baron && !this.baronBeaten)
           || (this.manifest.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
           || (this.manifest.tileParams.raceCourse && this.deepwater?.diagnostics.race?.finished !== true)
+          // A6: the Far Side is not won by outliving it. Surviving to the secure wave with the
+          // probe still buried leaves the run unsecurable, exactly as the canyon-connect
+          // objective does above. `objectiveAllowsSecure` is true on every contract that
+          // declares no probe, so no admitted contract's terminal moves.
+          || !this.probeRecovery.objectiveAllowsSecure
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -1017,6 +1038,10 @@ export class HeadlessContractSim {
     // from the `final` hash — the flags are a constant of the contract and the counters are
     // constant zero here, so hashing them would add bytes and no discrimination.
     if (this.signalSuppression.diagnostics.declared) view.now.signalSuppression = this.signalSuppression.diagnostics;
+    // A6: only where DECLARED, same rule. This one DOES belong to the run rather than the
+    // contract — `recovered` flips mid-run and gates the secure — so unlike the suppression
+    // row above it is real per-turn state a rider must be able to poll.
+    if (this.probeRecovery.declared) view.now.probeRecovery = this.probeRecovery.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1181,7 +1206,11 @@ export class HeadlessContractSim {
     // flag below, and it early-returns on `!grid?.connect` — so a powerGrid without a connect
     // objective would pin this false forever and beating the Baron would silently fail to secure.
     // Mirrors src/game/Game.ts byte-for-byte; the browser moved first.
-    const objectiveAllowsSecure = !this.manifest.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
+    const objectiveAllowsSecure = (!this.manifest.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline)
+      // A6, same clause as the auto-secure latch: a contract that fields both a Baron and a
+      // probe cannot be secured by the kill alone. No contract declares both today; stating it
+      // here keeps the two secure paths from disagreeing the way F-1471-1 did.
+      && this.probeRecovery.objectiveAllowsSecure;
     const runWave = this.currentRunWave();
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen'
       && runWave < (this.manifest.twist.secureWave ?? Balance.run.secureWave);
@@ -1348,6 +1377,7 @@ export class HeadlessContractSim {
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
+      probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,
@@ -1656,6 +1686,7 @@ export class HeadlessContractSim {
 
   private contextAction(order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>): { ok: true } | { ok: false; reason: string } {
     if (order.action === 'fund') return this.fundMegaproject();
+    if (order.action === 'recover') return this.recoverProbe();
     const { id, index } = order.target;
     const ok = order.action === 'upgrade'
       ? this.build.upgradeBuilding(id, index, this.timeAlive, this.prospector.position)
@@ -1663,6 +1694,28 @@ export class HeadlessContractSim {
     if (!ok) return { ok: false, reason: `REJECTED: ${order.action} ${id}:${index} is not legal here.` };
     this.syncStockpileHoldings();
     this.replayEvents.push({ type: 'context_action', at: round(this.timeAlive), action: order.action, target: { id, index } });
+    return { ok: true };
+  }
+
+  /**
+   * A6 — THE RECOVERY AND THE PLAYBACK, headless. The Prospector is the body that crosses
+   * (the hero never leaves its stake, `:919`), so the reach test reads the Prospector's
+   * position exactly as `fundMegaproject` below does.
+   *
+   * THE PLAYBACK IS THE REPLAY-LOG EVENT. This engine has no jack-board and no float text, so
+   * the banked fragment is carried in the event and mirrored on `now.probeRecovery` — a rider
+   * READS the wrong-number hello, which is the same payload the browser announces. The event
+   * fires exactly once because the consumer's latch is one-way.
+   */
+  private recoverProbe(): { ok: true } | { ok: false; reason: string } {
+    const result = this.probeRecovery.recover(this.prospector.position);
+    if (!result.ok) return { ok: false, reason: `REJECTED: ${result.reason}.` };
+    this.replayEvents.push({
+      type: PROBE_RECOVERED_EVENT,
+      at: round(this.timeAlive),
+      zone: result.zoneId,
+      fragment: result.fragment,
+    });
     return { ok: true };
   }
 

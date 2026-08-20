@@ -2,6 +2,10 @@ import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type Cont
 import { Balance } from '../game/Balance';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
+import { ProbeRecovery } from '../systems/ProbeRecovery';
+
+/** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
+const PROBE_RECOVER_ACTION = 'recover';
 
 type MechanicValue = boolean | number | string | readonly string[];
 
@@ -330,6 +334,22 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       // Named so a rider reads the CONSEQUENCE rather than deducing it from three booleans.
       consequence: 'the named systems refuse for the whole run; the claim is won with turrets, combat and harvest alone',
       refusalReason: SIGNAL_SUPPRESSION_REASON,
+    }));
+  }
+
+  // --- A6 probe recovery. SOURCED FROM THE CONSUMER for the same reason the suppression rule
+  // above is: the manifest asks `ProbeRecovery` what it armed, so a rule cannot promise a
+  // recoverable probe the run would refuse. Silence means no probe, and it must keep meaning
+  // that — a contract declaring the trigger with no crater arms NOTHING and says nothing here.
+  const probe = ProbeRecovery.create(contract);
+  if (probe.declared) {
+    rules.push(rule('probe_recovery', 'ProbeRecovery.recover', {
+      operation: `CONTEXT_ACTION:${PROBE_RECOVER_ACTION}`,
+      zones: probe.diagnostics.zones,
+      trigger: probe.diagnostics.trigger ?? '',
+      // The consequence a rider must plan around: this is an OBJECTIVE, not a bonus.
+      consequence: 'the run cannot secure until the probe is recovered; stand in the crater and take the context action',
+      playsOnce: true,
     }));
   }
 
