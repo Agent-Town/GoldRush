@@ -431,6 +431,30 @@ for (const contract of voltage.contracts) {
         // A powerGrid contract sells no turret; the fair defends itself with beacons and palisades.
         expect(mechanics.buildables?.map(({ id }: { id: string }) => id)).not.toContain('turret');
 
+        // THE MOVED NORTH GATE — owner ruling 2026-08-20, verbatim: **"move the spawn"**, given to
+        // the recommendation that the fairground's north spawn entry shift off the centre line so
+        // the night runner stops owning the middle crowd's lane. JSON carries no comments, so the
+        // ruling is pinned HERE, as a fact a guard can check, rather than described somewhere a
+        // reader has to find.
+        //
+        // WHAT WAS ON THAT LINE BEFORE, all three of it: the middle crowd's gate lane (derived from
+        // its landmark, the Fair Wheel, due north of the gate), the loss stake every outlaw walks
+        // at, and the north spawn entry itself — engine-derived at `heroPosition.z +
+        // Balance.waves.spawnRingRadius` (26), measured at (0,-4.1). `night_runner` entered there
+        // and walked that lane the whole way down. The fix is authored contract data on the
+        // established per-variant seam (`ContractEnemyVariant.spawnGates`, consumed by
+        // `WaveSystem.applyVariantSpawnGate`), so no shared spawn code moved and no other map can
+        // inherit it — F-1471-1 keying, on the variant.
+        //
+        // WHY -12: the runner's walk line converges on the stake, so its clearance from the lane
+        // decays as |x| x (z+30)/26 — at -12 that is 12.0wu at the entry, 9.2 at z=-10 and 7.4 at
+        // z=-14, which covers the lane's swept length down to where the fort's own guns reach. It
+        // is also the largest offset that still leaves 8wu to the flank crowd's lane at x=-20, so
+        // the fix does not simply move the problem onto a different crowd.
+        const roster = contract.twist.enemyRoster as ReadonlyArray<{ id: string; spawnGates?: unknown }> | undefined;
+        expect(roster?.find(({ id }) => id === 'night_runner')?.spawnGates)
+          .toEqual([{ edge: 'north', x: -12, z: -4 }]);
+
         // ADMISSION IS REFUSED, AND THAT IS THE FIRST THING THIS BRANCH ASSERTS. The consumer runs
         // in both engines, but the door-completion sheet's build law asks for "a public-verb secure
         // proof x2 per seed" and none exists yet (F-E3CF-4), so the ordinary door still says no.

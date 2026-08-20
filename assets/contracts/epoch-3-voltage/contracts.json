@@ -382,7 +382,7 @@
         },
         "enemyRoster": [
           { "id": "fevered_saboteur", "label": "Midway Saboteur", "waveMin": 1, "hpScale": 1.05, "speedMult": 1.1, "visualScale": 0.95, "tint": "#735c48", "wrecker": true, "buildingDamageScale": 1.2, "spawnEdges": ["west", "east"] },
-          { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
+          { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d", "spawnGates": [{ "edge": "north", "x": -12, "z": -4 }] }
         ]
       },
       "boardRow": { "name": "The Fairground", "ledgerBlurb": "Keep the wheel turning while the rival pavilions brighten the midway.", "tags": ["voltage", "defend", "escort"], "unlock": "secured:e3-moth-season" },
