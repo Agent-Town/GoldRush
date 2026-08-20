@@ -94,7 +94,12 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ⚠️ SEVENTH STACK (the A5 drain, same window as the sixth): relay-rush anchors take one more
   // not-offered row while its exemption row (below) holds the headless door shut. Pins = the
   // SEPTUPLE-stacked merged tree's own regen output, verbatim, as every layer before.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 7);
+  // ⚠️ EIGHTH STACK (the B3 drain, s2091): Half-Life Hollow's four authored anchors move it out of
+  // not-offered by the same one, 7 -> 6. Both sides of this merge again wrote pins from different
+  // stacks — main's said 7, lane/d's said 8, and NEITHER describes the merged tree. Pin below =
+  // the OCTUPLE-stacked merged tree's own regen output, verbatim; no side's arithmetic was edited
+  // into agreement (F-1441-3: re-pin only with a named cause, and the cause is named here).
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 6);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and none of the empty-data admissions was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -178,7 +183,10 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // over: this audit's rows are buildable/ability/choice/verb/economy surfaces read PER CONTRACT,
   // a mechanics RULE is not one of them (the A4 note above found the same), and a targetless
   // context action appears in no contract's player menu to be compared against.
-  // (A8 pins above were measured on its own pre-stack base; the pins below are the QUINTUPLE-stacked
+  // HALF-LIFE HOLLOW ADMISSION (2026-08-20, B3): four authored anchors move one contract through
+  // the same data-derived door as the preceding layers: +10 agent-lacks, +30 equal, -1
+  // not-offered. The crossing consumer is a mechanics rule and does not add an audit row.
+  // (A8 pins above were measured on its own pre-stack base; the pins below are the stacked
   // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run + Flotilla — verbatim.
   // The Flotilla adds no exemption, so the count stayed at A8's 6 through that layer; the live
   // pins now sit at the END of this block, after the A5 layer below.)
@@ -214,8 +222,21 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // (A5 pins above were measured on its own pre-stack base; the pins below are this branch's regen
   // output verbatim. The attended drain re-measures the stack at merge — A3 echo-canyon is being
   // built concurrently and would stack on top of these numbers.)
+  // ⚠️ EIGHTH STACK (the B3 drain, s2091 — HALF-LIFE HOLLOW ADMISSION). Half-Life Hollow's four
+  // authored anchors take it through the same data-derived door as every layer above: the parity
+  // block moves by one contract's worth, and THE EXEMPTION COUNT DOES NOT MOVE, for the same
+  // reason the Echo Canyon note above records — the Hollow was never in
+  // CONTRACT_ADMISSION_EXEMPTIONS, it was excluded by empty data, which is a different door — and
+  // unlike the Relay Rush and the Seed Run it SECURES (both bench seeds, wave 20, twice each:
+  // `fnv1a32:6204c6d0` / `fnv1a32:61359a06`), so it enters the DOOR rather than the exemption
+  // table. The crossing consumer is a mechanics RULE and adds no audit row, the fourth layer in a
+  // row to find that shape.
+  // ⚠️ BOTH SIDES OF THIS MERGE WROTE PINS FROM DIFFERENT STACKS AND NEITHER DESCRIBES THE MERGED
+  // TREE: main's said 7 exemptions / 453/947/7 (post-A3+A5), lane/d's said 6 / 422/938/8 (measured
+  // on a pre-A3/A5 base). Pins below = the OCTUPLE-stacked merged tree's own regen output,
+  // verbatim. Predicted from the +10/+30/-1/+39 anchor shape BEFORE measuring and confirmed by it.
   assert.equal(audit.admission.exemptions.length, 7);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 453, equal: 947, 'not-offered': 7 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 463, equal: 977, 'not-offered': 6 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

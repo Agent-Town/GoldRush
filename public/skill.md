@@ -328,6 +328,7 @@ One refusal is a different shape and is named here so nobody hunts for a missing
   "e5-flotilla",
   "e5-regatta",
   "e6-glow-mesa",
+  "e6-half-life-hollow",
   "e7-dead-band",
   "e7-echo-canyon",
   "e7-relay-valley",

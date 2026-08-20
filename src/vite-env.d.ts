@@ -515,6 +515,7 @@ interface ThreeGameDiagnostics {
   /** A3: present only where the contract declares `twist.broadcastMirror`; null everywhere else. */
   broadcastMirror: import('./systems/BroadcastMirror').BroadcastMirrorDiagnostics | null;
   lowOrbit: import('./systems/LowOrbitSystem').LowOrbitDiagnostics;
+  hollowCrossing: import('./systems/HollowCrossingSystem').HollowCrossingDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;

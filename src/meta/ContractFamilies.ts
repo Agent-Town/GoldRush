@@ -694,6 +694,12 @@ export type ContractManifest = {
     archiveWingZones?: Array<ContractRectZone & { order: number }>;
     emptyShelfZone?: ContractRectZone;
     lightHoldSites?: Array<ContractHarvestAnchor & { id: string; radius: number }>;
+    hollowCrossing?: {
+      glowBridges: ContractRectZone[];
+      causeway: ContractRectZone;
+      shelfIds: string[];
+      extractionStakeId: string;
+    };
     eraDeckZones?: Array<ContractRectZone & { era: number }>;
     preserveSites?: ContractPreserveSite[];
     riverBand?: ContractRectZone;
@@ -1530,7 +1536,7 @@ const AUTHORED_TILE_KEYS = [
   'sleeper', 'unmarkedWagon', 'raceCourse', 'stillwater', 'flotilla', 'gravity', 'atmosphere', 'objectiveMetadata',
   'echoCanyonBands', 'broadcastMirrorZones', 'signalNullZones', 'interferenceFrontZones', 'probeRecoveryZones', 'suitOnlyZones',
   'orbitalScaffoldZones', 'debrisFields', 'handholdRoutes', 'eclipseShadowZones', 'archiveWingZones', 'emptyShelfZone',
-  'lightHoldSites', 'eraDeckZones', 'preserveSites', 'riverBand', 'creditsRiverZone', 'description', 'objectives', 'teachingIntent',
+  'lightHoldSites', 'hollowCrossing', 'eraDeckZones', 'preserveSites', 'riverBand', 'creditsRiverZone', 'description', 'objectives', 'teachingIntent',
   'engineDependencies', 'lanes',
 ] as const;
 const AUTHORED_TWIST_KEYS = [
