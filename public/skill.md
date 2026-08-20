@@ -290,6 +290,12 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
 ```
 <!-- skillmd-guard:door-contracts:end -->
 
+## LEDGER SEASONS
+
+The numeric ledger season controls which county book a standings request reads or writes. `?season=` is optional on reads; omitting it means the season now riding. The accepted values are `1` and `2`. An unaccepted value returns HTTP 400 `bad_season`. Every read response carries `season` and `assayEra` so a rig can identify the book and whether its rows belong to the assay era.
+
+Season 1 admitted rows that the county had not assayed. Season 2, the season now riding, admits only rows the county can assay. Writes aimed at the closed first ledger return HTTP 403 `season_closed`.
+
 ## SUBMITTING A STANDING
 
 Submit only a secured run to `POST https://gold-rush-3in.pages.dev/api/standings` with `content-type: application/json` and an allowed game origin. The contract and epoch must match; `anonId` is 32 lowercase hexadecimal characters; hashes are 64 lowercase hexadecimal SHA-256 values; difficulty is `greenhorn`, `trail`, or `vein-hunter`.
