@@ -45,13 +45,16 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // true and every one of its parity rows already read `equal`. Only the exemption count moves.
   // ATTRIBUTED by revert-and-reproduce, not guessed: re-adding that one exemption row and re-running
   // this audit reproduced 6 exemptions with the SAME 0/331/749/15 summary, exactly.
-  // ADMISSION MOVE (2026-08-20, `fix-e3-fairground-crowd-flocks`): the crowd-flock consumer landed
-  // in both engines, so `e3-fairground` left CONTRACT_ADMISSION_EXEMPTIONS (5 -> 4) and its parity
-  // rows stopped being `agent-lacks` (331 -> 312, equal 749 -> 768) — 19 rows, one contract's worth
-  // for a tile that offers no turret. ATTRIBUTED by revert-and-reproduce, not guessed: re-adding
-  // that one exemption row and re-running this audit reproduced 5/331/749/15 EXACTLY.
-  assert.equal(audit.admission.exemptions.length, 4);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 312, equal: 768, 'not-offered': 15 });
+  // NO ADMISSION MOVE FOR `e3-fairground` (2026-08-20), and the near-miss is worth recording. Its
+  // crowd-flock consumer DID land in both engines, and removing the exemption moved these numbers
+  // by exactly one contract's worth: 5 -> 4 exemptions, 331 -> 312 `agent-lacks`, 749 -> 768
+  // `equal` (19 rows; the tile offers no turret). The attended gate then HELD admission — the
+  // door-completion sheet's build law asks for "a public-verb secure proof x2 per seed" and the
+  // securing runs draw their repair gold through the ?debug seam (F-E3CF-4) — so the row went back
+  // and these numbers went back with it. Both directions were measured, so when the prover lands,
+  // 4/312/768/15 is the arithmetic to expect, not a guess.
+  assert.equal(audit.admission.exemptions.length, 5);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 331, equal: 749, 'not-offered': 15 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

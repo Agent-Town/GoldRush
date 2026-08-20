@@ -431,8 +431,20 @@ for (const contract of voltage.contracts) {
         // A powerGrid contract sells no turret; the fair defends itself with beacons and palisades.
         expect(mechanics.buildables?.map(({ id }: { id: string }) => id)).not.toContain('turret');
 
+        // ADMISSION IS REFUSED, AND THAT IS THE FIRST THING THIS BRANCH ASSERTS. The consumer runs
+        // in both engines, but the door-completion sheet's build law asks for "a public-verb secure
+        // proof x2 per seed" and none exists yet (F-E3CF-4), so the ordinary door still says no.
+        for (const seed of seeds) {
+          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(/AP-07 supports only/);
+        }
+        // Everything below rides `admissionProbe`, the DECLARED measurement seam — "bypasses
+        // admission without making a playability claim". It is used here to measure the mechanic
+        // and never to assert a secure: the positive half of the latch is proven in the browser
+        // (`e2e/e3-fairground-flocks.spec.ts`), which is a lawful path for an exempted contract.
+        const probe = (seed: string) => new HeadlessContractSim({ contractId: contract.id, seed, admissionProbe: true });
+
         // THE ESCORT AT REST: three crowds on the gate line, each under its own attraction.
-        const atRest = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0]! });
+        const atRest = probe(seeds[0]!);
         expect(atRest.crowdFlocks.diagnostics).toMatchObject({
           enabled: true,
           count: 3,
@@ -463,7 +475,7 @@ for (const contract of voltage.contracts) {
         // home again on the next tick (it scatters to a gate it never really left), so `scattering`
         // is a state too brief to assert. The fright COUNTER is the durable fact.
         const parkedFright = (offset: number) => {
-          const sim = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0]! });
+          const sim = probe(seeds[0]!);
           stepToNight(sim);
           const before = sim.crowdFlocks.diagnostics;
           const flock = before.flocks[1];
@@ -475,17 +487,20 @@ for (const contract of voltage.contracts) {
         expect(parkedFright(6.9)).toEqual({ frights: 1, crossings: 0 });
         expect(parkedFright(7.1)).toEqual({ frights: 0, crossings: 0 });
 
-        // A CLEAN MIDWAY CROSSES, AND THE LATCH OPENS. The rig is buffed so the corridor clears —
-        // the same measurement idiom the Ridge and the Canyon use above — and the run is stepped to
-        // the declared secure wave. Deterministic twice over, so the crossings are the reason.
+        // A CLEAN MIDWAY CROSSES, AND THE ESCORT IS DETERMINISTIC. The rig is buffed so the
+        // corridor clears — the same measurement idiom the Ridge and the Canyon use above. NOTE
+        // WHAT IS NOT ASSERTED HERE: that the run secures. A secure measured behind a buffed rig
+        // through the admission probe is exactly the debug-seam claim this contract's hold exists
+        // to refuse; the browser spec proves the latch OPENS, and this branch proves only that the
+        // crossings complete, repeat identically, and that the wheel rule still shuts the door.
         Object.assign(Balance.sparkRig, { damage: 1_000, fireRate: 60, range: 300, boltSpeed: 30, boltLife: 5 });
         const run = (seed: string, breakWheel: boolean) => {
-          const sim = new HeadlessContractSim({ contractId: contract.id, seed });
+          const sim = probe(seed);
           sim.hero.applyStats(100_000, 1);
           sim.hero.heal(100_000);
-          // One post beside the stake, the same first purchase the prover makes: with no other
-          // building standing, the nearest building to a west/east saboteur is the wheel itself,
-          // 47 units off and undefended, and it is rubble before the crowds have crossed twice.
+          // One post beside the stake: with no other building standing, the nearest building to a
+          // west/east saboteur is the wheel itself, 47 units off and undefended, and it is rubble
+          // before the crowds have crossed twice.
           expect(sim.build.placeFree('palisade', { x: 0, z: -33 }, 0)).toBe(true);
           if (breakWheel) expect(sim.ferrisWheel.damage(1).applied).toBe(true);
           const maxTicks = Math.ceil(((contract.twist.secureWave + 2) * Balance.waves.waveInterval) / (1 / 30));
@@ -499,7 +514,6 @@ for (const contract of voltage.contracts) {
           expect(first.flocks.allCrossed).toBe(true);
           expect(first.flocks.flocks.every(({ crossings }: { crossings: number }) => crossings > 0)).toBe(true);
           expect(first.wheel.spinning).toBe(true);
-          expect(first.state.run.secured).toBe(true);
           expect(first.state.crowdFlocks.completions).toBe(second.state.crowdFlocks.completions);
           expect(second.state.crowdFlocks.flocks).toEqual(first.state.crowdFlocks.flocks);
         }

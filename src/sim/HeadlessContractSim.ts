@@ -93,11 +93,16 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'Best measured play with declared E1 progression secured seed 02 at wave 18 but terminated unsecured at wave 12/13 on seed 01; no pressureEnabled, hpScale-30 railcar. Re-admit when both bench seeds hold.',
     citation: 'reviews/e2-pressure-arsenal-headless.md',
   },
-  // F-1475-1's row is GONE (2026-08-20): "the crowd-flock escort objective has no headless
-  // consumer" was true when it was written and is false now — `CrowdFlockSystem` runs in both
-  // engines, the wheel is a damageable target here as it is in the browser, and the contract
-  // secured on both bench seeds under a public-verb prover. The reason died, so the row went
-  // with it (contrast `e6-showroom`, whose reason died but whose refusal survived).
+  // F-1475-1's ORIGINAL reason is dead and its replacement is narrower. "The crowd-flock escort
+  // objective has no headless consumer" was true when written and is false now: `CrowdFlockSystem`
+  // runs in BOTH engines and the wheel is a damageable target here as it is in the browser. What
+  // holds admission is the build law, not the consumer — the door-completion sheet requires "a
+  // public-verb secure proof x2 per seed", and no such proof exists yet. Same shape as
+  // `e6-showroom`: the reason died, the refusal survived, so the row is REWORDED not removed.
+  'e3-fairground': {
+    reason: 'Admission HELD pending a public-verb secure x2 per seed (F-E3CF-4). The crowd-flock consumer runs in both engines and winnability is proven at unmodified balance by artifacts/e3-fairground/fort-budget-probe.mjs (radius-8 ring + 4 beacons, 1 gold/s repairs, both seeds wave 12) — but those securing runs draw their repair gold through the ?debug seam, so they are evidence, not proof. Best public-verb play reached wave 14 with the wheel untouched and 7 crossings banked; the middle crowd, whose gate lane is the hero stake, never crossed.',
+    citation: 'reviews/e3-fairground-crowd-flocks.md',
+  },
   'e5-stillwater': {
     reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
     citation: 'reviews/milk-twin-sockets.md',
