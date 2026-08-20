@@ -292,6 +292,21 @@ while true; do
           deletion_numeric_count=$(printf '%s\n' "$deletion_probe" | awk '$1 ~ /^[0-9]+$/ && $2 ~ /^[0-9]+$/ { n++ } END { print n+0 }')
           deletion_count=$(printf '%s\n' "$deletion_probe" | awk '$2 ~ /^[0-9]+$/ { n += $2 } END { print n+0 }')
         fi
+        # F-2089-1: resolve the BUILD-ON-PREDECESSOR declaration before the verdict below.
+        # `optin_undeclared` starts NON-empty so that every path which does not positively
+        # compute it (no token, no declared paths, a mis-sized held array) falls through to
+        # REFUSE rather than to an accidental empty-string match.
+        optin_declared='' optin_undeclared='<uncomputed>'
+        if grep -q '^LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR$' "$f" 2>/dev/null &&
+           [ "$held_count" -gt 0 ] && [ "${#held_paths[@]}" -eq "$held_count" ]; then
+          optin_declared=$(sed -n 's/^EXPECTED-HOLDS:[[:space:]]*//p' "$f" |
+            sed 's/[[:space:]]*$//' | sed '/^$/d' | LC_ALL=C sort -u)
+          if [ -n "$optin_declared" ]; then
+            optin_undeclared=$(LC_ALL=C comm -23 \
+              <(printf '%s\n' "${held_paths[@]}" | LC_ALL=C sort -u) \
+              <(printf '%s\n' "$optin_declared"))
+          fi
+        fi
         if [ "$residue_probe_rc" -eq 0 ] &&
            [ "$residue_absorbed_count" -eq "$held_count" ] &&
            [ "$residue_line_count" -eq "$held_count" ] &&
@@ -300,6 +315,35 @@ while true; do
            [ "$deletion_numeric_count" -eq "$held_count" ] &&
            [ "$deletion_count" -eq 0 ]; then
           echo "[lane-runner-v3] $slot: HOLDS paths fully absorbed by main — dispatching $name: ${held_paths[*]}"
+        elif [ -n "$optin_declared" ] && [ -z "$optin_undeclared" ]; then
+          # F-2089-1: BUILD-ON-PREDECESSOR — the one safe master this guard could not express.
+          # Everything above keys on the LANE'S STATE, so it cannot tell a master that will
+          # `reset --hard` the lane (F-1522-1's real casualty: lane/a lost ee61f25ee) from one
+          # whose pre-flight FORBIDS the reset because the held WIP is its own base. Refusing
+          # the second kind protects nothing and brakes the board permanently: b4v2 was refused
+          # 296 times, once per poll cycle, for holding exactly the commit it was authored to
+          # extend — with both escapes shut, since merging the WIP is owner-forked
+          # (drain-block-check rc=1, "its WIP on lane/b is v2s base") and resetting is forbidden
+          # by the master's own pre-flight. A guard whose only remedy is an act its own subject
+          # forbids is not strict, it is stuck.
+          #
+          # This is NOT a blank cheque, and the declaration is the whole safety argument: the
+          # master must NAME the held paths, and EVERY held path must appear in that list. A
+          # lane holding anything its author did not anticipate is precisely the unexpected
+          # state F-1522-1 exists to refuse, so that still refuses — the opt-in narrows the
+          # guard to "this author proved they knew what was there", never to "skip the check".
+          # It cannot be satisfied by accident: b4v2's lane holds SIX paths, not the one its
+          # own review names, so the declaration has to be measured against the live lane
+          # rather than remembered. Fails safe in every direction — no token, an empty
+          # EXPECTED-HOLDS list, or a single undeclared held path all fall through to REFUSE.
+          #
+          # The predicate is SUBSET (held ⊆ declared), deliberately, not set equality. A
+          # declared path that is NOT held carries no risk at all — there is nothing there to
+          # destroy — whereas equality rots on its own: lane/b runs ~100 commits behind, so the
+          # first time main absorbs any one of the six, an equality test would refuse a
+          # dispatch that had become STRICTLY SAFER. Brittleness that reads as strictness is
+          # how a guard earns the excusing-away that killed the `cross-engine` label (F-1460-1).
+          echo "[lane-runner-v3] $slot: BUILD-ON-PREDECESSOR opt-in honoured — $name declared all $held_count held path(s), dispatching over: ${held_paths[*]}"
         else
           echo "[lane-runner-v3] $slot: REFUSE $name — HOLDS undrained paths:"
           printf '%s\n' "$lane_probe" | sed -n '/^[[:space:]]*HELD /p'

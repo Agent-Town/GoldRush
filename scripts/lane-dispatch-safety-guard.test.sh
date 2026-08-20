@@ -171,4 +171,86 @@ else
   fail DISPATCHES-PROBE-FAIL-OPEN 'missing probe stalled dispatch'
 fi
 
+# F-2089-1 — the BUILD-ON-PREDECESSOR opt-in. A master whose pre-flight forbids the reset may
+# dispatch over holds it DECLARES EXACTLY. Every other shape must still refuse, so all four
+# cases below are driven against a real HOLDS lane and differ only in the master's declaration.
+optin_fixture() { # optin_fixture <name> <master-body>
+  local root; root="$(new_fixture "$1")"
+  printf 'main has never absorbed this\n' > "$root/worktrees/lane-a/held-path.txt"
+  git -C "$root/worktrees/lane-a" add held-path.txt
+  git -C "$root/worktrees/lane-a" commit -qm held
+  printf '%s' "$2" > "$root/tasks/queue/lane-a/master.md"
+  echo "$root"
+}
+
+optin_root="$(optin_fixture optin 'fixture master
+LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
+EXPECTED-HOLDS: held-path.txt
+')"
+optin_verdict="$(verdict_for "$optin_root")"
+optin_out="$(dispatch_once "$optin_root")"
+if [ "$optin_verdict" = HOLDS ] &&
+   [ -f "$optin_root/tasks/running/master.md" ] &&
+   grep -Fq 'opt-in honoured' <<< "$optin_out"; then
+  pass HONOURS-DECLARED-BUILD-ON-PREDECESSOR 'a full declaration dispatched over a real HOLDS lane'
+else
+  fail HONOURS-DECLARED-BUILD-ON-PREDECESSOR "verdict=$optin_verdict; queue=$(test -e "$optin_root/tasks/queue/lane-a/master.md" && echo kept || echo moved); output=${optin_out:-<empty>}"
+fi
+
+# The safety argument itself: a lane holding ANYTHING the author did not anticipate is the
+# unexpected state F-1522-1 exists to refuse, so a partial declaration must not clear it.
+partial_root="$(new_fixture optin-partial)"
+printf 'main has never absorbed this\n' > "$partial_root/worktrees/lane-a/held-a.txt"
+printf 'nor this one\n' > "$partial_root/worktrees/lane-a/held-b.txt"
+git -C "$partial_root/worktrees/lane-a" add held-a.txt held-b.txt
+git -C "$partial_root/worktrees/lane-a" commit -qm held-pair
+printf 'fixture master\nLANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR\nEXPECTED-HOLDS: held-a.txt\n' \
+  > "$partial_root/tasks/queue/lane-a/master.md"
+partial_verdict="$(verdict_for "$partial_root")"
+partial_out="$(dispatch_once "$partial_root")"
+if [ "$partial_verdict" = HOLDS ] &&
+   [ -f "$partial_root/tasks/queue/lane-a/master.md" ] &&
+   [ ! -e "$partial_root/tasks/running/master.md" ]; then
+  pass REFUSES-PARTIAL-DECLARATION 'an undeclared second held path still refused'
+else
+  fail REFUSES-PARTIAL-DECLARATION "verdict=$partial_verdict; queue=$(test -e "$partial_root/tasks/queue/lane-a/master.md" && echo kept || echo moved); output=${partial_out:-<empty>}"
+fi
+
+# SUBSET, not equality: a declared path that is not held carries no risk, and equality would
+# refuse a dispatch that had become strictly safer the moment main absorbed one of the holds.
+superset_root="$(optin_fixture optin-superset 'fixture master
+LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
+EXPECTED-HOLDS: held-path.txt
+EXPECTED-HOLDS: already-absorbed-by-main.txt
+')"
+superset_out="$(dispatch_once "$superset_root")"
+if [ -f "$superset_root/tasks/running/master.md" ] &&
+   grep -Fq 'opt-in honoured' <<< "$superset_out"; then
+  pass HONOURS-SUPERSET-DECLARATION 'declaring a path main already absorbed did not block dispatch'
+else
+  fail HONOURS-SUPERSET-DECLARATION "queue=$(test -e "$superset_root/tasks/queue/lane-a/master.md" && echo kept || echo moved); output=${superset_out:-<empty>}"
+fi
+
+no_token_root="$(optin_fixture optin-no-token 'fixture master
+EXPECTED-HOLDS: held-path.txt
+')"
+no_token_out="$(dispatch_once "$no_token_root")"
+if [ -f "$no_token_root/tasks/queue/lane-a/master.md" ] &&
+   [ ! -e "$no_token_root/tasks/running/master.md" ]; then
+  pass REFUSES-DECLARATION-WITHOUT-OPT-IN 'a path list alone is not an opt-in'
+else
+  fail REFUSES-DECLARATION-WITHOUT-OPT-IN "queue=$(test -e "$no_token_root/tasks/queue/lane-a/master.md" && echo kept || echo moved); output=${no_token_out:-<empty>}"
+fi
+
+empty_list_root="$(optin_fixture optin-empty-list 'fixture master
+LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
+')"
+empty_list_out="$(dispatch_once "$empty_list_root")"
+if [ -f "$empty_list_root/tasks/queue/lane-a/master.md" ] &&
+   [ ! -e "$empty_list_root/tasks/running/master.md" ]; then
+  pass REFUSES-OPT-IN-WITHOUT-DECLARED-PATHS 'the token alone is not a blank cheque'
+else
+  fail REFUSES-OPT-IN-WITHOUT-DECLARED-PATHS "queue=$(test -e "$empty_list_root/tasks/queue/lane-a/master.md" && echo kept || echo moved); output=${empty_list_out:-<empty>}"
+fi
+
 [ "$fail" -eq 0 ] || exit 1
