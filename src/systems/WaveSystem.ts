@@ -159,6 +159,14 @@ export class WaveSystem {
     registerEscortTarget: (target: BuildingTarget) => void = () => {},
     private readonly onEscortPayout: (amount: number, position: THREE.Vector3, atSim: number) => void = () => {},
     private readonly escortRepairers: () => readonly THREE.Vector3[] = () => [heroPosition],
+    /**
+     * Living enemies that do NOT hold a spawn slot. Owner ruling 2026-08-20 ("cap fix yes"):
+     * machines wound down to `exhausted` are out of the fight and must stop counting against
+     * `Balance.waves.aliveCap`. Both engines seat the same `WrangleSystem.exhaustedCount`
+     * reader here (Game.ts via `this.wrangle`, GR-SIM via `AtomicSocket`), so the refusal
+     * below is one rule, not two implementations. Zero for every contract outside E6.
+     */
+    private readonly capExemptCount: () => number = () => 0,
   ) {
     this.nextWaveAt = this.waveInterval();
     this.nextPlanWaveAt = this.nextWaveAt;
@@ -191,6 +199,16 @@ export class WaveSystem {
   private get escortMode() {
     if (this.boot.mode !== 'escort') return undefined;
     return this.contract.modes?.find((mode) => mode.id === 'escort');
+  }
+
+  /**
+   * The number the alive cap is measured against: everything alive MINUS the enemies that
+   * no longer hold a spawn slot (`capExemptCount`). `EnemyPool.activeCount` still counts
+   * exhausted machines everywhere else — they are alive, drawn, and collidable; they simply
+   * stop pressing on the wave clock. The pool's own 96-slot ceiling remains the hard stop.
+   */
+  private get aliveAgainstCap(): number {
+    return Math.max(0, this.enemies.activeCount - this.capExemptCount());
   }
 
   get diagnostics(): WaveDiagnostics {
@@ -533,7 +551,7 @@ export class WaveSystem {
     respectAliveCap = true,
     applyEntryDamageScale = true,
   ): boolean {
-    if (respectAliveCap && Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
+    if (respectAliveCap && Balance.waves.aliveCap - this.aliveAgainstCap <= 0) return false;
 
     const radius = Balance.waves.spawnRingRadius;
     const spread = (index - 0.5 * Math.max(0, groupCount - 1)) * 1.35;
@@ -576,7 +594,7 @@ export class WaveSystem {
     respectAliveCap = true,
     params: SpawnPackOptions & { edge?: CompassEdge; thief?: boolean; wrecker?: boolean } = {},
   ): boolean {
-    if (respectAliveCap && Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
+    if (respectAliveCap && Balance.waves.aliveCap - this.aliveAgainstCap <= 0) return false;
     this.keepSpawnOutOfDeepWater(params.edge);
     this.keepSpawnOutOfNoSpawnZones();
 

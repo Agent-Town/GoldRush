@@ -1322,6 +1322,9 @@ export class Game {
         this.localActor.group.position,
         ...((this.agentStub?.state.permissionLevel ?? 0) >= 1 ? [this.prospector.position] : []),
       ],
+      // Owner ruling 2026-08-20: exhausted machines stop holding spawn slots. GR-SIM seats the
+      // SAME reader through `AtomicSocket.exhaustedCount`, so the two engines refuse identically.
+      () => this.wrangle.exhaustedCount(),
     );
     resetAssetLoading(canvas, 'the claim');
     this.assertActorMode();

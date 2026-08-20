@@ -112,9 +112,13 @@ for (const contract of atomic.contracts) {
       expect(active.map(({ variantId }: { variantId: string }) => variantId).sort()).toEqual([...machines].sort());
       expect(active.every(({ state }: { state: string }) => state === 'exhausted')).toBe(true);
       // Exhausted: harmless to the hero AND immune to it (Game.ts:536 and :2606 share the
-      // predicate), and still alive, so each one holds a spawn slot against Balance.waves.aliveCap.
+      // predicate), and still alive — but as of the owner's 2026-08-20 cap ruling they no
+      // longer hold a spawn slot against Balance.waves.aliveCap. `exhaustedCount` is the ONE
+      // number both engines subtract (WaveSystem's `capExemptCount` seat), so counting it here
+      // pins the exemption at the same place the census pins the rest of the consumer.
       expect(spawned.every((enemy) => socket.isHostile(enemy))).toBe(false);
       expect(spawned.every((enemy) => enemy.isAlive)).toBe(true);
+      expect(socket.exhaustedCount()).toBe(spawned.length);
       expect(spawned.every((enemy) => socket.movementMultiplier(enemy) === Balance.wrangle.exhaustedSpeedMultiplier)).toBe(true);
       // AP-16-7: the agent-surface lever now closes the consumer loop without changing its law.
       expect(socket.diagnostics.wrangle.pen.total).toBe(0);
