@@ -16,6 +16,7 @@ import { createRng } from '../core/Rng';
 import { EventBus, type GameEvent } from '../core/EventBus';
 import type { Intents } from '../core/InputController';
 import { BlastChargePool } from '../entities/BlastCharge';
+import { FerrisWheel, type FerrisWheelDiagnostics } from '../entities/FerrisWheel';
 import { GoldPickupPool } from '../entities/GoldPickup';
 import { EnemyPool } from '../entities/pools';
 import { Hero } from '../entities/Hero';
@@ -53,6 +54,7 @@ import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem, type ShooterHandle } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
+import { CrowdFlockSystem, type CrowdFlockDiagnostics } from '../systems/CrowdFlockSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
@@ -93,9 +95,15 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'Best measured play with declared E1 progression secured seed 02 at wave 18 but terminated unsecured at wave 12/13 on seed 01; no pressureEnabled, hpScale-30 railcar. Re-admit when both bench seeds hold.',
     citation: 'reviews/e2-pressure-arsenal-headless.md',
   },
+  // F-1475-1's ORIGINAL reason is dead and its replacement is narrower. "The crowd-flock escort
+  // objective has no headless consumer" was true when written and is false now: `CrowdFlockSystem`
+  // runs in BOTH engines and the wheel is a damageable target here as it is in the browser. What
+  // holds admission is the build law, not the consumer — the door-completion sheet requires "a
+  // public-verb secure proof x2 per seed", and no such proof exists yet. Same shape as
+  // `e6-showroom`: the reason died, the refusal survived, so the row is REWORDED not removed.
   'e3-fairground': {
-    reason: 'Scripted admission re-probe terminated unsecured at waves 2/3; the crowd-flock escort objective has no headless consumer.',
-    citation: 'F-1475-1',
+    reason: 'Admission HELD pending a public-verb secure x2 per seed (F-E3CF-4). The crowd-flock consumer runs in both engines and winnability is proven at unmodified balance by artifacts/e3-fairground/fort-budget-probe.mjs (radius-8 ring + 4 beacons, 1 gold/s repairs, both seeds wave 12) — but those securing runs draw their repair gold through the ?debug seam, so they are evidence, not proof. Best public-verb play reached wave 14 with the wheel untouched and 7 crossings banked; the middle crowd, whose gate lane is the hero stake, never crossed.',
+    citation: 'reviews/e3-fairground-crowd-flocks.md',
   },
   'e5-stillwater': {
     reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
@@ -206,6 +214,12 @@ export type HeadlessAgentView = AgentView & {
      * everywhere else — silence means "no probe out there", and it must keep meaning that.
      */
     probeRecovery?: ProbeRecoveryDiagnostics;
+    /** E3 Fairground: the dynamo the run defends and the escort the run must complete. */
+    fairground?: {
+      wheel: FerrisWheelDiagnostics;
+      flocks: CrowdFlockDiagnostics;
+      objective: { allCrossed: boolean; wheelSpinning: boolean; securableAtWave: number | null };
+    };
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -322,6 +336,8 @@ export class HeadlessContractSim {
   private readonly lightField: LightField | null;
   private readonly mothSwarm: MothSwarm | null;
   private readonly crawler: CrawlerBossSystem | null;
+  private readonly crowdFlocks: CrowdFlockSystem | null;
+  private readonly ferrisWheel: FerrisWheel | null;
   private readonly dredgeQueen: DredgeQueenBossSystem | null;
   private readonly goldPickups: GoldPickupPool | null;
   private readonly homemaker: HomemakerBossSystem | null;
@@ -517,6 +533,29 @@ export class HeadlessContractSim {
     this.powerGraph = powerGrid
       ? new PowerGraphSystem(contractPowerDefinition(this.contractId, powerGrid), powerGrid.maxSpanLength)
       : null;
+    // --- E3 FAIRGROUND. The browser builds both of these inside its power-grid branch
+    // (`Game.ts:4029-4034`), so they are built here in the same place and on the same gates.
+    //   THE WHEEL: the REAL `FerrisWheel`, reused not reshaped — probed before this line was
+    //   written and browser-free (Torus/Box/Cylinder/Circle/Octahedron geometries and
+    //   MeshStandardMaterials are plain typed-array objects; no `document`, no GL context), the
+    //   same finding that let the Homemaker reuse `GoldPickupPool`. It is minted ONLY where a
+    //   fairground is declared, so no already-admitted contract gains an object or a tick.
+    //   THE FLOCKS: gated on `twist.fairground.crowdFlocks`, the FIELD and not the block —
+    //   F-1471-1's lesson, so a fairground without flocks never gets an objective it cannot meet.
+    this.ferrisWheel = this.manifest.twist.fairground
+      ? new FerrisWheel(this.manifest.twist.fairground.wheel)
+      : null;
+    this.crowdFlocks = CrowdFlockSystem.create(this.manifest);
+    if (this.ferrisWheel) {
+      const wheel = this.ferrisWheel;
+      this.targeting.registerBuilding(wheel.target);
+      // `Game.ts:4577` routes the wheel's damage through the megaproject resolver, because the
+      // wheel's target declares `family: 'megaproject'`. Registered ONLY when a wheel exists, so
+      // every other contract keeps BuildSystem's untouched `applied: false` fallback.
+      this.build.setMegaprojectDamageResolver((target, amount) => target === wheel.target
+        ? wheel.damage(amount)
+        : { applied: false, family: target.family, index: target.index, hp: target.hp, maxHp: target.maxHp, wrecked: false });
+    }
     this.crawler = this.manifest.twist.baron?.variantId === 'dynamo_crawler'
       ? new CrawlerBossSystem(
           () => this.enemies.all,
@@ -701,6 +740,11 @@ export class HeadlessContractSim {
         waveSystem: this.waves,
         activeContract: this.manifest,
         secureWaveForRun: () => this.manifest.twist.secureWave ?? Balance.run.secureWave,
+        // Transcribed from `Game.autoSecureWaveForRun` (`src/game/Game.ts:5115`), clause for
+        // clause. The two fairground clauses are the LOSS rule and the OBJECTIVE rule and they
+        // are deliberately separate: a stopped wheel is unrecoverable (the dynamo never restarts
+        // mid-run), while an incomplete escort is only unfinished — the flocks keep trying every
+        // night, and a run that completes its third crossing at wave 13 still secures at 12.
         autoSecureWaveForRun: () => (this.manifest.twist.baron && !this.baronBeaten)
           || (this.manifest.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
           || (this.manifest.tileParams.raceCourse && this.deepwater?.diagnostics.race?.finished !== true)
@@ -709,6 +753,8 @@ export class HeadlessContractSim {
           // objective does above. `objectiveAllowsSecure` is true on every contract that
           // declares no probe, so no admitted contract's terminal moves.
           || !this.probeRecovery.objectiveAllowsSecure
+          || (this.manifest.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
+          || (this.crowdFlocks !== null && !this.crowdFlocks.allCrossed)
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -821,6 +867,10 @@ export class HeadlessContractSim {
         ...(this.powerGraph ? { power: this.powerGraph.snapshot() } : {}),
         ...(this.dayNightSnapshot ? { dayNight: this.dayNightSnapshot } : {}),
         ...(canyonConnect ? { canyonConnect } : {}),
+        // The escort ring is part of the terminal state, so it belongs in the hash that certifies
+        // it: a secure claimed with two crossings would hash differently from one won with three.
+        ...(this.ferrisWheel ? { fairground: this.ferrisWheel.diagnostics } : {}),
+        ...(this.crowdFlocks ? { crowdFlocks: this.crowdFlocks.simulationSnapshot } : {}),
         ...(crawler ? { crawler: (({ crawler3dState: _, ...simulation }) => simulation)(crawler) } : {}),
         ...(this.deepwater ? { deepwater: this.deepwater.simulationSnapshot } : {}),
         ...(this.atomic ? { atomic: this.atomic.diagnostics } : {}),
@@ -979,6 +1029,13 @@ export class HeadlessContractSim {
       this.waves.diagnostics.wave,
     );
     this.syncContractPowerGrid();
+    // Game.ts:2632-2636 orders these five exactly so: grid sync -> wheel -> wheel power -> graph
+    // step -> connect objective. The flocks ride at the wheel's own site and read the day/night
+    // sample the engine already holds — last tick's, in BOTH engines, because both refresh that
+    // field near the end of their tick (`Game.syncNightShiftLighting`, `step()` below).
+    this.ferrisWheel?.update(STEP_SECONDS);
+    this.syncFerrisWheelPower();
+    this.crowdFlocks?.update(STEP_SECONDS, this.dayNightSnapshot, this.enemies.all);
     this.powerGraph?.step(this.simTick);
     this.syncCanyonConnectObjective();
     this.syncStockpileHoldings();
@@ -1042,6 +1099,19 @@ export class HeadlessContractSim {
     // contract — `recovered` flips mid-run and gates the secure — so unlike the suppression
     // row above it is real per-turn state a rider must be able to poll.
     if (this.probeRecovery.declared) view.now.probeRecovery = this.probeRecovery.diagnostics;
+    // A rider cannot escort what it cannot see. THE VIEW carries the wheel, every flock's phase
+    // and crossing count, and the objective read straight off the same latch the run secures on —
+    // so a "secured" claim can be checked against the escort that earned it (Mistake #13).
+    if (this.ferrisWheel && this.crowdFlocks) {
+      const secureWave = this.manifest.twist.secureWave ?? Balance.run.secureWave;
+      const spinning = this.ferrisWheel.diagnostics.spinning;
+      const allCrossed = this.crowdFlocks.allCrossed;
+      view.now.fairground = {
+        wheel: this.ferrisWheel.diagnostics,
+        flocks: this.crowdFlocks.diagnostics,
+        objective: { allCrossed, wheelSpinning: spinning, securableAtWave: spinning && allCrossed ? secureWave : null },
+      };
+    }
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1373,6 +1443,8 @@ export class HeadlessContractSim {
       power: this.powerGraph?.snapshot() ?? null,
       dayNight: this.dayNightSnapshot,
       ...(canyonConnect ? { canyonConnect } : {}),
+      ...(this.ferrisWheel ? { fairground: this.ferrisWheel.diagnostics } : {}),
+      ...(this.crowdFlocks ? { crowdFlocks: this.crowdFlocks.diagnostics } : {}),
       crawler: this.crawler?.diagnostics() ?? null,
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
@@ -1438,6 +1510,40 @@ export class HeadlessContractSim {
         graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
       }
     }
+  }
+
+  /** `Game.syncFerrisWheelPower` (`src/game/Game.ts:6162`): a stopped dynamo is an offline node. */
+  private syncFerrisWheelPower(): void {
+    const wheel = this.ferrisWheel;
+    const graph = this.powerGraph;
+    if (!wheel || !graph) return;
+    const node = graph.snapshot().nodes.find((entry) => entry.id === wheel.config.nodeId);
+    if (node && node.online !== wheel.diagnostics.spinning) {
+      graph.queueCommand({ type: 'set-node-online', nodeId: node.id, online: wheel.diagnostics.spinning });
+    }
+  }
+
+  /** `Game.fairgroundCoverageSources` (`src/game/Game.ts:5611`), with no debug time override. */
+  private fairgroundCoverageSources(): LightSource[] {
+    const fairground = this.manifest.twist.fairground;
+    const graph = this.powerGraph;
+    if (!fairground || !graph) return [];
+    const snapshot = graph.snapshot();
+    const night = Math.floor(this.timeAlive / Math.max(1, this.manifest.twist.dayNightCycle?.periodSeconds ?? 1));
+    const sources: LightSource[] = [];
+    const wheelSource = this.ferrisWheel?.coverageSource;
+    if (wheelSource) sources.push(wheelSource);
+    for (const pavilion of fairground.pavilions) {
+      if (snapshot.nodes.find((node) => node.id === pavilion.nodeId)?.state !== 'powered') continue;
+      sources.push({
+        id: `fairground:${pavilion.id}`,
+        kind: 'powered-lamp',
+        x: pavilion.x,
+        z: pavilion.z,
+        radius: pavilion.baseRadius + pavilion.radiusPerNight * night,
+      });
+    }
+    return sources;
   }
 
   private canyonConnectDiagnostics(): null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean } {
@@ -1532,9 +1638,14 @@ export class HeadlessContractSim {
       radius: Balance.decoyShed.lightRadius,
       targetWeight: config?.decoyWeight ?? 1,
     }));
+    // The browser derives its moth list by KIND from the full source array (`Game.ts:5735`), and
+    // the fairground's wheel/pavilion sources are `powered-lamp` — so they belong in this list to
+    // keep the two engines saying the same thing. It is inert today (no fairground declares
+    // `mothSeason`, so `mothSwarm` is null and nothing reads it), and correct tomorrow.
     this.mothLightSources = [
       ...lanterns,
       ...decoys,
+      ...this.fairgroundCoverageSources(),
     ];
     const darkness = this.dayNightSnapshot?.darkness ?? this.lightRampDarkness();
     const enemyLanterns: LightSource[] = this.enemies.all

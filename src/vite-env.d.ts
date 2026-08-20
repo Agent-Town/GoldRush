@@ -320,6 +320,7 @@ interface ThreeGameDiagnostics {
   escort: GrEscortDiagnostics;
   tram: GrTramDiagnostics | null;
   fairground: GrFerrisWheelDiagnostics | null;
+  crowdFlocks: import('./systems/CrowdFlockSystem').CrowdFlockDiagnostics | null;
   fuel: import('./systems/FuelSystem').FuelDiagnostics | null;
   vehicle: import('./entities/Vehicle').VehicleDiagnostics | null;
   power: GrPowerGraphDiagnostics;

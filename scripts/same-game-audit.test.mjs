@@ -95,6 +95,15 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ACTION to a verb the door already carried cannot add a verb row.
   // (Summary pinned from the MERGED tree's regen — Regatta + Far Side stacked; see the stack
   // warning at the top of this file's admission block.)
+  // NO ADMISSION MOVE FOR `e3-fairground` (2026-08-20), and the near-miss is worth recording. Its
+  // crowd-flock consumer DID land in both engines, and removing the exemption moved these numbers
+  // by exactly one contract's worth on the A1 branch's own pre-stack base: 5 -> 4 exemptions,
+  // 331 -> 312 `agent-lacks`, 749 -> 768 `equal` (19 rows; the tile offers no turret). The
+  // attended gate then HELD admission — the door-completion sheet's build law asks for "a
+  // public-verb secure proof x2 per seed" and the securing runs draw their repair gold through
+  // the ?debug seam (F-E3CF-4) — so the row went back and these numbers went back with it. Both
+  // directions were measured, so when the prover lands, expect one contract's worth of movement
+  // (19 rows on that base) against whatever the summary then reads, not those absolute digits.
   assert.equal(audit.admission.exemptions.length, 5);
   assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 361, equal: 839, 'not-offered': 12 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));

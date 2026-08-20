@@ -94,6 +94,7 @@ import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultipla
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
+import { CrowdFlock } from '../entities/CrowdFlock';
 import { FerrisWheel } from '../entities/FerrisWheel';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { DEV_TRAM_CONSUMER, TramPath, devTramPowerGraphDefinition } from '../entities/TramPath';
@@ -214,6 +215,7 @@ import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type Upgra
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
+import { CrowdFlockSystem } from '../systems/CrowdFlockSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { createHomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { OldDiggerBossSystem, type OldDiggerTape, type SurveyPoint } from '../systems/OldDiggerBossSystem';
@@ -757,6 +759,8 @@ export class Game {
   private damSurge?: DamSurgeEvent;
   private tram?: TramPath;
   private ferrisWheel?: FerrisWheel;
+  private crowdFlocks?: CrowdFlockSystem;
+  private crowdFlockView?: CrowdFlock;
   private canyonConnectAnnounced = false;
   private canyonConnectCompletedByDeadline = false;
   private canyonConnectFailed = false;
@@ -2450,6 +2454,7 @@ export class Game {
     this.damSurge?.dispose();
     this.tram?.dispose();
     this.ferrisWheel?.dispose();
+    this.crowdFlockView?.dispose();
     this.vehicle?.dispose();
     this.fuelSystem?.dispose();
     this.detailScatter?.dispose();
@@ -2661,6 +2666,10 @@ export class Game {
       this.syncContractPowerGrid();
       this.ferrisWheel?.update(simDelta);
       this.syncFerrisWheelPower();
+      if (this.crowdFlocks) {
+        this.crowdFlocks.update(simDelta, this.dayNightSnapshot, this.enemies.all);
+        this.crowdFlockView?.update(simDelta, this.crowdFlocks.diagnostics);
+      }
       this.powerGraph?.step(this.simTick);
       this.syncCanyonConnectObjective();
       if (this.tram && this.powerGraph) {
@@ -4089,6 +4098,14 @@ export class Game {
         this.ferrisWheel = new FerrisWheel(fairground.wheel);
         this.goldTargeting.registerBuilding(this.ferrisWheel.target);
         this.scene.add(this.ferrisWheel.group);
+        // THE CROWD FLOCKS. Gated on `twist.fairground.crowdFlocks` inside `create()` — the FIELD,
+        // not this block (F-1471-1), so a fairground that ever ships without flocks still gets a
+        // wheel and no unreachable objective. The view is render-only and reads the sim's snapshot.
+        this.crowdFlocks = CrowdFlockSystem.create(this.activeContract) ?? undefined;
+        if (this.crowdFlocks) {
+          this.crowdFlockView = new CrowdFlock(this.crowdFlocks.diagnostics);
+          this.scene.add(this.crowdFlockView.group);
+        }
       }
       const tramConsumer = contractGrid?.nodes.find((node) => node.kind === 'consumer' && node.role === 'tram');
       const escortMode = this.activeEscortMode();
@@ -4952,6 +4969,7 @@ export class Game {
       escort: this.waveSystem.escortDiagnostics,
       tram: this.tram?.diagnostics ?? null,
       fairground: this.ferrisWheel?.diagnostics ?? null,
+      crowdFlocks: this.crowdFlocks?.diagnostics ?? null,
       fuel: this.fuelSystem?.diagnostics ?? null,
       vehicle: this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
@@ -5217,6 +5235,10 @@ export class Game {
 
   autoSecureWaveForRun(): number {
     if (this.e10StaticBoss.diagnostics().enabled && !this.e10StaticBoss.receded) return Number.MAX_SAFE_INTEGER;
+    // The fairground has two clauses now, and they are different in kind. The WHEEL clause is the
+    // loss rule and is unchanged: a stopped dynamo never restarts, so the run is over. The FLOCK
+    // clause is the ratified objective (door-completion sheet A1) and is only unfinished: the
+    // crowds try again every night, and a third crossing landed after wave 12 still secures at 12.
     return this.waitsForBaronDefeat()
       || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
       || (this.activeContract.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
@@ -5224,6 +5246,7 @@ export class Game {
       // A6: mirrors `HeadlessContractSim.autoSecureWaveForRun` — the Far Side is not won by
       // outliving it. True on every contract that declares no probe, so nothing else moves.
       || !this.probeRecovery.objectiveAllowsSecure
+      || (this.crowdFlocks !== undefined && !this.crowdFlocks.allCrossed)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -7191,6 +7214,7 @@ export class Game {
     this.oldDiggerBoss.reset();
     this.tram?.reset();
     this.ferrisWheel?.reset();
+    this.crowdFlocks?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
     this.applyRunPreset(readDifficultyPreset(), false);
