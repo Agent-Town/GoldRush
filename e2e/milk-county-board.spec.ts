@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
@@ -49,20 +50,66 @@ function request(method: 'GET' | 'POST', query = '', body?: unknown): Request {
   });
 }
 
+// F-SR-3 — THE ASSAY ERA'S ADMISSION LAW. The county ranks only a row that carries a tape
+// (`isRankedRow`, functions/api/standings.ts), and every view here — solo board, posse board, field
+// book — is built from the ranked rows. So a fixture standing is a TAPED standing by default: the
+// v2 shape the season roll admits, with the `runStart` that makes the run replayable, mirrored from
+// the season-roll fixtures in scripts/test-standings.mjs. `tapeless()` below is the deliberate
+// exception, for the one test whose subject IS a row with no tape.
+const RUN_START = {
+  meta: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+  research: {
+    version: 1,
+    progress: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+    taken: [],
+    proposalSalt: 0,
+    pinnedTarget: null,
+  },
+};
+
+function v2Tape(id: string, seed: string | undefined, waves: number, timeAlive: number, gold: number): Record<string, unknown> {
+  // A row that predates the seed fields carries a tape with no seed either — the stored path checks
+  // the tape's seed against the ROW's own, so omitting both is the honest legacy shape.
+  const seedField = seed === undefined ? {} : { seed };
+  return {
+    version: 2, id, createdAt: 1, kept: true, contract: 'the-claim', ...seedField, difficulty: 'trail',
+    simVersion: 1, runStart: RUN_START,
+    inputLog: {
+      version: 1, name: id, contractId: 'the-claim', ...seedField, difficultyPreset: 'trail',
+      stepSeconds: 1 / 30, start: { x: 0, z: 12 }, durationTicks: 1, entries: [], truncated: null,
+      primarySlot: 0, streams: [],
+    },
+    eventLogHash: 'fnv1a32:1234abcd',
+    outcome: { reason: 'secured', secured: true, waves, timeAlive, gold },
+  };
+}
+
 function standing(anonId: string, waves: number, extra: Record<string, unknown> = {}): Record<string, unknown> {
+  const score = { secured: true, waves, timeAlive: 600 + waves, gold: waves * 10, baseValue: waves * 20 };
+  const seed = `posse-${anonId}`;
+  const tape = v2Tape(`posse-${anonId.slice(0, 4)}-${waves}`, seed, score.waves, score.timeAlive, score.gold);
   return {
     contractId: 'the-claim',
     epochId: 'epoch-1-frontier',
-    score: { secured: true, waves, timeAlive: 600 + waves, gold: waves * 10, baseValue: waves * 20 },
+    score,
     profileName: 'Posse',
     anonId,
     difficulty: 'trail',
-    seed: `posse-${anonId}`,
+    seed,
     seedMode: 'live',
     seedHash: 'a'.repeat(64),
-    inputLogHash: 'b'.repeat(64),
+    // The endpoint recomputes sha256(inputLog) and refuses a tape whose hash disagrees, so the
+    // fixture derives the hash instead of declaring one.
+    inputLogHash: createHash('sha256').update(JSON.stringify((tape as { inputLog: unknown }).inputLog)).digest('hex'),
+    tape,
     ...extra,
   };
+}
+
+// The county STORES a tapeless row and never ranks it (F-SR-3). Use this where that is the point.
+function tapeless(post: Record<string, unknown>): Record<string, unknown> {
+  const { tape: _tape, ...rest } = post;
+  return { ...rest, inputLogHash: 'b'.repeat(64) };
 }
 
 async function post(kv: MockKV, body: unknown): Promise<Response> {
@@ -202,10 +249,12 @@ test('party is optional and strict once offered', async () => {
   expect(stored.find((row) => row.anonId === 'a'.repeat(32))).not.toHaveProperty('party');
 
   // A stored row whose party went bad is dropped on read, never rendered half-legible.
+  // F-SR-3: BOTH rows carry a tape, so the broken one is dropped for its PARTY and nothing else —
+  // a tapeless fixture would drop it for the wrong reason and prove the wrong law.
   const poisoned = makeKv();
   await poisoned.put(BOARD_KEY, JSON.stringify([
-    { ...(standing('d'.repeat(32), 9).score as object), profileName: 'Broken', anonId: 'd'.repeat(32), seedHash: 'a'.repeat(64), inputLogHash: 'b'.repeat(64), submittedAt: 1, party: { riderCount: 2, riders: [{ name: 'Ada' }] } },
-    { ...(standing('e'.repeat(32), 8).score as object), profileName: 'Sound', anonId: 'e'.repeat(32), seedHash: 'a'.repeat(64), inputLogHash: 'b'.repeat(64), submittedAt: 2 },
+    { ...(standing('d'.repeat(32), 9).score as object), profileName: 'Broken', anonId: 'd'.repeat(32), seedHash: 'a'.repeat(64), inputLogHash: 'b'.repeat(64), submittedAt: 1, tape: v2Tape('broken-reel', undefined, 9, 609, 90), party: { riderCount: 2, riders: [{ name: 'Ada' }] } },
+    { ...(standing('e'.repeat(32), 8).score as object), profileName: 'Sound', anonId: 'e'.repeat(32), seedHash: 'a'.repeat(64), inputLogHash: 'b'.repeat(64), submittedAt: 2, tape: v2Tape('sound-reel', undefined, 8, 608, 80) },
   ]));
   expect((await board(poisoned, '?contract=the-claim&epoch=epoch-1-frontier')).body.board).toMatchObject([{ rank: 1, profileName: 'Sound' }]);
 });
@@ -253,7 +302,6 @@ test('the field book reads composition from self-declared stacks, and ranks noth
 test('a standings row publishes a reel handle, and the reel itself is fetched on demand', async () => {
   const kv = makeKv();
   const tape = fixtureTape('11111111-1111-4111-8111-111111111111', 1);
-  const { createHash } = await import('node:crypto');
   const withTape = standing('1'.repeat(32), 12, {
     seed: 'gold-rush',
     tape,
@@ -261,11 +309,21 @@ test('a standings row publishes a reel handle, and the reel itself is fetched on
     score: { secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60 },
   });
   expect((await post(kv, withTape)).status).toBe(200);
-  expect((await post(kv, standing('2'.repeat(32), 6))).status).toBe(200);
+  expect((await post(kv, tapeless(standing('2'.repeat(32), 6)))).status).toBe(200);
 
   const rows = (await board(kv, '?contract=the-claim&epoch=epoch-1-frontier')).body.board ?? [];
   expect(rows[0]).toMatchObject({ rank: 1, reel: { id: tape.id, simVersion: 1 } });
-  expect(rows[1]).not.toHaveProperty('reel');
+  // F-SR-3 — the same law, stated as the assay era states it. This used to read "a row with no
+  // tape publishes no reel handle", proved by a second BOARD row that carried neither. The county
+  // now stores a tapeless row and never RANKS it (`isRankedRow`), so that row is not on the board
+  // at all: the tapeless standing is kept in the book, absent from the ranks, and every published
+  // row therefore carries its reel. Stronger than the old assertion, and the same intent.
+  expect(rows).toHaveLength(1);
+  expect(JSON.parse((await kv.get(BOARD_KEY)) ?? '[]')).toContainEqual(
+    expect.objectContaining({ anonId: '2'.repeat(32), waves: 6 }),
+  );
+  expect(JSON.parse((await kv.get(BOARD_KEY)) ?? '[]').find((row: { anonId: string }) => row.anonId === '2'.repeat(32)))
+    .not.toHaveProperty('tape');
   // A HANDLE, not the blob: the 64KB tape never rides the board.
   expect(JSON.stringify(rows)).not.toContain('inputLog');
   expect(JSON.stringify(rows)).not.toContain('eventLogHash');
