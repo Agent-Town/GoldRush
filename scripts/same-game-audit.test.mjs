@@ -54,7 +54,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // reproduced the base numbers EXACTLY — the whole movement belongs to the anchors; the consumer
   // moves NOTHING (`zero_gravity` is a mechanics RULE). Citation `file:line` shifts in the report
   // are coordinates, not classifications. Pins below = the TRIPLE-stacked merged tree's regen.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 11);
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 10);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and neither the Far Side nor Low Orbit was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -116,8 +116,32 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // the ?debug seam (F-E3CF-4) — so the row went back and these numbers went back with it. Both
   // directions were measured, so when the prover lands, expect one contract's worth of movement
   // (19 rows on that base) against whatever the summary then reads, not those absolute digits.
-  assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 371, equal: 869, 'not-offered': 11 });
+  // DATA MOVE + EXEMPTION MOVE IN ONE SLICE (2026-08-20, `e9-seed-run` A8 persistent planting) —
+  // and they are TWO independent moves that happen to land together, so they are attributed apart.
+  //
+  // (1) THE ANCHORS. The Seed Run's `harvestAnchors` were authored, so it left the door's own
+  //     `harvestAnchors?.length !== 0` filter and became a measurable contract. That is the whole
+  //     parity movement: 341 -> 372 agent-lacks, 779 -> 788 equal, 14 -> 13 not-offered,
+  //     1134 -> 1173 rows. ATTRIBUTED BY REVERT-AND-REPRODUCE: with the five anchors emptied and
+  //     EVERY other line of the slice in place, this audit reproduced 0/341/779/14 and 1134 rows
+  //     EXACTLY.
+  // (2) THE EXEMPTION. Unlike A4's Dead Band, the Seed Run does not secure — the best measured
+  //     public-verb play terminated at wave 16 on both bench seeds — so it enters
+  //     `CONTRACT_ADMISSION_EXEMPTIONS` (5 -> 6) rather than the door. ATTRIBUTED THE SAME WAY:
+  //     removing that one exemption row and leaving the anchors in place reproduced 5 exemptions
+  //     with 0/351/809/13, so the row is worth exactly 21 rows flipping `equal` -> `agent-lacks`
+  //     — the same 21-per-contract shape the glow-mesa and deepwater moves above recorded.
+  //
+  // THE CONSUMER MOVES NOTHING HERE, AND SO DOES THE NEW VERB — both measured, not assumed.
+  // Removing the `persistent_planting` manifest rule reproduced the baseline exactly, and so did
+  // removing `CONTEXT_ACTION action=plant` from `StandingOrders`. That is the expected shape twice
+  // over: this audit's rows are buildable/ability/choice/verb/economy surfaces read PER CONTRACT,
+  // a mechanics RULE is not one of them (the A4 note above found the same), and a targetless
+  // context action appears in no contract's player menu to be compared against.
+  // (A8 pins above were measured on its own pre-stack base; the pins below are the QUADRUPLE-stacked
+  // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run — verbatim.)
+  assert.equal(audit.admission.exemptions.length, 6);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 402, equal: 878, 'not-offered': 10 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

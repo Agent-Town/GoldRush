@@ -35,6 +35,26 @@ export type TileStateSnapshot = {
   [key: string]: unknown;
 };
 
+/**
+ * A8 (`specs/agent-play/door-completion-sheet.md:22`, RATIFIED 2026-08-20) — ONE GROUND, ONE ID.
+ *
+ * NO NEW ENTRY KIND IS INTRODUCED. The Seed Run plants the SAME sim kind TP-02 rehearsed on
+ * dry-gulch (a no-spawn disc), only three times on one tile — and `sameEntry()` below dedupes
+ * on `kind`+`id`, so three plants sharing the bare id would silently collapse into one. The
+ * ground id becomes an id SUFFIX; the shared prefix is what keeps them one kind for
+ * `applyAtBirth`. TP-02's own entry keeps the bare `green-waypoint` id and is untouched by
+ * this — verified by `e2e/tp02-green-waypoint.spec.ts`, which asserts that exact string.
+ */
+export function greenWaypointEntryId(groundId: string): string {
+  return `${GREEN_WAYPOINT_ENTRY_ID}:${groundId}`;
+}
+
+/** True for TP-02's bare entry AND for any A8 per-ground plant. Kind is checked, not assumed. */
+export function isGreenWaypointEntry(entry: TileStateEntry): boolean {
+  return entry.kind === 'sim'
+    && (entry.id === GREEN_WAYPOINT_ENTRY_ID || entry.id.startsWith(`${GREEN_WAYPOINT_ENTRY_ID}:`));
+}
+
 export class TileStateStore {
   private readonly profileId: string;
   private readonly snapshots = new Map<string, TileStateSnapshot>();
@@ -124,14 +144,16 @@ export class TileStateStore {
  * is never mutated — a changed birth returns a fresh tileParams.
  *
  * TP-02 implements exactly one sim kind: the green waypoint adds a no-spawn zone
- * at its disc. Everything else still passes through unchanged.
+ * at its disc. Everything else still passes through unchanged. A8 plants the same
+ * kind once per ground (`greenWaypointEntryId`), so a Seed Run tile can be born
+ * carrying up to three discs — still one kind, still only at birth.
  */
 export function applyAtBirth(
   entries: readonly TileStateEntry[],
   tileParams: ContractManifest['tileParams'],
 ): ContractManifest['tileParams'] {
   const zones = entries
-    .filter((entry) => entry.kind === 'sim' && entry.id === GREEN_WAYPOINT_ENTRY_ID)
+    .filter((entry) => isGreenWaypointEntry(entry))
     .map((entry) => parseGreenWaypointPayload(entry.payload))
     .filter((payload): payload is GreenWaypointPayload => payload !== null)
     .map((payload) => ({ x: payload.x, z: payload.z, radius: payload.r }));
