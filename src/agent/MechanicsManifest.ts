@@ -325,14 +325,14 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       goldPerMachinePerTick: Balance.wrangle.penGoldPerMachine,
       capturableState: 'exhausted',
     }));
-    // The load-bearing one. Exhausted machines stop taking damage and hold spawn slots, while the
+    // The load-bearing one. Exhausted machines stop taking damage (and no longer count against the alive cap since the owner-ruled exemption), while the
     // standing-order CAPTURE verb closes the agent-surface loop (9f920a2f6, 97–99% absorption).
     // Stating it is the whole point; a silent omission would read as "nothing more to know here".
     rules.push(rule('wrangle_capture', 'AgentGameAdapter', {
       consumerLever: 'WrangleSystem.tryCapture',
       agentOperations: [],
       aliveCap: Balance.waves.aliveCap,
-      consequence: 'exhausted machines are undamageable and hold spawn slots; capture is reached through the standing-order CAPTURE verb, not a tool',
+      consequence: 'exhausted machines are undamageable and exempt from the alive cap; capture is reached through the standing-order CAPTURE verb, not a tool',
     }));
   }
   const e6Tiles = contract.id === 'e6-glow-mesa' ? Balance.e6Tiles : undefined;
