@@ -121,6 +121,14 @@ rather than the start menu) and none is left behind as a passing-looking workaro
   `reviews/suite-red-inventory.md`, so it is recorded here as newly-observed rather than known.
   Dome Basin's own sim is untouched by an independent route as well: its null-floor rows are
   byte-identical.
+- `worker-type-coverage` ("every `functions/**/*.ts` is type-checked") is **ENVIRONMENTAL, not a
+  red at all**: it spawns the hardcoded path `<cwd>/node_modules/typescript/bin/tsc`, and this
+  git worktree's `node_modules` carries no `typescript` (the repo root's does, which is why `npx
+  tsc` and `npm run build` both resolve fine). It fails identically solo, and **this slice touches
+  zero files under `functions/`** — `git diff --name-only d931958b3..HEAD -- functions` is empty.
+
+**The first battery ran CONTENDED** (its own probe reported "2 concurrent batteries" — another
+builder's run overlapped), so it was re-run solo after that battery cleared rather than trusted.
 
 ## Merge classification
 
