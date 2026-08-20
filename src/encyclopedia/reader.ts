@@ -37,6 +37,7 @@ type LedgerView = 'ledger' | 'standings' | 'field-book' | 'assay' | 'seasons';
 type FieldBookView = 'byStack' | 'byHarness' | 'byParty';
 type StandingsDifficulty = DifficultyPresetId | 'all';
 type StandingsParty = 'solo' | '2' | '3' | '4';
+type StandingsSeason = 'current' | 'first';
 
 type StandingStack = {
   declared?: boolean;
@@ -145,6 +146,16 @@ const FIELD_BOOK_VIEW_LABELS: Record<FieldBookView, string> = {
 
 const SEASONS_ENABLED = true;
 
+// The county board rolled to an assayed season (owner 2026-08-15). The reader asks for the CURRENT
+// season by omitting the param — so "current" needs no id here and survives the next roll — and
+// reaches the closed first ledger by naming season 1 explicitly.
+const STANDINGS_SEASON_LABELS: Record<StandingsSeason, string> = {
+  current: 'This season',
+  first: 'First ledger',
+};
+const STANDINGS_SEASON_ORDER: readonly StandingsSeason[] = ['current', 'first'];
+const FIRST_LEDGER_SEASON = '1';
+
 let currentRoot: HTMLElement | null = null;
 let currentClose: (() => void) | undefined;
 let currentLiveReads: (() => void)[] = [];
@@ -155,6 +166,7 @@ let currentView: LedgerView = 'ledger';
 let currentStandingsContractId = '';
 let currentStandingsDifficulty: StandingsDifficulty = 'all';
 let currentStandingsParty: StandingsParty = 'solo';
+let currentStandingsSeason: StandingsSeason = 'current';
 let currentStandingsRows: CountyStanding[] = [];
 let currentFieldBookView: FieldBookView = 'byStack';
 let currentSeasonId: string | null = null;
@@ -173,6 +185,7 @@ export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   currentStandingsContractId = '';
   currentStandingsDifficulty = 'all';
   currentStandingsParty = 'solo';
+  currentStandingsSeason = 'current';
   currentStandingsRows = [];
   currentFieldBookView = 'byStack';
   currentSeasonId = null;
@@ -378,6 +391,21 @@ function renderStandingsLedger(): string {
             .join('')}
         </nav>
         <p class="county-standings__parties-hint">A team is ranked only against teams its own size.</p>
+        <nav class="county-standings__seasons" aria-label="County standings seasons">
+          ${STANDINGS_SEASON_ORDER
+            .map(
+              (season) =>
+                `<button type="button" data-standings-season="${season}" data-testid="county-standings-season-${season}" aria-pressed="${
+                  season === currentStandingsSeason
+                }">${STANDINGS_SEASON_LABELS[season]}</button>`,
+            )
+            .join('')}
+        </nav>
+        <p class="county-standings__seasons-hint">${
+          currentStandingsSeason === 'first'
+            ? 'The first ledger is closed. Its runs were posted before the county could assay a reel, so its ranks are history, not proof.'
+            : 'This season admits only runs the county can assay.'
+        }</p>
         <label class="county-standings__filter">
           Difficulty
           <select data-standings-difficulty data-testid="county-standings-difficulty-filter">
@@ -389,7 +417,9 @@ function renderStandingsLedger(): string {
         </label>
         <p class="county-standings__message" data-testid="county-standings-message" role="status" aria-live="polite"></p>
         ${renderLocalClaims(contracts)}
-        <p class="county-standings__board-label"><strong>County board</strong><span class="county-standings__difficulty">Global</span></p>
+        <p class="county-standings__board-label"><strong>${
+          currentStandingsSeason === 'first' ? 'First ledger &middot; closed' : 'County board'
+        }</strong><span class="county-standings__difficulty">Global</span></p>
         <p class="county-standings__provenance">Every rider names the mind and rig they declared. Rank still follows the result alone.</p>
         <div class="county-standings__board" data-testid="county-standings-board" aria-live="polite">
           <p class="county-standings__empty">The county clerk turns the pages.</p>
@@ -819,6 +849,7 @@ async function loadCountyStandings(): Promise<void> {
   const contractId = currentStandingsContractId;
   const difficulty = currentStandingsDifficulty;
   const party = currentStandingsParty;
+  const season = currentStandingsSeason;
   if (!root || !contractId) return;
   if (globalThis.navigator?.onLine === false) {
     currentStandingsRows = [];
@@ -833,6 +864,8 @@ async function loadCountyStandings(): Promise<void> {
   // Solo is the endpoint's default, so the solo request stays byte-identical to the one this
   // reader has always sent — the posse boards are the only new traffic.
   if (party !== 'solo') url.searchParams.set('party', party);
+  // Likewise the current season is the endpoint's default: only the archive names a season.
+  if (season === 'first') url.searchParams.set('season', FIRST_LEDGER_SEASON);
   let rows: CountyStanding[] = [];
   try {
     const response = await fetch(url);
@@ -849,6 +882,7 @@ async function loadCountyStandings(): Promise<void> {
     || currentStandingsContractId !== contractId
     || currentStandingsDifficulty !== difficulty
     || currentStandingsParty !== party
+    || currentStandingsSeason !== season
   ) {
     return;
   }
@@ -867,6 +901,9 @@ async function watchStandingsReel(rank: number): Promise<void> {
   url.searchParams.set('contract', contractId);
   url.searchParams.set('epoch', activeEpochId());
   url.searchParams.set('reel', row.reel.id);
+  // An archived reel is fetched from its own season's shelf, or the projector would look for it in
+  // a book it was never written in.
+  if (currentStandingsSeason === 'first') url.searchParams.set('season', FIRST_LEDGER_SEASON);
   let payload: unknown = null;
   try {
     const response = await fetch(url);
@@ -955,6 +992,10 @@ function isCountyReel(value: unknown): boolean {
 
 function renderCountyRows(rows: readonly CountyStanding[], party: StandingsParty): string {
   if (rows.length === 0) {
+    // A closed season is never "the door is open" — nothing will ever be posted to it again.
+    if (currentStandingsSeason === 'first') {
+      return '<p class="county-standings__empty">The first ledger holds no rows for this contract.</p>';
+    }
     return party === 'solo'
       ? '<p class="county-standings__empty">No standings yet — the door is open.</p>'
       : `<p class="county-standings__empty">No ${PARTY_LABELS[party].toLowerCase()} standings yet — the door is open.</p>`;
@@ -1322,6 +1363,13 @@ function onLedgerClick(event: MouseEvent): void {
     currentStandingsParty = party;
     renderCurrentLedger();
     currentRoot?.querySelector<HTMLElement>(`[data-standings-party="${party}"]`)?.focus();
+    return;
+  }
+  const season = target?.closest<HTMLButtonElement>('[data-standings-season]')?.dataset.standingsSeason as StandingsSeason | undefined;
+  if (season && season !== currentStandingsSeason) {
+    currentStandingsSeason = season;
+    renderCurrentLedger();
+    currentRoot?.querySelector<HTMLElement>(`[data-standings-season="${season}"]`)?.focus();
     return;
   }
   const fieldBookView = target?.closest<HTMLButtonElement>('[data-field-book-view]')?.dataset.fieldBookView as FieldBookView | undefined;

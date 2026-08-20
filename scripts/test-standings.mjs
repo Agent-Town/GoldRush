@@ -3,7 +3,10 @@ import { createHash } from 'node:crypto';
 import { createServer } from 'vite';
 
 const SECRET = 'assay-worker-test-secret';
-const KEY = 'standings:epoch-1-frontier:the-claim';
+// The season roll (owner 2026-08-15): the county writes in the current season's key shape, and the
+// pre-roll board keeps the shape it was written with, forever, read-only.
+const KEY = 'standings:s2:epoch-1-frontier:the-claim';
+const ARCHIVE_KEY = 'standings:epoch-1-frontier:the-claim';
 let checks = 0;
 
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
@@ -16,6 +19,7 @@ try {
   await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
   await checkUnrankedBound(onRequest);
   await checkRetroAssay(onRequest, onRequestAssayQueue);
+  await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
   console.log(`standings assay checks passed (${checks})`);
 } finally {
   await vite.close();
@@ -72,6 +76,9 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   equal(stored.find((row) => row.tape.id === 'reject-me').assayReason, 'replay diverged', 'rejection reason is retained privately');
 }
 
+// Guards the NORMALIZATION law (a stored row that carries a tape but no assay stamp reads as
+// pending) inside the CURRENT season. Post-roll the county's real legacy rows live in season one
+// and are never retro-assayed at all — that archive is proved read-only by checkSeasonRoll below.
 async function checkRetroAssay(onRequest, queueRoute) {
   const kv = makeKv();
   const rows = Array.from({ length: 17 }, (_, index) => storedRow(index, index !== 2 && index !== 7 && index !== 11));
@@ -109,6 +116,71 @@ async function checkUnrankedBound(onRequest) {
   ok(stored.some((row) => row.waves === 100), 'newest unattested row is retained at the bound');
 }
 
+// THE SEASON ROLL — the four mutation proofs the owner's ruling asks for, in one fixture.
+async function checkSeasonRoll(onRequest, queueRoute, verdictRoute) {
+  const kv = makeKv();
+  // The pre-roll board exactly as the county left it: 17 rows at the key shape they were written
+  // with, three of them tapeless.
+  const archive = Array.from({ length: 17 }, (_, index) => storedRow(index, index !== 2 && index !== 7 && index !== 11));
+  await kv.put(ARCHIVE_KEY, JSON.stringify(archive));
+  const archiveBytes = await kv.get(ARCHIVE_KEY);
+
+  // (a) The current season starts clean, with a full archive sitting right beside it.
+  const current = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+  equal(current.body.board.length, 0, 'current season starts empty beside a full archive');
+  equal(current.body.season, 2, 'current season labels itself');
+  equal(current.body.assayEra, true, 'current season declares the assay era');
+
+  // (b) The archive door: labeled, read-only, and refusing the pen.
+  const first = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&season=1', undefined, kv);
+  equal(first.body.season, 1, 'archive board labels its season');
+  equal(first.body.assayEra, false, 'archive board declares its pre-assay reality');
+  equal(first.body.board.length, 14, 'archive still serves its rows (14 taped of 17)');
+  const reel = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=legacy-0&season=1', undefined, kv);
+  equal(reel.status, 200, 'archived reels stay on the shelf');
+  equal(reel.body.assayEra, false, 'archived reel carries the pre-assay label');
+  const closed = await call(onRequest, 'POST', '/api/standings?season=1', post('9'.repeat(32), 42, tape('post-to-history', 42)), kv);
+  equal(closed.status, 403, 'POST to an archived season is refused');
+  equal(closed.body.error, 'season_closed', 'the refusal names the closed season');
+  equal(await kv.get(ARCHIVE_KEY), archiveBytes, 'the refused POST left the archive byte-identical');
+  const unknown = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&season=7', undefined, kv);
+  equal(unknown.status, 400, 'an unknown season is refused, never silently current');
+  const emptyQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=100', undefined, kv, SECRET);
+  equal(emptyQueue.body.queue.length, 0, 'archived rows never enter the assay queue');
+  equal(await kv.get(ARCHIVE_KEY), archiveBytes, 'reading the archive never rewrites it');
+
+  // The field book reads a season too, so the archive stays reachable through every view the
+  // county offers and not only through the board.
+  const currentView = await call(onRequest, 'GET', '/api/standings?view=byStack&epoch=epoch-1-frontier', undefined, kv);
+  equal(currentView.body.season, 2, 'the field book labels the season it read');
+  equal(currentView.body.byStack.length, 0, 'the fresh season\'s field book starts empty');
+  const archivedView = await call(onRequest, 'GET', '/api/standings?view=byStack&epoch=epoch-1-frontier&season=1', undefined, kv);
+  equal(archivedView.body.assayEra, false, 'the archived field book declares its pre-assay reality');
+  equal(archivedView.body.byStack[0].aggregate.standings, 14, 'the archived field book still aggregates its rows');
+
+  // (c) A v2 tape lands pending in the fresh season.
+  const v2 = await call(onRequest, 'POST', '/api/standings', post('a'.repeat(32), 30, tapeV2('assayable', 30)), kv);
+  equal(v2.body.rank, 1, 'the v2 standing takes the fresh season\'s first rank');
+  equal(JSON.parse(await kv.get(KEY)).find((row) => row.tape.id === 'assayable').assay, 'pending', 'v2 POST lands pending');
+
+  // (d) A v1 tape stores, and the LANDED lifecycle is what keeps it off the ranks: the worker
+  // cannot verify a tape with no runStart (scripts/assay-worker.mjs:81), so its verdict unranks the
+  // row while the row itself survives. The endpoint's tape contract is unchanged.
+  const v1 = await call(onRequest, 'POST', '/api/standings', post('b'.repeat(32), 90, tape('legacy-shaped', 90)), kv);
+  equal(v1.status, 200, 'the tape contract still accepts a v1 tape, unchanged');
+  const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=100', undefined, kv, SECRET);
+  const locator = queue.body.queue.find((row) => row.locator.tapeId === 'legacy-shaped').locator;
+  const rejected = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', {
+    locator, verdict: 'rejected', replayedHash: 'fnv1a32:00000000', reason: 'legacy tape v1 is unverifiable',
+  }, kv, SECRET);
+  equal(rejected.status, 200, 'the worker verdict on a v1 tape is accepted');
+  const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+  equal(board.body.board.length, 1, 'the v1 row holds no rank in the assayed season');
+  equal(board.body.board[0].assay, 'pending', 'the assayable v2 row is what the fresh season shows');
+  ok(JSON.parse(await kv.get(KEY)).some((row) => row.tape?.id === 'legacy-shaped'), 'the v1 row is stored, never deleted');
+  equal(await kv.get(ARCHIVE_KEY), archiveBytes, 'a whole current-season lifecycle never touched season one');
+}
+
 function post(anonId, waves, runTape) {
   const inputLogHash = runTape ? createHash('sha256').update(JSON.stringify(runTape.inputLog)).digest('hex') : 'b'.repeat(64);
   return {
@@ -128,6 +200,20 @@ function tape(id, waves, eventLogHash = 'fnv1a32:1234abcd') {
     },
     eventLogHash,
     outcome: { reason: 'secured', secured: true, waves, timeAlive: 120, gold: 40 },
+  };
+}
+
+// A v2 tape is a v1 tape plus the runStart that makes it replayable from a known state — the whole
+// reason the board rolled to a season that admits only these.
+function tapeV2(id, waves, eventLogHash = 'fnv1a32:1234abcd') {
+  const meta = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+  return {
+    ...tape(id, waves, eventLogHash),
+    version: 2,
+    runStart: {
+      meta,
+      research: { version: 1, progress: meta, taken: [], proposalSalt: 0, pinnedTarget: null },
+    },
   };
 }
 

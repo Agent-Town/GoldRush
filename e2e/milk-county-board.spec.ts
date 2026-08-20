@@ -21,6 +21,8 @@ type BoardRow = {
   reel?: { id: string; simVersion: number };
 };
 
+// The season the county now writes in (owner ruling 2026-08-15, the season roll).
+const BOARD_KEY = 'standings:s2:epoch-1-frontier:the-claim';
 const SHOTS = path.resolve('reviews/shots-team-and-training');
 const COMPAT_SHOTS = path.resolve('reviews/shots-f1563-1');
 const PROFILE_STATE: ProfileState = {
@@ -193,7 +195,7 @@ test('party is optional and strict once offered', async () => {
 
   // A garbled rider NAME is coerced exactly as profileName is, never fatal to the standing.
   expect((await post(kv, standing('c'.repeat(32), 6, { party: { riderCount: 2, riders: [{ name: 7 }, { name: '  Ada   Lovelace  ' }] } }))).status).toBe(200);
-  const stored = JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]') as Array<Record<string, unknown>>;
+  const stored = JSON.parse((await kv.get(BOARD_KEY)) ?? '[]') as Array<Record<string, unknown>>;
   expect(stored.find((row) => row.anonId === 'c'.repeat(32))).toMatchObject({
     party: { riderCount: 2, riders: [{ name: 'Anonymous Prospector' }, { name: 'Ada Lovelace' }] },
   });
@@ -201,7 +203,7 @@ test('party is optional and strict once offered', async () => {
 
   // A stored row whose party went bad is dropped on read, never rendered half-legible.
   const poisoned = makeKv();
-  await poisoned.put('standings:epoch-1-frontier:the-claim', JSON.stringify([
+  await poisoned.put(BOARD_KEY, JSON.stringify([
     { ...(standing('d'.repeat(32), 9).score as object), profileName: 'Broken', anonId: 'd'.repeat(32), seedHash: 'a'.repeat(64), inputLogHash: 'b'.repeat(64), submittedAt: 1, party: { riderCount: 2, riders: [{ name: 'Ada' }] } },
     { ...(standing('e'.repeat(32), 8).score as object), profileName: 'Sound', anonId: 'e'.repeat(32), seedHash: 'a'.repeat(64), inputLogHash: 'b'.repeat(64), submittedAt: 2 },
   ]));

@@ -154,6 +154,22 @@ const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reaso
 const ASSAY_LOCATOR_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId']);
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
 
+// ── THE SEASON ROLL (owner ruling 2026-08-15, verbatim in specs/agent-play/tape-contract.md
+// §"The legacy board — RULED: SEASON ROLL": "I think this kind of calls for a next season?").
+// A season dimension DID already exist in this repo, which is why this one is defined here rather
+// than bolted onto it — the two axes are genuinely different and must never be conflated:
+//   • the CHRONICLE season (src/seasons/registry.ts `resolveSeasonAt`, SEA-1..3) — a TIME WINDOW
+//     over the county's story, stamped onto each ROW as a name. It partitions by WHEN a row was
+//     posted; its current window already contains pre-assay rows, so it cannot express the roll.
+//     Untouched here: rows keep their chronicle name and the season pages keep telling the story.
+//   • the LEDGER season (below) — the KV KEY partition, which rolls when the ADMISSION LAW
+//     changes. Season 1 admitted un-assayed rows; the current season admits only rows an assay can
+//     verify, because v1 tapes carry no runStart and are structurally unverifiable.
+// The ledger season is an ID, never a name — naming a season is the chronicle's job and the owner's.
+const FIRST_SEASON = 1;
+const CURRENT_SEASON = 2;
+const KNOWN_SEASONS: ReadonlySet<number> = new Set([FIRST_SEASON, CURRENT_SEASON]);
+
 export async function onRequest(context: StandingsContext): Promise<Response> {
   const cors = corsHeaders(context.request);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
@@ -263,17 +279,24 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   const url = new URL(context.request.url);
   const epochId = url.searchParams.get('epoch') ?? '';
   const view = url.searchParams.get('view');
+  // Every read surface carries the season the same way: one optional param, counted into the strict
+  // param arithmetic each branch already does, so an unknown season is a refusal and never a
+  // silently-current board.
+  const season = parseSeason(url);
+  const seasonParams = url.searchParams.get('season') === null ? 0 : 1;
+  if (season === null) return error(cors, 400, 'bad_season', 'Season not accepted.');
   if (view !== null) {
     const contracts = epochContracts(epochId);
-    if ((view !== 'byStack' && view !== 'byHarness' && view !== 'byParty') || url.searchParams.size !== 2 || !contracts) {
+    if ((view !== 'byStack' && view !== 'byHarness' && view !== 'byParty') || url.searchParams.size !== 2 + seasonParams || !contracts) {
       return error(cors, 400, 'bad_view', 'Field book view not accepted.');
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? rankedRows(await readBoard(kv, epochId, contractId, true)) : []] as const));
+    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? rankedRows(await readBoard(kv, epochId, contractId, true, season)) : []] as const));
     if (view === 'byParty') {
       return json(cors, {
         ok: true,
         view: 'byParty',
+        ...seasonLabels(season),
         epochId,
         contracts,
         // Composition is INFORMATION, never ranking: no rank is minted here and the groups sort by
@@ -301,6 +324,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     return json(cors, {
       ok: true,
       view,
+      ...seasonLabels(season),
       epochId,
       contracts,
       [byHarness ? 'byHarness' : 'byStack']: grouped,
@@ -309,18 +333,20 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   const contractId = url.searchParams.get('contract') ?? '';
   const reelId = url.searchParams.get('reel');
   if (reelId !== null) {
-    if (url.searchParams.size !== 3 || reelId.length === 0 || reelId.length > MAX_REEL_ID_LENGTH || !knownContract(epochId, contractId)) {
+    if (url.searchParams.size !== 3 + seasonParams || reelId.length === 0 || reelId.length > MAX_REEL_ID_LENGTH || !knownContract(epochId, contractId)) {
       return error(cors, 400, 'bad_reel', 'Reel not accepted.');
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-    const rows = kv ? await readBoard(kv, epochId, contractId, true) : [];
+    const rows = kv ? await readBoard(kv, epochId, contractId, true, season) : [];
     const reel = rows.find((row) => row.tape?.id === reelId)?.tape;
     if (!reel) return error(cors, 404, 'reel_not_found', 'That reel is not on the shelf.');
-    return json(cors, { ok: true, epochId, contractId, reel });
+    // The archive keeps its reels: a season-1 tape stays fetchable as the artifact it is, and the
+    // payload's own labels say which era's proof standards it was posted under.
+    return json(cors, { ok: true, ...seasonLabels(season), epochId, contractId, reel });
   }
   const difficultyParam = url.searchParams.get('difficulty');
   const partyParam = url.searchParams.get('party');
-  const expectedParams = 2 + (difficultyParam === null ? 0 : 1) + (partyParam === null ? 0 : 1);
+  const expectedParams = 2 + seasonParams + (difficultyParam === null ? 0 : 1) + (partyParam === null ? 0 : 1);
   if (url.searchParams.size !== expectedParams || !knownContract(epochId, contractId)) {
     return error(cors, 400, 'bad_contract', 'Contract and epoch not accepted.');
   }
@@ -332,7 +358,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     return error(cors, 400, 'bad_difficulty', 'Difficulty not accepted.');
   }
   const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-  const rows = kv ? await readBoard(kv, epochId, contractId, true) : [];
+  const rows = kv ? await readBoard(kv, epochId, contractId, true, season) : [];
   // Posses rank WITHIN their size and nowhere else (owner 2026-08-05), so the size partitions the
   // field BEFORE ranks are minted: a posse row can never move a solo rank, and an omitted party
   // param is the solo board — which is byte-identical to the board this endpoint served before.
@@ -344,6 +370,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
   return json(cors, {
     ok: true,
+    ...seasonLabels(season),
     epochId,
     contractId,
     party: partyParam === null ? 'solo' : partyParam,
@@ -493,6 +520,14 @@ function partyRigs(party: SubmittedParty): string[] {
 }
 
 async function submitScore(context: StandingsContext, cors: Record<string, string>): Promise<Response> {
+  // A closed season is closed to the clerk too. This refuses BEFORE the body is read, so an
+  // archived board cannot be touched even by a well-formed standing (RETENTION LAW: history is
+  // read, never appended to). No param at all means the current season, exactly as before the roll.
+  const season = parseSeason(new URL(context.request.url));
+  if (season === null) return error(cors, 400, 'bad_season', 'Season not accepted.');
+  if (season !== CURRENT_SEASON) {
+    return error(cors, 403, 'season_closed', 'That season’s book is closed. The county writes only in the season now riding.');
+  }
   const body = await readJson(context.request);
   if (!hasOnlyKeys(body, POST_KEYS)) return error(cors, 400, 'bad_payload', 'Standing not accepted.');
   const contractId = typeof body.contractId === 'string' ? body.contractId : '';
@@ -569,9 +604,9 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null });
 }
 
-async function readBoard(kv: KVNamespaceLike, epochId: string, contractId: string, tolerateFailure = false): Promise<StoredRow[]> {
+async function readBoard(kv: KVNamespaceLike, epochId: string, contractId: string, tolerateFailure = false, season: number = CURRENT_SEASON): Promise<StoredRow[]> {
   try {
-    const parsed = JSON.parse((await kv.get(boardKey(epochId, contractId))) ?? '[]') as unknown;
+    const parsed = JSON.parse((await kv.get(boardKey(epochId, contractId, season))) ?? '[]') as unknown;
     return Array.isArray(parsed) ? retainUnranked(parsed.map((row) => validateStoredRow(row, contractId)).filter((row): row is StoredRow => row !== null)) : [];
   } catch {
     if (tolerateFailure) return [];
@@ -884,8 +919,28 @@ async function sha256Hex(value: string): Promise<string> {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
-function boardKey(epochId: string, contractId: string): string {
-  return `standings:${epochId}:${contractId}`;
+// Season 1 keeps the exact key shape it was written with — no migration, no re-keying, not one
+// archived row rewritten (RETENTION LAW). Every WRITE path calls this with the DEFAULT season, so
+// the archive is unreachable by the county's pen: read-only by construction, not by promise.
+function boardKey(epochId: string, contractId: string, season: number = CURRENT_SEASON): string {
+  return season === FIRST_SEASON
+    ? `standings:${epochId}:${contractId}`
+    : `standings:s${season}:${epochId}:${contractId}`;
+}
+
+// An absent param is the current season, so every client written before the roll keeps asking for
+// exactly the board it always asked for.
+function parseSeason(url: URL): number | null {
+  const raw = url.searchParams.get('season');
+  if (raw === null) return CURRENT_SEASON;
+  const season = /^[0-9]{1,4}$/.test(raw) ? Number(raw) : null;
+  return season !== null && KNOWN_SEASONS.has(season) ? season : null;
+}
+
+// The assay era began at the roll. Season 1's rows were admitted before any tape could be verified,
+// so every archived payload says so plainly rather than letting a reader assume a proved rank.
+function seasonLabels(season: number): JsonRecord {
+  return { season, assayEra: season !== FIRST_SEASON };
 }
 
 function integerInRange(value: unknown, min: number, max: number): number | null {

@@ -81,7 +81,9 @@ test('the Drill Yard is the training ground — standings refuse it on both POST
     error: 'training_ground',
     message: 'The Drill Yard is the training ground — practice is its own reward.',
   });
-  expect(await kv.get('standings:epoch-1-frontier:e1-drill-yard')).toBeNull();
+  // The key a drill-yard write WOULD have used — the season the county now writes in, so the
+  // refusal is still proved by an absent row rather than by looking in a closed book.
+  expect(await kv.get('standings:s2:epoch-1-frontier:e1-drill-yard')).toBeNull();
   expect((await standingsRoute({
     request: request('GET', '?contract=e1-drill-yard&epoch=epoch-1-frontier'),
     env: { TELEMETRY: kv },
