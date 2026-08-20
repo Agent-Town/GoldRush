@@ -47,8 +47,36 @@ function makeRoot(masters) {
   return root;
 }
 
+// F-2090-2: every spawn in this file MUST be bounded. These calls used to pass neither
+// `timeout` nor `maxBuffer`, so a child that blocked for any reason blocked its
+// `node --test` worker FOREVER — and because a fire's battery is reparented to launchd
+// when the fire exits, the corpse then outlived its author and sat at 0% CPU indefinitely.
+// Measured s2090 on the live machine: THREE orphaned `--report` children, all PPID 1, all
+// 0% CPU, aged 58 min, 1 h 14 min and 5 h 55 min, every one of them stuck at this exact
+// leaf — and the two youngest were holding up the `test:ledger-guards` battery that
+// F-1300-4 makes the mandatory LAST ACT of every fire. An unbounded call in the factory's
+// own gate is a starvation mechanism, not a slow test.
+// (Ruled out by measurement, so nobody re-chases it: git is NOT the blocker —
+// `core.fsmonitor` is unset and `git ls-files` over this repo returns in 10 ms.)
+// SPAWN_LIMITS is deliberately generous: the point is a LOUD failure with a name on it,
+// never a tighter gate. A timeout here should be read as "this guard hung", not as a red board.
+const SPAWN_LIMITS = { encoding: 'utf8', timeout: 120_000, maxBuffer: 1 << 26 };
+
+// A bounded spawn can fail in a way the old unbounded one could not, so say so out loud
+// rather than letting `undefined` stdout surface as a confusing assertion three lines later.
+function spawnGuard(args) {
+  const r = spawnSync('node', [GUARD, ...args], SPAWN_LIMITS);
+  if (r.error && r.error.code === 'ETIMEDOUT') {
+    throw new Error(
+      `claimed-spec-harness-guard ${args.join(' ')} exceeded ${SPAWN_LIMITS.timeout} ms and was killed (F-2090-2). ` +
+        'This guard has hung three times on this machine; it is the hang, not the board, that is red.'
+    );
+  }
+  return r;
+}
+
 function run(root) {
-  return spawnSync('node', [GUARD, '--root', root], { encoding: 'utf8' });
+  return spawnGuard(['--root', root]);
 }
 
 // ---------------------------------------------------------------- derivation
@@ -137,7 +165,7 @@ test('naming the npm ALIAS clears the master', () => {
 // ---------------------------------------------------------------- the live board
 
 test('the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op)', () => {
-  const r = spawnSync('node', [GUARD, '--report'], { encoding: 'utf8' });
+  const r = spawnGuard(['--report']);
   assert.ok(
     /claimed specs \(derived\)/.test(r.stdout),
     'the guard produced no output — the import.meta.url entrypoint check is broken again. ' +
@@ -147,14 +175,14 @@ test('the guard actually RUNS when invoked as a script (entrypoint is not a sile
 });
 
 test('the live board has no LIVE offender', () => {
-  const r = spawnSync('node', [GUARD], { encoding: 'utf8' });
+  const r = spawnGuard([]);
   assert.strictEqual(r.status, 0, `guard failed on the live board:\n${r.stderr}`);
 });
 
 // A grandfather entry that no longer describes a real offender is stale bookkeeping: it would
 // silently excuse that file if it regressed. The guard prints a note; this keeps the list honest.
 test('every grandfathered file is still a real offender (no stale excuses)', () => {
-  const r = spawnSync('node', [GUARD, '--report'], { encoding: 'utf8' });
+  const r = spawnGuard(['--report']);
   for (const f of GRANDFATHERED.keys()) {
     assert.match(
       r.stdout,
