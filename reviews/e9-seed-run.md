@@ -109,7 +109,7 @@ rather than the start menu) and none is left behind as a passing-looking workaro
 | `er01-e9-census` + `ap16-4-contract-admission`, both projects | **18/18** |
 | adjacent trio (`task-025`, `m1-01`, `m2-01`), both projects | **32/32** |
 | `npx playwright test --list` | **2864 tests / 411 files** (base 2858/410, +6 = this slice's 3 tests × 2 projects) |
-| node-guards, run SOLO | **452 pass / 21 fail** — 21 is the double-counted form of 10 distinct, all attributed below |
+| node-guards, run SOLO **after the F-A8-7 fix** | **453 pass / 17 fail** — 17 is the double-counted form of **8 distinct, every one attributed below**. The pre-fix run was 452/21; the two collection guards it caught are now green. |
 | battery determinism | 12 runs, every repeat byte-identical |
 
 **🔺 F-A8-7 (REAL REGRESSION, MINE, found and fixed — the one the battery was for).** The solo
@@ -149,6 +149,14 @@ the manifest's "source it from the consumer" law makes every such import suite-w
 - `fixture-teardown` ("all 34 `scripts/*.test.mjs` fixture owners remove their temp directories")
   and `node-guards-timeout` ("a per-test timeout still overrides the default") both **fail
   identically at the base commit** — pre-existing, proven by the same detached control.
+- `suite-red-inventory`'s four reducer rows (`script-root-invariant`, `renders absolute raw paths
+  relative to the recorded tree`, `refuses body statistics when the recorded tree is unavailable`,
+  `loss guard fails closed without touching output`) **fail identically at the base commit** —
+  pre-existing, same control. Notably this is the very guard that would have inventoried the
+  `e9-arsenal:77` red above, and it is itself red.
+
+**Final tally: 8 distinct reds, 7 proven pre-existing at `d931958b3` by detached control, 1 proven
+a battery-concurrency timeout by solo re-run. Zero unattributed.**
 - The two collection guards were **MINE** — see F-A8-7 above. Fixed, both green.
 
 **The control that decided all of this** was a clean detached checkout of `d931958b3` in this same
