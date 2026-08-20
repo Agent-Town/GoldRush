@@ -18,17 +18,10 @@ import { createDeepwaterClaimTile, type CorsairSkiffWave, type DeepwaterClaimTil
  *                -> deepwaterArsenal.update -> waveSystem.update
  *                -> recycleDeepwaterCorsairsAtExit -> combat.update -> arsenal.resolveTreatments
  *
- * ONE browser step has no headless counterpart: `DredgeQueenBossSystem`. It is not merely
- * unwired — it cannot be constructed outside a browser, because `counterSprite()`/`labelSprite()`
- * call `document.createElement('canvas')` from INSTANCE FIELD INITIALIZERS
- * (`DredgeQueenBossSystem.ts:77-80`), which run before its own `enabled` flag is ever read.
- *
- * Rather than drop that step silently — which would let the socket claim it reproduces the
- * browser while quietly missing the contract's whole win condition — every storm wave that
- * would have been offered to the boss is COUNTED in `bossHandoffsRefused`. A census can then
- * assert the gap exists rather than infer it from an absence.
+ * A missing boss handoff is never silent: every storm wave at or beyond the authored boss wave
+ * is counted in `bossHandoffsRefused`.
  */
-export type DeepwaterBossHandoff = (wave: CorsairSkiffWave) => boolean;
+export type DeepwaterBossHandoff = (wave: CorsairSkiffWave) => false | number;
 
 export type DeepwaterSocketDiagnostics = Readonly<{
   contractId: string;
@@ -97,9 +90,9 @@ export class DeepwaterSocket {
     const baron = this.contract.twist.baron;
     for (const wave of pending) {
       const bossWave = baron?.variantId === 'dredge_queen' ? baron.wave : Number.POSITIVE_INFINITY;
-      const escort = this.offerToBoss(wave, bossWave);
+      const escortMultiplier = this.offerToBoss(wave, bossWave);
       this.emitWaveStarted(wave.wave, wave.scheduledAt);
-      this.spawnCorsairs(wave, escort);
+      this.spawnCorsairs(wave, escortMultiplier);
     }
   }
 
@@ -172,30 +165,33 @@ export class DeepwaterSocket {
     return { ...rest, arsenal: simulationArsenal };
   }
 
-  private offerToBoss(wave: CorsairSkiffWave, bossWave: number): boolean {
+  private offerToBoss(wave: CorsairSkiffWave, bossWave: number): false | number {
     if (this.bossHandoff) return this.bossHandoff(wave);
-    // No headless DredgeQueenBossSystem exists. Count the refusal instead of hiding it.
+    // Count a missing handoff instead of hiding it.
     if (wave.wave >= bossWave) this.bossHandoffsRefused += 1;
     return false;
   }
 
-  private spawnCorsairs(wave: CorsairSkiffWave, bossEscort: boolean): void {
+  private spawnCorsairs(wave: CorsairSkiffWave, bossEscortMultiplier: false | number): void {
     const roster = this.contract.twist.enemyRoster?.find((entry) => entry.id === 'corsair_skiff');
-    for (const skiff of wave.enemies) {
-      const enemy: ClaimJumperEnemy | null = this.enemies.spawn(
-        new THREE.Vector3(skiff.x, Balance.enemy.groundY, skiff.z),
-        {
-          hpScale: roster?.hpScale,
-          speedScale: roster?.speedMult,
-          visualScale: roster?.visualScale,
-          tint: roster?.tint,
-          variantId: roster?.id,
-          variantLabel: bossEscort ? 'Dredge-Queen Escort' : roster?.label,
-        },
-      );
-      if (!enemy) continue;
-      enemy.scriptMoveTo(wave.toX - 2, skiff.z, enemy.moveSpeed, { ignoreTerrain: true });
-      this.corsairsSpawned += 1;
+    for (let copy = 0; copy < (bossEscortMultiplier || 1); copy += 1) {
+      for (const skiff of wave.enemies) {
+        const z = skiff.z + copy * 1.2;
+        const enemy: ClaimJumperEnemy | null = this.enemies.spawn(
+          new THREE.Vector3(skiff.x, Balance.enemy.groundY, z),
+          {
+            hpScale: roster?.hpScale,
+            speedScale: roster?.speedMult,
+            visualScale: roster?.visualScale,
+            tint: roster?.tint,
+            variantId: roster?.id,
+            variantLabel: bossEscortMultiplier !== false ? 'Dredge-Queen Escort' : roster?.label,
+          },
+        );
+        if (!enemy) continue;
+        enemy.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
+        this.corsairsSpawned += 1;
+      }
     }
   }
 }
