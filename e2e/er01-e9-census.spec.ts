@@ -3,11 +3,35 @@ import { createServer, type ViteDevServer } from 'vite';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 import redfields from '../assets/contracts/epoch-9-redfields/contracts.json' with { type: 'json' };
 
+/**
+ * PER-ID TRUTH, because the four Red Fields contracts stopped being the same story on 2026-08-20.
+ * A8 (`specs/agent-play/door-completion-sheet.md:22`) BUILT the Seed Run's consumer: the caravan,
+ * the three planting grounds, the permanent green and the objective latch are all live in both
+ * engines. What it did NOT do is win the map — the best public-verb play measured
+ * (`artifacts/e9-seed-run/`) terminated unsecured at waves 17/16 against secureWave 20 — so the
+ * Seed Run is now an ADMISSION-EXEMPT contract rather than an unsocketed one, and those are two
+ * different rows. Devil's Alley and the Old Canal are unchanged: still no consumer at all.
+ */
 const SIGNATURE_GAPS: Record<string, { dependency?: string; twist?: string }> = {
   'e9-dome-basin': {},
   'e9-seed-run': { dependency: 'persistent-planting-consumer', twist: 'persistentPlanting' },
   'e9-devils-alley': { dependency: 'scheduled-relocation-consumer', twist: 'scheduledRelocation' },
   'e9-old-canal': { dependency: 'persistent-canal-choice-consumer', twist: 'persistentCanalChoices' },
+};
+
+/**
+ * Which contracts carry bench seeds. The Seed Run minted `-01`/`-02` with its build (A8) and KEEPS
+ * them while exempt — the same shape `e2-incline` and `e6-showroom` carry: seeded, measured, and
+ * refused by the door until it secures. Seeds are the comparability unit, not an admission claim.
+ */
+const SEEDED = new Set(['e9-dome-basin', 'e9-seed-run']);
+
+/** The manifest rows each contract derives, in order. Only the Seed Run declares planting. */
+const EXPECTED_RULES: Record<string, string[]> = {
+  'e9-dome-basin': ['build_zones'],
+  'e9-seed-run': ['build_zones', 'persistent_planting'],
+  'e9-devils-alley': ['build_zones'],
+  'e9-old-canal': ['build_zones'],
 };
 
 for (const contract of redfields.contracts) {
@@ -32,7 +56,7 @@ for (const contract of redfields.contracts) {
       const gap = SIGNATURE_GAPS[contract.id]!;
       const admitted = contract.id === 'e9-dome-basin';
       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
-      if (admitted) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
+      if (SEEDED.has(contract.id)) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
       else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
       if (gap.dependency) {
         expect(contract.tileParams.engineDependencies).toEqual([
@@ -60,7 +84,7 @@ for (const contract of redfields.contracts) {
       const mechanics = deriveMechanicsManifest(contract.id);
 
       expect(mechanics.interactables).toEqual([]);
-      expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(['build_zones']);
+      expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
       const driveArsenal = (hasResearch: boolean) => {
         const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e9-arsenal-probe' });
         const enemies = new EnemyPool();
@@ -187,6 +211,77 @@ for (const contract of redfields.contracts) {
       } else {
         expect(E9CanalSocket.create(loadContract(contract.id), new EnemyPool(), new Economy())).toBeNull();
       }
+      // A8 — THE SEED CARAVAN, asserted where it is DECLARED and refused where it is not. The
+      // consumer is built off the CONTRACT (twist + authored zones + authored stakes), never the
+      // epoch, so its three Red Fields siblings must each get a null from the same call.
+      const { SeedCaravanSystem, SEED_CARAVAN_MAX_HP, SEED_CARAVAN_PLANT_COST_RATIO } =
+        await vite.ssrLoadModule('/src/systems/SeedCaravanSystem.ts');
+      const { TileStateStore } = await vite.ssrLoadModule('/src/game/TileStateStore.ts');
+      const emptyStore = () => new TileStateStore({ getItem: () => null, setItem: () => undefined, removeItem: () => undefined });
+      const caravan = SeedCaravanSystem.create(loadContract(contract.id), emptyStore());
+
+      if (contract.id === 'e9-seed-run') {
+        expect(caravan).not.toBeNull();
+        const diagnostics = caravan.diagnostics;
+        // THE ROUTE IS AUTHORED DATA, not a constant in the consumer: the five buildZone centres,
+        // in authored order — the same five points the mask table publishes as `caravanRoute` and
+        // `scripts/e3-mask-tables.test.mjs:352` already pins.
+        expect(diagnostics.route).toEqual([
+          { x: 0, z: -48 }, { x: -34, z: -21 }, { x: 0, z: 3 }, { x: 34, z: 27 }, { x: 0, z: 48 },
+        ]);
+        expect(diagnostics.grounds.map(({ id, zoneId }: { id: string; zoneId: string }) => [id, zoneId])).toEqual([
+          ['plant-west-waypoint', 'west-green-waypoint'],
+          ['plant-center-waypoint', 'center-green-waypoint'],
+          ['plant-east-waypoint', 'east-green-waypoint'],
+        ]);
+        expect(diagnostics).toMatchObject({
+          declared: true,
+          state: 'moving',
+          hp: SEED_CARAVAN_MAX_HP,
+          maxHp: SEED_CARAVAN_MAX_HP,
+          arrived: false,
+          plantedThisRun: [],
+          plantedBefore: [],
+          atGround: null,
+        });
+
+        // THE PLANT IS REFUSED UNTIL BOTH BODIES ARE AT THE GROUND, and each refusal is COUNTED.
+        const at = (x: number, z: number) => ({ x, z, distanceTo: () => 0 } as never);
+        expect(caravan.tryPlant(at(0, 3)).ok).toBe(false);
+        expect(caravan.diagnostics.refusals.caravanAway).toBe(1);
+        expect(caravan.tryPlant(at(60, 60)).ok).toBe(false);
+        expect(caravan.diagnostics.refusals.outOfReach).toBe(1);
+
+        // Drive the crossing at the fixed step, twice, from two fresh consumers: same in, same out.
+        const drive = () => {
+          const driven = SeedCaravanSystem.create(loadContract(contract.id), emptyStore());
+          const seen: string[] = [];
+          for (let step = 0; step < 12_000 && !driven.diagnostics.arrived; step += 1) {
+            driven.update(1 / 30, []);
+            const ground = driven.diagnostics.atGround;
+            if (ground && seen.at(-1) !== ground) seen.push(ground);
+          }
+          return { driven, seen };
+        };
+        const first = drive();
+        const second = drive();
+        expect(first.seen).toEqual(['plant-west-waypoint', 'plant-center-waypoint', 'plant-east-waypoint']);
+        expect(second.seen).toEqual(first.seen);
+        expect(JSON.stringify(second.driven.simulationSnapshot)).toBe(JSON.stringify(first.driven.simulationSnapshot));
+        // THE LATCH: an empty road costs the caravan nothing, and arriving is what opens the secure.
+        expect(first.driven.diagnostics).toMatchObject({ state: 'arrived', arrived: true, progress: 1, hp: SEED_CARAVAN_MAX_HP });
+        expect(first.driven.objectiveComplete).toBe(true);
+        expect(first.driven.objectiveLost).toBe(false);
+
+        // THE MANIFEST ROW IS SOURCED FROM THE CONSUMER, so a row cannot drift from the gate.
+        const rule = mechanics.rules.find(({ id }: { id: string }) => id === 'persistent_planting');
+        expect(rule.source).toBe('SeedCaravanSystem.tryPlant');
+        expect(rule.data.grounds).toEqual(diagnostics.grounds.map(({ id }: { id: string }) => id));
+        expect(rule.data.plantCostHp).toBe(Math.round(SEED_CARAVAN_MAX_HP * SEED_CARAVAN_PLANT_COST_RATIO));
+      } else {
+        expect(caravan).toBeNull();
+      }
+
       for (const seed of seeds) {
         if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
         else {

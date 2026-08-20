@@ -82,6 +82,7 @@ The source-locked forms are:
 {"verb":"CONTEXT_ACTION","action":"upgrade","target":{"id":"<buildable>","index":N}}
 {"verb":"CONTEXT_ACTION","action":"demolish","target":{"id":"<buildable>","index":N}}
 {"verb":"CONTEXT_ACTION","action":"fund"}
+{"verb":"CONTEXT_ACTION","action":"plant"}
 {"verb":"CAPTURE"}
 {"verb":"BOAT_BUILD","padId":"<string>","buildingId":"<string>"}
 {"verb":"REANCHOR","anchorId":"<string>"}
@@ -267,6 +268,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
   "e9-dome-basin": [
     "e9-dome-basin-01",
     "e9-dome-basin-02"
+  ],
+  "e9-seed-run": [
+    "e9-seed-run-01",
+    "e9-seed-run-02"
   ]
 }
 ```
