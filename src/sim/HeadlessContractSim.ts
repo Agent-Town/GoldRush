@@ -587,7 +587,7 @@ export class HeadlessContractSim {
       this.manifest,
       this.enemies,
       this.combat,
-      () => this.manifest.tileParams.raceCourse ? this.prospector.position : this.hero.group.position,
+      () => this.manifest.tileParams.raceCourse || this.manifest.tileParams.flotilla ? this.prospector.position : this.hero.group.position,
       (wave, at) => this.events.emit({ type: 'wave_started', at, wave }),
       this.dredgeQueen
         ? (wave) => this.dredgeQueen!.onStormWave(wave, this.manifest.twist.baron!.wave)
@@ -962,8 +962,8 @@ export class HeadlessContractSim {
     this.syncCanyonConnectObjective();
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
-    this.enemies.update(STEP_SECONDS, this.hero.group.position, (enemy) => {
-      if (this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
+    this.enemies.update(STEP_SECONDS, this.deepwater?.targetPosition(this.hero.group.position) ?? this.hero.group.position, (enemy) => {
+      if (!this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
     }, this.build.palisadeBlockers, {
       nearestGoldHolding: (from) => this.targeting.nearestGoldHolding(from),
@@ -977,6 +977,7 @@ export class HeadlessContractSim {
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
     }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1));
+    this.deepwater?.resolveHullContacts(this.timeAlive, () => this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5));
     this.deepwater?.recycleCorsairsAtExit();
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
     this.updateBaronRocketVolley();

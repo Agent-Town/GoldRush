@@ -2,6 +2,7 @@ import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type Cont
 import { Balance } from '../game/Balance';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
+import { FLOTILLA_HULL_RULES } from '../systems/FlotillaHullSystem';
 
 type MechanicValue = boolean | number | string | readonly string[];
 
@@ -256,7 +257,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     }));
   }
   // --- E5 Deepwater. Gated exactly as the browser's `createDeepwaterClaimTile` consumer.
-  const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta'
+  const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta' || contract.id === 'e5-flotilla'
     ? tile.deepwater
     : undefined;
   if (deepwater) {
@@ -308,6 +309,14 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         fastWaterMultiplier: 1.35,
         deadlineWave: twist.secureWave ?? 0,
         competingRacerLoot: false,
+      }));
+    }
+    if (tile.flotilla) {
+      rules.push(rule('flotilla_hulls', 'FlotillaHullSystem.advance+reanchor+targetPosition', {
+        hulls: tile.flotilla.hulls.map(({ id }) => id),
+        districts: tile.flotilla.hulls.map(({ district }) => district),
+        ...FLOTILLA_HULL_RULES,
+        secureWave: twist.secureWave ?? 0,
       }));
     }
     // The manifest must not imply an agent can work the boat: `AgentGameAdapter` carries
