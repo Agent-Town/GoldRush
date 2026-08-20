@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'vite';
-const contracts = process.argv.slice(2).length ? process.argv.slice(2) : ['e2-hill-mine', 'e2-incline', 'e2-trestle', 'e3-fairground', 'e5-deepwater-claim', 'e5-stillwater', 'e6-glow-mesa', 'e6-showroom'];
+const requestedContracts = process.argv.slice(2);
 globalThis.location = new URL('http://gr-sim.local/?debug'); globalThis.window = { location: globalThis.location };
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
-const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+const { HeadlessContractSim, CONTRACT_ADMISSION_EXEMPTIONS } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+const contracts = requestedContracts.length ? requestedContracts : Object.keys(CONTRACT_ADMISSION_EXEMPTIONS).sort();
 const positions = [{ x: 0, z: 13 }, { x: 3, z: 12 }, { x: -3, z: 12 }];
 const first = new Map();
 for (const contractId of contracts) for (const policy of ['idle', 'scripted']) for (const suffix of ['01', '02']) for (let repeat = 1; repeat <= 2; repeat += 1) {

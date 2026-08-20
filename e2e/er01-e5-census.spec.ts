@@ -55,7 +55,7 @@ const FORBIDDEN_SOURCE = [
 // declare their own consumer `missing` and must stay silent.
 const EXPECTED_SOCKET_RULES = [
   'deepwater_arsenal',
-  'deepwater_boss_socket_absent',
+  'deepwater_boss_socket',
   'deepwater_claim_boat',
   'deepwater_levers_unreachable',
   'deepwater_storm_track',

@@ -17,7 +17,7 @@ test('E5 and E6 epoch levers reach their existing socket laws', async () => {
     const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
 
     const deepwater = new HeadlessContractSim({
-      contractId: 'e5-deepwater-claim', seed: 'ap16-7-e5', admissionProbe: true,
+      contractId: 'e5-deepwater-claim', seed: 'ap16-7-e5',
     });
     const firstDeepwater = deepwater.currentTurn().view.now.deepwater!;
     expect(firstDeepwater.pads).toEqual(expect.arrayContaining([expect.objectContaining({ occupied: false })]));
