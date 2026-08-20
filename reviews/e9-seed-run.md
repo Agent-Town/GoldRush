@@ -106,11 +106,28 @@ rather than the start menu) and none is left behind as a passing-looking workaro
 | door-ratchet · bench-seeds · skill.md fences · null-floor-anchors · mask-tables | **41/41** |
 | `null-floor-anchors --check` | **53 match**, clean; the only line that moved is the git-derived `eraStamp` |
 | `e9-seed-run-caravan` + `tp02-green-waypoint`, both projects | **12/12** |
-| `er01-e9-census` + `ap16-4-contract-admission`, both projects | **18/18** with the two below |
+| `er01-e9-census` + `ap16-4-contract-admission`, both projects | **18/18** |
 | adjacent trio (`task-025`, `m1-01`, `m2-01`), both projects | **32/32** |
+| `npx playwright test --list` | **2864 tests / 411 files** (base 2858/410, +6 = this slice's 3 tests × 2 projects) |
+| node-guards, run SOLO | **452 pass / 21 fail** — 21 is the double-counted form of 10 distinct, all attributed below |
 | battery determinism | 12 runs, every repeat byte-identical |
 
-**Two reds, both attributed rather than absorbed.**
+**🔺 F-A8-7 (REAL REGRESSION, MINE, found and fixed — the one the battery was for).** The solo
+battery's two collection guards failed where a base-commit control passed. Cause: `MechanicsManifest`
+sources the A8 row from the consumer, and specs import `MechanicsManifest` (`agent-view`,
+`drill-yard-manifest`) — so two convenience imports in `SeedCaravanSystem` (`visualY` from
+`world/Terrain`, and `E1_RIVERBANK_GREEN` from `world/GreenWaypoint`, which itself imports Terrain)
+dragged Terrain's `assets/layer-contracts/*.json?raw` import into **every spec's collection graph**.
+Under plain Node ESM that throws `needs an import attribute of "type: json"`, and
+`npx playwright test --list` collapsed to **`Total: 0 tests in 0 files`** — the entire Playwright
+suite, uncollectable, from two imports that looked free. **Cured** by injecting both: `Game.ts`
+passes `Terrain.visualY` and the canonical `E1_RIVERBANK_GREEN` (one authority for the hex law
+preserved), headless gets flat ground and never paints. **Verified by count, not vibes: 2864 tests
+in 411 files against the base's 2858 in 410 — exactly the +6 this slice's three tests add across two
+projects.** The lesson is general: *a module both engines construct must not import render code, and
+the manifest's "source it from the consumer" law makes every such import suite-wide.*
+
+**Reds, all attributed rather than absorbed.**
 
 - `e9-canal-stages` failed twice inside a four-spec invocation and passed **3/3 solo** on the same
   tree, on both the desktop and mobile halves that had failed. Load flake, the known class.
@@ -121,11 +138,23 @@ rather than the start menu) and none is left behind as a passing-looking workaro
   `reviews/suite-red-inventory.md`, so it is recorded here as newly-observed rather than known.
   Dome Basin's own sim is untouched by an independent route as well: its null-floor rows are
   byte-identical.
-- `worker-type-coverage` ("every `functions/**/*.ts` is type-checked") is **ENVIRONMENTAL, not a
-  red at all**: it spawns the hardcoded path `<cwd>/node_modules/typescript/bin/tsc`, and this
-  git worktree's `node_modules` carries no `typescript` (the repo root's does, which is why `npx
-  tsc` and `npm run build` both resolve fine). It fails identically solo, and **this slice touches
-  zero files under `functions/`** — `git diff --name-only d931958b3..HEAD -- functions` is empty.
+- `worker-type-coverage` ("every `functions/**/*.ts` is type-checked") is **ENVIRONMENTAL**: it
+  spawns the hardcoded path `<cwd>/node_modules/typescript/bin/tsc`, and this git worktree's
+  `node_modules` carries no `typescript` (the repo root's does, which is why `npx tsc` and
+  `npm run build` both resolve fine). **Fails identically at the base commit**, and this slice
+  touches zero files under `functions/`.
+- `gr-sim.test.mjs` failed at battery level and passes **17/17 solo** — a per-file timeout under
+  the battery's own concurrency, not a regression. It is the door tool and this slice edits
+  `HeadlessContractSim`, so it was re-run rather than waved through.
+- `fixture-teardown` ("all 34 `scripts/*.test.mjs` fixture owners remove their temp directories")
+  and `node-guards-timeout` ("a per-test timeout still overrides the default") both **fail
+  identically at the base commit** — pre-existing, proven by the same detached control.
+- The two collection guards were **MINE** — see F-A8-7 above. Fixed, both green.
+
+**The control that decided all of this** was a clean detached checkout of `d931958b3` in this same
+worktree (tree verified clean first, branch restored after), running the same five guard files. Four
+of the six candidates reproduced at base and two did not; without it the two real ones would have
+been filed as inherited noise.
 
 **The first battery ran CONTENDED** (its own probe reported "2 concurrent batteries" — another
 builder's run genuinely overlapped, `sh -c node scripts/run-node-guards.mjs …` alive at the time),
