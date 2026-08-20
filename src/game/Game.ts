@@ -326,6 +326,7 @@ import {
 } from './TileStateStore';
 import { createGreenWaypointSwatch, E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
 import { SeedCaravanSystem } from '../systems/SeedCaravanSystem';
+import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
 
 // Replay Law: Frontier upgrades remain available after later epochs activate.
 const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
@@ -605,6 +606,12 @@ export class Game {
    * the door cannot disagree about where the route runs or when the crossing is won.
    */
   private readonly seedCaravan: SeedCaravanSystem | null;
+  /**
+   * A8-LEGIBILITY (owner playtest 2026-08-20: "I was not even aware that there is a caravan to
+   * protect or when it moves where"). Browser-only, presentation-only, born beside the consumer
+   * and null wherever it is. Nothing it does can move a hash — see the file header.
+   */
+  private seedCaravanPresentation: SeedCaravanPresentation | null = null;
   private readonly e10FinaleSystem: E10FinaleSystem;
   private readonly e10StaticBoss: E10StaticBossSystem;
   private readonly e7SignalSystem: E7SignalSystem;
@@ -2490,6 +2497,7 @@ export class Game {
     this.e9ArsenalSystem.dispose();
     this.e9CanalSystem.dispose();
     this.seedCaravan?.dispose();
+    this.seedCaravanPresentation?.dispose();
     this.e10FinaleSystem.dispose();
     this.e10StaticBoss.dispose();
     this.e7ArsenalSystem.dispose();
@@ -2797,6 +2805,7 @@ export class Game {
       // A8: beside the era systems and ahead of the enemy integration step, so contact damage
       // reads the same positions `HeadlessContractSim` reads at the same point in its own order.
       this.seedCaravan?.update(simDelta, this.enemies.all);
+      this.syncSeedCaravanPresentation();
       // A5: the wall advances on the same sim delta and in the same relative order as
       // `HeadlessContractSim`, reading the same standing-works register, so the two engines put
       // the front in the same place and light the same relays at the same instant.
@@ -4356,6 +4365,19 @@ export class Game {
     this.scene.add(this.e9ArsenalSystem.group);
     this.scene.add(this.e9CanalSystem.group);
     if (this.seedCaravan) this.scene.add(this.seedCaravan.group);
+    // A8-LEGIBILITY: the road, the ring markers, the name tag and the guard bar are raised HERE
+    // rather than in the constructor because this is where the terrain the road lies on exists.
+    // Same injected sampler and same green as the consumer, so there is still ONE authority for
+    // both (F-A8-7: neither file may import Terrain).
+    if (this.seedCaravan) {
+      this.seedCaravanPresentation = new SeedCaravanPresentation(
+        this.seedCaravan.diagnostics,
+        (x, z) => Terrain.visualY(x, z, 0),
+        E1_RIVERBANK_GREEN,
+        () => document.querySelector('[data-testid="contract-briefing"]:not([hidden])') !== null,
+      );
+      this.scene.add(this.seedCaravanPresentation.group);
+    }
     // A5: the band joins the scene only where a front is declared, so no other map pays a draw
     // call for it. It starts hidden — `syncInterferenceBand` shows it while the wall crosses.
     if (this.interferenceFront.isDeclared) {
@@ -5125,6 +5147,9 @@ export class Game {
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
       e9Canal: this.e9CanalSystem.diagnostics,
       seedCaravan: this.seedCaravan?.diagnostics ?? null,
+      // A8-LEGIBILITY: what the PLAYER can see of the caravan, published beside what it is doing,
+      // so the no-`?debug` spec can assert the mission is legible rather than merely present.
+      seedCaravanPresentation: this.seedCaravanPresentation?.diagnostics ?? null,
       // A5: null off relay rush, the same shape every optional consumer above uses. This is what
       // `e2e/e7-relay-rush-front.spec.ts` reads to prove the browser runs the same wall the
       // headless engine does.
@@ -5425,11 +5450,31 @@ export class Game {
     }
   }
 
+  /**
+   * A8-LEGIBILITY — the caravan's presentation, one step behind its sim step. The consumer stays
+   * the only writer; this reads its published diagnostics, moves the tag/bar/road, and says the
+   * county's line on the five beats a player must not miss. A departure also gets the ordinary
+   * camera nudge (`CameraRig.impulse`, the same seam the charm ping uses) so the eye goes to the
+   * thing the banner just named — no new camera tech, per the standing order.
+   */
+  private syncSeedCaravanPresentation(): void {
+    const presentation = this.seedCaravanPresentation;
+    const caravan = this.seedCaravan;
+    if (!presentation || !caravan) return;
+    for (const beat of presentation.update(caravan.diagnostics)) {
+      this.uiBridge.announce(beat.text, this.timeAlive, null, beat.seconds, 'wave', beat.title);
+      if (beat.kind === 'depart') {
+        this.cameraRig.impulse(new THREE.Vector3(beat.at.x, 0, beat.at.z), 0.06);
+      }
+    }
+  }
+
   private resampleVisualHeights(): void {
     this.railPath?.resampleTerrain();
     this.megaprojectRailPath?.resampleTerrain();
     this.e9CanalSystem.resampleTerrain();
     this.seedCaravan?.resampleTerrain();
+    this.seedCaravanPresentation?.resampleTerrain();
     this.e6TileConsumers.resampleTerrain();
     this.resampleHollowCrossingVisuals();
     // The gold seams belong on this list and were missing from it, which is why 29 of the 33
@@ -7534,6 +7579,7 @@ export class Game {
     this.e9ArsenalSystem.reset();
     this.e9CanalSystem.reset();
     this.seedCaravan?.reset();
+    if (this.seedCaravan) this.seedCaravanPresentation?.reset(this.seedCaravan.diagnostics);
     // A5: the schedule restarts with the run — a new run's first front is 90s away, never the
     // leftover phase of the last one.
     this.interferenceFront.reset();

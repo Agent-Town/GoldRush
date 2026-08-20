@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 /**
  * A8 — THE SEED RUN, in the browser (`specs/agent-play/door-completion-sheet.md:22`, RATIFIED
@@ -79,6 +80,36 @@ async function takeManualControl(page: Page): Promise<void> {
 
 const caravan = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.seedCaravan);
 const persistence = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.tilePersistence);
+const presentation = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.seedCaravanPresentation);
+
+/**
+ * A8-LEGIBILITY: the plain-boot door into the Seed Run, WITHOUT `?debug`.
+ *
+ * The owner's complaint of 2026-08-20 is about what a player sees, so the proof has to run where a
+ * player runs. `activeContractSelection` (`ContractFamilies.ts:1322`) honours `?contract=` with no
+ * debug flag whenever the id is a STAGED PLAYER LAUNCH, and `reverifyStagedContractLaunch` keeps
+ * that launch only while the row is unlocked — so the honest way in is to be a player who has
+ * already secured Dome Basin. That is one scoreboard row, written through the app's own
+ * profile-scoped storage (`ProfileStorage.installProfileStorageScope` patches `setItem`), and
+ * nothing else: no harness, no flag, no private handle.
+ */
+async function bootPlainAsUnlockedPlayer(page: Page): Promise<void> {
+  await page.goto('/?nolevel&nopause');
+  await page.waitForFunction(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId));
+  await page.evaluate(() => {
+    // The two things a player who reached this row actually has: he is IN the Red Fields era
+    // (`epochIsActive`, `ContractFamilies.ts:1111`) and he has SECURED Dome Basin
+    // (`contractUnlockStatus`'s `secured:` branch, `ContractUnlock.ts:57`). Both are ordinary
+    // profile data, written through the app's own patched storage.
+    localStorage.setItem('gr.activeEpoch.v1', 'epoch-9-redfields');
+    localStorage.setItem('gr.scores.v2', JSON.stringify([{
+      waves: 20, kills: 400, gold: 500, timeAlive: 600, at: 1, secured: true, contractId: 'e9-dome-basin',
+    }]));
+    sessionStorage.setItem('gr.contract.launch.v1', 'e9-seed-run');
+  });
+  await page.goto('/?contract=e9-seed-run&nolevel&nopause&seed=sr01');
+  await page.waitForFunction((id) => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === id, CONTRACT_ID);
+}
 
 /**
  * Advance in chunks until the predicate holds. `advanceSim` is SYNCHRONOUS, so polling a
@@ -99,6 +130,18 @@ async function tileStateSnapshot(page: Page): Promise<string | null> {
     const profiles = (await Function('return import("/src/game/ProfileStorage.ts")')()) as typeof import('../src/game/ProfileStorage');
     return localStorage.getItem(profiles.tileStateKey(profiles.activeProfile(localStorage).id, contractId));
   }, CONTRACT_ID);
+}
+
+/**
+ * Evidence that survives the run (Convention 1): the shot lands in `artifacts/e9-seed-run/shots/`
+ * under its project name AND is attached to the report, so a reviewer who never opens the trace
+ * can still see exactly what a stranger saw at 1280x800 and at 390px.
+ */
+async function shoot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  const body = await page.screenshot({
+    path: `artifacts/e9-seed-run/shots/${testInfo.project.name}-${name}.png`,
+  });
+  await testInfo.attach(name, { body, contentType: 'image/png' });
 }
 
 /** The ordinary context action — Space, the same key that funds a megaproject or frees a machine. */
@@ -134,7 +177,7 @@ test('the board refuses the Seed Run until Dome Basin is secured — the reach, 
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
-test('planting at the stake spends the guard, lands at run end, and is born as a green next run', async ({ page }) => {
+test('planting at the stake spends the guard, lands at run end, and is born as a green next run', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await page.goto(DEBUG_QUERY);
   await waitForBoot(page, true);
@@ -143,6 +186,12 @@ test('planting at the stake spends the guard, lands at run end, and is born as a
   // Walk the train to the centre ground on its own fixed schedule and stop inside the window.
   await advanceUntil(page, (state) => state.atGround === CENTER_GROUND);
   expect((await caravan(page))!.state).toBe('paused');
+  // A8-LEGIBILITY: this is the frame the owner never got — the train standing nine wu from the
+  // claim, named, guard-barred, on its drawn road, with the county's halt line on the banner. The
+  // shot is kept because "the box was grey and nobody knew what it was" is a VISUAL complaint and
+  // a visual claim needs a visual receipt.
+  await shoot(page, testInfo, 'at-center-ground');
+  expect(await presentation(page)).toMatchObject({ tagVisible: true, guardBarVisible: true, guardRatio: 1 });
 
   // OUT OF REACH IS REFUSED, and the refusal is counted rather than swallowed. The hero starts at
   // (0,12), nine wu from the stake — close enough to see it, too far to plant it.
@@ -158,6 +207,11 @@ test('planting at the stake spends the guard, lands at run end, and is born as a
   const spent = await caravan(page);
   expect(spent!.maxHp).toBe(CARAVAN_MAX_HP - PLANT_COST_HP);
   expect(spent!.hp).toBe(CARAVAN_MAX_HP - PLANT_COST_HP);
+
+  // A8-LEGIBILITY: the county names the vault, and the guard bar reads FULL again at the new,
+  // lower ceiling — the trade is "a smaller train", not "a wounded one".
+  expect((await presentation(page))!.beatsSaid).toContain('plant:plant-center-waypoint');
+  expect((await presentation(page))!.guardRatio).toBe(1);
 
   // ONE PER GROUND, for the life of the profile.
   await pressConfirm(page);
@@ -233,5 +287,74 @@ test('the caravan reaching the basin is what latches the objective', async ({ pa
 
   // A landed train persists nothing by landing — only planting writes.
   expect(await tileStateSnapshot(page)).toBeNull();
+
+  // A8-LEGIBILITY: the county said the crossing was made, and the presentation followed the train
+  // the whole way. `beatsSaid` is the render-side ledger of what a player was TOLD.
+  expect((await presentation(page))!.beatsSaid).toContain('depart');
+  expect((await presentation(page))!.beatsSaid).toContain('arrive');
+  expect((await presentation(page))!.beatsSaid).toContain('halt:plant-west-waypoint');
+  expect((await presentation(page))!.beatsSaid).toContain('halt:plant-center-waypoint');
+  expect((await presentation(page))!.beatsSaid).toContain('halt:plant-east-waypoint');
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
+/**
+ * THE OWNER'S OWN TEST, and it is deliberately the harshest one in this file: a stranger boots the
+ * map with NO flags and must be able to answer "what is the mission?" from the screen.
+ *
+ * Owner, 2026-08-20, verbatim: "I was not even aware that there is a caravan to protect or when it
+ * moves where. This has to be better explained. I saw a small grey box moving at one point in
+ * time, but I was not aware that this is the mission."
+ *
+ * So this asserts the four surfaces that answer him, in the order he would meet them: the briefing
+ * card LEADS with the escort, the box carries its name, it carries a guard bar, and its road is
+ * drawn on the ground with a ring on every ground it stops at.
+ */
+test('a plain boot tells a stranger the caravan IS the mission', async ({ page }, testInfo) => {
+  // THE HOUSE WATCH, not this file's own bucket, and for a measured reason: this is the only test
+  // here that boots the Seed Run's full landmark set on a shared dev server, so it is the only one
+  // that meets the load-sensitive texture-blob transient (F-1304-1 / F-1180-2). `watchErrors`
+  // tolerates EXACTLY that one string and nothing else — every other console or page error still
+  // fails the test, and the count of what was tolerated is printed.
+  const watch = watchErrors(page);
+  await bootPlainAsUnlockedPlayer(page);
+
+  // 1. THE BRIEFING LEADS WITH THE ESCORT. Not "cross from the yard to the approach" — escort.
+  await expect(page.getByTestId('contract-briefing-name')).toHaveText('The Seed Run');
+  const goals = await page.getByTestId('contract-briefing-goals').locator('li').allTextContents();
+  expect(goals[0]).toContain('Escort the seed-vault caravan');
+  expect(goals[0]).toContain('the crossing is the contract');
+  await expect(page.getByTestId('contract-briefing-geography')).toContainText('seed-vault caravan');
+  const rules = await page.getByTestId('contract-briefing-rules').locator('li').allTextContents();
+  expect(rules.join(' ')).toContain('halts forty seconds at each waypoint ground');
+  await shoot(page, testInfo, 'briefing');
+
+  // 2. THE THING ITSELF IS NAMED, GUARDED AND ROADED — with no `?debug` anywhere.
+  const shown = await presentation(page);
+  expect(shown).not.toBeNull();
+  expect(shown).toMatchObject({
+    tagVisible: true,
+    tagText: 'Seed Caravan',
+    guardBarVisible: true,
+    guardRatio: 1,
+  });
+  expect(shown!.roadRuts).toBeGreaterThan(40);
+  // Three planting grounds plus the basin the road ends at.
+  expect(shown!.waypointRings).toBe(4);
+
+  // 3. THE COUNTY SAYS IT ROLLS — after the briefing card lifts, never behind it.
+  const dismiss = page.getByTestId('contract-briefing-dismiss');
+  if (await dismiss.isVisible()) await dismiss.evaluate((button: HTMLButtonElement) => button.click());
+  await page.waitForFunction(
+    () => window.__THREE_GAME_DIAGNOSTICS__?.seedCaravanPresentation?.beatsSaid.includes('depart') === true,
+    undefined,
+    { timeout: 30_000 },
+  );
+  await expect(page.locator('[data-hud-wave-title]')).toHaveText('THE SEED RUN');
+  await expect(page.locator('[data-hud-wave]')).toHaveText('The seed caravan rolls — see it to the basin.');
+  await shoot(page, testInfo, 'departure');
+
+  // And the train really is moving while all of that is true.
+  expect((await caravan(page))!.progress).toBeGreaterThan(0);
+  expectNoConsoleErrors(watch, 'e9-seed-run plain boot');
 });

@@ -503,6 +503,13 @@ interface ThreeGameDiagnostics {
   e9Arsenal: import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
   e9Canal: import('./systems/E9CanalSystem').E9CanalDiagnostics;
   seedCaravan: import('./systems/SeedCaravanSystem').SeedCaravanDiagnostics | null;
+  /**
+   * A8-LEGIBILITY: what a PLAIN boot shows a stranger about the caravan — the name tag, the guard
+   * bar, the drawn road, and which county-voice beats have been said. Null wherever the consumer
+   * is null. Presentation only; nothing here reaches the sim.
+   */
+  seedCaravanPresentation:
+    import('./systems/SeedCaravanPresentation').SeedCaravanPresentationDiagnostics | null;
   /** A5: null on every contract that declares no discharge-able interference front. */
   interferenceFront: import('./systems/InterferenceFrontSystem').InterferenceFrontDiagnostics | null;
   e10Finale: import('./systems/E10FinaleSystem').E10FinaleDiagnostics;
