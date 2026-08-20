@@ -65,6 +65,7 @@ import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../sys
 import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
 import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } from '../systems/ProbeRecovery';
+import { LowOrbitSystem, type LowOrbitDiagnostics } from '../systems/LowOrbitSystem';
 import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
@@ -220,6 +221,13 @@ export type HeadlessAgentView = AgentView & {
       flocks: CrowdFlockDiagnostics;
       objective: { allCrossed: boolean; wheelSpinning: boolean; securableAtWave: number | null };
     };
+    /**
+     * A7. Present only where the contract declares the zero-gravity twist, so a rider can SEE
+     * that its lobs return, where the handholds are, and how many debris bands flank them —
+     * rather than discovering it by losing a run. The counters below it are the run's own
+     * evidence that the mechanic fired.
+     */
+    lowOrbit?: LowOrbitDiagnostics;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -367,6 +375,33 @@ export class HeadlessContractSim {
    * the headless door proves the whole objective, not a by-construction shadow of it.
    */
   private readonly probeRecovery: ProbeRecovery;
+  /**
+   * A7 — THE LOW-ORBIT CONSUMER, and the honest note about which of its three parts can bite
+   * HERE. The browser reads this same object on the movement seam and in combat. This engine
+   * shares the COMBAT half exactly — `CombatSystem` and `BlastChargePool` are the same two files
+   * both engines run (`HeadlessContractSim:18` and `:53`), and `BLAST_AT` is a public standing
+   * order, so a rider's missed lob returns here precisely as it returns in the browser.
+   *
+   * The MOVEMENT half is different, and the difference is stated rather than hidden: this sim
+   * drives slot 0 on `IDLE_INTENTS` (F-E2PA-4), so the hero never thrusts and the handhold drift
+   * — a THRUST-response penalty — has nothing to act on. It is inert here by construction, not
+   * by omission. The debris chip is NOT inert: it is positional, so a hero posted inside a band
+   * takes it, and the guard in `e2e/e8-low-orbit-momentum.spec.ts` pins both halves of this
+   * paragraph so the claim cannot rot into a lie.
+   */
+  private readonly lowOrbit: LowOrbitSystem;
+
+  /**
+   * A7 debris chip, headless. Positional and hero-only, matching `Game.applyLowOrbitDebris`
+   * exactly: the sheet declares the hazard for the player and says nothing about enemies, so
+   * nothing here touches them.
+   */
+  private applyLowOrbitDebris(): void {
+    if (!this.lowOrbit.isDeclared) return;
+    const position = this.hero.group.position;
+    const chip = this.lowOrbit.debrisDamage(position.x, position.z, STEP_SECONDS);
+    if (chip > 0) this.combat.damageActor(chip, -1, this.hero);
+  }
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -458,6 +493,9 @@ export class HeadlessContractSim {
     this.signalSuppression = SignalSuppression.create(this.manifest);
     // A6, same rule: one read of the contract, shared by the recover verb and the latch below.
     this.probeRecovery = ProbeRecovery.create(this.manifest);
+    // Same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. The policy
+    // install waits for `this.combat` below.
+    this.lowOrbit = LowOrbitSystem.create(this.manifest);
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -475,6 +513,15 @@ export class HeadlessContractSim {
       (enemy, amount, died) => this.atomic?.onEnemyDamaged(enemy, amount, died),
       (enemy) => this.atomic?.isHostile(enemy) !== false,
     );
+    // A7: the same policy the browser installs at `Game.ts`, from the same declaration, so a
+    // missed lob returns identically in both engines. Absent (null) on every other contract.
+    if (this.lowOrbit.returnsProjectiles) {
+      this.combat.setOrbitalReturn({
+        seconds: this.lowOrbit.returnSeconds,
+        onScheduled: () => this.lowOrbit.noteReturnScheduled(),
+        onDetonated: () => this.lowOrbit.noteReturnDetonated(),
+      });
+    }
     this.registerHeroShooter();
     const offeredBuildables = mechanicsBuildableIds(this.manifest);
     this.build = new BuildSystem(
@@ -877,6 +924,12 @@ export class HeadlessContractSim {
         // The chair is part of the terminal state, so it belongs in the hash that certifies it:
         // a secure claimed without `poweredDown`/`chairPlaced` would hash differently from one won.
         ...(this.homemaker ? { homemaker: this.homemaker.diagnostics() } : {}),
+        // A7: spread-if-declared, exactly like every optional system above it, so the key is
+        // ABSENT for every contract that is not low orbit and their pinned hashes cannot move.
+        // Included rather than skipped because the returns and the debris chip are real terminal
+        // facts — a claim won while three lobs were still in orbit is not the same run as one
+        // won with none, and the hash should be able to say so.
+        ...(this.lowOrbit.isDeclared ? { lowOrbit: this.lowOrbit.diagnostics } : {}),
       },
     });
     return { ...base, eventLogHash, ...overtime };
@@ -988,6 +1041,7 @@ export class HeadlessContractSim {
     // Every call is null-guarded, so no already-admitted contract's tick changes.
     this.atomic?.tickDecay();
     this.deepwater?.advance(this.timeAlive);
+    this.applyLowOrbitDebris();
     this.hero.update(STEP_SECONDS, IDLE_INTENTS, {
       bounds: Terrain.bounds,
       sample: Terrain.sample,
@@ -1112,6 +1166,8 @@ export class HeadlessContractSim {
         objective: { allCrossed, wheelSpinning: spinning, securableAtWave: spinning && allCrossed ? secureWave : null },
       };
     }
+    // A7: only where DECLARED, so no other contract's view grows a field.
+    if (this.lowOrbit.isDeclared) view.now.lowOrbit = this.lowOrbit.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1450,6 +1506,7 @@ export class HeadlessContractSim {
       atomic: this.atomic?.diagnostics ?? null,
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
       probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
+      lowOrbit: this.lowOrbit.isDeclared ? this.lowOrbit.diagnostics : null,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,

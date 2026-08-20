@@ -3,8 +3,23 @@ import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 
-/** Returns true when the detonation ends the run and later charges must not resolve this tick. */
-export type BlastDetonation = (position: THREE.Vector3, damage: number, radius: number, ownerId: string) => boolean;
+/**
+ * Returns true when the detonation ends the run and later charges must not resolve this tick.
+ *
+ * A7 (2026-08-20) appended `origin` and `orbitReturnsLeft`. Both are READ-ONLY reports about the
+ * charge that just landed, added because low orbit's returning lob needs the vector it came in on
+ * (`target - origin` continued) and needs to know whether this round has already used its one
+ * return. Appended rather than inserted so every existing caller keeps its arity, and carried as
+ * arguments rather than state so nothing about a non-returning contract changes shape.
+ */
+export type BlastDetonation = (
+  position: THREE.Vector3,
+  damage: number,
+  radius: number,
+  ownerId: string,
+  origin: THREE.Vector3,
+  orbitReturnsLeft: number,
+) => boolean;
 
 export type BlastChargeSuspendSnapshot = {
   slot: number;
@@ -16,6 +31,13 @@ export type BlastChargeSuspendSnapshot = {
   radius: number;
   ownerId: string;
   apexY: number;
+  /**
+   * A7. OPTIONAL and omitted whenever it is zero, which is every charge on every contract that
+   * does not declare `orbital-return`. `JSON.stringify` drops an absent key, so a suspend
+   * snapshot outside low orbit serialises byte-for-byte as it did before A7 and every hash that
+   * reads one is unmoved. Only low orbit ever writes it.
+   */
+  orbitReturnsLeft?: number;
 };
 
 const ARC_SEGMENTS = 10;
@@ -42,6 +64,8 @@ export class BlastChargePool {
   private readonly damage: number[] = [];
   private readonly radius: number[] = [];
   private readonly ownerIds: string[] = [];
+  /** A7: how many orbital returns this round may still make. 0 everywhere but low orbit. */
+  private readonly orbitReturnsLeft: number[] = [];
   private readonly chargeGeometry = new THREE.DodecahedronGeometry(0.2, 0);
   private readonly chargeMaterial = new THREE.MeshStandardMaterial({
     color: '#8b7d3c',
@@ -86,6 +110,7 @@ export class BlastChargePool {
       this.damage.push(0);
       this.radius.push(0);
       this.ownerIds.push('hero_blast');
+      this.orbitReturnsLeft.push(0);
       this.hide(i);
     }
     this.setVisible(false);
@@ -100,7 +125,7 @@ export class BlastChargePool {
     return Balance.blast.pool;
   }
 
-  activate(origin: THREE.Vector3, target: THREE.Vector3, airTime: number, damage: number, radius: number, ownerId: string): boolean {
+  activate(origin: THREE.Vector3, target: THREE.Vector3, airTime: number, damage: number, radius: number, ownerId: string, orbitReturnsLeft = 0): boolean {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
       this.active[i] = true;
@@ -115,6 +140,7 @@ export class BlastChargePool {
       this.damage[i] = damage;
       this.radius[i] = radius;
       this.ownerIds[i] = ownerId;
+      this.orbitReturnsLeft[i] = Math.max(0, Math.trunc(orbitReturnsLeft));
       this.sync(i);
       this.setVisible(true);
       this.markNeedsUpdate();
@@ -129,8 +155,16 @@ export class BlastChargePool {
       this.age[i] = (this.age[i] ?? 0) + delta;
       if ((this.age[i] ?? 0) >= (this.duration[i] ?? 0)) {
         const target = this.targets[i];
-        const stop = target
-          ? onDetonate(target, this.damage[i] ?? 0, this.radius[i] ?? 0, this.ownerIds[i] ?? 'hero_blast')
+        const origin = this.origins[i];
+        const stop = target && origin
+          ? onDetonate(
+              target,
+              this.damage[i] ?? 0,
+              this.radius[i] ?? 0,
+              this.ownerIds[i] ?? 'hero_blast',
+              origin,
+              this.orbitReturnsLeft[i] ?? 0,
+            )
           : false;
         this.deactivate(i);
         if (stop) {
@@ -179,6 +213,9 @@ export class BlastChargePool {
         radius: this.radius[slot] ?? 0,
         ownerId: this.ownerIds[slot] ?? 'hero_blast',
         apexY: this.apexY[slot] ?? 0,
+        // Spread-if-nonzero: an absent key serialises away, so non-orbital contracts keep the
+        // exact snapshot bytes they had before A7. See the type's note.
+        ...((this.orbitReturnsLeft[slot] ?? 0) > 0 ? { orbitReturnsLeft: this.orbitReturnsLeft[slot] } : {}),
       });
     }
     return snapshots;
@@ -208,6 +245,7 @@ export class BlastChargePool {
       this.radius[slot] = snapshot.radius;
       this.ownerIds[slot] = snapshot.ownerId;
       this.apexY[slot] = snapshot.apexY;
+      this.orbitReturnsLeft[slot] = Math.max(0, Math.trunc(snapshot.orbitReturnsLeft ?? 0));
       this.alive += 1;
       this.sync(slot);
     }
@@ -226,6 +264,7 @@ export class BlastChargePool {
       this.radius[i] = 0;
       this.apexY[i] = 0;
       this.ownerIds[i] = 'hero_blast';
+      this.orbitReturnsLeft[i] = 0;
       this.hide(i);
     }
     this.alive = 0;
@@ -249,6 +288,7 @@ export class BlastChargePool {
     this.radius[index] = 0;
     this.apexY[index] = 0;
     this.ownerIds[index] = 'hero_blast';
+    this.orbitReturnsLeft[index] = 0;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
     if (this.alive === 0) this.setVisible(false);

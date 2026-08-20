@@ -185,6 +185,7 @@ import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression 
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
+import { LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -690,6 +691,11 @@ export class Game {
   /** Mistake #7: every write-sink gets a dupe-guard. The crater hint announces ONCE per run. */
   private probeHintAnnounced = false;
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
+  // A7 (door-completion-sheet §A7, RATIFIED 2026-08-20). The low-orbit geography consumer:
+  // handhold spine, scaffold decks, debris bands, and the orbital-return flag that
+  // `E8PhysicsSystem:133` has computed since E8 landed while nothing read it. Built off the
+  // CONTRACT, so every non-orbital run holds an inert consumer that answers "no" to everything.
+  private readonly lowOrbit = LowOrbitSystem.create(this.activeContract);
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private readonly activeEpoch = new URLSearchParams(window.location.search).has('replay') && this.contractEpoch
     ? loadEpoch(this.contractEpoch.id)
@@ -1477,6 +1483,16 @@ export class Game {
       () => this.e7SignalSystem.diagnostics.enabled ? this.e7SignalSystem.diagnostics.links.length : undefined,
     );
     this.scene.add(this.e7ArsenalSystem.view.group);
+    // A7. Installed once, from the contract's own declaration, and only where it is declared:
+    // `setOrbitalReturn(null)` is the state every other contract keeps, which is the same
+    // no-policy path `CombatSystem` had before A7 existed.
+    if (this.lowOrbit.returnsProjectiles) {
+      this.combat.setOrbitalReturn({
+        seconds: this.lowOrbit.returnSeconds,
+        onScheduled: () => this.lowOrbit.noteReturnScheduled(),
+        onDetonated: () => this.lowOrbit.noteReturnDetonated(),
+      });
+    }
     const e8PhysicsCombat = {
       registerShooter: (handle: ShooterHandle) => this.combat.registerShooter(this.e8PhysicsSystem.adaptShooter(handle)),
     } as unknown as CombatSystem;
@@ -2800,6 +2816,7 @@ export class Game {
 
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
     this.syncE8LobPhysics();
+    this.applyLowOrbitDebris(simDelta);
     const terrain = {
       bounds: Terrain.bounds,
       sample: (x: number, z: number) => this.actorTerrainSample(x, z),
@@ -2833,8 +2850,32 @@ export class Game {
   }
 
   private e8PhysicsIntents(slot: number, actor: Hero, intents: Intents, fixedDelta: number): Intents {
-    const move = this.e8PhysicsSystem.filterMovement(slot, intents.move, fixedDelta, actor.velocity);
+    // A7: the handhold spine and the debris bands enter here and NOWHERE else on the movement
+    // path — one seam, so there is exactly one place a rider's control can be modified and no
+    // chance of a second, hidden one. `terrain` is undefined off low orbit, which restores the
+    // pre-A7 arithmetic exactly.
+    const terrain = this.lowOrbit.isDeclared
+      ? {
+          controlScale: this.lowOrbit.controlScale(actor.group.position.x, actor.group.position.z),
+          speedScale: this.lowOrbit.speedScale(actor.group.position.x, actor.group.position.z),
+        }
+      : undefined;
+    const move = this.e8PhysicsSystem.filterMovement(slot, intents.move, fixedDelta, actor.velocity, terrain);
     return move === intents.move ? intents : { ...intents, move };
+  }
+
+  /**
+   * A7 debris chip. The sheet declares a hazard for the player only ("applies to the hero;
+   * enemies unaffected — nothing declared for them"), so this walks the ACTORS and stops there:
+   * reject-don't-stretch (Mistake #14). Whole hp only; the consumer banks the fraction.
+   */
+  private applyLowOrbitDebris(fixedDelta: number): void {
+    if (!this.lowOrbit.isDeclared) return;
+    for (const actor of this.actors) {
+      if (!actor.group.visible) continue;
+      const chip = this.lowOrbit.debrisDamage(actor.group.position.x, actor.group.position.z, fixedDelta);
+      if (chip > 0) this.combat.damageActor(chip, -1, actor);
+    }
   }
 
   private syncE8LobPhysics(): void {
@@ -4918,6 +4959,7 @@ export class Game {
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       e8Physics: this.e8PhysicsSystem.diagnostics,
       probeRecovery: this.probeRecovery.diagnostics,
+      lowOrbit: this.lowOrbit.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -7238,6 +7280,7 @@ export class Game {
     this.deepwaterArsenal.reset();
     this.e8ArsenalSystem.reset();
     this.e8PhysicsSystem.reset();
+    this.lowOrbit.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);

@@ -41,10 +41,22 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // measured its own move from the SAME pre-Regatta base (341/779/14 -> 351/809/13), so both sides
   // of that merge pinned identical numbers while each missing the other's admission — git even
   // auto-merged the `measurements.length` pin because both sides wrote the same digit. Every pin
-  // below is therefore the MERGED tree's own regen output (Regatta + Far Side stacked), verbatim.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 12);
+  // below is therefore the MERGED tree's own regen output, verbatim.
+  // ADMISSION MOVE (2026-08-20, `e8-low-orbit` A7 momentum-is-commitment, THIRD stack layer):
+  // Low Orbit's `harvestAnchors` were authored, so it left the door's own `harvestAnchors?.length
+  // !== 0` filter and entered `supportedContractIds()`. THE EXEMPTION COUNT DOES NOT MOVE — like
+  // the Dead Band below, it was never in `CONTRACT_ADMISSION_EXEMPTIONS`; it was excluded by empty
+  // data. On the A7 branch's own pre-stack base the parity block moved +10 agent-lacks, +30 equal,
+  // -1 not-offered, +39 rows — the same per-contract shape as the Dead Band and the Far Side.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE on that branch: with the four anchors emptied and every
+  // other line of the slice in place (the LowOrbitSystem consumer, both engines' wiring, the
+  // orbital-return path through CombatSystem/BlastChargePool and the manifest rule), the audit
+  // reproduced the base numbers EXACTLY — the whole movement belongs to the anchors; the consumer
+  // moves NOTHING (`zero_gravity` is a mechanics RULE). Citation `file:line` shifts in the report
+  // are coordinates, not classifications. Pins below = the TRIPLE-stacked merged tree's regen.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 11);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
-  // and the Far Side entered through the empty-anchors door, never that population.
+  // and neither the Far Side nor Low Orbit was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -105,7 +117,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // directions were measured, so when the prover lands, expect one contract's worth of movement
   // (19 rows on that base) against whatever the summary then reads, not those absolute digits.
   assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 361, equal: 839, 'not-offered': 12 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 371, equal: 869, 'not-offered': 11 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

@@ -2,6 +2,7 @@ import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type Cont
 import { Balance } from '../game/Balance';
 import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSystem';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
+import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 
@@ -384,6 +385,23 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       // The consequence a rider must plan around: this is an OBJECTIVE, not a bonus.
       consequence: 'the run cannot secure until the probe is recovered; stand in the crater and take the context action',
       playsOnce: true,
+    }));
+  }
+
+  // --- A7 low orbit. SOURCED FROM THE CONSUMER for the same reason A4 is: the manifest asks
+  // `LowOrbitSystem` what it will actually do, so a rider's briefing cannot drift from the rules
+  // the run applies. Absent when the contract declares no zero-gravity twist.
+  const lowOrbit = LowOrbitSystem.create(contract);
+  if (lowOrbit.isDeclared) {
+    rules.push(rule('zero_gravity', 'LowOrbitSystem', {
+      // The three ratified mechanics, named as CONSEQUENCES a rider can plan against.
+      orbitalReturn: lowOrbit.returnsProjectiles,
+      returnSeconds: lowOrbit.returnSeconds,
+      driftControlScale: DRIFT_CONTROL_SCALE,
+      debrisSpeedScale: DEBRIS_SPEED_SCALE,
+      debrisDamagePerSecond: DEBRIS_DAMAGE_PER_SECOND,
+      consequence: 'a lob that hits nothing re-enters after 12s on its original vector and may strike your own works; off the handhold spine and the scaffold decks thrust responds at half rate and momentum carries; the two debris bands slow the suit and chip it',
+      handholds: 'soft — never a wall',
     }));
   }
 

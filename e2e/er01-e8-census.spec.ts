@@ -26,23 +26,30 @@ const EXPECTED_DEPENDENCY: Record<string, string> = {
   'e8-eclipse': 'eclipse-contract-consumers',
 };
 
-/** The door's own membership, per id, with the reason each one sits where it does. */
-const ADMITTED = new Set(['e8-mare-claim', 'e8-eclipse', 'e8-far-side']);
-
 /**
- * The mechanics vocabulary each contract is allowed to speak, sorted as the manifest sorts it.
- * Only the Far Side has consumers, which is the whole point of the census: a contract that
- * declares a mechanic nobody reads must stay silent (reject-don't-stretch, Mistake #14).
+ * PER-ID, one row each, for the same reason `EXPECTED_DEPENDENCY` above is: E8's four contracts
+ * are being socketed by different hands at different times, and a single shared literal makes
+ * every admission collide with every other. A contract that gains a mechanic edits ITS OWN line
+ * and nothing else. Rows are the manifest rule IDs `deriveMechanicsManifest` emits, in order.
  */
 const EXPECTED_RULES: Record<string, string[]> = {
   'e8-mare-claim': ['build_zones'],
-  'e8-eclipse': ['build_zones'],
-  'e8-low-orbit': ['build_zones'],
+  // A4's consumer is contract-gated, not epoch-gated, and the Far Side declares
+  // `twist.signalSuppression` — so this row was ALREADY true before A7 touched anything.
+  // Measured, not assumed: the first draft of this table guessed `['build_zones']` here and the
+  // census caught it immediately, which is the whole reason the rows are written out per id.
+  // MERGED-TREE CORRECTION (A6+A7 drain, 2026-08-20): A6's ProbeRecovery consumer exists here,
+  // so the Far Side speaks three rules — this row was 2 on the A7 branch, which predated A6.
   'e8-far-side': ['build_zones', 'probe_recovery', 'signal_suppression'],
+  'e8-low-orbit': ['build_zones', 'zero_gravity'],
+  'e8-eclipse': ['build_zones'],
 };
 
 for (const contract of orbital.contracts) {
-  test(`${contract.id} census reports its true Orbital admission`, async () => {
+  // Reworded from "rejects the unsocketed Orbital contract" (A7, 2026-08-20): the census now
+  // covers admitted contracts too, and a title that says "rejects" for a contract the door
+  // accepts is a lie a later reader would trust.
+  test(`${contract.id} census pins the Orbital contract's door state`, async () => {
     const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
     const previousLocation = host.location;
     const previousWindow = host.window;
@@ -60,7 +67,6 @@ for (const contract of orbital.contracts) {
     };
     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
     try {
-      const admitted = ADMITTED.has(contract.id);
       // 🔺 F-E8FS-1 (truth, non-blocking): the Far Side's dependency row still reads `missing`
       // while three of the four consumers it names now exist (suppression, probe recovery,
       // playback). It is NOT edited here — `twist.probePlayback` and
@@ -71,6 +77,11 @@ for (const contract of orbital.contracts) {
       // dependency down to what is still genuinely inert (`suitOnlyZones`, `signalNullZones`,
       // `atmosphere.airIsWall`). Same call the E6 census made for glow-mesa and A4 made for
       // the Dead Band; `ContractFamilies.ts` is outside this slice's firewall.
+      // DERIVED, not listed: `HeadlessContractSim` admits exactly the contracts whose
+      // `harvestAnchors` are non-empty (`:114`), so the census now asks the same question the
+      // door asks. An admission is then a ONE-LINE contract edit and this file needs no change —
+      // which is also why two contracts can be socketed concurrently without fighting here.
+      const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
       expect(contract.tileParams.engineDependencies).toEqual([
         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
       ]);
