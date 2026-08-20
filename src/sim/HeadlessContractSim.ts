@@ -59,6 +59,7 @@ import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../syst
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
+import { PicnicHoldSystem } from '../systems/PicnicHoldSystem';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
@@ -190,6 +191,7 @@ export type HeadlessAgentView = AgentView & {
     };
     atomic?: AtomicSocket['diagnostics'] & {
       homemakerBoss?: ReturnType<HomemakerBossSystem['diagnostics']>;
+      picnicHold?: PicnicHoldSystem['diagnostics'];
     };
     hero: AgentView['now']['hero'] & {
       level: number;
@@ -312,6 +314,7 @@ export class HeadlessContractSim {
   private readonly homemaker: HomemakerBossSystem | null;
   private readonly deepwater: DeepwaterSocket | null;
   private readonly atomic: AtomicSocket | null;
+  private readonly picnicHold: PicnicHoldSystem;
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -398,6 +401,11 @@ export class HeadlessContractSim {
     // The Atomic socket is built before combat because the browser routes two of its
     // couplings THROUGH CombatSystem's own hooks (Game.ts:534 and Game.ts:536).
     this.atomic = AtomicSocket.create(this.manifest, this.events, this.enemies, this.economy);
+    this.picnicHold = new PicnicHoldSystem(
+      this.contractId === 'e6-picnic',
+      this.manifest.tileParams.stakeMarkers ?? [],
+      () => this.postHeroDeath(),
+    );
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -948,6 +956,16 @@ export class HeadlessContractSim {
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
     }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1));
+    this.picnicHold.update(
+      STEP_SECONDS,
+      this.enemies.all.filter((enemy) => enemy.isAlive),
+      [
+        { position: this.hero.group.position },
+        { position: this.prospector.position },
+        ...this.build.diagnostics.beaconPositions.map((position) => ({ position })),
+        ...this.build.diagnostics.turretPositions.map((position) => ({ position })),
+      ],
+    );
     this.deepwater?.recycleCorsairsAtExit();
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
     this.updateBaronRocketVolley();
@@ -978,6 +996,7 @@ export class HeadlessContractSim {
     if (this.atomic) view.now.atomic = {
       ...this.atomic.diagnostics,
       ...(this.homemaker ? { homemakerBoss: this.homemaker.diagnostics() } : {}),
+      ...(this.picnicHold.diagnostics.length > 0 ? { picnicHold: this.picnicHold.diagnostics } : {}),
     };
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
@@ -1309,6 +1328,7 @@ export class HeadlessContractSim {
       crawler: this.crawler?.diagnostics() ?? null,
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
+      picnicHold: this.picnicHold.diagnostics,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,

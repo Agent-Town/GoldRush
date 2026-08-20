@@ -1,6 +1,7 @@
 import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
 import { Balance } from '../game/Balance';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
+import { PICNIC_HOLD_RADIUS, PICNIC_HOLD_SECONDS } from '../systems/PicnicHoldSystem';
 
 type MechanicValue = boolean | number | string | readonly string[];
 
@@ -350,6 +351,18 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       daySeconds: e6Tiles.night.daySeconds,
       nightSeconds: e6Tiles.night.nightSeconds,
       harvestableOnlyAtNight: true,
+    }));
+  }
+  if (contract.id === 'e6-picnic') {
+    rules.push(rule('three_stake_hold', 'PicnicHoldSystem.update', {
+      stakes: (tile.stakeMarkers ?? []).map(({ id }) => id).sort(),
+      radius: PICNIC_HOLD_RADIUS,
+      holdSeconds: PICNIC_HOLD_SECONDS,
+      defenders: ['hero', 'turret'],
+      claimRule: 'enemy-present-and-uncontested',
+      resetRule: 'timer-resets-without-uncontested-enemy-presence',
+      lossRule: 'all-stakes-claimed',
+      secureRule: 'at-least-one-stake-held-at-default-secure-wave',
     }));
   }
   if (practice) {

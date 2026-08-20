@@ -68,6 +68,7 @@ import { takeTrailGuideBark, type TrailGuideTrigger } from '../story/trailGuide'
 import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revealLedgerEnemyStats } from '../encyclopedia/state';
 import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
 import { RunManager } from './RunManager';
+import { PicnicHoldSystem } from '../systems/PicnicHoldSystem';
 import {
   RUN_TAPE_SIM_VERSION,
   RunTapeRecorder,
@@ -685,6 +686,11 @@ export class Game {
     this.tileStateStore,
     this.activeContract.tileParams,
     (position, amount) => this.vfx.floatText(position, `STARSTONE +${amount}`, '#83ded7'),
+  );
+  private readonly picnicHold = new PicnicHoldSystem(
+    this.activeContract.id === 'e6-picnic',
+    this.activeContract.tileParams.stakeMarkers ?? [],
+    () => { this.deathPending = true; },
   );
   private readonly echoBossEnabled = this.activeContract.id === 'e7-relay-valley'
     || (isDebugEnabled() && new URLSearchParams(window.location.search).has('e7boss'));
@@ -2655,6 +2661,16 @@ export class Game {
           this.wrangle.movementMultiplier(enemy) *
           this.e6ArsenalSystem.movementMultiplier(enemy) *
           this.e9ArsenalSystem.movementMultiplier(enemy),
+      );
+      this.picnicHold.update(
+        simDelta,
+        this.enemies.all.filter((enemy) => enemy.isAlive),
+        [
+          ...this.visibleActorPositions().map((position) => ({ position })),
+          { position: this.prospector.position },
+          ...this.buildSystem.diagnostics.beaconPositions.map((position) => ({ position })),
+          ...this.buildSystem.diagnostics.turretPositions.map((position) => ({ position })),
+        ],
       );
       if (this.e9CanalSystem.update(simDelta, this.timeAlive, this.visibleHarvestTargets())) this.syncHeroVisualHeight();
       this.recycleDeepwaterCorsairsAtExit();
@@ -4788,6 +4804,7 @@ export class Game {
       },
       decay: this.decay.diagnostics(),
       e6Tiles: this.e6TileConsumers.diagnostics,
+      picnicHold: this.picnicHold.diagnostics,
       wrangle: this.wrangle.diagnostics(),
       pressure: this.pressureSystem.diagnostics,
       pressureArsenal: this.pressureArsenalSystem.diagnostics,
@@ -4965,7 +4982,7 @@ export class Game {
         p95: this.frameMsP95,
         sampleCount: this.frameMsSamples.length,
       },
-    };
+    } as ThreeGameDiagnostics;
     Object.assign(window.__THREE_GAME_DIAGNOSTICS__, { defaultedPicks: this.defaultedPicks });
     this.serveAgentRiderViews();
   }
@@ -7062,6 +7079,7 @@ export class Game {
     this.wrangle.reset();
     this.decay.reset();
     this.e6TileConsumers.reset();
+    this.picnicHold.reset();
     this.deathPending = false;
     if (this.powerGraph) {
       this.powerGraph.reset(0);

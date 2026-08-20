@@ -12,7 +12,7 @@ const EXPECTED_RULES: Record<string, string[]> = {
   ],
   'e6-showroom': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
   'e6-half-life-hollow': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
-  'e6-picnic': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-picnic': ['build_zones', 'three_stake_hold', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
 };
 
 /**
