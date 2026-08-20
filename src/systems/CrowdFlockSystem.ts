@@ -42,6 +42,52 @@ export const FLOCK_SPEED_MULT = 0.6;
  * one outlaw can never frighten two flocks at once. Derived from `escortRadius`, not authored.
  */
 export const LANE_SPACING_RADII = 2;
+/**
+ * THE GATE LANE SHIFT — owner ruling 2026-08-20, verbatim: **"ok, try that"**, given to the
+ * recommendation *"shift the middle crowd's lane ~6wu off the stake/spawn line"* (F-E3CF-3; the
+ * sheet's ratification of A1 was "approved (with any tweaks)", and this lane x was a DERIVED
+ * default — the landmark's own x — never declared contract data).
+ *
+ * WHY THE LANE NEEDED MOVING AT ALL: on `e3-fairground` three different things sat on the SAME
+ * LINE, and only the third one is anybody's fault. (1) The middle crowd's gate lane, because it is
+ * derived from its landmark and the Fair Wheel stands due north of the gate. (2) The loss stake at
+ * the gate itself, which every outlaw on the claim walks toward and which the headless rider
+ * cannot step away from. (3) The claim's NORTH spawn point — measured at (0,-4.1), 26wu due north
+ * of the stake — where `night_runner` enters and then walks that lane the whole way down to the
+ * stake. Measured over a full public-verb run: of eleven scatters that cost the middle crowd its
+ * crossing, NINE were a runner on that line, and none of the three sat there by design.
+ *
+ * WHY SIX AND NOT MORE: a crowd waiting at the gate must also stay a fright radius clear of the
+ * besiegers that gather against a defender's wall — measured, they press about 1.5wu beyond it —
+ * so the shift is bounded above by how far out a rider can afford to build that wall. Six units
+ * clears the runners' line by most of the escort radius while keeping the wall inside a ring a
+ * rider can still fund and the hero's own rig (range 10) can still cover. It is applied only to a
+ * lane that would otherwise sit ON the stake, and the flank lanes do not move.
+ *
+ * ⚠️ THE TRIAL WAS RUN AND THE ANSWER IS NO — SO THE SHIPPED VALUE IS ZERO. Six units west was
+ * measured against the ratified lane on ONE INSTRUMENT: the same free-standing fort (radius-8 ring,
+ * four beacons), the same 1 gold/second of repair, the same upgrade priority, both bench seeds.
+ *
+ *   lane x = 0 (ratified) : crossings [5,3,7] and [4,4,3] — BOTH SEEDS SECURE
+ *   lane x = -6 (ruled)   : crossings [5,0,7] and [4,0,5] — neither secures
+ *
+ * The flanks are untouched in both columns (5/7 and 4/5), so the only thing that moved is the
+ * crowd the shift was meant to help, and it went from three and four crossings to NONE.
+ *
+ * TWO MECHANISMS, both measured, and the second is the interesting one. (1) The crossing target is
+ * unchanged, so the lane is now a DIAGONAL and the offset decays exactly where it is needed: the
+ * gap from the runners' line is 6.0wu at the gate, 4.4 at z=-20, 2.8 at z=-10 and 1.9 at the spawn
+ * point itself — inside the fright radius for the whole corridor. (2) The stake is not only what
+ * everything walks AT, it is also the best-defended tile on the claim: everything the hero kills it
+ * kills closing on (0,-30), so a crowd waiting there sits inside the tightest part of that shield.
+ * Six units aside took the crowd out of the shield without taking it out of the traffic, because
+ * the traffic converges on the stake from all three spawn edges regardless.
+ *
+ * The lever is kept, documented and one number from live, because the owner's question deserves an
+ * answer that stays where the next reader will look for it. Flipping it back to -6 restores the
+ * trial exactly. What the measurement recommends instead is on the desk as F-E3CF-3.
+ */
+export const GATE_LANE_SHIFT = 0;
 /** A flock has "arrived" inside half a metre; one step at flock speed is ~0.1. */
 const ARRIVE_EPSILON = 0.5;
 
@@ -232,7 +278,13 @@ export class CrowdFlockSystem {
     // flocks than landmarks does the fallback spacing below apply.
     const overflow = Math.floor(index / plaza.length);
     const lane = overflow * this.escortRadius * LANE_SPACING_RADII;
-    const homeX = destination.x + lane;
+    const derived = destination.x + lane;
+    // A lane that would stand ON the loss stake steps aside by the ruled shift (see
+    // GATE_LANE_SHIFT). "On the stake" is the escort radius itself, derived like everything else
+    // here: a crowd waiting closer than that to the stake shares its fright ring with whatever is
+    // walking at it. The crossing target is unchanged — the crowd simply angles in to the plaza.
+    const onTheStake = Math.abs(derived - this.home.x) < this.escortRadius;
+    const homeX = onTheStake ? Number((derived + GATE_LANE_SHIFT).toFixed(3)) : derived;
     return {
       id: `flock-${index + 1}`,
       x: homeX,

@@ -304,7 +304,7 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
 
 Not every bench contract is servable through the headless door yet. `gr-sim` runs exactly the contracts below and refuses the rest by name (their era sockets are browser-side only today — measured out, not forgotten). Bench seeds outside this list are for browser riders until the door catches up.
 
-One refusal is a different shape and is named here so nobody hunts for a missing socket: **`e3-fairground` HAS its era socket** — the crowd-flock escort runs in the headless engine exactly as it does in the browser — and its admission is HELD, not absent. The door opens for it when a rider secures it twice per bench seed using only the public grammar. Winnability at unmodified balance is already measured (`artifacts/e3-fairground/fort-budget-probe.mjs`); what is missing is a rider that funds the fort by panning rather than by a debug grant.
+One refusal is a different shape and is named here so nobody hunts for a missing socket: **`e3-fairground` HAS its era socket** — the crowd-flock escort runs in the headless engine exactly as it does in the browser — and its admission is HELD, not absent. The door opens for it when a rider secures it twice per bench seed using only the public grammar. Winnability at unmodified balance is already measured (`artifacts/e3-fairground/fort-budget-probe.mjs`), and a rider that funds the whole fort by panning now exists (`artifacts/e3-fairground/prover-v2.mjs`): it secures bench seed `e3-fairground-01` twice over, and on `e3-fairground-02` it reaches the wave ceiling with the wheel still turning and the middle crowd still unable to cross. The hold stands until BOTH seeds secure.
 
 <!-- skillmd-guard:door-contracts:start -->
 ```json
