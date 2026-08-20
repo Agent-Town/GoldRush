@@ -28,7 +28,23 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   ]);
   assert.ok(audit.rows.every((row) => ['buildable', 'ability', 'choice', 'verb', 'economy'].includes(row.surface)));
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 14);
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 13);
+  // ADMISSION MOVE (2026-08-20, `e8-low-orbit` A7 momentum-is-commitment): Low Orbit's
+  // `harvestAnchors` were authored, so it left the door's own `harvestAnchors?.length !== 0`
+  // filter and entered `supportedContractIds()`. THE EXEMPTION COUNT DOES NOT MOVE — like the
+  // Dead Band below, it was never in `CONTRACT_ADMISSION_EXEMPTIONS`; it was excluded by empty
+  // data. What moves is the parity block: 341 -> 351 agent-lacks, 779 -> 809 equal, 14 -> 13
+  // not-offered, 1134 -> 1173 rows. Same 39-row shape the Dead Band moved by, one contract later.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, not guessed: with the four anchors emptied and every
+  // other line of this slice in place (the LowOrbitSystem consumer, both engines' wiring, the
+  // orbital-return path through CombatSystem/BlastChargePool and the manifest rule), this audit
+  // reproduced 341/779/14 and 1134 rows EXACTLY — the summary block was byte-identical to the
+  // committed report. So the whole movement belongs to the anchors and the consumer moves
+  // NOTHING here, which is the expected shape: the audit's rows are buildable/ability/choice/
+  // verb/economy surfaces, and `zero_gravity` is a mechanics RULE.
+  // (The regenerated REPORT does carry one further class of change the summary cannot show —
+  // `file:line` citations shifted where this slice added lines to HeadlessContractSim.ts,
+  // MechanicsManifest.ts and Game.ts. Those are coordinates, not classifications.)
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -58,7 +74,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // expected shape, since the audit's rows are buildable/ability/choice/verb/economy surfaces
   // and `signal_suppression` is a mechanics RULE.
   assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 341, equal: 779, 'not-offered': 14 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 351, equal: 809, 'not-offered': 13 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

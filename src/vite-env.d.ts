@@ -504,6 +504,7 @@ interface ThreeGameDiagnostics {
   e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
   e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
   e8Physics: import('./systems/E8PhysicsSystem').E8PhysicsDiagnostics;
+  lowOrbit: import('./systems/LowOrbitSystem').LowOrbitDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;
