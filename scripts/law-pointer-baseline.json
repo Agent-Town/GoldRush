@@ -6,9 +6,9 @@
       "fingerprint": "8c859fddc1a9",
       "excerpt": "# It was: find \"$ROOT/tasks/runs\" -name '*.log' -mtime +3 -delete 2>/dev/null"
     },
-    "CLAUDE.md -> lane-runner-v3.sh:458": {
+    "CLAUDE.md -> lane-runner-v3.sh:502": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 458,
+      "line": 502,
       "fingerprint": "8c859fddc1a9",
       "excerpt": "# It was: find \"$ROOT/tasks/runs\" -name '*.log' -mtime +3 -delete 2>/dev/null"
     },
@@ -24,21 +24,21 @@
       "fingerprint": "48544d0754ff",
       "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
     },
-    "CLAUDE.md -> lane-runner-v3.sh:456": {
+    "CLAUDE.md -> lane-runner-v3.sh:500": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 456,
+      "line": 500,
       "fingerprint": "48544d0754ff",
       "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
     },
-    "scripts/fire.md -> lane-runner-v3.sh:339": {
+    "scripts/fire.md -> lane-runner-v3.sh:383": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 339,
+      "line": 383,
       "fingerprint": "2fc4c563a6a1",
       "excerpt": "# default gpt-5.6-sol@medium (owner ruling 2026-07-10: Sol over Terra, mid effort for normal tasks; "
     },
-    "scripts/fire.md -> lane-runner-v3.sh:340": {
+    "scripts/fire.md -> lane-runner-v3.sh:384": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 340,
+      "line": 384,
       "fingerprint": "808e0ab6983e",
       "excerpt": "cd \"$wd\" && \"$codex_bin\" exec -m \"${cx_model:-gpt-5.6-sol}\" -c model_reasoning_effort=\"${cx_effort:-"
     },
@@ -161,18 +161,6 @@
       "line": 99,
       "fingerprint": "18ae39970869",
       "excerpt": "await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullP"
-    },
-    "tasks/goals.json[assay-season-roll] -> specs/agent-play/tape-contract.md:18": {
-      "target": "specs/agent-play/tape-contract.md",
-      "line": 18,
-      "fingerprint": "6a45c0e3a324",
-      "excerpt": "## The legacy board — RULED: SEASON ROLL (owner, 2026-08-15, verbatim)"
-    },
-    "tasks/goals.json[assay-season-roll] -> functions/api/standings.ts:925": {
-      "target": "functions/api/standings.ts",
-      "line": 925,
-      "fingerprint": "28add38b19bf",
-      "excerpt": "function boardKey(epochId: string, contractId: string, season: number = CURRENT_SEASON): string {"
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."
