@@ -1004,6 +1004,14 @@
               "priorBlockedReason": "s1755 HOLD, NOT MERGED; no owner word is owed yet. F-1755-1: the runner built one of three allowed boilers, spent the finite pressure before the wave-12 railcar, died wave 7, and therefore measured zero damage against a target that never spawned. The directly affected e2-arsenal suite is also red while the master forbids the assertion update. Cure in a detached worktree: survive to wave 12, exercise the lawful two/three-boiler ceiling with banked coal, measure actual railcar damage, and make the relevant arsenal assertion green; only a residual measured deficit becomes an owner balance fork.",
               "note": "Corrective to fix-e2-railcar-arsenal-floor (rejected s1741 F-1741-1..5 for cheating: headless-only pressure, research bypass, global 6x damage, debug-cheated proof). Tightened: identical resources both engines, only the 3 named weapons, no global balance, STOP-and-report at the economy gap rather than buff. Attended 2026-08-14.",
               "review": "reviews/fix-e2-railcar-arsenal-floor-v2.md"
+            },
+            {
+              "id": "e2-pressure-arsenal-headless",
+              "title": "E2 pressure arsenal headless - hill-mine ADMITTED via declared progression (cold control fires zero); trestle/incline rewritten to measurement",
+              "taskFile": "ATTENDED-AGENT (no lane master; dispatched via Agent tool per owner engine directive)",
+              "status": "merged",
+              "mergeHash": "19dd85c0a",
+              "note": "Opus agent 2026-08-20; exemptions 6->5; F-E2PA-1 (runStart v3 for medals) + F-E2PA-2..5 recorded; owner fork open: pressure line for trestle/incline?"
             }
           ]
         },
@@ -1220,6 +1228,13 @@
               "dispatchNote": "s1782 attempt 1 stopped honestly with zero diff at mandatory preflight because the runner claimed after STATUS line 1 was rewritten to lock CLEARED but before that handoff was committed; tracked STATUS.md was therefore dirty. Re-queued once in the same fire with a changed premise: the recovery ACTIVE lock and all ledger edits are committed first, then the handoff commit makes STATUS clean before the runner's second preflight. Evidence: tasks/runs/20260815-075219-main-fix-e5-dredge-queen-headless-socket.md.log.",
               "review": "reviews/fix-e5-dredge-queen-headless-socket.md",
               "mergeHash": "26a364bfee4907fac6f1a96449e93adabf1dce61"
+            },
+            {
+              "id": "b1-regatta-race",
+              "title": "B1 Regatta: beacon-race consumer + gate widening + anchors/seeds -> door-ready (racer-loot recorded, not invented)",
+              "taskFile": "b1-regatta-race.md",
+              "status": "planned",
+              "note": "Ratified door-completion-sheet B1 (owner 2026-08-20 overruled deferral). lane-c."
             }
           ]
         },
@@ -1343,6 +1358,21 @@
               "registeredBy": "s1782",
               "note": "Cures F-MTS-4 from reviews/milk-twin-sockets.md after a mandatory GoldPickupPool dependency probe. The attended handover explicitly staged this master for registration and later queueing. It remains planned behind the E5 MAIN-slot task because both touch HeadlessContractSim and a second queued MAIN task would hit the first task's undrained working-tree output.",
               "mergeHash": "e86e9d8e322505f21e7a1b362587e96372c09e71"
+            },
+            {
+              "id": "b4-picnic-three-stake-hold",
+              "title": "B4 Picnic: three-stake hold consumer + anchors -> door-ready (owner-ruled B-wave build)",
+              "taskFile": "b4-picnic-three-stake-hold.md",
+              "status": "planned",
+              "note": "Ratified door-completion-sheet B4 (owner 2026-08-20: build, queue after A-wave; codex subscription reset -> B-wave rides lanes now). lane-b."
+            },
+            {
+              "id": "showroom-cap-fix",
+              "title": "Owner-ruled cap exemption for exhausted machines - idle false-green survives one layer deeper (pool, F-CAP-2 owner fork open)",
+              "taskFile": "ATTENDED-AGENT (no lane master; dispatched via Agent tool per owner engine directive)",
+              "status": "merged",
+              "mergeHash": "f8d025747",
+              "note": "Opus agent 2026-08-20; exemption reworded honest; blast radius 43/45 floors unmoved."
             }
           ]
         },
@@ -4895,13 +4925,22 @@
             },
             {
               "id": "f2081-1-e6-capture-truth-pass",
-              "title": "F-E6HS-2: the E6 manifest calls capturable machines \"uncapturable\" — truth-pass the rule id, prose, comment and census pins",
+              "title": "F-E6HS-2: the E6 manifest calls capturable machines \"uncapturable\" \u2014 truth-pass the rule id, prose, comment and census pins",
               "status": "queued",
               "taskFile": "f2081-1-e6-capture-truth-pass.md",
               "lane": "lane-b",
               "authoredBy": "s2081 (FIRE-AUTHORED, attended review welcome)",
-              "note": "Cures F-E6HS-2, filed by the attended E6 Homemaker socket drain at reviews/e6-homemaker-headless-socket.md:8. The E6 manifest serves every atomic-epoch contract a rule whose id, prose and rationale all assert that exhausted machines cannot be captured by an agent; artifacts/ap16-8b-e6-showroom-capture-loop/runs.jsonl:5 records 373 captures in a single e6-showroom run (hash fnv1a32:aea49513) and the E6 prover penned 12 more. Capture is driven by the agent-surface CAPTURE standing-order verb (StandingOrders.ts:28/:349, AtomicSocket.ts:30-31). Scope is deliberately narrow: the id, the consequence prose, the justifying comment, and the five census pins. The agentOperations: [] field is REPORT-ONLY because the rule names AgentGameAdapter (ToolSurface.ts:84-95), which carries no capture member, so the field may be true for its own consumer even though capture is reachable — the same unresolved question f2078-1 scope 6 raised for deepwater_levers_unreachable, whose reading was never recorded."
-            },{"id":"f2082-1-contention-probe-counts-observers","title":"F-E6HS-3: the node-guards contention probe counts observers as batteries — count invocations, not mentions","status":"queued","taskFile":"f2082-1-contention-probe-counts-observers.md","lane":"lane-a","authoredBy":"s2082 (FIRE-AUTHORED, attended review welcome)","note":"Cures F-E6HS-3 (reviews/e6-homemaker-headless-socket.md:8), the third sighting of the pgrep-prose class after F-1606-1 and F-2080-1. scripts/run-node-guards.mjs:39 asks 'is another battery running?' with pgrep -f 'run-node-guards', which matches any process whose command line MENTIONS the battery. The authoring fire measured it live with full ps attribution twice on 2026-08-20: both times a wait-for-quiet loop (until ! pgrep -f \"run-node-g...\") was counted as a battery, so one genuine battery was reported as three. A second half is INDICATED BUT NOT PROVEN and the master orders it proven or disproven before curing: :59-:60 counts forest roots (which include the caller's own) and then reports siblings + 1, which would make a lone battery print CONTENDED — 2; a quiet-board control returned INCONCLUSIVE because an agent worktree kept launching batteries. This matters because the red is already institutionalised as a standing excuse — tasks/f2081-1-e6-capture-truth-pass.md:52 instructs runners to ignore it by name, and reviews/e6-homemaker-headless-socket.md:6 excuses a node-guards red the same way — which is the F-1460-1 disease (a red nobody investigates is worse than no test). Scope puts ONE predicate in the already-pure scripts/node-guards-concurrency.mjs shared by the harness and by the guard's own waitForQuietBoard(), which runs the same defective pattern at :39; adds the waiter red path the guard never had; and orders a re-measurement of the guard sibling fixture at :129-:137, whose comment claims an sh -c wrapper matches although its argv holds the variable names unexpanded. The stamp stays advisory — it must never influence an exit code. Success criterion is \"when it says CONTENDED, it is right\", not \"it stops saying CONTENDED\": there IS real concurrent-battery pressure on this box, and that plausibility is exactly why the false label survived three sightings."},
+              "note": "Cures F-E6HS-2, filed by the attended E6 Homemaker socket drain at reviews/e6-homemaker-headless-socket.md:8. The E6 manifest serves every atomic-epoch contract a rule whose id, prose and rationale all assert that exhausted machines cannot be captured by an agent; artifacts/ap16-8b-e6-showroom-capture-loop/runs.jsonl:5 records 373 captures in a single e6-showroom run (hash fnv1a32:aea49513) and the E6 prover penned 12 more. Capture is driven by the agent-surface CAPTURE standing-order verb (StandingOrders.ts:28/:349, AtomicSocket.ts:30-31). Scope is deliberately narrow: the id, the consequence prose, the justifying comment, and the five census pins. The agentOperations: [] field is REPORT-ONLY because the rule names AgentGameAdapter (ToolSurface.ts:84-95), which carries no capture member, so the field may be true for its own consumer even though capture is reachable \u2014 the same unresolved question f2078-1 scope 6 raised for deepwater_levers_unreachable, whose reading was never recorded."
+            },
+            {
+              "id": "f2082-1-contention-probe-counts-observers",
+              "title": "F-E6HS-3: the node-guards contention probe counts observers as batteries \u2014 count invocations, not mentions",
+              "status": "queued",
+              "taskFile": "f2082-1-contention-probe-counts-observers.md",
+              "lane": "lane-a",
+              "authoredBy": "s2082 (FIRE-AUTHORED, attended review welcome)",
+              "note": "Cures F-E6HS-3 (reviews/e6-homemaker-headless-socket.md:8), the third sighting of the pgrep-prose class after F-1606-1 and F-2080-1. scripts/run-node-guards.mjs:39 asks 'is another battery running?' with pgrep -f 'run-node-guards', which matches any process whose command line MENTIONS the battery. The authoring fire measured it live with full ps attribution twice on 2026-08-20: both times a wait-for-quiet loop (until ! pgrep -f \"run-node-g...\") was counted as a battery, so one genuine battery was reported as three. A second half is INDICATED BUT NOT PROVEN and the master orders it proven or disproven before curing: :59-:60 counts forest roots (which include the caller's own) and then reports siblings + 1, which would make a lone battery print CONTENDED \u2014 2; a quiet-board control returned INCONCLUSIVE because an agent worktree kept launching batteries. This matters because the red is already institutionalised as a standing excuse \u2014 tasks/f2081-1-e6-capture-truth-pass.md:52 instructs runners to ignore it by name, and reviews/e6-homemaker-headless-socket.md:6 excuses a node-guards red the same way \u2014 which is the F-1460-1 disease (a red nobody investigates is worse than no test). Scope puts ONE predicate in the already-pure scripts/node-guards-concurrency.mjs shared by the harness and by the guard's own waitForQuietBoard(), which runs the same defective pattern at :39; adds the waiter red path the guard never had; and orders a re-measurement of the guard sibling fixture at :129-:137, whose comment claims an sh -c wrapper matches although its argv holds the variable names unexpanded. The stamp stays advisory \u2014 it must never influence an exit code. Success criterion is \"when it says CONTENDED, it is right\", not \"it stops saying CONTENDED\": there IS real concurrent-battery pressure on this box, and that plausibility is exactly why the false label survived three sightings."
+            },
             {
               "id": "fsr6-skillmd-ledger-season-docs",
               "title": "F-SR-6: document the ledger-season surface (?season=, bad_season, season_closed, assayEra) in the BYO-agent door doc",

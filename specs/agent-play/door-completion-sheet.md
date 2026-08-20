@@ -1,5 +1,6 @@
 # THE DOOR-COMPLETION SHEET — ten mechanic designs + six rulings to make every epoch door-ready
-### Status: DRAFT 2026-08-20 · attended, from the verified design dossier (all declared data read verbatim from contracts.json; seams verified file:line) · owner mandate: "Lets make all the epochs door ready"
+### Status: RATIFIED 2026-08-20 — owner, verbatim: "Group 1: approved (with any tweaks). Group 2: don't defer, lets keep building but put these in the queue after the other tasks. Group 3: cap fix yes, difficulty stands yes leave it."
+### RULINGS IN FORCE: A1–A10 approved WITH the sheet's defaults · B1–B6 ALL BUILD (sequenced AFTER the A-wave — nothing deferred; deferral recommendations are OVERRULED; Ember Shore + Archive World get attended design/content specs before their builds) · Showroom: exhausted machines STOP counting against the alive cap (idle then dies honestly, admission follows); works-density UNCHANGED (difficulty stands) · The River stays exempt-by-design (its own data).
 ### RATIFICATION MODEL: each item carries a RECOMMENDATION with defaults. The owner may ratify the whole sheet with one word ("approved"), strike items, or adjust parameters inline. Ratified items become fire/agent-authorable masters; each follows the socket patterns (DeepwaterSocket/AtomicSocket/E9CanalSocket precedents) and the reject-don't-stretch law — every design below sockets ONLY what its contract already declares.
 
 ## PART A — the ten undesigned mechanics (design → build on ratification)
