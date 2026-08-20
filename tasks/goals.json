@@ -1445,6 +1445,7 @@
               "title": "B4v2 Picnic: ruled stake pressure + completed hold consumer (builds on lane/b WIP) -> door-ready",
               "taskFile": "b4v2-picnic-stake-pressure.md",
               "status": "queued",
+              "note_s2088": "F-2088-1: QUEUED BUT UNDISPATCHABLE — the F-1522-1 lane-safety guard (lane-runner-v3.sh:229-309) REFUSED this master 113 times, once per poll, because lane/b reads HOLDS (the preserved 7a320da26 WIP that IS this masters base). Its only escape is full absorption into main, which the owner-fork block on b4-picnic-three-stake-hold forbids; the other escape, a lane reset, is forbidden by this masters own RESET FORBIDDEN pre-flight. Recommended unblock: run it directly in worktrees/lane-b outside the runner (verified clean at 7a320da26, WIP intact). Do NOT drop it from the queue.",
               "note": "Owner rulings 2026-08-20: unpark E6 on codex + stake pressure yes (F-2085-1 RULED). Prover evidence re-derived per F-PROTO-5. lane-b, build-on-predecessor."
             },
             {
