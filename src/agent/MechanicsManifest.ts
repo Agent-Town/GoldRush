@@ -1,6 +1,7 @@
 import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
 import { Balance } from '../game/Balance';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
+import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
 
 type MechanicValue = boolean | number | string | readonly string[];
 
@@ -302,6 +303,20 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       consumerLevers: ['ClaimBoat.placeBuilding', 'ClaimBoat.reanchor'],
       agentOperations: [],
       reason: 'no boat-build or reanchor verb exists on the agent tool surface',
+    }));
+  }
+
+  // --- A4 signal suppression. SOURCED FROM THE CONSUMER, not re-read from JSON: the manifest
+  // asks `SignalSuppression` which systems it switched off, so a manifest row cannot drift
+  // from the gate the run actually applies. Absent when the contract declares nothing —
+  // silence here means "no suppression", and it must keep meaning that.
+  const suppression = SignalSuppression.create(contract);
+  if (suppression.diagnostics.declared) {
+    rules.push(rule('signal_suppression', 'SignalSuppression.refuse', {
+      off: suppression.suppressedSystems,
+      // Named so a rider reads the CONSEQUENCE rather than deducing it from three booleans.
+      consequence: 'the named systems refuse for the whole run; the claim is won with turrets, combat and harvest alone',
+      refusalReason: SIGNAL_SUPPRESSION_REASON,
     }));
   }
 

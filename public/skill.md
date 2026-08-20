@@ -252,6 +252,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e7-relay-valley-01",
     "e7-relay-valley-02"
   ],
+  "e7-dead-band": [
+    "e7-dead-band-01",
+    "e7-dead-band-02"
+  ],
   "e8-mare-claim": [
     "e8-mare-claim-01",
     "e8-mare-claim-02"
@@ -290,6 +294,7 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
   "e4-long-road",
   "e5-deepwater-claim",
   "e6-glow-mesa",
+  "e7-dead-band",
   "e7-relay-valley",
   "e8-eclipse",
   "e8-mare-claim",
