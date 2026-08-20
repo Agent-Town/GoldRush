@@ -111,12 +111,12 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
     citation: 'reviews/milk-twin-sockets.md',
   },
-  // REWORDED 2026-08-20, after the owner's cap ruling landed and DISPROVED the original
-  // reason. Both of its clauses are now false: aimed CAPTURE absorbs 97-99% of exhaustion
-  // (AP-16-8b) and the 60-enemy alive cap no longer holds exhausted machines at all. The
-  // refusal survives its reason, which is why the row is reworded rather than removed.
+  // REWORDED 2026-08-20 after the Showroom gained an honest capture objective. The idle
+  // false-green is closed: fewer than six run-local captures keeps the secure latch shut at every
+  // wave. The refusal survives for the other measured reason — unchanged-difficulty public play
+  // still dies before wave 20 even after exceeding the quota by two orders of magnitude.
   'e6-showroom': {
-    reason: 'Aimed CAPTURE closes the loop and the alive cap no longer clogs, but no secure is demonstrated: competent play dies at waves 14-19 against secureWave 20, and difficulty stands per the owner (2026-08-20). Idle still false-greens at wave 20 — exhausted machines released their spawn slot but still hold an enemy-POOL slot, so all 96 fill with harmless statues and nothing further can spawn.',
+    reason: 'The six-capture objective latch is live in both engines, so idle can no longer secure at any wave. Strong public-verb CAPTURE + fortify play exceeded the quota but died at waves 18/14 on the two bench seeds (306 captures, fnv1a32:e95a0e84 / 194 captures, fnv1a32:6ee8e7e5) against secureWave 20. Difficulty stands per the owner (2026-08-20); re-admit when both seeds secure twice.',
     citation: 'reviews/e6-showroom-cap-fix.md',
   },
   // A8 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-20, door-completion-sheet §A8).
@@ -853,6 +853,7 @@ export class HeadlessContractSim {
           // canyon latch keys on `powerGrid.connect`. A Seed Run that never lands its train
           // cannot secure at any wave; a train that arrives opens the ordinary secure wave.
           || (this.seedCaravan && !this.seedCaravan.objectiveComplete)
+          || this.atomic?.objectiveAllowsSecure === false
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -1399,7 +1400,8 @@ export class HeadlessContractSim {
       // here keeps the two secure paths from disagreeing the way F-1471-1 did.
       && this.probeRecovery.objectiveAllowsSecure
       // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
-      && (!this.seedCaravan || this.seedCaravan.objectiveComplete);
+      && (!this.seedCaravan || this.seedCaravan.objectiveComplete)
+      && this.atomic?.objectiveAllowsSecure !== false;
     const runWave = this.currentRunWave();
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen'
       && runWave < (this.manifest.twist.secureWave ?? Balance.run.secureWave);

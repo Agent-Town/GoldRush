@@ -238,6 +238,7 @@ import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, 
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { WrangleSystem } from '../systems/WrangleSystem';
+import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 import { CombatVfx } from '../systems/CombatVfx';
 import { BaronVolleyVfx } from '../systems/BaronVolleyVfx';
 import { Vfx } from '../systems/Vfx';
@@ -719,6 +720,7 @@ export class Game {
     this.activeContract.tileParams,
     (position, amount) => this.vfx.floatText(position, `STARSTONE +${amount}`, '#83ded7'),
   );
+  private readonly showroomCaptureObjective = ShowroomCaptureObjective.create(this.activeContract);
   private readonly echoBossEnabled = this.activeContract.id === 'e7-relay-valley'
     || (isDebugEnabled() && new URLSearchParams(window.location.search).has('e7boss'));
   private readonly wrangle = new WrangleSystem(
@@ -730,6 +732,7 @@ export class Game {
     this.tileStateStore,
     (position) => this.vfx.floatText(position, 'EXHAUSTED — WRANGLE', '#83ded7'),
     (enemy, penTotal) => {
+      this.showroomCaptureObjective.recordCapture();
       this.combat.presentFreedEnemy(enemy);
       this.vfx.floatText(enemy.position, `CAUGHT — PEN ${penTotal}`, '#83ded7');
     },
@@ -4985,6 +4988,9 @@ export class Game {
       decay: this.decay.diagnostics(),
       e6Tiles: this.e6TileConsumers.diagnostics,
       wrangle: this.wrangle.diagnostics(),
+      ...(this.showroomCaptureObjective.diagnostics.declared
+        ? { showroomCaptureObjective: this.showroomCaptureObjective.diagnostics }
+        : {}),
       pressure: this.pressureSystem.diagnostics,
       pressureArsenal: this.pressureArsenalSystem.diagnostics,
       deepwaterArsenal: this.deepwaterArsenal.diagnostics,
@@ -5334,6 +5340,7 @@ export class Game {
       || (this.crowdFlocks !== undefined && !this.crowdFlocks.allCrossed)
       // A8: the caravan-connect latch, the canyon latch's twin — the crossing IS the objective.
       || (this.seedCaravan !== null && !this.seedCaravan.objectiveComplete)
+      || !this.showroomCaptureObjective.objectiveAllowsSecure
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -5610,7 +5617,8 @@ export class Game {
       // an unrecovered probe. No contract declares both today; the two paths agree anyway.
       && this.probeRecovery.objectiveAllowsSecure
       // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
-      && (this.seedCaravan === null || this.seedCaravan.objectiveComplete);
+      && (this.seedCaravan === null || this.seedCaravan.objectiveComplete)
+      && this.showroomCaptureObjective.objectiveAllowsSecure;
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
       || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
@@ -7289,6 +7297,7 @@ export class Game {
     this.timeAlive = 0;
     this.simTick = 0;
     this.wrangle.reset();
+    this.showroomCaptureObjective.reset();
     this.decay.reset();
     this.e6TileConsumers.reset();
     this.deathPending = false;

@@ -250,6 +250,7 @@ interface ThreeGameDiagnostics {
   decay: ReturnType<import('./systems/DecaySystem').DecayScheduler['diagnostics']>;
   e6Tiles: import('./systems/E6TileConsumerSystem').E6TileConsumerDiagnostics;
   wrangle: ReturnType<import('./systems/WrangleSystem').WrangleSystem['diagnostics']>;
+  showroomCaptureObjective?: import('./systems/ShowroomCaptureObjective').ShowroomCaptureDiagnostics;
   run: {
     secured: boolean;
     rush: boolean;
