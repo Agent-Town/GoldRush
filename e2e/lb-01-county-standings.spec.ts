@@ -34,6 +34,9 @@ const FD1_SHOTS = path.resolve('reviews/shots-fd1');
 const FD3_SHOTS = path.resolve('reviews/shots-fd3');
 const FD3_1_SHOTS = path.resolve('reviews/shots-fd3-1');
 const F_BOARD_2_SHOTS = path.resolve('reviews/shots-f-board-2');
+// The county writes in the season now riding (owner ruling 2026-08-15, the season roll); the
+// pre-roll key shape belongs to the closed first ledger and is never written again.
+const BOARD_KEY = 'standings:s2:epoch-1-frontier:the-claim';
 const CLAIM_BENCH_SEED = benchSeeds['the-claim'][0]!;
 const WRONG_CONTRACT_BENCH_SEED = benchSeeds['e1-dry-gulch'][0]!;
 const PROFILE_STATE: ProfileState = {
@@ -184,7 +187,7 @@ test('public county rows carry submitted time while legacy rows keep the missing
   });
   const body = (await response.json()) as { board: Array<Record<string, unknown>> };
   const projected = body.board[0]!;
-  const stored = JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]') as Array<Record<string, unknown>>;
+  const stored = JSON.parse((await kv.get(BOARD_KEY)) ?? '[]') as Array<Record<string, unknown>>;
   expect(projected.submittedAt).toBe(stored[0]?.submittedAt);
   expect(projected.submittedAt).toEqual(expect.any(Number));
   expect(projected.season).toBe('Season 2 — The Same Game');
@@ -259,7 +262,7 @@ test('standings still accept model-only and undeclared riders', async () => {
 
 test('stored version-less harness rows still render through the standings route', async () => {
   const kv = makeKv();
-  await kv.put('standings:epoch-1-frontier:the-claim', JSON.stringify([{
+  await kv.put(BOARD_KEY, JSON.stringify([{
     ...validPost('0'.repeat(32), 11).score,
     profileName: 'Season One Rider',
     anonId: '0'.repeat(32),
@@ -283,7 +286,7 @@ test('stored version-less harness rows still render through the standings route'
 
 test('endpoint stores optional self-declared stack and publishes only its board-safe declaration', async () => {
   const kv = makeKv();
-  await kv.put('standings:epoch-1-frontier:the-claim', JSON.stringify([
+  await kv.put(BOARD_KEY, JSON.stringify([
     {
       ...validPost('3'.repeat(32), 13).score,
       profileName: 'Before the Bench',
@@ -345,7 +348,7 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   await standingsRoute({ request: apiRequest('POST', '', validPost('1'.repeat(32), 8)), env: { TELEMETRY: kv } });
   await standingsRoute({ request: apiRequest('POST', '', validPost('2'.repeat(32), 14)), env: { TELEMETRY: kv } });
 
-  const stored = JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]') as Array<Record<string, unknown>>;
+  const stored = JSON.parse((await kv.get(BOARD_KEY)) ?? '[]') as Array<Record<string, unknown>>;
   expect(stored.find((row) => row.anonId === '1'.repeat(32))).toMatchObject({
     seed: CLAIM_BENCH_SEED,
     seedMode: 'bench',
@@ -422,7 +425,7 @@ test('endpoint stores optional self-declared stack and publishes only its board-
     env: { TELEMETRY: legacyClientKv },
   });
   expect(legacyClient.status).toBe(200);
-  expect(JSON.parse((await legacyClientKv.get('standings:epoch-1-frontier:the-claim')) ?? '[]')).toContainEqual(
+  expect(JSON.parse((await legacyClientKv.get(BOARD_KEY)) ?? '[]')).toContainEqual(
     expect.objectContaining({ difficulty: 'trail', defaulted: true }),
   );
 
@@ -458,11 +461,11 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   let boardWrites = 0;
   const unreadableKv: MockKV = {
     get: async (key) => {
-      if (key === 'standings:epoch-1-frontier:the-claim') throw new Error('read failed');
+      if (key === BOARD_KEY) throw new Error('read failed');
       return null;
     },
     put: async (key) => {
-      if (key === 'standings:epoch-1-frontier:the-claim') boardWrites += 1;
+      if (key === BOARD_KEY) boardWrites += 1;
     },
   };
   const unreadable = await standingsRoute({
@@ -474,7 +477,7 @@ test('endpoint stores optional self-declared stack and publishes only its board-
 
   const fullKv = makeKv();
   await fullKv.put(
-    'standings:epoch-1-frontier:the-claim',
+    BOARD_KEY,
     JSON.stringify(
       Array.from({ length: 100 }, (_, index) => ({
         secured: true,
@@ -510,7 +513,7 @@ test('bench submissions require membership in the contract frozen seed set', asy
     env: { TELEMETRY: kv },
   });
   expect(member.status).toBe(200);
-  expect(JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]')).toContainEqual(
+  expect(JSON.parse((await kv.get(BOARD_KEY)) ?? '[]')).toContainEqual(
     expect.objectContaining({ seed: CLAIM_BENCH_SEED, seedMode: 'bench' }),
   );
 
