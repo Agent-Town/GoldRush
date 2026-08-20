@@ -55,11 +55,12 @@ export class DeepwaterClaimTile {
   boat: ClaimBoat;
   private readonly scheduler: StormWaveScheduler;
   private readonly corsairWaves: CorsairSkiffWave[] = [];
+  private readonly lostHullPads = new Set<string>();
   private readonly deepwater: DeepwaterFields;
   private readonly corsair: CorsairRosterEntry;
 
   constructor(readonly contract: ContractManifest) {
-    if (contract.id !== 'e5-deepwater-claim' && contract.id !== 'e5-regatta') {
+    if (contract.id !== 'e5-deepwater-claim' && contract.id !== 'e5-regatta' && contract.id !== 'e5-flotilla') {
       throw new Error('The deepwater tile needs an authored Deepwater contract.');
     }
     const authored = contract as unknown as DeepwaterContract;
@@ -79,7 +80,11 @@ export class DeepwaterClaimTile {
   }
 
   placeBoatBuilding(padId: string, buildingId: string): boolean {
-    return this.boat.placeBuilding(padId, buildingId);
+    return !this.lostHullPads.has(padId) && this.boat.placeBuilding(padId, buildingId);
+  }
+
+  loseHull(id: string): void {
+    this.lostHullPads.add(id);
   }
 
   landPlacementAt(x: number, z: number) {
@@ -108,15 +113,17 @@ export class DeepwaterClaimTile {
     this.boat = new ClaimBoat(this.deepwater.claimBoat);
     this.scheduler.reset();
     this.corsairWaves.length = 0;
+    this.lostHullPads.clear();
     return this.snapshot();
   }
 
   snapshot() {
+    const boat = this.boat.snapshot();
     return {
       contractId: this.contract.id,
       tileId: this.deepwater.waterTile.id,
       size: this.deepwater.waterTile.size,
-      boat: this.boat.snapshot(),
+      boat: { ...boat, buildings: boat.buildings.filter(({ padId }) => !this.lostHullPads.has(padId)) },
       storm: this.scheduler.snapshot(),
       corsairWaves: this.corsairWaves.map((wave) => ({ ...wave, enemies: [...wave.enemies] })),
       wrecks: [...this.deepwater.wrecks],
@@ -146,7 +153,7 @@ export class DeepwaterClaimTile {
 }
 
 export function createDeepwaterClaimTile(contract: ContractManifest): DeepwaterClaimTile | null {
-  return contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta'
+  return contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta' || contract.id === 'e5-flotilla'
     ? new DeepwaterClaimTile(contract)
     : null;
 }

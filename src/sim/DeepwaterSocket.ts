@@ -5,6 +5,7 @@ import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
 import type { ContractManifest } from '../meta/ContractFamilies';
 import type { CombatSystem } from '../systems/CombatSystem';
+import { FlotillaHullSystem, type FlotillaHullDiagnostics } from '../systems/FlotillaHullSystem';
 import { RegattaRaceSystem, type RegattaRaceDiagnostics } from '../systems/RegattaRaceSystem';
 import { createDeepwaterClaimTile, type CorsairSkiffWave, type DeepwaterClaimTile } from '../world/DeepwaterClaimTile';
 
@@ -40,11 +41,13 @@ export type DeepwaterSocketDiagnostics = Readonly<{
   bossHandoffsRefused: number;
   arsenal: DeepwaterArsenalDiagnostics;
   race?: RegattaRaceDiagnostics;
+  flotilla?: FlotillaHullDiagnostics;
 }>;
 
 export class DeepwaterSocket {
   private readonly arsenal: DeepwaterArsenal;
   private readonly race: RegattaRaceSystem | null;
+  private readonly flotilla: FlotillaHullSystem | null;
   private corsairWavesSpawned = 0;
   private corsairsSpawned = 0;
   private corsairsRecycledAtExit = 0;
@@ -60,6 +63,7 @@ export class DeepwaterSocket {
     private readonly bossHandoff: DeepwaterBossHandoff | null,
   ) {
     this.race = RegattaRaceSystem.create(contract);
+    this.flotilla = FlotillaHullSystem.create(contract, (id) => this.tile.loseHull(id));
     this.arsenal = new DeepwaterArsenal(
       combat,
       heroPosition,
@@ -124,6 +128,15 @@ export class DeepwaterSocket {
     this.arsenal.resolveTreatments();
   }
 
+  resolveHullContacts(at: number, onAllLost: () => void): void {
+    if (this.flotilla?.advance(at, this.enemies.all)) onAllLost();
+  }
+
+  targetPosition(fallback: THREE.Vector3): THREE.Vector3 {
+    const target = this.flotilla?.targetPosition(fallback) ?? fallback;
+    return new THREE.Vector3(target.x, fallback.y, target.z);
+  }
+
   movementMultiplier(position: { x: number; z: number }): number {
     return this.race?.movementMultiplierAt(position.x, position.z) ?? 1;
   }
@@ -135,7 +148,9 @@ export class DeepwaterSocket {
 
   /** Real lever — Game's `reanchor` action. Rejects unknown anchors and the current one. */
   reanchor(anchorId: string): boolean {
-    return this.tile.reanchor(anchorId);
+    return this.flotilla?.diagnostics.hulls.some(({ id }) => id === anchorId)
+      ? this.flotilla.reanchor(anchorId)
+      : this.tile.reanchor(anchorId);
   }
 
   /** Game.heroInDeepwaterDiveZone — the depth classes that seal the hero's rig. */
@@ -162,6 +177,7 @@ export class DeepwaterSocket {
       bossHandoffsRefused: this.bossHandoffsRefused,
       arsenal: this.arsenal.diagnostics,
       ...(this.race ? { race: this.race.diagnostics } : {}),
+      ...(this.flotilla ? { flotilla: this.flotilla.diagnostics } : {}),
     };
   }
 
@@ -200,7 +216,7 @@ export class DeepwaterSocket {
           },
         );
         if (!enemy) continue;
-        enemy.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
+        if (!this.flotilla) enemy.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
         this.corsairsSpawned += 1;
       }
     }

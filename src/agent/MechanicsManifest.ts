@@ -5,6 +5,7 @@ import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/build
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
+import { FLOTILLA_HULL_RULES } from '../systems/FlotillaHullSystem';
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
@@ -303,7 +304,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     }));
   }
   // --- E5 Deepwater. Gated exactly as the browser's `createDeepwaterClaimTile` consumer.
-  const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta'
+  const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta' || contract.id === 'e5-flotilla'
     ? tile.deepwater
     : undefined;
   if (deepwater) {
@@ -355,6 +356,14 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         fastWaterMultiplier: 1.35,
         deadlineWave: twist.secureWave ?? 0,
         competingRacerLoot: false,
+      }));
+    }
+    if (tile.flotilla) {
+      rules.push(rule('flotilla_hulls', 'FlotillaHullSystem.advance+reanchor+targetPosition', {
+        hulls: tile.flotilla.hulls.map(({ id }) => id),
+        districts: tile.flotilla.hulls.map(({ district }) => district),
+        ...FLOTILLA_HULL_RULES,
+        secureWave: twist.secureWave ?? 0,
       }));
     }
     // The manifest must not imply an agent can work the boat: `AgentGameAdapter` carries

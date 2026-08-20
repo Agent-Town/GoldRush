@@ -8,7 +8,7 @@ const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
   'e5-deepwater-claim': 'e5-deepwater-claim',
   'e5-regatta': 'e5-regatta',
   'e5-stillwater': 'e5-stillwater',
-  'e5-flotilla': 'the-claim',
+  'e5-flotilla': 'e5-flotilla',
 };
 
 /**
@@ -17,10 +17,10 @@ const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
  * storm handoff is wired, and both bench seeds SECURE at wave 12 under public Deepwater verbs
  * (`REANCHOR`/`BOAT_BUILD` + the automatic Spark Rig). So the Claim is now ADMITTED and SEEDED.
  *
- * The Regatta now shares that deepwater socket and adds its declared race consumer. Stillwater
- * and Flotilla remain refused and unseeded.
+ * The Regatta and Flotilla now share that deepwater socket and add their declared consumers.
+ * Stillwater remains refused.
  */
-const ADMITTED = new Set(['e5-deepwater-claim', 'e5-regatta']);
+const ADMITTED = new Set(['e5-deepwater-claim', 'e5-regatta', 'e5-flotilla']);
 
 /**
  * ADMISSION GATE 1 (F-ER01-E5-1) — every E5 contract must name the headless consumer it lacks.
@@ -60,6 +60,13 @@ const EXPECTED_SOCKET_RULES: Record<string, string[]> = {
     'deepwater_water_regions',
   ],
   'e5-regatta': [
+    'deepwater_arsenal',
+    'deepwater_claim_boat',
+    'deepwater_levers_unreachable',
+    'deepwater_storm_track',
+    'deepwater_water_regions',
+  ],
+  'e5-flotilla': [
     'deepwater_arsenal',
     'deepwater_claim_boat',
     'deepwater_levers_unreachable',
@@ -196,11 +203,19 @@ for (const contract of deepwater.contracts) {
         });
         if (contract.id === 'e5-deepwater-claim') {
           expect(doorDeepwater).toMatchObject({ dredgeQueenBoss: expect.objectContaining({ act: expect.any(Number), livePaddles: 2 }) });
-        } else {
+        } else if (contract.id === 'e5-regatta') {
           expect(doorDeepwater?.race).toMatchObject({ gatesPassed: expect.any(Array), finished: false });
           // The bundle authors no competing-racer roster or loot zones. Record the remaining
           // authoring honestly; this slice must not stretch one corsair racer into a loot system.
           expect(manifest.rules.find(({ id }: { id: string }) => id === 'regatta_race')?.data.competingRacerLoot).toBe(false);
+        } else {
+          expect(doorDeepwater?.flotilla).toMatchObject({
+            hulls: expect.arrayContaining([expect.objectContaining({ district: 'kitchen', integrity: 96, lost: false })]),
+            centroid: { x: 0, z: 23 },
+            allLost: false,
+          });
+          expect(manifest.rules.find(({ id }: { id: string }) => id === 'flotilla_hulls')?.source)
+            .toBe('FlotillaHullSystem.advance+reanchor+targetPosition');
         }
         // The wired sim hands every storm wave to a real boss, so nothing is refused.
         expect(doorDeepwater!.bossHandoffsRefused).toBe(0);

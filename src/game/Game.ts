@@ -93,6 +93,7 @@ import { snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrd
 import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
+import { FlotillaHullSystem } from '../systems/FlotillaHullSystem';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { CrowdFlock } from '../entities/CrowdFlock';
 import { FerrisWheel } from '../entities/FerrisWheel';
@@ -735,6 +736,7 @@ export class Game {
   );
   private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
   private readonly regattaRace = RegattaRaceSystem.create(this.activeContract);
+  private readonly flotillaHulls = FlotillaHullSystem.create(this.activeContract, (id) => this.deepwaterClaim?.loseHull(id));
   private deepwaterCorsairWavesSpawned = 0;
   private readonly dayNightCycle = createDayNightCycle(this.activeContract);
   private readonly lightField = new LightField({
@@ -2107,7 +2109,9 @@ export class Game {
           return placed;
         },
         reanchorClaimBoat: (anchorId: string) => {
-          const moved = this.deepwaterClaim?.reanchor(anchorId) ?? false;
+          const moved = this.flotillaHulls?.diagnostics.hulls.some(({ id }) => id === anchorId)
+            ? this.flotillaHulls.reanchor(anchorId)
+            : this.deepwaterClaim?.reanchor(anchorId) ?? false;
           this.publishDiagnostics();
           return moved;
         },
@@ -2720,9 +2724,11 @@ export class Game {
       this.mothSwarm.update(simDelta, this.mothLightSources, this.enemies.all);
       this.enemies.update(
         simDelta,
-        this.visibleActorPositions(),
+        this.flotillaHulls
+          ? [this.flotillaTargetPosition()]
+          : this.visibleActorPositions(),
         (enemy) => {
-          if (!this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
+          if (!this.flotillaHulls && !this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
         [...this.buildSystem.palisadeBlockers, ...this.heroBlockers()],
@@ -2734,6 +2740,9 @@ export class Game {
           this.e6ArsenalSystem.movementMultiplier(enemy) *
           this.e9ArsenalSystem.movementMultiplier(enemy),
       );
+      if (this.flotillaHulls?.advance(this.timeAlive, this.enemies.all)) {
+        this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5);
+      }
       if (this.e9CanalSystem.update(simDelta, this.timeAlive, this.visibleHarvestTargets())) this.syncHeroVisualHeight();
       // A8: beside the era systems and ahead of the enemy integration step, so contact damage
       // reads the same positions `HeadlessContractSim` reads at the same point in its own order.
@@ -5027,6 +5036,7 @@ export class Game {
         ? Object.assign(this.deepwaterClaim.snapshot(), {
             dredgeQueenBoss: this.dredgeQueenBoss.diagnostics(),
             ...(this.regattaRace ? { race: this.regattaRace.diagnostics } : {}),
+            ...(this.flotillaHulls ? { flotilla: this.flotillaHulls.diagnostics } : {}),
           })
         : null,
       tilePersistence: {
@@ -5492,6 +5502,11 @@ export class Game {
     }
   }
 
+  private flotillaTargetPosition(): THREE.Vector3 {
+    const target = this.flotillaHulls?.targetPosition(this.primaryActor.group.position) ?? this.primaryActor.group.position;
+    return new THREE.Vector3(target.x, Balance.enemy.groundY, target.z);
+  }
+
   private spawnDeepwaterCorsairs(wave: CorsairSkiffWave, bossEscort = false): void {
     const roster = this.activeContract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat');
     const multiplier = bossEscort ? this.dredgeQueenBoss.escortMultiplier : 1;
@@ -5506,7 +5521,7 @@ export class Game {
           variantId: roster?.id,
           variantLabel: bossEscort ? 'Dredge-Queen Escort' : roster?.label,
         });
-        enemy?.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
+        if (!this.flotillaHulls) enemy?.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
       }
     }
   }
@@ -7305,6 +7320,7 @@ export class Game {
     this.drillYard?.reset();
     this.deepwaterClaim?.reset();
     this.regattaRace?.reset();
+    this.flotillaHulls?.reset();
     this.deepwaterCorsairWavesSpawned = 0;
     this.buildMenuOpen = false;
     this.upgradeCandidate = null;

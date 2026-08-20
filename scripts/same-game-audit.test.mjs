@@ -54,9 +54,19 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // reproduced the base numbers EXACTLY — the whole movement belongs to the anchors; the consumer
   // moves NOTHING (`zero_gravity` is a mechanics RULE). Citation `file:line` shifts in the report
   // are coordinates, not classifications. Pins below = the TRIPLE-stacked merged tree's regen.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 10);
+  // ADMISSION MOVE (2026-08-20, `b2-flotilla-hulls` B2, FIFTH stack layer — drained s2087): three
+  // authored deck harvest anchors admit `e5-flotilla` through the same data-derived door. THE
+  // EXEMPTION COUNT DOES NOT MOVE — the Flotilla was never in `CONTRACT_ADMISSION_EXEMPTIONS`; it
+  // was excluded by empty data, the same door the Dead Band, the Far Side and Low Orbit came
+  // through. On the lane's own pre-stack base (351/809/13 over 1173 rows) the parity block moved
+  // +10 agent-lacks, +30 equal, -1 not-offered, +39 rows — the same per-contract shape as all four
+  // layers above, attributed there by revert-and-reproduce with the three anchors emptied.
+  // ⚠️ THE LANE'S BASE WAS PRE-A6/A7/A8, SO ITS ABSOLUTE PINS (361/839/12) ARE STALE HERE — the
+  // fifth recurrence of F-2084-1 in one day. Pins below = the QUINTUPLE-stacked merged tree's own
+  // regen output, verbatim; no side's arithmetic was edited into agreement.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 9);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
-  // and neither the Far Side nor Low Orbit was ever in that population.
+  // and neither the Far Side, Low Orbit nor the Flotilla was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -138,10 +148,11 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // over: this audit's rows are buildable/ability/choice/verb/economy surfaces read PER CONTRACT,
   // a mechanics RULE is not one of them (the A4 note above found the same), and a targetless
   // context action appears in no contract's player menu to be compared against.
-  // (A8 pins above were measured on its own pre-stack base; the pins below are the QUADRUPLE-stacked
-  // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run — verbatim.)
+  // (A8 pins above were measured on its own pre-stack base; the pins below are the QUINTUPLE-stacked
+  // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run + Flotilla — verbatim.
+  // The Flotilla adds no exemption, so the count stays at A8's 6; only the parity block moves.)
   assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 402, equal: 878, 'not-offered': 10 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 412, equal: 908, 'not-offered': 9 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

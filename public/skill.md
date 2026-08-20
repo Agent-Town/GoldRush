@@ -117,7 +117,7 @@ At the secure boundary, `now.pendingSecure` supplies the configured default (`ba
 
 ## EPOCH LEVERS
 
-These orders exist only where their epoch socket appears in `now`; elsewhere they fail through the ordinary order-failure surprise. On E5 Deepwater, `now.deepwater` lists Claim-Boat pads and occupancy, boat buildings, the current `anchor`, and all known `anchors`. `BOAT_BUILD` occupies a known empty pad with the named building; `REANCHOR` moves to a known non-current anchor. Both mirror the player's zero-resource Claim-Boat actions. On E6 Atomic, `now.atomic.wrangle` shows the wind-down/capture radius, active machine states, and pen roster. `CAPTURE` has no target field: it catches the nearest exhausted machine within the published radius of the Prospector, exactly like the player's capture action, with no resource cost.
+These orders exist only where their epoch socket appears in `now`; elsewhere they fail through the ordinary order-failure surprise. On E5 Deepwater, `now.deepwater` lists Claim-Boat pads and occupancy, boat buildings, the current `anchor`, and all known `anchors`. `BOAT_BUILD` occupies a known empty pad with the named building; `REANCHOR` moves to a known non-current anchor. On the Flotilla, `now.deepwater.flotilla` publishes each hull's district, position, integrity, loss, and straggler status plus the formation centroid; `REANCHOR` with a living hull id nudges that hull toward the centroid when its cooldown is ready. Both mirror the player's zero-resource actions. On E6 Atomic, `now.atomic.wrangle` shows the wind-down/capture radius, active machine states, and pen roster. `CAPTURE` has no target field: it catches the nearest exhausted machine within the published radius of the Prospector, exactly like the player's capture action, with no resource cost.
 
 `<buildable>` is one of:
 
@@ -218,6 +218,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e5-deepwater-claim-01",
     "e5-deepwater-claim-02"
   ],
+  "e5-flotilla": [
+    "e5-flotilla-01",
+    "e5-flotilla-02"
+  ],
   "e5-regatta": [
     "e5-regatta-01",
     "e5-regatta-02"
@@ -313,6 +317,7 @@ One refusal is a different shape and is named here so nobody hunts for a missing
   "e4-gusher-county",
   "e4-long-road",
   "e5-deepwater-claim",
+  "e5-flotilla",
   "e5-regatta",
   "e6-glow-mesa",
   "e7-dead-band",
