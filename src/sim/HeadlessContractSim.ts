@@ -62,6 +62,7 @@ import { MothSwarm } from '../systems/MothSwarm';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
+import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
 import { depenetrateFromBlockers } from '../world/LandmarkCollision';
@@ -191,6 +192,13 @@ export type HeadlessAgentView = AgentView & {
     atomic?: AtomicSocket['diagnostics'] & {
       homemakerBoss?: ReturnType<HomemakerBossSystem['diagnostics']>;
     };
+    /**
+     * A4. Present only where the contract declares `twist.signalSuppression`, so a rider can
+     * SEE that the three systems are off rather than infer it from silence. Read the honesty
+     * note beside `signalSuppression` in the class below before treating this as a mirror of
+     * the browser's behaviour: this engine has none of the three systems to switch off.
+     */
+    signalSuppression?: SignalSuppressionDiagnostics;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -312,6 +320,23 @@ export class HeadlessContractSim {
   private readonly homemaker: HomemakerBossSystem | null;
   private readonly deepwater: DeepwaterSocket | null;
   private readonly atomic: AtomicSocket | null;
+  /**
+   * A4 — THE SIGNAL-SUPPRESSION CONSUMER, and the honest note about what it can mean HERE.
+   *
+   * The browser reads this same object at three gate sites (`E7SignalSystem.droneCanOperate`,
+   * `E7SignalSystem.update`, and the two playbook entry points in `Game.ts`). This engine
+   * reads it at none, because it HAS none: measured 2026-08-20, `HeadlessContractSim`
+   * constructs exactly one `Hero` (no slot >0, so no drone body), imports no `E7SignalSystem`
+   * (so no relay graph exists to link), and `src/agent/` declares no playbook verb.
+   *
+   * So suppression is enforced here BY CONSTRUCTION, not by a switch — and that difference is
+   * stated rather than hidden. What the consumer buys headless is (a) an identical READ of the
+   * contract, so both engines agree about which systems are declared off, (b) a rider-visible
+   * row in THE VIEW, and (c) a place for the guard that pins the by-construction claim
+   * (`e2e/e7-dead-band-suppression.spec.ts`). If a drone, playbook or relay chain is ever
+   * composed into this sim, it gates on THIS object and the note above becomes a real switch.
+   */
+  private readonly signalSuppression: SignalSuppression;
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -398,6 +423,9 @@ export class HeadlessContractSim {
     // The Atomic socket is built before combat because the browser routes two of its
     // couplings THROUGH CombatSystem's own hooks (Game.ts:534 and Game.ts:536).
     this.atomic = AtomicSocket.create(this.manifest, this.events, this.enemies, this.economy);
+    // Same read the browser performs at `Game.ts` (contract, never epoch), so the two engines
+    // cannot disagree about which systems this contract declares off.
+    this.signalSuppression = SignalSuppression.create(this.manifest);
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -979,6 +1007,10 @@ export class HeadlessContractSim {
       ...this.atomic.diagnostics,
       ...(this.homemaker ? { homemakerBoss: this.homemaker.diagnostics() } : {}),
     };
+    // A4: only where DECLARED, so no other contract's view grows a field. Deliberately absent
+    // from the `final` hash — the flags are a constant of the contract and the counters are
+    // constant zero here, so hashing them would add bytes and no discrimination.
+    if (this.signalSuppression.diagnostics.declared) view.now.signalSuppression = this.signalSuppression.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1309,6 +1341,7 @@ export class HeadlessContractSim {
       crawler: this.crawler?.diagnostics() ?? null,
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
+      signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,

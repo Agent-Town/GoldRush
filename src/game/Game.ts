@@ -179,6 +179,7 @@ import { E9CanalSystem } from '../systems/E9CanalSystem';
 import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
+import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression } from '../systems/SignalSuppression';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
@@ -672,6 +673,10 @@ export class Game {
   private readonly tileStateStore = new TileStateStore(safeLocalStorage());
   private readonly activeContract = bornContract(this.tileStateStore);
   private readonly offeredBuildables = mechanicsBuildableIds(this.activeContract);
+  // A4 (door-completion-sheet §A4, RATIFIED 2026-08-20). ONE consumer per run, shared by the
+  // three gate sites below, so its refusal counters are the run's real total and not three
+  // partial tallies. Built off the CONTRACT, never the epoch — A6 reuses it from E8.
+  private readonly signalSuppression = SignalSuppression.create(this.activeContract);
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private readonly activeEpoch = new URLSearchParams(window.location.search).has('replay') && this.contractEpoch
@@ -1444,6 +1449,7 @@ export class Game {
       terrainLineOfSight,
       safeLocalStorage(),
       (fragment) => this.uiBridge.announce(fragment, this.timeAlive, null, 6, 'wave', 'THE EXCHANGE'),
+      this.signalSuppression,
     );
     this.e7ArsenalSystem = new E7ArsenalSystem(
       this.combat,
@@ -3245,7 +3251,19 @@ export class Game {
     return sampledIntents;
   }
 
+  /**
+   * A4: the county's one line, announced wherever a playbook is swallowed. The refusal
+   * reason itself already reaches the player (`PlaybookSurface.ts:158` and `:178` render it
+   * verbatim); this puts the VOICE beside the code rather than making the code carry prose.
+   */
+  private refuseSuppressedPlaybook(): { ok: false; reason: string } {
+    this.uiBridge.announce(SIGNAL_SUPPRESSION_VOICE, this.timeAlive, null, 6, 'wave', 'THE EXCHANGE');
+    return { ok: false, reason: SIGNAL_SUPPRESSION_REASON };
+  }
+
   private startPlaybookRecording(options: { script?: unknown; probeEvery?: number }): { ok: boolean; reason?: string } {
+    // A4 first, and unconditionally: the Dead Band swallows the RECORD half of "record/use".
+    if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
     if (this.mpClient) return { ok: false, reason: 'multiplayer-active' };
     if (this.playbookRecorder && !this.playbookRecorder.finished) return { ok: false, reason: 'recording-active' };
     if (this.playbookReplay?.active) return { ok: false, reason: 'replay-active' };
@@ -3300,6 +3318,9 @@ export class Game {
     hidePlayer?: boolean;
     probeEvery?: number;
   }): { ok: boolean; reason?: string } {
+    // A4: and the USE half. Every replay entry point funnels here — `startNamedPlaybookReplay`
+    // and the dev bridge both call this method — so one gate closes the whole verb.
+    if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
     if (this.mpClient) return { ok: false, reason: 'multiplayer-active' };
     if (this.playbookRecorder && !this.playbookRecorder.finished) return { ok: false, reason: 'recording-active' };
     if (this.playbookReplay?.active) return { ok: false, reason: 'replay-active' };
@@ -3331,6 +3352,11 @@ export class Game {
   }
 
   private startNamedPlaybookReplay(name: string): { ok: boolean; reason?: string } {
+    // A4 outranks the consent rung: a granted permission still cannot use a playbook the
+    // band swallows, and reporting `permission-level-N-required` there would name the wrong
+    // cause. Returning here means `startPlaybookReplay` is never reached, so the refusal is
+    // counted exactly once.
+    if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
     const required = Balance.e7Playbook.requiredPermissionLevel;
     if (!this.playbookConsentGranted()) return { ok: false, reason: `permission-level-${required}-required` };
     const result = this.startPlaybookReplay({ name });

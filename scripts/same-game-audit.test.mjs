@@ -28,7 +28,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   ]);
   assert.ok(audit.rows.every((row) => ['buildable', 'ability', 'choice', 'verb', 'economy'].includes(row.surface)));
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 15);
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 14);
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -45,8 +45,20 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // true and every one of its parity rows already read `equal`. Only the exemption count moves.
   // ATTRIBUTED by revert-and-reproduce, not guessed: re-adding that one exemption row and re-running
   // this audit reproduced 6 exemptions with the SAME 0/331/749/15 summary, exactly.
+  // ADMISSION MOVE (2026-08-20, `e7-dead-band` A4 signal suppression): the Dead Band's
+  // `harvestAnchors` were authored, so it left the door's own `harvestAnchors?.length !== 0`
+  // filter and entered `supportedContractIds()`. THE EXEMPTION COUNT DOES NOT MOVE — it was
+  // never in `CONTRACT_ADMISSION_EXEMPTIONS`; it was excluded by empty data, which is a
+  // different door. What moves is the parity block: 331 -> 341 agent-lacks, 749 -> 779 equal,
+  // 15 -> 14 not-offered, 1095 -> 1134 rows.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, not guessed: with the four anchors emptied and every
+  // other line of that slice in place (the SignalSuppression consumer, its three browser gates
+  // and its manifest rule), this audit reproduced 0/331/749/15 and 1095 rows EXACTLY. So the
+  // whole movement belongs to the anchors, and the consumer moves NOTHING here — which is the
+  // expected shape, since the audit's rows are buildable/ability/choice/verb/economy surfaces
+  // and `signal_suppression` is a mechanics RULE.
   assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 331, equal: 749, 'not-offered': 15 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 341, equal: 779, 'not-offered': 14 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
