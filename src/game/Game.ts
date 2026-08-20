@@ -1475,6 +1475,11 @@ export class Game {
       this.activeContract,
       this.tileStateStore,
       (position, text, color) => this.vfx.floatText(position, text, color),
+      // The browser is the only engine with terrain to sample, and the only one that paints; the
+      // consumer must import neither (see `GroundSampler`), so both are handed in here. This keeps
+      // ONE authority for the hex law's green.
+      (x, z) => Terrain.visualY(x, z, 0),
+      E1_RIVERBANK_GREEN,
     );
     this.e7SignalSystem = new E7SignalSystem(
       () => this.activeEpoch.id === 'epoch-7-signal' && !this.multiplayerActive(),

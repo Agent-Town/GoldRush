@@ -8,8 +8,6 @@ import {
   type TileStateStore,
 } from '../game/TileStateStore';
 import type { ContractManifest } from '../meta/ContractFamilies';
-import { E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
-import { visualY } from '../world/Terrain';
 
 /**
  * A8 — THE SEED CARAVAN, and the permanent green it pays for.
@@ -136,6 +134,30 @@ export type SeedCaravanDiagnostics = Readonly<{
 
 type CaravanEnemy = { isAlive: boolean; position: THREE.Vector3 };
 
+/**
+ * Render-side ground sampler, INJECTED rather than imported, and the reason is a real regression
+ * this file caused once: importing `visualY` from `../world/Terrain` at module scope pulled
+ * Terrain — and its `assets/layer-contracts/*.json?raw` import — into every graph that reaches
+ * this class. `MechanicsManifest` reaches it (the manifest row is sourced from this consumer), and
+ * `MechanicsManifest` is reached by specs, so `npx playwright test --list` collapsed to
+ * `Total: 0 tests in 0 files` with `needs an import attribute of "type: json"` — the whole suite,
+ * uncollectable, from one convenience import. Both collection guards caught it and a base-commit
+ * control proved it was mine.
+ *
+ * A consumer both engines construct has no business owning a render dependency. The browser passes
+ * `Terrain.visualY`; everything else gets flat ground and never loads Terrain at all.
+ */
+export type GroundSampler = (x: number, z: number) => number;
+
+/**
+ * THE HEX LAW'S COLOUR, INJECTED FOR THE SAME REASON THE GROUND SAMPLER IS. `E1_RIVERBANK_GREEN`
+ * lives in `src/world/GreenWaypoint.ts`, which imports Terrain — so importing the constant here
+ * would re-open exactly the module edge that made the whole Playwright suite uncollectable.
+ * `Game.ts` passes the canonical constant, so the browser still has ONE authority for it. The
+ * fallback below is never painted: headless constructs no scene and supplies no voice.
+ */
+export const SEED_CARAVAN_UNPAINTED_GREEN = '#848c6c';
+
 type Point = { x: number; z: number };
 
 export class SeedCaravanSystem {
@@ -164,6 +186,8 @@ export class SeedCaravanSystem {
     private readonly grounds: readonly SeedPlantGround[],
     private readonly tileState: TileStateStore,
     private readonly onVoice?: (position: THREE.Vector3, text: string, color: string) => void,
+    private readonly groundY: GroundSampler = () => 0,
+    private readonly green: string = SEED_CARAVAN_UNPAINTED_GREEN,
   ) {
     this.group.name = 'SeedCaravanSystem';
     this.position = new THREE.Vector3(route[0]!.x, 0, route[0]!.z);
@@ -195,6 +219,8 @@ export class SeedCaravanSystem {
     contract: ContractManifest,
     tileState: TileStateStore,
     onVoice?: (position: THREE.Vector3, text: string, color: string) => void,
+    groundY?: GroundSampler,
+    green?: string,
   ): SeedCaravanSystem | null {
     if (!contract.twist.persistentPlanting) return null;
     const zones = contract.tileParams.buildZones ?? [];
@@ -213,7 +239,7 @@ export class SeedCaravanSystem {
     });
     // A caravan with no ground to plant on is not this mechanic; refuse rather than stretch.
     if (grounds.length === 0) return null;
-    return new SeedCaravanSystem(contract.id, route, grounds, tileState, onVoice);
+    return new SeedCaravanSystem(contract.id, route, grounds, tileState, onVoice, groundY, green);
   }
 
   /**
@@ -262,14 +288,14 @@ export class SeedCaravanSystem {
         if (this.leg >= this.route.length) {
           this.state = 'arrived';
           this.arrivedLatch = true;
-          this.onVoice?.(this.position, 'The seed train reaches the basin', E1_RIVERBANK_GREEN);
+          this.onVoice?.(this.position, 'The seed train reaches the basin', this.green);
           break;
         }
         // Every intermediate route point that carries a stake is a plant window.
         if (this.groundAt(next)) {
           this.dwellRemaining = SEED_CARAVAN_DWELL_SECONDS;
           this.state = 'paused';
-          this.onVoice?.(this.position, 'The seed train halts — plant or move on', E1_RIVERBANK_GREEN);
+          this.onVoice?.(this.position, 'The seed train halts — plant or move on', this.green);
           break;
         }
       } else {
@@ -307,7 +333,7 @@ export class SeedCaravanSystem {
     }
     if (this.plantedThisRun.has(ground.id) || this.plantedBefore.has(ground.id)) {
       this.refusals.alreadyHeld += 1;
-      this.onVoice?.(new THREE.Vector3(ground.x, 0, ground.z), 'The green already holds here', E1_RIVERBANK_GREEN);
+      this.onVoice?.(new THREE.Vector3(ground.x, 0, ground.z), 'The green already holds here', this.green);
       return { ok: false, reason: `ALREADY_HELD: ${ground.id} already carries a vault.` };
     }
 
@@ -323,7 +349,7 @@ export class SeedCaravanSystem {
     this.maxHp = Math.max(1, this.maxHp - cost);
     this.hp = Math.max(1, Math.min(this.hp - cost, this.maxHp));
     this.syncBody();
-    this.onVoice?.(new THREE.Vector3(ground.x, 0, ground.z), 'The green takes root — it will hold', E1_RIVERBANK_GREEN);
+    this.onVoice?.(new THREE.Vector3(ground.x, 0, ground.z), 'The green takes root — it will hold', this.green);
     return { ok: true, groundId: ground.id, costHp: cost };
   }
 
@@ -407,7 +433,7 @@ export class SeedCaravanSystem {
   }
 
   resampleTerrain(): void {
-    this.body.position.y = visualY(this.position.x, this.position.z, 0);
+    this.body.position.y = this.groundY(this.position.x, this.position.z);
   }
 
   dispose(): void {
@@ -429,7 +455,7 @@ export class SeedCaravanSystem {
     hull.position.y = 0.55;
     const vault = new THREE.Mesh(
       new THREE.BoxGeometry(1.6, 0.7, 1.1),
-      new THREE.MeshStandardMaterial({ color: E1_RIVERBANK_GREEN, roughness: 0.9 }),
+      new THREE.MeshStandardMaterial({ color: this.green, roughness: 0.9 }),
     );
     vault.position.y = 1.3;
     body.add(hull, vault);
@@ -438,7 +464,7 @@ export class SeedCaravanSystem {
   }
 
   private syncBody(): void {
-    this.body.position.set(this.position.x, visualY(this.position.x, this.position.z, 0), this.position.z);
+    this.body.position.set(this.position.x, this.groundY(this.position.x, this.position.z), this.position.z);
     this.body.visible = this.state !== 'lost';
     // Damage reads on the hull, so a player can see the guard spending without a bar.
     const health = this.maxHp > 0 ? Math.max(0, Math.min(1, this.hp / this.maxHp)) : 0;
