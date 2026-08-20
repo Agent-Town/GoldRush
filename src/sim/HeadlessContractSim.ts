@@ -105,23 +105,31 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // reason. Both of its clauses are now false: aimed CAPTURE absorbs 97-99% of exhaustion
   // (AP-16-8b) and the 60-enemy alive cap no longer holds exhausted machines at all. The
   // refusal survives its reason, which is why the row is reworded rather than removed.
-  // A8 BUILT THE MECHANIC AND THE MAP STILL WINS. `e9-seed-run`'s caravan, its three plant
-  // grounds and its objective latch all work in both engines (`src/systems/SeedCaravanSystem.ts`,
-  // `e2e/e9-seed-run-caravan.spec.ts`), and the crossing itself is not the problem — the train
-  // reached the basin with 228 of 240 guard on every measured run. The SECURE is the problem, and
-  // the reason is authored geometry rather than the new consumer: the claim stands at (0,12), ON
-  // the north edge of `center-green-waypoint` (x -10..10, z -6..12), the only buildZone within
-  // 30wu of it, so every gun must be built south of the body it defends; waves enter from BOTH
-  // the west and east edges; and half the roster is `feral_terraformer`, hpScale 1.7 with
-  // buildingDamageScale 1.4. Fifteen measured plays of a public-verb prover
-  // (`artifacts/e9-seed-run/`) topped out at wave 17 of 20 on seed 01 and 16 on seed 02.
-  'e9-seed-run': {
-    reason: 'Best measured public-verb play terminated unsecured at waves 17/16 against secureWave 20: the only buildZone near the claim is a 20x18 box whose north edge IS the claim, waves enter from two edges, and half the roster is an hpScale-1.7 wrecker. The A8 caravan and planting consumer are live and proven in the browser; re-admit when both bench seeds secure.',
-    citation: 'reviews/e9-seed-run.md',
-  },
   'e6-showroom': {
     reason: 'Aimed CAPTURE closes the loop and the alive cap no longer clogs, but no secure is demonstrated: competent play dies at waves 14-19 against secureWave 20, and difficulty stands per the owner (2026-08-20). Idle still false-greens at wave 20 — exhausted machines released their spawn slot but still hold an enemy-POOL slot, so all 96 fill with harmless statues and nothing further can spawn.',
     citation: 'reviews/e6-showroom-cap-fix.md',
+  },
+  // A8 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-20, door-completion-sheet §A8).
+  //
+  // THE CONSUMER IS NOT THE GAP, AND SAYING SO IS THE WHOLE POINT OF THIS ROW. `e9-seed-run`'s
+  // caravan, its three planting grounds, its permanent green and its objective latch are all live
+  // in BOTH engines (`src/systems/SeedCaravanSystem.ts`, proven in the browser by
+  // `e2e/e9-seed-run-caravan.spec.ts` and headless by `e2e/er01-e9-census.spec.ts`). The escort
+  // itself was never in doubt: the train reached the basin ALIVE on every measured run, at full
+  // guard (240) and at the three-quarters left after a vault (180).
+  //
+  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry rather than the new mechanic.
+  // The claim stands at (0,12), ON the north edge of `center-green-waypoint` (x -10..10, z -6..12)
+  // — the only buildZone within 30wu of it — so every gun must be built SOUTH of the body it
+  // defends and there is no ground at all north of the hero. Waves enter from BOTH the west and
+  // east edges (`lanes.spawnEdges`), and half the roster is `feral_terraformer`, hpScale 1.7 with
+  // buildingDamageScale 1.4, against turret and beacon caps of 4 and 6.
+  //
+  // Fifteen measured public-verb plays (`artifacts/e9-seed-run/`, preserved with its battery)
+  // topped out at wave 16 of 20 on BOTH bench seeds, twice each, byte-identical on the repeat.
+  'e9-seed-run': {
+    reason: 'Best measured public-verb play terminated unsecured at wave 16 on both bench seeds against secureWave 20 (fnv1a32:aebdeea4 / fnv1a32:4d221a7b, each repeated identical). The escort is not the obstacle — the caravan reached the basin alive on every run, at full guard and after a planted vault. The map is: the only buildZone within 30wu of the claim is a 20x18 box whose north edge IS the claim, waves enter from two edges, and half the roster is an hpScale-1.7 wrecker against turret/beacon caps of 4 and 6. The A8 caravan and planting consumer are live in both engines; re-admit when both bench seeds secure.',
+    citation: 'reviews/e9-seed-run.md',
   },
 } as const satisfies Record<string, AdmissionExemption>;
 
