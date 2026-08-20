@@ -65,7 +65,7 @@ Every fact below was measured on main by s1503. Facts 1 and 2 are a **correction
 
 1. `src/sim/E9CanalSocket.ts` — the whole file. Your predecessor in the same epoch; match its header-comment discipline and its refusal-counter naming.
 2. `src/sim/DeepwaterSocket.ts` — the whole file, especially the header comment (`:10-30`) and `get simulationSnapshot` (`:167-171`), which excludes presentation fields so that a render decision can never move a determinism hash.
-3. `e2e/er01-e5-census.spec.ts:120-145` (in the test titled `${contract.id} census refusal is explicit`) — the `drive(steps)` helper, the borrow of `sim.combat` and `sim.hero.group.position`, and the two-independent-drives determinism assertion.
+3. `e2e/er01-e5-census.spec.ts:144-170` (in the test titled `${contract.id} census admission is explicit` — RENAMED from `… census refusal is explicit` by the E5 re-admission merge `26a364bfe`, 2026-08-20, which also moved these lines; re-based s2078) — the `drive(steps)` helper, the borrow of `sim.combat` and `sim.hero.group.position`, and the two-independent-drives determinism assertion.
 4. `e2e/er01-e9-census.spec.ts` — the whole file, **as it stands after the canal socket landed**. It is short, and you must fold into the loop the canal slice already extended.
 5. `src/systems/E9ArsenalSystem.ts` — the whole file (286 lines). It is the subject.
 6. `docs/bench/e9-readiness-census.md:9-10` and `:19-22` and `:26-28` — the summary, the four rows, and F-ER01-E9-1's exact words. **Read the current text; do not trust this master's quotations of it, which predate the canal slice's narrowing.**
