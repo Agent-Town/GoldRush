@@ -18,6 +18,13 @@ export const FIRE_SHELL_NODE_GUARDS_REASON =
   'FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); ' +
   'this is the conservative default pending fire-side measurement.';
 
+const NODE_GUARDS_INVOCATION =
+  /^(?:(?:\S*\/)?(?:ba|da|z)?sh\s+-c\s+)?["']?(?:.*\/)?node["']?\s+["']?(?:.*\/)?run-node-guards\.mjs["']?(?:\s|$)/;
+
+export function runsNodeGuardsBattery(command) {
+  return NODE_GUARDS_INVOCATION.test(command);
+}
+
 /**
  * @param {Record<string, string | undefined>} env process.env (or a fabricated env, in tests)
  * @returns {number | undefined} a file-concurrency limit, or undefined for Node's default

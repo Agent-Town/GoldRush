@@ -3,6 +3,7 @@ import { spawnSync } from 'node:child_process';
 import {
   FIRE_SHELL_NODE_GUARDS_REASON,
   nodeGuardsConcurrency,
+  runsNodeGuardsBattery,
 } from './node-guards-concurrency.mjs';
 
 // WHY A DEFAULT PER-TEST BOUND EXISTS (F-1400-4, cured s1479): `node --test` defaults to no test
@@ -44,20 +45,23 @@ function contentionStamp() {
       return undefined;
     }
 
-    const listed = spawnSync('ps', ['-o', 'pid=,ppid=', '-p', [...pids].join(',')], {
+    const listed = spawnSync('ps', ['-o', 'pid=,ppid=,command=', '-p', [...pids].join(',')], {
       encoding: 'utf8',
     });
     if (listed.error || listed.status !== 0) return undefined;
 
-    const rows = listed.stdout.trim().split('\n').map((line) => line.match(/^\s*(\d+)\s+(\d+)\s*$/));
+    const rows = listed.stdout.trim().split('\n').map((line) => line.match(/^\s*(\d+)\s+(\d+)\s+(.+)$/));
     if (rows.some((row) => row === null)) return undefined;
 
     // npm's matching `sh -c` wrapper parents its matching `node` child, so count only roots in
     // the matching process forest. Directly-launched batteries are already single roots.
-    const processes = rows.map((row) => ({ pid: Number(row[1]), ppid: Number(row[2]) }));
+    const processes = rows.map((row) => ({ pid: Number(row[1]), ppid: Number(row[2]), command: row[3] }));
     if (processes.length !== pids.size || processes.some(({ pid }) => !pids.has(pid))) return undefined;
-    const siblings = processes.filter(({ ppid }) => !pids.has(ppid)).length;
-    return siblings > 0 ? `CONTENDED — ${siblings + 1} concurrent batteries` : undefined;
+    const batteries = processes.filter(({ command }) => runsNodeGuardsBattery(command));
+    const batteryPids = new Set(batteries.map(({ pid }) => pid));
+    const roots = batteries.filter(({ ppid }) => !batteryPids.has(ppid)).length;
+    const count = roots + (batteryPids.has(process.pid) ? 0 : 1);
+    return count > 1 ? `CONTENDED — ${count} concurrent batteries` : undefined;
   } catch {
     return undefined;
   }

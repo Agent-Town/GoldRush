@@ -6,6 +6,8 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
+import { runsNodeGuardsBattery } from './node-guards-concurrency.mjs';
+
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const HARNESS = join(ROOT, 'scripts/run-node-guards.mjs');
 const STAMP = 'CONTENDED — 2 concurrent batteries';
@@ -36,18 +38,26 @@ async function waitForQuietBoard() {
   const deadline = Date.now() + 5_000;
   let quietSince = Date.now();
   while (Date.now() < deadline) {
-    const found = spawnSync('pgrep', ['-f', 'run-node-guards']);
+    const found = spawnSync('pgrep', ['-f', 'run-node-guards'], { encoding: 'utf8' });
     if (found.error || (found.status !== 0 && found.status !== 1)) {
       assert.fail(`could not measure node-guards contention: ${found.error?.message ?? found.stderr}`);
     }
-    if (found.status === 0) quietSince = Date.now();
+    const pids = found.status === 0 ? found.stdout.trim().split(/\s+/) : [];
+    const listed = pids.length > 0
+      ? spawnSync('ps', ['-o', 'command=', '-p', pids.join(',')], { encoding: 'utf8' })
+      : undefined;
+    if (listed?.error || (listed && listed.status !== 0 && listed.status !== 1)) {
+      assert.fail(`could not inspect node-guards contention: ${listed.error?.message ?? listed.stderr}`);
+    }
+    const busy = listed?.stdout.split('\n').some((command) => runsNodeGuardsBattery(command.trim()));
+    if (busy) quietSince = Date.now();
     else if (Date.now() - quietSince >= 300) return;
     await new Promise((resolve) => setTimeout(resolve, 25));
   }
   assert.fail('node-guards board did not stay quiet for 300ms');
 }
 
-async function waitForReady(child) {
+async function waitForReady(child, marker = 'SIBLING_READY') {
   let output = '';
   child.stdout.setEncoding('utf8');
   child.stderr.setEncoding('utf8');
@@ -60,7 +70,7 @@ async function waitForReady(child) {
     };
     const check = (chunk) => {
       output += chunk;
-      if (output.includes('SIBLING_READY')) {
+      if (output.includes(marker)) {
         cleanup();
         resolve();
       }
@@ -106,6 +116,7 @@ async function stopGroup(child) {
 test('contention is advisory, correctly counted, and absent when alone', { timeout: 30_000 }, async () => {
   const dir = mkdtempSync(join(tmpdir(), 'node-guards-contention-'));
   let sibling;
+  let waiter;
   try {
     const passing = join(dir, 'passing.test.mjs');
     const failing = join(dir, 'failing.test.mjs');
@@ -113,6 +124,15 @@ test('contention is advisory, correctly counted, and absent when alone', { timeo
     writeFileSync(passing, "import test from 'node:test'; test('pass', () => {});\n");
     writeFileSync(failing, "import test from 'node:test'; test('fail', () => { throw new Error('MANUFACTURED_FAILURE'); });\n");
     writeFileSync(slow, "import test from 'node:test'; test('slow sibling', async () => { console.log('SIBLING_READY'); await new Promise((r) => setTimeout(r, 20_000)); });\n");
+
+    assert.equal(runsNodeGuardsBattery(`${process.execPath} ${HARNESS} fixture.test.mjs`), true);
+    assert.equal(runsNodeGuardsBattery(`/bin/sh -c "${process.execPath}" "${HARNESS}" fixture.test.mjs & wait`), true);
+    for (const command of [
+      "/bin/zsh -c until ! pgrep -f 'run-node-guards'; do sleep 1; done",
+      'grep run-node-guards',
+      '/bin/sh -c echo node scripts/run-node-guards.mjs',
+      'cat lane-a--f2082-1-contention-probe-counts-observers.md',
+    ]) assert.equal(runsNodeGuardsBattery(command), false, command);
 
     // Other files in the full node-guards battery also launch this harness briefly. Measure their
     // absence so these are genuinely no-sibling arms, not assertions racing the battery itself.
@@ -126,12 +146,23 @@ test('contention is advisory, correctly counted, and absent when alone', { timeo
     assert.equal(noPgrep.status, alonePass.status, `${noPgrep.stdout}${noPgrep.stderr}`);
     assertNoStamp(noPgrep);
 
-    // Keep the shell wrapper alive so the guard proves that its matching shell and node child
-    // collapse into one battery, matching the process shape produced by npm run.
-    sibling = spawn('/bin/sh', ['-c', '"$NODE_BIN" "$HARNESS_PATH" "$FIXTURE_PATH"'], {
+    waiter = spawn('/bin/sh', ['-c', "echo WAITER_READY; until ! pgrep -f 'run-node-guards'; do sleep 0.05; done"], {
       cwd: ROOT,
       detached: true,
-      env: { ...cleanEnv(), NODE_BIN: process.execPath, HARNESS_PATH: HARNESS, FIXTURE_PATH: slow },
+      env: cleanEnv(),
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    await waitForReady(waiter, 'WAITER_READY');
+    assertNoStamp(runHarness(passing));
+    await stopGroup(waiter);
+    waiter = undefined;
+
+    // Keep the shell wrapper alive so the guard proves that its matching shell and node child
+    // collapse into one battery, matching the process shape produced by npm run.
+    sibling = spawn('/bin/sh', ['-c', `"${process.execPath}" "${HARNESS}" "${slow}" & wait`], {
+      cwd: ROOT,
+      detached: true,
+      env: cleanEnv(),
       stdio: ['ignore', 'pipe', 'pipe'],
     });
     await waitForReady(sibling);
@@ -148,6 +179,7 @@ test('contention is advisory, correctly counted, and absent when alone', { timeo
     console.log('MANUFACTURED_DETECTION: shell + node sibling collapsed to 1 battery; reported 2 total');
     console.log(`EXIT_CODES: passing alone=${alonePass.status} sibling=${siblingPass.status}; failing alone=${aloneFail.status} sibling=${siblingFail.status}`);
   } finally {
+    if (waiter) await stopGroup(waiter);
     if (sibling) await stopGroup(sibling);
     rmSync(dir, { recursive: true, force: true });
   }
