@@ -1,9 +1,12 @@
 import { expect, test } from '@playwright/test';
 import { createServer, type ViteDevServer } from 'vite';
 
-// F-E2S-3 governs the three railcars. Canyon Works predates that ruling and was
-// measured lawful modelessly, so its declared escort mode remains additive.
-const MODELESS_MODE_CONTRACT_EXCEPTIONS = new Set(['e3-canyon-works']);
+// F-E2S-3 governed the three railcars. Canyon Works predates that ruling and was measured lawful
+// modelessly, so its declared escort mode remains additive. The Hill Mine joined it on 2026-08-20:
+// once the pressure arsenal reached the headless engine on the browser's own gates it secured
+// modelessly on both bench seeds (reviews/e2-pressure-arsenal-headless.md), so its escort mode is
+// additive too. The Trestle and the Incline are still exempt and still throw.
+const MODELESS_MODE_CONTRACT_EXCEPTIONS = new Set(['e3-canyon-works', 'e2-hill-mine']);
 
 test('every derived door contract boots and emits its first view', async () => {
   test.setTimeout(60_000);

@@ -279,6 +279,7 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
   "e1-night-shift",
   "e1-twin-banks",
   "e10-last-claim",
+  "e2-hill-mine",
   "e2-pressure-garden",
   "e3-blackout-ridge",
   "e3-canyon-works",

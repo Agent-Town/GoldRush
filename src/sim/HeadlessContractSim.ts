@@ -26,6 +26,7 @@ import { XpMotePool } from '../entities/XpMote';
 import { Balance } from '../game/Balance';
 import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { GameState } from '../game/GameState';
+import { hasBaronMedal } from '../game/Medals';
 import { Progression } from '../game/Progression';
 import { TileStateStore } from '../game/TileStateStore';
 import { hasResearchNode, loadResearchState } from '../meta/ResearchTree';
@@ -59,6 +60,7 @@ import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
+import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
@@ -74,17 +76,20 @@ type AdmissionExemption = {
 };
 
 export const CONTRACT_ADMISSION_EXEMPTIONS = {
-  'e2-hill-mine': {
-    reason: 'Scripted admission re-probe terminated unsecured at waves 1/2 because no weapon reaches the railcar.',
-    citation: 'F-E2S-3',
-  },
+  // F-E2S-3 read "no weapon reaches the railcar" off an unsecured probe and inferred that the board
+  // sold no such weapon. It sells three, and they now fire headless on the browser's own gates
+  // (`PressureArsenalSystem` below). What actually keeps these two out is narrower and measured:
+  // NEITHER declares `twist.pressureEnabled`, so no boiler can be built, no coal can be burned, and
+  // the E2 arsenal has nothing to spend — while both field a railcar at `hpScale: 30` against the
+  // hill mine's 12.5. `e2-hill-mine`, which does run a pressure line, secured on both bench seeds
+  // and has left this table.
   'e2-incline': {
-    reason: 'Scripted admission re-probe terminated unsecured at waves 2/3 because no weapon reaches the railcar.',
-    citation: 'F-E2S-3',
+    reason: 'Best measured play with declared E1 progression terminated unsecured at waves 6/8; the contract declares no pressureEnabled, so the E2 arsenal has no fuel against an hpScale-30 railcar.',
+    citation: 'reviews/e2-pressure-arsenal-headless.md',
   },
   'e2-trestle': {
-    reason: 'Scripted admission re-probe terminated unsecured at wave 1 because no weapon reaches the railcar.',
-    citation: 'F-E2S-3',
+    reason: 'Best measured play with declared E1 progression secured seed 02 at wave 18 but terminated unsecured at wave 12/13 on seed 01; no pressureEnabled, hpScale-30 railcar. Re-admit when both bench seeds hold.',
+    citation: 'reviews/e2-pressure-arsenal-headless.md',
   },
   'e3-fairground': {
     reason: 'Scripted admission re-probe terminated unsecured at waves 2/3; the crowd-flock escort objective has no headless consumer.',
@@ -296,6 +301,7 @@ export class HeadlessContractSim {
   private readonly combat: CombatSystem;
   private readonly build: BuildSystem;
   private readonly pressure: PressureSystem;
+  private readonly pressureArsenal: PressureArsenalSystem | null;
   private readonly powerGraph: PowerGraphSystem | null;
   private readonly dayNightCycle: DayNightCycle | null;
   private readonly lightField: LightField | null;
@@ -360,6 +366,10 @@ export class HeadlessContractSim {
     this.contractId = boot.contractId;
     this.seed = boot.seed;
     this.manifest = loadContract(this.contractId);
+    // Read once, at the top, because TWO consumers need it now: `Progression` (below, as before) and
+    // the Steamworks arsenal, which is built with the systems. Same call, same arguments, moved —
+    // when no storage is injected it stays null and every reader keeps its old answer.
+    const research = options.storage ? loadResearchState(options.storage, options.storage) : null;
     const epoch = listEpochs().map(({ id }) => loadEpoch(id)).find((entry) => entry.contracts.some(({ id }) => id === this.contractId));
     this.megaprojectManifest = epoch ? activeMegaprojectManifest(epoch, '') : null;
     this.megaprojectUnlocked = isMegaprojectUnlocked(this.megaprojectManifest, boot.scienceSteps ?? 0);
@@ -432,10 +442,33 @@ export class HeadlessContractSim {
       this.build.boilerHouses,
       () => this.manifest.twist.pressureEnabled === true,
       (index) => this.build.buildingTarget('boiler_house', index)?.active === true,
-      () => false,
+      (id) => research !== null && hasResearchNode(research, id),
       () => undefined,
       () => undefined,
     );
+    // THE STEAMWORKS ARSENAL, ON THE BROWSER'S OWN GATES — nothing here is a floor, a grant, or a
+    // mint. `Game.ts:1372-1381` builds `PressureArsenalSystem` from exactly four predicates, and all
+    // four are transcribed below rather than relaxed:
+    //   epoch      `activeEpoch.id === 'epoch-2-steamworks'`  -> the construction gate, so no other
+    //              epoch's contract gains an object, a tick, or a registered shooter;
+    //   multiplayer `!multiplayerActive()`                    -> a seat rides `SeatedLockstepSim.ts:165`,
+    //              which passes NO storage, so every weapon below reads its unlock as false anyway;
+    //   armed hero  `heroWeaponsEnabledFor(primaryActor)`     -> this sim's own idiom for the same
+    //              fact is `!this.dead` (`heroShooter.enabled`, `:267`);
+    //   per weapon  `hasResearch(node)` + `hasBaronMedal()`   -> read from the INJECTED profile, the
+    //              same storage the campaign harness already writes (`gr-sim-campaign.mjs:88`).
+    // A run that declares nothing therefore sees precisely what a browser player who has unlocked
+    // nothing sees: three shooters that never pass `enabled()`. Progression is DECLARED, never minted.
+    this.pressureArsenal = epoch?.id === 'epoch-2-steamworks'
+      ? new PressureArsenalSystem(
+          this.combat,
+          this.pressure,
+          () => this.hero.group.position,
+          (id) => research !== null && hasResearchNode(research, id),
+          () => hasBaronMedal(options.storage ?? NO_PROFILE_STORAGE),
+          () => !this.dead,
+        )
+      : null;
     const powerGrid = this.manifest.twist.powerGrid;
     this.powerGraph = powerGrid
       ? new PowerGraphSystem(contractPowerDefinition(this.contractId, powerGrid), powerGrid.maxSpanLength)
@@ -561,7 +594,6 @@ export class HeadlessContractSim {
       () => this.atomic?.exhaustedCount() ?? 0,
     );
     this.progressionState.transition('playing');
-    const research = options.storage ? loadResearchState(options.storage, options.storage) : null;
     this.progression = new Progression({
       state: this.progressionState,
       rng: createRng(`${this.seed}:upgrades`),
@@ -642,6 +674,17 @@ export class HeadlessContractSim {
 
   currentTurn(): GrSimTurn {
     return this.makeTurn();
+  }
+
+  /**
+   * READ-ONLY evidence channel: the arsenal's own counters, unchanged from the browser's
+   * (`PressureArsenalSystem.diagnostics`). Null off `epoch-2-steamworks`, where the browser
+   * builds no arsenal either. It reads state and cannot alter a run — the E2 prover uses it to
+   * report which weapons actually fired, so a "secured" claim can be checked against real fires
+   * rather than believed (Mistake #13).
+   */
+  get pressureArsenalDiagnostics(): PressureArsenalDiagnostics | null {
+    return this.pressureArsenal?.diagnostics ?? null;
   }
 
   submitOrders(orders: unknown): ToolReceipt<'et.goldrush.orders', { orders: unknown }> {
@@ -874,7 +917,17 @@ export class HeadlessContractSim {
       () => undefined,
       this.prospector.position,
     );
-    this.pressure.update(STEP_SECONDS, this.timeAlive, [this.hero.group.position], this.waves.diagnostics.wave);
+    // BOTH bodies, because the browser passes `visibleActorPositions()` (`Game.ts:1012`) — every actor
+    // that can walk to a coal seam. This sim has two: the hero, which never leaves its stake (it takes
+    // `IDLE_INTENTS` above), and the Prospector, which is the only thing a rider can actually MOVE and
+    // which `harvestTargets():1508` already treats as actor `'0'` for the gold seams. Passing the hero
+    // alone left the coal economy physically unreachable headless — no order could put a body on a seam.
+    this.pressure.update(
+      STEP_SECONDS,
+      this.timeAlive,
+      [this.hero.group.position, this.prospector.position],
+      this.waves.diagnostics.wave,
+    );
     this.syncContractPowerGrid();
     this.powerGraph?.step(this.simTick);
     this.syncCanyonConnectObjective();
