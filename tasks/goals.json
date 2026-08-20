@@ -1337,11 +1337,12 @@
               "id": "fix-e6-homemaker-headless-socket",
               "title": "E6 Glow Mesa: construct, wire, and resolve the Homemaker headlessly",
               "taskFile": "fix-e6-homemaker-headless-socket.md",
-              "status": "planned",
+              "status": "merged",
               "lane": "main",
               "authoredBy": "attended 2026-08-15",
               "registeredBy": "s1782",
-              "note": "Cures F-MTS-4 from reviews/milk-twin-sockets.md after a mandatory GoldPickupPool dependency probe. The attended handover explicitly staged this master for registration and later queueing. It remains planned behind the E5 MAIN-slot task because both touch HeadlessContractSim and a second queued MAIN task would hit the first task's undrained working-tree output."
+              "note": "Cures F-MTS-4 from reviews/milk-twin-sockets.md after a mandatory GoldPickupPool dependency probe. The attended handover explicitly staged this master for registration and later queueing. It remains planned behind the E5 MAIN-slot task because both touch HeadlessContractSim and a second queued MAIN task would hit the first task's undrained working-tree output.",
+              "mergeHash": "e86e9d8e322505f21e7a1b362587e96372c09e71"
             }
           ]
         },
@@ -4899,14 +4900,14 @@
               "taskFile": "fsr6-skillmd-ledger-season-docs.md",
               "lane": "lane-b",
               "authoredBy": "s2080 (FIRE-AUTHORED, attended review welcome)",
-              "note": "Cures F-SR-6, filed by the attended season-roll drain at reviews/assay-season-roll.md:18. The successor that review named (f2078-1-deepwater-manifest-truth-pass) had already been dispatched 24 minutes earlier with a four-file firewall excluding public/skill.md, so this debt was carried by nothing — see F-2080-2. Premise re-verified at source on main de10f894c: grep -Fc \"season=\" public/skill.md returns 0, while functions/api/standings.ts:933-938 parseSeason, :287 bad_season, :529 season_closed and :942-943 seasonLabels all exist. DOCS-ONLY BY DESIGN: standings.ts:161-168 states the chronicle and ledger season axes must never be conflated, so the master documents the ledger axis only and explicitly forbids touching the reader (that is F-SR-5, which the authoring fire measured is NOT the one-param fix the review advertises — see F-2080-3)."
+              "note": "Cures F-SR-6, filed by the attended season-roll drain at reviews/assay-season-roll.md:18. The successor that review named (f2078-1-deepwater-manifest-truth-pass) had already been dispatched 24 minutes earlier with a four-file firewall excluding public/skill.md, so this debt was carried by nothing \u2014 see F-2080-2. Premise re-verified at source on main de10f894c: grep -Fc \"season=\" public/skill.md returns 0, while functions/api/standings.ts:933-938 parseSeason, :287 bad_season, :529 season_closed and :942-943 seasonLabels all exist. DOCS-ONLY BY DESIGN: standings.ts:161-168 states the chronicle and ledger season axes must never be conflated, so the master documents the ledger axis only and explicitly forbids touching the reader (that is F-SR-5, which the authoring fire measured is NOT the one-param fix the review advertises \u2014 see F-2080-3)."
             },
             {
               "id": "f2078-1-deepwater-manifest-truth-pass",
               "title": "F-E5AC-1: make the deepwater agent-facing manifest tell the truth after re-admission, and derive the admission probe\u2019s contract list instead of hardcoding it",
               "status": "merged",
               "mergeHash": "d0d6daa441b496a6d5ccfc5a88bff618069f08e4",
-              "drainedBy": "s2080 (2026-08-20) — gated in detached worktree gate-s2080; 1 adjacent red = F-1606-1 fingerprint, reproduced on unmerged main as a control; review reviews/f2078-1-deepwater-manifest-truth-pass.md",
+              "drainedBy": "s2080 (2026-08-20) \u2014 gated in detached worktree gate-s2080; 1 adjacent red = F-1606-1 fingerprint, reproduced on unmerged main as a control; review reviews/f2078-1-deepwater-manifest-truth-pass.md",
               "taskFile": "f2078-1-deepwater-manifest-truth-pass.md",
               "lane": "lane-b",
               "authoredBy": "s2078 (FIRE-AUTHORED, attended review welcome)",
