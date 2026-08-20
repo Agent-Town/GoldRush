@@ -104,10 +104,26 @@ simply unsatisfiable while it is not alone. **This is a hypothesis, not a conclu
 controlled run on a provably quiet box. **Not blocking:** the stamp is advisory and cannot influence
 `process.exit` (asserted green above).
 
-**F-2083-3 (non-blocking, inherited, unowned) — `fixture-teardown.test.mjs` fails as a CONSEQUENCE of
-F-2083-1**, reporting only `1 !== 0` ("goal-tracker.test.mjs child failed", 51615 ms). s2082 observed
-the same coupling. The message names no cause, so this red is an anonymous echo three layers down —
-worth knowing when triaging, since fixing F-2083-1 should clear it.
+**F-2083-3 (non-blocking, inherited, unowned) — `fixture-teardown.test.mjs` reports only `1 !== 0` and
+names no cause; it is an anonymous echo of whichever child failed, three layers down.** s2082
+observed the same coupling against a different cause (its own duplicate leaf).
+
+⚠️ **CORRECTION, recorded because it was tested rather than assumed.** This finding first read
+*"fixing F-2083-1 should clear it"*. **That prediction is REFUTED.** With F-2083-1 fixed and
+`goal-tracker` green, `fixture-teardown` was re-run directly and **still fails (92.1 s)** — now
+carrying F-2083-2's assertion instead: `node-guards board did not stay quiet for 300ms` at
+`node-guards-contention.test.mjs:57`. The echo simply re-pointed at the next failing child.
+
+**This also weakens F-2083-2's stated hypothesis, so that is revised below rather than left standing.**
+The run above was invoked **directly**, with no `run-node-guards` ancestor and no full-battery window,
+which is where a passing external session's battery was supposed to be doing the contending. A more
+likely mechanism: the contention guard **manufactures real sibling batteries of its own** (it spawns
+`sh -c "node <harness> <fixture> & wait"`), so under composed invocation its own fixtures — or an
+incompletely reaped one — occupy the board that `waitForQuietBoard()` then demands be quiet. That
+would make the precondition self-defeating in composed runs while passing standalone, which matches
+every observation here. **Still a hypothesis; still needs a controlled run.** What is NOT in doubt is
+that it is **pre-existing** — s2082 recorded the same 5 s `waitForQuietBoard` deadline failing on the
+**pre-cure** tree — and that it is advisory-only.
 
 **Runner-reported, adjacent, untouched:** `/tmp/s2082-guards.mjs` wraps the full gate in unbounded
 `spawnSync`, letting a wedged worker outlive its per-test bound — this is what prevented the runner
