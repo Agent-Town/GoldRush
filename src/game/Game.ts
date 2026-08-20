@@ -183,6 +183,7 @@ import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
 import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression } from '../systems/SignalSuppression';
+import { BroadcastMirror } from '../systems/BroadcastMirror';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
@@ -692,6 +693,17 @@ export class Game {
   // three gate sites below, so its refusal counters are the run's real total and not three
   // partial tallies. Built off the CONTRACT, never the epoch — A6 reuses it from E8.
   private readonly signalSuppression = SignalSuppression.create(this.activeContract);
+  /**
+   * A3 (door-completion-sheet §A3, RATIFIED 2026-08-20). ONE consumer per run, written by the
+   * single funnel every playbook USE passes through and read by `WaveSystem` at the head of each
+   * wave — so "one corrupted copy per use, on the next wave" is one object's arithmetic rather
+   * than a rule spread across two call sites. Built off the CONTRACT, never the epoch: the three
+   * Signal siblings that declare no mirror get `none()` and never grow a spawn.
+   *
+   * It is declared HERE, above the constructor, because `this.waveSystem` is built on the
+   * constructor's first line and must be handed the reader already.
+   */
+  private readonly broadcastMirror = BroadcastMirror.create(this.activeContract);
   /**
    * A6 (door-completion-sheet §A6, RATIFIED 2026-08-20). ONE consumer per run, shared by the
    * player's confirm key, the agent rider's `CONTEXT_ACTION action:'recover'`, and the secure
@@ -1364,6 +1376,9 @@ export class Game {
       // Owner ruling 2026-08-20: exhausted machines stop holding spawn slots. GR-SIM seats the
       // SAME reader through `AtomicSocket.exhaustedCount`, so the two engines refuse identically.
       () => this.wrangle.exhaustedCount(),
+      // A3: the corrupted copies of last wave's playbook uses. GR-SIM seats the SAME reader off
+      // its own `BroadcastMirror`, so the mirror rule is one implementation in two engines.
+      (wave) => this.broadcastMirror.fieldMirrors(wave),
     );
     resetAssetLoading(canvas, 'the claim');
     this.assertActorMode();
@@ -3468,6 +3483,14 @@ export class Game {
     this.playbookReplay = new PlaybookReplaySession(playbook, normalizeProbeEvery(options.probeEvery));
     this.playbookReplaySlot = slot;
     this.playbookReplayRequiresConsent = false;
+    // A3: THE RECORD HALF, and it is deliberately the LAST line of the successful path. The sheet
+    // records "every playbook the player/agent USES" — a use, not an attempt — so every refusal
+    // above (suppressed, multiplayer, not-found, unparseable, contract/seed/difficulty mismatch,
+    // no actor slot) leaves the canyon nothing to mirror. Identity is the canonical tape HASH and
+    // not its shelf name, so renaming a habit does not launder it out of its own repeat count.
+    // RECORDING is not a use: the sheet's shadow is cast by playing a tape back, and the recorder
+    // path above deliberately does not call this.
+    this.broadcastMirror.noteUse({ id: playbookHash(playbook), entries: playbook.entries });
     return { ok: true };
   }
 
@@ -4999,6 +5022,7 @@ export class Game {
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       e8Physics: this.e8PhysicsSystem.diagnostics,
       probeRecovery: this.probeRecovery.diagnostics,
+      broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
       lowOrbit: this.lowOrbit.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
@@ -7334,6 +7358,8 @@ export class Game {
     this.e8ArsenalSystem.reset();
     this.e8PhysicsSystem.reset();
     this.lowOrbit.reset();
+    // A3: the shadow belongs to the run that cast it — a restart starts with no habits recorded.
+    this.broadcastMirror.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);

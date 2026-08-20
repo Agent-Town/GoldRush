@@ -266,6 +266,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e7-dead-band-01",
     "e7-dead-band-02"
   ],
+  "e7-echo-canyon": [
+    "e7-echo-canyon-01",
+    "e7-echo-canyon-02"
+  ],
   "e8-mare-claim": [
     "e8-mare-claim-01",
     "e8-mare-claim-02"
@@ -321,6 +325,7 @@ One refusal is a different shape and is named here so nobody hunts for a missing
   "e5-regatta",
   "e6-glow-mesa",
   "e7-dead-band",
+  "e7-echo-canyon",
   "e7-relay-valley",
   "e8-eclipse",
   "e8-far-side",

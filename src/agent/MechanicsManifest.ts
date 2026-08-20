@@ -4,6 +4,14 @@ import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSyste
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
+import {
+  BROADCAST_MIRROR_HP_PER_REPEAT,
+  BROADCAST_MIRROR_MAX_SQUAD,
+  BROADCAST_MIRROR_MIN_SQUAD,
+  BROADCAST_MIRROR_SQUAD_CAP,
+  BROADCAST_MIRROR_VARIANT_ID,
+  BroadcastMirror,
+} from '../systems/BroadcastMirror';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { FLOTILLA_HULL_RULES } from '../systems/FlotillaHullSystem';
 
@@ -386,6 +394,28 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       // Named so a rider reads the CONSEQUENCE rather than deducing it from three booleans.
       consequence: 'the named systems refuse for the whole run; the claim is won with turrets, combat and harvest alone',
       refusalReason: SIGNAL_SUPPRESSION_REASON,
+    }));
+  }
+
+  // --- A3 broadcast mirror. SOURCED FROM THE CONSUMER for the same reason the suppression rule
+  // above is: `BroadcastMirror.create` is what decides whether a contract casts a shadow at all
+  // (it refuses a delay it cannot honour, and refuses a roster with nothing to be a copy OF), so
+  // asking it is the only way a manifest row cannot promise a mechanic the run would not run.
+  // Absent everywhere the twist is undeclared — silence means no shadow, and it must keep meaning
+  // that.
+  const mirror = BroadcastMirror.create(contract);
+  if (mirror.isDeclared) {
+    rules.push(rule('broadcast_mirror', 'BroadcastMirror.fieldMirrors', {
+      recordedOn: 'a playbook USE (a replay that starts); recording a tape records nothing',
+      delay: mirror.diagnostics.delay ?? '',
+      capPerWave: BROADCAST_MIRROR_SQUAD_CAP,
+      hpPerRepeat: BROADCAST_MIRROR_HP_PER_REPEAT,
+      squadSize: `${BROADCAST_MIRROR_MIN_SQUAD}-${BROADCAST_MIRROR_MAX_SQUAD}`,
+      variantId: BROADCAST_MIRROR_VARIANT_ID,
+      // The four facets a copy echoes, named so a rider can plan the shape it will face.
+      echoes: ['squad size from tape length', 'wrecker if the tape built', 'thief otherwise', 'faster if the tape roved', 'longer hunt if the tape volleyed'],
+      // Named so a rider reads the LESSON rather than deducing it from two constants.
+      consequence: 'every playbook you play back returns next wave as a corrupted squad; repeating the SAME tape makes its copy 10% heavier each time, so vary your habits',
     }));
   }
 

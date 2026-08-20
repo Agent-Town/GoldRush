@@ -64,9 +64,33 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ⚠️ THE LANE'S BASE WAS PRE-A6/A7/A8, SO ITS ABSOLUTE PINS (361/839/12) ARE STALE HERE — the
   // fifth recurrence of F-2084-1 in one day. Pins below = the QUINTUPLE-stacked merged tree's own
   // regen output, verbatim; no side's arithmetic was edited into agreement.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 9);
+  // ADMISSION MOVE (2026-08-20, `e7-echo-canyon` A3 the broadcast mirror, FIFTH stack layer):
+  // Echo Canyon's `harvestAnchors` were authored — four of them, two on the canyon floor and one
+  // on each echo shelf — so it left the door's own `harvestAnchors?.length !== 0` filter and
+  // entered `supportedContractIds()`. THE EXEMPTION COUNT DOES NOT MOVE, for the third time in
+  // this block's history and for the same reason: the canyon was never in
+  // `CONTRACT_ADMISSION_EXEMPTIONS`, it was excluded by empty data, which is a different door —
+  // and unlike the Seed Run directly below, it SECURES (both bench seeds, wave 20, twice each:
+  // `fnv1a32:7d877de5` / `fnv1a32:0a267a0b`, `artifacts/e7-echo-canyon/`), so it enters the door
+  // rather than the exemption table. What moves is the parity block: 402 -> 412 agent-lacks,
+  // 878 -> 908 equal, 10 -> 9 not-offered, 1290 -> 1329 rows — the same +10/+30/-1/+39 shape the
+  // Dead Band, the Far Side and Low Orbit each recorded, because it is one contract's worth.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, not guessed: with the four anchors emptied in BOTH the
+  // contract and its published mask table, and EVERY other line of the slice still in place (the
+  // `BroadcastMirror` consumer, its record site at the browser's playbook-replay funnel, the
+  // `mirrorSquadsForWave` seam in `WaveSystem`, both engines' readers, the view row and the
+  // `broadcast_mirror` manifest rule), this audit reproduced 0/402/878/10 over 1290 rows and 6
+  // exemptions EXACTLY. So the whole movement belongs to the anchors and the A3 consumer moves
+  // NOTHING here — the expected shape, since this audit's rows are buildable/ability/choice/verb/
+  // economy surfaces and `broadcast_mirror` is a mechanics RULE, and the mirror adds no verb at
+  // all (it is recorded FROM an existing one).
+  // (Pins below = this tree's own regen output, verbatim, on a base of main's 402/878/10.)
+  // ⚠️ SIXTH STACK (the A3 drain): the Flotilla layer above landed on main while A3 built, so both
+  // sides of this merge again wrote identical-looking pins from different stacks. Pins below =
+  // the SEXTUPLE-stacked merged tree's own regen output, verbatim, as every layer before.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 8);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
-  // and neither the Far Side, Low Orbit nor the Flotilla was ever in that population.
+  // and none of the empty-data admissions was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -152,7 +176,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run + Flotilla — verbatim.
   // The Flotilla adds no exemption, so the count stays at A8's 6; only the parity block moves.)
   assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 412, equal: 908, 'not-offered': 9 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 422, equal: 938, 'not-offered': 8 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
