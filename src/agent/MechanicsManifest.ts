@@ -15,6 +15,7 @@ import {
 } from '../systems/BroadcastMirror';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { FLOTILLA_HULL_RULES } from '../systems/FlotillaHullSystem';
+import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
@@ -527,6 +528,14 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       agentOperations: [],
       aliveCap: Balance.waves.aliveCap,
       consequence: 'exhausted machines are undamageable and exempt from the alive cap; capture is reached through the standing-order CAPTURE verb, not a tool',
+    }));
+  }
+  const showroomObjective = ShowroomCaptureObjective.create(contract).diagnostics;
+  if (showroomObjective.quota !== null) {
+    rules.push(rule('showroom_capture_quota', 'ShowroomCaptureObjective', {
+      captureQuota: showroomObjective.quota,
+      consumerLever: 'WrangleSystem.tryCapture',
+      objective: 'capture quota must be met before the run can secure',
     }));
   }
   const e6Tiles = contract.id === 'e6-glow-mesa' ? Balance.e6Tiles : undefined;

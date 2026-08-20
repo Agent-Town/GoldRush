@@ -10,7 +10,7 @@ const EXPECTED_RULES: Record<string, string[]> = {
     'baron', 'build_zones', 'decay_field_windows', 'night_vein_ring',
     'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down',
   ],
-  'e6-showroom': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-showroom': ['build_zones', 'showroom_capture_quota', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
   'e6-half-life-hollow': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
   'e6-picnic': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
 };
@@ -23,9 +23,10 @@ const EXPECTED_RULES: Record<string, string[]> = {
  * CAPTURE the wound-down machines, rebuild what the Homemaker unbuilds, break VAC then CORE.
  * Seed 01 secures at wave 12 (`fnv1a32:e66807f6`), seed 02 at wave 10 (`fnv1a32:da62f7b9`).
  *
- * The other three Atomic contracts are unchanged and still refused: `e6-showroom` keeps its cited
- * exemption (its wave-20 false green is a separate, unresolved finding), and `e6-half-life-hollow`
- * and `e6-picnic` still declare consumers nobody has written. This census is per-id from here on.
+ * PROPOSAL: Showroom requires 6 captures before secure, a conservative minimum with wide margin
+ * under the cap-fix evidence's competent aimed loop. The latch makes idle
+ * survival honest without changing density or difficulty; admission still depends on two public-
+ * verb secures per seed. The other Atomic contracts remain independently refused until proven.
  */
 const ADMITTED = new Set(['e6-glow-mesa']);
 
@@ -125,11 +126,24 @@ for (const contract of atomic.contracts) {
       expect(socket.diagnostics.captureLever).toBe('CAPTURE');
       expect(socket.capture(spawned[0].position)).toBe(true);
       expect(socket.diagnostics.wrangle.pen.total).toBe(1);
+      if (contract.id === 'e6-showroom') {
+        expect(socket.diagnostics.showroomObjective).toMatchObject({ captures: 1, quota: 6, complete: false });
+        expect(socket.objectiveAllowsSecure).toBe(false);
+      } else {
+        expect(socket.diagnostics.showroomObjective).toBeUndefined();
+        expect(socket.objectiveAllowsSecure).toBe(true);
+      }
 
       // The manifest must keep saying so, in the consumer's own numbers.
       const captureRule = mechanics.rules.find(({ id }: { id: string }) => id === 'wrangle_capture');
       expect(captureRule.data.aliveCap).toBe(Balance.waves.aliveCap);
       expect(captureRule.data.consumerLever).toBe('WrangleSystem.tryCapture');
+      if (contract.id === 'e6-showroom') {
+        expect(mechanics.rules.find(({ id }: { id: string }) => id === 'showroom_capture_quota')).toMatchObject({
+          source: 'ShowroomCaptureObjective',
+          data: { captureQuota: 6, consumerLever: 'WrangleSystem.tryCapture' },
+        });
+      }
       expect(mechanics.buildables).toEqual(expect.any(Array));
 
       // THE DOOR ITSELF. Glow Mesa boots on its own bench seeds now that its boss resolves; the
