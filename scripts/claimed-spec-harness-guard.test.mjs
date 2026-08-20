@@ -191,3 +191,32 @@ test('every grandfathered file is still a real offender (no stale excuses)', () 
     );
   }
 });
+
+// ---------------------------------------------------------------- F-2098-1: exit discipline
+
+// s2098 sampled a 9 h 39 m orphan of this guard and found it deadlocked INSIDE V8 on the way
+// out: the main thread in process.exit() -> DisposePlatform -> pthread_join, waiting on a
+// concurrent-baseline-compiler worker that was itself parked in CollectionBarrier awaiting a
+// GC only the main thread could service. The scan had already finished; it simply failed to
+// die. That is why the corpses hold no file and burn no CPU, and it is what F-2090-2's
+// timeout was bounding. main() is fully synchronous with zero pending handles, so setting
+// process.exitCode and returning is behaviour-identical and lets V8 drain its in-flight jobs.
+//
+// This test exists because the cure is a DELETION of something that looks idiomatic, and the
+// three rc assertions above stay green whichever way it is written — so nothing else in this
+// file would notice someone 'tidying' process.exit() back in.
+test('the guard sets process.exitCode and never force-exits (F-2098-1)', () => {
+  const src = fs.readFileSync(GUARD, 'utf8');
+  const code = src
+    .split('\n')
+    .filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l))
+    .join('\n');
+  assert.ok(
+    !/process\.exit\s*\(/.test(code),
+    'claimed-spec-harness-guard.mjs calls process.exit() again. It force-disposes the V8 ' +
+      'platform while a baseline-compiler job can be parked on the collection barrier, which ' +
+      'deadlocks the process forever (F-2098-1, sampled stack). Set process.exitCode and ' +
+      'return instead — main() is synchronous, so the exit code is identical.'
+  );
+  assert.match(code, /process\.exitCode\s*=/, 'the guard must still set an explicit exit code');
+});

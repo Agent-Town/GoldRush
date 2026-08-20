@@ -179,6 +179,32 @@ export function classify(text, harness) {
   return { hits, namesOwningConfig, isOffender: !namesOwningConfig && reasons.length > 0, reasons };
 }
 
+// F-2098-1 — WHY THIS FUNCTION SETS `process.exitCode` AND RETURNS INSTEAD OF CALLING
+// `process.exit()`. Do not "tidy" it back; the force-exit is what hung the factory.
+//
+// s2098 sampled a live orphan of this very script (pid 40407, `--report`, PPID 1, 9 h 39 m
+// elapsed, 0:00.10 CPU total, holding NO file/lock/port — `lsof` showed only cwd + the node
+// binary). Its stack is an unambiguous two-thread deadlock INSIDE V8, on the way out:
+//
+//   main thread : process.exit() -> node::Environment::Exit -> DisposePlatform
+//                 -> WorkerThreadsTaskRunner::Shutdown -> uv_thread_join -> __ulock_wait
+//   V8 worker   : ConcurrentBaselineCompiler -> BaselineCompiler::Build
+//                 -> CodeBuilder::BuildInternal -> HeapAllocator::AllocateRawSlowPath
+//                 -> CollectionBarrier::AwaitCollectionBackground -> _pthread_cond_wait
+//
+// The main thread is joining the platform workers; a baseline-compiler worker is parked on
+// the collection barrier waiting for a GC that only the main thread can service. Each waits
+// for the other, forever. `main()` is fully SYNCHRONOUS with zero pending handles, so this
+// scan finishes its work and then fails to die — which is why the corpses hold nothing and
+// burn no CPU, and why 0% CPU was never evidence of innocence.
+//
+// This retires the shared-fixture/contention hypothesis F-2090-2 carried: the hang is not
+// the board, not git, not another battery, and not a fixture. It is load-CORRELATED only
+// because load changes JIT/GC timing. Returning normally lets the loop drain and V8 finish
+// its in-flight jobs, removing the guaranteed-in-flight window that `process.exit()` creates
+// at peak JIT activity. It also removes the known truncation of pending piped stdout.
+// (It shifts probability rather than proving impossibility — s2098 could NOT reproduce the
+// deadlock on demand in 180 bounded attempts, so no stronger claim is made here.)
 function main() {
   const argv = process.argv.slice(2);
   const report = argv.includes('--report');
@@ -220,7 +246,8 @@ function main() {
       if (tag === 'GRANDFATHERED') console.log(`    reason: ${GRANDFATHERED.get(o.f)}`);
       for (const r of o.reasons) console.log(`    :${r.n} (${r.form}) ${r.line.slice(0, 160)}`);
     }
-    process.exit(0);
+    process.exitCode = 0;
+    return;
   }
 
   // A grandfather entry naming a file that is no longer an offender is stale bookkeeping:
@@ -245,10 +272,11 @@ function main() {
           `       lines, which would rot every citation quoting them (F-1397-3).\n`
       );
     }
-    process.exit(1);
+    process.exitCode = 1;
+    return;
   }
   console.log('OK: no live offender.');
-  process.exit(0);
+  process.exitCode = 0;
 }
 
 // NOT `file://${process.argv[1]}` — this repo's absolute path contains a space ("Gold Rush"),
