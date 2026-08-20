@@ -46,7 +46,12 @@ trap 'finish interrupted 143' TERM
 
 note "building…"
 BUILD_ID="${CF_PAGES_COMMIT_SHA:-$(git rev-parse --short=8 HEAD 2>/dev/null || printf 'unknown')}"
-if ! CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; finish build_failed 3; fi
+# PRODUCTION IS E1-ONLY (owner ruling 2026-08-20, verbatim: "that is the production page - I
+# don't think we should deploy E9 there"): GR_RELEASE=e1 strips every post-E1 bundle at build
+# time and disables the ?debug contract door entirely (ContractFamilies.ts RELEASE_E1). Full
+# builds go to PREVIEW branch deployments only (wrangler pages deploy --branch=...), never here.
+# Override GR_RELEASE explicitly only on the owner's word.
+if ! GR_RELEASE="${GR_RELEASE:-e1}" CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; finish build_failed 3; fi
 printf '{"build":"%s","builtAt":"%s"}\n' "$BUILD_ID" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > dist/version.json
 
 BUDGET_LIMIT=25000000
