@@ -168,11 +168,11 @@
       "fingerprint": "6a45c0e3a324",
       "excerpt": "## The legacy board — RULED: SEASON ROLL (owner, 2026-08-15, verbatim)"
     },
-    "tasks/goals.json[assay-season-roll] -> functions/api/standings.ts:887": {
+    "tasks/goals.json[assay-season-roll] -> functions/api/standings.ts:925": {
       "target": "functions/api/standings.ts",
-      "line": 887,
-      "fingerprint": "03b6a7c35258",
-      "excerpt": "function boardKey(epochId: string, contractId: string): string {"
+      "line": 925,
+      "fingerprint": "28add38b19bf",
+      "excerpt": "function boardKey(epochId: string, contractId: string, season: number = CURRENT_SEASON): string {"
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."
