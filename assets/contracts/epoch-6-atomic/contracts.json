@@ -349,15 +349,26 @@
             "heroStart": false
           }
         ],
+        "hollowCrossing": {
+          "glowBridges": [
+            { "id": "west-glow-bridge", "minX": -34, "maxX": -22, "minZ": -34, "maxZ": 34 },
+            { "id": "east-glow-bridge", "minX": 22, "maxX": 34, "minZ": -34, "maxZ": 34 }
+          ],
+          "causeway": { "id": "central-causeway", "minX": -7, "maxX": 7, "minZ": -40, "maxZ": 40 },
+          "shelfIds": ["south-launch-shelf", "west-countdown-ground", "east-countdown-ground", "north-extraction-shelf"],
+          "extractionStakeId": "hollow-extraction"
+        },
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "x": -24, "z": -47 },
+          { "x": -25, "z": -14 },
+          { "x": 25, "z": 18 },
+          { "x": 24, "z": 47 }
+        ],
         "heightfield": {
           "id": "half-life-hollow-expiry-course",
           "mode": "visual"
         },
-        "engineDependencies": [
-          { "dep": "half-life-hollow-contract-consumers", "status": "missing", "description": "Needs the epoch-wide appliance wrangle consumer plus a crossing consumer for the two glow bridges, the central causeway, and the west and east shelves the briefing promises; those crossings are advertised in briefing prose alone and carry no tileParams data for any consumer to read." }
-        ],
         "lanes": {
           "spawnEdges": [
             "west",

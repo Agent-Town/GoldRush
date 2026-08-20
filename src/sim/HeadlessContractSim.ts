@@ -66,6 +66,7 @@ import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../syste
 import { PressureSystem } from '../systems/PressureSystem';
 import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } from '../systems/ProbeRecovery';
 import { LowOrbitSystem, type LowOrbitDiagnostics } from '../systems/LowOrbitSystem';
+import { HollowCrossingSystem, type HollowCrossingDiagnostics } from '../systems/HollowCrossingSystem';
 import { SeedCaravanSystem, type SeedCaravanDiagnostics } from '../systems/SeedCaravanSystem';
 import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
@@ -251,6 +252,7 @@ export type HeadlessAgentView = AgentView & {
      * evidence that the mechanic fired.
      */
     lowOrbit?: LowOrbitDiagnostics;
+    hollowCrossing?: HollowCrossingDiagnostics;
     /**
      * A8. Present only where the contract declares `twist.persistentPlanting`. This one IS the
      * objective: `seedCaravan.arrived` is what opens the secure, and `hp`/`state`/`dwellRemaining`
@@ -419,6 +421,7 @@ export class HeadlessContractSim {
    * paragraph so the claim cannot rot into a lie.
    */
   private readonly lowOrbit: LowOrbitSystem;
+  private readonly hollowCrossing: HollowCrossingSystem;
 
   /**
    * A7 debris chip, headless. Positional and hero-only, matching `Game.applyLowOrbitDebris`
@@ -540,6 +543,7 @@ export class HeadlessContractSim {
     // Same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. The policy
     // install waits for `this.combat` below.
     this.lowOrbit = LowOrbitSystem.create(this.manifest);
+    this.hollowCrossing = HollowCrossingSystem.create(this.manifest);
     // A8: same read the browser performs at `Game.ts` — the contract's own twist and its own
     // authored zones/stakes. A fresh empty store per sim, so runs never inherit each other's greens.
     this.seedCaravan = SeedCaravanSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
@@ -847,6 +851,7 @@ export class HeadlessContractSim {
           // objective does above. `objectiveAllowsSecure` is true on every contract that
           // declares no probe, so no admitted contract's terminal moves.
           || !this.probeRecovery.objectiveAllowsSecure
+          || !this.hollowCrossing.objectiveAllowsSecure
           || (this.manifest.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
           || (this.crowdFlocks !== null && !this.crowdFlocks.allCrossed)
           // A8: the caravan-connect latch, keyed on `twist.persistentPlanting` exactly as the
@@ -981,6 +986,7 @@ export class HeadlessContractSim {
         // facts — a claim won while three lobs were still in orbit is not the same run as one
         // won with none, and the hash should be able to say so.
         ...(this.lowOrbit.isDeclared ? { lowOrbit: this.lowOrbit.diagnostics } : {}),
+        ...(this.hollowCrossing.isDeclared ? { hollowCrossing: this.hollowCrossing.diagnostics } : {}),
       },
     });
     return { ...base, eventLogHash, ...overtime };
@@ -1180,6 +1186,8 @@ export class HeadlessContractSim {
       this.timeAlive,
       this.hero.group.position,
     );
+    const hollowChip = this.hollowCrossing.update(STEP_SECONDS, this.prospector.position, 'prospector');
+    if (hollowChip > 0) this.combat.damageActor(hollowChip, -1, this.hero);
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncLightState();
     observeStandingOrders();
@@ -1225,6 +1233,7 @@ export class HeadlessContractSim {
     }
     // A7: only where DECLARED, so no other contract's view grows a field.
     if (this.lowOrbit.isDeclared) view.now.lowOrbit = this.lowOrbit.diagnostics;
+    if (this.hollowCrossing.isDeclared) view.now.hollowCrossing = this.hollowCrossing.diagnostics;
     // A8: only where DECLARED. Unlike the suppression row this one MOVES every turn, and a rider
     // that cannot read it cannot escort — so it carries the live guard, the dwell clock and the
     // latch, and the grounds/route it needs to walk to a stake.
@@ -1398,6 +1407,7 @@ export class HeadlessContractSim {
       // probe cannot be secured by the kill alone. No contract declares both today; stating it
       // here keeps the two secure paths from disagreeing the way F-1471-1 did.
       && this.probeRecovery.objectiveAllowsSecure
+      && this.hollowCrossing.objectiveAllowsSecure
       // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
       && (!this.seedCaravan || this.seedCaravan.objectiveComplete);
     const runWave = this.currentRunWave();
@@ -1570,6 +1580,7 @@ export class HeadlessContractSim {
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
       probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
       lowOrbit: this.lowOrbit.isDeclared ? this.lowOrbit.diagnostics : null,
+      hollowCrossing: this.hollowCrossing.isDeclared ? this.hollowCrossing.diagnostics : null,
       seedCaravan: this.seedCaravan?.simulationSnapshot ?? null,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,

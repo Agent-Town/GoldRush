@@ -6,6 +6,7 @@ import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowO
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { FLOTILLA_HULL_RULES } from '../systems/FlotillaHullSystem';
+import { HOLLOW_EXTRACTION_RADIUS, HOLLOW_GLOW_DAMAGE_PER_SECOND } from '../systems/HollowCrossingSystem';
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
@@ -18,7 +19,8 @@ import {
 } from '../systems/SeedCaravanSystem';
 import { TileStateStore } from '../game/TileStateStore';
 
-type MechanicValue = boolean | number | string | readonly string[];
+type MechanicRecord = Readonly<Record<string, boolean | number | string>>;
+type MechanicValue = boolean | number | string | readonly string[] | readonly MechanicRecord[] | MechanicRecord;
 
 export type MechanicsManifest = {
   schema: 'goldrush.mechanics.v1';
@@ -471,6 +473,18 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       agentOperations: [],
       aliveCap: Balance.waves.aliveCap,
       consequence: 'exhausted machines are undamageable and exempt from the alive cap; capture is reached through the standing-order CAPTURE verb, not a tool',
+    }));
+  }
+  if (tile.hollowCrossing) {
+    const crossing = tile.hollowCrossing;
+    const shelves = crossing.shelfIds.map((id) => tile.buildZones?.find((zone) => zone.id === id)!);
+    const extraction = tile.stakeMarkers?.find(({ id }) => id === crossing.extractionStakeId)!;
+    rules.push(rule('hollow_crossing', 'HollowCrossingSystem.update', {
+      routes: [crossing.causeway, ...crossing.glowBridges].map(({ id, minX, maxX, minZ, maxZ }) => ({ id, minX, maxX, minZ, maxZ })),
+      shelves: shelves.map(({ id, minX, maxX, minZ, maxZ }) => ({ id, minX, maxX, minZ, maxZ })),
+      extraction: { id: extraction.id, x: extraction.x, z: extraction.z, radius: HOLLOW_EXTRACTION_RADIUS },
+      glowDamagePerSecond: HOLLOW_GLOW_DAMAGE_PER_SECOND,
+      sequence: 'enter launch shelf, enter one crossing route, reach extraction stake',
     }));
   }
   const e6Tiles = contract.id === 'e6-glow-mesa' ? Balance.e6Tiles : undefined;

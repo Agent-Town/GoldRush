@@ -187,6 +187,7 @@ import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
 import { LowOrbitSystem } from '../systems/LowOrbitSystem';
+import { HollowCrossingSystem } from '../systems/HollowCrossingSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -706,6 +707,8 @@ export class Game {
   // `E8PhysicsSystem:133` has computed since E8 landed while nothing read it. Built off the
   // CONTRACT, so every non-orbital run holds an inert consumer that answers "no" to everything.
   private readonly lowOrbit = LowOrbitSystem.create(this.activeContract);
+  private readonly hollowCrossing = HollowCrossingSystem.create(this.activeContract);
+  private readonly hollowCrossingVisuals = new THREE.Group();
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private readonly activeEpoch = new URLSearchParams(window.location.search).has('replay') && this.contractEpoch
     ? loadEpoch(this.contractEpoch.id)
@@ -2452,6 +2455,7 @@ export class Game {
     this.homemakerBoss.dispose();
     this.echoBoss.dispose();
     this.oldDiggerBoss.dispose();
+    disposeObject3D(this.hollowCrossingVisuals);
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -2853,6 +2857,12 @@ export class Game {
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
     this.syncE8LobPhysics();
     this.applyLowOrbitDebris(simDelta);
+    for (let slot = 0; slot < this.actors.length; slot += 1) {
+      const actor = this.actors[slot];
+      if (!actor?.group.visible) continue;
+      const hollowChip = this.hollowCrossing.update(simDelta, actor.group.position, slot);
+      if (hollowChip > 0) this.combat.damageActor(hollowChip, -1, actor);
+    }
     const terrain = {
       bounds: Terrain.bounds,
       sample: (x: number, z: number) => this.actorTerrainSample(x, z),
@@ -4138,6 +4148,7 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    this.createHollowCrossingVisuals();
     this.damSurge = new DamSurgeEvent(
       this.actors,
       Terrain.bounds,
@@ -5000,6 +5011,7 @@ export class Game {
       e8Physics: this.e8PhysicsSystem.diagnostics,
       probeRecovery: this.probeRecovery.diagnostics,
       lowOrbit: this.lowOrbit.diagnostics,
+      hollowCrossing: this.hollowCrossing.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -5254,12 +5266,44 @@ export class Game {
     this.canvas.dataset.terrain3dPilotRenderSource = 'painted';
   }
 
+  private createHollowCrossingVisuals(): void {
+    const crossing = this.activeContract.tileParams.hollowCrossing;
+    if (!crossing) return;
+    const zones = [
+      ...crossing.glowBridges.map((zone) => ({ zone, glow: true })),
+      { zone: crossing.causeway, glow: false },
+    ];
+    for (const { zone, glow } of zones) {
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(zone.maxX - zone.minX, 0.12, zone.maxZ - zone.minZ),
+        new THREE.MeshStandardMaterial(glow
+          ? { color: '#83ded7', emissive: '#2f8f85', emissiveIntensity: 0.8, roughness: 0.45, transparent: true, opacity: 0.78 }
+          : { color: '#c4883a', roughness: 0.75, metalness: 0.12 }),
+      );
+      mesh.name = `HollowCrossing-${zone.id}`;
+      mesh.position.set((zone.minX + zone.maxX) / 2, 0, (zone.minZ + zone.maxZ) / 2);
+      mesh.receiveShadow = true;
+      this.hollowCrossingVisuals.add(mesh);
+    }
+    this.hollowCrossingVisuals.name = 'HollowCrossingVisuals';
+    this.scene.add(this.hollowCrossingVisuals);
+    this.resampleHollowCrossingVisuals();
+    this.canvas.dataset.hollowCrossingVisuals = String(zones.length);
+  }
+
+  private resampleHollowCrossingVisuals(): void {
+    for (const visual of this.hollowCrossingVisuals.children) {
+      visual.position.y = Terrain.visualY(visual.position.x, visual.position.z, 0.08);
+    }
+  }
+
   private resampleVisualHeights(): void {
     this.railPath?.resampleTerrain();
     this.megaprojectRailPath?.resampleTerrain();
     this.e9CanalSystem.resampleTerrain();
     this.seedCaravan?.resampleTerrain();
     this.e6TileConsumers.resampleTerrain();
+    this.resampleHollowCrossingVisuals();
   }
 
   private resetFrameWindow(): void {
@@ -5331,6 +5375,7 @@ export class Game {
       // A6: mirrors `HeadlessContractSim.autoSecureWaveForRun` — the Far Side is not won by
       // outliving it. True on every contract that declares no probe, so nothing else moves.
       || !this.probeRecovery.objectiveAllowsSecure
+      || !this.hollowCrossing.objectiveAllowsSecure
       || (this.crowdFlocks !== undefined && !this.crowdFlocks.allCrossed)
       // A8: the caravan-connect latch, the canyon latch's twin — the crossing IS the objective.
       || (this.seedCaravan !== null && !this.seedCaravan.objectiveComplete)
@@ -5609,6 +5654,7 @@ export class Game {
       // A6, mirroring `HeadlessContractSim.postBaronDefeat`: a Baron kill cannot stand in for
       // an unrecovered probe. No contract declares both today; the two paths agree anyway.
       && this.probeRecovery.objectiveAllowsSecure
+      && this.hollowCrossing.objectiveAllowsSecure
       // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
       && (this.seedCaravan === null || this.seedCaravan.objectiveComplete);
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
@@ -7334,6 +7380,7 @@ export class Game {
     this.e8ArsenalSystem.reset();
     this.e8PhysicsSystem.reset();
     this.lowOrbit.reset();
+    this.hollowCrossing.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);

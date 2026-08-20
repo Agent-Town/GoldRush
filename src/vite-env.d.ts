@@ -510,6 +510,7 @@ interface ThreeGameDiagnostics {
   e8Physics: import('./systems/E8PhysicsSystem').E8PhysicsDiagnostics;
   probeRecovery: import('./systems/ProbeRecovery').ProbeRecoveryDiagnostics;
   lowOrbit: import('./systems/LowOrbitSystem').LowOrbitDiagnostics;
+  hollowCrossing: import('./systems/HollowCrossingSystem').HollowCrossingDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;

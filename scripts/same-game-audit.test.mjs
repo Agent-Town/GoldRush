@@ -64,7 +64,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ⚠️ THE LANE'S BASE WAS PRE-A6/A7/A8, SO ITS ABSOLUTE PINS (361/839/12) ARE STALE HERE — the
   // fifth recurrence of F-2084-1 in one day. Pins below = the QUINTUPLE-stacked merged tree's own
   // regen output, verbatim; no side's arithmetic was edited into agreement.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 9);
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 8);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and neither the Far Side, Low Orbit nor the Flotilla was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -148,11 +148,14 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // over: this audit's rows are buildable/ability/choice/verb/economy surfaces read PER CONTRACT,
   // a mechanics RULE is not one of them (the A4 note above found the same), and a targetless
   // context action appears in no contract's player menu to be compared against.
-  // (A8 pins above were measured on its own pre-stack base; the pins below are the QUINTUPLE-stacked
+  // HALF-LIFE HOLLOW ADMISSION (2026-08-20, B3): four authored anchors move one contract through
+  // the same data-derived door as the preceding layers: +10 agent-lacks, +30 equal, -1
+  // not-offered. The crossing consumer is a mechanics rule and does not add an audit row.
+  // (A8 pins above were measured on its own pre-stack base; the pins below are the stacked
   // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run + Flotilla — verbatim.
   // The Flotilla adds no exemption, so the count stays at A8's 6; only the parity block moves.)
   assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 412, equal: 908, 'not-offered': 9 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 422, equal: 938, 'not-offered': 8 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
