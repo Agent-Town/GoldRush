@@ -87,6 +87,41 @@ moved inside the box, or (c) accept it as an elite map and leave the exemption s
 are contract data or a ruling, none is engine work. Recommendation: **(c) for now** — the exemption
 is honest and the mechanic is already earning its keep in the browser.
 
+**🔺 F-A8-5 (reach, measured — the E7 sibling's finding, one map over).** The Seed Run's board row
+is `unlock: "secured:e9-dome-basin"`, and `reverifyStagedContractLaunch` (`ContractUnlock.ts:77`)
+clears a staged launch whose contract is locked — so a no-`?debug` launch aimed at it lands back on
+The Claim today. **Unlike the Dead Band's F-E7DB-2, this is a progression step and not a dead end:**
+Dome Basin is admitted, playable and secured by ordinary play. Asserted in the spec rather than
+described. Four attempts to seed the *unlocked* half through storage all measured `unlocked: false`
+(bare `gr.scores.v2`; the `profileDataKey` spelling; both together; seeded from inside a live run
+rather than the start menu) and none is left behind as a passing-looking workaround.
+
+## Gates (Node 26.4.0)
+
+| gate | result |
+|---|---|
+| `tsc --noEmit` | clean |
+| `npm run build` | rc=0 |
+| same-game audit tests | **3/3**, pins moved and attributed above |
+| door-ratchet · bench-seeds · skill.md fences · null-floor-anchors · mask-tables | **41/41** |
+| `null-floor-anchors --check` | **53 match**, clean; the only line that moved is the git-derived `eraStamp` |
+| `e9-seed-run-caravan` + `tp02-green-waypoint`, both projects | **12/12** |
+| `er01-e9-census` + `ap16-4-contract-admission`, both projects | **18/18** with the two below |
+| adjacent trio (`task-025`, `m1-01`, `m2-01`), both projects | **32/32** |
+| battery determinism | 12 runs, every repeat byte-identical |
+
+**Two reds, both attributed rather than absorbed.**
+
+- `e9-canal-stages` failed twice inside a four-spec invocation and passed **3/3 solo** on the same
+  tree, on both the desktop and mobile halves that had failed. Load flake, the known class.
+- `e9-arsenal:77` ("Cure-Arms free people and power fevered machines down without death events")
+  fails solo — and is **PRE-EXISTING, proven by control, not argued**: reverting `src/game/Game.ts`
+  to the base commit `d931958b3` (this slice's only shared browser-side file; `TileStateStore`'s
+  change is additive and cannot reach the arsenal) reproduced the identical failure. Not in
+  `reviews/suite-red-inventory.md`, so it is recorded here as newly-observed rather than known.
+  Dome Basin's own sim is untouched by an independent route as well: its null-floor rows are
+  byte-identical.
+
 ## Merge classification
 
 Base `d931958b3`. Every file below is LANE-TOUCHED only; `git log d931958b3..HEAD` over these paths
