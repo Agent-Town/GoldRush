@@ -1,5 +1,6 @@
 import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
 import { Balance } from '../game/Balance';
+import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSystem';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
 
 type MechanicValue = boolean | number | string | readonly string[];
@@ -161,6 +162,39 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       completionLatch: 'one-way-at-or-before-deadline',
       failureLatch: 'one-way-after-deadline',
       missedDeadline: 'run-unsecurable',
+    }));
+  }
+  // --- E3 FAIRGROUND. Derived from the CONSUMER, never from the declaration: `CrowdFlockSystem`
+  // is built by `create()` on `twist.fairground.crowdFlocks` in both engines, so the vocabulary is
+  // gated on exactly that field. A fairground that declared a wheel and no flocks would run the
+  // wheel and say nothing here, which is the truth in that case. Every number below is read off
+  // the consumer's own constants (`LANE_SPACING_RADII`, `FLOCK_SPEED_MULT`) or the contract.
+  const crowdFlocks = twist.fairground?.crowdFlocks;
+  if (crowdFlocks) {
+    const plaza = [
+      { id: twist.fairground!.wheel.nodeId, x: twist.fairground!.wheel.x },
+      ...twist.fairground!.pavilions.map(({ id, x }) => ({ id, x })),
+    ].sort((left, right) => left.x - right.x || compare(left.id, right.id));
+    rules.push(rule('crowd_escort', 'CrowdFlockSystem.update', {
+      flocks: crowdFlocks.count,
+      escortRadius: crowdFlocks.escortRadius,
+      speed: Number((Balance.hero.speed * FLOCK_SPEED_MULT).toFixed(3)),
+      speedRule: `hero-walk x ${FLOCK_SPEED_MULT}`,
+      launchesOn: 'each dayNightCycle whose dark phase finds the flock home',
+      route: 'heroStart stake -> plaza landmark -> back',
+      laneSpacing: crowdFlocks.escortRadius * LANE_SPACING_RADII,
+      destinations: plaza.map(({ id }) => id),
+      frightenedBy: 'any live enemy within escortRadius',
+      onFright: 'scatter home, crossing fails, retry next night',
+      friendliesNeverFrighten: true,
+    }));
+    rules.push(rule('crowd_escort_objective', 'Game.autoSecureWaveForRun', {
+      requires: 'every flock has completed at least one crossing',
+      andRequires: 'the fair wheel is still spinning',
+      secureWave: twist.secureWave ?? 0,
+      completionLatch: 'per-flock, one-way',
+      wheelRule: 'any damage stops the dynamo for the run',
+      unmetAtSecureWave: 'run-unsecurable-until-met',
     }));
   }
   const mothSocket = contract.id === 'e3-moth-season' && twist.mothSeason

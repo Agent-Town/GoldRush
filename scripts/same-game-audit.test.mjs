@@ -45,8 +45,13 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // true and every one of its parity rows already read `equal`. Only the exemption count moves.
   // ATTRIBUTED by revert-and-reproduce, not guessed: re-adding that one exemption row and re-running
   // this audit reproduced 6 exemptions with the SAME 0/331/749/15 summary, exactly.
-  assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 331, equal: 749, 'not-offered': 15 });
+  // ADMISSION MOVE (2026-08-20, `fix-e3-fairground-crowd-flocks`): the crowd-flock consumer landed
+  // in both engines, so `e3-fairground` left CONTRACT_ADMISSION_EXEMPTIONS (5 -> 4) and its parity
+  // rows stopped being `agent-lacks` (331 -> 312, equal 749 -> 768) — 19 rows, one contract's worth
+  // for a tile that offers no turret. ATTRIBUTED by revert-and-reproduce, not guessed: re-adding
+  // that one exemption row and re-running this audit reproduced 5/331/749/15 EXACTLY.
+  assert.equal(audit.admission.exemptions.length, 4);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 312, equal: 768, 'not-offered': 15 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

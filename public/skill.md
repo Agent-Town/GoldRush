@@ -283,6 +283,7 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
   "e2-pressure-garden",
   "e3-blackout-ridge",
   "e3-canyon-works",
+  "e3-fairground",
   "e3-moth-season",
   "e4-boneyard",
   "e4-dust-flats",
