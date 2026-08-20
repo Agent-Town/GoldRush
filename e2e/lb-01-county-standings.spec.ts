@@ -78,19 +78,43 @@ function validPost(anonId: string, waves = 10): StandingPost {
   };
 }
 
-function validTape(seed: string, difficulty: DifficultyPresetId): RunTape {
+// F-SR-3 — THE ASSAY ERA'S ADMISSION LAW. The county ranks only a row that carries a tape
+// (`isRankedRow`, functions/api/standings.ts), so every fixture below whose subject is "a ranked
+// row exists" carries a VALID v2 tape: the shape the season roll admits, with the `runStart` that
+// makes a run replayable. Mirrored from the season-roll fixtures in scripts/test-standings.mjs,
+// which already build this shape correctly.
+const RUN_START = {
+  meta: { version: 1 as const, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+  research: {
+    version: 1 as const,
+    progress: { version: 1 as const, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+    taken: [] as string[],
+    proposalSalt: 0,
+    pinnedTarget: null,
+  },
+};
+
+type TapeOutcome = { waves: number; timeAlive: number; gold: number };
+
+function validTape(
+  seed: string,
+  difficulty: DifficultyPresetId,
+  outcome: TapeOutcome = { waves: 12, timeAlive: 125.5, gold: 42 },
+  id = '11111111-1111-4111-8111-111111111111',
+): RunTape {
   return {
-    version: 1,
-    id: '11111111-1111-4111-8111-111111111111',
+    version: 2,
+    id,
     createdAt: 1,
     kept: false,
     contract: 'the-claim',
     seed,
     difficulty,
     simVersion: 1,
+    runStart: RUN_START,
     inputLog: {
       version: 1,
-      name: '11111111-1111-4111-8111-111111111111',
+      name: id,
       contractId: 'the-claim',
       seed,
       difficultyPreset: difficulty,
@@ -103,7 +127,54 @@ function validTape(seed: string, difficulty: DifficultyPresetId): RunTape {
       streams: [],
     },
     eventLogHash: 'fnv1a32:1234abcd',
-    outcome: { reason: 'secured', secured: true, waves: 12, timeAlive: 125.5, gold: 42 },
+    outcome: { reason: 'secured', secured: true, ...outcome },
+  };
+}
+
+// A POST whose row is meant to take a RANK. The endpoint recomputes sha256(inputLog) and refuses a
+// tape whose hash disagrees, so the hash is derived here rather than declared (F-SR-3).
+function rankedPost(anonId: string, waves = 10): StandingPost {
+  const base = validPost(anonId, waves);
+  const tape = validTape(
+    base.seed,
+    base.difficulty,
+    { waves: base.score.waves, timeAlive: base.score.timeAlive, gold: base.score.gold },
+    `lb01-${anonId.slice(0, 8)}-${waves}`,
+  );
+  return { ...base, tape, inputLogHash: createHash('sha256').update(JSON.stringify(tape.inputLog)).digest('hex') };
+}
+
+// A row seeded straight into KV ranks by the same law, but the stored path checks the tape's seed
+// against the ROW's own seed — a row that predates the seed fields carries a tape with no seed
+// either, which is the honest legacy shape rather than a contradiction (F-SR-3).
+function storedTape(id: string, outcome: TapeOutcome, seed?: string): Record<string, unknown> {
+  const seedField = seed === undefined ? {} : { seed };
+  return {
+    version: 2,
+    id,
+    createdAt: 1,
+    kept: true,
+    contract: 'the-claim',
+    ...seedField,
+    difficulty: 'trail',
+    simVersion: 1,
+    runStart: RUN_START,
+    inputLog: {
+      version: 1,
+      name: id,
+      contractId: 'the-claim',
+      ...seedField,
+      difficultyPreset: 'trail',
+      stepSeconds: 1 / 30,
+      start: { x: 0, z: 12 },
+      durationTicks: 1,
+      entries: [],
+      truncated: null,
+      primarySlot: 0,
+      streams: [],
+    },
+    eventLogHash: 'fnv1a32:1234abcd',
+    outcome: { reason: 'secured', secured: true, ...outcome },
   };
 }
 
@@ -175,8 +246,10 @@ function expectNoErrors(errors: ErrorBucket): void {
 
 test('public county rows carry submitted time while legacy rows keep the missing-time fallback', async ({ page }, testInfo) => {
   const kv = makeKv();
+  // F-SR-3: the subject is the SUBMITTED TIME a public row carries, which only a ranked row can
+  // show — and the assay era ranks only taped rows, so the fixture posts one.
   const submitted = await standingsRoute({
-    request: apiRequest('POST', '', validPost('5'.repeat(32))),
+    request: apiRequest('POST', '', rankedPost('5'.repeat(32))),
     env: { TELEMETRY: kv },
   });
   expect(submitted.status).toBe(200);
@@ -192,7 +265,9 @@ test('public county rows carry submitted time while legacy rows keep the missing
   expect(projected.submittedAt).toEqual(expect.any(Number));
   expect(projected.season).toBe('Season 2 — The Same Game');
 
-  const { submittedAt: _submittedAt, season: _season, ...legacyRow } = projected;
+  // The LEGACY row is what the county published before any of this: no submitted time, no season,
+  // and — F-SR-3 — no reel or assay stamp either, since those arrived with the tape it never had.
+  const { submittedAt: _submittedAt, season: _season, reel: _reel, assay: _assay, ...legacyRow } = projected;
   let board = [legacyRow];
   await seedProfile(page);
   const errors = collectErrors(page);
@@ -272,6 +347,9 @@ test('stored version-less harness rows still render through the standings route'
     inputLogHash: 'b'.repeat(64),
     submittedAt: 1,
     stack: { declaredBy: 'self', harness: 'legacy-rig' },
+    // F-SR-3: the subject here is the version-LESS HARNESS, not taplessness — so the row carries
+    // the tape the assay era needs to rank it, and the harness stays the only thing under test.
+    tape: storedTape('season-one-reel', { waves: 11, timeAlive: 125.5, gold: 42 }, 'gold-rush'),
   }]));
 
   const response = await standingsRoute({
@@ -294,6 +372,9 @@ test('endpoint stores optional self-declared stack and publishes only its board-
       seedHash: 'a'.repeat(64),
       inputLogHash: 'b'.repeat(64),
       submittedAt: 1,
+      // F-SR-3: this row's subject is that a pre-bench, difficulty-defaulted row still reaches the
+      // published board. It predates the seed fields, so its tape omits a seed exactly as it does.
+      tape: storedTape('before-the-bench-reel', { waves: 13, timeAlive: 125.5, gold: 42 }),
     },
     {
       ...validPost('4'.repeat(32), 15).score,
@@ -345,8 +426,10 @@ test('endpoint stores optional self-declared stack and publishes only its board-
     env: { TELEMETRY: kv },
   });
   expect(oversized.status).toBe(413);
-  await standingsRoute({ request: apiRequest('POST', '', validPost('1'.repeat(32), 8)), env: { TELEMETRY: kv } });
-  await standingsRoute({ request: apiRequest('POST', '', validPost('2'.repeat(32), 14)), env: { TELEMETRY: kv } });
+  // F-SR-3: both mean "a ranked row", so both carry tapes — the weaker resubmission still loses to
+  // the rider's standing best, and the stronger stranger still takes the county's first rank.
+  await standingsRoute({ request: apiRequest('POST', '', rankedPost('1'.repeat(32), 8)), env: { TELEMETRY: kv } });
+  await standingsRoute({ request: apiRequest('POST', '', rankedPost('2'.repeat(32), 14)), env: { TELEMETRY: kv } });
 
   const stored = JSON.parse((await kv.get(BOARD_KEY)) ?? '[]') as Array<Record<string, unknown>>;
   expect(stored.find((row) => row.anonId === '1'.repeat(32))).toMatchObject({
@@ -479,6 +562,9 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   await fullKv.put(
     BOARD_KEY,
     JSON.stringify(
+      // F-SR-3: the cut under test is the RANKED cut, and the assay era ranks only taped rows — a
+      // tapeless fixture would leave the board empty and let the weakest run in the county take
+      // rank 1, testing nothing. Every row here is a real ranked standing, so the board is full.
       Array.from({ length: 100 }, (_, index) => ({
         secured: true,
         waves: 200 - index,
@@ -492,11 +578,12 @@ test('endpoint stores optional self-declared stack and publishes only its board-
         seedHash: 'a'.repeat(64),
         inputLogHash: 'b'.repeat(64),
         submittedAt: index,
+        tape: storedTape(`full-board-${index}`, { waves: 200 - index, timeAlive: 200, gold: 100 }, 'gold-rush'),
       })),
     ),
   );
   const unranked = await standingsRoute({
-    request: apiRequest('POST', '', validPost('f'.repeat(32), 1)),
+    request: apiRequest('POST', '', rankedPost('f'.repeat(32), 1)),
     env: { TELEMETRY: fullKv },
   });
   expect(await unranked.json()).toMatchObject({ ok: true, stored: false, rank: null });
@@ -573,8 +660,15 @@ test('secure submits the county row with pinned origin, hashes, and profile name
     outcome: { reason: 'secured', secured: true, waves: 10 },
   });
   expect(post.inputLogHash).toBe(createHash('sha256').update(JSON.stringify(post.tape!.inputLog)).digest('hex'));
-  expect(JSON.stringify(post)).not.toContain('"species"');
-  expect(JSON.stringify(post)).not.toContain('"agent"');
+  // F-SR-3 — same intent, honest instrument. `species`/`agent` are DECLARATION fields the payload
+  // must never carry (the endpoint 400s an `agent` key; see the withAgentField case below), and the
+  // whole-payload substring scan used to prove it. The assay era's v2 tape carries a runStart whose
+  // meta-progress tracks are literally named `agent` (src/game/MetaProgress.ts META_TRACKS), so the
+  // old scan now trips on the run's own progress rather than on a leak. Scan the declaration, which
+  // is the payload minus the tape blob — the only place such a marker could ever be declared.
+  const { tape: _tape, ...declaration } = post;
+  expect(JSON.stringify(declaration)).not.toContain('"species"');
+  expect(JSON.stringify(declaration)).not.toContain('"agent"');
 
   await page.getByTestId('stay-for-rush').click();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0)).toBeGreaterThan(10);

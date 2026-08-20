@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
@@ -38,18 +39,53 @@ function request(method: 'GET' | 'POST', query = '', body?: unknown): Request {
   });
 }
 
+// F-SR-3 — THE ASSAY ERA'S ADMISSION LAW. The field book aggregates the RANKED rows
+// (`rankedRows` feeds every view in functions/api/standings.ts), and the county ranks only a row
+// that carries a tape. So a fixture standing is a TAPED standing: the v2 shape the season roll
+// admits, with the `runStart` that makes the run replayable, mirrored from the season-roll fixtures
+// in scripts/test-standings.mjs.
+const RUN_START = {
+  meta: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+  research: {
+    version: 1,
+    progress: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+    taken: [],
+    proposalSalt: 0,
+    pinnedTarget: null,
+  },
+};
+
+function tape(id: string, contractId: string, seed: string, waves: number, timeAlive: number, gold: number): Record<string, unknown> {
+  return {
+    version: 2, id, createdAt: 1, kept: true, contract: contractId, seed, difficulty: 'trail',
+    simVersion: 1, runStart: RUN_START,
+    inputLog: {
+      version: 1, name: id, contractId, seed, difficultyPreset: 'trail', stepSeconds: 1 / 30,
+      start: { x: 0, z: 12 }, durationTicks: 1, entries: [], truncated: null, primarySlot: 0, streams: [],
+    },
+    eventLogHash: 'fnv1a32:1234abcd',
+    outcome: { reason: 'secured', secured: true, waves, timeAlive, gold },
+  };
+}
+
 function standing(anonId: string, contractId: string, waves: number, stack?: Record<string, unknown>): Record<string, unknown> {
+  const score = { secured: true, waves, timeAlive: 600 + waves, gold: waves * 10, baseValue: waves * 20 };
+  const seed = `field-book-${anonId}`;
+  const runTape = tape(`fb-${anonId.slice(0, 4)}-${contractId}`, contractId, seed, score.waves, score.timeAlive, score.gold);
   return {
     contractId,
     epochId: 'epoch-1-frontier',
-    score: { secured: true, waves, timeAlive: 600 + waves, gold: waves * 10, baseValue: waves * 20 },
+    score,
     profileName: 'Field Book',
     anonId,
     difficulty: 'trail',
-    seed: `field-book-${anonId}`,
+    seed,
     seedMode: 'live',
     seedHash: 'a'.repeat(64),
-    inputLogHash: 'b'.repeat(64),
+    // The endpoint recomputes sha256(inputLog) and refuses a tape whose hash disagrees, so the
+    // fixture derives the hash instead of declaring one.
+    inputLogHash: createHash('sha256').update(JSON.stringify((runTape as { inputLog: unknown }).inputLog)).digest('hex'),
+    tape: runTape,
     ...(stack ? { stack } : {}),
   };
 }

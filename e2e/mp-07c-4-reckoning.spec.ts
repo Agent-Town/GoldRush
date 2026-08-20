@@ -15,6 +15,41 @@ function request(body?: unknown, query = ''): Request {
   });
 }
 
+// F-SR-3 — THE ASSAY ERA'S ADMISSION LAW. The county ranks only a row that carries a tape
+// (`isRankedRow`, functions/api/standings.ts), so a ride that means to appear on a board posts the
+// v2 tape the season roll admits — the shape with the `runStart` that makes the run replayable,
+// mirrored from the season-roll fixtures in scripts/test-standings.mjs. What this test is about
+// (which rider attribution the county records) is unchanged; only the admission ticket is new.
+const RUN_START = {
+  meta: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+  research: {
+    version: 1,
+    progress: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+    taken: [],
+    proposalSalt: 0,
+    pinnedTarget: null,
+  },
+};
+
+function tape(id: string, seed: string, waves: number): Record<string, unknown> {
+  return {
+    version: 2, id, createdAt: 1, kept: true, contract: 'the-claim', seed, difficulty: 'trail',
+    simVersion: 1, runStart: RUN_START,
+    inputLog: {
+      version: 1, name: id, contractId: 'the-claim', seed, difficultyPreset: 'trail',
+      stepSeconds: 1 / 30, start: { x: 0, z: 12 }, durationTicks: 1, entries: [], truncated: null,
+      primarySlot: 0, streams: [],
+    },
+    eventLogHash: 'fnv1a32:1234abcd',
+    // The score this tape attests: the endpoint refuses a tape whose outcome disagrees with it.
+    outcome: { reason: 'secured', secured: true, waves, timeAlive: 600, gold: 100 },
+  };
+}
+
+function inputLogHashOf(runTape: Record<string, unknown>): string {
+  return createHash('sha256').update(JSON.stringify(runTape.inputLog)).digest('hex');
+}
+
 test('a mixed ride records its declared agent stack while the agents-only bench payload stays byte-identical', async () => {
   const values = new Map<string, string>();
   const kv = {
@@ -32,6 +67,7 @@ test('a mixed ride records its declared agent stack while the agents-only bench 
     { name: 'Cedar Jack (scout)', client: 'headless', stack },
   ])).toEqual({ riderCount: 2, riders: [{ name: 'Robin' }, { name: 'Cedar Jack', stack }] });
 
+  const soloTape = tape('mp07c-solo-reel', 'solo-live-seed', 30);
   const solo = await standingsRoute({
     request: request({
       contractId: 'the-claim',
@@ -43,13 +79,15 @@ test('a mixed ride records its declared agent stack while the agents-only bench 
       seed: 'solo-live-seed',
       seedMode: 'live',
       seedHash: createHash('sha256').update('solo-live-seed').digest('hex'),
-      inputLogHash: createHash('sha256').update('[]').digest('hex'),
+      inputLogHash: inputLogHashOf(soloTape),
+      tape: soloTape,
     }),
     env: { TELEMETRY: kv },
   });
   expect(solo.status).toBe(200);
 
   const seed = 'mixed-live-seed';
+  const mixedTape = tape('mp07c-mixed-reel', seed, 20);
   const posted = await standingsRoute({
     request: request({
       contractId: 'the-claim',
@@ -61,7 +99,8 @@ test('a mixed ride records its declared agent stack while the agents-only bench 
       seed,
       seedMode: 'live',
       seedHash: createHash('sha256').update(seed).digest('hex'),
-      inputLogHash: createHash('sha256').update('[]').digest('hex'),
+      inputLogHash: inputLogHashOf(mixedTape),
+      tape: mixedTape,
       party: mixedParty,
     }),
     env: { TELEMETRY: kv },
