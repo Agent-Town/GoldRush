@@ -27,6 +27,73 @@ Nothing here is claimed away. What reverted is only the admission surface: the e
 
 **F-E3CF-4 — the successor condition, and it is a PROVER-LOGISTICS task, not an owner fork.** Write a public-verb prover that funds the fort by panning: secure both bench seeds ×2 and the exemption row comes out, restoring the numbers already measured in both directions (exemptions 4, `agent-lacks` 312, `equal` 768). `artifacts/e3-fairground/fort-budget-probe.mjs` is its spec — it names the target fort (radius-8 ring + 4 beacons) and prices the requirement (~320 gold of construction, ~1 gold/second of repair). The funding arithmetic below shows the target is reachable with public verbs, with thin but positive margin.
 
+---
+
+## TERMINAL STATE (2026-08-21) — F-E3CF-4 CLOSED, THE HOLD IS PERMANENT FOR THIS PROGRAMME
+
+Three changed-premise attempts were run against this contract, plus two owner rulings. All of it is
+preserved in `artifacts/e3-fairground/`. **The fairground rests as a browser-playable, benchmark-
+exempt map with every mechanism documented.** Nothing about the crowd-flock consumer is in doubt;
+what is absent is the one thing the exemption table exists to record — a public-verb secure ×2 on
+BOTH bench seeds.
+
+### The three premises, and what each measured
+
+**1. FUNDING (`artifacts/e3-fairground/prover-v2.mjs`).** A rider that funds the whole fort by
+panning. **Bench seed 01 SECURED ×2, byte-identical: wave 12, `fnv1a32:9f2740ab`, wheel spinning,
+crossings [4,1,3], 800 panned / 619 spent / 0 granted.** Seed 02 ×2 `fnv1a32:afdd8c2a`, wave 14
+ceiling, wheel still turning, crossings [1,0,4]. Five corrections to the funding table above came
+out of it, each read in source: the view's seam map is the ANCHOR list and not where the live nodes
+are (`gold-seam-1` is at (7.5,6.5) on seed 01 and (25,6.9) on seed 02 while the map says (−22,−6.8)
+for both); **one `HARVEST` pays a whole harvest tick in one sim tick, so travel is the only real
+cost and the 1.60 g/s ceiling is wrong — this rider measures 1.7–2.2 g/s while carrying the fort**;
+`pan_legend` and `spring_heels` are worth nothing to an agent; the view arrives only at wave
+boundaries and surprises; and a post planted north of the wheel's watershed loses the wheel rather
+than saving it.
+
+**2. GEOMETRY — owner ruling, verbatim "ok, try that".** The middle crowd's gate lane moved 6wu off
+the stake (`CrowdFlockSystem.GATE_LANE_SHIFT`). Measured on one instrument against the ratified
+lane — identical fort, identical repairs, both seeds: **x=0 → [5,3,7] and [4,4,3], both secure;
+x=−6 → [5,0,7] and [4,0,5], neither.** The flanks are identical in both columns, so the only crowd
+that moved is the only crowd that changed. Two mechanisms: the crossing target is unchanged so the
+lane is a diagonal whose offset decays to 1.9wu by the north spawn point; and **the stake is also
+the best-defended tile on the claim**, so stepping aside leaves the shield without leaving the
+traffic. **Shipped at 0** — the lever stays documented one number from live, and neutrality is
+proven by reproduction (the pre-existing prover returns `fnv1a32:9f2740ab` against the edited
+engine, the same hash to the digit).
+
+**3. FORT SHAPE — after the owner ruling "move the spawn".** The north entry was engine-derived
+(`WaveSystem.ts:557/:562`) at the measured (0,−4.1) — the same line as the crowd's lane and the
+stake. `noSpawnZones` was refused (`ContractFamilies.ts:705` declares it birth-loader output, never
+authored in contract JSON, and `tp02-green-waypoint.spec.ts:200` guards that law); the fix rides
+`ContractEnemyVariant.spawnGates` instead, one line of fairground data, no shared spawn code.
+**The map change works: on the free-fort instrument the middle crowd goes from 3 and 4 crossings to
+10 and 8 and both seeds secure, with total frights falling 29/33 → 22/29.** `prover-v3.mjs` then
+designed a fort from the measured pressure map (south corners absorb 65% of all damage and are hit
+from t=13; north corners 26%/16% from t=95; **nothing at all comes for a beacon** — 0–1%, first hit
+t=287). It holds seed 01 to the wave ceiling with the wheel intact (650 panned, crossings [4,0,4])
+and loses seed 02 at wave 2–3 with the wheel down; six opening variants (deadline 10/12/15,
+maxWorks 12/16/20, travel weight, trip threshold) all landed within one wave of each other.
+
+### What the programme leaves behind, and the honest reason it stops
+
+- **F-E3CF-6, the finding that explains the whole arc:** v2's securing fort was an ACCIDENT — two
+  beacon spots one unit from the ring's own flank post that `place_building` can never accept, which
+  stopped the purse reserve and left a ~14-work fort with the rest of the purse going to upkeep.
+  When the ruled spawn move changed which walls take the pressure, the accident stopped fitting.
+  **An accidental shape does not travel**, and a deliberate one built from the pressure map did not
+  reproduce it: the map says where damage lands on a COMPLETE fort, not what to buy first.
+- **The residual, stated precisely:** seed 02's first live seam is 46wu out, so its opening purse
+  lands ~5s later than seed 01's, and that margin is the whole wheel race. Every attempt that fixed
+  the escort left that opening untouched, and every attempt that fixed the opening cost the fort.
+- **What would change the answer** (none of it rider work): a `secureWave` below 12 for this map, a
+  seam anchor inside ~30wu of the stake, or accepting the fairground as an elite map. All three are
+  contract data or a ruling.
+
+**Admission surfaces are UNCHANGED throughout** — census refusal-first, door baseline without the
+id, skill.md fence naming the hold, floors with the fairground rows out. The exemption row's reason
+now records this full history rather than the first attempt's snapshot; its citation is this file.
+
 **F-E3CF-3 remains the owner-desk alternative.** If a prover attempt shows the funding gap is arithmetic rather than tactical, the fallback is a design ruling: the middle crowd's gate lane and the hero's loss stake are the same tile, and the headless hero cannot leave it. Giving the crowds a gate lane that is not the stake is an owner call, not an implementation choice.
 
 ### The funding arithmetic (public verbs only, unmodified balance)
