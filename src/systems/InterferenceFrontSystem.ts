@@ -52,10 +52,11 @@ export const RATIFIED_RELAY_TARGET = 3;
  * AUTHORED, NOT RATIFIED — flagged as such because the sheet did not specify it. "A vertical
  * static wall" needs a thickness before it can cover anything, and the ratification gives only
  * its cadence and its crossing time. 6wu of half-width (a 12wu band) is the number that makes
- * the declared pair behave: the corridor is 108wu wide and the crossing is 20s, so the band
- * sweeps at 5.4wu/s and stands over any one point for ~2.2s and over a whole 10wu relay site
- * for ~4s. Wide enough to be a wall a rider must plan around, narrow enough that the corridor is
- * never muted all at once. Every other number in this file is quoted from the ratification.
+ * the declared pair behave: the corridor is 108wu wide and the centre travels a half-width beyond
+ * each end of it, so it covers 120wu in 20s — 6wu/s. The band therefore stands over any one point
+ * for 2s and over a whole 10wu relay site for ~3.7s. Wide enough to be a wall a rider must plan
+ * around, narrow enough that the corridor is never muted all at once. Every other number in this
+ * file is quoted from the ratification.
  */
 export const FRONT_HALF_WIDTH = 6;
 
