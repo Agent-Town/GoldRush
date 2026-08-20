@@ -127,6 +127,15 @@ export class AtomicSocket {
     return this.wrangle.movementMultiplier(enemy);
   }
 
+  /**
+   * `WaveSystem` alive-cap exemption — see `WrangleSystem.exhaustedCount` for the owner
+   * ruling. The browser reads the same method off its own `Game.wrangle`, so the spawn
+   * refusal is identical in both engines by construction, not by parallel arithmetic.
+   */
+  exhaustedCount(): number {
+    return this.wrangle.exhaustedCount();
+  }
+
   /** Browser capture keybind/dev bridge — nearest exhausted machine in the authored radius. */
   capture(position: THREE.Vector3): boolean {
     return this.wrangle.tryCapture(position);

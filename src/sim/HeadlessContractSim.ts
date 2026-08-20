@@ -94,9 +94,13 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
     citation: 'reviews/milk-twin-sockets.md',
   },
+  // REWORDED 2026-08-20, after the owner's cap ruling landed and DISPROVED the original
+  // reason. Both of its clauses are now false: aimed CAPTURE absorbs 97-99% of exhaustion
+  // (AP-16-8b) and the 60-enemy alive cap no longer holds exhausted machines at all. The
+  // refusal survives its reason, which is why the row is reworded rather than removed.
   'e6-showroom': {
-    reason: 'Idle and CAPTURE policy both reached the wave-20 false green with the 60-enemy alive cap still full.',
-    citation: 'reviews/milk-twin-sockets.md',
+    reason: 'Aimed CAPTURE closes the loop and the alive cap no longer clogs, but no secure is demonstrated: competent play dies at waves 14-19 against secureWave 20, and difficulty stands per the owner (2026-08-20). Idle still false-greens at wave 20 — exhausted machines released their spawn slot but still hold an enemy-POOL slot, so all 96 fill with harmless statues and nothing further can spawn.',
+    citation: 'reviews/e6-showroom-cap-fix.md',
   },
 } as const satisfies Record<string, AdmissionExemption>;
 
@@ -547,6 +551,14 @@ export class HeadlessContractSim {
       () => false,
       this.hero.group.position,
       (position, at, escorts) => this.postBaronSpawn(position, at, escorts),
+      // `undefined` keeps the constructor's own defaults for the three escort seams GR-SIM does
+      // not drive; restating them here would be a second copy of a default, free to drift.
+      undefined,
+      undefined,
+      undefined,
+      // Owner ruling 2026-08-20: exhausted machines stop holding spawn slots. The browser seats
+      // the SAME reader off `Game.wrangle`, so the refusal is one rule in two engines.
+      () => this.atomic?.exhaustedCount() ?? 0,
     );
     this.progressionState.transition('playing');
     const research = options.storage ? loadResearchState(options.storage, options.storage) : null;

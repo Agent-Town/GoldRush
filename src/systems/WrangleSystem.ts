@@ -116,6 +116,24 @@ export class WrangleSystem {
     return this.active.get(enemy.id)?.state === 'exhausted';
   }
 
+  /**
+   * OWNER RULING 2026-08-20 ("cap fix yes"): an exhausted machine stops counting against
+   * `Balance.waves.aliveCap`. It is out of the fight in every other respect already —
+   * undamageable, harmless on contact, crawling at `exhaustedSpeedMultiplier` — so holding
+   * a spawn slot was the one way it still fought: AP-16-8b measured e6-showroom idling to a
+   * board of 60/60 exhausted machines, at which point `WaveSystem` refused every further
+   * spawn and the run "secured" at wave 20 by suffocation rather than by defence
+   * (artifacts/ap16-8b-e6-showroom-capture-loop/runs.jsonl, rows `idle`). Counted here so
+   * both engines read ONE number from the state's only owner.
+   */
+  exhaustedCount(): number {
+    let count = 0;
+    for (const entry of this.active.values()) {
+      if (entry.state === 'exhausted' && entry.enemy.isAlive) count += 1;
+    }
+    return count;
+  }
+
   movementMultiplier(enemy: ClaimJumperEnemy): number {
     return this.isHarmless(enemy) ? Balance.wrangle.exhaustedSpeedMultiplier : 1;
   }
