@@ -253,4 +253,64 @@ else
   fail REFUSES-OPT-IN-WITHOUT-DECLARED-PATHS "queue=$(test -e "$empty_list_root/tasks/queue/lane-a/master.md" && echo kept || echo moved); output=${empty_list_out:-<empty>}"
 fi
 
+# ── F-2089-2: the probe's fail-open arm must RETRY ONCE and NAME its concession ──
+# The live defect: a probe that returns no verdict (10 s timeout, crash, or misuse exit)
+# skipped the whole guard and dispatched in SILENCE, so nothing in the log distinguished
+# "probe timed out over a HOLDS lane" from "lane was clean". Both cases below stub the
+# probe rather than the lane, because the subject under test is the probe's FAILURE arm.
+
+# A probe that never delivers a verdict: retried exactly once, conceded LOUDLY, still
+# fail-open (F-1027-1's permanent brick is the failure on the other side).
+indeterminate_root="$(new_fixture probe-indeterminate)"
+cat > "$indeterminate_root/scripts/lane-usable.mjs" <<'STUB'
+import fs from 'node:fs'
+const counter = new URL('./probe-calls.txt', import.meta.url)
+let n = 0
+try { n = parseInt(fs.readFileSync(counter, 'utf8'), 10) || 0 } catch {}
+fs.writeFileSync(counter, String(n + 1))
+console.error('simulated probe failure — no verdict line')
+process.exit(3)
+STUB
+indeterminate_out="$(dispatch_once "$indeterminate_root")"
+indeterminate_calls="$(cat "$indeterminate_root/scripts/probe-calls.txt" 2>/dev/null || echo 0)"
+if [ "$indeterminate_calls" = 2 ] &&
+   [ -f "$indeterminate_root/tasks/running/master.md" ] &&
+   grep -Fq 'retrying once before conceding' <<< "$indeterminate_out" &&
+   grep -Fq 'LANE-SAFETY PROBE INDETERMINATE' <<< "$indeterminate_out" &&
+   grep -Fq 'FAIL-OPEN, guard NOT enforced' <<< "$indeterminate_out"; then
+  pass RETRIES-THEN-NAMES-FAIL-OPEN 'no-verdict probe was retried once, conceded in the log, and still dispatched'
+else
+  fail RETRIES-THEN-NAMES-FAIL-OPEN "calls=$indeterminate_calls; dispatched=$(test -e "$indeterminate_root/tasks/running/master.md" && echo yes || echo no); output=${indeterminate_out:-<empty>}"
+fi
+
+# THE CASE THAT PAYS FOR THE CURE: a TRANSIENT blip over a lane that really HOLDS. Before
+# F-2089-2 the single probe failed open and the master dispatched over undrained work; the
+# retry now recovers the real verdict and the guard REFUSES, as it always should have.
+transient_root="$(new_fixture probe-transient)"
+printf 'main has never absorbed this\n' > "$transient_root/worktrees/lane-a/held-path.txt"
+git -C "$transient_root/worktrees/lane-a" add held-path.txt
+git -C "$transient_root/worktrees/lane-a" commit -qm held
+mv "$transient_root/scripts/lane-usable.mjs" "$transient_root/scripts/lane-usable-real.mjs"
+cat > "$transient_root/scripts/lane-usable.mjs" <<'STUB'
+import fs from 'node:fs'
+const counter = new URL('./probe-calls.txt', import.meta.url)
+let n = 0
+try { n = parseInt(fs.readFileSync(counter, 'utf8'), 10) || 0 } catch {}
+fs.writeFileSync(counter, String(n + 1))
+if (n === 0) { console.error('simulated TRANSIENT probe failure'); process.exit(3) }
+await import('./lane-usable-real.mjs')
+STUB
+transient_out="$(dispatch_once "$transient_root")"
+transient_calls="$(cat "$transient_root/scripts/probe-calls.txt" 2>/dev/null || echo 0)"
+if [ "$transient_calls" = 2 ] &&
+   [ -f "$transient_root/tasks/queue/lane-a/master.md" ] &&
+   [ ! -e "$transient_root/tasks/running/master.md" ] &&
+   grep -Fq 'retrying once before conceding' <<< "$transient_out" &&
+   grep -Fq 'held-path.txt' <<< "$transient_out" &&
+   ! grep -Fq 'LANE-SAFETY PROBE INDETERMINATE' <<< "$transient_out"; then
+  pass RETRY-RECOVERS-REAL-HOLDS 'a transient blip over a HOLDS lane was retried and then REFUSED'
+else
+  fail RETRY-RECOVERS-REAL-HOLDS "calls=$transient_calls; queue=$(test -e "$transient_root/tasks/queue/lane-a/master.md" && echo kept || echo moved); output=${transient_out:-<empty>}"
+fi
+
 [ "$fail" -eq 0 ] || exit 1

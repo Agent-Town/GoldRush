@@ -227,21 +227,60 @@ while true; do
     # lane-usable distinguishes those safe AHEAD-BUT-ABSORBED commits from actual HOLDS.
     # The bounded probe fails open; only a completed, exact HOLDS verdict may stop dispatch.
     if [ "$slot" != "main" ] && [ "$wd" != "$ROOT" ]; then
-      lane_probe=$(
-        cd "$ROOT" && /usr/bin/perl -e '
-          $seconds = shift;
-          $pid = fork;
-          exit 125 unless defined $pid;
-          if ($pid == 0) { setpgrp(0, 0); exec @ARGV or exit 126 }
-          $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 };
-          alarm $seconds;
-          waitpid $pid, 0;
-          alarm 0;
-          exit $? >> 8;
-        ' 10 node scripts/lane-usable.mjs "$slot" 2>&1
-      )
-      lane_probe_rc=$?
-      lane_verdict=$(printf '%s\n' "$lane_probe" | sed -n 's/^  => \([A-Z-]*\):.*/\1/p' | tail -1)
+      # F-2089-2: this probe is the ONLY thing standing between a resetting master and an
+      # undrained lane, and until now it FAILED OPEN IN SILENCE. Everything below keys on
+      # `rc=2 && verdict=HOLDS`, so a probe that never DELIVERS a verdict — the 10 s timeout
+      # (rc=124), a fork/exec failure (125/126), or a misuse exit (lane-usable.mjs:462/:467,
+      # which is how a rotted slot->branch mapping presents, F-1464-3) — skips this entire
+      # guard and dispatches, writing NOTHING to the log. Observed live at 20:54:54 on
+      # 2026-08-20: after 296 consecutive REFUSEs, b4v2 dispatched over a live HOLDS lane on
+      # a bare `START lane-b`, and nothing in the log distinguished "the probe timed out"
+      # from "the lane was fine". A safety property that degrades silently under machine
+      # load is a race, not a guard.
+      #
+      # THE DISCRIMINATOR IS AN EMPTY VERDICT, NOT `rc=124`, and that is deliberate:
+      # lane-usable.mjs prints `  => <VERDICT>:` at exactly ONE place (:370) on every path
+      # that classifies at all, and exits before reaching it only on misuse. So "no verdict
+      # parsed" is a positive test for "the probe told us nothing", and it covers the
+      # timeout, crash and misuse arms with one predicate — instead of a list of rc values
+      # that would silently rot as the script grows new exits.
+      #
+      # RETRY ONCE, THEN CONCEDE — AND STAY FAIL-OPEN, DELIBERATELY. F-1027-1's permanent
+      # brick is the failure on the other side, and s2089's 296-refusal deadlock is exactly
+      # what a fail-closed guard costs when it is wrong. What changes here is that the
+      # concession is now NAMED, so the next fire can tell a load race from a clean lane.
+      # The 10 s budget is NOT raised: it has never been measured under a full board, and
+      # raising it blindly trades a rare silent race for a routine dispatch stall.
+      lane_probe='' lane_probe_rc=125 lane_verdict='' lane_probe_attempt=0
+      while [ "$lane_probe_attempt" -lt 2 ]; do
+        lane_probe_attempt=$((lane_probe_attempt + 1))
+        lane_probe=$(
+          cd "$ROOT" && /usr/bin/perl -e '
+            $seconds = shift;
+            $pid = fork;
+            exit 125 unless defined $pid;
+            if ($pid == 0) { setpgrp(0, 0); exec @ARGV or exit 126 }
+            $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 };
+            alarm $seconds;
+            waitpid $pid, 0;
+            alarm 0;
+            exit $? >> 8;
+          ' 10 node scripts/lane-usable.mjs "$slot" 2>&1
+        )
+        lane_probe_rc=$?
+        lane_verdict=$(printf '%s\n' "$lane_probe" | sed -n 's/^  => \([A-Z-]*\):.*/\1/p' | tail -1)
+        if [ -n "$lane_verdict" ]; then
+          break
+        fi
+        if [ "$lane_probe_attempt" -lt 2 ]; then
+          echo "[lane-runner-v3] $slot: lane-safety probe returned no verdict (rc=$lane_probe_rc) — retrying once before conceding (F-2089-2)."
+        fi
+      done
+      if [ -z "$lane_verdict" ]; then
+        echo "[lane-runner-v3] $slot: LANE-SAFETY PROBE INDETERMINATE after $lane_probe_attempt attempt(s) (rc=$lane_probe_rc) — DISPATCHING $name FAIL-OPEN, guard NOT enforced."
+        echo "[lane-runner-v3]   If this lane HOLDS undrained work, a resetting master can destroy it (F-2089-2). Probe said:"
+        printf '%s\n' "$lane_probe" | sed -n '1,5p' | sed 's/^/[lane-runner-v3]     /'
+      fi
       if [ "$lane_probe_rc" -eq 2 ] && [ "$lane_verdict" = "HOLDS" ]; then
         lane_branch=$(printf '%s\n' "$lane_probe" | sed -n 's/^[^ ]*  \([^ ]*\)  ahead=.*/\1/p' | head -1)
         held_count=$(printf '%s\n' "$lane_probe" | sed -n '/^[[:space:]]*HELD /p' | wc -l | tr -d ' ')
