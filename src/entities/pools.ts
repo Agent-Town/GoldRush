@@ -222,6 +222,28 @@ export type EnemyPoolSuspendSnapshot = {
   spawnSerial: number;
   active: EnemySuspendSnapshot[];
 };
+/**
+ * PROTOTYPE — owner-gated, F-CAP-2's recommended word "recycle-oldest". NOT ratified.
+ *
+ * The owner's cap fix (2026-08-20, "cap fix yes") exempted exhausted machines from
+ * `Balance.waves.aliveCap`, and `WaveSystem` says so in its own words: "The pool's own
+ * 96-slot ceiling remains the hard stop." This is that hard stop. A body that
+ * self-neutralised without any player action is not defending anything, but it still owns
+ * one of the 96 slots, so a roster of wranglable appliances silences its own map: measured
+ * idle `e6-showroom-01` reaches 96/96 alive, 96/96 exhausted, saturated from wave 8, and
+ * then "secures" at wave 20 by suffocation.
+ *
+ * A holder of self-neutralised bodies implements this so the pool can reclaim ONE of them
+ * for a fresh spawn instead of refusing the spawn. `release` exists because the slot is
+ * about to be reused by a DIFFERENT enemy: any per-id state the holder keeps for the old
+ * body must go with it, or the newcomer is born wearing the corpse's state.
+ */
+export type SelfNeutralisedBodies = {
+  /** True only for a body that neutralised itself and may be reclaimed. Never a live hostile. */
+  isReclaimable(enemy: ClaimJumperEnemy): boolean;
+  /** Drop all per-enemy-id state for this body; its slot is about to be reused. */
+  release(enemy: ClaimJumperEnemy): void;
+};
 type BossBarState = {
   x: number;
   y: number;
@@ -460,6 +482,10 @@ export class EnemyPool {
   private activeHitFlashes = 0;
   private warmHitFlashFrames = 0;
   private spawnSerial = 0;
+  /** PROTOTYPE (F-CAP-2). Null for every contract that grows no self-neutralised bodies. */
+  private selfNeutralised: SelfNeutralisedBodies | null = null;
+  /** Spawn order per slot, so "oldest" is age and not slot index. Only read when the pool is full. */
+  private readonly spawnOrder = new Array<number>(Balance.enemy.poolSize).fill(0);
   private enemyFogEnabled = true;
   private nightBasicActive = false;
   private baronSpriteAnimator: SpriteAnimator | null = null;
@@ -662,10 +688,45 @@ export class EnemyPool {
     });
   }
 
+  /**
+   * PROTOTYPE (F-CAP-2) — a self-neutralised holder lets the pool reclaim a slot instead of
+   * refusing a spawn. Pass `null` to clear: a contract that grows no such bodies must not
+   * inherit a previous contract's holder.
+   */
+  setSelfNeutralisedBodies(holder: SelfNeutralisedBodies | null): void {
+    this.selfNeutralised = holder;
+  }
+
+  /**
+   * PROTOTYPE (F-CAP-2) — the OLDEST reclaimable body, freed for a fresh spawn.
+   * Oldest by `spawnOrder`, not by slot: first-fit allocation makes slot index an age proxy
+   * only until the first death. Returns the now-free slot, or null when the pool holds no
+   * reclaimable body — in which case the caller's refusal stands, exactly as before.
+   */
+  private reclaimOldestSelfNeutralised(): ClaimJumperEnemy | undefined {
+    const holder = this.selfNeutralised;
+    if (!holder) return undefined;
+    let oldest: ClaimJumperEnemy | undefined;
+    let oldestOrder = Number.POSITIVE_INFINITY;
+    for (const candidate of this.enemies) {
+      if (!candidate.isAlive || !holder.isReclaimable(candidate)) continue;
+      const order = this.spawnOrder[candidate.id] ?? 0;
+      if (order >= oldestOrder) continue;
+      oldest = candidate;
+      oldestOrder = order;
+    }
+    if (!oldest) return undefined;
+    // Order matters: release the holder's state BEFORE the body dies, so the holder's own
+    // bookkeeping is not racing `isAlive` — and so the newcomer in this slot is born clean.
+    holder.release(oldest);
+    this.recycle(oldest);
+    return oldest;
+  }
+
   spawn(position: THREE.Vector3, params: EnemySpawnParams = {}, preferredSlot?: number): ClaimJumperEnemy | null {
     const enemy =
       preferredSlot === undefined
-        ? this.enemies.find((candidate) => !candidate.isAlive)
+        ? this.enemies.find((candidate) => !candidate.isAlive) ?? this.reclaimOldestSelfNeutralised()
         : Number.isInteger(preferredSlot) && preferredSlot >= 0 && preferredSlot < this.enemies.length
           ? this.enemies[preferredSlot]
           : undefined;
@@ -673,6 +734,7 @@ export class EnemyPool {
     enemy.spawn(position, { ...params, formationSeed: this.spawnSerial });
     if (enemy.eliteKind === 'railcar' && enemy.variantId === 'baron_railcar') this.ensureRailcar3d();
     this.previousActive[enemy.id] = false;
+    this.spawnOrder[enemy.id] = this.spawnSerial;
     this.spawnSerial += 1;
     this.active += 1;
     this.syncEnemyInstance(enemy);
@@ -954,6 +1016,7 @@ export class EnemyPool {
     for (const enemy of this.enemies) {
       enemy.recycle();
       this.previousActive[enemy.id] = false;
+      this.spawnOrder[enemy.id] = 0;
     }
     this.active = 0;
     this.spawnSerial = 0;

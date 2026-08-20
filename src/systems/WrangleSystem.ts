@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { FIXED_SIM_STEP_SECONDS } from '../core/Loop';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
-import type { EnemyPool } from '../entities/pools';
+import type { EnemyPool, SelfNeutralisedBodies } from '../entities/pools';
 import { Balance } from '../game/Balance';
 import type { Economy } from '../game/Economy';
 import {
@@ -38,7 +38,7 @@ type ActiveWrangle = {
   resets: number;
 };
 
-export class WrangleSystem {
+export class WrangleSystem implements SelfNeutralisedBodies {
   private readonly active = new Map<number, ActiveWrangle>();
   private readonly roster: PenRosterEntry[];
   private incomeElapsed = 0;
@@ -56,6 +56,34 @@ export class WrangleSystem {
     private readonly onCaptured: (enemy: ClaimJumperEnemy, penTotal: number) => void,
   ) {
     this.roster = readRoster(tileState.readSnapshot(contractId).entries);
+    // PROTOTYPE (F-CAP-2), owner-gated. Wrangle is the ONLY producer of bodies that neutralise
+    // themselves with no player action, so it is the only holder the pool ever needs. Seated
+    // here rather than in each engine for the same reason `exhaustedCount` is read from one
+    // owner: both engines construct this system with this pool, so they cannot disagree.
+    // `null` when disabled — a non-E6 contract must not inherit an earlier contract's holder.
+    enemies.setSelfNeutralisedBodies(enabled ? this : null);
+  }
+
+  /**
+   * PROTOTYPE (F-CAP-2) — `SelfNeutralisedBodies`. Exactly `isHarmless`: a machine that has
+   * wound all the way down with no player action. A machine still winding down is a live
+   * hostile and is NEVER reclaimable; nor is anything outside `MACHINE_VARIANTS`.
+   */
+  isReclaimable(enemy: ClaimJumperEnemy): boolean {
+    return this.isHarmless(enemy);
+  }
+
+  /**
+   * PROTOTYPE (F-CAP-2) — `SelfNeutralisedBodies`. The pool is about to seat a NEW enemy in
+   * this slot; without this the stale entry would survive (the pool reuses the same object,
+   * so `update`'s `!isAlive` sweep never fires) and the newcomer would be born exhausted:
+   * undamageable, harmless, and crawling. Same two lines `onDamage(died)` already uses.
+   */
+  release(enemy: ClaimJumperEnemy): void {
+    const entry = this.active.get(enemy.id);
+    if (!entry) return;
+    this.decay.cancel(entry.handle);
+    this.active.delete(enemy.id);
   }
 
   update(delta: number, at: number): void {
