@@ -1405,7 +1405,7 @@
               "taskFile": "b4-picnic-three-stake-hold.md",
               "status": "blocked",
               "blockClass": "owner-fork",
-              "blockedReason": "F-2085-1: runner STOPPED per Law 2 (run 20260820-131454). The hold objective is unreachable BY CONSTRUCTION: all three sandwich stakes are heroStart:true, the hero spawns at the first marker (sandwich-west), enemies target the hero and so never enter the center/east discs, and the hero's own body permanently contests west. No stake can be claimed, so idle e6-picnic-01 FALSELY SECURES at wave 20 (fnv1a32:04391e7c) where it must lose. Prover half is fine (seed 01 wave 12 fnv1a32:e66807f6, seed 02 wave 10 fnv1a32:da62f7b9). Needs an OWNER ruling on enemy-to-stake assignment for heroStart:true multi-stake maps; no fire may author a routing design fork. Entangled with F-CAP-2 (pool recycle) per F-2085-2. lane/b HOLDS the WIP - do NOT refill or reset that lane.",
+              "blockedReason": "SUPERSEDED by b4v2-picnic-stake-pressure.md — the owner ruled stake pressure IN (verbatim: (1) yes, 2026-08-20). v1 must never re-queue; its WIP on lane/b is v2s base.",
               "note": "Ratified door-completion-sheet B4 (owner 2026-08-20: build, queue after A-wave; codex subscription reset -> B-wave rides lanes now). lane-b. s2085: drain attempted, verdict HOLD - NOT merged; see reviews/b4-picnic-three-stake-hold.md."
             },
             {
@@ -1419,10 +1419,24 @@
               "id": "b3-half-life-hollow-crossing",
               "title": "B3 Hollow: author the prose-only crossing data + consumer -> door-ready (pool-disease measured early)",
               "taskFile": "b3-half-life-hollow-crossing.md",
-              "status": "blocked",
+              "status": "queued",
               "blockClass": "owner-fork",
-              "blockedReason": "F-2085-2 / F-CAP-2: RAN on lane-d (run 20260820-150023, commit ad49f9724) and STOPPED per Law 2 exactly as its master ordered. The pre-build admissionProbe idle measurement was decisive: seed e6-half-life-hollow-01 FALSE-SECURED at wave 20 (fnv1a32:c3f13eda, 210 kills, 0 calls) while seed -02 died honestly at wave 5 (fnv1a32:6e41317e, 83 kills). Runner's own words: 'No crossing implementation, admission changes, or gates run. Resume after F-CAP-2's pool-recycling ruling.' Its ledger row is merged to main at f256baf3c and lane/d is drained (main..lane/d empty). Needs the OWNER pool-recycle ruling; no fire may author it.",
-              "note": "Ratified sheet B3 (owner: build). lane-d codex. If idle false-greens via the E6 pool disease, it queues behind the recycle ruling with Picnic+Showroom. s2085: it DID false-green - the prediction held."
+              "note": "Ratified sheet B3 (owner: build). lane-d codex. If idle false-greens via the E6 pool disease, it queues behind the recycle ruling with Picnic+Showroom. s2085: it DID false-green - the prediction held.",
+              "note": "UNBLOCKED by owner word (verbatim: adopt, 2026-08-20) — recycle-oldest merged; F-PROTO-1 measured the Law-2 stop cured. Re-queued lane-d with changed-premise banner."
+            },
+            {
+              "id": "b4v2-picnic-stake-pressure",
+              "title": "B4v2 Picnic: ruled stake pressure + completed hold consumer (builds on lane/b WIP) -> door-ready",
+              "taskFile": "b4v2-picnic-stake-pressure.md",
+              "status": "queued",
+              "note": "Owner rulings 2026-08-20: unpark E6 on codex + stake pressure yes (F-2085-1 RULED). Prover evidence re-derived per F-PROTO-5. lane-b, build-on-predecessor."
+            },
+            {
+              "id": "b7-showroom-capture-quota",
+              "title": "B7 Showroom: authored capture-quota objective (PROPOSAL) + latch — idle can never fake a win; difficulty untouched",
+              "taskFile": "b7-showroom-capture-quota.md",
+              "status": "queued",
+              "note": "Owner rulings 2026-08-20: unpark E6 on codex; difficulty stands (absolute). Conditional admission: secures x2 or reword-the-exemption with the measured ceiling. lane-a."
             }
           ]
         },

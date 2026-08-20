@@ -1,3 +1,5 @@
+> ✅ CHANGED PREMISE — RE-RUN AUTHORIZED (2026-08-20): the owner ruled the pool-recycle fork with one word — verbatim: "adopt" — and the recycle-oldest mechanic is being merged to main by the attended session. The prior run's Law-2 stop (idle e6-half-life-hollow-01 false-secured wave 20, fnv1a32:c3f13eda) was measured CURED by the prototype under recycling (honest death wave 19, e41a66db, kills 210→463 — reviews/proto-pool-recycle.md F-PROTO-1). Per Escalation §5 this is the changed premise: idle is now expected to die honestly, so the master's own §Pool-disease measurement should come back clean. VERIFY the recycle commit is in your base before starting (grep EnemyPool for reclaimOldest — STOP if absent). All other terms of this master stand unchanged.
+
 # Task b3-half-life-hollow-crossing: author the Hollow's missing map data + the crossing — e6-half-life-hollow door-ready (lane-d, prefix "feat:")
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-d.
