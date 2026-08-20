@@ -386,11 +386,18 @@ export class SeedCaravanSystem {
   /**
    * A run reset re-reads NOTHING from storage: `plantedBefore` was read at birth and the loader
    * contract forbids a mid-life re-read. Staged writes survive the reset on purpose — they belong
-   * to the profile's commit at run end, not to this run's scoreboard.
+   * to the profile's commit at run end, not to this run's scoreboard, and keeping them is also
+   * what keeps a ground refused for the rest of the session.
+   *
+   * THE GUARD, HOWEVER, COMES BACK WHOLE, and that is the ratified trade rather than an oversight:
+   * "spend now, shelter forever" is paid ONCE. A vault taken on the last run must not still be
+   * costing the caravan on this one, or the map would grow monotonically harder for having been
+   * invested in — the opposite of the lesson (`door-completion-sheet.md:22`).
    */
   reset(): void {
     this.leg = 1;
     this.travelled = 0;
+    this.maxHp = this.initialMaxHp;
     this.hp = this.maxHp;
     this.dwellRemaining = 0;
     this.state = 'moving';
