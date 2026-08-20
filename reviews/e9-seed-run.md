@@ -128,7 +128,19 @@ rather than the start menu) and none is left behind as a passing-looking workaro
   zero files under `functions/`** — `git diff --name-only d931958b3..HEAD -- functions` is empty.
 
 **The first battery ran CONTENDED** (its own probe reported "2 concurrent batteries" — another
-builder's run overlapped), so it was re-run solo after that battery cleared rather than trusted.
+builder's run genuinely overlapped, `sh -c node scripts/run-node-guards.mjs …` alive at the time),
+so it was re-run solo rather than trusted.
+
+**🔺 F-A8-6 (process, cost 40 minutes, worth writing down).** The obvious way to wait for that
+other battery — `until ! pgrep -f "run-node-guards"; do sleep 20; done` — **can never terminate,
+because the waiting shell's own command line CONTAINS the pattern and `pgrep -f` matches against
+full command lines.** The loop matches itself and waits forever, and every later "is the machine
+free?" probe using the same pattern reads its own waiters as batteries. It looked exactly like a
+long-running neighbour: two live pids, plausible elapsed times. It was diagnosed only by printing
+the matched processes' command lines instead of trusting the count. Two cures, either sufficient:
+match the script path (`pgrep -f "run-node-guards\.mjs"`, which a quoted-string waiter does not
+contain), or exclude self with `pgrep -f pattern | grep -v $$`. The same trap applies to any
+`pkill`/`pgrep` guard-loop in the factory's shell scripts.
 
 ## Merge classification
 
