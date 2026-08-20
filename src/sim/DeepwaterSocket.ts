@@ -5,6 +5,7 @@ import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
 import type { ContractManifest } from '../meta/ContractFamilies';
 import type { CombatSystem } from '../systems/CombatSystem';
+import { RegattaRaceSystem, type RegattaRaceDiagnostics } from '../systems/RegattaRaceSystem';
 import { createDeepwaterClaimTile, type CorsairSkiffWave, type DeepwaterClaimTile } from '../world/DeepwaterClaimTile';
 
 /**
@@ -38,10 +39,12 @@ export type DeepwaterSocketDiagnostics = Readonly<{
   wrecks: readonly string[];
   bossHandoffsRefused: number;
   arsenal: DeepwaterArsenalDiagnostics;
+  race?: RegattaRaceDiagnostics;
 }>;
 
 export class DeepwaterSocket {
   private readonly arsenal: DeepwaterArsenal;
+  private readonly race: RegattaRaceSystem | null;
   private corsairWavesSpawned = 0;
   private corsairsSpawned = 0;
   private corsairsRecycledAtExit = 0;
@@ -52,10 +55,11 @@ export class DeepwaterSocket {
     private readonly contract: ContractManifest,
     private readonly enemies: EnemyPool,
     combat: CombatSystem,
-    heroPosition: () => THREE.Vector3,
+    private readonly heroPosition: () => THREE.Vector3,
     private readonly emitWaveStarted: (wave: number, at: number) => void,
     private readonly bossHandoff: DeepwaterBossHandoff | null,
   ) {
+    this.race = RegattaRaceSystem.create(contract);
     this.arsenal = new DeepwaterArsenal(
       combat,
       heroPosition,
@@ -85,6 +89,7 @@ export class DeepwaterSocket {
   /** Game.syncDeepwaterClaim: advance the storm track, then spawn whatever it scheduled. */
   advance(at: number): void {
     const snapshot = this.tile.advance(at);
+    this.race?.advance(at, snapshot.corsairWaves.length, [this.heroPosition(), snapshot.boat.anchor]);
     const pending = snapshot.corsairWaves.slice(this.corsairWavesSpawned);
     this.corsairWavesSpawned = snapshot.corsairWaves.length;
     const baron = this.contract.twist.baron;
@@ -105,8 +110,9 @@ export class DeepwaterSocket {
   recycleCorsairsAtExit(): void {
     const lastWave = this.tile.snapshot().corsairWaves.at(-1);
     if (!lastWave) return;
+    const variantId = this.contract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat')?.id;
     for (const enemy of this.enemies.all) {
-      if (enemy.isAlive && enemy.variantId === 'corsair_skiff' && enemy.position.x >= lastWave.toX - 2) {
+      if (enemy.isAlive && enemy.variantId === variantId && enemy.position.x >= lastWave.toX - 2) {
         this.enemies.recycle(enemy);
         this.corsairsRecycledAtExit += 1;
       }
@@ -116,6 +122,10 @@ export class DeepwaterSocket {
   /** Game.update: arsenal.resolveTreatments, immediately after combat.update. */
   resolveTreatments(): void {
     this.arsenal.resolveTreatments();
+  }
+
+  movementMultiplier(position: { x: number; z: number }): number {
+    return this.race?.movementMultiplierAt(position.x, position.z) ?? 1;
   }
 
   /** Real lever — Game's `place_boat_build` action. Rejects unknown and occupied pads. */
@@ -151,6 +161,7 @@ export class DeepwaterSocket {
       wrecks: snapshot.wrecks.map(({ id }) => id),
       bossHandoffsRefused: this.bossHandoffsRefused,
       arsenal: this.arsenal.diagnostics,
+      ...(this.race ? { race: this.race.diagnostics } : {}),
     };
   }
 
@@ -173,7 +184,7 @@ export class DeepwaterSocket {
   }
 
   private spawnCorsairs(wave: CorsairSkiffWave, bossEscortMultiplier: false | number): void {
-    const roster = this.contract.twist.enemyRoster?.find((entry) => entry.id === 'corsair_skiff');
+    const roster = this.contract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat');
     for (let copy = 0; copy < (bossEscortMultiplier || 1); copy += 1) {
       for (const skiff of wave.enemies) {
         const z = skiff.z + copy * 1.2;

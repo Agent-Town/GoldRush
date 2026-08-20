@@ -28,7 +28,16 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   ]);
   assert.ok(audit.rows.every((row) => ['buildable', 'ability', 'choice', 'verb', 'economy'].includes(row.surface)));
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 14);
+  // ADMISSION MOVE (2026-08-20, `b1-regatta-race`, drained s2084): five authored harvest anchors
+  // made e5-regatta browser-offered, moving exactly one row out of `not-offered` (14 -> 13).
+  // ⚠️ RE-MEASURED ON THE MERGED TREE, NOT INHERITED FROM THE LANE. The lane authored its pin
+  // against a base that did NOT yet contain the `e7-dead-band` admission, and main authored the
+  // block below against a base that did NOT yet contain the Regatta — so BOTH sides independently
+  // wrote `341/779/14`, and both are wrong once the two admissions stack. The merged tree measures
+  // 351/809/13 over 1173 rows: the Regatta contributes +10 agent-lacks and +30 equal and takes the
+  // one not-offered row, on top of the Dead Band's own move. Neither side's arithmetic was edited
+  // into agreement — the audit was re-run on the merged tree and its output pinned verbatim.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 13);
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -57,8 +66,13 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // whole movement belongs to the anchors, and the consumer moves NOTHING here — which is the
   // expected shape, since the audit's rows are buildable/ability/choice/verb/economy surfaces
   // and `signal_suppression` is a mechanics RULE.
+  // The Regatta admission moves NO exemption: `e5-regatta` was never in
+  // CONTRACT_ADMISSION_EXEMPTIONS — it was excluded by empty `harvestAnchors`, the same
+  // empty-data door the Dead Band came through. The lane's own pin of 6 was correct against its
+  // base (before `e2-pressure-arsenal-headless` took hill-mine out, 6 -> 5) and is stale here;
+  // the merged tree measures 5, which is main's count, unmoved by this slice.
   assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 341, equal: 779, 'not-offered': 14 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 351, equal: 809, 'not-offered': 13 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

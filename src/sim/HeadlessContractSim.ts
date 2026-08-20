@@ -587,7 +587,7 @@ export class HeadlessContractSim {
       this.manifest,
       this.enemies,
       this.combat,
-      () => this.hero.group.position,
+      () => this.manifest.tileParams.raceCourse ? this.prospector.position : this.hero.group.position,
       (wave, at) => this.events.emit({ type: 'wave_started', at, wave }),
       this.dredgeQueen
         ? (wave) => this.dredgeQueen!.onStormWave(wave, this.manifest.twist.baron!.wave)
@@ -687,6 +687,7 @@ export class HeadlessContractSim {
         secureWaveForRun: () => this.manifest.twist.secureWave ?? Balance.run.secureWave,
         autoSecureWaveForRun: () => (this.manifest.twist.baron && !this.baronBeaten)
           || (this.manifest.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
+          || (this.manifest.tileParams.raceCourse && this.deepwater?.diagnostics.race?.finished !== true)
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -984,7 +985,12 @@ export class HeadlessContractSim {
     this.progression.consumeXpTotal(this.combat.xpCount);
     // AP-16-0 audit anchor, retired by AP-16-2: while (this.progression.offer?.[0])
     this.syncUpgradeOfferClock();
-    this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
+    const { moving, drifting } = this.prospector.snapshot;
+    this.prospector.updateSimulation(
+      STEP_SECONDS * (moving || drifting ? this.deepwater?.movementMultiplier(this.prospector.position) ?? 1 : 1),
+      this.timeAlive,
+      this.hero.group.position,
+    );
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncLightState();
     observeStandingOrders();

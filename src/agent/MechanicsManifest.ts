@@ -255,10 +255,10 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       requires: 'a ready watchtower',
     }));
   }
-  // --- E5 Deepwater. Gated exactly as the browser gates it: `createDeepwaterClaimTile` returns a
-  // consumer only for the flagship, so only the flagship gets the vocabulary. The three variants
-  // declare their own consumer `missing` and must stay silent (reject-don't-stretch).
-  const deepwater = contract.id === 'e5-deepwater-claim' ? tile.deepwater : undefined;
+  // --- E5 Deepwater. Gated exactly as the browser's `createDeepwaterClaimTile` consumer.
+  const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta'
+    ? tile.deepwater
+    : undefined;
   if (deepwater) {
     rules.push(rule('deepwater_water_regions', 'WaterRegionTile.sample', {
       tileId: deepwater.waterTile.id,
@@ -290,13 +290,26 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     }));
     // NOT sourced to `tileParams.deepwater.wrecks`: raw data is not a mechanic. Vocabulary comes
     // from the consumer that anchors on the wreck field, including its headless boss lifecycle.
-    rules.push(rule('deepwater_boss_socket', 'DredgeQueenBossSystem', {
-      wreckSites: deepwater.wrecks.length,
-      eras: deepwater.wrecks.map(({ era }) => era).sort(),
-      bossWave: twist.baron?.wave ?? 0,
-      constructsHeadlessly: true,
-      secureConditionReachable: true,
-    }));
+    if (twist.baron?.variantId === 'dredge_queen') {
+      rules.push(rule('deepwater_boss_socket', 'DredgeQueenBossSystem', {
+        wreckSites: deepwater.wrecks.length,
+        eras: deepwater.wrecks.map(({ era }) => era).sort(),
+        bossWave: twist.baron.wave,
+        constructsHeadlessly: true,
+        secureConditionReachable: true,
+      }));
+    }
+    if (tile.raceCourse) {
+      rules.push(rule('regatta_race', 'RegattaRaceSystem.advance+movementMultiplierAt', {
+        gates: tile.raceCourse.beacons.map(({ id }) => id),
+        finish: tile.stakeMarkers?.find(({ heroStart }) => heroStart)?.id ?? '',
+        gateRadiusFallback: 6,
+        fastWaterZone: tile.raceCourse.fastWaterZone.id,
+        fastWaterMultiplier: 1.35,
+        deadlineWave: twist.secureWave ?? 0,
+        competingRacerLoot: false,
+      }));
+    }
     // The manifest must not imply an agent can work the boat: `AgentGameAdapter` carries
     // BUILD/PAN/REPAIR only. The levers exist on the consumer and not on the agent surface.
     rules.push(rule('deepwater_levers_unreachable', 'AgentGameAdapter', {

@@ -20,7 +20,8 @@ type DeepwaterFields = Readonly<{
 }>;
 
 type CorsairRosterEntry = Readonly<{
-  id: 'corsair_skiff';
+  id: string;
+  label?: string;
   unitClass: 'vehicle';
   vehicleChassis: 'e4-hauler';
   travelClass: 'boat';
@@ -58,10 +59,12 @@ export class DeepwaterClaimTile {
   private readonly corsair: CorsairRosterEntry;
 
   constructor(readonly contract: ContractManifest) {
-    if (contract.id !== 'e5-deepwater-claim') throw new Error('The Deepwater Claim needs its authored contract.');
+    if (contract.id !== 'e5-deepwater-claim' && contract.id !== 'e5-regatta') {
+      throw new Error('The deepwater tile needs an authored Deepwater contract.');
+    }
     const authored = contract as unknown as DeepwaterContract;
     this.deepwater = authored.tileParams.deepwater;
-    this.corsair = authored.twist.enemyRoster.find((entry) => entry.id === 'corsair_skiff')!;
+    this.corsair = authored.twist.enemyRoster.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat')!;
     if (!this.deepwater || !authored.twist.weather || !this.corsair) throw new Error('The Deepwater Claim data is incomplete.');
     this.water = new WaterRegionTile(this.deepwater.waterTile);
     this.boat = new ClaimBoat(this.deepwater.claimBoat);
@@ -143,5 +146,7 @@ export class DeepwaterClaimTile {
 }
 
 export function createDeepwaterClaimTile(contract: ContractManifest): DeepwaterClaimTile | null {
-  return contract.id === 'e5-deepwater-claim' ? new DeepwaterClaimTile(contract) : null;
+  return contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta'
+    ? new DeepwaterClaimTile(contract)
+    : null;
 }
