@@ -45,12 +45,21 @@ export type E7SignalDiagnostics = {
   latestFragment: string;
 };
 
+/**
+ * A6 (`door-completion-sheet.md:18`): the Far Side's crashed probe plays THIS line back, once,
+ * at the end of the loneliest map in the saga. Exported so `ProbeRecovery` cites the jack-board
+ * rather than re-typing its words — the probe recorded the town's own first hello, and a second
+ * copy of the string is a second thing to keep in sync. Read by `src/systems/ProbeRecovery.ts`;
+ * `ANSWERS[0].fragment` below is the same value and stays the definition.
+ */
+export const E7_WRONG_NUMBER_FRAGMENT = 'First tower up. A wrong number answered, confused and kind. The line stays open.';
+
 const ANSWERS = [
   {
     milestone: 'first-relay-linked',
     id: 'lighthouse-keeper',
     label: 'Lighthouse keeper',
-    fragment: 'First tower up. A wrong number answered, confused and kind. The line stays open.',
+    fragment: E7_WRONG_NUMBER_FRAGMENT,
   },
   {
     milestone: 'first-playbook-recorded',

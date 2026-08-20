@@ -180,6 +180,7 @@ import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
 import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression } from '../systems/SignalSuppression';
+import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
@@ -677,6 +678,14 @@ export class Game {
   // three gate sites below, so its refusal counters are the run's real total and not three
   // partial tallies. Built off the CONTRACT, never the epoch — A6 reuses it from E8.
   private readonly signalSuppression = SignalSuppression.create(this.activeContract);
+  /**
+   * A6 (door-completion-sheet §A6, RATIFIED 2026-08-20). ONE consumer per run, shared by the
+   * player's confirm key, the agent rider's `CONTEXT_ACTION action:'recover'`, and the secure
+   * latch — so all three read the same one-way flag and the counters are the run's real total.
+   */
+  private readonly probeRecovery = ProbeRecovery.create(this.activeContract);
+  /** Mistake #7: every write-sink gets a dupe-guard. The crater hint announces ONCE per run. */
+  private probeHintAnnounced = false;
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private readonly activeEpoch = new URLSearchParams(window.location.search).has('replay') && this.contractEpoch
@@ -1845,6 +1854,13 @@ export class Game {
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
           this.spawnHarnessPack(n, radius, opts ?? legacySpawnPackOptions(n, radius)),
         spawnThief: (edge?: CompassEdge) => this.spawnHarnessThief(edge),
+        // A6: the recovery reachable from a test without driving the confirm key, plus the
+        // pure reach predicate so a spec can prove the crater is a PLACE and not a global flag.
+        probe: {
+          recover: () => this.tryRecoverProbe(this.actionActor.group.position),
+          inReach: (x: number, z: number) => this.probeRecovery.inReach({ x, z }),
+          diagnostics: () => this.probeRecovery.diagnostics,
+        },
         spawnWrecker: (edge?: CompassEdge) => this.spawnHarnessWrecker(edge),
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         repair: (family: BuildableId, index: number) => {
@@ -2954,10 +2970,14 @@ export class Game {
     }
     if (action.type === 'secure_choice') return this.applySecureChoice(action.choice);
     if (action.type === 'context_action') {
-      if (action.action !== 'fund' && !isBuildableId(action.target.id)) return false;
+      // A6: `recover` is targetless like `fund`, so it must clear the target guard the same way
+      // — a tape that replays a recovery carries no building to look up.
+      const targetless = action.action === 'fund' || action.action === 'recover';
+      if (!targetless && !isBuildableId(action.target.id)) return false;
       if (action.action === 'upgrade') this.upgradeBuilding(action.target.id as BuildableId, action.target.index);
       if (action.action === 'demolish') this.demolishBuilding(action.target.id as BuildableId, action.target.index);
       if (action.action === 'fund') this.fundMegaprojectStage(this.actionActor.group.position);
+      if (action.action === 'recover') this.tryRecoverProbe(this.actionActor.group.position);
     }
     if (action.type === 'set_agent_rung') this.agentConsent.setRung(action.level as AgentPermissionLevel, action.granted);
     if (action.type === 'set_agent_ability') this.agentConsent.setAbility(action.ability as AgentAbility, action.granted);
@@ -3004,9 +3024,13 @@ export class Game {
         if (!actor) return { ok: false as const, reason: 'INVALID_ACTOR: the rider is not in this room.' };
         const ok = order.action === 'fund'
           ? this.fundMegaprojectStage(actor.group.position)
-          : order.action === 'upgrade'
-            ? this.buildSystem.upgradeBuilding(order.target.id, order.target.index, this.timeAlive, actor.group.position)
-            : this.buildSystem.demolish(order.target.id, order.target.index, this.timeAlive, actor.group.position);
+          // A6: the rider recovers from ITS OWN body's position, not the local player's —
+          // the crossing is the mechanic, so whoever walks it is who can lift the probe.
+          : order.action === 'recover'
+            ? this.tryRecoverProbe(actor.group.position)
+            : order.action === 'upgrade'
+              ? this.buildSystem.upgradeBuilding(order.target.id, order.target.index, this.timeAlive, actor.group.position)
+              : this.buildSystem.demolish(order.target.id, order.target.index, this.timeAlive, actor.group.position);
         if (!ok) return { ok: false as const, reason: `REJECTED: ${order.action} is not legal here.` };
         this.syncStockpileHoldings();
         this.publishDiagnostics();
@@ -4632,6 +4656,47 @@ export class Game {
       : null;
   }
 
+  /**
+   * A6 — THE RECOVERY AND THE PLAYBACK, browser side.
+   *
+   * WHERE THE PLAYER SEES THIS IN A PLAIN BOOT (Mistake #10, and `e2e/e8-far-side-probe.spec.ts`
+   * asserts both halves with no `?debug`): standing in the crater announces the objective once,
+   * and recovering plays the banked line back through THE EXCHANGE — the same title and channel
+   * the E7 jack-board announces its fragments on, because this IS that board's line, carried up
+   * the gravity well. The crater also gets a float text so the beat is anchored in the world
+   * rather than only in the banner.
+   */
+  private tryRecoverProbe(position: THREE.Vector3): boolean {
+    if (!this.probeRecovery.declared) return false;
+    const result = this.probeRecovery.recover(position);
+    if (!result.ok) return false;
+    this.audio.play('ledger-open', 0.75);
+    this.uiBridge.announce(result.fragment, this.timeAlive, null, 9, 'wave', 'THE EXCHANGE · RECOVERED');
+    this.vfx.floatText(position, 'PROBE RECOVERED', '#f0ddb1');
+    this.recordRunTapeAction({ type: 'context_action', action: 'recover' });
+    this.publishDiagnostics();
+    return true;
+  }
+
+  /**
+   * The standing hint, announced the first time the crossing actually reaches the crater. It
+   * is the only thing that tells an unaided player the confirm key does something out here.
+   */
+  private syncProbeHint(): void {
+    if (this.probeHintAnnounced || !this.probeRecovery.declared || this.probeRecovery.recovered) return;
+    if (this.state.current !== 'playing' || this.state.isPaused) return;
+    if (!this.probeRecovery.inReach(this.localActor.group.position)) return;
+    this.probeHintAnnounced = true;
+    this.uiBridge.announce(
+      'Half-buried, unmarked, still listening. Recover it.',
+      this.timeAlive,
+      null,
+      6,
+      'wave',
+      'THE LISTENING PROBE',
+    );
+  }
+
   private megaprojectInRange(position: THREE.Vector3, radius = 2.2): boolean {
     const target = this.megaprojectTarget;
     const dx = Math.max(Math.abs(position.x - target.position.x) - target.halfX, 0);
@@ -4827,6 +4892,7 @@ export class Game {
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       e8Physics: this.e8PhysicsSystem.diagnostics,
+      probeRecovery: this.probeRecovery.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -5143,6 +5209,9 @@ export class Game {
     return this.waitsForBaronDefeat()
       || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
       || (this.activeContract.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
+      // A6: mirrors `HeadlessContractSim.autoSecureWaveForRun` — the Far Side is not won by
+      // outliving it. True on every contract that declares no probe, so nothing else moves.
+      || !this.probeRecovery.objectiveAllowsSecure
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -5408,7 +5477,10 @@ export class Game {
     // Keys on `connect`, not on any powerGrid (F-1471-1): only syncCanyonConnectObjective sets the
     // flag below, and it early-returns on `!grid?.connect` — so a powerGrid without a connect
     // objective would pin this false forever and beating the Baron would silently fail to secure.
-    const objectiveAllowsSecure = !this.activeContract.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
+    const objectiveAllowsSecure = (!this.activeContract.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline)
+      // A6, mirroring `HeadlessContractSim.postBaronDefeat`: a Baron kill cannot stand in for
+      // an unrecovered probe. No contract declares both today; the two paths agree anyway.
+      && this.probeRecovery.objectiveAllowsSecure;
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
       || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
@@ -6849,6 +6921,7 @@ export class Game {
     const demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.demolishCandidate : null;
     const upgrade = demolish ? this.upgradeCandidate : null;
     this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund);
+    this.syncProbeHint();
   }
 
   private updateBuildingContextCandidates(position = this.localActor.group.position): void {
@@ -8092,6 +8165,10 @@ export class Game {
     if (this.e10StaticBoss.tryPreserve(this.actionActor.group.position, this.timeAlive)) return;
     if (this.oldDiggerBoss.tryInteract(this.actionActor.group.position, this.timeAlive)) return;
     if (this.fundMegaprojectStage(this.actionActor.group.position)) return;
+    // A6: ordered beside the other world interactions and BEFORE demolish, which is the
+    // fallback. The crater is bare ground with no building on it, so nothing above can claim
+    // the press first.
+    if (this.tryRecoverProbe(this.actionActor.group.position)) return;
     this.confirmDemolish();
   }
 

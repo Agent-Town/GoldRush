@@ -504,6 +504,7 @@ interface ThreeGameDiagnostics {
   e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
   e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
   e8Physics: import('./systems/E8PhysicsSystem').E8PhysicsDiagnostics;
+  probeRecovery: import('./systems/ProbeRecovery').ProbeRecoveryDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;
@@ -1054,6 +1055,11 @@ interface Window {
       },
     ) => void;
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
+    probe: {
+      recover: () => boolean;
+      inReach: (x: number, z: number) => boolean;
+      diagnostics: () => import('./systems/ProbeRecovery').ProbeRecoveryDiagnostics;
+    };
     spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     wreck: (family: GrBuildableId, index: number) => boolean;
     repair: (family: GrBuildableId, index: number) => false | unknown;

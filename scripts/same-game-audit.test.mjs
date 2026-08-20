@@ -28,7 +28,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   ]);
   assert.ok(audit.rows.every((row) => ['buildable', 'ability', 'choice', 'verb', 'economy'].includes(row.surface)));
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 14);
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 13);
   assert.equal(audit.admission.measurements.length, 10);
   // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
   // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
@@ -57,8 +57,23 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // whole movement belongs to the anchors, and the consumer moves NOTHING here — which is the
   // expected shape, since the audit's rows are buildable/ability/choice/verb/economy surfaces
   // and `signal_suppression` is a mechanics RULE.
+  // ADMISSION MOVE (2026-08-20, `e8-far-side` A6 the crossing and the probe): the Far Side's
+  // `harvestAnchors` were authored — together with the attended-authorized `heroStart` stake
+  // that its own briefing already commanded — so it left the door's `harvestAnchors?.length
+  // !== 0` filter and entered `supportedContractIds()`. Same shape as the Dead Band directly
+  // above: THE EXEMPTION COUNT DOES NOT MOVE, because the Far Side was never exempted either
+  // — it was excluded by empty data. The parity block moves: 341 -> 351 agent-lacks,
+  // 779 -> 809 equal, 14 -> 13 not-offered, 1134 -> 1173 rows (+40 parity rows, -1 refusal).
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, not guessed: with the four anchors emptied and EVERY
+  // other line of the slice still in place — the `ProbeRecovery` consumer, the `recover`
+  // context action, both engines' objective latches, the manifest rule and the hero stake —
+  // this audit reproduced 0/341/779/14 and 1134 rows EXACTLY. So the whole movement belongs to
+  // the anchors and the A6 consumer moves NOTHING here. Expected, for two reasons: the audit's
+  // rows are buildable/ability/choice/verb/economy surfaces and `probe_recovery` is a mechanics
+  // RULE, and its verb row is keyed on CONTEXT_ACTION itself, which already existed — adding an
+  // ACTION to a verb the door already carried cannot add a verb row.
   assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 341, equal: 779, 'not-offered': 14 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 351, equal: 809, 'not-offered': 13 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
