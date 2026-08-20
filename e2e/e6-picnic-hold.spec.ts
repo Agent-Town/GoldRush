@@ -41,3 +41,25 @@ test('Picnic hold is absent off-contract', async () => {
     await vite.close();
   }
 });
+
+test('one quarter of enemies press the nearest undefended stake', async () => {
+  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { PicnicHoldSystem, PICNIC_STAKE_PRESS_WEIGHT } = await vite.ssrLoadModule('/src/systems/PicnicHoldSystem.ts');
+    const hold = new PicnicHoldSystem(true, [
+      { id: 'west', x: -6, z: 0, heroStart: true },
+      { id: 'center', x: 0, z: 0, heroStart: true },
+      { id: 'east', x: 6, z: 0, heroStart: true },
+    ], () => undefined);
+    const enemies = Array.from({ length: 12 }, (_, id) => ({ id, position: { x: id - 6, z: -10 } }));
+    const defenders = [{ position: { x: -6, z: 0 } }];
+
+    const targets = enemies.map((enemy) => hold.pressureTarget(enemy, defenders));
+    expect(PICNIC_STAKE_PRESS_WEIGHT).toBe(0.25);
+    expect(targets.filter(Boolean)).toHaveLength(3);
+    expect(targets.filter(Boolean)).not.toContainEqual({ x: -6, z: 0 });
+    expect(PicnicHoldSystem.isEnabled([{ id: 'only', x: 0, z: 0, heroStart: true }])).toBe(false);
+  } finally {
+    await vite.close();
+  }
+});

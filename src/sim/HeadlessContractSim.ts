@@ -402,7 +402,7 @@ export class HeadlessContractSim {
     // couplings THROUGH CombatSystem's own hooks (Game.ts:534 and Game.ts:536).
     this.atomic = AtomicSocket.create(this.manifest, this.events, this.enemies, this.economy);
     this.picnicHold = new PicnicHoldSystem(
-      this.contractId === 'e6-picnic',
+      PicnicHoldSystem.isEnabled(this.manifest.tileParams.stakeMarkers ?? []),
       this.manifest.tileParams.stakeMarkers ?? [],
       () => this.postHeroDeath(),
     );
@@ -941,8 +941,18 @@ export class HeadlessContractSim {
     this.syncCanyonConnectObjective();
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
-    this.enemies.update(STEP_SECONDS, this.hero.group.position, (enemy) => {
-      if (this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
+    const actorTargets = [this.hero.group.position];
+    const picnicDefenders = [
+      { position: this.hero.group.position },
+      ...this.build.diagnostics.turretPositions.map((position) => ({ position })),
+    ];
+    this.enemies.update(STEP_SECONDS, this.picnicHold.active
+      ? (enemy) => {
+          const stake = this.picnicHold.pressureTarget(enemy, picnicDefenders);
+          return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
+        }
+      : actorTargets, (enemy) => {
+      if (!this.picnicHold.pressureTarget(enemy, picnicDefenders) && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
     }, this.build.palisadeBlockers, {
       nearestGoldHolding: (from) => this.targeting.nearestGoldHolding(from),
@@ -959,12 +969,7 @@ export class HeadlessContractSim {
     this.picnicHold.update(
       STEP_SECONDS,
       this.enemies.all.filter((enemy) => enemy.isAlive),
-      [
-        { position: this.hero.group.position },
-        { position: this.prospector.position },
-        ...this.build.diagnostics.beaconPositions.map((position) => ({ position })),
-        ...this.build.diagnostics.turretPositions.map((position) => ({ position })),
-      ],
+      picnicDefenders,
     );
     this.deepwater?.recycleCorsairsAtExit();
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());

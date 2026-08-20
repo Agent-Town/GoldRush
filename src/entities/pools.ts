@@ -769,7 +769,7 @@ export class EnemyPool {
 
   update(
     delta: number,
-    heroPosition: THREE.Vector3 | readonly THREE.Vector3[],
+    heroPosition: THREE.Vector3 | readonly THREE.Vector3[] | ((enemy: ClaimJumperEnemy) => THREE.Vector3 | readonly THREE.Vector3[]),
     onContact: (enemy: ClaimJumperEnemy) => boolean,
     blockers: readonly PalisadeBlocker[] = [],
     thiefContext?: ThiefUpdateContext,
@@ -778,10 +778,11 @@ export class EnemyPool {
   ): void {
     this.feverPulse += delta * Balance.legibility.feveredPulseSpeed;
     this.rebuildSpatialHash();
-    const heroPositions = Array.isArray(heroPosition) ? heroPosition : [heroPosition];
 
     for (const enemy of this.enemies) {
       if (!enemy.isAlive) continue;
+      const selectedTarget = typeof heroPosition === 'function' ? heroPosition(enemy) : heroPosition;
+      const heroPositions = Array.isArray(selectedTarget) ? selectedTarget : [selectedTarget];
       const enemyTarget = nearestPosition(heroPositions, enemy.group.position);
 
       let separationX = 0;

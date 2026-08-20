@@ -688,7 +688,7 @@ export class Game {
     (position, amount) => this.vfx.floatText(position, `STARSTONE +${amount}`, '#83ded7'),
   );
   private readonly picnicHold = new PicnicHoldSystem(
-    this.activeContract.id === 'e6-picnic',
+    PicnicHoldSystem.isEnabled(this.activeContract.tileParams.stakeMarkers ?? []),
     this.activeContract.tileParams.stakeMarkers ?? [],
     () => { this.deathPending = true; },
   );
@@ -2646,11 +2646,21 @@ export class Game {
       }
       this.syncStockpileHoldings();
       this.mothSwarm.update(simDelta, this.mothLightSources, this.enemies.all);
+      const actorTargets = this.visibleActorPositions();
+      const picnicDefenders = [
+        ...actorTargets.map((position) => ({ position })),
+        ...this.buildSystem.diagnostics.turretPositions.map((position) => ({ position })),
+      ];
       this.enemies.update(
         simDelta,
-        this.visibleActorPositions(),
+        this.picnicHold.active
+          ? (enemy) => {
+              const stake = this.picnicHold.pressureTarget(enemy, picnicDefenders);
+              return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
+            }
+          : actorTargets,
         (enemy) => {
-          if (!this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
+          if (!this.picnicHold.pressureTarget(enemy, picnicDefenders) && !this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
         [...this.buildSystem.palisadeBlockers, ...this.heroBlockers()],
@@ -2665,12 +2675,7 @@ export class Game {
       this.picnicHold.update(
         simDelta,
         this.enemies.all.filter((enemy) => enemy.isAlive),
-        [
-          ...this.visibleActorPositions().map((position) => ({ position })),
-          { position: this.prospector.position },
-          ...this.buildSystem.diagnostics.beaconPositions.map((position) => ({ position })),
-          ...this.buildSystem.diagnostics.turretPositions.map((position) => ({ position })),
-        ],
+        picnicDefenders,
       );
       if (this.e9CanalSystem.update(simDelta, this.timeAlive, this.visibleHarvestTargets())) this.syncHeroVisualHeight();
       this.recycleDeepwaterCorsairsAtExit();
