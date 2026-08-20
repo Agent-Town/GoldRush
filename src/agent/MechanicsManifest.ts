@@ -325,15 +325,14 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       goldPerMachinePerTick: Balance.wrangle.penGoldPerMachine,
       capturableState: 'exhausted',
     }));
-    // The load-bearing one. An exhausted machine can be neither killed nor captured by an agent,
-    // and it still counts against the spawn cap — so the epoch's loop cannot close from the
-    // agent surface as it stands. Stating it is the whole point; a silent omission would read
-    // as "nothing more to know here".
-    rules.push(rule('wrangle_capture_unreachable', 'AgentGameAdapter', {
+    // The load-bearing one. Exhausted machines stop taking damage and hold spawn slots, while the
+    // standing-order CAPTURE verb closes the agent-surface loop (9f920a2f6, 97–99% absorption).
+    // Stating it is the whole point; a silent omission would read as "nothing more to know here".
+    rules.push(rule('wrangle_capture', 'AgentGameAdapter', {
       consumerLever: 'WrangleSystem.tryCapture',
       agentOperations: [],
       aliveCap: Balance.waves.aliveCap,
-      consequence: 'exhausted machines are undamageable and uncapturable, and hold spawn slots',
+      consequence: 'exhausted machines are undamageable and hold spawn slots; capture is reached through the standing-order CAPTURE verb, not a tool',
     }));
   }
   const e6Tiles = contract.id === 'e6-glow-mesa' ? Balance.e6Tiles : undefined;
