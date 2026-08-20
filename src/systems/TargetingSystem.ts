@@ -130,6 +130,17 @@ export class TargetingSystem<T extends Damageable = Damageable> {
     return this.buildings.find((building) => building.id === id) ?? null;
   }
 
+  /**
+   * A5: every registered building, unfiltered, so a per-tick consumer can read the whole board
+   * without allocating a copy of it thirty times a second. `buildingsInRadius` already answers
+   * "what is near this point"; the interference front asks "what stands inside these four
+   * rectangles", which is a different question and a cheaper one to answer from the raw list.
+   * READ-ONLY by type: callers filter `active`/`hp` themselves, exactly as the radius query does.
+   */
+  get allBuildings(): readonly BuildingTarget[] {
+    return this.buildings;
+  }
+
   nearestBuilding(from: THREE.Vector3): BuildingTarget | null {
     let best: BuildingTarget | null = null;
     let bestDistanceSq = Number.POSITIVE_INFINITY;

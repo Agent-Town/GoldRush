@@ -3,6 +3,7 @@ import { Balance } from '../game/Balance';
 import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSystem';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
+import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 
@@ -431,6 +432,31 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       verb: 'CONTEXT_ACTION action=plant',
       // Named so a rider reads the TRADE, not three numbers.
       consequence: 'each plant leaves a permanent no-spawn green on this map and spends a quarter of the caravan guard; the run secures only if the caravan reaches the basin alive',
+    }));
+  }
+
+  // --- A5 interference front. SOURCED FROM THE CONSUMER for the same reason A4 is: the row
+  // publishes the schedule, the resolved relay target and the site ids that
+  // `InterferenceFrontSystem` will actually score, so a briefing cannot promise a deadline the
+  // run does not enforce. Absent unless the contract declares the front WITH a corridor to cross
+  // and relay sites to light — the same refusal-to-arm that keeps F-1471-1 from happening again.
+  const front = InterferenceFrontSystem.create(contract);
+  if (front.isDeclared) {
+    const diagnostics = front.diagnostics;
+    rules.push(rule('interference_front', 'InterferenceFrontSystem.refuse', {
+      cadenceSeconds: diagnostics.cadenceSeconds,
+      crossingSeconds: diagnostics.crossingSeconds,
+      bandHalfWidth: diagnostics.halfWidth,
+      // The resolved placeholder. `twist.interferenceFront.relayTarget` is authored `"N"`; the
+      // ratified sheet supplies the number (A5 DEFAULTS, "N = 3 of 4").
+      relayTarget: diagnostics.relayTarget,
+      deadlineFront: diagnostics.deadlineFront,
+      relaySites: diagnostics.sites.map(({ id }) => id),
+      litBy: POWERED_RELAY_KINDS,
+      mutes: ['works', 'drones', 'playbooks', 'relayChains'],
+      refusalReason: INTERFERENCE_MUTED_REASON,
+      // Named so a rider reads the DEADLINE and the trade, not five numbers.
+      consequence: 'a wall of static crosses west to east every 90s; anything under it is muted (turrets and beacons stop firing, drones and playbooks refuse) but never damaged; the run cannot secure unless 3 of the 4 relay sites carry a standing turret or beacon when the third front arrives',
     }));
   }
 

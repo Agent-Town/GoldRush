@@ -182,6 +182,7 @@ import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
 import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression } from '../systems/SignalSuppression';
+import { FRONT_HALF_WIDTH, INTERFERENCE_MUTED_REASON, INTERFERENCE_MUTED_VOICE, InterferenceFrontSystem } from '../systems/InterferenceFrontSystem';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
@@ -697,6 +698,24 @@ export class Game {
    * latch — so all three read the same one-way flag and the counters are the run's real total.
    */
   private readonly probeRecovery = ProbeRecovery.create(this.activeContract);
+  /**
+   * A5 (door-completion-sheet §A5, RATIFIED 2026-08-20). ONE consumer per run, shared by the
+   * shooter seam (`BuildSystem.isShooterPowered`), the playbook gates, the drone gate, the
+   * secure latch and the band this class renders — so a single wall answers every question and
+   * the refusal counters are the run's real total. Built off the CONTRACT, never the epoch.
+   */
+  private readonly interferenceFront = InterferenceFrontSystem.create(this.activeContract);
+  /**
+   * A5's whole presentation, and deliberately no more than the ratification asked for: "a simple
+   * static band (tint/vignette) is enough — no shader work". A flat translucent slate quad the
+   * width of the wall, laid over the corridor while the front crosses and hidden between fronts.
+   * The MESH lives here because `Game` is render code and `InterferenceFrontSystem` must not be
+   * (F-A8-7); the class publishes numbers and this reads them.
+   */
+  private readonly interferenceBand = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 1),
+    new THREE.MeshBasicMaterial({ color: 0x9aa3a8, transparent: true, opacity: 0.26, depthWrite: false }),
+  );
   /** Mistake #7: every write-sink gets a dupe-guard. The crater hint announces ONCE per run. */
   private probeHintAnnounced = false;
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
@@ -1398,7 +1417,12 @@ export class Game {
         });
         return true;
       },
-      (id, _index, position) => id !== 'turret' || this.powerConsumerAt(position.x, position.z, 'turret'),
+      // A5 prefixes the power read rather than replacing it: a work under the interference front
+      // is unpowered wherever it stands, and everything else answers exactly what it always did
+      // (the front's `muted()` is false on every contract that declares none). The beacon half of
+      // this predicate is newly consulted — see `BuildSystem.registerBeaconShooter`.
+      (id, _index, position) => !this.interferenceFront.muted(position.x, position.z)
+        && (id !== 'turret' || this.powerConsumerAt(position.x, position.z, 'turret')),
     );
     this.pressureSystem = new PressureSystem(
       this.economy,
@@ -1977,7 +2001,11 @@ export class Game {
         e7Signal: {
           milestone: (milestone: E7SignalMilestone) => this.e7SignalSystem.recordMilestone(milestone),
           graphFor: (nodes: Array<{ id: string; x: number; z: number }>) => this.e7SignalSystem.graphFor(nodes),
-          droneCanOperate: (x: number, z: number) => this.e7SignalSystem.droneCanOperate({ x, z }),
+          // A5: the same two-part answer the replay gate gives above — the contract's standing
+          // suppression, then the wall's position right now. `muted` is the pure read here, so a
+          // diagnostic poll never inflates the refusal counters.
+          droneCanOperate: (x: number, z: number) => this.e7SignalSystem.droneCanOperate({ x, z })
+            && !this.interferenceFront.muted(x, z),
           diagnostics: () => this.e7SignalSystem.diagnostics,
         },
         e9Arsenal: {
@@ -2738,6 +2766,11 @@ export class Game {
       // A8: beside the era systems and ahead of the enemy integration step, so contact damage
       // reads the same positions `HeadlessContractSim` reads at the same point in its own order.
       this.seedCaravan?.update(simDelta, this.enemies.all);
+      // A5: the wall advances on the same sim delta and in the same relative order as
+      // `HeadlessContractSim`, reading the same standing-works register, so the two engines put
+      // the front in the same place and light the same relays at the same instant.
+      this.interferenceFront.update(simDelta, this.goldTargeting.allBuildings);
+      this.syncInterferenceBand();
       this.recycleDeepwaterCorsairsAtExit();
       if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
@@ -3347,7 +3380,13 @@ export class Game {
       if (!this.state.simActive || sampledIntents.pause) return sampledIntents;
       const slot = this.playbookReplaySlot;
       const actor = this.actors[slot];
-      if (slot > 0 && actor && !this.e7SignalSystem.droneCanOperate(actor.group.position)) {
+      // A5 gates the drone at the CALL SITE rather than inside `E7SignalSystem`, on purpose: the
+      // Dead Band's suppression is a property of the whole contract and belongs in that class,
+      // while the front's mute is a property of WHERE THE DRONE IS STANDING this instant. Same
+      // off-switch semantics as A4 (a counted refusal), a different question.
+      if (slot > 0 && actor
+        && (!this.e7SignalSystem.droneCanOperate(actor.group.position)
+          || this.interferenceFront.refuse('drones', actor.group.position))) {
         this.mpActorIntents = this.actors.map((_, index) => index === 0 ? sampledIntents : intentsFromLockstepInput(null));
         return sampledIntents;
       }
@@ -3372,9 +3411,48 @@ export class Game {
     return { ok: false, reason: SIGNAL_SUPPRESSION_REASON };
   }
 
+  /**
+   * A5: the same refusal in the same shape, from the moving wall instead of the standing band.
+   * Positional and therefore TEMPORARY — the line says so, because a player who reads "swallowed"
+   * and stops trying has been told the wrong thing about a front that passes in two seconds.
+   */
+  private refuseMutedPlaybook(): { ok: false; reason: string } {
+    this.uiBridge.announce(INTERFERENCE_MUTED_VOICE, this.timeAlive, null, 6, 'wave', 'THE EXCHANGE');
+    return { ok: false, reason: INTERFERENCE_MUTED_REASON };
+  }
+
+  /** A5: the front swallows a playbook only where the actor asking for it is standing. */
+  private playbookMutedByFront(): boolean {
+    return this.interferenceFront.refuse('playbooks', this.primaryActor.group.position);
+  }
+
+  /**
+   * A5's entire render half: lay the slate quad over the wall while it crosses, hide it between
+   * fronts. The geometry is a unit plane scaled to the band, so nothing is rebuilt per frame and
+   * there is no shader — the ratification asked for "a simple static band (tint/vignette)" and
+   * this is exactly that. Every NUMBER here comes from the consumer (F-A8-7: the consumer must
+   * not know this method exists).
+   */
+  private syncInterferenceBand(): void {
+    if (!this.interferenceFront.isDeclared) return;
+    const band = this.interferenceFront.band;
+    const center = this.interferenceFront.bandCenterX;
+    if (!band || center === null) {
+      this.interferenceBand.visible = false;
+      return;
+    }
+    const depth = band.maxZ - band.minZ;
+    this.interferenceBand.scale.set(FRONT_HALF_WIDTH * 2, depth, 1);
+    this.interferenceBand.position.set(center, this.heroStart.y + 0.05, (band.minZ + band.maxZ) / 2);
+    this.interferenceBand.visible = true;
+  }
+
   private startPlaybookRecording(options: { script?: unknown; probeEvery?: number }): { ok: boolean; reason?: string } {
     // A4 first, and unconditionally: the Dead Band swallows the RECORD half of "record/use".
     if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
+    // A5 second, and never both: the Dead Band's refusal is permanent and the front's is not, so
+    // a contract declaring both would say the permanent thing first.
+    if (this.playbookMutedByFront()) return this.refuseMutedPlaybook();
     if (this.mpClient) return { ok: false, reason: 'multiplayer-active' };
     if (this.playbookRecorder && !this.playbookRecorder.finished) return { ok: false, reason: 'recording-active' };
     if (this.playbookReplay?.active) return { ok: false, reason: 'replay-active' };
@@ -3432,6 +3510,9 @@ export class Game {
     // A4: and the USE half. Every replay entry point funnels here — `startNamedPlaybookReplay`
     // and the dev bridge both call this method — so one gate closes the whole verb.
     if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
+    // A5 second, and never both: the Dead Band's refusal is permanent and the front's is not, so
+    // a contract declaring both would say the permanent thing first.
+    if (this.playbookMutedByFront()) return this.refuseMutedPlaybook();
     if (this.mpClient) return { ok: false, reason: 'multiplayer-active' };
     if (this.playbookRecorder && !this.playbookRecorder.finished) return { ok: false, reason: 'recording-active' };
     if (this.playbookReplay?.active) return { ok: false, reason: 'replay-active' };
@@ -3468,6 +3549,9 @@ export class Game {
     // cause. Returning here means `startPlaybookReplay` is never reached, so the refusal is
     // counted exactly once.
     if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
+    // A5 second, and never both: the Dead Band's refusal is permanent and the front's is not, so
+    // a contract declaring both would say the permanent thing first.
+    if (this.playbookMutedByFront()) return this.refuseMutedPlaybook();
     const required = Balance.e7Playbook.requiredPermissionLevel;
     if (!this.playbookConsentGranted()) return { ok: false, reason: `permission-level-${required}-required` };
     const result = this.startPlaybookReplay({ name });
@@ -4226,6 +4310,15 @@ export class Game {
     this.scene.add(this.e9ArsenalSystem.group);
     this.scene.add(this.e9CanalSystem.group);
     if (this.seedCaravan) this.scene.add(this.seedCaravan.group);
+    // A5: the band joins the scene only where a front is declared, so no other map pays a draw
+    // call for it. It starts hidden — `syncInterferenceBand` shows it while the wall crosses.
+    if (this.interferenceFront.isDeclared) {
+      this.interferenceBand.name = 'InterferenceFrontBand';
+      this.interferenceBand.rotation.x = -Math.PI / 2;
+      this.interferenceBand.renderOrder = RenderLayers.groundDecals;
+      this.interferenceBand.visible = false;
+      this.scene.add(this.interferenceBand);
+    }
     this.createMegaprojectVisuals();
     this.scene.add(this.megaprojectGroup);
     this.createBaronStandardVisual();
@@ -4983,6 +5076,10 @@ export class Game {
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
       e9Canal: this.e9CanalSystem.diagnostics,
       seedCaravan: this.seedCaravan?.diagnostics ?? null,
+      // A5: null off relay rush, the same shape every optional consumer above uses. This is what
+      // `e2e/e7-relay-rush-front.spec.ts` reads to prove the browser runs the same wall the
+      // headless engine does.
+      interferenceFront: this.interferenceFront.isDeclared ? this.interferenceFront.diagnostics : null,
       e10Finale: this.e10FinaleSystem.diagnostics(),
       e10Static: this.e10StaticBoss.diagnostics(),
       e7Signal: this.e7SignalSystem.diagnostics,
@@ -5324,6 +5421,10 @@ export class Game {
       || (this.crowdFlocks !== undefined && !this.crowdFlocks.allCrossed)
       // A8: the caravan-connect latch, the canyon latch's twin — the crossing IS the objective.
       || (this.seedCaravan !== null && !this.seedCaravan.objectiveComplete)
+      // A5: mirrors `HeadlessContractSim.autoSecureWaveForRun` clause for clause. Relay Rush is
+      // not won by outliving it: miss the deadline and the run cannot secure at any wave. True on
+      // every contract that declares no discharge-able front, so nothing else moves.
+      || !this.interferenceFront.objectiveAllowsSecure
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -5595,7 +5696,9 @@ export class Game {
       // an unrecovered probe. No contract declares both today; the two paths agree anyway.
       && this.probeRecovery.objectiveAllowsSecure
       // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
-      && (this.seedCaravan === null || this.seedCaravan.objectiveComplete);
+      && (this.seedCaravan === null || this.seedCaravan.objectiveComplete)
+      // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
+      && this.interferenceFront.objectiveAllowsSecure;
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
       || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
@@ -7327,6 +7430,10 @@ export class Game {
     this.e9ArsenalSystem.reset();
     this.e9CanalSystem.reset();
     this.seedCaravan?.reset();
+    // A5: the schedule restarts with the run — a new run's first front is 90s away, never the
+    // leftover phase of the last one.
+    this.interferenceFront.reset();
+    this.syncInterferenceBand();
     this.e10StaticBoss.reset();
     this.e7ArsenalSystem.reset();
     this.damSurge?.reset();
