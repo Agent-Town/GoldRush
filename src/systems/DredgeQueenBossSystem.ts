@@ -526,6 +526,7 @@ export class DredgeQueenBossSystem {
   }
 
   private ensureDredgeQueen3d(): void {
+    if (typeof document === 'undefined') return;
     if (this.dredgeQueen3dState !== 'off' && this.dredgeQueen3dState !== 'disposed') return;
     const serial = ++this.dredgeQueen3dLoadSerial;
     this.dredgeQueen3dState = 'loading';
@@ -631,6 +632,7 @@ export class DredgeQueenBossSystem {
   }
 
   private publishDredgeQueen3d(): void {
+    if (typeof document === 'undefined') return;
     const canvas = document.querySelector('canvas');
     if (!canvas) return;
     canvas.dataset.dredgeQueen3dState = this.dredgeQueen3dState;
@@ -719,6 +721,7 @@ function quittingSkiff(): THREE.Group {
 }
 
 function counterSprite(): THREE.Sprite {
+  if (typeof document === 'undefined') return new THREE.Sprite();
   const canvas = document.createElement('canvas');
   canvas.width = 320;
   canvas.height = 96;
@@ -733,6 +736,7 @@ function counterSprite(): THREE.Sprite {
 }
 
 function labelSprite(text: string, accent: string, width: number): THREE.Sprite {
+  if (typeof document === 'undefined') return new THREE.Sprite();
   const canvas = document.createElement('canvas');
   canvas.width = 384;
   canvas.height = 96;
