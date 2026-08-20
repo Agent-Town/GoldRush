@@ -25,6 +25,10 @@ export type StandingOrder =
   | { verb: 'SECURE_CHOICE'; choice: 'bank' | 'rush' }
   | { verb: 'CONTEXT_ACTION'; action: 'upgrade' | 'demolish'; target: { id: BuildableId; index: number } }
   | { verb: 'CONTEXT_ACTION'; action: 'fund' }
+  // A8 (door-completion-sheet §A8): plant the seed vault at the ground the Prospector stands on.
+  // A targetless context action like `fund`, for the same reason — the world, not a registry
+  // index, decides which stake is in reach, and the view already names the grounds.
+  | { verb: 'CONTEXT_ACTION'; action: 'plant' }
   | { verb: 'CAPTURE' }
   | { verb: 'BOAT_BUILD'; padId: string; buildingId: string }
   | { verb: 'REANCHOR'; anchorId: string }
@@ -545,6 +549,7 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
   }
   if (value.verb === 'CONTEXT_ACTION') {
     if (value.action === 'fund' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'fund' };
+    if (value.action === 'plant' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'plant' };
     if ((value.action !== 'upgrade' && value.action !== 'demolish') || !exactKeys(value, ['verb', 'action', 'target']) || !isRecord(value.target)) {
       return schemaError(index, 'CONTEXT_ACTION');
     }

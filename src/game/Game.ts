@@ -300,6 +300,7 @@ import {
   applyAtBirth,
   DREDGE_QUEEN_WRECK_ENTRY_ID,
   GREEN_WAYPOINT_ENTRY_ID,
+  isGreenWaypointEntry,
   OLD_DIGGER_GENTLE_ENTRY_ID,
   SALVAGE_CLAW_CARCASS_ENTRY_ID,
   parseDredgeQueenWreckPayload,
@@ -314,6 +315,7 @@ import {
   type SalvageClawCarcassPayload,
 } from './TileStateStore';
 import { createGreenWaypointSwatch, E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
+import { SeedCaravanSystem } from '../systems/SeedCaravanSystem';
 
 // Replay Law: Frontier upgrades remain available after later epochs activate.
 const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
@@ -586,6 +588,13 @@ export class Game {
   private readonly e6ArsenalSystem: E6ArsenalSystem;
   private readonly e9ArsenalSystem: E9ArsenalSystem;
   private readonly e9CanalSystem: E9CanalSystem;
+  /**
+   * A8 (door-completion-sheet §A8, RATIFIED 2026-08-20). Null on every contract that does not
+   * declare `twist.persistentPlanting`, which is every contract but the Seed Run today. The same
+   * consumer `HeadlessContractSim` composes, built off the SAME contract read, so the browser and
+   * the door cannot disagree about where the route runs or when the crossing is won.
+   */
+  private readonly seedCaravan: SeedCaravanSystem | null;
   private readonly e10FinaleSystem: E10FinaleSystem;
   private readonly e10StaticBoss: E10StaticBossSystem;
   private readonly e7SignalSystem: E7SignalSystem;
@@ -1241,6 +1250,8 @@ export class Game {
   private lastDebugXpIntent = false;
   private lastDebugPlantIntent = false;
   private greenWaypointMounted: GreenWaypointPayload | null = null;
+  /** A8: a Seed Run tile can be born carrying one disc per ground, so the mount is a list. */
+  private readonly greenWaypointsMounted: GreenWaypointPayload[] = [];
   private greenWaypointStagedThisRun = false;
   private playerPauseActive = false;
   private uiSnapshot?: UiSnapshot;
@@ -1436,6 +1447,13 @@ export class Game {
         this.activeContract.id === 'e9-dome-basin' &&
         !this.multiplayerActive(),
       (position, amount, label) => this.vfx.floatText(position, `${label} +${amount}`, '#83ded7'),
+    );
+    // A8: contract-driven, never epoch-driven or id-driven — the twist plus the authored zones
+    // and stakes are the whole test, so this stays null on the three Red Fields siblings.
+    this.seedCaravan = SeedCaravanSystem.create(
+      this.activeContract,
+      this.tileStateStore,
+      (position, text, color) => this.vfx.floatText(position, text, color),
     );
     this.e7SignalSystem = new E7SignalSystem(
       () => this.activeEpoch.id === 'epoch-7-signal' && !this.multiplayerActive(),
@@ -2375,6 +2393,7 @@ export class Game {
     this.e6TileConsumers.dispose();
     this.e9ArsenalSystem.dispose();
     this.e9CanalSystem.dispose();
+    this.seedCaravan?.dispose();
     this.e10FinaleSystem.dispose();
     this.e10StaticBoss.dispose();
     this.e7ArsenalSystem.dispose();
@@ -2663,6 +2682,9 @@ export class Game {
           this.e9ArsenalSystem.movementMultiplier(enemy),
       );
       if (this.e9CanalSystem.update(simDelta, this.timeAlive, this.visibleHarvestTargets())) this.syncHeroVisualHeight();
+      // A8: beside the era systems and ahead of the enemy integration step, so contact damage
+      // reads the same positions `HeadlessContractSim` reads at the same point in its own order.
+      this.seedCaravan?.update(simDelta, this.enemies.all);
       this.recycleDeepwaterCorsairsAtExit();
       if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
@@ -3002,7 +3024,9 @@ export class Game {
       contextAction: (order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>) => {
         const actor = this.agentRiderActor(playerId);
         if (!actor) return { ok: false as const, reason: 'INVALID_ACTOR: the rider is not in this room.' };
-        const ok = order.action === 'fund'
+        const ok = order.action === 'plant'
+          ? (this.seedCaravan?.tryPlant(actor.group.position).ok ?? false)
+          : order.action === 'fund'
           ? this.fundMegaprojectStage(actor.group.position)
           : order.action === 'upgrade'
             ? this.buildSystem.upgradeBuilding(order.target.id, order.target.index, this.timeAlive, actor.group.position)
@@ -4106,6 +4130,7 @@ export class Game {
     this.scene.add(this.e6TileConsumers.group);
     this.scene.add(this.e9ArsenalSystem.group);
     this.scene.add(this.e9CanalSystem.group);
+    if (this.seedCaravan) this.scene.add(this.seedCaravan.group);
     this.createMegaprojectVisuals();
     this.scene.add(this.megaprojectGroup);
     this.createBaronStandardVisual();
@@ -4821,6 +4846,7 @@ export class Game {
       e6Arsenal: this.e6ArsenalSystem.diagnostics,
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
       e9Canal: this.e9CanalSystem.diagnostics,
+      seedCaravan: this.seedCaravan?.diagnostics ?? null,
       e10Finale: this.e10FinaleSystem.diagnostics(),
       e10Static: this.e10StaticBoss.diagnostics(),
       e7Signal: this.e7SignalSystem.diagnostics,
@@ -4866,6 +4892,7 @@ export class Game {
         contractId: this.activeContract.id,
         entries: this.tileStateStore.readSnapshot(this.activeContract.id).entries.length,
         greenWaypoint: this.greenWaypointMounted,
+        greenWaypoints: this.greenWaypointsMounted,
         greenWaypointStaged: this.greenWaypointStagedThisRun,
         swatchColor: E1_RIVERBANK_GREEN,
         noSpawnZones: this.activeContract.tileParams.noSpawnZones ?? [],
@@ -5079,6 +5106,7 @@ export class Game {
     this.railPath?.resampleTerrain();
     this.megaprojectRailPath?.resampleTerrain();
     this.e9CanalSystem.resampleTerrain();
+    this.seedCaravan?.resampleTerrain();
     this.e6TileConsumers.resampleTerrain();
   }
 
@@ -5143,6 +5171,8 @@ export class Game {
     return this.waitsForBaronDefeat()
       || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
       || (this.activeContract.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
+      // A8: the caravan-connect latch, the canyon latch's twin — the crossing IS the objective.
+      || (this.seedCaravan !== null && !this.seedCaravan.objectiveComplete)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -5408,7 +5438,9 @@ export class Game {
     // Keys on `connect`, not on any powerGrid (F-1471-1): only syncCanyonConnectObjective sets the
     // flag below, and it early-returns on `!grid?.connect` — so a powerGrid without a connect
     // objective would pin this false forever and beating the Baron would silently fail to secure.
-    const objectiveAllowsSecure = !this.activeContract.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
+    // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
+    const objectiveAllowsSecure = (!this.activeContract.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline)
+      && (this.seedCaravan === null || this.seedCaravan.objectiveComplete);
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
       || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
@@ -7135,6 +7167,7 @@ export class Game {
     this.e6ArsenalSystem.reset();
     this.e9ArsenalSystem.reset();
     this.e9CanalSystem.reset();
+    this.seedCaravan?.reset();
     this.e10StaticBoss.reset();
     this.e7ArsenalSystem.reset();
     this.damSurge?.reset();
@@ -7526,13 +7559,20 @@ export class Game {
     this.vfx.floatText(position, 'The green takes root — it will hold', E1_RIVERBANK_GREEN);
   }
 
-  /** Render mounts for persisted entries, once at birth (Loader Contract). */
+  /**
+   * Render mounts for persisted entries, once at birth (Loader Contract).
+   *
+   * A8 widened this from ONE swatch to one per entry, because a Seed Run profile can hold three.
+   * `greenWaypointMounted` keeps meaning "the first one born", which is what TP-02's spec asserts
+   * on dry-gulch, where there is only ever one.
+   */
   private mountTileStateRenderEntries(): void {
     for (const entry of this.tileStateStore.readSnapshot(this.activeContract.id).entries) {
-      if (entry.kind !== 'sim' || entry.id !== GREEN_WAYPOINT_ENTRY_ID) continue;
+      if (!isGreenWaypointEntry(entry)) continue;
       const payload = parseGreenWaypointPayload(entry.payload);
-      if (!payload || this.greenWaypointMounted) continue;
-      this.greenWaypointMounted = payload;
+      if (!payload) continue;
+      this.greenWaypointsMounted.push(payload);
+      this.greenWaypointMounted ??= payload;
       this.scene.add(createGreenWaypointSwatch(payload));
     }
   }
@@ -8091,6 +8131,10 @@ export class Game {
     if (this.wrangle.tryCapture(this.actionActor.group.position)) return;
     if (this.e10StaticBoss.tryPreserve(this.actionActor.group.position, this.timeAlive)) return;
     if (this.oldDiggerBoss.tryInteract(this.actionActor.group.position, this.timeAlive)) return;
+    // A8: the plant is a PLAIN-BOOT context action on the same key every other one uses — no
+    // `?debug`, no dev bridge (Mistake #10). It sits ahead of demolish because a stake and a
+    // building are never in reach of each other on this map.
+    if (this.seedCaravan?.tryPlant(this.actionActor.group.position).ok) return;
     if (this.fundMegaprojectStage(this.actionActor.group.position)) return;
     this.confirmDemolish();
   }

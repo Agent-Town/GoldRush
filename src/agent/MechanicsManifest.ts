@@ -2,6 +2,14 @@ import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type Cont
 import { Balance } from '../game/Balance';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
+import {
+  SEED_CARAVAN_DWELL_SECONDS,
+  SEED_CARAVAN_MAX_HP,
+  SEED_CARAVAN_PLANT_COST_RATIO,
+  SEED_CARAVAN_PLANT_REACH,
+  SeedCaravanSystem,
+} from '../systems/SeedCaravanSystem';
+import { TileStateStore } from '../game/TileStateStore';
 
 type MechanicValue = boolean | number | string | readonly string[];
 
@@ -320,6 +328,27 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     }));
   }
 
+  // --- A8 persistent planting. SOURCED FROM THE CONSUMER for the same reason A4 is: the row
+  // names the grounds `SeedCaravanSystem` will actually accept a plant at, so a manifest that
+  // says "three stakes" can never outlive a contract that authors two. Absent unless the
+  // contract declares `twist.persistentPlanting` AND the consumer agrees it can run.
+  const caravan = SeedCaravanSystem.create(contract, new TileStateStore(MANIFEST_TILE_STORAGE));
+  if (caravan) {
+    const { grounds, route, maxHp } = caravan.diagnostics;
+    rules.push(rule('persistent_planting', 'SeedCaravanSystem.tryPlant', {
+      grounds: grounds.map(({ id }) => id),
+      // Both engines walk the caravan through these points in this order.
+      routeLength: route.length,
+      caravanMaxHp: maxHp,
+      plantCostHp: Math.round(SEED_CARAVAN_MAX_HP * SEED_CARAVAN_PLANT_COST_RATIO),
+      plantReach: SEED_CARAVAN_PLANT_REACH,
+      dwellSeconds: SEED_CARAVAN_DWELL_SECONDS,
+      verb: 'CONTEXT_ACTION action=plant',
+      // Named so a rider reads the TRADE, not three numbers.
+      consequence: 'each plant leaves a permanent no-spawn green on this map and spends a quarter of the caravan guard; the run secures only if the caravan reaches the basin alive',
+    }));
+  }
+
   // --- E6 Atomic. `WrangleSystem` is enabled for the WHOLE epoch (Game.ts:646), which is why
   // its absence blocked all four contracts at once. Derived from the consumer, not the roster.
   if (atomicEpoch(contract)) {
@@ -508,6 +537,9 @@ function interactables(contract: ContractManifest): MechanicsManifest['interacta
   }
   return result.sort(byId);
 }
+
+/** The manifest is a pure read: it never touches a profile, so its consumer gets bare ground. */
+const MANIFEST_TILE_STORAGE = { getItem: () => null, setItem: () => undefined, removeItem: () => undefined };
 
 function rule(id: string, source: string, data: Readonly<Record<string, MechanicValue>> = {}): MechanicsManifest['rules'][number] {
   return { id, source, data };

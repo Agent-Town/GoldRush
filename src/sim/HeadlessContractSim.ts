@@ -62,6 +62,7 @@ import { MothSwarm } from '../systems/MothSwarm';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
+import { SeedCaravanSystem, type SeedCaravanDiagnostics } from '../systems/SeedCaravanSystem';
 import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
@@ -104,6 +105,20 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // reason. Both of its clauses are now false: aimed CAPTURE absorbs 97-99% of exhaustion
   // (AP-16-8b) and the 60-enemy alive cap no longer holds exhausted machines at all. The
   // refusal survives its reason, which is why the row is reworded rather than removed.
+  // A8 BUILT THE MECHANIC AND THE MAP STILL WINS. `e9-seed-run`'s caravan, its three plant
+  // grounds and its objective latch all work in both engines (`src/systems/SeedCaravanSystem.ts`,
+  // `e2e/e9-seed-run-caravan.spec.ts`), and the crossing itself is not the problem — the train
+  // reached the basin with 228 of 240 guard on every measured run. The SECURE is the problem, and
+  // the reason is authored geometry rather than the new consumer: the claim stands at (0,12), ON
+  // the north edge of `center-green-waypoint` (x -10..10, z -6..12), the only buildZone within
+  // 30wu of it, so every gun must be built south of the body it defends; waves enter from BOTH
+  // the west and east edges; and half the roster is `feral_terraformer`, hpScale 1.7 with
+  // buildingDamageScale 1.4. Fifteen measured plays of a public-verb prover
+  // (`artifacts/e9-seed-run/`) topped out at wave 17 of 20 on seed 01 and 16 on seed 02.
+  'e9-seed-run': {
+    reason: 'Best measured public-verb play terminated unsecured at waves 17/16 against secureWave 20: the only buildZone near the claim is a 20x18 box whose north edge IS the claim, waves enter from two edges, and half the roster is an hpScale-1.7 wrecker. The A8 caravan and planting consumer are live and proven in the browser; re-admit when both bench seeds secure.',
+    citation: 'reviews/e9-seed-run.md',
+  },
   'e6-showroom': {
     reason: 'Aimed CAPTURE closes the loop and the alive cap no longer clogs, but no secure is demonstrated: competent play dies at waves 14-19 against secureWave 20, and difficulty stands per the owner (2026-08-20). Idle still false-greens at wave 20 — exhausted machines released their spawn slot but still hold an enemy-POOL slot, so all 96 fill with harmless statues and nothing further can spawn.',
     citation: 'reviews/e6-showroom-cap-fix.md',
@@ -199,6 +214,12 @@ export type HeadlessAgentView = AgentView & {
      * the browser's behaviour: this engine has none of the three systems to switch off.
      */
     signalSuppression?: SignalSuppressionDiagnostics;
+    /**
+     * A8. Present only where the contract declares `twist.persistentPlanting`. This one IS the
+     * objective: `seedCaravan.arrived` is what opens the secure, and `hp`/`state`/`dwellRemaining`
+     * are how a rider knows whether to escort, to plant, or to give up on the crossing.
+     */
+    seedCaravan?: SeedCaravanDiagnostics;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -337,6 +358,21 @@ export class HeadlessContractSim {
    * composed into this sim, it gates on THIS object and the note above becomes a real switch.
    */
   private readonly signalSuppression: SignalSuppression;
+  /**
+   * A8 — THE SEED CARAVAN, ticked for real, unlike the E9 census sockets.
+   *
+   * `E9CanalSocket`/`E9ArsenalSocket` are census probes this engine never ticks; that is fine for
+   * a canal, and would be fatal here, because this consumer OWNS THE OBJECTIVE. `arrived` is what
+   * lets the run secure at all, both in `autoSecureWaveForRun` below and in the browser's own
+   * `Game.autoSecureWaveForRun`. So it is composed like `PressureSystem` — constructed off the
+   * manifest, ticked in the browser's own relative order, null everywhere the twist is absent.
+   *
+   * THE TILE STORE IT IS GIVEN IS THE EMPTY ONE (`NO_PROFILE_STORAGE`), on purpose and by law:
+   * GR-SIM keeps no profile, so a null floor can never inherit a plant from an earlier run and a
+   * planted run can never leak into the next seed. Every bench run therefore starts from bare
+   * ground, which is exactly the isolation the floors need to mean anything.
+   */
+  private readonly seedCaravan: SeedCaravanSystem | null;
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -426,6 +462,9 @@ export class HeadlessContractSim {
     // Same read the browser performs at `Game.ts` (contract, never epoch), so the two engines
     // cannot disagree about which systems this contract declares off.
     this.signalSuppression = SignalSuppression.create(this.manifest);
+    // A8: same read the browser performs at `Game.ts` — the contract's own twist and its own
+    // authored zones/stakes. A fresh empty store per sim, so runs never inherit each other's greens.
+    this.seedCaravan = SeedCaravanSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -687,6 +726,10 @@ export class HeadlessContractSim {
         secureWaveForRun: () => this.manifest.twist.secureWave ?? Balance.run.secureWave,
         autoSecureWaveForRun: () => (this.manifest.twist.baron && !this.baronBeaten)
           || (this.manifest.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
+          // A8: the caravan-connect latch, keyed on `twist.persistentPlanting` exactly as the
+          // canyon latch keys on `powerGrid.connect`. A Seed Run that never lands its train
+          // cannot secure at any wave; a train that arrives opens the ordinary secure wave.
+          || (this.seedCaravan && !this.seedCaravan.objectiveComplete)
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -959,6 +1002,11 @@ export class HeadlessContractSim {
     this.syncContractPowerGrid();
     this.powerGraph?.step(this.simTick);
     this.syncCanyonConnectObjective();
+    // A8: the caravan advances beside the other objective syncs and BEFORE `enemies.update`,
+    // which is the browser's own order (`Game.ts` ticks it with the era systems, ahead of the
+    // enemy integration step). Reading the pool here means contact damage is resolved against
+    // the positions the previous tick left, identically in both engines.
+    this.seedCaravan?.update(STEP_SECONDS, this.enemies.all);
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
     this.enemies.update(STEP_SECONDS, this.hero.group.position, (enemy) => {
@@ -1011,6 +1059,10 @@ export class HeadlessContractSim {
     // from the `final` hash — the flags are a constant of the contract and the counters are
     // constant zero here, so hashing them would add bytes and no discrimination.
     if (this.signalSuppression.diagnostics.declared) view.now.signalSuppression = this.signalSuppression.diagnostics;
+    // A8: only where DECLARED. Unlike the suppression row this one MOVES every turn, and a rider
+    // that cannot read it cannot escort — so it carries the live guard, the dwell clock and the
+    // latch, and the grounds/route it needs to walk to a stake.
+    if (this.seedCaravan) view.now.seedCaravan = this.seedCaravan.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1175,7 +1227,9 @@ export class HeadlessContractSim {
     // flag below, and it early-returns on `!grid?.connect` — so a powerGrid without a connect
     // objective would pin this false forever and beating the Baron would silently fail to secure.
     // Mirrors src/game/Game.ts byte-for-byte; the browser moved first.
-    const objectiveAllowsSecure = !this.manifest.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
+    // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
+    const objectiveAllowsSecure = (!this.manifest.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline)
+      && (!this.seedCaravan || this.seedCaravan.objectiveComplete);
     const runWave = this.currentRunWave();
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen'
       && runWave < (this.manifest.twist.secureWave ?? Balance.run.secureWave);
@@ -1342,6 +1396,7 @@ export class HeadlessContractSim {
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
+      seedCaravan: this.seedCaravan?.simulationSnapshot ?? null,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,
@@ -1650,6 +1705,7 @@ export class HeadlessContractSim {
 
   private contextAction(order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>): { ok: true } | { ok: false; reason: string } {
     if (order.action === 'fund') return this.fundMegaproject();
+    if (order.action === 'plant') return this.plantSeedVault();
     const { id, index } = order.target;
     const ok = order.action === 'upgrade'
       ? this.build.upgradeBuilding(id, index, this.timeAlive, this.prospector.position)
@@ -1657,6 +1713,27 @@ export class HeadlessContractSim {
     if (!ok) return { ok: false, reason: `REJECTED: ${order.action} ${id}:${index} is not legal here.` };
     this.syncStockpileHoldings();
     this.replayEvents.push({ type: 'context_action', at: round(this.timeAlive), action: order.action, target: { id, index } });
+    return { ok: true };
+  }
+
+  /**
+   * A8's context action, reached by the SAME public verb the browser player uses — the
+   * Prospector must be standing at the stake, exactly as the megaproject fund below demands the
+   * site. The plant is optional by construction: a rider that never issues this order still
+   * secures, and one that plants three times pays three quarters of the guard for three greens
+   * that outlive the run.
+   */
+  private plantSeedVault(): { ok: true } | { ok: false; reason: string } {
+    if (!this.seedCaravan) return { ok: false, reason: 'REJECTED: this contract declares no planting grounds.' };
+    const planted = this.seedCaravan.tryPlant(this.prospector.position);
+    if (!planted.ok) return planted;
+    this.replayEvents.push({
+      type: 'context_action',
+      at: round(this.timeAlive),
+      action: 'plant',
+      ground: planted.groundId,
+      costHp: planted.costHp,
+    });
     return { ok: true };
   }
 
