@@ -5,13 +5,18 @@ import { expect, test, type Page } from '@playwright/test';
  * 2026-08-20). Three claims, in the order a player meets them:
  *
  *   1. PLAIN BOOT (no `?debug`, Mistake #10): the Seed Run is a real map with a real caravan on
- *      it. The briefing names it, the train is mounted in the scene, and the three planting
- *      grounds are where the contract says they are — with nothing written to a profile.
+ *      it. The briefing names it, the train stands in the yard the contract starts it in, the
+ *      three planting grounds are where the contract says they are — and nothing is written to a
+ *      profile by merely arriving (Mistake #7).
  *   2. THE TRADE: standing at a stake while the train stands at the same ground, the ordinary
  *      confirm key plants a vault. The guard drops by the ratified quarter, and NOTHING is
  *      persisted mid-run.
  *   3. THE PERSISTENCE LAW: the write lands at run END and takes effect at the NEXT tile birth —
  *      a permanent no-spawn green, on this profile, on this map, for every run after.
+ *
+ * THIS IS WHERE A8's PERSISTENCE IS PROVEN AT ALL. `HeadlessContractSim` deliberately hands the
+ * caravan a fresh EMPTY tile store so no bench run can inherit a plant, so the headless engine
+ * cannot demonstrate the round trip even in principle. The browser can, and does, here.
  *
  * The dry-gulch rehearsal (`e2e/tp02-green-waypoint.spec.ts`) is untouched and still passes: it
  * plants the BARE `green-waypoint` entry id, while this map plants `green-waypoint:<ground>`.
@@ -20,6 +25,7 @@ import { expect, test, type Page } from '@playwright/test';
 const QUERY = '/?contract=e9-seed-run&nolevel&nopause&seed=sr01';
 const DEBUG_QUERY = `${QUERY}&debug`;
 const CONTRACT_ID = 'e9-seed-run';
+const CENTER_GROUND = 'plant-center-waypoint';
 const CENTER_STAKE = { x: 0, z: 3 };
 const CENTER_ENTRY_ID = 'green-waypoint:plant-center-waypoint';
 const GREEN_RADIUS = 3;
@@ -28,11 +34,19 @@ const CARAVAN_MAX_HP = 240;
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
-test.setTimeout(180_000);
-test.beforeEach(async ({ page }) => page.addInitScript(() => {
-  localStorage.clear();
-  sessionStorage.clear();
-}));
+test.setTimeout(240_000);
+
+/**
+ * The storage wipe runs ONCE per test, not once per navigation. `addInitScript` fires on every
+ * load including `reload()`, so an unguarded `localStorage.clear()` here would erase the very
+ * write the persistence test exists to observe. Same sessionStorage latch TP-02 uses.
+ */
+test.beforeEach(async ({ page }, testInfo) => page.addInitScript((key) => {
+  if (!sessionStorage.getItem(key)) {
+    localStorage.clear();
+    sessionStorage.setItem(key, '1');
+  }
+}, `e9-seed-run-${testInfo.testId}`));
 
 function collectErrors(page: Page): ErrorBucket {
   const errors: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -48,8 +62,31 @@ async function waitForBoot(page: Page, debug: boolean): Promise<void> {
   if (await dismiss.isVisible()) await dismiss.evaluate((button: HTMLButtonElement) => button.click());
 }
 
+/** Manual sim + no contact damage: this spec measures the CARAVAN, not the hero's survival. */
+async function takeManualControl(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    const harness = window.__GR_TEST__!;
+    harness.setManualSim(true);
+    harness.setBalance('enemy.contactDamage', 0);
+  });
+}
+
 const caravan = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.seedCaravan);
 const persistence = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.tilePersistence);
+
+/**
+ * Advance in chunks until the predicate holds. `advanceSim` is SYNCHRONOUS, so polling a
+ * diagnostic after a single call can only ever see one instant — the clock does not move on its
+ * own under manual sim, and a poll that waits for it would hang until the timeout.
+ */
+async function advanceUntil(page: Page, predicate: (state: NonNullable<Awaited<ReturnType<typeof caravan>>>) => boolean, budgetSeconds = 320): Promise<void> {
+  for (let elapsed = 0; elapsed < budgetSeconds; elapsed += 5) {
+    const state = await caravan(page);
+    if (state && predicate(state)) return;
+    await page.evaluate(() => window.__GR_TEST__!.advanceSim(5));
+  }
+  throw new Error(`caravan never reached the expected state within ${budgetSeconds}s of sim time`);
+}
 
 async function tileStateSnapshot(page: Page): Promise<string | null> {
   return page.evaluate(async (contractId) => {
@@ -64,6 +101,8 @@ async function pressConfirm(page: Page): Promise<void> {
     window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Space', key: ' ', bubbles: true }));
     window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Space', key: ' ', bubbles: true }));
   });
+  // One frame, so the intent edge is consumed before the next assertion reads diagnostics.
+  await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.2));
 }
 
 test('a plain boot puts a real caravan on a real road — no debug, no profile write', async ({ page }) => {
@@ -75,9 +114,20 @@ test('a plain boot puts a real caravan on a real road — no debug, no profile w
   await expect(page.getByTestId('contract-briefing-name')).toContainText(/Seed Run/i);
 
   const state = await caravan(page);
-  expect(state).toMatchObject({ declared: true, hp: CARAVAN_MAX_HP, maxHp: CARAVAN_MAX_HP, arrived: false });
+  expect(state).toMatchObject({
+    declared: true,
+    state: 'moving',
+    hp: CARAVAN_MAX_HP,
+    maxHp: CARAVAN_MAX_HP,
+    arrived: false,
+    atGround: null,
+    plantedBefore: [],
+    plantedThisRun: [],
+  });
+  // The train has a PLACE, and it is the yard the contract starts it in.
+  expect(state!.position).toEqual({ x: 0, z: -48 });
   // The route is the five authored buildZone centres, in authored order — the same five points
-  // the mask table publishes as `caravanRoute` and `scripts/e3-mask-tables.test.mjs` already pins.
+  // the mask table publishes as `caravanRoute` and `scripts/e3-mask-tables.test.mjs:352` pins.
   expect(state!.route).toEqual([
     { x: 0, z: -48 }, { x: -34, z: -21 }, { x: 0, z: 3 }, { x: 34, z: 27 }, { x: 0, z: 48 },
   ]);
@@ -86,12 +136,6 @@ test('a plain boot puts a real caravan on a real road — no debug, no profile w
     'plant-center-waypoint/center-green-waypoint',
     'plant-east-waypoint/east-green-waypoint',
   ]);
-  expect(state!.plantedBefore).toEqual([]);
-
-  // The train has a PLACE, and it is the yard the contract starts it in — a computed caravan
-  // with no position would fail here.
-  expect(state!.position).toEqual({ x: 0, z: -48 });
-  expect(state!.state).toBe('moving');
 
   // Nothing is written on boot (Mistake #7): a run that plants nothing persists nothing.
   expect(await tileStateSnapshot(page)).toBeNull();
@@ -103,26 +147,21 @@ test('planting at the stake spends the guard, lands at run end, and is born as a
   const errors = collectErrors(page);
   await page.goto(DEBUG_QUERY);
   await waitForBoot(page, true);
-  await page.evaluate(() => {
-    const test = window.__GR_TEST__!;
-    test.setManualSim(true);
-    test.setBalance('enemy.contactDamage', 0);
-  });
+  await takeManualControl(page);
 
-  // Walk the train to the centre ground. It leaves the south yard at t=0 and reaches (0,3) on a
-  // fixed schedule, so the harness simply advances until the dwell opens.
-  await page.evaluate(() => window.__GR_TEST__!.advanceSim(120));
-  await expect.poll(async () => (await caravan(page))?.atGround).toBe('plant-center-waypoint');
-  expect((await caravan(page))?.state).toBe('paused');
+  // Walk the train to the centre ground on its own fixed schedule and stop inside the window.
+  await advanceUntil(page, (state) => state.atGround === CENTER_GROUND);
+  expect((await caravan(page))!.state).toBe('paused');
 
-  // OUT OF REACH IS REFUSED, and the refusal is counted rather than swallowed.
+  // OUT OF REACH IS REFUSED, and the refusal is counted rather than swallowed. The hero starts at
+  // (0,12), nine wu from the stake — close enough to see it, too far to plant it.
   await pressConfirm(page);
-  await expect.poll(async () => (await caravan(page))?.refusals.outOfReach).toBeGreaterThan(0);
-  expect((await caravan(page))?.plantedThisRun).toEqual([]);
+  expect((await caravan(page))!.refusals.outOfReach).toBeGreaterThan(0);
+  expect((await caravan(page))!.plantedThisRun).toEqual([]);
 
   await page.evaluate(({ x, z }) => window.__GR_TEST__!.teleport(x, z), CENTER_STAKE);
   await pressConfirm(page);
-  await expect.poll(async () => (await caravan(page))?.plantedThisRun).toEqual(['plant-center-waypoint']);
+  expect((await caravan(page))!.plantedThisRun).toEqual([CENTER_GROUND]);
 
   // THE COST: the ratified quarter, off both the pool and the ceiling.
   const spent = await caravan(page);
@@ -131,8 +170,8 @@ test('planting at the stake spends the guard, lands at run end, and is born as a
 
   // ONE PER GROUND, for the life of the profile.
   await pressConfirm(page);
-  await expect.poll(async () => (await caravan(page))?.refusals.alreadyHeld).toBeGreaterThan(0);
-  expect((await caravan(page))?.plantedThisRun).toEqual(['plant-center-waypoint']);
+  expect((await caravan(page))!.refusals.alreadyHeld).toBeGreaterThan(0);
+  expect((await caravan(page))!.plantedThisRun).toEqual([CENTER_GROUND]);
 
   // WRITE-AT-END: staged only. Nothing on disk, and this run's spawn rules are untouched.
   expect(await tileStateSnapshot(page)).toBeNull();
@@ -157,43 +196,38 @@ test('planting at the stake spends the guard, lands at run end, and is born as a
   expect(await persistence(page)).toMatchObject({
     entries: 1,
     greenWaypoint: { x: CENTER_STAKE.x, z: CENTER_STAKE.z, r: GREEN_RADIUS },
+    greenWaypoints: [{ x: CENTER_STAKE.x, z: CENTER_STAKE.z, r: GREEN_RADIUS }],
     noSpawnZones: [{ x: CENTER_STAKE.x, z: CENTER_STAKE.z, radius: GREEN_RADIUS }],
   });
-  expect((await caravan(page))!.plantedBefore).toEqual(['plant-center-waypoint']);
+  expect((await caravan(page))!.plantedBefore).toEqual([CENTER_GROUND]);
 
   // And the ground it holds refuses a second vault forever.
-  await page.evaluate(() => {
-    const test = window.__GR_TEST__!;
-    test.setManualSim(true);
-    test.setBalance('enemy.contactDamage', 0);
-    test.advanceSim(120);
-  });
-  await expect.poll(async () => (await caravan(page))?.atGround).toBe('plant-center-waypoint');
+  await takeManualControl(page);
+  await advanceUntil(page, (state) => state.atGround === CENTER_GROUND);
   await page.evaluate(({ x, z }) => window.__GR_TEST__!.teleport(x, z), CENTER_STAKE);
   await pressConfirm(page);
-  await expect.poll(async () => (await caravan(page))?.refusals.alreadyHeld).toBeGreaterThan(0);
-  expect((await caravan(page))?.plantedThisRun).toEqual([]);
+  expect((await caravan(page))!.refusals.alreadyHeld).toBeGreaterThan(0);
+  expect((await caravan(page))!.plantedThisRun).toEqual([]);
 
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
-test('the caravan reaching the basin is what opens the secure, and a dead train never does', async ({ page }) => {
+test('the caravan reaching the basin is what latches the objective', async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto(DEBUG_QUERY);
   await waitForBoot(page, true);
-  await page.evaluate(() => {
-    const test = window.__GR_TEST__!;
-    test.setManualSim(true);
-    test.setBalance('enemy.contactDamage', 0);
-  });
+  await takeManualControl(page);
 
-  // The whole crossing: five legs at 1.6 wu/s plus three 40-second dwells.
-  await page.evaluate(() => window.__GR_TEST__!.advanceSim(400));
-  await expect.poll(async () => (await caravan(page))?.state, { timeout: 60_000 }).toBe('arrived');
+  // The whole crossing: four legs at 1.6 wu/s plus three 40-second dwells, ~224s of sim.
+  await advanceUntil(page, (state) => state.arrived);
   const landed = await caravan(page);
-  expect(landed).toMatchObject({ arrived: true, progress: 1 });
-  // Arriving with no plant costs nothing: the guard is whole minus whatever the road took.
+  expect(landed).toMatchObject({ state: 'arrived', arrived: true, progress: 1, atGround: null });
+  expect(landed!.position).toEqual({ x: 0, z: 48 });
+  // Arriving with no plant costs nothing: an empty road takes nothing off the guard.
   expect(landed!.maxHp).toBe(CARAVAN_MAX_HP);
+  expect(landed!.plantedThisRun).toEqual([]);
 
+  // A landed train persists nothing by landing — only planting writes.
+  expect(await tileStateSnapshot(page)).toBeNull();
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
