@@ -12,6 +12,18 @@ const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
 };
 
 /**
+ * THE ADMITTED SET (2026-08-20, `fix-e5-dredge-queen-headless-socket` attempt 3 + its admission
+ * completion). The Dredge-Queen socket landed: `DredgeQueenBossSystem` constructs headless, the
+ * storm handoff is wired, and both bench seeds SECURE at wave 12 under public Deepwater verbs
+ * (`REANCHOR`/`BOAT_BUILD` + the automatic Spark Rig). So the Claim is now ADMITTED and SEEDED.
+ *
+ * The other three E5 contracts are unchanged: their consumers are still absent, so they stay
+ * refused and unseeded. This census is per-id from here on — a single blanket refusal would now
+ * be a lie about the flagship, and a single blanket admission a lie about the other three.
+ */
+const ADMITTED = new Set(['e5-deepwater-claim']);
+
+/**
  * ADMISSION GATE 1 (F-ER01-E5-1) — every E5 contract must name the headless consumer it lacks.
  * The Deepwater Claim shipped without one: `tileParams.deepwater` is inert for all four contracts,
  * but it is absent from `DECLARED_INERT_PATHS`, so the AP-11 validator never demanded the
@@ -51,9 +63,10 @@ const EXPECTED_SOCKET_RULES = [
 ];
 
 for (const contract of deepwater.contracts) {
-  test(`${contract.id} census refusal is explicit`, async () => {
+  test(`${contract.id} census admission is explicit`, async () => {
     test.setTimeout(90_000);
     const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+    const admitted = ADMITTED.has(contract.id);
     const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
     const previousLocation = host.location;
     const previousWindow = host.window;
@@ -79,7 +92,10 @@ for (const contract of deepwater.contracts) {
       const { EnemyPool } = await vite.ssrLoadModule('/src/entities/pools.ts');
       const manifest = deriveMechanicsManifest(contract.id);
 
-      expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
+      // Seeded exactly where admitted. The Claim's pair was added by the socket slice; the three
+      // variants must still be absent, or the door would advertise runs it refuses (F-DOOR-4).
+      if (admitted) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
+      else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
       expect(manifest.interactables).toEqual([]);
       const sources = manifest.rules.map(({ source }: { source: string }) => source);
       for (const source of FORBIDDEN_SOURCE) expect(sources).not.toContain(source);
@@ -144,13 +160,17 @@ for (const contract of deepwater.contracts) {
         expect(first.diagnostics.corsairWaves).toBeGreaterThan(0);
         expect(first.diagnostics.corsairsSpawned).toBeGreaterThan(0);
 
-        // F-ER01-E5-1: the missing step is COUNTED, not skipped. Every storm wave at or past the
-        // Dredge-Queen's wave was offered to a boss that cannot be constructed outside a browser.
+        // F-ER01-E5-1: a missing handoff is COUNTED, never skipped. `drive()` builds the socket
+        // with NO `bossHandoff` (the five-argument form), so every storm wave at or past the
+        // Dredge-Queen's wave is still recorded as a refusal. That counter is the socket's honesty
+        // mechanism and it must keep working now that a handoff EXISTS — the admitted sim below
+        // wires one and therefore refuses nothing.
         expect(first.diagnostics.bossHandoffsRefused).toBeGreaterThan(0);
 
         // F-ER01-E5-5, closed by AP-16-7: both boat levers keep the consumer's accept/reject
-        // law, and the headless door now exposes their diagnostics and verbs without admitting
-        // the contract ahead of the separate re-probe.
+        // law, and the headless door exposes their diagnostics and verbs. The re-probe that this
+        // once waited on has since been run and PASSED, which is why the door below is opened
+        // without the `admissionProbe` escape hatch.
         const boat = contract.tileParams.deepwater.claimBoat;
         const other = boat.anchors.find(({ id }: { id: string }) => id !== boat.initialAnchorId)!;
         expect(first.reanchor(other.id)).toBe(true);
@@ -159,12 +179,19 @@ for (const contract of deepwater.contracts) {
         expect(first.placeBoatBuilding(boat.pads[0].id, 'turret')).toBe(true);
         expect(first.placeBoatBuilding(boat.pads[0].id, 'sentry_beacon')).toBe(false);
         expect(first.placeBoatBuilding('no-such-pad', 'turret')).toBe(false);
-        const door = new HeadlessContractSim({ contractId: contract.id, seed: 'ap16-7-e5-census', admissionProbe: true });
-        expect(door.currentTurn().view.now.deepwater).toMatchObject({
+        // No `admissionProbe` flag any more: the Claim is through the ordinary door. Constructing
+        // it without the escape hatch IS the admission assertion.
+        const door = new HeadlessContractSim({ contractId: contract.id, seed: 'ap16-7-e5-census' });
+        const doorDeepwater = door.currentTurn().view.now.deepwater;
+        expect(doorDeepwater).toMatchObject({
           pads: expect.any(Array),
           anchors: expect.any(Array),
           anchor: expect.any(Object),
+          // The boss the census used to report as ABSENT now reports its own state.
+          dredgeQueenBoss: expect.objectContaining({ act: expect.any(Number), livePaddles: 2 }),
         });
+        // The wired sim hands every storm wave to a real boss, so nothing is refused.
+        expect(doorDeepwater!.bossHandoffsRefused).toBe(0);
         for (const order of [
           { verb: 'BOAT_BUILD', padId: boat.pads[1].id, buildingId: 'turret' },
           { verb: 'REANCHOR', anchorId: other.id },
@@ -187,8 +214,11 @@ for (const contract of deepwater.contracts) {
         expect(socket).toBeNull();
       }
 
+      // THE DOOR ITSELF. The Claim boots on its own bench seeds; the three variants are still
+      // refused BY NAME, which is what keeps the refusal honest rather than silent.
       for (const seed of seeds) {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(/AP-07 supports only/);
+        if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
+        else expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(/AP-07 supports only/);
       }
       expect(consoleErrors).toEqual([]);
     } finally {

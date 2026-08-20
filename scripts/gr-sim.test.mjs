@@ -88,9 +88,14 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   assert.ok(lines.some((line) => line.schema === 'goldrush.view.v1' && line.now.works.byKind.palisade === 1));
   assert.match(first.stderr, /gr-sim speed: \d+\.\d{2} waves\/s/);
 
+  // The refusal probe must name a contract that is ACTUALLY still refused. It used to be
+  // `e5-deepwater-claim`, which was admitted on 2026-08-20 once the Dredge-Queen socket landed
+  // and both its bench seeds secured — leaving this assertion testing nothing but its own
+  // staleness. `e5-stillwater` keeps the property under test: its noise-hunt consumer is still
+  // absent, so it remains a cited exemption and the door must still refuse it BY NAME.
   const unsupported = spawnSync(
     process.execPath,
-    ['scripts/gr-sim.mjs', '--contract', 'e5-deepwater-claim', '--policy=idle'],
+    ['scripts/gr-sim.mjs', '--contract', 'e5-stillwater', '--policy=idle'],
     { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
   );
   assert.notEqual(unsupported.status, 0);
