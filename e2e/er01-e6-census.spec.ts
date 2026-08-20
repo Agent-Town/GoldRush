@@ -8,11 +8,11 @@ import atomic from '../assets/contracts/epoch-6-atomic/contracts.json' with { ty
 const EXPECTED_RULES: Record<string, string[]> = {
   'e6-glow-mesa': [
     'baron', 'build_zones', 'decay_field_windows', 'night_vein_ring',
-    'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down',
+    'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down',
   ],
-  'e6-showroom': ['build_zones', 'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
-  'e6-half-life-hollow': ['build_zones', 'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
-  'e6-picnic': ['build_zones', 'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-showroom': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-half-life-hollow': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-picnic': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
 };
 
 /**
@@ -127,7 +127,7 @@ for (const contract of atomic.contracts) {
       expect(socket.diagnostics.wrangle.pen.total).toBe(1);
 
       // The manifest must keep saying so, in the consumer's own numbers.
-      const captureRule = mechanics.rules.find(({ id }: { id: string }) => id === 'wrangle_capture_unreachable');
+      const captureRule = mechanics.rules.find(({ id }: { id: string }) => id === 'wrangle_capture');
       expect(captureRule.data.aliveCap).toBe(Balance.waves.aliveCap);
       expect(captureRule.data.consumerLever).toBe('WrangleSystem.tryCapture');
       expect(mechanics.buildables).toEqual(expect.any(Array));
