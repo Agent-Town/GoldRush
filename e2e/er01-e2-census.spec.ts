@@ -38,7 +38,15 @@ for (const contract of steamworks.contracts) {
       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
       const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
-      if (contract.id !== 'e2-pressure-garden') {
+      // ADMITTED PER ID, DELIBERATELY. F-1660-1 records that these three were once re-admitted BY
+      // OMISSION when ap16-4 turned the door from a list into a derivation, so this census names
+      // every E2 contract's side of the door explicitly rather than letting a derivation decide.
+      // `e2-hill-mine` joined `e2-pressure-garden` on 2026-08-20 with a lawful secure on both bench
+      // seeds (reviews/e2-pressure-arsenal-headless.md); `e2-trestle` and `e2-incline` are still
+      // exempt, and the exemption table carries the measured reason.
+      const admitted = ['e2-pressure-garden', 'e2-hill-mine'];
+      if (!admitted.includes(contract.id)) {
+        expect(contract.id === 'e2-trestle' || contract.id === 'e2-incline').toBe(true);
         expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
         expect(consoleErrors).toEqual([]);
         return;

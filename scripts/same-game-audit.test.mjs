@@ -37,7 +37,15 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // re-running this audit reproduced 7/352/728 EXACTLY, so these three numbers move together with
   // that row and nothing else did. The preceding move, for the record, was 8 -> 7 / 373 -> 352 /
   // 707 -> 728 when `e5-deepwater-claim` was admitted — 21 rows per contract, both times.
-  assert.equal(audit.admission.exemptions.length, 6);
+  // ADMISSION MOVE (2026-08-20, `e2-pressure-arsenal-headless`): the E2 pressure arsenal reached the
+  // headless engine on the browser's own gates, so `e2-hill-mine` left CONTRACT_ADMISSION_EXEMPTIONS
+  // (6 -> 5) after securing on both bench seeds under a DECLARED progressed profile. Unlike the two
+  // moves above, THE SUMMARY DOES NOT MOVE WITH IT — 331/749/15 are unchanged — and that is the
+  // point worth recording: the Hill Mine declares an escort mode, so `agentCanEnter` was already
+  // true and every one of its parity rows already read `equal`. Only the exemption count moves.
+  // ATTRIBUTED by revert-and-reproduce, not guessed: re-adding that one exemption row and re-running
+  // this audit reproduced 6 exemptions with the SAME 0/331/749/15 summary, exactly.
+  assert.equal(audit.admission.exemptions.length, 5);
   assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 331, equal: 749, 'not-offered': 15 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
