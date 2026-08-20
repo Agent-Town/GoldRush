@@ -240,6 +240,14 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e4-boneyard-01",
     "e4-boneyard-02"
   ],
+  "e4-long-road": [
+    "e4-long-road-01",
+    "e4-long-road-02"
+  ],
+  "e4-gusher-county": [
+    "e4-gusher-county-01",
+    "e4-gusher-county-02"
+  ],
   "e7-relay-valley": [
     "e7-relay-valley-01",
     "e7-relay-valley-02"
