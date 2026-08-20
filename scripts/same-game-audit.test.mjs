@@ -30,13 +30,15 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
   assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 15);
   assert.equal(audit.admission.measurements.length, 10);
-  // ADMISSION MOVE (2026-08-20, `fix-e5-dredge-queen-headless-socket`): the Dredge-Queen socket
-  // landed, so `e5-deepwater-claim` left CONTRACT_ADMISSION_EXEMPTIONS (8 -> 7) and its parity
-  // rows stopped being `agent-lacks` (373 -> 352, equal 707 -> 728). The delta was ATTRIBUTED, not
-  // guessed: re-adding that one exemption row and re-running this audit reproduced 8/373/707
-  // exactly, so these three numbers move together with that row and nothing else did.
-  assert.equal(audit.admission.exemptions.length, 7);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 352, equal: 728, 'not-offered': 15 });
+  // ADMISSION MOVE (2026-08-20, `fix-e6-homemaker-headless-socket`, one day after the Dredge-Queen
+  // sibling): the Homemaker socket landed, so `e6-glow-mesa` left CONTRACT_ADMISSION_EXEMPTIONS
+  // (7 -> 6) and its parity rows stopped being `agent-lacks` (352 -> 331, equal 728 -> 749).
+  // ATTRIBUTED the same way its sibling was, not guessed: re-adding that one exemption row and
+  // re-running this audit reproduced 7/352/728 EXACTLY, so these three numbers move together with
+  // that row and nothing else did. The preceding move, for the record, was 8 -> 7 / 373 -> 352 /
+  // 707 -> 728 when `e5-deepwater-claim` was admitted — 21 rows per contract, both times.
+  assert.equal(audit.admission.exemptions.length, 6);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 331, equal: 749, 'not-offered': 15 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

@@ -280,6 +280,7 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
   "e4-gusher-county",
   "e4-long-road",
   "e5-deepwater-claim",
+  "e6-glow-mesa",
   "e7-relay-valley",
   "e8-eclipse",
   "e8-mare-claim",

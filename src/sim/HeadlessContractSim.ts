@@ -16,6 +16,7 @@ import { createRng } from '../core/Rng';
 import { EventBus, type GameEvent } from '../core/EventBus';
 import type { Intents } from '../core/InputController';
 import { BlastChargePool } from '../entities/BlastCharge';
+import { GoldPickupPool } from '../entities/GoldPickup';
 import { EnemyPool } from '../entities/pools';
 import { Hero } from '../entities/Hero';
 import { ProjectilePool } from '../entities/Projectile';
@@ -26,6 +27,7 @@ import { Balance } from '../game/Balance';
 import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { GameState } from '../game/GameState';
 import { Progression } from '../game/Progression';
+import { TileStateStore } from '../game/TileStateStore';
 import { hasResearchNode, loadResearchState } from '../meta/ResearchTree';
 import type { EffectiveStats } from '../game/StatSheet';
 import { resolveFiller, upgradeDefById, upgradeEffect } from '../game/Upgrades';
@@ -53,6 +55,7 @@ import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
+import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
@@ -91,10 +94,6 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
     citation: 'reviews/milk-twin-sockets.md',
   },
-  'e6-glow-mesa': {
-    reason: 'CAPTURE policy did not reach a lawful terminal because Homemaker boss resolution remains absent.',
-    citation: 'reviews/milk-twin-sockets.md',
-  },
   'e6-showroom': {
     reason: 'Idle and CAPTURE policy both reached the wave-20 false green with the 60-enemy alive cap still full.',
     citation: 'reviews/milk-twin-sockets.md',
@@ -110,6 +109,8 @@ export function supportedContractIds(): string[] {
   return [...SUPPORTED_CONTRACTS].sort();
 }
 const HEADLESS_META_STORAGE = { getItem: () => null, setItem: () => undefined };
+/** Same empty profile AtomicSocket hands its own tile state: GR-SIM persists nothing across runs. */
+const NO_PROFILE_STORAGE = { getItem: () => null, setItem: () => undefined, removeItem: () => undefined };
 /**
  * Names the engine inside every seated determinism hash. A browser rider hashes a
  * run-suspend snapshot (Game.multiplayerStateHash); this sim hashes its own planar
@@ -124,6 +125,15 @@ export function bossKillSecuresRun(
   event: Extract<GameEvent, { type: 'enemy_killed' }>,
 ): boolean {
   const expectedKind = baron?.bossKind ?? 'baron';
+  // THE HOMEMAKER SECURES ON ITS CORE, NEVER ON ITS RAILCAR PAIR (`src/game/Game.ts:1710`:
+  // `!isHomemakerComponent || event.bossComponentId === 'core'`). VAC and RACK arrive as the
+  // contract's authored two-member `wave-8:component-boss` group, so the generic branch below
+  // would secure the run the moment the SECOND of them died — while the CORE the boss spawns on
+  // VAC's death (`HomemakerBossSystem.spawnCore`, its own single-member group) was still standing.
+  // That is a false green in the browser's own terms, so the exception is transcribed, not invented.
+  if (baron?.variantId === 'homemaker_9000') {
+    return event.eliteKind === expectedKind && event.bossComponentId === 'core' && event.bossRemaining === 0;
+  }
   const expectedGroupId = baron?.variantId === 'dredge_queen'
     ? `${contractId}:dredge-queen-hold`
     : baron?.components?.length
@@ -169,7 +179,9 @@ export type HeadlessAgentView = AgentView & {
     deepwater?: DeepwaterSocket['diagnostics'] & {
       dredgeQueenBoss?: ReturnType<DredgeQueenBossSystem['diagnostics']>;
     };
-    atomic?: AtomicSocket['diagnostics'];
+    atomic?: AtomicSocket['diagnostics'] & {
+      homemakerBoss?: ReturnType<HomemakerBossSystem['diagnostics']>;
+    };
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -286,6 +298,8 @@ export class HeadlessContractSim {
   private readonly mothSwarm: MothSwarm | null;
   private readonly crawler: CrawlerBossSystem | null;
   private readonly dredgeQueen: DredgeQueenBossSystem | null;
+  private readonly goldPickups: GoldPickupPool | null;
+  private readonly homemaker: HomemakerBossSystem | null;
   private readonly deepwater: DeepwaterSocket | null;
   private readonly atomic: AtomicSocket | null;
   private readonly waves: WaveSystem;
@@ -442,6 +456,36 @@ export class HeadlessContractSim {
           true,
           { readAtBirth: () => null, writeAtCeremony: () => undefined },
         )
+      : null;
+    // E6's Homemaker is the only boss built through a FACTORY (`Game.ts:920`), because its first
+    // act is to hand the gold-pickup pool a demolish collector: the machine unbuilds the town, and
+    // the refund those parts become has to land somewhere. `GoldPickupPool` was probed before this
+    // line was written and is browser-free — `THREE.Group`/`InstancedMesh`/`DodecahedronGeometry`
+    // are plain typed-array objects, no `document`, no GL context — so the REAL pool is reused
+    // rather than reshaped into a stub (the task's own NO list forbids reshaping its API).
+    // It is minted ONLY for this boss, so no already-admitted contract gains a tick or an object.
+    const homemakerActive = this.manifest.twist.baron?.variantId === 'homemaker_9000';
+    this.goldPickups = homemakerActive ? new GoldPickupPool() : null;
+    this.homemaker = this.goldPickups
+      ? createHomemakerBossSystem({
+          enemies: this.enemies,
+          buildSystem: () => this.build,
+          targeting: this.targeting,
+          combat: this.combat,
+          goldPickups: this.goldPickups,
+          // The browser's `announce` is a `uiBridge` banner (`Game.ts:926`): presentation only,
+          // like the capture float-text AtomicSocket already declines to model.
+          announce: () => undefined,
+          syncStockpileHoldings: () => this.syncStockpileHoldings(),
+          // GR-SIM keeps no profile on disk (AtomicSocket says the same about the appliance pen):
+          // the kept chair reads empty at birth and writes nowhere, so the Homemaker is always the
+          // unmet machine here, never the one the town already took in.
+          tileStateStore: new TileStateStore(NO_PROFILE_STORAGE),
+          contractId: this.contractId,
+          enabled: homemakerActive,
+          now: () => this.timeAlive,
+          suppressBossSpawn: () => this.waves.suppressBaronForRun(),
+        })
       : null;
     this.dayNightCycle = this.manifest.twist.dayNightCycle
       ? new DayNightCycle(this.manifest.twist.dayNightCycle)
@@ -675,6 +719,9 @@ export class HeadlessContractSim {
         ...(crawler ? { crawler: (({ crawler3dState: _, ...simulation }) => simulation)(crawler) } : {}),
         ...(this.deepwater ? { deepwater: this.deepwater.simulationSnapshot } : {}),
         ...(this.atomic ? { atomic: this.atomic.diagnostics } : {}),
+        // The chair is part of the terminal state, so it belongs in the hash that certifies it:
+        // a secure claimed without `poweredDown`/`chairPlaced` would hash differently from one won.
+        ...(this.homemaker ? { homemaker: this.homemaker.diagnostics() } : {}),
       },
     });
     return { ...base, eventLogHash, ...overtime };
@@ -803,6 +850,10 @@ export class HeadlessContractSim {
     this.atomic?.updateWrangle(STEP_SECONDS, this.timeAlive);
     this.crawler?.step(this.timeAlive);
     this.dredgeQueen?.update(this.timeAlive);
+    // Game.ts:2586-2590 orders the bosses crawler -> land-yacht -> dredge-queen -> salvage-claw ->
+    // homemaker, all after wrangle and all before `buildSystem.update` — which matters here,
+    // because the Homemaker's act-1 beat DEMOLISHES a building through that same BuildSystem.
+    this.homemaker?.update(this.timeAlive);
     this.build.update(
       STEP_SECONDS,
       this.timeAlive,
@@ -859,7 +910,10 @@ export class HeadlessContractSim {
       ...this.deepwater.diagnostics,
       ...(this.dredgeQueen ? { dredgeQueenBoss: this.dredgeQueen.diagnostics() } : {}),
     };
-    if (this.atomic) view.now.atomic = this.atomic.diagnostics;
+    if (this.atomic) view.now.atomic = {
+      ...this.atomic.diagnostics,
+      ...(this.homemaker ? { homemakerBoss: this.homemaker.diagnostics() } : {}),
+    };
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -980,9 +1034,15 @@ export class HeadlessContractSim {
           const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
           this.dredgeQueen?.onComponentKilled(event.bossComponentId, enemy?.position ?? this.hero.group.position, event.at);
         }
+        if (event.type === 'enemy_killed' && event.variantId === 'homemaker_9000') {
+          const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+          this.homemaker?.onComponentKilled(event.bossComponentId, enemy?.position ?? this.hero.group.position, event.at);
+        }
         if (event.type === 'wave_started') {
           const baron = this.manifest.twist.baron;
           this.crawler?.onWaveStarted(event.wave, baron?.variantId === 'dynamo_crawler' ? baron.wave : Number.POSITIVE_INFINITY, event.at);
+          // Two arguments, not three: the Homemaker's wave hook takes no `at` (Game.ts:1734).
+          this.homemaker?.onWaveStarted(event.wave, baron?.variantId === 'homemaker_9000' ? baron.wave : Number.POSITIVE_INFINITY);
         }
         this.replayEvents.push(canonicalEvent(event));
         if (event.type === 'enemy_killed') {

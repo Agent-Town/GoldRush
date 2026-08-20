@@ -15,6 +15,20 @@ const EXPECTED_RULES: Record<string, string[]> = {
   'e6-picnic': ['build_zones', 'wrangle_capture_unreachable', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
 };
 
+/**
+ * THE ADMITTED SET (2026-08-20, `fix-e6-homemaker-headless-socket`). The Homemaker socket landed:
+ * `HomemakerBossSystem` constructs headless behind four `typeof document` guards, the boss is built
+ * through its own factory against a real `GoldPickupPool`, and both bench seeds SECURE under public
+ * verbs alone — HARVEST the seam ring, BUILD a turret on the pad the hero's own rig cannot reach,
+ * CAPTURE the wound-down machines, rebuild what the Homemaker unbuilds, break VAC then CORE.
+ * Seed 01 secures at wave 12 (`fnv1a32:e66807f6`), seed 02 at wave 10 (`fnv1a32:da62f7b9`).
+ *
+ * The other three Atomic contracts are unchanged and still refused: `e6-showroom` keeps its cited
+ * exemption (its wave-20 false green is a separate, unresolved finding), and `e6-half-life-hollow`
+ * and `e6-picnic` still declare consumers nobody has written. This census is per-id from here on.
+ */
+const ADMITTED = new Set(['e6-glow-mesa']);
+
 // Each Atomic contract declares the era socket it is missing (AP-11 engineDependencies mandate).
 // The declaration is honesty, not admission: every contract below stays rejected by the support gate.
 const EXPECTED_DEPENDENCY: Record<string, string> = {
@@ -25,9 +39,10 @@ const EXPECTED_DEPENDENCY: Record<string, string> = {
 };
 
 for (const contract of atomic.contracts) {
-  test(`${contract.id} census socket runs and still refuses admission`, async () => {
+  test(`${contract.id} census admission is explicit`, async () => {
     test.setTimeout(60_000);
     const seeds = (benchSeeds as Record<string, string[]>)[contract.id]!;
+    const admitted = ADMITTED.has(contract.id);
     const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
     const previousLocation = host.location;
     const previousWindow = host.window;
@@ -113,12 +128,35 @@ for (const contract of atomic.contracts) {
       expect(captureRule.data.consumerLever).toBe('WrangleSystem.tryCapture');
       expect(mechanics.buildables).toEqual(expect.any(Array));
 
-      // Admission is still refused, and that is the point: three of these four now run
-      // deterministically, and running them is what proved they are not agent-ready.
+      // THE DOOR ITSELF. Glow Mesa boots on its own bench seeds now that its boss resolves; the
+      // other three are still refused BY NAME, which is what keeps the refusal honest rather than
+      // silent. (The admitted contract's `engineDependencies` prose above — "the headless sim
+      // composes none" — is now stale for all three of its consumers, but the declaration lives in
+      // contract JSON outside this slice's firewall and is filed as a finding, not edited here.)
       for (const seed of seeds) {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
-          new RegExp(`AP-07 supports only .*received ${contract.id}`),
-        );
+        if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
+        else {
+          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
+            new RegExp(`AP-07 supports only .*received ${contract.id}`),
+          );
+        }
+      }
+      if (admitted) {
+        // No `admissionProbe` escape hatch: constructing through the ordinary door IS the
+        // admission assertion. The boss the census used to report as ABSENT now reports itself,
+        // and it reports the state a fresh run should be in — asleep, whole, and unmet.
+        const door = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0]! });
+        expect(door.currentTurn().view.now.atomic).toMatchObject({
+          epochId: 'epoch-6-atomic',
+          captureLever: 'CAPTURE',
+          homemakerBoss: expect.objectContaining({
+            act: 0,
+            liveComponents: [],
+            poweredDown: false,
+            chairPlaced: false,
+            persistentKept: false,
+          }),
+        });
       }
       if (contract.id === 'e6-picnic') expect(mechanics.posting.lossStakes).toHaveLength(3);
       if (contract.id === 'e6-half-life-hollow') expect(mechanics.posting.lossStakes).toEqual([]);
