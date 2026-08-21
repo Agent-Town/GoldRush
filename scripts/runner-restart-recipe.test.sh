@@ -232,5 +232,69 @@ else
   bad "CODEX_FLOOR DRIFT: helper $helper_floor != runner $runner_floor"
 fi
 
+# --- 6. F-2137-1: STALE-RUNNER reporting, exercised in BOTH directions ---------------
+# A live runner executes the parse it loaded at exec time, so commits to the runner script
+# since are INERT. s2136 read the file, believed the cure was live, and dispatched into a
+# process that had never contained it (64 refusals in 12 min). The reporter turns process
+# age vs. commit time into a verdict. Tested BEHAVIOURALLY, not by grepping for its name:
+# the function is extracted from the shipped helper so the probe cannot drift from it, and
+# both arms are built from real processes and real commits in a throwaway repo.
+stale_fn=$(sed -n '/^report_runner_staleness() {/,/^}/p' "$HELPER")
+if [ -z "$stale_fn" ]; then
+  bad "helper has no report_runner_staleness — a stale runner reports as healthy (F-2137-1)"
+else
+  stale_tmp=$(mktemp -d "${TMPDIR:-/tmp}/stale-runner.XXXXXX")
+  (
+    cd "$stale_tmp" || exit 1
+    git init -q . 2>/dev/null
+    git config user.email t@t; git config user.name t
+    printf 'v1\n' > runner.sh
+    # RED arm: process starts FIRST, the commit lands AFTER -> the commit is inert.
+    sleep 60 & red_pid=$!
+    sleep 1
+    git add runner.sh && git commit -qm "cure the runner"
+    # 24 more commits so the BOUNDEDNESS case is not vacuous: with a single commit the -n 10 cap
+    # never engages and removing it still passes. Caught by manufacturing that exact defect.
+    i=2
+    while [ "$i" -le 25 ]; do
+      printf 'v%s\n' "$i" > runner.sh
+      git add runner.sh && git commit -qm "cure the runner $i"
+      i=$((i + 1))
+    done
+    # GREEN arm: process starts AFTER the newest commit -> it loaded the current file.
+    sleep 60 & green_pid=$!
+    printf 'ROOT=%s\nRUNNER_SCRIPT=%s/runner.sh\n%s\nreport_runner_staleness "$1"\n' \
+      "$stale_tmp" "$stale_tmp" "$stale_fn" > probe.sh
+    red_out=$(bash probe.sh "$red_pid" 2>&1);   red_rc=$?
+    green_out=$(bash probe.sh "$green_pid" 2>&1); green_rc=$?
+    kill "$red_pid" "$green_pid" 2>/dev/null || true
+    printf '%s\n---SPLIT---\n%s\n---SPLIT---\n%s %s\n' "$red_out" "$green_out" "$red_rc" "$green_rc"
+  ) > "$stale_tmp/result.txt" 2>/dev/null
+  red_out=$(sed -n '1,/---SPLIT---/p' "$stale_tmp/result.txt" | sed '$d')
+  green_out=$(sed -n '/---SPLIT---/,/---SPLIT---/p' "$stale_tmp/result.txt" | sed '1d;$d')
+  rcs=$(tail -1 "$stale_tmp/result.txt")
+  if printf '%s' "$red_out" | grep -q 'STALE RUNNER'; then
+    ok "stale runner (process older than the newest runner-script commit) is REPORTED"
+  else
+    bad "stale runner NOT reported — an inert cure reads as live (F-2137-1): $(printf '%s' "$red_out" | head -1)"
+  fi
+  if printf '%s' "$green_out" | grep -q 'no inert commits'; then
+    ok "fresh runner is reported as current (no false STALE alarm)"
+  else
+    bad "fresh runner mis-reported — a WARN that cries wolf gets excused away: $(printf '%s' "$green_out" | head -1)"
+  fi
+  if [ "$rcs" = "0 0" ]; then
+    ok "staleness report is WARN-only (rc 0 both arms) — never blocks a restart"
+  else
+    bad "staleness report changed exit codes ($rcs) — it must report, never block"
+  fi
+  if [ "$(printf '%s\n' "$red_out" | wc -l | tr -d ' ')" -le 20 ]; then
+    ok "staleness report is bounded (<=20 lines)"
+  else
+    bad "staleness report is unbounded — an unread report is not a report"
+  fi
+  rm -rf "$stale_tmp"
+fi
+
 echo "RESULT: $fails failure(s)"
 [ "$fails" -eq 0 ] || exit 1

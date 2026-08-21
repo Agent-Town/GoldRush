@@ -47,6 +47,42 @@ RUNNER_LOG="${LANE_RUNNER_LOG:-$ROOT/logs/runner-headless.log}"
 # it, and copying the whole file would be the sibling-script hazard this repo keeps paying for.
 CODEX_FLOOR="0.144.1"
 
+# F-2137-1: a LIVE runner executes the parse of RUNNER_SCRIPT it loaded at exec time, so every
+# commit to that file since is INERT until someone restarts it. bash parses a `while` body whole
+# before running it, which is why editing the live runner is famously "safe but inert" — the half
+# nobody had an instrument for is that READING the file is not a measurement of what is RUNNING.
+# s2136 simulated the F-2089-1 BUILD-ON-PREDECESSOR predicate read-only against the file on disk
+# and against the live lane, got the right answer to the wrong question, and dispatched; the
+# process had loaded a 2026-08-12 parse on Aug 18 and the opt-in landed Aug 20, so it REFUSED
+# f2136-1 64 times in 12 minutes and had never once executed the cure. The refusal path below
+# already PRINTED "Tue Aug 18 20:05:25" on screen — the fact was visible and nothing drew the
+# conclusion. This turns that fact into a verdict. WARN-ONLY, never blocking: a stale runner is
+# still a working runner, and refusing to report the environment is how a check stops being run.
+report_runner_staleness() {
+  local pid="$1" lstart start_epoch commit_epoch n
+  command -v git >/dev/null 2>&1 || return 0
+  lstart=$(ps -o lstart= -p "$pid" 2>/dev/null | tr -s ' ' | sed 's/^ *//;s/ *$//')
+  [ -n "$lstart" ] || return 0
+  start_epoch=$(date -j -f "%a %b %e %H:%M:%S %Y" "$lstart" +%s 2>/dev/null) || return 0
+  [ -n "$start_epoch" ] || return 0
+  commit_epoch=$(git -C "$ROOT" log -1 --format=%ct -- "$RUNNER_SCRIPT" 2>/dev/null) || return 0
+  [ -n "$commit_epoch" ] || return 0
+  [ "$commit_epoch" -gt "$start_epoch" ] || {
+    echo "[start-lane-runner] runner pid $pid loaded the CURRENT $(basename "$RUNNER_SCRIPT") — no inert commits."
+    return 0
+  }
+  n=$(git -C "$ROOT" log --oneline --since="@$start_epoch" -- "$RUNNER_SCRIPT" 2>/dev/null | wc -l | tr -d ' ')
+  echo "[start-lane-runner] ⚠️  STALE RUNNER — pid $pid started $lstart and is executing that"
+  echo "[start-lane-runner]     parse of $(basename "$RUNNER_SCRIPT"). ${n:-?} commit(s) to that file since are INERT:"
+  # Bounded on purpose: an unbounded listing is how a report becomes something nobody reads
+  # (the status-archive-audit lesson). The real case is 1-3 commits; a huge count is itself news.
+  git -C "$ROOT" log --format='  %h %cI %s' --since="@$start_epoch" -n 10 -- "$RUNNER_SCRIPT" 2>/dev/null |
+    cut -c1-118 | sed 's/^/[start-lane-runner]   /'
+  [ "${n:-0}" -gt 10 ] && echo "[start-lane-runner]     … and $((n - 10)) more (showing the 10 newest)."
+  echo "[start-lane-runner]     A cure you can READ in that file is NOT thereby a cure that RUNS."
+  echo "[start-lane-runner]     Restart to load them: kill -TERM $pid, wait for the lock, re-run me."
+}
+
 ver_ge() {  # $1 >= $2, dotted numeric (BSD awk; no sort -V)
   awk -v a="$1" -v b="$2" 'BEGIN{
     n=split(a,x,"."); m=split(b,y,".");
@@ -64,6 +100,9 @@ others=$(runner_pids | wc -l | tr -d ' ')
 if [ "${others:-0}" != "0" ]; then
   echo "[start-lane-runner] REFUSING — a lane runner is already alive:"
   runner_pids | while read -r pid; do ps -o pid=,command= -p "$pid"; done | sed 's/^/[start-lane-runner]   /'
+  # F-2137-1: the live runner may be executing a parse older than the file. Say so HERE, where a
+  # fire is already looking at it and deciding whether to leave it alone.
+  runner_pids | while read -r pid; do report_runner_staleness "$pid"; done
   echo "[start-lane-runner] Do NOT rmdir tasks/.runner.lock — the runner self-heals a real corpse"
   echo "[start-lane-runner] (lane-runner-v3.sh:120-129); a held lock means a LIVE instance."
   echo "[start-lane-runner] To replace it: kill -TERM <pid>  (its trap at :135 releases the lock),"
