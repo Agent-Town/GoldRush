@@ -85,10 +85,13 @@ Screenshots: `artifacts/e9-old-canal/shots/{desktop-chrome,mobile-chrome}-*.png`
 | adjacent: `m2-01-build-menu` | **14/14** |
 | adjacent: `tp02-green-waypoint` | **5/6**, the sixth proven a FLAKE (below) |
 | node guards (targeted 7 files): same-game audit + report guard, door ratchet, bench seeds, skill.md fences, mask tables, null-floor anchors | **45/45** |
-| `null-floor-anchors --check` | see `artifacts/e9-old-canal/null-floors-check.log` |
+| `null-floor-anchors --check` | **53 rows byte-identical**; the ONLY difference is the git-derived `eraStamp` (`1817cb273` → `b9fd6fecb`), which is the A8 convention's own proof that this slice moved no floor. Log: `artifacts/e9-old-canal/null-floors-check.log` |
+| `npx playwright test --list` | **2936 tests in 422 files** — the suite still COLLECTS, which is the F-A8-7 check that matters for a slice whose consumer is reached by `MechanicsManifest` (a render import there once collapsed the whole list to `Total: 0`). Neither new module imports `world/Terrain`. |
 | battery determinism | 12 runs, every repeat byte-identical |
 
 **The one red, attributed rather than absorbed.** `tp02-green-waypoint:162` (mobile) failed with `THREE.GLTFLoader: Couldn't load texture blob:...` — **7 such errors on the first run, 4 on the second, and a clean PASS on the third, all on the identical tree.** A non-deterministic count is the signature of a texture-decode flake under a loaded dev server, and this slice touches no loader, no GLB and no texture path. Recorded as an environmental flake, not absorbed as noise.
+
+**The full 70-file node-guard battery was NOT run, and that is stated rather than implied.** A sibling agent held the machine for the whole window (its own `run-node-guards.mjs` alive on the same seven files, confirmed by reading the matched command lines rather than trusting a count — F-A8-6's cure applied). The seven guards this diff can possibly move were run instead and are 45/45, plus the collection check above and the floors check. The drain should run the full battery once on the merged tree.
 
 **Contention, stated:** the targeted node-guard run reported `CONTENDED — 2 concurrent batteries` (a sibling agent is building `e9-devils-alley` from the same base). All 45 are deterministic file-comparison guards rather than load-sensitive ones, so the result stands; the four browser adjacents were re-run **solo, one spec at a time**, after a first batched run produced 27 context-closed timeouts that solo runs did not reproduce.
 
