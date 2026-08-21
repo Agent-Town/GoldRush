@@ -741,7 +741,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  };
+  } & { picnicHold?: boolean };
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -1540,7 +1540,7 @@ const AUTHORED_TILE_KEYS = [
   'engineDependencies', 'lanes',
 ] as const;
 const AUTHORED_TWIST_KEYS = [
-  'pressureEnabled', 'seamYieldMult', 'secureWave', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
+  'picnicHold', 'pressureEnabled', 'seamYieldMult', 'secureWave', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
   'scheduledRelocation', 'persistentCanalChoices',
@@ -1652,6 +1652,7 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
   if (!tileParams || !twist) return null;
   addUnknownFieldReasons(tileParams, AUTHORED_TILE_KEYS, 'tileParams', reasons);
   addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons);
+  if (twist.picnicHold !== undefined && typeof twist.picnicHold !== 'boolean') addDescriptorReason(reasons, reason('field_type', 'picnicHold must be true or false.', 'twist.picnicHold'));
   if (!shortText(tileParams.tileId)) addDescriptorReason(reasons, reason('tile_id', 'Every authored contract needs a tile ID.', 'tileParams.tileId'));
   if (!shortText(tileParams.biome)) addDescriptorReason(reasons, reason('tile_biome', 'Every authored contract needs a biome.', 'tileParams.biome'));
   if (typeof tileParams.river !== 'boolean') addDescriptorReason(reasons, reason('field_type', 'river must be true or false.', 'tileParams.river'));
