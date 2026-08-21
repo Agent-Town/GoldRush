@@ -17,7 +17,19 @@ import redfields from '../assets/contracts/epoch-9-redfields/contracts.json' wit
  * engines. What it did NOT do is win the map — the best public-verb play measured
  * (`artifacts/e9-seed-run/`) terminated unsecured at waves 17/16 against secureWave 20 — so the
  * Seed Run is now an ADMISSION-EXEMPT contract rather than an unsocketed one, and those are two
- * different rows. Devil's Alley and the Old Canal are unchanged: still no consumer at all.
+ * different rows. THE SEED RUN'S ROW IS UNCHANGED BY THIS SLICE and stays exempt.
+ *
+ * A9 (`:24`, RATIFIED 2026-08-20) then made a THIRD row: `e9-devils-alley` is now ADMITTED. Its
+ * scheduled-relocation consumer is live in both engines (`src/systems/ScheduledRelocationSystem.ts`)
+ * AND the map is won — the public-verb prover secured wave 20 on both bench seeds, twice each,
+ * byte-identical (`artifacts/e9-devils-alley/summary.json`), while the idle floors terminate at
+ * wave 3 (Law 2). So it carries seeds, a manifest rule and a door row; the Old Canal is the only
+ * Red Fields contract still unsocketed.
+ *
+ * ADMISSION IS DERIVED HERE RATHER THAN LISTED, which is the shape `er01-e8-census` adopted at
+ * A7: the door's own rule is `tileParams.harvestAnchors?.length !== 0` minus the exemption table
+ * (`HeadlessContractSim.ts:182`), so this spec reads the same data instead of carrying a second
+ * hand-maintained list that can drift from it.
  */
 const SIGNATURE_GAPS: Record<string, { dependency?: string; twist?: string }> = {
   'e9-dome-basin': {},
@@ -31,7 +43,7 @@ const SIGNATURE_GAPS: Record<string, { dependency?: string; twist?: string }> = 
  * them while exempt — the same shape `e2-incline` and `e6-showroom` carry: seeded, measured, and
  * refused by the door until it secures. Seeds are the comparability unit, not an admission claim.
  */
-const SEEDED = new Set(['e9-dome-basin', 'e9-seed-run', 'e9-old-canal']);
+const SEEDED = new Set(['e9-dome-basin', 'e9-seed-run', 'e9-old-canal', 'e9-devils-alley']);
 
 /**
  * The manifest rows each contract derives, IN ORDER. Only the Seed Run declares planting and only
@@ -44,6 +56,8 @@ const EXPECTED_RULES: Record<string, string[]> = {
   'e9-seed-run': ['build_zones', 'persistent_planting'],
   'e9-devils-alley': ['build_zones'],
   'e9-old-canal': ['build_zones', 'persistent_canal_choices'],
+  'e9-devils-alley': ['build_zones', 'scheduled_relocation'],
+  'e9-old-canal': ['build_zones'],
 };
 
 for (const contract of redfields.contracts) {
@@ -66,7 +80,6 @@ for (const contract of redfields.contracts) {
     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
     try {
       const gap = SIGNATURE_GAPS[contract.id]!;
-      const admitted = contract.id === 'e9-dome-basin';
       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
       if (SEEDED.has(contract.id)) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
       else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
@@ -92,7 +105,17 @@ for (const contract of redfields.contracts) {
       const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
       const { E9ArsenalSocket } = await vite.ssrLoadModule('/src/sim/E9ArsenalSocket.ts');
       const { E9CanalSocket } = await vite.ssrLoadModule('/src/sim/E9CanalSocket.ts');
-      const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+      const { HeadlessContractSim, CONTRACT_ADMISSION_EXEMPTIONS } =
+        await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+      /**
+       * DERIVED, not listed: BOTH halves of the door's own rule, read off the same data it reads
+       * (`HeadlessContractSim.ts:182`) — non-empty `harvestAnchors` AND absent from the exemption
+       * table. Deriving only the FIRST half is a real trap this spec fell into once: `e9-seed-run`
+       * authored anchors with A8 and is STILL refused, because it carries a cited exemption, so a
+       * one-half derivation reports it admitted and the census reds on the truthful engine.
+       */
+      const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0
+        && !(contract.id in CONTRACT_ADMISSION_EXEMPTIONS);
       const mechanics = deriveMechanicsManifest(contract.id);
 
       expect(mechanics.interactables).toEqual([]);
@@ -395,6 +418,101 @@ for (const contract of redfields.contracts) {
         expect(rule.data.verbs).toEqual(['CONTEXT_ACTION action=redig', 'CONTEXT_ACTION action=backfill']);
       } else {
         expect(canal).toBeNull();
+      }
+
+      // A9 — THE WIND, asserted where it is DECLARED and inert where it is not. Same law as the
+      // caravan above: the consumer is built off the CONTRACT (twist + authored routes + authored
+      // bays and stakes), never the epoch, so its three Red Fields siblings each get an UNDECLARED
+      // consumer from the same call.
+      const { ScheduledRelocationSystem, DEVIL_COLUMN_RADIUS, DEVIL_SWEEP_SECONDS } =
+        await vite.ssrLoadModule('/src/systems/ScheduledRelocationSystem.ts');
+      const wind = ScheduledRelocationSystem.create(loadContract(contract.id));
+
+      if (contract.id === 'e9-devils-alley') {
+        expect(wind.isDeclared).toBe(true);
+        // THE ROUTES ARE AUTHORED DATA, in authored order — the same three `lanes.patrolRoutes`
+        // the mask table publishes and `scripts/e3-mask-tables.test.mjs` pins.
+        expect(wind.routeIds).toEqual(['south-devil-sweep', 'center-devil-sweep', 'north-devil-sweep']);
+        // THE HOLD IS DERIVED, NOT AUTHORED: min(halfWidth, halfDepth) of the bay each stake
+        // stands in. All three bays are 20x16, so every hold is exactly 8 and every stake is
+        // dead centre — the hold is the circle inscribed in its own bay.
+        expect(wind.anchorHolds.map(({ id, zoneId, holdRadius }: { id: string; zoneId: string; holdRadius: number }) =>
+          [id, zoneId, holdRadius])).toEqual([
+          ['anchor-west', 'west-anchor-bay', 8],
+          ['anchor-center', 'center-anchor-bay', 8],
+          ['anchor-east', 'east-anchor-bay', 8],
+        ]);
+        expect(wind.anchored(0, 3)).toBe(true);
+        expect(wind.anchored(9, 0)).toBe(false);
+
+        // Drive two fresh consumers over the same fixed steps: same in, same out, and the wind
+        // takes the work outside the hold while the one inside it never moves.
+        const drive = () => {
+          const driven = ScheduledRelocationSystem.create(loadContract(contract.id));
+          // BOTH pads are inside `center-anchor-bay` and inside the centre column's reach
+          // (radius 4 about z = 0) — the beacon at z = 3 deliberately so, because a pad the
+          // column never reaches would report zero anchored refusals for the boring reason
+          // instead of the interesting one. Only the turret is outside the anchor's 8wu hold.
+          const board = [
+            { family: 'turret', index: 0, position: { x: 9, z: 0 }, active: true, hp: 100 },
+            { family: 'sentry_beacon', index: 0, position: { x: 0, z: 3 }, active: true, hp: 100 },
+          ];
+          const move = (family: string, index: number, to: { x: number; z: number }) => {
+            const work = board.find((entry) => entry.family === family && entry.index === index);
+            if (!work) return false;
+            work.position = { x: to.x, z: to.z };
+            return true;
+          };
+          const steps = Math.ceil(DEVIL_SWEEP_SECONDS * 30) + 2;
+          // Wave 1 sweeps the SOUTH route (z -26): nothing here is near it.
+          for (let step = 0; step < steps; step += 1) driven.update(1 / 30, 1, board, move);
+          const afterSouth = board.map(({ position }: { position: { x: number; z: number } }) => ({ ...position }));
+          // Wave 2 sweeps the CENTRE route (z 0), straight through both works.
+          for (let step = 0; step < steps; step += 1) driven.update(1 / 30, 2, board, move);
+          return { driven, board, afterSouth };
+        };
+        const firstWind = drive();
+        const secondWind = drive();
+
+        expect(firstWind.afterSouth).toEqual([{ x: 9, z: 0 }, { x: 0, z: 3 }]);
+        // The unanchored turret is set down at the centre sweep's authored end point, ALIVE.
+        expect(firstWind.board[0]!.position).toEqual({ x: -52, z: 0 });
+        // The anchored beacon never left the hold, though the column passed straight over it.
+        expect(firstWind.board[1]!.position).toEqual({ x: 0, z: 3 });
+        expect(firstWind.driven.relocationCount).toBe(1);
+        expect(firstWind.driven.diagnostics).toMatchObject({
+          declared: true,
+          columnRadius: DEVIL_COLUMN_RADIUS,
+          sweepSeconds: DEVIL_SWEEP_SECONDS,
+          relocations: 1,
+          carried: [],
+          lastRelocation: {
+            family: 'turret',
+            index: 0,
+            routeId: 'center-devil-sweep',
+            wave: 2,
+            from: { x: 9, z: 0 },
+            to: { x: -52, z: 0 },
+          },
+        });
+        expect(firstWind.driven.diagnostics.refusals.anchored).toBeGreaterThan(0);
+        expect(firstWind.driven.diagnostics.works).toEqual([
+          { family: 'sentry_beacon', index: 0, anchored: true, carried: false },
+          { family: 'turret', index: 0, anchored: false, carried: false },
+        ]);
+        expect(JSON.stringify(secondWind.driven.simulationSnapshot))
+          .toBe(JSON.stringify(firstWind.driven.simulationSnapshot));
+
+        // THE MANIFEST ROW IS SOURCED FROM THE CONSUMER, so a row cannot drift from the gate.
+        const relocationRule = mechanics.rules.find(({ id }: { id: string }) => id === 'scheduled_relocation');
+        expect(relocationRule.source).toBe('ScheduledRelocationSystem.update');
+        expect(relocationRule.data.routes).toEqual(wind.routeIds);
+        expect(relocationRule.data.damages).toBe(false);
+        expect(relocationRule.data.gatesSecure).toBe(false);
+      } else {
+        expect(wind.isDeclared).toBe(false);
+        expect(wind.routeIds).toEqual([]);
+        expect(wind.anchorHolds).toEqual([]);
       }
 
       for (const seed of seeds) {

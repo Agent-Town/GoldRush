@@ -165,6 +165,24 @@ export class PalisadePool {
     return slot;
   }
 
+  /**
+   * A9: moves a STANDING segment without re-placing it. THE BLOCKER MOVES WITH IT — a palisade's
+   * route blocker caches its own x/z (`place` above), so a relocation that skipped this would
+   * leave enemies pathing around a wall that is no longer there.
+   */
+  moveTo(index: number, position: { x: number; z: number }): boolean {
+    if (!this.active[index]) return false;
+    this.positions[index]?.set(position.x, 0, position.z);
+    const blocker = this.blockers[index];
+    if (blocker) {
+      blocker.x = position.x;
+      blocker.z = position.z;
+    }
+    this.sync(index);
+    this.markNeedsUpdate();
+    return true;
+  }
+
   deactivate(index: number): boolean {
     if (!this.active[index]) return false;
     this.active[index] = false;

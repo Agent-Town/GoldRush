@@ -1448,6 +1448,47 @@ export class BuildSystem {
     target.active = !suspended && this.isSlotActive(target.family, target.index) && !this.wrecked[target.family][target.index];
   }
 
+  /**
+   * A9 — THE ONE WRITER OF A STANDING BUILDING'S POSITION (`Convention 4`: one writer per
+   * surface). `ScheduledRelocationSystem` decides WHICH work moves and WHERE; this decides
+   * whether the slot can take it and performs every consequence in one place: the pool's own
+   * mesh, the palisade route blocker, the targeting register, the shooter's origin (which reads
+   * `allPositions` live and therefore needs no touch) and the suspend flag.
+   *
+   * `lifted` carries the in-the-air state with the move. A lifted work is OFFLINE and UNDAMAGED
+   * — the same `suspendedBuildings` seam the shooter gates already consult — which is exactly
+   * the ratified "relocate unanchored buildings INSTEAD OF destroying them". Nothing here writes
+   * hp, wrecks, refunds or re-charges: a relocation costs a rider position, never gold.
+   *
+   * Returns false — never throws — when the slot is empty, wrecked, or belongs to a family whose
+   * pool cannot be moved (`sluice`, `assay_office`: both are water-adjacent placements, so
+   * neither can stand on a dry alley in the first place). The caller counts the refusal.
+   */
+  relocateBuilding(family: string, index: number, to: { x: number; z: number }, lifted: boolean): boolean {
+    if (!isBuildableId(family)) return false;
+    if (!Number.isInteger(index) || index < 0) return false;
+    if (!this.isSlotActive(family, index) || this.wrecked[family][index] === true) return false;
+    if (!this.moveSlot(family, index, to)) return false;
+    const key = `${family}:${index}`;
+    if (lifted) this.suspendedBuildings.add(key);
+    else this.suspendedBuildings.delete(key);
+    this.syncBuildingTarget(family, index, !lifted);
+    this.visualDirty = true;
+    return true;
+  }
+
+  private moveSlot(id: BuildableId, index: number, to: { x: number; z: number }): boolean {
+    if (id === 'palisade') return this.palisades.moveTo(index, to);
+    if (id === 'stockpile') return this.stockpiles.moveTo(index, to);
+    if (id === 'boiler_house') return this.boilerHouses.moveTo(index, to);
+    if (id === 'turret') return this.turrets.moveTo(index, to);
+    if (id === 'lantern_post') return this.lanternPosts.moveTo(index, to);
+    if (id === 'decoy_shed') return this.decoySheds.moveTo(index, to);
+    if (id === 'capacitor_bank') return this.capacitorBanks.moveTo(index, to);
+    if (id === 'sentry_beacon') return this.beacons.moveTo(index, to);
+    return false;
+  }
+
   collectDemolishRefund(position: THREE.Vector3, amount: number, at: number): boolean {
     if (!this.economy.canReceiveIncome(amount)) return false;
     const result = this.economy.apply({
@@ -2900,6 +2941,15 @@ class LanternPostPool {
     this.sync(slot, 0);
     this.markNeedsUpdate();
     return slot;
+  }
+
+  /** A9: moves a STANDING post/shed/bank without re-placing it. See `SentryBeaconPool.moveTo`. */
+  moveTo(index: number, position: { x: number; z: number }): boolean {
+    if (!this.active[index]) return false;
+    this.positions[index]?.set(position.x, 0, position.z);
+    this.sync(index, 0);
+    this.markNeedsUpdate();
+    return true;
   }
 
   deactivate(index: number): boolean {
