@@ -264,8 +264,26 @@ the drain (Mistake #4 runs both ways: this is the verification line).
 `src/agent/MechanicsManifest.ts` · `src/systems/PicnicHoldSystem.ts` (comment only) ·
 `reviews/e6-picnic-admission.md` · `playwright.e6picnic.config.ts` (new) · `artifacts/e6-picnic/**` (new)
 
+**MAIN-MOVED since the merge base, re-measured at the END of the slice (`4b7883cf0..main` at
+`184f63767`, 9 files):** `STATUS.md` · `tasks/BACKLOG.md` · `tasks/goals.json` ·
+`tasks/f2117-1-root-release-base-harness.md` · `logs/dashboard.html` · `scripts/fire.md` ·
+`docs/bench/harness-era-implications.md` · `marketing/outbox/gazette-queue.md` ·
+`marketing/outbox/ticker-digest-2026-08-21.md`.
+
+**BOTH-MOVED: none.** The two sets are disjoint — confirmed by measurement
+(`git diff --name-only 4b7883cf0..main` against `4b7883cf0..HEAD`), not by the absence of a
+complaint. The merge is additive by construction and needs no 3-way graft.
+
 **`tasks/BACKLOG.md`: deliberately untouched.** F-2131-5 recorded that this exact collision stopped
 b4v3 attempt 1, and the ledger row is the drain's duty. The row is in §9, ready to paste.
+
+**The COMMITTED tree was re-gated, not just the working tree** (the s195 lesson: a path-scoped add can
+strand a hunk and leave a green gate describing a tree that was never committed). After the commits,
+`git status --porcelain --untracked-files=no` returns **0 lines**, and the four admission guards plus
+the mask-table suite were re-run against it: `derived door matches the fixed admission baseline` ✔ ·
+`null-floor artifact exactly covers every door-servable bench seed` ✔ ·
+`skill.md door-contracts match SUPPORTED_CONTRACTS` ✔ ·
+`Picnic hold is enabled only for e6-picnic` ✔ · `e3-mask-tables` 30/30 ✔.
 
 **Where the player sees this, in a plain boot:** on the board, for the first time. `?contract=e6-picnic`
 resolves `activeId: 'e6-picnic'` with `fallbackReason: null` on both viewports with zero console/page
