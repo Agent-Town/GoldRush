@@ -113,6 +113,42 @@ test('the seam the owner could not see is on the ground and in view', async ({ p
   expect(errors.consoleErrors).toEqual([]);
 });
 
+/**
+ * THE COAL IS A SEAM TOO, AND NOTHING WAS MEASURING IT (owner playtest 2026-08-21, verbatim: "I was
+ * not able to ever obtain coal or use the pressure weapons when I played maps in E2").
+ *
+ * The suspicion was this file's own class: `PressureSystem` is NOT on `Game.resampleVisualHeights()`
+ * — the hook whose omission buried the gold. MEASURED: coal is NOT buried, and the reason is a real
+ * difference worth pinning rather than a lucky escape. `GoldNode` places its sprite ONCE at spawn,
+ * so it needs the hook; `PressureSystem.syncSeams()` recomputes `Terrain.visualAnchorY` EVERY FRAME
+ * inside `update()`, so a late-mounting sculpt is picked up on the next tick and the lump is
+ * self-healing by construction. **Do not "fix" PressureSystem by adding it to that list — its
+ * absence is correct.** This pin is what makes that safe to rely on: if the per-frame resync is ever
+ * refactored into a one-shot, these numbers go red instead of the owner finding it in play.
+ */
+test('the coal seam stands on the sculpted ground too', async ({ page }) => {
+  const errors = collectErrors(page);
+  await bootSculpted(page, 'e2-hill-mine', true);
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.pressure?.seams.length ?? 0) > 0, undefined, { timeout: 30_000 });
+
+  const pressure = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.pressure);
+  expect(pressure.enabled, 'the Hill Mine runs a pressure line').toBe(true);
+  expect(pressure.seams.length).toBeGreaterThan(0);
+  // `PressureSystem.SEAM_LIFT` — the lift `syncSeams` stands a coal lump on.
+  const COAL_LIFT = 0.32;
+  for (const seam of pressure.seams) {
+    expect(seam.spriteVisible, `coal (${seam.x},${seam.z}) drawing`).toBe(true);
+    expect(Number.isFinite(seam.visualY), `coal (${seam.x},${seam.z}) has a placed visual Y`).toBe(true);
+    expect(
+      Math.abs(seam.visualY - (seam.groundY + COAL_LIFT)),
+      `coal (${seam.x},${seam.z}) flush with terrain`,
+    ).toBeLessThanOrEqual(FLUSH_TOLERANCE);
+  }
+
+  expect(errors.pageErrors).toEqual([]);
+  expect(errors.consoleErrors).toEqual([]);
+});
+
 test('those pixels are the seam: draining it clears that patch of screen', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one viewport is enough for a pixel identity proof');
   const errors = collectErrors(page);

@@ -719,6 +719,15 @@ export type ContractManifest = {
   };
   twist: {
     pressureEnabled?: boolean;
+    /**
+     * WHERE THIS CLAIM'S COAL IS. Owner ruling 2026-08-21, verbatim, to the F-E2PL-1 lever:
+     * **"sounds like a good idea"**. Until then `PressureSystem.ts` fixed the three seams as a
+     * module constant on the Hill Mine's minehead, so every other pressure map paid a 55-60wu round
+     * trip for its fuel — measured as the reason `e2-trestle` and `e2-incline` could not convert a
+     * declared pressure line into a secure (`reviews/e2-pressure-line-railcars.md`). Absent, the
+     * module constant still answers, so no shipping contract changes by a byte.
+     */
+    coalSeams?: ContractHarvestAnchor[];
     seamYieldMult?: number;
     secureWave?: number;
     waveCadenceMult?: number;
@@ -1540,7 +1549,7 @@ const AUTHORED_TILE_KEYS = [
   'engineDependencies', 'lanes',
 ] as const;
 const AUTHORED_TWIST_KEYS = [
-  'picnicHold', 'pressureEnabled', 'seamYieldMult', 'secureWave', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
+  'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
   'scheduledRelocation', 'persistentCanalChoices',
@@ -1680,6 +1689,31 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
     addUnknownFieldReasons(twist.showroom, ['captureQuota'], 'twist.showroom', reasons);
   } else if (twist.showroom !== undefined) {
     addDescriptorReason(reasons, reason('field_section', 'The showroom section has the wrong shape.', 'twist.showroom'));
+  }
+  // COAL IS ONLY COAL WHERE THERE IS A PRESSURE LINE TO BURN IT (owner ruling 2026-08-21). The
+  // shape is deliberately the same two numbers `harvestAnchors` uses — a seam is a place, not a
+  // machine — and the list must be non-empty when declared, because an empty one would silently
+  // fall back to the module constant and read as "authored" while behaving as "absent".
+  if (twist.coalSeams !== undefined) {
+    if (!Array.isArray(twist.coalSeams) || twist.coalSeams.length === 0) {
+      addDescriptorReason(reasons, reason('field_list', 'Coal seams must be a non-empty list of places.', 'twist.coalSeams'));
+    } else {
+      if (twist.pressureEnabled !== true) {
+        addDescriptorReason(reasons, reason('field_section', 'Coal seams need twist.pressureEnabled — nothing can burn them otherwise.', 'twist.coalSeams'));
+      }
+      twist.coalSeams.forEach((entry, index) => {
+        if (!isRecord(entry) || Array.isArray(entry)) {
+          addDescriptorReason(reasons, reason('field_section', 'A coal seam has the wrong shape.', `twist.coalSeams[${index}]`));
+          return;
+        }
+        addUnknownFieldReasons(entry, ['x', 'z'], `twist.coalSeams[${index}]`, reasons);
+        for (const axis of ['x', 'z'] as const) {
+          if (!finiteInRange(entry[axis], -1_000, 1_000)) {
+            addDescriptorReason(reasons, reason('field_type', 'A coal seam needs a finite place.', `twist.coalSeams[${index}].${axis}`));
+          }
+        }
+      });
+    }
   }
   if (isRecord(twist.baron) && !Array.isArray(twist.baron)) {
     addUnknownFieldReasons(twist.baron, AUTHORED_BARON_KEYS, 'twist.baron', reasons);

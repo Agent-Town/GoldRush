@@ -288,6 +288,12 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // line declared and neither secured on both bench seeds, so they keep their exemption rows with
   // reworded reasons rather than leaving the table. The report's remaining churn is coordinate rot
   // — the reword shifted `src/sim/HeadlessContractSim.ts` citations by 21 lines.
+  // SECOND BOARD MOVE, SAME SHAPE, SAME NON-RESULT (2026-08-21, the owner's `coalSeams` ruling —
+  // `reviews/e2-coal-seams-and-legibility.md`): `twist.coalSeams` is a new AUTHORED_TWIST_KEY that
+  // `e2-trestle` and `e2-incline` now declare, and it moves NOTHING here — not a row, not the
+  // summary, not the exemption count. It is read by `PressureSystem` alone; `MechanicsManifest`
+  // derives no rule from it, so no parity row exists to flip. The report's churn is the two reworded
+  // exemption reasons plus citation-coordinate rot. Verified by regen, not assumed.
   // ⚠️ TWELFTH STACK (the fairground admission, owner-ruled anchor set): exemptions 8 -> 7,
   // 19 rows agent-lacks -> equal — the exact movement the hold-era comment predicted. Pins =
   // the merged tree's regen, verbatim, as every layer.

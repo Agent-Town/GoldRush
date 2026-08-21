@@ -6,12 +6,21 @@ import * as Terrain from '../world/Terrain';
 
 type BoilerState = { fuel: number; tick: number; cooldown: number; hot: boolean; cooling: boolean };
 type CoalSeam = { x: number; z: number; harvested: boolean; progress: number };
+export type CoalSeamAnchor = { x: number; z: number };
 
 export type PressureDiagnostics = {
   enabled: boolean;
   multiplayerPosture: 'single-player-gated';
   coal: number;
-  seams: Array<CoalSeam & { marked: boolean }>;
+  /**
+   * `visualY`/`groundY`/`spriteVisible` are the F-SEAM-1 numbers, published for the same reason
+   * `HarvestSystem.visualDiagnostics` publishes them (`HarvestSystem.ts:268`): the owner reported
+   * *"There is not gold to be collected"* on a map whose sim was perfect and whose seam sprites were
+   * metres underground, and only a RENDER-SIDE number catches that before he does. A coal seam is
+   * the same shape of thing on the same sculpted tiles, and until now nothing measured it.
+   */
+  seams: Array<CoalSeam & { marked: boolean; visualY: number; groundY: number; spriteVisible: boolean }>;
+  seamSource: 'twist.coalSeams' | 'PressureSystem.DEFAULT_COAL_SEAMS';
   boilers: ReturnType<BoilerHousePool['snapshots']>;
   vents: number;
   safeBand: { min: number; max: number } | null;
@@ -20,7 +29,17 @@ export type PressureDiagnostics = {
 
 export type PressureBand = 'empty' | 'low' | 'working' | 'high';
 
-const seamPositions = [
+/**
+ * THE SEAMS THE HILL MINE WAS BUILT AROUND, and the fallback for every contract that declares none.
+ * These three coordinates sit in the Hill Mine's minehead — 29wu from its stake — and were the ONLY
+ * coal in the game until the owner ruled on 2026-08-21 (verbatim, to the F-E2PL-1 lever: **"sounds
+ * like a good idea"**) that a contract may author its own. A contract that declares no `coalSeams`
+ * gets exactly this list and therefore exactly the behaviour it had before the ruling.
+ */
+/** The lift `syncSeams` stands a coal lump on, published so the guard can assert flushness. */
+export const SEAM_LIFT = 0.32;
+
+export const DEFAULT_COAL_SEAMS: readonly CoalSeamAnchor[] = [
   { x: -12, z: 39 },
   { x: -5, z: 43 },
   { x: 3, z: 39 },
@@ -28,18 +47,14 @@ const seamPositions = [
 
 export class PressureSystem {
   readonly group = new THREE.Group();
-  private readonly seams: CoalSeam[] = seamPositions.map((position) => ({ ...position, harvested: false, progress: 0 }));
-  private readonly seamMeshes = new THREE.InstancedMesh(
-    new THREE.DodecahedronGeometry(0.46, 0),
-    new THREE.MeshStandardMaterial({ color: '#332d29', emissive: '#8b7d3c', emissiveIntensity: 0.06, roughness: 0.94 }),
-    seamPositions.length,
-  );
-  private readonly markMeshes = new THREE.InstancedMesh(
-    new THREE.RingGeometry(0.62, 0.78, 18),
-    new THREE.MeshBasicMaterial({ color: '#c4883a', transparent: true, opacity: 0.72, side: THREE.DoubleSide }),
-    seamPositions.length,
-  );
+  private readonly seams: CoalSeam[];
+  private readonly seamSource: PressureDiagnostics['seamSource'];
+  private readonly seamMeshes: THREE.InstancedMesh;
+  private readonly markMeshes: THREE.InstancedMesh;
   private readonly object = new THREE.Object3D();
+  /** Render-side only: the last Y each lump was placed at, and whether it drew. F-SEAM-1's pair. */
+  private readonly seamVisualY: number[] = [];
+  private readonly seamDrawn: boolean[] = [];
   private readonly states = Array.from({ length: Balance.boilerHouse.maxCount }, (): BoilerState => ({ fuel: 0, tick: 0, cooldown: 0, hot: false, cooling: false }));
   private coal = 0;
   private vents = 0;
@@ -56,7 +71,28 @@ export class PressureSystem {
     private readonly hasResearch: (id: string) => boolean,
     private readonly onFloatText: (position: THREE.Vector3, text: string, color: string) => void,
     private readonly onSound: (name: 'blast-charge-arm' | 'wind-gust') => void,
+    /**
+     * The contract's own coal, when it authors any (`twist.coalSeams`). Owner ruling 2026-08-21 to
+     * the F-E2PL-1 lever, verbatim: **"sounds like a good idea"**. A map whose stake is 55-60wu from
+     * the Hill Mine's minehead was paying for its pressure line with the economy that buys its guns;
+     * now it can put the coal on its own ground. Absent = `DEFAULT_COAL_SEAMS`, byte-for-byte the
+     * behaviour every shipping contract already had.
+     */
+    seamAnchors?: readonly CoalSeamAnchor[],
   ) {
+    const anchors = seamAnchors && seamAnchors.length > 0 ? seamAnchors : DEFAULT_COAL_SEAMS;
+    this.seamSource = seamAnchors && seamAnchors.length > 0 ? 'twist.coalSeams' : 'PressureSystem.DEFAULT_COAL_SEAMS';
+    this.seams = anchors.map((position) => ({ x: position.x, z: position.z, harvested: false, progress: 0 }));
+    this.seamMeshes = new THREE.InstancedMesh(
+      new THREE.DodecahedronGeometry(0.46, 0),
+      new THREE.MeshStandardMaterial({ color: '#332d29', emissive: '#8b7d3c', emissiveIntensity: 0.06, roughness: 0.94 }),
+      this.seams.length,
+    );
+    this.markMeshes = new THREE.InstancedMesh(
+      new THREE.RingGeometry(0.62, 0.78, 18),
+      new THREE.MeshBasicMaterial({ color: '#c4883a', transparent: true, opacity: 0.72, side: THREE.DoubleSide }),
+      this.seams.length,
+    );
     this.group.name = 'PressureSystem';
     this.group.visible = this.enabled();
     this.seamMeshes.name = 'CoalSeams';
@@ -152,7 +188,16 @@ export class PressureSystem {
       enabled: this.enabled(),
       multiplayerPosture: 'single-player-gated',
       coal: this.coal,
-      seams: this.seams.map((seam) => ({ ...seam, marked: this.hasResearch('coal_survey') })),
+      seams: this.seams.map((seam, index) => ({
+        ...seam,
+        marked: this.hasResearch('coal_survey'),
+        // Where the sprite is STANDING versus where the ground IS — the F-SEAM-1 pair. A gap here
+        // is a seam the player cannot see even though the sim is perfect.
+        visualY: this.seamVisualY[index] ?? Number.NaN,
+        groundY: Terrain.visualAnchorY(seam, 0),
+        spriteVisible: this.seamDrawn[index] === true,
+      })),
+      seamSource: this.seamSource,
       boilers: this.boilers.snapshots(this.states),
       vents: this.vents,
       safeBand: this.hasResearch('pressure_assay') ? { min: Balance.boilerHouse.safeMin, max: Balance.boilerHouse.safeMax } : null,
@@ -209,12 +254,18 @@ export class PressureSystem {
     for (let index = 0; index < this.seams.length; index += 1) {
       const seam = this.seams[index]!;
       if (this.enabled() && !seam.harvested) {
-        this.object.position.set(seam.x, Terrain.visualAnchorY(seam, 0.32), seam.z);
+        const visualY = Terrain.visualAnchorY(seam, SEAM_LIFT);
+        this.object.position.set(seam.x, visualY, seam.z);
         this.object.rotation.set(0, index * 0.7, 0);
         this.object.scale.setScalar(1);
         this.object.updateMatrix();
         this.seamMeshes.setMatrixAt(index, this.object.matrix);
-      } else this.seamMeshes.setMatrixAt(index, hidden);
+        this.seamVisualY[index] = visualY;
+        this.seamDrawn[index] = true;
+      } else {
+        this.seamMeshes.setMatrixAt(index, hidden);
+        this.seamDrawn[index] = false;
+      }
       if (marked && !seam.harvested) {
         this.object.position.set(seam.x, Terrain.visualAnchorY(seam, 0.05), seam.z);
         this.object.rotation.set(-Math.PI / 2, 0, 0);

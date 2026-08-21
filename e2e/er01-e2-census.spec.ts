@@ -54,6 +54,11 @@ for (const contract of steamworks.contracts) {
       if (!admitted.includes(contract.id)) {
         expect(contract.id === 'e2-trestle' || contract.id === 'e2-incline').toBe(true);
         expect(contract.twist.pressureEnabled).toBe(true);
+        // AND EACH NOW OWNS ITS COAL (owner ruling 2026-08-21 to the F-E2PL-1 lever, verbatim:
+        // "sounds like a good idea"). Before it, `PressureSystem` fixed the seams on the Hill Mine's
+        // minehead for every map in the game, so these two paid a 55-58wu round trip for fuel; each
+        // now authors three seams ~29wu from its own stake, the Hill Mine's measured standard.
+        expect((contract.twist as { coalSeams?: Array<{ x: number; z: number }> }).coalSeams).toHaveLength(3);
         expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
         expect(consoleErrors).toEqual([]);
         return;
