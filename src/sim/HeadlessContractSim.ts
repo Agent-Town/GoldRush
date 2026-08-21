@@ -103,15 +103,18 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // holds admission is the build law, not the consumer — the door-completion sheet requires "a
   // public-verb secure proof x2 per seed", and no such proof exists yet. Same shape as
   // `e6-showroom`: the reason died, the refusal survived, so the row is REWORDED not removed.
-  // F-E3CF-4 IS CLOSED, NOT PENDING (2026-08-21). Three changed premises were run against this
-  // contract — funding, lane geometry, and fort shape — plus one owner-ruled map change, and the
-  // reason below now records the whole programme rather than the first attempt's snapshot. The
-  // consumer is not the gap and never was; the row survives its original reason exactly as
-  // `e6-showroom`'s and `e2-trestle`'s do.
-  'e3-fairground': {
-    reason: 'Admission HELD after three changed-premise attempts, all measured and preserved in artifacts/e3-fairground (F-E3CF-4, closed 2026-08-21). (1) FUNDING: a public-verb rider funds the whole fort by panning at a measured 1.7-2.2 gold/s — correcting the 1.60 ceiling in the review, because one HARVEST pays a whole harvest tick in one sim tick and travel is the only real cost — and secured bench seed 01 twice (wave 12, fnv1a32:9f2740ab) while seed 02 reached the wave ceiling with the wheel still turning and the middle crowd short. (2) GEOMETRY: the owner-ruled 6wu gate-lane shift was implemented, measured on one instrument against the ratified lane, and shipped at 0 because it made the objective strictly harder (crossings [5,3,7]/[4,4,3] -> [5,0,7]/[4,0,5]) — the offset decays to 1.9wu by the north spawn point and the stake is also the best-defended tile on the claim. (3) FORT SHAPE: the owner-ruled north spawn move (night_runner spawnGates north (-12,-4)) is landed and is a real improvement — on the free-fort instrument the middle crowd goes from 3 and 4 crossings to 10 and 8 with both seeds securing — but the rider that must fund it does not: a fort designed from the measured pressure map holds bench seed 01 to the wave ceiling with the wheel intact and loses seed 02 at wave 2-3. The map is browser-playable and every mechanism is documented; what is absent is a public-verb secure x2 on BOTH bench seeds, which is what this table exists to say.',
-    citation: 'reviews/e3-fairground-crowd-flocks.md',
-  },
+  // THE FAIRGROUND'S ROW IS GONE — ADMITTED 2026-08-21, and it took the map's own ground to do it.
+  // Owner ruling, verbatim: "lets follow your recommendation", to a five-map fork table whose
+  // fairground line was AUTHOR THE ANCHOR SET. `e3-fairground` had never had `harvestAnchors` of
+  // its own; it inherited `Terrain.DEFAULT_NODE_ANCHORS`, whose nearest live seam sits 38wu out on
+  // bench seed 01 and 46wu on seed 02. That single fact was the residual behind every earlier
+  // refusal: the opening purse landed ~5s late on seed 02, and that margin was the whole wheel
+  // race. With six anchors authored at 17-24wu — the placement its admitted E3 siblings already
+  // use — the public-verb prover `artifacts/e3-fairground/prover-v3.mjs` secures BOTH bench seeds
+  // twice over: seed 01 fnv1a32:7a66c50b and seed 02 fnv1a32:86c9ca37, both wave 12, wheel
+  // spinning, all three crowds across, zero gold granted. Three earlier premises (funding, lane
+  // geometry, fort shape) and two other rulings are recorded in
+  // reviews/e3-fairground-crowd-flocks.md; none of them was the gap, and the consumer never was.
   'e5-stillwater': {
     reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
     citation: 'reviews/milk-twin-sockets.md',

@@ -140,8 +140,22 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // context action appears in no contract's player menu to be compared against.
   // (A8 pins above were measured on its own pre-stack base; the pins below are the QUADRUPLE-stacked
   // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run — verbatim.)
-  assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 402, equal: 878, 'not-offered': 10 });
+  // ADMISSION MOVE — `e3-fairground`, 2026-08-21 (owner ruling, verbatim: "lets follow your
+  // recommendation", to a fork table whose fairground line was AUTHOR THE ANCHOR SET). The map
+  // authored its own `harvestAnchors` for the first time — it had been inheriting
+  // `Terrain.DEFAULT_NODE_ANCHORS`, whose nearest live seam sits 38-46wu from the stake, which was
+  // the residual behind every earlier refusal — and the public-verb prover then secured BOTH bench
+  // seeds twice through the plain door (fnv1a32:7a66c50b / fnv1a32:86c9ca37, both wave 12), so the
+  // exemption row came out: 6 -> 5.
+  //     ATTRIBUTED BY REVERT-AND-REPRODUCE, exactly as the moves above were: putting that one row
+  //     back reproduced `6 exemptions · agent-lacks 402 · equal 878 · not-offered 10 · 1290 rows`
+  //     to the digit, so the whole move is that row's. It is worth exactly NINETEEN rows flipping
+  //     `agent-lacks` -> `equal`, with the row COUNT unchanged at 1290 — which is precisely the
+  //     shape `reviews/e3-fairground-crowd-flocks.md` recorded in advance while the hold was on
+  //     ("one contract's worth of movement, 19 rows on its base"), measured then in both
+  //     directions and now paid out.
+  assert.equal(audit.admission.exemptions.length, 5);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 383, equal: 897, 'not-offered': 10 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
