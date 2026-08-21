@@ -1,310 +1,278 @@
-# Review — e6-picnic admission: REFUSED, and the refusal is the finding
+# Review — e6-picnic ADMITTED: the county's last unopened door
 
-**Slice:** `e6-picnic-admission` (the b4v3 door work, items 3–4) · **branch:** `worktree-agent-ad90f0a8eb7716664`
-**Base:** `705839487` (= `git merge-base HEAD main`; main sat one lock commit ahead at `1b1d2d2c8` throughout)
-**Built by:** a headless Opus-5 agent in an isolated worktree, 2026-08-21 · Node 26.4.0 · scratch port **5274**
+**Slice:** `e6-picnic-admission` · **branch:** `worktree-agent-ad90f0a8eb7716664`
+**Base:** `4b7883cf0` (main merged into the branch at `0ea1541e5` before any measurement — union discipline)
+**Built by:** a headless Opus-5 agent in an isolated worktree, 2026-08-21/22 · Node 26.4.0 · scratch port **5274**
 
-## VERDICT: STOP — LAW 2. NO ADMISSION, AND NO CONTRACT DATA CHANGES.
+## VERDICT: ADMITTED — idle LOSES on both bench seeds, the public-verb prover SECURES on both, twice each.
 
-The public-verb prover secures **both bench seeds, twice each**. So does the **idle floor**. A contract
-that can be won by doing nothing cannot be admitted, and `scripts/null-floor-anchors.test.mjs:43` says
-so in as many words: *"idle-secured: law 2 needs a ruling before this row can land"*. The ruling it
-wants is **F-2131-1b, already on the owner's desk** — so this slice measures the fork to the bottom,
-banks every number, and lands **no admission surface and no contract-data edit at all**.
+**OWNER RULING (2026-08-22), verbatim: "flip the stakes".** All three sandwiches now carry
+`heroStart: false`; the hero opens at the engine default (0,12), inside `mesa-meadow` and outside
+every hold disc. Five `harvestAnchors` land with it. `e6-picnic` enters `supportedContractIds()`,
+the browser serves a direct claim, the null floors gain two lawful rows, and the exemption table
+does not move — it never held this contract.
 
-The tracked tree is byte-identical to `705839487` except for this review, the evidence directory
-`artifacts/e6-picnic/`, and one scratch playwright config. The five `harvestAnchors` this task
-authorised were authored, measured with, and **reverted** — they are recorded below so the day the
-fork is ruled the door work is a copy-paste rather than a re-derivation.
+| policy | seed 01 (×2, byte-identical) | seed 02 (×2, byte-identical) |
+|---|---|---|
+| **idle** (`gr-sim --policy=idle`, `calls: 0`) | **LOST wave 2** · stakes-all-lost · hero hp 100 · `fnv1a32:c26f77d5` | **LOST wave 1** · stakes-all-lost · hero hp 100 · `fnv1a32:a649be29` |
+| **public-verb prover** (plain door) | **SECURED wave 20** · 607 kills · 60 calls · `fnv1a32:b55e6ff4` | **SECURED wave 20** · 690 kills · 67 calls · `fnv1a32:44f0f3dc` |
 
-## 1. The mechanic on main: live, correct, and contract-scoped — verified, not inherited
+Law 2 holds with room to spare: the idle floor does not merely fail to secure, it **loses the map**,
+by the contract's own authored loss condition, with the hero untouched at full health.
 
-`f2131-1` (`52c48fce7`) is intact on this base and the `e10-last-claim` leak is **closed**, proven two
-ways rather than quoted:
+## 1. Why this took two rulings, and why the first one was not enough
 
-| control | result |
-|---|---|
-| `scripts/picnic-hold-contract-scope.test.mjs` as shipped | **PASS**, 308 ms — enabled set is exactly `['e6-picnic']` |
-| **MANUFACTURED RED** — old predicate restored at the new call site (`tileParams.stakeMarkers.filter(heroStart).length >= 2`) | **FAILS and names the casualty**: `+ 'e10-last-claim'` against expected `['e6-picnic']` |
-| control reverted | `git status` clean; guard green again |
-| `e10-last-claim` live reachability (`same-game-audit.mjs --json`, `admission.measurements`) | **turns 5**, booted/firstView/terminal all true, error null — byte-equal to `docs/bench/same-game-audit.md:41` |
-| the same measurement **with my five anchors in the tree** | **turns 5**, unmoved — the picnic's data cannot reach e10 |
+This slice STOPPED once, on Law 2, and that stop is the reason the ruling exists. It is kept here
+because the admission is only trustworthy if the refusal that preceded it is legible.
 
-A passing guard never executes its violation path, so the red above is the load-bearing half (the
-s1299/s1300 standard, and the same control `reviews/f2131-1.md` ran at the drain — re-run here rather
-than inherited, per Mistake #4).
-
-✓ **Read-verified at source, which is why the b4v3 numbers are comparable at all:**
-`git diff archive/lane-b-s2131-b4v3-absorbed-2cc5a1d4b main -- src/systems/PicnicHoldSystem.ts` is a
-**single functional hunk** — `isEnabled`'s signature and body. For `e6-picnic` both forms return
-`true`, and `git log 90ec076a2..main -- src/sim src/game/Game.ts src/systems src/entities` contains
-only the picnic commits. So the b4v3 tree and this one are behaviourally identical for this contract,
-and indeed b4v3's reported idle hash reproduces to the digit (§3).
-
-## 2. The door work, authored and measured (then reverted)
-
-Five `harvestAnchors`, all inside the picnic's two authored `buildZones`, none within 11.6wu of any
-stake centre (the hold disc is 3wu) and none inside a glow-mesa landmark blocker (nearest is
-`six-vein-control-pylon` at (0,-7), 15wu from (0,8)):
-
-```json
-"harvestAnchors": [
-  { "x": -22, "z": 8 },   // mesa-meadow, west  — 11.66wu from sandwich-west
-  { "x": 0,   "z": 8 },   // mesa-meadow, mid   — 18.0wu from sandwich-center
-  { "x": 22,  "z": 8 },   // mesa-meadow, east  — 11.66wu from sandwich-east
-  { "x": -24, "z": -22 }, // base-staging, west
-  { "x": 24,  "z": -22 }  // base-staging, east
-]
-```
-
-With them the contract enters `supportedContractIds()` and `gr-sim` serves
-`--contract e6-picnic` through the **ordinary door** — no `admissionProbe` seam anywhere in §3.
-
-⚠️ **They are reverted on this branch, and they must not be re-landed alone.** Anchors are the door
-key on both sides: they clear the browser's `harvestAnchors?.length === 0 -> 'unavailable-contract'`
-refusal (`ContractFamilies.ts:1336`) *and* the headless `SUPPORTED_CONTRACTS` filter
-(`HeadlessContractSim.ts:253`). Landing them without a ruling would put a map on the board that
-**standing still wins** — the precise thing the owner ruled against.
-
-**That is measured, not asserted.** With the five anchors in the tree and nothing else changed, three
-shipped guards go red and each names the contract:
-
-| guard (anchors present, nothing else changed) | result |
-|---|---|
-| `scripts/door-admission-ratchet.test.mjs` | **✖** *"Door admission drifted from scripts/door-admission-baseline.json"* — diff line `+ 'e6-picnic'` |
-| `scripts/null-floor-anchors.test.mjs` | **✖** *"floors must equal bench seeds intersected with supported contracts"* |
-| `scripts/skillmd-guard.test.mjs` (door-contracts) | **✖** — the other three skill.md assertions stay green |
-
-All three are green on the reverted tree (§4). So the anchors cannot be landed as a quiet data tidy:
-they are an admission decision wearing five coordinates.
-
-## 3. The measurements — every run repeated, every repeat byte-identical
-
-Public-verb prover (`artifacts/e6-picnic/prover.mjs`; verbs: HARVEST · HOLD · BUILD turret ·
-CAPTURE · SECURE_CHOICE; three turrets planted 1.5wu inside the three stake discs; 13 appliances
-penned on seed 01), `--contract e6-picnic` passed explicitly on every run:
-
-| run | terminal | waves | kills | calls | eventLogHash |
-|---|---|---:|---:|---:|---|
-| seed 01 ×2 | **SECURED** | 20 | 613 | 59 | `fnv1a32:2cc17457` |
-| seed 02 ×2 | **SECURED** | 20 | 638 | 67 | `fnv1a32:fee59bca` |
-
-Idle floor, run exactly the way `scripts/null-floor-anchors.mjs:40` runs it (`gr-sim --policy=idle`):
-
-| run | terminal | waves | kills | calls | eventLogHash |
-|---|---|---:|---:|---:|---|
-| seed 01 ×2 | **SECURED — LAW 2 BREACH** | 20 | 268 | 0 | `fnv1a32:b9f476a6` |
-| seed 02 ×2 | **SECURED — LAW 2 BREACH** | 20 | 223 | 0 | `fnv1a32:612de94b` |
-
-`b9f476a6` is **the same hash `reviews/b4v3-picnic-active-defense.md` reported**. That inherited claim
-is now re-measured on a tree whose only delta is the enable key, and it is CONFIRMED.
-
-### The mechanism, read off THE VIEW rather than argued
-
-`artifacts/e6-picnic/idle-stake-trace-01.txt`, one line per turn:
+The first ruling (2026-08-21, verbatim: *"picnic - no, just standing there should not win"*) built the
+contest predicate: a stake's 3wu disc is held by a **standing structure** inside it, or by a hero that
+has dealt damage within `PICNIC_ACTIVE_DEFENSE_SECONDS`. It was built correctly, it shipped at
+`52c48fce7`, and **it did not bite**. Measured on the pre-flip map, `--policy=idle` **SECURED** both
+bench seeds at wave 20 (`fnv1a32:b9f476a6` / `fnv1a32:612de94b`, `calls: 0`) — the b4v3 review's own
+number, re-measured rather than inherited. The full-run trace showed exactly why:
 
 ```
 w 1 hp=100 west:t0.0      center:t0.0     east:CLAIMED
 w 2 hp=100 west:contested center:CLAIMED  east:CLAIMED
- …  (west reads `contested` on all 33 remaining turns; its hold timer never leaves 0)
+ …  west reads `contested` on all 33 remaining turns; its hold timer never leaves 0
 w20 hp=114 west:contested center:CLAIMED  east:CLAIMED
 ```
 
-**The ruled pressure works. It takes two of the three stakes inside two waves and holds them for the
-whole run.** What it cannot take is `sandwich-west`, because that is where the hero stands, and
-`HeadlessContractSim.ts:1830` registers the hero as a combat shooter whose gate at `:480`
-(`enabled: () => !this.dead && this.weapon === 'rig'`) has **no policy term** — so an "idle" hero
-fires all run, refreshes its own `PICNIC_ACTIVE_DEFENSE_SECONDS` window every second, and its stake
-never falls. All three claimed is the only loss, so the loss can never fire, and the hero then
-survives to `secureWave` 20 on **12 defaulted upgrade picks** — its hp dips to 82 by wave 10 and then
-*climbs back* to 126 as the free picks land — and secures.
+**The ruled pressure worked — it took two of three stakes inside two waves and held them for the
+whole run.** What it could not take was `sandwich-west`, because all three markers carried
+`heroStart: true`, the hero opened standing in that disc, and `HeadlessContractSim.ts:1830` registers
+it as a combat shooter whose gate at `:480` — `enabled: () => !this.dead && this.weapon === 'rig'` —
+has **no policy term**. An "idle" hero fires all run and refreshes its own active-defense window every
+second. All-three-claimed is the only loss, so the loss could never fire.
 
-### The counterfactual — the new information, measured rather than reasoned
+F-2131-1b had framed the cure as two expensive options: distinguish commanded defense from autonomous
+fire, or redefine `--policy=idle` across the whole admission program. **There was a third, and it was
+three booleans of contract data** — F-2090-1's original option (a), set aside as superseded when it
+was in fact the ruling's missing half. It was put to the owner with the counterfactual already
+measured, and the owner ruled it. The predicted numbers paid out to the digit: the floors this slice
+regenerated are byte-identical to the counterfactual measured a day earlier, on a tree that has since
+absorbed a whole day of main.
 
-On the same anchored tree (the door cannot serve the run without the anchors), flip the three
-`stakeMarkers[].heroStart` to `false` so the hero starts at the default `(0,12)` — still inside
-`mesa-meadow`, ≥14wu from every stake — and change **nothing else**:
+## 2. What changed
 
-| run | terminal | waves | kills | hero hp | eventLogHash |
-|---|---|---:|---:|---:|---|
-| idle seed 01 ×2 | **LOST — stakes-all-lost** | 2 | 25 | 100 (untouched) | `fnv1a32:c26f77d5` |
-| idle seed 02 ×2 | **LOST — stakes-all-lost** | 1 | 15 | 100 | `fnv1a32:a649be29` |
+**Contract data (the ruling):** `assets/contracts/epoch-6-atomic/contracts.json` —
+`heroStart: true → false` on all three sandwiches; five `harvestAnchors`; the stale
+`engineDependencies` row removed. The published mask table
+(`mask-tables/e6-picnic.json`) mirrors all of it, because `e3-mask-tables.test.mjs:248` deep-equals
+the two per key.
 
-Its trace: `west CLAIMED` w1, `center CLAIMED` w2, `east CLAIMED` w2, hero at full health — the loss
-is the **picnic loss firing**, not a death. So the owner's ruling is not merely correct, it is
-*already sufficient*; the only thing standing between it and a lawful floor is that all three
-`stakeMarkers` carry `heroStart: true`.
+```json
+"harvestAnchors": [
+  { "x": -22, "z": 8 },   // mesa-meadow west  — 11.66wu from sandwich-west
+  { "x": 0,   "z": 8 },   // mesa-meadow mid   — 18.0wu from sandwich-center
+  { "x": 22,  "z": 8 },   // mesa-meadow east  — 11.66wu from sandwich-east
+  { "x": -24, "z": -22 }, // base-staging west
+  { "x": 24,  "z": -22 }  // base-staging east
+]
+```
 
-## 4. Gates (Node 26.4.0, scratch port 5274, `--workers=1` throughout)
+All five sit inside the picnic's two authored `buildZones`, none within 11.6wu of a stake centre (the
+disc is 3wu), none inside a glow-mesa landmark blocker (nearest: `six-vein-control-pylon` at (0,-7),
+15wu from (0,8)).
+
+**One engine line, and it is a truth fix the flip forced (`src/agent/MechanicsManifest.ts`).**
+`posting.lossStakes` filtered on `heroStart`, so flipping the flags would have emptied it — telling
+every rider this contract has NO loss stakes while `PicnicHoldSystem` still loses on all three.
+`heroStart` was doing two jobs; under `twist.picnicHold` they are now read apart. Contract-scoped on
+the same declaration the system is gated on, so no other contract's posting moves —
+`picnic-hold-contract-scope.test.mjs` holds that key exclusive to `e6-picnic`, and its manufactured
+red still names `e10-last-claim` when the old marker-counting predicate is restored (re-run on this
+tree, §5).
+
+**The dropped `engineDependencies` row is not tidying.** It declared
+`picnic-contract-consumers: missing` with the description *"neither implements a three-stake hold"* —
+false since `52c48fce7`, and on an ADMITTED contract it would make the campaign dossier report a map
+the door serves as *"🟠 missing"* (`campaign-map-dossier-table.mjs:63`). The census now derives that
+branch from `EXPECTED_DEPENDENCY` rather than naming one contract, so the next admission cannot
+forget it.
+
+**Admission surfaces:** `door-admission-baseline.json` (+`e6-picnic`, door 33 → 34) ·
+`public/skill.md` door-contracts fence · `assets/contracts/null-floors.json` (regenerated) ·
+`e2e/er01-e6-census.spec.ts` (per-id flip, both rulings quoted verbatim with the hashes) ·
+`docs/bench/same-game-audit.md` (regenerated) · `scripts/same-game-audit.test.mjs` (re-pinned).
+
+## 3. Evidence (Node 26.4.0, scratch port 5274, `--workers=1` throughout)
 
 | Gate | Result |
 |---|---|
 | `npx tsc --noEmit` | clean |
-| `npm run build` | green, **1.67 s**, asset-diet ceilings respected |
-| er01-e6-census + e6-picnic-hold + the nine E6 siblings + ap16-4, both projects | **54 passed / 2 failed**, 6.2 m — both failures are the *inventoried* known red (below) |
-| task-025 + m1-01 + m2-01, both projects | **40 passed**, 3.6 m |
-| Door probe ×2 viewports (`artifacts/e6-picnic/door-probe.spec.ts`) | **4 passed**, 13.4 s, zero console/page errors |
-| `same-game-audit.mjs --json` on the clean tree | `0 / 468 / 1090 / 4` over **1562 rows**, **6 exemptions**, 10 measurements |
-| `node scripts/null-floor-anchors.mjs --check` | **71 rows, every pinned field byte-identical**; the single reported difference is `eraStamp: pinned="cef09f339" derived="705839487"`, 249.5 s |
-| `npm run test:node-guards` | **486 tests · 483 pass · 1 fail · 2 skipped · 327.0 s** — the one failure is the contention guard, controlled below |
+| `npm run build` | green, **1.55 s**, asset-diet ceilings respected |
+| `er01-e6-census` (per-id truth, both projects) | **8 passed**, 11.2 s |
+| E6 family (11 specs) + `ap16-4`, both projects | **53 passed / 3 failed** — all three controlled below |
+| `task-025` + `m1-01` + `m2-01`, both projects | **40 passed**, 2.8 m |
+| Door probe ×2 viewports (`artifacts/e6-picnic/door-probe.spec.ts`) | **4 passed**, 11.7 s, zero console/page errors |
+| `null-floor-anchors.mjs` regen | **75 floors / 32 contracts**, 189.7 s |
+| `null-floor-anchors.mjs --check` | **75/75 match, rc=0**, 172.0 s |
+| `same-game-audit.mjs --json` | `0 / 456 / 1143 / 3` over **1602 rows**, **5 exemptions**, 10 measurements |
+| `npm run test:node-guards` | **499 tests · 497 pass · 0 fail · 2 skipped · 269.1 s, rc=0** — fully green |
 
-**The 2 reds are the inventoried known red, fingerprint-matched, not mine.**
-`e2e/e6-boss-homemaker.spec.ts:126` — *"unbuilds, tidies, makes one chair, and remains kept without
-ever hurting the player"* — is listed in `logs/suite-red-inventory.md:172-173` as **BOTH** projects,
-TIMEOUT class (90 000 ms), and `reviews/e6-homemaker-headless-socket.md:6` records it as
-*"inventoried known red, control-proven pre-existing on an unguarded tree"*. My tracked tree is
-byte-identical to `705839487`, so no tracked line of mine can have caused it.
+**THE LAW-2 SURFACE, stated plainly:** the regenerated `null-floors.json` gains
+`e6-picnic-01` (wave 2, `c26f77d5`) and `e6-picnic-02` (wave 1, `a649be29`), **both `secured: false`**,
+and the artifact carries **0 rows with `secured: true`** across all 75. The other 73 rows are
+byte-unmoved — the whole diff is +19/−1 lines, the two new rows plus the `eraStamp`.
 
-**The one battery red is the contention guard, and it is provably not mine.**
-`scripts/node-guards-contention.test.mjs:116` — *"node-guards board did not stay quiet for 300 ms"*,
-stderr `CONTENDED — 2 concurrent batteries`. That guard exists to report a second concurrent battery,
-and there was one. **Bracketed `pgrep`, both ends:** at battery start, the sibling agent worktree
-`agent-a9e7d8321e70f7a1f` was mid-playwright on the E5 stillwater suite and `lane-runner-v3.sh` was
-alive, load average 8.75. At the SOLO re-run I attributed the process by hand — pid 32199,
-`lsof -d cwd` → **`.claude/worktrees/agent-a9e7d8321e70f7a1f`**, started 21:05:19, a *second whole
-`run-node-guards` battery* belonging to that sibling — plus a live `codex exec` on
-`lane-d f2141-1-canyon-census-run-3` and its vite preview on 5191, at load average 24.32. There was no
-quiet board to be had, and the guard was right both times. Everything of mine ran on port **5274**, so
-it could not collide with 5188, the A3 scratch 5273, or the lane's 5191.
+### The prover, and what it actually plays
 
-⚠️ **Battery cost drifted upward again, as always:** 486 tests / 327.0 s here against `f2131-1`'s
-482 / 449.8 s. Recorded, not pruned — the sequence is the provenance. (The wall-clock is *shorter*
-despite more tests only because that run was serialised at load 2.89; this one shared a box at 24.)
+`artifacts/e6-picnic/prover.mjs` drives `scripts/gr-sim.mjs --contract e6-picnic` over stdin. Public
+grammar only: HARVEST · HOLD · BUILD · CAPTURE · SECURE_CHOICE. No `admissionProbe`, no private
+handles, no balance edits.
+
+The flip made the map genuinely hostile and the opening had to be rebuilt for it. A turret is 50 gold
+and the first sandwich falls long before the Prospector can pan that much — so the rider **fences with
+palisades at 10 gold** (`Balance.palisade.cost`), because `PicnicHoldSystem.contested` accepts ANY
+standing structure inside the disc and never asks whether it shoots. Then it spends to the turret cap
+on whatever sandwiches are still alive, and CAPTUREs the wound-down machines so `aliveCap` does not
+fill with things that can be neither fought nor cleared.
+
+**Both seeds lose two sandwiches to the opening rush and hold the third to wave 20.** That is not the
+rider failing; it is the contract's own authored secure rule —
+*"at-least-one-stake-held-at-default-secure-wave"* (`MechanicsManifest.ts:666`) — doing exactly what
+it says. The Picnic is an attrition map: they get some of the sandwiches.
+
+## 4. Audit pins — re-measured on this tree, and attributed
+
+**My base, measured not inherited:** main moved under this slice while it was parked on the owner's
+desk (`e5-stillwater` was admitted in the interval, 6 exemptions → 5). Re-read after the merge:
+`5 exemptions · 0/446/1112/4 over 1562 rows`, matching `same-game-audit.test.mjs` on disk.
+
+**After:** `5 exemptions · 0/456/1143/3 over 1602 rows` — **+10 agent-lacks, +31 equal, −1 not-offered,
++40 rows**, the `+10/+30/−1/+39` anchor shape nine slices before this recorded, one `equal` row wider.
+**The exemption count does NOT move**: the Picnic was never in `CONTRACT_ADMISSION_EXEMPTIONS`, it was
+excluded by empty `harvestAnchors` — a different door.
+
+**ATTRIBUTED BY REVERT-AND-REPRODUCE, not by arithmetic**, and the control is unusually clean because
+three other edits ride in this slice and none of them is visible to this audit. Emptying
+`harvestAnchors` in BOTH the contract and the published mask table — while leaving the `heroStart`
+flip, the dropped `engineDependencies` row and the `MechanicsManifest` lossStakes read all in place —
+reproduced **`5 exemptions · 0/446/1112/4 over 1562 rows` EXACTLY**, the pre-slice pin. So the whole
+movement belongs to the five anchors, and the ruling that made the map winnable moves nothing here
+(it is a mechanics/posting surface, which this audit does not compare — the fourth slice running to
+find that shape).
+
+## 5. Controls run by this slice, not inherited
+
+| control | result |
+|---|---|
+| `picnic-hold-contract-scope.test.mjs` as shipped | **PASS** — enabled set exactly `['e6-picnic']` |
+| **manufactured red** — old marker-counting predicate restored at the new call site | **FAILS naming the casualty**: `+ 'e10-last-claim'` vs expected `['e6-picnic']`; reverted byte-identical |
+| `e10-last-claim` live reachability, before and after the anchors | **5 turns** both times — the picnic's data cannot reach it |
+| **anchors alone** (no admission surfaces) | `door-admission-ratchet`, `null-floor-anchors` and `skillmd-guard`'s door-contracts test all go RED, each naming `e6-picnic` — the anchors ARE the door, so they can never land as a quiet data tidy |
+| idle floor, pre-flip vs post-flip | `b9f476a6`/`612de94b` SECURED w20 → `c26f77d5`/`a649be29` LOST w2/w1. The flip is the whole delta |
+
+## 6. Battery, and every red controlled
+
+**`npm run test:node-guards`: 499 tests · 497 pass · 0 fail · 2 skipped · 269.1 s, rc=0 — GREEN,
+including the contention guard, which caught a quiet window at load 7.5.** Every admission guard
+passes on the merged tree: `derived door matches the fixed admission baseline` (4.3 s) ·
+`published mask tables exactly track authored contract data` (58.5 ms — the mask/contract deep-equal
+that makes the mirrored flip load-bearing) · `null-floor artifact exactly covers every door-servable
+bench seed` · `Picnic hold is enabled only for e6-picnic across every epoch contract` (1.8 s) ·
+`same-game audit runs over every contract` (11.8 s) · `skill.md door-contracts match
+SUPPORTED_CONTRACTS`. Log banked at `artifacts/e6-picnic/gate-node-guards-ruled.log`.
+
+⚠️ **Battery cost drifted upward again:** 499 tests / 269.1 s here against `f2131-1`'s 482 / 449.8 s
+and this branch's own 486 / 327.0 s a day earlier. Recorded, not pruned — the sequence is the
+provenance. The 2 skips are the documented fire-shell exemptions.
+
+**Three e2e reds, none of them mine:**
+
+1. **`e6-boss-homemaker.spec.ts:126`, both projects** — the *inventoried* known red:
+   `logs/suite-red-inventory.md:172-173` lists it as **BOTH** projects, TIMEOUT class (90 000 ms), and
+   `reviews/e6-homemaker-headless-socket.md:6` records it as *"inventoried known red, control-proven
+   pre-existing on an unguarded tree"*. Fingerprint matched.
+2. **`e6-arsenal.spec.ts:29`, one project per run — F-E6PA-6, a NEW load flake, not inventoried.**
+   Controlled by five solo reruns (`artifacts/e6-picnic/arsenal-flake-control.txt`): **run1 6 passed ·
+   run2 6 passed · run3 desktop-chrome failed · run4 MOBILE-chrome failed · run5 desktop-chrome
+   failed.** A deterministic tree red picks the same project every time and fails 5/5; this one moves
+   projects and passes outright on 2 of 5. The spec also cannot touch this slice: it opens
+   `e2-hill-mine` then `e6-glow-mesa` and contains **zero** references to `picnic`, `stakeMarkers`,
+   `heroStart` or `harvestAnchors` (`grep -c` = 0); the assertion that fails is a page-navigation
+   wait on `contract.activeId === 'e6-glow-mesa'`. Filed for the inventory rather than excused.
+3. **`node-guards-contention.test.mjs`** — the guard reporting a second concurrent battery, which is
+   its entire job. Declared under contention below.
+
+⚠️ **Contention was live throughout and is declared, not excused (Mistake #12).** A sibling agent
+worktree (`agent-a9e7d8321e70f7a1f`) ran its own full `run-node-guards` battery and playwright suites
+against the same box — attributed by hand at the time with `lsof -d cwd` on pid 32199 — alongside a
+live `codex exec` lane-d run and its vite preview on 5191, at load averages between 6.4 and 24.3.
+Everything of mine ran on port **5274**: never 5188, never the A3 scratch 5273, never the lane's 5191.
 
 **Environmental class, declared and pre-empted.** An isolated worktree ships no `node_modules`, and
 `worker-type-coverage` / `suite-red-inventory` red on an empty one. I symlinked the shared checkout's
-`node_modules` before the battery (the A3 precedent) and removed it after — **both guards passed**, so
-that class never reached the board. ⓘ Worth knowing, and it is a trap rather than a footnote:
-`.gitignore:1` reads `node_modules/` **with a trailing slash**, which does not match a *symlink*, so
-`git check-ignore` returns 1 and `git status` lists it as untracked. Path-scoped adds (§4.2) are the
-only thing that keeps it out of a commit; a root `-A` would have swept it — the Mistake-#3 shape,
-another sighting.
+`node_modules` (the A3 precedent), ran, and removed it. ⓘ `.gitignore:1` reads `node_modules/` **with
+a trailing slash**, which does not match a *symlink* — `git check-ignore` returns 1 and `git status`
+lists it as untracked. Path-scoped adds (§4.2) are the only thing keeping it out of a commit.
 
-## 5. What this slice did NOT do, and why each omission is correct
+## 7. Findings
 
-- **No `harvestAnchors`.** They are the door on both sides (§2). Reverted; `git checkout --` verified.
-- **No `er01-e6-census` per-id flip.** `ADMITTED` stays `{e6-glow-mesa, e6-half-life-hollow}`. Flipping
-  it would assert an admission the floors refuse.
-- **No `skill.md` fence, no `door-admission-baseline.json` row, no floors regen.** All three derive
-  from `supportedContractIds()`, which does not move without anchors — and all three go red the
-  moment anchors land alone (§2's control table). `null-floor-anchors.mjs --check` was run for the
-  record: **every pinned row byte-identical**, and its one reported difference is the `eraStamp`
-  field — `git rev-parse --short $(git merge-base HEAD main)` at `null-floor-anchors.mjs:21-22`,
-  which differs in *any* worktree or branch. A property of the instrument, not of the tree, and the
-  reason the regen was not written: writing it would have re-stamped 71 rows to say nothing.
-- **No audit regen, no re-pin.** Re-measured verbatim on this tree and byte-equal to main's committed
-  pins: `assert.equal(audit.admission.exemptions.length, 6)` and
-  `{ 'agent-exceeds': 0, 'agent-lacks': 468, equal: 1090, 'not-offered': 4 }`
-  (`scripts/same-game-audit.test.mjs:342-343`). Nothing to re-pin, so no `ADMISSION MOVE` comment is
-  owed; writing one would document a move that did not happen.
-- **No `CONTRACT_ADMISSION_EXEMPTIONS` row.** That table is for contracts the door would otherwise
-  **serve**. `e6-picnic` is refused by empty `harvestAnchors` — *"a different door"*, in
-  `same-game-audit.test.mjs`'s own words at `:76`, `:148` and `:243`. With the anchors reverted, a row
-  there would misname which door refuses this map. It is also not a *ceiling* refusal: the prover
-  secures. The refusal is Law 2.
-- **No `tasks/BACKLOG.md` edit.** F-2131-5 recorded that this collision stopped b4v3 attempt 1 and
-  that the ledger row is the drain's duty. The row text is in §7 ready to paste.
+**F-E6PA-1 — DISCHARGED BY THE OWNER'S RULING.** The idle-secure that refused this admission on
+2026-08-21 is cured, and the cure was the one this slice measured and recommended. Recorded closed
+rather than deleted: the measurement (`b9f476a6`/`612de94b` securing, then `c26f77d5`/`a649be29`
+losing) is the before/after that makes the ruling checkable.
 
-## 6. Findings
+**F-2131-1b — STILL OPEN, and this admission does NOT close it.** The desk fork is that
+`--policy=idle` gates movement, not fire: `heroShooter.enabled` has no policy term, so a headless
+"idle" hero is a stationary turret on **every** contract. The Picnic escaped it by moving the hero off
+the stakes, which is a fix to one map, not to the instrument. Any future predicate that reads hero
+damage as evidence of intent will hit this again. Left on the desk, unchanged.
 
-**F-E6PA-1 (BLOCKING — OWNER FORK; supersedes the framing of F-2131-1b, does not replace the fork).**
-`e6-picnic` idle-secures both bench seeds (`b9f476a6` w20 / `612de94b` w20, ×2 each). F-2131-1b framed
-the cure as two options, both expensive: *distinguish commanded defense from autonomous fire*, or
-*change what `--policy=idle` means across the whole admission program*. **There is a third, and it is
-three booleans of contract data**: F-2090-1's original option (a), *move the hero start off a stake*.
-It was set aside as superseded by the owner's ruling, and it is not — it is the ruling's missing half.
-Measured above: with `heroStart: false` on all three sandwich stakes and nothing else changed, the
-idle floor **LOSES at wave 2 and wave 1, by stakes-all-lost, with the hero at full health**.
-**RECOMMENDATION for the desk (one word releases it):** land the three booleans plus the five anchors
-of §2 as one slice; the prover hashes of §3 and a fresh idle floor become its gate. **COST if ruled:**
-the Prospector no longer opens the run standing on a sandwich — a fiction change, which is why this is
-the owner's call and not mine (§7.3).
+**F-E6PA-2 (NON-BLOCKING — INSTRUMENT DEFECT, and a shipped script has it).** A headless probe that
+does not put `contract=<id>` on `globalThis.location` measures the requested contract's MANIFEST on
+**The Claim's terrain**: `src/world/Terrain.ts:78` binds `ACTIVE_CONTRACT = activeContract()` at module
+load, and the tile's size, water, fords, landmark blockers and `nodeAnchors` all derive from it, while
+`HeadlessContractSim` takes its manifest from its argument. Set one and not the other and they
+disagree silently, with no error. It cost me a wrong number: a first probe reported this contract's
+idle floor *dying at wave 5* where the canonical driver secured at wave 20. Attributed by elimination
+— removing the `submitOrders` call changed nothing; restoring the URL param *and* the anchors that let
+it resolve reproduced `fnv1a32:b9f476a6` exactly. ⚠️ **`e2e/ap16-8-admission-probe.mjs:4` has the same
+omission** while its sibling `ap16-8b-capture-loop-probe.mjs:54` sets it correctly — read-verified at
+source, not re-measured here. Worth its own slice: it asks which published exemption numbers were
+measured on the wrong ground.
 
-**F-E6PA-2 (NON-BLOCKING — INSTRUMENT DEFECT, and a shipped script has it too).**
-**A headless probe that does not put `contract=<id>` on `globalThis.location` measures the requested
-contract's MANIFEST on THE CLAIM'S TERRAIN, and says nothing about it.** `src/world/Terrain.ts:78`
-binds `const ACTIVE_CONTRACT = activeContract()` **at module load**, off the URL search — and the
-tile's size, dimensions, water, fords, landmark blockers and `nodeAnchors` all derive from it
-(`:79`, `:83–:86`, `:102`, `:109`, `:142`, `:167`). `HeadlessContractSim` meanwhile takes its manifest
-from its `contractId` argument. Set one and not the other and the two disagree, silently, with no
-error and no console line.
+**F-E6PA-3 — DISCHARGED IN THIS SLICE.** The picnic's stale `engineDependencies` row is removed and
+the census derives its branch from the dependency table, so an admitted contract can no longer ship a
+"missing consumer" declaration.
 
-I hit this head-on and nearly published its number as the idle floor: my first probe reported
-`e6-picnic` idle **dying at wave 5** (`fnv1a32:a16ae02b`) where the canonical driver **secures at
-wave 20**. Attributed by elimination, each step measured rather than reasoned:
+**F-E6PA-6 (NON-BLOCKING, fire-authorable) — `e2e/e6-arsenal.spec.ts:29` is a load-sensitive flake and
+is NOT in `logs/suite-red-inventory.md`.** 3/5 solo runs failed, on a different project each time,
+with the same wall-clock shape. It belongs in the inventory so the next drain fingerprint-matches it
+instead of re-deriving the control. Evidence banked at
+`artifacts/e6-picnic/arsenal-flake-control.txt`.
 
-| probe variant | seed 01 result |
-|---|---|
-| submits `[]` each turn, `?debug` only | wave 5, dead, `a16ae02b` |
-| **no `submitOrders` at all** (mirrors gr-sim exactly), `?debug` only | wave 5, dead, `1cb0c606` — **so the orders call was NOT the cause** |
-| no orders, `?debug&contract=e6-picnic`, anchors absent | wave 5, dead, `1cb0c606` — the browser door refuses the param, so terrain still falls back |
-| no orders, `?debug&contract=e6-picnic`, **anchors present** | **secured w20, 268 kills, 12 defaulted picks, `fnv1a32:b9f476a6`** — byte-identical to `gr-sim --policy=idle` |
-
-The last row is the proof: the divergence was the terrain binding the whole time, and restoring it
-reproduces the canonical hash exactly. ⚠️ **`e2e/ap16-8-admission-probe.mjs:4` has the same omission** —
-it sets `globalThis.location = new URL('http://gr-sim.local/?debug')` with no `contract`, then probes
-every `CONTRACT_ADMISSION_EXEMPTIONS` entry. Its sibling `ap16-8b-capture-loop-probe.mjs:54` sets
-`?debug&contract=${CONTRACT}` correctly, which is what makes the omission legible as a defect rather
-than a convention. **Read-verified at source; NOT re-measured against that script**, because doing so
-means re-running the exemption program and that is a slice of its own — filed, not fixed here.
-Whoever takes it should start by asking which published exemption numbers were measured on The
-Claim's ground.
-
-**F-E6PA-3 (NON-BLOCKING, fire-authorable — an agent-facing lie, owed regardless of admission).**
-`assets/contracts/epoch-6-atomic/contracts.json` still declares
-`engineDependencies: [{ dep: 'picnic-contract-consumers', status: 'missing', … }]`, whose description
-reads *"neither implements a three-stake hold"*. `PicnicHoldSystem` has implemented it **in both
-engines** since `52c48fce7` (`Game.ts:806`, `HeadlessContractSim.ts:718`). The dossier's second axis
-(`scripts/campaign-map-dossier-table.mjs:63`) reports this map as *"🟠 missing"* on a consumer that
-exists. Left untouched here on purpose: it is outside the anchors-only data firewall, and it is the
-F-E5AC-1 shape — one small truth-pass master.
-
-**F-E6PA-4 (NON-BLOCKING — record).** With the anchors in the tree the audit measured
-`0 / 478 / 1121 / 3` over **1602 rows**, 6 exemptions: **+10 agent-lacks, +31 equal, −1 not-offered,
-+40 rows**. That is the *"+10/+30/−1/+39"* anchor shape eight previous slices recorded, one row wider
-(the picnic publishes one extra parity row). Banked so the ruled slice can predict its pins before it
-measures them, and be suspicious if they differ.
-
-**F-E6PA-5 (NON-BLOCKING — a pointer correction).** This task was dispatched citing *"main's current
-live pins: 464/1056/4 over 1524, exemptions 6"*. Measured on this base, twice, they are
-**468/1090/4 over 1562, exemptions 6** — matching both `scripts/same-game-audit.test.mjs:343` and
-`docs/bench/same-game-audit.md` on disk. The quoted figures match neither; whichever handoff carries
-them should be corrected before another slice bases arithmetic on them.
-
-## 7. Ledger row for the drain to paste (F-2131-5: the row is the drain's duty)
-
-> 🛑 **PICNIC ADMISSION REFUSED ON LAW 2, AND THE CURE IS NOW MEASURED (`reviews/e6-picnic-admission.md`).** The door work was authored and measured, then **reverted**: the public-verb prover SECURES both bench seeds twice (`fnv1a32:2cc17457` w20 / `fnv1a32:fee59bca` w20) — and so does the **idle floor** (`fnv1a32:b9f476a6` w20 / `fnv1a32:612de94b` w20, `calls: 0`), which `null-floor-anchors.test.mjs:43` forbids without an owner ruling. **The ruled predicate is not at fault and is proven working**: the full-run trace shows east CLAIMED at wave 1 and center at wave 2, held for the remaining 18 waves; only `sandwich-west` survives, because the hero stands on it and auto-fires (`HeadlessContractSim.ts:480` — `heroShooter.enabled` has no policy term; b4v3's `:478`/`:1803` coordinates have rotted to `:480`/`:1830` and were re-read, not copied), refreshing its own active-defense window forever. 🔑 **F-E6PA-1 — THE CHEAP CURE F-2131-1b MISSED, MEASURED NOT ARGUED:** with all three `stakeMarkers[].heroStart` flipped to `false` and NOTHING else changed, idle **LOSES at wave 2 / wave 1 by stakes-all-lost with the hero at full health** (`fnv1a32:c26f77d5` / `fnv1a32:a649be29`, ×2 each). F-2090-1's option (a) is not superseded by the owner's ruling — it is the ruling's missing half. 🔺 **OWNER'S DESK:** one word lands the three booleans + the five banked anchors as one slice. **COST:** the Prospector no longer starts standing on a sandwich. ✅ Also verified, not inherited: the `e10-last-claim` leak stays CLOSED — the scope guard passes, its **manufactured red names `e10-last-claim` by hand on this tree**, and e10's live reachability reads **5 turns** with and without the anchors. Audit pins re-measured verbatim and **unmoved**: 6 exemptions · 468/1090/4 over 1562. Gates: tsc clean · build 1.67 s · node-guards **486/483/1/2 skip, 327 s** (sole red = the contention guard, attributed by `lsof` to a SECOND battery in the sibling worktree `agent-a9e7d8321e70f7a1f`, pid 32199, at load 24.3) · E6 family + ap16-4 **54/2** (both reds = the inventoried `e6-boss-homemaker:126` timeout, `logs/suite-red-inventory.md:172-173`) · adjacent **40/40** · door probe **4/4** ×2 viewports · floors `--check` **every pinned row byte-identical**, sole diff the worktree-relative `eraStamp`. ⚠️ **The anchors cannot land quietly and that is measured:** with them in the tree and nothing else changed, `door-admission-ratchet`, `null-floor-anchors` and `skillmd-guard`'s door-contracts test all go RED, each naming `e6-picnic`. Filed: **F-E6PA-2** (a headless probe that omits `contract=<id>` from `globalThis.location` measures the contract's manifest on **The Claim's terrain** — `Terrain.ts:78` binds ACTIVE_CONTRACT at module load; it reported wave 5 where the real floor secures at 20, and **`e2e/ap16-8-admission-probe.mjs:4` has the same omission** while its `8b` sibling does not) · **F-E6PA-3** (the picnic still declares its now-built consumer "missing") · **F-E6PA-4** (anchor audit shape banked: +10/+31/−1/+40) · **F-E6PA-5** (the dispatch's quoted pins 464/1056/4 over 1524 match nothing on disk; measured 468/1090/4 over 1562).
+**F-E6PA-7 (NON-BLOCKING — a pointer correction, carried forward).** The dispatch that opened this
+work quoted *"main's current live pins: 464/1056/4 over 1524, exemptions 6"*. Measured twice on the
+pre-merge base they were **468/1090/4 over 1562, exemptions 6**, and after merging main they are
+**446/1112/4 over 1562, exemptions 5**. The quoted figures match no tree on disk; whichever handover
+carries them should be corrected before another slice bases arithmetic on them.
 
 ## 8. Merge classification
 
-**Base:** `705839487`. **Tracked files changed: 3, and none of them is code, data, or a gate.**
+**Base:** `4b7883cf0`, merged into the branch at `0ea1541e5` **before any measurement** — so every
+number above was taken on the merged tree, never on a stale one, and none of it needs re-deriving at
+the drain (Mistake #4 runs both ways: this is the verification line).
 
-| File | Class |
-|---|---|
-| `reviews/e6-picnic-admission.md` (new) | LANE-ONLY — this review |
-| `artifacts/e6-picnic/**` (new) | LANE-ONLY — prover, probes, traces, run logs, screenshots |
-| `playwright.e6picnic.config.ts` (new) | LANE-ONLY — scratch config, port 5274 |
+**LANE-TOUCHED (13):** `assets/contracts/epoch-6-atomic/contracts.json` ·
+`assets/contracts/epoch-6-atomic/mask-tables/e6-picnic.json` · `assets/contracts/null-floors.json` ·
+`docs/bench/same-game-audit.md` · `e2e/er01-e6-census.spec.ts` · `public/skill.md` ·
+`scripts/door-admission-baseline.json` · `scripts/same-game-audit.test.mjs` ·
+`src/agent/MechanicsManifest.ts` · `src/systems/PicnicHoldSystem.ts` (comment only) ·
+`reviews/e6-picnic-admission.md` · `playwright.e6picnic.config.ts` (new) · `artifacts/e6-picnic/**` (new)
 
-**MAIN-MOVED since base (17, re-measured at the end of the slice rather than at its start):** main
-advanced from the `1b1d2d2c8` lock to `2bd20fb1f` while this ran, draining `f2138-1` and `f2141-1` —
-`STATUS.md` · `package.json` · `src/sim/HeadlessContractSim.ts` · `tasks/BACKLOG.md` ·
-`tasks/goals.json` · `tasks/f2141-1-…md` · `reviews/f2138-1-…md` · `reviews/f2141-1-…md` ·
-`scripts/canyon-connect-view.test.mjs` · `scripts/f2135-canyon-*.mjs` ·
-`artifacts/f2135-canyon-census/**`.
+**`tasks/BACKLOG.md`: deliberately untouched.** F-2131-5 recorded that this exact collision stopped
+b4v3 attempt 1, and the ledger row is the drain's duty. The row is in §9, ready to paste.
 
-**BOTH-MOVED: none.** The two sets are disjoint — confirmed by measurement
-(`git diff --name-only 705839487..main` against `705839487..HEAD`), not by the absence of a complaint —
-so the merge is additive by construction and needs no 3-way graft.
+**Where the player sees this, in a plain boot:** on the board, for the first time. `?contract=e6-picnic`
+resolves `activeId: 'e6-picnic'` with `fallbackReason: null` on both viewports with zero console/page
+errors — it used to resolve `the-claim` / `'unavailable-contract'`. The default plain boot is
+unchanged and still opens The Claim, asserted in the same probe so the admission cannot have quietly
+moved the front door.
 
-⚠️ **One note for whoever merges:** main's `src/sim/HeadlessContractSim.ts` moved under me (the
-canyon-connect view publish). That file is the picnic engine's home, so although the change is an
-epoch-3 concern and cannot touch a picnic run, **every hash in §3 is pinned to base `705839487`**. If
-the fork is ruled and the anchors land, re-run the four floors and four prover runs on the merged tree
-and pin *those* numbers — do not carry mine forward on the assumption that nothing moved (Mistake #4).
+## 9. Ledger row for the drain to paste
 
-**Where the player sees this, in a plain boot: nowhere, and that is the point.** `e6-picnic` remains
-door-1 refused; `artifacts/e6-picnic/door-probe.spec.ts` asserts it on both viewports —
-`?contract=e6-picnic` resolves `activeId: 'the-claim'` with `fallbackReason: 'unavailable-contract'`,
-zero console/page errors. The probe reads the *resolved id* rather than merely booting, because a bare
-`?contract=<id>` falls back silently and a probe that does not check would pass while exercising
-nothing (`_s2080-f1742-1-boot-probe.spec.ts:13`).
+> 🥪 **THE PICNIC IS ADMITTED — THE COUNTY'S LAST UNOPENED DOOR IS OPEN (`reviews/e6-picnic-admission.md`).** **OWNER RULING (2026-08-22, verbatim: "flip the stakes")** executed: all three sandwiches carry `heroStart: false`, the hero opens at the engine default (0,12) outside every hold disc, and five `harvestAnchors` land with it. **Idle LOSES both bench seeds by stakes-all-lost with the hero at FULL HEALTH** — wave 2 `fnv1a32:c26f77d5` / wave 1 `fnv1a32:a649be29`, ×2 each — and the **public-verb prover SECURES both, twice, at wave 20**: `fnv1a32:b55e6ff4` (607 kills) / `fnv1a32:44f0f3dc` (690 kills), fencing each live disc with a 10-gold palisade then spending to the turret cap. 📐 **Two rulings built this and the first one alone was NOT enough, which is the durable lesson:** the 2026-08-21 predicate was correct and shipped, yet idle still SECURED w20 (`b9f476a6`/`612de94b`) because the hero opened standing in a disc and auto-fires with no policy term in its gate — the ruled pressure took two stakes in two waves and could never take the third. The cure was three booleans of contract DATA, F-2090-1's option (a), which had been set aside as superseded when it was the ruling's missing half. 🔢 **Pins re-measured verbatim on the merged tree and ATTRIBUTED BY REVERT-AND-REPRODUCE:** `5 exemptions · 0/456/1143/3 over 1602 rows` (base 446/1112/4 over 1562 — main admitted `e5-stillwater` while this sat on the desk). Emptying the anchors in BOTH the contract and the published mask table, with every other line of the slice in place, reproduced the pre-slice pin EXACTLY — so the +10/+31/−1/+40 belongs to the anchors and the ruling moves nothing in that table. **Exemption count does not move: the Picnic was never in `CONTRACT_ADMISSION_EXEMPTIONS`, it was refused by empty data, a different door.** ✅ Floors regenerated: **75 rows / 32 contracts, e6-picnic present, ALL `secured: false`, 0 `secured: true` anywhere**; `--check` 75/75 rc=0. Door baseline 33→34, skill.md fence, census per-id flip citing both rulings + the hashes. 🧹 Also discharged: the picnic's `engineDependencies` "missing consumer" lie (F-E6PA-3), and `MechanicsManifest.lossStakes` now reads the loss stakes apart from `heroStart` — the flip would otherwise have told riders this map has NO loss stakes. 🔺 **F-2131-1b STAYS ON THE DESK:** the Picnic escaped the armed idle floor by moving its hero, which fixes one map, not the instrument. Filed: **F-E6PA-2** (a probe omitting `contract=<id>` from `globalThis.location` measures on The Claim's terrain — `Terrain.ts:78`; `e2e/ap16-8-admission-probe.mjs:4` has it) · **F-E6PA-6** (`e6-arsenal.spec.ts:29` is a load flake, 3/5 and project-nondeterministic, NOT yet in the red inventory) · **F-E6PA-7** (the dispatch's quoted pins match no tree on disk).
