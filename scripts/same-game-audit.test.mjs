@@ -17,16 +17,20 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   assert.equal(result.status, 0, result.stderr);
   const audit = JSON.parse(result.stdout);
   assert.equal(audit.schema, 'goldrush.same-game-audit.v1');
-  const expectedContracts = fs.readdirSync(path.join(ROOT, 'assets/contracts')).reduce((count, epoch) => {
+  const contractData = fs.readdirSync(path.join(ROOT, 'assets/contracts')).flatMap((epoch) => {
     const file = path.join(ROOT, 'assets/contracts', epoch, 'contracts.json');
-    return count + (fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')).contracts.length : 0);
-  }, 0);
-  assert.equal(audit.contracts.length, expectedContracts);
+    return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')).contracts : [];
+  });
+  assert.equal(audit.contracts.length, contractData.length);
   assert.ok(audit.rows.length > audit.contracts.length * 4);
   assert.deepEqual(Object.keys(audit.rows[0]), [
     'contract', 'surface', 'humans-get', 'agents-get', 'direction', 'evidence',
   ]);
-  assert.ok(audit.rows.every((row) => ['buildable', 'ability', 'choice', 'verb', 'economy'].includes(row.surface)));
+  assert.ok(audit.rows.every((row) => ['buildable', 'ability', 'choice', 'verb', 'economy', 'seam'].includes(row.surface)));
+  assert.equal(
+    audit.rows.filter((row) => row.surface === 'seam').length,
+    contractData.filter((contract) => contract.tileParams.harvestAnchors?.length !== 0).length,
+  );
   assert.ok(audit.rows.every((row) => ['agent-exceeds', 'agent-lacks', 'equal', 'not-offered'].includes(row.direction)));
   // ADMISSION MOVE (2026-08-20, `b1-regatta-race`, drained s2084): five authored harvest anchors
   // made e5-regatta browser-offered, moving exactly one row out of `not-offered` (14 -> 13).
@@ -336,7 +340,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ⚠️ THIRTEENTH STACK (the relay-rush admission over the fairground's twelfth): the branch's
   // own 483/1037/7 was measured pre-fairground; the merged tree measures below, verbatim.
   assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 464, equal: 1056, 'not-offered': 4 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 468, equal: 1090, 'not-offered': 4 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
