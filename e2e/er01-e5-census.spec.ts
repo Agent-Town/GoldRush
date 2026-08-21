@@ -20,21 +20,16 @@ const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
  * The Regatta and Flotilla now share that deepwater socket and add their declared consumers.
  * Stillwater remains refused.
  */
-const ADMITTED = new Set(['e5-deepwater-claim', 'e5-regatta', 'e5-flotilla']);
+const ADMITTED = new Set(['e5-deepwater-claim', 'e5-regatta', 'e5-stillwater', 'e5-flotilla']);
 
 /**
- * REFUSED BUT SOCKETED (A2, 2026-08-21) — a third state this census did not have, and it needs
- * one. Before A2 every refused E5 contract was refused BECAUSE nothing socketed it, so
- * `socketRules === []` and `DeepwaterSocket.create() === null` were fair proxies for "no
- * consumer". `e5-stillwater` breaks that equivalence: its noise-hunt consumer is LIVE in both
- * engines and it still does not secure (best public-verb play wave 4 of 12, both bench seeds —
- * `artifacts/e5-stillwater/`), so it is socketed AND exempt. Asserting the old proxies here would
- * force a choice between deleting a working consumer and lying about the door.
- *
- * It stays UNSEEDED on purpose: F-DOOR-4 says the door must never advertise a run it refuses, so
- * `bench-seeds.json` gains nothing until both seeds secure.
+ * THE `SOCKETED_BUT_REFUSED` STATE IS RETIRED (2026-08-21). It was introduced one day earlier for
+ * exactly one contract — `e5-stillwater`, whose noise-hunt consumer was live while the map still
+ * would not secure — and it is gone because that contract is now ADMITTED. It is recorded here
+ * rather than silently deleted because the state may be needed again: the moment a consumer ships
+ * and its map does not secure, `socketRules === []` and a null `DeepwaterSocket.create()` stop
+ * being fair proxies for "no consumer" and the third branch has to come back.
  */
-const SOCKETED_BUT_REFUSED = new Set(['e5-stillwater']);
 
 /**
  * ADMISSION GATE 1 (F-ER01-E5-1) — every E5 contract must name the headless consumer it lacks.
@@ -192,8 +187,15 @@ for (const contract of deepwater.contracts) {
         const first = drive(30 * 120);
         const second = drive(30 * 120);
         expect(JSON.stringify(second.simulationSnapshot)).toBe(JSON.stringify(first.simulationSnapshot));
-        expect(first.diagnostics.corsairWaves).toBeGreaterThan(0);
-        expect(first.diagnostics.corsairsSpawned).toBeGreaterThan(0);
+        // THE STORM TRACK CREWS A WAVE ONLY WHERE THE CONTRACT DECLARES CORSAIRS FOR IT. Three of
+        // these four author `corsairWaveSize: 3` and their storm IS the run clock; `e5-stillwater`
+        // authors 0 with a storm suppressed to a 3600s cycle, so ZERO here is the correct and
+        // required reading — asserting `> 0` for it would demand a wave its data forbids. The
+        // zero-arm is the stronger assertion of the two: it pins the suppression itself, and if
+        // the Stillwater ever spawns a corsair, something has re-crewed a track that must stay dry.
+        const crews = contract.tileParams.deepwater.corsairWaveSize > 0;
+        expect(first.diagnostics.corsairWaves > 0).toBe(crews);
+        expect(first.diagnostics.corsairsSpawned > 0).toBe(crews);
 
         // F-ER01-E5-1: a missing boss handoff is COUNTED, never skipped. `drive()` builds the socket
         // with NO `bossHandoff` (the five-argument form), so every storm wave at or past the
@@ -231,6 +233,28 @@ for (const contract of deepwater.contracts) {
           // The bundle authors no competing-racer roster or loot zones. Record the remaining
           // authoring honestly; this slice must not stretch one corsair racer into a loot system.
           expect(manifest.rules.find(({ id }: { id: string }) => id === 'regatta_race')?.data.competingRacerLoot).toBe(false);
+        } else if (contract.id === 'e5-stillwater') {
+          // A2 — the hunt is published on the same surface its siblings use, and at BOOT it is
+          // silent: nothing has run yet, so nothing is heard and nothing is trailed.
+          expect(doorDeepwater?.noiseHunt).toMatchObject({
+            sources: [
+              { id: 'air-pump', radius: 18, running: false, level: 0 },
+              { id: 'engine', radius: 24, running: false, level: 0 },
+              { id: 'harpoon-reload', radius: 14, running: false, level: 0 },
+            ],
+            trail: { target: null, strikes: 0 },
+            fog: { id: 'stillwater-fog' },
+          });
+          expect(manifest.rules.find(({ id }: { id: string }) => id === 'noise_hunt')?.source)
+            .toBe('NoiseHuntSystem.advance+onReanchor');
+          // The owner-ruled third anchor is what admitted this map: it is the only station where
+          // every machine is LOUD and none of it lands on the hero (F-A2-3, ruled 2026-08-21).
+          expect(doorDeepwater?.anchors).toEqual([
+            { id: 'lagoon', x: 0, z: 30 },
+            { id: 'open-water', x: -24, z: 12 },
+            { id: 'shelf-watch', x: 36, z: 30 },
+          ]);
+          expect(doorDeepwater?.noiseHunt?.quietZones.every(({ boatInside }: { boatInside: boolean }) => !boatInside)).toBe(true);
         } else {
           expect(doorDeepwater?.flotilla).toMatchObject({
             hulls: expect.arrayContaining([expect.objectContaining({ district: 'kitchen', integrity: 96, lost: false })]),
@@ -249,46 +273,6 @@ for (const contract of deepwater.contracts) {
         const levers = manifest.rules.find(({ id }: { id: string }) => id === 'deepwater_levers_unreachable');
         expect(levers.data.consumerLevers).toEqual(['ClaimBoat.placeBuilding', 'ClaimBoat.reanchor']);
         expect(manifest.buildables).toEqual(expect.any(Array));
-      } else if (SOCKETED_BUT_REFUSED.has(contract.id)) {
-        // A2 — SOCKETED AND STILL REFUSED. The tile, the boat and the arsenal are all live here;
-        // what is missing is a secure, not a consumer. Everything below would be false under the
-        // old refused branch, which is exactly why this branch exists.
-        expect(socketRules).toEqual(EXPECTED_SOCKET_RULES[contract.id]);
-        const noise = manifest.rules.find(({ id }: { id: string }) => id === 'noise_hunt');
-        expect(noise.source).toBe('NoiseHuntSystem.advance+onReanchor');
-        expect(noise.data).toMatchObject({
-          sources: ['air-pump', 'engine', 'harpoon-reload'],
-          silencedIn: ['hand-pan-drift', 'sail-trim-drift'],
-          trailHoldSeconds: 8,
-          fogIsPresentationOnly: true,
-        });
-        // The storm track is authored SUPPRESSED here and crews nobody, so it must not claim the
-        // clock — the ordinary schedule is what fields this contract's `machine_leviathan`.
-        const track = manifest.rules.find(({ id }: { id: string }) => id === 'deepwater_storm_track');
-        expect(track.data).toMatchObject({ corsairsPerWave: 0, replacesScheduledWaves: false });
-
-        const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e5-probe' });
-        const socket = DeepwaterSocket.create(
-          loadContract(contract.id),
-          new EnemyPool(),
-          sim.combat,
-          () => sim.hero.group.position,
-          () => undefined,
-        )!;
-        expect(socket).not.toBeNull();
-        const hunt = socket.diagnostics.noiseHunt!;
-        // The machines RIDE THE ANCHOR, and the second anchor sits inside a declared quiet zone —
-        // the contract's own way to take the whole boat silent. Both halves pinned here because
-        // the map's whole tension is that geometry.
-        expect(hunt.sources.map(({ id, level }: { id: string; level: number }) => `${id}:${level}`))
-          .toEqual(['air-pump:0', 'engine:0', 'harpoon-reload:0']);
-        expect(hunt.trail.target).toBeNull();
-        expect(hunt.quietZones.map(({ id, boatInside }: { id: string; boatInside: boolean }) => `${id}:${boatInside}`))
-          .toEqual(['hand-pan-drift:false', 'sail-trim-drift:false']);
-        expect(socket.reanchor('open-water', 1)).toBe(true);
-        expect(socket.diagnostics.noiseHunt!.quietZones[0]).toMatchObject({ id: 'hand-pan-drift', boatInside: true });
-        expect(socket.diagnostics.noiseHunt!.sources.map(({ silenced }: { silenced: boolean }) => silenced))
-          .toEqual([true, true, true]);
       } else {
         expect(socketRules).toEqual([]);
         // The remaining variants carry `tileParams.deepwater` too. The socket must refuse them exactly as

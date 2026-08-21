@@ -220,13 +220,17 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e5-deepwater-claim-01",
     "e5-deepwater-claim-02"
   ],
+  "e5-regatta": [
+    "e5-regatta-01",
+    "e5-regatta-02"
+  ],
   "e5-flotilla": [
     "e5-flotilla-01",
     "e5-flotilla-02"
   ],
-  "e5-regatta": [
-    "e5-regatta-01",
-    "e5-regatta-02"
+  "e5-stillwater": [
+    "e5-stillwater-01",
+    "e5-stillwater-02"
   ],
   "e6-glow-mesa": [
     "e6-glow-mesa-01",
@@ -340,6 +344,7 @@ Two refusals on that list are worth naming so nobody hunts for a missing socket:
   "e5-deepwater-claim",
   "e5-flotilla",
   "e5-regatta",
+  "e5-stillwater",
   "e6-glow-mesa",
   "e6-half-life-hollow",
   "e7-dead-band",

@@ -127,23 +127,41 @@ export const NOISE_HUNT_RULES = Object.freeze({
   /**
    * "Leviathan damage tuned to threaten machines, not instakill" (sheet §A2 DEFAULTS).
    *
-   * RE-DERIVED 2026-08-21, and the first value was mis-derived rather than mis-typed. It was set
-   * at 16 when the only playable station was `lagoon`, where contact with a machine was
-   * INTERMITTENT because the heads were also walking at the hero. The owner's `shelf-watch`
-   * ruling created the regime this constant actually governs — a deliberate LURE, where contact
-   * is CONTINUOUS by design — and at 16 a deck died in six strikes, twenty-four seconds, so the
-   * whole three-pad boat lasted seventy-two seconds of a three-hundred-and-sixty-second run.
-   * That is instakill by attrition: it made the anchor's own best use self-defeating, and no
-   * public-verb response could change it (measured — `shed` and `kite` both cap at wave 5).
+   * ⚖️ OWNER RULING 2026-08-21, verbatim, to this dial: **"ok, lets do it, we can balance later
+   * during testing"**. The admitting value is authorised by fiat, and his explicit balance-later
+   * acceptance is what lifts the Mistake-14 bar that stopped the previous pass at 6. This comment
+   * is the whole dial, written down so the balance-later session inherits the map rather than
+   * re-deriving it.
    *
-   * The number is now tied to the player's actual lever, the DECLARED eight-second trail-shed:
-   * at a four-second cadence a deck survives 96/6 = 16 strikes, i.e. sixty-four seconds of
-   * unbroken alongside contact, FOUR TIMES the window the trail needs to shed. So breaking
-   * contact is a real save rather than a gesture, and a lost deck means a player who never broke
-   * it — a threat, not a countdown. Idle runs are untouched either way: they run no machine, take
-   * no trail and land no strike, so the Law 2 floor cannot move by a byte.
+   * THE THREE VALUES THIS CONSTANT HAS HELD, and why each was right when it was written:
+   *
+   *   16  THE ORIGINAL, and it was MIS-DERIVED rather than mis-typed. Chosen when the only
+   *       playable station was `lagoon`, where contact with a machine was INTERMITTENT because
+   *       the heads were also walking at the hero. Ceiling: wave 4 on both seeds.
+   *    6  THE PRINCIPLED MIDPOINT. The owner's `shelf-watch` anchor created the regime this
+   *       constant actually governs — a deliberate LURE, where contact is CONTINUOUS by design —
+   *       and 16 made the anchor's own best use self-defeating. Re-derived from the player's real
+   *       lever, the DECLARED eight-second trail-shed: at a four-second cadence a pad survives
+   *       96/6 = 16 strikes, FOUR TIMES that window, so breaking contact is a real save. Ceiling:
+   *       waves 9 and 11. It was deliberately NOT taken further without a ruling, because every
+   *       value below it is chosen by working backwards from "it must win".
+   *    3  THE ADMITTING VALUE, measured (`artifacts/e5-stillwater/dial-sweep.mjs`) as the HIGHEST
+   *       that secures both bench seeds twice WITH A ONE-STRIKE MARGIN. A pad survives 96/3 = 32
+   *       strikes; a full twelve-wave lure costs 76-77 across three pads, so one pad is still
+   *       standing at the secure (57 and 60 integrity) — nineteen-odd strikes of slack, not a
+   *       coin-flip.
+   *
+   * THE MARGIN IS THE POINT OF PICKING 3 OVER 4. Four also secures both seeds — but with ZERO
+   * decks left on both, i.e. it wins on the last pad dying, and a single unlucky wave takes it
+   * away. Five does not secure at all (wave 11 on both). So the dial's live boundary is between
+   * 4 and 5, and 3 sits one clear step inside it with headroom in BOTH directions for the
+   * balance-later pass: raise toward 4 to make the map meaner, lower for more slack.
+   *
+   * IDLE RUNS CANNOT BE MOVED BY THIS NUMBER, structurally: an idle run works no machine, so it
+   * takes no trail and lands no strike. The Law 2 floor is wave 3 on both seeds at every value
+   * above — verified, not assumed.
    */
-  strikeDamage: 6,
+  strikeDamage: 3,
   deckIntegrity: 96,
   /** Fog: the shroud caps how far anything is WATCHED. Published; never steers the hunt. */
   watchRadius: 22,
