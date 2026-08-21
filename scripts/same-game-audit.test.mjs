@@ -275,8 +275,33 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // exemption, 8th row) and A9 (admission) and A2 (stillwater reword, no count change) merged in
   // one window; per the standing law the pins below are the MERGED tree's own regen output,
   // verbatim — measured 504/1016/4 over 1524 rows, 8 exemptions.
-  assert.equal(audit.admission.exemptions.length, 8);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 504, equal: 1016, 'not-offered': 4 });
+  // ⚠️ TWELFTH LAYER — AN ADMISSION *REVERSAL*, AND THE FIRST ONE THIS TABLE HAS RECORDED
+  // (2026-08-21, `e7-relay-rush`, on an owner ruling). Every layer above added a row or moved a
+  // contract INTO the exemption table. This one takes a contract back OUT of it, and the numbers
+  // are the exact inverse of the move that put it there.
+  //
+  // WHAT CHANGED IS ONE MAP-DATA LINE. F-A5-1 had measured the cause of the A5 refusal as
+  // authored GEOMETRY rather than the mechanic — the deadline was met on both seeds; the claim at
+  // (0,12) simply had no buildable ground within 24wu against turret range 16 and beacon range 8.
+  // The owner ruled it (2026-08-21, VERBATIM, to the five-map fork table): "lets follow your
+  // recommendation" — a `heroStart` stake inside a relay site. `relay-ridge-command-stake` now
+  // stands at (-25,41), the CENTRE of `relay-site-r2` (the only point from which a 10x10 box is
+  // wholly inside beacon range), and both bench seeds SECURE at wave 20 twice each
+  // (`fnv1a32:bc89348d` / `fnv1a32:b25f69b0`), through the ORDINARY door as well as the
+  // `admissionProbe` seam, byte-identical either way. Law 2 holds: idle still dies at wave 2.
+  //
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, and the run is unusually clean because only ONE of the two
+  // edits is visible to this audit at all:
+  //   stake + exemption row REMOVED (shipped)  -> 0/483/1037/4 over 1524 rows, 7 exemptions
+  //   stake KEPT, exemption row RESTORED       -> 0/504/1016/4 over 1524 rows, 8 exemptions
+  // The second reproduced the pins this block replaced EXACTLY, WITH THE STAKE STILL IN PLACE. So
+  // the stake is worth ZERO here (it is map data, not a compared surface — the anchors already
+  // bought the +39 rows on 2026-08-20), and the whole delta is the ADMISSION: exactly 21 rows
+  // flipping `agent-lacks` -> `equal`, the precise inverse of the 21 the exemption cost when it
+  // was added. `not-offered` does not move either, for the same reason: this contract stopped
+  // being not-offered a day ago, when its `harvestAnchors` were authored.
+  assert.equal(audit.admission.exemptions.length, 7);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 483, equal: 1037, 'not-offered': 4 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
