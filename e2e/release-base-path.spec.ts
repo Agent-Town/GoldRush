@@ -1,4 +1,3 @@
-import { readFileSync } from 'node:fs';
 import { expect, test } from '@playwright/test';
 import { GAME_API_ORIGIN, gameApiUrl } from '../src/app/GameApi';
 
@@ -49,16 +48,10 @@ test('release boots cleanly beneath /goldrush/ and keeps API traffic on the game
   });
 });
 
-test('every game function permits both agenttown origins', () => {
-  for (const path of [
-    'functions/api/_accounts.ts',
-    'functions/api/_bugs.ts',
-    'functions/api/_multiplayer.ts',
-    'functions/api/stats.ts',
-    'functions/api/telemetry.ts',
-  ]) {
-    const source = readFileSync(path, 'utf8');
-    expect(source, path).toContain("'https://agenttown.app'");
-    expect(source, path).toContain("'https://www.agenttown.app'");
-  }
-});
+// The CORS allowlist assertion that used to live here MOVED to
+// scripts/function-cors-allowlist.test.mjs (F-2118-1, s2118), rooted in
+// `npm run test:node-guards`. It needed no browser and no harness, and this
+// spec's owning config (playwright.release-base.config.ts) has NO CALLER — so
+// the only guard of the deployed workers' allowlist ran nowhere. Its hardcoded
+// five paths are now a derived denominator: seven files declare ALLOWED_ORIGINS.
+// Do not restore a copy here; edit the guard.

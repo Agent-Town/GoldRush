@@ -194,6 +194,10 @@ export function classify(text, harness) {
 //
 //   release-build.spec.ts      -> playwright.release.config.ts       -> npm run test:release   (30 tests)
 //   release-base-path.spec.ts  -> playwright.release-base.config.ts  -> NO CALLER ANYWHERE      (4 tests)
+//     ^ 4 was s2117's measurement and is RESTATED, NOT DELETED. s2118 moved this spec's second
+//       test — a browser-free CORS assertion — out to scripts/function-cors-allowlist.test.mjs
+//       (F-2118-1), so this row is 2 tests today and the total below is 20 of 50 (40.0%).
+//       The verdict is unchanged; what shrank is the amount of coverage stranded here.
 //   accounts-sync.spec.ts      -> playwright.accounts.config.ts      -> NO CALLER ANYWHERE     (18 tests)
 //
 // 22 of 52 claimed-spec tests (42.3%) are collected by a config that no npm script, shell script
