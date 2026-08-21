@@ -3,7 +3,7 @@ import { Balance } from '../game/Balance';
 import type { EconomyEvent } from '../game/Economy';
 import { summarizeRun } from '../game/RunManager';
 import { activeContract, type ContractEnemyVariant, type ContractManifest } from '../meta/ContractFamilies';
-import { DEFAULT_COAL_SEAMS } from '../systems/PressureSystem';
+import { DEFAULT_COAL_SEAMS } from '../systems/coalSeamDefaults';
 import { deriveMechanicsManifest, type MechanicsManifest } from './MechanicsManifest';
 
 export type AgentViewSource = {
