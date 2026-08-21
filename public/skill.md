@@ -290,6 +290,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e8-low-orbit-01",
     "e8-low-orbit-02"
   ],
+  "e9-devils-alley": [
+    "e9-devils-alley-01",
+    "e9-devils-alley-02"
+  ],
   "e9-dome-basin": [
     "e9-dome-basin-01",
     "e9-dome-basin-02"
@@ -336,6 +340,7 @@ One refusal is a different shape and is named here so nobody hunts for a missing
   "e8-far-side",
   "e8-low-orbit",
   "e8-mare-claim",
+  "e9-devils-alley",
   "e9-dome-basin",
   "the-claim"
 ]

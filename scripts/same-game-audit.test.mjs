@@ -99,7 +99,15 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // stacks — main's said 7, lane/d's said 8, and NEITHER describes the merged tree. Pin below =
   // the OCTUPLE-stacked merged tree's own regen output, verbatim; no side's arithmetic was edited
   // into agreement (F-1441-3: re-pin only with a named cause, and the cause is named here).
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 6);
+  // ⚠️ NINTH STACK — ADMISSION MOVE (2026-08-21, `e9-devils-alley` A9 scheduled relocation):
+  // four authored `harvestAnchors` move Devil's Alley out of not-offered by the same one that
+  // moved relay-rush and the Hollow, 6 -> 5. UNLIKE the eighth stack this one had NO competing
+  // side: the branch is based on `b9fd6fecb` with nothing else in flight against this file, and
+  // the pin below is this tree's own `--json` regen output, verbatim. ATTRIBUTED BY
+  // REVERT-AND-REPRODUCE, not by arithmetic: emptying `harvestAnchors` in BOTH the contract and
+  // the published mask table — and changing nothing else in the slice — reproduced 6/463/977/7/10
+  // EXACTLY, so every number that moved here moves with those four anchors and nothing else.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 5);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and none of the empty-data admissions was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -236,7 +244,13 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // on a pre-A3/A5 base). Pins below = the OCTUPLE-stacked merged tree's own regen output,
   // verbatim. Predicted from the +10/+30/-1/+39 anchor shape BEFORE measuring and confirmed by it.
   assert.equal(audit.admission.exemptions.length, 7);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 463, equal: 977, 'not-offered': 6 });
+  // ADMISSION MOVE (2026-08-21, A9 `e9-devils-alley`): the anchors admit the contract, so its
+  // parity rows stop being not-offered and become measured ones — 463 -> 473 agent-lacks,
+  // 977 -> 1007 equal, the same +10/+30 anchor shape the eight layers above recorded. The
+  // exemption count does NOT move: Devil's Alley SECURES (both bench seeds, wave 20, twice each,
+  // `fnv1a32:947390e6` / `fnv1a32:a92b5ed1`), so it enters the DOOR rather than the exemption
+  // table, and the Seed Run's own exemption row is untouched by this slice.
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 473, equal: 1007, 'not-offered': 5 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
