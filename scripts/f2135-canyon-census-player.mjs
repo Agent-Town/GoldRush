@@ -7,8 +7,8 @@ const PYLONS = [
   { x: 28, z: 8 }, { x: -28, z: 8 },
 ];
 const COSTS = [25, 35, 45, 55, 75, 95];
-const output = resolve(process.env.F2135_CENSUS_FILE ?? 'artifacts/f2135-canyon-census/census.json');
 const runId = process.env.F2135_CENSUS_RUN ?? 'run-1';
+const output = resolve(process.env.F2135_CENSUS_FILE ?? `artifacts/f2135-canyon-census/scratch/${runId}.json`);
 let turnNumber = 0;
 let rows = [];
 
@@ -63,12 +63,13 @@ async function persist() {
     if (error?.code !== 'ENOENT') throw error;
   }
   artifact.runs = [...artifact.runs.filter((run) => run.id !== runId), { id: runId, rows }];
-  if (artifact.runs.length === 2) {
-    artifact.comparison = {
-      comparedRunIds: artifact.runs.map((run) => run.id),
-      identical: JSON.stringify(artifact.runs[0].rows) === JSON.stringify(artifact.runs[1].rows),
-    };
-  }
+  const firstRows = JSON.stringify(artifact.runs[0].rows);
+  artifact.comparison = {
+    comparedRunIds: artifact.runs.map((run) => run.id),
+    identical: artifact.runs.length < 2
+      ? null
+      : artifact.runs.every((run) => JSON.stringify(run.rows) === firstRows),
+  };
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, `${JSON.stringify(artifact, null, 2)}\n`);
 }
