@@ -1483,6 +1483,13 @@
               "note": "Owner ruling 2026-08-21 verbatim: 'picnic - no, just standing there should not win'. lane-b, BUILD-ON-PREDECESSOR over 7a320da26+1731de225."
             },
             {
+              "id": "f2134-1-bench-terrain-contract-scope",
+              "title": "F-A10-1: give the bench-Terrain contract-scope defect an instrument before rewiring it",
+              "taskFile": "f2134-1-bench-terrain-contract-scope.md",
+              "status": "queued",
+              "note": "FIRE-AUTHORED s2134, lane-b. F-A10-1 filed as a fire-authorable corrective in BACKLOG ('Engine debts filed for fires'). Terrain.ts:78 bakes ACTIVE_CONTRACT at module scope; under SSR currentSearch() is '' (ContractFamilies.ts:2294) so it falls back to DEFAULT_CONTRACT_ID 'the-claim' (:837). MEASURED s2134 by scripts/tmp-s2134-terrain-ssr-probe.mjs: 22 of 36 contracts declaring buildZones have their own first buildZone centre rejected by Terrain.isBuildable. Mechanism is the baked 64x64 bounds + terrain sample, NOT the buildZone list (the-claim declares buildZones: []). An override seam exists (previewEditorContract :371 / currentContract :406) but 21 reads bypass it and the 7 that use it are all cosmetic. DIAGNOSTIC ONLY: ships scripts/terrain-contract-scope.mjs + .test.mjs + docs/bench/terrain-contract-scope.md, rooted first in test:node-guards. Firewalled off src/** entirely, off gr-sim.test.mjs (its :630 assertion is honestly scoped to Twin Banks by its own title and widening it would red 22), and off the same-game-audit trio which lane-d's f2133-1 is editing live. Successor (NOT this slice): route the 21 legality reads through the seam - re-baselines every bench floor/pin/exemption."
+            },
+            {
               "id": "f2133-1-seam-legibility",
               "title": "F-2127-2 + F-E3CF-5: make the seam predicate say what it means, in both places it is asked",
               "taskFile": "f2133-1-seam-legibility.md",
