@@ -30,7 +30,8 @@ import { GameState } from '../game/GameState';
 import { hasBaronMedal } from '../game/Medals';
 import { Progression } from '../game/Progression';
 import { TileStateStore } from '../game/TileStateStore';
-import { hasResearchNode, loadResearchState } from '../meta/ResearchTree';
+import { freshResearchState, hasResearchNode, loadResearchState } from '../meta/ResearchTree';
+import type { RunTapeRunStart } from '../game/RunTape';
 import type { EffectiveStats } from '../game/StatSheet';
 import { resolveFiller, upgradeDefById, upgradeEffect } from '../game/Upgrades';
 import { isBuildableId } from '../game/buildables';
@@ -615,6 +616,16 @@ export class HeadlessContractSim {
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
+  /**
+   * TAPE v2 (`specs/agent-play/tape-contract.md` §3): the progression this run was BORN under,
+   * captured at birth from the same state the sim just installed — recorded, never re-derived
+   * later. Read-only evidence: nothing in the sim consumes it, so no outcome, hash or floor can
+   * move because it exists. A solo door boot (no `options.storage`) is a virgin profile and this
+   * reads exactly what `RunTapeRecorder`'s own default writes for one (`RunTape.ts:119`); a
+   * declared-progression boot (the campaign harness, which injects `storage`) reads ITS state,
+   * so the tape says which game was actually played.
+   */
+  readonly runStart: RunTapeRunStart;
   private readonly stockpileHoldings: GoldHolding[] = Array.from(
     { length: Balance.stockpile.maxCount },
     (_, index) => ({
@@ -1093,6 +1104,13 @@ export class HeadlessContractSim {
       },
       { now: () => Math.round(this.timeAlive * 1000), storage: options.storage ?? HEADLESS_META_STORAGE },
     ).install();
+    // Captured HERE, at run birth, from the two sources the run actually booted under: the meta
+    // `RunManager` just loaded and the research state read at the top of this constructor. The
+    // `??` mirrors `RunTapeRecorder`'s own default for a run that declares none (`RunTape.ts:119`).
+    this.runStart = structuredClone({
+      meta: this.runManager.metaProgress,
+      research: research ?? freshResearchState(this.runManager.metaProgress),
+    });
   }
 
   currentTurn(): GrSimTurn {
