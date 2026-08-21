@@ -3,6 +3,7 @@ import { Balance } from '../game/Balance';
 import type { EconomyEvent } from '../game/Economy';
 import { summarizeRun } from '../game/RunManager';
 import { activeContract, type ContractEnemyVariant, type ContractManifest } from '../meta/ContractFamilies';
+import { DEFAULT_COAL_SEAMS } from '../systems/coalSeamDefaults';
 import { deriveMechanicsManifest, type MechanicsManifest } from './MechanicsManifest';
 
 export type AgentViewSource = {
@@ -33,6 +34,7 @@ export type AgentView = {
     map: {
       claim: { x: number; z: number };
       seams: readonly { id: string; x: number; z: number }[];
+      coalSeams: readonly { id: string; x: number; z: number }[];
       water: { river: boolean; ford: boolean; sources: number; descriptor: string | null };
       spawnGates: readonly { edge: string; x?: number; z?: number }[];
     };
@@ -244,6 +246,13 @@ function buildStablePrefix(
         id: `gold-seam-${index + 1}`,
         x: round(number(position.x)),
         z: round(number(position.z)),
+      })),
+      coalSeams: (manifest.twist.pressureEnabled === true
+        ? manifest.twist.coalSeams?.length ? manifest.twist.coalSeams : DEFAULT_COAL_SEAMS
+        : []).map((position, index) => ({
+        id: `coal-seam-${index + 1}`,
+        x: round(position.x),
+        z: round(position.z),
       })),
       water: {
         river: tile.river === true,
