@@ -99,7 +99,9 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // stacks — main's said 7, lane/d's said 8, and NEITHER describes the merged tree. Pin below =
   // the OCTUPLE-stacked merged tree's own regen output, verbatim; no side's arithmetic was edited
   // into agreement (F-1441-3: re-pin only with a named cause, and the cause is named here).
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 6);
+  // A10 (2026-08-21, `e9-old-canal`): 6 -> 5. Its `harvestAnchors` were authored, so it left the
+  // door's own `harvestAnchors?.length !== 0` filter and stopped being an unmeasurable contract.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 5);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and none of the empty-data admissions was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -235,8 +237,29 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // TREE: main's said 7 exemptions / 453/947/7 (post-A3+A5), lane/d's said 6 / 422/938/8 (measured
   // on a pre-A3/A5 base). Pins below = the OCTUPLE-stacked merged tree's own regen output,
   // verbatim. Predicted from the +10/+30/-1/+39 anchor shape BEFORE measuring and confirmed by it.
-  assert.equal(audit.admission.exemptions.length, 7);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 463, equal: 977, 'not-offered': 6 });
+  // A10 — DATA MOVE + EXEMPTION MOVE IN ONE SLICE (2026-08-21, `e9-old-canal`), and they are TWO
+  // independent moves that happen to land together, so they are attributed apart by
+  // REVERT-AND-REPRODUCE rather than by arithmetic.
+  //
+  // (1) THE ANCHORS. Five `harvestAnchors` were authored, so the Old Canal left the empty-data
+  //     filter and became a measurable contract: 1446 -> 1485 rows, not-offered 6 -> 5, and — with
+  //     the contract merely measurable rather than refused — equal 977 -> 1007 and agent-lacks
+  //     463 -> 473. That is the +10/+30/-1/+39 shape seven previous anchor slices recorded, again.
+  //     ATTRIBUTED BY MEASUREMENT: with the five anchors emptied and EVERY other line of the slice
+  //     in place, this audit reproduced 0/463/977/6 over 1446 rows EXACTLY — the pre-slice pin.
+  // (2) THE EXEMPTION. Like A5's Relay Rush and A8's Seed Run, the Old Canal does not secure — the
+  //     best measured public-verb play terminated at wave 17 on both bench seeds — so it enters
+  //     `CONTRACT_ADMISSION_EXEMPTIONS` (7 -> 8) rather than the door. ATTRIBUTED THE SAME WAY:
+  //     removing that one row and leaving the anchors in place reproduced 7 exemptions with
+  //     0/473/1007/5, so the row is worth exactly 21 rows flipping `equal` -> `agent-lacks` — the
+  //     same 21-per-contract shape every admission move above recorded.
+  //
+  // ⚠️ RE-MEASURE AT THE DRAIN, DO NOT INHERIT THESE DIGITS. A sibling agent is landing
+  // `e9-devils-alley` from the same base; two lanes that each admit a different contract write
+  // DIFFERENT correct pins and git reports no conflict between them (F-2084-1, eight recurrences).
+  // Whoever merges must re-run the regen on the MERGED tree and pin its output verbatim.
+  assert.equal(audit.admission.exemptions.length, 8);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 494, equal: 986, 'not-offered': 5 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
