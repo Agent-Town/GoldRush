@@ -15,35 +15,55 @@ import signal from '../assets/contracts/epoch-7-signal/contracts.json' with { ty
  * wave 20 twice each (`artifacts/e7-echo-canyon/`, `fnv1a32:7d877de5` / `fnv1a32:0a267a0b`)
  * while the idle floors stayed lost at wave 4 (Law 2).
  *
- * RELAY RUSH MOVED HALFWAY, 2026-08-20, and its row is the reason this file's per-id shape earns
- * its keep. A5 built the interference front (`src/systems/InterferenceFrontSystem.ts`), authored
- * the map's four `harvestAnchors` and minted its bench seeds — so the BROWSER now resolves it and
- * its manifest grows an `interference_front` rule — but the best measured public-verb play
- * terminates unsecured at wave 4 of 20, so the HEADLESS door refuses it through a cited
- * `CONTRACT_ADMISSION_EXEMPTIONS` row (`reviews/e7-relay-rush.md`). Seeded, resolved, and still
- * refused: three different answers for one contract, which is exactly why nothing here is shared.
+ * RELAY RUSH MOVED HALFWAY ON 2026-08-20 AND THE REST OF THE WAY ON 2026-08-21, and the two-step
+ * is worth keeping in the record. A5 built the interference front
+ * (`src/systems/InterferenceFrontSystem.ts`), authored the map's four `harvestAnchors` and minted
+ * its bench seeds — so the browser resolved it and its manifest grew an `interference_front`
+ * rule — but the best measured public-verb play terminated unsecured at wave 4 of 20 and the
+ * headless door refused it through a cited exemption. F-A5-1 proved the cause was AUTHORED
+ * GEOMETRY and not the mechanic (the deadline was met on both seeds; the claim simply had no
+ * buildable ground within 24wu), and the owner ruled it: 2026-08-21, VERBATIM, "lets follow your
+ * recommendation" — a `heroStart` stake inside a relay site. With
+ * `relay-ridge-command-stake` at (-25,41) both seeds now secure at wave 20 twice each
+ * (`artifacts/e7-relay-rush/`, `fnv1a32:bc89348d` / `fnv1a32:b25f69b0`), through the ordinary
+ * door as well as the measurement seam, while the idle floors stay lost at wave 2 (Law 2).
+ *
+ * **E7 IS 4/4 ADMITTED.** Every assertion below is still keyed per id rather than shared — the
+ * E6 census's shape — because a set that is uniform today is exactly the one that hides the next
+ * divergence.
  */
-const ADMITTED = new Set(['e7-relay-valley', 'e7-dead-band', 'e7-echo-canyon']);
+const ADMITTED = new Set(['e7-relay-valley', 'e7-dead-band', 'e7-echo-canyon', 'e7-relay-rush']);
 
 /**
- * A5, AND IT IS THE ONE ROW THAT NEEDED A THIRD CASE. `e7-relay-rush` now carries authored
- * `harvestAnchors` and minted bench seeds — so it left the empty-data filter — but its best
- * measured public-verb play terminates unsecured at wave 4 of 20, so it entered
- * `CONTRACT_ADMISSION_EXEMPTIONS` instead of the door (`reviews/e7-relay-rush.md`). SEEDED and
- * REFUSED at the same time, which no earlier E7 row was: it still throws on construction like
- * Echo Canyon, and it still owns a seed set like the Dead Band.
+ * ADMISSION MOVE — `e7-relay-rush` JOINED THE SET ABOVE 2026-08-21, ON AN OWNER RULING, AND THE
+ * THIRD CASE THIS CONSTANT ONCE HELD IS GONE WITH IT.
+ *
+ * For one day this file needed a set called `EXEMPT_WITH_SEEDS`, because Relay Rush was SEEDED
+ * and REFUSED at the same time: authored `harvestAnchors` had minted its seeds and opened the
+ * browser door, while its best measured public-verb play terminated unsecured at wave 4 of 20 and
+ * put it in `CONTRACT_ADMISSION_EXEMPTIONS`. F-A5-1 named the cause — authored geometry, not the
+ * mechanic — and put the fork to the owner, who ruled it (2026-08-21, VERBATIM, to the five-map
+ * fork table): **"lets follow your recommendation"**, i.e. a `heroStart` stake inside a relay
+ * site. `relay-ridge-command-stake` now stands at (-25,41), the centre of `relay-site-r2`, and
+ * both bench seeds secure at wave 20 twice each (fnv1a32:bc89348d / fnv1a32:b25f69b0) — through
+ * the ORDINARY door as well as the measurement seam, byte-identical either way.
+ *
+ * The set is kept as an EMPTY one rather than deleted, because the state it names is real and
+ * `e9-seed-run` and `e9-old-canal` may yet enter it: a map whose data is authored and whose
+ * mechanic runs, held out of the door only by a measured ceiling. Emptying it is the ledger of
+ * the reversal; deleting it would erase the shape.
  */
-const EXEMPT_WITH_SEEDS = new Set(['e7-relay-rush']);
+const EXEMPT_WITH_SEEDS = new Set<string>([]);
 
 const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
   'e7-relay-valley': 'e7-relay-valley',
   'e7-echo-canyon': 'e7-echo-canyon',
   'e7-dead-band': 'e7-dead-band',
   // A5: authored anchors moved this one out of `activeContractSelection`'s
-  // `harvestAnchors?.length === 0` -> 'unavailable-contract' branch (`ContractFamilies.ts:1329`),
-  // so a `?debug&contract=` boot now resolves the map itself instead of falling back to The Claim.
-  // The BROWSER door and the HEADLESS door are separate gates and this proves they are: the same
-  // contract resolves here and is refused by `HeadlessContractSim` below.
+  // `harvestAnchors?.length === 0` -> 'unavailable-contract' branch (`ContractFamilies.ts:1336`,
+  // RE-MEASURED 2026-08-21 — the F-2125-1 law pointer for the same gate; it read `:1329` when this
+  // line was written and main has moved 234 commits since). Both doors now agree: the browser
+  // resolves the map AND `HeadlessContractSim` constructs it.
   'e7-relay-rush': 'e7-relay-rush',
 };
 
@@ -265,9 +285,9 @@ for (const contract of signal.contracts) {
       // A5 — THE INTERFERENCE FRONT, ASSERTED BIDIRECTIONALLY for the same reason A4's row is:
       // Relay Rush is the one Signal contract that carries `twist.interferenceFront`, so it is
       // the one whose manifest grows an `interference_front` rule, and the field must not leak
-      // onto a contract that never asked for it. The run itself is measured through the DECLARED
-      // `admissionProbe` seam (`artifacts/e7-relay-rush/prover.mjs`), never here — this census
-      // asserts the refusal, which is the truth the exemption records.
+      // onto a contract that never asked for it. The run itself is proven by the public-verb
+      // prover (`artifacts/e7-relay-rush/`), never here — this census asserts the DECLARATION and,
+      // since 2026-08-21, the owner-ruled stake that turned the refusal into an admission.
       if (contract.id === 'e7-relay-rush') {
         const { InterferenceFrontSystem } = await vite.ssrLoadModule('/src/systems/InterferenceFrontSystem.ts');
         const consumer = InterferenceFrontSystem.create(contract);
@@ -275,6 +295,8 @@ for (const contract of signal.contracts) {
         // The placeholder `"N"` resolved to the sheet's ratified 3 of 4 (A5 DEFAULTS).
         expect(consumer.relayTarget).toBe(3);
         expect(consumer.deadlineFront).toBe(3);
+        // Still false AT RUN START, and that is the objective doing its job: the latch opens only
+        // when the deadline front finds three relays lit. Admission did not weaken it.
         expect(consumer.objectiveAllowsSecure).toBe(false);
         expect(consumer.diagnostics.sites.map(({ id }: { id: string }) => id))
           .toEqual(['relay-site-r1', 'relay-site-r2', 'relay-site-r3', 'relay-site-r4']);
@@ -284,11 +306,20 @@ for (const contract of signal.contracts) {
         expect(rule.data.relayTarget).toBe(consumer.relayTarget);
         expect(rule.data.cadenceSeconds).toBe(90);
         expect(rule.data.crossingSeconds).toBe(20);
-        // The door DATA is authored even though the door itself refuses: four anchors, so the
-        // map is playable, and a cited exemption, so the refusal is a measurement not a gap.
+        // The door DATA is authored and the door is now OPEN: four anchors so the map is playable,
+        // and the owner-ruled stake that made it winnable.
         expect(contract.tileParams.harvestAnchors).toHaveLength(4);
+        // THE STAKE, PINNED AT ITS EXACT COORDINATES, because it is owner-ruled data and a silent
+        // drift would quietly un-win the map. (-25,41) is the CENTRE of `relay-site-r2`: the only
+        // point from which a 10x10 box sits wholly inside `Balance.beacon.range` of 8.
+        const stake = contract.tileParams.stakeMarkers?.find(({ heroStart }: { heroStart: boolean }) => heroStart);
+        expect(stake).toMatchObject({ id: 'relay-ridge-command-stake', x: -25, z: 41, heroStart: true });
+        const home = contract.tileParams.buildZones.find(({ id }: { id: string }) => id === 'relay-site-r2');
+        expect(stake?.x).toBe(((home?.minX ?? NaN) + (home?.maxX ?? NaN)) / 2);
+        expect(stake?.z).toBe(((home?.minZ ?? NaN) + (home?.maxZ ?? NaN)) / 2);
+        // And the exemption is GONE, asserted from source rather than believed.
         const { CONTRACT_ADMISSION_EXEMPTIONS } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
-        expect(CONTRACT_ADMISSION_EXEMPTIONS['e7-relay-rush'].citation).toBe('reviews/e7-relay-rush.md');
+        expect(CONTRACT_ADMISSION_EXEMPTIONS['e7-relay-rush']).toBeUndefined();
       } else {
         expect(mechanics.rules.some(({ id }: { id: string }) => id === 'interference_front')).toBe(false);
       }
