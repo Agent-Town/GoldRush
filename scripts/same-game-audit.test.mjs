@@ -351,7 +351,18 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // the branch BEFORE the audit was re-run), never by editing two sides' arithmetic into
   // agreement — which is the F-2084-1 failure this comment block exists to prevent, and which
   // git would happily auto-merge because both sides write the same-shaped digits.
-  assert.equal(audit.admission.exemptions.length, 5);
+  // ⚠️ FIFTEENTH STACK — E2 FINISHES (2026-08-22, owner: "yes, I want to admit it, E2 should be
+  // finished as well"). `e2-trestle` and `e2-incline` secured ×2 on both bench seeds and left the
+  // table: exemptions 5 -> 3, door 33 -> 35. **THE SUMMARY DOES NOT MOVE WITH THEM — 446/1112/4 over
+  // 1562 rows is unchanged** — and that is the `e2-hill-mine` shape recorded above rather than a
+  // miscount: both maps declare an escort `mode`, so `agentCanEnter` was already true and every one
+  // of their parity rows already read `equal`. Only the exemption count moves.
+  //     ATTRIBUTED BY REVERT-AND-REPRODUCE, twice, because the first probe was surprising: putting
+  //     BOTH rows back reproduced `446/1112/4` exactly with `exemptions=5`, and removing the two
+  //     `waveCadenceMult` declarations reproduced it again — so neither the admission nor the new
+  //     dial owns a row here. A third probe stashed EVERY source change in the slice and measured
+  //     the merged base at the same `446/1112/4`, which is what makes the claim safe to write down.
+  assert.equal(audit.admission.exemptions.length, 3);
   assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 446, equal: 1112, 'not-offered': 4 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));

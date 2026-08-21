@@ -5,8 +5,13 @@ import { createServer, type ViteDevServer } from 'vite';
 // modelessly, so its declared escort mode remains additive. The Hill Mine joined it on 2026-08-20:
 // once the pressure arsenal reached the headless engine on the browser's own gates it secured
 // modelessly on both bench seeds (reviews/e2-pressure-arsenal-headless.md), so its escort mode is
-// additive too. The Trestle and the Incline are still exempt and still throw.
-const MODELESS_MODE_CONTRACT_EXCEPTIONS = new Set(['e3-canyon-works', 'e2-hill-mine']);
+// additive too.
+// ═══ AND THE LAST TWO JOINED THEM ON 2026-08-22 (owner: "yes, I want to admit it, E2 should be
+// finished as well"). The Trestle and the Incline each secured MODELESSLY on both bench seeds, on
+// every play path, twice over (reviews/e2-finished.md) — so their declared escort modes are additive
+// exactly as the Hill Mine's is, and this set is now the whole of E2's railcar trio plus Canyon
+// Works. F-E2S-3's governance of these three is discharged: none of them throws any more.
+const MODELESS_MODE_CONTRACT_EXCEPTIONS = new Set(['e3-canyon-works', 'e2-hill-mine', 'e2-trestle', 'e2-incline']);
 
 test('every derived door contract boots and emits its first view', async () => {
   test.setTimeout(60_000);

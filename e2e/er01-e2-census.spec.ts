@@ -50,18 +50,34 @@ for (const contract of steamworks.contracts) {
       // re-proved with the line declared and still terminate unsecured on at least one bench seed
       // (reviews/e2-pressure-line-railcars.md), so they keep their exemption rows and this census
       // keeps naming both sides of the door per id.
-      const admitted = ['e2-pressure-garden', 'e2-hill-mine'];
+      // ═══ E2 IS FINISHED (owner, 2026-08-22, verbatim: "yes, I want to admit it, E2 should be
+      // finished as well"). All four E2 contracts are through the door. The list stays EXPLICIT and
+      // per-id rather than becoming `true` for everything, because F-1660-1 is exactly the accident
+      // of a derivation quietly re-admitting a map nobody had measured — the whole point of naming
+      // every id here is that admission is asserted, never inferred.
+      const admitted = ['e2-pressure-garden', 'e2-hill-mine', 'e2-trestle', 'e2-incline'];
+      // THE BRANCH IS DELIBERATELY KEPT THOUGH NOTHING TAKES IT TODAY. It is the landing pad for a
+      // FUTURE E2 contract: a new id must either be measured through the door or carry an exemption
+      // row, and this refuses the third option of arriving unnoticed.
       if (!admitted.includes(contract.id)) {
-        expect(contract.id === 'e2-trestle' || contract.id === 'e2-incline').toBe(true);
-        expect(contract.twist.pressureEnabled).toBe(true);
-        // AND EACH NOW OWNS ITS COAL (owner ruling 2026-08-21 to the F-E2PL-1 lever, verbatim:
-        // "sounds like a good idea"). Before it, `PressureSystem` fixed the seams on the Hill Mine's
-        // minehead for every map in the game, so these two paid a 55-58wu round trip for fuel; each
-        // now authors three seams ~29wu from its own stake, the Hill Mine's measured standard.
-        expect((contract.twist as { coalSeams?: Array<{ x: number; z: number }> }).coalSeams).toHaveLength(3);
         expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
         expect(consoleErrors).toEqual([]);
         return;
+      }
+      // THE TWO RULINGS THAT FINISHED E2, ASSERTED ON THE ADMITTED MAPS RATHER THAN ASSUMED.
+      // Coal (owner 2026-08-21, "sounds like a good idea"): `PressureSystem` used to fix the seams
+      // on the Hill Mine's minehead for every map in the game, so the railcar pair paid a 55-58wu
+      // round trip for fuel; each now authors three seams ~29wu from its own stake, the Hill Mine's
+      // own measured standard. Cadence (owner 2026-08-22, "E2 should be finished as well"): laddered
+      // per map and shipped one clear rung inside its first all-secure value — 0.7 trestle, 0.75
+      // incline. The Hill Mine and the Pressure Garden author NEITHER and are untouched by both.
+      const twist = contract.twist as { coalSeams?: Array<{ x: number; z: number }>; waveCadenceMult?: number };
+      if (contract.id === 'e2-trestle' || contract.id === 'e2-incline') {
+        expect(twist.coalSeams).toHaveLength(3);
+        expect(twist.waveCadenceMult).toBe(contract.id === 'e2-trestle' ? 0.7 : 0.75);
+      } else {
+        expect(twist.coalSeams).toBeUndefined();
+        expect(twist.waveCadenceMult).toBeUndefined();
       }
       const rig = { ...Balance.sparkRig };
       restoreRig = () => Object.assign(Balance.sparkRig, rig);
@@ -119,7 +135,13 @@ for (const contract of steamworks.contracts) {
         sim.hero.heal(100_000);
         if (contract.twist.pressureEnabled) {
           for (const x of [-4, 4]) expect(sim.build.placeFree('boiler_house', { x, z: 12 }, 0)).toBe(true);
-          sim.hero.group.position.set(-12, 0.06, 39);
+          // STAND ON THIS CONTRACT'S OWN COAL, not on a literal. Until the owner's 2026-08-21
+          // `coalSeams` ruling every map's seams were the same three module-constant coordinates, so
+          // `(-12, 39)` worked everywhere; the trestle and the incline now author their own ~29wu
+          // from their own stakes, and a hard-coded teleport lands them in open ground and harvests
+          // nothing — which is exactly how this assertion first went red.
+          const seam = sim.pressure.diagnostics.seams[0]!;
+          sim.hero.group.position.set(seam.x, 0.06, seam.z);
         }
         let turn = sim.currentTurn();
         while (!turn.terminal) turn = sim.advanceToTurn();

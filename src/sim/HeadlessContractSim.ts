@@ -95,42 +95,43 @@ type AdmissionExemption = {
 };
 
 export const CONTRACT_ADMISSION_EXEMPTIONS = {
-  // THE REASON THESE TWO ROWS GAVE IS NOW SPENT, AND THE ROWS SURVIVE IT. F-E2S-3 read "no weapon
-  // reaches the railcar" off an unsecured probe and inferred the board sold no such weapon; it
-  // sells three, and they fire headless on the browser's own gates (`PressureArsenalSystem` below).
-  // `e2-pressure-arsenal-headless` then narrowed the refusal to one authored fact — neither contract
-  // declared `twist.pressureEnabled`, so no boiler was buildable and the arsenal had no fuel — and
-  // put the design question on the owner's desk as F-E2PA-6.
+  // ═══ E2 IS FINISHED (owner, 2026-08-22, verbatim: "yes, I want to admit it, E2 should be
+  // finished as well"). `e2-trestle` and `e2-incline` LEFT THIS TABLE on that ruling, and the epoch
+  // is 4/4 through the door. Their rows are gone rather than reworded because, unlike every entry
+  // below, the thing this table exists to record — a public-verb secure on both bench seeds — now
+  // EXISTS for both: 12 of 12 non-idle battery rows secured, every one identical across two passes.
   //
-  // THE OWNER ANSWERED IT (2026-08-21, verbatim: "E2's pressure ... - lets do that"), executing the
-  // standing recommendation "give both the pressure line". Both contracts now declare
-  // `twist.pressureEnabled: true` (`assets/contracts/epoch-2-steamworks/contracts.json`), the boiler
-  // house is on both boards, the coal is reachable on both maps (3/3 seams cut, 12 vents each —
-  // `artifacts/e2-pressure-line/coal-reach-*.json`), and the arsenal fires on both: 192 pressure
-  // spent on the incline, 317 on the trestle. The gift is real and it is delivered.
+  // THE FOUR-STEP PROGRAMME, IN ORDER, EACH STEP MEASURED BEFORE THE NEXT WAS TAKEN:
+  //   1. the pressure LINE   (owner 2026-08-21, "give both the pressure line") — the arsenal fired
+  //      on both maps and neither secured;
+  //   2. the COAL            (owner 2026-08-21, "sounds like a good idea") — `twist.coalSeams` put
+  //      each map's fuel ~29wu from its own stake, doubling pressure delivered, and neither secured;
+  //   3. the RAILCAR CUT     (owner 2026-08-22, F-1608-2's priced value, `hpScale` 30 -> 12.5) — and
+  //      MEASURED, this one changed nothing at all on the runs that mattered: the event-log hashes
+  //      came back byte-identical (`e6fe4301`, `74a94d27`, `17116d57`, `2207a312`), because the
+  //      railcar spawns at wave 12 and those claims died at wave 6 and 10. **A boss-HP dial cannot
+  //      reach a claim that never meets the boss** — the single most useful thing this programme
+  //      learned, and the reason step 4 exists;
+  //   4. the CADENCE         (this slice) — `twist.waveCadenceMult`, laddered per map to the knife
+  //      edge and shipped one clear step inside it. Derivation at the constants in `contracts.json`
+  //      and the full tables in `artifacts/e2-pressure-line/cadence-ladder-*.json`.
   //
-  // AND THE MAPS STILL WIN, for a reason nothing before this had measured: `PressureSystem.ts:23`
-  // fixes the three coal seams at three WORLD coordinates on every map — they are not contract data
-  // and cannot be authored per tile — and those coordinates sit at the Hill Mine's minehead. From
-  // the Hill Mine's stake that is a 29wu walk; from the only stake these two heroes can hold it is
-  // 55wu (trestle) and 58wu (incline), and the Prospector is the same single body that earns all
-  // the gold. So the pressure line is not free here: it is bought with the economy that pays for the
-  // guns, and across 97 measured runs (7 ladders x 2 upgrade orders x 4 coal schedules) not one
-  // secured. The ruling is executed, not stretched — no balance moved, the railcar stays at
-  // `hpScale` 30 — and the door still says no, which is what this table is for.
+  // WHAT THE LADDERS SAY, AND WHY THE TWO MAPS GOT DIFFERENT NUMBERS (they were judged
+  // independently, and the measured minimum for each is its own):
+  //   trestle  1.0 ✗ · 0.9 ✗ · 0.8 ✗ · 0.75 3-of-4 · **0.7 ALL FOUR** · 0.65 ✓ · 0.6 ✓  -> ship 0.7
+  //   incline  1.0 ✗ · 0.95 2-of-4 · 0.9 2-of-4 · 0.85 2-of-4 · **0.8 ALL FOUR** · 0.75 ✓ · 0.7 ✓
+  //            · 0.6 ✓ · 0.5 ✓ · 0.4 ✓                                                  -> ship 0.75
+  // Each shipped value is one clear rung inside its own map's first all-secure rung, with securing
+  // rungs on BOTH sides of it — never more than the measured minimum, and never sitting on the edge.
   //
-  // THE EDIT IS PROVABLY INERT UNTIL A BOILER BURNS COAL. A rider that ignores the new line
-  // reproduces the review's own pre-ruling event-log hashes bit for bit on all four bench seeds
-  // (`8c28f1ff` w12 / `bc515b13` SECURED w18 / `83b0a873` w6 / `dac0c325` w8), so nothing about
-  // these contracts changed except what a player is now allowed to build.
-  'e2-incline': {
-    reason: 'BOTH E2 pressure levers are now spent on this map and it still refuses. (1) The pressure line was DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line"). (2) The coal was then moved onto the claim\'s OWN ground per the owner ruling of 2026-08-21 to F-E2PL-1 ("sounds like a good idea"): three authored twist.coalSeams in the lower yard between the haul lines, mean 28.8wu from the engine-house stake against 58wu when the seams were a module constant on the Hill Mine\'s minehead. The fuel economy doubled and is measured, not argued — 384 pressure delivered and 288 arsenal fires on seed 02, against 192/164 before. What refuses is a wall the coal never touched: the hero dies at wave 6 of 12 on seed 01 in every measured ladder with two turrets standing, and seed 02 reaches only wave 10 (fnv1a32:b90667b6 / fnv1a32:5607b921, each x2), against four spawn edges onto a lower-yard stake it cannot leave. A rider that declines the line still reproduces the pre-ruling floors exactly (fnv1a32:83b0a873 w6 / fnv1a32:dac0c325 w8), so neither ruling moved any balance. Re-admit when both bench seeds secure.',
-    citation: 'reviews/e2-coal-seams-and-legibility.md',
-  },
-  'e2-trestle': {
-    reason: 'BOTH E2 pressure levers are now spent on this map and it still refuses. (1) The pressure line was DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line"). (2) The coal was then moved onto the claim\'s OWN ground per the owner ruling of 2026-08-21 to F-E2PL-1 ("sounds like a good idea"): three authored twist.coalSeams along the mine spur on the south approach, mean 29.4wu from the hero\'s stake — the Hill Mine\'s own measured standard — against 55wu when the seams were a module constant. The fuel economy doubled and is measured: 384 pressure delivered on seed 02 against 192 before, with the arsenal firing 8/20/18. Admission is still refused because seed 01 still does not secure: best play WITH the line reaches wave 10 (fnv1a32:e6fe4301) and wave 12 (fnv1a32:053b81d6), the deepest run of any kind reaches 12/13, and the only secure in the whole programme remains the run that DECLINES the line on seed 02 at wave 18 (fnv1a32:bc515b13, x2). The remaining wall is the hpScale-30 railcar, not the fuel — see F-1608-2. A rider that declines the line reproduces the pre-ruling hashes exactly even with the seams moved, so neither ruling moved any balance. Re-admit when both bench seeds hold.',
-    citation: 'reviews/e2-coal-seams-and-legibility.md',
-  },
+  // THE HISTORY THESE ROWS CARRIED, KEPT BECAUSE IT IS THE REASON THE PROGRAMME WORKED. F-E2S-3 read
+  // "no weapon reaches the railcar" off an unsecured probe and inferred the board sold no such
+  // weapon; it sells three, and they fire headless on the browser's own gates
+  // (`PressureArsenalSystem` below). `e2-pressure-arsenal-headless` then narrowed the refusal to one
+  // authored fact — neither contract declared `twist.pressureEnabled`, so no boiler was buildable
+  // and the arsenal had no fuel — and put the design question on the owner's desk as F-E2PA-6.
+  // Every one of those steps was necessary and none was sufficient; the door opened on the fourth.
+  //
   // F-1475-1's ORIGINAL reason is dead and its replacement is narrower. "The crowd-flock escort
   // objective has no headless consumer" was true when written and is false now: `CrowdFlockSystem`
   // runs in BOTH engines and the wheel is a damageable target here as it is in the browser. What

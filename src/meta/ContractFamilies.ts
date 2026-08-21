@@ -730,6 +730,35 @@ export type ContractManifest = {
     coalSeams?: ContractHarvestAnchor[];
     seamYieldMult?: number;
     secureWave?: number;
+    /**
+     * THE WAVE CLOCK: `waveInterval = Balance.waves.waveInterval / waveCadenceMult` — one formula,
+     * both engines (`WaveSystem.ts:839`, `HeadlessContractSim.ts:2016`). ABOVE 1 is faster, BELOW 1
+     * is slower, and the contracts.json this is authored in cannot carry a comment, so the
+     * derivation of every shipped value lives here.
+     *
+     * SHIPPED VALUES AND THE LADDERS THEY CAME FROM (owner 2026-08-22, verbatim: "yes, I want to
+     * admit it, E2 should be finished as well" — the Stillwater knife-edge method: ladder the dial,
+     * ship one clear rung inside the first all-secure value, never more than the measured minimum).
+     * Each rung is a public-verb prover run under declared E1 progression, on BOTH bench seeds x
+     * BOTH best play configs, so "ALL FOUR" below means 4 of 4 secured:
+     *
+     *   `e2-trestle` -> 0.7  (30s becomes 42.9s)
+     *     1.0 ✗ · 0.9 ✗ · 0.8 ✗ · 0.75 3-of-4 · **0.7 ALL FOUR** · 0.65 ALL FOUR · 0.6 ✓
+     *   `e2-incline` -> 0.75 (30s becomes 40.0s)
+     *     1.0 ✗ · 0.95 2-of-4 · 0.9 2-of-4 · 0.85 2-of-4 · **0.8 ALL FOUR** · 0.75 ALL FOUR
+     *     · 0.7 ✓ · 0.6 ✓ · 0.5 ✓ · 0.4 ✓
+     *
+     * The two numbers differ because the two maps were judged independently and each got its OWN
+     * measured minimum: the trestle's first all-secure rung is 0.75, the incline's is 0.8, and each
+     * ships one rung inside that with securing rungs on both sides. Full tables, with every hash,
+     * in `artifacts/e2-pressure-line/cadence-ladder-*.json`.
+     *
+     * WHY THE CLOCK AND NOT THE BOSS: the owner-ruled `hpScale` 30 -> 12.5 cut was applied FIRST and
+     * measured, and on the runs that mattered it changed nothing — the event-log hashes came back
+     * byte-identical, because the railcar spawns at wave 12 and those claims died at 6 and 10. A
+     * boss-HP dial cannot reach a claim that never meets the boss; what these two lacked was time to
+     * turn gold into guns.
+     */
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
     dayNightCycle?: ContractDayNightCycle;
