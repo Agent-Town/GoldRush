@@ -111,6 +111,15 @@ export class StockpilePool {
     return slot;
   }
 
+  /** A9: moves a STANDING yard without re-placing it. See `SentryBeaconPool.moveTo`. */
+  moveTo(index: number, position: { x: number; z: number }): boolean {
+    if (!this.active[index]) return false;
+    this.positions[index]?.set(position.x, 0, position.z);
+    this.sync(index);
+    this.markNeedsUpdate();
+    return true;
+  }
+
   deactivate(index: number): boolean {
     if (!this.active[index]) return false;
     this.active[index] = false;

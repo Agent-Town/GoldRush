@@ -326,6 +326,8 @@ import {
 } from './TileStateStore';
 import { createGreenWaypointSwatch, E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
 import { SeedCaravanSystem } from '../systems/SeedCaravanSystem';
+import { ScheduledRelocationSystem } from '../systems/ScheduledRelocationSystem';
+import { DevilsAlleyPresentation } from '../systems/DevilsAlleyPresentation';
 import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
 
 // Replay Law: Frontier upgrades remain available after later epochs activate.
@@ -727,6 +729,16 @@ export class Game {
    * the refusal counters are the run's real total. Built off the CONTRACT, never the epoch.
    */
   private readonly interferenceFront = InterferenceFrontSystem.create(this.activeContract);
+  /**
+   * A9 — the scheduled relocation, read off the CONTRACT exactly as `HeadlessContractSim` reads
+   * it, so the two engines cannot disagree about where the column is or which works it may take.
+   * The county's voice is passed here and nowhere else: the sim engine paints nothing.
+   */
+  private readonly devilsAlley = ScheduledRelocationSystem.create(
+    this.activeContract,
+    (at, text) => this.vfx.floatText(new THREE.Vector3(at.x, Terrain.visualY(at.x, at.z, 1.4), at.z), text, '#e0b35d', 2.2),
+  );
+  private devilsAlleyPresentation: DevilsAlleyPresentation | null = null;
   /**
    * A5's whole presentation, and deliberately no more than the ratification asked for: "a simple
    * static band (tint/vignette) is enough — no shader work". A flat translucent slate quad the
@@ -2498,6 +2510,7 @@ export class Game {
     this.e9CanalSystem.dispose();
     this.seedCaravan?.dispose();
     this.seedCaravanPresentation?.dispose();
+    this.devilsAlleyPresentation?.dispose();
     this.e10FinaleSystem.dispose();
     this.e10StaticBoss.dispose();
     this.e7ArsenalSystem.dispose();
@@ -2811,6 +2824,17 @@ export class Game {
       // the front in the same place and light the same relays at the same instant.
       this.interferenceFront.update(simDelta, this.goldTargeting.allBuildings);
       this.syncInterferenceBand();
+      // A9: the column advances on the same sim delta and in the same relative order as
+      // `HeadlessContractSim` — after the standing-works register is current and ahead of the
+      // enemy integration step — reading the same register and calling the same one BuildSystem
+      // seam, so both engines rearrange the same board on the same tick.
+      this.devilsAlley.update(
+        simDelta,
+        this.waveSystem.diagnostics.wave,
+        this.goldTargeting.allBuildings,
+        (family, index, to, lifted) => this.buildSystem.relocateBuilding(family, index, to, lifted),
+      );
+      this.devilsAlleyPresentation?.update(this.devilsAlley.diagnostics);
       this.recycleDeepwaterCorsairsAtExit();
       if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
@@ -4378,6 +4402,16 @@ export class Game {
       );
       this.scene.add(this.seedCaravanPresentation.group);
     }
+    // A9: the column and the anchor-hold rings join the scene only where a relocation is
+    // declared, so no other map pays a draw call for them. The rings are ALWAYS visible — a
+    // rider cannot choose safe ground it cannot see — and the column only while a sweep runs.
+    if (this.devilsAlley.isDeclared) {
+      this.devilsAlleyPresentation = new DevilsAlleyPresentation(
+        this.devilsAlley.diagnostics,
+        (x, z) => Terrain.visualY(x, z, 0),
+      );
+      this.scene.add(this.devilsAlleyPresentation.group);
+    }
     // A5: the band joins the scene only where a front is declared, so no other map pays a draw
     // call for it. It starts hidden — `syncInterferenceBand` shows it while the wall crosses.
     if (this.interferenceFront.isDeclared) {
@@ -5154,6 +5188,11 @@ export class Game {
       // `e2e/e7-relay-rush-front.spec.ts` reads to prove the browser runs the same wall the
       // headless engine does.
       interferenceFront: this.interferenceFront.isDeclared ? this.interferenceFront.diagnostics : null,
+      // A9: null off every other map, same shape. `e2e/e9-devils-alley-relocation.spec.ts` reads
+      // this pair to prove the browser sweeps the same schedule the headless engine does, and
+      // that the PLAYER can see it in a plain boot (Mistake #10).
+      devilsAlley: this.devilsAlley.isDeclared ? this.devilsAlley.diagnostics : null,
+      devilsAlleyPresentation: this.devilsAlleyPresentation?.diagnostics ?? null,
       e10Finale: this.e10FinaleSystem.diagnostics(),
       e10Static: this.e10StaticBoss.diagnostics(),
       e7Signal: this.e7SignalSystem.diagnostics,
@@ -5475,6 +5514,7 @@ export class Game {
     this.e9CanalSystem.resampleTerrain();
     this.seedCaravan?.resampleTerrain();
     this.seedCaravanPresentation?.resampleTerrain();
+    this.devilsAlleyPresentation?.resampleTerrain();
     this.e6TileConsumers.resampleTerrain();
     this.resampleHollowCrossingVisuals();
     // The gold seams belong on this list and were missing from it, which is why 29 of the 33
@@ -7584,6 +7624,10 @@ export class Game {
     // leftover phase of the last one.
     this.interferenceFront.reset();
     this.syncInterferenceBand();
+    // A9: the schedule restarts with the run — a new run's first sweep belongs to its own wave 1,
+    // never the leftover phase of the last one, and nothing is left suspended in the air.
+    this.devilsAlley.reset();
+    this.devilsAlleyPresentation?.reset(this.devilsAlley.diagnostics);
     this.e10StaticBoss.reset();
     this.e7ArsenalSystem.reset();
     this.damSurge?.reset();

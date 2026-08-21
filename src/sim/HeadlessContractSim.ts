@@ -69,6 +69,7 @@ import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } f
 import { LowOrbitSystem, type LowOrbitDiagnostics } from '../systems/LowOrbitSystem';
 import { HollowCrossingSystem, type HollowCrossingDiagnostics } from '../systems/HollowCrossingSystem';
 import { SeedCaravanSystem, type SeedCaravanDiagnostics } from '../systems/SeedCaravanSystem';
+import { ScheduledRelocationSystem, type ScheduledRelocationDiagnostics } from '../systems/ScheduledRelocationSystem';
 import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
 import { BroadcastMirror, type BroadcastMirrorDiagnostics } from '../systems/BroadcastMirror';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
@@ -309,6 +310,15 @@ export type HeadlessAgentView = AgentView & {
      * wait out the wall, or to accept that the deadline is gone.
      */
     interferenceFront?: InterferenceFrontDiagnostics;
+    /**
+     * A9. Present only where the contract declares `twist.scheduledRelocation` WITH authored
+     * patrol routes. This one is NOT an objective — nothing here opens or shuts the secure — it
+     * is a HAZARD SCHEDULE, so what a rider needs from it is different: `nextRouteId` and
+     * `progress` say where the wind is going, and `works[].anchored` says, per building, whether
+     * the wind can take that one. A rider that reads the anchored column before it spends 50
+     * gold never loses a turret to the alley.
+     */
+    devilsAlley?: ScheduledRelocationDiagnostics;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -533,6 +543,13 @@ export class HeadlessContractSim {
    * relay lighting and the objective latch — the four things a secure depends on.
    */
   private readonly interferenceFront: InterferenceFrontSystem;
+  /**
+   * A9 — the scheduled relocation, and it runs IDENTICALLY in both engines because it is
+   * sim-affecting: a devil MOVES a building's position, which changes what a turret covers and
+   * what an outlaw walks into. A consumer that only the browser ran would put the two engines on
+   * different boards from wave one.
+   */
+  private readonly devilsAlley: ScheduledRelocationSystem;
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -637,6 +654,9 @@ export class HeadlessContractSim {
     // A5: same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. Built
     // before `BuildSystem` below, which injects its mute into the shooter seam.
     this.interferenceFront = InterferenceFrontSystem.create(this.manifest);
+    // A9: same read the browser performs at `Game.ts` — the CONTRACT's own twist plus its own
+    // authored routes, bays and stakes. No voice headless: this engine paints nothing.
+    this.devilsAlley = ScheduledRelocationSystem.create(this.manifest);
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -1271,6 +1291,16 @@ export class HeadlessContractSim {
     // schedule is a function of sim time alone. It reads the board's standing works from the
     // targeting register (the same list the browser hands it) to decide which relays are lit.
     this.interferenceFront.update(STEP_SECONDS, this.targeting.allBuildings);
+    // A9: the column advances on the SAME fixed step and at the SAME point in the order the
+    // browser uses — after the standing-works register is current and BEFORE `enemies.update`,
+    // so an outlaw walks into the board the wind has already rearranged this tick rather than
+    // last tick's. The mover is the one BuildSystem seam; nothing here touches a pool.
+    this.devilsAlley.update(
+      STEP_SECONDS,
+      this.waves.diagnostics.wave,
+      this.targeting.allBuildings,
+      (family, index, to, lifted) => this.build.relocateBuilding(family, index, to, lifted),
+    );
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
     this.enemies.update(STEP_SECONDS, this.deepwater?.targetPosition(this.hero.group.position) ?? this.hero.group.position, (enemy) => {
@@ -1362,6 +1392,10 @@ export class HeadlessContractSim {
     // position, the countdown to the next front, and the per-site lit/muted pair a rider needs to
     // decide where to spend the next 25 gold before the deadline closes.
     if (this.interferenceFront.isDeclared) view.now.interferenceFront = this.interferenceFront.diagnostics;
+    // A9: only where DECLARED. This one MOVES every turn and — unlike the caravan and the wall —
+    // it gates NOTHING, so it is published for planning rather than for scoring: where the next
+    // sweep goes, and which of your works the wind is allowed to take.
+    if (this.devilsAlley.isDeclared) view.now.devilsAlley = this.devilsAlley.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1714,6 +1748,9 @@ export class HeadlessContractSim {
       // grow a field. The terminal half of the same object also rides the determinism hash
       // (`outcome()` below) — this row is the per-turn read.
       interferenceFront: this.interferenceFront.isDeclared ? this.interferenceFront.diagnostics : null,
+      // A9: null off every other contract, same rule. The presentation-stripped half rides the
+      // determinism hash so a run that moved a turret cannot hash the same as one that did not.
+      devilsAlley: this.devilsAlley.isDeclared ? this.devilsAlley.simulationSnapshot : null,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,

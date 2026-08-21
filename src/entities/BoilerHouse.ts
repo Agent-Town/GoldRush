@@ -84,6 +84,17 @@ export class BoilerHousePool {
     return index;
   }
 
+  /**
+   * A9: moves a STANDING boiler without re-placing it. Hot/cooling are re-read by the very next
+   * `update`, so passing false/false here cannot lie for more than one frame.
+   */
+  moveTo(index: number, position: { x: number; z: number }): boolean {
+    if (!this.active[index]) return false;
+    this.positions[index]!.set(position.x, 0, position.z);
+    this.sync(index, false, false, 0);
+    return true;
+  }
+
   deactivate(index: number): boolean {
     if (!this.active[index]) return false;
     this.active[index] = false;

@@ -4,6 +4,11 @@ import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSyste
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
+import {
+  DEVIL_COLUMN_RADIUS,
+  DEVIL_SWEEP_SECONDS,
+  ScheduledRelocationSystem,
+} from '../systems/ScheduledRelocationSystem';
 import { SIGNAL_SUPPRESSION_REASON, SignalSuppression } from '../systems/SignalSuppression';
 import {
   BROADCAST_MIRROR_HP_PER_REPEAT,
@@ -453,6 +458,27 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       debrisDamagePerSecond: DEBRIS_DAMAGE_PER_SECOND,
       consequence: 'a lob that hits nothing re-enters after 12s on its original vector and may strike your own works; off the handhold spine and the scaffold decks thrust responds at half rate and momentum carries; the two debris bands slow the suit and chip it',
       handholds: 'soft — never a wall',
+    }));
+  }
+
+  // --- A9 scheduled relocation. SOURCED FROM THE CONSUMER for the same reason A7 is: the row
+  // names the routes `ScheduledRelocationSystem` will actually sweep and the holds it will
+  // actually honour, so a manifest that promises three anchors can never outlive a contract that
+  // authors two. Absent unless the contract declares `twist.scheduledRelocation` AND authors the
+  // patrol routes a column needs to walk.
+  const devilsAlley = ScheduledRelocationSystem.create(contract);
+  if (devilsAlley.isDeclared) {
+    rules.push(rule('scheduled_relocation', 'ScheduledRelocationSystem.update', {
+      routes: devilsAlley.routeIds,
+      cadence: 'one sweep per wave, alternating routes in authored order',
+      sweepSeconds: DEVIL_SWEEP_SECONDS,
+      columnRadius: DEVIL_COLUMN_RADIUS,
+      // The anchors, with the hold each exerts — the whole of what a rider must plan against.
+      anchors: devilsAlley.anchorHolds.map(({ id, x, z, holdRadius }) => `${id}@(${x},${z})r${holdRadius}`),
+      // The consequence, stated as a consequence: this is a HAZARD, not an objective.
+      consequence: 'a standing work inside the column and outside every anchor hold is lifted, carried to the sweep end point and set down there ALIVE; it is offline while airborne and loses no hp; works inside an anchor hold are never taken',
+      damages: false,
+      gatesSecure: false,
     }));
   }
 
