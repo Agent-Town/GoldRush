@@ -341,6 +341,7 @@ One refusal is a different shape and is named here so nobody hunts for a missing
   "e6-half-life-hollow",
   "e7-dead-band",
   "e7-echo-canyon",
+  "e7-relay-rush",
   "e7-relay-valley",
   "e8-eclipse",
   "e8-far-side",

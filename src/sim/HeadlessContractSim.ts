@@ -162,34 +162,27 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'The six-capture objective latch is live in both engines, so idle can no longer secure at any wave. Strong public-verb CAPTURE + fortify play exceeded the quota but died at waves 18/14 on the two bench seeds (306 captures, fnv1a32:e95a0e84 / 194 captures, fnv1a32:6ee8e7e5) against secureWave 20. Difficulty stands per the owner (2026-08-20); re-admit when both seeds secure twice.',
     citation: 'reviews/e6-showroom-cap-fix.md',
   },
-  // A5 BUILT THE MECHANIC, DISCHARGED ITS OBJECTIVE, AND THE MAP STILL WON (2026-08-20,
-  // door-completion-sheet §A5). Second instance of the A8 shape, and the closest reading of it.
+  // ADMISSION MOVE — `e7-relay-rush` LEFT THIS TABLE 2026-08-21, ON AN OWNER RULING, AND ITS ROW
+  // IS DELETED RATHER THAN REWORDED BECAUSE ITS REASON DIED WHOLE.
   //
-  // THE CONSUMER IS NOT THE GAP AND THE OBJECTIVE IS NOT THE GAP EITHER — this row exists to say
-  // both. `e7-relay-rush`'s interference front, its mute, its relay lighting and its deadline
-  // latch are live in BOTH engines (`src/systems/InterferenceFrontSystem.ts`, proven in the
-  // browser and headless by `e2e/e7-relay-rush-front.spec.ts`). The ratified objective is
-  // discharge-able and was in fact PART-DISCHARGED in ordinary play before the hero fell: the
-  // public-verb prover lit three of the four relay sites by t=131.6s on seed 01 and two by t=90s
-  // on seed 02, against a deadline of t=270s. The wall's whole interference across both runs was
-  // 120 and 60 muted work-steps — four and two seconds of beacon time — so it is not what ends
-  // them either.
+  // The row said, measured and correctly: "the claim at (0,12) has NO buildable ground within
+  // 24wu ... so no legal placement can defend the hero", and it named its own cure —
+  // "re-admit when both bench seeds secure". F-A5-1 put the fork to the owner, who ruled it
+  // (2026-08-21, VERBATIM, to the five-map fork table): **"lets follow your recommendation"** —
+  // i.e. the agent's own recommendation, a `heroStart` stake inside a relay site.
   //
-  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry, exactly as it was for the
-  // Seed Run below. The claim stands at (0,12). The ONLY buildable ground on this tile is the
-  // four 10x10 relay boxes at z 36..46 — twenty-four world units north of the hero — against a
-  // turret range of 16 and a beacon range of 8, on a heightfield authored `mode: "visual"` so no
-  // high-ground range bonus applies (`TileHeight.highGroundRange` early-returns without an
-  // `elevation` block). There is NO legal placement that defends the body the run is scored on,
-  // and `HeadlessContractSim` drives slot 0 on IDLE_INTENTS, so the hero cannot walk to the guns.
+  // So `tileParams.stakeMarkers` now carries `relay-ridge-command-stake` at (-25,41): the CENTRE
+  // of `relay-site-r2`. The centre is not a taste: `Balance.beacon.range` is 8 and a 10x10 box
+  // has a 7.1wu half-diagonal, so the centre is the ONLY placement from which the whole box is
+  // inside beacon reach, and turret range 16 then covers the box twice over. Nothing else moved —
+  // no zone was added, no cap was raised, no balance number was touched.
   //
-  // Measured across four policies (`artifacts/e7-relay-rush/`, preserved with its battery):
-  // objective-first, turret-first, all-turret and hero-only all terminate at wave 3 or 4 of 20,
-  // and the idle floor terminates at wave 2 — the whole spread is four waves wide.
-  'e7-relay-rush': {
-    reason: 'Best measured public-verb play terminated unsecured at wave 4 (seed 01) and wave 3 (seed 02) against secureWave 20 (fnv1a32:49f11d65 / fnv1a32:7fed3db1, each repeated identical). The front is not the obstacle: the ratified objective is discharge-able and the prover lit 3 of 4 relays by t=131.6s against a t=270s deadline, while the wall muted only 120 work-steps all run. The map is: the claim at (0,12) has NO buildable ground within 24wu, the four relay boxes are the only build zones on the tile, turret range is 16 and beacon range 8, and the visual-mode heightfield grants no high-ground reach — so no legal placement can defend the hero. The A5 front, mute, relay lighting and deadline latch are live in both engines; re-admit when both bench seeds secure.',
-    citation: 'reviews/e7-relay-rush.md',
-  },
+  // Both bench seeds now SECURE at wave 20, twice each, byte-identical on the repeat
+  // (fnv1a32:bc89348d / fnv1a32:b25f69b0), with the deadline MET on its own terms —
+  // `litAtDeadline: 3` of a `relayTarget` of 3 — and six fronts crossing per run. Law 2 holds:
+  // the idle floor still dies in the low waves having lit nothing. `reviews/e7-relay-rush.md`
+  // carries the table; `artifacts/e7-relay-rush/` carries the runs.
+  //
   // A10 BUILT THE MECHANIC, DISCHARGED ITS OBJECTIVE, AND THE MAP STILL WON (2026-08-21,
   // door-completion-sheet §A10). Third instance of the A5/A8 shape, and the cleanest measurement
   // of it, because this one carries a CONTROL rather than an argument.
