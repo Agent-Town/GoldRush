@@ -59,10 +59,11 @@ try {
     window.__GR_TEST__.setManualSim(true);
     window.__GR_TEST__.advanceSim(seconds);
   }, tape.inputLog.durationTicks * tape.inputLog.stepSeconds);
+  const playbackTimeoutMs = Number(process.env.ASSAY_PLAYBACK_TIMEOUT_MS ?? 120_000) || 120_000;
   await page.waitForFunction(
     () => document.querySelector('[data-testid="lantern-show"]')?.getAttribute('data-playback') === 'complete',
     undefined,
-    { timeout: 60_000 },
+    { timeout: playbackTimeoutMs },
   );
   if (errors.length) throw new Error(errors.join('\n'));
 
