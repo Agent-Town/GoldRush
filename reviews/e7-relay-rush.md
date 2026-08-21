@@ -1,7 +1,61 @@
-# Review — A5 `e7-relay-rush`, the interference front (mechanic BUILT, door SELF-EXEMPTED)
-**Slice/branch/tip:** `worktree-agent-a177c1e22ed14fe03`, base `1cb47bdca`. Built by a headless Opus-5 agent (owner directive 2026-08-20: remaining coding on Opus). **NOT yet drained** — this file is the builder's proposal; the attended drain re-measures the stack at merge.
+# Review — A5 `e7-relay-rush`, the interference front (mechanic SHIPPED 08-20, door ADMITTED 08-21 on an owner ruling)
+**Slice/branch/tip:** `worktree-agent-a177c1e22ed14fe03`. Part 1 built on base `1cb47bdca` and drained to main 2026-08-20 (`ea2872dd3`…`7b8c87181`). Part 2 built 2026-08-21 on top, after merging main (`bda894776`) — a clean FAST-FORWARD, zero conflicts, because part 1 was already on main. Built by a headless Opus-5 agent (owner directive 2026-08-20: remaining coding on Opus).
 
-**Verdict: PROPOSED — mechanic GREEN in both engines, admission HELD on a measured map ceiling.**
+**Verdict part 1 (2026-08-20): MERGED — mechanic GREEN in both engines, admission HELD on a measured map ceiling.**
+**Verdict part 2 (2026-08-21): PROPOSED — ADMISSION REVERSED. Both bench seeds secure at wave 20, twice each, through the ordinary door.**
+
+---
+
+## Part 2 — the owner's stake, and the reversal (2026-08-21)
+
+**The ruling.** F-A5-1 below had measured the A5 refusal to authored GEOMETRY rather than to the mechanic, and put the fork to the owner with a recommendation. He ruled it, verbatim, to the five-map fork table: **"lets follow your recommendation"** — i.e. a `heroStart` stake inside a relay site.
+
+**The stake, and why this exact point.** `tileParams.stakeMarkers` now carries `relay-ridge-command-stake` at **(-25, 41)** — the **centre of `relay-site-r2`**. The centre is not a taste, it is the only point that works: `Balance.beacon.range` is 8 and a 10×10 box has a 7.1wu half-diagonal, so the centre is the ONLY placement from which the whole box sits inside beacon reach, and turret range 16 then covers it twice over. r2 rather than r3 because they are geometrically symmetric (both are interior boxes with a 10wu gap to their outer neighbour, both 29wu from their nearest spawn edge) and r2 is the one the briefing's own reading walks first; the measurement, not the reasoning, is what settles it, and r2 secures both seeds. **Nothing else moved** — no zone added, no cap raised, no balance number touched, and the four `harvestAnchors` are untouched from part 1. The mask table mirrors the stake byte-for-byte; the briefing gains one rule line and a geography clause so a player is told where they stand.
+
+**The result.** The map is now a real "expand under deadline": the home box is the claim's garrison AND the first relay, and the other two relays the deadline needs cost two of the six beacon slots plus a walk. The front is no longer a rumour either — **six crossings per run** instead of one, ~2000 muted work-steps, which also discharges F-A5-3.
+
+### Evidence — twelve runs, every repeat byte-identical
+
+| Row | Result |
+| --- | --- |
+| Prover, seed 01 ×2 (`admissionProbe`) | **SECURED wave 20**, 671 kills, `litAtDeadline` **3** of 3, 6 fronts, 1980 muted work-steps — `fnv1a32:bc89348d` |
+| Prover, seed 02 ×2 (`admissionProbe`) | **SECURED wave 20**, 717 kills, `litAtDeadline` **3** of 3, 6 fronts, 2340 muted work-steps — `fnv1a32:b25f69b0` |
+| Prover, seed 01 ×2 **plain door** (`--plain`, no probe flag) | **SECURED wave 20** — `fnv1a32:bc89348d`, byte-identical to the probe path |
+| Prover, seed 02 ×2 **plain door** | **SECURED wave 20** — `fnv1a32:b25f69b0`, byte-identical to the probe path |
+| Idle floor, seed 01 ×2 (Law 2) | secured **false**, wave **2**, 81.3s, lit **0**, latch never set — `fnv1a32:ebf7134e` |
+| Idle floor, seed 02 ×2 (Law 2) | secured **false**, wave **2**, 79.8s, lit **0** — `fnv1a32:862ecace` |
+| Cross-check | `scripts/null-floor-anchors.mjs` independently generated the same two idle hashes into `null-floors.json` — the generator and the battery agree without being told to |
+| Pre-stake control | before the stake, on the MERGED tree, the old prover still reproduced `fnv1a32:49f11d65` at wave 4 exactly — 234 commits of main drift changed nothing about this map, so the reversal is the stake and only the stake |
+
+**The plain-door row is the one that certifies the admission.** While the contract sat in `CONTRACT_ADMISSION_EXEMPTIONS` every measurement had to ride `admissionProbe`, the declared measurement seam; a proof taken through that seam proves the play, not the door. `--plain` constructs through the ordinary gate — which would have thrown `AP-07 supports only …` a day ago — and returns the same hashes.
+
+### Admission surfaces reversed
+- `CONTRACT_ADMISSION_EXEMPTIONS`: **8 → 7**, the row DELETED rather than reworded, because its reason died whole (it named its own cure: "re-admit when both bench seeds secure"). An ADMISSION MOVE comment quoting the owner verbatim stands where it was.
+- `public/skill.md` door-contracts fence **+ `e7-relay-rush`**; `scripts/door-admission-baseline.json` **+ `e7-relay-rush`** (the ratchet is a fixed baseline, so admission has to be written into it deliberately).
+- `assets/contracts/null-floors.json`: regenerated **69 pairs** (67 → 69, the two new rows are Relay Rush's), `--check` GREEN, **0 `secured: true`** across the whole door.
+- `e2e/er01-e7-census.spec.ts`: relay-rush joins `ADMITTED`; **E7 is 4/4**. The one-day-old `EXEMPT_WITH_SEEDS` set is emptied rather than deleted (the state it names is real and `e9-seed-run`/`e9-old-canal` may yet enter it). The consumer block now pins the stake at its exact coordinates and asserts them EQUAL to the computed centre of `relay-site-r2`, so owner-ruled data cannot drift silently; the exemption's absence is asserted from source. `objectiveAllowsSecure` is still asserted FALSE at run start — admission did not weaken the latch.
+- `e2e/e7-relay-rush-front.spec.ts`: pads moved off the claim footprint, and the playbook/drone stop is now one wall-position that asks both questions. It also gained the stronger half: the wall rolls EAST **while still crossing** and the same towers come back on the air with `phase === 'crossing'` — proving it is the wall's POSITION that mutes, not the fact that a front is happening.
+
+### Audit — attributed by revert-and-reproduce, and unusually clean
+| Run | rows | agent-lacks / equal / not-offered | exemptions |
+| --- | --- | --- | --- |
+| stake + exemption removed (shipped) | 1524 | **483 / 1037 / 4** | **7** |
+| stake KEPT, exemption row restored | 1524 | 504 / 1016 / 4 | 8 |
+
+The second reproduced main's pins EXACTLY **with the stake still in place**. So the stake is worth **zero** in this audit (it is map data, not a compared surface — the anchors already bought their +39 rows on 08-20), and the entire delta is the admission: **exactly 21 rows flipping `agent-lacks` → `equal`**, the precise inverse of the 21 the exemption cost when it was added. `not-offered` does not move, for the same reason. Files restored byte-identically after the run (`diff` clean).
+
+### Gates part 2 (Node 26.4.0)
+tsc clean · build green · **front spec + census 16/16 both projects** (scratch port 5275) · **adjacents 48/48 both projects** (er01-e7-census, task-025, m1-01, m2-01, ap16-4, skillmd-door, e7-dead-band-suppression) · door-data guards green (skillmd + ratchet + mask tables + bench seeds) · audit guards **6/6** · floors 69 pairs `--check` GREEN, 0 `secured: true` · node-guards **480/472/6**, and all six are ONE environmental cause: this worktree's `node_modules/` is empty, so the guards that spawn `node_modules/typescript/bin/tsc` **by path** cannot find it (worker-type-coverage 1, suite-red-inventory reducer 4, fixture-teardown 1 as a cascade). None reads a file this slice touches. Note vs 08-20: the two desk-declaration reds are gone — main's line-1 is now an ACTIVE lock, which that guard skips by design.
+
+### Findings after part 2
+- **F-A5-1 — RULED AND DISCHARGED** (owner 2026-08-21, "lets follow your recommendation"). Kept below as the record of what was measured and why.
+- **F-A5-2 — still open**, and now the only one. See below.
+- **F-A5-3 — DISCHARGED by the stake**: the front's deadline is reached in every run now, and six fronts cross per game. The observation stands only as history.
+- **F-A5-4 (new, non-blocking, owner-adjacent):** the stake makes `relay-site-r2` strictly the best home box, so a rider's *first* decision is made for it. That is a fair reading of a map whose teaching intent is triage under deadline — the choice this map asks is WHICH TWO of the remaining three relays to light, not where to stand — but if the owner wants the start to be a choice too, the cheapest version is a second `heroStart`-eligible stake with a board-side pick. **Recommendation: leave it.** Recorded so the next reader knows it was considered rather than missed.
+
+---
+
+## Part 1 — the build (2026-08-20), unchanged below
 
 ## What it does
 `e7-relay-rush` declared a front that "crosses the map on a schedule and mutes everything it swallows", a `relayTarget` of `"N"` (a placeholder nobody ever resolved), and four 10×10 relay-site `buildZones` on the north ridge. A5 (`specs/agent-play/door-completion-sheet.md:16`, RATIFIED 2026-08-20) is now a real consumer, `src/systems/InterferenceFrontSystem.ts`, in the era-socket shape both A4 and A6 use — private ctor, `create()` read off the CONTRACT and never the epoch, counted refusals, presentation-stripped diagnostics, and (F-A8-7) **not one render import**: the only imports in the file are two TypeScript types.
@@ -81,7 +135,7 @@ Both files were restored byte-identically after the attribution runs (`diff` aga
 **Concurrency note for the drain:** a sibling builder (A3 echo-canyon) is editing this same census file and the same audit pins on its own branch. Every edit here is per-id or additive; expect to union, and re-measure the audit stack on the merged tree rather than trusting either branch's absolutes.
 
 ## Findings
-- **🔺 F-A5-1 (owner fork, blocking re-admission, MEASURED).** `e7-relay-rush` cannot be secured as authored: the claim at (0,12) has no buildable ground within 24wu and no gun reaches it. This is the **same class as F-A8-4** (`e9-seed-run`), one map further along — an authored geometry that makes a ratified mechanic unwinnable. Two cheap fixes exist and both are one-line data edits inside the contract, but both are map design and therefore owner calls: (a) author a `heroStart` stakeMarker inside or beside a relay site, which also reads true to the fiction ("the Prospector holds the relay ridge"); or (b) author one claim-adjacent buildZone so the fixed post can be garrisoned at all. **Recommendation: (a)** — it changes no zone, keeps the four relay boxes as the objective, and turns "expand under deadline" into a real triage instead of an impossible one. Until then the exemption stands with its cited re-admit condition.
+- **✅ F-A5-1 (owner fork, blocking re-admission, MEASURED) — RULED 2026-08-21 in favour of (a); see Part 2.** `e7-relay-rush` cannot be secured as authored: the claim at (0,12) has no buildable ground within 24wu and no gun reaches it. This is the **same class as F-A8-4** (`e9-seed-run`), one map further along — an authored geometry that makes a ratified mechanic unwinnable. Two cheap fixes exist and both are one-line data edits inside the contract, but both are map design and therefore owner calls: (a) author a `heroStart` stakeMarker inside or beside a relay site, which also reads true to the fiction ("the Prospector holds the relay ridge"); or (b) author one claim-adjacent buildZone so the fixed post can be garrisoned at all. **Recommendation: (a)** — it changes no zone, keeps the four relay boxes as the objective, and turns "expand under deadline" into a real triage instead of an impossible one. Until then the exemption stands with its cited re-admit condition.
 - **🔺 F-A5-2 (truth, non-blocking, fire-authorable).** `tileParams.engineDependencies` on this contract still names `interference-front-consumer` as `status: "missing"`, and that consumer now exists. It is deliberately NOT edited here: `twist.interferenceFront` and `tileParams.interferenceFrontZones` are both still listed in `DECLARED_INERT_PATHS` (`ContractFamilies.ts:1584`, `:1587`), which is what OBLIGES a non-empty `engineDependencies` at all (`:1713-1718`), and that literal is shared with the concurrently-built A3 echo-canyon. Exactly the F-E7DB-1 shape A4 filed for the Dead Band; this is now the **fifth** stale-prose instance and the consolidated truth-pass should sweep both together, DECLARED_INERT_PATHS included.
 - **🔺 F-A5-3 (observation, non-blocking).** The front never arrives inside a real bench run on this map — the first is due at t=90s and the best play ends at t=131.6s, so a run sees one crossing and never reaches the deadline. The schedule is proven instead by driving the consumer directly (`e2e/e7-relay-rush-front.spec.ts`, both the browser manual-sim block and the engine block) and by the prover's `front=` trace. If F-A5-1 is fixed and runs reach wave 20 (~600s+), roughly six fronts will cross per run and the mechanic becomes continuously visible; no cadence change is proposed, because 90s/20s is ratified.
 - **Non-blocking, recorded not fixed:** `artifacts/e7-relay-rush/prover.mjs` had to set `globalThis.location` before `ssrLoadModule` — `Terrain` reads `activeContract()` ONCE at module load, and without it every BUILD was rejected `out_of_zone` and the run lost three whole waves. Measured, not theorised. Any future in-process prover on a buildZone-restricted map needs the same two lines; the file's comment says so.

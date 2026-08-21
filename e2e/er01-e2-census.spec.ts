@@ -44,9 +44,16 @@ for (const contract of steamworks.contracts) {
       // `e2-hill-mine` joined `e2-pressure-garden` on 2026-08-20 with a lawful secure on both bench
       // seeds (reviews/e2-pressure-arsenal-headless.md); `e2-trestle` and `e2-incline` are still
       // exempt, and the exemption table carries the measured reason.
+      // THE OWNER'S 2026-08-21 RULING IS ASSERTED HERE, NOT ASSUMED. "E2's pressure ... - lets do
+      // that" gave the Trestle and the Incline the pressure line, so all four E2 contracts now
+      // declare `twist.pressureEnabled`. That is a BOARD change, not a door change: both maps were
+      // re-proved with the line declared and still terminate unsecured on at least one bench seed
+      // (reviews/e2-pressure-line-railcars.md), so they keep their exemption rows and this census
+      // keeps naming both sides of the door per id.
       const admitted = ['e2-pressure-garden', 'e2-hill-mine'];
       if (!admitted.includes(contract.id)) {
         expect(contract.id === 'e2-trestle' || contract.id === 'e2-incline').toBe(true);
+        expect(contract.twist.pressureEnabled).toBe(true);
         expect(() => new HeadlessContractSim({ contractId: contract.id, seed: seeds[0] })).toThrow(/AP-07 supports only/);
         expect(consoleErrors).toEqual([]);
         return;

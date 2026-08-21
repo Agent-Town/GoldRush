@@ -165,7 +165,7 @@ export class StandingOrdersExecutor {
       return { ok: false, reason: 'INVALID_ARGS', message };
     }
     if (state.pendingSecure && (validated.orders.length !== 1 || validated.orders[0]?.verb !== 'SECURE_CHOICE')) {
-      const message = 'Only one SECURE_CHOICE is accepted while the secure window is open.';
+      const message = 'While the secure window is open, the only accepted submission is a single SECURE_CHOICE.';
       this.append({ at: eventAt, type: 'orders_rejected', reason: message });
       return { ok: false, reason: 'INVALID_ARGS', message };
     }

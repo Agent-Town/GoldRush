@@ -62,6 +62,7 @@ import { InterferenceFrontSystem, type InterferenceFrontDiagnostics } from '../s
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
+import { PicnicHoldSystem } from '../systems/PicnicHoldSystem';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
@@ -94,20 +95,41 @@ type AdmissionExemption = {
 };
 
 export const CONTRACT_ADMISSION_EXEMPTIONS = {
-  // F-E2S-3 read "no weapon reaches the railcar" off an unsecured probe and inferred that the board
-  // sold no such weapon. It sells three, and they now fire headless on the browser's own gates
-  // (`PressureArsenalSystem` below). What actually keeps these two out is narrower and measured:
-  // NEITHER declares `twist.pressureEnabled`, so no boiler can be built, no coal can be burned, and
-  // the E2 arsenal has nothing to spend — while both field a railcar at `hpScale: 30` against the
-  // hill mine's 12.5. `e2-hill-mine`, which does run a pressure line, secured on both bench seeds
-  // and has left this table.
+  // THE REASON THESE TWO ROWS GAVE IS NOW SPENT, AND THE ROWS SURVIVE IT. F-E2S-3 read "no weapon
+  // reaches the railcar" off an unsecured probe and inferred the board sold no such weapon; it
+  // sells three, and they fire headless on the browser's own gates (`PressureArsenalSystem` below).
+  // `e2-pressure-arsenal-headless` then narrowed the refusal to one authored fact — neither contract
+  // declared `twist.pressureEnabled`, so no boiler was buildable and the arsenal had no fuel — and
+  // put the design question on the owner's desk as F-E2PA-6.
+  //
+  // THE OWNER ANSWERED IT (2026-08-21, verbatim: "E2's pressure ... - lets do that"), executing the
+  // standing recommendation "give both the pressure line". Both contracts now declare
+  // `twist.pressureEnabled: true` (`assets/contracts/epoch-2-steamworks/contracts.json`), the boiler
+  // house is on both boards, the coal is reachable on both maps (3/3 seams cut, 12 vents each —
+  // `artifacts/e2-pressure-line/coal-reach-*.json`), and the arsenal fires on both: 192 pressure
+  // spent on the incline, 317 on the trestle. The gift is real and it is delivered.
+  //
+  // AND THE MAPS STILL WIN, for a reason nothing before this had measured: `PressureSystem.ts:23`
+  // fixes the three coal seams at three WORLD coordinates on every map — they are not contract data
+  // and cannot be authored per tile — and those coordinates sit at the Hill Mine's minehead. From
+  // the Hill Mine's stake that is a 29wu walk; from the only stake these two heroes can hold it is
+  // 55wu (trestle) and 58wu (incline), and the Prospector is the same single body that earns all
+  // the gold. So the pressure line is not free here: it is bought with the economy that pays for the
+  // guns, and across 97 measured runs (7 ladders x 2 upgrade orders x 4 coal schedules) not one
+  // secured. The ruling is executed, not stretched — no balance moved, the railcar stays at
+  // `hpScale` 30 — and the door still says no, which is what this table is for.
+  //
+  // THE EDIT IS PROVABLY INERT UNTIL A BOILER BURNS COAL. A rider that ignores the new line
+  // reproduces the review's own pre-ruling event-log hashes bit for bit on all four bench seeds
+  // (`8c28f1ff` w12 / `bc515b13` SECURED w18 / `83b0a873` w6 / `dac0c325` w8), so nothing about
+  // these contracts changed except what a player is now allowed to build.
   'e2-incline': {
-    reason: 'Best measured play with declared E1 progression terminated unsecured at waves 6/8; the contract declares no pressureEnabled, so the E2 arsenal has no fuel against an hpScale-30 railcar.',
-    citation: 'reviews/e2-pressure-arsenal-headless.md',
+    reason: 'Pressure line DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line") and measured: boiler house on the board, all 3 coal seams reachable, 192 pressure spent through the E2 arsenal on seed 02. Best measured play with declared E1 progression still terminated unsecured at waves 6/9 across 60 measured runs; the hero holds a lower-yard stake 58wu from the fixed coal seams, so the walk that fuels the arsenal costs the economy that buys the guns, against an hpScale-30 railcar. Ignoring the new line reproduces the pre-ruling floors exactly (fnv1a32:83b0a873 w6 / fnv1a32:dac0c325 w8), so no balance moved. Re-admit when both bench seeds secure.',
+    citation: 'reviews/e2-pressure-line-railcars.md',
   },
   'e2-trestle': {
-    reason: 'Best measured play with declared E1 progression secured seed 02 at wave 18 but terminated unsecured at wave 12/13 on seed 01; no pressureEnabled, hpScale-30 railcar. Re-admit when both bench seeds hold.',
-    citation: 'reviews/e2-pressure-arsenal-headless.md',
+    reason: 'Pressure line DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line") and measured: boiler house on the board, all 3 coal seams reachable, 317 pressure spent through the E2 arsenal on seed 02. Admission is unchanged because seed 01 still refuses: across 94 measured runs the best play secures seed 02 at wave 18 (fnv1a32:bc515b13) and terminates unsecured at wave 12/13 on seed 01 (fnv1a32:8c28f1ff), the same split the pre-ruling review measured and reproduced here bit for bit. The seams sit 55wu from the only stake the hero can hold, so a rider that fuels the arsenal arrives at the hpScale-30 railcar poorer than one that does not. Re-admit when both bench seeds hold.',
+    citation: 'reviews/e2-pressure-line-railcars.md',
   },
   // F-1475-1's ORIGINAL reason is dead and its replacement is narrower. "The crowd-flock escort
   // objective has no headless consumer" was true when written and is false now: `CrowdFlockSystem`
@@ -115,15 +137,6 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // holds admission is the build law, not the consumer — the door-completion sheet requires "a
   // public-verb secure proof x2 per seed", and no such proof exists yet. Same shape as
   // `e6-showroom`: the reason died, the refusal survived, so the row is REWORDED not removed.
-  // F-E3CF-4 IS CLOSED, NOT PENDING (2026-08-21). Three changed premises were run against this
-  // contract — funding, lane geometry, and fort shape — plus one owner-ruled map change, and the
-  // reason below now records the whole programme rather than the first attempt's snapshot. The
-  // consumer is not the gap and never was; the row survives its original reason exactly as
-  // `e6-showroom`'s and `e2-trestle`'s do.
-  'e3-fairground': {
-    reason: 'Admission HELD after three changed-premise attempts, all measured and preserved in artifacts/e3-fairground (F-E3CF-4, closed 2026-08-21). (1) FUNDING: a public-verb rider funds the whole fort by panning at a measured 1.7-2.2 gold/s — correcting the 1.60 ceiling in the review, because one HARVEST pays a whole harvest tick in one sim tick and travel is the only real cost — and secured bench seed 01 twice (wave 12, fnv1a32:9f2740ab) while seed 02 reached the wave ceiling with the wheel still turning and the middle crowd short. (2) GEOMETRY: the owner-ruled 6wu gate-lane shift was implemented, measured on one instrument against the ratified lane, and shipped at 0 because it made the objective strictly harder (crossings [5,3,7]/[4,4,3] -> [5,0,7]/[4,0,5]) — the offset decays to 1.9wu by the north spawn point and the stake is also the best-defended tile on the claim. (3) FORT SHAPE: the owner-ruled north spawn move (night_runner spawnGates north (-12,-4)) is landed and is a real improvement — on the free-fort instrument the middle crowd goes from 3 and 4 crossings to 10 and 8 with both seeds securing — but the rider that must fund it does not: a fort designed from the measured pressure map holds bench seed 01 to the wave ceiling with the wheel intact and loses seed 02 at wave 2-3. The map is browser-playable and every mechanism is documented; what is absent is a public-verb secure x2 on BOTH bench seeds, which is what this table exists to say.',
-    citation: 'reviews/e3-fairground-crowd-flocks.md',
-  },
   // A2 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-21, door-completion-sheet §A2). Third
   // instance of the A8 shape, and the widest gap any of them has measured.
   //
@@ -178,34 +191,27 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'The six-capture objective latch is live in both engines, so idle can no longer secure at any wave. Strong public-verb CAPTURE + fortify play exceeded the quota but died at waves 18/14 on the two bench seeds (306 captures, fnv1a32:e95a0e84 / 194 captures, fnv1a32:6ee8e7e5) against secureWave 20. Difficulty stands per the owner (2026-08-20); re-admit when both seeds secure twice.',
     citation: 'reviews/e6-showroom-cap-fix.md',
   },
-  // A5 BUILT THE MECHANIC, DISCHARGED ITS OBJECTIVE, AND THE MAP STILL WON (2026-08-20,
-  // door-completion-sheet §A5). Second instance of the A8 shape, and the closest reading of it.
+  // ADMISSION MOVE — `e7-relay-rush` LEFT THIS TABLE 2026-08-21, ON AN OWNER RULING, AND ITS ROW
+  // IS DELETED RATHER THAN REWORDED BECAUSE ITS REASON DIED WHOLE.
   //
-  // THE CONSUMER IS NOT THE GAP AND THE OBJECTIVE IS NOT THE GAP EITHER — this row exists to say
-  // both. `e7-relay-rush`'s interference front, its mute, its relay lighting and its deadline
-  // latch are live in BOTH engines (`src/systems/InterferenceFrontSystem.ts`, proven in the
-  // browser and headless by `e2e/e7-relay-rush-front.spec.ts`). The ratified objective is
-  // discharge-able and was in fact PART-DISCHARGED in ordinary play before the hero fell: the
-  // public-verb prover lit three of the four relay sites by t=131.6s on seed 01 and two by t=90s
-  // on seed 02, against a deadline of t=270s. The wall's whole interference across both runs was
-  // 120 and 60 muted work-steps — four and two seconds of beacon time — so it is not what ends
-  // them either.
+  // The row said, measured and correctly: "the claim at (0,12) has NO buildable ground within
+  // 24wu ... so no legal placement can defend the hero", and it named its own cure —
+  // "re-admit when both bench seeds secure". F-A5-1 put the fork to the owner, who ruled it
+  // (2026-08-21, VERBATIM, to the five-map fork table): **"lets follow your recommendation"** —
+  // i.e. the agent's own recommendation, a `heroStart` stake inside a relay site.
   //
-  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry, exactly as it was for the
-  // Seed Run below. The claim stands at (0,12). The ONLY buildable ground on this tile is the
-  // four 10x10 relay boxes at z 36..46 — twenty-four world units north of the hero — against a
-  // turret range of 16 and a beacon range of 8, on a heightfield authored `mode: "visual"` so no
-  // high-ground range bonus applies (`TileHeight.highGroundRange` early-returns without an
-  // `elevation` block). There is NO legal placement that defends the body the run is scored on,
-  // and `HeadlessContractSim` drives slot 0 on IDLE_INTENTS, so the hero cannot walk to the guns.
+  // So `tileParams.stakeMarkers` now carries `relay-ridge-command-stake` at (-25,41): the CENTRE
+  // of `relay-site-r2`. The centre is not a taste: `Balance.beacon.range` is 8 and a 10x10 box
+  // has a 7.1wu half-diagonal, so the centre is the ONLY placement from which the whole box is
+  // inside beacon reach, and turret range 16 then covers the box twice over. Nothing else moved —
+  // no zone was added, no cap was raised, no balance number was touched.
   //
-  // Measured across four policies (`artifacts/e7-relay-rush/`, preserved with its battery):
-  // objective-first, turret-first, all-turret and hero-only all terminate at wave 3 or 4 of 20,
-  // and the idle floor terminates at wave 2 — the whole spread is four waves wide.
-  'e7-relay-rush': {
-    reason: 'Best measured public-verb play terminated unsecured at wave 4 (seed 01) and wave 3 (seed 02) against secureWave 20 (fnv1a32:49f11d65 / fnv1a32:7fed3db1, each repeated identical). The front is not the obstacle: the ratified objective is discharge-able and the prover lit 3 of 4 relays by t=131.6s against a t=270s deadline, while the wall muted only 120 work-steps all run. The map is: the claim at (0,12) has NO buildable ground within 24wu, the four relay boxes are the only build zones on the tile, turret range is 16 and beacon range 8, and the visual-mode heightfield grants no high-ground reach — so no legal placement can defend the hero. The A5 front, mute, relay lighting and deadline latch are live in both engines; re-admit when both bench seeds secure.',
-    citation: 'reviews/e7-relay-rush.md',
-  },
+  // Both bench seeds now SECURE at wave 20, twice each, byte-identical on the repeat
+  // (fnv1a32:bc89348d / fnv1a32:b25f69b0), with the deadline MET on its own terms —
+  // `litAtDeadline: 3` of a `relayTarget` of 3 — and six fronts crossing per run. Law 2 holds:
+  // the idle floor still dies in the low waves having lit nothing. `reviews/e7-relay-rush.md`
+  // carries the table; `artifacts/e7-relay-rush/` carries the runs.
+  //
   // A10 BUILT THE MECHANIC, DISCHARGED ITS OBJECTIVE, AND THE MAP STILL WON (2026-08-21,
   // door-completion-sheet §A10). Third instance of the A5/A8 shape, and the cleanest measurement
   // of it, because this one carries a CONTROL rather than an argument.
@@ -232,7 +238,7 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // -> 17/17/16, blast-always 17, prospector-on-the-claim 17, and the no-decide control 17. The
   // whole spread is six waves wide and its ceiling never moves off 17.
   'e9-old-canal': {
-    reason: 'Best measured public-verb play terminated unsecured at wave 17 on both bench seeds against secureWave 20 (fnv1a32:780aca7f / fnv1a32:a6119428, each repeated identical). The mechanic is not the obstacle, and that is measured rather than argued: the same rider with the objective NEVER discharged (--no-decide) reaches the same wave 17, so the three verdicts and the ground veto cost zero waves. The map is: a claim at (0,12) with waves entering from THREE edges, an hpScale-1.7 wrecker in half the roster, and an income ceiling that plateaus at 123 gold against a 125-gold fourth turret. The A10 choice consumer, permanent flow and objective latch are live in both engines; re-admit when both bench seeds secure.',
+    reason: 'Best measured public-verb play terminated unsecured at wave 17 on both bench seeds against secureWave 20 (fnv1a32:780aca7f / fnv1a32:a6119428, each repeated identical). The mechanic is not the obstacle, and that is measured rather than argued: the same rider with the objective NEVER discharged (--no-decide) reaches the same wave 17, so the three verdicts and the ground veto cost zero waves. The map is: a claim at (0,12) with waves entering from THREE edges, an hpScale-1.7 wrecker in half the roster, and an income ceiling that plateaus at 123 gold against a 125-gold fourth turret. The A10 choice consumer, permanent flow and objective latch are live in both engines; re-admit when both bench seeds secure. ACCEPTED-ELITE by owner ruling (2026-08-21, verbatim: to the five-map fork table, \'lets follow your recommendation\' — the recommendation for this map was elite-accept). The exemption is no longer a debt: the map is deliberately harder than the door\'s provers; the mechanic is live for humans and the row rests here as the honest record. Re-admission would need the ground/economy changes the table priced, none owed.',
     citation: 'reviews/e9-old-canal.md',
   },
   // A8 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-20, door-completion-sheet §A8).
@@ -254,7 +260,7 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // Fifteen measured public-verb plays (`artifacts/e9-seed-run/`, preserved with its battery)
   // topped out at wave 16 of 20 on BOTH bench seeds, twice each, byte-identical on the repeat.
   'e9-seed-run': {
-    reason: 'Best measured public-verb play terminated unsecured at wave 16 on both bench seeds against secureWave 20 (fnv1a32:aebdeea4 / fnv1a32:4d221a7b, each repeated identical). The escort is not the obstacle — the caravan reached the basin alive on every run, at full guard and after a planted vault. The map is: the only buildZone within 30wu of the claim is a 20x18 box whose north edge IS the claim, waves enter from two edges, and half the roster is an hpScale-1.7 wrecker against turret/beacon caps of 4 and 6. The A8 caravan and planting consumer are live in both engines; re-admit when both bench seeds secure.',
+    reason: 'Best measured public-verb play terminated unsecured at wave 16 on both bench seeds against secureWave 20 (fnv1a32:aebdeea4 / fnv1a32:4d221a7b, each repeated identical). The escort is not the obstacle — the caravan reached the basin alive on every run, at full guard and after a planted vault. The map is: the only buildZone within 30wu of the claim is a 20x18 box whose north edge IS the claim, waves enter from two edges, and half the roster is an hpScale-1.7 wrecker against turret/beacon caps of 4 and 6. The A8 caravan and planting consumer are live in both engines; re-admit when both bench seeds secure. ACCEPTED-ELITE by owner ruling (2026-08-21, verbatim: to the five-map fork table, \'lets follow your recommendation\' — the recommendation for this map was elite-accept). The exemption is no longer a debt: the map is deliberately harder than the door\'s provers; the mechanic is live for humans and the row rests here as the honest record. Re-admission would need the ground/economy changes the table priced, none owed.',
     citation: 'reviews/e9-seed-run.md',
   },
 } as const satisfies Record<string, AdmissionExemption>;
@@ -340,6 +346,7 @@ export type HeadlessAgentView = AgentView & {
     };
     atomic?: AtomicSocket['diagnostics'] & {
       homemakerBoss?: ReturnType<HomemakerBossSystem['diagnostics']>;
+      picnicHold?: PicnicHoldSystem['diagnostics'];
     };
     /**
      * A4. Present only where the contract declares `twist.signalSuppression`, so a rider can
@@ -528,6 +535,7 @@ export class HeadlessContractSim {
   private readonly homemaker: HomemakerBossSystem | null;
   private readonly deepwater: DeepwaterSocket | null;
   private readonly atomic: AtomicSocket | null;
+  private readonly picnicHold: PicnicHoldSystem;
   /**
    * A4 — THE SIGNAL-SUPPRESSION CONSUMER, and the honest note about what it can mean HERE.
    *
@@ -723,6 +731,11 @@ export class HeadlessContractSim {
     // The Atomic socket is built before combat because the browser routes two of its
     // couplings THROUGH CombatSystem's own hooks (Game.ts:534 and Game.ts:536).
     this.atomic = AtomicSocket.create(this.manifest, this.events, this.enemies, this.economy);
+    this.picnicHold = new PicnicHoldSystem(
+      PicnicHoldSystem.isEnabled(this.manifest),
+      this.manifest.tileParams.stakeMarkers ?? [],
+      () => this.postHeroDeath(),
+    );
     // Same read the browser performs at `Game.ts` (contract, never epoch), so the two engines
     // cannot disagree about which systems this contract declares off.
     this.signalSuppression = SignalSuppression.create(this.manifest);
@@ -764,7 +777,10 @@ export class HeadlessContractSim {
       undefined,
       undefined,
       undefined,
-      (enemy, amount, died) => this.atomic?.onEnemyDamaged(enemy, amount, died),
+      (enemy, amount, died, ownerId) => {
+        if (ownerId === 'hero' || ownerId === 'hero_blast') this.picnicHold.recordHeroDamage(this.timeAlive);
+        this.atomic?.onEnemyDamaged(enemy, amount, died);
+      },
       (enemy) => this.atomic?.isHostile(enemy) !== false,
     );
     // A7: the same policy the browser installs at `Game.ts`, from the same declaration, so a
@@ -1414,8 +1430,16 @@ export class HeadlessContractSim {
     );
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
-    this.enemies.update(STEP_SECONDS, this.deepwater?.targetPosition(this.hero.group.position) ?? this.hero.group.position, (enemy) => {
-      if (!this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
+    const actorTargets = [this.hero.group.position];
+    const picnicStructures = this.targeting.allBuildings.filter(({ active, hp }) => active && hp > 0);
+    const picnicHero = { position: this.hero.group.position };
+    this.enemies.update(STEP_SECONDS, this.picnicHold.active
+      ? (enemy) => {
+          const stake = this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive);
+          return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
+        }
+      : this.deepwater?.targetPosition(this.hero.group.position) ?? actorTargets, (enemy) => {
+      if (!this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive) && !this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
     }, this.build.palisadeBlockers, {
       nearestGoldHolding: (from) => this.targeting.nearestGoldHolding(from),
@@ -1429,6 +1453,13 @@ export class HeadlessContractSim {
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
     }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1));
+    this.picnicHold.update(
+      STEP_SECONDS,
+      this.timeAlive,
+      this.enemies.all.filter((enemy) => enemy.isAlive),
+      picnicStructures,
+      picnicHero,
+    );
     this.deepwater?.resolveHullContacts(this.timeAlive, () => this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5));
     this.deepwater?.recycleCorsairsAtExit();
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
@@ -1467,6 +1498,7 @@ export class HeadlessContractSim {
     if (this.atomic) view.now.atomic = {
       ...this.atomic.diagnostics,
       ...(this.homemaker ? { homemakerBoss: this.homemaker.diagnostics() } : {}),
+      ...(this.picnicHold.diagnostics.length > 0 ? { picnicHold: this.picnicHold.diagnostics } : {}),
     };
     // A4: only where DECLARED, so no other contract's view grows a field. Deliberately absent
     // from the `final` hash — the flags are a constant of the contract and the counters are
@@ -1858,6 +1890,7 @@ export class HeadlessContractSim {
       crawler: this.crawler?.diagnostics() ?? null,
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
+      picnicHold: this.picnicHold.active ? this.picnicHold.diagnostics : null,
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
       broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
       probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,

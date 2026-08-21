@@ -455,16 +455,23 @@ for (const contract of voltage.contracts) {
         expect(roster?.find(({ id }) => id === 'night_runner')?.spawnGates)
           .toEqual([{ edge: 'north', x: -12, z: -4 }]);
 
-        // ADMISSION IS REFUSED, AND THAT IS THE FIRST THING THIS BRANCH ASSERTS. The consumer runs
-        // in both engines, but the door-completion sheet's build law asks for "a public-verb secure
-        // proof x2 per seed" and none exists yet (F-E3CF-4), so the ordinary door still says no.
+        // ADMISSION MOVE — 2026-08-21, refusal-first becomes ADMITTED, and the first thing this
+        // branch asserts is now the ordinary door OPENING. Owner ruling, verbatim: "lets follow
+        // your recommendation", to a five-map fork table whose fairground line was AUTHOR THE
+        // ANCHOR SET. What had kept this map out was never the escort and never the consumer: the
+        // fair had no `harvestAnchors` of its own, inherited `Terrain.DEFAULT_NODE_ANCHORS`, and
+        // its nearest live seam sat 38wu out on bench seed 01 and 46wu on seed 02 — so the opening
+        // purse arrived after the first saboteur and the Fair Wheel's dynamo, which stops for the
+        // whole run on its FIRST hit, was already stopped. With the six anchors authored above at
+        // 17-24wu, `artifacts/e3-fairground/prover-v3.mjs` secures BOTH bench seeds twice over
+        // through the plain public door: seed 01 `fnv1a32:7a66c50b` and seed 02
+        // `fnv1a32:86c9ca37`, both wave 12, wheel spinning, all three crowds across, zero granted.
         for (const seed of seeds) {
-          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(/AP-07 supports only/);
+          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
         }
-        // Everything below rides `admissionProbe`, the DECLARED measurement seam — "bypasses
-        // admission without making a playability claim". It is used here to measure the mechanic
-        // and never to assert a secure: the positive half of the latch is proven in the browser
-        // (`e2e/e3-fairground-flocks.spec.ts`), which is a lawful path for an exempted contract.
+        // The measurements below no longer NEED `admissionProbe` — the door would serve them — but
+        // they keep it so this branch reads identically to the E3 siblings that still use the seam,
+        // and so the numbers below stay comparable to the ones recorded while the hold was on.
         const probe = (seed: string) => new HeadlessContractSim({ contractId: contract.id, seed, admissionProbe: true });
 
         // THE ESCORT AT REST: three crowds on the gate line, each under its own attraction.

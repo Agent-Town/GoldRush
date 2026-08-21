@@ -29,6 +29,76 @@ Nothing here is claimed away. What reverted is only the admission surface: the e
 
 ---
 
+## ✅ ADMITTED (2026-08-21) — THE MAP GOT ITS OWN GROUND, AND THE DOOR OPENED
+
+**Owner ruling, verbatim: "lets follow your recommendation"** — to a five-map fork table whose
+fairground line was **AUTHOR THE ANCHOR SET**. That is the whole fix, and it is the one thing four
+earlier sessions never touched.
+
+**`e3-fairground` had never had `harvestAnchors` of its own.** It inherited
+`Terrain.DEFAULT_NODE_ANCHORS`, whose nearest live seam sits **38wu out on bench seed 01 and 46wu
+on seed 02**. Every earlier refusal traced back to that single fact: the opening purse arrived
+after the first saboteur did, and the Fair Wheel's dynamo — which stops for the whole run on its
+FIRST hit — was already stopped. It was never the escort, and never the consumer.
+
+**Six anchors authored at 17–24wu**, the placement the admitted E3 siblings already use
+(`e3-blackout-ridge` puts its three at 7–16wu of its stake):
+
+    (-10,-16) (10,-16)   17.2wu — the clean band between the lanes, 10wu clear of all three
+    (-18,-38) (18,-38)   19.7wu — south of every lane; no crowd walks below z=-30
+    (-24,-34) (24,-34)   24.3wu — south flanks, lane-free
+
+Two properties do the work. **Every anchor is inside the fair opening radius**, so it does not
+matter which pair the seed's shuffle activates — both seeds now open on a seam ~17–20wu out
+instead of one seed drawing the far pair. And **none sits in the middle crowd's corridor**: the
+near pair is in the 10wu-clear band between lanes, the other four are south of z=-30 where no crowd
+ever walks. Seam count is unchanged at six, so supply is identical — only the geography moved.
+
+### The proof
+
+`artifacts/e3-fairground/prover-v3.mjs`, public verbs only, **through the PLAIN public door with no
+`admissionProbe`**, ×2 per seed, byte-identical repeats:
+
+| seed | hash | wave | wheel | crossings | panned / spent / granted |
+|---|---|---|---|---|---|
+| `e3-fairground-01` | `fnv1a32:7a66c50b` | 12 | spinning | **[4,1,6]** | 630 / 463 / **0** |
+| `e3-fairground-02` | `fnv1a32:86c9ca37` | 12 | spinning | **[2,1,4]** | 560 / 490 / 5 (own demolish refund) |
+
+The probe path returns **the same two hashes**, which is itself the proof the seam was never doing
+anything: same run, same numbers, with the flag and without it.
+
+**One rider change came with the new ground, and it is the mirror of the old one.** The ten-gold
+opening exemption existed because waiting for a full purse at a 38–46wu seam meant dying first.
+With a 17wu seam the same rule became a leak — measured, the rider dribbled every ten coins into
+new wall, stood at gold=0 from t=8, and watched six works decay to three by t=26. Past the opening,
+an errand must be worth the walk.
+
+### Admission surfaces moved, and every number is attributed
+
+- **Exemption row REMOVED**, citing this ruling and the two hashes.
+- **Census branch flipped to ADMITTED** — the ordinary door is asserted OPENING, with the
+  ADMISSION MOVE comment naming the ruling verbatim.
+- **skill.md fence + door baseline take the id IN** (baseline 26 → 27 contracts, one-line diff).
+- **Floors regenerated and `--check` clean at 61** (was 59; the fairground's two rows returned).
+  **Law 2 holds:** `e3-fairground-01` wave 1 `fnv1a32:647fa993`, `-02` wave 1 `fnv1a32:4bbf4662`,
+  both `secured:false`, and **no floor anywhere is `secured:true`**. An idle fair still loses.
+- **Audit regenerated: equal 28 → 29 · divergence 4 → 3 · not-offered 10 · exemptions 6 → 5 ·
+  rows 1318 → 1317** — exactly one contract's worth of movement. **ATTRIBUTED BY
+  REVERT-AND-REPRODUCE, not asserted:** putting the row back reproduces `equal 28 · divergence 4 ·
+  not-offered 10 · 6 exemptions · 1318 rows` EXACTLY, so the move is that row's and nothing else's.
+
+### What the three earlier premises were worth
+
+They are kept below in full because each one narrowed the question, and the last of them named the
+residual this ruling then removed. The funding rider proved the economy; the lane shift proved the
+geometry was not the problem and was measured back to zero; the fort-shape rider proved the fort
+could be designed rather than inherited, and reported precisely that seed 02's 46wu opening seam
+was the residual. **That report is what the owner's fork table was answering.**
+
+---
+
+## SUPERSEDED — the terminal state as it stood before the anchor set (kept for the record)
+
 ## TERMINAL STATE (2026-08-21) — F-E3CF-4 CLOSED, THE HOLD IS PERMANENT FOR THIS PROGRAMME
 
 Three changed-premise attempts were run against this contract, plus two owner rulings. All of it is
