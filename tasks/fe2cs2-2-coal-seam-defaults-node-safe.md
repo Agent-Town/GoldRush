@@ -29,6 +29,20 @@ lane-c` by the authoring fire at 2026-08-21T22:44Z (`ahead=1 behind=17 paths=3 t
 untracked=0`). If the lane holds anything else, **STOP and report it** — an unanticipated held path
 is exactly the state the lane-safety guard exists to refuse.
 
+**Cleanliness line.** `git -C worktrees/lane-c status --short` → expect clean, with the
+**FACTORY-CHURN EXCEPTION — these two tracked classes are ALWAYS EXPECTED and are NEVER a STOP;
+list them and proceed (F-1407-1, s1407):** (a) `logs/**` — the fire/runner accounting
+(`factory-usage.json`, `usage-history.jsonl`, `task-stats.jsonl`, `dashboard.html`,
+`.goal-tree.html`, `.blocked-seen`), rewritten every cycle by the factory itself; (b)
+`artifacts/**`, `reviews/shots-*` and any `.png` — regenerated evidence (F-1266-1), whose bytes
+differ from main forever because screenshots are never byte-identity gated. Discard them and
+proceed, listing what you discarded. ⓘ What still STOPs, unchanged and load-bearing: modified
+tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — anything a live
+drain or a concurrent task could actually own. ⚠️ **Note the one deliberate difference from the
+standard lane template: the three paths named in `EXPECTED-HOLDS` above are `src/**`, `scripts/**`
+and `package.json`, and they are your BASE, not someone else's work — the opt-in is what makes them
+lawful here.**
+
 **Step 1 — acquire main without losing the lane.** Run `git merge --no-edit main`.
 
 🚨 **THIS MERGE WILL CONFLICT, ONCE, AND THE AUTHORING FIRE ALREADY RESOLVED IT AND PROVED THE
