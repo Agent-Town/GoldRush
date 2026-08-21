@@ -6,13 +6,19 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `wo
 
 READ FIRST: `AGENTS.md`; `specs/agent-play/e10-ember-shore-preserve.md` (**your spec — read all of it, especially §2 Laws and §3 defaults**); `specs/enemy-rosters-e6-e10.md` §E10 (the Static movement grammar your roster rows must obey); `assets/contracts/epoch-10-deepsky/contracts.json` (the `e10-ember-shore` block you are authoring into); `assets/contracts/bench-seeds.json`.
 
-**DEPENDENCY GREP — RUN THIS FIRST, IT IS A HARD STOP.** Your spec was authored 2026-08-20 and this lane was refreshed to main at dispatch to carry it. Run:
+**REFRESH THIS LANE FIRST — IT IS 232 COMMITS BEHIND AND DOES NOT CARRY YOUR SPEC.** This is step ONE, before the pre-flight below and before `npm install`. The author verified at dispatch that `lane/c` is `ahead=0`, tracked-dirt 0, untracked 0 — **there is nothing on this branch to lose**, so the reset is unconditionally safe here:
+
+```
+git checkout -B lane/c main && git clean -fd
+```
+
+**THEN THE DEPENDENCY GREP — IT IS A HARD STOP.** Your spec was authored 2026-08-20 and only reaches this lane via the reset above. Run:
 `grep -Fc "the twist block, roster, anchors, bench seeds" specs/agent-play/e10-ember-shore-preserve.md`
-Expect **exactly 1**. If it is 0, the lane does not carry your spec — **STOP and report "lane lacks the E10S spec"**; do not attempt the task from this file alone.
+Expect **exactly 1** (the author proved this count against `main` before writing it here, per F-1425-2). If it is 0, the reset did not take — **STOP and report "lane lacks the E10S spec"**; do not attempt the task from this file alone, and do not reconstruct the spec from this master.
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/c main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` — are NEVER "work" and NEVER a STOP. Discard them and PROCEED, listing what you discarded.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. Then `git -C worktrees/lane-c status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
 
-**LANE CURRENCY (verified by the author at dispatch, F-1320-2):** at authoring time `lane/c` was `ahead=0 behind=231 tracked-dirt=0 untracked=0` (`node scripts/lane-usable.mjs lane-c` → **USABLE**), and it did **not** carry your spec. Because `ahead=0`, resetting it to main destroys nothing; the author refreshed `lane/c` to main **after** committing this master and verified the dependency grep returns 1 in the lane before queueing.
+**LANE CURRENCY (verified by the author at dispatch, F-1320-2):** at authoring time `lane/c` read `ahead=0 behind=232 tracked-dirt=0 untracked=0` (`node scripts/lane-usable.mjs lane-c` → **USABLE**) and did **not** carry your spec. ⓘ **Stated honestly: the author did NOT perform the reset** — the fire shell's bash allowlist refused `git checkout -B`, and routing around a permission gate to touch a lane was not worth doing. **So the reset is YOUR first step above, and the dependency grep is the guard on it.** The key was proven `1` against `main` at dispatch; it cannot have been proven in the lane, which is precisely why the grep is a hard STOP rather than a note. Because `ahead=0` with a clean tree, the reset destroys nothing — this was re-measured immediately before queueing.
 
 ## Why (owner ruling + spec, every line re-verified at source by the author s2121)
 
