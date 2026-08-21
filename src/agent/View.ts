@@ -80,7 +80,14 @@ export type AgentView = {
     };
     orders: readonly unknown[];
     needsRider: boolean;
-    seams: readonly { id: string; active: boolean; remaining: number }[];
+    seams: readonly {
+      id: string;
+      active: boolean;
+      remaining: number;
+      x: number | null;
+      z: number | null;
+      anchorIndex: number | null;
+    }[];
     score: ReturnType<typeof summarizeRun>;
   };
   almanac: {
@@ -311,11 +318,19 @@ function buildNow(
     },
     orders,
     needsRider: readNeedsRider(diagnostics, standingOrders),
-    seams: records(record(diagnostics.harvest).activeNodes).map((node) => ({
-      id: text(node.id) ?? 'seam',
-      active: node.active === true,
-      remaining: round(number(node.remaining)),
-    })),
+    seams: records(record(diagnostics.harvest).activeNodes).map((node) => {
+      const position = record(node.position);
+      const anchorIndex = number(node.anchorIndex, -1);
+      const active = node.active === true && anchorIndex !== -1;
+      return {
+        id: text(node.id) ?? 'seam',
+        active,
+        remaining: round(number(node.remaining)),
+        x: active ? round(number(position.x)) : null,
+        z: active ? round(number(position.z)) : null,
+        anchorIndex: active ? anchorIndex : null,
+      };
+    }),
     score: summarizeRun(economyLog, boundary.wave),
   };
 }
