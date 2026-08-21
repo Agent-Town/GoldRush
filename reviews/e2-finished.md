@@ -138,6 +138,17 @@ secure, terminal at wave 1 on all four seeds.
   but it does mean the railcar pair no longer *forces* the mechanic. **OWNER, non-blocking:** if the
   intent is that the Steamworks maps must be won *with* steam, the cadence is the dial to tighten
   (0.75 → 0.8 on the trestle would restore that, at the cost of the seed-02 railcar config).
+- **F-E2F-4 — a documentation comment reddened `law-pointer-guard`, and the cure was to move the
+  comment, not the pointer.** Written at the `waveCadenceMult` field declaration, the derivation
+  block pushed `ContractFamilies.ts:1345` — a line `tasks/goals.json`'s
+  `e10s-1b-ember-shore-schema-and-data` leaf cites by number — down to `:1374`, manufacturing exactly
+  the false accusation the guard exists to prevent. `tasks/goals.json` is firewalled for this agent,
+  so instead of re-basing the pointer the block was relocated **below** the cited line, beside
+  `AUTHORED_TWIST_KEYS` — which is the better home anyway, since that is where "may a contract author
+  this key?" is answered. The relocation carries a ⚠️ DO-NOT-TIDY-IT-BACK note naming the pointer, so
+  the next reader who thinks documentation belongs at its field does not silently re-break it.
+  **Reusable: when a comment rots a law pointer, moving the comment is usually cheaper and safer than
+  moving the law.**
 - **F-E2F-3 — the incline's 0.85–0.95 band is genuinely bistable, not noisy measurement.** Every rung
   is deterministic and reproduced identically; what flips is *which* config survives, seed by seed.
   A future tuner should read that band as "this map is on a cliff between two viable openings", not
