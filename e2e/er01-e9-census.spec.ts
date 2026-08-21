@@ -5,6 +5,13 @@ import redfields from '../assets/contracts/epoch-9-redfields/contracts.json' wit
 
 /**
  * PER-ID TRUTH, because the four Red Fields contracts stopped being the same story on 2026-08-20.
+ * A10 (2026-08-21) made that shape pay for itself again: `e9-old-canal` now has a LIVE consumer
+ * (`src/systems/CanalChoiceSystem.ts` — three permanent verdicts, the derived flow, the ground
+ * veto and the objective latch) and still does not secure, so it joins the Seed Run as an
+ * ADMISSION-EXEMPT contract rather than an unsocketed one. Its `engineDependencies` row survives
+ * with its `dep` and `missing` status untouched and its DESCRIPTION rewritten to the truth: the
+ * schema has no status but `missing`, and `DECLARED_INERT_PATHS` obliges a non-empty list while
+ * `twist.persistentCanalChoices` is declared (F-A10-2). Devil's Alley is unchanged.
  * A8 (`specs/agent-play/door-completion-sheet.md:22`) BUILT the Seed Run's consumer: the caravan,
  * the three planting grounds, the permanent green and the objective latch are all live in both
  * engines. What it did NOT do is win the map — the best public-verb play measured
@@ -24,14 +31,19 @@ const SIGNATURE_GAPS: Record<string, { dependency?: string; twist?: string }> = 
  * them while exempt — the same shape `e2-incline` and `e6-showroom` carry: seeded, measured, and
  * refused by the door until it secures. Seeds are the comparability unit, not an admission claim.
  */
-const SEEDED = new Set(['e9-dome-basin', 'e9-seed-run']);
+const SEEDED = new Set(['e9-dome-basin', 'e9-seed-run', 'e9-old-canal']);
 
-/** The manifest rows each contract derives, in order. Only the Seed Run declares planting. */
+/**
+ * The manifest rows each contract derives, IN ORDER. Only the Seed Run declares planting and only
+ * the Old Canal declares canal choices, so each row is asserted where it is declared and its
+ * absence is asserted everywhere else. The order is `deriveMechanicsManifest`'s own: A10's rule is
+ * pushed before A5's, which is after A8's.
+ */
 const EXPECTED_RULES: Record<string, string[]> = {
   'e9-dome-basin': ['build_zones'],
   'e9-seed-run': ['build_zones', 'persistent_planting'],
   'e9-devils-alley': ['build_zones'],
-  'e9-old-canal': ['build_zones'],
+  'e9-old-canal': ['build_zones', 'persistent_canal_choices'],
 };
 
 for (const contract of redfields.contracts) {
@@ -216,8 +228,18 @@ for (const contract of redfields.contracts) {
       // epoch, so its three Red Fields siblings must each get a null from the same call.
       const { SeedCaravanSystem, SEED_CARAVAN_MAX_HP, SEED_CARAVAN_PLANT_COST_RATIO } =
         await vite.ssrLoadModule('/src/systems/SeedCaravanSystem.ts');
-      const { TileStateStore } = await vite.ssrLoadModule('/src/game/TileStateStore.ts');
-      const emptyStore = () => new TileStateStore({ getItem: () => null, setItem: () => undefined, removeItem: () => undefined });
+      const tileState = await vite.ssrLoadModule('/src/game/TileStateStore.ts');
+      const { TileStateStore } = tileState;
+      // A REAL BACKING MAP, not a null sink: A10 asserts the STAGE -> COMMIT -> INHERIT cycle, and
+      // a store that swallows writes would let a broken persistence path pass.
+      const emptyStore = () => {
+        const cells = new Map<string, string>();
+        return new TileStateStore({
+          getItem: (key: string) => cells.get(key) ?? null,
+          setItem: (key: string, value: string) => void cells.set(key, value),
+          removeItem: (key: string) => void cells.delete(key),
+        });
+      };
       const caravan = SeedCaravanSystem.create(loadContract(contract.id), emptyStore());
 
       if (contract.id === 'e9-seed-run') {
@@ -280,6 +302,99 @@ for (const contract of redfields.contracts) {
         expect(rule.data.plantCostHp).toBe(Math.round(SEED_CARAVAN_MAX_HP * SEED_CARAVAN_PLANT_COST_RATIO));
       } else {
         expect(caravan).toBeNull();
+      }
+
+      // A10 — THE OLD CANAL'S THREE VERDICTS, asserted where they are DECLARED and refused where
+      // they are not. Same law as the caravan above: the consumer is built off the CONTRACT (twist
+      // + authored zones + authored stakes), never the epoch, so its three Red Fields siblings must
+      // each get a null from the same call.
+      const { CanalChoiceSystem, CANAL_DECISION_REACH } =
+        await vite.ssrLoadModule('/src/systems/CanalChoiceSystem.ts');
+      const canal = CanalChoiceSystem.create(loadContract(contract.id), emptyStore());
+
+      if (contract.id === 'e9-old-canal') {
+        expect(canal).not.toBeNull();
+        // THE SEGMENTS ARE AUTHORED DATA, not constants in the consumer: each is the buildZone that
+        // CONTAINS an authored stake, which on this tile is exactly the three canal boxes. The two
+        // yards hold no stake and are therefore not segments and can never be decided.
+        expect(canal.diagnostics.segments.map(({ id, zoneId }: { id: string; zoneId: string }) => [id, zoneId])).toEqual([
+          ['decide-segment-a', 'old-canal-segment-a'],
+          ['decide-segment-b', 'old-canal-segment-b'],
+          ['decide-segment-c', 'old-canal-segment-c'],
+        ]);
+        expect(canal.diagnostics).toMatchObject({
+          declared: true,
+          decided: 0,
+          total: 3,
+          allDecided: false,
+          flow: [],
+          openGround: [],
+          decidedThisRun: [],
+          decidedBefore: [],
+        });
+
+        // THE LATCH: a fresh canal pins the run unsecurable, and every verdict is REFUSED out of
+        // reach and COUNTED. `objectiveAllowsSecure` is the only thing the two engines' gates read.
+        expect(canal.objectiveAllowsSecure).toBe(false);
+        // (0,60) is the north outflow yard — a surveyed build ground with NO stake in it, which
+        // is exactly why it is not a segment and can never be decided.
+        expect(canal.decide({ x: 0, z: 60 }, 'redig').ok).toBe(false);
+        expect(canal.diagnostics.refusals.outOfReach).toBe(1);
+
+        // AN UNDECIDED BAND TAKES NO WORKS; a BACKFILLED one does; a RE-DUG one never will again.
+        expect(canal.worksAllowed(2, 0)).toBe(false);
+        expect(canal.worksAllowed(0, 30)).toBe(true);
+        expect(canal.decide({ x: 2, z: 0 }, 'demolish')).toMatchObject({ ok: true, segmentId: 'decide-segment-b', choice: 'demolish' });
+        expect(canal.worksAllowed(2, 0)).toBe(true);
+        expect(canal.isWet(2, 0)).toBe(false);
+        // ONE-TIME, FOR THE LIFE OF THE PROFILE: the second verdict on the same ground is refused.
+        expect(canal.decide({ x: 2, z: 0 }, 'redig').ok).toBe(false);
+        expect(canal.diagnostics.refusals.alreadyDecided).toBe(1);
+
+        expect(canal.decide({ x: -30, z: -23 }, 'redig')).toMatchObject({ ok: true, choice: 'redig' });
+        expect(canal.worksAllowed(-30, -23)).toBe(false);
+        expect(canal.isWet(-30, -23)).toBe(true);
+        expect(canal.objectiveAllowsSecure).toBe(false);
+        expect(canal.decide({ x: 32, z: 23 }, 'redig').ok).toBe(true);
+        // ALL THREE DECIDED IS THE OBJECTIVE, and the flow is the combined verdicts in authored order.
+        expect(canal.diagnostics).toMatchObject({
+          decided: 3,
+          allDecided: true,
+          flow: ['decide-segment-a', 'decide-segment-c'],
+          openGround: ['decide-segment-b'],
+        });
+        expect(canal.objectiveAllowsSecure).toBe(true);
+
+        // THE VERDICTS ARE STAGED, NEVER WRITTEN MID-RUN — TP-02's persistence law, unchanged.
+        // A second consumer built on the SAME store must still see three undecided segments,
+        // because nothing has reached the profile until the run-end commit.
+        const sameStore = emptyStore();
+        const staging = CanalChoiceSystem.create(loadContract(contract.id), sameStore);
+        expect(staging.decide({ x: 2, z: 0 }, 'redig').ok).toBe(true);
+        expect(CanalChoiceSystem.create(loadContract(contract.id), sameStore).diagnostics.decided).toBe(0);
+        expect(sameStore.commitAtRunEnd()).toBe(true);
+        const inheritor = CanalChoiceSystem.create(loadContract(contract.id), sameStore);
+        expect(inheritor.diagnostics).toMatchObject({
+          decided: 1,
+          decidedBefore: ['decide-segment-b'],
+          decidedThisRun: [],
+          flow: ['decide-segment-b'],
+        });
+        expect(inheritor.decide({ x: 2, z: 0 }, 'demolish').ok).toBe(false);
+
+        // A RE-DUG BAND IS BORN AS A NO-SPAWN ZONE — the inscribed disc of the authored rectangle,
+        // on the SAME sim substrate TP-02 and A8 use. A demolished one adds nothing at birth.
+        const born = tileState.applyAtBirth(sameStore.readSnapshot(contract.id).entries, loadContract(contract.id).tileParams);
+        expect(born.noSpawnZones).toEqual([{ x: 2, z: 0, radius: 8 }]);
+
+        // THE MANIFEST ROW IS SOURCED FROM THE CONSUMER, so a row cannot drift from the gate.
+        const rule = mechanics.rules.find(({ id }: { id: string }) => id === 'persistent_canal_choices');
+        expect(rule.source).toBe('CanalChoiceSystem.decide');
+        expect(rule.data.segments).toEqual(['decide-segment-a', 'decide-segment-b', 'decide-segment-c']);
+        expect(rule.data.decisionReach).toBe(CANAL_DECISION_REACH);
+        expect(rule.data.verbs).toEqual(['CONTEXT_ACTION action=redig', 'CONTEXT_ACTION action=backfill']);
+      } else {
+        expect(canal).toBeNull();
       }
 
       for (const seed of seeds) {
