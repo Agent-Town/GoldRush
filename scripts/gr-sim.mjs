@@ -218,7 +218,7 @@ async function readOrders(lines, sim, submissions) {
     try {
       orders = JSON.parse(next.value);
     } catch (error) {
-      process.stderr.write(`gr-sim rejected orders: ${error instanceof Error ? error.message : String(error)}\n`);
+      rejectOrders(error instanceof Error ? error.message : String(error), sim);
       continue;
     }
     if (orders === null) return;
@@ -227,8 +227,13 @@ async function readOrders(lines, sim, submissions) {
       submissions.push({ t: Math.round(sim.timeAlive * 30), orders: structuredClone(orders) });
       return;
     }
-    process.stderr.write(`gr-sim rejected orders: ${receipt.outcome.message ?? receipt.outcome.reason}\n`);
+    rejectOrders(receipt.outcome.message ?? receipt.outcome.reason, sim);
   }
+}
+
+function rejectOrders(reason, sim) {
+  process.stderr.write(`gr-sim rejected orders: ${reason}\n`);
+  process.stdout.write(`${JSON.stringify(sim.currentTurn().view)}\n`);
 }
 
 async function writeAgentTape(vite, path, sim, outcome, run) {

@@ -102,6 +102,62 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron/);
 });
 
+test('a reactive client can recover from rejected orders', { timeout: 30_000 }, async () => {
+  const answer = (view) => {
+    if (view.now.pendingSecure) return [{ verb: 'SECURE_CHOICE', choice: 'bank' }];
+    if (view.now.pendingOffer?.[0]) return [{ verb: 'PICK_UPGRADE', id: view.now.pendingOffer[0].id }];
+    return [{ verb: 'HOLD', pos: { x: 0, z: 12 } }];
+  };
+  const result = await new Promise((resolve, reject) => {
+    const child = spawn(process.execPath,
+      ['scripts/gr-sim.mjs', '--contract', 'the-claim', '--seed', 'e1-the-claim-01', '--policy=stdin'],
+      { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] });
+    let buffer = '';
+    let stderr = '';
+    let firstView;
+    let outcome;
+    let repeatedView = false;
+    const timeout = setTimeout(() => {
+      child.kill('SIGKILL');
+      reject(new Error('gr-sim did not recover from rejected orders within 20 seconds.'));
+    }, 20_000);
+    child.stdout.on('data', (chunk) => {
+      buffer += chunk;
+      let newline;
+      while ((newline = buffer.indexOf('\n')) >= 0) {
+        const line = buffer.slice(0, newline);
+        buffer = buffer.slice(newline + 1);
+        if (!line) continue;
+        const message = JSON.parse(line);
+        if (message.schema === 'goldrush.view.v1') {
+          if (!firstView) {
+            firstView = message;
+            child.stdin.write(`${JSON.stringify([{ verb: 'PICK_UPGRADE', id: 'no-such-offer-id' }])}\n`);
+          } else {
+            repeatedView ||= JSON.stringify(message) === JSON.stringify(firstView);
+            child.stdin.write(`${JSON.stringify(answer(message))}\n`);
+          }
+        } else {
+          outcome = message;
+        }
+      }
+    });
+    child.stderr.on('data', (chunk) => { stderr += chunk; });
+    child.on('error', (error) => {
+      clearTimeout(timeout);
+      reject(error);
+    });
+    child.on('close', (status) => {
+      clearTimeout(timeout);
+      resolve({ status, stderr, repeatedView, outcome });
+    });
+  });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.repeatedView, true);
+  assert.match(result.stderr, /gr-sim rejected orders: PICK_UPGRADE requires a live offered id/);
+  assert.equal(typeof result.outcome.secured, 'boolean');
+});
+
 test('headless landmark starts release before enemies can stall at the perimeter', { timeout: 120_000 }, () => {
   const cases = [
     ['e4-long-road', 'e4-long-road-01', -180, 0, 4, 41, 'fnv1a32:2b27b21d'],
