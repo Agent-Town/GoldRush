@@ -31,6 +31,7 @@
     "verify:visual": "playwright test e2e/visual.spec.ts",
     "test:preview": "playwright test --config playwright.preview.config.ts",
     "test:release": "playwright test --config playwright.release.config.ts",
+    "test:release-base": "playwright test --config playwright.release-base.config.ts",
     "inspect:canvas": "node scripts/inspect-threejs-canvas.mjs",
     "test:desk-birth": "node scripts/desk-birth-guard.mjs"
   },
