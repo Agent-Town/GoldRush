@@ -113,7 +113,13 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // REVERT-AND-REPRODUCE, not by arithmetic: emptying `harvestAnchors` in BOTH the contract and
   // the published mask table — and changing nothing else in the slice — reproduced 6/463/977/7/10
   // EXACTLY, so every number that moved here moves with those four anchors and nothing else.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 4);
+  // ⚠️ TENTH STACK — ADMISSION MOVE (2026-08-22, `e6-picnic`, owner ruling "flip the stakes"):
+  // five authored `harvestAnchors` move the Picnic out of not-offered by the same one that moved
+  // relay-rush, the Hollow and Devil's Alley, 4 -> 3. THE COUNTY'S LAST UNOPENED DOOR — the four
+  // contracts left outside are the four that carry cited exemptions, not empty data.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE: emptying those anchors in both the contract and the
+  // published mask table, with every other line of the slice in place, reproduced 4 exactly.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 3);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and none of the empty-data admissions was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -351,8 +357,38 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // the branch BEFORE the audit was re-run), never by editing two sides' arithmetic into
   // agreement — which is the F-2084-1 failure this comment block exists to prevent, and which
   // git would happily auto-merge because both sides write the same-shaped digits.
+  // ⚠️ FIFTEENTH STACK — ADMISSION MOVE (2026-08-22, `e6-picnic`, on an owner ruling), AND IT IS
+  // THE ONE THIS TABLE HAS BEEN WAITING FOR: the county's last unopened door.
+  //
+  // THE EXEMPTION COUNT DOES NOT MOVE — 5 before, 5 after. The Picnic was never in
+  // `CONTRACT_ADMISSION_EXEMPTIONS`; it was excluded by empty `harvestAnchors`, which is a
+  // different door, the same one the Dead Band, the Regatta, the Hollow, the Old Canal and
+  // Devil's Alley came through. What moves is the parity block, by exactly one contract's worth:
+  // agent-lacks 446 -> 456, equal 1112 -> 1143, not-offered 4 -> 3, rows 1562 -> 1602. That is the
+  // +10/+30/-1/+39 anchor shape nine previous slices recorded, one `equal` row wider — the Picnic
+  // publishes one parity row its siblings do not.
+  //
+  // TWO OWNER RULINGS BUILT THIS, AND THE SECOND IS WHY IT LANDED. The first (2026-08-21, verbatim:
+  // "picnic - no, just standing there should not win") built the contest predicate and was NOT
+  // enough: all three sandwiches carried `heroStart: true`, the hero opened inside a disc, the
+  // headless hero auto-fires with no policy term in its gate, and `--policy=idle` SECURED both
+  // bench seeds at wave 20 (`fnv1a32:b9f476a6` / `fnv1a32:612de94b`) — a Law-2 refusal, measured
+  // and filed rather than papered over. The second (2026-08-22, verbatim: "flip the stakes") cured
+  // it in contract DATA alone: `heroStart: false` on all three, hero at the engine default (0,12).
+  // Idle now LOSES by stakes-all-lost at wave 2 / wave 1 with the hero untouched
+  // (`fnv1a32:c26f77d5` / `fnv1a32:a649be29`), and the public-verb prover SECURES both seeds twice
+  // at wave 20 (`fnv1a32:b55e6ff4` / `fnv1a32:44f0f3dc`). `reviews/e6-picnic-admission.md`.
+  //
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, not by arithmetic, and the control is unusually clean
+  // because THREE other edits ride in this slice and NONE of them is visible here: emptying
+  // `harvestAnchors` in BOTH the contract and the published mask table — while leaving the
+  // `heroStart` flip, the dropped `engineDependencies` row and the `MechanicsManifest` lossStakes
+  // read all in place — reproduced `5 exemptions · 0/446/1112/4 over 1562 rows` EXACTLY, the
+  // pre-slice pin. So the whole movement belongs to the five anchors, and the ruling that made the
+  // map winnable moves nothing in this table (it is a mechanics/posting surface, which this audit
+  // does not compare — the fourth slice in a row to find that shape).
   assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 446, equal: 1112, 'not-offered': 4 });
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 456, equal: 1143, 'not-offered': 3 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });

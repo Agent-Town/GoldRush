@@ -29,15 +29,40 @@ const EXPECTED_RULES: Record<string, string[]> = {
  * verb secures per seed. The other Atomic contracts remain independently refused until proven.
  *
  * Half-Life Hollow is also admitted now: its authored crossing is consumed in both engines and
- * both bench seeds secure twice through public verbs. Showroom and Picnic remain refused.
+ * both bench seeds secure twice through public verbs.
+ *
+ * THE PICNIC IS ADMITTED (2026-08-22), AND IT TOOK TWO OWNER RULINGS, A YEAR APART IN SPIRIT.
+ * The first (2026-08-21, verbatim: "picnic - no, just standing there should not win") built the
+ * contest predicate: a stake's disc is held by a STANDING STRUCTURE inside it, or by a hero that
+ * has dealt damage in the last `PICNIC_ACTIVE_DEFENSE_SECONDS`. Correct, and not enough — all three
+ * `stakeMarkers` carried `heroStart: true`, so the hero opened the run standing in one of the three
+ * discs, and the headless hero auto-fires with no policy term in its gate
+ * (`HeadlessContractSim.ts:480`). Its own stake could never fall, the loss could never complete, and
+ * `--policy=idle` SECURED both bench seeds at wave 20 (`fnv1a32:b9f476a6` / `fnv1a32:612de94b`,
+ * `calls: 0`) — a Law-2 refusal, measured and filed rather than papered over
+ * (`reviews/e6-picnic-admission.md`, F-E6PA-1).
+ *
+ * The second ruling (2026-08-22, verbatim: "flip the stakes") cured it in contract DATA alone: all
+ * three sandwiches now carry `heroStart: false`, so the hero starts at the engine default (0,12) —
+ * inside `mesa-meadow`, outside every disc — and the ruled pressure reaches all three stakes.
+ *   · idle now LOSES, by stakes-all-lost with the hero untouched: wave 2 `fnv1a32:c26f77d5`,
+ *     wave 1 `fnv1a32:a649be29`, each repeated identical. Law 2 holds.
+ *   · the public-verb prover SECURES both bench seeds twice at wave 20 — fence each live disc with
+ *     a 10-gold palisade, then spend to the turret cap, CAPTURE the wound-down machines:
+ *     `fnv1a32:b55e6ff4` (607 kills) / `fnv1a32:44f0f3dc` (690 kills).
+ * The opening rush takes two sandwiches on both seeds; the rider holds the third to wave 20, which
+ * is exactly what the authored secure rule asks for ("at-least-one-stake-held-at-default-secure-
+ * wave"). Only the Showroom remains refused.
  */
-const ADMITTED = new Set(['e6-glow-mesa', 'e6-half-life-hollow']);
+const ADMITTED = new Set(['e6-glow-mesa', 'e6-half-life-hollow', 'e6-picnic']);
 
-// Each refused Atomic contract declares the era socket it is missing (AP-11 engineDependencies mandate).
+// Each refused Atomic contract declares the era socket it is missing (AP-11 engineDependencies
+// mandate). An ADMITTED contract must declare NONE — a shipped "missing consumer" on a map the door
+// serves is an agent-facing lie, which is why the Picnic's row left this table on admission
+// (its consumer, `PicnicHoldSystem`, has been live in both engines since `52c48fce7`).
 const EXPECTED_DEPENDENCY: Record<string, string> = {
   'e6-glow-mesa': 'glow-mesa-contract-consumers',
   'e6-showroom': 'atomic-wrangle-consumer',
-  'e6-picnic': 'picnic-contract-consumers',
 };
 
 for (const contract of atomic.contracts) {
@@ -74,7 +99,7 @@ for (const contract of atomic.contracts) {
       const mechanics = deriveMechanicsManifest(contract);
 
       expect(seeds).toEqual([`${contract.id}-01`, `${contract.id}-02`]);
-      if (contract.id === 'e6-half-life-hollow') expect(contract.tileParams.engineDependencies).toBeUndefined();
+      if (EXPECTED_DEPENDENCY[contract.id] === undefined) expect(contract.tileParams.engineDependencies).toBeUndefined();
       else {
         expect(contract.tileParams.engineDependencies).toEqual([
           expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
@@ -190,7 +215,29 @@ for (const contract of atomic.contracts) {
           radiationDamageDealt: 0,
         });
       }
-      if (contract.id === 'e6-picnic') expect(mechanics.posting.lossStakes).toHaveLength(3);
+      if (contract.id === 'e6-picnic') {
+        // THE RULING, ASSERTED ON THE DATA IT CHANGED: no sandwich is a hero start any more, so the
+        // hero cannot open the run inside a disc and hold it with its own auto-fire.
+        expect(contract.tileParams.stakeMarkers!.map(({ heroStart }) => heroStart)).toEqual([false, false, false]);
+        // ...and the loss still names all three, which is the whole point of the flip. `heroStart`
+        // was doing double duty (hero start AND loss stake); `MechanicsManifest` reads them apart
+        // for a picnic-hold contract, so this list cannot silently empty when the flags flip.
+        expect(mechanics.posting.lossStakes).toHaveLength(3);
+        expect(mechanics.posting.lossStakes.map(({ id }: { id: string }) => id))
+          .toEqual(['sandwich-center', 'sandwich-east', 'sandwich-west']);
+
+        // No `admissionProbe` escape hatch: constructing through the ordinary door IS the admission
+        // assertion, and THE VIEW must show a hold that has actually started — three stakes, none
+        // claimed, none contested at t0, with the hero posted at the engine default (0,12).
+        const door = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0]! });
+        const view = door.currentTurn().view.now;
+        expect(view.atomic.picnicHold).toEqual([
+          { id: 'sandwich-west', position: { x: -16, z: 18 }, held: true, claimed: false, contested: false, timer: 0 },
+          { id: 'sandwich-center', position: { x: 0, z: 26 }, held: true, claimed: false, contested: false, timer: 0 },
+          { id: 'sandwich-east', position: { x: 16, z: 18 }, held: true, claimed: false, contested: false, timer: 0 },
+        ]);
+        expect({ x: view.hero.x, z: view.hero.z }).toEqual({ x: 0, z: 12 });
+      }
       if (contract.id === 'e6-half-life-hollow') expect(mechanics.posting.lossStakes).toEqual([]);
       expect(consoleErrors).toEqual([]);
     } finally {

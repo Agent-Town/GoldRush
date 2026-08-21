@@ -448,30 +448,33 @@
             "id": "sandwich-west",
             "x": -16,
             "z": 18,
-            "heroStart": true
+            "heroStart": false
           },
           {
             "id": "sandwich-center",
             "x": 0,
             "z": 26,
-            "heroStart": true
+            "heroStart": false
           },
           {
             "id": "sandwich-east",
             "x": 16,
             "z": 18,
-            "heroStart": true
+            "heroStart": false
           }
         ],
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "x": -22, "z": 8 },
+          { "x": 0, "z": 8 },
+          { "x": 22, "z": 8 },
+          { "x": -24, "z": -22 },
+          { "x": 24, "z": -22 }
+        ],
         "heightfield": {
           "id": "glow-mesa-two-level",
           "mode": "visual"
         },
-        "engineDependencies": [
-          { "dep": "picnic-contract-consumers", "status": "missing", "description": "Needs the epoch-wide appliance wrangle consumer plus a three-stake hold objective consumer; the manifest lists all three stakeMarkers as loss stakes while Game.contractHeroStart and HeadlessContractSim each select only the first marker and neither implements a three-stake hold." }
-        ],
         "lanes": {
           "spawnEdges": [
             "north",

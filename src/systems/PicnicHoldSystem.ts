@@ -37,6 +37,22 @@ export class PicnicHoldSystem {
       : [];
   }
 
+  /**
+   * OWNER RULING (2026-08-22), verbatim: "flip the stakes"
+   *
+   * The second half of the 2026-08-21 ruling quoted at `contested()` below, and the half that makes
+   * it bite. With the predicate built and correct, `e6-picnic` STILL idle-secured both bench seeds
+   * (`fnv1a32:b9f476a6` / `fnv1a32:612de94b`, wave 20, `calls: 0`) — because all three
+   * `stakeMarkers` carried `heroStart: true`, the hero opened the run standing inside one of the
+   * three discs, and the headless hero auto-fires (`HeadlessContractSim.ts:480` — `heroShooter`'s
+   * gate has no policy term), so its own stake's active-defense window refreshed every second and
+   * that stake could never fall. Two stakes fell; the third was the hero's body.
+   *
+   * The ruling flips all three to `heroStart: false`, so the hero starts at the engine default
+   * (0,12) — inside `mesa-meadow`, outside every disc — and the ruled pressure reaches all three.
+   * Nothing in this file changed for it: the cure is contract DATA, and the mechanic was already
+   * right. `reviews/e6-picnic-admission.md` carries the measurement on both sides of the flip.
+   */
   static isEnabled(contract: Pick<ContractManifest, 'twist'>): boolean {
     return contract.twist.picnicHold === true;
   }
