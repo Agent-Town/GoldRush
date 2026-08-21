@@ -2,6 +2,7 @@ import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type Cont
 import { Balance } from '../game/Balance';
 import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSystem';
 import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
+import { PicnicHoldSystem, PICNIC_ACTIVE_DEFENSE_SECONDS, PICNIC_HOLD_RADIUS, PICNIC_HOLD_SECONDS, PICNIC_STAKE_PRESS_WEIGHT } from '../systems/PicnicHoldSystem';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
 import {
@@ -648,6 +649,21 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       daySeconds: e6Tiles.night.daySeconds,
       nightSeconds: e6Tiles.night.nightSeconds,
       harvestableOnlyAtNight: true,
+    }));
+  }
+  if (PicnicHoldSystem.isEnabled(tile.stakeMarkers ?? [])) {
+    rules.push(rule('three_stake_hold', 'PicnicHoldSystem.update', {
+      stakes: (tile.stakeMarkers ?? []).map(({ id }) => id).sort(),
+      radius: PICNIC_HOLD_RADIUS,
+      holdSeconds: PICNIC_HOLD_SECONDS,
+      defenders: ['standing_structure', 'active_hero'],
+      heroActiveDefenseSeconds: PICNIC_ACTIVE_DEFENSE_SECONDS,
+      claimRule: 'enemy-present-and-uncontested',
+      resetRule: 'timer-resets-without-uncontested-enemy-presence',
+      enemyStakePressWeight: PICNIC_STAKE_PRESS_WEIGHT,
+      pressureRule: 'weighted-enemies-target-nearest-undefended-stake',
+      lossRule: 'all-stakes-claimed',
+      secureRule: 'at-least-one-stake-held-at-default-secure-wave',
     }));
   }
   if (practice) {
