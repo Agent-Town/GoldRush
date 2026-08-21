@@ -27,6 +27,21 @@ import type { ContractManifest } from '../meta/ContractFamilies';
  * quiet zone, so REANCHOR — an existing public verb — is the map's own way to take the whole
  * boat quiet. A source whose world position sits in any declared quiet zone emits nothing.
  *
+ * THE THIRD ANCHOR IS WHAT MAKES NOISE A CHOICE RATHER THAN A COST — OWNER RULING 2026-08-21,
+ * verbatim to the five-map fork table: "lets follow your recommendation". For `e5-stillwater`
+ * that recommendation was this build's own F-A2-3 (`reviews/a2-stillwater-noise-hunt.md`):
+ * "one more `claimBoat.anchors` entry outside both quiet zones and away from (0,30)".
+ *
+ * `shelf-watch` (36,30) IS that entry. Before it, both stations were extremes and the mechanic
+ * had no third state: `lagoon` (0,30) sits ON the hero, so every running machine was loud exactly
+ * where the hero stood; `open-water` sits INSIDE a quiet zone, so it silenced everything and
+ * carried the guns 20wu off the body they defend. There was nowhere noise could be loud AWAY
+ * from the hero, so the trail could be PAID FOR or AVOIDED but never AIMED. `shelf-watch` is due
+ * east of the claim at 36wu — further than the loudest machine's own radius (engine r24), so a
+ * trailed head is pulled clear of the hero rather than merely nudged — it lies in
+ * `lagoon-shallows` so it is boat-navigable, and all three machines clear BOTH quiet zones there,
+ * so it is unambiguously loud. It sits 6wu north of `sail-trim-drift`, the adjacent silent step.
+ *
  * THE TRAIL is a two-state machine over declared radii. A running, unsilenced source is as loud
  * as it reaches: `level = radius`. The loudest audible source becomes the trail; ties break by
  * DECLARED ORDER, never by iteration order, so the hash cannot move. When every source falls
@@ -109,8 +124,44 @@ export const NOISE_HUNT_RULES = Object.freeze({
   /** How close the head must come to the emitter before it can strike. */
   strikeRange: 7,
   strikeCooldownSeconds: 4,
-  /** Tuned to threaten machines, not the hero: it can only ever reduce deck integrity. */
-  strikeDamage: 16,
+  /**
+   * "Leviathan damage tuned to threaten machines, not instakill" (sheet §A2 DEFAULTS).
+   *
+   * ⚖️ OWNER RULING 2026-08-21, verbatim, to this dial: **"ok, lets do it, we can balance later
+   * during testing"**. The admitting value is authorised by fiat, and his explicit balance-later
+   * acceptance is what lifts the Mistake-14 bar that stopped the previous pass at 6. This comment
+   * is the whole dial, written down so the balance-later session inherits the map rather than
+   * re-deriving it.
+   *
+   * THE THREE VALUES THIS CONSTANT HAS HELD, and why each was right when it was written:
+   *
+   *   16  THE ORIGINAL, and it was MIS-DERIVED rather than mis-typed. Chosen when the only
+   *       playable station was `lagoon`, where contact with a machine was INTERMITTENT because
+   *       the heads were also walking at the hero. Ceiling: wave 4 on both seeds.
+   *    6  THE PRINCIPLED MIDPOINT. The owner's `shelf-watch` anchor created the regime this
+   *       constant actually governs — a deliberate LURE, where contact is CONTINUOUS by design —
+   *       and 16 made the anchor's own best use self-defeating. Re-derived from the player's real
+   *       lever, the DECLARED eight-second trail-shed: at a four-second cadence a pad survives
+   *       96/6 = 16 strikes, FOUR TIMES that window, so breaking contact is a real save. Ceiling:
+   *       waves 9 and 11. It was deliberately NOT taken further without a ruling, because every
+   *       value below it is chosen by working backwards from "it must win".
+   *    3  THE ADMITTING VALUE, measured (`artifacts/e5-stillwater/dial-sweep.mjs`) as the HIGHEST
+   *       that secures both bench seeds twice WITH A ONE-STRIKE MARGIN. A pad survives 96/3 = 32
+   *       strikes; a full twelve-wave lure costs 76-77 across three pads, so one pad is still
+   *       standing at the secure (57 and 60 integrity) — nineteen-odd strikes of slack, not a
+   *       coin-flip.
+   *
+   * THE MARGIN IS THE POINT OF PICKING 3 OVER 4. Four also secures both seeds — but with ZERO
+   * decks left on both, i.e. it wins on the last pad dying, and a single unlucky wave takes it
+   * away. Five does not secure at all (wave 11 on both). So the dial's live boundary is between
+   * 4 and 5, and 3 sits one clear step inside it with headroom in BOTH directions for the
+   * balance-later pass: raise toward 4 to make the map meaner, lower for more slack.
+   *
+   * IDLE RUNS CANNOT BE MOVED BY THIS NUMBER, structurally: an idle run works no machine, so it
+   * takes no trail and lands no strike. The Law 2 floor is wave 3 on both seeds at every value
+   * above — verified, not assumed.
+   */
+  strikeDamage: 3,
   deckIntegrity: 96,
   /** Fog: the shroud caps how far anything is WATCHED. Published; never steers the hunt. */
   watchRadius: 22,

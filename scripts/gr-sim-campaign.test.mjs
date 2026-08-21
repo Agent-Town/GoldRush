@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
-import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -136,9 +136,31 @@ test('--contract selects exactly one named contract', async () => {
 });
 
 test('--contract refuses unknown, unseeded, and locked contracts loudly', async () => {
+  // THE "UNSEEDED" ARM IS DERIVED, NOT HARDCODED (2026-08-21). It named `e5-stillwater` until
+  // that contract was seeded by its admission, at which point this test kept failing but for the
+  // WRONG REASON — the harness got past the seed check and tripped the LOCK check instead, so the
+  // assertion was no longer testing the message it claims to. That is the same staleness class
+  // that bit `gr-sim.test.mjs`'s refusal probe three times over, and the cure is the same one:
+  // read the subject from the registry so admitting any contract can never silently repoint it.
+  const contractsDir = new URL('../assets/contracts/', import.meta.url);
+  const seeded = JSON.parse(await readFile(new URL('bench-seeds.json', contractsDir), 'utf8'));
+  const bundles = (await readdir(contractsDir, { withFileTypes: true }))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => new URL(`${entry.name}/contracts.json`, contractsDir));
+  const board = [];
+  for (const bundle of bundles) {
+    const text = await readFile(bundle, 'utf8').catch(() => null);
+    if (text) board.push(...JSON.parse(text).contracts);
+  }
+  // The subject must reach the SEED check, so it has to clear the guard above it: a contract
+  // declaring `practice.scores === false` is refused earlier with a different message, and
+  // `bench-seeds.test.mjs` requires exactly those to stay unseeded — so "unseeded" alone is not
+  // enough to name a subject for this arm.
+  const unseeded = board.find(({ id, practice }) => !(id in seeded) && practice?.scores !== false)?.id;
+  assert.ok(unseeded, 'every scored board contract is seeded — this arm needs a new subject');
   const cases = [
     ['not-a-contract', 'Contract "not-a-contract" is not on the board.'],
-    ['e5-stillwater', 'Contract "e5-stillwater" has no pinned bench seed.'],
+    [unseeded, `Contract "${unseeded}" has no pinned bench seed.`],
     ['e3-canyon-works', 'Contract "e3-canyon-works" is locked: The Voltage Age awaits — raise the Dynamo Hall.'],
   ];
   for (const [contractId, message] of cases) {

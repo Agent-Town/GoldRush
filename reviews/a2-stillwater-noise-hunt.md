@@ -1,5 +1,235 @@
 # A2 — `e5-stillwater`, the noise-hunt
 
+---
+
+## ADDENDUM 2 — **ADMITTED** (2026-08-21, third pass)
+
+**RULING (verbatim, to the strike-cost dial): "ok, lets do it, we can balance later during
+testing".** That lifts the Mistake-14 bar for this one dial — not by argument, but because the
+owner explicitly accepted balancing later. **`e5-stillwater` is now an ADMITTED contract.**
+
+**Base:** merged current `main` (`d775fca71`) FIRST. One conflict, `docs/bench/same-game-audit.md`
+— a **generated** file, so it was resolved by taking main's copy and regenerating at the end
+rather than hand-merging two machine outputs.
+
+### The value: `strikeDamage` = **3**
+
+Chosen by measurement, not by solving for the answer — `artifacts/e5-stillwater/dial-sweep.mjs`
+rewrites the constant, runs both seeds twice at each value, and always restores.
+
+| `strikeDamage` | pad survives | seed 01 | seed 02 | decks left | one-strike margin? |
+|---|---|---|---|---|---|
+| 16 (original) | 6 | w4 | w4 | 0 | — |
+| 6 (principled midpoint) | 16 | w9 | w11 | 0 | — |
+| 5 | 20 | w11 **no** | w11 **no** | 0 | NO |
+| 4 | 24 | **w12 SECURE** | **w12 SECURE** | **0** | **NO — knife-edge** |
+| **3 (shipped)** | **32** | **w12 SECURE** | **w12 SECURE** | **1 @ 57 / 60** | **YES** |
+
+**Why 3 and not 4.** Four *does* secure both seeds twice — but with **zero decks left on both**,
+i.e. it wins on the last pad dying, and one unlucky wave takes it away. Pinning that would be
+pinning a coin-flip. Three leaves a whole pad standing at 57 and 60 integrity — ~19 strikes of
+slack — so the dial has **headroom in both directions** for the balance-later pass, which is what
+the ruling asked for. The live boundary is between **4 and 5**, and 3 sits one clear step inside.
+All three values are documented at the constant so the next session inherits the map.
+
+### Secures ×2 — BOTH doors, both seeds
+
+| path | seed 01 | seed 02 |
+|---|---|---|
+| **PLAIN DOOR** (`gr-sim`, no `admissionProbe`) | **w12 SECURE** `fnv1a32:f9967071` · 97 kills | **w12 SECURE** `fnv1a32:8fb9ae74` · 127 kills |
+| in-process (`admissionProbe`) | w12 SECURE `fnv1a32:be2e0c63` · 77 strikes | w12 SECURE `fnv1a32:201e03cd` · 76 strikes |
+| **IDLE — plain door** | **w3 LOSS** `fnv1a32:91a34a6a` | **w3 LOSS** `fnv1a32:bd5a9d8f` |
+| idle — in-process | w3 LOSS `fnv1a32:30144ddc` | w3 LOSS `fnv1a32:316f5a1b` |
+
+Every repeat byte-IDENTICAL. The prover now carries **both transports off one shared `orders()`**,
+so a difference between them could only ever be the door, never the play. The in-process path is
+kept rather than replaced — it is what the entire exemption history and the dial sweep were
+measured on, and a re-admission must not make its own prior evidence un-re-runnable.
+
+**Law 2 holds and could not have been broken by this dial**: an idle run works no machine, so it
+takes no trail and lands no strike, and the dial only ever reduces deck integrity. Verified
+identical at 16, 6 and 3 — and now pinned twice over, in this suite *and* in the generated floor.
+
+### Admission checklist — all discharged
+
+| step | state |
+|---|---|
+| exemption row | **OUT** (replaced by a dated note naming what admitted it) |
+| `bench-seeds.json` | **IN** — `e5-stillwater-01/-02` |
+| `scripts/door-admission-baseline.json` | **IN** — 33 ids |
+| `public/skill.md` seeds + door-contracts fences | **IN** (guard green, incl. positive control) |
+| `er01-e5-census` | flipped to ADMITTED; `SOCKETED_BUT_REFUSED` retired |
+| `null-floors.json` | regenerated — **73 floors, `--check` GREEN** |
+| audit + pins | regenerated; pins re-measured **on the merged tree** |
+| plain-door secure ×2 | **done, both seeds** |
+
+**Floors — zero collateral, proved rather than asserted.** Regenerating added exactly **one** key
+and moved **nothing**: `moved=0, new=1` across all 30 pre-existing contracts, with
+`e5-deepwater-claim`, `e5-regatta` and `e5-flotilla` **byte-UNMOVED**. No row anywhere is
+`secured: true`. `--check` then re-derived all 73 clean.
+
+**Audit — the fourteenth stack, measured on the MERGED tree.** `exemptions 6 → 5`, door `32 → 33`
+with `e5-stillwater` present, summary `agent-lacks 446 · equal 1112 · not-offered 4`. Pinned
+verbatim from the regenerated output; **never by editing two sides' arithmetic into agreement**,
+which is the F-2084-1 failure the pin block warns about and which git would auto-merge silently.
+(The coordinator quoted main's live as 464/1056/4 over 1524 with 6 exemptions — my base is main
+`d775fca71` merged in, and the drain re-measures.)
+
+**F-A2-8 — the SAME staleness class, in a second test, found by the battery.**
+`gr-sim-campaign.test.mjs` used `e5-stillwater` as its "unseeded contract" example. Seeding it did
+not make that test pass with a different subject — it made it fail for the **wrong reason**: the
+harness got past the seed check and tripped the LOCK check instead, so the assertion was no longer
+testing the message it names. Now derived from the registry, with the extra filter my first
+attempt missed: the subject must also clear the `practice.scores === false` guard that sits ABOVE
+the seed check, because `bench-seeds.test.mjs` requires exactly those contracts to stay unseeded.
+**Two different tests in one admission picked the same trap** — a hardcoded example of a CHANGING
+property is a time bomb with a fuse the length of the next admission.
+
+**F-A2-9 — the battery was measured under the wrong Node, and it looked like code.**
+`scripts/node-guards-timeout.test.mjs` fails on Node **23.11.1** and passes on **26.4.0**; a bare
+`node` in this shell resolves to nvm's 23.11.1 while the project runs 26.4.0
+(`/opt/homebrew/bin`). The failure is a clean `ERR_ASSERTION` with no hint of a runtime mismatch.
+Gate transcripts here were re-taken with the project Node explicitly on PATH. Two further reds in
+the same battery — `gr-sim replays…` and `agent reel validation…` — were **starvation**, and their
+signature deserves naming: `spawnSync` returns `status: null` when it KILLS a child on timeout,
+which asserts as `null !== 0` and reads exactly like a logic failure. Both green solo (gr-sim
+**18/18 · 0 fail**, agent-reels **1/1**).
+
+**F-A2-10 — the empty-worktree class, confirmed and cured.** This worktree's `node_modules` holds
+only `.vite` caches; every tool resolved upward via npx, which hid it until
+`worker-type-coverage.test.mjs` built an absolute path to
+`<worktree>/node_modules/typescript/bin/tsc`. Cured with the symlink workaround (gitignored, so
+nothing ships); the test then passes. Any agent gating from a fresh worktree will hit this.
+
+### Two reds found, both real, both fixed
+
+**F-A2-6 — the census asserted a wave the data forbids.** The admitted branch required
+`corsairWaves > 0` and `corsairsSpawned > 0` for every admitted E5 contract. Stillwater authors
+`corsairWaveSize: 0` with a storm suppressed to a 3600s cycle, so zero is *correct*. Now keyed on
+the declared count — and the zero-arm is the **stronger** assertion, because it pins the
+suppression itself: if the Stillwater ever spawns a corsair, something has re-crewed a track that
+must stay dry.
+
+**F-A2-7 — a staleness trap that its own comment predicted and still did not stop.**
+`gr-sim.test.mjs`'s refusal probe hardcoded a contract id to prove the door refuses by name. It
+was `e5-deepwater-claim` until that was admitted; the fix hardcoded `e5-stillwater` and wrote a
+comment explaining the trap — and this admission sprang it for the **third** time. **A prediction
+is not a mechanism**, so the id is no longer hardcoded: it is read from
+`CONTRACT_ADMISSION_EXEMPTIONS` at run time, and an explicit `assert.ok` now fails loudly on the
+day that table empties, which is an event this suite should announce rather than skip.
+
+---
+
+## ADDENDUM 1 — the owner-ruled third anchor (2026-08-21, second pass)
+
+---
+
+### Detail
+
+**RULING (verbatim, to the five-map fork table): "lets follow your recommendation".** For
+`e5-stillwater` that recommendation was **F-A2-3** below: *"one more `claimBoat.anchors` entry
+outside both quiet zones and away from (0,30)"*. Built as **`shelf-watch` (36,30)**.
+
+**Base:** merged current `main` first (`bda894776`) — a **clean fast-forward**, because the first
+pass had already been drained to main as `c3fa244ab`. This addendum sits on top of that.
+
+### The anchor, and why there
+
+`shelf-watch` is due east of the claim at **36wu** — further than the loudest machine's own radius
+(engine r24), so a trailed head is pulled genuinely **clear** of the hero rather than nudged. It
+lies in `lagoon-shallows`, so it is boat-navigable (probed, `artifacts/e5-stillwater/anchor-probe.mjs`),
+and **all three machines clear both quiet zones there**, so it is unambiguously LOUD. It sits 6wu
+north of `sail-trim-drift`, the adjacent silent step. Landed in the contract **and its mask table**
+in the same commit; the ruling is quoted verbatim in `NoiseHuntSystem.ts` (JSON has no comment
+slot and `claimBoat` has no prose field — inventing one would have been schema drift).
+
+### AIMING VS THE WALL — the verdict, and it is not the one I predicted
+
+**AIMING WORKS, AND IT MOVED THE MAP FIVE WAVES.** Ceiling **wave 4/4 → wave 9 (seed 01) and
+wave 11 (seed 02)**. More telling than the number: **the failure mode changed completely.** Under
+the lure the hero is *never touched* — hp 100 from wave 1 to the end — because the leviathans hunt
+the boat. What ends the run is the third deck pad going and the swarm turning back on an
+undefended claim.
+
+**🚨 AND THE MEASUREMENT REFUTED MY OWN F-A2-4.** I expected the pressure wall to stand. It does
+not. A revert-and-reproduce diagnostic with `strikeDamage` set to **0** — decks immortal,
+everything else identical — **SECURED at wave 12**: 97 kills, hero at 150hp, all three pads
+intact, `alive` pinned at the 60 cap the whole way. So *fifteen `machine_leviathan` a wave against
+three deck slots and a hero that cannot walk is survivable*, and "land pressure against deepwater
+vocabulary" was the wrong diagnosis. **I am recording that I was wrong rather than quietly
+dropping it**, because the row and the BACKLOG both asserted it.
+
+**The mechanical answers were exhausted before any constant was touched** — this is the part that
+licenses the retune:
+
+| policy | what it tries | seed 01 / 02 |
+|---|---|---|
+| `shed` | hop to `open-water`, silence everything, save the decks | 2 / 1 — silence returns 30 leviathans to the hero |
+| `kite` | hop between the two LOUD stations so the lure holds but contact breaks | 4 / 1 — decks survive at 84/96, the hero does not |
+| `bait` | hold the shelf while trailed | **9 / 11 — the ceiling** |
+
+### The one constant, re-derived once, from the clock and not from the target
+
+`NOISE_HUNT_RULES.strikeDamage` **16 → 6**. It was **mis-derived, not mis-typed**: 16 was set when
+the only station was `lagoon`, where contact was *intermittent* because the heads were also
+walking at the hero. The owner's anchor created the regime the constant actually governs — a
+deliberate lure, where contact is **continuous by design** — and at 16 a pad died in six strikes,
+so the whole boat lasted 72s of a 360s run. That is instakill by attrition, against a sheet that
+says *"threaten machines, not instakill"*.
+
+The new value is tied to the player's **declared** lever: at a 4s cadence a pad survives
+`96/6 = 16` strikes — **four times the eight-second trail-shed window**, so breaking contact is a
+real save. That carried 4/4 → 9/11.
+
+**I STOPPED THERE, AND THE STOP IS THE POINT.** A securing value exists — solving from the
+measured 77-strike full-run cost gives `strikeDamage ≲ 3.7` — but it is reachable *only* by
+working backwards from "it must win". That is tuning-to-win, i.e. Mistake #14 wearing a number.
+**It is a difficulty dial, and difficulty is an owner call.**
+
+**Law 2 is untouched by the retune, structurally:** idle runs no machine, takes no trail and lands
+no strike, so `strikeDamage` cannot move the floor. Measured: wave 3 both seeds, `strikes: 0`,
+unsecured, before and after.
+
+### Second-pass evidence (all repeats byte-IDENTICAL)
+
+| case | seed 01 | seed 02 |
+|---|---|---|
+| **`bait` — the ceiling** | **w9** `fnv1a32:f2738841` | **w11** `fnv1a32:e6ca02c3` |
+| `aim` (hold the shelf always) | w9 `fnv1a32:628e1460` | w1 `fnv1a32:250a734a` |
+| `aim` three guns | w8 `fnv1a32:e6446edd` | w1 `fnv1a32:45da340c` |
+| `aim` silent (control) | w1 `fnv1a32:8ec0698e` | w1 `fnv1a32:ab1b5a65` |
+| `kite` | w4 `fnv1a32:a61e3556` | w1 `fnv1a32:250a734a` |
+| `shed` | w2 `fnv1a32:92c72af8` | w1 `fnv1a32:250a734a` |
+| pre-anchor baseline | w4 `fnv1a32:319bc5fb` | w5 `fnv1a32:a03679a0` |
+| **IDLE FLOOR** | **w3** `fnv1a32:30144ddc` | **w3** `fnv1a32:316f5a1b` |
+
+**Gates:** tsc clean · build green (1.59s) · **26/26 desktop AND 26/26 mobile** over
+`e5-stillwater-noise` + `er01-e5-census` + `e5-flotilla-hulls` + `e5-regatta-race` +
+`e5-deepwater-claim` + `task-025` + `m1-01` — every E5 sibling unmodified-green · node guards
+**44/44** incl. `e3-mask-tables` (which is what proves the new anchor is in-bounds), the audit
+count pins, the report byte-match and the skill.md positive control.
+
+**Pins:** `bench-seeds.json`, `door-admission-baseline.json`, `public/skill.md`,
+`null-floors.json` and `same-game-audit.test.mjs` are **all byte-unmoved** — the map is still
+refused, so the door does not move. `docs/bench/same-game-audit.md` regenerated: filtering
+`.ts:<line>` coordinates out of the diff leaves **exactly 2 lines**, the old and new exemption
+reason. (Its summary counts read 504/1016/4 and 8 exemptions rather than the first pass's
+463/977/6 and 7 — that is **main's 53 commits**, the A9/A10 maps, not this change.)
+
+### Residual — stated plainly, as asked
+
+**F-A2-4 is REFUTED and rewritten, not carried.** The land-pressure/deepwater-vocabulary mismatch
+is *not* the blocker; the immortal-deck run proves the pressure is survivable. **The sole residual
+is lure duration** — how long three deck pads absorb a leviathan the player deliberately attracts
+— and it is one consumer constant, already re-derived once on principle. Taking it further is a
+difficulty ruling, which is why it is on the desk and not in this commit.
+
+**F-A2-3 is CLOSED** (owner-ruled, built, measured: +5 waves).
+
+---
+
+## FIRST PASS (2026-08-21) — unchanged below
+
 **Slice:** door-completion sheet item **A2** (RATIFIED 2026-08-20, owner: *"Group 1: approved (with any tweaks)"*)
 **Branch:** agent worktree `agent-a9e7d8321e70f7a1f` · **Base:** `b9fd6fecb`
 **Date:** 2026-08-21
