@@ -1535,7 +1535,8 @@
               "id": "f2152-1-census-player-safe-default",
               "title": "The census player stops defaulting to the BANKED artifact, and its comparison block stops freezing at exactly two runs",
               "taskFile": "f2152-1-census-player-safe-default.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "f2b870e6d0a0d0a72dc385f067599ebe02aba40e",
               "note": "FIRE-AUTHORED s2152, lane-d, board dry but for lane-b's live run (§2E authoring arm). Cures F-2142-4 RECURRING, as diagnosed by F-2151-1: s2142's cure was placed in a master's TEXT, so it protected only invocations that quoted it, and the defect recurred 1h44m later. Moves the cure into the PLAYER (:10 defaults to a scratch path; the banked artifact requires explicit opt-in) plus a guard rooted in test:node-guards. ALSO fixes a sharper mechanism the authoring fire re-derived at source: persist() recomputes comparison only inside 'if (artifact.runs.length === 2)', so a third run FREEZES it permanently rather than merely leaving it untouched - that is what would make a corrupted census lie rather than merely bloat. Backward compatibility is provable: the banked 2-run file must round-trip byte-identically. Priced by s2152's F-2152-1: this recurrence cost zero (the stray run was byte-identical to both banked runs), but the next need not be, and a frozen comparison is precisely what would fail to notice."
             },
             {
