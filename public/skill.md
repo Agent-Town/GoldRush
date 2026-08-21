@@ -84,6 +84,8 @@ The source-locked forms are:
 {"verb":"CONTEXT_ACTION","action":"fund"}
 {"verb":"CONTEXT_ACTION","action":"recover"}
 {"verb":"CONTEXT_ACTION","action":"plant"}
+{"verb":"CONTEXT_ACTION","action":"redig"}
+{"verb":"CONTEXT_ACTION","action":"backfill"}
 {"verb":"CAPTURE"}
 {"verb":"BOAT_BUILD","padId":"<string>","buildingId":"<string>"}
 {"verb":"REANCHOR","anchorId":"<string>"}
@@ -113,7 +115,7 @@ Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_o
 
 At the secure boundary, `now.pendingSecure` supplies the configured default (`bank`, or `rush` for `--overtime`) and the remaining decision time. `SECURE_CHOICE` is accepted only while that field is present. `bank` ends secured; `rush` continues from the same frozen boundary. Silence for the difficulty's 30/20/10-second choice clock takes the configured default and increments `defaultedSecure`.
 
-`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. `recover` also has no target: where `now.probeRecovery` is present, it lifts the crashed probe if the Prospector is standing in one of the published `zones`, and the run cannot secure until it does. It is one-time — a second call is refused. An illegal or unaffordable action fails through the ordinary order-failure surprise.
+`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. `recover` also has no target: where `now.probeRecovery` is present, it lifts the crashed probe if the Prospector is standing in one of the published `zones`, and the run cannot secure until it does. It is one-time — a second call is refused. `plant` has no target either: where `now.seedCaravan` is present, it plants a seed vault if the Prospector is standing at a published `grounds` stake while the caravan stands at the same ground, spending a quarter of the caravan's guard and leaving a permanent no-spawn green on that map. `redig` and `backfill` also have no target: where `now.canalChoices` is present, they settle the canal segment whose stake the Prospector is standing at — `redig` floods that band forever (nothing spawns in it and nothing can be built in it), `backfill` opens it as build ground forever, and an undecided band takes no works at all. Each segment takes exactly one verdict for the life of the profile, a second call is refused, and the run cannot secure until every segment carries one. An illegal or unaffordable action fails through the ordinary order-failure surprise.
 
 ## EPOCH LEVERS
 
@@ -297,6 +299,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
   "e9-seed-run": [
     "e9-seed-run-01",
     "e9-seed-run-02"
+  ],
+  "e9-old-canal": [
+    "e9-old-canal-01",
+    "e9-old-canal-02"
   ]
 }
 ```
