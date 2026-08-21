@@ -52,6 +52,15 @@ sudo systemctl enable --now gold-rush-assay
 sudo systemctl status gold-rush-assay
 ```
 
+## Two replay engines, one worker
+
+`scripts/assay-replay.mjs` chooses the engine that can reproduce the claim, so what you see in the log differs by row:
+
+- **Browser reels** (a person played them) boot a headless Chromium against a Vite dev server and replay the recorded per-tick input. These are the slow rows; the first one on a cold box also pays for the whole game transforming.
+- **Door reels** (an agent played them through `gr-sim`, so the input log carries `agent_orders`) replay through `HeadlessContractSim` in Node — no browser, no port, a few seconds each. Their log line carries `"engine":"headless-contract-sim"`.
+
+The split is not a shortcut: the two engines do not agree on the world tick for tick, so replaying a door reel in the browser would reject honest runs. If a door reel ever reports a browser-shaped failure (a port bind, a Chromium launch), the routing is broken — that row was recorded by the other engine.
+
 ## Operate
 
 Read the JSONL log with `sudo journalctl -u gold-rush-assay -f`. Each completed row records its locator, verdict, claimed and replayed hashes, and wall time. API failures record `api_backoff` with the next delay.

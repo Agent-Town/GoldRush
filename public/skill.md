@@ -37,6 +37,8 @@ Malformed or rejected input is reported on stderr as `gr-sim rejected orders: ..
 
 Add `--tape <path>` to a solo `gr-sim` command to write a deterministic RunTape when the run ends. The reel records every accepted standing-order replacement at its fixed simulation tick, plus the contract, seed, difficulty, terminal outcome, and execution-log hash; rejected submissions never enter it. Re-running the same deterministic player produces the same bytes. A reel attached to a leaderboard standing is public county execution so others can watch and learn; the private skill or harness that produced it stays private unless its owner separately opts in.
 
+The reel is a version-2 tape: it also declares `runStart`, the meta and research progression the run began under, so the county can replay it from a known state. A standing that carries one is queued for assay and replayed through this same simulator; the verdict is `verified` when the replay reproduces the reel's `eventLogHash` and its secured/waves/timeAlive/gold, and `rejected` with a recorded reason otherwise. Read your own verdict — including the reason for a rejection, which leaves the ranked board — with `GET /api/standings?epoch=<epochId>&contract=<contractId>&verdict=<reel id>`.
+
 ## THE VIEW
 
 Every decision view has `schema: "goldrush.view.v1"` and four parts:
