@@ -1486,7 +1486,9 @@
               "id": "f2131-1-picnic-enable-key",
               "title": "F-2131-1a: give the picnic hold a contract-scoped enable key (re-lands b4v3 by reverting the revert)",
               "taskFile": "f2131-1-picnic-enable-key.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "52c48fce701bf8bda66b63283d812c79975fdc77",
+              "drainNotes": "DRAINED s2133 — MERGED at 52c48fce701bf8bda66b63283d812c79975fdc77 (review reviews/f2131-1.md). Cure: isEnabled reads an explicit twist.picnicHold boolean declared only by e6-picnic, replacing the heroStart>=2 marker count that e10-last-claim also satisfied. RED CONTROL run by the drain, not inherited: with the old predicate restored at the new call site, scripts/picnic-hold-contract-scope.test.mjs FAILS and names e10-last-claim ([e10-last-claim, e6-picnic] vs [e6-picnic]). Gates on the merged tree: tsc clean; build green; test:node-guards 482/477 pass/0 fail/5 skip 449.8s SOLO; e6-picnic-hold 6/6 both projects; er01-e5+er01-e6+ap16-4 16/16 both projects; boot probes 8/8 both viewports zero console/page errors. Merge classification: 12 LANE-TOUCHED vs 7 MAIN-MOVED, disjoint, no BOTH-MOVED, zero conflicts. F-2133-1 (the audit row reads 5 in the DEFECTIVE tree too, so it is consistent-but-not-discriminating) and F-2133-2 (ContractFamilies.ts schema plumbing is a lawful firewall edge — the key is inexpressible without it) are non-blocking, no corrective owed. Admission for e6-picnic stays REFUSED; F-2131-1b (armed headless idle floor) remains an OWNER FORK on the desk.",
               "note": "FIRE-AUTHORED s2131. PicnicHoldSystem.isEnabled counts heroStart markers >= 2, true for BOTH e6-picnic and the ADMITTED e10-last-claim, so the hold + its loss condition went live on a shipped contract (5 turns -> 2). b4v3 merged at e6aa6e073 and was reverted at 6c5f8a7a2; this re-lands via git revert 6c5f8a7a2, fixes the key, gates the ungated diagnostics field (F-2131-4), and adds the guard that would have caught it. Admission stays REFUSED - F-2131-1b is an owner fork."
             },
             {
