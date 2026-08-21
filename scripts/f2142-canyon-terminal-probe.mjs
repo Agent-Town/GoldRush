@@ -2,8 +2,8 @@
 /**
  * F-2142-1 — read the terminal state that GATE B discards.
  *
- * `scripts/gr-sim-campaign.mjs:113` throws `"<contract> ended unsecured at wave N"` the instant
- * `outcome.secured` is false. `outcome` is fully computed one line above that throw, and the whole
+ * `scripts/gr-sim-campaign.mjs:111/:113` computes `outcome`, then throws
+ * `"<contract> ended unsecured at wave N"` the instant `outcome.secured` is false, and the whole
  * of it — kills, gold, timeMs, the terminal `canyonConnect` row — is discarded with the exception.
  * The s2141 census therefore reported "the leg ends at wave 2" without being able to say WHY.
  *
@@ -11,7 +11,7 @@
  * module) through the same `HeadlessContractSim` loop, and instead of throwing, prints:
  *   - the full terminal `outcome()`
  *   - `HeadlessContractSim.terminal` is `this.dead || this.secureChoice === 'bank'`
- *     (`src/sim/HeadlessContractSim.ts:1331`), so with `secured:false` the discriminator between
+ *     (`src/sim/HeadlessContractSim.ts:1308`), so with `secured:false` the discriminator between
  *     "the rider went down" and "the rider banked" is decidable from the outcome + the last view
  *   - a RICH per-turn trace (hp, gold, kills, threats, works, prospector) beside the four-field
  *     census row, so the wave-2 end has a cause and not just a wave number
@@ -112,13 +112,26 @@ try {
   // different contract than the one the sim booted, `isBuildable` answers about the wrong map and
   // every cell outside the default 64x64 claim reads unbuildable AND unwalkable for a reason that
   // has nothing to do with the canyon. The canyon's own claim is 96x112.
-  const { ACTIVE_CONTRACT } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+  const { CLAIM_WIDTH, CLAIM_HEIGHT } = Terrain;
+  if (CLAIM_WIDTH === undefined) throw new Error('CLAIM_WIDTH is undefined in /src/world/Terrain.ts');
+  if (CLAIM_HEIGHT === undefined) throw new Error('CLAIM_HEIGHT is undefined in /src/world/Terrain.ts');
+  const contractDimensions = contract.tileParams.dimensions;
+  if (contractDimensions === undefined) {
+    throw new Error('contract.tileParams.dimensions is undefined in /src/meta/ContractFamilies.ts');
+  }
+  if (contractDimensions.width === undefined) {
+    throw new Error('contract.tileParams.dimensions.width is undefined in /src/meta/ContractFamilies.ts');
+  }
+  if (contractDimensions.height === undefined) {
+    throw new Error('contract.tileParams.dimensions.height is undefined in /src/meta/ContractFamilies.ts');
+  }
+  const matchesRequestedContract = CLAIM_WIDTH === contractDimensions.width && CLAIM_HEIGHT === contractDimensions.height;
   const terrainBinding = {
-    activeContractId: ACTIVE_CONTRACT?.id ?? null,
-    claimWidth: Terrain.CLAIM_WIDTH,
-    claimHeight: Terrain.CLAIM_HEIGHT,
-    contractDimensions: ACTIVE_CONTRACT?.tileParams?.dimensions ?? null,
-    matchesRequestedContract: (ACTIVE_CONTRACT?.id ?? null) === args.contract,
+    activeContractId: matchesRequestedContract ? contract.id : null,
+    claimWidth: CLAIM_WIDTH,
+    claimHeight: CLAIM_HEIGHT,
+    contractDimensions,
+    matchesRequestedContract,
   };
   const grid = args.grid ? JSON.parse(await readFile(resolve(args.grid), 'utf8')) : null;
   const sites = grid ?? [
@@ -162,7 +175,7 @@ try {
   });
 
   const report = {
-    schema: 'goldrush.f2142.canyon-terminal.v1',
+    schema: 'goldrush.f2142.canyon-terminal.v2',
     terrainBinding,
     groundCensus,
     contractId: contract.id,
