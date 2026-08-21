@@ -160,6 +160,8 @@ interface ThreeGameDiagnostics {
     contractId: string;
     entries: number;
     greenWaypoint: { x: number; z: number; r: number } | null;
+    /** A8: every green born on this tile, in snapshot order. `greenWaypoint` is the first of them. */
+    greenWaypoints: Array<{ x: number; z: number; r: number }>;
     greenWaypointStaged: boolean;
     swatchColor: string;
     noSpawnZones: Array<{ x: number; z: number; radius: number }>;
@@ -248,6 +250,7 @@ interface ThreeGameDiagnostics {
   decay: ReturnType<import('./systems/DecaySystem').DecayScheduler['diagnostics']>;
   e6Tiles: import('./systems/E6TileConsumerSystem').E6TileConsumerDiagnostics;
   wrangle: ReturnType<import('./systems/WrangleSystem').WrangleSystem['diagnostics']>;
+  showroomCaptureObjective?: import('./systems/ShowroomCaptureObjective').ShowroomCaptureDiagnostics;
   run: {
     secured: boolean;
     rush: boolean;
@@ -320,6 +323,7 @@ interface ThreeGameDiagnostics {
   escort: GrEscortDiagnostics;
   tram: GrTramDiagnostics | null;
   fairground: GrFerrisWheelDiagnostics | null;
+  crowdFlocks: import('./systems/CrowdFlockSystem').CrowdFlockDiagnostics | null;
   fuel: import('./systems/FuelSystem').FuelDiagnostics | null;
   vehicle: import('./entities/Vehicle').VehicleDiagnostics | null;
   power: GrPowerGraphDiagnostics;
@@ -498,12 +502,33 @@ interface ThreeGameDiagnostics {
   e6Arsenal: import('./systems/E6ArsenalSystem').E6ArsenalDiagnostics;
   e9Arsenal: import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
   e9Canal: import('./systems/E9CanalSystem').E9CanalDiagnostics;
+  seedCaravan: import('./systems/SeedCaravanSystem').SeedCaravanDiagnostics | null;
+  /** A10: null on every contract that declares no canal choices. The objective's own read. */
+  canalChoices: import('./systems/CanalChoiceSystem').CanalChoiceDiagnostics | null;
+  /** A10-LEGIBILITY: what a PLAIN boot shows of the flow. Presentation only; reaches no sim. */
+  canalFlow: import('./systems/CanalFlowPresentation').CanalFlowDiagnostics | null;
+  /**
+   * A8-LEGIBILITY: what a PLAIN boot shows a stranger about the caravan — the name tag, the guard
+   * bar, the drawn road, and which county-voice beats have been said. Null wherever the consumer
+   * is null. Presentation only; nothing here reaches the sim.
+   */
+  seedCaravanPresentation:
+    import('./systems/SeedCaravanPresentation').SeedCaravanPresentationDiagnostics | null;
+  /** A5: null on every contract that declares no discharge-able interference front. */
+  interferenceFront: import('./systems/InterferenceFrontSystem').InterferenceFrontDiagnostics | null;
   e10Finale: import('./systems/E10FinaleSystem').E10FinaleDiagnostics;
   e10Static: import('./systems/E10StaticBossSystem').E10StaticBossDiagnostics;
   e7Signal: import('./systems/E7SignalSystem').E7SignalDiagnostics;
   e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
   e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
   e8Physics: import('./systems/E8PhysicsSystem').E8PhysicsDiagnostics;
+  probeRecovery: import('./systems/ProbeRecovery').ProbeRecoveryDiagnostics;
+  /** A3: present only where the contract declares `twist.broadcastMirror`; null everywhere else. */
+  broadcastMirror: import('./systems/BroadcastMirror').BroadcastMirrorDiagnostics | null;
+  lowOrbit: import('./systems/LowOrbitSystem').LowOrbitDiagnostics;
+  devilsAlley: import('./systems/ScheduledRelocationSystem').ScheduledRelocationDiagnostics | null;
+  devilsAlleyPresentation: import('./systems/DevilsAlleyPresentation').DevilsAlleyPresentationDiagnostics | null;
+  hollowCrossing: import('./systems/HollowCrossingSystem').HollowCrossingDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;
@@ -520,6 +545,12 @@ interface ThreeGameDiagnostics {
     lastGoldGain: number;
     lastGoldPosition: { x: number; y: number; z: number } | null;
   };
+  /**
+   * RENDER-side seam heights (browser only — the headless engine has no visuals and omits this).
+   * `visualY` is where the seam's sprite is standing, `groundY` where the terrain now is; a gap
+   * between them is a buried seam, which is what shipped before 2026-08-20.
+   */
+  harvestVisuals?: import('./systems/HarvestSystem').HarvestVisualDiagnostics;
   steal: {
     thieves: number;
     fleeing: number;
@@ -1054,6 +1085,11 @@ interface Window {
       },
     ) => void;
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
+    probe: {
+      recover: () => boolean;
+      inReach: (x: number, z: number) => boolean;
+      diagnostics: () => import('./systems/ProbeRecovery').ProbeRecoveryDiagnostics;
+    };
     spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     wreck: (family: GrBuildableId, index: number) => boolean;
     repair: (family: GrBuildableId, index: number) => false | unknown;

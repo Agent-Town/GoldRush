@@ -93,7 +93,11 @@ import { install as installAgentStub, type AgentStub } from '../agent/AgentStub'
 import { snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
 import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
+import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
+import { FlotillaHullSystem } from '../systems/FlotillaHullSystem';
+import { NoiseHuntSystem } from '../systems/NoiseHuntSystem';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
+import { CrowdFlock } from '../entities/CrowdFlock';
 import { FerrisWheel } from '../entities/FerrisWheel';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { DEV_TRAM_CONSUMER, TramPath, devTramPowerGraphDefinition } from '../entities/TramPath';
@@ -180,8 +184,14 @@ import { E9CanalSystem } from '../systems/E9CanalSystem';
 import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
+import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression } from '../systems/SignalSuppression';
+import { BroadcastMirror } from '../systems/BroadcastMirror';
+import { FRONT_HALF_WIDTH, INTERFERENCE_MUTED_REASON, INTERFERENCE_MUTED_VOICE, InterferenceFrontSystem } from '../systems/InterferenceFrontSystem';
+import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
+import { LowOrbitSystem } from '../systems/LowOrbitSystem';
+import { HollowCrossingSystem } from '../systems/HollowCrossingSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -212,6 +222,7 @@ import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type Upgra
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
+import { CrowdFlockSystem } from '../systems/CrowdFlockSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { createHomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { OldDiggerBossSystem, type OldDiggerTape, type SurveyPoint } from '../systems/OldDiggerBossSystem';
@@ -232,6 +243,7 @@ import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, 
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { WrangleSystem } from '../systems/WrangleSystem';
+import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 import { CombatVfx } from '../systems/CombatVfx';
 import { BaronVolleyVfx } from '../systems/BaronVolleyVfx';
 import { Vfx } from '../systems/Vfx';
@@ -247,7 +259,7 @@ import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiInte
 import { PartyOverview, type PartyOverviewSnapshot } from '../ui/PartyOverview';
 import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
-import { BuildingContextPrompt, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
+import { BuildingContextPrompt, type CanalDecisionCandidate, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { LanternShow, type LanternShowState } from '../ui/LanternShow';
@@ -265,7 +277,7 @@ import {
   type NightShiftPhase,
 } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
-import { createDeepwaterClaimTile, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
+import { createDeepwaterClaimTile, deepwaterStormDrivesWaves, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
 import { readTownName } from '../town/TownNaming';
 import { gameApiUrl } from '../app/GameApi';
 import { installRunTelemetry, reportRenderDemotion } from '../telemetry/runBeacon';
@@ -300,6 +312,7 @@ import {
   applyAtBirth,
   DREDGE_QUEEN_WRECK_ENTRY_ID,
   GREEN_WAYPOINT_ENTRY_ID,
+  isGreenWaypointEntry,
   OLD_DIGGER_GENTLE_ENTRY_ID,
   SALVAGE_CLAW_CARCASS_ENTRY_ID,
   parseDredgeQueenWreckPayload,
@@ -314,6 +327,12 @@ import {
   type SalvageClawCarcassPayload,
 } from './TileStateStore';
 import { createGreenWaypointSwatch, E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
+import { SeedCaravanSystem } from '../systems/SeedCaravanSystem';
+import { ScheduledRelocationSystem } from '../systems/ScheduledRelocationSystem';
+import { DevilsAlleyPresentation } from '../systems/DevilsAlleyPresentation';
+import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
+import { CanalChoiceSystem } from '../systems/CanalChoiceSystem';
+import { CanalFlowPresentation } from '../systems/CanalFlowPresentation';
 
 // Replay Law: Frontier upgrades remain available after later epochs activate.
 const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
@@ -586,6 +605,28 @@ export class Game {
   private readonly e6ArsenalSystem: E6ArsenalSystem;
   private readonly e9ArsenalSystem: E9ArsenalSystem;
   private readonly e9CanalSystem: E9CanalSystem;
+  /**
+   * A8 (door-completion-sheet §A8, RATIFIED 2026-08-20). Null on every contract that does not
+   * declare `twist.persistentPlanting`, which is every contract but the Seed Run today. The same
+   * consumer `HeadlessContractSim` composes, built off the SAME contract read, so the browser and
+   * the door cannot disagree about where the route runs or when the crossing is won.
+   */
+  private readonly seedCaravan: SeedCaravanSystem | null;
+  /**
+   * A8-LEGIBILITY (owner playtest 2026-08-20: "I was not even aware that there is a caravan to
+   * protect or when it moves where"). Browser-only, presentation-only, born beside the consumer
+   * and null wherever it is. Nothing it does can move a hash — see the file header.
+   */
+  private seedCaravanPresentation: SeedCaravanPresentation | null = null;
+  /**
+   * A10 (`specs/agent-play/door-completion-sheet.md:26`). Null on every contract that does not
+   * declare `twist.persistentCanalChoices`, which is every contract but the Old Canal today. The
+   * same consumer `HeadlessContractSim` composes, built off the SAME contract read, so the
+   * browser and the door cannot disagree about which bands take a foundation or when the canal
+   * has been decided.
+   */
+  /** A10 legibility: browser-only, presentation-only, born beside the consumer and null with it. */
+  private canalFlowPresentation: CanalFlowPresentation | null = null;
   private readonly e10FinaleSystem: E10FinaleSystem;
   private readonly e10StaticBoss: E10StaticBossSystem;
   private readonly e7SignalSystem: E7SignalSystem;
@@ -673,7 +714,81 @@ export class Game {
   private readonly tileStateStore = new TileStateStore(safeLocalStorage());
   private readonly activeContract = bornContract(this.tileStateStore);
   private readonly offeredBuildables = mechanicsBuildableIds(this.activeContract);
+  // A4 (door-completion-sheet §A4, RATIFIED 2026-08-20). ONE consumer per run, shared by the
+  // three gate sites below, so its refusal counters are the run's real total and not three
+  // partial tallies. Built off the CONTRACT, never the epoch — A6 reuses it from E8.
+  private readonly signalSuppression = SignalSuppression.create(this.activeContract);
+  /**
+   * A3 (door-completion-sheet §A3, RATIFIED 2026-08-20). ONE consumer per run, written by the
+   * single funnel every playbook USE passes through and read by `WaveSystem` at the head of each
+   * wave — so "one corrupted copy per use, on the next wave" is one object's arithmetic rather
+   * than a rule spread across two call sites. Built off the CONTRACT, never the epoch: the three
+   * Signal siblings that declare no mirror get `none()` and never grow a spawn.
+   *
+   * It is declared HERE, above the constructor, because `this.waveSystem` is built on the
+   * constructor's first line and must be handed the reader already.
+   */
+  private readonly broadcastMirror = BroadcastMirror.create(this.activeContract);
+  /**
+   * A6 (door-completion-sheet §A6, RATIFIED 2026-08-20). ONE consumer per run, shared by the
+   * player's confirm key, the agent rider's `CONTEXT_ACTION action:'recover'`, and the secure
+   * latch — so all three read the same one-way flag and the counters are the run's real total.
+   */
+  private readonly probeRecovery = ProbeRecovery.create(this.activeContract);
+  /**
+   * A5 (door-completion-sheet §A5, RATIFIED 2026-08-20). ONE consumer per run, shared by the
+   * shooter seam (`BuildSystem.isShooterPowered`), the playbook gates, the drone gate, the
+   * secure latch and the band this class renders — so a single wall answers every question and
+   * the refusal counters are the run's real total. Built off the CONTRACT, never the epoch.
+   */
+  private readonly interferenceFront = InterferenceFrontSystem.create(this.activeContract);
+  /**
+   * A10 (`specs/agent-play/door-completion-sheet.md:26`) — the Old Canal's three verdicts. A FIELD
+   * INITIALISER rather than a constructor-body line, and that placement is load-bearing: field
+   * initialisers run in declaration order BEFORE the constructor body, and `BuildSystem` (built in
+   * the body) takes this consumer's ground veto as a constructor argument. It reads the BORN
+   * contract above, so a profile that re-dug a band last run walks onto water this one.
+   *
+   * Null on every contract that declares no canal choices, which is every contract but one today.
+   * The voice callback reads `this.vfx` lazily — it can only ever fire from a player action, long
+   * after the constructor body has raised the effects layer.
+   */
+  private readonly canalChoices = CanalChoiceSystem.create(
+    this.activeContract,
+    this.tileStateStore,
+    (position, text) => this.vfx.floatText(new THREE.Vector3(position.x, 0, position.z), text, '#5b8a8a'),
+  );
+  /**
+   * A9 — the scheduled relocation, read off the CONTRACT exactly as `HeadlessContractSim` reads
+   * it, so the two engines cannot disagree about where the column is or which works it may take.
+   * The county's voice is passed here and nowhere else: the sim engine paints nothing.
+   */
+  private readonly devilsAlley = ScheduledRelocationSystem.create(
+    this.activeContract,
+    (at, text) => this.vfx.floatText(new THREE.Vector3(at.x, Terrain.visualY(at.x, at.z, 1.4), at.z), text, '#e0b35d', 2.2),
+  );
+  private devilsAlleyPresentation: DevilsAlleyPresentation | null = null;
+  /**
+   * A5's whole presentation, and deliberately no more than the ratification asked for: "a simple
+   * static band (tint/vignette) is enough — no shader work". A flat translucent slate quad the
+   * width of the wall, laid over the corridor while the front crosses and hidden between fronts.
+   * The MESH lives here because `Game` is render code and `InterferenceFrontSystem` must not be
+   * (F-A8-7); the class publishes numbers and this reads them.
+   */
+  private readonly interferenceBand = new THREE.Mesh(
+    new THREE.PlaneGeometry(1, 1),
+    new THREE.MeshBasicMaterial({ color: 0x9aa3a8, transparent: true, opacity: 0.26, depthWrite: false }),
+  );
+  /** Mistake #7: every write-sink gets a dupe-guard. The crater hint announces ONCE per run. */
+  private probeHintAnnounced = false;
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
+  // A7 (door-completion-sheet §A7, RATIFIED 2026-08-20). The low-orbit geography consumer:
+  // handhold spine, scaffold decks, debris bands, and the orbital-return flag that
+  // `E8PhysicsSystem:133` has computed since E8 landed while nothing read it. Built off the
+  // CONTRACT, so every non-orbital run holds an inert consumer that answers "no" to everything.
+  private readonly lowOrbit = LowOrbitSystem.create(this.activeContract);
+  private readonly hollowCrossing = HollowCrossingSystem.create(this.activeContract);
+  private readonly hollowCrossingVisuals = new THREE.Group();
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private readonly activeEpoch = new URLSearchParams(window.location.search).has('replay') && this.contractEpoch
     ? loadEpoch(this.contractEpoch.id)
@@ -692,6 +807,7 @@ export class Game {
     this.activeContract.tileParams.stakeMarkers ?? [],
     () => { this.deathPending = true; },
   );
+  private readonly showroomCaptureObjective = ShowroomCaptureObjective.create(this.activeContract);
   private readonly echoBossEnabled = this.activeContract.id === 'e7-relay-valley'
     || (isDebugEnabled() && new URLSearchParams(window.location.search).has('e7boss'));
   private readonly wrangle = new WrangleSystem(
@@ -703,11 +819,28 @@ export class Game {
     this.tileStateStore,
     (position) => this.vfx.floatText(position, 'EXHAUSTED — WRANGLE', '#83ded7'),
     (enemy, penTotal) => {
+      this.showroomCaptureObjective.recordCapture();
       this.combat.presentFreedEnemy(enemy);
       this.vfx.floatText(enemy.position, `CAUGHT — PEN ${penTotal}`, '#83ded7');
     },
   );
   private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
+  private readonly regattaRace = RegattaRaceSystem.create(this.activeContract);
+  private readonly flotillaHulls = FlotillaHullSystem.create(this.activeContract, (id) => this.deepwaterClaim?.loseHull(id));
+  /**
+   * A2 — the noise-hunt, seated on the SAME readings GR-SIM seats (`DeepwaterSocket`): the boat
+   * anchor and deck from the tile, the ballista's shot counter from the deck arsenal, the pan
+   * CHANNEL from the harvest system, and knock-outs back through `loseHull`. Null on every
+   * contract that does not declare `tileParams.stillwater`.
+   */
+  private readonly noiseHunt = NoiseHuntSystem.create(this.activeContract, {
+    anchor: () => this.deepwaterClaim?.snapshot().boat.anchor ?? { x: 0, z: 0 },
+    panChanneling: () => this.harvestSnapshot.channeling,
+    harpoonFires: () => this.deepwaterArsenal.harpoonShots,
+    prospectorPosition: () => this.primaryActor.group.position,
+    deckBuildings: () => this.deepwaterClaim?.snapshot().boat.buildings ?? [],
+    onDeckLost: (padId) => this.deepwaterClaim?.loseHull(padId),
+  });
   private deepwaterCorsairWavesSpawned = 0;
   private readonly dayNightCycle = createDayNightCycle(this.activeContract);
   private readonly lightField = new LightField({
@@ -747,6 +880,8 @@ export class Game {
   private damSurge?: DamSurgeEvent;
   private tram?: TramPath;
   private ferrisWheel?: FerrisWheel;
+  private crowdFlocks?: CrowdFlockSystem;
+  private crowdFlockView?: CrowdFlock;
   private canyonConnectAnnounced = false;
   private canyonConnectCompletedByDeadline = false;
   private canyonConnectFailed = false;
@@ -1229,6 +1364,8 @@ export class Game {
   private demolishCandidate: DemolishCandidate | null = null;
   private demolishSuppressedKey: string | null = null;
   private upgradeCandidate: UpgradeCandidate | null = null;
+  /** A10: the undecided stake in reach, or null. Drives the two-button prompt. */
+  private canalDecisionCandidate: CanalDecisionCandidate | null = null;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastBuildIntent = false;
@@ -1242,6 +1379,8 @@ export class Game {
   private lastDebugXpIntent = false;
   private lastDebugPlantIntent = false;
   private greenWaypointMounted: GreenWaypointPayload | null = null;
+  /** A8: a Seed Run tile can be born carrying one disc per ground, so the mount is a list. */
+  private readonly greenWaypointsMounted: GreenWaypointPayload[] = [];
   private greenWaypointStagedThisRun = false;
   private playerPauseActive = false;
   private uiSnapshot?: UiSnapshot;
@@ -1307,7 +1446,12 @@ export class Game {
         this.advanceMegaprojectOnWave(atSim);
         return !this.secureClaimChoicePending();
       },
-      () => areWavesDisabled() || this.deepwaterClaim !== null || this.activeContract.practice?.scheduledWaves === false,
+      // A2: the storm track replaces the generic schedule only where it actually CREWS a wave.
+      // `e5-stillwater` authors a suppressed storm and `corsairWaveSize: 0`, so its clock stays
+      // the ordinary one — GR-SIM gates the identical predicate (`HeadlessContractSim`).
+      () => areWavesDisabled()
+        || (this.deepwaterClaim !== null && deepwaterStormDrivesWaves(this.activeContract))
+        || this.activeContract.practice?.scheduledWaves === false,
       () => this.activeContract,
       this.boot,
       () => !isStealDisabled() && this.hasBuiltStockpile(),
@@ -1331,6 +1475,9 @@ export class Game {
       // Owner ruling 2026-08-20: exhausted machines stop holding spawn slots. GR-SIM seats the
       // SAME reader through `AtomicSocket.exhaustedCount`, so the two engines refuse identically.
       () => this.wrangle.exhaustedCount(),
+      // A3: the corrupted copies of last wave's playbook uses. GR-SIM seats the SAME reader off
+      // its own `BroadcastMirror`, so the mirror rule is one implementation in two engines.
+      (wave) => this.broadcastMirror.fieldMirrors(wave),
     );
     resetAssetLoading(canvas, 'the claim');
     this.assertActorMode();
@@ -1367,7 +1514,16 @@ export class Game {
         });
         return true;
       },
-      (id, _index, position) => id !== 'turret' || this.powerConsumerAt(position.x, position.z, 'turret'),
+      // A5 prefixes the power read rather than replacing it: a work under the interference front
+      // is unpowered wherever it stands, and everything else answers exactly what it always did
+      // (the front's `muted()` is false on every contract that declares none). The beacon half of
+      // this predicate is newly consulted — see `BuildSystem.registerBeaconShooter`.
+      (id, _index, position) => !this.interferenceFront.muted(position.x, position.z)
+        && (id !== 'turret' || this.powerConsumerAt(position.x, position.z, 'turret')),
+      // A10 — THE GROUND VETO, the same predicate `HeadlessContractSim` injects. A canal band
+      // that is still a ditch, or is water again, takes no foundation; a backfilled one does.
+      // Every contract that declares no canal choices answers `true` and is unchanged.
+      (x, z) => this.canalChoices?.worksAllowed(x, z) ?? true,
     );
     this.pressureSystem = new PressureSystem(
       this.economy,
@@ -1438,6 +1594,18 @@ export class Game {
         !this.multiplayerActive(),
       (position, amount, label) => this.vfx.floatText(position, `${label} +${amount}`, '#83ded7'),
     );
+    // A8: contract-driven, never epoch-driven or id-driven — the twist plus the authored zones
+    // and stakes are the whole test, so this stays null on the three Red Fields siblings.
+    this.seedCaravan = SeedCaravanSystem.create(
+      this.activeContract,
+      this.tileStateStore,
+      (position, text, color) => this.vfx.floatText(position, text, color),
+      // The browser is the only engine with terrain to sample, and the only one that paints; the
+      // consumer must import neither (see `GroundSampler`), so both are handed in here. This keeps
+      // ONE authority for the hex law's green.
+      (x, z) => Terrain.visualY(x, z, 0),
+      E1_RIVERBANK_GREEN,
+    );
     this.e7SignalSystem = new E7SignalSystem(
       () => this.activeEpoch.id === 'epoch-7-signal' && !this.multiplayerActive(),
       () => {
@@ -1450,6 +1618,7 @@ export class Game {
       terrainLineOfSight,
       safeLocalStorage(),
       (fragment) => this.uiBridge.announce(fragment, this.timeAlive, null, 6, 'wave', 'THE EXCHANGE'),
+      this.signalSuppression,
     );
     this.e7ArsenalSystem = new E7ArsenalSystem(
       this.combat,
@@ -1462,6 +1631,16 @@ export class Game {
       () => this.e7SignalSystem.diagnostics.enabled ? this.e7SignalSystem.diagnostics.links.length : undefined,
     );
     this.scene.add(this.e7ArsenalSystem.view.group);
+    // A7. Installed once, from the contract's own declaration, and only where it is declared:
+    // `setOrbitalReturn(null)` is the state every other contract keeps, which is the same
+    // no-policy path `CombatSystem` had before A7 existed.
+    if (this.lowOrbit.returnsProjectiles) {
+      this.combat.setOrbitalReturn({
+        seconds: this.lowOrbit.returnSeconds,
+        onScheduled: () => this.lowOrbit.noteReturnScheduled(),
+        onDetonated: () => this.lowOrbit.noteReturnDetonated(),
+      });
+    }
     const e8PhysicsCombat = {
       registerShooter: (handle: ShooterHandle) => this.combat.registerShooter(this.e8PhysicsSystem.adaptShooter(handle)),
     } as unknown as CombatSystem;
@@ -1552,6 +1731,11 @@ export class Game {
         if (this.mpClient) this.mpQueuedActions.push({ type: 'context_action', action: 'fund' });
         else this.fundMegaprojectStage(this.actionActor.group.position);
       },
+      // A10: the two halves of the decision, on their own buttons so touch and mouse reach both.
+      // No multiplayer queue entry — the Old Canal is a single-seat contract and a verdict that
+      // one seat could take on another's behalf is a persistence bug waiting to be filed.
+      () => void this.canalChoices?.decide(this.actionActor.group.position, 'redig'),
+      () => void this.canalChoices?.decide(this.actionActor.group.position, 'demolish'),
     );
     this.assayOfficePrompt = new AssayOfficePrompt(this.promptStack);
     this.worldInfoNotePrompt = new WorldInfoNotePrompt(this.promptStack);
@@ -1845,6 +2029,13 @@ export class Game {
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
           this.spawnHarnessPack(n, radius, opts ?? legacySpawnPackOptions(n, radius)),
         spawnThief: (edge?: CompassEdge) => this.spawnHarnessThief(edge),
+        // A6: the recovery reachable from a test without driving the confirm key, plus the
+        // pure reach predicate so a spec can prove the crater is a PLACE and not a global flag.
+        probe: {
+          recover: () => this.tryRecoverProbe(this.actionActor.group.position),
+          inReach: (x: number, z: number) => this.probeRecovery.inReach({ x, z }),
+          diagnostics: () => this.probeRecovery.diagnostics,
+        },
         spawnWrecker: (edge?: CompassEdge) => this.spawnHarnessWrecker(edge),
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         repair: (family: BuildableId, index: number) => {
@@ -1916,7 +2107,11 @@ export class Game {
         e7Signal: {
           milestone: (milestone: E7SignalMilestone) => this.e7SignalSystem.recordMilestone(milestone),
           graphFor: (nodes: Array<{ id: string; x: number; z: number }>) => this.e7SignalSystem.graphFor(nodes),
-          droneCanOperate: (x: number, z: number) => this.e7SignalSystem.droneCanOperate({ x, z }),
+          // A5: the same two-part answer the replay gate gives above — the contract's standing
+          // suppression, then the wall's position right now. `muted` is the pure read here, so a
+          // diagnostic poll never inflates the refusal counters.
+          droneCanOperate: (x: number, z: number) => this.e7SignalSystem.droneCanOperate({ x, z })
+            && !this.interferenceFront.muted(x, z),
           diagnostics: () => this.e7SignalSystem.diagnostics,
         },
         e9Arsenal: {
@@ -2046,7 +2241,11 @@ export class Game {
           return placed;
         },
         reanchorClaimBoat: (anchorId: string) => {
-          const moved = this.deepwaterClaim?.reanchor(anchorId) ?? false;
+          const moved = this.flotillaHulls?.diagnostics.hulls.some(({ id }) => id === anchorId)
+            ? this.flotillaHulls.reanchor(anchorId)
+            : this.deepwaterClaim?.reanchor(anchorId) ?? false;
+          // A2: only a boat that actually got under way makes engine noise.
+          if (moved) this.noiseHunt?.onReanchor(this.timeAlive);
           this.publishDiagnostics();
           return moved;
         },
@@ -2375,6 +2574,10 @@ export class Game {
     this.e6TileConsumers.dispose();
     this.e9ArsenalSystem.dispose();
     this.e9CanalSystem.dispose();
+    this.seedCaravan?.dispose();
+    this.seedCaravanPresentation?.dispose();
+    this.canalFlowPresentation?.dispose();
+    this.devilsAlleyPresentation?.dispose();
     this.e10FinaleSystem.dispose();
     this.e10StaticBoss.dispose();
     this.e7ArsenalSystem.dispose();
@@ -2386,6 +2589,7 @@ export class Game {
     this.homemakerBoss.dispose();
     this.echoBoss.dispose();
     this.oldDiggerBoss.dispose();
+    disposeObject3D(this.hollowCrossingVisuals);
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -2432,6 +2636,7 @@ export class Game {
     this.damSurge?.dispose();
     this.tram?.dispose();
     this.ferrisWheel?.dispose();
+    this.crowdFlockView?.dispose();
     this.vehicle?.dispose();
     this.fuelSystem?.dispose();
     this.detailScatter?.dispose();
@@ -2574,6 +2779,11 @@ export class Game {
       this.syncDeepwaterClaim();
       if (this.actors.some((actor) => actor.group.visible && this.weaponForActor(actor) === 'blast')) this.blastTime += simDelta;
       this.updateActors(simDelta, intents);
+      this.regattaRace?.advance(
+        this.timeAlive,
+        this.currentRunWave(),
+        [...this.actors.filter(({ group }) => group.visible).map(({ group }) => group.position), this.deepwaterClaim!.snapshot().boat.anchor],
+      );
       this.e6TileConsumers.update(simDelta, this.timeAlive, this.visibleHarvestTargets());
       this.syncPlaybookAnchor();
       this.syncHeroVisualHeight();
@@ -2638,6 +2848,10 @@ export class Game {
       this.syncContractPowerGrid();
       this.ferrisWheel?.update(simDelta);
       this.syncFerrisWheelPower();
+      if (this.crowdFlocks) {
+        this.crowdFlocks.update(simDelta, this.dayNightSnapshot, this.enemies.all);
+        this.crowdFlockView?.update(simDelta, this.crowdFlocks.diagnostics);
+      }
       this.powerGraph?.step(this.simTick);
       this.syncCanyonConnectObjective();
       if (this.tram && this.powerGraph) {
@@ -2658,9 +2872,11 @@ export class Game {
               const stake = this.picnicHold.pressureTarget(enemy, picnicDefenders);
               return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
             }
-          : actorTargets,
+          : this.flotillaHulls
+            ? [this.flotillaTargetPosition()]
+            : actorTargets,
         (enemy) => {
-          if (!this.picnicHold.pressureTarget(enemy, picnicDefenders) && !this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
+          if (!this.picnicHold.pressureTarget(enemy, picnicDefenders) && !this.flotillaHulls && !this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
         [...this.buildSystem.palisadeBlockers, ...this.heroBlockers()],
@@ -2677,7 +2893,34 @@ export class Game {
         this.enemies.all.filter((enemy) => enemy.isAlive),
         picnicDefenders,
       );
+      if (this.flotillaHulls?.advance(this.timeAlive, this.enemies.all)) {
+        this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5);
+      }
       if (this.e9CanalSystem.update(simDelta, this.timeAlive, this.visibleHarvestTargets())) this.syncHeroVisualHeight();
+      // A8: beside the era systems and ahead of the enemy integration step, so contact damage
+      // reads the same positions `HeadlessContractSim` reads at the same point in its own order.
+      this.seedCaravan?.update(simDelta, this.enemies.all);
+      this.syncSeedCaravanPresentation();
+      // A10: the consumer has no tick of its own — a verdict is an event, not an integration —
+      // so the only per-frame work is repainting the flow from the published diagnostics. It is
+      // idempotent and does nothing at all until a decision lands.
+      if (this.canalChoices && this.canalFlowPresentation) this.canalFlowPresentation.sync(this.canalChoices.diagnostics);
+      // A5: the wall advances on the same sim delta and in the same relative order as
+      // `HeadlessContractSim`, reading the same standing-works register, so the two engines put
+      // the front in the same place and light the same relays at the same instant.
+      this.interferenceFront.update(simDelta, this.goldTargeting.allBuildings);
+      this.syncInterferenceBand();
+      // A9: the column advances on the same sim delta and in the same relative order as
+      // `HeadlessContractSim` — after the standing-works register is current and ahead of the
+      // enemy integration step — reading the same register and calling the same one BuildSystem
+      // seam, so both engines rearrange the same board on the same tick.
+      this.devilsAlley.update(
+        simDelta,
+        this.waveSystem.diagnostics.wave,
+        this.goldTargeting.allBuildings,
+        (family, index, to, lifted) => this.buildSystem.relocateBuilding(family, index, to, lifted),
+      );
+      this.devilsAlleyPresentation?.update(this.devilsAlley.diagnostics);
       this.recycleDeepwaterCorsairsAtExit();
       if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
@@ -2783,6 +3026,13 @@ export class Game {
 
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
     this.syncE8LobPhysics();
+    this.applyLowOrbitDebris(simDelta);
+    for (let slot = 0; slot < this.actors.length; slot += 1) {
+      const actor = this.actors[slot];
+      if (!actor?.group.visible) continue;
+      const hollowChip = this.hollowCrossing.update(simDelta, actor.group.position, slot);
+      if (hollowChip > 0) this.combat.damageActor(hollowChip, -1, actor);
+    }
     const terrain = {
       bounds: Terrain.bounds,
       sample: (x: number, z: number) => this.actorTerrainSample(x, z),
@@ -2816,8 +3066,32 @@ export class Game {
   }
 
   private e8PhysicsIntents(slot: number, actor: Hero, intents: Intents, fixedDelta: number): Intents {
-    const move = this.e8PhysicsSystem.filterMovement(slot, intents.move, fixedDelta, actor.velocity);
+    // A7: the handhold spine and the debris bands enter here and NOWHERE else on the movement
+    // path — one seam, so there is exactly one place a rider's control can be modified and no
+    // chance of a second, hidden one. `terrain` is undefined off low orbit, which restores the
+    // pre-A7 arithmetic exactly.
+    const terrain = this.lowOrbit.isDeclared
+      ? {
+          controlScale: this.lowOrbit.controlScale(actor.group.position.x, actor.group.position.z),
+          speedScale: this.lowOrbit.speedScale(actor.group.position.x, actor.group.position.z),
+        }
+      : undefined;
+    const move = this.e8PhysicsSystem.filterMovement(slot, intents.move, fixedDelta, actor.velocity, terrain);
     return move === intents.move ? intents : { ...intents, move };
+  }
+
+  /**
+   * A7 debris chip. The sheet declares a hazard for the player only ("applies to the hero;
+   * enemies unaffected — nothing declared for them"), so this walks the ACTORS and stops there:
+   * reject-don't-stretch (Mistake #14). Whole hp only; the consumer banks the fraction.
+   */
+  private applyLowOrbitDebris(fixedDelta: number): void {
+    if (!this.lowOrbit.isDeclared) return;
+    for (const actor of this.actors) {
+      if (!actor.group.visible) continue;
+      const chip = this.lowOrbit.debrisDamage(actor.group.position.x, actor.group.position.z, fixedDelta);
+      if (chip > 0) this.combat.damageActor(chip, -1, actor);
+    }
   }
 
   private syncE8LobPhysics(): void {
@@ -2829,7 +3103,8 @@ export class Game {
 
   private actorTerrainSample(x: number, z: number): Terrain.TerrainSample {
     const sample = Terrain.sample(x, z);
-    return this.e6TileConsumers.isWalkable(x, z) ? sample : { ...sample, walkable: false };
+    const raced = this.regattaRace ? { ...sample, speedMul: sample.speedMul * this.regattaRace.movementMultiplierAt(x, z) } : sample;
+    return this.e6TileConsumers.isWalkable(x, z) ? raced : { ...raced, walkable: false };
   }
 
   private heroBlockers() {
@@ -2969,10 +3244,14 @@ export class Game {
     }
     if (action.type === 'secure_choice') return this.applySecureChoice(action.choice);
     if (action.type === 'context_action') {
-      if (action.action !== 'fund' && !isBuildableId(action.target.id)) return false;
+      // A6: `recover` is targetless like `fund`, so it must clear the target guard the same way
+      // — a tape that replays a recovery carries no building to look up.
+      const targetless = action.action === 'fund' || action.action === 'recover';
+      if (!targetless && !isBuildableId(action.target.id)) return false;
       if (action.action === 'upgrade') this.upgradeBuilding(action.target.id as BuildableId, action.target.index);
       if (action.action === 'demolish') this.demolishBuilding(action.target.id as BuildableId, action.target.index);
       if (action.action === 'fund') this.fundMegaprojectStage(this.actionActor.group.position);
+      if (action.action === 'recover') this.tryRecoverProbe(this.actionActor.group.position);
     }
     if (action.type === 'set_agent_rung') this.agentConsent.setRung(action.level as AgentPermissionLevel, action.granted);
     if (action.type === 'set_agent_ability') this.agentConsent.setAbility(action.ability as AgentAbility, action.granted);
@@ -3017,11 +3296,21 @@ export class Game {
       contextAction: (order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>) => {
         const actor = this.agentRiderActor(playerId);
         if (!actor) return { ok: false as const, reason: 'INVALID_ACTOR: the rider is not in this room.' };
-        const ok = order.action === 'fund'
+        // A10: the rider decides from ITS OWN body's position, exactly as it plants and recovers
+        // from it — walking to the stake is the mechanic, so whoever walks it is who decides.
+        const ok = order.action === 'redig' || order.action === 'backfill'
+          ? (this.canalChoices?.decide(actor.group.position, order.action === 'redig' ? 'redig' : 'demolish').ok ?? false)
+          : order.action === 'plant'
+          ? (this.seedCaravan?.tryPlant(actor.group.position).ok ?? false)
+          : order.action === 'fund'
           ? this.fundMegaprojectStage(actor.group.position)
-          : order.action === 'upgrade'
-            ? this.buildSystem.upgradeBuilding(order.target.id, order.target.index, this.timeAlive, actor.group.position)
-            : this.buildSystem.demolish(order.target.id, order.target.index, this.timeAlive, actor.group.position);
+          // A6: the rider recovers from ITS OWN body's position, not the local player's —
+          // the crossing is the mechanic, so whoever walks it is who can lift the probe.
+          : order.action === 'recover'
+            ? this.tryRecoverProbe(actor.group.position)
+            : order.action === 'upgrade'
+              ? this.buildSystem.upgradeBuilding(order.target.id, order.target.index, this.timeAlive, actor.group.position)
+              : this.buildSystem.demolish(order.target.id, order.target.index, this.timeAlive, actor.group.position);
         if (!ok) return { ok: false as const, reason: `REJECTED: ${order.action} is not legal here.` };
         this.syncStockpileHoldings();
         this.publishDiagnostics();
@@ -3251,7 +3540,13 @@ export class Game {
       if (!this.state.simActive || sampledIntents.pause) return sampledIntents;
       const slot = this.playbookReplaySlot;
       const actor = this.actors[slot];
-      if (slot > 0 && actor && !this.e7SignalSystem.droneCanOperate(actor.group.position)) {
+      // A5 gates the drone at the CALL SITE rather than inside `E7SignalSystem`, on purpose: the
+      // Dead Band's suppression is a property of the whole contract and belongs in that class,
+      // while the front's mute is a property of WHERE THE DRONE IS STANDING this instant. Same
+      // off-switch semantics as A4 (a counted refusal), a different question.
+      if (slot > 0 && actor
+        && (!this.e7SignalSystem.droneCanOperate(actor.group.position)
+          || this.interferenceFront.refuse('drones', actor.group.position))) {
         this.mpActorIntents = this.actors.map((_, index) => index === 0 ? sampledIntents : intentsFromLockstepInput(null));
         return sampledIntents;
       }
@@ -3266,7 +3561,58 @@ export class Game {
     return sampledIntents;
   }
 
+  /**
+   * A4: the county's one line, announced wherever a playbook is swallowed. The refusal
+   * reason itself already reaches the player (`PlaybookSurface.ts:158` and `:178` render it
+   * verbatim); this puts the VOICE beside the code rather than making the code carry prose.
+   */
+  private refuseSuppressedPlaybook(): { ok: false; reason: string } {
+    this.uiBridge.announce(SIGNAL_SUPPRESSION_VOICE, this.timeAlive, null, 6, 'wave', 'THE EXCHANGE');
+    return { ok: false, reason: SIGNAL_SUPPRESSION_REASON };
+  }
+
+  /**
+   * A5: the same refusal in the same shape, from the moving wall instead of the standing band.
+   * Positional and therefore TEMPORARY — the line says so, because a player who reads "swallowed"
+   * and stops trying has been told the wrong thing about a front that passes in two seconds.
+   */
+  private refuseMutedPlaybook(): { ok: false; reason: string } {
+    this.uiBridge.announce(INTERFERENCE_MUTED_VOICE, this.timeAlive, null, 6, 'wave', 'THE EXCHANGE');
+    return { ok: false, reason: INTERFERENCE_MUTED_REASON };
+  }
+
+  /** A5: the front swallows a playbook only where the actor asking for it is standing. */
+  private playbookMutedByFront(): boolean {
+    return this.interferenceFront.refuse('playbooks', this.primaryActor.group.position);
+  }
+
+  /**
+   * A5's entire render half: lay the slate quad over the wall while it crosses, hide it between
+   * fronts. The geometry is a unit plane scaled to the band, so nothing is rebuilt per frame and
+   * there is no shader — the ratification asked for "a simple static band (tint/vignette)" and
+   * this is exactly that. Every NUMBER here comes from the consumer (F-A8-7: the consumer must
+   * not know this method exists).
+   */
+  private syncInterferenceBand(): void {
+    if (!this.interferenceFront.isDeclared) return;
+    const band = this.interferenceFront.band;
+    const center = this.interferenceFront.bandCenterX;
+    if (!band || center === null) {
+      this.interferenceBand.visible = false;
+      return;
+    }
+    const depth = band.maxZ - band.minZ;
+    this.interferenceBand.scale.set(FRONT_HALF_WIDTH * 2, depth, 1);
+    this.interferenceBand.position.set(center, this.heroStart.y + 0.05, (band.minZ + band.maxZ) / 2);
+    this.interferenceBand.visible = true;
+  }
+
   private startPlaybookRecording(options: { script?: unknown; probeEvery?: number }): { ok: boolean; reason?: string } {
+    // A4 first, and unconditionally: the Dead Band swallows the RECORD half of "record/use".
+    if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
+    // A5 second, and never both: the Dead Band's refusal is permanent and the front's is not, so
+    // a contract declaring both would say the permanent thing first.
+    if (this.playbookMutedByFront()) return this.refuseMutedPlaybook();
     if (this.mpClient) return { ok: false, reason: 'multiplayer-active' };
     if (this.playbookRecorder && !this.playbookRecorder.finished) return { ok: false, reason: 'recording-active' };
     if (this.playbookReplay?.active) return { ok: false, reason: 'replay-active' };
@@ -3321,6 +3667,12 @@ export class Game {
     hidePlayer?: boolean;
     probeEvery?: number;
   }): { ok: boolean; reason?: string } {
+    // A4: and the USE half. Every replay entry point funnels here — `startNamedPlaybookReplay`
+    // and the dev bridge both call this method — so one gate closes the whole verb.
+    if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
+    // A5 second, and never both: the Dead Band's refusal is permanent and the front's is not, so
+    // a contract declaring both would say the permanent thing first.
+    if (this.playbookMutedByFront()) return this.refuseMutedPlaybook();
     if (this.mpClient) return { ok: false, reason: 'multiplayer-active' };
     if (this.playbookRecorder && !this.playbookRecorder.finished) return { ok: false, reason: 'recording-active' };
     if (this.playbookReplay?.active) return { ok: false, reason: 'replay-active' };
@@ -3348,10 +3700,26 @@ export class Game {
     this.playbookReplay = new PlaybookReplaySession(playbook, normalizeProbeEvery(options.probeEvery));
     this.playbookReplaySlot = slot;
     this.playbookReplayRequiresConsent = false;
+    // A3: THE RECORD HALF, and it is deliberately the LAST line of the successful path. The sheet
+    // records "every playbook the player/agent USES" — a use, not an attempt — so every refusal
+    // above (suppressed, multiplayer, not-found, unparseable, contract/seed/difficulty mismatch,
+    // no actor slot) leaves the canyon nothing to mirror. Identity is the canonical tape HASH and
+    // not its shelf name, so renaming a habit does not launder it out of its own repeat count.
+    // RECORDING is not a use: the sheet's shadow is cast by playing a tape back, and the recorder
+    // path above deliberately does not call this.
+    this.broadcastMirror.noteUse({ id: playbookHash(playbook), entries: playbook.entries });
     return { ok: true };
   }
 
   private startNamedPlaybookReplay(name: string): { ok: boolean; reason?: string } {
+    // A4 outranks the consent rung: a granted permission still cannot use a playbook the
+    // band swallows, and reporting `permission-level-N-required` there would name the wrong
+    // cause. Returning here means `startPlaybookReplay` is never reached, so the refusal is
+    // counted exactly once.
+    if (this.signalSuppression.refuse('playbooks')) return this.refuseSuppressedPlaybook();
+    // A5 second, and never both: the Dead Band's refusal is permanent and the front's is not, so
+    // a contract declaring both would say the permanent thing first.
+    if (this.playbookMutedByFront()) return this.refuseMutedPlaybook();
     const required = Balance.e7Playbook.requiredPermissionLevel;
     if (!this.playbookConsentGranted()) return { ok: false, reason: `permission-level-${required}-required` };
     const result = this.startPlaybookReplay({ name });
@@ -4013,6 +4381,7 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    this.createHollowCrossingVisuals();
     this.damSurge = new DamSurgeEvent(
       this.actors,
       Terrain.bounds,
@@ -4052,6 +4421,14 @@ export class Game {
         this.ferrisWheel = new FerrisWheel(fairground.wheel);
         this.goldTargeting.registerBuilding(this.ferrisWheel.target);
         this.scene.add(this.ferrisWheel.group);
+        // THE CROWD FLOCKS. Gated on `twist.fairground.crowdFlocks` inside `create()` — the FIELD,
+        // not this block (F-1471-1), so a fairground that ever ships without flocks still gets a
+        // wheel and no unreachable objective. The view is render-only and reads the sim's snapshot.
+        this.crowdFlocks = CrowdFlockSystem.create(this.activeContract) ?? undefined;
+        if (this.crowdFlocks) {
+          this.crowdFlockView = new CrowdFlock(this.crowdFlocks.diagnostics);
+          this.scene.add(this.crowdFlockView.group);
+        }
       }
       const tramConsumer = contractGrid?.nodes.find((node) => node.kind === 'consumer' && node.role === 'tram');
       const escortMode = this.activeEscortMode();
@@ -4101,6 +4478,51 @@ export class Game {
     this.scene.add(this.e6TileConsumers.group);
     this.scene.add(this.e9ArsenalSystem.group);
     this.scene.add(this.e9CanalSystem.group);
+    if (this.seedCaravan) this.scene.add(this.seedCaravan.group);
+    // A8-LEGIBILITY: the road, the ring markers, the name tag and the guard bar are raised HERE
+    // rather than in the constructor because this is where the terrain the road lies on exists.
+    // Same injected sampler and same green as the consumer, so there is still ONE authority for
+    // both (F-A8-7: neither file may import Terrain).
+    if (this.seedCaravan) {
+      this.seedCaravanPresentation = new SeedCaravanPresentation(
+        this.seedCaravan.diagnostics,
+        (x, z) => Terrain.visualY(x, z, 0),
+        E1_RIVERBANK_GREEN,
+        () => document.querySelector('[data-testid="contract-briefing"]:not([hidden])') !== null,
+      );
+      this.scene.add(this.seedCaravanPresentation.group);
+    }
+    // A10: the flow is raised HERE, with the terrain the bands lie on, from the same injected
+    // sampler pattern the caravan uses (F-A8-7: neither the consumer nor its presentation may
+    // import Terrain). It joins the scene only where a canal is declared, so no other map pays a
+    // draw call for it, and it paints the profile's INHERITED verdicts from the first frame.
+    if (this.canalChoices) {
+      this.canalFlowPresentation = new CanalFlowPresentation(
+        this.canalChoices.diagnostics,
+        (x, z) => Terrain.visualY(x, z, 0),
+      );
+      this.canalFlowPresentation.resampleTerrain();
+      this.scene.add(this.canalFlowPresentation.group);
+    }
+    // A9: the column and the anchor-hold rings join the scene only where a relocation is
+    // declared, so no other map pays a draw call for them. The rings are ALWAYS visible — a
+    // rider cannot choose safe ground it cannot see — and the column only while a sweep runs.
+    if (this.devilsAlley.isDeclared) {
+      this.devilsAlleyPresentation = new DevilsAlleyPresentation(
+        this.devilsAlley.diagnostics,
+        (x, z) => Terrain.visualY(x, z, 0),
+      );
+      this.scene.add(this.devilsAlleyPresentation.group);
+    }
+    // A5: the band joins the scene only where a front is declared, so no other map pays a draw
+    // call for it. It starts hidden — `syncInterferenceBand` shows it while the wall crosses.
+    if (this.interferenceFront.isDeclared) {
+      this.interferenceBand.name = 'InterferenceFrontBand';
+      this.interferenceBand.rotation.x = -Math.PI / 2;
+      this.interferenceBand.renderOrder = RenderLayers.groundDecals;
+      this.interferenceBand.visible = false;
+      this.scene.add(this.interferenceBand);
+    }
     this.createMegaprojectVisuals();
     this.scene.add(this.megaprojectGroup);
     this.createBaronStandardVisual();
@@ -4627,6 +5049,47 @@ export class Game {
       : null;
   }
 
+  /**
+   * A6 — THE RECOVERY AND THE PLAYBACK, browser side.
+   *
+   * WHERE THE PLAYER SEES THIS IN A PLAIN BOOT (Mistake #10, and `e2e/e8-far-side-probe.spec.ts`
+   * asserts both halves with no `?debug`): standing in the crater announces the objective once,
+   * and recovering plays the banked line back through THE EXCHANGE — the same title and channel
+   * the E7 jack-board announces its fragments on, because this IS that board's line, carried up
+   * the gravity well. The crater also gets a float text so the beat is anchored in the world
+   * rather than only in the banner.
+   */
+  private tryRecoverProbe(position: THREE.Vector3): boolean {
+    if (!this.probeRecovery.declared) return false;
+    const result = this.probeRecovery.recover(position);
+    if (!result.ok) return false;
+    this.audio.play('ledger-open', 0.75);
+    this.uiBridge.announce(result.fragment, this.timeAlive, null, 9, 'wave', 'THE EXCHANGE · RECOVERED');
+    this.vfx.floatText(position, 'PROBE RECOVERED', '#f0ddb1');
+    this.recordRunTapeAction({ type: 'context_action', action: 'recover' });
+    this.publishDiagnostics();
+    return true;
+  }
+
+  /**
+   * The standing hint, announced the first time the crossing actually reaches the crater. It
+   * is the only thing that tells an unaided player the confirm key does something out here.
+   */
+  private syncProbeHint(): void {
+    if (this.probeHintAnnounced || !this.probeRecovery.declared || this.probeRecovery.recovered) return;
+    if (this.state.current !== 'playing' || this.state.isPaused) return;
+    if (!this.probeRecovery.inReach(this.localActor.group.position)) return;
+    this.probeHintAnnounced = true;
+    this.uiBridge.announce(
+      'Half-buried, unmarked, still listening. Recover it.',
+      this.timeAlive,
+      null,
+      6,
+      'wave',
+      'THE LISTENING PROBE',
+    );
+  }
+
   private megaprojectInRange(position: THREE.Vector3, radius = 2.2): boolean {
     const target = this.megaprojectTarget;
     const dx = Math.max(Math.abs(position.x - target.position.x) - target.halfX, 0);
@@ -4811,18 +5274,40 @@ export class Game {
       e6Tiles: this.e6TileConsumers.diagnostics,
       picnicHold: this.picnicHold.diagnostics,
       wrangle: this.wrangle.diagnostics(),
+      ...(this.showroomCaptureObjective.diagnostics.declared
+        ? { showroomCaptureObjective: this.showroomCaptureObjective.diagnostics }
+        : {}),
       pressure: this.pressureSystem.diagnostics,
       pressureArsenal: this.pressureArsenalSystem.diagnostics,
       deepwaterArsenal: this.deepwaterArsenal.diagnostics,
       e6Arsenal: this.e6ArsenalSystem.diagnostics,
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
       e9Canal: this.e9CanalSystem.diagnostics,
+      seedCaravan: this.seedCaravan?.diagnostics ?? null,
+      canalChoices: this.canalChoices?.diagnostics ?? null,
+      canalFlow: this.canalFlowPresentation?.diagnostics ?? null,
+      // A8-LEGIBILITY: what the PLAYER can see of the caravan, published beside what it is doing,
+      // so the no-`?debug` spec can assert the mission is legible rather than merely present.
+      seedCaravanPresentation: this.seedCaravanPresentation?.diagnostics ?? null,
+      // A5: null off relay rush, the same shape every optional consumer above uses. This is what
+      // `e2e/e7-relay-rush-front.spec.ts` reads to prove the browser runs the same wall the
+      // headless engine does.
+      interferenceFront: this.interferenceFront.isDeclared ? this.interferenceFront.diagnostics : null,
+      // A9: null off every other map, same shape. `e2e/e9-devils-alley-relocation.spec.ts` reads
+      // this pair to prove the browser sweeps the same schedule the headless engine does, and
+      // that the PLAYER can see it in a plain boot (Mistake #10).
+      devilsAlley: this.devilsAlley.isDeclared ? this.devilsAlley.diagnostics : null,
+      devilsAlleyPresentation: this.devilsAlleyPresentation?.diagnostics ?? null,
       e10Finale: this.e10FinaleSystem.diagnostics(),
       e10Static: this.e10StaticBoss.diagnostics(),
       e7Signal: this.e7SignalSystem.diagnostics,
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       e8Physics: this.e8PhysicsSystem.diagnostics,
+      probeRecovery: this.probeRecovery.diagnostics,
+      broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
+      lowOrbit: this.lowOrbit.diagnostics,
+      hollowCrossing: this.hollowCrossing.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -4856,12 +5341,18 @@ export class Game {
         medals: loadMedals(),
       },
       deepwaterClaim: this.deepwaterClaim
-        ? Object.assign(this.deepwaterClaim.snapshot(), { dredgeQueenBoss: this.dredgeQueenBoss.diagnostics() })
+        ? Object.assign(this.deepwaterClaim.snapshot(), {
+            dredgeQueenBoss: this.dredgeQueenBoss.diagnostics(),
+            ...(this.regattaRace ? { race: this.regattaRace.diagnostics } : {}),
+            ...(this.flotillaHulls ? { flotilla: this.flotillaHulls.diagnostics } : {}),
+            ...(this.noiseHunt ? { noiseHunt: this.noiseHunt.diagnostics } : {}),
+          })
         : null,
       tilePersistence: {
         contractId: this.activeContract.id,
         entries: this.tileStateStore.readSnapshot(this.activeContract.id).entries.length,
         greenWaypoint: this.greenWaypointMounted,
+        greenWaypoints: this.greenWaypointsMounted,
         greenWaypointStaged: this.greenWaypointStagedThisRun,
         swatchColor: E1_RIVERBANK_GREEN,
         noSpawnZones: this.activeContract.tileParams.noSpawnZones ?? [],
@@ -4871,6 +5362,7 @@ export class Game {
       escort: this.waveSystem.escortDiagnostics,
       tram: this.tram?.diagnostics ?? null,
       fairground: this.ferrisWheel?.diagnostics ?? null,
+      crowdFlocks: this.crowdFlocks?.diagnostics ?? null,
       fuel: this.fuelSystem?.diagnostics ?? null,
       vehicle: this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
@@ -4901,6 +5393,7 @@ export class Game {
       },
       progression: this.progression.snapshot,
       harvest: this.harvestSnapshot,
+      harvestVisuals: this.harvestSystem.visualDiagnostics,
       steal: this.stealDiagnostics(),
       wreck: this.wreckDiagnostics(),
       charmPause: this.charmPauseActive,
@@ -5071,11 +5564,71 @@ export class Game {
     this.canvas.dataset.terrain3dPilotRenderSource = 'painted';
   }
 
+  private createHollowCrossingVisuals(): void {
+    const crossing = this.activeContract.tileParams.hollowCrossing;
+    if (!crossing) return;
+    const zones = [
+      ...crossing.glowBridges.map((zone) => ({ zone, glow: true })),
+      { zone: crossing.causeway, glow: false },
+    ];
+    for (const { zone, glow } of zones) {
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(zone.maxX - zone.minX, 0.12, zone.maxZ - zone.minZ),
+        new THREE.MeshStandardMaterial(glow
+          ? { color: '#83ded7', emissive: '#2f8f85', emissiveIntensity: 0.8, roughness: 0.45, transparent: true, opacity: 0.78 }
+          : { color: '#c4883a', roughness: 0.75, metalness: 0.12 }),
+      );
+      mesh.name = `HollowCrossing-${zone.id}`;
+      mesh.position.set((zone.minX + zone.maxX) / 2, 0, (zone.minZ + zone.maxZ) / 2);
+      mesh.receiveShadow = true;
+      this.hollowCrossingVisuals.add(mesh);
+    }
+    this.hollowCrossingVisuals.name = 'HollowCrossingVisuals';
+    this.scene.add(this.hollowCrossingVisuals);
+    this.resampleHollowCrossingVisuals();
+    this.canvas.dataset.hollowCrossingVisuals = String(zones.length);
+  }
+
+  private resampleHollowCrossingVisuals(): void {
+    for (const visual of this.hollowCrossingVisuals.children) {
+      visual.position.y = Terrain.visualY(visual.position.x, visual.position.z, 0.08);
+    }
+  }
+
+  /**
+   * A8-LEGIBILITY — the caravan's presentation, one step behind its sim step. The consumer stays
+   * the only writer; this reads its published diagnostics, moves the tag/bar/road, and says the
+   * county's line on the five beats a player must not miss. A departure also gets the ordinary
+   * camera nudge (`CameraRig.impulse`, the same seam the charm ping uses) so the eye goes to the
+   * thing the banner just named — no new camera tech, per the standing order.
+   */
+  private syncSeedCaravanPresentation(): void {
+    const presentation = this.seedCaravanPresentation;
+    const caravan = this.seedCaravan;
+    if (!presentation || !caravan) return;
+    for (const beat of presentation.update(caravan.diagnostics)) {
+      this.uiBridge.announce(beat.text, this.timeAlive, null, beat.seconds, 'wave', beat.title);
+      if (beat.kind === 'depart') {
+        this.cameraRig.impulse(new THREE.Vector3(beat.at.x, 0, beat.at.z), 0.06);
+      }
+    }
+  }
+
   private resampleVisualHeights(): void {
     this.railPath?.resampleTerrain();
     this.megaprojectRailPath?.resampleTerrain();
     this.e9CanalSystem.resampleTerrain();
+    this.seedCaravan?.resampleTerrain();
+    this.seedCaravanPresentation?.resampleTerrain();
+    this.canalFlowPresentation?.resampleTerrain();
+    this.devilsAlleyPresentation?.resampleTerrain();
     this.e6TileConsumers.resampleTerrain();
+    this.resampleHollowCrossingVisuals();
+    // The gold seams belong on this list and were missing from it, which is why 29 of the 33
+    // seam-bearing sculpted maps shipped their seams off the ground entirely — buried up to
+    // 6.18 m, floating up to 5.63 m (owner, 2026-08-20: "There is not gold to be collected").
+    // Render-only; see HarvestSystem.resampleTerrain.
+    this.harvestSystem.resampleTerrain();
   }
 
   private resetFrameWindow(): void {
@@ -5136,9 +5689,30 @@ export class Game {
 
   autoSecureWaveForRun(): number {
     if (this.e10StaticBoss.diagnostics().enabled && !this.e10StaticBoss.receded) return Number.MAX_SAFE_INTEGER;
+    // The fairground has two clauses now, and they are different in kind. The WHEEL clause is the
+    // loss rule and is unchanged: a stopped dynamo never restarts, so the run is over. The FLOCK
+    // clause is the ratified objective (door-completion sheet A1) and is only unfinished: the
+    // crowds try again every night, and a third crossing landed after wave 12 still secures at 12.
     return this.waitsForBaronDefeat()
       || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
       || (this.activeContract.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
+      || (this.activeContract.tileParams.raceCourse && this.regattaRace?.diagnostics.finished !== true)
+      // A6: mirrors `HeadlessContractSim.autoSecureWaveForRun` — the Far Side is not won by
+      // outliving it. True on every contract that declares no probe, so nothing else moves.
+      || !this.probeRecovery.objectiveAllowsSecure
+      || !this.hollowCrossing.objectiveAllowsSecure
+      || (this.crowdFlocks !== undefined && !this.crowdFlocks.allCrossed)
+      // A8: the caravan-connect latch, the canyon latch's twin — the crossing IS the objective.
+      || (this.seedCaravan !== null && !this.seedCaravan.objectiveComplete)
+      // A10: the canal-choice latch, keyed on `twist.persistentCanalChoices`. Mirrors
+      // `HeadlessContractSim.autoSecureWaveForRun` clause for clause — a canal left half-decided
+      // cannot be secured by outliving it. True on every contract that declares none.
+      || (this.canalChoices !== null && !this.canalChoices.objectiveAllowsSecure)
+      // A5: mirrors `HeadlessContractSim.autoSecureWaveForRun` clause for clause. Relay Rush is
+      // not won by outliving it: miss the deadline and the run cannot secure at any wave. True on
+      // every contract that declares no discharge-able front, so nothing else moves.
+      || !this.interferenceFront.objectiveAllowsSecure
+      || !this.showroomCaptureObjective.objectiveAllowsSecure
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -5293,6 +5867,12 @@ export class Game {
   private syncDeepwaterClaim(): void {
     const snapshot = this.deepwaterClaim?.advance(this.timeAlive);
     if (!snapshot) return;
+    // A2 — steer before the enemy pool moves, the same relative order GR-SIM uses.
+    this.noiseHunt?.advance(
+      this.timeAlive,
+      this.enemies.all,
+      this.activeContract.twist.enemyRoster?.find((entry) => entry.travelClass === 'depth')?.id,
+    );
     const pending = snapshot.corsairWaves.slice(this.deepwaterCorsairWavesSpawned);
     this.deepwaterCorsairWavesSpawned = snapshot.corsairWaves.length;
     if (isSpawnDisabled()) return;
@@ -5307,8 +5887,13 @@ export class Game {
     }
   }
 
+  private flotillaTargetPosition(): THREE.Vector3 {
+    const target = this.flotillaHulls?.targetPosition(this.primaryActor.group.position) ?? this.primaryActor.group.position;
+    return new THREE.Vector3(target.x, Balance.enemy.groundY, target.z);
+  }
+
   private spawnDeepwaterCorsairs(wave: CorsairSkiffWave, bossEscort = false): void {
-    const roster = this.activeContract.twist.enemyRoster?.find((entry) => entry.id === 'corsair_skiff');
+    const roster = this.activeContract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat');
     const multiplier = bossEscort ? this.dredgeQueenBoss.escortMultiplier : 1;
     for (let copy = 0; copy < multiplier; copy += 1) {
       for (const skiff of wave.enemies) {
@@ -5321,7 +5906,7 @@ export class Game {
           variantId: roster?.id,
           variantLabel: bossEscort ? 'Dredge-Queen Escort' : roster?.label,
         });
-        enemy?.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
+        if (!this.flotillaHulls) enemy?.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
       }
     }
   }
@@ -5329,8 +5914,9 @@ export class Game {
   private recycleDeepwaterCorsairsAtExit(): void {
     const lastWave = this.deepwaterClaim?.snapshot().corsairWaves.at(-1);
     if (!lastWave) return;
+    const variantId = this.activeContract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat')?.id;
     for (const enemy of this.enemies.all) {
-      if (enemy.isAlive && enemy.variantId === 'corsair_skiff' && enemy.position.x >= lastWave.toX - 2) {
+      if (enemy.isAlive && enemy.variantId === variantId && enemy.position.x >= lastWave.toX - 2) {
         this.enemies.recycle(enemy);
       }
     }
@@ -5391,7 +5977,9 @@ export class Game {
   }
 
   private currentRunWave(): number {
-    return this.deepwaterClaim ? this.deepwaterCorsairWavesSpawned : this.waveSystem.diagnostics.wave;
+    return this.deepwaterClaim && deepwaterStormDrivesWaves(this.activeContract)
+      ? this.deepwaterCorsairWavesSpawned
+      : this.waveSystem.diagnostics.wave;
   }
 
   private completeBaronDefeat(atSim: number): void {
@@ -5404,7 +5992,18 @@ export class Game {
     // Keys on `connect`, not on any powerGrid (F-1471-1): only syncCanyonConnectObjective sets the
     // flag below, and it early-returns on `!grid?.connect` — so a powerGrid without a connect
     // objective would pin this false forever and beating the Baron would silently fail to secure.
-    const objectiveAllowsSecure = !this.activeContract.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
+    const objectiveAllowsSecure = (!this.activeContract.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline)
+      // A6, mirroring `HeadlessContractSim.postBaronDefeat`: a Baron kill cannot stand in for
+      // an unrecovered probe. No contract declares both today; the two paths agree anyway.
+      && this.probeRecovery.objectiveAllowsSecure
+      && this.hollowCrossing.objectiveAllowsSecure
+      // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
+      && (this.seedCaravan === null || this.seedCaravan.objectiveComplete)
+      // A10 rides the same expression: a boss kill cannot secure a canal left half-decided.
+      && (this.canalChoices === null || this.canalChoices.objectiveAllowsSecure)
+      // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
+      && this.interferenceFront.objectiveAllowsSecure
+      && this.showroomCaptureObjective.objectiveAllowsSecure;
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
       || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
@@ -6844,7 +7443,11 @@ export class Game {
     const fund = canInteract && !this.buildMenuOpen && !this.buildSystem.isBuildMode ? this.megaprojectFundCandidate(this.localActor.group.position) : null;
     const demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.demolishCandidate : null;
     const upgrade = demolish ? this.upgradeCandidate : null;
-    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund);
+    // A10: offered in ordinary play (no build mode, no `?debug`) — Mistake #10's answer to "where
+    // does the PLAYER see this, in a plain boot?" is this prompt, on the stake, from wave 1.
+    const canal = canInteract && !this.buildMenuOpen ? this.canalDecisionCandidate : null;
+    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund, canal);
+    this.syncProbeHint();
   }
 
   private updateBuildingContextCandidates(position = this.localActor.group.position): void {
@@ -6858,7 +7461,23 @@ export class Game {
     const upgrade = demolish ? this.buildSystem.upgradeCandidateFor(demolish.id, demolish.index) : null;
     this.demolishCandidate = demolish;
     this.upgradeCandidate = upgrade;
+    this.canalDecisionCandidate = canInteract ? this.canalDecisionAt(position) : null;
     this.maybeEmitStampSiteBeat(fund);
+  }
+
+  /**
+   * A10: the stake in reach, offered only while it is still UNDECIDED. Deliberately not gated on
+   * build mode the way the demolish candidate is — a decision stake is a place on the ground, not
+   * a building, so it reads like the megaproject site above it and stays offered in ordinary play.
+   */
+  private canalDecisionAt(position: THREE.Vector3): CanalDecisionCandidate | null {
+    const segment = this.canalChoices?.nearestSegmentWithinReach(position);
+    if (!segment || this.canalChoices?.choiceFor(segment.id) !== 'undecided') return null;
+    return {
+      segmentId: segment.id,
+      title: 'The old cut — decide it once',
+      line: 'Re-dig and the water runs here forever, and nothing stands in it. Demolish and the ground is yours to build on, forever. This choice outlives the run.',
+    };
   }
 
   private syncWorldInfoNotePrompt(): void {
@@ -7082,6 +7701,7 @@ export class Game {
     this.timeAlive = 0;
     this.simTick = 0;
     this.wrangle.reset();
+    this.showroomCaptureObjective.reset();
     this.decay.reset();
     this.e6TileConsumers.reset();
     this.picnicHold.reset();
@@ -7102,6 +7722,7 @@ export class Game {
     this.oldDiggerBoss.reset();
     this.tram?.reset();
     this.ferrisWheel?.reset();
+    this.crowdFlocks?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
     this.applyRunPreset(readDifficultyPreset(), false);
@@ -7112,6 +7733,13 @@ export class Game {
     this.waveSystem.reset();
     this.drillYard?.reset();
     this.deepwaterClaim?.reset();
+    this.regattaRace?.reset();
+    this.flotillaHulls?.reset();
+    // A2: alongside its siblings, and NOT optional. `deepwaterClaim.reset()` above restores the
+    // pads a strike knocked out, so a hunt that kept its integrity map would re-lose a restored
+    // pad on the first strike of the new run; it would also carry the old run's trail, strike
+    // count and shot counter across the boundary.
+    this.noiseHunt?.reset();
     this.deepwaterCorsairWavesSpawned = 0;
     this.buildMenuOpen = false;
     this.upgradeCandidate = null;
@@ -7124,6 +7752,10 @@ export class Game {
     this.deepwaterArsenal.reset();
     this.e8ArsenalSystem.reset();
     this.e8PhysicsSystem.reset();
+    this.lowOrbit.reset();
+    // A3: the shadow belongs to the run that cast it — a restart starts with no habits recorded.
+    this.broadcastMirror.reset();
+    this.hollowCrossing.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
@@ -7132,6 +7764,21 @@ export class Game {
     this.e6ArsenalSystem.reset();
     this.e9ArsenalSystem.reset();
     this.e9CanalSystem.reset();
+    this.seedCaravan?.reset();
+    if (this.seedCaravan) this.seedCaravanPresentation?.reset(this.seedCaravan.diagnostics);
+    // A10: `reset()` deliberately un-decides nothing (see the consumer's own note) — a verdict is
+    // permanent by ratification, so a new run inherits the flow the last one left and the paint
+    // is only re-synced, never cleared.
+    this.canalChoices?.reset();
+    if (this.canalChoices) this.canalFlowPresentation?.sync(this.canalChoices.diagnostics);
+    // A5: the schedule restarts with the run — a new run's first front is 90s away, never the
+    // leftover phase of the last one.
+    this.interferenceFront.reset();
+    this.syncInterferenceBand();
+    // A9: the schedule restarts with the run — a new run's first sweep belongs to its own wave 1,
+    // never the leftover phase of the last one, and nothing is left suspended in the air.
+    this.devilsAlley.reset();
+    this.devilsAlleyPresentation?.reset(this.devilsAlley.diagnostics);
     this.e10StaticBoss.reset();
     this.e7ArsenalSystem.reset();
     this.damSurge?.reset();
@@ -7523,13 +8170,20 @@ export class Game {
     this.vfx.floatText(position, 'The green takes root — it will hold', E1_RIVERBANK_GREEN);
   }
 
-  /** Render mounts for persisted entries, once at birth (Loader Contract). */
+  /**
+   * Render mounts for persisted entries, once at birth (Loader Contract).
+   *
+   * A8 widened this from ONE swatch to one per entry, because a Seed Run profile can hold three.
+   * `greenWaypointMounted` keeps meaning "the first one born", which is what TP-02's spec asserts
+   * on dry-gulch, where there is only ever one.
+   */
   private mountTileStateRenderEntries(): void {
     for (const entry of this.tileStateStore.readSnapshot(this.activeContract.id).entries) {
-      if (entry.kind !== 'sim' || entry.id !== GREEN_WAYPOINT_ENTRY_ID) continue;
+      if (!isGreenWaypointEntry(entry)) continue;
       const payload = parseGreenWaypointPayload(entry.payload);
-      if (!payload || this.greenWaypointMounted) continue;
-      this.greenWaypointMounted = payload;
+      if (!payload) continue;
+      this.greenWaypointsMounted.push(payload);
+      this.greenWaypointMounted ??= payload;
       this.scene.add(createGreenWaypointSwatch(payload));
     }
   }
@@ -8088,11 +8742,34 @@ export class Game {
     if (this.wrangle.tryCapture(this.actionActor.group.position)) return;
     if (this.e10StaticBoss.tryPreserve(this.actionActor.group.position, this.timeAlive)) return;
     if (this.oldDiggerBoss.tryInteract(this.actionActor.group.position, this.timeAlive)) return;
+    // A8: the plant is a PLAIN-BOOT context action on the same key every other one uses — no
+    // `?debug`, no dev bridge (Mistake #10). It sits ahead of demolish because a stake and a
+    // building are never in reach of each other on this map.
+    if (this.seedCaravan?.tryPlant(this.actionActor.group.position).ok) return;
+    // A10: the confirm key RE-DIGS at an undecided stake — a PLAIN-BOOT context action on the
+    // same key every other one uses (Mistake #10, no `?debug`, no dev bridge). DEMOLISH is the
+    // upgrade key and the prompt's second button (`confirmUpgrade` below, `canalDecision`), which
+    // is what gives one-key players both halves of a two-way choice without a new binding.
+    if (this.canalChoices?.decide(this.actionActor.group.position, 'redig').ok) return;
     if (this.fundMegaprojectStage(this.actionActor.group.position)) return;
+    // A6: ordered beside the other world interactions and BEFORE demolish, which is the
+    // fallback. The crater is bare ground with no building on it, so nothing above can claim
+    // the press first.
+    if (this.tryRecoverProbe(this.actionActor.group.position)) return;
     this.confirmDemolish();
   }
 
+  /**
+   * A10 — THE SECOND HALF OF A TWO-WAY CHOICE, ON A KEY THAT ALREADY EXISTS.
+   *
+   * The confirm key re-digs (`confirmAction`); this one demolishes. It rides the UPGRADE key
+   * because that is already this game's second context key and because it can never collide
+   * here: an undecided canal band takes no foundation at all (`CanalChoiceSystem.worksAllowed`),
+   * so there is never a work standing at a decision stake for the upgrade below to claim. No new
+   * binding was minted for a mechanic that lives on one map.
+   */
   private confirmUpgrade(): boolean {
+    if (this.canalChoices?.decide(this.actionActor.group.position, 'demolish').ok) return true;
     const candidate = this.upgradeCandidate;
     if (!candidate) return false;
     const upgraded = this.upgradeBuilding(candidate.id, candidate.index);

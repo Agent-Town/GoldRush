@@ -24,6 +24,10 @@ export type LockstepAction =
   | { type: 'secure_choice'; choice: 'bank' | 'rush' }
   | { type: 'context_action'; action: 'upgrade' | 'demolish'; target: LockstepBuildingRef }
   | { type: 'context_action'; action: 'fund' }
+  // A6: targetless like `fund`. Carried here so a run TAPE that recovered the probe replays
+  // the recovery too — without it a replayed Far Side run would never satisfy its own
+  // objective latch and would silently fail to secure.
+  | { type: 'context_action'; action: 'recover' }
   | { type: 'set_agent_rung'; level: number; granted: boolean }
   | { type: 'set_agent_ability'; ability: string; granted: boolean }
   | { type: 'agent_orders'; version: 1; orders: StandingOrder[]; submissionId: string };
@@ -1080,6 +1084,7 @@ function normalizeAction(value: unknown): LockstepAction | null {
     return { type: 'secure_choice', choice: value.choice };
   }
   if (value.type === 'context_action' && value.action === 'fund') return { type: 'context_action', action: 'fund' };
+  if (value.type === 'context_action' && value.action === 'recover') return { type: 'context_action', action: 'recover' };
   if (value.type === 'context_action' && (value.action === 'upgrade' || value.action === 'demolish')) {
     const target = normalizeBuildingRef(value.target);
     return target ? { type: 'context_action', action: value.action, target } : null;

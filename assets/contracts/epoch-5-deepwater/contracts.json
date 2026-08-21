@@ -170,7 +170,13 @@
         ],
         "stakeMarkers": [{ "id": "claim-boat", "x": -49, "z": 0, "heroStart": true }],
         "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "x": -52, "z": -4 },
+          { "x": -49, "z": -4 },
+          { "x": -46, "z": -4 },
+          { "x": -52, "z": 4 },
+          { "x": -46, "z": 4 }
+        ],
         "water": {
           "id": "deepwater-surface-placeholder",
           "depths": { "springPond": 0.2 },
@@ -432,7 +438,11 @@
           { "id": "still-room-barge", "x": 26, "z": 21, "heroStart": false }
         ],
         "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "id": "kitchen-scow-nets", "x": -26, "z": 15 },
+          { "id": "turret-raft-dredge", "x": 0, "z": 20 },
+          { "id": "still-room-traps", "x": 26, "z": 15 }
+        ],
         "water": {
           "id": "deepwater-surface-placeholder",
           "depths": { "springPond": 0.2 },

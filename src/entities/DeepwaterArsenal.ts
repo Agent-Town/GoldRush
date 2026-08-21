@@ -139,6 +139,16 @@ export class DeepwaterArsenal {
     }
   }
 
+  /**
+   * A2: the ballista's cumulative shot count, read EVERY TICK by the Stillwater noise-hunt to
+   * open its reload window. Exposed on its own rather than through `diagnostics` below, which
+   * allocates a bounded event array and five objects — free per frame, but not free thirty times
+   * a second. Same number, no garbage.
+   */
+  get harpoonShots(): number {
+    return this.fires.harpoonBallista;
+  }
+
   get diagnostics(): DeepwaterArsenalDiagnostics {
     const active = this.active();
     const munitionId = Balance.e5Arsenal.depthChargeMunition.id;

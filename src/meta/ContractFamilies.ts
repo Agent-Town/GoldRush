@@ -694,6 +694,12 @@ export type ContractManifest = {
     archiveWingZones?: Array<ContractRectZone & { order: number }>;
     emptyShelfZone?: ContractRectZone;
     lightHoldSites?: Array<ContractHarvestAnchor & { id: string; radius: number }>;
+    hollowCrossing?: {
+      glowBridges: ContractRectZone[];
+      causeway: ContractRectZone;
+      shelfIds: string[];
+      extractionStakeId: string;
+    };
     eraDeckZones?: Array<ContractRectZone & { era: number }>;
     preserveSites?: ContractPreserveSite[];
     riverBand?: ContractRectZone;
@@ -724,6 +730,7 @@ export type ContractManifest = {
     powerGrid?: ContractPowerGrid;
     enemyLanternClasses?: readonly ContractEnemyLanternClass[];
     enemyRoster?: readonly ContractEnemyVariant[];
+    showroom?: { captureQuota: number };
     baron?: ContractBaronTwist;
     broadcastMirror?: { description: string; delay: 'next-wave' };
     signalSuppression?: { description: string; drones: false; playbooks: false; relayChains?: false };
@@ -1019,7 +1026,7 @@ export function contractNumberRange(path: string, value: number): ContractNumber
   const signed = path.includes('.elevation.analytic.')
     || (key === 'depth' && path.includes('.deepwater.waterTile.regions['))
     || /^(?:.*X|.*Z|xOffset|zOffset|angle|rotation|.*Height)$/i.test(key);
-  const discrete = path.includes('.classCounts.') || /^(?:size|columns|rows|rotationSteps|territoryRingBiasWaves)$/i.test(key);
+  const discrete = path.includes('.classCounts.') || /^(?:size|columns|rows|rotationSteps|territoryRingBiasWaves|captureQuota)$/i.test(key);
   const magnitude = Math.max(1, Math.abs(value) * 3);
   if (key === 'rotationSteps') return { min: 0, max: 3, step: 1 };
   return {
@@ -1529,12 +1536,12 @@ const AUTHORED_TILE_KEYS = [
   'sleeper', 'unmarkedWagon', 'raceCourse', 'stillwater', 'flotilla', 'gravity', 'atmosphere', 'objectiveMetadata',
   'echoCanyonBands', 'broadcastMirrorZones', 'signalNullZones', 'interferenceFrontZones', 'probeRecoveryZones', 'suitOnlyZones',
   'orbitalScaffoldZones', 'debrisFields', 'handholdRoutes', 'eclipseShadowZones', 'archiveWingZones', 'emptyShelfZone',
-  'lightHoldSites', 'eraDeckZones', 'preserveSites', 'riverBand', 'creditsRiverZone', 'description', 'objectives', 'teachingIntent',
+  'lightHoldSites', 'hollowCrossing', 'eraDeckZones', 'preserveSites', 'riverBand', 'creditsRiverZone', 'description', 'objectives', 'teachingIntent',
   'engineDependencies', 'lanes',
 ] as const;
 const AUTHORED_TWIST_KEYS = [
   'pressureEnabled', 'seamYieldMult', 'secureWave', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
-  'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'baron', 'broadcastMirror',
+  'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
   'scheduledRelocation', 'persistentCanalChoices',
 ] as const;
@@ -1667,6 +1674,11 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
     });
   } else if (twist.enemyRoster !== undefined) {
     addDescriptorReason(reasons, reason('field_list', 'The enemy roster must be a list.', 'twist.enemyRoster'));
+  }
+  if (isRecord(twist.showroom) && !Array.isArray(twist.showroom)) {
+    addUnknownFieldReasons(twist.showroom, ['captureQuota'], 'twist.showroom', reasons);
+  } else if (twist.showroom !== undefined) {
+    addDescriptorReason(reasons, reason('field_section', 'The showroom section has the wrong shape.', 'twist.showroom'));
   }
   if (isRecord(twist.baron) && !Array.isArray(twist.baron)) {
     addUnknownFieldReasons(twist.baron, AUTHORED_BARON_KEYS, 'twist.baron', reasons);
@@ -2005,6 +2017,11 @@ function validateContractMap(contract: ContractManifest, reasons: ContractDescri
   validateEngineDependencies(contract, reasons);
   validateLightRamp(contract.twist.lightRamp, reasons);
   validateWaterMask(contract.tileParams.waterMask, reasons);
+  const captureQuota = contract.twist.showroom?.captureQuota;
+  if (contract.twist.showroom !== undefined
+    && (typeof captureQuota !== 'number' || !Number.isSafeInteger(captureQuota) || captureQuota <= 0)) {
+    addDescriptorReason(reasons, reason('capture_quota', 'The showroom capture quota must be a positive integer.', 'twist.showroom.captureQuota'));
+  }
   const water = contract.tileParams.water;
   if (water && (
     (water.centerZ !== undefined && !Number.isFinite(water.centerZ))

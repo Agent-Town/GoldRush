@@ -1,0 +1,26 @@
+# Task b2-flotilla-hulls: the Flotilla's three hulls — e5-flotilla door-ready single-seat (lane-c, prefix "feat:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.
+READ FIRST: AGENTS.md; **`specs/agent-play/door-completion-sheet.md` (RATIFIED — B2, owner-ruled BUILD in the B-wave; the co-op one-hull-per-rider half stays recorded for the co-op milestone — build the single-seat core)**; `assets/contracts/epoch-5-deepwater/contracts.json:413-541` (flotilla: tileId REUSES e5-deepwater-claim; `tileParams.flotilla` declares `formationZone` + THREE `hulls` (kitchen scow / turret raft / still-room barge, districts, radius 5); three buildZones one-per-hull; three stakeMarkers ALL heroStart:false; spawnEdges west+east; corsairWaveSize 3; real 24s storm cycle; `twist.secureWave: 12`; `harvestAnchors: []`; dependency verbatim: "multi-hull base ownership, straggler targeting, nonfatal hull loss, formation reshaping, and one-hull-per-rider co-op assignment"); **the JUST-MERGED Regatta slice (`git log --grep b1-regatta-race`)** — it widened `createDeepwaterClaimTile`/`DeepwaterSocket.create` for a second deepwater contract: READ how, and widen the same gates for flotilla the same way; `reviews/e5-admission-completion.md` (completion template).
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): ahead content already on main = SAFE DUPE → `git checkout -B lane/c main && git clean -fd`, PROCEED; STOP only on un-merged ahead content or foreign uncommitted edits. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1) + FACTORY-CHURN EXCEPTION (F-1407-1) as usual. Then `npm install --no-audit --no-fund`; `npm run build` green.
+
+## Why (owner ruling: nothing deferred)
+The Flotilla disaggregates the base into three district hulls — "formation is the wall." Single-seat design (ratified): the three hulls are HOME ZONES (the three buildZones, each tied to its declared hull disc): (1) **hull HP** — each hull is a damageable structure-cluster: enemies in contact with a hull's disc damage that HULL's integrity; (2) **nonfatal hull loss** — a hull at 0 integrity is LOST (its build zone disables, its buildings wreck) but the run continues; ALL THREE lost → run loss; (3) **straggler targeting** — enemies prefer the hull farthest from the formation centroid (the declared teaching: keep formation); (4) **formation reshaping** — a REANCHOR-class context action lets the player nudge a hull toward the centroid on a cooldown (reuse the deepwater REANCHOR verb conventions Regatta/deepwater already speak — read them; if a hull-move genuinely can't reuse that verb's plumbing, implement the smallest sibling and say so). Secure = survive to wave 12 with ≥1 hull alive.
+
+## Scope
+1. The hull consumer (new system file, socket pattern; flotilla-gated by contract id): hull states from `tileParams.flotilla.hulls`, integrity, contact damage, loss/disable semantics, straggler bias (a targeting WEIGHT, not a new pathing system — find the smallest existing targeting seam), the reshaping action, formation centroid diagnostics.
+2. Both engines (browser + headless) per the deepwater socket pattern; agent surface: hull states (id, district, position, integrity, lost, straggler) + centroid in diagnostics; MechanicsManifest rules from the CONSUMER.
+3. The door: widen the tile/socket gates (Regatta's pattern); author 3-5 harvestAnchors (near the hull decks); bench seeds e5-flotilla-01/-02; public-verb prover secures both seeds ×2 deterministically (defend hulls, reshape formation); idle floors honest (hulls fall → loss; report terminals); admission completion: er01-e5-census per-id truth (flotilla flips from refused — deliberate, cited), skill.md fences, door baseline, floors regen `--check` (deepwater-claim + stillwater + regatta floors byte-unmoved — prove), audit regen, pins attributed by revert-and-reproduce.
+4. The co-op half (one-hull-per-rider) is NOT built: record it in your BACKLOG row as the co-op-milestone debt, citing the sheet.
+
+## Firewall
+Touch ONLY: the new hull system, `src/world/DeepwaterClaimTile.ts` + `src/sim/DeepwaterSocket.ts` (gate widenings only), the two engines' hooks + loss/secure latches, flotilla's contract block (anchors ONLY), bench-seeds (+2), MechanicsManifest, er01-e5-census, skill.md fences, door baseline, floors+audit regen, pins (attributed), one new e2e, BACKLOG row.
+NO changes to: deepwater-claim/stillwater/regatta behavior or data; DredgeQueen; storm internals; balance beyond the ratified semantics; existing e2e assertions beyond the deliberate census flip.
+
+## Self-check
+tsc + build green; full node-guards (contention → solo rerun, say so); er01-e5 + ap16-4 both projects; the Regatta's new spec unmodified-green; adjacent task-025-bandits-dont-swim + m1-01-claim-jumpers-death + m2-01-build-menu both projects; plain boots ×2 viewports asserting the RESOLVED contract id; floors `--check` clean, 0 secured:true.
+End: READY-FOR-GATES + report: hull/straggler/reshape semantics as built, secure hashes ×2 both seeds, idle terminals, anchors, every gate count, pins, the recorded co-op debt.
+
+## No-op / honesty guard
+If the prover cannot secure with unmodified balance, STOP and report the measured gap. If straggler weighting cannot be added without touching global targeting order (other contracts' hashes), STOP and report — it must be flotilla-gated.

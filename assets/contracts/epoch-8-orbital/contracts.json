@@ -245,10 +245,17 @@
             "maxZ": 52
           }
         ],
-        "stakeMarkers": [],
+        "stakeMarkers": [
+          { "id": "far-side-landing-stake", "x": 0, "z": -36, "heroStart": true }
+        ],
         "rails": [],
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "x": -16, "z": -34 },
+          { "x": 16, "z": -34 },
+          { "x": -9, "z": -22 },
+          { "x": 9, "z": -22 }
+        ],
         "heightfield": {
           "id": "mare-claim-rim-ring",
           "mode": "visual"
@@ -393,7 +400,12 @@
         "stakeMarkers": [],
         "rails": [],
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "x": -38, "z": 2 },
+          { "x": -12, "z": 4 },
+          { "x": 12, "z": 4 },
+          { "x": 38, "z": 2 }
+        ],
         "heightfield": {
           "id": "salvage-claw-orbital-yard",
           "mode": "visual"

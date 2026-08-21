@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { deriveHarnessMap, GRANDFATHERED } from './claimed-spec-harness-guard.mjs';
+import { deriveHarnessMap, GRANDFATHERED, runnerless } from './claimed-spec-harness-guard.mjs';
 
 const GUARD = path.resolve('scripts/claimed-spec-harness-guard.mjs');
 
@@ -47,8 +47,36 @@ function makeRoot(masters) {
   return root;
 }
 
+// F-2090-2: every spawn in this file MUST be bounded. These calls used to pass neither
+// `timeout` nor `maxBuffer`, so a child that blocked for any reason blocked its
+// `node --test` worker FOREVER — and because a fire's battery is reparented to launchd
+// when the fire exits, the corpse then outlived its author and sat at 0% CPU indefinitely.
+// Measured s2090 on the live machine: THREE orphaned `--report` children, all PPID 1, all
+// 0% CPU, aged 58 min, 1 h 14 min and 5 h 55 min, every one of them stuck at this exact
+// leaf — and the two youngest were holding up the `test:ledger-guards` battery that
+// F-1300-4 makes the mandatory LAST ACT of every fire. An unbounded call in the factory's
+// own gate is a starvation mechanism, not a slow test.
+// (Ruled out by measurement, so nobody re-chases it: git is NOT the blocker —
+// `core.fsmonitor` is unset and `git ls-files` over this repo returns in 10 ms.)
+// SPAWN_LIMITS is deliberately generous: the point is a LOUD failure with a name on it,
+// never a tighter gate. A timeout here should be read as "this guard hung", not as a red board.
+const SPAWN_LIMITS = { encoding: 'utf8', timeout: 120_000, maxBuffer: 1 << 26 };
+
+// A bounded spawn can fail in a way the old unbounded one could not, so say so out loud
+// rather than letting `undefined` stdout surface as a confusing assertion three lines later.
+function spawnGuard(args) {
+  const r = spawnSync('node', [GUARD, ...args], SPAWN_LIMITS);
+  if (r.error && r.error.code === 'ETIMEDOUT') {
+    throw new Error(
+      `claimed-spec-harness-guard ${args.join(' ')} exceeded ${SPAWN_LIMITS.timeout} ms and was killed (F-2090-2). ` +
+        'This guard has hung three times on this machine; it is the hang, not the board, that is red.'
+    );
+  }
+  return r;
+}
+
 function run(root) {
-  return spawnSync('node', [GUARD, '--root', root], { encoding: 'utf8' });
+  return spawnGuard(['--root', root]);
 }
 
 // ---------------------------------------------------------------- derivation
@@ -67,6 +95,62 @@ test('derivation REFUSES rather than silently measuring nothing if the array is 
   const root = makeRoot({});
   fs.writeFileSync(path.join(root, 'playwright.config.ts'), 'export default { testDir: "./e2e" };');
   assert.throws(() => deriveHarnessMap(root), /claimedByAnotherConfig/);
+});
+
+// ------------------------------------------------- F-2117-1: runnerless harnesses (WARN only)
+
+// A root where ONE claimed spec's owning config has an npm caller and the other's has none —
+// the live board's own shape (test:release exists; release-base and accounts have no caller).
+// Proven by MANUFACTURING the split rather than by asserting the live board, so the test still
+// means something on the day somebody wires those two harnesses up.
+function makeSplitRoot() {
+  const root = makeRoot({});
+  fs.writeFileSync(
+    path.join(root, 'playwright.config.ts'),
+    `
+const claimedByAnotherConfig = [
+  '**/release-build.spec.ts',
+  '**/orphan-harness.spec.ts',
+];
+export default { testDir: './e2e', testIgnore: [...claimedByAnotherConfig] };
+`
+  );
+  fs.writeFileSync(
+    path.join(root, 'playwright.orphan.config.ts'),
+    `export default { testMatch: /orphan-harness\\.spec\\.ts/ };`
+  );
+  return root;
+}
+
+test('MANUFACTURED: a claimed spec whose owning config has NO npm caller is named', () => {
+  const h = deriveHarnessMap(makeSplitRoot());
+  const orphans = runnerless(h);
+  assert.deepStrictEqual(
+    orphans.map((o) => o.spec),
+    ['orphan-harness.spec.ts'],
+    'only the config with no npm script may be reported — a runnered one is not a finding'
+  );
+  assert.strictEqual(orphans[0].cfg, 'playwright.orphan.config.ts');
+});
+
+test('a runnerless harness WARNS and never changes the exit code', () => {
+  const r = run(makeSplitRoot());
+  assert.strictEqual(r.status, 0, 'WARN must never red the board — F-1460-1, the cross-engine lesson');
+  assert.match(r.stdout, /WARN: 1 of 2 claimed spec\(s\)/);
+  assert.match(r.stdout, /orphan-harness\.spec\.ts -> playwright\.orphan\.config\.ts -> no npm script/);
+  assert.ok(
+    !/release-build\.spec\.ts -> playwright\.release\.config\.ts -> no npm script/.test(r.stdout),
+    'the spec WITH a runner must not appear in the WARN block'
+  );
+});
+
+test('NO package.json is not the same as no caller — a synthetic root must stay silent', () => {
+  const root = makeSplitRoot();
+  fs.rmSync(path.join(root, 'package.json'));
+  const h = deriveHarnessMap(root);
+  assert.strictEqual(h.aliasesReadable, false);
+  assert.deepStrictEqual(runnerless(h), [], 'an unreadable package.json must never manufacture a finding');
+  assert.ok(!/WARN: /.test(run(root).stdout), 'and the fixture arms of this very file must stay quiet');
 });
 
 // ---------------------------------------------------------------- it BITES
@@ -137,7 +221,7 @@ test('naming the npm ALIAS clears the master', () => {
 // ---------------------------------------------------------------- the live board
 
 test('the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op)', () => {
-  const r = spawnSync('node', [GUARD, '--report'], { encoding: 'utf8' });
+  const r = spawnGuard(['--report']);
   assert.ok(
     /claimed specs \(derived\)/.test(r.stdout),
     'the guard produced no output — the import.meta.url entrypoint check is broken again. ' +
@@ -147,14 +231,14 @@ test('the guard actually RUNS when invoked as a script (entrypoint is not a sile
 });
 
 test('the live board has no LIVE offender', () => {
-  const r = spawnSync('node', [GUARD], { encoding: 'utf8' });
+  const r = spawnGuard([]);
   assert.strictEqual(r.status, 0, `guard failed on the live board:\n${r.stderr}`);
 });
 
 // A grandfather entry that no longer describes a real offender is stale bookkeeping: it would
 // silently excuse that file if it regressed. The guard prints a note; this keeps the list honest.
 test('every grandfathered file is still a real offender (no stale excuses)', () => {
-  const r = spawnSync('node', [GUARD, '--report'], { encoding: 'utf8' });
+  const r = spawnGuard(['--report']);
   for (const f of GRANDFATHERED.keys()) {
     assert.match(
       r.stdout,
@@ -162,4 +246,33 @@ test('every grandfathered file is still a real offender (no stale excuses)', () 
       `${f} is grandfathered but is no longer an offender — delete its entry, the debt is paid.`
     );
   }
+});
+
+// ---------------------------------------------------------------- F-2098-1: exit discipline
+
+// s2098 sampled a 9 h 39 m orphan of this guard and found it deadlocked INSIDE V8 on the way
+// out: the main thread in process.exit() -> DisposePlatform -> pthread_join, waiting on a
+// concurrent-baseline-compiler worker that was itself parked in CollectionBarrier awaiting a
+// GC only the main thread could service. The scan had already finished; it simply failed to
+// die. That is why the corpses hold no file and burn no CPU, and it is what F-2090-2's
+// timeout was bounding. main() is fully synchronous with zero pending handles, so setting
+// process.exitCode and returning is behaviour-identical and lets V8 drain its in-flight jobs.
+//
+// This test exists because the cure is a DELETION of something that looks idiomatic, and the
+// three rc assertions above stay green whichever way it is written — so nothing else in this
+// file would notice someone 'tidying' process.exit() back in.
+test('the guard sets process.exitCode and never force-exits (F-2098-1)', () => {
+  const src = fs.readFileSync(GUARD, 'utf8');
+  const code = src
+    .split('\n')
+    .filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l))
+    .join('\n');
+  assert.ok(
+    !/process\.exit\s*\(/.test(code),
+    'claimed-spec-harness-guard.mjs calls process.exit() again. It force-disposes the V8 ' +
+      'platform while a baseline-compiler job can be parked on the collection barrier, which ' +
+      'deadlocks the process forever (F-2098-1, sampled stack). Set process.exitCode and ' +
+      'return instead — main() is synchronous, so the exit code is identical.'
+  );
+  assert.match(code, /process\.exitCode\s*=/, 'the guard must still set an explicit exit code');
 });

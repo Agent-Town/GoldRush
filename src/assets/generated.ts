@@ -527,6 +527,12 @@ export class GeneratedSpriteBatch {
     this.setSpriteVisible(sprite, false);
   }
 
+  /** Whether this index is actually drawing — `set(..., true)` alone is not enough, the slot's
+   * texture has to have arrived too. Read by render-side diagnostics, never by the sim. */
+  isVisible(index: number): boolean {
+    return this.sprites[index]?.visible === true;
+  }
+
   setTintScalar(index: number, scalar: number): void {
     if (index < 0 || index >= this.tintScalars.length) return;
     this.tintScalars[index] = THREE.MathUtils.clamp(scalar, 0, 12);

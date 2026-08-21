@@ -227,21 +227,60 @@ while true; do
     # lane-usable distinguishes those safe AHEAD-BUT-ABSORBED commits from actual HOLDS.
     # The bounded probe fails open; only a completed, exact HOLDS verdict may stop dispatch.
     if [ "$slot" != "main" ] && [ "$wd" != "$ROOT" ]; then
-      lane_probe=$(
-        cd "$ROOT" && /usr/bin/perl -e '
-          $seconds = shift;
-          $pid = fork;
-          exit 125 unless defined $pid;
-          if ($pid == 0) { setpgrp(0, 0); exec @ARGV or exit 126 }
-          $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 };
-          alarm $seconds;
-          waitpid $pid, 0;
-          alarm 0;
-          exit $? >> 8;
-        ' 10 node scripts/lane-usable.mjs "$slot" 2>&1
-      )
-      lane_probe_rc=$?
-      lane_verdict=$(printf '%s\n' "$lane_probe" | sed -n 's/^  => \([A-Z-]*\):.*/\1/p' | tail -1)
+      # F-2089-2: this probe is the ONLY thing standing between a resetting master and an
+      # undrained lane, and until now it FAILED OPEN IN SILENCE. Everything below keys on
+      # `rc=2 && verdict=HOLDS`, so a probe that never DELIVERS a verdict — the 10 s timeout
+      # (rc=124), a fork/exec failure (125/126), or a misuse exit (lane-usable.mjs:462/:467,
+      # which is how a rotted slot->branch mapping presents, F-1464-3) — skips this entire
+      # guard and dispatches, writing NOTHING to the log. Observed live at 20:54:54 on
+      # 2026-08-20: after 296 consecutive REFUSEs, b4v2 dispatched over a live HOLDS lane on
+      # a bare `START lane-b`, and nothing in the log distinguished "the probe timed out"
+      # from "the lane was fine". A safety property that degrades silently under machine
+      # load is a race, not a guard.
+      #
+      # THE DISCRIMINATOR IS AN EMPTY VERDICT, NOT `rc=124`, and that is deliberate:
+      # lane-usable.mjs prints `  => <VERDICT>:` at exactly ONE place (:370) on every path
+      # that classifies at all, and exits before reaching it only on misuse. So "no verdict
+      # parsed" is a positive test for "the probe told us nothing", and it covers the
+      # timeout, crash and misuse arms with one predicate — instead of a list of rc values
+      # that would silently rot as the script grows new exits.
+      #
+      # RETRY ONCE, THEN CONCEDE — AND STAY FAIL-OPEN, DELIBERATELY. F-1027-1's permanent
+      # brick is the failure on the other side, and s2089's 296-refusal deadlock is exactly
+      # what a fail-closed guard costs when it is wrong. What changes here is that the
+      # concession is now NAMED, so the next fire can tell a load race from a clean lane.
+      # The 10 s budget is NOT raised: it has never been measured under a full board, and
+      # raising it blindly trades a rare silent race for a routine dispatch stall.
+      lane_probe='' lane_probe_rc=125 lane_verdict='' lane_probe_attempt=0
+      while [ "$lane_probe_attempt" -lt 2 ]; do
+        lane_probe_attempt=$((lane_probe_attempt + 1))
+        lane_probe=$(
+          cd "$ROOT" && /usr/bin/perl -e '
+            $seconds = shift;
+            $pid = fork;
+            exit 125 unless defined $pid;
+            if ($pid == 0) { setpgrp(0, 0); exec @ARGV or exit 126 }
+            $SIG{ALRM} = sub { kill "TERM", -$pid; select undef, undef, undef, 0.2; kill "KILL", -$pid; exit 124 };
+            alarm $seconds;
+            waitpid $pid, 0;
+            alarm 0;
+            exit $? >> 8;
+          ' 10 node scripts/lane-usable.mjs "$slot" 2>&1
+        )
+        lane_probe_rc=$?
+        lane_verdict=$(printf '%s\n' "$lane_probe" | sed -n 's/^  => \([A-Z-]*\):.*/\1/p' | tail -1)
+        if [ -n "$lane_verdict" ]; then
+          break
+        fi
+        if [ "$lane_probe_attempt" -lt 2 ]; then
+          echo "[lane-runner-v3] $slot: lane-safety probe returned no verdict (rc=$lane_probe_rc) — retrying once before conceding (F-2089-2)."
+        fi
+      done
+      if [ -z "$lane_verdict" ]; then
+        echo "[lane-runner-v3] $slot: LANE-SAFETY PROBE INDETERMINATE after $lane_probe_attempt attempt(s) (rc=$lane_probe_rc) — DISPATCHING $name FAIL-OPEN, guard NOT enforced."
+        echo "[lane-runner-v3]   If this lane HOLDS undrained work, a resetting master can destroy it (F-2089-2). Probe said:"
+        printf '%s\n' "$lane_probe" | sed -n '1,5p' | sed 's/^/[lane-runner-v3]     /'
+      fi
       if [ "$lane_probe_rc" -eq 2 ] && [ "$lane_verdict" = "HOLDS" ]; then
         lane_branch=$(printf '%s\n' "$lane_probe" | sed -n 's/^[^ ]*  \([^ ]*\)  ahead=.*/\1/p' | head -1)
         held_count=$(printf '%s\n' "$lane_probe" | sed -n '/^[[:space:]]*HELD /p' | wc -l | tr -d ' ')
@@ -292,6 +331,21 @@ while true; do
           deletion_numeric_count=$(printf '%s\n' "$deletion_probe" | awk '$1 ~ /^[0-9]+$/ && $2 ~ /^[0-9]+$/ { n++ } END { print n+0 }')
           deletion_count=$(printf '%s\n' "$deletion_probe" | awk '$2 ~ /^[0-9]+$/ { n += $2 } END { print n+0 }')
         fi
+        # F-2089-1: resolve the BUILD-ON-PREDECESSOR declaration before the verdict below.
+        # `optin_undeclared` starts NON-empty so that every path which does not positively
+        # compute it (no token, no declared paths, a mis-sized held array) falls through to
+        # REFUSE rather than to an accidental empty-string match.
+        optin_declared='' optin_undeclared='<uncomputed>'
+        if grep -q '^LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR$' "$f" 2>/dev/null &&
+           [ "$held_count" -gt 0 ] && [ "${#held_paths[@]}" -eq "$held_count" ]; then
+          optin_declared=$(sed -n 's/^EXPECTED-HOLDS:[[:space:]]*//p' "$f" |
+            sed 's/[[:space:]]*$//' | sed '/^$/d' | LC_ALL=C sort -u)
+          if [ -n "$optin_declared" ]; then
+            optin_undeclared=$(LC_ALL=C comm -23 \
+              <(printf '%s\n' "${held_paths[@]}" | LC_ALL=C sort -u) \
+              <(printf '%s\n' "$optin_declared"))
+          fi
+        fi
         if [ "$residue_probe_rc" -eq 0 ] &&
            [ "$residue_absorbed_count" -eq "$held_count" ] &&
            [ "$residue_line_count" -eq "$held_count" ] &&
@@ -300,6 +354,35 @@ while true; do
            [ "$deletion_numeric_count" -eq "$held_count" ] &&
            [ "$deletion_count" -eq 0 ]; then
           echo "[lane-runner-v3] $slot: HOLDS paths fully absorbed by main — dispatching $name: ${held_paths[*]}"
+        elif [ -n "$optin_declared" ] && [ -z "$optin_undeclared" ]; then
+          # F-2089-1: BUILD-ON-PREDECESSOR — the one safe master this guard could not express.
+          # Everything above keys on the LANE'S STATE, so it cannot tell a master that will
+          # `reset --hard` the lane (F-1522-1's real casualty: lane/a lost ee61f25ee) from one
+          # whose pre-flight FORBIDS the reset because the held WIP is its own base. Refusing
+          # the second kind protects nothing and brakes the board permanently: b4v2 was refused
+          # 296 times, once per poll cycle, for holding exactly the commit it was authored to
+          # extend — with both escapes shut, since merging the WIP is owner-forked
+          # (drain-block-check rc=1, "its WIP on lane/b is v2s base") and resetting is forbidden
+          # by the master's own pre-flight. A guard whose only remedy is an act its own subject
+          # forbids is not strict, it is stuck.
+          #
+          # This is NOT a blank cheque, and the declaration is the whole safety argument: the
+          # master must NAME the held paths, and EVERY held path must appear in that list. A
+          # lane holding anything its author did not anticipate is precisely the unexpected
+          # state F-1522-1 exists to refuse, so that still refuses — the opt-in narrows the
+          # guard to "this author proved they knew what was there", never to "skip the check".
+          # It cannot be satisfied by accident: b4v2's lane holds SIX paths, not the one its
+          # own review names, so the declaration has to be measured against the live lane
+          # rather than remembered. Fails safe in every direction — no token, an empty
+          # EXPECTED-HOLDS list, or a single undeclared held path all fall through to REFUSE.
+          #
+          # The predicate is SUBSET (held ⊆ declared), deliberately, not set equality. A
+          # declared path that is NOT held carries no risk at all — there is nothing there to
+          # destroy — whereas equality rots on its own: lane/b runs ~100 commits behind, so the
+          # first time main absorbs any one of the six, an equality test would refuse a
+          # dispatch that had become STRICTLY SAFER. Brittleness that reads as strictness is
+          # how a guard earns the excusing-away that killed the `cross-engine` label (F-1460-1).
+          echo "[lane-runner-v3] $slot: BUILD-ON-PREDECESSOR opt-in honoured — $name declared all $held_count held path(s), dispatching over: ${held_paths[*]}"
         else
           echo "[lane-runner-v3] $slot: REFUSE $name — HOLDS undrained paths:"
           printf '%s\n' "$lane_probe" | sed -n '/^[[:space:]]*HELD /p'

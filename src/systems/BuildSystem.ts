@@ -470,6 +470,16 @@ export class BuildSystem {
     private readonly isBuildableEnabled: (id: BuildableId) => boolean = () => true,
     private readonly onPlacementRequest?: (position: { x: number; z: number }) => boolean,
     private readonly isShooterPowered: (id: 'sentry_beacon' | 'turret', index: number, position: THREE.Vector3) => boolean = () => true,
+    /**
+     * A10 — THE GROUND SEAM, and the only per-POSITION placement veto this class takes.
+     * `Terrain.isBuildable` answers from the tile's authored zones, which are fixed at module
+     * load and cannot know about a verdict a player takes mid-run; the Old Canal's three bands
+     * change what they are when the Prospector decides them. Both engines pass
+     * `CanalChoiceSystem.worksAllowed` here, so the browser and `HeadlessContractSim` cannot
+     * disagree about where a work may stand. Every contract that declares no canal choices passes
+     * the default and gets the identical answer it always got.
+     */
+    private readonly isGroundOpen: (x: number, z: number) => boolean = () => true,
   ) {
     this.group.name = 'BuildSystem';
     this.group.add(
@@ -1438,6 +1448,47 @@ export class BuildSystem {
     target.active = !suspended && this.isSlotActive(target.family, target.index) && !this.wrecked[target.family][target.index];
   }
 
+  /**
+   * A9 — THE ONE WRITER OF A STANDING BUILDING'S POSITION (`Convention 4`: one writer per
+   * surface). `ScheduledRelocationSystem` decides WHICH work moves and WHERE; this decides
+   * whether the slot can take it and performs every consequence in one place: the pool's own
+   * mesh, the palisade route blocker, the targeting register, the shooter's origin (which reads
+   * `allPositions` live and therefore needs no touch) and the suspend flag.
+   *
+   * `lifted` carries the in-the-air state with the move. A lifted work is OFFLINE and UNDAMAGED
+   * — the same `suspendedBuildings` seam the shooter gates already consult — which is exactly
+   * the ratified "relocate unanchored buildings INSTEAD OF destroying them". Nothing here writes
+   * hp, wrecks, refunds or re-charges: a relocation costs a rider position, never gold.
+   *
+   * Returns false — never throws — when the slot is empty, wrecked, or belongs to a family whose
+   * pool cannot be moved (`sluice`, `assay_office`: both are water-adjacent placements, so
+   * neither can stand on a dry alley in the first place). The caller counts the refusal.
+   */
+  relocateBuilding(family: string, index: number, to: { x: number; z: number }, lifted: boolean): boolean {
+    if (!isBuildableId(family)) return false;
+    if (!Number.isInteger(index) || index < 0) return false;
+    if (!this.isSlotActive(family, index) || this.wrecked[family][index] === true) return false;
+    if (!this.moveSlot(family, index, to)) return false;
+    const key = `${family}:${index}`;
+    if (lifted) this.suspendedBuildings.add(key);
+    else this.suspendedBuildings.delete(key);
+    this.syncBuildingTarget(family, index, !lifted);
+    this.visualDirty = true;
+    return true;
+  }
+
+  private moveSlot(id: BuildableId, index: number, to: { x: number; z: number }): boolean {
+    if (id === 'palisade') return this.palisades.moveTo(index, to);
+    if (id === 'stockpile') return this.stockpiles.moveTo(index, to);
+    if (id === 'boiler_house') return this.boilerHouses.moveTo(index, to);
+    if (id === 'turret') return this.turrets.moveTo(index, to);
+    if (id === 'lantern_post') return this.lanternPosts.moveTo(index, to);
+    if (id === 'decoy_shed') return this.decoySheds.moveTo(index, to);
+    if (id === 'capacitor_bank') return this.capacitorBanks.moveTo(index, to);
+    if (id === 'sentry_beacon') return this.beacons.moveTo(index, to);
+    return false;
+  }
+
   collectDemolishRefund(position: THREE.Vector3, amount: number, at: number): boolean {
     if (!this.economy.canReceiveIncome(amount)) return false;
     const result = this.economy.apply({
@@ -1612,6 +1663,10 @@ export class BuildSystem {
   }
 
   private matchesPlacement(def: BuildableDef, position: THREE.Vector3): boolean {
+    // A10: the run-time ground veto sits AHEAD of the terrain read, because a rubble-choked or
+    // flooded canal band refuses every buildable kind for the same reason and there is nothing
+    // for the placement rules below to weigh once it has spoken.
+    if (!this.isGroundOpen(position.x, position.z)) return false;
     const buildable = Terrain.isBuildable(position.x, position.z);
     return matchesPlacement(def.placement, {
       walkable: Terrain.sample(position.x, position.z).walkable,
@@ -2134,7 +2189,15 @@ export class BuildSystem {
     const handle: ShooterHandle = {
       id: 'beacons',
       resumeKey: `building:sentry_beacon:${placed}`,
-      enabled: () => !this.suspendedBuildings.has(`sentry_beacon:${placed}`),
+      // A5: the beacon now consults `isShooterPowered` exactly as the turret below always has.
+      // The predicate's own signature has declared `'sentry_beacon' | 'turret'` since it was
+      // introduced, so this wires the half that was declared and never connected — and every
+      // existing caller is unchanged by it, because the browser's power closure answers
+      // `id !== 'turret' || powerConsumerAt(...)`, i.e. TRUE for every beacon (`Game.ts:1401`).
+      // What it buys is one seam for "this building's output is off right now" that both the
+      // power grid and the interference front can stand behind.
+      enabled: () => !this.suspendedBuildings.has(`sentry_beacon:${placed}`)
+        && this.isShooterPowered('sentry_beacon', placed, this.beacons.allPositions[placed] ?? this.ghostPos),
       getPos: () => this.shooterPos.copy(this.beacons.allPositions[placed] ?? this.ghostPos),
       range: Balance.beacon.range,
       cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
@@ -2878,6 +2941,15 @@ class LanternPostPool {
     this.sync(slot, 0);
     this.markNeedsUpdate();
     return slot;
+  }
+
+  /** A9: moves a STANDING post/shed/bank without re-placing it. See `SentryBeaconPool.moveTo`. */
+  moveTo(index: number, position: { x: number; z: number }): boolean {
+    if (!this.active[index]) return false;
+    this.positions[index]?.set(position.x, 0, position.z);
+    this.sync(index, 0);
+    this.markNeedsUpdate();
+    return true;
   }
 
   deactivate(index: number): boolean {

@@ -148,9 +148,22 @@ for (const sha of commits) {
   // string match. A guard whose remedy is to corrupt a correct file is the guard that is wrong.
   // The session number and the `(line-1 archive` phrase still bind; only the NOUN is free, which
   // is what keeps this from being a loosening -- an unarchived line still reds.
+  // F-2088-2 (s2088): an UNNUMBERED line-1 must be judged by the same LEGIBILITY standard as a
+  // numbered one, not condemned for lacking a session number. `lostSession === null` used to
+  // short-circuit straight to permanent, so an ATTENDED line-1 -- which carries "(attended)" and
+  // no `s<N>` -- could NEVER be exonerated however correctly it had been archived. Measured s2088:
+  // `1cb47bdc^`'s line was present at HEAD *verbatim*, carried by a textbook bullet
+  // (`- **attended lock line (line-1 archive, RESTORED s2087 from \`1cb47bdc^\`):**`), and was still
+  // counted PERMANENTLY absent. That is the exact trap the F-1690-2 block above names: the remedy
+  // the red implied was to invent an `s<N>` for a session that never had one, i.e. to write a
+  // falsehood onto the board to satisfy a string match. As attended sessions took over the drain
+  // load (F-1546-1), this arm reds on ordinary healthy behaviour -- the road to an excused guard.
+  // The numbered path is UNCHANGED, so this cannot loosen it; the null path now requires POSITIVE
+  // evidence (the lost text readable at HEAD) rather than assuming loss from a missing number.
   rec.permanent =
-    rec.lostSession === null ||
-    !new RegExp(`s${rec.lostSession} [^(]*\\(line-1 archive`).test(headBlob);
+    rec.lostSession === null
+      ? !headBlob.includes(rec.lost)
+      : !new RegExp(`s${rec.lostSession} [^(]*\\(line-1 archive`).test(headBlob);
   (rec.permanent ? drops : transient).push(rec);
 }
 

@@ -38,6 +38,8 @@ export type E8PhysicsDiagnostics = {
 export class E8PhysicsSystem {
   private readonly filteredMovement = new Map<number, THREE.Vector2>();
   private readonly adaptedLobs = new Map<string, { range: number; airTime: number }>();
+  /** Scratch for the A7 debris drag; see `filterMovement`. Never the stored momentum. */
+  private readonly dragged = new THREE.Vector2();
   private readonly profile: Omit<E8PhysicsDiagnostics, 'filteredMovement' | 'adaptedLobs'>;
 
   constructor(contract: ContractManifest) {
@@ -60,7 +62,21 @@ export class E8PhysicsSystem {
     return this.profile.lobArcDistanceMultiplier;
   }
 
-  filterMovement(slot: number, input: THREE.Vector2, fixedDelta: number, velocity?: THREE.Vector3): THREE.Vector2 {
+  /**
+   * A7 (2026-08-20) added the optional `terrain` argument and NOTHING else on this path. Both
+   * multipliers default to 1, which reproduces the pre-A7 arithmetic exactly — that default is
+   * what keeps `e8-eclipse` and `e8-mare-claim` byte-identical, since neither passes the
+   * argument. Low orbit passes `LowOrbitSystem`'s per-position answer: `controlScale` halves
+   * THRUST RESPONSE off the handhold spine (a soft constraint — momentum carries, and there is
+   * no wall), `speedScale` drags the resulting vector inside a debris band.
+   */
+  filterMovement(
+    slot: number,
+    input: THREE.Vector2,
+    fixedDelta: number,
+    velocity?: THREE.Vector3,
+    terrain?: { controlScale: number; speedScale: number },
+  ): THREE.Vector2 {
     if (!this.profile.active || this.profile.movement === 'normal') return input;
     let filtered = this.filteredMovement.get(slot);
     if (!filtered) {
@@ -72,12 +88,18 @@ export class E8PhysicsSystem {
     if (velocity) filtered.set(velocity.x / Balance.hero.speed, velocity.z / Balance.hero.speed).clampLength(0, 1);
     const moving = input.lengthSq() > 0.0001;
     const freeFall = this.profile.movement === 'free-fall';
-    const response = moving
+    const control = terrain ? terrain.controlScale : 1;
+    const response = (moving
       ? freeFall ? Balance.e8Physics.freeFallThrustResponsePerSecond : Balance.e8Physics.floatyThrustResponsePerSecond
-      : freeFall ? Balance.e8Physics.freeFallDriftResponsePerSecond : Balance.e8Physics.floatyDriftResponsePerSecond;
+      : freeFall ? Balance.e8Physics.freeFallDriftResponsePerSecond : Balance.e8Physics.floatyDriftResponsePerSecond)
+      * control;
     filtered.lerp(input, THREE.MathUtils.clamp(response * fixedDelta, 0, 1));
     if (filtered.lengthSq() > 1) filtered.normalize();
-    return filtered;
+    const speed = terrain ? terrain.speedScale : 1;
+    if (speed === 1) return filtered;
+    // Scratch, never `filtered` itself: `filtered` IS the persistent per-slot momentum, and
+    // scaling it in place would compound the drag every step into a standstill.
+    return this.dragged.copy(filtered).multiplyScalar(speed);
   }
 
   scaleLobAirTime(seconds: number): number {

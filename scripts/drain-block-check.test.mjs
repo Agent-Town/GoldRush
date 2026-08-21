@@ -514,6 +514,49 @@ test("an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re
   }
 });
 
+test('F-2097-1: an UNREGISTERED master is still refused when a runner holds it', (t) => {
+  // The dispatch refusal sat inside `if (queue)`, which the UNKNOWN branch exits before reaching —
+  // so a master with no goal leaf was cleared at rc=0 however many runners held it. Measured s2097:
+  // 532 of 1093 masters in tasks/*.md (48.7%) have no leaf, so this was the MAJORITY path, and it is
+  // exactly where a re-land or a successor reaches (old masters are what those are built from).
+  const dir = fixtureN([{ id: 'other', title: 'Unrelated', taskFile: 'lane-z-unrelated.md', status: 'queued' }]);
+  cleanup(t, dir);
+  const master = 'lane-b-dup-dispatch.md';
+  fs.writeFileSync(path.join(dir, 'tasks', master), '# master with no citations\n');
+  fs.mkdirSync(path.join(dir, 'tasks', 'running'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'tasks', 'running', `lane-b--20260821-004500-${master}`), '');
+
+  const r = run(dir, '--queue', master);
+  assert.equal(r.status, 1, `an unregistered master a runner holds must REFUSE, got rc=${r.status}\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /⛔ ALREADY DISPATCHED — DO NOT QUEUE/);
+  // The bookkeeping finding is still reported — the cure adds a refusal, it does not silence the
+  // Goal Registration Law gap that is also true here.
+  assert.match(r.stdout, /\? UNKNOWN — no goal leaf matches/);
+
+  // CONTROL 1 — same unregistered master, NO live run. It must go back to clearing at rc=0, or the
+  // arm above would be proving that an unregistered master is refused for being unregistered.
+  const free = fixtureN([{ id: 'other', title: 'Unrelated', taskFile: 'lane-z-unrelated.md', status: 'queued' }]);
+  cleanup(t, free);
+  fs.writeFileSync(path.join(free, 'tasks', master), '# master\n');
+  const c = run(free, '--queue', master);
+  assert.equal(c.status, 0, `no live run must still clear, got rc=${c.status}\n${c.stdout}`);
+  assert.doesNotMatch(c.stdout, /ALREADY DISPATCHED/);
+
+  // CONTROL 2 — the UNDRAINED WARN must stay OFF on this path even with a matching bare done-move.
+  // 403 unregistered masters have one (s2097), nearly all old work drained before the rename
+  // convention; with no leaf there is no ledger to check the heuristic against, and a warning that
+  // is usually false on the majority path is how a guard decays into a formality
+  // (drain-block-check.mjs:594 — cite the CODE, the coordinate drifts).
+  const bare = fixtureN([{ id: 'other', title: 'Unrelated', taskFile: 'lane-z-unrelated.md', status: 'queued' }]);
+  cleanup(t, bare);
+  fs.writeFileSync(path.join(bare, 'tasks', master), '# master\n');
+  fs.mkdirSync(path.join(bare, 'tasks', 'done'), { recursive: true });
+  fs.writeFileSync(path.join(bare, 'tasks', 'done', `20260801-080403-${master}`), '');
+  const w = run(bare, '--queue', master);
+  assert.equal(w.status, 0, `a bare done-move alone must not refuse, got rc=${w.status}\n${w.stdout}`);
+  assert.doesNotMatch(w.stdout, /UNDRAINED OUTPUT EXISTS/, 'the heuristic arm must not fire without a leaf to check it against');
+});
+
 test('the DRAIN path is untouched by both arms — a done-move is what a drain is FOR', (t) => {
   // Without --queue this check must never run: §3.0 is called with a done-move filename by
   // definition, and a live run of the same master is the normal shape of main-slot output.

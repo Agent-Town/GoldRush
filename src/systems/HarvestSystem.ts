@@ -34,6 +34,10 @@ export type HarvestChannelFutureState = {
   channeling: boolean;
 };
 
+export type HarvestVisualDiagnostics = {
+  seams: Array<{ id: string; x: number; z: number; visualY: number; groundY: number; spriteVisible: boolean }>;
+};
+
 export type HarvestTarget = {
   actorId?: string;
   position: THREE.Vector3;
@@ -250,6 +254,36 @@ export class HarvestSystem {
 
     this.updateProgressRing(at);
     return this.buildSnapshot(at);
+  }
+
+  /**
+   * RENDER-ONLY (CLAUDE.md §4.6). Called when a sculpted map installs its visual height source,
+   * which happens long after the seams were placed. See `GoldNode.resampleTerrain` for the whole
+   * story; nothing here reads the rng or moves a seam in X/Z, so the sim is untouched.
+   */
+  resampleTerrain(): void {
+    for (const node of this.nodes) node.resampleTerrain();
+  }
+
+  /**
+   * The seams as the PLAYER's eye meets them: where each visual is standing versus where the
+   * ground now is. `e2e/seam-visual-follows-sculpt.spec.ts` is the reason this is published —
+   * a seam whose sim is perfect and whose visual is a metre underground reads, in play, as no
+   * seam at all, and only a render-side number can catch that before the owner does.
+   */
+  get visualDiagnostics(): HarvestVisualDiagnostics {
+    return {
+      seams: this.nodes
+        .filter((node) => node.isActive)
+        .map((node) => ({
+          id: node.id,
+          x: node.group.position.x,
+          z: node.group.position.z,
+          visualY: node.visualHeight,
+          groundY: visualAnchorY(node.group.position, 0),
+          spriteVisible: node.visualDrawing,
+        })),
+    };
   }
 
   dispose(): void {

@@ -6,9 +6,9 @@ import regattaMask from '../assets/contracts/epoch-5-deepwater/mask-tables/e5-re
 
 const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
   'e5-deepwater-claim': 'e5-deepwater-claim',
-  'e5-regatta': 'the-claim',
+  'e5-regatta': 'e5-regatta',
   'e5-stillwater': 'e5-stillwater',
-  'e5-flotilla': 'the-claim',
+  'e5-flotilla': 'e5-flotilla',
 };
 
 /**
@@ -17,11 +17,24 @@ const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
  * storm handoff is wired, and both bench seeds SECURE at wave 12 under public Deepwater verbs
  * (`REANCHOR`/`BOAT_BUILD` + the automatic Spark Rig). So the Claim is now ADMITTED and SEEDED.
  *
- * The other three E5 contracts are unchanged: their consumers are still absent, so they stay
- * refused and unseeded. This census is per-id from here on — a single blanket refusal would now
- * be a lie about the flagship, and a single blanket admission a lie about the other three.
+ * The Regatta and Flotilla now share that deepwater socket and add their declared consumers.
+ * Stillwater remains refused.
  */
-const ADMITTED = new Set(['e5-deepwater-claim']);
+const ADMITTED = new Set(['e5-deepwater-claim', 'e5-regatta', 'e5-flotilla']);
+
+/**
+ * REFUSED BUT SOCKETED (A2, 2026-08-21) — a third state this census did not have, and it needs
+ * one. Before A2 every refused E5 contract was refused BECAUSE nothing socketed it, so
+ * `socketRules === []` and `DeepwaterSocket.create() === null` were fair proxies for "no
+ * consumer". `e5-stillwater` breaks that equivalence: its noise-hunt consumer is LIVE in both
+ * engines and it still does not secure (best public-verb play wave 4 of 12, both bench seeds —
+ * `artifacts/e5-stillwater/`), so it is socketed AND exempt. Asserting the old proxies here would
+ * force a choice between deleting a working consumer and lying about the door.
+ *
+ * It stays UNSEEDED on purpose: F-DOOR-4 says the door must never advertise a run it refuses, so
+ * `bench-seeds.json` gains nothing until both seeds secure.
+ */
+const SOCKETED_BUT_REFUSED = new Set(['e5-stillwater']);
 
 /**
  * ADMISSION GATE 1 (F-ER01-E5-1) — every E5 contract must name the headless consumer it lacks.
@@ -51,16 +64,39 @@ const FORBIDDEN_SOURCE = [
   'twist.weather',
 ];
 
-// Only the flagship has a consumer, so only the flagship gets vocabulary. The three variants
-// declare their own consumer `missing` and must stay silent.
-const EXPECTED_SOCKET_RULES = [
-  'deepwater_arsenal',
-  'deepwater_boss_socket',
-  'deepwater_claim_boat',
-  'deepwater_levers_unreachable',
-  'deepwater_storm_track',
-  'deepwater_water_regions',
-];
+const EXPECTED_SOCKET_RULES: Record<string, string[]> = {
+  'e5-deepwater-claim': [
+    'deepwater_arsenal',
+    'deepwater_boss_socket',
+    'deepwater_claim_boat',
+    'deepwater_levers_unreachable',
+    'deepwater_storm_track',
+    'deepwater_water_regions',
+  ],
+  'e5-regatta': [
+    'deepwater_arsenal',
+    'deepwater_claim_boat',
+    'deepwater_levers_unreachable',
+    'deepwater_storm_track',
+    'deepwater_water_regions',
+  ],
+  'e5-flotilla': [
+    'deepwater_arsenal',
+    'deepwater_claim_boat',
+    'deepwater_levers_unreachable',
+    'deepwater_storm_track',
+    'deepwater_water_regions',
+  ],
+  // A2: the same five the family shares. `noise_hunt` is asserted separately below, exactly as
+  // `flotilla_hulls` and `regatta_race` are — this list is the `deepwater_*` prefix only.
+  'e5-stillwater': [
+    'deepwater_arsenal',
+    'deepwater_claim_boat',
+    'deepwater_levers_unreachable',
+    'deepwater_storm_track',
+    'deepwater_water_regions',
+  ],
+};
 
 for (const contract of deepwater.contracts) {
   test(`${contract.id} census admission is explicit`, async () => {
@@ -92,8 +128,7 @@ for (const contract of deepwater.contracts) {
       const { EnemyPool } = await vite.ssrLoadModule('/src/entities/pools.ts');
       const manifest = deriveMechanicsManifest(contract.id);
 
-      // Seeded exactly where admitted. The Claim's pair was added by the socket slice; the three
-      // variants must still be absent, or the door would advertise runs it refuses (F-DOOR-4).
+      // Seeded exactly where admitted; the door must never advertise a run it refuses (F-DOOR-4).
       if (admitted) expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(seeds);
       else expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
       expect(manifest.interactables).toEqual([]);
@@ -133,8 +168,8 @@ for (const contract of deepwater.contracts) {
       const socketRules = manifest.rules
         .map(({ id }: { id: string }) => id)
         .filter((id: string) => id.startsWith('deepwater_'));
-      if (contract.id === 'e5-deepwater-claim') {
-        expect(socketRules).toEqual(EXPECTED_SOCKET_RULES);
+      if (admitted) {
+        expect(socketRules).toEqual(EXPECTED_SOCKET_RULES[contract.id]);
 
         // The socket is REAL and DETERMINISTIC. Two independent tiles, identical tick counts,
         // identical snapshots — the property that makes an event-log hash mean anything.
@@ -144,7 +179,7 @@ for (const contract of deepwater.contracts) {
         const drive = (steps: number) => {
           const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e5-probe' });
           const socket = DeepwaterSocket.create(
-            loadContract('e5-deepwater-claim'),
+            loadContract(contract.id),
             new EnemyPool(),
             sim.combat,
             () => sim.hero.group.position,
@@ -160,12 +195,13 @@ for (const contract of deepwater.contracts) {
         expect(first.diagnostics.corsairWaves).toBeGreaterThan(0);
         expect(first.diagnostics.corsairsSpawned).toBeGreaterThan(0);
 
-        // F-ER01-E5-1: a missing handoff is COUNTED, never skipped. `drive()` builds the socket
+        // F-ER01-E5-1: a missing boss handoff is COUNTED, never skipped. `drive()` builds the socket
         // with NO `bossHandoff` (the five-argument form), so every storm wave at or past the
         // Dredge-Queen's wave is still recorded as a refusal. That counter is the socket's honesty
         // mechanism and it must keep working now that a handoff EXISTS — the admitted sim below
         // wires one and therefore refuses nothing.
-        expect(first.diagnostics.bossHandoffsRefused).toBeGreaterThan(0);
+        if (contract.id === 'e5-deepwater-claim') expect(first.diagnostics.bossHandoffsRefused).toBeGreaterThan(0);
+        else expect(first.diagnostics.bossHandoffsRefused).toBe(0);
 
         // F-ER01-E5-5, closed by AP-16-7: both boat levers keep the consumer's accept/reject
         // law, and the headless door exposes their diagnostics and verbs. The re-probe that this
@@ -187,9 +223,23 @@ for (const contract of deepwater.contracts) {
           pads: expect.any(Array),
           anchors: expect.any(Array),
           anchor: expect.any(Object),
-          // The boss the census used to report as ABSENT now reports its own state.
-          dredgeQueenBoss: expect.objectContaining({ act: expect.any(Number), livePaddles: 2 }),
         });
+        if (contract.id === 'e5-deepwater-claim') {
+          expect(doorDeepwater).toMatchObject({ dredgeQueenBoss: expect.objectContaining({ act: expect.any(Number), livePaddles: 2 }) });
+        } else if (contract.id === 'e5-regatta') {
+          expect(doorDeepwater?.race).toMatchObject({ gatesPassed: expect.any(Array), finished: false });
+          // The bundle authors no competing-racer roster or loot zones. Record the remaining
+          // authoring honestly; this slice must not stretch one corsair racer into a loot system.
+          expect(manifest.rules.find(({ id }: { id: string }) => id === 'regatta_race')?.data.competingRacerLoot).toBe(false);
+        } else {
+          expect(doorDeepwater?.flotilla).toMatchObject({
+            hulls: expect.arrayContaining([expect.objectContaining({ district: 'kitchen', integrity: 96, lost: false })]),
+            centroid: { x: 0, z: 23 },
+            allLost: false,
+          });
+          expect(manifest.rules.find(({ id }: { id: string }) => id === 'flotilla_hulls')?.source)
+            .toBe('FlotillaHullSystem.advance+reanchor+targetPosition');
+        }
         // The wired sim hands every storm wave to a real boss, so nothing is refused.
         expect(doorDeepwater!.bossHandoffsRefused).toBe(0);
         for (const order of [
@@ -199,9 +249,49 @@ for (const contract of deepwater.contracts) {
         const levers = manifest.rules.find(({ id }: { id: string }) => id === 'deepwater_levers_unreachable');
         expect(levers.data.consumerLevers).toEqual(['ClaimBoat.placeBuilding', 'ClaimBoat.reanchor']);
         expect(manifest.buildables).toEqual(expect.any(Array));
+      } else if (SOCKETED_BUT_REFUSED.has(contract.id)) {
+        // A2 — SOCKETED AND STILL REFUSED. The tile, the boat and the arsenal are all live here;
+        // what is missing is a secure, not a consumer. Everything below would be false under the
+        // old refused branch, which is exactly why this branch exists.
+        expect(socketRules).toEqual(EXPECTED_SOCKET_RULES[contract.id]);
+        const noise = manifest.rules.find(({ id }: { id: string }) => id === 'noise_hunt');
+        expect(noise.source).toBe('NoiseHuntSystem.advance+onReanchor');
+        expect(noise.data).toMatchObject({
+          sources: ['air-pump', 'engine', 'harpoon-reload'],
+          silencedIn: ['hand-pan-drift', 'sail-trim-drift'],
+          trailHoldSeconds: 8,
+          fogIsPresentationOnly: true,
+        });
+        // The storm track is authored SUPPRESSED here and crews nobody, so it must not claim the
+        // clock — the ordinary schedule is what fields this contract's `machine_leviathan`.
+        const track = manifest.rules.find(({ id }: { id: string }) => id === 'deepwater_storm_track');
+        expect(track.data).toMatchObject({ corsairsPerWave: 0, replacesScheduledWaves: false });
+
+        const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e5-probe' });
+        const socket = DeepwaterSocket.create(
+          loadContract(contract.id),
+          new EnemyPool(),
+          sim.combat,
+          () => sim.hero.group.position,
+          () => undefined,
+        )!;
+        expect(socket).not.toBeNull();
+        const hunt = socket.diagnostics.noiseHunt!;
+        // The machines RIDE THE ANCHOR, and the second anchor sits inside a declared quiet zone —
+        // the contract's own way to take the whole boat silent. Both halves pinned here because
+        // the map's whole tension is that geometry.
+        expect(hunt.sources.map(({ id, level }: { id: string; level: number }) => `${id}:${level}`))
+          .toEqual(['air-pump:0', 'engine:0', 'harpoon-reload:0']);
+        expect(hunt.trail.target).toBeNull();
+        expect(hunt.quietZones.map(({ id, boatInside }: { id: string; boatInside: boolean }) => `${id}:${boatInside}`))
+          .toEqual(['hand-pan-drift:false', 'sail-trim-drift:false']);
+        expect(socket.reanchor('open-water', 1)).toBe(true);
+        expect(socket.diagnostics.noiseHunt!.quietZones[0]).toMatchObject({ id: 'hand-pan-drift', boatInside: true });
+        expect(socket.diagnostics.noiseHunt!.sources.map(({ silenced }: { silenced: boolean }) => silenced))
+          .toEqual([true, true, true]);
       } else {
         expect(socketRules).toEqual([]);
-        // The variants carry `tileParams.deepwater` too. The socket must refuse them exactly as
+        // The remaining variants carry `tileParams.deepwater` too. The socket must refuse them exactly as
         // `createDeepwaterClaimTile` does, or their missing consumers would look socketed.
         const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'er01-e5-probe' });
         const socket = DeepwaterSocket.create(
@@ -214,8 +304,8 @@ for (const contract of deepwater.contracts) {
         expect(socket).toBeNull();
       }
 
-      // THE DOOR ITSELF. The Claim boots on its own bench seeds; the three variants are still
-      // refused BY NAME, which is what keeps the refusal honest rather than silent.
+      // THE DOOR ITSELF. Admitted contracts boot on their own bench seeds; the remainder are
+      // refused BY NAME, which keeps the refusal honest rather than silent.
       for (const seed of seeds) {
         if (admitted) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
         else expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(/AP-07 supports only/);

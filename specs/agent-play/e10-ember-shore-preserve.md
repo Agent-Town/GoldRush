@@ -1,0 +1,39 @@
+# E10 EMBER SHORE — the preserve contract + the Static squall (B5 attended spec)
+### Status: DRAFT 2026-08-20 (attended) — build-authorized with the defaults below under the NO-BLOCKER LAW (owner 2026-07-18, verbatim: "you can wire things in game, I just correct them later. I am already blocking so much work - lets not add more to that."). Correction points batched at the bottom; none block the build.
+### Owner directives in force: door-completion sheet ratification 2026-08-20, verbatim: "Group 2: don't defer, lets keep building but put these in the queue after the other tasks." The sheet routed B5 through "attended design/content specs before their builds" — this file is that spec.
+### Design-locked source: `specs/epoch-saga/e10-deepsky-bundle.md` §B2 (banked 2026-07-07): "The First World ('the Ember Shore,' launch companion): … authored landmark (a cooled titan machine, older than the Combine — a question the game never answers), … one preserve-contract ('keep the last warm vent alight through the Static squall') — the extract→preserve turn taught by play, not text."
+
+## 1. What exists today (verified in data, 2026-08-20)
+`assets/contracts/epoch-10-deepsky/contracts.json` → `e10-ember-shore`: twist `{}` · enemyRoster `[]` · harvestAnchors `[]` · description "Board-launch-only until its preserve-contract Static squall consumer lands." Declared and REAL: buildZones `last-warm-vent-site` (south, x[-2..8] z[-16..-4]) + `cooled-titan-machine-mount` (north, x[14..38] z[22..46]); ONE stake `last-warm-vent` (3,−10) heroStart:true; heightfield `ember-shore-cooling-veins` (visual); spawnEdges north/west/east; size 128. The Static identities are ALREADY designed with movement grammar in `specs/enemy-rosters-e6-e10.md` §E10 (static_mote = orbit · unraveled_machine = chase under a mask · static_squall = "lane geometry as a scheduled front in the contract weather scheduler … never enters enemyRoster" · the_quiet = NOT this map). This spec authors only what is missing and sockets only what is declared — reject-don't-stretch.
+
+## 2. Laws
+- **Law 2**: idle floors must NOT secure. Idle here dies twice over: motes/unraveled kill the stationary hero, and an unstoked vent gutters in the first squall (loss). Both terminals are honest.
+- **F-1741**: no balance buffs to force greens; no headless-only minting. The prover funds stoking with earned gold (anchors below exist for that).
+- **Cure-arms copy** (roster spec reading law): Static-class exits use "disperses" — motes disperse under ordinary damage on this map (the re-ink burst is E10-finale weaponry, not required here); unraveled machines disperse and their source-era silhouette is presentation, not a second controller.
+- **Pool honesty**: neither roster row self-exhausts (no wrangle rows on this map) — the E6 pool disease does not apply. If measurement shows otherwise, STOP per Law 2 and park behind F-CAP-2.
+- **Canon**: the cooled titan machine is scenery with a mount zone. It never wakes, never explains itself ("a question the game never answers"). No firearms (ADR-001); warm, never gory.
+
+## 3. The design (defaults ratifiable by silence)
+**The turn this map teaches: you are not here to take. You are here to keep something alight.**
+- **The vent** (preserve consumer, keyed on the new `twist.emberShore.preserve` field per F-1471-1): the `last-warm-vent` stake is a structure-state, not a building — WARMTH meter 100, decays only during squalls (−4/s default). A **STOKE** context action inside the vent disc (radius 4) spends 15 gold to restore +40 warmth (REANCHOR-verb conventions — same plumbing family the deepwater maps speak). Warmth 0 ⇒ the vent gutters ⇒ **run loss** (mirror the fairground wheel-loss surfacing class). The vent is not damageable by enemies — the SQUALL is the antagonist; enemies are the thing that keeps you too busy to stoke.
+- **The squall** (scheduler front, `twist.emberShore.squall`): a map-wide desaturation WEATHER PHASE on the storm-cycle pattern (E5's proven tech): calm 60s → telegraph 8s (wind rises, edges pale) → **squall 25s** (vent decays, mote pressure doubles, browser presentation: desaturation vignette + mix-duck; headless: a phase flag in snapshots). If the A5 relay-rush interference-front consumer has merged, reuse its band/phase plumbing with Static presentation; if not, the storm-cycle scheduler is the fallback — implementer reads both and says which it took.
+- **Roster** (authored by this spec, rows per `specs/enemy-rosters-e6-e10.md` §E10): `static_mote` (orbit the vent, peel inward; 0.25× height; disperses) + `unraveled_machine` (chase; mask over the **e6 feral_toaster** source sheet at launch — sheets exist from batch R-E6; PROPOSAL, correctable to any era by swapping one mask row). Waves scale mote count with squall proximity; unraveled arrive from wave 4.
+- **Anchors**: author 4 harvestAnchors along the cooling veins south and west of the vent (inside walkable reach of both buildZones) — panning cooled ember veins for gold IS the stoking economy.
+- **Secure**: `twist.secureWave: 12` with the objective latch = vent alight (warmth > 0) at the secure check AND at least one full squall survived. objectiveAllowsSecure keyed on the preserve sub-field.
+
+## 4. Slices (each ends playable, gated)
+- **E10S-1 — data**: the twist block, roster, anchors, bench seeds `e10-ember-shore-01/-02`. GATE: contract loads both engines, tsc/build green, floors regen `--check` (rows appear only with admission; 0 secured:true).
+- **E10S-2 — squall scheduler + presentation-thin desat**: phase machine + browser vignette/mix-duck stub (the full aura shader is the Quiet's finale tech — NOT built here). GATE: phase timings deterministic in headless snapshots; zero console errors in plain boot ×2 viewports.
+- **E10S-3 — the preserve consumer**: warmth/stoke/loss + secure latch, both engines, socket pattern (private ctor + create() mirroring the browser gate + refusal counters + presentation-stripped snapshots). GATE: focused e2e — stoked vent survives a squall; unstoked vent gutters ⇒ loss; secure refused while warmth 0.
+- **E10S-4 — the door**: public-verb prover secures ×2 both seeds (pan → stoke → defend); idle floors honest (report both terminals); admission completion per the E5/E6 template (er01-e10-census per-id truth, skill.md fences, door baseline, floors + audit regen, pins attributed). The census file may not exist for e10 — create per the er01-e6 pattern, covering all four E10 ids truthfully (last-claim admitted; river post-credits-exempt; archive-world per its own spec's state).
+
+## 5. Integration map
+Touches: the e10-ember-shore contract block (data authoring authorized), one new consumer system, one new scheduler (or A5 reuse), engine hooks + latches, MechanicsManifest (rules from the consumer), census/skill/baseline/floors/audit, bench-seeds, one e2e.
+Untouched: e10-last-claim (ADMITTED today — its floors/pins must not move; prove byte-unmoved), e10-river (post-credits, exempt-by-design), the Quiet/boss tech, procgen v3 (the bundle's §C prereq applies to the FINALE pass, not this fixed authored tile — recorded), all other epochs.
+Sequencing: queue AFTER the A-wave remainder per the owner's ruling; prefer landing after A5 (front plumbing) — not a hard gate, fallback named above.
+
+## 6. Correction points for the owner (batched, non-blocking — defaults ship)
+1. Unraveled-machine mask source at launch = e6 feral_toaster (cheapest: sheets exist). Swap to any era by one mask row.
+2. Stoke economics = 15 gold → +40 warmth, decay −4/s squall-only. Tunable numbers, wired to Balance.
+3. Squall cadence = 60/8/25s (storm-cycle family, slower and heavier than E5's 24s). Say a word to retune.
+4. Desat at launch = presentation-thin (vignette + duck), full aura shader deferred to the Quiet. Say the word to front-load it.

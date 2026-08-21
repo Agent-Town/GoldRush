@@ -7,6 +7,7 @@ import { listEpochs, loadEpoch, type ContractManifest } from '../meta/ContractFa
 import type { EventBus } from '../core/EventBus';
 import { DecayScheduler } from '../systems/DecaySystem';
 import { E6TileConsumerSystem } from '../systems/E6TileConsumerSystem';
+import { ShowroomCaptureObjective, type ShowroomCaptureDiagnostics } from '../systems/ShowroomCaptureObjective';
 import { WrangleSystem } from '../systems/WrangleSystem';
 
 /**
@@ -39,11 +40,13 @@ export type AtomicSocketDiagnostics = Readonly<{
   tiles: E6TileConsumerSystem['diagnostics'] | null;
   exhausted: number;
   captureLever: 'CAPTURE';
+  showroomObjective?: ShowroomCaptureDiagnostics;
 }>;
 
 export class AtomicSocket {
   private readonly decay: DecayScheduler;
   private readonly wrangle: WrangleSystem;
+  private readonly showroomObjective: ShowroomCaptureObjective;
   private readonly tiles: E6TileConsumerSystem | null;
   private exhausted = 0;
 
@@ -55,6 +58,7 @@ export class AtomicSocket {
     economy: Economy,
   ) {
     this.decay = new DecayScheduler(events);
+    this.showroomObjective = ShowroomCaptureObjective.create(contract);
     // GR-SIM keeps no profile on disk: tile persistence reads empty and writes nowhere, so a
     // captured machine cannot survive a run here. That is a property of the harness, not a bug —
     // and it is why the pen roster is only ever evidence about the CURRENT run.
@@ -73,8 +77,8 @@ export class AtomicSocket {
       () => {
         this.exhausted += 1;
       },
-      // The browser's capture callback is float-text plus a freed-walker puff: presentation only.
-      () => undefined,
+      // The browser feeds the same objective from this callback before adding its presentation.
+      () => this.showroomObjective.recordCapture(),
     );
     this.tiles = contract.id === 'e6-glow-mesa'
       ? new E6TileConsumerSystem(true, contract.id, this.decay, economy, tileState, contract.tileParams)
@@ -141,13 +145,19 @@ export class AtomicSocket {
     return this.wrangle.tryCapture(position);
   }
 
+  get objectiveAllowsSecure(): boolean {
+    return this.showroomObjective.objectiveAllowsSecure;
+  }
+
   get diagnostics(): AtomicSocketDiagnostics {
+    const showroomObjective = this.showroomObjective.diagnostics;
     return {
       epochId: this.epochId,
       wrangle: this.wrangle.diagnostics(),
       tiles: this.tiles?.diagnostics ?? null,
       exhausted: this.exhausted,
       captureLever: 'CAPTURE',
+      ...(showroomObjective.declared ? { showroomObjective } : {}),
     };
   }
 }

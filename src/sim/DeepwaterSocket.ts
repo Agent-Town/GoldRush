@@ -5,6 +5,9 @@ import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
 import type { ContractManifest } from '../meta/ContractFamilies';
 import type { CombatSystem } from '../systems/CombatSystem';
+import { FlotillaHullSystem, type FlotillaHullDiagnostics } from '../systems/FlotillaHullSystem';
+import { NoiseHuntSystem, type NoiseHuntDiagnostics } from '../systems/NoiseHuntSystem';
+import { RegattaRaceSystem, type RegattaRaceDiagnostics } from '../systems/RegattaRaceSystem';
 import { createDeepwaterClaimTile, type CorsairSkiffWave, type DeepwaterClaimTile } from '../world/DeepwaterClaimTile';
 
 /**
@@ -38,10 +41,25 @@ export type DeepwaterSocketDiagnostics = Readonly<{
   wrecks: readonly string[];
   bossHandoffsRefused: number;
   arsenal: DeepwaterArsenalDiagnostics;
+  race?: RegattaRaceDiagnostics;
+  flotilla?: FlotillaHullDiagnostics;
+  noiseHunt?: NoiseHuntDiagnostics;
+}>;
+
+/**
+ * A2: the two readings the noise-hunt needs that live in the HOST rather than on this socket.
+ * Both engines seat the same two, so the hunt is one rule and not two implementations.
+ */
+export type DeepwaterNoisePorts = Readonly<{
+  /** `HarvestSnapshot.channeling` — the pan MACHINE is engaged (the hand-pan verb is not). */
+  panChanneling: () => boolean;
 }>;
 
 export class DeepwaterSocket {
   private readonly arsenal: DeepwaterArsenal;
+  private readonly race: RegattaRaceSystem | null;
+  private readonly flotilla: FlotillaHullSystem | null;
+  private readonly noise: NoiseHuntSystem | null;
   private corsairWavesSpawned = 0;
   private corsairsSpawned = 0;
   private corsairsRecycledAtExit = 0;
@@ -52,10 +70,24 @@ export class DeepwaterSocket {
     private readonly contract: ContractManifest,
     private readonly enemies: EnemyPool,
     combat: CombatSystem,
-    heroPosition: () => THREE.Vector3,
+    private readonly heroPosition: () => THREE.Vector3,
     private readonly emitWaveStarted: (wave: number, at: number) => void,
     private readonly bossHandoff: DeepwaterBossHandoff | null,
+    noisePorts: DeepwaterNoisePorts,
   ) {
+    this.race = RegattaRaceSystem.create(contract);
+    this.flotilla = FlotillaHullSystem.create(contract, (id) => this.tile.loseHull(id));
+    // A2 — the noise-hunt reads the boat and the deck from this socket's own tile, the ballista
+    // from its own arsenal, and the pan channel from the host. A knocked-out deck leaves through
+    // the SAME `loseHull` seam the Flotilla already uses.
+    this.noise = NoiseHuntSystem.create(contract, {
+      anchor: () => this.tile.snapshot().boat.anchor,
+      panChanneling: noisePorts.panChanneling,
+      harpoonFires: () => this.arsenal.harpoonShots,
+      prospectorPosition: () => heroPosition(),
+      deckBuildings: () => this.tile.snapshot().boat.buildings,
+      onDeckLost: (padId) => this.tile.loseHull(padId),
+    });
     this.arsenal = new DeepwaterArsenal(
       combat,
       heroPosition,
@@ -77,14 +109,25 @@ export class DeepwaterSocket {
     heroPosition: () => THREE.Vector3,
     emitWaveStarted: (wave: number, at: number) => void,
     bossHandoff: DeepwaterBossHandoff | null = null,
+    // Defaulted so every existing caller — and the census probe — keeps compiling unchanged. A
+    // contract with no `tileParams.stillwater` never builds a noise-hunt, so the default is
+    // never read there.
+    noisePorts: DeepwaterNoisePorts = { panChanneling: () => false },
   ): DeepwaterSocket | null {
     const tile = createDeepwaterClaimTile(contract);
-    return tile ? new DeepwaterSocket(tile, contract, enemies, combat, heroPosition, emitWaveStarted, bossHandoff) : null;
+    return tile
+      ? new DeepwaterSocket(tile, contract, enemies, combat, heroPosition, emitWaveStarted, bossHandoff, noisePorts)
+      : null;
   }
 
   /** Game.syncDeepwaterClaim: advance the storm track, then spawn whatever it scheduled. */
   advance(at: number): void {
     const snapshot = this.tile.advance(at);
+    // A2 — steer BEFORE the enemy pool moves, so the trail set this tick is the one walked this
+    // tick. The leviathan is the roster's depth traveller, named from the contract rather than
+    // hardcoded, exactly as the corsair archetype is looked up below.
+    this.noise?.advance(at, this.enemies.all, this.leviathanVariantId);
+    this.race?.advance(at, snapshot.corsairWaves.length, [this.heroPosition(), snapshot.boat.anchor]);
     const pending = snapshot.corsairWaves.slice(this.corsairWavesSpawned);
     this.corsairWavesSpawned = snapshot.corsairWaves.length;
     const baron = this.contract.twist.baron;
@@ -105,8 +148,9 @@ export class DeepwaterSocket {
   recycleCorsairsAtExit(): void {
     const lastWave = this.tile.snapshot().corsairWaves.at(-1);
     if (!lastWave) return;
+    const variantId = this.contract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat')?.id;
     for (const enemy of this.enemies.all) {
-      if (enemy.isAlive && enemy.variantId === 'corsair_skiff' && enemy.position.x >= lastWave.toX - 2) {
+      if (enemy.isAlive && enemy.variantId === variantId && enemy.position.x >= lastWave.toX - 2) {
         this.enemies.recycle(enemy);
         this.corsairsRecycledAtExit += 1;
       }
@@ -118,14 +162,38 @@ export class DeepwaterSocket {
     this.arsenal.resolveTreatments();
   }
 
+  resolveHullContacts(at: number, onAllLost: () => void): void {
+    if (this.flotilla?.advance(at, this.enemies.all)) onAllLost();
+  }
+
+  targetPosition(fallback: THREE.Vector3): THREE.Vector3 {
+    const target = this.flotilla?.targetPosition(fallback) ?? fallback;
+    return new THREE.Vector3(target.x, fallback.y, target.z);
+  }
+
+  movementMultiplier(position: { x: number; z: number }): number {
+    return this.race?.movementMultiplierAt(position.x, position.z) ?? 1;
+  }
+
   /** Real lever — Game's `place_boat_build` action. Rejects unknown and occupied pads. */
   placeBoatBuilding(padId: string, buildingId: string): boolean {
     return this.tile.placeBoatBuilding(padId, buildingId);
   }
 
   /** Real lever — Game's `reanchor` action. Rejects unknown anchors and the current one. */
-  reanchor(anchorId: string): boolean {
-    return this.tile.reanchor(anchorId);
+  reanchor(anchorId: string, at = 0): boolean {
+    const moved = this.flotilla?.diagnostics.hulls.some(({ id }) => id === anchorId)
+      ? this.flotilla.reanchor(anchorId)
+      : this.tile.reanchor(anchorId);
+    // A2: the boat only makes engine noise when it actually gets under way, so a REFUSED
+    // reanchor is silent. Free on every contract without a noise-hunt (`this.noise` is null).
+    if (moved) this.noise?.onReanchor(at);
+    return moved;
+  }
+
+  /** The roster's depth traveller — `machine_leviathan` on the Stillwater, absent elsewhere. */
+  private get leviathanVariantId(): string | undefined {
+    return this.contract.twist.enemyRoster?.find((entry) => entry.travelClass === 'depth')?.id;
   }
 
   /** Game.heroInDeepwaterDiveZone — the depth classes that seal the hero's rig. */
@@ -151,6 +219,9 @@ export class DeepwaterSocket {
       wrecks: snapshot.wrecks.map(({ id }) => id),
       bossHandoffsRefused: this.bossHandoffsRefused,
       arsenal: this.arsenal.diagnostics,
+      ...(this.race ? { race: this.race.diagnostics } : {}),
+      ...(this.flotilla ? { flotilla: this.flotilla.diagnostics } : {}),
+      ...(this.noise ? { noiseHunt: this.noise.diagnostics } : {}),
     };
   }
 
@@ -173,7 +244,7 @@ export class DeepwaterSocket {
   }
 
   private spawnCorsairs(wave: CorsairSkiffWave, bossEscortMultiplier: false | number): void {
-    const roster = this.contract.twist.enemyRoster?.find((entry) => entry.id === 'corsair_skiff');
+    const roster = this.contract.twist.enemyRoster?.find((entry) => entry.unitClass === 'vehicle' && entry.travelClass === 'boat');
     for (let copy = 0; copy < (bossEscortMultiplier || 1); copy += 1) {
       for (const skiff of wave.enemies) {
         const z = skiff.z + copy * 1.2;
@@ -189,7 +260,7 @@ export class DeepwaterSocket {
           },
         );
         if (!enemy) continue;
-        enemy.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
+        if (!this.flotilla) enemy.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
         this.corsairsSpawned += 1;
       }
     }

@@ -1,3 +1,5 @@
+> ⛔ SHIPPED — DO NOT QUEUE (scope consumed by the A1 crowd-flocks drain, merge 5feed8dd336a12cdf8e55c3813c6e38ee97853d5: the headless wheel dynamo/current half landed there; proof: reviews/e3-fairground-crowd-flocks.md)
+
 CODEX: model=gpt-5.6-sol effort=xhigh
 
 # lane-e3-fairground-socket — socket the Fair Wheel dynamo/current half (narrows F-ER01-E3-4; does NOT admit e3-fairground)

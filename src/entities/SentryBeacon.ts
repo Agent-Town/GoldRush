@@ -113,6 +113,20 @@ export class SentryBeaconPool {
     return true;
   }
 
+  /**
+   * A9: moves a STANDING instance without re-placing it — the slot, its hp and its shooter handle
+   * all survive, because the wind relocates and never destroys
+   * (`specs/agent-play/door-completion-sheet.md:24`). Called only through
+   * `BuildSystem.relocateBuilding`, which is the one writer of a building's position.
+   */
+  moveTo(index: number, position: { x: number; z: number }): boolean {
+    if (!this.active[index]) return false;
+    this.positions[index]?.set(position.x, 0, position.z);
+    this.sync(index, 0);
+    this.markNeedsUpdate();
+    return true;
+  }
+
   update(at: number): void {
     (this.coreMaterial as THREE.MeshStandardMaterial).emissiveIntensity = 1.55 + Math.sin(at * Math.PI * 2) * 0.35;
     for (let i = 0; i < this.active.length; i += 1) {

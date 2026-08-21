@@ -10,8 +10,8 @@ const EXPECTED_RULES: Record<string, string[]> = {
     'baron', 'build_zones', 'decay_field_windows', 'night_vein_ring',
     'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down',
   ],
-  'e6-showroom': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
-  'e6-half-life-hollow': ['build_zones', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-showroom': ['build_zones', 'showroom_capture_quota', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-half-life-hollow': ['build_zones', 'hollow_crossing', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
   'e6-picnic': ['build_zones', 'three_stake_hold', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
 };
 
@@ -23,18 +23,20 @@ const EXPECTED_RULES: Record<string, string[]> = {
  * CAPTURE the wound-down machines, rebuild what the Homemaker unbuilds, break VAC then CORE.
  * Seed 01 secures at wave 12 (`fnv1a32:e66807f6`), seed 02 at wave 10 (`fnv1a32:da62f7b9`).
  *
- * The other three Atomic contracts are unchanged and still refused: `e6-showroom` keeps its cited
- * exemption (its wave-20 false green is a separate, unresolved finding), and `e6-half-life-hollow`
- * and `e6-picnic` still declare consumers nobody has written. This census is per-id from here on.
+ * PROPOSAL: Showroom requires 6 captures before secure, a conservative minimum with wide margin
+ * under the cap-fix evidence's competent aimed loop. The latch makes idle
+ * survival honest without changing density or difficulty; admission still depends on two public-
+ * verb secures per seed. The other Atomic contracts remain independently refused until proven.
+ *
+ * Half-Life Hollow is also admitted now: its authored crossing is consumed in both engines and
+ * both bench seeds secure twice through public verbs. Showroom and Picnic remain refused.
  */
-const ADMITTED = new Set(['e6-glow-mesa']);
+const ADMITTED = new Set(['e6-glow-mesa', 'e6-half-life-hollow']);
 
-// Each Atomic contract declares the era socket it is missing (AP-11 engineDependencies mandate).
-// The declaration is honesty, not admission: every contract below stays rejected by the support gate.
+// Each refused Atomic contract declares the era socket it is missing (AP-11 engineDependencies mandate).
 const EXPECTED_DEPENDENCY: Record<string, string> = {
   'e6-glow-mesa': 'glow-mesa-contract-consumers',
   'e6-showroom': 'atomic-wrangle-consumer',
-  'e6-half-life-hollow': 'half-life-hollow-contract-consumers',
   'e6-picnic': 'picnic-contract-consumers',
 };
 
@@ -72,10 +74,13 @@ for (const contract of atomic.contracts) {
       const mechanics = deriveMechanicsManifest(contract);
 
       expect(seeds).toEqual([`${contract.id}-01`, `${contract.id}-02`]);
-      expect(contract.tileParams.engineDependencies).toEqual([
-        expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
-      ]);
-      expect(contract.tileParams.engineDependencies[0].description.trim()).not.toEqual('');
+      if (contract.id === 'e6-half-life-hollow') expect(contract.tileParams.engineDependencies).toBeUndefined();
+      else {
+        expect(contract.tileParams.engineDependencies).toEqual([
+          expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
+        ]);
+        expect(contract.tileParams.engineDependencies![0]!.description.trim()).not.toEqual('');
+      }
       expect(contract.twist.enemyRoster.some(({ id }) => id === 'feral_toaster' || id === 'lawn_shepherd')).toBe(true);
       expect(mechanics.interactables).toEqual([]);
       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
@@ -125,11 +130,24 @@ for (const contract of atomic.contracts) {
       expect(socket.diagnostics.captureLever).toBe('CAPTURE');
       expect(socket.capture(spawned[0].position)).toBe(true);
       expect(socket.diagnostics.wrangle.pen.total).toBe(1);
+      if (contract.id === 'e6-showroom') {
+        expect(socket.diagnostics.showroomObjective).toMatchObject({ captures: 1, quota: 6, complete: false });
+        expect(socket.objectiveAllowsSecure).toBe(false);
+      } else {
+        expect(socket.diagnostics.showroomObjective).toBeUndefined();
+        expect(socket.objectiveAllowsSecure).toBe(true);
+      }
 
       // The manifest must keep saying so, in the consumer's own numbers.
       const captureRule = mechanics.rules.find(({ id }: { id: string }) => id === 'wrangle_capture');
       expect(captureRule.data.aliveCap).toBe(Balance.waves.aliveCap);
       expect(captureRule.data.consumerLever).toBe('WrangleSystem.tryCapture');
+      if (contract.id === 'e6-showroom') {
+        expect(mechanics.rules.find(({ id }: { id: string }) => id === 'showroom_capture_quota')).toMatchObject({
+          source: 'ShowroomCaptureObjective',
+          data: { captureQuota: 6, consumerLever: 'WrangleSystem.tryCapture' },
+        });
+      }
       expect(mechanics.buildables).toEqual(expect.any(Array));
 
       // THE DOOR ITSELF. Glow Mesa boots on its own bench seeds now that its boss resolves; the
@@ -145,7 +163,7 @@ for (const contract of atomic.contracts) {
           );
         }
       }
-      if (admitted) {
+      if (contract.id === 'e6-glow-mesa') {
         // No `admissionProbe` escape hatch: constructing through the ordinary door IS the
         // admission assertion. The boss the census used to report as ABSENT now reports itself,
         // and it reports the state a fresh run should be in — asleep, whole, and unmet.
@@ -160,6 +178,16 @@ for (const contract of atomic.contracts) {
             chairPlaced: false,
             persistentKept: false,
           }),
+        });
+      }
+      if (contract.id === 'e6-half-life-hollow') {
+        const door = new HeadlessContractSim({ contractId: contract.id, seed: seeds[0]! });
+        expect(door.currentTurn().view.now.hollowCrossing).toEqual({
+          declared: true,
+          stage: 'launch',
+          routeId: null,
+          onGlowBridge: false,
+          radiationDamageDealt: 0,
         });
       }
       if (contract.id === 'e6-picnic') expect(mechanics.posting.lossStakes).toHaveLength(3);

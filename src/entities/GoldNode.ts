@@ -43,6 +43,7 @@ export class GoldNodeVisualBatch {
   private readonly position = new THREE.Vector3();
   private readonly rotation = new THREE.Quaternion();
   private readonly scale = new THREE.Vector3();
+  private readonly lastPlacedY: number[] = [];
 
   constructor(capacity: number) {
     this.group.name = 'GoldSeamVisualBatch';
@@ -67,6 +68,7 @@ export class GoldNodeVisualBatch {
     });
 
     for (let index = 0; index < capacity; index += 1) {
+      this.lastPlacedY.push(Number.NaN);
       this.clusterMesh.setMatrixAt(index, hiddenMatrix);
       this.glintMesh.setMatrixAt(index, hiddenMatrix);
     }
@@ -78,7 +80,9 @@ export class GoldNodeVisualBatch {
   }
 
   show(index: number, anchor: Vec2): void {
-    this.position.set(anchor.x, visualY(anchor.x, anchor.z, 0.05), anchor.z);
+    const y = visualY(anchor.x, anchor.z, 0.05);
+    this.lastPlacedY[index] = y;
+    this.position.set(anchor.x, y, anchor.z);
     this.scale.setScalar(1);
     this.matrix.compose(this.position, this.rotation, this.scale);
     this.clusterMesh.setMatrixAt(index, this.matrix);
@@ -87,7 +91,18 @@ export class GoldNodeVisualBatch {
     this.updateGlint(index, anchor, 0, 0);
   }
 
+  /** The Y the batch last placed this seam at — the RENDER truth a terrain resample must correct. */
+  placedY(index: number): number {
+    return this.lastPlacedY[index] ?? Number.NaN;
+  }
+
+  /** Whether this seam's sprite is actually drawing (texture arrived AND slot shown). */
+  spriteVisible(index: number): boolean {
+    return this.generatedSprites.isVisible(index);
+  }
+
   hide(index: number): void {
+    this.lastPlacedY[index] = Number.NaN;
     this.clusterMesh.setMatrixAt(index, hiddenMatrix);
     this.glintMesh.setMatrixAt(index, hiddenMatrix);
     this.clusterMesh.instanceMatrix.needsUpdate = true;
@@ -141,6 +156,16 @@ export class GoldNode {
     return this.anchorIndex;
   }
 
+  /** The Y the VISUAL batch is standing at (NaN when hidden). Render-side only. */
+  get visualHeight(): number {
+    return this.visuals.placedY(this.visualIndex);
+  }
+
+  /** Whether this seam's generated sprite is drawing. Render-side only. */
+  get visualDrawing(): boolean {
+    return this.visuals.spriteVisible(this.visualIndex);
+  }
+
   place(anchor: Vec2, anchorIndex: number): void {
     this.anchor = anchor;
     this.anchorIndex = anchorIndex;
@@ -150,6 +175,25 @@ export class GoldNode {
     this.group.visible = true;
     this.group.position.set(anchor.x, visualY(anchor.x, anchor.z, 0.05), anchor.z);
     this.visuals.show(this.visualIndex, anchor);
+  }
+
+  /**
+   * RENDER-ONLY re-lift (CLAUDE.md §4.6). A seam is placed the instant the run is built, which is
+   * long before the sculpted terrain's GLB has loaded and installed its height source
+   * (`Terrain3dClaimPilot.ts` -> `installVisualHeightSource`). Until that moment `visualY` answers
+   * with the legacy painted heightfield, so a seam on a sculpted map was left wherever THAT
+   * surface happened to be — measured across the whole map family: up to 6.18 m under the sculpt
+   * (e3-blackout-ridge) and up to 5.63 m above it (e5-deepwater-claim). A buried ground-decal
+   * sprite is, in play, no seam at all: the owner's "There is not gold to be collected"
+   * (2026-08-20), with the sim underneath working perfectly the whole time.
+   *
+   * Touches Y and nothing else — anchor, remaining gold, active flag, respawn clock and rng are
+   * all untouched, so the sim and its event log cannot feel this.
+   */
+  resampleTerrain(): void {
+    if (!this.active) return;
+    this.group.position.set(this.anchor.x, visualY(this.anchor.x, this.anchor.z, 0.05), this.anchor.z);
+    this.visuals.show(this.visualIndex, this.anchor);
   }
 
   takeGold(amount: number): number {

@@ -428,6 +428,43 @@ function main() {
   if (!leaf || branchFallback) {
     console.log(`  ? UNKNOWN — no ${branchFallback ? 'BLOCKED ' : ''}goal leaf matches "${target}".`);
     console.log(`${branchFallback ? '    (branch names are not registered as leaves — check the done-move filename too)\n' : ''}    Goal Registration Law: every authored master registers a leaf in ${GOALS}.\n    A missing leaf is a bookkeeping finding, not a clearance.`);
+    // F-2097-1 (s2097) — THE DUPLICATE-DISPATCH REFUSAL WAS INERT FOR HALF THE BOARD, BECAUSE IT SAT
+    // BEHIND A LEAF LOOKUP IT DOES NOT NEED. checkAlreadyDispatched (:615) is called at :543, inside
+    // `if (queue)`, which this UNKNOWN branch exits BEFORE ever reaching. So a master with no goal
+    // leaf was cleared at rc=0 no matter how many runners held it — and 532 of 1093 masters in
+    // tasks/*.md (48.7%, measured s2097) have no leaf, which makes this the majority case, not an
+    // edge. F-1538-1 measured the same gap from the other side and read the trend as healthy
+    // (93.3% of NEW masters register a leaf); that is true and it is about the FLOW, while this is
+    // about the STOCK — legacy debt is exactly where a re-queue reaches, because old masters are
+    // what a re-land or a successor is built from.
+    //
+    // PROVEN BY MANUFACTURING THE DEFECT, NOT BY A GREEN (the s1299/s1300 standard). Two fixtures
+    // identical but for the leaf, same master, same `tasks/running/lane-b--<stamp>-<name>`:
+    //   leaf present -> rc=1, "⛔ ALREADY DISPATCHED — DO NOT QUEUE"
+    //   leaf absent  -> rc=0, "? UNKNOWN", no refusal printed at all
+    // The prose two lines above says "not a clearance"; the control flow delivered one. That is the
+    // same shape F-1597-1 cured for the BLOCKED arm (an unkeyed leaf "would fall through to UNKNOWN
+    // and exit 0 — an affirmative-looking clearance"), and the reasoning was never carried across to
+    // the dispatch arm, which is why it survived the cure that names it.
+    //
+    // THE CHECK NEEDS NOTHING FROM THE GOAL TREE: it reads tasks/running/ and tasks/done/ and
+    // matches on the runner's own filename shape. So the leaf lookup was never a precondition — only
+    // an accident of where the call sits.
+    //
+    // ⚠️ ONLY THE REFUSAL ARM RUNS HERE, AND THE ASYMMETRY IS DELIBERATE — `warnUndrained: false`.
+    // The live-run arm has "no lawful reading of two runners on one master" (:584) and must fire
+    // regardless of bookkeeping. The UNDRAINED WARN must NOT: 403 of those unregistered masters have
+    // an un-prefixed done-move (measured s2097), nearly all of them old work that WAS drained before
+    // the rename convention existed — the prefix heuristic is a proxy for a fact the ledger holds,
+    // and with no leaf there is no ledger to consult. Firing it here would print a warning that is
+    // usually false, on the majority path, which is precisely how :594 says a guard "decays into a
+    // formality". A refusal that fires on the lawful case gets flagged past by reflex.
+    if (queueTaskFile) {
+      const rc = checkAlreadyDispatched(target, { warnUndrained: false });
+      // A live runner outranks the bookkeeping verdict: --strict's rc=2 means "unknown and I want
+      // that to be loud", while rc=1 means "stop, this is dispatched RIGHT NOW". Stop wins.
+      if (rc !== 0) process.exit(rc);
+    }
     process.exit(strict ? 2 : 0);
   }
 
@@ -570,7 +607,12 @@ function escapeRe(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function checkAlreadyDispatched(target) {
+// `warnUndrained` (F-2097-1, s2097): the two arms are separable because they answer different
+// questions. The live-run arm is a fact about tasks/running/ and is always sound. The undrained arm
+// is a HEURISTIC — "un-prefixed = never drained" — that stands in for a fact the goal tree holds, so
+// it is only trustworthy where a leaf was resolved. The UNKNOWN caller passes false; every other
+// caller keeps the default and is unchanged.
+function checkAlreadyDispatched(target, { warnUndrained = true } = {}) {
   const name = basename(target.trim());
   const runningDir = resolve(process.cwd(), 'tasks', 'running');
   const doneDir = resolve(process.cwd(), 'tasks', 'done');
@@ -592,7 +634,7 @@ function checkAlreadyDispatched(target) {
   }
 
   const undrained = existsSync(doneDir) ? readdirSync(doneDir).filter((f) => DONE.test(f)) : [];
-  if (undrained.length) {
+  if (warnUndrained && undrained.length) {
     console.log(`\n  ⚠️  UNDRAINED OUTPUT EXISTS for this master — not a refusal, but say why you are re-queueing.`);
     for (const f of undrained) console.log(`    done-move       : tasks/done/${f} (un-prefixed = never drained)`);
     console.log(`    §7.5 allows a re-dispatch only on a CHANGED PREMISE. An identical retry is forbidden.`);

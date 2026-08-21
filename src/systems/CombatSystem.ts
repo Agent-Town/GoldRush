@@ -142,6 +142,20 @@ export class CombatSystem {
   private blastDetonationCount = 0;
   private readonly lastBlastDetonationPosition = new THREE.Vector3();
   private hasLastBlastDetonation = false;
+  /**
+   * A7. Null unless the active contract declares `orbital-return` (today: `e8-low-orbit` alone).
+   * Null is not a degenerate case here — it is the ENTIRE gate. See `considerOrbitalReturn`.
+   */
+  private orbitalReturn: { seconds: number; onScheduled: () => void; onDetonated: () => void } | null = null;
+  private readonly pendingOrbitalReturns: Array<{
+    origin: { x: number; z: number };
+    target: { x: number; z: number };
+    damage: number;
+    radius: number;
+    ownerId: string;
+  }> = [];
+  private readonly scratchOrbitOrigin = new THREE.Vector3();
+  private readonly scratchOrbitTarget = new THREE.Vector3();
   private buildingDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
   private buildingTargetsResolver: ((position: THREE.Vector3, radius: number) => BuildingTarget[]) | null = null;
   private readonly freedWalkers: FreedWalkerVfx;
@@ -383,7 +397,11 @@ export class CombatSystem {
     while (remaining > 0) {
       const step = Math.min(remaining, 1 / 30);
       this.projectiles.update(step, this.handleBoltExpired);
-      if (this.blastCharges.update(step, this.onBlastDetonated)) return;
+      const runEnded = this.blastCharges.update(step, this.onBlastDetonated);
+      // Drained inside the fixed-step loop, immediately after the pool that filled it, so a
+      // return is armed at a deterministic tick boundary rather than at frame granularity.
+      this.launchOrbitalReturns();
+      if (runEnded) return;
       this.resolveBoltHits(at);
       remaining -= step;
     }
@@ -434,8 +452,23 @@ export class CombatSystem {
     this.freedWalkers.spawn(enemy);
   }
 
+  /**
+   * A7. Installs (or clears, with null) the orbital-return policy. Called ONCE at construction
+   * time by each engine, from the contract's own declaration — never mid-run, so a round cannot
+   * be armed under one policy and land under another.
+   */
+  setOrbitalReturn(policy: { seconds: number; onScheduled: () => void; onDetonated: () => void } | null): void {
+    this.orbitalReturn = policy;
+    this.pendingOrbitalReturns.length = 0;
+  }
+
+  /** 1 under the A7 policy so every fresh lob owns exactly one return; 0 everywhere else. */
+  private get orbitReturnsForNewLob(): number {
+    return this.orbitalReturn ? 1 : 0;
+  }
+
   launchLob(origin: THREE.Vector3, target: THREE.Vector3, airTime: number, damage: number, radius: number, ownerId: string): boolean {
-    const launched = this.blastCharges.activate(origin, target, airTime, damage, radius, ownerId);
+    const launched = this.blastCharges.activate(origin, target, airTime, damage, radius, ownerId, this.orbitReturnsForNewLob);
     if (!launched) return false;
     this.recordShot('lob', ownerId);
     this.onShot?.(this.currentAt, origin, target, ownerId);
@@ -586,7 +619,7 @@ export class CombatSystem {
           volleyTarget.x += Math.cos(angle) * handle.spreadRadius;
           volleyTarget.z += Math.sin(angle) * handle.spreadRadius;
         }
-        if (this.blastCharges.activate(this.scratchOrigin, volleyTarget, airTime, damage, aoe.radius, ownerId)) {
+        if (this.blastCharges.activate(this.scratchOrigin, volleyTarget, airTime, damage, aoe.radius, ownerId, this.orbitReturnsForNewLob)) {
           fired = true;
           this.recordShot('lob', ownerId);
           this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint, ownerId);
@@ -665,7 +698,14 @@ export class CombatSystem {
     return this.scratchAimPoint;
   }
 
-  private readonly onBlastDetonated = (position: THREE.Vector3, damage: number, radius: number, ownerId: string): boolean => {
+  private readonly onBlastDetonated = (
+    position: THREE.Vector3,
+    damage: number,
+    radius: number,
+    ownerId: string,
+    origin: THREE.Vector3,
+    orbitReturnsLeft: number,
+  ): boolean => {
     this.blastDetonationCount += 1;
     this.lastBlastDetonationPosition.copy(position);
     this.hasLastBlastDetonation = true;
@@ -674,6 +714,91 @@ export class CombatSystem {
     this.audio.playDetonation(ownerId);
     if (isCombatDamageDisabled()) return false;
 
+    const outcome = this.resolveBlastDamage(position, damage, radius, ownerId, orbitReturnsLeft);
+    this.considerOrbitalReturn(position, origin, damage, radius, ownerId, orbitReturnsLeft, outcome.hits);
+    return outcome.stop;
+  };
+
+  /**
+   * A7 — THE ORBITAL RETURN, and the ONE place it is decided.
+   *
+   * Gated entirely on `this.orbitalReturn`, which is null unless the active contract declared
+   * `orbital-return`. On every other contract this method reaches its first line, sees null and
+   * leaves — no queue, no allocation, no state, no ordering change. That is what makes the
+   * mechanic low-orbit-only rather than a global physics edit.
+   *
+   * THE RULE, as ratified: a lob that hits NOTHING re-enters after T seconds continuing its
+   * original vector. "Continuing" is read literally — the round carries on along `target-origin`
+   * for the same distance again, so a miss you fired east comes back down further east. It is
+   * scheduled by RE-ARMING a pool slot with an airTime of T, so the returning round is an
+   * ordinary charge for every other purpose: it interpolates, it renders, it suspends and
+   * restores with the run, and it is spent when it lands.
+   *
+   * ONE RETURN, THEN GONE. A fresh lob is armed with `orbitReturnsLeft = 1` and the return with
+   * 0, so under the policy `orbitReturnsLeft === 0` at detonation means "this WAS the return" —
+   * which is also how `resolveBlastDamage` knows to let it hit the player's own buildings.
+   */
+  private considerOrbitalReturn(
+    position: THREE.Vector3,
+    origin: THREE.Vector3,
+    damage: number,
+    radius: number,
+    ownerId: string,
+    orbitReturnsLeft: number,
+    hits: number,
+  ): void {
+    const policy = this.orbitalReturn;
+    if (!policy) return;
+    if (orbitReturnsLeft <= 0) {
+      policy.onDetonated();
+      return;
+    }
+    if (hits > 0) return;
+    const dx = position.x - origin.x;
+    const dz = position.z - origin.z;
+    if (dx * dx + dz * dz < 1e-6) return;
+    this.pendingOrbitalReturns.push({
+      origin: { x: position.x, z: position.z },
+      target: { x: position.x + dx, z: position.z + dz },
+      damage,
+      radius,
+      ownerId,
+    });
+    policy.onScheduled();
+  }
+
+  /**
+   * Drains the queue built during `blastCharges.update`. Kept OUT of the detonation callback so
+   * a return never re-enters the pool mid-iteration: the pool is walking its slot array when the
+   * callback fires, and arming a slot underneath that walk is how an in-flight round would get
+   * aged twice in one tick.
+   */
+  private launchOrbitalReturns(): void {
+    if (this.pendingOrbitalReturns.length === 0) return;
+    for (const entry of this.pendingOrbitalReturns) {
+      this.scratchOrbitOrigin.set(entry.origin.x, 0, entry.origin.z);
+      this.scratchOrbitTarget.set(entry.target.x, 0, entry.target.z);
+      this.blastCharges.activate(
+        this.scratchOrbitOrigin,
+        this.scratchOrbitTarget,
+        this.orbitalReturn?.seconds ?? 0,
+        entry.damage,
+        entry.radius,
+        entry.ownerId,
+        0,
+      );
+    }
+    this.pendingOrbitalReturns.length = 0;
+  }
+
+  private resolveBlastDamage(
+    position: THREE.Vector3,
+    damage: number,
+    radius: number,
+    ownerId: string,
+    orbitReturnsLeft: number,
+  ): { stop: boolean; hits: number } {
+    let hits = 0;
     if (ownerId.startsWith('baron_rocket')) {
       const sourceId = Number(ownerId.split(':')[1] ?? -1);
       const heroRadius = radius + Balance.hero.radius;
@@ -683,13 +808,15 @@ export class CombatSystem {
         const heroDx = actor.group.position.x - position.x;
         const heroDz = actor.group.position.z - position.z;
         if (heroDx * heroDx + heroDz * heroDz <= heroRadius * heroRadius) {
+          hits += 1;
           heroDied = this.damageHero(damage, sourceId, actor) || heroDied;
         }
       }
       for (const target of this.buildingTargetsResolver?.(position, radius) ?? []) {
+        hits += 1;
         this.damageBuilding(target, damage, sourceId, Math.max(1, radius * 0.65), true);
       }
-      return heroDied;
+      return { stop: heroDied, hits };
     }
 
     if (ownerId === 'turrets') {
@@ -707,13 +834,14 @@ export class CombatSystem {
         closestSq = distanceSq;
       }
       if (closest) {
+        hits += 1;
         this.recordDamage(ownerId, Math.min(closest.currentHp, damage));
         const died = closest.takeDamage(damage);
         const resolved = this.onEnemyDamaged?.(closest, damage, died, ownerId);
         this.vfx.hit(closest.position);
         if (died && resolved !== false) this.killEnemy(closest, this.currentAt, ownerId);
       }
-      return false;
+      return { stop: false, hits };
     }
 
     for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
@@ -723,14 +851,26 @@ export class CombatSystem {
       const dz = enemy.position.z - position.z;
       const hitRadius = radius + enemy.hitRadius;
       if (dx * dx + dz * dz > hitRadius * hitRadius) continue;
+      hits += 1;
       this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
       const died = enemy.takeDamage(damage);
       const resolved = this.onEnemyDamaged?.(enemy, damage, died, ownerId);
       this.vfx.hit(enemy.position);
       if (died && resolved !== false) this.killEnemy(enemy, this.currentAt, ownerId);
     }
-    return false;
-  };
+
+    // A7: "it can hit enemies OR your buildings — momentum is commitment" (sheet A7, ratified
+    // 2026-08-20). ONLY a round that already spent its return does this, and ONLY under the
+    // policy — `orbitalReturn` is null everywhere else, so no other contract's lob ever reached
+    // this branch and friendly fire stays a low-orbit fact rather than a global rule.
+    if (this.orbitalReturn && orbitReturnsLeft <= 0) {
+      for (const target of this.buildingTargetsResolver?.(position, radius) ?? []) {
+        hits += 1;
+        this.damageBuilding(target, damage, -1, Math.max(1, radius * 0.65), true);
+      }
+    }
+    return { stop: false, hits };
+  }
 
   private resolveBoltHits(at: number): void {
     if (isCombatDamageDisabled()) return;

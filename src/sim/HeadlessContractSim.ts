@@ -16,6 +16,7 @@ import { createRng } from '../core/Rng';
 import { EventBus, type GameEvent } from '../core/EventBus';
 import type { Intents } from '../core/InputController';
 import { BlastChargePool } from '../entities/BlastCharge';
+import { FerrisWheel, type FerrisWheelDiagnostics } from '../entities/FerrisWheel';
 import { GoldPickupPool } from '../entities/GoldPickup';
 import { EnemyPool } from '../entities/pools';
 import { Hero } from '../entities/Hero';
@@ -53,9 +54,11 @@ import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem, type ShooterHandle } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
+import { CrowdFlockSystem, type CrowdFlockDiagnostics } from '../systems/CrowdFlockSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
+import { InterferenceFrontSystem, type InterferenceFrontDiagnostics } from '../systems/InterferenceFrontSystem';
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -63,8 +66,23 @@ import { PicnicHoldSystem } from '../systems/PicnicHoldSystem';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
+import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } from '../systems/ProbeRecovery';
+import { LowOrbitSystem, type LowOrbitDiagnostics } from '../systems/LowOrbitSystem';
+import { HollowCrossingSystem, type HollowCrossingDiagnostics } from '../systems/HollowCrossingSystem';
+import { SeedCaravanSystem, type SeedCaravanDiagnostics } from '../systems/SeedCaravanSystem';
+import {
+  CANAL_ALREADY_DECIDED_REASON,
+  CANAL_BACKFILL_ACTION,
+  CANAL_NOT_DECLARED_REASON,
+  CanalChoiceSystem,
+  type CanalChoiceDiagnostics,
+} from '../systems/CanalChoiceSystem';
+import { ScheduledRelocationSystem, type ScheduledRelocationDiagnostics } from '../systems/ScheduledRelocationSystem';
+import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
+import { BroadcastMirror, type BroadcastMirrorDiagnostics } from '../systems/BroadcastMirror';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
+import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { depenetrateFromBlockers } from '../world/LandmarkCollision';
 import * as Terrain from '../world/Terrain';
 
@@ -92,21 +110,128 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'Best measured play with declared E1 progression secured seed 02 at wave 18 but terminated unsecured at wave 12/13 on seed 01; no pressureEnabled, hpScale-30 railcar. Re-admit when both bench seeds hold.',
     citation: 'reviews/e2-pressure-arsenal-headless.md',
   },
-  'e3-fairground': {
-    reason: 'Scripted admission re-probe terminated unsecured at waves 2/3; the crowd-flock escort objective has no headless consumer.',
-    citation: 'F-1475-1',
-  },
+  // F-1475-1's ORIGINAL reason is dead and its replacement is narrower. "The crowd-flock escort
+  // objective has no headless consumer" was true when written and is false now: `CrowdFlockSystem`
+  // runs in BOTH engines and the wheel is a damageable target here as it is in the browser. What
+  // holds admission is the build law, not the consumer — the door-completion sheet requires "a
+  // public-verb secure proof x2 per seed", and no such proof exists yet. Same shape as
+  // `e6-showroom`: the reason died, the refusal survived, so the row is REWORDED not removed.
+  // A2 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-21, door-completion-sheet §A2). Third
+  // instance of the A8 shape, and the widest gap any of them has measured.
+  //
+  // THE CONSUMER IS NOT THE GAP, AND THE ROW IS REWORDED RATHER THAN REMOVED TO SAY SO. The old
+  // reason — "the noise-hunt consumer remains absent" — was true when written and is false now:
+  // `src/systems/NoiseHuntSystem.ts` runs in BOTH engines, the three declared machines emit off
+  // seams that already existed (the harvest CHANNEL, a REANCHOR, the ballista's shot counter),
+  // the trail forms on the loudest audible source and is shed after eight quiet seconds, the
+  // declared quiet zones silence, and a strike costs a deck pad through the same `loseHull` seam
+  // the Flotilla uses. All of it is traced in `artifacts/e5-stillwater/`.
+  //
+  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry — the same sentence
+  // `e7-relay-rush` and `e9-seed-run` earned below, for a third distinct reason. There is no land
+  // on a Deepwater contract (`place_build` and `placeFree` both refuse), so a rider's ENTIRE
+  // defence is three deck pads carrying a ballista and a beacon; the hero is a fixed post at
+  // (0,30) because slot 0 runs on IDLE_INTENTS; and the contract's own `lanes.spawnEdges` and
+  // per-variant `spawnGates` declare the ORDINARY wave schedule, which fields fifteen
+  // `machine_leviathan` a wave from two edges. Its storm is authored suppressed (a 3600s cycle)
+  // and crews zero corsairs, so the storm track cannot be the clock and the ordinary one is.
+  //
+  // AND THE GEOMETRY REFUSES THE MECHANIC ITS OWN BEST USE, which is the finding worth keeping:
+  // both anchors are extremes. `lagoon` (0,30) sits ON the hero, so every machine that runs is
+  // loud exactly where the hero stands; `open-water` (-24,12) sits INSIDE the declared
+  // `hand-pan-drift` quiet zone, so it silences everything and carries the guns 20wu off the body
+  // they defend. There is no third station where noise is loud AWAY from the hero, so the trail
+  // can be paid for or avoided but never AIMED — and the measurements show paying beats avoiding.
   'e5-stillwater': {
-    reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
-    citation: 'reviews/milk-twin-sockets.md',
+    reason: 'Best measured public-verb play terminated unsecured at wave 4 on BOTH bench seeds against secureWave 12 (fnv1a32:e83bc5ff / fnv1a32:96191e05, each repeated identical). Six policies per seed span waves 0-4 against an idle floor of wave 3, so the whole spread is one wave wide. The A2 noise-hunt consumer is LIVE in both engines and is not the gap: the three declared machines emit, the trail forms on the loudest audible one and is shed after 8 quiet seconds, the declared quiet zones silence, and strikes cost deck pads (18 strikes and all three decks on the ceiling run). Emission is attributable — a run with no turret and no HARVEST order records strikes 0 and every deck at 96. The map is: a Deepwater contract offers no land (place_build and placeFree both refuse), so the whole of a rider defence is three deck pads; the hero is a fixed post at (0,30) because slot 0 runs on IDLE_INTENTS; and the authored storm is suppressed at a 3600s cycle crewing zero corsairs, so the storm track cannot be the clock and the ordinary schedule is, fielding 15 machine_leviathan a wave from two authored edges. Both anchors are extremes - the lagoon sits ON the hero and the open water sits INSIDE the hand-pan-drift quiet zone - so noise is either on top of the hero or absent, and the trail can be paid for or avoided but never aimed. Re-admit when both bench seeds secure.',
+    citation: 'reviews/a2-stillwater-noise-hunt.md',
   },
-  // REWORDED 2026-08-20, after the owner's cap ruling landed and DISPROVED the original
-  // reason. Both of its clauses are now false: aimed CAPTURE absorbs 97-99% of exhaustion
-  // (AP-16-8b) and the 60-enemy alive cap no longer holds exhausted machines at all. The
-  // refusal survives its reason, which is why the row is reworded rather than removed.
+  // REWORDED 2026-08-20 after the Showroom gained an honest capture objective. The idle
+  // false-green is closed: fewer than six run-local captures keeps the secure latch shut at every
+  // wave. The refusal survives for the other measured reason — unchanged-difficulty public play
+  // still dies before wave 20 even after exceeding the quota by two orders of magnitude.
   'e6-showroom': {
-    reason: 'Aimed CAPTURE closes the loop and the alive cap no longer clogs, but no secure is demonstrated: competent play dies at waves 14-19 against secureWave 20, and difficulty stands per the owner (2026-08-20). Idle still false-greens at wave 20 — exhausted machines released their spawn slot but still hold an enemy-POOL slot, so all 96 fill with harmless statues and nothing further can spawn.',
+    reason: 'The six-capture objective latch is live in both engines, so idle can no longer secure at any wave. Strong public-verb CAPTURE + fortify play exceeded the quota but died at waves 18/14 on the two bench seeds (306 captures, fnv1a32:e95a0e84 / 194 captures, fnv1a32:6ee8e7e5) against secureWave 20. Difficulty stands per the owner (2026-08-20); re-admit when both seeds secure twice.',
     citation: 'reviews/e6-showroom-cap-fix.md',
+  },
+  // A5 BUILT THE MECHANIC, DISCHARGED ITS OBJECTIVE, AND THE MAP STILL WON (2026-08-20,
+  // door-completion-sheet §A5). Second instance of the A8 shape, and the closest reading of it.
+  //
+  // THE CONSUMER IS NOT THE GAP AND THE OBJECTIVE IS NOT THE GAP EITHER — this row exists to say
+  // both. `e7-relay-rush`'s interference front, its mute, its relay lighting and its deadline
+  // latch are live in BOTH engines (`src/systems/InterferenceFrontSystem.ts`, proven in the
+  // browser and headless by `e2e/e7-relay-rush-front.spec.ts`). The ratified objective is
+  // discharge-able and was in fact PART-DISCHARGED in ordinary play before the hero fell: the
+  // public-verb prover lit three of the four relay sites by t=131.6s on seed 01 and two by t=90s
+  // on seed 02, against a deadline of t=270s. The wall's whole interference across both runs was
+  // 120 and 60 muted work-steps — four and two seconds of beacon time — so it is not what ends
+  // them either.
+  //
+  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry, exactly as it was for the
+  // Seed Run below. The claim stands at (0,12). The ONLY buildable ground on this tile is the
+  // four 10x10 relay boxes at z 36..46 — twenty-four world units north of the hero — against a
+  // turret range of 16 and a beacon range of 8, on a heightfield authored `mode: "visual"` so no
+  // high-ground range bonus applies (`TileHeight.highGroundRange` early-returns without an
+  // `elevation` block). There is NO legal placement that defends the body the run is scored on,
+  // and `HeadlessContractSim` drives slot 0 on IDLE_INTENTS, so the hero cannot walk to the guns.
+  //
+  // Measured across four policies (`artifacts/e7-relay-rush/`, preserved with its battery):
+  // objective-first, turret-first, all-turret and hero-only all terminate at wave 3 or 4 of 20,
+  // and the idle floor terminates at wave 2 — the whole spread is four waves wide.
+  'e7-relay-rush': {
+    reason: 'Best measured public-verb play terminated unsecured at wave 4 (seed 01) and wave 3 (seed 02) against secureWave 20 (fnv1a32:49f11d65 / fnv1a32:7fed3db1, each repeated identical). The front is not the obstacle: the ratified objective is discharge-able and the prover lit 3 of 4 relays by t=131.6s against a t=270s deadline, while the wall muted only 120 work-steps all run. The map is: the claim at (0,12) has NO buildable ground within 24wu, the four relay boxes are the only build zones on the tile, turret range is 16 and beacon range 8, and the visual-mode heightfield grants no high-ground reach — so no legal placement can defend the hero. The A5 front, mute, relay lighting and deadline latch are live in both engines; re-admit when both bench seeds secure.',
+    citation: 'reviews/e7-relay-rush.md',
+  },
+  // A10 BUILT THE MECHANIC, DISCHARGED ITS OBJECTIVE, AND THE MAP STILL WON (2026-08-21,
+  // door-completion-sheet §A10). Third instance of the A5/A8 shape, and the cleanest measurement
+  // of it, because this one carries a CONTROL rather than an argument.
+  //
+  // THE CONSUMER IS NOT THE GAP AND THE OBJECTIVE IS NOT THE GAP EITHER, and that is not a
+  // sentence here, it is a number. `e9-old-canal`'s three verdicts, the permanent flow, the ground
+  // veto and the objective latch are live in BOTH engines (`src/systems/CanalChoiceSystem.ts`,
+  // proven in the browser by `e2e/e9-old-canal-choices.spec.ts` and headless by
+  // `e2e/er01-e9-census.spec.ts`). The ratified objective is discharge-able and WAS discharged in
+  // ordinary play on both bench seeds — all three segments decided by wave 8 through the public
+  // verbs alone. Then the identical rider was run with `--no-decide`, never taking a verdict at
+  // all, and reached THE SAME WAVE: 17 on both seeds. The walk to the far stakes costs nothing,
+  // and the ground veto costs nothing, because the plan's pads never needed the closed bands.
+  //
+  // WHAT REFUSES IS THE SECURE, and the cause is income against a three-door map. The claim stands
+  // at (0,12) with waves entering from the NORTH, WEST and EAST (`lanes.spawnEdges` — one more
+  // door than the Seed Run's two), against a roster half made of `feral_terraformer` (hpScale 1.7,
+  // buildingDamageScale 1.4). The measured ceiling is a full pocket: gold plateaus at 123 for
+  // whole waves while turret #4 costs 125, so the top of the build list is unreachable without
+  // spending 60 on a stockpile that the same wave then wants back in repairs.
+  //
+  // Ten distinct policies were measured (`artifacts/e9-old-canal/`, preserved with its battery):
+  // guns-first 16, beacons-first 17, timber-first 11, two-stockpiles-early 10, repair gate 35/60/80
+  // -> 17/17/16, blast-always 17, prospector-on-the-claim 17, and the no-decide control 17. The
+  // whole spread is six waves wide and its ceiling never moves off 17.
+  'e9-old-canal': {
+    reason: 'Best measured public-verb play terminated unsecured at wave 17 on both bench seeds against secureWave 20 (fnv1a32:780aca7f / fnv1a32:a6119428, each repeated identical). The mechanic is not the obstacle, and that is measured rather than argued: the same rider with the objective NEVER discharged (--no-decide) reaches the same wave 17, so the three verdicts and the ground veto cost zero waves. The map is: a claim at (0,12) with waves entering from THREE edges, an hpScale-1.7 wrecker in half the roster, and an income ceiling that plateaus at 123 gold against a 125-gold fourth turret. The A10 choice consumer, permanent flow and objective latch are live in both engines; re-admit when both bench seeds secure. ACCEPTED-ELITE by owner ruling (2026-08-21, verbatim: to the five-map fork table, \'lets follow your recommendation\' — the recommendation for this map was elite-accept). The exemption is no longer a debt: the map is deliberately harder than the door\'s provers; the mechanic is live for humans and the row rests here as the honest record. Re-admission would need the ground/economy changes the table priced, none owed.',
+    citation: 'reviews/e9-old-canal.md',
+  },
+  // A8 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-20, door-completion-sheet §A8).
+  //
+  // THE CONSUMER IS NOT THE GAP, AND SAYING SO IS THE WHOLE POINT OF THIS ROW. `e9-seed-run`'s
+  // caravan, its three planting grounds, its permanent green and its objective latch are all live
+  // in BOTH engines (`src/systems/SeedCaravanSystem.ts`, proven in the browser by
+  // `e2e/e9-seed-run-caravan.spec.ts` and headless by `e2e/er01-e9-census.spec.ts`). The escort
+  // itself was never in doubt: the train reached the basin ALIVE on every measured run, at full
+  // guard (240) and at the three-quarters left after a vault (180).
+  //
+  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry rather than the new mechanic.
+  // The claim stands at (0,12), ON the north edge of `center-green-waypoint` (x -10..10, z -6..12)
+  // — the only buildZone within 30wu of it — so every gun must be built SOUTH of the body it
+  // defends and there is no ground at all north of the hero. Waves enter from BOTH the west and
+  // east edges (`lanes.spawnEdges`), and half the roster is `feral_terraformer`, hpScale 1.7 with
+  // buildingDamageScale 1.4, against turret and beacon caps of 4 and 6.
+  //
+  // Fifteen measured public-verb plays (`artifacts/e9-seed-run/`, preserved with its battery)
+  // topped out at wave 16 of 20 on BOTH bench seeds, twice each, byte-identical on the repeat.
+  'e9-seed-run': {
+    reason: 'Best measured public-verb play terminated unsecured at wave 16 on both bench seeds against secureWave 20 (fnv1a32:aebdeea4 / fnv1a32:4d221a7b, each repeated identical). The escort is not the obstacle — the caravan reached the basin alive on every run, at full guard and after a planted vault. The map is: the only buildZone within 30wu of the claim is a 20x18 box whose north edge IS the claim, waves enter from two edges, and half the roster is an hpScale-1.7 wrecker against turret/beacon caps of 4 and 6. The A8 caravan and planting consumer are live in both engines; re-admit when both bench seeds secure. ACCEPTED-ELITE by owner ruling (2026-08-21, verbatim: to the five-map fork table, \'lets follow your recommendation\' — the recommendation for this map was elite-accept). The exemption is no longer a debt: the map is deliberately harder than the door\'s provers; the mechanic is live for humans and the row rests here as the honest record. Re-admission would need the ground/economy changes the table priced, none owed.',
+    citation: 'reviews/e9-seed-run.md',
   },
 } as const satisfies Record<string, AdmissionExemption>;
 
@@ -193,6 +318,70 @@ export type HeadlessAgentView = AgentView & {
       homemakerBoss?: ReturnType<HomemakerBossSystem['diagnostics']>;
       picnicHold?: PicnicHoldSystem['diagnostics'];
     };
+    /**
+     * A4. Present only where the contract declares `twist.signalSuppression`, so a rider can
+     * SEE that the three systems are off rather than infer it from silence. Read the honesty
+     * note beside `signalSuppression` in the class below before treating this as a mirror of
+     * the browser's behaviour: this engine has none of the three systems to switch off.
+     */
+    signalSuppression?: SignalSuppressionDiagnostics;
+    /**
+     * A3. Present only where the contract declares `twist.broadcastMirror`, so a rider can SEE how
+     * many of its own habits are coming back, in what shape, and how much heavier each repeat has
+     * made them — rather than discovering the shadow by losing a wave to it. Read the honesty note
+     * beside `broadcastMirror` in the class below before treating a run of zeroes as a bug: this
+     * engine has no playbook verb to record a use FROM.
+     */
+    broadcastMirror?: BroadcastMirrorDiagnostics;
+    /**
+     * A6. Present only where the contract declares BOTH a playback trigger and a crater, so a
+     * rider can see the objective, aim at the zone, and read the recovered line back. Absent
+     * everywhere else — silence means "no probe out there", and it must keep meaning that.
+     */
+    probeRecovery?: ProbeRecoveryDiagnostics;
+    /** E3 Fairground: the dynamo the run defends and the escort the run must complete. */
+    fairground?: {
+      wheel: FerrisWheelDiagnostics;
+      flocks: CrowdFlockDiagnostics;
+      objective: { allCrossed: boolean; wheelSpinning: boolean; securableAtWave: number | null };
+    };
+    /**
+     * A7. Present only where the contract declares the zero-gravity twist, so a rider can SEE
+     * that its lobs return, where the handholds are, and how many debris bands flank them —
+     * rather than discovering it by losing a run. The counters below it are the run's own
+     * evidence that the mechanic fired.
+     */
+    lowOrbit?: LowOrbitDiagnostics;
+    hollowCrossing?: HollowCrossingDiagnostics;
+    /**
+     * A8. Present only where the contract declares `twist.persistentPlanting`. This one IS the
+     * objective: `seedCaravan.arrived` is what opens the secure, and `hp`/`state`/`dwellRemaining`
+     * are how a rider knows whether to escort, to plant, or to give up on the crossing.
+     */
+    seedCaravan?: SeedCaravanDiagnostics;
+    /**
+     * A10. Present only where the contract declares `twist.persistentCanalChoices`. This one IS
+     * the objective: `canalChoices.allDecided` is what opens the secure, and `choices`/`flow`/
+     * `segments` are how a rider knows which stake it still has to walk to, and what the ground
+     * it is standing on will be once it has.
+     */
+    canalChoices?: CanalChoiceDiagnostics;
+    /**
+     * A5. Present only where the contract declares `twist.interferenceFront` WITH a corridor and
+     * relay sites. This one IS the objective: `objectiveMet` is what opens the secure, and
+     * `phase`/`centerX`/`secondsToNextFront`/`sites` are how a rider knows whether to build, to
+     * wait out the wall, or to accept that the deadline is gone.
+     */
+    interferenceFront?: InterferenceFrontDiagnostics;
+    /**
+     * A9. Present only where the contract declares `twist.scheduledRelocation` WITH authored
+     * patrol routes. This one is NOT an objective — nothing here opens or shuts the secure — it
+     * is a HAZARD SCHEDULE, so what a rider needs from it is different: `nextRouteId` and
+     * `progress` say where the wind is going, and `works[].anchored` says, per building, whether
+     * the wind can take that one. A rider that reads the anchored column before it spends 50
+     * gold never loses a turret to the alley.
+     */
+    devilsAlley?: ScheduledRelocationDiagnostics;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -309,12 +498,123 @@ export class HeadlessContractSim {
   private readonly lightField: LightField | null;
   private readonly mothSwarm: MothSwarm | null;
   private readonly crawler: CrawlerBossSystem | null;
+  private readonly crowdFlocks: CrowdFlockSystem | null;
+  private readonly ferrisWheel: FerrisWheel | null;
   private readonly dredgeQueen: DredgeQueenBossSystem | null;
   private readonly goldPickups: GoldPickupPool | null;
   private readonly homemaker: HomemakerBossSystem | null;
   private readonly deepwater: DeepwaterSocket | null;
   private readonly atomic: AtomicSocket | null;
   private readonly picnicHold: PicnicHoldSystem;
+  /**
+   * A4 — THE SIGNAL-SUPPRESSION CONSUMER, and the honest note about what it can mean HERE.
+   *
+   * The browser reads this same object at three gate sites (`E7SignalSystem.droneCanOperate`,
+   * `E7SignalSystem.update`, and the two playbook entry points in `Game.ts`). This engine
+   * reads it at none, because it HAS none: measured 2026-08-20, `HeadlessContractSim`
+   * constructs exactly one `Hero` (no slot >0, so no drone body), imports no `E7SignalSystem`
+   * (so no relay graph exists to link), and `src/agent/` declares no playbook verb.
+   *
+   * So suppression is enforced here BY CONSTRUCTION, not by a switch — and that difference is
+   * stated rather than hidden. What the consumer buys headless is (a) an identical READ of the
+   * contract, so both engines agree about which systems are declared off, (b) a rider-visible
+   * row in THE VIEW, and (c) a place for the guard that pins the by-construction claim
+   * (`e2e/e7-dead-band-suppression.spec.ts`). If a drone, playbook or relay chain is ever
+   * composed into this sim, it gates on THIS object and the note above becomes a real switch.
+   */
+  private readonly signalSuppression: SignalSuppression;
+  /**
+   * A3 — THE BROADCAST MIRROR, and the same honest note its A4 neighbour above carries.
+   *
+   * The SPAWN half is REAL here and identical to the browser's: this engine builds the same
+   * `WaveSystem` and hands it the same `fieldMirrors` reader (`:748` below), so a queued mirror
+   * fields here exactly as it fields there — same squad sizes, same hp scale, same edges, through
+   * the same `spawnAt` and under the same alive cap.
+   *
+   * The RECORD half cannot fire here, and the reason is a measurement rather than an omission:
+   * `src/agent/StandingOrders.ts` declares no playbook verb (re-verified 2026-08-20, the same
+   * measurement A4 recorded), so a rider driving this engine through the public grammar has no
+   * way to USE a playbook — and "no playbook use -> no mirrors" is the ratified rule, not a gap.
+   * A GR-SIM run therefore reads `recordedUses: 0` and fields nothing, truthfully. The day a
+   * playbook verb reaches the door, it calls `noteUse` and the canyon answers with no edit here.
+   */
+  private readonly broadcastMirror: BroadcastMirror;
+  /**
+   * A6 — THE PROBE. Unlike its A4 neighbour above, this one is a REAL switch in this engine:
+   * the Prospector is the body a rider can actually move (`:950`), the crater is ordinary
+   * ground, and `CONTEXT_ACTION action:'recover'` reaches it through the public grammar. So
+   * the headless door proves the whole objective, not a by-construction shadow of it.
+   */
+  private readonly probeRecovery: ProbeRecovery;
+  /**
+   * A7 — THE LOW-ORBIT CONSUMER, and the honest note about which of its three parts can bite
+   * HERE. The browser reads this same object on the movement seam and in combat. This engine
+   * shares the COMBAT half exactly — `CombatSystem` and `BlastChargePool` are the same two files
+   * both engines run (`HeadlessContractSim:18` and `:53`), and `BLAST_AT` is a public standing
+   * order, so a rider's missed lob returns here precisely as it returns in the browser.
+   *
+   * The MOVEMENT half is different, and the difference is stated rather than hidden: this sim
+   * drives slot 0 on `IDLE_INTENTS` (F-E2PA-4), so the hero never thrusts and the handhold drift
+   * — a THRUST-response penalty — has nothing to act on. It is inert here by construction, not
+   * by omission. The debris chip is NOT inert: it is positional, so a hero posted inside a band
+   * takes it, and the guard in `e2e/e8-low-orbit-momentum.spec.ts` pins both halves of this
+   * paragraph so the claim cannot rot into a lie.
+   */
+  private readonly lowOrbit: LowOrbitSystem;
+  private readonly hollowCrossing: HollowCrossingSystem;
+
+  /**
+   * A7 debris chip, headless. Positional and hero-only, matching `Game.applyLowOrbitDebris`
+   * exactly: the sheet declares the hazard for the player and says nothing about enemies, so
+   * nothing here touches them.
+   */
+  private applyLowOrbitDebris(): void {
+    if (!this.lowOrbit.isDeclared) return;
+    const position = this.hero.group.position;
+    const chip = this.lowOrbit.debrisDamage(position.x, position.z, STEP_SECONDS);
+    if (chip > 0) this.combat.damageActor(chip, -1, this.hero);
+  }
+  /**
+   * A8 — THE SEED CARAVAN, ticked for real, unlike the E9 census sockets.
+   *
+   * `E9CanalSocket`/`E9ArsenalSocket` are census probes this engine never ticks; that is fine for
+   * a canal, and would be fatal here, because this consumer OWNS THE OBJECTIVE. `arrived` is what
+   * lets the run secure at all, both in `autoSecureWaveForRun` below and in the browser's own
+   * `Game.autoSecureWaveForRun`. So it is composed like `PressureSystem` — constructed off the
+   * manifest, ticked in the browser's own relative order, null everywhere the twist is absent.
+   *
+   * THE TILE STORE IT IS GIVEN IS THE EMPTY ONE (`NO_PROFILE_STORAGE`), on purpose and by law:
+   * GR-SIM keeps no profile, so a null floor can never inherit a plant from an earlier run and a
+   * planted run can never leak into the next seed. Every bench run therefore starts from bare
+   * ground, which is exactly the isolation the floors need to mean anything.
+   */
+  private readonly seedCaravan: SeedCaravanSystem | null;
+  private readonly canalChoices: CanalChoiceSystem | null;
+  /**
+   * A5 — THE INTERFERENCE FRONT, and it is a REAL switch in this engine rather than a
+   * by-construction shadow like its A4 neighbour above.
+   *
+   * The wall's mute reaches the shooter seam both engines share: `BuildSystem` registers every
+   * turret and beacon with `CombatSystem`, and `isShooterPowered` (the twelfth constructor
+   * argument, injected below) is consulted before a shooter is allowed to fire. So a covered
+   * turret stops firing HERE for exactly as long as it stops firing in the browser, and starts
+   * again when the wall passes. Nothing takes damage: `muted != damaged` is ratified, and no
+   * line in this seam touches hp.
+   *
+   * The verb half is honest about its reach, in A4's manner: this engine has no drone slot
+   * (one `Hero`) and `src/agent/` carries no playbook verb, so `refuse('drones'|'playbooks')`
+   * has nothing to refuse here and its counters stay zero. The browser calls those two at its
+   * own gates. What is IDENTICAL across both engines is the schedule, the mute geometry, the
+   * relay lighting and the objective latch — the four things a secure depends on.
+   */
+  private readonly interferenceFront: InterferenceFrontSystem;
+  /**
+   * A9 — the scheduled relocation, and it runs IDENTICALLY in both engines because it is
+   * sim-affecting: a devil MOVES a building's position, which changes what a turret covers and
+   * what an outlaw walks into. A consumer that only the browser ran would put the two engines on
+   * different boards from wave one.
+   */
+  private readonly devilsAlley: ScheduledRelocationSystem;
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -406,6 +706,33 @@ export class HeadlessContractSim {
       this.manifest.tileParams.stakeMarkers ?? [],
       () => this.postHeroDeath(),
     );
+    // Same read the browser performs at `Game.ts` (contract, never epoch), so the two engines
+    // cannot disagree about which systems this contract declares off.
+    this.signalSuppression = SignalSuppression.create(this.manifest);
+    // A3, same rule: one read of the CONTRACT, never the epoch, so the two engines cannot
+    // disagree about which contract casts a shadow.
+    this.broadcastMirror = BroadcastMirror.create(this.manifest);
+    // A6, same rule: one read of the contract, shared by the recover verb and the latch below.
+    this.probeRecovery = ProbeRecovery.create(this.manifest);
+    // Same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. The policy
+    // install waits for `this.combat` below.
+    this.lowOrbit = LowOrbitSystem.create(this.manifest);
+    this.hollowCrossing = HollowCrossingSystem.create(this.manifest);
+    // A8: same read the browser performs at `Game.ts` — the contract's own twist and its own
+    // authored zones/stakes. A fresh empty store per sim, so runs never inherit each other's greens.
+    this.seedCaravan = SeedCaravanSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
+    // A10: same read the browser performs at `Game.ts` — the contract's own twist and its own
+    // authored zones/stakes. A fresh empty store per sim, exactly as the caravan above takes one,
+    // so no bench run inherits a verdict and Law 2 holds by construction: every measured run
+    // starts with three undecided segments and an idle rider decides none of them. Built BEFORE
+    // `BuildSystem` below, which injects its ground veto into the placement seam.
+    this.canalChoices = CanalChoiceSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
+    // A5: same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. Built
+    // before `BuildSystem` below, which injects its mute into the shooter seam.
+    this.interferenceFront = InterferenceFrontSystem.create(this.manifest);
+    // A9: same read the browser performs at `Game.ts` — the CONTRACT's own twist plus its own
+    // authored routes, bays and stakes. No voice headless: this engine paints nothing.
+    this.devilsAlley = ScheduledRelocationSystem.create(this.manifest);
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -423,6 +750,15 @@ export class HeadlessContractSim {
       (enemy, amount, died) => this.atomic?.onEnemyDamaged(enemy, amount, died),
       (enemy) => this.atomic?.isHostile(enemy) !== false,
     );
+    // A7: the same policy the browser installs at `Game.ts`, from the same declaration, so a
+    // missed lob returns identically in both engines. Absent (null) on every other contract.
+    if (this.lowOrbit.returnsProjectiles) {
+      this.combat.setOrbitalReturn({
+        seconds: this.lowOrbit.returnSeconds,
+        onScheduled: () => this.lowOrbit.noteReturnScheduled(),
+        onDetonated: () => this.lowOrbit.noteReturnDetonated(),
+      });
+    }
     this.registerHeroShooter();
     const offeredBuildables = mechanicsBuildableIds(this.manifest);
     this.build = new BuildSystem(
@@ -436,6 +772,18 @@ export class HeadlessContractSim {
       undefined,
       undefined,
       (id) => offeredBuildables.has(id),
+      undefined,
+      // A5 — THE MUTE, AT THE ONLY SEAM THAT CAN CARRY IT IN BOTH ENGINES. `isShooterPowered` is
+      // the browser's own per-shooter gate (`Game.ts:1401` answers it from the power grid); this
+      // sim declares no power grid on any contract, so until now it passed the default `() => true`.
+      // Now it answers the front: a turret or beacon standing under the wall is unpowered while
+      // the wall is over it, and powered again the moment it passes. Every contract that declares
+      // no front gets `muted() === false` and therefore the identical answer it always got.
+      (_id, _index, position) => !this.interferenceFront.muted(position.x, position.z),
+      // A10 — THE GROUND VETO, the browser's own seam and the same predicate. A canal band that
+      // is still a ditch, or is water again, takes no foundation; a backfilled one does. Every
+      // contract that declares no canal choices passes `undefined` through to the default.
+      (x, z) => this.canalChoices?.worksAllowed(x, z) ?? true,
     );
     for (const fixture of this.manifest.tileParams.prePlacedBuildables ?? []) {
       this.build.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
@@ -464,7 +812,9 @@ export class HeadlessContractSim {
     //   armed hero  `heroWeaponsEnabledFor(primaryActor)`     -> this sim's own idiom for the same
     //              fact is `!this.dead` (`heroShooter.enabled`, `:267`);
     //   per weapon  `hasResearch(node)` + `hasBaronMedal()`   -> read from the INJECTED profile, the
-    //              same storage the campaign harness already writes (`gr-sim-campaign.mjs:88`).
+    //              same storage the campaign harness already writes (`gr-sim-campaign.mjs:103`,
+    //              the `new HeadlessContractSim(..., { storage })` site — was `:88` until f2120-1
+    //              added the `--contract` pre-flight refusals above it; cite the CODE, not the line).
     // A run that declares nothing therefore sees precisely what a browser player who has unlocked
     // nothing sees: three shooters that never pass `enabled()`. Progression is DECLARED, never minted.
     this.pressureArsenal = epoch?.id === 'epoch-2-steamworks'
@@ -481,6 +831,29 @@ export class HeadlessContractSim {
     this.powerGraph = powerGrid
       ? new PowerGraphSystem(contractPowerDefinition(this.contractId, powerGrid), powerGrid.maxSpanLength)
       : null;
+    // --- E3 FAIRGROUND. The browser builds both of these inside its power-grid branch
+    // (`Game.ts:4029-4034`), so they are built here in the same place and on the same gates.
+    //   THE WHEEL: the REAL `FerrisWheel`, reused not reshaped — probed before this line was
+    //   written and browser-free (Torus/Box/Cylinder/Circle/Octahedron geometries and
+    //   MeshStandardMaterials are plain typed-array objects; no `document`, no GL context), the
+    //   same finding that let the Homemaker reuse `GoldPickupPool`. It is minted ONLY where a
+    //   fairground is declared, so no already-admitted contract gains an object or a tick.
+    //   THE FLOCKS: gated on `twist.fairground.crowdFlocks`, the FIELD and not the block —
+    //   F-1471-1's lesson, so a fairground without flocks never gets an objective it cannot meet.
+    this.ferrisWheel = this.manifest.twist.fairground
+      ? new FerrisWheel(this.manifest.twist.fairground.wheel)
+      : null;
+    this.crowdFlocks = CrowdFlockSystem.create(this.manifest);
+    if (this.ferrisWheel) {
+      const wheel = this.ferrisWheel;
+      this.targeting.registerBuilding(wheel.target);
+      // `Game.ts:4577` routes the wheel's damage through the megaproject resolver, because the
+      // wheel's target declares `family: 'megaproject'`. Registered ONLY when a wheel exists, so
+      // every other contract keeps BuildSystem's untouched `applied: false` fallback.
+      this.build.setMegaprojectDamageResolver((target, amount) => target === wheel.target
+        ? wheel.damage(amount)
+        : { applied: false, family: target.family, index: target.index, hp: target.hp, maxHp: target.maxHp, wrecked: false });
+    }
     this.crawler = this.manifest.twist.baron?.variantId === 'dynamo_crawler'
       ? new CrawlerBossSystem(
           () => this.enemies.all,
@@ -567,13 +940,17 @@ export class HeadlessContractSim {
       this.manifest,
       this.enemies,
       this.combat,
-      () => this.hero.group.position,
+      () => this.manifest.tileParams.raceCourse || this.manifest.tileParams.flotilla ? this.prospector.position : this.hero.group.position,
       (wave, at) => this.events.emit({ type: 'wave_started', at, wave }),
       this.dredgeQueen
         ? (wave) => this.dredgeQueen!.onStormWave(wave, this.manifest.twist.baron!.wave)
           ? this.dredgeQueen!.escortMultiplier
           : false
         : null,
+      // A2: the pan MACHINE, not the hand. `panAt` (the public HARVEST verb) restores the
+      // channel state it borrowed, so a hand-pan never leaves this true — which is exactly the
+      // sheet's "hand-pan = harvest without pump noise" seam.
+      { panChanneling: () => this.harvestSnapshot.channeling },
     );
 
     this.waves = new WaveSystem(
@@ -582,8 +959,11 @@ export class HeadlessContractSim {
       createRng(`${this.seed}:waves`),
       (text, at, wave) => this.replayEvents.push({ type: 'announcement', at, wave: wave ?? null, text }),
       (wave, at) => this.startWave(wave, at),
-      // Game.ts:1251 — the Deepwater Claim runs no generic schedule; its storm track is the clock.
-      () => this.deepwater !== null,
+      // Game.ts:1387 — the Deepwater Claim runs no generic schedule; its storm track is the
+      // clock. A2: only where that track actually CREWS a wave. `e5-stillwater` authors a
+      // suppressed storm and `corsairWaveSize: 0`, so its clock is the ordinary schedule and
+      // its pressure is the roster's own `machine_leviathan` on the two authored spawn edges.
+      () => this.deepwater !== null && deepwaterStormDrivesWaves(this.manifest),
       () => this.manifest,
       boot,
       () => this.build.diagnostics.stockpilesState.some((entry) => entry.active),
@@ -600,6 +980,10 @@ export class HeadlessContractSim {
       // Owner ruling 2026-08-20: exhausted machines stop holding spawn slots. The browser seats
       // the SAME reader off `Game.wrangle`, so the refusal is one rule in two engines.
       () => this.atomic?.exhaustedCount() ?? 0,
+      // A3: the browser seats this same reader off its own `BroadcastMirror` (`Game.ts`), so a
+      // queued mirror fields identically in both engines. Empty here in practice — see the note
+      // beside the field: this engine has no playbook verb to record a use from.
+      (wave) => this.broadcastMirror.fieldMirrors(wave),
     );
     this.progressionState.transition('playing');
     this.progression = new Progression({
@@ -643,7 +1027,7 @@ export class HeadlessContractSim {
       boatBuild: (padId, buildingId) => this.deepwater?.placeBoatBuilding(padId, buildingId)
         ? { ok: true }
         : { ok: false, reason: 'BOAT_BUILD requires a known unoccupied pad and a building id.' },
-      reanchor: (anchorId) => this.deepwater?.reanchor(anchorId)
+      reanchor: (anchorId) => this.deepwater?.reanchor(anchorId, this.timeAlive)
         ? { ok: true }
         : { ok: false, reason: 'REANCHOR requires a known anchor other than the current anchor.' },
     });
@@ -665,8 +1049,37 @@ export class HeadlessContractSim {
         waveSystem: this.waves,
         activeContract: this.manifest,
         secureWaveForRun: () => this.manifest.twist.secureWave ?? Balance.run.secureWave,
+        // Transcribed from `Game.autoSecureWaveForRun` (`src/game/Game.ts:5115`), clause for
+        // clause. The two fairground clauses are the LOSS rule and the OBJECTIVE rule and they
+        // are deliberately separate: a stopped wheel is unrecoverable (the dynamo never restarts
+        // mid-run), while an incomplete escort is only unfinished — the flocks keep trying every
+        // night, and a run that completes its third crossing at wave 13 still secures at 12.
         autoSecureWaveForRun: () => (this.manifest.twist.baron && !this.baronBeaten)
           || (this.manifest.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
+          || (this.manifest.tileParams.raceCourse && this.deepwater?.diagnostics.race?.finished !== true)
+          // A6: the Far Side is not won by outliving it. Surviving to the secure wave with the
+          // probe still buried leaves the run unsecurable, exactly as the canyon-connect
+          // objective does above. `objectiveAllowsSecure` is true on every contract that
+          // declares no probe, so no admitted contract's terminal moves.
+          || !this.probeRecovery.objectiveAllowsSecure
+          || !this.hollowCrossing.objectiveAllowsSecure
+          || (this.manifest.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
+          || (this.crowdFlocks !== null && !this.crowdFlocks.allCrossed)
+          // A8: the caravan-connect latch, keyed on `twist.persistentPlanting` exactly as the
+          // canyon latch keys on `powerGrid.connect`. A Seed Run that never lands its train
+          // cannot secure at any wave; a train that arrives opens the ordinary secure wave.
+          || (this.seedCaravan && !this.seedCaravan.objectiveComplete)
+          // A10: the canal-choice latch, keyed on `twist.persistentCanalChoices` exactly as the
+          // canyon latch keys on `powerGrid.connect`. An Old Canal run that leaves a segment
+          // undecided cannot secure at any wave; deciding all three opens the ordinary secure
+          // wave. True on every contract that declares no canal, so no admitted terminal moves.
+          || (this.canalChoices !== null && !this.canalChoices.objectiveAllowsSecure)
+          // A5: the relay-rush deadline, keyed on the SUB-FIELDS exactly as the canyon latch keys
+          // on `powerGrid.connect` (F-1471-1). `InterferenceFrontSystem.create` refuses to arm
+          // without both a corridor and relay sites, so `objectiveAllowsSecure` is true on every
+          // contract that declares no discharge-able front and no admitted terminal moves.
+          || !this.interferenceFront.objectiveAllowsSecure
+          || this.atomic?.objectiveAllowsSecure === false
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -779,12 +1192,28 @@ export class HeadlessContractSim {
         ...(this.powerGraph ? { power: this.powerGraph.snapshot() } : {}),
         ...(this.dayNightSnapshot ? { dayNight: this.dayNightSnapshot } : {}),
         ...(canyonConnect ? { canyonConnect } : {}),
+        // The escort ring is part of the terminal state, so it belongs in the hash that certifies
+        // it: a secure claimed with two crossings would hash differently from one won with three.
+        ...(this.ferrisWheel ? { fairground: this.ferrisWheel.diagnostics } : {}),
+        ...(this.crowdFlocks ? { crowdFlocks: this.crowdFlocks.simulationSnapshot } : {}),
         ...(crawler ? { crawler: (({ crawler3dState: _, ...simulation }) => simulation)(crawler) } : {}),
         ...(this.deepwater ? { deepwater: this.deepwater.simulationSnapshot } : {}),
         ...(this.atomic ? { atomic: this.atomic.diagnostics } : {}),
         // The chair is part of the terminal state, so it belongs in the hash that certifies it:
         // a secure claimed without `poweredDown`/`chairPlaced` would hash differently from one won.
         ...(this.homemaker ? { homemaker: this.homemaker.diagnostics() } : {}),
+        // A7: spread-if-declared, exactly like every optional system above it, so the key is
+        // ABSENT for every contract that is not low orbit and their pinned hashes cannot move.
+        // Included rather than skipped because the returns and the debris chip are real terminal
+        // facts — a claim won while three lobs were still in orbit is not the same run as one
+        // won with none, and the hash should be able to say so.
+        ...(this.lowOrbit.isDeclared ? { lowOrbit: this.lowOrbit.diagnostics } : {}),
+        // A5: spread-if-declared for the same reason — ABSENT on every contract that is not
+        // relay rush, so no pinned hash moves. Included because the deadline is the terminal fact
+        // that certifies the secure: a run that met it with three relays lit is not the same run
+        // as one that met it with four, and one that missed it could not have secured at all.
+        ...(this.interferenceFront.isDeclared ? { interferenceFront: this.interferenceFront.diagnostics } : {}),
+        ...(this.hollowCrossing.isDeclared ? { hollowCrossing: this.hollowCrossing.diagnostics } : {}),
       },
     });
     return { ...base, eventLogHash, ...overtime };
@@ -896,6 +1325,7 @@ export class HeadlessContractSim {
     // Every call is null-guarded, so no already-admitted contract's tick changes.
     this.atomic?.tickDecay();
     this.deepwater?.advance(this.timeAlive);
+    this.applyLowOrbitDebris();
     this.hero.update(STEP_SECONDS, IDLE_INTENTS, {
       bounds: Terrain.bounds,
       sample: Terrain.sample,
@@ -937,8 +1367,34 @@ export class HeadlessContractSim {
       this.waves.diagnostics.wave,
     );
     this.syncContractPowerGrid();
+    // Game.ts:2632-2636 orders these five exactly so: grid sync -> wheel -> wheel power -> graph
+    // step -> connect objective. The flocks ride at the wheel's own site and read the day/night
+    // sample the engine already holds — last tick's, in BOTH engines, because both refresh that
+    // field near the end of their tick (`Game.syncNightShiftLighting`, `step()` below).
+    this.ferrisWheel?.update(STEP_SECONDS);
+    this.syncFerrisWheelPower();
+    this.crowdFlocks?.update(STEP_SECONDS, this.dayNightSnapshot, this.enemies.all);
     this.powerGraph?.step(this.simTick);
     this.syncCanyonConnectObjective();
+    // A8: the caravan advances beside the other objective syncs and BEFORE `enemies.update`,
+    // which is the browser's own order (`Game.ts` ticks it with the era systems, ahead of the
+    // enemy integration step). Reading the pool here means contact damage is resolved against
+    // the positions the previous tick left, identically in both engines.
+    this.seedCaravan?.update(STEP_SECONDS, this.enemies.all);
+    // A5: the wall advances beside the other objective syncs and on the SAME fixed step, so the
+    // schedule is a function of sim time alone. It reads the board's standing works from the
+    // targeting register (the same list the browser hands it) to decide which relays are lit.
+    this.interferenceFront.update(STEP_SECONDS, this.targeting.allBuildings);
+    // A9: the column advances on the SAME fixed step and at the SAME point in the order the
+    // browser uses — after the standing-works register is current and BEFORE `enemies.update`,
+    // so an outlaw walks into the board the wind has already rearranged this tick rather than
+    // last tick's. The mover is the one BuildSystem seam; nothing here touches a pool.
+    this.devilsAlley.update(
+      STEP_SECONDS,
+      this.waves.diagnostics.wave,
+      this.targeting.allBuildings,
+      (family, index, to, lifted) => this.build.relocateBuilding(family, index, to, lifted),
+    );
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
     const actorTargets = [this.hero.group.position];
@@ -951,8 +1407,8 @@ export class HeadlessContractSim {
           const stake = this.picnicHold.pressureTarget(enemy, picnicDefenders);
           return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
         }
-      : actorTargets, (enemy) => {
-      if (!this.picnicHold.pressureTarget(enemy, picnicDefenders) && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
+      : this.deepwater?.targetPosition(this.hero.group.position) ?? actorTargets, (enemy) => {
+      if (!this.picnicHold.pressureTarget(enemy, picnicDefenders) && !this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
     }, this.build.palisadeBlockers, {
       nearestGoldHolding: (from) => this.targeting.nearestGoldHolding(from),
@@ -971,6 +1427,7 @@ export class HeadlessContractSim {
       this.enemies.all.filter((enemy) => enemy.isAlive),
       picnicDefenders,
     );
+    this.deepwater?.resolveHullContacts(this.timeAlive, () => this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5));
     this.deepwater?.recycleCorsairsAtExit();
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
     this.updateBaronRocketVolley();
@@ -979,7 +1436,14 @@ export class HeadlessContractSim {
     this.progression.consumeXpTotal(this.combat.xpCount);
     // AP-16-0 audit anchor, retired by AP-16-2: while (this.progression.offer?.[0])
     this.syncUpgradeOfferClock();
-    this.prospector.updateSimulation(STEP_SECONDS, this.timeAlive, this.hero.group.position);
+    const { moving, drifting } = this.prospector.snapshot;
+    this.prospector.updateSimulation(
+      STEP_SECONDS * (moving || drifting ? this.deepwater?.movementMultiplier(this.prospector.position) ?? 1 : 1),
+      this.timeAlive,
+      this.hero.group.position,
+    );
+    const hollowChip = this.hollowCrossing.update(STEP_SECONDS, this.prospector.position, 'prospector');
+    if (hollowChip > 0) this.combat.damageActor(hollowChip, -1, this.hero);
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncLightState();
     observeStandingOrders();
@@ -1003,6 +1467,50 @@ export class HeadlessContractSim {
       ...(this.homemaker ? { homemakerBoss: this.homemaker.diagnostics() } : {}),
       ...(this.picnicHold.diagnostics.length > 0 ? { picnicHold: this.picnicHold.diagnostics } : {}),
     };
+    // A4: only where DECLARED, so no other contract's view grows a field. Deliberately absent
+    // from the `final` hash — the flags are a constant of the contract and the counters are
+    // constant zero here, so hashing them would add bytes and no discrimination.
+    if (this.signalSuppression.diagnostics.declared) view.now.signalSuppression = this.signalSuppression.diagnostics;
+    // A3: only where DECLARED, same rule. Unlike the suppression row this one is real per-turn
+    // state — `pending` is what is about to arrive — so a rider polls it every turn.
+    if (this.broadcastMirror.isDeclared) view.now.broadcastMirror = this.broadcastMirror.diagnostics;
+    // A6: only where DECLARED, same rule. This one DOES belong to the run rather than the
+    // contract — `recovered` flips mid-run and gates the secure — so unlike the suppression
+    // row above it is real per-turn state a rider must be able to poll.
+    if (this.probeRecovery.declared) view.now.probeRecovery = this.probeRecovery.diagnostics;
+    // A rider cannot escort what it cannot see. THE VIEW carries the wheel, every flock's phase
+    // and crossing count, and the objective read straight off the same latch the run secures on —
+    // so a "secured" claim can be checked against the escort that earned it (Mistake #13).
+    if (this.ferrisWheel && this.crowdFlocks) {
+      const secureWave = this.manifest.twist.secureWave ?? Balance.run.secureWave;
+      const spinning = this.ferrisWheel.diagnostics.spinning;
+      const allCrossed = this.crowdFlocks.allCrossed;
+      view.now.fairground = {
+        wheel: this.ferrisWheel.diagnostics,
+        flocks: this.crowdFlocks.diagnostics,
+        objective: { allCrossed, wheelSpinning: spinning, securableAtWave: spinning && allCrossed ? secureWave : null },
+      };
+    }
+    // A7: only where DECLARED, so no other contract's view grows a field.
+    if (this.lowOrbit.isDeclared) view.now.lowOrbit = this.lowOrbit.diagnostics;
+    if (this.hollowCrossing.isDeclared) view.now.hollowCrossing = this.hollowCrossing.diagnostics;
+    // A8: only where DECLARED. Unlike the suppression row this one MOVES every turn, and a rider
+    // that cannot read it cannot escort — so it carries the live guard, the dwell clock and the
+    // latch, and the grounds/route it needs to walk to a stake.
+    if (this.seedCaravan) view.now.seedCaravan = this.seedCaravan.diagnostics;
+    // A10: only where DECLARED. Static in the sense that nothing but a decision moves it, and
+    // load-bearing for exactly that reason — a rider that cannot read which segments are still
+    // undecided cannot discharge the objective, and one that cannot read `choices` cannot know
+    // whether the band under its next turret is ground or water.
+    if (this.canalChoices) view.now.canalChoices = this.canalChoices.diagnostics;
+    // A5: only where DECLARED. Like the caravan's row this one MOVES every turn — the wall's
+    // position, the countdown to the next front, and the per-site lit/muted pair a rider needs to
+    // decide where to spend the next 25 gold before the deadline closes.
+    if (this.interferenceFront.isDeclared) view.now.interferenceFront = this.interferenceFront.diagnostics;
+    // A9: only where DECLARED. This one MOVES every turn and — unlike the caravan and the wall —
+    // it gates NOTHING, so it is published for planning rather than for scoring: where the next
+    // sweep goes, and which of your works the wind is allowed to take.
+    if (this.devilsAlley.isDeclared) view.now.devilsAlley = this.devilsAlley.diagnostics;
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1167,7 +1675,19 @@ export class HeadlessContractSim {
     // flag below, and it early-returns on `!grid?.connect` — so a powerGrid without a connect
     // objective would pin this false forever and beating the Baron would silently fail to secure.
     // Mirrors src/game/Game.ts byte-for-byte; the browser moved first.
-    const objectiveAllowsSecure = !this.manifest.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline;
+    const objectiveAllowsSecure = (!this.manifest.twist.powerGrid?.connect || this.canyonConnectCompletedByDeadline)
+      // A6, same clause as the auto-secure latch: a contract that fields both a Baron and a
+      // probe cannot be secured by the kill alone. No contract declares both today; stating it
+      // here keeps the two secure paths from disagreeing the way F-1471-1 did.
+      && this.probeRecovery.objectiveAllowsSecure
+      && this.hollowCrossing.objectiveAllowsSecure
+      // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
+      && (!this.seedCaravan || this.seedCaravan.objectiveComplete)
+      // A10 rides the same expression: a boss kill cannot secure a canal left half-decided.
+      && (!this.canalChoices || this.canalChoices.objectiveAllowsSecure)
+      // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
+      && this.interferenceFront.objectiveAllowsSecure
+      && this.atomic?.objectiveAllowsSecure !== false;
     const runWave = this.currentRunWave();
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen'
       && runWave < (this.manifest.twist.secureWave ?? Balance.run.secureWave);
@@ -1193,7 +1713,9 @@ export class HeadlessContractSim {
   }
 
   private currentRunWave(): number {
-    return this.deepwater?.diagnostics.corsairWaves ?? this.waves.diagnostics.wave;
+    return this.deepwater && deepwaterStormDrivesWaves(this.manifest)
+      ? this.deepwater.diagnostics.corsairWaves
+      : this.waves.diagnostics.wave;
   }
 
   private updateBaronRocketVolley(): void {
@@ -1330,10 +1852,29 @@ export class HeadlessContractSim {
       power: this.powerGraph?.snapshot() ?? null,
       dayNight: this.dayNightSnapshot,
       ...(canyonConnect ? { canyonConnect } : {}),
+      ...(this.ferrisWheel ? { fairground: this.ferrisWheel.diagnostics } : {}),
+      ...(this.crowdFlocks ? { crowdFlocks: this.crowdFlocks.diagnostics } : {}),
       crawler: this.crawler?.diagnostics() ?? null,
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
       picnicHold: this.picnicHold.diagnostics,
+      signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
+      broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
+      probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
+      lowOrbit: this.lowOrbit.isDeclared ? this.lowOrbit.diagnostics : null,
+      hollowCrossing: this.hollowCrossing.isDeclared ? this.hollowCrossing.diagnostics : null,
+      seedCaravan: this.seedCaravan?.simulationSnapshot ?? null,
+      // A10: null off every other contract, exactly like its neighbours, so no admitted
+      // contract's determinism hash grows a field. Two runs that decide the same segments in the
+      // same order produce the same bytes here; one that decides a segment a turn later does not.
+      canalChoices: this.canalChoices?.simulationSnapshot ?? null,
+      // A5: null off relay rush, exactly like its neighbours, so no other contract's diagnostics
+      // grow a field. The terminal half of the same object also rides the determinism hash
+      // (`outcome()` below) — this row is the per-turn read.
+      interferenceFront: this.interferenceFront.isDeclared ? this.interferenceFront.diagnostics : null,
+      // A9: null off every other contract, same rule. The presentation-stripped half rides the
+      // determinism hash so a run that moved a turret cannot hash the same as one that did not.
+      devilsAlley: this.devilsAlley.isDeclared ? this.devilsAlley.simulationSnapshot : null,
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,
@@ -1394,6 +1935,40 @@ export class HeadlessContractSim {
         graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
       }
     }
+  }
+
+  /** `Game.syncFerrisWheelPower` (`src/game/Game.ts:6162`): a stopped dynamo is an offline node. */
+  private syncFerrisWheelPower(): void {
+    const wheel = this.ferrisWheel;
+    const graph = this.powerGraph;
+    if (!wheel || !graph) return;
+    const node = graph.snapshot().nodes.find((entry) => entry.id === wheel.config.nodeId);
+    if (node && node.online !== wheel.diagnostics.spinning) {
+      graph.queueCommand({ type: 'set-node-online', nodeId: node.id, online: wheel.diagnostics.spinning });
+    }
+  }
+
+  /** `Game.fairgroundCoverageSources` (`src/game/Game.ts:5611`), with no debug time override. */
+  private fairgroundCoverageSources(): LightSource[] {
+    const fairground = this.manifest.twist.fairground;
+    const graph = this.powerGraph;
+    if (!fairground || !graph) return [];
+    const snapshot = graph.snapshot();
+    const night = Math.floor(this.timeAlive / Math.max(1, this.manifest.twist.dayNightCycle?.periodSeconds ?? 1));
+    const sources: LightSource[] = [];
+    const wheelSource = this.ferrisWheel?.coverageSource;
+    if (wheelSource) sources.push(wheelSource);
+    for (const pavilion of fairground.pavilions) {
+      if (snapshot.nodes.find((node) => node.id === pavilion.nodeId)?.state !== 'powered') continue;
+      sources.push({
+        id: `fairground:${pavilion.id}`,
+        kind: 'powered-lamp',
+        x: pavilion.x,
+        z: pavilion.z,
+        radius: pavilion.baseRadius + pavilion.radiusPerNight * night,
+      });
+    }
+    return sources;
   }
 
   private canyonConnectDiagnostics(): null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean } {
@@ -1488,9 +2063,14 @@ export class HeadlessContractSim {
       radius: Balance.decoyShed.lightRadius,
       targetWeight: config?.decoyWeight ?? 1,
     }));
+    // The browser derives its moth list by KIND from the full source array (`Game.ts:5735`), and
+    // the fairground's wheel/pavilion sources are `powered-lamp` — so they belong in this list to
+    // keep the two engines saying the same thing. It is inert today (no fairground declares
+    // `mothSeason`, so `mothSwarm` is null and nothing reads it), and correct tomorrow.
     this.mothLightSources = [
       ...lanterns,
       ...decoys,
+      ...this.fairgroundCoverageSources(),
     ];
     const darkness = this.dayNightSnapshot?.darkness ?? this.lightRampDarkness();
     const enemyLanterns: LightSource[] = this.enemies.all
@@ -1642,6 +2222,9 @@ export class HeadlessContractSim {
 
   private contextAction(order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>): { ok: true } | { ok: false; reason: string } {
     if (order.action === 'fund') return this.fundMegaproject();
+    if (order.action === 'recover') return this.recoverProbe();
+    if (order.action === 'plant') return this.plantSeedVault();
+    if (order.action === 'redig' || order.action === CANAL_BACKFILL_ACTION) return this.decideCanalSegment(order.action);
     const { id, index } = order.target;
     const ok = order.action === 'upgrade'
       ? this.build.upgradeBuilding(id, index, this.timeAlive, this.prospector.position)
@@ -1649,6 +2232,76 @@ export class HeadlessContractSim {
     if (!ok) return { ok: false, reason: `REJECTED: ${order.action} ${id}:${index} is not legal here.` };
     this.syncStockpileHoldings();
     this.replayEvents.push({ type: 'context_action', at: round(this.timeAlive), action: order.action, target: { id, index } });
+    return { ok: true };
+  }
+
+  /**
+   * A6 — THE RECOVERY AND THE PLAYBACK, headless. The Prospector is the body that crosses
+   * (the hero never leaves its stake, `:919`), so the reach test reads the Prospector's
+   * position exactly as `fundMegaproject` below does.
+   *
+   * THE PLAYBACK IS THE REPLAY-LOG EVENT. This engine has no jack-board and no float text, so
+   * the banked fragment is carried in the event and mirrored on `now.probeRecovery` — a rider
+   * READS the wrong-number hello, which is the same payload the browser announces. The event
+   * fires exactly once because the consumer's latch is one-way.
+   */
+  private recoverProbe(): { ok: true } | { ok: false; reason: string } {
+    const result = this.probeRecovery.recover(this.prospector.position);
+    if (!result.ok) return { ok: false, reason: `REJECTED: ${result.reason}.` };
+    this.replayEvents.push({
+      type: PROBE_RECOVERED_EVENT,
+      at: round(this.timeAlive),
+      zone: result.zoneId,
+      fragment: result.fragment,
+    });
+    return { ok: true };
+  }
+
+  /**
+   * A8's context action, reached by the SAME public verb the browser player uses — the
+   * Prospector must be standing at the stake, exactly as the megaproject fund below demands the
+   * site. The plant is optional by construction: a rider that never issues this order still
+   * secures, and one that plants three times pays three quarters of the guard for three greens
+   * that outlive the run.
+   */
+  private plantSeedVault(): { ok: true } | { ok: false; reason: string } {
+    if (!this.seedCaravan) return { ok: false, reason: 'REJECTED: this contract declares no planting grounds.' };
+    const planted = this.seedCaravan.tryPlant(this.prospector.position);
+    if (!planted.ok) return planted;
+    this.replayEvents.push({
+      type: 'context_action',
+      at: round(this.timeAlive),
+      action: 'plant',
+      ground: planted.groundId,
+      costHp: planted.costHp,
+    });
+    return { ok: true };
+  }
+
+  /**
+   * A10's context actions, reached by the SAME public verbs the browser player uses — the
+   * Prospector must be standing at the stake, exactly as the plant and the megaproject fund
+   * demand their ground. Neither is optional the way a plant is: this contract cannot secure
+   * until all three segments carry a verdict, so a rider that never issues these orders loses
+   * the map no matter how long it survives.
+   */
+  private decideCanalSegment(action: 'redig' | 'backfill'): { ok: true } | { ok: false; reason: string } {
+    if (!this.canalChoices) return { ok: false, reason: `REJECTED: ${CANAL_NOT_DECLARED_REASON}.` };
+    const choice = action === 'redig' ? 'redig' : 'demolish';
+    const decided = this.canalChoices.decide(this.prospector.position, choice);
+    if (!decided.ok) {
+      // ALREADY_DECIDED is the one refusal a rider will meet by simply re-issuing an order that
+      // already landed, so it is named rather than lumped with the reach failure.
+      const prefix = decided.reason === CANAL_ALREADY_DECIDED_REASON ? 'ALREADY_DECIDED' : 'OUT_OF_REACH';
+      return { ok: false, reason: `${prefix}: ${decided.reason}.` };
+    }
+    this.replayEvents.push({
+      type: 'context_action',
+      at: round(this.timeAlive),
+      action,
+      segment: decided.segmentId,
+      choice: decided.choice,
+    });
     return { ok: true };
   }
 

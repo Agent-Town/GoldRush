@@ -1,6 +1,7 @@
 import relayValleyMask from '../../assets/contracts/epoch-7-signal/mask-tables/e7-relay-valley.json' with { type: 'json' };
 import { Balance } from '../game/Balance';
 import { stableHash } from '../mp/LockstepClient';
+import { SignalSuppression } from './SignalSuppression';
 
 export const E7_SIGNAL_STATE_KEY = 'gr.e7Signal.v1';
 
@@ -32,6 +33,10 @@ export type E7SignalDiagnostics = {
   linkedCoverage: boolean;
   threatVisibilityBonus: boolean;
   droneDropped: boolean;
+  /** A4: true when the active contract declares `signalSuppression.relayChains: false`. */
+  relayChainsSuppressed: boolean;
+  /** A4: true when the active contract declares `signalSuppression.drones: false`. */
+  dronesSuppressed: boolean;
   jacks: readonly Jack[];
   midpointReached: boolean;
   lastBeatCount: 0 | 1;
@@ -40,12 +45,21 @@ export type E7SignalDiagnostics = {
   latestFragment: string;
 };
 
+/**
+ * A6 (`door-completion-sheet.md:18`): the Far Side's crashed probe plays THIS line back, once,
+ * at the end of the loneliest map in the saga. Exported so `ProbeRecovery` cites the jack-board
+ * rather than re-typing its words — the probe recorded the town's own first hello, and a second
+ * copy of the string is a second thing to keep in sync. Read by `src/systems/ProbeRecovery.ts`;
+ * `ANSWERS[0].fragment` below is the same value and stays the definition.
+ */
+export const E7_WRONG_NUMBER_FRAGMENT = 'First tower up. A wrong number answered, confused and kind. The line stays open.';
+
 const ANSWERS = [
   {
     milestone: 'first-relay-linked',
     id: 'lighthouse-keeper',
     label: 'Lighthouse keeper',
-    fragment: 'First tower up. A wrong number answered, confused and kind. The line stays open.',
+    fragment: E7_WRONG_NUMBER_FRAGMENT,
   },
   {
     milestone: 'first-playbook-recorded',
@@ -103,6 +117,9 @@ export class E7SignalSystem {
     private readonly lineOfSight: (from: E7RelayNode, to: E7RelayNode) => boolean,
     private readonly storage: Pick<Storage, 'getItem' | 'setItem'> = localStorage,
     private readonly announceFragment: (fragment: string) => void = () => {},
+    // A4 (door-completion-sheet §A4): the contract-level OFF switch. Defaults to the
+    // undeclared consumer so every existing caller keeps its answer unchanged.
+    private readonly suppression: SignalSuppression = SignalSuppression.none(),
   ) {
     this.handled = readMilestones(storage);
     this.root.dataset.testid = 'e7-jack-board';
@@ -117,7 +134,11 @@ export class E7SignalSystem {
   }
 
   update(): void {
-    const next = this.active() ? buildRelayGraph(this.relayNodes(), this.lineOfSight) : { nodes: [], links: [], hash: EMPTY_GRAPH_HASH };
+    // A4: relay chains never link where the contract declares them off. The board itself
+    // still renders — the Dead Band's own SILENCES row is the cross-era payoff — so this
+    // gates the GRAPH, never `active()`.
+    const linksAllowed = this.active() && !this.suppression.suppresses('relayChains');
+    const next = linksAllowed ? buildRelayGraph(this.relayNodes(), this.lineOfSight) : { nodes: [], links: [], hash: EMPTY_GRAPH_HASH };
     this.nodes = next.nodes;
     this.links = next.links;
     this.graphHash = next.hash;
@@ -152,6 +173,13 @@ export class E7SignalSystem {
   }
 
   droneCanOperate(position: { x: number; z: number }): boolean {
+    // A4: the contract gate comes FIRST and does not consult `active()`. `active()` is an
+    // EPOCH test (`epoch-7-signal`), and A6 reuses this same seam from an E8 contract —
+    // ordering it after the coverage read would silently un-suppress the Far Side.
+    if (this.suppression.refuse('drones')) {
+      this.droneDropped = true;
+      return false;
+    }
     const covered = this.coverageAt(position);
     this.droneDropped = this.active() && !covered;
     return covered;
@@ -162,6 +190,9 @@ export class E7SignalSystem {
   }
 
   graphFor(nodes: readonly E7RelayNode[]): Pick<E7SignalDiagnostics, 'graphHash' | 'nodes' | 'links'> {
+    // A4: the probe must not contradict the run. Where chains are suppressed there is no
+    // graph to report for ANY node set, so the answer is the empty graph, not a hypothetical.
+    if (this.suppression.suppresses('relayChains')) return { graphHash: EMPTY_GRAPH_HASH, nodes: [], links: [] };
     const graph = buildRelayGraph(nodes, this.lineOfSight);
     return { graphHash: graph.hash, nodes: graph.nodes, links: graph.links };
   }
@@ -176,6 +207,8 @@ export class E7SignalSystem {
       linkedCoverage: this.links.length > 0,
       threatVisibilityBonus: this.links.length > 0,
       droneDropped: this.droneDropped,
+      relayChainsSuppressed: this.suppression.suppresses('relayChains'),
+      dronesSuppressed: this.suppression.suppresses('drones'),
       jacks: board.jacks,
       midpointReached: board.midpointReached,
       lastBeatCount: board.lastBeatFired ? 1 : 0,
@@ -197,7 +230,11 @@ export class E7SignalSystem {
     this.root.hidden = !this.active();
     if (this.root.hidden) return;
     this.root.innerHTML = `<strong style="letter-spacing:.08em">THE EXCHANGE · RESCUE BOARD</strong>
-      <p style="margin:4px 0 7px">${this.links.length > 0 ? 'SIGNAL LINKED · THREATS CHARTED' : 'SEARCHING · RELAYS NEED A CLEAR LINE'}</p>
+      <p data-testid="e7-signal-status" style="margin:4px 0 7px">${this.suppression.suppresses('relayChains')
+        // A4, Mistake #10 (where does the PLAYER see this in a plain boot?): the Dead Band is
+        // not SEARCHING, it is dead. The board says so instead of implying a link is coming.
+        ? 'DEAD BAND · NO RELAY, NO DRONE, NO PLAYBOOK'
+        : this.links.length > 0 ? 'SIGNAL LINKED · THREATS CHARTED' : 'SEARCHING · RELAYS NEED A CLEAR LINE'}</p>
       <ol style="margin:0;padding-left:20px">${board.jacks.map((jack) => `<li data-jack-id="${jack.id}" data-jack-state="${jack.state}">${jack.state === 'lit' ? '●' : jack.patched ? '◉' : '○'} ${jack.label} — ${jack.state === 'lit' ? 'ANSWERING' : jack.patched ? 'PATCHED · ANSWER PENDING' : 'ANSWER PENDING'}</li>`).join('')}</ol>
       <p data-testid="e7-signal-fragment" style="margin:7px 0 0;font-style:italic">${board.latestFragment}</p>`;
   }

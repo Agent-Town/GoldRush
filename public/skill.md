@@ -41,9 +41,9 @@ Add `--tape <path>` to a solo `gr-sim` command to write a deterministic RunTape 
 
 Every decision view has `schema: "goldrush.view.v1"` and four parts:
 
-- `stablePrefix` identifies the seed and contract, carries the authored briefing and derived mechanics, and locates the claim, seams, water, and spawn gates. It is stable for the run except that its accepted `orders` snapshot refreshes when you replace the order set.
+- `stablePrefix` identifies the seed and contract, carries the authored briefing and derived mechanics, and locates the claim, authored seam anchors, water, and spawn gates. It is stable for the run except that its accepted `orders` snapshot refreshes when you replace the order set.
 - `appendLog` is the growing wave ledger: outcome, gold delta, works-health delta, kills, and surprises. A skipped observation is marked `unobserved`, not invented.
-- `now` is the live boundary: wave and timers; gold; hero health and position; standing/wrecked works; threat count, state, and edge; active seams; accepted orders; score; and `needsRider`. Treat `needsRider: true` as an escalation cue after claim damage, an order failure, hero down, or an unexpectedly early wave.
+- `now` is the live boundary: wave and timers; gold; hero health and position; standing/wrecked works; threat count, state, and edge; active seams with their live positions; accepted orders; score; and `needsRider`. Treat `needsRider: true` as an escalation cue after claim damage, an order failure, hero down, or an unexpectedly early wave.
 - `almanac` is explicitly an estimate. It projects the next wave's arrival and composition, expected leaks and works damage, expected gold, and current works from the published mechanics. Use it to plan, never as observed fact.
 
 Coordinates are the claim plane's `{x, z}` values. Contract-specific vocabulary and restrictions live in `stablePrefix.mechanics`; do not infer a mechanic that the view does not declare.
@@ -82,6 +82,10 @@ The source-locked forms are:
 {"verb":"CONTEXT_ACTION","action":"upgrade","target":{"id":"<buildable>","index":N}}
 {"verb":"CONTEXT_ACTION","action":"demolish","target":{"id":"<buildable>","index":N}}
 {"verb":"CONTEXT_ACTION","action":"fund"}
+{"verb":"CONTEXT_ACTION","action":"recover"}
+{"verb":"CONTEXT_ACTION","action":"plant"}
+{"verb":"CONTEXT_ACTION","action":"redig"}
+{"verb":"CONTEXT_ACTION","action":"backfill"}
 {"verb":"CAPTURE"}
 {"verb":"BOAT_BUILD","padId":"<string>","buildingId":"<string>"}
 {"verb":"REANCHOR","anchorId":"<string>"}
@@ -111,11 +115,11 @@ Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_o
 
 At the secure boundary, `now.pendingSecure` supplies the configured default (`bank`, or `rush` for `--overtime`) and the remaining decision time. `SECURE_CHOICE` is accepted only while that field is present. `bank` ends secured; `rush` continues from the same frozen boundary. Silence for the difficulty's 30/20/10-second choice clock takes the configured default and increments `defaultedSecure`.
 
-`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. An illegal or unaffordable action fails through the ordinary order-failure surprise.
+`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. `recover` also has no target: where `now.probeRecovery` is present, it lifts the crashed probe if the Prospector is standing in one of the published `zones`, and the run cannot secure until it does. It is one-time — a second call is refused. `plant` has no target either: where `now.seedCaravan` is present, it plants a seed vault if the Prospector is standing at a published `grounds` stake while the caravan stands at the same ground, spending a quarter of the caravan's guard and leaving a permanent no-spawn green on that map. `redig` and `backfill` also have no target: where `now.canalChoices` is present, they settle the canal segment whose stake the Prospector is standing at — `redig` floods that band forever (nothing spawns in it and nothing can be built in it), `backfill` opens it as build ground forever, and an undecided band takes no works at all. Each segment takes exactly one verdict for the life of the profile, a second call is refused, and the run cannot secure until every segment carries one. An illegal or unaffordable action fails through the ordinary order-failure surprise.
 
 ## EPOCH LEVERS
 
-These orders exist only where their epoch socket appears in `now`; elsewhere they fail through the ordinary order-failure surprise. On E5 Deepwater, `now.deepwater` lists Claim-Boat pads and occupancy, boat buildings, the current `anchor`, and all known `anchors`. `BOAT_BUILD` occupies a known empty pad with the named building; `REANCHOR` moves to a known non-current anchor. Both mirror the player's zero-resource Claim-Boat actions. On E6 Atomic, `now.atomic.wrangle` shows the wind-down/capture radius, active machine states, and pen roster. `CAPTURE` has no target field: it catches the nearest exhausted machine within the published radius of the Prospector, exactly like the player's capture action, with no resource cost.
+These orders exist only where their epoch socket appears in `now`; elsewhere they fail through the ordinary order-failure surprise. On E5 Deepwater, `now.deepwater` lists Claim-Boat pads and occupancy, boat buildings, the current `anchor`, and all known `anchors`. `BOAT_BUILD` occupies a known empty pad with the named building; `REANCHOR` moves to a known non-current anchor. On the Flotilla, `now.deepwater.flotilla` publishes each hull's district, position, integrity, loss, and straggler status plus the formation centroid; `REANCHOR` with a living hull id nudges that hull toward the centroid when its cooldown is ready. Both mirror the player's zero-resource actions. On E6 Atomic, `now.atomic.wrangle` shows the wind-down/capture radius, active machine states, and pen roster. `CAPTURE` has no target field: it catches the nearest exhausted machine within the published radius of the Prospector, exactly like the player's capture action, with no resource cost.
 
 `<buildable>` is one of:
 
@@ -216,6 +220,14 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e5-deepwater-claim-01",
     "e5-deepwater-claim-02"
   ],
+  "e5-flotilla": [
+    "e5-flotilla-01",
+    "e5-flotilla-02"
+  ],
+  "e5-regatta": [
+    "e5-regatta-01",
+    "e5-regatta-02"
+  ],
   "e6-glow-mesa": [
     "e6-glow-mesa-01",
     "e6-glow-mesa-02"
@@ -252,6 +264,18 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e7-relay-valley-01",
     "e7-relay-valley-02"
   ],
+  "e7-dead-band": [
+    "e7-dead-band-01",
+    "e7-dead-band-02"
+  ],
+  "e7-echo-canyon": [
+    "e7-echo-canyon-01",
+    "e7-echo-canyon-02"
+  ],
+  "e7-relay-rush": [
+    "e7-relay-rush-01",
+    "e7-relay-rush-02"
+  ],
   "e8-mare-claim": [
     "e8-mare-claim-01",
     "e8-mare-claim-02"
@@ -260,15 +284,37 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
     "e8-eclipse-01",
     "e8-eclipse-02"
   ],
+  "e8-far-side": [
+    "e8-far-side-01",
+    "e8-far-side-02"
+  ],
+  "e8-low-orbit": [
+    "e8-low-orbit-01",
+    "e8-low-orbit-02"
+  ],
+  "e9-devils-alley": [
+    "e9-devils-alley-01",
+    "e9-devils-alley-02"
+  ],
   "e9-dome-basin": [
     "e9-dome-basin-01",
     "e9-dome-basin-02"
+  ],
+  "e9-seed-run": [
+    "e9-seed-run-01",
+    "e9-seed-run-02"
+  ],
+  "e9-old-canal": [
+    "e9-old-canal-01",
+    "e9-old-canal-02"
   ]
 }
 ```
 <!-- skillmd-guard:seeds:end -->
 
 Not every bench contract is servable through the headless door yet. `gr-sim` runs exactly the contracts below and refuses the rest by name (their era sockets are browser-side only today — measured out, not forgotten). Bench seeds outside this list are for browser riders until the door catches up.
+
+**`e3-fairground` joined this list on 2026-08-21** and the way it got there is worth a rider's attention: its three festival crowds must each complete a crossing while the Fair Wheel still turns, and the wheel's dynamo stops for the whole run on its first hit. What kept it out was never the escort — it was the map's ground. Until that date the fair had no `harvestAnchors` of its own and inherited the default set, whose nearest live seam sits 38-46 units from the stake; the opening purse arrived after the first saboteur did. With the fair's own anchors authored at 17-24 units, a rider that pans the nearest seam, front-loads a ring at radius eight and mends under 60% secures both bench seeds (`artifacts/e3-fairground/prover-v3.mjs`).
 
 <!-- skillmd-guard:door-contracts:start -->
 ```json
@@ -283,16 +329,25 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
   "e2-pressure-garden",
   "e3-blackout-ridge",
   "e3-canyon-works",
+  "e3-fairground",
   "e3-moth-season",
   "e4-boneyard",
   "e4-dust-flats",
   "e4-gusher-county",
   "e4-long-road",
   "e5-deepwater-claim",
+  "e5-flotilla",
+  "e5-regatta",
   "e6-glow-mesa",
+  "e6-half-life-hollow",
+  "e7-dead-band",
+  "e7-echo-canyon",
   "e7-relay-valley",
   "e8-eclipse",
+  "e8-far-side",
+  "e8-low-orbit",
   "e8-mare-claim",
+  "e9-devils-alley",
   "e9-dome-basin",
   "the-claim"
 ]
