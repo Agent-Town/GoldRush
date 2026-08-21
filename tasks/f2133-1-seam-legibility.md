@@ -45,8 +45,7 @@ real view. You are extending an instrument that already has the capability, not 
 
 ## Scope
 
-1. **Give the e2e assertion a per-seam loop.** In `e2e/agent-view.spec.ts:512` ("the seeded rider
-   view stays cache-shaped and grows one honest wave at a time"), replace that test's **final
+1. **Give the e2e assertion a per-seam loop.** In `e2e/agent-view.spec.ts:512` ("the seeded rider view stays cache-shaped and grows one honest wave at a time"), replace that test's **final
    assertion — the collapsed `views.wave3.now.seams.every(...)` immediately before `const receipt`** —
    with a loop that asserts the same predicate **per seam**, so a
    failure names the seam and the field. Assert the **same** logic — this is a diagnosability change,
