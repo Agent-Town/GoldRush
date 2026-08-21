@@ -75,6 +75,32 @@ which is the F-2084-1 failure the pin block warns about and which git would auto
 (The coordinator quoted main's live as 464/1056/4 over 1524 with 6 exemptions — my base is main
 `d775fca71` merged in, and the drain re-measures.)
 
+**F-A2-8 — the SAME staleness class, in a second test, found by the battery.**
+`gr-sim-campaign.test.mjs` used `e5-stillwater` as its "unseeded contract" example. Seeding it did
+not make that test pass with a different subject — it made it fail for the **wrong reason**: the
+harness got past the seed check and tripped the LOCK check instead, so the assertion was no longer
+testing the message it names. Now derived from the registry, with the extra filter my first
+attempt missed: the subject must also clear the `practice.scores === false` guard that sits ABOVE
+the seed check, because `bench-seeds.test.mjs` requires exactly those contracts to stay unseeded.
+**Two different tests in one admission picked the same trap** — a hardcoded example of a CHANGING
+property is a time bomb with a fuse the length of the next admission.
+
+**F-A2-9 — the battery was measured under the wrong Node, and it looked like code.**
+`scripts/node-guards-timeout.test.mjs` fails on Node **23.11.1** and passes on **26.4.0**; a bare
+`node` in this shell resolves to nvm's 23.11.1 while the project runs 26.4.0
+(`/opt/homebrew/bin`). The failure is a clean `ERR_ASSERTION` with no hint of a runtime mismatch.
+Gate transcripts here were re-taken with the project Node explicitly on PATH. Two further reds in
+the same battery — `gr-sim replays…` and `agent reel validation…` — were **starvation**, and their
+signature deserves naming: `spawnSync` returns `status: null` when it KILLS a child on timeout,
+which asserts as `null !== 0` and reads exactly like a logic failure. Both green solo (gr-sim
+**18/18 · 0 fail**, agent-reels **1/1**).
+
+**F-A2-10 — the empty-worktree class, confirmed and cured.** This worktree's `node_modules` holds
+only `.vite` caches; every tool resolved upward via npx, which hid it until
+`worker-type-coverage.test.mjs` built an absolute path to
+`<worktree>/node_modules/typescript/bin/tsc`. Cured with the symlink workaround (gitignored, so
+nothing ships); the test then passes. Any agent gating from a fresh worktree will hit this.
+
 ### Two reds found, both real, both fixed
 
 **F-A2-6 — the census asserted a wave the data forbids.** The admitted branch required
