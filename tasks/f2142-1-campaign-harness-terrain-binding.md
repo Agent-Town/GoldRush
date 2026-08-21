@@ -92,13 +92,17 @@ numbers untouched. If your diff moves a pin, you have drifted; stop and report.
 4. **Pin the cure with a test that measures the BINDING, not the string.** A test asserting the URL contains `contract=` would pass while the binding stayed broken — it would be testing your own edit back to yourself. Load `/src/world/Terrain.ts` through a vite SSR module runner under each of the two URLs in **separate module graphs**, and assert `CLAIM_WIDTH`/`CLAIM_HEIGHT` is `64 × 64` under `?debug` and **`96 × 112`** under `?debug&contract=e3-canyon-works`.
    ⚠️ **The two loads MUST NOT share a module graph** — `Terrain`'s consts evaluate once, and `activeContractSelection` additionally memoises on the search string, so a second load in the same runner will hand you the first load's answer and the test will pass for the wrong reason. Use a fresh `createServer` per arm and assert the two arms actually differ. Put it in a new focused `scripts/campaign-harness-terrain.test.mjs` and **root it into `test:node-guards` in `package.json`** (`gate-caller-audit` will red if you add the script and forget to root it — F-2141-4's lesson).
 
-5. **Reproduce the control end-to-end, as evidence rather than as a test.** Run the probe the finding was measured with, unchanged, and paste its headline into your report:
+5. **Reproduce the cure end-to-end THROUGH THE HARNESS ITSELF, as evidence rather than as a test.**
+
+   🔴 **CORRECTED s2142 AFTER THE FIRST RUN STOPPED HERE — THE ORIGINAL INSTRUCTION WAS DEFECTIVE AND THE RUNNER WAS RIGHT TO REFUSE IT (F-2142-3). The retired text is kept below, not deleted.** It read: *"Run the probe the finding was measured with, unchanged … `node scripts/f2142-canyon-terminal-probe.mjs --player … --contract e3-canyon-works …` … With the cure in place, the harness's own default URL path is what the probe now exercises."* **That last clause is false, and the authoring fire wrote the probe itself, so the error is entirely mine.** `scripts/f2142-canyon-terminal-probe.mjs:44` builds its **own** `globalThis.location` from its own `--search` default of `?debug`, and it **never imports or invokes `scripts/gr-sim-campaign.mjs`** — it re-implements the harness's loop. So no edit to the harness can ever change what that probe reports, and the task's own NO list forbids editing the probe. **The step was unsatisfiable as written: it demanded evidence that the instrument could not produce, from a file the firewall protected.** The first run reported exactly this (*"it independently hard-codes `?debug`; it never invokes or imports the changed campaign harness"*), reverted its churn, and STOPPED without touching the banked file. **That is a firewall success, not a failure.**
+
+   ➡️ **DO THIS INSTEAD — drive the SANCTIONED HARNESS COMMAND, which is the thing your diff actually changes:**
    ```
-   node scripts/f2142-canyon-terminal-probe.mjs --player scripts/f2135-canyon-census-player.mjs \
+   node scripts/gr-sim-campaign.mjs --player scripts/f2135-canyon-census-player.mjs \
      --contract e3-canyon-works --resume artifacts/f2135-canyon-census/epoch3-checkpoint.json \
-     --out artifacts/f2142-1-cure/probe-after.json
+     --output artifacts/f2142-1-cure/campaign --checkpoint artifacts/f2142-1-cure/checkpoint.json
    ```
-   With the cure in place, the harness's own default URL path is what the probe now exercises, so expect the **96 × 112** binding, beacons built, and `powered ≥ 1`. **This is ~4–5 minutes; budget for it.** If it still reports `64 × 64`, your edit is landing after module evaluation — re-read scope 2.
+   **Expect it to STILL THROW — and expect the throw to have MOVED.** `gr-sim-campaign.mjs:113` throws `e3-canyon-works ended unsecured at wave N` whenever the leg does not secure, and the leg is not expected to secure. **The evidence is `N`:** it was **2** before the cure and the s2142 control reached **8**. Paste the verbatim exception. **A wave materially past 2 is the cure working end-to-end;** still `wave 2` means your edit lands after module evaluation — re-read scope 2. ⓘ This is ~4–5 minutes; budget for it. Nothing here needs the probe, and the probe stays banked and unedited.
 
 6. **Report, do not fix, the multi-leg half (F-2142-2).** One process holds one binding; a multi-leg walk changes contract between legs and **cannot** re-bind. State in your report which legs of a real (non-fixture) multi-leg walk remain wrong under your cure. **Do not attempt to fix it** — the options (a process per leg, or a re-bindable terrain) are a design fork reserved for an attended session.
 
@@ -120,8 +124,23 @@ numbers untouched. If your diff moves a pin, you have drifted; stop and report.
 - `node --test scripts/gr-sim-campaign.test.mjs` — **pin `fnv1a32:4f363fd5` still asserted and green** (scope 3).
 - `node --test scripts/campaign-harness-terrain.test.mjs` — both arms, and they differ (scope 4).
 - `node scripts/gate-caller-audit.test.mjs` — green, proving the new script is rooted (scope 4).
-- The probe headline from scope 5, pasted verbatim.
+- The **verbatim harness exception** from scope 5, with its wave number (expected: materially past 2).
 - All three scope-0 greps quoted.
 - Zero console/page errors is N/A — this slice renders nothing and no e2e is required.
 
-**READY-FOR-GATES.** Report: the three scope-0 greps · the exact diff to the URL line · the pin result from scope 3 · both arms of the new test with their measured dimensions · the scope-5 probe headline · your scope-6 statement about which multi-leg legs remain wrong · and any law-file coordinate your diff rotted (named, not edited).
+**READY-FOR-GATES.** Report: the three scope-0 greps · the exact diff to the URL line · the pin result from scope 3 · both arms of the new test with their measured dimensions · the scope-5 harness exception with its wave number · your scope-6 statement about which multi-leg legs remain wrong · and any law-file coordinate your diff rotted (named, not edited).
+
+---
+
+## RE-RUN NOTE (s2142) — WHAT THE FIRST RUN ALREADY DELIVERED, SO YOU DO NOT REDO IT
+
+The first dispatch (`20260821-215424`, 114,627 tokens) **completed the implementation and every gate except scope 5**, then stopped on the defective instruction now corrected above. Its lane work is on `lane/b`. **Verify each of these yourself rather than inheriting them** — they are listed so you can confirm rather than rebuild:
+
+- URL now conditionally appends the encoded contract; **assignment still line 17, before `createServer` at line 21** (scope 2 satisfied).
+- New binding test: fallback **64 × 64**, Canyon Works **96 × 112**, arms differ, **separate vite servers** (scope 4 satisfied — the separate-graph requirement was honoured).
+- `scripts/gr-sim-campaign.test.mjs` **6/6, `fnv1a32:4f363fd5` unchanged** (scope 3 satisfied — the pin did NOT move).
+- `gate-caller-audit` **26/26** (the new script is rooted).
+- `npx tsc --noEmit` and `npm run build` both pass. No law-file coordinates moved.
+- Scope 6 answered: a real multi-leg walk stays wrong after the first `the-claim` leg — `e1-dry-gulch`, `e1-night-shift`, `e1-twin-banks`, `e1-baron` all retain the first module binding.
+
+⚠️ **`artifacts/f2142-1-cure/` holds the FAILED probe output from the retired scope 5.** It is retained (Retention Law), and it is **not** evidence for this slice; do not cite it. Overwrite or supersede it with the scope-5 harness transcript.
