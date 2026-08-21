@@ -60,18 +60,33 @@ try {
     campaignHash = checkpoint.campaign?.hash ?? stableHash([]);
   }
 
+  const board = listBoardContracts();
+  const selected = args.contract ? board.find((contract) => contract.id === args.contract) : undefined;
+  if (args.contract && !selected) throw new Error(`Contract "${args.contract}" is not on the board.`);
+  if (selected && selected.practice?.scores === false) throw new Error(`Contract "${selected.id}" does not permit scored practice.`);
+  if (selected && !benchSeeds[selected.id]?.[0]) throw new Error(`Contract "${selected.id}" has no pinned bench seed.`);
+  if (selected) {
+    const unlock = contractUnlockStatus(selected);
+    if (!unlock.unlocked) throw new Error(`Contract "${selected.id}" is locked: ${unlock.condition}`);
+  }
+  const contracts = (selected
+    ? [selected]
+    : board.filter((contract) => contract.id === 'the-claim' || contract.id.startsWith('e1-')))
+    .filter((contract) => contract.practice?.scores !== false);
+  let selectedPending = !!selected;
+
   await mkdir(outputDir, { recursive: true });
   for (let index = 0; index < legs.length; index += 1) {
     await writeLegArtifact(outputDir, index, legs[index]);
   }
-  const contracts = listBoardContracts().filter((contract) =>
-    contract.id === 'the-claim' || contract.id.startsWith('e1-'))
-    .filter((contract) => contract.practice?.scores !== false);
 
   while (true) {
     const secured = new Set(loadScores().filter((score) => score.secured).map((score) => score.contractId));
-    const contract = contracts.find((candidate) => !secured.has(candidate.id) && contractUnlockStatus(candidate).unlocked);
+    const contract = selectedPending
+      ? contracts[0]
+      : contracts.find((candidate) => !secured.has(candidate.id) && contractUnlockStatus(candidate).unlocked);
     if (!contract) break;
+    selectedPending = false;
 
     resetStandingOrders();
     player.reset?.({ contractId: contract.id, legIndex: legs.length });
@@ -183,15 +198,17 @@ function parseArgs(argv) {
   for (let index = 0; index < argv.length; index += 1) {
     const match = /^--([^=]+)=(.*)$/.exec(argv[index]);
     const key = match?.[1] ?? argv[index].replace(/^--/, '');
-    if (!['player', 'output', 'checkpoint', 'resume', 'test-fixture'].includes(key)) throw new Error(`Unknown argument: ${argv[index]}`);
+    if (!['player', 'output', 'checkpoint', 'resume', 'contract', 'test-fixture'].includes(key)) throw new Error(`Unknown argument: ${argv[index]}`);
     values[key] = key === 'test-fixture' ? true : match?.[2] ?? argv[++index];
   }
   if (!values.player) throw new Error('--player is required.');
+  if (Object.hasOwn(values, 'contract') && !values.contract) throw new Error('--contract requires an id.');
   return {
     player: values.player,
     output: values.output ?? 'artifacts/gr-sim-campaign',
     checkpoint: values.checkpoint ?? 'artifacts/gr-sim-campaign/checkpoint.json',
     resume: values.resume,
+    contract: values.contract,
     testFixture: values['test-fixture'] === true,
   };
 }

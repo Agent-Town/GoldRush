@@ -125,6 +125,43 @@ test('a killed campaign resumes from its last profile checkpoint', async () => {
   await rm(dir, { recursive: true });
 });
 
+test('--contract selects exactly one named contract', async () => {
+  const run = await runContract('the-claim');
+  try {
+    assert.equal(run.status, 0, run.stderr);
+    assert.deepEqual(JSON.parse(await readFile(join(run.output, 'campaign.json'), 'utf8')).legs.map(({ contractId }) => contractId), ['the-claim']);
+  } finally {
+    await rm(run.dir, { recursive: true });
+  }
+});
+
+test('--contract refuses unknown, unseeded, and locked contracts loudly', async () => {
+  const cases = [
+    ['not-a-contract', 'Contract "not-a-contract" is not on the board.'],
+    ['e5-stillwater', 'Contract "e5-stillwater" has no pinned bench seed.'],
+    ['e3-canyon-works', 'Contract "e3-canyon-works" is locked: The Voltage Age awaits — raise the Dynamo Hall.'],
+  ];
+  for (const [contractId, message] of cases) {
+    const run = await runContract(contractId);
+    try {
+      assert.notEqual(run.status, 0);
+      assert.match(run.stderr, new RegExp(`${escapeRegExp(message)}(?:\\n|$)`));
+    } finally {
+      await rm(run.dir, { recursive: true });
+    }
+  }
+});
+
+test('--contract refuses an empty selector instead of falling back', async () => {
+  const run = await runContract('');
+  try {
+    assert.notEqual(run.status, 0);
+    assert.match(run.stderr, /--contract requires an id\./);
+  } finally {
+    await rm(run.dir, { recursive: true });
+  }
+});
+
 async function runCampaign() {
   const dir = await mkdtemp(join(tmpdir(), 'gr-campaign-'));
   const output = join(dir, 'out');
@@ -139,6 +176,20 @@ async function runCampaign() {
     files: await readdir(output),
     artifact: JSON.parse(await readFile(join(output, 'campaign.json'), 'utf8')),
   };
+}
+
+async function runContract(contractId) {
+  const dir = await mkdtemp(join(tmpdir(), 'gr-campaign-contract-'));
+  const output = join(dir, 'out');
+  const run = spawnSync(process.execPath, [
+    'scripts/gr-sim-campaign.mjs', '--player', PLAYER, '--test-fixture', '--contract', contractId, '--output', output,
+    '--checkpoint', join(dir, 'checkpoint.json'),
+  ], { cwd: ROOT, encoding: 'utf8', timeout: 120_000, env: { ...process.env, NODE_ENV: 'test' } });
+  return { ...run, dir, output };
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function restoreGlobal(key, value) {
