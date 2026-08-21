@@ -68,6 +68,7 @@ import { takeTrailGuideBark, type TrailGuideTrigger } from '../story/trailGuide'
 import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revealLedgerEnemyStats } from '../encyclopedia/state';
 import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
 import { RunManager } from './RunManager';
+import { PicnicHoldSystem } from '../systems/PicnicHoldSystem';
 import {
   RUN_TAPE_SIM_VERSION,
   RunTapeRecorder,
@@ -587,6 +588,7 @@ export class Game {
       this.lightRig?.triggerMuzzleFlash(at, this.baronImpactFlashFrom, position);
     },
     (enemy, amount, died, ownerId) => {
+      if (ownerId === 'hero' || ownerId === 'hero_blast') this.picnicHold.recordHeroDamage(this.timeAlive);
       if (this.drillYard?.handleEnemyDamage(enemy, died, this.timeAlive)) return false;
       if (died && e6CureArmForOwner(ownerId) && this.wrangle.powerDown(enemy)) {
         this.e6ArsenalSystem.recordPowerDown(enemy, ownerId);
@@ -800,6 +802,11 @@ export class Game {
     this.tileStateStore,
     this.activeContract.tileParams,
     (position, amount) => this.vfx.floatText(position, `STARSTONE +${amount}`, '#83ded7'),
+  );
+  private readonly picnicHold = new PicnicHoldSystem(
+    PicnicHoldSystem.isEnabled(this.activeContract),
+    this.activeContract.tileParams.stakeMarkers ?? [],
+    () => { this.deathPending = true; },
   );
   private readonly showroomCaptureObjective = ShowroomCaptureObjective.create(this.activeContract);
   private readonly echoBossEnabled = this.activeContract.id === 'e7-relay-valley'
@@ -2854,13 +2861,21 @@ export class Game {
       }
       this.syncStockpileHoldings();
       this.mothSwarm.update(simDelta, this.mothLightSources, this.enemies.all);
+      const actorTargets = this.visibleActorPositions();
+      const picnicStructures = this.goldTargeting.allBuildings.filter(({ active, hp }) => active && hp > 0);
+      const picnicHero = { position: this.primaryActor.group.position };
       this.enemies.update(
         simDelta,
-        this.flotillaHulls
-          ? [this.flotillaTargetPosition()]
-          : this.visibleActorPositions(),
+        this.picnicHold.active
+          ? (enemy) => {
+              const stake = this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive);
+              return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
+            }
+          : this.flotillaHulls
+            ? [this.flotillaTargetPosition()]
+            : actorTargets,
         (enemy) => {
-          if (!this.flotillaHulls && !this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
+          if (!this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive) && !this.flotillaHulls && !this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
         [...this.buildSystem.palisadeBlockers, ...this.heroBlockers()],
@@ -2871,6 +2886,13 @@ export class Game {
           this.wrangle.movementMultiplier(enemy) *
           this.e6ArsenalSystem.movementMultiplier(enemy) *
           this.e9ArsenalSystem.movementMultiplier(enemy),
+      );
+      this.picnicHold.update(
+        simDelta,
+        this.timeAlive,
+        this.enemies.all.filter((enemy) => enemy.isAlive),
+        picnicStructures,
+        picnicHero,
       );
       if (this.flotillaHulls?.advance(this.timeAlive, this.enemies.all)) {
         this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5);
@@ -5251,6 +5273,7 @@ export class Game {
       },
       decay: this.decay.diagnostics(),
       e6Tiles: this.e6TileConsumers.diagnostics,
+      picnicHold: this.picnicHold.diagnostics,
       wrangle: this.wrangle.diagnostics(),
       ...(this.showroomCaptureObjective.diagnostics.declared
         ? { showroomCaptureObjective: this.showroomCaptureObjective.diagnostics }
@@ -5458,7 +5481,7 @@ export class Game {
         p95: this.frameMsP95,
         sampleCount: this.frameMsSamples.length,
       },
-    };
+    } as ThreeGameDiagnostics;
     Object.assign(window.__THREE_GAME_DIAGNOSTICS__, { defaultedPicks: this.defaultedPicks });
     this.serveAgentRiderViews();
   }
@@ -7682,6 +7705,7 @@ export class Game {
     this.showroomCaptureObjective.reset();
     this.decay.reset();
     this.e6TileConsumers.reset();
+    this.picnicHold.reset();
     this.deathPending = false;
     if (this.powerGraph) {
       this.powerGraph.reset(0);

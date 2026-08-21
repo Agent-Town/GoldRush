@@ -62,6 +62,7 @@ import { InterferenceFrontSystem, type InterferenceFrontDiagnostics } from '../s
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
+import { PicnicHoldSystem } from '../systems/PicnicHoldSystem';
 import { PowerGraphSystem, powerWireId, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { PressureArsenalSystem, type PressureArsenalDiagnostics } from '../systems/PressureArsenalSystem';
 import { PressureSystem } from '../systems/PressureSystem';
@@ -329,6 +330,7 @@ export type HeadlessAgentView = AgentView & {
     };
     atomic?: AtomicSocket['diagnostics'] & {
       homemakerBoss?: ReturnType<HomemakerBossSystem['diagnostics']>;
+      picnicHold?: PicnicHoldSystem['diagnostics'];
     };
     /**
      * A4. Present only where the contract declares `twist.signalSuppression`, so a rider can
@@ -517,6 +519,7 @@ export class HeadlessContractSim {
   private readonly homemaker: HomemakerBossSystem | null;
   private readonly deepwater: DeepwaterSocket | null;
   private readonly atomic: AtomicSocket | null;
+  private readonly picnicHold: PicnicHoldSystem;
   /**
    * A4 — THE SIGNAL-SUPPRESSION CONSUMER, and the honest note about what it can mean HERE.
    *
@@ -712,6 +715,11 @@ export class HeadlessContractSim {
     // The Atomic socket is built before combat because the browser routes two of its
     // couplings THROUGH CombatSystem's own hooks (Game.ts:534 and Game.ts:536).
     this.atomic = AtomicSocket.create(this.manifest, this.events, this.enemies, this.economy);
+    this.picnicHold = new PicnicHoldSystem(
+      PicnicHoldSystem.isEnabled(this.manifest),
+      this.manifest.tileParams.stakeMarkers ?? [],
+      () => this.postHeroDeath(),
+    );
     // Same read the browser performs at `Game.ts` (contract, never epoch), so the two engines
     // cannot disagree about which systems this contract declares off.
     this.signalSuppression = SignalSuppression.create(this.manifest);
@@ -753,7 +761,10 @@ export class HeadlessContractSim {
       undefined,
       undefined,
       undefined,
-      (enemy, amount, died) => this.atomic?.onEnemyDamaged(enemy, amount, died),
+      (enemy, amount, died, ownerId) => {
+        if (ownerId === 'hero' || ownerId === 'hero_blast') this.picnicHold.recordHeroDamage(this.timeAlive);
+        this.atomic?.onEnemyDamaged(enemy, amount, died);
+      },
       (enemy) => this.atomic?.isHostile(enemy) !== false,
     );
     // A7: the same policy the browser installs at `Game.ts`, from the same declaration, so a
@@ -1403,8 +1414,16 @@ export class HeadlessContractSim {
     );
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
-    this.enemies.update(STEP_SECONDS, this.deepwater?.targetPosition(this.hero.group.position) ?? this.hero.group.position, (enemy) => {
-      if (!this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
+    const actorTargets = [this.hero.group.position];
+    const picnicStructures = this.targeting.allBuildings.filter(({ active, hp }) => active && hp > 0);
+    const picnicHero = { position: this.hero.group.position };
+    this.enemies.update(STEP_SECONDS, this.picnicHold.active
+      ? (enemy) => {
+          const stake = this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive);
+          return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
+        }
+      : this.deepwater?.targetPosition(this.hero.group.position) ?? actorTargets, (enemy) => {
+      if (!this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive) && !this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
     }, this.build.palisadeBlockers, {
       nearestGoldHolding: (from) => this.targeting.nearestGoldHolding(from),
@@ -1418,6 +1437,13 @@ export class HeadlessContractSim {
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
     }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1));
+    this.picnicHold.update(
+      STEP_SECONDS,
+      this.timeAlive,
+      this.enemies.all.filter((enemy) => enemy.isAlive),
+      picnicStructures,
+      picnicHero,
+    );
     this.deepwater?.resolveHullContacts(this.timeAlive, () => this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5));
     this.deepwater?.recycleCorsairsAtExit();
     this.harvestSnapshot = this.harvest.update(STEP_SECONDS, this.timeAlive, this.harvestTargets());
@@ -1456,6 +1482,7 @@ export class HeadlessContractSim {
     if (this.atomic) view.now.atomic = {
       ...this.atomic.diagnostics,
       ...(this.homemaker ? { homemakerBoss: this.homemaker.diagnostics() } : {}),
+      ...(this.picnicHold.diagnostics.length > 0 ? { picnicHold: this.picnicHold.diagnostics } : {}),
     };
     // A4: only where DECLARED, so no other contract's view grows a field. Deliberately absent
     // from the `final` hash — the flags are a constant of the contract and the counters are
@@ -1847,6 +1874,7 @@ export class HeadlessContractSim {
       crawler: this.crawler?.diagnostics() ?? null,
       deepwater: this.deepwater?.diagnostics ?? null,
       atomic: this.atomic?.diagnostics ?? null,
+      picnicHold: this.picnicHold.active ? this.picnicHold.diagnostics : null,
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
       broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
       probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
