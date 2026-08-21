@@ -314,9 +314,9 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
 
 Not every bench contract is servable through the headless door yet. `gr-sim` runs exactly the contracts below and refuses the rest by name (their era sockets are browser-side only today — measured out, not forgotten). Bench seeds outside this list are for browser riders until the door catches up.
 
-Two more refusals are worth naming for the same reason: **`e2-trestle` and `e2-incline` both run a pressure line now.** The owner ruled on 2026-08-21 that they should ("give both the pressure line"), both contracts declare `twist.pressureEnabled`, the boiler house is on both boards, all three coal seams are reachable on both maps and the E2 arsenal fires on real pressure there (192 and 317 spent, measured). What still refuses is the SECURE: across 154 measured runs neither map secured on both bench seeds, and the reason is geometry rather than a missing socket — `PressureSystem`'s three coal seams sit at fixed world coordinates 55wu and 58wu from the only stakes those heroes hold, against 29wu on the Hill Mine, so fuelling the arsenal costs the economy that buys the guns. Full measurement in `reviews/e2-pressure-line-railcars.md`.
+Two refusals on that list are worth naming so nobody hunts for a missing socket: **`e2-trestle` and `e2-incline` both run a pressure line now.** The owner ruled on 2026-08-21 that they should ("give both the pressure line"), both contracts declare `twist.pressureEnabled`, the boiler house is on both boards, all three coal seams are reachable on both maps and the E2 arsenal fires on real pressure there (192 and 317 spent, measured). What still refuses is the SECURE: across 154 measured runs neither map secured on both bench seeds, and the reason is geometry rather than a missing socket — `PressureSystem`'s three coal seams sit at fixed world coordinates 55wu and 58wu from the only stakes those heroes hold, against 29wu on the Hill Mine, so fuelling the arsenal costs the economy that buys the guns. Full measurement in `reviews/e2-pressure-line-railcars.md`.
 
-One refusal is a different shape and is named here so nobody hunts for a missing socket: **`e3-fairground` HAS its era socket** — the crowd-flock escort runs in the headless engine exactly as it does in the browser — and its admission is HELD, not absent. The door opens for it when a rider secures it twice per bench seed using only the public grammar. Winnability at unmodified balance is already measured (`artifacts/e3-fairground/fort-budget-probe.mjs`), and a rider that funds the whole fort by panning now exists (`artifacts/e3-fairground/prover-v2.mjs`): it secures bench seed `e3-fairground-01` twice over, and on `e3-fairground-02` it reaches the wave ceiling with the wheel still turning and the middle crowd still unable to cross. The hold stands until BOTH seeds secure.
+**`e3-fairground` joined this list on 2026-08-21** and the way it got there is worth a rider's attention: its three festival crowds must each complete a crossing while the Fair Wheel still turns, and the wheel's dynamo stops for the whole run on its first hit. What kept it out was never the escort — it was the map's ground. Until that date the fair had no `harvestAnchors` of its own and inherited the default set, whose nearest live seam sits 38-46 units from the stake; the opening purse arrived after the first saboteur did. With the fair's own anchors authored at 17-24 units, a rider that pans the nearest seam, front-loads a ring at radius eight and mends under 60% secures both bench seeds (`artifacts/e3-fairground/prover-v3.mjs`).
 
 <!-- skillmd-guard:door-contracts:start -->
 ```json
@@ -331,6 +331,7 @@ One refusal is a different shape and is named here so nobody hunts for a missing
   "e2-pressure-garden",
   "e3-blackout-ridge",
   "e3-canyon-works",
+  "e3-fairground",
   "e3-moth-season",
   "e4-boneyard",
   "e4-dust-flats",

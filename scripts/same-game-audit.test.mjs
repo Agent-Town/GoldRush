@@ -284,8 +284,31 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // line declared and neither secured on both bench seeds, so they keep their exemption rows with
   // reworded reasons rather than leaving the table. The report's remaining churn is coordinate rot
   // — the reword shifted `src/sim/HeadlessContractSim.ts` citations by 21 lines.
-  assert.equal(audit.admission.exemptions.length, 8);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 504, equal: 1016, 'not-offered': 4 });
+  // ⚠️ TWELFTH STACK (the fairground admission, owner-ruled anchor set): exemptions 8 -> 7,
+  // 19 rows agent-lacks -> equal — the exact movement the hold-era comment predicted. Pins =
+  // the merged tree's regen, verbatim, as every layer.
+  assert.equal(audit.admission.exemptions.length, 7);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 485, equal: 1035, 'not-offered': 4 });
+  // (A8 pins above were measured on its own pre-stack base; the pins below are the QUADRUPLE-stacked
+  // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run — verbatim.)
+  // ADMISSION MOVE — `e3-fairground`, 2026-08-21 (owner ruling, verbatim: "lets follow your
+  // recommendation", to a fork table whose fairground line was AUTHOR THE ANCHOR SET). The map
+  // authored its own `harvestAnchors` for the first time — it had been inheriting
+  // `Terrain.DEFAULT_NODE_ANCHORS`, whose nearest live seam sits 38-46wu from the stake, which was
+  // the residual behind every earlier refusal — and the public-verb prover then secured BOTH bench
+  // seeds twice through the plain door (fnv1a32:7a66c50b / fnv1a32:86c9ca37, both wave 12), so the
+  // exemption row came out: 6 -> 5.
+  //     ATTRIBUTED BY REVERT-AND-REPRODUCE, exactly as the moves above were: putting that one row
+  //     back reproduced `6 exemptions · agent-lacks 402 · equal 878 · not-offered 10 · 1290 rows`
+  //     to the digit, so the whole move is that row's. It is worth exactly NINETEEN rows flipping
+  //     `agent-lacks` -> `equal`, with the row COUNT unchanged at 1290 — which is precisely the
+  //     shape `reviews/e3-fairground-crowd-flocks.md` recorded in advance while the hold was on
+  //     ("one contract's worth of movement, 19 rows on its base"), measured then in both
+  //     directions and now paid out.
+  // (The fairground branch's own base pins — 5 exemptions, 383/897/10 — were measured pre-stack;
+  // the LIVE pins for the merged tree sit above at the twelfth-stack block: 7 exemptions,
+  // 485/1035/4. The narrative stays; the duplicate assertions are retired.)
+
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
