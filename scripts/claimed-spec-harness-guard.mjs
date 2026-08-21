@@ -110,15 +110,21 @@ export function deriveHarnessMap(root) {
     }
   }
   const alias = {};
+  // `aliasesReadable` distinguishes "package.json says no script runs this config" from "there is
+  // no package.json here" — the two are indistinguishable in an empty `alias` map, and the
+  // runnerless WARN below must never fire on a synthetic --root fixture that simply has no
+  // package.json to read. F-2117-1.
+  let aliasesReadable = false;
   try {
     const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+    aliasesReadable = true;
     for (const [k, v] of Object.entries(pkg.scripts || {})) {
       for (const c of Object.values(owner)) if (v.includes(c)) (alias[c] ||= []).push(k);
     }
   } catch {
     /* a synthetic root need not carry a package.json */
   }
-  return { claimed, owner, alias };
+  return { claimed, owner, alias, aliasesReadable };
 }
 
 function corpus(root, useGit) {
@@ -177,6 +183,42 @@ export function classify(text, harness) {
   });
 
   return { hits, namesOwningConfig, isOffender: !namesOwningConfig && reasons.length > 0, reasons };
+}
+
+// F-2117-1 — THE OTHER HALF OF "coverage is not lost, it moves to the owning config".
+//
+// `playwright.config.ts` removes three specs from the DEFAULT gate and justifies it in one
+// sentence: "coverage is not lost, it moves to the owning config (`npm run test:release`, etc.)".
+// Measured s2117 with this file's own `deriveHarnessMap`: that sentence is true of exactly ONE
+// of the three members, and the "etc." is where the coverage went.
+//
+//   release-build.spec.ts      -> playwright.release.config.ts       -> npm run test:release   (30 tests)
+//   release-base-path.spec.ts  -> playwright.release-base.config.ts  -> NO CALLER ANYWHERE      (4 tests)
+//   accounts-sync.spec.ts      -> playwright.accounts.config.ts      -> NO CALLER ANYWHERE     (18 tests)
+//
+// 22 of 52 claimed-spec tests (42.3%) are collected by a config that no npm script, shell script
+// or gate invokes. The VERDICT (ignore them in the default gate) stays correct — each genuinely
+// needs a harness the default config cannot provide. What is false is the stated REASON, for two
+// of three. `npm run test:accounts` looks like the missing runner and is not: it runs
+// scripts/test-accounts.mjs, a wrangler HTTP harness with ZERO references to playwright.
+//
+// WHY THIS GUARD AND NOT A NEW ONE: the `alias` map above ALREADY computes this, on every run,
+// and then discards it. Nothing else in the factory can see it — gate-caller-audit.mjs treats
+// npm scripts as ROOTS and *.config.ts as EDGES, never as subjects (its own tally: 131 subjects
+// = 23 npm + 29 guards + 79 tests, exactly), so "does this config have a caller?" is outside its
+// question by construction. The fact was derivable for 635 fires and printed by nobody.
+//
+// WHY WARN AND NOT RED (the F-1613 / gazette-sweep disposition): two members are runnerless
+// RIGHT NOW, so a red would fail the board on a standing condition and be excused within a week
+// — the `cross-engine` label's fate (F-1460-1). Whether these two harnesses get stood up and
+// rooted is GATE POLICY and costs owner time (accounts wants wrangler + KV on :8788), so it is
+// an owner call on the halo-reextraction-check.mjs precedent, not a drive-by. This prints the
+// fact; it does not decide it. Exit codes are untouched in every arm.
+export function runnerless(harness) {
+  if (!harness.aliasesReadable) return [];
+  return harness.claimed
+    .map((spec) => ({ spec, cfg: harness.owner[spec] }))
+    .filter(({ cfg }) => cfg && !(harness.alias[cfg] || []).length);
 }
 
 // F-2098-1 — WHY THIS FUNCTION SETS `process.exitCode` AND RETURNS INSTEAD OF CALLING
@@ -238,6 +280,19 @@ function main() {
     `corpus ${files.length} task files · ${mentions} name a claimed spec · ` +
       `${offenders.length} offend the predicate · ${grand.length} grandfathered · ${live.length} LIVE`
   );
+
+  // F-2117-1 — WARN only, never a red, and never an exit-code change. See the note above.
+  const orphanHarnesses = runnerless(harness);
+  if (orphanHarnesses.length) {
+    console.log(
+      `\nWARN: ${orphanHarnesses.length} of ${harness.claimed.length} claimed spec(s) are ignored by the default ` +
+        `gate and their owning config has NO npm caller — so "coverage moves to the owning config" is not true of them:`
+    );
+    for (const { spec, cfg } of orphanHarnesses) {
+      console.log(`    ${spec} -> ${cfg} -> no npm script invokes this config (runs only if typed by hand).`);
+    }
+    console.log('    Not a failure: wiring/rooting these harnesses is gate policy (owner). Advisory only.\n');
+  }
 
   if (report) {
     for (const o of offenders) {

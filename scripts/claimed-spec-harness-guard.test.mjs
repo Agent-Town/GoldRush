@@ -11,7 +11,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { deriveHarnessMap, GRANDFATHERED } from './claimed-spec-harness-guard.mjs';
+import { deriveHarnessMap, GRANDFATHERED, runnerless } from './claimed-spec-harness-guard.mjs';
 
 const GUARD = path.resolve('scripts/claimed-spec-harness-guard.mjs');
 
@@ -95,6 +95,62 @@ test('derivation REFUSES rather than silently measuring nothing if the array is 
   const root = makeRoot({});
   fs.writeFileSync(path.join(root, 'playwright.config.ts'), 'export default { testDir: "./e2e" };');
   assert.throws(() => deriveHarnessMap(root), /claimedByAnotherConfig/);
+});
+
+// ------------------------------------------------- F-2117-1: runnerless harnesses (WARN only)
+
+// A root where ONE claimed spec's owning config has an npm caller and the other's has none —
+// the live board's own shape (test:release exists; release-base and accounts have no caller).
+// Proven by MANUFACTURING the split rather than by asserting the live board, so the test still
+// means something on the day somebody wires those two harnesses up.
+function makeSplitRoot() {
+  const root = makeRoot({});
+  fs.writeFileSync(
+    path.join(root, 'playwright.config.ts'),
+    `
+const claimedByAnotherConfig = [
+  '**/release-build.spec.ts',
+  '**/orphan-harness.spec.ts',
+];
+export default { testDir: './e2e', testIgnore: [...claimedByAnotherConfig] };
+`
+  );
+  fs.writeFileSync(
+    path.join(root, 'playwright.orphan.config.ts'),
+    `export default { testMatch: /orphan-harness\\.spec\\.ts/ };`
+  );
+  return root;
+}
+
+test('MANUFACTURED: a claimed spec whose owning config has NO npm caller is named', () => {
+  const h = deriveHarnessMap(makeSplitRoot());
+  const orphans = runnerless(h);
+  assert.deepStrictEqual(
+    orphans.map((o) => o.spec),
+    ['orphan-harness.spec.ts'],
+    'only the config with no npm script may be reported — a runnered one is not a finding'
+  );
+  assert.strictEqual(orphans[0].cfg, 'playwright.orphan.config.ts');
+});
+
+test('a runnerless harness WARNS and never changes the exit code', () => {
+  const r = run(makeSplitRoot());
+  assert.strictEqual(r.status, 0, 'WARN must never red the board — F-1460-1, the cross-engine lesson');
+  assert.match(r.stdout, /WARN: 1 of 2 claimed spec\(s\)/);
+  assert.match(r.stdout, /orphan-harness\.spec\.ts -> playwright\.orphan\.config\.ts -> no npm script/);
+  assert.ok(
+    !/release-build\.spec\.ts -> playwright\.release\.config\.ts -> no npm script/.test(r.stdout),
+    'the spec WITH a runner must not appear in the WARN block'
+  );
+});
+
+test('NO package.json is not the same as no caller — a synthetic root must stay silent', () => {
+  const root = makeSplitRoot();
+  fs.rmSync(path.join(root, 'package.json'));
+  const h = deriveHarnessMap(root);
+  assert.strictEqual(h.aliasesReadable, false);
+  assert.deepStrictEqual(runnerless(h), [], 'an unreadable package.json must never manufacture a finding');
+  assert.ok(!/WARN: /.test(run(root).stdout), 'and the fixture arms of this very file must stay quiet');
 });
 
 // ---------------------------------------------------------------- it BITES
