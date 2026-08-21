@@ -599,7 +599,13 @@
           }
         ],
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "x": -6, "z": 16 },
+          { "x": 6, "z": 16 },
+          { "x": 0, "z": -11 },
+          { "x": -12, "z": 20 },
+          { "x": 12, "z": 20 }
+        ],
         "heightfield": {
           "id": "old-canal-wrong-survey",
           "mode": "visual"
@@ -609,7 +615,7 @@
           "teachingIntent": "Inheritance is edited, not erased."
         },
         "engineDependencies": [
-          { "dep": "persistent-canal-choice-consumer", "status": "missing", "description": "Needs the profile-persistent segment-choice, derived water-flow, and objective consumers declared by this contract." }
+          { "dep": "persistent-canal-choice-consumer", "status": "missing", "description": "SATISFIED 2026-08-21 by A10 (src/systems/CanalChoiceSystem.ts, live in both engines): the profile-persistent segment choice, the derived flow and the objective latch all exist. The row survives because the schema has no status but 'missing' and DECLARED_INERT_PATHS obliges a non-empty list while twist.persistentCanalChoices is declared - see F-A10-2." }
         ],
         "lanes": {
           "spawnEdges": [

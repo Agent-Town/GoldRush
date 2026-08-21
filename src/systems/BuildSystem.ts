@@ -470,6 +470,16 @@ export class BuildSystem {
     private readonly isBuildableEnabled: (id: BuildableId) => boolean = () => true,
     private readonly onPlacementRequest?: (position: { x: number; z: number }) => boolean,
     private readonly isShooterPowered: (id: 'sentry_beacon' | 'turret', index: number, position: THREE.Vector3) => boolean = () => true,
+    /**
+     * A10 — THE GROUND SEAM, and the only per-POSITION placement veto this class takes.
+     * `Terrain.isBuildable` answers from the tile's authored zones, which are fixed at module
+     * load and cannot know about a verdict a player takes mid-run; the Old Canal's three bands
+     * change what they are when the Prospector decides them. Both engines pass
+     * `CanalChoiceSystem.worksAllowed` here, so the browser and `HeadlessContractSim` cannot
+     * disagree about where a work may stand. Every contract that declares no canal choices passes
+     * the default and gets the identical answer it always got.
+     */
+    private readonly isGroundOpen: (x: number, z: number) => boolean = () => true,
   ) {
     this.group.name = 'BuildSystem';
     this.group.add(
@@ -1612,6 +1622,10 @@ export class BuildSystem {
   }
 
   private matchesPlacement(def: BuildableDef, position: THREE.Vector3): boolean {
+    // A10: the run-time ground veto sits AHEAD of the terrain read, because a rubble-choked or
+    // flooded canal band refuses every buildable kind for the same reason and there is nothing
+    // for the placement rules below to weigh once it has spoken.
+    if (!this.isGroundOpen(position.x, position.z)) return false;
     const buildable = Terrain.isBuildable(position.x, position.z);
     return matchesPlacement(def.placement, {
       walkable: Terrain.sample(position.x, position.z).walkable,

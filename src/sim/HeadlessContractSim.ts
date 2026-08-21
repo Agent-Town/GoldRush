@@ -69,6 +69,13 @@ import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } f
 import { LowOrbitSystem, type LowOrbitDiagnostics } from '../systems/LowOrbitSystem';
 import { HollowCrossingSystem, type HollowCrossingDiagnostics } from '../systems/HollowCrossingSystem';
 import { SeedCaravanSystem, type SeedCaravanDiagnostics } from '../systems/SeedCaravanSystem';
+import {
+  CANAL_ALREADY_DECIDED_REASON,
+  CANAL_BACKFILL_ACTION,
+  CANAL_NOT_DECLARED_REASON,
+  CanalChoiceSystem,
+  type CanalChoiceDiagnostics,
+} from '../systems/CanalChoiceSystem';
 import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
 import { BroadcastMirror, type BroadcastMirrorDiagnostics } from '../systems/BroadcastMirror';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
@@ -154,6 +161,35 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   'e7-relay-rush': {
     reason: 'Best measured public-verb play terminated unsecured at wave 4 (seed 01) and wave 3 (seed 02) against secureWave 20 (fnv1a32:49f11d65 / fnv1a32:7fed3db1, each repeated identical). The front is not the obstacle: the ratified objective is discharge-able and the prover lit 3 of 4 relays by t=131.6s against a t=270s deadline, while the wall muted only 120 work-steps all run. The map is: the claim at (0,12) has NO buildable ground within 24wu, the four relay boxes are the only build zones on the tile, turret range is 16 and beacon range 8, and the visual-mode heightfield grants no high-ground reach — so no legal placement can defend the hero. The A5 front, mute, relay lighting and deadline latch are live in both engines; re-admit when both bench seeds secure.',
     citation: 'reviews/e7-relay-rush.md',
+  },
+  // A10 BUILT THE MECHANIC, DISCHARGED ITS OBJECTIVE, AND THE MAP STILL WON (2026-08-21,
+  // door-completion-sheet §A10). Third instance of the A5/A8 shape, and the cleanest measurement
+  // of it, because this one carries a CONTROL rather than an argument.
+  //
+  // THE CONSUMER IS NOT THE GAP AND THE OBJECTIVE IS NOT THE GAP EITHER, and that is not a
+  // sentence here, it is a number. `e9-old-canal`'s three verdicts, the permanent flow, the ground
+  // veto and the objective latch are live in BOTH engines (`src/systems/CanalChoiceSystem.ts`,
+  // proven in the browser by `e2e/e9-old-canal-choices.spec.ts` and headless by
+  // `e2e/er01-e9-census.spec.ts`). The ratified objective is discharge-able and WAS discharged in
+  // ordinary play on both bench seeds — all three segments decided by wave 8 through the public
+  // verbs alone. Then the identical rider was run with `--no-decide`, never taking a verdict at
+  // all, and reached THE SAME WAVE: 17 on both seeds. The walk to the far stakes costs nothing,
+  // and the ground veto costs nothing, because the plan's pads never needed the closed bands.
+  //
+  // WHAT REFUSES IS THE SECURE, and the cause is income against a three-door map. The claim stands
+  // at (0,12) with waves entering from the NORTH, WEST and EAST (`lanes.spawnEdges` — one more
+  // door than the Seed Run's two), against a roster half made of `feral_terraformer` (hpScale 1.7,
+  // buildingDamageScale 1.4). The measured ceiling is a full pocket: gold plateaus at 123 for
+  // whole waves while turret #4 costs 125, so the top of the build list is unreachable without
+  // spending 60 on a stockpile that the same wave then wants back in repairs.
+  //
+  // Ten distinct policies were measured (`artifacts/e9-old-canal/`, preserved with its battery):
+  // guns-first 16, beacons-first 17, timber-first 11, two-stockpiles-early 10, repair gate 35/60/80
+  // -> 17/17/16, blast-always 17, prospector-on-the-claim 17, and the no-decide control 17. The
+  // whole spread is six waves wide and its ceiling never moves off 17.
+  'e9-old-canal': {
+    reason: 'Best measured public-verb play terminated unsecured at wave 17 on both bench seeds against secureWave 20 (fnv1a32:780aca7f / fnv1a32:a6119428, each repeated identical). The mechanic is not the obstacle, and that is measured rather than argued: the same rider with the objective NEVER discharged (--no-decide) reaches the same wave 17, so the three verdicts and the ground veto cost zero waves. The map is: a claim at (0,12) with waves entering from THREE edges, an hpScale-1.7 wrecker in half the roster, and an income ceiling that plateaus at 123 gold against a 125-gold fourth turret. The A10 choice consumer, permanent flow and objective latch are live in both engines; re-admit when both bench seeds secure.',
+    citation: 'reviews/e9-old-canal.md',
   },
   // A8 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-20, door-completion-sheet §A8).
   //
@@ -302,6 +338,13 @@ export type HeadlessAgentView = AgentView & {
      * are how a rider knows whether to escort, to plant, or to give up on the crossing.
      */
     seedCaravan?: SeedCaravanDiagnostics;
+    /**
+     * A10. Present only where the contract declares `twist.persistentCanalChoices`. This one IS
+     * the objective: `canalChoices.allDecided` is what opens the secure, and `choices`/`flow`/
+     * `segments` are how a rider knows which stake it still has to walk to, and what the ground
+     * it is standing on will be once it has.
+     */
+    canalChoices?: CanalChoiceDiagnostics;
     /**
      * A5. Present only where the contract declares `twist.interferenceFront` WITH a corridor and
      * relay sites. This one IS the objective: `objectiveMet` is what opens the secure, and
@@ -515,6 +558,7 @@ export class HeadlessContractSim {
    * ground, which is exactly the isolation the floors need to mean anything.
    */
   private readonly seedCaravan: SeedCaravanSystem | null;
+  private readonly canalChoices: CanalChoiceSystem | null;
   /**
    * A5 — THE INTERFERENCE FRONT, and it is a REAL switch in this engine rather than a
    * by-construction shadow like its A4 neighbour above.
@@ -634,6 +678,12 @@ export class HeadlessContractSim {
     // A8: same read the browser performs at `Game.ts` — the contract's own twist and its own
     // authored zones/stakes. A fresh empty store per sim, so runs never inherit each other's greens.
     this.seedCaravan = SeedCaravanSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
+    // A10: same read the browser performs at `Game.ts` — the contract's own twist and its own
+    // authored zones/stakes. A fresh empty store per sim, exactly as the caravan above takes one,
+    // so no bench run inherits a verdict and Law 2 holds by construction: every measured run
+    // starts with three undecided segments and an idle rider decides none of them. Built BEFORE
+    // `BuildSystem` below, which injects its ground veto into the placement seam.
+    this.canalChoices = CanalChoiceSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
     // A5: same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. Built
     // before `BuildSystem` below, which injects its mute into the shooter seam.
     this.interferenceFront = InterferenceFrontSystem.create(this.manifest);
@@ -684,6 +734,10 @@ export class HeadlessContractSim {
       // the wall is over it, and powered again the moment it passes. Every contract that declares
       // no front gets `muted() === false` and therefore the identical answer it always got.
       (_id, _index, position) => !this.interferenceFront.muted(position.x, position.z),
+      // A10 — THE GROUND VETO, the browser's own seam and the same predicate. A canal band that
+      // is still a ditch, or is water again, takes no foundation; a backfilled one does. Every
+      // contract that declares no canal choices passes `undefined` through to the default.
+      (x, z) => this.canalChoices?.worksAllowed(x, z) ?? true,
     );
     for (const fixture of this.manifest.tileParams.prePlacedBuildables ?? []) {
       this.build.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
@@ -962,6 +1016,11 @@ export class HeadlessContractSim {
           // canyon latch keys on `powerGrid.connect`. A Seed Run that never lands its train
           // cannot secure at any wave; a train that arrives opens the ordinary secure wave.
           || (this.seedCaravan && !this.seedCaravan.objectiveComplete)
+          // A10: the canal-choice latch, keyed on `twist.persistentCanalChoices` exactly as the
+          // canyon latch keys on `powerGrid.connect`. An Old Canal run that leaves a segment
+          // undecided cannot secure at any wave; deciding all three opens the ordinary secure
+          // wave. True on every contract that declares no canal, so no admitted terminal moves.
+          || (this.canalChoices !== null && !this.canalChoices.objectiveAllowsSecure)
           // A5: the relay-rush deadline, keyed on the SUB-FIELDS exactly as the canyon latch keys
           // on `powerGrid.connect` (F-1471-1). `InterferenceFrontSystem.create` refuses to arm
           // without both a corridor and relay sites, so `objectiveAllowsSecure` is true on every
@@ -1360,6 +1419,11 @@ export class HeadlessContractSim {
     // that cannot read it cannot escort — so it carries the live guard, the dwell clock and the
     // latch, and the grounds/route it needs to walk to a stake.
     if (this.seedCaravan) view.now.seedCaravan = this.seedCaravan.diagnostics;
+    // A10: only where DECLARED. Static in the sense that nothing but a decision moves it, and
+    // load-bearing for exactly that reason — a rider that cannot read which segments are still
+    // undecided cannot discharge the objective, and one that cannot read `choices` cannot know
+    // whether the band under its next turret is ground or water.
+    if (this.canalChoices) view.now.canalChoices = this.canalChoices.diagnostics;
     // A5: only where DECLARED. Like the caravan's row this one MOVES every turn — the wall's
     // position, the countdown to the next front, and the per-site lit/muted pair a rider needs to
     // decide where to spend the next 25 gold before the deadline closes.
@@ -1536,6 +1600,8 @@ export class HeadlessContractSim {
       && this.hollowCrossing.objectiveAllowsSecure
       // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
       && (!this.seedCaravan || this.seedCaravan.objectiveComplete)
+      // A10 rides the same expression: a boss kill cannot secure a canal left half-decided.
+      && (!this.canalChoices || this.canalChoices.objectiveAllowsSecure)
       // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
       && this.interferenceFront.objectiveAllowsSecure
       && this.atomic?.objectiveAllowsSecure !== false;
@@ -1712,6 +1778,10 @@ export class HeadlessContractSim {
       lowOrbit: this.lowOrbit.isDeclared ? this.lowOrbit.diagnostics : null,
       hollowCrossing: this.hollowCrossing.isDeclared ? this.hollowCrossing.diagnostics : null,
       seedCaravan: this.seedCaravan?.simulationSnapshot ?? null,
+      // A10: null off every other contract, exactly like its neighbours, so no admitted
+      // contract's determinism hash grows a field. Two runs that decide the same segments in the
+      // same order produce the same bytes here; one that decides a segment a turn later does not.
+      canalChoices: this.canalChoices?.simulationSnapshot ?? null,
       // A5: null off relay rush, exactly like its neighbours, so no other contract's diagnostics
       // grow a field. The terminal half of the same object also rides the determinism hash
       // (`outcome()` below) — this row is the per-turn read.
@@ -2065,6 +2135,7 @@ export class HeadlessContractSim {
     if (order.action === 'fund') return this.fundMegaproject();
     if (order.action === 'recover') return this.recoverProbe();
     if (order.action === 'plant') return this.plantSeedVault();
+    if (order.action === 'redig' || order.action === CANAL_BACKFILL_ACTION) return this.decideCanalSegment(order.action);
     const { id, index } = order.target;
     const ok = order.action === 'upgrade'
       ? this.build.upgradeBuilding(id, index, this.timeAlive, this.prospector.position)
@@ -2114,6 +2185,33 @@ export class HeadlessContractSim {
       action: 'plant',
       ground: planted.groundId,
       costHp: planted.costHp,
+    });
+    return { ok: true };
+  }
+
+  /**
+   * A10's context actions, reached by the SAME public verbs the browser player uses — the
+   * Prospector must be standing at the stake, exactly as the plant and the megaproject fund
+   * demand their ground. Neither is optional the way a plant is: this contract cannot secure
+   * until all three segments carry a verdict, so a rider that never issues these orders loses
+   * the map no matter how long it survives.
+   */
+  private decideCanalSegment(action: 'redig' | 'backfill'): { ok: true } | { ok: false; reason: string } {
+    if (!this.canalChoices) return { ok: false, reason: `REJECTED: ${CANAL_NOT_DECLARED_REASON}.` };
+    const choice = action === 'redig' ? 'redig' : 'demolish';
+    const decided = this.canalChoices.decide(this.prospector.position, choice);
+    if (!decided.ok) {
+      // ALREADY_DECIDED is the one refusal a rider will meet by simply re-issuing an order that
+      // already landed, so it is named rather than lumped with the reach failure.
+      const prefix = decided.reason === CANAL_ALREADY_DECIDED_REASON ? 'ALREADY_DECIDED' : 'OUT_OF_REACH';
+      return { ok: false, reason: `${prefix}: ${decided.reason}.` };
+    }
+    this.replayEvents.push({
+      type: 'context_action',
+      at: round(this.timeAlive),
+      action,
+      segment: decided.segmentId,
+      choice: decided.choice,
     });
     return { ok: true };
   }
