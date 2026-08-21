@@ -109,7 +109,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // REVERT-AND-REPRODUCE, not by arithmetic: emptying `harvestAnchors` in BOTH the contract and
   // the published mask table — and changing nothing else in the slice — reproduced 6/463/977/7/10
   // EXACTLY, so every number that moved here moves with those four anchors and nothing else.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 5);
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 4);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and none of the empty-data admissions was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -266,16 +266,17 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // `e9-devils-alley` from the same base; two lanes that each admit a different contract write
   // DIFFERENT correct pins and git reports no conflict between them (F-2084-1, eight recurrences).
   // Whoever merges must re-run the regen on the MERGED tree and pin its output verbatim.
-  assert.equal(audit.admission.exemptions.length, 8);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 494, equal: 986, 'not-offered': 5 });
-  assert.equal(audit.admission.exemptions.length, 7);
   // ADMISSION MOVE (2026-08-21, A9 `e9-devils-alley`): the anchors admit the contract, so its
-  // parity rows stop being not-offered and become measured ones — 463 -> 473 agent-lacks,
-  // 977 -> 1007 equal, the same +10/+30 anchor shape the eight layers above recorded. The
-  // exemption count does NOT move: Devil's Alley SECURES (both bench seeds, wave 20, twice each,
-  // `fnv1a32:947390e6` / `fnv1a32:a92b5ed1`), so it enters the DOOR rather than the exemption
-  // table, and the Seed Run's own exemption row is untouched by this slice.
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 473, equal: 1007, 'not-offered': 5 });
+  // parity rows stop being not-offered and become measured ones — the same +10/+30 anchor shape
+  // the eight layers above recorded. The exemption count does NOT move for A9: Devil's Alley
+  // SECURES (both bench seeds, wave 20, twice each, `fnv1a32:947390e6` / `fnv1a32:a92b5ed1`),
+  // so it enters the DOOR rather than the exemption table.
+  // ⚠️ TENTH-AND-ELEVENTH STACK (the closing attended window, 2026-08-21): A10 (+old-canal
+  // exemption, 8th row) and A9 (admission) and A2 (stillwater reword, no count change) merged in
+  // one window; per the standing law the pins below are the MERGED tree's own regen output,
+  // verbatim — measured 504/1016/4 over 1524 rows, 8 exemptions.
+  assert.equal(audit.admission.exemptions.length, 8);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 504, equal: 1016, 'not-offered': 4 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
