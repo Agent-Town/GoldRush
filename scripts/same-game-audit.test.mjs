@@ -275,8 +275,11 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // exemption, 8th row) and A9 (admission) and A2 (stillwater reword, no count change) merged in
   // one window; per the standing law the pins below are the MERGED tree's own regen output,
   // verbatim — measured 504/1016/4 over 1524 rows, 8 exemptions.
-  assert.equal(audit.admission.exemptions.length, 8);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 504, equal: 1016, 'not-offered': 4 });
+  // ⚠️ TWELFTH STACK (the fairground admission, owner-ruled anchor set): exemptions 8 -> 7,
+  // 19 rows agent-lacks -> equal — the exact movement the hold-era comment predicted. Pins =
+  // the merged tree's regen, verbatim, as every layer.
+  assert.equal(audit.admission.exemptions.length, 7);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 485, equal: 1035, 'not-offered': 4 });
   // (A8 pins above were measured on its own pre-stack base; the pins below are the QUADRUPLE-stacked
   // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run — verbatim.)
   // ADMISSION MOVE — `e3-fairground`, 2026-08-21 (owner ruling, verbatim: "lets follow your
