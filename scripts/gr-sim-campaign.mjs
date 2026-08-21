@@ -14,7 +14,7 @@ const playerModule = await import(pathToFileURL(resolve(args.player)).href);
 const player = playerModule.default ?? playerModule.ordersFor;
 if (typeof player !== 'function') throw new Error('Player module must export a default order-generator function.');
 
-const location = new URL('http://gr-sim-campaign.local/?debug');
+const location = new URL(`http://gr-sim-campaign.local/?debug${args.contract ? `&contract=${encodeURIComponent(args.contract)}` : ''}`);
 globalThis.location = location;
 const originalConsole = { log: console.log, info: console.info, debug: console.debug };
 console.log = console.info = console.debug = () => undefined;
