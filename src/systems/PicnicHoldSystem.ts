@@ -3,6 +3,7 @@ import type { ContractStakeMarker } from '../meta/ContractFamilies';
 export const PICNIC_HOLD_RADIUS = 3;
 export const PICNIC_HOLD_SECONDS = 6;
 export const PICNIC_STAKE_PRESS_WEIGHT = 0.25;
+export const PICNIC_ACTIVE_DEFENSE_SECONDS = 5;
 
 type Positioned = { position: { x: number; z: number } };
 
@@ -24,6 +25,7 @@ export class PicnicHoldSystem {
     timer: number;
   }>;
   private lost = false;
+  private lastHeroDamageAt = Number.NEGATIVE_INFINITY;
 
   constructor(
     private readonly enabled: boolean,
@@ -43,21 +45,30 @@ export class PicnicHoldSystem {
     return this.enabled;
   }
 
-  pressureTarget(enemy: { id: number; position: { x: number; z: number } }, defenders: readonly Positioned[]): { x: number; z: number } | null {
+  recordHeroDamage(at: number): void {
+    if (this.enabled) this.lastHeroDamageAt = at;
+  }
+
+  pressureTarget(
+    enemy: { id: number; position: { x: number; z: number } },
+    structures: readonly Positioned[],
+    hero: Positioned,
+    at: number,
+  ): { x: number; z: number } | null {
     if (!this.enabled || enemy.id % Math.round(1 / PICNIC_STAKE_PRESS_WEIGHT) !== 0) return null;
-    const undefended = this.stakes.filter((stake) => !stake.claimed && !defenders.some((defender) => inside(defender.position, stake.position)));
+    const undefended = this.stakes.filter((stake) => !stake.claimed && !this.contested(stake, structures, hero, at));
     if (undefended.length === 0) return null;
     return { ...undefended.reduce((nearest, stake) => (
       distanceSquared(enemy.position, stake.position) < distanceSquared(enemy.position, nearest.position) ? stake : nearest
     )).position };
   }
 
-  update(delta: number, enemies: readonly Positioned[], defenders: readonly Positioned[]): void {
+  update(delta: number, at: number, enemies: readonly Positioned[], structures: readonly Positioned[], hero: Positioned): void {
     if (!this.enabled || this.lost) return;
     for (const stake of this.stakes) {
       if (stake.claimed) continue;
       const enemyPresent = enemies.some((enemy) => inside(enemy.position, stake.position));
-      const defenderPresent = defenders.some((defender) => inside(defender.position, stake.position));
+      const defenderPresent = this.contested(stake, structures, hero, at);
       stake.contested = enemyPresent && defenderPresent;
       stake.timer = enemyPresent && !defenderPresent
         ? Math.min(PICNIC_HOLD_SECONDS, stake.timer + delta)
@@ -72,7 +83,19 @@ export class PicnicHoldSystem {
 
   reset(): void {
     this.lost = false;
+    this.lastHeroDamageAt = Number.NEGATIVE_INFINITY;
     for (const stake of this.stakes) Object.assign(stake, { claimed: false, contested: false, timer: 0 });
+  }
+
+  private contested(
+    stake: { position: { x: number; z: number } },
+    structures: readonly Positioned[],
+    hero: Positioned,
+    at: number,
+  ): boolean {
+    // OWNER RULING (2026-08-21), verbatim: "picnic - no, just standing there should not win"
+    return structures.some((structure) => inside(structure.position, stake.position))
+      || (at - this.lastHeroDamageAt <= PICNIC_ACTIVE_DEFENSE_SECONDS && inside(hero.position, stake.position));
   }
 
   get diagnostics(): readonly PicnicStakeState[] {

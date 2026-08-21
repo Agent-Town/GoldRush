@@ -588,6 +588,7 @@ export class Game {
       this.lightRig?.triggerMuzzleFlash(at, this.baronImpactFlashFrom, position);
     },
     (enemy, amount, died, ownerId) => {
+      if (ownerId === 'hero' || ownerId === 'hero_blast') this.picnicHold.recordHeroDamage(this.timeAlive);
       if (this.drillYard?.handleEnemyDamage(enemy, died, this.timeAlive)) return false;
       if (died && e6CureArmForOwner(ownerId) && this.wrangle.powerDown(enemy)) {
         this.e6ArsenalSystem.recordPowerDown(enemy, ownerId);
@@ -2861,22 +2862,20 @@ export class Game {
       this.syncStockpileHoldings();
       this.mothSwarm.update(simDelta, this.mothLightSources, this.enemies.all);
       const actorTargets = this.visibleActorPositions();
-      const picnicDefenders = [
-        ...actorTargets.map((position) => ({ position })),
-        ...this.buildSystem.diagnostics.turretPositions.map((position) => ({ position })),
-      ];
+      const picnicStructures = this.goldTargeting.allBuildings.filter(({ active, hp }) => active && hp > 0);
+      const picnicHero = { position: this.primaryActor.group.position };
       this.enemies.update(
         simDelta,
         this.picnicHold.active
           ? (enemy) => {
-              const stake = this.picnicHold.pressureTarget(enemy, picnicDefenders);
+              const stake = this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive);
               return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
             }
           : this.flotillaHulls
             ? [this.flotillaTargetPosition()]
             : actorTargets,
         (enemy) => {
-          if (!this.picnicHold.pressureTarget(enemy, picnicDefenders) && !this.flotillaHulls && !this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
+          if (!this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive) && !this.flotillaHulls && !this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
         [...this.buildSystem.palisadeBlockers, ...this.heroBlockers()],
@@ -2890,8 +2889,10 @@ export class Game {
       );
       this.picnicHold.update(
         simDelta,
+        this.timeAlive,
         this.enemies.all.filter((enemy) => enemy.isAlive),
-        picnicDefenders,
+        picnicStructures,
+        picnicHero,
       );
       if (this.flotillaHulls?.advance(this.timeAlive, this.enemies.all)) {
         this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5);

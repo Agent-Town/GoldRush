@@ -747,7 +747,10 @@ export class HeadlessContractSim {
       undefined,
       undefined,
       undefined,
-      (enemy, amount, died) => this.atomic?.onEnemyDamaged(enemy, amount, died),
+      (enemy, amount, died, ownerId) => {
+        if (ownerId === 'hero' || ownerId === 'hero_blast') this.picnicHold.recordHeroDamage(this.timeAlive);
+        this.atomic?.onEnemyDamaged(enemy, amount, died);
+      },
       (enemy) => this.atomic?.isHostile(enemy) !== false,
     );
     // A7: the same policy the browser installs at `Game.ts`, from the same declaration, so a
@@ -1398,17 +1401,15 @@ export class HeadlessContractSim {
     this.syncStockpileHoldings();
     this.mothSwarm?.update(STEP_SECONDS, this.mothLightSources, this.enemies.all);
     const actorTargets = [this.hero.group.position];
-    const picnicDefenders = [
-      { position: this.hero.group.position },
-      ...this.build.diagnostics.turretPositions.map((position) => ({ position })),
-    ];
+    const picnicStructures = this.targeting.allBuildings.filter(({ active, hp }) => active && hp > 0);
+    const picnicHero = { position: this.hero.group.position };
     this.enemies.update(STEP_SECONDS, this.picnicHold.active
       ? (enemy) => {
-          const stake = this.picnicHold.pressureTarget(enemy, picnicDefenders);
+          const stake = this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive);
           return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
         }
       : this.deepwater?.targetPosition(this.hero.group.position) ?? actorTargets, (enemy) => {
-      if (!this.picnicHold.pressureTarget(enemy, picnicDefenders) && !this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
+      if (!this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive) && !this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
     }, this.build.palisadeBlockers, {
       nearestGoldHolding: (from) => this.targeting.nearestGoldHolding(from),
@@ -1424,8 +1425,10 @@ export class HeadlessContractSim {
     }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1));
     this.picnicHold.update(
       STEP_SECONDS,
+      this.timeAlive,
       this.enemies.all.filter((enemy) => enemy.isAlive),
-      picnicDefenders,
+      picnicStructures,
+      picnicHero,
     );
     this.deepwater?.resolveHullContacts(this.timeAlive, () => this.combat.damageActor(Number.MAX_SAFE_INTEGER, -5));
     this.deepwater?.recycleCorsairsAtExit();
