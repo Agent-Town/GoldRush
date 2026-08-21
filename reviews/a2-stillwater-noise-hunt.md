@@ -1,5 +1,113 @@
 # A2 — `e5-stillwater`, the noise-hunt
 
+---
+
+## ADDENDUM — THE OWNER-RULED THIRD ANCHOR (2026-08-21, second pass)
+
+**RULING (verbatim, to the five-map fork table): "lets follow your recommendation".** For
+`e5-stillwater` that recommendation was **F-A2-3** below: *"one more `claimBoat.anchors` entry
+outside both quiet zones and away from (0,30)"*. Built as **`shelf-watch` (36,30)**.
+
+**Base:** merged current `main` first (`bda894776`) — a **clean fast-forward**, because the first
+pass had already been drained to main as `c3fa244ab`. This addendum sits on top of that.
+
+### The anchor, and why there
+
+`shelf-watch` is due east of the claim at **36wu** — further than the loudest machine's own radius
+(engine r24), so a trailed head is pulled genuinely **clear** of the hero rather than nudged. It
+lies in `lagoon-shallows`, so it is boat-navigable (probed, `artifacts/e5-stillwater/anchor-probe.mjs`),
+and **all three machines clear both quiet zones there**, so it is unambiguously LOUD. It sits 6wu
+north of `sail-trim-drift`, the adjacent silent step. Landed in the contract **and its mask table**
+in the same commit; the ruling is quoted verbatim in `NoiseHuntSystem.ts` (JSON has no comment
+slot and `claimBoat` has no prose field — inventing one would have been schema drift).
+
+### AIMING VS THE WALL — the verdict, and it is not the one I predicted
+
+**AIMING WORKS, AND IT MOVED THE MAP FIVE WAVES.** Ceiling **wave 4/4 → wave 9 (seed 01) and
+wave 11 (seed 02)**. More telling than the number: **the failure mode changed completely.** Under
+the lure the hero is *never touched* — hp 100 from wave 1 to the end — because the leviathans hunt
+the boat. What ends the run is the third deck pad going and the swarm turning back on an
+undefended claim.
+
+**🚨 AND THE MEASUREMENT REFUTED MY OWN F-A2-4.** I expected the pressure wall to stand. It does
+not. A revert-and-reproduce diagnostic with `strikeDamage` set to **0** — decks immortal,
+everything else identical — **SECURED at wave 12**: 97 kills, hero at 150hp, all three pads
+intact, `alive` pinned at the 60 cap the whole way. So *fifteen `machine_leviathan` a wave against
+three deck slots and a hero that cannot walk is survivable*, and "land pressure against deepwater
+vocabulary" was the wrong diagnosis. **I am recording that I was wrong rather than quietly
+dropping it**, because the row and the BACKLOG both asserted it.
+
+**The mechanical answers were exhausted before any constant was touched** — this is the part that
+licenses the retune:
+
+| policy | what it tries | seed 01 / 02 |
+|---|---|---|
+| `shed` | hop to `open-water`, silence everything, save the decks | 2 / 1 — silence returns 30 leviathans to the hero |
+| `kite` | hop between the two LOUD stations so the lure holds but contact breaks | 4 / 1 — decks survive at 84/96, the hero does not |
+| `bait` | hold the shelf while trailed | **9 / 11 — the ceiling** |
+
+### The one constant, re-derived once, from the clock and not from the target
+
+`NOISE_HUNT_RULES.strikeDamage` **16 → 6**. It was **mis-derived, not mis-typed**: 16 was set when
+the only station was `lagoon`, where contact was *intermittent* because the heads were also
+walking at the hero. The owner's anchor created the regime the constant actually governs — a
+deliberate lure, where contact is **continuous by design** — and at 16 a pad died in six strikes,
+so the whole boat lasted 72s of a 360s run. That is instakill by attrition, against a sheet that
+says *"threaten machines, not instakill"*.
+
+The new value is tied to the player's **declared** lever: at a 4s cadence a pad survives
+`96/6 = 16` strikes — **four times the eight-second trail-shed window**, so breaking contact is a
+real save. That carried 4/4 → 9/11.
+
+**I STOPPED THERE, AND THE STOP IS THE POINT.** A securing value exists — solving from the
+measured 77-strike full-run cost gives `strikeDamage ≲ 3.7` — but it is reachable *only* by
+working backwards from "it must win". That is tuning-to-win, i.e. Mistake #14 wearing a number.
+**It is a difficulty dial, and difficulty is an owner call.**
+
+**Law 2 is untouched by the retune, structurally:** idle runs no machine, takes no trail and lands
+no strike, so `strikeDamage` cannot move the floor. Measured: wave 3 both seeds, `strikes: 0`,
+unsecured, before and after.
+
+### Second-pass evidence (all repeats byte-IDENTICAL)
+
+| case | seed 01 | seed 02 |
+|---|---|---|
+| **`bait` — the ceiling** | **w9** `fnv1a32:f2738841` | **w11** `fnv1a32:e6ca02c3` |
+| `aim` (hold the shelf always) | w9 `fnv1a32:628e1460` | w1 `fnv1a32:250a734a` |
+| `aim` three guns | w8 `fnv1a32:e6446edd` | w1 `fnv1a32:45da340c` |
+| `aim` silent (control) | w1 `fnv1a32:8ec0698e` | w1 `fnv1a32:ab1b5a65` |
+| `kite` | w4 `fnv1a32:a61e3556` | w1 `fnv1a32:250a734a` |
+| `shed` | w2 `fnv1a32:92c72af8` | w1 `fnv1a32:250a734a` |
+| pre-anchor baseline | w4 `fnv1a32:319bc5fb` | w5 `fnv1a32:a03679a0` |
+| **IDLE FLOOR** | **w3** `fnv1a32:30144ddc` | **w3** `fnv1a32:316f5a1b` |
+
+**Gates:** tsc clean · build green (1.59s) · **26/26 desktop AND 26/26 mobile** over
+`e5-stillwater-noise` + `er01-e5-census` + `e5-flotilla-hulls` + `e5-regatta-race` +
+`e5-deepwater-claim` + `task-025` + `m1-01` — every E5 sibling unmodified-green · node guards
+**44/44** incl. `e3-mask-tables` (which is what proves the new anchor is in-bounds), the audit
+count pins, the report byte-match and the skill.md positive control.
+
+**Pins:** `bench-seeds.json`, `door-admission-baseline.json`, `public/skill.md`,
+`null-floors.json` and `same-game-audit.test.mjs` are **all byte-unmoved** — the map is still
+refused, so the door does not move. `docs/bench/same-game-audit.md` regenerated: filtering
+`.ts:<line>` coordinates out of the diff leaves **exactly 2 lines**, the old and new exemption
+reason. (Its summary counts read 504/1016/4 and 8 exemptions rather than the first pass's
+463/977/6 and 7 — that is **main's 53 commits**, the A9/A10 maps, not this change.)
+
+### Residual — stated plainly, as asked
+
+**F-A2-4 is REFUTED and rewritten, not carried.** The land-pressure/deepwater-vocabulary mismatch
+is *not* the blocker; the immortal-deck run proves the pressure is survivable. **The sole residual
+is lure duration** — how long three deck pads absorb a leviathan the player deliberately attracts
+— and it is one consumer constant, already re-derived once on principle. Taking it further is a
+difficulty ruling, which is why it is on the desk and not in this commit.
+
+**F-A2-3 is CLOSED** (owner-ruled, built, measured: +5 waves).
+
+---
+
+## FIRST PASS (2026-08-21) — unchanged below
+
 **Slice:** door-completion sheet item **A2** (RATIFIED 2026-08-20, owner: *"Group 1: approved (with any tweaks)"*)
 **Branch:** agent worktree `agent-a9e7d8321e70f7a1f` · **Base:** `b9fd6fecb`
 **Date:** 2026-08-21
