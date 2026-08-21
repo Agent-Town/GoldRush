@@ -15,6 +15,8 @@ import {
 } from '../systems/BroadcastMirror';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { FLOTILLA_HULL_RULES } from '../systems/FlotillaHullSystem';
+import { NOISE_HUNT_RULES } from '../systems/NoiseHuntSystem';
+import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 import { HOLLOW_EXTRACTION_RADIUS, HOLLOW_GLOW_DAMAGE_PER_SECOND } from '../systems/HollowCrossingSystem';
 
@@ -316,7 +318,8 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     }));
   }
   // --- E5 Deepwater. Gated exactly as the browser's `createDeepwaterClaimTile` consumer.
-  const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta' || contract.id === 'e5-flotilla'
+  const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta'
+    || contract.id === 'e5-stillwater' || contract.id === 'e5-flotilla'
     ? tile.deepwater
     : undefined;
   if (deepwater) {
@@ -339,7 +342,9 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       westX: deepwater.stormTrack.westX,
       eastX: deepwater.stormTrack.eastX,
       corsairsPerWave: deepwater.corsairWaveSize,
-      replacesScheduledWaves: true,
+      // A2: a track that crews nobody replaces nothing. The Stillwater authors zero corsairs and
+      // keeps the ordinary schedule, so a rider must not read "storm = wave" on that map.
+      replacesScheduledWaves: deepwaterStormDrivesWaves(contract),
     }));
     rules.push(rule('deepwater_arsenal', 'DeepwaterArsenal.update', {
       deckBuildables: ['sentry_beacon', 'turret'],
@@ -375,6 +380,26 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         hulls: tile.flotilla.hulls.map(({ id }) => id),
         districts: tile.flotilla.hulls.map(({ district }) => district),
         ...FLOTILLA_HULL_RULES,
+        secureWave: twist.secureWave ?? 0,
+      }));
+    }
+    // A2 — SOURCED FROM THE CONSUMER, never re-read from `tileParams.stillwater`: the rule spells
+    // out what makes each machine RUN and how the trail is shaken, which is vocabulary the JSON
+    // does not contain. Only the source ids and the quiet-zone ids are names the contract owns.
+    if (tile.stillwater) {
+      rules.push(rule('noise_hunt', 'NoiseHuntSystem.advance+onReanchor', {
+        sources: tile.stillwater.noiseSources.map(({ id }) => id),
+        heardWhile: [
+          'air-pump: the harvest CHANNEL is engaged (the HARVEST verb hand-pans and is silent)',
+          'engine: the boat is under way after a REANCHOR',
+          'harpoon-reload: the deck ballista fired',
+        ],
+        loudness: 'the declared radius of a running source; the loudest audible one is trailed',
+        machinesRideTheAnchor: 'world position = anchor + authored offset',
+        silencedIn: tile.stillwater.quietZones.map(({ id }) => id),
+        ...NOISE_HUNT_RULES,
+        strikeTarget: 'the deck nearest the trailed machine; the hero is never struck',
+        fogIsPresentationOnly: true,
         secureWave: twist.secureWave ?? 0,
       }));
     }

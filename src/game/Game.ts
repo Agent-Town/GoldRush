@@ -94,6 +94,7 @@ import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultipla
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
 import { FlotillaHullSystem } from '../systems/FlotillaHullSystem';
+import { NoiseHuntSystem } from '../systems/NoiseHuntSystem';
 import { AgentRiderBody, type AgentRiderBodyFutureState } from '../mp/AgentRiderBody';
 import { CrowdFlock } from '../entities/CrowdFlock';
 import { FerrisWheel } from '../entities/FerrisWheel';
@@ -275,7 +276,7 @@ import {
   type NightShiftPhase,
 } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
-import { createDeepwaterClaimTile, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
+import { createDeepwaterClaimTile, deepwaterStormDrivesWaves, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
 import { readTownName } from '../town/TownNaming';
 import { gameApiUrl } from '../app/GameApi';
 import { installRunTelemetry, reportRenderDemotion } from '../telemetry/runBeacon';
@@ -781,6 +782,20 @@ export class Game {
   private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
   private readonly regattaRace = RegattaRaceSystem.create(this.activeContract);
   private readonly flotillaHulls = FlotillaHullSystem.create(this.activeContract, (id) => this.deepwaterClaim?.loseHull(id));
+  /**
+   * A2 — the noise-hunt, seated on the SAME readings GR-SIM seats (`DeepwaterSocket`): the boat
+   * anchor and deck from the tile, the ballista's shot counter from the deck arsenal, the pan
+   * CHANNEL from the harvest system, and knock-outs back through `loseHull`. Null on every
+   * contract that does not declare `tileParams.stillwater`.
+   */
+  private readonly noiseHunt = NoiseHuntSystem.create(this.activeContract, {
+    anchor: () => this.deepwaterClaim?.snapshot().boat.anchor ?? { x: 0, z: 0 },
+    panChanneling: () => this.harvestSnapshot.channeling,
+    harpoonFires: () => this.deepwaterArsenal.harpoonShots,
+    prospectorPosition: () => this.primaryActor.group.position,
+    deckBuildings: () => this.deepwaterClaim?.snapshot().boat.buildings ?? [],
+    onDeckLost: (padId) => this.deepwaterClaim?.loseHull(padId),
+  });
   private deepwaterCorsairWavesSpawned = 0;
   private readonly dayNightCycle = createDayNightCycle(this.activeContract);
   private readonly lightField = new LightField({
@@ -1384,7 +1399,12 @@ export class Game {
         this.advanceMegaprojectOnWave(atSim);
         return !this.secureClaimChoicePending();
       },
-      () => areWavesDisabled() || this.deepwaterClaim !== null || this.activeContract.practice?.scheduledWaves === false,
+      // A2: the storm track replaces the generic schedule only where it actually CREWS a wave.
+      // `e5-stillwater` authors a suppressed storm and `corsairWaveSize: 0`, so its clock stays
+      // the ordinary one — GR-SIM gates the identical predicate (`HeadlessContractSim`).
+      () => areWavesDisabled()
+        || (this.deepwaterClaim !== null && deepwaterStormDrivesWaves(this.activeContract))
+        || this.activeContract.practice?.scheduledWaves === false,
       () => this.activeContract,
       this.boot,
       () => !isStealDisabled() && this.hasBuiltStockpile(),
@@ -2168,6 +2188,8 @@ export class Game {
           const moved = this.flotillaHulls?.diagnostics.hulls.some(({ id }) => id === anchorId)
             ? this.flotillaHulls.reanchor(anchorId)
             : this.deepwaterClaim?.reanchor(anchorId) ?? false;
+          // A2: only a boat that actually got under way makes engine noise.
+          if (moved) this.noiseHunt?.onReanchor(this.timeAlive);
           this.publishDiagnostics();
           return moved;
         },
@@ -5201,6 +5223,7 @@ export class Game {
             dredgeQueenBoss: this.dredgeQueenBoss.diagnostics(),
             ...(this.regattaRace ? { race: this.regattaRace.diagnostics } : {}),
             ...(this.flotillaHulls ? { flotilla: this.flotillaHulls.diagnostics } : {}),
+            ...(this.noiseHunt ? { noiseHunt: this.noiseHunt.diagnostics } : {}),
           })
         : null,
       tilePersistence: {
@@ -5716,6 +5739,12 @@ export class Game {
   private syncDeepwaterClaim(): void {
     const snapshot = this.deepwaterClaim?.advance(this.timeAlive);
     if (!snapshot) return;
+    // A2 — steer before the enemy pool moves, the same relative order GR-SIM uses.
+    this.noiseHunt?.advance(
+      this.timeAlive,
+      this.enemies.all,
+      this.activeContract.twist.enemyRoster?.find((entry) => entry.travelClass === 'depth')?.id,
+    );
     const pending = snapshot.corsairWaves.slice(this.deepwaterCorsairWavesSpawned);
     this.deepwaterCorsairWavesSpawned = snapshot.corsairWaves.length;
     if (isSpawnDisabled()) return;
@@ -5820,7 +5849,9 @@ export class Game {
   }
 
   private currentRunWave(): number {
-    return this.deepwaterClaim ? this.deepwaterCorsairWavesSpawned : this.waveSystem.diagnostics.wave;
+    return this.deepwaterClaim && deepwaterStormDrivesWaves(this.activeContract)
+      ? this.deepwaterCorsairWavesSpawned
+      : this.waveSystem.diagnostics.wave;
   }
 
   private completeBaronDefeat(atSim: number): void {
@@ -7554,6 +7585,11 @@ export class Game {
     this.deepwaterClaim?.reset();
     this.regattaRace?.reset();
     this.flotillaHulls?.reset();
+    // A2: alongside its siblings, and NOT optional. `deepwaterClaim.reset()` above restores the
+    // pads a strike knocked out, so a hunt that kept its integrity map would re-lose a restored
+    // pad on the first strike of the new run; it would also carry the old run's trail, strike
+    // count and shot counter across the boundary.
+    this.noiseHunt?.reset();
     this.deepwaterCorsairWavesSpawned = 0;
     this.buildMenuOpen = false;
     this.upgradeCandidate = null;

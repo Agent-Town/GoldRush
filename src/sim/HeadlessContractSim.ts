@@ -73,6 +73,7 @@ import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems
 import { BroadcastMirror, type BroadcastMirrorDiagnostics } from '../systems/BroadcastMirror';
 import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
+import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { depenetrateFromBlockers } from '../world/LandmarkCollision';
 import * as Terrain from '../world/Terrain';
 
@@ -115,9 +116,35 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
     reason: 'Admission HELD after three changed-premise attempts, all measured and preserved in artifacts/e3-fairground (F-E3CF-4, closed 2026-08-21). (1) FUNDING: a public-verb rider funds the whole fort by panning at a measured 1.7-2.2 gold/s — correcting the 1.60 ceiling in the review, because one HARVEST pays a whole harvest tick in one sim tick and travel is the only real cost — and secured bench seed 01 twice (wave 12, fnv1a32:9f2740ab) while seed 02 reached the wave ceiling with the wheel still turning and the middle crowd short. (2) GEOMETRY: the owner-ruled 6wu gate-lane shift was implemented, measured on one instrument against the ratified lane, and shipped at 0 because it made the objective strictly harder (crossings [5,3,7]/[4,4,3] -> [5,0,7]/[4,0,5]) — the offset decays to 1.9wu by the north spawn point and the stake is also the best-defended tile on the claim. (3) FORT SHAPE: the owner-ruled north spawn move (night_runner spawnGates north (-12,-4)) is landed and is a real improvement — on the free-fort instrument the middle crowd goes from 3 and 4 crossings to 10 and 8 with both seeds securing — but the rider that must fund it does not: a fort designed from the measured pressure map holds bench seed 01 to the wave ceiling with the wheel intact and loses seed 02 at wave 2-3. The map is browser-playable and every mechanism is documented; what is absent is a public-verb secure x2 on BOTH bench seeds, which is what this table exists to say.',
     citation: 'reviews/e3-fairground-crowd-flocks.md',
   },
+  // A2 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-21, door-completion-sheet §A2). Third
+  // instance of the A8 shape, and the widest gap any of them has measured.
+  //
+  // THE CONSUMER IS NOT THE GAP, AND THE ROW IS REWORDED RATHER THAN REMOVED TO SAY SO. The old
+  // reason — "the noise-hunt consumer remains absent" — was true when written and is false now:
+  // `src/systems/NoiseHuntSystem.ts` runs in BOTH engines, the three declared machines emit off
+  // seams that already existed (the harvest CHANNEL, a REANCHOR, the ballista's shot counter),
+  // the trail forms on the loudest audible source and is shed after eight quiet seconds, the
+  // declared quiet zones silence, and a strike costs a deck pad through the same `loseHull` seam
+  // the Flotilla uses. All of it is traced in `artifacts/e5-stillwater/`.
+  //
+  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry — the same sentence
+  // `e7-relay-rush` and `e9-seed-run` earned below, for a third distinct reason. There is no land
+  // on a Deepwater contract (`place_build` and `placeFree` both refuse), so a rider's ENTIRE
+  // defence is three deck pads carrying a ballista and a beacon; the hero is a fixed post at
+  // (0,30) because slot 0 runs on IDLE_INTENTS; and the contract's own `lanes.spawnEdges` and
+  // per-variant `spawnGates` declare the ORDINARY wave schedule, which fields fifteen
+  // `machine_leviathan` a wave from two edges. Its storm is authored suppressed (a 3600s cycle)
+  // and crews zero corsairs, so the storm track cannot be the clock and the ordinary one is.
+  //
+  // AND THE GEOMETRY REFUSES THE MECHANIC ITS OWN BEST USE, which is the finding worth keeping:
+  // both anchors are extremes. `lagoon` (0,30) sits ON the hero, so every machine that runs is
+  // loud exactly where the hero stands; `open-water` (-24,12) sits INSIDE the declared
+  // `hand-pan-drift` quiet zone, so it silences everything and carries the guns 20wu off the body
+  // they defend. There is no third station where noise is loud AWAY from the hero, so the trail
+  // can be paid for or avoided but never AIMED — and the measurements show paying beats avoiding.
   'e5-stillwater': {
-    reason: 'Scripted admission re-probe terminated unsecured at wave 3; the noise-hunt consumer remains absent.',
-    citation: 'reviews/milk-twin-sockets.md',
+    reason: 'Best measured public-verb play terminated unsecured at wave 4 on BOTH bench seeds against secureWave 12 (fnv1a32:e83bc5ff / fnv1a32:96191e05, each repeated identical). Six policies per seed span waves 0-4 against an idle floor of wave 3, so the whole spread is one wave wide. The A2 noise-hunt consumer is LIVE in both engines and is not the gap: the three declared machines emit, the trail forms on the loudest audible one and is shed after 8 quiet seconds, the declared quiet zones silence, and strikes cost deck pads (18 strikes and all three decks on the ceiling run). Emission is attributable — a run with no turret and no HARVEST order records strikes 0 and every deck at 96. The map is: a Deepwater contract offers no land (place_build and placeFree both refuse), so the whole of a rider defence is three deck pads; the hero is a fixed post at (0,30) because slot 0 runs on IDLE_INTENTS; and the authored storm is suppressed at a 3600s cycle crewing zero corsairs, so the storm track cannot be the clock and the ordinary schedule is, fielding 15 machine_leviathan a wave from two authored edges. Both anchors are extremes - the lagoon sits ON the hero and the open water sits INSIDE the hand-pan-drift quiet zone - so noise is either on top of the hero or absent, and the trail can be paid for or avoided but never aimed. Re-admit when both bench seeds secure.',
+    citation: 'reviews/a2-stillwater-noise-hunt.md',
   },
   // REWORDED 2026-08-20 after the Showroom gained an honest capture objective. The idle
   // false-green is closed: fewer than six run-local captures keeps the secure latch shut at every
@@ -845,6 +872,10 @@ export class HeadlessContractSim {
           ? this.dredgeQueen!.escortMultiplier
           : false
         : null,
+      // A2: the pan MACHINE, not the hand. `panAt` (the public HARVEST verb) restores the
+      // channel state it borrowed, so a hand-pan never leaves this true — which is exactly the
+      // sheet's "hand-pan = harvest without pump noise" seam.
+      { panChanneling: () => this.harvestSnapshot.channeling },
     );
 
     this.waves = new WaveSystem(
@@ -853,8 +884,11 @@ export class HeadlessContractSim {
       createRng(`${this.seed}:waves`),
       (text, at, wave) => this.replayEvents.push({ type: 'announcement', at, wave: wave ?? null, text }),
       (wave, at) => this.startWave(wave, at),
-      // Game.ts:1251 — the Deepwater Claim runs no generic schedule; its storm track is the clock.
-      () => this.deepwater !== null,
+      // Game.ts:1387 — the Deepwater Claim runs no generic schedule; its storm track is the
+      // clock. A2: only where that track actually CREWS a wave. `e5-stillwater` authors a
+      // suppressed storm and `corsairWaveSize: 0`, so its clock is the ordinary schedule and
+      // its pressure is the roster's own `machine_leviathan` on the two authored spawn edges.
+      () => this.deepwater !== null && deepwaterStormDrivesWaves(this.manifest),
       () => this.manifest,
       boot,
       () => this.build.diagnostics.stockpilesState.some((entry) => entry.active),
@@ -918,7 +952,7 @@ export class HeadlessContractSim {
       boatBuild: (padId, buildingId) => this.deepwater?.placeBoatBuilding(padId, buildingId)
         ? { ok: true }
         : { ok: false, reason: 'BOAT_BUILD requires a known unoccupied pad and a building id.' },
-      reanchor: (anchorId) => this.deepwater?.reanchor(anchorId)
+      reanchor: (anchorId) => this.deepwater?.reanchor(anchorId, this.timeAlive)
         ? { ok: true }
         : { ok: false, reason: 'REANCHOR requires a known anchor other than the current anchor.' },
     });
@@ -1562,7 +1596,9 @@ export class HeadlessContractSim {
   }
 
   private currentRunWave(): number {
-    return this.deepwater?.diagnostics.corsairWaves ?? this.waves.diagnostics.wave;
+    return this.deepwater && deepwaterStormDrivesWaves(this.manifest)
+      ? this.deepwater.diagnostics.corsairWaves
+      : this.waves.diagnostics.wave;
   }
 
   private updateBaronRocketVolley(): void {
