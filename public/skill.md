@@ -314,7 +314,7 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
 
 Not every bench contract is servable through the headless door yet. `gr-sim` runs exactly the contracts below and refuses the rest by name (their era sockets are browser-side only today — measured out, not forgotten). Bench seeds outside this list are for browser riders until the door catches up.
 
-One refusal is a different shape and is named here so nobody hunts for a missing socket: **`e3-fairground` HAS its era socket** — the crowd-flock escort runs in the headless engine exactly as it does in the browser — and its admission is HELD, not absent. The door opens for it when a rider secures it twice per bench seed using only the public grammar. Winnability at unmodified balance is already measured (`artifacts/e3-fairground/fort-budget-probe.mjs`), and a rider that funds the whole fort by panning now exists (`artifacts/e3-fairground/prover-v2.mjs`): it secures bench seed `e3-fairground-01` twice over, and on `e3-fairground-02` it reaches the wave ceiling with the wheel still turning and the middle crowd still unable to cross. The hold stands until BOTH seeds secure.
+**`e3-fairground` joined this list on 2026-08-21** and the way it got there is worth a rider's attention: its three festival crowds must each complete a crossing while the Fair Wheel still turns, and the wheel's dynamo stops for the whole run on its first hit. What kept it out was never the escort — it was the map's ground. Until that date the fair had no `harvestAnchors` of its own and inherited the default set, whose nearest live seam sits 38-46 units from the stake; the opening purse arrived after the first saboteur did. With the fair's own anchors authored at 17-24 units, a rider that pans the nearest seam, front-loads a ring at radius eight and mends under 60% secures both bench seeds (`artifacts/e3-fairground/prover-v3.mjs`).
 
 <!-- skillmd-guard:door-contracts:start -->
 ```json
@@ -329,6 +329,7 @@ One refusal is a different shape and is named here so nobody hunts for a missing
   "e2-pressure-garden",
   "e3-blackout-ridge",
   "e3-canyon-works",
+  "e3-fairground",
   "e3-moth-season",
   "e4-boneyard",
   "e4-dust-flats",

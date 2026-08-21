@@ -138,9 +138,12 @@ test('published mask tables exactly track authored contract data', async () => {
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'pylonSites',
       'capacitorSites', 'prePlacedBuildables', 'ridgeGlow', 'waterSources', 'harvestAnchors', 'heightfield', 'lanes',
     ],
+    // `harvestAnchors` joins the list the day the fairground stops inheriting
+    // `Terrain.DEFAULT_NODE_ANCHORS` and authors its own (owner ruling 2026-08-21) — the same key
+    // its admitted siblings publish, so the map is held to the same standard rather than a softer one.
     'e3-fairground': [
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers',
-      'waterSources', 'heightfield', 'palette', 'scatter', 'lanes',
+      'waterSources', 'harvestAnchors', 'heightfield', 'palette', 'scatter', 'lanes',
     ],
     'e5-regatta': [
       'tileId', 'size', 'dimensions', 'buildZones', 'stakeMarkers', 'waterSources',
