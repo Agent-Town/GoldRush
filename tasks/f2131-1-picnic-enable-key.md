@@ -51,8 +51,20 @@ already merged. You must **revert the revert**:
 git revert --no-commit 6c5f8a7a2      # restores the whole b4v3 stack onto your lane
 ```
 
-Do that FIRST, on a lane refreshed from current main, then fix the key on top. Verify before you
-build: `src/systems/PicnicHoldSystem.ts` and `e2e/e6-picnic-hold.spec.ts` must exist again.
+**Refresh the lane first — this is SAFE-DUPE-verified and the reset is authorised.** At authoring
+time `node scripts/lane-usable.mjs lane-b` read **`USABLE`**, `ahead=0 behind=25`, no tracked dirt:
+the whole b4v3 stack is already in main's history and its tip is archived, so the lane holds nothing
+main has not absorbed. Re-run that command yourself; if it does NOT say `USABLE`, **STOP** and report
+— something landed after this master was written.
+
+```
+node scripts/lane-usable.mjs lane-b        # must print USABLE; STOP if not
+git fetch origin && git reset --hard main  # lane now carries the revert 6c5f8a7a2
+git revert --no-commit 6c5f8a7a2           # restores the whole b4v3 stack
+```
+
+Then fix the key on top. Verify before you build:
+`src/systems/PicnicHoldSystem.ts` and `e2e/e6-picnic-hold.spec.ts` must exist again.
 `npm install --no-audit --no-fund`; build green. FACTORY-CHURN EXCEPTION (F-1407-1) as usual.
 
 ## Scope
