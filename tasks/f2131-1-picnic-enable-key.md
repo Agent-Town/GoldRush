@@ -60,7 +60,25 @@ main has not absorbed. Re-run that command yourself; if it does NOT say `USABLE`
 ```
 node scripts/lane-usable.mjs lane-b        # must print USABLE; STOP if not
 git fetch origin && git reset --hard main  # lane now carries the revert 6c5f8a7a2
-git revert --no-commit 6c5f8a7a2           # restores the whole b4v3 stack
+# restore the CODE ONLY, from the merge commit that the revert undid:
+git checkout e6aa6e073 -- src/systems/PicnicHoldSystem.ts src/sim/HeadlessContractSim.ts \
+    src/game/Game.ts src/entities/pools.ts src/agent/MechanicsManifest.ts \
+    e2e/e6-picnic-hold.spec.ts e2e/er01-e6-census.spec.ts
+```
+
+⛔ **DO NOT use `git revert --no-commit 6c5f8a7a2`. Attempt 1 of this task did exactly that, on my
+instruction, and it CONFLICTED — correctly — in `tasks/BACKLOG.md`** (run
+`20260821-151824-lane-b-f2131-1-picnic-enable-key.md.log`; the runner aborted and stopped per the
+honesty guard, 44,298 tokens, zero damage, lane left clean). **That was an authoring defect in this
+master, not a lane problem (F-2131-5):** `6c5f8a7a2` reverts eight paths *including* `tasks/BACKLOG.md`,
+and s2131 rewrote that file afterwards (the picnic narrative row and the F-2131-1 desk row), so
+reverting it wholesale is guaranteed to collide with rows that must NOT be rolled back. The
+path-scoped `checkout` above restores byte-identical code and leaves every ledger row alone.
+
+Verify the restore before building — it must reproduce the merged tree exactly for those paths:
+
+```
+git diff e6aa6e073 -- src/ e2e/    # MUST be empty; if not, STOP and report
 ```
 
 Then fix the key on top. Verify before you build:
