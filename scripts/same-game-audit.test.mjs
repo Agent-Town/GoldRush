@@ -275,6 +275,15 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // exemption, 8th row) and A9 (admission) and A2 (stillwater reword, no count change) merged in
   // one window; per the standing law the pins below are the MERGED tree's own regen output,
   // verbatim — measured 504/1016/4 over 1524 rows, 8 exemptions.
+  // BOARD MOVE WITHOUT A DOOR MOVE (2026-08-21, the owner's pressure-line ruling on `e2-incline`
+  // and `e2-trestle`, `reviews/e2-pressure-line-railcars.md`): both contracts now declare
+  // `twist.pressureEnabled`, so four rows FLIP IN PLACE — `contract manifest does not advertise
+  // boiler_house` becomes `advertises BUILD boiler_house`, plus each one's browser-menu twin — and
+  // all four land `equal`, because the door predicate accepted `boiler_house` all along. NOTHING
+  // BELOW MOVES: not the summary, not the exemption count. Both contracts were re-proved with the
+  // line declared and neither secured on both bench seeds, so they keep their exemption rows with
+  // reworded reasons rather than leaving the table. The report's remaining churn is coordinate rot
+  // — the reword shifted `src/sim/HeadlessContractSim.ts` citations by 21 lines.
   // ⚠️ TWELFTH STACK (the fairground admission, owner-ruled anchor set): exemptions 8 -> 7,
   // 19 rows agent-lacks -> equal — the exact movement the hold-era comment predicted. Pins =
   // the merged tree's regen, verbatim, as every layer.
@@ -328,6 +337,7 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // own 483/1037/7 was measured pre-fairground; the merged tree measures below, verbatim.
   assert.equal(audit.admission.exemptions.length, 6);
   assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 464, equal: 1056, 'not-offered': 4 });
+
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 

@@ -94,20 +94,41 @@ type AdmissionExemption = {
 };
 
 export const CONTRACT_ADMISSION_EXEMPTIONS = {
-  // F-E2S-3 read "no weapon reaches the railcar" off an unsecured probe and inferred that the board
-  // sold no such weapon. It sells three, and they now fire headless on the browser's own gates
-  // (`PressureArsenalSystem` below). What actually keeps these two out is narrower and measured:
-  // NEITHER declares `twist.pressureEnabled`, so no boiler can be built, no coal can be burned, and
-  // the E2 arsenal has nothing to spend — while both field a railcar at `hpScale: 30` against the
-  // hill mine's 12.5. `e2-hill-mine`, which does run a pressure line, secured on both bench seeds
-  // and has left this table.
+  // THE REASON THESE TWO ROWS GAVE IS NOW SPENT, AND THE ROWS SURVIVE IT. F-E2S-3 read "no weapon
+  // reaches the railcar" off an unsecured probe and inferred the board sold no such weapon; it
+  // sells three, and they fire headless on the browser's own gates (`PressureArsenalSystem` below).
+  // `e2-pressure-arsenal-headless` then narrowed the refusal to one authored fact — neither contract
+  // declared `twist.pressureEnabled`, so no boiler was buildable and the arsenal had no fuel — and
+  // put the design question on the owner's desk as F-E2PA-6.
+  //
+  // THE OWNER ANSWERED IT (2026-08-21, verbatim: "E2's pressure ... - lets do that"), executing the
+  // standing recommendation "give both the pressure line". Both contracts now declare
+  // `twist.pressureEnabled: true` (`assets/contracts/epoch-2-steamworks/contracts.json`), the boiler
+  // house is on both boards, the coal is reachable on both maps (3/3 seams cut, 12 vents each —
+  // `artifacts/e2-pressure-line/coal-reach-*.json`), and the arsenal fires on both: 192 pressure
+  // spent on the incline, 317 on the trestle. The gift is real and it is delivered.
+  //
+  // AND THE MAPS STILL WIN, for a reason nothing before this had measured: `PressureSystem.ts:23`
+  // fixes the three coal seams at three WORLD coordinates on every map — they are not contract data
+  // and cannot be authored per tile — and those coordinates sit at the Hill Mine's minehead. From
+  // the Hill Mine's stake that is a 29wu walk; from the only stake these two heroes can hold it is
+  // 55wu (trestle) and 58wu (incline), and the Prospector is the same single body that earns all
+  // the gold. So the pressure line is not free here: it is bought with the economy that pays for the
+  // guns, and across 97 measured runs (7 ladders x 2 upgrade orders x 4 coal schedules) not one
+  // secured. The ruling is executed, not stretched — no balance moved, the railcar stays at
+  // `hpScale` 30 — and the door still says no, which is what this table is for.
+  //
+  // THE EDIT IS PROVABLY INERT UNTIL A BOILER BURNS COAL. A rider that ignores the new line
+  // reproduces the review's own pre-ruling event-log hashes bit for bit on all four bench seeds
+  // (`8c28f1ff` w12 / `bc515b13` SECURED w18 / `83b0a873` w6 / `dac0c325` w8), so nothing about
+  // these contracts changed except what a player is now allowed to build.
   'e2-incline': {
-    reason: 'Best measured play with declared E1 progression terminated unsecured at waves 6/8; the contract declares no pressureEnabled, so the E2 arsenal has no fuel against an hpScale-30 railcar.',
-    citation: 'reviews/e2-pressure-arsenal-headless.md',
+    reason: 'Pressure line DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line") and measured: boiler house on the board, all 3 coal seams reachable, 192 pressure spent through the E2 arsenal on seed 02. Best measured play with declared E1 progression still terminated unsecured at waves 6/9 across 60 measured runs; the hero holds a lower-yard stake 58wu from the fixed coal seams, so the walk that fuels the arsenal costs the economy that buys the guns, against an hpScale-30 railcar. Ignoring the new line reproduces the pre-ruling floors exactly (fnv1a32:83b0a873 w6 / fnv1a32:dac0c325 w8), so no balance moved. Re-admit when both bench seeds secure.',
+    citation: 'reviews/e2-pressure-line-railcars.md',
   },
   'e2-trestle': {
-    reason: 'Best measured play with declared E1 progression secured seed 02 at wave 18 but terminated unsecured at wave 12/13 on seed 01; no pressureEnabled, hpScale-30 railcar. Re-admit when both bench seeds hold.',
-    citation: 'reviews/e2-pressure-arsenal-headless.md',
+    reason: 'Pressure line DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line") and measured: boiler house on the board, all 3 coal seams reachable, 317 pressure spent through the E2 arsenal on seed 02. Admission is unchanged because seed 01 still refuses: across 94 measured runs the best play secures seed 02 at wave 18 (fnv1a32:bc515b13) and terminates unsecured at wave 12/13 on seed 01 (fnv1a32:8c28f1ff), the same split the pre-ruling review measured and reproduced here bit for bit. The seams sit 55wu from the only stake the hero can hold, so a rider that fuels the arsenal arrives at the hpScale-30 railcar poorer than one that does not. Re-admit when both bench seeds hold.',
+    citation: 'reviews/e2-pressure-line-railcars.md',
   },
   // F-1475-1's ORIGINAL reason is dead and its replacement is narrower. "The crowd-flock escort
   // objective has no headless consumer" was true when written and is false now: `CrowdFlockSystem`
