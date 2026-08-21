@@ -92,6 +92,31 @@ test('once processes verified, mismatch, crash, and legacy rows fail-honestly', 
   }
 });
 
+// The county SERVES a rejection's reason now (`?verdict=<reel id>`), so the posted text is public
+// while the operator's log stays whole. An instrument failure carries the box's paths through
+// `error.message`; a rider learns nothing from them and a stranger learns the deploy layout.
+test('a posted rejection reason names files, never paths; the operator log keeps both', async () => {
+  const { directory, stub } = await fixture();
+  const pathStub = path.join(directory, 'path-stub.mjs');
+  await writeFile(pathStub, `
+    process.stderr.write("Cannot find module '/srv/gold-rush/scripts/assay-replay.mjs'\\n");
+    process.exit(1);
+  `);
+  const api = await mockApi([row('leaky')]);
+  try {
+    const { code, stdout, stderr } = await runWorker(api.base, pathStub).done;
+    assert.equal(code, 0, stderr);
+    assert.equal(api.posts.length, 1);
+    assert.equal(api.posts[0].verdict, 'rejected');
+    assert.equal(api.posts[0].reason, "Cannot find module 'assay-replay.mjs'");
+    assert.ok(!/\/srv\//.test(api.posts[0].reason), 'no absolute path reaches the county');
+    assert.match(JSON.parse(stdout).reason, /\/srv\/gold-rush\/scripts\/assay-replay\.mjs/, 'the operator log keeps the whole message');
+  } finally {
+    await api.close();
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
 test('dry-run prints the verdict without posting it', async () => {
   const { directory, stub } = await fixture();
   const api = await mockApi([row('verified')]);
