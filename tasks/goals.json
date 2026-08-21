@@ -1535,7 +1535,8 @@
               "id": "f2145-1-terminal-probe-binding-control",
               "title": "Make the canyon terminal probe's binding control capable of returning both answers — it reads ACTIVE_CONTRACT from a module that never exported it, so it reports the cured f2142-1 defect on every run",
               "taskFile": "f2145-1-terminal-probe-binding-control.md",
-              "status": "queued",
+              "status": "merged",
+   "mergeHash": "fe1bbeaa4b07a753b8607df96ac03f70ddb1eacd",
               "note": "FIRE-AUTHORED s2145, lane-b. F-2145-2. scripts/f2142-canyon-terminal-probe.mjs:115 destructures ACTIVE_CONTRACT from /src/meta/ContractFamilies.ts, which does not export it — it is a module-local const in src/world/Terrain.ts:78 and src/world/props.ts:6 (four call sites, zero exports, measured s2145 across all of src and scripts). undefined?.id ?? null is null and matchesRequestedContract is false unconditionally, including on the run banked at artifacts/f2135-canyon-census/terminal-cause-s2145.json whose terrain is provably correct (96x112 canyon claim; 540/540 turn agreement with the census). That block is the probe's DECLARED CONTROL for whether refusals are a fact about the contract or about the harness URL, so a reader who trusts it re-opens F-2142-1, cured and merged at 8656ca1f1f1d71edcfec33fd3467ed45a31e4d59. Scope: rebuild the control on symbols the modules actually export, throw rather than compare when a cross-module symbol is undefined, guard it with a manufactured red, and prove the cured control returns BOTH answers by running the probe at ?debug&contract=<id> and at bare ?debug. Firewalled off src/** entirely: if the apparent cure is to export ACTIVE_CONTRACT, that is a sim-surface API change and an attended call, to be REPORTED and not done."
             },            {
               "id": "f2141-1-canyon-census-run-3",
