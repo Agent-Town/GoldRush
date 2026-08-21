@@ -712,7 +712,9 @@ export class HeadlessContractSim {
     //   armed hero  `heroWeaponsEnabledFor(primaryActor)`     -> this sim's own idiom for the same
     //              fact is `!this.dead` (`heroShooter.enabled`, `:267`);
     //   per weapon  `hasResearch(node)` + `hasBaronMedal()`   -> read from the INJECTED profile, the
-    //              same storage the campaign harness already writes (`gr-sim-campaign.mjs:88`).
+    //              same storage the campaign harness already writes (`gr-sim-campaign.mjs:103`,
+    //              the `new HeadlessContractSim(..., { storage })` site — was `:88` until f2120-1
+    //              added the `--contract` pre-flight refusals above it; cite the CODE, not the line).
     // A run that declares nothing therefore sees precisely what a browser player who has unlocked
     // nothing sees: three shooters that never pass `enabled()`. Progression is DECLARED, never minted.
     this.pressureArsenal = epoch?.id === 'epoch-2-steamworks'
