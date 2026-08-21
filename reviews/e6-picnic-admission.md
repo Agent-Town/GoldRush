@@ -285,8 +285,22 @@ them should be corrected before another slice bases arithmetic on them.
 | `artifacts/e6-picnic/**` (new) | LANE-ONLY — prover, probes, traces, run logs, screenshots |
 | `playwright.e6picnic.config.ts` (new) | LANE-ONLY — scratch config, port 5274 |
 
-**MAIN-MOVED since base:** `STATUS.md` only (the `1b1d2d2c8` lock commit). **BOTH-MOVED: none** — this
-branch touches no file main touched, so the merge is additive by construction and needs no 3-way graft.
+**MAIN-MOVED since base (17, re-measured at the end of the slice rather than at its start):** main
+advanced from the `1b1d2d2c8` lock to `2bd20fb1f` while this ran, draining `f2138-1` and `f2141-1` —
+`STATUS.md` · `package.json` · `src/sim/HeadlessContractSim.ts` · `tasks/BACKLOG.md` ·
+`tasks/goals.json` · `tasks/f2141-1-…md` · `reviews/f2138-1-…md` · `reviews/f2141-1-…md` ·
+`scripts/canyon-connect-view.test.mjs` · `scripts/f2135-canyon-*.mjs` ·
+`artifacts/f2135-canyon-census/**`.
+
+**BOTH-MOVED: none.** The two sets are disjoint — confirmed by measurement
+(`git diff --name-only 705839487..main` against `705839487..HEAD`), not by the absence of a complaint —
+so the merge is additive by construction and needs no 3-way graft.
+
+⚠️ **One note for whoever merges:** main's `src/sim/HeadlessContractSim.ts` moved under me (the
+canyon-connect view publish). That file is the picnic engine's home, so although the change is an
+epoch-3 concern and cannot touch a picnic run, **every hash in §3 is pinned to base `705839487`**. If
+the fork is ruled and the anchors land, re-run the four floors and four prover runs on the merged tree
+and pin *those* numbers — do not carry mine forward on the assumption that nothing moved (Mistake #4).
 
 **Where the player sees this, in a plain boot: nowhere, and that is the point.** `e6-picnic` remains
 door-1 refused; `artifacts/e6-picnic/door-probe.spec.ts` asserts it on both viewports —
