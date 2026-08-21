@@ -275,6 +275,15 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // exemption, 8th row) and A9 (admission) and A2 (stillwater reword, no count change) merged in
   // one window; per the standing law the pins below are the MERGED tree's own regen output,
   // verbatim — measured 504/1016/4 over 1524 rows, 8 exemptions.
+  // BOARD MOVE WITHOUT A DOOR MOVE (2026-08-21, the owner's pressure-line ruling on `e2-incline`
+  // and `e2-trestle`, `reviews/e2-pressure-line-railcars.md`): both contracts now declare
+  // `twist.pressureEnabled`, so four rows FLIP IN PLACE — `contract manifest does not advertise
+  // boiler_house` becomes `advertises BUILD boiler_house`, plus each one's browser-menu twin — and
+  // all four land `equal`, because the door predicate accepted `boiler_house` all along. NOTHING
+  // BELOW MOVES: not the summary, not the exemption count. Both contracts were re-proved with the
+  // line declared and neither secured on both bench seeds, so they keep their exemption rows with
+  // reworded reasons rather than leaving the table. The report's remaining churn is coordinate rot
+  // — the reword shifted `src/sim/HeadlessContractSim.ts` citations by 21 lines.
   assert.equal(audit.admission.exemptions.length, 8);
   assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 504, equal: 1016, 'not-offered': 4 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
