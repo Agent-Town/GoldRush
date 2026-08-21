@@ -554,9 +554,17 @@ test('the seeded rider view stays cache-shaped and grows one honest wave at a ti
   expect(projection.expectedWorksDamage).toBeLessThanOrEqual(views.wave3.now.works.hp);
   expect(projection.expectedGold).toBeGreaterThanOrEqual(0);
   expect(projection.harnessHash).toMatch(/^fnv1a32:[0-9a-f]{8}$/);
-  expect(views.wave3.now.seams.every((seam) => seam.active
-    ? Number.isFinite(seam.x) && Number.isFinite(seam.z) && seam.anchorIndex !== null && seam.anchorIndex >= 0
-    : seam.x === null && seam.z === null && seam.anchorIndex === null)).toBe(true);
+  for (const seam of views.wave3.now.seams) {
+    if (seam.active) {
+      expect(Number.isFinite(seam.x), `${seam.id}.x must be finite while active`).toBe(true);
+      expect(Number.isFinite(seam.z), `${seam.id}.z must be finite while active`).toBe(true);
+      expect(seam.anchorIndex !== null && seam.anchorIndex >= 0, `${seam.id}.anchorIndex must be non-negative while active`).toBe(true);
+    } else {
+      expect(seam.x, `${seam.id}.x must be null while inactive`).toBeNull();
+      expect(seam.z, `${seam.id}.z must be null while inactive`).toBeNull();
+      expect(seam.anchorIndex, `${seam.id}.anchorIndex must be null while inactive`).toBeNull();
+    }
+  }
 
   const receipt = await page.evaluate(async () => {
     const { createToolSurface } = await import('../src/agent/ToolSurface');
