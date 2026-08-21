@@ -1,6 +1,7 @@
 # Review — E2 pressure line on the last two railcars (the ruling executed; the maps still win)
 
-**Slice/branch/tip:** `worktree-agent-a383c2ed5dd452ebd`, base `789dc39a7`. Built by a headless Opus-5 agent.
+**Slice/branch/tip:** `worktree-agent-a383c2ed5dd452ebd`, built on `789dc39a7`, **re-derived on the
+merged tree after `main` advanced to `cef09f339` mid-build** (merge `7a03b4ce0`). Headless Opus-5 agent.
 **Verdict: PROPOSED — GREEN on what it claims, and what it claims is that the owner's ruling is now
 DATA, that the ruling's gift is real and measured, and that NEITHER map earns admission by it.**
 
@@ -100,19 +101,29 @@ option, not a force.**
 
 ### 4. Law 2 (null floors) and the pins
 
-- `assets/contracts/null-floors.json`: regenerated, **67 pairs, 0 `secured:true`**. The **only**
-  byte that changed in the whole file is `eraStamp` (`c3fa244ab` → `789dc39a7`), which was already
-  stale on `main` before this branch existed — a `--check` on the untouched tree reported exactly
-  `1 null-floor difference` and named that field. **Not one floor moved**, including the Hill Mine's
-  and the Pressure Garden's, and the two newly-pressured contracts add no rows because they are
-  still exempt. Idle with pressure declared still builds nothing: the four idle rows above terminate
-  at waves 1–2 on the same hashes the previous review published.
+- `assets/contracts/null-floors.json`: **this slice's diff is EMPTY, and that is the measured
+  result rather than an omission.** A `--check` on the untouched pre-merge tree reported exactly
+  `1 null-floor difference` and named it: `eraStamp` (`c3fa244ab` vs derived `789dc39a7`), already
+  stale on `main` before this branch existed (F-E2PL-4). A full regen then wrote **67 pairs, 0
+  `secured:true`**, and that one field was the only byte that moved — **not one floor changed**,
+  including the Hill Mine's and the Pressure Garden's, and the two newly-pressured contracts add no
+  rows because they are still exempt. When `main` advanced mid-build with the fairground admission
+  (which legitimately adds floor rows), main's file was taken whole rather than re-churned, so the
+  slice leaves the artifact exactly as `main` wrote it. Idle with pressure declared still builds
+  nothing: the four idle rows above terminate at waves 1–2 on the same hashes the previous review
+  published (`artifacts/e2-pressure-line/floors-regen.txt` preserves the regen).
 - **The Hill Mine's pin re-measured, not inherited:** `--contract e2-hill-mine --seed e2-hill-mine-01`
   through the (flag-extended) prover still returns **SECURED w15 `fnv1a32:c40556c0`** — the shipped
   value, exactly.
-- `docs/bench/same-game-audit.md` regenerated. **The summary does not move** — `0 agent-exceeds /
-  504 agent-lacks / 1016 equal / 4 not-offered` over 1524 rows, and 8 exemptions, all unchanged — so
-  `scripts/same-game-audit.test.mjs` needed no new number. Two rows per contract flip in place
+- `docs/bench/same-game-audit.md` regenerated **on the merged tree** (F-2084-1's own law — the
+  audit test's comment block records five earlier slices that pinned a pre-merge number and were
+  wrong). **The summary does not move** — the merged tree measures `0 agent-exceeds / 485
+  agent-lacks / 1035 equal / 4 not-offered` over 1524 rows with **7** exemptions, which is exactly
+  what `main`'s own twelfth-stack pin already says after the fairground admission. So
+  `scripts/same-game-audit.test.mjs` keeps main's numbers verbatim and gains only a note; nothing
+  was edited into agreement. (Pre-merge, on `789dc39a7`, the same regen measured 504/1016/4 with 8
+  exemptions and likewise did not move that base's numbers — the pressure line is summary-neutral on
+  both bases.) Two rows per contract flip in place
   (`contract manifest does not advertise boiler_house` → `advertises BUILD boiler_house`, and the
   browser-menu twin), and both land `equal` because the door predicate always accepted the buildable.
   The remaining churn is coordinate rot: this slice's comment block moved
@@ -156,17 +167,31 @@ refusal survived.
 
 ## Merge classification
 
-Base `789dc39a7` (branch fast-forwarded onto current `main` before any edit; 0 commits of its own
-beforehand). All files LANE-TOUCHED; no MAIN-MOVED file, no conflicts.
+Built on `789dc39a7` (branch fast-forwarded onto `main` before any edit; 0 commits of its own
+beforehand), then **merged with `main` at `cef09f339`** when the attended window landed the
+`e3-fairground` admission mid-build (merge `7a03b4ce0`). Five files conflicted and each was resolved
+by its own rule, none by hand-splitting a derived number:
+
+- **MAIN-MOVED, taken whole:** `assets/contracts/null-floors.json` (the fairground admission adds
+  real floor rows; this slice adds none — see Law 2 above).
+- **RE-DERIVED, never hand-merged:** `docs/bench/same-game-audit.md` — regenerated from the merged
+  tree, and `scripts/same-game-audit.test.mjs` keeps `main`'s pins **verbatim** because the merged
+  regen measured them unchanged (485/1035/4, 7 exemptions).
+- **UNION, both sides kept:** `tasks/BACKLOG.md` (main's four-rulings row first — it is the row that
+  dispatched this slice — then this slice's shipped row and F-E2PL-1), and `public/skill.md` (main's
+  new fairground-admission paragraph plus this slice's two-railcar paragraph, with my opener reworded
+  because main removed the sentence it referred back to).
+- **AUTO-MERGED AND VERIFIED BY READING:** `src/sim/HeadlessContractSim.ts` — `e3-fairground`'s row
+  is gone (main's) and both reworded railcar reasons are intact (mine); exemptions 8 → **7**.
 
 | file | change |
 |---|---|
 | `assets/contracts/epoch-2-steamworks/contracts.json` | +2 lines: `"pressureEnabled": true` on both twists |
 | `src/sim/HeadlessContractSim.ts` | two exemption reasons reworded + the ruling recorded verbatim |
 | `e2e/er01-e2-census.spec.ts` | the exempt pair now asserts `twist.pressureEnabled === true` |
-| `assets/contracts/null-floors.json` | regen; `eraStamp` only |
-| `docs/bench/same-game-audit.md` | regen; two row flips per contract + citation re-derivation |
-| `scripts/same-game-audit.test.mjs` | note only — no pin moved |
+| `assets/contracts/null-floors.json` | **no diff** — regen measured `eraStamp` alone, and main's file stands |
+| `docs/bench/same-game-audit.md` | regen on the merged tree; two row flips per contract + citation re-derivation |
+| `scripts/same-game-audit.test.mjs` | note only — main's pins kept verbatim, re-measured unchanged |
 | `public/skill.md` | prose: the two held railcars now carry a declared pressure line |
 | `tasks/BACKLOG.md` | the shipped row, F-E2PL-1's declaring row, F-E2PA-6 discharged, F-1608-2 re-priced |
 | `reviews/e2-pressure-line-railcars.md` | this file |
@@ -176,41 +201,52 @@ beforehand). All files LANE-TOUCHED; no MAIN-MOVED file, no conflicts.
 
 ## Gates
 
+The census, admission, audit, report, skill.md, citation and door-ratchet guards were **re-run after
+the merge** and are green there (5 playwright + 30 node assertions). The browser suites below ran on
+`789dc39a7` + this slice and carry over unmodified, proven rather than assumed:
+`git diff --name-only 789dc39a7..cef09f339` matches **nothing** under `e2e/e2-*`, `src/systems/Pressure*`,
+`src/game/Game.ts`, `assets/contracts/epoch-2-*`, `e2e/m1-01*`, `e2e/m2-01*` or `e2e/task-025*`.
+
 | gate | result |
 |---|---|
-| `tsc --noEmit` | clean |
+| `tsc --noEmit` | clean (pre-merge and post-merge) |
 | `vite build` + asset diet | green |
-| `e2e/er01-e2-census.spec.ts` | 4/4 green |
+| `e2e/er01-e2-census.spec.ts` (+ `ap16-4-contract-admission`) | 4/4 green pre-merge; **5/5 green re-run on the merged tree** |
 | E2 adjacent set (hill-mine, pressure-garden, trestle, incline, arsenal, pressure-economy, pressure-in-run, clarity-and-wreckers, ap16-4) × desktop + mobile | **40 passed · 2 skipped (deliberate) · 2 failed = ONE REGISTERED KNOWN RED × both projects** — see below |
 | `task-025` · `m1-01` · `m2-01` × desktop + mobile | green |
 | plain-boot probe × 2 contracts × 2 viewports | 4/4 green, 0 console/page errors |
-| `null-floor-anchors --check` | green after regen |
-| `test:node-guards` (contention protocol observed) | **275 assertions; the two guards this slice can move are GREEN (6/6); 5 reds are worktree-environment, 1 was mine and is cured** — see below |
+| `null-floor-anchors --check` | 67 pairs measured; only `eraStamp` differed (pre-existing, F-E2PL-4) |
+| `same-game-audit` · `same-game-report-guard` · `door-admission-ratchet` · `skillmd-guard` · `citation-title-guard` on the merged tree | **30/30 green** |
+| `test:node-guards`, run TWICE (contended, then alone on the merged tree) | **472 green assertions · 5 reds, all ONE worktree-environment cause, none this slice's** — see below |
 
-**THE NODE-GUARDS BATTERY, ROW BY ROW, WITH NOTHING WAVED THROUGH.**
+**THE NODE-GUARDS BATTERY, ROW BY ROW, WITH NOTHING WAVED THROUGH.** The first run (pre-merge) had
+six reds; the second — merged tree, board verified clear first — has five, and the difference itself
+is evidence.
 
-- ⑴ **MINE, AND CURED.** `same-game-report-guard.test.mjs:61` reddened with its own fix in the
-  message — *"stale exemption reason for 'e2-incline' — regenerate with `node scripts/same-game-audit.mjs
-  --write-report`"*. I had corrected a run count inside an exemption string after the first regen.
-  Regenerated; `same-game-report-guard` + `same-game-audit` now run **6/6 green**, with
-  `exemptions.length === 8` and `504/1016/4` unmoved.
-- ⑵ **CASCADE OF ⑴.** `fixture-teardown.test.mjs:41` re-runs every `scripts/*.test.mjs` as a child and
-  asserts `run.status === 0`, so a red in any subject reddens it too. It is not an independent finding.
-- ⑶ **CONCURRENCY, MEASURED NOT GUESSED.** `contention is advisory, correctly counted, and absent when
-  alone` failed because we were **not alone**: a second battery was live in `worktrees/lane-d` (pid
-  93798, cwd confirmed by `lsof -a -p <pid> -d cwd`) — a Codex lane running the same battery. The guard
-  did its job. (Checked and excluded: a poll loop whose own command line contains the string
-  `run-node-guards` is found by `contentionStamp`'s `pgrep` but **filtered out** by
-  `runsNodeGuardsBattery`, whose regex at `scripts/node-guards-concurrency.mjs:21` requires an actual
-  `node …/run-node-guards.mjs` invocation — so watching the battery does not corrupt it.)
-- ⑷ **FIVE STRUCTURAL WORKTREE REDS — see F-E2PL-5.** The four `suite-red-inventory` reducer arms and
-  `worker-type-coverage`'s *"every functions/**/*.ts is type-checked"* all die on
-  `Cannot find package 'typescript'`. **An agent worktree has no installed packages** — its
-  `node_modules/` holds only `.vite`/`.vite-temp` — and `typescript` resolves for ordinary code by
-  walking UP to the parent repo. These two guards defeat that walk by construction:
-  `worker-type-coverage.test.mjs:10` hard-codes `join(ROOT, 'node_modules', 'typescript', 'bin', 'tsc')`,
+- ⑴ **ONE WAS MINE, AND IT IS CURED.** `same-game-report-guard.test.mjs:61` reddened with its own fix
+  in the message — *"stale exemption reason for 'e2-incline' — regenerate with `node
+  scripts/same-game-audit.mjs --write-report`"* — because I corrected a run count inside an exemption
+  string after the first regen. Regenerated; `same-game-audit` + `same-game-report-guard` +
+  `door-admission-ratchet` + `skillmd-guard` + `citation-title-guard` now run **30/30 green** on the
+  merged tree, with `exemptions.length === 7` and `485/1035/4` unmoved.
+- ⑵ **CONCURRENCY — AND THE SECOND RUN PROVES THE ATTRIBUTION.** `contention is advisory, correctly
+  counted, and absent when alone` failed on the first run because we were **not alone**: a second
+  battery was live in `worktrees/lane-d` (pid 93798, cwd confirmed by `lsof -a -p <pid> -d cwd`).
+  Re-run alone, **it passes**. The guard did its job and the diagnosis holds. (Checked and excluded:
+  a poll loop whose own command line contains the string `run-node-guards` is found by
+  `contentionStamp`'s `pgrep` but **filtered out** by `runsNodeGuardsBattery`, whose regex at
+  `scripts/node-guards-concurrency.mjs:21` demands an actual `node …/run-node-guards.mjs` invocation —
+  so watching the battery does not corrupt it.)
+- ⑶ **THE REMAINING FIVE ARE ONE CAUSE — see F-E2PL-5.** Four `suite-red-inventory` reducer arms and
+  `worker-type-coverage`'s *"every functions/**/*.ts is type-checked"* die on `Cannot find package
+  'typescript'`, and `fixture-teardown` reddens **downstream of them**: its assertion text names the
+  culprit outright — *"scripts/suite-red-inventory.test.mjs child failed"* — because it re-runs every
+  `scripts/*.test.mjs` and asserts `run.status === 0`. **An agent worktree has no installed packages**
+  (its `node_modules/` holds only `.vite`/`.vite-temp`); ordinary code survives because Node walks UP
+  to the parent repo, and these two guards defeat that walk by construction —
+  `worker-type-coverage.test.mjs:10` hard-codes `join(ROOT, 'node_modules', 'typescript', 'bin', 'tsc')`
   and `suite-red-inventory.test.mjs:65` symlinks `ROOT/node_modules` into a temp tree. Proven at the
-  source, not inferred from a run.
+  source and confirmed by the cascade's own message, not inferred from a run.
 
 **THE TWO REDS ARE ATTRIBUTED THREE WAYS, NOT EXPLAINED AWAY.** Both are the same test —
 `e2e/e2-hill-mine.spec.ts:166`, *"Hill Mine render descriptor auto-activates mesh relief and leaves
@@ -255,8 +291,8 @@ guard, which boots the default claim) are green on both projects.
   'typescript', 'bin', 'tsc')`) and `scripts/suite-red-inventory.test.mjs:65` (symlinking
   `ROOT/node_modules` into a temp root). An agent worktree has no installed packages; ordinary code
   survives because Node walks UP to the parent repo, and these two defeat that walk. So every
-  worktree-built slice inherits the same five reds plus the `fixture-teardown` cascade they cause,
-  and each drain must re-derive that from scratch. **Fire-authorable**, two candidate cures: resolve
+  worktree-built slice inherits the same reds — four reducer arms, `worker-type-coverage`, and the
+  `fixture-teardown` cascade they cause — and each drain must re-derive that from scratch. **Fire-authorable**, two candidate cures: resolve
   the compiler with `require.resolve('typescript')` instead of a path join, or have the guards skip
   with a stated reason when `ROOT/node_modules` is empty. Filed so the next worktree agent does not
   spend a gate cycle proving it again.
