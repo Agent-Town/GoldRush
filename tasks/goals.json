@@ -1478,8 +1478,16 @@
               "id": "b4v3-picnic-active-defense",
               "title": "B4v3 Picnic: the hold is earned — standing hero contests nothing (owner ruling); complete the hold on the v1+v2 WIP",
               "taskFile": "b4v3-picnic-active-defense.md",
-              "status": "queued",
+              "status": "stopped",
+              "note_s2131": "MERGED at e6aa6e073 and REVERTED at 6c5f8a7a2 the same fire (s2131). The runner reached a lawful Law-2 STOP (idle still secures; the headless idle hero auto-fires, so no hero-damage predicate can express the owner ruling - F-2131-1b, OWNER FORK). I merged the built content on a full green battery, then found F-2131-1a while regenerating a report the merge invalidated: PicnicHoldSystem.isEnabled counts heroStart markers >= 2, which is ALSO true of the ADMITTED e10-last-claim (heroStart=3), so the hold and its loss condition went live there - e10-last-claim 5 turns -> 2, proven by bisection, restored to 5 by the revert. Corrective tasks/f2131-1-picnic-enable-key.md re-lands by reverting the revert. Salvage archive/lane-b-s2131-b4v3-absorbed-2cc5a1d4b. Evidence reviews/b4v3-picnic-active-defense.md.",
               "note": "Owner ruling 2026-08-21 verbatim: 'picnic - no, just standing there should not win'. lane-b, BUILD-ON-PREDECESSOR over 7a320da26+1731de225."
+            },
+            {
+              "id": "f2131-1-picnic-enable-key",
+              "title": "F-2131-1a: give the picnic hold a contract-scoped enable key (re-lands b4v3 by reverting the revert)",
+              "taskFile": "f2131-1-picnic-enable-key.md",
+              "status": "queued",
+              "note": "FIRE-AUTHORED s2131. PicnicHoldSystem.isEnabled counts heroStart markers >= 2, true for BOTH e6-picnic and the ADMITTED e10-last-claim, so the hold + its loss condition went live on a shipped contract (5 turns -> 2). b4v3 merged at e6aa6e073 and was reverted at 6c5f8a7a2; this re-lands via git revert 6c5f8a7a2, fixes the key, gates the ungated diagnostics field (F-2131-4), and adds the guard that would have caught it. Admission stays REFUSED - F-2131-1b is an owner fork."
             },
             {
               "id": "b4v2-picnic-stake-pressure",
