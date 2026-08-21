@@ -288,6 +288,12 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // line declared and neither secured on both bench seeds, so they keep their exemption rows with
   // reworded reasons rather than leaving the table. The report's remaining churn is coordinate rot
   // — the reword shifted `src/sim/HeadlessContractSim.ts` citations by 21 lines.
+  // SECOND BOARD MOVE, SAME SHAPE, SAME NON-RESULT (2026-08-21, the owner's `coalSeams` ruling —
+  // `reviews/e2-coal-seams-and-legibility.md`): `twist.coalSeams` is a new AUTHORED_TWIST_KEY that
+  // `e2-trestle` and `e2-incline` now declare, and it moves NOTHING here — not a row, not the
+  // summary, not the exemption count. It is read by `PressureSystem` alone; `MechanicsManifest`
+  // derives no rule from it, so no parity row exists to flip. The report's churn is the two reworded
+  // exemption reasons plus citation-coordinate rot. Verified by regen, not assumed.
   // ⚠️ TWELFTH STACK (the fairground admission, owner-ruled anchor set): exemptions 8 -> 7,
   // 19 rows agent-lacks -> equal — the exact movement the hold-era comment predicted. Pins =
   // the merged tree's regen, verbatim, as every layer.
@@ -339,8 +345,14 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // being not-offered a day ago, when its `harvestAnchors` were authored.
   // ⚠️ THIRTEENTH STACK (the relay-rush admission over the fairground's twelfth): the branch's
   // own 483/1037/7 was measured pre-fairground; the merged tree measures below, verbatim.
-  assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 468, equal: 1090, 'not-offered': 4 });
+  // ⚠️ FOURTEENTH STACK — the `e5-stillwater` admission (2026-08-21, owner-authorised strike-cost
+  // dial: "ok, lets do it, we can balance later during testing"). Exemptions 6 -> 5 and the door
+  // 32 -> 33. The numbers below were measured on the MERGED tree (main `d775fca71` merged into
+  // the branch BEFORE the audit was re-run), never by editing two sides' arithmetic into
+  // agreement — which is the F-2084-1 failure this comment block exists to prevent, and which
+  // git would happily auto-merge because both sides write the same-shaped digits.
+  assert.equal(audit.admission.exemptions.length, 5);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 446, equal: 1112, 'not-offered': 4 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });

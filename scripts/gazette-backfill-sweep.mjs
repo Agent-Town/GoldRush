@@ -116,6 +116,22 @@ const main = () => {
   for (const r of absent) {
     console.log(`  ${r.short}  ${r.date}  files=${r.n}  ${r.subject.slice(0, 96)}`)
   }
+  if (absent.length) {
+    console.log('')
+    // F-2157-1: a judgement recorded ONLY in a STATUS.md handoff does not reach this tool,
+    // which reads marketing/outbox/ and nothing else. 1968127f5 was judged NOT PLAYER-VISIBLE
+    // in ELEVEN consecutive handoffs (s2144..s2155) while cited ZERO times in the outbox, so
+    // it came back as a live candidate every fire and each one re-paid the judgement cost --
+    // several while telling their successor "do NOT re-judge it". State the discharge here,
+    // at the moment the judgement is made, because that is the only surface the judging fire
+    // is looking at (the F-1654-1 address problem, one level down).
+    console.log('    to DISCHARGE a candidate, write its verdict where THIS TOOL reads:')
+    console.log(`      - news      -> a gazette item in marketing/outbox/ citing the hash`)
+    console.log(`      - not news  -> a paragraph in marketing/outbox/ containing "${MARKER}" AND the hash`)
+    console.log('    a verdict written only into a STATUS.md handoff is INVISIBLE here and')
+    console.log('    the candidate returns next fire. Blank lines scope the marker paragraph:')
+    console.log('    never cite a REPORTED hash inside one (F-1613-1).')
+  }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main()

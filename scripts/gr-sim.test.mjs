@@ -88,14 +88,23 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   assert.ok(lines.some((line) => line.schema === 'goldrush.view.v1' && line.now.works.byKind.palisade === 1));
   assert.match(first.stderr, /gr-sim speed: \d+\.\d{2} waves\/s/);
 
-  // The refusal probe must name a contract that is ACTUALLY still refused. It used to be
-  // `e5-deepwater-claim`, which was admitted on 2026-08-20 once the Dredge-Queen socket landed
-  // and both its bench seeds secured — leaving this assertion testing nothing but its own
-  // staleness. `e5-stillwater` keeps the property under test: its noise-hunt consumer is still
-  // absent, so it remains a cited exemption and the door must still refuse it BY NAME.
+  // The refusal probe must name a contract that is ACTUALLY still refused, and this is the THIRD
+  // time that has bitten: it was `e5-deepwater-claim` until the Dredge-Queen socket admitted it
+  // on 2026-08-20, then `e5-stillwater` until the noise-hunt admitted THAT on 2026-08-21. Each
+  // time the hardcoded id left the assertion testing nothing but its own staleness — which the
+  // previous comment predicted in writing and still did not prevent, because a prediction is not
+  // a mechanism.
+  //
+  // SO IT IS NO LONGER HARDCODED. The id is READ from `CONTRACT_ADMISSION_EXEMPTIONS` at run
+  // time, so admitting any single contract can never again turn this probe into a tautology; the
+  // `assert.ok` below is what fails loudly on the day the table finally empties, which is a real
+  // event this suite should announce rather than skip.
+  const exemptions = [...readFileSync(new URL('../src/sim/HeadlessContractSim.ts', import.meta.url), 'utf8')
+    .matchAll(/^ {2}'([a-z0-9-]+)': \{$/gm)].map(([, id]) => id);
+  assert.ok(exemptions.length > 0, 'no cited exemption remains — this refusal probe needs a new subject');
   const unsupported = spawnSync(
     process.execPath,
-    ['scripts/gr-sim.mjs', '--contract', 'e5-stillwater', '--policy=idle'],
+    ['scripts/gr-sim.mjs', '--contract', exemptions[0], '--policy=idle'],
     { cwd: ROOT, encoding: 'utf8', timeout: 30_000 },
   );
   assert.notEqual(unsupported.status, 0);

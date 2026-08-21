@@ -98,6 +98,14 @@ const CONTRACTS: readonly Briefing[] = [
       'T2 and T3 pads out-range the valley, but cliff faces block bolts.',
       'Claim-jumpers must climb the switchbacks; cliff bands are impassable.',
       'The flooded gallery is deep except at the trestle and wet edge.',
+      // THE SENTENCE THE MAP NEVER HAD (owner playtest 2026-08-21, verbatim: "I was not able to
+      // ever obtain coal or use the pressure weapons when I played maps in E2"). Measured: the coal
+      // was never buried and never unobtainable — every lump flush to 0.000 m, and 0.8 s standing on
+      // one yields its 4 coal. What was missing was any way to LEARN it existed: this card named the
+      // terraces, the switchbacks and the flooded gallery and never mentioned the fuel its own
+      // pressure line runs on, while `e2-pressure-garden`'s card had named its seams all along. This
+      // pin is why the cure cannot silently rot back out.
+      'Coal seams lie at the mine mouth on the top terrace, north of the boiler-house site.',
     ],
   },
 ];

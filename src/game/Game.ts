@@ -1534,6 +1534,8 @@ export class Game {
       (id) => hasResearchNode(this.researchState, id),
       (position, text, color) => this.vfx.floatText(position, text, color),
       (sound) => this.audio.play(sound),
+      // ONE CONTRACT READ, BOTH ENGINES — `HeadlessContractSim` passes the identical expression.
+      this.activeContract.twist.coalSeams,
     );
     this.pressureArsenalSystem = new PressureArsenalSystem(
       this.combat,

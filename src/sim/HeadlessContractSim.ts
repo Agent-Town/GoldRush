@@ -124,12 +124,12 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // (`8c28f1ff` w12 / `bc515b13` SECURED w18 / `83b0a873` w6 / `dac0c325` w8), so nothing about
   // these contracts changed except what a player is now allowed to build.
   'e2-incline': {
-    reason: 'Pressure line DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line") and measured: boiler house on the board, all 3 coal seams reachable, 192 pressure spent through the E2 arsenal on seed 02. Best measured play with declared E1 progression still terminated unsecured at waves 6/9 across 60 measured runs; the hero holds a lower-yard stake 58wu from the fixed coal seams, so the walk that fuels the arsenal costs the economy that buys the guns, against an hpScale-30 railcar. Ignoring the new line reproduces the pre-ruling floors exactly (fnv1a32:83b0a873 w6 / fnv1a32:dac0c325 w8), so no balance moved. Re-admit when both bench seeds secure.',
-    citation: 'reviews/e2-pressure-line-railcars.md',
+    reason: 'BOTH E2 pressure levers are now spent on this map and it still refuses. (1) The pressure line was DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line"). (2) The coal was then moved onto the claim\'s OWN ground per the owner ruling of 2026-08-21 to F-E2PL-1 ("sounds like a good idea"): three authored twist.coalSeams in the lower yard between the haul lines, mean 28.8wu from the engine-house stake against 58wu when the seams were a module constant on the Hill Mine\'s minehead. The fuel economy doubled and is measured, not argued — 384 pressure delivered and 288 arsenal fires on seed 02, against 192/164 before. What refuses is a wall the coal never touched: the hero dies at wave 6 of 12 on seed 01 in every measured ladder with two turrets standing, and seed 02 reaches only wave 10 (fnv1a32:b90667b6 / fnv1a32:5607b921, each x2), against four spawn edges onto a lower-yard stake it cannot leave. A rider that declines the line still reproduces the pre-ruling floors exactly (fnv1a32:83b0a873 w6 / fnv1a32:dac0c325 w8), so neither ruling moved any balance. Re-admit when both bench seeds secure.',
+    citation: 'reviews/e2-coal-seams-and-legibility.md',
   },
   'e2-trestle': {
-    reason: 'Pressure line DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line") and measured: boiler house on the board, all 3 coal seams reachable, 317 pressure spent through the E2 arsenal on seed 02. Admission is unchanged because seed 01 still refuses: across 94 measured runs the best play secures seed 02 at wave 18 (fnv1a32:bc515b13) and terminates unsecured at wave 12/13 on seed 01 (fnv1a32:8c28f1ff), the same split the pre-ruling review measured and reproduced here bit for bit. The seams sit 55wu from the only stake the hero can hold, so a rider that fuels the arsenal arrives at the hpScale-30 railcar poorer than one that does not. Re-admit when both bench seeds hold.',
-    citation: 'reviews/e2-pressure-line-railcars.md',
+    reason: 'BOTH E2 pressure levers are now spent on this map and it still refuses. (1) The pressure line was DECLARED per the owner ruling of 2026-08-21 ("give both the pressure line"). (2) The coal was then moved onto the claim\'s OWN ground per the owner ruling of 2026-08-21 to F-E2PL-1 ("sounds like a good idea"): three authored twist.coalSeams along the mine spur on the south approach, mean 29.4wu from the hero\'s stake — the Hill Mine\'s own measured standard — against 55wu when the seams were a module constant. The fuel economy doubled and is measured: 384 pressure delivered on seed 02 against 192 before, with the arsenal firing 8/20/18. Admission is still refused because seed 01 still does not secure: best play WITH the line reaches wave 10 (fnv1a32:e6fe4301) and wave 12 (fnv1a32:053b81d6), the deepest run of any kind reaches 12/13, and the only secure in the whole programme remains the run that DECLINES the line on seed 02 at wave 18 (fnv1a32:bc515b13, x2). The remaining wall is the hpScale-30 railcar, not the fuel — see F-1608-2. A rider that declines the line reproduces the pre-ruling hashes exactly even with the seams moved, so neither ruling moved any balance. Re-admit when both bench seeds hold.',
+    citation: 'reviews/e2-coal-seams-and-legibility.md',
   },
   // F-1475-1's ORIGINAL reason is dead and its replacement is narrower. "The crowd-flock escort
   // objective has no headless consumer" was true when written and is false now: `CrowdFlockSystem`
@@ -137,36 +137,14 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // holds admission is the build law, not the consumer — the door-completion sheet requires "a
   // public-verb secure proof x2 per seed", and no such proof exists yet. Same shape as
   // `e6-showroom`: the reason died, the refusal survived, so the row is REWORDED not removed.
-  // A2 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-21, door-completion-sheet §A2). Third
-  // instance of the A8 shape, and the widest gap any of them has measured.
-  //
-  // THE CONSUMER IS NOT THE GAP, AND THE ROW IS REWORDED RATHER THAN REMOVED TO SAY SO. The old
-  // reason — "the noise-hunt consumer remains absent" — was true when written and is false now:
-  // `src/systems/NoiseHuntSystem.ts` runs in BOTH engines, the three declared machines emit off
-  // seams that already existed (the harvest CHANNEL, a REANCHOR, the ballista's shot counter),
-  // the trail forms on the loudest audible source and is shed after eight quiet seconds, the
-  // declared quiet zones silence, and a strike costs a deck pad through the same `loseHull` seam
-  // the Flotilla uses. All of it is traced in `artifacts/e5-stillwater/`.
-  //
-  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry — the same sentence
-  // `e7-relay-rush` and `e9-seed-run` earned below, for a third distinct reason. There is no land
-  // on a Deepwater contract (`place_build` and `placeFree` both refuse), so a rider's ENTIRE
-  // defence is three deck pads carrying a ballista and a beacon; the hero is a fixed post at
-  // (0,30) because slot 0 runs on IDLE_INTENTS; and the contract's own `lanes.spawnEdges` and
-  // per-variant `spawnGates` declare the ORDINARY wave schedule, which fields fifteen
-  // `machine_leviathan` a wave from two edges. Its storm is authored suppressed (a 3600s cycle)
-  // and crews zero corsairs, so the storm track cannot be the clock and the ordinary one is.
-  //
-  // AND THE GEOMETRY REFUSES THE MECHANIC ITS OWN BEST USE, which is the finding worth keeping:
-  // both anchors are extremes. `lagoon` (0,30) sits ON the hero, so every machine that runs is
-  // loud exactly where the hero stands; `open-water` (-24,12) sits INSIDE the declared
-  // `hand-pan-drift` quiet zone, so it silences everything and carries the guns 20wu off the body
-  // they defend. There is no third station where noise is loud AWAY from the hero, so the trail
-  // can be paid for or avoided but never AIMED — and the measurements show paying beats avoiding.
-  'e5-stillwater': {
-    reason: 'Best measured public-verb play terminated unsecured at wave 4 on BOTH bench seeds against secureWave 12 (fnv1a32:e83bc5ff / fnv1a32:96191e05, each repeated identical). Six policies per seed span waves 0-4 against an idle floor of wave 3, so the whole spread is one wave wide. The A2 noise-hunt consumer is LIVE in both engines and is not the gap: the three declared machines emit, the trail forms on the loudest audible one and is shed after 8 quiet seconds, the declared quiet zones silence, and strikes cost deck pads (18 strikes and all three decks on the ceiling run). Emission is attributable — a run with no turret and no HARVEST order records strikes 0 and every deck at 96. The map is: a Deepwater contract offers no land (place_build and placeFree both refuse), so the whole of a rider defence is three deck pads; the hero is a fixed post at (0,30) because slot 0 runs on IDLE_INTENTS; and the authored storm is suppressed at a 3600s cycle crewing zero corsairs, so the storm track cannot be the clock and the ordinary schedule is, fielding 15 machine_leviathan a wave from two authored edges. Both anchors are extremes - the lagoon sits ON the hero and the open water sits INSIDE the hand-pan-drift quiet zone - so noise is either on top of the hero or absent, and the trail can be paid for or avoided but never aimed. Re-admit when both bench seeds secure.',
-    citation: 'reviews/a2-stillwater-noise-hunt.md',
-  },
+  // `e5-stillwater` LEFT THIS TABLE 2026-08-21 — ADMITTED. It sat here from the milk/twin-sockets
+  // probe ("the noise-hunt consumer remains absent") through the A2 build that made that reason
+  // false, and out on the measurement that made the map winnable. What admitted it, in order:
+  // the A2 noise-hunt consumer in both engines; the owner-ruled `shelf-watch` anchor, which let
+  // the trail be AIMED for the first time and moved the ceiling from wave 4 to waves 9 and 11;
+  // and the owner-authorised strike-cost dial ("ok, lets do it, we can balance later during
+  // testing"), which secures BOTH bench seeds twice at wave 12 with a pad still standing.
+  // Evidence and the whole dial: `reviews/a2-stillwater-noise-hunt.md`, `artifacts/e5-stillwater/`.
   // REWORDED 2026-08-20 after the Showroom gained an honest capture objective. The idle
   // false-green is closed: fewer than six run-local captures keeps the secure latch shut at every
   // wave. The refusal survives for the other measured reason — unchanged-difficulty public play
@@ -353,6 +331,11 @@ export type HeadlessAgentView = AgentView & {
      * everywhere else — silence means "no probe out there", and it must keep meaning that.
      */
     probeRecovery?: ProbeRecoveryDiagnostics;
+    /**
+     * E3 Canyon Works. `powered` moves every turn, while `complete` and `failed` latch mid-run
+     * and gate the secure. A rider cannot escort the connection it cannot see.
+     */
+    canyonConnect?: { powered: number; required: number; byWave: number; complete: boolean; failed: boolean };
     /** E3 Fairground: the dynamo the run defends and the escort the run must complete. */
     fairground?: {
       wheel: FerrisWheelDiagnostics;
@@ -818,6 +801,8 @@ export class HeadlessContractSim {
       (id) => research !== null && hasResearchNode(research, id),
       () => undefined,
       () => undefined,
+      // ONE CONTRACT READ, BOTH ENGINES — `Game.ts` passes the identical expression.
+      this.manifest.twist.coalSeams,
     );
     // THE STEAMWORKS ARSENAL, ON THE BROWSER'S OWN GATES — nothing here is a floor, a grant, or a
     // mint. `Game.ts:1372-1381` builds `PressureArsenalSystem` from exactly four predicates, and all
@@ -1495,6 +1480,7 @@ export class HeadlessContractSim {
     // contract — `recovered` flips mid-run and gates the secure — so unlike the suppression
     // row above it is real per-turn state a rider must be able to poll.
     if (this.probeRecovery.declared) view.now.probeRecovery = this.probeRecovery.diagnostics;
+    if (this.canyonConnectDiagnostics()) view.now.canyonConnect = this.canyonConnectDiagnostics()!;
     // A rider cannot escort what it cannot see. THE VIEW carries the wheel, every flock's phase
     // and crossing count, and the objective read straight off the same latch the run secures on —
     // so a "secured" claim can be checked against the escort that earned it (Mistake #13).

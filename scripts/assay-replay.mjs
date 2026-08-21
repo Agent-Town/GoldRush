@@ -51,15 +51,19 @@ try {
   });
   const startedAt = performance.now();
   await page.goto(`http://127.0.0.1:${port}/?${query}`, { waitUntil: 'load', timeout: 60_000 });
-  await page.waitForFunction(() => Boolean(window.__GR_TEST__), undefined, { timeout: 60_000 });
+  // Slow-box headroom (the DO worker droplet cold-transforms the whole game on its first replay):
+  // the FIRST boot may exceed a fixed minute; later replays reuse the warmed vite server.
+  const bootTimeoutMs = Number(process.env.ASSAY_BOOT_TIMEOUT_MS ?? 60_000) || 60_000;
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__), undefined, { timeout: bootTimeoutMs });
   await page.evaluate((seconds) => {
     window.__GR_TEST__.setManualSim(true);
     window.__GR_TEST__.advanceSim(seconds);
   }, tape.inputLog.durationTicks * tape.inputLog.stepSeconds);
+  const playbackTimeoutMs = Number(process.env.ASSAY_PLAYBACK_TIMEOUT_MS ?? 120_000) || 120_000;
   await page.waitForFunction(
     () => document.querySelector('[data-testid="lantern-show"]')?.getAttribute('data-playback') === 'complete',
     undefined,
-    { timeout: 60_000 },
+    { timeout: playbackTimeoutMs },
   );
   if (errors.length) throw new Error(errors.join('\n'));
 
