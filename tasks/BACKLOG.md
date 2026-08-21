@@ -1,3 +1,8 @@
+📜 **FOUR RULINGS IN ONE BREATH (owner 2026-08-21, verbatim: "five-map - lets follow your recommendation, picnic - no, just standing there should not win, E2s pressure and E10 lore pages - lets do that") — ALL EXECUTING:**
+· **Five-map table → the recommendations**: e9-seed-run + e9-old-canal exemption rows stamped **ACCEPTED-ELITE** (F-A8-4 + F-A10-4 CLOSED — deliberate difficulty, no debt); e3-fairground anchor-set authoring (prover agent session 7) · e7-relay-rush relay-line stake (A5 agent resumed) · e5-stillwater aiming anchor (A2 agent resumed) — each re-proves ×2 and flips its own admission on evidence.
+· **Picnic RULED**: a merely-standing hero contests nothing — `tasks/b4v3-picnic-active-defense.md` queued lane-b (BUILD-ON-PREDECESSOR over the v1+v2 WIP; contest = turrets or active defense).
+· **E2 pressure line EXECUTING** (F-E2PA-6 desk rec approved): fresh agent gives incline+trestle the boiler arsenal, re-proves against the review baselines, judges each map independently.
+· **E10 lore pages RATIFIED**: `lore/archive-world-pages.md` landed as canon (wired-from, never-invented — the WD convention); the spec §6 PROPOSAL tags retire.
 🏁 **THE DOOR-COMPLETION PROGRAM CLOSES (2026-08-21 attended closing window; drains `2146c61ae` A9 · `a4956750` A10 · `c3fa244ab` A2 + records/leaves)** — every item on the ratified sheet is now BUILT (17 mechanics in both engines), ADMITTED (door 30 contracts), or honestly EXEMPT with its full story. Final audit stack (eleventh re-measure, verbatim): 504/1016/4 over 1524 rows, 8 exemptions; floors 67 --check reproducible, 0 secured:true.
 🔺 **THE FIVE-MAP FORK TABLE (one owner sitting, one word per row — all mechanics SHIPPED, all exemptions honest):**
 | map | measured ceiling | one-word cures (rec first) |
