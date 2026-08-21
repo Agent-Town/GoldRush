@@ -440,7 +440,9 @@
             "maxZ": 46
           }
         ],
-        "stakeMarkers": [],
+        "stakeMarkers": [
+          { "id": "relay-ridge-command-stake", "x": -25, "z": 41, "heroStart": true }
+        ],
         "waterSources": [],
         "harvestAnchors": [
           { "x": -45, "z": 32 },
@@ -509,9 +511,10 @@
         "rules": [
           "Relay Rush reuses Relay Valley ground.",
           "Four surveyed sites mark the ridge chain.",
+          "You stake the second relay ground; the other three want a walk.",
           "Waves enter from the north, west, and east."
         ],
-        "geographyLine": "The Relay Valley ridge chain with four surveyed relay grounds along its map-wide corridor."
+        "geographyLine": "The Relay Valley ridge chain with four surveyed relay grounds along its map-wide corridor; the claim is staked on the second ground, where the guns can stand with you."
       }
     }
   ]
