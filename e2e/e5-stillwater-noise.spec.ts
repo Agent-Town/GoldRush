@@ -127,8 +127,23 @@ test('the noise-hunt hears its three machines, trails the loudest, sheds the tra
       { id: 'sail-trim-drift', boatInside: false },
     ]);
 
-    // THE STRIKE COSTS A DECK AND NEVER THE HERO. Six strikes at 16 take a 96-integrity pad out
-    // through the tile's own `loseHull` seam, and only when the head is actually alongside.
+    // THE THIRD ANCHOR IS THE ONE THAT MAKES NOISE A CHOICE (owner ruling 2026-08-21). At
+    // `shelf-watch` every machine is LOUD — it clears both quiet zones — and it is 36wu from the
+    // hero's fixed post at (0,30), which is further than the loudest machine's own radius (24).
+    // That is the whole difference between a trail you PAY FOR and one you AIM.
+    state.anchor = { id: 'shelf-watch', x: 36, z: 30 };
+    hunt.advance(50, [away], 'machine_leviathan');
+    expect(hunt.diagnostics.sources.every(({ silenced }: { silenced: boolean }) => !silenced)).toBe(true);
+    expect(hunt.diagnostics.quietZones.every(({ boatInside }: { boatInside: boolean }) => !boatInside)).toBe(true);
+    // The engine window opened at t=40 has expired by t=50, so the pump is the only machine
+    // running and it is what gets trailed — at (33,29), riding the new anchor.
+    expect(hunt.diagnostics.trail).toMatchObject({ target: 'air-pump', x: 33, z: 29 });
+    expect(Math.hypot(33 - 0, 29 - 30)).toBeGreaterThan(NOISE_HUNT_RULES.audibleRadius);
+
+    // THE STRIKE COSTS A DECK AND NEVER THE HERO. Sixteen strikes at 6 take a 96-integrity pad
+    // out through the tile's own `loseHull` seam, and only when the head is actually alongside.
+    // Sixteen is the point of the re-derived damage: it is four times the eight-second trail-shed
+    // window in strikes, so breaking contact is a real save rather than a gesture.
     // It is `port` that goes, not `bow`: the pump is the loudest thing running once the boat is
     // back on the lagoon, it sits at (-3,29), and the struck deck is the one nearest the TRAILED
     // MACHINE — port at (-3,31) is 2wu from it where bow at (0,27) is 3.6wu.
@@ -162,56 +177,86 @@ test('the noise-hunt hears its three machines, trails the loudest, sheds the tra
  * run twice each. It does NOT secure, and this test exists to keep that number honest rather
  * than to celebrate it — the moment either seed reaches wave 12 the exemption row is wrong.
  */
-test('the best measured Stillwater play tops out at wave 4 of 12 on both bench seeds', () => {
-  test.setTimeout(180_000);
+test('Stillwater SECURES both bench seeds twice through the PLAIN door', () => {
+  test.setTimeout(300_000);
+  // THE ADMISSION PROOF (2026-08-21). No `admissionProbe` anywhere: this spawns
+  // `scripts/gr-sim.mjs` exactly as any rider would, which is the only proof that admits a map.
   const expected = {
-    'e5-stillwater-01': 'fnv1a32:e83bc5ff',
-    'e5-stillwater-02': 'fnv1a32:96191e05',
+    'e5-stillwater-01': { eventLogHash: 'fnv1a32:f9967071', kills: 97 },
+    'e5-stillwater-02': { eventLogHash: 'fnv1a32:8fb9ae74', kills: 127 },
   } as const;
-  for (const [seed, eventLogHash] of Object.entries(expected)) {
+  for (const [seed, { eventLogHash, kills }] of Object.entries(expected)) {
     const outcomes = [1, 2].map(() => {
       const run = spawnSync(process.execPath, [
-        'artifacts/e5-stillwater/prover.mjs', '--seed', seed,
-        '--policy', 'deck', '--deck', 'turret,sentry_beacon,turret', '--harvest', 'off', '--quiet',
-      ], { cwd: process.cwd(), encoding: 'utf8', timeout: 60_000 });
-      // Law: the prover exits 1 when a public-verb run does NOT secure, which is the case here.
-      expect(run.status, run.stderr).toBe(1);
+        'artifacts/e5-stillwater/prover.mjs', '--plain', '--seed', seed,
+        '--policy', 'bait', '--deck', 'turret,sentry_beacon,turret', '--harvest', 'on', '--quiet',
+      ], { cwd: process.cwd(), encoding: 'utf8', timeout: 120_000 });
+      // The prover exits 0 only when a public-verb run SECURES.
+      expect(run.status, run.stderr).toBe(0);
       return JSON.parse(run.stdout.trim().split('\n').at(-1)!);
     });
     expect(outcomes[1]).toEqual(outcomes[0]);
-    // NAMED-CAUSE PIN (A2, 2026-08-21): two ballistae and a beacon on the deck with the
-    // Prospector kept off the seams — the quietest play that still shoots. The trail forms on the
-    // reload, eighteen strikes take all three pads, and the hero falls at wave 4 of 12.
-    //
-    // `trail` IS DELIBERATELY NOT PINNED. It is a last-tick reading — whether the ballista had
-    // fired within `harpoonReloadSeconds` of the hero falling — and it differs by seed (01 ends
-    // on 'harpoon-reload', 02 on null) for a reason that says nothing about the mechanic. What
-    // the strike count says is stronger and seed-stable: a strike is only reachable THROUGH a
-    // trail, so 18 of them is proof the hunt held one.
-    expect(outcomes[0]).toMatchObject({
-      secured: false,
-      waves: 4,
-      eventLogHash,
-      noiseHunt: { strikes: 18, decks: [], anchor: 'lagoon' },
+    // NAMED-CAUSE PIN: AIM the noise. Two ballistae and a beacon on the deck, the Prospector
+    // working a seam so the pump runs, and the boat held on `shelf-watch` — 36wu east of the
+    // hero — while the trail is up. The leviathans hunt the BOAT, so the hero is never touched,
+    // and the decks outlast the run with a pad to spare at the owner-authorised strike cost.
+    expect(outcomes[0]).toMatchObject({ secured: true, waves: 12, kills, eventLogHash });
+  }
+});
+
+test('the same play through the in-process door agrees, and the decks survive with margin', () => {
+  test.setTimeout(300_000);
+  // The transport the whole exemption history was measured on, kept so that history stays
+  // re-runnable. Same policy, same seeds — a difference here can only be the DOOR, never the play.
+  const expected = {
+    'e5-stillwater-01': { eventLogHash: 'fnv1a32:be2e0c63', strikes: 77 },
+    'e5-stillwater-02': { eventLogHash: 'fnv1a32:201e03cd', strikes: 76 },
+  } as const;
+  for (const [seed, { eventLogHash, strikes }] of Object.entries(expected)) {
+    const outcomes = [1, 2].map(() => {
+      const run = spawnSync(process.execPath, [
+        'artifacts/e5-stillwater/prover.mjs', '--seed', seed,
+        '--policy', 'bait', '--deck', 'turret,sentry_beacon,turret', '--harvest', 'on', '--quiet',
+      ], { cwd: process.cwd(), encoding: 'utf8', timeout: 120_000 });
+      expect(run.status, run.stderr).toBe(0);
+      return JSON.parse(run.stdout.trim().split('\n').at(-1)!);
     });
+    expect(outcomes[1]).toEqual(outcomes[0]);
+    // THE MARGIN IS PINNED ON PURPOSE, because it is what chose the strike cost. A twelve-wave
+    // lure costs 76-77 strikes across three pads; at 3 damage a pad survives 32, so ONE PAD IS
+    // STILL STANDING at the secure. Four also secures — but with zero decks left on both seeds,
+    // i.e. it wins on the last pad dying. If this ever drops to an empty `decks`, the dial has
+    // been pushed back onto that knife-edge and the balance-later pass needs to know.
+    expect(outcomes[0]).toMatchObject({
+      secured: true,
+      waves: 12,
+      eventLogHash,
+      noiseHunt: { strikes },
+    });
+    expect(outcomes[0].noiseHunt.decks.length).toBeGreaterThan(0);
   }
 });
 
 /**
- * LAW 2. `e5-stillwater` is admission-exempt, so `scripts/null-floor-anchors.mjs` will not
- * generate a floor for it and `gr-sim --policy=idle` cannot construct it. The floor therefore
- * runs here, through the same `admissionProbe` seam, submitting NOTHING.
+ * LAW 2, NOW CHECKED TWICE OVER. `e5-stillwater` is ADMITTED, so
+ * `scripts/null-floor-anchors.mjs` generates its floor like any other contract's and pins the
+ * same two hashes this test spawns through the PLAIN door. Keeping both is deliberate: the
+ * generated floor proves the number, and this proves the number is a REFUSAL.
+ *
+ * The owner-authorised strike cost cannot move either, structurally — an idle run works no
+ * machine, so it takes no trail and lands no strike, and the dial only ever reduces deck
+ * integrity. Verified identical across 16, 6 and 3.
  */
 test('idle Stillwater runs stay silent and still lose', () => {
   test.setTimeout(120_000);
   const expected = {
-    'e5-stillwater-01': 'fnv1a32:824cf81d',
-    'e5-stillwater-02': 'fnv1a32:5291107a',
+    'e5-stillwater-01': 'fnv1a32:91a34a6a',
+    'e5-stillwater-02': 'fnv1a32:bd5a9d8f',
   } as const;
   for (const [seed, eventLogHash] of Object.entries(expected)) {
     const outcomes = [1, 2].map(() => {
       const run = spawnSync(process.execPath, [
-        'artifacts/e5-stillwater/prover.mjs', '--seed', seed, '--idle', '--quiet',
+        'artifacts/e5-stillwater/prover.mjs', '--plain', '--seed', seed, '--idle', '--quiet',
       ], { cwd: process.cwd(), encoding: 'utf8', timeout: 60_000 });
       // Inverted for the floor: the prover exits 1 when an IDLE run secures.
       expect(run.status, run.stderr).toBe(0);
@@ -221,13 +266,10 @@ test('idle Stillwater runs stay silent and still lose', () => {
     // NAMED-CAUSE PIN: idle runs no machine at all, so the hunt never takes a trail and never
     // strikes — and the run still ends at wave 3, killed by the ordinary leviathan pressure the
     // contract's own spawn edges field. The floor is honest WITHOUT the new mechanic, which is
-    // what makes the mechanic's own cost measurable above.
-    expect(outcomes[0]).toMatchObject({
-      secured: false,
-      waves: 3,
-      eventLogHash,
-      noiseHunt: { trail: null, strikes: 0 },
-    });
+    // what makes the mechanic's own cost measurable above. (The plain door's outcome carries no
+    // `noiseHunt` block — that is the prover's own annotation on the in-process path — so the
+    // silence is asserted by the floor being a LOSS at the same wave the mechanic never touched.)
+    expect(outcomes[0]).toMatchObject({ secured: false, waves: 3, eventLogHash });
   }
 });
 

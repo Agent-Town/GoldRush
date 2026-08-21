@@ -345,8 +345,14 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // being not-offered a day ago, when its `harvestAnchors` were authored.
   // ⚠️ THIRTEENTH STACK (the relay-rush admission over the fairground's twelfth): the branch's
   // own 483/1037/7 was measured pre-fairground; the merged tree measures below, verbatim.
-  assert.equal(audit.admission.exemptions.length, 6);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 468, equal: 1090, 'not-offered': 4 });
+  // ⚠️ FOURTEENTH STACK — the `e5-stillwater` admission (2026-08-21, owner-authorised strike-cost
+  // dial: "ok, lets do it, we can balance later during testing"). Exemptions 6 -> 5 and the door
+  // 32 -> 33. The numbers below were measured on the MERGED tree (main `d775fca71` merged into
+  // the branch BEFORE the audit was re-run), never by editing two sides' arithmetic into
+  // agreement — which is the F-2084-1 failure this comment block exists to prevent, and which
+  // git would happily auto-merge because both sides write the same-shaped digits.
+  assert.equal(audit.admission.exemptions.length, 5);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 446, equal: 1112, 'not-offered': 4 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });

@@ -137,36 +137,14 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // holds admission is the build law, not the consumer — the door-completion sheet requires "a
   // public-verb secure proof x2 per seed", and no such proof exists yet. Same shape as
   // `e6-showroom`: the reason died, the refusal survived, so the row is REWORDED not removed.
-  // A2 BUILT THE MECHANIC AND THE MAP STILL WON (2026-08-21, door-completion-sheet §A2). Third
-  // instance of the A8 shape, and the widest gap any of them has measured.
-  //
-  // THE CONSUMER IS NOT THE GAP, AND THE ROW IS REWORDED RATHER THAN REMOVED TO SAY SO. The old
-  // reason — "the noise-hunt consumer remains absent" — was true when written and is false now:
-  // `src/systems/NoiseHuntSystem.ts` runs in BOTH engines, the three declared machines emit off
-  // seams that already existed (the harvest CHANNEL, a REANCHOR, the ballista's shot counter),
-  // the trail forms on the loudest audible source and is shed after eight quiet seconds, the
-  // declared quiet zones silence, and a strike costs a deck pad through the same `loseHull` seam
-  // the Flotilla uses. All of it is traced in `artifacts/e5-stillwater/`.
-  //
-  // WHAT REFUSES IS THE SECURE, and the cause is authored geometry — the same sentence
-  // `e7-relay-rush` and `e9-seed-run` earned below, for a third distinct reason. There is no land
-  // on a Deepwater contract (`place_build` and `placeFree` both refuse), so a rider's ENTIRE
-  // defence is three deck pads carrying a ballista and a beacon; the hero is a fixed post at
-  // (0,30) because slot 0 runs on IDLE_INTENTS; and the contract's own `lanes.spawnEdges` and
-  // per-variant `spawnGates` declare the ORDINARY wave schedule, which fields fifteen
-  // `machine_leviathan` a wave from two edges. Its storm is authored suppressed (a 3600s cycle)
-  // and crews zero corsairs, so the storm track cannot be the clock and the ordinary one is.
-  //
-  // AND THE GEOMETRY REFUSES THE MECHANIC ITS OWN BEST USE, which is the finding worth keeping:
-  // both anchors are extremes. `lagoon` (0,30) sits ON the hero, so every machine that runs is
-  // loud exactly where the hero stands; `open-water` (-24,12) sits INSIDE the declared
-  // `hand-pan-drift` quiet zone, so it silences everything and carries the guns 20wu off the body
-  // they defend. There is no third station where noise is loud AWAY from the hero, so the trail
-  // can be paid for or avoided but never AIMED — and the measurements show paying beats avoiding.
-  'e5-stillwater': {
-    reason: 'Best measured public-verb play terminated unsecured at wave 4 on BOTH bench seeds against secureWave 12 (fnv1a32:e83bc5ff / fnv1a32:96191e05, each repeated identical). Six policies per seed span waves 0-4 against an idle floor of wave 3, so the whole spread is one wave wide. The A2 noise-hunt consumer is LIVE in both engines and is not the gap: the three declared machines emit, the trail forms on the loudest audible one and is shed after 8 quiet seconds, the declared quiet zones silence, and strikes cost deck pads (18 strikes and all three decks on the ceiling run). Emission is attributable — a run with no turret and no HARVEST order records strikes 0 and every deck at 96. The map is: a Deepwater contract offers no land (place_build and placeFree both refuse), so the whole of a rider defence is three deck pads; the hero is a fixed post at (0,30) because slot 0 runs on IDLE_INTENTS; and the authored storm is suppressed at a 3600s cycle crewing zero corsairs, so the storm track cannot be the clock and the ordinary schedule is, fielding 15 machine_leviathan a wave from two authored edges. Both anchors are extremes - the lagoon sits ON the hero and the open water sits INSIDE the hand-pan-drift quiet zone - so noise is either on top of the hero or absent, and the trail can be paid for or avoided but never aimed. Re-admit when both bench seeds secure.',
-    citation: 'reviews/a2-stillwater-noise-hunt.md',
-  },
+  // `e5-stillwater` LEFT THIS TABLE 2026-08-21 — ADMITTED. It sat here from the milk/twin-sockets
+  // probe ("the noise-hunt consumer remains absent") through the A2 build that made that reason
+  // false, and out on the measurement that made the map winnable. What admitted it, in order:
+  // the A2 noise-hunt consumer in both engines; the owner-ruled `shelf-watch` anchor, which let
+  // the trail be AIMED for the first time and moved the ceiling from wave 4 to waves 9 and 11;
+  // and the owner-authorised strike-cost dial ("ok, lets do it, we can balance later during
+  // testing"), which secures BOTH bench seeds twice at wave 12 with a pad still standing.
+  // Evidence and the whole dial: `reviews/a2-stillwater-noise-hunt.md`, `artifacts/e5-stillwater/`.
   // REWORDED 2026-08-20 after the Showroom gained an honest capture objective. The idle
   // false-green is closed: fewer than six run-local captures keeps the secure latch shut at every
   // wave. The refusal survives for the other measured reason — unchanged-difficulty public play
