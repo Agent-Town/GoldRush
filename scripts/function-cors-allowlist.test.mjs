@@ -34,6 +34,42 @@
  * a passing guard never executes its violation path. Both arms were reproduced on
  * the live tree s2118 and reverted byte-identical — see the F-2118-1 row.
  *
+ * IS THERE A SECOND INSTANCE? SWEPT s2119 (F-2119-1) — NO. Do not re-run this; it
+ * is recorded here so the next reader of the canonical example does not pay for it
+ * again. s2118 left the question open as "the OTHER hardcoded file-lists in
+ * scripts/*.test.mjs have never been swept for the same 5-of-7 defect".
+ *   - scripts/ (79 *.test.mjs + 100+ other *.mjs, plus every *.sh): 27 candidate
+ *     path-lists, 14 of them `tmp-` / `_s` one-shot scratch (retained evidence per the
+ *     RETENTION LAW, out of scope). Of the 13 live lists, ZERO carry the defect —
+ *     each one either DERIVES its denominator (null-floor-anchors intersects bench
+ *     seeds with supportedContractIds; this file; worker-type-coverage;
+ *     script-tree-parse), GRANDFATHERS by name with the commit that proves it
+ *     (claimed-spec-harness-guard.GRANDFATHERED — the endorsed discipline, not the
+ *     defect), or names files for BESPOKE per-file analysis where no denominator
+ *     exists (same-game-audit reads 8 named files with different logic each;
+ *     gr-sim-campaign and night-stall-census are dynamic ssrLoadModule imports).
+ *     law-pointer-guard.SURFACES was the closest call and is COMPLETE: 6 of 6 —
+ *     CLAUDE.md, AGENTS.md, scripts/fire.md and the drain, author-task and
+ *     playtest-intake SKILL.md files, which is every SKILL.md on disk. No shell
+ *     guard enumerates a class at all.
+ *   - e2e/ (439 specs): ZERO hardcoded source-path lists remain, because s2118's own
+ *     cure removed the only one.
+ *
+ * THE SWEEP'S SCOPE WAS ITSELF THE FINDING, and it is the reusable half: s2118
+ * scoped its open corner to `scripts/*.test.mjs` — where its CURE landed — while the
+ * DEFECT it cured had lived in `e2e/`. A sweep aimed at where the cure went looks in
+ * the one place the class has just been cleaned out of. Both surfaces were swept here
+ * for that reason. NOTHING WAS MECHANISED, deliberately: "a hardcoded list vs a
+ * deliberate enumeration" is a judgement, so a red guard on it would fire on every
+ * legitimate grandfathered list and be excused into uselessness within a week (the
+ * `cross-engine` label's fate, F-1460-1).
+ *
+ * THE DETECTOR WAS CONTROLLED BEFORE ITS ZERO WAS BELIEVED. A detector never proven
+ * capable of a hit reports a vacuous green. Run against e2e/release-base-path.spec.ts
+ * at 7d2aeaedf^ — the tree where the defect provably existed — it fires, naming
+ * exactly the five paths F-2118-1 recorded (_accounts, _bugs, _multiplayer, stats,
+ * telemetry); against the same file at 7d2aeaedf it names zero.
+ *
  * WHY ALWAYS-ON RATHER THAN A `functions/**` PATH RULE, on the site-contract
  * precedent (F-1230-1): the drift this guards is two-sided. A `functions/**` rule
  * catches an edit that drops an origin, but the origins are a DEPLOY fact — the
