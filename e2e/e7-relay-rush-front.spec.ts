@@ -39,13 +39,20 @@ async function open(page: Page, query: string): Promise<ErrorBucket> {
  */
 const DEBUG_URL = '/?debug&epoch=epoch-7-signal&contract=e7-relay-rush&nowaves&nolevel&nopause&seed=e7-relay-rush-01';
 
-/** One legal pad inside each authored relay site (`tileParams.buildZones`, z 36..46). */
+/**
+ * One legal pad inside each authored relay site (`tileParams.buildZones`, z 36..46). The r2 pad
+ * sits at z=44 rather than the site's centre because the owner's `relay-ridge-command-stake`
+ * (2026-08-21) now stands AT that centre, (-25,41) — the claim's own footprint is not build ground.
+ */
 const PADS = {
   r1: { x: -45, z: 40 },
-  r2: { x: -25, z: 40 },
+  r2: { x: -25, z: 44 },
   r3: { x: 25, z: 40 },
   r4: { x: 45, z: 40 },
 };
+
+/** Where the owner's stake put the Prospector's post, and therefore where the playbook gate asks. */
+const CLAIM = { x: -25, z: 41 };
 
 const front = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.interferenceFront!);
 const advance = (page: Page, seconds: number) => page.evaluate((s) => window.__GR_TEST__!.advanceSim(s), seconds);
@@ -152,36 +159,44 @@ test('a playbook refuses under the wall and works the moment it passes', async (
   // relay COVERAGE on this epoch, which is false everywhere until two towers link — so without
   // this the wall's effect on it would be invisible against a background of "no" (measured).
   const pair = await page.evaluate(() => [
-    window.__GR_TEST__!.placeFree('turret', -27, 40),
-    window.__GR_TEST__!.placeFree('turret', -23, 40),
+    window.__GR_TEST__!.placeFree('turret', -28, 44),
+    window.__GR_TEST__!.placeFree('turret', -22, 44),
   ]);
   expect(pair).toEqual([true, true]);
   await advance(page, 0.2);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Signal.links.length)).toBeGreaterThan(0);
-  expect(await page.evaluate(() => window.__GR_TEST__!.e7Signal.droneCanOperate(-25, 40))).toBe(true);
+  expect(await page.evaluate(() => window.__GR_TEST__!.e7Signal.droneCanOperate(-25, 44))).toBe(true);
 
-  // Walk the wall onto the towers at x = -25, one half-second at a time.
+  // Walk the wall onto the claim at (-25,41) — since the owner's stake that is also where the
+  // towers stand, so ONE stop asks both questions of the same wall at the same instant.
   const opening = await front(page);
   await advance(page, opening.secondsToNextFront + 0.5);
-  expect(await stepUntilCentreNear(page, -25)).toBe(true);
-  // THE SAME PLACE, THE SAME TOWERS, A DIFFERENT ANSWER — purely because the wall moved.
-  expect(await page.evaluate(() => window.__GR_TEST__!.e7Signal.droneCanOperate(-25, 40))).toBe(false);
+  expect(await stepUntilCentreNear(page, CLAIM.x)).toBe(true);
 
-  // Now walk it onto the claim at (0,12), which is where the playbook gate asks its question:
-  // the refusal is keyed on the ACTOR's position, not on the map.
-  expect(await stepUntilCentreNear(page, 0)).toBe(true);
-  // A5's own refusal, in A4's exact shape and with its own kebab reason.
+  // THE SAME PLACE, THE SAME TOWERS, A DIFFERENT ANSWER — purely because the wall moved.
+  expect(await page.evaluate(() => window.__GR_TEST__!.e7Signal.droneCanOperate(-25, 44))).toBe(false);
+  // A5's own refusal, in A4's exact shape and with its own kebab reason. The playbook gate reads
+  // the ACTOR's position, and the actor is standing on the stake.
   const beforeRefusals = (await front(page)).refusals.playbooks;
   expect(await page.evaluate(() => window.__GR_TEST__!.playbook.startRecording()))
     .toMatchObject({ ok: false, reason: 'interference-muted' });
   expect(await page.evaluate(() => window.__GR_TEST__!.playbook.startReplay({ name: 'anything' })))
     .toMatchObject({ ok: false, reason: 'interference-muted' });
-  // The towers behind the wall are back on the air; only what it covers is muted.
-  expect(await page.evaluate(() => window.__GR_TEST__!.e7Signal.droneCanOperate(-25, 40))).toBe(true);
   // And the refusals were COUNTED, not merely returned — asserted as a DELTA rather than an
   // absolute, because the harness's own control calls above also pass through the same gate.
   const counted = await front(page);
   expect(counted.refusals.playbooks).toBeGreaterThan(beforeRefusals);
+
+  // NOW THE STRONGER HALF: let the wall roll EAST while it is still crossing. A front being
+  // "happening" is not what mutes anything — its POSITION is — so the same towers come back on
+  // the air mid-crossing, with `phase` still 'crossing'.
+  expect(await stepUntilCentreNear(page, 25)).toBe(true);
+  const midCrossing = await front(page);
+  expect(midCrossing.phase).toBe('crossing');
+  expect(await page.evaluate(() => window.__GR_TEST__!.e7Signal.droneCanOperate(-25, 44))).toBe(true);
+  expect((await page.evaluate(() => window.__GR_TEST__!.playbook.startRecording())).reason)
+    .not.toBe('interference-muted');
+  await page.evaluate(() => window.__GR_TEST__!.playbook.stopRecording?.());
 
   // The wall passes and the Exchange comes back. Nothing about this refusal is permanent.
   await advance(page, 22);

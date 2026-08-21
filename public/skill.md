@@ -342,6 +342,7 @@ Not every bench contract is servable through the headless door yet. `gr-sim` run
   "e6-half-life-hollow",
   "e7-dead-band",
   "e7-echo-canyon",
+  "e7-relay-rush",
   "e7-relay-valley",
   "e8-eclipse",
   "e8-far-side",

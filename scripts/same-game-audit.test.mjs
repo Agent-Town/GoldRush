@@ -278,8 +278,8 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ⚠️ TWELFTH STACK (the fairground admission, owner-ruled anchor set): exemptions 8 -> 7,
   // 19 rows agent-lacks -> equal — the exact movement the hold-era comment predicted. Pins =
   // the merged tree's regen, verbatim, as every layer.
-  assert.equal(audit.admission.exemptions.length, 7);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 485, equal: 1035, 'not-offered': 4 });
+  // (Twelfth-stack pins — 7 exemptions, 485/1035/4 — retired to narrative when the relay-rush
+  // admission stacked on top; the live pins sit at the end of this block.)
   // (A8 pins above were measured on its own pre-stack base; the pins below are the QUADRUPLE-stacked
   // merged tree's regen output — Regatta + Far Side + Low Orbit + Seed Run — verbatim.)
   // ADMISSION MOVE — `e3-fairground`, 2026-08-21 (owner ruling, verbatim: "lets follow your
@@ -299,6 +299,35 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // (The fairground branch's own base pins — 5 exemptions, 383/897/10 — were measured pre-stack;
   // the LIVE pins for the merged tree sit above at the twelfth-stack block: 7 exemptions,
   // 485/1035/4. The narrative stays; the duplicate assertions are retired.)
+  // ⚠️ TWELFTH LAYER — AN ADMISSION *REVERSAL*, AND THE FIRST ONE THIS TABLE HAS RECORDED
+  // (2026-08-21, `e7-relay-rush`, on an owner ruling). Every layer above added a row or moved a
+  // contract INTO the exemption table. This one takes a contract back OUT of it, and the numbers
+  // are the exact inverse of the move that put it there.
+  //
+  // WHAT CHANGED IS ONE MAP-DATA LINE. F-A5-1 had measured the cause of the A5 refusal as
+  // authored GEOMETRY rather than the mechanic — the deadline was met on both seeds; the claim at
+  // (0,12) simply had no buildable ground within 24wu against turret range 16 and beacon range 8.
+  // The owner ruled it (2026-08-21, VERBATIM, to the five-map fork table): "lets follow your
+  // recommendation" — a `heroStart` stake inside a relay site. `relay-ridge-command-stake` now
+  // stands at (-25,41), the CENTRE of `relay-site-r2` (the only point from which a 10x10 box is
+  // wholly inside beacon range), and both bench seeds SECURE at wave 20 twice each
+  // (`fnv1a32:bc89348d` / `fnv1a32:b25f69b0`), through the ORDINARY door as well as the
+  // `admissionProbe` seam, byte-identical either way. Law 2 holds: idle still dies at wave 2.
+  //
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, and the run is unusually clean because only ONE of the two
+  // edits is visible to this audit at all:
+  //   stake + exemption row REMOVED (shipped)  -> 0/483/1037/4 over 1524 rows, 7 exemptions
+  //   stake KEPT, exemption row RESTORED       -> 0/504/1016/4 over 1524 rows, 8 exemptions
+  // The second reproduced the pins this block replaced EXACTLY, WITH THE STAKE STILL IN PLACE. So
+  // the stake is worth ZERO here (it is map data, not a compared surface — the anchors already
+  // bought the +39 rows on 2026-08-20), and the whole delta is the ADMISSION: exactly 21 rows
+  // flipping `agent-lacks` -> `equal`, the precise inverse of the 21 the exemption cost when it
+  // was added. `not-offered` does not move either, for the same reason: this contract stopped
+  // being not-offered a day ago, when its `harvestAnchors` were authored.
+  // ⚠️ THIRTEENTH STACK (the relay-rush admission over the fairground's twelfth): the branch's
+  // own 483/1037/7 was measured pre-fairground; the merged tree measures below, verbatim.
+  assert.equal(audit.admission.exemptions.length, 6);
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 464, equal: 1056, 'not-offered': 4 });
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
