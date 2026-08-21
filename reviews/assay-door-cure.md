@@ -22,7 +22,7 @@ The species-blind board's agent half could not be verified end to end. A real se
 | `scripts/agent-reels.test.mjs` | 1 pass (5.5 s) |
 | `node scripts/test-standings.mjs` | `standings assay checks passed (66)` (was 58) |
 | `node scripts/test-stats.mjs` | `stats worker checks passed (87)` |
-| `npm run test:node-guards` (serial) | see the run recorded at drain time; the default-concurrency arrangement reds `node-guards-contention` + `fixture-teardown` for arrangement reasons — attribution below |
+| node-guards battery, serial (`--test-concurrency=1`) | **501 tests, 499 pass, 0 fail, 2 skipped, 628.5 s, exit 0** (501 not 500 — this slice adds one test) |
 | e2e desktop-chrome (8 assay/tape specs) | **17 passed (29.5 s)** — includes the browser fidelity matrix, which still routes to the browser |
 | e2e mobile-chrome (same 8) | 16 passed, 1 failed → `tape-02-lantern-show` **1 passed alone (13.4 s)**; fingerprint matches the recorded mobile flake (`docs/bench/e9-roster-regression.md:88`) |
 | Local end-to-end (never production) | submit 200 rank 1 → pending → worker **verified** in 7.9 s, claimed == replayed == `fnv1a32:a4d0de7f` → slip reads verified |
@@ -31,6 +31,8 @@ The species-blind board's agent half could not be verified end to end. A real se
 The instruments and outputs behind every row above are committed here: `artifacts/assay-e2e-cure/local-e2e.mjs` (the whole county flow, local only), `artifacts/assay-e2e-cure/trace-replay.mjs` (the per-second browser trace that found the `levelup` freeze), `artifacts/assay-e2e-cure/probe-seams.mjs` (the tick-0 cross-engine census), `artifacts/assay-e2e-cure/tape-v2-run1.json` and `artifacts/assay-e2e-cure/tape-v2-run2.json` (the determinism pair) and `artifacts/assay-e2e-cure/tape-v2-secure-verb.json` (the boundary tape).
 
 Gated on a scratch playwright config at port 5275 (5188 was held by another writer). `node_modules` is symlinked into this worktree from the repo root — without it five node-guards tests fail on `Cannot find package 'typescript'`, which is the empty-worktree class, not a tree red.
+
+**Two arrangement reds, attributed, not excused.** Run through `npm run test:node-guards` with Node's default file concurrency the battery reports 2 failures — `node-guards-contention` ("board did not stay quiet for 300ms") and `fixture-teardown`, which fails ON its contention child. Both are the F-1409-1/F-1410-1 class: the sibling guard files launch the harness while the contention test is measuring, so its 5-second quiet window never opens. Neither file is touched by this diff, both pass when run as a pair outside the battery (`✔ ✔`, 116 s), and the whole battery is green at the documented serial arrangement above. A third, earlier red set (5 tests on `Cannot find package 'typescript'`) was the empty worktree and disappeared with the symlink.
 
 ## Findings
 
