@@ -23,6 +23,18 @@ alert() {
 }
 
 runner_alive() { [ -n "$(runner_pids)" ]; }
+
+# F-2137-1: annotate the runner line when the live process predates the runner script's
+# newest commit. Silent when current, so a healthy board reads exactly as it always has.
+runner_staleness_note() {
+  local pid n
+  pid=$(runner_pids | head -1)
+  [ -n "$pid" ] || return 0
+  n=$(runner_inert_commits "$pid" "$ROOT" "$ROOT/scripts/lane-runner-v3.sh")
+  [ "${n:-0}" -gt 0 ] || return 0
+  printf ' ⚠️  STALE — pid %s predates %s commit(s) to lane-runner-v3.sh; they are INERT until restart (scripts/start-lane-runner.sh)' \
+    "$pid" "$n"
+}
 fire_proc()    { pgrep -f "claude -p # Gold Rush FIRE" >/dev/null 2>&1; }
 
 queued_count()  { ls tasks/queue/main tasks/queue/lane-* tasks/queue/art 2>/dev/null | grep -c '\.md$'; }
@@ -68,7 +80,12 @@ art_untracked() {
 
 dashboard() {
   echo "=== Gold Rush factory — $(date '+%F %H:%M:%S') ==="
-  echo "runner : $(runner_alive && echo ALIVE || echo DEAD)"
+  # F-2137-1: ALIVE is not the same as CURRENT. A runner executes the parse it loaded at exec
+  # time, so commits to lane-runner-v3.sh since are INERT — the state in which the factory
+  # refused a correct master 64 times in 12 min while three fires read the cure in the file
+  # and believed it live. Reported HERE because this is the one command every session runs
+  # at start (CLAUDE.md §1.4); a verdict only helps the reader who was going to look anyway.
+  echo "runner : $(runner_alive && echo ALIVE || echo DEAD)$(runner_staleness_note)"
   echo "fire   : $(fire_proc && echo RUNNING || echo between-fires)"
   echo "lock   : $(head -c 120 STATUS.md)"
   echo "queued : $(queued_count) task(s)   in-flight: $(running_count)   pending-orders: $(pending_count)"

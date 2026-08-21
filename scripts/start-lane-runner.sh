@@ -59,19 +59,14 @@ CODEX_FLOOR="0.144.1"
 # conclusion. This turns that fact into a verdict. WARN-ONLY, never blocking: a stale runner is
 # still a working runner, and refusing to report the environment is how a check stops being run.
 report_runner_staleness() {
-  local pid="$1" lstart start_epoch commit_epoch n
-  command -v git >/dev/null 2>&1 || return 0
-  lstart=$(ps -o lstart= -p "$pid" 2>/dev/null | tr -s ' ' | sed 's/^ *//;s/ *$//')
-  [ -n "$lstart" ] || return 0
-  start_epoch=$(date -j -f "%a %b %e %H:%M:%S %Y" "$lstart" +%s 2>/dev/null) || return 0
-  [ -n "$start_epoch" ] || return 0
-  commit_epoch=$(git -C "$ROOT" log -1 --format=%ct -- "$RUNNER_SCRIPT" 2>/dev/null) || return 0
-  [ -n "$commit_epoch" ] || return 0
-  [ "$commit_epoch" -gt "$start_epoch" ] || {
+  local pid="$1" lstart n start_epoch
+  n=$(runner_inert_commits "$pid" "$ROOT" "$RUNNER_SCRIPT")
+  lstart=$(runner_started_at "$pid")
+  if [ "${n:-0}" -eq 0 ]; then
     echo "[start-lane-runner] runner pid $pid loaded the CURRENT $(basename "$RUNNER_SCRIPT") — no inert commits."
     return 0
-  }
-  n=$(git -C "$ROOT" log --oneline --since="@$start_epoch" -- "$RUNNER_SCRIPT" 2>/dev/null | wc -l | tr -d ' ')
+  fi
+  start_epoch=$(date -j -f "%a %b %e %H:%M:%S %Y" "$lstart" +%s 2>/dev/null)
   echo "[start-lane-runner] ⚠️  STALE RUNNER — pid $pid started $lstart and is executing that"
   echo "[start-lane-runner]     parse of $(basename "$RUNNER_SCRIPT"). ${n:-?} commit(s) to that file since are INERT:"
   # Bounded on purpose: an unbounded listing is how a report becomes something nobody reads

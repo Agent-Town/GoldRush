@@ -240,6 +240,23 @@ fi
 # the function is extracted from the shipped helper so the probe cannot drift from it, and
 # both arms are built from real processes and real commits in a throwaway repo.
 stale_fn=$(sed -n '/^report_runner_staleness() {/,/^}/p' "$HELPER")
+note_fn=$(sed -n '/^runner_staleness_note() {/,/^}/p' "$ROOT/scripts/health-watch.sh")
+if ! grep -q '^runner_inert_commits() {' "$ROOT/scripts/runner-processes.sh"; then
+  bad "runner_inert_commits is not in the SHARED runner-processes.sh — two implementations drift"
+else
+  ok "staleness computation lives in the shared runner-processes.sh (one implementation)"
+fi
+# Assert the CALL SITE, not the mere presence of the name: the function's own definition
+# contains its name, so a grep for the name stays green after the call is deleted. Proven by
+# manufacturing exactly that — removing the call left this case green until it keyed on the
+# `runner :` line itself. "Defined" and "wired" are different facts (the gate-caller lesson).
+if [ -z "$note_fn" ]; then
+  bad "health-watch has no runner_staleness_note — the verdict reaches no reader (F-2137-1)"
+elif ! grep -E '^[[:space:]]*echo "runner : ' "$ROOT/scripts/health-watch.sh" | grep -q 'runner_staleness_note'; then
+  bad "health-watch's runner line does not CALL runner_staleness_note — defined but not wired"
+else
+  ok "health-watch's runner line calls runner_staleness_note (wired, not merely defined)"
+fi
 if [ -z "$stale_fn" ]; then
   bad "helper has no report_runner_staleness — a stale runner reports as healthy (F-2137-1)"
 else
@@ -249,30 +266,64 @@ else
     git init -q . 2>/dev/null
     git config user.email t@t; git config user.name t
     printf 'v1\n' > runner.sh
-    # RED arm: process starts FIRST, the commit lands AFTER -> the commit is inert.
+    mkdir -p scripts
+    # RED arm: process starts FIRST, every commit lands AFTER -> those commits are inert.
     sleep 60 & red_pid=$!
     sleep 1
-    git add runner.sh && git commit -qm "cure the runner"
+    cp runner.sh scripts/lane-runner-v3.sh
+    git add runner.sh scripts/lane-runner-v3.sh && git commit -qm "cure the runner"
     # 24 more commits so the BOUNDEDNESS case is not vacuous: with a single commit the -n 10 cap
     # never engages and removing it still passes. Caught by manufacturing that exact defect.
     i=2
     while [ "$i" -le 25 ]; do
       printf 'v%s\n' "$i" > runner.sh
-      git add runner.sh && git commit -qm "cure the runner $i"
+      cp runner.sh scripts/lane-runner-v3.sh
+      git add runner.sh scripts/lane-runner-v3.sh && git commit -qm "cure the runner $i"
       i=$((i + 1))
     done
     # GREEN arm: process starts AFTER the newest commit -> it loaded the current file.
+    # Started here, once every commit is in, so BOTH probed paths are current for it.
+    sleep 1
     sleep 60 & green_pid=$!
-    printf 'ROOT=%s\nRUNNER_SCRIPT=%s/runner.sh\n%s\nreport_runner_staleness "$1"\n' \
-      "$stale_tmp" "$stale_tmp" "$stale_fn" > probe.sh
+    # Every generated path is QUOTED: this repo's root is "/…/Gold Rush" and an unquoted
+    # `. /…/Gold Rush/scripts/…` sources "/…/Gold" with an argument. Caught by this case
+    # going red on its first run — the probe must survive the path the repo actually has.
+    printf '. "%s"\nROOT="%s"\nRUNNER_SCRIPT="%s/runner.sh"\n%s\nreport_runner_staleness "$1"\n' \
+      "$ROOT/scripts/runner-processes.sh" "$stale_tmp" "$stale_tmp" "$stale_fn" > probe.sh
     red_out=$(bash probe.sh "$red_pid" 2>&1);   red_rc=$?
     green_out=$(bash probe.sh "$green_pid" 2>&1); green_rc=$?
+    # The health-watch annotation is a thin formatter over the same primitive — which is
+    # exactly where a bug hides, so exercise it rather than trusting the shared green.
+    # runner_pids is stubbed to each arm's pid; the script path is the fixture's.
+    # The stub must echo the SCRIPT's $1, not the function's — inside runner_staleness_note
+    # the call `runner_pids` passes no arguments, so a naive `echo "$1"` stub yields an empty
+    # pid and the note goes silent in BOTH arms, i.e. it passes the green case for the wrong
+    # reason. Caught by the red arm refusing to fire.
+    printf '. "%s"\nROOT="%s"\nPID_UT="$1"\nrunner_pids() { echo "$PID_UT"; }\n%s\nrunner_staleness_note; echo\n' \
+      "$ROOT/scripts/runner-processes.sh" "$stale_tmp" "$note_fn" > note.sh
+    note_red=$(bash note.sh "$red_pid" 2>&1)
+    note_green=$(bash note.sh "$green_pid" 2>&1)
     kill "$red_pid" "$green_pid" 2>/dev/null || true
-    printf '%s\n---SPLIT---\n%s\n---SPLIT---\n%s %s\n' "$red_out" "$green_out" "$red_rc" "$green_rc"
+    printf '%s\n---SPLIT---\n%s\n---SPLIT---\n%s %s\n---SPLIT---\n%s\n---SPLIT---\n%s\n' \
+      "$red_out" "$green_out" "$red_rc" "$green_rc" "$note_red" "$note_green"
   ) > "$stale_tmp/result.txt" 2>/dev/null
-  red_out=$(sed -n '1,/---SPLIT---/p' "$stale_tmp/result.txt" | sed '$d')
-  green_out=$(sed -n '/---SPLIT---/,/---SPLIT---/p' "$stale_tmp/result.txt" | sed '1d;$d')
-  rcs=$(tail -1 "$stale_tmp/result.txt")
+  # section N of the ---SPLIT----delimited result (1-based); robust for any number of sections
+  section() { awk -v want="$1" 'BEGIN{n=1} /^---SPLIT---$/{n++; next} n==want{print}' "$stale_tmp/result.txt"; }
+  red_out=$(section 1)
+  green_out=$(section 2)
+  rcs=$(section 3 | tr -d '\n')
+  note_red=$(section 4)
+  note_green=$(section 5)
+  if printf '%s' "$note_red" | grep -q 'STALE'; then
+    ok "health-watch runner line goes STALE when the process predates the script"
+  else
+    bad "health-watch runner line stayed silent on a stale runner — ALIVE read as CURRENT"
+  fi
+  if [ -z "$(printf '%s' "$note_green" | tr -d '[:space:]')" ]; then
+    ok "health-watch runner line is silent when the runner is current (no noise)"
+  else
+    bad "health-watch annotates a CURRENT runner — a line that always warns stops being read: $note_green"
+  fi
   if printf '%s' "$red_out" | grep -q 'STALE RUNNER'; then
     ok "stale runner (process older than the newest runner-script commit) is REPORTED"
   else
