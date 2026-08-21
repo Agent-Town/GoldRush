@@ -54,10 +54,8 @@ const SEEDED = new Set(['e9-dome-basin', 'e9-seed-run', 'e9-old-canal', 'e9-devi
 const EXPECTED_RULES: Record<string, string[]> = {
   'e9-dome-basin': ['build_zones'],
   'e9-seed-run': ['build_zones', 'persistent_planting'],
-  'e9-devils-alley': ['build_zones'],
-  'e9-old-canal': ['build_zones', 'persistent_canal_choices'],
   'e9-devils-alley': ['build_zones', 'scheduled_relocation'],
-  'e9-old-canal': ['build_zones'],
+  'e9-old-canal': ['build_zones', 'persistent_canal_choices'],
 };
 
 for (const contract of redfields.contracts) {
