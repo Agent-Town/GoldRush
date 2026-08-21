@@ -26,6 +26,20 @@ try {
     process.exit(0);
   }
 
+  // TWO DOORS, TWO ENGINES (F-ASSAY-E2E-3, 2026-08-22). A browser recording replays in the browser
+  // below. A headless-door recording — the only writer of `agent_orders` entries is
+  // `scripts/gr-sim.mjs` — was written by `HeadlessContractSim`, whose world differs from the
+  // browser's from tick 0 (the seam census in `assay-replay-agent.mjs`), so the browser cannot
+  // verify one. Each claim is assayed by the engine that can reproduce it; the routing is the
+  // same discriminator the replay seam itself uses (`Game.ts:6892`).
+  const { isAgentTape, replayAgentTape } = await import('./assay-replay-agent.mjs');
+  if (isAgentTape(tape)) {
+    const startedAt = performance.now();
+    const replay = await replayAgentTape(tape);
+    process.stdout.write(`${JSON.stringify({ ...replay, wallMs: Math.round(performance.now() - startedAt) })}\n`);
+    process.exit(0);
+  }
+
   vite = await createServer({
     root,
     logLevel: 'silent',
