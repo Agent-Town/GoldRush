@@ -1493,7 +1493,8 @@
               "id": "f2133-1-seam-legibility",
               "title": "F-2127-2 + F-E3CF-5: make the seam predicate say what it means, in both places it is asked",
               "taskFile": "f2133-1-seam-legibility.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "07e2e5397c7e0076c8d655ee99c90587151ce9e0",
               "note": "FIRE-AUTHORED s2133. One predicate, asked twice, legible in neither place. (a) F-2127-2: e2e/agent-view.spec.ts:557-559 collapses the seam check to .every(...).toBe(true), so a failure says only \"expected false to be true\" against a six-seam fixture - naming neither the seam nor which of x/z/anchorIndex broke. Scope 1-2 make it a per-seam loop and PROVE the message by manufacturing the defect. (b) F-E3CF-5 owed half: grep -c seam scripts/same-game-audit.mjs returns 0 (measured s2133 on main), so seam location - the thing f2124-1 proved diverged 2 of 2, sending an id-joining agent 13 units off in x - is outside the same-game denominator entirely. Scope 3 adds a seam-legibility row. LEVER VERIFIED before authoring: same-game-audit.mjs already SSR-loads HeadlessContractSim (:30), so it can read a real view; this extends an instrument that already has the capability. Scope 4 bounds the cost (~15s ceiling) and permits a narrowing STOP. Diagnosability only - the predicate semantics are firewalled."
         },
         {
