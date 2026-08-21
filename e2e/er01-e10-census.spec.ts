@@ -11,7 +11,7 @@ const EXPECTED_RULES: Record<string, string[]> = {
 };
 
 const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
-  'e10-ember-shore': undefined,
+  'e10-ember-shore': 'ember-shore-preserve-consumers',
   'e10-archive-world': 'archive-world-consumers',
   'e10-last-claim': 'last-claim-objective-consumer',
   'e10-river': 'credits-river-consumer',

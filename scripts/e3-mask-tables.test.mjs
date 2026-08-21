@@ -396,7 +396,12 @@ test('published mask tables exactly track authored contract data', async () => {
   assert.deepEqual(emberShoreMask.fixtureZones, emberShore.tileParams.buildZones
     .filter((zone) => zone.id === 'last-warm-vent-site')
     .map(({ id, minX, maxX, minZ, maxZ }) => ({ id, minX, maxX, minZ, maxZ })));
-  assert.deepEqual(emberShore.tileParams.harvestAnchors, []);
+  assert.deepEqual(emberShore.tileParams.harvestAnchors, [
+    { x: -6, z: -24 },
+    { x: -20, z: -34 },
+    { x: -38, z: -22 },
+    { x: -54, z: -12 },
+  ]);
 
   for (const id of ['e4-long-road', 'e4-gusher-county', 'e4-boneyard', 'e5-regatta', 'e5-stillwater', 'e5-flotilla']) {
     const authored = contract(id);
