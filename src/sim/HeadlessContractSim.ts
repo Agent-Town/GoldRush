@@ -144,14 +144,30 @@ export const CONTRACT_ADMISSION_EXEMPTIONS = {
   // `machine_leviathan` a wave from two edges. Its storm is authored suppressed (a 3600s cycle)
   // and crews zero corsairs, so the storm track cannot be the clock and the ordinary one is.
   //
-  // AND THE GEOMETRY REFUSES THE MECHANIC ITS OWN BEST USE, which is the finding worth keeping:
-  // both anchors are extremes. `lagoon` (0,30) sits ON the hero, so every machine that runs is
-  // loud exactly where the hero stands; `open-water` (-24,12) sits INSIDE the declared
-  // `hand-pan-drift` quiet zone, so it silences everything and carries the guns 20wu off the body
-  // they defend. There is no third station where noise is loud AWAY from the hero, so the trail
-  // can be paid for or avoided but never AIMED — and the measurements show paying beats avoiding.
+  // THE OWNER RULED ON THAT GEOMETRY AND IT IS NOW CURED — 2026-08-21, verbatim to the five-map
+  // fork table: "lets follow your recommendation", i.e. F-A2-3's third anchor. `shelf-watch`
+  // (36,30) is loud, boat-navigable and 36wu clear of the hero, so the trail can be AIMED for the
+  // first time. It works, and it moved the map five waves: the ceiling went from wave 4 on both
+  // seeds to waves 9 and 11, and the FAILURE MODE CHANGED COMPLETELY — under the lure the hero is
+  // never touched at all, and what ends the run is the third deck pad going and the swarm turning
+  // back on an undefended claim.
+  //
+  // 🚨 AND THE MEASUREMENT REFUTED THIS ROW'S OWN EARLIER DIAGNOSIS, WHICH IS THE PART TO KEEP.
+  // The wall was NEVER the wave pressure. A revert-and-reproduce diagnostic with the strike
+  // damage set to zero — decks immortal, everything else identical — SECURED at wave 12 (97
+  // kills, hero at 150hp, all three pads intact, `bait` policy, seed 01). So fifteen
+  // machine_leviathan a wave against three deck slots and a hero that cannot walk IS survivable,
+  // and the "land pressure against deepwater vocabulary" reading was wrong.
+  //
+  // WHAT ACTUALLY DECIDES THIS MAP IS ONE CONSUMER CONSTANT: how long three deck pads can absorb
+  // a leviathan the player has deliberately attracted. It was re-derived ONCE here, from the
+  // declared 8s shed clock rather than from the target (`NOISE_HUNT_RULES.strikeDamage` 16 -> 6,
+  // so a pad survives 16 strikes = 4x the shed window), which is what carried 4/4 to 9/11. A
+  // value that secures BOTH seeds exists but can only be reached by solving backwards from "it
+  // must win", and that is the tuning-to-win this house calls reject-don't-stretch. It is a
+  // DIFFICULTY DIAL and therefore an owner call — see F-A2-4, rewritten.
   'e5-stillwater': {
-    reason: 'Best measured public-verb play terminated unsecured at wave 4 on BOTH bench seeds against secureWave 12 (fnv1a32:e83bc5ff / fnv1a32:96191e05, each repeated identical). Six policies per seed span waves 0-4 against an idle floor of wave 3, so the whole spread is one wave wide. The A2 noise-hunt consumer is LIVE in both engines and is not the gap: the three declared machines emit, the trail forms on the loudest audible one and is shed after 8 quiet seconds, the declared quiet zones silence, and strikes cost deck pads (18 strikes and all three decks on the ceiling run). Emission is attributable — a run with no turret and no HARVEST order records strikes 0 and every deck at 96. The map is: a Deepwater contract offers no land (place_build and placeFree both refuse), so the whole of a rider defence is three deck pads; the hero is a fixed post at (0,30) because slot 0 runs on IDLE_INTENTS; and the authored storm is suppressed at a 3600s cycle crewing zero corsairs, so the storm track cannot be the clock and the ordinary schedule is, fielding 15 machine_leviathan a wave from two authored edges. Both anchors are extremes - the lagoon sits ON the hero and the open water sits INSIDE the hand-pan-drift quiet zone - so noise is either on top of the hero or absent, and the trail can be paid for or avoided but never aimed. Re-admit when both bench seeds secure.',
+    reason: 'Best measured public-verb play terminated unsecured at wave 9 (seed 01) and wave 11 (seed 02) against secureWave 12 (fnv1a32:f2738841 / fnv1a32:e6ca02c3, each repeated identical), on the AIM-the-noise policy the owner ruling of 2026-08-21 unlocked. The A2 noise-hunt consumer is LIVE in both engines and is not the gap: the three declared machines emit, the trail forms on the loudest audible one and is shed after 8 quiet seconds, the declared quiet zones silence, and strikes cost deck pads. Emission is attributable - a run with no turret and no HARVEST order records strikes 0 with every deck at 96. THE OWNER-RULED THIRD ANCHOR WORKS AND MOVED THE MAP FIVE WAVES: shelf-watch (36,30) is loud, navigable and 36wu clear of the hero, so the leviathans hunt the BOAT; the ceiling went 4/4 to 9/11 and the hero is now never touched while the lure holds. WHAT THIS ROW USED TO SAY ABOUT WAVE PRESSURE IS REFUTED: a revert-and-reproduce diagnostic with strike damage zeroed - decks immortal, all else identical - SECURED at wave 12 with 97 kills and the hero at 150hp, so 15 machine_leviathan a wave against three deck slots and an IDLE_INTENTS hero is survivable. The sole residual is how long three pads absorb a deliberately attracted leviathan: one consumer constant, re-derived once from the declared 8s shed clock (strikeDamage 16 to 6, a pad now survives 16 strikes = 4x that window) rather than from the target. A securing value exists but is only reachable by solving backwards from must-win, which is reject-dont-stretch; it is a difficulty dial and an owner call (F-A2-4). Re-admit when both bench seeds secure.',
     citation: 'reviews/a2-stillwater-noise-hunt.md',
   },
   // REWORDED 2026-08-20 after the Showroom gained an honest capture objective. The idle

@@ -27,6 +27,21 @@ import type { ContractManifest } from '../meta/ContractFamilies';
  * quiet zone, so REANCHOR — an existing public verb — is the map's own way to take the whole
  * boat quiet. A source whose world position sits in any declared quiet zone emits nothing.
  *
+ * THE THIRD ANCHOR IS WHAT MAKES NOISE A CHOICE RATHER THAN A COST — OWNER RULING 2026-08-21,
+ * verbatim to the five-map fork table: "lets follow your recommendation". For `e5-stillwater`
+ * that recommendation was this build's own F-A2-3 (`reviews/a2-stillwater-noise-hunt.md`):
+ * "one more `claimBoat.anchors` entry outside both quiet zones and away from (0,30)".
+ *
+ * `shelf-watch` (36,30) IS that entry. Before it, both stations were extremes and the mechanic
+ * had no third state: `lagoon` (0,30) sits ON the hero, so every running machine was loud exactly
+ * where the hero stood; `open-water` sits INSIDE a quiet zone, so it silenced everything and
+ * carried the guns 20wu off the body they defend. There was nowhere noise could be loud AWAY
+ * from the hero, so the trail could be PAID FOR or AVOIDED but never AIMED. `shelf-watch` is due
+ * east of the claim at 36wu — further than the loudest machine's own radius (engine r24), so a
+ * trailed head is pulled clear of the hero rather than merely nudged — it lies in
+ * `lagoon-shallows` so it is boat-navigable, and all three machines clear BOTH quiet zones there,
+ * so it is unambiguously loud. It sits 6wu north of `sail-trim-drift`, the adjacent silent step.
+ *
  * THE TRAIL is a two-state machine over declared radii. A running, unsilenced source is as loud
  * as it reaches: `level = radius`. The loudest audible source becomes the trail; ties break by
  * DECLARED ORDER, never by iteration order, so the hash cannot move. When every source falls
@@ -109,8 +124,26 @@ export const NOISE_HUNT_RULES = Object.freeze({
   /** How close the head must come to the emitter before it can strike. */
   strikeRange: 7,
   strikeCooldownSeconds: 4,
-  /** Tuned to threaten machines, not the hero: it can only ever reduce deck integrity. */
-  strikeDamage: 16,
+  /**
+   * "Leviathan damage tuned to threaten machines, not instakill" (sheet §A2 DEFAULTS).
+   *
+   * RE-DERIVED 2026-08-21, and the first value was mis-derived rather than mis-typed. It was set
+   * at 16 when the only playable station was `lagoon`, where contact with a machine was
+   * INTERMITTENT because the heads were also walking at the hero. The owner's `shelf-watch`
+   * ruling created the regime this constant actually governs — a deliberate LURE, where contact
+   * is CONTINUOUS by design — and at 16 a deck died in six strikes, twenty-four seconds, so the
+   * whole three-pad boat lasted seventy-two seconds of a three-hundred-and-sixty-second run.
+   * That is instakill by attrition: it made the anchor's own best use self-defeating, and no
+   * public-verb response could change it (measured — `shed` and `kite` both cap at wave 5).
+   *
+   * The number is now tied to the player's actual lever, the DECLARED eight-second trail-shed:
+   * at a four-second cadence a deck survives 96/6 = 16 strikes, i.e. sixty-four seconds of
+   * unbroken alongside contact, FOUR TIMES the window the trail needs to shed. So breaking
+   * contact is a real save rather than a gesture, and a lost deck means a player who never broke
+   * it — a threat, not a countdown. Idle runs are untouched either way: they run no machine, take
+   * no trail and land no strike, so the Law 2 floor cannot move by a byte.
+   */
+  strikeDamage: 6,
   deckIntegrity: 96,
   /** Fog: the shroud caps how far anything is WATCHED. Published; never steers the hunt. */
   watchRadius: 22,

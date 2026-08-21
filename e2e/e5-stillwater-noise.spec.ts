@@ -127,8 +127,23 @@ test('the noise-hunt hears its three machines, trails the loudest, sheds the tra
       { id: 'sail-trim-drift', boatInside: false },
     ]);
 
-    // THE STRIKE COSTS A DECK AND NEVER THE HERO. Six strikes at 16 take a 96-integrity pad out
-    // through the tile's own `loseHull` seam, and only when the head is actually alongside.
+    // THE THIRD ANCHOR IS THE ONE THAT MAKES NOISE A CHOICE (owner ruling 2026-08-21). At
+    // `shelf-watch` every machine is LOUD — it clears both quiet zones — and it is 36wu from the
+    // hero's fixed post at (0,30), which is further than the loudest machine's own radius (24).
+    // That is the whole difference between a trail you PAY FOR and one you AIM.
+    state.anchor = { id: 'shelf-watch', x: 36, z: 30 };
+    hunt.advance(50, [away], 'machine_leviathan');
+    expect(hunt.diagnostics.sources.every(({ silenced }: { silenced: boolean }) => !silenced)).toBe(true);
+    expect(hunt.diagnostics.quietZones.every(({ boatInside }: { boatInside: boolean }) => !boatInside)).toBe(true);
+    // The engine window opened at t=40 has expired by t=50, so the pump is the only machine
+    // running and it is what gets trailed — at (33,29), riding the new anchor.
+    expect(hunt.diagnostics.trail).toMatchObject({ target: 'air-pump', x: 33, z: 29 });
+    expect(Math.hypot(33 - 0, 29 - 30)).toBeGreaterThan(NOISE_HUNT_RULES.audibleRadius);
+
+    // THE STRIKE COSTS A DECK AND NEVER THE HERO. Sixteen strikes at 6 take a 96-integrity pad
+    // out through the tile's own `loseHull` seam, and only when the head is actually alongside.
+    // Sixteen is the point of the re-derived damage: it is four times the eight-second trail-shed
+    // window in strikes, so breaking contact is a real save rather than a gesture.
     // It is `port` that goes, not `bow`: the pump is the loudest thing running once the boat is
     // back on the lagoon, it sits at (-3,29), and the struck deck is the one nearest the TRAILED
     // MACHINE — port at (-3,31) is 2wu from it where bow at (0,27) is 3.6wu.
@@ -162,37 +177,42 @@ test('the noise-hunt hears its three machines, trails the loudest, sheds the tra
  * run twice each. It does NOT secure, and this test exists to keep that number honest rather
  * than to celebrate it — the moment either seed reaches wave 12 the exemption row is wrong.
  */
-test('the best measured Stillwater play tops out at wave 4 of 12 on both bench seeds', () => {
-  test.setTimeout(180_000);
+test('the best measured Stillwater play tops out at waves 9 and 11 of 12 on the bench seeds', () => {
+  test.setTimeout(300_000);
   const expected = {
-    'e5-stillwater-01': 'fnv1a32:e83bc5ff',
-    'e5-stillwater-02': 'fnv1a32:96191e05',
+    'e5-stillwater-01': { eventLogHash: 'fnv1a32:f2738841', waves: 9 },
+    'e5-stillwater-02': { eventLogHash: 'fnv1a32:e6ca02c3', waves: 11 },
   } as const;
-  for (const [seed, eventLogHash] of Object.entries(expected)) {
+  for (const [seed, { eventLogHash, waves }] of Object.entries(expected)) {
     const outcomes = [1, 2].map(() => {
       const run = spawnSync(process.execPath, [
         'artifacts/e5-stillwater/prover.mjs', '--seed', seed,
-        '--policy', 'deck', '--deck', 'turret,sentry_beacon,turret', '--harvest', 'off', '--quiet',
-      ], { cwd: process.cwd(), encoding: 'utf8', timeout: 60_000 });
+        '--policy', 'bait', '--deck', 'turret,sentry_beacon,turret', '--harvest', 'on', '--quiet',
+      ], { cwd: process.cwd(), encoding: 'utf8', timeout: 120_000 });
       // Law: the prover exits 1 when a public-verb run does NOT secure, which is the case here.
       expect(run.status, run.stderr).toBe(1);
       return JSON.parse(run.stdout.trim().split('\n').at(-1)!);
     });
     expect(outcomes[1]).toEqual(outcomes[0]);
-    // NAMED-CAUSE PIN (A2, 2026-08-21): two ballistae and a beacon on the deck with the
-    // Prospector kept off the seams — the quietest play that still shoots. The trail forms on the
-    // reload, eighteen strikes take all three pads, and the hero falls at wave 4 of 12.
+    // NAMED-CAUSE PIN (A2 + the 2026-08-21 owner anchor ruling): AIM the noise. Two ballistae
+    // and a beacon on the deck, the Prospector working a seam so the pump runs, and the boat
+    // parked on `shelf-watch` — 36wu east of the hero — for as long as the trail is held. The
+    // leviathans hunt the BOAT instead of the claim, so the hero stands untouched while the decks
+    // absorb; the run ends when the third pad goes at 48 strikes and the swarm turns back.
+    //
+    // BOTH numbers here are the whole finding. Before the anchor this ceiling was wave 4 on both
+    // seeds; aiming carries it to 9 and 11. It still does not secure, so the exemption row
+    // stands — and the moment either seed reaches 12 the row is wrong.
     //
     // `trail` IS DELIBERATELY NOT PINNED. It is a last-tick reading — whether the ballista had
-    // fired within `harpoonReloadSeconds` of the hero falling — and it differs by seed (01 ends
-    // on 'harpoon-reload', 02 on null) for a reason that says nothing about the mechanic. What
-    // the strike count says is stronger and seed-stable: a strike is only reachable THROUGH a
-    // trail, so 18 of them is proof the hunt held one.
+    // fired within `harpoonReloadSeconds` of the hero falling — and it varies by seed for a
+    // reason that says nothing about the mechanic. The strike count is stronger and seed-stable:
+    // a strike is only reachable THROUGH a trail, so 48 of them is proof the hunt held one.
     expect(outcomes[0]).toMatchObject({
       secured: false,
-      waves: 4,
+      waves,
       eventLogHash,
-      noiseHunt: { strikes: 18, decks: [], anchor: 'lagoon' },
+      noiseHunt: { strikes: 48, decks: [] },
     });
   }
 });
@@ -205,8 +225,8 @@ test('the best measured Stillwater play tops out at wave 4 of 12 on both bench s
 test('idle Stillwater runs stay silent and still lose', () => {
   test.setTimeout(120_000);
   const expected = {
-    'e5-stillwater-01': 'fnv1a32:824cf81d',
-    'e5-stillwater-02': 'fnv1a32:5291107a',
+    'e5-stillwater-01': 'fnv1a32:30144ddc',
+    'e5-stillwater-02': 'fnv1a32:316f5a1b',
   } as const;
   for (const [seed, eventLogHash] of Object.entries(expected)) {
     const outcomes = [1, 2].map(() => {
