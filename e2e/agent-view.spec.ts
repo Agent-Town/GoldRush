@@ -290,32 +290,50 @@ const WAVE_THREE_SNAPSHOT = `{
       {
         "id": "gold-seam-1",
         "active": true,
-        "remaining": 30
+        "remaining": 30,
+        "x": -9,
+        "z": 6.7,
+        "anchorIndex": 1
       },
       {
         "id": "gold-seam-2",
         "active": true,
-        "remaining": 30
+        "remaining": 30,
+        "x": -1.5,
+        "z": -6.4,
+        "anchorIndex": 2
       },
       {
         "id": "gold-seam-3",
         "active": false,
-        "remaining": 30
+        "remaining": 30,
+        "x": null,
+        "z": null,
+        "anchorIndex": null
       },
       {
         "id": "gold-seam-4",
         "active": false,
-        "remaining": 30
+        "remaining": 30,
+        "x": null,
+        "z": null,
+        "anchorIndex": null
       },
       {
         "id": "gold-seam-5",
         "active": false,
-        "remaining": 30
+        "remaining": 30,
+        "x": null,
+        "z": null,
+        "anchorIndex": null
       },
       {
         "id": "gold-seam-6",
         "active": false,
-        "remaining": 30
+        "remaining": 30,
+        "x": null,
+        "z": null,
+        "anchorIndex": null
       }
     ],
     "score": {
@@ -536,6 +554,9 @@ test('the seeded rider view stays cache-shaped and grows one honest wave at a ti
   expect(projection.expectedWorksDamage).toBeLessThanOrEqual(views.wave3.now.works.hp);
   expect(projection.expectedGold).toBeGreaterThanOrEqual(0);
   expect(projection.harnessHash).toMatch(/^fnv1a32:[0-9a-f]{8}$/);
+  expect(views.wave3.now.seams.every((seam) => seam.active
+    ? Number.isFinite(seam.x) && Number.isFinite(seam.z) && seam.anchorIndex !== null && seam.anchorIndex >= 0
+    : seam.x === null && seam.z === null && seam.anchorIndex === null)).toBe(true);
 
   const receipt = await page.evaluate(async () => {
     const { createToolSurface } = await import('../src/agent/ToolSurface');
