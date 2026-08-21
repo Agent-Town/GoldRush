@@ -54,11 +54,13 @@ function runReactive(answerOffers: boolean) {
         const terminal = message.now.hero.hp <= 0 || message.appendLog.at(-1)?.outcome === 'secured';
         if (terminal) continue;
         const offer = message.now.pendingOffer?.[0];
-        const orders = firstView
-          ? SECURING_ORDERS[0]
-          : answerOffers && offer
-            ? [{ verb: 'PICK_UPGRADE', id: offer.id }, ...HOLD]
-            : HOLD;
+        const orders = message.now.pendingSecure
+          ? [{ verb: 'SECURE_CHOICE', choice: 'bank' }]
+          : firstView
+            ? SECURING_ORDERS[0]
+            : answerOffers && offer
+              ? [{ verb: 'PICK_UPGRADE', id: offer.id }, ...HOLD]
+              : HOLD;
         firstView = false;
         child.stdin.write(`${JSON.stringify(orders)}\n`);
       }
@@ -108,9 +110,9 @@ test('pure stdin progression and panning secure the Claim deterministically', as
     waves: 10,
     gold: 0,
     kills: 297,
-    calls: 26,
+    calls: 27,
     defaultedPicks: 0,
-    eventLogHash: 'fnv1a32:fd705184',
+    eventLogHash: 'fnv1a32:05270638',
   });
 });
 
