@@ -1486,7 +1486,8 @@
               "id": "f2134-1-bench-terrain-contract-scope",
               "title": "F-A10-1: give the bench-Terrain contract-scope defect an instrument before rewiring it",
               "taskFile": "f2134-1-bench-terrain-contract-scope.md",
-              "status": "queued",
+              "status": "merged",
+      "mergeHash": "88863d3ebb8fc58289326e9945d16ccae2f8cf1d",
               "note": "FIRE-AUTHORED s2134, lane-b. F-A10-1 filed as a fire-authorable corrective in BACKLOG ('Engine debts filed for fires'). Terrain.ts:78 bakes ACTIVE_CONTRACT at module scope; under SSR currentSearch() is '' (ContractFamilies.ts:2294) so it falls back to DEFAULT_CONTRACT_ID 'the-claim' (:837). MEASURED s2134 by scripts/tmp-s2134-terrain-ssr-probe.mjs: 22 of 36 contracts declaring buildZones have their own first buildZone centre rejected by Terrain.isBuildable. Mechanism is the baked 64x64 bounds + terrain sample, NOT the buildZone list (the-claim declares buildZones: []). An override seam exists (previewEditorContract :371 / currentContract :406) but 21 reads bypass it and the 7 that use it are all cosmetic. DIAGNOSTIC ONLY: ships scripts/terrain-contract-scope.mjs + .test.mjs + docs/bench/terrain-contract-scope.md, rooted first in test:node-guards. Firewalled off src/** entirely, off gr-sim.test.mjs (its :630 assertion is honestly scoped to Twin Banks by its own title and widening it would red 22), and off the same-game-audit trio which lane-d's f2133-1 is editing live. Successor (NOT this slice): route the 21 legality reads through the seam - re-baselines every bench floor/pin/exemption."
             },
             {
@@ -1501,7 +1502,8 @@
               "id": "f2136-1-terrain-scope-honest-labels",
               "title": "F-2136-1/-2: make the bench terrain scope report claim only what it measures",
               "taskFile": "f2136-1-terrain-scope-honest-labels.md",
-              "status": "queued",
+              "status": "merged",
+      "mergeHash": "88863d3ebb8fc58289326e9945d16ccae2f8cf1d",
               "note": "FIRE-AUTHORED s2136, lane-b, BUILD-ON-PREDECESSOR over 56c37cf14 (declares all four held paths). Discharges the s2136 REFUSE of f2134-1 (reviews/f2134-1-bench-terrain-contract-scope.md). Both defects are in the f2134-1 MASTER specification, not the runner implementation: the runner identified both and correctly declined to fix them out of scope per CLAUDE.md 4.5, recording so in its own report. F-2136-1: terrain-contract-scope.mjs:33-34 labels AGREE/DIVERGE from a SINGLE Terrain.isBuildable call against the module-scoped Terrain the slice itself measures as baked to the-claim, so the label asserts agreement between two grounds while evaluating one; the direction of error is unprovable without a second module load, and a second load is forbidden here because module-scope baking IS the defect under measurement. Cure: drop the two-sided label, report the one-sided fact (rejected by the bench ground), keep 22 of 36 unchanged. F-2136-2: :42 counts ACTIVE_CONTRACT with no subtraction while the NEXT expression subtracts currentContract() own declaration. Measured by reading src/world/Terrain.ts: 21 matches, of which :78 is the declaration and :407 is the SEAM OWN FALLBACK (return editorPreviewContract ?? ACTIVE_CONTRACT, inside currentContract() at :406), so 19 reads genuinely bypass the seam and the metric floor is 2 BY CONSTRUCTION - it can never reach the zero it was authored to track. The off-by-two propagated into the f2134-1 master prose (:30, :57, :75) and its pinned expected value (:71), so the successor scope statement is corrected here too: route 19 reads, not 21. Firewalled off src/** entirely and off package.json (already correctly rooted by the predecessor commit)."
             },
             {
