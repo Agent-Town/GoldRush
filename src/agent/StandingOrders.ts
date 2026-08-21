@@ -33,6 +33,13 @@ export type StandingOrder =
   // A targetless context action like `fund`, for the same reason — the world, not a registry
   // index, decides which stake is in reach, and the view already names the grounds.
   | { verb: 'CONTEXT_ACTION'; action: 'plant' }
+  // A10 (door-completion-sheet §A10): decide the canal segment the Prospector stands at.
+  // `redig` is the sheet's RE-DIG and `backfill` is its DEMOLISH — renamed on the wire only,
+  // because `demolish` above already means "tear down that work" and one word cannot mean two
+  // things (Mistake #14). Targetless like `fund`/`recover`/`plant`, for the same reason: the
+  // world names the stake, so the body's position is the whole argument.
+  | { verb: 'CONTEXT_ACTION'; action: 'redig' }
+  | { verb: 'CONTEXT_ACTION'; action: 'backfill' }
   | { verb: 'CAPTURE' }
   | { verb: 'BOAT_BUILD'; padId: string; buildingId: string }
   | { verb: 'REANCHOR'; anchorId: string }
@@ -555,6 +562,8 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     if (value.action === 'fund' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'fund' };
     if (value.action === 'recover' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'recover' };
     if (value.action === 'plant' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'plant' };
+    if (value.action === 'redig' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'redig' };
+    if (value.action === 'backfill' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'backfill' };
     if ((value.action !== 'upgrade' && value.action !== 'demolish') || !exactKeys(value, ['verb', 'action', 'target']) || !isRecord(value.target)) {
       return schemaError(index, 'CONTEXT_ACTION');
     }

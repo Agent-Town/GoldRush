@@ -27,6 +27,12 @@ import {
   SEED_CARAVAN_PLANT_REACH,
   SeedCaravanSystem,
 } from '../systems/SeedCaravanSystem';
+import {
+  CANAL_BACKFILL_ACTION,
+  CANAL_DECISION_REACH,
+  CANAL_REDIG_ACTION,
+  CanalChoiceSystem,
+} from '../systems/CanalChoiceSystem';
 import { TileStateStore } from '../game/TileStateStore';
 
 type MechanicRecord = Readonly<Record<string, boolean | number | string>>;
@@ -474,6 +480,30 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       verb: 'CONTEXT_ACTION action=plant',
       // Named so a rider reads the TRADE, not three numbers.
       consequence: 'each plant leaves a permanent no-spawn green on this map and spends a quarter of the caravan guard; the run secures only if the caravan reaches the basin alive',
+    }));
+  }
+
+  // --- A10 persistent canal choices. SOURCED FROM THE CONSUMER for the same reason A8 is: the
+  // row names the stakes `CanalChoiceSystem` will actually accept a verdict at and the standing
+  // verdicts it holds, so a manifest that says "three grounds" can never outlive a contract that
+  // authors two. Absent unless the contract declares `twist.persistentCanalChoices` AND the
+  // consumer agrees it can run. A fresh empty store, so the row describes the MECHANIC, never
+  // one profile's history.
+  const canal = CanalChoiceSystem.create(contract, new TileStateStore(MANIFEST_TILE_STORAGE));
+  if (canal) {
+    const { choices, total } = canal.diagnostics;
+    rules.push(rule('persistent_canal_choices', 'CanalChoiceSystem.decide', {
+      segments: choices.map(({ id }) => id),
+      zones: choices.map(({ zoneId }) => zoneId),
+      total,
+      decisionReach: CANAL_DECISION_REACH,
+      verbs: [
+        `CONTEXT_ACTION action=${CANAL_REDIG_ACTION}`,
+        `CONTEXT_ACTION action=${CANAL_BACKFILL_ACTION}`,
+      ],
+      // Named so a rider reads the TRADE and the DEADLINE-less objective, not three ids.
+      consequence: 'each canal segment takes one permanent verdict at its stake: redig floods the band for every future run (nothing spawns in it, nothing can be built in it) and backfill opens it as build ground forever; an undecided band takes no works at all, and the run cannot secure until all of them are decided',
+      playsOnce: true,
     }));
   }
 

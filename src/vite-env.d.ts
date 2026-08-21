@@ -503,6 +503,10 @@ interface ThreeGameDiagnostics {
   e9Arsenal: import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
   e9Canal: import('./systems/E9CanalSystem').E9CanalDiagnostics;
   seedCaravan: import('./systems/SeedCaravanSystem').SeedCaravanDiagnostics | null;
+  /** A10: null on every contract that declares no canal choices. The objective's own read. */
+  canalChoices: import('./systems/CanalChoiceSystem').CanalChoiceDiagnostics | null;
+  /** A10-LEGIBILITY: what a PLAIN boot shows of the flow. Presentation only; reaches no sim. */
+  canalFlow: import('./systems/CanalFlowPresentation').CanalFlowDiagnostics | null;
   /**
    * A8-LEGIBILITY: what a PLAIN boot shows a stranger about the caravan — the name tag, the guard
    * bar, the drawn road, and which county-voice beats have been said. Null wherever the consumer

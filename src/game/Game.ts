@@ -257,7 +257,7 @@ import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiInte
 import { PartyOverview, type PartyOverviewSnapshot } from '../ui/PartyOverview';
 import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
-import { BuildingContextPrompt, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
+import { BuildingContextPrompt, type CanalDecisionCandidate, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { LanternShow, type LanternShowState } from '../ui/LanternShow';
@@ -327,6 +327,8 @@ import {
 import { createGreenWaypointSwatch, E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
 import { SeedCaravanSystem } from '../systems/SeedCaravanSystem';
 import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
+import { CanalChoiceSystem } from '../systems/CanalChoiceSystem';
+import { CanalFlowPresentation } from '../systems/CanalFlowPresentation';
 
 // Replay Law: Frontier upgrades remain available after later epochs activate.
 const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
@@ -612,6 +614,15 @@ export class Game {
    * and null wherever it is. Nothing it does can move a hash — see the file header.
    */
   private seedCaravanPresentation: SeedCaravanPresentation | null = null;
+  /**
+   * A10 (`specs/agent-play/door-completion-sheet.md:26`). Null on every contract that does not
+   * declare `twist.persistentCanalChoices`, which is every contract but the Old Canal today. The
+   * same consumer `HeadlessContractSim` composes, built off the SAME contract read, so the
+   * browser and the door cannot disagree about which bands take a foundation or when the canal
+   * has been decided.
+   */
+  /** A10 legibility: browser-only, presentation-only, born beside the consumer and null with it. */
+  private canalFlowPresentation: CanalFlowPresentation | null = null;
   private readonly e10FinaleSystem: E10FinaleSystem;
   private readonly e10StaticBoss: E10StaticBossSystem;
   private readonly e7SignalSystem: E7SignalSystem;
@@ -727,6 +738,22 @@ export class Game {
    * the refusal counters are the run's real total. Built off the CONTRACT, never the epoch.
    */
   private readonly interferenceFront = InterferenceFrontSystem.create(this.activeContract);
+  /**
+   * A10 (`specs/agent-play/door-completion-sheet.md:26`) — the Old Canal's three verdicts. A FIELD
+   * INITIALISER rather than a constructor-body line, and that placement is load-bearing: field
+   * initialisers run in declaration order BEFORE the constructor body, and `BuildSystem` (built in
+   * the body) takes this consumer's ground veto as a constructor argument. It reads the BORN
+   * contract above, so a profile that re-dug a band last run walks onto water this one.
+   *
+   * Null on every contract that declares no canal choices, which is every contract but one today.
+   * The voice callback reads `this.vfx` lazily — it can only ever fire from a player action, long
+   * after the constructor body has raised the effects layer.
+   */
+  private readonly canalChoices = CanalChoiceSystem.create(
+    this.activeContract,
+    this.tileStateStore,
+    (position, text) => this.vfx.floatText(new THREE.Vector3(position.x, 0, position.z), text, '#5b8a8a'),
+  );
   /**
    * A5's whole presentation, and deliberately no more than the ratification asked for: "a simple
    * static band (tint/vignette) is enough — no shader work". A flat translucent slate quad the
@@ -1304,6 +1331,8 @@ export class Game {
   private demolishCandidate: DemolishCandidate | null = null;
   private demolishSuppressedKey: string | null = null;
   private upgradeCandidate: UpgradeCandidate | null = null;
+  /** A10: the undecided stake in reach, or null. Drives the two-button prompt. */
+  private canalDecisionCandidate: CanalDecisionCandidate | null = null;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastBuildIntent = false;
@@ -1453,6 +1482,10 @@ export class Game {
       // this predicate is newly consulted — see `BuildSystem.registerBeaconShooter`.
       (id, _index, position) => !this.interferenceFront.muted(position.x, position.z)
         && (id !== 'turret' || this.powerConsumerAt(position.x, position.z, 'turret')),
+      // A10 — THE GROUND VETO, the same predicate `HeadlessContractSim` injects. A canal band
+      // that is still a ditch, or is water again, takes no foundation; a backfilled one does.
+      // Every contract that declares no canal choices answers `true` and is unchanged.
+      (x, z) => this.canalChoices?.worksAllowed(x, z) ?? true,
     );
     this.pressureSystem = new PressureSystem(
       this.economy,
@@ -1660,6 +1693,11 @@ export class Game {
         if (this.mpClient) this.mpQueuedActions.push({ type: 'context_action', action: 'fund' });
         else this.fundMegaprojectStage(this.actionActor.group.position);
       },
+      // A10: the two halves of the decision, on their own buttons so touch and mouse reach both.
+      // No multiplayer queue entry — the Old Canal is a single-seat contract and a verdict that
+      // one seat could take on another's behalf is a persistence bug waiting to be filed.
+      () => void this.canalChoices?.decide(this.actionActor.group.position, 'redig'),
+      () => void this.canalChoices?.decide(this.actionActor.group.position, 'demolish'),
     );
     this.assayOfficePrompt = new AssayOfficePrompt(this.promptStack);
     this.worldInfoNotePrompt = new WorldInfoNotePrompt(this.promptStack);
@@ -2498,6 +2536,7 @@ export class Game {
     this.e9CanalSystem.dispose();
     this.seedCaravan?.dispose();
     this.seedCaravanPresentation?.dispose();
+    this.canalFlowPresentation?.dispose();
     this.e10FinaleSystem.dispose();
     this.e10StaticBoss.dispose();
     this.e7ArsenalSystem.dispose();
@@ -2806,6 +2845,10 @@ export class Game {
       // reads the same positions `HeadlessContractSim` reads at the same point in its own order.
       this.seedCaravan?.update(simDelta, this.enemies.all);
       this.syncSeedCaravanPresentation();
+      // A10: the consumer has no tick of its own — a verdict is an event, not an integration —
+      // so the only per-frame work is repainting the flow from the published diagnostics. It is
+      // idempotent and does nothing at all until a decision lands.
+      if (this.canalChoices && this.canalFlowPresentation) this.canalFlowPresentation.sync(this.canalChoices.diagnostics);
       // A5: the wall advances on the same sim delta and in the same relative order as
       // `HeadlessContractSim`, reading the same standing-works register, so the two engines put
       // the front in the same place and light the same relays at the same instant.
@@ -3186,7 +3229,11 @@ export class Game {
       contextAction: (order: Extract<StandingOrder, { verb: 'CONTEXT_ACTION' }>) => {
         const actor = this.agentRiderActor(playerId);
         if (!actor) return { ok: false as const, reason: 'INVALID_ACTOR: the rider is not in this room.' };
-        const ok = order.action === 'plant'
+        // A10: the rider decides from ITS OWN body's position, exactly as it plants and recovers
+        // from it — walking to the stake is the mechanic, so whoever walks it is who decides.
+        const ok = order.action === 'redig' || order.action === 'backfill'
+          ? (this.canalChoices?.decide(actor.group.position, order.action === 'redig' ? 'redig' : 'demolish').ok ?? false)
+          : order.action === 'plant'
           ? (this.seedCaravan?.tryPlant(actor.group.position).ok ?? false)
           : order.action === 'fund'
           ? this.fundMegaprojectStage(actor.group.position)
@@ -4378,6 +4425,18 @@ export class Game {
       );
       this.scene.add(this.seedCaravanPresentation.group);
     }
+    // A10: the flow is raised HERE, with the terrain the bands lie on, from the same injected
+    // sampler pattern the caravan uses (F-A8-7: neither the consumer nor its presentation may
+    // import Terrain). It joins the scene only where a canal is declared, so no other map pays a
+    // draw call for it, and it paints the profile's INHERITED verdicts from the first frame.
+    if (this.canalChoices) {
+      this.canalFlowPresentation = new CanalFlowPresentation(
+        this.canalChoices.diagnostics,
+        (x, z) => Terrain.visualY(x, z, 0),
+      );
+      this.canalFlowPresentation.resampleTerrain();
+      this.scene.add(this.canalFlowPresentation.group);
+    }
     // A5: the band joins the scene only where a front is declared, so no other map pays a draw
     // call for it. It starts hidden — `syncInterferenceBand` shows it while the wall crosses.
     if (this.interferenceFront.isDeclared) {
@@ -5147,6 +5206,8 @@ export class Game {
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
       e9Canal: this.e9CanalSystem.diagnostics,
       seedCaravan: this.seedCaravan?.diagnostics ?? null,
+      canalChoices: this.canalChoices?.diagnostics ?? null,
+      canalFlow: this.canalFlowPresentation?.diagnostics ?? null,
       // A8-LEGIBILITY: what the PLAYER can see of the caravan, published beside what it is doing,
       // so the no-`?debug` spec can assert the mission is legible rather than merely present.
       seedCaravanPresentation: this.seedCaravanPresentation?.diagnostics ?? null,
@@ -5475,6 +5536,7 @@ export class Game {
     this.e9CanalSystem.resampleTerrain();
     this.seedCaravan?.resampleTerrain();
     this.seedCaravanPresentation?.resampleTerrain();
+    this.canalFlowPresentation?.resampleTerrain();
     this.e6TileConsumers.resampleTerrain();
     this.resampleHollowCrossingVisuals();
     // The gold seams belong on this list and were missing from it, which is why 29 of the 33
@@ -5557,6 +5619,10 @@ export class Game {
       || (this.crowdFlocks !== undefined && !this.crowdFlocks.allCrossed)
       // A8: the caravan-connect latch, the canyon latch's twin — the crossing IS the objective.
       || (this.seedCaravan !== null && !this.seedCaravan.objectiveComplete)
+      // A10: the canal-choice latch, keyed on `twist.persistentCanalChoices`. Mirrors
+      // `HeadlessContractSim.autoSecureWaveForRun` clause for clause — a canal left half-decided
+      // cannot be secured by outliving it. True on every contract that declares none.
+      || (this.canalChoices !== null && !this.canalChoices.objectiveAllowsSecure)
       // A5: mirrors `HeadlessContractSim.autoSecureWaveForRun` clause for clause. Relay Rush is
       // not won by outliving it: miss the deadline and the run cannot secure at any wave. True on
       // every contract that declares no discharge-able front, so nothing else moves.
@@ -5840,6 +5906,8 @@ export class Game {
       && this.hollowCrossing.objectiveAllowsSecure
       // A8 rides the same expression: a boss kill cannot secure a crossing the caravan never made.
       && (this.seedCaravan === null || this.seedCaravan.objectiveComplete)
+      // A10 rides the same expression: a boss kill cannot secure a canal left half-decided.
+      && (this.canalChoices === null || this.canalChoices.objectiveAllowsSecure)
       // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
       && this.interferenceFront.objectiveAllowsSecure
       && this.showroomCaptureObjective.objectiveAllowsSecure;
@@ -7282,7 +7350,10 @@ export class Game {
     const fund = canInteract && !this.buildMenuOpen && !this.buildSystem.isBuildMode ? this.megaprojectFundCandidate(this.localActor.group.position) : null;
     const demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.demolishCandidate : null;
     const upgrade = demolish ? this.upgradeCandidate : null;
-    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund);
+    // A10: offered in ordinary play (no build mode, no `?debug`) — Mistake #10's answer to "where
+    // does the PLAYER see this, in a plain boot?" is this prompt, on the stake, from wave 1.
+    const canal = canInteract && !this.buildMenuOpen ? this.canalDecisionCandidate : null;
+    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund, canal);
     this.syncProbeHint();
   }
 
@@ -7297,7 +7368,23 @@ export class Game {
     const upgrade = demolish ? this.buildSystem.upgradeCandidateFor(demolish.id, demolish.index) : null;
     this.demolishCandidate = demolish;
     this.upgradeCandidate = upgrade;
+    this.canalDecisionCandidate = canInteract ? this.canalDecisionAt(position) : null;
     this.maybeEmitStampSiteBeat(fund);
+  }
+
+  /**
+   * A10: the stake in reach, offered only while it is still UNDECIDED. Deliberately not gated on
+   * build mode the way the demolish candidate is — a decision stake is a place on the ground, not
+   * a building, so it reads like the megaproject site above it and stays offered in ordinary play.
+   */
+  private canalDecisionAt(position: THREE.Vector3): CanalDecisionCandidate | null {
+    const segment = this.canalChoices?.nearestSegmentWithinReach(position);
+    if (!segment || this.canalChoices?.choiceFor(segment.id) !== 'undecided') return null;
+    return {
+      segmentId: segment.id,
+      title: 'The old cut — decide it once',
+      line: 'Re-dig and the water runs here forever, and nothing stands in it. Demolish and the ground is yours to build on, forever. This choice outlives the run.',
+    };
   }
 
   private syncWorldInfoNotePrompt(): void {
@@ -7580,6 +7667,11 @@ export class Game {
     this.e9CanalSystem.reset();
     this.seedCaravan?.reset();
     if (this.seedCaravan) this.seedCaravanPresentation?.reset(this.seedCaravan.diagnostics);
+    // A10: `reset()` deliberately un-decides nothing (see the consumer's own note) — a verdict is
+    // permanent by ratification, so a new run inherits the flow the last one left and the paint
+    // is only re-synced, never cleared.
+    this.canalChoices?.reset();
+    if (this.canalChoices) this.canalFlowPresentation?.sync(this.canalChoices.diagnostics);
     // A5: the schedule restarts with the run — a new run's first front is 90s away, never the
     // leftover phase of the last one.
     this.interferenceFront.reset();
@@ -8551,6 +8643,11 @@ export class Game {
     // `?debug`, no dev bridge (Mistake #10). It sits ahead of demolish because a stake and a
     // building are never in reach of each other on this map.
     if (this.seedCaravan?.tryPlant(this.actionActor.group.position).ok) return;
+    // A10: the confirm key RE-DIGS at an undecided stake — a PLAIN-BOOT context action on the
+    // same key every other one uses (Mistake #10, no `?debug`, no dev bridge). DEMOLISH is the
+    // upgrade key and the prompt's second button (`confirmUpgrade` below, `canalDecision`), which
+    // is what gives one-key players both halves of a two-way choice without a new binding.
+    if (this.canalChoices?.decide(this.actionActor.group.position, 'redig').ok) return;
     if (this.fundMegaprojectStage(this.actionActor.group.position)) return;
     // A6: ordered beside the other world interactions and BEFORE demolish, which is the
     // fallback. The crater is bare ground with no building on it, so nothing above can claim
@@ -8559,7 +8656,17 @@ export class Game {
     this.confirmDemolish();
   }
 
+  /**
+   * A10 — THE SECOND HALF OF A TWO-WAY CHOICE, ON A KEY THAT ALREADY EXISTS.
+   *
+   * The confirm key re-digs (`confirmAction`); this one demolishes. It rides the UPGRADE key
+   * because that is already this game's second context key and because it can never collide
+   * here: an undecided canal band takes no foundation at all (`CanalChoiceSystem.worksAllowed`),
+   * so there is never a work standing at a decision stake for the upgrade below to claim. No new
+   * binding was minted for a mechanic that lives on one map.
+   */
   private confirmUpgrade(): boolean {
+    if (this.canalChoices?.decide(this.actionActor.group.position, 'demolish').ok) return true;
     const candidate = this.upgradeCandidate;
     if (!candidate) return false;
     const upgraded = this.upgradeBuilding(candidate.id, candidate.index);
