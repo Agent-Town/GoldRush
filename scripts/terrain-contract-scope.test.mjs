@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
+import { terrainSeamCensus } from './terrain-contract-scope.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
@@ -24,6 +25,20 @@ test('Terrain still resolves DEFAULT_CONTRACT_ID under SSR', async () => {
   } finally {
     await vite.close();
   }
+});
+
+test('Terrain seam census excludes its declaration and fallback', () => {
+  const source = `
+    const ACTIVE_CONTRACT = activeContract();
+    function currentContract() {
+      return editorPreviewContract ?? ACTIVE_CONTRACT;
+    }
+  `;
+  assert.deepEqual(terrainSeamCensus(source), {
+    bypassingReads: 0,
+    structuralFloor: 2,
+    seamCalls: 0,
+  });
 });
 
 test('the F-A10-1 Terrain consumption and override seams have not moved', () => {
