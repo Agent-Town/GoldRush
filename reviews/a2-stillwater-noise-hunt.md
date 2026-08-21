@@ -2,7 +2,103 @@
 
 ---
 
-## ADDENDUM — THE OWNER-RULED THIRD ANCHOR (2026-08-21, second pass)
+## ADDENDUM 2 — **ADMITTED** (2026-08-21, third pass)
+
+**RULING (verbatim, to the strike-cost dial): "ok, lets do it, we can balance later during
+testing".** That lifts the Mistake-14 bar for this one dial — not by argument, but because the
+owner explicitly accepted balancing later. **`e5-stillwater` is now an ADMITTED contract.**
+
+**Base:** merged current `main` (`d775fca71`) FIRST. One conflict, `docs/bench/same-game-audit.md`
+— a **generated** file, so it was resolved by taking main's copy and regenerating at the end
+rather than hand-merging two machine outputs.
+
+### The value: `strikeDamage` = **3**
+
+Chosen by measurement, not by solving for the answer — `artifacts/e5-stillwater/dial-sweep.mjs`
+rewrites the constant, runs both seeds twice at each value, and always restores.
+
+| `strikeDamage` | pad survives | seed 01 | seed 02 | decks left | one-strike margin? |
+|---|---|---|---|---|---|
+| 16 (original) | 6 | w4 | w4 | 0 | — |
+| 6 (principled midpoint) | 16 | w9 | w11 | 0 | — |
+| 5 | 20 | w11 **no** | w11 **no** | 0 | NO |
+| 4 | 24 | **w12 SECURE** | **w12 SECURE** | **0** | **NO — knife-edge** |
+| **3 (shipped)** | **32** | **w12 SECURE** | **w12 SECURE** | **1 @ 57 / 60** | **YES** |
+
+**Why 3 and not 4.** Four *does* secure both seeds twice — but with **zero decks left on both**,
+i.e. it wins on the last pad dying, and one unlucky wave takes it away. Pinning that would be
+pinning a coin-flip. Three leaves a whole pad standing at 57 and 60 integrity — ~19 strikes of
+slack — so the dial has **headroom in both directions** for the balance-later pass, which is what
+the ruling asked for. The live boundary is between **4 and 5**, and 3 sits one clear step inside.
+All three values are documented at the constant so the next session inherits the map.
+
+### Secures ×2 — BOTH doors, both seeds
+
+| path | seed 01 | seed 02 |
+|---|---|---|
+| **PLAIN DOOR** (`gr-sim`, no `admissionProbe`) | **w12 SECURE** `fnv1a32:f9967071` · 97 kills | **w12 SECURE** `fnv1a32:8fb9ae74` · 127 kills |
+| in-process (`admissionProbe`) | w12 SECURE `fnv1a32:be2e0c63` · 77 strikes | w12 SECURE `fnv1a32:201e03cd` · 76 strikes |
+| **IDLE — plain door** | **w3 LOSS** `fnv1a32:91a34a6a` | **w3 LOSS** `fnv1a32:bd5a9d8f` |
+| idle — in-process | w3 LOSS `fnv1a32:30144ddc` | w3 LOSS `fnv1a32:316f5a1b` |
+
+Every repeat byte-IDENTICAL. The prover now carries **both transports off one shared `orders()`**,
+so a difference between them could only ever be the door, never the play. The in-process path is
+kept rather than replaced — it is what the entire exemption history and the dial sweep were
+measured on, and a re-admission must not make its own prior evidence un-re-runnable.
+
+**Law 2 holds and could not have been broken by this dial**: an idle run works no machine, so it
+takes no trail and lands no strike, and the dial only ever reduces deck integrity. Verified
+identical at 16, 6 and 3 — and now pinned twice over, in this suite *and* in the generated floor.
+
+### Admission checklist — all discharged
+
+| step | state |
+|---|---|
+| exemption row | **OUT** (replaced by a dated note naming what admitted it) |
+| `bench-seeds.json` | **IN** — `e5-stillwater-01/-02` |
+| `scripts/door-admission-baseline.json` | **IN** — 33 ids |
+| `public/skill.md` seeds + door-contracts fences | **IN** (guard green, incl. positive control) |
+| `er01-e5-census` | flipped to ADMITTED; `SOCKETED_BUT_REFUSED` retired |
+| `null-floors.json` | regenerated — **73 floors, `--check` GREEN** |
+| audit + pins | regenerated; pins re-measured **on the merged tree** |
+| plain-door secure ×2 | **done, both seeds** |
+
+**Floors — zero collateral, proved rather than asserted.** Regenerating added exactly **one** key
+and moved **nothing**: `moved=0, new=1` across all 30 pre-existing contracts, with
+`e5-deepwater-claim`, `e5-regatta` and `e5-flotilla` **byte-UNMOVED**. No row anywhere is
+`secured: true`. `--check` then re-derived all 73 clean.
+
+**Audit — the fourteenth stack, measured on the MERGED tree.** `exemptions 6 → 5`, door `32 → 33`
+with `e5-stillwater` present, summary `agent-lacks 446 · equal 1112 · not-offered 4`. Pinned
+verbatim from the regenerated output; **never by editing two sides' arithmetic into agreement**,
+which is the F-2084-1 failure the pin block warns about and which git would auto-merge silently.
+(The coordinator quoted main's live as 464/1056/4 over 1524 with 6 exemptions — my base is main
+`d775fca71` merged in, and the drain re-measures.)
+
+### Two reds found, both real, both fixed
+
+**F-A2-6 — the census asserted a wave the data forbids.** The admitted branch required
+`corsairWaves > 0` and `corsairsSpawned > 0` for every admitted E5 contract. Stillwater authors
+`corsairWaveSize: 0` with a storm suppressed to a 3600s cycle, so zero is *correct*. Now keyed on
+the declared count — and the zero-arm is the **stronger** assertion, because it pins the
+suppression itself: if the Stillwater ever spawns a corsair, something has re-crewed a track that
+must stay dry.
+
+**F-A2-7 — a staleness trap that its own comment predicted and still did not stop.**
+`gr-sim.test.mjs`'s refusal probe hardcoded a contract id to prove the door refuses by name. It
+was `e5-deepwater-claim` until that was admitted; the fix hardcoded `e5-stillwater` and wrote a
+comment explaining the trap — and this admission sprang it for the **third** time. **A prediction
+is not a mechanism**, so the id is no longer hardcoded: it is read from
+`CONTRACT_ADMISSION_EXEMPTIONS` at run time, and an explicit `assert.ok` now fails loudly on the
+day that table empties, which is an event this suite should announce rather than skip.
+
+---
+
+## ADDENDUM 1 — the owner-ruled third anchor (2026-08-21, second pass)
+
+---
+
+### Detail
 
 **RULING (verbatim, to the five-map fork table): "lets follow your recommendation".** For
 `e5-stillwater` that recommendation was **F-A2-3** below: *"one more `claimBoat.anchors` entry
