@@ -296,8 +296,9 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   //     shape `reviews/e3-fairground-crowd-flocks.md` recorded in advance while the hold was on
   //     ("one contract's worth of movement, 19 rows on its base"), measured then in both
   //     directions and now paid out.
-  assert.equal(audit.admission.exemptions.length, 5);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 383, equal: 897, 'not-offered': 10 });
+  // (The fairground branch's own base pins — 5 exemptions, 383/897/10 — were measured pre-stack;
+  // the LIVE pins for the merged tree sit above at the twelfth-stack block: 7 exemptions,
+  // 485/1035/4. The narrative stays; the duplicate assertions are retired.)
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
 
