@@ -347,6 +347,7 @@ Two refusals on that list are worth naming so nobody hunts for a missing socket:
   "e5-stillwater",
   "e6-glow-mesa",
   "e6-half-life-hollow",
+  "e6-picnic",
   "e7-dead-band",
   "e7-echo-canyon",
   "e7-relay-rush",

@@ -735,8 +735,15 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     posting: {
       waves: waves.sort((left, right) => left.wave - right.wave || compare(left.event, right.event)),
       spawnEdges: [...tile.lanes.spawnEdges].sort(),
+      // `heroStart` was doing two jobs — WHERE THE HERO STARTS and WHICH STAKES END THE RUN — and
+      // the picnic is the contract that needed them apart. Under `twist.picnicHold` the loss is
+      // `PicnicHoldSystem`'s own rule, "all-stakes-claimed", which reads EVERY `stakeMarkers` entry
+      // and never consults `heroStart` — so the two must be read apart here or this manifest tells
+      // a rider the wrong stakes. Contract-scoped on the same declaration the system itself is
+      // gated on, so no other contract's posting moves (`picnic-hold-contract-scope.test.mjs`
+      // holds the key exclusive to `e6-picnic`).
       lossStakes: (tile.stakeMarkers ?? [])
-        .filter(({ heroStart }) => heroStart)
+        .filter(({ heroStart }) => heroStart || PicnicHoldSystem.isEnabled(contract))
         .map(({ id, x, z }) => ({ id, x, z, source: 'tileParams.stakeMarkers' as const }))
         .sort(byId),
     },
