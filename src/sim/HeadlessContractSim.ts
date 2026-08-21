@@ -353,6 +353,11 @@ export type HeadlessAgentView = AgentView & {
      * everywhere else — silence means "no probe out there", and it must keep meaning that.
      */
     probeRecovery?: ProbeRecoveryDiagnostics;
+    /**
+     * E3 Canyon Works. `powered` moves every turn, while `complete` and `failed` latch mid-run
+     * and gate the secure. A rider cannot escort the connection it cannot see.
+     */
+    canyonConnect?: { powered: number; required: number; byWave: number; complete: boolean; failed: boolean };
     /** E3 Fairground: the dynamo the run defends and the escort the run must complete. */
     fairground?: {
       wheel: FerrisWheelDiagnostics;
@@ -1495,6 +1500,7 @@ export class HeadlessContractSim {
     // contract — `recovered` flips mid-run and gates the secure — so unlike the suppression
     // row above it is real per-turn state a rider must be able to poll.
     if (this.probeRecovery.declared) view.now.probeRecovery = this.probeRecovery.diagnostics;
+    if (this.canyonConnectDiagnostics()) view.now.canyonConnect = this.canyonConnectDiagnostics()!;
     // A rider cannot escort what it cannot see. THE VIEW carries the wheel, every flock's phase
     // and crossing count, and the objective read straight off the same latch the run secures on —
     // so a "secured" claim can be checked against the escort that earned it (Mistake #13).
