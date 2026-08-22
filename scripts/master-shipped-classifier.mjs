@@ -85,6 +85,44 @@ function goalLeaves(value, out = []) {
   return out;
 }
 
+// F-2219-1 (s2219): THE SECOND SHIPPED-EVIDENCE SOURCE, WHICH F-2213-1 DID NOT CARRY ITS CURE
+// ACROSS TO. `verdictFor` builds SHIPPED from TWO corpora -- reviews (declared above since
+// F-2213-1) and goal leaves (undeclared until now) -- and the goals arm was a bare
+// `existsSync(p) ? goalLeaves(JSON.parse(readFileSync(p))) : []`. That is F-2218-1's class: the
+// swallow need not be a `catch`, so every catch-keyed census in this file's lineage (s2212
+// grep -c catch, s2213 spawn-inside-try, s2214 same-file wrapper, s2215 handler polarity) was
+// structurally incapable of seeing it -- nothing throws, so there is no handler to score.
+//
+// BLAST RADIUS, MEASURED s2219 by a controlled experiment against the live board (same root,
+// same masters, same reviews; the ONLY variable is this arm, so anything that moves is this arm
+// alone):  goals read -> SHIPPED 704 · NO-TRACE 66 · CANDIDATES 1 · DISAGREES 97
+//          goals empty -> SHIPPED 547 · NO-TRACE 85 · CANDIDATES 8 · DISAGREES 272
+// 157 masters fall out of SHIPPED and the candidate set inflates 8x, INTO the set this tool
+// exists to compute -- the Mistake #8 / 824k Flail polarity, identical in direction to F-2213-1
+// and two orders of magnitude larger: that finding was cured on a blast radius of ONE flip.
+//
+// SEVERITY, STATED HONESTLY: LATENT, exactly like F-2212-1/F-2213-1/F-2214-1 before it.
+// `tasks/goals.json` is TRACKED and was measured present in main and in all four lane worktrees,
+// and a MALFORMED file already fails loud (JSON.parse throws into the F-2214-1 CLI catch, which
+// prints CANNOT VERIFY and reds --strict with 2). What was undefended is the ABSENT case, which
+// alone reaches this ternary without an exception. The defect is not that absence is likely --
+// it is that the tool could not tell you which corpus its queue licence was computed from.
+//
+// THE RESTRAINT IS THE DESIGN (F-2218-1): `absent` DECLARES AND DOES NOT REFUSE. A root with no
+// goals.json is LAWFUL -- it is what every one of this file's 12 legacy guard tests uses, and it
+// is how `mainReviews` already treats a non-git root ('worktree', ok: true). Refusing here would
+// red every fixture and be excused into uselessness inside a week (F-1460-1), taking the
+// declaration down with it. The parse path is DELIBERATELY LEFT ALONE: it already refuses
+// correctly via F-2214-1, and re-coding a working cure in passing is a drive-by (F-2218-1).
+//
+// `source` is a STRING for the F-2212-1 reason: a careless truthiness test at a call site
+// coerces it TRUE, i.e. toward noticing rather than ignoring.
+function goalEvidence(tasksDir) {
+  const goalsPath = path.join(tasksDir, 'goals.json');
+  if (!fs.existsSync(goalsPath)) return { source: 'absent', leaves: [] };
+  return { source: 'goals', leaves: goalLeaves(JSON.parse(fs.readFileSync(goalsPath, 'utf8'))) };
+}
+
 function verdictFor(name, goalEvidence, reviews, drained, traces) {
   const shipped = [
     ...goalEvidence,
@@ -123,8 +161,8 @@ export function classifyRoot(root) {
     const match = path.basename(file).match(/^drained-([0-9a-f]{7,40})-/);
     return match ? [{ file, hash: match[1] }] : [];
   });
-  const goalsPath = path.join(tasksDir, 'goals.json');
-  const goals = fs.existsSync(goalsPath) ? goalLeaves(JSON.parse(fs.readFileSync(goalsPath, 'utf8'))) : [];
+  const goalSource = goalEvidence(tasksDir); // F-2219-1
+  const goals = goalSource.leaves;
 
   const verdicts = masters.map((master) => {
     const fullStem = stem(master);
@@ -174,6 +212,13 @@ export function classifyRoot(root) {
     reviewsOk: reviewSource.ok,
     reviewsSource: reviewSource.source,
     ...(reviewSource.reason && { reviewsReason: reviewSource.reason }),
+    // F-2219-1: the OTHER shipped-evidence corpus, declared on the machine channel ALWAYS --
+    // including the happy path -- because a field that appears only on failure re-creates the
+    // ambiguity it removes (F-2208-1). The human channel follows this file's OWN convention
+    // instead and prints only a deviation, matching `reviewsSource` fifteen lines below: an
+    // always-on line for the ordinary case is the noise that decays a declaration into a
+    // formality (F-2218-1). That split is a decision, not an oversight.
+    goalsSource: goalSource.source,
     verdicts,
   };
 }
@@ -204,6 +249,17 @@ function printTable(result) {
     );
   } else if (result.reviewsSource === 'worktree') {
     console.log(`\nⓘ review evidence read from this WORKING TREE (no \`main\` ref here), not from main.`);
+  }
+  // F-2219-1: the goal-leaf corpus is the OTHER half of SHIPPED evidence. Measured on the live
+  // board, losing it moves 157 masters out of SHIPPED and inflates CANDIDATES 1 -> 8, so a
+  // candidate count computed without it must never leave here wearing an authority it lacks.
+  if (result.goalsSource === 'absent') {
+    console.log(
+      `\nⓘ NO goal-leaf evidence — tasks/goals.json is absent under this root, so SHIPPED was\n` +
+        `   computed from reviews and traces ALONE. That loss is one-directional: it moves masters\n` +
+        `   INTO the candidate set above. Expected for a scratch root; on a real board, re-run\n` +
+        `   from the repo root before treating any candidate as queueable.`,
+    );
   }
 }
 
