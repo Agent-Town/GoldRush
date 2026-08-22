@@ -133,7 +133,7 @@ export class Hero {
 
     const moveX = finiteOrZero(intents.move.x);
     const moveY = finiteOrZero(intents.move.y);
-    terrain.depenetrate?.(this.group.position, Balance.hero.speed * this.moveSpeedMult * dt);
+    terrain.depenetrate?.(this.group.position, Balance.hero.speed * dt);
     const currentSample = terrain.sample(this.group.position.x, this.group.position.z);
     const slopeSpeed = terrainSpeedMultiplier(this.group.position.x, this.group.position.z, moveX, moveY);
     this.targetVelocity
@@ -176,7 +176,7 @@ export class Hero {
     } else {
       if (terrain.sample(this.nextPosition.x, previousZ).walkable) this.group.position.x = this.nextPosition.x;
       else this.velocity.x = 0;
-      if (terrain.sample(previousX, this.nextPosition.z).walkable) this.group.position.z = this.nextPosition.z;
+      if (terrain.sample(this.group.position.x, this.nextPosition.z).walkable) this.group.position.z = this.nextPosition.z;
       else this.velocity.z = 0;
     }
     const actualSpeed = dt > 0 ? Math.hypot(this.group.position.x - previousX, this.group.position.z - previousZ) / dt : 0;
