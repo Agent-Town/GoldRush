@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { createServer } from 'vite';
 
 const SECRET = 'assay-worker-test-secret';
@@ -17,6 +18,7 @@ try {
   await checkPosts(onRequest);
   await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
   await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
+  await checkVerdictSlipExactMatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
   await checkUnrankedBound(onRequest);
   await checkRetroAssay(onRequest, onRequestAssayQueue);
   await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -49,12 +51,13 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   const kv = makeKv();
   await call(onRequest, 'POST', '/api/standings', post('1'.repeat(32), 30, tape('verify-me', 30)), kv);
   await call(onRequest, 'POST', '/api/standings', post('2'.repeat(32), 25, tape('reject-me', 25)), kv);
+  await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 20, tape('retry-me', 20)), kv);
 
   equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, kv, undefined)).status, 503, 'absent secret fails closed');
   equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, kv, SECRET, 'wrong')).status, 401, 'wrong key is unauthorized');
   const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=2', undefined, kv, SECRET);
   equal(queue.status, 200, 'correct key reads queue');
-  equal(queue.body.queue.map((row) => row.locator.tapeId).join(','), 'verify-me,reject-me', 'queue is oldest first');
+  equal(queue.body.queue.map((row) => row.locator.tapeId).join(','), 'verify-me,reject-me', 'queue is oldest first and respects its limit');
 
   const verifyLocator = queue.body.queue.find((row) => row.locator.tapeId === 'verify-me').locator;
   const rejectLocator = queue.body.queue.find((row) => row.locator.tapeId === 'reject-me').locator;
@@ -66,14 +69,19 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   equal(verified.body.assay, 'verified', 'verified verdict flips state');
   const rejected = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(rejectLocator, 'rejected', 'replay diverged'), kv, SECRET);
   equal(rejected.status, 200, 'rejected verdict accepted');
+  const retryQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=3', undefined, kv, SECRET);
+  const retryLocator = retryQueue.body.queue.find((row) => row.locator.tapeId === 'retry-me').locator;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(retryLocator, 'unassayable', 'instrument exited 143'), kv, SECRET)).status, 200, 'unassayable verdict accepted with a reason');
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(retryLocator, 'unassayable'), kv, SECRET)).status, 400, 'unassayable verdict without a reason is refused');
 
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'rejected row drops from ranking');
   equal(board.body.board[0].assay, 'verified', 'verified row remains ranked');
   equal(board.body.rejectedCount, 1, 'rejected row is counted');
   const stored = JSON.parse(await kv.get(KEY));
-  equal(stored.length, 2, 'rejected row survives in KV');
+  equal(stored.length, 3, 'unranked rows survive in KV');
   equal(stored.find((row) => row.tape.id === 'reject-me').assayReason, 'replay diverged', 'rejection reason is retained on the row');
+  equal(stored.find((row) => row.tape.id === 'retry-me').assayReason, 'instrument exited 143', 'instrument reason is retained on the row');
 
   // THE ASSAY SLIP (F-ASSAY-E2E, 2026-08-22). A refused row leaves the ranked board; before this
   // it also took its reason with it, so an honest rider learned only that `rejectedCount` moved.
@@ -84,6 +92,21 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   equal(slip.body.assay, 'rejected', 'the slip names the verdict');
   equal(slip.body.assayReason, 'replay diverged', 'the slip names the reason');
   equal(slip.body.ranked, false, 'and says the row holds no rank');
+  const unassayableSlip = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=retry-me', undefined, kv);
+  equal(unassayableSlip.body.assay, 'unassayable', 'the slip names an infrastructure failure honestly');
+  equal(unassayableSlip.body.assayReason, 'instrument exited 143', 'the slip serves the instrument reason');
+  equal(unassayableSlip.body.assayHash, undefined, 'the slip does not invent a replay hash');
+  equal(unassayableSlip.body.ranked, false, 'an unassayable row is not ranked');
+
+  const requeued = JSON.parse(await kv.get(KEY));
+  requeued.find((row) => row.tape.id === 'retry-me').assay = 'pending';
+  await kv.put(KEY, JSON.stringify(requeued));
+  const secondQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=3', undefined, kv, SECRET);
+  const secondLocator = secondQueue.body.queue.find((row) => row.locator.tapeId === 'retry-me').locator;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(secondLocator, 'verified'), kv, SECRET)).status, 200, 'a flipped-back row re-enters the queue');
+  const retried = JSON.parse(await kv.get(KEY)).find((row) => row.tape.id === 'retry-me');
+  equal(retried.assay, 'verified', 'the later assay can verify it');
+  equal(retried.assayReason, undefined, 'the stale instrument reason is cleared');
   const verifiedSlip = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=verify-me', undefined, kv);
   equal(verifiedSlip.body.assay, 'verified', 'a verified row reads its own slip too');
   equal(verifiedSlip.body.ranked, true, 'and it stays ranked');
@@ -121,6 +144,21 @@ async function checkDuplicateTapeIds(onRequest, verdictRoute) {
   const stored = JSON.parse(await kv.get(KEY));
   equal(stored.find((row) => row.anonId === '3'.repeat(32)).assay, 'verified', 'selected duplicate row receives verdict');
   equal(stored.find((row) => row.anonId === '4'.repeat(32)).assay, 'pending', 'identical duplicate row stays pending');
+}
+
+async function checkVerdictSlipExactMatch(onRequest, queueRoute, verdictRoute) {
+  const kv = makeKv();
+  const collisionId = JSON.parse(readFileSync('artifacts/assay-e2e-20260822/round2/tape-run1.json', 'utf8')).id;
+  const uniqueId = `${collisionId}-00000000-0000-4000-8000-000000000000`;
+  await call(onRequest, 'POST', '/api/standings', post('6'.repeat(32), 10, tape(collisionId, 10)), kv);
+  await call(onRequest, 'POST', '/api/standings', post('7'.repeat(32), 20, tape(uniqueId, 20)), kv);
+  const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=2', undefined, kv, SECRET);
+  for (const row of queue.body.queue) {
+    await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(row.locator, 'rejected', `reason:${row.locator.tapeId}`), kv, SECRET);
+  }
+  const slip = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=${uniqueId}`, undefined, kv);
+  equal(slip.body.tapeId, uniqueId, 'the round-2 collision prefix resolves only the full id');
+  equal(slip.body.assayReason, `reason:${uniqueId}`, 'the exact matching slip is reachable');
 }
 
 async function checkUnrankedBound(onRequest) {
@@ -180,14 +218,14 @@ async function checkSeasonRoll(onRequest, queueRoute, verdictRoute) {
   equal(JSON.parse(await kv.get(KEY)).find((row) => row.tape.id === 'assayable').assay, 'pending', 'v2 POST lands pending');
 
   // (d) A v1 tape stores, and the LANDED lifecycle is what keeps it off the ranks: the worker
-  // cannot verify a tape with no runStart (scripts/assay-worker.mjs:81), so its verdict unranks the
+  // cannot verify a tape with no runStart, so its verdict unranks the
   // row while the row itself survives. The endpoint's tape contract is unchanged.
   const v1 = await call(onRequest, 'POST', '/api/standings', post('b'.repeat(32), 90, tape('legacy-shaped', 90)), kv);
   equal(v1.status, 200, 'the tape contract still accepts a v1 tape, unchanged');
   const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=100', undefined, kv, SECRET);
   const locator = queue.body.queue.find((row) => row.locator.tapeId === 'legacy-shaped').locator;
   const rejected = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', {
-    locator, verdict: 'rejected', replayedHash: 'fnv1a32:00000000', reason: 'legacy tape v1 is unverifiable',
+    locator, verdict: 'unassayable', reason: 'legacy tape v1 is unverifiable',
   }, kv, SECRET);
   equal(rejected.status, 200, 'the worker verdict on a v1 tape is accepted');
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
@@ -245,7 +283,8 @@ function storedRow(index, withTape) {
 function verdict(locator, verdictValue, reason) {
   return {
     locator, verdict: verdictValue,
-    replayedHash: 'fnv1a32:1234abcd', ...(reason ? { reason } : {}),
+    ...(verdictValue === 'unassayable' ? {} : { replayedHash: 'fnv1a32:1234abcd' }),
+    ...(reason ? { reason } : {}),
   };
 }
 

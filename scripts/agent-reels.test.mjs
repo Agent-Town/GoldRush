@@ -8,7 +8,7 @@ import { createServer } from 'vite';
 
 const hold = { verb: 'HOLD', pos: { x: 0, z: 12 } };
 
-test('agent reel validation reuses the door bounds and CLI tapes are byte deterministic', async () => {
+test('agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids', async () => {
   const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
   try {
     const { validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
@@ -41,7 +41,14 @@ test('agent reel validation reuses the door bounds and CLI tapes are byte determ
       ], { encoding: 'utf8', input: prefix + input, timeout: 30_000 });
       assert.equal(run.status, 0, run.stderr);
     }
-    assert.equal(readFileSync(second, 'utf8'), readFileSync(first, 'utf8'));
+    const firstTape = JSON.parse(readFileSync(first, 'utf8'));
+    const secondTape = JSON.parse(readFileSync(second, 'utf8'));
+    assert.notEqual(secondTape.id, firstTape.id);
+    assert.match(firstTape.id, /^agent-[a-f0-9]{8}-[a-f0-9-]{36}$/);
+    assert.equal(secondTape.inputLog.name, firstTape.inputLog.name);
+    delete firstTape.id;
+    delete secondTape.id;
+    assert.deepEqual(secondTape, firstTape);
   } finally {
     rmSync(directory, { recursive: true, force: true });
   }

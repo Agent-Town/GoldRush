@@ -9,6 +9,7 @@
 //                        when a browser owns the world. See src/sim/SeatedLockstepSim.ts.
 
 import { createInterface } from 'node:readline';
+import { randomUUID } from 'node:crypto';
 import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -253,7 +254,11 @@ async function writeAgentTape(vite, path, sim, outcome, run) {
   const lastEntryTick = run.submissions.length ? run.submissions[run.submissions.length - 1].t : -1;
   const durationTicks = Math.max(elapsedTicks, lastEntryTick + 1);
   const eventLogHash = agentOrdersEventLogHash(snapshotStandingOrders());
-  const id = `agent-${stableHash({ contract: run.contract, seed: run.seed, difficulty: run.difficulty, eventLogHash }).slice('fnv1a32:'.length)}`;
+  const contentId = `agent-${stableHash({ contract: run.contract, seed: run.seed, difficulty: run.difficulty, eventLogHash }).slice('fnv1a32:'.length)}`;
+  // Identical proof content must remain deterministic, but its public lookup handle must not
+  // collide. Mint uniqueness only in the recording's id; the input-log name keeps the stable
+  // content id, so two identical runs differ in exactly this field.
+  const id = `${contentId}-${randomUUID()}`;
   const tape = {
     version: RUN_TAPE_VERSION,
     id,
@@ -268,7 +273,7 @@ async function writeAgentTape(vite, path, sim, outcome, run) {
     runStart: sim.runStart,
     inputLog: {
       version: 1,
-      name: id,
+      name: contentId,
       contractId: run.contract,
       seed: run.seed,
       difficultyPreset: run.difficulty,
