@@ -6,7 +6,13 @@ import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { plannedLeaves, resolveRefusal, summarise } from './authorable-candidates.mjs';
+import {
+  plannedLeaves,
+  resolveRefusal,
+  summarise,
+  unresolvedStatuses,
+  RESOLVED_BY_DRAIN_BLOCK_CHECK,
+} from './authorable-candidates.mjs';
 
 const GUARD = fileURLToPath(new URL('./authorable-candidates.mjs', import.meta.url));
 
@@ -112,4 +118,101 @@ test('planned leaves are found at any depth, through subgoals AND tasks', () => 
     }],
   };
   assert.deepEqual(plannedLeaves(goals).map((l) => l.id), ['deep']);
+});
+
+// --- F-2180-1 (filed s2180, cured s2181): the census must STATE its denominator ---
+//
+// The defect was an over-claim, not a wrong number: the header called `planned`
+// "the factory's whole authorable-candidate surface", so a fire that read the
+// footer was told the question was covered and never looked further. Measured
+// s2181, `building` (5 leaves) and `verified-by-owner` (11) are resolved by NO
+// instrument — this tool filters `planned`, and drain-block-check resolves only
+// `blocked` plus its two terminal sets.
+
+test('a leaf in a status NO instrument resolves is named in the residue', () => {
+  const result = run({
+    goals: [
+      { id: 'rung', title: 'A rung', status: 'planned', authoringBlock: { class: 'owner-gated', reason: 'owner' } },
+      { id: 'half-built', title: 'Mid-flight', status: 'building' },
+    ],
+  });
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /RESIDUE: 1 leaf\/leaves in 1 status\(es\) NO instrument resolves/);
+  assert.match(result.stdout, /building {2}1/);
+  assert.match(result.stdout, /· half-built/);
+});
+
+test('the residue is ADVISORY — an unresolved status must not trip --strict', () => {
+  // Reding the board on legacy statuses would repeat the mistake --strict's
+  // narrow scope exists to avoid. Only an UNPRICED planned leaf gates.
+  const result = run({
+    goals: [
+      { id: 'rung', title: 'A rung', status: 'planned', authoringBlock: { class: 'owner-gated', reason: 'owner' } },
+      { id: 'half-built', title: 'Mid-flight', status: 'building' },
+      { id: 'seen', title: 'Owner saw it', status: 'verified-by-owner' },
+    ],
+  }, ['--strict']);
+  assert.equal(result.status, 0, 'residue must not gate');
+  assert.match(result.stdout, /RESIDUE: 2 leaf\/leaves in 2 status\(es\)/);
+});
+
+test('statuses SOME instrument resolves stay out of the residue', () => {
+  const result = run({
+    goals: [
+      { id: 'a', status: 'merged', mergeHash: 'x' },
+      { id: 'b', status: 'blocked', blockedReason: 'owner', blockClass: 'owner-fork' },
+      { id: 'c', status: 'superseded', reason: 'replaced' },
+      { id: 'd', title: 'A rung', status: 'planned', authoringBlock: { class: 'owner-gated', reason: 'owner' } },
+    ],
+  });
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /RESIDUE: none/);
+});
+
+test('the mirrored status set does not drift from drain-block-check own literals', () => {
+  // MIRRORED, NOT IMPORTED: drain-block-check calls main() unconditionally at its
+  // foot, so importing it would EXECUTE the drain guard as a side effect of asking
+  // this question. The mirror is therefore the "hardcoded list git already knows"
+  // defect, and this is its mitigation — the same shape as the CODEX_FLOOR drift
+  // guard in runner-restart-recipe.test.sh, and for the same reason.
+  const src = fs.readFileSync(fileURLToPath(new URL('./drain-block-check.mjs', import.meta.url)), 'utf8');
+  const literal = (name) => {
+    const m = src.match(new RegExp('const ' + name + ' = new Set\\(\\[([^\\]]*)\\]\\)'));
+    assert.ok(m, name + ' not found in drain-block-check.mjs — the mirror cannot be checked');
+    return m[1].split(',').map((s) => s.trim().replace(/^['"]|['"]$/g, '')).filter(Boolean);
+  };
+  const theirs = new Set([
+    ...literal('TERMINAL_SHIPPED_STATUSES'),
+    ...literal('TERMINAL_CLOSED_STATUSES'),
+    'blocked',
+  ]);
+  assert.deepEqual(
+    [...RESOLVED_BY_DRAIN_BLOCK_CHECK].sort(),
+    [...theirs].sort(),
+    'RESOLVED_BY_DRAIN_BLOCK_CHECK has drifted from drain-block-check own status sets',
+  );
+  // The `blocked` arm is not a Set literal — assert it by the code that reads it.
+  assert.match(
+    src,
+    /node\.status === 'blocked'/,
+    "drain-block-check no longer resolves 'blocked' the way the mirror assumes",
+  );
+});
+
+test('unresolvedStatuses finds residue at any depth and sorts by count', () => {
+  const goals = {
+    goals: [{
+      id: 'root',
+      status: 'merged',
+      subgoals: [{
+        id: 'mid',
+        status: 'building',
+        tasks: [{ id: 'x', status: 'verified-by-owner' }, { id: 'y', status: 'verified-by-owner' }],
+      }],
+    }],
+  };
+  assert.deepEqual(unresolvedStatuses(goals), [
+    { status: 'verified-by-owner', count: 2, ids: ['x', 'y'] },
+    { status: 'building', count: 1, ids: ['mid'] },
+  ]);
 });
