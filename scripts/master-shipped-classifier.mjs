@@ -219,7 +219,28 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     process.exitCode =
       process.argv.includes('--strict') && (result.counts.CANDIDATES || !result.reviewsOk) ? 1 : 0;
   } catch (error) {
+    // F-2214-1: F-2213-1's `--strict` refusal lives INSIDE the try above, so ANY throw skipped it
+    // and this line forced exitCode 0 -- byte-identical to a genuinely clean board, with stdout
+    // EMPTY. That is F-2208-1's defect one file over, and it defeated the cure landed one arm
+    // over a fire earlier. The triggers are mundane, not exotic: a mid-splice or malformed
+    // `tasks/goals.json` (fires splice it every drain), a `--root` one directory off, or a master
+    // renamed between readdirSync and readFileSync by a concurrent drain.
+    //
+    // The advisory DEFAULT is deliberately preserved -- a drain must never be blocked by this
+    // tool's own absence, which is what the retired comment here protected and what an
+    // over-general cure (rethrow, or refuse on every catch) would break. What changes is only
+    // `--strict`, which now separates "could not answer" (2) from "answered, and the answer
+    // refuses" (1) -- the house convention already carried by drain-block-check and
+    // dry-board-probe, so the corpus supplied this pattern rather than inventing one.
+    //
+    // The banner is printed to STDOUT as well as stderr: per F-2211-1 a caller classifying by
+    // stdout would otherwise read an empty string from a crashed run and bucket it as silence.
+    console.log(
+      '\n⛔ CANNOT VERIFY — DO NOT QUEUE off this run. The classifier crashed before it finished\n' +
+        `   reading the board (${error.message}). No master above, if any printed at all, carries\n` +
+        '   a verdict. Re-run once the cause is fixed before treating anything here as queueable.',
+    );
     console.error(`master-shipped-classifier: ${error.message}`);
-    process.exitCode = 0; // advisory: never block a drain on our own absence
+    process.exitCode = process.argv.includes('--strict') ? 2 : 0;
   }
 }
