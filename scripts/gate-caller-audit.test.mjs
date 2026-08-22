@@ -490,6 +490,204 @@ test("all five desk spellings are matched, so the check cannot be dodged by an a
 });
 
 // ---------------------------------------------------------------------------
+// F-2199-1 — SUBJECT ADMISSION. The header defines a gate BEHAVIOURALLY ("whose
+// whole purpose is to return a verdict") while the code admitted files by
+// EXTENSION, so a guard written in bash was not merely unreached, it was not a
+// SUBJECT. Every red below is proven by MANUFACTURING the defect against a
+// pre-cure mutant: a passing guard never executes its own violation path, so a
+// green here would say nothing about the arm (the s1299/s1300 standard).
+// ---------------------------------------------------------------------------
+
+/** Pre-cure mutant: .sh admission reverted, everything else byte-identical. */
+function mutantWithoutShSubjects() {
+  const src = fs.readFileSync(SCRIPT, 'utf8');
+  const neutered = src
+    .replace(
+      "const testFiles = files.filter((f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh'));",
+      "const testFiles = files.filter((f) => f.endsWith('.test.mjs'));",
+    )
+    .replace(
+      "  if (f.endsWith('.test.mjs') || f.endsWith('.test.sh')) continue;",
+      "  if (!f.endsWith('.mjs') || f.endsWith('.test.mjs')) continue;",
+    );
+  assert.notEqual(neutered, src, 'the mutant must actually differ — otherwise this proves nothing');
+  const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-gate-caller-mutant-')));
+  const p = path.join(dir, 'gate-caller-audit.mjs');
+  fs.writeFileSync(p, neutered);
+  fs.copyFileSync(path.join(path.dirname(SCRIPT), 'law-surfaces.mjs'), path.join(dir, 'law-surfaces.mjs'));
+  return p;
+}
+
+function runWith(script, dir, ...extra) {
+  return spawnSync(process.execPath, [script, '--root', dir, ...extra], { encoding: 'utf8' });
+}
+
+test('ADMISSION: a *.test.sh nothing calls is a NEW orphan (pre-cure it is byte-invisible)', () => {
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'scripts/lonely-thing.test.sh': '#!/usr/bin/env bash\nexit 0\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const pre = runWith(mutantWithoutShSubjects(), dir);
+  assert.equal(pre.status, 0, 'PRE-CURE: the bash guard is not a subject — this is the defect\n' + pre.stdout);
+  assert.doesNotMatch(pre.stdout, /lonely-thing\.test\.sh/, 'PRE-CURE: it is never even named');
+
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stdout + r.stderr, /scripts\/lonely-thing\.test\.sh/);
+});
+
+test('ADMISSION: a guard-shaped .sh nothing calls is a NEW orphan (pre-cure invisible)', () => {
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'scripts/lonely-fence-guard.sh': '#!/usr/bin/env bash\nexit 1\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const pre = runWith(mutantWithoutShSubjects(), dir);
+  assert.equal(pre.status, 0, 'PRE-CURE: a bash guard is outside the subject set\n' + pre.stdout);
+  assert.doesNotMatch(pre.stdout, /lonely-fence-guard\.sh/);
+
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stdout + r.stderr, /scripts\/lonely-fence-guard\.sh/);
+});
+
+test('ADMISSION CONTROL: a NON-guard-shaped .sh is still never ratcheted on', () => {
+  // The widening is narrow ON PURPOSE. Admitting all 33 scripts/*.sh in the real
+  // tree would add 22 orphans — fire-runner.sh, lane-runner-v3.sh, deploy-alias.sh,
+  // stream-sync.sh — all human tools and pipeline entry points. A ratchet that reds
+  // on those trains fires to ignore it (F-1460-1, the `cross-engine` fate).
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'scripts/deploy-somewhere.sh': '#!/usr/bin/env bash\necho ship\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.doesNotMatch(r.stdout, /deploy-somewhere\.sh/);
+});
+
+// ---------------------------------------------------------------------------
+// F-2199-1 — A LAW IS A CALLER. Seventeen baseline entries said "law files are
+// outside this audit's edge vocabulary" and worked around it; the cost was that
+// `test:ledger-guards` and every leaf it chains were excused as orphans, so
+// DROPPING a leaf from the chain changed nothing this audit printed.
+// ---------------------------------------------------------------------------
+
+/** Pre-cure mutant: law-derived roots removed, everything else byte-identical. */
+function mutantWithoutLawRoots() {
+  const src = fs.readFileSync(SCRIPT, 'utf8');
+  const neutered = src.replace(
+    "const lawRoots = lawCalledNpmScripts(scripts);\nfor (const name of lawRoots.keys()) roots.add('npm:' + name);",
+    'const lawRoots = new Map();',
+  );
+  assert.notEqual(neutered, src, 'the mutant must actually differ — otherwise this proves nothing');
+  const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-gate-caller-lawmutant-')));
+  const p = path.join(dir, 'gate-caller-audit.mjs');
+  fs.writeFileSync(p, neutered);
+  fs.copyFileSync(path.join(path.dirname(SCRIPT), 'law-surfaces.mjs'), path.join(dir, 'law-surfaces.mjs'));
+  return p;
+}
+
+const LAW_FIXTURE = {
+  scripts: {
+    ...BASE_SCRIPTS,
+    'test:ledger-ish': 'node --test scripts/late-guard.test.mjs && bash scripts/late-fence.test.sh',
+  },
+  files: {
+    ...BASE_FILES,
+    'scripts/late-guard.test.mjs': 'console.log("late");\n',
+    'scripts/late-fence.test.sh': '#!/usr/bin/env bash\nexit 0\n',
+    'scripts/fire.md': 'Run `npm run test:ledger-ish` as the LAST act of every fire that wrote a ledger row.\n',
+  },
+  baseline: EMPTY_BASELINE,
+};
+
+test('LAW ROOT: a battery only a LAW surface calls is REACHED, and so are its leaves', () => {
+  const dir = fixture(LAW_FIXTURE);
+  const pre = runWith(mutantWithoutLawRoots(), dir);
+  assert.equal(pre.status, 1, 'PRE-CURE: the law-called battery reads as an orphan — this is the defect');
+  assert.match(pre.stdout + pre.stderr, /npm:test:ledger-ish/);
+  assert.match(pre.stdout + pre.stderr, /late-guard\.test\.mjs/, 'PRE-CURE: the leaf inherits the orphanhood');
+
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /law-called roots\s+:\s+\d+.*test:ledger-ish/);
+  assert.doesNotMatch(r.stdout + r.stderr, /NEW\s+npm:test:ledger-ish/);
+});
+
+test('LAW ROOT TEETH: dropping a leaf from the chain now REDS — the whole point', () => {
+  // Before this cure the leaf was grandfathered as an orphan, so removing its only
+  // caller changed nothing the audit printed. That is F-1252-2's failure mode (a
+  // guard RED for nine fires behind nine green batteries) inside the guard built
+  // to catch it.
+  const dropped = {
+    ...LAW_FIXTURE,
+    scripts: { ...LAW_FIXTURE.scripts, 'test:ledger-ish': 'node --test scripts/late-guard.test.mjs' },
+  };
+  const r = run(fixture(dropped));
+  assert.equal(r.status, 1, 'a leaf removed from the chain must red\n' + r.stdout);
+  assert.match(r.stdout + r.stderr, /late-fence\.test\.sh/);
+});
+
+test('LAW ROOT: a law citing a script package.json does NOT define confers nothing', () => {
+  // F-1667-1's shape: two entries excused guards for 133 fires on a law caller that
+  // `grep -c` says never existed. A citation is READ and RESOLVED here, never trusted.
+  const dir = fixture({
+    scripts: { ...BASE_SCRIPTS, 'test:lonely': 'node scripts/lonely-guard.mjs' },
+    files: {
+      ...BASE_FILES,
+      'scripts/lonely-guard.mjs': 'console.log("nobody calls me");\n',
+      'scripts/fire.md': 'Always run `npm run test:lonley` before draining.\n', // typo: no such script
+    },
+    baseline: EMPTY_BASELINE,
+  });
+  const r = run(dir);
+  assert.equal(r.status, 1, 'a misspelled law citation must not invent a caller\n' + r.stdout);
+  assert.match(r.stdout + r.stderr, /npm:test:lonely/);
+});
+
+// ---------------------------------------------------------------------------
+// F-2199-2 — TIGHTENING USED TO DESTROY THE REASONING. --update-baseline rebuilt
+// the file from the current orphan set, so an entry that gained a caller was
+// dropped and its reason went with it. On the live tree that was 17 entries and
+// 22,038 characters of recorded why, several carrying their own later
+// corrections. The RETENTION LAW marks superseded lines, it does not delete them.
+// ---------------------------------------------------------------------------
+
+test('RETENTION: --update-baseline SUPERSEDES a healed entry instead of deleting its reason', () => {
+  const REASON = 's0000 F-9999-9: the whole recorded why, which must survive tightening.';
+  const dir = fixture({
+    ...LAW_FIXTURE,
+    baseline: JSON.stringify({ grandfathered: { 'npm:test:ledger-ish': REASON } }),
+  });
+  const r = run(dir, '--update-baseline');
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  const after = JSON.parse(fs.readFileSync(path.join(dir, 'scripts', 'gate-caller-baseline.json'), 'utf8'));
+  assert.ok(!('npm:test:ledger-ish' in after.grandfathered), 'a reached gate must leave the ratchet');
+  assert.equal(after.superseded['npm:test:ledger-ish'], REASON, 'the reason must survive BYTE-IDENTICAL');
+});
+
+test('RETENTION: `superseded` excuses NOTHING — a re-orphaned gate reds as FRESH', () => {
+  // The danger of keeping history in the same file is that it becomes an amnesty.
+  // Only `grandfathered` is read by the ratchet; this proves it.
+  const dir = fixture({
+    scripts: { ...BASE_SCRIPTS, 'test:lonely': 'node scripts/lonely-guard.mjs' },
+    files: { ...BASE_FILES, 'scripts/lonely-guard.mjs': 'console.log("nobody calls me");\n' },
+    baseline: JSON.stringify({
+      grandfathered: {},
+      superseded: {
+        'npm:test:lonely': 'once had a caller',
+        'scripts/lonely-guard.mjs': 'once had a caller',
+      },
+    }),
+  });
+  const r = run(dir);
+  assert.equal(r.status, 1, 'a superseded key must not excuse an orphan\n' + r.stdout);
+  assert.match(r.stdout + r.stderr, /npm:test:lonely/);
+});
+
+// ---------------------------------------------------------------------------
 // POSITIVE CONTROL — the arms above all run on fixtures, so at least one must
 // prove the script works on the tree it actually gates (s1252's harness lesson:
 // validate the harness before believing its numbers).

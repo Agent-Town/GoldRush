@@ -140,6 +140,11 @@ function mutantWithoutDeclaration(t) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-law-pointer-mutant-'));
   const p = path.join(dir, 'law-pointer-guard.mjs');
   fs.writeFileSync(p, neutered);
+  // s2199: the guard imports ./law-surfaces.mjs (the shared law-surface list, extracted so
+  // gate-caller-audit.mjs cannot drift a second copy of it — F-2199-1). A mutant is a COPY of
+  // the script, so it needs the script's local dependency beside it or it dies on module
+  // resolution and this harness proves nothing about the declaration path it exists to test.
+  fs.copyFileSync(path.join(path.dirname(SCRIPT), 'law-surfaces.mjs'), path.join(dir, 'law-surfaces.mjs'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   return p;
 }

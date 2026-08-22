@@ -58,6 +58,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { LAW_SURFACES } from './law-surfaces.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -91,7 +92,41 @@ const SCRATCH_FILE = /^scripts\/tmp-s\d+-/;
 const ANCHORS = ['npm:test:node-guards', 'npm:test:task-guards', 'scripts/run-guards.mjs'];
 
 // The edge vocabulary, written down because it is a claim (see header).
-const EDGE_SOURCES = ['package.json scripts', 'scripts/**.mjs', 'scripts/**.sh', '*.config.ts', '.github/**'];
+const EDGE_SOURCES = ['package.json scripts', 'scripts/**.mjs', 'scripts/**.sh', '*.config.ts', '.github/**', 'law surfaces (`npm run` only)'];
+
+// s2199 (F-2199-1): A LAW IS A CALLER, AND SEVENTEEN BASELINE ENTRIES SAID SO BEFORE THIS DID.
+// "law files are outside this audit's edge vocabulary" appears near-verbatim in nine of them.
+// They were RIGHT and they were HONEST -- and the workaround cost the audit its teeth on the
+// biggest chain in the repo: `test:ledger-guards` was grandfathered as an orphan, so its leaves
+// inherited that orphanhood and were grandfathered too, and once a leaf is excused, DROPPING IT
+// FROM THE CHAIN CHANGES NOTHING THIS AUDIT PRINTS. That is F-1252-2's exact failure mode (a
+// guard RED for nine fires behind nine green batteries) sitting inside the guard built to
+// prevent it. Deriving the root instead of asserting it also refuses F-1667-1's shape: two
+// baseline entries excused guards for 133 fires on a law caller that `grep -c` says never
+// existed. Here the citation is READ from the surface at runtime and must name a script that
+// package.json actually defines -- a caller that is checked, not a sentence that is trusted.
+// Measured s2199 across all six surfaces: FOUR npm scripts are law-cited (build, test:guards,
+// test:node-guards, test:ledger-guards) and three were already roots, so this admits exactly
+// one. It cannot flood: the surfaces are law, not a pattern, and a name it cannot resolve in
+// package.json is dropped rather than invented.
+// NOTE ON SCOPE, because the entries call the unrootedness DELIBERATE and they are right:
+// nothing here wires test:ledger-guards into a battery. F-1300-4's ordering law is untouched --
+// it still must run AFTER the drain-bookkeeping commit, as a fire's last act. This teaches the
+// AUDIT to see a caller that already exists; it does not move when the battery runs.
+function lawCalledNpmScripts(scriptNames) {
+  const found = new Map();
+  for (const surface of LAW_SURFACES) {
+    const text = readIf(surface);
+    if (!text) continue;
+    for (const m of text.matchAll(/npm\s+run\s+`?([\w:@.-]+)/g)) {
+      const name = m[1];
+      if (!(name in scriptNames)) continue; // a cited name package.json does not define is not a caller
+      if (!found.has(name)) found.set(name, new Set());
+      found.get(name).add(surface);
+    }
+  }
+  return found;
+}
 
 // ---------------------------------------------------------------------------
 let untracked = [];
@@ -155,7 +190,14 @@ try {
 }
 const scripts = (pkg && pkg.scripts) || {};
 const scriptFiles = files.filter((f) => f.startsWith('scripts/') && /\.(mjs|sh)$/.test(f));
-const testFiles = files.filter((f) => f.endsWith('.test.mjs'));
+// s2199 (F-2199-1): `.test.sh` counts. This class used to be `.test.mjs` only, so the SIX bash
+// guards `test:ledger-guards` chains (main-lock-gate, janitor-request-rejection,
+// lane-dispatch-safety, codex-client-floor, runner-restart-recipe, runner-commit-decoupling)
+// were not merely unreached -- they were NOT SUBJECTS AT ALL, invisible to this audit's universe.
+// Two of them are cited by law as the thing that guards a law (fire.md §0 and §2.0b), and
+// dropping one from the chain would have produced silence. Admission by file EXTENSION, where
+// the header defines a gate by BEHAVIOUR ("whose whole purpose is to return a verdict").
+const testFiles = files.filter((f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh'));
 const configFiles = files.filter((f) => /(^|\/)[\w.-]*config\.ts$/.test(f));
 const workflowFiles = files.filter((f) => f.startsWith('.github/'));
 
@@ -186,6 +228,11 @@ roots.add('npm:test:guards');
 // (b) the drain minimum (CLAUDE.md §6 "tsc clean · build green · its own spec · adjacent suites")
 roots.add('npm:build');
 roots.add('npm:test');
+// (b2) s2199 (F-2199-1): batteries a LAW surface orders a fire to run. Same class as (b) --
+// `npm:build`/`npm:test` are the drain minimum asserted from CLAUDE.md §6 -- except these are
+// READ from the surface rather than hardcoded, so the claim expires when the law does.
+const lawRoots = lawCalledNpmScripts(scripts);
+for (const name of lawRoots.keys()) roots.add('npm:' + name);
 // (c) whatever the pipeline shells invoke — fires and the lane runner live here
 for (const sh of scriptFiles.filter((f) => f.endsWith('.sh'))) for (const e of edgesOf(readIf(sh))) roots.add(e);
 // (d) the node --test roster is itself a caller of every file in its argv
@@ -265,7 +312,13 @@ for (const name of Object.keys(scripts)) {
   subjects.push({ key: 'npm:' + name, kind: 'npm script', via: reached.get('npm:' + name) || null });
 }
 for (const f of scriptFiles) {
-  if (!f.endsWith('.mjs') || f.endsWith('.test.mjs')) continue;
+  // s2199 (F-2199-1): was `!f.endsWith('.mjs')`, which excluded every .sh in the tree. A guard
+  // written in bash is a guard. The narrow widening -- GUARDISH_FILE still decides -- is
+  // deliberate: admitting ALL 33 scripts/*.sh would add 22 orphans (fire-runner.sh,
+  // lane-runner-v3.sh, deploy-alias.sh, stream-sync.sh, move-art-downloads.sh...) which are
+  // human tools and pipeline entry points, and ratcheting on those is what trains a fire to
+  // ignore this guard (the header's own warning, and the `cross-engine` fate, F-1460-1).
+  if (f.endsWith('.test.mjs') || f.endsWith('.test.sh')) continue;
   if (!GUARDISH_FILE.test(f) || SCRATCH_FILE.test(f)) continue;
   subjects.push({ key: f, kind: 'guard script', via: reached.get(f) || null });
 }
@@ -293,7 +346,8 @@ console.log('gate-caller-audit — who calls each gate?');
 console.log('  root                : ' + ROOT);
 console.log('  npm scripts         : ' + Object.keys(scripts).length + ' (' + subjects.filter((s) => s.kind === 'npm script').length + ' gate-shaped)');
 console.log('  scripts/ files      : ' + scriptFiles.length + ' (' + subjects.filter((s) => s.kind === 'guard script').length + ' guard-shaped)' + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter((f) => f.startsWith('scripts/') && /\.(mjs|sh)$/.test(f)).length + ' untracked)' : ''));
-console.log('  *.test.mjs files    : ' + testFiles.length + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter((f) => f.endsWith('.test.mjs')).length + ' untracked)' : ''));
+console.log('  *.test.{mjs,sh}     : ' + testFiles.length + ' (' + testFiles.filter((f) => f.endsWith('.test.sh')).length + ' bash)' + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter((f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh')).length + ' untracked)' : ''));
+console.log('  law-called roots    : ' + lawRoots.size + (lawRoots.size ? '   ' + [...lawRoots.keys()].sort().join(', ') : '   (none cited)'));
 console.log('  config.ts read      : ' + configFiles.length + '   .github/ files: ' + workflowFiles.length);
 console.log('  edge vocabulary     : ' + EDGE_SOURCES.join(', '));
 console.log('  roots               : ' + roots.size + '   reached: ' + reached.size);
@@ -309,13 +363,33 @@ if (REPORT) {
 
 // --- baseline ratchet ----------------------------------------------------
 if (UPDATE) {
-  const prev = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')).grandfathered || {} : {};
+  const prevFile = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : {};
+  const prev = prevFile.grandfathered || {};
   const obj = {};
   for (const s of orphans.sort((a, b) => a.key.localeCompare(b.key))) {
     obj[s.key] = prev[s.key] || 'TODO: say why this gate has no caller, or give it one.';
   }
-  fs.writeFileSync(BASELINE, JSON.stringify({ grandfathered: obj }, null, 2) + '\n');
-  console.log('gate-caller-audit: baseline written — ' + Object.keys(obj).length + ' grandfathered orphan(s)');
+  // s2199 (F-2199-2): TIGHTENING THE BASELINE USED TO DESTROY THE REASONING. This writer rebuilt
+  // the file from the CURRENT orphan set, so an entry that gained a caller was dropped and its
+  // reason -- often the only surviving record of why a guard is shaped the way it is, several of
+  // them 200+ words with their teeth-proofs and their own later corrections (the F-1667-1
+  // annotations) -- went with it. The RETENTION LAW is explicit that superseded lines are marked,
+  // not deleted, and a fire following the tool's own "tighten the baseline" advice would have
+  // erased 17 of them in one command. They move to `superseded` instead: out of the ratchet, still
+  // on disk, still greppable. A key here confers NOTHING -- only `grandfathered` excuses an orphan
+  // -- so a guard that loses its caller again reappears as a FRESH orphan and reds, exactly as it
+  // should. This is history, not amnesty.
+  const superseded = { ...(prevFile.superseded || {}) };
+  for (const [key, reason] of Object.entries(prev)) if (!(key in obj)) superseded[key] = reason;
+  const ordered = Object.fromEntries(Object.keys(superseded).sort().map((k) => [k, superseded[k]]));
+  fs.writeFileSync(BASELINE, JSON.stringify({ grandfathered: obj, superseded: ordered }, null, 2) + '\n');
+  console.log(
+    'gate-caller-audit: baseline written — ' +
+      Object.keys(obj).length +
+      ' grandfathered orphan(s), ' +
+      Object.keys(ordered).length +
+      ' superseded (kept for history)',
+  );
   process.exit(0);
 }
 
@@ -327,13 +401,16 @@ if (!fs.existsSync(BASELINE)) {
   process.exit(2);
 }
 let baseline = {};
+let supersededCount = 0;
 try {
-  baseline = JSON.parse(fs.readFileSync(BASELINE, 'utf8')).grandfathered || {};
+  const parsed = JSON.parse(fs.readFileSync(BASELINE, 'utf8'));
+  baseline = parsed.grandfathered || {};
+  supersededCount = Object.keys(parsed.superseded || {}).length;
 } catch (error) {
   console.error('gate-caller-audit: REFUSING — baseline unreadable: ' + error.message);
   process.exit(2);
 }
-console.log('  grandfathered       : ' + Object.keys(baseline).length);
+console.log('  grandfathered       : ' + Object.keys(baseline).length + (supersededCount ? '   superseded (history, excuses nothing): ' + supersededCount : ''));
 
 const fresh = orphans.filter((s) => !(s.key in baseline));
 const healed = Object.keys(baseline).filter((k) => !orphans.some((s) => s.key === k));

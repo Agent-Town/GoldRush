@@ -65,6 +65,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { LAW_SURFACES } from './law-surfaces.mjs';
 
 // fileURLToPath, never URL.pathname — the repo path contains a space ("Gold Rush"),
 // which URL.pathname percent-encodes into a path that silently matches nothing (F-1255-3).
@@ -76,14 +77,11 @@ const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 
 const ROOT = path.resolve(arg('--root') || DEFAULT_ROOT);
 const BASELINE = path.join(ROOT, 'scripts', 'law-pointer-baseline.json');
 
-const SURFACES = [
-  'CLAUDE.md',
-  'AGENTS.md',
-  'scripts/fire.md',
-  '.claude/skills/drain/SKILL.md',
-  '.claude/skills/author-task/SKILL.md',
-  '.claude/skills/playtest-intake/SKILL.md',
-];
+// s2199 (F-2199-1): the list itself moved to scripts/law-surfaces.mjs, unchanged, because
+// gate-caller-audit.mjs now needs the SAME six paths to answer a different question (a law
+// surface is a CALLER). Pasting a second copy there is the defect s2198 explicitly refused;
+// one list, two readers, so adding a surface is one edit. Everything below is untouched.
+const SURFACES = LAW_SURFACES;
 const GOAL_LEDGER = 'tasks/goals.json';
 const DRAIN_GUARD = 'scripts/drain-block-check.mjs';
 
