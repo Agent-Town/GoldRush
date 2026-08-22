@@ -76,6 +76,34 @@
  * CAVEAT worth knowing before trusting a green LOCAL-ONLY: remote-tracking refs
  * are a local mirror of origin, refreshed by fetch/push. Run `git fetch` first if
  * another writer may have pushed the blobs you are asking about.
+ *
+ * F-2184-1 (s2184): that caveat names only the HARMLESS direction. Tracking-ref
+ * staleness has two, and only one of them can lie in the direction this audit has
+ * already lied twice (F-1054-1, F-1055-1):
+ *   (1) tracking ref BEHIND the wire  -> `offsite` too SMALL -> false ALARM. This
+ *       is the direction the caveat above describes; it over-reports risk, which
+ *       is the safe way to be wrong.
+ *   (2) tracking ref names objects the wire NO LONGER HAS (branch deleted or
+ *       rewound on origin, tracking ref not yet pruned) -> `offsite` too LARGE
+ *       -> FALSE ZERO: blobs reported backed that in fact die with this disk.
+ * Direction (2) is the false-zero SHAPE this header catalogues, one level up: the
+ * question moved from "is this blob in git?" to "is the ref I am trusting real?".
+ *
+ * MEASURED AT THE WIRE s2184, and the exposure is currently NIL — recorded so the
+ * next fire re-measures rather than re-derives, and knows this audit does NOT ask:
+ *   - 133 tracking refs (+HEAD = 134) vs `git ls-remote origin`: SET-IDENTICAL.
+ *     Same names, same SHAs, zero divergence in EITHER direction. Diff the set,
+ *     never the tally (F-2182-1) — an equal count is also what one deletion plus
+ *     one addition looks like.
+ *   - one remote only (origin, git@github.com:Agent-Town/GoldRush.git), so
+ *     `--remotes` really is origin and cannot be inflated by a second, on-disk
+ *     remote — which would be F-1055-1's "asks only THIS disk" recurring.
+ * DELIBERATELY NOT CURED IN CODE: adding an `ls-remote` call would make this audit
+ * network-dependent, so a flaky connection would turn a working instrument into a
+ * failing one, and the audit is a fire duty rather than a gate. The check above is
+ * ~1 s by hand when a LOCAL-ONLY green is actually load-bearing. If direction (2)
+ * ever measures non-zero, THAT is the third gap the header demands be fixed as a
+ * class rather than an instance.
  */
 import { execFileSync } from 'node:child_process';
 import { readdirSync, statSync, existsSync } from 'node:fs';
