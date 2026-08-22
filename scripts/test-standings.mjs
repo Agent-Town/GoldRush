@@ -8,6 +8,7 @@ const SECRET = 'assay-worker-test-secret';
 // pre-roll board keeps the shape it was written with, forever, read-only.
 const KEY = 'standings:s2:epoch-1-frontier:the-claim';
 const ARCHIVE_KEY = 'standings:epoch-1-frontier:the-claim';
+const ASSAY_INDEX_KEY = 'assay-queue-index';
 let checks = 0;
 
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
@@ -15,16 +16,64 @@ try {
   const { onRequest } = await vite.ssrLoadModule('/functions/api/standings.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
+  await checkAssayIndexRace(onRequest, onRequestAssayQueue);
   await checkPosts(onRequest);
   await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
   await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
   await checkVerdictSlipExactMatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+  await checkAssayIndex(onRequest, onRequestAssayQueue);
   await checkUnrankedBound(onRequest);
   await checkRetroAssay(onRequest, onRequestAssayQueue);
   await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
   console.log(`standings assay checks passed (${checks})`);
 } finally {
   await vite.close();
+}
+
+async function checkAssayIndexRace(onRequest, queueRoute) {
+  const raced = makeKv({ barrierIndexReads: 2 });
+  await raced.put(ASSAY_INDEX_KEY, JSON.stringify(indexEnvelope([])));
+  const [raceA, raceB] = await Promise.all([
+    call(onRequest, 'POST', '/api/standings', post('a'.repeat(32), 20, tape('race-a', 20)), raced),
+    call(onRequest, 'POST', '/api/standings', post('b'.repeat(32), 10, tape('race-b', 10, 'fnv1a32:1234abcd', 'e2-hill-mine'), 'e2-hill-mine', 'epoch-2-steamworks'), raced),
+  ]);
+  equal([raceA.status, raceB.status], [200, 200], 'concurrent cross-board submissions both store');
+  const racedIndex = await assayIndex(raced);
+  equal(racedIndex.locators.length, 1, 'the deterministic valid-index race loses exactly one locator');
+  const racedQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, raced, SECRET);
+  equal(racedQueue.body.queue.length, 1, 'fresh raced index serves only its surviving locator');
+  const served = racedQueue.body.queue[0].locator.tapeId;
+  const lost = served === 'race-a' ? 'race-b' : 'race-a';
+  const lostBoardKey = lost === 'race-a' ? KEY : 'standings:s2:epoch-2-steamworks:e2-hill-mine';
+  ok(JSON.parse(await raced.get(lostBoardKey)).some((row) => row.tape.id === lost && row.assay === 'pending'), 'lost locator remains pending on its board but unserved');
+
+  racedIndex.sweptAt = 0;
+  await raced.put(ASSAY_INDEX_KEY, JSON.stringify(racedIndex));
+  raced.resetOps();
+  const reconciled = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, raced, SECRET);
+  equal(reconciled.body.queue.map((row) => row.locator.tapeId).sort(), ['race-a', 'race-b'], 'stale reconcile restores and serves the raced locator');
+  equal(raced.ops.reads, 43, 'raced reconcile reads the index twice and every board');
+  equal(raced.ops.writes, 1, 'raced reconcile writes one authoritative index');
+
+  const overlap = makeKv({ pauseAfterBoardReads: 41 });
+  const rowA = storedRowFor(6, 'the-claim', 'epoch-1-frontier');
+  const rowB = storedRowFor(7, 'e2-hill-mine', 'epoch-2-steamworks');
+  await overlap.put(KEY, JSON.stringify([rowA]));
+  await overlap.put('standings:s2:epoch-2-steamworks:e2-hill-mine', JSON.stringify([rowB]));
+  const rowBLocator = { ...queueRow(rowB, 'epoch-2-steamworks', 'e2-hill-mine').locator, submittedAt: rowB.submittedAt };
+  await overlap.put(ASSAY_INDEX_KEY, JSON.stringify(indexEnvelope([rowBLocator], 0)));
+  const overlappingSweep = workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, overlap, SECRET);
+  await overlap.waitForBoardSweep();
+  const late = storedRowFor(5, 'e3-blackout-ridge', 'epoch-3-voltage');
+  await overlap.put('standings:s2:epoch-3-voltage:e3-blackout-ridge', JSON.stringify([late]));
+  const lateLocator = { ...queueRow(late, 'epoch-3-voltage', 'e3-blackout-ridge').locator, submittedAt: late.submittedAt };
+  await overlap.put(ASSAY_INDEX_KEY, JSON.stringify(indexEnvelope([
+    rowBLocator,
+    lateLocator,
+  ], 0)));
+  overlap.releaseBoardSweep();
+  const withLateRow = await overlappingSweep;
+  equal(withLateRow.body.queue.map((row) => row.locator.tapeId).sort(), [rowA.tape.id, rowB.tape.id, late.tape.id].sort(), 'reconcile restores the race without dropping a row written between its scan and index write');
 }
 
 async function checkPosts(onRequest) {
@@ -52,6 +101,7 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   await call(onRequest, 'POST', '/api/standings', post('1'.repeat(32), 30, tape('verify-me', 30)), kv);
   await call(onRequest, 'POST', '/api/standings', post('2'.repeat(32), 25, tape('reject-me', 25)), kv);
   await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 20, tape('retry-me', 20)), kv);
+  equal((await assayIndex(kv)).locators.length, 3, 'submissions append pending locators');
 
   equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, kv, undefined)).status, 503, 'absent secret fails closed');
   equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, kv, SECRET, 'wrong')).status, 401, 'wrong key is unauthorized');
@@ -73,6 +123,7 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   const retryLocator = retryQueue.body.queue.find((row) => row.locator.tapeId === 'retry-me').locator;
   equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(retryLocator, 'unassayable', 'instrument exited 143'), kv, SECRET)).status, 200, 'unassayable verdict accepted with a reason');
   equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(retryLocator, 'unassayable'), kv, SECRET)).status, 400, 'unassayable verdict without a reason is refused');
+  equal((await assayIndex(kv)).locators.length, 0, 'all verdicts remove their locators');
 
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'rejected row drops from ranking');
@@ -98,9 +149,8 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   equal(unassayableSlip.body.assayHash, undefined, 'the slip does not invent a replay hash');
   equal(unassayableSlip.body.ranked, false, 'an unassayable row is not ranked');
 
-  const requeued = JSON.parse(await kv.get(KEY));
-  requeued.find((row) => row.tape.id === 'retry-me').assay = 'pending';
-  await kv.put(KEY, JSON.stringify(requeued));
+  await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 20, tape('retry-me', 20)), kv);
+  equal((await assayIndex(kv)).locators.length, 1, 'resubmission requeues the assay locator');
   const secondQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=3', undefined, kv, SECRET);
   const secondLocator = secondQueue.body.queue.find((row) => row.locator.tapeId === 'retry-me').locator;
   equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(secondLocator, 'verified'), kv, SECRET)).status, 200, 'a flipped-back row re-enters the queue');
@@ -113,6 +163,68 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   equal(verifiedSlip.body.assayReason, undefined, 'a verified slip carries no reason');
   equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=no-such-reel', undefined, kv)).status, 404, 'an unknown reel has no slip');
   equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=reject-me&party=solo', undefined, kv)).status, 400, 'the slip keeps the strict param arithmetic');
+}
+
+async function checkAssayIndex(onRequest, queueRoute) {
+  const idle = makeKv();
+  await idle.put(ASSAY_INDEX_KEY, JSON.stringify(indexEnvelope([])));
+  idle.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, idle, SECRET)).body.queue.length, 0, 'idle indexed queue is empty');
+  equal(idle.ops.reads, 1, 'idle poll costs exactly one KV read');
+  equal(idle.ops.writes, 0, 'idle poll does not rewrite its index');
+
+  const pending = makeKv();
+  await call(onRequest, 'POST', '/api/standings', post('8'.repeat(32), 20, tape('one-pending', 20)), pending);
+  pending.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, pending, SECRET)).body.queue.length, 1, 'indexed pending row is served');
+  equal(pending.ops.reads, 2, 'one-pending poll costs the index plus one board read');
+  equal(pending.ops.writes, 0, 'live locators do not rewrite the index');
+
+  const seeded = makeKv();
+  const first = storedRowFor(20, 'the-claim', 'epoch-1-frontier');
+  const second = storedRowFor(10, 'e2-hill-mine', 'epoch-2-steamworks');
+  await seeded.put(KEY, JSON.stringify([first]));
+  await seeded.put('standings:s2:epoch-2-steamworks:e2-hill-mine', JSON.stringify([second]));
+  seeded.resetOps();
+  const rebuilt = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, seeded, SECRET);
+  equal(rebuilt.body.queue, [queueRow(second, 'epoch-2-steamworks', 'e2-hill-mine'), queueRow(first, 'epoch-1-frontier', 'the-claim')], 'missing index rebuild equals the seeded full-scan response');
+  equal(seeded.ops.reads, 43, 'missing index rebuild reads the index twice and all 41 boards');
+  equal(seeded.ops.writes, 1, 'missing index rebuild writes one index');
+
+  await seeded.put(ASSAY_INDEX_KEY, '{broken');
+  seeded.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, seeded, SECRET)).body.queue.length, 2, 'corrupt index rebuilds and serves');
+  equal(seeded.ops.reads, 43, 'corrupt index rebuild reads the index twice and all 41 boards');
+
+  const migratedLocators = (await assayIndex(seeded)).locators;
+  await seeded.put(ASSAY_INDEX_KEY, JSON.stringify(migratedLocators));
+  seeded.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, seeded, SECRET)).body.queue.length, 2, 'legacy bare index migrates and serves');
+  const migrated = await assayIndex(seeded);
+  equal(migrated.version, 1, 'legacy index is rewritten in the versioned envelope');
+  ok(Number.isInteger(migrated.sweptAt), 'legacy migration records a full-sweep stamp');
+  equal(seeded.ops.reads, 44, 'legacy migration performs two index reads, one full sweep, plus the assertion read');
+  equal(seeded.ops.writes, 1, 'legacy migration rewrites the index once');
+
+  const staleRows = JSON.parse(await pending.get(KEY));
+  staleRows[0].assay = 'verified';
+  staleRows[0].assayedAt = 1;
+  staleRows[0].assayHash = 'fnv1a32:1234abcd';
+  await pending.put(KEY, JSON.stringify(staleRows));
+  pending.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, pending, SECRET)).body.queue.length, 0, 'stale verified locator is not served');
+  equal((await assayIndex(pending)).locators.length, 0, 'stale verified locator is pruned');
+
+  const busy = makeKv();
+  const oldSweep = Date.now() - 1_000;
+  await busy.put(ASSAY_INDEX_KEY, JSON.stringify(indexEnvelope([], oldSweep)));
+  await call(onRequest, 'POST', '/api/standings', post('9'.repeat(32), 20, tape('busy-board', 20)), busy);
+  equal((await assayIndex(busy)).sweptAt, oldSweep, 'incremental submission preserves the last full-sweep stamp');
+  busy.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, busy, SECRET, SECRET, { ASSAY_INDEX_MAX_AGE_MS: '1' })).body.queue.length, 1, 'preserved stale stamp makes the next poll reconcile');
+  equal(busy.ops.reads, 43, 'stale poll reads the index twice and all 41 boards');
+  equal(busy.ops.writes, 1, 'stale poll rewrites one reconciled index');
+
 }
 
 // Guards the NORMALIZATION law (a stored row that carries a tape but no assay stamp reads as
@@ -235,21 +347,21 @@ async function checkSeasonRoll(onRequest, queueRoute, verdictRoute) {
   equal(await kv.get(ARCHIVE_KEY), archiveBytes, 'a whole current-season lifecycle never touched season one');
 }
 
-function post(anonId, waves, runTape) {
+function post(anonId, waves, runTape, contractId = 'the-claim', epochId = 'epoch-1-frontier') {
   const inputLogHash = runTape ? createHash('sha256').update(JSON.stringify(runTape.inputLog)).digest('hex') : 'b'.repeat(64);
   return {
-    contractId: 'the-claim', epochId: 'epoch-1-frontier',
+    contractId, epochId,
     score: { secured: true, waves, timeAlive: 120, gold: 40, baseValue: 60 },
     profileName: 'Assay Test', anonId, difficulty: 'trail', seed: 'gold-rush', seedMode: 'live',
     seedHash: 'a'.repeat(64), inputLogHash, ...(runTape ? { tape: runTape } : {}),
   };
 }
 
-function tape(id, waves, eventLogHash = 'fnv1a32:1234abcd') {
+function tape(id, waves, eventLogHash = 'fnv1a32:1234abcd', contractId = 'the-claim') {
   return {
-    version: 1, id, createdAt: 1, kept: true, contract: 'the-claim', seed: 'gold-rush', difficulty: 'trail', simVersion: 1,
+    version: 1, id, createdAt: 1, kept: true, contract: contractId, seed: 'gold-rush', difficulty: 'trail', simVersion: 1,
     inputLog: {
-      version: 1, name: id, contractId: 'the-claim', seed: 'gold-rush', difficultyPreset: 'trail', stepSeconds: 1 / 30,
+      version: 1, name: id, contractId, seed: 'gold-rush', difficultyPreset: 'trail', stepSeconds: 1 / 30,
       start: { x: 0, z: 12 }, durationTicks: 1, entries: [], truncated: null, primarySlot: 0, streams: [],
     },
     eventLogHash,
@@ -280,6 +392,25 @@ function storedRow(index, withTape) {
   };
 }
 
+function storedRowFor(index, contractId, epochId) {
+  const runTape = tape(`seed-${index}`, 100 - index, 'fnv1a32:1234abcd', contractId);
+  const payload = post(index.toString(16).padStart(32, '0'), 100 - index, runTape, contractId, epochId);
+  return {
+    ...payload.score, profileName: `Seed ${index}`, anonId: payload.anonId, difficulty: payload.difficulty,
+    seed: payload.seed, seedMode: payload.seedMode, seedHash: payload.seedHash, inputLogHash: payload.inputLogHash,
+    submittedAt: index + 1, tape: runTape, assay: 'pending',
+  };
+}
+
+function queueRow(row, epochId, contractId) {
+  return {
+    locator: { epochId, contractId, tapeId: row.tape.id, rowId: `${row.anonId}:1:${row.submittedAt}:${row.inputLogHash}` },
+    tape: row.tape,
+    score: { secured: true, waves: row.waves, timeAlive: row.timeAlive, gold: row.gold, baseValue: row.baseValue },
+    submittedAt: row.submittedAt,
+  };
+}
+
 function verdict(locator, verdictValue, reason) {
   return {
     locator, verdict: verdictValue,
@@ -292,19 +423,57 @@ async function call(route, method, url, body, kv) {
   return workerCall(route, method, url, body, kv);
 }
 
-async function workerCall(route, method, url, body, kv, secret, key = secret) {
+async function workerCall(route, method, url, body, kv, secret, key = secret, extraEnv = {}) {
   const headers = new Headers(body === undefined ? {} : { 'content-type': 'application/json' });
   if (key !== undefined) headers.set('x-assay-key', key);
   const response = await route({
     request: new Request(`http://127.0.0.1${url}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) }),
-    env: { TELEMETRY: kv, ...(secret === undefined ? {} : { ASSAY_WORKER_SECRET: secret }) },
+    env: { TELEMETRY: kv, ...(secret === undefined ? {} : { ASSAY_WORKER_SECRET: secret }), ...extraEnv },
   });
   return { status: response.status, body: await response.json() };
 }
 
-function makeKv() {
+function makeKv({ barrierIndexReads = 0, pauseAfterBoardReads = 0 } = {}) {
   const values = new Map();
-  return { get: async (key) => values.get(key) ?? null, put: async (key, value) => void values.set(key, value) };
+  const ops = { reads: 0, writes: 0 };
+  let blockedIndexReads = 0;
+  let releaseIndexReads;
+  const indexReadBarrier = barrierIndexReads > 0 && new Promise((resolve) => { releaseIndexReads = resolve; });
+  let boardReads = 0;
+  let signalBoardSweep;
+  let releaseBoardSweep;
+  const boardSweepReached = pauseAfterBoardReads > 0 && new Promise((resolve) => { signalBoardSweep = resolve; });
+  const boardSweepBarrier = pauseAfterBoardReads > 0 && new Promise((resolve) => { releaseBoardSweep = resolve; });
+  return {
+    ops,
+    resetOps: () => { ops.reads = 0; ops.writes = 0; },
+    waitForBoardSweep: () => boardSweepReached,
+    releaseBoardSweep: () => releaseBoardSweep?.(),
+    get: async (key) => {
+      ops.reads += 1;
+      const value = values.get(key) ?? null;
+      if (key === ASSAY_INDEX_KEY && blockedIndexReads < barrierIndexReads) {
+        blockedIndexReads += 1;
+        if (blockedIndexReads === barrierIndexReads) releaseIndexReads();
+        await indexReadBarrier;
+      }
+      if (key.startsWith('standings:') && pauseAfterBoardReads > 0 && ++boardReads === pauseAfterBoardReads) {
+        signalBoardSweep();
+        await boardSweepBarrier;
+      }
+      return value;
+    },
+    put: async (key, value) => { ops.writes += 1; values.set(key, value); },
+  };
+}
+
+function indexEnvelope(locators, sweptAt = Date.now()) {
+  return { version: 1, sweptAt, locators };
+}
+
+async function assayIndex(kv) {
+  const parsed = JSON.parse(await kv.get(ASSAY_INDEX_KEY));
+  return Array.isArray(parsed) ? { version: 0, sweptAt: null, locators: parsed } : parsed;
 }
 
 function equal(actual, expected, message) {
