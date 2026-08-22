@@ -4,13 +4,23 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c`.
 
-READ FIRST: `AGENTS.md`; **`reviews/c3-hero-move-pin.md`** (the drain that HELD your predecessor — it
-carries the measurement, the two-sided control and the cure shape you are about to need);
-**`tasks/fe2cs2-2-coal-seam-defaults-node-safe.md`** and
+READ FIRST — ⚠️ **THE FIRST FILE IS NOT ON YOUR LANE. Your lane is deliberately BEHIND main (see the
+pre-flight: you must NOT refresh it), so `reviews/c3-hero-move-pin.md` does not exist in your
+worktree. Read it out of main instead:**
+
+```
+git show main:reviews/c3-hero-move-pin.md
+```
+
+That is the drain that HELD your predecessor; it carries the measurement, the two-sided control and
+the cure shape you are about to need. **Read it before anything else.** Then, on your lane as normal:
+`AGENTS.md`; **`tasks/fe2cs2-2-coal-seam-defaults-node-safe.md`** and
 **`reviews/fe2cs2-1-publish-coal-seams-on-the-view.md`** (the SAME defect class cured once already —
 read how it was resolved before inventing a second answer); `src/world/LandmarkCollision.ts` (line 1
 is the whole problem); `src/game/RunSuspend.ts` (your predecessor's new import);
 `scripts/whole-suite-collection.test.mjs` (the guard that caught this — read it, **do not edit it**).
+If any of those three older paths is missing on your lane too, read it from `main:` the same way and
+say so in your report.
 
 ## Pre-flight — READ THIS ENTIRE SECTION BEFORE RUNNING ANY GIT COMMAND
 
