@@ -51,12 +51,34 @@
  * the half it did not reach.
  *
  * ADVISORY BY DEFAULT (exit 0), by the drain-block-check UNKNOWN precedent: this
- * reports, it does not gate. `--strict` exits 1 when a real drain is found.
+ * reports, it does not gate. `--strict` exits 1 on a real drain and 2 on an
+ * UNKNOWN -- the same two codes, meaning the same two things, as the tool whose
+ * precedent this cites. READ THE WORD, not just the code (the lane-usable rule).
  *
  * UNKNOWN IS NOT A CLEARANCE. drain-block-check exits 0 for "no goal leaf
  * matches", which is the ledger DECLINING TO ANSWER, not permission. Those are
  * bucketed separately here and each one owes the s1061 file probe: read the
  * master, list the artifacts it claims, ask `git ls-files` for them on main.
+ *
+ * F-2208-1 (s2208): that paragraph was true of the BUCKETING and false of the
+ * EXIT CODE for this script's whole first day. `--strict` mapped only the drain
+ * arm to a non-zero code, so the middle verdict -- printed in this script's own
+ * words as "NO DRAIN FOUND, but N UNKNOWN(s) owe a file probe BEFORE YOU MAY SAY
+ * DRY" -- exited 0, byte-identical to the earned "✅ DRY". In the one mode whose
+ * entire purpose is to turn the verdict into an exit code, "you have not earned
+ * this word" and "the word is earned" were the same answer. Measured on the live
+ * board at s2208: 3 UNKNOWNs present, `--strict` rc=0.
+ *
+ * It is F-1597-1's shape surviving the cure that names it, one more time: a
+ * branch falling through to an affirmative-looking clearance. F-2097-1 drew the
+ * general rule -- WHEN YOU CURE A FALL-THROUGH, ASK WHICH OTHER CHECKS SIT
+ * BEHIND THE SAME EARLY EXIT. Here the fall-through and the cure were in one
+ * file, nine tests apart.
+ *
+ * The nine guard tests missed it by construction: every one exercised
+ * selectSubjects/bucketOf, and the decision lived inline in main() where no test
+ * could reach it. `exitCodeFor` is exported for exactly the reason the two
+ * functions above are -- so the arm that decides can be exercised, not admired.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -185,6 +207,26 @@ export function bucketOf(output) {
   return 'drain';
 }
 
+/**
+ * The verdict, as an exit code. Pure and exported so the guard can exercise the
+ * arm that DECIDES -- F-2208-1: for this script's first day the decision sat
+ * inline in main(), and all nine tests asserted the bucketing instead.
+ *
+ * Codes match drain-block-check, whose precedent this script's header cites:
+ *   1 = a real drain (the definite bad thing)
+ *   2 = the ledger declines to answer; a file probe is owed before "dry"
+ *   0 = advisory mode, or a genuinely earned "dry"
+ *
+ * @param {{drain: unknown[], unknown: unknown[]}} buckets
+ * @param {boolean} strict
+ */
+export function exitCodeFor(buckets, strict) {
+  if (!strict) return 0;
+  if (buckets.drain.length) return 1;
+  if (buckets.unknown.length) return 2;
+  return 0;
+}
+
 function main() {
   const root = process.cwd();
   const strict = process.argv.includes('--strict');
@@ -241,8 +283,7 @@ function main() {
   console.log('\n  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed');
   console.log('  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.');
 
-  if (strict && buckets.drain.length) process.exit(1);
-  process.exit(0);
+  process.exit(exitCodeFor(buckets, strict));
 }
 
 // NOTE: compare via pathToFileURL, never a `file://${argv[1]}` template. This

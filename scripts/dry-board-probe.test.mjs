@@ -18,7 +18,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { TERMINAL_TOKENS, bareDate, bucketOf, embeddedDate, selectSubjects } from './dry-board-probe.mjs';
+import { TERMINAL_TOKENS, bareDate, bucketOf, embeddedDate, exitCodeFor, selectSubjects } from './dry-board-probe.mjs';
 
 function fixture(names) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dry-board-probe-'));
@@ -128,6 +128,46 @@ test('UNKNOWN is bucketed apart from CLEAR — it is not a clearance', () => {
   assert.equal(bucketOf('✅ CLEAR — x.md [leaf] status="merged"'), 'merged');
   // RED arm: a CLEAR with no merged status is a real drain, never a ghost.
   assert.equal(bucketOf('✅ CLEAR — x.md [leaf] status="queued"'), 'drain');
+});
+
+// ---------------------------------------------------------------------------
+// F-2208-1 — the exit code, which is where the sibling test's principle leaked.
+//
+// The test above asserts UNKNOWN "is not a clearance" and is right about the
+// BUCKET. For this script's whole first day `--strict` mapped only the drain arm
+// to a non-zero code, so an UNKNOWN board exited 0 — byte-identical to an earned
+// "✅ DRY", in the one mode whose purpose is to turn the verdict into a code.
+// Nine tests missed it because the decision sat inline in main(), unreachable.
+//
+// Each arm below was PROVEN BY MANUFACTURING THE DEFECT: restoring the original
+// `if (strict && buckets.drain.length) exit(1); exit(0)` reds the UNKNOWN cases
+// (rc 2 → 0) and leaves every other arm green — i.e. these tests fail for the
+// one reason they exist, and the old code passes the rest.
+// ---------------------------------------------------------------------------
+
+const NONE = { drain: [], unknown: [] };
+const DRAIN = { drain: ['x.md'], unknown: [] };
+const UNK = { drain: [], unknown: ['x.md'] };
+const BOTH = { drain: ['x.md'], unknown: ['y.md'] };
+
+test('advisory mode reports and never gates — every arm exits 0', () => {
+  for (const b of [NONE, DRAIN, UNK, BOTH]) assert.equal(exitCodeFor(b, false), 0);
+});
+
+test('F-2208-1: --strict exits 2 on UNKNOWN — the ledger declining is not a clearance', () => {
+  // THE finding. Live board at s2208: 0 drains, 3 UNKNOWNs, `--strict` rc=0.
+  assert.equal(exitCodeFor(UNK, true), 2);
+  assert.notEqual(exitCodeFor(UNK, true), exitCodeFor(NONE, true),
+    'an UNKNOWN board must not be indistinguishable from an earned DRY');
+});
+
+test('--strict exits 1 on a real drain, 0 on an earned dry', () => {
+  assert.equal(exitCodeFor(DRAIN, true), 1);
+  assert.equal(exitCodeFor(NONE, true), 0);
+});
+
+test('a real drain outranks an UNKNOWN — the worse verdict wins the code', () => {
+  assert.equal(exitCodeFor(BOTH, true), 1);
 });
 
 test('a missing tasks/done directory yields an empty, non-throwing result', (t) => {
