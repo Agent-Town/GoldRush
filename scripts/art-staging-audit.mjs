@@ -153,6 +153,8 @@ import { fileURLToPath } from 'node:url';
 // and pathname keeps it percent-encoded, which git reads as a different directory.
 const REPO = fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
 const STAGING_ROOT = join(REPO, 'worktrees/art/assets');
+// The ART slot's worktree root — one level ABOVE the staging tree. See §1b.
+const ART_ROOT = join(REPO, 'worktrees/art');
 
 const git = (...args) =>
   execFileSync('git', ['-C', REPO, ...args], { encoding: 'utf8', maxBuffer: 1 << 26 });
@@ -250,6 +252,31 @@ for (const file of walk(STAGING_ROOT)) {
     area: `staging/${slash === -1 ? '(root)' : rel.slice(0, slash)}`,
   });
 }
+// 1b. The ART WORKTREE's own root files. F-2195-1 (s2195): STAGING_ROOT is
+//    `worktrees/art/assets`, so a file sitting at `worktrees/art/` — one level
+//    ABOVE it — belonged to no area and was never scanned. This is F-1658-3
+//    exactly one directory up: that finding's own comment says to walk "the
+//    staging ROOT ITSELF, not merely its subdirectories", and it cured the root
+//    of assets/ while leaving the root of the WORKTREE unwalked. FIFTH
+//    recurrence of this script's own class (F-1054-1 name-vs-blob · F-1055-1
+//    here-vs-origin · F-1120-2 one-dir-vs-enumerated · F-1658-3 assets-root-vs-
+//    subdirs), and like every one of them it had a live casualty: the slot's own
+//    `worktrees/art/README.md` — 120 bytes recording where ART output goes — in
+//    NO object database for 48 days, while four consecutive fires read AT RISK 0.
+//    maxdepth 1 by design: `assets/` is walked above, and the audit must not
+//    recurse into any future sibling dir without a deliberate area mapping.
+//    mainPath is the bare root-relative name, which CANNOT collide with the
+//    `tracked` map (keyed exclusively on `assets/...` paths from ls-tree), so a
+//    root file with no counterpart on main classifies untracked => AT RISK.
+for (const e of existsSync(ART_ROOT) ? readdirSync(ART_ROOT, { withFileTypes: true }) : []) {
+  if (SKIP_NAMES.has(e.name) || !e.isFile()) continue;
+  scan.push({
+    file: join(ART_ROOT, e.name),
+    mainPath: e.name,
+    area: 'staging/(worktree-root)',
+  });
+}
+
 // 2. MAIN's own assets/ tree. An ART run that writes to the repo root instead of
 //    the staging dir (the recurring F-071-1 defect) leaves untracked files here,
 //    where no amount of widening the staging path would ever have found them.

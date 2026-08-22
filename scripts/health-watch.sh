@@ -88,8 +88,14 @@ failed_sig()    { ls tasks/failed/ 2>/dev/null | tail -5 | shasum | cut -c1-12; 
 # guaranteed exactly that for dot-prefixed art. Skip VCS/OS noise BY NAME, which
 # is the same rule its two sibling scripts now carry (SKIP_NAMES).
 art_untracked() {
-  [ -d worktrees/art/assets ] || { echo 0; return; }
-  find worktrees/art/assets -type f \
+  # F-2195-1 (s2195): scan `worktrees/art`, NOT `worktrees/art/assets`. A file at
+  # the worktree root — one level above the staging tree — was never scanned by
+  # any of the three implementations of this question, and the live casualty was
+  # the ART slot's own README.md, 120 bytes in no object database for 48 days.
+  # This is the ALARM, so its blindness is the worst of the three: it
+  # edge-triggers on the count and a count that never leaves 0 can never fire.
+  [ -d worktrees/art ] || { echo 0; return; }
+  find worktrees/art -type f \
     -not -path '*/.git/*' -not -name '.git' \
     -not -name '.DS_Store' -not -name '.localized' -not -name 'Thumbs.db' 2>/dev/null \
     | git hash-object --stdin-paths 2>/dev/null \

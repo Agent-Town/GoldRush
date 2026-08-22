@@ -75,6 +75,8 @@ import { fileURLToPath } from 'node:url';
 // and pathname keeps it percent-encoded, which git reads as a different directory.
 const REPO = fileURLToPath(new URL('..', import.meta.url)).replace(/\/$/, '');
 const STAGING_ROOT = join(REPO, 'worktrees/art/assets');
+// The ART slot's worktree root — one level ABOVE the staging tree (F-2195-1).
+const ART_ROOT = join(REPO, 'worktrees/art');
 const BRANCH = process.argv[2];
 const DRY = process.argv.includes('--dry-run');
 
@@ -139,6 +141,26 @@ for (const file of walk(STAGING_ROOT)) {
     area: `staging/${slash === -1 ? '(root)' : rel.slice(0, slash)}`,
   });
 }
+// ...and walk the ART WORKTREE ROOT too, one level ABOVE the staging tree.
+// F-2195-1 (s2195): the comment above says to walk "the staging ROOT ITSELF",
+// and it does — but STAGING_ROOT is `worktrees/art/assets`, so a file at
+// `worktrees/art/` still belonged to no area and was never scanned. F-1658-3
+// exactly one directory up, and the FIFTH recurrence of this class. The cure
+// must land in all THREE implementations of this question (the audit, this
+// tool, and health-watch.sh's art_untracked) or it restores F-2174-1's shape:
+// the tool that SAVES and the tool that VERIFIES the save blind identically.
+// Live casualty: `worktrees/art/README.md`, 120 bytes in no object database
+// since 2026-07-05. Salvaged path keeps its TRUE location rather than being
+// remapped under assets/ — it is not art output, it is the slot's own note.
+for (const e of existsSync(ART_ROOT) ? readdirSync(ART_ROOT, { withFileTypes: true }) : []) {
+  if (SKIP_NAMES.has(e.name) || !e.isFile()) continue;
+  scan.push({
+    file: join(ART_ROOT, e.name),
+    mainPath: join('worktrees/art', e.name),
+    area: 'staging/(worktree-root)',
+  });
+}
+
 const areas = [...scan.reduce((m, s) => m.set(s.area, (m.get(s.area) || 0) + 1), new Map())]
   .sort()
   .map(([area, count]) => ({ area, count }));
