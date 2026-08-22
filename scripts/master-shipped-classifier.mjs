@@ -3,7 +3,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { execFileSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
 const SHIPPED = new Set(['merged', 'shipped']);
@@ -23,16 +23,57 @@ const walk = (dir) =>
       })
     : [];
 
+const walkReviews = (root) =>
+  walk(path.join(root, 'reviews')).filter((file) => file.endsWith('.md')).map((file) => path.relative(root, file));
+
+// F-2213-1. `git ls-tree main` asks "what has MAIN shipped?"; walking `reviews/` asks "what is
+// in THIS directory?". Those are the same question only when the working tree IS main. The old
+// bare `catch` substituted the second for the first SILENTLY, and the substitution is not
+// symmetric: measured s2213, the two arms agree exactly on main (955/955), but in
+// worktrees/lane-a (behind 508) the walk is 32 paths SHORT and gains nothing -- loss is
+// monotone, and lost review evidence drops a master SHIPPED -> NO-TRACE, i.e. INTO the
+// `CANDIDATES` set this tool exists to compute. That is the Mistake #8 polarity (the 824k
+// Flail): a crash reading as "never shipped, safe to queue".
+//
+// Unlike `merge-base --is-ancestor` (F-2212-1), a non-zero exit is NOT a legitimate verdict in
+// ls-tree's protocol, so any failure here is a CRASH and must be loud. But the fallback is also
+// genuinely load-bearing -- every one of this file's 12 guard tests builds a non-git mkdtemp
+// root, so `main` does not resolve and the walk IS the honest answer there. Hence a
+// DISCRIMINATOR rather than a refusal: resolve `main` first, and only treat an ls-tree failure
+// as unverifiable when main demonstrably exists.
+//
+// Returns { ok, source: 'main' | 'worktree' | 'unverifiable', files }. `source` is a STRING for
+// the F-2212-1 reason: a careless truthiness test at a call site coerces it TRUE, i.e. toward
+// noticing rather than ignoring.
 function mainReviews(root) {
-  try {
-    return execFileSync('git', ['ls-tree', '-r', '--name-only', 'main', '--', 'reviews'], {
-      cwd: root,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'ignore'],
-    }).trim().split('\n').filter((file) => file.endsWith('.md'));
-  } catch {
-    return walk(path.join(root, 'reviews')).filter((file) => file.endsWith('.md')).map((file) => path.relative(root, file));
+  const opts = { cwd: root, encoding: 'utf8', maxBuffer: 64 << 20 };
+  const ref = spawnSync('git', ['rev-parse', '--verify', '--quiet', 'main'], opts);
+  // Codes MEASURED s2213, not assumed -- a broken git must not be waved through as "no main
+  // here", which would just move the silent substitution one call earlier:
+  //   128 = not a git repository   |   1 = a repo with no `main` branch   (both legitimate)
+  //   .error (e.g. ENOENT) or any other code = the probe itself failed    (a crash)
+  if (ref.error) return { ok: false, source: 'unverifiable', files: walkReviews(root), reason: `git unspawnable: ${ref.error.code}` };
+  if (ref.status === 1 || ref.status === 128) {
+    // No `main` here at all: a non-git root, or a repo without the branch. The walk is not a
+    // degraded substitute in that case -- it is the only truthful source. Every one of this
+    // file's 12 guard tests lives here.
+    return { ok: true, source: 'worktree', files: walkReviews(root) };
   }
+  if (ref.status !== 0) return { ok: false, source: 'unverifiable', files: walkReviews(root), reason: `git rev-parse exited ${ref.status}` };
+  // maxBuffer is explicit and generous on purpose: the default 1 MiB is a growth-keyed trap.
+  // Measured s2213, this output is 152,901 bytes over 3,081 paths -- 14.6% of the default, and
+  // it grows by a line every drain. The sibling instruments in this corpus (gate-caller-audit,
+  // row-quote-currency) already pass `64 << 20`; this file had simply never adopted it.
+  const listed = spawnSync('git', ['ls-tree', '-r', '--name-only', 'main', '--', 'reviews'], opts);
+  if (listed.error || listed.status !== 0) {
+    const why = listed.error ? listed.error.message : `git exited ${listed.status}`;
+    return { ok: false, source: 'unverifiable', files: walkReviews(root), reason: why };
+  }
+  return {
+    ok: true,
+    source: 'main',
+    files: listed.stdout.trim().split('\n').filter((file) => file.endsWith('.md')),
+  };
 }
 
 function goalLeaves(value, out = []) {
@@ -69,7 +110,8 @@ export function classifyRoot(root) {
     .readdirSync(tasksDir)
     .filter((file) => file.endsWith('.md') && file !== 'BACKLOG.md')
     .sort();
-  const reviews = mainReviews(root);
+  const reviewSource = mainReviews(root);
+  const reviews = reviewSource.files;
   const traceDirs = fs
     .readdirSync(tasksDir, { withFileTypes: true })
     .filter(
@@ -127,6 +169,11 @@ export function classifyRoot(root) {
       CANDIDATES: verdicts.filter((item) => item.verdict === 'NO-TRACE' && !item.banner).length,
       DISAGREES: verdicts.filter((item) => item.disagrees).length,
     },
+    // F-2213-1: which corpus the SHIPPED evidence actually came from. A caller that reads
+    // CANDIDATES without reading this is reading a queue licence off an unknown source.
+    reviewsOk: reviewSource.ok,
+    reviewsSource: reviewSource.source,
+    ...(reviewSource.reason && { reviewsReason: reviewSource.reason }),
     verdicts,
   };
 }
@@ -147,6 +194,17 @@ function printTable(result) {
   console.log(
     `\nTOTAL ${result.verdicts.length} · SHIPPED ${result.counts.SHIPPED} · RAN-UNMERGED ${result.counts['RAN-UNMERGED']} · NO-TRACE ${result.counts['NO-TRACE']}, of which ${bannered} self-declare DO NOT QUEUE → ${result.counts.CANDIDATES} candidates · DISAGREES ${result.counts.DISAGREES}`,
   );
+  // F-2213-1: never let a candidate count leave here wearing an authority it does not have.
+  if (!result.reviewsOk) {
+    console.log(
+      `\n⛔ CANNOT VERIFY — DO NOT QUEUE off this run. \`main\` resolves here but its review list\n` +
+        `   could not be read (${result.reviewsReason}), so SHIPPED evidence fell back to this\n` +
+        `   working tree. That loss is one-directional: it moves masters INTO the candidate set.\n` +
+        `   Re-run once git is healthy before treating any candidate above as queueable.`,
+    );
+  } else if (result.reviewsSource === 'worktree') {
+    console.log(`\nⓘ review evidence read from this WORKING TREE (no \`main\` ref here), not from main.`);
+  }
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
@@ -155,7 +213,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   try {
     const result = classifyRoot(root);
     process.argv.includes('--json') ? console.log(JSON.stringify(result, null, 2)) : printTable(result);
-    process.exitCode = process.argv.includes('--strict') && result.counts.CANDIDATES ? 1 : 0;
+    // F-2213-1: under --strict an unverifiable review corpus refuses in its own right. Without
+    // this, a degraded run whose candidate count happens to be 0 exits 0 -- byte-identical to a
+    // clean board, which is the exact defect F-2208-1 cured one file over.
+    process.exitCode =
+      process.argv.includes('--strict') && (result.counts.CANDIDATES || !result.reviewsOk) ? 1 : 0;
   } catch (error) {
     console.error(`master-shipped-classifier: ${error.message}`);
     process.exitCode = 0; // advisory: never block a drain on our own absence
