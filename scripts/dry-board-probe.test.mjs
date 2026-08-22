@@ -13,6 +13,7 @@
  */
 
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -176,4 +177,81 @@ test('a missing tasks/done directory yields an empty, non-throwing result', (t) 
   const sel = selectSubjects(root);
   assert.deepEqual(sel.subjects, []);
   assert.equal(sel.total, 0);
+});
+
+// ---------------------------------------------------------------------------
+// F-2209-1 — the WIRING, which is the layer F-2208-1's own cure left uncovered.
+//
+// F-2208-1 extracted `exitCodeFor` so the arm that DECIDES could be exercised
+// rather than admired, and its four tests above are correct about the decision.
+// But the only thing a CALLER can observe is the process exit code, and after
+// the cure not one test spawned the CLI -- so `main()`'s two links to that pure
+// function were exactly as unreachable as the inline decision had been.
+//
+// MEASURED s2209 on scratch copies, both defects invisible to all 13 tests:
+//   * `process.exit(exitCodeFor(buckets, strict))` -> `process.exit(0)`  : 13/13 pass
+//   * `argv.includes('--strict')` -> `argv.includes('--Strict')`         : 13/13 pass
+// Either one silently restores F-2208-1 in full -- an UNKNOWN board exiting 0,
+// byte-identical to an earned DRY -- while the guard that names F-2208-1 stays
+// green. That is F-2208-1's OWN lesson recurring one layer out: a guard that
+// asserts a principle where it holds, and never where it fails, certifies its
+// own blind spot. The cure for a layering blind spot cannot live at the layer
+// that had it; it has to be observed from OUTSIDE, where the caller stands.
+//
+// These arms spawn the real script against a fixture root, so they cross every
+// link: flag parse -> subject selection -> bucketing -> exit code -> process.
+// `main()` derives the root from cwd and resolves drain-block-check under it,
+// so a fixture supplies its own stub verdict and the live corpus is never read.
+// ---------------------------------------------------------------------------
+
+const PROBE = path.join(import.meta.dirname, 'dry-board-probe.mjs');
+
+/** A fixture root the CLI can run in: one subject, plus a stubbed verdict. */
+function cliFixture(t, verdict) {
+  const root = fixture([ANCHOR, '20260801-010101-subject.md']);
+  t.after(() => fs.rmSync(root, { recursive: true }));
+  fs.mkdirSync(path.join(root, 'scripts'), { recursive: true });
+  fs.writeFileSync(
+    path.join(root, 'scripts', 'drain-block-check.mjs'),
+    `console.log(${JSON.stringify(verdict)});\n`,
+  );
+  return root;
+}
+
+/** Run the real CLI in `root` and return its exit code. */
+function runCli(root, args) {
+  try {
+    execFileSync('node', [PROBE, ...args], { cwd: root, encoding: 'utf8', stdio: 'pipe' });
+    return 0;
+  } catch (e) {
+    return e.status;
+  }
+}
+
+const V_UNKNOWN = '? UNKNOWN — no goal leaf matches "subject.md".';
+const V_DRAIN = '✅ CLEAR — subject.md [leaf] status="queued"';
+const V_MERGED = '✅ CLEAR — subject.md [leaf] status="merged"';
+
+test('F-2209-1: the CLI itself exits 2 on UNKNOWN — observed where a caller stands', (t) => {
+  // THE finding, at the only layer that can see it. Severing main() from
+  // exitCodeFor reds this and nothing else in the file.
+  const rc = runCli(cliFixture(t, V_UNKNOWN), ['--strict']);
+  assert.equal(rc, 2, 'an UNKNOWN board must not exit like an earned DRY');
+  assert.notEqual(rc, runCli(cliFixture(t, V_MERGED), ['--strict']));
+});
+
+test('F-2209-1: the CLI exits 1 on a real drain and 0 on an earned dry', (t) => {
+  assert.equal(runCli(cliFixture(t, V_DRAIN), ['--strict']), 1);
+  assert.equal(runCli(cliFixture(t, V_MERGED), ['--strict']), 0);
+});
+
+test('F-2209-1: the --strict flag is actually read — advisory stays advisory', (t) => {
+  // RED arm for the second manufactured defect: a misparsed flag makes strict
+  // mode unreachable, so the drain case below would return 0 like advisory.
+  assert.equal(runCli(cliFixture(t, V_DRAIN), []), 0, 'advisory never gates');
+  assert.notEqual(
+    runCli(cliFixture(t, V_DRAIN), ['--strict']),
+    runCli(cliFixture(t, V_DRAIN), []),
+    'if --strict were misparsed these would be equal',
+  );
 });
