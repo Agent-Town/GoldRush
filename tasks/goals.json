@@ -2760,9 +2760,9 @@
               "id": "c4-assay-queue-index",
               "title": "The assay queue poll costs one KV read, not the whole county (the KV cap incident cure)",
               "taskFile": "c4-assay-queue-index.md",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "s2190 drain HELD it: F-2190-1 — the assay-queue-index lost update has no clock. Two concurrent taped submissions to different boards lose one locator; the row stays pending on its board but is invisible to the assay worker, and the index stays VALID so the missing/corrupt self-heal never fires. Reproduced deterministically at the drain with a barrier KV (reviews/c4-assay-queue-index.md). NOT an owner fork — no owner will lift this; it lifts when corrective f2190-1-assay-index-reconcile lands the sweptAt stamp + periodic reconcile on top of this lane. lane/d must NOT be refreshed: its content is f2190-1's base.",
+              "status": "merged",
+              "mergeHash": "9db6f52bd65fcef82ed0f1b006fb389d3a0321aa",
+              "drainNotes": "s2193 drain: the gate-side hold LIFTED by the condition its own blockedReason named — corrective f2190-1-assay-index-reconcile landed the sweptAt stamp + periodic reconcile on top of this lane, and both commits merged together at 9db6f52bd. Not an owner lift and no owner word was required (F-1383-1); code commit immediately followed by this leaf commit (F-1384-1). F-2190-1 reproduced INDEPENDENTLY at this drain against c4's own bare-array seed (served=race-b, lost=race-a, lost row pending across three polls, never recovered), then the cure demonstrated on the merged tree: fresh index 2r/0w serves one, stale index 43r/1w serves BOTH, next poll 3r/0w back on the fast path. Gates: tsc, build, standings 111, stats 87, accounts 43, multiplayer 466. reviews/f2190-1-assay-index-reconcile.md",
               "lane": "lane-d",
               "authoredBy": "attended 2026-08-22",
               "note": "Cloudflare 50%-cap notification traced to onRequestAssayQueue reading all 41 boards per 15s poll (~236k reads/day vs 100k free). Interim ops fix live (ASSAY_POLL_MS=180000). This slice: a single assay-queue-index key, poll O(pending), idle poll = 1 read; board stays source of truth, index self-heals. Builds on merged c1 (2f4a0fe7ba24). Routed to codex per the 2026-08-22 engine-routing ruling. DISPATCHED to tasks/queue/lane-d in the authoring commit window."
@@ -2771,7 +2771,9 @@
               "id": "f2190-1-assay-index-reconcile",
               "title": "Bound the assay index's staleness — a lost locator becomes visible again on a clock, not on luck",
               "taskFile": "f2190-1-assay-index-reconcile.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "9db6f52bd65fcef82ed0f1b006fb389d3a0321aa",
+              "drainNotes": "s2193 drain: MERGED at 9db6f52bd together with its held predecessor c4-assay-queue-index, which it exists to unblock. The index is now {version:1,sweptAt,locators}; legacy bare arrays migrate free through the existing null-parse rebuild; incremental board syncs preserve sweptAt so a busy contract cannot starve a quiet one's reconcile; stale polls reconcile all 41 boards past ASSAY_INDEX_MAX_AGE_MS (default 900000, env-overridable). Budget re-derived by the drain, matching the runner exactly: 15s cadence 9,708 reads + 94 writes/day; 180s cadence 3,840 + 80; main was 236,160 reads/day against a 100,000 free cap. F-2193-1 filed non-blocking: the sweep alone spends 9.4% of the free WRITE cap, which is the cliff docs/OWNER-DECISIONS.md §F rests on — a number for pricing F-2190-2, not a defect. reviews/f2190-1-assay-index-reconcile.md",
               "lane": "lane-d",
               "authoredBy": "s2190 fire 2026-08-22",
               "note": "Corrective for F-2190-1, authored by the drain that HELD c4. Adds a {version,sweptAt,locators} envelope and a periodic full reconcile when the index ages past ASSAY_INDEX_MAX_AGE_MS (default 15 min), so a raced-away locator returns on a clock instead of waiting for unrelated traffic on its own board. sweptAt is set by full rebuilds ONLY — incremental writes preserve it, else a busy contract starves a quiet one's reconcile forever. Legacy bare-array indexes migrate free via the existing null-parse rebuild. Explicitly NOT a Durable Object: that route needs the Workers Paid plan and is owner-gated (F-2190-2). BUILD-ON-PREDECESSOR over undrained lane/d — the lane must not be reset."
