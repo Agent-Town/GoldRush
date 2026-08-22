@@ -501,15 +501,18 @@ test("all five desk spellings are matched, so the check cannot be dodged by an a
 /** Pre-cure mutant: .sh admission reverted, everything else byte-identical. */
 function mutantWithoutShSubjects() {
   const src = fs.readFileSync(SCRIPT, 'utf8');
+  // s2200 (F-2200-2): RE-POINTED. This mutant used to neuter two INLINE predicates; s2200
+  // hoisted both into the shared TEST_FILE, so neither literal matched, the mutant stopped
+  // mutating, and the `notEqual` below caught it — the guard refusing to prove a cure with a
+  // probe that had silently become a no-op. That refusal is the guard working: had this
+  // asserted only the post-cure arm, the s2199 proof would have quietly become vacuous.
+  // Neutering TEST_FILE itself reproduces the pre-s2199 world at its new single source.
   const neutered = src
     .replace(
-      "const testFiles = files.filter((f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh'));",
-      "const testFiles = files.filter((f) => f.endsWith('.test.mjs'));",
+      "const TEST_FILE = (f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh') || /(^|\\/)test-[\\w.-]*\\.(mjs|sh)$/.test(f);",
+      "const TEST_FILE = (f) => f.endsWith('.test.mjs');",
     )
-    .replace(
-      "  if (f.endsWith('.test.mjs') || f.endsWith('.test.sh')) continue;",
-      "  if (!f.endsWith('.mjs') || f.endsWith('.test.mjs')) continue;",
-    );
+    .replace("  if (TEST_FILE(f)) continue;", "  if (!f.endsWith('.mjs') || f.endsWith('.test.mjs')) continue;");
   assert.notEqual(neutered, src, 'the mutant must actually differ — otherwise this proves nothing');
   const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-gate-caller-mutant-')));
   const p = path.join(dir, 'gate-caller-audit.mjs');
@@ -565,6 +568,116 @@ test('ADMISSION CONTROL: a NON-guard-shaped .sh is still never ratcheted on', ()
   const r = run(dir);
   assert.equal(r.status, 0, r.stdout + r.stderr);
   assert.doesNotMatch(r.stdout, /deploy-somewhere\.sh/);
+});
+
+// ---------------------------------------------------------------------------
+// F-2200-1 — A TEST NAMED WITH A HYPHEN IS STILL A TEST. Subjects were admitted
+// by SUFFIX (`.test.mjs`/`.test.sh`), so `test-<thing>.mjs` was not a subject at
+// all — and SIX such files run inside gate-shaped batteries. Measured s2200 on
+// the real tree: deleting `node scripts/test-standings.mjs` from `test:stats`
+// produced byte-identical output, rc=0, zero fresh orphans. Total silence.
+// The same blindness sat on the EDGE side (paths admitted by location), so
+// curing only the subject side would have minted an orphan no rooting could clear.
+// ---------------------------------------------------------------------------
+
+/** Pre-cure mutant: the `test-` prefix form is not a subject and not an edge. */
+function mutantWithoutPrefixTests() {
+  const src = fs.readFileSync(SCRIPT, 'utf8');
+  const neutered = src
+    .replace(
+      "const TEST_FILE = (f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh') || /(^|\\/)test-[\\w.-]*\\.(mjs|sh)$/.test(f);",
+      "const TEST_FILE = (f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh');",
+    )
+    .replace("  for (const m of body.matchAll(/(?:[\\w.-]+\\/)+test-[\\w.-]*\\.(?:mjs|sh)/g)) out.add(m[0]);\n", '');
+  assert.notEqual(neutered, src, 'the mutant must actually differ — otherwise this proves nothing');
+  return writeMutant(neutered, 'prefix');
+}
+
+/** Half-cure mutant: the SUBJECT widening only. Proves the edge half is load-bearing. */
+function mutantSubjectCureOnly() {
+  const src = fs.readFileSync(SCRIPT, 'utf8');
+  const neutered = src.replace(
+    "  for (const m of body.matchAll(/(?:[\\w.-]+\\/)+test-[\\w.-]*\\.(?:mjs|sh)/g)) out.add(m[0]);\n",
+    '',
+  );
+  assert.notEqual(neutered, src, 'the half-cure mutant must actually differ');
+  return writeMutant(neutered, 'edgeless');
+}
+
+function writeMutant(source, tag) {
+  const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-gate-caller-' + tag + '-')));
+  const p = path.join(dir, 'gate-caller-audit.mjs');
+  fs.writeFileSync(p, source);
+  fs.copyFileSync(path.join(path.dirname(SCRIPT), 'law-surfaces.mjs'), path.join(dir, 'law-surfaces.mjs'));
+  return p;
+}
+
+test('ADMISSION: a test-<thing>.mjs nothing calls is a NEW orphan (pre-cure invisible)', () => {
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'scripts/test-lonely-thing.mjs': 'console.log("verdict");\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const pre = runWith(mutantWithoutPrefixTests(), dir);
+  assert.equal(pre.status, 0, 'PRE-CURE: a hyphen-prefix test is outside the subject set\n' + pre.stdout);
+  assert.doesNotMatch(pre.stdout, /test-lonely-thing\.mjs/, 'PRE-CURE: it is never even named');
+
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stdout + r.stderr, /scripts\/test-lonely-thing\.mjs/);
+});
+
+test('TEETH: dropping a test-<thing>.mjs from a live gate now REDS (the real silent-drop)', () => {
+  // This is `test:stats` in miniature: one npm gate whose body chains TWO files.
+  // Removing the second half is the drop that was byte-invisible before s2200.
+  const both = {
+    ...BASE_SCRIPTS,
+    'test:node-guards': 'node --test scripts/probe.test.mjs && node scripts/test-standings.mjs',
+  };
+  const files = { ...BASE_FILES, 'scripts/test-standings.mjs': 'console.log("standings");\n' };
+  const kept = fixture({ scripts: both, files, baseline: EMPTY_BASELINE });
+  const green = run(kept);
+  assert.equal(green.status, 0, 'chained: reached, so no orphan\n' + green.stdout + green.stderr);
+
+  const dropped = fixture({
+    scripts: { ...both, 'test:node-guards': 'node --test scripts/probe.test.mjs' },
+    files,
+    baseline: EMPTY_BASELINE,
+  });
+  const red = run(dropped);
+  assert.equal(red.status, 1, 'dropped from the chain: must RED\n' + red.stdout + red.stderr);
+  assert.match(red.stdout + red.stderr, /scripts\/test-standings\.mjs/);
+});
+
+test('EDGE: a test file OUTSIDE scripts/ is REACHED when a gate calls it', () => {
+  // foundry/kit/test-init.sh in miniature. The edge vocabulary admitted paths by
+  // LOCATION (`scripts/`), so a cited test file anywhere else resolved to no edge.
+  const scripts = { ...BASE_SCRIPTS, 'test:node-guards': 'node --test scripts/probe.test.mjs && bash kit/test-init.sh' };
+  const files = { ...BASE_FILES, 'kit/test-init.sh': '#!/usr/bin/env bash\nexit 0\n' };
+  const dir = fixture({ scripts, files, baseline: EMPTY_BASELINE });
+
+  const r = run(dir);
+  assert.equal(r.status, 0, 'cured: the citation resolves, so it is reached\n' + r.stdout + r.stderr);
+
+  // HALF-CURE CONTROL: subject widening WITHOUT the edge widening. The file becomes a
+  // subject, the gate calls it as loudly as before — and it still reads ORPHAN. Curing
+  // one side alone would have manufactured an unclearable red.
+  const half = runWith(mutantSubjectCureOnly(), dir);
+  assert.equal(half.status, 1, 'HALF-CURE: an orphan no rooting can clear\n' + half.stdout);
+  assert.match(half.stdout + half.stderr, /kit\/test-init\.sh/);
+});
+
+test('ADMISSION CONTROL: a `test-` prefix in a DIRECTORY name does not admit the file', () => {
+  // The pattern anchors on the basename. `test-helpers/thing.mjs` is not a test file,
+  // and admitting a whole directory tree by its name is how a narrow widening floods.
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'test-helpers/thing.mjs': 'console.log("helper");\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.doesNotMatch(r.stdout, /test-helpers/);
 });
 
 // ---------------------------------------------------------------------------

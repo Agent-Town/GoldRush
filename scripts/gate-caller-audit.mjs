@@ -87,6 +87,20 @@ const GUARDISH_FILE = /(guard|assert|check|audit|contract|ratchet)/i;
 // Scratch probes from past fires: named for their session, never wired on purpose.
 const SCRATCH_FILE = /^scripts\/tmp-s\d+-/;
 
+// s2200 (F-2200-1): A TEST NAMED WITH A HYPHEN IS STILL A TEST. This class was
+// `.test.mjs`/`.test.sh` -- admission by SUFFIX -- so a file named `test-<thing>.mjs`
+// matched neither this nor GUARDISH_FILE and was NOT A SUBJECT AT ALL. That is the
+// s2198/s2199 disease one layer on: a LEXICAL membership test where the header's
+// definition is BEHAVIOURAL ("whose whole purpose is to return a verdict"). Seven such
+// files are tracked and SIX run inside a gate-shaped battery -- `test:stats` is literally
+// `node scripts/test-stats.mjs && node scripts/test-standings.mjs`, so dropping the second
+// half of that gate would have produced SILENCE, F-2199-1's exact cost. Measured s2200:
+// this admits 6 net new subjects (2 of the 7 already matched GUARDISH_FILE on "contract")
+// and mints exactly ONE fresh orphan, foundry/kit/test-init.sh -- a TRUE positive, rooted
+// in the same commit rather than grandfathered. It cannot flood: the form is a naming
+// convention the repo already uses for exactly seven files.
+const TEST_FILE = (f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh') || /(^|\/)test-[\w.-]*\.(mjs|sh)$/.test(f);
+
 // Gates whose callers are structurally certain. If the resolver cannot reach
 // THESE, it is broken and every other verdict it prints is worthless.
 const ANCHORS = ['npm:test:node-guards', 'npm:test:task-guards', 'scripts/run-guards.mjs'];
@@ -169,7 +183,16 @@ function edgesOf(text) {
   const out = new Set();
   for (const m of body.matchAll(/npm(?:\s+run|['"\s,\]]+run)['"\s,\]]*['"]?([\w:-]+)/g)) out.add('npm:' + m[1]);
   for (const m of body.matchAll(/['"`]((?:test|verify|build):[\w:-]+)['"`]/g)) out.add('npm:' + m[1]);
-  for (const m of body.matchAll(/(?:[\w.-]+\/)+[\w.-]+\.test\.mjs/g)) out.add(m[0]);
+  // s2200 (F-2200-1): THE SAME BLINDNESS SAT ON BOTH SIDES OF THE GRAPH, and curing only the
+  // subject side would have been worse than useless -- it would have minted an orphan that
+  // rooting could not clear. Subjects were admitted by SUFFIX; edges are admitted by LOCATION
+  // (`scripts/`, next line) plus the same `.test.mjs` suffix. So a test file living anywhere
+  // else was unreachable BY CONSTRUCTION: citing `foundry/kit/test-init.sh` from package.json
+  // resolved to no edge, and the file read ORPHAN however loudly a battery called it. Widened
+  // to the full test-file vocabulary (`.test.{mjs,sh}` or a `test-` prefix) at any path, so the
+  // edge rule and the subject rule now answer the same question the same way.
+  for (const m of body.matchAll(/(?:[\w.-]+\/)+[\w.-]+\.test\.(?:mjs|sh)/g)) out.add(m[0]);
+  for (const m of body.matchAll(/(?:[\w.-]+\/)+test-[\w.-]*\.(?:mjs|sh)/g)) out.add(m[0]);
   for (const m of body.matchAll(/scripts\/[\w.-]+\.(?:mjs|sh|ts)/g)) out.add(m[0]);
   for (const m of body.matchAll(/['"`]\.\/([\w.-]+\.(?:mjs|sh))['"`]/g)) out.add('scripts/' + m[1]);
   return out;
@@ -197,7 +220,8 @@ const scriptFiles = files.filter((f) => f.startsWith('scripts/') && /\.(mjs|sh)$
 // Two of them are cited by law as the thing that guards a law (fire.md §0 and §2.0b), and
 // dropping one from the chain would have produced silence. Admission by file EXTENSION, where
 // the header defines a gate by BEHAVIOUR ("whose whole purpose is to return a verdict").
-const testFiles = files.filter((f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh'));
+// s2200 (F-2200-1): the `test-<thing>.mjs` prefix form joins this class -- see TEST_FILE.
+const testFiles = files.filter(TEST_FILE);
 const configFiles = files.filter((f) => /(^|\/)[\w.-]*config\.ts$/.test(f));
 const workflowFiles = files.filter((f) => f.startsWith('.github/'));
 
@@ -318,7 +342,10 @@ for (const f of scriptFiles) {
   // lane-runner-v3.sh, deploy-alias.sh, stream-sync.sh, move-art-downloads.sh...) which are
   // human tools and pipeline entry points, and ratcheting on those is what trains a fire to
   // ignore this guard (the header's own warning, and the `cross-engine` fate, F-1460-1).
-  if (f.endsWith('.test.mjs') || f.endsWith('.test.sh')) continue;
+  // s2200 (F-2200-1): TEST_FILE, not the bare suffixes -- otherwise the two `test-deploy-*
+  // contract.sh` files would be counted twice, once here (they match GUARDISH_FILE on
+  // "contract") and once in the test class. They are tests; the test class wins.
+  if (TEST_FILE(f)) continue;
   if (!GUARDISH_FILE.test(f) || SCRATCH_FILE.test(f)) continue;
   subjects.push({ key: f, kind: 'guard script', via: reached.get(f) || null });
 }
@@ -346,7 +373,12 @@ console.log('gate-caller-audit — who calls each gate?');
 console.log('  root                : ' + ROOT);
 console.log('  npm scripts         : ' + Object.keys(scripts).length + ' (' + subjects.filter((s) => s.kind === 'npm script').length + ' gate-shaped)');
 console.log('  scripts/ files      : ' + scriptFiles.length + ' (' + subjects.filter((s) => s.kind === 'guard script').length + ' guard-shaped)' + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter((f) => f.startsWith('scripts/') && /\.(mjs|sh)$/.test(f)).length + ' untracked)' : ''));
-console.log('  *.test.{mjs,sh}     : ' + testFiles.length + ' (' + testFiles.filter((f) => f.endsWith('.test.sh')).length + ' bash)' + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter((f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh')).length + ' untracked)' : ''));
+// s2200 (F-2200-1): the label names the ROLE, not a format. It read `*.test.{mjs,sh}` while
+// the class it counted was "test files" -- and s2199 (E) named exactly that tell as the way
+// this blindness announces itself: "when a census header names a FORMAT and the concept it
+// serves is a ROLE, the formats it forgot are the blind spot." It forgot `test-<thing>.mjs`.
+// The untracked arm used the bare suffixes too, so it disagreed with the tracked arm beside it.
+console.log('  test files (role)   : ' + testFiles.length + ' (' + testFiles.filter((f) => f.endsWith('.sh')).length + ' bash)' + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter(TEST_FILE).length + ' untracked)' : ''));
 console.log('  law-called roots    : ' + lawRoots.size + (lawRoots.size ? '   ' + [...lawRoots.keys()].sort().join(', ') : '   (none cited)'));
 console.log('  config.ts read      : ' + configFiles.length + '   .github/ files: ' + workflowFiles.length);
 console.log('  edge vocabulary     : ' + EDGE_SOURCES.join(', '));
