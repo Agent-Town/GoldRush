@@ -104,6 +104,45 @@
  * ~1 s by hand when a LOCAL-ONLY green is actually load-bearing. If direction (2)
  * ever measures non-zero, THAT is the third gap the header demands be fixed as a
  * class rather than an instance.
+ *
+ * F-2185-1 (s2185): `offsite` is a UNION of every remote-tracking ref, and A UNION
+ * CANNOT EXPRESS REDUNDANCY. A blob whose only home is ONE deletable ref produces
+ * a byte-identical verdict to a blob held on all 133. So `LOCAL-ONLY 0` is true
+ * and says less than every reader has taken it to say: it certifies EXISTENCE
+ * offsite, never DURABILITY. Nobody had ever asked where SALVAGED actually lives.
+ * MEASURED s2185, per-ref attribution over all 134 remote-tracking refs:
+ *   - 760 SALVAGED files = 754 distinct blobs = 587.64 MB.
+ *   - 753 of 754 blobs (99.87%) have REDUNDANCY 1 — exactly one origin ref each.
+ *   - those sole homes are FOUR refs, all `save/art-staging-*`, holding 563.18 MB:
+ *       save/art-staging-20260822  578 blobs  509.22 MB
+ *       save/art-staging-20260801  166 blobs   38.58 MB
+ *       save/art-staging-20260811    5 blobs    8.23 MB
+ *       save/art-staging-20260725    4 blobs    7.15 MB
+ *   - the single exception (redundancy 133) is
+ *     motion-pilot/production-newsie-mei/char-newsie-mei-sheet-walk8.png, whose
+ *     bytes are on origin/main under a different path; it is SALVAGED only
+ *     because its STAGING PATH is absent from main's assets/ tree.
+ *   - NO-ORIGIN-REF blobs: 0 — which independently re-confirms `LOCAL-ONLY 0`.
+ * THE OBVIOUS THREAT WAS CHECKED AND IS REFUTED, and it is written down so the
+ * next fire does not re-derive it: fire.md §2E's SALVAGE LIFECYCLE retires
+ * `save/<name>` -> `archive/<name>` once its re-land merges, and
+ * `salvage-census.mjs --strict` exits 1 on any absorbed `save/*` still unrenamed
+ * (55 such renames are pending on the OWNER'S DESK as F-1536-2). If these four
+ * were in THAT batch, one owner word would move 563.18 MB of sole-copy art.
+ * They are not: `salvage-census` classifies all four as HOLDS (content main
+ * lacks), so the pending rename batch does not reach them. ASK THE CENSUS, do
+ * not assume from the prefix.
+ * WHAT REMAINS IS A CLASSIFICATION MISMATCH, NOT A DELETION THREAT: the census
+ * calls these four "genuinely re-land-pending", which they will never be — they
+ * are BACKUPS, not re-land candidates, and `save/art-staging-20260725` has sat in
+ * that state for 28 days. A lifecycle whose terminal state is "retire once
+ * merged" is the wrong lifecycle for bytes that must never be retired, and the
+ * `save/` prefix is the only thing declaring their intent.
+ * DELIBERATELY NOT CURED IN CODE, for the same reason the wire check above is
+ * not: per-ref attribution costs 134 `rev-list --objects` traversals (~3 min),
+ * which would turn a 31.9 s fire duty into a 4 min one — and F-2159-1 is already
+ * an open OWNER'S DESK question about whether a >=30 s addition is a fire's call
+ * at all. What IS cured here is free: the SALVAGED headline now prints its BYTES.
  */
 import { execFileSync } from 'node:child_process';
 import { readdirSync, statSync, existsSync } from 'node:fs';
@@ -354,8 +393,12 @@ if (process.argv.includes('--json')) {
     `\nLOCAL-ONLY (in git HERE, but on no origin ref — one push from safe): ${localOnly.length} files, ${kb(total(localOnly))}`,
   );
   list(localOnly, (r) => `${r.name}  ${kb(r.size)}`);
+  // F-2185-1 (s2185): print the BYTES, not merely the file count. "760 files"
+  // reads like bookkeeping; "587.64 MB" reads like the largest bucket on the
+  // board, which it is. The number was already computed — only the headline was
+  // narrower than the fact, which is this script's own recurring class.
   console.log(
-    `\nSALVAGED (not on main, but the bytes ARE in git — parked): ${salvaged.length} files`,
+    `\nSALVAGED (not on main, but the bytes ARE in git — parked): ${salvaged.length} files, ${kb(total(salvaged))}`,
   );
   list(salvaged, (r) => `${r.name}  ${kb(r.size)}`, '  ');
   console.log(
