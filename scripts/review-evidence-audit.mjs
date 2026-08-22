@@ -5,6 +5,15 @@
  * Default: node scripts/review-evidence-audit.mjs reviews/<slice>.md [...]
  * Sweep:   node scripts/review-evidence-audit.mjs --all
  * Gate:    add --strict to exit 1 only for ON-DISK-UNTRACKED evidence.
+ *
+ * EXIT CODES (F-2215-1, s2215)
+ *   0  advisory mode, always; or --strict with nothing ON-DISK-UNTRACKED
+ *   1  --strict, and the audit RAN and found ON-DISK-UNTRACKED evidence
+ *   2  --strict, and the audit COULD NOT RUN at all
+ * 1 and 2 are different questions and must never share a code: "the answer
+ * refuses" is not "there was no answer". A crash also prints ⛔ CANNOT VERIFY
+ * to STDOUT, because the caller in .claude/skills/drain/SKILL.md §4 acts on
+ * stdout and an empty stdout would read as "no untracked evidence cited".
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -92,6 +101,10 @@ function print(result) {
 }
 
 function main() {
+  // F-2215-1 (s2215): parsed OUTSIDE the try, because argumentsFor() itself throws
+  // and a crash must still know whether the caller asked for an exit code.
+  // includes() cannot throw; that is the whole point of not reusing args.strict here.
+  const strict = process.argv.slice(2).includes('--strict');
   try {
     const args = argumentsFor(process.argv.slice(2));
     const tracked = trackedPaths(args.root);
@@ -103,7 +116,29 @@ function main() {
     print(result);
     if (args.strict && result.buckets['ON-DISK-UNTRACKED'].length) process.exitCode = 1;
   } catch (error) {
+    // F-2215-1: this catch used to print "REFUSING" to stderr and set NO exit code,
+    // so a crash exited 0 with EMPTY stdout — byte-identical, on both channels the
+    // caller reads, to "audited fine, nothing untracked". Measured s2215 across four
+    // arms (absent review path, --root one directory off, unknown option, advisory
+    // mode): every one rc=0 against a clean control also rc=0.
+    //
+    // The banner goes to STDOUT as well as stderr because the LAW-side caller reads
+    // stdout: .claude/skills/drain/SKILL.md §4 tells every drain to run this on the
+    // review it is about to commit and to `git add -f` each ON-DISK-UNTRACKED path.
+    // An empty stdout there reads as "no untracked evidence" — the exact inversion of
+    // this tool's purpose, and a Retention Law hole (cited evidence that dies with the
+    // disk). Per F-2211-1, an stdout-classifying caller reads an empty string as silence.
+    //
+    // The ADVISORY default still exits 0, deliberately: an advisory reader must never
+    // block a drain by its own absence (the drain-block-check UNKNOWN precedent, and
+    // the intent gate-caller-baseline.json records for this file). Only --strict gains
+    // a code, and it separates 2 = "could not answer" from 1 = "answered, and the
+    // answer refuses" — the convention drain-block-check, dry-board-probe and
+    // master-shipped-classifier already carry.
+    console.log(`⛔ CANNOT VERIFY — the audit did not run: ${error.message}`);
+    console.log('   Do NOT read this as "no untracked evidence cited".');
     console.error(`review-evidence-audit: REFUSING — ${error.message}`);
+    if (strict) process.exitCode = 2;
   }
 }
 
