@@ -104,10 +104,19 @@ try {
 // --- the scan set: enumerated and recursive, never hardcoded (F-1120-2) -----
 // Every file under a directory, recursively. motion-pilot/ nests two levels deep
 // and the old non-recursive readdir could not see any of it.
+// F-2174-1 (s2174): skip VCS/OS noise BY NAME, never every dot-prefixed entry.
+// The old rule was `if (e.name.startsWith('.')) continue`, so this tool could
+// never SALVAGE a dot-prefixed file and its sibling `art-staging-audit.mjs:136`
+// could never REPORT one missing — one blind spot in both halves of the loop.
+// Measured casualty: the 36 `.hero-*-take[123].png` pose-library takes
+// (12.43 MB) that this tool's own 2026-08-22 run (`68de23724`) walked past.
+// Kept in lockstep with the audit's SKIP_NAMES; `salvage-art-staging-reach.test.mjs`
+// reds if the two drift apart.
+const SKIP_NAMES = new Set(['.git', '.DS_Store', '.localized', 'Thumbs.db']);
 const walk = (dir, acc = []) => {
   if (!existsSync(dir)) return acc;
   for (const e of readdirSync(dir, { withFileTypes: true })) {
-    if (e.name.startsWith('.')) continue;
+    if (SKIP_NAMES.has(e.name)) continue;
     const p = join(dir, e.name);
     if (e.isDirectory()) walk(p, acc);
     else if (e.isFile()) acc.push(p);

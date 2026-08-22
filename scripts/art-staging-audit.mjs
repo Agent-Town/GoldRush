@@ -130,10 +130,27 @@ for (const line of git('rev-list', '--objects', '--remotes').split('\n')) {
 
 // Every file under a directory, recursively. motion-pilot/ nests two levels
 // deep and the old non-recursive readdir could not see any of it (F-1120-2).
+// F-2174-1 (s2174): skip VCS/OS noise BY NAME, never every dot-prefixed entry.
+// The old rule was `if (e.name.startsWith('.')) continue`, which excluded real
+// generated art from the scan set BY CONSTRUCTION. Live casualty: 36 files /
+// 12.43 MB of `.hero-<pose>-<dir>-take[123].png` under
+// motion-pilot/pose-library/hero/contact-sheets/, every one in NO object
+// database, while this audit printed `AT RISK 0`.
+//
+// This is this script's own recurring class a FIFTH time (F-1054-1 name-vs-blob,
+// F-1055-1 here-vs-origin, F-1120-2 one-dir-vs-enumerated, F-1658-3 root-loose-
+// files) and the standing order on it is "fix the CLASS, not the instance" — so
+// the identical skip in the SIBLING tool `salvage-art-staging.mjs:110` is cured
+// in the same commit. That pairing is what made this invisible: the tool that
+// SAVES and the tool that VERIFIES the save shared one blind spot, so the
+// morning's motion-pilot salvage (`68de23724`, pushed to
+// origin/save/art-staging-20260822) skipped these 36 and the audit then
+// certified the result clean.
+const SKIP_NAMES = new Set(['.git', '.DS_Store', '.localized', 'Thumbs.db']);
 const walk = (dir, acc = []) => {
   if (!existsSync(dir)) return acc;
   for (const e of readdirSync(dir, { withFileTypes: true })) {
-    if (e.name.startsWith('.')) continue;
+    if (SKIP_NAMES.has(e.name)) continue;
     const p = join(dir, e.name);
     if (e.isDirectory()) walk(p, acc);
     else if (e.isFile()) acc.push(p);
