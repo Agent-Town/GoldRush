@@ -663,6 +663,62 @@ function escapeRe(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+// F-2218-1 (s2218) — THE DISPATCH CORPUS IS ENUMERATED BEHIND AN existsSync GUARD, SO AN ABSENT
+// tasks/running/ READS AS "no runner holds this master" AND CLEARS THE QUEUE.
+//
+// This is the F-2217-1 shape (an empty subject set is the shape of good news) with the PERMISSIVE
+// polarity of F-2212-1: the swallow does not mis-label a member of the set, it EMPTIES the set, and
+// an empty set here means `live.length === 0` means ✅ CLEAR — an affirmative licence to dispatch a
+// master a runner may be holding RIGHT NOW (F-1322-1, whose own message says "a second copy is a
+// second DISPATCH that fires the moment this slot frees").
+//
+// WHY EVERY CENSUS IN THIS STREAK WAS BLIND TO IT, which is the reusable half: s2212 (`grep -c
+// catch`), s2213 (spawn lexically inside a try), s2214 (same-file wrapper), s2215 (handler polarity
+// LOUD vs SILENT), s2216 (`spawnSync` never throws) and s2217 (enumeration vs classification) are
+// ALL KEYED ON A `catch`. There is no catch here and nothing ever throws: `existsSync` returns
+// false and the ternary hands back `[]`. A guard-keyed empty is invisible to a catch-keyed census
+// BY CONSTRUCTION — the same way s2216 proved a catch-keyed census cannot see `spawnSync`.
+// Measured s2218 over 326 non-test scripts/*.mjs: 6 guard-keyed empty enumerations in 5 files.
+//
+// PROVEN BY MANUFACTURING, ground truth = a runner IS holding this master, and per F-2215-1 the
+// control asserted its own validity first (arm A produced 704 B — it really ran):
+//   tasks/running present            -> ⛔ ALREADY DISPATCHED, rc=1        (correct)
+//   tasks/running renamed away       -> ✅ CLEAR,             rc=0, 89 B  (defect)
+//   REVERSE CONTROL, truly no run    -> ✅ CLEAR,             rc=0, 89 B  (correct)
+// The defect arm and a genuinely clear board are BYTE-IDENTICAL on stdout AND stderr AND rc.
+//
+// ⚖️ REACHABILITY IS NOT EXOTIC — IT IS THE DESIGNED STATE OF THE DIRECTORY. `.gitignore:78` lists
+// `tasks/running/` as "ephemeral filesystem state the runner manages", so it is absent from every
+// fresh clone, removed by any `git clean -fdx`, and — measured s2218 — ABSENT FROM ALL FOUR LANE
+// WORKTREES while `tasks/goals.json` is tracked and present in each. So in a worktree this file
+// resolves its leaf, runs the whole queue path, and clears. §3.0b MANDATES gating undecided content
+// in a detached worktree, which is precisely where the refusal cannot fire.
+//
+// 🛠️ THE CURE IS A DECLARATION, NOT A REFUSAL, AND THE RESTRAINT IS THE DESIGN. Refusing on
+// `absent` is the OVER-GENERAL cure: absence is a LAWFUL routine state (see .gitignore above), so
+// that arm would refuse legitimate dispatch after any `git clean -fdx` and be excused into
+// uselessness inside a week — the `cross-engine` fate F-1460-1 names. Only `unreadable` — a
+// directory that EXISTS and will not enumerate — is an unambiguous instrument failure, and only it
+// refuses. `absent` is declared instead, ALWAYS, including on the happy path, because a
+// declaration that appears only on failure re-creates the ambiguity it removes (F-2208-1, and the
+// §4 desk-header precedent: if the desk is genuinely empty, still write the header).
+//
+// Returns 'read' | 'absent' | 'unreadable'. Deliberately a STRING, for F-2212-1's reason: any
+// careless truthiness test at a call site coerces every failure value to TRUE — i.e. toward
+// NOTICING rather than toward the permissive silence — fail-safe by construction, not by
+// discipline. Note this file's OTHER discriminator, `ancestryOfMain` (:205), exits 1 on its
+// refusal; the newer 2 = "could not answer" / 1 = "answered, and the answer refuses" convention
+// (F-2214-1, F-2215-1, F-2217-1) is used for the NEW arm only. Re-coding the old one would be a
+// drive-by change to a cure that is working, so it is deliberately left alone.
+function dispatchCorpus(dir) {
+  if (!existsSync(dir)) return { state: 'absent', entries: [] };
+  try {
+    return { state: 'read', entries: readdirSync(dir) };
+  } catch {
+    return { state: 'unreadable', entries: [] };
+  }
+}
+
 // `warnUndrained` (F-2097-1, s2097): the two arms are separable because they answer different
 // questions. The live-run arm is a fact about tasks/running/ and is always sound. The undrained arm
 // is a HEURISTIC — "un-prefixed = never drained" — that stands in for a fact the goal tree holds, so
@@ -675,7 +731,31 @@ function checkAlreadyDispatched(target, { warnUndrained = true } = {}) {
   const RUNNING = new RegExp(`^[\\w.-]+--\\d{8}-\\d{6}-${escapeRe(name)}$`);
   const DONE = new RegExp(`^\\d{8}-\\d{6}-${escapeRe(name)}$`);
 
-  const live = existsSync(runningDir) ? readdirSync(runningDir).filter((f) => RUNNING.test(f)) : [];
+  const runningCorpus = dispatchCorpus(runningDir);
+  // F-2218-1: the corpus exists and will not enumerate. That is the INSTRUMENT failing, not
+  // evidence that no runner holds this master, so it refuses rather than clears. 2, not 1:
+  // "could not answer" is a different act from "answered, and the answer refuses".
+  if (runningCorpus.state === 'unreadable') {
+    console.log(`\n  ⛔ CANNOT VERIFY — DO NOT QUEUE off this run: ${name}`);
+    console.log(`    dispatch corpus : tasks/running/ EXISTS but could not be enumerated`);
+    console.log(`    The duplicate-dispatch refusal (F-1322-1) reads that directory and nothing`);
+    console.log(`    else. With it unreadable this check has no evidence either way, and an empty`);
+    console.log(`    reading would be an affirmative licence to dispatch a master a runner may be`);
+    console.log(`    holding RIGHT NOW. Fix the directory, then re-run:  ls tasks/running/\n`);
+    return 2;
+  }
+  // F-2218-1: ALWAYS declared, including the happy path — a declaration that appears only on
+  // failure cannot distinguish "asked and found nothing" from "never asked", which is the exact
+  // ambiguity that made this defect byte-identical to a clean board.
+  if (runningCorpus.state === 'absent') {
+    console.log(`\n  ⚠️  DISPATCH CHECK NOT PERFORMED — tasks/running/ is absent under ${process.cwd()}`);
+    console.log(`    This is LAWFUL (.gitignore:78 — ephemeral state the runner manages), so it is`);
+    console.log(`    not a refusal. But it is NOT the same fact as "no runner holds this master":`);
+    console.log(`    the directory is absent from every fresh clone and from all four lane`);
+    console.log(`    worktrees, so if you are not at the repo root this check saw nothing at all.`);
+    console.log(`    Any ✅ CLEAR below is silent on duplicate dispatch. Re-run from the repo root.`);
+  }
+  const live = runningCorpus.entries.filter((f) => RUNNING.test(f));
   if (live.length) {
     console.log(`\n  ⛔ ALREADY DISPATCHED — DO NOT QUEUE: ${name}`);
     for (const f of live) console.log(`    live run        : tasks/running/${f}`);
@@ -689,7 +769,19 @@ function checkAlreadyDispatched(target, { warnUndrained = true } = {}) {
     return 1;
   }
 
-  const undrained = existsSync(doneDir) ? readdirSync(doneDir).filter((f) => DONE.test(f)) : [];
+  // F-2218-1: the SIBLING instance of the same guard-keyed empty — "fix the CLASS, not the
+  // instance" (the standing order this script's own family, F-1054-1..F-2195-1, is named for).
+  // The asymmetry with the arm above is deliberate and is F-2216-1's polarity lesson: that corpus
+  // feeds a REFUSAL the law acts on, this one feeds an advisory WARN, and `tasks/done/` is TRACKED
+  // (present in all four worktrees, measured s2218) where `tasks/running/` is gitignored. So this
+  // declares only when it could NOT read — an always-on line here would be noise on every run,
+  // which is how a declaration decays into a formality.
+  const doneCorpus = dispatchCorpus(doneDir);
+  if (warnUndrained && doneCorpus.state !== 'read') {
+    console.log(`\n  ⚠️  UNDRAINED-OUTPUT WARN NOT PERFORMED — tasks/done/ ${doneCorpus.state} under ${process.cwd()}`);
+    console.log(`    Absence of the warning below is not evidence that no undrained output exists.`);
+  }
+  const undrained = doneCorpus.entries.filter((f) => DONE.test(f));
   if (warnUndrained && undrained.length) {
     console.log(`\n  ⚠️  UNDRAINED OUTPUT EXISTS for this master — not a refusal, but say why you are re-queueing.`);
     for (const f of undrained) console.log(`    done-move       : tasks/done/${f} (un-prefixed = never drained)`);
