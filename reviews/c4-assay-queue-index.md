@@ -6,6 +6,10 @@
 
 ## VERDICT: 🛑 HOLD — NOT MERGED. One blocking finding (F-2190-1), corrective `f2190-1-assay-index-reconcile` authored and dispatched to lane-d over this work.
 
+> ✅ **SUPERSEDED — THIS SLICE SHIPPED. The HOLD above is preserved verbatim as the record of why it waited; it is no longer the state of the board.**
+> Discharged by **`9db6f52bd`** (s2193 drain, 2026-08-22), which merged this slice together with the corrective it was held for. **Ancestry-verified:** `git merge-base --is-ancestor 9db6f52bd main` → true. The hold's own stated lift condition — *"it lifts when corrective f2190-1-assay-index-reconcile lands the sweptAt stamp + periodic reconcile on top of this lane"* — was satisfied, so this was a `gate-side` lift requiring no owner word (F-1383-1). F-2190-1 was reproduced **independently** at that drain against c4's own bare-array seed before the cure was accepted. See `reviews/f2190-1-assay-index-reconcile.md`.
+> The sentence below about `lane/d` is likewise **spent**: the lane is fully absorbed (`main..lane/d` = 0) and is now safe to refresh.
+
 `lane/d` is left **untouched and undrained on purpose**: its content is the corrective's base. Do NOT refresh or reset this lane.
 
 ## What it does
