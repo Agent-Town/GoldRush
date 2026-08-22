@@ -18,6 +18,7 @@ type StandingsEnv = {
   TELEMETRY?: KVNamespaceLike;
   ACCOUNTS?: KVNamespaceLike;
   ASSAY_WORKER_SECRET?: string;
+  ASSAY_INDEX_MAX_AGE_MS?: string;
 };
 
 type StandingsContext = {
@@ -89,6 +90,12 @@ type AssayLocator = {
   submittedAt: number;
 };
 
+type AssayIndex = {
+  version: 1;
+  sweptAt: number;
+  locators: AssayLocator[];
+};
+
 type GroupAggregate = {
   standings: number;
   contracts: number;
@@ -130,6 +137,8 @@ const MAX_JSON_BYTES = MAX_TAPE_BYTES + 4 * 1024;
 const MAX_ROWS = 100;
 const ASSAY_QUEUE_INDEX_KEY = 'assay-queue-index';
 const ASSAY_INDEX_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId', 'submittedAt']);
+const ASSAY_INDEX_ENVELOPE_KEYS = new Set(['version', 'sweptAt', 'locators']);
+const ASSAY_INDEX_MAX_AGE_MS = 900_000;
 const MAX_REQUESTS_PER_ANON = 12;
 const MAX_REQUESTS_PER_IP = 60;
 const RATE_TTL_SECONDS = 60 * 60;
@@ -206,19 +215,37 @@ export async function onRequestAssayQueue(context: StandingsContext): Promise<Re
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
     if (!kv) return error(cors, 503, 'board_unavailable', 'The county book is unavailable.');
-    let locators = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
+    let index = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
+    const observedIndex = index;
+    const configuredMaxAge = integerInRange(Number(context.env.ASSAY_INDEX_MAX_AGE_MS), 1, Number.MAX_SAFE_INTEGER);
     let boards: Map<string, StoredRow[]>;
-    if (locators === null) {
-      ({ locators, boards } = await rebuildAssayIndex(kv));
-      await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(locators));
+    if (index === null || Date.now() - index.sweptAt > (configuredMaxAge ?? ASSAY_INDEX_MAX_AGE_MS)) {
+      ({ index, boards } = await rebuildAssayIndex(kv));
+      const concurrentIndex = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
+      const observedIds = JSON.stringify(observedIndex?.locators.map(locatorId).sort() ?? []);
+      const concurrentIds = JSON.stringify(concurrentIndex?.locators.map(locatorId).sort() ?? []);
+      if (concurrentIndex && concurrentIds !== observedIds) {
+        const candidates = [...(observedIndex?.locators ?? []), ...concurrentIndex.locators];
+        const changedBoards = [...new Set(candidates.map((locator) => boardKey(locator.epochId, locator.contractId)))];
+        for (const key of changedBoards) {
+          const locator = candidates.find((candidate) => boardKey(candidate.epochId, candidate.contractId) === key)!;
+          const rows = await readBoard(kv, locator.epochId, locator.contractId);
+          boards.set(key, rows);
+          index.locators = [
+            ...index.locators.filter((candidate) => boardKey(candidate.epochId, candidate.contractId) !== key),
+            ...rows.filter((row) => row.assay === 'pending' && row.tape).map((row) => assayLocator(locator.epochId, locator.contractId, row)),
+          ];
+        }
+      }
+      await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(index));
     } else {
-      const namedBoards = [...new Set(locators.map((locator) => boardKey(locator.epochId, locator.contractId)))];
+      const namedBoards = [...new Set(index.locators.map((locator) => boardKey(locator.epochId, locator.contractId)))];
       boards = new Map(await Promise.all(namedBoards.map(async (key) => {
-        const locator = locators!.find((candidate) => boardKey(candidate.epochId, candidate.contractId) === key)!;
+        const locator = index!.locators.find((candidate) => boardKey(candidate.epochId, candidate.contractId) === key)!;
         return [key, await readBoard(kv, locator.epochId, locator.contractId)] as const;
       })));
     }
-    const verified = locators.flatMap((locator) => {
+    const verified = index.locators.flatMap((locator) => {
       const row = boards.get(boardKey(locator.epochId, locator.contractId))?.find((candidate) => candidate.assay === 'pending'
         && candidate.tape?.id === locator.tapeId && assayRowId(candidate) === locator.rowId);
       return row ? [{
@@ -226,10 +253,10 @@ export async function onRequestAssayQueue(context: StandingsContext): Promise<Re
         tape: row.tape!, score: scoreOf(row), submittedAt: row.submittedAt,
       }] : [];
     });
-    if (verified.length !== locators.length) {
+    if (verified.length !== index.locators.length) {
       const live = new Set(verified.map((row) => locatorId(row.locator)));
-      locators = locators.filter((locator) => live.has(locatorId(locator)));
-      await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(locators));
+      index.locators = index.locators.filter((locator) => live.has(locatorId(locator)));
+      await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(index));
     }
     const queue = verified.sort((a, b) => a.submittedAt - b.submittedAt).slice(0, limit);
     return json(cors, { ok: true, queue });
@@ -757,14 +784,15 @@ function locatorId(locator: Pick<AssayLocator, 'epochId' | 'contractId' | 'tapeI
   return `${locator.epochId}\n${locator.contractId}\n${locator.tapeId}\n${locator.rowId}`;
 }
 
-function parseAssayIndex(raw: string | null): AssayLocator[] | null {
+function parseAssayIndex(raw: string | null): AssayIndex | null {
   if (raw === null) return null;
   try {
     const parsed = JSON.parse(raw) as unknown;
-    if (!Array.isArray(parsed)) return null;
+    if (!isRecord(parsed) || !hasOnlyKeys(parsed, ASSAY_INDEX_ENVELOPE_KEYS) || parsed.version !== 1
+      || integerInRange(parsed.sweptAt, 0, Number.MAX_SAFE_INTEGER) === null || !Array.isArray(parsed.locators)) return null;
     const locators: AssayLocator[] = [];
     const seen = new Set<string>();
-    for (const value of parsed) {
+    for (const value of parsed.locators) {
       if (!isRecord(value) || !hasOnlyKeys(value, ASSAY_INDEX_KEYS)
         || typeof value.epochId !== 'string' || typeof value.contractId !== 'string' || !knownContract(value.epochId, value.contractId)
         || typeof value.tapeId !== 'string' || value.tapeId.length === 0 || value.tapeId.length > MAX_REEL_ID_LENGTH
@@ -776,13 +804,13 @@ function parseAssayIndex(raw: string | null): AssayLocator[] | null {
       seen.add(id);
       locators.push(locator);
     }
-    return locators;
+    return { version: 1, sweptAt: parsed.sweptAt as number, locators };
   } catch {
     return null;
   }
 }
 
-async function rebuildAssayIndex(kv: KVNamespaceLike): Promise<{ locators: AssayLocator[]; boards: Map<string, StoredRow[]> }> {
+async function rebuildAssayIndex(kv: KVNamespaceLike): Promise<{ index: AssayIndex; boards: Map<string, StoredRow[]> }> {
   const entries = await Promise.all(CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
     .filter((contract) => contract.id !== DRILL_YARD_CONTRACT_ID)
     .map(async (contract) => {
@@ -791,21 +819,25 @@ async function rebuildAssayIndex(kv: KVNamespaceLike): Promise<{ locators: Assay
     })));
   return {
     boards: new Map(entries.map(([key, rows]) => [key, rows])),
-    locators: entries.flatMap(([, rows, epochId, contractId]) => rows
-      .filter((row) => row.assay === 'pending' && row.tape)
-      .map((row) => assayLocator(epochId, contractId, row))),
+    index: {
+      version: 1,
+      sweptAt: Date.now(),
+      locators: entries.flatMap(([, rows, epochId, contractId]) => rows
+        .filter((row) => row.assay === 'pending' && row.tape)
+        .map((row) => assayLocator(epochId, contractId, row))),
+    },
   };
 }
 
 async function syncAssayBoardIndex(kv: KVNamespaceLike, epochId: string, contractId: string, rows: StoredRow[]): Promise<void> {
-  // ponytail: one KV key cannot serialize concurrent state changes; move index ownership to a Durable Object before launch traffic.
-  let locators = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
-  if (locators === null) ({ locators } = await rebuildAssayIndex(kv));
-  locators = [
-    ...locators.filter((locator) => locator.epochId !== epochId || locator.contractId !== contractId),
+  // ponytail: one KV key cannot serialize concurrent writes; ASSAY_INDEX_MAX_AGE_MS bounds staleness, a Durable Object cures it at launch traffic.
+  let index = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
+  if (index === null) ({ index } = await rebuildAssayIndex(kv));
+  index.locators = [
+    ...index.locators.filter((locator) => locator.epochId !== epochId || locator.contractId !== contractId),
     ...rows.filter((row) => row.assay === 'pending' && row.tape).map((row) => assayLocator(epochId, contractId, row)),
   ];
-  await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(locators));
+  await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(index));
 }
 
 function validateScore(value: unknown): ScoreRow | null {
