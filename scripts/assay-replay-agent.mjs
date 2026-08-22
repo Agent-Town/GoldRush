@@ -63,7 +63,7 @@ function installLocationShim(tape) {
 
 export async function replayAgentTape(rawTape) {
   installLocationShim(rawTape);
-  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null /* F-ASSAY-E2E-8: the replayer never edits files; default watching exhausts inotify on small boxes and crashed every live agent replay */ } });
   const quiet = { log: console.log, info: console.info, debug: console.debug };
   console.log = console.info = console.debug = () => undefined;
   try {

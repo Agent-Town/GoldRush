@@ -137,7 +137,7 @@ secure, terminal at wave 1 on all four seeds.
   seeds. That is not a defect — the epoch teaches pressure on the Hill Mine and the Pressure Garden —
   but it does mean the railcar pair no longer *forces* the mechanic. **OWNER, non-blocking:** if the
   intent is that the Steamworks maps must be won *with* steam, the cadence is the dial to tighten
-  (0.75 → 0.8 on the trestle would restore that, at the cost of the seed-02 railcar config).
+  (0.7 → 0.75 on the trestle would restore that, at the cost of the seed-02 railcar config — its sole 0.75-rung failure is railcar-02 ✗ w13. CORRECTED per F-2163-1, attended 2026-08-22: this sentence originally read “0.75 → 0.8”, contradicting the ladder above — the trestle SHIPS 0.7, and 0.8 is its 0-of-4 rung, so the literal remedy would have de-admitted the map).
 - **F-E2F-4 — a documentation comment reddened `law-pointer-guard`, and the cure was to move the
   comment, not the pointer.** Written at the `waveCadenceMult` field declaration, the derivation
   block pushed `ContractFamilies.ts:1345` — a line `tasks/goals.json`'s
