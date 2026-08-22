@@ -60,15 +60,21 @@
       "fingerprint": "c94bed4f2080",
       "excerpt": "placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation),"
     },
+    "scripts/fire.md -> blocker-panel-closed-guard.mjs:112": {
+      "target": "scripts/blocker-panel-closed-guard.mjs",
+      "line": 112,
+      "fingerprint": "47b2e57fd64a",
+      "excerpt": "if (error.status === 1 && !error.stderr?.trim()) selected = [];"
+    },
     "scripts/fire.md -> scripts/goal-tracker.test.mjs:81": {
       "target": "scripts/goal-tracker.test.mjs",
       "line": 81,
       "fingerprint": "c5593bf5b9fb",
       "excerpt": "if (leaf.status === 'merged') assert.ok(leaf.mergeHash, `${leaf.id}: merged without Git evidence`);"
     },
-    "scripts/fire.md -> scripts/drain-block-check.mjs:468": {
+    "scripts/fire.md -> scripts/drain-block-check.mjs:509": {
       "target": "scripts/drain-block-check.mjs",
-      "line": 468,
+      "line": 509,
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
@@ -132,9 +138,9 @@
       "fingerprint": "d7293afa016e",
       "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
     },
-    ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:468": {
+    ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:509": {
       "target": "scripts/drain-block-check.mjs",
-      "line": 468,
+      "line": 509,
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
