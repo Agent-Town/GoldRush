@@ -13,7 +13,7 @@ import type { HarvestFutureState } from '../systems/HarvestSystem';
 import type { CombatSuspendSnapshot } from '../systems/CombatSystem';
 import type { CrawlerBossSuspendSnapshot } from '../systems/CrawlerBossSystem';
 import type { WrangleSuspendSnapshot } from '../systems/WrangleSystem';
-import { depenetrateToWalkable } from '../world/LandmarkCollision';
+import { depenetrateToWalkable } from '../world/depenetrate';
 import {
   decodeHomemakerBossSuspend,
   type HomemakerBossSuspendSnapshot,
@@ -926,7 +926,7 @@ function restoreHero(game: AnyGame, snapshot: RunSuspendEnvelope): AnyGame | und
   const position = new THREE.Vector3(snapshot.hero.position.x, snapshot.hero.position.y, snapshot.hero.position.z);
   if (typeof game.actorTerrainSample === 'function') {
     depenetrateToWalkable(position, (x, z) => game.actorTerrainSample(x, z).walkable === true, Number.POSITIVE_INFINITY);
-    if (typeof game.heroVisualYAt === 'function') position.y = game.heroVisualYAt(position.x, position.z);
+    if (typeof game.heroVisualYAt === 'function' && (position.x !== snapshot.hero.position.x || position.z !== snapshot.hero.position.z)) position.y = game.heroVisualYAt(position.x, position.z);
   }
   hero.resetRun?.(position);
   game.applyStats?.(game.progression?.snapshot?.stats, null);
