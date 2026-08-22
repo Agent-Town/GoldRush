@@ -387,7 +387,22 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // pre-slice pin. So the whole movement belongs to the five anchors, and the ruling that made the
   // map winnable moves nothing in this table (it is a mechanics/posting surface, which this audit
   // does not compare — the fourth slice in a row to find that shape).
-  assert.equal(audit.admission.exemptions.length, 5);
+  // (The Picnic-era pin pair — 5 exemptions, 456/1143/3 — retires to narrative here; the live
+  // pins sit at the end of the block, after the E2 finish below.)
+  // ⚠️ FIFTEENTH STACK — E2 FINISHES (2026-08-22, owner: "yes, I want to admit it, E2 should be
+  // finished as well"). `e2-trestle` and `e2-incline` secured ×2 on both bench seeds and left the
+  // table: exemptions 5 -> 3, door 33 -> 35. **THE SUMMARY DOES NOT MOVE WITH THEM — 446/1112/4 over
+  // 1562 rows is unchanged** — and that is the `e2-hill-mine` shape recorded above rather than a
+  // miscount: both maps declare an escort `mode`, so `agentCanEnter` was already true and every one
+  // of their parity rows already read `equal`. Only the exemption count moves.
+  //     ATTRIBUTED BY REVERT-AND-REPRODUCE, twice, because the first probe was surprising: putting
+  //     BOTH rows back reproduced `446/1112/4` exactly with `exemptions=5`, and removing the two
+  //     `waveCadenceMult` declarations reproduced it again — so neither the admission nor the new
+  //     dial owns a row here. A third probe stashed EVERY source change in the slice and measured
+  //     the merged base at the same `446/1112/4`, which is what makes the claim safe to write down.
+  // (E2's branch measured its unmoved summary on a pre-Picnic base; the merged tree carries the
+  // Picnic's +10/+31/-1 — pinned verbatim from this tree's regen.)
+  assert.equal(audit.admission.exemptions.length, 3);
   assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 456, equal: 1143, 'not-offered': 3 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
