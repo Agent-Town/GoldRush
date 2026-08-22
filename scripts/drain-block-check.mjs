@@ -169,16 +169,57 @@ function closedReason(leaf) {
   return `(no reason-bearing key on this leaf — searched: ${searched})`;
 }
 
-function isMainAncestor(mergeHash) {
-  if (typeof mergeHash !== 'string' || !mergeHash.trim()) return false;
+// F-2212-1 (s2212) — A CRASH WAS READ AS THE VERDICT "NOT SHIPPED", IN THE PERMISSIVE
+// DIRECTION. This function used to wrap both git calls in a bare `catch { return false }`.
+// But `merge-base --is-ancestor` uses EXIT 1 AS A LEGITIMATE VERDICT ("not an ancestor"),
+// so the catch could not tell that verdict from a broken instrument — F-2211-1's class,
+// one file over, and here the failure direction is the dangerous one: false => "not
+// shipped" => the master is CLEARED FOR DISPATCH. That is the Mistake #8 guard (the 824k
+// Flail) silently disarming itself.
+//
+// AND THE FAILURE IS NOT EXOTIC: these two calls carried the ONLY 2-second bound in this
+// file (every other git call here is unbounded or 30 s), so a load spike selectively kills
+// THIS check and leaves everything else working — the fire shell under a concurrent
+// ~9-minute node-guards battery is the documented load case (F-2166-2).
+// PROVEN BY MANUFACTURING, not by reading (s2212): fixture leaf status="queued" with a
+// mergeHash that IS an ancestor of main, git made slow ONLY on these two calls —
+//   healthy git => `⛔ ALREADY SHIPPED — DO NOT QUEUE` (rc=1)
+//   2 s timeout => `✅ CLEAR` (rc=0), no crash, no warning.
+//
+// THE SIGNATURES, MEASURED rather than assumed — this is what makes the two separable:
+//   cat-file -e     present object  -> status 0
+//   cat-file -e     MISSING object  -> status 128 + "fatal: Not a valid object name"
+//   is-ancestor     yes             -> status 0
+//   is-ancestor     NO (the verdict)-> status 1, stderr EMPTY
+//   timeout                         -> status null, error ETIMEDOUT
+// So exit 1 WITH EMPTY STDERR is the only non-zero code that means anything, which is the
+// same discriminator `blocker-panel-closed-guard.mjs` already uses for `grep`. Everything
+// else is the instrument breaking and must never be read as either verdict.
+//
+// Returns 'yes' | 'no' | 'absent' | 'unverifiable'. Deliberately a STRING, not a boolean:
+// any careless truthiness test at a call site coerces 'unverifiable' to TRUE, i.e. toward
+// REFUSING a queue rather than clearing one — the fail-safe direction by construction.
+// VERIFIED BEHAVIOUR-NEUTRAL ON THE LIVE TREE BEFORE LANDING (the F-1274-2 standard):
+// all 593 leaves resolve 550 'yes' / 43 'absent' / ZERO 'unverifiable', so no master that
+// queues today starts being refused; this only stops a FUTURE silent clearance.
+function ancestryOfMain(mergeHash) {
+  if (typeof mergeHash !== 'string' || !mergeHash.trim()) return 'absent';
   const hash = mergeHash.trim();
-  try {
-    execFileSync('git', ['cat-file', '-e', '--', `${hash}^{commit}`], { stdio: 'ignore', timeout: 2_000 });
-    execFileSync('git', ['merge-base', '--is-ancestor', '--', hash, 'main'], { stdio: 'ignore', timeout: 2_000 });
-    return true;
-  } catch {
-    return false;
-  }
+  // 10 s, not the old 2 s. This is NOT "raise it until it goes green" (F-1410-2's standing
+  // prohibition): the failure mode below is now a LOUD refusal, so a generous bound only
+  // trades false alarms for patience — it can no longer hide anything. Two O(1) plumbing
+  // calls have no business taking 10 s, so this still bounds a genuine hang.
+  const probe = (args) => spawnSync('git', args,
+    { stdio: ['ignore', 'ignore', 'pipe'], encoding: 'utf8', timeout: 10_000 });
+
+  const exists = probe(['cat-file', '-e', '--', `${hash}^{commit}`]);
+  if (exists.error || exists.status !== 0) return 'unverifiable';
+
+  const anc = probe(['merge-base', '--is-ancestor', '--', hash, 'main']);
+  if (anc.error) return 'unverifiable';
+  if (anc.status === 0) return 'yes';
+  if (anc.status === 1 && !String(anc.stderr ?? '').trim()) return 'no';
+  return 'unverifiable';
 }
 
 // F-1597-1 (s1597) — A BLOCKED LEAF WITH NO `taskFile` WAS INVISIBLE TO THIS ENTIRE FILE.
@@ -519,7 +560,22 @@ function main() {
 
   if (queue) {
     const shippedByStatus = TERMINAL_SHIPPED_STATUSES.has(leaf.status);
-    const shippedByAncestry = !shippedByStatus && isMainAncestor(leaf.mergeHash);
+    const ancestry = shippedByStatus ? 'absent' : ancestryOfMain(leaf.mergeHash);
+    // F-2212-1: the probe broke. It is NOT a verdict, and above all it is not the
+    // permissive one. Refuse and say which instrument failed, so the fire re-runs
+    // instead of dispatching a master that may already be on main (Mistake #8).
+    if (ancestry === 'unverifiable') {
+      console.log(`  ⛔ CANNOT VERIFY — DO NOT QUEUE: ${leafLabel(leaf)} [${leaf.id}]`);
+      console.log(`    mergeHash="${leaf.mergeHash || '(not recorded)'}"`);
+      console.log(`    The ancestry probe for this hash did not return a verdict — git errored,`);
+      console.log(`    timed out, or the object is not in this clone. That is the INSTRUMENT`);
+      console.log(`    failing, not evidence the master is unshipped, so this refuses rather`);
+      console.log(`    than clear: re-queueing an already-merged master is Mistake #8.`);
+      console.log(`    Re-run this check; if it persists, verify by hand:`);
+      console.log(`      git merge-base --is-ancestor ${leaf.mergeHash || '<hash>'} main\n`);
+      process.exit(1);
+    }
+    const shippedByAncestry = ancestry === 'yes';
     const closedByStatus = TERMINAL_CLOSED_STATUSES.has(leaf.status);
     if (shippedByStatus || shippedByAncestry) {
       console.log(`  ⛔ ALREADY SHIPPED — DO NOT QUEUE: ${leafLabel(leaf)} [${leaf.id}]`);
