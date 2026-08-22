@@ -70,9 +70,28 @@ failed_sig()    { ls tasks/failed/ 2>/dev/null | tail -5 | shasum | cut -c1-12; 
 #
 # Enumerated + recursive + classified by BLOB, batched through two git plumbing
 # processes rather than one per file (~10s over 983 files, fine for a 10-min loop).
+# (983 was the count BEFORE F-2175-1 widened the walk below; it is 1019 now. The
+# old figure is restated rather than replaced — the drift is the provenance.)
+# F-2175-1 (s2175): the THIRD site of F-2174-1's class, and the worst of the three.
+# This function used `-not -path '*/.*'`, which excludes every path with a
+# dot-prefixed segment — so all 36 `.hero-*-take[123].png` files (12.43 MB, every
+# one in NO object database) were dropped BEFORE the blob check, and this alarm
+# reported 0. s2174 cured the blanket dot-skip in `art-staging-audit.mjs` and
+# `salvage-art-staging.mjs` and guarded THOSE TWO against drift; a third
+# implementation of the same question, in another language, sat outside that
+# guard's denominator. Measured s2175: scanned 983 with the exclusion vs 1019
+# without; reported 0 vs a true 36.
+#
+# The irony is load-bearing and is why this is cured rather than noted: the
+# comment directly above already states the principle — an edge-triggered alert
+# on a count that never leaves 0 can never fire — while the code below it
+# guaranteed exactly that for dot-prefixed art. Skip VCS/OS noise BY NAME, which
+# is the same rule its two sibling scripts now carry (SKIP_NAMES).
 art_untracked() {
   [ -d worktrees/art/assets ] || { echo 0; return; }
-  find worktrees/art/assets -type f -not -path '*/.*' 2>/dev/null \
+  find worktrees/art/assets -type f \
+    -not -path '*/.git/*' -not -name '.git' \
+    -not -name '.DS_Store' -not -name '.localized' -not -name 'Thumbs.db' 2>/dev/null \
     | git hash-object --stdin-paths 2>/dev/null \
     | git cat-file --batch-check 2>/dev/null \
     | grep -c 'missing' || true
