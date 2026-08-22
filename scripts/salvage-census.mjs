@@ -54,6 +54,34 @@
 // overwrite STATUS.md line-1 with a 58-fire-stale handoff. For a mis-filed ref the
 // lifecycle's prescribed action is HARMFUL, not merely wasteful.
 //
+// ✅ ASKED AND ANSWERED — DO NOT RE-DERIVE (F-2187-1, measured s2187 under a positive
+// control). s2186 closed by naming its own untouched neighbour: "the 55 ABSORBED refs
+// owed an archive/* rename have never been checked for the DUPLICATE shape I found in
+// the HOLDS bucket — if pairs like ap-06b exist there too, the 55-rename batch is
+// smaller than it reads." They were checked. THE ANSWER IS NO, on three grounds:
+//   1. THE DOMAIN IS EMPTY. The discriminator that found ap-06b is HELD-CONTENT
+//      set-equality, and `main...<ref>` is empty for an ABSORBED ref BY THE DEFINITION
+//      OF ABSORPTION — measured 55/55. The question cannot be asked of this bucket by
+//      the method that motivated it.
+//   2. POSITIVE CONTROL PASSES, which is the only thing that makes (1) worth reading:
+//      the same detector on the same run independently rediscovers ap-06b in HOLDS
+//      (160 held lines; trees differ TRUE, shas differ TRUE — reproducing s2186's
+//      "only the held-content set pairs them"). So the zero is a property of the
+//      BUCKET, not a weakness of the detector.
+//   3. THE PREMISE IS UNSOUND ANYWAY. The owed action is a per-REF rename and --strict
+//      reds PER REF (see the exit-code line below). Duplicate WORK cannot shrink a
+//      per-REF op count. 55 refs stay 55 renames. This is the refs-vs-work conflation
+//      F-2186-1 diagnosed at line 42 — reproduced in its own recommendation.
+// ⚠️ TWO WEAK ARMS ARE RECORDED SO NOBODY REPEATS THEM AS IF THEY SETTLED ANYTHING:
+// commit-identity and tree-identity both returned "55 distinct / 55 distinct" — an
+// identical-looking zero, and WORTHLESS, because ap-06b's trees and shas differ too, so
+// those arms would have missed the known instance. A negative result needs a positive
+// control on the same run or it is indistinguishable from a broken detector.
+// ⓘ And an ancestry arm was hypothesised to be a pure TAUTOLOGY here (absorbed refs all
+// sit in main's history). REFUTED AT THE MARGIN, kept because it bounds the claim:
+// 1424/1485 pairs comparable (95.9%) but 61 genuinely unordered — a PARTIAL order, not
+// total. Still uninformative about duplicate work; it measures timeline position only.
+//
 // NOT CURED IN CODE, deliberately: "backup vs re-land candidate" is a JUDGEMENT, and a
 // red guard over a judgement is excused into uselessness inside a week (F-1460-1's
 // `cross-engine` fate). What is cured is free — the two output lines no longer claim an
