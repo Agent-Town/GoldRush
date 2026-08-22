@@ -155,3 +155,102 @@ holds all 7 paths, `ahead=1`, and the branch is untouched.
   — s2124's item (C) was conditioned on this merge landing.
 - Gate worktree `gate-s2125` retained with the probe merge for the next fire; it is
   detached and touches nothing.
+
+---
+
+## s2165 RE-GATE (2026-08-22) — the re-scoped hold instructed this merge; I re-measured and it still reds main
+
+**Base:** `a9b6b468b` (main, s2165 lock) · **Gate worktree:** `gate-s2165` (detached, §3.0b)
+**Lane tip:** `61358eb555e10e236071f8dc7b2e6e8b39c030b0` — unchanged · **behind=307** (was 9 at s2125)
+
+### VERDICT: **HOLD — STILL NOT MERGED.** F-2125-1 re-confirmed at source; new F-2165-1 filed.
+
+**Why this fire re-gated at all.** `drain-block-check lane/a` prints a hold whose reason,
+re-scoped by attended today (`2c357128d`, F-2162-1), ends: *"LIFT = the drain itself:
+merge lane/a (61358eb55), regen null-floors on the merged tree, --check clean, flip this
+leaf in the drain commit."* That is an instruction to merge. **I executed it as far as
+evidence, and the evidence refuses it.**
+
+### What PASSED — the re-scoped condition, satisfied in full
+
+| Check | Result |
+|---|---|
+| `npx tsc --noEmit` | ✅ clean |
+| `npm run build` | ✅ green, 1.17 s |
+| Contract loads **headless** | ✅ `null-floor-anchors.test.mjs` passes — its coverage assertion coerces `floors` keys to `benchSeeds ∩ supportedContractIds()`, so its green **is** the proof `e10-ember-shore` loads |
+| `e3-mask-tables` + `bench-seeds` + `null-floor-anchors` | ✅ **33 pass / 0 fail**, 1.84 s (incl. `e10-ember-shore mask stays inside bounds`) |
+| Floors regen on the merged tree | ✅ **81 floors, 671.1 s**, rc=0 |
+| **0 `secured:true`** | ✅ none anywhere in 81 rows; both Ember seeds `secured:false`, wave 3 |
+| Regen reproduces the lane's 20-h-old pins | ✅ **byte-identical**, incl. `eventLogHash` `fnv1a32:efe6d491` / `fnv1a32:7257e0b7` — determinism proven across a **307-commit** gap |
+| Regen moves nothing else | ✅ merged-vs-main delta in `null-floors.json` is **exactly 20 lines**: the `eraStamp` + the two Ember rows. All 34 pre-existing contracts re-derived byte-identically — a stronger result than `--check`, which is the same computation |
+| `e10-last-claim` floors | ⓘ **vacuous by absence, not a green** — it is not in `bench-seeds.json`, so it has no floors row in either tree. Stated plainly because the naive comparison is `undefined === undefined` |
+
+### What FAILED — the same three deterministic reds, re-measured on a base 307 commits newer
+
+| Test | Clean main `a9b6b468b` | Merged tree |
+|---|---|---|
+| `door-admission-ratchet` — derived door matches the fixed admission baseline | ✔ 9260 ms | ✖ 2766 ms |
+| `skillmd-guard` — skill.md bench seeds match the source registry | ✔ 0.20 ms | ✖ **0.96 ms** |
+| `skillmd-guard` — skill.md door-contracts match `SUPPORTED_CONTRACTS` | ✔ 0.11 ms | ✖ **0.19 ms** |
+| **File totals** | ✅ **6 pass / 0 fail** | 🔴 **3 pass / 3 fail** |
+
+Two fail in **under 1 ms**. No load or scheduling hypothesis reaches them, and the control
+was taken this fire on today's main — **F-2125-1 is not stale.**
+
+**Root re-verified at source, by reading the file:** `src/meta/ContractFamilies.ts:1345`
+— `else if (requested.tileParams.harvestAnchors?.length === 0) { fallbackReason =
+'unavailable-contract'; … }`, redirecting to The Claim. An **empty** anchors array is what
+holds a map out of play; this slice authors **four**, so the map becomes directly enterable
+on merge. (s2125 cited `:1336`; the coordinate has rotted **9 lines** — cite the code.)
+
+### 🔴 F-2165-1 (BLOCKING, ATTENDED-OWED) — the re-scope's premise is refuted by a measurement that predates it
+
+F-2162-1 re-scoped this hold on the argument that the data is machine-declared inert
+(`DECLARED_INERT_PATHS` + `engine_dependency_required`), therefore *"no player-reachable
+behaviour lands."* **That argument is sound about the twist and silent about the anchors.**
+Admission is not gated on the twist being live — it is gated on `harvestAnchors.length`
+(`:1345`), and on the bench seeds that feed `skill.md`'s door-contract list. The slice moves
+both. So:
+
+> **The bench seeds and anchors ARE the admission mechanism.** The re-scope assumed E10S-1's
+> data could land with admission withheld; measured, this content cannot — landing the data
+> *is* admitting the map, which is precisely the act F-2162-1 deferred to the newly-minted
+> E10S-4 door leaf.
+
+The re-scope never addressed F-2125-1's three reds — they are named nowhere in the
+`2c357128d` reason text or the BACKLOG row. This is not a disagreement about values; it is a
+measurement the ruling did not have in front of it.
+
+**A fourth red, new this fire, same root:** `e2e/er01-e10-census.spec.ts` at `--workers=1`,
+desktop. `e10-ember-shore` fails at **line 46** (`expect(benchSeeds[contract.id]).toBeUndefined()`,
+received `["e10-ember-shore-01","e10-ember-shore-02"]`) — the spec encodes "Deep Sky is
+declared debt, unserved", and the slice's seeds contradict it. The master's firewall permitted
+this file only for *"the `e10-ember-shore` **dependency** expectation ONLY"*, so **the runner
+was forbidden from fixing it and correctly did not** — a firewall success, not a lapse.
+
+⚠️ **Pre-existing and UNRELATED, recorded so the next reader does not attribute it to the
+slice — `er01-e10-census.spec.ts` is ALREADY RED ON MAIN:** all four e10 contracts fail on
+clean main at **line 59** (`expect(mechanics.buildables).toBeUndefined()`, received the full
+six-item buildables registry). Same test *names* fail in both trees, at **different lines and
+for different causes** — the merged tree's ember-shore failure is a genuine *additional* red
+that a name-level comparison would have called pre-existing. Fingerprint by line, not by title.
+
+### The choice is unchanged from s2125, and now has a third option
+
+- **(a)** Empty the anchors — data lands inert and un-enterable; door opens at E10S-4. One-file edit.
+- **(b)** Complete the admission — add `public/skill.md` (+5) and the door baseline (+1), matching
+  the two precedents `c183d3496` / `1bbb73ad5`. **Admits a map with no consumer and no door.**
+- **(c)** *(new)* **Drop the bench seeds and floors rows from this slice** — the null-floor guard is
+  then satisfied trivially (no seeds ⇒ no floors row, its coverage assertion is an intersection),
+  the door surface is untouched, and the contract/mask/twist declaration still lands. This reads
+  closest to the spec's own gate wording, *"rows appear only **with admission**"* — under a
+  deferred door there should be **no** Ember rows yet.
+
+**GATE: attended picks (a), (b) or (c).** All three are a single small master. **Nothing is
+lost** — `lane/a` holds all 7 paths at `ahead=1`, untouched by this fire.
+
+### Custody
+
+Per §3.0b every probe ran in the detached `gate-s2165` worktree; **nothing was staged on main
+and no merge was ever left in main's index** (F-1295-1 / F-1589-5). The worktree was removed
+after measurement. Clean-main controls were taken at the repo root, read-only.
