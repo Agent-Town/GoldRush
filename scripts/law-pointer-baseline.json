@@ -48,6 +48,36 @@
       "fingerprint": "b064925c8381",
       "excerpt": "resolve_codex_bin() { # echoes the first client meeting CODEX_FLOOR; rc 1 if none does"
     },
+    "scripts/fire.md -> gen-audio.mjs:194": {
+      "target": "scripts/gen-audio.mjs",
+      "line": 194,
+      "fingerprint": "f2ce71d6f514",
+      "excerpt": "const afinfo = spawnSync('afinfo', [file], { encoding: 'utf8' });"
+    },
+    "scripts/fire.md -> drain-block-check.mjs:212": {
+      "target": "scripts/drain-block-check.mjs",
+      "line": 212,
+      "fingerprint": "02a2d2e6226a",
+      "excerpt": "const probe = (args) => spawnSync('git', args,"
+    },
+    "scripts/fire.md -> red-inventory-lookup.mjs:64": {
+      "target": "scripts/red-inventory-lookup.mjs",
+      "line": 64,
+      "fingerprint": "0bc75339095b",
+      "excerpt": "const git = spawnSync('git', ['rev-list', '--count', `--since=${snapshotStartTime}`, 'main', '--', '"
+    },
+    "scripts/fire.md -> red-inventory-lookup.mjs:226": {
+      "target": "scripts/red-inventory-lookup.mjs",
+      "line": 226,
+      "fingerprint": "7a9b78c9d211",
+      "excerpt": "} catch (error) {"
+    },
+    "scripts/fire.md -> blocker-panel-closed-guard.mjs:88": {
+      "target": "scripts/blocker-panel-closed-guard.mjs",
+      "line": 88,
+      "fingerprint": "7a9b78c9d211",
+      "excerpt": "} catch (error) {"
+    },
     "scripts/fire.md -> scripts/goal-tracker.test.mjs:80": {
       "target": "scripts/goal-tracker.test.mjs",
       "line": 80,
