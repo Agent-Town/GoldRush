@@ -8,6 +8,7 @@ const SECRET = 'assay-worker-test-secret';
 // pre-roll board keeps the shape it was written with, forever, read-only.
 const KEY = 'standings:s2:epoch-1-frontier:the-claim';
 const ARCHIVE_KEY = 'standings:epoch-1-frontier:the-claim';
+const ASSAY_INDEX_KEY = 'assay-queue-index';
 let checks = 0;
 
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
@@ -19,6 +20,7 @@ try {
   await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
   await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
   await checkVerdictSlipExactMatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+  await checkAssayIndex(onRequest, onRequestAssayQueue);
   await checkUnrankedBound(onRequest);
   await checkRetroAssay(onRequest, onRequestAssayQueue);
   await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -52,6 +54,7 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   await call(onRequest, 'POST', '/api/standings', post('1'.repeat(32), 30, tape('verify-me', 30)), kv);
   await call(onRequest, 'POST', '/api/standings', post('2'.repeat(32), 25, tape('reject-me', 25)), kv);
   await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 20, tape('retry-me', 20)), kv);
+  equal(JSON.parse(await kv.get(ASSAY_INDEX_KEY)).length, 3, 'submissions append pending locators');
 
   equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, kv, undefined)).status, 503, 'absent secret fails closed');
   equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, kv, SECRET, 'wrong')).status, 401, 'wrong key is unauthorized');
@@ -73,6 +76,7 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   const retryLocator = retryQueue.body.queue.find((row) => row.locator.tapeId === 'retry-me').locator;
   equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(retryLocator, 'unassayable', 'instrument exited 143'), kv, SECRET)).status, 200, 'unassayable verdict accepted with a reason');
   equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(retryLocator, 'unassayable'), kv, SECRET)).status, 400, 'unassayable verdict without a reason is refused');
+  equal(JSON.parse(await kv.get(ASSAY_INDEX_KEY)).length, 0, 'all verdicts remove their locators');
 
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'rejected row drops from ranking');
@@ -98,9 +102,8 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   equal(unassayableSlip.body.assayHash, undefined, 'the slip does not invent a replay hash');
   equal(unassayableSlip.body.ranked, false, 'an unassayable row is not ranked');
 
-  const requeued = JSON.parse(await kv.get(KEY));
-  requeued.find((row) => row.tape.id === 'retry-me').assay = 'pending';
-  await kv.put(KEY, JSON.stringify(requeued));
+  await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 20, tape('retry-me', 20)), kv);
+  equal(JSON.parse(await kv.get(ASSAY_INDEX_KEY)).length, 1, 'resubmission requeues the assay locator');
   const secondQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=3', undefined, kv, SECRET);
   const secondLocator = secondQueue.body.queue.find((row) => row.locator.tapeId === 'retry-me').locator;
   equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(secondLocator, 'verified'), kv, SECRET)).status, 200, 'a flipped-back row re-enters the queue');
@@ -113,6 +116,47 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   equal(verifiedSlip.body.assayReason, undefined, 'a verified slip carries no reason');
   equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=no-such-reel', undefined, kv)).status, 404, 'an unknown reel has no slip');
   equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=reject-me&party=solo', undefined, kv)).status, 400, 'the slip keeps the strict param arithmetic');
+}
+
+async function checkAssayIndex(onRequest, queueRoute) {
+  const idle = makeKv();
+  await idle.put(ASSAY_INDEX_KEY, '[]');
+  idle.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, idle, SECRET)).body.queue.length, 0, 'idle indexed queue is empty');
+  equal(idle.ops.reads, 1, 'idle poll costs exactly one KV read');
+  equal(idle.ops.writes, 0, 'idle poll does not rewrite its index');
+
+  const pending = makeKv();
+  await call(onRequest, 'POST', '/api/standings', post('8'.repeat(32), 20, tape('one-pending', 20)), pending);
+  pending.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, pending, SECRET)).body.queue.length, 1, 'indexed pending row is served');
+  equal(pending.ops.reads, 2, 'one-pending poll costs the index plus one board read');
+  equal(pending.ops.writes, 0, 'live locators do not rewrite the index');
+
+  const seeded = makeKv();
+  const first = storedRowFor(20, 'the-claim', 'epoch-1-frontier');
+  const second = storedRowFor(10, 'e2-hill-mine', 'epoch-2-steamworks');
+  await seeded.put(KEY, JSON.stringify([first]));
+  await seeded.put('standings:s2:epoch-2-steamworks:e2-hill-mine', JSON.stringify([second]));
+  seeded.resetOps();
+  const rebuilt = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, seeded, SECRET);
+  equal(rebuilt.body.queue, [queueRow(second, 'epoch-2-steamworks', 'e2-hill-mine'), queueRow(first, 'epoch-1-frontier', 'the-claim')], 'missing index rebuild equals the seeded full-scan response');
+  equal(seeded.ops.reads, 42, 'missing index rebuild reads the index and all 41 boards');
+  equal(seeded.ops.writes, 1, 'missing index rebuild writes one index');
+
+  await seeded.put(ASSAY_INDEX_KEY, '{broken');
+  seeded.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, seeded, SECRET)).body.queue.length, 2, 'corrupt index rebuilds and serves');
+  equal(seeded.ops.reads, 42, 'corrupt index rebuild reads the index and all 41 boards');
+
+  const staleRows = JSON.parse(await pending.get(KEY));
+  staleRows[0].assay = 'verified';
+  staleRows[0].assayedAt = 1;
+  staleRows[0].assayHash = 'fnv1a32:1234abcd';
+  await pending.put(KEY, JSON.stringify(staleRows));
+  pending.resetOps();
+  equal((await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, pending, SECRET)).body.queue.length, 0, 'stale verified locator is not served');
+  equal(JSON.parse(await pending.get(ASSAY_INDEX_KEY)).length, 0, 'stale verified locator is pruned');
 }
 
 // Guards the NORMALIZATION law (a stored row that carries a tape but no assay stamp reads as
@@ -235,21 +279,21 @@ async function checkSeasonRoll(onRequest, queueRoute, verdictRoute) {
   equal(await kv.get(ARCHIVE_KEY), archiveBytes, 'a whole current-season lifecycle never touched season one');
 }
 
-function post(anonId, waves, runTape) {
+function post(anonId, waves, runTape, contractId = 'the-claim', epochId = 'epoch-1-frontier') {
   const inputLogHash = runTape ? createHash('sha256').update(JSON.stringify(runTape.inputLog)).digest('hex') : 'b'.repeat(64);
   return {
-    contractId: 'the-claim', epochId: 'epoch-1-frontier',
+    contractId, epochId,
     score: { secured: true, waves, timeAlive: 120, gold: 40, baseValue: 60 },
     profileName: 'Assay Test', anonId, difficulty: 'trail', seed: 'gold-rush', seedMode: 'live',
     seedHash: 'a'.repeat(64), inputLogHash, ...(runTape ? { tape: runTape } : {}),
   };
 }
 
-function tape(id, waves, eventLogHash = 'fnv1a32:1234abcd') {
+function tape(id, waves, eventLogHash = 'fnv1a32:1234abcd', contractId = 'the-claim') {
   return {
-    version: 1, id, createdAt: 1, kept: true, contract: 'the-claim', seed: 'gold-rush', difficulty: 'trail', simVersion: 1,
+    version: 1, id, createdAt: 1, kept: true, contract: contractId, seed: 'gold-rush', difficulty: 'trail', simVersion: 1,
     inputLog: {
-      version: 1, name: id, contractId: 'the-claim', seed: 'gold-rush', difficultyPreset: 'trail', stepSeconds: 1 / 30,
+      version: 1, name: id, contractId, seed: 'gold-rush', difficultyPreset: 'trail', stepSeconds: 1 / 30,
       start: { x: 0, z: 12 }, durationTicks: 1, entries: [], truncated: null, primarySlot: 0, streams: [],
     },
     eventLogHash,
@@ -280,6 +324,25 @@ function storedRow(index, withTape) {
   };
 }
 
+function storedRowFor(index, contractId, epochId) {
+  const runTape = tape(`seed-${index}`, 100 - index, 'fnv1a32:1234abcd', contractId);
+  const payload = post(index.toString(16).padStart(32, '0'), 100 - index, runTape, contractId, epochId);
+  return {
+    ...payload.score, profileName: `Seed ${index}`, anonId: payload.anonId, difficulty: payload.difficulty,
+    seed: payload.seed, seedMode: payload.seedMode, seedHash: payload.seedHash, inputLogHash: payload.inputLogHash,
+    submittedAt: index + 1, tape: runTape, assay: 'pending',
+  };
+}
+
+function queueRow(row, epochId, contractId) {
+  return {
+    locator: { epochId, contractId, tapeId: row.tape.id, rowId: `${row.anonId}:1:${row.submittedAt}:${row.inputLogHash}` },
+    tape: row.tape,
+    score: { secured: true, waves: row.waves, timeAlive: row.timeAlive, gold: row.gold, baseValue: row.baseValue },
+    submittedAt: row.submittedAt,
+  };
+}
+
 function verdict(locator, verdictValue, reason) {
   return {
     locator, verdict: verdictValue,
@@ -304,7 +367,13 @@ async function workerCall(route, method, url, body, kv, secret, key = secret) {
 
 function makeKv() {
   const values = new Map();
-  return { get: async (key) => values.get(key) ?? null, put: async (key, value) => void values.set(key, value) };
+  const ops = { reads: 0, writes: 0 };
+  return {
+    ops,
+    resetOps: () => { ops.reads = 0; ops.writes = 0; },
+    get: async (key) => { ops.reads += 1; return values.get(key) ?? null; },
+    put: async (key, value) => { ops.writes += 1; values.set(key, value); },
+  };
 }
 
 function equal(actual, expected, message) {

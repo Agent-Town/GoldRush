@@ -81,6 +81,14 @@ type StoredRow = ScoreRow & {
   assayReason?: string;
 };
 
+type AssayLocator = {
+  epochId: string;
+  contractId: string;
+  tapeId: string;
+  rowId: string;
+  submittedAt: number;
+};
+
 type GroupAggregate = {
   standings: number;
   contracts: number;
@@ -120,6 +128,8 @@ const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://age
 const MAX_TAPE_BYTES = 64 * 1024;
 const MAX_JSON_BYTES = MAX_TAPE_BYTES + 4 * 1024;
 const MAX_ROWS = 100;
+const ASSAY_QUEUE_INDEX_KEY = 'assay-queue-index';
+const ASSAY_INDEX_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId', 'submittedAt']);
 const MAX_REQUESTS_PER_ANON = 12;
 const MAX_REQUESTS_PER_IP = 60;
 const RATE_TTL_SECONDS = 60 * 60;
@@ -196,23 +206,32 @@ export async function onRequestAssayQueue(context: StandingsContext): Promise<Re
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
     if (!kv) return error(cors, 503, 'board_unavailable', 'The county book is unavailable.');
-    const boards = await Promise.all(CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
-      .filter((contract) => contract.id !== DRILL_YARD_CONTRACT_ID)
-      .map(async (contract) => ({
-        epochId: bundle.epochId,
-        contractId: contract.id,
-        rows: await readBoard(kv, bundle.epochId, contract.id),
-      }))));
-    const queue = boards.flatMap(({ epochId, contractId, rows }) => rows
-      .filter((row) => row.assay === 'pending' && row.tape)
-      .map((row) => ({
-        locator: { epochId, contractId, tapeId: row.tape!.id as string, rowId: assayRowId(row) },
-        tape: row.tape,
-        score: scoreOf(row),
-        submittedAt: row.submittedAt,
-      })))
-      .sort((a, b) => a.submittedAt - b.submittedAt)
-      .slice(0, limit);
+    let locators = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
+    let boards: Map<string, StoredRow[]>;
+    if (locators === null) {
+      ({ locators, boards } = await rebuildAssayIndex(kv));
+      await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(locators));
+    } else {
+      const namedBoards = [...new Set(locators.map((locator) => boardKey(locator.epochId, locator.contractId)))];
+      boards = new Map(await Promise.all(namedBoards.map(async (key) => {
+        const locator = locators!.find((candidate) => boardKey(candidate.epochId, candidate.contractId) === key)!;
+        return [key, await readBoard(kv, locator.epochId, locator.contractId)] as const;
+      })));
+    }
+    const verified = locators.flatMap((locator) => {
+      const row = boards.get(boardKey(locator.epochId, locator.contractId))?.find((candidate) => candidate.assay === 'pending'
+        && candidate.tape?.id === locator.tapeId && assayRowId(candidate) === locator.rowId);
+      return row ? [{
+        locator: { epochId: locator.epochId, contractId: locator.contractId, tapeId: locator.tapeId, rowId: locator.rowId },
+        tape: row.tape!, score: scoreOf(row), submittedAt: row.submittedAt,
+      }] : [];
+    });
+    if (verified.length !== locators.length) {
+      const live = new Set(verified.map((row) => locatorId(row.locator)));
+      locators = locators.filter((locator) => live.has(locatorId(locator)));
+      await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(locators));
+    }
+    const queue = verified.sort((a, b) => a.submittedAt - b.submittedAt).slice(0, limit);
     return json(cors, { ok: true, queue });
   });
 }
@@ -250,7 +269,9 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     if (replayedHash !== null) row.assayHash = replayedHash;
     delete row.assayReason;
     if ((body.verdict === 'rejected' || body.verdict === 'unassayable') && reason) row.assayReason = reason;
-    await kv.put(boardKey(locator.epochId, locator.contractId), JSON.stringify(retainUnranked(rows)));
+    const next = retainUnranked(rows);
+    await kv.put(boardKey(locator.epochId, locator.contractId), JSON.stringify(next));
+    await syncAssayBoardIndex(kv, locator.epochId, locator.contractId, next);
     return json(cors, { ok: true, locator, assay: row.assay });
   });
 }
@@ -631,6 +652,7 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   ]);
   // ponytail: KV read-modify-write; move this board to a Durable Object if concurrent submissions measurably collide.
   await kv.put(key, JSON.stringify(next));
+  if (tape && kept === candidate) await syncAssayBoardIndex(kv, epochId, contractId, next);
   const index = rankedRows(next).indexOf(kept);
   return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null });
 }
@@ -725,6 +747,65 @@ function scoreOf(row: ScoreRow): ScoreRow {
 
 function assayRowId(row: StoredRow): string {
   return `${row.anonId}:${row.party?.riderCount ?? 1}:${row.submittedAt}:${row.inputLogHash}`;
+}
+
+function assayLocator(epochId: string, contractId: string, row: StoredRow): AssayLocator {
+  return { epochId, contractId, tapeId: row.tape!.id as string, rowId: assayRowId(row), submittedAt: row.submittedAt };
+}
+
+function locatorId(locator: Pick<AssayLocator, 'epochId' | 'contractId' | 'tapeId' | 'rowId'>): string {
+  return `${locator.epochId}\n${locator.contractId}\n${locator.tapeId}\n${locator.rowId}`;
+}
+
+function parseAssayIndex(raw: string | null): AssayLocator[] | null {
+  if (raw === null) return null;
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return null;
+    const locators: AssayLocator[] = [];
+    const seen = new Set<string>();
+    for (const value of parsed) {
+      if (!isRecord(value) || !hasOnlyKeys(value, ASSAY_INDEX_KEYS)
+        || typeof value.epochId !== 'string' || typeof value.contractId !== 'string' || !knownContract(value.epochId, value.contractId)
+        || typeof value.tapeId !== 'string' || value.tapeId.length === 0 || value.tapeId.length > MAX_REEL_ID_LENGTH
+        || typeof value.rowId !== 'string' || !ASSAY_ROW_ID.test(value.rowId)
+        || integerInRange(value.submittedAt, 0, Number.MAX_SAFE_INTEGER) === null) return null;
+      const locator = value as AssayLocator;
+      const id = locatorId(locator);
+      if (seen.has(id)) return null;
+      seen.add(id);
+      locators.push(locator);
+    }
+    return locators;
+  } catch {
+    return null;
+  }
+}
+
+async function rebuildAssayIndex(kv: KVNamespaceLike): Promise<{ locators: AssayLocator[]; boards: Map<string, StoredRow[]> }> {
+  const entries = await Promise.all(CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
+    .filter((contract) => contract.id !== DRILL_YARD_CONTRACT_ID)
+    .map(async (contract) => {
+      const rows = await readBoard(kv, bundle.epochId, contract.id);
+      return [boardKey(bundle.epochId, contract.id), rows, bundle.epochId, contract.id] as const;
+    })));
+  return {
+    boards: new Map(entries.map(([key, rows]) => [key, rows])),
+    locators: entries.flatMap(([, rows, epochId, contractId]) => rows
+      .filter((row) => row.assay === 'pending' && row.tape)
+      .map((row) => assayLocator(epochId, contractId, row))),
+  };
+}
+
+async function syncAssayBoardIndex(kv: KVNamespaceLike, epochId: string, contractId: string, rows: StoredRow[]): Promise<void> {
+  // ponytail: one KV key cannot serialize concurrent state changes; move index ownership to a Durable Object before launch traffic.
+  let locators = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
+  if (locators === null) ({ locators } = await rebuildAssayIndex(kv));
+  locators = [
+    ...locators.filter((locator) => locator.epochId !== epochId || locator.contractId !== contractId),
+    ...rows.filter((row) => row.assay === 'pending' && row.tape).map((row) => assayLocator(epochId, contractId, row)),
+  ];
+  await kv.put(ASSAY_QUEUE_INDEX_KEY, JSON.stringify(locators));
 }
 
 function validateScore(value: unknown): ScoreRow | null {
