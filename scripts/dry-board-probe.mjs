@@ -199,6 +199,54 @@ export function selectSubjects(root) {
   };
 }
 
+/**
+ * A verdict drain-block-check actually PRINTED, as opposed to text that merely
+ * contains a verdict word. F-2211-1: the distinction is the whole finding.
+ */
+export const VERDICT_MARKER = /⛔|✅ CLEAR|\? UNKNOWN/;
+
+/**
+ * Reduce one drain-block-check invocation to the text that may be CLASSIFIED --
+ * and refuse to classify a CRASH as a verdict.
+ *
+ * F-2211-1 (measured s2211). drain-block-check exits 1 for every "do not drain"
+ * verdict, so the catch below is not an edge case: it is the path EVERY closed
+ * and blocked subject on the live board travels (8 of 8 at s2211, verdict on
+ * stdout, stderr empty). An uncaught exception ALSO exits 1, so the exit code
+ * cannot tell a verdict from a crash -- only the content can.
+ *
+ * The trap is that node writes the THROWING SOURCE LINE into stderr, and
+ * drain-block-check's own source carries the verdict literals it prints (⛔ at
+ * :365/:493/:525/:533/:624, "? UNKNOWN" at :429). So folding stderr into the
+ * classified text lets a crash be read as the verdict whose line it died on.
+ * Measured on scratch copies, subject truth = A REAL DRAIN in every arm:
+ *
+ *   throw on the "⛔ CLOSED" line   -> classified 'closed'  -> "✅ DRY ... earned"
+ *   throw on the "⛔ BLOCKED" line  -> classified 'closed'  -> "✅ DRY ... earned"
+ *   throw on the "? UNKNOWN" line   -> classified 'unknown' -> "owe a file probe"
+ *   throw on a status="merged" line -> classified 'merged'  -> "✅ DRY ... earned"
+ *   CONTROL: throw on a line with no verdict literal -> 'drain' -> "⛔ NOT DRY"
+ *
+ * Three of four print the s1061 banner on a board the classifier never read.
+ * Only the CONTROL is fail-safe -- and it is the one parameterisation s2210
+ * happened to hit when it recorded this catch as "loud in both directions".
+ *
+ * The cure is to classify from STDOUT ONLY. bucketOf('') is 'drain', so a crash
+ * falls out loud by construction rather than by luck.
+ *
+ * @param {{stdout?: string, stderr?: string, failed: boolean}} cap
+ * @returns {{text: string, crashed: boolean, detail: string}}
+ */
+export function classifiableCapture(cap) {
+  const stdout = cap.stdout ?? '';
+  if (!cap.failed || VERDICT_MARKER.test(stdout)) {
+    return { text: stdout, crashed: false, detail: '' };
+  }
+  const detail = (cap.stderr ?? '').split('\n').map((l) => l.trim())
+    .find((l) => /^[A-Za-z]*Error\b/.test(l)) ?? 'exited non-zero with no verdict on stdout';
+  return { text: '', crashed: true, detail };
+}
+
 /** Bucket one drain-block-check result. UNKNOWN is deliberately NOT a clearance. */
 export function bucketOf(output) {
   if (/UNKNOWN/.test(output)) return 'unknown';
@@ -249,15 +297,22 @@ function main() {
   }
 
   const buckets = { merged: [], closed: [], unknown: [], drain: [] };
+  const crashed = [];
   for (const f of sel.subjects) {
-    let out = '';
+    let cap;
     try {
-      out = execFileSync('node', [path.join(root, 'scripts', 'drain-block-check.mjs'), f],
-        { encoding: 'utf8', cwd: root });
+      cap = {
+        failed: false,
+        stdout: execFileSync('node', [path.join(root, 'scripts', 'drain-block-check.mjs'), f],
+          { encoding: 'utf8', cwd: root }),
+      };
     } catch (e) {
-      out = (e.stdout ?? '') + (e.stderr ?? '');
+      // NOT an edge case: rc=1 is how every "do not drain" verdict arrives.
+      cap = { failed: true, stdout: e.stdout, stderr: e.stderr };
     }
-    buckets[bucketOf(out)].push(f);
+    const { text, crashed: isCrash, detail } = classifiableCapture(cap);
+    if (isCrash) crashed.push(`${f}  [${detail}]`);
+    buckets[bucketOf(text)].push(f);
   }
 
   const label = {
@@ -273,6 +328,14 @@ function main() {
   }
 
   console.log('');
+  if (crashed.length) {
+    // F-2211-1: name them. They are counted as drains so the verdict fails safe,
+    // but a fire sent to file-probe a file whose CLASSIFIER broke would be
+    // investigating the wrong subject entirely.
+    console.log(`  ⚠️  CLASSIFIER CRASHED on ${crashed.length} subject(s) — counted as drains, NOT as verdicts:`);
+    for (const c of crashed) console.log(`      ${c}`);
+    console.log('');
+  }
   if (buckets.drain.length) {
     console.log(`  ⛔ NOT DRY — ${buckets.drain.length} undrained done-move(s). Do not declare §2F.`);
   } else if (buckets.unknown.length) {

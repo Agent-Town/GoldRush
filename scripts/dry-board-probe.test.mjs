@@ -19,7 +19,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 
-import { TERMINAL_TOKENS, bareDate, bucketOf, embeddedDate, exitCodeFor, selectSubjects } from './dry-board-probe.mjs';
+import { TERMINAL_TOKENS, bareDate, bucketOf, classifiableCapture, embeddedDate, exitCodeFor, selectSubjects } from './dry-board-probe.mjs';
 
 function fixture(names) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'dry-board-probe-'));
@@ -325,4 +325,118 @@ test('F-2210-1: a drain and an UNKNOWN are NAMED, not merely counted', (t) => {
   const unknown = runCliFull(cliFixture(t, V_UNKNOWN), []).out;
   assert.match(unknown, /UNKNOWN[^\n]*: 1/);
   assert.ok(unknown.includes(SUBJECT), 'the UNKNOWN filename must print — it owes a file probe');
+});
+
+// ---------------------------------------------------------------------------
+// F-2211-1 — the CAPTURE, which is upstream of every layer above.
+//
+// s2210 recorded main()'s catch as the one branch no test reaches, and judged it
+// no finding: "it fails LOUD in both directions -- a crash leaves out='', which
+// bucketOf classifies as drain." That was measured ACCIDENTALLY, from a stub with
+// a quoting fault, and it holds at exactly that one parameterisation.
+//
+// The catch is not an edge case. drain-block-check exits 1 for EVERY "do not
+// drain" verdict, so it is the path every closed and blocked subject travels --
+// 8 of 8 on the live board at s2211. An uncaught exception exits 1 too, so the
+// exit code cannot separate a verdict from a crash. Only the content can, and
+// the shipped code folded stderr into the classified text -- where node has
+// written the THROWING SOURCE LINE, out of a file whose own source carries every
+// verdict literal it prints (⛔ at :365/:493/:525/:533/:624, UNKNOWN at :429).
+//
+// MEASURED s2211 on scratch copies, subject truth = A REAL DRAIN in every arm,
+// all four invisible to the 18 tests that shipped before this block:
+//   * throw on the "⛔ CLOSED" line   -> 'closed'  -> "✅ DRY ... The word is earned."
+//   * throw on the "⛔ BLOCKED" line  -> 'closed'  -> "✅ DRY ... The word is earned."
+//   * throw on a status="merged" line -> 'merged'  -> "✅ DRY ... The word is earned."
+//   * throw on the "? UNKNOWN" line   -> 'unknown' -> "owe a file probe"
+//   * CONTROL, no verdict literal     -> 'drain'   -> "⛔ NOT DRY"   (fail-safe)
+//
+// Three of four print the s1061 banner on a board the classifier never read --
+// F-2210-1's own failure, one layer upstream, reached through a different door:
+// there the banner lied about the bucket, here the bucket itself is a lie and
+// the banner reports it faithfully. So F-2210-1's guard cannot see this, and
+// does not: it asserts banner-matches-bucket, and the banner does match.
+//
+// REUSABLE: a negative result is a measurement and inherits a measurement's
+// duties. s2210's was true, honestly reported, and confirmed at ONE arm of a
+// five-arm class -- the only arm that happens to be safe. When you record a
+// branch as harmless, parameterise the harm before you write "no finding".
+// ---------------------------------------------------------------------------
+
+/** A fixture whose stubbed drain-block-check CRASHES on the given source line. */
+function crashFixture(t, sourceLine) {
+  const root = fixture([ANCHOR, SUBJECT]);
+  t.after(() => fs.rmSync(root, { recursive: true }));
+  fs.mkdirSync(path.join(root, 'scripts'), { recursive: true });
+  // The undefined identifier sits INSIDE the verdict line, exactly as a rot in
+  // drain-block-check's own template literals would -- so node prints that line,
+  // verdict literal and all, into stderr.
+  fs.writeFileSync(path.join(root, 'scripts', 'drain-block-check.mjs'), `${sourceLine}\n`);
+  return root;
+}
+
+const CRASH_ARMS = [
+  ['⛔ CLOSED (:493)', 'console.log(`\\n  ⛔ CLOSED — DO NOT DRAIN: ${leafLabel(leaf)}`);'],
+  ['⛔ BLOCKED (:365)', 'console.log(`\\n  ⛔ BLOCKED — DO NOT DRAIN: ${targetX}\\n`);'],
+  ['? UNKNOWN (:429)', 'console.log(`  ? UNKNOWN — no goal leaf matches "${targetX}".`);'],
+  ['status="merged"', 'console.log(`  ✅ CLEAR — x [leaf] status="merged" ${leafX.id}`);'],
+];
+
+test('F-2211-1: a CRASH is never classified as the verdict whose line it died on', (t) => {
+  // Parameterised across every verdict literal ON PURPOSE: the defect this
+  // replaces was recorded as harmless from a single arm, and four of five lie.
+  for (const [name, line] of CRASH_ARMS) {
+    const { rc, out } = runCliFull(crashFixture(t, line), []);
+    assert.equal(rc, 0, 'advisory never gates');
+    assert.ok(out.includes('⛔ NOT DRY'), `${name}: a crashed classifier must read NOT DRY`);
+    assert.ok(!out.includes('✅ DRY'), `${name}: a crashed classifier must NEVER print the earned banner`);
+    assert.ok(!out.includes('owe a file probe'), `${name}: a crash is not an UNKNOWN`);
+    assert.ok(out.includes('CLASSIFIER CRASHED'), `${name}: the crash must be named as a crash`);
+    assert.ok(out.includes(SUBJECT), `${name}: the affected subject must be named`);
+  }
+});
+
+test('F-2211-1: --strict gates on a crashed classifier — it is a drain, not a clearance', (t) => {
+  for (const [name, line] of CRASH_ARMS) {
+    assert.equal(runCli(crashFixture(t, line), ['--strict']), 1, `${name}: must gate like a drain`);
+  }
+});
+
+test('F-2211-1: a REAL rc=1 verdict still classifies — the cure must not break the live path', (t) => {
+  // The reverse control, and the one that matters most in practice: every closed
+  // and blocked subject on the board arrives through the catch with rc=1 and its
+  // verdict on stdout. A cure that simply ignored the catch would score green on
+  // the arms above and silently turn all 8 of them into drains.
+  const root = fixture([ANCHOR, SUBJECT]);
+  t.after(() => fs.rmSync(root, { recursive: true }));
+  fs.mkdirSync(path.join(root, 'scripts'), { recursive: true });
+  fs.writeFileSync(
+    path.join(root, 'scripts', 'drain-block-check.mjs'),
+    'console.log("  ⛔ BLOCKED — DO NOT DRAIN: x.md");\nprocess.exit(1);\n',
+  );
+  const { rc, out } = runCliFull(root, []);
+  assert.equal(rc, 0);
+  assert.ok(out.includes('✅ DRY'), 'a genuine rc=1 BLOCKED verdict is a closed subject, not a drain');
+  assert.ok(!out.includes('CLASSIFIER CRASHED'), 'a printed verdict is not a crash');
+  assert.equal(runCli(root, ['--strict']), 0, 'and it must not gate');
+});
+
+test('F-2211-1: the capture refuses stderr, and says so at the unit level too', () => {
+  // Per F-2209-1: extracting a decision creates a new seam at the CALL SITE, so
+  // the arms above spawn the CLI. These assert the same rule where it is stated.
+  const crash = classifiableCapture({
+    failed: true, stdout: '', stderr: 'x.mjs:493\nconsole.log(`⛔ CLOSED — DO NOT DRAIN`);\nReferenceError: leafLabel is not defined',
+  });
+  assert.equal(crash.crashed, true);
+  assert.equal(crash.text, '', 'stderr must never reach the classifier');
+  assert.equal(bucketOf(crash.text), 'drain', 'and the fall-through must be the loud one');
+  assert.match(crash.detail, /ReferenceError/, 'the reader is told what actually broke');
+
+  const verdict = classifiableCapture({ failed: true, stdout: '  ⛔ CLOSED — DO NOT DRAIN: x.md', stderr: '' });
+  assert.equal(verdict.crashed, false, 'rc=1 with a printed verdict is a verdict');
+  assert.equal(bucketOf(verdict.text), 'closed');
+
+  const ok = classifiableCapture({ failed: false, stdout: '  ? UNKNOWN — no goal leaf matches "x".' });
+  assert.equal(ok.crashed, false);
+  assert.equal(bucketOf(ok.text), 'unknown');
 });
