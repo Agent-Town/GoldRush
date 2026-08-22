@@ -72,6 +72,22 @@ function parse(text) {
   return { meta, body }
 }
 
+// F-2220-1 — DECLARE THE CORPUS. `DIR` is a bare repo-relative path, so it resolves against
+// `process.cwd()`. From a subdirectory the guard-keyed empty below returns [], every counter
+// stays 0, and the banner reads `CLEAN — 0 item(s)` at rc=0 — indistinguishable from a board
+// with nothing owed, in BOTH modes. Measured s2220 ON THE LIVE BOARD: from the repo root
+// `1 item(s): 1 open` (a 21-day-old attended-owed item); from `scripts/`, `CLEAN — 0 item(s)`.
+// `--strict` exits 0 there where it should exit 1.
+//
+// `corpusState` is deliberately a STRING, not a boolean (F-2212-1): a careless truthiness
+// test on a failure value reads TRUE, i.e. toward NOTICING rather than toward clearing.
+function corpusState() {
+  if (existsSync(DIR)) return 'read'
+  // Absent is NOT automatically a refusal — but this directory is TRACKED (5 files in main),
+  // so absence means we are not looking at a repo root, not that nothing is owed.
+  return existsSync('.git') || existsSync('tasks') ? 'absent' : 'unrooted'
+}
+
 function items() {
   if (!existsSync(DIR)) return []
   return readdirSync(DIR)
@@ -85,6 +101,18 @@ function items() {
       const { meta, body } = parse(readFileSync(path, 'utf8'))
       return { file: f, path, meta, body }
     })
+}
+
+// A refusal is not a report: it reaches STDOUT even under --quiet, because per F-2211-1 a
+// caller that classifies stdout reads an empty string as silence. 2 = "could not answer",
+// against 1 = "answered, and the answer refuses" — the convention drain-block-check,
+// dry-board-probe, master-shipped-classifier and review-evidence-audit already carry.
+const corpus = corpusState()
+if (corpus !== 'read') {
+  console.log(`attended-owed: ⛔ CANNOT VERIFY — corpus ${corpus}: ${DIR} not found from ${process.cwd()}.`)
+  console.log('  The CLEAN banner is a claim about every item in a TRACKED directory.')
+  console.log('  Re-run from the repository root.')
+  process.exit(2)
 }
 
 let defects = 0
