@@ -206,9 +206,11 @@ test('a missing tasks/done directory yields an empty, non-throwing result', (t) 
 
 const PROBE = path.join(import.meta.dirname, 'dry-board-probe.mjs');
 
+const SUBJECT = '20260801-010101-subject.md';
+
 /** A fixture root the CLI can run in: one subject, plus a stubbed verdict. */
 function cliFixture(t, verdict) {
-  const root = fixture([ANCHOR, '20260801-010101-subject.md']);
+  const root = fixture([ANCHOR, SUBJECT]);
   t.after(() => fs.rmSync(root, { recursive: true }));
   fs.mkdirSync(path.join(root, 'scripts'), { recursive: true });
   fs.writeFileSync(
@@ -218,14 +220,24 @@ function cliFixture(t, verdict) {
   return root;
 }
 
+/**
+ * Run the real CLI in `root` and return BOTH observables — the exit code and
+ * what it printed. F-2210-1: in advisory mode the code is constant 0, so the
+ * output is the entire verdict; a helper that discards it can only ever test
+ * half the interface.
+ */
+function runCliFull(root, args) {
+  try {
+    const out = execFileSync('node', [PROBE, ...args], { cwd: root, encoding: 'utf8', stdio: 'pipe' });
+    return { rc: 0, out };
+  } catch (e) {
+    return { rc: e.status, out: (e.stdout ?? '') + (e.stderr ?? '') };
+  }
+}
+
 /** Run the real CLI in `root` and return its exit code. */
 function runCli(root, args) {
-  try {
-    execFileSync('node', [PROBE, ...args], { cwd: root, encoding: 'utf8', stdio: 'pipe' });
-    return 0;
-  } catch (e) {
-    return e.status;
-  }
+  return runCliFull(root, args).rc;
 }
 
 const V_UNKNOWN = '? UNKNOWN — no goal leaf matches "subject.md".';
@@ -254,4 +266,63 @@ test('F-2209-1: the --strict flag is actually read — advisory stays advisory',
     runCli(cliFixture(t, V_DRAIN), []),
     'if --strict were misparsed these would be equal',
   );
+});
+
+// ---------------------------------------------------------------------------
+// F-2210-1 — the ADVISORY verdict: the layer F-2209-1's cure left uncovered,
+// and the only one scripts/fire.md §2F actually prescribes.
+//
+// F-2209-1 crossed the wiring from bucket to EXIT CODE, and its three arms above
+// are correct about it. But `exitCodeFor(b, false)` returns 0 for EVERY bucket,
+// so in advisory mode -- `node scripts/dry-board-probe.mjs`, the command §2F
+// names as the first act of a dry-board fire, and the one every fire since s2207
+// has actually run -- the exit code carries ZERO information. The whole verdict
+// travels on stdout, and after F-2209-1 not one test read a character of it:
+// `runCli` piped the output and returned only the status.
+//
+// MEASURED s2210 on scratch copies. Both defects are invisible to all 16 tests:
+//   * verdict banner made unconditional (always "✅ DRY")   : 16/16 pass, rc unchanged
+//   * 'drain' dropped from the report loop                  : 16/16 pass, rc unchanged
+// On a fixture board holding ONE REAL DRAIN the first prints, in advisory mode
+// at rc=0:  "✅ DRY — every subject resolves merged or closed. The word is
+// earned."  That is not a cosmetic regression. It is the s1061 incident verbatim
+// -- an undrained slice sitting 28 hours behind a probe that could not fail
+// loudly -- reproduced inside the tool built to prevent it. The second is worse
+// in a quieter way: the banner stays honest while the NAMES vanish, so a fire is
+// told a drain exists and is given nothing to act on.
+//
+// The rule is F-2209-1's own, turned on itself: TEST FROM WHERE THE CALLER
+// STANDS. A caller of this script in its prescribed mode observes exactly one
+// thing, and it is not the exit code.
+// ---------------------------------------------------------------------------
+
+test('F-2210-1: in ADVISORY mode the banner is the ONLY signal — it must match the bucket', (t) => {
+  // Mutual exclusion is the load-bearing half: asserting the right banner is
+  // PRESENT does not catch an unconditional banner, because a probe that always
+  // says "DRY" still says it on a dry board. The forbidden list is what reds.
+  const cases = [
+    [V_DRAIN, '⛔ NOT DRY', ['✅ DRY', 'owe a file probe']],
+    [V_UNKNOWN, 'owe a file probe', ['✅ DRY', '⛔ NOT DRY']],
+    [V_MERGED, '✅ DRY', ['⛔ NOT DRY', 'owe a file probe']],
+  ];
+  for (const [verdict, expected, forbidden] of cases) {
+    const { rc, out } = runCliFull(cliFixture(t, verdict), []);
+    assert.equal(rc, 0, 'advisory never gates — rc says nothing, so stdout says everything');
+    assert.ok(out.includes(expected), `advisory verdict must read "${expected}"`);
+    for (const f of forbidden) {
+      assert.ok(!out.includes(f), `a "${expected}" board must NOT also print "${f}"`);
+    }
+  }
+});
+
+test('F-2210-1: a drain and an UNKNOWN are NAMED, not merely counted', (t) => {
+  // A fire cannot act on a count. §2F sends it to the file named here, and the
+  // s1061 file probe needs the UNKNOWN's name for exactly the same reason.
+  const drain = runCliFull(cliFixture(t, V_DRAIN), []).out;
+  assert.match(drain, /REAL DRAINS[^\n]*: 1/, 'the drain bucket must be reported at all');
+  assert.ok(drain.includes(SUBJECT), 'the undrained filename must print, not just its count');
+
+  const unknown = runCliFull(cliFixture(t, V_UNKNOWN), []).out;
+  assert.match(unknown, /UNKNOWN[^\n]*: 1/);
+  assert.ok(unknown.includes(SUBJECT), 'the UNKNOWN filename must print — it owes a file probe');
 });
