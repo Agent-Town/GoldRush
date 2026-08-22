@@ -801,6 +801,133 @@ test('RETENTION: `superseded` excuses NOTHING — a re-orphaned gate reds as FRE
 });
 
 // ---------------------------------------------------------------------------
+// s2201 (F-2201-1): THE BATTERY-STEP CLASS. A step of a gate-shaped npm script is
+// a gate whatever its name. These arms prove the RED path by manufacturing the
+// defect, and pair each with the control that makes the red meaningful.
+// ---------------------------------------------------------------------------
+
+test('a NON-guard-named step of a gate script is admitted as a subject', () => {
+  // The step hangs off test:task-guards, which run-guards.mjs already roots. Hanging
+  // it off a NEW npm script instead would red for an unrelated reason -- that script
+  // would itself be an uncalled gate, and drag its step down with it (the arm at the
+  // top of this file). The claim here is about the STEP, so the battery must be rooted.
+  const dir = fixture({
+    scripts: {
+      ...BASE_SCRIPTS,
+      'test:task-guards': 'node scripts/task-guard-audit.mjs && node scripts/plain-step.mjs',
+    },
+    files: { ...BASE_FILES, 'scripts/plain-step.mjs': 'throw new Error("budget");\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const r = run(dir);
+  // It is CALLED, so it must not red -- admission alone is not a complaint.
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /battery steps\s+:\s+[1-9]/);
+});
+
+test('CONTROL: that same file, named by nothing and persisted nowhere, is invisible', () => {
+  // The pre-cure behaviour. Without a gate script naming it and without a
+  // batterySteps entry, a plainly-named script is not a subject at all -- which
+  // is correct, and is why the arm below needs the persisted set to bite.
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'scripts/plain-step.mjs': 'throw new Error("budget");\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.doesNotMatch(r.stdout + r.stderr, /plain-step\.mjs/);
+});
+
+test('DROPPING a persisted battery step from its battery reds as a NEW orphan', () => {
+  // THE WHOLE POINT. The file was a step (so it is in batterySteps) and is now
+  // named by nothing. Pre-cure this was byte-for-byte silent; the audit could not
+  // see a gate leave its own battery.
+  const dir = fixture({
+    scripts: BASE_SCRIPTS, // note: no `test:diet` — the step has been removed
+    files: { ...BASE_FILES, 'scripts/plain-step.mjs': 'throw new Error("budget");\n' },
+    baseline: JSON.stringify({ grandfathered: {}, batterySteps: ['scripts/plain-step.mjs'] }),
+  });
+  const r = run(dir);
+  assert.equal(r.status, 1, r.stdout + r.stderr);
+  assert.match(r.stderr, /no caller and no recorded reason/);
+  assert.match(r.stdout + r.stderr, /scripts\/plain-step\.mjs/);
+});
+
+test('a dropped battery step can be grandfathered with a reason, like any orphan', () => {
+  const dir = fixture({
+    scripts: BASE_SCRIPTS,
+    files: { ...BASE_FILES, 'scripts/plain-step.mjs': 'throw new Error("budget");\n' },
+    baseline: JSON.stringify({
+      grandfathered: { 'scripts/plain-step.mjs': 'retired deliberately: the budget moved into tsc' },
+      batterySteps: ['scripts/plain-step.mjs'],
+    }),
+  });
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /retired deliberately/);
+});
+
+test('--update-baseline is ADDITIVE: a step no script names any longer is KEPT', () => {
+  // The RETENTION LAW applied to this set, and the mechanism's own load-bearing
+  // property: a writer that rebuilt batterySteps from today's package.json would
+  // drop the entry in the same breath as the edge, restoring the silence.
+  const dir = fixture({
+    scripts: { ...BASE_SCRIPTS, 'test:diet': 'node scripts/plain-step.mjs' },
+    files: {
+      ...BASE_FILES,
+      'scripts/plain-step.mjs': 'throw new Error("budget");\n',
+      'scripts/long-gone.mjs': 'throw new Error("was a step once");\n',
+    },
+    baseline: JSON.stringify({ grandfathered: {}, batterySteps: ['scripts/long-gone.mjs'] }),
+  });
+  const w = run(dir, '--update-baseline');
+  assert.equal(w.status, 0, w.stdout + w.stderr);
+  const written = JSON.parse(
+    fs.readFileSync(path.join(dir, 'scripts', 'gate-caller-baseline.json'), 'utf8'),
+  );
+  assert.ok(
+    written.batterySteps.includes('scripts/long-gone.mjs'),
+    'the historical entry was dropped: ' + JSON.stringify(written.batterySteps),
+  );
+  assert.ok(
+    written.batterySteps.includes('scripts/plain-step.mjs'),
+    'today\'s step was not recorded: ' + JSON.stringify(written.batterySteps),
+  );
+});
+
+test('a step of a NON-gate script (dev, census) is never admitted', () => {
+  // The flood check. GATE_NAME still decides which npm scripts contribute steps,
+  // so a human tool's helper does not become a ratcheted subject.
+  const dir = fixture({
+    scripts: { ...BASE_SCRIPTS, dev: 'node scripts/helper.mjs', census: 'node scripts/helper.mjs' },
+    files: { ...BASE_FILES, 'scripts/helper.mjs': 'console.log("human tool");\n' },
+    baseline: EMPTY_BASELINE,
+  });
+  const w = run(dir, '--update-baseline');
+  assert.equal(w.status, 0, w.stdout + w.stderr);
+  const written = JSON.parse(
+    fs.readFileSync(path.join(dir, 'scripts', 'gate-caller-baseline.json'), 'utf8'),
+  );
+  assert.ok(
+    !written.batterySteps.includes('scripts/helper.mjs'),
+    'a non-gate script contributed a step: ' + JSON.stringify(written.batterySteps),
+  );
+});
+
+test('REGRESSION: the real repo persists asset-diet.mjs as a battery step', () => {
+  // The instance that produced the finding. If a future edit drops this entry the
+  // hole re-opens silently, which is precisely how it went unseen for so long.
+  const written = JSON.parse(
+    fs.readFileSync(path.join(REAL_ROOT, 'scripts', 'gate-caller-baseline.json'), 'utf8'),
+  );
+  assert.ok(
+    Array.isArray(written.batterySteps) && written.batterySteps.includes('scripts/asset-diet.mjs'),
+    'asset-diet.mjs is no longer a persisted battery step',
+  );
+});
+
+// ---------------------------------------------------------------------------
 // POSITIVE CONTROL — the arms above all run on fixtures, so at least one must
 // prove the script works on the tree it actually gates (s1252's harness lesson:
 // validate the harness before believing its numbers).

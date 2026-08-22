@@ -101,6 +101,60 @@ const SCRATCH_FILE = /^scripts\/tmp-s\d+-/;
 // convention the repo already uses for exactly seven files.
 const TEST_FILE = (f) => f.endsWith('.test.mjs') || f.endsWith('.test.sh') || /(^|\/)test-[\w.-]*\.(mjs|sh)$/.test(f);
 
+// s2201 (F-2201-1): A STEP OF A BATTERY IS A GATE, WHATEVER ITS NAME. The three classes
+// above admit by NAME (GUARDISH_FILE's six words) or by FORM (the test-file vocabulary) --
+// so a gate whose name says neither is not a subject at all, and DROPPING IT FROM ITS
+// BATTERY CHANGES NOTHING THIS AUDIT PRINTS. Measured s2201 across all 25 gate-shaped npm
+// scripts and their ~130 direct steps, EXACTLY ONE file was in that state:
+// scripts/asset-diet.mjs, a step of both `build` and `build:release`, which throws on six
+// separate budget/contract violations (Herald byte ceilings, the 14-derivative roster,
+// stale PNG references) and runs inside `npm run build` -- part of EVERY drain's gate
+// battery per fire.md section 3. Its sibling step in the same npm script,
+// assert-release-build.mjs, IS a subject purely because its name contains "assert".
+//
+// PROVEN BY MANUFACTURING THE DEFECT -- and the first two attempts at that proof were BOTH
+// invalid, which is worth recording because each failed in a way that still LOOKED like
+// evidence (F-2200-2's lesson generalised: a mutant proves nothing unless the observable it
+// moves is not determined by something else):
+//   ATTEMPT 1, invalid: dropped assert-release-build.mjs from build:release as a control.
+//     SILENT -- but not because the audit is blind to it; four other callers still reached
+//     it. A control that cannot bite discriminates nothing.
+//   ATTEMPT 2, invalid: dropped asset-diet.mjs from build AND build:release and read the
+//     silence as proof it was unreachable. It was NOT unreachable: vite.config.ts:24 READS
+//     the file to hash it into a cache key, and the edge vocabulary counts that mention as
+//     a call. The in-degree probe that said "2 callers" simply never walked *.config.ts.
+//   VALID EXPERIMENT: remove EVERY edge in the vocabulary -- both npm steps and the config
+//     read -- then run the same tree through the pre-cure and post-cure source:
+//       PRE-CURE   rc=0, orphans 8, asset-diet.mjs named nowhere.          SILENT.
+//       POST-CURE  rc=1, orphans 9, "FAIL - 1 gate(s)" naming asset-diet.  IT SPEAKS.
+//     Control on the guard-NAMED side, in-degree 1, cut from its only caller:
+//       check-power-graph-budget.mjs -> rc=1, orphans 8 -> 9, both before and after.
+//
+// ⚠️ KNOWN LIMIT, recorded rather than quietly fixed: `reached` means "mentioned by something
+// in the edge vocabulary", not "run by a battery". Because vite.config.ts hashes
+// asset-diet.mjs, cutting it from `build` alone still reads as reached and stays green. This
+// cure closes the SUBJECTHOOD hole -- the file can now orphan at all, which it previously
+// could not -- and does not claim to close that one. See F-2201-2.
+//
+// WHY THIS IS STICKY AND NOT SIMPLY "admit what a battery calls" -- the obvious cure is
+// VACUOUS. If subjecthood were derived from the CURRENT graph, a file would be admitted
+// exactly when it has a caller, so it could never be an orphan: cut the edge and it stops
+// being a subject in the same breath, and the audit falls silent again. So the set is
+// PERSISTED in the baseline under `batterySteps`: once a file has been a battery step, it
+// stays a subject until someone records why it should not be. Cut asset-diet from both
+// scripts now and it remains a subject, becomes unreached, and reds as a FRESH ORPHAN.
+// It cannot flood -- the set is bounded by what package.json's own gate scripts name, and
+// today it admits exactly ONE net new subject and mints ZERO fresh orphans.
+const BATTERY_STEP_RE = /scripts\/[\w.-]+\.(?:mjs|sh)/g;
+function batteryStepsOf(scriptMap) {
+  const out = new Set();
+  for (const [name, body] of Object.entries(scriptMap)) {
+    if (!GATE_NAME.test(name) || typeof body !== 'string') continue;
+    for (const m of body.matchAll(BATTERY_STEP_RE)) out.add(m[0]);
+  }
+  return out;
+}
+
 // Gates whose callers are structurally certain. If the resolver cannot reach
 // THESE, it is broken and every other verdict it prints is worthless.
 const ANCHORS = ['npm:test:node-guards', 'npm:test:task-guards', 'scripts/run-guards.mjs'];
@@ -330,6 +384,18 @@ if (brokenAnchors.length && !REPORT) {
 }
 
 // --- classify ------------------------------------------------------------
+// s2201 (F-2201-1): read the persisted battery-step set EARLY, tolerantly. The hard
+// refusals on a missing/unreadable baseline live below and are deliberately left where
+// they are -- this read must not pre-empt them, so an absent file yields an empty set
+// and the classification falls back to today's steps.
+let persistedBatterySteps = [];
+try {
+  const parsedEarly = JSON.parse(fs.readFileSync(BASELINE, 'utf8'));
+  if (Array.isArray(parsedEarly.batterySteps)) persistedBatterySteps = parsedEarly.batterySteps;
+} catch {
+  /* the baseline refusal below owns this case */
+}
+
 const subjects = [];
 for (const name of Object.keys(scripts)) {
   if (!GATE_NAME.test(name)) continue;
@@ -351,6 +417,15 @@ for (const f of scriptFiles) {
 }
 for (const f of testFiles) {
   subjects.push({ key: f, kind: 'test file', via: reached.get(f) || null });
+}
+// s2201 (F-2201-1): the battery-step class -- current steps UNION the persisted ones, so
+// subjecthood survives the edge being cut. Anything already admitted above keeps its own
+// kind; this only adds what the name-based and form-based classes missed.
+const claimed = new Set(subjects.map((s) => s.key));
+for (const f of [...batteryStepsOf(scripts), ...persistedBatterySteps].sort()) {
+  if (claimed.has(f) || SCRATCH_FILE.test(f)) continue;
+  claimed.add(f);
+  subjects.push({ key: f, kind: 'battery step', via: reached.get(f) || null });
 }
 const orphans = subjects.filter((s) => !s.via);
 
@@ -379,6 +454,7 @@ console.log('  scripts/ files      : ' + scriptFiles.length + ' (' + subjects.fi
 // serves is a ROLE, the formats it forgot are the blind spot." It forgot `test-<thing>.mjs`.
 // The untracked arm used the bare suffixes too, so it disagreed with the tracked arm beside it.
 console.log('  test files (role)   : ' + testFiles.length + ' (' + testFiles.filter((f) => f.endsWith('.sh')).length + ' bash)' + (INCLUDE_UNTRACKED ? ' (+' + untracked.filter(TEST_FILE).length + ' untracked)' : ''));
+console.log('  battery steps       : ' + subjects.filter((s) => s.kind === 'battery step').length + ' admitted (' + persistedBatterySteps.length + ' persisted)');
 console.log('  law-called roots    : ' + lawRoots.size + (lawRoots.size ? '   ' + [...lawRoots.keys()].sort().join(', ') : '   (none cited)'));
 console.log('  config.ts read      : ' + configFiles.length + '   .github/ files: ' + workflowFiles.length);
 console.log('  edge vocabulary     : ' + EDGE_SOURCES.join(', '));
@@ -414,13 +490,25 @@ if (UPDATE) {
   const superseded = { ...(prevFile.superseded || {}) };
   for (const [key, reason] of Object.entries(prev)) if (!(key in obj)) superseded[key] = reason;
   const ordered = Object.fromEntries(Object.keys(superseded).sort().map((k) => [k, superseded[k]]));
-  fs.writeFileSync(BASELINE, JSON.stringify({ grandfathered: obj, superseded: ordered }, null, 2) + '\n');
+  // s2201 (F-2201-1): ADDITIVE, never rebuilt from today's package.json. The whole point of
+  // the class is that it outlives the edge -- a writer that dropped a file when its npm
+  // script stopped naming it would restore the exact silence this cure exists to end, and
+  // would also destroy the record, which the RETENTION LAW forbids in the same breath.
+  // A file leaves this set only by a human editing the baseline, and then it must be
+  // grandfathered with a reason like every other excused orphan.
+  const batterySteps = [...new Set([...(prevFile.batterySteps || []), ...batteryStepsOf(scripts)])].sort();
+  fs.writeFileSync(
+    BASELINE,
+    JSON.stringify({ grandfathered: obj, superseded: ordered, batterySteps }, null, 2) + '\n',
+  );
   console.log(
     'gate-caller-audit: baseline written — ' +
       Object.keys(obj).length +
       ' grandfathered orphan(s), ' +
       Object.keys(ordered).length +
-      ' superseded (kept for history)',
+      ' superseded (kept for history), ' +
+      batterySteps.length +
+      ' battery step(s)',
   );
   process.exit(0);
 }
