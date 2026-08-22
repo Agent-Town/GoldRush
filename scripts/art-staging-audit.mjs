@@ -359,6 +359,34 @@ for (const line of git('status', '--porcelain', '--untracked-files=all', '--', '
 //     it. Measured when found: 28.33 MB of freshly salvaged assets/raw/originals/
 //     sat in a commit 6 ahead of origin/main and the audit printed LOCAL-ONLY 0.
 //     Asking `origin/main..main` is O(unpushed commits), not O(6.5k tracked files).
+//
+// F-2216-1 (s2216) — THIS CURE COULD SILENTLY RESTORE THE FALSE ZERO IT CURED.
+// The catch below used to be bare, justified by a comment reading "no origin, or
+// no origin/main remote-tracking ref yet — nothing to compare against, and a
+// missing remote is already the loudest possible signal." Both halves are wrong:
+//   1. The catch fires when the REMOTE IS PRESENT and only the `origin/main`
+//      REF is unavailable. Then `offsite` is still populated from the other
+//      remote-tracking refs (137 of them on this repo), so NOTHING is loud —
+//      the main-tree files simply never enter `scan` and appear in no bucket.
+//   2. It also fires for any other failure of that one call (a fork/spawn
+//      failure at ~2,000 spawns a run, git dying on the plumbing call), which
+//      the comment never contemplated. F-2212-1's class: a handler correct for
+//      its named cause and blind to every other one.
+// PROVEN BY MANUFACTURING on a scratch repo whose ground truth was one unpushed
+// asset (LOCAL-ONLY 1). Healthy git: `LOCAL-ONLY 1 files`, names it, `--strict`
+// rc=1. Delete only refs/remotes/origin/main, remote and other refs intact:
+// `LOCAL-ONLY 0 files`, `--strict` rc=0, `--json` localOnlyFiles 0 — all THREE
+// machine channels byte-identical to a genuinely safe board. Same for a
+// transient failure of that one call. The only dissent was an unlabelled line
+// of git's own stderr, which no caller classifies and `--json` drops entirely.
+// That is F-2208-1's shape — "could not answer" and "the answer is clean"
+// sharing one verdict — sitting inside the cure for this audit's THIRD false
+// zero, and it is the number the ART-SLOT LAW makes every dry-board fire report
+// to the owner (six consecutive fires have reported LOCAL-ONLY 0).
+// CURE: declare the source's coverage, exactly as F-2196-1 declares the scan's
+// boundary forty lines up. `mainTreeSource` is a STRING for F-2212-1's reason —
+// a careless truthiness test on a FAILURE value is true, i.e. toward declaring.
+let mainTreeSource = 'ok';
 try {
   const unpushed = git('diff', '--name-only', 'origin/main..main', '--', 'assets/');
   for (const line of unpushed.split('\n')) {
@@ -370,9 +398,25 @@ try {
     scan.push({ file: abs, mainPath: rel, area: 'main-tree' });
   }
 } catch {
-  // no origin, or no origin/main remote-tracking ref yet — nothing to compare
-  // against, and a missing remote is already the loudest possible signal.
+  // BOTH outcomes blind this bucket, so both are declared. Naming which one
+  // tells the reader which act is owed — fetch/push, versus investigate. The
+  // discriminator is the one F-2213-1 measured: `rev-parse --verify --quiet`
+  // exits 1 when the ref simply is not there, and that is the only non-zero
+  // code that means anything here.
+  try {
+    git('rev-parse', '--verify', '--quiet', 'origin/main^{commit}');
+    mainTreeSource = 'unverifiable';
+  } catch {
+    mainTreeSource = 'absent-ref';
+  }
 }
+const MAIN_TREE_SOURCE_NOTE = {
+  ok: 'committed-but-unpushed source: ran (this bucket was asked)',
+  'absent-ref':
+    '⛔ UNDER-REPORTED — origin/main is unavailable, so committed-but-unpushed assets were never asked about. This number is a FLOOR, not a verdict. Fetch or push, then re-run.',
+  unverifiable:
+    '⛔ CANNOT VERIFY — the committed-but-unpushed probe FAILED with origin/main present. This number is a FLOOR, not a verdict. Investigate before reporting it.',
+};
 
 const untracked = [];
 const exposed = [];
@@ -450,6 +494,9 @@ if (process.argv.includes('--json')) {
         // F-2196-1: the boundary, machine-readable too — a consumer that only
         // reads atRiskFiles must still be able to see what was never scanned.
         notAudited: unauditedNeighbours(),
+        // F-2216-1: same principle for the OTHER headline. A consumer reading
+        // localOnlyFiles must be able to see whether that bucket was asked.
+        mainTreeSource,
       },
       null,
       2,
@@ -489,6 +536,11 @@ if (process.argv.includes('--json')) {
   console.log(
     `\nLOCAL-ONLY (in git HERE, but on no origin ref — one push from safe): ${localOnly.length} files, ${kb(total(localOnly))}`,
   );
+  // F-2216-1: ALWAYS printed, including on the happy path. A declaration that
+  // appears only on failure cannot distinguish "asked and found nothing" from
+  // "never asked" — which is precisely the §4 desk-header precedent: if the desk
+  // is genuinely empty, still write the header.
+  console.log(`  ${MAIN_TREE_SOURCE_NOTE[mainTreeSource]}`);
   list(localOnly, (r) => `${r.name}  ${kb(r.size)}`);
   // F-2185-1 (s2185): print the BYTES, not merely the file count. "760 files"
   // reads like bookkeeping; "587.64 MB" reads like the largest bucket on the
@@ -506,4 +558,18 @@ if (process.argv.includes('--json')) {
 }
 
 // Default exit is always 0: a routine audit must never block a fire's drain.
-if (process.argv.includes('--strict') && atRisk.length + localOnly.length > 0) process.exit(1);
+// That intent is real and an over-general cure destroys it, so F-2216-1 changes
+// ONLY --strict — the one mode whose whole purpose is to turn the verdict into
+// an exit code, and the exact arm the open F-2159-1 desk question proposes to
+// root in `test:ledger-guards`.
+//
+// The convention is the corpus's own, carried by drain-block-check,
+// dry-board-probe, master-shipped-classifier and review-evidence-audit:
+//   2 = could not answer        1 = answered, and the answer refuses
+// "Could not answer" is tested FIRST and wins: when the source did not run the
+// counts below are a FLOOR, so a 1 taken off them would assert a completeness
+// this run never had.
+if (process.argv.includes('--strict')) {
+  if (mainTreeSource !== 'ok') process.exit(2);
+  if (atRisk.length + localOnly.length > 0) process.exit(1);
+}
