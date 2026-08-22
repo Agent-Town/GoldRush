@@ -42,6 +42,17 @@
  *     and they are covered automatically.
  *   - A NEW pointer is a RED until it is baselined. That is deliberate: adding a coordinate
  *     to a law file is exactly when someone should have verified it once.
+ *   - THE SCAN'S OWN EDGE, now PRINTED rather than merely written here (F-2197-1, s2197).
+ *     SURFACES is a closed, hand-maintained list, so a law surface added to the repo is
+ *     invisible until someone edits this file — and for six surfaces nothing ever said so.
+ *     Every run now NAMES the law-surface-shaped files it did not scan, with the citation
+ *     counts it is declining to check, and prompts for a reason when one is undeclared.
+ *     It is ADVISORY and exit-neutral BY DESIGN: STATUS.md alone carries ~2400 citations,
+ *     almost all inside frozen handoff archives whose coordinates are deliberately stale,
+ *     so widening the scan would red forever and be excused into uselessness inside a week.
+ *     The lesson is F-2196-1's, one level up: a boundary declared in a COMMENT — like the
+ *     KNOWN GAP above — is one only its author sees; a boundary the instrument PRINTS is
+ *     one every reader sees.
  *
  * usage:
  *   node scripts/law-pointer-guard.mjs            # check (exit 1 on drift/new/unresolvable)
@@ -75,6 +86,46 @@ const SURFACES = [
 ];
 const GOAL_LEDGER = 'tasks/goals.json';
 const DRAIN_GUARD = 'scripts/drain-block-check.mjs';
+
+// s2197 (F-2197-1): SURFACES is a CLOSED, hand-maintained list. A law surface added to the
+// repo — a fourth skill, a new root .md — is invisible here until someone edits this file,
+// and nothing ever says so. That is the F-2196-1 shape one level up: this guard's header
+// already declares a "KNOWN GAP" in prose, and prose is a boundary only its author sees.
+// So the guard NAMES what it did not scan, every run, with the citation counts it is
+// declining to check. It stays ADVISORY and never moves the exit code: widening the scan
+// is the thing that must not happen by accident (see STATUS.md's reason below).
+//
+// Excluded by NAME with a reason. Never widen this by pattern.
+const NOT_SCANNED = new Map([
+  ['STATUS.md', 'Its lettered `s9<letter>` law bullets ARE live law (fire.md §0 orders every fire to read them), but almost every citation it carries sits in frozen `- **sNNNN handoff` archives whose coordinates are DELIBERATELY stale — the RETENTION LAW restates rather than deletes, so the drift IS the provenance. Guarding those would red forever and be excused into uselessness inside a week (F-1460-1, the `cross-engine` fate). Measured s2197: both live law-bullet pointers were accurate.'],
+]);
+
+/** The three families SURFACES draws from. A new law surface appears in one of these. */
+function unscannedSurfaces() {
+  const listing = (dir) => { try { return fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true }); } catch { return []; } };
+  const candidates = [
+    ...listing('').filter((e) => e.isFile() && e.name.endsWith('.md')).map((e) => e.name),
+    ...listing('scripts').filter((e) => e.isFile() && e.name.endsWith('.md')).map((e) => `scripts/${e.name}`),
+    ...listing('.claude/skills').filter((e) => e.isDirectory()).map((e) => `.claude/skills/${e.name}/SKILL.md`),
+  ];
+  const out = [];
+  for (const rel of candidates) {
+    if (SURFACES.includes(rel)) continue;
+    let src;
+    try { src = fs.readFileSync(path.join(ROOT, rel), 'utf8'); } catch { continue; }
+    // Split live LAW bullets from frozen handoff archives, derived from the file itself
+    // rather than transcribed — a hardcoded count is a defect awaiting the next handoff.
+    let live = 0, frozen = 0;
+    for (const line of src.split('\n')) {
+      const n = [...line.matchAll(new RegExp(POINTER.source, 'g'))].length;
+      if (!n) continue;
+      if (/^- \*\*s\d+[a-z]*\s/.test(line)) { if (/^- \*\*s\d+[a-z]+\s/.test(line)) live += n; else frozen += n; }
+      else frozen += n;
+    }
+    out.push({ rel, live, frozen, total: live + frozen });
+  }
+  return out;
+}
 
 // Excluded by NAME with a reason. Never widen this by pattern.
 const ILLUSTRATIVE = new Map([
@@ -263,6 +314,20 @@ for (const p of pointers) {
 
 console.log('law-pointer-guard — do the law surfaces still point at what they claim?');
 console.log(`  surfaces      : ${SURFACES.length + 1}`);
+
+// ADVISORY, always exit-neutral. This declares the edge of the scan so a NEW law surface is
+// visible on the next run rather than after N days (F-2197-1, after F-2196-1).
+const unscanned = unscannedSurfaces();
+if (unscanned.length) {
+  console.log(`  NOT SCANNED   : ${unscanned.length} law-surface-shaped file(s) outside the closed SURFACES list —`);
+  for (const u of unscanned) {
+    const split = u.total ? `${u.total} citation(s)${u.live ? `, ${u.live} in LIVE law bullets` : ''}` : 'no citations — exclusion costs nothing';
+    console.log(`      ${u.rel}  (${split})`);
+    const why = NOT_SCANNED.get(u.rel);
+    if (why) console.log(`        reason: ${why}`);
+    else if (u.total) console.log('        reason: NONE DECLARED — if this is law, add it to SURFACES; if not, add it to NOT_SCANNED with a reason.');
+  }
+}
 console.log(`  pointers      : ${pointers.length}  (checked ${checked}, illustrative ${pointers.filter((p) => p.state === 'illustrative').length}, known-rotten ${pointers.filter((p) => p.state === 'known-rotten').length})`);
 
 if (problems.length) {

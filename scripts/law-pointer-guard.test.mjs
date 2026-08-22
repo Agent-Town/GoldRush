@@ -125,6 +125,99 @@ test('MARKDOWN TARGET: a law surface citing another .md by coordinate is checked
   assert.match(r.stdout, /POINTER DRIFT/);
 });
 
+// ---------------------------------------------------------------------------
+// F-2197-1 — SURFACES is a CLOSED list, and nothing ever said so. These tests are about
+// the BOUNDARY of the scan rather than the pointers inside it. The red path is proven by
+// MANUFACTURING the defect (a pre-cure mutant), never by reading a green: a passing guard
+// never executes its own declaration path.
+// ---------------------------------------------------------------------------
+
+/** Pre-cure mutant: the declaration neutered, everything else byte-identical. */
+function mutantWithoutDeclaration(t) {
+  const src = fs.readFileSync(SCRIPT, 'utf8');
+  const neutered = src.replace('const unscanned = unscannedSurfaces();', 'const unscanned = [];');
+  assert.notEqual(neutered, src, 'the mutant must actually differ — otherwise this proves nothing');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-law-pointer-mutant-'));
+  const p = path.join(dir, 'law-pointer-guard.mjs');
+  fs.writeFileSync(p, neutered);
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  return p;
+}
+
+test('BOUNDARY: a NEW law surface outside the closed SURFACES list is NAMED (pre-cure it is invisible)', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  // The exact scenario the method predicts: a fourth skill appears, carrying a coordinate
+  // nobody is checking. It must not require a fire to notice by eye.
+  fs.mkdirSync(path.join(dir, '.claude', 'skills', 'new-ritual'), { recursive: true });
+  fs.writeFileSync(
+    path.join(dir, '.claude', 'skills', 'new-ritual', 'SKILL.md'),
+    'Always confirm the epitaph at `scripts/target.sh:3` before draining.\n',
+  );
+
+  const pre = spawnSync('node', [mutantWithoutDeclaration(t), '--root', dir], { encoding: 'utf8' });
+  assert.equal(pre.status, 0, pre.stdout);
+  assert.doesNotMatch(pre.stdout, /NOT SCANNED/, 'PRE-CURE: the boundary is invisible — this is the defect');
+  assert.doesNotMatch(pre.stdout, /new-ritual/, 'PRE-CURE: the unscanned surface is never named');
+
+  const r = run(dir);
+  assert.equal(r.status, 0, 'the declaration is ADVISORY — it must not move the exit code');
+  assert.match(r.stdout, /NOT SCANNED/);
+  assert.match(r.stdout, /new-ritual\/SKILL\.md/, 'the new law surface must be named');
+  assert.match(r.stdout, /NONE DECLARED/, 'an undeclared surface WITH citations must say so');
+});
+
+test('BOUNDARY: a DECLARED exclusion prints its reason instead of the undeclared prompt', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  // STATUS.md is the one named exclusion: live law bullets, frozen handoff archives.
+  fs.writeFileSync(path.join(dir, 'STATUS.md'), [
+    'Last updated: fixture line-1',
+    '- **s9au MIGRATION: the model is set at `scripts/target.sh:1`',
+    '- **s2100 handoff (line-1 archive):** we cited `scripts/target.sh:2` back then',
+    '',
+  ].join('\n'));
+  const r = run(dir);
+  assert.equal(r.status, 0, 'a declared exclusion must stay exit-neutral');
+  assert.match(r.stdout, /STATUS\.md {2}\(2 citation\(s\), 1 in LIVE law bullets\)/, r.stdout);
+  assert.match(r.stdout, /RETENTION LAW/, 'the reason must be printed, not merely implied');
+  assert.doesNotMatch(r.stdout, /STATUS\.md[\s\S]{0,400}?NONE DECLARED/, 'a declared file must not be prompted for a reason');
+});
+
+test('BOUNDARY: the live/frozen split is DERIVED from the file, so a new handoff cannot rot it', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  const base = ['Last updated: fixture line-1', '- **s9au LAW: `scripts/target.sh:1`', ''];
+  fs.writeFileSync(path.join(dir, 'STATUS.md'), base.join('\n'));
+  assert.match(run(dir).stdout, /STATUS\.md {2}\(1 citation\(s\), 1 in LIVE law bullets\)/);
+  // Append a handoff archive: total moves, the LIVE count must NOT.
+  base.splice(2, 0, '- **s2196 handoff (line-1 archive):** `scripts/target.sh:2` and `scripts/target.sh:3`');
+  fs.writeFileSync(path.join(dir, 'STATUS.md'), base.join('\n'));
+  assert.match(run(dir).stdout, /STATUS\.md {2}\(3 citation\(s\), 1 in LIVE law bullets\)/, 'frozen archives must not inflate the LIVE count');
+});
+
+test('BOUNDARY: a law-surface-shaped file with NO citations is reported as costless, not as a problem', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  fs.writeFileSync(path.join(dir, 'NOTES.md'), 'prose with no coordinates at all\n');
+  const r = run(dir);
+  assert.equal(r.status, 0);
+  assert.match(r.stdout, /NOTES\.md {2}\(no citations — exclusion costs nothing\)/);
+  assert.doesNotMatch(r.stdout, /NOTES\.md[\s\S]{0,200}?NONE DECLARED/, 'no citations means nothing is owed');
+});
+
+test('BOUNDARY: a file already IN SURFACES is never named as unscanned, and a red still reds', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  assert.doesNotMatch(run(dir).stdout, /CLAUDE\.md {2}\(/, 'a scanned surface must not appear in the NOT SCANNED list');
+  // And the declaration must not mask a genuine pointer red.
+  fs.writeFileSync(path.join(dir, 'NOTES.md'), 'prose with no coordinates at all\n');
+  fs.writeFileSync(path.join(dir, 'CLAUDE.md'), LAW_OK.replace('target.sh:3', 'target.sh:2'));
+  const r = run(dir);
+  assert.equal(r.status, 1, 'an advisory block must never suppress a real failure');
+  assert.match(r.stdout, /NOT SCANNED/, 'and the boundary is still declared on a failing run');
+});
+
 test('GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf', (t) => {
   const goals = {
     version: 1,
