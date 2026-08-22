@@ -75,7 +75,7 @@ type StoredRow = ScoreRow & {
   stack?: SelfDeclaredStack;
   party?: SubmittedParty;
   tape?: JsonRecord;
-  assay?: 'pending' | 'verified' | 'rejected';
+  assay?: 'pending' | 'verified' | 'rejected' | 'unassayable';
   assayedAt?: number;
   assayHash?: string;
   assayReason?: string;
@@ -223,13 +223,15 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     const body = await readJson(context.request);
     const locator = isRecord(body.locator) ? body.locator : null;
     const reason = body.reason === undefined ? undefined : typeof body.reason === 'string' && body.reason.length <= MAX_ASSAY_REASON_LENGTH ? body.reason : null;
+    const replayedHash = typeof body.replayedHash === 'string' && ASSAY_HASH.test(body.replayedHash) ? body.replayedHash : null;
     if (!hasOnlyKeys(body, ASSAY_VERDICT_KEYS) || !locator || !hasOnlyKeys(locator, ASSAY_LOCATOR_KEYS)
-      || (body.verdict !== 'verified' && body.verdict !== 'rejected')
-      || typeof body.replayedHash !== 'string' || !ASSAY_HASH.test(body.replayedHash)
+      || (body.verdict !== 'verified' && body.verdict !== 'rejected' && body.verdict !== 'unassayable')
+      || (body.verdict === 'unassayable' ? body.replayedHash !== undefined : replayedHash === null)
       || reason === null || typeof locator.epochId !== 'string' || typeof locator.contractId !== 'string'
       || typeof locator.tapeId !== 'string' || locator.tapeId.length === 0 || locator.tapeId.length > MAX_REEL_ID_LENGTH
       || typeof locator.rowId !== 'string' || !ASSAY_ROW_ID.test(locator.rowId)
-      || !knownContract(locator.epochId, locator.contractId)) {
+      || !knownContract(locator.epochId, locator.contractId)
+      || (body.verdict === 'unassayable' && !reason)) {
       return error(cors, 400, 'bad_verdict', 'Assay verdict not accepted.');
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
@@ -237,15 +239,17 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     const rows = await readBoard(kv, locator.epochId, locator.contractId);
     const pending = rows.filter((candidate) => candidate.assay === 'pending'
       && candidate.tape?.id === locator.tapeId && assayRowId(candidate) === locator.rowId);
-    const row = pending.find((candidate) => body.verdict === 'rejected' || candidate.tape?.eventLogHash === body.replayedHash);
+    const row = pending.find((candidate) => body.verdict !== 'verified' || candidate.tape?.eventLogHash === replayedHash);
     if (!row && pending.length > 0) {
       return error(cors, 400, 'bad_verdict', 'Verified replay hash does not match the submitted tape.');
     }
     if (!row) return error(cors, 404, 'assay_not_found', 'Pending assay not found.');
     row.assay = body.verdict;
     row.assayedAt = Date.now();
-    row.assayHash = body.replayedHash;
-    if (body.verdict === 'rejected' && reason) row.assayReason = reason;
+    delete row.assayHash;
+    if (replayedHash !== null) row.assayHash = replayedHash;
+    delete row.assayReason;
+    if ((body.verdict === 'rejected' || body.verdict === 'unassayable') && reason) row.assayReason = reason;
     await kv.put(boardKey(locator.epochId, locator.contractId), JSON.stringify(retainUnranked(rows)));
     return json(cors, { ok: true, locator, assay: row.assay });
   });
@@ -667,7 +671,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   const tape = value.tape === undefined ? undefined : validateTape(value.tape, contractId, value.seed, difficulty);
   const submittedAt = integerInRange(value.submittedAt, 0, Number.MAX_SAFE_INTEGER);
   const assay = value.assay === undefined && tape ? 'pending'
-    : value.assay === 'pending' || value.assay === 'verified' || value.assay === 'rejected' ? value.assay : undefined;
+    : value.assay === 'pending' || value.assay === 'verified' || value.assay === 'rejected' || value.assay === 'unassayable' ? value.assay : undefined;
   const assayedAt = value.assayedAt === undefined ? undefined : integerInRange(value.assayedAt, 0, Number.MAX_SAFE_INTEGER);
   const assayHash = typeof value.assayHash === 'string' && ASSAY_HASH.test(value.assayHash) ? value.assayHash : undefined;
   const assayReason = typeof value.assayReason === 'string' && value.assayReason.length <= MAX_ASSAY_REASON_LENGTH ? value.assayReason : undefined;
@@ -677,7 +681,8 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     || (value.assayedAt !== undefined && assayedAt === null)
     || (value.assayHash !== undefined && !assayHash)
     || (value.assayReason !== undefined && assayReason === undefined)
-    || ((assay === 'verified' || assay === 'rejected') && (assayedAt === undefined || assayHash === undefined))) return null;
+    || ((assay === 'verified' || assay === 'rejected') && (assayedAt === undefined || assayHash === undefined))
+    || (assay === 'unassayable' && (assayedAt === undefined || assayHash !== undefined || assayReason === undefined))) return null;
   return {
     ...score,
     profileName,
@@ -703,7 +708,7 @@ function rankedRows(rows: StoredRow[]): StoredRow[] {
 }
 
 function isRankedRow(row: StoredRow): boolean {
-  return row.tape !== undefined && row.assay !== 'rejected';
+  return row.tape !== undefined && row.assay !== 'rejected' && row.assay !== 'unassayable';
 }
 
 function retainUnranked(rows: StoredRow[]): StoredRow[] {

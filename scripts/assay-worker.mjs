@@ -20,10 +20,10 @@ const replayScript = path.resolve(process.env.ASSAY_REPLAY_SCRIPT ?? path.join(r
 const pollMs = positiveInteger(process.env.ASSAY_POLL_MS, 15_000);
 const initialBackoffMs = positiveInteger(process.env.ASSAY_BACKOFF_INITIAL_MS, pollMs);
 const maxBackoffMs = positiveInteger(process.env.ASSAY_BACKOFF_MAX_MS, 300_000);
+const maxAttempts = positiveInteger(process.env.ASSAY_MAX_ATTEMPTS, 3);
 const queueUrl = new URL('/api/standings/assay-queue?limit=100', base);
 const verdictUrl = new URL('/api/standings/assay-verdict', base);
 const headers = { 'x-assay-key': secret };
-const noReplayHash = 'fnv1a32:00000000';
 let stopping = false;
 
 process.on('SIGTERM', () => { stopping = true; });
@@ -72,32 +72,50 @@ function outcomeMismatch(claim, actual) {
 async function assay(row) {
   const startedAt = performance.now();
   const claimedHash = typeof row?.tape?.eventLogHash === 'string' ? row.tape.eventLogHash : null;
-  let replayedHash = noReplayHash;
-  let verdict = 'rejected';
+  let replayedHash = null;
+  let verdict;
   let reason;
+  let result;
 
-  try {
-    if (!row?.tape || typeof row.tape !== 'object') throw new Error('malformed tape');
-    if (row.tape.version !== 2) throw new Error(row.tape.version === 1 ? 'legacy tape v1 is unverifiable' : 'malformed tape version');
-    const result = await replay(row.tape);
-    if (typeof result?.eventLogHash !== 'string' || !/^fnv1a32:[a-f0-9]{8}$/.test(result.eventLogHash)) {
-      throw new Error('instrument returned no valid eventLogHash');
+  let backoffMs = initialBackoffMs;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      if (!row?.tape || typeof row.tape !== 'object') throw new Error('malformed tape');
+      if (row.tape.version !== 2) throw new Error(row.tape.version === 1 ? 'legacy tape v1 is unverifiable' : 'malformed tape version');
+      const attemptResult = await replay(row.tape);
+      if (typeof attemptResult?.eventLogHash !== 'string' || !/^fnv1a32:[a-f0-9]{8}$/.test(attemptResult.eventLogHash)) {
+        throw new Error('instrument returned no valid eventLogHash');
+      }
+      result = attemptResult;
+      reason = undefined;
+      break;
+    } catch (error) {
+      reason = error instanceof Error ? error.message : String(error);
+      if (stopping) return;
+      if (attempt === maxAttempts) break;
+      process.stdout.write(`${JSON.stringify({ event: 'instrument_retry', locator: row?.locator ?? null, attempt, delayMs: backoffMs, error: reason })}\n`);
+      await sleep(backoffMs);
+      backoffMs = Math.min(maxBackoffMs, backoffMs * 2);
     }
+  }
+
+  if (!result) {
+    verdict = 'unassayable';
+  } else {
     replayedHash = result.eventLogHash;
     const mismatch = outcomeMismatch(row.score, result.outcome);
     if (replayedHash !== claimedHash) reason = `eventLogHash mismatch: claimed ${claimedHash ?? 'missing'}, replayed ${replayedHash}`;
     else if (mismatch) reason = mismatch;
     else verdict = 'verified';
-  } catch (error) {
-    reason = error instanceof Error ? error.message : String(error);
+    verdict ??= 'rejected';
   }
 
   reason = reason?.slice(0, 256);
-  // The county now SERVES a rejection's reason (`?verdict=<reel id>`), so what is posted is public
+  // The county now SERVES a terminal verdict's reason (`?verdict=<reel id>`), so what is posted is public
   // text while what is logged below stays the operator's. An instrument failure can carry this
   // box's absolute paths through `error.message`; those say nothing to a rider and something to a
   // stranger, so they are named by basename on the wire and left whole in the log.
-  const payload = { locator: row?.locator, verdict, replayedHash, ...(reason ? { reason: publicReason(reason) } : {}) };
+  const payload = { locator: row?.locator, verdict, ...(replayedHash ? { replayedHash } : {}), ...(reason ? { reason: publicReason(reason) } : {}) };
   if (!dryRun) {
     await requestJson(verdictUrl, {
       method: 'POST',
