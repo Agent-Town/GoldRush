@@ -9,6 +9,16 @@
 
 ## VERDICT: 🛑 HOLD — DO NOT MERGE. One blocking defect, cured by a ~5-line move.
 
+> ✅ **SUPERSEDED — THIS HOLD IS DISCHARGED. THE SLICE SHIPPED at `eddb903f729e174ec7f61abb81fee6a671e95e55`**
+> (s2192, 2026-08-22). Ancestry verified: `git merge-base --is-ancestor eddb903f7 main` → **true**.
+> The verdict above is **kept verbatim** (Retention Law: supersede, never delete) and was correct when written.
+> The blocking defect it names — the `?raw` specifier dragging Vite into plain node, taking whole-suite e2e
+> collection from `2958 tests in 425 files` to **0 in 0** — was cured by the corrective
+> `f2189-1-depenetrate-node-safe`, which merged **together with this slice** in the commit above.
+> Collection on the merged tree: **`2968 tests in 426 files`**. Full gate evidence, both findings' resolutions,
+> and the merge classification live in `reviews/f2189-1-depenetrate-node-safe.md`.
+> ⚠️ **Read this banner before acting on the verdict line: the slice is MERGED and owes no further work.**
+
 **The gameplay cure is sound and I recommend landing it once the blocker clears.** The defect is not in the movement law — it is an *import-graph* side effect that silently destroys whole-suite test collection.
 
 ---
