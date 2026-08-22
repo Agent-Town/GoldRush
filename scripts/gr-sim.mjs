@@ -237,21 +237,35 @@ function rejectOrders(reason, sim) {
 }
 
 async function writeAgentTape(vite, path, sim, outcome, run) {
-  const { agentOrdersEventLogHash } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { RUN_TAPE_SIM_VERSION, RUN_TAPE_VERSION, agentOrdersEventLogHash } = await vite.ssrLoadModule('/src/game/RunTape.ts');
   const { stableHash } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
   const { snapshotStandingOrders } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
-  const durationTicks = Math.round((outcome.timeMs / 1000) * 30);
+  // THE TERMINAL-INSTANT ORDER (F-ASSAY-E2E-2). The elapsed clock alone is not a legal duration
+  // for this log. The browser recorder samples BEFORE each step, so its last entry always lands at
+  // `durationTicks - 1` and both validators (`PlaybookFormat.validateEntries`, the county's
+  // `validTapeEntries`) enforce `t < durationTicks`. gr-sim's rider, though, may answer AT the
+  // boundary — a `SECURE_CHOICE` accepted at the instant the run ends is recorded at
+  // `round(timeAlive * 30)`, which equals the elapsed tick count exactly and is refused with HTTP
+  // 400 `bad_payload`. The recorded tick is the truth (that order is what secured the claim, and
+  // moving it earlier would replay into a closed secure window); the elapsed count is the side
+  // that was wrong, because this log's timeline runs one tick past the last step it caused.
+  const elapsedTicks = Math.round((outcome.timeMs / 1000) * 30);
+  const lastEntryTick = run.submissions.length ? run.submissions[run.submissions.length - 1].t : -1;
+  const durationTicks = Math.max(elapsedTicks, lastEntryTick + 1);
   const eventLogHash = agentOrdersEventLogHash(snapshotStandingOrders());
   const id = `agent-${stableHash({ contract: run.contract, seed: run.seed, difficulty: run.difficulty, eventLogHash }).slice('fnv1a32:'.length)}`;
   const tape = {
-    version: 1,
+    version: RUN_TAPE_VERSION,
     id,
     createdAt: 0,
     kept: true,
     contract: run.contract,
     seed: run.seed,
     difficulty: run.difficulty,
-    simVersion: 1,
+    simVersion: RUN_TAPE_SIM_VERSION,
+    // Tape v2's declaration (`specs/agent-play/tape-contract.md` §2-§3): the progression this run
+    // was born under, captured by the sim at birth rather than re-derived here.
+    runStart: sim.runStart,
     inputLog: {
       version: 1,
       name: id,

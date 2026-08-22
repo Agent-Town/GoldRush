@@ -344,6 +344,33 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     // payload's own labels say which era's proof standards it was posted under.
     return json(cors, { ok: true, ...seasonLabels(season), epochId, contractId, reel });
   }
+  // THE ASSAY SLIP (F-ASSAY-E2E, 2026-08-22). A refused row leaves the ranked board and takes its
+  // reason with it, so a rider who submitted honestly and was rejected could learn only that
+  // `rejectedCount` had moved. This is the smallest honest read that fixes that: keyed on the
+  // TAPE ID, exactly as `?reel=` already is, so it is the submitter's own handle and no ranking
+  // surface changes — a rejected row stays off the board, it just stops being mute about why.
+  const verdictId = url.searchParams.get('verdict');
+  if (verdictId !== null) {
+    if (url.searchParams.size !== 3 + seasonParams || verdictId.length === 0 || verdictId.length > MAX_REEL_ID_LENGTH || !knownContract(epochId, contractId)) {
+      return error(cors, 400, 'bad_verdict_lookup', 'Assay slip not accepted.');
+    }
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    const rows = kv ? await readBoard(kv, epochId, contractId, true, season) : [];
+    const row = rows.find((candidate) => candidate.tape?.id === verdictId);
+    if (!row || !row.assay) return error(cors, 404, 'assay_not_found', 'No assay slip for that reel.');
+    return json(cors, {
+      ok: true,
+      ...seasonLabels(season),
+      epochId,
+      contractId,
+      tapeId: verdictId,
+      assay: row.assay,
+      ranked: isRankedRow(row),
+      ...(row.assayedAt === undefined ? {} : { assayedAt: row.assayedAt }),
+      ...(row.assayHash === undefined ? {} : { assayHash: row.assayHash }),
+      ...(row.assayReason === undefined ? {} : { assayReason: row.assayReason }),
+    });
+  }
   const difficultyParam = url.searchParams.get('difficulty');
   const partyParam = url.searchParams.get('party');
   const expectedParams = 2 + seasonParams + (difficultyParam === null ? 0 : 1) + (partyParam === null ? 0 : 1);

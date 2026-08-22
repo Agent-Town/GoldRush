@@ -73,7 +73,23 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   equal(board.body.rejectedCount, 1, 'rejected row is counted');
   const stored = JSON.parse(await kv.get(KEY));
   equal(stored.length, 2, 'rejected row survives in KV');
-  equal(stored.find((row) => row.tape.id === 'reject-me').assayReason, 'replay diverged', 'rejection reason is retained privately');
+  equal(stored.find((row) => row.tape.id === 'reject-me').assayReason, 'replay diverged', 'rejection reason is retained on the row');
+
+  // THE ASSAY SLIP (F-ASSAY-E2E, 2026-08-22). A refused row leaves the ranked board; before this
+  // it also took its reason with it, so an honest rider learned only that `rejectedCount` moved.
+  // The slip is keyed on the tape id — the submitter's own handle, exactly as `?reel=` is — so
+  // nothing is added to the ranked board and nothing else becomes readable.
+  const slip = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=reject-me', undefined, kv);
+  equal(slip.status, 200, 'an unranked row still has a slip');
+  equal(slip.body.assay, 'rejected', 'the slip names the verdict');
+  equal(slip.body.assayReason, 'replay diverged', 'the slip names the reason');
+  equal(slip.body.ranked, false, 'and says the row holds no rank');
+  const verifiedSlip = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=verify-me', undefined, kv);
+  equal(verifiedSlip.body.assay, 'verified', 'a verified row reads its own slip too');
+  equal(verifiedSlip.body.ranked, true, 'and it stays ranked');
+  equal(verifiedSlip.body.assayReason, undefined, 'a verified slip carries no reason');
+  equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=no-such-reel', undefined, kv)).status, 404, 'an unknown reel has no slip');
+  equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=reject-me&party=solo', undefined, kv)).status, 400, 'the slip keeps the strict param arithmetic');
 }
 
 // Guards the NORMALIZATION law (a stored row that carries a tape but no assay stamp reads as

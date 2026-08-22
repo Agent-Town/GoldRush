@@ -93,7 +93,11 @@ async function assay(row) {
   }
 
   reason = reason?.slice(0, 256);
-  const payload = { locator: row?.locator, verdict, replayedHash, ...(reason ? { reason } : {}) };
+  // The county now SERVES a rejection's reason (`?verdict=<reel id>`), so what is posted is public
+  // text while what is logged below stays the operator's. An instrument failure can carry this
+  // box's absolute paths through `error.message`; those say nothing to a rider and something to a
+  // stranger, so they are named by basename on the wire and left whole in the log.
+  const payload = { locator: row?.locator, verdict, replayedHash, ...(reason ? { reason: publicReason(reason) } : {}) };
   if (!dryRun) {
     await requestJson(verdictUrl, {
       method: 'POST',
@@ -109,6 +113,10 @@ async function assay(row) {
     ...(reason ? { reason } : {}),
     ...(dryRun ? { dryRun: true } : {}),
   })}\n`);
+}
+
+function publicReason(reason) {
+  return reason.replace(/(^|[\s('"`])\/[^\s)'"`]+/g, (match, lead) => `${lead}${match.slice(lead.length).split('/').pop() || '/'}`);
 }
 
 async function sleep(ms) {
