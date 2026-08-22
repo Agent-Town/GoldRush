@@ -139,13 +139,27 @@ const RUN_SURFACE = [
   'package.json', 'package-lock.json', 'playwright.config.ts', 'tsconfig.json', 'vite.config.ts',
 ]
 
+// s2221 — F-2221-1. These are the ONLY two git calls in this file that carry a PATHSPEC, and a
+// pathspec is resolved relative to the process CWD while `--name-only` OUTPUT is repo-relative.
+// That asymmetry is the whole defect: run from any subdirectory, `-- src e2e … ` matches nothing,
+// git exits 0 with EMPTY STDERR, and both functions return [] — whereupon report() prints
+// "✅ …NONE of it is run-surface … byte-identical to main", an affirmative all-clear asserting a
+// comparison it never made, and SUPPRESSES the package.json false-green warning at :405 that the
+// F-1343-2 comment above calls "a false-green hazard invisible to every existing probe".
+// Measured s2221: `--all` from the repo root prints 15 drift sections and 0 greens; from
+// scripts/, src/, docs/ or any subdirectory of a LANE WORKTREE it prints 0 drift sections and 15
+// greens, at the SAME rc=0. Every other git call here is ref-based (cwd-invariant) or already
+// passes its own explicit cwd, so anchoring these two cures the class in this file.
+// Anchored to repoRoot() — the F-1418-1 helper, which resolves the MAIN worktree root from
+// anywhere in the repo or any of its worktrees. NOT to import.meta.url: this file is diffing
+// REFS, so it needs a valid repo root, not the directory the script happens to live in.
 function surfaceDrift(branch) {
-  const out = git(['diff', '--name-only', branch, 'main', '--', ...RUN_SURFACE]).trim()
+  const out = git(['diff', '--name-only', branch, 'main', '--', ...RUN_SURFACE], { cwd: repoRoot() }).trim()
   return out ? out.split('\n').filter(Boolean) : []
 }
 
 function ledgerDrift(branch) {
-  const out = git(['diff', '--name-only', branch, 'main', '--', 'tasks']).trim()
+  const out = git(['diff', '--name-only', branch, 'main', '--', 'tasks'], { cwd: repoRoot() }).trim()
   return out ? out.split('\n').filter(Boolean) : []
 }
 
