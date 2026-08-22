@@ -1,0 +1,251 @@
+#!/usr/bin/env node
+/**
+ * dry-board-probe.mjs — answers scripts/fire.md §2F in ONE command:
+ * "is there a drain in tasks/done/ that I am about to walk past?"
+ *
+ * WHY THIS EXISTS (F-2207-1, s2207 — the fourth instance of F-2204-1's class)
+ * -------------------------------------------------------------------------
+ * §2F has had its subject-selection rule guessed wrong TWICE, by two fires that
+ * were each being careful:
+ *
+ *   s1061  found `art-batch-roster-e9` UNDRAINED FOR 28 HOURS after s1057-s1060
+ *          each honestly reported "no drain exists" off `ls -1t | head`. Closed
+ *          done-moves are RENAMED with a prefix, and a rename re-stamps the file,
+ *          so every closed entry sorts ABOVE every undrained one. The probe could
+ *          not fail loudly. (F-2205-1)
+ *   s2206  cured the fold by deriving the window as a DATE rather than a
+ *          `tail -30` guess -- correctly -- but validated the cure only over
+ *          BARE-DATED files. (F-2206-1)
+ *
+ * F-2207-1 is the residue of that second cure. §2F's filter reads
+ * "bare-dated AND date >= 20260725", which is complete over bare-dated files and
+ * BLIND to every prefixed one. That is safe only if every prefix asserts a
+ * terminal state -- and 5 of the 13 prefixes in the live corpus do NOT:
+ *
+ *     TERMINAL (581): drained 327 · shipped 149 · stopped 82 · noop 16 ·
+ *                     superseded 3 · rejected 2 · duplicate 1 · reverted 1
+ *     NOT      ( 11): held 6 · blocked 2 · OWNER 1 · partial 1 · ready 1
+ *
+ * Those 11 are exactly where a deferred drain would hide, and two of them say so
+ * in their own filenames:
+ *
+ *   held-s2125-owner-fork-f2125-1-...-e10s-1b-ember-shore-schema-and-data.md
+ *       -- the ONLY live undrained slice on the board at s2207 (lane/a ahead=1,
+ *          7 held paths, gate-side blocked by F-2165-1)
+ *   ready-for-gates-s1330-UNDRAINED-7c4f132f-leaf-blocked-...
+ *       -- carries the word UNDRAINED in its name and is invisible to §2F
+ *
+ * Cost at s2207: ZERO. All 11 resolved merged/closed/blocked, so the board really
+ * was dry. Stated plainly because that is the honest reading -- and because a
+ * probe that is right by luck and cannot be wrong out loud is precisely the one
+ * that costs you 28 hours the day the luck runs out.
+ *
+ * THE FIX IS TO INVERT THE TEST, WHICH IS THE ONLY PART THAT GENERALISES
+ * ---------------------------------------------------------------------
+ * §2F enumerates what to LOOK AT. This enumerates what to SKIP -- the terminal
+ * tokens below -- and probes everything else. So a prefix nobody has invented yet
+ * lands in the subject set rather than in the blind spot: it fails SAFE where the
+ * prose form fails BLIND. The convention-start date is likewise DERIVED from the
+ * corpus (the earliest date embedded in any prefixed done-move) instead of pinned,
+ * so it never needs re-measuring by hand -- F-2206-1's own principle, applied to
+ * the half it did not reach.
+ *
+ * ADVISORY BY DEFAULT (exit 0), by the drain-block-check UNKNOWN precedent: this
+ * reports, it does not gate. `--strict` exits 1 when a real drain is found.
+ *
+ * UNKNOWN IS NOT A CLEARANCE. drain-block-check exits 0 for "no goal leaf
+ * matches", which is the ledger DECLINING TO ANSWER, not permission. Those are
+ * bucketed separately here and each one owes the s1061 file probe: read the
+ * master, list the artifacts it claims, ask `git ls-files` for them on main.
+ */
+
+import { execFileSync } from 'node:child_process';
+import fs from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+/**
+ * Leading tokens that assert a done-move reached a terminal state -- it either
+ * reached main or was abandoned. Anything else is a subject.
+ * DO NOT add a token here to quieten output: a token belongs here only if its
+ * presence PROVES no drain is owed. When in doubt, leave it out -- an extra
+ * probe costs one second, a missed drain costs a day.
+ */
+export const TERMINAL_TOKENS = new Set([
+  'drained',
+  'shipped',
+  'stopped',
+  'noop',
+  'superseded',
+  'rejected',
+  'duplicate',
+  'reverted',
+]);
+
+/**
+ * A done-move stamp is YYYYMMDD-HHMMSS. Eight digits alone is NOT enough to
+ * identify one: this corpus is full of NUMERIC SHORT HASHES in the same shape
+ * and the same position --
+ *     shipped-09102598-20260727-133154-lane-055-standard-note-assertion...
+ *     drained-s1243-15505222-20260730-051923-ret-01-run-log-recoverability...
+ * -- so a naive /(\d{8})-\d{6}/ reads `09102598` as the year 0910 and drags the
+ * derived convention boundary back to prehistory. That is not hypothetical: it
+ * is what this script did on its first live run, turning a 32-subject board into
+ * a 562-subject one. Validate the calendar, not just the digit count.
+ */
+const STAMP = /(?<![0-9])(20\d{2})(\d{2})(\d{2})-\d{6}(?![0-9])/g;
+
+function plausibleDate(y, m, d) {
+  const year = Number(y); const mon = Number(m); const day = Number(d);
+  return year >= 2024 && year <= 2099 && mon >= 1 && mon <= 12 && day >= 1 && day <= 31;
+}
+
+/** The leading YYYYMMDD of a bare-dated done-move, or null. */
+export function bareDate(name) {
+  const m = name.match(/^(20\d{2})(\d{2})(\d{2})-/);
+  return m && plausibleDate(m[1], m[2], m[3]) ? m[1] + m[2] + m[3] : null;
+}
+
+/** The earliest CALENDAR-PLAUSIBLE stamp embedded anywhere in a name, or null. */
+export function embeddedDate(name) {
+  let best = null;
+  for (const m of name.matchAll(STAMP)) {
+    if (!plausibleDate(m[1], m[2], m[3])) continue;
+    const d = m[1] + m[2] + m[3];
+    if (best === null || d < best) best = d;
+  }
+  return best;
+}
+
+/**
+ * Pure subject selection. Exported so the guard can exercise it without spawning
+ * drain-block-check over the whole corpus.
+ *
+ * @param {string} root repo root (or a fixture root) containing tasks/done/
+ * @returns {{subjects: string[], conventionStart: string|null, skippedLegacy: string[],
+ *            skippedTerminal: string[], tokens: Record<string, number>, total: number}}
+ */
+export function selectSubjects(root) {
+  const dir = path.join(root, 'tasks', 'done');
+  let names = [];
+  try {
+    names = fs.readdirSync(dir).filter((n) => n.endsWith('.md'));
+  } catch {
+    return {
+      subjects: [], conventionStart: null, skippedLegacy: [],
+      skippedTerminal: [], tokens: {}, total: 0,
+    };
+  }
+
+  const prefixed = names.filter((n) => bareDate(n) === null);
+
+  // DERIVED, never pinned: the convention starts the day the first prefixed
+  // done-move was written. Before that date, bare-dating carries no signal at
+  // all (every file is bare), so those entries are genuine legacy.
+  let conventionStart = null;
+  for (const n of prefixed) {
+    const d = embeddedDate(n);
+    if (d !== null && (conventionStart === null || d < conventionStart)) conventionStart = d;
+  }
+
+  const tokens = {};
+  for (const n of prefixed) {
+    const t = n.split('-')[0];
+    tokens[t] = (tokens[t] ?? 0) + 1;
+  }
+
+  const subjects = [];
+  const skippedLegacy = [];
+  const skippedTerminal = [];
+
+  for (const n of names) {
+    const d = bareDate(n);
+    if (d !== null) {
+      // A bare-dated file is a subject only once the prefix convention exists to
+      // give bare-dating meaning. With no prefixed file anywhere, nothing is legacy.
+      if (conventionStart === null || d >= conventionStart) subjects.push(n);
+      else skippedLegacy.push(n);
+      continue;
+    }
+    if (TERMINAL_TOKENS.has(n.split('-')[0].toLowerCase())) skippedTerminal.push(n);
+    else subjects.push(n); // non-terminal OR unrecognised -> probe it. Fails safe.
+  }
+
+  subjects.sort();
+  return {
+    subjects, conventionStart, skippedLegacy, skippedTerminal, tokens, total: names.length,
+  };
+}
+
+/** Bucket one drain-block-check result. UNKNOWN is deliberately NOT a clearance. */
+export function bucketOf(output) {
+  if (/UNKNOWN/.test(output)) return 'unknown';
+  if (/⛔|DO NOT DRAIN/.test(output)) return 'closed';
+  if (/status="merged"/.test(output)) return 'merged';
+  return 'drain';
+}
+
+function main() {
+  const root = process.cwd();
+  const strict = process.argv.includes('--strict');
+  const sel = selectSubjects(root);
+
+  console.log('dry-board-probe — scripts/fire.md §2F, in one command (F-2207-1)\n');
+  console.log(`  done-moves (.md)        : ${sel.total}`);
+  console.log(`  prefix convention start : ${sel.conventionStart ?? '(none — no prefixed file)'}  [DERIVED, not pinned]`);
+  console.log(`  skipped, legacy         : ${sel.skippedLegacy.length}  (bare-dated before the convention existed)`);
+  console.log(`  skipped, terminal prefix: ${sel.skippedTerminal.length}`);
+  console.log(`  SUBJECTS to classify    : ${sel.subjects.length}\n`);
+
+  const nonTerminal = Object.entries(sel.tokens)
+    .filter(([t]) => !TERMINAL_TOKENS.has(t.toLowerCase()))
+    .sort((a, b) => b[1] - a[1]);
+  if (nonTerminal.length) {
+    console.log('  non-terminal prefixes in the subject set (F-2207-1 — invisible to §2F\'s prose filter):');
+    for (const [t, c] of nonTerminal) console.log(`    ${String(c).padStart(4)} · ${t}`);
+    console.log('');
+  }
+
+  const buckets = { merged: [], closed: [], unknown: [], drain: [] };
+  for (const f of sel.subjects) {
+    let out = '';
+    try {
+      out = execFileSync('node', [path.join(root, 'scripts', 'drain-block-check.mjs'), f],
+        { encoding: 'utf8', cwd: root });
+    } catch (e) {
+      out = (e.stdout ?? '') + (e.stderr ?? '');
+    }
+    buckets[bucketOf(out)].push(f);
+  }
+
+  const label = {
+    merged: 'MERGED (shipped-but-unrenamed ghost — cosmetic)',
+    closed: 'CLOSED / BLOCKED — do not drain',
+    unknown: 'UNKNOWN — the ledger declines to answer; each owes the s1061 FILE PROBE',
+    drain: 'REAL DRAINS — work you were about to walk past',
+  };
+  for (const k of ['drain', 'unknown', 'closed', 'merged']) {
+    console.log(`  ${label[k]}: ${buckets[k].length}`);
+    if (k === 'merged') continue;
+    for (const f of buckets[k]) console.log(`      ${f}`);
+  }
+
+  console.log('');
+  if (buckets.drain.length) {
+    console.log(`  ⛔ NOT DRY — ${buckets.drain.length} undrained done-move(s). Do not declare §2F.`);
+  } else if (buckets.unknown.length) {
+    console.log(`  ⚠️  NO DRAIN FOUND, but ${buckets.unknown.length} UNKNOWN(s) owe a file probe before you may say "dry".`);
+  } else {
+    console.log('  ✅ DRY — every subject resolves merged or closed. The word is earned.');
+  }
+  console.log('\n  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed');
+  console.log('  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.');
+
+  if (strict && buckets.drain.length) process.exit(1);
+  process.exit(0);
+}
+
+// NOTE: compare via pathToFileURL, never a `file://${argv[1]}` template. This
+// repo's own root contains a space ("Gold Rush"), which import.meta.url encodes
+// as %20 -- the template form silently never matches and the CLI prints nothing.
+if (import.meta.url === pathToFileURL(process.argv[1]).href) main();
