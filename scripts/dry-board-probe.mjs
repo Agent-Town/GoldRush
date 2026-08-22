@@ -150,12 +150,25 @@ export function embeddedDate(name) {
 export function selectSubjects(root) {
   const dir = path.join(root, 'tasks', 'done');
   let names = [];
+  // F-2217-1. This handler used to return the empty selection with no way for a
+  // caller to tell "the corpus is clean" from "the corpus was never read" -- and
+  // an empty subject set drives every bucket to zero, so `main()` printed
+  // "✅ DRY ... The word is earned." at rc=0 in BOTH modes. That is the s1061
+  // incident reproduced inside the tool built to prevent it, one layer further IN
+  // than F-2211-1 reached: F-2209-1 crossed to the exit code, F-2210-1 to stdout,
+  // F-2211-1 to the CAPTURE -- this is the ENUMERATION, where the subject set is
+  // empty because the read failed rather than because the board is clean.
+  //
+  // `corpus` is a STRING for F-2212-1's reason: any careless truthiness test at a
+  // call site coerces 'unreadable' to TRUE, i.e. toward NOTICING rather than
+  // toward silently declaring dry. Fail-safe by construction, not by discipline.
   try {
     names = fs.readdirSync(dir).filter((n) => n.endsWith('.md'));
-  } catch {
+  } catch (err) {
     return {
       subjects: [], conventionStart: null, skippedLegacy: [],
       skippedTerminal: [], tokens: {}, total: 0,
+      corpus: 'unreadable', corpusDetail: String(err?.code || err?.message || err),
     };
   }
 
@@ -196,6 +209,7 @@ export function selectSubjects(root) {
   subjects.sort();
   return {
     subjects, conventionStart, skippedLegacy, skippedTerminal, tokens, total: names.length,
+    corpus: 'read', corpusDetail: '',
   };
 }
 
@@ -268,8 +282,15 @@ export function bucketOf(output) {
  * @param {{drain: unknown[], unknown: unknown[]}} buckets
  * @param {boolean} strict
  */
-export function exitCodeFor(buckets, strict) {
+// F-2217-1: `corpus` defaults to 'read' so the four F-2208-1 tests that call this
+// with two arguments keep asserting exactly what they always asserted. An
+// unreadable corpus is 2 = "could not answer", never 1 = "answered, and the
+// answer refuses" -- the convention drain-block-check, master-shipped-classifier
+// and review-evidence-audit already carry. It outranks every bucket verdict
+// because when the corpus was never read, the buckets are not evidence at all.
+export function exitCodeFor(buckets, strict, corpus = 'read') {
   if (!strict) return 0;
+  if (corpus !== 'read') return 2;
   if (buckets.drain.length) return 1;
   if (buckets.unknown.length) return 2;
   return 0;
@@ -281,6 +302,11 @@ function main() {
   const sel = selectSubjects(root);
 
   console.log('dry-board-probe — scripts/fire.md §2F, in one command (F-2207-1)\n');
+  // F-2217-1: declared ALWAYS, including the happy path. A declaration that
+  // appears only on failure re-creates the very ambiguity it removes (F-2208-1).
+  console.log(
+    `  corpus tasks/done/      : ${sel.corpus === 'read' ? 'read' : `UNREADABLE (${sel.corpusDetail})`}`,
+  );
   console.log(`  done-moves (.md)        : ${sel.total}`);
   console.log(`  prefix convention start : ${sel.conventionStart ?? '(none — no prefixed file)'}  [DERIVED, not pinned]`);
   console.log(`  skipped, legacy         : ${sel.skippedLegacy.length}  (bare-dated before the convention existed)`);
@@ -336,7 +362,17 @@ function main() {
     for (const c of crashed) console.log(`      ${c}`);
     console.log('');
   }
-  if (buckets.drain.length) {
+  if (sel.corpus !== 'read') {
+    // F-2217-1. The buckets are all empty, but they are empty because the corpus
+    // was never read -- NOT because the board is clean. Printing the earned-DRY
+    // banner here is the s1061 incident, and in advisory mode (the mode §2F
+    // prescribes) stdout is the ONLY channel a caller reads, so this must be
+    // cured at the banner and not merely at the exit code (F-2210-1).
+    console.log(`  ⛔ CANNOT VERIFY — tasks/done/ was unreadable (${sel.corpusDetail}).`);
+    console.log('     This is NOT a dry board. Check your cwd: `main()` roots itself at');
+    console.log('     process.cwd(), so running this by absolute path from elsewhere reads');
+    console.log('     a directory that has no tasks/done/ and finds nothing by construction.');
+  } else if (buckets.drain.length) {
     console.log(`  ⛔ NOT DRY — ${buckets.drain.length} undrained done-move(s). Do not declare §2F.`);
   } else if (buckets.unknown.length) {
     console.log(`  ⚠️  NO DRAIN FOUND, but ${buckets.unknown.length} UNKNOWN(s) owe a file probe before you may say "dry".`);
@@ -346,7 +382,7 @@ function main() {
   console.log('\n  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed');
   console.log('  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.');
 
-  process.exit(exitCodeFor(buckets, strict));
+  process.exit(exitCodeFor(buckets, strict, sel.corpus));
 }
 
 // NOTE: compare via pathToFileURL, never a `file://${argv[1]}` template. This
