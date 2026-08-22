@@ -108,6 +108,30 @@
       "fingerprint": "03d9aba63511",
       "excerpt": "try {"
     },
+    "scripts/fire.md -> art-staging-audit.mjs:273": {
+      "target": "scripts/art-staging-audit.mjs",
+      "line": 273,
+      "fingerprint": "f04ebb00d76a",
+      "excerpt": "if (!existsSync(dir)) return acc;"
+    },
+    "scripts/fire.md -> salvage-art-staging.mjs:123": {
+      "target": "scripts/salvage-art-staging.mjs",
+      "line": 123,
+      "fingerprint": "f04ebb00d76a",
+      "excerpt": "if (!existsSync(dir)) return acc;"
+    },
+    "scripts/fire.md -> task-guard-audit.mjs:43": {
+      "target": "scripts/task-guard-audit.mjs",
+      "line": 43,
+      "fingerprint": "9049eb940517",
+      "excerpt": "const readdirSafe = (dir) => (fs.existsSync(dir) ? fs.readdirSync(dir) : []);"
+    },
+    "scripts/fire.md -> campaign-map-dossier.mjs:96": {
+      "target": "scripts/campaign-map-dossier.mjs",
+      "line": 96,
+      "fingerprint": "f3ae8b9adf92",
+      "excerpt": "if (!existsSync(dir)) return null;"
+    },
     "scripts/fire.md -> scripts/goal-tracker.test.mjs:81": {
       "target": "scripts/goal-tracker.test.mjs",
       "line": 81,
