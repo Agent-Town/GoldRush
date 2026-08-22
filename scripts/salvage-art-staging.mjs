@@ -45,7 +45,11 @@
  * success line, and ended no exposure at all.
  *
  * That mattered because the remedy text is WIRED INTO THE ALARM:
- * `scripts/health-watch.sh:139` tells its reader, every ten minutes,
+ * `scripts/health-watch.sh` (the `alert "ART slot: $AU staged file(s)…"` line —
+ * cite the CONTENT, the coordinate drifts: this read `:139` until s2195, by
+ * which time the true line was `:209` and `:139` landed on the unrelated
+ * `status` dispatch, i.e. a reader would conclude the remedy was DELETED)
+ * tells its reader, every ten minutes,
  * "preserve with: node scripts/salvage-art-staging.mjs save/<name>" — and the
  * 530 MB question on the owner's desk (F-1640-1) offers "salvage to a branch"
  * as one of its three one-word options. The option was not executable by the

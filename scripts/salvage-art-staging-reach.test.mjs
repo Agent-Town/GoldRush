@@ -4,7 +4,9 @@
  *
  * WHY (F-1658-1, s1658): `art-staging-audit.mjs` raises the alarm and
  * `salvage-art-staging.mjs` is the cure named in the alarm's own remedy text
- * (`scripts/health-watch.sh:139`) and in the owner's 530 MB desk question
+ * (`scripts/health-watch.sh`, the `alert "ART slot: … preserve with:"` line —
+ * cite the CONTENT, not the coordinate: this said `:139` until s2195, when the
+ * true line was `:209`) and in the owner's 530 MB desk question
  * (F-1640-1, "salvage to a branch"). The audit was widened three times
  * (F-1054-1 name->blob, F-1055-1 remote refs, F-1120-2 one-dir->recursive
  * enumeration); the salvage script was never revisited. Measured live at s1658:
