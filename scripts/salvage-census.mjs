@@ -18,6 +18,48 @@
 // "absorbed" — it is strictly stronger than a content/file-level comparison, which is
 // the F-1081-9 lesson (a coarse file-level read froze three lanes, two never at risk).
 //
+// ⚠️ WHAT `HOLDS` DOES NOT MEAN (F-2115-1 measured it first; F-2186-1 re-measured on
+// a second axis and cured the wording. Read before acting on the number, and before
+// building the dynamic panel F-1536-2 deferred.)
+// The test above is COMMIT ANCESTRY. It establishes that main lacks these commits. It
+// CANNOT establish that anyone intends to re-land them — and the old wording here
+// ("genuinely re-land-pending") asserted exactly that, which is why this caveat lives
+// at the source of the claim rather than only in the BACKLOG rows that noticed it.
+//
+// 📊 PRIOR ART, NOT SUPERSEDED: s2115 drove all 16 then-live non-ancestors through
+// `lane-freeze-classify.mjs` and found only FOUR held a file main had never seen (all
+// art-staging); the other TWELVE were `LANE-ONLY=0` — "LINE RESIDUE, not slices".
+// s2186 asked a different question — what CLASS of path does each ref hold? — and the
+// two partitions AGREE EXACTLY on the shared 16, which is the control that makes both
+// trustworthy. Today's 18 is s2115's 16 plus two refs minted after it ran
+// (`art-staging-20260822`, `s2128-handoff`), both backup-class. Counts drift; re-run.
+//
+// 🆕 WHAT s2186 ADDS BEYOND s2115:
+//   - 6 of 18 hold NO source main lacks — only backup-class paths (logs/ artifacts/
+//     assets/ salvage/ worktrees/ STATUS.md). `s2128-handoff`'s OWN COMMIT MESSAGE
+//     says "BANKED COPY"; `art-diverged-20260726`'s 14 files sit under a literal
+//     `salvage/` prefix. The refs declare their intent and the census cannot read it.
+//   - THE BUCKET COUNTS REFS, NOT WORK: `ap-06b-adapter-wiring` and
+//     `ap-06b-reland-s1218` are ONE piece of work — the identical 38-line held set in
+//     src/game/Game.ts and a byte-identical e2e/ap-standing-orders.spec.ts blob.
+//   - `s2128-handoff` is a DISCHARGED backup: its held line is on main VERBATIM as the
+//     s2128 archive bullet (banked === archived, 7818 chars). Every instrument here
+//     still reads HOLDS because main's copy carries the bullet prefix — line-level
+//     absorption testing is defeated by a prefix, so a "held line" can be a formatting
+//     difference over content that was fully preserved.
+// So 18 "pending" is 11 distinct pieces of unlanded source work.
+//
+// 🚫 AND THE MIS-FILING IS NOT COSMETIC: fire.md §2E says a save/* older than ~3h
+// "gets a RE-LAND ruling". Executed literally against `s2128-handoff` that would
+// overwrite STATUS.md line-1 with a 58-fire-stale handoff. For a mis-filed ref the
+// lifecycle's prescribed action is HARMFUL, not merely wasteful.
+//
+// NOT CURED IN CODE, deliberately: "backup vs re-land candidate" is a JUDGEMENT, and a
+// red guard over a judgement is excused into uselessness inside a week (F-1460-1's
+// `cross-engine` fate). What is cured is free — the two output lines no longer claim an
+// intent the test never measured. The path-class probe is ~30 s to re-derive; re-run it
+// rather than trusting this comment's counts, which were true at s2186 and will drift.
+//
 // Exit codes: 0 always (advisory, per the drain-block-check UNKNOWN precedent).
 //             --strict exits 1 if any ABSORBED ref is still named save/* (rename owed).
 import { execFileSync } from 'node:child_process'
@@ -58,7 +100,7 @@ const holds = by('HOLDS')
 console.log('=== SALVAGE CENSUS (F-1536-2) ===')
 console.log(`total save/* refs: ${rows.length}`)
 console.log(`  ABSORBED (ancestor of main; archive/* rename owed by law): ${absorbed.length}`)
-console.log(`  HOLDS    (content main lacks; genuinely re-land-pending):  ${holds.length}`)
+console.log(`  HOLDS    (commits main lacks; RE-LAND INTENT NOT ESTABLISHED): ${holds.length}`)
 console.log(`  DEAD     (ref does not resolve):                           ${by('DEAD').length}`)
 console.log('')
 console.log(`--- dashboard-gen.sh:286 hardcoded refs (the visible symptom) ---`)
@@ -71,7 +113,8 @@ for (const ref of HARDCODED) {
   console.log(`  ${ref}: ${state}`)
 }
 console.log('')
-console.log('--- HOLDS: the only refs a dynamic salvage panel should ever show ---')
+console.log('--- HOLDS: candidates for a salvage panel — NOT a vetted pending list ---')
+console.log('    (F-2186-1: 6 of 18 hold only backup-class content. Classify before showing.)')
 for (const r of holds.sort((a, b) => b.ahead - a.ahead || a.ref.localeCompare(b.ref))) {
   console.log(`  ${r.ref}  ahead=${r.ahead}  files=${r.files}  last=${r.age}`)
 }
