@@ -159,6 +159,59 @@ const ART_ROOT = join(REPO, 'worktrees/art');
 const git = (...args) =>
   execFileSync('git', ['-C', REPO, ...args], { encoding: 'utf8', maxBuffer: 1 << 26 });
 
+// F-2196-1 (s2196): THE BOUNDARY DECLARATION — what sits immediately OUTSIDE the
+// scan root, named out loud on every run.
+//
+// This script's class has now recurred FIVE times (F-1054-1 name-vs-blob ·
+// F-1055-1 here-vs-origin · F-1120-2 one-dir-vs-enumerated · F-1658-3
+// assets-root-vs-subdirs · F-2195-1 worktree-root), and every cure widened the
+// boundary by exactly the width of the incident that prompted it. s2195 wrote
+// the lesson down — "when you widen a scan, state the new boundary explicitly
+// and go look at what is immediately outside it" — and going to look found the
+// SIXTH instance one sibling away: `worktrees/lane-{a,b,c,d}-salvage`, four
+// directories that are NOT registered git worktrees (their `.git` stubs point at
+// the LIVE lanes' admin dirs) and so belong to no scan root the factory owns.
+// 111 files / 25.18 MB of source, specs and review screenshots sat there in NO
+// object database for 48 days — including
+// `e2e/lane-c-polish-02-rivalry-stats.spec.ts`, polish-02, the named casualty of
+// CLAUDE.md Mistake #2, the Reset Massacre. Salvaged to `save/lane-salvage-s2196`
+// @ 207e6222 and pushed to origin BEFORE this code changed.
+//
+// This does NOT widen the scan, deliberately. Walking those trees would sweep in
+// 10,047 files / 833.30 MB of node_modules+dist+test-results, drowning the AT
+// RISK signal and making `--strict` red forever — which is how a guard gets
+// excused into uselessness inside a week (the `cross-engine` decay, F-1460-1).
+// It instead makes the blind spot VISIBLE: a sibling tree appearing under
+// `worktrees/` is named on the next run rather than after 48 days.
+//
+// ADVISORY, exit 0 always (the `drain-block-check` UNKNOWN precedent). It must
+// not move `--strict`: that would prejudge F-2159-1, the open OWNER'S DESK
+// question about rooting this audit in `test:ledger-guards`, by making the
+// answer permanently red.
+const WORKTREES_DIR = join(REPO, 'worktrees');
+function unauditedNeighbours() {
+  if (!existsSync(WORKTREES_DIR)) return [];
+  // Registered worktrees are git's own business and are audited by git itself.
+  // Ask `git worktree list`, never a hardcoded lane list: the slot->path mapping
+  // rots (F-1464-3), and a hardcoded list of what git already knows is a defect
+  // awaiting a rename.
+  const registered = new Set(
+    git('worktree', 'list', '--porcelain')
+      .split('\n')
+      .filter((l) => l.startsWith('worktree '))
+      .map((l) => l.slice('worktree '.length)),
+  );
+  const out = [];
+  for (const e of readdirSync(WORKTREES_DIR, { withFileTypes: true })) {
+    if (!e.isDirectory()) continue;
+    const abs = join(WORKTREES_DIR, e.name);
+    if (abs === ART_ROOT || registered.has(abs)) continue;
+    // walk() skips SKIP_NAMES, so a worktree's `.git` stub is not counted as content.
+    out.push({ name: relative(REPO, abs), files: walk(abs).length });
+  }
+  return out.sort((a, b) => a.name.localeCompare(b.name));
+}
+
 // main's tracked assets, REPO-RELATIVE PATH -> { sha, size } (from HEAD, not the
 // disk). The sha is what classifies: two files with the same name and the same
 // size can still be different images, and that is exactly the case this audit
@@ -394,6 +447,9 @@ if (process.argv.includes('--json')) {
         salvaged,
         diverged,
         shipped: shipped.length,
+        // F-2196-1: the boundary, machine-readable too — a consumer that only
+        // reads atRiskFiles must still be able to see what was never scanned.
+        notAudited: unauditedNeighbours(),
       },
       null,
       2,
@@ -404,6 +460,20 @@ if (process.argv.includes('--json')) {
   console.log(`ART STAGING AUDIT — ${areas.length} areas scanned, ${scan.length} files`);
   console.log(`  ${areas.join(' · ')}`);
   console.log(`main tracks ${tracked.size} files under assets/`);
+  // F-2196-1: name the boundary. See the comment at unauditedNeighbours().
+  const outside = unauditedNeighbours();
+  if (outside.length) {
+    console.log(
+      `\nNOT AUDITED — ${outside.length} tree(s) under worktrees/ that no git worktree owns and this audit does not scan:`,
+    );
+    for (const d of outside) console.log(`  ${d.name}  ${d.files} files`);
+    console.log(
+      '  These are outside the scan root BY DESIGN (walking them would drown AT RISK in build output).',
+    );
+    console.log(
+      '  They are named so a new one is visible on the next run, not after 48 days — F-2196-1.',
+    );
+  }
   console.log(
     `\nAT RISK (in NO object database — dies with this disk): ${atRisk.length} files, ${kb(total(atRisk))}`,
   );

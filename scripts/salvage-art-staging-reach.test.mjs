@@ -390,6 +390,128 @@ test('all THREE implementations scan the ART WORKTREE ROOT, not just assets/ (F-
   );
 });
 
+/* ------------------------------------------------------------------------- *
+ * F-2196-1 (s2196): THE BOUNDARY DECLARATION.
+ *
+ * Every cure above widened the scan by exactly the width of the incident that
+ * prompted it, and none asked what lay immediately OUTSIDE the new edge. s2196
+ * asked, and found the sixth instance one sibling away: worktrees/lane-*-salvage,
+ * unregistered trees holding 111 files / 25.18 MB in no object database for 48
+ * days — including polish-02, the named casualty of CLAUDE.md Mistake #2.
+ *
+ * The cure is NOT a wider scan (that would drown AT RISK in 833 MB of build
+ * output and get excused into uselessness — the `cross-engine` decay, F-1460-1).
+ * It is a DECLARATION: the audit names what it does not scan, so a new sibling
+ * tree is visible on the next run instead of after 48 days.
+ * ------------------------------------------------------------------------- */
+
+const AUDIT_SRC = readFileSync(
+  fileURLToPath(new URL('./art-staging-audit.mjs', import.meta.url)),
+  'utf8',
+);
+
+/** Install the real audit, or a mutated variant, and run it in the scratch repo. */
+const runAudit = (repo, source = AUDIT_SRC, args = []) => {
+  writeFileSync(join(repo, 'scripts/art-staging-audit.mjs'), source);
+  try {
+    return { rc: 0, out: execFileSync('node', [join(repo, 'scripts/art-staging-audit.mjs'), ...args], {
+      encoding: 'utf8', maxBuffer: 1 << 26,
+    }) };
+  } catch (e) {
+    return { rc: e.status ?? 1, out: (e.stdout || '') + (e.stderr || '') };
+  }
+};
+
+const mutateAudit = (from, to) => {
+  assert.ok(AUDIT_SRC.includes(from), `mutation target absent from the audit — this guard has rotted: ${from}`);
+  const out = AUDIT_SRC.replace(from, to);
+  assert.notEqual(out, AUDIT_SRC, 'mutation did not change the audit source');
+  return out;
+};
+
+/** An unregistered directory under worktrees/ — the F-2196-1 shape. */
+const stageNeighbour = (repo, dir, name, contents) => {
+  const p = join(repo, 'worktrees', dir, name);
+  mkdirSync(dirname(p), { recursive: true });
+  writeFileSync(p, contents);
+  return p;
+};
+
+test('the audit NAMES an unregistered sibling tree under worktrees/ (F-2196-1)', () => {
+  const repo = makeRepo();
+  try {
+    stage(repo, 'raw/other.png', 'SO THE SCAN IS NOT EMPTY');
+    stageNeighbour(repo, 'lane-z-salvage', 'src/Lost.ts', 'BYTES IN NO OBJECT DATABASE');
+    const { rc, out } = runAudit(repo);
+    assert.equal(rc, 0, out);
+    assert.match(out, /NOT AUDITED/, `the audit did not declare its boundary:\n${out}`);
+    assert.match(out, /worktrees\/lane-z-salvage/, `the unaudited tree was not named:\n${out}`);
+    // Named with a magnitude: "a tree exists" is bookkeeping, "1 files" is a fact
+    // a fire can act on. This script's own recurring class is a headline narrower
+    // than the question above it (F-2185-1).
+    assert.match(out, /worktrees\/lane-z-salvage\s+1 files/, out);
+  } finally {
+    rmSync(repo, { recursive: true, force: true });
+  }
+});
+
+test('RED PATH PROVEN: without the declaration, that same tree goes unnamed', () => {
+  const repo = makeRepo();
+  try {
+    // A staging tree that is genuinely CLEAN (blob-identical to main), so the
+    // only bytes at risk anywhere are the ones outside the scan root. This is
+    // the live shape exactly: four fires read AT RISK 0 while 111 files died.
+    stage(repo, 'raw/shipped.png', 'SHIPPED-BYTES');
+    stageNeighbour(repo, 'lane-z-salvage', 'src/Lost.ts', 'BYTES IN NO OBJECT DATABASE');
+    // The pre-s2196 shape: no neighbour enumeration at all.
+    const old = mutateAudit(
+      '  if (!existsSync(WORKTREES_DIR)) return [];',
+      '  return [];',
+    );
+    const { rc, out } = runAudit(repo, old);
+    assert.equal(rc, 0, out);
+    assert.ok(
+      !out.includes('lane-z-salvage'),
+      `the mutant unexpectedly named the unaudited tree — the mutation did not reproduce the defect:\n${out}`,
+    );
+    // THE WHOLE POINT: the mutant certifies a clean board while bytes die.
+    assert.match(out, /AT RISK[^:]*: 0 files/, out);
+    // ...and the cured audit, same fixture, still reports AT RISK 0 — the
+    // declaration must ADD visibility, never manufacture a false red.
+    const cured = runAudit(repo);
+    assert.match(cured.out, /AT RISK[^:]*: 0 files/, cured.out);
+    assert.match(cured.out, /worktrees\/lane-z-salvage/, cured.out);
+  } finally {
+    rmSync(repo, { recursive: true, force: true });
+  }
+});
+
+test('the declaration EXCLUDES registered worktrees, resolved from git not a hardcoded list', () => {
+  const repo = makeRepo();
+  try {
+    stage(repo, 'raw/other.png', 'SO THE SCAN IS NOT EMPTY');
+    stageNeighbour(repo, 'lane-z-salvage', 'src/Lost.ts', 'BYTES IN NO OBJECT DATABASE');
+    // A REAL registered worktree, sitting in exactly the same parent directory.
+    git(repo, 'worktree', 'add', '--quiet', '-b', 'lane/live', join(repo, 'worktrees/lane-live'), 'main');
+    const { rc, out } = runAudit(repo);
+    assert.equal(rc, 0, out);
+    assert.match(out, /worktrees\/lane-z-salvage/, `the unregistered tree stopped being named:\n${out}`);
+    assert.ok(
+      !out.includes('worktrees/lane-live'),
+      `a REGISTERED worktree was reported as unaudited — git owns it, and naming it is noise:\n${out}`,
+    );
+    // Resolved from git's own answer. A hardcoded lane list is a defect awaiting
+    // a rename: the slot->branch mapping has already rotted once (F-1464-3).
+    assert.match(
+      AUDIT_SRC,
+      /git\('worktree', 'list', '--porcelain'\)/,
+      'the audit no longer resolves registration from git worktree list (F-2196-1)',
+    );
+  } finally {
+    rmSync(repo, { recursive: true, force: true });
+  }
+});
+
 test('selects by BLOB, not name: regenerated bytes under a tracked name are AT RISK', () => {
   const repo = makeRepo();
   try {
