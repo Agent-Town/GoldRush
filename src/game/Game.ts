@@ -267,7 +267,7 @@ import { disposeObject3D } from '../utils/dispose';
 import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
-import { depenetrateFromBlockers } from '../world/LandmarkCollision';
+import { depenetrateFromBlockers, depenetrateToWalkable } from '../world/LandmarkCollision';
 import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
 import { PowerWireView } from '../world/PowerWireView';
 import {
@@ -1298,6 +1298,9 @@ export class Game {
   private fixedTickElapsed = 0;
   private activeTickElapsed = 0;
   private timeAlive = 0;
+  private movePinSeconds = 0;
+  private movePinReported = false;
+  private movePinDiagnostic: { x: number; z: number; sample: Terrain.TerrainSample; sinceSeconds: number } | null = null;
   private kills = 0;
   private baronBeatenThisRun = false;
   private baronCeremony: { atSim: number; startedTickElapsed: number } | null = null;
@@ -3039,33 +3042,60 @@ export class Game {
     const terrain = {
       bounds: Terrain.bounds,
       sample: (x: number, z: number) => this.actorTerrainSample(x, z),
-      depenetrate: (point: { x: number; z: number }, maxDistance: number) => depenetrateFromBlockers(
+      depenetrate: (point: { x: number; z: number }, maxDistance: number) => depenetrateToWalkable(
         point,
-        this.heroBlockers(),
-        Balance.hero.radius + 0.08,
+        (x, z) => this.actorTerrainSample(x, z).walkable,
         maxDistance,
       ),
     };
     if (!this.mpActorIntents) {
+      const intents = this.e8PhysicsIntents(0, this.primaryActor, fallbackIntents, simDelta);
+      const beforeX = this.primaryActor.group.position.x;
+      const beforeZ = this.primaryActor.group.position.z;
       this.primaryActor.update(
         simDelta,
-        this.e8PhysicsIntents(0, this.primaryActor, fallbackIntents, simDelta),
+        intents,
         terrain,
         this.harvestSnapshot.channeling,
       );
+      this.watchMovePin(this.primaryActor, fallbackIntents, beforeX, beforeZ, simDelta);
       return;
     }
     for (let slot = 0; slot < this.actors.length; slot += 1) {
       const actor = this.actors[slot];
       if (!actor?.group.visible) continue;
       const channeling = this.harvestSnapshot.channels.some((channel) => channel.actorId === String(slot) && channel.channeling);
+      const rawIntents = this.mpActorIntents[slot] ?? intentsFromLockstepInput(null);
+      const intents = this.e8PhysicsIntents(slot, actor, rawIntents, simDelta);
+      const beforeX = actor.group.position.x;
+      const beforeZ = actor.group.position.z;
       actor.update(
         simDelta,
-        this.e8PhysicsIntents(slot, actor, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), simDelta),
+        intents,
         terrain,
         channeling,
       );
+      if (actor === this.localActor) this.watchMovePin(actor, rawIntents, beforeX, beforeZ, simDelta);
     }
+  }
+
+  private watchMovePin(actor: Hero, intents: Intents, beforeX: number, beforeZ: number, delta: number): void {
+    const hasIntent = intents.move.lengthSq() > 0;
+    const displacementSq = (actor.group.position.x - beforeX) ** 2 + (actor.group.position.z - beforeZ) ** 2;
+    if (!hasIntent || displacementSq > 1e-12) {
+      this.movePinSeconds = 0;
+      this.movePinReported = false;
+      return;
+    }
+    this.movePinSeconds += delta;
+    if (this.movePinSeconds <= 2 || this.movePinReported) return;
+    this.movePinReported = true;
+    this.movePinDiagnostic = {
+      x: actor.group.position.x,
+      z: actor.group.position.z,
+      sample: this.actorTerrainSample(actor.group.position.x, actor.group.position.z),
+      sinceSeconds: this.movePinSeconds,
+    };
   }
 
   private e8PhysicsIntents(slot: number, actor: Hero, intents: Intents, fixedDelta: number): Intents {
@@ -5232,6 +5262,7 @@ export class Game {
       targetScore: 0,
       complete: false,
       heroPos,
+      movePin: this.movePinDiagnostic,
       heroRenderPos: {
         x: localActor.renderPosition.x,
         y: localActor.renderPosition.y,
