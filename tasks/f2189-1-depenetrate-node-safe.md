@@ -68,8 +68,9 @@ But `src/world/LandmarkCollision.ts:1` is a **Vite-only** module specifier:
 import registryText from '../../assets/pilots/map-rebuild-spike/landmark-collision-contract.json?raw';
 ```
 
-Playwright spec files run in **node**, and three specs import `RunSuspend` at node level
-(`e2e/restore-validation.spec.ts:14`, `e2e/mp-arsenal.spec.ts`, `e2e/lane-gold-quantization.spec.ts`).
+Playwright spec files run in **node**, and three specs import `RunSuspend` at node level —
+`e2e/restore-validation.spec.ts`, `e2e/mp-arsenal.spec.ts`, `e2e/lane-gold-quantization.spec.ts`
+(cited by content, not coordinate: grep each for `from '../src/game/RunSuspend'`).
 Node cannot resolve `?raw`, throws `needs an import attribute of "type: json"`, and Playwright
 **aborts whole-suite collection on any such error**. Measured, same command, same machine:
 
@@ -119,8 +120,9 @@ if (hero?.group?.position) hero.group.position.y = snapshot.hero.position.y;
 ```
 
 `git log -S` attributes it to **`f56c0ea36` — `runner(lane-a): lane-hero-y-restore-roundtrip.md`**,
-whose entire purpose was curing `e2e/restore-validation.spec.ts:658` (*"active megaproject wrecker
-references survive strict normalization and restore"*), a test whose failure was exactly one
+whose entire purpose was curing `e2e/restore-validation.spec.ts:658`
+("active megaproject wrecker references survive strict normalization and restore"),
+a test whose failure was exactly one
 difference: `root.hero.position.y`. The deletion is *plausibly* right — the new relocate recomputes
 height via `heroVisualYAt` and re-applying the saved `y` would undo it — **but nobody has verified
 it, because F-2189-1 stops that suite from collecting at all.**
