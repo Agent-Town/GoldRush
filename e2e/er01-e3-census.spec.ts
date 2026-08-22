@@ -48,7 +48,15 @@ for (const contract of voltage.contracts) {
         const rig = { ...Balance.sparkRig };
         restoreRig = () => Object.assign(Balance.sparkRig, rig);
         for (const seed of seeds) expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).not.toThrow();
-        expect(mechanics.buildables).toBeUndefined();
+        // re-pinned s2168 (F-2167-1/F-2168-1): ap16-1 8465f6b33 gave every admitted contract the core registry set.
+        expect(mechanics.buildables.map(({ id, source }: { id: string; source: string }) => ({ id, source }))).toEqual([
+          { id: 'sentry_beacon', source: 'buildables.registry' },
+          { id: 'palisade', source: 'buildables.registry' },
+          { id: 'sluice', source: 'buildables.registry' },
+          { id: 'stockpile', source: 'buildables.registry' },
+          { id: 'assay_office', source: 'buildables.registry' },
+        ]);
+        expect(mechanics.buildables.map(({ id }: { id: string }) => id)).not.toContain('turret');
         expect(mechanics.interactables.flatMap(({ operations }: { operations: string[] }) => operations)).toEqual([]);
         expect(mechanics.rules).toEqual(expect.arrayContaining([
           {
@@ -187,15 +195,23 @@ for (const contract of voltage.contracts) {
         const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
         const rig = { ...Balance.sparkRig };
         restoreRig = () => Object.assign(Balance.sparkRig, rig);
+        // re-pinned s2168 (F-2167-1/F-2168-1): ap16-1 8465f6b33 gave every admitted contract the core registry set.
         expect(mechanics).toMatchObject({
-          buildables: [{
-            id: 'capacitor_bank',
-            operation: 'BUILD',
-            meaning: 'Stores 0.05 Wh and returns up to 12 W when the trunk is cut.',
-            cost: 75,
-            maxCount: 4,
-            source: 'twist.powerGrid',
-          }],
+          buildables: [
+            { id: 'sentry_beacon', source: 'buildables.registry' },
+            { id: 'palisade', source: 'buildables.registry' },
+            { id: 'sluice', source: 'buildables.registry' },
+            { id: 'stockpile', source: 'buildables.registry' },
+            { id: 'assay_office', source: 'buildables.registry' },
+            {
+              id: 'capacitor_bank',
+              operation: 'BUILD',
+              meaning: 'Stores 0.05 Wh and returns up to 12 W when the trunk is cut.',
+              cost: 75,
+              maxCount: 4,
+              source: 'twist.powerGrid',
+            },
+          ],
           interactables: expect.arrayContaining([
             { id: 'lantern_post', count: 2, operations: [], source: 'tileParams.prePlacedBuildables' },
             { id: 'sentry_beacon', count: 3, operations: [], source: 'tileParams.prePlacedBuildables' },
