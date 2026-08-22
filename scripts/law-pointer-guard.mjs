@@ -133,6 +133,59 @@ const ILLUSTRATIVE = new Map([
   ['e2e/foo.spec.ts:123', 'author-task §5 CITATION LAW template placeholder — a made-up spec showing the required shape.'],
 ]);
 
+// s2198 (F-2198-1): a law surface does not only cite lines — it ORDERS fires to run
+// INSTRUMENTS, and it names most of them WITHOUT a coordinate ("run `node
+// scripts/lane-usable.mjs <slot>` before any refill"). POINTER below requires `:<digits>`,
+// so every one of those bare citations was invisible here; and gate-caller-audit cannot
+// see them either, because it declares law files outside its edge vocabulary AND its
+// subject set is LEXICAL — a script earns a reviewed grandfather entry only if its
+// filename happens to contain guard|assert|check|audit|contract|ratchet. Measured s2198:
+// 23 scripts are cited by a law surface as an instrument a fire must run, and 9 of them
+// are invisible to that audit by name alone (lane-usable, lane-freeze-classify,
+// lane-absorbed-lines, authorable-candidates, master-shipped-classifier, extract-alpha,
+// gazette-backfill-sweep, gate-battery, red-inventory-lookup).
+//
+// So a law could order every fire to run an instrument that does not exist, and NOTHING
+// would say so. That is not hypothetical: F-1667-1 is this shape one level down — a
+// gate-caller baseline entry excused two guards from the reachability audit for 133 fires
+// on the strength of a caller in scripts/fire.md that had never existed.
+//
+// Measured s2198 across all six SURFACES: 31 distinct scripts/ citations, 0 dead. The
+// defect cured here is the ABSENCE OF THE CHECK, not a casualty — the same honest reading
+// as F-2197-1. It reds, rather than warning, because it is precisely the UNRESOLVABLE
+// defect this file already reds on, differing only by whether a line number was typed.
+const INSTRUMENT = /`?(scripts\/[A-Za-z0-9_.-]+\.(?:mjs|sh))`?(\s*:\s*\d+)?/g;
+
+// Excluded by NAME with a reason. Never widen this by pattern.
+const ILLUSTRATIVE_INSTRUMENTS = new Map([]);
+
+/** Bare instrument citations in the law surfaces: does the named tool actually exist? */
+function collectInstruments() {
+  const found = [];
+  const seen = new Set();
+  for (const surface of SURFACES) {
+    let src;
+    try {
+      src = fs.readFileSync(path.join(ROOT, surface), 'utf8');
+    } catch {
+      continue; // a MISSING surface is already its own red, above
+    }
+    for (const m of src.matchAll(INSTRUMENT)) {
+      if (m[2]) continue; // has a :line — POINTER owns it, and double-reporting one defect twice helps nobody
+      const cited = m[1];
+      const id = `${surface} -> ${cited}`;
+      if (seen.has(id)) continue;
+      seen.add(id);
+      if (ILLUSTRATIVE_INSTRUMENTS.has(cited)) {
+        found.push({ surface, cited, id, state: 'illustrative' });
+        continue;
+      }
+      found.push({ surface, cited, id, state: resolveCited(cited) ? 'resolved' : 'dead' });
+    }
+  }
+  return found;
+}
+
 // Excluded by NAME with a reason. Never widen this by pattern.
 const KNOWN_ROTTEN = new Map([
   [`${GOAL_LEDGER}[rf-34-hero-y-restore-roundtrip] -> Game.ts:6669`, 'The leaf says this diagnosis coordinate is knowingly rotten. Re-deriving the first divergent write requires rerunning the diagnosis, not guessing a nearby line.'],
@@ -284,7 +337,16 @@ if (UPDATE) {
   process.exit(0);
 }
 
-const problems = [...backlogProblems];
+const instruments = collectInstruments();
+const problems = [
+  ...backlogProblems,
+  ...instruments
+    .filter((i) => i.state === 'dead')
+    .map(
+      (i) =>
+        `DEAD INSTRUMENT  ${i.id} — the law orders fires to run it and no such file exists.\n      A law that names a tool nobody can run is an instruction that silently does nothing (F-1667-1's shape).\n      Fix the path, restore the tool, or add it to ILLUSTRATIVE_INSTRUMENTS with a reason.`,
+    ),
+];
 let checked = 0;
 for (const p of pointers) {
   if (p.state === 'backlog-coordinate') continue;
@@ -329,9 +391,11 @@ if (unscanned.length) {
   }
 }
 console.log(`  pointers      : ${pointers.length}  (checked ${checked}, illustrative ${pointers.filter((p) => p.state === 'illustrative').length}, known-rotten ${pointers.filter((p) => p.state === 'known-rotten').length})`);
+console.log(`  instruments   : ${instruments.length}  (resolved ${instruments.filter((i) => i.state === 'resolved').length}, dead ${instruments.filter((i) => i.state === 'dead').length}, illustrative ${instruments.filter((i) => i.state === 'illustrative').length})`);
+if (REPORT) for (const i of instruments) console.log(`  ${i.state === 'dead' ? 'DEAD' : 'ok  '}          ${i.id}`);
 
 if (problems.length) {
-  console.log(`\nFAIL — ${problems.length} pointer problem(s):`);
+  console.log(`\nFAIL — ${problems.length} law-surface problem(s):`);
   for (const p of problems) console.log(`  ${p}`);
   console.log('\nA rotted pointer does not condemn its claim — but in a law it manufactures a false accusation. Re-read, then re-base.');
   process.exit(1);

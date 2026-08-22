@@ -290,3 +290,39 @@ test('BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal
   r = run(terminal);
   assert.equal(r.status, 0, r.stdout);
 });
+
+// s2198 (F-2198-1): a law surface ORDERS fires to run instruments, and names most of them
+// WITHOUT a coordinate. Those bare citations were invisible to this guard (POINTER requires
+// `:<digits>`) and to gate-caller-audit (law files are outside its edge vocabulary, and its
+// subject set is lexical — a script earns a reviewed grandfather entry only if its filename
+// happens to contain guard|assert|check|audit|contract|ratchet; 9 of the 23 law-cited
+// instruments do not). So a law could name a tool that does not exist and nothing would say
+// so — F-1667-1's shape, which excused two guards from the reachability audit for 133 fires
+// on the strength of a caller in scripts/fire.md that had never existed.
+test('DEAD INSTRUMENT: a law ordering fires to run a tool that does not exist is a red (F-2198-1)', (t) => {
+  const dir = fixture(t, {
+    law: 'Before any refill, run `node scripts/no-such-tool.mjs <slot>` and read the WORD.\n',
+    target: TARGET,
+  });
+  const r = run(dir);
+  assert.equal(r.status, 1, 'a law naming a nonexistent instrument must FAIL, not pass quietly');
+  assert.match(r.stdout, /DEAD INSTRUMENT/);
+  assert.match(r.stdout, /no-such-tool\.mjs/, 'the red must name the tool that cannot be run');
+});
+
+test('a bare citation to a tool that EXISTS resolves and does not red', (t) => {
+  const dir = fixture(t, { law: 'Run `bash scripts/target.sh` as the last act.\n', target: TARGET });
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout);
+  assert.match(r.stdout, /instruments\s+:\s+1\s+\(resolved 1, dead 0/);
+});
+
+// The two arms must not both report one defect: a citation carrying a coordinate is POINTER's,
+// and UNRESOLVABLE already covers it. Double-reporting trains readers to skim the red.
+test('a citation WITH a coordinate stays POINTER-owned and is not counted as an instrument', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout);
+  assert.match(r.stdout, /instruments\s+:\s+0\s+\(resolved 0, dead 0/);
+});
