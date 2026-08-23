@@ -277,6 +277,13 @@ export function selectSubjects(root) {
 export const VERDICT_MARKER = /⛔|✅ CLEAR|\? UNKNOWN/;
 
 /**
+ * The sibling's REFUSAL banner (F-2240-1). Deliberately narrower than
+ * VERDICT_MARKER: every refusal drain-block-check prints leads with these two
+ * words, and no VERDICT it prints contains them.
+ */
+export const CANNOT_VERIFY = /⛔ CANNOT VERIFY/;
+
+/**
  * Reduce one drain-block-check invocation to the text that may be CLASSIFIED --
  * and refuse to classify a CRASH as a verdict.
  *
@@ -310,6 +317,39 @@ export const VERDICT_MARKER = /⛔|✅ CLEAR|\? UNKNOWN/;
  */
 export function classifiableCapture(cap) {
   const stdout = cap.stdout ?? '';
+  // F-2240-1: a REFUSAL is not a VERDICT, and until s2240 this consumer had no
+  // way to say so. drain-block-check carries the convention this whole family
+  // carries -- 2 = "could not answer", 1 = "answered, and the answer refuses"
+  // -- and its refusal banner leads with ⛔, which VERDICT_MARKER matches. So a
+  // refusal fell through the crash filter, was classified like any other
+  // verdict, and `verdictLine` handed bucketOf the string "⛔ CANNOT VERIFY",
+  // which buckets `closed`: DO NOT DRAIN, nothing owed.
+  //
+  // MEASURED s2240, ground truth = ONE REAL DRAIN, sibling stubbed at its real
+  // exit code with drain-block-check.mjs:426-439 reproduced verbatim:
+  //   sibling healthy            -> drains=1 closed=0 -> "⛔ NOT DRY"      rc=1
+  //   sibling REFUSES  (rc=2)    -> drains=0 closed=1 -> "✅ DRY ... earned" rc=0
+  //   REVERSE CONTROL, genuinely
+  //   CLOSED           (rc=1)    -> drains=0 closed=1 -> "✅ DRY ... earned" rc=0
+  // The defect arm and a genuinely-closed board were BYTE-IDENTICAL on stdout,
+  // on the bucket counts AND on rc in both modes -- so the refusal that exists
+  // precisely to stop a fire acting on a board it could not read was converted
+  // into the strongest clearance this tool can print (the s1061 banner).
+  //
+  // BOTH conditions are required, and that is the reverse control rather than
+  // caution: keying on ⛔ alone would reclassify every genuinely-CLOSED subject
+  // (8 of 8 live) as unverifiable, and keying on rc=2 alone would swallow a
+  // usage error that belongs in the crash arm (empty stdout, no banner). This
+  // consumer never passes --strict to the child, so on THIS call shape rc=2 is
+  // always "could not answer" -- verified against every exit(2) in that file.
+  if (cap.status === 2 && CANNOT_VERIFY.test(stdout)) {
+    const detail = (stdout.split('\n').map((l) => l.trim())
+      .find((l) => /^(corpus tree|dispatch corpus)\s*:/.test(l)) ?? 'sibling refused to verify')
+      .replace(/\s+/g, ' ');
+    // text:'' so bucketOf falls to the LOUD bucket BY CONSTRUCTION, exactly as
+    // F-2211-1 requires of a crash -- never rely on the banner arm alone.
+    return { text: '', crashed: false, refused: true, detail };
+  }
   if (!cap.failed || VERDICT_MARKER.test(stdout)) {
     return { text: stdout, crashed: false, detail: '' };
   }
@@ -390,9 +430,13 @@ export function bucketOf(output) {
 // answer refuses" -- the convention drain-block-check, master-shipped-classifier
 // and review-evidence-audit already carry. It outranks every bucket verdict
 // because when the corpus was never read, the buckets are not evidence at all.
-export function exitCodeFor(buckets, strict, corpus = 'read') {
+export function exitCodeFor(buckets, strict, corpus = 'read', refusedCount = 0) {
   if (!strict) return 0;
   if (corpus !== 'read') return 2;
+  // F-2240-1: "could not answer" outranks "answered". A refusal from the sibling
+  // means no verdict is available for that subject, so 2 rather than 1 even when
+  // the refused subjects are also (fail-safe) sitting in the drain bucket.
+  if (refusedCount) return 2;
   if (buckets.drain.length) return 1;
   if (buckets.unknown.length) return 2;
   return 0;
@@ -433,20 +477,26 @@ function main() {
 
   const buckets = { merged: [], closed: [], unknown: [], drain: [] };
   const crashed = [];
+  const refused = [];
   for (const f of sel.subjects) {
     let cap;
     try {
       cap = {
         failed: false,
+        status: 0,
         stdout: execFileSync('node', [path.join(root, 'scripts', 'drain-block-check.mjs'), f],
           { encoding: 'utf8', cwd: root }),
       };
     } catch (e) {
       // NOT an edge case: rc=1 is how every "do not drain" verdict arrives.
-      cap = { failed: true, stdout: e.stdout, stderr: e.stderr };
+      // F-2240-1: carry the STATUS too. rc=1 and rc=2 are different acts in this
+      // family's convention, and without the code the consumer cannot tell a
+      // refusal from a refusal-to-drain.
+      cap = { failed: true, status: e.status, stdout: e.stdout, stderr: e.stderr };
     }
-    const { text, crashed: isCrash, detail } = classifiableCapture(cap);
+    const { text, crashed: isCrash, refused: isRefusal, detail } = classifiableCapture(cap);
     if (isCrash) crashed.push(`${f}  [${detail}]`);
+    if (isRefusal) refused.push(`${f}  [${detail}]`);
     buckets[bucketOf(text)].push(f);
   }
 
@@ -469,6 +519,15 @@ function main() {
     // investigating the wrong subject entirely.
     console.log(`  ⚠️  CLASSIFIER CRASHED on ${crashed.length} subject(s) — counted as drains, NOT as verdicts:`);
     for (const c of crashed) console.log(`      ${c}`);
+    console.log('');
+  }
+  if (refused.length) {
+    // F-2240-1: named separately from CLASSIFIER CRASHED for the same reason
+    // F-2211-1 named that separately from a verdict -- a fire sent to drain a
+    // subject whose classifier REFUSED is investigating the wrong subject. The
+    // sibling did not decline to drain this; it declined to answer at all.
+    console.log(`  ⛔ SIBLING REFUSED to verify ${refused.length} subject(s) — counted as drains, NOT as verdicts:`);
+    for (const r of refused) console.log(`      ${r}`);
     console.log('');
   }
   if (sel.corpus === 'linked-worktree') {
@@ -494,6 +553,12 @@ function main() {
     console.log('     This is NOT a dry board. Check your cwd: `main()` roots itself at');
     console.log('     process.cwd(), so running this by absolute path from elsewhere reads');
     console.log('     a directory that has no tasks/done/ and finds nothing by construction.');
+  } else if (refused.length) {
+    // Cured at the BANNER, not merely at the exit code: advisory is the mode §2F
+    // prescribes and there the verdict travels on stdout alone (F-2210-1).
+    console.log(`  ⛔ CANNOT VERIFY — drain-block-check REFUSED on ${refused.length} subject(s) (rc=2).`);
+    console.log('     "Could not answer" is not "closed". No verdict is offered on this board');
+    console.log('     until the sibling answers — re-run from the repo root and read its refusal.');
   } else if (buckets.drain.length) {
     console.log(`  ⛔ NOT DRY — ${buckets.drain.length} undrained done-move(s). Do not declare §2F.`);
   } else if (buckets.unknown.length) {
@@ -504,7 +569,7 @@ function main() {
   console.log('\n  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed');
   console.log('  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.');
 
-  process.exit(exitCodeFor(buckets, strict, sel.corpus));
+  process.exit(exitCodeFor(buckets, strict, sel.corpus, refused.length));
 }
 
 // NOTE: compare via pathToFileURL, never a `file://${argv[1]}` template. This
