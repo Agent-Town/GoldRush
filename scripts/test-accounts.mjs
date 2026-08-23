@@ -4,11 +4,14 @@ import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assertWranglerVersion } from './wrangler-binary.mjs';
+import { createLedgerServer } from '../server/ledger/serve.mjs';
+import { SqliteStorage } from '../server/ledger/storage.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
 const ARTIFACT_DIR = path.join(ROOT, 'artifacts/accounts-worker');
 const STATE_ROOT = path.join(ROOT, 'test-results/accounts-worker-state');
+const SQLITE_ROOT = path.join(STATE_ROOT, 'sqlite');
 const checks = [];
 
 await main();
@@ -17,20 +20,24 @@ async function main() {
   assertWranglerVersion('test:accounts');
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await rm(STATE_ROOT, { recursive: true, force: true });
+  await mkdir(SQLITE_ROOT, { recursive: true });
 
   try {
-    await checkUnconfigured503();
-    await checkDevFlow();
+    for (const [backend, start] of [['kv', startWrangler], ['sqlite', startLedger]]) {
+      const before = checks.length;
+      await checkUnconfigured503(start);
+      await checkDevFlow(start);
+      console.log(`accounts ${backend} checks passed (${checks.length - before})`);
+    }
     await writeSummary('passed');
-    console.log(`accounts worker checks passed (${checks.length})`);
   } catch (err) {
     await writeSummary('failed', err);
     throw err;
   }
 }
 
-async function checkUnconfigured503() {
-  const server = await startWrangler('unconfigured', false);
+async function checkUnconfigured503(start) {
+  const server = await start('unconfigured', false);
   try {
     const response = await post(server.url, '/api/request-code', { email: 'family@example.com' });
     assertEqual(response.status, 503, 'request-code returns 503 without DEV_AUTH or Resend');
@@ -39,8 +46,8 @@ async function checkUnconfigured503() {
   }
 }
 
-async function checkDevFlow() {
-  const server = await startWrangler('dev', true);
+async function checkDevFlow(start) {
+  const server = await start('dev', true);
   try {
     const badCors = await post(server.url, '/api/request-code', { email: 'cors@example.com' }, undefined, 'https://evil.example');
     assertEqual(badCors.status, 403, 'bad CORS origin rejected');
@@ -230,6 +237,19 @@ async function startWrangler(name, devAuth) {
         });
       });
       if (child.exitCode === null) child.kill('SIGKILL');
+    },
+  };
+}
+
+async function startLedger(name, devAuth) {
+  const storage = new SqliteStorage(path.join(SQLITE_ROOT, `${name}.db`));
+  const server = await createLedgerServer({ storage, env: devAuth ? { DEV_AUTH: '1' } : {} });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  return {
+    url: `http://127.0.0.1:${server.address().port}`,
+    async stop() {
+      await new Promise((resolve) => server.close(resolve));
+      storage.close();
     },
   };
 }

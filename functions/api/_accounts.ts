@@ -1,23 +1,24 @@
 import { bumpCounter } from './_ratelimit';
 
-type KVListResult = {
+export type LedgerListResult = {
   keys: { name: string }[];
   list_complete: boolean;
   cursor?: string;
 };
 
-type KVNamespaceLike = {
+export type LedgerStorage = {
   get(key: string): Promise<string | null>;
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
   delete(key: string): Promise<void>;
-  list(options?: { prefix?: string; cursor?: string }): Promise<KVListResult>;
+  list(options?: { prefix?: string; cursor?: string }): Promise<LedgerListResult>;
 };
 
 type AccountsEnv = {
-  ACCOUNTS?: KVNamespaceLike;
+  ACCOUNTS?: LedgerStorage;
   DEV_AUTH?: string;
   RESEND_API_KEY?: string;
   AUTH_CODE_PEPPER?: string;
+  ALLOWED_CORS_ORIGINS?: ReadonlySet<string>;
 };
 
 type AccountsContext = {
@@ -314,7 +315,7 @@ async function route(
   context: AccountsContext,
   handler: (value: { request: Request; env: AccountsEnv; cors: Record<string, string> }) => Promise<Response>,
 ): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   try {
@@ -325,7 +326,7 @@ async function route(
   }
 }
 
-function corsHeaders(request: Request): Record<string, string> | null {
+function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'authorization, content-type',
@@ -334,7 +335,7 @@ function corsHeaders(request: Request): Record<string, string> | null {
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || extraOrigins?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;
@@ -351,7 +352,7 @@ function error(cors: Record<string, string>, status: number, code: string, messa
   return json(cors, { ok: false, error: code, message }, status);
 }
 
-function requireAccounts(env: AccountsEnv, cors: Record<string, string>): KVNamespaceLike | Response {
+function requireAccounts(env: AccountsEnv, cors: Record<string, string>): LedgerStorage | Response {
   return env.ACCOUNTS ?? error(cors, 503, 'sign_in_not_enabled', 'sign-in not yet enabled');
 }
 
@@ -429,7 +430,7 @@ function validateEnvelope(envelope: JsonRecord, profileId: string): SaveMetadata
 
 async function requireSession(
   request: Request,
-  kv: KVNamespaceLike,
+  kv: LedgerStorage,
   cors: Record<string, string>,
 ): Promise<{ token: string; record: SessionRecord } | Response> {
   const token = await sessionToken(request);
@@ -455,7 +456,7 @@ async function sessionToken(request: Request): Promise<string | null> {
   }
 }
 
-async function loadOrCreateAccount(kv: KVNamespaceLike, email: string, emailHash: string): Promise<AccountRecord> {
+async function loadOrCreateAccount(kv: LedgerStorage, email: string, emailHash: string): Promise<AccountRecord> {
   const raw = await kv.get(`account:${emailHash}`);
   const existing = parseAccount(raw);
   if (existing) return existing;
@@ -540,7 +541,7 @@ function parseCode(raw: string | null): CodeRecord | null {
   }
 }
 
-async function deleteSessionsForAccount(kv: KVNamespaceLike, accountId: string): Promise<void> {
+async function deleteSessionsForAccount(kv: LedgerStorage, accountId: string): Promise<void> {
   let cursor: string | undefined;
   do {
     const page = await kv.list({ prefix: 'session:', cursor });
@@ -555,7 +556,7 @@ async function deleteSessionsForAccount(kv: KVNamespaceLike, accountId: string):
   } while (cursor);
 }
 
-async function deletePrefix(kv: KVNamespaceLike, prefix: string): Promise<void> {
+async function deletePrefix(kv: LedgerStorage, prefix: string): Promise<void> {
   let cursor: string | undefined;
   do {
     const page = await kv.list({ prefix, cursor });
@@ -573,7 +574,7 @@ function saveEntryPrefix(accountId: string, profileId: string): string {
   return `${saveKey(accountId, profileId)}:entry:`;
 }
 
-async function loadSaveHistory(kv: KVNamespaceLike, accountId: string, profileId: string): Promise<SaveRecord[]> {
+async function loadSaveHistory(kv: LedgerStorage, accountId: string, profileId: string): Promise<SaveRecord[]> {
   const saves: { save: SaveRecord; key: string }[] = [];
   const key = saveKey(accountId, profileId);
   const legacyCurrent = parseSave(await kv.get(key));
@@ -593,7 +594,7 @@ async function loadSaveHistory(kv: KVNamespaceLike, accountId: string, profileId
     .map(({ save }) => save);
 }
 
-async function newestSaveEntryKeys(kv: KVNamespaceLike, prefix: string, limit: number): Promise<string[]> {
+async function newestSaveEntryKeys(kv: LedgerStorage, prefix: string, limit: number): Promise<string[]> {
   const keys: string[] = [];
   let cursor: string | undefined;
   do {
@@ -607,7 +608,7 @@ async function newestSaveEntryKeys(kv: KVNamespaceLike, prefix: string, limit: n
   return keys;
 }
 
-async function listProfileIds(kv: KVNamespaceLike, accountId: string): Promise<string[]> {
+async function listProfileIds(kv: LedgerStorage, accountId: string): Promise<string[]> {
   const ids = new Set<string>();
   const prefix = `save:${accountId}:`;
   let cursor: string | undefined;

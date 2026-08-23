@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
+import { mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import { createServer } from 'vite';
+import { createLedgerServer } from '../server/ledger/serve.mjs';
+import { SqliteStorage } from '../server/ledger/storage.mjs';
 
 const SECRET = 'assay-worker-test-secret';
 // The season roll (owner 2026-08-15): the county writes in the current season's key shape, and the
@@ -10,23 +15,41 @@ const KEY = 'standings:s2:epoch-1-frontier:the-claim';
 const ARCHIVE_KEY = 'standings:epoch-1-frontier:the-claim';
 const ASSAY_INDEX_KEY = 'assay-queue-index';
 let checks = 0;
+let backend = 'kv';
+let sqliteId = 0;
+let httpRoutes;
+const sqliteRoot = await mkdtemp(path.join(tmpdir(), 'gold-rush-ledger-standings-'));
+const sqliteStores = [];
+const httpServers = [];
+const serversByStorage = new WeakMap();
 
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 try {
   const { onRequest } = await vite.ssrLoadModule('/functions/api/standings.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
-  await checkAssayIndexRace(onRequest, onRequestAssayQueue);
-  await checkPosts(onRequest);
-  await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
-  await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
-  await checkVerdictSlipExactMatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
-  await checkAssayIndex(onRequest, onRequestAssayQueue);
-  await checkUnrankedBound(onRequest);
-  await checkRetroAssay(onRequest, onRequestAssayQueue);
-  await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
-  console.log(`standings assay checks passed (${checks})`);
+  httpRoutes = {
+    '/api/standings': onRequest,
+    '/api/standings/assay-queue': onRequestAssayQueue,
+    '/api/standings/assay-verdict': onRequestAssayVerdict,
+  };
+  for (backend of ['kv', 'sqlite']) {
+    checks = 0;
+    await checkAssayIndexRace(onRequest, onRequestAssayQueue);
+    await checkPosts(onRequest);
+    await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+    await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
+    await checkVerdictSlipExactMatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+    await checkAssayIndex(onRequest, onRequestAssayQueue);
+    await checkUnrankedBound(onRequest);
+    await checkRetroAssay(onRequest, onRequestAssayQueue);
+    await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+    console.log(`standings assay ${backend} checks passed (${checks})`);
+  }
 } finally {
+  await Promise.all(httpServers.map((server) => new Promise((resolve) => server.close(resolve))));
+  sqliteStores.forEach((store) => store.close());
+  await rm(sqliteRoot, { recursive: true, force: true });
   await vite.close();
 }
 
@@ -426,6 +449,11 @@ async function call(route, method, url, body, kv) {
 async function workerCall(route, method, url, body, kv, secret, key = secret, extraEnv = {}) {
   const headers = new Headers(body === undefined ? {} : { 'content-type': 'application/json' });
   if (key !== undefined) headers.set('x-assay-key', key);
+  if (backend === 'sqlite') {
+    const base = await serviceFor(kv, secret, extraEnv);
+    const response = await fetch(`${base}${url}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+    return { status: response.status, body: await response.json() };
+  }
   const response = await route({
     request: new Request(`http://127.0.0.1${url}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) }),
     env: { TELEMETRY: kv, ...(secret === undefined ? {} : { ASSAY_WORKER_SECRET: secret }), ...extraEnv },
@@ -435,6 +463,13 @@ async function workerCall(route, method, url, body, kv, secret, key = secret, ex
 
 function makeKv({ barrierIndexReads = 0, pauseAfterBoardReads = 0 } = {}) {
   const values = new Map();
+  const storage = backend === 'sqlite'
+    ? new SqliteStorage(path.join(sqliteRoot, `${sqliteId += 1}.db`))
+    : {
+        get: async (key) => values.get(key) ?? null,
+        put: async (key, value) => { values.set(key, value); },
+      };
+  if (backend === 'sqlite') sqliteStores.push(storage);
   const ops = { reads: 0, writes: 0 };
   let blockedIndexReads = 0;
   let releaseIndexReads;
@@ -451,7 +486,7 @@ function makeKv({ barrierIndexReads = 0, pauseAfterBoardReads = 0 } = {}) {
     releaseBoardSweep: () => releaseBoardSweep?.(),
     get: async (key) => {
       ops.reads += 1;
-      const value = values.get(key) ?? null;
+      const value = await storage.get(key);
       if (key === ASSAY_INDEX_KEY && blockedIndexReads < barrierIndexReads) {
         blockedIndexReads += 1;
         if (blockedIndexReads === barrierIndexReads) releaseIndexReads();
@@ -463,8 +498,30 @@ function makeKv({ barrierIndexReads = 0, pauseAfterBoardReads = 0 } = {}) {
       }
       return value;
     },
-    put: async (key, value) => { ops.writes += 1; values.set(key, value); },
+    put: async (key, value, options) => { ops.writes += 1; await storage.put(key, value, options); },
+    delete: (key) => storage.delete?.(key),
+    list: (options) => storage.list?.(options),
   };
+}
+
+async function serviceFor(storage, secret, extraEnv) {
+  let services = serversByStorage.get(storage);
+  if (!services) {
+    services = new Map();
+    serversByStorage.set(storage, services);
+  }
+  const key = JSON.stringify({ secret, extraEnv });
+  if (services.has(key)) return services.get(key);
+  const server = await createLedgerServer({
+    storage,
+    handlers: httpRoutes,
+    env: { ...(secret === undefined ? {} : { ASSAY_WORKER_SECRET: secret }), ...extraEnv },
+  });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  httpServers.push(server);
+  const base = `http://127.0.0.1:${server.address().port}`;
+  services.set(key, base);
+  return base;
 }
 
 function indexEnvelope(locators, sweptAt = Date.now()) {
