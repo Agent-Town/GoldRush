@@ -1,6 +1,7 @@
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { resolveSeasonAt, SEASONS } from '../src/seasons/registry';
@@ -58,7 +59,7 @@ test('plain boot opens the season list and a season page without losing legacy s
   const legacyAt = season.startsAt - 60_000;
   const seasonName = resolveSeasonAt(seasonedAt)?.name;
   expect(seasonName).toBe('Season 2: The Same Game');
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, async (route) => {
     const params = new URL(route.request().url()).searchParams;
     const view = params.get('view');
     if (view === 'byStack' || view === 'byHarness') {
@@ -132,7 +133,7 @@ test('plain boot opens the season list and a season page without losing legacy s
 
 test('the Founding Season renders its cited chronicle at both viewports', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) => route.fulfill({
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, (route) => route.fulfill({
     status: 200,
     contentType: 'application/json',
     body: JSON.stringify({ ok: true, contracts: [], byStack: [], byHarness: [] }),
