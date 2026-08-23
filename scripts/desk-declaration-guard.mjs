@@ -298,6 +298,42 @@ export function deskSlugs(tail) {
 }
 
 /**
+ * A ROW KEY IS A WHOLE TOKEN — F-2229-1.
+ *
+ * FINDING is unanchored, so on a row about a sub-finding it matches a PREFIX and
+ * keys the row under an id that is not in the text: "F-CLAW-2X" is keyed F-CLAW-2,
+ * "F-0707-5a" is keyed F-0707-5. That manufactures a declaration for a desk item
+ * that has no row of its own, and this guard's own FAIL text is the principle it
+ * was breaking: "A mention inside another finding's row does NOT count."
+ * PROVEN BY MANUFACTURING (not by a green): desk item F-CLAW-2, whose only BACKLOG
+ * row declares F-CLAW-2X — as shipped PASS rc=0, whole-token FAIL rc=1. A false
+ * green, in a chained test:ledger-guards leg, in the permissive direction.
+ *
+ * WHY NOT IMPORT findings-state-guard's cured FINDING, which F-2228-1 anchored and
+ * which F-2227-1's rule would tell you to reuse: it rejects the trailing sub-id
+ * letter outright, so all FOUR live sub-ids (F-2131-1b, F-GNT-4b, F-0707-5a,
+ * F-CLAW-2X) would key NOTHING — trading a permissive miss for a blind one. The
+ * ledger asks "what state does this row declare?", where F-1419-2s is prose
+ * inflection of F-1419-2 and must not mint an id; this asks "what does this row
+ * KEY?", where F-2131-1b is a real finding distinct from its parent F-2131-1
+ * (BACKLOG.md:257). Two questions, two grammars — the sibling is right for its own.
+ *
+ * WHY THE DESK-TAIL SCAN IS DELIBERATELY LEFT ALONE: widening it the same way was
+ * MEASURED and is worse — across all 1457 historical desks it invents three items
+ * that have no row (F-1314-5b, F-1285-4s, F-1260-3s), two of them prose inflections,
+ * i.e. it reds the battery on ordinary handoff prose (the F-1460-1 fate). Changing
+ * only the key side regresses NOTHING: 1095 occurrences / 170 distinct undeclared
+ * before and after, and 0 undeclared on the live desk.
+ *
+ * RESIDUAL, stated rather than hidden: a future desk that routes a sub-id whose
+ * PARENT has no row (say F-GNT-4b with no F-GNT-4 row) now reads undeclared, where
+ * the two truncations used to cancel out. It has never occurred in 1457 desks, it
+ * fails LOUD, and the fire writing the desk fixes it by filing the row it should
+ * have filed. The grammar question itself is banked as F-2229-2.
+ */
+const FINDING_ROW = /\bF-(?:[A-Z0-9]{1,8}-)+\d+[A-Za-z]?\b/g;
+
+/**
  * An id is DECLARED when some BACKLOG row carries it as the first F-ID of its
  * 90-char subject zone. The markdown list bullet is stripped first so that
  * "- 🟡 **F-x" and "🟡 **F-x" are read identically.
@@ -306,7 +342,7 @@ export function declaredIds(backlogText) {
   const found = new Map();
   backlogText.split('\n').forEach((line, i) => {
     const body = line.trim().replace(/^[-*]\s+/, '');
-    const first = (body.slice(0, SUBJECT_CHARS).match(FINDING) || [])[0];
+    const first = (body.slice(0, SUBJECT_CHARS).match(FINDING_ROW) || [])[0];
     if (first && !found.has(first)) found.set(first, i + 1);
   });
   return found;
