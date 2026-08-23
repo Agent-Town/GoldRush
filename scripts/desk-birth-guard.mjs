@@ -200,6 +200,62 @@ export function isOwnerGate(gateText) {
   return hasPositiveOwnerVerb(gateText) || OWNER_GATE_ALT.some((re) => re.test(gateText));
 }
 
+/**
+ * WHERE the admission was decided — the character offset, inside gateOf()'s text,
+ * of the match that made isOwnerGate() true. -1 when it is false.
+ *
+ * WHY THIS EXISTS (F-2255-1, banked uncured by s2247 and measured here).
+ * gateOf() is DOCUMENTED as "a row's GATE clause" and RETURNS the whole row tail
+ * — from the last `GATE:` to end-of-line — and a BACKLOG row is one line of up to
+ * ~8k characters. So isOwnerGate() reads thousands of characters of unrelated
+ * trailing prose looking for a gate, and BACKLOG prose is exactly where past
+ * owner rulings get CITED. That is s2247's own lesson one file over: a basis, a
+ * record, a refutation and an intent are four different things wearing one shape.
+ *
+ * MEASURED s2255 over the live ledger, 2,022 addedRows()-shaped rows / 702 with a
+ * GATE: / 69 admitted. The deciding match sits at distance p50 0 · p75 15 · p90 76
+ * · p95 162, then jumps to a thin tail of 407 / 2,971 / 3,284. Hand-reading those
+ * three agrees with the distribution independently: ALL THREE ARE FALSE POSITIVES
+ * (F-2247-1, F-1660-1, F-1596-1) — each has a gate clause that literally opens
+ * `GATE: none`, and each is admitted by a RECORDED or QUOTED past ruling far away
+ * in trailing prose ("OWNER RULING PROPAGATED s1655", "the owner ruling naming all
+ * three BY NAME", "the owner ruling quoted verbatim in a comment").
+ *
+ * WHY THIS ONLY DECLARES AND DOES NOT NARROW — the restraint is the design
+ * (F-2218-1, F-2225-1). Bounding gateOf() to a distance would change VERDICTS in
+ * the PERMISSIVE direction: a genuine owner gate with a long preamble would stop
+ * qualifying, the item would reach no desk, and this guard exists precisely
+ * because "an owner fork on no desk is on no board Robin reads". A false RED gets
+ * waived with DESK-NOT-OWED in one line; a false GREEN is silent forever. And the
+ * cheap cure — a threshold — would be a GUESSED boundary of the kind F-2206-1
+ * forbids, on a population of 69. So the distance is REPORTED, always, and the
+ * fire decides. Do NOT "improve" this into a cutoff without re-measuring.
+ *
+ * NOTE the two admissions are deliberately NOT collapsed: OWNER_GATE_ALT's
+ * `GATE: OWNER` form legitimately decides at distance 0, and two live rows
+ * (F-1608-2, F-1120-2) are admitted there while also carrying a far incidental
+ * match. Reporting the NEAREST admission is what keeps those two honest.
+ */
+export function ownerGateDecidedAt(gateText) {
+  let best = -1;
+  for (const m of gateText.matchAll(new RegExp(OWNER_GATE.source, 'gi'))) {
+    const before = gateText.slice(0, m.index);
+    let sentenceStart = 0;
+    for (const ch of ['.', ';', '!', '?']) {
+      sentenceStart = Math.max(sentenceStart, before.lastIndexOf(ch) + 1);
+    }
+    if (!NEGATION.test(before.slice(sentenceStart))) {
+      best = m.index;
+      break;
+    }
+  }
+  for (const re of OWNER_GATE_ALT) {
+    const i = gateText.search(re);
+    if (i !== -1 && (best === -1 || i < best)) best = i;
+  }
+  return best;
+}
+
 /** Line-1 is a live lock, not a handoff, when it says ACTIVE and not lock CLEARED. */
 export function isLockLine(line1) {
   return /\bACTIVE\b/.test(line1) && !/lock CLEARED/.test(line1);
@@ -251,10 +307,14 @@ export function analyse(line1, addedRowTexts) {
   if (tail === null) return { kind: 'no-desk' };
   const qualifying = [];
   for (const text of addedRowTexts) {
-    if (!isOwnerGate(gateOf(text))) continue;
+    const gate = gateOf(text);
+    if (!isOwnerGate(gate)) continue;
     const id = rowId(text);
     if (!id) continue;
-    qualifying.push({ id, text });
+    // decidedAt is ADDITIVE and advisory (F-2255-1): no row's membership turns on
+    // it. It travels with the row so the FAIL output can say WHERE the admission
+    // came from without this function acquiring an opinion about it.
+    qualifying.push({ id, text, decidedAt: ownerGateDecidedAt(gate) });
   }
   const missing = qualifying.filter((r) => !carriesId(tail, r.id) && !notOwed(line1, r.id));
   return { kind: 'window', qualifying, missing };
@@ -352,6 +412,11 @@ function main() {
   for (const r of result.missing) {
     console.error(`  ${r.id}`);
     console.error(`      ${gateOf(r.text).replace(/\s+/g, ' ').slice(0, 160)}`);
+    // F-2255-1 — WHERE the admission was decided. gateOf() returns the whole row
+    // tail, so a large offset means the deciding words are trailing prose (usually
+    // a past ruling being CITED), not this row's gate. Measured p95 = 162.
+    console.error(`      admitted by text at offset ${r.decidedAt} past "GATE:"` +
+      (r.decidedAt > 162 ? ' — BEYOND the p95 of 162; read it before desking, this is the false-positive shape' : ''));
   }
   console.error('');
   console.error('Put each on the desk at the END of line-1, or say why it is not owed:');
