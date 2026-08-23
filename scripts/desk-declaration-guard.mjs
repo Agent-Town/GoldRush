@@ -333,7 +333,24 @@ export function deskSlugs(tail) {
  * fails LOUD, and the fire writing the desk fixes it by filing the row it should
  * have filed. The grammar question itself is banked as F-2229-2.
  */
-const FINDING_ROW = /\bF-(?:[A-Z0-9]{1,8}-)+\d+[A-Za-z]?\b/g;
+export const FINDING_ROW = /\bF-(?:[A-Z0-9]{1,8}-)+\d+[A-Za-z]?\b/g;
+/**
+ * Non-global twin of FINDING_ROW — `.match` reports `.index` only when NOT
+ * global, and a caller that must decide whether an F-ID or a backticked SLUG
+ * comes first needs that index (desk-birth-guard's rowId does exactly this).
+ *
+ * DERIVED from FINDING_ROW.source rather than written out again: this file
+ * already carries a hand-copied FINDING/FINDING_ONE pair, and F-2227-1's
+ * measured lesson is that four independent copies of one predicate is HOW it
+ * drifted. A derived twin cannot drift from its original by construction.
+ *
+ * EXPORTED because desk-birth-guard asks the IDENTICAL question about the
+ * IDENTICAL subject — "what does this BACKLOG row KEY?" — and F-2229-1 ruled
+ * that question's grammar here, with the reasoning above. It is the row-key
+ * side only: the desk-TAIL scan stays narrow, for the measured reason at
+ * FINDING's own site.
+ */
+export const FINDING_ROW_ONE = new RegExp(FINDING_ROW.source);
 
 /**
  * An id is DECLARED when some BACKLOG row carries it as the first F-ID of its

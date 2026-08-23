@@ -83,6 +83,72 @@ const FINDING = /F-(?:[A-Z0-9]{1,8}-)+\d+/;
 const SLUG = /`([a-z0-9][a-z0-9-]{6,})`/;
 
 /**
+ * TWO STACKED PREFIX HAZARDS, BOTH PERMISSIVE — F-2230-1.
+ *
+ * This guard asks: "did a newly-added owner-gated BACKLOG row's id reach the
+ * desk?" It answered with two prefix-tolerant tests in a row, and BOTH fail
+ * toward saying yes:
+ *
+ *   (1) rowId() used FINDING, which is unanchored and rejects the trailing
+ *       sub-id letter, so a row about F-CLAW-2X was keyed F-CLAW-2 — an id that
+ *       is not in the row. That is F-2229-1's defect, in the sibling file, on
+ *       the identical question about the identical subject.
+ *   (2) analyse() then satisfied that key with `tail.includes(id)`, a RAW
+ *       SUBSTRING test, so ANY desk id sharing the prefix answers for it.
+ *
+ * PROVEN BY MANUFACTURING, not by a green (5 arms, exported core, each arm
+ * asserting it reached kind:'window' with its row recognised as owner-gated):
+ *   - desk carries only the PARENT F-CLAW-2, new owner-gated row keys
+ *     F-CLAW-2X  -> as shipped NOT FLAGGED; truth is that F-CLAW-2X never
+ *     reached the desk.
+ *   - desk carries only the longer F-2131-1b, new row keys F-2131-1
+ *     -> as shipped NOT FLAGGED, the substring matching inside the longer id.
+ * Both are false greens in a chained test:ledger-guards leg (npm run
+ * test:desk-birth), in the permissive direction: a finding that needs the
+ * owner's word never reaches him, and the guard built to catch that certifies
+ * it did. A third arm passed for the WRONG REASON — a genuinely-carried
+ * F-CLAW-2X was keyed F-CLAW-2 and rescued by the substring — which is why the
+ * arms assert the KEY as well as the verdict.
+ *
+ * WHY IMPORT RATHER THAN WIDEN THE LITERAL HERE: F-2227-1 measured that four
+ * independent copies of this predicate is HOW it drifted, and F-2229-1 already
+ * ruled the row-key grammar — including WHY the ledger's anchored form is wrong
+ * for it (that one rejects the sub-id letter, so all four live sub-ids would key
+ * nothing: a permissive miss traded for a blind one). Same question, same
+ * subject, so one implementation.
+ *
+ * WHY THE DESK SIDE IS A CONTAINMENT FIX AND NOT A WIDER SCAN: s2229 measured
+ * that widening the desk-TAIL predicate invents three items with no row across
+ * 1457 desks, two of them prose inflections, i.e. it reds the battery on
+ * ordinary handoff prose (the F-1460-1 fate). carriesId() never ENUMERATES desk
+ * ids, so it cannot mint an item — it can only make a match the guard already
+ * found stricter. That asymmetry is the whole reason this side is safe to
+ * change where the scan is not.
+ */
+import { FINDING_ROW_ONE } from './desk-declaration-guard.mjs';
+
+/**
+ * Does `text` carry `id` as a WHOLE TOKEN? `.includes` is prefix-tolerant, which
+ * is the permissive half of F-2230-1 — F-2131-1 "appears in" F-2131-1b.
+ *
+ * THE TWO ENDS ARE DELIBERATELY ASYMMETRIC, and the asymmetry was MEASURED, not
+ * reasoned: a first draft excluded `-` on BOTH sides and reddened its own
+ * ordinary-markup control, because a hyphen-adjacent mention of a genuinely
+ * carried id then reads as ABSENT — a FALSE RED on ordinary desk prose, which is
+ * how a guard gets excused into uselessness (F-1460-1).
+ *   - LEADING: exclude alphanumerics only. An id always starts with "F-", so the
+ *     only real hazard is being the tail of a longer word (NF-1234-5); a
+ *     preceding hyphen or dash is ordinary punctuation.
+ *   - TRAILING: exclude the hyphen TOO, and that half IS load-bearing — ids are
+ *     multi-segment, so F-MILK-3 is a strict prefix of the equally valid
+ *     F-MILK-3-SS-4. Dropping it re-opens the shadow hazard on the alpha families.
+ */
+export function carriesId(text, id) {
+  const lit = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return new RegExp(`(?<![A-Za-z0-9])${lit}(?![A-Za-z0-9-])`).test(text);
+}
+
+/**
  * An OWNER GATE — a gate that turns on an owner ACT, not one that merely says the
  * word. Measured s1542: the loose form ("owner" appears anywhere in the gate)
  * admits rows gated on a DRAIN whose prose happens to mention him, at a 2-in-20
@@ -148,9 +214,9 @@ export function gateOf(rowText) {
   return i === -1 ? '' : rowText.slice(i);
 }
 
-/** A row's own key: the first id shape it introduces. */
+/** A row's own key: the first id shape it introduces, as a WHOLE token (F-2230-1). */
 export function rowId(rowText) {
-  const f = rowText.match(FINDING);
+  const f = rowText.match(FINDING_ROW_ONE);
   const s = rowText.match(SLUG);
   if (f && (!s || f.index <= s.index)) return f[0];
   return s ? s[1] : null;
@@ -159,7 +225,7 @@ export function rowId(rowText) {
 /** An explicit "this one is not owed" acknowledgement, scoped like DESK-DROPPED. */
 export function notOwed(line1, id) {
   return [...line1.matchAll(/DESK-NOT-OWED/g)].some((m) =>
-    line1.slice(m.index, m.index + 400).includes(id),
+    carriesId(line1.slice(m.index, m.index + 400), id),
   );
 }
 
@@ -187,7 +253,7 @@ export function analyse(line1, addedRowTexts) {
     if (!id) continue;
     qualifying.push({ id, text });
   }
-  const missing = qualifying.filter((r) => !tail.includes(r.id) && !notOwed(line1, r.id));
+  const missing = qualifying.filter((r) => !carriesId(tail, r.id) && !notOwed(line1, r.id));
   return { kind: 'window', qualifying, missing };
 }
 
