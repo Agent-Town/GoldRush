@@ -1,3 +1,5 @@
+> ⚠️ STALENESS ADDENDUM (attended 2026-08-23, at dispatch): this master was authored s1474, BEFORE the fairground was ADMITTED through the door (2026-08-22, six authored anchors). Its census expectations ("AGENT-READY 3 of 4", "e3-fairground still absent from SUPPORTED_CONTRACTS") are HISTORICAL — re-verify every census/admission number at run start against current main and treat the socket scope (FerrisWheel consumer wiring) as the surviving core. The crowd-flock firewall stands unchanged. If the socket itself turns out to have landed since, STOP and report rather than re-landing it.
+
 > ⛔ SHIPPED — DO NOT QUEUE (scope consumed by the A1 crowd-flocks drain, merge 5feed8dd336a12cdf8e55c3813c6e38ee97853d5: the headless wheel dynamo/current half landed there; proof: reviews/e3-fairground-crowd-flocks.md)
 
 CODEX: model=gpt-5.6-sol effort=xhigh
