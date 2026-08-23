@@ -98,13 +98,78 @@ export function findGhosts(root) {
     }
     return [];
   });
-  return { ghosts, tree, treeDetail: classified.corpusTreeDetail ?? '', crossSource: cross.source, crossDetail: cross.detail ?? '' };
+  return {
+    ghosts,
+    tree,
+    treeDetail: classified.corpusTreeDetail ?? '',
+    crossSource: cross.source,
+    crossDetail: cross.detail ?? '',
+    // F-2245-1: the OTHER TWO declarations `classifyRoot` returns. See the block above main().
+    reviewsOk: classified.reviewsOk,
+    reviewsSource: classified.reviewsSource,
+    reviewsReason: classified.reviewsReason ?? '',
+    goalsSource: classified.goalsSource,
+  };
 }
 
+/**
+ * F-2245-1 (measured and cured s2245). F-2226-1'S OWN SHAPE, ON THE SAME IMPORT, ONE FIELD OVER
+ * -- TWICE. THE CURE THAT NAMED IT CARRIED ONE DECLARATION ACROSS AND LEFT TWO BEHIND.
+ *
+ * `classifyRoot` returns THREE declarations, each added by a fire that had measured the harm of
+ * its absence: `reviewsSource` (F-2213-1), `goalsSource` (F-2219-1) and `corpusTree` (F-2222-2).
+ * s2226 carried `corpusTree` across to this caller and read `.verdicts` for the rest -- so the
+ * other two were discarded exactly as `corpusTree` had been. The comment at `reviewsSource` states
+ * the duty outright: "A caller that reads CANDIDATES without reading this is reading a queue
+ * licence off an unknown source." This file is that caller, and it is the ONLY non-test importer.
+ *
+ * BOTH are permissive: lost shipped-evidence drops a master SHIPPED -> NO-TRACE, which drops a
+ * GHOST, and `--strict` reds only when `ghosts.length`. Fewer evidence rows means a QUIETER gate.
+ *
+ * MEASURED s2245 by manufacturing, ground truth = ONE REAL GHOST, with the control asserting its
+ * own validity first (F-2215-1: the healthy arm really did produce the ghost):
+ *   reviews axis (evidence on main, not in the working tree; `git ls-tree` broken by a PATH shim)
+ *     healthy .................. GHOST line 3, rc=1, 174 B
+ *     ls-tree BROKEN ........... 0 ghost ladder row(s), rc=0, 119 B
+ *     REVERSE CONTROL, clean ... 0 ghost ladder row(s), rc=0, 119 B   <- BYTE-IDENTICAL to the defect
+ *   goals axis (evidence is a goals.json leaf only)
+ *     healthy .................. GHOST line 3, rc=1, 214 B
+ *     goals.json ABSENT ........ 0 ghost ladder row(s), rc=0, 119 B   <- BYTE-IDENTICAL again
+ *
+ * AND THE SAME LIBRARY DISAGREES WITH ITSELF ON THE IDENTICAL INPUT, which is what makes this a
+ * finding rather than a preference: on the same root with the same broken git, the classifier's
+ * CLI prints "⛔ CANNOT VERIFY — DO NOT QUEUE off this run" and exits 1, while THIS guard --
+ * the one chained bare in `test:ledger-guards` -- exits 0. Two consumers of one library, one
+ * failure, opposite verdicts, and the gate got the permissive one.
+ *
+ * SEVERITY STATED HONESTLY AND NOT INFLATED: LATENT in the prescribed invocation. At the repo
+ * root git is healthy and `tasks/goals.json` is tracked and present, so every green this guard
+ * has printed was TRUE -- verified on the live board, not assumed. The harm is BOOKKEEPING (a
+ * stale ladder row), NOT a Mistake #8 clearance. What earns it a clause is that the false green
+ * lands in a GATE, in the permissive direction, in the DEFAULT mode the battery uses.
+ *
+ * WHY THE TWO ARMS DIFFER, and it is the F-2218-1 restraint rather than a style choice:
+ *   `reviewsOk === false` REFUSES (2 = "could not answer"). `mainReviews` already discriminates
+ *   the lawful states from the crashes -- a non-git root and a repo with no `main` both return
+ *   ok:true/'worktree', which is where all 12 of the classifier's legacy fixtures live -- so
+ *   ok:false means a genuine crash and nothing lawful reaches it.
+ *   `goalsSource === 'absent'` DECLARES AND DOES NOT REFUSE. A root without goals.json is a
+ *   LAWFUL routine state (it is what those same 12 fixtures use), so refusing there would red on
+ *   ordinary work and be excused into uselessness inside a week (F-1460-1), taking the
+ *   declaration down with it.
+ *
+ * Declared ALWAYS, including the happy path (F-2208-1), for the reason the tree line beneath it
+ * already gives: the two zeros are otherwise byte-identical. A SEPARATE line rather than an
+ * extension of the tree line, because that line answers a different question -- WHICH BOARD this
+ * is -- and the F-2226-1 cross-check it reports asks only main's GOALS corpus, so it is
+ * structurally unable to speak for review-only evidence.
+ */
 function main() {
   const rootIndex = process.argv.indexOf('--root');
   const root = path.resolve(rootIndex === -1 ? process.cwd() : process.argv[rootIndex + 1]);
-  const { ghosts, tree, treeDetail, crossSource, crossDetail } = findGhosts(root);
+  const {
+    ghosts, tree, treeDetail, crossSource, crossDetail, reviewsOk, reviewsSource, reviewsReason, goalsSource,
+  } = findGhosts(root);
   console.log('=== ghost-ladder-row-guard ===');
   for (const ghost of ghosts) console.log(`GHOST line ${ghost.line} ${ghost.path} — ${ghost.evidence}`);
   console.log(`${ghosts.length} ghost ladder row(s).`);
@@ -113,8 +178,24 @@ function main() {
   // re-create the very ambiguity it removes -- and the two zeros above ("no ghosts exist" vs
   // "I read a frozen board") are otherwise byte-identical.
   console.log(`corpus tree: ${tree}${treeDetail ? ` (${treeDetail})` : ''} — main shipped-evidence cross-check: ${crossSource}`);
+  // F-2245-1: the corpora the ghost list is actually COMPUTED from, as opposed to the tree it was
+  // read on. Always, including the happy path (F-2208-1).
+  console.log(`shipped-evidence corpora: reviews ${reviewsSource}, goals ${goalsSource}`);
 
   if (!process.argv.includes('--strict')) return;
+  // F-2245-1: this refusal comes FIRST because it invalidates the ghost list wholesale, where the
+  // cross-check refusal below speaks only to its COMPLETENESS on a non-main tree. Same code (2 =
+  // "could not answer") either way, so the order changes only which cause a reader is told.
+  if (!reviewsOk) {
+    console.log(
+      `⛔ CANNOT VERIFY — \`main\` resolves here but its review list could not be read\n` +
+      `   (${reviewsReason}), so SHIPPED evidence fell back to this working tree and the count\n` +
+      `   above may be SHORT. The classifier's own CLI refuses on this same input.\n` +
+      `   Re-run when git is healthy.`,
+    );
+    process.exitCode = 2;
+    return;
+  }
   // 2 = "could not answer" outranks 1 = "answered, and the answer refuses" -- the convention
   // drain-block-check, dry-board-probe, master-shipped-classifier and review-evidence-audit all
   // carry. An incomplete ghost list read off a frozen board is exactly a non-answer, so it must
