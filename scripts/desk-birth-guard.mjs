@@ -298,6 +298,62 @@ export function addedRows(diffText) {
 }
 
 /**
+ * The DENOMINATOR of addedRows() — the added lines it did NOT admit, restricted to
+ * those that WOULD have qualified (owner gate + a key). F-2259-1, measured s2259.
+ *
+ * THE CLAIM IS WIDER THAN THE CORPUS. main() prints "owner-gated rows filed : N"
+ * and, on the happy path, "every owner-gated row filed this window reached the
+ * desk". Both range over whatever addedRows() managed to admit — and that parser
+ * takes a line only if it (a) LEADS with one of four glyphs after whitespace, or
+ * (b) contains the literal `**F-`. A row contributing to neither cannot enter
+ * `qualifying`, so it is structurally incapable of failing this gate.
+ *
+ * The two tests each cover the other's blind spot, which is why this survived: a
+ * row escapes ONLY when it uses BOTH house conventions at once — a markdown
+ * bullet before the glyph AND the bracketed `**[F-id]` key. Measured s2259:
+ *   "🔺 **F-9999-1** …"      -> admitted (glyph)     "- 🔺 **F-9999-1** …" -> admitted (**F-)
+ *   "🔺 **[F-9999-1] …"      -> admitted (glyph)     "- 🔺 **[F-9999-1] …" -> ESCAPED
+ * Neither convention is exotic: the live BACKLOG carries 353 bullet-then-glyph
+ * rows, 47 bracketed keys, and 38 lines in the escaping shape today. Glyphs
+ * outside the admitted four (🔵, 👑, 🟢) escape outright.
+ *
+ * The header's 2x2 pricing table above prices the SELECTOR (which gates count)
+ * against MEMBERSHIP (what the desk carries) — and never the corpus both range
+ * over. That is the whole gap.
+ *
+ * MEASURED over all 2,459 BACKLOG-touching commits: 10 owner-gated keyed rows
+ * escaped, of which 5 are real owner items — F-1637-2 and F-1625-4 (BOTH ON
+ * ROBIN'S DESK TODAY), F-1617-1, F-BT-2 (🔵) and F-1118-2 (👑).
+ *
+ * SEVERITY, STATED HONESTLY AND NOT INFLATED: LATENT. Replaying all 1,133 real
+ * handoff windows, every one of those rows had already been desked by hand in the
+ * same handoff, so the blindness has never actually cost a desk entry. What it
+ * costs is the guarantee: the PASS cannot mean what it says.
+ *
+ * WHY THIS DECLARES AND DOES NOT WIDEN MEMBERSHIP, and the restraint is MEASURED
+ * rather than stylistic. The obvious cure — teach the two tests the two house
+ * conventions — was replayed over those same 1,133 windows: it admits 168 extra
+ * rows across 85 windows and produces exactly THREE new verdicts, ALL THREE
+ * FALSE (F-1631-3 "OFF THE OWNER'S DESK — CLOSED … OWES NO WORD", F-1635-3
+ * "SUPERSEDED s1636", 325241e2 "DRAINED s1497"). It catches ZERO genuine
+ * undesked rows. And this guard's REMEDY is "put it on the desk", so obeying a
+ * false red MANUFACTURES owner-desk items out of closure records, onto a desk
+ * already at 27 (s2255's rule: the harm is the remedy, not the red).
+ *
+ * Restricted to the QUALIFYING set, not the corpus (s2230): naming all 168
+ * excluded rows would be inflation dressed as diligence.
+ */
+export function unexaminedRows(diffText) {
+  const admitted = new Set(addedRows(diffText));
+  return String(diffText)
+    .split('\n')
+    .filter((l) => l.startsWith('+') && !l.startsWith('+++'))
+    .map((l) => l.slice(1))
+    .filter((l) => !admitted.has(l) && rowId(l) && isOwnerGate(gateOf(l)))
+    .map((l) => l.trim().replace(/\s+/g, ' ').slice(0, 160));
+}
+
+/**
  * The pure core, so the arms can drive it without a git tree.
  * Returns {kind:'lock'} | {kind:'no-desk'} | {kind:'window', qualifying, missing}
  */
@@ -381,6 +437,20 @@ function main() {
 
   console.log(`window start              : ${prev.slice(0, 8)} (previous handoff)`);
   console.log(`owner-gated rows filed    : ${result.qualifying.length}`);
+  // F-2259-1: the DENOMINATOR that count ranges over. Printed ALWAYS, including
+  // the happy path — a declaration that appears only on failure re-creates the
+  // ambiguity it removes (F-2208-1), and here the failure state is a PASS, so
+  // there is no failure for it to appear on. `unexamined 0` is the line that
+  // separates "no owner row escaped the parser" from "I never looked".
+  const unexamined = unexaminedRows(diff);
+  console.log(`unexamined by the parser  : ${unexamined.length}`);
+  for (const row of unexamined) console.log(`   | ${row}`);
+  if (unexamined.length) {
+    console.log('   ⓘ ADVISORY, not a failure: each line above carries an owner gate and a key but');
+    console.log('     leads with neither an admitted glyph nor `**F-`, so this guard never examined');
+    console.log('     it. Widening membership was measured and manufactures false reds out of');
+    console.log('     closure rows (F-2259-1) — read these by hand and desk any that are real.');
+  }
   console.log(`of those, undesked        : ${result.missing.length}`);
 
   if (REPORT) {
