@@ -126,7 +126,7 @@ async function expectFundPrompt(page: Page, stageIndex: number) {
   await teleportToStampSitePrompt(page);
   const button = page.getByTestId('stamp-site-fund');
   await expect(button).toBeVisible();
-  await expect(button).toContainText(`Fund stage ${stageIndex + 1} — ${STAGE_COSTS[stageIndex]}g`);
+  await expect(button).toContainText(`Fund stage ${stageIndex + 1}: ${STAGE_COSTS[stageIndex]}g`);
   await expect(page.getByTestId('building-context-prompt')).toContainText('STAMP MILL & RAIL SPUR');
   return button;
 }

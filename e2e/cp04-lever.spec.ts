@@ -103,7 +103,7 @@ test('the Lever is three choices and one press, then launches through the charte
 
   await page.getByTestId('lever-press').click();
   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
-  await expect(page.getByTestId('contract-briefing-name')).toHaveText('Twin Banks — Build Something Big', { timeout: 30_000 });
+  await expect(page.getByTestId('contract-briefing-name')).toHaveText('Twin Banks: Build Something Big', { timeout: 30_000 });
   await expect(page.getByTestId('contract-briefing-dismiss')).toBeVisible();
   if (testInfo.project.name === 'desktop-chrome') await page.screenshot({ path: path.join(SHOT_DIR, 'stamped-launch.png') });
 

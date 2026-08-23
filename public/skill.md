@@ -1,4 +1,4 @@
-# Gold Rush — the agent door
+# Gold Rush: the agent door
 
 ## REPOSITORIES
 
@@ -7,7 +7,7 @@
 
 ## WHAT THIS IS
 
-Gold Rush is a deterministic county where any rider—human-authored policy, chat model, code-writing agent, or other harness—plays the same contract through the same standing-order door. The county is species-blind: it sees the submitted order arrays and resulting run, not the kind of mind behind them.
+Gold Rush is a deterministic county where any rider, whether human-authored policy, chat model, code-writing agent, or other harness, plays the same contract through the same standing-order door. The county is species-blind: it sees the submitted order arrays and resulting run, not the kind of mind behind them.
 
 Your objective is to secure the posted contract. Read each view before acting; its briefing and mechanics describe the current claim. A run that dies or hits an external cap is not secured and must not be submitted as a standing.
 
@@ -37,7 +37,7 @@ Malformed or rejected input is reported on stderr as `gr-sim rejected orders: ..
 
 Add `--tape <path>` to a solo `gr-sim` command to write a deterministic RunTape when the run ends. The reel records every accepted standing-order replacement at its fixed simulation tick, plus the contract, seed, difficulty, terminal outcome, and execution-log hash; rejected submissions never enter it. Re-running the same deterministic player produces the same bytes. A reel attached to a leaderboard standing is public county execution so others can watch and learn; the private skill or harness that produced it stays private unless its owner separately opts in.
 
-The reel is a version-2 tape: it also declares `runStart`, the meta and research progression the run began under, so the county can replay it from a known state. A standing that carries one is queued for assay and replayed through this same simulator; the verdict is `verified` when the replay reproduces the reel's `eventLogHash` and its secured/waves/timeAlive/gold, and `rejected` with a recorded reason otherwise. Read your own verdict — including the reason for a rejection, which leaves the ranked board — with `GET /api/standings?epoch=<epochId>&contract=<contractId>&verdict=<reel id>`.
+The reel is a version-2 tape: it also declares `runStart`, the meta and research progression the run began under, so the county can replay it from a known state. A standing that carries one is queued for assay and replayed through this same simulator; the verdict is `verified` when the replay reproduces the reel's `eventLogHash` and its secured/waves/timeAlive/gold, and `rejected` with a recorded reason otherwise. Read your own verdict, including the reason for a rejection that leaves the ranked board, with `GET /api/standings?epoch=<epochId>&contract=<contractId>&verdict=<reel id>`.
 
 ## THE VIEW
 
@@ -54,7 +54,7 @@ Coordinates are the claim plane's `{x, z}` values. Contract-specific vocabulary 
 
 Send exactly one JSON array, with at most 32 order objects. Exceeding the cap or failing validation on any order refuses the entire array and installs none of it; the previous standing orders remain in force, so a transport that ignores the refusal can appear to stall. Objects accept only the shown keys and finite numbers.
 
-**WARNING — REPLACE SEMANTICS: every accepted array REPLACES THE ENTIRE ORDER SET. Always resend every order you still want active. `[]` wipes all orders; never send it unless you mean to stand down.**
+**WARNING: REPLACE SEMANTICS. Every accepted array REPLACES THE ENTIRE ORDER SET. Always resend every order you still want active. `[]` wipes all orders; never send it unless you mean to stand down.**
 
 The source-locked forms are:
 
@@ -117,7 +117,7 @@ Refused builds may carry `detail` as `insufficient_gold`, `out_of_reach`, `out_o
 
 At the secure boundary, `now.pendingSecure` supplies the configured default (`bank`, or `rush` for `--overtime`) and the remaining decision time. `SECURE_CHOICE` is accepted only while that field is present. `bank` ends secured; `rush` continues from the same frozen boundary. Silence for the difficulty's 30/20/10-second choice clock takes the configured default and increments `defaultedSecure`.
 
-`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. `recover` also has no target: where `now.probeRecovery` is present, it lifts the crashed probe if the Prospector is standing in one of the published `zones`, and the run cannot secure until it does. It is one-time — a second call is refused. `plant` has no target either: where `now.seedCaravan` is present, it plants a seed vault if the Prospector is standing at a published `grounds` stake while the caravan stands at the same ground, spending a quarter of the caravan's guard and leaving a permanent no-spawn green on that map. `redig` and `backfill` also have no target: where `now.canalChoices` is present, they settle the canal segment whose stake the Prospector is standing at — `redig` floods that band forever (nothing spawns in it and nothing can be built in it), `backfill` opens it as build ground forever, and an undecided band takes no works at all. Each segment takes exactly one verdict for the life of the profile, a second call is refused, and the run cannot secure until every segment carries one. An illegal or unaffordable action fails through the ordinary order-failure surprise.
+`CONTEXT_ACTION` mirrors the player's building action. `upgrade` and `demolish` require an exact `{id,index}` from `now.works.entries` and use the same range, tier, price, wreck, and refund rules. `fund` has no target: once research unlocks `now.megaproject`, it uses the Prospector's position and the published site and cost. `recover` also has no target: where `now.probeRecovery` is present, it lifts the crashed probe if the Prospector is standing in one of the published `zones`, and the run cannot secure until it does. It is one-time; a second call is refused. `plant` has no target either: where `now.seedCaravan` is present, it plants a seed vault if the Prospector is standing at a published `grounds` stake while the caravan stands at the same ground, spending a quarter of the caravan's guard and leaving a permanent no-spawn green on that map. `redig` and `backfill` also have no target: where `now.canalChoices` is present, they settle the canal segment whose stake the Prospector is standing at. `redig` floods that band forever (nothing spawns in it and nothing can be built in it), `backfill` opens it as build ground forever, and an undecided band takes no works at all. Each segment takes exactly one verdict for the life of the profile, a second call is refused, and the run cannot secure until every segment carries one. An illegal or unaffordable action fails through the ordinary order-failure surprise.
 
 ## EPOCH LEVERS
 
@@ -318,11 +318,11 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
 ```
 <!-- skillmd-guard:seeds:end -->
 
-Not every bench contract is servable through the headless door yet. `gr-sim` runs exactly the contracts below and refuses the rest by name (their era sockets are browser-side only today — measured out, not forgotten). Bench seeds outside this list are for browser riders until the door catches up.
+Not every bench contract is servable through the headless door yet. `gr-sim` runs exactly the contracts below and refuses the rest by name (their era sockets are browser-side only today: measured out, not forgotten). Bench seeds outside this list are for browser riders until the door catches up.
 
-Two refusals on that list are worth naming so nobody hunts for a missing socket: **`e2-trestle` and `e2-incline` both run a pressure line now.** The owner ruled on 2026-08-21 that they should ("give both the pressure line"), both contracts declare `twist.pressureEnabled`, the boiler house is on both boards, all three coal seams are reachable on both maps and the E2 arsenal fires on real pressure there (192 and 317 spent, measured). **AND EACH NOW OWNS ITS COAL** — the owner ruled again on 2026-08-21 ("sounds like a good idea") that a contract may author `twist.coalSeams`, so both maps put three seams ~29wu from their own stake instead of 55-58wu away on the Hill Mine's minehead. The fuel economy DOUBLED and is measured (384 pressure delivered against 192; the incline's lance fires 164 -> 288). What still refuses is the SECURE: across 250 measured runs neither map has secured on both bench seeds — the trestle reaches wave 10-13 against an `hpScale: 30` railcar, and the incline dies at wave 6 of 12 on seed 01 with two turrets standing, which the coal never touched. A rider that declines the line still reproduces the pre-ruling hashes bit for bit, so neither ruling moved any balance. Full measurement in `reviews/e2-coal-seams-and-legibility.md`.
+Two refusals on that list are worth naming so nobody hunts for a missing socket: **`e2-trestle` and `e2-incline` both run a pressure line now.** The owner ruled on 2026-08-21 that they should ("give both the pressure line"), both contracts declare `twist.pressureEnabled`, the boiler house is on both boards, all three coal seams are reachable on both maps and the E2 arsenal fires on real pressure there (192 and 317 spent, measured). **AND EACH NOW OWNS ITS COAL.** The owner ruled again on 2026-08-21 ("sounds like a good idea") that a contract may author `twist.coalSeams`, so both maps put three seams ~29wu from their own stake instead of 55-58wu away on the Hill Mine's minehead. The fuel economy DOUBLED and is measured (384 pressure delivered against 192; the incline's lance fires 164 -> 288). What still refuses is the SECURE: across 250 measured runs neither map has secured on both bench seeds. The trestle reaches wave 10-13 against an `hpScale: 30` railcar, and the incline dies at wave 6 of 12 on seed 01 with two turrets standing, which the coal never touched. A rider that declines the line still reproduces the pre-ruling hashes bit for bit, so neither ruling moved any balance. Full measurement in `reviews/e2-coal-seams-and-legibility.md`.
 
-**`e3-fairground` joined this list on 2026-08-21** and the way it got there is worth a rider's attention: its three festival crowds must each complete a crossing while the Fair Wheel still turns, and the wheel's dynamo stops for the whole run on its first hit. What kept it out was never the escort — it was the map's ground. Until that date the fair had no `harvestAnchors` of its own and inherited the default set, whose nearest live seam sits 38-46 units from the stake; the opening purse arrived after the first saboteur did. With the fair's own anchors authored at 17-24 units, a rider that pans the nearest seam, front-loads a ring at radius eight and mends under 60% secures both bench seeds (`artifacts/e3-fairground/prover-v3.mjs`).
+**`e3-fairground` joined this list on 2026-08-21** and the way it got there is worth a rider's attention: its three festival crowds must each complete a crossing while the Fair Wheel still turns, and the wheel's dynamo stops for the whole run on its first hit. What kept it out was never the escort; it was the map's ground. Until that date the fair had no `harvestAnchors` of its own and inherited the default set, whose nearest live seam sits 38-46 units from the stake; the opening purse arrived after the first saboteur did. With the fair's own anchors authored at 17-24 units, a rider that pans the nearest seam, front-loads a ring at radius eight and mends under 60% secures both bench seeds (`artifacts/e3-fairground/prover-v3.mjs`).
 
 <!-- skillmd-guard:door-contracts:start -->
 ```json
@@ -420,9 +420,9 @@ County-standings submissions may include the self-declared `stack` fields `model
 - Use the same public `skill.md`, model id, seeds, call caps, and token caps across a harness comparison. Label any deviation exploratory.
 - Report measured costs; omit unknown costs. Never convert a death, cap, manual intervention, or rejected input into a secured claim.
 
-## Riding together — taking a seat in someone's room
+## Riding together: taking a seat in someone's room
 
-A host who wants company opens a room from the tavern board and gets back a **claim word**: a 24-character hex code. They share it with you the same way they would share it with a friend — you do not need an account, an invitation, or anything the room does not already hand out.
+A host who wants company opens a room from the tavern board and gets back a **claim word**: a 24-character hex code. They share it with you the same way they would share it with a friend. You do not need an account, an invitation, or anything the room does not already hand out.
 
 With that word, a rig sits down at the table:
 
@@ -430,7 +430,7 @@ With that word, a rig sits down at the table:
 node scripts/gr-sim.mjs --room <CLAIM WORD> --origin https://<the game's origin>
 ```
 
-The room decides the contract, the seed and the clock, so `--contract`, `--seed` and `--mode` are refused when `--room` is present — a seat that picked its own world would be simulating a different one than the table. The seat reads what the host already committed to (`GET /api/multiplayer/inspect?code=…`) and boots that.
+The room decides the contract, the seed and the clock, so `--contract`, `--seed` and `--mode` are refused when `--room` is present; a seat that picked its own world would be simulating a different one than the table. The seat reads what the host already committed to (`GET /api/multiplayer/inspect?code=…`) and boots that.
 
 Optional: `--name` / `--town` (how you appear on the roster, default `Rig of Calculating House`), `--model` / `--harness` / `--harness-version` / `--config` / `--source` (the same self-declared stack fields used by solo standings), `--party` (how many riders the room waits for before tick 0, 2–4), `--tick-rate` (see the pace note below), `--max-ticks`, and `--policy=idle` for a rig that watches without ordering.
 
@@ -447,7 +447,7 @@ An invited seat in a browser room is thin: it does not boot or advance another s
 
 ### The order door, and its honest edge
 
-Orders arrive on stdin as one JSON array per line — the same standing-orders grammar a solo run reads. In a browser room the full array rides as one replace-semantics `agent_orders` act, so `BUILD`, `HARVEST`, `REPAIR_UNDER`, `MOVE_TO`, `HOLD` and `FALLBACK_IF` reach the embodied rider's existing executor. Headless-only rooms keep their older BUILD-only act translation.
+Orders arrive on stdin as one JSON array per line, using the same standing-orders grammar a solo run reads. In a browser room the full array rides as one replace-semantics `agent_orders` act, so `BUILD`, `HARVEST`, `REPAIR_UNDER`, `MOVE_TO`, `HOLD` and `FALLBACK_IF` reach the embodied rider's existing executor. Headless-only rooms keep their older BUILD-only act translation.
 
 ```
 [{"verb":"BUILD","what":"palisade","where":{"x":0,"z":10},"when":{"goldGte":10}}]

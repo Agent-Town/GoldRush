@@ -201,7 +201,7 @@ export class SeedCaravanPresentation {
     if (diagnostics.progress > 0 && diagnostics.state !== 'lost') {
       this.queue(beats, 'depart', {
         kind: 'depart',
-        text: 'The seed caravan rolls — see it to the basin.',
+        text: 'The seed caravan rolls; see it to the basin.',
         title: VOICE_TITLE,
         seconds: 6,
         at,
@@ -214,7 +214,7 @@ export class SeedCaravanPresentation {
     if (diagnostics.hp < this.lastHp && diagnostics.state !== 'lost' && !plantSpend) {
       this.queue(beats, 'attacked', {
         kind: 'attacked',
-        text: 'The seed caravan is under attack — clear its road.',
+        text: 'The seed caravan is under attack. Clear its road.',
         title: VOICE_TITLE,
         seconds: 5,
         at,
@@ -228,7 +228,7 @@ export class SeedCaravanPresentation {
     if (diagnostics.state === 'paused' && diagnostics.atGround) {
       this.queue(beats, `halt:${diagnostics.atGround}`, {
         kind: 'halt',
-        text: `The caravan halts at the ${groundWord(diagnostics.atGround)} ground — plant a vault here, or wave it on.`,
+        text: `The caravan halts at the ${groundWord(diagnostics.atGround)} ground. Plant a vault here, or wave it on.`,
         title: VOICE_TITLE,
         seconds: 5,
         at,
@@ -239,7 +239,7 @@ export class SeedCaravanPresentation {
       const ground = this.grounds.find((entry) => entry.id === groundId);
       this.queue(beats, `plant:${groundId}`, {
         kind: 'plant',
-        text: `The ${groundWord(groundId)} vault takes root — it shelters this ground for good, and the guard is lighter for it.`,
+        text: `The ${groundWord(groundId)} vault takes root. It shelters this ground for good, and the guard is lighter for it.`,
         title: VOICE_TITLE,
         seconds: 5,
         at: ground ? { x: ground.x, z: ground.z } : at,
@@ -249,7 +249,7 @@ export class SeedCaravanPresentation {
     if (diagnostics.arrived) {
       this.queue(beats, 'arrive', {
         kind: 'arrive',
-        text: 'The seed caravan reaches the basin — the crossing is made.',
+        text: 'The seed caravan reaches the basin; the crossing is made.',
         title: VOICE_TITLE,
         seconds: 6,
         at,
@@ -259,7 +259,7 @@ export class SeedCaravanPresentation {
     if (diagnostics.state === 'lost') {
       this.queue(beats, 'lost', {
         kind: 'lost',
-        text: 'The seed caravan is lost — there is no crossing to secure now.',
+        text: 'The seed caravan is lost. There is no crossing to secure now.',
         title: VOICE_TITLE,
         seconds: 6,
         at,

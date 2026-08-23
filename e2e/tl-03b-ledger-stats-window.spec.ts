@@ -128,7 +128,7 @@ test('Assay Office records are locked until the first completed run, then show m
   const card = page.getByTestId('claim-ledger-card-assay_office_records');
   await expect(card).toBeVisible();
   await expect(card).toHaveAttribute('data-ledger-discovered', 'true');
-  await expect(card).toContainText('Assay Office — Records');
+  await expect(card).toContainText('Assay Office: Records');
   await expect(card).toContainText('Claims assayed this week: 14');
   await expect(card).toContainText('Claims assayed all told: 42');
   await expect(card).toContainText('Deepest holdout: wave 37');

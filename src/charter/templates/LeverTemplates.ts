@@ -109,7 +109,7 @@ export function createLeverCharter(
   const visitors = LEVER_VISITORS.find((choice) => choice.id === visitorsId)!;
   const contract = structuredClone(landsById.get(landId)!);
 
-  contract.name = `${land.label} — ${story.label}`;
+  contract.name = `${land.label}: ${story.label}`;
   contract.boardRow.name = contract.name;
   contract.boardRow.ledgerBlurb = story.blurb;
   contract.briefing.goals[0] = story.goal;

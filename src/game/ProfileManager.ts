@@ -204,7 +204,7 @@ export class ProfileManager {
           <button class="death-overlay__button" type="button" data-testid="profile-import-apply">Bring them in</button>
         </div>` : ''}
         ${this.options.onBack
-          ? `<button class="death-overlay__button gr-profile-back" type="button" data-testid="profile-back">Done — ${escapeHtml(selected.name)} selected</button>`
+          ? `<button class="death-overlay__button gr-profile-back" type="button" data-testid="profile-back">Done: ${escapeHtml(selected.name)} selected</button>`
           : `<button class="death-overlay__button" type="button" data-testid="profile-start">Enter claim as ${escapeHtml(selected.name)}</button>`}
       </div>
     `;

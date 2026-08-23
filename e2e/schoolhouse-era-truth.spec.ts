@@ -80,7 +80,7 @@ async function runSchoolhouseCase(page: Page, options: { seedActiveEpoch: boolea
   await expect(chart).toBeVisible();
   await expect(chart).toHaveAttribute('data-research-readonly', 'false');
   await expect(page.getByTestId('research-era-row')).toBeVisible();
-  await expect(page.getByTestId(`research-era-${STEAMWORKS}`)).toHaveText('The Steamworks — active');
+  await expect(page.getByTestId(`research-era-${STEAMWORKS}`)).toHaveText('The Steamworks: active');
   await expect(page.getByTestId('research-chart-node-pressure_assay')).toBeVisible();
   await expect(page.getByTestId('research-chart-node-assay_grading')).toHaveCount(0);
   expect(await page.evaluate(() => localStorage.getItem('gr.activeEpoch.v1'))).toBe(STEAMWORKS);

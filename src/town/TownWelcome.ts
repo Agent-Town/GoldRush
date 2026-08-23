@@ -7,7 +7,7 @@ export const TOWN_WELCOME_BEATS = [
   {
     id: 'tavern-board',
     buildingId: 'tavern',
-    guide: 'First stop: the Tavern board. Walk with me — no rush.',
+    guide: 'First stop: the Tavern board. Walk with me; no rush.',
     line: 'The Tavern board posts your first claim; the separate Drill Yard is practice with nothing at stake.',
   },
   {

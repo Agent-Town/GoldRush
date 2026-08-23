@@ -38,7 +38,7 @@ test('the active Orbital Frontier chart renders its frontier and keeps picks pin
   await expect(icons).toHaveCount(15);
   expect(await icons.evaluateAll((items) => items.every((item) => item.style.backgroundImage.startsWith('url(')))).toBe(true);
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(8);
-  await expect(page.getByTestId('research-era-epoch-8-orbital')).toHaveText('The Orbital Frontier — active');
+  await expect(page.getByTestId('research-era-epoch-8-orbital')).toHaveText('The Orbital Frontier: active');
 
   const frontier = page.locator('[data-research-node][data-research-state="available"]').first();
   await frontier.click();

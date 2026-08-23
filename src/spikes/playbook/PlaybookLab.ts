@@ -79,8 +79,8 @@ export function installPlaybookLab(root: HTMLElement = document.body): LabHandle
           <div><dt>fixed tick</dt><dd data-testid="lab-tick">0</dd></div>
           <div><dt>state</dt><dd data-testid="lab-phase">idle</dd></div>
           <div><dt>validation</dt><dd data-testid="lab-status">Not recorded.</dd></div>
-          <div><dt>recorded hash</dt><dd data-testid="lab-hash">—</dd></div>
-          <div><dt>corrupted hash</dt><dd data-testid="lab-corrupt-hash">—</dd></div>
+          <div><dt>recorded hash</dt><dd data-testid="lab-hash">not set</dd></div>
+          <div><dt>corrupted hash</dt><dd data-testid="lab-corrupt-hash">not set</dd></div>
         </dl>
         <h2>Canonical tape</h2>
         <pre data-testid="lab-json">{}</pre>
@@ -302,8 +302,8 @@ export function installPlaybookLab(root: HTMLElement = document.body): LabHandle
     tickOut.textContent = String(tick);
     phaseOut.textContent = phase;
     statusOut.textContent = status;
-    hashOut.textContent = playbook?.hash ?? '—';
-    corruptHashOut.textContent = corrupted?.hash ?? '—';
+    hashOut.textContent = playbook?.hash ?? 'not set';
+    corruptHashOut.textContent = corrupted?.hash ?? 'not set';
     jsonOut.textContent = JSON.stringify(corrupted ?? playbook ?? {}, null, 2);
     startButton.disabled = phase === 'recording' || phase === 'agent-replay' || phase === 'echo-replay';
     markButton.disabled = phase !== 'recording' || Boolean(manual);

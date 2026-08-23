@@ -479,7 +479,7 @@ test('T6 THE CALCULATING HOUSE: mounting the plate arms E7 exactly once and the 
     ceremonyId: 't6-the-calculating-house',
     epochId: E6,
     successorId: E7,
-    caption: "The plate above the door, the dial's light on the crowd — the Prospector front row.",
+    caption: "The plate above the door, the dial's light on the crowd, the Prospector front row.",
     stored: true,
   });
   expect(keptImage.dataUrl).toMatch(/^data:image\/png/);

@@ -57,7 +57,7 @@ export function installDescriptorInspector(root: HTMLElement): void {
       <h1>Contract Inspector</h1>
       <strong data-testid="editor-contract-name"></strong>
       <span>Waves are paused while this page is open.</span>
-      <p class="descriptor-inspector__dirty" data-testid="editor-dirty" hidden><strong>Un-stamped draft</strong> Stamp to keep — un-stamped edits are lost on reload.</p>
+      <p class="descriptor-inspector__dirty" data-testid="editor-dirty" hidden><strong>Un-stamped draft</strong> Stamp to keep; un-stamped edits are lost on reload.</p>
     </header>
     <div class="descriptor-inspector__fields" data-testid="editor-fields"></div>
     <section class="descriptor-inspector__transfer">

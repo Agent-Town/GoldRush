@@ -23,7 +23,7 @@ test('the active Motor Frontier chart renders its uncertified bank without purch
   await expect(icons).toHaveCount(15);
   expect(await icons.evaluateAll((items) => items.every((item) => item.style.backgroundImage.startsWith('url(')))).toBe(true);
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(4);
-  await expect(page.getByTestId('research-era-epoch-4-motor')).toHaveText('The Motor Frontier — active');
+  await expect(page.getByTestId('research-era-epoch-4-motor')).toHaveText('The Motor Frontier: active');
 
   await expect(page.locator('[data-research-state="available"]')).toHaveCount(0);
   await expect(page.locator('[data-research-state="locked"]')).toHaveCount(15);

@@ -5,7 +5,7 @@ import { captureNextRenderedFrame } from '../core/Renderer';
 import { canPersistProspectorSkin, grantProspectorSkin, grantReporterSet, ownedProspectorSkins } from '../game/ProspectorSkin';
 
 export const BUG_OFFICE_COPY = {
-  bounty: 'THE BOUNTY — The county will reward the three reports that help the trail most. Prize notice follows.',
+  bounty: 'THE BOUNTY: The county will reward the three reports that help the trail most. Prize notice follows.',
 } as const;
 
 const MAX_SCREENSHOT_BYTES = 180 * 1024;
@@ -240,7 +240,7 @@ export class ComplaintDeskPanel {
         : '';
       this.setStatus(`Complaint filed. Ticket ${result.id}. The county thanks you.${set} ${BUG_OFFICE_COPY.bounty}`, 'filed');
     } catch {
-      this.setStatus('The wire is down. The clerk kept your complaint on the desk — try again.', 'offline');
+      this.setStatus('The wire is down. The clerk kept your complaint on the desk; try again.', 'offline');
     } finally {
       this.setBusy(false);
     }

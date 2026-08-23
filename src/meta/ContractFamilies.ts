@@ -1736,7 +1736,7 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
       addDescriptorReason(reasons, reason('field_list', 'Coal seams must be a non-empty list of places.', 'twist.coalSeams'));
     } else {
       if (twist.pressureEnabled !== true) {
-        addDescriptorReason(reasons, reason('field_section', 'Coal seams need twist.pressureEnabled — nothing can burn them otherwise.', 'twist.coalSeams'));
+        addDescriptorReason(reasons, reason('field_section', 'Coal seams need twist.pressureEnabled; nothing can burn them otherwise.', 'twist.coalSeams'));
       }
       twist.coalSeams.forEach((entry, index) => {
         if (!isRecord(entry) || Array.isArray(entry)) {

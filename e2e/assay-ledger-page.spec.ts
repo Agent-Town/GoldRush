@@ -96,12 +96,12 @@ test('renders the county book and this claim from a seeded first run', async ({ 
 
   const card = page.getByTestId(`claim-ledger-card-${RECORDS_ID}`);
   await expect(card).toHaveAttribute('data-ledger-discovered', 'true');
-  await expect(card.getByRole('heading', { name: 'Assay Office — Records' })).toBeVisible();
-  await expect(card.getByTestId('assay-records-county')).toContainText("THE COUNTY — the county's book");
+  await expect(card.getByRole('heading', { name: 'Assay Office: Records' })).toBeVisible();
+  await expect(card.getByTestId('assay-records-county')).toContainText("THE COUNTY: the county's book");
   await expect(card.getByTestId('assay-records-county')).toContainText('Claims assayed this week: 14');
   await expect(card.getByTestId('assay-records-county')).toContainText('Typical run: 3–5 min');
   await expect(card.getByTestId('assay-records-county')).toContainText('Trail rigs: Full 10, Balanced 20, Lite 12');
-  await expect(card.getByTestId('assay-records-claim')).toContainText('THE CLAIM — your page in it');
+  await expect(card.getByTestId('assay-records-claim')).toContainText('THE CLAIM: your page in it');
   await expect(card.getByTestId('assay-records-claim')).toContainText('Runs entered: 2 · Deepest holdout: wave 12');
   await expect(card.getByTestId('assay-records-claim')).toContainText('Gold panned: 330 · Folks freed: 25');
   await expect(card.getByTestId('assay-records-claim')).toContainText('Playtime in the ledger: 4 min');

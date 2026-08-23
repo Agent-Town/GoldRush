@@ -126,7 +126,7 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
   {
     objectClass: 'drill_straw_man',
     title: 'Straw men',
-    lines: ["Straw men — they don't mind."],
+    lines: ["Straw men; they don't mind."],
     persistent: false,
   },
   {

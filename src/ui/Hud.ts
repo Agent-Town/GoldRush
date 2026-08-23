@@ -110,7 +110,7 @@ export class Hud {
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
-      <p class="hud-training-tag" data-testid="drill-yard-training-tag" hidden>DRILL YARD — training</p>
+      <p class="hud-training-tag" data-testid="drill-yard-training-tag" hidden>DRILL YARD: training</p>
 
       <section class="contract-briefing" data-testid="contract-briefing" aria-live="polite" role="status" hidden></section>
 

@@ -351,7 +351,7 @@ test('a plain boot tells a stranger the caravan IS the mission', async ({ page }
     { timeout: 30_000 },
   );
   await expect(page.locator('[data-hud-wave-title]')).toHaveText('THE SEED RUN');
-  await expect(page.locator('[data-hud-wave]')).toHaveText('The seed caravan rolls — see it to the basin.');
+  await expect(page.locator('[data-hud-wave]')).toHaveText('The seed caravan rolls; see it to the basin.');
   await shoot(page, testInfo, 'departure');
 
   // And the train really is moving while all of that is true.

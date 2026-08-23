@@ -23,7 +23,7 @@ test('the active Deepwater chart renders its uncertified bank without purchasabl
   await expect(icons).toHaveCount(15);
   expect(await icons.evaluateAll((items) => items.every((item) => item.style.backgroundImage.startsWith('url(')))).toBe(true);
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(5);
-  await expect(page.getByTestId('research-era-epoch-5-deepwater')).toHaveText('The Deepwater Claim — active');
+  await expect(page.getByTestId('research-era-epoch-5-deepwater')).toHaveText('The Deepwater Claim: active');
 
   await expect(page.locator('[data-research-state="available"]')).toHaveCount(0);
   await expect(page.locator('[data-research-state="locked"]')).toHaveCount(15);

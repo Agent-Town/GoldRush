@@ -97,7 +97,7 @@ test('an un-stamped dirty draft warns first and disappears on reload', async ({ 
   await applyAtCursor(page);
   const dirty = page.getByTestId('editor-dirty');
   await expect(dirty).toBeVisible();
-  await expect(dirty).toContainText('Stamp to keep — un-stamped edits are lost on reload');
+  await expect(dirty).toContainText('Stamp to keep; un-stamped edits are lost on reload');
   expect(await page.evaluate(() => window.__GR_EDITOR__!.descriptorJson())).not.toBe(baselineBytes);
   if (testInfo.project.name === 'desktop-chrome') await page.screenshot({ path: path.join(SHOT_DIR, 'dirty-hint.png') });
 

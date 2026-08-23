@@ -73,7 +73,7 @@ test('E2 ledger has two open chapters, a locked future stub, tabs, and deep link
   await expect(eraRow.locator('[data-ledger-era-state="open"]')).toHaveCount(2);
   await expect(eraRow.locator('[data-ledger-era-state="locked"]')).toHaveCount(1);
   await expect(page.getByTestId(`claim-ledger-era-${FRONTIER}`)).toContainText('The Frontier ✓');
-  await expect(page.getByTestId(`claim-ledger-era-${STEAMWORKS}`)).toContainText('The Steamworks — active');
+  await expect(page.getByTestId(`claim-ledger-era-${STEAMWORKS}`)).toContainText('The Steamworks: active');
   await expect(page.getByTestId(`claim-ledger-era-${VOLTAGE}`)).toBeDisabled();
   await expect(page.getByTestId('claim-ledger-locked-chapter')).toHaveAttribute('data-ledger-era', VOLTAGE);
   await expect(page.getByTestId('claim-ledger-locked-chapter')).toContainText('The ledger has pages yet unwritten');

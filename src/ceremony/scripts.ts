@@ -154,7 +154,7 @@ export const T4_THE_BOAT: CeremonyScript = {
     label: 'Hold to drive the lead Flivver',
   },
   phases: [
-    { id: 'muster', kind: 'beat', durationMs: 1_400, direction: 'The haul musters — one ship, every vehicle in the valley.' },
+    { id: 'muster', kind: 'beat', durationMs: 1_400, direction: 'The haul musters: one ship, every vehicle in the valley.' },
     { id: 'haul', kind: 'hand', direction: 'Dust like a parade. Drive.' },
     { id: 'crest', kind: 'beat', durationMs: 1_000, direction: 'The Boat crests the last dune.' },
     { id: 'the-sea', kind: 'beat', durationMs: 1_400, direction: 'THE SEA. The town goes silent; the toy-boat kid stands at the bow.' },
@@ -202,7 +202,7 @@ export const T5_THE_DEEP_REACTOR: CeremonyScript = {
       id: 'homecoming-pass',
       kind: 'beat',
       durationMs: 4_200,
-      direction: 'The homecoming barge crosses the new inland water — every prior claim passes in green glass below.',
+      direction: 'The homecoming barge crosses the new inland water; every prior claim passes in green glass below.',
       // The hand stays involved: the rhythm continues under the pass.
       rhythmContinues: { minPulls: 3 },
     },
@@ -237,7 +237,7 @@ export const T6_THE_CALCULATING_HOUSE: CeremonyScript = {
     { id: 'teal-dial', kind: 'beat', durationMs: 1_400, direction: "The teal dial blinks the Prospector's own boot rhythm." },
     { id: 'house-listens', kind: 'beat', durationMs: 1_800, direction: "The House listens to the world's faint voices." },
     { id: 'more-voices', kind: 'beat', durationMs: 1_400, direction: 'The paper answers: MORE VOICES.' },
-    { id: 'kept-image', kind: 'kept-image', delayMs: 350, direction: "The plate above the door, the dial's light on the crowd — the Prospector front row." },
+    { id: 'kept-image', kind: 'kept-image', delayMs: 350, direction: "The plate above the door, the dial's light on the crowd, the Prospector front row." },
     { id: 'arm', kind: 'arm', direction: 'The Signal Era opens.' },
   ],
   sound: [
@@ -246,7 +246,7 @@ export const T6_THE_CALCULATING_HOUSE: CeremonyScript = {
     { beat: 't6-click-chord', phase: 'house-listens', atMs: 900, sound: 'tier-up' },
     { beat: 't6-more-voices', phase: 'more-voices', atMs: 0, sound: null, silence: true },
   ],
-  keptImage: { caption: "The plate above the door, the dial's light on the crowd — the Prospector front row." },
+  keptImage: { caption: "The plate above the door, the dial's light on the crowd, the Prospector front row." },
 };
 
 // ─── T7 · E7→E8 — THE STARSHIP ───────────────────────────────────────────
@@ -264,7 +264,7 @@ export const T7_THE_STARSHIP: CeremonyScript = {
   },
   phases: [
     { id: 'pad-quiet', kind: 'beat', durationMs: 900, direction: 'The Starship stands on the pad. The river holds the last of the light.' },
-    { id: 'made-crew-boards', kind: 'beat', durationMs: 1_400, direction: 'The crew of made agents boards — the Prospector at a porthole, Chalk beside it.' },
+    { id: 'made-crew-boards', kind: 'beat', durationMs: 1_400, direction: 'The crew of made agents boards, the Prospector at a porthole and Chalk beside it.' },
     { id: 'release-umbilical', kind: 'hand', direction: 'Throw the final umbilical release.' },
     { id: 'relay-towers', kind: 'beat', durationMs: 800, direction: 'Every relay tower carries the count.' },
     { id: 'countdown', kind: 'beat', durationMs: 2_200, direction: 'The switchboard chief counts the ground to the sky: five, four, three, two…' },
@@ -346,11 +346,11 @@ export const T9_THE_GENERATION_ARK: CeremonyScript = {
     label: "Hold to carry the Elder's Tree seed-tin",
   },
   phases: [
-    { id: 'boarding-line', kind: 'beat', durationMs: 1_200, direction: 'Every surviving portrait waits in the boarding line — aged, named, touchable.' },
+    { id: 'boarding-line', kind: 'beat', durationMs: 1_200, direction: 'Every surviving portrait waits in the boarding line: aged, named, touchable.' },
     { id: 'carry-tree-seed', kind: 'hand', direction: "Carry the Elder's Tree seed-tin through the line and up the ramp." },
     { id: 'town-boards-entire', kind: 'beat', durationMs: 1_200, direction: 'The town boards entire: every generation, the Long Table, the seed in its greenkeeper tin.' },
     { id: 'heirs-fleet', kind: 'beat', durationMs: 1_400, direction: "The heirs' fleet crests the horizon, crossed pickaxes on every sail. They have come asking." },
-    { id: 'departure-horn', kind: 'beat', durationMs: 1_000, direction: "The departure horn sounds the Railcar's old whistle note — leaving-music now." },
+    { id: 'departure-horn', kind: 'beat', durationMs: 1_000, direction: "The departure horn sounds the Railcar's old whistle note, leaving-music now." },
     { id: 'ramps-close', kind: 'beat', durationMs: 1_400, direction: 'The ramps close on a green world. Under the horn, the canals keep running.' },
     { id: 'kept-image', kind: 'kept-image', delayMs: 350, direction: 'From the ramp: the basin green, the Digger working, one old man waving with a stopped watch.' },
     { id: 'arm', kind: 'arm', direction: 'The Deep Sky opens.' },

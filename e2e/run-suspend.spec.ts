@@ -211,7 +211,7 @@ test('wave-boundary suspend restores state and matches the uninterrupted seeded 
   await saveVisibilityShot(page, testInfo, 'boundary-tick');
   await page.keyboard.press('KeyP');
   const pauseSaved = await savedSuspend(page);
-  await expect(page.getByTestId('pause-meta-save')).toHaveText(`📒 Ledger saved at wave ${pauseSaved.wave} — closing the tab keeps your place.`);
+  await expect(page.getByTestId('pause-meta-save')).toHaveText(`📒 Ledger saved at wave ${pauseSaved.wave}; closing the tab keeps your place.`);
   await saveVisibilityShot(page, testInfo, 'pause-line-saved');
   await page.keyboard.press('KeyP');
   const savedPalisade = saved.buildings.find((entry) => entry.id === 'palisade');
@@ -267,7 +267,7 @@ test('wave-boundary suspend restores state and matches the uninterrupted seeded 
   await writeSuspend(page, savedRaw);
   await page.evaluate(([key, value]) => localStorage.setItem(key, value), [profileDataKey('robin', TOWN_NAME_KEY), 'Copper Hill'] as const);
   await page.reload();
-  await expect(page.getByTestId('start-menu-continue')).toHaveText(`Continue — wave ${saved.wave} · The Claim · Copper Hill`);
+  await expect(page.getByTestId('start-menu-continue')).toHaveText(`Continue: wave ${saved.wave} · The Claim · Copper Hill`);
   await expect(page.getByTestId('start-menu-saved-claim')).toContainText(`wave ${saved.wave}`);
   await expect(page.getByTestId('start-menu-saved-claim')).toContainText('The Claim');
   await saveVisibilityShot(page, testInfo, 'menu-continue');

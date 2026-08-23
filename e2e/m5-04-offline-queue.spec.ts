@@ -6,7 +6,7 @@ import { makePendingQueueRequest, normalizeQueueProfile, pendingQueuePath } from
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type Box = { x: number; y: number; width: number; height: number };
 const localSampleSuffix = '_steady_brass_pan_receipt_for_faster_claim_work.json';
-const HONEST_WIRE_LINE = 'The wire to the Assayer is still being strung — orders open soon.';
+const HONEST_WIRE_LINE = 'The wire to the Assayer is still being strung; orders open soon.';
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -212,7 +212,7 @@ test('posted orders stay visible across reloads and refresh to verdicts on reope
     const pendingRows = page.getByTestId('assay-queue-pending').locator('li');
     await expect(pendingRows).toHaveCount(1);
     await expect(pendingRows.first()).toContainText(text);
-    await expect(pendingRows.first()).toContainText('at the assay works, check back next run');
+    await expect(pendingRows.first()).toContainText('at the assay works; check back next run');
 
     await page.getByTestId('assay-close').click();
     await expect(page.getByTestId('assay-bench')).toBeHidden();
@@ -260,7 +260,7 @@ test('posted orders stay visible across reloads and refresh to verdicts on reope
     await page.keyboard.press('Enter');
     await expect(page.getByTestId('assay-bench')).toBeVisible();
     await expect(page.getByTestId('assay-log').locator('li')).toContainText([
-      'Teal Splitter Coupler (common) arrived — collection opens soon',
+      'Teal Splitter Coupler (common) arrived; collection opens soon',
     ]);
     await expect(page.getByTestId('assay-queue-pending').locator('li')).toHaveCount(0);
     expect(errors.consoleErrors).toEqual([]);
@@ -397,7 +397,7 @@ test('approved fixtures enter a profile history once', async ({ page, baseURL })
 
   const rows = page.getByTestId('assay-log').locator('li');
   await expect(rows).toHaveCount(1);
-  await expect(rows.first()).toContainText('Brass Pan Receipt (common) arrived — collection opens soon');
+  await expect(rows.first()).toContainText('Brass Pan Receipt (common) arrived; collection opens soon');
 
   const idempotentCount = await page.evaluate(async () => {
     const benchPath = '/src/crafting/AssayBench.ts';
@@ -420,7 +420,7 @@ test('approved fixtures enter a profile history once', async ({ page, baseURL })
 test('bench hint is visible, avoids HUD chips, and closes both ways', async ({ page }) => {
   const errors = await openBench(page, '?debug&nowaves&nolevel&profile=m5_example_prospector');
   await expect(page.getByTestId('assay-hint')).toHaveText(
-    'Write what you need — the Assayer takes orders between sessions when the wire is open.',
+    'Write what you need. The Assayer takes orders between sessions when the wire is open.',
   );
   await expect(page.getByTestId('assay-close')).toBeVisible();
 

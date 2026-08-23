@@ -159,7 +159,7 @@ export class E10FinaleSystem {
         <p style="letter-spacing:.18em">THE CHARTER PRESS</p>
         <h1 id="e10-finale-title">Four hands, one lever.</h1>
         <p>The child chooses a river. The first verb is waiting.</p>
-        <button type="button" data-testid="e10-river-lever" style="min-height:54px;padding:12px 20px;font:700 16px Georgia,serif">PRESS THE LEVER — CHARTER THE RIVER</button>
+        <button type="button" data-testid="e10-river-lever" style="min-height:54px;padding:12px 20px;font:700 16px Georgia,serif">PRESS THE LEVER: CHARTER THE RIVER</button>
         <button type="button" data-testid="e10-return-town" style="min-height:44px;margin-left:8px;padding:10px 16px">Return to the Ark</button>
         <p data-testid="e10-finale-status" role="status"></p>
       </section>`;

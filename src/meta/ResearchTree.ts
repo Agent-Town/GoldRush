@@ -23,9 +23,9 @@ export const RESEARCH_STATE_KEY = 'gr.research.v1';
 export const STEAMWORKS_THRESHOLD = loadEpoch(DEFAULT_EPOCH_ID).scienceThreshold;
 export const SKY_ROCKET_BATTERY_NODE_ID = 'sky_rocket_battery';
 export const SCIENCE_CEILING_TEXT =
-  'Epoch science complete — the Steamworks awaits a town to build it. (Steps beyond the threshold are banked for the new era.)';
+  'Epoch science complete: the Steamworks awaits a town to build it. (Steps beyond the threshold are banked for the new era.)';
 export const SCIENCE_BUILDING_TEXT =
-  'Epoch science complete — the town is building the Steamworks. (Steps beyond the threshold are already in the ledger.)';
+  'Epoch science complete: the town is building the Steamworks. (Steps beyond the threshold are already in the ledger.)';
 
 export type ResearchBranch = string;
 
@@ -310,8 +310,8 @@ export function scienceMeter(state: ResearchState, buildStatus: ScienceBuildStat
     bankedText,
     text: complete
       ? buildStatus === 'building'
-        ? `Epoch science complete — the town is building ${nextEpoch}. (Steps beyond the threshold are already in the ledger.)`
-        : `Epoch science complete — ${nextEpoch} awaits a town to build it. (Steps beyond the threshold are banked for the new era.)`
+        ? `Epoch science complete: the town is building ${nextEpoch}. (Steps beyond the threshold are already in the ledger.)`
+        : `Epoch science complete: ${nextEpoch} awaits a town to build it. (Steps beyond the threshold are banked for the new era.)`
       : `Science: ${steps} steps - ${remaining} to ${nextEpoch}`,
   };
 }
