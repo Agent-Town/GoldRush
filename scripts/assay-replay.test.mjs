@@ -21,6 +21,11 @@ test('rob\'s v1 live reel is retained but reported as unverifiable legacy', () =
   assert.equal(fixture.eventLogHash, 'fnv1a32:f6390382');
 });
 
+test('the round-2 corpus hash remains byte-for-byte pinned', () => {
+  const tape = JSON.parse(readFileSync('artifacts/assay-e2e-20260822/round2/tape-secure-verb.json', 'utf8'));
+  assert.equal(tape.eventLogHash, 'fnv1a32:ba8fdc3e');
+});
+
 /**
  * THE DOOR TAPE, END TO END (F-ASSAY-E2E-1/2/3, 2026-08-22). Before this test the public headless
  * door was unverifiable by construction and nothing said so: gr-sim stamped `version: 1` while the
@@ -40,6 +45,7 @@ test('a securing door tape carries its start, its boundary answer, and replays t
     // F-ASSAY-E2E-1: the door writes the version the assayer accepts, and declares what it booted
     // under. gr-sim rides a virgin profile, so the truthful declaration is the fresh one.
     assert.equal(tape.version, 2);
+    assert.equal(typeof tape.meta?.buildId, 'string', 'the door records which checkout built its tape');
     assert.deepEqual(tape.runStart.meta, { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } });
     assert.deepEqual(tape.runStart.research.taken, []);
     assert.equal(tape.runStart.research.version, 1);

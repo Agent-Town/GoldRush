@@ -25,7 +25,7 @@ const serversByStorage = new WeakMap();
 
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 try {
-  const { onRequest } = await vite.ssrLoadModule('/functions/api/standings.ts');
+  const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
   httpRoutes = {
@@ -35,6 +35,7 @@ try {
   };
   for (backend of ['kv', 'sqlite']) {
     checks = 0;
+    checkTapeBuildMetadata(validateTape);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -51,6 +52,13 @@ try {
   sqliteStores.forEach((store) => store.close());
   await rm(sqliteRoot, { recursive: true, force: true });
   await vite.close();
+}
+
+function checkTapeBuildMetadata(validateTape) {
+  const legacyV2 = tapeV2('without-build', 1);
+  const stampedV2 = { ...tapeV2('with-build', 1), meta: { buildId: 'abcdef12' } };
+  equal(validateTape(legacyV2, 'the-claim', 'gold-rush', 'trail')?.meta, undefined, 'v2 tapes without build metadata remain valid');
+  equal(validateTape(stampedV2, 'the-claim', 'gold-rush', 'trail')?.meta, stampedV2.meta, 'v2 build metadata is accepted and preserved');
 }
 
 async function checkAssayIndexRace(onRequest, queueRoute) {

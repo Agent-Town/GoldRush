@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { tmpdir } from 'node:os';
@@ -7,6 +8,7 @@ import path from 'node:path';
 import test from 'node:test';
 
 const root = process.cwd();
+const buildId = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
 const locator = (tapeId) => ({ epochId: 'epoch-1-frontier', contractId: 'the-claim', tapeId, rowId: `${'a'.repeat(32)}:1:1:${'b'.repeat(64)}` });
 const score = { secured: true, waves: 10, timeAlive: 120, gold: 40, baseValue: 60 };
 const row = (id, version = 2) => ({ locator: locator(id), tape: { version, id, eventLogHash: 'fnv1a32:1234abcd' }, score, submittedAt: 1 });
@@ -29,8 +31,8 @@ async function fixture() {
       await writeFile(${JSON.stringify(attempts)}, String(attempt));
       if (attempt <= 3) throw new Error('stub instrument unavailable');
     }
-    const eventLogHash = tape.id === 'hash-mismatch' ? 'fnv1a32:deadbeef' : tape.id === 'invalid-hash' ? 'not-a-hash' : 'fnv1a32:1234abcd';
-    const outcome = { secured: true, waves: tape.id === 'outcome-mismatch' ? 9 : 10, timeAlive: 120, gold: 40 };
+    const eventLogHash = tape.id === 'hash-mismatch' ? 'fnv1a32:deadbeef' : tape.id === 'invalid-hash' ? 'not-a-hash' : tape.id === 'matching-round2' ? tape.eventLogHash : 'fnv1a32:1234abcd';
+    const outcome = tape.id === 'matching-round2' ? tape.outcome : { secured: true, waves: tape.id === 'outcome-mismatch' ? 9 : 10, timeAlive: 120, gold: 40 };
     process.stdout.write(JSON.stringify({ eventLogHash, outcome }) + '\\n');
   `);
   return { directory, stub };
@@ -67,7 +69,7 @@ function json(response, status, body) {
 function runWorker(base, stub, flags = ['--once']) {
   const child = spawn(process.execPath, ['scripts/assay-worker.mjs', ...flags], {
     cwd: root,
-    env: { ...process.env, ASSAY_API_BASE: base, ASSAY_WORKER_SECRET: 'test-secret', ASSAY_REPLAY_SCRIPT: stub, ASSAY_POLL_MS: '5', ASSAY_BACKOFF_INITIAL_MS: '10', ASSAY_BACKOFF_MAX_MS: '20' },
+    env: { ...process.env, ASSAY_BUILD_ID: buildId, ASSAY_API_BASE: base, ASSAY_WORKER_SECRET: 'test-secret', ASSAY_REPLAY_SCRIPT: stub, ASSAY_POLL_MS: '5', ASSAY_BACKOFF_INITIAL_MS: '10', ASSAY_BACKOFF_MAX_MS: '20' },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   let stdout = '';
@@ -102,6 +104,33 @@ test('once keeps completed mismatches rejected and retries instrument failures b
     const verdicts = logs.filter(({ verdict }) => verdict);
     assert.equal(verdicts.length, 6);
     assert.ok(verdicts.every((entry) => entry.locator && entry.hashes && Number.isInteger(entry.wallMs)));
+  } finally {
+    await api.close();
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('build skew is retry-free and a matching round-2 tape still verifies', async () => {
+  const { directory, stub } = await fixture();
+  const round2 = JSON.parse(readFileSync('artifacts/assay-e2e-20260822/round2/tape-secure-verb.json', 'utf8'));
+  const matchingTape = { ...round2, id: 'matching-round2', meta: { buildId: buildId.slice(0, 8) } };
+  const matchingRow = {
+    locator: locator(matchingTape.id),
+    tape: matchingTape,
+    score: { ...matchingTape.outcome, baseValue: 60 },
+    submittedAt: 1,
+  };
+  const skew = row('skew');
+  skew.tape.meta = { buildId: 'deadbeef' };
+  const api = await mockApi([skew, matchingRow]);
+  try {
+    const { code, stdout, stderr } = await runWorker(api.base, stub).done;
+    assert.equal(code, 0, stderr);
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'verified']);
+    assert.equal(api.posts[0].reason, `build-skew (tape deadbeef, assayer ${buildId})`);
+    assert.equal(api.posts[0].replayedHash, undefined);
+    assert.equal(api.posts[1].reason, undefined);
+    assert.equal(stdout.trim().split('\n').map(JSON.parse).some(({ event }) => event === 'instrument_retry'), false);
   } finally {
     await api.close();
     await rm(directory, { recursive: true, force: true });

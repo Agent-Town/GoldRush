@@ -65,6 +65,10 @@ export type RunTapeRunStart = {
   research: ResearchState;
 };
 
+export type RunTapeMeta = {
+  buildId: string;
+};
+
 export type RunTape = {
   version: 1 | typeof RUN_TAPE_VERSION;
   id: string;
@@ -74,6 +78,7 @@ export type RunTape = {
   seed: string;
   difficulty: string;
   simVersion: number;
+  meta?: RunTapeMeta;
   runStart?: RunTapeRunStart;
   inputLog: RunTapeInputLog;
   eventLogHash: string;
@@ -81,7 +86,7 @@ export type RunTape = {
   annotations?: Array<{ atMs: number; text: string }>;
 };
 
-type RunTapeHeader = Pick<RunTape, 'contract' | 'seed' | 'difficulty'> & {
+type RunTapeHeader = Pick<RunTape, 'contract' | 'seed' | 'difficulty' | 'meta'> & {
   start: { x: number; z: number };
   runStart?: RunTapeRunStart;
 };
@@ -216,6 +221,7 @@ export class RunTapeRecorder {
       seed: this.header.seed,
       difficulty: this.header.difficulty,
       simVersion: RUN_TAPE_SIM_VERSION,
+      ...(this.header.meta ? { meta: structuredClone(this.header.meta) } : {}),
       runStart: structuredClone(this.header.runStart),
       inputLog,
       eventLogHash: runTapeEventLogHash(this.frozenEventLog ?? eventLog),
@@ -309,7 +315,7 @@ function writeRing(storage: TapeStorage, tapes: RunTape[]): boolean {
 // Exported for TAPE-03: a reel fetched from the county board is untrusted bytes off the network
 // and gets the same validator the local ring already trusts, rather than a second, weaker one.
 export function validateRunTape(value: unknown): RunTape | null {
-  if (!isRecord(value) || !hasOnlyKeys(value, ['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'runStart', 'inputLog', 'eventLogHash', 'outcome', 'annotations'])) return null;
+  if (!isRecord(value) || !hasOnlyKeys(value, ['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'meta', 'runStart', 'inputLog', 'eventLogHash', 'outcome', 'annotations'])) return null;
   if ((value.version !== 1 && value.version !== RUN_TAPE_VERSION) || !Number.isSafeInteger(value.simVersion) || (value.simVersion as number) < 1) return null;
   if (typeof value.id !== 'string' || !value.id || typeof value.createdAt !== 'number' || !Number.isSafeInteger(value.createdAt)) return null;
   if (typeof value.kept !== 'boolean' || typeof value.contract !== 'string' || !value.contract) return null;
@@ -319,8 +325,9 @@ export function validateRunTape(value: unknown): RunTape | null {
   const streams = validateInputStreams(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0);
   const outcome = validateOutcome(value.outcome);
   const annotations = validateAnnotations(value.annotations);
+  const meta = validateTapeMeta(value.meta);
   const runStart = validateRunStart(value.runStart);
-  if (!parsed.ok || !streams || !outcome || annotations === null || (value.version === RUN_TAPE_VERSION ? !runStart : value.runStart !== undefined) || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
+  if (!parsed.ok || !streams || !outcome || annotations === null || meta === null || (value.version === RUN_TAPE_VERSION ? !runStart : value.runStart !== undefined || value.meta !== undefined) || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
   return {
     version: value.version,
     id: value.id,
@@ -330,12 +337,20 @@ export function validateRunTape(value: unknown): RunTape | null {
     seed: value.seed,
     difficulty: value.difficulty,
     simVersion: value.simVersion as number,
+    ...(meta ? { meta } : {}),
     ...(runStart ? { runStart } : {}),
     inputLog: { ...parsed.playbook, ...streams },
     eventLogHash: value.eventLogHash,
     outcome,
     ...(annotations ? { annotations } : {}),
   };
+}
+
+function validateTapeMeta(value: unknown): RunTapeMeta | null | undefined {
+  if (value === undefined) return undefined;
+  return isRecord(value) && hasOnlyKeys(value, ['buildId']) && typeof value.buildId === 'string' && /^(dev|[a-f0-9]{7,16})$/.test(value.buildId)
+    ? { buildId: value.buildId }
+    : null;
 }
 
 function validateRunStart(value: unknown): RunTapeRunStart | null {

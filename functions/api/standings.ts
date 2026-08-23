@@ -934,13 +934,14 @@ function validateParty(value: unknown, stored = false): SubmittedParty | null {
 
 export function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): JsonRecord | null {
   if (!isRecord(value) || new TextEncoder().encode(JSON.stringify(value)).length > MAX_TAPE_BYTES) return null;
-  if (!hasOnlyKeys(value, new Set(['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'runStart', 'inputLog', 'eventLogHash', 'outcome']))) return null;
+  if (!hasOnlyKeys(value, new Set(['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'meta', 'runStart', 'inputLog', 'eventLogHash', 'outcome']))) return null;
   if ((value.version !== 1 && value.version !== 2) || value.simVersion !== 1 || typeof value.id !== 'string' || !value.id || value.id.length > 64) return null;
   if (!Number.isSafeInteger(value.createdAt) || (value.createdAt as number) < 0 || typeof value.kept !== 'boolean') return null;
   if (value.contract !== contractId || value.seed !== seed || value.difficulty !== difficulty) return null;
   if (typeof value.eventLogHash !== 'string' || !/^fnv1a32:[a-f0-9]{8}$/.test(value.eventLogHash)) return null;
   if (!validTapeOutcome(value.outcome) || !validTapeInput(value.inputLog, contractId, seed, difficulty)
-    || (value.version === 2 ? !validRunStart(value.runStart) : value.runStart !== undefined)) return null;
+    || (value.meta !== undefined && (!isRecord(value.meta) || !hasOnlyKeys(value.meta, new Set(['buildId'])) || typeof value.meta.buildId !== 'string' || !/^(dev|[a-f0-9]{7,16})$/.test(value.meta.buildId)))
+    || (value.version === 2 ? !validRunStart(value.runStart) : value.runStart !== undefined || value.meta !== undefined)) return null;
   return value;
 }
 
