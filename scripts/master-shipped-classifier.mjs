@@ -6,7 +6,10 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
-const SHIPPED = new Set(['merged', 'shipped']);
+// Exported for F-2226-1: `ghost-ladder-row-guard` cross-checks a frozen board's rows against
+// main's own goals.json, and must ask the SAME question this file asks. A private copy of a
+// two-element set is a rename away from silently disagreeing with its own source of truth.
+export const SHIPPED = new Set(['merged', 'shipped']);
 const TRACE_DIRS = new Set(['done', 'failed', 'running', 'runs', 'stopped', 'queue-paused']);
 // Gates CANDIDATES only for NO-TRACE masters; widening can only shrink that list, so the risk is hiding real work.
 const NOT_QUEUEABLE = /DO[- ]NOT[- ]QUEUE|NEVER QUEUE|NOT[- ](?:FIRE[- ])?QUEUEABLE/i;
@@ -76,7 +79,7 @@ function mainReviews(root) {
   };
 }
 
-function goalLeaves(value, out = []) {
+export function goalLeaves(value, out = []) {
   if (Array.isArray(value)) value.forEach((item) => goalLeaves(item, out));
   else if (value && typeof value === 'object') {
     if (value.taskFile) out.push(value);
