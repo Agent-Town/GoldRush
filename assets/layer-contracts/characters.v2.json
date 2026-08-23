@@ -429,6 +429,56 @@
       }
     },
     {
+      "slot": "char.town.tavernkeeper",
+      "fallback": { "file": "townsfolk-tavernkeeper.png" },
+      "walk8": {
+        "version": 1,
+        "status": "ACTIVE",
+        "enabled": true,
+        "frameCount": 8,
+        "fps": 8,
+        "cadenceReferenceFrames": 8,
+        "grid": { "file": "char-tavernkeeper-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
+        "directions": {
+          "s":  { "frames": { "files": ["char-tavernkeeper-sheet-walk8-r0c0.png", "char-tavernkeeper-sheet-walk8-r0c1.png", "char-tavernkeeper-sheet-walk8-r0c2.png", "char-tavernkeeper-sheet-walk8-r0c3.png", "char-tavernkeeper-sheet-walk8-r0c4.png", "char-tavernkeeper-sheet-walk8-r0c5.png", "char-tavernkeeper-sheet-walk8-r0c6.png", "char-tavernkeeper-sheet-walk8-r0c7.png"] } },
+          "se": { "frames": { "files": ["char-tavernkeeper-sheet-walk8-r2c0.png", "char-tavernkeeper-sheet-walk8-r2c1.png", "char-tavernkeeper-sheet-walk8-r2c2.png", "char-tavernkeeper-sheet-walk8-r2c3.png", "char-tavernkeeper-sheet-walk8-r2c4.png", "char-tavernkeeper-sheet-walk8-r2c5.png", "char-tavernkeeper-sheet-walk8-r2c6.png", "char-tavernkeeper-sheet-walk8-r2c7.png"] } },
+          "e":  { "frames": { "files": ["char-tavernkeeper-sheet-walk8-r2c0.png", "char-tavernkeeper-sheet-walk8-r2c1.png", "char-tavernkeeper-sheet-walk8-r2c2.png", "char-tavernkeeper-sheet-walk8-r2c3.png", "char-tavernkeeper-sheet-walk8-r2c4.png", "char-tavernkeeper-sheet-walk8-r2c5.png", "char-tavernkeeper-sheet-walk8-r2c6.png", "char-tavernkeeper-sheet-walk8-r2c7.png"] } },
+          "ne": { "frames": { "files": ["char-tavernkeeper-sheet-walk8-r2c0.png", "char-tavernkeeper-sheet-walk8-r2c1.png", "char-tavernkeeper-sheet-walk8-r2c2.png", "char-tavernkeeper-sheet-walk8-r2c3.png", "char-tavernkeeper-sheet-walk8-r2c4.png", "char-tavernkeeper-sheet-walk8-r2c5.png", "char-tavernkeeper-sheet-walk8-r2c6.png", "char-tavernkeeper-sheet-walk8-r2c7.png"] } },
+          "n":  { "frames": { "files": ["char-tavernkeeper-sheet-walk8-r3c0.png", "char-tavernkeeper-sheet-walk8-r3c1.png", "char-tavernkeeper-sheet-walk8-r3c2.png", "char-tavernkeeper-sheet-walk8-r3c3.png", "char-tavernkeeper-sheet-walk8-r3c4.png", "char-tavernkeeper-sheet-walk8-r3c5.png", "char-tavernkeeper-sheet-walk8-r3c6.png", "char-tavernkeeper-sheet-walk8-r3c7.png"] } },
+          "nw": { "frames": { "files": ["char-tavernkeeper-sheet-walk8-r1c0.png", "char-tavernkeeper-sheet-walk8-r1c1.png", "char-tavernkeeper-sheet-walk8-r1c2.png", "char-tavernkeeper-sheet-walk8-r1c3.png", "char-tavernkeeper-sheet-walk8-r1c4.png", "char-tavernkeeper-sheet-walk8-r1c5.png", "char-tavernkeeper-sheet-walk8-r1c6.png", "char-tavernkeeper-sheet-walk8-r1c7.png"] } },
+          "w":  { "frames": { "files": ["char-tavernkeeper-sheet-walk8-r1c0.png", "char-tavernkeeper-sheet-walk8-r1c1.png", "char-tavernkeeper-sheet-walk8-r1c2.png", "char-tavernkeeper-sheet-walk8-r1c3.png", "char-tavernkeeper-sheet-walk8-r1c4.png", "char-tavernkeeper-sheet-walk8-r1c5.png", "char-tavernkeeper-sheet-walk8-r1c6.png", "char-tavernkeeper-sheet-walk8-r1c7.png"] } },
+          "sw": { "frames": { "files": ["char-tavernkeeper-sheet-walk8-r1c0.png", "char-tavernkeeper-sheet-walk8-r1c1.png", "char-tavernkeeper-sheet-walk8-r1c2.png", "char-tavernkeeper-sheet-walk8-r1c3.png", "char-tavernkeeper-sheet-walk8-r1c4.png", "char-tavernkeeper-sheet-walk8-r1c5.png", "char-tavernkeeper-sheet-walk8-r1c6.png", "char-tavernkeeper-sheet-walk8-r1c7.png"] } }
+        },
+        "aliases": {},
+        "notes": "Town cast wiring: processed 4x8 cardinal sheet, with diagonals explicit through the matching side row. TownScene anchors every displayed cell from its frames.json bbox footline."
+      }
+    },
+    {
+      "slot": "char.town.storekeeper",
+      "fallback": { "file": "townsfolk-storekeeper.png" },
+      "walk8": {
+        "version": 1,
+        "status": "ACTIVE",
+        "enabled": true,
+        "frameCount": 8,
+        "fps": 8,
+        "cadenceReferenceFrames": 8,
+        "grid": { "file": "char-storekeeper-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
+        "directions": {
+          "s":  { "frames": { "files": ["char-storekeeper-sheet-walk8-r0c0.png", "char-storekeeper-sheet-walk8-r0c1.png", "char-storekeeper-sheet-walk8-r0c2.png", "char-storekeeper-sheet-walk8-r0c3.png", "char-storekeeper-sheet-walk8-r0c4.png", "char-storekeeper-sheet-walk8-r0c5.png", "char-storekeeper-sheet-walk8-r0c6.png", "char-storekeeper-sheet-walk8-r0c7.png"] } },
+          "se": { "frames": { "files": ["char-storekeeper-sheet-walk8-r2c0.png", "char-storekeeper-sheet-walk8-r2c1.png", "char-storekeeper-sheet-walk8-r2c2.png", "char-storekeeper-sheet-walk8-r2c3.png", "char-storekeeper-sheet-walk8-r2c4.png", "char-storekeeper-sheet-walk8-r2c5.png", "char-storekeeper-sheet-walk8-r2c6.png", "char-storekeeper-sheet-walk8-r2c7.png"] } },
+          "e":  { "frames": { "files": ["char-storekeeper-sheet-walk8-r2c0.png", "char-storekeeper-sheet-walk8-r2c1.png", "char-storekeeper-sheet-walk8-r2c2.png", "char-storekeeper-sheet-walk8-r2c3.png", "char-storekeeper-sheet-walk8-r2c4.png", "char-storekeeper-sheet-walk8-r2c5.png", "char-storekeeper-sheet-walk8-r2c6.png", "char-storekeeper-sheet-walk8-r2c7.png"] } },
+          "ne": { "frames": { "files": ["char-storekeeper-sheet-walk8-r2c0.png", "char-storekeeper-sheet-walk8-r2c1.png", "char-storekeeper-sheet-walk8-r2c2.png", "char-storekeeper-sheet-walk8-r2c3.png", "char-storekeeper-sheet-walk8-r2c4.png", "char-storekeeper-sheet-walk8-r2c5.png", "char-storekeeper-sheet-walk8-r2c6.png", "char-storekeeper-sheet-walk8-r2c7.png"] } },
+          "n":  { "frames": { "files": ["char-storekeeper-sheet-walk8-r3c0.png", "char-storekeeper-sheet-walk8-r3c1.png", "char-storekeeper-sheet-walk8-r3c2.png", "char-storekeeper-sheet-walk8-r3c3.png", "char-storekeeper-sheet-walk8-r3c4.png", "char-storekeeper-sheet-walk8-r3c5.png", "char-storekeeper-sheet-walk8-r3c6.png", "char-storekeeper-sheet-walk8-r3c7.png"] } },
+          "nw": { "frames": { "files": ["char-storekeeper-sheet-walk8-r1c0.png", "char-storekeeper-sheet-walk8-r1c1.png", "char-storekeeper-sheet-walk8-r1c2.png", "char-storekeeper-sheet-walk8-r1c3.png", "char-storekeeper-sheet-walk8-r1c4.png", "char-storekeeper-sheet-walk8-r1c5.png", "char-storekeeper-sheet-walk8-r1c6.png", "char-storekeeper-sheet-walk8-r1c7.png"] } },
+          "w":  { "frames": { "files": ["char-storekeeper-sheet-walk8-r1c0.png", "char-storekeeper-sheet-walk8-r1c1.png", "char-storekeeper-sheet-walk8-r1c2.png", "char-storekeeper-sheet-walk8-r1c3.png", "char-storekeeper-sheet-walk8-r1c4.png", "char-storekeeper-sheet-walk8-r1c5.png", "char-storekeeper-sheet-walk8-r1c6.png", "char-storekeeper-sheet-walk8-r1c7.png"] } },
+          "sw": { "frames": { "files": ["char-storekeeper-sheet-walk8-r1c0.png", "char-storekeeper-sheet-walk8-r1c1.png", "char-storekeeper-sheet-walk8-r1c2.png", "char-storekeeper-sheet-walk8-r1c3.png", "char-storekeeper-sheet-walk8-r1c4.png", "char-storekeeper-sheet-walk8-r1c5.png", "char-storekeeper-sheet-walk8-r1c6.png", "char-storekeeper-sheet-walk8-r1c7.png"] } }
+        },
+        "aliases": {},
+        "notes": "Town cast wiring: processed 4x8 cardinal sheet, with diagonals explicit through the matching side row. TownScene anchors every displayed cell from its frames.json bbox footline."
+      }
+    },
+    {
       "slot": "char.baron",
       "fallback": {
         "file": "char-baron-sheet-walk8-r0c0.png"
