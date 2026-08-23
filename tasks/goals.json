@@ -2787,7 +2787,9 @@
               "id": "c7-standing-order-replay-rescoped",
               "title": "The browser replays a standing-order tape - three seams on the c2 stop's measured premise (bindStandingUpgradePicker + deadline + executor)",
               "taskFile": "c7-standing-order-replay-rescoped.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "6b6f52a7ba42632748058f895b2447096bd08cfc",
+              "drainNotes": "DRAINED s2238. Gated in detached worktree gate2-s2238 (§3.0b), merged+committed as ONE act (F-1589-5). tsc clean, build green, own spec 2/2 desktop+390px reproducing fnv1a32:2e35389e, boot probe 6/6 zero console errors, ap16-upgrade-door + ui-upgrade-icons green. Both c6 and c7 hunks verified coexisting in Game.ts after the ort auto-merge. F-2238-3: ap-standing-orders.spec.ts is red under whole-file load on BOTH arms - proven by a same-root reverted-content control that fails with zero c7 code, a different failing set in every run, and :123 passing in isolation on both arms at load avg 6.49. NOT re-pinned. OWED: gr-sim.test.mjs not independently re-run for this slice (not mandated by the path rule; green on the lane 18/0/2 and on the c6 tree 18/0/2) - skipped to avoid a SIGKILL mid-drain inside the ~39min fire wall clock. Review reviews/c7-standing-order-replay-rescoped.md.",
               "lane": "lane-b",
               "authoredBy": "attended 2026-08-23",
               "note": "Successor to the honest c2 stop (796e0d15d): the two-seam cure measured insufficient because installAgentDoor never binds the upgrade picker (only HeadlessContractSim does) - the null-handler root cause is the stop's own finding. Gate: the recorded eventLogHash reproduces through the browser roundtrip with a PICK_UPGRADE through a draft; floors/pins byte-unmoved; predecessor's no-partial-patch honesty standard carried verbatim. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
