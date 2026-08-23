@@ -3,6 +3,7 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { onRequest as standingsRoute } from '../functions/api/standings';
+import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 import { LANTERN_VERSION_REFUSAL } from '../src/ui/LanternShow';
 import type { RunTape } from '../src/game/RunTape';
@@ -378,7 +379,7 @@ test('plain boot: a failing standings request adds no error of the application o
     sessionStorage.clear();
     localStorage.setItem(key, JSON.stringify(state));
   }, { key: PROFILE_KEY, state: PROFILE_STATE });
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) => route.abort());
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, (route) => route.abort());
 
   await page.goto('/');
   await page.getByTestId('start-menu-claim-ledger').click();
@@ -405,7 +406,7 @@ test('plain boot: standings accept pre-declaration rows but reject malformed or 
     localStorage.setItem(key, JSON.stringify(state));
   }, { key: PROFILE_KEY, state: PROFILE_STATE });
   const base = { profileName: 'Legacy rider', secured: true, waves: 12, timeAlive: 400, gold: 90, baseValue: 100, difficulty: 'trail' };
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) => route.fulfill({
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, (route) => route.fulfill({
     status: 200,
     contentType: 'application/json',
     body: JSON.stringify({
@@ -451,7 +452,7 @@ test('plain boot: posse chips rank within size, the field book counts hands, and
   }, { key: PROFILE_KEY, state: PROFILE_STATE });
 
   const seen: string[] = [];
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, async (route) => {
     const url = new URL(route.request().url());
     seen.push(url.search);
     const reelId = url.searchParams.get('reel');

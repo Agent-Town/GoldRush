@@ -4,6 +4,7 @@ import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 import { onRequest as standingsRoute } from '../functions/api/standings';
+import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import type { DifficultyPresetId } from '../src/game/Balance';
 import { PROFILE_KEY, SCOREBOARD_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import type { RunTape } from '../src/game/RunTape';
@@ -229,7 +230,7 @@ async function secureClaim(page: Page, seed: string, beforeSecure?: () => Promis
 
 function interceptPosts(page: Page): StandingPost[] {
   const posts: StandingPost[] = [];
-  void page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
+  void page.route(`${GAME_API_ORIGIN}/api/standings**`, async (route) => {
     if (route.request().method() === 'POST') posts.push(JSON.parse(route.request().postData() ?? '{}') as StandingPost);
     await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
   });
@@ -271,7 +272,7 @@ test('public county rows carry submitted time while legacy rows keep the missing
   let board = [legacyRow];
   await seedProfile(page);
   const errors = collectErrors(page);
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) =>
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, (route) =>
     route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true, board }) }),
   );
   await page.goto('/');
@@ -734,7 +735,7 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
     baseValue: 180, secured: true, contractId: 'the-claim', profileName: 'Robin',
   }]);
   const errors = collectErrors(page);
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, async (route) => {
     const url = new URL(route.request().url());
     const difficulty = url.searchParams.get('difficulty');
     if (difficulty === 'greenhorn') await new Promise((resolve) => setTimeout(resolve, 250));

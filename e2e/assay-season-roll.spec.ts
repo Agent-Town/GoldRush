@@ -2,6 +2,7 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { onRequest as standingsRoute } from '../functions/api/standings';
+import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 
 // THE SEASON ROLL (owner ruling 2026-08-15, specs/agent-play/tape-contract.md §"The legacy board —
@@ -84,7 +85,7 @@ function collectErrors(page: Page): ErrorBucket {
 }
 
 async function serveCounty(page: Page, kv: MockKV, seen: string[]): Promise<void> {
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, async (route) => {
     const request = route.request();
     seen.push(new URL(request.url()).search);
     const response = await standingsRoute({

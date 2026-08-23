@@ -1,11 +1,12 @@
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../src/encyclopedia/storage';
 import { PROFILE_KEY, SCOREBOARD_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 
 const PROFILE_ID = 'robin';
-const STATS_ROUTE = 'https://gold-rush-3in.pages.dev/api/stats';
+const STATS_ROUTE = `${GAME_API_ORIGIN}/api/stats`;
 const RECORDS_ID = 'assay_office_records';
 
 const countyStats = {

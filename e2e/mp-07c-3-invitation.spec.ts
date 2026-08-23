@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 const CODE = '0123456789ABCDEF01234567';
@@ -44,7 +45,7 @@ test('the tavern invites an agent in one paste without closing the human door', 
   const command = page.getByTestId('ride-agent-command');
   await expect(command).toBeVisible();
   await expect(command).toHaveValue(
-    `node scripts/gr-sim.mjs --room ${CODE} --origin https://gold-rush-3in.pages.dev # claim ${phrase}`,
+    `node scripts/gr-sim.mjs --room ${CODE} --origin ${GAME_API_ORIGIN} # claim ${phrase}`,
   );
 
   await page.getByTestId('ride-agent-copy').click();

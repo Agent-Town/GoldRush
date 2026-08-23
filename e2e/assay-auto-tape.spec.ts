@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
+import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 import { RUN_TAPES_KEY, type RunTape } from '../src/game/RunTape';
 import { TELEMETRY_DEV_SEND_STORAGE_KEY, TELEMETRY_OPT_IN_STORAGE_KEY } from '../src/telemetry/payload';
@@ -42,7 +43,7 @@ async function openRun(page: Page, posts: StandingPost[]): Promise<void> {
     optInKey: TELEMETRY_OPT_IN_STORAGE_KEY,
     devSendKey: TELEMETRY_DEV_SEND_STORAGE_KEY,
   });
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, async (route) => {
     if (route.request().method() === 'POST') posts.push(JSON.parse(route.request().postData() ?? '{}') as StandingPost);
     await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
   });
