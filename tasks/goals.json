@@ -2776,7 +2776,9 @@
               "id": "c6-tape-build-id",
               "title": "Tapes carry their build id; the assayer declares build-skew honestly instead of rejecting the rider (F-ASSAY-SKEW successor)",
               "taskFile": "c6-tape-build-id.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "3a2ebfd0ceea737a0393900b12310a4cf4827790",
+              "drainNotes": "DRAINED s2238. Gated in detached worktree gate-s2238 off 9d21ce4ce (§3.0b); merged and committed as ONE act (F-1589-5). Evidence: tsc clean, build green, assay-worker+assay-replay 10/10, standings 113 KV + 113 SQLite, stats 87, ledger-worker 15, gr-sim 18 pass / 2 skip / 0 fail (determinism pins unmoved, round-2 hash still fnv1a32:ba8fdc3e), boot probe 6/6 desktop+390px zero console errors. All nine merged blobs byte-identical to the gated tree. Review reviews/c6-tape-build-id.md. F-2238-1 (worker will not boot on the git-less droplet without ASSAY_BUILD_ID) CURED in the drain commit by landing the precondition in docs/ops/agenttown-server.md. F-2238-2 (L1 server/ledger port of the validation) owed, correctly firewalled by the runner.",
               "lane": "lane-d",
               "authoredBy": "attended 2026-08-23",
               "note": "Pre-bounty launch-quality fix from the 2026-08-23 release map. meta.buildId stamped at record time both recorders; worker pre-replay comparison -> unassayable build-skew (c1 vocabulary, no retries); legacy tapes without the field replay as today. Hash-neutrality proven by pinning an existing fixture. L1 ledger port of the validation noted as follow-up, not edited here. DISPATCHED to tasks/queue/lane-d in the authoring commit window."
