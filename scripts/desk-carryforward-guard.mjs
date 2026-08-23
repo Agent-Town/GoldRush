@@ -93,6 +93,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { subjectLedClosure } from './desk-state-audit.mjs';
+// F-2231-1: the whole-token containment test F-2230-1 ruled on, imported rather
+// than re-implemented. No new cycle — desk-birth-guard reaches only
+// desk-declaration-guard, and the carryforward<->state-audit cycle predates this.
+import { carriesId } from './desk-birth-guard.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -183,10 +187,65 @@ export function previousDesk(statusText) {
   return null;
 }
 
-/** An explicit acknowledgement of a drop, anywhere on line-1. */
+/**
+ * An explicit acknowledgement of a drop, anywhere on line-1.
+ *
+ * THE CONTAINMENT TEST IS WHOLE-TOKEN — F-2231-1, the third file in this family
+ * to carry the same permissive prefix hazard (F-2229-1 in the ledger row key,
+ * F-2230-1 in the birth guard's two stacked tests). `.includes` is
+ * prefix-tolerant, and here that fails toward EXCUSED: a clause naming a LONGER
+ * id answers for a SHORTER one that was dropped in silence, which is precisely
+ * the failure this guard exists to catch (F-1533-1: ten items left one desk with
+ * no closure and no sentence saying why).
+ *
+ * PROVEN BY MANUFACTURING, not by a green — three false greens, each arm
+ * asserting it reached kind:'desk' with the right id in `dropped`:
+ *   - drop F-2131-1, acknowledge only `F-2131-1b` -> NOT FLAGGED. Both are real
+ *     ids; F-2131-1b is one of the four live sub-ids F-2230-1 enumerated.
+ *   - drop F-1260-3, window merely says "F-1260-3s numbering collision"
+ *     -> NOT FLAGGED. A PROSE INFLECTION of the id excuses its own silent drop,
+ *     and fires write those constantly.
+ *
+ * SEVERITY, HONESTLY: LATENT. Replaying all 1,150 keyable archived desks through
+ * this exported core, substring and whole-token agree on 24 of 24 real
+ * acknowledgements out of 4,448 dropped ids — ZERO disagreements — so every
+ * verdict this guard has printed was TRUE. Reachability is narrow but REAL: of
+ * the 205 distinct desk ids ever seen, 4 are shadowed by an id-shaped token that
+ * really occurs on a desk line (F-2131-1 by F-2131-1a/b, plus F-1260-3 and
+ * F-1210-5 by their own prose inflections).
+ *
+ * WHY IMPORT RATHER THAN WIDEN THE LITERAL: F-2227-1 measured that four
+ * independent copies of an id predicate is HOW it drifted, and F-2230-1 already
+ * ruled this exact containment question — including the measured asymmetry of
+ * its two ends (leading excludes alphanumerics only, or a hyphen-adjacent
+ * mention of a carried id reads ABSENT and reds ordinary prose; trailing
+ * excludes the hyphen too, since F-MILK-3 is a strict prefix of F-MILK-3-SS-4).
+ * Same question, same subject, so one implementation.
+ *
+ * WHY THE 400-CHAR WINDOW STAYS, AND IT IS A MEASURED REFUSAL RATHER THAN AN
+ * OVERSIGHT — F-2231-2. The window admits a CROSS-REFERENCE: an id named inside
+ * ANOTHER clause's reason prose excuses its own silent drop (manufactured arm C,
+ * modelled verbatim on s2160's real line — "DESK-DROPPED: F-2131-1 — ruled 08-22
+ * and executing — F-2131-1b + F-2090-1" — where dropping the separate F-2090-1
+ * clause would have left that id excused by a passing mention). Whole-token does
+ * NOT cure it, because the id is genuinely present as a whole token.
+ *
+ * THE OBVIOUS CURE — key on a subject zone just after the mark, the way
+ * subjectLedClosure keys a BACKLOG row — IS REFUTED BY MEASUREMENT: 21 of the 24
+ * real acknowledgements sit at offset 14 (the `DESK-DROPPED: ` template), but
+ * THREE do not, at offsets 51, 67 and 166, and all three are legitimate —
+ * s1590's compound "F-1589-5** (cured `00ed63eff`) **and F-1589-4**" and s1593's
+ * count-first "DESK-DROPPED: 2, both by discharge rather than by re-labelling**
+ * — F-1590-1 … and F-1590-2". Narrowing would false-red 12.5% of real
+ * acknowledgements, which is how a guard gets excused into uselessness
+ * (F-1460-1). And the two shapes are textually IDENTICAL: a cross-reference and
+ * a compound acknowledgement are the same bytes, so no parser can separate them
+ * — the same conclusion this file's own header reached about aliases. Ask the
+ * FIRE, not the parser: the residue is a READING duty, not a mechanism.
+ */
 export function acknowledged(line1, id) {
   const marks = [...line1.matchAll(/DESK-DROPPED/g)];
-  return marks.some((m) => line1.slice(m.index, m.index + 400).includes(id));
+  return marks.some((m) => carriesId(line1.slice(m.index, m.index + 400), id));
 }
 
 export function analyse(statusText, backlogText) {
