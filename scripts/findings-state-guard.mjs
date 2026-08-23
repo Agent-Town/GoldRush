@@ -34,7 +34,23 @@ const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), 
 const ROOT = path.resolve(arg('--root') || DEFAULT_ROOT);
 const REPORT = process.argv.includes('--report');
 const SUBJECT_CHARS = 90;
-export const FINDING = /\bF-\d+-\d+\b/g;
+// THE F-ID PATTERN — one implementation, for the same F-1261-1 reason scan() is
+// shared below. F-2228-1 measured SEVEN live copies in THREE variants, and both
+// populations were wrong, in OPPOSITE directions:
+//   · the four ledger guards read /\bF-\d+-\d+\b/ and are structurally BLIND to
+//     every lettered id (F-DOOR-6, F-E2S-4, F-ASSAY-E2E-9 ...) — 23 state-declaring
+//     subjects here and 2 of 33 live blocker-panel rows. A guard that cannot SEE a
+//     row can never red on it, so the blindness is in the PERMISSIVE direction.
+//   · the three desk guards read /F-(?:[A-Z0-9]{1,8}-)+\d+/ with NO trailing \b, so
+//     they match INSIDE a longer token: "F-1419-2s CURE" yields F-1419-2. Adopting
+//     that copy verbatim manufactures a double-state conflict (closed 1388 / open
+//     1396) and REDS this gate falsely.
+// So "import the sibling" (F-2227-1's rule) was not enough here — the sibling was
+// itself defective. Correct needs BOTH halves: alphanumeric segments AND \b at each
+// end. Measured on the live ledger: 543 subjects (was 520), 0 conflicts (unchanged).
+// Safe to share despite the /g flag because every consumer uses String#match, which
+// ignores and resets lastIndex; a consumer wanting #test or #exec must clone it.
+export const FINDING = /\bF-(?:[A-Z0-9]{1,8}-)+\d+\b/g;
 
 // Exported so a second guard can EXECUTE this closure rule rather than copy it.
 // F-1261-1: a re-implementation of a ledger rule disagreed with the original on

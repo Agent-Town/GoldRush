@@ -41,7 +41,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { scan } from './findings-state-guard.mjs';
+import { scan, FINDING } from './findings-state-guard.mjs';
+import { subjectLedClosure } from './desk-state-audit.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -51,7 +52,9 @@ function arg(flag) {
 const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ROOT = path.resolve(arg('--root') || DEFAULT_ROOT);
 const REPORT = process.argv.includes('--report');
-const FINDING = /\bF-\d+-\d+\b/g;
+// FINDING is IMPORTED, not redeclared (F-2228-1): this guard already reuses scan()
+// for exactly the F-1261-1 reason, and the private copy it used to keep here was
+// blind to 2 of the 33 rows the live panel shows the owner.
 
 function refuse(message) {
   console.error(`blocker-panel-closed-guard: REFUSING — ${message}`);
@@ -133,9 +136,18 @@ function main() {
     if (ids.size) rowsWithId += 1;
     for (const id of ids) {
       const state = states.get(id);
-      if (state && state.closed.length && !state.open.length) {
-        violations.push({ id, shown, closedAt: state.closed });
-      }
+      if (!state || !state.closed.length || state.open.length) continue;
+      // SUBJECT-FIRST, not mere membership (F-2228-1). scan() attributes state to
+      // EVERY id in a row's 90-char subject zone, so a row that merely CITES an id
+      // inside its own subject lends it that row's state. Harmless while the id
+      // pattern was blind to lettered ids; the moment it could see them, BACKLOG:974
+      // — subject F-1543-1, ✅, reading "F-DOOR-3 DISCHARGED BY FOLDING" — declared
+      // F-DOOR-3 closed. F-DOOR-3's OWN row (:987) is a live 🔺 whose tail says the
+      // `respawns: true` view-flag half "stays OPEN and unassigned". Following this
+      // guard's remedy on that false red would have STRUCK A GENUINELY OPEN ITEM off
+      // the owner's panel — the exact inversion of what this guard is for.
+      if (!subjectLedClosure(backlog, id).length) continue;
+      violations.push({ id, shown, closedAt: state.closed });
     }
   }
 

@@ -29,6 +29,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { FINDING } from './findings-state-guard.mjs';
 
 function arg(flag, fallback) {
   const i = process.argv.indexOf(flag);
@@ -49,7 +50,9 @@ if (!fs.existsSync(BACKLOG)) {
 // struck; a leading ✅ or a struck 🟡 is closed. The 90-char subject zone is that guard's
 // measured value — widening it reaches prose citations and invents state claims.
 const SUBJECT_CHARS = 90;
-const FINDING = /\bF-\d+-\d+\b/g;
+// FINDING is IMPORTED, not redeclared — see findings-state-guard.mjs (F-2228-1).
+// This file already declares it shares that guard's row vocabulary "deliberately";
+// the id pattern is part of that vocabulary and was the one piece still copied.
 const FILE_RE = /\b([A-Za-z0-9._-]+\.(?:mjs|ts|tsx|js|json|sh))\b/g;
 
 const rows = [];

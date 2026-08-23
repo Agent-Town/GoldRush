@@ -30,6 +30,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { FINDING } from './findings-state-guard.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORT = process.argv.includes('--report');
@@ -40,7 +41,9 @@ const TERMINAL_CLOSED_STATUSES = new Set(['superseded', 'void', 'abandoned', 'st
 const REFUSAL_REASON_KEYS = [
   'blockedReason', 'closedReason', 'stoppedReason', 'stopNote', 'supersededBy', 'reason',
 ];
-const FINDING = /\bF-\d+-\d+\b/g;
+// FINDING is IMPORTED, not redeclared — see findings-state-guard.mjs (F-2228-1).
+// The private copy this replaced could not see a lettered id, so a refusal citing
+// one the owner had already ruled was invisible to this guard by construction.
 
 export function ruledFindings(backlogText) {
   const ruled = new Map(); // id -> line number
