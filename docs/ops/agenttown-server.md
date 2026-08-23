@@ -55,5 +55,56 @@ Standings boards live at `standings:s<season>:<epochId>:<contractId>` (season 1 
 Free tier: **100k reads / 1k writes / 1k deletes / 1k lists per day**, resets 00:00 UTC. The 50%-cap notification traced to the assay worker: `onRequestAssayQueue` read every board (41 contracts) per poll at the 15s default = ~236k reads/day idle. **Knob**: `ASSAY_POLL_MS` in `/etc/goldrush-assay.env` (set 180000 on 2026-08-22 → ~20k/day; latency ≤3 min). **Durable cure**: the `assay-queue-index` slice (c4) makes polls O(pending). **Launch note**: the sharper cliff is the WRITE cap — every submission + verdict is a KV write, so a launch day with a few hundred riders exceeds 1k/day; the $5/mo Workers Paid plan (10M reads / 1M writes monthly) is the recommended pre-announcement upgrade (owner decision, OWNER-DECISIONS §F). Worker code updates reach the droplet by rsync (no git on the box): `rsync -az --delete --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist ./ root@<droplet>:/opt/goldrush/` — **then update `ASSAY_BUILD_ID` in `/etc/goldrush-assay.env` to the source commit the tree was synced from** (since c6, the worker refuses to boot without a build id: no `.git` on the box means the `git rev-parse` fallback dies — learned 2026-08-23 as a crash-loop; the env knob is the cure) — then `systemctl restart goldrush-assay`. The service ExecStart pins `/root/.nvm/versions/node/v26.4.0/bin/node` (nvm; the apt node is v18 and is NOT what the service runs) — the ledger cutover's node-26 prerequisite is therefore already satisfied.
 
 ## The ledger service (L3 cutover, 2026-08-23 — owner "go")
-`goldrush-ledger.service`: nvm node 26 (`/root/.nvm/versions/node/v26.4.0/bin/node`), `WorkingDirectory=/opt/goldrush`, `server/ledger/serve.mjs`, `EnvironmentFile=/etc/goldrush-ledger.env` (600: PORT=8791, LEDGER_DB_PATH=/opt/goldrush-ledger/ledger.db, ASSAY_WORKER_SECRET shared with the assay env, ALLOWED_CORS_ORIGINS), `MemoryMax=320M`, binds 127.0.0.1 only. nginx routes `/api/standings*` to it (ledger down = honest `503 ledger_resting`); ALL other `/api/*` forwards to `gold-rush-3in.pages.dev` (accounts until the owner supplies RESEND_API_KEY + AUTH_CODE_PEPPER; multiplayer permanently). The client hits ONE origin (`GAME_API_ORIGIN = https://agenttown.app`, `src/app/GameApi.ts`); rollback = revert that line. First boot takes ~60s (runtime transform of the TS handlers — vite must be installed WITH dev deps: `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install`, and rolldown needs its platform binding at rolldown's EXACT version: `npm install "@rolldown/binding-linux-x64-gnu@$(node -p "require('rolldown/package.json').version")" --no-save` — a mismatched-latest binding crashes with a BindingBuiltinPluginName enum error; learned at cutover). The assay worker polls the ledger at `ASSAY_API_BASE=http://127.0.0.1:8791` (localhost, no edge round-trip). KV keeps the pre-cutover data untouched (retention + rollback); the sqlite ledger started EMPTY per the owner amendment. Backups: L4 (nightly .backup + KV mirror) — until it lands, `sqlite3 /opt/goldrush-ledger/ledger.db ".backup /opt/goldrush-ledger/backup-$(date +%F).db"` is the manual form.
+`goldrush-ledger.service`: nvm node 26 (`/root/.nvm/versions/node/v26.4.0/bin/node`), `WorkingDirectory=/opt/goldrush`, `server/ledger/serve.mjs`, `EnvironmentFile=/etc/goldrush-ledger.env` (600: PORT=8791, LEDGER_DB_PATH=/opt/goldrush-ledger/ledger.db, ASSAY_WORKER_SECRET shared with the assay env, ALLOWED_CORS_ORIGINS), `MemoryMax=320M`, binds 127.0.0.1 only. nginx routes `/api/standings*` to it (ledger down = honest `503 ledger_resting`); ALL other `/api/*` forwards to `gold-rush-3in.pages.dev` (accounts until the owner supplies RESEND_API_KEY + AUTH_CODE_PEPPER; multiplayer permanently). The client hits ONE origin (`GAME_API_ORIGIN = https://agenttown.app`, `src/app/GameApi.ts`); rollback = revert that line. First boot takes ~60s (runtime transform of the TS handlers — vite must be installed WITH dev deps: `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install`, and rolldown needs its platform binding at rolldown's EXACT version: `npm install "@rolldown/binding-linux-x64-gnu@$(node -p "require('rolldown/package.json').version")" --no-save` — a mismatched-latest binding crashes with a BindingBuiltinPluginName enum error; learned at cutover). The assay worker polls the ledger at `ASSAY_API_BASE=http://127.0.0.1:8791` (localhost, no edge round-trip). KV keeps the pre-cutover data untouched (retention + rollback); the sqlite ledger started EMPTY per the owner amendment.
 
+### Ledger backups
+
+The nightly job uses Node 26's `VACUUM INTO`, which is safe against the live WAL database and needs no `sqlite3` package. It refuses to overwrite a same-day file and retains 14 days of explicitly named `ledger-YYYY-MM-DD.db` copies. Install and prove the timer on the droplet after `/opt/goldrush` has the drained revision:
+
+```bash
+sudo install -m 0644 ops/droplet/goldrush-ledger-backup.service ops/droplet/goldrush-ledger-backup.timer /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now goldrush-ledger-backup.timer
+sudo systemctl start goldrush-ledger-backup.service
+sudo systemctl status goldrush-ledger-backup.timer --no-pager
+sudo journalctl -u goldrush-ledger-backup.service -n 30 --no-pager
+```
+
+The offsite mirror is pulled by the Mac, where the SSH key and git origin already live. It adds no credential to the droplet:
+
+```bash
+node scripts/ledger-backup-pull.mjs --dry-run
+node scripts/ledger-backup-pull.mjs
+git add artifacts/ledger-backups/
+git commit -m "ops: mirror ledger backup"
+git push origin main
+```
+
+The pull is idempotent and bounded: today's local file skips all network work, SSH gets a five-second connect timeout, and rsync gets a ten-second I/O timeout. Attended still must add this command as a standing fire duty; the repository script does not schedule itself.
+
+This raw private-git mirror is valid only while accounts remain on Cloudflare. Before routing accounts to the droplet, attended must replace it with an encrypted artifact: the account ledger contains email addresses and active session tokens, which must never enter Git history in plaintext.
+
+### Restore drill
+
+The executable local drill creates a ledger through the production storage adapter, writes known rows, invokes the nightly script's own `VACUUM INTO` function, opens the backup through a fresh adapter, and byte-compares every stored row:
+
+```bash
+node --test ops/droplet/ledger-backup.test.mjs
+```
+
+To restore a real nightly copy on the droplet, first choose the dated file explicitly, verify it, stop both ledger writers, preserve every current SQLite file, install the copy, and restart:
+
+```bash
+BACKUP=/opt/goldrush-ledger/backups/ledger-YYYY-MM-DD.db
+sudo test -f "$BACKUP"
+sudo /root/.nvm/versions/node/v26.4.0/bin/node --input-type=module -e 'import { DatabaseSync } from "node:sqlite"; const db = new DatabaseSync(process.argv[1], { readOnly: true }); const result = db.prepare("PRAGMA integrity_check").get(); db.close(); if (result.integrity_check !== "ok") throw new Error(JSON.stringify(result)); console.log("integrity_check: ok")' "$BACKUP"
+sudo systemctl stop goldrush-assay.service goldrush-ledger.service
+STAMP=$(date -u +%Y%m%dT%H%M%SZ)
+PRESERVE=/opt/goldrush-ledger/pre-restore-$STAMP
+sudo install -d -m 0700 "$PRESERVE"
+for NAME in ledger.db ledger.db-wal ledger.db-shm; do sudo test ! -e "/opt/goldrush-ledger/$NAME" || sudo mv "/opt/goldrush-ledger/$NAME" "$PRESERVE/"; done
+sudo install -m 0600 "$BACKUP" /opt/goldrush-ledger/ledger.db
+sudo systemctl start goldrush-ledger.service goldrush-assay.service
+curl -fsS 'https://agenttown.app/api/standings?contract=the-claim&epoch=epoch-1-frontier'
+sudo journalctl -u goldrush-ledger.service -n 30 --no-pager
+```
