@@ -97,8 +97,10 @@ test('all four live sub-ids key themselves, not their prefixes', () => {
 });
 
 test('a parent and its sub-finding are DISTINCT keys', () => {
-  // F-2131-1 is a real owner design fork (BACKLOG.md:257); F-2131-1b is a separate
-  // finding. Keying the second under the first conflates two owner items.
+  // F-2131-1 is a real owner design fork ("F-2131-1 (OPEN — OWNER DESIGN FORK,
+  // declared s2131" in BACKLOG.md — cited by CONTENT, since the fire that wrote this
+  // moved that line by 4 with its own rows); F-2131-1b is a separate finding.
+  // Keying the second under the first conflates two owner items.
   const keys = declaredIds(
     ['- 🔺 **F-2131-1 (OPEN — OWNER DESIGN FORK)** — the headless idle floor.',
      '- 🟡 **F-2131-1b OPEN** — a distinct sub-finding.'].join('\n') + '\n',

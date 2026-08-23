@@ -315,8 +315,10 @@ export function deskSlugs(tail) {
  * F-CLAW-2X) would key NOTHING — trading a permissive miss for a blind one. The
  * ledger asks "what state does this row declare?", where F-1419-2s is prose
  * inflection of F-1419-2 and must not mint an id; this asks "what does this row
- * KEY?", where F-2131-1b is a real finding distinct from its parent F-2131-1
- * (BACKLOG.md:257). Two questions, two grammars — the sibling is right for its own.
+ * KEY?", where F-2131-1b is a real finding distinct from its parent F-2131-1 (the
+ * row reading "F-2131-1 (OPEN — OWNER DESIGN FORK, declared s2131" — cited by
+ * CONTENT, because this very fire's own two BACKLOG rows moved that line by 4).
+ * Two questions, two grammars — the sibling is right for its own.
  *
  * WHY THE DESK-TAIL SCAN IS DELIBERATELY LEFT ALONE: widening it the same way was
  * MEASURED and is worse — across all 1457 historical desks it invents three items
