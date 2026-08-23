@@ -823,6 +823,13 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
       // -- both return 861/36004eab byte-identical, and the determinism assert above (second ===
       // first) passes on both. Re-pin only ever with a named cause; a blind re-pin is forbidden
       // (F-1441-3).
+      // NAMED-CAUSE RE-PIN (F-2235-5, re-pinned s2237 from predecessor 6a7bafb26):
+      // assets/contracts/* prose is inside eventLogHash via canonicalReplayEvents. The wave-20
+      // medal event carries medalBlurb, which the c5 em-dash sweep rewrote. Measured s2237:
+      // gameplay outcome UNCHANGED: kills 862, waves 20, timeMs 528400, gold 0, secured true,
+      // defaultedPicks 21, defaultedSecure 1; only 5b1d21f1 -> 9a7d4dfd moved. A copy edit to
+      // contract prose is therefore expected to move this pin. Blind re-pins remain forbidden
+      // (F-1441-3).
       // AP-16-2: e1-baron-01 reaches twenty-one stable trail deadlines. Queued XP cannot
       // refresh them; choices stay deterministic while secure time and the hash re-pin.
       assert.deepEqual(first.outcome, {
@@ -834,7 +841,7 @@ test('the Baron driver runs the declared fight and keeps medal writes off headle
         calls: 0,
         defaultedPicks: 21,
         defaultedSecure: 1,
-        eventLogHash: 'fnv1a32:5b1d21f1',
+        eventLogHash: 'fnv1a32:9a7d4dfd',
       });
       assert.equal(first.payout.science, Balance.meta.victoryPayout.science * baron.sciencePayoutMult);
       assert.deepEqual(first.transcript.filter(({ type }) => type === 'baron_announcement').map(({ wave }) => wave), [5, 12, 18, 20]);

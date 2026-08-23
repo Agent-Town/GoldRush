@@ -161,7 +161,7 @@ test('--contract refuses unknown, unseeded, and locked contracts loudly', async 
   const cases = [
     ['not-a-contract', 'Contract "not-a-contract" is not on the board.'],
     [unseeded, `Contract "${unseeded}" has no pinned bench seed.`],
-    ['e3-canyon-works', 'Contract "e3-canyon-works" is locked: The Voltage Age awaits — raise the Dynamo Hall.'],
+    ['e3-canyon-works', 'Contract "e3-canyon-works" is locked: The Voltage Age awaits: raise the Dynamo Hall.'],
   ];
   for (const [contractId, message] of cases) {
     const run = await runContract(contractId);
