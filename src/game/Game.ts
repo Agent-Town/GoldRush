@@ -7112,6 +7112,7 @@ export class Game {
       contract: this.activeContract.id,
       seed: this.runSeed,
       difficulty: this.difficultyPreset,
+      meta: { buildId: __APP_BUILD__ },
       start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
       runStart: {
         meta: this.appliedMetaProgress,

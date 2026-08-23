@@ -10,10 +10,13 @@
 
 import { createInterface } from 'node:readline';
 import { randomUUID } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
+
+const BUILD_ID = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
 
 // Declared above the first call: `parseArgs` runs at module top level, so a `const`
 // further down is still in its temporal dead zone by then.
@@ -268,6 +271,7 @@ async function writeAgentTape(vite, path, sim, outcome, run) {
     seed: run.seed,
     difficulty: run.difficulty,
     simVersion: RUN_TAPE_SIM_VERSION,
+    meta: { buildId: BUILD_ID },
     // Tape v2's declaration (`specs/agent-play/tape-contract.md` §2-§3): the progression this run
     // was born under, captured by the sim at birth rather than re-derived here.
     runStart: sim.runStart,

@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const buildId = process.env.ASSAY_BUILD_ID?.trim()
+  || execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+if (!/^[a-f0-9]{7,16}$/.test(buildId)) throw new Error('ASSAY_BUILD_ID must be a 7-16 character lowercase Git id');
 const args = new Set(process.argv.slice(2));
 const once = args.delete('--once');
 const dryRun = args.delete('--dry-run');
@@ -78,7 +81,12 @@ async function assay(row) {
   let result;
 
   let backoffMs = initialBackoffMs;
-  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+  const tapeBuildId = typeof row?.tape?.meta?.buildId === 'string' ? row.tape.meta.buildId : null;
+  const buildSkew = tapeBuildId !== null && !tapeBuildId.startsWith(buildId) && !buildId.startsWith(tapeBuildId);
+  if (buildSkew) {
+    reason = `build-skew (tape ${tapeBuildId}, assayer ${buildId})`;
+  }
+  for (let attempt = 1; !buildSkew && attempt <= maxAttempts; attempt += 1) {
     try {
       if (!row?.tape || typeof row.tape !== 'object') throw new Error('malformed tape');
       if (row.tape.version !== 2) throw new Error(row.tape.version === 1 ? 'legacy tape v1 is unverifiable' : 'malformed tape version');
