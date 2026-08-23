@@ -1,3 +1,5 @@
+> ⛔ SUPERSEDED 2026-08-23 — DO NOT QUEUE. Owner amendment, verbatim: "We don't have to keep any runs or anything, this is pre-launch, so migration is not needed." The droplet ledger starts EMPTY; no export/import/parity-corpus is owed. Contract parity is L1's dual-backend suites. Retained banked per the retention law.
+
 # Task l2-ledger-parity-and-import: every KV row imported, every response byte-matched (lane-d, prefix "feat:")
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-d.
