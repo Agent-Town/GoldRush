@@ -2794,9 +2794,9 @@
               "id": "c5-emdash-sweep",
               "title": "No em-dashes in anything a player or visitor reads (owner ruling; game half - site half shipped attended)",
               "taskFile": "c5-emdash-sweep.md",
-      "blockClass": "gate-side",
-      "blockedReason": "HOLD at the s2235 drain gate, NOT an owner fork: test:node-guards rc=1 with 2 NEW failures beyond s2234 known reds. F-2235-4 scripts/gr-sim-campaign.test.mjs:164 pins pre-sweep copy; F-2235-5 assets/contracts prose sits inside eventLogHash via canonicalReplayEvents, so the wave-20 medalBlurb rewrite moves the Baron determinism pin (outcome fields byte-identical, only the hash moved). Attributed by reverting one variable at a time: assets-reverted PASSES, src-reverted still FAILS. Corrective c5b-emdash-pin-and-determinism.md authored+banked. Lift by draining both commits together. See reviews/c5-emdash-sweep.md.",
-              "status": "blocked",
+      "status": "merged",
+      "mergeHash": "ddcde57f0613fde99d986e884e0c471d02de18af",
+      "drainNotes": "DRAINED s2237 2026-08-23: the s2235 gate-side HOLD is DISCHARGED by satisfying its own stated condition, not by a green battery - c5b cured F-2235-4 (gr-sim-campaign locked-copy pin) and F-2235-5 (Baron eventLogHash re-pinned 5b1d21f1 -> 9a7d4dfd with its named cause at the site), and BOTH commits were gated together on the merged tree and merged as one fast-forward onto the gated commit itself. Evidence: reviews/c5b-emdash-pin-and-determinism.md. tsc clean, build green, boot probe 6/6 desktop+mobile, both cured tests PASS, no-emdash guard PASS; test:node-guards rc=1 with 4 failures, ALL attributed away from the slice (2 inherited F-2234-3, 1 load-attributable and proven passing at 82.2s/90s when re-run alone, 1 the rot of THIS leaf's own blockedReason pointer, cured by this flip). The one e2e red is inherited, proven by a control with all 78 slice paths reverted to main.",
               "lane": "lane-c",
               "authoredBy": "attended 2026-08-23",
               "note": "Owner verbatim 2026-08-23: remove the emdashes from the page, game and everything. Site/ swept + live same hour (attended). This slice: public/skill.md+llms.txt+robots.txt, contracts.json text fields, src/news templates, rendered UI strings; editorial rewrites only, pins move in-commit, no-emdash guard for checkable surfaces; comments out of scope. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
@@ -2805,7 +2805,9 @@
       "id": "c5b-emdash-pin-and-determinism",
       "title": "C5b: land the two pins the em-dash sweep moved (gr-sim-campaign copy pin + Baron eventLogHash re-pin with named cause)",
       "taskFile": "c5b-emdash-pin-and-determinism.md",
-      "status": "queued",
+      "status": "merged",
+      "mergeHash": "ddcde57f0613fde99d986e884e0c471d02de18af",
+      "drainNotes": "DRAINED s2237 2026-08-23 together with its predecessor c5-emdash-sweep, as the c5 review prescribed. Both pins verified on the merged tree: the locked-contract copy test and the Baron outcome test both PASS, and the Baron re-pin's outcome fields were independently re-checked byte-identical (kills 862, waves 20, timeMs 528400, gold 0, secured true, defaultedPicks 21, defaultedSecure 1) - only the log hash moved. Firewall exact at three files. Evidence: reviews/c5b-emdash-pin-and-determinism.md.",
       "note": "FIRE-AUTHORED s2235 from the c5 drain gate (F-2235-4 + F-2235-5). BANKED, NOT QUEUED on purpose: lane/c is ahead=1 holding the undrained c5 sweep, so an ordinary refill pre-flight would reset --hard and destroy it (Mistake #2). Dispatch to lane-c with the BUILD-ON-PREDECESSOR opt-in, then re-drain both commits together. DISPATCHED s2236 to tasks/queue/lane-c under the BUILD-ON-PREDECESSOR opt-in: the master now carries the LANE-SAFETY-OPT-IN token plus all 84 EXPECTED-HOLDS paths, MEASURED against the live lane (lane-usable lane-c -> HOLDS rc=2, 84 held), because a bespoke pre-flight cannot beat the runner dispatch guard. s2236 also cured two dispatch defects: the READ-FIRST cited reviews/c5-emdash-sweep.md, which is ABSENT from lane/c (main-only) and now reads via git show main:; and the battery expectation is annotated for the lane being 23 commits behind main (4 of which move package.json), while all four files the task touches or reads are byte-unchanged on main since the lane branched, so the fix itself cannot be made wrong by the staleness."
     },
             {

@@ -6,6 +6,8 @@
 
 ## VERDICT: HOLD — NOT MERGED
 
+> ✅ **SUPERSEDED s2237 — THE HOLD IS DISCHARGED AND BOTH COMMITS ARE MERGED AT `ddcde57f0613fde99d986e884e0c471d02de18af`.** The verdict below is kept verbatim as the record of what was measured at s2235; it was correct when written. The corrective `c5b-emdash-pin-and-determinism` cured F-2235-4 and F-2235-5 exactly as this file prescribed, and both were re-gated together on the merged tree — see **`reviews/c5b-emdash-pin-and-determinism.md`** for the re-drain's evidence, the four-failure attribution, and the updated merge classification (main had moved 33 commits, not 18, by the time of the re-drain).
+
 The slice is 95% good work and its player-facing intent is exactly the owner's ruling. It is held for **one measured defect and one design question it exposes**, both in `assets/contracts/*/contracts.json`, both invisible to the gates the runner ran. `src/**` and `public/**` are clean and are not the problem.
 
 **The master pre-committed the runner to stop on precisely this condition** (self-check, verbatim): *"`node scripts/null-floor-anchors.mjs --check` clean (**text fields must not move sim outcomes — if it moves, you changed more than copy: STOP**)."* The runner reported that check red, attributed it to an unrelated era-stamp mismatch, and shipped `READY-FOR-GATES`. The stamp explanation may well be true for null-floor; it is not true for what follows.
