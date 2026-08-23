@@ -2773,6 +2773,16 @@
               "note_s2168": "FIRE-AUTHORED s2168 2026-08-22 from F-2167-1 (s2167) re-measured and re-classified as F-2168-1. e2e/er01-e3-census.spec.ts has been red on clean main for 12 days: 4 failed / 4 passed, e3-canyon-works at :51 (toBeUndefined) and e3-blackout-ridge at :190 (toMatchObject), both projects. Cause is 8465f6b33 (ap16-1 buildable parity, 2026-08-10), which replaced a membership-gated two-item registry term with an unconditional six-item one; the manifest emits buildables only when non-empty, so an admitted contract can no longer report undefined. The ap16-1 runner FLAGGED this at the time and was correctly told it was out of scope (reviews/ap16-1-buildable-parity.md, section F-1636-3, logged as a green); nobody ran the spec afterwards. This master re-pins the two stale assertions ONLY. It is deliberately scoped to the fork-INDEPENDENT half: both contracts are admitted (supportedContractIds() contains them, measured s2168), so under every possible answer to the open F-2168-1 question about whether the manifest should gate on admission, an admitted contract still receives the core registry set — the pin must move either way. The e10 half stays red and is NOT touched here. Denominator measured s2168: of the 9 er01 census specs, exactly 2 are red (e3, e10); the other 7 (e2, e4, e5, e6, e7, e8, e9) are 56 passed / 0 failed on clean main."
             },
             {
+              "id": "l4-ledger-backup-discipline",
+              "title": "The county book survives the box - nightly VACUUM INTO + pull-into-git mirror + an executed restore drill (ledger-on-droplet L4)",
+              "taskFile": "l4-ledger-backup-discipline.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "spec": "specs/ops/ledger-on-droplet.md",
+              "authoredBy": "attended 2026-08-23",
+              "note": "Spec Law 3's backup half, authored with L3's live paths (/opt/goldrush-ledger/ledger.db, WAL). Mirror target revised KV-push -> git-pull with the reason recorded in the master (no new secret on the box). Codex ships files + the drill test; attended installs on the box after the drain. DISPATCHED to tasks/queue/lane-d in the authoring commit window."
+            },
+            {
               "id": "c6-tape-build-id",
               "title": "Tapes carry their build id; the assayer declares build-skew honestly instead of rejecting the rider (F-ASSAY-SKEW successor)",
               "taskFile": "c6-tape-build-id.md",
