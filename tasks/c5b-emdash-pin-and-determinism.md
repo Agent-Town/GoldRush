@@ -17,7 +17,11 @@ git -C worktrees/lane-c log --oneline -1        # expect: 6a7bafb26 runner(lane-
 grep -c "The Rocket Cart, captured" assets/contracts/epoch-1-frontier/contracts.json   # expect: 1
 ```
 
-If the first does not name `c5-emdash-sweep`, or the grep returns `0`, the lane has been reset and the predecessor is gone: **STOP and report** — do not re-derive the sweep. Then `npm install --no-audit --no-fund` and `npm run build` green before editing.
+If the first does not name `c5-emdash-sweep`, or the grep returns `0`, the lane has been reset and the predecessor is gone: **STOP and report** — do not re-derive the sweep.
+
+Then a cleanliness line, `git -C worktrees/lane-c status --short` → must be clean, with the **FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1):** (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. **What still STOPs:** modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md` — i.e. anything a live drain or a concurrent task could actually own. ⓘ Note the c5 predecessor's own gate wrote `reviews/shots-c5/*.png`; those are regenerated evidence and are covered by the exception.
+
+Then `npm install --no-audit --no-fund` and `npm run build` green before editing.
 
 ## Why (measured s2235 at the drain gate, not inherited)
 
