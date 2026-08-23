@@ -121,6 +121,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+// F-2241-1: the identical discriminator its sibling desk-carryforward-guard got
+// from F-2232-1. That census keyed on legs invoked BARE in test:ledger-guards;
+// this leg reaches the same battery through `npm run test:desk-declaration`, so
+// it was invisible to the key and never got the cure.
+import { corpusTree, line1MatchesMain, frozenTreeRefusal } from './corpus-tree.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -403,6 +408,7 @@ function main() {
     // is `test:ledger-guards`, which every fire runs as its LAST act, AFTER the
     // handoff commit has replaced line-1 with a CLEARED line (F-1300-4's order).
     console.log('=== desk-declaration-guard ===');
+    console.log('corpus tree       :', corpusTree(ROOT));
     console.log('SKIP — STATUS.md line-1 is a live ACTIVE lock, not a handoff.');
     console.log('  The desk is written at handoff time; test:ledger-guards gates it then.');
     return;
@@ -444,6 +450,7 @@ function main() {
   const retired = [...GRANDFATHERED].filter((id) => declared.has(id) || declaredSlug.has(id));
 
   console.log('=== desk-declaration-guard ===');
+  console.log('corpus tree       :', corpusTree(ROOT));
   console.log('desk F-IDs        :', ids.length);
   console.log('desk slugs        :', slugs.length);
   console.log('with a BACKLOG row:', ids.length - undeclared.length + (slugs.length - undeclaredSlugs.length));
@@ -479,6 +486,18 @@ function main() {
     console.error('F-keyed item, its `backticked-slug` for a slug-keyed one. A mention inside');
     console.error('another finding\'s row does NOT count — that is the F-1328-3 shape.');
     process.exit(1);
+  }
+
+  // F-2241-1: the PASS is the only verdict a frozen tree can make DANGEROUS — a
+  // SKIP asserts nothing and a FAIL is already loud. Proven by manufacturing:
+  // ground truth = a real undesked item on main; from a worktree branched one
+  // commit earlier this printed PASS at rc=0, BYTE-IDENTICAL on stdout, stderr
+  // AND rc to a genuinely clean board.
+  if (corpusTree(ROOT) === 'linked-worktree' &&
+      line1MatchesMain(ROOT, fs.readFileSync(statusPath, 'utf8')) === 'different') {
+    console.error('');
+    console.error(frozenTreeRefusal('desk-declaration-guard'));
+    process.exit(2);
   }
 
   console.log('PASS — every non-grandfathered desk item has a declaring row.');

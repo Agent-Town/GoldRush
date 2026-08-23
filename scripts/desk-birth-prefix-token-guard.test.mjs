@@ -47,7 +47,6 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const SCRIPTS = path.dirname(fileURLToPath(import.meta.url));
 const BIRTH = path.join(SCRIPTS, 'desk-birth-guard.mjs');
-const DECL = path.join(SCRIPTS, 'desk-declaration-guard.mjs');
 
 const HANDOFF = (desk) =>
   `Last updated: 2026-08-23T11:30Z s9999 handoff, lock CLEARED — nothing landed. ` +
@@ -65,8 +64,23 @@ async function load(patches = []) {
   if (!patches.length) return import(pathToFileURL(BIRTH).href);
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 's2230-'));
   roots.push(root);
-  fs.writeFileSync(path.join(root, 'desk-declaration-guard.mjs'), fs.readFileSync(DECL));
   let src = fs.readFileSync(BIRTH, 'utf8');
+  // Stage the sibling modules the source ACTUALLY imports, transitively, rather
+  // than a hardcoded list of them. s2241: desk-birth-guard gained an import of
+  // ./corpus-tree.mjs (F-2241-1) and this fixture's fixed list went stale the same
+  // hour — the variant died MODULE_NOT_FOUND having never run, which is s2232's
+  // trap exactly. A list of what the source already declares is a defect awaiting
+  // the next import.
+  const staged = new Set();
+  const stage = (file) => {
+    if (staged.has(file)) return;
+    staged.add(file);
+    const text = fs.readFileSync(path.join(SCRIPTS, file), 'utf8');
+    fs.writeFileSync(path.join(root, file), text);
+    for (const m of text.matchAll(/from '\.\/([\w.-]+\.mjs)'/g)) stage(m[1]);
+  };
+  for (const m of src.matchAll(/from '\.\/([\w.-]+\.mjs)'/g)) stage(m[1]);
+  assert.ok(staged.size, 'no sibling modules staged — the variant would test nothing');
   for (const [find, replace] of patches) {
     assert.ok(src.includes(find), `variant anchor not found — the arm would test nothing: ${find}`);
     src = src.replace(find, replace);

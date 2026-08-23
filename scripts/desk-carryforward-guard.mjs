@@ -133,32 +133,14 @@ const REPORT = process.argv.includes('--report');
  * Exit 128 is git saying "not a repository", which is LAWFUL here and must NOT
  * refuse: every legacy fixture in this family builds a non-git temp root.
  */
-export function corpusTree(root) {
-  const r = spawnSync('git', ['-C', root, 'rev-parse', '--git-dir', '--git-common-dir'], {
-    encoding: 'utf8',
-  });
-  if (r.error || r.status === null) return 'tree-unverifiable';
-  if (r.status === 128) return 'no-git';
-  if (r.status !== 0) return 'tree-unverifiable';
-  const [gitDir, commonDir] = String(r.stdout).trim().split('\n');
-  if (!gitDir || !commonDir) return 'tree-unverifiable';
-  // The two answers arrive in DIFFERENT SHAPES and must be normalised on both
-  // axes before they can be compared. From the repo root git says ".git"/".git";
-  // from a SUBDIRECTORY it says an ABSOLUTE --git-dir and a RELATIVE
-  // --git-common-dir ("../.git"). Resolving alone is not enough on macOS, where
-  // the absolute form git prints is /private/var/... while resolving the
-  // relative one against a /var/... root yields /var/... — the same directory
-  // through a symlink, comparing unequal as strings, which would misread every
-  // subdirectory of the MAIN worktree as a linked one. Caught by this file's
-  // own arm 8 (s2226's rule: a reverse-control sweep is also a reachability
-  // audit of your own new code).
-  const norm = (p) => {
-    const abs = path.resolve(root, p);
-    try { return fs.realpathSync(abs); } catch { return abs; }
-  };
-  // Equal means the MAIN worktree or any subdirectory of it — correct, not a flag.
-  return norm(gitDir) === norm(commonDir) ? 'main' : 'linked-worktree';
-}
+// MOVED to ./corpus-tree.mjs s2241 (F-2241-1) and RE-EXPORTED here unchanged, so
+// every existing importer and this family's own suite are untouched. Two more
+// legs of the SAME battery — desk-declaration-guard and desk-birth-guard — needed
+// this identical predicate, and they sit UPSTREAM of this file in the import
+// chain, so a leaf module is the only cycle-free home. The macOS realpath note
+// and arm 8's provenance travel with the body; see that file.
+export { corpusTree } from './corpus-tree.mjs';
+import { corpusTree } from './corpus-tree.mjs';
 
 /**
  * Is this frozen tree's line-1 the same one main carries? Only asked when the
@@ -172,15 +154,9 @@ export function corpusTree(root) {
  * inside a week (F-1460-1). A merged gate tree carries main's STATUS.md
  * unchanged — lane tasks are firewalled from it — so this cannot fire there.
  */
-function line1MatchesMain(root, localStatusText) {
-  const r = spawnSync('git', ['-C', root, 'show', 'main:STATUS.md'], {
-    encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
-  });
-  if (r.error || r.status !== 0) return 'unverifiable';
-  const mainLine1 = String(r.stdout).split('\n')[0] || '';
-  const localLine1 = String(localStatusText).split('\n')[0] || '';
-  return mainLine1 === localLine1 ? 'same' : 'different';
-}
+// MOVED to ./corpus-tree.mjs s2241 (F-2241-1) alongside corpusTree, for the same
+// reason: two upstream legs of this battery ask the identical question.
+import { line1MatchesMain } from './corpus-tree.mjs';
 
 /**
  * Same FIVE spellings desk-declaration-guard matches — four measured s1472, the
