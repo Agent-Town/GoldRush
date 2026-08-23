@@ -142,7 +142,7 @@ test('Continue appears only for an existing suspend slot and enters the run path
   await page.goto('/');
 
   await expect(page.getByTestId('start-menu-continue')).toBeVisible();
-  await expect(page.getByTestId('start-menu-continue')).toHaveText('Continue — wave 4 · The Claim');
+  await expect(page.getByTestId('start-menu-continue')).toHaveText('Continue: wave 4 · The Claim');
   await expect(page.getByTestId('start-menu-new-claim')).toHaveCount(0);
   await expect(page.getByTestId('start-menu-research')).toHaveCount(0);
   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();

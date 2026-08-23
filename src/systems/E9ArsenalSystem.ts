@@ -237,7 +237,7 @@ export class E9ArsenalSystem {
         : 'freed_turned_back';
     this.outcomes.push({ type, weapon, enemyId: event.enemyId, variantId, lethal: false });
     const enemy = this.enemies.all[event.enemyId];
-    if (enemy) this.onOutcome?.(enemy.position, type === 'freed_turned_back' ? 'FREED — TURNED BACK' : type === 'fevered_machine_powered_down' ? 'POWERED DOWN' : 'HONEST DAMAGE');
+    if (enemy) this.onOutcome?.(enemy.position, type === 'freed_turned_back' ? 'FREED: TURNED BACK' : type === 'fevered_machine_powered_down' ? 'POWERED DOWN' : 'HONEST DAMAGE');
   }
 
   private changedKillOwner(): DamagingItem | null {

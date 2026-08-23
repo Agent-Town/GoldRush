@@ -69,7 +69,7 @@ export class AssayBenchPanel {
       <header class="assay-bench__header">
         <div>
           <strong>Assay Bench</strong>
-          <p class="assay-bench__hint" data-testid="assay-hint">Write what you need — the Assayer takes orders between sessions when the wire is open.</p>
+          <p class="assay-bench__hint" data-testid="assay-hint">Write what you need. The Assayer takes orders between sessions when the wire is open.</p>
         </div>
         <button class="assay-bench__close" type="button" aria-label="Close Assay Bench" data-testid="assay-close">✕</button>
       </header>
@@ -221,7 +221,7 @@ export class AssayBenchPanel {
     if (available === true) {
       this.wireStatus.textContent = 'The wire to the Assayer is open.';
     } else if (available === false) {
-      this.wireStatus.textContent = 'The wire to the Assayer is still being strung — orders open soon.';
+      this.wireStatus.textContent = 'The wire to the Assayer is still being strung; orders open soon.';
     } else {
       this.wireStatus.textContent = 'Checking the wire to the Assayer.';
     }
@@ -236,7 +236,7 @@ export class AssayBenchPanel {
       ...this.pending.map((entry) => {
         const row = document.createElement('li');
         row.className = 'assay-bench__pending-order';
-        row.textContent = `${entry.text} (${formatQueueTimestamp(entry.timestamp)}) — at the assay works, check back next run`;
+        row.textContent = `${entry.text} (${formatQueueTimestamp(entry.timestamp)}), at the assay works; check back next run`;
         row.dataset.orderId = entry.id;
         row.dataset.status = 'pending';
         return row;
@@ -248,7 +248,7 @@ export class AssayBenchPanel {
     this.history.replaceChildren(
       ...this.bench.acceptedLog.map((item) => {
         const row = document.createElement('li');
-        row.textContent = `${item.name} (${item.rarity}) arrived — collection opens soon`;
+        row.textContent = `${item.name} (${item.rarity}) arrived; collection opens soon`;
         row.dataset.itemId = item.id;
         return row;
       }),

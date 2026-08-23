@@ -231,7 +231,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   {
     id: 'assay_office_records',
     epochId: 'epoch-1-frontier',
-    name: 'Assay Office — Records',
+    name: 'Assay Office: Records',
     category: 'The Claim',
     unlockSignal: 'run:completed:first',
     spriteRef: { slot: 'assay-office.records', imageUrl: claimOfficeUrl },

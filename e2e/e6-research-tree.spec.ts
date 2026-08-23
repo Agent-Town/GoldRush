@@ -30,7 +30,7 @@ test('the active Atomic Homestead chart renders its frontier and keeps picks pin
   await expect(icons).toHaveCount(15);
   expect(await icons.evaluateAll((items) => items.every((item) => item.style.backgroundImage.startsWith('url(')))).toBe(true);
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(6);
-  await expect(page.getByTestId('research-era-epoch-6-atomic')).toHaveText('The Atomic Homestead — active');
+  await expect(page.getByTestId('research-era-epoch-6-atomic')).toHaveText('The Atomic Homestead: active');
 
   const frontier = page.locator('[data-research-node][data-research-state="available"]').first();
   await frontier.click();

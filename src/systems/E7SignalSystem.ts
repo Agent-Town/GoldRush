@@ -235,7 +235,7 @@ export class E7SignalSystem {
         // not SEARCHING, it is dead. The board says so instead of implying a link is coming.
         ? 'DEAD BAND · NO RELAY, NO DRONE, NO PLAYBOOK'
         : this.links.length > 0 ? 'SIGNAL LINKED · THREATS CHARTED' : 'SEARCHING · RELAYS NEED A CLEAR LINE'}</p>
-      <ol style="margin:0;padding-left:20px">${board.jacks.map((jack) => `<li data-jack-id="${jack.id}" data-jack-state="${jack.state}">${jack.state === 'lit' ? '●' : jack.patched ? '◉' : '○'} ${jack.label} — ${jack.state === 'lit' ? 'ANSWERING' : jack.patched ? 'PATCHED · ANSWER PENDING' : 'ANSWER PENDING'}</li>`).join('')}</ol>
+      <ol style="margin:0;padding-left:20px">${board.jacks.map((jack) => `<li data-jack-id="${jack.id}" data-jack-state="${jack.state}">${jack.state === 'lit' ? '●' : jack.patched ? '◉' : '○'} ${jack.label}: ${jack.state === 'lit' ? 'ANSWERING' : jack.patched ? 'PATCHED · ANSWER PENDING' : 'ANSWER PENDING'}</li>`).join('')}</ol>
       <p data-testid="e7-signal-fragment" style="margin:7px 0 0;font-style:italic">${board.latestFragment}</p>`;
   }
 }

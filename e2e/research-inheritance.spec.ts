@@ -42,8 +42,8 @@ test('Frontier science remains live, visible, and suspend-canonical in Steamwork
 
   await openSchoolhouse(page);
   await expect(page.getByTestId('research-era-row')).toBeVisible();
-  await expect(page.getByTestId(`research-era-${FRONTIER}`)).toHaveText('The Frontier — complete ✓');
-  await expect(page.getByTestId(`research-era-${STEAMWORKS}`)).toHaveText('The Steamworks — active');
+  await expect(page.getByTestId(`research-era-${FRONTIER}`)).toHaveText('The Frontier: complete ✓');
+  await expect(page.getByTestId(`research-era-${STEAMWORKS}`)).toHaveText('The Steamworks: active');
   await shot(page, testInfo, 'era-row');
 
   await page.getByTestId(`research-era-${FRONTIER}`).click();

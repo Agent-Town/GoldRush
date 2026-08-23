@@ -818,11 +818,11 @@ export class Game {
     this.enemies,
     this.economy,
     this.tileStateStore,
-    (position) => this.vfx.floatText(position, 'EXHAUSTED — WRANGLE', '#83ded7'),
+    (position) => this.vfx.floatText(position, 'EXHAUSTED: WRANGLE', '#83ded7'),
     (enemy, penTotal) => {
       this.showroomCaptureObjective.recordCapture();
       this.combat.presentFreedEnemy(enemy);
-      this.vfx.floatText(enemy.position, `CAUGHT — PEN ${penTotal}`, '#83ded7');
+      this.vfx.floatText(enemy.position, `CAUGHT: PEN ${penTotal}`, '#83ded7');
     },
   );
   private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
@@ -5770,7 +5770,7 @@ export class Game {
 
   secureLedgerLineForRun(): string | undefined {
     const baron = this.activeContract.twist.baron;
-    return baron && this.baronBeatenThisRun ? `${bossLedgerLabel(baron)} — DEFEATED, wave ${baron.wave}` : undefined;
+    return baron && this.baronBeatenThisRun ? `${bossLedgerLabel(baron)}: DEFEATED, wave ${baron.wave}` : undefined;
   }
 
   secureCalloutForRun(): string | undefined {
@@ -7509,7 +7509,7 @@ export class Game {
     if (!segment || this.canalChoices?.choiceFor(segment.id) !== 'undecided') return null;
     return {
       segmentId: segment.id,
-      title: 'The old cut — decide it once',
+      title: 'The old cut: decide it once',
       line: 'Re-dig and the water runs here forever, and nothing stands in it. Demolish and the ground is yours to build on, forever. This choice outlives the run.',
     };
   }
@@ -8201,7 +8201,7 @@ export class Game {
       schemaVersion: TILE_STATE_SCHEMA_VERSION,
     });
     this.greenWaypointStagedThisRun = true;
-    this.vfx.floatText(position, 'The green takes root — it will hold', E1_RIVERBANK_GREEN);
+    this.vfx.floatText(position, 'The green takes root; it will hold', E1_RIVERBANK_GREEN);
   }
 
   /**
@@ -9063,7 +9063,7 @@ export class Game {
       training: this.activeContract.practice !== undefined,
       save: this.activeContract.practice ? 'Practice resets when you leave.' : this.runSuspendSaveLine,
       goalProgress: secureWave > 0 && this.autoSecureWaveForRun() === secureWave
-        ? `Secure the claim at wave ${secureWave} — wave ${Math.min(this.waveSystem.diagnostics.wave, secureWave)}/${secureWave}`
+        ? `Secure the claim at wave ${secureWave}: wave ${Math.min(this.waveSystem.diagnostics.wave, secureWave)}/${secureWave}`
         : null,
       manualSave: this.manualSaveSnapshot(),
       contract: this.contractBriefingSnapshot(),
@@ -9373,7 +9373,7 @@ type MetaPresenceLine = { name: string; effect: string; recap: string };
 
 function runStartMetaRecap(meta: MetaProgress, research: ResearchState, townName: string | null, contract: ContractManifest): string | null {
   const items: string[] = [];
-  if (contract.id === 'e1-baron') items.push("The Baron's outfit rides at 20 — cadence runs hot (+15%).");
+  if (contract.id === 'e1-baron') items.push("The Baron's outfit rides at 20; cadence runs hot (+15%).");
   if (meta.tracks.territory >= Balance.meta.territoryTier1) {
     items.push(`palisade kit (Territory ${romanNumeral(meta.tracks.territory)}; ${Balance.meta.territoryRing.length} free)`);
   }
@@ -9388,7 +9388,7 @@ function runSuspendPauseLine(contractId: string): string {
 }
 
 function runSuspendSavedLine(wave: number): string {
-  return `📒 Ledger saved at wave ${wave} — closing the tab keeps your place.`;
+  return `📒 Ledger saved at wave ${wave}; closing the tab keeps your place.`;
 }
 
 function runSuspendEmptyLine(): string {

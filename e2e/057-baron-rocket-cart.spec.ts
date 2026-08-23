@@ -18,7 +18,7 @@ type MemoryStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
 const ARTIFACT_DIR = path.resolve('artifacts/057');
 const BASE_QUERY = '?debug&contract=e1-baron&timescale=1&nolevel&nowaves&nosteal&nowreck';
-const ROCKET_MEDAL_LINE = 'The Rocket Cart — captured';
+const ROCKET_MEDAL_LINE = 'The Rocket Cart, captured';
 const ROCKET_PREREQS = ['chain_spark_primer', 'beacon_cadence', 'brass_coil_standards', 'powder_math'];
 
 function collectErrors(page: Page): ErrorBucket {

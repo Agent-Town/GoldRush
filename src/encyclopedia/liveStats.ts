@@ -146,7 +146,7 @@ function renderRecords(card: HTMLElement, countyLines: readonly string[]): void 
 
 function renderSection(title: string, subtitle: string, lines: readonly string[], id: string): string {
   return `<section data-testid="assay-records-${id}">
-    <strong>${escapeHtml(title)}</strong> — ${escapeHtml(subtitle)}
+    <strong>${escapeHtml(title)}</strong>: ${escapeHtml(subtitle)}
     <ul>${lines.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>
   </section>`;
 }

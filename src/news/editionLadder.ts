@@ -86,7 +86,7 @@ const CLAIM_COPY: Readonly<Record<string, ClaimCopy>> = {
     standfirst: 'The classic river claim, split around one center ford, stood through every posted wave.',
     engraving: 'river',
     lead: ({ hero, town }) => [
-      `The river ground at ${town} — the old claim, split around its one center ford — is held, and it is held with ${hero} standing on it.`,
+      `The river ground at ${town}, the old claim split around its one center ford, is held, and it is held with ${hero} standing on it.`,
       // lore/STORYBOOK.md:39 + contracts.json:25-31 — turned-back register; four edges; tenth horn.
       'Pressure came from all four edges until the tenth horn sealed the ground. The ford held. The works held. The claim office has entered it secured.',
     ],
@@ -95,7 +95,7 @@ const CLAIM_COPY: Readonly<Record<string, ClaimCopy>> = {
     name: 'The Dry Gulch',
     // assets/contracts/epoch-1-frontier/contracts.json:153-166 — mesa, washes, spring, sluice.
     headline: 'THE DRY GULCH ANSWERS',
-    standfirst: 'Mesa country, where every wash falls to one sunken spring — and a sluice works nowhere else.',
+    standfirst: 'Mesa country, where every wash falls to one sunken spring, and a sluice works nowhere else.',
     engraving: 'trail',
     lead: ({ hero, town }) => [
       `Mesa country gave up its washes to ${hero} this season: the dry gulch above ${town}, where the ground falls every direction toward one sunken spring and a sluice will work nowhere else on the map.`,
@@ -211,11 +211,11 @@ function arrivalEdition(hero: string, town: string): Edition {
     lead: [
       `${hero} has come to ${town}, and the clerk has written the name into the claim book.`,
       // The rarity engine, fully canon at E1 — lore/STORYBOOK.md:33 (THE SPARING).
-      'That book does not fill often, and everyone here knows why. The Baron panned this creek before the first roof went up, found the color thin, and wrote the valley spent on his own survey maps — and the money of the wider world reads those maps like scripture. The road brings us wagons that do not stop. A hand who stops is an event.',
+      'That book does not fill often, and everyone here knows why. The Baron panned this creek before the first roof went up, found the color thin, and wrote the valley spent on his own survey maps. The money of the wider world reads those maps like scripture. The road brings us wagons that do not stop. A hand who stops is an event.',
       // lore/agent-town-heritage.md:8 — the clerk's ledger is the future citizen registry.
       // lore/STORYBOOK.md:35 + :406 — a plate at the fire, no questions on it.
       `So the board carries the name, hand-copied, until the day this town owns a press of its own. Nobody at the wagon ring will ask ${hero} what they left behind. There is a plate at that fire, and there always has been.`,
-      'Below: the rest of the welcome — what a claim is, what the works cost, and whose side the fevered are really on.',
+      'Below: the rest of the welcome, what a claim is, what the works cost, and whose side the fevered are really on.',
     ],
   };
 }
@@ -235,12 +235,12 @@ function claimEdition(contractId: string, hero: string, town: string, number: nu
     standfirst: copy?.standfirst ?? `The ground called ${contractName} is held.`,
     engraving: copy ? copy.engraving : 'board',
     lead: first ? [firstClaimOpener(hero), ...lead] : lead,
-    deed: `Be it known — the ground called ${contractName}, at ${town}, was held through every posted wave and stands entered as secured in the clerk's book, under the hand of ${hero}.`,
+    deed: `Be it known: the ground called ${contractName}, at ${town}, was held through every posted wave and stands entered as secured in the clerk's book, under the hand of ${hero}.`,
   };
 }
 
 function firstClaimOpener(hero: string): string {
-  return `The new hand is a new hand no longer. ${hero}, whose name this paper entered not so long ago, has secured a claim outright — the first of them — and the office has posted the deed for anyone who cares to read it.`;
+  return `The new hand is a new hand no longer. ${hero}, whose name this paper entered not so long ago, has secured a claim outright, the first of them, and the office has posted the deed for anyone who cares to read it.`;
 }
 
 function baronEdition(hero: string, town: string, number: number): Edition {
@@ -257,14 +257,14 @@ function baronEdition(hero: string, town: string, number: number): Edition {
       'Dragged off by his own men, swearing revenge.',
       `The banner arrived before the bill, the way it always does, and the Rocket Cart that came with it is captured and standing at ${town} where anyone may walk up and look at it.`,
       // lore/characters.md:20 — his armies are victims; turned back, never slain.
-      'Say the next part plainly, because this paper prints nothing it cannot prove: the outfit he sent was no outfit at all. They were neighbours with gold dust in the creases of their faces, and they were freed — every one of them — and every one of them went home.',
+      'Say the next part plainly, because this paper prints nothing it cannot prove: the outfit he sent was no outfit at all. They were neighbours with gold dust in the creases of their faces, and they were freed, every one of them, and every one of them went home.',
       // lore/STORYBOOK.md:33 + lore/characters.md:22 — the pride-wound: he returns to be RIGHT.
       `He was in this valley first. He called the ground here spent, in his own hand, on his own maps, and he has spent every season since trying to make that paper true. ${town} is the standing correction. ${hero} is the hand that wrote this line of it.`,
     ],
     // lore/world-dispatches.md:35, VERBATIM — that file is the single source for dispatch text
     // and its law is "never invent lines". Ratification question 2, default YES: one paragraph,
     // no mechanics named.
-    deed: "The first stamp's iron drop carries down the valley, past the bend, out over the flats. Somewhere past the hills, something lifts its head — and acquires a taste for steam.",
+    deed: "The first stamp's iron drop carries down the valley, past the bend, out over the flats. Somewhere past the hills, something lifts its head and acquires a taste for steam.",
   };
 }
 

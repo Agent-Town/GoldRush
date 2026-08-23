@@ -501,7 +501,7 @@ function renderEraRow(eras: readonly ResearchState[], selectedEpochId: string): 
           const id = era.epochId ?? active;
           const selected = id === selectedEpochId;
           const name = loadEpoch(id).displayName;
-          const label = `${name.startsWith('The ') ? name : `The ${name}`} — ${id === active ? 'active' : 'complete ✓'}`;
+          const label = `${name.startsWith('The ') ? name : `The ${name}`}: ${id === active ? 'active' : 'complete ✓'}`;
           return `<button class="gr-start-menu__small-button" type="button" data-research-era="${escapeHtml(id)}" data-testid="research-era-${escapeHtml(
             id,
           )}" aria-pressed="${selected}">${escapeHtml(label)}</button>`;

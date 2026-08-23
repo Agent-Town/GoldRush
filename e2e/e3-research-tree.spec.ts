@@ -23,7 +23,7 @@ test('the active Voltage chart renders its uncertified bank without purchasable 
   await expect(icons).toHaveCount(15);
   expect(await icons.evaluateAll((items) => items.every((item) => item.style.backgroundImage.startsWith('url(')))).toBe(true);
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(3);
-  await expect(page.getByTestId(`research-era-${VOLTAGE}`)).toHaveText('The Voltage Age — active');
+  await expect(page.getByTestId(`research-era-${VOLTAGE}`)).toHaveText('The Voltage Age: active');
 
   await expect(page.locator('[data-research-state="available"]')).toHaveCount(0);
   await expect(page.locator('[data-research-state="locked"]')).toHaveCount(15);

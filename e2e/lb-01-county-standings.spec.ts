@@ -263,7 +263,7 @@ test('public county rows carry submitted time while legacy rows keep the missing
   const stored = JSON.parse((await kv.get(BOARD_KEY)) ?? '[]') as Array<Record<string, unknown>>;
   expect(projected.submittedAt).toBe(stored[0]?.submittedAt);
   expect(projected.submittedAt).toEqual(expect.any(Number));
-  expect(projected.season).toBe('Season 2 — The Same Game');
+  expect(projected.season).toBe('Season 2: The Same Game');
 
   // The LEGACY row is what the county published before any of this: no submitted time, no season,
   // and — F-SR-3 — no reel or assay stamp either, since those arrived with the tape it never had.
@@ -451,9 +451,9 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   const body = (await response.json()) as { board: Array<Record<string, unknown>> };
   expect(response.status).toBe(200);
   expect(body.board).toMatchObject([
-    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false, season: 'Season 2 — The Same Game' },
+    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false, season: 'Season 2: The Same Game' },
     { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', defaulted: true, declared: false },
-    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, source: stack.source, season: 'Season 2 — The Same Game' },
+    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, source: stack.source, season: 'Season 2: The Same Game' },
   ]);
   expect(body.board[1]).not.toHaveProperty('season');
   for (const row of body.board.slice(0, 2)) {
@@ -805,7 +805,7 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   await expect(page.getByTestId('county-standings-row-3')).toHaveCount(0);
 
   await page.getByTestId('county-standings-contract-e1-dry-gulch').click();
-  await expect(page.getByTestId('county-standings-board')).toHaveText('No standings yet — the door is open.');
+  await expect(page.getByTestId('county-standings-board')).toHaveText('No standings yet; the door is open.');
   await page.getByTestId('claim-ledger-field-book').click();
   await expect(page.getByTestId('field-book')).toBeVisible();
   expectNoErrors(errors);

@@ -170,7 +170,7 @@
           { "id": "middle-way-station", "minX": -12, "maxX": 12, "minZ": 6, "maxZ": 22, "anchorageSeconds": 45 },
           { "id": "east-way-station", "minX": 124, "maxX": 148, "minZ": -22, "maxZ": -6, "anchorageSeconds": 45 }
         ],
-        "description": "Linear, 400 units: the map IS a road — a scrolling claim with no fixed pads at all; Haulers only, the town moves or dies. The convoy is the base is the town. Rest stops offer brief anchorage; leaving each one behind is a small goodbye the map makes you practice. Engine dependency: the moving-claim consumer (Hauler-only basing, convoy advance, rest-stop anchorage windows, lead-Hauler loss) does not exist yet.",
+        "description": "Linear, 400 units: the map IS a road, a scrolling claim with no fixed pads at all; Haulers only, the town moves or dies. The convoy is the base is the town. Rest stops offer brief anchorage; leaving each one behind is a small goodbye the map makes you practice. Engine dependency: the moving-claim consumer (Hauler-only basing, convoy advance, rest-stop anchorage windows, lead-Hauler loss) does not exist yet.",
         "objectives": [
           { "id": "reach-the-railhead", "description": "Bring the convoy the full length of the road to the far railhead." },
           { "id": "keep-the-lead-hauler", "description": "The town rides with the lead Hauler; losing it ends the run." }
@@ -292,7 +292,7 @@
           { "id": "hold-county-camp", "description": "Hold the County Camp through wave 12 while the wells erupt." }
         ],
         "teachingIntent": {
-          "description": "Teaches risk sequencing — which geyser do you ride first? The county is a boiling economy tamed well by well."
+          "description": "Teaches risk sequencing: which geyser do you ride first? The county is a boiling economy tamed well by well."
         },
         "engineDependencies": [
           { "dep": "wild-derrick-consumer", "status": "missing", "description": "Needs wild-derrick eruption scheduling, cap-to-claim conversion, the blowout wave each cap triggers, and tar sprites spawning from seams instead of edges." }
@@ -385,7 +385,7 @@
         ],
         "sleeper": { "id": "half-buried-sleeper", "x": 34, "z": 36, "radius": 6, "wakes": "only-if-disturbed" },
         "unmarkedWagon": { "id": "unmarked-wagon", "x": -38, "z": 30 },
-        "description": "Where machines go — a valley of dead Flivvers, spent boilers, one half-buried thing nobody names. Salvage economy: strip parts under pressure while pipeline rustlers strip the SAME yard — a race in slow motion over bones. Nothing in the boneyard attacks unless woken, and the map rewards leaving the sleeper asleep; no tooltip ever says so. Engine dependency: the salvage-race consumer (strip-under-pressure economy, rival rustler crews, sleeper wake trigger) does not exist yet.",
+        "description": "Where machines go: a valley of dead Flivvers, spent boilers, one half-buried thing nobody names. Salvage economy: strip parts under pressure while pipeline rustlers strip the SAME yard, a race in slow motion over bones. Nothing in the boneyard attacks unless woken, and the map rewards leaving the sleeper asleep; no tooltip ever says so. Engine dependency: the salvage-race consumer (strip-under-pressure economy, rival rustler crews, sleeper wake trigger) does not exist yet.",
         "objectives": [
           { "id": "strip-the-yard", "description": "Strip more of the yard than the pipeline rustlers do." },
           { "id": "hold-gate-camp", "description": "Hold the Gate Camp through wave 12." }

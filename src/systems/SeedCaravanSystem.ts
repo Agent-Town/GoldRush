@@ -295,7 +295,7 @@ export class SeedCaravanSystem {
         if (this.groundAt(next)) {
           this.dwellRemaining = SEED_CARAVAN_DWELL_SECONDS;
           this.state = 'paused';
-          this.onVoice?.(this.position, 'The seed train halts — plant or move on', this.green);
+          this.onVoice?.(this.position, 'The seed train halts; plant or move on', this.green);
           break;
         }
       } else {
@@ -349,7 +349,7 @@ export class SeedCaravanSystem {
     this.maxHp = Math.max(1, this.maxHp - cost);
     this.hp = Math.max(1, Math.min(this.hp - cost, this.maxHp));
     this.syncBody();
-    this.onVoice?.(new THREE.Vector3(ground.x, 0, ground.z), 'The green takes root — it will hold', this.green);
+    this.onVoice?.(new THREE.Vector3(ground.x, 0, ground.z), 'The green takes root; it will hold', this.green);
     return { ok: true, groundId: ground.id, costHp: cost };
   }
 

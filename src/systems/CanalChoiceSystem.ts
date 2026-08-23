@@ -241,7 +241,7 @@ export class CanalChoiceSystem {
     this.decidedThisRun.add(segment.id);
     this.onVoice?.(
       segment,
-      choice === 'redig' ? 'The water comes back — this cut is a canal again' : 'The cut is filled — this ground is yours',
+      choice === 'redig' ? 'The water comes back; this cut is a canal again' : 'The cut is filled; this ground is yours',
     );
     return { ok: true, segmentId: segment.id, choice };
   }

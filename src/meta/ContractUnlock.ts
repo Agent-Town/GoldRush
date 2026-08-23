@@ -25,7 +25,7 @@ export function contractUnlockStatus(contract: ContractManifest): ContractUnlock
     return {
       unlocked: false,
       condition: predecessor
-        ? `The ${epoch.displayName} awaits — ${predecessor.megaproject.raiseActionText.replace(/^./, (letter) => letter.toLowerCase())}.`
+        ? `The ${epoch.displayName} awaits: ${predecessor.megaproject.raiseActionText.replace(/^./, (letter) => letter.toLowerCase())}.`
         : action,
       action,
     };
@@ -51,7 +51,7 @@ export function contractUnlockStatus(contract: ContractManifest): ContractUnlock
     const securedContracts = new Set(scores.filter((score) => score.secured === true).map((score) => contractIdOf(score.contractId)));
     return {
       unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete && securedContracts.size >= 2,
-      condition: "Secure two claims; bank the science — then he'll come out",
+      condition: "Secure two claims; bank the science, then he'll come out",
     };
   }
   if (unlock.startsWith('secured:')) {

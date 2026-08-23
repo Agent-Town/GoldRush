@@ -454,7 +454,7 @@ function escapeHtml(value: string): string {
 }
 
 function continueLabel(suspend: { wave: number; contractId: string }): string {
-  return `Continue — ${suspendContext(suspend)}`;
+  return `Continue: ${suspendContext(suspend)}`;
 }
 
 function savedClaimLabel(suspend: { wave: number; contractId: string }): string {

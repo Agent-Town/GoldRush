@@ -12,7 +12,7 @@ export function installBuildFreshness(app: HTMLElement, canAutoReload: () => boo
   toast.type = 'button';
   toast.dataset.testid = 'fresh-build-toast';
   toast.setAttribute('aria-live', 'polite');
-  toast.textContent = 'Fresh ink — a newer build is out. Refresh keeps your place.';
+  toast.textContent = 'Fresh ink: a newer build is out. Refresh keeps your place.';
   Object.assign(toast.style, {
     position: 'fixed',
     zIndex: '1000',

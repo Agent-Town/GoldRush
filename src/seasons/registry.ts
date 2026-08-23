@@ -18,7 +18,7 @@ export const SEASONS = [
   },
   {
     id: 'same-game-season',
-    name: 'Season 2 — The Same Game',
+    name: 'Season 2: The Same Game',
     startsAt: 1786376727000,
     endsAt: null,
     eraStamps: ['b8cf2332d'],

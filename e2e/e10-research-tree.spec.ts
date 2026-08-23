@@ -40,7 +40,7 @@ test('the active Deep Sky chart renders its uncertified bank without purchasable
   await expect(icons).toHaveCount(15);
   expect(await icons.evaluateAll((items) => items.every((item) => item.style.backgroundImage.startsWith('url(')))).toBe(true);
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(10);
-  await expect(page.getByTestId('research-era-epoch-10-deepsky')).toHaveText('The Deep Sky — active');
+  await expect(page.getByTestId('research-era-epoch-10-deepsky')).toHaveText('The Deep Sky: active');
 
   await expect(page.locator('[data-research-state="available"]')).toHaveCount(0);
   await expect(page.locator('[data-research-state="locked"]')).toHaveCount(15);

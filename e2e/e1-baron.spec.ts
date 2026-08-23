@@ -36,7 +36,7 @@ const BARON_ARRIVAL_TITLE = 'THE CLAIM-JUMPER BARON';
 const BARON_TAUNT_TITLE = 'The Claim-Jumper Baron';
 const BARON_DEFEAT = 'Dragged off by his own men, swearing revenge.';
 const BARON_DEFEAT_CARD = `The Baron is DEFEATED. ${BARON_DEFEAT}`;
-const BARON_STAKES = "The Baron's outfit rides at 20 — cadence runs hot (+15%).";
+const BARON_STAKES = "The Baron's outfit rides at 20; cadence runs hot (+15%).";
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -351,7 +351,7 @@ test('contract board requires science plus two secured claims and always shows a
   await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'true');
   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveCount(0);
-  await expect(page.getByTestId('contract-launch-e1-baron')).toHaveText("Secure two claims; bank the science — then he'll come out");
+  await expect(page.getByTestId('contract-launch-e1-baron')).toHaveText("Secure two claims; bank the science, then he'll come out");
 
   // c505e3f9: Baron graduation requires completed science and two distinct secured claims.
   await seedStorage(page, { science: 6, securedContracts: ['the-claim', 'e1-dry-gulch'] });
@@ -584,7 +584,7 @@ test('standard rig damage defeats the Baron, doubles science, and persists the m
   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
   await expect(page.getByTestId('claim-office')).toContainText(BARON_DEFEAT_CARD);
   await expect(page.getByTestId('baron-defeat-callout')).toHaveText('+double science');
-  await expect(page.getByTestId('run-ledger-baron')).toContainText('THE BARON — DEFEATED, wave 20');
+  await expect(page.getByTestId('run-ledger-baron')).toContainText('THE BARON: DEFEATED, wave 20');
   await expect(page.getByTestId('claim-payout-science')).toContainText('+2');
   await shot(page, testInfo, 'baron-defeat-card');
   await expect

@@ -57,7 +57,7 @@ test('plain boot opens the season list and a season page without losing legacy s
   const seasonedAt = season.startsAt + 60_000;
   const legacyAt = season.startsAt - 60_000;
   const seasonName = resolveSeasonAt(seasonedAt)?.name;
-  expect(seasonName).toBe('Season 2 — The Same Game');
+  expect(seasonName).toBe('Season 2: The Same Game');
   await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
     const params = new URL(route.request().url()).searchParams;
     const view = params.get('view');
@@ -102,7 +102,7 @@ test('plain boot opens the season list and a season page without losing legacy s
   await plainBoot(page);
   await page.getByTestId('claim-ledger-seasons').click();
   await expect(page.getByTestId('season-list').locator('[data-season-id]')).toHaveCount(2);
-  await expect(page.getByTestId(`season-link-${season.id}`)).toContainText('Since August 10, 2026 — still riding');
+  await expect(page.getByTestId(`season-link-${season.id}`)).toContainText('Since August 10, 2026, still riding');
   await mkdir(SHOTS, { recursive: true });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(SHOTS, `list-${testInfo.project.name}.png`) });
 
@@ -150,7 +150,7 @@ test('the Founding Season renders its cited chronicle at both viewports', async 
   for (const block of await commentary.all()) await expect(block.locator('[data-season-citation]')).toHaveCount(1);
   await expect(page.getByTestId('season-results')).toContainText('Robin');
   await expect(page.getByTestId('season-results')).toContainText('Prime Sol');
-  await expect(page.getByTestId('season-results-board')).toHaveText('No rides were posted for this season — the county page is ready when they are.');
+  await expect(page.getByTestId('season-results-board')).toHaveText('No rides were posted for this season; the county page is ready when they are.');
   expect(await page.locator('body').evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
   await mkdir(CHRONICLE_SHOTS, { recursive: true });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(CHRONICLE_SHOTS, `chronicle-top-${testInfo.project.name}.png`) });
@@ -165,6 +165,6 @@ test('unavailable results are not reported as an empty season', async ({ page })
   await page.evaluate(() => Object.defineProperty(navigator, 'onLine', { configurable: true, value: false }));
   await page.getByTestId('claim-ledger-seasons').click();
   await page.getByTestId(`season-link-${SEASONS[0].id}`).click();
-  await expect(page.getByTestId('season-results-board')).toHaveText('The county results book is unavailable right now — try this page again when the trail clears.');
+  await expect(page.getByTestId('season-results-board')).toHaveText('The county results book is unavailable right now; try this page again when the trail clears.');
   expect(errors).toEqual({ console: [], page: [] });
 });

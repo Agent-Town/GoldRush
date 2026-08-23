@@ -212,7 +212,7 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
     }
     if (entry.name === 'wave-10') {
       await goToContractPage(page, 'e1-dry-gulch');
-      await expect(page.getByTestId('contract-best-e1-dry-gulch')).toHaveText('Overrun — wave 12 — 88 gold');
+      await expect(page.getByTestId('contract-best-e1-dry-gulch')).toHaveText('Overrun: wave 12, 88 gold');
       await shot(page, testInfo, 'mixed-locks');
     }
   }
@@ -297,7 +297,7 @@ test('contract board shows the full contract picture and remembers the Ride Toge
 
   await expect(page.getByTestId('ride-together-card')).not.toHaveAttribute('open', '');
   await expect(page.getByTestId('ride-together-controls')).not.toBeVisible();
-  await expect(page.getByTestId('contract-best-e1-dry-gulch')).toHaveText('Secured — wave 14 — 96 gold');
+  await expect(page.getByTestId('contract-best-e1-dry-gulch')).toHaveText('Secured: wave 14, 96 gold');
   for (const testId of [
     'contract-art-e1-dry-gulch',
     'contract-board-briefing-e1-dry-gulch',

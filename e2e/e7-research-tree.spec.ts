@@ -31,7 +31,7 @@ test('the active Signal Era chart renders its uncertified bank without purchasab
   await expect(icons).toHaveCount(15);
   expect(await icons.evaluateAll((items) => items.every((item) => item.style.backgroundImage.startsWith('url(')))).toBe(true);
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(7);
-  await expect(page.getByTestId('research-era-epoch-7-signal')).toHaveText('The Signal Era — active');
+  await expect(page.getByTestId('research-era-epoch-7-signal')).toHaveText('The Signal Era: active');
 
   await expect(page.locator('[data-research-state="available"]')).toHaveCount(0);
   await expect(page.locator('[data-research-state="locked"]')).toHaveCount(15);

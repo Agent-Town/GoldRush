@@ -161,7 +161,7 @@ test('manual save creates a curated slot, preserves auto, and loads through the 
   await page.getByTestId('manual-save-confirm').click();
   const slots = await readSlots(page);
   const manualWave = slots.manual[0]!.wave;
-  await expect(page.getByTestId('manual-save-message')).toContainText(`Saved: Quartz Run — as of wave ${manualWave}'s end.`);
+  await expect(page.getByTestId('manual-save-message')).toContainText(`Saved: Quartz Run, as of wave ${manualWave}'s end.`);
   await shot(page, testInfo, 'save-card');
   const autoAfterManualSave = JSON.parse(await readAutoRaw(page)) as SavedSuspend;
   expect(autoAfterManualSave).toMatchObject({ contractId: 'the-claim' });

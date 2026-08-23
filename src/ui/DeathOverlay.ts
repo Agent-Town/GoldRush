@@ -132,7 +132,7 @@ export class DeathOverlay {
     const secured = this.options.outcome === 'secured' || this.options.outcome === 'rush';
     const runStats = this.runStats();
     const flavor = this.options.outcome === 'rush'
-      ? 'The claim held. The Rush took the rest — your win stays in the ledger.'
+      ? 'The claim held. The Rush took the rest; your win stays in the ledger.'
       : secured
         ? 'The assay is sealed. The town kept thinking.'
         : 'The claim was overrun. The gold remembers.';

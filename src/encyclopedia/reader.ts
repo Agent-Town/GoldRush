@@ -444,8 +444,8 @@ function renderFieldBookLedger(): string {
         <p class="county-standings__epoch">${escapeHtml(eraName(epochId as LedgerEpochId))}</p>
         <p class="field-book__intro">${
           currentFieldBookView === 'byParty'
-            ? "Who rode with whom, as the riders declared themselves — the field book counts hands, the board never does."
-            : "Minds and rigs are SELF-DECLARED — the county prints what riders claim; the boards rank results alone; learn-more links are the county's own pointers."
+            ? "Who rode with whom, as the riders declared themselves. The field book counts hands; the board never does."
+            : "Minds and rigs are SELF-DECLARED: the county prints what riders claim; the boards rank results alone; learn-more links are the county's own pointers."
         }</p>
         <nav class="county-standings__contracts field-book__views" aria-label="Field book views">
           ${(Object.keys(FIELD_BOOK_VIEW_LABELS) as FieldBookView[])
@@ -507,7 +507,7 @@ function renderSeasonPage(season: Season): string {
       </section>
       <section data-testid="season-results">
         <h4>Results</h4>
-        <p>Minds and rigs are <strong>SELF-DECLARED</strong> — the county prints what riders claim; the boards rank results alone.</p>
+        <p>Minds and rigs are <strong>SELF-DECLARED</strong>: the county prints what riders claim; the boards rank results alone.</p>
         ${content ? renderSeasonChronicleResults(content.results) : ''}
         <div data-testid="season-results-board" aria-live="polite"><p class="seasons__empty">The county clerk turns the results pages.</p></div>
       </section>
@@ -557,13 +557,13 @@ async function loadSeasonResults(seasonId: string): Promise<void> {
   const board = root.querySelector<HTMLElement>('[data-testid="season-results-board"]');
   if (!board) return;
   if (!results || results.some((pair) => pair.some((result) => !result.ok))) {
-    board.innerHTML = '<p class="seasons__empty">The county results book is unavailable right now — try this page again when the trail clears.</p>';
+    board.innerHTML = '<p class="seasons__empty">The county results book is unavailable right now; try this page again when the trail clears.</p>';
     return;
   }
   const minds = mergeFieldBooks(results.map(([result]) => readFieldBook(result.payload, 'byStack', season.name)));
   const rigs = mergeFieldBooks(results.map(([, result]) => readFieldBook(result.payload, 'byHarness', season.name)));
   board.innerHTML = minds.rows.length === 0 && rigs.rows.length === 0
-    ? '<p class="seasons__empty">No rides were posted for this season — the county page is ready when they are.</p>'
+    ? '<p class="seasons__empty">No rides were posted for this season; the county page is ready when they are.</p>'
     : `${renderSeasonMatrix(minds, 'byStack')}${renderSeasonMatrix(rigs, 'byHarness')}`;
 }
 
@@ -602,9 +602,9 @@ function mergeFieldBooks(books: readonly FieldBook[]): FieldBook {
 
 function formatSeasonRange(season: Season): string {
   const start = new Date(season.startsAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-  if (season.endsAt === null) return `Since ${start} — still riding`;
+  if (season.endsAt === null) return `Since ${start}, still riding`;
   const end = new Date(season.endsAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-  return `${start} — ${end}`;
+  return `${start} to ${end}`;
 }
 
 async function loadFieldBook(): Promise<void> {
@@ -683,7 +683,7 @@ function isFieldBookCell(value: unknown): value is FieldBookCell {
 
 function renderFieldBook(fieldBook: FieldBook, view: Exclude<FieldBookView, 'byParty'>): string {
   const noun = view === 'byHarness' ? 'rig' : 'mind';
-  if (fieldBook.rows.length === 0) return `<p class="county-standings__empty">No ${noun}s in the field book yet — the door is open.</p>`;
+  if (fieldBook.rows.length === 0) return `<p class="county-standings__empty">No ${noun}s in the field book yet; the door is open.</p>`;
   const contractNames = new Map(listContracts(activeEpochId()).map((contract) => [contract.id, contract.boardRow.name]));
   const contracts = fieldBook.contracts.filter((contractId) => fieldBook.rows.some((row) => row.contracts.some((cell) => cell.contractId === contractId)));
   return `
@@ -781,7 +781,7 @@ function isNameList(value: unknown): value is string[] {
 
 function renderPartyBook(partyBook: PartyBook): string {
   if (partyBook.rows.length === 0) {
-    return '<p class="county-standings__empty">No teams in the field book yet — the door is open.</p>';
+    return '<p class="county-standings__empty">No teams in the field book yet; the door is open.</p>';
   }
   const contractNames = new Map(listContracts(activeEpochId()).map((contract) => [contract.id, contract.boardRow.name]));
   const contracts = partyBook.contracts.filter((contractId) => partyBook.rows.some((row) => row.contracts.some((cell) => cell.contractId === contractId)));
@@ -997,8 +997,8 @@ function renderCountyRows(rows: readonly CountyStanding[], party: StandingsParty
       return '<p class="county-standings__empty">The first ledger holds no rows for this contract.</p>';
     }
     return party === 'solo'
-      ? '<p class="county-standings__empty">No standings yet — the door is open.</p>'
-      : `<p class="county-standings__empty">No ${PARTY_LABELS[party].toLowerCase()} standings yet — the door is open.</p>`;
+      ? '<p class="county-standings__empty">No standings yet; the door is open.</p>'
+      : `<p class="county-standings__empty">No ${PARTY_LABELS[party].toLowerCase()} standings yet; the door is open.</p>`;
   }
   const watchable = currentWatchTape !== undefined && rows.some((row) => row.reel);
   return `
@@ -1060,7 +1060,7 @@ function renderLocalClaims(contracts: ReturnType<typeof listContracts>): string 
       </div>
       <div class="county-standings__local-list">
         ${bests.size === 0
-          ? '<p class="county-standings__local-empty">No claims in your ledger yet — ride one and make your mark.</p>'
+          ? '<p class="county-standings__local-empty">No claims in your ledger yet. Ride one and make your mark.</p>'
           : [...bests].map(([contractId, score]) => renderLocalClaim(contractId, names.get(contractId)!, score)).join('')}
       </div>
     </section>
@@ -1193,13 +1193,13 @@ function renderEraRow(
       ${eras
         .map((era, index) => {
           const selected = era.id === selectedEpochId;
-          const label = `${eraName(era.id)}${index === eras.length - 1 ? ' — active' : ' ✓'}`;
+          const label = `${eraName(era.id)}${index === eras.length - 1 ? ': active' : ' ✓'}`;
           return `<button class="gr-start-menu__small-button" type="button" data-ledger-era="${era.id}" data-ledger-era-state="open" data-testid="claim-ledger-era-${era.id}" aria-pressed="${selected}">${escapeHtml(label)}</button>`;
         })
         .join('')}
       ${
         lockedId
-          ? `<button class="gr-start-menu__small-button" type="button" disabled data-ledger-era="${lockedId}" data-ledger-era-state="locked" data-testid="claim-ledger-era-${lockedId}" aria-label="A future era remains locked">Next Era — locked</button>`
+          ? `<button class="gr-start-menu__small-button" type="button" disabled data-ledger-era="${lockedId}" data-ledger-era-state="locked" data-testid="claim-ledger-era-${lockedId}" aria-label="A future era remains locked">Next Era: locked</button>`
           : ''
       }
     </nav>

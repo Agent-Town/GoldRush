@@ -39,7 +39,7 @@ test('the active Red Fields chart renders its frontier and keeps picks pinnable'
   await expect(icons).toHaveCount(15);
   expect(await icons.evaluateAll((items) => items.every((item) => item.style.backgroundImage.startsWith('url(')))).toBe(true);
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(9);
-  await expect(page.getByTestId('research-era-epoch-9-redfields')).toHaveText('The Red Fields — active');
+  await expect(page.getByTestId('research-era-epoch-9-redfields')).toHaveText('The Red Fields: active');
 
   const frontier = page.locator('[data-research-node][data-research-state="available"]').first();
   await frontier.click();

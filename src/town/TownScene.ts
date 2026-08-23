@@ -1822,7 +1822,7 @@ export class TownScene {
     if (snapshot.phase === 'delivery') {
       this.showBark(
         newsie,
-        'Hot off the press — your first Gazette, free to a new face.',
+        'Hot off the press: your first Gazette, free to a new face.',
         false,
         '<button class="town-ui__bark-action" type="button" data-town-welcome-action="take-paper" data-testid="town-welcome-take-paper">Take issue #1</button><button class="town-ui__bark-action" type="button" data-town-welcome-action="skip" data-testid="town-welcome-skip">Skip welcome</button>',
       );
@@ -1968,12 +1968,12 @@ export class TownScene {
     }
     // Owner ruling 2026-07-12: the transition is E1's graduation — the Baron answers first.
     if (!hasBaronMedal()) {
-      if (surface === 'site') return `<span>The valley has one answer left to give — the Baron still rides.</span>`;
+      if (surface === 'site') return `<span>The valley has one answer left to give: the Baron still rides.</span>`;
       return `
         <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-baron">
           <p class="town-ui__board-eyebrow">The town's next ledger</p>
           <h3>The Stamp Mill stands ready.</h3>
-          <p>The valley has one answer left to give — the Baron still rides.</p>
+          <p>The valley has one answer left to give: the Baron still rides.</p>
         </section>
       `;
     }
@@ -2283,7 +2283,7 @@ export class TownScene {
     const firstClaimHint = this.firstClaimGuideActive && contract.id === DEFAULT_CONTRACT_ID && unlock.unlocked;
     const baronStakes =
       contract.id === 'e1-baron' && showDetails
-        ? `<p class="town-ui__contract-stakes" data-testid="contract-stakes-e1-baron">The Baron's outfit rides at 20 — cadence runs hot (+15%).</p>`
+        ? `<p class="town-ui__contract-stakes" data-testid="contract-stakes-e1-baron">The Baron's outfit rides at 20; cadence runs hot (+15%).</p>`
         : '';
     return `
       <article class="town-ui__contract ${unlock.unlocked ? '' : 'town-ui__contract--locked'}" tabindex="-1" data-testid="contract-card-${escapeHtml(
@@ -3400,7 +3400,7 @@ function contractIdOf(score: ScoreRecord): string {
 
 function formatBest(score: ScoreRecord | null): string {
   if (!score) return 'No result yet';
-  return `${score.secured ? 'Secured' : 'Overrun'} — wave ${score.waves} — ${score.gold} gold`;
+  return `${score.secured ? 'Secured' : 'Overrun'}: wave ${score.waves}, ${score.gold} gold`;
 }
 
 function renderContractBriefing(contract: ContractManifest): string {

@@ -34,7 +34,7 @@ const WAVE_THREE_SNAPSHOT = `{
         {
           "id": "sentry_beacon",
           "operation": "BUILD",
-          "meaning": "Lights the dark and slows what it touches — radius 8wu.",
+          "meaning": "Lights the dark and slows what it touches; radius 8wu.",
           "cost": 25,
           "costs": [
             25,
@@ -67,7 +67,7 @@ const WAVE_THREE_SNAPSHOT = `{
         {
           "id": "sluice",
           "operation": "BUILD",
-          "meaning": "Works the river for you — 3g per cycle beside water.",
+          "meaning": "Works the river for you: 3g per cycle beside water.",
           "cost": 40,
           "costs": [
             40,

@@ -95,7 +95,7 @@ test('plain boot keeps the Drill Yard visible and launchable on both sides of th
   for (const rule of DRILL_YARD_RULES) await expect(briefing).toContainText(rule);
   await expect(page.getByTestId('contract-best-e1-drill-yard')).toHaveCount(0);
   await expect(page.getByTestId('contract-flavor-e1-drill-yard')).toHaveText(
-    'Practice ground — no stakes, no claim. The county lends the gold; the straw men lend their patience.',
+    'Practice ground: no stakes, no claim. The county lends the gold; the straw men lend their patience.',
   );
   await expect(page.getByTestId('contract-launch-e1-drill-yard')).toHaveText('Enter the yard');
   await shot(page, testInfo, 'after-board', 'e1-drill-yard');
@@ -104,7 +104,7 @@ test('plain boot keeps the Drill Yard visible and launchable on both sides of th
   await expect(page.getByTestId('drill-yard-exit')).toBeVisible({ timeout: 15_000 });
   const trainingTag = page.getByTestId('drill-yard-training-tag');
   await expect(trainingTag).toBeVisible();
-  await expect(trainingTag).toHaveText('DRILL YARD — training');
+  await expect(trainingTag).toHaveText('DRILL YARD: training');
   await page.keyboard.press('KeyP');
   const pauseTraining = page.getByTestId('pause-drill-yard-training');
   await expect(pauseTraining).toBeVisible();
@@ -128,7 +128,7 @@ test('The Drill Yard is a resettable, ledger-free practice claim', async ({ page
   const card = page.getByTestId('contract-card-e1-drill-yard');
   await expect(card).toBeVisible();
   await expect(card).toContainText('The Drill Yard');
-  await expect(card).toContainText('Practice ground — no stakes, no claim.');
+  await expect(card).toContainText('Practice ground: no stakes, no claim.');
   await expect(card).toHaveAttribute('data-contract-locked', 'false');
   await shot(page, testInfo, 'card');
   const storageBeforeLaunch = await persistenceSnapshot(page);
@@ -182,7 +182,7 @@ test('The Drill Yard is a resettable, ledger-free practice claim', async ({ page
     window.__GR_TEST__!.advanceSim(0.1);
   });
   await expect(page.getByTestId('world-info-note-title')).toHaveText('Straw men');
-  await expect(page.getByTestId('world-info-note-body')).toHaveText("Straw men — they don't mind.");
+  await expect(page.getByTestId('world-info-note-body')).toHaveText("Straw men; they don't mind.");
   await shot(page, testInfo, 'straw-men-prompt');
   await page.evaluate(() => {
     window.__GR_TEST__!.teleport(0, -5);

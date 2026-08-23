@@ -186,7 +186,7 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
       const row = document.createElement('li');
       row.dataset.testid = 'press-shelf-row';
       const label = document.createElement('span');
-      label.textContent = `${entry.charter.contract.name} — first pressed by ${entry.charter.envelope.provenance.author}, ${entry.charter.envelope.provenance.createdAt.slice(0, 10)}`;
+      label.textContent = `${entry.charter.contract.name}, first pressed by ${entry.charter.envelope.provenance.author}, ${entry.charter.envelope.provenance.createdAt.slice(0, 10)}`;
       const actions = document.createElement('span');
       actions.className = 'charter-press-panel__shelf-actions';
       const launch = document.createElement('button');

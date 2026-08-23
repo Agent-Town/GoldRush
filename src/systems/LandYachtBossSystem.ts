@@ -292,7 +292,7 @@ export class LandYachtBossSystem {
     this.stolenHeads += 1;
     this.escortsFunded += 1;
     this.nextLootAt = at + Balance.landYacht.lootIntervalSeconds;
-    this.callout(crane.position, 'HEAD STOLEN — ESCORT FUNDED');
+    this.callout(crane.position, 'HEAD STOLEN: ESCORT FUNDED');
   }
 
   private updateCrane(at: number, components: ReadonlyMap<LandYachtComponentId, ClaimJumperEnemy>): void {

@@ -358,6 +358,6 @@ test('plain boot renders the honest empty Field Book state', async ({ page }) =>
   await page.goto('/');
   await page.getByTestId('start-menu-claim-ledger').click();
   await page.getByTestId('claim-ledger-field-book').click();
-  await expect(page.getByTestId('field-book-board')).toHaveText('No minds in the field book yet — the door is open.');
+  await expect(page.getByTestId('field-book-board')).toHaveText('No minds in the field book yet; the door is open.');
   expect(errors).toEqual({ console: [], page: [] });
 });

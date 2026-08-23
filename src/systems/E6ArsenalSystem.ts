@@ -225,7 +225,7 @@ export class E6ArsenalSystem {
     type: CureArmOutcome['type'],
   ): void {
     this.outcomes.push({ type, weapon, enemyId: enemy.id, variantId: enemy.variantId, lethal: false });
-    this.onOutcome?.(enemy.position, type === 'freed_turned_back' ? 'FREED — TURNED BACK' : type === 'fevered_machine_powered_down' ? 'POWERED DOWN' : 'PRISTINE IRON');
+    this.onOutcome?.(enemy.position, type === 'freed_turned_back' ? 'FREED: TURNED BACK' : type === 'fevered_machine_powered_down' ? 'POWERED DOWN' : 'PRISTINE IRON');
   }
 
   private changedKillOwner(): Exclude<E6ArsenalItem, 'halfLifeCaltrops'> | null {

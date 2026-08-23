@@ -26,7 +26,7 @@ test('new build shows fresh ink and reloads an idle start menu', async ({ page }
   const requestCount = await stubVersion(page, 'newer-build');
   await page.goto('/');
   const toast = page.getByTestId('fresh-build-toast');
-  await expect(toast).toHaveText('Fresh ink — a newer build is out. Refresh keeps your place.');
+  await expect(toast).toHaveText('Fresh ink: a newer build is out. Refresh keeps your place.');
   await mkdir(SHOT_DIR, { recursive: true });
   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-toast.png`, fullPage: true });
 

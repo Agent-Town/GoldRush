@@ -1,6 +1,6 @@
 import { MEDALS_KEY, activeProfile, profileDataKey, type ProfileStorage } from './ProfileStorage';
 
-export const BARON_MEDAL_BLURB = "The Rocket Cart — captured. He'll be back — with machines.";
+export const BARON_MEDAL_BLURB = "The Rocket Cart, captured. He'll be back with machines.";
 
 export type MedalState = {
   version: 1;

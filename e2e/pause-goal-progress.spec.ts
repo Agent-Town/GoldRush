@@ -17,7 +17,7 @@ test('Twin Banks pause goals show the win wave and live progress', async ({ page
   await page.evaluate(() => window.__GR_TEST__?.setWave(13));
   await page.keyboard.press('KeyP');
 
-  await expect(page.getByTestId('pause-contract-goal-progress')).toHaveText('Secure the claim at wave 20 — wave 13/20');
+  await expect(page.getByTestId('pause-contract-goal-progress')).toHaveText('Secure the claim at wave 20: wave 13/20');
   expect(await page.getByTestId('pause-contract-goals').locator('li').allTextContents()).toEqual([
     'Survive through wave 20.',
     'Build on either bank and watch both fords.',

@@ -129,8 +129,8 @@ export class BuildingContextPrompt {
       this.fundButton.hidden = true;
       this.canalRedigButton.hidden = false;
       this.canalDemolishButton.hidden = false;
-      this.canalRedigButton.textContent = `Re-dig — the water comes back${enterEnabled ? ' Enter' : ''}`;
-      this.canalDemolishButton.textContent = 'Demolish — the ground opens U';
+      this.canalRedigButton.textContent = `Re-dig: the water comes back${enterEnabled ? ' Enter' : ''}`;
+      this.canalDemolishButton.textContent = 'Demolish: the ground opens U';
       return;
     }
     this.canalRedigButton.hidden = true;
@@ -143,7 +143,7 @@ export class BuildingContextPrompt {
       this.demolishButton.hidden = true;
       this.fundButton.hidden = false;
       this.fundButton.disabled = false;
-      this.fundButton.textContent = `Fund stage ${fund.stage} — ${fund.cost}g${enterEnabled ? ' Enter' : ''}`;
+      this.fundButton.textContent = `Fund stage ${fund.stage}: ${fund.cost}g${enterEnabled ? ' Enter' : ''}`;
       return;
     }
     this.fundButton.hidden = true;

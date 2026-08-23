@@ -38,7 +38,7 @@ export const buildableDefs: readonly BuildableDef[] = [
   {
     id: 'sentry_beacon',
     displayName: 'Sentry Beacon',
-    blurb: () => `Lights the dark and slows what it touches — radius ${formatBuildNumber(Balance.beacon.range)}wu.`,
+    blurb: () => `Lights the dark and slows what it touches; radius ${formatBuildNumber(Balance.beacon.range)}wu.`,
     costCurve: beaconCost,
     footprint: { w: 1, d: 1 },
     hpMax: Balance.wreck.hp.sentry_beacon,
@@ -65,7 +65,7 @@ export const buildableDefs: readonly BuildableDef[] = [
   {
     id: 'sluice',
     displayName: 'Sluice Works',
-    blurb: () => `Works the river for you — ${formatBuildNumber(Balance.sluice.goldPerCycle)}g per cycle beside water.`,
+    blurb: () => `Works the river for you: ${formatBuildNumber(Balance.sluice.goldPerCycle)}g per cycle beside water.`,
     costCurve: () => Balance.sluice.cost,
     footprint: { w: 2, d: 1 },
     hpMax: Balance.wreck.hp.sluice,
