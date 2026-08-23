@@ -38,14 +38,15 @@ s2252 grepped the whole of `e2e/` and then ran the four files nobody had examine
 | `e2e/assay-season-roll.spec.ts:102` | "the county board opens on the season now riding and reaches the closed first ledger" |
 | `e2e/sea-2-season-page.spec.ts:54` | "plain boot opens the season list and a season page without losing legacy standings" |
 
-Those are IN ADDITION to the six s2251 already attributed, each of which also fails on mobile-chrome:
-`e2e/lb-01-county-standings.spec.ts:247` ("public county rows carry submitted time while legacy rows
-keep the missing-time fallback"), `:630` ("secure submits the county row with pinned origin, hashes,
-and profile name"), `:730` ("Claim Ledger renders the seeded county board and its empty contract
-state"); `e2e/milk-county-board.spec.ts:374` ("plain boot: a failing standings request adds no error
-of the application own"), `:400` ("plain boot: standings accept pre-declaration rows but reject
-malformed or dishonest stacks"), `:442` ("plain boot: posse chips rank within size, the field book
-counts hands, and a row watches its run").
+Those are IN ADDITION to the six s2251 already attributed, each of which also fails on mobile-chrome
+(one citation per line — a wrapped title is unrecoverable to a line-oriented grep, F-1425-2):
+
+- `e2e/lb-01-county-standings.spec.ts:247` ("public county rows carry submitted time while legacy rows keep the missing-time fallback")
+- `e2e/lb-01-county-standings.spec.ts:630` ("secure submits the county row with pinned origin, hashes, and profile name")
+- `e2e/lb-01-county-standings.spec.ts:730` ("Claim Ledger renders the seeded county board and its empty contract state")
+- `e2e/milk-county-board.spec.ts:374` ("plain boot: a failing standings request adds no error of the application own")
+- `e2e/milk-county-board.spec.ts:400` ("plain boot: standings accept pre-declaration rows but reject malformed or dishonest stacks")
+- `e2e/milk-county-board.spec.ts:442` ("plain boot: posse chips rank within size, the field book counts hands, and a row watches its run")
 
 ⛔ **DO NOT REVERT THE CUTOVER. DO NOT EDIT ANY ASSERTION VALUE TO MATCH LIVE DATA.** The tests encode
 the right expectations; only their *interception target* is stale. Greening a red by weakening an
@@ -68,7 +69,7 @@ assertion is forbidden (F-1441-3).
    sites by grepping the literal, not by trusting these numbers.** `grep -rn "gold-rush-3in.pages.dev" e2e/`
    must return ZERO route-mock hits when you are done.
 
-2. **`e2e/mp-07c-3-invitation.spec.ts:47` — MEASURE FIRST, then repoint.** This one is NOT a mock: it is an
+2. **`e2e/mp-07c-3-invitation.spec.ts:47` ("the tavern invites an agent in one paste without closing the human door") — MEASURE FIRST, then repoint.** This one is NOT a mock: it is an
    assertion on product output. `src/town/TownScene.ts:2383` builds the invitation command from
    `relayBaseFromTownSearch()` → `src/mp/RideTogether.ts:73` → `GAME_API_ORIGIN`, so the app now renders
    `agenttown.app` while the test asserts `pages.dev`. **s2252 predicted this by reading the code and did
