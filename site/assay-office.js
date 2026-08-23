@@ -1,4 +1,4 @@
-const STATS_ENDPOINT = 'https://gold-rush-3in.pages.dev/api/stats';
+const STATS_ENDPOINT = 'https://agenttown.app/goldrush/api/stats';
 
 const DURATION_LABELS = {
   lt1m: 'under a minute',
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderQuiet() {
-    renderMessage('the wire is quiet — the office reports again shortly');
+    renderMessage('the wire is quiet; the office reports again shortly');
   }
 });
 

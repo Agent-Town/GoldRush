@@ -2757,6 +2757,35 @@
               "note_s2168": "FIRE-AUTHORED s2168 2026-08-22 from F-2167-1 (s2167) re-measured and re-classified as F-2168-1. e2e/er01-e3-census.spec.ts has been red on clean main for 12 days: 4 failed / 4 passed, e3-canyon-works at :51 (toBeUndefined) and e3-blackout-ridge at :190 (toMatchObject), both projects. Cause is 8465f6b33 (ap16-1 buildable parity, 2026-08-10), which replaced a membership-gated two-item registry term with an unconditional six-item one; the manifest emits buildables only when non-empty, so an admitted contract can no longer report undefined. The ap16-1 runner FLAGGED this at the time and was correctly told it was out of scope (reviews/ap16-1-buildable-parity.md, section F-1636-3, logged as a green); nobody ran the spec afterwards. This master re-pins the two stale assertions ONLY. It is deliberately scoped to the fork-INDEPENDENT half: both contracts are admitted (supportedContractIds() contains them, measured s2168), so under every possible answer to the open F-2168-1 question about whether the manifest should gate on admission, an admitted contract still receives the core registry set — the pin must move either way. The e10 half stays red and is NOT touched here. Denominator measured s2168: of the 9 er01 census specs, exactly 2 are red (e3, e10); the other 7 (e2, e4, e5, e6, e7, e8, e9) are 56 passed / 0 failed on clean main."
             },
             {
+              "id": "c5-emdash-sweep",
+              "title": "No em-dashes in anything a player or visitor reads (owner ruling; game half - site half shipped attended)",
+              "taskFile": "c5-emdash-sweep.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-08-23",
+              "note": "Owner verbatim 2026-08-23: remove the emdashes from the page, game and everything. Site/ swept + live same hour (attended). This slice: public/skill.md+llms.txt+robots.txt, contracts.json text fields, src/news templates, rendered UI strings; editorial rewrites only, pins move in-commit, no-emdash guard for checkable surfaces; comments out of scope. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
+            },
+            {
+              "id": "l1-ledger-service-core",
+              "title": "The county ledger runs as a node service on sqlite - same endpoint contract, our box (ledger-on-droplet L1)",
+              "taskFile": "l1-ledger-service-core.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "spec": "specs/ops/ledger-on-droplet.md",
+              "authoredBy": "attended 2026-08-23",
+              "note": "Owner ruling 2026-08-23 verbatim in the spec. Storage seam extracted in functions (zero edge behavior change, existing suites prove it), node:sqlite adapter + plain node:http service in server/ledger/, the existing test-standings/test-accounts suites run against BOTH backends, worker-contract probe included. No droplet/client/deploy changes in this slice. DISPATCHED to tasks/queue/lane-d in the authoring commit window."
+            },
+            {
+              "id": "l2-ledger-parity-and-import",
+              "title": "Every KV row imported, every response byte-matched - the parity gate cutover waits on (ledger-on-droplet L2)",
+              "taskFile": "l2-ledger-parity-and-import.md",
+              "status": "planned",
+              "lane": "lane-d",
+              "spec": "specs/ops/ledger-on-droplet.md",
+              "authoredBy": "attended 2026-08-23",
+              "note": "SEQUENCING: queue ONLY after l1-ledger-service-core MERGES (the master carries the verifiable check + STOP). Export the whole namespace --remote (read-only, token from .env.local never printed), idempotent import with count reconciliation, byte-parity replay across every ported endpoint with an explicit printed allowlist. Evidence + parity report under artifacts/ops/ledger-export-<stamp>/."
+            },
+            {
               "id": "c4-assay-queue-index",
               "title": "The assay queue poll costs one KV read, not the whole county (the KV cap incident cure)",
               "taskFile": "c4-assay-queue-index.md",
