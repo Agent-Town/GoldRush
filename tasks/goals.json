@@ -1950,6 +1950,27 @@
               "note": "FIRE-AUTHORED s2123 as the named cure for the gate-side block on e10s-1-ember-shore-data. The predecessor authored the data correctly and could not load it: the s2121 master firewalled src/**, which is exactly where the twist allowlist lives, so the task could not satisfy its own acceptance condition by construction. This master lands the SCHEMA and the DATA together. SIX coupled changes, all re-verified at source by the author on main 8cf19eae0 -- the predecessor reported two, and four were undiscovered: (1) emberShore into AUTHORED_TWIST_KEYS (ContractFamilies.ts:1542-1547, enforced :1654); (2) twist.emberShore into DECLARED_INERT_PATHS (:1568-1613) -- the house two-step, precedents twist.scheduledRelocation (A9) and twist.persistentCanalChoices (A10), both merged 2026-08-21; (3) the salvaged contract hunk from lane/c tip 1a2b93969, applied as the commit OWN patch because main has moved and a whole-file checkout would revert A9/A10; (4) a tileParams.engineDependencies entry -- REQUIRED by (2) via the inert rule at :1726-1733, and e10-ember-shore is the ONLY deepsky contract with engineDependencies undefined; (5) the census pin EXPECTED_DEPENDENCY[e10-ember-shore] in e2e/er01-e10-census.spec.ts, which (4) moves; (6) the stale anchors pin at scripts/e3-mask-tables.test.mjs:399. Also settles the squallDecayPerSecond sign to a positive magnitude per the house attachDamagePerSecond convention (reversible; flagged for veto). Bench seeds are authored by hand rather than patched: the author measured that the predecessor bench-seeds hunk applies WITH CONFLICTS against main A9/A10 additions. Deliberately NOT authored this fire: the sibling E10A-1, because it would edit the same AUTHORED_TWIST_KEYS array on a second lane and collide."
             },
             {
+              "id": "e10s-4-ember-shore-door",
+              "title": "E10S-4: the Ember Shore door - public-verb prover secures x2 both seeds (pan -> stoke -> defend); idle floors honest; admission flips on evidence",
+              "status": "planned",
+              "lane": "lane-a",
+              "spec": "specs/agent-play/e10-ember-shore-preserve.md",
+              "authoredBy": "attended 2026-08-22 (F-2162-1 execution)",
+              "note": "MINTED per F-2162-1 to carry the DOOR's condition where the spec puts it (E10S-4 GATE: public-verb prover secures x2 both seeds (pan -> stoke -> defend); idle floors honest). This condition previously sat as e10s-1b's blockedReason - the DATA leaf - written there in the 2026-08-22 desk sweep because no door leaf existed to receive it. Not authorable until E10S-2/E10S-3 land: the census names ember-shore-preserve-consumers as the missing engine dependency and E10S-3 builds it.",
+              "parkedPayload_e10s1c": {
+                "harvestAnchors": [
+                  { "x": -6, "z": -24 },
+                  { "x": -20, "z": -34 },
+                  { "x": -38, "z": -22 },
+                  { "x": -54, "z": -12 }
+                ],
+                "benchSeeds": [
+                  "e10-ember-shore-01",
+                  "e10-ember-shore-02"
+                ]
+              }
+            },
+            {
               "id": "e10-ember-shore-contract",
               "title": "E10 Ember Shore contract + mask (last run-tile gate)",
               "mergeHash": "c5b6c86d9848b70d4d60a79556d30c884707265e",
