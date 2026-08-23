@@ -8,6 +8,8 @@
 
 ## VERDICT: **HOLD — NOT MERGED.** Owner fork; see F-2125-1.
 
+> ⬆️ **SUPERSEDED s2258 (2026-08-24) — THE HOLD IS DISCHARGED AND THE SLICE IS ON MAIN at `9eb74cc81`** (`git merge-base --is-ancestor 9eb74cc81ce8bedae1e8500e2be771ccc00b9ce4 main` → rc=0, verified this fire). The verdict above is KEPT VERBATIM under the Retention Law and was CORRECT when written: this slice's payload really did admit the map, and merging it as authored really did turn the door guards from 6 pass / 0 fail into 3 pass / 3 fail. What discharged it was not a re-argument but the corrective `e10s-1c`, which emptied the anchors so the data lands INERT — the attended pick of s2165's option (a), the e6-picnic precedent. On the merged tree `skillmd-guard` + `door-admission-ratchet` read **6 pass / 0 fail**. Both leaves are `status="merged"`. See `reviews/e10s-1c-ember-shore-inert-landing.md` — and note F-2258-1 there: the anchors this slice authored live on THREE surfaces, so the E10S-4 door slice must re-land all three.
+
 The slice does what its master asked and its own gates are sound. It is held for a
 reason no gate in its master could have seen: **it admits `e10-ember-shore` to the
 public door while omitting the two door-surface files that every other admission in
@@ -164,6 +166,8 @@ holds all 7 paths, `ahead=1`, and the branch is untouched.
 **Lane tip:** `61358eb555e10e236071f8dc7b2e6e8b39c030b0` — unchanged · **behind=307** (was 9 at s2125)
 
 ### VERDICT: **HOLD — STILL NOT MERGED.** F-2125-1 re-confirmed at source; new F-2165-1 filed.
+
+> ⬆️ **SUPERSEDED s2258 (2026-08-24) — THE HOLD IS DISCHARGED AND THE SLICE IS ON MAIN at `9eb74cc81`** (`git merge-base --is-ancestor 9eb74cc81ce8bedae1e8500e2be771ccc00b9ce4 main` → rc=0, verified this fire). The verdict above is KEPT VERBATIM under the Retention Law and was CORRECT when written: this slice's payload really did admit the map, and merging it as authored really did turn the door guards from 6 pass / 0 fail into 3 pass / 3 fail. What discharged it was not a re-argument but the corrective `e10s-1c`, which emptied the anchors so the data lands INERT — the attended pick of s2165's option (a), the e6-picnic precedent. On the merged tree `skillmd-guard` + `door-admission-ratchet` read **6 pass / 0 fail**. Both leaves are `status="merged"`. See `reviews/e10s-1c-ember-shore-inert-landing.md` — and note F-2258-1 there: the anchors this slice authored live on THREE surfaces, so the E10S-4 door slice must re-land all three.
 
 **Why this fire re-gated at all.** `drain-block-check lane/a` prints a hold whose reason,
 re-scoped by attended today (`2c357128d`, F-2162-1), ends: *"LIFT = the drain itself:
