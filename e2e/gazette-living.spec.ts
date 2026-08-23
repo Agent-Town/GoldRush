@@ -12,7 +12,7 @@ import {
 } from '../src/game/ProfileStorage';
 import type { ScoreRecord } from '../src/game/Scoreboard';
 import { HERALD_FRESHNESS_DAYS, isCleanHeraldLine, readHeraldItems } from '../src/news/herald';
-import { editionLadder, HERALD_LAST_READ_KEY } from '../src/news/editionLadder';
+import { editionLadder, frontierEdition, HERALD_LAST_READ_KEY } from '../src/news/editionLadder';
 
 // THE LIVING PAPER — GZ-L1 (specs/gazette-house/living-paper.md; owner directive 2026-08-04:
 // "right now the newspaper never changes. Even after I beat the Baron, same newspaper.").
@@ -334,6 +334,25 @@ test('the ladder covers every E1 contract that can print', async () => {
   for (const edition of ladder.slice(2, -1)) {
     expect(edition.headline, `${edition.contractId} has no authored headline`).not.toMatch(/ IS HELD$/);
   }
+});
+
+test('a frontier dethronement becomes one stable Herald item', () => {
+  const edition = frontierEdition({
+    id: 'frontier-b8cf2332d-the-claim-seed-hash',
+    contractId: 'the-claim',
+    seed: 'e1-the-claim-01',
+    eraStamp: 'b8cf2332d',
+    previous: { profileName: 'Old Hand', decisions: 10 },
+    current: { profileName: 'New Hand', decisions: 8 },
+  }, 4);
+  expect(edition).toMatchObject({
+    id: 'frontier-b8cf2332d-the-claim-seed-hash',
+    number: 4,
+    kind: 'frontier',
+    headline: 'A NEW FRONTIER IS ENTERED',
+  });
+  expect(edition.lead.join(' ')).toContain("New Hand has taken the Surveyor's Crown");
+  expect(edition.lead.join(' ')).toContain('Nothing was erased; the frontier moved.');
 });
 
 test('every printable E1 edition has unique copy', async () => {

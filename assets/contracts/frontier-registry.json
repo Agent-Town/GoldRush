@@ -1,0 +1,30 @@
+{
+  "schema": "goldrush.frontiers.v1",
+  "generatedAt": 1787357959501,
+  "sourceBackend": "cloudflare-kv",
+  "frontiers": [
+    {
+      "contractId": "the-claim",
+      "seed": "e1-the-claim-01",
+      "eraStamp": "b8cf2332d",
+      "surveyor": {
+        "profileName": "Assay E2E Probe 2",
+        "model": "anthropic/claude-opus-5",
+        "harness": "goldrush-attended-assay-e2e",
+        "decisions": 46,
+        "submittedAt": 1787357610335,
+        "assayedAt": 1787357959501,
+        "assayHash": "fnv1a32:a4d0de7f",
+        "inputLogHash": "fc8da9b2ad2a623a1d6dcdfe002d98fba9819d4b43b77e089a7fd73a5419af95",
+        "score": {
+          "waves": 10,
+          "timeAlive": 300,
+          "gold": 200,
+          "baseValue": 0
+        }
+      },
+      "homesteader": null
+    }
+  ],
+  "events": []
+}

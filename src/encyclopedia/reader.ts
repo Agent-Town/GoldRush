@@ -77,6 +77,16 @@ type FieldBookCell = {
   harness?: string;
   harnessVersion?: string;
   config?: string;
+  assayStatus?: 'pending' | 'verified' | 'rejected' | 'unassayable' | 'legacy';
+  assayStrip?: AssayStrip;
+};
+
+type AssayStrip = {
+  era: { id: string; label: string };
+  outcome: { secured: true; waves: number; timeAlive: number };
+  economy: { status: 'measured'; decisions: number; frontierDecisions: number; efficiency: number }
+    | { status: 'void' | 'unavailable'; reason: string };
+  cost: { tokensIn?: number; tokensOut?: number; calls?: number };
 };
 
 type FieldBookAggregate = {
@@ -678,7 +688,23 @@ function isFieldBookCell(value: unknown): value is FieldBookCell {
     && Number.isInteger(cell.submittedAt) && (cell.submittedAt ?? -1) >= 0
     && validOptionalString(cell.season)
     && validOptionalCost(cell.tokensIn) && validOptionalCost(cell.tokensOut) && validOptionalCost(cell.calls)
-    && validOptionalString(cell.harness) && validOptionalString(cell.harnessVersion) && validOptionalString(cell.config);
+    && validOptionalString(cell.harness) && validOptionalString(cell.harnessVersion) && validOptionalString(cell.config)
+    && (cell.assayStatus === undefined || ['pending', 'verified', 'rejected', 'unassayable', 'legacy'].includes(cell.assayStatus))
+    && (cell.assayStrip === undefined || isAssayStrip(cell.assayStrip));
+}
+
+function isAssayStrip(value: unknown): value is AssayStrip {
+  if (!value || typeof value !== 'object') return false;
+  const strip = value as Partial<AssayStrip>;
+  if (!strip.era || typeof strip.era.id !== 'string' || typeof strip.era.label !== 'string'
+    || !strip.outcome || strip.outcome.secured !== true || !finiteNonNegative(strip.outcome.waves) || !finiteNonNegative(strip.outcome.timeAlive)
+    || !strip.economy || !strip.cost || !validOptionalCost(strip.cost.tokensIn)
+    || !validOptionalCost(strip.cost.tokensOut) || !validOptionalCost(strip.cost.calls)) return false;
+  return strip.economy.status === 'measured'
+    ? finiteNonNegative(strip.economy.decisions) && strip.economy.decisions > 0
+      && finiteNonNegative(strip.economy.frontierDecisions) && strip.economy.frontierDecisions > 0
+      && finiteNonNegative(strip.economy.efficiency)
+    : (strip.economy.status === 'void' || strip.economy.status === 'unavailable') && typeof strip.economy.reason === 'string';
 }
 
 function renderFieldBook(fieldBook: FieldBook, view: Exclude<FieldBookView, 'byParty'>): string {
@@ -751,7 +777,27 @@ function renderFieldBookCell(cell: FieldBookCell | undefined, rowSlug: string, c
     <span class="county-standings__difficulty" data-difficulty="${cell.difficulty}">${DIFFICULTY_LABELS[cell.difficulty]}</span>
     <span>${costs.length ? costs.join(' &middot; ') : 'Cost not declared'}</span>
     <time datetime="${safeIsoDate(cell.submittedAt)}">${relativeAge(cell.submittedAt)}</time>
+    ${renderAssayStrip(cell, rowSlug)}
   </td>`;
+}
+
+function renderAssayStrip(cell: FieldBookCell, rowSlug: string): string {
+  const strip = cell.assayStrip;
+  if (!strip) return `<p class="field-book__assay-absent" data-testid="field-book-assay-absent-${rowSlug}-${escapeHtml(cell.contractId)}">Assay awaits verification.</p>`;
+  const economy = strip.economy.status === 'measured'
+    ? `EFF ${strip.economy.efficiency.toFixed(2)} &middot; ${formatCount(strip.economy.decisions)} decisions`
+    : strip.economy.reason;
+  const cost = [
+    strip.cost.tokensIn === undefined ? undefined : `${formatCount(strip.cost.tokensIn)} in`,
+    strip.cost.tokensOut === undefined ? undefined : `${formatCount(strip.cost.tokensOut)} out`,
+    strip.cost.calls === undefined ? undefined : `${formatCount(strip.cost.calls)} calls`,
+  ].filter((value): value is string => value !== undefined).join(' &middot; ') || 'Not declared';
+  return `<dl class="field-book__assay" data-testid="field-book-assay-${rowSlug}-${escapeHtml(cell.contractId)}">
+    <div><dt>Outcome</dt><dd>Secured &middot; ${Math.floor(strip.outcome.waves)} waves</dd></div>
+    <div><dt>Economy</dt><dd>${economy}</dd></div>
+    <div><dt>Cost</dt><dd>${cost}</dd></div>
+    <small>${escapeHtml(strip.era.label)} &middot; ${escapeHtml(strip.era.id)}</small>
+  </dl>`;
 }
 
 function readPartyBook(value: unknown): PartyBook {

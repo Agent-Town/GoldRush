@@ -218,7 +218,7 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
     sessionStorage.clear();
     localStorage.setItem(key, JSON.stringify(state));
   }, { key: PROFILE_KEY, state: PROFILE_STATE });
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
+  await page.route('**/api/standings**', async (route) => {
     const url = new URL(route.request().url());
     const view = url.searchParams.get('view');
     expect(['byStack', 'byHarness']).toContain(view);
@@ -249,8 +249,8 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
               model: 'gpt-5.6-sol',
               aggregate: { standings: 2, contracts: 2, crowns: 1, bestWaves: 20, totalTokensIn: 90_000, totalTokensOut: 8_000, totalCalls: 18, declaredCells: 1, undeclaredCells: 1, latestSubmittedAt: now - 60_000 },
               contracts: [
-                { contractId: 'the-claim', score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 }, difficulty: 'trail', tokensIn: 90_000, tokensOut: 8_000, calls: 18, harness: 'codex', harnessVersion: '2026.08', config: 'medium', submittedAt: now - 60_000 },
-                { contractId: 'e1-dry-gulch', score: { secured: true, waves: 14, timeAlive: 614, gold: 140, baseValue: 280 }, difficulty: 'vein-hunter', harness: 'gr-sim', submittedAt: now - 86_400_000 },
+                { contractId: 'the-claim', score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 }, difficulty: 'trail', tokensIn: 90_000, tokensOut: 8_000, calls: 18, harness: 'codex', harnessVersion: '2026.08', config: 'medium', submittedAt: now - 60_000, assayStatus: 'verified', assayStrip: { era: { id: 'b8cf2332d', label: 'Same-Game era' }, outcome: { secured: true, waves: 20, timeAlive: 620 }, economy: { status: 'measured', decisions: 10, frontierDecisions: 8, efficiency: 0.8 }, cost: { tokensIn: 90_000, tokensOut: 8_000, calls: 18 } } },
+                { contractId: 'e1-dry-gulch', score: { secured: true, waves: 14, timeAlive: 614, gold: 140, baseValue: 280 }, difficulty: 'vein-hunter', harness: 'gr-sim', submittedAt: now - 86_400_000, assayStatus: 'pending' },
               ],
             },
             {
@@ -292,7 +292,12 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
   await expect(page.getByTestId('field-book-row-undeclared-rider')).toBeVisible();
   await page.getByTestId('field-book-row-gpt-5-6-sol').click();
   await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-the-claim')).toContainText('90,000 in');
+  await expect(page.getByTestId('field-book-assay-gpt-5-6-sol-the-claim')).toContainText('OutcomeSecured · 20 waves');
+  await expect(page.getByTestId('field-book-assay-gpt-5-6-sol-the-claim')).toContainText('EconomyEFF 0.80 · 10 decisions');
+  await expect(page.getByTestId('field-book-assay-gpt-5-6-sol-the-claim')).toContainText('Cost90,000 in · 8,000 out · 18 calls');
+  await expect(page.getByTestId('field-book-assay-gpt-5-6-sol-the-claim')).toContainText('Same-Game era · b8cf2332d');
   await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-e1-dry-gulch')).toContainText('Cost not declared');
+  await expect(page.getByTestId('field-book-assay-absent-gpt-5-6-sol-e1-dry-gulch')).toHaveText('Assay awaits verification.');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('codex 2026.08');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('medium');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText(new Date(now - 60_000).toISOString());
@@ -349,7 +354,7 @@ test('plain boot renders the honest empty Field Book state', async ({ page }) =>
     sessionStorage.clear();
     localStorage.setItem(key, JSON.stringify(state));
   }, { key: PROFILE_KEY, state: PROFILE_STATE });
-  await page.route('https://gold-rush-3in.pages.dev/api/standings**', (route) => route.fulfill({
+  await page.route('**/api/standings**', (route) => route.fulfill({
     status: 200,
     contentType: 'application/json',
     body: JSON.stringify({ ok: true, view: 'byStack', epochId: 'epoch-1-frontier', contracts: [], byStack: [] }),

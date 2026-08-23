@@ -659,6 +659,33 @@
   text-align: center !important;
 }
 
+.field-book__assay,
+.field-book__assay-absent {
+  margin: 0.55rem 0 0;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(76, 48, 23, 0.18);
+}
+
+.field-book__assay div {
+  display: grid;
+  grid-template-columns: 5.25rem 1fr;
+  gap: 0.4rem;
+}
+
+.field-book__assay dt,
+.field-book__assay dd {
+  margin: 0;
+}
+
+.field-book__assay dt {
+  font-weight: 700;
+}
+
+.field-book__assay small,
+.field-book__assay-absent {
+  color: #684728;
+}
+
 .field-book__details > td {
   padding: 14px;
   background: rgba(91, 138, 138, 0.08);

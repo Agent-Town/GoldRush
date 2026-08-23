@@ -1,4 +1,5 @@
 import type { HeraldClass } from './herald';
+import frontierRegistry from '../../assets/contracts/frontier-registry.json' with { type: 'json' };
 import {
   SCOREBOARD_KEY,
   TOWN_NAME_KEY,
@@ -31,7 +32,7 @@ export const HERALD_LAST_READ_KEY = 'gr.herald.lastRead.v1';
 export const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
 export const BARON_CONTRACT_ID = 'e1-baron';
 
-export type EditionKind = 'arrival' | 'claim' | 'baron';
+export type EditionKind = 'arrival' | 'claim' | 'baron' | 'frontier';
 
 export type Edition = {
   /** Stable across renders and sessions; the archive strip keys on it. */
@@ -56,6 +57,15 @@ export type LadderFacts = {
   /** The player's OWN clear order. Drill yard and the Baron are excluded by construction. */
   securedContractIds: readonly string[];
   baronBeaten: boolean;
+};
+
+export type FrontierEvent = {
+  id: string;
+  contractId: string;
+  seed: string;
+  eraStamp: string;
+  previous: { profileName: string; decisions: number };
+  current: { profileName: string; decisions: number };
 };
 
 type CopyContext = {
@@ -138,7 +148,26 @@ export function editionLadder(facts: LadderFacts): Edition[] {
     editions.push(claimEdition(contractId, hero, town, editions.length + 1, editions.length === 1));
   }
   if (facts.baronBeaten) editions.push(baronEdition(hero, town, editions.length + 1));
+  for (const event of (frontierRegistry.events as readonly FrontierEvent[])) editions.push(frontierEdition(event, editions.length + 1));
   return editions;
+}
+
+export function frontierEdition(event: FrontierEvent, number: number): Edition {
+  const contractName = fallbackContractName(event.contractId);
+  return {
+    id: event.id,
+    number,
+    kind: 'frontier',
+    contractId: event.contractId,
+    eyebrow: `Issue No. ${number} · ${HAND_COPIED_EYEBROW}`,
+    headline: 'A NEW FRONTIER IS ENTERED',
+    standfirst: `${contractName} has a leaner verified mark in the county book.`,
+    engraving: 'ledger',
+    lead: [
+      `${event.current.profileName} has taken the Surveyor's Crown on ${contractName}.`,
+      'The old mark remains in the book under its own era stamp. Nothing was erased; the frontier moved.',
+    ],
+  };
 }
 
 /**
