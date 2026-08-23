@@ -81,7 +81,7 @@
  * functions above are -- so the arm that decides can be exercised, not admired.
  */
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -147,6 +147,58 @@ export function embeddedDate(name) {
  * @returns {{subjects: string[], conventionStart: string|null, skippedLegacy: string[],
  *            skippedTerminal: string[], tokens: Record<string, number>, total: number}}
  */
+/**
+ * F-2222-1 (s2222). WHICH TREE is this corpus a checkout OF?
+ *
+ * Six fires built discriminators for a corpus that is ABSENT (F-2218-1),
+ * UNREADABLE (F-2217-1), CRASHED (F-2211-1) or EMPTY (F-2215-1). None of them can
+ * see a corpus that is present, readable, complete-looking and STALE -- and a
+ * LINKED WORKTREE is exactly that: `tasks/done` is TRACKED, so every worktree
+ * holds a checkout of it frozen at whatever commit that lane sits on. Measured
+ * s2222: worktrees/lane-c holds 154 done-moves against main's 1,353, and the
+ * probe printed "✅ DRY -- every subject resolves merged or closed. The word is
+ * earned." at rc=0, with F-2217-1's own declaration line affirmatively reading
+ * `read`. The cure that was built to stop the s1061 banner CERTIFIED it, because
+ * it discriminates readable-from-unreadable and not right-corpus-from-wrong-one.
+ *
+ * s2217 named this hazard in its own handoff and left it open ("a stale TRACKED
+ * subset ... the defence remains 'run it from the repo root'"). This closes it.
+ *
+ * The test is exact and cheap: a LINKED worktree's gitdir is
+ * <main>/.git/worktrees/<name> while --git-common-dir still resolves to the MAIN
+ * .git. Equal => the main worktree OR ANY SUBDIRECTORY OF IT, which is correct
+ * and must NOT be flagged (that is the over-general cure -- it would refuse from
+ * `scripts/`, and s2221's near-catastrophic reverse control is the standing
+ * warning about anchoring helpers one level too general).
+ *
+ * spawnSync, not execFileSync: it reports by RETURN VALUE and never throws
+ * (s2216), so the discriminator reads a status rather than a caught exception.
+ * Exit 128 is git's "not a repository" -- LAWFUL here, because the pre-existing
+ * fixture-rooted tests (F-2209-1's CLI arms) build non-git temp roots and must
+ * keep asserting exactly what they always asserted. Only a git that could not
+ * ANSWER is 'tree-unverifiable'.
+ *
+ * @returns {{tree: 'main'|'linked-worktree'|'tree-unverifiable', detail: string}}
+ */
+function corpusTree(root) {
+  const opts = { cwd: root, encoding: 'utf8', timeout: 10000 };
+  const ask = (args) => spawnSync('git', args, opts);
+  const gitDir = ask(['rev-parse', '--absolute-git-dir']);
+  if (gitDir.status === 128) return { tree: 'main', detail: '' }; // not a repo: a fixture root
+  if (gitDir.status !== 0) {
+    return { tree: 'tree-unverifiable', detail: String(gitDir.error?.code || `git rev-parse exit ${gitDir.status}`) };
+  }
+  const common = ask(['rev-parse', '--path-format=absolute', '--git-common-dir']);
+  if (common.status !== 0) {
+    return { tree: 'tree-unverifiable', detail: String(common.error?.code || `git rev-parse exit ${common.status}`) };
+  }
+  const a = (gitDir.stdout || '').trim();
+  const b = (common.stdout || '').trim();
+  if (!a || !b) return { tree: 'tree-unverifiable', detail: 'git rev-parse returned empty' };
+  if (a === b) return { tree: 'main', detail: '' };
+  return { tree: 'linked-worktree', detail: `the board lives in ${path.dirname(b)}` };
+}
+
 export function selectSubjects(root) {
   const dir = path.join(root, 'tasks', 'done');
   let names = [];
@@ -207,9 +259,14 @@ export function selectSubjects(root) {
   }
 
   subjects.sort();
+  // F-2222-1. The dir read FINE; the question left is whether it is the right dir.
+  // Counts are still reported (seeing "154" against main's 1,353 is the whole
+  // tell), but the verdict is refused below -- a stale subset of the board can
+  // never earn the word.
+  const tree = corpusTree(root);
   return {
     subjects, conventionStart, skippedLegacy, skippedTerminal, tokens, total: names.length,
-    corpus: 'read', corpusDetail: '',
+    corpus: tree.tree === 'main' ? 'read' : tree.tree, corpusDetail: tree.detail,
   };
 }
 
@@ -304,9 +361,16 @@ function main() {
   console.log('dry-board-probe — scripts/fire.md §2F, in one command (F-2207-1)\n');
   // F-2217-1: declared ALWAYS, including the happy path. A declaration that
   // appears only on failure re-creates the very ambiguity it removes (F-2208-1).
-  console.log(
-    `  corpus tasks/done/      : ${sel.corpus === 'read' ? 'read' : `UNREADABLE (${sel.corpusDetail})`}`,
-  );
+  // F-2222-1 extends this line's domain. It stays a SINGLE always-printed
+  // declaration rather than a new field, so a reader who learned to check one
+  // line still checks one line.
+  const corpusLabel = {
+    read: 'read',
+    unreadable: `UNREADABLE (${sel.corpusDetail})`,
+    'linked-worktree': `LINKED WORKTREE — STALE CHECKOUT (${sel.corpusDetail})`,
+    'tree-unverifiable': `TREE UNVERIFIABLE (${sel.corpusDetail})`,
+  }[sel.corpus] ?? `UNRECOGNISED (${sel.corpus})`;
+  console.log(`  corpus tasks/done/      : ${corpusLabel}`);
   console.log(`  done-moves (.md)        : ${sel.total}`);
   console.log(`  prefix convention start : ${sel.conventionStart ?? '(none — no prefixed file)'}  [DERIVED, not pinned]`);
   console.log(`  skipped, legacy         : ${sel.skippedLegacy.length}  (bare-dated before the convention existed)`);
@@ -362,7 +426,20 @@ function main() {
     for (const c of crashed) console.log(`      ${c}`);
     console.log('');
   }
-  if (sel.corpus !== 'read') {
+  if (sel.corpus === 'linked-worktree') {
+    // F-2222-1. The buckets are not empty because the board is clean -- they are
+    // empty because this is a STALE CHECKOUT of the board. Cured at the BANNER,
+    // not merely at the exit code: advisory is the mode §2F prescribes, and there
+    // the verdict travels on stdout alone (F-2210-1).
+    console.log('  ⛔ CANNOT VERIFY — this is a LINKED WORKTREE, not the board.');
+    console.log(`     tasks/done/ is TRACKED, so this is a checkout of the board frozen at`);
+    console.log(`     whatever commit this worktree sits on — ${sel.total} done-move(s) here.`);
+    console.log(`     ${sel.corpusDetail}. Re-run from there; §2F means the board, not a lane.`);
+  } else if (sel.corpus === 'tree-unverifiable') {
+    console.log(`  ⛔ CANNOT VERIFY — could not establish which tree this corpus belongs to`);
+    console.log(`     (${sel.corpusDetail}). A stale worktree checkout is indistinguishable`);
+    console.log('     from the board until this is answered, so no verdict is offered.');
+  } else if (sel.corpus !== 'read') {
     // F-2217-1. The buckets are all empty, but they are empty because the corpus
     // was never read -- NOT because the board is clean. Printing the earned-DRY
     // banner here is the s1061 incident, and in advisory mode (the mode §2F
