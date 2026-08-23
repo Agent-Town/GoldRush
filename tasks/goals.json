@@ -2836,7 +2836,8 @@
               "id": "f2253-1-mp07c-inspect-mock",
               "title": "Mock the ride-inspect route in mp-07c so its console guard stops reporting a live 404",
               "taskFile": "f2253-1-mp07c-inspect-mock.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "b4730ea3d8fb949116ce1917d842b55f92502611",
               "lane": "lane-b",
               "authoredBy": "fire s2253 2026-08-24",
               "note_s2253": "note_s2253: FIRE-AUTHORED s2253 from F-2253-1, which this same fire measured on the merged tree of 8a2f3f3a while draining f2252-1. Repointing the origin assertion at :47 made it pass, which advanced execution 13 lines into code that had NEVER RUN, where the spec fails on both projects at :59 expect(errors.console).toEqual([]) with a 404. Traced by READING: the spec mocks **/api/multiplayer/create and is handed a synthetic room code, but does NOT mock inspect, so src/mp/RideTogether.ts:163 fetches /api/multiplayer/inspect live, no such room exists, and functions/api/_multiplayer.ts:262 answers room_not_found 404 CORRECTLY. Origin-INDEPENDENT - it would have 404d against pages.dev identically - so this is a masked pre-existing red, not a regression. Cure: mock **/api/multiplayer/inspect** origin-agnostically, copying the shape e2e/mp-ride-lobby.spec.ts already uses beside its own create mock. The master FORBIDS weakening the console guard (F-1441-3, and that assertion is the Mistake #10 defence doing its job) and forbids touching src/** or functions/** (the product is correct). It also orders a MEASURE-then-adjust-the-PAYLOAD loop, and a STOP-and-report if no payload satisfies the existing assertions. DISPATCHED to tasks/queue/lane-b in the authoring commit window. UNBLOCKS the red-inventory refresh, which should follow this rather than precede it."
