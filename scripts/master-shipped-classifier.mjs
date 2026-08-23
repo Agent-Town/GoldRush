@@ -123,6 +123,78 @@ function goalEvidence(tasksDir) {
   return { source: 'goals', leaves: goalLeaves(JSON.parse(fs.readFileSync(goalsPath, 'utf8'))) };
 }
 
+/**
+ * F-2222-2 (measured s2222, cured s2223). WHICH TREE is this board a checkout OF?
+ *
+ * Every discriminator this file has grown asks WHETHER a corpus could be read:
+ * F-2213-1 gave `reviewsSource` (main vs a walked working tree), F-2214-1 made a
+ * crash refuse, F-2219-1 gave `goalsSource` (goals vs absent). NONE of them asks
+ * WHICH corpus it was -- and three of this tool's four inputs are TRACKED files
+ * (`tasks/*.md`, the trace dirs under `tasks/`, `tasks/goals.json`), so a linked
+ * worktree holds all three FROZEN at whatever commit that lane sits on.
+ *
+ * A stale checkout passes every existing test: the files exist, they enumerate,
+ * nothing throws, the sets are non-empty, and BOTH declarations read healthy --
+ * measured s2223 from worktrees/lane-c, `reviewsSource: "main"` (correctly: git
+ * ls-tree reaches main from inside a worktree, same object database) and
+ * `goalsSource: "goals"` (correctly: goals.json is tracked and present there).
+ *
+ * BLAST RADIUS, measured s2223 on the live board, same binary ninety seconds apart:
+ *   repo root      -> TOTAL 1125 · SHIPPED 704 · NO-TRACE  66 ->   1 candidate
+ *   worktrees/lane-c -> TOTAL 1122 · SHIPPED 695 · NO-TRACE 343 -> 268 candidates
+ * A 268x inflation of the queue-me set at identical rc=0, with no refusal and no
+ * declaration. That is the Mistake #8 / 824k Flail polarity -- this tool exists to
+ * stop a fire re-deriving already-merged work -- and it is the largest blast radius
+ * this lineage has measured: F-2219-1's was 8x, F-2213-1's was ONE flip.
+ *
+ * WHY THIS REFUSES WHERE F-2218-1's `absent` ONLY DECLARES: an absent corpus can be
+ * a lawful routine state, so refusing there would red on ordinary work and be
+ * excused into uselessness (F-1460-1). A STALE board is never lawful for THIS
+ * question. The tool asks "has MAIN shipped this master?", and a lane's frozen
+ * checkout cannot answer that -- it answers a different question and reports the
+ * answer as if it were this one. dry-board-probe set the precedent for exactly this
+ * corpus class one file over: report the counts (seeing 154 against 1,353 is the
+ * whole tell) and refuse the verdict.
+ *
+ * The test is exact and cheap: a LINKED worktree's gitdir is
+ * <main>/.git/worktrees/<name> while --git-common-dir still resolves to the MAIN
+ * .git. Equal => the main worktree OR ANY SUBDIRECTORY OF IT, which is correct and
+ * must NOT be flagged -- flagging every repo is the over-general cure, and s2221's
+ * near-catastrophic reverse control is the standing warning about helpers pitched
+ * one level too general.
+ *
+ * `cwd: root`, NOT process.cwd(): unlike dry-board-probe this file takes an explicit
+ * `--root`, so the question is about the tree the CALLER named, not the one the
+ * process happens to sit in. spawnSync, not execFileSync: it reports by RETURN VALUE
+ * and never throws (s2216), so this reads a status rather than a caught exception.
+ * Exit 128 is git's "not a repository" and is LAWFUL -- all 12 legacy tests in this
+ * file build non-git mkdtemp roots and must keep asserting exactly what they always
+ * asserted. Only a git that could not ANSWER is 'tree-unverifiable'.
+ *
+ * Values are STRINGS for the F-2212-1 reason: a careless truthiness test at a call
+ * site coerces every failure value TRUE, i.e. toward noticing rather than ignoring.
+ *
+ * @returns {{tree: 'main'|'linked-worktree'|'tree-unverifiable', detail: string}}
+ */
+function corpusTree(root) {
+  const opts = { cwd: root, encoding: 'utf8', timeout: 10000 };
+  const ask = (args) => spawnSync('git', args, opts);
+  const gitDir = ask(['rev-parse', '--absolute-git-dir']);
+  if (gitDir.status === 128) return { tree: 'main', detail: '' }; // not a repo: a fixture root
+  if (gitDir.status !== 0) {
+    return { tree: 'tree-unverifiable', detail: String(gitDir.error?.code || `git rev-parse exit ${gitDir.status}`) };
+  }
+  const common = ask(['rev-parse', '--path-format=absolute', '--git-common-dir']);
+  if (common.status !== 0) {
+    return { tree: 'tree-unverifiable', detail: String(common.error?.code || `git rev-parse exit ${common.status}`) };
+  }
+  const a = (gitDir.stdout || '').trim();
+  const b = (common.stdout || '').trim();
+  if (!a || !b) return { tree: 'tree-unverifiable', detail: 'git rev-parse returned empty' };
+  if (a === b) return { tree: 'main', detail: '' };
+  return { tree: 'linked-worktree', detail: `the board main tracks lives in ${path.dirname(b)}` };
+}
+
 function verdictFor(name, goalEvidence, reviews, drained, traces) {
   const shipped = [
     ...goalEvidence,
@@ -163,6 +235,7 @@ export function classifyRoot(root) {
   });
   const goalSource = goalEvidence(tasksDir); // F-2219-1
   const goals = goalSource.leaves;
+  const tree = corpusTree(root); // F-2222-2. The corpora read FINE; the question left is WHICH board they are.
 
   const verdicts = masters.map((master) => {
     const fullStem = stem(master);
@@ -219,6 +292,11 @@ export function classifyRoot(root) {
     // always-on line for the ordinary case is the noise that decays a declaration into a
     // formality (F-2218-1). That split is a decision, not an oversight.
     goalsSource: goalSource.source,
+    // F-2222-2: WHICH tree the three TRACKED corpora above are a checkout of. Carried on the
+    // machine channel ALWAYS, including the happy path (F-2208-1) -- the two source fields above
+    // both read healthy from a stale worktree, so a caller has no other way to tell.
+    corpusTree: tree.tree,
+    ...(tree.detail && { corpusTreeDetail: tree.detail }),
     verdicts,
   };
 }
@@ -239,6 +317,29 @@ function printTable(result) {
   console.log(
     `\nTOTAL ${result.verdicts.length} · SHIPPED ${result.counts.SHIPPED} · RAN-UNMERGED ${result.counts['RAN-UNMERGED']} · NO-TRACE ${result.counts['NO-TRACE']}, of which ${bannered} self-declare DO NOT QUEUE → ${result.counts.CANDIDATES} candidates · DISAGREES ${result.counts.DISAGREES}`,
   );
+  // F-2222-2: this refusal prints BEFORE the two source notes below, and the order is the point.
+  // From a stale worktree `reviewsSource` and `goalsSource` both read HEALTHY (measured s2223),
+  // so those notes stay silent and would leave the count looking fully attested. The banner is
+  // cured here and not merely at the exit code because the DEFAULT mode is advisory and there the
+  // whole verdict travels on stdout (F-2210-1). Human channel prints only a DEVIATION, matching
+  // this file's own convention for the two fields below; the machine channel carries it always.
+  if (result.corpusTree === 'linked-worktree') {
+    console.log(
+      `\n⛔ CANNOT VERIFY — DO NOT QUEUE off this run. This root is a LINKED WORKTREE, so the\n` +
+        `   masters, traces and goal leaves above are a checkout of the board FROZEN at this\n` +
+        `   lane's commit, not main's (${result.corpusTreeDetail}).\n` +
+        `   The two source lines below cannot see this: git reaches main for reviews from inside a\n` +
+        `   worktree, and goals.json is tracked and present here, so BOTH read healthy while the\n` +
+        `   board underneath them is stale. That loss is one-directional — it moves masters INTO\n` +
+        `   the candidate set above. Re-run from the main worktree before queueing anything.`,
+    );
+  } else if (result.corpusTree === 'tree-unverifiable') {
+    console.log(
+      `\n⛔ CANNOT VERIFY — DO NOT QUEUE off this run. git could not say which tree this board is a\n` +
+        `   checkout of (${result.corpusTreeDetail}), so the counts above may be computed from a\n` +
+        `   stale lane checkout rather than from main. Re-run once git is healthy.`,
+    );
+  }
   // F-2213-1: never let a candidate count leave here wearing an authority it does not have.
   if (!result.reviewsOk) {
     console.log(
@@ -272,8 +373,18 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     // F-2213-1: under --strict an unverifiable review corpus refuses in its own right. Without
     // this, a degraded run whose candidate count happens to be 0 exits 0 -- byte-identical to a
     // clean board, which is the exact defect F-2208-1 cured one file over.
-    process.exitCode =
-      process.argv.includes('--strict') && (result.counts.CANDIDATES || !result.reviewsOk) ? 1 : 0;
+    // F-2222-2: 2 = "could not answer" OUTRANKS 1 = "answered, and the answer refuses" -- the
+    // house convention already carried by drain-block-check, dry-board-probe and
+    // review-evidence-audit. A candidate count off a stale board is not a smaller refusal than a
+    // candidate count off main; it is not an answer to this question at all.
+    const strict = process.argv.includes('--strict');
+    process.exitCode = !strict
+      ? 0
+      : result.corpusTree !== 'main'
+        ? 2
+        : result.counts.CANDIDATES || !result.reviewsOk
+          ? 1
+          : 0;
   } catch (error) {
     // F-2214-1: F-2213-1's `--strict` refusal lives INSIDE the try above, so ANY throw skipped it
     // and this line forced exitCode 0 -- byte-identical to a genuinely clean board, with stdout
