@@ -90,7 +90,7 @@ import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
-import { snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
+import { bindStandingUpgradePicker, snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
 import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
@@ -2496,6 +2496,14 @@ export class Game {
       if (receipt.outcome.ok) this.audio.play('chirp-acknowledge');
       else if (receipt.outcome.reason !== 'NO_SYSTEM_API') this.audio.play('chirp-refuse');
     });
+    bindStandingUpgradePicker((id) => {
+      const applied = this.progression.applyUpgrade(id);
+      if (applied) {
+        this.upgradeOfferClockKey = '';
+        this.syncUpgradeOverlay();
+      }
+      return applied;
+    });
     this.agentStub.heartbeat();
     if (showIntro) this.showProspectorIntro();
   }
@@ -2686,6 +2694,7 @@ export class Game {
     if (this.mpClient && !lockstepTick) {
       if (!this.releaseFailedMultiplayer()) return false;
     }
+    if (this.runTapeReplay?.agentTape && this.state.current === 'levelup') this.syncUpgradeOverlay();
     const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : this.consumePlaybookTick(sampledIntents, cancelConsumed);
     const echoSample = this.echoActionSample(intents);
     if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
@@ -2963,6 +2972,13 @@ export class Game {
       this.prospector.updateSimulation(delta, this.timeAlive, this.primaryActor.group.position);
     } else {
       this.captureRenderState();
+      if (
+        this.state.current === 'levelup' &&
+        snapshotStandingOrders().orders.some(({ order, status }) =>
+          order.verb === 'PICK_UPGRADE' && (status === 'pending' || status === 'active'))
+      ) {
+        this.prospector.updateSimulation(0, this.timeAlive, this.primaryActor.group.position);
+      }
     }
     this.finishRunTapeReplayIfComplete();
     this.finishMultiplayerTick();
@@ -9197,17 +9213,19 @@ export class Game {
       return;
     }
     const multiplayerState = this.mpClient?.state();
+    const replayTick = this.runTapeReplay?.agentTape ? this.simTick : null;
+    const offerTick = multiplayerState?.tick ?? replayTick;
     const offerKey = `${this.progression.snapshot.pendingLevels}:${offer.map((def) => def.id).join('|')}`;
     if (offerKey !== this.upgradeOfferClockKey) {
       this.upgradeOfferClockKey = offerKey;
       this.upgradeOfferDeadlineMs = performance.now() + Balance.offers.pickSeconds * 1_000;
-      this.upgradeOfferDeadlineTick = (multiplayerState?.tick ?? 0) + Math.ceil(Balance.offers.pickSeconds / (this.mpClient?.stepSeconds ?? 1));
+      this.upgradeOfferDeadlineTick = (offerTick ?? 0) + Math.ceil(Balance.offers.pickSeconds / (this.mpClient?.stepSeconds ?? PLAYBOOK_STEP_SECONDS));
       this.upgradeExpiryQueued = false;
     }
-    // Solo uses wall time; MP uses its authoritative wall-paced ticks so every peer expires together.
-    // Neither opening settings nor pausing the already-frozen sim stops this clock.
-    const secondsRemaining = this.mpClient && multiplayerState
-      ? Math.max(0, Math.ceil((this.upgradeOfferDeadlineTick - multiplayerState.tick) * this.mpClient.stepSeconds))
+    // Solo uses wall time; MP and agent-tape replay use their authoritative ticks.
+    // Neither opening settings nor pausing the already-frozen sim stops the applicable clock.
+    const secondsRemaining = offerTick !== null
+      ? Math.max(0, Math.ceil((this.upgradeOfferDeadlineTick - offerTick) * (this.mpClient?.stepSeconds ?? PLAYBOOK_STEP_SECONDS)))
       : Math.max(0, Math.ceil((this.upgradeOfferDeadlineMs - performance.now()) / 1_000));
     const multiplayerAuthority = !multiplayerState || multiplayerState.playerId === multiplayerState.roster[0]?.playerId;
     if (secondsRemaining === 0 && !this.upgradeExpiryQueued && multiplayerAuthority) {
