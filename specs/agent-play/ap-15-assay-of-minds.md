@@ -1,5 +1,5 @@
 # AP-15 — THE ASSAY OF MINDS (what we measure when a mind plays the county)
-Status: DRAFT 2026-08-08 (attended). Seeded by the owner, verbatim: "How can we differentiate better what they actually did and whether it was better or worse? ... we want to align that with intelligence - you said ARC compares to human puzzle completion, I am not sure that is the right metric for us. What other metrics can we think of to continue to compare across human, agent, harness, model, memory, and so on. What are even good categories?" Supersedes GR-EFFICIENCY's single-ratio framing (AP-10d) without breaking any shipped row.
+Status: RATIFIED 2026-08-23 (owner: "Ratify all three (Recommended)"; was DRAFT 2026-08-08)
 
 ## The two problems with a human-anchored ratio
 1. **It anchors on one species.** A human baseline measures "human-shaped efficiency"; the county is species-blind by law, and its best play may never be human.
@@ -38,7 +38,12 @@ Status: DRAFT 2026-08-08 (attended). Seeded by the owner, verbatim: "How can we 
 3. Field Book: one assay strip per row (axes 1-3 render immediately from existing data; 4 and 7 from the heat sheets; 5-6 as the logs allow).
 4. The heat runbook adopts exam clones (F-GNT-3) + the stack extensions.
 
-## Ratification questions (owner)
+## Ratification questions (owner) — ALL ANSWERED, SPEC RATIFIED 2026-08-23
+**Owner rulings 2026-08-23 (the attended session's recommendations, adopted verbatim: "Ratify all three"):**
+1. YES — frontier-anchored EFF replaces fixture-anchored in the Field Book; old rows relabeled by era, nothing deleted.
+2. YES — frontier dethronements are Herald items; the county celebrates its record-breakers.
+3. YES — the axis names stay in the county's voice: Outcome / Economy / Cost / Diet / Learning / Craft / Operability.
+The historical questions, retained:
 1. Frontier-anchored EFF replaces fixture-anchored EFF in the Field Book (old rows relabeled by era, nothing deleted) — yes?
 2. Do frontier dethronements belong in the Herald (the county celebrating its record-breakers feels right, and feeds the living paper)?
 3. Axis names in the county's voice (Outcome/Economy/Cost/Diet/Learning/Craft/Operability) — or do you want to name them yourself before they hit the Field Book?

@@ -432,6 +432,9 @@
             },
             {
               "id": "bt-04-homestead-automation",
+              "taskFile": "bt-04-homestead-automation.md",
+              "lane": "lane-a",
+              "note_s_att_20260823b": "OWNER RULED 2026-08-23: Defaults now, tune later (Recommended) - the F-1313-2 forks become documented tunables with implementer defaults. Master authored + queued behind e10s-1c on lane-a.",
               "authoringBlock": {
                 "class": "attended-owed",
                 "finding": "F-1661-4",
@@ -439,7 +442,7 @@
                 "reason": "NOT fire-authorable: the BLOCK is lifted but the PARAMETERS are missing, and a fire may not invent them. Stated first because the legacy blockedReason prose below opens with the word UNBLOCKED and the instrument prints only its head. The owner's 2026-08-09 roundup greenlit the PROGRAM (\"blocked trio ALL GREENLIT ... bt-04 -> planned\", fc284845d) and that is a decision to PROCEED, not a set of values: it names no X for \"auto-repair under X%\", no definition of \"idle\" for auto-pan, no ruling on the building-tiers Law 4 balance question (an autonomous gold engine), and nothing on the autoPan NAME COLLISION with the shipped E2 pressure-arsenal mechanic at src/game/Balance.ts:291. The declaring row in tasks/BACKLOG.md (CITE BY CONTENT: grep \"bt-04-homestead-automation\" and read its GATE (RESTATED)) says exactly this and names the next act: \"put the four forks to Robin as four concrete questions with recommendations - the program is already greenlit, so only the numbers are missing\", marked ATTENDED, NOT FIRE. Any BT-04 slice must either avoid forks (1)-(4) entirely or carry the owner's values for the ones it touches; measured s1661, the four forks between them cover the whole of BT-04's scope (repair threshold, idle semantics, balance ruling, endless-mode session spine), so there is no fork-free sub-slice to author. WHAT IS NOT BLOCKING, so the refusal is not overstated: the abilities themselves already ship as permission-ladder grants - src/agent/AgentConsent.ts:11-17 carries auto_collect (level 1), auto_repair (level 1) and auto_pan (level 2). The owner is not being asked to authorise new abilities; he is being asked for numbers on top of granted booleans (abilities is a Record<AgentAbility, boolean>, so no numeric threshold exists anywhere in the surface yet). ATTENDED ACT OWED: put the four questions with recommendations."
               },
               "title": "BT-04 Homestead automation \u2014 Prospector policy switches (auto-repair under X%, auto-pan when idle, auto-collect) behind permission-ladder grants, plus the endless-mode session spine. REGISTERED AS BLOCKED s1354 for Goal Registration Law visibility ONLY; nothing is claimed shipped and no owner question is added.",
-              "status": "planned",
+              "status": "queued",
               "spec": "specs/building-tiers/README.md (the BT-04 bullet; its Law 4 is the balance constraint) + specs/m4-agent-ux/README.md (the same policy switches, built once)",
               "blockedReason": "UNBLOCKED (owner greenlight 2026-08-09, desk walkthrough \u2014 all three chosen) \u2014 prior hold kept as history: OWNER DESIGN FORKS x4, none answered by either spec \u2014 verbatim from F-1313-2 (tasks/BACKLOG.md, CITED BY CONTENT not by line per F-1352-1: grep the finding id): (1) what X is in auto-repair under X% \u2014 the loop today repairs at ANY damage and the panel has only checkboxes, so a numeric policy is new UI; (2) what idle means for auto-pan, and where the Prospector pans; (3) the building-tiers spec Law",
               "authoredBy": "s1354 (fire-registered, bookkeeping only \u2014 no master authored, no code touched)",
@@ -1441,9 +1444,10 @@
             },
             {
               "id": "b4-picnic-three-stake-hold",
+              "note_s_att_20260823": "STATUS FLIPPED blocked -> superseded (attended convergence audit): the blockedReason has said SUPERSEDED since the ruling; the picnic shipped via the flipped stakes (b4v4-picnic-admission merged). Label catches its own reason, F-2146-2 precedent; reason retained verbatim below.",
               "title": "B4 Picnic: three-stake hold consumer + anchors -> door-ready (owner-ruled B-wave build)",
               "taskFile": "b4-picnic-three-stake-hold.md",
-              "status": "blocked",
+              "status": "superseded",
               "blockClass": "owner-fork",
               "blockedReason": "SUPERSEDED by b4v2-picnic-stake-pressure.md — the owner ruled stake pressure IN (verbatim: (1) yes, 2026-08-20). v1 must never re-queue; its WIP on lane/b is v2s base.",
               "note": "Ratified door-completion-sheet B4 (owner 2026-08-20: build, queue after A-wave; codex subscription reset -> B-wave rides lanes now). lane-b. s2085: drain attempted, verdict HOLD - NOT merged; see reviews/b4-picnic-three-stake-hold.md."
@@ -2082,13 +2086,23 @@
               "taskFile": "e10s-1b-ember-shore-schema-and-data.md",
               "status": "blocked",
               "blockClass": "gate-side",
-              "blockedReason": "RE-GATED s2165 (2026-08-22): the LIFT INSTRUCTION BELOW IS MEASURED FALSE - DO NOT MERGE ON IT. s2165 executed it as far as evidence in a detached worktree: the re-scoped condition PASSES in full (tsc clean, build green, contract loads headless, regen 81 floors rc=0, 0 secured:true, Ember rows byte-identical to the lane pins incl. eventLogHash across a 307-commit gap, and the merged-vs-main null-floors delta is exactly the eraStamp plus the two Ember rows) - AND THE MERGE STILL REDS MAIN. Control taken this fire on base a9b6b468b: skillmd-guard + door-admission-ratchet are 6 pass / 0 fail on clean main and 3 pass / 3 fail on the merged tree, two of them failing in under 1 ms (timing-free). F-2125-1 is therefore NOT stale. Root re-verified by reading src/meta/ContractFamilies.ts:1345 (s2125 cited :1336, rotted 9 lines): an EMPTY harvestAnchors array is what holds a map out of play, so the four anchors this slice authors ADMIT the map on merge. F-2165-1: the bench seeds and anchors ARE the admission mechanism, so E10S-1 data cannot land with admission withheld - landing it IS admitting the map, the act F-2162-1 deferred to the e10s-4-ember-shore-door leaf. The re-scope argued correctly about twist inertness and was silent about anchors; it never addressed the three reds. A fourth red, new s2165: e2e/er01-e10-census.spec.ts ember-shore fails at line 46 (benchSeeds expected undefined) - note the same spec is ALREADY RED on clean main at line 59 for all four e10 contracts, a different and unrelated cause, so fingerprint by LINE not by test name. LIFT = attended picks (a) empty the anchors, (b) complete the door surface (public/skill.md +5, door baseline +1, per precedents c183d3496 / 1bbb73ad5), or (c) drop the bench seeds and floors rows so the data lands with no admission - see reviews/e10s-1b-ember-shore-schema-and-data.md, section \"s2165 RE-GATE\". lane/a is untouched, ahead=1, all 7 paths intact. HISTORY, RETAINED: RE-SCOPED to E10S-1's OWN gate (F-2162-1 executed, attended 2026-08-22): contract loads both engines, tsc/build green, floors regen --check with rows appearing only with admission and 0 secured:true - which lane/a's measured content satisfies (s2162: both new floor rows secured:false; DECLARED_INERT_PATHS + engine_dependency_required enforce no player-reachable behaviour). LIFT = the drain itself: merge lane/a (61358eb55), regen null-floors on the merged tree, --check clean, flip this leaf in the drain commit. The door's x2 condition moved to the minted e10s-4-ember-shore-door leaf, where the spec puts it. HISTORY, RETAINED: previously read \"Hold stands until the ember-shore spec ladder (specs/agent-play/e10-ember-shore-preserve.md E10S-4) proves public-verb secures x2 - then the door opens on evidence, no owner word owed. Reclassified owner-fork->gate-side in the 2026-08-22 desk sweep (F-1383-1 semantics).\" - that was the DOOR's gate guarding the DATA (mis-scoped; see the F-2162-1 row).",
+              "blockedReason": "ATTENDED PICK RECORDED 2026-08-23 (convergence audit): option (a) INERT LANDING via tasks/e10s-1c-ember-shore-inert-landing.md (lane-a, BUILD-ON-PREDECESSOR, dispatched) - anchors emptied + benchSeeds parked on the e10s-4 leaf; the corrective's merge is the lift. RE-GATED s2165 (2026-08-22): the LIFT INSTRUCTION BELOW IS MEASURED FALSE - DO NOT MERGE ON IT. s2165 executed it as far as evidence in a detached worktree: the re-scoped condition PASSES in full (tsc clean, build green, contract loads headless, regen 81 floors rc=0, 0 secured:true, Ember rows byte-identical to the lane pins incl. eventLogHash across a 307-commit gap, and the merged-vs-main null-floors delta is exactly the eraStamp plus the two Ember rows) - AND THE MERGE STILL REDS MAIN. Control taken this fire on base a9b6b468b: skillmd-guard + door-admission-ratchet are 6 pass / 0 fail on clean main and 3 pass / 3 fail on the merged tree, two of them failing in under 1 ms (timing-free). F-2125-1 is therefore NOT stale. Root re-verified by reading src/meta/ContractFamilies.ts:1345 (s2125 cited :1336, rotted 9 lines): an EMPTY harvestAnchors array is what holds a map out of play, so the four anchors this slice authors ADMIT the map on merge. F-2165-1: the bench seeds and anchors ARE the admission mechanism, so E10S-1 data cannot land with admission withheld - landing it IS admitting the map, the act F-2162-1 deferred to the e10s-4-ember-shore-door leaf. The re-scope argued correctly about twist inertness and was silent about anchors; it never addressed the three reds. A fourth red, new s2165: e2e/er01-e10-census.spec.ts ember-shore fails at line 46 (benchSeeds expected undefined) - note the same spec is ALREADY RED on clean main at line 59 for all four e10 contracts, a different and unrelated cause, so fingerprint by LINE not by test name. LIFT = attended picks (a) empty the anchors, (b) complete the door surface (public/skill.md +5, door baseline +1, per precedents c183d3496 / 1bbb73ad5), or (c) drop the bench seeds and floors rows so the data lands with no admission - see reviews/e10s-1b-ember-shore-schema-and-data.md, section \"s2165 RE-GATE\". lane/a is untouched, ahead=1, all 7 paths intact. HISTORY, RETAINED: RE-SCOPED to E10S-1's OWN gate (F-2162-1 executed, attended 2026-08-22): contract loads both engines, tsc/build green, floors regen --check with rows appearing only with admission and 0 secured:true - which lane/a's measured content satisfies (s2162: both new floor rows secured:false; DECLARED_INERT_PATHS + engine_dependency_required enforce no player-reachable behaviour). LIFT = the drain itself: merge lane/a (61358eb55), regen null-floors on the merged tree, --check clean, flip this leaf in the drain commit. The door's x2 condition moved to the minted e10s-4-ember-shore-door leaf, where the spec puts it. HISTORY, RETAINED: previously read \"Hold stands until the ember-shore spec ladder (specs/agent-play/e10-ember-shore-preserve.md E10S-4) proves public-verb secures x2 - then the door opens on evidence, no owner word owed. Reclassified owner-fork->gate-side in the 2026-08-22 desk sweep (F-1383-1 semantics).\" - that was the DOOR's gate guarding the DATA (mis-scoped; see the F-2162-1 row).",
               "lane": "lane-a",
               "spec": "specs/agent-play/e10-ember-shore-preserve.md",
               "authoredBy": "s2123 fire",
               "supersedes": "e10s-1-ember-shore-data",
               "salvageRef": "1a2b93969",
               "note": "FIRE-AUTHORED s2123 as the named cure for the gate-side block on e10s-1-ember-shore-data. The predecessor authored the data correctly and could not load it: the s2121 master firewalled src/**, which is exactly where the twist allowlist lives, so the task could not satisfy its own acceptance condition by construction. This master lands the SCHEMA and the DATA together. SIX coupled changes, all re-verified at source by the author on main 8cf19eae0 -- the predecessor reported two, and four were undiscovered: (1) emberShore into AUTHORED_TWIST_KEYS (ContractFamilies.ts:1542-1547, enforced :1654); (2) twist.emberShore into DECLARED_INERT_PATHS (:1568-1613) -- the house two-step, precedents twist.scheduledRelocation (A9) and twist.persistentCanalChoices (A10), both merged 2026-08-21; (3) the salvaged contract hunk from lane/c tip 1a2b93969, applied as the commit OWN patch because main has moved and a whole-file checkout would revert A9/A10; (4) a tileParams.engineDependencies entry -- REQUIRED by (2) via the inert rule at :1726-1733, and e10-ember-shore is the ONLY deepsky contract with engineDependencies undefined; (5) the census pin EXPECTED_DEPENDENCY[e10-ember-shore] in e2e/er01-e10-census.spec.ts, which (4) moves; (6) the stale anchors pin at scripts/e3-mask-tables.test.mjs:399. Also settles the squallDecayPerSecond sign to a positive magnitude per the house attachDamagePerSecond convention (reversible; flagged for veto). Bench seeds are authored by hand rather than patched: the author measured that the predecessor bench-seeds hunk applies WITH CONFLICTS against main A9/A10 additions. Deliberately NOT authored this fire: the sibling E10A-1, because it would edit the same AUTHORED_TWIST_KEYS array on a second lane and collide."
+            },
+            {
+              "id": "e10s-1c-ember-shore-inert-landing",
+              "title": "E10S-1c: the Ember Shore data lands INERT - anchors emptied, admission parked with the door (F-2165-1 corrective)",
+              "taskFile": "e10s-1c-ember-shore-inert-landing.md",
+              "status": "queued",
+              "lane": "lane-a",
+              "spec": "specs/agent-play/e10-ember-shore-preserve.md",
+              "authoredBy": "attended 2026-08-23",
+              "note": "The attended pick among s2165's three lift options: the picnic precedent. BUILD-ON-PREDECESSOR on 61358eb55 (lane/a deliberately ahead - do NOT reset). Empties harvestAnchors + removes benchSeeds (both parked verbatim on the e10s-4 leaf for the door slice to re-land on prover evidence), regenerates floors (rows drop themselves), keeps the schema/inert/census work. Gate: s2165's three door-guard reds + the census :46 pin all green; the pre-existing :59 red fingerprinted by line, untouched. DISPATCHED to tasks/queue/lane-a in the authoring commit window."
             },
             {
               "id": "e10s-4-ember-shore-door",
@@ -2673,8 +2687,9 @@
             },
             {
               "id": "assay-worker",
+              "note_s_att_20260823": "STATUS FLIPPED planned -> shipped (attended convergence audit): the worker is LIVE as systemd on the droplet (runbook 9340d346c-era), machine-verified end to end TWICE - the 2026-08-22 round-2 slip (fnv1a32:a4d0de7f) and the 2026-08-23 L3 slip on the sqlite ledger (fnv1a32:8fda13d2, artifacts/ops/l3-cutover/). The leaf's residual slices 3-4 are both discharged; the launch-list item is ticked in BACKLOG.",
               "title": "THE ASSAY WORKER - server-side replay verification of board submissions (OWNER-RULED LAUNCH-GATING 2026-08-15)",
-              "status": "planned",
+              "status": "shipped",
               "note": "Owner verbatim 2026-08-15: \"the gauntlet verification worker queue has to be done before launch - people will play and submit results\". Verified holes: rows rank instantly unreplayed (standings.ts:434-456), tape optional (:408) - live board #3 ranks tapeless. 5 slices in the spec; DO box = worker home (owner access offered). Q1-Q4 policy rulings pending (recommendations in spec).",
               "authoringBlock": {
                 "class": "owner-gated",
@@ -2805,6 +2820,34 @@
               "note": "Successor to the honest c2 stop (796e0d15d): the two-seam cure measured insufficient because installAgentDoor never binds the upgrade picker (only HeadlessContractSim does) - the null-handler root cause is the stop's own finding. Gate: the recorded eventLogHash reproduces through the browser roundtrip with a PICK_UPGRADE through a draft; floors/pins byte-unmoved; predecessor's no-partial-patch honesty standard carried verbatim. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
             },
             {
+              "id": "ap15-frontier-registry",
+              "title": "The county keeps frontiers - the record book + Field Book strips axes 1-3 (ap-15 RATIFIED, slices 2-3)",
+              "taskFile": "ap15-frontier-registry.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "spec": "specs/agent-play/ap-15-assay-of-minds.md",
+              "authoredBy": "attended 2026-08-23",
+              "note": "Unlocked by the 2026-08-23 ratification (all three answers = the recommendations). Registry seeded from verified rows (the master names the two-backend reality post-L3), dethronements become Herald items, axis names in the county voice. Queued behind l4 on lane-d - lawful depth 2. DISPATCHED to tasks/queue/lane-d in the authoring commit window."
+            },
+            {
+              "id": "art-jumper-rotation-retake",
+              "title": "The claim-jumper rotation sheet retaken at >=460px raw (owner ruling; unblocks the banked 8-way wiring master)",
+              "taskFile": "art-jumper-rotation-retake.md",
+              "status": "queued",
+              "lane": "art",
+              "authoredBy": "attended 2026-08-23",
+              "note": "OWNER RULED 2026-08-23: Retake at >=460px (Recommended) - closes LEDGER row 31's awaiting-a-ruling line (s1656). One 4x3 sheet, no mirrors, measured self-QA against the OUTPUT cell (the batch-007 lesson). Fire-side extraction + the jumper-8way-wiring gate flip follow. DISPATCHED to tasks/queue/art in the authoring commit window."
+            },
+            {
+              "id": "town-cast-wiring",
+              "title": "The tavernkeeper and storekeeper walk their town - the s293-processed walk8 sheets reach the runtime",
+              "taskFile": "town-cast-wiring.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-08-23",
+              "note": "Owner burn directive 2026-08-23. Shelf-ready: both sheets PROCESSED s293 (32/32 cells + frames.json + per-cell footlines recorded for wire-time), PENDING-INTEGRATION six weeks. Pure integration: contract blocks + TownScene mount + LEDGER Integrated flips in the drain commit. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
+            },
+            {
               "id": "c5-emdash-sweep",
               "title": "No em-dashes in anything a player or visitor reads (owner ruling; game half - site half shipped attended)",
               "taskFile": "c5-emdash-sweep.md",
@@ -2902,9 +2945,10 @@
             },
             {
               "id": "c2-browser-standing-order-replay",
+              "note_s_att_20260823": "STATUS FLIPPED stopped -> superseded (attended convergence audit): the honest stop was succeeded by c7-standing-order-replay-rescoped, MERGED at 6b6f52a7b on the stop's own measured premise. The species-blind gap this leaf carried is closed.",
               "title": "A human who rides with standing orders gets a verifiable browser tape (F-ASSAY-E2E-6: sim-clock the draft deadline via the existing two-branch read + tick the executor during drafts)",
               "taskFile": "c2-browser-standing-order-replay.md",
-              "status": "stopped", "mergeHash": "796e0d15d62191e85f9a7845389a0e954a0763f1", "stopNote": "STOPPED-AND-DRAINED s2165 (2026-08-22), merge 796e0d15d62191e85f9a7845389a0e954a0763f1: the runner measured the authorized two-seam cure INSUFFICIENT in a real browser proof, removed its partial Game.ts patch and claimed no hash - a firewall/honesty success, not a failure. Output was one tasks/BACKLOG.md row and no code, which is what merged. FINDING: Game.installAgentDoor installs the browser StandingOrdersExecutor but never calls bindStandingUpgradePicker (the only binding is in src/sim/HeadlessContractSim.ts), so StandingOrdersExecutor.execute reaches a null pickUpgrade handler and fails the accepted order as unavailable. RESIDUAL CURE NEEDS A RE-AUTHORED SCOPE: bind the browser upgrade picker, verify a draft-time agent_orders act is captured by the browser run-tape recorder, then reinstate the two seams and the roundtrip gate. F-ASSAY-E2E-6 remains OPEN on the owner desk.",
+              "status": "superseded", "mergeHash": "796e0d15d62191e85f9a7845389a0e954a0763f1", "stopNote": "STOPPED-AND-DRAINED s2165 (2026-08-22), merge 796e0d15d62191e85f9a7845389a0e954a0763f1: the runner measured the authorized two-seam cure INSUFFICIENT in a real browser proof, removed its partial Game.ts patch and claimed no hash - a firewall/honesty success, not a failure. Output was one tasks/BACKLOG.md row and no code, which is what merged. FINDING: Game.installAgentDoor installs the browser StandingOrdersExecutor but never calls bindStandingUpgradePicker (the only binding is in src/sim/HeadlessContractSim.ts), so StandingOrdersExecutor.execute reaches a null pickUpgrade handler and fails the accepted order as unavailable. RESIDUAL CURE NEEDS A RE-AUTHORED SCOPE: bind the browser upgrade picker, verify a draft-time agent_orders act is captured by the browser run-tape recorder, then reinstate the two seams and the roundtrip gate. F-ASSAY-E2E-6 remains OPEN on the owner desk.",
               "lane": "lane-b",
               "authoredBy": "attended 2026-08-22",
               "note": "Authored from the s2163 BACKLOG row + its verified hand-forward: EXTEND the existing two-branch deadline read (tick-deadline when multiplayer live) rather than naively sim-clocking, which would never expire the draft in ordinary human solo play during a levelup freeze. Gate: a browser standing-order roundtrip e2e reproduces the recorded eventLogHash; floors/pins byte-unmoved. Routed to codex per the owner 2026-08-22 engine-routing ruling. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
@@ -4711,6 +4755,9 @@
             },
             {
               "id": "e3-fairground-socket",
+              "taskFile": "e3-fairground-socket.md",
+              "lane": "lane-b",
+              "note_s_att_20260823": "AUTHORED + DISPATCHED (owner burn directive 2026-08-23; greenlight 2026-08-09 stood unexecuted). Master carries a PREMISE RE-CHECK first act: the F-1475-1 door measurement predates the fairground admission of 2026-08-22.",
               "authoringBlock": {
                 "class": "attended-owed",
                 "finding": "F-1661-4",
@@ -4718,7 +4765,7 @@
                 "reason": "NOT fire-authorable: the owner gate closed, but the residual is owed by the ATTENDED SESSION and the actor change is the whole point. Stated first because the legacy blockedReason prose below opens with the word UNBLOCKED and the instrument prints only its head. The 2026-08-09 roundup's own words carry the caveat: \"blocked trio ALL GREENLIT (rf-34 + e3-fairground-socket + bt-04 -> planned; FAIRGROUND NEEDS THE ATTENDED ENGINE SLICE - owed by the attended session, next working pass)\" (fc284845d). Until that diagnostics-path engine slice lands (F-1475-1 recommendation (c): a diagnostics-only path that is explicitly NOT an admission), the HeadlessContractSim door still refuses e3-fairground, so any master built on a fairground socket is JOINTLY UNSATISFIABLE - it would ask a runner to prove a thing the door forbids. DO NOT RE-QUEUE THE EXISTING MASTER: tasks/lane-e3-fairground-socket.md burned 124,606 tokens, and fire.md 7.5's \"third attempt only with a CHANGED premise\" is not satisfied - the greenlight is a changed premise for AUTHORING A NEW CONSTRUCTION PATH, never a licence to re-run the master that failed. EXTRA TIMING HAZARD, live as of s1661 and stated because it decays: lane-b is currently running f1660-1-door-readmission-repair, which edits the exact admission surface any fairground socket would touch (CONTRACT_ADMISSION_EXEMPTIONS in src/sim/HeadlessContractSim.ts, public/skill.md, e2e/er01-e2-census.spec.ts). Even were this authorable, queueing it against a live writer on the same files is the Mistake #12 shape. ATTENDED ACT OWED: the engine slice; only then is a fairground socket master re-authorable."
               },
               "title": "E3 census: socket the Fair Wheel dynamo/current half (NARROWS F-ER01-E3-4 to its crowd half; may NOT admit e3-fairground and may NOT move the AGENT-READY 3 of 4 headline)",
-              "status": "planned",
+              "status": "queued",
               "taskFile": "lane-e3-fairground-socket.md",
               "lane": "lane-a",
               "note": "s1474 fire (FIRE-AUTHORED). Era-socket class #6, and the cheapest in the class because two of its three dependencies already shipped. F-ER01-E3-4 orders the two Fairground gaps kept SEPARATE: this leaf is the socket half ONLY. The crowd-flock escort objective is an OWNER DESIGN FORK and is firewalled \u2014 twist.fairground.crowdFlocks sits in DECLARED_INERT_PATHS (src/meta/ContractFamilies.ts) precisely because it honestly declares having no consumer, and engineDependencies carries fairground-crowd-flock-consumer status:missing. Authoring one would be new gameplay on its own governed surface. MEASURED s1474 on main rather than inherited: the finding's phrase 'GR-SIM has neither system' is now STALE IN OUR FAVOUR \u2014 twist.powerGrid is already socketed at HeadlessContractSim.ts:245 and twist.dayNightCycle at :256, both by this leaf's own predecessors, so the ONLY missing consumer is src/entities/FerrisWheel.ts. e3-fairground has NO baron and secureWave 12, which retires the predecessor's hardest constraint: the shared (secureWave + 2) tick budget at :349 cannot block a run-to-secure here, so that firewalled line should not need touching. The contract-defining chain is already complete and deterministic in the BROWSER and is being socketed, not designed: FerrisWheel.damage() drops spinning on the FIRST hit (not on death), Game.ts:5894 syncFerrisWheelPower mirrors spinning onto the graph via set-node-online from the SIM TICK at :2593, the 24W producer going offline starves both 6W pavilion lamp consumers so fairgroundCoverageSources (:5337) drops them, and Game.ts:4848 makes autoSecureWaveForRun MAX_SAFE_INTEGER while the wheel is stopped \u2014 i.e. a stopped dynamo means the run can never be secured. That is a real agent choice in vocabulary the contract already declares, so zero operations need inventing (ERA-SOCKET LAW / Mistake #14). HEADLINE FIREWALL: unlike leaf #5 this one may NOT move the census arithmetic \u2014 the census verdict cell says admission needs BOTH the era socket and the declared crowd consumer, so the honest outcome of a perfect run is a narrowed F-ER01-E3-4, an unchanged AGENT-READY 3 of 4 / DATA-GAP 1 of 4, and e3-fairground still absent from SUPPORTED_CONTRACTS. Safe-dupe key checked for the s1471 case-trap shape and found clean: FerrisWheel -> 0, and case-insensitive fairground -> 0 and ferris -> 0 in HeadlessContractSim.ts. Citation key proved to return exactly 1 on main before dispatch (F-1425-2), apostrophe-free and on a single physical line.",
@@ -5845,9 +5892,10 @@
         },
         {
           "id": "calibrate-suite-workers-v2",
+              "note_s_att_20260823": "STATUS FLIPPED stopped -> superseded (attended convergence audit): the leaf's own blockedReason proves the master is DEAD (its pre-flight STOPs on the config the F-1270-1 cure shipped at d1a0846d) and the calibration purpose is discharged by workers:isFireShell. No owner action was ever the true lift; retiring it removes a burned-dispatch trap (4 paid runs).",
           "title": "F-1101-1, third attempt with a CHANGED PREMISE: re-run the worker calibration with a drift control that survives one flaky test. v1 executed its full 1,2,4,8,1 sequence on a quiesced box and then VOIDED ITSELF under its own RULING 5 (the two w=1 runs disagreed 17.88% on p95 vs a 15% ceiling), pinning nothing. \u26d4 STALE + BLOCKED (F-1294-1, s1294): playwright.config.ts:30 HAS declared workers since d1a0846d, so this master pre-flight is a guaranteed STOP and its flat-pin deliverable now reds a shipped guard \u2014 re-author, do not re-queue; see blockedReason. RULING 5-A computes drift over tests GREEN IN BOTH w=1 runs, chosen over F-1107-1's other option (delete 055 from the subset) because deleting cures the instance and leaves the class: any flaky test can hijack a nearest-rank p95. RULING 6's inflation inherits the restriction; its 'zero reds' pin clause is UNCHANGED and absolute, so excluding a flaky test from the DURATION metric never excuses a red from the PIN decision. Explicitly does NOT depend on 055:121 being cured \u2014 s1123 merged 09102598 closing that spec's proven false-green branch, but 10 runs is underpowered against a 1-in-43 red and F-1122-1 leaves the red's mechanism unproven.",
           "taskFile": "lane-calibrate-suite-workers-v2.md",
-          "status": "stopped",
+          "status": "superseded",
           "supersessionChecked": {
             "factory-build-mode-prompt-realign": "NO -- e42ed4ed is a tests-only realign of 22 building-context-prompt rows onto the owner's 2026-07-12 build-mode-only contract. It names this leaf exactly once, in note_s1173, filing F-1173-4: 'the default worker count manufactures reds in this spec set, direct evidence for the parked calibrate-suite-workers-v2 blocker'. That CONTRIBUTES A DATUM to this leaf's subject and performs none of its scope -- no calibration sequence, no worker pin, no playwright.config.ts edit. Evidence for a parked question is not an answer to it. Walked s1606.",
             "factory-m3-05b-run-ledger": "NO -- d9c86768 ships the Run Ledger page on the Claim Office surface. It names this leaf exactly once, in note_s1180, where F-1180-2 records a load-sensitive run-suspend flake as 'direct extra evidence for the owner-gated calibrate-suite-workers-v2 load blocker'. Same shape as factory-build-mode-prompt-realign: a drain donating one observation to the load question while touching no calibration scope. Walked s1606.",
@@ -6871,8 +6919,9 @@
             },
             {
               "id": "ap-03-protocol",
+              "note_s_att_20260823": "STATUS FLIPPED planned -> superseded (attended convergence audit, executing the F-1650-1 measurement): the deliverable shipped as public/skill.md (4cdedebe9, AP-10d slice gate), source-locked by skillmd-guard + the door spec. RESIDUAL preserved: Transport B RIDER-API remains unbuilt and becomes its own leaf if ever wanted; the spec marks it deferrable. This label had re-advertised a shipped thing as a free authoring slot.",
               "title": "AP-03 The Rider Protocol (versioned BYO-agent surface) \u2014 RE-GREENLIT (owner 2026-08-09: \"Greenlight all three\")",
-              "status": "planned",
+              "status": "superseded",
               "authoringBlock": {
                 "class": "attended-owed",
                 "finding": "F-1650-1",
@@ -7369,6 +7418,7 @@
             },
             {
               "id": "ap-15-assay-of-minds",
+              "note_s_att_20260823": "SPEC RATIFIED 2026-08-23 (owner: Ratify all three) - the three questions answered with the recommendations verbatim at the spec foot. First slices authored: ap15-frontier-registry (lane-d).",
               "title": "AP-15: the assay of minds \u2014 null-floor/frontier anchors + seven axes (owner metrics question, spec DRAFT, 3 ratification Qs)",
               "status": "planned",
               "authoringBlock": {
@@ -8088,6 +8138,7 @@
         },
         {
           "id": "foundry-first-real-game",
+              "note_s_att_20260823": "OWNER RULED 2026-08-23: Post-launch (Recommended) - the seed waits until Gold Rush vE1.0 ships; focus stays on launch. Fresh word, same parking.",
           "title": "The first REAL second game \u2014 the owner's own concept through the kit (owner brings the seed)",
           "status": "planned",
           "authoringBlock": {
