@@ -94,15 +94,48 @@ export function line1MatchesMain(root, localStatusText) {
 /**
  * The shared refusal text. One copy, because three guards print it and F-2227-1's
  * lesson is precisely that independently-maintained copies of one thing drift.
+ *
+ * `cmp` is REQUIRED and names which of the two refusable answers arrived, because
+ * they owe different acts: 'different' means the tree is frozen (re-run from main),
+ * 'unverifiable' means the comparison could not be made at all (investigate git).
+ * Collapsing them would reproduce F-2225-1 — a declaration that names a corpus the
+ * tool opened rather than the one the verdict came from.
  */
-export function frozenTreeRefusal(name) {
+export function frozenTreeRefusal(name, cmp) {
   return [
     `${name}: REFUSING — this is a linked worktree and its STATUS.md`,
-    '  line-1 is NOT the one main carries.',
+    `  line-1 is ${cmp === 'different' ? 'NOT the one main carries' : 'not comparable against main'}.`,
     '  Both corpora here are TRACKED, so this tree is frozen at its branch point and',
-    '  the desk above is a self-consistent reading of the WRONG handoff. A PASS would',
-    '  certify a board this run never read (F-2241-1, proven by manufacturing: a real',
-    '  undesked item on main read byte-identically to a clean board from here).',
+    '  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS',
+    '  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each',
+    '  proven by manufacturing: a real defect on main read byte-identically to a clean',
+    '  board from here).',
     '  Re-run from the main worktree, or pass --root <main worktree>.',
   ].join('\n');
+}
+
+/**
+ * THE WHOLE DECISION, in one place — returns the refusal text, or null to proceed.
+ *
+ * F-2242-1 (s2242): s2241 extracted `corpusTree` and `line1MatchesMain` here
+ * citing F-2227-1 — "four independent copies of one predicate is HOW it drifts" —
+ * and then, in the same commit, HAND-WROTE the consuming condition at two new call
+ * sites as `line1MatchesMain(...) === 'different'`. The original site three lines
+ * from its own convention comment used `cmp !== 'same'`. So the FUNCTION was
+ * unified while the CONDITION was re-typed, and re-typed with the opposite
+ * polarity: 'unverifiable' — "I could not answer" — fell through to PASS, in a
+ * gate, in the default mode. Proven by manufacturing: with a real undeclared desk
+ * item on main and `main` unresolvable from the worktree, both guards printed
+ * `PASS` at rc=0, their verdict line byte-identical to a genuinely clean board.
+ *
+ * The lesson is that extracting a helper does not unify a decision; the decision
+ * is the condition, so the condition is what has to move. Everything a caller can
+ * get wrong now lives on this side of the import.
+ */
+export function frozenTreeCheck(root, statusText, name) {
+  if (corpusTree(root) !== 'linked-worktree') return null;
+  const cmp = line1MatchesMain(root, statusText);
+  // NOT `=== 'different'`: 'unverifiable' is the failure value, and per F-2212-1
+  // a failure value must land on the side that NOTICES.
+  return cmp === 'same' ? null : frozenTreeRefusal(name, cmp);
 }

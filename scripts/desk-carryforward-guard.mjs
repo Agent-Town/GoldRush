@@ -156,7 +156,7 @@ import { corpusTree } from './corpus-tree.mjs';
  */
 // MOVED to ./corpus-tree.mjs s2241 (F-2241-1) alongside corpusTree, for the same
 // reason: two upstream legs of this battery ask the identical question.
-import { line1MatchesMain } from './corpus-tree.mjs';
+import { frozenTreeCheck } from './corpus-tree.mjs';
 
 /**
  * Same FIVE spellings desk-declaration-guard matches — four measured s1472, the
@@ -461,19 +461,15 @@ function main() {
   // 2 = "could not answer" against 1 = "answered, and the answer refuses" — the
   // convention drain-block-check, dry-board-probe, master-shipped-classifier and
   // review-evidence-audit already carry.
-  if (tree === 'linked-worktree') {
-    const cmp = line1MatchesMain(ROOT, statusText);
-    if (cmp !== 'same') {
-      console.error('');
-      console.error("desk-carryforward-guard: REFUSING — this is a linked worktree and its STATUS.md");
-      console.error(`  line-1 is ${cmp === 'different' ? 'NOT the one main carries' : 'not comparable against main'}.`);
-      console.error('  Both corpora here are TRACKED, so this tree is frozen at its branch point and');
-      console.error('  the desks above are a self-consistent comparison of the WRONG handoff. A PASS');
-      console.error('  would certify a board this run never read (F-2232-1, proven by manufacturing:');
-      console.error('  a real silent drop on main read byte-identically to a clean board from here).');
-      console.error('  Re-run from the main worktree, or pass --root <main worktree>.');
-      process.exit(2);
-    }
+  // s2242 (F-2242-1): this site was ALREADY correct — it is the one the other two
+  // were re-typed from, wrongly. It moves to the shared decision anyway, because
+  // leaving one hand-written copy of the condition leaves the drift surface open,
+  // and F-2227-1's prescription is to import the sibling rather than keep a copy.
+  const frozen = frozenTreeCheck(ROOT, statusText, 'desk-carryforward-guard');
+  if (frozen) {
+    console.error('');
+    console.error(frozen);
+    process.exit(2);
   }
 
   console.log("PASS — every item on the previous desk is carried, closed, or accounted for.");

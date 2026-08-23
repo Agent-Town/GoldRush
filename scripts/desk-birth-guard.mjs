@@ -65,7 +65,7 @@ import { pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 // F-2241-1 — see the twin note in desk-declaration-guard.mjs. Reached through
 // `npm run test:desk-birth`, so F-2232-1's "five BARE legs" census could not see it.
-import { corpusTree, line1MatchesMain, frozenTreeRefusal } from './corpus-tree.mjs';
+import { corpusTree, frozenTreeCheck } from './corpus-tree.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -336,10 +336,10 @@ function main() {
     // Manufactured: ground truth = an owner-gated row filed on main and never
     // desked; from a worktree branched before it, this printed PASS at rc=0 with
     // the same verdict line and rc as a genuinely clean board.
-    if (corpusTree(ROOT) === 'linked-worktree' &&
-        line1MatchesMain(ROOT, fs.readFileSync(statusPath, 'utf8')) === 'different') {
+    const frozen = frozenTreeCheck(ROOT, fs.readFileSync(statusPath, 'utf8'), 'desk-birth-guard');
+    if (frozen) {
       console.error('');
-      console.error(frozenTreeRefusal('desk-birth-guard'));
+      console.error(frozen);
       process.exit(2);
     }
     console.log('PASS — every owner-gated row filed this window reached the desk.');

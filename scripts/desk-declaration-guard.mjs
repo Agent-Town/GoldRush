@@ -125,7 +125,7 @@ import { pathToFileURL } from 'node:url';
 // from F-2232-1. That census keyed on legs invoked BARE in test:ledger-guards;
 // this leg reaches the same battery through `npm run test:desk-declaration`, so
 // it was invisible to the key and never got the cure.
-import { corpusTree, line1MatchesMain, frozenTreeRefusal } from './corpus-tree.mjs';
+import { corpusTree, frozenTreeCheck } from './corpus-tree.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -493,10 +493,10 @@ function main() {
   // ground truth = a real undesked item on main; from a worktree branched one
   // commit earlier this printed PASS at rc=0, BYTE-IDENTICAL on stdout, stderr
   // AND rc to a genuinely clean board.
-  if (corpusTree(ROOT) === 'linked-worktree' &&
-      line1MatchesMain(ROOT, fs.readFileSync(statusPath, 'utf8')) === 'different') {
+  const frozen = frozenTreeCheck(ROOT, fs.readFileSync(statusPath, 'utf8'), 'desk-declaration-guard');
+  if (frozen) {
     console.error('');
-    console.error(frozenTreeRefusal('desk-declaration-guard'));
+    console.error(frozen);
     process.exit(2);
   }
 
