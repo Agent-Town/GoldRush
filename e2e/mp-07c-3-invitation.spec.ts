@@ -12,6 +12,11 @@ test('the tavern invites an agent in one paste without closing the human door', 
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   const errors = watchErrors(page);
   await page.route('**/api/multiplayer/create', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ code: CODE }) }));
+  await page.route('**/api/multiplayer/inspect**', (route) => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ ok: true, started: false, players: 0, roster: [] }),
+  }));
   await page.addInitScript(({ profileKey, townKey, scoreKey }) => {
     localStorage.clear();
     sessionStorage.clear();
