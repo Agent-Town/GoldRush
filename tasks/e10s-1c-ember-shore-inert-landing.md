@@ -4,6 +4,23 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in wor
 READ FIRST: AGENTS.md; **the e10s-1b leaf's blockedReason in tasks/goals.json (F-2165-1 — the measured coupling this corrective resolves) + reviews/e10s-1b-ember-shore-schema-and-data.md §"s2165 RE-GATE"**; src/meta/ContractFamilies.ts — the admission mechanism (s2165 cites `:1345`, s2125 cited `:1336`; the coordinate rots, the fact is: an EMPTY `harvestAnchors` array is what holds a map out of play); e2e/er01-e10-census.spec.ts (the `benchSeeds expected undefined` pin at ~:46, and note its UNRELATED pre-existing red at ~:59 on clean main — fingerprint by LINE); the e6-picnic precedent (the map sat refused-by-empty-data until its door slice earned the anchors: grep BACKLOG "THE PICNIC IS ADMITTED").
 
 ## Pre-flight — BUILD-ON-PREDECESSOR (F-2089-1 opt-in; this is NOT the safe-dupe template)
+<!-- s2257 (F-2257-1): the two lines below are the MACHINE-READABLE opt-in that
+     lane-runner-v3.sh:339–347 actually greps. This master declared the opt-in in
+     its title and in the heading above — prose the guard cannot read — so the
+     dispatch guard fell through to REFUSE 1,100 times, once per poll cycle, for
+     ~5h. The declaration is the whole safety argument (held ⊆ declared): every
+     held path must be named. Verified against the LIVE lane this fire, not
+     remembered — `lane-usable lane-a` reports paths=7, and `main...lane/a`
+     (tip 61358eb55) touches exactly these 7. -->
+LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
+EXPECTED-HOLDS: assets/contracts/bench-seeds.json
+EXPECTED-HOLDS: assets/contracts/epoch-10-deepsky/contracts.json
+EXPECTED-HOLDS: assets/contracts/epoch-10-deepsky/mask-tables/e10-ember-shore.json
+EXPECTED-HOLDS: assets/contracts/null-floors.json
+EXPECTED-HOLDS: e2e/er01-e10-census.spec.ts
+EXPECTED-HOLDS: scripts/e3-mask-tables.test.mjs
+EXPECTED-HOLDS: src/meta/ContractFamilies.ts
+
 lane/a is DELIBERATELY ahead by exactly one commit: `61358eb55` (`runner(lane-a): e10s-1b-ember-shore-schema-and-data.md`), 7 paths, undrained BY DESIGN — the re-gate holds it. Do NOT reset the lane; build ON that commit. Verify first: `git log --oneline main..lane/a` shows exactly `61358eb55` and nothing else; the worktree is clean apart from the FACTORY-CHURN EXCEPTION classes (F-1407-1: `logs/**`, `artifacts/**`, `reviews/shots-*`, `.png` — list and proceed). Anything ELSE ahead or dirty: STOP and report. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 ## Why (F-2165-1, measured by s2165 in a detached control — the evidence is the master's premise)
