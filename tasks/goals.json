@@ -2789,8 +2789,8 @@
       "id": "c5b-emdash-pin-and-determinism",
       "title": "C5b: land the two pins the em-dash sweep moved (gr-sim-campaign copy pin + Baron eventLogHash re-pin with named cause)",
       "taskFile": "c5b-emdash-pin-and-determinism.md",
-      "status": "planned",
-      "note": "FIRE-AUTHORED s2235 from the c5 drain gate (F-2235-4 + F-2235-5). BANKED, NOT QUEUED on purpose: lane/c is ahead=1 holding the undrained c5 sweep, so an ordinary refill pre-flight would reset --hard and destroy it (Mistake #2). Dispatch to lane-c with the BUILD-ON-PREDECESSOR opt-in, then re-drain both commits together."
+      "status": "queued",
+      "note": "FIRE-AUTHORED s2235 from the c5 drain gate (F-2235-4 + F-2235-5). BANKED, NOT QUEUED on purpose: lane/c is ahead=1 holding the undrained c5 sweep, so an ordinary refill pre-flight would reset --hard and destroy it (Mistake #2). Dispatch to lane-c with the BUILD-ON-PREDECESSOR opt-in, then re-drain both commits together. DISPATCHED s2236 to tasks/queue/lane-c under the BUILD-ON-PREDECESSOR opt-in: the master now carries the LANE-SAFETY-OPT-IN token plus all 84 EXPECTED-HOLDS paths, MEASURED against the live lane (lane-usable lane-c -> HOLDS rc=2, 84 held), because a bespoke pre-flight cannot beat the runner dispatch guard. s2236 also cured two dispatch defects: the READ-FIRST cited reviews/c5-emdash-sweep.md, which is ABSENT from lane/c (main-only) and now reads via git show main:; and the battery expectation is annotated for the lane being 23 commits behind main (4 of which move package.json), while all four files the task touches or reads are byte-unchanged on main since the lane branched, so the fix itself cannot be made wrong by the staleness."
     },
             {
               "id": "l1-ledger-service-core",
