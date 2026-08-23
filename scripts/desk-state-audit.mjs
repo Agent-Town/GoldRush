@@ -26,7 +26,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { deskItems, deskTail } from './desk-carryforward-guard.mjs';
+import { deskItems, deskTail, isLockLine } from './desk-carryforward-guard.mjs';
 import { scan } from './findings-state-guard.mjs';
 
 const SUBJECT_CHARS = 90;
@@ -39,7 +39,33 @@ function value(flag, fallback) {
 
 export function desk(statusText) {
   const line1 = statusText.split('\n')[0] || '';
-  if (line1.startsWith('ACTIVE')) return { kind: 'lock', items: [] };
+  // ONE IMPLEMENTATION OF THIS PREDICATE, IMPORTED (F-2227-1, s2227).
+  //
+  // This test used to be `line1.startsWith('ACTIVE')`, written for a line-1
+  // convention that has since been retired. Today's lock line reads
+  // `Last updated: <stamp> ACTIVE (sNNNN fire) — <intent>`, which does not START
+  // with the word — so this branch had become UNREACHABLE, and every lock line
+  // fell through to the `kind:'none'` arm below: REFUSING at rc=2 with "no desk
+  // header on line-1", a message that accuses the wrong subject (the line has no
+  // desk BECAUSE it is a lock, which is the one thing this branch existed to say).
+  //
+  // Measured s2227 over all 4,639 STATUS.md commits: the sibling predicate
+  // identifies 2,119 lock lines, `startsWith` only 1,696 — 423 disagreements, and
+  // the disagreement is CURRENT, covering every fire since the convention moved.
+  //
+  // The drift's direction was CONSERVATIVE — a loud refusal, never a false green —
+  // which is exactly why nothing caught it. What it cost was the DOCUMENTED
+  // behaviour: fire.md §4 and gate-caller-baseline.json's F-1566-2 entry both
+  // state that this tool "correctly prints SKIP" on a lock line, and it had
+  // silently stopped doing so. (F-1566-2's CONCLUSION — never root this advisory
+  // in a battery — survives the refutation and is strengthened by it: an rc=2
+  // refusal would have redded any battery that chained it.)
+  //
+  // Imported rather than re-written: desk-carryforward-guard.mjs already imports
+  // subjectLedClosure FROM this file, so the cycle predates this line, and
+  // F-1261-1's rule ("there is one implementation of that word in this repo")
+  // is the same reason that import exists. Four copies is how this drifted.
+  if (isLockLine(line1)) return { kind: 'lock', items: [] };
   const tail = deskTail(line1);
   if (!tail) return { kind: 'none', items: [] };
   const items = deskItems(tail).map((id) => ({ id, type: FINDING_ONE.test(id) ? 'finding' : 'slug' }));
