@@ -15,7 +15,7 @@ READ FIRST:
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via `git log`/`git diff`), it is a SAFE DUPE → `git checkout -B lane/b main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. FACTORY-CHURN EXCEPTION (F-1407-1): `logs/**`, `artifacts/**`, `reviews/shots-*`, any `.png` — expected, list, proceed. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
 **Citation check (hard STOP if it fails).** Before item 1, run:
-`grep -Fc "ATTRIBUTED TO MAIN, not this slice" reviews/ap15-frontier-registry.md`
+`grep -Fc "The red is main's and predates this branch." reviews/ap15-frontier-registry.md`
 Expect **1**. A `0` means your lane is behind the commit carrying this task's evidence — do NOT proceed, do NOT guess; report the count and STOP.
 
 ## Why (measured s2251, drain of `ap15-frontier-registry`, merge `d87b9097`)
