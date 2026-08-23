@@ -27,8 +27,49 @@ import { readFileSync, realpathSync, statSync } from 'node:fs';
 const NUL = String.fromCharCode(0);
 const quiet = process.argv.includes('--quiet');
 
-// Extensions we expect to be text. Binary assets legitimately contain NULs and are skipped.
-const TEXT_EXT = /\.(ts|tsx|js|jsx|mjs|cjs|json|md|css|html|yml|yaml|sh|txt)$/i;
+// F-2246-1 — THE SUBJECT TEST ADMITS BY FORMAT WHERE THE CLAIM IS A ROLE.
+//
+// This file's banner is a UNIVERSAL claim about "tracked text sources", but the subject
+// test was a 14-extension ALLOW-LIST, and the comment defending it named only the case it
+// was thinking about ("binary assets legitimately contain NULs and are skipped"). An
+// allow-list does not exclude BINARY; it excludes EVERYTHING NOBODY LISTED, and it fails
+// toward silently narrowing — the direction that prints good news.
+//
+// Measured s2246 over 22,386 tracked files: the old list admitted 9,751 and excluded
+// 12,635, of which 1,109 are text by any reading — py 230, log 680, jsonl 43, rc 48,
+// toml 4, plus ndjson/tsv/xml/conf/c/patch/diff, `public/_headers`, and the SHA256SUMS
+// evidence-integrity files. F-2220-1's declaration is TRUE and could not say so: it counts
+// POST-FILTER subjects, so it reports "corpus 9,751 text subject(s)" whether the filter
+// dropped 12 files or 12,000. That is a declaration NEAR the verdict but not OF the claim.
+//
+// SEVERITY, STATED HONESTLY AND NOT INFLATED: LATENT. Of those 1,109, 1,101 were readable
+// and exactly 2 carry a raw NUL — both sqlite `-shm`/`-wal` sidecars, i.e. genuinely
+// binary. So every CLEAN this audit has printed was TRUE about text sources, verified not
+// assumed. What earns it a cure is that the miss would land in a GATE (chained bare in
+// test:ledger-guards), in the permissive direction, in the DEFAULT mode the battery uses —
+// and the harm the banner itself names ("grep is BLIND to these files") bites hardest on
+// the excluded `.log` files, since §1.1 tells every fire to grep logs/fire-<date>.log for
+// the authoritative FIRE END lock signal.
+//
+// COST OF WIDENING, measured before it was chosen: 1,101 files, 12.8 MB, 18 ms. Free.
+//
+// WHY NOT A PURE DENY-LIST (the F-2207-1 invert, "enumerate what to SKIP"). That is right
+// for dry-board-probe, whose unknown prefixes are lawful subjects. Here it would make every
+// NEW binary asset type a subject, and binary files legitimately carry NULs — so adding a
+// .ktx2 or .fbx would RED test:ledger-guards on ordinary art work and the guard would be
+// excused into uselessness inside a week (F-1460-1, the `cross-engine` fate). So the cure
+// is three buckets, not two: TEXT is audited, known-BINARY is skipped, and anything in
+// NEITHER list is COUNTED AND NAMED. An unlisted extension can no longer vanish — it
+// arrives on stdout by name — without a new asset type being able to red the gate.
+// UNCLASSIFIED therefore DECLARES AND DOES NOT REFUSE (F-2218-1's restraint): a suffix
+// nobody has listed is a lawful, routine state.
+const TEXT_EXT =
+  /\.(ts|tsx|js|jsx|mjs|cjs|json|jsonl|ndjson|md|css|html|yml|yaml|toml|sh|txt|py|log|tsv|csv|xml|svg|sql|conf|c|h|patch|diff|rc|out|err|trace|tap|ffconcat|service|nvmrc|gitignore|gitattributes|gitkeep|editorconfig)$/i;
+// Suffixes that are binary BY DESIGN: a NUL here is the file working correctly, so they are
+// skipped without comment. Listed explicitly rather than assumed, so that the third bucket
+// below means "nobody has classified this", not "the author forgot".
+const BINARY_EXT =
+  /\.(png|jpe?g|gif|webp|ico|bmp|tiff?|glb|gltf|blend1?|fbx|obj|stl|mp4|webm|mov|mp3|m4a|wav|ogg|flac|pdf|zip|gz|tgz|bz2|7z|rar|ttf|otf|woff2?|eot|sqlite|sqlite-shm|sqlite-wal|db|pyc|pyo|so|dylib|dll|exe|bin|dat|b64|plist)$/i;
 
 // F-2220-1 — DECLARE THE CORPUS. This audit's banner is a UNIVERSAL claim ("no raw NUL
 // bytes in tracked text sources") over a set it never counted. `git ls-files` is CWD-
@@ -76,10 +117,18 @@ if (scope !== 'repo') {
 }
 
 const hits = [];
-let subjects = 0, read = 0, emptySkip = 0;
+let subjects = 0, read = 0, emptySkip = 0, binarySkip = 0;
 const unreadable = [];
+const unclassified = [];
 for (const rel of files) {
-  if (!TEXT_EXT.test(rel)) continue;
+  if (!TEXT_EXT.test(rel)) {
+    // Three buckets, not two (F-2246-1): a file that is on NEITHER list is not silently
+    // dropped, it is counted and named below. That is what makes the corpus declaration a
+    // statement about the whole tracked set rather than about the filter's own output.
+    if (BINARY_EXT.test(rel)) binarySkip += 1;
+    else unclassified.push(rel);
+    continue;
+  }
   subjects += 1;
   let buf;
   try {
@@ -119,6 +168,25 @@ if (!quiet) {
   const skipped = unreadable.length ? `, ${unreadable.length} UNREADABLE` : '';
   console.log(`nul-audit: corpus ${subjects} text subject(s) — ${read} read, ${emptySkip} empty${skipped}.`);
   for (const u of unreadable) console.log(`  ⚠️  not audited: ${u}`);
+  // The other side of the denominator (F-2246-1), printed ALWAYS including the happy path
+  // (F-2208-1): without it, "corpus N text subject(s)" is a statement about what the filter
+  // KEPT and says nothing about what it threw away.
+  console.log(
+    `nul-audit: excluded ${binarySkip} known-binary, ${unclassified.length} UNCLASSIFIED` +
+      ` of ${files.length} tracked file(s).`,
+  );
+  if (unclassified.length) {
+    const by = new Map();
+    for (const f of unclassified) {
+      const m = f.match(/\.([A-Za-z0-9-]+)$/);
+      const k = m ? `.${m[1].toLowerCase()}` : '(no extension)';
+      by.set(k, (by.get(k) || 0) + 1);
+    }
+    const shown = [...by.entries()].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k}×${n}`);
+    console.log(`  ⓘ  UNCLASSIFIED (not audited, not known-binary): ${shown.join(' ')}`);
+    console.log('     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix');
+    console.log('     announces itself instead of silently leaving the corpus.');
+  }
   if (hits.length === 0) {
     console.log('nul-audit: CLEAN — no raw NUL bytes in tracked text sources.');
   } else {
