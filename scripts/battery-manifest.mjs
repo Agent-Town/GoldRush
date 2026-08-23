@@ -7,13 +7,29 @@ function clean(line) {
   return line.replace(/\x1b\[[0-?]*[ -\/]*[@-~]/g, '').trimEnd();
 }
 
+// F-2234-1 (measured s2234): THE ROSTER IS THE SOLE ATTRIBUTION SOURCE, so whichever battery
+// it names is the only battery this tool can attribute. A real `node --test <files>` log carries
+// ZERO file markers and mentions ZERO test-file paths — measured on a live 419-test
+// `test:ledger-guards` log — so the log-harvest below contributes nothing in practice and every
+// row's `file` is resolved by matching test-name literals against sources named in the roster.
+// Reading only `scripts['test:node-guards']` therefore made this tool structurally incapable of
+// attributing any other battery: 32 of `test:ledger-guards`' 40 files produced ZERO rows and
+// 297 of 419 rows (70.9%) collapsed to <unknown>, while `totals` reconciled perfectly against
+// the log's own summary — a correct headline over an attribution that had silently narrowed.
+// package.json already knows every battery's files; a hardcoded single-battery list is a defect
+// awaiting the next battery. Widening it is measured behaviour-neutral for the original battery.
 function parse(log) {
   let roster = [];
+  let rosterSource = 'log-only';
   try {
-    const script = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).scripts['test:node-guards'];
-    roster = [...script.matchAll(/\b((?:scripts|src)\/[^\s'"`]+\.test\.mjs)\b/g)].map((match) => match[1]);
+    const scripts = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')).scripts ?? {};
+    roster = [...new Set(Object.values(scripts).flatMap((body) => (typeof body === 'string'
+      ? [...body.matchAll(/\b((?:scripts|src)\/[^\s'"`]+\.test\.mjs)\b/g)].map((match) => match[1])
+      : [])))];
+    rosterSource = 'package-scripts';
   } catch {
     // Explicit file markers still work outside this repository.
+    rosterSource = 'log-only';
   }
   const sourceFiles = [...new Set([
     ...roster,
@@ -131,7 +147,18 @@ function parse(log) {
   }
   for (const entry of block.tests) if (entry.file === UNKNOWN_FILE) entry.file = inferredFile(entry.name);
   block.tests.sort((a, b) => a.file.localeCompare(b.file) || a.name.localeCompare(b.name) || a.status.localeCompare(b.status));
+  // Declared ALWAYS, including the happy path (F-2208-1): a field that appears only when
+  // something is wrong re-creates the ambiguity it removes. `source` is a STRING, not a
+  // boolean (F-2212-1) — a careless truthiness test coerces every value toward NOTICING.
+  // `unattributed` is the number that makes F-2234-1 visible at a glance: it sits beside a
+  // `totals` that reconciles perfectly, and says how much of the battery this manifest can
+  // actually name. A high count means the roster does not cover the log, NOT that the run failed.
   return {
+    attribution: {
+      source: rosterSource,
+      rosterFiles: sourceFiles.length,
+      unattributed: block.tests.filter((entry) => entry.file === UNKNOWN_FILE).length,
+    },
     tests: block.tests,
     totals: {
       tests: block.totals.tests ?? block.tests.length,
@@ -163,7 +190,19 @@ function diff(a, b) {
   const residue = totalDelta === nameDelta
     ? `RESIDUE: accounted for (totals.tests delta ${signed(totalDelta)}; named delta ${signed(nameDelta)})`
     : `RESIDUE: UNACCOUNTED (totals.tests delta ${signed(totalDelta)}; named delta ${signed(nameDelta)}; residue ${signed(totalDelta - nameDelta)})`;
-  return [section('ADDED', added), section('REMOVED', removed), section('STATUS-CHANGED', changed), residue].join('\n');
+  // The harm is per-CONSUMER (F-2216-1): `key()` is file-scoped, so rows this tool could not
+  // attribute compare as `<unknown> :: name` on BOTH sides. Same-named tests in different
+  // unattributed files then share one key and one of them is invisible here. Unlike the JSON
+  // above this line is DEVIATION-ONLY — a clean diff stays clean, and the machine channel
+  // already carries the field unconditionally for anything that wants to branch on it.
+  const degraded = [a, b]
+    .map((side, index) => ({ side: index ? 'after' : 'before', count: side.attribution?.unattributed ?? 0 }))
+    .filter((entry) => entry.count > 0);
+  const rows = [section('ADDED', added), section('REMOVED', removed), section('STATUS-CHANGED', changed), residue];
+  if (degraded.length) {
+    rows.push(`ATTRIBUTION: DEGRADED (${degraded.map((e) => `${e.side} ${e.count} unattributed`).join('; ')}) — these rows key on <unknown>, so same-named tests in different files collide`);
+  }
+  return rows.join('\n');
 }
 
 const args = process.argv.slice(2);
