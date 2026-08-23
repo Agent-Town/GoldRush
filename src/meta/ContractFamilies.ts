@@ -1589,7 +1589,7 @@ const AUTHORED_TWIST_KEYS = [
   'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
-  'scheduledRelocation', 'persistentCanalChoices',
+  'scheduledRelocation', 'persistentCanalChoices', 'emberShore',
 ] as const;
 const AUTHORED_PRACTICE_KEYS = [
   'scheduledWaves', 'scores', 'metaProgress', 'runHistory', 'standings', 'tapes', 'goldGrant', 'bellWaveSize',
@@ -1651,6 +1651,7 @@ const DECLARED_INERT_PATHS = [
   'twist.persistentPlanting',
   'twist.scheduledRelocation',
   'twist.persistentCanalChoices',
+  'twist.emberShore',
   'tileParams.archiveWingZones',
   'tileParams.emptyShelfZone',
   'tileParams.lightHoldSites',

@@ -52,6 +52,9 @@
           "id": "ember-shore-cooling-veins",
           "mode": "visual"
         },
+        "engineDependencies": [
+          { "dep": "ember-shore-preserve-consumers", "status": "missing", "description": "Needs the declared preserve warmth/stoke, squall scheduler, and secure-latch consumers; E10S-2 lands the scheduler and E10S-3 the preserve consumer." }
+        ],
         "lanes": {
           "spawnEdges": [
             "north",
@@ -62,7 +65,50 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": {},
+      "twist": {
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "static_mote",
+            "label": "Static Mote",
+            "waveMin": 1,
+            "visualScale": 0.25,
+            "art": "placeholder"
+          },
+          {
+            "id": "unraveled_machine",
+            "label": "Unraveled Memory",
+            "waveMin": 4,
+            "art": "char.e6.feral_toaster"
+          }
+        ],
+        "emberShore": {
+          "preserve": {
+            "stakeId": "last-warm-vent",
+            "initialWarmth": 100,
+            "squallDecayPerSecond": 4,
+            "stoke": {
+              "action": "STOKE",
+              "goldCost": 15,
+              "warmthRestore": 40,
+              "radius": 4
+            },
+            "secureRequires": {
+              "ventAlight": true,
+              "fullSquallsSurvived": 1
+            }
+          },
+          "squall": {
+            "calmSeconds": 60,
+            "telegraphSeconds": 8,
+            "squallSeconds": 25,
+            "motePressure": {
+              "scalesWith": "squall-proximity",
+              "squallMultiplier": 2
+            }
+          }
+        }
+      },
       "boardRow": {
         "name": "The Ember Shore",
         "ledgerBlurb": "Cooling lava-vein bands divide the last warm vent from a cooled titan.",
