@@ -99,6 +99,8 @@ import { contractUnlockStatus as contractUnlock } from '../meta/ContractUnlock';
 import { deriveMechanicsManifest, mechanicsManifestLine } from '../agent/MechanicsManifest';
 import { SoundSystem } from '../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
+import tavernkeeperWalkFrames from '../../assets/processed/char-tavernkeeper-sheet-walk8.frames.json' with { type: 'json' };
+import storekeeperWalkFrames from '../../assets/processed/char-storekeeper-sheet-walk8.frames.json' with { type: 'json' };
 
 const contractPlateUrls = import.meta.glob<string>('../../assets/raw/plate-contract-*.png', {
   eager: true,
@@ -110,6 +112,17 @@ const boardCardUrls = import.meta.glob<string>('../../assets/processed/board-car
   query: '?url',
   import: 'default',
 });
+
+type ProcessedWalkFrames = {
+  cell: number;
+  scale: number;
+  cells: Array<{ row: number; col: number; bbox: number[] }>;
+};
+
+const townCastWalkFrames: Partial<Record<TownActorId, ProcessedWalkFrames>> = {
+  tavernkeeper: tavernkeeperWalkFrames,
+  storekeeper: storekeeperWalkFrames,
+};
 const tailorSignUrls = import.meta.glob<string>('../../assets/processed/prop-tailor-sign.png', {
   eager: true,
   query: '?url',
@@ -302,6 +315,8 @@ export type TownDiagnostics = {
     assetSlot: string;
     spriteAspect: number;
     spriteHeight: number;
+    spriteY: number;
+    footY: number | null;
     frameKey: string;
     presentation: 'full_body' | 'portrait_post';
     fullBodyStandIn: boolean;
@@ -2661,16 +2676,18 @@ export class TownScene {
           },
           bark: this.activeBark?.actorId === actor.id ? this.activeBark.text : null,
           loaded: runtime?.loaded ?? false,
-          loop: !!actor.loop,
+          loop: !!runtime?.definition.loop,
           assetSlot: actor.assetSlot,
           spriteAspect: runtime?.spriteAspect ?? 0,
           spriteHeight: runtime?.spriteHeight ?? 0,
+          spriteY: runtime?.spriteY ?? 0,
+          footY: runtime?.footY ?? null,
           frameKey: runtime?.frameKey ?? '',
           presentation: actor.fullBody ? 'full_body' : 'portrait_post',
           fullBodyStandIn: false,
           moving: runtime?.moving ?? false,
           motion: runtime?.motion ?? { x: 0, z: 0 },
-          trailId: actor.loop?.trailId ?? null,
+          trailId: runtime?.definition.loop?.trailId ?? null,
         };
       }),
       stampMill: this.stampMillDiagnostics(),
@@ -3112,7 +3129,9 @@ class TownActorRuntime {
   private frameElapsed = 0;
   private stillElapsed = 0;
   private frame = 0;
+  private requestedFrameKey = '';
   private currentFrameKey = '';
+  private anchoredFootY: number | null = null;
   private crispTexture?: THREE.Texture;
   private disposed = false;
   private fitted = false;
@@ -3166,6 +3185,14 @@ class TownActorRuntime {
 
   get spriteHeight(): number {
     return this.sprite.scale.y;
+  }
+
+  get spriteY(): number {
+    return this.sprite.position.y;
+  }
+
+  get footY(): number | null {
+    return this.anchoredFootY;
   }
 
   // Sized off the billboard HEIGHT, not its width: walk-sheet cells carry a lot of empty margin,
@@ -3239,13 +3266,19 @@ class TownActorRuntime {
         this.frame = (this.frame + 1) % (this.definition.fullBody.frameMap?.length ?? 8);
         this.applyFullBodyFrame(this.frame);
       }
-    } else if (this.definition.fullBody?.animated && this.frame !== 0) {
+    } else if (
+      this.definition.fullBody?.animated
+      && (this.frame !== 0 || ((this.definition.id === 'tavernkeeper' || this.definition.id === 'storekeeper') && this.currentDirection !== this.definition.facing))
+    ) {
       // Loop points can be float-identical on alternate frames; only snap to the
       // standing frame after a real stop, or the walk thrashes back to column 0.
       this.stillElapsed += delta;
       if (this.stillElapsed >= 0.15) {
         this.frameElapsed = 0;
         this.frame = 0;
+        if (this.definition.id === 'tavernkeeper' || this.definition.id === 'storekeeper') {
+          this.currentDirection = this.definition.facing;
+        }
         this.applyFullBodyFrame(0);
       }
     }
@@ -3263,12 +3296,19 @@ class TownActorRuntime {
     const row = directionRow(this.currentDirection);
     const sourceFrame = fullBody.frameMap?.[frame] ?? frame;
     const key = `${fullBody.sheet}-r${row}c${fullBody.animated ? sourceFrame : 0}.png`;
-    this.currentFrameKey = key;
+    const metadata = townCastWalkFrames[this.definition.id];
+    const cell = metadata?.cells.find((candidate) => candidate.row === row && candidate.col === sourceFrame);
+    const footline = cell && metadata ? {
+      y: metadata.cell / 2 + ((cell.bbox[3] - cell.bbox[1] + 1) * metadata.scale) / 2,
+      cell: metadata.cell,
+    } : undefined;
+    this.requestedFrameKey = key;
     void loadProcessedCharacterTexture(key).then((texture) => {
-      if (texture && !this.disposed && this.currentFrameKey === key) {
+      if (texture && !this.disposed && this.requestedFrameKey === key) {
+        this.currentFrameKey = key;
         this.material.map = texture;
         this.material.needsUpdate = true;
-        this.fitSpriteToTexture(texture);
+        this.fitSpriteToTexture(texture, footline);
       }
     });
   }
@@ -3285,7 +3325,7 @@ class TownActorRuntime {
 
   // Size the billboard from the cell's real aspect: fixed height band, width follows
   // the sheet — a 2.4:1 plane on a 1.2:1 cell was the town-wide vertical stretch.
-  private fitSpriteToTexture(texture: THREE.Texture): void {
+  private fitSpriteToTexture(texture: THREE.Texture, footline?: { y: number; cell: number }): void {
     const image = texture.image as { width?: number; height?: number } | undefined;
     const width = typeof image?.width === 'number' ? image.width : 0;
     const height = typeof image?.height === 'number' ? image.height : 0;
@@ -3293,7 +3333,12 @@ class TownActorRuntime {
     this.fitted = true;
     const targetHeight = this.definition.scale * TOWN_CAST_METROLOGY.worldUnitsPerHero;
     this.sprite.scale.set(targetHeight * (width / height), targetHeight, 1);
-    this.sprite.position.y = targetHeight / 2 + FEET_CONTACT_Y;
+    this.sprite.position.y = footline
+      ? FEET_CONTACT_Y + targetHeight * (footline.y / footline.cell - 0.5)
+      : targetHeight / 2 + FEET_CONTACT_Y;
+    this.anchoredFootY = footline
+      ? this.sprite.position.y - targetHeight / 2 + targetHeight * (1 - footline.y / footline.cell)
+      : null;
   }
 }
 
@@ -4964,9 +5009,20 @@ function townActorPlazaPlacement(actor: TownActorDefinition): TownActorDefinitio
   if (!offset) return actor;
   const anchor = townBuildings.find((building) => building.id === actor.anchor);
   if (!anchor) return actor;
-  return {
+  const placement = {
     ...actor,
     position: { x: anchor.position.x + offset.x, z: anchor.position.z + offset.z },
+  };
+  if (actor.id !== 'tavernkeeper' && actor.id !== 'storekeeper') return placement;
+  return {
+    ...placement,
+    loop: {
+      trailId: `${actor.anchor}-cast`,
+      points: [placement.position, townPlazaSlot(actor.anchor).approach],
+      seconds: actor.id === 'tavernkeeper' ? 8 : 7,
+      phase: actor.id === 'tavernkeeper' ? 0 : 0.5,
+      pauses: actor.id === 'tavernkeeper' ? { 0: 3, 1: 30 } : { 0: 3, 1: 2 },
+    },
   };
 }
 
