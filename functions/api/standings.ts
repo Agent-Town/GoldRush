@@ -12,13 +12,17 @@ import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.j
 import type { DifficultyPresetId } from '../../src/game/Balance';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
 import { resolveSeasonAt } from '../../src/seasons/registry';
-import { bumpCounter, clientIpHash, type KVNamespaceLike } from './_ratelimit';
+import { bumpCounter, clientIpHash } from './_ratelimit';
+import type { LedgerStorage } from './_accounts';
+
+type StandingsStorage = Pick<LedgerStorage, 'get' | 'put'>;
 
 type StandingsEnv = {
-  TELEMETRY?: KVNamespaceLike;
-  ACCOUNTS?: KVNamespaceLike;
+  TELEMETRY?: StandingsStorage;
+  ACCOUNTS?: StandingsStorage;
   ASSAY_WORKER_SECRET?: string;
   ASSAY_INDEX_MAX_AGE_MS?: string;
+  ALLOWED_CORS_ORIGINS?: ReadonlySet<string>;
 };
 
 type StandingsContext = {
@@ -190,7 +194,7 @@ const CURRENT_SEASON = 2;
 const KNOWN_SEASONS: ReadonlySet<number> = new Set([FIRST_SEASON, CURRENT_SEASON]);
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
 
@@ -304,7 +308,7 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
 }
 
 async function assayRequest(context: StandingsContext, handle: (cors: Record<string, string>) => Promise<Response>): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   const secret = context.env.ASSAY_WORKER_SECRET;
   if (!secret) return error(cors, 503, 'assay_unavailable', 'The assay worker is not configured.');
@@ -684,7 +688,7 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null });
 }
 
-async function readBoard(kv: KVNamespaceLike, epochId: string, contractId: string, tolerateFailure = false, season: number = CURRENT_SEASON): Promise<StoredRow[]> {
+async function readBoard(kv: StandingsStorage, epochId: string, contractId: string, tolerateFailure = false, season: number = CURRENT_SEASON): Promise<StoredRow[]> {
   try {
     const parsed = JSON.parse((await kv.get(boardKey(epochId, contractId, season))) ?? '[]') as unknown;
     return Array.isArray(parsed) ? retainUnranked(parsed.map((row) => validateStoredRow(row, contractId)).filter((row): row is StoredRow => row !== null)) : [];
@@ -810,7 +814,7 @@ function parseAssayIndex(raw: string | null): AssayIndex | null {
   }
 }
 
-async function rebuildAssayIndex(kv: KVNamespaceLike): Promise<{ index: AssayIndex; boards: Map<string, StoredRow[]> }> {
+async function rebuildAssayIndex(kv: StandingsStorage): Promise<{ index: AssayIndex; boards: Map<string, StoredRow[]> }> {
   const entries = await Promise.all(CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
     .filter((contract) => contract.id !== DRILL_YARD_CONTRACT_ID)
     .map(async (contract) => {
@@ -829,7 +833,7 @@ async function rebuildAssayIndex(kv: KVNamespaceLike): Promise<{ index: AssayInd
   };
 }
 
-async function syncAssayBoardIndex(kv: KVNamespaceLike, epochId: string, contractId: string, rows: StoredRow[]): Promise<void> {
+async function syncAssayBoardIndex(kv: StandingsStorage, epochId: string, contractId: string, rows: StoredRow[]): Promise<void> {
   // ponytail: one KV key cannot serialize concurrent writes; ASSAY_INDEX_MAX_AGE_MS bounds staleness, a Durable Object cures it at launch traffic.
   let index = parseAssayIndex(await kv.get(ASSAY_QUEUE_INDEX_KEY));
   if (index === null) ({ index } = await rebuildAssayIndex(kv));
@@ -1114,7 +1118,7 @@ async function readJson(request: Request): Promise<JsonRecord> {
   throw new HttpError(400, 'bad_json', 'JSON not accepted.');
 }
 
-function corsHeaders(request: Request): Record<string, string> | null {
+function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'content-type',
@@ -1123,7 +1127,7 @@ function corsHeaders(request: Request): Record<string, string> | null {
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || extraOrigins?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;
