@@ -198,6 +198,7 @@ let defects = 0
 let open = 0
 let landed = 0
 let stale = 0
+let uncrossChecked = 0
 const all = items()
 
 for (const it of all) {
@@ -232,7 +233,18 @@ for (const it of all) {
   // F-2225-1: this tree says OPEN. Before believing it, ask main — the tree whose law surface
   // the item is actually about. A disagreement is not a judgement call: the paste is done and
   // the archive bookkeeping is owed, whatever this checkout happens to hold.
-  if (anchorOnMain(target, anchor) === 'landed-on-main') {
+  //
+  // F-2244-1 (s2244): decide the FAILURE VALUE before the permissive test. `anchorOnMain`
+  // returns THREE values and this site used to test `=== 'landed-on-main'`, so 'unverifiable'
+  // — the value that means "the cross-check could not run" — swept onto the same branch as
+  // 'absent-on-main', which means "it ran and the answer is no". The item then printed a plain
+  // ⏳ OPEN at rc=0, byte-identical to a genuinely clean board, while the banner above had
+  // already promised "Verdicts below are cross-checked against main". An affirmative promise of
+  // a comparison that never happened (F-2221-1's polarity, F-2243-1's mechanism: `===` against
+  // ONE member of a multi-valued return is never an exhaustive test).
+  const onMain = anchorOnMain(target, anchor)
+
+  if (onMain === 'landed-on-main') {
     stale += 1
     defects += 1
     console.log(
@@ -240,6 +252,31 @@ for (const it of all) {
         `      This tree's ${target} lacks the anchor, but MAIN's copy CONTAINS it.\n` +
         `      The paste is DONE on main; reading OPEN here is an artefact of a frozen checkout.\n` +
         `      Bookkeeping owed (a fire can do this): mv ${it.path} ${ARCHIVE}/ and commit.`,
+    )
+    continue
+  }
+
+  // DECLARES, does not refuse — and fires ONLY from a linked worktree, which is the one place
+  // the banner's promise can be false. Both restraints are load-bearing, not timidity:
+  //
+  //   * 'unverifiable' is LAWFUL in the common cases — git exit 128 is "not a repo", "no main
+  //     ref", or "no such path on main" (a target main does not carry YET). Every legacy fixture
+  //     in this family builds a non-git or main-less root, so refusing here is the over-general
+  //     cure that reds ordinary work and gets excused into uselessness inside a week (F-1460-1).
+  //   * from the MAIN worktree the cross-check is structurally INERT — the local file and main's
+  //     blob are the same tree — so an unanswerable cross-check there hides nothing, and saying
+  //     so would be the noise that decays a declaration into a formality (and would red arm 7,
+  //     which asserts a non-git fixture root prints no UNVERIFIABLE at all).
+  //
+  // What is left is exactly the false promise: a frozen checkout whose cross-check went silent.
+  if (onMain === 'unverifiable' && tree === 'linked-worktree') {
+    uncrossChecked += 1
+    open += 1
+    console.log(
+      `  ⚠️  OPEN (UNCROSS-CHECKED) ${label}\n` +
+        `      This tree lacks the anchor, but git could NOT read main's copy of ${target},\n` +
+        `      so "OPEN" here is this frozen checkout's word alone — the cross-check the banner\n` +
+        `      above promises did not run. Re-run from the repo root before believing it.`,
     )
     continue
   }
@@ -258,10 +295,19 @@ for (const it of all) {
 const verdict = defects > 0 ? 'DEFECTS' : open > 0 ? 'OPEN ITEMS (attended-side)' : 'CLEAN'
 console.log(
   `attended-owed: ${verdict} — ${all.length} item(s): ${open} open, ${landed} landed-not-archived, ` +
-    `${stale} stale-tree-open, ${defects - landed - stale} malformed/bad-target`,
+    `${stale} stale-tree-open, ${uncrossChecked} uncross-checked, ` +
+    `${defects - landed - stale} malformed/bad-target`,
 )
 if (open > 0 && defects === 0 && !strict) {
   console.log('  (OPEN is not a defect: only the attended side can clear it. --strict to enforce.)')
 }
 
-process.exit(defects > 0 || (strict && open > 0) ? 1 : 0)
+// F-2244-1: BARE mode is deliberately unchanged — an uncross-checked item is not a defect and
+// must not red the battery (see the restraint note at the verdict site). --strict separates
+// 2 = "could not answer" from 1 = "answered, and the answer refuses", the convention
+// drain-block-check, dry-board-probe, master-shipped-classifier and review-evidence-audit all
+// carry. An incomplete answer outranks a known-open item: 2 tells an attended sweep the run
+// itself is not trustworthy, where 1 only says there is work to do.
+process.exit(
+  strict && uncrossChecked > 0 ? 2 : defects > 0 || (strict && open > 0) ? 1 : 0,
+)
