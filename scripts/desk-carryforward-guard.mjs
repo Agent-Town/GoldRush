@@ -91,6 +91,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 import { subjectLedClosure } from './desk-state-audit.mjs';
 // F-2231-1: the whole-token containment test F-2230-1 ruled on, imported rather
@@ -104,6 +105,82 @@ function arg(flag) {
 }
 const ROOT = path.resolve(arg('--root') || process.cwd());
 const REPORT = process.argv.includes('--report');
+
+/**
+ * WHICH TREE ARE THESE DESKS FROM? — F-2232-1.
+ *
+ * Both corpora this guard reads (STATUS.md and tasks/BACKLOG.md) are TRACKED,
+ * so a linked worktree hands it a board FROZEN at that lane's commit. The two
+ * desks then compare self-consistently against each other (F-2230-2) and the
+ * guard prints PASS about a handoff that is not the one on main.
+ *
+ * PROVEN BY MANUFACTURING, not by a green (s2232): ground truth = main carries a
+ * handoff that silently drops F-BBB-1. From the repo root the guard FAILS rc=1
+ * and names it; from a worktree branched one commit earlier it prints
+ * "PASS — every item on the previous desk is carried, closed, or accounted for."
+ * at rc=0 — BYTE-IDENTICAL on stdout AND rc to a genuinely clean board.
+ *
+ * This is the last of the FIVE tools invoked BARE in test:ledger-guards to get
+ * the discriminator: ghost-ladder-row-guard (F-2226-1), attended-owed-audit
+ * (F-2225-1) and nul-audit (F-2220-1) have it, and status-archive-audit is
+ * tree-invariant by construction (it roots every git call at an absolute REPO).
+ *
+ * `cwd: ROOT`, NOT process.cwd(): this tool takes an explicit --root, so the
+ * question is about the tree the CALLER NAMED. (drain-block-check has no --root
+ * and correctly uses process.cwd() instead — copying either sibling verbatim
+ * would answer the wrong question. F-2223-1 / F-2224-1.)
+ *
+ * Exit 128 is git saying "not a repository", which is LAWFUL here and must NOT
+ * refuse: every legacy fixture in this family builds a non-git temp root.
+ */
+export function corpusTree(root) {
+  const r = spawnSync('git', ['-C', root, 'rev-parse', '--git-dir', '--git-common-dir'], {
+    encoding: 'utf8',
+  });
+  if (r.error || r.status === null) return 'tree-unverifiable';
+  if (r.status === 128) return 'no-git';
+  if (r.status !== 0) return 'tree-unverifiable';
+  const [gitDir, commonDir] = String(r.stdout).trim().split('\n');
+  if (!gitDir || !commonDir) return 'tree-unverifiable';
+  // The two answers arrive in DIFFERENT SHAPES and must be normalised on both
+  // axes before they can be compared. From the repo root git says ".git"/".git";
+  // from a SUBDIRECTORY it says an ABSOLUTE --git-dir and a RELATIVE
+  // --git-common-dir ("../.git"). Resolving alone is not enough on macOS, where
+  // the absolute form git prints is /private/var/... while resolving the
+  // relative one against a /var/... root yields /var/... — the same directory
+  // through a symlink, comparing unequal as strings, which would misread every
+  // subdirectory of the MAIN worktree as a linked one. Caught by this file's
+  // own arm 8 (s2226's rule: a reverse-control sweep is also a reachability
+  // audit of your own new code).
+  const norm = (p) => {
+    const abs = path.resolve(root, p);
+    try { return fs.realpathSync(abs); } catch { return abs; }
+  };
+  // Equal means the MAIN worktree or any subdirectory of it — correct, not a flag.
+  return norm(gitDir) === norm(commonDir) ? 'main' : 'linked-worktree';
+}
+
+/**
+ * Is this frozen tree's line-1 the same one main carries? Only asked when the
+ * tree is a linked worktree AND the verdict is about to be a PASS — a SKIP
+ * asserts nothing, and a FAIL is already loud, so neither can hide a drop.
+ *
+ * Deliberately NOT a blanket linked-worktree refusal: §3.0b MANDATES gating in
+ * a detached worktree and this guard is chained in that battery, so a fire
+ * FOLLOWING THE LAW runs it from a worktree as ordinary prescribed work. That
+ * refusal would red the mandated drain gate and be excused into uselessness
+ * inside a week (F-1460-1). A merged gate tree carries main's STATUS.md
+ * unchanged — lane tasks are firewalled from it — so this cannot fire there.
+ */
+function line1MatchesMain(root, localStatusText) {
+  const r = spawnSync('git', ['-C', root, 'show', 'main:STATUS.md'], {
+    encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
+  });
+  if (r.error || r.status !== 0) return 'unverifiable';
+  const mainLine1 = String(r.stdout).split('\n')[0] || '';
+  const localLine1 = String(localStatusText).split('\n')[0] || '';
+  return mainLine1 === localLine1 ? 'same' : 'different';
+}
 
 /**
  * Same FIVE spellings desk-declaration-guard matches — four measured s1472, the
@@ -285,12 +362,17 @@ function main() {
       process.exit(2);
     }
   }
+  const statusText = fs.readFileSync(statusPath, 'utf8');
   const result = analyse(
-    fs.readFileSync(statusPath, 'utf8'),
+    statusText,
     fs.readFileSync(backlogPath, 'utf8'),
   );
 
   console.log('=== desk-carryforward-guard ===');
+  // Printed ALWAYS, including the happy path: a declaration that appears only on
+  // failure re-creates the ambiguity it removes (F-2208-1).
+  const tree = corpusTree(ROOT);
+  console.log('corpus tree               :', tree);
 
   if (result.kind === 'lock') {
     console.log('SKIP — STATUS.md line-1 is a live ACTIVE lock, not a handoff.');
@@ -397,6 +479,25 @@ function main() {
       console.error('Both are repaired in one pass — this guard no longer makes you find them one at a time.');
     }
     process.exit(1);
+  }
+
+  // F-2232-1: the PASS is the only verdict a frozen tree can make DANGEROUS.
+  // 2 = "could not answer" against 1 = "answered, and the answer refuses" — the
+  // convention drain-block-check, dry-board-probe, master-shipped-classifier and
+  // review-evidence-audit already carry.
+  if (tree === 'linked-worktree') {
+    const cmp = line1MatchesMain(ROOT, statusText);
+    if (cmp !== 'same') {
+      console.error('');
+      console.error("desk-carryforward-guard: REFUSING — this is a linked worktree and its STATUS.md");
+      console.error(`  line-1 is ${cmp === 'different' ? 'NOT the one main carries' : 'not comparable against main'}.`);
+      console.error('  Both corpora here are TRACKED, so this tree is frozen at its branch point and');
+      console.error('  the desks above are a self-consistent comparison of the WRONG handoff. A PASS');
+      console.error('  would certify a board this run never read (F-2232-1, proven by manufacturing:');
+      console.error('  a real silent drop on main read byte-identically to a clean board from here).');
+      console.error('  Re-run from the main worktree, or pass --root <main worktree>.');
+      process.exit(2);
+    }
   }
 
   console.log("PASS — every item on the previous desk is carried, closed, or accounted for.");
