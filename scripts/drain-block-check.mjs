@@ -28,10 +28,75 @@
 
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { basename, join, relative, resolve } from 'node:path';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 const GOALS = 'tasks/goals.json';
 const BACKLOG = 'tasks/BACKLOG.md';
+
+// F-2223-1 (filed s2223, cured s2224) — EVERY CORPUS THIS TOOL READS IS TRACKED, SO A LINKED
+// WORKTREE HANDS IT A BOARD FROZEN AT THAT LANE'S COMMIT AND NOTHING ANYWHERE SAYS SO.
+//
+// `GOALS` and `BACKLOG` are bare relative paths and `main()` roots at process.cwd(), so from
+// `worktrees/lane-c` this file reads that lane's checkout of the ledger. Measured s2224 on the live
+// board: `--all` prints "Scanned 594 goal leaves" from the repo root and "Scanned 591" from
+// lane-c — IDENTICAL rc, IDENTICAL 7371 bytes, exactly ONE diverging line out of 56.
+//
+// THE HARM IS NOT THE MISSING COUNT, IT IS THE MISTAKE #8 POLARITY ON THE --queue ARM. Loss is
+// monotone (3 leaves present in main, 0 present only in the lane; all 3 status="merged"), and a
+// master whose leaf is missing falls to the UNKNOWN branch at :509, which exits 0. Controlled
+// experiment, same master, same binary, the ONLY variable being the cwd:
+//   c4-assay-queue-index.md --queue   ROOT -> "⛔ ALREADY SHIPPED — DO NOT QUEUE"  rc=1
+//   c4-assay-queue-index.md --queue   LANE -> "? UNKNOWN"                          rc=0
+// All three delta masters behave identically. So from a lane worktree the guard that exists to stop
+// a re-derivation of already-merged work — the 824k Flail, Mistake #8 — hands out a clearance. That
+// is F-2222-2's polarity in the OTHER Mistake #8 instrument, and this one is §3.0's FIRST COMMAND OF
+// EVERY DRAIN.
+//
+// LATENT in the prescribed invocation (§3.0 says the repo root, and every verdict this streak has
+// read was TRUE — verified, not assumed). But reachability is not exotic: §3.0b MANDATES gating
+// undecided content in a detached worktree, so the law itself sends fires into trees where this
+// tool goes quiet.
+//
+// WHY THIS REFUSES WHERE `dispatchCorpus`'s `absent` ONLY DECLARES — the boundary is s2223's and it
+// transfers verbatim: an ABSENT corpus can be a lawful routine state, so refusing there gets
+// excused into uselessness (F-1460-1, the `cross-engine` fate). A STALE BOARD IS NEVER LAWFUL FOR
+// THIS QUESTION. The tool asks "does MAIN's ledger block this?"; a lane's frozen checkout answers a
+// different question and reports it as this one.
+//
+// Values are STRINGS for F-2212-1's reason: a careless truthiness test at a call site coerces every
+// failure value to TRUE, i.e. toward REFUSING rather than toward the permissive silence.
+//
+// `cwd` is process.cwd() and NOT an anchored root, deliberately: this file has no --root flag and
+// roots its whole corpus at the working directory, so the question is genuinely about the tree the
+// process sits in. (Its sibling `master-shipped-classifier` uses `cwd: root` for the opposite and
+// equally deliberate reason — it takes an explicit --root, so the caller NAMES the tree.)
+//
+// git exit 128 is "not a repository" and is LAWFUL, not a failure: every fixture-rooted test in
+// this family builds a bare mkdtemp directory and must keep asserting exactly what it always
+// asserted. Only a git that could not ANSWER is 'tree-unverifiable'. spawnSync, not execFileSync:
+// it reports by RETURN VALUE and never throws (s2216), so this reads a status rather than relying
+// on a catch.
+function corpusTree(root) {
+  const opts = { cwd: root, encoding: 'utf8', timeout: 10000 };
+  const ask = (args) => spawnSync('git', args, opts);
+  const gitDir = ask(['rev-parse', '--absolute-git-dir']);
+  if (gitDir.status === 128) return { tree: 'main', detail: '' }; // not a repo: a fixture root
+  if (gitDir.status !== 0) {
+    return { tree: 'tree-unverifiable', detail: String(gitDir.error?.code || `git rev-parse exit ${gitDir.status}`) };
+  }
+  const common = ask(['rev-parse', '--path-format=absolute', '--git-common-dir']);
+  if (common.status !== 0) {
+    return { tree: 'tree-unverifiable', detail: String(common.error?.code || `git rev-parse exit ${common.status}`) };
+  }
+  const a = (gitDir.stdout || '').trim();
+  const b = (common.stdout || '').trim();
+  if (!a || !b) return { tree: 'tree-unverifiable', detail: 'git rev-parse returned empty' };
+  // Equal means the MAIN worktree or any subdirectory of it — correct, and must not be flagged.
+  // A linked worktree's gitdir is <main>/.git/worktrees/<name> while --git-common-dir still
+  // resolves to the main .git.
+  if (a === b) return { tree: 'main', detail: '' };
+  return { tree: 'linked-worktree', detail: `the board lives in ${dirname(b)}` };
+}
 
 // Filename-level markers. Independent of goals.json on purpose: the done-move rename convention
 // ("OWNER-GATED-...-do-not-drain-...") is a second, cheaper line of defence, and a fire that
@@ -343,6 +408,37 @@ function main() {
   const all = argv.includes('--all');
   const queue = argv.includes('--queue');
   const target = argv.find((a) => !a.startsWith('--'));
+
+  // F-2223-1: BEFORE any corpus is read, and before any verdict is formed. Every path below
+  // (--all, the drain arm, --queue) reads the TRACKED ledger, and tasks/done/ is tracked too
+  // (F-2222-1 measured a lane worktree holding 154 done-moves against main's 1,353), so a frozen
+  // tree compromises the whole tool rather than one arm of it. 2, not 1: "could not answer" is a
+  // different act from "answered, and the answer refuses" — the convention dry-board-probe,
+  // master-shipped-classifier and review-evidence-audit already carry.
+  //
+  // SILENT on the healthy read, loud otherwise — this file's OWN established convention
+  // (`dispatchCorpus` at :713 declares 'absent' always, refuses 'unreadable', and says nothing on
+  // 'read'). F-2208-1's "declare even on the happy path" argument governs a corpus whose failure
+  // state is a SILENT DEGRADATION; here every non-main state REFUSES, so the absence of a banner
+  // is not ambiguous and an always-on line on §3.0's most-run command would be the noise that
+  // decays a declaration into a formality.
+  const tree = corpusTree(process.cwd());
+  if (tree.tree !== 'main') {
+    const stale = tree.tree === 'linked-worktree';
+    console.log(`\n  ⛔ CANNOT VERIFY — DO NOT DRAIN, DO NOT QUEUE off this run`);
+    console.log(`    corpus tree     : ${stale ? 'LINKED WORKTREE' : 'UNVERIFIABLE'} — ${tree.detail}`);
+    console.log(`    cwd             : ${process.cwd()}`);
+    if (stale) {
+      console.log(`    tasks/goals.json and tasks/done/ are TRACKED, so this tree hands the check a`);
+      console.log(`    board FROZEN at that branch's commit. A master registered after the branch`);
+      console.log(`    point resolves to "? UNKNOWN" — which exits 0 — and a leaf the owner has`);
+      console.log(`    since unblocked still reads "blocked". Measured s2224: from worktrees/lane-c`);
+      console.log(`    an already-SHIPPED master answered "? UNKNOWN" rc=0 where the repo root`);
+      console.log(`    answered "⛔ ALREADY SHIPPED — DO NOT QUEUE" rc=1 (F-2223-1).`);
+    }
+    console.log(`    Re-run from the repo root. Do NOT re-run elsewhere until it goes green.\n`);
+    process.exit(2);
+  }
 
   if (!existsSync(GOALS)) {
     console.error(`drain-block-check: ${GOALS} not found (run from the repo root)`);
