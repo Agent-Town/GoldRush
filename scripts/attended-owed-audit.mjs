@@ -49,6 +49,7 @@
 
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import { spawnSync } from 'node:child_process'
 
 const DIR = 'tasks/attended-owed'
 const ARCHIVE = join(DIR, 'archive')
@@ -115,9 +116,88 @@ if (corpus !== 'read') {
   process.exit(2)
 }
 
+// F-2225-1 (s2225): THE SECOND CORPUS — THE ANCHOR TARGET.
+//
+// F-2220-1 declared the ITEM corpus above. But no verdict in this file is computed from it:
+// every OPEN/LANDED call is decided at the `readFileSync(target)` probe below, from a SECOND
+// corpus that was never declared and never tree-checked. That is F-2219-1's shape exactly —
+// a tool computing its verdict from two corpora while declaring only one — and here the
+// undeclared corpus is the one that decides every answer.
+//
+// `target` is a bare repo-relative path, so it resolves against process.cwd(). In a LINKED
+// WORKTREE it reads that tree's frozen copy of the law surface, and the question this tool
+// asks — "has the attended cure landed in the surface a drainer reads?" — is a question about
+// MAIN, not about the tree the process happens to sit in.
+//
+// PROVEN BY MANUFACTURING s2225, ground truth = the cure HAS landed on main, so the correct
+// verdict is LANDED-NOT-ARCHIVED at rc=1 (bare mode — exactly how test:ledger-guards invokes
+// this tool): root -> LANDED rc=1 · linked worktree branched before the cure -> OPEN rc=0 ·
+// reverse control, genuinely not landed -> OPEN rc=0. The stale arm and the clean board were
+// BYTE-IDENTICAL on stdout, rc AND verdict — and F-2220-1's corpus declaration read
+// affirmatively healthy in the stale arm, because the item dir really was read. A true
+// declaration about the wrong corpus is F-2221-1's polarity.
+//
+// WHY THIS DECLARES WHERE `drain-block-check`'s corpusTree REFUSES — the boundary is measured,
+// not stylistic, and it is the first time in this streak the discriminator must NOT refuse:
+// §3.0b MANDATES gating undecided content in a detached worktree, and `test:ledger-guards`
+// chains this tool, so a fire FOLLOWING THE LAW runs it from a linked worktree as ordinary
+// prescribed work. Refusing there would red the mandated drain gate and be excused into
+// uselessness inside a week (F-1460-1, the `cross-engine` fate). A linked worktree is LAWFUL
+// for this tool in a way a stale board never is for drain-block-check.
+//
+// Declared on the happy path too (F-2208-1): nothing refuses here, so a line that appeared
+// only on failure would re-create the ambiguity it removes. Values are STRINGS for F-2212-1's
+// reason. git exit 128 is "not a repository" and is LAWFUL — every fixture-rooted test in this
+// family builds a bare mkdtemp root and must keep asserting what it always asserted.
+// spawnSync, not execFileSync: it reports by RETURN VALUE and never throws (s2216).
+function anchorTree() {
+  const opts = { cwd: process.cwd(), encoding: 'utf8', timeout: 10000 }
+  const ask = (args) => spawnSync('git', args, opts)
+  const gitDir = ask(['rev-parse', '--absolute-git-dir'])
+  if (gitDir.status === 128) return 'main' // not a repo: a fixture root
+  if (gitDir.status !== 0) return 'tree-unverifiable'
+  const common = ask(['rev-parse', '--path-format=absolute', '--git-common-dir'])
+  if (common.status !== 0) return 'tree-unverifiable'
+  const a = (gitDir.stdout || '').trim()
+  const b = (common.stdout || '').trim()
+  if (!a || !b) return 'tree-unverifiable'
+  // Equal means the MAIN worktree or any subdirectory of it — correct, and must not be flagged.
+  return a === b ? 'main' : 'linked-worktree'
+}
+
+// The targeted half. Declaring the tree names the hazard but does not close it, so the ONE
+// verdict that can be silently wrong is cross-checked against main's blob: an item reads OPEN
+// here while main's copy of the target already contains the anchor. That case is unambiguous
+// — the paste IS done on main and the bookkeeping IS owed — and it CANNOT fire on the lawful
+// detached-gate path, because a merged tree is a superset of main for a file main already
+// carries the anchor in. So this catches the manufactured defect without reding the prescribed
+// invocation, which a blanket linked-worktree refusal would not.
+function anchorOnMain(target, anchor) {
+  const r = spawnSync('git', ['show', `main:${target}`], {
+    cwd: process.cwd(),
+    encoding: 'utf8',
+    timeout: 10000,
+    maxBuffer: 64 << 20,
+  })
+  // 128 = not a repo, no `main` ref, or no such path on main. All lawful; none is an answer.
+  if (r.status !== 0 || r.error) return 'unverifiable'
+  return (r.stdout || '').includes(anchor) ? 'landed-on-main' : 'absent-on-main'
+}
+
+const tree = anchorTree()
+console.log(
+  tree === 'main'
+    ? '  anchor targets read from: the main worktree.'
+    : tree === 'linked-worktree'
+      ? '  ⚠️  anchor targets read from a LINKED WORKTREE — frozen relative to main. A cure main\n' +
+        '      already carries reads as OPEN here. Verdicts below are cross-checked against main.'
+      : '  ⚠️  anchor-target tree UNVERIFIABLE — git could not answer; verdicts are uncross-checked.',
+)
+
 let defects = 0
 let open = 0
 let landed = 0
+let stale = 0
 const all = items()
 
 for (const it of all) {
@@ -149,6 +229,21 @@ for (const it of all) {
     continue
   }
 
+  // F-2225-1: this tree says OPEN. Before believing it, ask main — the tree whose law surface
+  // the item is actually about. A disagreement is not a judgement call: the paste is done and
+  // the archive bookkeeping is owed, whatever this checkout happens to hold.
+  if (anchorOnMain(target, anchor) === 'landed-on-main') {
+    stale += 1
+    defects += 1
+    console.log(
+      `  ✗ STALE-TREE-OPEN ${label}\n` +
+        `      This tree's ${target} lacks the anchor, but MAIN's copy CONTAINS it.\n` +
+        `      The paste is DONE on main; reading OPEN here is an artefact of a frozen checkout.\n` +
+        `      Bookkeeping owed (a fire can do this): mv ${it.path} ${ARCHIVE}/ and commit.`,
+    )
+    continue
+  }
+
   open += 1
   if (!quiet) {
     const age = Math.floor((Date.now() - statSync(it.path).mtimeMs) / 86400000)
@@ -163,7 +258,7 @@ for (const it of all) {
 const verdict = defects > 0 ? 'DEFECTS' : open > 0 ? 'OPEN ITEMS (attended-side)' : 'CLEAN'
 console.log(
   `attended-owed: ${verdict} — ${all.length} item(s): ${open} open, ${landed} landed-not-archived, ` +
-    `${defects - landed} malformed/bad-target`,
+    `${stale} stale-tree-open, ${defects - landed - stale} malformed/bad-target`,
 )
 if (open > 0 && defects === 0 && !strict) {
   console.log('  (OPEN is not a defect: only the attended side can clear it. --strict to enforce.)')
