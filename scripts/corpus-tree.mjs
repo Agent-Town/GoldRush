@@ -115,6 +115,26 @@ export function frozenTreeRefusal(name, cmp) {
 }
 
 /**
+ * The refusal for a tree that could not be IDENTIFIED at all.
+ *
+ * A SEPARATE text from frozenTreeRefusal, and deliberately so: that one opens
+ * "this is a linked worktree", which is precisely the thing we do not know here.
+ * Asserting it would be F-2225-1 — a declaration naming a corpus the verdict did
+ * not come from. The two also owe DIFFERENT ACTS: that one says re-run from main,
+ * this one says the instrument itself is broken and wants investigating.
+ */
+export function unverifiableTreeRefusal(name) {
+  return [
+    `${name}: REFUSING — git could not say which tree this corpus is from.`,
+    '  `git rev-parse --git-dir --git-common-dir` did not answer, so this run cannot',
+    '  tell a MAIN worktree from a frozen linked one. Both corpora here are TRACKED,',
+    '  so a PASS would certify a board that might never have been read (F-2243-1).',
+    '  This is an INSTRUMENT failure, not a board state: check git, then re-run.',
+    '  (A non-git root is NOT this case — that answers 128 and proceeds normally.)',
+  ].join('\n');
+}
+
+/**
  * THE WHOLE DECISION, in one place — returns the refusal text, or null to proceed.
  *
  * F-2242-1 (s2242): s2241 extracted `corpusTree` and `line1MatchesMain` here
@@ -133,7 +153,27 @@ export function frozenTreeRefusal(name, cmp) {
  * get wrong now lives on this side of the import.
  */
 export function frozenTreeCheck(root, statusText, name) {
-  if (corpusTree(root) !== 'linked-worktree') return null;
+  // F-2243-1 (s2243): this line read `if (corpusTree(root) !== 'linked-worktree')
+  // return null;` — which is F-2242-1's OWN defect on the sibling discriminator,
+  // inside the function built to cure it. corpusTree returns FOUR values, and an
+  // inequality against ONE of them puts the other three on the permissive side,
+  // the failure value among them. Note the docstring's promise that strings
+  // protect the caller does NOT hold here: a string protects a TRUTHINESS test,
+  // and this is a test against a specific value. Proven by manufacturing: a
+  // linked worktree whose line-1 is not main's, with only the corpusTree probe
+  // failing, printed PASS at rc=0 with its verdict line BYTE-IDENTICAL to a
+  // genuinely clean board.
+  //
+  // 'no-git' (exit 128) stays PERMISSIVE and that is load-bearing, not laziness:
+  // measured s2243, a plain non-git temp dir AND a path that does not exist both
+  // answer 128, and every legacy fixture in this family builds a non-git temp
+  // root. Refusing there would red them all and be excused into uselessness
+  // inside a week (F-1460-1). Only 'tree-unverifiable' — git present, question
+  // unanswered — is an unambiguous instrument failure. Same restraint as
+  // F-2218-1's absent-vs-unreadable split.
+  const tree = corpusTree(root);
+  if (tree === 'tree-unverifiable') return unverifiableTreeRefusal(name);
+  if (tree !== 'linked-worktree') return null;
   const cmp = line1MatchesMain(root, statusText);
   // NOT `=== 'different'`: 'unverifiable' is the failure value, and per F-2212-1
   // a failure value must land on the side that NOTICES.
