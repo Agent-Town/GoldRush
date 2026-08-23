@@ -115,3 +115,25 @@ wastes a queue slot and a gate.
 
 End: **READY-FOR-GATES** + report (a) the before/after table per project, (b) the mp-07c verdict and whether
 s2252's prediction held, (c) the final grep output, (d) any red that survived the repoint, named.
+
+---
+
+## CORRECTION NOTE — s2252, appended after dispatch (claimed-spec-harness-guard)
+
+⚠️ **The self-check line naming `e2e/release-base-path.spec.ts` is INCOMPLETE AS WRITTEN, and the
+correction is appended rather than edited in place so the citations above do not rot (F-1397-3).**
+
+That spec is CLAIMED BY ANOTHER CONFIG: `playwright.release-base.config.ts:9` selects it via
+`testMatch: /release-base-path\.spec\.ts/`, and the default config excludes every such file
+(`playwright.config.ts:47`, `testIgnore: [... ...claimedByAnotherConfig]`). **So
+`npx playwright test e2e/release-base-path.spec.ts` under the DEFAULT config collects ZERO tests and
+exits rc=1** — a collection break that looks exactly like a failure and is not one.
+
+➡️ **Run it with its owning config instead:**
+`npx playwright test --config playwright.release-base.config.ts --workers=1`
+
+ⓘ This master was already dispatched when `test:ledger-guards` caught this (the s1301 ordering law
+working as designed — the battery that judges a master runs after the master is written). **The
+copy the runner is executing does NOT contain this note.** If you are that runner and you hit
+`0 tests / rc=1` on that one command, that is THIS defect, not your slice: report it and move on.
+Do not re-copy this master to the queue while a run holds it (F-1307-1).
