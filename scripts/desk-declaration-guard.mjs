@@ -279,7 +279,60 @@ export function deskIds(statusText) {
     kind: 'desk',
     ids: [...new Set(tail.match(FINDING) || [])],
     slugs: deskSlugs(tail),
+    segments: tail.split('🔺').length - 1,
+    unexamined: unexaminedSegments(tail),
   };
+}
+
+/**
+ * THE DENOMINATOR THIS GUARD NEVER CHECKED — F-2256-1.
+ *
+ * The PASS says "every non-grandfathered desk item has a declaring row". The
+ * corpus that claim ranges over is whatever the two parsers above managed to
+ * KEY: `ids` (a FLAT scan, so an F-ID anywhere in the tail counts) UNION
+ * `slugs` (segment-anchored, first key inside KEY_ZONE). A 🔺 segment that
+ * contributes to NEITHER is an owner item this guard never examined — it cannot
+ * appear in `undeclared`, so it is structurally incapable of failing the gate.
+ *
+ * The irony is that the SLUG note above already states the principle — "a parser
+ * whose denominator nobody checks is how the 145-id misread survived (F-1471-3)"
+ * — and then the denominator is checked NOWHERE in this file. It was validated
+ * by hand, once, at s1535, against that day's board.
+ *
+ * PROVEN BY MANUFACTURING, not by a green (s2256). Ground truth: a desk carrying
+ * one item with no declaring row, written exactly as s1585 wrote four of them.
+ *   backticked `rf-34-hero-y-restore-roundtrip` -> FAIL rc=1, names it
+ *   written BARE (same item, same absent row)   -> PASS rc=0, "desk slugs: 0"
+ * and that PASS is BYTE-IDENTICAL on stdout and rc to a genuinely clean board.
+ * The "desk slugs: 0" line is TRUE — about a corpus that excluded the item.
+ *
+ * SEVERITY, STATED HONESTLY AND NOT INFLATED: LATENT on today's board (the live
+ * inherited desk reads 27 segments / 27 stated / 0 unexamined). But it has been
+ * LIVE 20 times since the s1535 cure — 24 unexamined segments — and 10 of those
+ * are REAL owner items: s1585's four owner-forked goal slugs written without
+ * backticks, the FIVE-MAP FORK TABLE carried by s2123/s2124/s2125, `F-1533-x`
+ * (a placeholder id, so FINDING's trailing \d+ never matches) and MP-07c.
+ *
+ * WHY THIS DECLARES AND DOES NOT REFUSE, and the restraint is MEASURED rather
+ * than stylistic: the other 14 of those 24 are ordinary handoff PROSE riding a
+ * 🔺 — "AUDITED with `desk-state-audit --status`…", "Carried from s1580 and
+ * re-verified…", and mid-sentence 🔺 glyphs that split a clause. A refusal would
+ * red the battery on honest writing and be excused into uselessness inside a
+ * week (F-1460-1, the `cross-engine` fate), taking the declaration down with it.
+ * 58% noise is not a gate. The sibling desk-carryforward-guard reached the same
+ * verdict from its own histogram and reports `liveUnkeyed` advisorily; this is
+ * that concept adopted, which is the fourth fire running that the corpus already
+ * held the correct pattern and this file had simply never taken it.
+ *
+ * FINDING_ONE, not FINDING: the global twin carries `lastIndex` between calls,
+ * so `.test` in a filter would skip every other segment.
+ */
+export function unexaminedSegments(tail) {
+  return String(tail)
+    .split('🔺')
+    .slice(1)
+    .filter((seg) => !FINDING_ONE.test(seg) && deskSlugs(`🔺${seg}`).length === 0)
+    .map((seg) => seg.trim().replace(/\s+/g, ' ').slice(0, KEY_ZONE));
 }
 
 /**
@@ -453,6 +506,25 @@ function main() {
   console.log('corpus tree       :', corpusTree(ROOT));
   console.log('desk F-IDs        :', ids.length);
   console.log('desk slugs        :', slugs.length);
+  // F-2256-1: the DENOMINATOR. Printed ALWAYS, including the happy path — a
+  // declaration that appears only on failure re-creates the ambiguity it
+  // removes (F-2208-1), and here the failure state is a PASS, so there is no
+  // failure for it to appear on. `unexamined 0` is the line that separates
+  // "I checked all 27 items" from "I checked the 23 I could see".
+  console.log('🔺 desk segments  :', desk.segments);
+  console.log('unexamined        :', desk.unexamined.length);
+  for (const seg of desk.unexamined) console.log(`   | ${seg}`);
+  if (desk.unexamined.length) {
+    console.log(
+      '   ⓘ ADVISORY, not a failure: each line above is a 🔺 segment carrying neither an F-ID',
+    );
+    console.log(
+      '     nor a front `backticked-slug`, so this guard never examined it. If one is a real',
+    );
+    console.log(
+      '     owner item, key it — otherwise it is prose and the count is expected to be non-zero.',
+    );
+  }
   console.log('with a BACKLOG row:', ids.length - undeclared.length + (slugs.length - undeclaredSlugs.length));
   console.log(
     'undeclared        :',
