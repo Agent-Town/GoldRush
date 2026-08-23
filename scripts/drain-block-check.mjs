@@ -209,6 +209,20 @@ const CLOSURE_STEM_KEY = /(superseded|closed|stop|drain|refut|retir|cann)/i;
 // information loss, which is the worse direction.
 const NOT_A_CLOSURE_REASON = new Set(['blockedReason', 'priorBlockedReason', 'authorNotes']);
 
+// F-2247-2 (s2247). The set above excluded ONE retired spelling by name; the tree holds SIX
+// (priorBlockedReason, priorStoppedReason, priorStopNote_s1206, priorStopNote_s1288,
+// priorBlockReason_s1110_SUPERSEDED, priorBlockClass), so five slipped through. Worse, they slip
+// through into the RANKED-FIRST bucket: `priorStoppedReason` matches CLOSURE_STEM_KEY on "stop"
+// while the leaf's real record, `closureReason`, does NOT — so the retired reason OUTRANKED the
+// live one. MEASURED on the live tree: 2 of the 42 terminal-closed leaves resolved to
+// `priorStoppedReason` (agent-rung-honest-gate, ap-06b-panel-ladder-and-voice), and BOTH carry a
+// `closureReason` stating the actual supersession. agent-rung-honest-gate's own authorNotes warns
+// in words — "READ THIS BEFORE THE PRIOR REASON BELOW, WHICH THE RULING OVERTURNS" — and the
+// instrument picked exactly the overturned one. That is precisely the harm the comment above
+// describes for priorBlockedReason ("printing that as the closure cause would be WORSE than
+// silence"), reached by a spelling the exclusion did not cover. Exclude the CLASS, not the member.
+const RETIRED_REASON_KEY = /^prior|_SUPERSEDED$/i;
+
 function closedReason(leaf) {
   for (const key of CLOSED_REASON_KEYS) {
     const value = leaf[key];
@@ -217,6 +231,7 @@ function closedReason(leaf) {
   const candidates = Object.keys(leaf).filter(
     (key) =>
       !NOT_A_CLOSURE_REASON.has(key) &&
+      !RETIRED_REASON_KEY.test(key) &&
       REASON_ISH_KEY.test(key) &&
       typeof leaf[key] === 'string' &&
       leaf[key].trim(),

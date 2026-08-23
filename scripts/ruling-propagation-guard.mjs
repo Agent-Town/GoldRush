@@ -38,9 +38,68 @@ const REPORT = process.argv.includes('--report');
 // Mirrors scripts/drain-block-check.mjs — a leaf in one of these refuses a drain, so a stale reason
 // here has the same cost as a stale `blocked`.
 const TERMINAL_CLOSED_STATUSES = new Set(['superseded', 'void', 'abandoned', 'stopped']);
+
+// F-2247-1 (s2247). This list was a subject test by FORMAT under a claim defined by ROLE: the
+// verdict below says "no REFUSAL cites a finding the owner has already ruled" — universal over
+// refusals — while the list read six exact spellings. MEASURED on the live tree: 17 of the 44
+// refusing leaves (38.6%) carried NONE of the six, so the scan joined an EMPTY string and could
+// never red on them whatever they said — 38,681 chars of refusal prose unread, 13 of the 17 citing
+// an F-id. The tree holds 138 reason/note spellings, and this guard was reading `closedReason`
+// (4 uses or fewer) while ignoring `closureReason` (24), `drainNotes` (172), `note` (160) and
+// `authorNotes` (146). The file already mirrors drain-block-check.mjs for the status set and for
+// the leaf definition; it had not mirrored the one thing that decides what it reads.
+//
+// WIDENED to the spellings whose NAME states the refusal BASIS. Residue 17 -> 5, verdict unchanged.
 const REFUSAL_REASON_KEYS = [
   'blockedReason', 'closedReason', 'stoppedReason', 'stopNote', 'supersededBy', 'reason',
+  'closureReason', 'supersededReason', 'stoppedNote', 'closedNote', 'voidReason', 'abandonedReason',
+  'supersededNote', 'drainNote',
 ];
+
+// DELIBERATELY NOT WIDENED to the narrative fields `note`, `drainNotes` (plural) and `authorNotes`,
+// and the boundary is MEASURED rather than stylistic: a union scan over them reds on THREE live
+// leaves and ALL THREE reds are FALSE. b4v2-picnic-stake-pressure and vp-02e-jumper-8way-activation
+// each RECORD that a ruling was propagated ("(F-2085-1 RULED)", "OWNER RULING PROPAGATED s1655"),
+// and lane-vp-02b-jumper-slot-red's drainNotes REFUTES the citation outright ("It is NOT --
+// F-1166-1 ... treats this spec as GREEN"). In a narrative field an F-id is as likely to be a
+// refutation or a propagation record as a basis. Redding there would turn this guard's own remedy
+// text — "say so without naming the ruled finding" — into an instruction to DELETE propagation
+// records, i.e. to corrupt correct bookkeeping under the Retention Law, and a guard that fires on
+// ordinary correct work is excused into uselessness inside a week (F-1460-1).
+//
+// EXCLUDED for the reason drain-block-check excludes them: `prior*` spellings are RETIRED reasons
+// kept for history (agent-rung-honest-gate's own authorNotes says the ruling OVERTURNS the prior
+// one), and `authorNotes*` is written at AUTHORING time, so it states intent, never outcome.
+const RETIRED_OR_AUTHORING = /^(prior|authorNotes)/i;
+
+// A session stamp is not a new field: `stoppedNote_s1263` and `stoppedNote` are the same record,
+// and s1249 lost three leaves to exactly this by anchoring on one stamped spelling's suffix.
+export function refusalText(leaf) {
+  const parts = [];
+  for (const key of Object.keys(leaf)) {
+    if (RETIRED_OR_AUTHORING.test(key)) continue;
+    const stem = key.replace(/_s\d+.*$/i, '');
+    if (!REFUSAL_REASON_KEYS.includes(stem)) continue;
+    if (typeof leaf[key] === 'string' && leaf[key].trim()) parts.push(leaf[key].trim());
+  }
+  return parts.join(' ');
+}
+
+// Extracted so the HAPPY path can be exercised rather than admired: main() reads the live tree
+// through an import.meta.url-anchored ROOT, so no fixture can drive it to unreadable === 0, and a
+// CLI-only assertion would pass just as well if the line were printed on failure alone (F-2209-1).
+export function corpusDeclaration(refusing, unreadable) {
+  return `  reason corpus     : ${refusing - unreadable}/${refusing} refusals state their basis under a key this guard reads`
+    + (unreadable ? ` · ${unreadable} DECLARED UNREAD` : '');
+}
+
+// Likewise the verdict: it used to read as universal over refusals while the scan was silent about
+// the ones it could not read at all.
+export function passVerdict(unreadable) {
+  return unreadable
+    ? `PASS — no READABLE refusal cites a finding the owner has already ruled. ${unreadable} refusal(s) state their basis in a narrative field this guard does not scan; their text is above.`
+    : 'PASS — no refusal cites a finding the owner has already ruled.';
+}
 // FINDING is IMPORTED, not redeclared — see findings-state-guard.mjs (F-2228-1).
 // The private copy this replaced could not see a lettered id, so a refusal citing
 // one the owner had already ruled was invisible to this guard by construction.
@@ -82,24 +141,38 @@ export function refusingLeaves(goals) {
 export function staleRefusals(goals, backlogText) {
   const ruled = ruledFindings(backlogText);
   const stale = [];
+  const unreadable = [];
   for (const leaf of refusingLeaves(goals)) {
-    const reason = REFUSAL_REASON_KEYS.map((k) => leaf[k] || '').join(' ');
+    const reason = refusalText(leaf);
+    // A refusal whose basis is stored under none of the read spellings is a HOLE IN THE
+    // DENOMINATOR, not a clean subject. It is counted and named rather than refused on: an
+    // unreadable reason is a lawful, routine state (F-2218-1's restraint).
+    if (!reason) unreadable.push(leaf);
     const cited = new Set(reason.match(FINDING) || []);
     const hits = [...cited].filter((id) => ruled.has(id));
     if (hits.length) stale.push({ leaf, hits, ruledAt: hits.map((h) => ruled.get(h)) });
   }
-  return { stale, ruledCount: ruled.size, ruled };
+  return { stale, ruledCount: ruled.size, ruled, unreadable };
 }
 
 function main() {
   const goals = JSON.parse(fs.readFileSync(path.join(ROOT, 'tasks/goals.json'), 'utf8'));
   const backlog = fs.readFileSync(path.join(ROOT, 'tasks/BACKLOG.md'), 'utf8');
-  const { stale, ruledCount } = staleRefusals(goals, backlog);
+  const { stale, ruledCount, unreadable } = staleRefusals(goals, backlog);
   const refusing = refusingLeaves(goals).length;
 
   console.log(
     `ruling-propagation: ${ruledCount} findings recorded RULED · ${refusing} goal leaves still refuse work · ${stale.length} stale`,
   );
+
+  // Printed ALWAYS, including the happy path: a declaration that appears only on failure re-creates
+  // the ambiguity it removes (F-2208-1). This line is the difference between "I read 44 refusals
+  // and found nothing" and "I read 39 of them".
+  console.log(corpusDeclaration(refusing, unreadable.length));
+  for (const leaf of unreadable) {
+    const keys = Object.keys(leaf).filter((k) => /note|reason/i.test(k)).join(', ') || '(no reason-bearing key)';
+    console.log(`      unread: ${String(leaf.status).padEnd(11)} ${leaf.id}  [${keys}]`);
+  }
 
   if (REPORT) {
     for (const leaf of refusingLeaves(goals)) {
@@ -108,7 +181,7 @@ function main() {
   }
 
   if (!stale.length) {
-    console.log('PASS — no refusal cites a finding the owner has already ruled.');
+    console.log(passVerdict(unreadable.length));
     return 0;
   }
 
