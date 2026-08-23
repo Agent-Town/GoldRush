@@ -318,11 +318,56 @@ export function classifiableCapture(cap) {
   return { text: '', crashed: true, detail };
 }
 
+/**
+ * The line drain-block-check rendered its VERDICT on, as opposed to the body it
+ * prints underneath. F-2236-1: the distinction is the whole finding, and it is
+ * F-2211-1 one layer further in -- that finding stopped stderr reaching the
+ * classifier; this one stops the tool's OWN stdout body reaching it.
+ *
+ * drain-block-check's closed-class arms (blocked / stopped / superseded) echo the
+ * leaf's AUTHOR-WRITTEN prose -- `note`, `blockedReason`, `stopNote` -- into
+ * stdout beneath the verdict. bucketOf substring-matched that whole blob, so any
+ * ledger note that so much as CONTAINS a token bucketOf keys on re-classified its
+ * own subject. The tokens are ordinary words a closure note has every reason to
+ * use, and this is not hypothetical: s2236 registered three legacy leaves whose
+ * notes explain, accurately, that the done-move "read UNKNOWN to dry-board-probe
+ * because no leaf existed" -- and that sentence flipped its own subject from
+ * `closed` to `unknown` on the live board, at the same rc, the same instant the
+ * leaf was written.
+ *
+ * SEVERITY, MEASURED AND NOT INFLATED. This is NOT the s1061 false-green: the
+ * permissive direction is UNREACHABLE via this route today, because only the
+ * closed-class arms echo prose at all, and a subject already in a closed arm
+ * cannot be moved to `drain`. Measured s2236, one drain-arm probe per live status
+ * over leaves that HAVE prose (detector validated against a known-leaky control
+ * first, F-2215-1): blocked/stopped/superseded ECHO; planned/queued/shipped/merged
+ * DO NOT. So the reachable harm is conservative -- a closed subject reported as
+ * owing a file probe. It still earns a cure, because it is an item that can never
+ * be discharged (F-1600-1's shape): the probe reports the duty as owed forever,
+ * `--strict` exits 2 on a genuinely clean board, and every fire pays the probe
+ * cost again.
+ *
+ * The cure is this file's own lesson turned inward: ASSERT THE OBSERVABLE, NOT
+ * THE BLOB. The verdict is a LINE, so classify that line. Deliberately the FIRST
+ * NON-EMPTY line rather than a search for a marker anywhere: a marker-search is
+ * what got us here, and every drain-arm verdict drain-block-check prints -- ⛔
+ * CLOSED, ⛔ BLOCKED, ✅ CLEAR, ? UNKNOWN -- is rendered first, verified s2236
+ * across all seven live statuses. An empty capture still falls through to
+ * 'drain', loudly, exactly as F-2211-1 requires.
+ */
+export function verdictLine(output) {
+  for (const line of String(output ?? '').split('\n')) {
+    if (line.trim()) return line;
+  }
+  return '';
+}
+
 /** Bucket one drain-block-check result. UNKNOWN is deliberately NOT a clearance. */
 export function bucketOf(output) {
-  if (/UNKNOWN/.test(output)) return 'unknown';
-  if (/⛔|DO NOT DRAIN/.test(output)) return 'closed';
-  if (/status="merged"/.test(output)) return 'merged';
+  const verdict = verdictLine(output);
+  if (/UNKNOWN/.test(verdict)) return 'unknown';
+  if (/⛔|DO NOT DRAIN/.test(verdict)) return 'closed';
+  if (/status="merged"/.test(verdict)) return 'merged';
   return 'drain';
 }
 
