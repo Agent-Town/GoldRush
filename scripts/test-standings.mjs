@@ -45,6 +45,7 @@ try {
     await checkUnrankedBound(onRequest);
     await checkRetroAssay(onRequest, onRequestAssayQueue);
     await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+    await checkAssayStrips(onRequest);
     console.log(`standings assay ${backend} checks passed (${checks})`);
   }
 } finally {
@@ -52,6 +53,40 @@ try {
   sqliteStores.forEach((store) => store.close());
   await rm(sqliteRoot, { recursive: true, force: true });
   await vite.close();
+}
+
+async function checkAssayStrips(onRequest) {
+  const kv = makeKv();
+  const verified = storedRowFor(10, 'the-claim', 'epoch-1-frontier');
+  verified.profileName = 'Verified Mind';
+  verified.stack = { declaredBy: 'self', model: 'verified-mind', harness: 'test-rig', harnessVersion: '1', calls: 2 };
+  verified.assay = 'verified';
+  verified.assayedAt = 1_787_000_001_000;
+  verified.assayHash = 'fnv1a32:1234abcd';
+  verified.submittedAt = 1_787_000_000_000;
+  verified.seed = 'e1-the-claim-01';
+  verified.tape.seed = verified.seed;
+  verified.tape.inputLog.seed = verified.seed;
+  verified.tape.inputLog.durationTicks = 10;
+  verified.tape.inputLog.entries = Array.from({ length: 10 }, (_, index) => ({ t: index, mx: 0, my: 0, a: [{ kind: 'agent_orders', orders: [] }] }));
+  verified.inputLogHash = createHash('sha256').update(JSON.stringify(verified.tape.inputLog)).digest('hex');
+  const pending = structuredClone(verified);
+  pending.profileName = 'Pending Mind';
+  pending.stack.model = 'pending-mind';
+  pending.assay = 'pending';
+  delete pending.assayedAt;
+  delete pending.assayHash;
+  pending.inputLogHash = 'f'.repeat(64);
+  await kv.put(KEY, JSON.stringify([verified, pending]));
+
+  const fieldBook = await call(onRequest, 'GET', '/api/standings?view=byStack&epoch=epoch-1-frontier', undefined, kv);
+  equal(fieldBook.status, 200, 'field book assay read succeeds');
+  const verifiedCell = fieldBook.body.byStack.find((row) => row.model === 'verified-mind').contracts[0];
+  equal(verifiedCell.assayStrip.era, { id: 'b8cf2332d', label: 'Same-Game era' }, 'verified row carries its era');
+  equal(verifiedCell.assayStrip.outcome.waves, verified.waves, 'Outcome reads the verified score');
+  equal(verifiedCell.assayStrip.economy, { status: 'measured', decisions: 10, frontierDecisions: 10, efficiency: 1 }, 'Economy is frontier-anchored');
+  equal(verifiedCell.assayStrip.cost, { calls: 2 }, 'Cost reads the declaration without inventing tokens');
+  equal(fieldBook.body.byStack.find((row) => row.model === 'pending-mind').contracts[0].assayStrip, undefined, 'unverified row has no assay strip');
 }
 
 function checkTapeBuildMetadata(validateTape) {

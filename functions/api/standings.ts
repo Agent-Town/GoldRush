@@ -1,4 +1,5 @@
 import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
+import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import atomicContracts from '../../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
 import deepwaterContracts from '../../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
 import deepskyContracts from '../../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
@@ -11,7 +12,7 @@ import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contr
 import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
-import { resolveSeasonAt } from '../../src/seasons/registry';
+import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 import type { LedgerStorage } from './_accounts';
 
@@ -176,6 +177,9 @@ const ASSAY_ROW_ID = /^[a-f0-9]{32}:[1-4]:\d{1,16}:[a-f0-9]{64}$/;
 const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason']);
 const ASSAY_LOCATOR_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId']);
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
+const WALK_ERA_START = 1_786_167_061_000;
+const WALK_ERA_STAMP = '3dd7790d';
+const SAME_GAME_ERA = SEASONS.find((season) => season.id === 'same-game-season')!;
 
 // ── THE SEASON ROLL (owner ruling 2026-08-15, verbatim in specs/agent-play/tape-contract.md
 // §"The legacy board — RULED: SEASON ROLL": "I think this kind of calls for a next season?").
@@ -348,6 +352,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
     const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? rankedRows(await readBoard(kv, epochId, contractId, true, season)) : []] as const));
+    const frontiers = frontierDecisionMap(boards);
     if (view === 'byParty') {
       return json(cors, {
         ok: true,
@@ -357,7 +362,8 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
         contracts,
         // Composition is INFORMATION, never ranking: no rank is minted here and the groups sort by
         // recency, exactly as byStack does (owner 2026-08-05 — detail lives in the field book).
-        byParty: groupRows(boards, (row) => (row.party ? partyComposition(row.party) : null), partyCell)
+        byParty: groupRows(boards, (row) => (row.party ? partyComposition(row.party) : null),
+          (row, contractId) => partyCell(row, contractId, frontiers))
           .map(([composition, group]) => ({
             composition,
             riderCount: composition.split('+').length,
@@ -370,7 +376,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     const grouped = groupRows(
       boards,
       (row) => (byHarness ? row.stack?.harness?.trim() || UNDECLARED_RIG : row.stack?.model?.trim() || UNDECLARED_RIDER),
-      stackCell,
+      (row, contractId) => stackCell(row, contractId, frontiers),
     ).map(([name, group]) => ({
       [byHarness ? 'harness' : 'model']: name,
       contracts: [...group.contracts.values()],
@@ -549,7 +555,7 @@ function groupRows(
   return [...groups.entries()].sort((a, b) => b[1].aggregate.latestSubmittedAt - a[1].aggregate.latestSubmittedAt || a[0].localeCompare(b[0]));
 }
 
-function showing(row: StoredRow, contractId: string): JsonRecord {
+function showing(row: StoredRow, contractId: string, frontiers: ReadonlyMap<string, number>): JsonRecord {
   const season = resolveSeasonAt(row.submittedAt);
   return {
     contractId,
@@ -563,12 +569,14 @@ function showing(row: StoredRow, contractId: string): JsonRecord {
     difficulty: row.difficulty,
     submittedAt: row.submittedAt,
     ...(season ? { season: season.name } : {}),
+    assayStatus: row.assay ?? 'legacy',
+    ...(row.assay === 'verified' ? { assayStrip: assayStrip(row, contractId, frontiers) } : {}),
   };
 }
 
-function stackCell(row: StoredRow, contractId: string): JsonRecord {
+function stackCell(row: StoredRow, contractId: string, frontiers: ReadonlyMap<string, number>): JsonRecord {
   return {
-    ...showing(row, contractId),
+    ...showing(row, contractId, frontiers),
     ...(row.stack?.tokensIn === undefined ? {} : { tokensIn: row.stack.tokensIn }),
     ...(row.stack?.tokensOut === undefined ? {} : { tokensOut: row.stack.tokensOut }),
     ...(row.stack?.calls === undefined ? {} : { calls: row.stack.calls }),
@@ -578,13 +586,66 @@ function stackCell(row: StoredRow, contractId: string): JsonRecord {
   };
 }
 
-function partyCell(row: StoredRow, contractId: string): JsonRecord {
+function partyCell(row: StoredRow, contractId: string, frontiers: ReadonlyMap<string, number>): JsonRecord {
   return {
-    ...showing(row, contractId),
+    ...showing(row, contractId, frontiers),
     profileName: row.profileName,
     riders: row.party?.riders.map((rider) => rider.name) ?? [],
     rigs: row.party ? partyRigs(row.party) : [],
   };
+}
+
+function assayStrip(row: StoredRow, contractId: string, frontiers: ReadonlyMap<string, number>): JsonRecord {
+  const era = assayEra(row.submittedAt);
+  const decisions = decisionCount(row);
+  const frontier = row.seed ? frontiers.get(frontierKey(contractId, row.seed, era.id)) : undefined;
+  const floorSecures = row.seed ? Boolean((nullFloors.floors as Record<string, Record<string, { secured?: boolean }>>)[contractId]?.[row.seed]?.secured) : false;
+  const economy = floorSecures
+    ? { status: 'void', reason: 'The null floor already secures.' }
+    : decisions === undefined || frontier === undefined
+      ? { status: 'unavailable', reason: 'No verified decision frontier for this seed.' }
+      : { status: 'measured', decisions, frontierDecisions: frontier, efficiency: frontier / decisions };
+  return {
+    era,
+    outcome: { secured: true, waves: row.waves, timeAlive: row.timeAlive },
+    economy,
+    cost: {
+      ...(row.stack?.tokensIn === undefined ? {} : { tokensIn: row.stack.tokensIn }),
+      ...(row.stack?.tokensOut === undefined ? {} : { tokensOut: row.stack.tokensOut }),
+      ...(row.stack?.calls === undefined ? {} : { calls: row.stack.calls }),
+    },
+  };
+}
+
+function frontierDecisionMap(boards: ReadonlyArray<readonly [string, StoredRow[]]>): Map<string, number> {
+  const frontiers = new Map<string, number>();
+  for (const [contractId, rows] of boards) for (const row of rows) {
+    const decisions = row.assay === 'verified' ? decisionCount(row) : undefined;
+    if (!row.seed || decisions === undefined) continue;
+    const key = frontierKey(contractId, row.seed, assayEra(row.submittedAt).id);
+    frontiers.set(key, Math.min(frontiers.get(key) ?? Number.POSITIVE_INFINITY, decisions));
+  }
+  return frontiers;
+}
+
+function frontierKey(contractId: string, seed: string, era: string): string {
+  return `${contractId}\n${seed}\n${era}`;
+}
+
+function assayEra(submittedAt: number): { id: string; label: string } {
+  if (submittedAt >= SAME_GAME_ERA.startsAt) return { id: SAME_GAME_ERA.eraStamps.at(-1)!, label: 'Same-Game era' };
+  if (submittedAt >= WALK_ERA_START) return { id: WALK_ERA_STAMP, label: 'Walk era' };
+  return { id: 'pre-walk', label: 'Before the Walk' };
+}
+
+function decisionCount(row: StoredRow): number | undefined {
+  const input = isRecord(row.tape?.inputLog) ? row.tape.inputLog : null;
+  if (!input || !Array.isArray(input.entries)) return undefined;
+  const streams = Array.isArray(input.streams) ? input.streams : [];
+  const entries = [input.entries, ...streams.flatMap((stream) => isRecord(stream) && Array.isArray(stream.entries) ? [stream.entries] : [])].flat();
+  const decisions = entries.filter((entry) => isRecord(entry) && Array.isArray(entry.a)
+    && entry.a.some((action) => isRecord(action) && action.kind === 'agent_orders')).length;
+  return decisions > 0 ? decisions : undefined;
 }
 
 // 'h+a', 'h+h+a', 'a+a+a' — humans first so the key is stable however the riders were ordered.
