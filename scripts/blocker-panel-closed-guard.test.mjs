@@ -34,22 +34,35 @@ function offenders(output) {
   return [...output.matchAll(/^(F-\d+-\d+)\s+closed at BACKLOG:/gm)].map((match) => match[1]);
 }
 
-// REAL HISTORY. 2e02098f is the state the owner's dashboard was drawn from before
-// s1290's sweep — the panel that produced his 2026-07-30 AUTHOR-NOW directive to
-// redo work shipped five days earlier. A guard that cannot red here is decoration.
-test('reds on the pre-strike ledger that manufactured the owner directive, greens on the struck one', (t) => {
-  const before = execFileSync('git', ['show', '2e02098f:tasks/BACKLOG.md'], {
+// REAL HISTORY. The live panel selects 725deff2's e3-fairground row, whose displayed
+// subject zone names F-1534-2, and F-1534-2's closure is subject-led by F-1534-2
+// itself at BACKLOG:11. The live root has no such pairing and must stay green.
+test('reds on a real ledger with a subject-led closed finding on the panel, greens on the live root', (t) => {
+  const before = execFileSync('git', ['show', '725deff2c34fc5014f90f46ae06d2d0959f0ed4f:tasks/BACKLOG.md'], {
     cwd: ROOT,
     encoding: 'utf8',
     maxBuffer: 64 * 1024 * 1024,
   });
   const historical = run(fixture(t, before));
   assert.equal(historical.status, 1, historical.stdout + historical.stderr);
-  assert.deepEqual(offenders(historical.stdout), ['F-1030-2']);
+  assert.deepEqual(offenders(historical.stdout), ['F-1534-2']);
 
   const current = run(ROOT);
   assert.equal(current.status, 0, current.stdout + current.stderr);
   assert.deepEqual(offenders(current.stdout), []);
+});
+
+test('a cited id does not borrow the subject id closure on the old real ledger', (t) => {
+  // F-1030-2 is only the second id on the closure row led by F-1040-1, so
+  // F-2228-1 must keep it out of the offender list.
+  const backlog = execFileSync('git', ['show', '2e02098f:tasks/BACKLOG.md'], {
+    cwd: ROOT,
+    encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
+  });
+  const result = run(fixture(t, backlog));
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.deepEqual(offenders(result.stdout), []);
 });
 
 test('a closure APPENDED below the panel row does not clear the panel — which is the whole defect', (t) => {
