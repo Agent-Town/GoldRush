@@ -2918,11 +2918,22 @@
               "id": "gauntlet-heat3a-codex-backend-shim",
               "title": "Guest harnesses ride the Codex subscription - the local OpenAI-compatible shim (investigate-first, never metered fallback)",
               "taskFile": "gauntlet-heat3a-codex-backend-shim.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "2d779a3e62945c69b69d69690dc7b6b0f2576625",
+              "drainNotes": "Drained s2272. Gated on the merged tree in detached gate-s2272 (fire.md 3.0b): tsc clean, build green, own suite 4/4 rc=0 16.7s with the live arm really riding the subscription (model=gpt-5.6-luna, 16741 prompt + 19 completion tokens, latency 10.5s; concurrency arm 3 parallel at 6.0/4.8/6.0s), auth-absent skip path rc=0 with 2 skipped loudly. package.json 3-way kept main newer 71-leg test:ledger-guards (lane was one leg behind), zero script keys lost. Two findings, neither blocking: F-2272-1 (two new gates with no caller - grandfathered in scripts/gate-caller-baseline.json with the measurement, because rooting them would spend the owner Codex allowance every drain; partial coverage hole stated, split recommended) and F-2272-2 (block-class-guard.test.mjs reds twice from the linked worktree that fire.md 3.0b mandates - attributed away from this slice by a same-worktree pre-merge control, corrective authored as f2272-2-block-class-guard-worktree-cwd). Review: reviews/gauntlet-heat3a-codex-backend-shim.md",
               "note_s2269": "s2269 — the 20260824-140242 dispatch STOPPED on its lane-safety pre-flight and is NOT a failure of this master: lane/b held the undrained runner commit f21448853 (harness-disclosure-field), git cherry reported +, and the runner correctly refused to reset over it rather than repeating Mistake #2. The master is unchanged and still wanted (owner directive 2026-08-24: we want to run hermes, openclaw and all of them on Codex/subscription). RE-DISPATCH CONDITION: drain lane/b first, then cp the master back into tasks/queue/lane-b/. Run log: tasks/runs/20260824-140242-lane-b-gauntlet-heat3a-codex-backend-shim.md.log",
               "lane": "lane-b",
               "authoredBy": "attended 2026-08-24",
               "note": "Owner verbatim: we want to run hermes, openclaw and all of them on Codex/subscription. codex CLI has app-server/mcp-server/exec-server modes but no OpenAI-compat endpoint - this slice investigates the lawful mechanism and builds the smallest shim (127.0.0.1 only, no auth material ever logged), or STOPs with the honest option table. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
+            },
+            {
+              "id": "f2272-2-block-class-guard-worktree-cwd",
+              "title": "The drain gate reds twice on every lawful drain - teach block-class-guard which board it asks about",
+              "taskFile": "f2272-2-block-class-guard-worktree-cwd.md",
+              "status": "planned",
+              "lane": "lane-a",
+              "authoredBy": "fire s2272",
+              "note": "Authored s2272 from finding F-2272-2 in reviews/gauntlet-heat3a-codex-backend-shim.md. block-class-guard.test.mjs:91 and :108 spawn drain-block-check with no cwd option, so from the detached worktree that fire.md 3.0b MANDATES the child inherits a linked-worktree cwd and hits s2224 F-2223-1 corpus-tree refusal (exit 2). Attributed by control: main at repo root rc=0 PASS; merged slice in gate-s2272 rc=1 3pass/2fail; pre-merge main in the SAME worktree rc=1 3pass/2fail - so the slice is exonerated and the collision is between two individually-correct laws. Direction is SAFE (loud refusal, never a false green) so nothing was ever mis-merged, but a battery that reds on every law-abiding drain is the F-1460-1 excused-into-uselessness shape. Precedent to follow: F-2225-1 cured attended-owed-audit to DECLARE rather than REFUSE for exactly this collision. Trap to avoid: F-2221-1, where a careless forced cwd re-pointed callers that legitimately pass their own."
             },
             {
               "id": "gauntlet-heat3b-full-field",
