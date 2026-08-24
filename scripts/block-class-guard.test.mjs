@@ -21,6 +21,20 @@ import { spawnSync } from 'node:child_process';
 
 const VALID = new Set(['owner-fork', 'gate-side', 'disputed']);
 
+// This guard's local schema assertions belong to the checkout being tested. Its drain cross-checks
+// do too, but drain-block-check correctly refuses to answer from a frozen linked-worktree board.
+// Declare that collision instead of comparing local leaves with main's different denominator.
+const LINKED_WORKTREE = (() => {
+  const opts = { encoding: 'utf8' };
+  const gitDir = spawnSync('git', ['rev-parse', '--absolute-git-dir'], opts);
+  const common = spawnSync('git', ['rev-parse', '--path-format=absolute', '--git-common-dir'], opts);
+  return gitDir.status === 0 && common.status === 0 && gitDir.stdout.trim() !== common.stdout.trim();
+})();
+
+const LINKED_SKIP =
+  'DECLARED SKIP: this assertion compares the local goals board with drain-block-check; ' +
+  'a linked worktree is frozen and that tool correctly refuses it. Re-run from the main worktree.';
+
 let lastVisited = 0;
 
 function blockedLeaves() {
@@ -86,8 +100,11 @@ test('disputed leaves are surfaced, not silently accumulated', () => {
 // visibility, and had a valid blockClass, so THIS file passed it and the board read green. The
 // lesson is that a guard's green is only worth its denominator, and two guards over one subject
 // must be tied together or they drift apart silently. This test is that tie.
-test('every blocked leaf is visible to the §3.0 drain guard (denominator parity)', () => {
+test('every blocked leaf is visible to the §3.0 drain guard (denominator parity)', (t) => {
+  if (LINKED_WORKTREE) return t.skip(LINKED_SKIP);
   const mine = blockedLeaves();
+  // Same-tree assertion: both this walker and the child read the current main worktree's board.
+  // Pointing only the child at main would compare two denominators and manufacture a verdict.
   const r = spawnSync('node', ['scripts/drain-block-check.mjs', '--all'], { encoding: 'utf8' });
   const m = /Scanned \d+ goal leaves — (\d+) BLOCKED/.exec(r.stdout || '');
   assert.ok(m, `--all did not print its census; got: ${(r.stdout || r.stderr || '').slice(0, 200)}`);
@@ -102,9 +119,12 @@ test('every blocked leaf is visible to the §3.0 drain guard (denominator parity
 
 // Every blocked leaf must be REACHABLE by the name a fire would actually type. An unkeyed leaf is
 // matched by its id (F-1597-1); a keyed one by its taskFile. Either way the answer must be rc=1.
-test('every blocked leaf refuses the drain under the name a fire would type', () => {
+test('every blocked leaf refuses the drain under the name a fire would type', (t) => {
+  if (LINKED_WORKTREE) return t.skip(LINKED_SKIP);
   for (const leaf of blockedLeaves()) {
     const needle = leaf.taskFile || leaf.id;
+    // Same-tree assertion: the local leaf's typed name is checked against that same main board.
+    // A linked worktree cannot lawfully supply drain-block-check's board, so it is declared above.
     const r = spawnSync('node', ['scripts/drain-block-check.mjs', needle], { encoding: 'utf8' });
     assert.strictEqual(
       r.status,
@@ -116,9 +136,12 @@ test('every blocked leaf refuses the drain under the name a fire would type', ()
 });
 
 // Integration: the print branch must actually differ by class. A field nothing reads is decoration.
-test('drain-block-check prints class-specific verdicts, and gate-side is not called owner debt', () => {
+test('drain-block-check prints class-specific verdicts, and gate-side is not called owner debt', (t) => {
   const gateSide = blockedLeaves().find((l) => l.blockClass === 'gate-side' && l.taskFile);
   if (!gateSide) return; // no gate-side leaf on the board right now; nothing to assert
+  if (LINKED_WORKTREE) return t.skip(LINKED_SKIP);
+  // Same-tree assertion: wording is checked for the local gate-side leaf on the same main board.
+  // This spawn did not red at s2272 only because that frozen board had no gate-side leaf to reach it.
   const r = spawnSync('node', ['scripts/drain-block-check.mjs', gateSide.taskFile], {
     encoding: 'utf8',
   });
