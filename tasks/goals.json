@@ -2946,7 +2946,9 @@
               "id": "gauntlet-heat-e1",
               "title": "The season's first heat - six E1 contracts ridden through the public door, verified standings on the live board",
               "taskFile": "gauntlet-heat-e1.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "b31ecbc50aaf698ada99e61b3de65adc7578091b",
+              "drainNotes": "s2270 drain 2 — MERGED at b31ecbc50 (fast-forward of the gated commit). NO CODE: 36 paths, all artifacts/gauntlet-heat-20260824/** or tasks/BACKLOG.md — firewall PERFECT, zero src/scripts/functions/assets/e2e/specs. tsc rc=0 + build rc=0 on the merged tree. 14 attempts, 2 VERIFIED rows (the-claim wave 10/98g, e1-dry-gulch wave 20/147g), 4 honestly not-submitted after three attempts each — verified by reading all six verdict-slip.json at the tip, not the note summarising them. One BACKLOG conflict, resolved keeping BOTH sides. FILED F-2270-3 (launch-relevant): Epoch One's roster is six contracts but e1-drill-yard has NO bench seed, so only five can carry a verified bench standing — the heat rode e2-hill-mine in its place because the master's list named hill-mine, and bench-seeds.json is a seed registry that was asked the epoch roster's question. Review: reviews/gauntlet-heat-e1.md.",
               "lane": "lane-c",
               "authoredBy": "attended 2026-08-24",
               "note": "Owner 2026-08-24: I think we will have to run another gauntlet to fill the leaderboard? - yes. Codex rides as the season's first rider: own strategies via skill.md, up to 3 attempts per contract, secured runs submitted + polled to verified, honest table for the rest. Rides AT the deployed commit b42c0fbcc (the c6 skew law). Evidence under artifacts/gauntlet-heat-20260824/. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
