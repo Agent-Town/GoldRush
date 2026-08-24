@@ -56,7 +56,7 @@ was **flaky**, measured across six serial `--workers=1` runs:
 > 2 failures in 3 full-file mobile runs; 0 failures in 2 isolated runs of the same
 > test; desktop full-file green.
 
-The failing test is `e2e/bt-04b-automation.spec.ts:38` ("repair and idle boundaries
+The failing test is `e2e/bt-04b-automation.spec.ts` ("repair and idle boundaries
 update the live loop on the next sim tick"). ⓘ **That coordinate is unresolvable on
 main by construction — the spec exists only on lane/a's undrained commit — so the
 TITLE is the durable key here, not the line number (F-1310-1).** The failure is
