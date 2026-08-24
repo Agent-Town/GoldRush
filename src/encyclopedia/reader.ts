@@ -44,6 +44,7 @@ type StandingStack = {
   model?: string;
   harness?: string;
   harnessVersion?: string;
+  worldModel?: string;
   source?: string;
 };
 
@@ -76,6 +77,7 @@ type FieldBookCell = {
   calls?: number;
   harness?: string;
   harnessVersion?: string;
+  worldModel?: string;
   config?: string;
   assayStatus?: 'pending' | 'verified' | 'rejected' | 'unassayable' | 'legacy';
   assayStrip?: AssayStrip;
@@ -688,7 +690,8 @@ function isFieldBookCell(value: unknown): value is FieldBookCell {
     && Number.isInteger(cell.submittedAt) && (cell.submittedAt ?? -1) >= 0
     && validOptionalString(cell.season)
     && validOptionalCost(cell.tokensIn) && validOptionalCost(cell.tokensOut) && validOptionalCost(cell.calls)
-    && validOptionalString(cell.harness) && validOptionalString(cell.harnessVersion) && validOptionalString(cell.config)
+    && validOptionalString(cell.harness) && validOptionalString(cell.harnessVersion)
+    && validOptionalWorldModel(cell.worldModel) && validOptionalString(cell.config)
     && (cell.assayStatus === undefined || ['pending', 'verified', 'rejected', 'unassayable', 'legacy'].includes(cell.assayStatus))
     && (cell.assayStrip === undefined || isAssayStrip(cell.assayStrip));
 }
@@ -776,6 +779,7 @@ function renderFieldBookCell(cell: FieldBookCell | undefined, rowSlug: string, c
     <span>${Math.floor(cell.score.baseValue)} works &middot; ${Math.floor(cell.score.gold)} gold</span>
     <span class="county-standings__difficulty" data-difficulty="${cell.difficulty}">${DIFFICULTY_LABELS[cell.difficulty]}</span>
     <span>${costs.length ? costs.join(' &middot; ') : 'Cost not declared'}</span>
+    <span>${cell.worldModel ? `World model: ${escapeHtml(cell.worldModel)}` : 'World model not declared'}</span>
     <time datetime="${safeIsoDate(cell.submittedAt)}">${relativeAge(cell.submittedAt)}</time>
     ${renderAssayStrip(cell, rowSlug)}
   </td>`;
@@ -882,6 +886,7 @@ function renderFieldBookDetails(cell: FieldBookCell, name: string, rowSlug: stri
     <h4>${escapeHtml(name)}</h4>
     <dl>
       <dt>Harness</dt><dd>${escapeHtml(harness)}</dd>
+      <dt>World model</dt><dd>${escapeHtml(cell.worldModel || 'Not declared')}</dd>
       <dt>Configuration</dt><dd>${escapeHtml(cell.config || 'Not declared')}</dd>
       <dt>Result</dt><dd>${Math.floor(cell.score.waves)} waves &middot; ${formatTime(cell.score.timeAlive)} &middot; ${Math.floor(cell.score.gold)} gold</dd>
       <dt>Submitted</dt><dd><time datetime="${safeIsoDate(cell.submittedAt)}">${safeIsoDate(cell.submittedAt)}</time></dd>
@@ -1025,8 +1030,9 @@ function isStandingStack(value: Partial<StandingStack>): boolean {
     && validOptionalString(value.model)
     && validOptionalString(value.harness)
     && validOptionalString(value.harnessVersion)
+    && validOptionalWorldModel(value.worldModel)
     && validOptionalSource(value.source)
-    && (value.declared === true || (value.model === undefined && value.harness === undefined && value.harnessVersion === undefined && value.source === undefined));
+    && (value.declared === true || (value.model === undefined && value.harness === undefined && value.harnessVersion === undefined && value.worldModel === undefined && value.source === undefined));
 }
 
 function isCountyReel(value: unknown): boolean {
@@ -1087,7 +1093,7 @@ function renderCountyRow(row: CountyStanding, watchable: boolean): string {
 
 function renderCountyStack(stack: StandingStack, testId: string): string {
   const harness = [stack.harness, stack.harnessVersion].filter(Boolean).join(' ');
-  const label = stack.declared ? [stack.model, harness].filter(Boolean).join(' · ') || 'Declared rider' : 'Undeclared rider';
+  const label = stack.declared ? [stack.model, harness, stack.worldModel && `world model ${stack.worldModel}`].filter(Boolean).join(' · ') || 'Declared rider' : 'Undeclared rider';
   return `<span class="county-standings__stack" data-testid="county-standings-stack-${testId}" title="${escapeHtml(label)}">${escapeHtml(label)}</span>${stack.source === undefined ? '' : `<a class="county-standings__source" data-testid="county-standings-source-${testId}" href="${escapeHtml(stack.source)}" target="_blank" rel="noopener">source &#8599;</a>`}`;
 }
 
@@ -1131,6 +1137,10 @@ function validOptionalCost(value: unknown): boolean {
 
 function validOptionalString(value: unknown): boolean {
   return value === undefined || (typeof value === 'string' && value.length <= 256);
+}
+
+function validOptionalWorldModel(value: unknown): boolean {
+  return value === undefined || (typeof value === 'string' && value.length <= 64);
 }
 
 function validOptionalSource(value: unknown): boolean {

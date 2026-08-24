@@ -130,7 +130,7 @@ test('minds and rigs aggregate the same standings without changing county rankin
   const kv = makeKv();
   const contracts = ['the-claim', 'e1-dry-gulch', 'e1-night-shift'];
   const stacks = [
-    { model: 'mind-a', harness: 'rig-x', harnessVersion: 'test', tokensIn: 10, tokensOut: 1, calls: 1 },
+    { model: 'mind-a', harness: 'rig-x', harnessVersion: 'test', worldModel: 'sim-import', tokensIn: 10, tokensOut: 1, calls: 1 },
     { model: 'mind-a', harness: 'rig-y', harnessVersion: 'test', tokensIn: 20, tokensOut: 2, calls: 2 },
     { model: 'mind-b', harness: 'rig-x', harnessVersion: 'test', tokensIn: 30, tokensOut: 3, calls: 3 },
     { model: 'mind-b', harness: 'rig-y', harnessVersion: 'test' },
@@ -184,6 +184,8 @@ test('minds and rigs aggregate the same standings without changing county rankin
   expect(minds.byStack.find((row) => row.model === 'undeclared rider')).toMatchObject({ aggregate: { standings: 1, contracts: 1, crowns: 0 } });
   const absentCostCell = minds.byStack.find((row) => row.model === 'mind-b')?.contracts.find((cell) => cell.contractId === 'e1-dry-gulch');
   for (const field of ['tokensIn', 'tokensOut', 'calls']) expect(absentCostCell).not.toHaveProperty(field);
+  expect(minds.byStack.find((row) => row.model === 'mind-a')?.contracts.find((cell) => cell.contractId === 'the-claim')).toMatchObject({ worldModel: 'sim-import' });
+  expect(absentCostCell).not.toHaveProperty('worldModel');
 
   const rigsResponse = await standingsRoute({
     request: request('GET', '?view=byHarness&epoch=epoch-1-frontier'),
@@ -249,7 +251,7 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
               model: 'gpt-5.6-sol',
               aggregate: { standings: 2, contracts: 2, crowns: 1, bestWaves: 20, totalTokensIn: 90_000, totalTokensOut: 8_000, totalCalls: 18, declaredCells: 1, undeclaredCells: 1, latestSubmittedAt: now - 60_000 },
               contracts: [
-                { contractId: 'the-claim', score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 }, difficulty: 'trail', tokensIn: 90_000, tokensOut: 8_000, calls: 18, harness: 'codex', harnessVersion: '2026.08', config: 'medium', submittedAt: now - 60_000, assayStatus: 'verified', assayStrip: { era: { id: 'b8cf2332d', label: 'Same-Game era' }, outcome: { secured: true, waves: 20, timeAlive: 620 }, economy: { status: 'measured', decisions: 10, frontierDecisions: 8, efficiency: 0.8 }, cost: { tokensIn: 90_000, tokensOut: 8_000, calls: 18 } } },
+                { contractId: 'the-claim', score: { secured: true, waves: 20, timeAlive: 620, gold: 200, baseValue: 400 }, difficulty: 'trail', tokensIn: 90_000, tokensOut: 8_000, calls: 18, harness: 'codex', harnessVersion: '2026.08', worldModel: 'sim-import', config: 'medium', submittedAt: now - 60_000, assayStatus: 'verified', assayStrip: { era: { id: 'b8cf2332d', label: 'Same-Game era' }, outcome: { secured: true, waves: 20, timeAlive: 620 }, economy: { status: 'measured', decisions: 10, frontierDecisions: 8, efficiency: 0.8 }, cost: { tokensIn: 90_000, tokensOut: 8_000, calls: 18 } } },
                 { contractId: 'e1-dry-gulch', score: { secured: true, waves: 14, timeAlive: 614, gold: 140, baseValue: 280 }, difficulty: 'vein-hunter', harness: 'gr-sim', submittedAt: now - 86_400_000, assayStatus: 'pending' },
               ],
             },
@@ -299,6 +301,9 @@ test('plain boot renders and expands the Minds and Rigs tables', async ({ page }
   await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-e1-dry-gulch')).toContainText('Cost not declared');
   await expect(page.getByTestId('field-book-assay-absent-gpt-5-6-sol-e1-dry-gulch')).toHaveText('Assay awaits verification.');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('codex 2026.08');
+  await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-the-claim')).toContainText('World model: sim-import');
+  await expect(page.getByTestId('field-book-cell-gpt-5-6-sol-e1-dry-gulch')).toContainText('World model not declared');
+  await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('World modelsim-import');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText('medium');
   await expect(page.getByTestId('field-book-detail-gpt-5-6-sol-the-claim')).toContainText(new Date(now - 60_000).toISOString());
   const frontDesk = page.locator('[data-testid="field-book"] + [data-testid="front-desk"]');
