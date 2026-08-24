@@ -22,7 +22,7 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync, mkdirSync, cpSync, readFileSync, rmSync, realpathSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, rmSync, realpathSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -88,7 +88,23 @@ function run(body, { splice = null, strict = true, seam = RESIDUE_SEAM } = {}) {
   writeFileSync(path.join(root, 'tasks', 'goals.json'), JSON.stringify(HEALTHY, null, 2));
 
   const dir = path.join(base, 'scripts');
-  cpSync(HERE, dir, { recursive: true });
+  /**
+   * F-2284-1: this used to be `cpSync(HERE, dir, { recursive: true })` — the whole
+   * 503-entry scripts/ directory, on EVERY run() call, to place a file the next line
+   * immediately overwrites. `authorable-candidates.mjs` imports only node builtins and
+   * reads no sibling, so the copy bought nothing and cost two things:
+   *   1. a RACE. cpSync enumerates the source, then copies entry by entry; any
+   *      concurrent mutation of scripts/ in that window is an ENOENT — and the path it
+   *      reports is the DESTINATION, so the error accuses the fixture's own temp dir
+   *      while the SOURCE is what moved. F-2283-4 read exactly that message and
+   *      concluded a detached gate worktree was an unreliable host; it is not. The
+   *      racing writer is lawful and ordinary: F-1665-1 measured 38 fires writing
+   *      one-shot splice helpers into scripts/ mid-fire.
+   *   2. ~3,500 pointless file copies per execution of this file (3.2× slower).
+   * PROVEN BY MANUFACTURING, both directions: with scripts/ churned concurrently the
+   * pre-cure fixture reds 5/5 on that ENOENT and the cured one is 5/5 green.
+   */
+  mkdirSync(dir, { recursive: true });
   const finalBody = splice ? variantOf(body, seam, splice + '\n' + seam) : body;
   writeFileSync(path.join(dir, 'authorable-candidates.mjs'), finalBody);
 
