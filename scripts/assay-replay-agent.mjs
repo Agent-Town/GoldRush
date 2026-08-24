@@ -25,12 +25,27 @@
  * Usage: node scripts/assay-replay-agent.mjs <reel.json>   (or import `replayAgentTape`)
  */
 
-import { readFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+export const CANONICAL_ASSAY_NODE_VERSION = '26.4.0';
+export const ENGINE_SOURCE_INPUTS = [
+  'package-lock.json',
+  'package.json',
+  'tsconfig.json',
+  'vite.config.ts',
+  'scripts/assay-replay-agent.mjs',
+  'assets/contracts',
+  'assets/crafting-queue/contract.v1.json',
+  'assets/crafting-queue/approved',
+  'assets/layer-contracts',
+  'assets/pilots/map-rebuild-spike',
+  'src',
+];
 /**
  * Anti-hang headroom for the steps a run takes while its clock is FROZEN — every pending secure
  * choice burns `Balance.offers.pickSeconds` of steps without moving `timeAlive`, so a tape's
@@ -38,6 +53,41 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
  * admitted contract's choice clocks; past it the instrument refuses rather than spins.
  */
 const FROZEN_STEP_ALLOWANCE = 18_000;
+const TRACE_EVERY = Number(process.env.ASSAY_TRACE_EVERY ?? 0);
+if (!Number.isSafeInteger(TRACE_EVERY) || TRACE_EVERY < 0) throw new Error('ASSAY_TRACE_EVERY must be a non-negative integer');
+
+export function assertCanonicalAssayNode(version = process.versions.node) {
+  if (version !== CANONICAL_ASSAY_NODE_VERSION) {
+    throw new Error(`assay worker requires Node ${CANONICAL_ASSAY_NODE_VERSION} exactly; found ${version}`);
+  }
+}
+
+/** Conservative source identity for everything the headless replay can execute or load as data. */
+export async function computeEngineHash(projectRoot = root) {
+  const files = [];
+  for (const input of ENGINE_SOURCE_INPUTS) {
+    const absolute = path.join(projectRoot, input);
+    if (path.extname(input)) files.push(absolute);
+    else await collectEngineFiles(absolute, files);
+  }
+  files.sort();
+  const hash = createHash('sha256');
+  for (const file of files) {
+    const relative = path.relative(projectRoot, file).split(path.sep).join('/');
+    const bytes = await readFile(file);
+    hash.update(`${relative}\0${bytes.length}\0`);
+    hash.update(bytes);
+  }
+  return hash.digest('hex');
+}
+
+async function collectEngineFiles(directory, files) {
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const absolute = path.join(directory, entry.name);
+    if (entry.isDirectory()) await collectEngineFiles(absolute, files);
+    else if (entry.isFile() && /\.(?:json|mjs|ts)$/.test(entry.name)) files.push(absolute);
+  }
+}
 
 /** A tape whose input log carries standing orders was written by the headless door, not a browser. */
 export function isAgentTape(tape) {
@@ -81,7 +131,7 @@ export async function replayAgentTape(rawTape) {
 
     // The county validator already ran server-side; running it again here means the instrument
     // never replays bytes it has not itself agreed are a tape (the worker feeds it raw queue rows).
-    const tape = validateRunTape(rawTape);
+    const tape = validateRunTape(withoutEngineHash(rawTape));
     if (!tape) throw new Error('malformed tape');
     if (tape.simVersion !== RUN_TAPE_SIM_VERSION) throw new Error('sim version mismatch');
     if (!tape.runStart) throw new Error('legacy tape v1 is unverifiable');
@@ -109,6 +159,9 @@ export async function replayAgentTape(rawTape) {
         for (const order of orders.get(tick) ?? []) sim.submitOrders(order);
         applied.add(tick);
       }
+      if (TRACE_EVERY > 0 && steps % TRACE_EVERY === 0) {
+        process.stderr.write(`${JSON.stringify({ event: 'tick_hash', step: steps, tick, hash: sim.tickHash(steps) })}\n`);
+      }
       sim.advanceOneTick();
       steps += 1;
     }
@@ -132,6 +185,14 @@ export async function replayAgentTape(rawTape) {
     Object.assign(console, quiet);
     await vite.close();
   }
+}
+
+function withoutEngineHash(tape) {
+  const meta = tape?.meta;
+  if (!meta || typeof meta !== 'object' || Array.isArray(meta)
+    || Object.keys(meta).sort().join(',') !== 'buildId,engineHash'
+    || typeof meta.engineHash !== 'string' || !/^[a-f0-9]{64}$/.test(meta.engineHash)) return tape;
+  return { ...tape, meta: { buildId: meta.buildId } };
 }
 
 /**

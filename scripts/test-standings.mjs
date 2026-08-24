@@ -39,6 +39,7 @@ try {
     checks = 0;
     checkDurationCeilings(validateTape, validateRunTape, maxRunTapeTicksForContract, MAX_PLAYBOOK_TICKS);
     checkTapeBuildMetadata(validateTape);
+    await checkEngineHashReel(onRequest);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -94,9 +95,20 @@ async function checkAssayStrips(onRequest) {
 
 function checkTapeBuildMetadata(validateTape) {
   const legacyV2 = tapeV2('without-build', 1);
-  const stampedV2 = { ...tapeV2('with-build', 1), meta: { buildId: 'abcdef12' } };
+  const stampedV2 = { ...tapeV2('with-build', 1), meta: { buildId: 'abcdef12', engineHash: 'a'.repeat(64) } };
+  const badEngineHash = { ...tapeV2('bad-engine-hash', 1), meta: { buildId: 'abcdef12', engineHash: 'nope' } };
   equal(validateTape(legacyV2, 'the-claim', 'gold-rush', 'trail')?.meta, undefined, 'v2 tapes without build metadata remain valid');
-  equal(validateTape(stampedV2, 'the-claim', 'gold-rush', 'trail')?.meta, stampedV2.meta, 'v2 build metadata is accepted and preserved');
+  equal(validateTape(stampedV2, 'the-claim', 'gold-rush', 'trail')?.meta, stampedV2.meta, 'v2 engine metadata is accepted and preserved');
+  equal(validateTape(badEngineHash, 'the-claim', 'gold-rush', 'trail'), null, 'malformed engine metadata is rejected');
+}
+
+async function checkEngineHashReel(onRequest) {
+  const kv = makeKv();
+  const runTape = { ...tapeV2('engine-reel', 1), meta: { buildId: 'abcdef12', engineHash: 'a'.repeat(64) } };
+  equal((await call(onRequest, 'POST', '/api/standings', post('e'.repeat(32), 1, runTape), kv)).status, 200, 'engine tape is stored');
+  equal(JSON.parse(await kv.get(KEY))[0].tape.meta.engineHash, 'a'.repeat(64), 'worker identity stays stored');
+  const response = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=engine-reel', undefined, kv);
+  equal(response.body.reel.meta, { buildId: 'abcdef12' }, 'public WATCH reel stays compatible with the shared browser validator');
 }
 
 async function checkAssayIndexRace(onRequest, queueRoute) {

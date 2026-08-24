@@ -1,14 +1,19 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawn } from 'node:child_process';
-import { readFileSync } from 'node:fs';
-import { mkdtemp, rm, writeFile } from 'node:fs/promises';
+import { existsSync, readFileSync } from 'node:fs';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
-import { tmpdir } from 'node:os';
+import { homedir, tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { assertCanonicalAssayNode, CANONICAL_ASSAY_NODE_VERSION, computeEngineHash, ENGINE_SOURCE_INPUTS } from './assay-replay-agent.mjs';
 
 const root = process.cwd();
 const buildId = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
+const engineHash = await computeEngineHash(root);
+const installedCanonicalNode = path.join(homedir(), '.nvm/versions/node', `v${CANONICAL_ASSAY_NODE_VERSION}`, 'bin/node');
+const workerNode = process.versions.node === CANONICAL_ASSAY_NODE_VERSION ? process.execPath : installedCanonicalNode;
+if (!existsSync(workerNode)) throw new Error(`assay-worker tests require Node ${CANONICAL_ASSAY_NODE_VERSION}`);
 const locator = (tapeId) => ({ epochId: 'epoch-1-frontier', contractId: 'the-claim', tapeId, rowId: `${'a'.repeat(32)}:1:1:${'b'.repeat(64)}` });
 const score = { secured: true, waves: 10, timeAlive: 120, gold: 40, baseValue: 60 };
 const row = (id, version = 2) => ({ locator: locator(id), tape: { version, id, eventLogHash: 'fnv1a32:1234abcd' }, score, submittedAt: 1 });
@@ -67,7 +72,7 @@ function json(response, status, body) {
 }
 
 function runWorker(base, stub, flags = ['--once']) {
-  const child = spawn(process.execPath, ['scripts/assay-worker.mjs', ...flags], {
+  const child = spawn(workerNode, ['scripts/assay-worker.mjs', ...flags], {
     cwd: root,
     env: { ...process.env, ASSAY_BUILD_ID: buildId, ASSAY_API_BASE: base, ASSAY_WORKER_SECRET: 'test-secret', ASSAY_REPLAY_SCRIPT: stub, ASSAY_POLL_MS: '5', ASSAY_BACKOFF_INITIAL_MS: '10', ASSAY_BACKOFF_MAX_MS: '20' },
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -110,30 +115,78 @@ test('once keeps completed mismatches rejected and retries instrument failures b
   }
 });
 
-test('build skew is retry-free and a matching round-2 tape still verifies', async () => {
+test('engine hash wins over build id, with build id retained for legacy tapes', async () => {
   const { directory, stub } = await fixture();
   const round2 = JSON.parse(readFileSync('artifacts/assay-e2e-20260822/round2/tape-secure-verb.json', 'utf8'));
-  const matchingTape = { ...round2, id: 'matching-round2', meta: { buildId: buildId.slice(0, 8) } };
+  const matchingTape = { ...round2, id: 'matching-round2', meta: { buildId: buildId.slice(0, 8), engineHash } };
   const matchingRow = {
     locator: locator(matchingTape.id),
     tape: matchingTape,
     score: { ...matchingTape.outcome, baseValue: 60 },
     submittedAt: 1,
   };
-  const skew = row('skew');
-  skew.tape.meta = { buildId: 'deadbeef' };
-  const api = await mockApi([skew, matchingRow]);
+  const engineSkew = row('engine-skew');
+  engineSkew.tape.meta = { buildId, engineHash: '0'.repeat(64) };
+  const legacySkew = row('legacy-skew');
+  legacySkew.tape.meta = { buildId: 'deadbeef' };
+  const api = await mockApi([engineSkew, legacySkew, matchingRow]);
   try {
     const { code, stdout, stderr } = await runWorker(api.base, stub).done;
     assert.equal(code, 0, stderr);
-    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'verified']);
-    assert.equal(api.posts[0].reason, `build-skew (tape deadbeef, assayer ${buildId})`);
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'unassayable', 'verified']);
+    assert.equal(api.posts[0].reason, `engine-skew (tape ${'0'.repeat(64)}, assayer ${engineHash})`);
     assert.equal(api.posts[0].replayedHash, undefined);
-    assert.equal(api.posts[1].reason, undefined);
+    assert.equal(api.posts[1].reason, `build-skew (tape deadbeef, assayer ${buildId})`);
+    assert.equal(api.posts[2].reason, undefined);
     assert.equal(stdout.trim().split('\n').map(JSON.parse).some(({ event }) => event === 'instrument_retry'), false);
   } finally {
     await api.close();
     await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('the worker environment law refuses every Node version except the exact canonical one', () => {
+  assert.doesNotThrow(() => assertCanonicalAssayNode(CANONICAL_ASSAY_NODE_VERSION));
+  assert.throws(() => assertCanonicalAssayNode('26.4.1'), /requires Node 26\.4\.0 exactly; found 26\.4\.1/);
+});
+
+test('engine hash ignores a doc-only commit and moves on a Balance edit in a scratch worktree', async () => {
+  const repository = await mkdtemp(path.join(tmpdir(), 'assay-engine-hash-repo-'));
+  const worktree = `${repository}-worktree`;
+  const gitEnv = { ...process.env, GIT_AUTHOR_NAME: 'Assay Test', GIT_AUTHOR_EMAIL: 'assay@test.invalid', GIT_COMMITTER_NAME: 'Assay Test', GIT_COMMITTER_EMAIL: 'assay@test.invalid' };
+  try {
+    for (const input of ENGINE_SOURCE_INPUTS) {
+      if (path.extname(input)) {
+        await mkdir(path.dirname(path.join(repository, input)), { recursive: true });
+        await writeFile(path.join(repository, input), `${input}\n`);
+      } else {
+        await mkdir(path.join(repository, input), { recursive: true });
+        await writeFile(path.join(repository, input, input.startsWith('assets/') ? 'fixture.json' : 'fixture.ts'), '{}\n');
+      }
+    }
+    await mkdir(path.join(repository, 'src/game'), { recursive: true });
+    await writeFile(path.join(repository, 'src/game/Balance.ts'), 'export const Balance = 1;\n');
+    execFileSync('git', ['init', '-q'], { cwd: repository });
+    execFileSync('git', ['add', '.'], { cwd: repository });
+    execFileSync('git', ['commit', '-qm', 'engine baseline'], { cwd: repository, env: gitEnv });
+    execFileSync('git', ['worktree', 'add', '-q', '--detach', worktree, 'HEAD'], { cwd: repository });
+
+    const baseline = await computeEngineHash(worktree);
+    await mkdir(path.join(worktree, 'docs'), { recursive: true });
+    await writeFile(path.join(worktree, 'docs/note.md'), 'docs only\n');
+    execFileSync('git', ['add', 'docs/note.md'], { cwd: worktree });
+    execFileSync('git', ['commit', '-qm', 'docs only'], { cwd: worktree, env: gitEnv });
+    assert.equal(await computeEngineHash(worktree), baseline);
+
+    const balancePath = path.join(worktree, 'src/game/Balance.ts');
+    await writeFile(balancePath, `${await readFile(balancePath, 'utf8')}export const changed = true;\n`);
+    const balanceHash = await computeEngineHash(worktree);
+    assert.notEqual(balanceHash, baseline);
+    await writeFile(path.join(worktree, 'assets/crafting-queue/approved/fixture.json'), '{"changed":true}\n');
+    assert.notEqual(await computeEngineHash(worktree), balanceHash);
+  } finally {
+    if (existsSync(worktree)) execFileSync('git', ['worktree', 'remove', '--force', worktree], { cwd: repository });
+    await rm(repository, { recursive: true, force: true });
   }
 });
 

@@ -407,7 +407,10 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     if (!reel) return error(cors, 404, 'reel_not_found', 'That reel is not on the shelf.');
     // The archive keeps its reels: a season-1 tape stays fetchable as the artifact it is, and the
     // payload's own labels say which era's proof standards it was posted under.
-    return json(cors, { ok: true, ...seasonLabels(season), epochId, contractId, reel });
+    const publicReel = isRecord(reel.meta) && reel.meta.engineHash !== undefined
+      ? { ...reel, meta: { buildId: reel.meta.buildId } }
+      : reel;
+    return json(cors, { ok: true, ...seasonLabels(season), epochId, contractId, reel: publicReel });
   }
   // THE ASSAY SLIP (F-ASSAY-E2E, 2026-08-22). A refused row leaves the ranked board and takes its
   // reason with it, so a rider who submitted honestly and was rejected could learn only that
@@ -1007,9 +1010,17 @@ export function validateTape(value: unknown, contractId: unknown, seed: unknown,
   if (value.contract !== contractId || value.seed !== seed || value.difficulty !== difficulty) return null;
   if (typeof value.eventLogHash !== 'string' || !/^fnv1a32:[a-f0-9]{8}$/.test(value.eventLogHash)) return null;
   if (!validTapeOutcome(value.outcome) || !validTapeInput(value.inputLog, contractId, seed, difficulty)
-    || (value.meta !== undefined && (!isRecord(value.meta) || !hasOnlyKeys(value.meta, new Set(['buildId'])) || typeof value.meta.buildId !== 'string' || !/^(dev|[a-f0-9]{7,16})$/.test(value.meta.buildId)))
+    || !validTapeMeta(value.meta)
     || (value.version === 2 ? !validRunStart(value.runStart) : value.runStart !== undefined || value.meta !== undefined)) return null;
   return value;
+}
+
+function validTapeMeta(value: unknown): boolean {
+  return value === undefined || (isRecord(value)
+    && hasOnlyKeys(value, new Set(['buildId', 'engineHash']))
+    && typeof value.buildId === 'string'
+    && /^(dev|[a-f0-9]{7,16})$/.test(value.buildId)
+    && (value.engineHash === undefined || (typeof value.engineHash === 'string' && SHA256.test(value.engineHash))));
 }
 
 function validRunStart(value: unknown): boolean {

@@ -206,7 +206,9 @@ export function resolveTerrainMove(
     const projectedDistance = distance * Math.cos(turn);
     for (const sign of [-1, 1] as const) {
       const angle = moveAngle + sign * turn;
-      consider(Math.cos(angle) * projectedDistance, Math.sin(angle) * projectedDistance);
+      // JS transcendental functions may differ by one ulp across platform libm implementations.
+      // Canonicalize only their candidate before it can enter authoritative movement state.
+      consider(roundMotion(Math.cos(angle) * projectedDistance), roundMotion(Math.sin(angle) * projectedDistance));
     }
   }
 
@@ -337,6 +339,10 @@ function keyCoord(value: number): string {
 
 function round3(value: number): number {
   return Math.round(value * 1000) / 1000;
+}
+
+function roundMotion(value: number): number {
+  return Math.round(value * 1e15) / 1e15;
 }
 
 function cacheLos(key: string, check: TerrainLosCheck): void {
