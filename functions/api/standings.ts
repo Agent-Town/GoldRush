@@ -1,18 +1,8 @@
 import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
-import atomicContracts from '../../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
-import deepwaterContracts from '../../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
-import deepskyContracts from '../../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
-import frontierContracts from '../../assets/contracts/epoch-1-frontier/contracts.json' with { type: 'json' };
-import motorContracts from '../../assets/contracts/epoch-4-motor/contracts.json' with { type: 'json' };
-import orbitalContracts from '../../assets/contracts/epoch-8-orbital/contracts.json' with { type: 'json' };
-import redfieldsContracts from '../../assets/contracts/epoch-9-redfields/contracts.json' with { type: 'json' };
-import signalContracts from '../../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
-import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
-import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
-import { maxRunTapeTicksForContract } from '../../src/playbook/PlaybookFormat';
+import { CONTRACT_BUNDLES, maxRunTapeTicksForContract } from '../../src/playbook/PlaybookFormat';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 import type { LedgerStorage } from './_accounts';
@@ -118,23 +108,6 @@ type GroupAggregate = {
 
 type BoardGroup = { contracts: Map<string, unknown>; aggregate: GroupAggregate };
 
-type ContractBundle = {
-  epochId: string;
-  contracts: Array<{ id: string }>;
-};
-
-const CONTRACT_BUNDLES = [
-  frontierContracts,
-  steamworksContracts,
-  voltageContracts,
-  motorContracts,
-  deepwaterContracts,
-  atomicContracts,
-  signalContracts,
-  orbitalContracts,
-  redfieldsContracts,
-  deepskyContracts,
-] as ContractBundle[];
 const CONTRACT_EPOCHS = new Map(
   CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts.map((contract) => [contract.id, bundle.epochId] as const)),
 );
