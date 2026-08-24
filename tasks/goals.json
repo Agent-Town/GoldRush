@@ -2915,6 +2915,24 @@
               "note": "Authored s2265 from the gate evidence in reviews/bt-04b-automation-two-params.md. Measured flake: 2 failures in 3 full-file mobile-chrome runs at --workers=1, 0 failures in 2 isolated runs, desktop full-file green. Held bt-04b from merging."
             },
             {
+              "id": "gauntlet-heat3a-codex-backend-shim",
+              "title": "Guest harnesses ride the Codex subscription - the local OpenAI-compatible shim (investigate-first, never metered fallback)",
+              "taskFile": "gauntlet-heat3a-codex-backend-shim.md",
+              "status": "queued",
+              "lane": "lane-b",
+              "authoredBy": "attended 2026-08-24",
+              "note": "Owner verbatim: we want to run hermes, openclaw and all of them on Codex/subscription. codex CLI has app-server/mcp-server/exec-server modes but no OpenAI-compat endpoint - this slice investigates the lawful mechanism and builds the smallest shim (127.0.0.1 only, no auth material ever logged), or STOPs with the honest option table. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
+            },
+            {
+              "id": "gauntlet-heat3b-full-field",
+              "title": "Heat 3 - pi, omp, Eliza + the paper-harness recon (Tycho/AVO/VISTA), every guest on the subscription shim, hermes+openclaw re-ridden",
+              "taskFile": "gauntlet-heat3b-full-field.md",
+              "status": "queued",
+              "lane": "lane-b",
+              "authoredBy": "attended 2026-08-24",
+              "note": "Owner verbatim: we need PI, omp, Eliza as well + prime intellect's prime agent is also needed + the papers direction. Sequencing-gated on heat-3a's shim (verifies by round trip at start; queued behind it on the same lane, alphabetical pickup preserves order). Short program each, DNFs as heat history incl. install/config stages, paper-trio recon verdicts are deliverables. Skew law tracks the LIVE deploy at run time via version.json + an early probe submission. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
+            },
+            {
               "id": "gauntlet-heat2-harness-matrix",
               "title": "Heat 2 - the field widens: codex-luna full program + hermes and openclaw short programs, same door, same seeds",
               "taskFile": "gauntlet-heat2-harness-matrix.md",

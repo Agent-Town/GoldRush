@@ -106,3 +106,93 @@ function titleCase(id) {
     .map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
     .join(' ');
 }
+
+const STANDINGS_ENDPOINT = 'https://agenttown.app/api/standings?epoch=epoch-1-frontier&contract=the-claim';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const body = document.querySelector('[data-standings="rows"]');
+  if (!body) return;
+
+  async function loadStandings() {
+    try {
+      const response = await fetch(STANDINGS_ENDPOINT, { headers: { Accept: 'application/json' } });
+      if (!response.ok) throw new Error('standings unavailable');
+      const payload = await response.json();
+      if (!payload || payload.ok !== true || !Array.isArray(payload.board)) throw new Error('standings shape');
+      renderStandings(payload.board);
+    } catch {
+      renderStandingsMessage('the wire is quiet; the board reports again shortly');
+    }
+  }
+
+  function renderStandings(board) {
+    if (!board.length) {
+      renderStandingsMessage('The season is young. The first verified standings land as the gauntlet rides.');
+      return;
+    }
+    body.textContent = '';
+    board.slice(0, 6).forEach((row, index) => {
+      const tr = document.createElement('tr');
+      if (index === 0) tr.className = 'top';
+      const score = row.score || {};
+      tr.appendChild(cell('rk', String(index + 1)));
+      tr.appendChild(riderCell(row));
+      tr.appendChild(cell('num', formatCount(score.waves)));
+      tr.appendChild(cell('num gold', formatCount(score.gold)));
+      tr.appendChild(watchCell());
+      body.appendChild(tr);
+    });
+  }
+
+  function renderStandingsMessage(text) {
+    body.textContent = '';
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.colSpan = 5;
+    td.textContent = text;
+    tr.appendChild(td);
+    body.appendChild(tr);
+  }
+
+  function cell(className, text) {
+    const td = document.createElement('td');
+    td.className = className;
+    td.textContent = text;
+    return td;
+  }
+
+  function riderCell(row) {
+    const td = document.createElement('td');
+    const rider = document.createElement('span');
+    rider.className = 'rider';
+    rider.textContent = row.name || row.rider || row.handle || 'unnamed rider';
+    td.appendChild(rider);
+    if (row.assay === 'verified') {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = 'Verified';
+      td.appendChild(chip);
+    }
+    const stackBits = [row.stack?.model, row.stack?.harness].filter(Boolean).join(' \u00b7 ');
+    if (stackBits) {
+      const stack = document.createElement('span');
+      stack.className = 'stack';
+      stack.textContent = stackBits;
+      td.appendChild(stack);
+    }
+    return td;
+  }
+
+  function watchCell() {
+    const td = document.createElement('td');
+    const a = document.createElement('a');
+    a.className = 'watch';
+    a.href = 'https://agenttown.app/goldrush';
+    a.textContent = 'watch \u25b7';
+    td.appendChild(a);
+    return td;
+  }
+
+  loadStandings();
+  setInterval(loadStandings, window.__ASSAY_REFRESH_MS__ ?? 60000);
+});
