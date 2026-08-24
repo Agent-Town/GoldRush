@@ -187,6 +187,14 @@ test('(3) the map half-extent the carried delta was measured at has not grown', 
   // (half-extent 200 -> ulp 2.84e-14, 4x today's). It does not reach resolveTerrainMove today, so
   // nothing is wrong; if it ever gained an elevation tile or an authored water mask, hypot's
   // headroom would fall from ~14x to ~3.5x WITHOUT ONE LINE OF src/sim/ CHANGING.
+  //
+  // ⓘ CLOSED s2288 (F-2288-1). The residue this arm declared -- "no guard can cheaply assert that
+  // no REACHING contract exceeds half-extent 32" -- is now watched by
+  // scripts/reaching-contract-extent-guard.test.mjs, which censuses contract data rather than this
+  // constant. Keep BOTH: this arm pins the DEFAULT, that one pins the per-contract override, and
+  // neither can see the other's rot. Measured s2288: the live worst REACHING contract is
+  // e3-canyon-works at half-extent 56 -- 1.75x the 32 asserted below, and identical in ULP because
+  // both sit in the [32,64) binade, which is the quantity that actually matters.
   const m = read('src/world/Terrain.ts').match(/export const DEFAULT_CLAIM_SIZE = (\d+)/);
   assert.ok(m, 'REFUSING — DEFAULT_CLAIM_SIZE not found; the carried-delta scale cannot be derived.');
   const halfExtent = Number(m[1]) / 2;
