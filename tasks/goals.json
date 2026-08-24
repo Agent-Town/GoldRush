@@ -2915,6 +2915,24 @@
               "note": "Authored s2265 from the gate evidence in reviews/bt-04b-automation-two-params.md. Measured flake: 2 failures in 3 full-file mobile-chrome runs at --workers=1, 0 failures in 2 isolated runs, desktop full-file green. Held bt-04b from merging."
             },
             {
+              "id": "gauntlet-heat2-harness-matrix",
+              "title": "Heat 2 - the field widens: codex-luna full program + hermes and openclaw short programs, same door, same seeds",
+              "taskFile": "gauntlet-heat2-harness-matrix.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-08-24",
+              "note": "Owner verbatim: can we also do the harnesses as part of the gauntlet? I have lots of tokens for Codex. Codex operates the field and rides as gpt-5.6-luna (six contracts); hermes + openclaw ride the three-contract short program via the charter prompt - DNFs are heat history (ap-15 axis 7), never ghost-written. Own worktree /tmp/heat2-b42c0fbc (heat-1 owns the other). DISPATCHED to tasks/queue/lane-d in the authoring commit window."
+            },
+            {
+              "id": "gauntlet-heat-e1",
+              "title": "The season's first heat - six E1 contracts ridden through the public door, verified standings on the live board",
+              "taskFile": "gauntlet-heat-e1.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-08-24",
+              "note": "Owner 2026-08-24: I think we will have to run another gauntlet to fill the leaderboard? - yes. Codex rides as the season's first rider: own strategies via skill.md, up to 3 attempts per contract, secured runs submitted + polled to verified, honest table for the rest. Rides AT the deployed commit b42c0fbcc (the c6 skew law). Evidence under artifacts/gauntlet-heat-20260824/. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
+            },
+            {
               "id": "harness-disclosure-field",
               "title": "Sim-import is lawful WITH disclosure - the ruling reaches the door doc, the stack, and the board (F-HARNESS-1 ruled)",
               "taskFile": "harness-disclosure-field.md",
@@ -2944,6 +2962,7 @@
               "lane": "lane-a",
               "spec": "specs/building-tiers/README.md",
               "authoredBy": "s2268 fire",
+              "drainNotes": "NEGATIVE REPRODUCTION, s2268 same fire: the runner consumed this at 13:47:39 and reported READY-FOR-GATES with 10 consecutive unmodified full-file mobile-chrome runs at --workers=1 all passing 3/3. It established no mechanism, changed NO product and NO spec source, and stopped exactly as scope item 1 ordered - a FIREWALL SUCCESS, and it wrote WHY it changed nothing (not a Silent No-Op). Combined with s2268 gate evidence the rate is 1 failure in 15 full-file mobile runs (~7%), so FILE ORDER is refuted as a sufficient cause. THE UNCONTROLLED VARIABLE IS THE SHELL: the runner ran in the LANE shell, the failure was observed in the FIRE shell (F-1267-1/F-1269-1 measure ~3.5x less per-job CPU there) - which matters more, not less, because every drain gate runs fire-side. Its done-move carries NO code diff by design: retire it as noop/stopped, do not gate it. Do NOT re-dispatch this master unchanged (S7.5 forbids the identical retry). Run log: tasks/runs/20260824-134739-lane-a-f2268-1-bt04b-plain-boot-order-determinism.md.log",
               "note": "FIRE-AUTHORED from the gate evidence in reviews/f2265-2-bt04b-mobile-spec-determinism.md. Measured: 1 failure in 5 full-file mobile-chrome runs at --workers=1, 0 failures in 6 ISOLATED runs of the same test at equal-or-higher loadavg - so the discriminator is FILE ORDER, not load, and the ambient reading is refuted by a load-matched control. Note this does NOT contradict F-2266-1: that refutation rested on the failing test being FIRST in the file, and this one runs THIRD. Declares the F-2089-1 BUILD-ON-PREDECESSOR opt-in with all 8 held paths verified against the live lane. DISPATCHED to tasks/queue/lane-a in the authoring commit window."
             },
             {
