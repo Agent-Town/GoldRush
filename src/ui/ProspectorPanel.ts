@@ -146,14 +146,27 @@ export class ProspectorPanel {
         const state = consent?.abilities[ability.id];
         const granted = state?.granted ?? true;
         const allowed = state?.allowed ?? false;
+        const inputId = `prospector-ability-input-${ability.id}`;
         return `
-          <label class="prospector-check" data-allowed="${allowed}">
-            <input type="checkbox" data-prospector-ability="${ability.id}" data-testid="prospector-ability-${ability.id}" ${granted ? 'checked' : ''} />
-            <span>${ability.label}</span>
-          </label>
+          <div class="prospector-check" data-allowed="${allowed}">
+            <input id="${inputId}" type="checkbox" data-prospector-ability="${ability.id}" data-testid="prospector-ability-${ability.id}" ${granted ? 'checked' : ''} />
+            <span><label for="${inputId}">${ability.label}</label>${this.automationControl(ability.id)}</span>
+          </div>
         `;
       })
       .join('');
+  }
+
+  private automationControl(ability: AgentAbility): string {
+    const consent = this.snapshot?.agent?.consent;
+    const inputStyle = 'width:4rem;height:2rem;margin:0 .25rem';
+    if (ability === 'auto_repair') {
+      return `<br /><small>Repair under <input type="number" min="0" max="100" step="1" value="${consent?.repairUnderPct ?? 60}" style="${inputStyle}" data-prospector-automation="repairUnderPct" data-testid="prospector-repair-under" aria-label="Auto-repair threshold percent" />% HP</small>`;
+    }
+    if (ability === 'auto_pan') {
+      return `<br /><small>Act after <input type="number" min="0" max="60" step="0.1" value="${consent?.idleSeconds ?? 0.8}" style="${inputStyle}" data-prospector-automation="idleSeconds" data-testid="prospector-idle-seconds" aria-label="Automation idle seconds" />s idle</small>`;
+    }
+    return '';
   }
 
   private lockedAbility(ability: AgentCapability): string {
@@ -189,6 +202,11 @@ export class ProspectorPanel {
   private readonly onChange = (event: Event) => {
     const target = event.target;
     if (!(target instanceof HTMLInputElement)) return;
+    const automation = target.dataset.prospectorAutomation as 'repairUnderPct' | 'idleSeconds' | undefined;
+    if (automation) {
+      this.onIntent({ type: 'set_agent_automation', key: automation, value: target.valueAsNumber } as unknown as UiIntent);
+      return;
+    }
     const rung = target.dataset.prospectorRung;
     if (rung !== undefined) {
       this.onIntent({ type: 'set_agent_rung', level: Number(rung) as AgentPermissionLevel, granted: target.checked });
