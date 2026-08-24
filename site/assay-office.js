@@ -137,8 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const score = row.score || {};
       tr.appendChild(cell('rk', String(index + 1)));
       tr.appendChild(riderCell(row));
-      tr.appendChild(cell('num', formatCount(score.waves)));
-      tr.appendChild(cell('num gold', formatCount(score.gold)));
+      tr.appendChild(cell('num', formatCount(score.waves ?? row.waves)));
+      tr.appendChild(cell('num gold', formatCount(score.gold ?? row.gold)));
       tr.appendChild(watchCell());
       body.appendChild(tr);
     });
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const td = document.createElement('td');
     const rider = document.createElement('span');
     rider.className = 'rider';
-    rider.textContent = row.name || row.rider || row.handle || 'unnamed rider';
+    rider.textContent = row.profileName || row.name || row.rider || 'unnamed rider';
     td.appendChild(rider);
     if (row.assay === 'verified') {
       const chip = document.createElement('span');
@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
       chip.textContent = 'Verified';
       td.appendChild(chip);
     }
-    const stackBits = [row.stack?.model, row.stack?.harness].filter(Boolean).join(' \u00b7 ');
+    const stackBits = [row.model || row.stack?.model, row.harness || row.stack?.harness].filter(Boolean).join(' \u00b7 ');
     if (stackBits) {
       const stack = document.createElement('span');
       stack.className = 'stack';

@@ -2915,6 +2915,14 @@
               "note": "Authored s2265 from the gate evidence in reviews/bt-04b-automation-two-params.md. Measured flake: 2 failures in 3 full-file mobile-chrome runs at --workers=1, 0 failures in 2 isolated runs, desktop full-file green. Held bt-04b from merging."
             },
             {
+              "id": "avo-harness-experiment",
+              "title": "The AVO direction - a search-native harness as calibration instrument (PARKED post-launch; owner deeply interested)",
+              "status": "planned",
+              "spec": "docs/bench/avo-harness-direction.md",
+              "authoredBy": "attended 2026-08-24",
+              "authoringBlock": {"class": "owner-gated", "finding": "owner ruling 2026-08-24", "measuredBy": "attended 2026-08-24", "reason": "Owner verbatim: lets put this in the backlog for now, I am deeply interested, but I want to first secure and publish + announce the first version now. Theory distilled in the spec doc; the unpause spawns a real spec (genome, operators, QD descriptors, divisions, budget accounting). No implementation before his word."}
+            },
+            {
               "id": "gauntlet-heat3c-shim-streaming",
               "title": "The shim learns SSE streaming - the one wall pi/omp/hermes/openclaw all hit (heat-3b's measured blocker)",
               "taskFile": "gauntlet-heat3c-shim-streaming.md",
