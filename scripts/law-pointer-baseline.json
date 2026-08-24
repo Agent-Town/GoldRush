@@ -168,15 +168,15 @@
       "fingerprint": "c11d5b8cacd2",
       "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
     },
-    "scripts/fire.md -> desk-state-audit.mjs:68": {
+    "scripts/fire.md -> desk-state-audit.mjs:72": {
       "target": "scripts/desk-state-audit.mjs",
-      "line": 68,
+      "line": 72,
       "fingerprint": "2e9d2a423116",
       "excerpt": "if (isLockLine(line1)) return { kind: 'lock', items: [] };"
     },
-    "scripts/fire.md -> desk-state-audit.mjs:180": {
+    "scripts/fire.md -> desk-state-audit.mjs:235": {
       "target": "scripts/desk-state-audit.mjs",
-      "line": 180,
+      "line": 235,
       "fingerprint": "9efb1fe71821",
       "excerpt": "const backlogPath = path.resolve(value('--backlog', 'tasks/BACKLOG.md'));"
     },

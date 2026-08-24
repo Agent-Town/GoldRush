@@ -31,6 +31,10 @@ import { scan } from './findings-state-guard.mjs';
 
 const SUBJECT_CHARS = 90;
 const FINDING_ONE = /\bF-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d+\b/;
+// DERIVED, never re-typed: four independent copies of one predicate is how the
+// F-2227-1 lock test drifted for hundreds of fires. Same source, same semantics,
+// only the /g flag differs.
+const FINDING_ALL = new RegExp(FINDING_ONE.source, 'g');
 
 function value(flag, fallback) {
   const index = process.argv.indexOf(flag);
@@ -83,6 +87,44 @@ function subjectRows(backlogText) {
   return rows;
 }
 
+// F-2263-1 (s2263). UNRECORDED conflated two facts that demand OPPOSITE acts and
+// printed them byte-identically: "the board has never heard of this id" and "the
+// board discusses this id, and the subject-first rule has DECLINED to attribute
+// state from those rows". Proven by manufacturing: a desk carrying F-2249-2
+// (present, BACKLOG line 10, never a subject) and F-9999-9 (absent entirely) both
+// printed `finding\tUNRECORDED\t—`. A fire reading the first as the second writes
+// a duplicate row, or drops a live item as a ghost.
+//
+// This is the inherited s2262 aim landing one tool over: ask not whether a
+// selector declares, but whether it declares ON THE BRANCH WHERE IT IS MOST
+// LIKELY TO BE WRONG. classifyFinding already prints evidence line numbers on
+// every branch that HAS rows, and was silent on the one branch that has none.
+//
+// It DECLARES and does NOT refuse. Mentioned-not-subject is a lawful, routine
+// state -- 555 of 2175 ids on the live board -- so a refusal would red on
+// ordinary work and be excused into uselessness inside a week (F-1460-1). The
+// subject-first rule itself is UNCHANGED and still correct: a row states the
+// state only of its subject, and this does not attribute that row's state here.
+// It reports WHERE to look, never WHAT the rows mean.
+//
+// Declared on BOTH outcomes, including the genuinely-absent one (F-2208-1): a
+// declaration that appears only on the interesting branch re-creates the very
+// ambiguity it removes.
+function nonSubjectMentions(backlogText) {
+  const mentions = new Map();
+  backlogText.split('\n').forEach((line, index) => {
+    const subject = line.slice(0, SUBJECT_CHARS).match(FINDING_ONE)?.[0] ?? null;
+    for (const match of line.matchAll(FINDING_ALL)) {
+      const id = match[0];
+      if (id === subject) continue;
+      if (!mentions.has(id)) mentions.set(id, []);
+      const lines = mentions.get(id);
+      if (lines.at(-1) !== index + 1) lines.push(index + 1);
+    }
+  });
+  return mentions;
+}
+
 function fallbackState(row, id) {
   const numeric = `F-${'0'.repeat(id.length - 4)}-0`;
   const line = row.line.slice(0, row.index) + numeric + row.line.slice(row.index + id.length);
@@ -107,7 +149,7 @@ function subjectState(id, rows, census) {
   return { ownRows, closed, open };
 }
 
-function classifyFinding(id, rows, census) {
+function classifyFinding(id, rows, census, mentions = new Map()) {
   const { ownRows, closed, open } = subjectState(id, rows, census);
 
   const evidence = [...new Set([...closed, ...open])].sort((a, b) => a - b);
@@ -115,7 +157,19 @@ function classifyFinding(id, rows, census) {
   if (closed.length) return { verdict: 'CLOSED', evidence };
   if (open.length) return { verdict: 'OPEN', evidence };
   if (ownRows.length) return { verdict: 'OPEN-DESK-ONLY', evidence: ownRows.map(({ number }) => number) };
-  return { verdict: 'UNRECORDED', evidence: [] };
+
+  // The branch with no rows of its own -- the one where being wrong matters most.
+  // Verdict and counts are DELIBERATELY unchanged, so --strict and every caller
+  // that reads `verdict` behave exactly as before; only the evidence speaks.
+  const seen = mentions.get(id) ?? [];
+  return {
+    verdict: 'UNRECORDED',
+    evidence: [],
+    mentioned: seen,
+    mentionNote: seen.length
+      ? `mentioned (non-subject) at ${seen.join(', ')} — state NOT attributable from those rows; read them`
+      : 'absent from BACKLOG entirely',
+  };
 }
 
 export function subjectLedClosure(backlogText, id) {
@@ -149,10 +203,11 @@ export function audit(statusText, backlogText, goals = {}) {
   if (parsed.kind !== 'desk') return parsed;
   const rows = subjectRows(backlogText);
   const census = scan(backlogText, { closedVocabulary: 'wide' });
+  const mentions = nonSubjectMentions(backlogText);
   const items = parsed.items.map((item) => ({
     ...item,
     ...(item.type === 'finding'
-      ? classifyFinding(item.id, rows, census)
+      ? classifyFinding(item.id, rows, census, mentions)
       : classifySlug(item.id, goals)),
   }));
   const counts = Object.fromEntries(
@@ -167,7 +222,7 @@ export function audit(statusText, backlogText, goals = {}) {
 function print(result) {
   console.log('ITEM\tTYPE\tVERDICT\tEVIDENCE');
   for (const item of result.items) {
-    const evidence = item.evidence.join(', ') || '—';
+    const evidence = item.evidence.join(', ') || item.mentionNote || '—';
     const block = item.blockClass ? `; blockClass=${item.blockClass}` : '';
     console.log(`${item.id}\t${item.type}\t${item.verdict}\t${evidence}${block}`);
   }
