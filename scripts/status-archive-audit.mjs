@@ -21,6 +21,42 @@
 // Exit 0 = no cross-session drops. Exit 1 = at least one. Exit 2 = misuse.
 //   --limit N   cap how many STATUS.md commits to walk (default: all)
 //   --all       also list the ordered/self shapes that were excluded, for audit of the exclusion
+//   --quiet     suppress the ADVISORY listings (abridged / ok-excluded). The DROPPED blocks and
+//               the verdict line ALWAYS print -- see the F-2278-1 note below.
+//
+// F-2278-1 (s2278): this file is leg 10 of `test:ledger-guards`, invoked BARE, and it had NO
+// .test.mjs anywhere in the repo. Its argument parsing was `argv.includes(...)` per flag, so every
+// UNRECOGNISED option was silently swallowed -- which contradicted the "Exit 2 = misuse" contract
+// two lines up, in the permissive direction, in a gate.
+//
+// MEASURED s2278 against the live board:
+//   `--limit 40 --quiet` (THE BATTERY LEG since s1341)  rc=0, 252 B  }  BYTE-IDENTICAL.
+//   `--limit 40`                                        rc=0, 252 B  }  `--quiet` was never
+//   `--limit 40 --strict`                               rc=0, 252 B  }  implemented at all.
+// So the battery's own command line asserted a behaviour this tool did not have, and a future
+// fire's tightening flag (`--strict`) would have been swallowed the same silent way. That is
+// F-2209-1's class -- a misparsed flag invisible to the suite -- with no suite to be invisible to.
+//
+// The sharpest arm is a TYPO of the BOUNDING flag, and its harm is NOT the one I first wrote down.
+// `--lmit 40` left `limit = Infinity`, silently un-bounding the walk to all ~4,600 STATUS.md
+// commits. I priced that as wall-clock (~5 min against ~2 s) and it is worse than that: MEASURED,
+// the unbounded walk FLIPS THE GATE'S VERDICT — rc=1, 352 lines, `LOST: 81 handoff line-1s
+// PERMANENTLY absent at HEAD`. Those 81 are the legacy debt s2224 already measured and excused
+// (all HISTORICAL, newest 2026-07-27, from before §4's archive law had teeth, invisible to the
+// 40-commit regression window BY CONSTRUCTION). So one mistyped character turns leg 10 of
+// `test:ledger-guards` from green to a four-minute RED over known-excused history — and a guard
+// that reds on legacy debt is the guard that gets excused into uselessness (F-1460-1).
+// A bound a typo can silently remove is not a bound.
+//
+// CURE: recognise the option set explicitly and REFUSE anything else with 2 = "could not answer"
+// -- the convention drain-block-check, dry-board-probe, master-shipped-classifier and
+// review-evidence-audit already carry. The refusal reaches STDOUT as well as stderr (F-2211-1: a
+// caller that classifies stdout reads an empty string as silence).
+//
+// `--quiet` is implemented rather than merely accepted, because the battery has passed it since
+// s1341 and the intent is legible. It suppresses ADVISORY chatter ONLY. It deliberately does NOT
+// suppress the DROPPED blocks: a gate that reds while withholding what it found is worse than a
+// chatty one, and that reverse control is arm 7 of the guard.
 
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -28,12 +64,32 @@ import { readFileSync } from "node:fs";
 const PROBE_CHARS = 120;
 const REPO = process.env.GR_REPO ?? "/Users/robin/Claude/Projects/Gold Rush";
 const argv = process.argv.slice(2);
-const showAll = argv.includes("--all");
-const limitIdx = argv.indexOf("--limit");
-const limit = limitIdx >= 0 ? Number(argv[limitIdx + 1]) : Infinity;
-if (limitIdx >= 0 && !Number.isFinite(limit)) {
-  console.error("--limit needs a number");
+
+// Refuse on BOTH channels: the battery reads rc, a human reads stdout, and F-2211-1's lesson is
+// that an stdout-classifying caller cannot tell an empty string from a clean answer.
+const refuse = (msg) => {
+  console.log(`REFUSING (misuse): ${msg}`);
+  console.error(`REFUSING (misuse): ${msg}`);
   process.exit(2);
+};
+
+const KNOWN = new Set(["--all", "--quiet", "--limit"]);
+let showAll = false;
+let quiet = false;
+let limit = Infinity;
+for (let i = 0; i < argv.length; i++) {
+  const a = argv[i];
+  if (!KNOWN.has(a)) refuse(`unrecognised option ${JSON.stringify(a)} — known options are --all, --quiet, --limit N`);
+  if (a === "--all") showAll = true;
+  else if (a === "--quiet") quiet = true;
+  else {
+    // Consume the value, so `--limit 40` never leaves `40` looking like an unknown option.
+    limit = Number(argv[++i]);
+    if (!Number.isFinite(limit)) refuse("--limit needs a number");
+    // A non-positive limit walks ZERO commits and still prints an affirmative CLEAN at rc=0 --
+    // F-2217-1's polarity (an empty corpus wearing the shape of good news), reachable by a typo.
+    if (limit <= 0) refuse(`--limit ${limit} would examine no commits at all, and CLEAN over an empty corpus is not an answer`);
+  }
 }
 
 const git = (args) =>
@@ -173,11 +229,15 @@ for (const d of drops) {
   console.log(`  commit: ${d.subject}`);
   console.log(`  lost  : ${d.lost}...`);
 }
-for (const a of abridged) {
-  console.log(`ABRIDGED ${a.sha}  s${a.newSession} kept only a prefix of s${a.lostSession}'s ${a.kind} line`);
-}
-if (showAll) {
-  for (const e of excluded) console.log(`ok-excluded ${e.sha}  ${e.why}  [${e.subject.slice(0, 70)}]`);
+// ADVISORY listings — the only thing --quiet suppresses. The DROPPED blocks above and the verdict
+// line below always print, however quiet the caller asked for (F-2278-1).
+if (!quiet) {
+  for (const a of abridged) {
+    console.log(`ABRIDGED ${a.sha}  s${a.newSession} kept only a prefix of s${a.lostSession}'s ${a.kind} line`);
+  }
+  if (showAll) {
+    for (const e of excluded) console.log(`ok-excluded ${e.sha}  ${e.why}  [${e.subject.slice(0, 70)}]`);
+  }
 }
 
 const verdict = drops.length === 0 ? "CLEAN" : "LOST";
