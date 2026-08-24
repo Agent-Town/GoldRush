@@ -2926,10 +2926,12 @@
               "id": "gauntlet-heat3c-shim-streaming",
               "title": "The shim learns SSE streaming - the one wall pi/omp/hermes/openclaw all hit (heat-3b's measured blocker)",
               "taskFile": "gauntlet-heat3c-shim-streaming.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-b",
               "authoredBy": "attended 2026-08-24",
-              "note": "Heat-3b: all four installed riders reached the shim and DNF'd on 400 Streaming is not supported. Honest minimum fidelity allowed (chunked-at-completion SSE); non-streaming byte-unchanged; abort leaves no orphans. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
+              "mergeHash": "2e75540c10aa638cc31336dd7769b1a9446b265e",
+              "note": "Heat-3b: all four installed riders reached the shim and DNF'd on 400 Streaming is not supported. Honest minimum fidelity allowed (chunked-at-completion SSE); non-streaming byte-unchanged; abort leaves no orphans. DISPATCHED to tasks/queue/lane-b in the authoring commit window.",
+              "drainNotes": "DRAINED + MERGED s2275 at 2e75540c1. Gated on the MERGED tree in detached gate-s2275/ (SS3.0b): tsc rc=0 5.6s; npm run build rc=0 17.3s with the asset-diet ceiling respected; shim suite 4 pass / 0 fail / 3 live arms skipped LOUDLY on absent auth (CODEX_HOME pinned at an empty dir - ZERO owner subscription spend, deliberate: F-2272-1 is the owner's own open question about that cost, and lane-c was concurrently BUSY on heat5 against the same subscription). Free before/after control with a fake completeFn: merged tree returns HTTP 200 text/event-stream, 4 SSE data lines, [DONE] terminator - while the SAME probe against main pre-merge returns the exact 400 'Streaming is not supported' that DNF'd all four riders. The control asserts its own validity (F-2215-1), so ARM A's green is not a probe that failed to run. Evidence: artifacts/gauntlet-heat3c-20260824/wall-probe-before-after.md. Merged-tree blobs for serve.mjs/serve.test.mjs/codex-shim.md/package.json are BYTE-IDENTICAL to the lane tree the runner gated, so its live measurement (3 chunks, 16,749 tokens, 11.903s vs 10.515s non-streaming, zero orphans on abort) transfers as a fact rather than an assumption. All 4 files LANE-TOUCHED, zero BOTH-MOVED, no 3-way resolution needed. F-2275-1 (SAFE-DUPE clean -fd destroyed unmirrored heat runtime state - reported by the runner itself, nothing cited lost, heat3b's 19 payload files intact on main) and F-2275-2 (cosmetic listener retention) both non-blocking. Review: reviews/gauntlet-heat3c-shim-streaming.md. UNBLOCKS heat4 on a CHANGED premise (SS7.5)."
             },
             {
               "id": "gauntlet-heat5-best-effort",
