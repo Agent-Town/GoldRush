@@ -1,3 +1,5 @@
+> ⛔ SUPERSEDED 2026-08-24 — DO NOT QUEUE. Its hard gate (the rotation2 sheet processed with cleared scale debt) is VOID by owner ruling, verbatim "ok legacy for now": the rotation sheet is LEGACY after the ≥460px retake failed its size law (LEDGER row 31, s2249). The surviving scope — grab/flee clips on the coarse cells, size-gated — lives in tasks/jumper-grab-flee-clips.md, which inherits this master's verified call-site map. Kept per the retention law.
+
 # Task jumper-8way-wiring: the claim-jumper turns to face you — 8-way + grab/flee live (LANE-C, commit prefix "feat:")
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.

@@ -2881,13 +2881,23 @@
             },
             {
               "id": "art-jumper-rotation-retake",
+              "note_s_att_20260824": "CLOSED BY RULING (owner 2026-08-24 verbatim: ok legacy for now): the honest s2249 stop stands as the final art attempt; rotation declared LEGACY on LEDGER row 31. Successor scope: tasks/jumper-grab-flee-clips.md.",
               "title": "The claim-jumper rotation sheet retaken at >=460px raw (owner ruling; unblocks the banked 8-way wiring master)",
               "taskFile": "art-jumper-rotation-retake.md",
-              "status": "stopped",
+              "status": "superseded",
               "note_s2249": "note_s2249: STOPPED CORRECTLY per the master's item 4 — the owner-ruled >=460px retake failed after the initial take + 2 allowed retakes, so no sheet was handed forward. Final take measured 354-460px, 2/12 reached 460px, 0/12 passed height+registration together, 10/12 touched a cell boundary, key purity failed (1,022,058 near-magenta non-exact px). LEDGER row 31 appended + run note landed at 0008f457d; the 3 rejected takes salvaged into git at e27c4ebb4 (6.44 MB, RETENTION LAW). Scale debt REMAINS UNCLEARED, so lane-c-jumper-8way-wiring stays gated.",
               "lane": "art",
               "authoredBy": "attended 2026-08-23",
               "note": "OWNER RULED 2026-08-23: Retake at >=460px (Recommended) - closes LEDGER row 31's awaiting-a-ruling line (s1656). One 4x3 sheet, no mirrors, measured self-QA against the OUTPUT cell (the batch-007 lesson). Fire-side extraction + the jumper-8way-wiring gate flip follow. DISPATCHED to tasks/queue/art in the authoring commit window."
+            },
+            {
+              "id": "jumper-grab-flee-clips",
+              "title": "The jumper steals in character - grab/flee clips on the LEGACY-scoped sheets, size-gated (owner ruling 2026-08-24)",
+              "taskFile": "jumper-grab-flee-clips.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-08-24",
+              "note": "Owner verbatim: ok legacy for now. Gate 1 measures the batch-003/004 grab/flee cell heights against the LIVE walk8 band and MAY end the task honestly (then it is an art item for a future batch); fit -> wire clips on coarse cells inside the vp-02b pin's own law, no size pop, rotation block stays dormant. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
             },
             {
               "id": "town-cast-wiring",
@@ -6266,6 +6276,7 @@
         },
         {
           "id": "jumper-8way-wiring",
+              "note_s_att_20260824": "SUPERSEDED by the legacy ruling (owner 2026-08-24): the banked master's art gate is void; the grab/flee half re-scoped to jumper-grab-flee-clips (its own leaf).",
           "authoringBlock": {
             "class": "owner-gated",
             "finding": "F-1661-1",
@@ -6273,7 +6284,7 @@
             "reason": "MASTER IS BANKED AND LOOKS READY, BUT ITS OWN SEQUENCING GATE IS UNMET - DO NOT QUEUE. tasks/lane-c-jumper-8way-wiring.md exists on disk (authored 2026-08-11 under the owner's F-1166-1 ruling (b), verbatim \"this is not too much to do, lets fix things when we can\") and its line 5 is a hard gate: assets/LEDGER.md's `char.claim_jumper SHEET full-ROTATION` row must say the batch-007 regen is PROCESSED with scale-debt CLEARED and measured heights in the 409-439 band, else STOP \"art not landed\" (activating on the old cells ships the visible size pop s39 rejected). READ s1661 rather than inferred: that row (assets/LEDGER.md:31) says the OPPOSITE - \"s1656 (2026-08-11) - batch-007 GENERATED + EXTRACTED FIRE-SIDE + MEASURED; SCALE DEBT NOT CLEARED, NOT WIRED (F-1656-3)\", measured effective heights 336-407px = 65.6-79.5% of cell so the >=78% acceptance law is met by 1 of 12 cells, and scripts/extract-alpha.mjs never upscales (computed scale 1.082 capped at 1, per the s39 ruling) so the shortfall cannot be closed downstream. Worse for activation: walk8 is RUNTIME-ACTIVE at 227-327px, so rotation2 would run ~25% TALLER than the sheet the jumper actually uses - the same size pop in the opposite direction. THE TRAP THIS BLOCK EXISTS TO STOP, and it is a live one: the art half DID drain today (tasks/done/drained-961043c7-20260811-114616-art-jumper-rotation-regen.md, 11:46), so a fire pattern-matching \"the art gate is the regen, and the regen drained\" would queue this and burn a lane dispatch plus Codex tokens on a master engineered to stop at its fifth line. DRAINING THE REGEN AND CLEARING THE SCALE DEBT ARE DIFFERENT FACTS; only the LEDGER row can tell them apart, and it is one grep. NO NEW DESK ITEM IS OWED: F-1656-3 is already on the owner's desk awaiting one of three words (accept as-is / retake at >=460px raw / declare the rotation sheet legacy - LEDGER:33 records that the walk4 A/B sheets already cleared this same debt). UNBLOCKS THE MOMENT that row clears; the master needs no re-authoring, only a re-read of its own gate."
           },
           "title": "Claim-jumper 8-way + grab/flee live (art-gated on the regen; supersedes 025/vp-02e)",
-          "status": "planned",
+          "status": "superseded",
           "taskFile": "lane-c-jumper-8way-wiring.md"
         }
       ]
