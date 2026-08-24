@@ -3011,6 +3011,15 @@
               "note": "Owner verbatim: we want to run hermes, openclaw and all of them on Codex/subscription. codex CLI has app-server/mcp-server/exec-server modes but no OpenAI-compat endpoint - this slice investigates the lawful mechanism and builds the smallest shim (127.0.0.1 only, no auth material ever logged), or STOPs with the honest option table. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
             },
             {
+              "id": "f2282-1-blocker-panel-real-history-arm",
+              "title": "Re-anchor the one real-history arm of blocker-panel-closed-guard onto a pair today's rule still reds on",
+              "taskFile": "f2282-1-blocker-panel-real-history-arm.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "fire s2282",
+              "note": "Authored s2282 from its own measurement of the standing red on clean main. SUPERSEDES the cure prescribed in the F-2280-4 ledger row, which s2282 measured and refuted: (1) the LIVE panel rule still DRAWS F-1030-2 from the 2e02098f ledger (it is among the 7 selected rows), so F-2280-4 premise is false; (2) the prescribed cure (pin panel + BACKLOG at the same commit) does NOT restore the red - 15 rows, still 0 offenders, status 0; (3) the actual disarming agent is F-2228-1 subject-first attribution - subjectLedClosure(F-1030-2) is [] while subjectLedClosure(F-1040-1) is [1461], because the closure row at BACKLOG:1461 has subject zone \"F-1040-1 / F-1030-2 UPDATE\" and states the FIRST id only; (4) dated by counting - subjectLedClosure occurs 0x in the guard before 020f62c0b and 2x after (that commit is the F-2228-1 cure, 2026-08-23, one day before the red was first logged). The guard is CORRECT and the fixture asserts pre-F-2228-1 behaviour, so this must NOT be cured by reversing it. Consequence is smaller than F-2280-4 states: its claim that the red path is PROVEN unexercised is false - the synthetic arm at :55 asserts status 1 offender F-9001-1 and PASSES, as does the REFUSE arm at :87; only the real-history claim rotted. Feasibility established: replaying today full rule across BACKLOG history sampling every 25th commit, 64 historical commits still red (worked example d5407705, 17 rows, offenders F-1310-1/F-1269-1/F-1270-1/F-1457-1) - a 1-in-25 sample, NOT a census, so the runner must verify its pick."
+            },
+            {
               "id": "f2272-2-block-class-guard-worktree-cwd",
               "title": "The drain gate reds twice on every lawful drain - teach block-class-guard which board it asks about",
               "taskFile": "f2272-2-block-class-guard-worktree-cwd.md",
