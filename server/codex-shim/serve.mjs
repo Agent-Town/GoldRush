@@ -16,6 +16,12 @@ const MODELS = new Map([
 const MODEL_FLOOR = [0, 149, 1];
 const MAX_BODY_BYTES = 1024 * 1024;
 const TOOL_SCHEMA = fileURLToPath(new URL('./tool-response.schema.json', import.meta.url));
+const EXPECTED_STREAM_ERRORS = new Set(['EPIPE', 'ECONNRESET', 'ERR_STREAM_DESTROYED']);
+
+function handleStreamError(error) {
+  if (EXPECTED_STREAM_ERRORS.has(error?.code)) return;
+  console.error(`codex shim stream error (${error?.code ?? 'unknown'})`);
+}
 
 export function hasCodexAuth(env = process.env) {
   const codexHome = env.CODEX_HOME || path.join(homedir(), '.codex');
@@ -93,6 +99,7 @@ function complete(codexBinary, model, prompt, timeoutMs, outputSchema, signal) {
       ...(outputSchema ? ['--output-schema', outputSchema] : []), '-'
     ];
     const child = execFile(codexBinary, args, { cwd: tmpdir(), maxBuffer: 4 * 1024 * 1024, timeout: timeoutMs, signal }, (error, stdout) => {
+      // A dead Codex child fails this request; the shared shim stays available to other riders.
       if (error) return reject(new Error(`Codex completion failed (exit ${error.code ?? 'unknown'})`));
       try {
         let content;
@@ -109,6 +116,7 @@ function complete(codexBinary, model, prompt, timeoutMs, outputSchema, signal) {
         reject(new Error('Codex returned invalid event data'));
       }
     });
+    child.stdin.on('error', () => reject(new Error('Codex completion failed')));
     child.stdin.end(prompt);
   });
 }
@@ -120,7 +128,9 @@ export function createCodexShimServer({
   completeFn = complete,
 } = {}) {
   let active = 0;
-  return createServer(async (request, response) => {
+  const server = createServer(async (request, response) => {
+    request.on('error', handleStreamError);
+    response.on('error', handleStreamError);
     try {
       const url = new URL(request.url ?? '/', 'http://127.0.0.1');
       if (request.method === 'GET' && url.pathname === '/v1/models') {
@@ -212,6 +222,8 @@ export function createCodexShimServer({
       sendError(response, clientError ? 400 : 502, clientError ? 'invalid_request' : 'backend_error', error instanceof Error ? error.message : 'Request failed');
     }
   });
+  server.on('connection', (socket) => socket.on('error', handleStreamError));
+  return server;
 }
 
 function sendStream(response, model, content, toolCalls, usage) {

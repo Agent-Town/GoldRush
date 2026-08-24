@@ -4,6 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { chmodSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { connect } from 'node:net';
 import { createCodexShimServer, hasCodexAuth, resolveCodexBinary } from './serve.mjs';
 
 const skip = hasCodexAuth() ? false : 'Codex subscription auth is absent';
@@ -128,6 +129,56 @@ test('client abort terminates the codex child process', { timeout: 10_000 }, asy
   } finally {
     await new Promise((resolve) => localServer.close(resolve));
     rmSync(directory, { recursive: true });
+  }
+});
+
+test('client disconnect mid-stream leaves the shim available', { timeout: 10_000 }, async (context) => {
+  let calls = 0;
+  const usage = { input_tokens: 1, output_tokens: 1 };
+  const localServer = createCodexShimServer({
+    codexBinary: 'unused',
+    completeFn: async () => ({ content: calls++ === 0 ? 'x'.repeat(8 * 1024 * 1024) : 'still-alive', usage }),
+  });
+  let serverSocket;
+  localServer.once('connection', (socket) => {
+    serverSocket = socket;
+  });
+  await new Promise((resolve) => localServer.listen(0, '127.0.0.1', resolve));
+  try {
+    const body = JSON.stringify({ stream: true, messages: [{ role: 'user', content: 'disconnect' }] });
+    const receivedBytes = await new Promise((resolve, reject) => {
+      const client = connect(localServer.address().port, '127.0.0.1', () => client.write([
+        'POST /v1/chat/completions HTTP/1.1',
+        'Host: 127.0.0.1',
+        'Content-Type: application/json',
+        `Content-Length: ${Buffer.byteLength(body)}`,
+        'Connection: close',
+        '', body,
+      ].join('\r\n')));
+      client.once('data', (chunk) => {
+        client.resetAndDestroy();
+        resolve(chunk.length);
+      });
+      client.once('error', reject);
+    });
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    // Node 23 adds this after close; production Node 26 did not, so prove the shim owns the late EPIPE itself.
+    for (const listener of serverSocket.listeners('error')) {
+      if (listener.name === 'noop') serverSocket.off('error', listener);
+    }
+    serverSocket.emit('error', Object.assign(new Error('write EPIPE'), { code: 'EPIPE', syscall: 'write' }));
+
+    assert.equal(localServer.listening, true);
+    const response = await fetch(`http://127.0.0.1:${localServer.address().port}/v1/chat/completions`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ messages: [{ role: 'user', content: 'survival check' }] }),
+    });
+    assert.equal(response.status, 200);
+    assert.equal((await response.json()).choices[0].message.content, 'still-alive');
+    context.diagnostic(`abort_bytes=${receivedBytes} followup_status=${response.status}`);
+  } finally {
+    await new Promise((resolve) => localServer.close(resolve));
   }
 });
 
