@@ -14,6 +14,7 @@ import {
   MAX_PLAYBOOK_TICKS,
   PLAYBOOK_STEP_SECONDS,
   PLAYBOOK_VERSION,
+  maxRunTapeTicksForContract,
   quantizePlaybookCoordinate,
   validateEntries,
   validatePlaybook,
@@ -321,7 +322,7 @@ export function validateRunTape(value: unknown): RunTape | null {
   if (typeof value.kept !== 'boolean' || typeof value.contract !== 'string' || !value.contract) return null;
   if (typeof value.seed !== 'string' || typeof value.difficulty !== 'string' || !value.difficulty) return null;
   if (typeof value.eventLogHash !== 'string' || !EVENT_HASH.test(value.eventLogHash)) return null;
-  const parsed = validatePlaybook(value.inputLog);
+  const parsed = validatePlaybook(value.inputLog, maxRunTapeTicksForContract(value.contract));
   const streams = validateInputStreams(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0);
   const outcome = validateOutcome(value.outcome);
   const annotations = validateAnnotations(value.annotations);

@@ -12,6 +12,7 @@ import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contr
 import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
+import { maxRunTapeTicksForContract } from '../../src/playbook/PlaybookFormat';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 import type { LedgerStorage } from './_accounts';
@@ -1048,7 +1049,7 @@ function validTapeInput(value: unknown, contractId: unknown, seed: unknown, diff
   if (typeof value.name !== 'string' || !value.name || value.name.length > 64 || !isRecord(value.start)
     || !hasOnlyKeys(value.start, new Set(['x', 'z']))) return false;
   if (numberInRange(value.start.x, -256, 256) === null || numberInRange(value.start.z, -256, 256) === null) return false;
-  const duration = integerInRange(value.durationTicks, 0, 18_000);
+  const duration = integerInRange(value.durationTicks, 0, maxRunTapeTicksForContract(String(contractId)));
   if (duration === null || !Array.isArray(value.entries) || value.entries.length > 2_000 || !validTapeTruncation(value.truncated, duration)) return false;
   const primarySlot = integerInRange(value.primarySlot, 0, 3);
   if (primarySlot === null || !Array.isArray(value.streams) || value.streams.length > 3 || !validTapeEntries(value.entries, duration)) return false;
@@ -1175,9 +1176,9 @@ async function readJson(request: Request): Promise<JsonRecord> {
   const type = request.headers.get('content-type') ?? '';
   if (!/^application\/json\b/i.test(type)) throw new HttpError(415, 'unsupported_media_type', 'Send application/json.');
   const declared = Number(request.headers.get('content-length') ?? '0');
-  if (Number.isFinite(declared) && declared > MAX_JSON_BYTES) throw new HttpError(413, 'payload_too_large', 'Standing is too large.');
+  if (Number.isFinite(declared) && declared > MAX_JSON_BYTES) throw new HttpError(413, 'reel_too_large', 'Reel is too large. Submit compact JSON without whitespace.');
   const text = await request.text();
-  if (new TextEncoder().encode(text).length > MAX_JSON_BYTES) throw new HttpError(413, 'payload_too_large', 'Standing is too large.');
+  if (new TextEncoder().encode(text).length > MAX_JSON_BYTES) throw new HttpError(413, 'reel_too_large', 'Reel is too large. Submit compact JSON without whitespace.');
   try {
     const value = JSON.parse(text || '{}');
     if (isRecord(value)) return value;
