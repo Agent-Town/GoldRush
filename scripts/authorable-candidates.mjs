@@ -224,13 +224,55 @@ export function readGoals(root) {
   return JSON.parse(fs.readFileSync(path.join(root, 'tasks', 'goals.json'), 'utf8'));
 }
 
-export function auditRoot(root) {
-  const goals = readGoals(root);
+/**
+ * F-2265-1 (measured and cured s2265). A TIME-OF-CHECK divergence, and a NEW AXIS
+ * for this streak: every declaration built since s2204 asks WHETHER a corpus could
+ * be read (F-2217-1) or WHICH TREE it came from (F-2222-1). None asks WHEN.
+ *
+ * `main()` read `tasks/goals.json` TWICE per verdict -- once through `auditRoot`
+ * for the rows, and again through `unresolvedStatuses(readGoals(root))` for the
+ * RESIDUE. Fires splice that file on EVERY drain (the Goal Registration Law), so
+ * the two reads could describe two different boards, silently, with both of this
+ * file's existing declarations reading perfectly healthy.
+ *
+ * PROVEN BY MANUFACTURING, ground truth = 2 planned leaves both priced, 0 unpriced,
+ * with the control asserting its own validity first (F-2215-1 -- the first attempt
+ * was VACUOUS at 0 B of stdout and only that assertion caught it):
+ *
+ *   healthy control      -> RESIDUE: 1 leaf in 1 status,  rc=0 / --strict rc=0
+ *   splice completes     -> RESIDUE: 2 leaves in 2 statuses, rc=0 / --strict rc=0
+ *
+ * The second arm is BYTE-IDENTICAL to a clean run on both channels: same exit code,
+ * same complete-looking headline, and a residue section describing a board the rows
+ * never saw. Nothing throws, so every catch-, guard- and tree-keyed census in this
+ * lineage (s2212-s2226) was structurally incapable of seeing it.
+ *
+ * SEVERITY, HONESTLY, AND DELIBERATELY NOT INFLATED: LATENT, and the residue is
+ * EXPLICITLY advisory -- it does not trip `--strict` and the tool says so in its own
+ * output. No verdict and no gate was ever wrong. What was wrong is that the tool
+ * could not tell you the two halves of one report came from two different boards.
+ *
+ * THE CURE IS STRUCTURAL, NOT A DECLARATION, WHICH IS WHY IT IS SMALL: read ONCE and
+ * feed both consumers. The two sections then describe the same board BY CONSTRUCTION,
+ * so there is no divergence left to declare -- and a declaration nobody can falsify
+ * is the noise that decays a declaration into a formality. It also closes the
+ * mid-splice arm for free: a single read that fails does so BEFORE any output, so
+ * stdout is empty and "it did not run" is unambiguous, where the second read failing
+ * used to leave a COMPLETE, TRUE headline on stdout and the residue silently absent.
+ *
+ * `auditRoot`'s signature and behaviour are UNCHANGED -- the legacy suite pins it,
+ * and re-coding a working export while extracting from it is a drive-by.
+ */
+export function auditGoals(goals) {
   return plannedLeaves(goals).map((leaf) => ({
     id: leaf.id,
     title: String(leaf.title ?? ''),
     refusal: resolveRefusal(leaf),
   }));
+}
+
+export function auditRoot(root) {
+  return auditGoals(readGoals(root));
 }
 
 export function summarise(rows) {
@@ -246,7 +288,9 @@ export function summarise(rows) {
 function main() {
   const rootIndex = process.argv.indexOf('--root');
   const root = path.resolve(rootIndex === -1 ? process.cwd() : process.argv[rootIndex + 1]);
-  const rows = auditRoot(root);
+  // F-2265-1: ONE read, both consumers. See the block above `auditGoals`.
+  const goals = readGoals(root);
+  const rows = auditGoals(goals);
 
   console.log('=== authorable-candidates ===');
   for (const row of rows) {
@@ -292,7 +336,7 @@ function main() {
   console.log('Advisory: a priced leaf is not a closed one, and UNPRICED is a cost estimate, not a verdict.');
 
   // F-2180-1: state the denominator instead of implying one. See the header.
-  const residue = unresolvedStatuses(readGoals(root));
+  const residue = unresolvedStatuses(goals);
   if (residue.length) {
     const total = residue.reduce((n, r) => n + r.count, 0);
     console.log(`\n--- RESIDUE: ${total} leaf/leaves in ${residue.length} status(es) NO instrument resolves ---`);
