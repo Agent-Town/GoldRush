@@ -2930,7 +2930,7 @@
               "id": "f2272-2-block-class-guard-worktree-cwd",
               "title": "The drain gate reds twice on every lawful drain - teach block-class-guard which board it asks about",
               "taskFile": "f2272-2-block-class-guard-worktree-cwd.md",
-              "status": "planned",
+              "status": "queued",
               "lane": "lane-a",
               "authoredBy": "fire s2272",
               "note": "Authored s2272 from finding F-2272-2 in reviews/gauntlet-heat3a-codex-backend-shim.md. block-class-guard.test.mjs:91 and :108 spawn drain-block-check with no cwd option, so from the detached worktree that fire.md 3.0b MANDATES the child inherits a linked-worktree cwd and hits s2224 F-2223-1 corpus-tree refusal (exit 2). Attributed by control: main at repo root rc=0 PASS; merged slice in gate-s2272 rc=1 3pass/2fail; pre-merge main in the SAME worktree rc=1 3pass/2fail - so the slice is exonerated and the collision is between two individually-correct laws. Direction is SAFE (loud refusal, never a false green) so nothing was ever mis-merged, but a battery that reds on every law-abiding drain is the F-1460-1 excused-into-uselessness shape. Precedent to follow: F-2225-1 cured attended-owed-audit to DECLARE rather than REFUSE for exactly this collision. Trap to avoid: F-2221-1, where a careless forced cwd re-pointed callers that legitimately pass their own."
