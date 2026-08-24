@@ -381,16 +381,55 @@ function git(args) {
 }
 
 /**
- * The window is [previous handoff commit .. HEAD]. This guard is a fire's LAST
- * act, so HEAD already carries this fire's handoff; the PREVIOUS handoff is the
- * second entry, not the first.
+ * The window is [previous FIRE's handoff commit .. HEAD]. This guard is a fire's
+ * LAST act, so HEAD already carries this fire's handoff.
+ *
+ * F-2260-1 — "the SECOND matching entry" is not "the previous fire's handoff",
+ * and the difference is a silently narrowed denominator. A fire that re-runs the
+ * battery after a correction emits a second commit whose subject ALSO matches
+ * (`sNNNN handoff addendum:` / `handoff amendment:` / `handoff correction:`), so
+ * handoffs[1] becomes THIS fire's own earlier handoff and the window collapses to
+ * the minutes between the two. The diff then holds almost nothing, `owner-gated
+ * rows filed` reads 0, and the guard prints PASS — accurately, about a set it
+ * built too small. That is the F-2259-1 shape one level up: there the parser that
+ * admitted ROWS was incomplete, here it is the selector that picks the CORPUS
+ * those rows are drawn from.
+ *
+ * MEASURED over all 2,226 matching commits: 83 of 2,136 sessions emit more than
+ * one, and replayed at each such fire's FINAL matching commit the window start
+ * lands on the SAME fire 83 times out of 83 — never once on the previous fire.
+ * It is not a historical curiosity either: 8 of the last 30 fires did it.
+ *
+ * SEVERITY IS LATENT AND IS NOT INFLATED HERE. Replaying both windows across all
+ * 83, the correct window sees more owner-gated rows in 3 and produces ZERO new
+ * FAIL verdicts — every row a collapsed window missed had already been desked by
+ * hand. So this has never cost a desk entry; what it cost is the guarantee that
+ * the PASS means what it says.
+ *
+ * THE CURE IS AN IDENTITY TEST, NOT A WIDENING — which is the distinction
+ * F-2259-1 was decided on. There, teaching the parser more row shapes admitted
+ * 168 rows and produced three verdicts, all false, so the denominator was
+ * DECLARED and membership left alone. Here the selector is simply naming the
+ * wrong commit, and skipping same-session entries restores the window the
+ * docstring already claimed without admitting anything new.
+ *
+ * The returned `session` is the always-on declaration (F-2208-1): the caller
+ * prints whose handoff the window starts at, so a reader sees `s2259` against a
+ * fire numbered s2260 and a collapse is legible on sight. A bare sha never was.
  */
 export function previousHandoffCommit() {
   const log = git(['log', '--format=%H\t%s', '--', 'STATUS.md']).trim().split('\n');
   const handoffs = log
     .map((l) => { const [sha, ...s] = l.split('\t'); return { sha, subj: s.join('\t') }; })
     .filter((c) => /^s\d+ handoff/.test(c.subj));
-  return handoffs.length >= 2 ? handoffs[1].sha : null;
+  if (!handoffs.length) return null;
+  const sessionOf = (subj) => (subj.match(/^s(\d+)/) || [])[1] ?? null;
+  const mine = sessionOf(handoffs[0].subj);
+  for (let i = 1; i < handoffs.length; i++) {
+    const session = sessionOf(handoffs[i].subj);
+    if (session !== mine) return { sha: handoffs[i].sha, session, skipped: i - 1 };
+  }
+  return null;
 }
 
 function main() {
@@ -421,7 +460,7 @@ function main() {
 
   let diff = '';
   try {
-    diff = git(['diff', `${prev}..HEAD`, '--', 'tasks/BACKLOG.md']);
+    diff = git(['diff', `${prev.sha}..HEAD`, '--', 'tasks/BACKLOG.md']);
   } catch (err) {
     console.error(`desk-birth-guard: REFUSING — could not diff the window: ${err.message}`);
     process.exit(2);
@@ -435,7 +474,14 @@ function main() {
     process.exit(2);
   }
 
-  console.log(`window start              : ${prev.slice(0, 8)} (previous handoff)`);
+  // F-2260-1: name WHOSE handoff the window starts at, always. A bare sha cannot
+  // show a reader that the window collapsed onto this fire's own earlier commit.
+  console.log(`window start              : ${prev.sha.slice(0, 8)} (s${prev.session} handoff)`);
+  if (prev.skipped) {
+    console.log(`   ⓘ skipped ${prev.skipped} same-session handoff commit(s) — this fire's own`);
+    console.log('     addendum/amendment. Without this the window would collapse onto them');
+    console.log('     and the count below would range over minutes, not the fire (F-2260-1).');
+  }
   console.log(`owner-gated rows filed    : ${result.qualifying.length}`);
   // F-2259-1: the DENOMINATOR that count ranges over. Printed ALWAYS, including
   // the happy path — a declaration that appears only on failure re-creates the
