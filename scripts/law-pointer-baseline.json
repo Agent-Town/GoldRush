@@ -138,9 +138,9 @@
       "fingerprint": "c5593bf5b9fb",
       "excerpt": "if (leaf.status === 'merged') assert.ok(leaf.mergeHash, `${leaf.id}: merged without Git evidence`);"
     },
-    "scripts/fire.md -> scripts/drain-block-check.mjs:620": {
+    "scripts/fire.md -> scripts/drain-block-check.mjs:646": {
       "target": "scripts/drain-block-check.mjs",
-      "line": 620,
+      "line": 646,
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
@@ -216,9 +216,9 @@
       "fingerprint": "d7293afa016e",
       "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
     },
-    ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:620": {
+    ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:646": {
       "target": "scripts/drain-block-check.mjs",
-      "line": 620,
+      "line": 646,
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
@@ -251,12 +251,6 @@
       "line": 99,
       "fingerprint": "18ae39970869",
       "excerpt": "await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullP"
-    },
-    "tasks/goals.json[e10s-1b-ember-shore-schema-and-data] -> src/meta/ContractFamilies.ts:1345": {
-      "target": "src/meta/ContractFamilies.ts",
-      "line": 1345,
-      "fingerprint": "7eb38e692853",
-      "excerpt": "} else if (requested.tileParams.harvestAnchors?.length === 0) {"
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."

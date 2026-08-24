@@ -404,6 +404,32 @@ function findLeaves(leaves, needle) {
   return hits.map((h) => h.leaf);
 }
 
+// F-2262-1 (s2262) — see the call site for the finding. Returns the lines to print when the
+// resolved leaf is NOT about the subject, or null when it is. null is the overwhelming majority
+// path and prints nothing, which is what keeps this off §3.0's most-run command as noise.
+function subjectDivergence(leaf, target, leaves) {
+  const key = normalize(target).toLowerCase();
+  if (!key) return null;
+  const leafKey = normalize(leaf.taskFile ?? leaf.id).toLowerCase();
+  if (leafKey === key) return null; // identity: the resolver found YOUR leaf
+  // A leaf may be keyed by `id` while its taskFile points at a successor — gg-03-gazette-panel-swap
+  // and f1323-2-charter-fuzz-briefing-undefined are both live examples on this board. Those leaves
+  // genuinely represent the subject, so compare modulo a leading slot label and do NOT flag them.
+  const stripSlot = (s) => s.replace(/^(lane|main|art)-([a-d]-)?/, '');
+  const id = String(leaf.id ?? '').toLowerCase();
+  if (id && (id === key || id === stripSlot(key) || stripSlot(id) === stripSlot(key))) return null;
+  // Only claim a different subject when the board can PROVE there is one: the master exists on disk
+  // and no leaf claims it. Without the file, a near-miss cannot be told from ordinary decoration.
+  if (!existsSync(join('tasks', `${key}.md`))) return null;
+  if (leaves.some((l) => normalize(l.taskFile ?? l.id).toLowerCase() === key)) return null;
+  return [
+    `  ⓘ NEAREST MATCH, NOT YOUR SUBJECT — you asked about "${key}"; everything below is about`,
+    `    "${leafKey}" [${leaf.id}], a DIFFERENT task. tasks/${key}.md exists and NO leaf claims it,`,
+    `    so the honest verdict for YOUR subject is "? UNKNOWN" — Goal Registration Law debt, not a`,
+    `    clearance. Register the leaf, or file-probe the master itself (the s1061 method).`,
+  ];
+}
+
 function backlogMentions(needle) {
   if (!existsSync(BACKLOG)) return [];
   const key = normalize(needle).toLowerCase();
@@ -619,6 +645,47 @@ function main() {
     }
     process.exit(strict ? 2 : 0);
   }
+
+  // F-2262-1 (s2262) — THE DRAIN ARM ACCEPTS A NEAR-MISS AS AN IDENTITY, AND SAYS SO ONLY WHEN MORE
+  // THAN ONE LEAF HAPPENED TO MATCH. F-1250-1 wrote the correct sentence one screen below — "A CLEAR
+  // that names a leaf the reader did not ask about is the exact shape that made the false clearance
+  // readable as an affirmative answer" — and then gated it on `hits.length > 1`. The deciding
+  // condition is not how many leaves matched; it is whether the winner is YOUR leaf. A subject with
+  // exactly ONE inexact hit therefore prints no caveat at all.
+  //
+  // THE ASYMMETRY BETWEEN THE TWO ARMS IS THE DEFECT, for the third time in this file (F-1597-1 and
+  // the blocked-arm note in findLeaves are the same shape): the --queue arm requires exact equality
+  // and correctly answers "? UNKNOWN"; the drain arm takes hits[0]. Same resolver, same board, two
+  // different answers about the SAME task — measured s2262 on e3-fairground:
+  //   --queue e3-fairground.md  -> "? UNKNOWN — no goal leaf matches"                      (correct)
+  //   the done-move             -> "✅ CLEAR — lane-d-e3-fairground-mask-table
+  //                                 [world-e3-fairground-mask] status=merged"    (a DIFFERENT task)
+  //
+  // MEASURED s2262 over all 1,284 done-moves against 613 leaves: 30 resolve to an INEXACT winner,
+  // and 23 of those are BENIGN — the done-move carries session/hash decoration the normalizer does
+  // not strip (`shipped-s1049-deploy-honest-and-serialized-ab528c3f` contains
+  // `lane-b-deploy-honest-and-serialized`), so the needle CONTAINS the leaf's key and the leaf
+  // really is the subject. INEXACTNESS ALONE IS THEREFORE NOT THE DEFECT AND MUST NOT BE THE
+  // TRIGGER: requiring exact equality here is the over-general cure and would break all 23.
+  //
+  // THE DECIDABLE TRIGGER is the one the board can prove — the subject names a REAL MASTER on disk
+  // that has NO leaf of its own. Then the honest verdict is Goal Registration Law debt and any
+  // verdict at all is about somebody else. 7 live instances (e3-fairground x3, lane-boss-healthbar
+  // x2, lane-e9-arsenal, stream-capture-duty), 5 of which print NO caveat today.
+  //
+  // DECLARES, DOES NOT REFUSE (F-2218-1's restraint). The near-miss answer is often the useful one,
+  // and this is §3.0's most-run command: a refusal here would red lawful drains and be excused into
+  // uselessness inside a week (F-1460-1). It is scoped to the provable case rather than to every
+  // inexact winner for F-2224's reason — an always-on line on this command is the noise that decays
+  // a declaration into a formality. Placed BEFORE the verdict arms so it covers all of them
+  // (CLOSED, blocked, CLEAR, --queue), and so the reader learns the subject is wrong before reading
+  // an answer about it.
+  //
+  // DECLARED LIMIT: keyed on the master EXISTING, so a subject whose master was deleted or renamed
+  // still resolves to a neighbour silently. That case cannot be told from ordinary decoration
+  // without the file, and a guess is worse than a stated gap.
+  const divergence = subjectDivergence(leaf, target, leaves);
+  if (divergence) for (const line of divergence) console.log(line);
 
   // F-1248-1 (s1248) — THE DRAIN PATH'S VOCABULARY WAS NARROWER THAN THIS FILE'S OWN --queue PATH.
   // TERMINAL_CLOSED_STATUSES (:46) was consulted ONLY under --queue, so the path §3.0 calls "THE
