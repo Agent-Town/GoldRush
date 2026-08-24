@@ -45,6 +45,30 @@
  * real subjects vanish from the census, which is the direction F-2207-1 warns about
  * (make a selector's failure mode over-inclusion). Counting the actual reads at
  * RUNTIME is immune to both, and it asserts the property rather than a proxy for it.
+ *
+ * F-2273-1 (measured s2273, CURED s2277) — A COUNTER IS ONLY AS COMPLETE AS THE
+ * CHANNELS IT OBSERVES, AND THIS ONE OBSERVED ONE CHANNEL WHILE CLAIMING A UNIVERSAL.
+ * The shim patched `fs.readFileSync` alone, so a second read of STATUS.md reached
+ * through `git show <rev>:STATUS.md` was INVISIBLE: arms 1-3 asserted "exactly ONCE"
+ * and stayed GREEN with the double read fully restored. Re-measured s2277 before
+ * spending, by manufacturing the regression on desk-birth-guard in a linked worktree:
+ *
+ *   CURED baseline        fs=1   git revs ["main"]
+ *   git-channel variant   fs=1   git revs ["HEAD", "main"]   <- IDENTICAL on fs
+ *
+ * THE REVERSE CONTROL FORBIDS THE OBVIOUS CURE, and it is measured above rather than
+ * argued: all three cured guards ALREADY read `main:STATUS.md` through git exactly
+ * once in a linked worktree (corpus-tree.mjs:85, line1MatchesMain — the sanctioned
+ * cross-check that keeps a frozen checkout from gating on a stale board). Folding git
+ * reads into one "exactly once" TOTAL would therefore red all three CORRECT files.
+ * So the discriminator is not a total, it is a REV: `main:STATUS.md` is the sanctioned
+ * second board, and any OTHER `<rev>:STATUS.md` is a second board arriving unannounced.
+ *
+ * The channel denominator is DECLARED in the assertion messages (F-2208-1: a counter
+ * that does not say what it watched invites the next reader to assume it watched
+ * everything). A channel this instrument does NOT observe is a known hole, not a
+ * silent one: reads through a spawned SHELL string (`execSync('git show ...')`) are
+ * not attributed, because there are no argv members to key on.
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -111,20 +135,64 @@ function build() {
   return { root, wt };
 }
 
-/** Patch fs.readFileSync in the CHILD and count reads of STATUS.md. */
+/**
+ * The sanctioned second board. corpus-tree.mjs's frozenTreeCheck compares a frozen
+ * checkout's line-1 against main's, so exactly one `main:STATUS.md` git read is the
+ * CURED behaviour of all three subjects. Any other rev is the regression.
+ */
+const SANCTIONED_REV = 'main';
+
+/** The channels this instrument observes, named so an arm can declare its denominator. */
+const CHANNELS =
+  'fs read family (readFileSync/readFile/promises.readFile/createReadStream/openSync) ' +
+  '+ git <rev>:STATUS.md via spawnSync/execFileSync/spawn/execFile';
+
+/**
+ * Patch the CHILD's read surface and tally STATUS.md reads PER CHANNEL.
+ *
+ * F-2273-1: the fs family is widened because `readFileSync` is one of several ways to
+ * read a file, and the git channel is counted SEPARATELY — keyed on the rev — because
+ * one git read of `main:STATUS.md` is correct and a total would red it (see header).
+ *
+ * `node -r` preloads this BEFORE the subject module is instantiated, and node builds a
+ * builtin's ESM named exports from the same patched object, so `import { spawnSync }`
+ * and `import { readFileSync }` both pick up the patch. That is MEASURED, not assumed:
+ * the git revs below arrive from corpus-tree.mjs, which imports spawnSync by name.
+ */
 function counterShim(dir) {
   const p = path.join(dir, 'counter.cjs');
   writeFileSync(p, [
     "const fs = require('fs');",
     "const path = require('path');",
-    'let n = 0;',
-    'const orig = fs.readFileSync;',
-    'fs.readFileSync = function (f, ...rest) {',
-    "  try { if (typeof f === 'string' && path.basename(f) === 'STATUS.md') n += 1; } catch {}",
-    '  return orig.call(this, f, ...rest);',
+    "const cp = require('child_process');",
+    'let n = 0; const revs = [];',
+    "const isStatus = (f) => { try { return typeof f === 'string' && path.basename(f) === 'STATUS.md'; } catch { return false; } };",
+    "for (const name of ['readFileSync', 'readFile', 'createReadStream', 'openSync']) {",
+    '  const orig = fs[name];',
+    "  if (typeof orig !== 'function') continue;",
+    '  fs[name] = function (f, ...rest) { if (isStatus(f)) n += 1; return orig.call(this, f, ...rest); };',
+    '}',
+    'try {',
+    '  const origPromise = fs.promises && fs.promises.readFile;',
+    "  if (typeof origPromise === 'function') {",
+    '    fs.promises.readFile = function (f, ...rest) { if (isStatus(f)) n += 1; return origPromise.call(this, f, ...rest); };',
+    '  }',
+    '} catch {}',
+    // A git pathspec is `<rev>:<path>`; the path half may be repo-relative.
+    "const REV = /^([^\\s:]+):(?:.*\\/)?STATUS\\.md$/;",
+    'const note = (cmd, args) => {',
+    '  try {',
+    "    if (path.basename(String(cmd)) !== 'git' || !Array.isArray(args)) return;",
+    '    for (const a of args) { const m = REV.exec(String(a)); if (m) revs.push(m[1]); }',
+    '  } catch {}',
     '};',
+    "for (const name of ['spawnSync', 'execFileSync', 'spawn', 'execFile']) {",
+    '  const orig = cp[name];',
+    "  if (typeof orig !== 'function') continue;",
+    '  cp[name] = function (cmd, args, ...rest) { note(cmd, args); return orig.call(this, cmd, args, ...rest); };',
+    '}',
     "process.on('exit', () => {",
-    '  try { fs.writeFileSync(process.env.S2271_COUNT_FILE, String(n)); } catch {}',
+    '  try { fs.writeFileSync(process.env.S2271_COUNT_FILE, JSON.stringify({ fs: n, git: revs })); } catch {}',
     '});',
   ].join('\n'));
   return p;
@@ -148,7 +216,32 @@ function reads(scriptPath, cwd, dir) {
   assert.doesNotMatch(r.stdout ?? '', /SKIP —/,
     'control validity: the guard SKIPped, so it never reached the second read — this arm would pass vacuously');
   assert.ok(existsSync(countFile), 'the counter shim never wrote its tally — the instrument, not the subject, failed');
-  return { n: Number(readFileSync(countFile, 'utf8')), rc: r.status, all };
+  const tally = JSON.parse(readFileSync(countFile, 'utf8'));
+  const git = tally.git ?? [];
+  return {
+    n: tally.fs,
+    git,
+    sanctioned: git.filter((rev) => rev === SANCTIONED_REV),
+    unsanctioned: git.filter((rev) => rev !== SANCTIONED_REV),
+    rc: r.status,
+    all,
+  };
+}
+
+/**
+ * The once-per-verdict property, asserted across EVERY channel this instrument
+ * observes — and the denominator declared in every message, so a future reader can
+ * tell "I watched these channels and saw one read" from "I watched one channel".
+ */
+function assertReadsOnce(r, name, why) {
+  assert.equal(r.n, 1, `${name}: read STATUS.md ${r.n}x through the fs channel — ${why}. Channels observed: ${CHANNELS}`);
+  assert.deepEqual(r.unsanctioned, [],
+    `${name}: reached a SECOND board through git (${JSON.stringify(r.unsanctioned)}:STATUS.md) — ` +
+    `${why}. Only ${SANCTIONED_REV}:STATUS.md is the sanctioned cross-check (corpus-tree.mjs, frozenTreeCheck). ` +
+    `Channels observed: ${CHANNELS}`);
+  assert.ok(r.sanctioned.length <= 1,
+    `${name}: read ${SANCTIONED_REV}:STATUS.md ${r.sanctioned.length}x — the sanctioned cross-check is ONE read too. ` +
+    `Channels observed: ${CHANNELS}`);
 }
 
 /**
@@ -172,7 +265,18 @@ function reads(scriptPath, cwd, dir) {
  *   * s2264: a variant that no longer CONSTRUCTS is indistinguishable from a guard
  *     with teeth, so the edit is asserted to have matched AND the result to parse.
  */
-function preCure(name) {
+const FS_SECOND_READ = "frozenTreeCheck(ROOT, fs.readFileSync(statusPath, 'utf8'), ";
+/**
+ * The SAME regression reached through git instead of fs (F-2273-1). desk-birth-guard
+ * already imports execFileSync at :65, so this variant needs no new import — which is
+ * exactly why the channel is not exotic: it is this file family's native idiom for
+ * reading a corpus (desk-birth-guard.mjs reads BACKLOG.md by `git diff`).
+ */
+const GIT_SECOND_READ =
+  "frozenTreeCheck(ROOT, execFileSync('git', ['-C', ROOT, 'show', 'HEAD:STATUS.md'], " +
+  '{ encoding: \'utf8\', maxBuffer: 64 << 20 }), ';
+
+function preCure(name, replacement = FS_SECOND_READ) {
   const needle = 'frozenTreeCheck(ROOT, statusText, ';
   const src = readFileSync(path.join(SCRIPTS, name + '.mjs'), 'utf8');
   assert.ok(src.includes(needle), `variantOf: the anchor is absent from ${name} — the edit matched NOTHING, so this arm would test a file it never modified (s2264)`);
@@ -197,7 +301,7 @@ function preCure(name) {
   };
   copyDeps(path.join(SCRIPTS, name + '.mjs'));
   const out = path.join(dir, name + '.mjs');
-  writeFileSync(out, src.replace(needle, "frozenTreeCheck(ROOT, fs.readFileSync(statusPath, 'utf8'), "));
+  writeFileSync(out, src.replace(needle, replacement));
   // The first draft of this helper replaced the CALL PREFIX rather than the
   // argument, producing `const frozen = fs.readFileSync(...)'desk-birth-guard');`
   // — a SYNTAX ERROR. The variant then read STATUS.md zero times and the arm
@@ -219,20 +323,20 @@ test('1. desk-birth-guard reads STATUS.md exactly ONCE on the path that consumes
   const { wt } = build();
   const r = reads(path.join(SCRIPTS, 'desk-birth-guard.mjs'), wt, path.dirname(wt));
   assert.match(r.all, /linked worktree/, 'the fixture must reach frozenTreeCheck, or the count proves nothing');
-  assert.equal(r.n, 1, `read STATUS.md ${r.n}x — the verdict and the freshness check must share one read`);
+  assertReadsOnce(r, 'desk-birth-guard', 'the verdict and the freshness check must share one read');
 });
 
 test('2. desk-declaration-guard reads STATUS.md exactly ONCE on the path that consumes it', () => {
   const { wt } = build();
   const r = reads(path.join(SCRIPTS, 'desk-declaration-guard.mjs'), wt, path.dirname(wt));
   assert.match(r.all, /linked worktree/, 'the fixture must reach frozenTreeCheck, or the count proves nothing');
-  assert.equal(r.n, 1, `read STATUS.md ${r.n}x — the desk and the freshness check must share one read`);
+  assertReadsOnce(r, 'desk-declaration-guard', 'the desk and the freshness check must share one read');
 });
 
 test('3. REVERSE CONTROL — desk-carryforward-guard, which always had the cured structure, still reads ONCE', () => {
   const { wt } = build();
   const r = reads(path.join(SCRIPTS, 'desk-carryforward-guard.mjs'), wt, path.dirname(wt));
-  assert.equal(r.n, 1, `read STATUS.md ${r.n}x — the sibling this cure was copied FROM must not regress`);
+  assertReadsOnce(r, 'desk-carryforward-guard', 'the sibling this cure was copied FROM must not regress');
 });
 
 test('4. TEETH — the pre-cure desk-birth-guard reads STATUS.md TWICE', () => {
@@ -266,8 +370,64 @@ test('6. INSTRUMENT VALIDITY — the counter counts, so a 0 cannot be mistaken f
     cwd: root, encoding: 'utf8', env: { ...process.env, S2271_COUNT_FILE: countFile },
   });
   assert.equal(r.status, 0, r.stderr);
-  assert.equal(Number(readFileSync(countFile, 'utf8')), 3,
+  assert.equal(JSON.parse(readFileSync(countFile, 'utf8')).fs, 3,
     'the shim under-counted a known number of reads — every other arm in this file is then unsound');
+});
+
+test('8. TEETH (F-2273-1) — the SAME double read through `git show HEAD:STATUS.md` must RED', () => {
+  const { wt } = build();
+  const v = preCure('desk-birth-guard', GIT_SECOND_READ);
+  const r = reads(v, wt, path.dirname(wt));
+  // The whole finding in one assertion: on the channel the pre-F-2273-1 counter
+  // watched, this variant is INDISTINGUISHABLE from the cured baseline. Measured
+  // s2277 before the cure was written — cured fs=1 git=["main"], variant fs=1
+  // git=["HEAD","main"] — so arms 1-3 stayed green with the double read restored.
+  assert.equal(r.n, 1, 'the git-channel regression must remain invisible to the fs counter, or this arm is testing something else');
+  assert.deepEqual(r.unsanctioned, ['HEAD'],
+    'the git channel must SEE the second board — if this is empty the widened shim is decoration');
+  // The regex also pins the DECLARATION (F-2208-1): a counter that does not name the
+  // channels it watched invites the next reader to assume it watched everything, which
+  // is precisely the assumption F-2273-1 was. Without this clause, dropping the
+  // declaration reds no arm at all and it decays into a comment.
+  assert.throws(() => assertReadsOnce(r, 'desk-birth-guard', 'x'),
+    /SECOND board through git[\s\S]*Channels observed: fs read family[\s\S]*git <rev>:STATUS\.md/,
+    'the assertion the real arms use must REJECT this variant, and must DECLARE the channels it watched');
+});
+
+test('9. REVERSE CONTROL (F-2273-1) — the sanctioned `main:STATUS.md` read must NOT count as a violation', () => {
+  const { wt } = build();
+  const r = reads(path.join(SCRIPTS, 'desk-birth-guard.mjs'), wt, path.dirname(wt));
+  // This is the arm that catches the over-general cure. Folding git reads into one
+  // "exactly once" TOTAL passes arm 8 and reds all three CORRECT guards, because
+  // corpus-tree.mjs's frozenTreeCheck legitimately asks main for its line-1.
+  assert.deepEqual(r.sanctioned, [SANCTIONED_REV],
+    'the cured baseline must actually PERFORM the sanctioned cross-check here, or arms 1-3 prove nothing about the git channel');
+  assert.equal(r.n + r.sanctioned.length, 2,
+    'the cured baseline reads STATUS.md twice IN TOTAL across channels — one fs read plus one sanctioned main: read. ' +
+    'A cure that asserts a total of 1 reds correct code.');
+  assertReadsOnce(r, 'desk-birth-guard', 'the sanctioned cross-check is not a violation');
+});
+
+test('10. INSTRUMENT VALIDITY — the git counter counts, so an empty rev list cannot be mistaken for a pass', () => {
+  const { root, wt } = build();
+  const dir = path.dirname(wt);
+  const probe = path.join(dir, 'gitprobe.mjs');
+  writeFileSync(probe, [
+    "import { execFileSync, spawnSync } from 'node:child_process';",
+    "execFileSync('git', ['show', 'HEAD:STATUS.md'], { encoding: 'utf8' });",
+    "spawnSync('git', ['show', 'main:STATUS.md'], { encoding: 'utf8' });",
+    "console.log('probe read two boards');",
+  ].join('\n'));
+  const shim = counterShim(dir);
+  const countFile = path.join(dir, 'count.gitprobe.txt');
+  const r = spawnSync('node', ['-r', shim, probe], {
+    cwd: root, encoding: 'utf8', env: { ...process.env, S2271_COUNT_FILE: countFile },
+  });
+  assert.equal(r.status, 0, r.stderr);
+  const tally = JSON.parse(readFileSync(countFile, 'utf8'));
+  assert.deepEqual(tally.git, ['HEAD', 'main'],
+    'the shim missed a known number of git reads through BOTH spawners — every git assertion in this file is then unsound');
+  assert.equal(tally.fs, 0, 'a git read must not also be tallied on the fs channel — the two counts would double-report');
 });
 
 test('7. the cure is behaviour-neutral — both guards still REFUSE from a frozen worktree', () => {
