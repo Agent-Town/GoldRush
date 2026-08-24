@@ -1,4 +1,5 @@
 import type { AgentPermissionLevel } from './PermissionLadder';
+import { Balance } from '../game/Balance';
 
 export type AgentAbility = 'auto_collect' | 'auto_repair' | 'auto_pan' | 'light_duty' | 'place_building';
 
@@ -20,17 +21,23 @@ export type AgentConsentSnapshot = {
   ceiling: AgentPermissionLevel;
   rungs: Record<AgentPermissionLevel, { earned: boolean; granted: boolean }>;
   abilities: Record<AgentAbility, { earned: boolean; granted: boolean; allowed: boolean; level: AgentPermissionLevel }>;
+  repairUnderPct: number;
+  idleSeconds: number;
 };
 
 type AgentConsentState = {
   rungs: Record<AgentPermissionLevel, boolean>;
   abilities: Record<AgentAbility, boolean>;
+  repairUnderPct: number;
+  idleSeconds: number;
 };
 
 export type AgentConsentFutureState = {
   rungs: AgentConsentState['rungs'];
   abilities: Omit<AgentConsentState['abilities'], 'light_duty' | 'place_building'> &
     Partial<Pick<AgentConsentState['abilities'], 'light_duty' | 'place_building'>>;
+  repairUnderPct?: number;
+  idleSeconds?: number;
 };
 
 export class AgentConsentStore {
@@ -41,13 +48,20 @@ export class AgentConsentStore {
   }
 
   captureFutureState(): AgentConsentFutureState {
-    return { rungs: { ...this.state.rungs }, abilities: { ...this.state.abilities } };
+    return {
+      rungs: { ...this.state.rungs },
+      abilities: { ...this.state.abilities },
+      repairUnderPct: this.state.repairUnderPct,
+      idleSeconds: this.state.idleSeconds,
+    };
   }
 
   restoreFutureState(state: AgentConsentFutureState): boolean {
     const rungValues = [state.rungs?.[0], state.rungs?.[1], state.rungs?.[2], state.rungs?.[3]];
     const abilityValues = [state.abilities?.auto_collect, state.abilities?.auto_repair, state.abilities?.auto_pan];
     if (![...rungValues, ...abilityValues].every((value) => typeof value === 'boolean')) return false;
+    if (state.repairUnderPct !== undefined && !finiteInRange(state.repairUnderPct, 0, 100)) return false;
+    if (state.idleSeconds !== undefined && !finiteInRange(state.idleSeconds, 0, 60)) return false;
     this.state = {
       rungs: { ...state.rungs },
       abilities: {
@@ -55,6 +69,8 @@ export class AgentConsentStore {
         light_duty: state.abilities.light_duty === true,
         place_building: state.abilities.place_building === true,
       },
+      repairUnderPct: state.repairUnderPct ?? Balance.agent.autoRepairUnderPct,
+      idleSeconds: state.idleSeconds ?? Balance.agent.automationIdleSeconds,
     };
     return true;
   }
@@ -65,6 +81,19 @@ export class AgentConsentStore {
 
   setAbility(ability: AgentAbility, granted: boolean): void {
     this.state.abilities[ability] = granted;
+  }
+
+  setAutomation(key: 'repairUnderPct' | 'idleSeconds', value: number): void {
+    const max = key === 'repairUnderPct' ? 100 : 60;
+    if (Number.isFinite(value)) this.state[key] = Math.max(0, Math.min(max, value));
+  }
+
+  get repairUnderPct(): number {
+    return this.state.repairUnderPct;
+  }
+
+  get idleSeconds(): number {
+    return this.state.idleSeconds;
   }
 
   allows(ability: AgentAbility, ceiling: AgentPermissionLevel): boolean {
@@ -89,6 +118,8 @@ export class AgentConsentStore {
         auto_pan: this.ability('auto_pan', ceiling),
         place_building: this.ability('place_building', ceiling),
       },
+      repairUnderPct: this.state.repairUnderPct,
+      idleSeconds: this.state.idleSeconds,
     };
   }
 
@@ -111,5 +142,11 @@ function freshConsentState(): AgentConsentState {
   return {
     rungs: { 0: true, 1: true, 2: true, 3: true },
     abilities: { auto_collect: true, auto_repair: true, auto_pan: true, light_duty: false, place_building: true },
+    repairUnderPct: Balance.agent.autoRepairUnderPct,
+    idleSeconds: Balance.agent.automationIdleSeconds,
   };
+}
+
+function finiteInRange(value: number, min: number, max: number): boolean {
+  return Number.isFinite(value) && value >= min && value <= max;
 }

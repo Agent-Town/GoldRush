@@ -258,6 +258,10 @@ export const Balance = {
     // F-1565-1 / f1567-2: keep a refusal readable through the first idle-survey deadline.
     refusalHoldSeconds: 8,
     xpMoteAgeS: 4,
+    // REPAIR_UNDER already proves 60% as the authored repair-policy precedent.
+    autoRepairUnderPct: 60,
+    // The existing automation sweep retries every 0.8s; one quiet sweep defines idle.
+    automationIdleSeconds: 0.8,
     priorityChaseMark: 40,
     priorityRepair: 30,
     priorityCollectXp: 20,

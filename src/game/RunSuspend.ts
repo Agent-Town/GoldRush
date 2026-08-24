@@ -718,7 +718,11 @@ function captureAgent(game: AnyGame, at: number, buildings: readonly BuildingSus
     Number.isInteger(repairTarget.index) &&
     buildings.some((building) => building.id === repairTarget.id && building.index === repairTarget.index);
   return {
-    consent: deepClone(consent),
+    consent: {
+      ...deepClone(consent),
+      repairUnderPct: consent.repairUnderPct,
+      idleSeconds: consent.idleSeconds,
+    },
     prospector: deepClone(prospector),
     sweeps: {
       xpIn: Math.max(0, cleanNumber(game.nextProspectorXpSweepAt) - at),
@@ -949,6 +953,7 @@ function restoreAgent(game: AnyGame, snapshot: RunSuspendEnvelope, hero: AnyGame
     game.nextProspectorRepairSweepAt = 0;
     game.prospectorRepairTarget = null;
     game.prospectorRepairDwellStartedAt = null;
+    game.prospectorIdleStartedAt = null;
     return true;
   }
   if (game.agentConsent?.restoreFutureState?.(agent.consent) === false) return false;
@@ -961,6 +966,7 @@ function restoreAgent(game: AnyGame, snapshot: RunSuspendEnvelope, hero: AnyGame
     agent.sweeps.repairDwellElapsed === null
       ? null
       : cleanNumber(game.activeTickElapsed) - agent.sweeps.repairDwellElapsed;
+  game.prospectorIdleStartedAt = null;
   return true;
 }
 
@@ -2607,6 +2613,12 @@ function decodeAgent(value: unknown, reasons: string[]): AgentSuspend | null | u
   const abilities = consentRecord ? requiredRecord(consentRecord.abilities, 'agent.consent.abilities', reasons) : null;
   const rungValues = rungs ? [rungs[0], rungs[1], rungs[2], rungs[3]] : [];
   const abilityValues = abilities ? [abilities.auto_collect, abilities.auto_repair, abilities.auto_pan] : [];
+  const repairUnderPct = consentRecord && 'repairUnderPct' in consentRecord
+    ? requiredNumber(consentRecord.repairUnderPct, 0, 100, 'agent.consent.repairUnderPct', reasons)
+    : Balance.agent.autoRepairUnderPct;
+  const idleSeconds = consentRecord && 'idleSeconds' in consentRecord
+    ? requiredNumber(consentRecord.idleSeconds, 0, 60, 'agent.consent.idleSeconds', reasons)
+    : Balance.agent.automationIdleSeconds;
   if (rungValues.length !== 4 || !rungValues.every((entry) => typeof entry === 'boolean')) {
     reasons.push('agent.consent.rungs must contain four booleans');
   }
@@ -2663,6 +2675,8 @@ function decodeAgent(value: unknown, reasons: string[]): AgentSuspend | null | u
     !abilities ||
     rungValues.some((entry) => typeof entry !== 'boolean') ||
     abilityValues.some((entry) => typeof entry !== 'boolean') ||
+    repairUnderPct === null ||
+    idleSeconds === null ||
     !prospectorRecord ||
     !position ||
     !target ||
@@ -2691,6 +2705,8 @@ function decodeAgent(value: unknown, reasons: string[]): AgentSuspend | null | u
         light_duty: abilities.light_duty === true,
         place_building: abilities.place_building === true,
       },
+      repairUnderPct,
+      idleSeconds,
     },
     prospector: {
       visible: prospectorRecord.visible,

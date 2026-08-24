@@ -1412,6 +1412,7 @@ export class Game {
   private nextProspectorRepairSweepAt = 0;
   private prospectorRepairTarget: AgentBuildingRef | null = null;
   private prospectorRepairDwellStartedAt: number | null = null;
+  private prospectorIdleStartedAt: number | null = null;
   private prospectorIntroShown = false;
   private agentPolicySlotBonus = 0;
   private readonly researchStorage = browserResearchStorage();
@@ -7386,9 +7387,12 @@ export class Game {
       return;
     }
     if (this.prospector.hasActiveTask) {
+      this.prospectorIdleStartedAt = null;
       this.previewProspectorRepair();
       return;
     }
+    this.prospectorIdleStartedAt ??= this.timeAlive;
+    if (this.timeAlive - this.prospectorIdleStartedAt < this.agentConsent.idleSeconds) return;
     this.prospectorRepairDwellStartedAt = null;
 
     const hadTarget = this.prospectorRepairTarget !== null;
@@ -7458,7 +7462,7 @@ export class Game {
     const index = Number.isInteger(ref.index) ? ref.index! : 0;
     if (!id || index < 0) return null;
     const entry = this.buildSystem.diagnostics.hp.find((candidate) => candidate.id === id && candidate.index === index);
-    if (!entry || !buildingNeedsRepair(entry)) return null;
+    if (!entry || !buildingNeedsRepair(entry, this.agentConsent.repairUnderPct)) return null;
     const rangeSq = Balance.sparkRig.range * Balance.sparkRig.range;
     const distanceSq = distanceSq2(this.prospector.position.x, this.prospector.position.z, entry.position.x, entry.position.z);
     if (distanceSq > rangeSq) return null;
@@ -7469,7 +7473,7 @@ export class Game {
     let best: { id: BuildableId; index: number; position: ProspectorPoint } | null = null;
     let bestDistanceSq = Balance.sparkRig.range * Balance.sparkRig.range;
     for (const entry of this.buildSystem.diagnostics.hp) {
-      if (!buildingNeedsRepair(entry)) continue;
+      if (!buildingNeedsRepair(entry, this.agentConsent.repairUnderPct)) continue;
       const distanceSq = distanceSq2(this.prospector.position.x, this.prospector.position.z, entry.position.x, entry.position.z);
       if (distanceSq <= bestDistanceSq) {
         best = { id: entry.id, index: entry.index, position: entry.position };
@@ -7602,6 +7606,18 @@ export class Game {
   }
 
   private handleUiIntent(intent: UiIntent): void {
+    const automation = intent as unknown as {
+      type: 'set_agent_automation';
+      key: 'repairUnderPct' | 'idleSeconds';
+      value: number;
+    };
+    if (automation.type === 'set_agent_automation') {
+      if (!this.mpClient) {
+        this.agentConsent.setAutomation(automation.key, automation.value);
+        this.nextProspectorRepairSweepAt = this.timeAlive;
+      }
+      return;
+    }
     if (this.mpClient) {
       if (intent.type === 'set_agent_rung') {
         this.mpQueuedActions.push({ type: 'set_agent_rung', level: intent.level, granted: intent.granted });
@@ -7874,6 +7890,7 @@ export class Game {
     this.nextProspectorRepairSweepAt = 0;
     this.prospectorRepairTarget = null;
     this.prospectorRepairDwellStartedAt = null;
+    this.prospectorIdleStartedAt = null;
     this.prospectorIntroShown = false;
     this.lastHarvestChanneling = false;
     this.lastUpgradeOfferAudioKey = '';
@@ -9672,8 +9689,8 @@ function buildableIdFromString(value: string): BuildableId | null {
   return buildableDefs.some((def) => def.id === value) ? (value as BuildableId) : null;
 }
 
-function buildingNeedsRepair(entry: { hp: number; maxHp: number; wrecked: boolean }): boolean {
-  return entry.maxHp > 0 && (entry.wrecked || (entry.hp > 0 && entry.hp < entry.maxHp));
+function buildingNeedsRepair(entry: { hp: number; maxHp: number; wrecked: boolean }, repairUnderPct: number): boolean {
+  return entry.maxHp > 0 && (entry.wrecked || (entry.hp > 0 && (entry.hp / entry.maxHp) * 100 < repairUnderPct));
 }
 
 function browserMegaprojectStorage(): MegaprojectStorage | undefined {
