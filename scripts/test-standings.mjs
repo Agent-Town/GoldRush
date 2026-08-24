@@ -154,6 +154,13 @@ async function checkPosts(onRequest) {
   const emptyBoard = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(emptyBoard.body.board.length, 0, 'tapeless row is excluded from board');
 
+  const disclosed = post('1'.repeat(32), 10);
+  disclosed.stack = { worldModel: 'sim-import' };
+  equal((await call(onRequest, 'POST', '/api/standings', disclosed, kv)).status, 200, 'world-model disclosure is optional and accepted');
+  const oversizedDisclosure = post('2'.repeat(32), 10);
+  oversizedDisclosure.stack = { worldModel: 'x'.repeat(65) };
+  equal((await call(onRequest, 'POST', '/api/standings', oversizedDisclosure, kv)).status, 400, 'world-model disclosure is capped at 64 characters');
+
   const taped = post('0'.repeat(32), 20, tape('pending-tape', 20));
   const pending = await call(onRequest, 'POST', '/api/standings', taped, kv);
   equal(pending.body.rank, 1, 'taped resubmission supersedes unattested row');

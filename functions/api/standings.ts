@@ -48,6 +48,7 @@ type SelfDeclaredStack = {
   model?: string;
   harness?: string;
   harnessVersion?: string;
+  worldModel?: string;
   config?: string;
   source?: string;
   tokensIn?: number;
@@ -151,8 +152,9 @@ const SHA256 = /^[a-f0-9]{64}$/;
 const ANON_ID = /^[a-f0-9]{32}$/;
 const MAX_SEED_LENGTH = 256;
 const MAX_STACK_FIELD_LENGTH = 256;
+const MAX_WORLD_MODEL_LENGTH = 64;
 const MAX_STACK_COST = 1_000_000_000_000;
-const STACK_TEXT_FIELDS = ['model', 'harness', 'harnessVersion', 'config'] as const;
+const STACK_TEXT_FIELDS = ['model', 'harness', 'harnessVersion', 'worldModel', 'config'] as const;
 const STACK_COST_FIELDS = ['tokensIn', 'tokensOut', 'calls'] as const;
 const STACK_KEYS = new Set<string>([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source']);
 const STORED_STACK_KEYS = new Set([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source', 'declaredBy']);
@@ -503,6 +505,7 @@ function boardStack(stack?: SelfDeclaredStack): JsonRecord {
     ...(stack.model === undefined ? {} : { model: stack.model }),
     ...(stack.harness === undefined ? {} : { harness: stack.harness }),
     ...(stack.harnessVersion === undefined ? {} : { harnessVersion: stack.harnessVersion }),
+    ...(stack.worldModel === undefined ? {} : { worldModel: stack.worldModel }),
     ...(stack.source === undefined ? {} : { source: stack.source }),
   };
 }
@@ -582,6 +585,7 @@ function stackCell(row: StoredRow, contractId: string, frontiers: ReadonlyMap<st
     ...(row.stack?.calls === undefined ? {} : { calls: row.stack.calls }),
     ...(row.stack?.harness === undefined ? {} : { harness: row.stack.harness }),
     ...(row.stack?.harnessVersion === undefined ? {} : { harnessVersion: row.stack.harnessVersion }),
+    ...(row.stack?.worldModel === undefined ? {} : { worldModel: row.stack.worldModel }),
     ...(row.stack?.config === undefined ? {} : { config: row.stack.config }),
   };
 }
@@ -950,7 +954,8 @@ function validateStack(value: unknown, stored = false): SelfDeclaredStack | null
   for (const field of STACK_TEXT_FIELDS) {
     const fieldValue = value[field];
     if (fieldValue === undefined) continue;
-    if (typeof fieldValue !== 'string' || fieldValue.length > MAX_STACK_FIELD_LENGTH) return null;
+    const maxLength = field === 'worldModel' ? MAX_WORLD_MODEL_LENGTH : MAX_STACK_FIELD_LENGTH;
+    if (typeof fieldValue !== 'string' || fieldValue.length > maxLength) return null;
     stack[field] = fieldValue;
   }
   // Stored rows are season history; never retro-judge version-less harness declarations.

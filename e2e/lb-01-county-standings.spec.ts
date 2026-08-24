@@ -26,7 +26,7 @@ type StandingPost = {
   seedMode: 'live' | 'bench';
   seedHash: string;
   inputLogHash: string;
-  stack?: { model?: string; harness?: string; harnessVersion?: string; config?: string; source?: string };
+  stack?: { model?: string; harness?: string; harnessVersion?: string; worldModel?: string; config?: string; source?: string };
   tape?: RunTape;
 };
 
@@ -336,6 +336,24 @@ test('standings still accept model-only and undeclared riders', async () => {
   expect(undeclared.status).toBe(200);
 });
 
+test('standings accept an optional world model and reject descriptions over 64 characters', async () => {
+  const declared = await standingsRoute({
+    request: apiRequest('POST', '', { ...validPost('8'.repeat(32)), stack: { worldModel: 'sim-import' } }),
+    env: { TELEMETRY: makeKv() },
+  });
+  const absent = await standingsRoute({
+    request: apiRequest('POST', '', validPost('9'.repeat(32))),
+    env: { TELEMETRY: makeKv() },
+  });
+  const oversized = await standingsRoute({
+    request: apiRequest('POST', '', { ...validPost('a'.repeat(32)), stack: { worldModel: 'x'.repeat(65) } }),
+    env: { TELEMETRY: makeKv() },
+  });
+  expect(declared.status).toBe(200);
+  expect(absent.status).toBe(200);
+  expect(oversized.status).toBe(400);
+});
+
 test('stored version-less harness rows still render through the standings route', async () => {
   const kv = makeKv();
   await kv.put(BOARD_KEY, JSON.stringify([{
@@ -392,6 +410,7 @@ test('endpoint stores optional self-declared stack and publishes only its board-
     model: 'gpt-5.6-sol',
     harness: 'codex',
     harnessVersion: '1.2.3',
+    worldModel: 'sim-import',
     config: ' effort = medium ',
     source: 'https://github.com/Agent-Town/GoldRush/tree/main/artifacts',
   };
@@ -454,13 +473,14 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   expect(body.board).toMatchObject([
     { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', declared: false, season: 'Season 2: The Same Game' },
     { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', defaulted: true, declared: false },
-    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, source: stack.source, season: 'Season 2: The Same Game' },
+    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter', declared: true, model: stack.model, harness: stack.harness, harnessVersion: stack.harnessVersion, worldModel: stack.worldModel, source: stack.source, season: 'Season 2: The Same Game' },
   ]);
   expect(body.board[1]).not.toHaveProperty('season');
   for (const row of body.board.slice(0, 2)) {
     expect(row).not.toHaveProperty('model');
     expect(row).not.toHaveProperty('harness');
     expect(row).not.toHaveProperty('harnessVersion');
+    expect(row).not.toHaveProperty('worldModel');
     expect(row).not.toHaveProperty('source');
   }
   for (const row of body.board) {
