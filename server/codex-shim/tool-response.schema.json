@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": ["string", "null"]
+    },
+    "tool_calls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "arguments": { "type": "string" }
+        },
+        "required": ["name", "arguments"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["content", "tool_calls"],
+  "additionalProperties": false
+}
