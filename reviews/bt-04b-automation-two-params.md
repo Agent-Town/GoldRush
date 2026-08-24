@@ -8,6 +8,16 @@
 
 ## VERDICT: HOLD — NOT MERGED
 
+> ⏭️ **SUPERSEDED s2269 — THIS HOLD IS DISCHARGED. The slice MERGED at `fa00605bac5e165adae3c6ce3210ccd5128ab659`,
+> verified BY ANCESTRY (`git merge-base --is-ancestor fa00605ba main` → yes).** The verdict above is kept VERBATIM
+> under the Retention Law: it was correct when written, and the reasoning is the provenance. What changed is the
+> evidence, not the judgement — the hold rested on the slice's own spec being uncertifiable on mobile-390, and it
+> was lifted by s2268's pre-registered condition being met: 5/5 clean full-file mobile-chrome runs in a fire-shell
+> detached worktree at `--workers=1`, on top of the implementer's 10 clean lane-shell runs. ⚠️ **Read the successor
+> review before citing this one — the flake is CARRIED, not explained:** combined record 1 failure in 20 full-file
+> mobile runs, and the load hypothesis is UN-PROBED (the clean runs ran at loadavg 8.89, the one failure at 13.51).
+> Successor: `reviews/bt-04b-automation-two-params-s2269-merge.md`.
+
 The implementation gates clean on every deterministic check. **It is held on ONE
 finding: the slice's own new spec is FLAKY on mobile-390 — non-deterministic across
 identical serial runs.** Nothing here says the feature is wrong; what cannot be said
