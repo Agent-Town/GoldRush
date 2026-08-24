@@ -89,3 +89,39 @@ LANE-TOUCHED; main has not moved any of them since the lane branched.
 `src/agent/`, and it was **not run** — the slice was held on the spec flake before
 the ~530 s battery was worth spending. **The next fire owes that battery before any
 merge**; do not read this review's greens as covering it.
+
+
+## s2266 — the owed battery, DISCHARGED (and the hold stands on its own merits)
+
+**`npm run test:node-guards` was run on the MERGED tree** (detached worktree
+`worktrees/gate-s2266`, base `b0ba2b178`, `git merge --no-ff lane/a` clean — 8 files,
++214/-10, zero conflicts), fire shell, node **v26.4.0** matching `.nvmrc` (F-2166-2: a
+red here is a question about WHICH INTERPRETER ran it before it is a question about the
+slice). **rc=1, 3 failing tests — and NONE of them is a product objection to this slice.**
+
+| failing test | file | attribution |
+|---|---|---|
+| "reds on the pre-strike ledger that manufactured the owner directive, greens on the struck one" | `scripts/blocker-panel-closed-guard.test.mjs` | **PRE-EXISTING ON MAIN** |
+| "all 76 scripts/*.test.mjs fixture owners remove their temp directories" | `scripts/fixture-teardown.test.mjs` | **CASCADE of the above** — its own message names `blocker-panel-closed-guard.test.mjs child failed` |
+| "THE REAL TREE: every law-surface pointer in this repo currently holds" | `scripts/law-pointer-guard.test.mjs` | **ATTRIBUTABLE — routine, predicted pointer rot (F-2266-3)** |
+
+**The control is what makes this readable, and it was run rather than assumed:** the
+same `blocker-panel-closed-guard.test.mjs` fails **on clean main** with the identical
+`0 !== 1` at the identical assertion, so it is not this slice's (F-2266-2). And
+`law-pointer-guard.test.mjs` is **GREEN on main and RED on the merged tree**, re-run
+**ALONE** in both to rule out the contention that F-1537-1 warns of — so that one IS
+the merge's, and it is the ordinary lifecycle rather than a defect.
+
+⚠️ **THE ONE OWED ACT AT MERGE TIME (F-2266-3):** this slice moves
+`src/game/Game.ts` and shifts the line `scripts/fire.md` cites for the
+`placeBuilding`/`panAt` GHOST evidence. **Measured by RE-GREPPING the content, never by
+remembering a delta:** `placeBuilding: (id, position, rotation = 0) => ...` sits at
+**2477 on main** and at **2478 on the merged tree** — a shift of exactly **+1**, so the
+law's `2477–2478` becomes `2478–2479`. **The landing drain must re-base that pointer in
+its own commit**, exactly as the CLAUDE.md clause predicts for this coordinate family.
+Note `src/game/Game.ts` carries a SECOND `placeBuilding` occurrence (3327 → 3328); the
+law cites the FIRST — re-grep, do not count.
+
+⚖️ **THE HOLD IS UNCHANGED AND IS NOT WEAKENED BY THIS RESULT.** The battery found no
+product objection, but the F-2265-2 spec flake is untouched by it. **A green battery
+does not certify a flaky spec** — and this battery was not green anyway.
