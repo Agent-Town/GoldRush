@@ -209,15 +209,28 @@ function checkDurationCeilings(validateTape, validateRunTape, maxRunTapeTicksFor
     'e1-night-shift',
     'e1-twin-banks',
     'e1-baron',
-  ].map(maxRunTapeTicksForContract), [18_000, 18_000, 18_001, 22_501, 18_001, 20_349], 'E1 contract duration table is pinned');
+    'e2-trestle',
+    'e2-incline',
+    'e3-canyon-works',
+    'e4-dust-flats',
+  ].map(maxRunTapeTicksForContract), [18_000, 18_000, 18_001, 22_501, 18_001, 20_349, 23_144, 21_601, 18_001, 18_001], 'contract duration table is pinned');
+  equal(maxRunTapeTicksForContract('unknown-contract'), recorderTicks, 'unknown contracts keep the recorder ceiling');
 
-  const night = tape('night-validator', 25, 'fnv1a32:1234abcd', 'e1-night-shift');
-  night.inputLog.durationTicks = 22_501;
-  ok(validateTape(night, 'e1-night-shift', 'gold-rush', 'trail'), 'standings validator accepts Night Shift dawn');
-  ok(validateRunTape(night), 'assay validator accepts Night Shift dawn');
-  night.inputLog.durationTicks += 1;
-  equal(validateTape(night, 'e1-night-shift', 'gold-rush', 'trail'), null, 'standings validator refuses beyond Night Shift margin');
-  equal(validateRunTape(night), null, 'assay validator refuses beyond Night Shift margin');
+  for (const [contractId, ceiling, waves] of [
+    ['e1-night-shift', 22_501, 25],
+    ['e2-trestle', 23_144, 12],
+    ['e2-incline', 21_601, 12],
+    ['e3-canyon-works', 18_001, 12],
+    ['e4-dust-flats', 18_001, 12],
+  ]) {
+    const bounded = tape(`${contractId}-validator`, waves, 'fnv1a32:1234abcd', contractId);
+    bounded.inputLog.durationTicks = ceiling;
+    ok(validateTape(bounded, contractId, 'gold-rush', 'trail'), `standings validator accepts ${contractId} ceiling`);
+    ok(validateRunTape(bounded), `assay validator accepts ${contractId} ceiling`);
+    bounded.inputLog.durationTicks += 1;
+    equal(validateTape(bounded, contractId, 'gold-rush', 'trail'), null, `standings validator refuses beyond ${contractId} ceiling`);
+    equal(validateRunTape(bounded), null, `assay validator refuses beyond ${contractId} ceiling`);
+  }
 }
 
 async function checkVerdicts(onRequest, queueRoute, verdictRoute) {

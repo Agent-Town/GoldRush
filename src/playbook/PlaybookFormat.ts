@@ -1,6 +1,15 @@
 import { normalizeLockstepAction, stableHash, type LockstepAction } from '../mp/LockstepClient';
 import { validateStandingOrders, type StandingOrder } from '../agent/StandingOrders';
+import atomicContracts from '../../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
+import deepwaterContracts from '../../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
+import deepskyContracts from '../../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
 import frontierContracts from '../../assets/contracts/epoch-1-frontier/contracts.json' with { type: 'json' };
+import motorContracts from '../../assets/contracts/epoch-4-motor/contracts.json' with { type: 'json' };
+import orbitalContracts from '../../assets/contracts/epoch-8-orbital/contracts.json' with { type: 'json' };
+import redfieldsContracts from '../../assets/contracts/epoch-9-redfields/contracts.json' with { type: 'json' };
+import signalContracts from '../../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
+import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
+import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 import { Balance } from '../game/Balance';
 
 // PB-01 format law (specs/playbook-core/README.md): a playbook is SIM TRUTH only —
@@ -18,9 +27,23 @@ type DurationContract = {
   twist?: { secureWave?: number; waveCadenceMult?: number; baron?: { wave: number } };
 };
 
+export const CONTRACT_BUNDLES = [
+  frontierContracts,
+  steamworksContracts,
+  voltageContracts,
+  motorContracts,
+  deepwaterContracts,
+  atomicContracts,
+  signalContracts,
+  orbitalContracts,
+  redfieldsContracts,
+  deepskyContracts,
+];
+
 const ASSAY_BOSS_GRACE_WAVES = 6;
 const DURATION_CONTRACTS = new Map(
-  (frontierContracts.contracts as DurationContract[]).map((contract) => [contract.id, contract.twist] as const),
+  CONTRACT_BUNDLES.flatMap((bundle) => (bundle.contracts as DurationContract[])
+    .map((contract) => [contract.id, contract.twist] as const)),
 );
 
 /** Bounded assay duration: contract clock plus the terminal-instant entry seam. */
