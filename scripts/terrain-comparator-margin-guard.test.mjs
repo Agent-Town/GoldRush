@@ -12,6 +12,25 @@
 //   F-2286-1 (s2286) measured that end to end against the REAL function, and found the safety
 //     rests on two things NEITHER prior finding names -- which is what this guard pins.
 //
+// ⚠️ CORRECTED s2287 (F-2287-1). The inference in (1) below -- "1e9x ... nine orders of magnitude
+//     below the threshold that could change a decision" -- is MEASURABLY FALSE, and it is
+//     RESTATED rather than deleted because the reasoning is the provenance. The epsilon is not
+//     compared against the perturbation; it is compared against `biasedScore`, and a perturbation
+//     is AMPLIFIED on its way there (by `* distance`, and above all by the subtractive
+//     cancellation `goalDistance - Math.hypot(goal - x)` inside goalBias, where two nearly-equal
+//     large quantities are differenced). So epsilon/quantum is a real invariant but it is NOT the
+//     safety margin, and reading it as one overstates the headroom by up to 8 orders.
+//
+//     MEASURED s2287 by sweeping the injected perturbation by decades against the real function,
+//     6000 shared pairs, enemy shape -- the first magnitude at which ANY consider() winner flips:
+//         trig  1e-11   ·   atan2  1e-11   ·   hypot  1e-13
+//     Against the 7.105e-15 delta a real one-ULP difference actually carries, that is ~1.4e3x
+//     headroom on the CURED surfaces and ~14x on the RAW hypot surface -- not 1e9. The conclusion
+//     that today's code is safe SURVIVES (0 flips at one ULP on all three surfaces, with a
+//     per-surface 1e-6 positive control proving the harness sees flips at all); what does not
+//     survive is the stated reason, and the margin is 100x thinner on the surface F-2281-2 named
+//     than on the one this guard was built for. See test (4) for the mechanism that would close it.
+//
 // (1) THE COMPARATOR MARGIN. Every winner comparison inside `consider()` carries a `+ 0.000001`
 //     epsilon. That is 1e9x LARGER than roundMotion's 1e-15 quantum, so a surviving one-ULP
 //     difference is nine orders of magnitude below the threshold that could change a decision.
@@ -144,5 +163,54 @@ test('the canonicalization still covers both rotation candidates', () => {
   assert.ok(
     /consider\(roundMotion\(Math\.cos\(angle\) \* projectedDistance\), roundMotion\(Math\.sin\(angle\) \* projectedDistance\)\)/.test(tileHeight),
     'the rotation candidate is no longer canonicalized on BOTH axes — re-measure F-2286-1',
+  );
+});
+
+// ---------------------------------------------------------------------------------------------
+// (3) and (4) below are F-2287-1's, and they pin the two premises the MEASURED margin rests on.
+// The tests above pin the epsilon and the quantum -- the constants a fire would think to change.
+// Neither of those is how this margin actually rots. It rots by moving something that never
+// mentions TileHeight at all.
+// ---------------------------------------------------------------------------------------------
+
+test('(3) the map half-extent the carried delta was measured at has not grown', () => {
+  // WHY THIS IS THE REAL ROT MECHANISM, and it is quantified rather than feared. The largest
+  // position delta a one-ULP libm difference carries is 7.105e-15. That is not a coincidence and
+  // not a property of TileHeight: it is EXACTLY ulp(32) = 32 * 2**-52, and 32 is the default map
+  // half-extent (DEFAULT_CLAIM_SIZE 64 / 2). The carry IS the position ULP, so it scales
+  // LINEARLY with how far from the origin the map lets an entity stand.
+  //
+  // Measured s2287, the injected perturbation at which the raw hypot surface first flips a
+  // consider() winner is 1e-13 -- i.e. ~14x the delta actually carried today. Grow the extent and
+  // that headroom shrinks in proportion. This is not hypothetical: map extent is a per-contract
+  // `tileParams.dimensions` flag, and `e4-long-road` ALREADY EXISTS in the corpus at 400 x 96
+  // (half-extent 200 -> ulp 2.84e-14, 4x today's). It does not reach resolveTerrainMove today, so
+  // nothing is wrong; if it ever gained an elevation tile or an authored water mask, hypot's
+  // headroom would fall from ~14x to ~3.5x WITHOUT ONE LINE OF src/sim/ CHANGING.
+  const m = read('src/world/Terrain.ts').match(/export const DEFAULT_CLAIM_SIZE = (\d+)/);
+  assert.ok(m, 'REFUSING — DEFAULT_CLAIM_SIZE not found; the carried-delta scale cannot be derived.');
+  const halfExtent = Number(m[1]) / 2;
+  assert.ok(Number.isFinite(halfExtent) && halfExtent > 0, 'REFUSING — DEFAULT_CLAIM_SIZE did not parse.');
+  assert.ok(
+    halfExtent <= 32,
+    `default map half-extent grew to ${halfExtent} (was 32 when F-2287-1 measured). The carried ` +
+    'delta is the position ULP and scales with this, so every headroom figure in this file is now ' +
+    'stale. Re-measure with scripts/tmp-s2287-terrain-raw-surface.mjs threshold before proceeding.',
+  );
+});
+
+test('(4) goalBias still differences two distances — the cancellation the margin was measured on', () => {
+  // The raw hypot surface has ~100x LESS headroom than the cured trig surface (1e-13 vs 1e-11),
+  // and this expression is why: `goalDistance - Math.hypot(...)` differences two nearly-equal
+  // large quantities, so absolute error entering hypot is amplified relative to the small term it
+  // lands in. If this is rewritten -- comparing squared distances would REMOVE the cancellation
+  // and IMPROVE the margin, which is a good change and must still red here -- the 1e-13 figure
+  // stops describing the code. This arm asserts the SHAPE the measurement was taken against, so
+  // the remedy is always "re-measure", never "restore".
+  assert.ok(
+    /goalDistance - Math\.hypot\(goal\.x - x, goal\.z - z\)/.test(tileHeight),
+    'the goalBias distance-difference moved — the 1e-13 hypot flip threshold no longer describes ' +
+    'this code. Re-measure with scripts/tmp-s2287-terrain-raw-surface.mjs threshold; do not assume ' +
+    'the change was for the worse, and do not restore the old shape to make this pass.',
   );
 });
