@@ -14,7 +14,7 @@ READ FIRST:
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): standard safe-dupe template — ahead content already on main = SAFE DUPE → `git checkout -B lane/c main && git clean -fd`, PROCEED; **STOP on un-merged ahead content or foreign edits.** FACTORY-CHURN EXCEPTION (F-1407-1): `logs/**`, `artifacts/**`, `reviews/shots-*`, `.png` — expected, list, proceed. `npm install --no-audit --no-fund`; build green.
 
-**Dispatch citation check (hard STOP if it fails):** `grep -Fc "the two sites must move together or not at all" reviews/door-tick-ceiling-stopped.md` must return **1**. Zero means your lane is stale — refresh it and re-read; do NOT proceed on a stale tree.
+**Dispatch citation check (hard STOP if it fails):** `grep -Fc "sites must move together or not at all" reviews/door-tick-ceiling-stopped.md` must return **1**. (Key verified against the file on main at authoring time — F-1425-2; the first draft of this key differed by one capital letter and matched **nowhere**, which would have read as a stale lane and sent you chasing a phantom refresh.) Zero means your lane is stale — refresh it and re-read; do NOT proceed on a stale tree.
 
 ## Why (v1 stopped correctly; the cure is bigger than its firewall was)
 
