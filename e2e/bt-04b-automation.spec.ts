@@ -1,6 +1,7 @@
 import { mkdirSync } from 'node:fs';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const FIXED_TICK = 1 / 60;
 const SHOT_DIR = 'reviews/shots-bt04b';
@@ -17,11 +18,8 @@ async function openPanel(page: Page): Promise<void> {
 }
 
 async function setNumber(page: Page, testId: string, value: number): Promise<void> {
-  await page.getByTestId(testId).evaluate((input, next) => {
-    const field = input as HTMLInputElement;
-    field.value = String(next);
-    field.dispatchEvent(new Event('change', { bubbles: true }));
-  }, value);
+  await page.getByTestId(testId).fill(String(value));
+  await page.getByTestId(testId).dispatchEvent('change');
 }
 
 async function activeTask(page: Page): Promise<boolean> {
@@ -36,8 +34,11 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('repair and idle boundaries update the live loop on the next sim tick', async ({ page }) => {
+  const errors = watchErrors(page);
   await page.goto('/?debug&nowaves&nolevel&nokill&seed=bt04b-boundaries');
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.getByTestId('contract-briefing-dismiss').click();
+  await expect(page.getByTestId('contract-briefing'), 'play did not start: contract briefing is still visible').toBeHidden();
   await expect(page.evaluate(() => window.__GR_TEST__!.placeFree('palisade', 0, 9))).resolves.toBe(true);
   await page.evaluate(() => {
     const snapshot = window.__GR_TEST__!.captureSuspend() as any;
@@ -65,9 +66,11 @@ test('repair and idle boundaries update the live loop on the next sim tick', asy
   expect(await activeTask(page)).toBe(false);
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.2));
   expect(await activeTask(page)).toBe(true);
+  expectNoConsoleErrors(errors, 'boundary boot');
 });
 
 test('automation tunables survive suspend restore and old saves receive defaults', async ({ page }) => {
+  const errors = watchErrors(page);
   await page.goto('/?debug&nowaves&nolevel&seed=bt04b-suspend');
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
@@ -93,9 +96,11 @@ test('automation tunables survive suspend restore and old saves receive defaults
     repairUnderPct: 60,
     idleSeconds: 0.8,
   });
+  expectNoConsoleErrors(errors, 'suspend boot');
 });
 
 test('plain boot exposes operable automation controls', async ({ page }, testInfo: TestInfo) => {
+  const errors = watchErrors(page);
   await page.goto('/?nowaves&nolevel&seed=bt04b-plain');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await openPanel(page);
@@ -109,4 +114,5 @@ test('plain boot exposes operable automation controls', async ({ page }, testInf
 
   mkdirSync(SHOT_DIR, { recursive: true });
   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}.png`, fullPage: true });
+  expectNoConsoleErrors(errors, 'plain boot');
 });
