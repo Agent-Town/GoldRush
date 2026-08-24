@@ -85,14 +85,14 @@ function messageText(content) {
   throw new TypeError('message content must be a string or text-part array');
 }
 
-function complete(codexBinary, model, prompt, timeoutMs, outputSchema) {
+function complete(codexBinary, model, prompt, timeoutMs, outputSchema, signal) {
   return new Promise((resolve, reject) => {
     const args = [
       'exec', '--ephemeral', '--json', '--skip-git-repo-check', '--ignore-user-config', '--ignore-rules',
       '-s', 'read-only', '-m', model,
       ...(outputSchema ? ['--output-schema', outputSchema] : []), '-'
     ];
-    const child = execFile(codexBinary, args, { cwd: tmpdir(), maxBuffer: 4 * 1024 * 1024, timeout: timeoutMs }, (error, stdout) => {
+    const child = execFile(codexBinary, args, { cwd: tmpdir(), maxBuffer: 4 * 1024 * 1024, timeout: timeoutMs, signal }, (error, stdout) => {
       if (error) return reject(new Error(`Codex completion failed (exit ${error.code ?? 'unknown'})`));
       try {
         let content;
@@ -130,8 +130,11 @@ export function createCodexShimServer({
       if (request.headers.origin) return sendError(response, 403, 'browser_origin_denied', 'Browser-origin requests are not allowed');
       if (!request.headers['content-type']?.toLowerCase().startsWith('application/json')) return sendError(response, 415, 'unsupported_media_type', 'Content-Type must be application/json');
       if (active >= maxConcurrency) return sendError(response, 429, 'rate_limit_exceeded', 'Too many concurrent completions');
+      const controller = new AbortController();
+      const abort = () => controller.abort();
+      request.once('aborted', abort);
+      response.once('close', abort);
       const body = await readJson(request);
-      if (body.stream) return sendError(response, 400, 'unsupported_value', 'Streaming is not supported');
       const model = MODELS.get(body.model ?? 'codex');
       if (!model) return sendError(response, 400, 'invalid_model', `Supported models: ${[...MODELS.keys()].join(', ')}`);
       const tools = body.tools ?? [];
@@ -139,8 +142,10 @@ export function createCodexShimServer({
       active += 1;
       let result;
       try {
-        result = await completeFn(codexBinary, model, transcript(body.messages, tools, body.tool_choice), timeoutMs, tools.length ? TOOL_SCHEMA : undefined);
+        result = await completeFn(codexBinary, model, transcript(body.messages, tools, body.tool_choice), timeoutMs, tools.length ? TOOL_SCHEMA : undefined, controller.signal);
       } finally {
+        request.off('aborted', abort);
+        response.off('close', abort);
         active -= 1;
       }
       let content = result.content;
@@ -174,6 +179,15 @@ export function createCodexShimServer({
       const { usage } = result;
       const reasoningTokens = usage.reasoning_output_tokens ?? 0;
       const completionTokens = usage.output_tokens;
+      if (body.stream) {
+        return sendStream(response, model, content, toolCalls, {
+          prompt_tokens: usage.input_tokens,
+          completion_tokens: completionTokens,
+          total_tokens: usage.input_tokens + completionTokens,
+          prompt_tokens_details: { cached_tokens: usage.cached_input_tokens ?? 0 },
+          completion_tokens_details: { reasoning_tokens: reasoningTokens },
+        });
+      }
       send(response, 200, {
         id: `chatcmpl-codex-${randomUUID()}`,
         object: 'chat.completion',
@@ -193,10 +207,30 @@ export function createCodexShimServer({
         },
       });
     } catch (error) {
+      if (response.destroyed) return;
       const clientError = error instanceof SyntaxError || error instanceof TypeError;
       sendError(response, clientError ? 400 : 502, clientError ? 'invalid_request' : 'backend_error', error instanceof Error ? error.message : 'Request failed');
     }
   });
+}
+
+function sendStream(response, model, content, toolCalls, usage) {
+  const id = `chatcmpl-codex-${randomUUID()}`;
+  const created = Math.floor(Date.now() / 1000);
+  const chunk = (delta, finishReason = null, finalUsage) => response.write(`data: ${JSON.stringify({
+    id, object: 'chat.completion.chunk', created, model,
+    choices: [{ index: 0, delta, finish_reason: finishReason }],
+    ...(finalUsage ? { usage: finalUsage } : {}),
+  })}\n\n`);
+  response.writeHead(200, {
+    'content-type': 'text/event-stream; charset=utf-8',
+    'cache-control': 'no-cache',
+    connection: 'keep-alive',
+  });
+  chunk({ role: 'assistant' });
+  chunk(toolCalls.length ? { tool_calls: toolCalls.map((call, index) => ({ index, ...call })) } : { content });
+  chunk({}, toolCalls.length ? 'tool_calls' : 'stop', usage);
+  response.end('data: [DONE]\n\n');
 }
 
 async function readJson(request) {
