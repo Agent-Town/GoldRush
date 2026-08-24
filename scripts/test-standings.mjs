@@ -26,6 +26,8 @@ const serversByStorage = new WeakMap();
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 try {
   const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
+  const { validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
   httpRoutes = {
@@ -35,6 +37,7 @@ try {
   };
   for (backend of ['kv', 'sqlite']) {
     checks = 0;
+    checkDurationCeilings(validateTape, validateRunTape, maxRunTapeTicksForContract, MAX_PLAYBOOK_TICKS);
     checkTapeBuildMetadata(validateTape);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest);
@@ -167,6 +170,42 @@ async function checkPosts(onRequest) {
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'pending row shows on board');
   equal(board.body.board[0].assay, 'pending', 'pending badge state is exposed');
+
+  const twin = tape('twin-final-tick', 20, 'fnv1a32:1234abcd', 'e1-twin-banks');
+  twin.inputLog.durationTicks = 18_001;
+  equal((await call(onRequest, 'POST', '/api/standings', post('3'.repeat(32), 20, twin, 'e1-twin-banks'), kv)).status, 200, 'Twin Banks final-tick tape is accepted');
+
+  const night = tape('night-dawn', 25, 'fnv1a32:1234abcd', 'e1-night-shift');
+  night.inputLog.durationTicks = 22_501;
+  equal((await call(onRequest, 'POST', '/api/standings', post('4'.repeat(32), 25, night, 'e1-night-shift'), kv)).status, 200, 'Night Shift dawn tape is accepted');
+  night.inputLog.durationTicks += 1;
+  equal((await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 25, night, 'e1-night-shift'), kv)).status, 400, 'Night Shift beyond-margin tape is refused');
+
+  const oversized = post('6'.repeat(32), 20);
+  oversized.profileName = 'x'.repeat(70 * 1024);
+  const tooLarge = await call(onRequest, 'POST', '/api/standings', oversized, kv);
+  equal(tooLarge.status, 413, 'pretty-sized standing is refused before validation');
+  equal(tooLarge.body.error, 'reel_too_large', '413 names the compact-reel cure');
+}
+
+function checkDurationCeilings(validateTape, validateRunTape, maxRunTapeTicksForContract, recorderTicks) {
+  equal(recorderTicks, 18_000, 'browser recorder keeps its ten-minute DoS bound');
+  equal([
+    'the-claim',
+    'e1-drill-yard',
+    'e1-dry-gulch',
+    'e1-night-shift',
+    'e1-twin-banks',
+    'e1-baron',
+  ].map(maxRunTapeTicksForContract), [18_000, 18_000, 18_001, 22_501, 18_001, 20_349], 'E1 contract duration table is pinned');
+
+  const night = tape('night-validator', 25, 'fnv1a32:1234abcd', 'e1-night-shift');
+  night.inputLog.durationTicks = 22_501;
+  ok(validateTape(night, 'e1-night-shift', 'gold-rush', 'trail'), 'standings validator accepts Night Shift dawn');
+  ok(validateRunTape(night), 'assay validator accepts Night Shift dawn');
+  night.inputLog.durationTicks += 1;
+  equal(validateTape(night, 'e1-night-shift', 'gold-rush', 'trail'), null, 'standings validator refuses beyond Night Shift margin');
+  equal(validateRunTape(night), null, 'assay validator refuses beyond Night Shift margin');
 }
 
 async function checkVerdicts(onRequest, queueRoute, verdictRoute) {

@@ -1,5 +1,7 @@
 import { normalizeLockstepAction, stableHash, type LockstepAction } from '../mp/LockstepClient';
 import { validateStandingOrders, type StandingOrder } from '../agent/StandingOrders';
+import frontierContracts from '../../assets/contracts/epoch-1-frontier/contracts.json' with { type: 'json' };
+import { Balance } from '../game/Balance';
 
 // PB-01 format law (specs/playbook-core/README.md): a playbook is SIM TRUTH only —
 // per-tick movement intent plus semantic lockstep actions. Never raw input codes,
@@ -10,6 +12,28 @@ export const PLAYBOOK_STEP_SECONDS = 1 / 30;
 // Law 6 bounds: one tile, one actor, <=10 minutes of sim time, <=2,000 intents.
 export const MAX_PLAYBOOK_TICKS = 18_000;
 export const MAX_PLAYBOOK_INTENTS = 2_000;
+
+type DurationContract = {
+  id: string;
+  twist?: { secureWave?: number; waveCadenceMult?: number; baron?: { wave: number } };
+};
+
+const ASSAY_BOSS_GRACE_WAVES = 6;
+const DURATION_CONTRACTS = new Map(
+  (frontierContracts.contracts as DurationContract[]).map((contract) => [contract.id, contract.twist] as const),
+);
+
+/** Bounded assay duration: contract clock plus the terminal-instant entry seam. */
+export function maxRunTapeTicksForContract(contractId: string): number {
+  const twist = DURATION_CONTRACTS.get(contractId);
+  if (!twist?.secureWave) return MAX_PLAYBOOK_TICKS;
+  const finalWave = twist.baron
+    ? Math.max(twist.secureWave, twist.baron.wave) + ASSAY_BOSS_GRACE_WAVES
+    : twist.secureWave;
+  const cadence = Math.max(0.1, twist.waveCadenceMult ?? 1);
+  const contractTicks = Math.ceil((finalWave * Balance.waves.waveInterval / cadence) / PLAYBOOK_STEP_SECONDS) + 1;
+  return Math.max(MAX_PLAYBOOK_TICKS, contractTicks);
+}
 
 /** One change-point on the tape: movement holds (mx,my) from tick t until the next entry; actions fire exactly at t. */
 export type AgentOrdersAction = { kind: 'agent_orders'; orders: StandingOrder[] };
@@ -75,7 +99,7 @@ export function parsePlaybookText(text: string): PlaybookParseResult {
   return validatePlaybook(raw);
 }
 
-export function validatePlaybook(raw: unknown): PlaybookParseResult {
+export function validatePlaybook(raw: unknown, maxDurationTicks = MAX_PLAYBOOK_TICKS): PlaybookParseResult {
   if (!isRecord(raw)) return { ok: false, reason: 'not-an-object' };
   if (raw.version !== PLAYBOOK_VERSION) return { ok: false, reason: 'unsupported-version' };
   if (typeof raw.name !== 'string' || !raw.name.trim()) return { ok: false, reason: 'missing-name' };
@@ -87,7 +111,7 @@ export function validatePlaybook(raw: unknown): PlaybookParseResult {
     return { ok: false, reason: 'missing-start' };
   }
   const durationTicks = raw.durationTicks;
-  if (!Number.isInteger(durationTicks) || (durationTicks as number) < 0 || (durationTicks as number) > MAX_PLAYBOOK_TICKS) {
+  if (!Number.isInteger(durationTicks) || (durationTicks as number) < 0 || (durationTicks as number) > maxDurationTicks) {
     return { ok: false, reason: 'invalid-duration' };
   }
   const truncated = validateTruncation(raw.truncated);
