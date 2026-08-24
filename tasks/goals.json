@@ -2364,8 +2364,9 @@
             },
             {
               "id": "rf-05-fixed-version",
+              "note_s_att_20260824": "THE BLESSING (owner 2026-08-24, verbatim: I bless E1). Tag vE1.1 cut + pushed on the blessed production build b42c0fbc (vE1.0 of 2026-08-04 retained untouched as the armed-then-deferred first candidate). The launch list's walk+blessing item is DISCHARGED; remaining launch acts: the owner announcement w/ bounty (rf-04).",
               "title": "RF-05 The fixed version @ agenttown.app \u2014 PUBLIC URL LIVE 2026-07-28 (edge worker route agenttown.app/goldrush \u2192 goldrush-base branch, ledgered publish cadence); remaining = owner vE1.0 tag + final E1 walk blessing",
-              "status": "planned",
+              "status": "verified-by-owner",
               "authoringBlock": {
                 "class": "owner-gated",
                 "finding": "F-1664-1",
@@ -2898,7 +2899,10 @@
               "id": "f2265-2-bt04b-mobile-spec-determinism",
               "title": "bt-04b's own spec is flaky on mobile-390 - make it deterministic without weakening its assertions",
               "taskFile": "f2265-2-bt04b-mobile-spec-determinism.md",
-              "status": "queued",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE, NOT AN OWNER GATE - no owner word is needed and none should be sought. The slice is held only because its own spec is not certifiable on mobile-390 (F-2268-1): 1 failure in 5 full-file runs, 0 in 6 isolated runs at equal-or-higher load. Lifted by the f2268-1 corrective landing five clean consecutive mobile runs, then merging the lane/a stack at its TIP (fa9a757f0) - merging 8dc4ff173 alone would land the pre-cure spec. The MERGE is what is blocked; gathering evidence in a detached worktree is lawful and is the prescribed cure (fire.md §3.0).",
+              "drainNotes": "s2268 GATE — HELD, NOT MERGED. Gated on the merged tree in detached worktree .gate-s2268 (base main 8a3dc50db + lane/a tip fa9a757f0, clean three-way, 8 files +220/-10). tsc rc=0, npm run build rc=0, desktop-chrome full file 3/3. Mobile-chrome full file 4/5 clean: the failure is the THIRD test (plain boot exposes operable automation controls) inside openPanel, expect(prospector-panel).toBeVisible() element not found. Control that repriced it: that same test passed 6/6 ISOLATED at loadavg 13.25-16.43, equal to or higher than the 13.51 of the full-file run that failed, so the ambient/load reading is REFUTED and the discriminator is FILE ORDER. f2265-2 CURED its own target (test 1 green 5/5 mobile + desktop) and respected its firewall - this hold is a DIFFERENT test in the same file. Corrective queued: f2268-1-bt04b-plain-boot-order-determinism. Full evidence: reviews/f2265-2-bt04b-mobile-spec-determinism.md",
               "lane": "lane-a",
               "spec": "specs/building-tiers/README.md",
               "authoredBy": "s2265 fire",
@@ -2911,14 +2915,36 @@
               "note": "Authored s2265 from the gate evidence in reviews/bt-04b-automation-two-params.md. Measured flake: 2 failures in 3 full-file mobile-chrome runs at --workers=1, 0 failures in 2 isolated runs, desktop full-file green. Held bt-04b from merging."
             },
             {
+              "id": "harness-disclosure-field",
+              "title": "Sim-import is lawful WITH disclosure - the ruling reaches the door doc, the stack, and the board (F-HARNESS-1 ruled)",
+              "taskFile": "harness-disclosure-field.md",
+              "status": "queued",
+              "lane": "lane-b",
+              "authoredBy": "attended 2026-08-24",
+              "note": "Owner ruling verbatim: yes, that is fine, lawful with disclosure. Additive worldModel stack field, skill.md law lines with the guards re-pinned in-commit, board renders as information, ranking untouched (ap-15 Law 1). Wanted BEFORE the announcement. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
+            },
+            {
               "id": "bt-04b-automation-two-params",
               "title": "Automation forks (1)+(2) only - repair threshold + idle definition, persisted through the measured seam (F-2261-1 remedy width)",
               "taskFile": "bt-04b-automation-two-params.md",
-              "status": "queued",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "GATE-SIDE, NOT AN OWNER GATE - no owner word is needed and none should be sought. The slice is held only because its own spec is not certifiable on mobile-390 (F-2268-1): 1 failure in 5 full-file runs, 0 in 6 isolated runs at equal-or-higher load. Lifted by the f2268-1 corrective landing five clean consecutive mobile runs, then merging the lane/a stack at its TIP (fa9a757f0) - merging 8dc4ff173 alone would land the pre-cure spec. The MERGE is what is blocked; gathering evidence in a detached worktree is lawful and is the prescribed cure (fire.md §3.0).",
+              "drainNotes": "s2268 GATE — HELD, NOT MERGED. Gated on the merged tree in detached worktree .gate-s2268 (base main 8a3dc50db + lane/a tip fa9a757f0, clean three-way, 8 files +220/-10). tsc rc=0, npm run build rc=0, desktop-chrome full file 3/3. Mobile-chrome full file 4/5 clean: the failure is the THIRD test (plain boot exposes operable automation controls) inside openPanel, expect(prospector-panel).toBeVisible() element not found. Control that repriced it: that same test passed 6/6 ISOLATED at loadavg 13.25-16.43, equal to or higher than the 13.51 of the full-file run that failed, so the ambient/load reading is REFUTED and the discriminator is FILE ORDER. f2265-2 CURED its own target (test 1 green 5/5 mobile + desktop) and respected its firewall - this hold is a DIFFERENT test in the same file. Corrective queued: f2268-1-bt04b-plain-boot-order-determinism. Full evidence: reviews/f2265-2-bt04b-mobile-spec-determinism.md",
               "lane": "lane-a",
               "spec": "specs/building-tiers/README.md",
               "authoredBy": "attended 2026-08-24",
               "note": "Re-authored at the width F-2261-1 prescribed after the v1 STOP (firewall success): forks (1)+(2) are the parameters the owner ruling covers; (3) stays a balance ruling, (4) stays F-1313-3 on the desk. Firewall widened to the named persistence seam (AgentConsentFutureState + captureAgent, additive fields only). DISPATCHED to tasks/queue/lane-a in the authoring commit window."
+            },
+            {
+              "id": "f2268-1-bt04b-plain-boot-order-determinism",
+              "title": "bt-04b's plain-boot test is ORDER-DEPENDENT on mobile-390 - make it deterministic without weakening its assertions",
+              "taskFile": "f2268-1-bt04b-plain-boot-order-determinism.md",
+              "status": "queued",
+              "lane": "lane-a",
+              "spec": "specs/building-tiers/README.md",
+              "authoredBy": "s2268 fire",
+              "note": "FIRE-AUTHORED from the gate evidence in reviews/f2265-2-bt04b-mobile-spec-determinism.md. Measured: 1 failure in 5 full-file mobile-chrome runs at --workers=1, 0 failures in 6 ISOLATED runs of the same test at equal-or-higher loadavg - so the discriminator is FILE ORDER, not load, and the ambient reading is refuted by a load-matched control. Note this does NOT contradict F-2266-1: that refutation rested on the failing test being FIRST in the file, and this one runs THIRD. Declares the F-2089-1 BUILD-ON-PREDECESSOR opt-in with all 8 held paths verified against the live lane. DISPATCHED to tasks/queue/lane-a in the authoring commit window."
             },
             {
               "id": "jumper-grab-flee-clips",
@@ -4015,6 +4041,7 @@
             },
             {
               "id": "stream-live",
+              "note_s_att_20260824": "OWNER 2026-08-24 verbatim: no stream for now. Stays parked on the fresh word; no longer recommended for announcement day unless he re-opens it.",
               "title": "Owner starts the YouTube loop",
               "status": "planned",
               "authoringBlock": {
