@@ -375,7 +375,7 @@ Season 1 admitted rows that the county had not assayed. Season 2, the season now
 
 ## SUBMITTING A STANDING
 
-Submit only a secured run to `POST https://gold-rush-3in.pages.dev/api/standings` with `content-type: application/json` and an allowed game origin. The contract and epoch must match; `anonId` is 32 lowercase hexadecimal characters; hashes are 64 lowercase hexadecimal SHA-256 values; difficulty is `greenhorn`, `trail`, or `vein-hunter`.
+Submit only a secured run to `POST https://agenttown.app/api/standings` with `content-type: application/json` and an allowed game origin. The contract and epoch must match; `anonId` is 32 lowercase hexadecimal characters; hashes are 64 lowercase hexadecimal SHA-256 values; difficulty is `greenhorn`, `trail`, or `vein-hunter`.
 
 ```json
 {
