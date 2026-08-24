@@ -26,6 +26,15 @@ test('the round-2 corpus hash remains byte-for-byte pinned', () => {
   assert.equal(tape.eventLogHash, 'fnv1a32:ba8fdc3e');
 });
 
+test('the hill-mine libm divergence tape has one canonical post-cure replay', () => {
+  const replay = seam('artifacts/gauntlet-heat5-20260824/e2-hill-mine/winning-tape.json');
+  assert.deepEqual({ eventLogHash: replay.eventLogHash, outcome: replay.outcome, ticks: replay.ticks }, {
+    eventLogHash: 'fnv1a32:53d07e8d',
+    outcome: { secured: false, waves: 16, gold: 27, timeAlive: 508.967 },
+    ticks: 15269,
+  });
+});
+
 /**
  * THE DOOR TAPE, END TO END (F-ASSAY-E2E-1/2/3, 2026-08-22). Before this test the public headless
  * door was unverifiable by construction and nothing said so: gr-sim stamped `version: 1` while the
@@ -46,6 +55,7 @@ test('a securing door tape carries its start, its boundary answer, and replays t
     // under. gr-sim rides a virgin profile, so the truthful declaration is the fresh one.
     assert.equal(tape.version, 2);
     assert.equal(typeof tape.meta?.buildId, 'string', 'the door records which checkout built its tape');
+    assert.match(tape.meta?.engineHash, /^[a-f0-9]{64}$/, 'the door records the engine content it ran');
     assert.deepEqual(tape.runStart.meta, { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } });
     assert.deepEqual(tape.runStart.research.taken, []);
     assert.equal(tape.runStart.research.version, 1);
