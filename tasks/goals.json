@@ -3011,6 +3011,15 @@
               "note": "Owner verbatim: we want to run hermes, openclaw and all of them on Codex/subscription. codex CLI has app-server/mcp-server/exec-server modes but no OpenAI-compat endpoint - this slice investigates the lawful mechanism and builds the smallest shim (127.0.0.1 only, no auth material ever logged), or STOPs with the honest option table. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
             },
             {
+              "id": "f2279-1-codex-shim-epipe-survival",
+              "title": "One rider hanging up must fail ONE request, not kill the county shim (EPIPE survival)",
+              "taskFile": "f2279-1-codex-shim-epipe-survival.md",
+              "status": "queued",
+              "lane": "lane-b",
+              "authoredBy": "fire s2282",
+              "note": "Authored s2282 from finding F-2279-1 in reviews/gauntlet-heat4-streaming-field.md, which named it \"the next lane-b master\". OBSERVED PRODUCTION LOSS, not a hypothesis: during heat 4 a socket emitted EPIPE with no error listener attached and Node terminated the shim process (stack preserved verbatim at artifacts/gauntlet-heat4-20260824/shim-crash.txt: \"Emitted error event on Socket instance\", code EPIPE, syscall write). OpenClaw then took ECONNREFUSED on three attempts; OMP, Hermes and Prime surfaced the same loss. Server-availability defect, not a guest DNF - no rider retry can cure an absent process. Cost roughly half the heat program: OMP hill-mine 2 of 3, Hermes night-shift 2 of 3 and hill-mine 3 of 3, OpenClaw 8 of 9, all unridden. CONFIRMED BY READING s2282: grep for .on(error) in server/codex-shim/serve.mjs returns NOTHING - no handler on the server, on any response, or on any socket; the \"if (response.destroyed) return\" at :209 is a check, not a handler, and cannot help a write already in flight when the peer RST arrives during onWriteComplete, which is exactly what the stack shows. Cure is bounded: absorb peer-hangup errors so one rider hanging up fails ONE request and never the process, and write down the dead-child policy at the site. Testable with NO auth and NO network - createCodexShimServer accepts a stubbed completeFn (see serve.test.mjs :135 and :167), and the existing client-abort arm at :98 is most of the harness. Guard must assert a SUBSEQUENT request still succeeds, because \"did not throw\" is not survival. Explicitly out of scope: rooting test:codex-shim into test:ledger-guards is F-2272-1, an OPEN owner question (it would spend the owner Codex allowance every drain)."
+            },
+            {
               "id": "f2282-1-blocker-panel-real-history-arm",
               "title": "Re-anchor the one real-history arm of blocker-panel-closed-guard onto a pair today's rule still reds on",
               "taskFile": "f2282-1-blocker-panel-real-history-arm.md",
