@@ -438,7 +438,33 @@ function main() {
     console.error(`desk-birth-guard: REFUSING — cannot read ${statusPath}`);
     process.exit(2);
   }
-  const line1 = fs.readFileSync(statusPath, 'utf8').split('\n')[0] || '';
+  // F-2271-1 (s2271): ONE read, both consumers — the structure F-2265-1 landed in
+  // authorable-candidates.mjs and the one desk-carryforward-guard.mjs:341 has always
+  // used (`statusText` read once, fed to analyse AND to frozenTreeCheck). This file
+  // and desk-declaration-guard.mjs were the two members of that family still reading
+  // STATUS.md TWICE per verdict: once here for the verdict, and again at the
+  // frozenTreeCheck call below for the freshness cross-check.
+  //
+  // MEASURED s2271, both arms manufactured against corpus-tree.mjs directly:
+  //   main worktree     -> statusText DISCARDED (frozenTreeCheck returns at the
+  //                        `tree !== 'linked-worktree'` line before the argument is
+  //                        used; REAL and GARBAGE text give identical answers)
+  //   linked worktree   -> statusText CONSUMED (main's own line-1 -> PROCEED,
+  //                        GARBAGE -> REFUSAL; the answers DIFFER)
+  //
+  // SEVERITY, HONESTLY AND DELIBERATELY NOT INFLATED: this is NOT a false green and
+  // no verdict was ever wrong. In the prescribed invocation the second read's value
+  // is discarded, and in a linked worktree a mid-run rewrite of a frozen tracked
+  // checkout is part of no workflow (lane tasks are firewalled from STATUS.md). The
+  // window is real in the CODE and unreachable in the WORKFLOW. What the double read
+  // does cost unconditionally is a 12.7 MB file read thrown away on every run.
+  //
+  // The cure is STRUCTURAL rather than a declaration, for F-2265-1's stated reason:
+  // the two consumers now describe one board BY CONSTRUCTION, so there is no
+  // divergence left to declare, and a declaration nobody can falsify is the noise
+  // that decays a declaration into a formality.
+  const statusText = fs.readFileSync(statusPath, 'utf8');
+  const line1 = statusText.split('\n')[0] || '';
 
   console.log('=== desk-birth-guard ===');
   console.log(`corpus tree               : ${corpusTree(ROOT)}`);
@@ -512,7 +538,9 @@ function main() {
     // Manufactured: ground truth = an owner-gated row filed on main and never
     // desked; from a worktree branched before it, this printed PASS at rc=0 with
     // the same verdict line and rc as a genuinely clean board.
-    const frozen = frozenTreeCheck(ROOT, fs.readFileSync(statusPath, 'utf8'), 'desk-birth-guard');
+    // F-2271-1: the SAME text the verdict above was computed from. See the block at
+    // the first read. Was a second `fs.readFileSync(statusPath, 'utf8')` here.
+    const frozen = frozenTreeCheck(ROOT, statusText, 'desk-birth-guard');
     if (frozen) {
       console.error('');
       console.error(frozen);

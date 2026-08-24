@@ -452,7 +452,13 @@ function main() {
     }
   }
 
-  const desk = deskIds(fs.readFileSync(statusPath, 'utf8'));
+  // F-2271-1 (s2271): ONE read, both consumers — see the twin block in
+  // desk-birth-guard.mjs. This file read STATUS.md twice per verdict: here for the
+  // desk, and again at the frozenTreeCheck call below for the freshness cross-check.
+  // desk-carryforward-guard.mjs:341 has always had the cured structure; this is the
+  // class being finished, not a new idea.
+  const statusText = fs.readFileSync(statusPath, 'utf8');
+  const desk = deskIds(statusText);
 
   if (desk.kind === 'lock') {
     // NOT a fail-open. A fire holds an ACTIVE lock for its whole run and writes
@@ -565,7 +571,9 @@ function main() {
   // ground truth = a real undesked item on main; from a worktree branched one
   // commit earlier this printed PASS at rc=0, BYTE-IDENTICAL on stdout, stderr
   // AND rc to a genuinely clean board.
-  const frozen = frozenTreeCheck(ROOT, fs.readFileSync(statusPath, 'utf8'), 'desk-declaration-guard');
+  // F-2271-1: the SAME text the desk above was parsed from. Was a second
+  // `fs.readFileSync(statusPath, 'utf8')` here.
+  const frozen = frozenTreeCheck(ROOT, statusText, 'desk-declaration-guard');
   if (frozen) {
     console.error('');
     console.error(frozen);
