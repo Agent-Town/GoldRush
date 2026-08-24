@@ -2895,6 +2895,22 @@
               "note": "OWNER RULED 2026-08-23: Retake at >=460px (Recommended) - closes LEDGER row 31's awaiting-a-ruling line (s1656). One 4x3 sheet, no mirrors, measured self-QA against the OUTPUT cell (the batch-007 lesson). Fire-side extraction + the jumper-8way-wiring gate flip follow. DISPATCHED to tasks/queue/art in the authoring commit window."
             },
             {
+              "id": "f2265-2-bt04b-mobile-spec-determinism",
+              "title": "bt-04b's own spec is flaky on mobile-390 - make it deterministic without weakening its assertions",
+              "taskFile": "f2265-2-bt04b-mobile-spec-determinism.md",
+              "status": "planned",
+              "lane": "lane-a",
+              "spec": "specs/building-tiers/README.md",
+              "authoredBy": "s2265 fire",
+              "authoringBlock": {
+                "class": "gate-side",
+                "finding": "F-2265-2",
+                "measuredBy": "s2265",
+                "reason": "BANKED, NOT DISPATCHED. The corrective edits e2e/bt-04b-automation.spec.ts, which lives ON lane/a's undrained bt-04b commit - so it must BUILD ON its predecessor. lane/a is ahead of main, and a standard lane pre-flight STOPs on any unmerged commit (LANE-SAFETY LAW), so queueing this as an ordinary master would burn a dispatch for zero edits. Two lawful routes: (a) drain bt-04b first and queue this against a clean lane, or (b) declare the F-2089-1 BUILD-ON-PREDECESSOR opt-in in the master using its two literal lines. Route (b) is only correct if bt-04b is going to be merged anyway; route (a) is blocked on THIS corrective, so the ordering is (b) then drain both, or fix-then-drain as one. A fire must pick deliberately, not by default."
+              },
+              "note": "Authored s2265 from the gate evidence in reviews/bt-04b-automation-two-params.md. Measured flake: 2 failures in 3 full-file mobile-chrome runs at --workers=1, 0 failures in 2 isolated runs, desktop full-file green. Held bt-04b from merging."
+            },
+            {
               "id": "bt-04b-automation-two-params",
               "title": "Automation forks (1)+(2) only - repair threshold + idle definition, persisted through the measured seam (F-2261-1 remedy width)",
               "taskFile": "bt-04b-automation-two-params.md",
