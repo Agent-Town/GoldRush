@@ -2915,6 +2915,24 @@
               "note": "Authored s2265 from the gate evidence in reviews/bt-04b-automation-two-params.md. Measured flake: 2 failures in 3 full-file mobile-chrome runs at --workers=1, 0 failures in 2 isolated runs, desktop full-file green. Held bt-04b from merging."
             },
             {
+              "id": "gauntlet-heat3c-shim-streaming",
+              "title": "The shim learns SSE streaming - the one wall pi/omp/hermes/openclaw all hit (heat-3b's measured blocker)",
+              "taskFile": "gauntlet-heat3c-shim-streaming.md",
+              "status": "queued",
+              "lane": "lane-b",
+              "authoredBy": "attended 2026-08-24",
+              "note": "Heat-3b: all four installed riders reached the shim and DNF'd on 400 Streaming is not supported. Honest minimum fidelity allowed (chunked-at-completion SSE); non-streaming byte-unchanged; abort leaves no orphans. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
+            },
+            {
+              "id": "gauntlet-heat4-streaming-field",
+              "title": "Heat 4 - the four riders return on the streaming shim; the heat-2 bad_payload diagnosed first; eliza one bounded retry",
+              "taskFile": "gauntlet-heat4-streaming-field.md",
+              "status": "queued",
+              "lane": "lane-b",
+              "authoredBy": "attended 2026-08-24",
+              "note": "Sequenced behind heat-3c on the same lane (verifies SSE live as first act). Short program each, DNF law, skew law re-derived at run time, guest configs snapshot/restore per heat-3b's OpenClaw lesson. The one near-miss of heat-2 (luna dry-gulch bad_payload) gets a field-by-field diagnosis before new submissions. DISPATCHED to tasks/queue/lane-b in the authoring commit window."
+            },
+            {
               "id": "gauntlet-heat3a-codex-backend-shim",
               "title": "Guest harnesses ride the Codex subscription - the local OpenAI-compatible shim (investigate-first, never metered fallback)",
               "taskFile": "gauntlet-heat3a-codex-backend-shim.md",
