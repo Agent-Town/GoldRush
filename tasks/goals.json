@@ -2937,10 +2937,22 @@
               "id": "door-tick-ceiling",
               "title": "The validator stops refusing honest wins - per-contract duration ceilings (heat-5 door findings 1-3)",
               "taskFile": "door-tick-ceiling.md",
-              "status": "queued",
+              "status": "stopped",
               "lane": "lane-c",
               "authoredBy": "attended 2026-08-24",
+              "stopNote": "STOPPED at the firewall s2279 (correct STOP, not a failure). The 18,000 ceiling is enforced at TWO sites and this master's TOUCH-ONLY named only functions/api/standings.ts; src/playbook/PlaybookFormat.ts:11 MAX_PLAYBOOK_TICKS is applied by validatePlaybook:90, RunTape.ts:324 delegates to it, and assay-replay-agent.mjs calls that before replay - so the master's own gate (the 22,501-tick night-shift tape reaching verified) was unsatisfiable in scope. Runner reverted its provisional work and left lane/c clean. Re-measured at the drain: assay-replay-agent on the stranded tape exits 1 'malformed tape'. SUPERSEDED BY door-tick-ceiling-v2. Evidence: reviews/door-tick-ceiling-stopped.md (F-2279-4).",
+              "supersededBy": "door-tick-ceiling-v2",
               "note": "Heat-5 measured: night-shift's dawn secure needs 22,501 ticks vs the global 18,000 cap - every honest win on that map is refused; the 18,001 explicit-bank boundary; the 413 on pretty-printed reels. Gate: the stranded night-shift winning tape submits and verifies. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
+            },
+            {
+              "id": "door-tick-ceiling-v2",
+              "title": "The two-site ceiling - per-contract duration at the door AND at the assayer (re-authored with the firewall lifted)",
+              "taskFile": "door-tick-ceiling-v2.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "fire s2279",
+              "supersedes": "door-tick-ceiling",
+              "note": "FIRE-AUTHORED re-author of door-tick-ceiling after its correct firewall STOP (F-2279-4). No new scope and no new design question: v1's scope items 1-5 and its no-op guard remain binding; only the firewall is lifted, to include src/playbook/PlaybookFormat.ts and src/game/RunTape.ts where they enforce the same 18,000. Guard rail carried forward from v1's own ruling: MAX_PLAYBOOK_TICKS is a load-bearing browser-recorder DoS bound and must survive - per-contract derivation with margins, never a raised or deleted constant. Gate: the stranded heat-5 night-shift tape reaches verified AND assay-replay-agent exits 0 on it. Bears on F-2276-1, the launch-week blocker."
             },
             {
               "id": "assayer-environment-honesty",
