@@ -2969,7 +2969,8 @@
               "id": "assayer-environment-honesty",
               "title": "The hill-mine cross-environment divergence diagnosed to a mechanism + engineHash replaces the commit pin",
               "taskFile": "assayer-environment-honesty.md",
-              "status": "queued",
+              "status": "merged",
+      "mergeHash": "0a117cf9ad9c2e4c85e2c251023769b7a35a980e",
               "lane": "lane-a",
               "authoredBy": "attended 2026-08-24",
               "note": "Same tape, same tree: Mac replay exact-hashes, droplet ends early ~tick 12561 (E2 pressure content) - a determinism leak in the one engine, diagnosed by bisection to a named mechanism. Plus c6's single commit-pin re-choreographed three times today - engineHash (sim-relevant source-set) stamps tapes additively and the worker prefers it. DISPATCHED to tasks/queue/lane-a in the authoring commit window."
