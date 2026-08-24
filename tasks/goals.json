@@ -2945,10 +2945,20 @@
               "note": "Heat-5 measured: night-shift's dawn secure needs 22,501 ticks vs the global 18,000 cap - every honest win on that map is refused; the 18,001 explicit-bank boundary; the 413 on pretty-printed reels. Gate: the stranded night-shift winning tape submits and verifies. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
             },
             {
+              "id": "door-tick-ceiling-all-epochs",
+              "title": "The per-contract ceiling reads ONE bundle; the door admits TEN (F-2280-1)",
+              "taskFile": "door-tick-ceiling-all-epochs.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "fire s2280",
+              "note": "FIRE-AUTHORED from F-2280-1, measured at the door-tick-ceiling-v2 drain. DURATION_CONTRACTS is built from epoch-1-frontier alone while standings.ts admits ten bundles, so 4 contracts (e2-trestle 23144, e2-incline 21601, e3-canyon-works 18001, e4-dust-flats 18001) remain structurally unwinnable through the public door for exactly the F-2276-1 reason. NOT a regression - it is the pre-cure behaviour preserved, and v2 scoped its table to the six E1 contracts deliberately because E1 is launch week. Binding rulings carried forward from v1/v2: per-contract derivation with explicit margins, never a raised or deleted MAX_PLAYBOOK_TICKS, and no contract ceiling may decrease."
+            },
+            {
               "id": "door-tick-ceiling-v2",
               "title": "The two-site ceiling - per-contract duration at the door AND at the assayer (re-authored with the firewall lifted)",
               "taskFile": "door-tick-ceiling-v2.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "d8cae3c3bed0707fba400fe9b068a0d2e34b9e31",
               "lane": "lane-c",
               "authoredBy": "fire s2279",
               "supersedes": "door-tick-ceiling",
