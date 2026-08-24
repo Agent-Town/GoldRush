@@ -48,6 +48,71 @@ const NOTE_S = /^note_s\d+$/;
 export const KNOWN_CLASSES = ['owner-gated', 'attended-owed', 'needs-spec'];
 
 /**
+ * The ONE implementation of "this block carries a readable refusal", DERIVED at
+ * both call sites rather than re-typed. Four independent copies of one predicate
+ * is how the F-2227-1 lock test in `desk-state-audit.mjs` drifted for hundreds of
+ * fires, and s2263 hit the same lesson one tool over in the same file.
+ *
+ * Deliberately byte-for-byte the test `resolveRefusal` already applied — no
+ * `!Array.isArray` tightening, no truthiness cleanup. Re-coding a working
+ * predicate while extracting it is a drive-by, and it would silently move the
+ * boundary this cure exists to describe.
+ */
+export function blockIsReadable(block) {
+  return Boolean(block && typeof block === 'object' && block.reason);
+}
+
+/**
+ * F-2264-1 (s2264). `UNPRICED` printed two facts demanding OPPOSITE acts
+ * byte-identically, and named the wrong one:
+ *
+ *   (a) the leaf records NOTHING          -> measure it yourself
+ *   (b) the leaf records a refusal this    -> go READ what is there, and repair
+ *       reader cannot parse (an
+ *       `authoringBlock` with a class /
+ *       finding / measuredBy but no
+ *       `reason`)
+ *
+ * Both printed `no refusal on record — a refilling fire must measure this one
+ * itself`. PROVEN BY MANUFACTURING: a leaf declaring `{class:'owner-gated',
+ * finding:'F-1313-3', measuredBy:'s1336'}` and a leaf declaring nothing at all
+ * were byte-identical on stdout.
+ *
+ * THE POLARITY IS WHY THIS IS WORTH A CLAUSE: §2E reads this tool to decide what
+ * a fire may author. Told "nothing is on record, measure it yourself" about a
+ * leaf whose block already says `owner-gated`, a fire measures, concludes the
+ * work is available, and AUTHORS WORK THE OWNER RESERVED — the one act §2E
+ * exists to prevent. The erased evidence is exactly the evidence that forbids it.
+ *
+ * SEVERITY, HONESTLY: LATENT. Measured s2264 over all 942 leaves — 14 carry an
+ * `authoringBlock` and ALL 14 are readable, so zero live instances, and `--strict`
+ * already reds on both branches (the conservative direction). No verdict and no
+ * gate was wrong. What was wrong is the word and the act it names.
+ *
+ * DECLARES, DOES NOT REFUSE (F-2218-1), and the VERDICT AND COUNTS ARE
+ * DELIBERATELY UNCHANGED — `class` stays `UNPRICED` and `counts.byClass` is
+ * untouched, so only the evidence column speaks (s2263's precedent one tool
+ * over). Declared on BOTH outcomes including the genuinely-absent one (F-2208-1):
+ * a declaration that appears only on the interesting branch re-creates the
+ * ambiguity it removes. `blockState` is a STRING for F-2212-1's reason — a
+ * careless truthiness test at a call site coerces every value toward NOTICING.
+ */
+export function blockState(leaf) {
+  const block = leaf.authoringBlock;
+  return block === null || block === undefined ? 'absent' : 'unreadable';
+}
+
+/** Whatever a present-but-unreadable block still declares, for the reader to go read. */
+export function blockSalvage(block) {
+  const readable = block && typeof block === 'object' && !Array.isArray(block);
+  return {
+    class: readable ? block.class ?? null : null,
+    finding: readable ? block.finding ?? null : null,
+    measuredBy: readable ? block.measuredBy ?? null : null,
+  };
+}
+
+/**
  * The statuses SOME instrument resolves, so the residue below can name what is left.
  *
  * MIRRORED, NOT IMPORTED, AND THAT IS DELIBERATE: `scripts/drain-block-check.mjs`
@@ -114,7 +179,7 @@ export function plannedLeaves(goals) {
  */
 export function resolveRefusal(leaf) {
   const block = leaf.authoringBlock;
-  if (block && typeof block === 'object' && block.reason) {
+  if (blockIsReadable(block)) {
     const known = KNOWN_CLASSES.includes(block.class);
     return {
       priced: true,
@@ -141,7 +206,18 @@ export function resolveRefusal(leaf) {
       proseKey: key,
     };
   }
-  return { priced: false, structured: false, class: 'UNPRICED', knownClass: false, reason: null };
+  // F-2264-1: verdict and counts unchanged; `blockState` says WHICH kind of
+  // "no refusal on record" this is, and `blockDeclared` carries the evidence
+  // that survived so the reader can go read it instead of re-measuring it.
+  return {
+    priced: false,
+    structured: false,
+    class: 'UNPRICED',
+    knownClass: false,
+    reason: null,
+    blockState: blockState(leaf),
+    blockDeclared: blockSalvage(block),
+  };
 }
 
 export function readGoals(root) {
@@ -185,8 +261,25 @@ function main() {
         console.log(`  (declared class "${refusal.classDeclared}" is not a known class)`);
       }
       console.log(`  ${refusal.reason.slice(0, 220)}`);
+    } else if (refusal.blockState === 'unreadable') {
+      // F-2264-1: NOT "nothing on record". Something IS on record and this reader
+      // could not parse it, so the owed act is to READ, not to re-measure.
+      const declared = [
+        refusal.blockDeclared.class && `class "${refusal.blockDeclared.class}"`,
+        refusal.blockDeclared.finding,
+        refusal.blockDeclared.measuredBy,
+      ].filter(Boolean).join(' · ');
+      console.log('  authoringBlock is PRESENT but carries no readable "reason"');
+      console.log(declared
+        ? `  it already declares: ${declared} — READ that before you price this leaf`
+        : '  it declares no readable field at all — repair the block, do not re-measure it');
+      console.log('  this is NOT "nothing on record": do not author off a measurement of your own');
     } else {
+      // The original sentence is CORRECT on this branch and is deliberately kept
+      // verbatim — `authorable-candidates.test.mjs` pins it, and a cure that
+      // rewrites a true message to make room for a new one is a drive-by.
       console.log('  no refusal on record — a refilling fire must measure this one itself');
+      console.log('  (no authoringBlock and no prose key on the leaf — nothing is recorded to read)');
     }
   }
 
