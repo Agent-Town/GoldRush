@@ -49,14 +49,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, readFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, readFileSync, mkdirSync, rmSync, existsSync, realpathSync, copyFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const SCRIPTS = path.dirname(fileURLToPath(import.meta.url));
 const roots = [];
-const variants = [];
 
 function git(cwd, ...args) {
   const r = spawnSync('git', args, { cwd, encoding: 'utf8' });
@@ -140,6 +139,12 @@ function reads(scriptPath, cwd, dir) {
   });
   const all = (r.stdout ?? '') + (r.stderr ?? '');
   assert.ok(all.length > 0, 'control validity (F-2215-1): the arm produced no output at all — it did not run');
+  // F-2215-1's "did it produce anything?" is SATISFIED BY A CRASH — a stack trace is
+  // bytes. s2265 named this and it still bit this file: a variant missing a
+  // transitive import wrote ERR_MODULE_NOT_FOUND to stderr and read STATUS.md zero
+  // times. So assert the arm reached the SUBJECT'S OWN output, not merely output.
+  assert.match(r.stdout ?? '', /^=== desk-\w+-guard ===/m,
+    `control validity: the run never reached the guard's own banner — it crashed or never started:\n${all.slice(0, 400)}`);
   assert.doesNotMatch(r.stdout ?? '', /SKIP —/,
     'control validity: the guard SKIPped, so it never reached the second read — this arm would pass vacuously');
   assert.ok(existsSync(countFile), 'the counter shim never wrote its tally — the instrument, not the subject, failed');
@@ -147,18 +152,52 @@ function reads(scriptPath, cwd, dir) {
 }
 
 /**
- * Restore the pre-cure double read on a scratch copy. Lives in SCRIPTS/ because
- * both guards import './corpus-tree.mjs' relatively — s2265's trap (C): a copy away
- * from its imports dies MODULE_NOT_FOUND having never run, and an arm that reads
- * that as "0 reads" passes for the wrong reason.
+ * Restore the pre-cure double read on a scratch copy.
+ *
+ * THE COPY MUST NOT LIVE IN scripts/, AND THE FIRST DRAFT OF THIS FILE PROVED WHY
+ * BY REDDING A SIBLING. Writing `.s2271-precure-*.mjs` there made
+ * `finding-id-pattern-guard.test.mjs` — which scans scripts/ for private F-ID
+ * patterns and runs CONCURRENTLY in the same `node --test` invocation — fail with
+ * "a new private F-ID pattern appeared". A guard that drops files into a shared run
+ * surface manufactures false reds in whatever else is reading it (F-1665-1: scripts/
+ * is a RUN SURFACE, and a fire's scratch belongs outside it).
+ *
+ * So the variant goes to a temp dir with `corpus-tree.mjs` copied beside it — the
+ * only relative import either guard has. Two traps are handled here, both of which
+ * make an arm pass for the wrong reason rather than fail:
+ *   * s2265 trap (C): the dir is realpathSync'd. macOS symlinks /var/folders (where
+ *     mkdtemp lives) into /private, so node's ESM loader resolves import.meta.url to
+ *     /private/var/... while pathToFileURL(process.argv[1]) says /var/... — the
+ *     module-main guard is then FALSE, main() never runs, and the arm sees 0 reads.
+ *   * s2264: a variant that no longer CONSTRUCTS is indistinguishable from a guard
+ *     with teeth, so the edit is asserted to have matched AND the result to parse.
  */
 function preCure(name) {
   const needle = 'frozenTreeCheck(ROOT, statusText, ';
   const src = readFileSync(path.join(SCRIPTS, name + '.mjs'), 'utf8');
   assert.ok(src.includes(needle), `variantOf: the anchor is absent from ${name} — the edit matched NOTHING, so this arm would test a file it never modified (s2264)`);
-  const out = path.join(SCRIPTS, '.s2271-precure-' + name + '.mjs');
+  const dir = realpathSync(mkdtempSync(path.join(tmpdir(), 's2271-variant-')));
+  roots.push(dir);
+  // TRANSITIVELY, not just corpus-tree.mjs. desk-birth-guard.mjs also imports
+  // ./desk-declaration-guard.mjs, from a second import block far below its header —
+  // copying only the one import a `grep` of the first 70 lines showed produced
+  // ERR_MODULE_NOT_FOUND. That crash is the trap, not the miss: it wrote a stack
+  // trace to stderr, so F-2215-1's "did the arm PRODUCE anything?" was SATISFIED
+  // while nothing under test had run, and the arm failed 0 !== 2 for a reason that
+  // had nothing to do with reads. Hence the reached-the-real-output assertion below.
+  const copied = new Set();
+  const copyDeps = (file) => {
+    for (const m of readFileSync(file, 'utf8').matchAll(/from\s+'(\.\/[^']+)'/g)) {
+      const dep = m[1].slice(2);
+      if (copied.has(dep)) continue;
+      copied.add(dep);
+      copyFileSync(path.join(SCRIPTS, dep), path.join(dir, dep));
+      copyDeps(path.join(SCRIPTS, dep));
+    }
+  };
+  copyDeps(path.join(SCRIPTS, name + '.mjs'));
+  const out = path.join(dir, name + '.mjs');
   writeFileSync(out, src.replace(needle, "frozenTreeCheck(ROOT, fs.readFileSync(statusPath, 'utf8'), "));
-  variants.push(out);
   // The first draft of this helper replaced the CALL PREFIX rather than the
   // argument, producing `const frozen = fs.readFileSync(...)'desk-birth-guard');`
   // — a SYNTAX ERROR. The variant then read STATUS.md zero times and the arm
@@ -174,7 +213,6 @@ function preCure(name) {
 
 test.after(() => {
   for (const r of roots) rmSync(r, { recursive: true, force: true });
-  for (const v of variants) rmSync(v, { force: true });
 });
 
 test('1. desk-birth-guard reads STATUS.md exactly ONCE on the path that consumes it', () => {
