@@ -2994,6 +2994,15 @@
               "note": "F-2302-1's cure at the right width: the shared MAX_PLAYBOOK_INTENTS constant split (playbook UX bound stays; door sites consume the per-contract envelope), bytes + entries derived beside ceiling-v2's duration law, all four enforcement sites consistent, both backends. Gate: both banked Baron secures submit and verify. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
             },
             {
+              "id": "door-epic-envelope-v2",
+              "title": "ONE law for the door envelope (v2) - duration + bytes + entries + the L1 reader cap all derive from the contract; the Baron banked x2 tapes are the gate",
+              "taskFile": "door-epic-envelope-v2.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "fire s2309 2026-08-25",
+              "note": "Re-author of door-epic-envelope after its lawful STOP at s2308 (the v1 honesty guard ordered it: a FOURTH axis emerged outside the firewall, and the runner reverted its provisional edits leaving lane/c clean, so v1's whole scope is still to do). Scope 1-7 are INHERITED VERBATIM from the v1 master; item 8 is the only new scope - the L1 reader cap in server/ledger/serve.mjs must DERIVE from the same maximum lawful request size as the outer standings.ts body cap (MAX_JSON_BYTES) rather than being an independent number. VERIFIED AT SOURCE s2309 rather than inherited from the stopNote: the 256*1024 literal appears TWICE at serve.mjs:64-71; MAX_TAPE_BYTES=64*1024 at standings.ts:115 and MAX_JSON_BYTES=MAX_TAPE_BYTES+4*1024 at :116, enforced at :1175 and :1177 as 413 reel_too_large. The stopNote is REFINED by that reading: the 400 bad_json does not happen before standings.ts validates, it happens INSIDE readJson after both size checks pass, because the truncated buffer fails JSON.parse - so the reader cap is inert today and becomes the binding wall the moment the envelope is raised past 256 KiB, failing with a refusal that blames syntax rather than size. Does NOT settle the open owner-desk item F-2299-2 (whose own recommendation is (b) keep 64 KiB); this implements the envelope law the attended session dispatched at BACKLOG:1, and is reversible - a lane branch, gated before merge. DRAIN DUTY: when this merges, retire door-epic-envelope as superseded with supersededBy, or stopped-leaf-supersession-guard reds."
+            },
+            {
               "id": "door-reel-ceiling",
               "note_s_att_20260825b": "SUPERSEDED into door-epic-envelope (the honest s2302 stop proved the byte law alone unsatisfiable - the entry law refuses first; F-2302-1). The unified three-axis master carries the gate.",
               "title": "The door accepts the Baron's own epic - per-contract reel size ceilings (round 21's win is inadmissible at 464KB vs 64KiB)",
