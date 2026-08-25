@@ -30,6 +30,12 @@
       "fingerprint": "48544d0754ff",
       "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
     },
+    "scripts/fire.md -> fire-runner.sh:10": {
+      "target": "scripts/fire-runner.sh",
+      "line": 10,
+      "fingerprint": "4c17c1c59c24",
+      "excerpt": "LOG=\"logs/fire-$(date +%Y%m%d).log\""
+    },
     "scripts/fire.md -> lane-runner-v3.sh:422": {
       "target": "scripts/lane-runner-v3.sh",
       "line": 422,
