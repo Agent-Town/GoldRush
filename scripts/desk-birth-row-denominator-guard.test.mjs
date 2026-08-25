@@ -23,7 +23,7 @@
  * drain records). Arm 7 is the reverse control that pins this: an escaping row
  * must be NAMED and must still exit 0.
  */
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -34,6 +34,8 @@ import { fileURLToPath } from 'node:url';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const GUARD = path.join(HERE, 'desk-birth-guard.mjs');
 const { unexaminedRows } = await import(pathToUrl(GUARD));
+const fixtures = [];
+after(() => fixtures.forEach((dir) => fs.rmSync(dir, { recursive: true, force: true })));
 
 function pathToUrl(p) { return new URL(`file://${p.split(path.sep).map(encodeURIComponent).join('/')}`).href; }
 
@@ -106,6 +108,7 @@ test('10 — CLI: an escaping row does not inflate the owner-gated count it sits
 // --- fixture plumbing -------------------------------------------------------
 function fixture(rows, deskTail) {
   const d = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 's2259-birth-')));
+  fixtures.push(d);
   fs.mkdirSync(path.join(d, 'tasks'));
   const g = (a) => execFileSync('git', a, { cwd: d, encoding: 'utf8' });
   g(['init', '-q', '-b', 'main']);

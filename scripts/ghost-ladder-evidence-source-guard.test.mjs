@@ -30,10 +30,12 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import test from 'node:test';
+import test, { after } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 const GUARD = fileURLToPath(new URL('./ghost-ladder-row-guard.mjs', import.meta.url));
+const fixtures = [];
+after(() => fixtures.forEach((dir) => fs.rmSync(dir, { recursive: true, force: true })));
 
 const git = (cwd, ...args) => {
   const r = spawnSync('git', args, { cwd, encoding: 'utf8' });
@@ -50,6 +52,7 @@ const git = (cwd, ...args) => {
  */
 function board({ ghost = true, via = 'review', goals = true, repo = true } = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'f2245-'));
+  fixtures.push(root);
   fs.mkdirSync(path.join(root, 'tasks'), { recursive: true });
   fs.mkdirSync(path.join(root, 'reviews'), { recursive: true });
   fs.writeFileSync(path.join(root, 'tasks', 'foo.md'), '# foo — the foo slice\n');

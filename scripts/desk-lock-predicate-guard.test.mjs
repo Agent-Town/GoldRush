@@ -33,7 +33,7 @@
  * every handoff, silently retiring the entire desk-gating layer. Arms 3, 4 and 8
  * exist solely to catch that, and each was proven by manufacturing it.
  */
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -48,6 +48,8 @@ import { isLockLine as declaration } from './desk-declaration-guard.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const AUDITOR = path.join(HERE, 'desk-state-audit.mjs');
+const fixtures = [];
+after(() => fixtures.forEach((dir) => fs.rmSync(dir, { recursive: true, force: true })));
 
 /**
  * Real line-1 shapes, copied verbatim from STATUS.md history rather than
@@ -77,6 +79,7 @@ const HANDOFF =
  */
 function board(line1) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'desk-lock-'));
+  fixtures.push(dir);
   fs.mkdirSync(path.join(dir, 'tasks'));
   fs.writeFileSync(
     path.join(dir, 'STATUS.md'),
