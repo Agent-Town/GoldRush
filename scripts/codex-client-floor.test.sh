@@ -23,6 +23,14 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 # (a passing guard never executes its violation path, so its green is no evidence
 # about its red). Defaults to the live runner; CI/gates pass no argument.
 RUNNER="${1:-$ROOT/scripts/lane-runner-v3.sh}"
+# s2307 / F-2307-1 — an ABSENT subject is "could not answer" (exit 2), not "answered, and the
+# answer refuses" (exit 1). Without this, `bash -n` on a missing file fails and the guard below
+# reports "lane-runner-v3.sh does not parse" — a diagnosis that accuses the wrong subject and
+# collapses the 2-vs-1 distinction its three siblings in this same battery already carry
+# (main-lock-gate-guard.test.sh:29, lane-dispatch-safety-guard.test.sh:12,
+# janitor-request-rejection.test.sh). Silent on the happy path: every non-readable state
+# refuses LOUDLY here, so the absence of a banner is unambiguous (the F-2224-1 boundary).
+[ -r "$RUNNER" ] || { echo "MISUSE: cannot read $RUNNER"; exit 2; }
 fails=0
 ok()   { echo "  ok   — $1"; }
 bad()  { echo "  FAIL — $1"; fails=$((fails+1)); }

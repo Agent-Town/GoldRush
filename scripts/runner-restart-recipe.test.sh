@@ -28,6 +28,15 @@ HELPER="${1:-$ROOT/scripts/start-lane-runner.sh}"
 HEALTH="${2:-$ROOT/scripts/health-watch.sh}"
 RUNNER="$ROOT/scripts/lane-runner-v3.sh"
 PROCESSES="$ROOT/scripts/runner-processes.sh"
+# s2307 / F-2307-1 — an ABSENT subject is "could not answer" (exit 2), not "answered, and the
+# answer refuses" (exit 1). All four are read: HELPER/HEALTH/PROCESSES are parse-checked below,
+# RUNNER only at the CODEX_FLOOR drift check (:5), which §2.0b calls the one thing that can
+# silently rot — that check already reds on an empty read, so this adds diagnosis, not safety.
+# See codex-client-floor.test.sh for the reasoning; sibling convention at
+# main-lock-gate-guard.test.sh:29 / lane-dispatch-safety-guard.test.sh:12.
+for _subject in "$HELPER" "$HEALTH" "$RUNNER" "$PROCESSES"; do
+  [ -r "$_subject" ] || { echo "MISUSE: cannot read $_subject"; exit 2; }
+done
 fails=0
 ok()  { echo "  ok   — $1"; }
 skip() { echo "  SKIP — $1"; }

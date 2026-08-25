@@ -37,6 +37,10 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 # Default to the live file; gates pass no arguments.
 RUNNER="${1:-$ROOT/scripts/lane-runner-v3.sh}"
 SELF_CHECK="${1:-}"
+# s2307 / F-2307-1 — an ABSENT subject is "could not answer" (exit 2), not "answered, and the
+# answer refuses" (exit 1). See codex-client-floor.test.sh for the reasoning; the sibling
+# convention is main-lock-gate-guard.test.sh:29 / lane-dispatch-safety-guard.test.sh:12.
+[ -r "$RUNNER" ] || { echo "MISUSE: cannot read $RUNNER"; exit 2; }
 fails=0
 ok()  { echo "  ok   — $1"; }
 bad() { echo "  FAIL — $1"; fails=$((fails+1)); }
