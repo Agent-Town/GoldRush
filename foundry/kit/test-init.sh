@@ -57,11 +57,55 @@ echo "== 5. name/path substitution =="
 assert_grep "Test Game" "$TARGET/CLAUDE.md"
 assert_grep "Test Game" "$TARGET/scripts/fire.md"
 assert_grep "Test Game" "$TARGET/tasks/BACKLOG.md"
+# The leftover-token set is DERIVED from init.mjs's own instantiate() body, never
+# hand-listed beside it. F-2306-1: the hand-list knew 3 of the 4 tokens the
+# substituter replaces, and the one it missed (<date>) was the most common in the
+# corpus — 8 occurrences across 3 templates vs 4 for all three it knew. Dropping
+# the <date> substitution shipped 8 raw tokens into CLAUDE.md, scripts/fire.md and
+# docs/TEMPLATE-specialist-queue.md while this section printed a perfect green,
+# byte-identical to a correct scaffold on stdout, stderr AND rc.
+# DERIVED (catches tokens ADDED to the substituter) UNIONED WITH A CONTRACT FLOOR
+# (catches tokens REMOVED from it). Both halves are load-bearing and one alone is
+# worse than useless: a set derived ONLY from instantiate() is defeated by the very
+# edit it must catch — dropping a replaceAll also drops it from the check — which is
+# how the first draft of this cure went green on BOTH defect arms, including the one
+# the hand-list it replaced had caught. The floor is the independent anchor.
+TOKFILE="$TMP/subst-tokens.txt"
+if node -e '
+  const fs = require("fs");
+  const FLOOR = ["<PROJECT NAME>", "<PROJECT>", "<project>", "<date>"];
+  const src = fs.readFileSync(process.argv[1], "utf8");
+  const body = src.match(/function instantiate\([\s\S]*?\n\}/);
+  if (!body) { console.error("instantiate() not found in init.mjs"); process.exit(2); }
+  const derived = [...body[0].matchAll(/\.replaceAll\(\x27([^\x27]+)\x27/g)].map((m) => m[1]);
+  if (!derived.length) { console.error("instantiate() replaces no tokens"); process.exit(2); }
+  const missing = FLOOR.filter((t) => !derived.includes(t));
+  if (missing.length) {
+    console.error("init.mjs no longer substitutes contract token(s): " + missing.join(" "));
+    process.exit(2);
+  }
+  process.stdout.write([...new Set([...derived, ...FLOOR])].join("\n") + "\n");
+' "$KIT/init.mjs" > "$TOKFILE" 2>"$TMP/subst-tokens.err"; then
+  TOKCOUNT=$(grep -c . "$TOKFILE" 2>/dev/null || echo 0)
+else
+  TOKCOUNT=0
+fi
+# Declared ALWAYS, including the happy path: "0 leftover tokens" read off an empty
+# token set is the same false green one level up, and only this line separates them.
+if [ "$TOKCOUNT" -ge 1 ]; then
+  pass "derived $TOKCOUNT substitution token(s) from init.mjs instantiate() [DERIVED, not hand-listed]"
+else
+  fail "cannot derive substitution tokens from init.mjs — the leftover-token check would be vacuous: $(cat "$TMP/subst-tokens.err" 2>/dev/null)"
+fi
 for f in CLAUDE.md scripts/fire.md tasks/TEMPLATE-task-master.md reviews/TEMPLATE-review.md docs/TEMPLATE-specialist-queue.md docs/TEMPLATES-INDEX.md; do
-  if grep -qE '<PROJECT( NAME)?>|<project>' "$TARGET/$f" 2>/dev/null; then
-    fail "unsubstituted project token remains in $f"
+  if [ ! -f "$TARGET/$f" ]; then
+    fail "leftover-token check cannot read $f — the file is missing"
+  elif [ "$TOKCOUNT" -lt 1 ]; then
+    fail "leftover-token check VACUOUS for $f — no token set was derived"
+  elif LEFT=$(grep -Fo -f "$TOKFILE" "$TARGET/$f" 2>/dev/null | sort -u | tr '\n' ' '); [ -n "$LEFT" ]; then
+    fail "unsubstituted token(s) remain in $f: $LEFT"
   else
-    pass "no project tokens left in $f"
+    pass "no unsubstituted tokens in $f (checked $TOKCOUNT derived token(s))"
   fi
 done
 
