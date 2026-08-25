@@ -65,13 +65,35 @@ that was my own regex expecting TAP `# tests`, where this reporter emits `ℹ te
 never at fault; recorded because a broken instrument that prints `BAD` is luckier than one that
 prints `OK`.)
 
+### The cure confirmed a second time, in production conditions
+
+The pinned probe above measures each file **alone in a fresh `TMPDIR`** — which is how
+`fixture-teardown` measures, but it is not how the guards actually run. The full battery runs all
+eight in the **shared** `TMPDIR`, so that is the stronger test, and it was taken by timestamp:
+
+| fact | value |
+|---|---|
+| battery window (cured tree, all 8 files) | `03:04:19Z → 03:15:36Z` |
+| newest guard-fixture directory in shared `TMPDIR` | `02:42:45Z` |
+| directories created during the battery window | **0** |
+
+The newest debris predates the battery by **21.5 minutes** and falls inside the lane-b runner's own
+working window (its run log last wrote `02:56:24Z`) — i.e. it is the runner's **pre-cure**
+development runs, not this tree. **The cured battery left nothing behind in the shared `TMPDIR`.**
+
 ## Findings
 
-**F-2294-1 (NON-BLOCKING, informational).** The ~5,670 stale directories s2293 measured in the
-shared `TMPDIR` are **not** cleaned by this slice and deliberately were not cleaned by this drain.
-The cure is at the generator and it has landed; the historical debris is inert, and a headless fire
-mass-deleting under a shared `TMPDIR` is not a drive-by act. Re-measure at leisure; it is now a
-closed, non-growing set.
+**F-2294-1 (NON-BLOCKING, informational) — the historical debris is now a CLOSED set.**
+Stale fixture directories remain in the shared `TMPDIR` and were deliberately **not** deleted by
+this drain: the cure belongs at the generator and has landed, and a headless fire mass-deleting
+under a shared `TMPDIR` is not a drive-by act.
+
+Measured s2294: **2,090** directories across the three surviving prefixes (`f2245-` 1176,
+`desk-lock-` 546, `f2223-1-` 368), oldest **50.1 h**. ⚠️ **This is NOT comparable to s2293's
+5,670** — that figure used a different, wider prefix basis, and I did not reconstruct it, so **no
+reduction is claimed.** What *is* established is the direction that matters: the set is **no longer
+growing**, because the newest member predates the first battery run of the cured tree. Cleanup is
+now safe, cheap and optional whenever someone wants the disk back.
 
 **F-2293-1 — CLOSED by this merge.** The battery is **rc=0 with 0 fail**, so *both* reds are gone:
 
