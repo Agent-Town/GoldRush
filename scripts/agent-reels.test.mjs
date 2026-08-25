@@ -43,7 +43,13 @@ test('agent reel validation reuses the door bounds and CLI tape content stays de
       request: new Request(`http://localhost/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${eraTape.id}`),
       env: { TELEMETRY: kv },
     });
-    assert.deepEqual((await response.json()).reel.meta, { buildId: 'abcdef12', era: 3 });
+    // F-2308-1 (s2308): the stored tape keeps `era` (see the row above), but the PUBLIC projection
+    // strips it along with `engineHash`. v3's §7.4 ruling retained `era` here and this assertion
+    // was written for that ruling; the ruling is vetoed on measured evidence, so this mirrors the
+    // veto. It is deliberately identical to `scripts/test-standings.mjs:111`, which asserts the
+    // same shape as a CONTRACT with `src/game/RunTape.ts:350` — under v3's ruling these two
+    // assertions directly contradicted each other and could not both pass.
+    assert.deepEqual((await response.json()).reel.meta, { buildId: 'abcdef12' });
   } finally {
     await vite.close();
   }

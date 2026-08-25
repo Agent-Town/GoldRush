@@ -380,8 +380,19 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     if (!reel) return error(cors, 404, 'reel_not_found', 'That reel is not on the shelf.');
     // The archive keeps its reels: a season-1 tape stays fetchable as the artifact it is, and the
     // payload's own labels say which era's proof standards it was posted under.
+    // F-2308-1 (s2308): the public projection stays `{ buildId }` and carries NEITHER `engineHash`
+    // NOR `era`. v3's §7.4 ruling retained `era` here; that ruling is VETOED on measured evidence,
+    // using the fallback v3's own master pre-authorized ("if vetoed, the projection stays
+    // { buildId } and this master is otherwise unchanged"). `src/game/RunTape.ts:350`
+    // validateTapeMeta is an EXACT-key allowlist over ['buildId'] and is the validator of THIS
+    // payload, reached from `src/ui/LanternShow.ts:24` readStandingsReel — so a projected `era`
+    // makes `validateRunTape` return null (`:331` treats meta===null as a whole-tape refusal) and
+    // every node-produced WATCH reel becomes unplayable. `scripts/test-standings.mjs:111` asserts
+    // exactly this shape and is a CONTRACT between the two surfaces, not a mirror of this line.
+    // Widening the browser validator is the named follow-up `engine-era-browser-stamp`; until it
+    // lands, `{ buildId }` is the invariant rather than a compromise.
     const publicReel = isRecord(reel.meta) && reel.meta.engineHash !== undefined
-      ? { ...reel, meta: { buildId: reel.meta.buildId, ...(reel.meta.era !== undefined ? { era: reel.meta.era } : {}) } }
+      ? { ...reel, meta: { buildId: reel.meta.buildId } }
       : reel;
     return json(cors, { ok: true, ...seasonLabels(season), epochId, contractId, reel: publicReel });
   }
