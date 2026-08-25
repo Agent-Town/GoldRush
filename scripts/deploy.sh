@@ -166,8 +166,13 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
     # tree makes every fresh tape honestly unassayable (engine-hash mismatch). The verifier
     # box rides along with every deploy, or says loudly why it could not. Fail-open by
     # design: an unreachable box must never turn a good deploy into a red.
+    # F-2299-1 (s2299): `rsync -a` sends dotfiles, and .env.local was NOT excluded — so this
+    # leg shipped FIVE live credentials (Cloudflare, ElevenLabs, OpenRouter, Claude OAuth) to
+    # /opt/goldrush/.env.local on a public-IP box. Nothing box-side reads it: both services
+    # take EnvironmentFile=/etc/goldrush-{assay,ledger}.env, outside the synced tree (runbook
+    # :32,:60). Strictly subtractive, and it leaves the payload/allowlist fork (b)/(c) open.
     if ssh -o ConnectTimeout=8 -o BatchMode=yes root@<droplet> true 2>/dev/null; then
-      if rsync -az --delete --timeout=60 --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
+      if rsync -az --delete --timeout=60 --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
         && ssh -o BatchMode=yes root@<droplet> "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
       else
