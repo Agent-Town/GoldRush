@@ -381,7 +381,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     // The archive keeps its reels: a season-1 tape stays fetchable as the artifact it is, and the
     // payload's own labels say which era's proof standards it was posted under.
     const publicReel = isRecord(reel.meta) && reel.meta.engineHash !== undefined
-      ? { ...reel, meta: { buildId: reel.meta.buildId } }
+      ? { ...reel, meta: { buildId: reel.meta.buildId, ...(reel.meta.era !== undefined ? { era: reel.meta.era } : {}) } }
       : reel;
     return json(cors, { ok: true, ...seasonLabels(season), epochId, contractId, reel: publicReel });
   }
@@ -990,10 +990,11 @@ export function validateTape(value: unknown, contractId: unknown, seed: unknown,
 
 function validTapeMeta(value: unknown): boolean {
   return value === undefined || (isRecord(value)
-    && hasOnlyKeys(value, new Set(['buildId', 'engineHash']))
+    && hasOnlyKeys(value, new Set(['buildId', 'engineHash', 'era']))
     && typeof value.buildId === 'string'
     && /^(dev|[a-f0-9]{7,16})$/.test(value.buildId)
-    && (value.engineHash === undefined || (typeof value.engineHash === 'string' && SHA256.test(value.engineHash))));
+    && (value.engineHash === undefined || (typeof value.engineHash === 'string' && SHA256.test(value.engineHash)))
+    && (value.era === undefined || (Number.isSafeInteger(value.era) && (value.era as number) > 0)));
 }
 
 function validRunStart(value: unknown): boolean {

@@ -11,11 +11,18 @@ const hold = { verb: 'HOLD', pos: { x: 0, z: 12 } };
 test('agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids', async () => {
   const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
   try {
-    const { validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
+    const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
     const tape = fixture(Array(32).fill(hold));
     assert.ok(validateTape(tape, tape.contract, tape.seed, tape.difficulty));
     const v2 = { ...tape, version: 2, runStart: runStart() };
     assert.ok(validateTape(v2, v2.contract, v2.seed, v2.difficulty));
+    const eraTape = {
+      ...v2,
+      meta: { buildId: 'abcdef12', engineHash: 'a'.repeat(64), era: 3 },
+      outcome: { reason: 'secured', secured: true, waves: 0, timeAlive: 0, gold: 0 },
+    };
+    assert.ok(validateTape(eraTape, eraTape.contract, eraTape.seed, eraTape.difficulty));
+    assert.equal(validateTape({ ...eraTape, meta: { ...eraTape.meta, surprise: true } }, eraTape.contract, eraTape.seed, eraTape.difficulty), null);
     assert.equal(validateTape({ ...tape, runStart: runStart() }, tape.contract, tape.seed, tape.difficulty), null);
     assert.equal(validateTape({ ...v2, runStart: { ...v2.runStart, meta: {} } }, v2.contract, v2.seed, v2.difficulty), null);
     assert.equal(validateTape({ ...v2, runStart: { ...v2.runStart, research: { ...v2.runStart.research, version: 2 } } }, v2.contract, v2.seed, v2.difficulty), null);
@@ -25,6 +32,18 @@ test('agent reel validation reuses the door bounds and CLI tape content stays de
     const moving = fixture([hold]);
     moving.inputLog.entries[0].mx = 1;
     assert.equal(validateTape(moving, tape.contract, tape.seed, tape.difficulty), null);
+
+    const row = {
+      secured: true, waves: 0, timeAlive: 0, gold: 0, baseValue: 0,
+      profileName: 'Era Test', anonId: 'a'.repeat(32), difficulty: 'trail', seed: eraTape.seed, seedMode: 'live',
+      seedHash: 'b'.repeat(64), inputLogHash: 'c'.repeat(64), submittedAt: 1, tape: eraTape, assay: 'pending',
+    };
+    const kv = { get: async (key) => key === 'standings:s2:epoch-1-frontier:the-claim' ? JSON.stringify([row]) : null, put: async () => undefined };
+    const response = await onRequest({
+      request: new Request(`http://localhost/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${eraTape.id}`),
+      env: { TELEMETRY: kv },
+    });
+    assert.deepEqual((await response.json()).reel.meta, { buildId: 'abcdef12', era: 3 });
   } finally {
     await vite.close();
   }

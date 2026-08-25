@@ -5,6 +5,7 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 import { assertCanonicalAssayNode, computeEngineHash } from './assay-replay-agent.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -85,12 +86,15 @@ async function assay(row) {
 
   let backoffMs = initialBackoffMs;
   const tapeEngineHash = typeof row?.tape?.meta?.engineHash === 'string' ? row.tape.meta.engineHash : null;
+  const tapeEra = Number.isSafeInteger(row?.tape?.meta?.era) ? row.tape.meta.era : null;
   const tapeBuildId = typeof row?.tape?.meta?.buildId === 'string' ? row.tape.meta.buildId : null;
   const engineSkew = tapeEngineHash !== null && tapeEngineHash !== engineHash;
   const buildSkew = tapeEngineHash === null && tapeBuildId !== null && !tapeBuildId.startsWith(buildId) && !buildId.startsWith(tapeBuildId);
   const identitySkew = engineSkew || buildSkew;
   if (engineSkew) {
-    reason = `engine-skew (tape ${tapeEngineHash}, assayer ${engineHash})`;
+    reason = tapeEra === null
+      ? `engine era ${engineEra.era} '${engineEra.name}', tape from an unannounced era`
+      : `engine era ${engineEra.era} '${engineEra.name}', tape from era ${tapeEra}`;
   } else if (buildSkew) {
     reason = `build-skew (tape ${tapeBuildId}, assayer ${buildId})`;
   }

@@ -15,6 +15,7 @@ import { writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 import { computeEngineHash } from './assay-replay-agent.mjs';
 
 const BUILD_ID = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' }).trim();
@@ -271,7 +272,7 @@ async function writeAgentTape(vite, path, sim, outcome, run) {
     seed: run.seed,
     difficulty: run.difficulty,
     simVersion: RUN_TAPE_SIM_VERSION,
-    meta: { buildId: BUILD_ID, engineHash: await computeEngineHash(root) },
+    meta: { buildId: BUILD_ID, engineHash: await computeEngineHash(root), era: engineEra.era },
     // Tape v2's declaration (`specs/agent-play/tape-contract.md` §2-§3): the progression this run
     // was born under, captured by the sim at birth rather than re-derived here.
     runStart: sim.runStart,
