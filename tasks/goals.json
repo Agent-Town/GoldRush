@@ -2985,6 +2985,15 @@
               "drainNotes": "DRAINED + MERGED s2290 at 77c85566ac364a95742eec0f545cabefe2e4467d. Gated by s2289 on the MERGED tree in detached .gate-s2289 (SS3.0b): tsc rc=0 5.5s; npm run build rc=0 19.4s; test:ledger-guards rc=0 105.8s / 19 legs; merged-tree status clean. s2289 gated it green and DEFERRED the merge on live attended contention over tasks/BACKLOG.md, preserving the gated tree as tag s2289-gate-merge -> 1672a0cc2. NOT re-gated by s2290, and that is verified rather than assumed: all 68 artifact blobs in the merge are BYTE-IDENTICAL to the s2289 gated tree (68/68, control asserted its own validity first per F-2215-1). The only divergence is tasks/BACKLOG.md, which conflicted because main gained two attended rows above the row the lane edited; resolved as a lawful row supersession + union, verified by row-set diff as exactly 1 row lost and 1 gained. Battery call RECORDED, not quietly taken: merged-vs-main changed paths 69, of those RUN SURFACE 0, so the F-1460-1 src/sim|src/systems|src/entities trigger does not fire and the ~530s test:node-guards was not re-run. This slice changes no code. Science: Night Shift secured w25 / 115g in 1 scored launch (hash fnv1a32:889d9357, replayed on main and MATCHING its own claim); Hill Mine secured w17 / 5g in 10 attempts (fnv1a32:85cb8a01). Structural strategy transfers across an engine patch; tick-coupled timing does not. Findings F-2289-1 (recorder/assayer hash divergence, conditional) and F-2289-2 (the door hash check is an oracle) both NON-BLOCKING - they concern code this slice does not touch. Both now carry a BACKLOG row, filed by this drain because s2289 could not write the contested file. Review: reviews/gauntlet-heat5b-reearn.md."
             },
             {
+              "id": "lantern-show-agent-honesty",
+              "title": "The replay viewer stops lying about agent reels - honesty banner + recorded-outcome card + hard ending (owner playtest, the dry-gulch watch URL)",
+              "taskFile": "lantern-show-agent-honesty.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-08-25",
+              "note": "Owner verbatim: this reel ended but the player should die... instead it looks like this continues? weird + I can't play the 20 waves that it is supposed to have? The watch links play agent reels through the browser engine - the PROVEN-divergent one (F-ASSAY-E2E-3; the assayer routes around it, the viewer never learned). Fix = honesty: agent-reel banner + the tape's own verified outcome card + hard stop at durationTicks or at terminal divergence; no immortal swarm theater. Launch-facing (the landing's watch links). DISPATCHED to tasks/queue/lane-d in the authoring commit window."
+            },
+            {
               "id": "door-epic-envelope",
               "title": "ONE law for the door envelope - duration + bytes + entries derive from the contract; the Baron's banked x2 tapes are the gate",
               "taskFile": "door-epic-envelope.md",
