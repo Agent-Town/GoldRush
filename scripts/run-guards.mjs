@@ -38,6 +38,12 @@
  * one-time sweep, while the board moved underneath it.
  */
 import { spawnSync } from 'node:child_process';
+import { appendFileSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const repoRoot = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
+const statsPath = path.resolve(repoRoot, process.env.GR_GUARD_STATS_PATH || 'logs/guard-stats.jsonl');
 
 const GUARDS = [
   'test:node-guards',
@@ -241,6 +247,7 @@ if (requested) {
   selected = GUARDS;
 }
 
+const runId = new Date().toISOString();
 const rows = [];
 for (const guard of selected) {
   const started = Date.now();
@@ -257,7 +264,7 @@ for (const guard of selected) {
   const rc = run.status === null ? `signal:${run.signal ?? 'unknown'}` : run.status;
   const output = `${run.stdout ?? ''}${run.stderr ?? ''}`.trim();
   const p95 = output.match(/^power-graph-budget: p95=([0-9.]+)ms\b/m)?.[1];
-  rows.push({ guard, rc, seconds, output });
+  rows.push({ guard, rc, seconds, output, p95: p95 ?? null });
   console.log(
     `${rc === 0 ? 'PASS' : 'FAIL'}  rc=${rc}  ${seconds}s  ${guard}` +
       (p95 ? `  p95=${p95}ms` : ''),
@@ -275,5 +282,32 @@ console.log(
   `\nguards: ${rows.length - failed.length}/${rows.length} passed` +
     (failed.length ? ` -- RED: ${failed.map((r) => r.guard).join(', ')}` : ''),
 );
+
+const roster = requested
+  ? '--only'
+  : changedFiles && selected.length === GATE_GUARDS.length
+    ? 'GATE_GUARDS'
+    : changedFiles
+      ? '--changed-since'
+      : 'GUARDS';
+try {
+  const git = spawnSync('git', ['-C', repoRoot, 'rev-parse', '--short', 'HEAD'], { encoding: 'utf8' });
+  const stdout = (git.stdout ?? '').trim();
+  const head = git.status === 0 && stdout ? stdout : 'unknown';
+  const records = rows.map(({ guard, rc, seconds, p95 }) => ({
+    runId,
+    ts: runId,
+    head,
+    roster,
+    guard,
+    rc,
+    seconds,
+    p95,
+  }));
+  appendFileSync(statsPath, `${records.map((record) => JSON.stringify(record)).join('\n')}\n`);
+  console.log(`guard-stats: appended ${records.length} record(s) to ${statsPath}`);
+} catch (error) {
+  console.log(`⚠️ guard-stats: could not append to ${statsPath}: ${error.message}`);
+}
 
 process.exit(failed.length ? 1 : 0);
