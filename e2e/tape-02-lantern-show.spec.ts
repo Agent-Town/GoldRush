@@ -24,6 +24,7 @@ test('plain town WATCH replays a fresh tape read-only and refuses a mismatched r
   await page.getByTestId('watch-run-tape').click();
   const show = page.getByTestId('lantern-show');
   await expect(show).toBeVisible();
+  await expect(page.getByTestId('lantern-agent-honesty')).toBeHidden();
   expect(new URL(page.url()).searchParams.has('debug')).toBe(false);
   await expect(page.getByTestId('lantern-intertitle')).toHaveText('Hold the east bank.');
   await expect(page.locator('[data-lantern-scrub]')).toHaveCount(0);
@@ -31,6 +32,7 @@ test('plain town WATCH replays a fresh tape read-only and refuses a mismatched r
 
   await page.getByTestId('lantern-speed-4').click();
   await expect(show).toHaveAttribute('data-playback', 'complete', { timeout: 15_000 });
+  await expect(page.getByTestId('lantern-intertitle')).toContainText('RECORDED OUTCOME');
   const status = page.getByTestId('lantern-playback-status');
   await expect(status).toHaveAttribute('data-hash', tape.eventLogHash);
   await expect(status).toHaveAttribute('data-expected-hash', tape.eventLogHash);
