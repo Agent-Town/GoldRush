@@ -304,8 +304,20 @@ try {
     seconds,
     p95,
   }));
-  appendFileSync(statsPath, `${records.map((record) => JSON.stringify(record)).join('\n')}\n`);
-  console.log(`guard-stats: appended ${records.length} record(s) to ${statsPath}`);
+  const tracking = spawnSync(
+    'git',
+    ['-C', path.dirname(statsPath), 'ls-files', '--error-unmatch', '--', path.basename(statsPath)],
+    { encoding: 'utf8', env: { ...process.env, LC_ALL: 'C' } },
+  );
+  const outsideRepo = tracking.status === 128 && (tracking.stderr ?? '').includes('not a git repository');
+  if (tracking.status === 1 || outsideRepo) {
+    appendFileSync(statsPath, `${records.map((record) => JSON.stringify(record)).join('\n')}\n`);
+    console.log(`guard-stats: appended ${records.length} record(s) to ${statsPath}`);
+  } else if (tracking.status === 0) {
+    console.log(`guard-stats: skipped ${statsPath} because it is tracked; a gate must not dirty its own tree`);
+  } else {
+    console.log(`guard-stats: could not classify ${statsPath}; skipped because a gate must not dirty its own tree`);
+  }
 } catch (error) {
   console.log(`⚠️ guard-stats: could not append to ${statsPath}: ${error.message}`);
 }
