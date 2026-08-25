@@ -436,6 +436,7 @@ type RunTapeReplayState = {
   complete: boolean;
   hash: string | null;
   agentTape: boolean;
+  divergedAtWave: number | null;
 };
 
 export class Game {
@@ -2676,6 +2677,7 @@ export class Game {
   }
 
   private update(delta: number): boolean {
+    if (this.runTapeReplay?.complete || this.finishRunTapeReplayIfComplete()) return false;
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
@@ -2726,6 +2728,7 @@ export class Game {
         return true;
       }
     }
+    if (this.finishAgentTapeReplayIfTerminal()) return true;
     if (this.secureClaimChoicePending()) {
       this.rememberIntents(intents);
       this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
@@ -2826,6 +2829,7 @@ export class Game {
       this.echoBoss.update(this.timeAlive);
       this.oldDiggerBoss.update(this.timeAlive);
       this.e10StaticBoss.update(simDelta, this.timeAlive, this.visibleActorPositions());
+      if (this.finishAgentTapeReplayIfTerminal()) return true;
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
         return true;
@@ -6971,7 +6975,7 @@ export class Game {
     }
     this.mpLocalSlot = tape.inputLog.primarySlot;
     this.mpActionSlot = 0;
-    this.runTapeReplay = { tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape };
+    this.runTapeReplay = { tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape, divergedAtWave: null };
     this.replayCameraPan.set(0, 0, 0);
     this.prospector.reset(this.primaryActor.group.position);
     this.cameraRig.snapTo(this.localActor.group.position);
@@ -7006,14 +7010,21 @@ export class Game {
     return actorIntents[this.mpLocalSlot] ?? idle;
   }
 
-  private finishRunTapeReplayIfComplete(): void {
+  private finishRunTapeReplayIfComplete(): boolean {
     const replay = this.runTapeReplay;
-    if (!replay || replay.complete) return;
+    if (!replay || replay.complete) return false;
     if (replay.skipWave !== null && this.waveSystem.diagnostics.wave >= replay.skipWave) {
       replay.skipWave = null;
       this.loop.setTimeScale(replay.speed);
     }
-    if ([...replay.sessions.values()].some((session) => !session.complete)) return;
+    if ([...replay.sessions.values()].some((session) => !session.complete)) return false;
+    this.finishRunTapeReplay();
+    return true;
+  }
+
+  private finishRunTapeReplay(divergedAtWave: number | null = null): void {
+    const replay = this.runTapeReplay;
+    if (!replay || replay.complete) return;
     const primary = replay.sessions.get(replay.tape.inputLog.primarySlot);
     replay.hash = replay.agentTape
       ? agentOrdersEventLogHash(snapshotStandingOrders())
@@ -7025,10 +7036,18 @@ export class Game {
           economy: summarizeLog(this.economy.log),
         });
     replay.complete = true;
+    replay.divergedAtWave = divergedAtWave;
     replay.skipWave = null;
     this.state.setPaused(true);
     this.loop.setTimeScale(1);
     this.syncLanternShow();
+  }
+
+  private finishAgentTapeReplayIfTerminal(): boolean {
+    const replay = this.runTapeReplay;
+    if (!replay?.agentTape || replay.complete || this.runManager?.diagnostics.secured !== true) return false;
+    this.finishRunTapeReplay(this.waveSystem.diagnostics.wave);
+    return true;
   }
 
   private setRunTapeReplayPaused(paused: boolean): void {
@@ -7083,6 +7102,8 @@ export class Game {
       complete: replay.complete,
       hash: replay.hash,
       expectedHash: replay.tape.eventLogHash,
+      agentTape: replay.agentTape,
+      divergedAtWave: replay.divergedAtWave,
     };
     this.lanternShow.update(state);
   }
@@ -8281,7 +8302,7 @@ export class Game {
     if (!this.deathPending) return false;
     if (this.runTapeReplay) {
       this.deathPending = false;
-      this.finishRunTapeReplayIfComplete();
+      this.finishRunTapeReplay(this.runTapeReplay.agentTape ? this.waveSystem.diagnostics.wave : null);
       return true;
     }
     this.endRun();
