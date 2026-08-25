@@ -1,3 +1,5 @@
+> ⛔ SUPERSEDED 2026-08-25 — DO NOT QUEUE. Stopped honestly by s2302 (joint unsatisfiability: the byte law alone cannot admit tapes the ENTRY law refuses first — F-2302-1). Absorbed into tasks/door-epic-envelope.md, the unified three-axis envelope. Kept per the retention law.
+
 # Task door-reel-ceiling: the door accepts the Baron's own epic — per-contract reel size, the duration law's sibling (lane-c, prefix "fix:")
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.
