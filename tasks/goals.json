@@ -2992,7 +2992,8 @@
               "id": "f2293-1-guard-fixture-teardown",
               "title": "Eight corpus-declaration guards must remove the temp directories they create - the cure for F-2293-1",
               "taskFile": "f2293-1-guard-fixture-teardown.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "da32563682cf8086d1f7b4ba6d579e74d5141b85",
               "lane": "lane-b",
               "authoredBy": "fire s2293",
               "note": "FIRE-AUTHORED s2293 from F-2293-1, measured on MAIN (not inherited from the lane run that surfaced it). test:node-guards is RED on main; this cures one of its two failures. fixture-teardown.test.mjs runs each subject in a child with a FRESH TMPDIR, so its survivors are freshly leaked rather than accumulated debris - both innocent readings were tested and refuted. Reproducing its own method on main gives 8 of 8 leaking with counts identical to the lane run (10/4/8/3/2/2/3/8 = 40 dirs per battery run), every child rc=0 with tests really executed, so the guards pass their own arms and only teardown is missing. 5,670 matching dirs sit in the shared TMPDIR, up to 47.5h old. One class instantiated 8 times: a fixture-builder that mkdtempSync-es and RETURNS a value, registering no cleanup (canonical at desk-lock-predicate-guard.test.mjs:79). All 8 are guards from the F-2204-1 corpus-declaration streak. The gate PINS each file own test counts at 8/10/8/8/8/8/9/8 because the cheapest false cure (deleting arms) greens the detector while gutting eight guards. The battery second red, moth-season-pressure, is attributed as a load ceiling (spawnSync timeout 30s reported as status:null; green on main in 15.2s) and is explicitly OUT of scope."
