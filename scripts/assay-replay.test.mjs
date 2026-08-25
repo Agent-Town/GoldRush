@@ -26,6 +26,11 @@ test('the round-2 corpus hash remains byte-for-byte pinned', () => {
   assert.equal(tape.eventLogHash, 'fnv1a32:ba8fdc3e');
 });
 
+test('pre-era engine-stamped agent tapes remain replayable', () => {
+  const replay = seam('artifacts/gauntlet-heat5b-20260825/e2-hill-mine/winning-tape.json');
+  assert.match(replay.eventLogHash, /^fnv1a32:[a-f0-9]{8}$/);
+});
+
 test('the hill-mine libm divergence tape has one canonical post-cure replay', () => {
   const replay = seam('artifacts/gauntlet-heat5-20260824/e2-hill-mine/winning-tape.json');
   assert.deepEqual({ eventLogHash: replay.eventLogHash, outcome: replay.outcome, ticks: replay.ticks }, {
@@ -56,6 +61,7 @@ test('a securing door tape carries its start, its boundary answer, and replays t
     assert.equal(tape.version, 2);
     assert.equal(typeof tape.meta?.buildId, 'string', 'the door records which checkout built its tape');
     assert.match(tape.meta?.engineHash, /^[a-f0-9]{64}$/, 'the door records the engine content it ran');
+    assert.equal(tape.meta?.era, 3, 'the door records the announced engine era');
     assert.deepEqual(tape.runStart.meta, { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } });
     assert.deepEqual(tape.runStart.research.taken, []);
     assert.equal(tape.runStart.research.version, 1);

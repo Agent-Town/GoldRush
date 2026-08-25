@@ -187,8 +187,11 @@ export async function replayAgentTape(rawTape) {
 
 function withoutEngineHash(tape) {
   const meta = tape?.meta;
+  const keys = meta && typeof meta === 'object' && !Array.isArray(meta)
+    ? Object.keys(meta).sort().join(',')
+    : '';
   if (!meta || typeof meta !== 'object' || Array.isArray(meta)
-    || Object.keys(meta).sort().join(',') !== 'buildId,engineHash'
+    || (keys !== 'buildId,engineHash' && keys !== 'buildId,engineHash,era')
     || typeof meta.engineHash !== 'string' || !/^[a-f0-9]{64}$/.test(meta.engineHash)) return tape;
   return { ...tape, meta: { buildId: meta.buildId } };
 }

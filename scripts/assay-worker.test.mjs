@@ -118,7 +118,7 @@ test('once keeps completed mismatches rejected and retries instrument failures b
 test('engine hash wins over build id, with build id retained for legacy tapes', async () => {
   const { directory, stub } = await fixture();
   const round2 = JSON.parse(readFileSync('artifacts/assay-e2e-20260822/round2/tape-secure-verb.json', 'utf8'));
-  const matchingTape = { ...round2, id: 'matching-round2', meta: { buildId: buildId.slice(0, 8), engineHash } };
+  const matchingTape = { ...round2, id: 'matching-round2', meta: { buildId: buildId.slice(0, 8), engineHash, era: 3 } };
   const matchingRow = {
     locator: locator(matchingTape.id),
     tape: matchingTape,
@@ -126,7 +126,7 @@ test('engine hash wins over build id, with build id retained for legacy tapes', 
     submittedAt: 1,
   };
   const engineSkew = row('engine-skew');
-  engineSkew.tape.meta = { buildId, engineHash: '0'.repeat(64) };
+  engineSkew.tape.meta = { buildId, engineHash: '0'.repeat(64), era: 2 };
   const legacySkew = row('legacy-skew');
   legacySkew.tape.meta = { buildId: 'deadbeef' };
   const api = await mockApi([engineSkew, legacySkew, matchingRow]);
@@ -134,7 +134,7 @@ test('engine hash wins over build id, with build id retained for legacy tapes', 
     const { code, stdout, stderr } = await runWorker(api.base, stub).done;
     assert.equal(code, 0, stderr);
     assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'unassayable', 'verified']);
-    assert.equal(api.posts[0].reason, `engine-skew (tape ${'0'.repeat(64)}, assayer ${engineHash})`);
+    assert.equal(api.posts[0].reason, "engine era 3 'the Honest Hypot', tape from era 2");
     assert.equal(api.posts[0].replayedHash, undefined);
     assert.equal(api.posts[1].reason, `build-skew (tape deadbeef, assayer ${buildId})`);
     assert.equal(api.posts[2].reason, undefined);
