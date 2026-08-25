@@ -4,7 +4,7 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b`.
 
-READ FIRST: `AGENTS.md`; `scripts/fixture-teardown.test.mjs` (the guard this cures — read it BEFORE editing anything, it defines what "leak" means here); `tasks/BACKLOG.md` (finding **F-2293-1**, top of file); `scripts/node-guards-timeout.test.mjs:43` (`withFixture` — the house teardown pattern already in this repo).
+READ FIRST: `AGENTS.md`; `scripts/fixture-teardown.test.mjs` (the guard this cures — read it BEFORE editing anything, it defines what "leak" means here); `tasks/BACKLOG.md` (finding **F-2293-1**, top of file); `scripts/node-guards-timeout.test.mjs:38` (`withFixture` — the house teardown pattern already in this repo).
 
 FRESHNESS CHECK (F-1424-3): this master is dispatched with its evidence commit. Verify the lane has it:
 `grep -Fc 'F-2293-1 FIXTURE-TEARDOWN KEY s2293' tasks/BACKLOG.md` — must print `1`. If it prints `0`, the lane is STALE (it is missing the commit that carries this task's evidence): **STOP and report "lane stale — F-2293-1 evidence commit absent"**. Do NOT try to fix it yourself.
@@ -23,7 +23,7 @@ test at scripts/fixture-teardown.test.mjs:24:1
 
 **This is NOT that slice's defect, and it is NOT accumulated debris.** Both readings were tested and both are refuted:
 
-1. **`fixture-teardown` runs each subject in a child process with `TMPDIR` set to a FRESH scratch dir** (`scripts/fixture-teardown.test.mjs:34-42`), then lists what survived *in that scratch*. So every survivor it names was created **during that isolated child run** and left behind. The detector is correct.
+1. **`fixture-teardown` runs each subject in a child process with `TMPDIR` set to a FRESH scratch dir** (`scripts/fixture-teardown.test.mjs:33-42`), then lists what survived *in that scratch*. So every survivor it names was created **during that isolated child run** and left behind. The detector is correct.
 2. **Reproduced independently on MAIN s2293** using the guard's own method on the 8 named subjects — **8 of 8 leak, with counts identical to the lane's run**:
 
 | file | survivors | own tests |
@@ -55,7 +55,7 @@ All 8 are guards from the recent F-2204-1 corpus-declaration streak (s2223, s222
 
 ## Scope
 
-1. **Give each of the 8 files deterministic fixture teardown.** For each file in the table above, ensure every directory its fixture-builder creates is removed when the file's tests finish — whichever mechanism fits that file: a module-level `after()` that empties a collected list, `t.after(...)` per test, or the existing `withFixture` try/finally shape at `scripts/node-guards-timeout.test.mjs:43`. Prefer the file's own idiom; consistency across the 8 is NOT required, correctness is.
+1. **Give each of the 8 files deterministic fixture teardown.** For each file in the table above, ensure every directory its fixture-builder creates is removed when the file's tests finish — whichever mechanism fits that file: a module-level `after()` that empties a collected list, `t.after(...)` per test, or the existing `withFixture` try/finally shape at `scripts/node-guards-timeout.test.mjs:38`. Prefer the file's own idiom; consistency across the 8 is NOT required, correctness is.
 
 2. **Teardown must survive a failing arm.** Removal must happen even when an assertion throws (that is exactly when fixtures are most useful to leak). `after()`/`t.after()`/`finally` all satisfy this; a trailing `rmSync` at the end of a test body does NOT.
 
