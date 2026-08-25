@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { mkdtemp, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { createLedgerServer } from '../server/ledger/serve.mjs';
+import { createLedgerServer, loadLedgerHandlers, loadLedgerMaxRequestBytes } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
 
 const secret = 'ledger-worker-contract-secret';
@@ -14,8 +14,17 @@ const ledgerPath = path.join(ledgerDirectory, 'ledger.db');
 const storage = new SqliteStorage(ledgerPath);
 const launchDirectory = process.cwd();
 process.chdir(directory);
+const maxRequestBytes = await loadLedgerMaxRequestBytes();
 const server = await createLedgerServer({
   storage,
+  handlers: {
+    ...await loadLedgerHandlers(),
+    '/reader-boundary': async ({ request, env }) => {
+      const bytes = Buffer.byteLength(await request.text());
+      await env.TELEMETRY.put('reader-boundary', String(bytes));
+      return new Response(JSON.stringify({ bytes }));
+    },
+  },
   env: { ASSAY_WORKER_SECRET: secret, ALLOWED_CORS_ORIGINS: new Set(['https://county.example']) },
 }).finally(() => process.chdir(launchDirectory));
 
@@ -36,13 +45,23 @@ try {
   assert.equal(cors.headers.get('access-control-allow-origin'), 'https://county.example');
   assert.equal((await fetch(`${base}/api/session`, { method: 'OPTIONS' })).status, 204);
   assert.equal((await fetch(`${base}/api/standings/assay-queue`, { method: 'OPTIONS', headers: { 'x-assay-key': secret } })).status, 405);
-  const oversized = await fetch(`${base}/api/standings`, {
+  const exactBody = JSON.stringify({ padding: 'x'.repeat(maxRequestBytes - 14) });
+  assert.equal(Buffer.byteLength(exactBody), maxRequestBytes);
+  const exact = await jsonFetch(`${base}/reader-boundary`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: exactBody,
+  });
+  assert.equal(exact.status, 200);
+  assert.equal(exact.body.bytes, maxRequestBytes);
+  assert.equal(await storage.get('reader-boundary'), String(maxRequestBytes));
+  const oversized = await jsonFetch(`${base}/api/standings`, {
     method: 'POST',
     headers: { Origin: 'https://county.example', 'content-type': 'application/json' },
-    body: 'x'.repeat(300_000),
+    body: `${exactBody} `,
   });
-  assert.equal(oversized.status, 413);
-  assert.equal(oversized.headers.get('access-control-allow-origin'), 'https://county.example');
+  assert.equal(oversized.status, 413, 'reader cap equals the outer standings body cap');
+  assert.equal(oversized.body.error, 'reel_too_large');
 
   const tape = assayableTape();
   const submitted = await jsonFetch(`${base}/api/standings`, {
@@ -73,7 +92,7 @@ try {
   assert.equal(slip.body.ranked, true);
   const queue = await jsonFetch(`${base}/api/standings/assay-queue?limit=100`, { headers: { 'x-assay-key': secret } });
   assert.equal(queue.body.queue.length, 0);
-  console.log('ledger worker HTTP contract checks passed (15)');
+  console.log('ledger worker HTTP contract checks passed (19)');
 } finally {
   await new Promise((resolve) => server.close(resolve));
   storage.close();

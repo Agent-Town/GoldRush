@@ -26,8 +26,8 @@ const serversByStorage = new WeakMap();
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 try {
   const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
-  const { validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
-  const { MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
+  const { submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
   httpRoutes = {
@@ -37,11 +37,12 @@ try {
   };
   for (backend of ['kv', 'sqlite']) {
     checks = 0;
-    checkDurationCeilings(validateTape, validateRunTape, maxRunTapeTicksForContract, MAX_PLAYBOOK_TICKS);
+    checkDoorEnvelopes(validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS);
     checkTapeBuildMetadata(validateTape);
     await checkEngineHashReel(onRequest);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest);
+    await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
     await checkVerdictSlipExactMatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -194,14 +195,30 @@ async function checkPosts(onRequest) {
   equal((await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 25, night, 'e1-night-shift'), kv)).status, 400, 'Night Shift beyond-margin tape is refused');
 
   const oversized = post('6'.repeat(32), 20);
-  oversized.profileName = 'x'.repeat(70 * 1024);
+  oversized.profileName = 'x'.repeat(2 * 1024 * 1024);
   const tooLarge = await call(onRequest, 'POST', '/api/standings', oversized, kv);
   equal(tooLarge.status, 413, 'pretty-sized standing is refused before validation');
   equal(tooLarge.body.error, 'reel_too_large', '413 names the compact-reel cure');
 }
 
-function checkDurationCeilings(validateTape, validateRunTape, maxRunTapeTicksForContract, recorderTicks) {
+function checkDoorEnvelopes(validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, recorderTicks, playbookEntries) {
   equal(recorderTicks, 18_000, 'browser recorder keeps its ten-minute DoS bound');
+  equal(playbookEntries, 2_000, 'playbook authoring keeps its own 2,000-intent UX bound');
+  equal([
+    'the-claim',
+    'e1-drill-yard',
+    'e1-dry-gulch',
+    'e1-night-shift',
+    'e1-twin-banks',
+    'e1-baron',
+  ].map((contractId) => [contractId, ...Object.values(runTapeEnvelopeForContract(contractId))]), [
+    ['the-claim', 18_000, 3_600, 592_384],
+    ['e1-drill-yard', 18_000, 3_600, 592_384],
+    ['e1-dry-gulch', 18_001, 3_601, 592_544],
+    ['e1-night-shift', 22_501, 4_501, 736_544],
+    ['e1-twin-banks', 18_001, 3_601, 592_544],
+    ['e1-baron', 20_349, 4_070, 667_584],
+  ], 'E1 three-axis door envelope table is pinned');
   equal([
     'the-claim',
     'e1-drill-yard',
@@ -215,6 +232,7 @@ function checkDurationCeilings(validateTape, validateRunTape, maxRunTapeTicksFor
     'e4-dust-flats',
   ].map(maxRunTapeTicksForContract), [18_000, 18_000, 18_001, 22_501, 18_001, 20_349, 23_144, 21_601, 18_001, 18_001], 'contract duration table is pinned');
   equal(maxRunTapeTicksForContract('unknown-contract'), recorderTicks, 'unknown contracts keep the recorder ceiling');
+  equal(runTapeEnvelopeForContract('unknown-contract'), runTapeEnvelopeForContract('the-claim'), 'unknown contracts keep the ordinary door envelope');
 
   for (const [contractId, ceiling, waves] of [
     ['e1-night-shift', 22_501, 25],
@@ -230,6 +248,35 @@ function checkDurationCeilings(validateTape, validateRunTape, maxRunTapeTicksFor
     bounded.inputLog.durationTicks += 1;
     equal(validateTape(bounded, contractId, 'gold-rush', 'trail'), null, `standings validator refuses beyond ${contractId} ceiling`);
     equal(validateRunTape(bounded), null, `assay validator refuses beyond ${contractId} ceiling`);
+  }
+
+  const baronEnvelope = runTapeEnvelopeForContract('e1-baron');
+  const tooManyEntries = tape('baron-too-many-entries', 22, 'fnv1a32:1234abcd', 'e1-baron');
+  tooManyEntries.inputLog.durationTicks = baronEnvelope.maxTicks;
+  tooManyEntries.inputLog.entries = Array.from({ length: baronEnvelope.maxEntries + 1 }, (_, t) => ({ t, mx: 0, my: 0, a: [] }));
+  equal(validateTape(tooManyEntries, 'e1-baron', 'gold-rush', 'trail'), null, 'standings validator refuses beyond the Baron entry envelope');
+  equal(validateRunTape(tooManyEntries), null, 'assay validator refuses beyond the Baron entry envelope');
+
+  const tooManyBytes = tape('baron-too-many-bytes', 22, 'fnv1a32:1234abcd', 'e1-baron');
+  tooManyBytes.padding = 'x'.repeat(baronEnvelope.maxTapeBytes);
+  equal(validateTape(tooManyBytes, 'e1-baron', 'gold-rush', 'trail'), null, 'standings validator refuses beyond the Baron byte envelope');
+  equal(submittedRunTape(tooManyBytes), undefined, 'browser submission refuses beyond the Baron byte envelope');
+}
+
+async function checkBankedBaronTapes(onRequest, queueRoute, verdictRoute, validateTape, validateRunTape) {
+  const kv = makeKv();
+  const tapes = [1, 2].map((run) => JSON.parse(readFileSync(`artifacts/gauntlet-heat6-20260825/e1-baron/run-${run}-tape.json`, 'utf8')));
+  for (const [index, runTape] of tapes.entries()) {
+    ok(validateTape(runTape, runTape.contract, runTape.seed, runTape.difficulty), `banked Baron tape ${index + 1} clears the standings validator`);
+    ok(validateRunTape({ ...runTape, meta: { buildId: runTape.meta.buildId } }), `banked Baron tape ${index + 1} clears the assay validator`);
+    const submitted = await call(onRequest, 'POST', '/api/standings', bankedPost(runTape, `${index + 7}`.repeat(32)), kv);
+    equal(submitted.status, 200, `banked Baron tape ${index + 1} submits`);
+  }
+  const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, kv, SECRET);
+  equal(queue.body.queue.length, 2, 'both banked Baron tapes enter the assay queue');
+  for (const row of queue.body.queue) {
+    equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(row.locator, 'verified', undefined, row.tape.eventLogHash), kv, SECRET)).status, 200, `${row.locator.tapeId} accepts its verified worker verdict`);
+    equal((await call(onRequest, 'GET', `/api/standings?contract=e1-baron&epoch=epoch-1-frontier&verdict=${row.locator.tapeId}`, undefined, kv)).body.assay, 'verified', `${row.locator.tapeId} polls verified`);
   }
 }
 
@@ -529,6 +576,28 @@ function storedRow(index, withTape) {
   };
 }
 
+function bankedPost(runTape, anonId) {
+  return {
+    contractId: runTape.contract,
+    epochId: 'epoch-1-frontier',
+    score: {
+      secured: runTape.outcome.secured,
+      waves: runTape.outcome.waves,
+      timeAlive: runTape.outcome.timeAlive,
+      gold: runTape.outcome.gold,
+      baseValue: 0,
+    },
+    profileName: 'Banked Baron',
+    anonId,
+    difficulty: runTape.difficulty,
+    seed: runTape.seed,
+    seedMode: 'bench',
+    seedHash: createHash('sha256').update(runTape.seed).digest('hex'),
+    inputLogHash: createHash('sha256').update(JSON.stringify(runTape.inputLog)).digest('hex'),
+    tape: runTape,
+  };
+}
+
 function storedRowFor(index, contractId, epochId) {
   const runTape = tape(`seed-${index}`, 100 - index, 'fnv1a32:1234abcd', contractId);
   const payload = post(index.toString(16).padStart(32, '0'), 100 - index, runTape, contractId, epochId);
@@ -548,10 +617,10 @@ function queueRow(row, epochId, contractId) {
   };
 }
 
-function verdict(locator, verdictValue, reason) {
+function verdict(locator, verdictValue, reason, replayedHash = 'fnv1a32:1234abcd') {
   return {
     locator, verdict: verdictValue,
-    ...(verdictValue === 'unassayable' ? {} : { replayedHash: 'fnv1a32:1234abcd' }),
+    ...(verdictValue === 'unassayable' ? {} : { replayedHash }),
     ...(reason ? { reason } : {}),
   };
 }

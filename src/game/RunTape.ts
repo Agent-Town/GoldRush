@@ -10,12 +10,11 @@ import {
   type LockstepSampleEdgeState,
 } from '../mp/LockstepClient';
 import {
-  MAX_PLAYBOOK_INTENTS,
   MAX_PLAYBOOK_TICKS,
   PLAYBOOK_STEP_SECONDS,
   PLAYBOOK_VERSION,
-  maxRunTapeTicksForContract,
   quantizePlaybookCoordinate,
+  runTapeEnvelopeForContract,
   validateEntries,
   validatePlaybook,
   type PlaybookEntry,
@@ -32,7 +31,6 @@ export const RUN_TAPES_KEY = 'gr.tapes.v1';
 export const RUN_TAPE_VERSION = 2 as const;
 export const RUN_TAPE_SIM_VERSION = 1 as const;
 export const RUN_TAPE_RECENT_LIMIT = 10;
-export const MAX_SUBMITTED_TAPE_BYTES = 64 * 1024;
 
 export type RunTapeOutcome = {
   reason: RunEndReason;
@@ -119,10 +117,12 @@ export class RunTapeRecorder {
   private stopped = false;
 
   private readonly header: RunTapeHeader & { runStart: RunTapeRunStart };
+  private readonly maxEntries: number;
 
   constructor(header: RunTapeHeader) {
     const meta = freshMetaProgress();
     this.header = structuredClone({ ...header, runStart: header.runStart ?? { meta, research: freshResearchState(meta) } });
+    this.maxEntries = runTapeEnvelopeForContract(header.contract).maxEntries;
   }
 
   record(intents: Intents, position: { x: number; z: number }, queuedActions: LockstepAction[] = [], primarySlot = 0): void {
@@ -243,7 +243,7 @@ export class RunTapeRecorder {
       last.my = my;
       last.a.push(...actions.map((action) => ({ ...action })));
     } else {
-      if (this.entries.length >= MAX_PLAYBOOK_INTENTS) return this.truncate('max-entries');
+      if (this.entries.length >= this.maxEntries) return this.truncate('max-entries');
       this.entries.push({ t, mx, my, a: actions.map((action) => ({ ...action })) });
     }
     this.mx = mx;
@@ -252,7 +252,7 @@ export class RunTapeRecorder {
 
   private appendStream(stream: StreamState, t: number, mx: number, my: number, actions: LockstepAction[]): void {
     if (mx === stream.mx && my === stream.my && actions.length === 0) return;
-    if (stream.entries.length >= MAX_PLAYBOOK_INTENTS) return this.truncate('max-entries');
+    if (stream.entries.length >= this.maxEntries) return this.truncate('max-entries');
     stream.entries.push({ t, mx, my, a: actions.map((action) => ({ ...action })) });
     stream.mx = mx;
     stream.my = my;
@@ -275,7 +275,7 @@ export function agentOrdersEventLogHash(orders: StandingOrdersView): string {
 }
 
 export function submittedRunTape(tape: RunTape): RunTape | undefined {
-  return byteSize(JSON.stringify(tape)) <= MAX_SUBMITTED_TAPE_BYTES ? tape : undefined;
+  return byteSize(JSON.stringify(tape)) <= runTapeEnvelopeForContract(tape.contract).maxTapeBytes ? tape : undefined;
 }
 
 export function readRunTapes(storage: TapeStorage): RunTape[] {
@@ -322,8 +322,9 @@ export function validateRunTape(value: unknown): RunTape | null {
   if (typeof value.kept !== 'boolean' || typeof value.contract !== 'string' || !value.contract) return null;
   if (typeof value.seed !== 'string' || typeof value.difficulty !== 'string' || !value.difficulty) return null;
   if (typeof value.eventLogHash !== 'string' || !EVENT_HASH.test(value.eventLogHash)) return null;
-  const parsed = validatePlaybook(value.inputLog, maxRunTapeTicksForContract(value.contract));
-  const streams = validateInputStreams(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0);
+  const envelope = runTapeEnvelopeForContract(value.contract);
+  const parsed = validatePlaybook(value.inputLog, envelope.maxTicks, envelope.maxEntries);
+  const streams = validateInputStreams(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0, envelope.maxEntries);
   const outcome = validateOutcome(value.outcome);
   const annotations = validateAnnotations(value.annotations);
   const meta = validateTapeMeta(value.meta);
@@ -412,7 +413,7 @@ function validateAnnotations(value: unknown): RunTape['annotations'] | null {
   return annotations;
 }
 
-function validateInputStreams(value: unknown, durationTicks: number): Pick<RunTapeInputLog, 'primarySlot' | 'streams'> | null {
+function validateInputStreams(value: unknown, durationTicks: number, maxEntries: number): Pick<RunTapeInputLog, 'primarySlot' | 'streams'> | null {
   if (!isRecord(value) || !Number.isInteger(value.primarySlot) || (value.primarySlot as number) < 0 || (value.primarySlot as number) > 3) return null;
   if (!Array.isArray(value.streams) || value.streams.length > 3) return null;
   const streams: RunTapeInputStream[] = [];
@@ -422,7 +423,7 @@ function validateInputStreams(value: unknown, durationTicks: number): Pick<RunTa
     if (!Number.isInteger(candidate.slot) || (candidate.slot as number) < 0 || (candidate.slot as number) > 3 || slots.has(candidate.slot as number)) return null;
     if (!isRecord(candidate.start) || !hasOnlyKeys(candidate.start, ['x', 'z'])) return null;
     if (!nonNegativeCoordinate(candidate.start.x) || !nonNegativeCoordinate(candidate.start.z)) return null;
-    const entries = validateEntries(candidate.entries, durationTicks);
+    const entries = validateEntries(candidate.entries, durationTicks, maxEntries);
     if (!entries.ok) return null;
     slots.add(candidate.slot as number);
     streams.push({
