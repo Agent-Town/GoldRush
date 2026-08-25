@@ -31,10 +31,12 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import test from 'node:test';
+import test, { after } from 'node:test';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const SUBJECT = path.join(HERE, 'dry-board-probe.mjs');
+const fixtures = [];
+after(() => fixtures.forEach((dir) => fs.rmSync(dir, { recursive: true, force: true })));
 
 /** The real shapes drain-block-check renders, verdict first, body underneath. */
 const CLOSED_WITH_UNKNOWN_IN_ITS_NOTE = [
@@ -58,6 +60,7 @@ const load = async (variant) => {
   const mutated = variant(src);
   assert.notEqual(mutated, src, 'variant must actually edit the subject');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'f2236-'));
+  fixtures.push(dir);
   const p = path.join(dir, 'variant.mjs');
   fs.writeFileSync(p, mutated);
   try { return await import(p); } finally { /* dir removed by the owner test below */ }
@@ -124,6 +127,7 @@ test('8. REVERSE CONTROL — dropping the UNKNOWN-first order reds arm 3', async
 
 test('9. the cure is exercised by the CLI, not just the unit (F-2209-1)', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'f2236-cli-'));
+  fixtures.push(root);
   fs.mkdirSync(path.join(root, 'tasks', 'done'), { recursive: true });
   fs.mkdirSync(path.join(root, 'scripts'), { recursive: true });
   // a terminal-prefixed file establishes the convention start; the bare-dated one is the subject

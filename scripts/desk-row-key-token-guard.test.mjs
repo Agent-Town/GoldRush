@@ -25,7 +25,7 @@
 //
 // Run: node --test scripts/desk-row-key-token-guard.test.mjs
 
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
@@ -36,6 +36,8 @@ import { fileURLToPath } from 'node:url';
 const SCRIPTS = path.dirname(fileURLToPath(import.meta.url));
 const GUARD = path.join(SCRIPTS, 'desk-declaration-guard.mjs');
 const { declaredIds, deskIds } = await import(GUARD);
+const fixtures = [];
+after(() => fixtures.forEach((dir) => fs.rmSync(dir, { recursive: true, force: true })));
 
 const HANDOFF = (desk) =>
   `Last updated: 2026-08-23T09:00Z s9998 handoff, lock CLEARED — nothing landed. ` +
@@ -43,6 +45,7 @@ const HANDOFF = (desk) =>
 
 function fixture(line1, rows) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 's2229-'));
+  fixtures.push(root);
   fs.mkdirSync(path.join(root, 'tasks'));
   fs.writeFileSync(path.join(root, 'STATUS.md'), line1 + '\n\n## rest\n');
   fs.writeFileSync(path.join(root, 'tasks', 'BACKLOG.md'), ['# BACKLOG', ...rows].join('\n') + '\n');

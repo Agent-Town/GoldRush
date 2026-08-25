@@ -24,7 +24,7 @@
 //   declaring only on failure, never the happy path-> arm 8
 //   swallowing the 'landed-on-main' branch         -> arm 7
 
-import test from 'node:test'
+import test, { after } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
 import fs from 'node:fs'
@@ -35,6 +35,8 @@ import { fileURLToPath } from 'node:url'
 const SCRIPTS = path.dirname(fileURLToPath(import.meta.url))
 const AUDIT = path.join(SCRIPTS, 'attended-owed-audit.mjs')
 const ANCHOR = 'CUSTODY — NEVER PLACE CONTENT YOU HAVE NOT DECIDED TO MERGE'
+const fixtures = []
+after(() => fixtures.forEach((dir) => fs.rmSync(dir, { recursive: true, force: true })))
 
 const git = (args, cwd) => execFileSync('git', args, { cwd, encoding: 'utf8', maxBuffer: 1 << 26, stdio: 'pipe' })
 
@@ -43,6 +45,7 @@ const git = (args, cwd) => execFileSync('git', args, { cwd, encoding: 'utf8', ma
 // corpus that actually goes stale).
 function board({ landedOnMain = true, withWorktree = true, git: isRepo = true } = {}) {
   const root = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 's2244-')))
+  fixtures.push(root)
   const item = (dir) => {
     const d = path.join(dir, 'tasks', 'attended-owed')
     fs.mkdirSync(d, { recursive: true })

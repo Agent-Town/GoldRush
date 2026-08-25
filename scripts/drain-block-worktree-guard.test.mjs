@@ -16,7 +16,7 @@
 // so such an arm would pass on the cured and uncured file alike.
 //
 // Run: node --test scripts/drain-block-worktree-guard.test.mjs
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
@@ -26,6 +26,8 @@ import { fileURLToPath } from 'node:url';
 
 const SUBJECT = join(dirname(fileURLToPath(import.meta.url)), 'drain-block-check.mjs');
 const MASTER = 'fixture-shipped-master.md';
+const fixtures = [];
+after(() => fixtures.forEach((dir) => rmSync(dir, { recursive: true, force: true })));
 
 const git = (cwd, args) => execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 
@@ -37,6 +39,7 @@ const git = (cwd, args) => execFileSync('git', args, { cwd, encoding: 'utf8', st
  */
 function buildFixture() {
   const root = mkdtempSync(join(tmpdir(), 'f2223-1-'));
+  fixtures.push(root);
   git(root, ['init', '-b', 'main', '-q']);
   git(root, ['config', 'user.email', 'fixture@example.com']);
   git(root, ['config', 'user.name', 'fixture']);
@@ -78,7 +81,9 @@ function variantOf(edit) {
   const src = readFileSync(SUBJECT, 'utf8');
   const out = edit(src);
   assert.notEqual(out, src, 'variant edit matched nothing — the manufactured defect was never built');
-  const f = join(mkdtempSync(join(tmpdir(), 'f2223-1-var-')), 'drain-block-check.mjs');
+  const dir = mkdtempSync(join(tmpdir(), 'f2223-1-var-'));
+  fixtures.push(dir);
+  const f = join(dir, 'drain-block-check.mjs');
   writeFileSync(f, out);
   return f;
 };
@@ -124,6 +129,7 @@ test('REVERSE CONTROL: a NON-GIT fixture root stays lawful (git exit 128 is not 
   // as "unverifiable" this cure would red all of them, which is the over-general cure this arm
   // exists to catch.
   const root = mkdtempSync(join(tmpdir(), 'f2223-1-nogit-'));
+  fixtures.push(root);
   try {
     mkdirSync(join(root, 'tasks'), { recursive: true });
     writeFileSync(join(root, 'tasks', 'goals.json'), JSON.stringify({ id: 'root', children: [] }));

@@ -57,7 +57,7 @@
  * variant was built to reach it — until you try to break an arm, it is
  * indistinguishable from a correct one.
  */
-import { test } from 'node:test';
+import { after, test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -67,6 +67,8 @@ import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const GUARD = path.join(HERE, 'desk-birth-guard.mjs');
+const fixtures = [];
+after(() => fixtures.forEach((dir) => fs.rmSync(dir, { recursive: true, force: true })));
 
 const OWNER_GATE = 'GATE: OWNER decides the fork.';
 const DESK = (tail) => `🔺 **OWNER'S DESK — n awaiting a word.** ${tail}`;
@@ -146,6 +148,7 @@ test('8 — with NO earlier FIRE at all, it REFUSES rather than passing over not
  */
 function fixture({ row, deskTail, addenda }) {
   const d = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 's2260-window-')));
+  fixtures.push(d);
   fs.mkdirSync(path.join(d, 'tasks'));
   const g = (a) => execFileSync('git', a, { cwd: d, encoding: 'utf8' });
   g(['init', '-q', '-b', 'main']);
@@ -176,6 +179,7 @@ function fixture({ row, deskTail, addenda }) {
 /** Every matching commit belongs to one session — there is no previous fire. */
 function soloSessionFixture() {
   const d = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 's2260-solo-')));
+  fixtures.push(d);
   fs.mkdirSync(path.join(d, 'tasks'));
   const g = (a) => execFileSync('git', a, { cwd: d, encoding: 'utf8' });
   g(['init', '-q', '-b', 'main']);
