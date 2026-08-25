@@ -162,6 +162,20 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
   note "VERIFY attempt $ATTEMPT/$VERIFY_ATTEMPTS: $PAGES_PRODUCTION_URL/version.json says $LIVE_BUILD"
   if [ "$LIVE_BUILD" = "$PUBLISHED_BUILD" ]; then
     note "VERIFIED published $PUBLISHED_BUILD at $PAGES_PRODUCTION_URL"
+    # F-HEAT6-SKEW (2026-08-25): a deploy that moves the game engine but not the assayer's
+    # tree makes every fresh tape honestly unassayable (engine-hash mismatch). The verifier
+    # box rides along with every deploy, or says loudly why it could not. Fail-open by
+    # design: an unreachable box must never turn a good deploy into a red.
+    if ssh -o ConnectTimeout=8 -o BatchMode=yes root@<droplet> true 2>/dev/null; then
+      if rsync -az --delete --timeout=60 --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
+        && ssh -o BatchMode=yes root@<droplet> "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
+        note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
+      else
+        note "ASSAYER SYNC FAILED mid-step: droplet may be mixed-state — run the runbook sync by hand before trusting fresh verdicts"
+      fi
+    else
+      note "ASSAYER NOT SYNCED (box unreachable): fresh tapes will be unassayable until the runbook sync runs"
+    fi
     finish deployed 0 "$URL"
   fi
   [ "$ATTEMPT" -gt "${#VERIFY_SLEEP_SCHEDULE[@]}" ] || sleep "${VERIFY_SLEEP_SCHEDULE[$((ATTEMPT - 1))]}"
