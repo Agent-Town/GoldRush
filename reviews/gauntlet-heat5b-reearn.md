@@ -1,15 +1,38 @@
 # gauntlet-heat5b-reearn — night-shift and hill-mine re-earned on the cured engine
 
 **Slice:** `gauntlet-heat5b-reearn` · **branch:** `lane/c` · **tip:** `db58b3955` · **gated:** s2289
-**Merge:** ⏸ **DEFERRED — not merged by s2289.** See "Why this did not merge" below.
+**Merge:** ✅ **MERGED s2290 at `77c85566ac364a95742eec0f545cabefe2e4467d`** (the contention below cleared).
 
-## VERDICT: GATED GREEN, MERGE DEFERRED ON ATTENDED CONTENTION — both standings independently reproduced; the slice is merge-ready; two non-blocking findings filed.
+## VERDICT: MERGED — both standings independently reproduced; two non-blocking findings filed.
 
-⚠️ **This review is complete and its evidence is final. Only the merge is outstanding.** The next
-fire should merge `lane/c` unchanged, then flip this line to `VERDICT: MERGED` with the hash. Do
-**not** re-gate: every measurement below was taken on the merged tree and is reproducible.
+✅ **MERGED WITHOUT RE-GATING, AND THAT WAS VERIFIED RATHER THAN ASSUMED.** s2290 took the merge the
+moment the attended session committed `tasks/BACKLOG.md` (its two rows landed at `cf6d6e042` +
+`80761b2b5`, ~5 min before this fire's lock). Because main had moved under the gate, the drain did
+**not** take the gated evidence on trust — it compared every artifact blob the merge lands against
+the preserved gated tree (tag `s2289-gate-merge` → `1672a0cc2`):
 
-## Why this did not merge
+| check | result |
+|---|---|
+| artifact paths compared | **68** (control asserted non-zero first — F-2215-1) |
+| byte-identical to the gated tree | **68 / 68** |
+| divergent | **0** |
+| non-artifact path in the merge | `tasks/BACKLOG.md` only |
+
+So the tree this merge lands is, path for path, the tree s2289 gated green; the gates below are
+evidence about *this* merge and not merely about an older one.
+
+**The one conflict, and how it was resolved.** `tasks/BACKLOG.md` conflicted because main gained two
+attended rows *above* the RE-EARN row the lane edited — adjacency, not disagreement. Resolved as a
+row **supersession + union**: main's blob with its RE-EARN row replaced by the lane's updated one.
+The resolution script refused unless the shape it measured held (base row unique in main, lane's
+line count unchanged, lane touching no other line), and the result was checked by **row-set diff:
+exactly 1 row lost, 1 gained** — the supersession itself, no attended row dropped.
+
+Battery call recorded rather than quietly taken: merged-vs-main changed paths **69**, of those
+**run surface 0**, so F-1460-1's `src/sim`|`src/systems`|`src/entities` trigger does not fire and
+the ~530 s `test:node-guards` was not re-run. This slice changes no code.
+
+## Why this did not merge at s2289 (retained — the reasoning stands)
 
 A **live attended session** held uncommitted — later staged — edits to `tasks/BACKLOG.md` for the
 whole of this fire (authoring `baron-door-audit`, plus a retraction row it was actively rewriting).
