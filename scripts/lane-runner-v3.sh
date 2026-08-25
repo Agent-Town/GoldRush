@@ -37,7 +37,7 @@ capture_lane_baseline() {
 
 commit_lane_delta() {
   local wd="$1" baseline="$2" message="$3" log="$4"
-  local delta record xy path paired baseline_path identity hash baseline_identity baseline_hash ignored_path withheld=0
+  local delta record xy path paired baseline_path identity hash baseline_identity baseline_hash ignored_path withheld=0 swept=0
   # Git paths cannot be empty; the sentinel keeps Bash 3.2 + `set -u` happy on a clean lane.
   local -a baseline_paths=('')
   local -a baseline_identities=('')
@@ -87,6 +87,29 @@ commit_lane_delta() {
   while IFS= read -r -d '' record; do
     xy="${record:0:2}"; path="${record:3}"; paired=''
     case "$xy" in *R*|*C*) IFS= read -r -d '' paired || true ;; esac
+    # F-2319-1 (s2319, from F-2316-1): the factory's OWN accounting lives DIRECTLY in
+    # logs/ and is owned by main, never authored by a lane task — dashboard.html,
+    # task-stats.jsonl, .goal-tree.html, .blocked-seen, lane-runner.out, guard-stats.jsonl
+    # and stray logs/_s* debris. The hand-named exclude list in lane_dirty_status could not
+    # keep up by construction: logs/guard-stats.jsonl was BORN after that list was written
+    # and was swept into f86d3412c. Ask the question STRUCTURALLY instead of by name, so a
+    # log file the factory invents tomorrow cannot arm this simply by existing.
+    #
+    # DELIBERATELY NOT A WHOLESALE logs/ EXCLUSION, which is the cure F-2316-1 recommended.
+    # MEASURED s2319 over all 701 `runner(` commits: 14 of them carry 136 files of
+    # logs/session-scratch/** — LANE EVIDENCE (probe specs, raw run JSON, rate tables, tsc
+    # and build output). Excluding logs/ wholesale stops that class ever reaching git, i.e.
+    # it opens a RETENTION LAW hole to close a hygiene one. Proven on scratch runners: all
+    # three pathspec forms — :(exclude)logs/, :(exclude)logs/*, :(exclude,glob)logs/* —
+    # prune the session-scratch SUBTREE, because the directory itself matches the pattern.
+    # Hence a path test on the DELTA, which can distinguish depth, and not a pathspec.
+    case "$path" in
+      logs/*/*) : ;;
+      logs/*)
+        printf '[lane-runner-v3] withheld factory accounting: %s\n' "$path" >> "$log"
+        swept=$((swept+1))
+        continue ;;
+    esac
     if is_baseline_path "$path" || has_baseline_identity "$path" || \
        { [ -n "$paired" ] && is_baseline_path "$paired"; }; then
       printf '[lane-runner-v3] withheld baseline-dirty path: %s\n' "$path" >> "$log"
@@ -104,6 +127,9 @@ commit_lane_delta() {
   fi
   rm -f "$delta"
   [ "$withheld" -eq 0 ] || printf '[lane-runner-v3] withheld %s baseline ownership collision(s)\n' "$withheld" >> "$log"
+  # counted apart from $withheld on purpose: these are two different owed acts, and one
+  # number covering both causes tells a reader neither.
+  [ "$swept" -eq 0 ] || printf '[lane-runner-v3] withheld %s factory-accounting path(s)\n' "$swept" >> "$log"
 }
 
 # The guard invokes only the commit boundary against scratch repositories.
