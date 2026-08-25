@@ -1146,6 +1146,10 @@ export class HeadlessContractSim {
     return receipt;
   }
 
+  standingOrdersSnapshot(): StandingOrdersView {
+    return snapshotStandingOrders();
+  }
+
   advanceToTurn(): GrSimTurn {
     const started = performance.now();
     const secureWave = this.manifest.twist.secureWave ?? Balance.run.secureWave;

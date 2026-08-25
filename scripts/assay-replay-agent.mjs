@@ -119,12 +119,10 @@ export async function replayAgentTape(rawTape) {
   try {
     const [
       { validateRunTape, RUN_TAPE_SIM_VERSION, agentOrdersEventLogHash },
-      { snapshotStandingOrders },
       { applyDifficultyPreset, normalizeDifficultyPreset },
       { stableHash },
     ] = await Promise.all([
       vite.ssrLoadModule('/src/game/RunTape.ts'),
-      vite.ssrLoadModule('/src/agent/StandingOrders.ts'),
       vite.ssrLoadModule('/src/game/Balance.ts'),
       vite.ssrLoadModule('/src/mp/LockstepClient.ts'),
     ]);
@@ -171,7 +169,7 @@ export async function replayAgentTape(rawTape) {
     if (unreached.length) throw new Error(`the run ended before tick ${unreached[0]} of the order stream`);
     const outcome = sim.outcome();
     return {
-      eventLogHash: agentOrdersEventLogHash(snapshotStandingOrders()),
+      eventLogHash: agentOrdersEventLogHash(sim.standingOrdersSnapshot()),
       outcome: {
         secured: outcome.secured,
         waves: outcome.waves,
