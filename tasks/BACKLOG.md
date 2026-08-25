@@ -1,3 +1,23 @@
+📉 **F-2314-2 — DO NOT AUTHOR F-2312-1 OPTION (a): SHIPPING (b) SUBSTANTIALLY DISCHARGED IT, AND THE INHERITED "still authorable" WAS PRICED BEFORE (b) EXISTED (fire s2314 2026-08-25).**
+
+s2313 handed option (a) forward as live authorable work — *"(a) remains authorable and is now cheaper to get right than to get wrong"* — with a specific safety instruction (**append** the stamp after `verdict=`, never prepend, or the line-anchored regex at `run-guards.mjs:259` silently eats the p95). **That pricing was correct when written and is now stale, because the fire that wrote it also dispatched the thing that obsoletes it.** Mistake #4 governs a predecessor's recommendation exactly as it governs a predecessor's alarm: **a recommendation is a hypothesis wearing a conclusion's clothes.**
+
+🔍 **① WHAT (a) WOULD ADD IS WHAT (b) NOW WRITES.** (a) proposes the emitter print *"an ISO stamp + `git rev-parse --short HEAD` alongside the p95"*. **Measured s2314 by RUNNING the real motivating leg through the shipped cure** (`node scripts/run-guards.mjs --only test:power-budget`, rc=0, 0.3 s):
+
+```json
+{"runId":"2026-08-25T13:42:12.726Z","ts":"2026-08-25T13:42:12.726Z","head":"5f1fc10b5","roster":"--only","guard":"test:power-budget","rc":0,"seconds":0,"p95":"0.347"}
+```
+
+**ISO stamp, short HEAD, and p95 — all three of (a)'s facts, already persisted, for the exact guard that motivated it.** This is not a projection from the design; it is the record the shipped code wrote.
+
+🎯 **② AND THE COVERAGE IS TOTAL ON THE PATH THAT MATTERS, WHICH IS THE PART THAT DECIDES IT.** `test:power-budget` has exactly **one** caller in the repo — `package.json:19`, reached through `run-guards.mjs`, where it is a member of **both** `GUARDS` (`:50`) **and** `GATE_GUARDS` (`:104`). There is no CI workflow invoking it separately. **So every gate-path run of that guard now leaves the stamped prior behind.** The only residue is an ad-hoc human `npm run test:power-budget`, where the reader already knows the time and the HEAD.
+
+⚖️ **③ STATED HONESTLY RATHER THAN INFLATED: this RETIRES (a), it does not refute F-2313-1.** F-2313-1's regex finding is **correct and still load-bearing** — anyone who ever edits that emitter line must still append rather than prepend, and that hazard now sits in a file whose parse result is *persisted* rather than merely displayed, so the consequence of getting it wrong is marginally wider than when F-2313-1 measured it. What changed is only the **cost/benefit**: authoring (a) now buys ~nothing on the gate path while carrying a known latent parse hazard and a full gate cycle.
+
+🔑 **④ REUSABLE, AND IT IS THE SIBLING OF F-2313-1 ④: A HANDED-FORWARD "still authorable" IS A CLAIM ABOUT A BOARD THAT THE HANDOFF ITSELF WAS ABOUT TO CHANGE.** s2313 dispatched (b) and priced (a) in the same breath, so its own dispatch invalidated half its own handoff — and nothing in the flow re-prices a sibling option when its counterpart merges. **The cheap tell: when a predecessor hands you option (a) and merged option (b), re-derive (a)'s VALUE against the merged tree before spending a budget on it — the ladder rung you inherit may have been sawn off by the fire that handed it to you.** ➡️ **Consequence for the next fire: the board is genuinely PIPELINE-DRY. Do NOT author (a).**
+
+Evidence: live record above (`GR_GUARD_STATS_PATH` redirected to a temp file, live corpus untouched) · `package.json:19` (sole caller) · `scripts/run-guards.mjs:50,104` (both rosters) · `scripts/run-guards.mjs:259` (the line-anchored parse F-2313-1 measured) · `reviews/f2313-1.md`. Supersedes the "(a) remains authorable" carry in the s2313 handoff. Prior: F-2313-1, F-2312-1, F-2309-1.
+
 ✅ **F-2314-1 — F-2312-1 (b) IS SHIPPED: the guard runner now leaves a per-leg prior behind (fire s2314 2026-08-25, merged `29c674b02`).**
 
 The thread F-2309-1 opened in its own words — *"node-guard reds have no inventory at all, so a fire meeting one has no cheap prior and must pay for a control run every time"* — now has its instrument. `scripts/run-guards.mjs` appends one record per leg to `logs/guard-stats.jsonl`: `{runId, ts, head, roster, guard, rc, seconds, p95}`. **A red is inventoried as a red** (the failing-leg arm asserts `rc: 1` reaches the file), which is the whole point of the widening.
