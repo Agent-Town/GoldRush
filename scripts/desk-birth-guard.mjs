@@ -75,11 +75,14 @@ const ROOT = path.resolve(arg('--root') || process.cwd());
 const REPORT = process.argv.includes('--report');
 
 /**
- * Identical literal to desk-declaration-guard.mjs and desk-carryforward-guard.mjs.
- * Five spellings: four measured s1472, the backtick (U+0060) added s1542 after a
- * real handoff wrote it — F-1542-1. Keep all three in step.
+ * The desk-word pattern is IMPORTED, not copied — see the import below and the
+ * declaration's own site in desk-declaration-guard.mjs.
+ *
+ * This file used to carry a hand-copied literal under the instruction "Keep all
+ * three in step", which nothing enforced. F-2322-1 measured the drift as
+ * ASYMMETRIC: narrowing this copy reds (the backtick arm below catches it),
+ * widening it alone was invisible to every guard in the factory.
  */
-const DESK_WORD = /OWNER(?:'S|’S|S|`S)? DESK/g;
 
 /** Same id shapes the sibling guards key on, including the alpha families. */
 const FINDING = /F-(?:[A-Z0-9]{1,8}-)+\d+/;
@@ -128,7 +131,7 @@ const SLUG = /`([a-z0-9][a-z0-9-]{6,})`/;
  * found stricter. That asymmetry is the whole reason this side is safe to
  * change where the scan is not.
  */
-import { FINDING_ROW_ONE } from './desk-declaration-guard.mjs';
+import { DESK_WORD, FINDING_ROW_ONE } from './desk-declaration-guard.mjs';
 
 /**
  * Does `text` carry `id` as a WHOLE TOKEN? `.includes` is prefix-tolerant, which

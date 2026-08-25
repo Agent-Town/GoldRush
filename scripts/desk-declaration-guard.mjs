@@ -245,8 +245,43 @@ const KEY_ZONE = 120;
  * of observed spellings is a floor and not a ceiling. Add the variant when a
  * fire writes one; do NOT relax to a wildcard separator, which would let
  * "OWNER-DESK" (41 occurrences, all prose) supply the tail.
+ *
+ * EXPORTED, AND SINGLE-SOURCED HERE — F-2322-1, s2322.
+ *
+ * This literal was hand-copied into desk-birth-guard.mjs and
+ * desk-carryforward-guard.mjs, and all three sites carried a written "keep these
+ * in step" instruction that nothing enforced. That is the exact shape F-2227-1
+ * measured on isLockLine (four copies, one silently retired for hundreds of
+ * fires) and F-2228-1 measured on the F-ID pattern (seven copies, three
+ * variants) — in these very files.
+ *
+ * The drift was proven ASYMMETRIC by manufacturing it (s2322), which is why the
+ * "keep in step" comments were not enough on their own:
+ *   - NARROWING one copy is caught. Each file's own suite asserts it still reads
+ *     the backtick spelling, so dropping it reds (measured: rc=1 on two arms).
+ *   - WIDENING one copy is INVISIBLE. Adding a sixth spelling to one file alone
+ *     left all 14 desk guards and all three bare tools at rc=0 — including the
+ *     test named "the three desk parsers stay in step", which asserts only its
+ *     OWN copy reads the five spellings and never that the copies agree.
+ * The paragraph directly above tells a maintainer to "add the variant when a
+ * fire writes one" — i.e. the documented maintenance action points straight into
+ * the one direction no guard could see.
+ *
+ * Unlike FINDING/FINDING_ROW below, there is no two-grammars question here
+ * (F-2229-1): all three consumers ask the IDENTICAL question of the IDENTICAL
+ * subject — "where on this line does the desk tail begin?" — and all three
+ * answered it with a byte-identical literal and a byte-identical LAST-match
+ * rule. One question, one declaration.
+ *
+ * ⚠️ IT IS /g AND THEREFORE STATEFUL. Every consumer must reach it through
+ * String.prototype.matchAll, which clones the regex and leaves lastIndex alone.
+ * A caller that uses .test() or .exec() on this shared instance advances a
+ * lastIndex the OTHER TWO MODULES then read — a cross-module bug that could not
+ * exist while the copies were private, i.e. a hazard introduced by this very
+ * cure. scripts/desk-word-single-source-guard.test.mjs asserts statelessness
+ * across repeated calls precisely to bound it.
  */
-const DESK_WORD = /OWNER(?:'S|’S|S|`S)? DESK/g;
+export const DESK_WORD = /OWNER(?:'S|’S|S|`S)? DESK/g;
 
 /** Line-1 is a live lock, not a handoff, when it says ACTIVE and not lock CLEARED. */
 export function isLockLine(line1) {
