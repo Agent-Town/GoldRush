@@ -1,20 +1,15 @@
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { existsSync } from 'node:fs';
-import { homedir } from 'node:os';
-import { join } from 'node:path';
 import test from 'node:test';
 import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
-import { crossEngineSkipReason } from './cross-engine-skip.mjs';
+import { crossEngineSkipReason, installedNodeEngines } from './cross-engine-skip.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const PROBE = fileURLToPath(new URL('./twin-banks-hash-probe.mjs', import.meta.url));
 const run = promisify(execFile);
-const interpreters = [
-  '/opt/homebrew/bin/node',
-  join(homedir(), '.nvm/versions/node/v23.11.1/bin/node'),
-].filter(existsSync);
+// F-2321-1: the engine list lives in cross-engine-skip.mjs, beside the decision it feeds.
+const interpreters = installedNodeEngines();
 
 const contracts = [
   ['e1-dry-gulch', 'e1-dry-gulch-01'],

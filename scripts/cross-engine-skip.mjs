@@ -1,4 +1,10 @@
-// cross-engine-skip — decides whether the cross-engine determinism guard may run HERE.
+// cross-engine-skip — decides whether the cross-engine determinism guard may run HERE,
+// and owns the engine list that decision is made from (F-2321-1).
+//
+import { existsSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { join } from 'node:path';
+
 //
 // WHY THIS EXISTS (F-1408-2, measured s1408, ruled + landed s1409 as recommendation (a)):
 // `scripts/wave-scaling-cross-engine.test.mjs` runs the same E1 contract on two Node engines and
@@ -32,6 +38,40 @@
 // `CLAUDE_CONFIG_DIR` is the same discriminator `playwright.config.ts` uses for `isFireShell`:
 // launchd sets it to ~/.claude-fires and scripts/fire-runner.sh to ~/.claude-alt, while lane and
 // attended shells never set it.
+//
+// F-2321-1 (s2321). This module owned the DECISION but not the INPUT the decision is made from:
+// `crossEngineSkipReason` takes `interpreterCount` as an argument, and each cross-engine guard
+// computed that count for itself from its own verbatim copy of the candidate list. That is
+// F-2209-1's rule one argument out — extracting a decision to make it testable creates a new
+// untested seam, and here the seam is the ARGUMENT. cross-engine-skip.test.mjs pins both
+// directions of the decision for FABRICATED counts and never touches the real engine list, so
+// the two consumers could drift apart (or silently lose their second engine to an nvm upgrade)
+// with every guard in the repo still green. The candidate list now lives HERE, once, and
+// scripts/cross-engine-engine-source-guard.test.mjs asserts both consumers read it from here.
+//
+// The list is still WRITTEN DOWN rather than globbed, and that is deliberate: the guards assert
+// determinism ACROSS TWO NAMED ENGINES, so which two is part of the claim. `assay-replay-agent.mjs`
+// makes the same choice with CANONICAL_ASSAY_NODE_VERSION. What is cured is the DUPLICATION, not
+// the pinning — an nvm upgrade is now one edit in one file instead of two edits nothing checks.
+
+/** The engines the cross-engine determinism guards compare, whether installed or not. */
+export const NODE_ENGINE_CANDIDATES = [
+  '/opt/homebrew/bin/node',
+  join(homedir(), '.nvm/versions/node/v23.11.1/bin/node'),
+];
+
+/**
+ * The subset of `candidates` actually present on this disk.
+ * Resolved at CALL time, never at import time, so a guard can measure it directly. `candidates` is
+ * a parameter for the same reason `crossEngineSkipReason` takes `env`: the existence FILTER is the
+ * load-bearing behaviour, and on a machine where every candidate happens to be installed there is
+ * no other way to exercise it. A guard that could only observe the happy path would be decoration.
+ * @param {string[]} [candidates]
+ * @returns {string[]}
+ */
+export function installedNodeEngines(candidates = NODE_ENGINE_CANDIDATES) {
+  return candidates.filter((engine) => existsSync(engine));
+}
 
 export const FIRE_SHELL_SKIP_REASON =
   'FIRE SHELL — cross-engine guard NOT RUN HERE, so this green is NOT coverage (F-1408-2): the ' +
