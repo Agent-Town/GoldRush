@@ -244,7 +244,6 @@ function rejectOrders(reason, sim) {
 async function writeAgentTape(vite, path, sim, outcome, run) {
   const { RUN_TAPE_SIM_VERSION, RUN_TAPE_VERSION, agentOrdersEventLogHash } = await vite.ssrLoadModule('/src/game/RunTape.ts');
   const { stableHash } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
-  const { snapshotStandingOrders } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
   // THE TERMINAL-INSTANT ORDER (F-ASSAY-E2E-2). The elapsed clock alone is not a legal duration
   // for this log. The browser recorder samples BEFORE each step, so its last entry always lands at
   // `durationTicks - 1` and both validators (`PlaybookFormat.validateEntries`, the county's
@@ -257,7 +256,7 @@ async function writeAgentTape(vite, path, sim, outcome, run) {
   const elapsedTicks = Math.round((outcome.timeMs / 1000) * 30);
   const lastEntryTick = run.submissions.length ? run.submissions[run.submissions.length - 1].t : -1;
   const durationTicks = Math.max(elapsedTicks, lastEntryTick + 1);
-  const eventLogHash = agentOrdersEventLogHash(snapshotStandingOrders());
+  const eventLogHash = agentOrdersEventLogHash(sim.standingOrdersSnapshot());
   const contentId = `agent-${stableHash({ contract: run.contract, seed: run.seed, difficulty: run.difficulty, eventLogHash }).slice('fnv1a32:'.length)}`;
   // Identical proof content must remain deterministic, but its public lookup handle must not
   // collide. Mint uniqueness only in the recording's id; the input-log name keeps the stable
