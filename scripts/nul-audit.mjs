@@ -48,7 +48,7 @@ const quiet = process.argv.includes('--quiet');
 // assumed. What earns it a cure is that the miss would land in a GATE (chained bare in
 // test:ledger-guards), in the permissive direction, in the DEFAULT mode the battery uses —
 // and the harm the banner itself names ("grep is BLIND to these files") bites hardest on
-// the excluded `.log` files, since §1.1 tells every fire to grep logs/fire-<date>.log for
+// the excluded `.log` files, since §1.1 tells every fire to grep logs/fire-$(date +%Y%m%d).log (compact, NOT ISO — F-2295-1) for
 // the authoritative FIRE END lock signal.
 //
 // COST OF WIDENING, measured before it was chosen: 1,101 files, 12.8 MB, 18 ms. Free.
