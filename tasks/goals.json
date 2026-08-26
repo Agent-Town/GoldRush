@@ -2996,16 +2996,8 @@
               "note": "Owner verbatim: this reel ended but the player should die... instead it looks like this continues? weird + I can't play the 20 waves that it is supposed to have? The watch links play agent reels through the browser engine - the PROVEN-divergent one (F-ASSAY-E2E-3; the assayer routes around it, the viewer never learned). Fix = honesty: agent-reel banner + the tape's own verified outcome card + hard stop at durationTicks or at terminal divergence; no immortal swarm theater. Launch-facing (the landing's watch links). DISPATCHED to tasks/queue/lane-d in the authoring commit window."
             },
             {
-              "id": "door-epic-envelope-v2",
-              "title": "The whole door envelope at measured width - duration + bytes + entries + the ledger's own 256KiB reader, one lawful-request law; the Baron's banked x2 verifies as the gate",
-              "taskFile": "door-epic-envelope-v2.md",
-              "status": "queued",
-              "lane": "lane-c",
-              "authoredBy": "attended 2026-08-26",
-              "note": "Owner: lets do this one here first (before the announcement lands). v1 inherited verbatim + the firewall widened exactly per its own stop: server/ledger/serve.mjs requestBody derives from the SAME maximum-lawful-request law as the outer cap - one law, two consumers, never another independent number. Gate: both banked Baron slips quoted verified. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
-            },
-            {
               "id": "door-epic-envelope",
+              "supersededBy": "door-epic-envelope-v2",
               "note_s_att_20260826": "SUPERSEDED into v2 after its honest s2308 stop named the ledger reader cap (serve.mjs:64-71, 256 KiB) outside its firewall.",
               "title": "ONE law for the door envelope - duration + bytes + entries derive from the contract; the Baron's banked x2 tapes are the gate",
               "taskFile": "door-epic-envelope.md",
@@ -3016,10 +3008,21 @@
               "note": "F-2302-1's cure at the right width: the shared MAX_PLAYBOOK_INTENTS constant split (playbook UX bound stays; door sites consume the per-contract envelope), bytes + entries derived beside ceiling-v2's duration law, all four enforcement sites consistent, both backends. Gate: both banked Baron secures submit and verify. DISPATCHED to tasks/queue/lane-c in the authoring commit window."
             },
             {
+              "id": "door-epic-envelope-v3",
+              "title": "Re-land the archived door envelope (5645c5b91) on current main - four axes derived, one lawful-request law; gate = both banked Baron x2 tapes verify by the DIRECT door. Browser keepalive fifth wall stays owner-parked (F-2310-1)",
+              "taskFile": "door-epic-envelope-v3.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-08-26",
+              "note": "Owner word 2026-08-26 (Lets do this one here first, on the storage-wall framing) lifts the F-2310-1 gate for the SERVER side only. Starts FROM archive/door-epic-envelope-v2-s2310-stopped-5645c5b9 under an explicit re-land authorization in the master, merges main, re-runs the battery, gates on the two banked verdict slips. src/game/Game.ts keepalive stays out of scope - open desk fork."
+            },
+            {
               "id": "door-epic-envelope-v2",
+              "supersededBy": "door-epic-envelope-v3",
+              "noteDupe_s_att_20260826": "An attended session, blind to s2309/s2310, re-authored a narrower v2 over this name (6a879770b) and dispatched it; the runner honestly no-opped (run 20260826-070555, no repo changes). Master file restored to the fire original + banner; duplicate leaf removed; v3 re-lands the archive.",
               "title": "ONE law for the door envelope (v2) - duration + bytes + entries + the L1 reader cap all derive from the contract; the Baron banked x2 tapes are the gate",
               "taskFile": "door-epic-envelope-v2.md",
-              "status": "stopped",
+              "status": "superseded",
               "stopNote": "LAWFUL STOP at s2310 - a FIFTH admission axis emerged outside the firewall, and the runner reported it instead of widening scope (firewall success, not a failure; s2309 predicted exactly this). MEASURED by the runner and VERIFIED AT SOURCE by the s2310 fire: src/game/Game.ts submits standings with keepalive: true (the flag is at Game.ts:7244, in the fetch options of the submit call the runner cites at :7221). Chromium ACCEPTED a 60,000-byte body and REJECTED both 65,536 bytes and the compact 463,569-byte Baron body with TypeError: Failed to fetch - the request never reaches the ledger server at all. So the real player path carries a ~64 KiB browser-imposed ceiling that no server-side envelope law can lift, and Game.ts is outside this slice TOUCH-ONLY list. Runner also corrected a second review finding: the provisional 8 KiB outer-body allowance is 235 bytes too SMALL for a maximum lawful e2-trestle tape plus maximum stack and four-rider party metadata (765,451 B vs the 765,216 B provisional cap). NOT MERGED: acceptance (both banked Baron secures submit AND verify) was not met - server-side verify succeeded for both tapes, browser-side submit is the wall. The lane commit 5645c5b91 (6 files, +198/-67) holds real derivation work and is PRESERVED at archive/door-epic-envelope-v2-s2310-stopped-5645c5b9 - do NOT reset lane/c without reading it. RE-AUTHOR IS OWNER-GATED, NOT FIRE-AUTHORABLE: the runner named the smallest fix (admit the Game.ts call site, omit keepalive above the browser ceiling, prove it with a browser regression), but whether that fix is WANTED depends on the open desk item F-2299-2, whose own recommendation is (b) keep 64 KiB - under (b) the correct move is to shrink tapes, not to drop keepalive. See F-2310-1: this measurement REPRICES that desk item premise.",
               "lane": "lane-c",
               "authoredBy": "fire s2309 2026-08-25",
