@@ -98,6 +98,81 @@ test('THE SEAM (F-2209-1): analyse() attaches decidedAt to EVERY qualifying row'
   }
 });
 
+// ---------------------------------------------------------------------------
+// F-2331-1 — THE SHAPE THE DISTANCE DIAGNOSTIC CANNOT SEE, AND WHY THE OBVIOUS
+// CURE IS MEASURED UNSAFE.
+//
+// s2330 censused the "spurious GATE: from a citation" class and closed it at
+// "exactly ONE live row ... s2329's instance was the only one". That census is
+// DETECTOR-SCOPED: it looked for a gate clause OPENING with a backticked path.
+// A sibling shape exists and it was not in the denominator — the `GATE:` TOKEN
+// ITSELF inside a code span, i.e. a row QUOTING another finding's gate clause.
+// Measured s2331 over the live ledger: 16 rows select such a token, and ONE
+// (F-1310-1, a ✅ closed row from s1310) is ADMITTED on it.
+//
+// IT IS INVISIBLE TO ownerGateDecidedAt() BY CONSTRUCTION. A quoted clause head
+// decides at offset 0 — and 0 is the DOMINANT HEALTHY value (51 of 73 admitted
+// rows, 50 of them legitimate `GATE: OWNER …` / `GATE: owner picks …` heads).
+// So the spurious admission reports the single most reassuring distance the
+// diagnostic can print. Distance cannot discriminate this shape at any cutoff.
+//
+// AND THE ONE-CHARACTER CURE IS NOT A STRICT IMPROVEMENT — measured before it
+// was proposed, not after (F-1274-2). Skipping backtick-preceded tokens changes
+// the gate text of 16 rows and flips exactly TWO verdicts IN OPPOSITE
+// DIRECTIONS: F-1310-1 out (correct) and F-2073-1 IN — a row whose exposed
+// earlier gate is an owner ask the owner already DISCHARGED, i.e. the PERMISSIVE
+// direction this file exists to refuse. The admitted COUNT is 73 before and 73
+// after, so a headline-count neutrality check calls it behaviour-neutral while
+// the SET changes underneath: ask for the DIFF, never the tally.
+// ⚖️ SEVERITY, HONESTLY: LATENT. analyse() examines only rows BORN in the
+// window, and F-1310-1 can never re-enter one. The direction is a false RED with
+// a documented DESK-NOT-OWED waiver. No verdict on the live board was wrong.
+// ➡️ DECLARED, NOT CURED — and the reason is measured rather than stylistic.
+
+const quotedRow = row('It quotes a sibling clause, `GATE: owner picks (a) or (b)`, and adds nothing of its own.');
+const dischargedRow = row('GATE: owner picks (a) or (b). ✅ OWNER RULED 2026-08-09. A later probe greps for `GATE:` and finds none.');
+
+// The candidate cure, kept HERE rather than in the guard: skip a `GATE:` token
+// that is lexically inside a code span.
+const curedGateOf = (text) => {
+  const U = text.toUpperCase();
+  let i = U.lastIndexOf('GATE:');
+  while (i !== -1) {
+    if (text[i - 1] !== '`') return text.slice(i);
+    i = U.lastIndexOf('GATE:', i - 1);
+  }
+  return '';
+};
+
+test('F-2331-1: a QUOTED gate clause is admitted, and reports the same offset 0 as a real one', () => {
+  const gate = gateOf(quotedRow);
+  assert.ok(gate.startsWith('GATE: owner picks'), 'gateOf selects the token inside the code span');
+  assert.equal(isOwnerGate(gate), true, 'the quotation is admitted as an owner gate');
+  assert.equal(ownerGateDecidedAt(gate), 0, 'and decides at 0 — the same value a genuine GATE: OWNER head reports');
+  // The point of the arm: 0 is not evidence of a sound admission.
+  assert.equal(ownerGateDecidedAt(gateOf(row('GATE: OWNER — one word picks it.'))), 0);
+});
+
+test('F-2331-1: analyse() acts on it — a quoted gate reaches `missing` and reds the fire', () => {
+  const { qualifying, missing } = analyse(DESK_LINE1, [quotedRow]);
+  assert.equal(qualifying.length, 1, 'the quoted row qualifies as owner-gated');
+  assert.equal(missing.length, 1, 'and with no desk entry it becomes a FAIL — a false RED, not a silent green');
+});
+
+test('F-2331-1 REVERSE CONTROL: the backtick-skip cure flips verdicts BOTH ways, so it is refused', () => {
+  // Direction 1 — it removes the spurious admission. This is the half that tempts.
+  assert.equal(isOwnerGate(gateOf(quotedRow)), true);
+  assert.equal(isOwnerGate(curedGateOf(quotedRow)), false, 'the cure drops the quoted admission');
+
+  // Direction 2 — and it ADDS one, by exposing an earlier, already-discharged
+  // owner gate. This is the permissive direction the file header forbids.
+  assert.equal(isOwnerGate(gateOf(dischargedRow)), false, 'live: the trailing code span is not an owner gate');
+  assert.equal(isOwnerGate(curedGateOf(dischargedRow)), true, 'cured: a discharged owner ask is newly admitted');
+
+  // So the two changes cancel in any COUNT and do not cancel in the SET. A fire
+  // that ships the cure must re-measure the flips by name, not by tally.
+});
+
 test('AGREEMENT INVARIANT over the LIVE ledger: decidedAt !== -1 exactly when isOwnerGate is true', async () => {
   // F-2228-1's lesson: two implementations of one rule drift, and the drift is
   // silent. This arm re-derives both over the real corpus rather than fixtures.

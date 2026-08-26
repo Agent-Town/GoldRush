@@ -234,6 +234,18 @@ export function isOwnerGate(gateText) {
  * forbids, on a population of 69. So the distance is REPORTED, always, and the
  * fire decides. Do NOT "improve" this into a cutoff without re-measuring.
  *
+ * ⚠️ AND 0 IS NOT EVIDENCE OF A SOUND ADMISSION — IT IS THE DOMINANT HEALTHY
+ * VALUE, SO THE ONE SHAPE THAT FAKES IT IS INVISIBLE HERE (F-2331-1, s2331).
+ * A row QUOTING another finding's clause — the `GATE:` token itself inside a
+ * code span — decides at 0, exactly like a genuine `GATE: OWNER …` head.
+ * Measured on the live ledger: 51 of 73 admitted rows decide at 0, 50 of them
+ * legitimate heads and ONE (F-1310-1) a quotation. No cutoff can separate them,
+ * because the spurious one reports the most reassuring distance there is.
+ * The obvious one-character cure (skip backtick-preceded tokens) is MEASURED
+ * UNSAFE: it flips two verdicts in OPPOSITE directions and leaves the count at
+ * 73 both ways. DECLARED, NOT CURED — see the F-2331-1 arms in
+ * desk-birth-gate-distance-guard.test.mjs for the fixtures and the reasoning.
+ *
  * NOTE the two admissions are deliberately NOT collapsed: OWNER_GATE_ALT's
  * `GATE: OWNER` form legitimately decides at distance 0, and two live rows
  * (F-1608-2, F-1120-2) are admitted there while also carrying a far incidental
