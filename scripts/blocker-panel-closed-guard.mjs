@@ -160,6 +160,47 @@ function main() {
     console.log(`    panel row: ${v.shown}`);
   }
 
+  // A DECLARATION IS ONLY AS GOOD AS ITS CONSUMER (F-2335-1, measured s2335).
+  //
+  // The three numbers above exist so a reader can tell "I checked and found
+  // nothing" from "I checked nothing" — the F-2208-1 principle. Until s2335 the
+  // gate read NONE of them: it branched on `violations.length` alone, and the
+  // battery reads only rc. So `closed-on-panel: 0` was reported identically
+  // whether every row was classified and came back clean, or no row was
+  // classifiable at all and the loop body never ran.
+  //
+  // That is s2334's rung — a consumer that SELECTS subjects and DELEGATES their
+  // classification cannot reach any refusal built into the child when the
+  // classifiable set is empty. Here the child is scan()/subjectLedClosure() and
+  // the emptiness arrives one step earlier, at display(): if the panel's own
+  // transform or FINDING stops yielding ids, every row falls through `continue`.
+  //
+  // PROVEN BY MANUFACTURING (s2335), same board both arms, ground truth = one
+  // closed finding on the panel: healthy transform -> rc=1, names it; the same
+  // board with the panel's `cut -c1-100` narrowed past the id -> `PASS` rc=0.
+  //
+  // REFUSES ONLY ON THE UNAMBIGUOUS CASE, and the restraint is measured, not
+  // stylistic (F-2218-1): an EMPTY panel is lawful — grep exits 1 on no matches
+  // and this file's own catch calls that "an empty panel, not a broken guard" —
+  // and a panel row naming no F-ID is lawful too, which this guard's header
+  // states outright. Live board s2335: 33 rows, 32 with an id. So the test is
+  // "rows selected and NOT ONE id readable", never a ratio and never a bare
+  // zero; refusing on either of those would red on lawful boards and be excused
+  // into uselessness inside a week (F-1460-1).
+  //
+  // 2 = "could not answer", never 1 = "answered, and the answer refuses" — the
+  // convention drain-block-check, dry-board-probe and master-shipped-classifier
+  // already carry. --report stays advisory (refuse() exits 0 there) because an
+  // advisory reader must never block a drain by this guard's own blindness.
+  if (selected.length && rowsWithId === 0) {
+    refuse(
+      `selected ${selected.length} panel row(s) and could not read an F-ID from ANY of them — ` +
+        'the display transform or the id pattern stopped yielding ids, so "closed-on-panel: 0" says ' +
+        'nothing was CLASSIFIED, not that nothing is closed. Re-anchor this guard against ' +
+        `${dashboardPath}.`,
+    );
+  }
+
   if (REPORT) process.exit(0);
   if (violations.length) {
     console.error(
