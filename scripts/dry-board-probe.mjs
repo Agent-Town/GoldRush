@@ -85,6 +85,8 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+// (F-2334-1's `headDetached` is defined locally below, NOT imported. The reason is
+// measured and is recorded at the function itself — see the note above it.)
 
 /**
  * Leading tokens that assert a done-move reached a terminal state -- it either
@@ -199,6 +201,50 @@ function corpusTree(root) {
   return { tree: 'linked-worktree', detail: `the board lives in ${path.dirname(b)}` };
 }
 
+/**
+ * 'on-branch' | 'detached' | 'no-git' | 'unverifiable' — is HEAD on a branch, or
+ * pinned to a bare commit? A VERBATIM copy of corpus-tree.mjs's `headDetached`.
+ *
+ * ⚠️ A COPY, AND I TRIED THE IMPORT FIRST AND THE BATTERY REFUTED ME — recorded
+ * because the wrong lesson is easy to draw here. F-2227-1's rule is "import the
+ * sibling predicate rather than write a fifth copy", and s2333 recorded the one
+ * exception: drain-block-check.mjs and master-shipped-classifier.mjs are copied by
+ * guard fixtures using a FIXED LIST (F-2284-1), so they cannot follow an import.
+ * s2334 checked whether THIS file was in that class by grepping its six guard
+ * suites for `copyFileSync` of dry-board-probe.mjs, found none, and imported.
+ *
+ * THAT CHECK WAS WRONG, AND THE KEY WAS WRONG RATHER THAN THE ANSWER:
+ * `dry-board-bucket-verdict-guard.test.mjs:62-65` builds its variant by
+ * `readFileSync` -> mutate -> `writeFileSync(<bare tmpdir>/variant.mjs)`. There is
+ * no `copyFileSync` and no fixed list, so a copy-keyed grep is structurally unable
+ * to see it — and the destination is a BARE temp dir with no siblings at all, so
+ * ANY relative import fails ERR_MODULE_NOT_FOUND. `test:ledger-guards` reddened 3
+ * arms in that suite, naming the missing module.
+ *
+ * So the constraint is NOT "fixtures copy by a fixed list" — that is one instance.
+ * It is: A FILE WHOSE GUARDS RELOCATE IT CANNOT CARRY RELATIVE IMPORTS, however
+ * the relocation is spelled. The anti-drift duty is discharged instead by an arm
+ * asserting this copy AGREES with corpus-tree.mjs's, which is the property
+ * F-2227-1 actually protects once an import is off the table (s2333's route).
+ *
+ * Codes MEASURED, not assumed (F-2212-1's standard):
+ *   non-repo temp dir            -> 128, the legacy-fixture shape
+ *   on a branch                  -> 0 + a ref               (the healthy fire state)
+ *   MAIN worktree detached       -> 1, SILENT               (the subject)
+ *   linked worktree detached     -> 1, SILENT               (caught earlier by corpusTree)
+ *   path that does not exist     -> status null + ENOENT
+ */
+function headDetached(root) {
+  const r = spawnSync('git', ['-C', root, 'symbolic-ref', '-q', 'HEAD'], { encoding: 'utf8' });
+  if (r.error || r.status === null) return 'unverifiable';
+  if (r.status === 0 && String(r.stdout).trim()) return 'on-branch';
+  if (r.status === 1) return 'detached';
+  // 128 is "not a repository", LAWFUL and PERMISSIVE — corpusTree above maps it
+  // onto 'main' so the non-git fixture roots keep asserting what they always did.
+  if (r.status === 128) return 'no-git';
+  return 'unverifiable';
+}
+
 export function selectSubjects(root) {
   const dir = path.join(root, 'tasks', 'done');
   let names = [];
@@ -264,9 +310,67 @@ export function selectSubjects(root) {
   // tell), but the verdict is refused below -- a stale subset of the board can
   // never earn the word.
   const tree = corpusTree(root);
+  if (tree.tree !== 'main') {
+    return {
+      subjects, conventionStart, skippedLegacy, skippedTerminal, tokens, total: names.length,
+      corpus: tree.tree, corpusDetail: tree.detail,
+    };
+  }
+
+  // F-2334-1 (s2334). `corpusTree` answers WHICH TREE; it is used here as a proxy
+  // for IS THIS CORPUS FRESH, and the two come apart in the MAIN worktree. A
+  // DETACHED HEAD there reports 'main' -- the modal healthy value, and the value a
+  // correct run prints -- while `tasks/done` is TRACKED and therefore frozen at
+  // that commit exactly as it is in the linked worktree this tool already refuses.
+  // s2333 cured this in drain-block-check.mjs and master-shipped-classifier.mjs and
+  // named this file as carrying a third copy of the same shape, explicitly as an
+  // UNMEASURED hypothesis. It is now measured, and it was real.
+  //
+  // PROVEN BY MANUFACTURING s2334, ground truth = a board holding ONE REAL DRAIN,
+  // the control asserting its own validity first (F-2215-1: arm A produced 799 B
+  // and detected the drain, so it really ran):
+  //   attached main branch          -> "⛔ NOT DRY — 1 undrained done-move(s)"  rc=0/1
+  //   SAME repo, main worktree
+  //   DETACHED one commit back      -> "✅ DRY ... The word is earned."         rc=0
+  //   REVERSE CONTROL, genuinely dry -> "✅ DRY ... The word is earned."        rc=0
+  // The defect arm and the genuinely-dry board were BYTE-IDENTICAL: 774 B of
+  // stdout each, the same banner, the same rc in BOTH modes, and this function's
+  // own F-2217-1 declaration reading `read` -- affirmatively, and truthfully,
+  // because it really had read *a* tasks/done.
+  //
+  // ⚠️ WHY THE SIBLING'S CURE CANNOT COVER THIS ONE, which is the mechanism worth
+  // carrying: s2333 made drain-block-check REFUSE from a detached tree, and
+  // F-2240-1 already teaches this consumer to treat that refusal as loud. But the
+  // freeze narrows the SUBJECT SET first -- the derived convention start moves with
+  // the corpus, so the surviving entries are classed legacy and `subjects` empties.
+  // With zero subjects the child is NEVER SPAWNED, so the child's refusal cannot
+  // fire. A cure in the classifier is unreachable when the defect is in the
+  // enumeration; that is F-2217-1's layer, one tree-state further in.
+  //
+  // 'no-git' stays PERMISSIVE and that is deliberate, not an oversight: corpusTree
+  // above maps git's 128 onto 'main' so the non-git fixture roots F-2209-1's CLI
+  // arms build keep asserting exactly what they always asserted. Refusing there
+  // would red them all -- the over-general cure, and F-2243-1's standing restraint.
+  const head = headDetached(root);
+  if (head === 'detached') {
+    return {
+      subjects, conventionStart, skippedLegacy, skippedTerminal, tokens, total: names.length,
+      corpus: 'detached-head', corpusDetail: 'HEAD is pinned to a bare commit, not a branch',
+    };
+  }
+  if (head === 'unverifiable') {
+    // F-2243-1: a FAILURE value must never fall through to PASS. Named apart from
+    // 'tree-unverifiable' because that one says "which tree is this?" and this one
+    // says "which COMMIT is this tree pinned to?" -- different subjects, different
+    // owed acts, and a refusal that accuses the wrong one is the defect above.
+    return {
+      subjects, conventionStart, skippedLegacy, skippedTerminal, tokens, total: names.length,
+      corpus: 'head-unverifiable', corpusDetail: 'git symbolic-ref -q HEAD did not answer',
+    };
+  }
   return {
     subjects, conventionStart, skippedLegacy, skippedTerminal, tokens, total: names.length,
-    corpus: tree.tree === 'main' ? 'read' : tree.tree, corpusDetail: tree.detail,
+    corpus: 'read', corpusDetail: tree.detail,
   };
 }
 
@@ -458,6 +562,11 @@ function main() {
     unreadable: `UNREADABLE (${sel.corpusDetail})`,
     'linked-worktree': `LINKED WORKTREE — STALE CHECKOUT (${sel.corpusDetail})`,
     'tree-unverifiable': `TREE UNVERIFIABLE (${sel.corpusDetail})`,
+    // F-2334-1. Same always-printed line, two more domains. It stays ONE
+    // declaration rather than a new field, so a reader who learned to check one
+    // line still checks one line.
+    'detached-head': `DETACHED HEAD — STALE CHECKOUT (${sel.corpusDetail})`,
+    'head-unverifiable': `HEAD UNVERIFIABLE (${sel.corpusDetail})`,
   }[sel.corpus] ?? `UNRECOGNISED (${sel.corpus})`;
   console.log(`  corpus tasks/done/      : ${corpusLabel}`);
   console.log(`  done-moves (.md)        : ${sel.total}`);
@@ -543,6 +652,21 @@ function main() {
     console.log(`  ⛔ CANNOT VERIFY — could not establish which tree this corpus belongs to`);
     console.log(`     (${sel.corpusDetail}). A stale worktree checkout is indistinguishable`);
     console.log('     from the board until this is answered, so no verdict is offered.');
+  } else if (sel.corpus === 'detached-head') {
+    // F-2334-1. Cured at the BANNER and not merely at the exit code, for F-2210-1's
+    // reason: advisory is the mode §2F prescribes, and there the verdict travels on
+    // stdout alone. The counts above are still printed -- seeing a done-move total
+    // far below the board's is the whole tell -- but the verdict is refused.
+    console.log('  ⛔ CANNOT VERIFY — this is the main worktree, but its HEAD is DETACHED.');
+    console.log(`     tasks/done/ is TRACKED, so this is a checkout of the board frozen at`);
+    console.log(`     that bare commit — ${sel.total} done-move(s) here — and the subject set`);
+    console.log('     narrows with it, so a REAL DRAIN can vanish before it is ever classified.');
+    console.log('     Run `git checkout main`, then re-run; §2F means the board as it stands.');
+  } else if (sel.corpus === 'head-unverifiable') {
+    console.log('  ⛔ CANNOT VERIFY — git could not say whether this main worktree\'s HEAD is');
+    console.log(`     detached (${sel.corpusDetail}), so this run cannot tell a tree on \`main\``);
+    console.log('     from one frozen at a bare commit. This is an INSTRUMENT failure, not a');
+    console.log('     board state: check git, then re-run. (A non-git root never gets here.)');
   } else if (sel.corpus !== 'read') {
     // F-2217-1. The buckets are all empty, but they are empty because the corpus
     // was never read -- NOT because the board is clean. Printing the earned-DRY
