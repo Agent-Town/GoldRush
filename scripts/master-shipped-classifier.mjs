@@ -6,6 +6,27 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
+/**
+ * 'on-branch' | 'detached' | 'no-git' | 'unverifiable' — F-2333-1's detachment half.
+ *
+ * A LOCAL COPY for the same measured reason as its twin in drain-block-check.mjs: guard
+ * fixtures copy these files by a FIXED LIST and must not copy the whole scripts/ tree
+ * (F-2284-1), so a sibling import is ERR_MODULE_NOT_FOUND inside them. This file already
+ * carries its own `corpusTree` for the equivalent reason. The anti-drift duty F-2227-1 asks
+ * for is discharged by a guard asserting all three copies AGREE, not by an import.
+ *
+ * 128 ("not a repository") stays PERMISSIVE: corpusTree here maps it onto a fixture root, and
+ * refusing would red every legacy fixture in this family (F-1460-1).
+ */
+function headDetached(root) {
+  const r = spawnSync('git', ['-C', root, 'symbolic-ref', '-q', 'HEAD'], { encoding: 'utf8', timeout: 10000 });
+  if (r.error || r.status === null) return 'unverifiable';
+  if (r.status === 0 && String(r.stdout).trim()) return 'on-branch';
+  if (r.status === 1) return 'detached';
+  if (r.status === 128) return 'no-git';
+  return 'unverifiable';
+}
+
 // Exported for F-2226-1: `ghost-ladder-row-guard` cross-checks a frozen board's rows against
 // main's own goals.json, and must ask the SAME question this file asks. A private copy of a
 // two-element set is a rename away from silently disagreeing with its own source of truth.
@@ -239,6 +260,11 @@ export function classifyRoot(root) {
   const goalSource = goalEvidence(tasksDir); // F-2219-1
   const goals = goalSource.leaves;
   const tree = corpusTree(root); // F-2222-2. The corpora read FINE; the question left is WHICH board they are.
+  // F-2333-1. And WHICH COMMIT they were read at: this file's corpusTree maps git's 128 onto
+  // 'main' for fixture roots, so the 'no-git' answer is REACHABLE here and must stay permissive
+  // (F-1460-1). Only asked of a tree that claims to be main -- a linked worktree is already
+  // refused above, and asking twice would print a DETACHED accusation for a stale-lane cause.
+  const head = tree.tree === 'main' ? headDetached(root) : 'not-asked';
 
   const verdicts = masters.map((master) => {
     const fullStem = stem(master);
@@ -300,6 +326,13 @@ export function classifyRoot(root) {
     // both read healthy from a stale worktree, so a caller has no other way to tell.
     corpusTree: tree.tree,
     ...(tree.detail && { corpusTreeDetail: tree.detail }),
+    // F-2333-1: the OTHER way this board can be frozen. `corpusTree` answers WHICH TREE and
+    // is used above as a proxy for IS THIS BOARD FRESH -- and in the MAIN worktree a DETACHED
+    // HEAD answers 'main', the modal healthy value. `tasks/goals.json` is TRACKED, so it is
+    // then frozen at that commit. Carried ALWAYS, including the happy path (F-2208-1), for
+    // exactly the reason the field above states: from a detached tree `reviewsSource`,
+    // `goalsSource` AND `corpusTree` all read healthy, so a caller has no other way to tell.
+    headState: head,
     verdicts,
   };
 }
@@ -341,6 +374,28 @@ function printTable(result) {
       `\n⛔ CANNOT VERIFY — DO NOT QUEUE off this run. git could not say which tree this board is a\n` +
         `   checkout of (${result.corpusTreeDetail}), so the counts above may be computed from a\n` +
         `   stale lane checkout rather than from main. Re-run once git is healthy.`,
+    );
+  } else if (result.headState === 'detached') {
+    // F-2333-1. Cured at the BANNER and not merely at the exit code, because the default mode
+    // is advisory and there the whole verdict travels on stdout (F-2210-1). Kept SEPARATE from
+    // the linked-worktree text above: that one opens "this root is a LINKED WORKTREE", which is
+    // false here, and the two owe different acts -- that one says re-run from main, this one
+    // says `git checkout main` first (F-2225-1).
+    console.log(
+      `\n⛔ CANNOT VERIFY — DO NOT QUEUE off this run. This IS the main worktree, but its HEAD is\n` +
+        `   DETACHED, so the masters, traces and goal leaves above are a checkout of the board\n` +
+        `   FROZEN at that commit. Every declaration on this run reads healthy and cannot see it:\n` +
+        `   reviews are read by REF so they are genuinely fresh, goals.json is tracked and present,\n` +
+        `   and corpusTree says 'main' — the modal healthy value. Measured s2333: a master shipped\n` +
+        `   by its goal leaf alone moved SHIPPED→NO-TRACE and INTO the candidate set (Mistake #8).\n` +
+        `   Run \`git checkout main\`, or pass --root <a tree on main>, before queueing anything.`,
+    );
+  } else if (result.headState === 'unverifiable') {
+    console.log(
+      `\n⛔ CANNOT VERIFY — DO NOT QUEUE off this run. git could not say whether this main worktree's\n` +
+        `   HEAD is detached, so this run cannot tell a tree on \`main\` from one frozen at a bare\n` +
+        `   commit. This is an INSTRUMENT failure, not a board state: check git, then re-run.\n` +
+        `   (A non-git root is NOT this case — that answers 128 and proceeds normally.)`,
     );
   }
   // F-2213-1: never let a candidate count leave here wearing an authority it does not have.
@@ -385,6 +440,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       ? 0
       : result.corpusTree !== 'main'
         ? 2
+        // F-2333-1: the detachment half. 2 = "could not answer", the same act as the tree
+        // check above. Tested by VALUE and not by `!== 'on-branch'`, because 'no-git' is a
+        // LAWFUL fixture root that must keep exiting on its counts (F-1460-1).
+        : result.headState === 'detached' || result.headState === 'unverifiable'
+          ? 2
         : result.counts.CANDIDATES || !result.reviewsOk
           ? 1
           : 0;

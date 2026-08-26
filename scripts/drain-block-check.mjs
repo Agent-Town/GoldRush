@@ -30,6 +30,34 @@ import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFile
 import { execFileSync, spawnSync } from 'node:child_process';
 import { basename, dirname, join, relative, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
+
+/**
+ * 'on-branch' | 'detached' | 'no-git' | 'unverifiable' — F-2333-1's detachment half.
+ *
+ * A LOCAL COPY, and the choice is MEASURED rather than stylistic. F-2227-1 says import the
+ * sibling predicate rather than write a copy, and s2333's first draft did exactly that —
+ * `import { headDetached } from './corpus-tree.mjs'`. The ledger battery reddened: guard
+ * fixtures copy this file into a temp dir by a FIXED LIST (they must not `cpSync` the whole
+ * scripts/ tree — F-2284-1), so a new sibling import is ERR_MODULE_NOT_FOUND in 19 of them.
+ * Patching 19 hardcoded lists is the "hardcoded list of what git already knows" defect and
+ * breaks again for the next importer. This file is deliberately self-contained — which is
+ * also why it already carries its own `corpusTree` — so the predicate is inlined and the
+ * ANTI-DRIFT duty F-2227-1 really wants is discharged by a guard asserting the copies AGREE,
+ * the same shape `desk-lock-predicate-guard` uses for its four-way predicate.
+ *
+ * Codes MEASURED s2333, not assumed (F-2212-1): non-repo -> 128 · unborn branch -> 0 + a ref
+ * (lawful, NOT frozen) · on a branch -> 0 + a ref · detached -> 1 and SILENT · missing path ->
+ * status null. 128 stays PERMISSIVE: corpusTree above maps it onto 'main' for fixture roots,
+ * so refusing there would red every legacy fixture (F-1460-1, the `cross-engine` fate).
+ */
+function headDetached(root) {
+  const r = spawnSync('git', ['-C', root, 'symbolic-ref', '-q', 'HEAD'], { encoding: 'utf8', timeout: 10000 });
+  if (r.error || r.status === null) return 'unverifiable';
+  if (r.status === 0 && String(r.stdout).trim()) return 'on-branch';
+  if (r.status === 1) return 'detached';
+  if (r.status === 128) return 'no-git';
+  return 'unverifiable';
+}
 const GOALS = 'tasks/goals.json';
 const BACKLOG = 'tasks/BACKLOG.md';
 
@@ -478,6 +506,54 @@ function main() {
       console.log(`    answered "⛔ ALREADY SHIPPED — DO NOT QUEUE" rc=1 (F-2223-1).`);
     }
     console.log(`    Re-run from the repo root. Do NOT re-run elsewhere until it goes green.\n`);
+    process.exit(2);
+  }
+
+  // F-2333-1 (s2333): the OTHER way this tree can be frozen. The check above asks WHICH
+  // TREE and uses that as a proxy for IS THIS BOARD FRESH — and the two come apart in the
+  // MAIN worktree, because a DETACHED HEAD here answers 'main', the modal healthy value and
+  // the value a correct run prints. `tasks/goals.json` is TRACKED, so it is then frozen at
+  // that commit exactly as it is in the linked worktree the block above already refuses.
+  //
+  // PROVEN BY MANUFACTURING, ground truth = a master that IS already shipped, control
+  // asserting its own validity first (F-2215-1):
+  //   healthy main worktree            -> `⛔ ALREADY SHIPPED — DO NOT QUEUE`  rc=1
+  //   linked worktree frozen at c1     -> `⛔ CANNOT VERIFY`                   rc=2  (cured)
+  //   MAIN worktree DETACHED at c1     -> `? UNKNOWN — no goal leaf matches`   rc=0  (this)
+  // The defect arm was BYTE-IDENTICAL on stdout, stderr AND rc to a genuinely unregistered
+  // master on a healthy board. That is the Mistake #8 polarity — an affirmative-looking
+  // clearance to re-derive already-merged work — in §3.0's first command of every drain.
+  //
+  // SCOPED to a real repo, and that scoping is load-bearing rather than tidy: corpusTree
+  // above maps git's 128 onto 'main' for fixture roots (see its own comment), so asking
+  // this question without the 'no-git' arm would refuse on every legacy fixture and be
+  // excused into uselessness inside a week (F-1460-1). 'no-git' and 'on-branch' proceed.
+  //
+  // The two failure answers are tested SEPARATELY and neither by inequality, because they
+  // owe DIFFERENT ACTS (F-2225-1): 'detached' says `git checkout main`, 'unverifiable' says
+  // the instrument itself wants investigating. Collapsing them into `!== 'on-branch'` would
+  // print a DETACHED accusation for a git that simply did not answer.
+  //
+  // IMPORTED, not re-typed: F-2227-1 measured that independently-maintained copies of one
+  // predicate is HOW it drifts. (The corpusTree copies stay separate on purpose — they
+  // differ in which tree the question is about; see corpus-tree.mjs's header.)
+  const head = headDetached(process.cwd());
+  if (head === 'detached' || head === 'unverifiable') {
+    console.log(`\n  ⛔ CANNOT VERIFY — DO NOT DRAIN, DO NOT QUEUE off this run`);
+    console.log(`    corpus tree     : main worktree, but HEAD is ${head === 'detached' ? 'DETACHED' : 'UNREADABLE'}`);
+    console.log(`    cwd             : ${process.cwd()}`);
+    if (head === 'detached') {
+      console.log(`    tasks/goals.json is TRACKED, so a detached HEAD freezes the board at that`);
+      console.log(`    commit. A master registered after it resolves to "? UNKNOWN" — which exits 0`);
+      console.log(`    — and an ALREADY SHIPPED master reads as a clearance to queue it again`);
+      console.log(`    (Mistake #8). Measured s2333: byte-identical to an innocent board on stdout,`);
+      console.log(`    stderr and rc. Run \`git checkout main\`, then re-run (F-2333-1).`);
+    } else {
+      console.log(`    \`git symbolic-ref -q HEAD\` did not answer, so this run cannot tell a tree on`);
+      console.log(`    \`main\` from one frozen at a bare commit. This is an INSTRUMENT failure, not a`);
+      console.log(`    board state: check git, then re-run. (A non-git root is NOT this case.)`);
+    }
+    console.log(`    Do NOT re-run elsewhere until it goes green.\n`);
     process.exit(2);
   }
 

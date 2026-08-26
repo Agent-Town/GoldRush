@@ -66,8 +66,8 @@ export function corpusTree(root) {
 }
 
 /**
- * 'on-branch' | 'detached' | 'unverifiable' — is HEAD on a branch, or pinned to a
- * bare commit?
+ * 'on-branch' | 'detached' | 'no-git' | 'unverifiable' — is HEAD on a branch, or
+ * pinned to a bare commit?
  *
  * F-2332-1 (s2332). `corpusTree` answers WHICH TREE, and `frozenTreeCheck` uses
  * that as a proxy for IS THIS CORPUS FRESH. The two come apart in the MAIN
@@ -103,13 +103,32 @@ export function corpusTree(root) {
  * is structurally unable to fire on the prescribed path.
  */
 export function headDetached(root) {
-  // `symbolic-ref -q HEAD` is the narrow question: exit 0 + a ref when HEAD names a
-  // branch, exit 1 and SILENT when it is detached. Only ever called once the tree
-  // has been identified as 'main', so git has already answered here.
+  // `symbolic-ref -q HEAD` is the narrow question. Codes MEASURED s2333, not assumed
+  // (F-2212-1's standard), across all six states this repo can present:
+  //   non-repo temp dir            -> 128, the legacy-fixture shape
+  //   fresh repo, unborn branch    -> 0 + "refs/heads/main"   (lawful, NOT frozen)
+  //   on a branch                  -> 0 + a ref               (the healthy fire state)
+  //   MAIN worktree detached       -> 1, SILENT               (the subject)
+  //   linked worktree detached     -> 1, SILENT               (caught earlier by corpusTree)
+  //   path that does not exist     -> status null + ENOENT
   const r = spawnSync('git', ['-C', root, 'symbolic-ref', '-q', 'HEAD'], { encoding: 'utf8' });
   if (r.error || r.status === null) return 'unverifiable';
   if (r.status === 0 && String(r.stdout).trim()) return 'on-branch';
   if (r.status === 1) return 'detached';
+  // 128 is "not a repository", which is LAWFUL and must stay PERMISSIVE — the same
+  // restraint F-2243-1 applies one function down.
+  //
+  // ⓘ IT IS UNREACHABLE FROM frozenTreeCheck, AND THAT IS SAID PLAINLY RATHER THAN
+  // DRESSED UP: that caller asks only once corpusTree has answered 'main', so git has
+  // already spoken. The branch exists because drain-block-check.mjs and
+  // master-shipped-classifier.mjs carry SELF-CONTAINED copies of this predicate
+  // (s2333 — their guard fixtures copy them by a fixed list and cannot follow a
+  // sibling import, F-2284-1), and their corpusTree copies map 128 onto 'main' for
+  // that same fixture-root reason, so 'no-git' is live there. Keeping this copy in
+  // step is what makes the three-way agreement arm in
+  // detached-head-instruments-guard.test.mjs meaningful — the anti-drift property
+  // F-2227-1 actually protects, once an import is off the table.
+  if (r.status === 128) return 'no-git';
   return 'unverifiable';
 }
 
