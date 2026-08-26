@@ -2,7 +2,7 @@ import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'j
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
-import { CONTRACT_BUNDLES, maxRunTapeTicksForContract } from '../../src/playbook/PlaybookFormat';
+import { CONTRACT_BUNDLES, runTapeEnvelopeForContract } from '../../src/playbook/PlaybookFormat';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 import type { LedgerStorage } from './_accounts';
@@ -112,8 +112,8 @@ const CONTRACT_EPOCHS = new Map(
   CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts.map((contract) => [contract.id, bundle.epochId] as const)),
 );
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
-const MAX_TAPE_BYTES = 64 * 1024;
-const MAX_JSON_BYTES = MAX_TAPE_BYTES + 4 * 1024;
+export const MAX_JSON_BYTES = Math.max(...CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
+  .map((contract) => runTapeEnvelopeForContract(contract.id).maxTapeBytes))) + 44 * 1024;
 const MAX_ROWS = 100;
 const ASSAY_QUEUE_INDEX_KEY = 'assay-queue-index';
 const ASSAY_INDEX_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId', 'submittedAt']);
@@ -987,7 +987,7 @@ function validateParty(value: unknown, stored = false): SubmittedParty | null {
 }
 
 export function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): JsonRecord | null {
-  if (!isRecord(value) || new TextEncoder().encode(JSON.stringify(value)).length > MAX_TAPE_BYTES) return null;
+  if (!isRecord(value) || new TextEncoder().encode(JSON.stringify(value)).length > runTapeEnvelopeForContract(String(contractId)).maxTapeBytes) return null;
   if (!hasOnlyKeys(value, new Set(['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'meta', 'runStart', 'inputLog', 'eventLogHash', 'outcome']))) return null;
   if ((value.version !== 1 && value.version !== 2) || value.simVersion !== 1 || typeof value.id !== 'string' || !value.id || value.id.length > 64) return null;
   if (!Number.isSafeInteger(value.createdAt) || (value.createdAt as number) < 0 || typeof value.kept !== 'boolean') return null;
@@ -1045,24 +1045,25 @@ function validTapeInput(value: unknown, contractId: unknown, seed: unknown, diff
   if (typeof value.name !== 'string' || !value.name || value.name.length > 64 || !isRecord(value.start)
     || !hasOnlyKeys(value.start, new Set(['x', 'z']))) return false;
   if (numberInRange(value.start.x, -256, 256) === null || numberInRange(value.start.z, -256, 256) === null) return false;
-  const duration = integerInRange(value.durationTicks, 0, maxRunTapeTicksForContract(String(contractId)));
-  if (duration === null || !Array.isArray(value.entries) || value.entries.length > 2_000 || !validTapeTruncation(value.truncated, duration)) return false;
+  const envelope = runTapeEnvelopeForContract(String(contractId));
+  const duration = integerInRange(value.durationTicks, 0, envelope.maxTicks);
+  if (duration === null || !Array.isArray(value.entries) || value.entries.length > envelope.maxEntries || !validTapeTruncation(value.truncated, duration)) return false;
   const primarySlot = integerInRange(value.primarySlot, 0, 3);
-  if (primarySlot === null || !Array.isArray(value.streams) || value.streams.length > 3 || !validTapeEntries(value.entries, duration)) return false;
+  if (primarySlot === null || !Array.isArray(value.streams) || value.streams.length > 3 || !validTapeEntries(value.entries, duration, envelope.maxEntries)) return false;
   const slots = new Set<number>([primarySlot]);
   for (const stream of value.streams) {
     if (!isRecord(stream) || !hasOnlyKeys(stream, new Set(['slot', 'start', 'entries']))) return false;
     const slot = integerInRange(stream.slot, 0, 3);
     if (slot === null || slots.has(slot) || !isRecord(stream.start) || !hasOnlyKeys(stream.start, new Set(['x', 'z']))) return false;
     if (numberInRange(stream.start.x, -256, 256) === null || numberInRange(stream.start.z, -256, 256) === null) return false;
-    if (!validTapeEntries(stream.entries, duration)) return false;
+    if (!validTapeEntries(stream.entries, duration, envelope.maxEntries)) return false;
     slots.add(slot);
   }
   return true;
 }
 
-function validTapeEntries(entries: unknown, duration: number): boolean {
-  if (!Array.isArray(entries) || entries.length > 2_000) return false;
+function validTapeEntries(entries: unknown, duration: number, maxEntries: number): boolean {
+  if (!Array.isArray(entries) || entries.length > maxEntries) return false;
   let prior = -1;
   for (const entry of entries) {
     if (!isRecord(entry) || !hasOnlyKeys(entry, new Set(['t', 'mx', 'my', 'a']))) return false;

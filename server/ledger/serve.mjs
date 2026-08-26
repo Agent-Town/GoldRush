@@ -7,37 +7,49 @@ import { createServer as createViteServer } from 'vite';
 import { SqliteStorage } from './storage.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-let handlersPromise;
+let runtimePromise;
 
-export async function loadLedgerHandlers() {
-  handlersPromise ??= (async () => {
+async function loadLedgerRuntime() {
+  runtimePromise ??= (async () => {
     const vite = await createViteServer({ root: ROOT, configFile: false, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
     try {
       const standings = await vite.ssrLoadModule('/functions/api/standings.ts');
       const accounts = await vite.ssrLoadModule('/functions/api/_accounts.ts');
       return {
-        '/api/standings': standings.onRequest,
-        '/api/standings/assay-queue': standings.onRequestAssayQueue,
-        '/api/standings/assay-verdict': standings.onRequestAssayVerdict,
-        '/api/request-code': accounts.requestCode,
-        '/api/verify': accounts.verifyCode,
-        '/api/session': accounts.sessionStatus,
-        '/api/save/push': accounts.pushSave,
-        '/api/save/pull': accounts.pullSave,
-        '/api/save/versions': accounts.saveVersions,
-        '/api/save/profiles': accounts.saveProfiles,
-        '/api/delete-account': accounts.deleteAccount,
+        maxRequestBytes: standings.MAX_JSON_BYTES,
+        handlers: {
+          '/api/standings': standings.onRequest,
+          '/api/standings/assay-queue': standings.onRequestAssayQueue,
+          '/api/standings/assay-verdict': standings.onRequestAssayVerdict,
+          '/api/request-code': accounts.requestCode,
+          '/api/verify': accounts.verifyCode,
+          '/api/session': accounts.sessionStatus,
+          '/api/save/push': accounts.pushSave,
+          '/api/save/pull': accounts.pullSave,
+          '/api/save/versions': accounts.saveVersions,
+          '/api/save/profiles': accounts.saveProfiles,
+          '/api/delete-account': accounts.deleteAccount,
+        },
       };
     } finally {
       await vite.close();
     }
   })();
-  return handlersPromise;
+  return runtimePromise;
+}
+
+export async function loadLedgerHandlers() {
+  return (await loadLedgerRuntime()).handlers;
+}
+
+export async function loadLedgerMaxRequestBytes() {
+  return (await loadLedgerRuntime()).maxRequestBytes;
 }
 
 export async function createLedgerServer({ storage, env = {}, handlers } = {}) {
   if (!storage) throw new Error('ledger storage is required');
-  const routes = handlers ?? await loadLedgerHandlers();
+  const runtime = await loadLedgerRuntime();
+  const routes = handlers ?? runtime.handlers;
   const handlerEnv = { ACCOUNTS: storage, TELEMETRY: storage, ...env };
 
   return createHttpServer(async (incoming, outgoing) => {
@@ -48,7 +60,7 @@ export async function createLedgerServer({ storage, env = {}, handlers } = {}) {
       const headers = new Headers(incoming.headers);
       const init = { method: incoming.method, headers };
       if (incoming.method !== 'GET' && incoming.method !== 'HEAD') {
-        const { body, bytes, tooLarge } = await requestBody(incoming);
+        const { body, bytes, tooLarge } = await requestBody(incoming, runtime.maxRequestBytes);
         if (tooLarge) headers.set('content-length', String(bytes));
         init.body = body;
       }
@@ -61,14 +73,14 @@ export async function createLedgerServer({ storage, env = {}, handlers } = {}) {
   });
 }
 
-async function requestBody(incoming) {
+async function requestBody(incoming, maxRequestBytes) {
   const chunks = [];
   let bytes = 0;
   for await (const chunk of incoming) {
     bytes += chunk.length;
-    if (bytes <= 256 * 1024) chunks.push(chunk);
+    if (bytes <= maxRequestBytes) chunks.push(chunk);
   }
-  return { body: Buffer.concat(chunks), bytes, tooLarge: bytes > 256 * 1024 };
+  return { body: Buffer.concat(chunks), bytes, tooLarge: bytes > maxRequestBytes };
 }
 
 function json(value, status) {

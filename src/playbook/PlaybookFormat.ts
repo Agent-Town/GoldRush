@@ -19,12 +19,20 @@ import { Balance } from '../game/Balance';
 export const PLAYBOOK_VERSION = 1 as const;
 export const PLAYBOOK_STEP_SECONDS = 1 / 30;
 // Law 6 bounds: one tile, one actor, <=10 minutes of sim time, <=2,000 intents.
+// F-2302-1 split: this is the playbook-authoring bound. Door tapes use the
+// contract envelope below because a faithful epic is not an authored strategy artifact.
 export const MAX_PLAYBOOK_TICKS = 18_000;
 export const MAX_PLAYBOOK_INTENTS = 2_000;
 
-type DurationContract = {
+type EnvelopeContract = {
   id: string;
   twist?: { secureWave?: number; waveCadenceMult?: number; baron?: { wave: number } };
+};
+
+export type RunTapeEnvelope = {
+  maxTicks: number;
+  maxEntries: number;
+  maxTapeBytes: number;
 };
 
 export const CONTRACT_BUNDLES = [
@@ -41,21 +49,38 @@ export const CONTRACT_BUNDLES = [
 ];
 
 const ASSAY_BOSS_GRACE_WAVES = 6;
-const DURATION_CONTRACTS = new Map(
-  CONTRACT_BUNDLES.flatMap((bundle) => (bundle.contracts as DurationContract[])
+// The retained Baron proof averages one change-point per 5.44 ticks and 140.7 bytes per entry.
+// Five ticks, 160 bytes, and 16 KiB fixed overhead preserve measured margin without an open cap.
+const RUN_TAPE_ENVELOPE_TICKS_PER_ENTRY = 5;
+const RUN_TAPE_BYTES_PER_ENTRY = 160;
+const RUN_TAPE_FIXED_BYTES = 16 * 1024;
+const RUN_TAPE_CONTRACTS = new Map(
+  CONTRACT_BUNDLES.flatMap((bundle) => (bundle.contracts as EnvelopeContract[])
     .map((contract) => [contract.id, contract.twist] as const)),
 );
 
-/** Bounded assay duration: contract clock plus the terminal-instant entry seam. */
+/** One bounded door envelope, derived from the contract clock for every admission axis. */
+export function runTapeEnvelopeForContract(contractId: string): RunTapeEnvelope {
+  const twist = RUN_TAPE_CONTRACTS.get(contractId);
+  let maxTicks = MAX_PLAYBOOK_TICKS;
+  if (twist?.secureWave) {
+    const finalWave = twist.baron
+      ? Math.max(twist.secureWave, twist.baron.wave) + ASSAY_BOSS_GRACE_WAVES
+      : twist.secureWave;
+    const cadence = Math.max(0.1, twist.waveCadenceMult ?? 1);
+    const contractTicks = Math.ceil((finalWave * Balance.waves.waveInterval / cadence) / PLAYBOOK_STEP_SECONDS) + 1;
+    maxTicks = Math.max(MAX_PLAYBOOK_TICKS, contractTicks);
+  }
+  const maxEntries = Math.ceil(maxTicks / RUN_TAPE_ENVELOPE_TICKS_PER_ENTRY);
+  return {
+    maxTicks,
+    maxEntries,
+    maxTapeBytes: RUN_TAPE_FIXED_BYTES + maxEntries * RUN_TAPE_BYTES_PER_ENTRY,
+  };
+}
+
 export function maxRunTapeTicksForContract(contractId: string): number {
-  const twist = DURATION_CONTRACTS.get(contractId);
-  if (!twist?.secureWave) return MAX_PLAYBOOK_TICKS;
-  const finalWave = twist.baron
-    ? Math.max(twist.secureWave, twist.baron.wave) + ASSAY_BOSS_GRACE_WAVES
-    : twist.secureWave;
-  const cadence = Math.max(0.1, twist.waveCadenceMult ?? 1);
-  const contractTicks = Math.ceil((finalWave * Balance.waves.waveInterval / cadence) / PLAYBOOK_STEP_SECONDS) + 1;
-  return Math.max(MAX_PLAYBOOK_TICKS, contractTicks);
+  return runTapeEnvelopeForContract(contractId).maxTicks;
 }
 
 /** One change-point on the tape: movement holds (mx,my) from tick t until the next entry; actions fire exactly at t. */
@@ -122,7 +147,11 @@ export function parsePlaybookText(text: string): PlaybookParseResult {
   return validatePlaybook(raw);
 }
 
-export function validatePlaybook(raw: unknown, maxDurationTicks = MAX_PLAYBOOK_TICKS): PlaybookParseResult {
+export function validatePlaybook(
+  raw: unknown,
+  maxDurationTicks = MAX_PLAYBOOK_TICKS,
+  maxEntries = MAX_PLAYBOOK_INTENTS,
+): PlaybookParseResult {
   if (!isRecord(raw)) return { ok: false, reason: 'not-an-object' };
   if (raw.version !== PLAYBOOK_VERSION) return { ok: false, reason: 'unsupported-version' };
   if (typeof raw.name !== 'string' || !raw.name.trim()) return { ok: false, reason: 'missing-name' };
@@ -139,7 +168,7 @@ export function validatePlaybook(raw: unknown, maxDurationTicks = MAX_PLAYBOOK_T
   }
   const truncated = validateTruncation(raw.truncated);
   if (truncated === false) return { ok: false, reason: 'invalid-truncation' };
-  const entries = validateEntries(raw.entries, durationTicks as number);
+  const entries = validateEntries(raw.entries, durationTicks as number, maxEntries);
   if (!entries.ok) return { ok: false, reason: entries.reason };
   return {
     ok: true,
