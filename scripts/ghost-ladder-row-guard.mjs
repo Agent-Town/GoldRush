@@ -86,7 +86,15 @@ export function findGhosts(root) {
   // F-2226-1: only a board that is NOT main can be frozen relative to main, so the cross-check
   // costs one `git show` and only on the path that needs it.
   const cross = tree === 'main' ? { source: 'not-needed', masters: new Set() } : mainShipped(root);
-  const ghosts = masterRows(backlog).flatMap((row) => {
+  // F-2336-1: the SUBJECT SET, so `0 ghost ladder row(s)` stops being byte-identical between
+  // "I checked four rows and none is a ghost" and "I selected nothing to check". Every other
+  // declaration this file carries (F-2226-1, F-2245-1) names a corpus feeding the CLASSIFIER;
+  // none of them moves when the SELECTOR comes back empty, because the selector is upstream of
+  // all three. `clipboard` is carried beside `rows` because the two zeros mean different things:
+  // no ladder rows at all, versus rows that exist but name no master.
+  const rows = masterRows(backlog);
+  const clipboard = backlog.split('\n').filter((line) => LEAD_CLIPBOARD.test(line)).length;
+  const ghosts = rows.flatMap((row) => {
     const verdict = verdicts.get(row.master);
     if (verdict?.verdict === 'SHIPPED') return [{ ...row, evidence: verdict.evidenceSummary }];
     if (cross.masters.has(row.master)) {
@@ -100,6 +108,8 @@ export function findGhosts(root) {
   });
   return {
     ghosts,
+    rows: rows.length,
+    clipboard,
     tree,
     treeDetail: classified.corpusTreeDetail ?? '',
     crossSource: cross.source,
@@ -168,11 +178,24 @@ function main() {
   const rootIndex = process.argv.indexOf('--root');
   const root = path.resolve(rootIndex === -1 ? process.cwd() : process.argv[rootIndex + 1]);
   const {
-    ghosts, tree, treeDetail, crossSource, crossDetail, reviewsOk, reviewsSource, reviewsReason, goalsSource,
+    ghosts, rows, clipboard, tree, treeDetail, crossSource, crossDetail, reviewsOk, reviewsSource,
+    reviewsReason, goalsSource,
   } = findGhosts(root);
   console.log('=== ghost-ladder-row-guard ===');
   for (const ghost of ghosts) console.log(`GHOST line ${ghost.line} ${ghost.path} — ${ghost.evidence}`);
   console.log(`${ghosts.length} ghost ladder row(s).`);
+  // F-2336-1: printed ALWAYS, including the happy path (F-2208-1) -- a declaration that appears
+  // only on failure re-creates the ambiguity it removes. This is the one number that separates
+  // "no ghosts among N rows" from "no rows".
+  //
+  // DELIBERATELY NOT A REFUSAL, and the restraint is MEASURED rather than stylistic (F-2218-1).
+  // An empty subject set is the LAWFUL RESTING STATE OF A DRY BOARD: a fire ladders a master (the
+  // set rises) and the drain retires the row (it returns to 0). Measured s2336 over every
+  // BACKLOG.md revision since this guard was born at 7cfa8bb7 -- 37 transitions, oscillating
+  // constantly, e.g. d79627ea 0->1 when s2291 authored and 46e20af7 1->0 when s2293 drained.
+  // So `rows === 0` would red this gate on most dry boards, i.e. most of the time, and would be
+  // excused into uselessness inside a week (F-1460-1, the `cross-engine` fate).
+  console.log(`ladder corpus: ${rows} master row(s) selected from ${clipboard} clipboard-lead row(s).`);
   // F-2226-1: declared ALWAYS, including the happy path (F-2208-1). Nothing on this path
   // refuses on an ordinary non-main tree, so a line that appeared only on failure would
   // re-create the very ambiguity it removes -- and the two zeros above ("no ghosts exist" vs
