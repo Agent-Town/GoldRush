@@ -6,9 +6,9 @@
       "fingerprint": "8c859fddc1a9",
       "excerpt": "# It was: find \"$ROOT/tasks/runs\" -name '*.log' -mtime +3 -delete 2>/dev/null"
     },
-    "CLAUDE.md -> lane-runner-v3.sh:541": {
+    "CLAUDE.md -> lane-runner-v3.sh:567": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 541,
+      "line": 567,
       "fingerprint": "8c859fddc1a9",
       "excerpt": "# It was: find \"$ROOT/tasks/runs\" -name '*.log' -mtime +3 -delete 2>/dev/null"
     },
@@ -24,9 +24,9 @@
       "fingerprint": "48544d0754ff",
       "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
     },
-    "CLAUDE.md -> lane-runner-v3.sh:539": {
+    "CLAUDE.md -> lane-runner-v3.sh:565": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 539,
+      "line": 565,
       "fingerprint": "48544d0754ff",
       "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
     },
@@ -36,21 +36,21 @@
       "fingerprint": "4c17c1c59c24",
       "excerpt": "LOG=\"logs/fire-$(date +%Y%m%d).log\""
     },
-    "scripts/fire.md -> lane-runner-v3.sh:422": {
+    "scripts/fire.md -> lane-runner-v3.sh:448": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 422,
+      "line": 448,
       "fingerprint": "2fc4c563a6a1",
       "excerpt": "# default gpt-5.6-sol@medium (owner ruling 2026-07-10: Sol over Terra, mid effort for normal tasks; "
     },
-    "scripts/fire.md -> lane-runner-v3.sh:423": {
+    "scripts/fire.md -> lane-runner-v3.sh:449": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 423,
+      "line": 449,
       "fingerprint": "808e0ab6983e",
       "excerpt": "cd \"$wd\" && \"$codex_bin\" exec -m \"${cx_model:-gpt-5.6-sol}\" -c model_reasoning_effort=\"${cx_effort:-"
     },
-    "scripts/fire.md -> lane-runner-v3.sh:171": {
+    "scripts/fire.md -> lane-runner-v3.sh:197": {
       "target": "scripts/lane-runner-v3.sh",
-      "line": 171,
+      "line": 197,
       "fingerprint": "b064925c8381",
       "excerpt": "resolve_codex_bin() { # echoes the first client meeting CODEX_FLOOR; rc 1 if none does"
     },
@@ -96,9 +96,9 @@
       "fingerprint": "5a95e83cbbe1",
       "excerpt": "if (leaf.mergeHash) assert.match(leaf.mergeHash, /^[0-9a-f]{40}$/);"
     },
-    "scripts/fire.md -> src/game/Game.ts:2478": {
+    "scripts/fire.md -> src/game/Game.ts:2479": {
       "target": "src/game/Game.ts",
-      "line": 2478,
+      "line": 2479,
       "fingerprint": "c94bed4f2080",
       "excerpt": "placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation),"
     },
@@ -216,9 +216,9 @@
       "fingerprint": "5df9337b3bb3",
       "excerpt": "🔺 **ONE OWNER CHOICE in this digest, and it is a good-news one.** The county's first standing means"
     },
-    "scripts/fire.md -> marketing/outbox/gazette-queue.md:1454": {
+    "scripts/fire.md -> marketing/outbox/gazette-queue.md:1464": {
       "target": "marketing/outbox/gazette-queue.md",
-      "line": 1454,
+      "line": 1464,
       "fingerprint": "d7293afa016e",
       "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
     },

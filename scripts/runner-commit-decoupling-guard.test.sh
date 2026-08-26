@@ -146,6 +146,50 @@ if :; then
   rm -rf "$delta_probe"
 fi
 
+# --- 1c. F-2319-1: factory accounting is withheld; lane evidence under logs/ is NOT ---
+# One EXACT-SHAPE assertion, and it is a CONTRACT rather than a mirror: it fails in BOTH
+# directions on purpose. Extra entries mean the factory's own accounting was swept into a
+# lane commit (F-2316-1, logs/guard-stats.jsonl into f86d3412c). MISSING entries mean a
+# well-meaning cure excluded logs/ wholesale and took logs/session-scratch/** lane evidence
+# with it — 136 files across 14 commits, measured s2319 — which trades a hygiene hole for a
+# RETENTION LAW one. Both failures are silent in production, so the shape is pinned here.
+if :; then
+  acct_probe="$(mktemp -d "${TMPDIR:-/tmp}/s2319-guard-XXXXXX")"
+  (
+    cd "$acct_probe" || exit 1
+    git init -q .
+    git config user.email guard@local
+    git config user.name guard
+    mkdir -p src logs
+    printf 'seed\n' > src/seed.ts
+    git add -A
+    git commit -q -m init
+    baseline="$(mktemp "${TMPDIR:-/tmp}/s2319-baseline-XXXXXX")"
+    LANE_RUNNER_COMMIT_PROBE=capture bash "$RUNNER" "$acct_probe" "$baseline"
+    # the run writes: real content, lane EVIDENCE in a logs/ SUBDIRECTORY, and the
+    # factory's own accounting DIRECTLY in logs/ — all three born after dispatch.
+    mkdir -p logs/session-scratch/s2319/raw
+    printf 'content\n' > src/game.ts
+    printf 'evidence\n' > logs/session-scratch/s2319/probe.mjs
+    printf '{}\n' > logs/session-scratch/s2319/raw/run-01.json
+    printf '{"gate":1}\n' > logs/guard-stats.jsonl
+    printf '<html>\n' > logs/dashboard.html
+    printf 'stdout\n' > logs/lane-runner.out
+    LANE_RUNNER_COMMIT_PROBE=commit bash "$RUNNER" "$acct_probe" "$baseline" \
+      'runner(probe): accounting' "$acct_probe/runner.log"
+    rm -f "$baseline" "$baseline.ids" "$baseline.hashes"
+    git show --name-only --format='' HEAD | sed '/^$/d' | sort | tr '\n' ',' > result
+  )
+  acct_expected='logs/session-scratch/s2319/probe.mjs,logs/session-scratch/s2319/raw/run-01.json,src/game.ts,'
+  acct_files="$(cat "$acct_probe/result" 2>/dev/null || printf 'PROBE-DID-NOT-RUN')"
+  if [ "$acct_files" = "$acct_expected" ]; then
+    ok "factory accounting withheld; logs/session-scratch evidence and src still committed"
+  else
+    bad "F-2319-1 contract broken — expected '$acct_expected' got '$acct_files'"
+  fi
+  rm -rf "$acct_probe"
+fi
+
 # --- 2. CLASS: neither commit site is gated on the add's exit code -------------------
 if grep -qE 'git add -A --.*&&[[:space:]]*git commit' "$RUNNER"; then
   bad "a commit site is still gated on the add's rc (\`&& git commit\`) — an ignored path will strand finished work"
@@ -188,6 +232,34 @@ if [ -z "$SELF_CHECK" ]; then
     bad "RED PATH DID NOT FIRE: a scratch runner with the old broad commit still passed"
   else
     ok "red path fires — restoring the old broad commit sweeps baseline dirt and is rejected"
+  fi
+  rm -rf "$scratch"
+fi
+
+# --- 6. F-2319-1 RED PATH: disarm the factory-accounting test ------------------------
+if [ -z "$SELF_CHECK" ]; then
+  scratch="$(mktemp -d "${TMPDIR:-/tmp}/s2319-red-XXXXXX")"
+  sed 's@^      logs/\*)$@      logs/__never_matches__)@' "$RUNNER" > "$scratch/lane-runner-v3.sh"
+  if bash "$0" "$scratch/lane-runner-v3.sh" >/dev/null 2>&1; then
+    bad "RED PATH DID NOT FIRE: a runner that no longer withholds factory accounting still passed"
+  else
+    ok "red path fires — a runner that sweeps logs/ accounting into lane commits is rejected"
+  fi
+  rm -rf "$scratch"
+fi
+
+# --- 7. F-2319-1 REVERSE CONTROL: the OVER-GENERAL cure must fail too ----------------
+# Deleting the `logs/*/*` keep-arm turns the test into a wholesale logs/ exclusion — which
+# is the cure F-2316-1 RECOMMENDED and which its BACKLOG row still recommends in writing.
+# It cures the sweep and opens a RETENTION hole, so it must be rejected just as loudly as
+# the defect. Without this arm the guard would green the very mistake it exists to prevent.
+if [ -z "$SELF_CHECK" ]; then
+  scratch="$(mktemp -d "${TMPDIR:-/tmp}/s2319-rev-XXXXXX")"
+  sed '/^      logs\/\*\/\*) : ;;$/d' "$RUNNER" > "$scratch/lane-runner-v3.sh"
+  if bash "$0" "$scratch/lane-runner-v3.sh" >/dev/null 2>&1; then
+    bad "REVERSE CONTROL DID NOT FIRE: a wholesale logs/ exclusion (drops session-scratch evidence) still passed"
+  else
+    ok "reverse control fires — a wholesale logs/ exclusion is rejected (retention hole)"
   fi
   rm -rf "$scratch"
 fi

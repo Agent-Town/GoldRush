@@ -1,3 +1,5 @@
+> ⛔ SUPERSEDED 2026-08-26 — DO NOT QUEUE. Its s2308 stop named the third wall (the L1 ledger reader 256 KiB cap, outside its firewall); tasks/door-epic-envelope-v2.md inherits the whole scope with the widened firewall. Kept per the retention law.
+
 # Task door-epic-envelope: ONE law for the whole door envelope — duration, bytes, and entries all derive from the contract (lane-c, prefix "fix:")
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.

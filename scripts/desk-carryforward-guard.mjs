@@ -159,15 +159,24 @@ import { corpusTree } from './corpus-tree.mjs';
 import { frozenTreeCheck } from './corpus-tree.mjs';
 
 /**
- * Same FIVE spellings desk-declaration-guard matches — four measured s1472, the
- * backtick U+0060 added s1542 (F-1542-1). Keep these two literals identical:
- * this guard's failure mode on a missed header is the loudest one in the
- * factory. deskTail() returns null, deskItems(null) returns [], so `live` is
- * empty and EVERY inherited item reads as silently dropped — measured on the
- * real s1529 handoff (aab5dfb3): "this desk: 0 items · dropped: 7", rc=1,
- * against a fire that had in fact carried all 8 forward correctly.
+ * The desk-word pattern is IMPORTED from desk-declaration-guard.mjs, not copied
+ * — F-2322-1, s2322. See the declaration's own site for the five spellings and
+ * the measured reason it is single-sourced.
+ *
+ * What this file used to say, kept because it states the STAKES better than the
+ * declaration site does: this guard's failure mode on a missed header is the
+ * loudest one in the factory. deskTail() returns null, deskItems(null) returns
+ * [], so `live` is empty and EVERY inherited item reads as silently dropped —
+ * measured on the real s1529 handoff (aab5dfb3): "this desk: 0 items ·
+ * dropped: 7", rc=1, against a fire that had in fact carried all 8 forward
+ * correctly.
+ *
+ * The instruction it used to carry — "Keep these two literals identical" —
+ * undercounted its own siblings: there were THREE copies, not two. A hand-
+ * maintained agreement contract that cannot even count its parties is the
+ * argument for single-sourcing, not against it.
  */
-const DESK_WORD = /OWNER(?:'S|’S|S|`S)? DESK/g;
+import { DESK_WORD } from './desk-declaration-guard.mjs';
 /**
  * Finding ids, including the MULTI-SEGMENT alpha shapes the milk pile uses.
  * Caught by this guard's own ground-truth fixture (s1533): the first draft was

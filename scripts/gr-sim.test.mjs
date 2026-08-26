@@ -1,18 +1,18 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
-import { homedir } from 'node:os';
-import { join } from 'node:path';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
+import { installedNodeEngines } from './cross-engine-skip.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const NODE_ENGINES = [
-  '/opt/homebrew/bin/node',
-  join(homedir(), '.nvm/versions/node/v23.11.1/bin/node'),
-].filter(existsSync);
+// F-2321-1: the engine list lives in cross-engine-skip.mjs, beside the decision it feeds. This file
+// deliberately does NOT adopt crossEngineSkipReason's fire-shell arm — that is an owner-priced
+// ruling (F-1408-2) scoped to wave-scaling-cross-engine, and extending it here would silently
+// delete this test's coverage from every fire. See the F-2321-1 row for the measurement.
+const NODE_ENGINES = installedNodeEngines();
 
 const ORDERS = [
   [{ verb: 'HARVEST', seam: 'gold-seam-1' }],
