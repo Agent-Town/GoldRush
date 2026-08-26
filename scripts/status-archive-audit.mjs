@@ -97,10 +97,17 @@ const git = (args) =>
 
 const commits = git(["log", "--format=%H", "--", "STATUS.md"]).trim().split("\n").filter(Boolean);
 
+// A null here is LAWFUL and routine: the parent of the commit that first created STATUS.md has
+// no such blob, so `git show` legitimately fails. The count is therefore DIAGNOSTIC, never a
+// refusal trigger on its own -- it exists so that the `examined === 0` refusal below can name
+// WHICH route emptied the corpus (F-2218-1: a swallow that is counted and named can no longer
+// empty a subject set in silence).
+let blobFailures = 0;
 const blobOf = (sha) => {
   try {
     return git(["show", `${sha}:STATUS.md`]);
   } catch {
+    blobFailures += 1;
     return null;
   }
 };
@@ -238,6 +245,61 @@ if (!quiet) {
   if (showAll) {
     for (const e of excluded) console.log(`ok-excluded ${e.sha}  ${e.why}  [${e.subject.slice(0, 70)}]`);
   }
+}
+
+// F-2337-1 — THE DENOMINATOR WAS DECLARED AND NOTHING READ IT.
+//
+// `examined` has been printed since s2224 ("across N STATUS.md commits"), and the verdict below
+// branches on `drops.length` ALONE. So when the walk examines NOTHING, `drops` is empty for the
+// most trivial of reasons and the tool prints an affirmative CLEAN at rc=0 -- a universal claim
+// ("0 handoff line-1s PERMANENTLY absent") about a corpus it never read. That is precisely the
+// polarity F-2278-1 named ONE ROUTE of, 200 lines up, in its own words: "CLEAN over an empty
+// corpus is not an answer". It guarded the `--limit <= 0` typo and left every other route open.
+//
+// MEASURED s2337, ground truth = a scratch board carrying ONE REAL DROP, control asserting its
+// own validity first (F-2215-1: arm A produced 460 B and read LOST rc=1, so the harness was real):
+//   (a) STATUS.md on disk but absent from history  -> CLEAN rc=0, examined=0
+//   (b) only a ROOT commit touches STATUS.md       -> CLEAN rc=0, examined=0
+//   (c) THE SAME REAL-DROP REPO with `git show` transiently failing -> CLEAN rc=0, examined=0
+// Arm (c) is the inversion that earns this cure: same repo, same binary, the verdict flips from
+// LOST rc=1 to CLEAN rc=0 because the instrument went blind, and the reverse control (a genuinely
+// clean board) is byte-length identical at 249 B with the same rc and the same verdict word.
+//
+// IS THE EMPTY STATE LAWFUL HERE? No -- and that question is what decides whether a declaration
+// deserves a REFUSAL or merely a printed number (s2336's rule, applied rather than assumed).
+// Checked before building this, because a refusal with no lawful-state analysis is worse than
+// decoration -- it blocks the factory (F-1460-1, the `cross-engine` fate):
+//   · the battery leg `--limit 40 --quiet` reads examined=40 on the live board;
+//   · `--limit N` cannot manufacture this -- the loop breaks on `examined >= limit`, so it walks
+//     PAST merges and unreadable blobs until it has N examinable commits. Measured on the live
+//     board: --limit 1/2/5/40 -> examined 1/2/5/40. A small limit is safe by construction;
+//   · the existing fixture (`status-archive-arg-guard.test.mjs`) reads examined=1.
+// So examined===0 is unreachable in every lawful invocation, and refusing cannot red real work.
+//
+// 2 = "could not answer", against 1 = "answered, and the answer refuses" -- the convention
+// drain-block-check, dry-board-probe, master-shipped-classifier, review-evidence-audit and
+// nul-audit already carry. The route is a STRING for F-2212-1's reason, and it discriminates
+// because the three name DIFFERENT owed acts: a wrong GR_REPO, a board too young to audit, and
+// an instrument that could not read the blobs it found.
+if (examined === 0) {
+  const route =
+    commits.length === 0
+      ? "no-history"
+      : blobFailures > 0
+        ? "blobs-unreadable"
+        : "nothing-examinable";
+  const why = {
+    "no-history": `${REPO} has no STATUS.md history at all (is GR_REPO pointing at the right tree?)`,
+    "blobs-unreadable": `${commits.length} STATUS.md commit(s) found but ${blobFailures} blob read(s) failed -- git could not be read, so this is instrument failure, not a clean board`,
+    "nothing-examinable": `${commits.length} STATUS.md commit(s) found but none has exactly one parent -- no line-1 transition is unambiguous`,
+  }[route];
+  // Both channels, and on STDOUT even under --quiet: the battery reads rc, a human reads stdout,
+  // and per F-2211-1 an stdout-classifying caller reads an empty string as silence.
+  const banner = `⛔ CANNOT VERIFY (${route}): examined 0 STATUS.md commits -- ${why}`;
+  console.log(banner);
+  console.log("  CLEAN here would be a claim about a corpus this run never read.");
+  console.error(banner);
+  process.exit(2);
 }
 
 const verdict = drops.length === 0 ? "CLEAN" : "LOST";
