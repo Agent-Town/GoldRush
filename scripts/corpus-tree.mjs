@@ -66,6 +66,93 @@ export function corpusTree(root) {
 }
 
 /**
+ * 'on-branch' | 'detached' | 'unverifiable' — is HEAD on a branch, or pinned to a
+ * bare commit?
+ *
+ * F-2332-1 (s2332). `corpusTree` answers WHICH TREE, and `frozenTreeCheck` uses
+ * that as a proxy for IS THIS CORPUS FRESH. The two come apart in the MAIN
+ * worktree: a detached HEAD there reports 'main' — the modal healthy value, and
+ * the value a correct run prints — while `STATUS.md`, `tasks/BACKLOG.md` and
+ * `tasks/goals.json` are frozen at that commit exactly as they are in the linked
+ * worktree this family already refuses.
+ *
+ * MEASURED s2332 against desk-carryforward-guard, ground truth = a REAL silent
+ * desk drop on main, control asserting its own validity first (F-2215-1):
+ *   healthy main worktree  -> rc=1, names F-BBB-1                    (the control)
+ *   frozen LINKED worktree -> rc=2, REFUSING                         (already cured)
+ *   SAME repo, main worktree DETACHED one commit back
+ *                          -> rc=0, `PASS — every item ... carried`  (this defect)
+ * The false PASS differs from a GENUINELY clean board in one substring — the
+ * session label of the desk it happened to read (`s1001` vs `s1002`) — while the
+ * verdict line, all three counts, `corpus tree : main` and the exit code are
+ * byte-identical. A reader cannot falsify a plausible session number.
+ *
+ * ⚠️ SEVERITY STATED HONESTLY AND DELIBERATELY NOT INFLATED: LATENT. No script in
+ * the repo detaches the MAIN worktree (swept s2332), and §3.0b's mandated gate
+ * tree is made with `git worktree add`, which is LINKED and therefore already
+ * caught. What earns it a cure is that the harm is a certified false PASS, in a
+ * gate, in the default mode, and the sibling half of the same staleness has had a
+ * four-finding apparatus built against it since s2232 — this is the second of the
+ * two ways a tree can be frozen, and only one was being asked about.
+ *
+ * WHY DETACHMENT AND NOT "IS HEAD ON main": because a fire's OWN main worktree is
+ * on `main` with UNCOMMITTED STATUS.md edits for its entire working life, so any
+ * freshness test that compares local text to `main:STATUS.md` reads 'different'
+ * and would refuse on every lawful handoff — F-1460-1's fate, a gate excused into
+ * uselessness inside a week. Detachment is never a lawful fire state, so this arm
+ * is structurally unable to fire on the prescribed path.
+ */
+export function headDetached(root) {
+  // `symbolic-ref -q HEAD` is the narrow question: exit 0 + a ref when HEAD names a
+  // branch, exit 1 and SILENT when it is detached. Only ever called once the tree
+  // has been identified as 'main', so git has already answered here.
+  const r = spawnSync('git', ['-C', root, 'symbolic-ref', '-q', 'HEAD'], { encoding: 'utf8' });
+  if (r.error || r.status === null) return 'unverifiable';
+  if (r.status === 0 && String(r.stdout).trim()) return 'on-branch';
+  if (r.status === 1) return 'detached';
+  return 'unverifiable';
+}
+
+/**
+ * The refusal for a MAIN worktree that is pinned to a bare commit.
+ *
+ * A SEPARATE text from frozenTreeRefusal for this file's stated reason: that one
+ * opens "this is a linked worktree", which is false here, and the two owe
+ * different acts — that one says re-run from main, this one says `git checkout
+ * main` first.
+ */
+export function detachedHeadRefusal(name) {
+  return [
+    `${name}: REFUSING — this is the main worktree but its HEAD is DETACHED.`,
+    '  STATUS.md and tasks/BACKLOG.md are TRACKED, so they are frozen at that commit',
+    '  and the desk(s) above are a self-consistent reading of the WRONG handoff — the',
+    '  same staleness this guard already refuses in a linked worktree (F-2232-1), by',
+    '  the other of the two ways a tree can be frozen (F-2332-1, proven by',
+    '  manufacturing: a real silent drop on main read as PASS at rc=0 from here).',
+    '  Run `git checkout main`, or pass --root <a tree on main>.',
+  ].join('\n');
+}
+
+/**
+ * The refusal for a main worktree whose HEAD state could not be read at all.
+ *
+ * SEPARATE from detachedHeadRefusal for this file's standing reason: that one opens
+ * "its HEAD is DETACHED", which is precisely what is unknown here, and the two owe
+ * different acts — that one says `git checkout main`, this one says go look at git.
+ * Same split as frozenTreeRefusal vs unverifiableTreeRefusal one level up.
+ */
+export function unverifiableHeadRefusal(name) {
+  return [
+    `${name}: REFUSING — git could not say whether this main worktree's HEAD is`,
+    '  detached. `git symbolic-ref -q HEAD` did not answer, so this run cannot tell a',
+    '  tree that is on `main` from one frozen at a bare commit. STATUS.md and',
+    '  tasks/BACKLOG.md are TRACKED, so a PASS would certify a board that might never',
+    '  have been read (F-2332-1). This is an INSTRUMENT failure, not a board state:',
+    '  check git, then re-run. (A non-git root is NOT this case — it never gets here.)',
+  ].join('\n');
+}
+
+/**
  * 'same' | 'different' | 'unverifiable' — is this frozen tree's STATUS.md line-1
  * the one main carries?
  *
@@ -173,6 +260,21 @@ export function frozenTreeCheck(root, statusText, name) {
   // F-2218-1's absent-vs-unreadable split.
   const tree = corpusTree(root);
   if (tree === 'tree-unverifiable') return unverifiableTreeRefusal(name);
+  // F-2332-1 (s2332): the OTHER way a tree is frozen. 'main' is the modal healthy
+  // value, so it cannot by itself carry the freshness claim this line is making.
+  //
+  // SCOPED to 'main' deliberately: 'no-git' must keep falling through to the
+  // permissive return below, since every legacy fixture in this family is a non-git
+  // root and refusing there would red them all (F-2243-1's restraint, F-1460-1's fate).
+  //
+  // The two answers are tested SEPARATELY and neither by inequality, because they owe
+  // DIFFERENT ACTS — 'detached' says `git checkout main`, 'unverifiable' says the
+  // instrument is broken. Collapsing them into `!== 'on-branch'` would print a
+  // DETACHED accusation for a git that simply did not answer, which is F-2225-1: a
+  // declaration naming a state the verdict did not come from.
+  const head = tree === 'main' ? headDetached(root) : 'not-asked';
+  if (head === 'detached') return detachedHeadRefusal(name);
+  if (head === 'unverifiable') return unverifiableHeadRefusal(name);
   if (tree !== 'linked-worktree') return null;
   const cmp = line1MatchesMain(root, statusText);
   // NOT `=== 'different'`: 'unverifiable' is the failure value, and per F-2212-1
