@@ -25,7 +25,7 @@ const serversByStorage = new WeakMap();
 
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 try {
-  const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
+  const { MAX_JSON_BYTES, onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
   const { submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
   const { MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
@@ -37,7 +37,7 @@ try {
   };
   for (backend of ['kv', 'sqlite']) {
     checks = 0;
-    checkDoorEnvelopes(validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS);
+    await checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS, MAX_JSON_BYTES);
     checkTapeBuildMetadata(validateTape);
     await checkEngineHashReel(onRequest);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
@@ -201,7 +201,7 @@ async function checkPosts(onRequest) {
   equal(tooLarge.body.error, 'reel_too_large', '413 names the compact-reel cure');
 }
 
-function checkDoorEnvelopes(validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, recorderTicks, playbookEntries) {
+async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, recorderTicks, playbookEntries, maxRequestBytes) {
   equal(recorderTicks, 18_000, 'browser recorder keeps its ten-minute DoS bound');
   equal(playbookEntries, 2_000, 'playbook authoring keeps its own 2,000-intent UX bound');
   equal([
@@ -211,14 +211,49 @@ function checkDoorEnvelopes(validateTape, validateRunTape, submittedRunTape, max
     'e1-night-shift',
     'e1-twin-banks',
     'e1-baron',
-  ].map((contractId) => [contractId, ...Object.values(runTapeEnvelopeForContract(contractId))]), [
-    ['the-claim', 18_000, 3_600, 592_384],
-    ['e1-drill-yard', 18_000, 3_600, 592_384],
-    ['e1-dry-gulch', 18_001, 3_601, 592_544],
-    ['e1-night-shift', 22_501, 4_501, 736_544],
-    ['e1-twin-banks', 18_001, 3_601, 592_544],
-    ['e1-baron', 20_349, 4_070, 667_584],
-  ], 'E1 three-axis door envelope table is pinned');
+  ].map((contractId) => {
+    const envelope = runTapeEnvelopeForContract(contractId);
+    return [contractId, envelope.maxTicks, envelope.maxTapeBytes, envelope.maxEntries, maxRequestBytes];
+  }), [
+    ['the-claim', 18_000, 592_384, 3_600, 802_080],
+    ['e1-drill-yard', 18_000, 592_384, 3_600, 802_080],
+    ['e1-dry-gulch', 18_001, 592_544, 3_601, 802_080],
+    ['e1-night-shift', 22_501, 736_544, 4_501, 802_080],
+    ['e1-twin-banks', 18_001, 592_544, 3_601, 802_080],
+    ['e1-baron', 20_349, 667_584, 4_070, 802_080],
+  ], 'E1 four-axis door envelope table is pinned');
+
+  const widestCharacter = '\ud800';
+  const maxStack = {
+    model: widestCharacter.repeat(256), harness: widestCharacter.repeat(256), harnessVersion: widestCharacter.repeat(256),
+    worldModel: widestCharacter.repeat(64), config: widestCharacter.repeat(256), source: `https://example.com/${widestCharacter.repeat(236)}`,
+    tokensIn: 1_000_000_000_000, tokensOut: 1_000_000_000_000, calls: 1_000_000_000_000,
+  };
+  const trestleEnvelope = runTapeEnvelopeForContract('e2-trestle');
+  const maximumTape = {
+    ...tape('x'.repeat(64), 12, 'fnv1a32:1234abcd', 'e2-trestle'),
+    seed: widestCharacter.repeat(256),
+    inputLog: {
+      ...tape('trestle', 12, 'fnv1a32:1234abcd', 'e2-trestle').inputLog,
+      seed: widestCharacter.repeat(256),
+      durationTicks: 1_195,
+      entries: Array.from({ length: 1_195 }, (_, t) => ({
+        t, mx: 0, my: 0, a: Array.from({ length: 24 }, () => ({ type: 'weapon_toggle' })),
+      })),
+    },
+  };
+  const maximumLawfulRequest = bankedPost(maximumTape, 'a'.repeat(32));
+  maximumLawfulRequest.epochId = 'epoch-2-steamworks';
+  maximumLawfulRequest.seedMode = 'live';
+  maximumLawfulRequest.profileName = widestCharacter.repeat(24);
+  maximumLawfulRequest.stack = maxStack;
+  maximumLawfulRequest.party = { riderCount: 4, riders: Array.from({ length: 4 }, () => ({ name: widestCharacter.repeat(24), stack: maxStack })) };
+  const metadataBytes = Buffer.byteLength(JSON.stringify({ ...maximumLawfulRequest, tape: null })) - Buffer.byteLength('null');
+  ok(maxRequestBytes >= trestleEnvelope.maxTapeBytes + metadataBytes,
+    `outer and reader cap admits the measured maximum lawful request (${trestleEnvelope.maxTapeBytes + metadataBytes} bytes)`);
+  const maximumResponse = await call(onRequest, 'POST', '/api/standings', maximumLawfulRequest, makeKv());
+  equal(maximumResponse.status, 200,
+    `maximum escaped metadata and near-envelope Trestle tape pass the real standings handler: ${JSON.stringify(maximumResponse.body)}`);
   equal([
     'the-claim',
     'e1-drill-yard',

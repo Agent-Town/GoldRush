@@ -113,7 +113,7 @@ const CONTRACT_EPOCHS = new Map(
 );
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 export const MAX_JSON_BYTES = Math.max(...CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
-  .map((contract) => runTapeEnvelopeForContract(contract.id).maxTapeBytes))) + 8 * 1024;
+  .map((contract) => runTapeEnvelopeForContract(contract.id).maxTapeBytes))) + 44 * 1024;
 const MAX_ROWS = 100;
 const ASSAY_QUEUE_INDEX_KEY = 'assay-queue-index';
 const ASSAY_INDEX_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId', 'submittedAt']);
