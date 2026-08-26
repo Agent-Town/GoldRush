@@ -364,6 +364,9 @@ const BARON_PROPS_3D_TRIANGLES = { launcher: 2_020, rocket: 876, powder_keg: 704
 const TRAIL_GUIDE_DWELL_MS = 4_000;
 const GREEN_WAYPOINT_CONTRACT_ID = 'e1-dry-gulch';
 const COUNTY_ANON_ID_KEY = 'gr.countyStandings.anonId.v1';
+// Browsers cap shared in-flight keepalive bodies at 64 KiB (65,536 B); s2310 measured
+// 60,000 B accepted and 65,536 B refused. This lower threshold leaves load-bearing shared-quota margin.
+const KEEPALIVE_SAFE_BYTES = 60_000;
 
 // The tile factory is the sole birth-loader reader (Loader Contract): sim
 // entries transform tileParams here, before any system builds on them.
@@ -2419,6 +2422,10 @@ export class Game {
           },
         }),
       };
+      Object.assign(window.__GR_TEST__, {
+        submitCountyStandingForTest: (tapeBytes: number) =>
+          this.postCountyStanding(JSON.stringify({ tape: 'x'.repeat(tapeBytes) })).then((response) => response.ok),
+      });
     }
     this.cameraRig.snapTo(this.localActor.group.position);
     this.state.transition('playing');
@@ -7239,34 +7246,40 @@ export class Game {
         sha256Hex(seed),
         sha256Hex(JSON.stringify(tape?.inputLog ?? [])),
       ]);
-      await fetch(gameApiUrl('/api/standings'), {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          contractId: this.activeContract.id,
-          epochId: epoch.id,
-          score: {
-            secured: true,
-            waves: Math.max(0, Math.floor(score.waves)),
-            timeAlive: Math.max(0, score.timeAlive),
-            gold: Math.max(0, Math.floor(score.gold)),
-            baseValue: Math.max(0, Math.floor(score.baseValue ?? 0)),
-          },
-          profileName: activeProfileName(),
-          anonId: countyAnonId(),
-          difficulty: this.difficultyPreset,
-          seed,
-          seedMode: pinnedSeed === null ? 'live' : 'bench',
-          seedHash,
-          inputLogHash,
-          ...(party ? { party } : {}),
-          ...(submittedTape ? { tape: submittedTape } : {}),
-        }),
-        keepalive: true,
+      const body = JSON.stringify({
+        contractId: this.activeContract.id,
+        epochId: epoch.id,
+        score: {
+          secured: true,
+          waves: Math.max(0, Math.floor(score.waves)),
+          timeAlive: Math.max(0, score.timeAlive),
+          gold: Math.max(0, Math.floor(score.gold)),
+          baseValue: Math.max(0, Math.floor(score.baseValue ?? 0)),
+        },
+        profileName: activeProfileName(),
+        anonId: countyAnonId(),
+        difficulty: this.difficultyPreset,
+        seed,
+        seedMode: pinnedSeed === null ? 'live' : 'bench',
+        seedHash,
+        inputLogHash,
+        ...(party ? { party } : {}),
+        ...(submittedTape ? { tape: submittedTape } : {}),
       });
+      await this.postCountyStanding(body);
     } catch {
       // County standings are optional and must never block the secure ceremony.
     }
+  }
+
+  private postCountyStanding(body: string): Promise<Response> {
+    const bodyBytes = new TextEncoder().encode(body).length;
+    return fetch(gameApiUrl('/api/standings'), {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body,
+      ...(bodyBytes < KEEPALIVE_SAFE_BYTES ? { keepalive: true } : {}),
+    });
   }
 
   private agentAutonomyDelta(securedThisRun: boolean): { before: number; after: number } | undefined {
