@@ -486,7 +486,7 @@ function main() {
   // master-shipped-classifier and review-evidence-audit already carry.
   //
   // SILENT on the healthy read, loud otherwise — this file's OWN established convention
-  // (`dispatchCorpus` at :713 declares 'absent' always, refuses 'unreadable', and says nothing on
+  // (`dispatchCorpus` at :967 declares 'absent' always, refuses 'unreadable', and says nothing on
   // 'read'). F-2208-1's "declare even on the happy path" argument governs a corpus whose failure
   // state is a SILENT DEGRADATION; here every non-main state REFUSES, so the absence of a banner
   // is not ambiguous and an always-on line on §3.0's most-run command would be the noise that
@@ -960,7 +960,7 @@ function escapeRe(s) {
 // Returns 'read' | 'absent' | 'unreadable'. Deliberately a STRING, for F-2212-1's reason: any
 // careless truthiness test at a call site coerces every failure value to TRUE — i.e. toward
 // NOTICING rather than toward the permissive silence — fail-safe by construction, not by
-// discipline. Note this file's OTHER discriminator, `ancestryOfMain` (:205), exits 1 on its
+// discipline. Note this file's OTHER discriminator, `ancestryOfMain` (:313), exits 1 on its
 // refusal; the newer 2 = "could not answer" / 1 = "answered, and the answer refuses" convention
 // (F-2214-1, F-2215-1, F-2217-1) is used for the NEW arm only. Re-coding the old one would be a
 // drive-by change to a cure that is working, so it is deliberately left alone.

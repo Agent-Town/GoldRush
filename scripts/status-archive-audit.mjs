@@ -202,7 +202,7 @@ for (const sha of commits) {
   // `s<N> handoff \(line-1 archive`, which silently assumed every line-1 worth archiving is a
   // HANDOFF line. It is not: a fire that DIES mid-work leaves a LOCK line as its last line-1, and
   // its successor must archive THAT. This script already knows the difference -- it records
-  // `kind` at :115 and prints "destroyed s<N>'s lock line" at :146 -- so the old predicate
+  // `kind` at :178 and prints "destroyed s<N>'s lock line" at :235 -- so the old predicate
   // contradicted the script's own output, demanding a "handoff" bullet for a fire that never
   // wrote one. Measured s1690: s1689 reached FIRE END rc=0 mid-drain, s1690 archived its lock
   // line honestly as `- **s1689 lock line (line-1 archive -- ...)`, and this guard reported it
