@@ -270,7 +270,48 @@ export function deskTail(line) {
   return hits.length ? line.slice(hits[hits.length - 1].index) : null;
 }
 
-/** A row's GATE clause — the LAST one, since row prose quotes earlier gates. */
+/**
+ * A row's GATE clause — the LAST one, since row prose quotes earlier gates.
+ *
+ * THE SELECTOR IS BOUNDED; THE READER IS NOT — and only one of the two has ever
+ * been wrong (F-2330-1, measured s2330 over the live ledger: 2,140 addedRows()-
+ * shaped rows / 724 carrying a `GATE:` / 64 multi-token / 73 admitted).
+ *   - lastIndexOf() is a selection over the ROW'S OWN EDIT HISTORY, not a guess
+ *     about text: the house convention appends the current gate at end-of-line, so
+ *     every earlier `GATE:` is quoted history or a superseded clause BY
+ *     CONSTRUCTION. Measured in the RESTRICTIVE direction, which F-2255-1 did not
+ *     take: 12 rows where an EARLIER token would have been admitted and the last
+ *     is not — and 11 of the 12 CONFIRM the selector, each earlier token being a
+ *     quoted, discharged or superseded gate (F-2072-1 quotes "GATE: owner word on
+ *     the fork" and then records that the owner gave that word; F-1493-3's owner
+ *     word arrived and its live gate is now a merge). The 12th, F-2190-1, is a
+ *     multi-finding HOLD row whose owner-gated concern is F-2190-2 — which carries
+ *     its OWN row and is on the desk, so nothing is stranded.
+ *   - isOwnerGate() then reads the WHOLE TAIL — thousands of characters — which is
+ *     the unbounded half, and is where F-2255-1 found its 3 real false admissions.
+ * So cure effort belongs on the READER, never here. Do NOT bound this to a
+ * distance: F-2255-1 forbids it because it moves verdicts in the PERMISSIVE
+ * direction, and this measurement supplies the second, independent reason — there
+ * is nothing on this side to gain.
+ *
+ * THE ONE SHAPE THAT DOES DEFEAT IT, and the remedy — recorded here because the
+ * cure lived only in a handoff line and a ledger row, the two surfaces F-1654-1
+ * proved a fire does not read at decision time (F-2329-1, s2329; landed s2330):
+ * a row with NO gate clause can acquire a SPURIOUS one from a CITATION. s2329's
+ * row's only `GATE:` token was the prose "…REDS A GATE: `scripts/test-deploy-
+ * contract.sh:86`", so this returned a file path, isOwnerGate() correctly said no,
+ * and the row never entered the denominator at all. The guard then reported
+ * `owner-gated rows filed: 0` while structurally unable to see the owner row just
+ * filed — a PASS byte-identical to an earned one, since `unexamined by the parser:
+ * 0` and `undesked: 0` both read clean as well. The gap is in NEITHER number.
+ * ➡️ REMEDY, on the ROW and not on this function: append a real `GATE: OWNER — …`
+ * clause at END-OF-LINE, where lastIndexOf() will find it.
+ * ⓘ CENSUSED s2330: exactly ONE live row carries a single citation-shaped `GATE:`
+ * token — F-1217-1's "GATE: `<taskfile>` merges" — and it is a legitimate merge
+ * gate, correctly not an owner gate. The detector was validated against s2329's
+ * own PRE-CURE row, where it fires, and goes quiet on the cured one; so the "one
+ * hit" is a measurement and not a silence. s2329's instance was the only one.
+ */
 export function gateOf(rowText) {
   const i = rowText.toUpperCase().lastIndexOf('GATE:');
   return i === -1 ? '' : rowText.slice(i);
