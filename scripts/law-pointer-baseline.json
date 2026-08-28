@@ -54,6 +54,12 @@
       "fingerprint": "b064925c8381",
       "excerpt": "resolve_codex_bin() { # echoes the first client meeting CODEX_FLOOR; rc 1 if none does"
     },
+    "scripts/fire.md -> lane-runner-v3.sh:161": {
+      "target": "scripts/lane-runner-v3.sh",
+      "line": 161,
+      "fingerprint": "d33475a1afcb",
+      "excerpt": "trap 'cleanup; echo \"[lane-runner-v3] stopped (background tasks finish on their own)\"; exit 130' INT"
+    },
     "scripts/fire.md -> gen-audio.mjs:194": {
       "target": "scripts/gen-audio.mjs",
       "line": 194,
