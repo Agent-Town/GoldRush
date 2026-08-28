@@ -98,14 +98,48 @@ const NOT_SCANNED = new Map([
   ['STATUS.md', 'Its lettered `s9<letter>` law bullets ARE live law (fire.md §0 orders every fire to read them), but almost every citation it carries sits in frozen `- **sNNNN handoff` archives whose coordinates are DELIBERATELY stale — the RETENTION LAW restates rather than deletes, so the drift IS the provenance. Guarding those would red forever and be excused into uselessness inside a week (F-1460-1, the `cross-engine` fate). Measured s2197: both live law-bullet pointers were accurate.'],
 ]);
 
-/** The three families SURFACES draws from. A new law surface appears in one of these. */
+// s2342 (F-2342-1): the families below are ONE table, read by both the enumeration and the
+// declaration at the bottom, so the printed scan space cannot drift from what was actually
+// scanned. That is this file's own rule, stated twenty lines down about the live/frozen split:
+// derive from the file, never transcribe — a hardcoded description is a defect awaiting the
+// next edit.
+//
+// WHY IT IS PRINTED AT ALL. F-2197-1 made the closed SURFACES list visible, and its lesson was
+// F-2196-1's: "a boundary declared in a COMMENT is one only its author sees; a boundary the
+// instrument PRINTS is one every reader sees." That cure's OWN boundary then lived in a comment
+// -- the one-line "three families" header this block replaces -- so `NOT SCANNED : 6` reads as a
+// census of the REPO when it can only ever be a census of three directories. Measured s2342:
+// 13 .md files are named by a law surface, exist, are tracked, and are invisible to BOTH lists
+// (assets/LEDGER.md, tasks/BACKLOG.md, logs/suite-red-inventory.md, docs/HANDOVER-2026-07-20.md
+// which CLAUDE.md 1 makes read-first, and tasks/engine-era-law-v3.md, whose name is "law").
+//
+// SEVERITY, HONESTLY: no false green, no wrong verdict, and ZERO casualties -- of the 22
+// path-shaped coordinates in those files, 22 resolve and 0 rot. Like F-2197-1 and F-2198-1
+// before it, the defect cured here is the ABSENCE OF THE DECLARATION, not a casualty.
+//
+// AND THE FAMILIES ARE DELIBERATELY NOT WIDENED. law-surfaces.mjs says "Never widen by pattern"
+// and gives the reason: tasks/BACKLOG.md alone carries 2681 coordinates, almost all in frozen
+// findings prose whose drift IS the provenance, so scanning it would red forever and be excused
+// into uselessness inside a week (F-1460-1, the `cross-engine` fate). Declaring the edge is the
+// cure; moving it is the thing that must not happen by accident.
+const SCAN_FAMILIES = [
+  { label: '<root>/*.md', of: (listing) => listing('').filter((e) => e.isFile() && e.name.endsWith('.md')).map((e) => e.name) },
+  { label: 'scripts/*.md', of: (listing) => listing('scripts').filter((e) => e.isFile() && e.name.endsWith('.md')).map((e) => `scripts/${e.name}`) },
+  { label: '.claude/skills/*/SKILL.md', of: (listing) => listing('.claude/skills').filter((e) => e.isDirectory()).map((e) => `.claude/skills/${e.name}/SKILL.md`) },
+];
+
+const familyListing = (dir) => { try { return fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true }); } catch { return []; } };
+
+/** What the candidate enumeration below covered — DERIVED from the same table it enumerates. */
+function scanSpace() {
+  return SCAN_FAMILIES.map((f) => ({ label: f.label, count: f.of(familyListing).length }));
+}
+
+/** The families SURFACES draws from. A new law surface appears in one of these -- or, if it
+ *  lives anywhere else in the repo, in NONE of them; that edge is declared, not guessed. */
 function unscannedSurfaces() {
-  const listing = (dir) => { try { return fs.readdirSync(path.join(ROOT, dir), { withFileTypes: true }); } catch { return []; } };
-  const candidates = [
-    ...listing('').filter((e) => e.isFile() && e.name.endsWith('.md')).map((e) => e.name),
-    ...listing('scripts').filter((e) => e.isFile() && e.name.endsWith('.md')).map((e) => `scripts/${e.name}`),
-    ...listing('.claude/skills').filter((e) => e.isDirectory()).map((e) => `.claude/skills/${e.name}/SKILL.md`),
-  ];
+  const listing = familyListing;
+  const candidates = SCAN_FAMILIES.flatMap((f) => f.of(listing));
   const out = [];
   for (const rel of candidates) {
     if (SURFACES.includes(rel)) continue;
@@ -377,6 +411,15 @@ console.log(`  surfaces      : ${SURFACES.length + 1}`);
 
 // ADVISORY, always exit-neutral. This declares the edge of the scan so a NEW law surface is
 // visible on the next run rather than after N days (F-2197-1, after F-2196-1).
+//
+// s2342 (F-2342-1): printed ALWAYS, including the happy path, because a declaration that
+// appears only when something is unscanned re-creates the ambiguity it removes -- a reader of
+// "NOT SCANNED : 6" cannot otherwise tell a census of the repo from a census of three
+// directories. Derived from SCAN_FAMILIES, so it cannot drift from the enumeration.
+const space = scanSpace();
+console.log(`  scan space    : ${space.length} famil(ies), ${space.reduce((n, f) => n + f.count, 0)} candidate(s) — ${space.map((f) => `${f.label} (${f.count})`).join(', ')}`);
+console.log('                  a law surface OUTSIDE these is invisible to BOTH lists (F-2342-1)');
+
 const unscanned = unscannedSurfaces();
 if (unscanned.length) {
   console.log(`  NOT SCANNED   : ${unscanned.length} law-surface-shaped file(s) outside the closed SURFACES list —`);

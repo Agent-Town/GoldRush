@@ -331,3 +331,80 @@ test('a citation WITH a coordinate stays POINTER-owned and is not counted as an 
   assert.equal(r.status, 0, r.stdout);
   assert.match(r.stdout, /instruments\s+:\s+0\s+\(resolved 0, dead 0/);
 });
+
+// ---------------------------------------------------------------------------
+// F-2342-1 — F-2197-1 made the closed SURFACES list visible; its OWN boundary then lived in
+// a one-line comment. `NOT SCANNED : 6` reads as a census of the repo when it can only ever
+// be a census of three directories. These arms are about the declaration of the SCAN SPACE,
+// one level out from the arms above.
+// ---------------------------------------------------------------------------
+
+/** Pre-cure mutant: the scan-space declaration removed, everything else byte-identical. */
+function mutantWithoutScanSpace(t) {
+  const src = fs.readFileSync(SCRIPT, 'utf8');
+  const marker = 'const space = scanSpace();';
+  assert.ok(src.includes(marker), 'the mutant must find its subject — otherwise this proves nothing');
+  // Cut the three CONSUMER lines only. Filtering on `scanSpace()` alone would also delete the
+  // function's own `function scanSpace() {` header and leave an orphaned body — the mutant would
+  // die on a SyntaxError and the arm would "prove" the declaration is absent because NOTHING ran.
+  // A defect arm that crashes is silence wearing a costume; that is what the rc assertion below
+  // is for, and it is how this very mutant was caught on its first writing.
+  const cut = src.split('\n').filter((l) => (
+    !l.includes(marker)
+    && !l.includes('scan space    :')
+    && !l.includes('invisible to BOTH lists (F-2342-1)')
+  )).join('\n');
+  assert.notEqual(cut, src, 'the mutant must actually differ');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-law-scan-space-mutant-'));
+  const p = path.join(dir, 'law-pointer-guard.mjs');
+  fs.writeFileSync(p, cut);
+  fs.copyFileSync(path.join(path.dirname(SCRIPT), 'law-surfaces.mjs'), path.join(dir, 'law-surfaces.mjs'));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  return p;
+}
+
+test('SCAN SPACE: declared on the HAPPY path too — a declaration that appears only on failure re-creates the ambiguity it removes (F-2208-1)', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  const r = run(dir);
+  assert.equal(r.status, 0, r.stdout);
+  assert.match(r.stdout, /PASS/, 'this fixture is the happy path — the arm must exercise it');
+  assert.match(r.stdout, /scan space\s+:\s+\d+ famil\(ies\)/, 'the scan space must be declared even when nothing is unscanned');
+  assert.match(r.stdout, /invisible to BOTH lists/, 'and it must say what the edge MEANS');
+
+  const pre = spawnSync('node', [mutantWithoutScanSpace(t), '--root', dir], { encoding: 'utf8' });
+  assert.equal(pre.status, 0, pre.stdout);
+  assert.ok(pre.stdout.length > 0, 'PRE-CURE arm must really run — a silent control cannot be told from the silence it measures (F-2215-1)');
+  assert.doesNotMatch(pre.stdout, /scan space/, 'PRE-CURE: the scan space is undeclared — this is the defect');
+});
+
+test('SCAN SPACE: DERIVED from the families it enumerates, never transcribed', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  const before = run(dir).stdout.match(/scan space\s+:\s+\d+ famil\(ies\), (\d+) candidate\(s\)/);
+  assert.ok(before, 'the declaration must report a candidate count');
+
+  // A fourth skill appears. A DERIVED count moves; a hardcoded string does not.
+  fs.mkdirSync(path.join(dir, '.claude', 'skills', 'new-ritual'), { recursive: true });
+  fs.writeFileSync(path.join(dir, '.claude', 'skills', 'new-ritual', 'SKILL.md'), 'stub\n');
+  const after = run(dir).stdout.match(/scan space\s+:\s+\d+ famil\(ies\), (\d+) candidate\(s\)/);
+  assert.ok(after, 'the declaration must survive the new surface');
+  assert.equal(Number(after[1]), Number(before[1]) + 1, 'the candidate count must be derived from the real listing');
+  assert.match(run(dir).stdout, /\.claude\/skills\/\*\/SKILL\.md \(\d+\)/, 'each family must name itself');
+});
+
+// REVERSE CONTROL. The cure is to DECLARE the edge, never to MOVE it. law-surfaces.mjs says
+// "Never widen by pattern" and gives the reason: tasks/BACKLOG.md alone carries thousands of
+// deliberately-stale coordinates, so scanning it would red forever and be excused into
+// uselessness inside a week (F-1460-1). An over-general cure that widened SCAN_FAMILIES to
+// docs/ or tasks/ passes both arms above and is caught only here.
+test('SCAN SPACE (reverse control): the edge is DECLARED, not widened — a law-shaped .md outside the families stays unscanned', (t) => {
+  const dir = fixture(t, { law: LAW_OK, target: TARGET });
+  assert.equal(run(dir, '--update').status, 0);
+  fs.mkdirSync(path.join(dir, 'docs'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'docs', 'HANDOVER.md'), 'The epitaph is at `scripts/target.sh:3`.\n');
+  const r = run(dir);
+  assert.equal(r.status, 0, 'widening must not have happened — a docs/ pointer must not be checked, nor red');
+  assert.doesNotMatch(r.stdout, /docs\/HANDOVER\.md/, 'a file outside the three families is NOT enumerated — the declaration is what tells you so');
+  assert.match(r.stdout, /scan space\s+:/, 'and the declaration is present to say where the edge is');
+});
