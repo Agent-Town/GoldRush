@@ -67,7 +67,7 @@ const BEACONS = [{ x: 0, z: 13 }, { x: 3, z: 12 }, { x: -3, z: 12 }];
 const GOLD_GATES = [25, 35, 45];
 // `fortify` tape: two rings around the hero's start (0, 12) — all inside the
 // `model-home-village` build zone (x[-50,50], z[-24,32]). The hero is auto-piloted here
-// (`IDLE_INTENTS`, src/sim/HeadlessContractSim.ts:789), so WORKS are the agent's only defence,
+// (`IDLE_INTENTS`, src/sim/HeadlessContractSim.ts:428), so WORKS are the agent's only defence,
 // and the appliance pen's gold is the only thing that could pay for a bigger one.
 const FORT_SITES = [
   ...BEACONS.map((where) => ({ what: 'sentry_beacon', where })),

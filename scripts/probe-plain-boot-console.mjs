@@ -3,7 +3,7 @@
  * probe-plain-boot-console.mjs — s1083 (blocked-storage-boot drain evidence)
  *
  * WHY THIS EXISTS: the e2e suites collect only `message.type() === 'error'`
- * (see `collectErrors` in e2e/profile-first-boot.spec.ts:19-25). The
+ * (see `collectErrors` in e2e/profile-first-boot.spec.ts:15-22, the type test at :18). The
  * blocked-storage guards this drain lands degrade by emitting a
  * `console.WARN` — a channel every existing spec is structurally blind to.
  * So a green suite cannot answer the question the task master actually asked:
