@@ -194,6 +194,36 @@ test('11. a .sh comment carries pointers too — the corpus is mixed by design',
   rmSync(root, { recursive: true, force: true });
 });
 
+test('13. a corpus the FILE key emptied names the file key, not the citation key', () => {
+  // F-2341-1. Arm 7 covers the OTHER empty: files were read, no citation matched.
+  // This is the case where the root is perfectly readable and the SOURCE extension
+  // list simply selects nothing — measured live at `--root src`, which holds only
+  // .ts. Both exit 2, so a bare rc test cannot tell them apart (arm 10's lesson,
+  // one level in). Accusing the citation key here sends the next fire hunting a key
+  // regression that never happened, which is the F-1425-2 shape: a refusal whose
+  // message accuses the wrong subject.
+  const root = rootWith({ 'a.ts': subject(4), 'notes.md': 'not source\n' });
+  const { rc, out } = run(root);
+  assert.equal(rc, 2, 'an empty file selection is "could not answer", not a pass');
+  assert.match(out, /corpus\s+: 0 source file\(s\)/, 'the discriminating number must still print');
+  assert.match(out, /FILE key selected nothing/, 'must name the key that actually emptied the set');
+  assert.doesNotMatch(out, /CITATION key matched nothing/, 'must not accuse the citation key for a file-key empty');
+  assert.doesNotMatch(out, /PASS — every checkable/, 'an unread corpus must never print the pass banner');
+  rmSync(root, { recursive: true, force: true });
+});
+
+test('14. REVERSE CONTROL — files read but no citations still names the CITATION key', () => {
+  // Guards the over-general cure: collapsing both empties into the file-key wording
+  // would make arm 7's real case lie in the opposite direction.
+  const root = rootWith({ 'a.mjs': 'export const x = 1;\n' });
+  const { rc, out } = run(root);
+  assert.equal(rc, 2);
+  assert.match(out, /corpus\s+: 1 source file\(s\)/);
+  assert.match(out, /CITATION key matched nothing across 1 file\(s\)/, 'files WERE read — the citation key is the right subject here');
+  assert.doesNotMatch(out, /FILE key selected nothing/);
+  rmSync(root, { recursive: true, force: true });
+});
+
 test('12. a nested directory is NOT walked — the corpus claim is one directory deep', () => {
   // Stated as a test rather than left implicit: the declaration says "N source
   // file(s) under <dir>", and a reader must be able to trust that the number is the

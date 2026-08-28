@@ -207,11 +207,28 @@ function main() {
   // the same green, so the empty state refuses. 2 = "could not answer", against
   // 1 = "answered, and the answer refuses".
   if (checked.length === 0) {
+    // TWO KEYS CAN EMPTY THIS SET AND THEY NAME DIFFERENT OWED ACTS (F-2341-1).
+    // The FILE key (the root plus the SOURCE extension list) can select no file at
+    // all; or the CITATION key can match nothing across files that WERE read. Both
+    // are "could not answer", so the exit code is deliberately UNCHANGED at 2 — what
+    // changes is that the banner no longer accuses the citation key for a corpus the
+    // file key emptied. That misdiagnosis is the F-1425-2 shape: a refusal whose
+    // message accuses the wrong subject sends the next fire chasing a key regression
+    // that never happened. The corpus line above already carries the discriminating
+    // number; this only says out loud which of the two it means.
     console.log('');
     console.log('source-pointer-guard: ⛔ CANNOT VERIFY — zero checkable citations found.');
-    console.log('  This corpus has carried same-file pointers continuously, so an empty');
-    console.log('  subject set means the citation key stopped matching — not that the');
-    console.log('  pointers are sound. A PASS here would certify a scan that read nothing.');
+    if (entries.length === 0) {
+      console.log(`  The FILE key selected nothing: no name under ${SCRIPTS}`);
+      console.log(`  matched ${SOURCE}. That is the ROOT or the extension list — NOT the`);
+      console.log('  citation key. Widen one of those before concluding anything about pointers.');
+    } else {
+      console.log(`  The CITATION key matched nothing across ${entries.length} file(s) that WERE read.`);
+      console.log('  The default corpus has carried same-file pointers continuously, so there');
+      console.log('  an empty subject set means the key stopped matching — not that the');
+      console.log('  pointers are sound.');
+    }
+    console.log('  A PASS here would certify a scan that read nothing.');
     process.exit(2);
   }
 
