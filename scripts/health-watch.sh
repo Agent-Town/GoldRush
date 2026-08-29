@@ -108,17 +108,37 @@ art_untracked() {
 # noticed — every check above watches the Mac, none watched the public door. The
 # three probes cover the three failure domains: landing (droplet nginx static),
 # game (Cloudflare edge worker -> pages.dev), api (droplet nginx -> ledger/forward).
+# F-2355-1: `curl -w '%{http_code}' ... || echo 000` CONCATENATES, it does not
+# substitute. -w has already written the code to stdout by the time curl's exit
+# status is known, so a request that receives a status and THEN fails mid-transfer
+# captures both and yields an undocumented composite. Measured s2355 against the
+# live door: a 200 that misses the -m budget prints exactly `200000`, and a request
+# that never answers prints `000000`. Neither consumer could decode that — both
+# read "not 200" and cried DARK for a door that had answered. The `|| echo 000`
+# arm can never REPLACE the output, only corrupt it; capture the code and the
+# transfer outcome SEPARATELY instead, and give the third state its own name.
+edge_one() {  # -> 200 | 2xx-slow (answered, transfer missed the budget) | <code> | 000
+  local c rc
+  c=$(curl -so /dev/null -m 10 -w '%{http_code}' "$1" 2>/dev/null); rc=$?
+  [ -n "$c" ] || c=000
+  if [ "$rc" -eq 0 ]; then echo "$c"; return; fi
+  case "$c" in
+    2??) echo "$c-slow" ;;   # the door answered; the body did not finish in time
+    *)   echo "$c" ;;        # 000 = nothing came back; anything else is its own bad code
+  esac
+}
+
 edge_probe() {
   local l g a
-  l=$(curl -so /dev/null -m 10 -w '%{http_code}' https://agenttown.app/ 2>/dev/null || echo 000)
-  g=$(curl -so /dev/null -m 10 -w '%{http_code}' https://agenttown.app/goldrush/ 2>/dev/null || echo 000)
-  a=$(curl -so /dev/null -m 10 -w '%{http_code}' https://agenttown.app/api/stats 2>/dev/null || echo 000)
+  l=$(edge_one https://agenttown.app/)
+  g=$(edge_one https://agenttown.app/goldrush/)
+  a=$(edge_one https://agenttown.app/api/stats)
   echo "landing=$l game=$g api=$a"
 }
 
 dashboard() {
   echo "=== Gold Rush factory — $(date '+%F %H:%M:%S') ==="
-  echo "edge   : $(edge_probe)   (200s or the public door is dark — F-OUT-0829)"
+  echo "edge   : $(edge_probe)   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)"
   # F-2137-1: ALIVE is not the same as CURRENT. A runner executes the parse it loaded at exec
   # time, so commits to lane-runner-v3.sh since are INERT — the state in which the factory
   # refused a correct master 64 times in 12 min while three fires read the cure in the file
@@ -234,12 +254,25 @@ fi
 # stays down (a dark public door is the one condition worth re-ringing), and note
 # recovery once. A 521 here previously ran ~2d18h with zero alarms.
 EDGE="$(edge_probe)"
-EDGE_BAD="$(echo "$EDGE" | tr ' ' '\n' | grep -v '=200$' | tr '\n' ' ')"
+# F-2355-1: DARK and SLOW are different conditions and must not share one alarm.
+# A door that answers 200 and then misses the transfer budget is DEGRADED, not
+# down — and paging for it every time it happens is exactly how an alarm gets
+# excused into uselessness (F-1460-1), which this factory cannot afford on the
+# only watch it has over the public door. So: dark pages at once, as it always
+# has; slow pages only once it has PERSISTED across 3 passes, which still catches
+# a door that has genuinely stalled (headers sent, body never finishing).
+EDGE_DARK="$(echo "$EDGE" | tr ' ' '\n' | grep -v -e '=200$' -e '\-slow$' | tr '\n' ' ')"
+EDGE_SLOW="$(echo "$EDGE" | tr ' ' '\n' | grep -e '-slow$' | tr '\n' ' ')"
 OLDEDGEN=$(grep '^edgebad=' "$STATE" 2>/dev/null | tail -1 | cut -d= -f2)
-if [ -n "$EDGE_BAD" ]; then
+if [ -n "$EDGE_DARK" ]; then
   EDGEN=$(( ${OLDEDGEN:-0} + 1 ))
   if [ "$EDGEN" -eq 1 ] || [ $(( EDGEN % 6 )) -eq 0 ]; then
     alert "PUBLIC EDGE DARK: $EDGE — runbook F-OUT-0829: ssh root@<droplet> 'systemctl status nginx goldrush-ledger'"
+  fi
+elif [ -n "$EDGE_SLOW" ]; then
+  EDGEN=$(( ${OLDEDGEN:-0} + 1 ))
+  if [ "$EDGEN" -eq 3 ] || [ $(( EDGEN % 12 )) -eq 0 ]; then
+    alert "PUBLIC EDGE SLOW x$EDGEN passes: $EDGE — answered, transfer missed the budget. Not dark; check droplet load before the F-OUT-0829 runbook."
   fi
 else
   EDGEN=0

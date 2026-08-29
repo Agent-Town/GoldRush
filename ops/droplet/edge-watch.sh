@@ -23,12 +23,36 @@ STATE="$STATE_DIR/state"
 ALERT_TO="<owner-email>"
 ALERT_FROM="Gold Rush <claim@agenttown.app>"
 
-code() { curl -so /dev/null -m 12 -w '%{http_code}' "$1" 2>/dev/null || echo 000; }
+# F-2355-1: `curl -w '%{http_code}' ... || echo 000` CONCATENATES, it does not
+# substitute. -w has already written the code to stdout by the time curl's exit
+# status is known, so a request that receives a status and THEN fails mid-transfer
+# captures both and yields an undocumented composite like `200000` — which line 45
+# below read as "not 200" and mailed the owner as DARK, for a door that answered.
+# Measured s2355 on the Mac against the live door; the rate from THIS box is
+# unmeasured, but any nonzero rate mails a false outage on a 5-minute timer.
+code() {  # -> 200 | 2xx-slow (answered, transfer missed the budget) | <code> | 000
+  local c rc
+  c=$(curl -so /dev/null -m 12 -w '%{http_code}' "$1" 2>/dev/null); rc=$?
+  [ -n "$c" ] || c=000
+  if [ "$rc" -eq 0 ]; then echo "$c"; return; fi
+  case "$c" in
+    2??) echo "$c-slow" ;;
+    *)   echo "$c" ;;
+  esac
+}
 # Three probes, three failure domains: landing (this box's nginx static), game
 # (Cloudflare edge worker -> pages.dev), api (this box's nginx -> ledger/forward).
 L=$(code https://agenttown.app/)
 G=$(code https://agenttown.app/goldrush/)
 A=$(code https://agenttown.app/api/stats)
+DARK=""; SLOW=""
+for v in "$L" "$G" "$A"; do
+  case "$v" in
+    200)    ;;
+    *-slow) SLOW=1 ;;
+    *)      DARK=1 ;;
+  esac
+done
 SVC_BAD=""
 for s in nginx goldrush-ledger goldrush-assay; do
   systemctl is-active --quiet "$s" || SVC_BAD="$SVC_BAD $s"
@@ -41,9 +65,15 @@ if echo "$SVC_BAD" | grep -q nginx; then
 fi
 DISK=$(df --output=pcent / 2>/dev/null | tail -1 | tr -dc 0-9)
 EDGE="landing=$L game=$G api=$A svc=${SVC_BAD:-ok} disk=${DISK:-?}%"
+# F-2355-1: a dead service, a full disk and a non-200 door are all DARK and page
+# at once, exactly as before. A door that answered 200 and then missed the
+# transfer budget is degraded, not down, and pages only once it has persisted
+# (see the mail policy below) — an outage alarm that cries wolf on ordinary
+# transient slowness is one nobody reads by the time it matters (F-1460-1).
+[ -n "$SVC_BAD" ] && DARK=1
+[ "${DISK:-0}" -ge 95 ] && DARK=1
 BAD=""
-{ [ "$L" = 200 ] && [ "$G" = 200 ] && [ "$A" = 200 ] && [ -z "$SVC_BAD" ]; } || BAD=1
-[ "${DISK:-0}" -ge 95 ] && BAD=1
+{ [ -z "$DARK" ] && [ -z "$SLOW" ]; } || BAD=1
 
 send_mail() { # $1 subject, $2 body — plain text, no user input, no quotes in EDGE
   [ -n "${RESEND_API_KEY:-}" ] || { echo "no RESEND_API_KEY; alert not sent: $1"; return 1; }
@@ -56,9 +86,14 @@ N=$(cat "$STATE" 2>/dev/null || echo 0)
 case "$N" in (*[!0-9]*|'') N=0;; esac
 if [ -n "$BAD" ]; then
   N=$((N + 1))
-  if [ "$N" -eq 1 ] || [ $((N % 12)) -eq 0 ]; then
-    send_mail "agenttown.app watch: DARK ($EDGE)" \
-      "Probe: $EDGE\n${HEALED:+Self-heal: $HEALED\n}Runbook F-OUT-0829: ssh the box; systemctl status nginx goldrush-ledger goldrush-assay; journalctl -u nginx -n 30. This alert re-rings hourly while the condition persists; a recovery mail follows when it clears."
+  if [ -n "$DARK" ]; then
+    if [ "$N" -eq 1 ] || [ $((N % 12)) -eq 0 ]; then
+      send_mail "agenttown.app watch: DARK ($EDGE)" \
+        "Probe: $EDGE\n${HEALED:+Self-heal: $HEALED\n}Runbook F-OUT-0829: ssh the box; systemctl status nginx goldrush-ledger goldrush-assay; journalctl -u nginx -n 30. This alert re-rings hourly while the condition persists; a recovery mail follows when it clears."
+    fi
+  elif [ "$N" -eq 3 ] || [ $((N % 12)) -eq 0 ]; then
+    send_mail "agenttown.app watch: SLOW ($EDGE)" \
+      "Probe: $EDGE\nThe door ANSWERED but the transfer missed the budget on $N consecutive passes (~$((N * 5)) min). This is degradation, not an outage — check droplet load and nginx worker saturation before reaching for the F-OUT-0829 runbook. A recovery mail follows when it clears."
   fi
 else
   [ "$N" -gt 0 ] && send_mail "agenttown.app watch: recovered ($EDGE)" "All probes green again. $EDGE"
