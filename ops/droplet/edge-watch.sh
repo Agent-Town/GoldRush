@@ -82,22 +82,49 @@ send_mail() { # $1 subject, $2 body — plain text, no user input, no quotes in 
     -d "$(printf '{"from":"%s","to":["%s"],"subject":"%s","text":"%s"}' "$ALERT_FROM" "$ALERT_TO" "$1" "$2")" >/dev/null 2>&1
 }
 
-N=$(cat "$STATE" 2>/dev/null || echo 0)
-case "$N" in (*[!0-9]*|'') N=0;; esac
+# F-2356-1: DARK and SLOW need SEPARATE CLOCKS. F-2355-1 split the branches and
+# the mails but left ONE counter, incremented BEFORE the branch is chosen — so a
+# dark door inherited the slow condition's banked passes and `[ N -eq 1 ]` could
+# not fire. This box is the worse of the two watchers because it is the one that
+# MAILS: measured s2356, one slow pass then dark = 50 min of silence, two = 45,
+# on a genuinely dark public door. `load -> slow -> down` is the ordinary way a
+# box fails, so this is the likely sequence, not an exotic one. Per-condition
+# clocks make every transition start at 1 and page at once, as the comment above
+# already promises. State is now two fields, "<dark> <slow>"; anything else —
+# including a single-number file written by the previous revision — resets to
+# 0 0, which fails toward paging.
+DARKN=0
+SLOWN=0
+STATE_RAW=$(cat "$STATE" 2>/dev/null || echo '')
+case "$STATE_RAW" in
+  *[!0-9\ ]*|'') ;;                       # non-numeric or empty: keep 0 0
+  *)
+    set -- $STATE_RAW
+    if [ $# -eq 2 ]; then DARKN=$1; SLOWN=$2; fi
+    ;;
+esac
 if [ -n "$BAD" ]; then
-  N=$((N + 1))
   if [ -n "$DARK" ]; then
-    if [ "$N" -eq 1 ] || [ $((N % 12)) -eq 0 ]; then
+    DARKN=$((DARKN + 1)); SLOWN=0
+    if [ "$DARKN" -eq 1 ] || [ $((DARKN % 12)) -eq 0 ]; then
       send_mail "agenttown.app watch: DARK ($EDGE)" \
         "Probe: $EDGE\n${HEALED:+Self-heal: $HEALED\n}Runbook F-OUT-0829: ssh the box; systemctl status nginx goldrush-ledger goldrush-assay; journalctl -u nginx -n 30. This alert re-rings hourly while the condition persists; a recovery mail follows when it clears."
     fi
-  elif [ "$N" -eq 3 ] || [ $((N % 12)) -eq 0 ]; then
-    send_mail "agenttown.app watch: SLOW ($EDGE)" \
-      "Probe: $EDGE\nThe door ANSWERED but the transfer missed the budget on $N consecutive passes (~$((N * 5)) min). This is degradation, not an outage — check droplet load and nginx worker saturation before reaching for the F-OUT-0829 runbook. A recovery mail follows when it clears."
+  else
+    SLOWN=$((SLOWN + 1)); DARKN=0
+    if [ "$SLOWN" -eq 3 ] || [ $((SLOWN % 12)) -eq 0 ]; then
+      send_mail "agenttown.app watch: SLOW ($EDGE)" \
+        "Probe: $EDGE\nThe door ANSWERED but the transfer missed the budget on $SLOWN consecutive passes (~$((SLOWN * 5)) min). This is degradation, not an outage — check droplet load and nginx worker saturation before reaching for the F-OUT-0829 runbook. A recovery mail follows when it clears."
+    fi
   fi
 else
-  [ "$N" -gt 0 ] && send_mail "agenttown.app watch: recovered ($EDGE)" "All probes green again. $EDGE"
-  N=0
+  # Recover only from an episode that actually mailed: dark mails on pass 1, slow
+  # on pass 3. Without this an unalarmed one-pass slow blip still sends an
+  # all-clear for an alert the owner never got.
+  if [ "$DARKN" -gt 0 ] || [ "$SLOWN" -ge 3 ]; then
+    send_mail "agenttown.app watch: recovered ($EDGE)" "All probes green again. $EDGE"
+  fi
+  DARKN=0; SLOWN=0
 fi
-echo "$N" > "$STATE"
-echo "$(date -u +%FT%TZ) $EDGE bad=${BAD:-0} n=$N${HEALED:+ healed: $HEALED}"
+echo "$DARKN $SLOWN" > "$STATE"
+echo "$(date -u +%FT%TZ) $EDGE bad=${BAD:-0} dark=$DARKN slow=$SLOWN${HEALED:+ healed: $HEALED}"

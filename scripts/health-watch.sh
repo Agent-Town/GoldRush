@@ -263,22 +263,45 @@ EDGE="$(edge_probe)"
 # a door that has genuinely stalled (headers sent, body never finishing).
 EDGE_DARK="$(echo "$EDGE" | tr ' ' '\n' | grep -v -e '=200$' -e '\-slow$' | tr '\n' ' ')"
 EDGE_SLOW="$(echo "$EDGE" | tr ' ' '\n' | grep -e '-slow$' | tr '\n' ' ')"
-OLDEDGEN=$(grep '^edgebad=' "$STATE" 2>/dev/null | tail -1 | cut -d= -f2)
+# F-2356-1: DARK and SLOW need SEPARATE CLOCKS, not one shared counter. The
+# F-2355-1 cure gave them separate branches and separate mails but left them
+# incrementing ONE `edgebad` tally, then chose the branch AFTERWARDS — so a dark
+# door inherited however many passes the SLOW condition had already banked, and
+# `[ EDGEN -eq 1 ]` could not fire. The comment three lines up promises "dark
+# pages at once, as it always has"; measured s2356 by manufacturing the sequence,
+# that promise held only from a cold state. Two slow passes then dark = 30 min of
+# silence here, and 45 min on the droplet's 5-min timer (up to 50 after one slow
+# pass). The shared counter predates F-2355-1 — what that cure changed is that
+# the early passes are now DELIBERATELY silent, so the sequence load -> slow ->
+# down, which is the ordinary way a box fails, now pages NOTHING at all until the
+# modulo comes round. A per-condition clock makes each transition start at 1.
+OLDDARKN=$(grep '^edgedark=' "$STATE" 2>/dev/null | tail -1 | cut -d= -f2)
+OLDSLOWN=$(grep '^edgeslow=' "$STATE" 2>/dev/null | tail -1 | cut -d= -f2)
+DARKN=0
+SLOWN=0
 if [ -n "$EDGE_DARK" ]; then
-  EDGEN=$(( ${OLDEDGEN:-0} + 1 ))
-  if [ "$EDGEN" -eq 1 ] || [ $(( EDGEN % 6 )) -eq 0 ]; then
+  DARKN=$(( ${OLDDARKN:-0} + 1 ))
+  if [ "$DARKN" -eq 1 ] || [ $(( DARKN % 6 )) -eq 0 ]; then
     alert "PUBLIC EDGE DARK: $EDGE — runbook F-OUT-0829: ssh root@<droplet> 'systemctl status nginx goldrush-ledger'"
   fi
 elif [ -n "$EDGE_SLOW" ]; then
-  EDGEN=$(( ${OLDEDGEN:-0} + 1 ))
-  if [ "$EDGEN" -eq 3 ] || [ $(( EDGEN % 12 )) -eq 0 ]; then
-    alert "PUBLIC EDGE SLOW x$EDGEN passes: $EDGE — answered, transfer missed the budget. Not dark; check droplet load before the F-OUT-0829 runbook."
+  SLOWN=$(( ${OLDSLOWN:-0} + 1 ))
+  if [ "$SLOWN" -eq 3 ] || [ $(( SLOWN % 12 )) -eq 0 ]; then
+    alert "PUBLIC EDGE SLOW x$SLOWN passes: $EDGE — answered, transfer missed the budget. Not dark; check droplet load before the F-OUT-0829 runbook."
   fi
 else
-  EDGEN=0
-  [ "${OLDEDGEN:-0}" -gt 0 ] && alert "Public edge recovered: $EDGE"
+  # Announce recovery only for an episode that actually PAGED. Dark pages on its
+  # first pass, slow on its third, so those two tests are exact — and without
+  # them a one-pass slow blip that deliberately said nothing still mails an
+  # all-clear for an alarm the owner never received.
+  if [ "${OLDDARKN:-0}" -gt 0 ] || [ "${OLDSLOWN:-0}" -ge 3 ]; then
+    alert "Public edge recovered: $EDGE"
+  fi
 fi
-grep -v '^edgebad=' "$STATE" > "$STATE.tmp" 2>/dev/null; mv "$STATE.tmp" "$STATE" 2>/dev/null || : > "$STATE"
-echo "edgebad=$EDGEN" >> "$STATE"
+# `edgebad` is the retired F-2355-1 key: strip it too, so a state file written by
+# the previous revision cannot leave a stale tally behind the new counters.
+grep -v -e '^edgebad=' -e '^edgedark=' -e '^edgeslow=' "$STATE" > "$STATE.tmp" 2>/dev/null; mv "$STATE.tmp" "$STATE" 2>/dev/null || : > "$STATE"
+echo "edgedark=$DARKN" >> "$STATE"
+echo "edgeslow=$SLOWN" >> "$STATE"
 
 note "ok runner=$(runner_alive && echo 1 || echo 0) queued=$QC inflight=$RC pending=$PC edge=$EDGE"
