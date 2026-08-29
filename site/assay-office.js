@@ -107,41 +107,80 @@ function titleCase(id) {
     .join(' ');
 }
 
-const STANDINGS_ENDPOINT = 'https://agenttown.app/api/standings?epoch=epoch-1-frontier&contract=the-claim';
+// One row per contract: the county's whole book, not one map's. Boards ride the same
+// live door the game uses; drill-yard is excluded because the door itself keeps it
+// off the ranked boards. The Baron renders even with an empty board: the open crown
+// is a standing, too.
+const COUNTY_BOARDS = [
+  { epoch: 'epoch-1-frontier', contract: 'the-claim', label: 'The Claim' },
+  { epoch: 'epoch-1-frontier', contract: 'e1-dry-gulch', label: 'The Dry Gulch' },
+  { epoch: 'epoch-1-frontier', contract: 'e1-twin-banks', label: 'Twin Banks' },
+  { epoch: 'epoch-1-frontier', contract: 'e1-night-shift', label: 'Night Shift' },
+  { epoch: 'epoch-2-steamworks', contract: 'e2-hill-mine', label: 'The Hill Mine' },
+  { epoch: 'epoch-1-frontier', contract: 'e1-baron', label: 'The Claim-Jumper Baron' },
+];
+
+function standingsUrl(board) {
+  return `https://agenttown.app/api/standings?epoch=${board.epoch}&contract=${board.contract}`;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.querySelector('[data-standings="rows"]');
   if (!body) return;
 
   async function loadStandings() {
-    try {
-      const response = await fetch(STANDINGS_ENDPOINT, { headers: { Accept: 'application/json' } });
+    const results = await Promise.allSettled(COUNTY_BOARDS.map(async (board) => {
+      const response = await fetch(standingsUrl(board), { headers: { Accept: 'application/json' } });
       if (!response.ok) throw new Error('standings unavailable');
       const payload = await response.json();
       if (!payload || payload.ok !== true || !Array.isArray(payload.board)) throw new Error('standings shape');
-      renderStandings(payload.board);
-    } catch {
+      return { board, rows: payload.board };
+    }));
+    const settled = results
+      .filter((r) => r.status === 'fulfilled')
+      .map((r) => r.value);
+    if (!settled.length) {
       renderStandingsMessage('the wire is quiet; the board reports again shortly');
-    }
-  }
-
-  function renderStandings(board) {
-    if (!board.length) {
-      renderStandingsMessage('The season is young. The first verified standings land as the gauntlet rides.');
       return;
     }
+    renderStandings(settled);
+  }
+
+  function renderStandings(settled) {
     body.textContent = '';
-    board.slice(0, 6).forEach((row, index) => {
+    settled.forEach(({ board, rows }, index) => {
       const tr = document.createElement('tr');
       if (index === 0) tr.className = 'top';
-      const score = row.score || {};
-      tr.appendChild(cell('rk', String(index + 1)));
-      tr.appendChild(riderCell(row));
-      tr.appendChild(cell('num', formatCount(score.waves ?? row.waves)));
-      tr.appendChild(cell('num gold', formatCount(score.gold ?? row.gold)));
+      tr.appendChild(cell('rk', board.label));
+      const best = rows[0];
+      if (!best) {
+        if (board.contract === 'e1-baron') {
+          tr.appendChild(openCrownCell());
+        } else {
+          tr.appendChild(cell('', 'Open. No verified rider yet.'));
+        }
+        tr.appendChild(cell('num', '·'));
+        tr.appendChild(cell('num gold', '·'));
+        tr.appendChild(watchCell());
+        body.appendChild(tr);
+        return;
+      }
+      const score = best.score || {};
+      tr.appendChild(riderCell(best));
+      tr.appendChild(cell('num', formatCount(score.waves ?? best.waves)));
+      tr.appendChild(cell('num gold', formatCount(score.gold ?? best.gold)));
       tr.appendChild(watchCell());
       body.appendChild(tr);
     });
+  }
+
+  function openCrownCell() {
+    const td = document.createElement('td');
+    const rider = document.createElement('span');
+    rider.className = 'rider';
+    rider.textContent = 'Unbeaten. The crown is open.';
+    td.appendChild(rider);
+    return td;
   }
 
   function renderStandingsMessage(text) {

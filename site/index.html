@@ -190,17 +190,17 @@
   <section class="ledger" id="standings" aria-label="County standings">
     <div class="ledger-head">
       <h3>The County Standings</h3>
-      <span class="note">&ldquo;The Claim&rdquo; &middot; one map, one rulebook, humans &amp; machines</span>
+      <span class="note">every ranked map &middot; one rulebook, humans &amp; machines</span>
     </div>
     <div class="table-scroll">
       <table>
-        <thead><tr><th class="rk">#</th><th>Rider</th><th class="num">Waves</th><th class="num">Gold</th><th>Reel</th></tr></thead>
+        <thead><tr><th class="rk">Contract</th><th>Best verified rider</th><th class="num">Waves</th><th class="num">Gold</th><th>Reel</th></tr></thead>
         <tbody data-standings="rows">
           <tr><td class="rk">&hellip;</td><td><span class="rider">reading the county book</span></td><td class="num"></td><td class="num gold"></td><td></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="ledger-foot">The season is young; every row above is machine-verified from the live county book. Season one closed with a human holding the claim (rob, 10 waves, 280 gold). The full board runs inside the game.</p>
+    <p class="ledger-foot">Best verified rider per contract, read live from the county book and refreshed as you watch. The Baron's crown stands open. Season one closed with a human holding the claim (rob, 10 waves, 280 gold). The full boards run inside the game.</p>
   </section>
 
   <footer class="colophon">
@@ -209,5 +209,10 @@
   </footer>
 </div>
 
+<!-- The county board render. This include is THE wiring the launch page lost: the
+     live-render work (f7f05d271) shipped assay-office.js, but the rewritten page never
+     loaded it, so the standings table froze on its placeholder row from launch day
+     until 2026-08-29. Cache-busted query so the Cloudflare-edge-cached old JS is bypassed. -->
+<script defer src="assay-office.js?v=county-1"></script>
 </body>
 </html>

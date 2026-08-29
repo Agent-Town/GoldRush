@@ -103,8 +103,22 @@ art_untracked() {
     | grep -c 'missing' || true
 }
 
+# F-OUT-0829: agenttown.app answered Cloudflare 521 for ~2d18h (nginx died at an
+# unattended-upgrade restart, 2026-08-26 06:09 UTC) and NOTHING in this factory
+# noticed — every check above watches the Mac, none watched the public door. The
+# three probes cover the three failure domains: landing (droplet nginx static),
+# game (Cloudflare edge worker -> pages.dev), api (droplet nginx -> ledger/forward).
+edge_probe() {
+  local l g a
+  l=$(curl -so /dev/null -m 10 -w '%{http_code}' https://agenttown.app/ 2>/dev/null || echo 000)
+  g=$(curl -so /dev/null -m 10 -w '%{http_code}' https://agenttown.app/goldrush/ 2>/dev/null || echo 000)
+  a=$(curl -so /dev/null -m 10 -w '%{http_code}' https://agenttown.app/api/stats 2>/dev/null || echo 000)
+  echo "landing=$l game=$g api=$a"
+}
+
 dashboard() {
   echo "=== Gold Rush factory — $(date '+%F %H:%M:%S') ==="
+  echo "edge   : $(edge_probe)   (200s or the public door is dark — F-OUT-0829)"
   # F-2137-1: ALIVE is not the same as CURRENT. A runner executes the parse it loaded at exec
   # time, so commits to lane-runner-v3.sh since are INERT — the state in which the factory
   # refused a correct master 64 times in 12 min while three fires read the cure in the file
@@ -216,4 +230,22 @@ if tail -40 "logs/fire-$(date +%Y%m%d).log" 2>/dev/null | grep -q '401 Unauthori
   alert "Codex 401 in recent fire log — account/login needs attention (codex login)"
 fi
 
-note "ok runner=$(runner_alive && echo 1 || echo 0) queued=$QC inflight=$RC pending=$PC"
+# 7. Public edge dark (F-OUT-0829). Alert on the DOWN edge, nag hourly while it
+# stays down (a dark public door is the one condition worth re-ringing), and note
+# recovery once. A 521 here previously ran ~2d18h with zero alarms.
+EDGE="$(edge_probe)"
+EDGE_BAD="$(echo "$EDGE" | tr ' ' '\n' | grep -v '=200$' | tr '\n' ' ')"
+OLDEDGEN=$(grep '^edgebad=' "$STATE" 2>/dev/null | tail -1 | cut -d= -f2)
+if [ -n "$EDGE_BAD" ]; then
+  EDGEN=$(( ${OLDEDGEN:-0} + 1 ))
+  if [ "$EDGEN" -eq 1 ] || [ $(( EDGEN % 6 )) -eq 0 ]; then
+    alert "PUBLIC EDGE DARK: $EDGE — runbook F-OUT-0829: ssh root@<droplet> 'systemctl status nginx goldrush-ledger'"
+  fi
+else
+  EDGEN=0
+  [ "${OLDEDGEN:-0}" -gt 0 ] && alert "Public edge recovered: $EDGE"
+fi
+grep -v '^edgebad=' "$STATE" > "$STATE.tmp" 2>/dev/null; mv "$STATE.tmp" "$STATE" 2>/dev/null || : > "$STATE"
+echo "edgebad=$EDGEN" >> "$STATE"
+
+note "ok runner=$(runner_alive && echo 1 || echo 0) queued=$QC inflight=$RC pending=$PC edge=$EDGE"
