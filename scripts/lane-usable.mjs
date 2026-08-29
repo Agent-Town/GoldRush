@@ -134,10 +134,63 @@ function behindCount(branch) {
 //
 // Deliberately narrow: only surfaces that can change whether a task runs or how it is gated.
 // docs/, tasks/, artifacts/, reviews/ and logs/ are excluded BY DESIGN, not by oversight.
-const RUN_SURFACE = [
+const RUN_SURFACE_BASE = [
   'src', 'e2e', 'functions', 'scripts',
   'package.json', 'package-lock.json', 'playwright.config.ts', 'tsconfig.json', 'vite.config.ts',
 ]
+
+// s2349 — F-2349-1. The list above is a HARDCODED list of something git and package.json
+// already know, and it was drawn when those nine entries were the whole run surface. The repo
+// has since grown `server/`, `ops/` and `foundry/`, and gate leaves moved into all three — so
+// the list rotted by ADDITION ELSEWHERE, which no guard on this file could ever see.
+//
+// Measured s2349 over main's own package.json: EIGHT gate leaves live outside the base list,
+// two of them leaves of the batteries every fire runs —
+//     test:ledger-guards -> foundry/kit/test-init.sh
+//     test:node-guards   -> ops/droplet/ledger-backup.test.mjs
+//     test:codex-shim    -> server/codex-shim/serve{,.test}.mjs
+//     test:preview / test:release / test:release-base -> playwright.{preview,release,release-base}.config.ts
+// and `foundry/kit/test-init.sh` GENUINELY DIVERGES on lane/a and lane/b today. That is the
+// F-1343-2 package.json hazard one directory over: a lane whose copy of a gate leaf differs
+// produces a green that means something other than main's green, and the panel below would
+// have scored the difference as bookkeeping.
+//
+// So DERIVE the additions instead of re-drawing the list by hand — a hand-drawn list is a
+// defect awaiting the next new directory. package.json's scripts already name every path the
+// gates execute, so they are the authoritative source, and they extend themselves: add a gate
+// leaf anywhere and this learns it in the same commit.
+//
+// Read from `main:package.json`, NOT the worktree's — the question this file asks is "what has
+// MAIN moved that this lane lacks?", and a lane's own package.json can be the strict SUBSET that
+// F-1343-2 warns about, i.e. exactly the corpus that would under-report its own drift.
+//
+// DECLARES AND NEVER REFUSES (the F-2218-1 restraint): a root with no package.json is lawful —
+// every fixture repo in this file's four guard suites is one — so refusing there would red on
+// ordinary work and be excused into uselessness inside a week (F-1460-1). On any failure it
+// degrades to the base list, which is the pre-cure behaviour, and SAYS SO.
+let SURFACE_CACHE = null
+function gatedRoots() {
+  if (SURFACE_CACHE) return SURFACE_CACHE
+  const r = tryGit(['show', 'main:package.json'])
+  if (!r.ok) return (SURFACE_CACHE = { roots: [], source: 'unverifiable' })
+  let scripts
+  try {
+    scripts = JSON.parse(r.out).scripts || {}
+  } catch {
+    return (SURFACE_CACHE = { roots: [], source: 'unparseable' })
+  }
+  const roots = new Set()
+  for (const body of Object.values(scripts)) {
+    for (const tok of String(body).match(/[A-Za-z0-9_.\/-]+\.(?:mjs|cjs|js|ts|sh|json|html|toml)\b/g) || []) {
+      if (tok.startsWith('-')) continue
+      roots.add(tok.includes('/') ? tok.split('/')[0] : tok)
+    }
+  }
+  const added = [...roots].filter((p) => !RUN_SURFACE_BASE.includes(p)).sort()
+  return (SURFACE_CACHE = { roots: added, source: 'main:package.json' })
+}
+
+const RUN_SURFACE = [...RUN_SURFACE_BASE, ...gatedRoots().roots]
 
 // s2221 — F-2221-1. These are the ONLY two git calls in this file that carry a PATHSPEC, and a
 // pathspec is resolved relative to the process CWD while `--name-only` OUTPUT is repo-relative.
@@ -399,12 +452,12 @@ function report(r) {
       const ledger = ledgerDrift(r.branch)
       if (ledger.length === 0) {
         console.log(
-          `     ✅ ...but NONE of it is run-surface: src/ e2e/ functions/ scripts/ and the configs are\n` +
+          `     ✅ ...but NONE of it is run-surface: the ${RUN_SURFACE.length} compared paths (see the run-surface line above) are\n` +
             `        byte-identical to main. The gap is bookkeeping only — nothing here can stop a task running.`,
         )
       } else {
         console.log(
-          `     ✅ ...but NONE of it is run-surface: src/ e2e/ functions/ scripts/ and the configs are\n` +
+          `     ✅ ...but NONE of it is run-surface: the ${RUN_SURFACE.length} compared paths (see the run-surface line above) are\n` +
             `        byte-identical to main.`,
         )
         console.log(`     📒 ledger drift: ${ledger.length} file(s) main has moved that this lane lacks:`)
@@ -466,6 +519,15 @@ if (!isMain) {
 const argv = process.argv.slice(2)
 const doCure = argv.includes('--cure')
 const target = argv.find((a) => !a.startsWith('--'))
+
+// s2349 — F-2349-1. Printed on EVERY run including the happy path (F-2208-1): the failure state
+// of gatedRoots() is a SILENT DEGRADATION back to the nine hardcoded entries, and a declaration
+// that appears only on failure re-creates the ambiguity it removes. One line, not per-lane.
+{
+  const g = gatedRoots()
+  const extra = g.roots.length ? ` (+${g.roots.length}: ${g.roots.join(' ')})` : ' (+0)'
+  console.log(`run surface: ${RUN_SURFACE_BASE.length} base + gate leaves from ${g.source}${extra}`)
+}
 
 if (argv.includes('--all')) {
   for (const lane of fleet()) report(inspect(lane))
