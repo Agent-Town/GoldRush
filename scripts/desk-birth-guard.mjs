@@ -204,6 +204,103 @@ export function isOwnerGate(gateText) {
 }
 
 /**
+ * A row that ASKS THE OWNER FOR AN ACT WITHOUT EVER WRITING "GATE:" — the second
+ * admission arm (F-2347-1 measured s2347, PRICED AND SHIPPED s2348).
+ *
+ * THE GAP THIS CLOSES. Every admission ran through gateOf(), which returns '' when
+ * a row carries no `GATE:` token, and isOwnerGate('') is false UNCONDITIONALLY. So
+ * a row declaring in bold that Robin must do something, which simply never writes
+ * the word, was not REJECTED by the selector — IT NEVER REACHED THE SELECTOR. It
+ * entered no bucket, no denominator and no FAIL list.
+ *
+ * THE FIELD IS EMPTY FOR TWO THIRDS OF THE CORPUS, so this is the majority shape
+ * and not an exotic one. Re-measured s2348 through this file's own addedRows() /
+ * gateOf() over the live ledger (s2347 measured 1,419/2,157; independently 1,419
+ * of 2,158 here): 739 rows carry a `GATE:` token and 1,419 — 65.8% — do not.
+ *
+ * WHAT IT COST, and it was LIVE rather than latent: F-MAIL-0829 (sign-in code
+ * emails down in production since 2026-08-24; the whole fix ~5 minutes of the
+ * owner's time at resend.com/domains) was filed at BACKLOG line 1 at 09:53 on
+ * 2026-08-29 and reached NO desk. s2346 ran this guard as its last act 21 minutes
+ * later, got PASS, and published a 41-item desk without it.
+ *
+ * PRICED BY REPLAY, DRIVING analyse() ITSELF (s2348) — 2,221 session windows, 1,695
+ * reaching kind:'window', each row keyed by rowId() and membership tested against
+ * THAT WINDOW'S OWN deskTail(), which are s2347's two self-corrected errors:
+ *   UNTIGHTENED (owner-act, no closure test) : 13 admitted -> 5 FAIL verdicts
+ *      4 of the 5 are CLOSURE RECORDS (F-1652-1 x2, F-1374-1, 7435fa7c) — exactly
+ *      the shape F-2259-1 replayed at 3-new-verdicts-ALL-FALSE and rejected,
+ *      because this guard's remedy MANUFACTURES desk items out of closed threads.
+ *   TIGHTENED (this function)                : 1 admitted -> 1 FAIL verdict
+ *      F-MAIL-0829, at s2346 — the fire that actually missed it. 0 false positives.
+ * Corroborated independently against the live ledger, not only the replay: of 1,419
+ * no-gate rows, 11 declare an owner act, 10 are closure-marked, and the ONE
+ * survivor is F-MAIL-0829.
+ *
+ * WHY THE CLOSURE TEST CANNOT CAUSE A REGRESSION, which is the whole safety
+ * argument and is structural rather than statistical: it narrows a set that is
+ * EMPTY TODAY. This arm admits nothing at all before this change, so every row it
+ * suppresses is a miss the guard ALREADY HAS — never a new one. The filter is
+ * deliberately broad (it drops 10 of 11 live candidates) and that breadth is
+ * affordable for exactly that reason, and for no other.
+ *
+ * ⚠️ AND THE ARM IS THIN — STATED PLAINLY SO NOBODY READS ITS 0% AS STRENGTH. It
+ * fires ONCE in the entire recorded history of the ledger. A guard arm that rare is
+ * close to decoration, and its 0-false-positive rate is bought by a filter that
+ * removes 92% of its own admissions. What earns it a place is not its yield but its
+ * DIRECTION: the one row it catches is a five-day production outage that every
+ * prescribed instrument reported as health. main() therefore DECLARES this arm's
+ * admissions and suppressions on every run (F-2259-1's form), so the narrowness is
+ * visible to a reader rather than implied by a PASS.
+ *
+ * ⓘ s2347's own figures (18 admissions / 7 verdicts) are NOT reproduced here and no
+ * claim is made that they are: its candidate predicate was wider than this one. What
+ * DOES reproduce is the SHAPE of its ERROR 1 — whole-line-1 membership scores this
+ * corpus at 1 verdict where deskTail() membership scores it at 5. Its correction was
+ * right, and this measurement is an independent one rather than a confirmation.
+ */
+const OWNER_ACT = /\bowner\s+(?:action|ask|fix)\b/i;
+
+/** Closure vocabulary — a row recording a thread's END, not opening an owner one. */
+const CLOSURE_MARK =
+  /✅|\b(?:SHIPPED|CLOSED|DISCHARGED|SUPERSEDED|DRAINED|RETIRED|ANSWERED|WITHDRAWN|RESOLVED|LANDED|DESK-DROPPED|OWES NO WORD|OFF THE OWNER)\b/u;
+
+/**
+ * The same sentence-scoped negation guard hasPositiveOwnerVerb() uses, for the same
+ * reason (F-1551-4): a row saying "no owner action needed" declares the opposite.
+ */
+export function declaresOwnerAct(rowText) {
+  for (const m of rowText.matchAll(new RegExp(OWNER_ACT.source, 'gi'))) {
+    const before = rowText.slice(0, m.index);
+    let sentenceStart = 0;
+    for (const ch of ['.', ';', '!', '?']) {
+      sentenceStart = Math.max(sentenceStart, before.lastIndexOf(ch) + 1);
+    }
+    if (!NEGATION.test(before.slice(sentenceStart))) return true;
+  }
+  return false;
+}
+
+/** True when the row records a closure rather than opening an owner thread. */
+export function closureMarked(rowText) {
+  return CLOSURE_MARK.test(rowText);
+}
+
+/**
+ * How a row was admitted: 'gate' (the shipped arm) | 'act' (this one) | null.
+ * The 'act' arm is reached ONLY when the row has no gate clause at all, so it can
+ * never override a gate the shipped arm has already read and declined.
+ */
+export function admissionOf(rowText) {
+  const gate = gateOf(rowText);
+  if (isOwnerGate(gate)) return 'gate';
+  if (gate !== '') return null;
+  if (!declaresOwnerAct(rowText)) return null;
+  if (closureMarked(rowText)) return null;
+  return 'act';
+}
+
+/**
  * WHERE the admission was decided — the character offset, inside gateOf()'s text,
  * of the match that made isOwnerGate() true. -1 when it is false.
  *
@@ -418,18 +515,29 @@ export function analyse(line1, addedRowTexts) {
   const tail = deskTail(line1);
   if (tail === null) return { kind: 'no-desk' };
   const qualifying = [];
+  // F-2347-1's declaration (F-2259-1's form): the second arm's own admissions and
+  // suppressions, counted ALWAYS, so a reader sees how thin it is rather than
+  // inferring strength from a PASS. `actSuppressed` counts no-gate rows that DO
+  // declare an owner act and were dropped as closure records.
+  let actSuppressed = 0;
   for (const text of addedRowTexts) {
     const gate = gateOf(text);
-    if (!isOwnerGate(gate)) continue;
+    const how = admissionOf(text);
+    if (!how) {
+      if (gate === '' && declaresOwnerAct(text) && closureMarked(text) && rowId(text)) actSuppressed++;
+      continue;
+    }
     const id = rowId(text);
     if (!id) continue;
     // decidedAt is ADDITIVE and advisory (F-2255-1): no row's membership turns on
     // it. It travels with the row so the FAIL output can say WHERE the admission
-    // came from without this function acquiring an opinion about it.
-    qualifying.push({ id, text, decidedAt: ownerGateDecidedAt(gate) });
+    // came from without this function acquiring an opinion about it. It is -1 for
+    // an 'act' row by construction — there is no "GATE:" for an offset to be past.
+    qualifying.push({ id, text, how, decidedAt: how === 'gate' ? ownerGateDecidedAt(gate) : -1 });
   }
   const missing = qualifying.filter((r) => !carriesId(tail, r.id) && !notOwed(line1, r.id));
-  return { kind: 'window', qualifying, missing };
+  const actAdmitted = qualifying.filter((r) => r.how === 'act').length;
+  return { kind: 'window', qualifying, missing, actAdmitted, actSuppressed };
 }
 
 function git(args) {
@@ -565,6 +673,14 @@ function main() {
     console.log('     and the count below would range over minutes, not the fire (F-2260-1).');
   }
   console.log(`owner-gated rows filed    : ${result.qualifying.length}`);
+  // F-2347-1: the second arm, declared ALWAYS including the happy path (F-2208-1).
+  // This arm is THIN — it fires once in the whole recorded ledger — so its zero is
+  // the number that must stay legible: `0 admitted` says the arm looked and found
+  // nothing, which is a different fact from the arm not existing. `suppressed`
+  // names how much its closure filter is doing, which is most of the work.
+  console.log(`  ├ by an owner GATE clause : ${result.qualifying.length - result.actAdmitted}`);
+  console.log(`  └ by an owner-ACT declaration, no gate clause : ${result.actAdmitted}` +
+    (result.actSuppressed ? `  (+${result.actSuppressed} suppressed as closure records)` : ''));
   // F-2259-1: the DENOMINATOR that count ranges over. Printed ALWAYS, including
   // the happy path — a declaration that appears only on failure re-creates the
   // ambiguity it removes (F-2208-1), and here the failure state is a PASS, so
@@ -611,12 +727,23 @@ function main() {
   console.error('reached no desk. An owner fork on no desk is on no board Robin reads:');
   for (const r of result.missing) {
     console.error(`  ${r.id}`);
-    console.error(`      ${gateOf(r.text).replace(/\s+/g, ' ').slice(0, 160)}`);
-    // F-2255-1 — WHERE the admission was decided. gateOf() returns the whole row
-    // tail, so a large offset means the deciding words are trailing prose (usually
-    // a past ruling being CITED), not this row's gate. Measured p95 = 162.
-    console.error(`      admitted by text at offset ${r.decidedAt} past "GATE:"` +
-      (r.decidedAt > 162 ? ' — BEYOND the p95 of 162; read it before desking, this is the false-positive shape' : ''));
+    if (r.how === 'act') {
+      // F-2347-1 — an act-admitted row has NO gate clause, so gateOf() is '' and
+      // decidedAt is -1. Printing the gate line here would show an empty quote and
+      // an "offset -1 past GATE:" that names a token the row does not contain —
+      // a FAIL message accusing the wrong subject. Quote the owner-act clause.
+      const m = r.text.match(/[^.;!?]*\bowner\s+(?:action|ask|fix)\b[^.;!?]*/i);
+      console.error(`      ${(m ? m[0] : r.text).replace(/\s+/g, ' ').trim().slice(0, 160)}`);
+      console.error('      admitted by an owner-ACT declaration — this row carries NO "GATE:" clause');
+      console.error('      at all, so the gate selector never saw it (F-2347-1).');
+    } else {
+      console.error(`      ${gateOf(r.text).replace(/\s+/g, ' ').slice(0, 160)}`);
+      // F-2255-1 — WHERE the admission was decided. gateOf() returns the whole row
+      // tail, so a large offset means the deciding words are trailing prose (usually
+      // a past ruling being CITED), not this row's gate. Measured p95 = 162.
+      console.error(`      admitted by text at offset ${r.decidedAt} past "GATE:"` +
+        (r.decidedAt > 162 ? ' — BEYOND the p95 of 162; read it before desking, this is the false-positive shape' : ''));
+    }
   }
   console.error('');
   console.error('Put each on the desk at the END of line-1, or say why it is not owed:');
