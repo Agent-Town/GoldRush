@@ -210,6 +210,41 @@ test('arm 7: a MALFORMED package.json degrades to the base list and says so', (t
   assert.match(r.out, /src\/foo\.ts/, 'and the base list still answers');
 });
 
+test('arm 9: the DEGRADED path writes NOTHING to stderr — a 2>&1 consumer parses this output', (t) => {
+  // The defect this arm exists for was shipped in the first draft of the cure and caught by
+  // the mandated last-act battery, not by the eight arms above. `execFileSync` INHERITS the
+  // child's stderr by default even when the throw is caught, so an absent `main:package.json`
+  // emitted `fatal: path 'package.json' does not exist in 'main'` onto the parent's stderr.
+  // `lane-runner-v3.sh` captures this tool AND `lane-absorbed-lines.mjs` (which imports from
+  // this file, so the module-level derivation runs at ITS import too) with `2>&1`, then COUNTS
+  // the captured lines — so the stray line made the residue line-count disagree with the
+  // absorbed-count and the runner REFUSED a lawful dispatch.
+  //
+  // It was invisible on the live board because `main:package.json` EXISTS here: ONLY the
+  // degraded path speaks, and only into a fixture. That is why this arm asserts the QUIET of
+  // the failure mode rather than the correctness of the happy one.
+  const root = fixture(t, { pkg: undefined, movesBaseSurface: true });
+  const r = run(SUBJECT, root);
+  assert.ok(r.out.length > 0, 'VALIDITY: the arm produced no stdout — it never ran');
+  assert.equal(r.err, '', `the degraded derivation must stay silent on stderr, got: ${r.err}`);
+  assert.match(r.out, /gate leaves from unverifiable/, 'and still declares the degradation on STDOUT');
+});
+
+test('arm 10: lane-absorbed-lines.mjs — the IMPORTING consumer — is stderr-clean too', (t) => {
+  // Fix the CLASS, not the instance: the runner parses that tool's output, and it inherits
+  // this file's module-level derivation simply by importing residueForHeld from it.
+  const root = fixture(t, { pkg: undefined });
+  const r = spawnSync(process.execPath, [path.join(HERE, 'lane-absorbed-lines.mjs'), 'lane/x', 'README.md'], {
+    cwd: root,
+    encoding: 'utf8',
+  });
+  assert.doesNotMatch(
+    r.stderr || '',
+    /does not exist in 'main'/,
+    'the imported derivation must not leak git diagnostics into a machine-parsed probe',
+  );
+});
+
 test('REVERSE CONTROL, arm 8: the gates are read from MAIN, not from the lane worktree', (t) => {
   // The F-1343-2 subset hazard, inside the probe built to report it: a lane whose
   // package.json is a strict SUBSET of main's would derive a narrower surface and
@@ -221,7 +256,7 @@ test('REVERSE CONTROL, arm 8: the gates are read from MAIN, not from the lane wo
   assert.match(cured.out, /\(\+1: foundry\)/, 'main names the gate leaf, so the surface includes it');
 
   const worktreeRead = run(
-    variantOf(t, (s) => s.replace("tryGit(['show', 'main:package.json'])", "tryGit(['show', 'HEAD:package.json'])")),
+    variantOf(t, (s) => s.replace("tryGit(['show', 'main:package.json'], {", "tryGit(['show', 'HEAD:package.json'], {")),
     lane,
   );
   assert.ok(worktreeRead.out.length > 0, 'VALIDITY: the variant produced no output — it never ran');

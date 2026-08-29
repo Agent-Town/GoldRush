@@ -171,7 +171,17 @@ const RUN_SURFACE_BASE = [
 let SURFACE_CACHE = null
 function gatedRoots() {
   if (SURFACE_CACHE) return SURFACE_CACHE
-  const r = tryGit(['show', 'main:package.json'])
+  // stdio MUST be given: execFileSync INHERITS the child's stderr by default even when the
+  // throw is caught, and `lane-runner-v3.sh` captures both this tool and `lane-absorbed-lines.mjs`
+  // (which imports from this file, so this runs at ITS import too) with `2>&1`, then COUNTS the
+  // captured lines. A `fatal: path 'package.json' does not exist in 'main'` therefore lands in a
+  // machine-parsed probe and makes the residue line-count disagree with the absorbed-count —
+  // which the runner reads as unabsorbed residue and REFUSES a lawful dispatch.
+  // Caught s2349 by the mandated last-act battery, and CONTROLLED to prove it was mine: the
+  // pre-cure blob passes `lane-dispatch-safety-guard` at rc=0, the cured one failed
+  // DISPATCHES-HOLDS-BUT-FULLY-ABSORBED. It was invisible on the live board because
+  // `main:package.json` EXISTS here — only the degraded path speaks, and only into a fixture.
+  const r = tryGit(['show', 'main:package.json'], { stdio: ['ignore', 'pipe', 'pipe'] })
   if (!r.ok) return (SURFACE_CACHE = { roots: [], source: 'unverifiable' })
   let scripts
   try {
