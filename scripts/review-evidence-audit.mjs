@@ -22,7 +22,41 @@ import { fileURLToPath } from 'node:url';
 
 const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BACKTICKED = /`([^`\n]*)`/g;
-const CITATION = /^(?:artifacts|reviews\/shots-)\S*$/;
+
+/**
+ * THE SCAN SPACE (F-2346-1, s2346) — the CHOOSER, not the matcher.
+ *
+ * A backticked span becomes a citation only if it starts with one of these. Anything
+ * else is `continue`d BEFORE the counter increments, so it lands in no bucket and in no
+ * denominator — it is invisible, unlike SKIPPED, which at least prints a count. This
+ * file had been hardened twice on its crash/exit side (F-2215-1 and its guard), which
+ * made it feel examined while this line — the one that decides the whole corpus — had
+ * never been read, exported, or tested.
+ *
+ * WHY THIS IS NOT WIDENED, measured s2346 rather than assumed. Across the 1,000 tracked
+ * reviews, 11,308 path-shaped backticked spans sit outside this space; 216 of them are
+ * genuinely on-disk-untracked. EVERY ONE is lawfully excluded:
+ *   - dist/ node_modules/ test-results/ tasks/running/ .wrangler/ worktrees/ and *.log
+ *     are EXPLICITLY .gitignore'd — telling a drain to `git add -f` them would be
+ *     instructing it to violate the ignore file.
+ *   - tasks/runs/*.log are DELIBERATELY disk-local under the owner's RETENTION LAW
+ *     amendment of 2026-08-26 (ruling F-2324-1, "keep the run logs local for now"),
+ *     which says in terms that nobody force-adds them.
+ *   - worktrees/art/ IS the one class whose bytes genuinely die with the disk (F-1045-1),
+ *     and it is already covered by a different instrument: `art-staging-audit.mjs`,
+ *     which reported AT RISK 0 / LOCAL-ONLY 0 on the same tree this was measured on.
+ * So the chooser is CORRECT as drawn; what was wrong was that it was silent. Widening it
+ * would emit advice contradicting .gitignore and an owner ruling, and would be excused
+ * into uselessness inside a week (F-1460-1, the `cross-engine` fate).
+ *
+ * TO CHANGE THE SCAN SPACE: edit this list only. The regex is DERIVED from it (F-1261-1
+ * — one implementation of the word) and it is DECLARED on stdout on every run.
+ */
+export const EVIDENCE_PREFIXES = ['artifacts', 'reviews/shots-'];
+const CITATION = new RegExp(
+  `^(?:${EVIDENCE_PREFIXES.map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})\\S*$`,
+);
+export const isEvidenceCitation = (span) => CITATION.test(span);
 const PLACEHOLDER = /[{}<>*?|…]|\.\./;
 
 function argumentsFor(argv) {
@@ -69,7 +103,7 @@ export function audit(root, reviewFiles, tracked = trackedPaths(root)) {
   for (const review of reviewFiles) {
     const text = fs.readFileSync(path.resolve(root, review), 'utf8');
     for (const match of text.matchAll(BACKTICKED)) {
-      if (!CITATION.test(match[1])) continue;
+      if (!isEvidenceCitation(match[1])) continue;
       citations += 1;
       const cited = match[1];
       if (PLACEHOLDER.test(cited)) {
@@ -92,6 +126,11 @@ export function summary(result) {
 }
 
 function print(result) {
+  // Printed ALWAYS, including the happy path (F-2208-1): a scan space named only when
+  // something goes wrong re-creates the ambiguity it removes. This is the single line
+  // that separates "I looked at every evidence citation and found nothing untracked"
+  // from "I looked at two prefixes".
+  console.log(`scan space: ${EVIDENCE_PREFIXES.join(' ')} — a cited path outside these is not counted at all`);
   for (const bucket of ['ON-DISK-UNTRACKED', 'ABSENT']) {
     for (const item of result.buckets[bucket]) console.log(`${bucket}\t${item.cited}\t${item.review}`);
   }
