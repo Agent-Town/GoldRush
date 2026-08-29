@@ -172,7 +172,7 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
     # take EnvironmentFile=/etc/goldrush-{assay,ledger}.env, outside the synced tree (runbook
     # :32,:60). Strictly subtractive, and it leaves the payload/allowlist fork (b)/(c) open.
     if ssh -o ConnectTimeout=8 -o BatchMode=yes root@<droplet> true 2>/dev/null; then
-      if rsync -az --delete --timeout=60 --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
+      if rsync -az --delete --timeout=60 --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist --exclude 'gate-s*' ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
         && ssh -o BatchMode=yes root@<droplet> "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
       else
