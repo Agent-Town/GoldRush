@@ -73,6 +73,24 @@ reviews/eight-winds/gen/_misclaimed/
 # the F-1027-2 black-hole shape. Reversible with one word.
 !artifacts/**/*.log
 
+# ...and F-1573-1's own cure was scoped to ONE of the two evidence sinks (F-2358-1, s2358).
+# `review-evidence-audit.mjs:55` declares `EVIDENCE_PREFIXES = ['artifacts', 'reviews/shots-']`
+# and CLAUDE.md §4.1 names them in one breath — "screenshots in reviews/shots-*/ or artifacts/" —
+# i.e. the law treats the two sinks as INTERCHANGEABLE. The ignore file did not: the negation
+# above covers artifacts/ and nothing covered its sibling, so the SAME run log retained under one
+# sink was swallowed under the other, by the same `*.log` rule at line 7 that cost f1572-1 its 24.
+# PROVED BY MANUFACTURING, ground truth = each dir holding ONLY a run log: artifacts/…/run.log
+# RETAINED, reviews/shots-…/run.log SWALLOWED — invisible to `git status --short` (ZERO lines),
+# to the F-2357-1 `ls-files --others --exclude-standard -- artifacts/` triage read (wrong prefix),
+# AND to that read widened to reviews/ (because --exclude-standard drops ignored paths outright).
+# BLAST RADIUS MEASURED BEFORE LANDING, not assumed: 0 tracked *.log under reviews/shots-* (all 71
+# tracked logs under reviews/ are the eight-winds codex banners on line 60), and the only ignored
+# file present under reviews/shots-* is one .DS_Store — so this newly tracks NOTHING today and is
+# purely forward-looking, exactly as line 74 and `gate-*/` were. Scoped to shots-* on purpose: the
+# CONTROLS reviews/<other>/run.log and logs/**/*.log must STAY ignored, so this cannot rot into the
+# blanket !**/*.log sweep that line 72 forbids as the F-1027-2 black-hole shape. Reversible with one word.
+!reviews/shots-**/*.log
+
 # transient runner state — masters (tasks/*.md, tasks/BACKLOG.md) stay tracked,
 # but queue/running/done/failed are ephemeral filesystem state the runner manages.
 tasks/running/
