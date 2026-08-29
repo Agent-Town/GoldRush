@@ -53,6 +53,7 @@ if (existsSync(localFile)) {
 mkdirSync(destination, { recursive: true });
 run('rsync', ['-a', '--timeout=10', `${HOST}:${remoteFile}`, destination]);
 console.log(`ledger backup pulled: ${localFile}`);
+exposureGate();
 
 // Pull every dated backup the box still holds that this mirror lacks. The local
 // series only ever grows (Retention Law: nothing here is deleted) while the remote
@@ -99,6 +100,48 @@ function fillRemoteGaps() {
   for (const remoteFile of missing) {
     run('rsync', ['-a', '--timeout=10', `${HOST}:${remoteFile}`, destination]);
     console.log(`filled: ${path.join(destination, path.basename(remoteFile))}`);
+  }
+  exposureGate();
+}
+
+/**
+ * LB-01's STANDING ENCRYPTION GATE, enforced at the door instead of remembered
+ * (F-2353-1). The duty that calls this script goes on to `git add` + commit +
+ * PUSH the pulled file, and that door is ONE-WAY: undoing a committed account
+ * row needs a force-push, which is deny-listed here.
+ *
+ * s2352 added a manual "read the keys first" instruction to the --fill-gaps arm
+ * only; the DAILY arm — the one that actually runs every day — had neither an
+ * instruction nor an instrument. This closes that, for both arms.
+ *
+ * SCOPE, chosen deliberately rather than maximally: this HARD-STOPS only on
+ * account-class rows, which are NEVER a lawful thing to commit. A "could not
+ * answer" (exit 2 — e.g. the bytes did not parse as sqlite) is reported LOUDLY
+ * but does not fail the pull, because an unparseable download is a FETCH problem
+ * that the next run self-heals, and failing here would red the fill-gaps guard's
+ * legitimate non-sqlite stubs. The committed corpus is still covered: the same
+ * tool is a leg of `test:ledger-guards`, where exit 2 DOES red — so an
+ * unverifiable mirror that reaches a commit is caught at the fire's last act.
+ */
+function exposureGate() {
+  const probe = fileURLToPath(new URL('./ledger-mirror-exposure.mjs', import.meta.url));
+  const r = spawnSync(process.execPath, [probe, '--dir', destination], { encoding: 'utf8' });
+
+  if (r.error || r.status === null) {
+    console.log('⚠️  exposure gate DID NOT RUN — verify the keys by hand before committing:');
+    console.log(`    node scripts/ledger-mirror-exposure.mjs`);
+    return;
+  }
+  process.stdout.write(r.stdout);
+  if (r.status === 1) {
+    console.error('\n⛔ REFUSING — the pulled mirror carries ACCOUNT data. It is on disk but MUST NOT');
+    console.error('   be committed or pushed. See scripts/fire.md §LB-01: the mirror must become an');
+    console.error('   ENCRYPTED artifact before any further mirror is committed.');
+    process.exit(1);
+  }
+  if (r.status !== 0) {
+    console.log('⚠️  exposure gate COULD NOT ANSWER (above). The file is on disk and UNVERIFIED —');
+    console.log('    do not commit it until the keys are read.');
   }
 }
 
