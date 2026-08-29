@@ -55,13 +55,45 @@
  * other refused leg." A guard that reds on a surface which HAS stated the cure is the
  * `cross-engine` fate (F-1460-1): excused into uselessness inside a week.
  *
- * BOUNDARY, DECLARED (F-2196-1). This covers the factory's OWN tooling — repo shell scripts
- * and repo npm scripts — because those are what a fire is ORDERED to run. It does NOT census
- * every backticked span: law surfaces mention `sed`, `pkill`, `sqlite3` and others that are
- * likewise unallowlisted, and flagging each prose mention would bury the signal. If a third
- * refused family ever becomes load-bearing, ADD IT TO `COMMAND_FAMILIES` — that is the one
- * key this guard selects on, and the next reader should question it exactly as s2359
- * questioned s2350's.
+ * BOUNDARY, DECLARED (F-2196-1). This covers the factory's OWN tooling — repo shell scripts,
+ * repo npm scripts, and (since s2360) the one gated external binary a law surface ORDERS a
+ * fire to run — because those are what a fire is ORDERED to run. It does NOT census every
+ * backticked span; flagging each prose mention would bury the signal.
+ *
+ * THE THIRD FAMILY, AND THE INFERENCE THAT NEARLY HID IT (s2360, F-2360-1)
+ * -----------------------------------------------------------------------
+ * s2359 invited the next reader to question this file's one selector, and named `sed`,
+ * `pkill` and `sqlite3` as "likewise unallowlisted" prose. TAKEN, AND THE PREMISE IS WRONG:
+ * "unallowlisted" is NECESSARY but NOT SUFFICIENT for refusal. The gate also sandboxes
+ * read-only commands, so a command absent from all 89 allow entries may still simply run.
+ *
+ * MEASURED s2360, every arm BARE (no `cd`, no pipe — s2350's confound), over the six
+ * imported LAW_SURFACES:
+ *   · `sed -n 461p <file>`                             2 spans — RAN (not refused at all)
+ *   · `date "+%Y-%m-%dT%H:%MZ"`   §1.3's binding stamp — RAN (not refused at all)
+ *   · `git ls-files --others --exclude-standard -- …`  §2E's read — RAN (not refused)
+ *   · `pkill`                                          ZERO spans in any surface, AND
+ *                                                      `Bash(pkill -f vite:*)` is allowlisted
+ *   · `sqlite3 <file> "select key from kv"`            1 span — REFUSED
+ *   · `sqlite3 -version`  (no quotes, no file)         REFUSED — so it is the BINARY,
+ *                                                      not the quoting
+ * So of s2359's three named candidates, one does not appear at all, one runs fine, and
+ * exactly ONE is genuinely refused — and that one is an IMPERATIVE in a standing duty
+ * (LB-01's encryption gate, on the F-2352-2 `--fill-gaps` recovery path, guarding the
+ * one-way door F-2353-2 names). It is added here. The other two are correctly excluded,
+ * and now for a MEASURED reason rather than an assumed one.
+ *
+ * ⚠️ `gateAllows` MODELS THE ALLOWLIST, NOT THE WHOLE GATE. It answers "does an allow entry
+ * cover this?" — which coincides with "will this run?" for both original families (all six
+ * of arm 8's ground-truth rows are consistent) but NOT for read-only commands outside them.
+ * The error direction is safe: it can only say REFUSED where reality says RAN, i.e. demand a
+ * fallback nobody needed, and the file-scoped test makes that cheap. But it means A CANDIDATE
+ * FAMILY MUST BE MEASURED REFUSED BEFORE BEING ADDED, NEVER INFERRED FROM SETTINGS — which is
+ * precisely the inference s2359's boundary note made, and it was wrong about two of three.
+ *
+ * If a fourth refused family ever becomes load-bearing, ADD IT TO `COMMAND_FAMILIES` — that
+ * is the one key this guard selects on, and the next reader should question it exactly as
+ * s2359 questioned s2350's and s2360 questioned s2359's. RUN THE COMMAND FIRST.
  *
  * IT RETIRES ITSELF, PER FAMILY. The day someone adds `Bash(bash scripts/*)` to settings.json,
  * the bash arms pass trivially; add `Bash(npm run test:*)` and the npm arms do too. That is
@@ -90,10 +122,14 @@ const FALLBACK_TOKEN = 'execFileSync';
  * The families this guard censuses. See the BOUNDARY note in the header before adding one.
  * `bash …`      — s2350's original subject, the runner/health/deploy shell scripts.
  * `npm run …`   — s2359's addition: the mandated gate batteries (F-1300-4, F-1460-1).
+ * `sqlite3 …`   — s2360's addition: LB-01's encryption gate. MEASURED refused (bare, and
+ *                 again with no quoted argument), unlike `sed`/`date`/`git ls-files`, which
+ *                 are equally unallowlisted and simply run. See the header before adding one.
  */
 const COMMAND_FAMILIES = [
   { name: 'bash', pattern: /\bbash\s+scripts\/[A-Za-z0-9._/-]+\.sh/g },
   { name: 'npm-run', pattern: /\bnpm run [a-zA-Z0-9:_-]+/g },
+  { name: 'sqlite3', pattern: /\bsqlite3\s+\S+/g },
 ];
 
 function allowEntries() {
@@ -208,8 +244,10 @@ test('arm 3 — fire.md does prescribe refused commands, so arm 1 is not vacuous
   assert.ok(refused.length > 0, 'fire.md must still be a subject, or arm 1 checks nothing');
 });
 
-test('arm 4 — BOTH families are represented in the live corpus, or the widening is decoration', () => {
+test('arm 4 — bash AND npm-run are represented in the live corpus, or the widening is decoration', () => {
   // F-2359-1's whole point: a family with no subject is a selector nobody is testing.
+  // `sqlite3` is deliberately NOT asserted here — see arm 12 for why a single-prescription
+  // family is exercised on a manufactured subject instead of on the live corpus.
   const all = Object.values(surfaceTexts).flatMap((t) => prescriptionsIn(t))
     .filter((p) => !gateAllows(p.cmd, entries));
   const fams = new Set(all.map((p) => p.family));
@@ -276,8 +314,40 @@ test('arm 9 — REVERSE CONTROL: allowlisting a family retires exactly that fami
     withBash.some((x) => x.file === 'scripts/fire.md'),
     'permitting bash must not retire the npm family',
   );
-  const withBoth = findings(variant, [...entries, 'Bash(bash scripts/*)', 'Bash(npm run test:*)']);
-  assert.deepEqual(withBoth, [], 'once BOTH families are permitted there is nothing to say');
+  // DELIBERATE TRIPWIRE (s2360): this list must name EVERY family, and the assertion below
+  // makes a new family red HERE rather than silently weaken the control. That is exactly how
+  // s2360 found out its own widening was live — adding `sqlite3` reddened this arm, because
+  // permitting two families no longer empties fire.md. A reverse control that quietly stops
+  // covering a family is worse than one that reds: it keeps attesting to a retirement it can
+  // no longer observe.
+  const permitAll = ['Bash(bash scripts/*)', 'Bash(npm run test:*)', 'Bash(sqlite3:*)'];
+  assert.equal(
+    permitAll.length,
+    COMMAND_FAMILIES.length,
+    'a family was added without teaching this reverse control to permit it',
+  );
+  const withAll = findings(variant, [...entries, ...permitAll]);
+  assert.deepEqual(withAll, [], 'once EVERY family is permitted there is nothing to say');
+});
+
+test('arm 12 — a surface whose ONLY refused prescription is sqlite3 is caught', () => {
+  // The s2360 family, exercised on a synthetic surface rather than on the live corpus.
+  // DELIBERATELY NOT asserted in arm 4: `sqlite3` has a single live prescription (LB-01's
+  // encryption gate), so demanding a live subject would red the day that clause is lawfully
+  // reworded — the `cross-engine` fate (F-1460-1). A manufactured subject proves the family
+  // is not decoration without betting on one sentence surviving.
+  const f = findings(
+    { 'docs/lb.md': 'Before committing, read its keys: `sqlite3 <file> "select key from kv"`.' },
+    entries,
+  );
+  assert.equal(f.length, 1, 'a sqlite3-only surface must be a subject');
+  assert.equal(f[0].sample, 'sqlite3 <file>');
+  // and it retires per-family, exactly like the other two
+  assert.deepEqual(
+    findings({ 'docs/lb.md': 'read `sqlite3 <file> "x"`' }, [...entries, 'Bash(sqlite3:*)']),
+    [],
+    'permitting sqlite3 must retire the sqlite3 family',
+  );
 });
 
 test('arm 10 — REVERSE CONTROL: a surface that prescribes nothing refused is never flagged', () => {
