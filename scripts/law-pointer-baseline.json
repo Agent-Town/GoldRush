@@ -228,6 +228,18 @@
       "fingerprint": "d7293afa016e",
       "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
     },
+    "scripts/fire.md -> ops/droplet/ledger-backup.mjs:6": {
+      "target": "ops/droplet/ledger-backup.mjs",
+      "line": 6,
+      "fingerprint": "fb9bf04870e3",
+      "excerpt": "const SOURCE = '/opt/goldrush-ledger/ledger.db';"
+    },
+    "scripts/fire.md -> functions/api/_accounts.ts:87": {
+      "target": "functions/api/_accounts.ts",
+      "line": 87,
+      "fingerprint": "9c12aa6bae4b",
+      "excerpt": "if (!env.ACCOUNTS) return error(cors, 503, 'sign_in_not_enabled', 'sign-in not yet enabled');"
+    },
     ".claude/skills/drain/SKILL.md -> scripts/drain-block-check.mjs:722": {
       "target": "scripts/drain-block-check.mjs",
       "line": 722,
