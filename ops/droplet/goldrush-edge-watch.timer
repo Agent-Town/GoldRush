@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the Gold Rush public-edge watch every 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnCalendar=*:0/5
+Unit=goldrush-edge-watch.service
+
+[Install]
+WantedBy=timers.target

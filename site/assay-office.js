@@ -139,22 +139,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const settled = results
       .filter((r) => r.status === 'fulfilled')
       .map((r) => r.value);
+    const base = window.__ASSAY_REFRESH_MS__ ?? 60000;
     if (!settled.length) {
       renderStandingsMessage('the wire is quiet; the board reports again shortly');
+      setTimeout(loadStandings, base);
       return;
     }
-    renderStandings(settled);
+    const pendingTotal = renderStandings(settled);
+    // The board rides the VALIDATION pipeline, not a blind clock: while any reel
+    // sits at the assay office (~1 min replay), poll fast so the Verified flip
+    // shows the moment the county's own replay confirms it; otherwise amble.
+    setTimeout(loadStandings, pendingTotal > 0 ? Math.min(15000, base) : base);
   }
 
   function renderStandings(settled) {
     body.textContent = '';
+    let pendingTotal = 0;
     settled.forEach(({ board, rows }, index) => {
       const tr = document.createElement('tr');
       if (index === 0) tr.className = 'top';
       tr.appendChild(cell('rk', board.label));
-      const best = rows[0];
+      // The headline is always the best VERIFIED row (the column says so); reels
+      // still at the assay office are shown as exactly that, never as standings.
+      const best = rows.find((row) => row.assay === 'verified');
+      const pendingN = rows.filter((row) => row.assay === 'pending').length;
+      pendingTotal += pendingN;
       if (!best) {
-        if (board.contract === 'e1-baron') {
+        if (pendingN > 0) {
+          tr.appendChild(assayOfficeCell(pendingN));
+        } else if (board.contract === 'e1-baron') {
           tr.appendChild(openCrownCell());
         } else {
           tr.appendChild(cell('', 'Open. No verified rider yet.'));
@@ -166,12 +179,29 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       const score = best.score || {};
-      tr.appendChild(riderCell(best));
+      const rider = riderCell(best);
+      if (pendingN > 0) {
+        const note = document.createElement('span');
+        note.className = 'stack';
+        note.textContent = `+${pendingN} at the assay office`;
+        rider.appendChild(note);
+      }
+      tr.appendChild(rider);
       tr.appendChild(cell('num', formatCount(score.waves ?? best.waves)));
       tr.appendChild(cell('num gold', formatCount(score.gold ?? best.gold)));
       tr.appendChild(watchCell());
       body.appendChild(tr);
     });
+    return pendingTotal;
+  }
+
+  function assayOfficeCell(pendingN) {
+    const td = document.createElement('td');
+    const rider = document.createElement('span');
+    rider.className = 'rider';
+    rider.textContent = pendingN === 1 ? 'One reel at the assay office' : `${pendingN} reels at the assay office`;
+    td.appendChild(rider);
+    return td;
   }
 
   function openCrownCell() {
@@ -232,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return td;
   }
 
+  // Self-scheduling: loadStandings picks its own next tick from the validation
+  // state (15 s while a reel is at the assay office, 60 s at rest).
   loadStandings();
-  setInterval(loadStandings, window.__ASSAY_REFRESH_MS__ ?? 60000);
 });

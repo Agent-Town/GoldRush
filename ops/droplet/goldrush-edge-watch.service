@@ -1,0 +1,12 @@
+[Unit]
+Description=Gold Rush public-edge watch (F-OUT-0829; probes, self-heal, email alert)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/goldrush
+EnvironmentFile=-/etc/goldrush-ledger.env
+ExecStart=/usr/bin/bash /opt/goldrush/ops/droplet/edge-watch.sh
+MemoryMax=64M
+UMask=0077
