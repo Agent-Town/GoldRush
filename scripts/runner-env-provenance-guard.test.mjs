@@ -150,6 +150,24 @@ test('PRE-CURE: stripping the record_env calls loses the refusal provenance enti
     'PRE-CURE REPRODUCED: the refusal leaves no durable trace — this is what shipped');
 });
 
+// HONEST LIMITATION, recorded rather than papered over (F-2214-1: bank the mechanism).
+// The arms above drive record_env through the REFUSAL path. The `started` call site cannot be
+// executed here: it needs a real detached runner, and the sibling runner-restart-recipe guard
+// SKIPs its two custody arms in this shell because /usr/bin/script has no tty
+// ("tcgetattr/ioctl: Operation not supported on socket"). So this arm is a STATIC wiring
+// assertion, not an execution one — deliberately weaker, and named as such.
+// It exists because F-2209-1's defect is exactly this: severing the wiring between a tested
+// helper and its call site leaves every behavioural arm green while the feature is gone.
+test('WIRING (static): the verified-start path still records, after custody is confirmed', () => {
+  const src = fs.readFileSync(HELPER, 'utf8');
+  assert.match(src, /record_env started "\$live"/,
+    'the success path must record the environment it just imposed');
+  const atRecord = src.indexOf('record_env started');
+  const atPpid = src.indexOf('runner custody was not transferred');
+  assert.ok(atPpid > 0 && atRecord > atPpid,
+    'it records AFTER custody is verified, so a rejected runner never leaves a provenance line');
+});
+
 test('OVER-GENERAL: recording on --check pollutes provenance with non-events', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-over-'));
   const helper = scratchHelper(dir, s => variantOf(s,
