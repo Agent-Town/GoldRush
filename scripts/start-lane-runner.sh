@@ -47,6 +47,40 @@ RUNNER_LOG="${LANE_RUNNER_LOG:-$ROOT/logs/runner-headless.log}"
 # it, and copying the whole file would be the sibling-script hazard this repo keeps paying for.
 CODEX_FLOOR="0.144.1"
 
+# F-2344-1 (s2344): RECORD THE ENVIRONMENT THIS START IMPOSES, INTO THE DURABLE LOG.
+# A runner's inherited PATH decides which node/npm/npx runs every lane gate for its whole
+# lifetime (see the load-bearing note at the top of this file), and macOS makes that
+# UNRECOVERABLE afterwards: `ps -E` shows no environment even for a process you spawned
+# yourself (measured s2344 with a marked control child — the marker was invisible).
+# The banners below go to STDOUT, which is durable only when the caller redirects it:
+# health-watch.sh:151 does (`>> logs/runner-headless.log`), but §2.0b/§2.0c tell a FIRE to
+# run this helper bare, and that stream dies with the fire. Measured s2344 over all 23,062
+# lines of the live runner log: the ONLY two [start-lane-runner] lines ever recorded are a
+# single REFUSING pair — the success banners have never once landed, and the currently-live
+# runner's provenance is therefore genuinely unknown.
+# So this writes ONE consolidated, greppable line straight to RUNNER_LOG, on EVERY outcome
+# including the happy path (F-2208-1: a record that appears only on failure re-creates the
+# ambiguity it removes). It resolves node at CALL time, so it reports the environment as it
+# actually stands at that moment rather than what was intended.
+# It must never block a restart: an unwritable log degrades to a stdout note, never an exit.
+record_env() {
+  local verdict="$1" pid="${2:--}" n v stamp
+  n="$(command -v node 2>/dev/null || echo none)"
+  v="$([ "$n" = none ] || "$n" --version 2>/dev/null || echo '?')"
+  stamp="$(date '+%Y-%m-%dT%H:%M:%S%z')"
+  local line="[start-lane-runner] ENV $stamp verdict=$verdict pid=$pid floor=$CODEX_FLOOR"
+  line="$line codex=${codex_ver:-none}@${codex_bin:-none} node=${v:-?}@$n"
+  line="$line CLAUDE_CONFIG_DIR=${CLAUDE_CONFIG_DIR-<unset>} CLAUDECODE=${CLAUDECODE-<unset>}"
+  mkdir -p "$(dirname "$RUNNER_LOG")" 2>/dev/null || true
+  # The braces are load-bearing: `>>` failing is reported by the SHELL, not by printf, so
+  # `printf ... 2>/dev/null` leaves a raw "Permission denied" on stderr beside the clean WARN.
+  # Grouping puts the redirection itself inside the silenced compound.
+  if ! { printf '%s\n' "$line" >> "$RUNNER_LOG"; } 2>/dev/null; then
+    echo "[start-lane-runner] WARN — could not record the environment to $RUNNER_LOG"
+    echo "[start-lane-runner]   $line"
+  fi
+}
+
 # F-2137-1: a LIVE runner executes the parse of RUNNER_SCRIPT it loaded at exec time, so every
 # commit to that file since is INERT until someone restarts it. bash parses a `while` body whole
 # before running it, which is why editing the live runner is famously "safe but inert" — the half
@@ -122,6 +156,10 @@ done
 if [ -z "$codex_bin" ]; then
   echo "[start-lane-runner] REFUSING — no codex client >= $CODEX_FLOOR on PATH or in ~/.nvm."
   echo "[start-lane-runner] Starting anyway would produce a runner that refuses every dispatch."
+  # A refusal is exactly the moment a hand-start follows, so record it durably (F-2344-1):
+  # the live log shows a REFUSING followed immediately by two `watching` starts with no
+  # successful-helper banner between them — i.e. the forbidden path, taken, unrecorded.
+  record_env refused
   exit 1
 fi
 CODEX_DIR="$(dirname "$codex_bin")"
@@ -188,4 +226,6 @@ if [ "${tty:-}" != "??" ]; then
   stop_rejected_runner "$live" || echo "[start-lane-runner] FAILED — rejected runner pid $live survived TERM/KILL"
   exit 1
 fi
+record_env started "$live"
 echo "[start-lane-runner] OK — record the pid + start time in your handoff."
+echo "[start-lane-runner] provenance recorded: grep '\[start-lane-runner\] ENV' $RUNNER_LOG"
