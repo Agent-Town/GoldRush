@@ -121,10 +121,20 @@ ver_ge() {  # $1 >= $2, dotted numeric (BSD awk; no sort -V)
 }
 
 # ---- 1. REFUSE if a runner is already alive. NEVER clear the lock by hand. ----
-# lane-runner-v3.sh:120-129 SELF-HEALS a genuine corpse (no other runner process -> rmdir + retake).
-# So "another instance running. Remove if stale." at :20 means an instance GENUINELY IS running,
+# lane-runner-v3.sh SELF-HEALS a genuine corpse: its lock block rmdirs and retakes when no other
+# runner process exists, logging "stale lock self-healed (no other runner process)".
+# So its "another instance running. Remove if stale." means an instance GENUINELY IS running,
 # and `rmdir tasks/.runner.lock` + relaunch yields TWO runners on the same queues. That error
 # text invited the one action that compounds the damage (F-1652-1 §3); this is the cure.
+#
+# F-2350-2 (s2350): those branches are cited by CONTENT, never by :NNN. This block used to carry
+# four bare coordinates (:120-129 twice, ":20", ":135"); s2343 re-based the SAME four in
+# fire.md §2.0b by +26 and these rotted on undetected, because law-pointer-guard scans the law
+# surfaces and a shell script is not one. Measured s2350: ":20" was a BLANK LINE, and :120-129
+# had become commit_lane_delta's pathspec body -- i.e. a fire that followed the citation to check
+# the "do NOT rmdir" claim landed on unrelated code and was pushed toward distrusting correct
+# advice, at the one moment (a stuck factory) when acting on it wrongly yields TWO runners.
+# Guarded by scripts/start-lane-runner-citation-guard.test.mjs.
 others=$(runner_pids | wc -l | tr -d ' ')
 if [ "${others:-0}" != "0" ]; then
   echo "[start-lane-runner] REFUSING — a lane runner is already alive:"
@@ -133,8 +143,8 @@ if [ "${others:-0}" != "0" ]; then
   # fire is already looking at it and deciding whether to leave it alone.
   runner_pids | while read -r pid; do report_runner_staleness "$pid"; done
   echo "[start-lane-runner] Do NOT rmdir tasks/.runner.lock — the runner self-heals a real corpse"
-  echo "[start-lane-runner] (lane-runner-v3.sh:120-129); a held lock means a LIVE instance."
-  echo "[start-lane-runner] To replace it: kill -TERM <pid>  (its trap at :135 releases the lock),"
+  echo "[start-lane-runner] (it logs 'stale lock self-healed'); a held lock means a LIVE instance."
+  echo "[start-lane-runner] To replace it: kill -TERM <pid>  (its INT/TERM trap releases the lock),"
   echo "[start-lane-runner] wait for the lock to clear, then re-run me."
   # --check is a REPORT, not an action: it must stay runnable while the factory is healthy,
   # otherwise the only time you can exercise this script is the one time it matters.
