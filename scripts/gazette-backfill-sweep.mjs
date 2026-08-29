@@ -51,7 +51,40 @@ export const normalizeSince = (since) => /^\d{4}-\d{2}-\d{2}$/.test(since) ? `${
 
 // Player paths: a change the PLAYER could see. Excludes tests, scripts, tasks, docs,
 // reviews, logs, marketing — those are factory surfaces, not the game.
-const PLAYER = /^(src\/|assets\/|public\/|functions\/|index\.html)/
+//
+// ⚠️ THE PATH FILTER IS A CORPUS SELECTOR, AND IT OMITTED THE PUBLIC DOOR FOR 16 DAYS
+// (F-2345-1, measured and cured s2345). Two comments above warn that a matcher narrower
+// than the data lies — both about HASHES (F-1600-1's 8-char slice, the 7-char prefix
+// trap). Nobody re-asked the same question of the PATHS, and `site/` was never in the
+// list: the droplet-served landing at https://agenttown.app/, which `health-watch.sh`
+// probes as "the public door" and which is the first page any visitor sees. Note also
+// that `index.html` is ROOT-ANCHORED, so `site/index.html` did not match it either.
+//
+// Measured s2345 over 4,133 first-parent merges since 2026-08-05: NINE touch `site/`
+// and no other player path, so all nine were skipped before classification and NONE is
+// cited in any owner-facing sink — including "replace agenttown.app frontpage with the
+// Gold Rush landing", "the landing tells the truth", and the county-wide live board.
+//
+// SEVERITY, STATED HONESTLY AND DELIBERATELY NOT INFLATED: nothing is broken for the
+// player, no gate is wrong, and this tool is ADVISORY by design (exit 0 always). What
+// earns it a finding is the DIRECTION — the skipped merges never reach `rows`, so they
+// cannot appear as candidates, and the report prints "NOT cited anywhere: 0" as an
+// affirmative all-clear over a corpus that excluded the landing page by construction.
+// That number is what every dry-board fire reports to the owner as the GZ-01 discharge.
+//
+// The list is therefore NAMED and DECLARED in the report rather than buried in a
+// regex, so the next narrowing is visible at the moment a fire reads the verdict
+// (F-2208-1: declare on the happy path too, or the declaration re-creates the
+// ambiguity it removes). Widening remains a JUDGEMENT: a path belongs here only if a
+// PLAYER could see it. `rehearsal/`, `foundry/`, `ops/`, `server/` and `news/herald.json`
+// were each considered s2345 and deliberately EXCLUDED as factory/backend surfaces.
+export const PLAYER_PREFIXES = ['src/', 'assets/', 'public/', 'functions/', 'site/', 'index.html']
+// Derived from the list above, never a parallel literal: a second copy is how the hash
+// matchers in this same file drifted twice (F-1600-1, F-1633-1), and F-1261-1's rule is
+// that there is ONE implementation of a predicate in this repo. Exported so its guard
+// tests the REAL decision rather than a re-derivation that can agree while being wrong.
+const PLAYER = new RegExp(`^(${PLAYER_PREFIXES.map((p) => p.replace(/\./g, '\\.')).join('|')})`)
+export const isPlayerPath = (file) => PLAYER.test(file)
 
 const main = () => {
   // Git fills a date-only revision limit with the current clock time, shrinking the
@@ -74,7 +107,7 @@ const main = () => {
   for (const line of log) {
     const [full, short, date, subject] = line.split('\t')
     const files = git('show', '--first-parent', '--name-only', '--format=', full).trim().split('\n').filter(Boolean)
-    if (!files.some((f) => PLAYER.test(f))) continue
+    if (!files.some((f) => isPlayerPath(f))) continue
 
     // ⚠️ A merge may be published under the LANE-SIDE commit hash rather than the merge's
     // own — the existing roundups do exactly this. Keying only on the merge hash is a
@@ -101,6 +134,12 @@ const main = () => {
   const dismissed = rows.filter((r) => r.state === 'dismissed')
   const absent = rows.filter((r) => r.state === 'candidate')
   console.log(`=== GZ-01 BACKFILL SWEEP (since ${since}) ===`)
+  // F-2345-1: the verdict below is a universal claim over whatever these prefixes select.
+  // Printed ALWAYS, including the happy path — a scan space named only when something goes
+  // wrong leaves "0 candidates" indistinguishable from "0 candidates I was allowed to see".
+  console.log(`scan space: ${PLAYER_PREFIXES.join(' ')}`)
+  console.log(`  (a merge touching NONE of these is never examined — widen the list, not the verdict)`)
+  console.log(`examined ${log.length} first-parent merge(s) in the window`)
   console.log(`player-path-touching first-parent merges: ${rows.length}`)
   const viaContained = rows.filter((r) => r.state !== 'candidate' && r.via !== 'merge hash')
   console.log(`  already cited in marketing/outbox/ (either sink): ${reported.length + dismissed.length}`)
