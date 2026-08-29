@@ -16,15 +16,12 @@ STATE_DIR=/var/lib/goldrush-edge-watch
 mkdir -p "$STATE_DIR"
 STATE="$STATE_DIR/state"
 [ -n "${RESEND_API_KEY:-}" ] || . /etc/goldrush-ledger.env 2>/dev/null || true
-# INTERIM SENDER (F-MAIL-0829, 2026-08-29): agenttown.app is NOT domain-verified in
-# Resend, so `claim@agenttown.app` cannot send (403) — which also breaks the game's
-# sign-in codes (request-code answers 503 email_unavailable). Until the owner
-# verifies the domain at resend.com/domains (+ its DNS records in Cloudflare),
-# Resend's test sender works but may deliver ONLY to the account owner's address.
-# AFTER verification: set ALERT_FROM="Gold Rush <claim@agenttown.app>" and
-# ALERT_TO="<owner-email>", and re-test one send.
-ALERT_TO="4robinlehmann@gmail.com"
-ALERT_FROM="Gold Rush watch <onboarding@resend.dev>"
+# F-MAIL-0829 RESOLVED 2026-08-29: the owner verified agenttown.app in Resend
+# (Cloudflare records auto-added), and `claim@agenttown.app` sends again — proven
+# by mail id a51cf4da the moment verification landed. This same verification
+# restored the game's sign-in code emails. Interim test-sender routing retired.
+ALERT_TO="<owner-email>"
+ALERT_FROM="Gold Rush <claim@agenttown.app>"
 
 code() { curl -so /dev/null -m 12 -w '%{http_code}' "$1" 2>/dev/null || echo 000; }
 # Three probes, three failure domains: landing (this box's nginx static), game
