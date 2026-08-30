@@ -25,6 +25,17 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// Fixture teardown (F-2383-2). These guards made temp dirs and never removed them: 50 survivors
+// per run, invisible while scripts/fixture-teardown.test.mjs still failed fast on an earlier subject.
+// keep() only REGISTERS the directory — the mkdtemp literal deliberately stays at its own call site,
+// because that auditor extracts prefixes lexically and cannot see through a wrapper (F-2382-4).
+const TMP = [];
+const keep = (d) => { TMP.push(d); return d; };
+process.on('exit', () => {
+  for (const d of TMP) fs.rmSync(d, { recursive: true, force: true });
+});
+
+
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const HELPER = path.join(HERE, 'start-lane-runner.sh');
 const ENV_KEY = '[start-lane-runner] ENV';
@@ -47,7 +58,7 @@ function scratchHelper(dir, mutate) {
 // Runs the REAL helper (or a variant) in isolation: stubbed runner_pids so it never sees the
 // live runner, an isolated log, and a fake runner script it never reaches on the refusal path.
 function run(helper, { check = false, noCodex = false, logPath, logDir } = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-prov-'));
+  const dir = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-prov-')));
   const stub = path.join(dir, 'processes.sh');
   fs.writeFileSync(stub, 'runner_pids() { :; }\nrunner_inert_commits() { echo 0; }\nrunner_started_at() { echo 0; }\n');
   const fakeRunner = path.join(dir, 'lane-runner-v3.sh');
@@ -81,7 +92,7 @@ function run(helper, { check = false, noCodex = false, logPath, logDir } = {}) {
 }
 
 test('a REFUSED start is recorded durably in the runner log, not just on stdout', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-a-'));
+  const dir = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-a-')));
   const r = run(scratchHelper(dir), { noCodex: true });
   assert.equal(r.status, 1, 'the floor refusal still exits 1');
   assert.match(r.stdout, /REFUSING — no codex client/, 'control: the refusal arm really ran');
@@ -90,7 +101,7 @@ test('a REFUSED start is recorded durably in the runner log, not just on stdout'
 });
 
 test('the record names the facts that decide every lane gate', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-b-'));
+  const dir = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-b-')));
   const line = run(scratchHelper(dir), { noCodex: true }).envLines[0] ?? '';
   assert.match(line, /node=/, 'the interpreter under every lane gate is named');
   assert.match(line, /codex=/, 'the client is named');
@@ -102,7 +113,7 @@ test('the record names the facts that decide every lane gate', () => {
 // must stay side-effect-free, or the one command that is safe to run on a healthy factory
 // starts writing non-events into the runner's provenance history.
 test('--check records NOTHING: it started no runner, so there is no provenance to write', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-c-'));
+  const dir = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-c-')));
   const r = run(scratchHelper(dir), { check: true });
   assert.match(r.stdout, /--check: environment is READY|--check: continuing/,
     'control: --check really reached its report');
@@ -115,8 +126,8 @@ test('an unwritable log degrades to a WARN and never changes the exit code', (t)
   if (typeof process.getuid === 'function' && process.getuid() === 0) {
     return t.skip('running as root: chmod 000 is not enforced, so this arm cannot be built');
   }
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-d-'));
-  const locked = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-locked-'));
+  const dir = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-d-')));
+  const locked = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-locked-')));
   fs.chmodSync(locked, 0o000);
   try {
     const r = run(scratchHelper(dir), { noCodex: true, logPath: path.join(locked, 'x.log') });
@@ -130,7 +141,7 @@ test('an unwritable log degrades to a WARN and never changes the exit code', (t)
 // The point of the whole cure: stdout is NOT redirected here, exactly as §2.0b/§2.0c tell a
 // fire to invoke it, and the fact must still survive in the log.
 test('the record survives an un-redirected stdout — the prescribed fire invocation', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-e-'));
+  const dir = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-e-')));
   const r = run(scratchHelper(dir), { noCodex: true });
   assert.ok(r.envLines.length >= 1, 'the durable channel carries it independently of stdout');
   assert.ok(!r.stdout.includes(ENV_KEY),
@@ -140,7 +151,7 @@ test('the record survives an un-redirected stdout — the prescribed fire invoca
 // ---- Manufactured defects: each must red exactly the arm built for it. ----
 
 test('PRE-CURE: stripping the record_env calls loses the refusal provenance entirely', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-pre-'));
+  const dir = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-pre-')));
   const helper = scratchHelper(dir, s =>
     variantOf(s, '\n  record_env refused', '', 'strip refusal record'));
   const r = run(helper, { noCodex: true });
@@ -169,7 +180,7 @@ test('WIRING (static): the verified-start path still records, after custody is c
 });
 
 test('OVER-GENERAL: recording on --check pollutes provenance with non-events', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-over-'));
+  const dir = keep(fs.mkdtempSync(path.join(os.tmpdir(), 'gr-env-over-')));
   const helper = scratchHelper(dir, s => variantOf(s,
     '  echo "[start-lane-runner] --check: environment is READY; started nothing."',
     '  record_env started\n  echo "[start-lane-runner] --check: environment is READY; started nothing."',

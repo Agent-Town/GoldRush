@@ -19,19 +19,30 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { mkdtempSync, mkdirSync, writeFileSync, cpSync, readFileSync, chmodSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, cpSync, readFileSync, chmodSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { DatabaseSync } from 'node:sqlite';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// Fixture teardown (F-2383-2). These guards made temp dirs and never removed them: 50 survivors
+// per run, invisible while scripts/fixture-teardown.test.mjs still failed fast on an earlier subject.
+// keep() only REGISTERS the directory — the mkdtemp literal deliberately stays at its own call site,
+// because that auditor extracts prefixes lexically and cannot see through a wrapper (F-2382-4).
+const TMP = [];
+const keep = (d) => { TMP.push(d); return d; };
+process.on('exit', () => {
+  for (const d of TMP) rmSync(d, { recursive: true, force: true });
+});
+
+
 const REPO = fileURLToPath(new URL('..', import.meta.url));
 const SUBJECT = path.join(REPO, 'scripts', 'ledger-mirror-exposure.mjs');
 
 /** Build a mirror directory holding one sqlite db per {name: [keys]} entry. */
 function mirrorDir(spec) {
-  const dir = mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-'));
+  const dir = keep(mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-')));
   for (const [name, keys] of Object.entries(spec)) {
     const db = new DatabaseSync(path.join(dir, name));
     db.exec('create table kv (key text primary key, value text)');
@@ -66,7 +77,7 @@ function runVariant(script, dir, extra = []) {
 function variantOf(find, replace) {
   const src = readFileSync(SUBJECT, 'utf8');
   assert.ok(src.includes(find), `variant construction FAILED — anchor absent: ${find.slice(0, 60)}`);
-  const dir = mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-variant-'));
+  const dir = keep(mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-variant-')));
   const file = path.join(dir, 'ledger-mirror-exposure.mjs');
   writeFileSync(file, src.replace(find, replace));
   return file;
@@ -212,7 +223,7 @@ test('the corpus root is cwd-INVARIANT — the dangerous cwd is the one that sti
 test('the DEFAULT dir is anchored to the script, not to the working directory', () => {
   // Relocating the script must move its default corpus with it — that is what
   // proves the anchor is import.meta.url rather than process.cwd().
-  const home = mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-relocated-'));
+  const home = keep(mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-relocated-')));
   mkdirSync(path.join(home, 'scripts'));
   mkdirSync(path.join(home, 'artifacts', 'ledger-backups'), { recursive: true });
   cpSync(SUBJECT, path.join(home, 'scripts', 'ledger-mirror-exposure.mjs'));

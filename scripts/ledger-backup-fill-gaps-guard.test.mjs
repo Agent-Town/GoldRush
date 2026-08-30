@@ -8,18 +8,29 @@
 // Every red below was proven by manufacturing the defect on a scratch copy.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, writeFileSync, readdirSync, readFileSync, chmodSync, existsSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readdirSync, readFileSync, chmodSync, existsSync, rmSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+// Fixture teardown (F-2383-2). These guards made temp dirs and never removed them: 50 survivors
+// per run, invisible while scripts/fixture-teardown.test.mjs still failed fast on an earlier subject.
+// keep() only REGISTERS the directory — the mkdtemp literal deliberately stays at its own call site,
+// because that auditor extracts prefixes lexically and cannot see through a wrapper (F-2382-4).
+const TMP = [];
+const keep = (d) => { TMP.push(d); return d; };
+process.on('exit', () => {
+  for (const d of TMP) rmSync(d, { recursive: true, force: true });
+});
+
 
 const SCRIPT = fileURLToPath(new URL('./ledger-backup-pull.mjs', import.meta.url));
 
 // Build a sandbox: fake remote listing + stub ssh/rsync on PATH + an empty mirror.
 // `remote` is the set of basenames the box "holds"; `local` what the mirror already has.
 function sandbox({ remote, local, dated = true }) {
-  const root = mkdtempSync(path.join(tmpdir(), 'lb01-fill-'));
+  const root = keep(mkdtempSync(path.join(tmpdir(), 'lb01-fill-')));
   const bin = path.join(root, 'bin');
   const dest = path.join(root, 'mirror');
   const remoteDir = path.join(root, 'remote');
