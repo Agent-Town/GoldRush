@@ -1,9 +1,9 @@
 {
-  "era": 3,
-  "name": "the Honest Hypot",
-  "engineHash": "8a0559cd93fed554fcf07ea16eafb183ff2dcffefc79c6f12f020733685f074d",
-  "declaredAt": "2026-08-25",
-  "note": "Engine-era declarations and tape stamps became enforceable; simulation behaviour did not change.",
+  "era": 4,
+  "name": "the Embodied Hand",
+  "engineHash": "dbf8b14e573a9fe66cf5162e9e368ccecbadb162c479c52ba0abb09c25dfd5d9",
+  "declaredAt": "2026-08-30",
+  "note": "Agent BUILD orders now travel within placement reach, confirm from the ordering body, and fail unreachable terrain honestly. Hash RE-PINNED at drain (s2372) with a named cause per F-1441-3: the lane measured 0bd10f71 against its own checkout, and merging moved the engine content twice over -- it absorbed the era-3 copy edits (s2371 drain 1, LanternShow.ts and RunSuspend.ts) that had already left main's own era-3 pin stale at 8a0559cd vs an actual 1c0406f6. Era 4 is the behavioural change below and nothing else; the merge is why the constant moved.",
   "history": [
     {
       "era": 1,
@@ -16,6 +16,12 @@
       "name": "the Brief Hypot",
       "declaredAt": "2026-08-24",
       "note": "The brief post-cure window after engine hashes arrived and before named engine eras."
+    },
+    {
+      "era": 3,
+      "name": "the Honest Hypot",
+      "declaredAt": "2026-08-25",
+      "note": "Engine-era declarations and tape stamps became enforceable; simulation behaviour did not change."
     }
   ]
 }

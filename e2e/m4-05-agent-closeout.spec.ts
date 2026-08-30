@@ -277,6 +277,41 @@ test('side-effect permission checks read live meta on each call', async ({ page 
   expect(errors.pageErrors).toEqual([]);
 });
 
+test('the browser build door confirms against the Prospector body, not the local hero', async ({ page }) => {
+  await setStoredMeta(page, 3);
+  const errors = await openDebugGame(page, '?debug&timescale=4&nowaves&nolevel&seed=embodied-build-body');
+  await grantGold(page, 25);
+  const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.beacons ?? 0);
+  const target = await page.evaluate(() => {
+    const rider = window.__THREE_GAME_DIAGNOSTICS__!.agent.embodiment.position;
+    const target = { x: rider.x, z: rider.z - 2 };
+    window.__GR_TEST__?.teleport(target.x + 20, target.z);
+    return target;
+  });
+  await expect.poll(() => page.evaluate(
+    (point) => {
+      const hero = window.__THREE_GAME_DIAGNOSTICS__!.heroPos;
+      return Math.hypot(hero.x - point.x, hero.z - point.z);
+    },
+    target,
+  )).toBeGreaterThan(Balance.beacon.placeRadius);
+  const result = await page.evaluate((point) => {
+    const rider = window.__THREE_GAME_DIAGNOSTICS__!.agent.embodiment.position;
+    return {
+      rider,
+      hero: window.__THREE_GAME_DIAGNOSTICS__!.heroPos,
+      receipt: window.__GR_AGENT__!.placeBuilding('sentry_beacon', point, 0),
+    };
+  }, target);
+
+  expect(distance(result.rider, target)).toBeLessThanOrEqual(Balance.beacon.placeRadius);
+  expect(distance(result.hero, target)).toBeGreaterThan(Balance.beacon.placeRadius);
+  expect(result.receipt.outcome.ok).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.beacons ?? 0)).toBe(before + 1);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('victory pause agent calls do not bank gold into the stale or next run', async ({ page }) => {
   await setStoredMeta(page, 2);
   const errors = await openDebugGame(page, '?debug&timescale=100&nolevel&seed=m4-05-victory');

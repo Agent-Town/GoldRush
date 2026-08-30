@@ -140,6 +140,7 @@ export class StandingOrdersExecutor {
   private capture: (() => ActionOrderResult) | null = null;
   private boatBuild: ((padId: string, buildingId: string) => ActionOrderResult) | null = null;
   private reanchor: ((anchorId: string) => ActionOrderResult) | null = null;
+  private buildProgress: { orderId: string; distance: number; at: number } | null = null;
 
   constructor(
     private readonly surface: GoldRushToolSurface,
@@ -233,6 +234,7 @@ export class StandingOrdersExecutor {
     this.needsRiderValue = false;
     this.submission = 0;
     this.sequence = 0;
+    this.buildProgress = null;
     this.previousState = null;
     this.expectedWaveAt = null;
     this.failureReasons.clear();
@@ -276,8 +278,24 @@ export class StandingOrdersExecutor {
     if (order.verb === 'BUILD') {
       if (!conditionMet(order.when, state)) return null;
       this.status(record, 'active', at);
+      const target = snapBuildTarget(order.where);
+      if (!this.surface.buildTargetReachable(target)) {
+        this.fail(record, 'UNREACHABLE: BUILD target is outside buildable terrain.', at);
+        return {};
+      }
+      const remaining = distance(actor, target);
+      if (remaining > this.surface.buildPlacementRadius(order.what)) {
+        if (this.buildProgress?.orderId !== record.id || remaining < this.buildProgress.distance - 0.05) {
+          this.buildProgress = { orderId: record.id, distance: remaining, at };
+        } else if (at - this.buildProgress.at >= 4) {
+          this.fail(record, 'UNREACHABLE: BUILD target has no traversable approach.', at);
+          return {};
+        }
+        return { movement: target };
+      }
+      this.buildProgress = null;
       const receipt = this.surface.tools.place_building(order.what, order.where, order.rotationSteps ?? 0);
-      return this.finishAction(record, receipt, order.where, at);
+      return this.finishAction(record, receipt, target, at);
     }
 
     if (order.verb === 'REPAIR_UNDER') {
@@ -820,6 +838,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function schemaError(index: number, verb: StandingOrder['verb']): string {
   return `orders[${index}] does not match the ${verb} schema.`;
+}
+
+function snapBuildTarget(point: AgentVec2): AgentVec2 {
+  const snap = Balance.beacon.gridSnap;
+  return { x: Math.round(point.x / snap) * snap, z: Math.round(point.z / snap) * snap };
 }
 
 function distance(a: AgentVec2, b: AgentVec2): number {

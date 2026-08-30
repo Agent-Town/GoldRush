@@ -959,14 +959,18 @@ export class BuildSystem {
   }
 
   get confirmDiagnostics(): ConfirmBuildDiagnostics {
+    return this.confirmDiagnosticsFor(this.heroPosition);
+  }
+
+  private confirmDiagnosticsFor(origin: { x: number; z: number }): ConfirmBuildDiagnostics {
     const def = this.selectedDef();
     const count = this.countFor(def.id);
     const maxCount = this.maxCountFor(def);
     const cost = this.costFor(def);
     const economyOk = this.economy.gold >= cost;
     const placementOk = this.matchesPlacement(def, this.ghostPos);
-    const dx = this.ghostPos.x - this.heroPosition.x;
-    const dz = this.ghostPos.z - this.heroPosition.z;
+    const dx = this.ghostPos.x - origin.x;
+    const dz = this.ghostPos.z - origin.z;
     const distanceSq = dx * dx + dz * dz;
     const placeRadius = this.placeRadius(def.id);
     const rangeOk = distanceSq <= placeRadius * placeRadius;
@@ -1008,7 +1012,11 @@ export class BuildSystem {
     };
   }
 
-  confirm(at: number, position?: { x: number; z: number }): boolean {
+  confirm(
+    at: number,
+    position?: { x: number; z: number },
+    origin: { x: number; z: number } = this.heroPosition,
+  ): boolean {
     this.lastConfirmFailure = null;
     if (!this.mode) {
       this.lastConfirmFailure = 'mode_off';
@@ -1020,7 +1028,7 @@ export class BuildSystem {
     } else {
       this.updateGhostPosition();
     }
-    this.valid = this.computeValid();
+    this.valid = this.computeValid(origin);
     if (!this.valid) {
       this.lastConfirmFailure = 'invalid';
       return this.invalidBuild();
@@ -1058,6 +1066,7 @@ export class BuildSystem {
   confirmPlacement(
     at: number,
     placement: { id: string; position: { x: number; z: number }; rotationSteps: number },
+    origin: { x: number; z: number } = this.heroPosition,
   ): boolean {
     const previous = {
       id: this.selectedId,
@@ -1070,8 +1079,8 @@ export class BuildSystem {
       if (!this.selectBuildable(placement.id, true)) return false;
       this.ghostRotationSteps = ((Math.round(placement.rotationSteps) % 4) + 4) % 4;
       this.syncGhostShape();
-      const placed = this.confirm(at, placement.position);
-      if (!placed) setBuildRejectionDetail(rejectionDetail(this.confirmDiagnostics.reason));
+      const placed = this.confirm(at, placement.position, origin);
+      if (!placed) setBuildRejectionDetail(rejectionDetail(this.confirmDiagnosticsFor(origin).reason));
       return placed;
     } finally {
       this.selectedId = previous.id;
@@ -1650,7 +1659,7 @@ export class BuildSystem {
     this.snap(this.ghostPos);
   }
 
-  private computeValid(origin: THREE.Vector3 = this.heroPosition): boolean {
+  private computeValid(origin: { x: number; z: number } = this.heroPosition): boolean {
     const def = this.selectedDef();
     if (this.countFor(def.id) >= this.maxCountFor(def)) return false;
     if (this.economy.gold < this.costFor(def)) return false;

@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
@@ -245,6 +247,163 @@ test('a distant HARVEST walks before it pays', async () => {
   }
 });
 
+test('BUILD walks, confirms from the ordering body, and cannot wedge on unreachable terrain', async () => {
+  const previousLocation = globalThis.location;
+  const previousWindow = globalThis.window;
+  const location = new URL('http://gr-sim.local/?debug&contract=e1-dry-gulch&seed=embodied-build');
+  globalThis.location = location;
+  globalThis.window = { location };
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { StandingOrdersExecutor } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
+    let placements = 0;
+    const placedAt = [];
+    const state = () => ({
+      timeAlive: 0,
+      runState: 'playing',
+      hp: 100,
+      maxHp: 100,
+      enemiesAlive: 0,
+      wave: 1,
+      nextWaveInSim: 30,
+      economy: { gold: 100 },
+      wreck: { hitsResolved: 0 },
+      build: { hp: [], sluicePositions: [] },
+      harvest: { activeNodes: [] },
+    });
+    const surface = {
+      namespace: 'et.goldrush',
+      permissionLevel: () => 3,
+      capabilities: [],
+      buildPlacementRadius: () => 6,
+      buildTargetReachable: ({ x, z }) => Math.abs(x) <= 32 && Math.abs(z) <= 32,
+      tools: {
+        place_building: (def, pos) => {
+          placements += 1;
+          placedAt.push({ x: Math.round(pos.x), z: Math.round(pos.z) });
+          return { tool: 'et.goldrush.place_building', args: { def, pos, rot: 0 }, outcome: { ok: true, economyLog: [] } };
+        },
+      },
+    };
+    const executor = new StandingOrdersExecutor(surface, state);
+    const remote = [{ verb: 'BUILD', what: 'palisade', where: { x: 10, z: 10 }, when: { goldGte: 0 } }];
+    executor.submit(remote, 0);
+    for (let tick = 1; tick <= 3; tick += 1) {
+      assert.deepEqual(executor.tick(tick, { x: 0, z: 0 }).movement, { x: 10, z: 10 });
+    }
+    assert.equal(placements, 0, 'a body that never moves cannot place remotely');
+    assert.equal(executor.snapshot().orders[0].status, 'active');
+    executor.tick(4, { x: 6, z: 10 });
+    assert.equal(placements, 1);
+    assert.equal(executor.snapshot().orders[0].status, 'done');
+
+    executor.submit([{ verb: 'BUILD', what: 'palisade', where: { x: 32.4, z: 10 }, when: { goldGte: 0 } }], 5);
+    executor.tick(5, { x: 26, z: 10 });
+    assert.deepEqual(placedAt.at(-1), { x: 32, z: 10 }, 'the executor uses the placement door grid before validating range');
+
+    executor.submit([
+      { verb: 'BUILD', what: 'palisade', where: { x: 10, z: 10 }, when: { goldGte: 0 } },
+      { verb: 'BUILD', what: 'palisade', where: { x: 0, z: 0 }, when: { goldGte: 0 } },
+    ], 6);
+    executor.tick(6, { x: 0, z: 0 });
+    executor.tick(10, { x: 0, z: 0 });
+    assert.equal(executor.snapshot().orders[0].reason, 'UNREACHABLE: BUILD target has no traversable approach.');
+    executor.tick(11, { x: 0, z: 0 });
+    assert.equal(executor.snapshot().orders[1].status, 'done', 'the order after a route-stalled BUILD still executes');
+
+    executor.submit([
+      { verb: 'BUILD', what: 'palisade', where: { x: 99, z: 99 }, when: { goldGte: 0 } },
+      { verb: 'BUILD', what: 'palisade', where: { x: 6, z: 10 }, when: { goldGte: 0 } },
+    ], 12);
+    executor.tick(12, { x: 6, z: 10 });
+    assert.deepEqual(executor.snapshot().orders[0], {
+      id: 'orders-4-1',
+      order: { verb: 'BUILD', what: 'palisade', where: { x: 99, z: 99 }, when: { goldGte: 0 } },
+      status: 'failed',
+      reason: 'UNREACHABLE: BUILD target is outside buildable terrain.',
+    });
+    executor.tick(13, { x: 6, z: 10 });
+    assert.equal(executor.snapshot().orders[1].status, 'done');
+    assert.equal(placements, 4, 'the order after an unreachable BUILD still executes');
+  } finally {
+    await vite.close();
+    if (previousLocation === undefined) delete globalThis.location;
+    else globalThis.location = previousLocation;
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
+});
+
+test('the gr-sim door walks to a remote BUILD and its tape assay-replays', { timeout: 120_000 }, async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'gold-rush-embodied-build-'));
+  const tapePath = join(directory, 'ride.json');
+  const target = { x: 10, z: 10 };
+  const views = [];
+  try {
+    const outcome = await new Promise((resolve, reject) => {
+      const child = spawn(process.execPath, [
+        'scripts/gr-sim.mjs', '--contract', 'e1-dry-gulch', '--seed', 'embodied-build', '--tape', tapePath,
+      ], { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] });
+      let buffer = '';
+      let stderr = '';
+      let outcome;
+      child.stdout.on('data', (chunk) => {
+        buffer += chunk;
+        let newline;
+        while ((newline = buffer.indexOf('\n')) >= 0) {
+          const line = buffer.slice(0, newline);
+          buffer = buffer.slice(newline + 1);
+          if (!line) continue;
+          const message = JSON.parse(line);
+          if (message.schema !== 'goldrush.view.v1') {
+            outcome = message;
+            continue;
+          }
+          views.push(message);
+          const orders = message.now.pendingOffer?.[0]
+            ? [{ verb: 'PICK_UPGRADE', id: message.now.pendingOffer[0].id }]
+            : message.now.works.byKind.palisade > 0
+              ? [{ verb: 'HOLD', pos: target }]
+              : message.now.gold >= 10
+                ? [
+                    { verb: 'BUILD', what: 'palisade', where: target, when: { goldGte: 10 } },
+                    { verb: 'HOLD', pos: target },
+                  ]
+                : [{ verb: 'HARVEST', seam: message.now.seams.find(({ active, remaining }) => active && remaining > 0)?.id ?? 'gold-seam-1' }];
+          child.stdin.write(`${JSON.stringify(orders)}\n`);
+        }
+      });
+      child.stderr.on('data', (chunk) => { stderr += chunk; });
+      child.on('error', reject);
+      child.on('close', (code) => {
+        if (code !== 0) reject(new Error(stderr));
+        else resolve(outcome);
+      });
+    });
+    assert.equal(typeof outcome.secured, 'boolean');
+    const departure = views.find(({ now }) => now.gold >= 10 && (now.works.byKind.palisade ?? 0) === 0);
+    const arrived = views.find(({ now }) => now.works.byKind.palisade === 1);
+    assert.ok(departure, 'the transcript must show the rider before the remote build');
+    assert.ok(arrived, 'the remote build must confirm after arrival');
+    assert.notDeepEqual(arrived.now.prospector, departure.now.prospector, 'the ordering body must move before placement');
+    const tape = JSON.parse(readFileSync(tapePath, 'utf8'));
+    assert.ok(
+      Math.hypot(arrived.now.prospector.x - target.x, arrived.now.prospector.z - target.z) <= 6.1,
+      JSON.stringify({ departure: departure.now, arrived: arrived.now, target, entries: tape.inputLog.entries }),
+    );
+
+    const replay = spawnSync(process.execPath, ['scripts/assay-replay.mjs', tapePath], {
+      cwd: ROOT,
+      encoding: 'utf8',
+      timeout: 120_000,
+    });
+    assert.equal(replay.status, 0, replay.stderr);
+    assert.equal(JSON.parse(replay.stdout).eventLogHash, tape.eventLogHash);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 test('gr-sim keeps standing orders through free blank and null turns', () => {
   const plan = JSON.stringify([{ verb: 'HOLD', pos: { x: 12, z: 12 } }]);
   const run = spawnSync(
@@ -440,7 +599,7 @@ test('runtime rush and --overtime use the same CLI ceiling and terminal stream',
   assert.equal(explicit.endReason ?? null, flagged.endReason ?? null);
   assert.notEqual(explicit.endReason, 'wave-ceiling');
   assert.equal(explicit.eventLogHash, flagged.eventLogHash);
-  assert.equal(explicit.eventLogHash, 'fnv1a32:d62454c5');
+  assert.equal(explicit.eventLogHash, 'fnv1a32:94fe2e2d');
 });
 
 test('the CLI science input reaches and funds the published megaproject cost', { timeout: 30_000 }, async () => {
@@ -1020,6 +1179,8 @@ test('identical order failures coalesce across submissions without hiding a new 
       harvest: { activeNodes: [] },
     });
     const executor = new StandingOrdersExecutor({
+      buildPlacementRadius: () => 6,
+      buildTargetReachable: () => true,
       permissionLevel: () => 3,
       tools: {
         place_building: (def, pos) => ({

@@ -15,6 +15,7 @@ import {
 } from './StandingOrders';
 import { buildView, type AgentView } from './View';
 import { takeBuildRejectionDetail } from '../systems/buildRejectionDetail';
+import * as Terrain from '../world/Terrain';
 
 export type AgentVec2 = { x: number; z: number };
 export type AgentBuildingRef = { id: string; index?: number };
@@ -103,6 +104,8 @@ export type GoldRushToolSurface = {
   readonly namespace: 'et.goldrush';
   readonly permissionLevel: () => AgentPermissionLevel;
   readonly capabilities: readonly AgentCapability[];
+  readonly buildPlacementRadius: (def: BuildableId) => number;
+  readonly buildTargetReachable: (pos: AgentVec2) => boolean;
   readonly tools: {
     get_state: () => ToolReceipt<'et.goldrush.get_state', Record<string, never>>;
     pan_at: (node: string) => ToolReceipt<'et.goldrush.pan_at', { node: string }>;
@@ -157,6 +160,8 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
     namespace: 'et.goldrush',
     permissionLevel,
     capabilities,
+    buildPlacementRadius: placementRadius,
+    buildTargetReachable: (pos) => Terrain.isBuildable(pos.x, pos.z),
     tools: {
       get_state: stateReceipt,
       pan_at: (node) =>
@@ -197,6 +202,13 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
   standingOrders = new StandingOrdersExecutor(surface, () => readLiveState(game), () => readEconomyLog(game));
   standingOrdersBySurface.set(surface, standingOrders);
   return surface;
+}
+
+function placementRadius(id: BuildableId): number {
+  if (id === 'lantern_post') return Balance.lanternPost.placeRadius;
+  if (id === 'decoy_shed') return Balance.decoyShed.placeRadius;
+  if (id === 'capacitor_bank') return Balance.e3Power.storage.placeRadius;
+  return id === 'turret' ? Balance.turret.placeRadius : Balance.beacon.placeRadius;
 }
 
 export function install(game: AgentGameAdapter, options: ToolSurfaceOptions = {}): GoldRushToolSurface {
