@@ -1,15 +1,17 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 
 const FIXTURE_PATH = path.resolve('artifacts/eh3-fixture/tape.json');
 const SHOT_DIR = path.resolve('reviews/shots-true-reel');
+const ERA_SHOT_DIR = path.resolve('reviews/shots-reel-era');
 
 test('an era-current agent reel renders the true sim and verifies its hash in this browser', async ({ page }, testInfo) => {
   test.setTimeout(180_000);
-  const tape = JSON.parse(await readFile(FIXTURE_PATH, 'utf8'));
+  const tape = await currentEraTape();
   expect(tape.inputLog.entries.some((entry: { a: Array<{ kind?: string }> }) =>
     entry.a.some((action) => action.kind === 'agent_orders'))).toBe(true);
   await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
@@ -62,7 +64,7 @@ test('an era-current agent reel renders the true sim and verifies its hash in th
 
 test('an agent reel from another engine era is refused before playback', async ({ page }) => {
   test.setTimeout(120_000);
-  const tape = JSON.parse(await readFile(FIXTURE_PATH, 'utf8'));
+  const tape = await currentEraTape();
   tape.meta = { ...tape.meta, engineHash: '0'.repeat(64), era: tape.meta.era - 1 };
   await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
   const errors = collectErrors(page);
@@ -71,16 +73,44 @@ test('an agent reel from another engine era is refused before playback', async (
   await expect(show).toHaveAttribute('data-era-refused', 'true');
   await expect(show).toHaveAttribute('data-playback', 'complete');
   await expect(page.getByTestId('lantern-intertitle')).toContainText(
-    `This reel rode era ${tape.meta.era} (${'0'.repeat(64)}). This engine is era 4`,
+    `This reel rode era ${tape.meta.era} (${'0'.repeat(64)}). This engine is era ${engineEra.era}`,
   );
   await expect(page.getByTestId('lantern-intertitle')).toContainText('The county will not counterfeit one era with another.');
   expect(await probe(page)).toBeNull();
   expect(errors).toEqual([]);
 });
 
-test('plain town board WATCH reaches the honest unstamped-era refusal without debug', async ({ page }) => {
-  const tape = JSON.parse(await readFile(FIXTURE_PATH, 'utf8'));
-  const publicTape = { ...tape, meta: { buildId: tape.meta.buildId } };
+test('plain town board WATCH plays an era-current reel without debug', async ({ page }, testInfo) => {
+  test.setTimeout(120_000);
+  const tape = await currentEraTape();
+  const errors = await openBoardReel(page, tape);
+  const show = page.getByTestId('lantern-show');
+  await expect(show).toHaveAttribute('data-era-refused', 'false', { timeout: 20_000 });
+  await expect(show).toHaveAttribute('data-playback', 'playing');
+  await expect(page.getByTestId('lantern-agent-honesty')).toHaveText('This is the ride. The county is replaying it here in your browser.');
+  await expect.poll(async () => (await probe(page))?.tick ?? -1).toBeGreaterThanOrEqual(0);
+  await mkdir(ERA_SHOT_DIR, { recursive: true });
+  await writeFile(path.join(ERA_SHOT_DIR, `${testInfo.project.name}-plain-boot-playing.png`), await page.screenshot({ fullPage: true }));
+  expect(new URL(page.url()).searchParams.has('debug')).toBe(false);
+  expect(errors).toEqual([]);
+});
+
+test('plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal', async ({ page }, testInfo) => {
+  test.setTimeout(120_000);
+  const tape = await currentEraTape();
+  tape.meta = { buildId: tape.meta.buildId, engineHash: tape.meta.engineHash };
+  const errors = await openBoardReel(page, tape);
+  const show = page.getByTestId('lantern-show');
+  await expect(show).toHaveAttribute('data-era-refused', 'true', { timeout: 20_000 });
+  await expect(show).toHaveAttribute('data-playback', 'complete');
+  await expect(page.getByTestId('lantern-intertitle')).toContainText(`This reel rode era unknown (unstamped build ${tape.meta.buildId}).`);
+  await expect(page.getByTestId('lantern-intertitle')).toContainText('The county will not counterfeit one era with another.');
+  await mkdir(ERA_SHOT_DIR, { recursive: true });
+  await writeFile(path.join(ERA_SHOT_DIR, `${testInfo.project.name}-half-stamped-refusal.png`), await page.screenshot({ fullPage: true }));
+  expect(errors).toEqual([]);
+});
+
+async function openBoardReel(page: Page, tape: any): Promise<string[]> {
   const profile: ProfileState = {
     version: 2,
     activeId: 'reel-viewer',
@@ -95,7 +125,7 @@ test('plain town board WATCH reaches the honest unstamped-era refusal without de
   await page.route(`${GAME_API_ORIGIN}/api/standings**`, async (route) => {
     const url = new URL(route.request().url());
     const body = url.searchParams.has('reel')
-      ? { ok: true, reel: publicTape }
+      ? { ok: true, reel: tape }
       : {
           ok: true,
           board: [{
@@ -111,14 +141,16 @@ test('plain town board WATCH reaches the honest unstamped-era refusal without de
   await page.getByTestId('start-menu-claim-ledger').click();
   await page.getByTestId('claim-ledger-county-standings').click();
   await page.getByTestId('county-standings-watch-1').click();
-  await expect(page.getByTestId('lantern-show')).toHaveAttribute('data-era-refused', 'true', { timeout: 20_000 });
-  await expect(page.getByTestId('lantern-intertitle')).toContainText(`This reel rode era unknown (unstamped build ${tape.meta.buildId}).`);
-  await expect(page.getByTestId('lantern-intertitle')).toContainText('The county will not counterfeit one era with another.');
-  expect(new URL(page.url()).searchParams.has('debug')).toBe(false);
-  expect(errors).toEqual([]);
-});
+  return errors;
+}
 
 // Approximation-era assertions were retired because EH-3 removes that path rather than relabeling it.
+
+async function currentEraTape(): Promise<any> {
+  const tape = JSON.parse(await readFile(FIXTURE_PATH, 'utf8'));
+  // F-2374-2: mint the fixture's identity from the live registry so src merges cannot stale it.
+  return { ...tape, meta: { ...tape.meta, engineHash: engineEra.engineHash, era: engineEra.era } };
+}
 
 function replayUrl(tape: { id: string; contract: string; seed: string; difficulty: string }): string {
   const query = new URLSearchParams({ debug: '', assayReplay: '', replay: tape.id, contract: tape.contract, seed: tape.seed, difficulty: tape.difficulty });

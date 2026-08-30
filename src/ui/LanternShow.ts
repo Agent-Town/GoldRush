@@ -31,15 +31,19 @@ export function readStandingsReel(payload: unknown): ReelVerdict {
 export function validateAgentRunTape(value: unknown): AgentRunTape | null {
   if (!isRecord(value)) return null;
   const rawMeta = isRecord(value.meta) ? value.meta : null;
-  const enriched = rawMeta && typeof rawMeta.buildId === 'string'
-    && typeof rawMeta.engineHash === 'string' && /^[a-f0-9]{64}$/.test(rawMeta.engineHash)
-    && Number.isSafeInteger(rawMeta.era) && (rawMeta.era as number) > 0;
-  const tape = validateRunTape(enriched
-    ? { ...value, meta: { buildId: rawMeta!.buildId } }
+  const publicMeta = rawMeta && Object.keys(rawMeta).every((key) => ['buildId', 'engineHash', 'era'].includes(key))
+    && typeof rawMeta.buildId === 'string'
+    && (rawMeta.engineHash === undefined || (typeof rawMeta.engineHash === 'string' && /^[a-f0-9]{64}$/.test(rawMeta.engineHash)))
+    && (rawMeta.era === undefined || (Number.isSafeInteger(rawMeta.era) && (rawMeta.era as number) > 0))
+    ? rawMeta as AgentRunTape['meta']
+    : null;
+  const tape = validateRunTape(publicMeta
+    ? { ...value, meta: { buildId: publicMeta.buildId } }
     : value);
   if (!tape) return null;
-  return enriched
-    ? { ...tape, meta: { buildId: rawMeta!.buildId as string, engineHash: rawMeta!.engineHash as string, era: rawMeta!.era as number } }
+  // An engine hash proves a playable era only as a pair; a half-stamp stays honestly unstamped.
+  return publicMeta
+    ? { ...tape, meta: publicMeta.engineHash && publicMeta.era ? publicMeta : { buildId: publicMeta.buildId } }
     : tape;
 }
 
