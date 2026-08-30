@@ -6,6 +6,7 @@ import {
   type RunTape,
 } from '../game/RunTape';
 import { isolateProfileStorage } from '../game/ProfileStorage';
+import type { AgentTapeReplaySnapshot } from '../replay/AgentTapeReplay';
 
 export const LANTERN_VERSION_REFUSAL =
   'This projectionist cannot thread a reel cut for another machine. The show stays dark, but the reel remains on the shelf.';
@@ -13,7 +14,8 @@ export const LANTERN_VERSION_REFUSAL =
 export const LANTERN_REEL_UNAVAILABLE =
   'The county clerk cannot find that reel. The standing keeps its place on the board.';
 
-export type ReelVerdict = { ok: true; tape: RunTape } | { ok: false; reason: 'version' | 'unavailable' };
+export type AgentRunTape = RunTape & { meta?: { buildId: string; engineHash?: string; era?: number } };
+export type ReelVerdict = { ok: true; tape: AgentRunTape } | { ok: false; reason: 'version' | 'unavailable' };
 
 /**
  * TAPE-03's half of the version law. A reel arriving from `/api/standings?reel=` is parsed by the
@@ -21,9 +23,24 @@ export type ReelVerdict = { ok: true; tape: RunTape } | { ok: false; reason: 've
  * row and a shelved reel can never disagree about whether a show is threadable.
  */
 export function readStandingsReel(payload: unknown): ReelVerdict {
-  const tape = validateRunTape(isRecord(payload) ? payload.reel : null);
+  const tape = validateAgentRunTape(isRecord(payload) ? payload.reel : null);
   if (!tape) return { ok: false, reason: 'unavailable' };
   return tape.simVersion === RUN_TAPE_SIM_VERSION ? { ok: true, tape } : { ok: false, reason: 'version' };
+}
+
+export function validateAgentRunTape(value: unknown): AgentRunTape | null {
+  if (!isRecord(value)) return null;
+  const rawMeta = isRecord(value.meta) ? value.meta : null;
+  const enriched = rawMeta && typeof rawMeta.buildId === 'string'
+    && typeof rawMeta.engineHash === 'string' && /^[a-f0-9]{64}$/.test(rawMeta.engineHash)
+    && Number.isSafeInteger(rawMeta.era) && (rawMeta.era as number) > 0;
+  const tape = validateRunTape(enriched
+    ? { ...value, meta: { buildId: rawMeta!.buildId } }
+    : value);
+  if (!tape) return null;
+  return enriched
+    ? { ...tape, meta: { buildId: rawMeta!.buildId as string, engineHash: rawMeta!.engineHash as string, era: rawMeta!.era as number } }
+    : tape;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -146,6 +163,9 @@ export type LanternShowState = {
   expectedHash: string;
   agentTape: boolean;
   divergedAtWave: number | null;
+  snapshot: AgentTapeReplaySnapshot | null;
+  winding: boolean;
+  eraRefusal: { tapeHash: string; currentHash: string; tapeEra: number | null; currentEra: number } | null;
 };
 
 type LanternShowActions = {
@@ -176,6 +196,9 @@ export class LanternShow {
       expectedHash: tape.eventLogHash,
       agentTape: false,
       divergedAtWave: null,
+      snapshot: null,
+      winding: false,
+      eraRefusal: null,
     };
     this.root.className = 'lantern-show';
     this.root.dataset.testid = 'lantern-show';
@@ -183,7 +206,7 @@ export class LanternShow {
     this.root.setAttribute('aria-modal', 'true');
     this.root.setAttribute('aria-label', 'The Lantern Show replay');
     this.root.innerHTML = `
-      <div class="lantern-show__stage" data-lantern-pan aria-label="Drag to pan the lantern view"></div>
+      <div class="lantern-show__stage" data-lantern-pan data-testid="lantern-true-stage" aria-label="Drag to pan the lantern view"></div>
       <div class="lantern-show__frame" aria-hidden="true"></div>
       <header class="lantern-show__title"><p>Schoolhouse Lantern Room</p><h1>The Lantern Show</h1>
         <p data-testid="lantern-agent-honesty" style="padding: 8px 14px; border: 2px solid #8b7d3c; background: rgba(46, 27, 14, 0.94); color: #fff8e8; font-size: clamp(14px, 2vw, 20px)" hidden></p>
@@ -221,12 +244,20 @@ export class LanternShow {
     this.root.dataset.recordedSecured = String(this.tape.outcome.secured);
     this.root.dataset.recordedWave = String(Math.floor(this.tape.outcome.waves));
     this.root.dataset.recordedHash = this.tape.eventLogHash;
+    this.root.dataset.eraRefused = String(state.eraRefusal !== null);
+    this.root.dataset.trueReelProbe = state.snapshot ? JSON.stringify(state.snapshot) : '';
+    if (state.agentTape) {
+      if (state.eraRefusal) {
+        const stage = this.root.querySelector<HTMLElement>('[data-testid="lantern-true-stage"]');
+        if (stage) stage.innerHTML = '<p style="position:absolute;inset:42% 0 auto;text-align:center;font-size:22px">This reel stays dark. Its recorded outcome remains below.</p>';
+      } else {
+        this.renderTrueWorld(state.snapshot);
+      }
+    }
     const honesty = this.root.querySelector<HTMLElement>('[data-testid="lantern-agent-honesty"]');
     if (honesty) {
-      honesty.hidden = !state.agentTape || state.complete;
-      honesty.textContent = state.agentTape
-        ? `This is a browser APPROXIMATION of a machine ride. VERIFIED outcome: ${outcomeLabel(this.tape)} · wave ${Math.floor(this.tape.outcome.waves)} · ${this.tape.eventLogHash}. Replayed exactly on the county's engine.`
-        : '';
+      honesty.hidden = !state.agentTape || state.complete || state.eraRefusal !== null;
+      honesty.textContent = state.agentTape ? 'This is the ride. The county is replaying it here in your browser.' : '';
     }
     const pause = this.root.querySelector<HTMLButtonElement>('[data-testid="lantern-pause"]');
     if (pause) pause.textContent = state.paused ? 'Play' : 'Pause';
@@ -237,9 +268,11 @@ export class LanternShow {
     if (status) {
       status.textContent = state.complete
         ? state.agentTape
-          ? 'Reel ended · recorded outcome verified on the county engine'
+          ? state.eraRefusal
+            ? 'Reel refused · recorded outcome retained'
+            : `Reel ended · ${state.hash === state.expectedHash ? 'hash matched in this browser' : 'hash mismatch'}`
           : `Reel ended · ${state.hash === state.expectedHash ? 'replay matched' : 'replay differed'}`
-        : `${formatTime(state.tick * PLAYBOOK_STEP_SECONDS)} / ${formatTime(state.durationTicks * PLAYBOOK_STEP_SECONDS)} · wave ${state.wave}${state.skipping ? ' · finding next wave' : ''}`;
+        : `${formatTime(state.tick * PLAYBOOK_STEP_SECONDS)} / ${formatTime(state.durationTicks * PLAYBOOK_STEP_SECONDS)} · wave ${state.wave}${state.winding ? ' · winding the reel' : state.skipping ? ' · finding next wave' : ''}`;
       status.dataset.hash = state.hash ?? '';
       status.dataset.expectedHash = state.expectedHash;
     }
@@ -248,9 +281,11 @@ export class LanternShow {
     this.card.hidden = !state.complete && !annotation;
     if (state.complete) {
       const ending = state.agentTape
-        ? state.divergedAtWave === null
-          ? 'Verified on the county\'s engine.'
-          : `The approximation diverged from the verified ride at wave ${state.divergedAtWave}. Exact replay runs on the county's engine.`
+        ? state.eraRefusal
+          ? `This reel rode era ${state.eraRefusal.tapeEra ?? 'unknown'} (${state.eraRefusal.tapeHash}). This engine is era ${state.eraRefusal.currentEra} (${state.eraRefusal.currentHash}). The county will not counterfeit one era with another.`
+          : state.hash === state.expectedHash
+            ? `This ride was replayed and matched in this very browser: ${state.hash}.`
+            : `REPLAY MISMATCH. The reel claims ${state.expectedHash}; this browser replayed ${state.hash ?? 'no hash'}.`
         : state.hash === state.expectedHash
           ? 'Replay matched this browser recording.'
           : 'Replay differed from this browser recording.';
@@ -258,6 +293,41 @@ export class LanternShow {
     } else {
       this.card.textContent = annotation?.text ?? '';
     }
+  }
+
+  private renderTrueWorld(snapshot: AgentTapeReplaySnapshot | null): void {
+    const stage = this.root.querySelector<HTMLElement>('[data-testid="lantern-true-stage"]');
+    if (!stage) return;
+    if (!snapshot) {
+      stage.innerHTML = '<p style="position:absolute;inset:42% 0 auto;text-align:center;font-size:22px">Winding the true reel...</p>';
+      return;
+    }
+    const point = (x: number, z: number) => ({ x: x + 40, y: z + 28 });
+    const hero = point(snapshot.hero.x, snapshot.hero.z);
+    const rider = snapshot.rider ? point(snapshot.rider.x, snapshot.rider.z) : null;
+    const enemies = snapshot.enemies.map((enemy) => {
+      const at = point(enemy.x, enemy.z);
+      return `<g data-replay-entity="enemy" data-id="${enemy.id}" data-kind="${escapeHtml(enemy.kind)}" data-alive="${enemy.alive}" opacity="${enemy.alive ? 1 : 0.42}">
+        <circle cx="${at.x}" cy="${at.y}" r="0.7" fill="${enemy.alive ? '#a0522d' : '#2e1b0e'}" stroke="#fff8e8" stroke-width="0.16" />
+        <title>${escapeHtml(enemy.kind)} · ${enemy.alive ? 'alive' : 'dead'} · ${enemy.hp}/${enemy.maxHp} HP</title>
+      </g>`;
+    }).join('');
+    const works = snapshot.works.map((work) => {
+      const at = point(work.x, work.z);
+      return `<g data-replay-entity="work" data-index="${work.index}" data-kind="${escapeHtml(work.id)}" data-wrecked="${work.wrecked}">
+        <rect x="${at.x - 0.7}" y="${at.y - 0.7}" width="1.4" height="1.4" rx="0.2" fill="${work.wrecked ? '#7f2633' : '#2f8f85'}" stroke="#c4883a" stroke-width="0.18" />
+        <title>${escapeHtml(work.id)} · ${work.wrecked ? 'wrecked' : 'standing'} · ${work.hp}/${work.maxHp} HP</title>
+      </g>`;
+    }).join('');
+    stage.innerHTML = `<svg data-testid="lantern-true-world" viewBox="0 0 80 56" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;background:#6f5835">
+      <defs><pattern id="lantern-grid" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M 5 0 L 0 0 0 5" fill="none" stroke="#fff8e8" stroke-opacity=".09" stroke-width=".12" /></pattern></defs>
+      <rect width="80" height="56" fill="url(#lantern-grid)" />
+      ${works}${enemies}
+      <g data-replay-entity="hero" data-alive="${snapshot.hero.alive}"><circle cx="${hero.x}" cy="${hero.y}" r="1" fill="#c4883a" stroke="#fff8e8" stroke-width=".22" /><title>Claim Keeper · ${snapshot.hero.alive ? 'alive' : 'dead'} · ${snapshot.hero.hp}/${snapshot.hero.maxHp} HP</title></g>
+      ${rider ? `<g data-replay-entity="rider"><path d="M ${rider.x} ${rider.y - 1.15} L ${rider.x + 1.15} ${rider.y} L ${rider.x} ${rider.y + 1.15} L ${rider.x - 1.15} ${rider.y} Z" fill="#83ded7" stroke="#2e1b0e" stroke-width=".22" /><title>Prospector rider</title></g>` : ''}
+    </svg>
+    <p data-testid="lantern-true-hud" style="position:absolute;top:126px;left:50%;transform:translateX(-50%);margin:0;padding:6px 12px;border:1px solid #c4883a;background:rgba(46,27,14,.88);white-space:nowrap">Gold ${Math.round(snapshot.gold)} · Wave ${snapshot.wave} · Keeper ${Math.max(0, Math.round(snapshot.hero.hp))}/${Math.round(snapshot.hero.maxHp)} HP</p>
+    <p data-testid="lantern-truth-placeholders" style="position:absolute;left:30px;bottom:96px;margin:0;padding:5px 8px;background:rgba(46,27,14,.84);font-size:12px">Honest placeholders: Claim Keeper dot · Prospector diamond · enemy ring · work block</p>`;
   }
 
   dispose(): void {
