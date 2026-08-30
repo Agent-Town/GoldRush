@@ -1264,6 +1264,11 @@ export class HeadlessContractSim {
     return this.terminal;
   }
 
+  /** The sim-clock tick used by gr-sim when it stamps standing-order submissions. */
+  get replayTick(): number {
+    return Math.round(this.timeAlive * 30);
+  }
+
   /**
    * True when the rider is owed a turn: the same wave-boundary / surprise trigger
    * `advanceToTurn()` fires on, asked WITHOUT advancing the sim. A seated loop cannot
