@@ -1,26 +1,16 @@
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
+import { srcScanSpace } from './no-emdash-scan-space.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const HUMAN_TEXT_KEYS = new Set([
   'arrivalTitle', 'defeatBeat', 'defeatLine', 'defeatTitle', 'description', 'geographyLine',
   'goals', 'label', 'ledgerBlurb', 'ledgerLabel', 'medalBlurb', 'name', 'objective', 'rules',
   'secureCallout', 'taunt', 'tauntTitle', 'teachingIntent', 'unlock', 'variantLabel',
-]);
-const SRC_EXCEPTIONS = new Set([
-  'src/game/SaveSlots.ts', // Structural: NAME_RULE permits existing profile names containing em dashes.
-  'src/story/ceremonyPostscripts.ts', // Structural: parses existing "Ceremony postscript — T(n)" headings.
-  'src/world/SteamPlume.ts', // GLSL template comments are player-invisible but remain inside a JS string token.
-  'src/world/Water.ts', // GLSL template comments are player-invisible but remain inside a JS string token.
-  'src/sim/HeadlessContractSim.ts', // Agent/machine-facing verdict reasons pending an owner ruling.
-  'src/sim/SeatedLockstepSim.ts', // Agent/machine-facing notices and errors pending an owner ruling.
-  'src/sim/SeatOrders.ts', // Agent/machine-facing validation copy pending an owner ruling.
-  'src/agent/MechanicsManifest.ts', // Agent-facing manifest copy pending an owner ruling.
 ]);
 
 function containsEmDashOutsideComments(source) {
@@ -47,11 +37,8 @@ function inspectTextFields(value, key, location, failures) {
 
 test('visitor copy and contract text fields contain no em dashes', () => {
   const failures = [];
-  const srcFiles = execFileSync('git', ['ls-files', '-z', '--', 'src/**/*.ts'], { cwd: ROOT })
-    .toString().split('\0').filter(Boolean);
-  const scanned = srcFiles.filter((file) => !SRC_EXCEPTIONS.has(file));
-  const skipped = srcFiles.length - scanned.length;
-  console.log(`scan space: ${scanned.length} tracked src/**/*.ts files scanned, ${skipped} skipped`);
+  const { all, scanned, skipped } = srcScanSpace(ROOT);
+  console.log(`scan space: ${all.length} tracked src TS files (${scanned.length} scanned, ${skipped} skipped)`);
   for (const file of scanned) {
     if (containsEmDashOutsideComments(fs.readFileSync(path.join(ROOT, file), 'utf8'))) failures.push(file);
   }
