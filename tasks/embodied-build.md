@@ -1,3 +1,5 @@
+> ⛔ SUPERSEDED 2026-08-30 → tasks/embodied-build-v2.md — DO NOT QUEUE. Ran s2369 and STOPPED LAWFULLY at its own ratified firewall, finding a SECOND parity bug beneath the first (the confirm gate measures range from the local body, not the ordering rider's - Game.ts:7295/BuildSystem confirm path) plus a missing stall law for unreachable targets. v2 inherits scope 1-5 verbatim and admits the two files, narrowly. Kept per the retention law.
+
 # Task embodied-build: the machine's hand becomes embodied — BUILD walks like REPAIR already does (EH-1, lane-b, commit prefix "fix:")
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b.
