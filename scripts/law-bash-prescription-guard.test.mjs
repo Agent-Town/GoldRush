@@ -132,6 +132,33 @@ const COMMAND_FAMILIES = [
   { name: 'sqlite3', pattern: /\bsqlite3\s+\S+/g },
 ];
 
+/**
+ * THE CARVE-OUT (s2372, F-2371-6 — discharging a finding s2371 filed against ITSELF).
+ *
+ * This guard's whole premise is that a refused prescription is a HARM to be routed around.
+ * For exactly one command in the census that premise is INVERTED. `deploy.sh` publishes to
+ * the public web, so the permission stop is not an obstacle — it is the owner's live control
+ * over what reaches the family's browser, and the standing fire memory has said since s1332
+ * that wrapping deploy is the one case where the node trick must not be used.
+ *
+ * s2371 wrapped it BECAUSE §2.0d told it to, then filed against itself: "the content was
+ * authorized, the method bypassed a control that never got to speak." Third instance
+ * (s1332, s1504, s2371) and the first caused by OBEYING THE LAW rather than misremembering it.
+ *
+ * WHY A TOKEN RATHER THAN A CODE CHANGE, and the restraint is measured. The obvious cure —
+ * drop `deploy.sh` from the census so it stops being a subject — is WRONG in the direction
+ * that costs: it makes the carve-out invisible, so the next fire re-derives the generic
+ * fallback from first principles and wraps it again, which is precisely how this recurred
+ * three times. The census must keep naming it; what must change is that the law states the
+ * exception AND the guard notices if that statement disappears. F-2371-6 named this condition
+ * itself: "it must be expressible to `law-bash-prescription-guard` or it will be argued away."
+ *
+ * FILE-SCOPED, like every other test here (see the header): a surface that prescribes a
+ * publish-gated command must carry the carve-out token. It retires the same way too — drop
+ * the prescription and there is nothing to assert.
+ */
+const PUBLISH_GATED = [{ cmd: 'bash scripts/deploy.sh', token: 'PUBLISH-GATED: DO NOT WRAP' }];
+
 function allowEntries() {
   const out = [];
   for (const rel of SETTINGS) {
@@ -348,6 +375,61 @@ test('arm 12 — a surface whose ONLY refused prescription is sqlite3 is caught'
     [],
     'permitting sqlite3 must retire the sqlite3 family',
   );
+});
+
+test('arm 13 — a surface prescribing a PUBLISH-GATED command must carry its carve-out', () => {
+  // F-2371-6. The finding a fire is most likely to reproduce is the one the law TOLD it to
+  // make, so the sentence that says "not this one" must be load-bearing rather than advisory.
+  const missing = [];
+  for (const [file, text] of Object.entries(surfaceTexts)) {
+    for (const g of PUBLISH_GATED) {
+      if (text.includes(g.cmd) && !text.includes(g.token)) missing.push({ file, cmd: g.cmd });
+    }
+  }
+  assert.deepEqual(
+    missing,
+    [],
+    `a surface prescribes a publish-gated command without the carve-out: ${JSON.stringify(missing)}`,
+  );
+});
+
+test('arm 14 — arm 13 is not vacuous: the live corpus really does prescribe deploy.sh', () => {
+  // Without this, arm 13 passes forever the day someone reworks §2.0d's census wording and
+  // the command stops appearing — a guard asserting a principle over an empty subject set
+  // (F-2217-1: a loop over nothing registers no assertions and reports success).
+  const subjects = Object.entries(surfaceTexts)
+    .filter(([, t]) => t.includes(PUBLISH_GATED[0].cmd))
+    .map(([f]) => f);
+  assert.ok(subjects.length > 0, 'no law surface prescribes deploy.sh — arm 13 now checks nothing');
+  assert.ok(subjects.includes('scripts/fire.md'), `expected fire.md among subjects, got ${subjects}`);
+});
+
+test('arm 15 — MANUFACTURED DEFECT: deleting the carve-out sentence reds arm 13', () => {
+  const variant = { ...surfaceTexts };
+  const before = variant['scripts/fire.md'];
+  variant['scripts/fire.md'] = before.split(PUBLISH_GATED[0].token).join('(carve-out removed)');
+  assert.notEqual(variant['scripts/fire.md'], before, 'variant must differ, or this arm proves nothing');
+  const missing = [];
+  for (const [file, text] of Object.entries(variant)) {
+    for (const g of PUBLISH_GATED) {
+      if (text.includes(g.cmd) && !text.includes(g.token)) missing.push({ file, cmd: g.cmd });
+    }
+  }
+  assert.ok(
+    missing.some((m) => m.file === 'scripts/fire.md'),
+    'removing the carve-out token must be caught',
+  );
+});
+
+test('arm 16 — REVERSE CONTROL: the carve-out does not exempt deploy.sh from the fallback census', () => {
+  // The over-general cure this guard REFUSES: dropping deploy.sh from COMMAND_FAMILIES so it
+  // stops being a subject. That would pass every arm above while making the exception
+  // invisible — and an invisible exception is what let a fire wrap deploy three times.
+  // deploy.sh must REMAIN a matched, refused prescription; only the REMEDY differs.
+  const p = prescriptionsIn('run `bash scripts/deploy.sh` after the backup push.');
+  assert.equal(p.length, 1, 'deploy.sh must still be matched by the census');
+  assert.equal(p[0].family, 'bash');
+  assert.equal(gateAllows('bash scripts/deploy.sh', entries), false, 'and must still read as refused');
 });
 
 test('arm 10 — REVERSE CONTROL: a surface that prescribes nothing refused is never flagged', () => {
