@@ -96,12 +96,17 @@ The owner's law says "the page, game and everything". Whether an **agent-facing 
 
 ## Pre-flight (LANE-C, branch `lane/c` — SAFE-DUPE, judge by CONTENT not ahead-count)
 
-1. `lane/c` was measured `ahead=0 behind=204` USABLE, `tracked-dirt=0`, by s2367. **Verify it yourself before resetting:**
-   `git diff --stat main lane/c -- src e2e scripts functions site`
-   If that shows **any** lane-unique `src`/`e2e`/`scripts` content that is not on main, **STOP and report** "lane/c has unmerged code: `<files>`" — do NOT reset over it (LANE-SAFETY LAW; the Reset Massacre, Mistake #2).
+1. `lane/c` was re-measured `ahead=0 behind=210` USABLE, `tracked-dirt=0`, by s2368. **Verify it yourself before resetting, with a DIRECTIONAL instrument:**
+   ```
+   node scripts/lane-usable.mjs lane-c     # expect USABLE (rc=0)
+   git log main..lane/c --oneline          # expect EMPTY — this is the decisive check
+   ```
+   `main..lane/c` empty means the lane holds **no commit main lacks**, so there is nothing a reset could destroy. If either says otherwise — `HOLDS`, `DIRTY`, `BUSY`, or any commit listed — **STOP and report** "lane/c has unmerged code: `<files>`" — do NOT reset over it (LANE-SAFETY LAW; the Reset Massacre, Mistake #2).
+
+   🚫 **DO NOT judge this by `git diff --stat main lane/c` — an earlier draft of this pre-flight did, and it is a FALSE-STOP TRAP (measured s2368, before dispatch).** That is a two-dot **tree** diff, so it reports every way the two trees differ **without direction**: run today it prints **56 files, +127 / -7400**, including `src/game/Game.ts | 61 ++---`. Every one of those insertions is the *older* side of a line main has since changed — the lane is 210 commits **behind**, not unique — but it reads exactly like "lane-unique `src` content that is not on main", which this step's own wording tells you to STOP on. A run that stops there burns its whole budget for zero diff (F-1424-3: 44,007 tokens, zero files touched). **Difference is not direction; ask `main..lane/c`.**
 2. When safe: `git checkout -B lane/c main && git clean -fd && npm install --no-audit --no-fund && npm run build` green before touching anything.
 
-⚠️ **`lane/c` is 204 commits behind main and USABLE does not mean CURRENT.** This task depends on `982926333` (2026-08-25, `lantern-show-agent-honesty`), which introduced the copy you are fixing. s2367 proved `lane/c` HAS it and that the two subject files carry **2 em-dashes each**, identical to main. After the reset in step 2 you are on main anyway, so the dependency is satisfied — but if you skip the reset, prove it:
+⚠️ **`lane/c` is 210 commits behind main and USABLE does not mean CURRENT.** This task depends on `982926333` (2026-08-25, `lantern-show-agent-honesty`), which introduced the copy you are fixing. s2367 proved `lane/c` HAS it and that the two subject files carry **2 em-dashes each**, identical to main. After the reset in step 2 you are on main anyway, so the dependency is satisfied — but if you skip the reset, prove it:
 
 ```
 git merge-base --is-ancestor 982926333 HEAD    # expect rc=0
