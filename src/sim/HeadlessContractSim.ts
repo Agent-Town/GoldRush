@@ -1029,7 +1029,10 @@ export class HeadlessContractSim {
       panAt: (node) => this.panAt(node),
       repair: (building) => this.repairBuilding(building),
     };
-    this.surface = install(adapter, { permissionLevel: 3 });
+    this.surface = install(adapter, {
+      permissionLevel: 3,
+      buildTargetReachable: ({ x, z }) => Terrain.isBuildable(x, z),
+    });
     bindStandingOrderBlast((pos) => this.blastAt(pos));
     bindStandingOrderFinalVerbs({
       setWeapon: (weapon) => this.setWeapon(weapon),

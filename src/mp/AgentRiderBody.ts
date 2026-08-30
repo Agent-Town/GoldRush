@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { StandingOrdersExecutor, type FinalVerbHandlers, type StandingOrder, type StandingOrdersView } from '../agent/StandingOrders';
-import { createToolSurface, type AgentGameAdapter } from '../agent/ToolSurface';
+import { createToolSurface, type AgentGameAdapter, type ToolSurfaceOptions } from '../agent/ToolSurface';
 
 export type AgentRiderBodySnapshot = StandingOrdersView & {
   playerId: string;
@@ -18,8 +18,8 @@ export class AgentRiderBody {
   private readonly executor: StandingOrdersExecutor;
   private submissionId: string | null = null;
 
-  constructor(readonly playerId: string, game: AgentGameAdapter, finalVerbs?: FinalVerbHandlers) {
-    const surface = createToolSurface(game, { permissionLevel: 3 });
+  constructor(readonly playerId: string, game: AgentGameAdapter, finalVerbs?: FinalVerbHandlers, options: ToolSurfaceOptions = {}) {
+    const surface = createToolSurface(game, { ...options, permissionLevel: 3 });
     this.executor = new StandingOrdersExecutor(surface, game.diagnostics ?? (() => ({})), game.economyLog);
     if (finalVerbs) this.executor.bindFinalVerbs(finalVerbs);
   }

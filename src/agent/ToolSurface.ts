@@ -15,7 +15,6 @@ import {
 } from './StandingOrders';
 import { buildView, type AgentView } from './View';
 import { takeBuildRejectionDetail } from '../systems/buildRejectionDetail';
-import * as Terrain from '../world/Terrain';
 
 export type AgentVec2 = { x: number; z: number };
 export type AgentBuildingRef = { id: string; index?: number };
@@ -98,6 +97,7 @@ export type AgentGameAdapter = {
 export type ToolSurfaceOptions = {
   readonly metaProgress?: MetaProgressAgentGate;
   readonly permissionLevel?: AgentPermissionLevel;
+  readonly buildTargetReachable?: (pos: AgentVec2) => boolean;
 };
 
 export type GoldRushToolSurface = {
@@ -161,7 +161,7 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
     permissionLevel,
     capabilities,
     buildPlacementRadius: placementRadius,
-    buildTargetReachable: (pos) => Terrain.isBuildable(pos.x, pos.z),
+    buildTargetReachable: options.buildTargetReachable ?? (() => true),
     tools: {
       get_state: stateReceipt,
       pan_at: (node) =>

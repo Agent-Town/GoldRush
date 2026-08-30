@@ -2499,6 +2499,7 @@ export class Game {
       },
       {
         clock: () => this.timeAlive,
+        buildTargetReachable: ({ x, z }) => Terrain.isBuildable(x, z),
         ...(showIntro ? {} : { permissionLevel: 3 as const }),
         metaProgress: {
           get agentAutonomyLevel() {
@@ -4206,7 +4207,12 @@ export class Game {
       if (!this.agentRiderBodies.has(playerId)) {
         this.agentRiderBodies.set(
           playerId,
-          new AgentRiderBody(playerId, this.agentRiderAdapter(playerId), this.agentRiderFinalVerbs(playerId)),
+          new AgentRiderBody(
+            playerId,
+            this.agentRiderAdapter(playerId),
+            this.agentRiderFinalVerbs(playerId),
+            { buildTargetReachable: ({ x, z }) => Terrain.isBuildable(x, z) },
+          ),
         );
       }
     }
