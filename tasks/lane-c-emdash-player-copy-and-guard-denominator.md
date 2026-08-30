@@ -37,8 +37,8 @@ House style is set by c5 and is binding here: *"Rewrites are editorial (colon/co
 
 ### 2. Move the pins in the SAME commit as the copy.
 
-- `e2e/agent-reels.spec.ts:36` — a full literal `toContainText` carrying the em-dash. Update to match 1a byte-for-byte.
-- `e2e/agent-reels.spec.ts:49` — a **regex** carrying the em-dash. Update to match 1b.
+- `e2e/agent-reels.spec.ts:36` ("the verified Dry Gulch agent reel is labeled as an approximation and ends honestly") — a full literal `toContainText` carrying the em-dash. Update to match 1a byte-for-byte.
+- `e2e/agent-reels.spec.ts:49` ("the verified Dry Gulch agent reel is labeled as an approximation and ends honestly") — a **regex** carrying the em-dash. Update to match 1b. ⓘ Both citations live inside that single test, so one red names both.
 - `e2e/restore-validation.spec.ts:799` **imports the constant** (`RUN_SUSPEND_REJECTION_LINE`) rather than duplicating the string, so it moves for free. **Verify this rather than assuming it** — re-run that spec.
 
 A copy change that leaves a pin behind is a red board for everyone; a pin change that leaves the copy behind is the defect surviving its own fix.
