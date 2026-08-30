@@ -350,23 +350,80 @@ function tryGitless(pid) {
   }
 }
 
+// s2366 — F-2366-1. The block above establishes WHO holds the slot and never asks whether
+// that holder is ALIVE, so a crashed runner's corpse and a live runner are indistinguishable:
+// a dead pid is finite, positive and not one of our ancestors, so it lands on the same
+// `return true` a live foreign runner does. MEASURED by manufacturing both (a spawned child
+// allowed to exit vs one still running): `isSlotBusy` returns `true` for each, and the report
+// prints the same "a runner holds this slot — leave it alone".
+//
+// `lane-runner-v3.sh` DISAGREES, and it is the authority here because it is the pidfile's
+// WRITER: its poll loop tests `kill -0 "$pid"`, and on a dead pid it salvages the run to
+// tasks/failed/CRASHED-* and removes the pidfile. So the two readers of one file answer
+// differently, and only the runner's answer is true.
+//
+// REACHABLE exactly when the runner dies mid-run — a reboot (F-2343-1's 37h50m outage), a
+// kill -9, a crash — and the self-heal above cannot run, because the thing that performs it
+// is the thing that died. The window is "as long as the runner is dead".
+//
+// 🚫 THE VERDICT IS DELIBERATELY NOT FLIPPED, and the restraint is measured, not timid:
+//   (1) The comment above is right that a false NOT-busy is the DESTRUCTIVE direction — it
+//       lets a fire refill an occupied lane and `reset --hard` over live output (Mistake #2).
+//       A liveness probe that mis-reads one live runner as gone buys that back for nothing.
+//   (2) At the only moment this fires, USABLE would be the WORSE answer anyway. A dead holder
+//       means the RUNNER is dead, so a fire told "refill freely" queues a master into a lane
+//       nothing can consume — F-2343-1's armed trap, where the board looks MORE worked the
+//       instant it becomes incapable of working.
+// The truthful reading of a dead holder is not "this lane is free", it is "go look at the
+// runner" — so this DECLARES the corpse and routes the reader to §2.0c. Same verdict, same
+// exit code, one more fact. (F-2218-1's precedent: an unambiguous-but-lawful state declares
+// and does not refuse; here an unambiguous-but-DANGEROUS state declares and does not clear.)
+//
+// Values are STRINGS for F-2212-1's reason: a careless truthiness test coerces every one of
+// them to TRUE, i.e. toward BUSY, which is the safe direction.
+// `kill` is injectable so the guard can drive EPERM and ESRCH deterministically. It cannot be
+// driven any other way: a test cannot make the real process.kill raise EPERM on demand, and an
+// EPERM misread as 'stale' is precisely the destructive direction this function exists to avoid.
+export function pidLiveness(pid, kill = (p) => process.kill(p, 0)) {
+  try {
+    kill(pid)
+    return 'live'
+  } catch (e) {
+    // ESRCH is the ONLY positive proof of absence. EPERM means the process EXISTS and is
+    // merely not ours — that is ALIVE, and reading it as gone is the destructive direction.
+    if (e && e.code === 'ESRCH') return 'stale'
+    if (e && e.code === 'EPERM') return 'live'
+    return 'unverifiable'
+  }
+}
+
+// Exported so the guard can drive every branch without a runner. `probe` is injectable for
+// the same reason `readPid` and `self` are: the guard must drive both directions determin-
+// istically rather than hope the machine supplies them.
+export function slotHolder(readPid, self = process.pid, probe = pidLiveness) {
+  const raw = readPid()
+  if (raw === null || raw === undefined) return 'none' // no pidfile: nobody holds the slot
+  const pid = Number.parseInt(String(raw).trim(), 10)
+  if (!Number.isFinite(pid) || pid <= 0) return 'unverifiable' // unparseable -> fail safe
+  const chain = ancestors(self)
+  if (chain === null) return 'unverifiable' // could not establish ancestry -> fail safe
+  if (chain.includes(pid)) return 'self' // our own dispatcher does not count as "someone else"
+  return probe(pid) // 'live' | 'stale' | 'unverifiable' — all three are BUSY
+}
+
 // Exported so the guard can drive both directions without a runner. `self` is the pid the
 // caller claims to be (process.pid in production); `readPid` returns the pidfile's contents
-// or null when absent.
+// or null when absent. Delegates to slotHolder so there is ONE implementation of the
+// question (F-1261-1) — four independent copies of a predicate is how one drifts.
 export function isSlotBusy(readPid, self = process.pid) {
-  const raw = readPid()
-  if (raw === null || raw === undefined) return false // no pidfile: nobody holds the slot
-  const pid = Number.parseInt(String(raw).trim(), 10)
-  if (!Number.isFinite(pid) || pid <= 0) return true // unparseable -> fail safe
-  const chain = ancestors(self)
-  if (chain === null) return true // could not establish ancestry -> fail safe
-  return !chain.includes(pid) // our own dispatcher does not count as "someone else"
+  const holder = slotHolder(readPid, self)
+  return holder !== 'none' && holder !== 'self'
 }
 
 function inspect(lane) {
   // Anchor to the MAIN worktree root so the answer no longer depends on where we were run
   // from. `--git-common-dir`'s parent is the main repo root even when cwd is a lane worktree.
-  const busy = isSlotBusy(() => {
+  const readPid = () => {
     const pidfile = `${repoRoot()}/tasks/running/${lane.slot}.pid`
     if (!existsSync(pidfile)) return null
     try {
@@ -374,7 +431,9 @@ function inspect(lane) {
     } catch {
       return 'unreadable' // -> unparseable -> fail safe to BUSY
     }
-  })
+  }
+  const holder = slotHolder(readPid)
+  const busy = holder !== 'none' && holder !== 'self'
   const c = classify(lane.branch)
   const d = dirt(lane.worktree)
   let verdict
@@ -383,7 +442,7 @@ function inspect(lane) {
   else if (c.ahead === 0) verdict = 'USABLE'
   else if (c.held.length === 0) verdict = 'AHEAD-BUT-ABSORBED'
   else verdict = 'HOLDS'
-  return { ...lane, busy, ...c, dirt: d, verdict }
+  return { ...lane, busy, holder, ...c, dirt: d, verdict }
 }
 
 const RC = { USABLE: 0, 'AHEAD-BUT-ABSORBED': 1, HOLDS: 2, DIRTY: 2, BUSY: 2 }
@@ -445,6 +504,26 @@ function report(r) {
     BUSY: 'a runner holds this slot — leave it alone',
   }[r.verdict]
   console.log(`  => ${r.verdict}: ${note}`)
+  // F-2366-1. BUSY has three causes and they owe three different acts, so a BUSY row always
+  // names which one. Scoped to the BUSY branch on purpose: BUSY is rare (0 of 30 lanes on the
+  // day this landed), where an always-on line across a 30-row fleet listing is the noise that
+  // decays a declaration into a formality. Within the branch it prints on EVERY cause,
+  // including the ordinary one, because a line that appears only on failure re-creates the
+  // ambiguity it removes (F-2208-1).
+  if (r.verdict === 'BUSY') {
+    const why = {
+      live: 'holder pid is ALIVE — a real runner is working here. Leave it alone.',
+      stale: [
+        'holder pid is GONE — this is a CRASHED-RUNNER CORPSE, not live work.',
+        'A live runner salvages it to tasks/failed/CRASHED-* on its next poll; if this',
+        'persists, the RUNNER is dead too — read the `runner :` line (§2.0c) and restart',
+        'per §2.0b. Do NOT hand-remove the pidfile, and do NOT read this as a free lane:',
+        'a dead holder means nothing can consume a refill (F-2343-1).',
+      ].join('\n     '),
+      unverifiable: 'holder pid could NOT be established — failing safe to BUSY. Investigate before refilling.',
+    }[r.holder]
+    if (why) console.log(`     ${why}`)
+  }
   // Deliberately attached to USABLE alone. On every other verdict the lane is not being
   // refilled this minute, so a staleness footnote would be noise; on USABLE it is the exact
   // moment the F-1320-2 mistake gets made, and the verdict word itself says "refill freely".
