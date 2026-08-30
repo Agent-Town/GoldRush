@@ -456,12 +456,20 @@ test('arm 11 — the allowlist matcher does not confuse `bash` with other Bash(.
  * and silently retire this control. If you grant it, grant it as an enumeration that
  * omits deploy."
  *
- * THAT SENTENCE REACHED NO READER. Measured s2387: the F-2350-3 desk item is BYTE-IDENTICAL
- * across 9 consecutive archived handoffs (s2378-s2386) and NONE carries the caveat — it lives
- * only in s2371's narrative prose. So the owner is being handed `rec YES, scoped to scripts/`
- * with no hint that this particular grant is also a publishing decision. That is this
- * factory's most-repeated finding (F-2153-1 / F-2204-1 / F-2350-1 / F-2360-1 / F-2365-1):
- * a cure with no reader, parked outside the surface consulted at the moment it applies.
+ * THAT SENTENCE DID REACH THE OWNER, and a first draft of this comment wrongly said otherwise.
+ * s2371 put it in the OWNER'S DESK HEADER, which PRECEDES the items and has been carried
+ * verbatim since 2026-08-30 ("read the two together ... grant it as an ENUMERATION that omits
+ * deploy"). The probe that missed it scanned only the bytes FOLLOWING each `F-2350-3` mention:
+ * a forward-only window reporting absence from a region it never read. Recorded because the
+ * correction is the transferable part — when a probe says something is MISSING, check the
+ * direction of your own window first.
+ *
+ * WHAT WAS ACTUALLY OPEN is the gap s2371 named itself: "my carve-out is LAW-LEVEL, not
+ * gate-level." Nothing in the repo stopped an allowlist edit from making deploy runnable — the
+ * protection was prose, which F-2371-6 says is what gets argued away. These arms close that.
+ * The desk warning also lives in the HEADER, which is the one part of the desk each fire
+ * REWRITES rather than splices; it has survived 15 fires, but that is a convention, not a
+ * mechanism.
  *
  * MEASURED s2387 with the file's own ground-truth matcher, not inferred:
  *   · today, 89 live entries                        -> gateAllows(deploy) === false   (gate holds)
