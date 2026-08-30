@@ -225,7 +225,7 @@ export class LanternShow {
     if (honesty) {
       honesty.hidden = !state.agentTape || state.complete;
       honesty.textContent = state.agentTape
-        ? `This is a browser APPROXIMATION of a machine ride. VERIFIED outcome: ${outcomeLabel(this.tape)} · wave ${Math.floor(this.tape.outcome.waves)} · ${this.tape.eventLogHash} — replayed exactly on the county's engine.`
+        ? `This is a browser APPROXIMATION of a machine ride. VERIFIED outcome: ${outcomeLabel(this.tape)} · wave ${Math.floor(this.tape.outcome.waves)} · ${this.tape.eventLogHash}. Replayed exactly on the county's engine.`
         : '';
     }
     const pause = this.root.querySelector<HTMLButtonElement>('[data-testid="lantern-pause"]');
@@ -250,7 +250,7 @@ export class LanternShow {
       const ending = state.agentTape
         ? state.divergedAtWave === null
           ? 'Verified on the county\'s engine.'
-          : `The approximation diverged from the verified ride at wave ${state.divergedAtWave} — exact replay runs on the county's engine.`
+          : `The approximation diverged from the verified ride at wave ${state.divergedAtWave}. Exact replay runs on the county's engine.`
         : state.hash === state.expectedHash
           ? 'Replay matched this browser recording.'
           : 'Replay differed from this browser recording.';

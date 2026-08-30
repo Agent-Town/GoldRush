@@ -40,7 +40,7 @@ export const RUN_SUSPEND_REJECTION_KEY = `${RUN_SUSPEND_KEY}.rejected`;
 // Internal diagnostics only — the player never sees this (owner ruling 2026-08-04: "this is
 // more internal information for you rather than the player. If things are good anyways, no
 // need to add confusion"). A rejected snapshot simply isn't offered; durable state survives.
-export const RUN_SUSPEND_REJECTION_LINE = 'Saved claim set aside — snapshot from an older build.';
+export const RUN_SUSPEND_REJECTION_LINE = 'Saved claim set aside. This snapshot is from an older build.';
 let lastRestoreFailure: string | null = null;
 
 export type RunSuspendEnvelope = {
