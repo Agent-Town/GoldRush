@@ -85,6 +85,27 @@ function htmlFiles() {
   return readdirSync(SITE).filter((f) => f.endsWith('.html')).sort();
 }
 
+/**
+ * The FILESYSTEM part of a URL reference: everything before the query and the
+ * fragment. A reference is `path[?query][#fragment]`; only `path` names a file.
+ *
+ * F-2369-1 (measured s2370): this repo had no such helper, so every consumer
+ * treated the raw attribute value as a filename. `1188a6d88` added the ordinary
+ * cache-busting query string to index.html's only script tag --
+ * `assay-office.js?v=county-2` -- and THREE assertions in this file went red at
+ * once against a file that exists and has never moved. The guard accused an
+ * innocent page of shipping a broken reference, and stayed red on main for two
+ * days (s2369 attributed it, correctly, as pre-existing debt).
+ *
+ * Strip the fragment first, then the query: per RFC 3986 the fragment is last,
+ * so a `?` inside a fragment ("a.js#x?y") is part of the fragment and a `#`
+ * inside a query is not reachable. Splitting in the other order would mis-handle
+ * that case, which is why the order is stated rather than incidental.
+ */
+function refPath(raw) {
+  return raw.split('#')[0].split('?')[0];
+}
+
 /** Every local <script src> the site's pages load, with the grammar each tag implies. */
 function scriptRefs() {
   const refs = [];
@@ -93,7 +114,10 @@ function scriptRefs() {
     for (const tag of html.match(/<script\b[^>]*\bsrc=[^>]*>/gi) ?? []) {
       const src = tag.match(/\bsrc=["']([^"']+)["']/i)?.[1];
       if (!src || /^(https?:)?\/\//.test(src)) continue; // remote scripts are not ours to parse
-      refs.push({ page, src, module: /\btype=["']module["']/i.test(tag) });
+      // `src` stays RAW so failure messages quote what the page actually wrote;
+      // `path` is what the filesystem is asked about. Keeping both is what stops
+      // a future reader "simplifying" one into the other.
+      refs.push({ page, src, path: refPath(src), module: /\btype=["']module["']/i.test(tag) });
     }
   }
   return refs;
@@ -105,8 +129,8 @@ test('site: every local <script src> the pages load actually exists', () => {
   // regex (or a page that stops loading its script) cannot read as a pass.
   assert.ok(refs.length > 0, 'found no local <script src> in site/*.html — parser or site changed');
   for (const ref of refs) {
-    const file = join(SITE, ref.src);
-    assert.ok(existsSync(file), `${ref.page} loads "${ref.src}" but site/${ref.src} does not exist`);
+    const file = join(SITE, ref.path);
+    assert.ok(existsSync(file), `${ref.page} loads "${ref.src}" but site/${ref.path} does not exist`);
   }
 });
 
@@ -114,7 +138,7 @@ test('site: each loaded script parses under the grammar its tag requests', () =>
   const tmp = mkdtempSync(join(tmpdir(), 'gr-site-parse-'));
   try {
     for (const ref of scriptRefs()) {
-      const source = readFileSync(join(SITE, ref.src), 'utf8');
+      const source = readFileSync(join(SITE, ref.path), 'utf8');
       // A classic <script> is NOT parsed as a module by the browser, so checking it
       // as ESM would accept import/export that would blank the page in production.
       // Match the grammar to the tag: .cjs => classic/sloppy, .mjs => module.
@@ -211,8 +235,8 @@ function localRefs() {
         attrs.match(/\bdata-feed=["']([^"']+)["']/i)?.[1];
       if (!raw) continue;
       if (/^(https?:)?\/\/|^(mailto|tel|data|javascript):/i.test(raw)) continue;
-      const [path, fragment] = raw.split('#');
-      refs.push({ page, tag: tag.toLowerCase(), raw, path, fragment });
+      const fragment = raw.split('#')[1];
+      refs.push({ page, tag: tag.toLowerCase(), raw, path: refPath(raw), fragment });
     }
   }
   return refs;
@@ -259,7 +283,7 @@ test('site: every local href/src resolves to a file that exists', () => {
  * checks nothing reports no failures. Counting is therefore not enough -- the two
  * properties that were silently lost have to be asserted by name.
  */
-test('site: the denominator still contains a data-* reference and an escaping path', () => {
+test('site: the denominator still contains a data-* reference, an escaping path and a query string', () => {
   const refs = localRefs().filter((r) => r.path);
 
   // (1) A reference carried by a non-whitelisted element. This is what the old
@@ -277,6 +301,28 @@ test('site: the denominator still contains a data-* reference and an escaping pa
     escaping.length > 0,
     'no reference escapes site/ — the cross-tree feed has left the denominator (F-1234-2 branch is unexercised again)',
   );
+
+  // (4) A reference carrying a QUERY STRING, and it must still resolve. This is
+  // the F-2369-1 anti-rot arm, and it exists to catch the CHEAPER cure rather
+  // than the defect: skipping query-bearing refs (`if (raw.includes('?'))
+  // continue`) turns all three red assertions green while silently dropping the
+  // site's ONLY script from the denominator -- F-1234-1's failure shape exactly,
+  // where a reference falls out and a guard that checks nothing reports no
+  // failures. Asserting existence here is what makes the arm a check and not a
+  // census: a denominator entry nobody resolves is decoration.
+  const queried = refs.filter((r) => r.raw.includes('?'));
+  assert.ok(
+    queried.length > 0,
+    'no reference carries a query string — the cache-busting ref that exposed F-2369-1 ' +
+      'has left the denominator, so refPath() is no longer exercised by any real input',
+  );
+  for (const ref of queried) {
+    assert.ok(
+      existsSync(resolveRef(ref.path)),
+      `${ref.page} <${ref.tag}> points at "${ref.raw}" but its path part does not resolve ` +
+        `(resolved: ${resolveRef(ref.path)}) — refPath() is not stripping the query`,
+    );
+  }
 
   // (3) …and it must resolve INSIDE the repo. The old branch sent it to the
   // repo's PARENT, which existsSync would have reported as simply missing.
