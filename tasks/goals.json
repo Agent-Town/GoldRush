@@ -3045,15 +3045,6 @@
               "drainNotes": "s2376 drain. EVIDENCE-ONLY slice: 26 files, 160,404 insertions, and NOT ONE of them src/, e2e/, scripts/ or functions/ - the only tracked non-artifact path is a single appended BACKLOG row, so tsc/build/spec arms cannot differ from main and the gate is evidential rather than compilational (scope recorded, not skipped). Verified the note against its own artifacts: run-1 slip assay=verified ranked=true assayHash=fnv1a32:2422a5fb and probe slip fnv1a32:e7c3d0c0 both match the note exactly, and run-2 really does return assay_not_found - which the note DISCLOSES rather than hides. tasks/BACKLOG.md was BOTH-MOVED (s2376 rewrote line 2 this same fire); auto-merged by ort and verified BY CONTENT, both rows present, 4885 -> 4886 lines. Two findings recorded non-blocking: F-2376-3 (claim stream hash 620e7876 vs assay hash 2422a5fb on a slip that still says verified+ranked) and F-2376-4 (the master premise that the era-3 Baron was \"anchored\" was a MEASUREMENT ARTIFACT - the old logging read now.hero, not now.prospector)."
             },
             {
-              "id": "reel-era-projection-v2",
-              "title": "EH-3b v2: the era papers land whole - both s2376 gate findings cured on the salvage (the mirrored contract's other half + the meta-shape ladder with honest refusals per rung)",
-              "taskFile": "reel-era-projection-v2.md",
-              "status": "queued",
-              "lane": "lane-d",
-              "authoredBy": "attended 2026-08-30",
-              "note": "Satisfies the gate-side block's stated lift (reel-era-projection-v2 landing both cures). Starts FROM salvage lane/d @ 5518d9a04 under explicit re-land authorization. F-2376-1: both halves of the mirrored two-surface contract; F-2376-2: {buildId,engineHash}-no-era gets the honest unstamped-era refusal, never reel_not_found."
-            },
-            {
               "id": "reel-era-projection",
               "title": "EH-3b: the WATCH reel carries its era papers - the door projection exposes meta.era/engineHash/buildId so the true show plays era-current reels instead of failing closed; folds in the F-2374-2 fixture-staling cure",
               "taskFile": "reel-era-projection.md",
@@ -3069,7 +3060,7 @@
               "id": "reel-era-projection-v2",
               "title": "EH-3b re-land: the WATCH reel carries its era papers AND the half-stamped reel keeps its honest refusal (cures F-2376-1 + F-2376-2)",
               "taskFile": "reel-era-projection-v2.md",
-              "status": "planned",
+              "status": "queued",
               "lane": "lane-d",
               "authoredBy": "fire s2376",
               "note": "Carries v1 whole (branch lane/d @ 5518d9a04 is the salvage ref, ~90% correct) plus the two gate findings. Evidence: reviews/reel-era-projection.md, artifacts/reel-era-gate-s2376/gate.txt."
