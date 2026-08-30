@@ -152,29 +152,27 @@ test('place_building reports out_of_reach beyond the selected buildable reach', 
   const errors = await openGame(page);
   await grantGold(page, 30);
 
-  const target = { x: 0, z: 10 };
-  const placeRadius = await page.evaluate(() => {
+  const { target, outOfZone, placeRadius } = await page.evaluate(() => {
     window.__GR_TEST__?.selectBuildable('sentry_beacon');
-    return window.__GR_TEST__?.confirmBuildDiagnostics().placeRadius ?? 0;
+    const placeRadius = window.__GR_TEST__?.confirmBuildDiagnostics().placeRadius ?? 0;
+    const rider = window.__THREE_GAME_DIAGNOSTICS__!.agent.embodiment.position;
+    const target = { x: rider.x + placeRadius + 1, z: rider.z };
+    for (let dx = -placeRadius; dx <= placeRadius; dx += 1) {
+      for (let dz = -placeRadius; dz <= placeRadius; dz += 1) {
+        if (dx * dx + dz * dz > placeRadius * placeRadius) continue;
+        const point = { x: Math.round(rider.x + dx), z: Math.round(rider.z + dz) };
+        if (window.__GR_TEST__?.terrainSample(point.x, point.z).zone !== 'bank') {
+          return { target, outOfZone: point, placeRadius };
+        }
+      }
+    }
+    throw new Error('Expected deterministic non-bank terrain within the rider build radius.');
   });
-  await page.evaluate(
-    ({ x, z, reach }) => window.__GR_TEST__?.teleport(x + reach + 1, z),
-    { ...target, reach: placeRadius },
-  );
 
   const receipt = await page.evaluate(
     (position) => window.__GR_AGENT__?.placeBuilding('sentry_beacon', position, 0),
     target,
   ) as ToolReceipt;
-  const outOfZone = await page.evaluate(() => {
-    for (let x = -40; x <= 40; x += 2) {
-      for (let z = -40; z <= 40; z += 2) {
-        if (window.__GR_TEST__?.terrainSample(x, z).zone !== 'bank') return { x, z };
-      }
-    }
-    throw new Error('Expected deterministic non-bank terrain in the debug harness.');
-  });
-  await page.evaluate(({ x, z }) => window.__GR_TEST__?.teleport(x, z), outOfZone);
   const zoneReceipt = await page.evaluate(
     (position) => window.__GR_AGENT__?.placeBuilding('sentry_beacon', position, 0),
     outOfZone,

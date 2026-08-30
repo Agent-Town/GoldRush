@@ -2483,7 +2483,7 @@ export class Game {
       {
         diagnostics: () => window.__THREE_GAME_DIAGNOSTICS__,
         economyLog: () => this.economy.log,
-        placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation),
+        placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation, this.prospector.position),
         panAt: (node) => this.panAgentAt(node),
         repair: (building) => this.repairProspectorBuilding(building),
         collectXp: (options) => this.collectProspectorXp(options),
@@ -3336,7 +3336,10 @@ export class Game {
     return {
       diagnostics: () => this.agentRiderDiagnostics(playerId),
       economyLog: () => this.economy.log,
-      placeBuilding: (id, position, rotation = 0) => this.placeAgentBuilding(id, position, rotation),
+      placeBuilding: (id, position, rotation = 0) => {
+        const actor = this.agentRiderActor(playerId);
+        return actor ? this.placeAgentBuilding(id, position, rotation, actor.group.position) : false;
+      },
       panAt: (node) => this.panAgentAt(node),
       repair: (building) => this.repairAgentRiderBuilding(playerId, building),
     };
@@ -7292,12 +7295,17 @@ export class Game {
     return { before, after };
   }
 
-  private placeAgentBuilding(id: BuildableId, position: ProspectorPoint, rotation = 0): boolean {
+  private placeAgentBuilding(
+    id: BuildableId,
+    position: ProspectorPoint,
+    rotation = 0,
+    origin: ProspectorPoint,
+  ): boolean {
     if (this.state.current !== 'playing' || this.state.isPaused || this.deepwaterClaim) return false;
     const rotationSteps = Number.isFinite(rotation)
       ? Number.isInteger(rotation) ? rotation : Math.round(rotation / (Math.PI / 2))
       : 0;
-    const placed = this.buildSystem.confirmPlacement(this.timeAlive, { id, position, rotationSteps });
+    const placed = this.buildSystem.confirmPlacement(this.timeAlive, { id, position, rotationSteps }, origin);
     if (placed) {
       this.recordLedgerBuildable(id);
       this.recordRunTapeAction({ type: 'place_build', id, position, rotationSteps });

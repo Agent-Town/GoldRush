@@ -49,7 +49,7 @@ test('the landed registry names the live engine and stays outside its hash corpu
     assert.ok(path.relative(input, REGISTRY).startsWith('..'), `${REGISTRY} must stay outside ${input}`);
   }
   const registry = await assertCurrentEra(ROOT);
-  assert.equal(registry.era, 3);
+  assert.equal(registry.era, 4);
 
   const [grSim, replay, worker] = await Promise.all([
     readFile(path.join(ROOT, 'scripts/gr-sim.mjs'), 'utf8'),
@@ -57,7 +57,7 @@ test('the landed registry names the live engine and stays outside its hash corpu
     readFile(path.join(ROOT, 'scripts/assay-worker.mjs'), 'utf8'),
   ]);
   assert.match(grSim, /engineHash: await computeEngineHash\(root\), era: engineEra\.era/);
-  assert.match(replay, /keys !== 'buildId,engineHash' && keys !== 'buildId,engineHash,era'/);
+  assert.match(replay, /ssrLoadModule\('\/src\/replay\/AgentTapeReplay\.ts'\)/);
   assert.match(worker, /engine era \$\{engineEra\.era\} '\$\{engineEra\.name\}', tape from era \$\{tapeEra\}/);
 });
 

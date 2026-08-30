@@ -134,7 +134,7 @@ test('engine hash wins over build id, with build id retained for legacy tapes', 
     const { code, stdout, stderr } = await runWorker(api.base, stub).done;
     assert.equal(code, 0, stderr);
     assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'unassayable', 'verified']);
-    assert.equal(api.posts[0].reason, "engine era 3 'the Honest Hypot', tape from era 2");
+    assert.equal(api.posts[0].reason, "engine era 4 'the Embodied Hand', tape from era 2");
     assert.equal(api.posts[0].replayedHash, undefined);
     assert.equal(api.posts[1].reason, `build-skew (tape deadbeef, assayer ${buildId})`);
     assert.equal(api.posts[2].reason, undefined);
