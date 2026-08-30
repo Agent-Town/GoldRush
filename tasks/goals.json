@@ -3048,22 +3048,27 @@
               "id": "reel-era-projection",
               "title": "EH-3b: the WATCH reel carries its era papers - the door projection exposes meta.era/engineHash/buildId so the true show plays era-current reels instead of failing closed; folds in the F-2374-2 fixture-staling cure",
               "taskFile": "reel-era-projection.md",
-              "status": "blocked",
+              "status": "superseded",
               "lane": "lane-d",
               "authoredBy": "attended 2026-08-30",
               "note": "EH-3 merged fail-closed by design (door outside its firewall, run report names the strip). One read-side field lights the whole watchability program; the plain-boot TRUE-PLAYBACK arm completes the F-2318-1 closure.",
               "blockClass": "gate-side",
               "blockedReason": "s2376 gate HELD, not merged. Two findings, both control-proven, in reviews/reel-era-projection.md. F-2376-1: scripts/agent-reels.test.mjs:52 (a leg of test:node-guards) reds on the merged tree and passes on pristine main - the lane updated one half of a deliberately-mirrored two-surface contract. F-2376-2: a {buildId,engineHash} tape with no era regresses from the honest unstamped-era refusal to a false 'cannot find that reel'. LIFTS BY: reel-era-projection-v2 landing both cures. The s2308 veto premise is measured DEAD (af85497537 retired it) - do NOT re-litigate that. Branch lane/d @ 5518d9a04 is intact as salvage.",
-              "heldBy": "s2376"
+              "heldBy": "s2376",
+              "supersededBy": "reel-era-projection-v2",
+              "mergeHash": "b24bcf679e59b19329b965b17de9d5eb6b9c8563",
+              "liftedBy": "s2380",
+              "liftedNote": "gate-side hold SATISFIED (not waived) and lifted in the same fire as the merge, per fire.md 3.0's blockClass rule and the two-commit sequence of F-1384-1. The stated lift condition was \"reel-era-projection-v2 landing both cures\"; both were re-measured independently by the draining fire on its own merged tree rather than inherited from the gate: F-2376-1's exact suite scripts/agent-reels.test.mjs 1/1 pass, and its mirrored pair scripts/test-standings.mjs kv 173 / sqlite 173. blockedReason above is the historical record of the hold, retained deliberately."
             },
             {
               "id": "reel-era-projection-v2",
               "title": "EH-3b re-land: the WATCH reel carries its era papers AND the half-stamped reel keeps its honest refusal (cures F-2376-1 + F-2376-2)",
               "taskFile": "reel-era-projection-v2.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "fire s2376",
-              "note": "Carries v1 whole (branch lane/d @ 5518d9a04 is the salvage ref, ~90% correct) plus the two gate findings. Evidence: reviews/reel-era-projection.md, artifacts/reel-era-gate-s2376/gate.txt."
+              "note": "Carries v1 whole (branch lane/d @ 5518d9a04 is the salvage ref, ~90% correct) plus the two gate findings. Evidence: reviews/reel-era-projection.md, artifacts/reel-era-gate-s2376/gate.txt. MERGED s2380 at b24bcf679 (drain re-pin 1d41d4763). Gated by s2379 in detached worktree gate-s2379 per fire.md 3.0b; that fire died at FIRE END rc=0 23:10:18 without merging, so s2380 took over the dead lock, landed its stranded deliverables verbatim (F-2204-1) and RE-VERIFIED the decisive arms on its own merged tree rather than inheriting them. Evidence: reviews/reel-era-projection-v2.md.",
+              "mergeHash": "b24bcf679e59b19329b965b17de9d5eb6b9c8563"
             },
             {
               "id": "true-reel-show",
