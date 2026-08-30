@@ -1,3 +1,8 @@
+// @cwd-invariant-collection-guard — enrols this file in `collection-guards-cwd-invariance.test.mjs`,
+// which runs it from os.tmpdir() and from a repo subdirectory and asserts it still passes. The
+// marker is what makes that subject set DERIVED rather than transcribed (F-2363-1); dropping it
+// silently removes this file from that guard, so `collection-guards-subject-set-guard.test.mjs`
+// reds if a file spawning `playwright --list` does not carry it.
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { closeSync, mkdtempSync, openSync, readFileSync, rmSync } from 'node:fs';
