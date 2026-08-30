@@ -3046,17 +3046,29 @@
               "id": "reel-era-projection",
               "title": "EH-3b: the WATCH reel carries its era papers - the door projection exposes meta.era/engineHash/buildId so the true show plays era-current reels instead of failing closed; folds in the F-2374-2 fixture-staling cure",
               "taskFile": "reel-era-projection.md",
-              "status": "queued",
+              "status": "blocked",
               "lane": "lane-d",
               "authoredBy": "attended 2026-08-30",
-              "note": "EH-3 merged fail-closed by design (door outside its firewall, run report names the strip). One read-side field lights the whole watchability program; the plain-boot TRUE-PLAYBACK arm completes the F-2318-1 closure."
+              "note": "EH-3 merged fail-closed by design (door outside its firewall, run report names the strip). One read-side field lights the whole watchability program; the plain-boot TRUE-PLAYBACK arm completes the F-2318-1 closure.",
+              "blockClass": "gate-side",
+              "blockedReason": "s2376 gate HELD, not merged. Two findings, both control-proven, in reviews/reel-era-projection.md. F-2376-1: scripts/agent-reels.test.mjs:52 (a leg of test:node-guards) reds on the merged tree and passes on pristine main - the lane updated one half of a deliberately-mirrored two-surface contract. F-2376-2: a {buildId,engineHash} tape with no era regresses from the honest unstamped-era refusal to a false 'cannot find that reel'. LIFTS BY: reel-era-projection-v2 landing both cures. The s2308 veto premise is measured DEAD (af85497537 retired it) - do NOT re-litigate that. Branch lane/d @ 5518d9a04 is intact as salvage.",
+              "heldBy": "s2376"
+            },
+            {
+              "id": "reel-era-projection-v2",
+              "title": "EH-3b re-land: the WATCH reel carries its era papers AND the half-stamped reel keeps its honest refusal (cures F-2376-1 + F-2376-2)",
+              "taskFile": "reel-era-projection-v2.md",
+              "status": "planned",
+              "lane": "lane-d",
+              "authoredBy": "fire s2376",
+              "note": "Carries v1 whole (branch lane/d @ 5518d9a04 is the salvage ref, ~90% correct) plus the two gate findings. Evidence: reviews/reel-era-projection.md, artifacts/reel-era-gate-s2376/gate.txt."
             },
             {
               "id": "true-reel-show",
               "title": "EH-3: the Lantern Show plays the truth - agent reels ride the county's own replay (EH-2 core), re-verified live in the viewer's browser; era-mismatched reels get the era refusal, never a divergent playback",
               "taskFile": "true-reel-show.md",
               "status": "merged",
-      "mergeHash": "af85497537fb973b8798089794498ff9b2974110",
+              "mergeHash": "af85497537fb973b8798089794498ff9b2974110",
               "lane": "lane-d",
               "authoredBy": "attended 2026-08-30",
               "note": "EH-2 merged (8c5684de) with the budget that makes this trivial: full-ride browser replay 1.8s. Truth contract r1: entity kinds+positions+life-state+timeline faithful; named placeholders where VFX vocabulary is missing; approximation path REMOVED for agent reels. Era honesty clause covers the era-3 crown reel on an era-4 build."
