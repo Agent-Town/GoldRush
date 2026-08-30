@@ -3037,10 +3037,12 @@
               "id": "gauntlet-heat7-embodied-crown",
               "title": "EH-4: the crown re-earned under the Embodied Hand - the first walking Baron campaign; x2 secures = the admission standard; the embodiment cost table is the almanac's next lesson",
               "taskFile": "gauntlet-heat7-embodied-crown.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-c",
               "authoredBy": "attended 2026-08-30",
-              "note": "BANKED BEHIND A GATE - do not dispatch until era 4 is LIVE on production (the master's own era gate STOPs otherwise, but do not burn the run): GATE = the live deploy's tree reads assets/engine-era.json era>=4. Opens after EH-3 (true-reel-show, lane-d, live now) drains and a deploy ships. Owner: then lets do all of that!"
+              "note": "BANKED BEHIND A GATE - do not dispatch until era 4 is LIVE on production (the master's own era gate STOPs otherwise, but do not burn the run): GATE = the live deploy's tree reads assets/engine-era.json era>=4. Opens after EH-3 (true-reel-show, lane-d, live now) drains and a deploy ships. Owner: then lets do all of that!",
+              "mergeHash": "b43df480f3ffd9902591cbc75bec34f00c9a1862",
+              "drainNotes": "s2376 drain. EVIDENCE-ONLY slice: 26 files, 160,404 insertions, and NOT ONE of them src/, e2e/, scripts/ or functions/ - the only tracked non-artifact path is a single appended BACKLOG row, so tsc/build/spec arms cannot differ from main and the gate is evidential rather than compilational (scope recorded, not skipped). Verified the note against its own artifacts: run-1 slip assay=verified ranked=true assayHash=fnv1a32:2422a5fb and probe slip fnv1a32:e7c3d0c0 both match the note exactly, and run-2 really does return assay_not_found - which the note DISCLOSES rather than hides. tasks/BACKLOG.md was BOTH-MOVED (s2376 rewrote line 2 this same fire); auto-merged by ort and verified BY CONTENT, both rows present, 4885 -> 4886 lines. Two findings recorded non-blocking: F-2376-3 (claim stream hash 620e7876 vs assay hash 2422a5fb on a slip that still says verified+ranked) and F-2376-4 (the master premise that the era-3 Baron was \"anchored\" was a MEASUREMENT ARTIFACT - the old logging read now.hero, not now.prospector)."
             },
             {
               "id": "reel-era-projection",
