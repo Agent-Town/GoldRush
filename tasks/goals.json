@@ -6250,6 +6250,13 @@
               "review": "reviews/f1710-1-gate-caller-capture.md",
               "drainedBy": "s1711 fire, 2026-08-12",
               "drainNotes": "Detached gates: tsc/build green; focused 26/26; direct audit emitted 22,428 bytes for 128 subjects and ended in PASS; complete ledger battery 179/179 plus every chained guard green; diff check clean. File-backed stdout/stderr capture preserved spawn verdict fields and left no temporary directories."
+            },
+            {
+              "id": "toolsurface-terrain-edge",
+              "title": "F-2381-1: one ToolSurface import makes the WHOLE Playwright suite uncollectable — restore the F-A8-7 injection law",
+              "taskFile": "lane-d-toolsurface-terrain-edge.md",
+              "status": "queued",
+              "note_s2381": "FIRE-AUTHORED s2381 from a measurement chain taken this fire, not inherited. `npx playwright test --list` on main = `Total: 0 tests in 0 files`, rc=1. Bisected the 432-spec corpus to ONE culprit (e2e/ap16-6-browser-seat.spec.ts reproduces alone); static chain spec -> src/mp/AgentRiderBody.ts -> src/agent/ToolSurface.ts -> src/world/Terrain.ts (?raw JSON). A/B BY COMMIT in a detached worktree: parent f0bf01138 = 2988 tests in 431 files, 405efbbf6 = 0 tests. A/B BY LINE on main's tip: severing ToolSurface.ts:18 alone = 2996 tests. So it is ONE line, ONE commit, landed 2026-08-30T17:31:31+07:00 — NOT 'broad and long-standing' as s2380 recorded, and it needs NO owner ruling because the corpus already ruled: F-A8-7, quoted verbatim in src/systems/ScheduledRelocationSystem.ts, whose header says this exact failure ('made the WHOLE Playwright suite uncollectable') has happened before and that terrain is INJECTED, NOT IMPORTED. Severity stated honestly: NOT a false green — the listing exits rc=1 and scripts/whole-suite-collection.test.mjs reds correctly in test:node-guards. The cost is COVERAGE, because targeted spec runs still pass, so a drain gating only its own spec reads green with the suite dark behind it. The other three spec-reachable Terrain edges (Embodiment.ts, WaveSystem.ts, FreedWalkerVfx.ts) date from July, are not load-fatal, and are deliberately OUT of scope."
             }
           ]
         }
