@@ -33,7 +33,7 @@ test('the verified Dry Gulch agent reel is labeled as an approximation and ends 
   await expect(show).toHaveAttribute('data-recorded-wave', '20');
   await expect(show).toHaveAttribute('data-recorded-hash', tape.eventLogHash);
   await expect(page.getByTestId('lantern-agent-honesty')).toContainText(
-    `This is a browser APPROXIMATION of a machine ride. VERIFIED outcome: SECURED · wave 20 · ${tape.eventLogHash} — replayed exactly on the county's engine.`,
+    `This is a browser APPROXIMATION of a machine ride. VERIFIED outcome: SECURED · wave 20 · ${tape.eventLogHash}. Replayed exactly on the county's engine.`,
   );
   const bannerShot = await page.screenshot({ fullPage: true });
 
@@ -46,7 +46,7 @@ test('the verified Dry Gulch agent reel is labeled as an approximation and ends 
   await expect(outcome).toContainText('RECORDED OUTCOME');
   await expect(outcome).toContainText('SECURED');
   await expect(outcome).toContainText(`Wave 20 · ${tape.eventLogHash}`);
-  await expect(outcome).toContainText(/The approximation diverged from the verified ride at wave \d+ — exact replay runs on the county's engine\./);
+  await expect(outcome).toContainText(/The approximation diverged from the verified ride at wave \d+\. Exact replay runs on the county's engine\./);
   const outcomeShot = await page.screenshot({ fullPage: true });
 
   await page.evaluate(() => window.__GR_TEST__!.setManualSim(false));
