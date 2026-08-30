@@ -44,9 +44,15 @@ const MAC = path.join(ROOT, 'scripts/health-watch.sh');
 const BOX = path.join(ROOT, 'ops/droplet/edge-watch.sh');
 
 const TMP = [];
+// The prefix is spelled as a STRING LITERAL at the mkdtemp site on purpose. scripts/fixture-teardown.test.mjs
+// extracts prefixes lexically and cannot see through this wrapper, so passing `tag` straight through yielded
+// 0 extractable prefixes and reddened that guard on main for two days (F-2382-4). The tag is preserved as a
+// nested directory, which keeps fixtures self-describing without hiding the prefix from the auditor.
 function tmpdir(tag) {
-  const d = fs.mkdtempSync(path.join(os.tmpdir(), tag));
-  TMP.push(d);
+  const base = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-edge-alarm-'));
+  TMP.push(base);
+  const d = path.join(base, tag);
+  fs.mkdirSync(d);
   return d;
 }
 process.on('exit', () => {
