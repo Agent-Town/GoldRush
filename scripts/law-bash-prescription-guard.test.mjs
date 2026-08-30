@@ -445,3 +445,91 @@ test('arm 11 — the allowlist matcher does not confuse `bash` with other Bash(.
   // and a non-Bash entry is never a command spec
   assert.equal(gateAllows('Read', ['Read', 'Glob']), false);
 });
+
+/**
+ * F-2387-1 (s2387) — THE PUBLISH GATE IS A MECHANISM TODAY AND THE DESK RECOMMENDS RETIRING IT.
+ *
+ * Arms 13-16 make the carve-out LAW-LEVEL: a surface prescribing deploy.sh must say
+ * "do not wrap it through node". s2371 named that limit itself, in its own handoff:
+ * "my carve-out is law-level, not gate-level. F-2350-3 recommends allowlisting
+ * `Bash(bash scripts/*)` — that entry would make deploy runnable for every headless fire
+ * and silently retire this control. If you grant it, grant it as an enumeration that
+ * omits deploy."
+ *
+ * THAT SENTENCE REACHED NO READER. Measured s2387: the F-2350-3 desk item is BYTE-IDENTICAL
+ * across 9 consecutive archived handoffs (s2378-s2386) and NONE carries the caveat — it lives
+ * only in s2371's narrative prose. So the owner is being handed `rec YES, scoped to scripts/`
+ * with no hint that this particular grant is also a publishing decision. That is this
+ * factory's most-repeated finding (F-2153-1 / F-2204-1 / F-2350-1 / F-2360-1 / F-2365-1):
+ * a cure with no reader, parked outside the surface consulted at the moment it applies.
+ *
+ * MEASURED s2387 with the file's own ground-truth matcher, not inferred:
+ *   · today, 89 live entries                        -> gateAllows(deploy) === false   (gate holds)
+ *   · + Bash(bash scripts/*)   <- the desk's rec     -> TRUE   (control retired)
+ *   · + Bash(bash:*)                                 -> TRUE   (control retired)
+ *   · + Bash(bash scripts/health-watch.sh:*)         -> false  (safe)
+ *   · + Bash(bash scripts/start-lane-runner.sh:*)    -> false  (safe)
+ * So s2371's proposed alternative is measurably correct and the desk's wording measurably is not.
+ *
+ * SEVERITY STATED HONESTLY AND DELIBERATELY NOT INFLATED: nothing is broken, no fire has
+ * published, and the realised cost is ZERO — arm 17 passes on the live tree today. This is a
+ * DECISION hazard, not a live defect. What earns it a mechanism is the direction: the thing it
+ * protects is what reaches the family's browser, and DEPLOY LAW positively INSTRUCTS a fire to
+ * run deploy.sh after merging gameplay code — so the day the grant lands, fires begin
+ * publishing automatically, with no further edit and no announcement.
+ *
+ * NOT AN F-1460-1 HAZARD, and the restraint is measured rather than assumed: this arm cannot
+ * fire during ordinary correct operation. It reds on exactly one event — an edit to the
+ * settings allowlist that makes deploy runnable — which is the single decision it exists to
+ * catch. If the owner deliberately rules that fires SHOULD publish, this arm is retired BY
+ * THAT RULING, in the same commit, and the retirement is the record of the decision.
+ */
+test('arm 17 — no allowlist entry may make a PUBLISH-GATED command runnable', () => {
+  const runnable = PUBLISH_GATED.filter((g) => gateAllows(g.cmd, entries)).map((g) => g.cmd);
+  assert.deepEqual(
+    runnable,
+    [],
+    'the permission gate is the owner\'s live control over what reaches the public web ' +
+      `(F-2371-6); an allow entry now makes it runnable by every headless fire: ${JSON.stringify(runnable)}. ` +
+      'If this was a deliberate owner ruling, record it and retire this arm in the same commit; ' +
+      'if it was collateral from widening bash (F-2350-3), grant the scripts individually instead.',
+  );
+});
+
+test('arm 18 — arm 17 is not vacuous: there really is a publish-gated command to protect', () => {
+  // F-2217-1: a filter over an empty set reports success. Without this, emptying
+  // PUBLISH_GATED would silently retire arms 13 and 17 together.
+  assert.ok(PUBLISH_GATED.length > 0, 'PUBLISH_GATED is empty — arms 13 and 17 now check nothing');
+  assert.ok(
+    PUBLISH_GATED.some((g) => g.cmd === 'bash scripts/deploy.sh'),
+    'deploy.sh must remain the protected subject',
+  );
+});
+
+test('arm 19 — MANUFACTURED DEFECT: F-2350-3\'s recommendation verbatim reds arm 17', () => {
+  // The defect is not hypothetical — it is the exact string the OWNER'S DESK recommends.
+  const widened = entries.concat(['Bash(bash scripts/*)']);
+  assert.equal(gateAllows('bash scripts/deploy.sh', entries), false, 'control: the gate holds today');
+  assert.equal(
+    gateAllows('bash scripts/deploy.sh', widened),
+    true,
+    'granting Bash(bash scripts/*) must be caught as retiring the publish gate',
+  );
+});
+
+test('arm 20 — REVERSE CONTROL: a per-script enumeration serves F-2350-3 and keeps the gate', () => {
+  // The cure this guard POINTS AT, proven to work rather than merely asserted: enumerating the
+  // scripts the law actually prescribes retires F-2350-1's workaround WITHOUT touching deploy.
+  // Without this arm the guard would read as "never widen bash", which is not the finding.
+  const enumerated = entries.concat([
+    'Bash(bash scripts/health-watch.sh:*)',
+    'Bash(bash scripts/start-lane-runner.sh:*)',
+  ]);
+  assert.equal(gateAllows('bash scripts/deploy.sh', enumerated), false, 'deploy stays gated');
+  assert.equal(gateAllows('bash scripts/health-watch.sh status', enumerated), true, 'triage read runs');
+  assert.equal(
+    gateAllows('bash scripts/start-lane-runner.sh --check', enumerated),
+    true,
+    'emergency restart runs',
+  );
+});
