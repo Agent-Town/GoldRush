@@ -3028,10 +3028,12 @@
               "id": "embodied-build",
               "title": "EH-1: the machine's hand becomes embodied - BUILD walks inside the buildable's own placeRadius like REPAIR already does; era 4 'the Embodied Hand'; skill.md tells riders orders imply travel",
               "taskFile": "embodied-build.md",
-              "status": "queued",
+              "status": "stopped",
               "lane": "lane-b",
               "authoredBy": "attended 2026-08-30",
-              "note": "F-PARITY-0830 cure, owner-ratified verbatim: yes, all of this. lets improve this. Spec: specs/embodied-hand.md. Era guard forces the era-4 registry in the same commit; if the hash does NOT rotate that is its own finding (engine-hash blind spot). Zero file overlap with true-reel-harness (lane-d, same window)."
+              "note": "F-PARITY-0830 cure, owner-ratified verbatim: yes, all of this. lets improve this. Spec: specs/embodied-hand.md. Era guard forces the era-4 registry in the same commit; if the hash does NOT rotate that is its own finding (engine-hash blind spot). Zero file overlap with true-reel-harness (lane-d, same window).",
+              "stopNote": "EH-1 STOPPED s2369 at the ratified firewall, NOT failed. The runner removed its partial era/behaviour diff and reported two defects it could not cure inside EH-1's authorized files: (1) the shipped browser door validates the final build against a different body — StandingOrdersExecutor receives the Prospector/rider position while Game.installAgentDoor and Game.agentRiderAdapter both route through Game.placeAgentBuilding, whose BuildSystem.confirmPlacement reads actionActorPosition (normally local player/slot 0), so a remote Prospector walks into range and still gets invalid_range; the headless proof masks it because HeadlessContractSim constructs BuildSystem with prospector.position. (2) A finite BUILD target beyond terrain bounds leaves movement clamped forever and starves later orders — the executor has neither terrain reachability nor a stall result. EH-1 explicitly forbids src/game/Game.ts and all door code, so neither is curable honestly in scope. Reporting instead of breaching scope is the prescribed behaviour (CLAUDE.md 4.5). Block report merged to main at 5db3d7ae4d1d99dab0b4460aacecf255ffd19f90 (tasks/BACKLOG.md:4853).",
+              "reason": "Needs an ATTENDED re-author widening the slice: plumb the executing actor through browser placement validation, and define unreachable-travel failure. Not owner-gated (the cure program F-PARITY-0830 is already ratified) and not fire-authorable (widening a ratified slice's firewall to admit src/game/Game.ts is a scope decision)."
             },
             {
               "id": "true-reel-harness",
