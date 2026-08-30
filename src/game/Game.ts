@@ -78,7 +78,6 @@ import {
   readRunTapes,
   runTapeEventLogHash,
   submittedRunTape,
-  validateRunTape,
   type RunTape,
   type RunTapeOutcome,
 } from './RunTape';
@@ -218,6 +217,9 @@ import {
   type EconomySummary,
 } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
+import engineEra from '../../assets/engine-era.json' with { type: 'json' };
+import { BrowserAgentTapeReplay } from '../replay/BrowserAgentTapeReplay';
+import type { AgentTapeReplaySnapshot } from '../replay/AgentTapeReplay';
 import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type UpgradeCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
@@ -262,7 +264,7 @@ import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt, type CanalDecisionCandidate, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
-import { LanternShow, type LanternShowState } from '../ui/LanternShow';
+import { LanternShow, validateAgentRunTape, type LanternShowState } from '../ui/LanternShow';
 import { disposeObject3D } from '../utils/dispose';
 import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
@@ -422,7 +424,7 @@ const ASSAY_REPLAY_STORAGE_KEY = 'gr.assay-replay.v1';
 function assayReplayBoot(boot: GameBoot): GameBoot {
   if (boot.replay || !isDebugEnabled() || !new URLSearchParams(window.location.search).has('assayReplay')) return boot;
   try {
-    const tape = validateRunTape(JSON.parse(sessionStorage.getItem(ASSAY_REPLAY_STORAGE_KEY) ?? 'null'));
+    const tape = validateAgentRunTape(JSON.parse(sessionStorage.getItem(ASSAY_REPLAY_STORAGE_KEY) ?? 'null'));
     sessionStorage.removeItem(ASSAY_REPLAY_STORAGE_KEY);
     if (!tape) throw new Error('invalid tape');
     return { ...boot, replay: { tape, onClose: () => undefined } };
@@ -440,6 +442,12 @@ type RunTapeReplayState = {
   hash: string | null;
   agentTape: boolean;
   divergedAtWave: number | null;
+  trueDriver: BrowserAgentTapeReplay | null;
+  snapshot: AgentTapeReplaySnapshot | null;
+  requestedTick: number;
+  requestPending: boolean;
+  winding: boolean;
+  eraRefusal: { tapeHash: string; currentHash: string; tapeEra: number | null; currentEra: number } | null;
 };
 
 export class Game {
@@ -2574,6 +2582,7 @@ export class Game {
     this.input.dispose();
     this.cameraZoom.dispose();
     this.playbookSurface?.dispose();
+    this.runTapeReplay?.trueDriver?.dispose();
     this.lanternShow?.dispose();
     this.e7SignalSystem.dispose();
     this.hud.dispose();
@@ -2685,6 +2694,7 @@ export class Game {
 
   private update(delta: number): boolean {
     if (this.runTapeReplay?.complete || this.finishRunTapeReplayIfComplete()) return false;
+    if (this.runTapeReplay?.trueDriver) return this.updateTrueRunTapeReplay();
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
@@ -6942,6 +6952,12 @@ export class Game {
       { slot: tape.inputLog.primarySlot, start: tape.inputLog.start, entries: tape.inputLog.entries },
       ...tape.inputLog.streams,
     ];
+    const agentTape = recordings.some((recording) =>
+      recording.entries.some((entry) => entry.a.some(isAgentOrdersAction)));
+    if (agentTape) {
+      this.startTrueRunTapeReplay(tape);
+      return;
+    }
     const maxSlot = Math.max(...recordings.map((entry) => entry.slot));
     while (this.actors.length <= maxSlot) {
       const actor = new Hero(RUN_CAST_SCALE);
@@ -6951,8 +6967,6 @@ export class Game {
       this.scene.add(actor.group);
     }
     const sessions = new Map<number, PlaybookReplaySession>();
-    const agentTape = recordings.some((recording) =>
-      recording.entries.some((entry) => entry.a.some(isAgentOrdersAction)));
     for (const { slot, start, entries } of recordings) {
       const playbook: PlaybookRecording = {
         version: PLAYBOOK_VERSION,
@@ -6985,10 +6999,60 @@ export class Game {
     }
     this.mpLocalSlot = tape.inputLog.primarySlot;
     this.mpActionSlot = 0;
-    this.runTapeReplay = { tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape, divergedAtWave: null };
+    this.runTapeReplay = {
+      tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape, divergedAtWave: null,
+      trueDriver: null, snapshot: null, requestedTick: 0, requestPending: false, winding: false, eraRefusal: null,
+    };
     this.replayCameraPan.set(0, 0, 0);
     this.prospector.reset(this.primaryActor.group.position);
     this.cameraRig.snapTo(this.localActor.group.position);
+    this.mountLanternShow(tape);
+    this.syncLanternShow();
+  }
+
+  private startTrueRunTapeReplay(tape: RunTape): void {
+    const meta = tape.meta as { buildId: string; engineHash?: string; era?: number } | undefined;
+    const eraRefusal = !meta?.engineHash || meta.engineHash !== engineEra.engineHash
+      ? { tapeHash: meta?.engineHash ?? `unstamped build ${meta?.buildId ?? 'unknown'}`, currentHash: engineEra.engineHash, tapeEra: meta?.era ?? null, currentEra: engineEra.era }
+      : null;
+    const driver = eraRefusal ? null : new BrowserAgentTapeReplay(tape);
+    this.runTapeReplay = {
+      tape,
+      sessions: new Map(),
+      speed: 1,
+      skipWave: null,
+      complete: eraRefusal !== null,
+      hash: null,
+      agentTape: true,
+      divergedAtWave: null,
+      trueDriver: driver,
+      snapshot: null,
+      requestedTick: 0,
+      requestPending: driver !== null,
+      winding: driver !== null,
+      eraRefusal,
+    };
+    this.mountLanternShow(tape);
+    if (eraRefusal) {
+      this.state.setPaused(true);
+      this.syncLanternShow();
+      return;
+    }
+    void driver!.start().then((reply) => {
+      const replay = this.runTapeReplay;
+      if (!replay || replay.trueDriver !== driver) return;
+      replay.snapshot = reply.snapshot ?? null;
+      replay.requestedTick = replay.snapshot?.tick ?? 0;
+      replay.requestPending = false;
+      replay.winding = false;
+      this.syncLanternShow();
+    }).catch((error) => {
+      if (this.runTapeReplay?.trueDriver === driver) this.failTrueRunTapeReplay(error);
+    });
+    this.syncLanternShow();
+  }
+
+  private mountLanternShow(tape: RunTape): void {
     this.lanternShow ??= new LanternShow(this.getElement('#app'), tape, {
       pause: (paused) => this.setRunTapeReplayPaused(paused),
       speed: (speed) => this.setRunTapeReplaySpeed(speed),
@@ -7000,6 +7064,56 @@ export class Game {
         this.replayCameraPan.z = THREE.MathUtils.clamp(this.replayCameraPan.z + dz, -24, 24);
       },
     });
+  }
+
+  private updateTrueRunTapeReplay(): boolean {
+    const replay = this.runTapeReplay;
+    if (!replay?.trueDriver || replay.complete || this.state.isPaused) return false;
+    replay.requestedTick += 1;
+    this.pumpTrueRunTapeReplay();
+    return true;
+  }
+
+  private pumpTrueRunTapeReplay(): void {
+    const replay = this.runTapeReplay;
+    const driver = replay?.trueDriver;
+    if (!replay || !driver || replay.complete || replay.requestPending) return;
+    replay.requestPending = true;
+    const target = replay.skipWave === null ? replay.requestedTick : replay.tape.inputLog.durationTicks + 18_000;
+    void driver.advance(target, replay.skipWave ?? undefined).then((reply) => {
+      const current = this.runTapeReplay;
+      if (!current || current.trueDriver !== driver) return;
+      current.requestPending = false;
+      current.snapshot = reply.snapshot ?? current.snapshot;
+      current.winding = false;
+      if (current.skipWave !== null && (current.snapshot?.wave ?? 0) >= current.skipWave) {
+        current.skipWave = null;
+        current.requestedTick = current.snapshot?.tick ?? current.requestedTick;
+        this.loop.setTimeScale(current.speed);
+      }
+      if (reply.result) {
+        current.hash = reply.result.eventLogHash;
+        current.complete = true;
+        current.skipWave = null;
+        this.state.setPaused(true);
+        this.loop.setTimeScale(1);
+      } else if (!this.state.isPaused && (current.skipWave !== null || current.requestedTick > (current.snapshot?.tick ?? 0))) {
+        this.pumpTrueRunTapeReplay();
+      }
+      this.syncLanternShow();
+    }).catch((error) => {
+      if (this.runTapeReplay?.trueDriver === driver) this.failTrueRunTapeReplay(error);
+    });
+  }
+
+  private failTrueRunTapeReplay(error: unknown): void {
+    console.error('[lantern-show] true replay failed', error);
+    const replay = this.runTapeReplay;
+    if (!replay) return;
+    replay.requestPending = false;
+    replay.winding = false;
+    replay.complete = true;
+    this.state.setPaused(true);
     this.syncLanternShow();
   }
 
@@ -7023,6 +7137,7 @@ export class Game {
   private finishRunTapeReplayIfComplete(): boolean {
     const replay = this.runTapeReplay;
     if (!replay || replay.complete) return false;
+    if (replay.trueDriver) return false;
     if (replay.skipWave !== null && this.waveSystem.diagnostics.wave >= replay.skipWave) {
       replay.skipWave = null;
       this.loop.setTimeScale(replay.speed);
@@ -7067,6 +7182,7 @@ export class Game {
     this.state.setPaused(paused);
     this.loop.setTimeScale(replay.speed);
     this.syncLanternShow();
+    if (!paused) this.pumpTrueRunTapeReplay();
   }
 
   private setRunTapeReplaySpeed(speed: 1 | 2 | 4): void {
@@ -7081,15 +7197,23 @@ export class Game {
   private skipRunTapeReplayWave(): void {
     const replay = this.runTapeReplay;
     if (!replay || replay.complete) return;
-    replay.skipWave = this.waveSystem.diagnostics.wave + 1;
+    replay.skipWave = (replay.snapshot?.wave ?? this.waveSystem.diagnostics.wave) + 1;
     this.state.setPaused(false);
     this.loop.setTimeScale(16);
     this.syncLanternShow();
   }
 
   private restartRunTapeReplay(): void {
-    const tape = this.runTapeReplay?.tape;
+    const current = this.runTapeReplay;
+    const tape = current?.tape;
     if (!tape) return;
+    if (current.trueDriver) {
+      current.trueDriver.dispose();
+      this.state.setPaused(false);
+      this.loop.setTimeScale(1);
+      this.startTrueRunTapeReplay(tape);
+      return;
+    }
     this.runTapeReplay = null;
     this.loop.setTimeScale(1);
     this.mpLocalSlot = 0;
@@ -7103,9 +7227,9 @@ export class Game {
     const primary = replay.sessions.get(replay.tape.inputLog.primarySlot);
     const status = primary?.status();
     const state: LanternShowState = {
-      tick: Math.min(status?.tick ?? 0, replay.tape.inputLog.durationTicks),
+      tick: Math.min(replay.snapshot?.tick ?? status?.tick ?? 0, replay.tape.inputLog.durationTicks),
       durationTicks: replay.tape.inputLog.durationTicks,
-      wave: this.waveSystem.diagnostics.wave,
+      wave: replay.snapshot?.wave ?? this.waveSystem.diagnostics.wave,
       paused: !replay.complete && this.state.isPaused,
       speed: replay.speed,
       skipping: replay.skipWave !== null,
@@ -7114,6 +7238,9 @@ export class Game {
       expectedHash: replay.tape.eventLogHash,
       agentTape: replay.agentTape,
       divergedAtWave: replay.divergedAtWave,
+      snapshot: replay.snapshot,
+      winding: replay.winding,
+      eraRefusal: replay.eraRefusal,
     };
     this.lanternShow.update(state);
   }

@@ -21,51 +21,157 @@ export type AgentTapeReplayResult = {
   engine: 'headless-contract-sim';
 };
 
+export type AgentTapeReplaySnapshot = {
+  tick: number;
+  wave: number;
+  timeAlive: number;
+  gold: number;
+  hero: { x: number; z: number; hp: number; maxHp: number; alive: boolean };
+  rider: { x: number; z: number } | null;
+  enemies: Array<{ id: number; kind: string; x: number; z: number; hp: number; maxHp: number; alive: boolean }>;
+  works: Array<{ id: string; index: number; x: number; z: number; hp: number; maxHp: number; wrecked: boolean }>;
+};
+
 export type AgentTapeReplayOptions = {
   traceEvery?: number;
   onTrace?: (trace: { step: number; tick: number; hash: string }) => void;
 };
 
 export async function replayAgentTape(rawTape: unknown, options: AgentTapeReplayOptions = {}): Promise<AgentTapeReplayResult> {
-  const tape = validateRunTape(withoutEngineHash(rawTape));
-  if (!tape) throw new Error('malformed tape');
-  if (tape.simVersion !== RUN_TAPE_SIM_VERSION) throw new Error('sim version mismatch');
-  if (!tape.runStart) throw new Error('legacy tape v1 is unverifiable');
-  if (tape.inputLog.streams.length > 0) throw new Error('an agent tape carries no additional streams');
-
-  applyDifficultyPreset(normalizeDifficultyPreset(tape.difficulty));
-
-  const sim = bootDeclaredRun(tape);
-  const orders = ordersByTick(tape);
-  const applied = new Set<number>();
+  const replay = new AgentTapeReplaySession(rawTape);
   let steps = 0;
-  while (!sim.isTerminal && steps < tape.inputLog.durationTicks + FROZEN_STEP_ALLOWANCE) {
-    const tick = sim.replayTick;
-    if (!applied.has(tick)) {
-      for (const order of orders.get(tick) ?? []) sim.submitOrders(order);
-      applied.add(tick);
-    }
+  while (!replay.complete && steps < replay.durationTicks + FROZEN_STEP_ALLOWANCE) {
     if (options.traceEvery && steps % options.traceEvery === 0) {
-      options.onTrace?.({ step: steps, tick, hash: sim.tickHash(steps) });
+      options.onTrace?.({ step: steps, tick: replay.tick, hash: replay.tickHash(steps) });
     }
-    sim.advanceOneTick();
+    replay.advanceOneTick();
     steps += 1;
   }
-  if (!sim.isTerminal) throw new Error(`tape ran out after ${steps} steps with the run still alive`);
-  const unreached = [...orders.keys()].filter((tick) => !applied.has(tick));
-  if (unreached.length) throw new Error(`the run ended before tick ${unreached[0]} of the order stream`);
-  const outcome = sim.outcome();
-  return {
-    eventLogHash: agentOrdersEventLogHash(sim.standingOrdersSnapshot()),
-    outcome: {
-      secured: outcome.secured,
-      waves: outcome.waves,
-      gold: outcome.gold,
-      timeAlive: outcome.timeMs / 1000,
-    },
-    ticks: steps,
-    engine: 'headless-contract-sim',
-  };
+  return replay.result();
+}
+
+export class AgentTapeReplaySession {
+  readonly durationTicks: number;
+  private readonly sim: HeadlessContractSim;
+  private readonly orders: Map<number, unknown[]>;
+  private readonly applied = new Set<number>();
+  private readonly recentEnemies = new Map<number, AgentTapeReplaySnapshot['enemies'][number] & { lastSeen: number }>();
+  private steps = 0;
+
+  constructor(rawTape: unknown) {
+    const tape = validateRunTape(withoutEngineHash(rawTape));
+    if (!tape) throw new Error('malformed tape');
+    if (tape.simVersion !== RUN_TAPE_SIM_VERSION) throw new Error('sim version mismatch');
+    if (!tape.runStart) throw new Error('legacy tape v1 is unverifiable');
+    if (tape.inputLog.streams.length > 0) throw new Error('an agent tape carries no additional streams');
+
+    applyDifficultyPreset(normalizeDifficultyPreset(tape.difficulty));
+    this.durationTicks = tape.inputLog.durationTicks;
+    this.sim = bootDeclaredRun(tape);
+    this.orders = ordersByTick(tape);
+  }
+
+  get tick(): number { return this.sim.replayTick; }
+  get complete(): boolean { return this.sim.isTerminal; }
+  tickHash(step = this.steps): string { return this.sim.tickHash(step); }
+
+  advanceOneTick(): void {
+    if (this.complete) return;
+    const tick = this.tick;
+    if (!this.applied.has(tick)) {
+      for (const order of this.orders.get(tick) ?? []) this.sim.submitOrders(order);
+      this.applied.add(tick);
+    }
+    this.sim.advanceOneTick();
+    this.steps += 1;
+  }
+
+  advanceTo(targetTick: number, stopAfterWave?: number): AgentTapeReplaySnapshot {
+    const ceiling = this.durationTicks + FROZEN_STEP_ALLOWANCE;
+    while (!this.complete && this.tick < targetTick && this.steps < ceiling) {
+      this.advanceOneTick();
+      if (stopAfterWave !== undefined && this.snapshot().wave >= stopAfterWave) break;
+    }
+    return this.snapshot();
+  }
+
+  snapshot(): AgentTapeReplaySnapshot {
+    const internal = this.sim as unknown as {
+      hero: { group: { position: { x: number; z: number } }; hp: number; maxHp: number };
+      prospector: { snapshot: { position: { x: number; z: number } } };
+      enemies: { all: Array<{
+        id: number; isAlive: boolean; currentHp: number; maxHp: number; position: { x: number; z: number };
+        variantId: string | null; variantLabel: string | null; eliteKind: string | null; isThief: boolean; isWrecker: boolean;
+      }> };
+      build: { diagnostics: { hp: AgentTapeReplaySnapshot['works'] extends Array<infer T> ? Array<T & { position: { x: number; z: number } }> : never } };
+      economy: { gold: number };
+      waves: { diagnostics: { wave: number } };
+      timeAlive: number;
+    };
+    const aliveIds = new Set<number>();
+    for (const enemy of internal.enemies.all) {
+      if (!enemy.isAlive) continue;
+      aliveIds.add(enemy.id);
+      this.recentEnemies.set(enemy.id, {
+        id: enemy.id,
+        kind: enemy.variantLabel ?? enemy.variantId ?? enemy.eliteKind ?? (enemy.isWrecker ? 'wrecker' : enemy.isThief ? 'thief' : 'claim_jumper'),
+        x: enemy.position.x,
+        z: enemy.position.z,
+        hp: enemy.currentHp,
+        maxHp: enemy.maxHp,
+        alive: true,
+        lastSeen: this.tick,
+      });
+    }
+    for (const [id, enemy] of this.recentEnemies) {
+      if (!aliveIds.has(id) && enemy.alive) this.recentEnemies.set(id, { ...enemy, hp: 0, alive: false });
+      if (!aliveIds.has(id) && this.tick - enemy.lastSeen > 15) this.recentEnemies.delete(id);
+    }
+    return {
+      tick: this.tick,
+      wave: internal.waves.diagnostics.wave,
+      timeAlive: internal.timeAlive,
+      gold: internal.economy.gold,
+      hero: {
+        x: internal.hero.group.position.x,
+        z: internal.hero.group.position.z,
+        hp: internal.hero.hp,
+        maxHp: internal.hero.maxHp,
+        alive: internal.hero.hp > 0,
+      },
+      rider: internal.prospector?.snapshot?.position
+        ? { x: internal.prospector.snapshot.position.x, z: internal.prospector.snapshot.position.z }
+        : null,
+      enemies: [...this.recentEnemies.values()].map(({ lastSeen: _lastSeen, ...enemy }) => enemy),
+      works: internal.build.diagnostics.hp.map((work) => ({
+        id: work.id,
+        index: work.index,
+        x: work.position.x,
+        z: work.position.z,
+        hp: work.hp,
+        maxHp: work.maxHp,
+        wrecked: work.wrecked,
+      })),
+    };
+  }
+
+  result(): AgentTapeReplayResult {
+    if (!this.complete) throw new Error(`tape ran out after ${this.steps} steps with the run still alive`);
+    const unreached = [...this.orders.keys()].filter((tick) => !this.applied.has(tick));
+    if (unreached.length) throw new Error(`the run ended before tick ${unreached[0]} of the order stream`);
+    const outcome = this.sim.outcome();
+    return {
+      eventLogHash: agentOrdersEventLogHash(this.sim.standingOrdersSnapshot()),
+      outcome: {
+        secured: outcome.secured,
+        waves: outcome.waves,
+        gold: outcome.gold,
+        timeAlive: outcome.timeMs / 1000,
+      },
+      ticks: this.steps,
+      engine: 'headless-contract-sim',
+    };
+  }
 }
 
 function withoutEngineHash(tape: unknown): unknown {
