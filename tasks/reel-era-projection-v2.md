@@ -14,6 +14,15 @@ READ FIRST: AGENTS.md; **`reviews/reel-era-projection.md`** (the v1 gate — REA
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): standard safe-dupe (ahead content on main = SAFE DUPE → `git checkout -B lane/d main && git clean -fd`, PROCEED; STOP on unmerged ahead content or foreign edits). ⚠️ **THIS LANE IS AHEAD WITH UNMERGED CONTENT ON PURPOSE — `5518d9a04` is the held v1.** That is the one case the safe-dupe wording tells you to STOP on. **You are explicitly authorised to reset over it**, because it is preserved: this master names its hash, the review file names its hash, and the drain that held it left it unmerged deliberately. Cherry-pick or diff from it first (`git diff main...5518d9a04`), THEN reset. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1)** and the **FACTORY-CHURN EXCEPTION (F-1407-1): `logs/**`, `artifacts/**`, `reviews/shots-*`, any `.png` — always expected, never a STOP; list and proceed.** Then `npm install --no-audit --no-fund`; `npm run build` green.
 
+🔓 **LANE-SAFETY DECLARATION (added s2377, F-2377-2 — this is the machine-readable form of the authorisation the pre-flight above already gives you in prose).** The runner's F-2089-1 guard refuses a dispatch over a lane that HOLDS undrained paths unless the master proves its author knew exactly what was there. This master does: the five paths below ARE the held v1 (`5518d9a04`), they are named in `reviews/reel-era-projection.md`, and they are preserved on TWO refs (`lane/d` and `archive/s2375-agent-reels-contract-cure`, whose parent is that very commit) so the reset this master authorises cannot orphan them.
+
+LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
+EXPECTED-HOLDS: e2e/agent-reels.spec.ts
+EXPECTED-HOLDS: functions/api/standings.ts
+EXPECTED-HOLDS: reviews/shots-reel-era/desktop-chrome-plain-boot-playing.png
+EXPECTED-HOLDS: reviews/shots-reel-era/mobile-chrome-plain-boot-playing.png
+EXPECTED-HOLDS: scripts/test-standings.mjs
+
 ## Why
 
 EH-3 shipped the honest projectionist but the public board strips a reel's era papers, so the show refuses everything fail-closed. v1 fixed that correctly and was held for exactly two things, both proven with a control:
