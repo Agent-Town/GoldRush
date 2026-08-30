@@ -43,13 +43,29 @@ test('agent reel validation reuses the door bounds and CLI tape content stays de
       request: new Request(`http://localhost/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${eraTape.id}`),
       env: { TELEMETRY: kv },
     });
-    // F-2308-1 (s2308): the stored tape keeps `era` (see the row above), but the PUBLIC projection
-    // strips it along with `engineHash`. v3's §7.4 ruling retained `era` here and this assertion
-    // was written for that ruling; the ruling is vetoed on measured evidence, so this mirrors the
-    // veto. It is deliberately identical to `scripts/test-standings.mjs:111`, which asserts the
-    // same shape as a CONTRACT with `src/game/RunTape.ts:350` — under v3's ruling these two
-    // assertions directly contradicted each other and could not both pass.
-    assert.deepEqual((await response.json()).reel.meta, { buildId: 'abcdef12' });
+    // F-2308-1 (s2308) is RETIRED here by EH-3/EH-3b — recorded, not erased. That veto stripped
+    // `engineHash`/`era` from this projection because `validateTapeMeta` in `src/game/RunTape.ts`
+    // is an exact-key allowlist over ['buildId'] and was reached DIRECTLY by the browser reader:
+    // a projected `era` made `validateRunTape` return null and every node-produced WATCH reel
+    // unplayable. EH-3 (s2374) interposed `validateAgentRunTape`, which pre-strips meta to
+    // { buildId } before that allowlist and re-attaches the era identity afterwards — so the
+    // measured harm is gone and the veto's own named follow-up (`engine-era-browser-stamp`) is
+    // satisfied. The stored tape still keeps era (see the row above); the projection now carries
+    // the PUBLIC era identity only.
+    // This is a CONTRACT, not a mirror: it asserts the projection against the REAL browser reader
+    // instead of restating the projection's own shape, so it reds if EITHER side moves alone —
+    // which is precisely the failure the veto was protecting against.
+    // Keep this projection contract paired with scripts/test-standings.mjs.
+    const publicMeta = { buildId: 'abcdef12', engineHash: 'a'.repeat(64), era: 3 };
+    const body = await response.json();
+    assert.deepEqual(body.reel.meta, publicMeta);
+    const { validateAgentRunTape } = await vite.ssrLoadModule('/src/ui/LanternShow.ts');
+    const read = validateAgentRunTape(body.reel);
+    assert.ok(read, 'the browser reader accepts the public WATCH projection');
+    assert.deepEqual(read.meta, publicMeta, 'and it preserves the era identity the show checks');
+    const bareMeta = { buildId: 'abcdef12' };
+    assert.deepEqual(validateAgentRunTape({ ...body.reel, meta: { ...bareMeta, engineHash: 'a'.repeat(64) } })?.meta, bareMeta, 'browser reader keeps a half-stamped reel honestly unstamped');
+    assert.deepEqual(validateAgentRunTape({ ...body.reel, meta: bareMeta })?.meta, bareMeta, 'browser reader accepts buildId-only reels');
   } finally {
     await vite.close();
   }

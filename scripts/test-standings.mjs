@@ -105,11 +105,12 @@ function checkTapeBuildMetadata(validateTape) {
 
 async function checkEngineHashReel(onRequest) {
   const kv = makeKv();
-  const runTape = { ...tapeV2('engine-reel', 1), meta: { buildId: 'abcdef12', engineHash: 'a'.repeat(64) } };
+  const runTape = { ...tapeV2('engine-reel', 1), meta: { buildId: 'abcdef12', engineHash: 'a'.repeat(64), era: 4 } };
   equal((await call(onRequest, 'POST', '/api/standings', post('e'.repeat(32), 1, runTape), kv)).status, 200, 'engine tape is stored');
   equal(JSON.parse(await kv.get(KEY))[0].tape.meta.engineHash, 'a'.repeat(64), 'worker identity stays stored');
   const response = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=engine-reel', undefined, kv);
-  equal(response.body.reel.meta, { buildId: 'abcdef12' }, 'public WATCH reel stays compatible with the shared browser validator');
+  // Keep this projection contract paired with scripts/agent-reels.test.mjs.
+  equal(response.body.reel.meta, runTape.meta, 'public WATCH reel carries its era identity');
 }
 
 async function checkAssayIndexRace(onRequest, queueRoute) {
