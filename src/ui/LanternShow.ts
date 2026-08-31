@@ -270,13 +270,16 @@ export class LanternShow {
     }
     const status = this.root.querySelector<HTMLOutputElement>('[data-testid="lantern-playback-status"]');
     if (status) {
+      const vitals = state.snapshot
+        ? ` · Gold ${Math.round(state.snapshot.gold)} · Keeper ${Math.max(0, Math.round(state.snapshot.hero.hp))}/${Math.round(state.snapshot.hero.maxHp)} HP`
+        : '';
       status.textContent = state.complete
         ? state.agentTape
           ? state.eraRefusal
             ? 'Reel refused · recorded outcome retained'
             : `Reel ended · ${state.hash === state.expectedHash ? 'hash matched in this browser' : 'hash mismatch'}`
           : `Reel ended · ${state.hash === state.expectedHash ? 'replay matched' : 'replay differed'}`
-        : `${formatTime(state.tick * PLAYBOOK_STEP_SECONDS)} / ${formatTime(state.durationTicks * PLAYBOOK_STEP_SECONDS)} · wave ${state.wave}${state.winding ? ' · winding the reel' : state.skipping ? ' · finding next wave' : ''}`;
+        : `${formatTime(state.tick * PLAYBOOK_STEP_SECONDS)} / ${formatTime(state.durationTicks * PLAYBOOK_STEP_SECONDS)} · wave ${state.wave}${vitals}${state.winding ? ' · winding the reel' : state.skipping ? ' · finding next wave' : ''}`;
       status.dataset.hash = state.hash ?? '';
       status.dataset.expectedHash = state.expectedHash;
     }
@@ -285,6 +288,11 @@ export class LanternShow {
     this.card.hidden = !state.complete && !annotation;
     if (state.complete) {
       const refusal = state.eraRefusal;
+      this.card.style.pointerEvents = refusal ? 'auto' : '';
+      this.card.style.width = refusal ? 'min(480px, 82vw)' : '';
+      this.card.style.padding = refusal ? '16px' : '';
+      this.card.style.fontSize = refusal ? 'clamp(15px, 2.3vw, 20px)' : '';
+      this.card.style.overflowWrap = refusal ? 'anywhere' : '';
       const refusalReason = refusal?.tapeEra === null
         ? `This reel does not announce an engine era. The county cannot prove it belongs to era ${refusal.currentEra}.`
         : refusal && refusal.tapeEra === refusal.currentEra
@@ -299,8 +307,14 @@ export class LanternShow {
         : state.hash === state.expectedHash
           ? 'Replay matched this browser recording.'
           : 'Replay differed from this browser recording.';
-      this.card.innerHTML = `<strong>RECORDED OUTCOME</strong><br>${outcomeLabel(this.tape)}<br>Wave ${Math.floor(this.tape.outcome.waves)} · ${escapeHtml(this.tape.eventLogHash)}<br>${escapeHtml(ending)}`;
+      const card = `<strong>RECORDED OUTCOME</strong><br>${outcomeLabel(this.tape)}<br>Wave ${Math.floor(this.tape.outcome.waves)} · ${escapeHtml(this.tape.eventLogHash)}<br>${escapeHtml(ending)}${refusal ? '<br><button type="button" data-lantern-action="close" data-testid="lantern-refusal-close" style="margin-top:12px;background:#c4883a">Back to shelf</button>' : ''}`;
+      if (this.card.innerHTML !== card) this.card.innerHTML = card;
     } else {
+      this.card.style.pointerEvents = '';
+      this.card.style.width = '';
+      this.card.style.padding = '';
+      this.card.style.fontSize = '';
+      this.card.style.overflowWrap = '';
       this.card.textContent = annotation?.text ?? '';
     }
   }
@@ -336,7 +350,6 @@ export class LanternShow {
       <g data-replay-entity="hero" data-alive="${snapshot.hero.alive}"><circle cx="${hero.x}" cy="${hero.y}" r="1" fill="#c4883a" stroke="#fff8e8" stroke-width=".22" /><title>Claim Keeper · ${snapshot.hero.alive ? 'alive' : 'dead'} · ${snapshot.hero.hp}/${snapshot.hero.maxHp} HP</title></g>
       ${rider ? `<g data-replay-entity="rider"><path d="M ${rider.x} ${rider.y - 1.15} L ${rider.x + 1.15} ${rider.y} L ${rider.x} ${rider.y + 1.15} L ${rider.x - 1.15} ${rider.y} Z" fill="#83ded7" stroke="#2e1b0e" stroke-width=".22" /><title>Prospector rider</title></g>` : ''}
     </svg>
-    <p data-testid="lantern-true-hud" style="position:absolute;top:126px;left:50%;transform:translateX(-50%);margin:0;padding:6px 12px;border:1px solid #c4883a;background:rgba(46,27,14,.88);white-space:nowrap">Gold ${Math.round(snapshot.gold)} · Wave ${snapshot.wave} · Keeper ${Math.max(0, Math.round(snapshot.hero.hp))}/${Math.round(snapshot.hero.maxHp)} HP</p>
     <p data-testid="lantern-truth-placeholders" style="position:absolute;left:30px;bottom:96px;margin:0;padding:5px 8px;background:rgba(46,27,14,.84);font-size:12px">Honest placeholders: Claim Keeper dot · Prospector diamond · enemy ring · work block</p>`;
   }
 
@@ -349,7 +362,10 @@ export class LanternShow {
 
   private readonly onClick = (event: MouseEvent) => {
     const target = (event.target as HTMLElement).closest<HTMLElement>('[data-lantern-action], [data-lantern-speed]');
-    if (!target) return;
+    if (!target) {
+      if (this.state.eraRefusal && !this.card.contains(event.target as Node)) this.actions.close();
+      return;
+    }
     const speed = Number(target.dataset.lanternSpeed);
     if (speed === 1 || speed === 2 || speed === 4) return this.actions.speed(speed);
     if (target.dataset.lanternAction === 'pause') return this.actions.pause(!this.state.paused);

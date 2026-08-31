@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 import { onRequest as standingsRoute } from '../functions/api/standings';
 import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
@@ -58,11 +59,11 @@ function request(method: 'GET' | 'POST', query = '', body?: unknown): Request {
 // the season-roll fixtures in scripts/test-standings.mjs. `tapeless()` below is the deliberate
 // exception, for the one test whose subject IS a row with no tape.
 const RUN_START = {
-  meta: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+  meta: { version: 1 as const, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
   research: {
-    version: 1,
-    progress: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
-    taken: [],
+    version: 1 as const,
+    progress: { version: 1 as const, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+    taken: [] as string[],
     proposalSalt: 0,
     pinnedTarget: null,
   },
@@ -74,7 +75,7 @@ function v2Tape(id: string, seed: string | undefined, waves: number, timeAlive: 
   const seedField = seed === undefined ? {} : { seed };
   return {
     version: 2, id, createdAt: 1, kept: true, contract: 'the-claim', ...seedField, difficulty: 'trail',
-    simVersion: 1, runStart: RUN_START,
+    simVersion: 1, meta: { buildId: 'abcdef12', engineHash: engineEra.engineHash, era: engineEra.era }, runStart: RUN_START,
     inputLog: {
       version: 1, name: id, contractId: 'the-claim', ...seedField, difficultyPreset: 'trail',
       stepSeconds: 1 / 30, start: { x: 0, z: 12 }, durationTicks: 1, entries: [], truncated: null,
@@ -124,7 +125,7 @@ async function board(kv: MockKV, query: string): Promise<{ status: number; body:
 
 function fixtureTape(id: string, simVersion: number): RunTape {
   return {
-    version: 1,
+    version: 2,
     id,
     createdAt: 1,
     kept: false,
@@ -132,6 +133,8 @@ function fixtureTape(id: string, simVersion: number): RunTape {
     seed: 'gold-rush',
     difficulty: 'trail',
     simVersion,
+    meta: { buildId: 'abcdef12', engineHash: engineEra.engineHash, era: engineEra.era } as RunTape['meta'],
+    runStart: RUN_START,
     inputLog: {
       version: 1,
       name: id,

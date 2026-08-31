@@ -63,7 +63,7 @@ test('the landed registry names the live engine and stays outside its hash corpu
     assert.ok(path.relative(input, REGISTRY).startsWith('..'), `${REGISTRY} must stay outside ${input}`);
   }
   const registry = await assertCurrentEra(ROOT);
-  assert.equal(registry.era, 4);
+  assert.equal(registry.era, 5);
 
   const [grSim, replay, worker] = await Promise.all([
     readFile(path.join(ROOT, 'scripts/gr-sim.mjs'), 'utf8'),

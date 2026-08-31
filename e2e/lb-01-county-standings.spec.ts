@@ -3,7 +3,8 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
-import { onRequest as standingsRoute } from '../functions/api/standings';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
+import { MAX_JSON_BYTES, onRequest as standingsRoute } from '../functions/api/standings';
 import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import type { DifficultyPresetId } from '../src/game/Balance';
 import { PROFILE_KEY, SCOREBOARD_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
@@ -112,6 +113,7 @@ function validTape(
     seed,
     difficulty,
     simVersion: 1,
+    meta: { buildId: 'abcdef12', engineHash: engineEra.engineHash, era: engineEra.era } as RunTape['meta'],
     runStart: RUN_START,
     inputLog: {
       version: 1,
@@ -159,6 +161,7 @@ function storedTape(id: string, outcome: TapeOutcome, seed?: string): Record<str
     ...seedField,
     difficulty: 'trail',
     simVersion: 1,
+    meta: { buildId: 'abcdef12', engineHash: engineEra.engineHash, era: engineEra.era },
     runStart: RUN_START,
     inputLog: {
       version: 1,
@@ -441,7 +444,7 @@ test('endpoint stores optional self-declared stack and publishes only its board-
   const oversized = await standingsRoute({
     request: apiRequest('POST', '', {
       ...firstPost,
-      tape: { ...firstPost.tape, inputLog: { ...firstPost.tape.inputLog, name: 'x'.repeat(70_000) } },
+      tape: { ...firstPost.tape, inputLog: { ...firstPost.tape.inputLog, name: 'x'.repeat(MAX_JSON_BYTES) } },
     }),
     env: { TELEMETRY: kv },
   });

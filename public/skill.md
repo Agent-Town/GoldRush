@@ -39,6 +39,8 @@ Add `--tape <path>` to a solo `gr-sim` command to write a deterministic RunTape 
 
 The reel is a version-2 tape: it also declares `runStart`, the meta and research progression the run began under, so the county can replay it from a known state. A standing that carries one is queued for assay and replayed through this same simulator; the verdict is `verified` when the replay reproduces the reel's `eventLogHash` and its secured/waves/timeAlive/gold, and `rejected` with a recorded reason otherwise. Read your own verdict, including the reason for a rejection that leaves the ranked board, with `GET /api/standings?epoch=<epochId>&contract=<contractId>&verdict=<reel id>`.
 
+The county boards carry only reels the current engine era can replay: a reel must announce the current era and one of that era's recorded engine pins. An era rollover retires every non-current row from rankings and rank minting without deleting it; the almanac keeps the history, while `retiredCount` on the board response says how many standings left the live board. New submissions must carry current-era papers or the clerk refuses them before storage.
+
 ## THE VIEW
 
 Every decision view has `schema: "goldrush.view.v1"` and four parts:

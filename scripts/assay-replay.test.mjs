@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import { createServer } from 'vite';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 
 test('rob\'s v1 live reel is retained but reported as unverifiable legacy', () => {
   const fixturePath = 'scripts/fixtures/assay/rob-the-claim-reel.json';
@@ -61,7 +62,7 @@ test('a securing door tape carries its start, its boundary answer, and replays t
     assert.equal(tape.version, 2);
     assert.equal(typeof tape.meta?.buildId, 'string', 'the door records which checkout built its tape');
     assert.match(tape.meta?.engineHash, /^[a-f0-9]{64}$/, 'the door records the engine content it ran');
-    assert.equal(tape.meta?.era, 4, 'the door records the announced engine era');
+    assert.equal(tape.meta?.era, engineEra.era, 'the door records the announced engine era');
     assert.deepEqual(tape.runStart.meta, { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } });
     assert.deepEqual(tape.runStart.research.taken, []);
     assert.equal(tape.runStart.research.version, 1);
