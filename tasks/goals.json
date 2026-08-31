@@ -3062,6 +3062,15 @@
               "liftedNote": "gate-side hold SATISFIED (not waived) and lifted in the same fire as the merge, per fire.md 3.0's blockClass rule and the two-commit sequence of F-1384-1. The stated lift condition was \"reel-era-projection-v2 landing both cures\"; both were re-measured independently by the draining fire on its own merged tree rather than inherited from the gate: F-2376-1's exact suite scripts/agent-reels.test.mjs 1/1 pass, and its mirrored pair scripts/test-standings.mjs kv 173 / sqlite 173. blockedReason above is the historical record of the hold, retained deliberately."
             },
             {
+              "id": "era-pin-lineage",
+              "title": "An era is its lineage, not its latest pin - the registry carries per-era pins; the show and the worker honor era membership; the owner's refused crown reel is the gate",
+              "taskFile": "era-pin-lineage.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-08-31",
+              "note": "Owner screenshots 2026-08-31: the show refused the era-4 crown reel against the era-4 engine (same era, different pins - the reel-papers merge re-pinned within era 4 per F-1441-3, and both consumers compare raw hashes against the doctrine). Gate: the exact refused reel (d5b04061 pin) plays and hash-matches."
+            },
+            {
               "id": "reel-era-projection-v2",
               "title": "EH-3b re-land: the WATCH reel carries its era papers AND the half-stamped reel keeps its honest refusal (cures F-2376-1 + F-2376-2)",
               "taskFile": "reel-era-projection-v2.md",
