@@ -82,6 +82,62 @@
  * for the defect could not see the defect. It now pins the refusal's reason, and that same defect
  * reds arms 2 and 3. SAME ROOT CAUSE AS THE MAIN FINDING: an exit code alone is an ambiguous
  * observable in a tool with three of them -- assert the MESSAGE, not just the number.
+ *
+ * ---------------------------------------------------------------------------------------------
+ * F-2402-1 (s2402) — THOSE THREE CURED ARMS ARE EXERCISED ONLY BY LUCK OF THE BOARD, AND ON A
+ * FIRE THAT ARCHIVES AT LOCK TIME THEY CERTIFY NOTHING ABOUT THE CURE.
+ *
+ * Arms 1, 6 and 8 read the LIVE board by design -- this header says so itself, in the sentence
+ * ending "except the three that are ABOUT the live board" (cite the CONTENT; coordinates drift,
+ * and this very amendment moved every line below it). Their rc therefore
+ * depends on a choice each fire makes about its OWN lock commit: §4's normal pattern drops the
+ * predecessor's line-1 and restores it at handoff (audit -> rc=1, the state the cure is for),
+ * but a fire may instead archive the predecessor IN the lock commit (audit -> rc=0, no window).
+ *
+ * MEASURED s2402 BY MANUFACTURING, on a board of the second kind: the PRE-CURE guard restored
+ * verbatim -- `assert.equal(rc, 0)` on arms 1, 6 and 8, i.e. F-2401-1's defect itself -- passes
+ * 8 of 8 GREEN. Control asserted its own validity first (F-2215-1): the relocated copy really
+ * ran all 8 arms, 26.5 s, beside a copy of the tool so `import.meta.url` still resolved its
+ * subject. So on ~25% of fires the cure and the defect are INDISTINGUISHABLE here.
+ *
+ * SEVERITY, STATED HONESTLY AND DELIBERATELY NOT INFLATED: the cure is CORRECT and s2401 proved
+ * it with five scratch variants; nothing is wrong with the assertions and nothing was ever
+ * wrongly certified. This is not a false green about the factory's work. What earns it an arm is
+ * that an assertion whose EXERCISE depends on the live board is an INTERMITTENT gate -- reds on
+ * ~75% of fires, green on the rest -- which is F-2320-1's disease ("the cost is a gate you cannot
+ * trust") feeding F-1460-1's decay path, the very path F-2401-1 was written to close.
+ *
+ * ⚠️ AND IT MISREADS AN INHERITED INSTRUCTION, which is the half worth carrying: s2401's handoff
+ * told its successor "when you run test:ledger-guards mid-fire it should now be GREEN while you
+ * hold the lock". That is TRUE, and its converse is not -- a green is byte-compatible with the
+ * uncured code on a board like s2402's, so a fire reading the green as confirmation would report
+ * a cure verified on evidence that says nothing about it. A PREDICTION IS ONLY EVIDENCE IF THE
+ * BOARD IT IS READ ON CAN FALSIFY IT.
+ *
+ * CURE: arm 9 pins the cure's SEMANTICS against the LOST fixture the file already owns, so the
+ * contract "rc=1 is a board verdict, never a misuse refusal" is asserted on EVERY fire regardless
+ * of which lock discipline that fire chose. It does NOT re-pin arms 1/6/8 -- those are about the
+ * live board on purpose, and making them fixture-backed would delete the smoke test of the real
+ * battery leg.
+ *
+ * TEETH for arm 9, every variant manufactured on scratch copies of the TOOL, each sitting beside
+ * a copy of the guard so `import.meta.url` still resolved its subject:
+ *   · a LOST board refused as misuse (rc=2) — F-2401-1's axis error, tool-side -> reds 7 and 9
+ *   · the `across N` denominator dropped                                       -> reds 1, 6 and 9
+ *   · `--limit` PRESENT and the board LOST refused as misuse                   -> reds 9 ALONE
+ *   · REVERSE CONTROL, a cosmetic no-op beside the same exit                   -> reds NOTHING
+ * The third is the one that earns the arm: arm 7 cannot see it (it never passes `--limit`) and
+ * arms 1/6/8 cannot see it on a CLEAN board, so on a fire like s2402 it is invisible to all eight.
+ *
+ * ⚠️ ONE PREDICTION CORRECTED, recorded because this streak's note is that reverse controls keep
+ * repricing what their author was surest of: I expected the FIRST variant to be arm 9's unique
+ * catch. Arm 7 catches it too. Arm 9's real contribution is the PRESCRIBED FORMS -- the battery
+ * leg's own `--limit 40 …` shapes -- against a LOST board, not LOST boards in general.
+ *
+ * ⓘ ONE THING THE FIXTURE CANNOT CARRY, found by checking what it makes reachable (F-2213-1)
+ * rather than by assuming: a 2-commit fixture has NO ok-excluded shapes, so `--all` prints the
+ * SAME 460 B as plain there. Arm 8's `--all > plain` size teeth are UNREACHABLE on it and are
+ * deliberately NOT duplicated into arm 9; arm 9 asserts only what the fixture can actually prove.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -218,4 +274,28 @@ test('8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure d
     `--all must still add the ok-excluded listing (plain ${plain.out.length} B vs --all ${all.out.length} B)`,
   );
   assert.match(all.out, /^ok-excluded /m, 'and that listing is what --all names');
+});
+
+// ------------------------------------------------- the cure's semantics, pinned board-INDEPENDENTLY
+
+test('9. TEETH — on a board that IS LOST, every prescribed form answers with 1 and never refuses as 2', () => {
+  // F-2402-1: arms 1, 6 and 8 meet this state only when the fire's own lock discipline happens to
+  // produce it (~75% of fires, s2401). This arm manufactures it, so the contract the F-2401-1 cure
+  // established -- rc=1 is a BOARD VERDICT, rc=2 is a MISUSE refusal, and they are not the same
+  // axis -- is exercised on every fire regardless of the board it runs on.
+  const root = fixtureWithOneDrop();
+  try {
+    for (const form of [['--limit', '40', '--quiet'], ['--limit', '40'], ['--limit', '40', '--all']]) {
+      const r = run(form, { GR_REPO: root });
+      const label = form.join(' ');
+      // F-2215-1: assert the arm REACHED the state it is about to measure. A fixture that silently
+      // stopped producing a LOST board would make every assertion below vacuous.
+      assert.match(r.out, /^LOST:/m, `${label}: the fixture must actually be LOST, or this arm proves nothing`);
+      assert.notEqual(r.rc, 2, `${label}: a LOST board is an ANSWER; refusing it as misuse is the F-2401-1 defect`);
+      assert.equal(r.rc, 1, `${label}: and the answer that refuses is exit 1`);
+      assert.match(r.out, /across \d+ STATUS\.md commits/, `${label}: the examined denominator stays declared (s2224)`);
+    }
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });
