@@ -6,11 +6,10 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import engineEra from '../assets/engine-era.json' with { type: 'json' };
-import { assertCanonicalAssayNode, computeEngineHash } from './assay-replay-agent.mjs';
+import { assertCanonicalAssayNode } from './assay-replay-agent.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 assertCanonicalAssayNode();
-const engineHash = await computeEngineHash(root);
 const buildId = process.env.ASSAY_BUILD_ID?.trim()
   || execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
 if (!/^[a-f0-9]{7,16}$/.test(buildId)) throw new Error('ASSAY_BUILD_ID must be a 7-16 character lowercase Git id');
@@ -88,13 +87,16 @@ async function assay(row) {
   const tapeEngineHash = typeof row?.tape?.meta?.engineHash === 'string' ? row.tape.meta.engineHash : null;
   const tapeEra = Number.isSafeInteger(row?.tape?.meta?.era) ? row.tape.meta.era : null;
   const tapeBuildId = typeof row?.tape?.meta?.buildId === 'string' ? row.tape.meta.buildId : null;
-  const engineSkew = tapeEngineHash !== null && tapeEngineHash !== engineHash;
+  const engineSkew = tapeEngineHash !== null
+    && (tapeEra !== engineEra.era || !engineEra.pins.some((pin) => pin.engineHash === tapeEngineHash));
   const buildSkew = tapeEngineHash === null && tapeBuildId !== null && !tapeBuildId.startsWith(buildId) && !buildId.startsWith(tapeBuildId);
   const identitySkew = engineSkew || buildSkew;
   if (engineSkew) {
     reason = tapeEra === null
       ? `engine era ${engineEra.era} '${engineEra.name}', tape from an unannounced era`
-      : `engine era ${engineEra.era} '${engineEra.name}', tape from era ${tapeEra}`;
+      : tapeEra !== engineEra.era
+        ? `engine era ${engineEra.era} '${engineEra.name}', tape from era ${tapeEra}`
+        : `engine era ${engineEra.era} '${engineEra.name}', tape claims unknown pin ${tapeEngineHash} in era ${tapeEra}`;
   } else if (buildSkew) {
     reason = `build-skew (tape ${tapeBuildId}, assayer ${buildId})`;
   }

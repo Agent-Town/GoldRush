@@ -284,9 +284,15 @@ export class LanternShow {
     const annotation = this.tape.annotations?.find((entry) => entry.atMs <= atMs && atMs < entry.atMs + 2500);
     this.card.hidden = !state.complete && !annotation;
     if (state.complete) {
+      const refusal = state.eraRefusal;
+      const refusalReason = refusal?.tapeEra === null
+        ? `This reel does not announce an engine era. The county cannot prove it belongs to era ${refusal.currentEra}.`
+        : refusal && refusal.tapeEra === refusal.currentEra
+          ? `This reel's engine pin is not recorded in era ${refusal.currentEra}'s lineage.`
+          : 'The county will not counterfeit one era with another.';
       const ending = state.agentTape
-        ? state.eraRefusal
-          ? `This reel rode era ${state.eraRefusal.tapeEra ?? 'unknown'} (${state.eraRefusal.tapeHash}). This engine is era ${state.eraRefusal.currentEra} (${state.eraRefusal.currentHash}). The county will not counterfeit one era with another.`
+        ? refusal
+          ? `This reel rode era ${refusal.tapeEra ?? 'unknown'} (${refusal.tapeHash}). This engine is era ${refusal.currentEra} (${refusal.currentHash}). ${refusalReason}`
           : state.hash === state.expectedHash
             ? `This ride was replayed and matched in this very browser: ${state.hash}.`
             : `REPLAY MISMATCH. The reel claims ${state.expectedHash}; this browser replayed ${state.hash ?? 'no hash'}.`

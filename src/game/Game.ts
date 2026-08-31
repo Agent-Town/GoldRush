@@ -7018,7 +7018,7 @@ export class Game {
 
   private startTrueRunTapeReplay(tape: RunTape): void {
     const meta = tape.meta as { buildId: string; engineHash?: string; era?: number } | undefined;
-    const eraRefusal = !meta?.engineHash || meta.engineHash !== engineEra.engineHash
+    const eraRefusal = !meta?.engineHash || meta.era !== engineEra.era || !engineEra.pins.some((pin) => pin.engineHash === meta.engineHash)
       ? { tapeHash: meta?.engineHash ?? `unstamped build ${meta?.buildId ?? 'unknown'}`, currentHash: engineEra.engineHash, tapeEra: meta?.era ?? null, currentEra: engineEra.era }
       : null;
     const driver = eraRefusal ? null : new BrowserAgentTapeReplay(tape);
