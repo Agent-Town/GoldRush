@@ -3062,6 +3062,15 @@
               "liftedNote": "gate-side hold SATISFIED (not waived) and lifted in the same fire as the merge, per fire.md 3.0's blockClass rule and the two-commit sequence of F-1384-1. The stated lift condition was \"reel-era-projection-v2 landing both cures\"; both were re-measured independently by the draining fire on its own merged tree rather than inherited from the gate: F-2376-1's exact suite scripts/agent-reels.test.mjs 1/1 pass, and its mirrored pair scripts/test-standings.mjs kv 173 / sqlite 173. blockedReason above is the historical record of the hold, retained deliberately."
             },
             {
+              "id": "era-five-replayed-board",
+              "title": "Era 5 'the Replayed Board' - the leaderboards carry only what replays on the current era (retired rows stay in storage + almanac), the era refusal never blocks the game, and the show gets a live gold/health HUD",
+              "taskFile": "era-five-replayed-board.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-08-31",
+              "note": "Owner ruling verbatim: lets fix this and make a new era - we don't need stuff in the leaderboards that does not get replayed. This message blocks me from viewing the game. It would also be good to see amount of gold and health during the replay. SEQUENCED after era-pin-lineage merges (hard gate in the master); queued behind it on lane-d."
+            },
+            {
               "id": "era-pin-lineage",
               "title": "An era is its lineage, not its latest pin - the registry carries per-era pins; the show and the worker honor era membership; the owner's refused crown reel is the gate",
               "taskFile": "era-pin-lineage.md",
