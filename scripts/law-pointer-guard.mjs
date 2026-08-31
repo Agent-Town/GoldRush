@@ -85,6 +85,26 @@ const SURFACES = LAW_SURFACES;
 const GOAL_LEDGER = 'tasks/goals.json';
 const DRAIN_GUARD = 'scripts/drain-block-check.mjs';
 
+// s2412 (F-2412-1): the `surfaces` headline was `SURFACES.length + 1` — a TRANSCRIBED literal,
+// standing for the goal ledger, which this file scans as a seventh corpus at the bottom of
+// collect(). It was CORRECT (6 + 1 = 7 really are scanned) and it moved no verdict; what was
+// wrong is that it is exactly the shape the SCAN_FAMILIES comment twenty lines below forbids in
+// its own words -- "derive from the file, never transcribe -- a hardcoded description is a
+// defect awaiting the next edit" -- and that the corpus it stood for was named NOWHERE in the
+// output. Measured s2412: `goals.json` appeared 0 times in stdout, at --report verbosity too,
+// and contributed 0 pointers, so a reader comparing "surfaces : 7" against a CLOSED six-entry
+// list could not resolve the discrepancy and could not discover the seventh by reading harder.
+// That is the fourth instance in this file's own lineage (F-2196-1 -> F-2197-1 -> F-2198-1 ->
+// F-2342-1), and the one number all four of those cures left transcribed: the FIRST one a
+// reader sees, in a declaration whose whole purpose is that the printed scan space cannot
+// drift from what was actually scanned.
+//
+// DELIBERATELY NOT WIDENED, and the restraint is measured rather than stylistic: the ledger is
+// scanned by a STRUCTURALLY DIFFERENT arm (it walks JSON blockedReason fields, not markdown),
+// so folding it into SURFACES would feed it to the markdown loop and break it. One derived
+// list for the COUNT and the NAMES; the scan arms are left exactly as they were.
+const SCANNED_SURFACES = [...SURFACES, GOAL_LEDGER];
+
 // s2197 (F-2197-1): SURFACES is a CLOSED, hand-maintained list. A law surface added to the
 // repo — a fourth skill, a new root .md — is invisible here until someone edits this file,
 // and nothing ever says so. That is the F-2196-1 shape one level up: this guard's header
@@ -407,7 +427,12 @@ for (const p of pointers) {
 }
 
 console.log('law-pointer-guard — do the law surfaces still point at what they claim?');
-console.log(`  surfaces      : ${SURFACES.length + 1}`);
+// F-2412-1: DERIVED from SCANNED_SURFACES, and the non-law-surface members are NAMED, because a
+// count a reader cannot decompose is a boundary only its author sees (F-2196-1). Printed ALWAYS,
+// including the happy path (F-2342-1's rule): a declaration that appears only when the set is
+// surprising re-creates the ambiguity it removes.
+const extraCorpora = SCANNED_SURFACES.filter((s) => !SURFACES.includes(s));
+console.log(`  surfaces      : ${SCANNED_SURFACES.length}  (${SURFACES.length} law surface(s)${extraCorpora.length ? ` + ${extraCorpora.join(', ')}` : ', no other corpus'})`);
 
 // ADVISORY, always exit-neutral. This declares the edge of the scan so a NEW law surface is
 // visible on the next run rather than after N days (F-2197-1, after F-2196-1).
