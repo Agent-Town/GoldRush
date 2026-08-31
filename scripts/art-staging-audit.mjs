@@ -145,8 +145,8 @@
  * at all. What IS cured here is free: the SALVAGED headline now prints its BYTES.
  */
 import { execFileSync } from 'node:child_process';
-import { readdirSync, statSync, existsSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { readdirSync, statSync, existsSync, readFileSync } from 'node:fs';
+import { join, relative, resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // fileURLToPath, not URL.pathname — the repo path contains a space ("Gold Rush")
@@ -189,25 +189,125 @@ const git = (...args) =>
 // question about rooting this audit in `test:ledger-guards`, by making the
 // answer permanently red.
 const WORKTREES_DIR = join(REPO, 'worktrees');
+
+// F-2406-1 (s2406): WHOSE GITDIR DOES AN UNOWNED TREE BORROW?
+//
+// CREDIT WHERE IT IS OWED, because this is not a new sighting: F-2196-1's comment
+// above records in passing that these trees' `.git` stubs "point at the LIVE
+// lanes' admin dirs", and **F-2404-1 (s2404) characterised it correctly one fire
+// earlier** — "a tool run with cwd inside a salvage tree would resolve to the live
+// lane's HEAD and index while looking at salvage's files". That reading is right,
+// and s2404 priced the item INERT on a MEASURED reachability argument (no script,
+// skill or npm leg sends anyone into these trees) and deliberately proposed no
+// cure. That restraint was reasonable and its reachability claim re-verified here.
+//
+// WHAT IS NEW IS THE DIRECTION, AND IT IS WHY "inert" needed one qualifier: s2404
+// priced the READ hazard. The WRITE hazard is not inert, and it is destructive.
+//
+// MEASURED s2406 on a throwaway fixture (a plain `cp -R` of a linked worktree,
+// which is exactly the shape these four are), READ-ONLY probes first:
+//   --show-toplevel  -> the COPY          (it gets its own working tree)
+//   --git-dir        -> the LIVE lane's   (HEAD, index and refs are SHARED)
+//   worktree list    -> the copy is ABSENT (so `lane-usable` cannot see it)
+// and then the write arms:
+//   `git add` inside the copy   -> the LIVE lane reads `MM file.txt` with its own
+//                                  file untouched on disk (shared index)
+//   `git reset --hard HEAD~1`   -> the LIVE lane's HEAD *and the branch ref* move,
+//                                  its disk is NOT rewritten, and `main..lane/x`
+//                                  drops 1 -> 0: an unmerged commit silently
+//                                  leaves the lane's ahead-set.
+// That last one is Mistake #2, the Reset Massacre, reached from a directory that
+// is invisible to every lane instrument the factory owns.
+//
+// SEVERITY, STATED HONESTLY AND NOT INFLATED: LATENT, realised cost ZERO. All
+// four lanes read ahead=0 / tracked-dirt=0 the day this landed, no script in
+// scripts/ or ops/ runs git inside these trees (s2404's reachability claim,
+// re-verified s2406 — the only non-test globber of worktrees/ is this file, which
+// deliberately does not walk them), and `worktrees/` is gitignored. The trigger is
+// a human or an agent typing a git command after being sent to look at one of
+// these trees — and the one thing in the factory that sends anybody there is the
+// block this function prints. s2404 says so itself: "if an attended session ever
+// wants the disk space back, these are the four trees to ask about."
+//
+// So the cure is NOT a new measurement — it is MOVING A KNOWN FACT to where it is
+// read. s2404's characterisation lived in a BACKLOG row, which is not a surface a
+// fire or an attended session reads at the moment it stands in one of these
+// directories. That is this factory's most-repeated finding (F-2153-1 · F-2204-1 ·
+// F-2350-1 · F-2360-1 · F-2365-1 · F-2403-1): a cure with no reader.
+//
+// It DECLARES and does not REFUSE (F-1460-1): these trees are LAWFUL — the
+// RETENTION LAW forbids deleting them, and their content is in the object database
+// BY CONSTRUCTION (F-2404-1's mechanism: each is a checkout of committed
+// lane-branch content; re-confirmed s2406 at 1554/1554, which reproduces s2404's
+// figure exactly). A red on "a salvage tree exists" would fire forever and be
+// excused into uselessness.
+// Values are STRINGS for F-2212-1's reason: a careless truthiness test on a
+// failure value coerces toward NOTICING, not toward silence.
+function gitdirOwners() {
+  const owners = new Map(); // absolute admin dir -> registered worktree path
+  for (const w of registeredWorktrees()) {
+    const dot = join(w, '.git');
+    try {
+      const st = statSync(dot);
+      if (st.isDirectory()) owners.set(resolve(dot), w);
+      else {
+        const m = readFileSync(dot, 'utf8').match(/^gitdir:\s*(.+)$/m);
+        if (m) owners.set(resolve(dirname(dot), m[1].trim()), w);
+      }
+    } catch {
+      // a registered worktree we cannot read is not a reason to fail the audit;
+      // it only means this one cannot be named as an owner below.
+    }
+  }
+  return owners;
+}
+
+// Ask `git worktree list`, never a hardcoded lane list: the slot->path mapping
+// rots (F-1464-3), and a hardcoded list of what git already knows is a defect
+// awaiting a rename.
+function registeredWorktrees() {
+  return git('worktree', 'list', '--porcelain')
+    .split('\n')
+    .filter((l) => l.startsWith('worktree '))
+    .map((l) => l.slice('worktree '.length));
+}
+
+// 'shared'   — borrows a LIVE registered worktree's gitdir; a git WRITE here
+//              reaches that lane. The hazard this classifier exists for.
+// 'orphan'   — points at an admin dir no registered worktree owns (harmless to
+//              the lanes, but git commands there answer about nothing).
+// 'own-repo' — a real independent repository. Self-contained.
+// 'no-git'   — a plain directory. Self-contained.
+// 'unverifiable' — could not be read; declared, never assumed safe.
+function gitdirLink(abs, owners) {
+  const dot = join(abs, '.git');
+  try {
+    if (!existsSync(dot)) return { link: 'no-git', sharesWith: null };
+    if (statSync(dot).isDirectory()) return { link: 'own-repo', sharesWith: null };
+    const m = readFileSync(dot, 'utf8').match(/^gitdir:\s*(.+)$/m);
+    if (!m) return { link: 'unverifiable', sharesWith: null };
+    const target = resolve(dirname(dot), m[1].trim());
+    const owner = owners.get(target);
+    return owner
+      ? { link: 'shared', sharesWith: relative(REPO, owner) }
+      : { link: 'orphan', sharesWith: null };
+  } catch {
+    return { link: 'unverifiable', sharesWith: null };
+  }
+}
+
 function unauditedNeighbours() {
   if (!existsSync(WORKTREES_DIR)) return [];
   // Registered worktrees are git's own business and are audited by git itself.
-  // Ask `git worktree list`, never a hardcoded lane list: the slot->path mapping
-  // rots (F-1464-3), and a hardcoded list of what git already knows is a defect
-  // awaiting a rename.
-  const registered = new Set(
-    git('worktree', 'list', '--porcelain')
-      .split('\n')
-      .filter((l) => l.startsWith('worktree '))
-      .map((l) => l.slice('worktree '.length)),
-  );
+  const registered = new Set(registeredWorktrees());
+  const owners = gitdirOwners();
   const out = [];
   for (const e of readdirSync(WORKTREES_DIR, { withFileTypes: true })) {
     if (!e.isDirectory()) continue;
     const abs = join(WORKTREES_DIR, e.name);
     if (abs === ART_ROOT || registered.has(abs)) continue;
     // walk() skips SKIP_NAMES, so a worktree's `.git` stub is not counted as content.
-    out.push({ name: relative(REPO, abs), files: walk(abs).length });
+    out.push({ name: relative(REPO, abs), files: walk(abs).length, ...gitdirLink(abs, owners) });
   }
   return out.sort((a, b) => a.name.localeCompare(b.name));
 }
@@ -513,13 +613,39 @@ if (process.argv.includes('--json')) {
     console.log(
       `\nNOT AUDITED — ${outside.length} tree(s) under worktrees/ that no git worktree owns and this audit does not scan:`,
     );
-    for (const d of outside) console.log(`  ${d.name}  ${d.files} files`);
+    for (const d of outside) {
+      // F-2406-1: the gitdir link is declared on EVERY row, including the benign
+      // ones (F-2208-1 — a declaration that appears only on failure re-creates the
+      // ambiguity it removes).
+      const note =
+        d.link === 'shared'
+          ? `⚠️  SHARES the gitdir of ${d.sharesWith}`
+          : d.link === 'orphan'
+            ? 'gitdir points at an admin dir no worktree owns'
+            : d.link === 'unverifiable'
+              ? '⚠️  gitdir UNVERIFIABLE — could not be read'
+              : d.link === 'own-repo'
+                ? 'self-contained (own repository)'
+                : 'self-contained (no .git)';
+      console.log(`  ${d.name}  ${d.files} files  —  ${note}`);
+    }
     console.log(
       '  These are outside the scan root BY DESIGN (walking them would drown AT RISK in build output).',
     );
     console.log(
       '  They are named so a new one is visible on the next run, not after 48 days — F-2196-1.',
     );
+    if (outside.some((d) => d.link === 'shared')) {
+      console.log(
+        '  ⚠️  A tree marked SHARES has its OWN working tree but BORROWS that lane\'s HEAD,\n' +
+          '      index and branch refs. Reading there is safe; a WRITE is not — `git add`\n' +
+          '      dirties the live lane\'s index, and `reset`/`checkout`/`commit` move the live\n' +
+          '      lane\'s HEAD and branch ref without rewriting its disk, silently dropping\n' +
+          '      commits out of `main..<lane>` (Mistake #2, the Reset Massacre). These trees\n' +
+          '      are ABSENT from `git worktree list`, so `lane-usable` cannot see them.\n' +
+          '      Never run a writing git command inside one — F-2406-1.',
+      );
+    }
   }
   console.log(
     `\nAT RISK (in NO object database — dies with this disk): ${atRisk.length} files, ${kb(total(atRisk))}`,
