@@ -682,6 +682,59 @@ function main() {
   if (!leaf || branchFallback) {
     console.log(`  ? UNKNOWN — no ${branchFallback ? 'BLOCKED ' : ''}goal leaf matches "${target}".`);
     console.log(`${branchFallback ? '    (branch names are not registered as leaves — check the done-move filename too)\n' : ''}    Goal Registration Law: every authored master registers a leaf in ${GOALS}.\n    A missing leaf is a bookkeeping finding, not a clearance.`);
+    // F-2390-1 (s2390) — THE UNKNOWN BRANCH THROWS AWAY A NEAR-MISS IT HAS ALREADY RESOLVED, AND A
+    // PARK RENAME IS ENOUGH TO REACH IT. `findLeaves` (:396) matches by BIDIRECTIONAL SUBSTRING, so a
+    // master renamed with a prefix still finds its own leaf; the --queue arm (:679) then demands
+    // EXACT normalized equality, finds nothing, and falls here — printing "no goal leaf matches" while
+    // `hits` holds the very leaf that would refuse the dispatch. `normalize` (:383) strips a
+    // directory, an extension, a run stamp and a slot label; it does NOT strip an arbitrary prefix.
+    //
+    // MEASURED LIVE s2390 on the SAME master, byte-identical content (sha256 verified), the ONLY
+    // variable being the filename — and the path was control-isolated as a non-confound:
+    //   lane-d-toolsurface-terrain-edge.md                        -> ⛔ ALREADY SHIPPED   rc=1
+    //   tasks/lane-d-toolsurface-terrain-edge.md                  -> ⛔ ALREADY SHIPPED   rc=1  (path is not the cause)
+    //   s2382-PARKED-armed-duplicate-dispatch-<same name>.md      -> ? UNKNOWN            rc=0
+    //   tasks/queue-paused/s2382-PARKED-...-<same name>.md        -> ? UNKNOWN            rc=0
+    // That file is a real one on this board: a copy of a master whose cure merged at 0d718cead, parked
+    // in tasks/queue-paused/ — the directory §2E tells a fire to re-queue from "once the pile is below
+    // 2". So the ACT OF PARKING A MASTER, which is how a fire marks it dangerous, is what removes it
+    // from the guard that would refuse it. The louder the human label, the blinder the instrument.
+    //
+    // THIS IS THE FOURTH TIME THIS ONE FILE HAS SPLIT ON THE SAME SEAM, and it has said so twice
+    // itself: F-1597-1 cured the fall-through for the BLOCKED arm, F-2097-1 wrote "the reasoning was
+    // never carried across to the dispatch arm, which is why it survived the cure that names it", and
+    // F-2262-1 (:763) added near-miss disclosure whose own comment claims it is "placed BEFORE the
+    // verdict arms so it covers all of them ... and --queue" — but it sits AFTER this branch's
+    // process.exit and takes a resolved `leaf`, so it can never see the case where NO leaf resolved.
+    //
+    // DECLARES, DOES NOT REFUSE (F-2218-1's restraint), and does not touch the verdict or the exit
+    // code: an unregistered master is lawful and common, so refusing here would red ordinary work and
+    // be excused into uselessness inside a week (F-1460-1). It is NOT always-on, which is the F-2224
+    // concern — a line on every run is the noise that decays a declaration into a formality.
+    // BLAST RADIUS MEASURED BEFORE LANDING, not assumed, over all 1191 masters in tasks/*.md, with the
+    // census's replication of this resolver CONTROLLED against this very CLI (25/25 agreement):
+    //   654 resolve exactly (untouched) · 524 UNKNOWN with zero hits (stays SILENT) · 13 would SPEAK,
+    //   and 11 of those 13 name a merged/shipped leaf — the Mistake #8 class this exists to catch.
+    // So it fires on 1.1% of subjects and is on-target for 85% of those.
+    //
+    // SCOPED TO THE --queue ARM DELIBERATELY: the branchFallback path reaches this same branch, and
+    // :656 already rules that a branch matching a leaf by substring is "noise, not clearance", so
+    // declaring a near-miss for a branch name would advertise exactly the coincidence that comment
+    // forbids acting on.
+    if (queueTaskFile && hits.length) {
+      // `findLeaves` returns LEAVES, not {leaf,taskKey} wrappers — it maps at :432. Reading the
+      // return shape rather than assuming it is what the pushes look like is the whole of this line.
+      const near = hits.slice(0, 3).map((l) => {
+        const st = l.status ? `status="${l.status}"` : 'status=(none)';
+        const mh = l.mergeHash ? ` mergeHash="${String(l.mergeHash).slice(0, 8)}"` : '';
+        return `      · ${l.taskFile ?? l.id} [${l.id}] ${st}${mh}`;
+      });
+      console.log(`    ⚠️  NEAR-MISS — this name did not resolve, but ${hits.length} leaf/leaves match it by substring:`);
+      for (const line of near) console.log(line);
+      if (hits.length > 3) console.log(`      · … and ${hits.length - 3} more`);
+      console.log(`    A prefix (a park label, a session tag) defeats the exact-match this arm requires.`);
+      console.log(`    If one of the above IS your subject, ask again under its registered name before queueing.`);
+    }
     // F-2097-1 (s2097) — THE DUPLICATE-DISPATCH REFUSAL WAS INERT FOR HALF THE BOARD, BECAUSE IT SAT
     // BEHIND A LEAF LOOKUP IT DOES NOT NEED. checkAlreadyDispatched (:615) is called at :543, inside
     // `if (queue)`, which this UNKNOWN branch exits BEFORE ever reaching. So a master with no goal
