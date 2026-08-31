@@ -1,4 +1,5 @@
 import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
+import engineEra from '../../assets/engine-era.json' with { type: 'json' };
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
@@ -438,6 +439,8 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   const board = ranked.map(boardRow);
   const rejectedCount = partition.filter((row) => row.assay === 'rejected'
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
+  const retiredCount = partition.filter((row) => row.tape !== undefined && currentLineageRefusal(row.tape) !== null
+    && (difficulty === 'all' || row.difficulty === difficulty)).length;
   return json(cors, {
     ok: true,
     ...seasonLabels(season),
@@ -446,6 +449,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     party: partyParam === null ? 'solo' : partyParam,
     board: difficulty === 'all' ? board : board.filter((row) => row.difficulty === difficulty),
     rejectedCount,
+    retiredCount,
   });
 }
 
@@ -687,6 +691,8 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   if (tape && !tapeMatchesScore(tape, score)) {
     return error(cors, 400, 'bad_payload', 'Standing not accepted.');
   }
+  const eraRefusal = tape ? currentLineageRefusal(tape) : null;
+  if (eraRefusal) return error(cors, 400, 'reel_not_current', eraRefusal);
   if (seedMode === 'bench' && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(seed)) {
     return error(cors, 400, 'bad_bench_seed', 'Bench seed not accepted.');
   }
@@ -805,7 +811,21 @@ function rankedRows(rows: StoredRow[]): StoredRow[] {
 }
 
 function isRankedRow(row: StoredRow): boolean {
-  return row.tape !== undefined && row.assay !== 'rejected' && row.assay !== 'unassayable';
+  return row.tape !== undefined && currentLineageRefusal(row.tape) === null
+    && row.assay !== 'rejected' && row.assay !== 'unassayable';
+}
+
+function currentLineageRefusal(tape: JsonRecord): string | null {
+  const meta = isRecord(tape.meta) ? tape.meta : null;
+  if (!meta || typeof meta.era !== 'number' || typeof meta.engineHash !== 'string') {
+    return `This reel carries no current-era papers; the county accepts era ${engineEra.era} '${engineEra.name}'.`;
+  }
+  if (meta.era !== engineEra.era) {
+    return `This reel rode era ${meta.era}; the county accepts era ${engineEra.era} '${engineEra.name}'.`;
+  }
+  return engineEra.pins.some((pin) => pin.engineHash === meta.engineHash)
+    ? null
+    : `This reel's engine pin is not recorded in era ${engineEra.era} '${engineEra.name}'.`;
 }
 
 function retainUnranked(rows: StoredRow[]): StoredRow[] {

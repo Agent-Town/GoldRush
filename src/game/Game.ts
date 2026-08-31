@@ -7064,7 +7064,7 @@ export class Game {
       speed: (speed) => this.setRunTapeReplaySpeed(speed),
       restart: () => this.restartRunTapeReplay(),
       skipWave: () => this.skipRunTapeReplayWave(),
-      close: () => this.boot.replay?.onClose(),
+      close: () => this.closeRunTapeReplay(),
       pan: (dx, dz) => {
         this.replayCameraPan.x = THREE.MathUtils.clamp(this.replayCameraPan.x + dx, -24, 24);
         this.replayCameraPan.z = THREE.MathUtils.clamp(this.replayCameraPan.z + dz, -24, 24);
@@ -7225,6 +7225,16 @@ export class Game {
     this.mpLocalSlot = 0;
     this.resetRun();
     this.startRunTapeReplay(tape);
+  }
+
+  private closeRunTapeReplay(): void {
+    this.runTapeReplay?.trueDriver?.dispose();
+    this.runTapeReplay = null;
+    this.lanternShow?.dispose();
+    this.lanternShow = undefined;
+    this.state.setPaused(false);
+    this.loop.setTimeScale(1);
+    this.boot.replay?.onClose();
   }
 
   private syncLanternShow(): void {

@@ -128,25 +128,21 @@ test('engine lineage wins over build id, with build id retained for legacy tapes
   unknownPin.tape.meta = { buildId, engineHash: '0'.repeat(64), era: engineEra.era };
   const legacySkew = row('legacy-skew');
   legacySkew.tape.meta = { buildId: 'deadbeef' };
-  const earlierPin = engineEra.pins.find(({ engineHash }) => engineHash.startsWith('d5b04061'))?.engineHash;
-  assert.ok(earlierPin, 'the heat-7 era-4 pin is present in the registry lineage');
   const api = await mockApi([
     crossEra,
     unknownPin,
     legacySkew,
     matchingRow('matching-round2', engineEra.engineHash),
-    matchingRow('matching-round2-lineage', earlierPin),
   ]);
   try {
     const { code, stdout, stderr } = await runWorker(api.base, stub).done;
     assert.equal(code, 0, stderr);
-    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'unassayable', 'unassayable', 'verified', 'verified']);
-    assert.equal(api.posts[0].reason, "engine era 4 'the Embodied Hand', tape from era 3");
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'unassayable', 'unassayable', 'verified']);
+    assert.equal(api.posts[0].reason, `engine era ${engineEra.era} '${engineEra.name}', tape from era ${engineEra.era - 1}`);
     assert.equal(api.posts[0].replayedHash, undefined);
-    assert.equal(api.posts[1].reason, `engine era 4 'the Embodied Hand', tape claims unknown pin ${'0'.repeat(64)} in era 4`);
+    assert.equal(api.posts[1].reason, `engine era ${engineEra.era} '${engineEra.name}', tape claims unknown pin ${'0'.repeat(64)} in era ${engineEra.era}`);
     assert.equal(api.posts[2].reason, `build-skew (tape deadbeef, assayer ${buildId})`);
     assert.equal(api.posts[3].reason, undefined);
-    assert.equal(api.posts[4].reason, undefined);
     assert.equal(stdout.trim().split('\n').map(JSON.parse).some(({ event }) => event === 'instrument_retry'), false);
   } finally {
     await api.close();

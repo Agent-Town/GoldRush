@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { mkdtemp, rm, stat, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 import { createLedgerServer, loadLedgerHandlers, loadLedgerMaxRequestBytes } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
 
@@ -81,7 +82,7 @@ try {
       tape,
     }),
   });
-  assert.equal(submitted.status, 200);
+  assert.equal(submitted.status, 200, JSON.stringify(submitted.body));
 
   const replay = path.join(directory, 'replay.mjs');
   await writeFile(replay, `process.stdout.write(JSON.stringify({eventLogHash:'fnv1a32:1234abcd',outcome:{secured:true,waves:3,timeAlive:12,gold:7}}));\n`);
@@ -106,6 +107,7 @@ function assayableTape() {
     id: 'worker-contract',
     createdAt: 1,
     kept: true,
+    meta: { buildId: 'abcdef12', era: engineEra.era, engineHash: engineEra.pins[0].engineHash },
     contract: 'the-claim',
     seed: 'worker-probe',
     difficulty: 'trail',

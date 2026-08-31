@@ -7,6 +7,7 @@ import path from 'node:path';
 import { createServer } from 'vite';
 import { createLedgerServer } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 
 const SECRET = 'assay-worker-test-secret';
 // The season roll (owner 2026-08-15): the county writes in the current season's key shape, and the
@@ -40,6 +41,7 @@ try {
     await checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS, MAX_JSON_BYTES);
     checkTapeBuildMetadata(validateTape);
     await checkEngineHashReel(onRequest);
+    await checkReplayableBoard(onRequest);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest);
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
@@ -105,12 +107,44 @@ function checkTapeBuildMetadata(validateTape) {
 
 async function checkEngineHashReel(onRequest) {
   const kv = makeKv();
-  const runTape = { ...tapeV2('engine-reel', 1), meta: { buildId: 'abcdef12', engineHash: 'a'.repeat(64), era: 4 } };
+  const runTape = currentEraTape(tapeV2('engine-reel', 1));
   equal((await call(onRequest, 'POST', '/api/standings', post('e'.repeat(32), 1, runTape), kv)).status, 200, 'engine tape is stored');
-  equal(JSON.parse(await kv.get(KEY))[0].tape.meta.engineHash, 'a'.repeat(64), 'worker identity stays stored');
+  equal(JSON.parse(await kv.get(KEY))[0].tape.meta.engineHash, engineEra.engineHash, 'worker identity stays stored');
   const response = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=engine-reel', undefined, kv);
   // Keep this projection contract paired with scripts/agent-reels.test.mjs.
   equal(response.body.reel.meta, runTape.meta, 'public WATCH reel carries its era identity');
+}
+
+async function checkReplayableBoard(onRequest) {
+  const kv = makeKv();
+  const key = 'standings:s2:epoch-1-frontier:e1-baron';
+  const current = storedRowFor(1, 'e1-baron', 'epoch-1-frontier');
+  current.profileName = 'The Walking Crown';
+  current.assay = 'verified';
+  current.assayedAt = 2;
+  current.assayHash = current.tape.eventLogHash;
+  const retired = structuredClone(current);
+  retired.profileName = 'The Era Three Crown';
+  retired.anonId = 'f'.repeat(32);
+  retired.submittedAt = 1;
+  retired.tape.id = 'era-three-crown';
+  retired.tape.meta = { buildId: 'deadbeef', engineHash: '0'.repeat(64), era: 3 };
+  await kv.put(key, JSON.stringify([retired, current]));
+  const storedBytes = await kv.get(key);
+
+  const response = await call(onRequest, 'GET', '/api/standings?contract=e1-baron&epoch=epoch-1-frontier', undefined, kv);
+  equal(response.body.board.map(({ rank, profileName }) => ({ rank, profileName })), [{ rank: 1, profileName: 'The Walking Crown' }], 'e1-baron mints only the era-current crown');
+  equal(response.body.retiredCount, 1, 'the cross-era Baron crown is counted as retired');
+  equal(await kv.get(key), storedBytes, 'reading the replayable board leaves both raw rows byte-identical');
+
+  const staleTape = { ...tapeV2('stale-door', 1), meta: { buildId: 'deadbeef', engineHash: '0'.repeat(64), era: engineEra.era - 1 } };
+  const stalePost = post('d'.repeat(32), 1, staleTape);
+  stalePost.tape = staleTape;
+  const refused = await call(onRequest, 'POST', '/api/standings', stalePost, kv);
+  equal(refused.status, 400, 'a cross-era submission is refused at the door');
+  equal(refused.body.error, 'reel_not_current', 'the door names the current-era failure');
+  equal(refused.body.message, `This reel rode era ${engineEra.era - 1}; the county accepts era ${engineEra.era} '${engineEra.name}'.`, 'the door gives the honest era reason');
+  equal(await kv.get(key), storedBytes, 'the refused tape is never stored');
 }
 
 async function checkAssayIndexRace(onRequest, queueRoute) {
@@ -549,31 +583,28 @@ async function checkSeasonRoll(onRequest, queueRoute, verdictRoute) {
   equal(v2.body.rank, 1, 'the v2 standing takes the fresh season\'s first rank');
   equal(JSON.parse(await kv.get(KEY)).find((row) => row.tape.id === 'assayable').assay, 'pending', 'v2 POST lands pending');
 
-  // (d) A v1 tape stores, and the LANDED lifecycle is what keeps it off the ranks: the worker
-  // cannot verify a tape with no runStart, so its verdict unranks the
-  // row while the row itself survives. The endpoint's tape contract is unchanged.
-  const v1 = await call(onRequest, 'POST', '/api/standings', post('b'.repeat(32), 90, tape('legacy-shaped', 90)), kv);
-  equal(v1.status, 200, 'the tape contract still accepts a v1 tape, unchanged');
-  const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=100', undefined, kv, SECRET);
-  const locator = queue.body.queue.find((row) => row.locator.tapeId === 'legacy-shaped').locator;
-  const rejected = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', {
-    locator, verdict: 'unassayable', reason: 'legacy tape v1 is unverifiable',
-  }, kv, SECRET);
-  equal(rejected.status, 200, 'the worker verdict on a v1 tape is accepted');
+  // (d) A v1 tape has no complete era papers, so the era-5 clerk refuses it before storage.
+  const legacyTape = tape('legacy-shaped', 90);
+  const legacyPost = post('b'.repeat(32), 90, legacyTape);
+  legacyPost.tape = legacyTape;
+  const v1 = await call(onRequest, 'POST', '/api/standings', legacyPost, kv);
+  equal(v1.status, 400, 'the current-era door refuses a v1 tape with no era papers');
+  equal(v1.body.error, 'reel_not_current', 'the v1 refusal names the current-era law');
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'the v1 row holds no rank in the assayed season');
   equal(board.body.board[0].assay, 'pending', 'the assayable v2 row is what the fresh season shows');
-  ok(JSON.parse(await kv.get(KEY)).some((row) => row.tape?.id === 'legacy-shaped'), 'the v1 row is stored, never deleted');
+  ok(!JSON.parse(await kv.get(KEY)).some((row) => row.tape?.id === 'legacy-shaped'), 'the v1 row never enters storage');
   equal(await kv.get(ARCHIVE_KEY), archiveBytes, 'a whole current-season lifecycle never touched season one');
 }
 
 function post(anonId, waves, runTape, contractId = 'the-claim', epochId = 'epoch-1-frontier') {
-  const inputLogHash = runTape ? createHash('sha256').update(JSON.stringify(runTape.inputLog)).digest('hex') : 'b'.repeat(64);
+  const submittedTape = runTape ? currentEraTape(runTape) : undefined;
+  const inputLogHash = submittedTape ? createHash('sha256').update(JSON.stringify(submittedTape.inputLog)).digest('hex') : 'b'.repeat(64);
   return {
     contractId, epochId,
     score: { secured: true, waves, timeAlive: 120, gold: 40, baseValue: 60 },
     profileName: 'Assay Test', anonId, difficulty: 'trail', seed: 'gold-rush', seedMode: 'live',
-    seedHash: 'a'.repeat(64), inputLogHash, ...(runTape ? { tape: runTape } : {}),
+    seedHash: 'a'.repeat(64), inputLogHash, ...(submittedTape ? { tape: submittedTape } : {}),
   };
 }
 
@@ -613,6 +644,7 @@ function storedRow(index, withTape) {
 }
 
 function bankedPost(runTape, anonId) {
+  runTape = currentEraTape(runTape);
   return {
     contractId: runTape.contract,
     epochId: 'epoch-1-frontier',
@@ -634,13 +666,25 @@ function bankedPost(runTape, anonId) {
   };
 }
 
+function currentEraTape(runTape) {
+  const meta = { buildId: runTape.meta?.buildId ?? 'abcdef12', engineHash: engineEra.engineHash, era: engineEra.era };
+  if (runTape.version === 2) return { ...runTape, meta };
+  const progress = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+  return {
+    ...runTape,
+    version: 2,
+    meta,
+    runStart: { meta: progress, research: { version: 1, progress, taken: [], proposalSalt: 0, pinnedTarget: null } },
+  };
+}
+
 function storedRowFor(index, contractId, epochId) {
   const runTape = tape(`seed-${index}`, 100 - index, 'fnv1a32:1234abcd', contractId);
   const payload = post(index.toString(16).padStart(32, '0'), 100 - index, runTape, contractId, epochId);
   return {
     ...payload.score, profileName: `Seed ${index}`, anonId: payload.anonId, difficulty: payload.difficulty,
     seed: payload.seed, seedMode: payload.seedMode, seedHash: payload.seedHash, inputLogHash: payload.inputLogHash,
-    submittedAt: index + 1, tape: runTape, assay: 'pending',
+    submittedAt: index + 1, tape: payload.tape, assay: 'pending',
   };
 }
 

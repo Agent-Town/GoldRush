@@ -7,8 +7,10 @@ import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 
 const FIXTURE_PATH = path.resolve('artifacts/eh3-fixture/tape.json');
 const HEAT_7_CROWN_PATH = path.resolve('artifacts/gauntlet-heat7-20260830/baron/run-1-tape.json');
+const HUD_FIXTURE_PATH = path.resolve('artifacts/gauntlet-heat6-guests-r2-20260825/openclaw/hill-mine/attempt-3.tape.json');
 const SHOT_DIR = path.resolve('reviews/shots-true-reel');
 const ERA_SHOT_DIR = path.resolve('reviews/shots-reel-era');
+const ERA_FIVE_SHOT_DIR = path.resolve('reviews/shots-era-five');
 
 test('an era-current agent reel renders the true sim and verifies its hash in this browser', async ({ page }, testInfo) => {
   test.setTimeout(180_000);
@@ -63,59 +65,80 @@ test('an era-current agent reel renders the true sim and verifies its hash in th
   await writeFile(path.join(SHOT_DIR, `${testInfo.project.name}-outcome.png`), await page.screenshot({ fullPage: true }));
 });
 
-test('an agent reel from another engine era is refused before playback', async ({ page }) => {
+test('an era refusal dismisses by button, Escape, and click-outside without leaving the game stuck', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const tape = await currentEraTape();
   tape.meta = { ...tape.meta, engineHash: '0'.repeat(64), era: tape.meta.era - 1 };
+  await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
+  const errors = collectErrors(page);
+  for (const dismissal of ['button', 'Escape', 'outside'] as const) {
+    await page.goto(replayUrl(tape));
+    const show = page.getByTestId('lantern-show');
+    await expect(show).toHaveAttribute('data-era-refused', 'true');
+    await expect(show).toHaveAttribute('data-playback', 'complete');
+    await expect(page.getByTestId('lantern-intertitle')).toContainText(
+      `This reel rode era ${tape.meta.era} (${'0'.repeat(64)}). This engine is era ${engineEra.era}`,
+    );
+    await expect(page.getByTestId('lantern-intertitle')).toContainText('The county will not counterfeit one era with another.');
+    await expect(page.getByTestId('lantern-refusal-close')).toHaveText('Back to shelf');
+    expect(await probe(page)).toBeNull();
+    if (dismissal === 'button') {
+      await mkdir(ERA_FIVE_SHOT_DIR, { recursive: true });
+      await writeFile(path.join(ERA_FIVE_SHOT_DIR, `${testInfo.project.name}-refusal.png`), await page.screenshot({ fullPage: true }));
+      await page.getByTestId('lantern-refusal-close').click();
+    } else if (dismissal === 'Escape') {
+      await page.keyboard.press('Escape');
+    } else {
+      await page.getByTestId('lantern-true-stage').click({ position: { x: 8, y: 8 } });
+    }
+    await expect(show).toHaveCount(0);
+    const [before, after] = await page.evaluate(() => {
+      const before = window.__THREE_GAME_DIAGNOSTICS__!.timeAlive;
+      window.__GR_TEST__!.advanceSim(1);
+      return [before, window.__THREE_GAME_DIAGNOSTICS__!.timeAlive];
+    });
+    expect(after).toBeGreaterThan(before);
+  }
+  expect(errors).toEqual([]);
+});
+
+test('the heat-7 era-4 crown is now a stale deep link and refuses under era 5', async ({ page }) => {
+  const tape = JSON.parse(await readFile(HEAT_7_CROWN_PATH, 'utf8'));
+  expect(tape.meta).toMatchObject({ era: 4, engineHash: 'd5b04061596bdf43b313a0e430229a46d10e67e52877c6394b61aea05efd389a' });
   await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
   const errors = collectErrors(page);
   await page.goto(replayUrl(tape));
   const show = page.getByTestId('lantern-show');
   await expect(show).toHaveAttribute('data-era-refused', 'true');
   await expect(show).toHaveAttribute('data-playback', 'complete');
-  await expect(page.getByTestId('lantern-intertitle')).toContainText(
-    `This reel rode era ${tape.meta.era} (${'0'.repeat(64)}). This engine is era ${engineEra.era}`,
-  );
-  await expect(page.getByTestId('lantern-intertitle')).toContainText('The county will not counterfeit one era with another.');
+  await expect(page.getByTestId('lantern-intertitle')).toContainText(`This reel rode era 4`);
   expect(await probe(page)).toBeNull();
   expect(errors).toEqual([]);
 });
 
-test('the heat-7 crown reel is admitted by its earlier era-4 pin and plays to completion', async ({ page }) => {
-  test.setTimeout(600_000);
-  const tape = JSON.parse(await readFile(HEAT_7_CROWN_PATH, 'utf8'));
-  expect(tape.meta).toMatchObject({ era: engineEra.era, engineHash: 'd5b04061596bdf43b313a0e430229a46d10e67e52877c6394b61aea05efd389a' });
+test('the replay HUD shows live gold and Keeper health and changes with the displayed tick', async ({ page }, testInfo) => {
+  const tape = await currentEraTape(HUD_FIXTURE_PATH);
   await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
   const errors = collectErrors(page);
   await page.goto(replayUrl(tape));
-  await page.waitForFunction(() => Boolean(window.__GR_TEST__));
-  const show = page.getByTestId('lantern-show');
-  // The slice's own deliverable: an EARLIER era-4 pin is admitted, not refused.
-  await expect(show).toHaveAttribute('data-era-refused', 'false');
-  await page.getByTestId('lantern-speed-4').click();
-  await expect(show).toHaveAttribute('data-playback', 'complete', { timeout: 240_000 });
+  await expect.poll(async () => (await probe(page))?.tick ?? -1).toBeGreaterThanOrEqual(0);
+  const before = await probe(page);
+  const status = page.getByTestId('lantern-playback-status');
+  await expect(status).toContainText(`Gold ${before.gold}`);
+  await expect(status).toContainText(`Keeper ${before.hero.hp}/${before.hero.maxHp} HP`);
 
-  // ⛔ KNOWN DEFECT — F-2393-1, and this assertion is PINNED TO THE WRONG ANSWER ON PURPOSE.
-  // The master's gate wanted `This ride was replayed and matched in this very browser: <hash>`.
-  // Admission (above) works; the BROWSER REPLAY then ends before tick 17651 of the order stream
-  // and yields no hash, while the canonical Node replay of this same tape matches at
-  // fnv1a32:2422a5fb (17,910 ticks, wave 22). That is a node-vs-browser replay-parity defect
-  // that PRE-DATES this slice: nothing here touches replay semantics -- src/replay/** is
-  // untouched and Game.ts only decides whether a driver is constructed -- so this slice changed
-  // REACHABILITY, not behaviour. The tape was previously refused at the era gate and never
-  // replayed at all, which is why the defect was invisible until now.
-  // Pinning the defective outcome (rather than skipping, or test.fail()-ing the whole test)
-  // keeps every assertion above live -- a regression in ADMISSION still reds here -- and makes
-  // this test RED THE MOMENT THE REPLAY IS FIXED, which is when it must be restored to the
-  // hash-match assertion the master asked for. Do not "fix" this by deleting the test.
-  await expect(page.getByTestId('lantern-intertitle')).toContainText(
-    `REPLAY MISMATCH. The reel claims ${tape.eventLogHash}; this browser replayed no hash.`,
-  );
-  // The same defect surfaces as exactly ONE console error, from src/replay/BrowserAgentTapeReplay.ts
-  // (a file this slice does not touch). Pinned by fingerprint rather than waived: any OTHER console
-  // error on this path still reds, and the day the replay is fixed this array goes empty and reds too.
-  expect(errors).toHaveLength(1);
-  expect(errors[0]).toContain('the run ended before tick 17651 of the order stream');
+  await page.getByTestId('lantern-wave-skip').click();
+  await expect.poll(async () => (await probe(page))?.wave ?? 0, { timeout: 15_000 }).toBeGreaterThanOrEqual(1);
+  await page.getByTestId('lantern-pause').click();
+  await expect(page.getByTestId('lantern-show')).toHaveAttribute('data-playback', 'paused');
+  const after = await probe(page);
+  expect(after.gold).not.toBe(before.gold);
+  expect(after.hero.hp).not.toBe(before.hero.hp);
+  await expect(status).toContainText(`Gold ${after.gold}`);
+  await expect(status).toContainText(`Keeper ${after.hero.hp}/${after.hero.maxHp} HP`);
+  await mkdir(ERA_FIVE_SHOT_DIR, { recursive: true });
+  await writeFile(path.join(ERA_FIVE_SHOT_DIR, `${testInfo.project.name}-hud.png`), await page.screenshot({ fullPage: true }));
+  expect(errors).toEqual([]);
 });
 
 test('an unknown pin claiming the current era is refused with a lineage message', async ({ page }) => {
@@ -163,6 +186,15 @@ test('plain town board WATCH gives a half-stamped reel its honest unstamped-era 
   );
   await mkdir(ERA_SHOT_DIR, { recursive: true });
   await writeFile(path.join(ERA_SHOT_DIR, `${testInfo.project.name}-half-stamped-refusal.png`), await page.screenshot({ fullPage: true }));
+  await page.getByTestId('lantern-refusal-close').click();
+  await expect(show).toHaveCount(0);
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.evaluate(() => {
+    const town = window.__GR_TOWN_DIAGNOSTICS__!;
+    const approach = town.buildings.find((building) => building.id === 'schoolhouse')!.approach;
+    town.teleport(approach.x, approach.z);
+  });
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe('schoolhouse');
   expect(errors).toEqual([]);
 });
 
@@ -202,8 +234,8 @@ async function openBoardReel(page: Page, tape: any): Promise<string[]> {
 
 // Approximation-era assertions were retired because EH-3 removes that path rather than relabeling it.
 
-async function currentEraTape(): Promise<any> {
-  const tape = JSON.parse(await readFile(FIXTURE_PATH, 'utf8'));
+async function currentEraTape(fixturePath = FIXTURE_PATH): Promise<any> {
+  const tape = JSON.parse(await readFile(fixturePath, 'utf8'));
   // F-2374-2: mint the fixture's identity from the live registry so src merges cannot stale it.
   return { ...tape, meta: { ...tape.meta, engineHash: engineEra.engineHash, era: engineEra.era } };
 }
