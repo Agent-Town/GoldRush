@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawn } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { homedir, tmpdir } from 'node:os';
 import path from 'node:path';
@@ -71,8 +71,8 @@ function json(response, status, body) {
   response.end(JSON.stringify(body));
 }
 
-function runWorker(base, stub, flags = ['--once']) {
-  const child = spawn(workerNode, ['scripts/assay-worker.mjs', ...flags], {
+function runWorker(base, stub, flags = ['--once'], worker = path.join(root, 'scripts/assay-worker.mjs')) {
+  const child = spawn(workerNode, [worker, ...flags], {
     cwd: root,
     env: { ...process.env, ASSAY_BUILD_ID: buildId, ASSAY_API_BASE: base, ASSAY_WORKER_SECRET: 'test-secret', ASSAY_REPLAY_SCRIPT: stub, ASSAY_POLL_MS: '5', ASSAY_BACKOFF_INITIAL_MS: '10', ASSAY_BACKOFF_MAX_MS: '20' },
     stdio: ['ignore', 'pipe', 'pipe'],
@@ -147,6 +147,46 @@ test('engine lineage wins over build id, with build id retained for legacy tapes
   } finally {
     await api.close();
     await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('an earlier pin in the current era remains assayable', async () => {
+  const { directory: replayDirectory, stub } = await fixture();
+  const workerDirectory = await mkdtemp(path.join(tmpdir(), 'assay-worker-lineage-'));
+  const scripts = path.join(workerDirectory, 'scripts');
+  const earlierPin = 'a'.repeat(64);
+  const unknownPin = '0'.repeat(64);
+  const lineageRow = (id, engineHash) => {
+    const candidate = row(`matching-round2-${id}`);
+    candidate.tape.meta = { buildId, engineHash, era: engineEra.era };
+    candidate.tape.outcome = score;
+    return candidate;
+  };
+  const api = await mockApi([
+    lineageRow('earlier-pin', earlierPin),
+    lineageRow('head-pin', engineEra.engineHash),
+    lineageRow('unknown-pin', unknownPin),
+  ]);
+  try {
+    await mkdir(scripts, { recursive: true });
+    await mkdir(path.join(workerDirectory, 'assets'));
+    await copyFile(path.join(root, 'scripts/assay-worker.mjs'), path.join(scripts, 'assay-worker.mjs'));
+    await copyFile(path.join(root, 'scripts/assay-replay-agent.mjs'), path.join(scripts, 'assay-replay-agent.mjs'));
+    await writeFile(path.join(workerDirectory, 'assets/engine-era.json'), JSON.stringify({
+      ...engineEra,
+      name: 'the Fixture Era',
+      pins: [{ engineHash: earlierPin }, { engineHash: engineEra.engineHash }],
+    }));
+    await symlink(path.join(root, 'node_modules'), path.join(workerDirectory, 'node_modules'), 'dir');
+
+    const { code, stderr } = await runWorker(api.base, stub, ['--once'], path.join(scripts, 'assay-worker.mjs')).done;
+    assert.equal(code, 0, stderr);
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['verified', 'verified', 'unassayable']);
+    assert.equal(api.posts[2].reason, `engine era ${engineEra.era} 'the Fixture Era', tape claims unknown pin ${unknownPin} in era ${engineEra.era}`);
+  } finally {
+    await api.close();
+    await rm(replayDirectory, { recursive: true, force: true });
+    await rm(workerDirectory, { recursive: true, force: true });
   }
 });
 
