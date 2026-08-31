@@ -72,6 +72,33 @@ function run(script, args = []) {
   // regression still reds on the first attempt. Only ETIMEDOUT — a verdict the subject never
   // produced — gets a second chance, and a second timeout fails LOUD with both attempts named.
   // "Raise the bound until it goes green" is the thing F-1410-2 forbids; this changes no bound.
+  //
+  // ⚠️ AMENDED s2413 (F-2413-1) — THE STATED CONDITION ABOVE IS MEASURABLY INSUFFICIENT, AND THE
+  // NEXT FIRE MUST NOT INHERIT IT AS THE REPRODUCING RECIPE. s2412 priced the aim as "a node child
+  // spawned from inside `node --test` at battery concurrency" and asked its successor to EXTEND its
+  // controls into exactly that parameterisation. s2413 did, and it does NOT reproduce:
+  //   arm 1  trivial child (`node -e`), 18 files x 4 spawns, `node --test`, concurrency 16
+  //          -> 12/12 clean, 864 passing assertions, 346-362 ms, ZERO wedges
+  //   arm 2  the REAL subject as the child (law-pointer-guard.mjs, 245 ms / 14 KB stdout solo),
+  //          same parent, same concurrency -> 12/12 clean, 432 assertions, 1099-1163 ms, ZERO
+  //   arm 3  the real `test:ledger-guards` battery itself, 4 runs -> 4/4 green, 948 assertions
+  //          each, 87.7-99.3 s. A fired retry costs a full 60 s bound, so a retried run reads
+  //          ~150 s; nothing exceeded 100 s, so no retry fired in any of the four.
+  // 28 runs at or beside the production condition, 0 wedges. So the `node --test` parent is NOT
+  // the sufficient condition, and neither is a heavy child: something s2412's arrangement had and
+  // all three of these lack is still unnamed.
+  //
+  // 🚫 THE RETRY STAYS, AND THAT IS THE POINT OF RECORDING THIS RATHER THAN DELETING IT. A failure
+  // to reproduce is NOT a proof of absence — s2412 caught its wedge with a real transcript (15 B of
+  // stdout, the bare TAP header, zero arms reported) and the mandated battery later named the arm
+  // and the ETIMEDOUT outright. What is refuted is the RECIPE, not the event. Removing the retry on
+  // this evidence would re-arm a hang that stalls a fire's mandated last act, to buy nothing.
+  //
+  // 💡 METHOD NOTE, worth more than the result: arm 1's FIRST run reported pass=0 and read as "the
+  // arm never ran". It had run perfectly — node v26's default reporter is `spec` (`ℹ pass N`), not
+  // TAP (`# pass N`), and the harness matched only the TAP form. It was caught solely because the
+  // harness prints its own validity line FIRST (F-2215-1). A control whose failure mode is silence
+  // cannot be told from the silence it measures, and a parser is one more way to manufacture it.
   if (r.error && r.error.code === 'ETIMEDOUT') {
     const first = r;
     r = spawnOnce(script, args);
