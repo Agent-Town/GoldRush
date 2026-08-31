@@ -6,6 +6,7 @@ import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 
 const FIXTURE_PATH = path.resolve('artifacts/eh3-fixture/tape.json');
+const HEAT_7_CROWN_PATH = path.resolve('artifacts/gauntlet-heat7-20260830/baron/run-1-tape.json');
 const SHOT_DIR = path.resolve('reviews/shots-true-reel');
 const ERA_SHOT_DIR = path.resolve('reviews/shots-reel-era');
 
@@ -80,6 +81,41 @@ test('an agent reel from another engine era is refused before playback', async (
   expect(errors).toEqual([]);
 });
 
+test('the heat-7 crown reel plays through its earlier era-4 pin and hash-matches', async ({ page }) => {
+  test.setTimeout(600_000);
+  const tape = JSON.parse(await readFile(HEAT_7_CROWN_PATH, 'utf8'));
+  expect(tape.meta).toMatchObject({ era: engineEra.era, engineHash: 'd5b04061596bdf43b313a0e430229a46d10e67e52877c6394b61aea05efd389a' });
+  await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
+  const errors = collectErrors(page);
+  await page.goto(replayUrl(tape));
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__));
+  const show = page.getByTestId('lantern-show');
+  await expect(show).toHaveAttribute('data-era-refused', 'false');
+  await page.getByTestId('lantern-speed-4').click();
+  await expect(show).toHaveAttribute('data-playback', 'complete', { timeout: 240_000 });
+  await expect(page.getByTestId('lantern-intertitle')).toContainText(
+    `This ride was replayed and matched in this very browser: ${tape.eventLogHash}.`,
+  );
+  await expect(page.getByTestId('lantern-playback-status')).toHaveAttribute('data-hash', tape.eventLogHash);
+  expect(errors).toEqual([]);
+});
+
+test('an unknown pin claiming the current era is refused with a lineage message', async ({ page }) => {
+  const tape = await currentEraTape();
+  tape.meta = { ...tape.meta, engineHash: '0'.repeat(64) };
+  await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
+  const errors = collectErrors(page);
+  await page.goto(replayUrl(tape));
+  const show = page.getByTestId('lantern-show');
+  await expect(show).toHaveAttribute('data-era-refused', 'true');
+  await expect(page.getByTestId('lantern-intertitle')).toContainText(
+    `This reel's engine pin is not recorded in era ${engineEra.era}'s lineage.`,
+  );
+  await expect(page.getByTestId('lantern-intertitle')).not.toContainText('one era with another');
+  expect(await probe(page)).toBeNull();
+  expect(errors).toEqual([]);
+});
+
 test('plain town board WATCH plays an era-current reel without debug', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const tape = await currentEraTape();
@@ -104,7 +140,9 @@ test('plain town board WATCH gives a half-stamped reel its honest unstamped-era 
   await expect(show).toHaveAttribute('data-era-refused', 'true', { timeout: 20_000 });
   await expect(show).toHaveAttribute('data-playback', 'complete');
   await expect(page.getByTestId('lantern-intertitle')).toContainText(`This reel rode era unknown (unstamped build ${tape.meta.buildId}).`);
-  await expect(page.getByTestId('lantern-intertitle')).toContainText('The county will not counterfeit one era with another.');
+  await expect(page.getByTestId('lantern-intertitle')).toContainText(
+    `This reel does not announce an engine era. The county cannot prove it belongs to era ${engineEra.era}.`,
+  );
   await mkdir(ERA_SHOT_DIR, { recursive: true });
   await writeFile(path.join(ERA_SHOT_DIR, `${testInfo.project.name}-half-stamped-refusal.png`), await page.screenshot({ fullPage: true }));
   expect(errors).toEqual([]);

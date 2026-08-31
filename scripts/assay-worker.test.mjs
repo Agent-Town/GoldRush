@@ -6,11 +6,11 @@ import { createServer } from 'node:http';
 import { homedir, tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 import { assertCanonicalAssayNode, CANONICAL_ASSAY_NODE_VERSION, computeEngineHash, ENGINE_SOURCE_INPUTS } from './assay-replay-agent.mjs';
 
 const root = process.cwd();
 const buildId = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim();
-const engineHash = await computeEngineHash(root);
 const installedCanonicalNode = path.join(homedir(), '.nvm/versions/node', `v${CANONICAL_ASSAY_NODE_VERSION}`, 'bin/node');
 const workerNode = process.versions.node === CANONICAL_ASSAY_NODE_VERSION ? process.execPath : installedCanonicalNode;
 if (!existsSync(workerNode)) throw new Error(`assay-worker tests require Node ${CANONICAL_ASSAY_NODE_VERSION}`);
@@ -36,8 +36,8 @@ async function fixture() {
       await writeFile(${JSON.stringify(attempts)}, String(attempt));
       if (attempt <= 3) throw new Error('stub instrument unavailable');
     }
-    const eventLogHash = tape.id === 'hash-mismatch' ? 'fnv1a32:deadbeef' : tape.id === 'invalid-hash' ? 'not-a-hash' : tape.id === 'matching-round2' ? tape.eventLogHash : 'fnv1a32:1234abcd';
-    const outcome = tape.id === 'matching-round2' ? tape.outcome : { secured: true, waves: tape.id === 'outcome-mismatch' ? 9 : 10, timeAlive: 120, gold: 40 };
+    const eventLogHash = tape.id === 'hash-mismatch' ? 'fnv1a32:deadbeef' : tape.id === 'invalid-hash' ? 'not-a-hash' : tape.id.startsWith('matching-round2') ? tape.eventLogHash : 'fnv1a32:1234abcd';
+    const outcome = tape.id.startsWith('matching-round2') ? tape.outcome : { secured: true, waves: tape.id === 'outcome-mismatch' ? 9 : 10, timeAlive: 120, gold: 40 };
     process.stdout.write(JSON.stringify({ eventLogHash, outcome }) + '\\n');
   `);
   return { directory, stub };
@@ -115,29 +115,38 @@ test('once keeps completed mismatches rejected and retries instrument failures b
   }
 });
 
-test('engine hash wins over build id, with build id retained for legacy tapes', async () => {
+test('engine lineage wins over build id, with build id retained for legacy tapes', async () => {
   const { directory, stub } = await fixture();
   const round2 = JSON.parse(readFileSync('artifacts/assay-e2e-20260822/round2/tape-secure-verb.json', 'utf8'));
-  const matchingTape = { ...round2, id: 'matching-round2', meta: { buildId: buildId.slice(0, 8), engineHash, era: 3 } };
-  const matchingRow = {
-    locator: locator(matchingTape.id),
-    tape: matchingTape,
-    score: { ...matchingTape.outcome, baseValue: 60 },
-    submittedAt: 1,
+  const matchingRow = (id, engineHash) => {
+    const tape = { ...round2, id, meta: { buildId: buildId.slice(0, 8), engineHash, era: engineEra.era } };
+    return { locator: locator(id), tape, score: { ...tape.outcome, baseValue: 60 }, submittedAt: 1 };
   };
-  const engineSkew = row('engine-skew');
-  engineSkew.tape.meta = { buildId, engineHash: '0'.repeat(64), era: 2 };
+  const crossEra = row('cross-era');
+  crossEra.tape.meta = { buildId, engineHash: '0'.repeat(64), era: engineEra.era - 1 };
+  const unknownPin = row('unknown-pin');
+  unknownPin.tape.meta = { buildId, engineHash: '0'.repeat(64), era: engineEra.era };
   const legacySkew = row('legacy-skew');
   legacySkew.tape.meta = { buildId: 'deadbeef' };
-  const api = await mockApi([engineSkew, legacySkew, matchingRow]);
+  const earlierPin = engineEra.pins.find(({ engineHash }) => engineHash.startsWith('d5b04061'))?.engineHash;
+  assert.ok(earlierPin, 'the heat-7 era-4 pin is present in the registry lineage');
+  const api = await mockApi([
+    crossEra,
+    unknownPin,
+    legacySkew,
+    matchingRow('matching-round2', engineEra.engineHash),
+    matchingRow('matching-round2-lineage', earlierPin),
+  ]);
   try {
     const { code, stdout, stderr } = await runWorker(api.base, stub).done;
     assert.equal(code, 0, stderr);
-    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'unassayable', 'verified']);
-    assert.equal(api.posts[0].reason, "engine era 4 'the Embodied Hand', tape from era 2");
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['unassayable', 'unassayable', 'unassayable', 'verified', 'verified']);
+    assert.equal(api.posts[0].reason, "engine era 4 'the Embodied Hand', tape from era 3");
     assert.equal(api.posts[0].replayedHash, undefined);
-    assert.equal(api.posts[1].reason, `build-skew (tape deadbeef, assayer ${buildId})`);
-    assert.equal(api.posts[2].reason, undefined);
+    assert.equal(api.posts[1].reason, `engine era 4 'the Embodied Hand', tape claims unknown pin ${'0'.repeat(64)} in era 4`);
+    assert.equal(api.posts[2].reason, `build-skew (tape deadbeef, assayer ${buildId})`);
+    assert.equal(api.posts[3].reason, undefined);
+    assert.equal(api.posts[4].reason, undefined);
     assert.equal(stdout.trim().split('\n').map(JSON.parse).some(({ event }) => event === 'instrument_retry'), false);
   } finally {
     await api.close();
