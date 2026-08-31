@@ -19,7 +19,7 @@
 // a declaration that starts blocking drains is a regression, not a stronger guard (F-1460-1).
 // EVERY RED ARM IS PROVEN BY MANUFACTURING THE DEFECT on a scratch copy, and each reverse control
 // exists to catch one specific over-general cure.
-import test from 'node:test';
+import test, { after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
@@ -33,8 +33,19 @@ const SOURCE = readFileSync(SUBJECT, 'utf8');
 
 const DECLARATION = 'NEAR-MISS';
 
+// F-2393-3 (cured s2394): every board() root is registered and removed in ONE top-level `after`,
+// rather than the house `t.after(...)` idiom. Deliberate: board() has ten call sites and takes no
+// test context, so a per-site hook is ten chances to forget — and an eleventh test added later
+// would leak silently until `fixture-teardown` reds the WHOLE node-guards battery on main, which
+// is exactly what this cure is repairing.
+const FIXTURE_ROOTS = [];
+after(() => {
+  for (const root of FIXTURE_ROOTS) rmSync(root, { recursive: true, force: true });
+});
+
 function board({ leaves, masters = [] }) {
   const root = mkdtempSync(join(tmpdir(), 's2390-nearmiss-'));
+  FIXTURE_ROOTS.push(root);
   mkdirSync(join(root, 'tasks', 'done'), { recursive: true });
   mkdirSync(join(root, 'tasks', 'queue-paused'), { recursive: true });
   for (const m of masters) writeFileSync(join(root, 'tasks', m), `# ${m}\n`);
