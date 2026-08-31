@@ -34,6 +34,54 @@
  *
  * The fixture drives the tool through `GR_REPO`, which is the seam its own header already exposes,
  * so no arm touches the live board except the three that are ABOUT the live board.
+ *
+ * ---------------------------------------------------------------------------------------------
+ * F-2401-1 (s2401) — THOSE THREE ARMS PINNED `rc === 0` ON A BOARD THAT IS rc=1 FOR THE ENTIRE
+ * WORKING LIFE OF EVERY FIRE THAT HOLDS THE LOCK.
+ *
+ * §4's normal pattern is: take the lock (which DROPS the predecessor's line-1), do the work,
+ * restore the archive in the handoff commit. `status-archive-audit` reads HEAD, so between those
+ * two commits it correctly reports `LOST: 1 handoff line-1s PERMANENTLY absent at HEAD` and exits
+ * 1. That is the tool being RIGHT -- it is telling the fire it still owes §4's archive.
+ *
+ * MEASURED s2401 over the last 8 lock commits: 6 of 8 dropped the predecessor archive at lock
+ * time, so arms 1, 6 and 8 red on ~75% of fires that run this battery mid-run. Leg 10 itself
+ * (`status-archive-audit --limit 40 --quiet`, chained bare) reds for the same reason.
+ *
+ * SEVERITY, STATED HONESTLY AND NOT INFLATED: this is a FALSE RED, not a false green, and at the
+ * PRESCRIBED moment it does not fire at all -- F-1300-4 mandates the battery as the fire's LAST
+ * act, AFTER the bookkeeping commit, by which time the archive is restored and rc=0. Nothing was
+ * ever wrongly certified. What earns it a cure is F-1460-1's decay path: a red that fires during
+ * ordinary correct operation is the red that gets excused, and these three are REVERSE CONTROLS --
+ * the arms that decide whether the F-2278-1 cure is the right SIZE. Excused, they protect nothing.
+ * It also punishes the mid-fire health check this factory otherwise encourages.
+ *
+ * THE CURE IS THE DISCRIMINATION THIS REPO ALREADY LIVES BY: rc=2 = "could not answer" (misuse)
+ * vs rc=1 = "answered, and the answer refuses". F-2278-1's whole finding was about the MISUSE
+ * contract -- every teeth arm asserts rc=2 -- so its reverse controls should assert "NOT a misuse
+ * refusal", never "the board is clean". The audit and leg 10 are DELIBERATELY LEFT ALONE: their
+ * mid-fire rc=1 is a true and useful reminder of an owed archive, and silencing it would trade a
+ * false red for a false green.
+ *
+ * TEETH, every variant manufactured on scratch copies, each asserting it LOADED and ran all 8 arms
+ * before its verdict was believed (F-2400-1's method note: a variant that fails to load prints no
+ * `✖ arm N` and is otherwise scored as a clean pass -- F-2215-1's silence-vs-silence trap):
+ *   · CONTROL, cured guard on the live board with the lock held  -> NO reds (the false red clears)
+ *   · CONTROL, original guard on the same board                  -> reds 1, 6, 8 (reproduces it)
+ *   · `--limit` stops consuming its value                        -> reds 1, 6, 8 (teeth intact)
+ *   · `--all` stops printing the ok-excluded listing             -> reds 8 ALONE
+ *   · the tool CRASHES                                           -> reds ALL 8 (not blind to it)
+ *   · a VALID command prints a correct verdict and exits 2       -> reds 1, 6, 8 WITH the rc
+ *     assertion and 7 ALONE without it -- so `notEqual(rc, 2)` is LOAD-BEARING, not decoration
+ *     (s2226's duty: a manufactured defect that reddens nothing is an unreachable branch).
+ *
+ * ⚠️ AND A SECOND, SMALLER FINDING FOUND BY THE SAME SWEEP, arm 2. It asserted rc=2 and nothing
+ * about WHICH refusal -- so restoring F-2278-1's ORIGINAL defect verbatim (disable the `KNOWN`
+ * check) left it GREEN: `--limit 40 --strict` still exits 2, but with "--limit needs a number"
+ * from an unrelated path, and only arm 3 reddened, incidentally, on its time bound. The arm NAMED
+ * for the defect could not see the defect. It now pins the refusal's reason, and that same defect
+ * reds arms 2 and 3. SAME ROOT CAUSE AS THE MAIN FINDING: an exit code alone is an ambiguous
+ * observable in a tool with three of them -- assert the MESSAGE, not just the number.
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -84,7 +132,12 @@ function fixtureWithOneDrop() {
 
 test('1. REVERSE CONTROL — the battery leg `--limit 40 --quiet` still succeeds and still reports', () => {
   const r = run(['--limit', '40', '--quiet']);
-  assert.equal(r.rc, 0, 'leg 10 of test:ledger-guards must keep passing on a clean board');
+  // F-2401-1: NOT `rc === 0`. This tool's rc carries TWO axes -- 2 = "could not answer" (misuse)
+  // vs 1 = "answered, and the answer refuses" (a LOST verdict) -- and this arm is about the first.
+  // A fire holding the lock has, BY CONSTRUCTION, dropped its predecessor's line-1 and not yet
+  // restored it (§4's normal pattern), so the audit correctly reports LOST at rc=1 for the whole
+  // working life of the fire. Pinning rc=0 made this arm red on 6 of the last 8 fires.
+  assert.notEqual(r.rc, 2, 'leg 10 must never REFUSE as misuse; rc=1 is a board verdict, not a parse failure');
   assert.match(r.out, /^(CLEAN|LOST):/m, 'the verdict line always prints, however quiet the caller asked for');
   assert.match(r.out, /across \d+ STATUS\.md commits/, 'the examined denominator stays declared (s2224)');
 });
@@ -92,6 +145,11 @@ test('1. REVERSE CONTROL — the battery leg `--limit 40 --quiet` still succeeds
 test('2. TEETH — an unrecognised option REFUSES with 2 rather than being swallowed', () => {
   const r = run(['--limit', '40', '--strict']);
   assert.equal(r.rc, 2, '`--strict` was byte-identical to passing nothing before this cure');
+  // F-2401-1: rc=2 ALONE is satisfied by ANY refusal, so this arm -- the one named for F-2278-1 --
+  // was blind to F-2278-1's own defect. MEASURED: disabling the KNOWN check makes `--limit 40
+  // --strict` refuse with "--limit needs a number" instead, still rc=2, and this arm stayed GREEN
+  // while only arm 3 reddened (incidentally, on its time bound). Pin WHICH refusal.
+  assert.match(r.out, /unrecognised option/, 'and it must refuse for THAT reason, not some other');
   assert.doesNotMatch(r.out, /^CLEAN:/m, 'a refusal must not also render an affirmative verdict');
 });
 
@@ -125,7 +183,9 @@ test('5. REVERSE CONTROL — the refusal reaches STDOUT, not stderr alone (F-221
 
 test('6. REVERSE CONTROL — `--limit N` consumes its value, so the number is not read as an option', () => {
   const r = run(['--limit', '40']);
-  assert.equal(r.rc, 0, 'if the value were not consumed, "40" itself would refuse as unrecognised');
+  // F-2401-1: this arm is about ARGUMENT PARSING, not about the board's verdict. rc=2 is the only
+  // outcome that means "the parse failed"; the `across 40` regex below carries the positive teeth.
+  assert.notEqual(r.rc, 2, 'if the value were not consumed, "40" itself would refuse as unrecognised (rc=2)');
   assert.match(r.out, /across 40 STATUS\.md commits/, 'and the bound must still be the one asked for');
 });
 
@@ -151,7 +211,8 @@ test('7. REVERSE CONTROL — `--quiet` must NOT suppress the DROPPED blocks or t
 test('8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure did not break advisory output', () => {
   const plain = run(['--limit', '40']);
   const all = run(['--limit', '40', '--all']);
-  assert.equal(all.rc, 0);
+  // F-2401-1: as arm 6 -- this is about `--all` still producing its listing, not about the verdict.
+  assert.notEqual(all.rc, 2);
   assert.ok(
     all.out.length > plain.out.length,
     `--all must still add the ok-excluded listing (plain ${plain.out.length} B vs --all ${all.out.length} B)`,
