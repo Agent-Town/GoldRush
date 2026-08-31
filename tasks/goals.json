@@ -3644,10 +3644,12 @@
               "id": "f2397-2-multi-pin-lineage-arm",
               "title": "Restore the era-pin-lineage CONSUMER arm on a fixture registry: an earlier pin of the same era must still verify",
               "taskFile": "lane-d-f2397-2-multi-pin-lineage-arm.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "fire s2407 2026-08-31",
-              "note": "F-2397-2 corrective, FIRE-AUTHORED from the s2397 drain review reviews/era-five-replayed-board.md. Proven by manufacturing: with pins.some(...) collapsed to head-pin equality the assay-worker suite still reports 9 pass / 0 fail rc=0, so the multi-pin lineage mechanism is asserted nowhere. The review’s literal cure is unachievable (static module-relative registry import); the authoring fire measured a working lever (copy the two-file worker surface beside a two-pin fixture registry, symlink node_modules, spawn from there) and proved its teeth (earlier pin flips verified -> unassayable under the defect, both controls steady). F-2397-1 deliberately NOT authored and firewalled out: its cure is a design fork across three runtimes."
+              "note": "F-2397-2 corrective, FIRE-AUTHORED from the s2397 drain review reviews/era-five-replayed-board.md. Proven by manufacturing: with pins.some(...) collapsed to head-pin equality the assay-worker suite still reports 9 pass / 0 fail rc=0, so the multi-pin lineage mechanism is asserted nowhere. The review’s literal cure is unachievable (static module-relative registry import); the authoring fire measured a working lever (copy the two-file worker surface beside a two-pin fixture registry, symlink node_modules, spawn from there) and proved its teeth (earlier pin flips verified -> unassayable under the defect, both controls steady). F-2397-1 deliberately NOT authored and firewalled out: its cure is a design fork across three runtimes.",
+              "mergeHash": "8a2ff0df3ef8269589a4e0ecd952c0619299b9bc",
+              "drainNotes": "Drained s2408. Merge 8a2ff0df3, review reviews/f2397-2-multi-pin-lineage-arm.md. Teeth RE-PROVEN drain-side rather than inherited: with pins.some(...) collapsed to head-pin equality the new arm reds ALONE (actual [unassayable,verified,unassayable] vs expected [verified,verified,unassayable]) while both controls hold steady; defect reverted, gate tree clean. 10 pass / 0 fail in 2.08s, tsc green, build green. Production surface (assay-worker.mjs, assay-replay-agent.mjs, assets/engine-era.json) byte-identical to main, so no player-visible change and no GZ-01 item is owed. Drain filed F-2408-1: engine-era-guard is red on unmodified main because daae36dc7 (s2406) appended one guard filename to package.json, which sits in ENGINE_SOURCE_INPUTS - NOT caused by this slice."
             }
           ]
         }
