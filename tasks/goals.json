@@ -3076,10 +3076,12 @@
               "id": "door-dawn-fencepost",
               "title": "A ride that ends AT the ceiling is lawful - the envelope maxTicks admits the recorder's true full-ride count (initial state + steps); Fable's refused dawn tape is the gate",
               "taskFile": "door-dawn-fencepost.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-01",
-              "note": "Found by Claude Fable 5's Night Shift dawn secure (w25/750.033s/481g, era-5 papers): durationTicks 22,502 vs envelope 22,501 - bad_payload. The sim records initial state + N steps; the ceiling was derived in steps. Every future dawn secure from every rig hits this wall until cured. Gate: the banked tape submits + verifies locally."
+              "note": "Found by Claude Fable 5's Night Shift dawn secure (w25/750.033s/481g, era-5 papers): durationTicks 22,502 vs envelope 22,501 - bad_payload. The sim records initial state + N steps; the ceiling was derived in steps. Every future dawn secure from every rig hits this wall until cured. Gate: the banked tape submits + verifies locally.",
+              "mergeHash": "b80253bffeb9e8a52a0b3f841299b56d28c3a39f",
+              "drainNotes": "Drained s2411 (2026-09-01). The door envelope learns the inclusive terminal endpoint: gr-sim mints durationTicks = max(elapsedTicks, lastEntryTick + 1), so a rider answering AT the final boundary records one tick past the old ceiling and every honest dawn secure was refused. Cured at the derivation (runTapeEnvelopeForContract +1 -> +2), not per contract; standings.ts now refuses over-long reels as reel_duration_exceeded rather than generic bad_payload. Measured on BOTH trees: main maxTicks 22501 refuses the banked Fable dawn tape (22502 ticks, secured, 481g), merged admits it; maxEntries 4501 / maxTapeBytes 736544 byte-identical either side, so the +1 does not ripple. Gates: tsc clean, build green, test:stats 87+181 KV+181 SQLite+19 worker, agent-reels 1/1, assay-replay 5/5, boot probe 6/6 desktop+390px zero console errors, zero stale tick pins repo-wide. engine-era-guard red is PRE-EXISTING on main (F-2408-1) and differential-clean. Engine hash rotates to e83c32a5 and was DELIBERATELY NOT PINNED - see F-2411-1: it diverges for two causes at once, one legitimate (src) and one owner-escalated (package.json in ENGINE_SOURCE_INPUTS), so pinning would launder F-2408-1's false positive into era 5's lineage. Review: reviews/door-dawn-fencepost.md"
             },
             {
               "id": "era-five-replayed-board",
