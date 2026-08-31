@@ -486,7 +486,7 @@ function main() {
   // master-shipped-classifier and review-evidence-audit already carry.
   //
   // SILENT on the healthy read, loud otherwise — this file's OWN established convention
-  // (`dispatchCorpus` at :967 declares 'absent' always, refuses 'unreadable', and says nothing on
+  // (`dispatchCorpus` at :1020 declares 'absent' always, refuses 'unreadable', and says nothing on
   // 'read'). F-2208-1's "declare even on the happy path" argument governs a corpus whose failure
   // state is a SILENT DEGRADATION; here every non-main state REFUSES, so the absence of a banner
   // is not ambiguous and an always-on line on §3.0's most-run command would be the noise that
