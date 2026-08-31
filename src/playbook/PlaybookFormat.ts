@@ -68,7 +68,10 @@ export function runTapeEnvelopeForContract(contractId: string): RunTapeEnvelope 
       ? Math.max(twist.secureWave, twist.baron.wave) + ASSAY_BOSS_GRACE_WAVES
       : twist.secureWave;
     const cadence = Math.max(0.1, twist.waveCadenceMult ?? 1);
-    const contractTicks = Math.ceil((finalWave * Balance.waves.waveInterval / cadence) / PLAYBOOK_STEP_SECONDS) + 1;
+    // The sim takes one step through the final wave boundary, and gr-sim may record an accepted
+    // order at that terminal instant. durationTicks is an exclusive end, so that lawful endpoint
+    // needs one more slot: nominal boundary + terminal step + inclusive endpoint.
+    const contractTicks = Math.ceil((finalWave * Balance.waves.waveInterval / cadence) / PLAYBOOK_STEP_SECONDS) + 2;
     maxTicks = Math.max(MAX_PLAYBOOK_TICKS, contractTicks);
   }
   const maxEntries = Math.ceil(maxTicks / RUN_TAPE_ENVELOPE_TICKS_PER_ENTRY);

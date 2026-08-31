@@ -678,6 +678,11 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   const inputLogHash = typeof body.inputLogHash === 'string' && SHA256.test(body.inputLogHash) ? body.inputLogHash : '';
   const stack = body.stack === undefined ? undefined : validateStack(body.stack);
   const party = body.party === undefined ? undefined : validateParty(body.party);
+  if (knownContract(epochId, contractId) && isRecord(body.tape) && isRecord(body.tape.inputLog)
+    && Number.isSafeInteger(body.tape.inputLog.durationTicks)
+    && (body.tape.inputLog.durationTicks as number) > runTapeEnvelopeForContract(contractId).maxTicks) {
+    return error(cors, 400, 'reel_duration_exceeded', `Reel duration exceeds the ${contractId} contract ceiling.`);
+  }
   const tape = body.tape === undefined ? undefined : validateTape(body.tape, contractId, seed, difficulty);
   if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null || party === null || tape === null) {
     return error(cors, 400, 'bad_payload', 'Standing not accepted.');

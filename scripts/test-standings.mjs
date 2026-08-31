@@ -220,14 +220,16 @@ async function checkPosts(onRequest) {
   equal(board.body.board[0].assay, 'pending', 'pending badge state is exposed');
 
   const twin = tape('twin-final-tick', 20, 'fnv1a32:1234abcd', 'e1-twin-banks');
-  twin.inputLog.durationTicks = 18_001;
+  twin.inputLog.durationTicks = 18_002;
   equal((await call(onRequest, 'POST', '/api/standings', post('3'.repeat(32), 20, twin, 'e1-twin-banks'), kv)).status, 200, 'Twin Banks final-tick tape is accepted');
 
   const night = tape('night-dawn', 25, 'fnv1a32:1234abcd', 'e1-night-shift');
-  night.inputLog.durationTicks = 22_501;
+  night.inputLog.durationTicks = 22_502;
   equal((await call(onRequest, 'POST', '/api/standings', post('4'.repeat(32), 25, night, 'e1-night-shift'), kv)).status, 200, 'Night Shift dawn tape is accepted');
   night.inputLog.durationTicks += 1;
-  equal((await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 25, night, 'e1-night-shift'), kv)).status, 400, 'Night Shift beyond-margin tape is refused');
+  const beyondDawn = await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 25, night, 'e1-night-shift'), kv);
+  equal(beyondDawn.status, 400, 'Night Shift beyond-margin tape is refused');
+  equal(beyondDawn.body.error, 'reel_duration_exceeded', 'Night Shift beyond-margin refusal names the duration reason');
 
   const oversized = post('6'.repeat(32), 20);
   oversized.profileName = 'x'.repeat(2 * 1024 * 1024);
@@ -252,10 +254,10 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
   }), [
     ['the-claim', 18_000, 592_384, 3_600, 802_080],
     ['e1-drill-yard', 18_000, 592_384, 3_600, 802_080],
-    ['e1-dry-gulch', 18_001, 592_544, 3_601, 802_080],
-    ['e1-night-shift', 22_501, 736_544, 4_501, 802_080],
-    ['e1-twin-banks', 18_001, 592_544, 3_601, 802_080],
-    ['e1-baron', 20_349, 667_584, 4_070, 802_080],
+    ['e1-dry-gulch', 18_002, 592_544, 3_601, 802_080],
+    ['e1-night-shift', 22_502, 736_544, 4_501, 802_080],
+    ['e1-twin-banks', 18_002, 592_544, 3_601, 802_080],
+    ['e1-baron', 20_350, 667_584, 4_070, 802_080],
   ], 'E1 four-axis door envelope table is pinned');
 
   const widestCharacter = '\ud800';
@@ -300,16 +302,16 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
     'e2-incline',
     'e3-canyon-works',
     'e4-dust-flats',
-  ].map(maxRunTapeTicksForContract), [18_000, 18_000, 18_001, 22_501, 18_001, 20_349, 23_144, 21_601, 18_001, 18_001], 'contract duration table is pinned');
+  ].map(maxRunTapeTicksForContract), [18_000, 18_000, 18_002, 22_502, 18_002, 20_350, 23_145, 21_602, 18_002, 18_002], 'contract duration table is pinned');
   equal(maxRunTapeTicksForContract('unknown-contract'), recorderTicks, 'unknown contracts keep the recorder ceiling');
   equal(runTapeEnvelopeForContract('unknown-contract'), runTapeEnvelopeForContract('the-claim'), 'unknown contracts keep the ordinary door envelope');
 
   for (const [contractId, ceiling, waves] of [
-    ['e1-night-shift', 22_501, 25],
-    ['e2-trestle', 23_144, 12],
-    ['e2-incline', 21_601, 12],
-    ['e3-canyon-works', 18_001, 12],
-    ['e4-dust-flats', 18_001, 12],
+    ['e1-night-shift', 22_502, 25],
+    ['e2-trestle', 23_145, 12],
+    ['e2-incline', 21_602, 12],
+    ['e3-canyon-works', 18_002, 12],
+    ['e4-dust-flats', 18_002, 12],
   ]) {
     const bounded = tape(`${contractId}-validator`, waves, 'fnv1a32:1234abcd', contractId);
     bounded.inputLog.durationTicks = ceiling;
