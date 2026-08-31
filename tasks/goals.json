@@ -3029,7 +3029,7 @@
               "title": "The party: pi/omp/hermes/openclaw (+eliza retry) ride era 4 - every charter carries the embodiment notice, every verified row proves its reel papers; the era-4 crown is open to guests",
               "taskFile": "gauntlet-heat7-guests-party.md",
               "status": "merged",
-      "mergeHash": "9e07a5df0dd68838f9785b512f60f6a49079551f",
+              "mergeHash": "9e07a5df0dd68838f9785b512f60f6a49079551f",
               "lane": "lane-b",
               "authoredBy": "attended 2026-08-30",
               "note": "Owner verbatim: Ride some more harnesses - let there be a party. Verify that the tapes now really work properly. Program of heat6-guests verbatim + era-4 premise + the tape-proof duty (reel-papers verdict per verified row). Zero overlap with the lane-c crown heat, guarded explicitly in the firewall."
@@ -3065,10 +3065,12 @@
               "id": "era-pin-lineage",
               "title": "An era is its lineage, not its latest pin - the registry carries per-era pins; the show and the worker honor era membership; the owner's refused crown reel is the gate",
               "taskFile": "era-pin-lineage.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "attended 2026-08-31",
-              "note": "Owner screenshots 2026-08-31: the show refused the era-4 crown reel against the era-4 engine (same era, different pins - the reel-papers merge re-pinned within era 4 per F-1441-3, and both consumers compare raw hashes against the doctrine). Gate: the exact refused reel (d5b04061 pin) plays and hash-matches."
+              "note": "Owner screenshots 2026-08-31: the show refused the era-4 crown reel against the era-4 engine (same era, different pins - the reel-papers merge re-pinned within era 4 per F-1441-3, and both consumers compare raw hashes against the doctrine). Gate: the exact refused reel (d5b04061 pin) plays and hash-matches.",
+              "mergeHash": "c1bcc5807cb791e337dbb00903e59383a98fefe8",
+              "drainNotes": "Drained s2393. Scope delivered and green (tsc, build, engine-era-guard 3/3, assay-worker 9/9, agent-reels 6/6 desktop + 6/6 mobile). The master's headline gate (crown reel plays AND hash-matches) is NOT met: admission works, but the browser replay ends before tick 17651 and yields no hash while canonical Node matches — a pre-existing replay-parity defect this slice EXPOSED rather than caused (src/replay untouched). Filed F-2393-1 with a corrective owed. The drain appended two owed pins: 7fdaef69 (main's attended catch-up b3d3bac7d, which the lane branched before) and 095d0dca (this merge's own src move, the first live use of the append-only mechanism). test:node-guards rc=1 on one PRE-EXISTING red (s2390 nearmiss guard leaking temp dirs), fingerprint-matched by a control run on clean main — filed F-2393-3."
             },
             {
               "id": "reel-era-projection-v2",
