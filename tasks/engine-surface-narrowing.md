@@ -1,0 +1,27 @@
+# Task engine-surface-narrowing: the engine's identity is the engine — not the lockfile (lane-d, commit prefix "fix:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-d.
+
+READ FIRST: AGENTS.md; `scripts/assay-replay-agent.mjs` (`ENGINE_SOURCE_INPUTS` ~`:36` — today: package-lock.json, package.json, tsconfig.json, vite.config.ts, the replay agent, assets/contracts, crafting-queue, layer-contracts, pilots/map-rebuild-spike, and ALL of `src`); `assets/engine-era.json` (era 5, three pins, each caused by NON-engine churn); `scripts/engine-era-guard.test.mjs`; the release-audit row at the top of tasks/BACKLOG.md (the measured harm: three same-era rotations in two days from `package.json` guard-hygiene edits alone; heat 10 stopped because an arena `npm install` rewrote the lockfile; the era guard is RED on main right now); `tasks/era-pin-lineage.md` (the membership law this extends).
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): standard safe-dupe (ahead content on main = SAFE DUPE → `git checkout -B lane/d main && git clean -fd`, PROCEED; STOP on unmerged ahead content or foreign edits). **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1)** and **FACTORY-CHURN EXCEPTION (F-1407-1): `logs/**`, `artifacts/**`, `reviews/shots-*`, any `.png` — always expected, never a STOP; list and proceed.** Still-STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`. Then **`npm ci`** (never `npm install` — see scope 4); `npm run build` green.
+
+## Why (pre-release integrity: a public rider's verified tape must not rot because a fire tuned a test timeout)
+The hash surface over-covers. `package.json`, `package-lock.json`, `tsconfig.json` and `vite.config.ts` are build/tooling files whose edits never change simulation behaviour, yet every touch rotates the "engine identity", orphans every stored tape for WATCH and assay until someone remembers a pin-append (missed three times), and stopped a whole heat when an operator's `npm install` rewrote the lockfile in an arena. After launch this class would hit strangers.
+
+## Scope
+1. **Narrow the surface to what actually determines a replay**: `src` (the sim + everything the replay imports), `assets/contracts`, `assets/layer-contracts`, `assets/crafting-queue/**` that the sim reads, `assets/pilots/map-rebuild-spike`, and `scripts/assay-replay-agent.mjs` itself. DROP `package.json`, `package-lock.json`, `tsconfig.json`, `vite.config.ts`. Justify each keep/drop in the report; if any dropped file demonstrably changes sim output (prove or disprove with a replay-hash experiment), keep it and say why.
+2. **Dual-basis lineage so NOTHING is orphaned**: changing the surface changes the hash FUNCTION, so every existing stamp (tapes, board rows, the three era-5 pins) is in the OLD basis. Each pin entry gains an `aliases` array; for every existing era-5 pin, compute the NEW-basis hash at that pin's commit (`git worktree`/`git show` the tree at the pin's recorded commit — recover the commits from `git log -- assets/engine-era.json`; c0a015ae = the era-5 declaration commit, 417ac150 = b80253bff, 25040ad5 = c13b4c24d, d47f32f6 = main after the package.json trio) and record it as an alias. Membership (show + worker, from era-pin-lineage) tests the tape's hash against EVERY recorded hash and alias. Every existing verified row stays playable — assert it with the real stored reels' hashes as fixtures.
+3. **Guard teeth**: `engine-era-guard` must RED any tree whose computed (new-basis) hash is absent from the current era's pins/aliases — no green drains with an unrecorded engine — and stay append-only. The `d47f32f6…` pin (old basis; the fires' package.json guard-hygiene edits) was already appended by the attended session - give it its new-basis alias like the others, then the post-narrowing hash becomes the head pin.
+4. **The arena law**: `scripts/fire.md` §heats / the heat masters' shared pre-flight text: arenas use `npm ci`, never `npm install`; and with the narrowed surface a lockfile rewrite no longer rotates identity anyway — state both.
+5. **Tests**: the guard's three arms + a new one (a package.json change does NOT rotate the hash; a src change DOES); membership with aliases at show and worker; the stored-reel fixtures from scope 2.
+
+## Firewall
+Touch ONLY: `scripts/assay-replay-agent.mjs` (the surface list + hash function), `assets/engine-era.json`, `scripts/engine-era-guard.test.mjs`, the membership helper the show/worker share (from era-pin-lineage) + their tests, `scripts/fire.md` (one arena-law paragraph), `scripts/gr-sim.mjs` only if it stamps via a separate path, BACKLOG row. NO sim mechanics, NO door ranking, NO UI.
+
+## Self-check (evidence, not vibes)
+`npx tsc --noEmit` clean; `npm run build` green; `npm run test:node-guards` green INCLUDING the era guard on the merged tree (count stated); `npm run test:stats` green both arms; the alias-membership fixtures green; a proof that the three existing Claude crown/standing reels (`agent-6acf1470…`, `agent-c4ab1b1a-2d1d8622…`, `agent-bb7f6efb…`) still pass membership. Report: the final surface list with justifications, the alias table (old→new per pin), the guard diff, the arena-law text.
+End: READY-FOR-GATES + the above.
+
+## No-op / honesty guard
+If any dropped file turns out to affect replay output, keep it and STOP-note why; if an alias cannot be computed for a historical pin (commit unrecoverable), STOP and name it — orphaning even one verified row silently is the forbidden outcome.
