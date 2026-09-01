@@ -34,8 +34,40 @@ function fixture(t, { law, target, goals = { version: 1, goals: [] } }) {
   return dir;
 }
 
+/**
+ * EVERY spawn in this file is BOUNDED (F-2428-1). The sibling `law-pointer-surface-count-guard.test.mjs`
+ * bounded its spawns at s2412 after a run wedged, and its header comment says "EVERY spawn is BOUNDED" —
+ * but that sentence is TRUE ONLY OF THE FILE IT IS WRITTEN IN. This file spawns the SAME subject, in the
+ * SAME battery, and was unbounded at three sites until s2428: no `timeout`, so a wedged child blocks
+ * `spawnSync` forever, and because `spawnSync` blocks the event loop, node --test's own
+ * `--test-timeout=300000` is a TIMER THAT CAN NEVER FIRE. The result is a hang, and a hang is the one
+ * failure a battery leg must never have: a red names a subject, a hang names nothing, stalls the fire
+ * running its mandated last act (F-1300-4), and is indistinguishable from slowness.
+ *
+ * WHY HERE AND NOT THE OTHER 165 UNBOUNDED SITES in this battery: s2427's hang ran 14m37s, which is
+ * ARITHMETICALLY IMPOSSIBLE in the bounded sibling (60 s + one 60 s retry caps it near 120 s), so the
+ * hang came from an unbounded spawn; and this subject is the only one whose wedge is DOCUMENTED and
+ * MEASURED (~1 run in 10, s2412). The remaining sites are overwhelmingly `git`, which does not wedge
+ * this way — bounding all of them is unpriced work, not a cure.
+ */
+const SPAWN_BOUND = { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, timeout: 60_000, killSignal: 'SIGKILL' };
+
 function run(dir, ...args) {
-  return spawnSync('node', [SCRIPT, '--root', dir, ...args], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  let r = spawnSync('node', [SCRIPT, '--root', dir, ...args], SPAWN_BOUND);
+  // RETRY EXACTLY ONE FAILURE MODE, mirroring the sibling's F-2412-2 reasoning: a bound with no retry
+  // converts a known ~1-in-10 flake into a RED on a lawful board, which is how a guard gets excused
+  // into uselessness (F-1460-1). An assertion failure is NEVER retried, so a genuine regression still
+  // reds on the first attempt; only ETIMEDOUT — a verdict the subject never produced — gets a second
+  // chance, and a second timeout fails LOUD with both attempts named. No bound is raised (F-1410-2).
+  if (r.error && r.error.code === 'ETIMEDOUT') {
+    const first = r;
+    r = spawnSync('node', [SCRIPT, '--root', dir, ...args], SPAWN_BOUND);
+    assert.ok(
+      !r.error,
+      `spawn timed out TWICE (${first.error.code}, ${r.error && r.error.code}): node ${SCRIPT} — this is no longer the F-2412-2 flake, investigate the subject`,
+    );
+  }
+  return r;
 }
 
 const TARGET = ['#!/bin/bash', 'echo one', '# THE EPITAPH: do not restore the prune', 'echo three', ''].join('\n');
@@ -160,7 +192,7 @@ test('BOUNDARY: a NEW law surface outside the closed SURFACES list is NAMED (pre
     'Always confirm the epitaph at `scripts/target.sh:3` before draining.\n',
   );
 
-  const pre = spawnSync('node', [mutantWithoutDeclaration(t), '--root', dir], { encoding: 'utf8' });
+  const pre = spawnSync('node', [mutantWithoutDeclaration(t), '--root', dir], SPAWN_BOUND);
   assert.equal(pre.status, 0, pre.stdout);
   assert.doesNotMatch(pre.stdout, /NOT SCANNED/, 'PRE-CURE: the boundary is invisible — this is the defect');
   assert.doesNotMatch(pre.stdout, /new-ritual/, 'PRE-CURE: the unscanned surface is never named');
@@ -372,7 +404,7 @@ test('SCAN SPACE: declared on the HAPPY path too — a declaration that appears 
   assert.match(r.stdout, /scan space\s+:\s+\d+ famil\(ies\)/, 'the scan space must be declared even when nothing is unscanned');
   assert.match(r.stdout, /invisible to BOTH lists/, 'and it must say what the edge MEANS');
 
-  const pre = spawnSync('node', [mutantWithoutScanSpace(t), '--root', dir], { encoding: 'utf8' });
+  const pre = spawnSync('node', [mutantWithoutScanSpace(t), '--root', dir], SPAWN_BOUND);
   assert.equal(pre.status, 0, pre.stdout);
   assert.ok(pre.stdout.length > 0, 'PRE-CURE arm must really run — a silent control cannot be told from the silence it measures (F-2215-1)');
   assert.doesNotMatch(pre.stdout, /scan space/, 'PRE-CURE: the scan space is undeclared — this is the defect');
