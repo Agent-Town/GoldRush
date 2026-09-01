@@ -172,7 +172,11 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
     # take EnvironmentFile=/etc/goldrush-{assay,ledger}.env, outside the synced tree (runbook
     # :32,:60). Strictly subtractive, and it leaves the payload/allowlist fork (b)/(c) open.
     if ssh -o ConnectTimeout=8 -o BatchMode=yes root@<droplet> true 2>/dev/null; then
-      if rsync -az --delete --timeout=60 --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist --exclude 'gate-s*' ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
+      # F-DISK-0902: the droplet mirror is RUNTIME-ONLY. Review videos (3.3G), screenshots (1.5G), marketing (379M),
+      # the env dir (671M) and raw/motion/pilot art (5.7G) had been rsynced to a 24G box that only needs what the
+      # ledger+assayer import: src, scripts, functions, server, package files, assets/contracts|layer-contracts|
+      # crafting-queue and the one pilots subtree in ENGINE_SOURCE_INPUTS. Keep this list in step with that surface.
+      if rsync -az --delete --timeout=60 --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist --exclude 'gate-s*' --exclude reviews --exclude e1-review-video --exclude marketing --exclude env --exclude assets/raw --exclude assets/motion-pilot --exclude assets/contact-sheets --exclude assets/reference --include 'assets/pilots/map-rebuild-spike/***' --exclude 'assets/pilots/*' ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
         && ssh -o BatchMode=yes root@<droplet> "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
       else
