@@ -60,7 +60,7 @@ function spec(_files, name = SPEC) {
 }
 
 function run(files, ...args) {
-  return spawnSync(process.execPath, [SCRIPT, ...args], {
+  return spawnSync(process.execPath, [SCRIPT, ...args], { timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     env: {
       ...process.env,
@@ -242,7 +242,7 @@ const FRESH_NOW = '2031-12-26T01:02:03.000Z'; // 1 day after the fixture snapsho
 const STALE_NOW = '2032-01-25T01:02:03.000Z'; // 31 days after
 
 function runAt(files, now, ...args) {
-  return spawnSync(process.execPath, [SCRIPT, ...args], {
+  return spawnSync(process.execPath, [SCRIPT, ...args], { timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     env: {
       ...process.env,
@@ -267,7 +267,7 @@ test('a stale snapshot warns and a fresh one does not', (t) => {
   assert.match(stale.stdout, /! STALE SNAPSHOT — 31 days old, threshold 7/);
 
   // The threshold is a convention, so it must be movable — and moving it past the age must silence it.
-  const raised = spawnSync(process.execPath, [SCRIPT, spec(files), '--title', CLEAN_TITLE], {
+  const raised = spawnSync(process.execPath, [SCRIPT, spec(files), '--title', CLEAN_TITLE], { timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     env: {
       ...process.env,
@@ -334,7 +334,7 @@ test('an uncomputable age is treated as STALE, never as fresh', (t) => {
 
 test('a bad threshold or clock override fails loudly instead of disabling the warning', (t) => {
   const files = fixture(t);
-  const bad = (env) => spawnSync(process.execPath, [SCRIPT, spec(files), '--title', CLEAN_TITLE], {
+  const bad = (env) => spawnSync(process.execPath, [SCRIPT, spec(files), '--title', CLEAN_TITLE], { timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     env: {
       ...process.env,

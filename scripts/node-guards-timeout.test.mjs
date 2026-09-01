@@ -57,7 +57,7 @@ test('report execArgv', () => {
 `;
 
   const flags = withFixture('report-execargv.test.mjs', source, (file) => {
-    const child = spawnSync(process.execPath, [HARNESS, file], {
+    const child = spawnSync(process.execPath, [HARNESS, file], { timeout: 240_000, killSignal: 'SIGKILL',
       cwd: ROOT,
       encoding: 'utf8',
       env: cleanEnv(),
@@ -106,7 +106,7 @@ test('explicitly bounded sibling', { timeout: 10_000 }, async () => { await slee
     const child = spawnSync(
       process.execPath,
       ['--test', '--test-timeout=1000', file],
-      { cwd: ROOT, encoding: 'utf8', env: cleanEnv() },
+      { timeout: 240_000, killSignal: 'SIGKILL', cwd: ROOT, encoding: 'utf8', env: cleanEnv() },
     );
     const out = `${child.stdout}${child.stderr}`;
 

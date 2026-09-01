@@ -19,7 +19,7 @@ function cleanEnv() {
 }
 
 function runHarness(file, env = cleanEnv()) {
-  return spawnSync(process.execPath, [HARNESS, file], {
+  return spawnSync(process.execPath, [HARNESS, file], { timeout: 240_000, killSignal: 'SIGKILL',
     cwd: ROOT,
     encoding: 'utf8',
     env,

@@ -185,7 +185,7 @@ test('site: each inline <script> parses under the grammar its tag requests', () 
     blocks.forEach((block, i) => {
       const probe = join(tmp, `inline-${i}.${block.module ? 'mjs' : 'cjs'}`);
       writeFileSync(probe, block.body);
-      const run = spawnSync(process.execPath, ['--check', probe], { encoding: 'utf8' });
+      const run = spawnSync(process.execPath, ['--check', probe], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
       assert.equal(
         run.status,
         0,

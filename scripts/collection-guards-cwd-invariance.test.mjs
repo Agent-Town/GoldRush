@@ -79,7 +79,7 @@ console.log(
 function runGuard(file, cwd) {
   const env = { ...process.env };
   delete env.NODE_TEST_CONTEXT;
-  return spawnSync(process.execPath, ['--test', path.join(SCRIPTS, file)], {
+  return spawnSync(process.execPath, ['--test', path.join(SCRIPTS, file)], { timeout: 240_000, killSignal: 'SIGKILL',
     cwd,
     encoding: 'utf8',
     env,

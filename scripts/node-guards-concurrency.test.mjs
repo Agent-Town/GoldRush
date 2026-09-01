@@ -29,7 +29,7 @@ test('launcher propagates a non-zero node:test child exit code exactly', () => {
   const launcher = fileURLToPath(new URL('./run-node-guards.mjs', import.meta.url));
   const missing = fileURLToPath(new URL('./node-guards-missing-fixture.test.mjs', import.meta.url));
   const { CLAUDE_CONFIG_DIR: _fire, ...laneEnv } = process.env;
-  const options = { encoding: 'utf8', env: laneEnv };
+  const options = { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8', env: laneEnv };
   const child = spawnSync(process.execPath, ['--test', missing], options);
   const launched = spawnSync(process.execPath, [launcher, missing], options);
 

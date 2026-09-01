@@ -9,7 +9,7 @@ import { terrainSeamCensus } from './terrain-contract-scope.mjs';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 test('terrain contract scope report matches a fresh SSR measurement', () => {
-  const run = spawnSync(process.execPath, ['scripts/terrain-contract-scope.mjs', '--check'], {
+  const run = spawnSync(process.execPath, ['scripts/terrain-contract-scope.mjs', '--check'], { timeout: 240_000, killSignal: 'SIGKILL',
     cwd: ROOT,
     encoding: 'utf8',
   });

@@ -56,7 +56,7 @@ test('--check is clean against a seeded board fixture', async () => {
     await writeFile(artifact, `${JSON.stringify(deriveRegistry(boards, null, 'fixture'), null, 2)}\n`);
     const checked = spawnSync(process.execPath, [
       'scripts/frontier-registry.mjs', '--input', input, '--output', artifact, '--source-backend', 'fixture', '--check',
-    ], { cwd: process.cwd(), encoding: 'utf8' });
+    ], { timeout: 240_000, killSignal: 'SIGKILL', cwd: process.cwd(), encoding: 'utf8' });
     assert.equal(checked.status, 0, checked.stderr);
     assert.match(checked.stdout, /1 frontiers match/);
   } finally {

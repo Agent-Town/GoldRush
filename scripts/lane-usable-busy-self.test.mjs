@@ -93,13 +93,13 @@ test('bookkeeping reassurance narrows only when tasks are behind', (t) => {
   git(['worktree', 'add', join(repo, 'worktrees/tmp-ledger-slot'), 'tmp-ledger-drift'])
   git(['worktree', 'add', join(repo, 'worktrees/tmp-no-ledger-slot'), 'tmp-no-ledger-drift'])
 
-  const ledger = execFileSync('node', [script, 'tmp-ledger-drift'], { cwd: repo, encoding: 'utf8' })
+  const ledger = execFileSync('node', [script, 'tmp-ledger-drift'], { timeout: 240_000, killSignal: 'SIGKILL', cwd: repo, encoding: 'utf8' })
   assert.match(ledger, /ledger drift: 1 file\(s\) main has moved that this lane lacks:/)
   assert.match(ledger, /tasks\/BACKLOG\.md/)
   assert.match(ledger, /READ-FIRST cites the ledger BY CONTENT will fail its grep in this lane/)
   assert.doesNotMatch(ledger, /nothing here can stop a task running/)
 
-  const noLedger = execFileSync('node', [script, 'tmp-no-ledger-drift'], { cwd: repo, encoding: 'utf8' })
+  const noLedger = execFileSync('node', [script, 'tmp-no-ledger-drift'], { timeout: 240_000, killSignal: 'SIGKILL', cwd: repo, encoding: 'utf8' })
   assert.match(
     noLedger,
     /byte-identical to main\. The gap is bookkeeping only — nothing here can stop a task running\./,

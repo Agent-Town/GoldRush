@@ -46,7 +46,7 @@ function run(root, views, { output, runId } = {}) {
         now: { wave: row.wave, pendingSecure: true },
       });
     }
-  `], { cwd: root, env, encoding: 'utf8' });
+  `], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, env, encoding: 'utf8' });
   assert.equal(child.status, 0, child.stderr || child.stdout);
 }
 

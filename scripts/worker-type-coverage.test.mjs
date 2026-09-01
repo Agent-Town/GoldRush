@@ -21,7 +21,7 @@ for (const subject of SUBJECTS) {
     });
     assert.deepEqual(unchecked, [], `worker files disabling semantic checks:\n  ${unchecked.join('\n  ')}`);
 
-    const result = spawnSync(process.execPath, [TSC, '--noEmit', '--listFiles', '--project', join(ROOT, 'tsconfig.json')], {
+    const result = spawnSync(process.execPath, [TSC, '--noEmit', '--listFiles', '--project', join(ROOT, 'tsconfig.json')], { timeout: 240_000, killSignal: 'SIGKILL',
       cwd: ROOT,
       encoding: 'utf8',
     });

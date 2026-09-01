@@ -25,7 +25,7 @@ test('townEraProps resolves its manifests under plain node, not only under Vite'
         "console.log(JSON.stringify({ e3: m.townEraPropsForOrder(3).length, e10: m.townEraPropsForOrder(10).length }));",
       ].join('\n'),
     ],
-    { encoding: 'utf8' },
+    { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' },
   );
 
   assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);

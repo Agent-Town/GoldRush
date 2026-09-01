@@ -26,7 +26,7 @@ function fixture(t, tracked = {}, ignored = '') {
 function run(root, citation, ...args) {
   fs.mkdirSync(path.join(root, 'reviews'), { recursive: true });
   fs.writeFileSync(path.join(root, 'reviews', 'subject.md'), `Evidence: \`${citation}\`\n`);
-  return spawnSync(process.execPath, [SCRIPT, '--root', root, ...args, 'reviews/subject.md'], { encoding: 'utf8' });
+  return spawnSync(process.execPath, [SCRIPT, '--root', root, ...args, 'reviews/subject.md'], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
 }
 
 test('a review citing a tracked file is TRACKED', (t) => {

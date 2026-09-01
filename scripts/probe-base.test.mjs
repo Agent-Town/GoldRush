@@ -8,13 +8,13 @@ const envWithoutBase = { ...process.env };
 delete envWithoutBase.PROBE_BASE;
 
 test('rejects an unset PROBE_BASE before launching a browser', () => {
-  const result = spawnSync(process.execPath, [SCRIPT], { env: envWithoutBase, encoding: 'utf8' });
+  const result = spawnSync(process.execPath, [SCRIPT], { timeout: 240_000, killSignal: 'SIGKILL', env: envWithoutBase, encoding: 'utf8' });
   assert.ok(Number.isInteger(result.status) && result.status !== 0, result.stderr);
   assert.match(result.stderr, /PROBE_BASE/);
 });
 
 test('rejects an unset PROBE_BASE before checking the browser executable', () => {
-  const result = spawnSync(process.execPath, [SCRIPT], {
+  const result = spawnSync(process.execPath, [SCRIPT], { timeout: 240_000, killSignal: 'SIGKILL',
     env: { ...envWithoutBase, PLAYWRIGHT_BROWSERS_PATH: '/nonexistent-lane-probe-launch-ordering-1091' },
     encoding: 'utf8',
   });

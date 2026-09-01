@@ -79,7 +79,7 @@ test('the guard BITES a drifted skill.md (positive control, manufactured defect)
     // inside `test:node-guards` — green in the only context that matters, for the wrong reason.
     const env = { ...process.env, SKILLMD_PATH: drifted };
     delete env.NODE_TEST_CONTEXT;
-    const child = spawnSync(process.execPath, ['--test', fileURLToPath(import.meta.url)], {
+    const child = spawnSync(process.execPath, ['--test', fileURLToPath(import.meta.url)], { timeout: 240_000, killSignal: 'SIGKILL',
       cwd: root,
       encoding: 'utf8',
       env,

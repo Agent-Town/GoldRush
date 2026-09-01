@@ -58,7 +58,7 @@ function runGuard(root, { release = 'e1' } = {}) {
   const env = { ...process.env };
   if (release === null) delete env.GR_RELEASE;
   else env.GR_RELEASE = release;
-  const r = spawnSync(process.execPath, [SCRIPT], { cwd: root, encoding: 'utf8', env });
+  const r = spawnSync(process.execPath, [SCRIPT], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8', env });
   return { code: r.status, out: `${r.stdout ?? ''}${r.stderr ?? ''}` };
 }
 

@@ -50,7 +50,7 @@ function fixture(t, statusText, backlogText) {
 }
 
 function run(dir, ...extra) {
-  return spawnSync(process.execPath, [GUARD, '--root', dir, ...extra], { encoding: 'utf8' });
+  return spawnSync(process.execPath, [GUARD, '--root', dir, ...extra], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
 }
 
 const DESK = (ids) =>

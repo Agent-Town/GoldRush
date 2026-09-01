@@ -14,7 +14,7 @@ function fixture(t, name, contents) {
   const logPath = join(dir, `${name}.log`);
   const jsonPath = join(dir, `${name}.json`);
   writeFileSync(logPath, contents);
-  const parsed = spawnSync(process.execPath, [script, '--from-log', logPath], { encoding: 'utf8' });
+  const parsed = spawnSync(process.execPath, [script, '--from-log', logPath], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   assert.equal(parsed.status, 0, parsed.stderr);
   writeFileSync(jsonPath, parsed.stdout);
   return jsonPath;
@@ -25,7 +25,7 @@ function log(rows, totals) {
 }
 
 function compare(a, b) {
-  const result = spawnSync(process.execPath, [script, '--diff', a, b], { encoding: 'utf8' });
+  const result = spawnSync(process.execPath, [script, '--diff', a, b], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr);
   return result.stdout;
 }
@@ -76,7 +76,7 @@ test('stdin and --from-log emit the same deterministic manifest', (t) => {
     tests: 4, suites: 1, pass: 3, skipped: 1,
   });
   const fromLog = fixture(t, 'deterministic', contents);
-  const stdin = spawnSync(process.execPath, [script], { input: contents, encoding: 'utf8' });
+  const stdin = spawnSync(process.execPath, [script], { timeout: 240_000, killSignal: 'SIGKILL', input: contents, encoding: 'utf8' });
   assert.equal(stdin.status, 0, stdin.stderr);
   assert.equal(stdin.stdout, readFileSync(fromLog, 'utf8'));
   assert.deepEqual(JSON.parse(stdin.stdout).tests, [

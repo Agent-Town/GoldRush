@@ -9,7 +9,7 @@ const SCRIPT = fileURLToPath(new URL('./same-game-audit.mjs', import.meta.url));
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 function run(...args) {
-  return spawnSync(process.execPath, [SCRIPT, ...args], { encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  return spawnSync(process.execPath, [SCRIPT, ...args], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
 }
 
 test('same-game audit runs over every contract and keeps its row schema', () => {
