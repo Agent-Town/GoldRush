@@ -335,7 +335,7 @@ import { DevilsAlleyPresentation } from '../systems/DevilsAlleyPresentation';
 import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
 import { CanalChoiceSystem } from '../systems/CanalChoiceSystem';
 import { CanalFlowPresentation } from '../systems/CanalFlowPresentation';
-
+import { engineEraIncludes } from '../replay/EngineEraLineage.mjs';
 // Replay Law: Frontier upgrades remain available after later epochs activate.
 const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
 const STAMP_MILL_ID = 'stamp-mill';
@@ -7018,7 +7018,7 @@ export class Game {
 
   private startTrueRunTapeReplay(tape: RunTape): void {
     const meta = tape.meta as { buildId: string; engineHash?: string; era?: number } | undefined;
-    const eraRefusal = !meta?.engineHash || meta.era !== engineEra.era || !engineEra.pins.some((pin) => pin.engineHash === meta.engineHash)
+    const eraRefusal = !meta?.engineHash || meta.era !== engineEra.era || !engineEraIncludes(engineEra, meta.engineHash)
       ? { tapeHash: meta?.engineHash ?? `unstamped build ${meta?.buildId ?? 'unknown'}`, currentHash: engineEra.engineHash, tapeEra: meta?.era ?? null, currentEra: engineEra.era }
       : null;
     const driver = eraRefusal ? null : new BrowserAgentTapeReplay(tape);

@@ -110,6 +110,9 @@ async function checkEngineHashReel(onRequest) {
   const runTape = currentEraTape(tapeV2('engine-reel', 1));
   equal((await call(onRequest, 'POST', '/api/standings', post('e'.repeat(32), 1, runTape), kv)).status, 200, 'engine tape is stored');
   equal(JSON.parse(await kv.get(KEY))[0].tape.meta.engineHash, engineEra.engineHash, 'worker identity stays stored');
+  const aliasTape = currentEraTape(tapeV2('aliased-engine-reel', 1));
+  aliasTape.meta.engineHash = engineEra.pins[0].aliases[0];
+  equal((await call(onRequest, 'POST', '/api/standings', post('f'.repeat(32), 1, aliasTape), kv)).status, 200, 'an aliased current-era tape is stored');
   const response = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=engine-reel', undefined, kv);
   // Keep this projection contract paired with scripts/agent-reels.test.mjs.
   equal(response.body.reel.meta, runTape.meta, 'public WATCH reel carries its era identity');

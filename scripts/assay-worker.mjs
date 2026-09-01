@@ -6,6 +6,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import engineEra from '../assets/engine-era.json' with { type: 'json' };
+import { engineEraIncludes } from '../src/replay/EngineEraLineage.mjs';
 import { assertCanonicalAssayNode } from './assay-replay-agent.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -88,7 +89,7 @@ async function assay(row) {
   const tapeEra = Number.isSafeInteger(row?.tape?.meta?.era) ? row.tape.meta.era : null;
   const tapeBuildId = typeof row?.tape?.meta?.buildId === 'string' ? row.tape.meta.buildId : null;
   const engineSkew = tapeEngineHash !== null
-    && (tapeEra !== engineEra.era || !engineEra.pins.some((pin) => pin.engineHash === tapeEngineHash));
+    && (tapeEra !== engineEra.era || !engineEraIncludes(engineEra, tapeEngineHash));
   const buildSkew = tapeEngineHash === null && tapeBuildId !== null && !tapeBuildId.startsWith(buildId) && !buildId.startsWith(tapeBuildId);
   const identitySkew = engineSkew || buildSkew;
   if (engineSkew) {
