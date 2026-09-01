@@ -72,13 +72,54 @@ function advisoryRegion(src) {
   return src.slice(lastVerdict, exit);
 }
 
-/** Every runnable `node scripts/<x>.mjs [args]` command the region names. */
+/**
+ * Every RUNNABLE command the region names, in any idiom this factory prescribes.
+ *
+ * F-2423-1 (s2423). This selector used to read /`(node scripts\/…\.mjs[^`]*)`/ —
+ * ONE idiom — while the header three paragraphs up promises something strictly
+ * wider: "whatever commands the advisory names, the law must prescribe... this
+ * guard starts asking about the new advice in the same commit". A promise about
+ * advice THAT DOES NOT EXIST YET cannot be kept by a detector that can only see
+ * the one spelling in front of it.
+ *
+ * PROVEN BY MANUFACTURING, two fixtures differing ONLY in idiom, each mutation
+ * asserted to land inside the always-on region before anything was believed:
+ *   defect  — advisory also names `bash scripts/health-watch.sh status`, which
+ *             §2F does NOT carry  -> guard 8/8 PASS, rc=0 (all arms RAN; this is
+ *             a false green, not a construction refusal)
+ *   control — the SAME advice written as `node scripts/health-probe.mjs --status`
+ *             -> arm 4 REDS naming the command, rc=1
+ * Three bytes of idiom decided whether F-2365-1's own cure could see its own defect.
+ *
+ * NOT widened to "any backticked span", and the restraint is measured rather than
+ * stylistic: the advisory prose also backticks PATHS (`tasks/done/`), and arm 4
+ * would then demand §2F prescribe a directory — a false accusation, which is how
+ * a guard gets excused into uselessness (F-1460-1). The key is a leading command
+ * VERB PLUS A SPACE, drawn from the families §2.0d censuses in the law surfaces
+ * (`bash scripts/*.sh`, `npm run test:*`) plus the node/npx/git forms fires run.
+ * The trailing space is load-bearing: it keeps `node_modules` from reading as a
+ * `node` invocation.
+ */
+const COMMAND_VERBS = ['node', 'bash', 'npm', 'npx', 'git'];
+
 function commandsIn(region) {
   const out = new Set();
-  const re = /`(node scripts\/[A-Za-z0-9._-]+\.mjs[^`]*)`/g;
+  const re = new RegExp('`((?:' + COMMAND_VERBS.join('|') + ') [^`]*)`', 'g');
   let m;
   while ((m = re.exec(region))) out.add(m[1].trim());
   return [...out];
+}
+
+/**
+ * The bare tool name inside a command, for arm 5's premise check — `null` when
+ * the command names no script at all (`npm run test:ledger-guards`). Returning
+ * null rather than throwing is deliberate: the old arm did `.match(...)[1]` and
+ * would have died on the very idioms this cure exists to admit, turning a
+ * widened selector into a crash instead of a verdict.
+ */
+function bareToolName(cmd) {
+  const m = cmd.match(/scripts\/([A-Za-z0-9._-]+?)\.(?:mjs|js|sh)\b/);
+  return m ? m[1] : null;
 }
 
 function lawSection() {
@@ -155,8 +196,16 @@ test('5. the bare tool NAME is an insufficient needle — proven against the law
   assert.ok(cureAt >= 0, 'the F-2365-1 clause is missing from §2F — that IS the defect, see arm 4');
   const withoutCure = seg.slice(0, seg.lastIndexOf('\n', cureAt));
 
+  let premiseChecked = 0;
   for (const cmd of COMMANDS) {
-    const bare = cmd.match(/scripts\/([A-Za-z0-9._-]+)\.mjs/)[1];
+    const bare = bareToolName(cmd);
+    // A command naming no script (`npm run …`) has no bare TOOL NAME, so the
+    // "name is insufficient" premise is not expressible for it. Skip it — but
+    // count, because a loop that skips everything registers no assertions and
+    // reports green (F-2217-1), which is the exact vacuity this suite exists
+    // to refuse one arm above.
+    if (bare === null) continue;
+    premiseChecked += 1;
     assert.ok(
       withoutCure.includes(bare),
       `§2F no longer mentions ${bare} outside the cure; the "name is insufficient" premise is now unproven`,
@@ -166,6 +215,11 @@ test('5. the bare tool NAME is an insufficient needle — proven against the law
       `§2F carried \`${cmd}\` before the cure — then F-2365-1 was never a real gap and this guard should be re-derived`,
     );
   }
+  assert.ok(
+    premiseChecked > 0,
+    'no advisory command names a script, so this reverse control asserted NOTHING — '
+    + 'the premise behind arm 4\'s needle is now unproven rather than merely unchecked',
+  );
 });
 
 test('6. the selector is SCOPED to the advisory, not the whole file', () => {
@@ -179,6 +233,40 @@ test('6. the selector is SCOPED to the advisory, not the whole file', () => {
     !COMMANDS.some((c) => c.includes('drain-block-check')),
     'the extractor pulled a command from outside the advisory region — it is selecting on the wrong scope',
   );
+});
+
+test('6b. the selector reads EVERY prescribed idiom, not only the one in front of it', () => {
+  // F-2423-1, the regression lock. The header promises "whatever commands the
+  // advisory names"; before this arm the selector matched `node scripts/*.mjs`
+  // alone, so an advisory that ALSO named a bash or npm command kept a non-empty
+  // subject set (arm 2 satisfied), passed arm 4 on the command it COULD see, and
+  // certified the law as carrying advice the law did not carry. Measured on
+  // relocated fixtures differing only in idiom: bash form -> 8/8 green, rc=0;
+  // .mjs form -> arm 4 red, rc=1.
+  //
+  // Asserted against a SYNTHETIC region, not the live one: today's advisory names
+  // exactly one .mjs command, so keying this on the live text would make the arm
+  // pass for the wrong reason and rot into decoration the day the advisory changes.
+  const synthetic = [
+    'ask `node scripts/lane-usable.mjs --all` too',
+    'and `bash scripts/health-watch.sh status`',
+    'and `npm run test:ledger-guards`',
+    'but not `tasks/done/`, which is a path and not a command',
+  ].join('\n');
+  const found = commandsIn(synthetic);
+
+  assert.ok(found.includes('bash scripts/health-watch.sh status'), 'the selector cannot see a `bash` command');
+  assert.ok(found.includes('npm run test:ledger-guards'), 'the selector cannot see an `npm` command');
+  assert.ok(found.includes('node scripts/lane-usable.mjs --all'), 'the selector lost the `node` idiom it always had');
+  // Over-reach half: a backticked PATH must NOT become a command §2F is required
+  // to prescribe. Widening the needle must not turn arm 4 into a false accusation.
+  assert.ok(
+    !found.some((c) => c.includes('tasks/done/')),
+    'the selector pulled a backticked PATH in as a command — arm 4 would now make a false accusation',
+  );
+  // And the trailing-space half of the verb key, which is what keeps `node_modules`
+  // from reading as a `node` invocation.
+  assert.equal(commandsIn('see `node_modules/foo` for detail').length, 0, '`node_modules` read as a command');
 });
 
 // ---------------------------------------------------------------------------
