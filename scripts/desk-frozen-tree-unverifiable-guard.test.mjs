@@ -52,7 +52,7 @@ function git(cwd, ...args) {
 }
 
 function guard(name, cwd) {
-  const r = spawnSync('node', [path.join(SCRIPTS, name + '.mjs')], { cwd, encoding: 'utf8' });
+  const r = spawnSync('node', [path.join(SCRIPTS, name + '.mjs')], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
   return { rc: r.status, out: r.stdout ?? '', err: r.stderr ?? '', all: (r.stdout ?? '') + (r.stderr ?? '') };
 }
 
@@ -210,7 +210,7 @@ test('all three guards share the SAME frozenTreeCheck function object', async ()
     .map((n) => spawnSync('node', ['-e',
       `import(${JSON.stringify(path.join(SCRIPTS, n + '.mjs'))}).then(()=>{});`
       + `import(${JSON.stringify(path.join(SCRIPTS, 'corpus-tree.mjs'))})`
-      + `.then(m=>console.log(typeof m.frozenTreeCheck));`], { encoding: 'utf8' }).stdout.trim());
+      + `.then(m=>console.log(typeof m.frozenTreeCheck));`], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' }).stdout.trim());
   for (const s of sources) assert.equal(s, 'function', 'a guard does not reach the shared decision');
 
   // And no guard may CALL line1MatchesMain itself — the moment a caller reaches

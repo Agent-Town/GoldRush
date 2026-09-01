@@ -126,6 +126,7 @@ function fixture({ trees = ['salvage'] } = {}) {
 
 function run(repo, args = []) {
   const r = spawnSync('node', [path.join(repo, 'scripts/art-staging-audit.mjs'), ...args], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: repo,
     encoding: 'utf8',
     maxBuffer: 64 << 20,

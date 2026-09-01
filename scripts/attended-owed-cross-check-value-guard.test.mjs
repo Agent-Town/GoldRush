@@ -92,7 +92,7 @@ function sabotageShow(root) {
 function run(cwd, { args = [], shim = null } = {}) {
   const env = { ...process.env }
   if (shim) env.PATH = `${shim}:${env.PATH}`
-  const r = spawnSync('node', [AUDIT, ...args], { cwd, encoding: 'utf8', env })
+  const r = spawnSync('node', [AUDIT, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8', env })
   const out = (r.stdout || '') + (r.stderr || '')
   // s2227: assert the arm REACHED a verdict, not merely that it produced bytes.
   // A crash and a skip both produce output; neither is a measurement.

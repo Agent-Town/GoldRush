@@ -38,6 +38,7 @@ const SWEEP = resolve(HERE, 'gazette-backfill-sweep.mjs')
 
 const run = (...args) => {
   const r = execFileSync('node', [SWEEP, ...args], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     cwd: resolve(HERE, '..'),
     maxBuffer: 64 * 1024 * 1024,

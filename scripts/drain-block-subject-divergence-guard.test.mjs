@@ -47,7 +47,7 @@ function run(scriptText, root, args) {
   const shadow = join(HERE, `tmp-s2262-shadow-${process.pid}-${Math.abs(hash(scriptText))}.mjs`);
   writeFileSync(shadow, scriptText);
   try {
-    const r = spawnSync('node', [shadow, ...args], { cwd: root, encoding: 'utf8' });
+    const r = spawnSync('node', [shadow, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8' });
     return { out: (r.stdout ?? '') + (r.stderr ?? ''), rc: r.status };
   } finally {
     rmSync(shadow, { force: true });

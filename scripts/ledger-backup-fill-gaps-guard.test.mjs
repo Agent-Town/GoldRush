@@ -67,6 +67,7 @@ function sandbox({ remote, local, dated = true }) {
 
 function runScript(sb, args, scriptPath = SCRIPT) {
   return spawnSync('node', [scriptPath, ...args], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     env: { ...process.env, PATH: `${sb.bin}:${process.env.PATH}`, LEDGER_BACKUP_DEST: sb.dest },
   });

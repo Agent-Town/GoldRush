@@ -67,7 +67,7 @@ function hideCorpus(root) {
 }
 
 function runProbe(root, args = []) {
-  const r = spawnSync('node', [PROBE, ...args], { cwd: root, encoding: 'utf8' });
+  const r = spawnSync('node', [PROBE, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8' });
   return { rc: r.status, out: r.stdout || '' };
 }
 

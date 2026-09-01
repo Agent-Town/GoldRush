@@ -198,6 +198,6 @@ function soloSessionFixture() {
 }
 
 function run(root) {
-  const r = spawnSync('node', [GUARD, '--root', root], { encoding: 'utf8' });
+  const r = spawnSync('node', [GUARD, '--root', root], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   return { rc: r.status, out: r.stdout || '', err: r.stderr || '' };
 }

@@ -60,6 +60,7 @@ function fixture(days, { makeMirrorDir = true } = {}) {
 
 function runIn(root, args = [], cwd = root) {
   const r = spawnSync('node', [path.join(root, 'scripts', path.basename(SUBJECT)), ...args], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     cwd,
   });

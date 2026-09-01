@@ -85,6 +85,7 @@ function fixture(t, { running = 'live', done = true } = {}) {
 /** Run the real script on the fixture and return everything a caller can observe. */
 function observe(root) {
   const r = execFileSync(process.execPath, [SUBJECT, 'x.md', '--queue'], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: root, encoding: 'utf8', env: { ...process.env }, stdio: ['ignore', 'pipe', 'pipe'],
   });
   return { rc: 0, out: r, err: '' };

@@ -142,7 +142,7 @@ function variantOf(t, edit) {
 }
 
 function run(script, cwd, args = ['--all']) {
-  const r = spawnSync(process.execPath, [script, ...args], { cwd, encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [script, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
   return { rc: r.status, out: r.stdout || '', err: r.stderr || '' };
 }
 

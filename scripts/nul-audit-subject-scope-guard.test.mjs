@@ -48,7 +48,7 @@ function fixture(files) {
 }
 
 function run(root, args = [], script = AUDIT) {
-  const r = spawnSync('node', [script, ...args], { cwd: root, encoding: 'utf8' });
+  const r = spawnSync('node', [script, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8' });
   return { rc: r.status, out: r.stdout || '', err: r.stderr || '' };
 }
 

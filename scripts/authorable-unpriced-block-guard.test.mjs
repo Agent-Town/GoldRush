@@ -75,7 +75,7 @@ function runCli(leaves, args = []) {
       path.join(dir, 'tasks', 'goals.json'),
       JSON.stringify({ id: 'root', children: leaves }, null, 2),
     );
-    const r = spawnSync('node', [TOOL, '--root', dir, ...args], { encoding: 'utf8' });
+    const r = spawnSync('node', [TOOL, '--root', dir, ...args], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
     return { out: r.stdout ?? '', err: r.stderr ?? '', rc: r.status };
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });

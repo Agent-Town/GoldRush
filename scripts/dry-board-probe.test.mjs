@@ -228,7 +228,7 @@ function cliFixture(t, verdict) {
  */
 function runCliFull(root, args) {
   try {
-    const out = execFileSync('node', [PROBE, ...args], { cwd: root, encoding: 'utf8', stdio: 'pipe' });
+    const out = execFileSync('node', [PROBE, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8', stdio: 'pipe' });
     return { rc: 0, out };
   } catch (e) {
     return { rc: e.status, out: (e.stdout ?? '') + (e.stderr ?? '') };

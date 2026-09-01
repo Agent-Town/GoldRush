@@ -203,6 +203,7 @@ function runGuardOn(guardPath, rows, line1) {
   git('commit', '-qm', 's9999 handoff: the window end');
   copyGuardSources(HERE, path.join(dir, 'scripts'), SUBJECT_FILE); // F-2420-1: same race
   return spawnSync(process.execPath, [path.join(dir, 'scripts', 'desk-birth-guard.mjs')], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: dir, encoding: 'utf8',
   });
 }

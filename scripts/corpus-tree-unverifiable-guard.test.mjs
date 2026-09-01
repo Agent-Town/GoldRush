@@ -55,7 +55,7 @@ function git(cwd, ...args) {
 function guard(name, cwd, shimDir) {
   const env = { ...process.env };
   if (shimDir) env.PATH = `${shimDir}:${env.PATH}`;
-  const r = spawnSync('node', [path.join(SCRIPTS, name + '.mjs')], { cwd, encoding: 'utf8', env });
+  const r = spawnSync('node', [path.join(SCRIPTS, name + '.mjs')], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8', env });
   return { rc: r.status, out: r.stdout ?? '', err: r.stderr ?? '', all: (r.stdout ?? '') + (r.stderr ?? '') };
 }
 

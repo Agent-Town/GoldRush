@@ -66,7 +66,7 @@ function fixture({ landed }) {
 }
 
 function run(cwd, args = []) {
-  const r = spawnSync('node', [AUDIT, ...args], { cwd, encoding: 'utf8' })
+  const r = spawnSync('node', [AUDIT, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' })
   const out = `${r.stdout || ''}${r.stderr || ''}`
   // F-2215-1: a control whose failure mode is silence cannot be told from the silence it
   // measures. Assert the arm PRODUCED something before believing what it says.

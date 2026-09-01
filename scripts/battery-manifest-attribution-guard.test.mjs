@@ -56,7 +56,7 @@ function root(t, { scripts, sources, variant }) {
 function manifest({ dir, target }, contents) {
   const logPath = join(dir, 'run.log');
   writeFileSync(logPath, contents);
-  const run = spawnSync(process.execPath, [target, '--from-log', logPath], { encoding: 'utf8' });
+  const run = spawnSync(process.execPath, [target, '--from-log', logPath], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   assert.equal(run.status, 0, run.stderr);
   // Assert the arm REACHED the branch, not merely that it emitted bytes (s2232: a crash
   // produces plenty, and a pre-cure copy away from its inputs dies having never run).
@@ -135,7 +135,7 @@ test('--diff flags a DEGRADED comparison when either side has unattributed rows'
   const b = join(fixture.dir, 'b.json');
   writeFileSync(a, JSON.stringify(manifest(fixture, log(['a known test']))));
   writeFileSync(b, JSON.stringify(manifest(fixture, log(['a known test', 'a nameless one']))));
-  const run = spawnSync(process.execPath, [fixture.target, '--diff', a, b], { encoding: 'utf8' });
+  const run = spawnSync(process.execPath, [fixture.target, '--diff', a, b], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   assert.equal(run.status, 0, run.stderr);
   assert.match(run.stdout, /ATTRIBUTION: DEGRADED \(after 1 unattributed\)/);
 });
@@ -146,7 +146,7 @@ test('REVERSE CONTROL: a fully attributed diff carries NO attribution line', (t)
   const b = join(fixture.dir, 'b.json');
   writeFileSync(a, JSON.stringify(manifest(fixture, log(['a known test']))));
   writeFileSync(b, JSON.stringify(manifest(fixture, log(BOTH_NAMES))));
-  const run = spawnSync(process.execPath, [fixture.target, '--diff', a, b], { encoding: 'utf8' });
+  const run = spawnSync(process.execPath, [fixture.target, '--diff', a, b], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   assert.equal(run.status, 0, run.stderr);
   assert.doesNotMatch(run.stdout, /ATTRIBUTION/, 'an unconditional banner is noise that decays into a formality');
   assert.match(run.stdout, /RESIDUE: accounted for/);

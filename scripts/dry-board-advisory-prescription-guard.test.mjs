@@ -292,7 +292,7 @@ function cliFixture(t, verdict) {
 
 function runProbe(root) {
   try {
-    return { rc: 0, out: execFileSync('node', [PROBE], { cwd: root, encoding: 'utf8', stdio: 'pipe' }) };
+    return { rc: 0, out: execFileSync('node', [PROBE], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8', stdio: 'pipe' }) };
   } catch (e) {
     return { rc: e.status, out: (e.stdout ?? '') + (e.stderr ?? '') };
   }

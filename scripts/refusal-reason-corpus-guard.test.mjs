@@ -77,6 +77,7 @@ test('F-2247-1: the CLI is WIRED to the declaration (the call site, not just the
   // F-2209-1: extracting a decision to make it testable creates a NEW untested seam — the call
   // site. Assert from where the caller stands, on the observable the caller actually reads.
   const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/ruling-propagation-guard.mjs')], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: ROOT, encoding: 'utf8',
   });
   assert.equal(r.status, 0, r.stderr);
@@ -92,6 +93,7 @@ test('F-2247-1: the PASS sentence states its own scope when anything went unread
 
   // ...and the CLI must actually use it.
   const r = spawnSync(process.execPath, [path.join(ROOT, 'scripts/ruling-propagation-guard.mjs')], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: ROOT, encoding: 'utf8',
   });
   const pass = r.stdout.split('\n').find((l) => l.startsWith('PASS'));
@@ -163,6 +165,7 @@ function fixtureRoot(leaf) {
 
 function askDrainBlockCheck(dir, arg) {
   return spawnSync(process.execPath, [path.join(ROOT, 'scripts/drain-block-check.mjs'), arg], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: dir, encoding: 'utf8',
   });
 }

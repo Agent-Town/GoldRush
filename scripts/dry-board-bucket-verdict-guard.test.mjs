@@ -138,7 +138,7 @@ test('9. the cure is exercised by the CLI, not just the unit (F-2209-1)', () => 
     'console.log("  ⛔ CLOSED — DO NOT DRAIN: subject.md");\n' +
     'console.log("    note: this once read UNKNOWN to dry-board-probe");\n' +
     'process.exit(1);\n');
-  const r = spawnSync('node', [SUBJECT, '--strict'], { cwd: root, encoding: 'utf8' });
+  const r = spawnSync('node', [SUBJECT, '--strict'], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8' });
   const out = r.stdout ?? '';
   assert.ok(out.trim().length, 'the CLI arm must actually run');           // F-2215-1
   assert.match(out, /UNKNOWN[^\n]*: 0/, 'no subject may be parked in UNKNOWN by its own note');

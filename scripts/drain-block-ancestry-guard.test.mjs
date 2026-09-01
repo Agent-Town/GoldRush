@@ -92,7 +92,7 @@ function verdictOf(root, env) {
   let out;
   try {
     out = execFileSync(process.execPath, [SUBJECT, 'x.md', '--queue'],
-      { cwd: root, encoding: 'utf8', env });
+      { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8', env });
   } catch (e) {
     out = String(e.stdout ?? '') + String(e.stderr ?? '');
   }

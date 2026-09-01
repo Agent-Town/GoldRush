@@ -67,7 +67,7 @@ function board(backlogBody, { shipped = false } = {}) {
 }
 
 const run = (script, cwd, args = ['--strict']) =>
-  spawnSync(process.execPath, [script, ...args], { cwd, encoding: 'utf8' });
+  spawnSync(process.execPath, [script, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
 
 const declaration = (stdout) => stdout.split('\n').find((l) => l.startsWith('ladder corpus:'));
 

@@ -32,7 +32,7 @@ function runGuard(statusText, backlogText = '') {
     return spawnSync(
       process.execPath,
       [fileURLToPath(new URL('./desk-carryforward-guard.mjs', import.meta.url)), '--root', root],
-      { encoding: 'utf8' },
+      { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' },
     );
   } finally {
     rmSync(root, { recursive: true, force: true });

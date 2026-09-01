@@ -73,7 +73,7 @@ function rootlessFixture(t) {
 }
 
 function run(root, ...extra) {
-  const r = spawnSync('node', [SCRIPT, '--root', root, ...extra], { encoding: 'utf8' });
+  const r = spawnSync('node', [SCRIPT, '--root', root, ...extra], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   return { rc: r.status, out: r.stdout, err: r.stderr };
 }
 

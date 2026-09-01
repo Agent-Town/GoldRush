@@ -59,7 +59,7 @@ function review(root, citation, name = 'subject.md') {
 }
 
 function cli(...args) {
-  return spawnSync(process.execPath, [SCRIPT, ...args], { encoding: 'utf8' });
+  return spawnSync(process.execPath, [SCRIPT, ...args], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
 }
 
 test('strict + absent review path: rc=2, not a clearance', (t) => {

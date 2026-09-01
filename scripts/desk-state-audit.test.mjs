@@ -26,7 +26,7 @@ function run(dir, ...flags) {
   return spawnSync(process.execPath, [AUDITOR,
     '--status', path.join(dir, 'STATUS.md'),
     '--backlog', path.join(dir, 'BACKLOG.md'),
-    '--goals', path.join(dir, 'goals.json'), '--json', ...flags], { encoding: 'utf8' });
+    '--goals', path.join(dir, 'goals.json'), '--json', ...flags], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
 }
 
 function item(result, id) {

@@ -106,7 +106,7 @@ function repoWithDrain(t) {
 }
 
 function runProbe(cwd, args = []) {
-  const r = spawnSync('node', [PROBE, ...args], { cwd, encoding: 'utf8' });
+  const r = spawnSync('node', [PROBE, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
   return { rc: r.status, out: r.stdout || '' };
 }
 

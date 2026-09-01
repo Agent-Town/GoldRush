@@ -50,7 +50,7 @@ function fixture(t, files = {}) {
 }
 
 const cli = (root, ...args) =>
-  spawnSync(process.execPath, [SCRIPT, '--root', root, ...args], { encoding: 'utf8' });
+  spawnSync(process.execPath, [SCRIPT, '--root', root, ...args], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
 
 // ---------------------------------------------------------------- the DECLARATION
 

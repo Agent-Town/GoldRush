@@ -63,7 +63,7 @@ function git(cwd, args) {
 }
 
 function run(cwd, args = []) {
-  const r = spawnSync('node', [TOOL, ...args], { cwd, encoding: 'utf8', maxBuffer: 64 << 20 });
+  const r = spawnSync('node', [TOOL, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8', maxBuffer: 64 << 20 });
   return { rc: r.status, out: r.stdout || '', err: r.stderr || '' };
 }
 

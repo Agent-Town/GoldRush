@@ -67,6 +67,7 @@ const run = (repo, args, source = SOURCE) => {
   writeFileSync(join(repo, 'scripts/salvage-art-staging.mjs'), source);
   try {
     return { rc: 0, out: execFileSync('node', [join(repo, 'scripts/salvage-art-staging.mjs'), ...args], {
+      timeout: 240_000, killSignal: 'SIGKILL',
       encoding: 'utf8', maxBuffer: 1 << 26,
     }) };
   } catch (e) {
@@ -415,6 +416,7 @@ const runAudit = (repo, source = AUDIT_SRC, args = []) => {
   writeFileSync(join(repo, 'scripts/art-staging-audit.mjs'), source);
   try {
     return { rc: 0, out: execFileSync('node', [join(repo, 'scripts/art-staging-audit.mjs'), ...args], {
+      timeout: 240_000, killSignal: 'SIGKILL',
       encoding: 'utf8', maxBuffer: 1 << 26,
     }) };
   } catch (e) {

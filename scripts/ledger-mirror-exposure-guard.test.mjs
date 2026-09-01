@@ -54,7 +54,7 @@ function mirrorDir(spec) {
 }
 
 function run(dir, extra = [], script = SUBJECT) {
-  return spawnSync(process.execPath, [script, '--dir', dir, ...extra], { encoding: 'utf8' });
+  return spawnSync(process.execPath, [script, '--dir', dir, ...extra], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
 }
 
 /**

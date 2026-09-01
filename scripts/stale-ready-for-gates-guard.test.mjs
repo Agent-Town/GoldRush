@@ -137,7 +137,7 @@ test('headline is the leading bold span, and falls back when there is none', () 
 // contains a space, percent-encoded by import.meta.url but not by argv[1]). It printed nothing
 // and exited 0: a gate that looks rooted and measures nothing. Assert the opposite directly.
 test('the guard RUNS when invoked as a script (entrypoint is not a silent no-op)', () => {
-  const r = spawnSync('node', [GUARD, '--report'], { cwd: REPO, encoding: 'utf8' });
+  const r = spawnSync('node', [GUARD, '--report'], { timeout: 240_000, killSignal: 'SIGKILL', cwd: REPO, encoding: 'utf8' });
   assert.match(r.stdout, /row\(s\) carry READY-FOR-GATES/);
   assert.equal(r.status, 0);
 });
@@ -146,7 +146,7 @@ test('the guard RUNS when invoked as a script (entrypoint is not a silent no-op)
 // Without this, every test above could pass while the real tasks/BACKLOG.md went unexamined —
 // the guard would be wired, green, and inert.
 test('the live ledger carries no stale READY-FOR-GATES claim', () => {
-  const r = spawnSync('node', [GUARD], { cwd: REPO, encoding: 'utf8' });
+  const r = spawnSync('node', [GUARD], { timeout: 240_000, killSignal: 'SIGKILL', cwd: REPO, encoding: 'utf8' });
   assert.equal(r.status, 0, `guard failed on the live ledger:\n${r.stdout}\n${r.stderr}`);
 });
 

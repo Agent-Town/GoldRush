@@ -154,6 +154,7 @@ const TOOL = path.join(SCRIPTS, 'status-archive-audit.mjs');
 
 const run = (args, env = {}) => {
   const r = spawnSync('node', [TOOL, ...args], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     maxBuffer: 64 << 20,
     env: { ...process.env, ...env },

@@ -77,7 +77,7 @@ function plainRoot(line1, archives) {
 }
 
 const run = (cwd) => {
-  const r = spawnSync(process.execPath, [GUARD], { cwd, encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [GUARD], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
   return { rc: r.status, out: String(r.stdout || ''), err: String(r.stderr || '') };
 };
 
@@ -198,6 +198,7 @@ test('9. a git that cannot answer the HEAD question REFUSES — and does NOT cry
     );
     chmodSync(path.join(shim, 'git'), 0o755);
     const r = spawnSync(process.execPath, [GUARD], {
+      timeout: 240_000, killSignal: 'SIGKILL',
       cwd: f.root, encoding: 'utf8', env: { ...process.env, PATH: `${shim}:${process.env.PATH}` },
     });
     const err = String(r.stderr || '');

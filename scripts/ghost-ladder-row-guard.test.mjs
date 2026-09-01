@@ -17,7 +17,7 @@ function run(backlog, status = 'merged') {
     goals: [{ id: 'example', taskFile: 'lane-example.md', status, mergeHash: 'abc1234' }],
   }));
   try {
-    return spawnSync(process.execPath, [GUARD, '--root', root, '--strict'], { encoding: 'utf8' });
+    return spawnSync(process.execPath, [GUARD, '--root', root, '--strict'], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

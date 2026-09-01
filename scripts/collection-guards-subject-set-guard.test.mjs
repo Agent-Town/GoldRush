@@ -167,6 +167,7 @@ function runGuardIn(dir, { file = GUARD } = {}) {
   const env = { ...process.env };
   delete env.NODE_TEST_CONTEXT;
   return spawnSync(process.execPath, ['--test', path.join(dir, file)], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: dir,
     encoding: 'utf8',
     env,

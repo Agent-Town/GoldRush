@@ -105,7 +105,7 @@ test('every blocked leaf is visible to the §3.0 drain guard (denominator parity
   const mine = blockedLeaves();
   // Same-tree assertion: both this walker and the child read the current main worktree's board.
   // Pointing only the child at main would compare two denominators and manufacture a verdict.
-  const r = spawnSync('node', ['scripts/drain-block-check.mjs', '--all'], { encoding: 'utf8' });
+  const r = spawnSync('node', ['scripts/drain-block-check.mjs', '--all'], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   const m = /Scanned \d+ goal leaves — (\d+) BLOCKED/.exec(r.stdout || '');
   assert.ok(m, `--all did not print its census; got: ${(r.stdout || r.stderr || '').slice(0, 200)}`);
   assert.strictEqual(
@@ -125,7 +125,7 @@ test('every blocked leaf refuses the drain under the name a fire would type', (t
     const needle = leaf.taskFile || leaf.id;
     // Same-tree assertion: the local leaf's typed name is checked against that same main board.
     // A linked worktree cannot lawfully supply drain-block-check's board, so it is declared above.
-    const r = spawnSync('node', ['scripts/drain-block-check.mjs', needle], { encoding: 'utf8' });
+    const r = spawnSync('node', ['scripts/drain-block-check.mjs', needle], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
     assert.strictEqual(
       r.status,
       1,
@@ -143,6 +143,7 @@ test('drain-block-check prints class-specific verdicts, and gate-side is not cal
   // Same-tree assertion: wording is checked for the local gate-side leaf on the same main board.
   // This spawn did not red at s2272 only because that frozen board had no gate-side leaf to reach it.
   const r = spawnSync('node', ['scripts/drain-block-check.mjs', gateSide.taskFile], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
   });
   assert.strictEqual(r.status, 1, 'a blocked leaf must still refuse the drain with rc=1');

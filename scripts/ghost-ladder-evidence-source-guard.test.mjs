@@ -98,6 +98,7 @@ function run(root, { strict = true, breakGit = false, guard = GUARD } = {}) {
   const env = { ...process.env };
   if (breakGit) env.PATH = brokenGitPath(root);
   const r = spawnSync('node', [guard, '--root', root, ...(strict ? ['--strict'] : [])], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: root, encoding: 'utf8', env,
   });
   return { rc: r.status, out: r.stdout || '', err: r.stderr || '' };

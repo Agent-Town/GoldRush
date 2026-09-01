@@ -87,7 +87,7 @@ const stubFor = (text, code) =>
 function cli(stub, mode = []) {
   const root = board(stub);
   try {
-    const r = spawnSync('node', [SUBJECT, ...mode], { cwd: root, encoding: 'utf8' });
+    const r = spawnSync('node', [SUBJECT, ...mode], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8' });
     const out = r.stdout ?? '';
     assert.ok(/REAL DRAINS/.test(out), 'the CLI arm must reach the classify branch'); // s2227
     return { out, rc: r.status };

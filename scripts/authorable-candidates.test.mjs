@@ -21,7 +21,7 @@ function run(goals, extraArgs = []) {
   fs.mkdirSync(path.join(root, 'tasks'));
   fs.writeFileSync(path.join(root, 'tasks', 'goals.json'), JSON.stringify(goals, null, 2));
   try {
-    return spawnSync(process.execPath, [GUARD, '--root', root, ...extraArgs], { encoding: 'utf8' });
+    return spawnSync(process.execPath, [GUARD, '--root', root, ...extraArgs], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

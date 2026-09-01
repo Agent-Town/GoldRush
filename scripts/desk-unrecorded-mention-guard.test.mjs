@@ -153,7 +153,7 @@ test('REVERSE CONTROL — declaring must not become refusing (--strict stays 0)'
     fs.writeFileSync(goalsPath, '{}');
     const r = spawnSync('node',
       [TOOL, '--status', statusPath, '--backlog', backlogPath, '--goals', goalsPath, '--strict'],
-      { encoding: 'utf8' });
+      { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
     assert.equal(r.status, 0, 'an UNRECORDED-only desk must not red --strict');
     assert.match(r.stdout, /mentioned \(non-subject\) at 1/);
     assert.match(r.stdout, /absent from BACKLOG entirely/);
@@ -177,7 +177,7 @@ test('END TO END — the CLI stdout carries both declarations (F-2210-1)', () =>
     fs.writeFileSync(goalsPath, '{}');
     const r = spawnSync('node',
       [TOOL, '--status', statusPath, '--backlog', backlogPath, '--goals', goalsPath],
-      { encoding: 'utf8' });
+      { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
     assert.equal(r.status, 0);
     assert.ok(r.stdout.length > 0, 'the arm really produced output (F-2215-1)');
     const rows = r.stdout.split('\n').filter((l) => /^F-\S+\t/.test(l));
@@ -203,7 +203,7 @@ test('--json carries the declaration for machine callers', () => {
     fs.writeFileSync(goalsPath, '{}');
     const r = spawnSync('node',
       [TOOL, '--status', statusPath, '--backlog', backlogPath, '--goals', goalsPath, '--json'],
-      { encoding: 'utf8' });
+      { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
     assert.equal(r.status, 0);
     const parsed = JSON.parse(r.stdout);
     assert.deepEqual(parsed.items[0].mentioned, [1]);

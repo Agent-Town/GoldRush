@@ -100,6 +100,7 @@ function brokenGitPath(base) {
 
 const run = (script, repo, args = [], env = {}) => {
   const r = spawnSync(process.execPath, [script, ...args], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: repo, encoding: 'utf8', env: { ...process.env, ...env }, maxBuffer: 1 << 26,
   });
   return { rc: r.status, out: r.stdout ?? '' };

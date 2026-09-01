@@ -35,7 +35,13 @@ const CLI = fileURLToPath(new URL('./lane-usable.mjs', import.meta.url))
 // child we hold open. Both are asserted before use — a control whose failure mode is silence
 // cannot be told from the silence it measures (F-2215-1).
 function deadPid() {
-  const r = spawnSync(process.execPath, ['-e', 'process.exit(0)'])
+  // BOUNDED (s2430, F-2429-2). This is the single most wedge-shaped spawn in the battery: the
+  // child's ENTIRE body is `process.exit(0)`, and F-2429-1 measured the wedge as a deadlock inside
+  // node's own platform teardown ON `process.exit()` — so this fixture is the exact shape whose
+  // corpses were autopsied. Unbounded it would hang `spawnSync` forever, and because `spawnSync`
+  // blocks the event loop, `--test-timeout` could never fire. The bound cannot fire on lawful work:
+  // this child does nothing but exit.
+  const r = spawnSync(process.execPath, ['-e', 'process.exit(0)'], { timeout: 240_000, killSignal: 'SIGKILL' })
   return r.pid
 }
 function isGone(pid) {
@@ -134,7 +140,7 @@ function fixture() {
   return { root, repo }
 }
 function runCli(repo, args) {
-  const r = spawnSync(process.execPath, [CLI, ...args], { cwd: repo, encoding: 'utf8' })
+  const r = spawnSync(process.execPath, [CLI, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd: repo, encoding: 'utf8' })
   return { rc: r.status, out: r.stdout || '' }
 }
 // A live process that is a SIBLING of the CLI we spawn, never one of its ancestors — otherwise

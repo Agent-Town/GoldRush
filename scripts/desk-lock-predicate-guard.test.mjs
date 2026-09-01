@@ -99,7 +99,7 @@ function board(line1) {
 }
 
 function run(args, cwd = HERE) {
-  return spawnSync('node', [AUDITOR, ...args], { cwd, encoding: 'utf8', maxBuffer: 64 << 20 });
+  return spawnSync('node', [AUDITOR, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8', maxBuffer: 64 << 20 });
 }
 
 // ARM 1 — THE DEFECT ARM. Pre-cure this reds: `startsWith('ACTIVE')` is false for

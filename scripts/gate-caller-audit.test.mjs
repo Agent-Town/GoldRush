@@ -52,6 +52,7 @@ function run(dir, ...extra) {
     stdoutFd = fs.openSync(stdoutPath, 'w');
     stderrFd = fs.openSync(stderrPath, 'w');
     result = spawnSync(process.execPath, [SCRIPT, '--root', dir, ...extra], {
+      timeout: 240_000, killSignal: 'SIGKILL',
       stdio: ['ignore', stdoutFd, stderrFd],
     });
   } finally {
@@ -522,7 +523,7 @@ function mutantWithoutShSubjects() {
 }
 
 function runWith(script, dir, ...extra) {
-  return spawnSync(process.execPath, [script, '--root', dir, ...extra], { encoding: 'utf8' });
+  return spawnSync(process.execPath, [script, '--root', dir, ...extra], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
 }
 
 test('ADMISSION: a *.test.sh nothing calls is a NEW orphan (pre-cure it is byte-invisible)', () => {

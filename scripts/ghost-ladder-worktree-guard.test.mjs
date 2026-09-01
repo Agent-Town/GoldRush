@@ -64,7 +64,7 @@ function board({ shippedOnMain = true, worktree = true, mainGoalsRaw = null, goa
   return { root, wt, cleanup: () => fs.rmSync(root, { recursive: true, force: true }) };
 }
 
-const run = (script, cwd) => spawnSync(process.execPath, [script, '--strict'], { cwd, encoding: 'utf8' });
+const run = (script, cwd) => spawnSync(process.execPath, [script, '--strict'], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
 
 /**
  * Manufacture a variant of the guard on a scratch copy inside scripts/ (so its relative import
@@ -162,7 +162,7 @@ test('8 — a non-git fixture root is LAWFUL (git 128) and behaves exactly as be
     fs.writeFileSync(path.join(root, 'tasks', 'foo.md'), '# foo\n');
     fs.writeFileSync(path.join(root, 'tasks', 'BACKLOG.md'), '# B\n\n- 📋 **[foo]** master tasks/foo.md\n');
     fs.writeFileSync(path.join(root, 'tasks', 'goals.json'), SHIPPED_LEAF());
-    const r = spawnSync(process.execPath, [GUARD, '--root', root, '--strict'], { encoding: 'utf8' });
+    const r = spawnSync(process.execPath, [GUARD, '--root', root, '--strict'], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
     assert.match(r.stdout, /GHOST line 3/);
     assert.equal(r.status, 1);
     assert.match(r.stdout, /corpus tree: main/);

@@ -129,7 +129,7 @@ function variantOf(t, edit) {
 }
 
 function run(script, cwd, args = ['--all']) {
-  const r = spawnSync(process.execPath, [script, ...args], { cwd, encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [script, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
   return { rc: r.status, out: r.stdout || '', err: r.stderr || '' };
 }
 
@@ -235,6 +235,7 @@ test('arm 10: lane-absorbed-lines.mjs — the IMPORTING consumer — is stderr-c
   // this file's module-level derivation simply by importing residueForHeld from it.
   const root = fixture(t, { pkg: undefined });
   const r = spawnSync(process.execPath, [path.join(HERE, 'lane-absorbed-lines.mjs'), 'lane/x', 'README.md'], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: root,
     encoding: 'utf8',
   });

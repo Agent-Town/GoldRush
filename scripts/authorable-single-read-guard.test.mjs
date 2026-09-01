@@ -110,7 +110,7 @@ function run(body, { splice = null, strict = true, seam = RESIDUE_SEAM } = {}) {
 
   const args = [path.join(dir, 'authorable-candidates.mjs'), '--root', root];
   if (strict) args.push('--strict');
-  const r = spawnSync(process.execPath, args, { encoding: 'utf8', maxBuffer: 64 << 20 });
+  const r = spawnSync(process.execPath, args, { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8', maxBuffer: 64 << 20 });
   const out = r.stdout ?? '';
   // F-2215-1: a control whose failure mode is silence cannot be told from the
   // silence it measures. Assert the arm RAN before believing what it says.
@@ -188,7 +188,7 @@ test('REVERSE CONTROL: reading once must not silence UNPRICED — the verdict st
     id: 'root', status: 'root',
     children: [{ id: 'u1', status: 'planned', title: 'nothing on record' }],
   }, null, 2));
-  const r = spawnSync(process.execPath, [SUBJECT, '--root', root, '--strict'], { encoding: 'utf8', maxBuffer: 64 << 20 });
+  const r = spawnSync(process.execPath, [SUBJECT, '--root', root, '--strict'], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8', maxBuffer: 64 << 20 });
   assert.ok((r.stdout ?? '').length > 0, 'arm produced 0 B — VACUOUS');
   assert.equal(r.status, 1, '--strict must still exit 1 on an unpriced leaf');
   assert.match(r.stdout, /no refusal on record/);

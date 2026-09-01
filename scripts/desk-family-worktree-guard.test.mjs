@@ -45,7 +45,7 @@ function git(cwd, ...args) {
 }
 
 function guard(name, cwd) {
-  const r = spawnSync('node', [path.join(SCRIPTS, name + '.mjs')], { cwd, encoding: 'utf8' });
+  const r = spawnSync('node', [path.join(SCRIPTS, name + '.mjs')], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
   return { rc: r.status, out: r.stdout ?? '', err: r.stderr ?? '', all: (r.stdout ?? '') + (r.stderr ?? '') };
 }
 

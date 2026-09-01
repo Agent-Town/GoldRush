@@ -54,7 +54,7 @@ function fixture(line1, rows) {
 }
 function runGuard(root) {
   try {
-    return { rc: 0, out: execFileSync('node', [GUARD, '--root', root], { encoding: 'utf8', maxBuffer: 64 << 20 }) };
+    return { rc: 0, out: execFileSync('node', [GUARD, '--root', root], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8', maxBuffer: 64 << 20 }) };
   } catch (e) {
     return { rc: e.status ?? 'ERR', out: (e.stdout || '') + (e.stderr || '') };
   }

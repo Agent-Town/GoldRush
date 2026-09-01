@@ -74,7 +74,7 @@ function board(secondItem) {
 }
 
 function run(root, extra = []) {
-  const r = spawnSync('node', [GUARD, '--root', root, ...extra], { encoding: 'utf8' });
+  const r = spawnSync('node', [GUARD, '--root', root, ...extra], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   return { rc: r.status, out: r.stdout ?? '', err: r.stderr ?? '' };
 }
 

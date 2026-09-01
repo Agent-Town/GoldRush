@@ -54,7 +54,7 @@ function statusText(line1, archives) {
 }
 
 function run(cwd, extra = []) {
-  const r = spawnSync(process.execPath, [GUARD, ...extra], { cwd, encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [GUARD, ...extra], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8' });
   return { rc: r.status, out: String(r.stdout || ''), err: String(r.stderr || '') };
 }
 

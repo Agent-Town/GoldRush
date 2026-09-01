@@ -49,7 +49,7 @@ function board({ withGoals }) {
 }
 
 const run = (root, ...args) => {
-  const r = spawnSync('node', [SCRIPT, '--root', root, ...args], { encoding: 'utf8', maxBuffer: 64 << 20 });
+  const r = spawnSync('node', [SCRIPT, '--root', root, ...args], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8', maxBuffer: 64 << 20 });
   // F-2215-1: an arm that produced nothing is not a measurement. Assert validity before reading.
   assert.ok(r.stdout.length > 0, `arm produced NO stdout (rc=${r.status}) — it did not run`);
   return r;
@@ -102,7 +102,7 @@ test('7. the MALFORMED path is untouched and still fails LOUD (F-2214-1 not regr
   // The parse arm was deliberately left alone; this asserts the cure did not quietly swallow it.
   const root = board({ withGoals: true });
   writeFileSync(join(root, 'tasks', 'goals.json'), '{ this is not json');
-  const r = spawnSync('node', [SCRIPT, '--root', root, '--strict'], { encoding: 'utf8' });
+  const r = spawnSync('node', [SCRIPT, '--root', root, '--strict'], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   assert.equal(r.status, 2, 'a malformed goal corpus must still refuse with 2 = could not answer');
   assert.match(r.stdout, /CANNOT VERIFY/);
 });

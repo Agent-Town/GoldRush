@@ -72,7 +72,7 @@ function buildFixture() {
 }
 
 const run = (file, cwd, args) => {
-  const r = spawnSync('node', [file, ...args], { cwd, encoding: 'utf8', maxBuffer: 64 << 20 });
+  const r = spawnSync('node', [file, ...args], { timeout: 240_000, killSignal: 'SIGKILL', cwd, encoding: 'utf8', maxBuffer: 64 << 20 });
   return { rc: r.status, out: r.stdout || '', err: r.stderr || '' };
 };
 

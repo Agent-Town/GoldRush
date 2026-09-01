@@ -203,6 +203,7 @@ function reads(scriptPath, cwd, dir) {
   const shim = counterShim(dir);
   const countFile = path.join(dir, 'count.' + path.basename(scriptPath) + '.txt');
   const r = spawnSync('node', ['-r', shim, scriptPath], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd, encoding: 'utf8', env: { ...process.env, S2271_COUNT_FILE: countFile },
   });
   const all = (r.stdout ?? '') + (r.stderr ?? '');
@@ -309,7 +310,7 @@ function preCure(name, replacement = FS_SECOND_READ) {
   // CONSTRUCTS is indistinguishable from a guard with teeth") arriving as a wrong
   // COUNT instead of a false pass, and it is why asserting the needle MATCHED is
   // not enough: assert the variant still PARSES AND RUNS.
-  const syntax = spawnSync('node', ['--check', out], { encoding: 'utf8' });
+  const syntax = spawnSync('node', ['--check', out], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
   assert.equal(syntax.status, 0,
     `the manufactured variant does not parse, so it tests nothing:\n${syntax.stderr}`);
   return out;
@@ -367,6 +368,7 @@ test('6. INSTRUMENT VALIDITY — the counter counts, so a 0 cannot be mistaken f
   const shim = counterShim(dir);
   const countFile = path.join(dir, 'count.probe.txt');
   const r = spawnSync('node', ['-r', shim, probe], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: root, encoding: 'utf8', env: { ...process.env, S2271_COUNT_FILE: countFile },
   });
   assert.equal(r.status, 0, r.stderr);
@@ -421,6 +423,7 @@ test('10. INSTRUMENT VALIDITY — the git counter counts, so an empty rev list c
   const shim = counterShim(dir);
   const countFile = path.join(dir, 'count.gitprobe.txt');
   const r = spawnSync('node', ['-r', shim, probe], {
+    timeout: 240_000, killSignal: 'SIGKILL',
     cwd: root, encoding: 'utf8', env: { ...process.env, S2271_COUNT_FILE: countFile },
   });
   assert.equal(r.status, 0, r.stderr);
@@ -433,7 +436,7 @@ test('10. INSTRUMENT VALIDITY — the git counter counts, so an empty rev list c
 test('7. the cure is behaviour-neutral — both guards still REFUSE from a frozen worktree', () => {
   const { wt } = build();
   for (const name of ['desk-birth-guard', 'desk-declaration-guard']) {
-    const r = spawnSync('node', [path.join(SCRIPTS, name + '.mjs')], { cwd: wt, encoding: 'utf8' });
+    const r = spawnSync('node', [path.join(SCRIPTS, name + '.mjs')], { timeout: 240_000, killSignal: 'SIGKILL', cwd: wt, encoding: 'utf8' });
     const all = (r.stdout ?? '') + (r.stderr ?? '');
     assert.equal(r.status, 2, `${name}: ${all}`);
     assert.match(all, /REFUSING/, name);
