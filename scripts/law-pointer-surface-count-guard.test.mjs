@@ -112,9 +112,41 @@ function run(script, args = []) {
 /**
  * The happy-path run, taken ONCE and shared. Four arms below ask different questions of the SAME
  * stdout, and spawning it four times bought nothing but four more chances to wedge.
+ *
+ * THE FAILURE IS SHARED TOO, AND THAT HALF WAS MISSING UNTIL s2415 (F-2415-1). `happyPath ??= run()`
+ * memoises a VALUE, never a THROW: when run() threw, nothing was cached and the next arm re-ran it
+ * from scratch. So the invariant this comment states held on the happy path and INVERTED on exactly
+ * the path it was written to protect. MEASURED, not reasoned — an instrumented scratch copy whose
+ * subject is a 600 s hang, bound lowered 60_000 -> 1_000 to keep the experiment cheap (a deviation
+ * that changes each attempt's DURATION, never the control flow being counted): 8 spawns, i.e. all
+ * four arms x two attempts each, where the comment above promises one.
+ *
+ * WHAT THAT COSTS, PRICED HONESTLY AND IN TWO REGIMES, because they differ and only one is dear:
+ *   - INTERMITTENT flake (the F-2412-2 event): cheap either way. Arm 1 burns its retry; the other
+ *     three re-run and almost certainly succeed in ~250 ms. Little is lost, which is why no fire
+ *     noticed.
+ *   - PERSISTENT hang (a bad edit puts the subject in a loop): 8 x 60 s = up to EIGHT MINUTES before
+ *     the battery says so, against a normal wall of 77-99 s, at the fire's mandated last act
+ *     (F-1300-4). Caching the rejection makes that 2 x 60 s and names the same cause.
+ *
+ * NOT a false green — it fails LOUD in both regimes, and the realised cost to date is ZERO. The
+ * defect is wall time at the worst possible moment, plus a comment a future reader would reason from.
+ * The resilience given up is the accidental kind (three arms independently recovering); it costs up
+ * to six extra 60 s spawns to buy a red the battery was going to show anyway.
  */
 let happyPath;
-const happy = () => (happyPath ??= run(SUBJECT));
+let happyFailure;
+const happy = () => {
+  if (happyFailure) throw happyFailure;
+  if (happyPath) return happyPath;
+  try {
+    happyPath = run(SUBJECT);
+  } catch (e) {
+    happyFailure = e;
+    throw e;
+  }
+  return happyPath;
+};
 
 const headlineOf = (stdout) => stdout.split('\n').find((l) => l.includes('surfaces      :')) ?? '';
 
@@ -198,4 +230,37 @@ test('7. the declaration prints on the happy path, at an unchanged exit code', (
   const r = happy();
   assert.equal(r.status, 0, 'the advisory declaration must not move the exit code');
   assert.ok(headlineOf(r.stdout).length > 0, 'headline absent on a green run — a declaration that appears only on failure re-creates the ambiguity it removes (F-2208-1)');
+});
+
+/**
+ * ARM 8 IS STATIC, FOR THE SAME MEASURED REASON ARMS 4 AND 5 ARE (F-2415-1).
+ *
+ * The behavioural proof exists and is what produced this cure — an instrumented scratch copy over a
+ * hanging subject, 8 spawns before and 2 after — but reproducing it here means putting a deliberate
+ * WEDGE inside the battery leg whose entire purpose is never to wedge. That trade was already made
+ * and written down thirty lines up; this arm honours it rather than re-opening it.
+ *
+ * WHAT IT CANNOT SEE, DECLARED: a rewrite that keeps both identifiers and still re-spawns per arm.
+ * WHAT IT DOES SEE is the regression that actually threatens this file — a tidying pass restoring the
+ * pre-cure one-liner, which is the exact shape s2415 measured at 8 spawns.
+ *
+ * IT MATCHES WHOLE TRIMMED CODE LINES, NEVER THE RAW FILE, AND THAT IS NOT STYLE — IT IS THE BUG THIS
+ * ARM SHIPPED WITH FOR ITS FIRST DRAFT. Reading itself with a substring needle, the arm RED ON THE
+ * CURED FILE, because the prose above quoted the very shape it forbids. A self-reading guard whose own
+ * documentation satisfies its own needle is the `pgrep`-inside-the-command-it-probes tautology wearing
+ * a new costume; line equality is immune to anything written in a comment.
+ */
+const MEMO_PRE_CURE = 'const happy = () => (happyPath ??= run(SUBJECT));';
+const MEMO_RETHROW = 'if (happyFailure) throw happyFailure;';
+const MEMO_CACHE = 'happyFailure = e;';
+
+test('8. the shared happy-path run shares its FAILURE too, not only its value (F-2415-1)', () => {
+  const codeLines = fs.readFileSync(fileURLToPath(import.meta.url), 'utf8')
+    .split('\n').map((l) => l.trim());
+  assert.ok(!codeLines.includes(MEMO_PRE_CURE),
+    'the `??=` memo is back: it caches a value but never a throw, so a wedged subject is re-spawned by every arm (measured s2415: 8 spawns, up to 8 min at the mandated last act)');
+  assert.ok(codeLines.includes(MEMO_RETHROW),
+    'the cached failure is no longer re-thrown — each arm would pay the wedge again');
+  assert.ok(codeLines.includes(MEMO_CACHE),
+    'the failure is never cached, so the shared run is shared on success only');
 });
