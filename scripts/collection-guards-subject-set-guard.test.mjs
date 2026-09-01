@@ -85,10 +85,33 @@ const LIST_FLAG = ['--', 'list'].join(''); // built, not written, so this file d
  * carrying the list flag at all, `function-cors-allowlist.test.mjs` is excluded by this conjunct
  * (it only QUOTES `npx playwright test --list` in a comment) and `worker-type-coverage.test.mjs` is
  * excluded by the first (it spawns `tsc --listFiles`, whose flag contains the list flag as a
- * substring). Both exclusions are correct. What stays UNMEASURED is a guard that reaches playwright
- * INDIRECTLY — `npm run test:e2e -- --list` names no `playwright` literal — and a collection guard
- * that is not named `*.test.mjs`; both would be invisible here, though the second is invisible to
- * the SELECTOR too, so the two agree and no false enrolment can result.
+ * substring). Both exclusions are correct. A collection guard that is not named `*.test.mjs` would
+ * also be invisible here — but it is invisible to the SELECTOR too, so the two agree and no false
+ * enrolment can result.
+ *
+ * ✅ THE FIRST CONJUNCT'S BOUNDARY IS NOW MEASURED, AND IT IS EMPTY (s2426, executing the declared
+ * limit rather than inheriting it — F-2219-1: a census's declared limit is worth more than the site
+ * it names). s2425 left as UNMEASURED "a guard that reaches playwright INDIRECTLY — `npm run
+ * test:e2e -- --list` names no `playwright` literal". Re-measured over the same 174
+ * `scripts/*.test.mjs`: 6 carry the list flag, and the ONLY one lacking the `playwright` literal is
+ * `worker-type-coverage.test.mjs` — the `tsc --listFiles` file s2425 had already classified. ZERO
+ * live offenders: no collection guard reaches playwright indirectly today.
+ *
+ * ⚠️ EMPTY IS NOT IMPOSSIBLE, WHICH IS THE HALF WORTH CARRYING — the idiom is ordinary house style
+ * here, so this boundary is forward-live rather than hypothetical: 12 of the 174 test files already
+ * spawn `npm`, and 7 `package.json` scripts wrap playwright (`test`, `test:preview`, `test:release`,
+ * `test:release-base`, `test:asset-diet`, `census`, `verify:visual`). A future collection guard
+ * written as `npm run test:preview -- --list` would satisfy conjuncts 2 and 3 and be invisible to
+ * conjunct 1 — silently, in the one direction this file exists to make loud.
+ *
+ * 🚫 DELIBERATELY NOT WIDENED, on s2425's own `fork` reasoning rather than on inertia, and the
+ * restraint is MEASURED: adding `npm` to the first conjunct accuses NOTHING today — the intersection
+ * of "spawns npm" and "carries the list flag" is exactly ONE file and it is SELF, already exempt by
+ * name — so the widening buys no detection now, while `npm` is common enough in this corpus to
+ * eventually meet the other two conjuncts and accuse an honest file: the noise that gets a guard
+ * excused into uselessness (F-1460-1). ➡️ THE NUMBER TO WATCH is whether any npm-spawning test file
+ * ever gains the list flag. On the day that intersection exceeds SELF, re-measure and widen; until
+ * then a red here would fire only on honest work.
  */
 const SPAWNER_TOKENS = ['spawn', 'execFile', 'execSync'];
 
