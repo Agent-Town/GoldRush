@@ -289,6 +289,71 @@ export function isLockLine(line1) {
 }
 
 /**
+ * The header SHAPE — a 🔺 bullet opening in bold, optionally with a second glyph
+ * (`🔺🚨 **`). Tested against everything BEFORE the desk word, anchored at the
+ * end, so the window can never be mis-sized: 🔺 and 🚨 are two UTF-16 units each
+ * and a fixed slice is exactly the kind of off-by-one this file keeps recording.
+ */
+const HEADER_SHAPE = /🔺[^*🔺]{0,4}\*\*\s*$/u;
+
+/**
+ * WHERE ON LINE-1 DOES THE DESK TAIL BEGIN? — one question, ONE declaration.
+ *
+ * F-2435-1 (measured s2435), curing F-2434-1 (filed s2434).
+ *
+ * F-1471-3's cure was "the desk is the TAIL; prose mentions lose", implemented as
+ * the LAST bare DESK_WORD hit. That is correct for a mention UPSTREAM of the
+ * header and it INVERTS for one DOWNSTREAM — i.e. sitting INSIDE the desk body,
+ * where "last wins" promotes the fragment to header and silently discards every
+ * item above it. A rule that disambiguates by POSITION assumes the noise is all
+ * on one side; here the fix for prose-BEFORE became the defect for prose-WITHIN.
+ *
+ * ⚙️ THE MECHANISM IS THIS FAMILY'S OWN ERROR TEXT, WHICH IS WHY IT RECURS. All
+ * seven divergent desks in the corpus are handoffs QUOTING a desk guard's red —
+ * "N item(s) left the OWNER'S DESK with no reason given" — or carrying a severed
+ * remnant of that sentence spliced into the desk body. A guard's failure message
+ * is a PARSER INPUT the moment a fire narrates it, and these three parsers read
+ * the surface their own siblings write about.
+ *
+ * 📊 BEHAVIOUR MEASURED OVER THE WHOLE CORPUS BEFORE LANDING (F-1274-2), not
+ * asserted: 1,551 non-lock desk-bearing line-1s in STATUS.md (line 1 plus every
+ * archived bullet). 1,544 parse BYTE-IDENTICALLY to the old rule. Exactly 7 move,
+ * and every one moves BACKWARD onto the real `🔺 **OWNER'S DESK` header:
+ * s2434 · s2433 · s2432 (1 segment recovered each) · s2430 · s2429 · s2428
+ * (2 each) · s2274 (0 — a start move with no item behind it). On the desk this
+ * fire inherited that recovers `NEW — HEAT 10 NEEDS A RE-RIDE AUTHORIZATION`,
+ * the newest item and the one asking the owner for a spend authorization, born
+ * into the blind region at s2432 and never once examined.
+ *
+ * ⚖️ SEVERITY, HONESTLY: the realised cost was ZERO and that was verified, not
+ * assumed — the recovered segment carries no F-ID and no backticked slug, and the
+ * one id the window gains (`F-2434-1`, from the header sentence itself) IS
+ * declared at tasks/BACKLOG.md:1. Nothing undeclared ever slipped past. What
+ * earns the cure is the DIRECTION (permissive, in a MANDATED gate) and the
+ * RESIDENCE: the blind region is precisely where a fire writes a NEW desk item.
+ *
+ * 🚦 THE FALLBACK IS LOAD-BEARING AND MUST STAY. When NO hit is header-shaped the
+ * rule degrades to plain last-wins, which is what keeps the other 1,544 — and
+ * every desk written before the 🔺 convention — parsing exactly as they did. An
+ * anchor with no fallback would refuse on lawful historical desks and be excused
+ * into uselessness inside a week (F-1460-1, the `cross-engine` fate).
+ *
+ * Returns the index, or -1 when the line carries no desk word at all.
+ */
+export function deskTailStart(line) {
+  const hits = [...line.matchAll(DESK_WORD)];
+  if (!hits.length) return -1;
+  const shaped = hits.filter((h) => HEADER_SHAPE.test(line.slice(0, h.index)));
+  return (shaped.length ? shaped : hits).at(-1).index;
+}
+
+/** The desk tail of a line: everything from the header on, or null if there is none. */
+export function deskTail(line) {
+  const i = deskTailStart(line);
+  return i === -1 ? null : line.slice(i);
+}
+
+/**
  * The desk list is the tail of STATUS.md LINE 1 — never any other line.
  *
  * Returns:
@@ -306,10 +371,8 @@ export function isLockLine(line1) {
 export function deskIds(statusText) {
   const line1 = statusText.split('\n')[0] || '';
   if (isLockLine(line1)) return { kind: 'lock' };
-  const hits = [...line1.matchAll(DESK_WORD)];
-  if (!hits.length) return { kind: 'none' };
-  const last = hits[hits.length - 1]; // the desk is the TAIL; prose mentions lose
-  const tail = line1.slice(last.index);
+  const tail = deskTail(line1);
+  if (tail === null) return { kind: 'none' };
   return {
     kind: 'desk',
     ids: [...new Set(tail.match(FINDING) || [])],

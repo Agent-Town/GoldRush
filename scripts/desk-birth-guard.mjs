@@ -373,11 +373,14 @@ export function isLockLine(line1) {
   return /\bACTIVE\b/.test(line1) && !/lock CLEARED/.test(line1);
 }
 
-/** The desk tail of a line: everything after its LAST desk word (prose mentions lose). */
-export function deskTail(line) {
-  const hits = [...line.matchAll(DESK_WORD)];
-  return hits.length ? line.slice(hits[hits.length - 1].index) : null;
-}
+/**
+ * The desk tail of a line — RE-EXPORTED, never re-implemented (F-2435-1, s2435).
+ * See the note at desk-carryforward-guard.mjs's re-export: the DESK_WORD token
+ * was single-sourced at s2229 and the LAST-match RULE was left in three copies,
+ * so F-2434-1's downstream-fragment defect lived in all three at once.
+ */
+export { deskTail, deskTailStart } from './desk-declaration-guard.mjs';
+import { deskTail } from './desk-declaration-guard.mjs';
 
 /**
  * A row's GATE clause — the LAST one, since row prose quotes earlier gates.

@@ -198,12 +198,20 @@ export function isLockLine(line1) {
   return /\bACTIVE\b/.test(line1) && !/lock CLEARED/.test(line1);
 }
 
-/** The desk tail of a line: everything after its LAST desk word (prose mentions lose). */
-export function deskTail(line) {
-  const hits = [...line.matchAll(DESK_WORD)];
-  if (!hits.length) return null;
-  return line.slice(hits[hits.length - 1].index);
-}
+/**
+ * The desk tail of a line — RE-EXPORTED, never re-implemented (F-2435-1, s2435).
+ *
+ * This was a byte-identical third copy of the LAST-match rule, and the module
+ * comment at the DESK_WORD declaration already named the principle it broke:
+ * "all three consumers ask the IDENTICAL question of the IDENTICAL subject —
+ * where on this line does the desk tail begin? — One question, one declaration."
+ * The TOKEN was single-sourced at s2229; the RULE was not, so F-2434-1's defect
+ * lived in three places and a cure in one of them would have left this guard —
+ * the very guard whose red text is the fragment that CAUSES the defect — still
+ * parsing from inside the desk body.
+ */
+export { deskTail, deskTailStart } from './desk-declaration-guard.mjs';
+import { deskTail } from './desk-declaration-guard.mjs';
 
 /**
  * The items on a desk tail. The desk's own convention introduces each item with
