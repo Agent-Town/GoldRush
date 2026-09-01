@@ -229,10 +229,29 @@ function main() {
   console.log(`  already bounded                        : ${c.rows.filter((r) => r.bounded).length}`);
 
   if (argv.includes('--list')) {
+    const group = (rows) => {
+      const by = new Map();
+      for (const r of rows) by.set(r.file, [...(by.get(r.file) || []), r.line]);
+      return [...by].sort();
+    };
+
     console.log('\nEXPOSED sites inside a mandated battery leg:');
-    const by = new Map();
-    for (const r of inBattery) by.set(r.file, [...(by.get(r.file) || []), r.line]);
-    for (const [f, lines] of [...by].sort()) console.log(`  ${f}  (lines ${lines.join(',')})`);
+    for (const [f, lines] of group(inBattery)) console.log(`  ${f}  (lines ${lines.join(',')})`);
+    if (!inBattery.length) console.log('  (none)');
+
+    // F-2433-1: NAME the outside set too. Until s2433 this arm listed ONLY the
+    // in-battery rows, so the tool reported a COUNT it gave its reader no way to
+    // act on -- a detector whose finding no tool can reach. That is not cosmetic:
+    // the outside set is where the TRIAGE INSTRUMENTS live, because a tool a fire
+    // runs BY HAND is outside every battery BY CONSTRUCTION. dry-board-probe.mjs
+    // (§2F's first prescribed command, 46 sync node spawns per run) sat in this
+    // unnamed bucket through both the F-2430-1 and s2432 sweeps.
+    const outside = exposed.filter((r) => !legs.all.has(r.file));
+    console.log('\nEXPOSED sites OUTSIDE any mandated battery leg:');
+    for (const [f, lines] of group(outside)) console.log(`  ${f}  (lines ${lines.join(',')})`);
+    if (!outside.length) console.log('  (none)');
+    console.log('\n  Battery membership sizes the GATE risk, not the FIRE risk: an');
+    console.log('  instrument the law tells a fire to run by hand is never a leg.');
   }
 
   if (strict && inBattery.length > max) {

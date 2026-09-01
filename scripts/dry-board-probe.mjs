@@ -593,8 +593,27 @@ function main() {
       cap = {
         failed: false,
         status: 0,
+        // F-2433-1: BOUNDED. This is a SYNC spawn of a NODE child that exits via
+        // process.exit() (drain-block-check has 15 of them), which is exactly
+        // F-2429-1's deadlock: the child finishes its work, calls exit, and wedges
+        // in node's own platform teardown (DisposePlatform -> uv_thread_join), so
+        // the parent waits forever for an EOF that never arrives. spawnSync BLOCKS
+        // THE EVENT LOOP, so no outer timer can ever fire -- the run has no upper
+        // bound at all.
+        //
+        // This loop makes ONE such spawn PER SUBJECT (46 on the live board), on
+        // every fire, in the instrument §2F prescribes as the first command of a
+        // dry-board declaration -- more node children per run than most battery
+        // legs make. F-2430-1 and s2432 bound 102 sites by asking "is this file a
+        // mandated battery leg?"; this file is not one, and never can be, which is
+        // why it survived both sweeps.
+        //
+        // 240_000 is F-2430-1's measured constant, kept for consistency; it is
+        // ~240x this child's lawful runtime (~1s), so it cannot red honest work.
+        // A timeout throws, is caught below, and lands in the `crashed` arm with
+        // text:'' -- so bucketOf falls to the LOUD `drain` bucket BY CONSTRUCTION.
         stdout: execFileSync('node', [path.join(root, 'scripts', 'drain-block-check.mjs'), f],
-          { encoding: 'utf8', cwd: root }),
+          { encoding: 'utf8', cwd: root, timeout: 240_000, killSignal: 'SIGKILL' }),
       };
     } catch (e) {
       // NOT an edge case: rc=1 is how every "do not drain" verdict arrives.

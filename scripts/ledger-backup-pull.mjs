@@ -125,7 +125,18 @@ function fillRemoteGaps() {
  */
 function exposureGate() {
   const probe = fileURLToPath(new URL('./ledger-mirror-exposure.mjs', import.meta.url));
-  const r = spawnSync(process.execPath, [probe, '--dir', destination], { encoding: 'utf8' });
+  // F-2433-1: BOUNDED. A SYNC spawn of a NODE child is F-2429-1's deadlock shape --
+  // the child exits, wedges in node's platform teardown, and spawnSync blocks the
+  // event loop so no outer timer can ever fire. Unbounded, this hangs the LB-01
+  // duty forever, in the one gate standing between a plaintext account row and a
+  // ONE-WAY commit (F-2353-2).
+  //
+  // The bound makes an ALREADY-WRITTEN handler reachable rather than adding one:
+  // a timeout yields status === null, which the arm below already treats as
+  // "gate DID NOT RUN -- verify the keys by hand", the correct fail-safe.
+  // 240_000 is F-2430-1's measured constant, ~240x this child's lawful runtime.
+  const r = spawnSync(process.execPath, [probe, '--dir', destination],
+    { encoding: 'utf8', timeout: 240_000, killSignal: 'SIGKILL' });
 
   if (r.error || r.status === null) {
     console.log('⚠️  exposure gate DID NOT RUN — verify the keys by hand before committing:');
