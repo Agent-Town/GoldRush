@@ -52,8 +52,52 @@ const NOT_COLLECTION_GUARDS = new Set([GUARD, SELF]);
 
 const LIST_FLAG = ['--', 'list'].join(''); // built, not written, so this file does not match itself
 
+/**
+ * The spawner FAMILY, not the single token `spawn` (F-2425-1, measured and cured s2425).
+ *
+ * The promise this detector serves is stated in `collection-guard-subjects.mjs`: "Forgetting the
+ * marker is LOUD, not silent ... reds by name if a file spawns playwright list-mode without carrying
+ * it." The third conjunct used to be the literal `spawn`, so a collection guard written with
+ * `execFileSync` was INVISIBLE to the census and never enrolled — silently, in the one direction
+ * this file exists to make loud. Measured s2425 over the 174 `scripts/*.test.mjs`: `execFileSync`
+ * appears in 43 of them and 10 carry it with no `spawn` token anywhere, so the idiom is ordinary
+ * house style here rather than a hypothetical.
+ *
+ * ⚖️ ZERO LIVE OFFENDERS when this landed — the widening changes no verdict today, because both
+ * real subjects use `spawnSync`. It is future-proofing, and it earns its keep for the reason
+ * F-2424-1 gives one guard over: the sibling GREW a new site 93 fires after its guard was written,
+ * and was safe only because its author happened to reuse the idiom under test. That is a convention
+ * no mechanism enforced.
+ *
+ * 🚫 TWO TOKENS ARE DELIBERATELY EXCLUDED, and the two exclusions have DIFFERENT standing — stated
+ * apart because the teeth sweep repriced what its author was surest of, and collapsing them would
+ * hand the next reader a proof that does not exist:
+ *   · bare `exec` — MEASURED. Adding it reds arms 2 and 8, because `function-cors-allowlist.test.mjs`
+ *     carries the token while spawning nothing. It genuinely over-reaches on the live tree today.
+ *   · `fork` — REASONED, NOT MEASURED. Adding it reds NOTHING (swept s2425), so no current file is
+ *     saved by excluding it. It stays out on a forward-looking argument: the token appears in 26 of
+ *     the 174 test files, because this repo writes "owner-fork" throughout its prose, and a token
+ *     that common will eventually meet the other two conjuncts and accuse an honest file — the noise
+ *     that gets a guard excused into uselessness (F-1460-1). Do not cite this exclusion as proven.
+ *
+ * ⓘ DECLARED BOUNDARY, so the next reader inherits a reason and not a verdict. Only the THIRD
+ * conjunct was widened. The other two were measured s2425 and are doing real work: of the 6 files
+ * carrying the list flag at all, `function-cors-allowlist.test.mjs` is excluded by this conjunct
+ * (it only QUOTES `npx playwright test --list` in a comment) and `worker-type-coverage.test.mjs` is
+ * excluded by the first (it spawns `tsc --listFiles`, whose flag contains the list flag as a
+ * substring). Both exclusions are correct. What stays UNMEASURED is a guard that reaches playwright
+ * INDIRECTLY — `npm run test:e2e -- --list` names no `playwright` literal — and a collection guard
+ * that is not named `*.test.mjs`; both would be invisible here, though the second is invisible to
+ * the SELECTOR too, so the two agree and no false enrolment can result.
+ */
+const SPAWNER_TOKENS = ['spawn', 'execFile', 'execSync'];
+
 function spawnsPlaywrightList(source) {
-  return source.includes('playwright') && source.includes(LIST_FLAG) && source.includes('spawn');
+  return (
+    source.includes('playwright') &&
+    source.includes(LIST_FLAG) &&
+    SPAWNER_TOKENS.some((token) => source.includes(token))
+  );
 }
 
 function fixture(files) {
@@ -200,4 +244,75 @@ test('6. a marked file is excluded from its OWN subject set — no guard can spa
     'self-exclusion must remove only the caller, not its marked siblings',
   );
   fs.rmSync(dir, { recursive: true, force: true });
+});
+
+/**
+ * Detector fixtures as SOURCE STRINGS, not files: these arms ask what the census can SEE, which is a
+ * question about text. No temp dir, no spawn, microseconds. The list flag is built rather than
+ * written for the same reason it is at the top of this file.
+ */
+const SPAWNS_VIA_EXEC_FILE =
+  "import { execFileSync } from 'node:child_process';\n" +
+  `execFileSync('npx', ['playwright', 'test', '${LIST_FLAG}']);\n`;
+
+const QUOTES_LIST_MODE_ONLY = `// a comment mentioning npx playwright test ${LIST_FLAG}, and nothing else\n`;
+
+test('7. TEETH: the census sees a guard that spawns via execFileSync, not only via `spawn`', () => {
+  assert.ok(
+    spawnsPlaywrightList(SPAWNS_VIA_EXEC_FILE),
+    'a file spawning playwright list-mode via execFileSync is invisible to the census, so it would ' +
+      'never be enrolled and arm 2 would never name it — the silent direction this file exists to close',
+  );
+  // The PRE-CURE detector, restored inline: it must MISS the same source. Without this the arm would
+  // pass identically against the narrow third conjunct and would prove nothing about the widening —
+  // a variant that reddens nothing is a report about the instrument, not about the defect.
+  const preCure = (s) => s.includes('playwright') && s.includes(LIST_FLAG) && s.includes('spawn');
+  assert.equal(
+    preCure(SPAWNS_VIA_EXEC_FILE),
+    false,
+    'the pre-cure detector already saw this source, so arm 7 is not measuring the widening',
+  );
+});
+
+test('8. reverse control: widening did not reach into prose that merely QUOTES list-mode', () => {
+  assert.equal(
+    spawnsPlaywrightList(QUOTES_LIST_MODE_ONLY),
+    false,
+    'the widening over-reached into prose: a file that only quotes `npx playwright test --list` in ' +
+      'a comment must never be accused, or arm 2 becomes noise and gets excused (F-1460-1)',
+  );
+  // Grounded on the real tree, not only on a fixture: this live file quotes list-mode in a comment
+  // and spawns nothing. It is the shape the third conjunct exists to exclude, and it must stay out.
+  const proseOnly = 'function-cors-allowlist.test.mjs';
+  const source = fs.readFileSync(path.join(SCRIPTS, proseOnly), 'utf8');
+  assert.equal(
+    spawnsPlaywrightList(source),
+    false,
+    `${proseOnly} only quotes list-mode in prose but the census now accuses it — the widening is too broad`,
+  );
+});
+
+test('9. reverse control: the by-name exemption is load-bearing and swallows no real subject', () => {
+  // LOAD-BEARING: every exempt file must actually match the detector. An exemption that exempts
+  // nothing is decoration, and it would silently outlive the reason it was added (s2226's duty:
+  // an assertion no defect can reach is indistinguishable from a correct one).
+  for (const exempt of NOT_COLLECTION_GUARDS) {
+    const source = fs.readFileSync(path.join(SCRIPTS, exempt), 'utf8');
+    assert.ok(
+      spawnsPlaywrightList(source),
+      `${exempt} is exempt from arm 2 but no longer matches the detector, so the exemption is ` +
+        'decoration — drop it from NOT_COLLECTION_GUARDS rather than leaving it to mask a future match',
+    );
+  }
+  // AND it must never be used to silence a red on a REAL collection guard. That would drop the file
+  // from the census while leaving it out of the subject set — precisely the silent state this guard
+  // exists to prevent, and the one way the exemption can be abused as the detector's key widens.
+  const { subjects } = collectionGuards(SCRIPTS, SELF);
+  const swallowed = subjects.filter((f) => NOT_COLLECTION_GUARDS.has(f));
+  assert.deepEqual(
+    swallowed,
+    [],
+    `a MARKED collection guard is also exempt by name: ${swallowed.join(', ')}. The exemption is for ` +
+      'files that merely quote list-mode, never for silencing a subject.',
+  );
 });
