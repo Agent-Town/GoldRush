@@ -39,9 +39,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
+import { copyGuardSources } from './guard-source-snapshot.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const GUARD = path.join(HERE, 'desk-birth-guard.mjs');
+const SUBJECT_FILE = 'desk-birth-guard.mjs';
+const GUARD = path.join(HERE, SUBJECT_FILE);
 const pathToUrl = (p) =>
   new URL(`file://${p.split(path.sep).map(encodeURIComponent).join('/')}`).href;
 const { analyse, admissionOf, declaresOwnerAct, closureMarked } = await import(pathToUrl(GUARD));
@@ -148,11 +150,12 @@ test('12 — REVERSE CONTROL: the FAIL text for an ACT row must not cite a "GATE
 async function variant(kind) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), `desk-birth-${kind}-`));
   scratch.push(dir);
-  for (const f of fs.readdirSync(HERE)) {
-    if (f.endsWith('.mjs') && !f.endsWith('.test.mjs')) {
-      fs.copyFileSync(path.join(HERE, f), path.join(dir, f));
-    }
-  }
+  // F-2420-1: NOT a bare copy loop. Two sibling guards in this battery write and
+  // delete transient `tmp-*-shadow-*.mjs` in the REAL scripts/ dir by design, and
+  // `node --test` runs the 98 files in parallel — so an entry can vanish between
+  // the listing and its copy. Measured s2420: 10/10 crashes inline, 0/10 with the
+  // helper. See guard-source-snapshot.mjs for why it skips ENOENT and only ENOENT.
+  copyGuardSources(HERE, dir, SUBJECT_FILE);
   const target = path.join(dir, 'desk-birth-guard.mjs');
   const src = fs.readFileSync(target, 'utf8');
   const edits = {
@@ -198,11 +201,7 @@ function runGuardOn(guardPath, rows, line1) {
   fs.writeFileSync(path.join(dir, 'STATUS.md'), `${line1}\n`);
   git('add', '-A');
   git('commit', '-qm', 's9999 handoff: the window end');
-  for (const f of fs.readdirSync(HERE)) {
-    if (f.endsWith('.mjs') && !f.endsWith('.test.mjs')) {
-      fs.copyFileSync(path.join(HERE, f), path.join(dir, 'scripts', f));
-    }
-  }
+  copyGuardSources(HERE, path.join(dir, 'scripts'), SUBJECT_FILE); // F-2420-1: same race
   return spawnSync(process.execPath, [path.join(dir, 'scripts', 'desk-birth-guard.mjs')], {
     cwd: dir, encoding: 'utf8',
   });
