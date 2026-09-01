@@ -179,6 +179,13 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
       if rsync -az --delete --timeout=60 --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist --exclude 'gate-s*' --exclude reviews --exclude e1-review-video --exclude marketing --exclude env --exclude assets/raw --exclude assets/motion-pilot --exclude assets/contact-sheets --exclude assets/reference --include 'assets/pilots/map-rebuild-spike/***' --exclude 'assets/pilots/*' ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
         && ssh -o BatchMode=yes root@<droplet> "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
+        # F-DISK-0902: measure what the mirror weighs after every sync. The runtime set is ~1 GB; anything
+        # past 2,500 MB means non-runtime content is shipping again (a new top-level dir the exclude
+        # list does not know) and is said out loud here and in the fire handoff that reads this log.
+        MIRROR_MB="$(ssh -o BatchMode=yes root@<droplet> "du -sm /opt/goldrush 2>/dev/null | cut -f1" 2>/dev/null)"
+        if [ -n "${MIRROR_MB:-}" ]; then
+          if [ "$MIRROR_MB" -gt 2500 ]; then note "MIRROR-BLOAT: /opt/goldrush is ${MIRROR_MB} MB after sync (ceiling 2500) — a non-runtime directory is shipping again; fix the rsync filter before the next deploy"; else note "mirror weight after sync: ${MIRROR_MB} MB"; fi
+        fi
       else
         note "ASSAYER SYNC FAILED mid-step: droplet may be mixed-state — run the runbook sync by hand before trusting fresh verdicts"
       fi
