@@ -42,6 +42,7 @@ try {
     checkTapeBuildMetadata(validateTape);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
+    await checkOperatorProbes(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest);
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
@@ -145,6 +146,76 @@ async function checkReplayableBoard(onRequest) {
   equal(refused.body.error, 'reel_not_current', 'the door names the current-era failure');
   equal(refused.body.message, `This reel rode era ${engineEra.era - 1}; the county accepts era ${engineEra.era} '${engineEra.name}'.`, 'the door gives the honest era reason');
   equal(await kv.get(key), storedBytes, 'the refused tape is never stored');
+}
+
+async function checkOperatorProbes(onRequest, queueRoute, verdictRoute) {
+  const kv = makeKv();
+  const probe = post('c'.repeat(32), 10, tape('operator-probe-reel', 10));
+  probe.profileName = 'Era Probe';
+  probe.stack = { model: 'deterministic-controller', harness: 'operator-probe', harnessVersion: '1' };
+  equal((await call(onRequest, 'POST', '/api/standings', probe, kv)).body.rank, null, 'operator probe mints no rank');
+
+  const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, kv, SECRET);
+  equal(queue.body.queue.length, 1, 'operator probe still enters the assay queue');
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(queue.body.queue[0].locator, 'verified'), kv, SECRET)).status, 200, 'operator probe verifies');
+
+  const storedBytes = await kv.get(KEY);
+  const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+  equal(board.body.board.length, 0, 'verified operator probe stays off the board');
+  equal(board.body.probeCount, 1, 'board counts the stored operator probe');
+  equal(JSON.parse(storedBytes).length, 1, 'verified operator probe stays in storage');
+  equal(await kv.get(KEY), storedBytes, 'reading the probe leaves storage byte-identical');
+  equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=operator-probe-reel', undefined, kv)).status, 200, 'WATCH still serves the operator probe reel');
+  equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=operator-probe-reel', undefined, kv)).body, {
+    ok: true,
+    season: 2,
+    assayEra: true,
+    epochId: 'epoch-1-frontier',
+    contractId: 'the-claim',
+    tapeId: 'operator-probe-reel',
+    assay: 'verified',
+    ranked: false,
+    assayedAt: JSON.parse(storedBytes)[0].assayedAt,
+    assayHash: 'fnv1a32:1234abcd',
+  }, 'verdict endpoint still answers for the unranked probe');
+
+  const liveShape = [
+    ['Claude Opus 5', 'claude-code-cli', 680],
+    ['Claude Fable 5', 'claude-code-cli', 499],
+    ['Heat 8 Era Probe', 'operator-probe', 200],
+    ['Heat 9 R2 Era Probe', 'operator-probe', 200],
+    ['OMP Heat 8', 'omp', 25],
+    ['PI Heat 9 R2', 'pi', 2],
+    ['OpenClaw Heat 8', 'openclaw', 0],
+    ['Prime Agent Heat 9 R2', 'prime-agent', 0],
+  ].map(([profileName, harness, gold], index) => {
+    const row = storedRowFor(index + 20, 'the-claim', 'epoch-1-frontier');
+    row.profileName = profileName;
+    row.stack = { declaredBy: 'self', model: 'test-model', harness, harnessVersion: '1' };
+    row.waves = row.tape.outcome.waves = 10;
+    row.timeAlive = row.tape.outcome.timeAlive = 300;
+    row.gold = row.tape.outcome.gold = gold;
+    row.baseValue = 0;
+    row.submittedAt = 1_788_000_000_000 + index;
+    row.assay = 'verified';
+    row.assayedAt = row.submittedAt + 1;
+    row.assayHash = row.tape.eventLogHash;
+    return row;
+  });
+  const fixtureKv = makeKv();
+  await fixtureKv.put(KEY, JSON.stringify(liveShape));
+  const fixtureBytes = await fixtureKv.get(KEY);
+  const reranked = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, fixtureKv);
+  equal(reranked.body.board.map(({ rank, profileName }) => ({ rank, profileName })), [
+    { rank: 1, profileName: 'Claude Opus 5' },
+    { rank: 2, profileName: 'Claude Fable 5' },
+    { rank: 3, profileName: 'OMP Heat 8' },
+    { rank: 4, profileName: 'PI Heat 9 R2' },
+    { rank: 5, profileName: 'OpenClaw Heat 8' },
+    { rank: 6, profileName: 'Prime Agent Heat 9 R2' },
+  ], 'live-shaped Claim fixture promotes the four riders two ranks after removing both probes');
+  equal(reranked.body.probeCount, 2, 'live-shaped Claim fixture counts both probes');
+  equal(await fixtureKv.get(KEY), fixtureBytes, 're-ranking the live-shaped fixture is read-only');
 }
 
 async function checkAssayIndexRace(onRequest, queueRoute) {

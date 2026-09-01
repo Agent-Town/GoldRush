@@ -441,6 +441,8 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
   const retiredCount = partition.filter((row) => row.tape !== undefined && currentLineageRefusal(row.tape) !== null
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
+  const probeCount = partition.filter((row) => row.stack?.harness === 'operator-probe'
+    && (difficulty === 'all' || row.difficulty === difficulty)).length;
   return json(cors, {
     ok: true,
     ...seasonLabels(season),
@@ -450,6 +452,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     board: difficulty === 'all' ? board : board.filter((row) => row.difficulty === difficulty),
     rejectedCount,
     retiredCount,
+    probeCount,
   });
 }
 
@@ -817,6 +820,7 @@ function rankedRows(rows: StoredRow[]): StoredRow[] {
 
 function isRankedRow(row: StoredRow): boolean {
   return row.tape !== undefined && currentLineageRefusal(row.tape) === null
+    && row.stack?.harness !== 'operator-probe'
     && row.assay !== 'rejected' && row.assay !== 'unassayable';
 }
 
