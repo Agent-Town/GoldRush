@@ -30,11 +30,24 @@ function fixture(overrides = {}) {
   return dir;
 }
 
+// F-2418-1: `run-guards.mjs` anchors its stats path to the SCRIPT TREE, not to cwd
+// (`run-guards.mjs:45-46`), and this file spawns the REAL script rather than a copy. So
+// without this redirect every arm below appends fixture rows -- stub legs, `seconds: 0`,
+// `rc: 0` -- into the live `logs/guard-stats.jsonl`, the per-leg prior F-2312-1 built to
+// be READ. Measured s2418: one run of this file appended 58 such rows, 8 of them claiming
+// `test:node-guards` PASSED while its first leg was red on main. Pinning it inside the
+// fixture dir keeps the production corpus clean and costs nothing; the sibling
+// `guard-stats-persistence.test.mjs` has always done this. Do NOT remove.
+function statsEnv(dir) {
+  return { GR_GUARD_STATS_PATH: path.join(dir, 'guard-stats.jsonl') };
+}
+
 function run(dir, ...args) {
   return spawnSync(process.execPath, [SCRIPT, ...args], {
     cwd: dir,
     encoding: 'utf8',
     timeout: 60_000,
+    env: { ...process.env, ...statsEnv(dir) },
   });
 }
 
@@ -209,7 +222,11 @@ test('--changed-since exits 2 when the untracked listing fails rather than repor
       cwd: dir,
       encoding: 'utf8',
       timeout: 60_000,
-      env: { ...process.env, PATH: `${shimDir}${path.delimiter}${process.env.PATH}` },
+      env: {
+        ...process.env,
+        ...statsEnv(dir),
+        PATH: `${shimDir}${path.delimiter}${process.env.PATH}`,
+      },
     });
 
   // Shape 1: brand-new unstaged worker file -- invisible to `git diff`, so the untracked
