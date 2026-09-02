@@ -70,6 +70,8 @@ export type RunTapeRunStart = {
 export type RunTapeMeta = {
   buildId: string;
   viewVersion?: number;
+  engineHash?: string;
+  era?: number;
 };
 
 export type RunTape = {
@@ -297,6 +299,27 @@ export function readRunTapes(storage: TapeStorage): RunTape[] {
   }
 }
 
+export function runTapeRecordingMeta(
+  storage: TapeStorage,
+  contract: string,
+  current: RunTapeMeta,
+  resumed: boolean,
+): RunTapeMeta {
+  try {
+    const ring = JSON.parse(storage.getItem(RUN_TAPES_KEY) ?? 'null') as unknown;
+    if (resumed && isRecord(ring) && isRecord(ring.recording) && ring.recording.contract === contract) {
+      const saved = validateTapeMeta(ring.recording.meta);
+      if (saved?.engineHash && saved.era) return saved;
+    }
+    const writable = ring === null
+      ? { version: RUN_TAPE_RING_VERSION, tapes: [] }
+      : isRecord(ring) && ring.version === RUN_TAPE_RING_VERSION && Array.isArray(ring.tapes) ? ring : null;
+    if (!writable) return structuredClone(current);
+    storage.setItem(RUN_TAPES_KEY, JSON.stringify({ ...writable, recording: { contract, meta: current } }));
+  } catch {}
+  return structuredClone(current);
+}
+
 export function appendRunTape(storage: TapeStorage, tape: RunTape): boolean {
   const tapes = readRunTapes(storage).filter((entry) => entry.id !== tape.id);
   tapes.push(tape);
@@ -359,9 +382,15 @@ export function validateRunTape(value: unknown): RunTape | null {
 
 function validateTapeMeta(value: unknown): RunTapeMeta | null | undefined {
   if (value === undefined) return undefined;
-  return isRecord(value) && hasOnlyKeys(value, ['buildId', 'viewVersion']) && typeof value.buildId === 'string' && /^(dev|[a-f0-9]{7,16})$/.test(value.buildId)
-    && (value.viewVersion === undefined || (Number.isSafeInteger(value.viewVersion) && (value.viewVersion as number) > 0))
-    ? { buildId: value.buildId, ...(value.viewVersion === undefined ? {} : { viewVersion: value.viewVersion as number }) }
+  if (!isRecord(value) || !hasOnlyKeys(value, ['buildId', 'viewVersion', 'engineHash', 'era'])
+    || typeof value.buildId !== 'string' || !/^(dev|[a-f0-9]{7,16})$/.test(value.buildId)) return null;
+  if (value.viewVersion !== undefined
+    && !(Number.isSafeInteger(value.viewVersion) && (value.viewVersion as number) > 0)) return null;
+  const view = value.viewVersion === undefined ? {} : { viewVersion: value.viewVersion as number };
+  if (value.engineHash === undefined && value.era === undefined) return { buildId: value.buildId, ...view };
+  return typeof value.engineHash === 'string' && /^[a-f0-9]{64}$/.test(value.engineHash)
+    && Number.isSafeInteger(value.era) && (value.era as number) > 0
+    ? { buildId: value.buildId, ...view, engineHash: value.engineHash, era: value.era as number }
     : null;
 }
 
