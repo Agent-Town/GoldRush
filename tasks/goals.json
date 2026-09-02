@@ -3821,7 +3821,8 @@
               "status": "queued",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-02"
+              "queuedAt": "2026-09-02",
+              "drainNotes": "s2458: GATED GREEN, MERGE DEFERRED. Gated on the merged tree in a detached worktree (tsc rc=0, build rc=0, 46 adjacent tests 46 pass 0 fail); gated commit cf1e10a21 preserved as branch save/view-schema-gated-s2458. NOT merged: the main slot was held by a live runner (main--20260902-223733-watchdog-self-check, pid 71704 ALIVE) whose uncommitted package.json edit touches the same test:node-guards line this slice edits. Also cured F-2458-1: main was ALREADY outside era 5 before this slice (s2457 winnability-receipts rotated the corpus and its drain missed the pin append); the gated commit appends era-5 pins 30ae0a3c and 4082ebe4. Merge instructions + re-measure command in reviews/view-schema-versioning.md."
             },
             {
               "id": "ss-04-e3-beats",
