@@ -8,7 +8,7 @@ import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 const FIXTURE_PATH = path.resolve('artifacts/eh3-fixture/tape.json');
 const HEAT_7_CROWN_PATH = path.resolve('artifacts/gauntlet-heat7-20260830/baron/run-1-tape.json');
 const HUD_FIXTURE_PATH = path.resolve('artifacts/gauntlet-heat6-guests-r2-20260825/openclaw/hill-mine/attempt-3.tape.json');
-const SHOT_DIR = path.resolve('reviews/shots-true-reel');
+const SHOT_DIR = path.resolve('reviews/shots-true-reel-sprites');
 const ERA_SHOT_DIR = path.resolve('reviews/shots-reel-era');
 const ERA_FIVE_SHOT_DIR = path.resolve('reviews/shots-era-five');
 
@@ -29,6 +29,8 @@ test('an era-current agent reel renders the true sim and verifies its hash in th
   );
   await expect.poll(async () => (await probe(page))?.tick ?? -1).toBeGreaterThanOrEqual(0);
   await assertRenderedProbe(page);
+  await expect(page.getByTestId('lantern-truth-placeholders')).toHaveText('Snapshot does not carry: terrain layout · decorative props');
+  await expect(page.getByTestId('lantern-truth-placeholders')).not.toContainText(/Keeper|Prospector|enemy|work|gold/i);
   await mkdir(SHOT_DIR, { recursive: true });
 
   await page.getByTestId('lantern-pause').click();
@@ -63,6 +65,36 @@ test('an era-current agent reel renders the true sim and verifies its hash in th
   expect(errors).toEqual([]);
 
   await writeFile(path.join(SHOT_DIR, `${testInfo.project.name}-outcome.png`), await page.screenshot({ fullPage: true }));
+});
+
+test('the crown reel wears live-game sprites mid-ride inside the live-map frame budget', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  const tape = await currentEraTape(HEAT_7_CROWN_PATH);
+  await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
+  const errors = collectErrors(page);
+
+  await page.goto(`/?debug&contract=${tape.contract}&seed=${tape.seed}`);
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 20);
+  const liveP95 = await frameP95(page);
+
+  await page.goto(replayUrl(tape));
+  await expect.poll(async () => (await probe(page))?.tick ?? -1).toBeGreaterThanOrEqual(0);
+  await page.getByTestId('lantern-speed-2').click();
+  await expect.poll(async () => (await probe(page))?.tick ?? 0, { timeout: 20_000 }).toBeGreaterThan(120);
+  await assertRenderedProbe(page);
+  await expect(page.locator('[data-replay-entity="hero"] image')).toBeVisible();
+  await expect(page.locator('[data-replay-entity="rider"] image')).toBeVisible();
+  await expect(page.locator('[data-replay-entity="enemy"] image').first()).toBeVisible();
+  await expect(page.locator('[data-replay-entity="work"] image').first()).toBeVisible();
+  const reelP95 = await frameP95(page);
+  expect(reelP95).toBeLessThanOrEqual(liveP95 * 1.15);
+
+  const perf = { liveP95, reelP95, ratio: Number((reelP95 / liveP95).toFixed(4)) };
+  await mkdir(SHOT_DIR, { recursive: true });
+  await writeFile(path.join(SHOT_DIR, `${testInfo.project.name}-perf.json`), `${JSON.stringify(perf, null, 2)}\n`);
+  await writeFile(path.join(SHOT_DIR, `${testInfo.project.name}-crown-mid-ride.png`), await page.screenshot({ fullPage: true }));
+  console.log(`true-reel-sprites ${testInfo.project.name}: live p95 ${liveP95.toFixed(2)} ms; reel p95 ${reelP95.toFixed(2)} ms; ratio ${perf.ratio}x`);
+  expect(errors).toEqual([]);
 });
 
 test('an era refusal dismisses by button, Escape, and click-outside without leaving the game stuck', async ({ page }, testInfo) => {
@@ -252,49 +284,78 @@ function probe(page: Page): Promise<any> {
   });
 }
 
+async function frameP95(page: Page): Promise<number> {
+  return page.evaluate(() => new Promise<number>((resolve) => {
+    const samples: number[] = [];
+    let previous = performance.now();
+    const sample = (now: number) => {
+      samples.push(now - previous);
+      previous = now;
+      if (samples.length < 180) requestAnimationFrame(sample);
+      else resolve(samples.sort((a, b) => a - b)[Math.floor(samples.length * 0.95)] ?? 0);
+    };
+    requestAnimationFrame(sample);
+  }));
+}
+
 async function assertRenderedProbe(page: Page): Promise<void> {
   const rendered = await page.evaluate(() => {
     const show = document.querySelector<HTMLElement>('[data-testid="lantern-show"]')!;
     const state = JSON.parse(show.dataset.trueReelProbe!);
-    const hero = show.querySelector('[data-replay-entity="hero"] circle')!;
+    const hero = show.querySelector<SVGImageElement>('[data-replay-entity="hero"] image')!;
     return {
       state,
-      heroX: Number(hero.getAttribute('cx')),
-      heroY: Number(hero.getAttribute('cy')),
-      riderPath: show.querySelector('[data-replay-entity="rider"] path')?.getAttribute('d') ?? null,
+      worldFit: show.querySelector<SVGSVGElement>('[data-testid="lantern-true-world"]')!.getAttribute('preserveAspectRatio'),
+      hero: { x: Number(hero.dataset.x), z: Number(hero.dataset.z), visual: hero.dataset.visual },
+      rider: (() => {
+        const image = show.querySelector<SVGImageElement>('[data-replay-entity="rider"] image');
+        return image ? { x: Number(image.dataset.x), z: Number(image.dataset.z), visual: image.dataset.visual } : null;
+      })(),
       entities: [...show.querySelectorAll<HTMLElement>('[data-replay-entity="enemy"]')]
         .map((enemy) => {
-          const circle = enemy.querySelector('circle')!;
+          const image = enemy.querySelector<SVGImageElement>('image')!;
           return {
             id: Number(enemy.dataset.id), kind: enemy.dataset.kind, alive: enemy.dataset.alive,
-            x: Number(circle.getAttribute('cx')), y: Number(circle.getAttribute('cy')),
+            x: Number(image.dataset.x), z: Number(image.dataset.z), visual: image.dataset.visual,
+            title: enemy.querySelector('title')?.textContent,
           };
         }),
       works: [...show.querySelectorAll<HTMLElement>('[data-replay-entity="work"]')]
         .map((work) => {
-          const rect = work.querySelector('rect')!;
+          const image = work.querySelector<SVGImageElement>('image')!;
           return {
             index: Number(work.dataset.index), kind: work.dataset.kind, wrecked: work.dataset.wrecked,
-            x: Number(rect.getAttribute('x')) + 0.7, y: Number(rect.getAttribute('y')) + 0.7,
+            x: Number(image.dataset.x), z: Number(image.dataset.z), visual: image.dataset.visual,
+            title: work.querySelector('title')?.textContent,
           };
         }),
+      seams: [...show.querySelectorAll<HTMLElement>('[data-replay-entity="seam"]')].map((seam) => {
+        const image = seam.querySelector<SVGImageElement>('image')!;
+        return { id: seam.dataset.id, x: Number(image.dataset.x), z: Number(image.dataset.z), visual: image.dataset.visual };
+      }),
+      pickups: [...show.querySelectorAll<HTMLElement>('[data-replay-entity="pickup"]')].map((pickup) => {
+        const circle = pickup.querySelector<SVGCircleElement>('circle')!;
+        return { index: Number(pickup.dataset.index), amount: Number(pickup.dataset.amount), x: Number(circle.dataset.x), z: Number(circle.dataset.z) };
+      }),
     };
   });
   const { state } = rendered;
-  expect(rendered.heroX).toBeCloseTo(state.hero.x + 40, 8);
-  expect(rendered.heroY).toBeCloseTo(state.hero.z + 28, 8);
+  expect(rendered.worldFit).toBe('xMidYMid meet');
+  expect(rendered.hero).toEqual({ x: state.hero.x, z: state.hero.z, visual: 'Claim Keeper' });
   if (state.rider) {
-    expect(rendered.riderPath).toContain(`M ${state.rider.x + 40} ${state.rider.z + 28 - 1.15}`);
+    expect(rendered.rider).toEqual({ x: state.rider.x, z: state.rider.z, visual: 'Prospector' });
   }
   for (const enemy of state.enemies) {
-    expect(rendered.entities).toContainEqual({
-      id: enemy.id, kind: enemy.kind, alive: String(enemy.alive), x: enemy.x + 40, y: enemy.z + 28,
-    });
+    expect(rendered.entities).toContainEqual({ id: enemy.id, kind: enemy.kind, alive: String(enemy.alive), x: enemy.x, z: enemy.z, visual: enemy.kind, title: `${enemy.kind} — ${Math.round(enemy.hp)}/${Math.round(enemy.maxHp)} HP` });
   }
   for (const work of state.works) {
-    expect(rendered.works).toContainEqual({
-      index: work.index, kind: work.id, wrecked: String(work.wrecked), x: work.x + 40, y: work.z + 28,
-    });
+    expect(rendered.works).toContainEqual({ index: work.index, kind: work.id, wrecked: String(work.wrecked), x: work.x, z: work.z, visual: work.id, title: `${work.id} — ${Math.round(work.hp)}/${Math.round(work.maxHp)} HP` });
+  }
+  for (const seam of state.seams) {
+    expect(rendered.seams).toContainEqual({ id: seam.id, x: seam.x, z: seam.z, visual: seam.id });
+  }
+  for (const pickup of state.pickups) {
+    expect(rendered.pickups).toContainEqual({ index: pickup.index, amount: pickup.amount, x: pickup.x, z: pickup.z });
   }
 }
 

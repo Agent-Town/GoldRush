@@ -7,6 +7,7 @@ import {
 } from '../game/RunTape';
 import { isolateProfileStorage } from '../game/ProfileStorage';
 import type { AgentTapeReplaySnapshot } from '../replay/AgentTapeReplay';
+import { renderTrueReel } from './TrueReelRenderer';
 
 export const LANTERN_VERSION_REFUSAL =
   'This projectionist cannot thread a reel cut for another machine. The show stays dark, but the reel remains on the shelf.';
@@ -326,31 +327,7 @@ export class LanternShow {
       stage.innerHTML = '<p style="position:absolute;inset:42% 0 auto;text-align:center;font-size:22px">Winding the true reel...</p>';
       return;
     }
-    const point = (x: number, z: number) => ({ x: x + 40, y: z + 28 });
-    const hero = point(snapshot.hero.x, snapshot.hero.z);
-    const rider = snapshot.rider ? point(snapshot.rider.x, snapshot.rider.z) : null;
-    const enemies = snapshot.enemies.map((enemy) => {
-      const at = point(enemy.x, enemy.z);
-      return `<g data-replay-entity="enemy" data-id="${enemy.id}" data-kind="${escapeHtml(enemy.kind)}" data-alive="${enemy.alive}" opacity="${enemy.alive ? 1 : 0.42}">
-        <circle cx="${at.x}" cy="${at.y}" r="0.7" fill="${enemy.alive ? '#a0522d' : '#2e1b0e'}" stroke="#fff8e8" stroke-width="0.16" />
-        <title>${escapeHtml(enemy.kind)} · ${enemy.alive ? 'alive' : 'dead'} · ${enemy.hp}/${enemy.maxHp} HP</title>
-      </g>`;
-    }).join('');
-    const works = snapshot.works.map((work) => {
-      const at = point(work.x, work.z);
-      return `<g data-replay-entity="work" data-index="${work.index}" data-kind="${escapeHtml(work.id)}" data-wrecked="${work.wrecked}">
-        <rect x="${at.x - 0.7}" y="${at.y - 0.7}" width="1.4" height="1.4" rx="0.2" fill="${work.wrecked ? '#7f2633' : '#2f8f85'}" stroke="#c4883a" stroke-width="0.18" />
-        <title>${escapeHtml(work.id)} · ${work.wrecked ? 'wrecked' : 'standing'} · ${work.hp}/${work.maxHp} HP</title>
-      </g>`;
-    }).join('');
-    stage.innerHTML = `<svg data-testid="lantern-true-world" viewBox="0 0 80 56" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;background:#6f5835">
-      <defs><pattern id="lantern-grid" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M 5 0 L 0 0 0 5" fill="none" stroke="#fff8e8" stroke-opacity=".09" stroke-width=".12" /></pattern></defs>
-      <rect width="80" height="56" fill="url(#lantern-grid)" />
-      ${works}${enemies}
-      <g data-replay-entity="hero" data-alive="${snapshot.hero.alive}"><circle cx="${hero.x}" cy="${hero.y}" r="1" fill="#c4883a" stroke="#fff8e8" stroke-width=".22" /><title>Claim Keeper · ${snapshot.hero.alive ? 'alive' : 'dead'} · ${snapshot.hero.hp}/${snapshot.hero.maxHp} HP</title></g>
-      ${rider ? `<g data-replay-entity="rider"><path d="M ${rider.x} ${rider.y - 1.15} L ${rider.x + 1.15} ${rider.y} L ${rider.x} ${rider.y + 1.15} L ${rider.x - 1.15} ${rider.y} Z" fill="#83ded7" stroke="#2e1b0e" stroke-width=".22" /><title>Prospector rider</title></g>` : ''}
-    </svg>
-    <p data-testid="lantern-truth-placeholders" style="position:absolute;left:30px;bottom:96px;margin:0;padding:5px 8px;background:rgba(46,27,14,.84);font-size:12px">Honest placeholders: Claim Keeper dot · Prospector diamond · enemy ring · work block</p>`;
+    stage.innerHTML = renderTrueReel(snapshot);
   }
 
   dispose(): void {
