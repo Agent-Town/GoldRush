@@ -26,7 +26,7 @@ const serversByStorage = new WeakMap();
 
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 try {
-  const { MAX_JSON_BYTES, onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
+  const { MAX_JSON_BYTES, compareScores, onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
   const { submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
   const { MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
@@ -45,6 +45,7 @@ try {
     await checkOperatorProbes(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest);
+    await checkPreserveRanking(onRequest, compareScores);
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
@@ -61,6 +62,62 @@ try {
   sqliteStores.forEach((store) => store.close());
   await rm(sqliteRoot, { recursive: true, force: true });
   await vite.close();
+}
+
+async function checkPreserveRanking(onRequest, compareScores) {
+  const contractId = 'e10-last-claim';
+  const epochId = 'epoch-10-deepsky';
+  const key = `standings:s2:${epochId}:${contractId}`;
+  const fixtures = [
+    ['eight waves', 8, 0.2, 120, 900, 6],
+    ['seven waves, more hp', 7, 0.8, 120, 10, 5],
+    ['seven waves, less hp', 7, 0.4, 120, 1_000, 4],
+    ['six waves, longer time', 6, 0.5, 130, 1_000, 4],
+    ['six waves, low gold', 6, 0.5, 120, 1, 2],
+    ['six waves, high gold', 6, 0.5, 120, 1_000, 3],
+  ].map(([profileName, preserveWavesAlive, preserveHpFraction, timeAlive, gold, submittedAt], index) => {
+    const row = storedRowFor(index + 1, contractId, epochId);
+    row.profileName = profileName;
+    row.waves = row.tape.outcome.waves = preserveWavesAlive;
+    row.timeAlive = row.tape.outcome.timeAlive = timeAlive;
+    row.gold = row.tape.outcome.gold = gold;
+    row.baseValue = 1_000 - index;
+    row.preserveWavesAlive = preserveWavesAlive;
+    row.preserveHpFraction = preserveHpFraction;
+    row.submittedAt = submittedAt;
+    return row;
+  });
+  const old = storedRowFor(9, contractId, epochId);
+  old.profileName = 'old row, no preserve';
+  old.submittedAt = 1;
+  const kv = makeKv();
+  await kv.put(key, JSON.stringify([...fixtures].reverse().concat(old)));
+  const board = await call(onRequest, 'GET', `/api/standings?contract=${contractId}&epoch=${epochId}`, undefined, kv);
+  equal(board.body.board.map((row) => row.profileName), [
+    'eight waves',
+    'seven waves, more hp',
+    'seven waves, less hp',
+    'six waves, longer time',
+    'six waves, low gold',
+    'six waves, high gold',
+    'old row, no preserve',
+  ], 'preserve rows rank by waves, hp, then time/submission; gold never reorders and old rows sort last');
+  equal(board.body.board[0].preserveWavesAlive, 8, 'preserve score fields survive stored-row validation and reach the board');
+
+  const common = { waves: 1, timeAlive: 1, gold: 1, baseValue: 1, preserveWavesAlive: 99, preserveHpFraction: 1 };
+  equal(compareScores({ ...common, secured: true }, { ...common, secured: false }, contractId) < 0, true, 'secured preserve row beats unsecured');
+  equal([
+    { ...common, secured: true, profileName: 'base value wins', baseValue: 2, preserveWavesAlive: 0 },
+    { ...common, secured: true, profileName: 'preserve-shaped loser', baseValue: 1, preserveWavesAlive: 100 },
+  ].sort((a, b) => compareScores(a, b, 'the-claim')).map((row) => row.profileName), [
+    'base value wins',
+    'preserve-shaped loser',
+  ], 'mixed non-preserve board keeps the existing base-value order');
+
+  const invalid = post('c'.repeat(32), 8, undefined, contractId, epochId);
+  invalid.score.preserveWavesAlive = 8;
+  invalid.score.preserveHpFraction = 1.1;
+  equal((await call(onRequest, 'POST', '/api/standings', invalid, makeKv())).status, 400, 'preserve hp fraction is bounded at the score boundary');
 }
 
 async function checkAssayStrips(onRequest) {

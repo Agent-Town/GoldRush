@@ -7403,12 +7403,14 @@ export class Game {
   }
 
   private runTapeEventLog() {
+    const preserve = this.preserveDiagnostics();
     return {
       probes: this.runTapeRecorder?.eventLog().probes ?? [],
       kills: this.kills,
       gold: this.economy.gold,
       wave: this.waveSystem.diagnostics.wave,
       economy: summarizeLog(this.economy.log),
+      ...(preserve ? { preserve } : {}),
     };
   }
 
@@ -7449,6 +7451,7 @@ export class Game {
       const reason: RunEndReason = this.state.current === 'dead'
         ? this.runManager?.diagnostics.rush ? 'rush' : 'death'
         : 'secured';
+      const eventLog = this.runTapeEventLog();
       const tape = this.runTapeRecorder?.snapshot(
         {
           reason,
@@ -7457,7 +7460,7 @@ export class Game {
           timeAlive: Math.max(0, score.timeAlive),
           gold: Math.max(0, Math.floor(score.gold)),
         },
-        this.runTapeEventLog(),
+        eventLog,
       );
       const submittedTape = tape ? submittedRunTape(tape) : undefined;
       const [seedHash, inputLogHash] = await Promise.all([
@@ -7473,6 +7476,10 @@ export class Game {
           timeAlive: Math.max(0, score.timeAlive),
           gold: Math.max(0, Math.floor(score.gold)),
           baseValue: Math.max(0, Math.floor(score.baseValue ?? 0)),
+          ...(eventLog.preserve ? {
+            preserveWavesAlive: Math.max(0, Math.floor(eventLog.wave)),
+            preserveHpFraction: eventLog.preserve.maxHp > 0 ? eventLog.preserve.hp / eventLog.preserve.maxHp : 0,
+          } : {}),
         },
         profileName: activeProfileName(),
         anonId: countyAnonId(),

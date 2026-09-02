@@ -371,6 +371,8 @@ Two refusals on that list are worth naming so nobody hunts for a missing socket:
 ```
 <!-- skillmd-guard:door-contracts:end -->
 
+`e10-last-claim` is ranked by preservation, never by gold.
+
 ## LEDGER SEASONS
 
 The numeric ledger season controls which county book a standings request reads or writes. `?season=` is optional on reads; omitting it means the season now riding. The accepted values are `1` and `2`. An unaccepted value returns HTTP 400 `bad_season`. Every read response carries `season` and `assayEra` so a rig can identify the book and whether its rows belong to the assay era.
