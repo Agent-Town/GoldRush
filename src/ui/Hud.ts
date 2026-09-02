@@ -385,8 +385,6 @@ export class Hud {
   };
 
   private readonly onAgentChipClick = () => {
-    this.prospectorSelectedValue = true;
-    this.elements.agentChip.dataset.selected = 'true';
     this.setProspectorPanelOpen(!this.prospectorPanelOpen);
   };
 
@@ -405,6 +403,12 @@ export class Hud {
   };
 
   private setProspectorPanelOpen(open: boolean): void {
+    if (open && !this.prospectorSelectedValue) {
+      // Opening the charter (chip click or G) selects the Prospector: from here on a click on a
+      // seam or sluice sends it to pan (ProspectorDispatchInput). Modifier-click never needed it.
+      this.prospectorSelectedValue = true;
+      this.elements.agentChip.dataset.selected = 'true';
+    }
     this.prospectorPanelOpen = open;
     this.elements.agentChip.dataset.open = String(open);
     this.elements.agentChip.setAttribute('aria-expanded', String(open));

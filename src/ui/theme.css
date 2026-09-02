@@ -1255,6 +1255,10 @@
   max-width: min(48ch, calc(100vw - 32px));
 }
 
+.hud-agent-chip[data-selected="true"] {
+  box-shadow: 0 0 0 2px #83ded7;
+}
+
 .hud-agent-feed[data-guide="true"] {
   grid-column: 1 / -1;
   max-width: none;

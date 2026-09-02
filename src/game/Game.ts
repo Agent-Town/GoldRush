@@ -7540,7 +7540,7 @@ export class Game {
   private advanceProspectorDispatch(): void {
     const node = this.prospectorDispatchQueue[0];
     if (!node) {
-      if (!this.prospector.hasActiveTask && this.harvestSnapshot.activeNodes.some((entry) =>
+      if (!this.runTapeReplay && !this.prospector.hasActiveTask && this.harvestSnapshot.activeNodes.some((entry) =>
         entry.active && distanceSq2(this.prospector.position.x, this.prospector.position.z, entry.position.x, entry.position.z)
           <= Balance.goldSeam.channelRange ** 2)) this.speakTrailGuide('first-prospector-pan');
       return;
