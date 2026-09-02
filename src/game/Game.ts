@@ -415,6 +415,7 @@ export type RunReturnResult = 'secured' | 'overrun';
 export type GameBoot = ContractRunBoot & {
   replay?: {
     tape: RunTape;
+    shareUrl?: string;
     onClose: () => void;
   };
 };
@@ -7069,7 +7070,7 @@ export class Game {
         this.replayCameraPan.x = THREE.MathUtils.clamp(this.replayCameraPan.x + dx, -24, 24);
         this.replayCameraPan.z = THREE.MathUtils.clamp(this.replayCameraPan.z + dz, -24, 24);
       },
-    });
+    }, this.boot.replay?.shareUrl);
   }
 
   private updateTrueRunTapeReplay(): boolean {

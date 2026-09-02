@@ -117,6 +117,41 @@ export function closeTapeShelf(): void {
   openShelf = null;
 }
 
+export function openLanternRefusal(parent: HTMLElement, message: string, onClose: () => void): void {
+  const root = document.createElement('section');
+  root.className = 'lantern-show';
+  root.dataset.testid = 'lantern-show';
+  root.dataset.playback = 'complete';
+  root.dataset.eraRefused = 'false';
+  root.setAttribute('role', 'dialog');
+  root.setAttribute('aria-modal', 'true');
+  root.setAttribute('aria-label', 'The Lantern Show replay');
+  root.innerHTML = `
+    <div class="lantern-show__stage" data-testid="lantern-true-stage"></div>
+    <div class="lantern-show__frame" aria-hidden="true"></div>
+    <header class="lantern-show__title"><p>Schoolhouse Lantern Room</p><h1>The Lantern Show</h1></header>
+    <div class="lantern-show__intertitle" data-testid="lantern-intertitle" role="status" style="pointer-events:auto">
+      <strong>THE REEL STAYS DARK</strong><br>${escapeHtml(message)}<br>
+      <button type="button" data-testid="lantern-refusal-close" style="margin-top:12px;background:#c4883a">Back to start</button>
+    </div>`;
+  const close = () => {
+    window.removeEventListener('keydown', onKeyDown, true);
+    root.remove();
+    parent.classList.remove('lantern-show-active');
+    onClose();
+  };
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.key !== 'Escape') return;
+    event.preventDefault();
+    close();
+  };
+  root.querySelector('[data-testid="lantern-refusal-close"]')?.addEventListener('click', close);
+  window.addEventListener('keydown', onKeyDown, true);
+  parent.classList.add('lantern-show-active');
+  parent.append(root);
+  root.querySelector<HTMLButtonElement>('[data-testid="lantern-refusal-close"]')?.focus({ preventScroll: true });
+}
+
 export function isolateReplayStorage(storage: Storage): () => void {
   const restoreProfileStorage = isolateProfileStorage(storage);
   const prototype = Storage.prototype;
@@ -187,7 +222,7 @@ export class LanternShow {
   private state: LanternShowState;
   private drag: { id: number; x: number; y: number } | null = null;
 
-  constructor(parent: HTMLElement, private readonly tape: RunTape, private readonly actions: LanternShowActions) {
+  constructor(parent: HTMLElement, private readonly tape: RunTape, private readonly actions: LanternShowActions, shareUrl?: string) {
     this.state = {
       tick: 0,
       durationTicks: tape.inputLog.durationTicks,
@@ -224,6 +259,7 @@ export class LanternShow {
         <button type="button" data-lantern-action="restart" data-testid="lantern-restart">Restart</button>
         <button type="button" data-lantern-action="wave" data-testid="lantern-wave-skip">Next wave</button>
         <button type="button" data-lantern-action="close" data-testid="lantern-close">Back to shelf</button>
+        ${shareUrl ? `<input data-testid="lantern-share-url" aria-label="Share this reel" readonly value="${escapeHtml(shareUrl)}">` : ''}
         <output data-testid="lantern-playback-status" aria-live="polite"></output>
       </div>`;
     this.card = this.root.querySelector<HTMLElement>('[data-testid="lantern-intertitle"]')!;
