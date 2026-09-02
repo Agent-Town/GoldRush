@@ -1263,6 +1263,19 @@
   white-space: normal;
 }
 
+.prospector-dispatch-prompt {
+  position: fixed;
+  z-index: 80;
+  min-height: 44px;
+  max-width: 230px;
+  padding: 10px 14px;
+  border: 2px solid #83ded7;
+  border-radius: 8px;
+  background: #2e1b0e;
+  color: #fff8e8;
+  font: 700 14px/1.2 system-ui, sans-serif;
+}
+
 .gr-profile-create__button {
   min-width: 0;
 }

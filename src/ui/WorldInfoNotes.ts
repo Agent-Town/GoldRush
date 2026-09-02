@@ -137,7 +137,7 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
   {
     objectClass: 'prospector',
     title: 'The Prospector',
-    lines: ['Your deputy. G opens its charter.'],
+    lines: ['Your deputy. G opens its charter. Select it, then click a seam to send it panning.'],
   },
   {
     objectClass: 'town_tavern',

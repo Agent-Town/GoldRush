@@ -9,6 +9,7 @@ export type TrailGuideTrigger =
   | 'first-level'
   | 'first-secured'
   | 'first-return'
+  | 'first-prospector-pan'
   | 'first-build-menu'
   | 'first-theft';
 
@@ -23,6 +24,7 @@ export const TRAIL_GUIDE_BARKS: readonly TrailGuideBark[] = [
   { id: 'trail-guide-first-level', trigger: 'first-level', line: 'The trail has taught you something. Pick the card that suits the claim you mean to keep.' },
   { id: 'trail-guide-first-secured', trigger: 'first-secured', line: 'The claim is secured; that win is banked. Ride home now, or stay for the Rush and wager the trail ahead.' },
   { id: 'trail-guide-first-return', trigger: 'first-return', line: 'Welcome back. The board keeps every open trail; choose the next card when your outfit is ready.' },
+  { id: 'trail-guide-first-prospector-pan', trigger: 'first-prospector-pan', line: 'Send the Prospector to pan a seam while you hold the claim.' },
   { id: 'trail-guide-first-build-menu', trigger: 'first-build-menu', line: 'Every line here names its price and its work. Set what the claim is short of, not what looks grandest.' },
   { id: 'trail-guide-first-theft', trigger: 'first-theft', line: 'One of them is away with your gold. Give chase and it comes back to the pile, or let them run and keep your place at the claim.' },
 ];

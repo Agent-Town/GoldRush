@@ -107,6 +107,7 @@ export class Hud {
   private baronPortraitUrl = '';
   private baronPortraitLoading = false;
   private prospectorPanelOpen = false;
+  private prospectorSelectedValue = false;
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
@@ -250,6 +251,10 @@ export class Hud {
     window.addEventListener('keydown', this.onKeyDown, { capture: true });
   }
 
+  get prospectorSelected(): boolean {
+    return this.prospectorSelectedValue;
+  }
+
   update(snapshot: UiSnapshot, meta: PauseMetaSnapshot, showPauseMeta = snapshot.paused): void {
     this.elements.trainingTag.hidden = !meta.training;
     this.elements.hpText.textContent = `${Math.ceil(snapshot.hp)} / ${Math.round(snapshot.maxHp)}`;
@@ -380,6 +385,8 @@ export class Hud {
   };
 
   private readonly onAgentChipClick = () => {
+    this.prospectorSelectedValue = true;
+    this.elements.agentChip.dataset.selected = 'true';
     this.setProspectorPanelOpen(!this.prospectorPanelOpen);
   };
 

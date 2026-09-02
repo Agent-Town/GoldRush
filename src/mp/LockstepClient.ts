@@ -11,6 +11,7 @@ export type LockstepBuildingRef = { id: string; index: number };
 
 export type LockstepAction =
   | { type: 'place_build'; id: string; position: LockstepPoint; rotationSteps: number }
+  | { type: 'prospector_dispatch'; node: string }
   | { type: 'weapon_toggle' }
   | { type: 'restart' }
   | { type: 'set_pause'; paused: boolean }
@@ -1057,6 +1058,10 @@ function normalizeAction(value: unknown): LockstepAction | null {
     const position = normalizePoint(value.position);
     const rotationSteps = Number.isInteger(value.rotationSteps) ? ((Number(value.rotationSteps) % 4) + 4) % 4 : 0;
     return id && position ? { type: 'place_build', id, position, rotationSteps } : null;
+  }
+  if (value.type === 'prospector_dispatch') {
+    const node = cleanToken(value.node, 64);
+    return node ? { type: 'prospector_dispatch', node } : null;
   }
   if (
     value.type === 'weapon_toggle' ||
