@@ -73,15 +73,32 @@ untouched, verified by the empty `git status` on those paths.
 
 ## Findings
 
-**F-2459-1 — the runner did not write its BACKLOG row; the drain wrote it.**
-The master's TOUCH-ONLY list names a BACKLOG row and no such row was in the
-working tree. The only uncommitted `tasks/BACKLOG.md` edit at lock time was an
-**attended** row (it quotes the owner verbatim and answers the CAPABILITY-LADDER
-ratification questions), so it belonged to a different author entirely and was
-committed separately as §2A bookkeeping. Non-blocking: the row is written in
-this drain's bookkeeping commit, which is where a drain's ledger duty lands
-anyway. Recorded because "the master named a row" and "a row exists" are
-different facts, and only the second one is evidence.
+**F-2459-1 — WITHDRAWN, MEASURED FALSE BY THE FIRE THAT FILED IT. Kept so the
+correction has a subject.** It read: *"the runner did not write its BACKLOG row;
+the drain wrote it"*, on the evidence that `git diff -- tasks/BACKLOG.md` at lock
+time showed only an attended row. **That diff is against HEAD, and HEAD already
+contained the runner's row** — s2458 committed it at `a5a052654`, one fire
+earlier, in its own drain bookkeeping. `git log -S "WATCHDOG SELF-CHECK
+IMPLEMENTED" -- tasks/BACKLOG.md` names that commit and no other. The runner
+wrote its row exactly as the master required.
+
+💡 **The reusable half, and it is why this is written out rather than deleted: a
+working-tree diff answers "what is UNCOMMITTED", never "what EXISTS".** For a
+main-slot drain those two questions feel identical — the slot's whole signature
+is uncommitted dirt — which is precisely what made the wrong one feel
+sufficient. I found it only because the *merge* three steps later surfaced the
+row as a conflict side. **When you are about to assert that an artifact is
+ABSENT, grep the file, do not read the diff.**
+
+**Non-finding, recorded because it is the more interesting result:** the runner
+ended **NOT** ready-for-gates. Its own BACKLOG row is headlined *"GATE BLOCKED ON
+PRE-EXISTING ENGINE PIN + CONTENDED SIM REDS"*. Both blockers were real and
+neither was this slice's: the engine pin is F-2458-1, which s2458 cured in
+`cf1e10a21`, and the contended sim reds are the three concurrent lane runners
+this fire's own `health-watch` reported as `in-flight: 3`. The drain's own re-run
+is the free control on the runner's headline, and it came back green on every
+leg. A runner that reports a blocker instead of reaching outside its firewall to
+fix it is a firewall success, not a failure.
 
 **Non-finding, recorded so it is not re-derived:** the live watchdog was
 *already* running this code when the gate ran — `logs/health.log` carries the
