@@ -24,6 +24,9 @@ test('plain watch URL opens the true current-era show without a profile or debug
   await expect(show).toHaveAttribute('data-era-refused', 'false', { timeout: 20_000 });
   await expect(show).toHaveAttribute('data-playback', 'playing');
   await expect(page.getByTestId('lantern-agent-honesty')).toHaveText('This is the ride. The county is replaying it here in your browser.');
+  await expect(page.getByTestId('lantern-true-world').locator('[data-replay-terrain="the-claim"]')).toBeVisible();
+  await expect(page.getByTestId('lantern-true-world').locator('[data-terrain-feature="water"]')).toHaveCount(1);
+  await expect(page.getByTestId('lantern-truth-placeholders')).not.toContainText('terrain layout');
   await expect(page.getByTestId('profile-manager')).toHaveCount(0);
   const expectedUrl = new URL(page.url());
   expect(Object.fromEntries(expectedUrl.searchParams)).toEqual({ watch: tape.id, contract: tape.contract, epoch: 'epoch-1-frontier' });

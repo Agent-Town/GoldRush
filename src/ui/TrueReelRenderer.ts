@@ -1,4 +1,5 @@
 import type { AgentTapeReplaySnapshot } from '../replay/AgentTapeReplay';
+import { trueReelTerrain } from './TrueReelTerrain';
 
 const heroUrl = new URL('../../assets/processed/hero-homesteader-f.png', import.meta.url).href;
 const prospectorUrl = new URL('../../assets/processed/char-prospector-sheet-hover8-r0c0.png', import.meta.url).href;
@@ -25,7 +26,7 @@ const stockpileUrl = new URL('../../assets/processed/bld-stockpile-yard.png', im
 const turretUrl = new URL('../../assets/processed/bld-signal-turret.png', import.meta.url).href;
 const boilerUrl = new URL('../../assets/processed/bld-boiler-house.png', import.meta.url).href;
 
-export const TRUE_REEL_PLACEHOLDERS = ['terrain layout', 'decorative props'] as const;
+export const TRUE_REEL_PLACEHOLDERS = ['decorative props'] as const;
 
 const enemyVisuals: Record<string, string> = {
   baron: baronUrl,
@@ -56,7 +57,14 @@ const workVisuals: Record<string, string> = {
   boiler_house: boilerUrl,
 };
 
-export function renderTrueReel(snapshot: AgentTapeReplaySnapshot): string {
+function reelParts(snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string): {
+  terrain: string;
+  terrainPhase: string;
+  dynamics: string;
+  placeholderText: string;
+} {
+  const terrain = trueReelTerrain(contractId, seed, snapshot.wave);
+  const at = (x: number, z: number) => terrain.project(x, z);
   const entity = (
     type: string,
     key: string,
@@ -69,19 +77,27 @@ export function renderTrueReel(snapshot: AgentTapeReplaySnapshot): string {
     style = '',
     marker = '#2e1b0e',
     hp?: { current: number; max: number },
-  ) => `<g data-replay-entity="${type}" ${attrs}>
+  ) => {
+    const position = at(x, z);
+    const scaledWidth = width * terrain.spriteScale;
+    const scaledHeight = height * terrain.spriteScale;
+    return `<g data-replay-entity="${type}" ${attrs}>
     <title>${escapeHtml(key)}${hp ? ` · ${Math.round(hp.current)}/${Math.round(hp.max)} HP` : ''}</title>
-    <ellipse cx="${x + 40}" cy="${z + 28}" rx="${width * 0.28}" ry="${width * 0.13}" fill="#2e1b0e" opacity=".28" />
-    <circle cx="${x + 40}" cy="${z + 28}" r="${width * 0.37}" fill="none" stroke="${marker}" stroke-width=".16" opacity=".82" />
-    <image href="${url}" x="${x + 40 - width / 2}" y="${z + 28 - height * 0.78}" width="${width}" height="${height}" preserveAspectRatio="xMidYMid meet" style="${style}" data-x="${x}" data-z="${z}" data-visual="${escapeHtml(key)}" />
-    ${hp ? `<rect x="${x + 40 - width * .34}" y="${z + 28 - height * .88}" width="${width * .68}" height=".32" fill="#2e1b0e" /><rect x="${x + 40 - width * .32}" y="${z + 28 - height * .86}" width="${width * .64 * Math.max(0, hp.max > 0 ? hp.current / hp.max : 0)}" height=".18" fill="#6bb36b" />` : ''}
+    <ellipse cx="${position.x}" cy="${position.y}" rx="${scaledWidth * .28}" ry="${scaledWidth * .13}" fill="#2e1b0e" opacity=".28" />
+    <circle cx="${position.x}" cy="${position.y}" r="${scaledWidth * .37}" fill="none" stroke="${marker}" stroke-width=".16" opacity=".82" />
+    <image href="${url}" x="${position.x - scaledWidth / 2}" y="${position.y - scaledHeight * .78}" width="${scaledWidth}" height="${scaledHeight}" preserveAspectRatio="xMidYMid meet" style="${style}" data-x="${x}" data-z="${z}" data-visual="${escapeHtml(key)}" />
+    ${hp ? `<rect x="${position.x - scaledWidth * .34}" y="${position.y - scaledHeight * .88}" width="${scaledWidth * .68}" height=".32" fill="#2e1b0e" /><rect x="${position.x - scaledWidth * .32}" y="${position.y - scaledHeight * .86}" width="${scaledWidth * .64 * Math.max(0, hp.max > 0 ? hp.current / hp.max : 0)}" height=".18" fill="#6bb36b" />` : ''}
   </g>`;
+  };
 
-  const placeholder = (type: string, key: string, x: number, z: number, attrs: string) => `<g data-replay-entity="${type}" ${attrs} data-placeholder="true">
+  const placeholder = (type: string, key: string, x: number, z: number, attrs: string) => {
+    const position = at(x, z);
+    return `<g data-replay-entity="${type}" ${attrs} data-placeholder="true">
     <title>${escapeHtml(key)} · visual placeholder</title>
-    <rect x="${x + 38}" y="${z + 24}" width="4" height="4" rx=".4" fill="#f5e6c8" stroke="#a0522d" stroke-width=".28" data-x="${x}" data-z="${z}" data-visual="placeholder:${escapeHtml(key)}" />
-    <text x="${x + 40}" y="${z + 26.4}" text-anchor="middle" fill="#7f2633" font-size=".9">${escapeHtml(key)}</text>
+    <rect x="${position.x - 2}" y="${position.y - 4}" width="4" height="4" rx=".4" fill="#f5e6c8" stroke="#a0522d" stroke-width=".28" data-x="${x}" data-z="${z}" data-visual="placeholder:${escapeHtml(key)}" />
+    <text x="${position.x}" y="${position.y - 1.6}" text-anchor="middle" fill="#7f2633" font-size=".9">${escapeHtml(key)}</text>
   </g>`;
+  };
 
   const unknownEnemyKinds = [...new Set(snapshot.enemies.map(({ kind }) => kind).filter((kind) => !enemyVisual(kind)))];
   const unknownWorkKinds = [...new Set(snapshot.works.map(({ id }) => id).filter((kind) => !workVisual(kind)))];
@@ -99,7 +115,8 @@ export function renderTrueReel(snapshot: AgentTapeReplaySnapshot): string {
     const rendered = visual ? entity('work', work.id, work.x, work.z, visual, 4.8, 4.8, attrs,
       work.wrecked ? 'opacity:.55;filter:grayscale(.8) sepia(.5)' : '', '#8b7d3c', { current: work.hp, max: work.maxHp })
       : placeholder('work', work.id, work.x, work.z, attrs);
-    return `${rendered}${work.wrecked ? `<path d="M ${work.x + 38.4} ${work.z + 26.4} l 3.2 3.2 m 0 -3.2 l -3.2 3.2" stroke="#7f2633" stroke-width=".4" />` : ''}`;
+    const position = at(work.x, work.z);
+    return `${rendered}${work.wrecked ? `<path d="M ${position.x - 1.6} ${position.y - 1.6} l 3.2 3.2 m 0 -3.2 l -3.2 3.2" stroke="#7f2633" stroke-width=".4" />` : ''}`;
   }).join('');
   const seams = snapshot.seams.map((seam) => entity(
     'seam', seam.id, seam.x, seam.z, seamUrl, 3, 3,
@@ -107,20 +124,57 @@ export function renderTrueReel(snapshot: AgentTapeReplaySnapshot): string {
     '',
     '#c4883a',
   )).join('');
-  const pickups = snapshot.pickups.map((pickup) => `<g data-replay-entity="pickup" data-index="${pickup.index}" data-amount="${pickup.amount}">
-    <circle cx="${pickup.x + 40}" cy="${pickup.z + 28}" r=".38" fill="#ffe4a0" stroke="#8b7d3c" stroke-width=".12" data-x="${pickup.x}" data-z="${pickup.z}" />
-    <text x="${pickup.x + 40}" y="${pickup.z + 26.9}" text-anchor="middle" fill="#fff8e8" font-size="1.15">+${Math.round(pickup.amount)}</text>
-  </g>`).join('');
+  const pickups = snapshot.pickups.map((pickup) => {
+    const position = at(pickup.x, pickup.z);
+    return `<g data-replay-entity="pickup" data-index="${pickup.index}" data-amount="${pickup.amount}">
+    <circle cx="${position.x}" cy="${position.y}" r=".38" fill="#ffe4a0" stroke="#8b7d3c" stroke-width=".12" data-x="${pickup.x}" data-z="${pickup.z}" />
+    <text x="${position.x}" y="${position.y - 1.1}" text-anchor="middle" fill="#fff8e8" font-size="1.15">+${Math.round(pickup.amount)}</text>
+  </g>`;
+  }).join('');
 
   const placeholders = [...TRUE_REEL_PLACEHOLDERS, ...unknownEnemyKinds.map((kind) => `enemy ${kind}`), ...unknownWorkKinds.map((kind) => `work ${kind}`)];
+  return {
+    terrain: terrain.svg,
+    terrainPhase: terrain.phase,
+    dynamics: `${seams}${works}${pickups}${enemies}
+      ${entity('hero', 'Claim Keeper', snapshot.hero.x, snapshot.hero.z, heroUrl, 4.5, 5.4, `data-alive="${snapshot.hero.alive}"`, snapshot.hero.alive ? '' : 'opacity:.4;filter:grayscale(1)', '#c4883a')}
+      ${snapshot.rider ? entity('rider', 'Prospector', snapshot.rider.x, snapshot.rider.z, prospectorUrl, 4.2, 4.8, '', '', '#83ded7') : ''}`,
+    placeholderText: `Reel does not carry: ${placeholders.map(escapeHtml).join(' · ')}`,
+  };
+}
+
+export function renderTrueReel(snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string): string {
+  const parts = reelParts(snapshot, contractId, seed);
+  return reelShell(parts.terrain, parts.dynamics, parts.placeholderText);
+}
+
+export function renderTrueReelGround(contractId: string, seed: string): string {
+  const terrain = trueReelTerrain(contractId, seed, 0);
+  return reelShell(terrain.svg, '', 'Reel does not carry: decorative props');
+}
+
+function reelShell(terrain: string, dynamics: string, placeholderText: string): string {
   return `<svg data-testid="lantern-true-world" viewBox="0 0 80 56" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;background:#2e1b0e">
-    <rect width="80" height="56" fill="#6f5835" />
-    <path d="M0 8H80M0 18H80M0 28H80M0 38H80M0 48H80M10 0V56M20 0V56M30 0V56M40 0V56M50 0V56M60 0V56M70 0V56" stroke="#f5e6c8" stroke-width=".08" opacity=".16" />
-    ${seams}${works}${pickups}${enemies}
-    ${entity('hero', 'Claim Keeper', snapshot.hero.x, snapshot.hero.z, heroUrl, 4.5, 5.4, `data-alive="${snapshot.hero.alive}"`, snapshot.hero.alive ? '' : 'opacity:.4;filter:grayscale(1)', '#c4883a')}
-    ${snapshot.rider ? entity('rider', 'Prospector', snapshot.rider.x, snapshot.rider.z, prospectorUrl, 4.2, 4.8, '', '', '#83ded7') : ''}
+    <defs><pattern id="reel-cliff-hatch" width="1.5" height="1.5" patternUnits="userSpaceOnUse" patternTransform="rotate(35)"><rect width="1.5" height="1.5" fill="#574536"/><path d="M0 0V1.5" stroke="#d6b36e" stroke-width=".35"/></pattern></defs>
+    <rect width="80" height="56" fill="#2e1b0e" />
+    ${terrain}
+    <g data-replay-dynamics>${dynamics}</g>
   </svg>
-  <p data-testid="lantern-truth-placeholders" style="position:absolute;left:30px;bottom:clamp(96px,18vh,350px);margin:0;padding:5px 8px;background:rgba(46,27,14,.9);color:#fff8e8;font-size:12px">Snapshot does not carry: ${placeholders.map(escapeHtml).join(' · ')}</p>`;
+  <p data-testid="lantern-truth-placeholders" style="position:absolute;left:30px;bottom:clamp(96px,18vh,350px);margin:0;padding:5px 8px;background:rgba(46,27,14,.9);color:#fff8e8;font-size:12px">${placeholderText}</p>`;
+}
+
+export function updateTrueReel(root: HTMLElement, snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string): boolean {
+  const dynamics = root.querySelector<SVGGElement>('[data-replay-dynamics]');
+  const terrain = root.querySelector<SVGGElement>(`[data-replay-terrain="${CSS.escape(contractId)}"]`);
+  const legend = root.querySelector<HTMLElement>('[data-testid="lantern-truth-placeholders"]');
+  if (!dynamics || !terrain || !legend) return false;
+  if (dynamics.dataset.tick === String(snapshot.tick)) return true;
+  const parts = reelParts(snapshot, contractId, seed);
+  if (terrain.dataset.lightPhase !== parts.terrainPhase) return false;
+  dynamics.innerHTML = parts.dynamics;
+  dynamics.dataset.tick = String(snapshot.tick);
+  legend.innerHTML = parts.placeholderText;
+  return true;
 }
 
 function enemyVisual(kind: string): string | undefined {
