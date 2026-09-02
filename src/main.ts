@@ -11,6 +11,7 @@ import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
 import {
   activeContract,
+  activeEpochId,
   DEFAULT_CONTRACT_ID,
   loadContract,
   readCharterLaunch,
@@ -23,6 +24,7 @@ import { installClaimLedgerRequestHandler } from './encyclopedia/events';
 import { installEpochLedgerDiscovery } from './encyclopedia/state';
 import type { LedgerEntryId } from './encyclopedia/registry';
 import { installBuildFreshness } from './app/BuildFreshness';
+import { gameApiUrl } from './app/GameApi';
 import { seedDebugEraFromSearch } from './meta/DebugEraSeed';
 import { reverifyStagedContractLaunch } from './meta/ContractUnlock';
 import { reconcileActiveEpoch } from './meta/ResearchTree';
@@ -114,7 +116,7 @@ const uninstallBuildFreshness = installBuildFreshness(app, () => !game && !profi
 const uninstallClaimLedgerRequest = installClaimLedgerRequestHandler((entryId) => openClaimLedger(entryId));
 installEpochLedgerDiscovery();
 
-const RUN_ROUTE_PARAMS = ['contract', 'seed', 'difficulty', 'mode', 'press', 'replay'] as const;
+const RUN_ROUTE_PARAMS = ['contract', 'seed', 'difficulty', 'mode', 'press', 'replay', 'watch'] as const;
 
 afterFirstFrame(() => {
   void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));
@@ -335,6 +337,8 @@ if (history.state?.goldRushScene === 'town') {
   openTown();
 } else if (history.state?.goldRushScene === 'menu') {
   showStartMenu();
+} else if (initialSearch.has('watch')) {
+  void openWatchDeepLink(initialSearch);
 } else if ([...initialSearch.keys()].every((key) => MENU_SAFE_PARAMS.has(key))) {
   showStartMenu();
 } else {
@@ -365,23 +369,53 @@ function openRunTapeShelf(): void {
   void import('./ui/LanternShow').then(({ openTapeShelf }) => openTapeShelf(localStorage, watchRunTape));
 }
 
-async function watchRunTape(tape: RunTape): Promise<void> {
+async function watchRunTape(tape: RunTape, epochId = activeEpochId(), closeToMenu = false): Promise<void> {
   teardownActiveScene();
   stageReplayContract(tape.contract);
-  const search = new URLSearchParams();
-  search.set('contract', tape.contract);
-  search.set('seed', tape.seed);
-  search.set('difficulty', tape.difficulty);
-  search.set('replay', tape.id);
-  history.replaceState({ goldRushScene: 'replay' }, '', `${window.location.pathname}?${search.toString()}${window.location.hash}`);
+  const bootSearch = new URLSearchParams({ contract: tape.contract, seed: tape.seed, difficulty: tape.difficulty, replay: tape.id, epoch: epochId });
+  history.replaceState({ goldRushScene: 'replay' }, '', `${window.location.pathname}?${bootSearch.toString()}${window.location.hash}`);
   const { isolateReplayStorage } = await import('./ui/LanternShow');
   restoreReplayStorage = isolateReplayStorage(localStorage);
   try {
-    await startGame({ replay: { tape, onClose: closeRunTapeReplay } });
+    const shareUrl = reelUrl(tape.id, tape.contract, epochId);
+    await startGame({ replay: { tape, shareUrl, onClose: closeToMenu ? closeDeepLinkToMenu : closeRunTapeReplay } });
+    history.replaceState({ goldRushScene: 'replay' }, '', shareUrl);
   } catch (error) {
-    closeRunTapeReplay();
+    (closeToMenu ? closeDeepLinkToMenu : closeRunTapeReplay)();
     throw error;
   }
+}
+
+async function openWatchDeepLink(search: URLSearchParams): Promise<void> {
+  const reelId = search.get('watch')?.trim();
+  const contractId = search.get('contract')?.trim();
+  const epochId = search.get('epoch')?.trim();
+  let payload: unknown = null;
+  if (reelId && contractId && epochId) {
+    const url = new URL(gameApiUrl('/api/standings'));
+    url.searchParams.set('reel', reelId);
+    url.searchParams.set('contract', contractId);
+    url.searchParams.set('epoch', epochId);
+    try {
+      const response = await fetch(url);
+      if (response.ok) payload = await response.json();
+    } catch {
+      // The Lantern Show gives the same quiet refusal as the county board.
+    }
+  }
+  const { LANTERN_REEL_UNAVAILABLE, LANTERN_VERSION_REFUSAL, openLanternRefusal, readStandingsReel } = await import('./ui/LanternShow');
+  const verdict = readStandingsReel(payload);
+  if (verdict.ok) {
+    await watchRunTape(verdict.tape, epochId!, true);
+    return;
+  }
+  openLanternRefusal(app, verdict.reason === 'version' ? LANTERN_VERSION_REFUSAL : LANTERN_REEL_UNAVAILABLE, closeDeepLinkToMenu);
+}
+
+function reelUrl(reelId: string, contractId: string, epochId: string): string {
+  const url = new URL(window.location.href);
+  url.search = new URLSearchParams({ watch: reelId, contract: contractId, epoch: epochId }).toString();
+  return url.href;
 }
 
 function closeRunTapeReplay(): void {
@@ -391,6 +425,15 @@ function closeRunTapeReplay(): void {
   stageReplayContract(null);
   replaceRunRoute('town');
   openTown();
+}
+
+function closeDeepLinkToMenu(): void {
+  teardownActiveScene();
+  restoreReplayStorage?.();
+  restoreReplayStorage = undefined;
+  stageReplayContract(null);
+  history.replaceState({ goldRushScene: 'menu' }, '', window.location.pathname);
+  showStartMenu();
 }
 
 function openClaimLedger(entryId?: LedgerEntryId): void {

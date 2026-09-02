@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         tr.appendChild(cell('num', '·'));
         tr.appendChild(cell('num gold', '·'));
-        tr.appendChild(watchCell());
+        tr.appendChild(watchCell(board));
         body.appendChild(tr);
         return;
       }
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.appendChild(rider);
       tr.appendChild(cell('num', formatCount(score.waves ?? best.waves)));
       tr.appendChild(cell('num gold', formatCount(score.gold ?? best.gold)));
-      tr.appendChild(watchCell());
+      tr.appendChild(watchCell(board, best));
       body.appendChild(tr);
     });
     return pendingTotal;
@@ -252,11 +252,14 @@ document.addEventListener('DOMContentLoaded', () => {
     return td;
   }
 
-  function watchCell() {
+  function watchCell(board, row) {
     const td = document.createElement('td');
     const a = document.createElement('a');
     a.className = 'watch';
-    a.href = 'https://agenttown.app/goldrush';
+    const reelId = row?.reel?.id;
+    a.href = reelId
+      ? `https://agenttown.app/goldrush/?${new URLSearchParams({ watch: reelId, contract: board.contract, epoch: board.epoch })}`
+      : 'https://agenttown.app/goldrush/';
     a.textContent = 'watch \u25b7';
     td.appendChild(a);
     return td;
