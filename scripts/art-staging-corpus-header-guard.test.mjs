@@ -3,10 +3,13 @@
  * TELL A VANISHED CORPUS FROM A SAFE ONE. THE ONE THING THAT CAN IS THE HEADER,
  * AND IT WAS NAMED IN NO LAW SURFACE AND ASSERTED BY NO GUARD.
  *
- * BACKGROUND. s2218 handed forward `art-staging-audit.mjs:373` as a hedged target
- * — a guard-keyed empty enumeration — and s2221 recorded it as "still unmeasured".
- * It stayed unmeasured for 228 fires. s2449 measured it. The site (now `:424`, and
- * its sibling `walk()`'s `if (!existsSync(dir)) return acc;`) is SOUND, and the
+ * BACKGROUND. s2218 handed forward a hedged guard-keyed empty enumeration in
+ * `art-staging-audit.mjs` and s2221 recorded it as "still unmeasured". It stayed
+ * unmeasured for 228 fires. s2449 measured it. BOTH such sites in that file are
+ * SOUND — the §1b `existsSync(ART_ROOT) ? readdirSync(…) : []` and `walk()'s
+ * `if (!existsSync(dir)) return acc;`. (s2218 cited `:373`; against its OWN tree
+ * that line is a comment and the site it meant sat at `:324` — the coordinate was
+ * born drifted. Cite the CODE.) The
  * mechanism is the point: this audit prints an ALWAYS-ON corpus declaration —
  * `ART STAGING AUDIT — <n> areas scanned, <m> files` — so an emptied scan set is
  * visible on stdout. That is F-2208-1's cure, already applied. NEGATIVE RESULT:
