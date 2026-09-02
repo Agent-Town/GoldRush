@@ -3797,7 +3797,9 @@
               "id": "winnability-receipts-and-kit-guard",
               "title": "S1: winnability receipts per door contract + the kit-vs-boss guard (L2)",
               "taskFile": "winnability-receipts-and-kit-guard.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "b5850417ad05b1e870d8fda8866a86f32bf400b1",
+              "drainNotes": "Drained s2457. PART-DELIVERED BY DESIGN, not part-failed: scope 1 (receipts ledger) is complete and its artifact reproduces byte-for-byte from the live standings; scope 2 (kit-vs-boss guard) was NOT written because the master's own No-op/honesty guard ordered exactly that — \"STOP after the receipts ledger and report the fork; a guessed kit is worse than no guard\". Scope 3 left flagged-off and unpublished as ordered. Gates on the merged tree in detached worktree gate-s2457: tsc rc=0 8.1s; build rc=0 38.1s; receipts offline byte-identical across two runs; receipts ONLINE reproduces the committed artifact byte-for-byte (sha256/16 706772b061b484a4); 9 adjacent assets/contracts guards 9 green/0 red; console/page N/A (no UI, zero src/). test:node-guards not path-mandated (diff touches no src/sim|systems|entities and no package.json). Board today: 36 contracts, 4 claimed, 32 unclaimed, 0 claimed rows missing a pin. THE GUARD HALF IS AN OPEN OWNER FORK — F-WIN-1/F-WIN-2, on the desk. Review: reviews/winnability-receipts.md.",
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-02"
@@ -3807,6 +3809,7 @@
               "title": "S3: the Last Claim preserve objective, secure by keeping the vent alight (E10 flip)",
               "taskFile": "e10-preserve-objective.md",
               "status": "queued",
+              "notes": "Its 21:53 lane-a run STOPPED at the master's own SEQUENCING LAW with ZERO diff and zero gates run (37,616 tokens): the predecessor winnability-receipts-and-kit-guard had been queued into the SAME lane in the SAME batch and had not landed. The refusal was CORRECT and the firewall worked. UNBLOCKED s2457 by draining that predecessor at b5850417a; the gate was then verified satisfied with the master's own command (`git log --oneline main | grep -c winnability-receipts-and-kit-guard` => 2, was 0) and the task re-queued into lane-a. TRAP for whoever touches this next (F-2457-2): that gate greps COMMIT SUBJECTS, which is Mistake #16, so it is satisfied by a drainer spelling the slug rather than by the dependency landing. Verify dependencies with drain-block-check (leaf status + mergeHash), never by the message grep.",
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-02"
