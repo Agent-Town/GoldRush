@@ -15,3 +15,6 @@ Consequence: the Prospector's power stands; the cure moves to the HUMAN side (a 
 ## Recommendation on publish timing (attended, revised)
 With no era bump and no retirement, publishing need not wait for the human-side command; land it in the first days after so the "same laws" sentence is fully true for players. Owner's call.
 Fix F-PT16-1 and re-ride the field under era 6 BEFORE announcing: the announcement's central claim is "same door, same physics", and the boards it points to were earned with the surplus. A day of delay is cheaper than a retraction. Owner's call.
+
+## Outcome (2026-09-02, attended)
+Both findings shipped and deployed the same day: F-PT16-2 as `c1084e547` (+ the lantern_post mapping `4c4b0a9a2`), F-PT16-1 as `9e5d0636d`, live at build `1f3bb821` and verified on production (crown reel over real ground; Prospector command reachable in a plain boot). No era bump; boards stand. The owner announces next.
