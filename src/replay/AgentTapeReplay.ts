@@ -191,10 +191,13 @@ function withoutEngineHash(tape: unknown): unknown {
     ? Object.keys(meta).sort().join(',')
     : '';
   if (!meta || typeof meta !== 'object' || Array.isArray(meta)
-    || (keys !== 'buildId,engineHash' && keys !== 'buildId,engineHash,era')
+    || (keys !== 'buildId,engineHash' && keys !== 'buildId,engineHash,era' && keys !== 'buildId,engineHash,era,viewVersion')
     || typeof Reflect.get(meta, 'engineHash') !== 'string'
     || !/^[a-f0-9]{64}$/.test(Reflect.get(meta, 'engineHash') as string)) return tape;
-  return { ...tape, meta: { buildId: Reflect.get(meta, 'buildId') } };
+  return { ...tape, meta: {
+    buildId: Reflect.get(meta, 'buildId'),
+    ...(Reflect.has(meta, 'viewVersion') ? { viewVersion: Reflect.get(meta, 'viewVersion') } : {}),
+  } };
 }
 
 function bootDeclaredRun(tape: RunTape): HeadlessContractSim {

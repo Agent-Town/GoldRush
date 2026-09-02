@@ -385,7 +385,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     // EH-3 af85497537 retired F-2308-1's validator premise. WATCH now carries only the stored
     // reel's public era identity; no private controller state or additional metadata is exposed.
     const publicReel = isRecord(reel.meta) && reel.meta.engineHash !== undefined
-      ? { ...reel, meta: { buildId: reel.meta.buildId, engineHash: reel.meta.engineHash, era: reel.meta.era } }
+      ? { ...reel, meta: { buildId: reel.meta.buildId, engineHash: reel.meta.engineHash, era: reel.meta.era, ...(reel.meta.viewVersion === undefined ? {} : { viewVersion: reel.meta.viewVersion }) } }
       : reel;
     return json(cors, { ok: true, ...seasonLabels(season), epochId, contractId, reel: publicReel });
   }
@@ -1022,11 +1022,12 @@ export function validateTape(value: unknown, contractId: unknown, seed: unknown,
 
 function validTapeMeta(value: unknown): boolean {
   return value === undefined || (isRecord(value)
-    && hasOnlyKeys(value, new Set(['buildId', 'engineHash', 'era']))
+    && hasOnlyKeys(value, new Set(['buildId', 'engineHash', 'era', 'viewVersion']))
     && typeof value.buildId === 'string'
     && /^(dev|[a-f0-9]{7,16})$/.test(value.buildId)
     && (value.engineHash === undefined || (typeof value.engineHash === 'string' && SHA256.test(value.engineHash)))
-    && (value.era === undefined || (Number.isSafeInteger(value.era) && (value.era as number) > 0)));
+    && (value.era === undefined || (Number.isSafeInteger(value.era) && (value.era as number) > 0))
+    && (value.viewVersion === undefined || (Number.isSafeInteger(value.viewVersion) && (value.viewVersion as number) > 0)));
 }
 
 function validRunStart(value: unknown): boolean {

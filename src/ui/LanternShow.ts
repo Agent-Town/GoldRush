@@ -15,7 +15,7 @@ export const LANTERN_VERSION_REFUSAL =
 export const LANTERN_REEL_UNAVAILABLE =
   'The county clerk cannot find that reel. The standing keeps its place on the board.';
 
-export type AgentRunTape = RunTape & { meta?: { buildId: string; engineHash?: string; era?: number } };
+export type AgentRunTape = RunTape & { meta?: { buildId: string; engineHash?: string; era?: number; viewVersion?: number } };
 export type ReelVerdict = { ok: true; tape: AgentRunTape } | { ok: false; reason: 'version' | 'unavailable' };
 
 /**
@@ -32,14 +32,15 @@ export function readStandingsReel(payload: unknown): ReelVerdict {
 export function validateAgentRunTape(value: unknown): AgentRunTape | null {
   if (!isRecord(value)) return null;
   const rawMeta = isRecord(value.meta) ? value.meta : null;
-  const publicMeta = rawMeta && Object.keys(rawMeta).every((key) => ['buildId', 'engineHash', 'era'].includes(key))
+  const publicMeta = rawMeta && Object.keys(rawMeta).every((key) => ['buildId', 'engineHash', 'era', 'viewVersion'].includes(key))
     && typeof rawMeta.buildId === 'string'
     && (rawMeta.engineHash === undefined || (typeof rawMeta.engineHash === 'string' && /^[a-f0-9]{64}$/.test(rawMeta.engineHash)))
     && (rawMeta.era === undefined || (Number.isSafeInteger(rawMeta.era) && (rawMeta.era as number) > 0))
+    && (rawMeta.viewVersion === undefined || (Number.isSafeInteger(rawMeta.viewVersion) && (rawMeta.viewVersion as number) > 0))
     ? rawMeta as AgentRunTape['meta']
     : null;
   const tape = validateRunTape(publicMeta
-    ? { ...value, meta: { buildId: publicMeta.buildId } }
+    ? { ...value, meta: { buildId: publicMeta.buildId, ...(publicMeta.viewVersion === undefined ? {} : { viewVersion: publicMeta.viewVersion }) } }
     : value);
   if (!tape) return null;
   // An engine hash proves a playable era only as a pair; a half-stamp stays honestly unstamped.
