@@ -3868,10 +3868,13 @@
               "id": "watchdog-self-check",
               "title": "the health watchdog checks its sibling launch agents are loaded",
               "taskFile": "watchdog-self-check.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "main",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-02"
+              "queuedAt": "2026-09-02",
+      "mergeHash": "b4d8e199c21e57817c911318e8dd93090b4b156a",
+      "drainedBy": "s2459",
+      "drainNotes": "main-slot output; tsc rc=0, build rc=0, health-watch-agents 2/2, battery-manifest+gate-caller-audit+run-guards 62/62; guard teeth proven by manufacturing PASS=FAIL -> PASS=ok (rc=1); three live health.log passes already carry agents=LOADED x3. reviews/watchdog-self-check.md"
             },
             {
               "id": "e10-preserve-ranking",
