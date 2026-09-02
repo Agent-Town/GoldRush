@@ -55,6 +55,10 @@ const workVisuals: Record<string, string> = {
   stockpile: stockpileUrl,
   turret: turretUrl,
   boiler_house: boilerUrl,
+  // Night Shift's lantern posts have no replay sprite of their own; the sentry beacon (brass
+  // tripod + teal lantern) is the closest shipped visual, so the reel stops drawing a text card
+  // for the county's most-watched night map (owner playtest 16, 2026-09-02).
+  lantern_post: sentryUrl,
 };
 
 function reelParts(snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string): {
