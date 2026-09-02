@@ -30,6 +30,8 @@ export type AgentTapeReplaySnapshot = {
   rider: { x: number; z: number } | null;
   enemies: Array<{ id: number; kind: string; x: number; z: number; hp: number; maxHp: number; alive: boolean }>;
   works: Array<{ id: string; index: number; x: number; z: number; hp: number; maxHp: number; wrecked: boolean }>;
+  seams: Array<{ id: string; x: number; z: number; remaining: number }>;
+  pickups: Array<{ index: number; x: number; z: number; amount: number }>;
 };
 
 export type AgentTapeReplayOptions = {
@@ -104,6 +106,8 @@ export class AgentTapeReplaySession {
         variantId: string | null; variantLabel: string | null; eliteKind: string | null; isThief: boolean; isWrecker: boolean;
       }> };
       build: { diagnostics: { hp: AgentTapeReplaySnapshot['works'] extends Array<infer T> ? Array<T & { position: { x: number; z: number } }> : never } };
+      harvest: { snapshot: { activeNodes: Array<{ id: string; active: boolean; position: { x: number; z: number }; remaining: number }> } };
+      goldPickups: { snapshot(): Array<{ active: boolean; amount: number; position: { x: number; z: number } }> } | null;
       economy: { gold: number };
       waves: { diagnostics: { wave: number } };
       timeAlive: number;
@@ -152,6 +156,12 @@ export class AgentTapeReplaySession {
         maxHp: work.maxHp,
         wrecked: work.wrecked,
       })),
+      seams: internal.harvest.snapshot.activeNodes
+        .filter((node) => node.active)
+        .map((node) => ({ id: node.id, x: node.position.x, z: node.position.z, remaining: node.remaining })),
+      pickups: (internal.goldPickups?.snapshot() ?? []).flatMap((pickup, index) => pickup.active
+        ? [{ index, x: pickup.position.x, z: pickup.position.z, amount: pickup.amount }]
+        : []),
     };
   }
 
