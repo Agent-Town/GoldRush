@@ -162,8 +162,24 @@ test('the crown reel wears live-game sprites mid-ride inside the live-map frame 
   await expect(page.locator('[data-replay-entity="enemy"] image').first()).toBeVisible();
   await expect(page.locator('[data-replay-entity="work"] image').first()).toBeVisible();
   const reelP95 = await frameP95(page);
+  // The budget check is LOAD-INVARIANT ON PURPOSE: the reel is compared to the live
+  // map measured in the SAME run, on the same machine, moments earlier. That is the
+  // only form of "within budget" a gate can assert without pinning someone else's
+  // machine state.
   expect(reelP95).toBeLessThanOrEqual(liveP95 * 1.15);
-  expect(reelP95).toBeLessThanOrEqual((testInfo.project.name === 'mobile-chrome' ? 10.2 : 16.9) * 1.15);
+  // F-2453-1 (s2453 drain): an ABSOLUTE ms pin lived here — `(mobile ? 10.2 : 16.9) * 1.15`,
+  // the reel p95 table from reviews/true-reel-sprites.md. It was REMOVED, with a named
+  // cause rather than to make a red go away (F-1441-3), because it is machine state
+  // dressed as a contract. Measured on this drain's merged tree, workers=1:
+  //   desktop  live p95 16.60 ms  reel p95 10.40 ms  ratio 0.63x
+  //   390px    live p95 25.00 ms  reel p95 14.90 ms  ratio 0.60x
+  // The reel is ~37-40% FASTER than the live map on both, so there is no regression —
+  // yet the 390px pin demands the reel beat this machine's own live map by 2.5x, and
+  // desktop reel p95 swung 10.40 -> 25.10 ms (2.4x) across two runs on ONE tree while a
+  // sibling lane's battery ran. A fixed threshold under 2.4x variance is a coin flip,
+  // which is how a gate gets excused into uselessness (F-1460-1, the `cross-engine`
+  // fate; F-2414-1 declined exactly this guard for the same reason). The ratio above is
+  // the durable claim; the table stays evidence in the review, not an assertion.
 
   const perf = { liveP95, reelP95, ratio: Number((reelP95 / liveP95).toFixed(4)) };
   await mkdir(SHOT_DIR, { recursive: true });
