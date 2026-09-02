@@ -1,9 +1,11 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import { PNG } from 'pngjs';
 import engineEra from '../assets/engine-era.json' with { type: 'json' };
 import { GAME_API_ORIGIN } from '../src/app/GameApi';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
+import { trueReelTerrain } from '../src/ui/TrueReelTerrain';
 
 const FIXTURE_PATH = path.resolve('artifacts/eh3-fixture/tape.json');
 const HEAT_7_CROWN_PATH = path.resolve('artifacts/gauntlet-heat7-20260830/baron/run-1-tape.json');
@@ -11,6 +13,15 @@ const HUD_FIXTURE_PATH = path.resolve('artifacts/gauntlet-heat6-guests-r2-202608
 const SHOT_DIR = path.resolve('reviews/shots-true-reel-sprites');
 const ERA_SHOT_DIR = path.resolve('reviews/shots-reel-era');
 const ERA_FIVE_SHOT_DIR = path.resolve('reviews/shots-era-five');
+const TERRAIN_SHOT_DIR = path.resolve('reviews/shots-lantern-true-terrain');
+const TERRAIN_TAPES = {
+  'the-claim': 'artifacts/eh3-fixture/tape.json',
+  'e1-dry-gulch': 'artifacts/gauntlet-heat2-20260824/codex-luna/e1-dry-gulch-e1-dry-gulch-01-attempt-1.tape.json',
+  'e1-twin-banks': 'artifacts/gauntlet-heat2-20260824/codex-luna/e1-twin-banks-e1-twin-banks-01-attempt-1.tape.json',
+  'e1-night-shift': 'artifacts/gauntlet-heat2-20260824/codex-luna/e1-night-shift-e1-night-shift-01-attempt-3.tape.json',
+  'e2-hill-mine': 'artifacts/gauntlet-heat2-20260824/codex-luna/e2-hill-mine-e2-hill-mine-01-attempt-1.tape.json',
+  'e1-baron': 'artifacts/gauntlet-heat2-20260824/codex-luna/e1-baron-e1-baron-01-attempt-1.tape.json',
+} as const;
 
 test('an era-current agent reel renders the true sim and verifies its hash in this browser', async ({ page }, testInfo) => {
   test.setTimeout(180_000);
@@ -29,7 +40,7 @@ test('an era-current agent reel renders the true sim and verifies its hash in th
   );
   await expect.poll(async () => (await probe(page))?.tick ?? -1).toBeGreaterThanOrEqual(0);
   await assertRenderedProbe(page);
-  await expect(page.getByTestId('lantern-truth-placeholders')).toHaveText('Snapshot does not carry: terrain layout · decorative props');
+  await expect(page.getByTestId('lantern-truth-placeholders')).toHaveText('Reel does not carry: decorative props');
   await expect(page.getByTestId('lantern-truth-placeholders')).not.toContainText(/Keeper|Prospector|enemy|work|gold/i);
   await mkdir(SHOT_DIR, { recursive: true });
 
@@ -67,6 +78,70 @@ test('an era-current agent reel renders the true sim and verifies its hash in th
   await writeFile(path.join(SHOT_DIR, `${testInfo.project.name}-outcome.png`), await page.screenshot({ fullPage: true }));
 });
 
+test('all six landing boards rebuild their declared terrain from contract and seed', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  expect(trueReelTerrain('e1-night-shift', 'phase-check', 0).svg).not.toContain('data-terrain-feature="night"');
+  const night = trueReelTerrain('e1-night-shift', 'phase-check', 8).svg;
+  expect(night).toContain('data-terrain-feature="night"');
+  expect(night).not.toContain('r="3.2"');
+  expect(trueReelTerrain('e1-night-shift', 'phase-check', 11).svg).toContain('data-light-phase="dark:1"');
+  expect(trueReelTerrain('e1-night-shift', 'phase-check', 25).svg).not.toContain('data-terrain-feature="night"');
+  const errors = collectErrors(page);
+  await mkdir(TERRAIN_SHOT_DIR, { recursive: true });
+  const tapes = Object.fromEntries(await Promise.all(Object.entries(TERRAIN_TAPES).map(async ([contract, fixturePath]) =>
+    [contract, await currentEraTape(path.resolve(fixturePath))])));
+  await page.addInitScript((reels) => {
+    const contract = new URLSearchParams(location.search).get('contract');
+    if (contract && reels[contract]) sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reels[contract]));
+  }, tapes);
+  const readyTimes: Record<string, number> = {};
+
+  for (const contract of Object.keys(TERRAIN_TAPES)) {
+    const tape = tapes[contract];
+    expect(tape.contract).toBe(contract);
+    await page.goto(replayUrl(tape));
+    const world = page.getByTestId('lantern-true-world');
+    await expect(world.locator(`[data-replay-terrain="${contract}"]`)).toBeVisible();
+    const terrainReadyMs = Number(await page.getByTestId('lantern-show').getAttribute('data-terrain-ready-ms'));
+    readyTimes[contract] = terrainReadyMs;
+    if (contract === 'the-claim') expect(terrainReadyMs).toBeLessThan(2_000);
+    if (contract === 'e1-night-shift') {
+      for (let wave = 1; wave <= 8; wave += 1) {
+        await page.getByTestId('lantern-wave-skip').click();
+        await expect.poll(async () => (await probe(page))?.wave ?? 0, { timeout: 20_000 }).toBeGreaterThanOrEqual(wave);
+      }
+    }
+    await page.getByTestId('lantern-pause').click();
+    await expect(page.getByTestId('lantern-truth-placeholders')).not.toContainText('terrain layout');
+    expect(await world.locator('[data-terrain-feature="spawn-edge"]').count()).toBeGreaterThan(0);
+    expect(await world.locator('[data-terrain-feature="seam-anchor"]').count()).toBeGreaterThan(0);
+
+    if (contract === 'the-claim' || contract === 'e1-baron') {
+      await expect(world.locator('[data-terrain-feature="water"]')).toHaveCount(1);
+      await expect(world.locator('[data-terrain-feature="ford"]')).toHaveCount(1);
+    } else if (contract === 'e1-dry-gulch') {
+      await expect(world.locator('[data-terrain-feature="water"]')).toHaveCount(1);
+      await expect(world.locator('[data-terrain-feature="ford"]')).toHaveCount(0);
+    } else if (contract === 'e1-twin-banks') {
+      await expect(world.locator('[data-terrain-feature="ford"]')).toHaveCount(2);
+      await expect(world.locator('[data-terrain-feature="build-pad"]')).toHaveCount(2);
+    } else if (contract === 'e1-night-shift') {
+      await expect(world.locator('[data-terrain-feature="night"]')).toHaveCount(1);
+      await expect(world.locator('[data-terrain-feature="lantern"]')).toHaveCount(7);
+    } else {
+      await expect(world.locator('[data-terrain-feature="contour"]')).toHaveCount(1);
+      await expect(world.locator('[data-terrain-feature="impassable-cliff"]')).toHaveCount(1);
+      await expect(world.locator('[data-terrain-feature="build-pad"]')).toHaveCount(5);
+    }
+
+    const shot = await world.screenshot();
+    assertNotFlatGrey(shot);
+    await writeFile(path.join(TERRAIN_SHOT_DIR, `${testInfo.project.name}-${contract}.png`), shot);
+  }
+  console.log(`lantern terrain ready ${testInfo.project.name}: ${JSON.stringify(readyTimes)}`);
+  expect(errors).toEqual([]);
+});
+
 test('the crown reel wears live-game sprites mid-ride inside the live-map frame budget', async ({ page }, testInfo) => {
   test.setTimeout(180_000);
   const tape = await currentEraTape(HEAT_7_CROWN_PATH);
@@ -87,11 +162,30 @@ test('the crown reel wears live-game sprites mid-ride inside the live-map frame 
   await expect(page.locator('[data-replay-entity="enemy"] image').first()).toBeVisible();
   await expect(page.locator('[data-replay-entity="work"] image').first()).toBeVisible();
   const reelP95 = await frameP95(page);
+  // The budget check is LOAD-INVARIANT ON PURPOSE: the reel is compared to the live
+  // map measured in the SAME run, on the same machine, moments earlier. That is the
+  // only form of "within budget" a gate can assert without pinning someone else's
+  // machine state.
   expect(reelP95).toBeLessThanOrEqual(liveP95 * 1.15);
+  // F-2453-1 (s2453 drain): an ABSOLUTE ms pin lived here — `(mobile ? 10.2 : 16.9) * 1.15`,
+  // the reel p95 table from reviews/true-reel-sprites.md. It was REMOVED, with a named
+  // cause rather than to make a red go away (F-1441-3), because it is machine state
+  // dressed as a contract. Measured on this drain's merged tree, workers=1:
+  //   desktop  live p95 16.60 ms  reel p95 10.40 ms  ratio 0.63x
+  //   390px    live p95 25.00 ms  reel p95 14.90 ms  ratio 0.60x
+  // The reel is ~37-40% FASTER than the live map on both, so there is no regression —
+  // yet the 390px pin demands the reel beat this machine's own live map by 2.5x, and
+  // desktop reel p95 swung 10.40 -> 25.10 ms (2.4x) across two runs on ONE tree while a
+  // sibling lane's battery ran. A fixed threshold under 2.4x variance is a coin flip,
+  // which is how a gate gets excused into uselessness (F-1460-1, the `cross-engine`
+  // fate; F-2414-1 declined exactly this guard for the same reason). The ratio above is
+  // the durable claim; the table stays evidence in the review, not an assertion.
 
   const perf = { liveP95, reelP95, ratio: Number((reelP95 / liveP95).toFixed(4)) };
   await mkdir(SHOT_DIR, { recursive: true });
+  await mkdir(TERRAIN_SHOT_DIR, { recursive: true });
   await writeFile(path.join(SHOT_DIR, `${testInfo.project.name}-perf.json`), `${JSON.stringify(perf, null, 2)}\n`);
+  await writeFile(path.join(TERRAIN_SHOT_DIR, `${testInfo.project.name}-perf.json`), `${JSON.stringify(perf, null, 2)}\n`);
   await writeFile(path.join(SHOT_DIR, `${testInfo.project.name}-crown-mid-ride.png`), await page.screenshot({ fullPage: true }));
   console.log(`true-reel-sprites ${testInfo.project.name}: live p95 ${liveP95.toFixed(2)} ms; reel p95 ${reelP95.toFixed(2)} ms; ratio ${perf.ratio}x`);
   expect(errors).toEqual([]);
@@ -296,6 +390,19 @@ async function frameP95(page: Page): Promise<number> {
     };
     requestAnimationFrame(sample);
   }));
+}
+
+function assertNotFlatGrey(buffer: Buffer): void {
+  const png = PNG.sync.read(buffer);
+  let grey = 0;
+  const colors = new Set<string>();
+  for (let offset = 0; offset < png.data.length; offset += 4) {
+    const [r, g, b] = png.data.subarray(offset, offset + 3);
+    if (r === 111 && g === 88 && b === 53) grey += 1;
+    colors.add(`${r},${g},${b}`);
+  }
+  expect(grey / (png.width * png.height)).toBeLessThan(.1);
+  expect(colors.size).toBeGreaterThan(24);
 }
 
 async function assertRenderedProbe(page: Page): Promise<void> {
