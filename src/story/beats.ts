@@ -406,6 +406,113 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// Chapter E3 follows E2's single-table shape above: town tales and Gazette headlines are
+// ordinary, attributed beats (E2 examples at lines 368-397), not a second narrative system.
+export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    // lore/STORYBOOK.md:174
+    id: 'e3-canyon-works-arrival',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e3-canyon-works', // assets/raw/plate-contract-e3-canyon-works.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
+    lines: ['The tram has crested the Canyon Works rim at dusk.', 'The black gorge waits below, and our Dynamo Hall came with us.'],
+  },
+  {
+    // lore/STORYBOOK.md:147,174
+    id: 'e3-twin-representatives',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
+    lines: ['Copper trim offers one exclusive line. Silver trim offers the other.', 'Keep both contracts unsigned. We string our own wire.'],
+  },
+  {
+    // lore/STORYBOOK.md:147,174; Gazette mystery-law headline in the E2 shape at lines 376-397.
+    id: 'e3-gazette-two-offers',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
+    lines: ['GAZETTE: TWO OFFERS, NO SIGNATURE', 'The companies agree only that the town must choose. The Gazette cannot prove why.'],
+  },
+  {
+    // lore/STORYBOOK.md:148,152,175
+    id: 'e3-first-night-round',
+    trigger: 'contract-unlocked',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
+    lines: ['The lamplighter draws the shore one lamp at a time.', "The Elder's Tree stays lit. That line is never shed."],
+  },
+  {
+    // lore/STORYBOOK.md:139,176
+    id: 'e3-brownout-ledger',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
+    lines: ['Brown-out ledger open: light, arms, and the loads that wait.', 'The shoreline moves tonight. Choose what stays inside it.'],
+  },
+  {
+    // lore/STORYBOOK.md:165-176
+    id: 'e3-moth-season',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e3-moth-season', // assets/raw/plate-contract-e3-moth-season.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-moth-season',
+    lines: ['GAZETTE: THE LIGHT DRAWS WINGS', 'Migration week makes every lamp a shelter and a lure.'],
+  },
+  {
+    // lore/STORYBOOK.md:142,147,176
+    id: 'e3-saboteur-night',
+    trigger: 'boss-arrival',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e3-enemy-saboteur', // assets/raw/plate-e3-enemy-saboteur.png
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e3-canyon-works',
+    lines: ['Both company orders say the same thing: cut the town line.', 'The wire-cutters stopped before the first span.'],
+  },
+  {
+    // lore/STORYBOOK.md:147,177; tavern-tale shape mirrors e2-depot-wedding at lines 368-373.
+    id: 'e3-tavern-twins-defect',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e3-saboteur-night'),
+    lines: ['The twins took one table and quit in stereo.', 'We hired both. Copper runs days, silver runs nights.'],
+  },
+  {
+    // lore/STORYBOOK.md:147,177; the reveal waits for proof, preserving the Gazette mystery law.
+    id: 'e3-gazette-ledger-reveal',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e3-saboteur-night'),
+    lines: ['GAZETTE: BOTH BOOKS, ONE BACKER', "The expense ledgers meet at the Baron's crossed pickaxes."],
+  },
+  {
+    // lore/STORYBOOK.md:178
+    id: 'e3-refinery-horizon',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    lines: ['The Refinery rises by lamplight. At dawn, crude arrives from the flats.', "That horizon is too wide to walk. We're going to need to move faster."],
+  },
+];
+
 export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
   ? [...STORY_BEATS, ...LEDGER_STORY_BEATS]
   : [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];

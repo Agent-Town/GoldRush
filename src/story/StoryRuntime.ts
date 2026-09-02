@@ -1,10 +1,11 @@
 import './story.css';
-import { STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats';
+import { E3_STORY_BEATS, STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats';
 import { hasStoryBeatSeen, markStoryBeatSeen } from './seenState';
 import { emitStorySignal, onStorySignal, STORY_RUNTIME_SIGNAL_REGISTRY, type RuntimeStorySignal } from './signals';
 import { STORY_SPEAKERS } from './speakers';
 import { readStoryTalesEnabled, subscribeStorySettings } from './settings';
 import { SoundSystem } from '../audio/SoundSystem';
+import { activeEpochId } from '../meta/ContractFamilies';
 
 const CARD_MS = 6000;
 const GAP_MS = 3000;
@@ -71,7 +72,11 @@ export class StoryRuntime {
       return;
     }
     const items: QueueItem[] = [];
-    for (const beat of [...STORY_RUNTIME_BEATS, ...(await this.postscriptBeats)]) {
+    for (const beat of [
+      ...STORY_RUNTIME_BEATS,
+      ...(activeEpochId() === 'epoch-3-voltage' ? E3_STORY_BEATS : []),
+      ...(await this.postscriptBeats),
+    ]) {
       if ('postscriptOnly' in signal && signal.postscriptOnly && !beat.id.startsWith('wd04-postscript-')) continue;
       if (beat.trigger !== signal.type || (beat.when && !beat.when(signal))) continue;
       const key = beat.seenKey?.(signal) ?? beat.id;
