@@ -3783,11 +3783,13 @@
               "id": "lantern-true-terrain",
               "title": "The Lantern Show draws the contract real ground from manifest + seed, not a grey schematic",
               "taskFile": "lantern-true-terrain.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "note": "Release audit: the most-watched surface at launch renders diamonds and rings. Queued behind probe-rows-unranked on lane-c.",
-              "queuedAt": "2026-09-02"
+              "queuedAt": "2026-09-02",
+              "mergeHash": "c1084e547a3dbbf87ec1817a8c15a23a71a0386b",
+              "drainNotes": "Drained s2453. The Lantern Show draws the contract real ground from manifest tileParams + tape seed; terrain layout leaves TRUE_REEL_PLACEHOLDERS, decorative props stays (scatter is not deterministic). Gates on the merged tree, workers=1: tsc clean, build green, 36/36 across agent-reels, reel-deep-links, run3d-lantern-post, tape-02-lantern-show, true-reel-harness, desktop + 390px, zero console errors, six boards evidenced both projects. Review fix F-2453-1: the absolute frame-budget pin the lane added was removed with a named cause (reel measured 33-41% FASTER than the live map across three runs, while absolute p95 swung 2.5x on one tree). See reviews/lantern-true-terrain.md."
             }
           ]
         }
