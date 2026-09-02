@@ -730,6 +730,7 @@ export type ContractManifest = {
     coalSeams?: ContractHarvestAnchor[];
     seamYieldMult?: number;
     secureWave?: number;
+    preserve?: { work: 'warm_vent'; hp: number; position: ContractHarvestAnchor };
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
     dayNightCycle?: ContractDayNightCycle;
@@ -1586,7 +1587,7 @@ const AUTHORED_TILE_KEYS = [
  * turn gold into guns.
  */
 const AUTHORED_TWIST_KEYS = [
-  'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
+  'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
   'scheduledRelocation', 'persistentCanalChoices', 'emberShore',
@@ -1700,6 +1701,19 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
   addUnknownFieldReasons(tileParams, AUTHORED_TILE_KEYS, 'tileParams', reasons);
   addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons);
   if (twist.picnicHold !== undefined && typeof twist.picnicHold !== 'boolean') addDescriptorReason(reasons, reason('field_type', 'picnicHold must be true or false.', 'twist.picnicHold'));
+  if (twist.preserve !== undefined) {
+    const preserve = twist.preserve;
+    if (
+      !isRecord(preserve)
+      || !exactRecord(preserve, ['work', 'hp', 'position'])
+      || preserve.work !== 'warm_vent'
+      || !finiteInRange(preserve.hp, 1, 100_000)
+      || !isRecord(preserve.position)
+      || !exactRecord(preserve.position, ['x', 'z'])
+      || !finiteInRange(preserve.position.x, -1_000, 1_000)
+      || !finiteInRange(preserve.position.z, -1_000, 1_000)
+    ) addDescriptorReason(reasons, reason('preserve_shape', 'A preserve needs a warm vent, positive hp, and a finite place.', 'twist.preserve'));
+  }
   if (!shortText(tileParams.tileId)) addDescriptorReason(reasons, reason('tile_id', 'Every authored contract needs a tile ID.', 'tileParams.tileId'));
   if (!shortText(tileParams.biome)) addDescriptorReason(reasons, reason('tile_biome', 'Every authored contract needs a biome.', 'tileParams.biome'));
   if (typeof tileParams.river !== 'boolean') addDescriptorReason(reasons, reason('field_type', 'river must be true or false.', 'tileParams.river'));

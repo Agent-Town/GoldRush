@@ -33,6 +33,7 @@ export type AgentView = {
       briefing: { geography: string; goals: readonly string[]; rules: readonly string[] };
     };
     mechanics: MechanicsManifest;
+    objective?: 'preserve';
     map: {
       claim: { x: number; z: number };
       seams: readonly { id: string; x: number; z: number }[];
@@ -55,6 +56,7 @@ export type AgentView = {
       cost: number;
       site: { x: number; z: number; w: number; d: number };
     };
+    preserve?: { hp: number; maxHp: number; alive: boolean };
     timers: { runSeconds: number; nextWaveInSeconds: number };
     gold: number;
     hero: { hp: number; maxHp: number; x: number; z: number };
@@ -230,6 +232,7 @@ function buildStablePrefix(
 
   return {
     seed: readSeed(),
+    ...(manifest.twist.preserve ? { objective: 'preserve' as const } : {}),
     contract: {
       id: contractId,
       name: text(contract.name) ?? manifest.name,
@@ -292,6 +295,14 @@ function buildNow(
   const megaproject = record(diagnostics.megaproject);
   const site = record(megaproject.siteFootprint);
   const pendingSecure = run.pendingSecure === true ? true : undefined;
+  const preserve = record(diagnostics.preserve);
+  const preserveState = typeof preserve.hp === 'number'
+    && Number.isFinite(preserve.hp)
+    && typeof preserve.maxHp === 'number'
+    && Number.isFinite(preserve.maxHp)
+    && typeof preserve.alive === 'boolean'
+    ? { hp: round(preserve.hp), maxHp: round(preserve.maxHp), alive: preserve.alive }
+    : undefined;
   const project = megaproject.active === true && megaproject.unlocked === true && text(megaproject.id) &&
     ['x', 'z', 'w', 'd'].every((key) => typeof site[key] === 'number' && Number.isFinite(site[key]))
     ? {
@@ -308,6 +319,7 @@ function buildNow(
     weapon: readWeapon(diagnostics),
     ...(pendingSecure ? { pendingSecure } : {}),
     ...(project ? { megaproject: project } : {}),
+    ...(preserveState ? { preserve: preserveState } : {}),
     timers: {
       runSeconds: round(boundary.runSeconds),
       nextWaveInSeconds: round(number(diagnostics.nextWaveInSim)),

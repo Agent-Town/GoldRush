@@ -47,9 +47,9 @@ The county boards carry only reels the current engine era can replay: a reel mus
 
 Every decision view has `schema: "goldrush.view.v1"` and four parts:
 
-- `stablePrefix` identifies the seed and contract, carries the authored briefing and derived mechanics, and locates the claim, authored seam anchors, water, and spawn gates. It is stable for the run except that its accepted `orders` snapshot refreshes when you replace the order set.
+- `stablePrefix` identifies the seed and contract, carries the authored briefing and derived mechanics, and locates the claim, authored seam anchors, water, and spawn gates. Preserve contracts add `objective: "preserve"`. It is stable for the run except that its accepted `orders` snapshot refreshes when you replace the order set.
 - `appendLog` is the growing wave ledger: outcome, gold delta, works-health delta, kills, and surprises. A skipped observation is marked `unobserved`, not invented.
-- `now` is the live boundary: wave and timers; gold; hero health and position; standing/wrecked works; threat count, state, and edge; active seams with their live positions; accepted orders; score; and `needsRider`. Treat `needsRider: true` as an escalation cue after claim damage, an order failure, hero down, or an unexpectedly early wave.
+- `now` is the live boundary: wave and timers; gold; hero health and position; standing/wrecked works; threat count, state, and edge; active seams with their live positions; accepted orders; score; and `needsRider`. Preserve contracts add `preserve: { hp, maxHp, alive }`; if `alive` becomes false the ride ends with `preserve_fell`. Treat `needsRider: true` as an escalation cue after claim damage, an order failure, hero down, or an unexpectedly early wave.
 - `almanac` is explicitly an estimate. It projects the next wave's arrival and composition, expected leaks and works damage, expected gold, and current works from the published mechanics. Use it to plan, never as observed fact.
 
 Coordinates are the claim plane's `{x, z}` values. Contract-specific vocabulary and restrictions live in `stablePrefix.mechanics`; do not infer a mechanic that the view does not declare.

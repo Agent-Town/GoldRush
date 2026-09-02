@@ -476,7 +476,7 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "last-claim-objective-consumer", "status": "missing", "description": "Needs the declared objective metadata consumer; era decks and preserve sites already drive the finale systems." }
+          { "dep": "last-claim-finale-metadata-consumer", "status": "missing", "description": "The warm vent objective is live; the remaining finale objective metadata still needs its broader consumer." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -488,7 +488,18 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": {},
+      "twist": {
+        "preserve": {
+          "work": "warm_vent",
+          "hp": 360,
+          "position": { "x": 0, "z": 50 }
+        },
+        "secureWave": 8,
+        "enemyRoster": [
+          { "id": "static_mote", "label": "Static Mote", "waveMin": 1, "visualScale": 0.25, "contactDamageScale": 0.35, "art": "placeholder" },
+          { "id": "unraveled_machine", "label": "Unraveled Machine", "waveMin": 2, "hpScale": 0.8, "wrecker": true, "contactDamageScale": 0.35, "buildingDamageScale": 0.45, "art": "placeholder" }
+        ]
+      },
       "boardRow": {
         "name": "The Last Claim",
         "ledgerBlurb": "Ten lineage decks run stern to bow and end at three small preserves.",
@@ -501,9 +512,7 @@
       },
       "briefing": {
         "goals": [
-          "Cross all ten era-decks from stern to bow.",
-          "Walk the ten lineage stations along the Ark.",
-          "Keep one lantern lit, one song playing, and one portrait untouched."
+          "Keep the last warm vent alight through wave 8."
         ],
         "rules": [
           "The Ark carries ten lineage stations from stern to bow.",

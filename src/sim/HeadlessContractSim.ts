@@ -81,7 +81,7 @@ import {
 import { ScheduledRelocationSystem, type ScheduledRelocationDiagnostics } from '../systems/ScheduledRelocationSystem';
 import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
 import { BroadcastMirror, type BroadcastMirrorDiagnostics } from '../systems/BroadcastMirror';
-import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
+import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
 import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { depenetrateFromBlockers } from '../world/LandmarkCollision';
@@ -284,6 +284,7 @@ export type GrSimOutcome = {
   defaultedPicks: number;
   defaultedSecure: number;
   eventLogHash: string;
+  endReason?: 'preserve_fell';
   securedWave?: number;
   overtimeWaves?: number;
   homestead?: {
@@ -458,6 +459,8 @@ export class HeadlessContractSim {
   private readonly xpMotes = new XpMotePool();
   private readonly combatVfx = new CombatVfx();
   private readonly targeting = new TargetingSystem();
+  private preserve: BuildingTarget | null = null;
+  private preserveFell = false;
   private weapon: 'rig' | 'blast' = 'rig';
   private readonly heroShooter: ShooterHandle = {
     id: 'hero',
@@ -804,6 +807,24 @@ export class HeadlessContractSim {
         preplaced: true,
       });
     }
+    const preserve = this.manifest.twist.preserve;
+    if (preserve) {
+      this.preserve = {
+        id: `preserve:${preserve.work}`,
+        family: preserve.work,
+        index: 0,
+        position: new THREE.Vector3(preserve.position.x, 0, preserve.position.z),
+        halfX: 1,
+        halfZ: 1,
+        active: true,
+        hp: preserve.hp,
+        maxHp: preserve.hp,
+        reachRadius: 1.4,
+      };
+      this.targeting.registerBuilding(this.preserve);
+      this.combat.registerBuildingDamageResolver((target, amount) =>
+        target === this.preserve ? this.damagePreserve(amount) : this.build.resolveBuildingDamage(target, amount));
+    }
     for (const holding of this.stockpileHoldings) this.targeting.registerGoldHolding(holding);
     this.pressure = new PressureSystem(
       this.economy,
@@ -981,7 +1002,7 @@ export class HeadlessContractSim {
       () => this.manifest,
       boot,
       () => this.build.diagnostics.stockpilesState.some((entry) => entry.active),
-      () => this.build.hasAnyBuildable,
+      () => this.preserve?.active === true || this.build.hasAnyBuildable,
       () => this.enemies.all.filter((enemy) => enemy.isAlive && enemy.isThief).length,
       () => false,
       this.hero.group.position,
@@ -1097,6 +1118,7 @@ export class HeadlessContractSim {
           // contract that declares no discharge-able front and no admitted terminal moves.
           || !this.interferenceFront.objectiveAllowsSecure
           || this.atomic?.objectiveAllowsSecure === false
+          || (this.preserve !== null && !this.preserve.active)
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
         securePayoutMultForRun: () => this.baronBeaten
@@ -1227,6 +1249,7 @@ export class HeadlessContractSim {
         ...(crawler ? { crawler: (({ crawler3dState: _, ...simulation }) => simulation)(crawler) } : {}),
         ...(this.deepwater ? { deepwater: this.deepwater.simulationSnapshot } : {}),
         ...(this.atomic ? { atomic: this.atomic.diagnostics } : {}),
+        ...(this.preserve ? { preserve: this.preserveDiagnostics() } : {}),
         // The chair is part of the terminal state, so it belongs in the hash that certifies it:
         // a secure claimed without `poweredDown`/`chairPlaced` would hash differently from one won.
         ...(this.homemaker ? { homemaker: this.homemaker.diagnostics() } : {}),
@@ -1244,7 +1267,7 @@ export class HeadlessContractSim {
         ...(this.hollowCrossing.isDeclared ? { hollowCrossing: this.hollowCrossing.diagnostics } : {}),
       },
     });
-    return { ...base, eventLogHash, ...overtime };
+    return { ...base, eventLogHash, ...overtime, ...(this.preserveFell ? { endReason: 'preserve_fell' as const } : {}) };
   }
 
   // ---------------------------------------------------------------------------
@@ -1449,7 +1472,9 @@ export class HeadlessContractSim {
         this.enemies.recycle(enemy);
       },
     }, {
-      nearestBuilding: (from) => this.waves.preferredEscortTarget(from) ?? this.targeting.nearestBuilding(from),
+      nearestBuilding: (from) => this.preserve?.active
+        ? this.preserve
+        : this.waves.preferredEscortTarget(from) ?? this.targeting.nearestBuilding(from),
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
     }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1));
@@ -1909,6 +1934,7 @@ export class HeadlessContractSim {
       // A9: null off every other contract, same rule. The presentation-stripped half rides the
       // determinism hash so a run that moved a turret cannot hash the same as one that did not.
       devilsAlley: this.devilsAlley.isDeclared ? this.devilsAlley.simulationSnapshot : null,
+      preserve: this.preserveDiagnostics(),
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
       lightField: this.lightField?.diagnostics() ?? null,
@@ -1917,7 +1943,7 @@ export class HeadlessContractSim {
       run: {
         secured: this.secured,
         pendingSecure: this.secureChoice === 'pending',
-        lastRunEndedReason: this.secureChoice === 'bank' ? 'secured' : null,
+        lastRunEndedReason: this.preserveFell ? 'preserve_fell' : this.secureChoice === 'bank' ? 'secured' : null,
       },
       progression: { ...this.progression.snapshot, choiceRule: 'first-offer' },
       agent: {
@@ -1927,6 +1953,24 @@ export class HeadlessContractSim {
         embodiment: this.prospector.snapshot,
       },
     };
+  }
+
+  private preserveDiagnostics(): { hp: number; maxHp: number; alive: boolean } | null {
+    return this.preserve
+      ? { hp: round(this.preserve.hp), maxHp: round(this.preserve.maxHp), alive: this.preserve.active && this.preserve.hp > 0 }
+      : null;
+  }
+
+  private damagePreserve(amount: number) {
+    const target = this.preserve!;
+    const damage = Math.max(0, amount);
+    target.hp = Math.max(0, target.hp - damage);
+    if (target.hp === 0) {
+      target.active = false;
+      this.preserveFell = true;
+      this.dead = true;
+    }
+    return { applied: damage > 0, family: target.family, index: 0, hp: target.hp, maxHp: target.maxHp, wrecked: !target.active };
   }
 
   private homesteadOutcome(): NonNullable<GrSimOutcome['homestead']> {

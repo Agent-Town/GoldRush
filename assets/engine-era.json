@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "4082ebe41a9c70652edcb84946417c879a16be404087891a2961e86c009a4cbf",
+  "engineHash": "a6e9fc02fe56d689ca36eeec20d16df763f13deb7c1697e38584fabc358df925",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -146,6 +146,12 @@
       "aliases": [],
       "pinnedAt": "2026-09-02T23:10:00+07:00",
       "cause": "view-schema-versioning merge: the rider view and tape meta gained a numeric viewVersion (src/agent/View.ts, src/game/Game.ts, src/game/RunTape.ts, src/replay/AgentTapeReplay.ts, src/ui/LanternShow.ts). Observation surface only - no sim, systems, entities or Balance touched, and legacy tapes without the field stay accepted. Simulation behaviour did not change."
+    },
+    {
+      "engineHash": "a6e9fc02fe56d689ca36eeec20d16df763f13deb7c1697e38584fabc358df925",
+      "aliases": [],
+      "pinnedAt": "2026-09-02T23:54:00+07:00",
+      "cause": "e10-preserve-objective merge: the Last Claim gained a preserve twist. Corpus-touching files, measured not assumed: assets/contracts/epoch-10-deepsky/contracts.json (the twist block and enemy roster for e10-last-claim only) and src (HeadlessContractSim secure decision, Game browser secure decision, View additive fields, ContractFamilies). Both are inside ENGINE_SOURCE_INPUTS, so the content re-hashes. This is a REAL behaviour change for e10-last-claim and for that contract only: secured now requires the warm vent alive at secureWave and its fall ends the ride with reason preserve_fell. Every other contract decides exactly as before. Same era: no view field was removed or renamed and no tape shape changed."
     }
   ],
   "history": [
