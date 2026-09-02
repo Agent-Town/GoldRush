@@ -70,7 +70,7 @@ export function renderTrueReel(snapshot: AgentTapeReplaySnapshot): string {
     marker = '#2e1b0e',
     hp?: { current: number; max: number },
   ) => `<g data-replay-entity="${type}" ${attrs}>
-    <title>${escapeHtml(key)}${hp ? ` — ${Math.round(hp.current)}/${Math.round(hp.max)} HP` : ''}</title>
+    <title>${escapeHtml(key)}${hp ? ` · ${Math.round(hp.current)}/${Math.round(hp.max)} HP` : ''}</title>
     <ellipse cx="${x + 40}" cy="${z + 28}" rx="${width * 0.28}" ry="${width * 0.13}" fill="#2e1b0e" opacity=".28" />
     <circle cx="${x + 40}" cy="${z + 28}" r="${width * 0.37}" fill="none" stroke="${marker}" stroke-width=".16" opacity=".82" />
     <image href="${url}" x="${x + 40 - width / 2}" y="${z + 28 - height * 0.78}" width="${width}" height="${height}" preserveAspectRatio="xMidYMid meet" style="${style}" data-x="${x}" data-z="${z}" data-visual="${escapeHtml(key)}" />
@@ -78,7 +78,7 @@ export function renderTrueReel(snapshot: AgentTapeReplaySnapshot): string {
   </g>`;
 
   const placeholder = (type: string, key: string, x: number, z: number, attrs: string) => `<g data-replay-entity="${type}" ${attrs} data-placeholder="true">
-    <title>${escapeHtml(key)} — visual placeholder</title>
+    <title>${escapeHtml(key)} · visual placeholder</title>
     <rect x="${x + 38}" y="${z + 24}" width="4" height="4" rx=".4" fill="#f5e6c8" stroke="#a0522d" stroke-width=".28" data-x="${x}" data-z="${z}" data-visual="placeholder:${escapeHtml(key)}" />
     <text x="${x + 40}" y="${z + 26.4}" text-anchor="middle" fill="#7f2633" font-size=".9">${escapeHtml(key)}</text>
   </g>`;

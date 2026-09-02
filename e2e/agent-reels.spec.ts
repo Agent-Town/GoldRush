@@ -346,10 +346,10 @@ async function assertRenderedProbe(page: Page): Promise<void> {
     expect(rendered.rider).toEqual({ x: state.rider.x, z: state.rider.z, visual: 'Prospector' });
   }
   for (const enemy of state.enemies) {
-    expect(rendered.entities).toContainEqual({ id: enemy.id, kind: enemy.kind, alive: String(enemy.alive), x: enemy.x, z: enemy.z, visual: enemy.kind, title: `${enemy.kind} — ${Math.round(enemy.hp)}/${Math.round(enemy.maxHp)} HP` });
+    expect(rendered.entities).toContainEqual({ id: enemy.id, kind: enemy.kind, alive: String(enemy.alive), x: enemy.x, z: enemy.z, visual: enemy.kind, title: `${enemy.kind} · ${Math.round(enemy.hp)}/${Math.round(enemy.maxHp)} HP` });
   }
   for (const work of state.works) {
-    expect(rendered.works).toContainEqual({ index: work.index, kind: work.id, wrecked: String(work.wrecked), x: work.x, z: work.z, visual: work.id, title: `${work.id} — ${Math.round(work.hp)}/${Math.round(work.maxHp)} HP` });
+    expect(rendered.works).toContainEqual({ index: work.index, kind: work.id, wrecked: String(work.wrecked), x: work.x, z: work.z, visual: work.id, title: `${work.id} · ${Math.round(work.hp)}/${Math.round(work.maxHp)} HP` });
   }
   for (const seam of state.seams) {
     expect(rendered.seams).toContainEqual({ id: seam.id, x: seam.x, z: seam.z, visual: seam.id });

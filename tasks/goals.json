@@ -3028,7 +3028,8 @@
               "id": "deploy-mirror-allowlist",
               "title": "The droplet mirror ships the runtime set and nothing else - rsync allowlist (not denylist), protected box-local paths, a guard deriving the runtime import closure, decoy dry-run fixture; the post-sync weight gauge tightened",
               "taskFile": "deploy-mirror-allowlist.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "1aeb17b727cfd92ec36510343529ab7b975340d2",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-02",
               "note": "Owner: how can we make sure the next sync/deploy will not result in the same issue? Layer 1 (attended, live): the deploy logs the mirror weight after every sync and shouts MIRROR-BLOAT past 2,500 MB. Layer 2 (this master): structural - nothing outside the allowlist can ship. Queued behind engine-surface-narrowing on lane-d."
