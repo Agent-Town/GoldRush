@@ -1,4 +1,4 @@
-import { PLAYBOOK_STEP_SECONDS } from '../playbook/PlaybookFormat';
+import { PLAYBOOK_STEP_SECONDS, isAgentOrdersAction } from '../playbook/PlaybookFormat';
 import {
   RUN_TAPE_SIM_VERSION,
   readRunTapes,
@@ -7,7 +7,7 @@ import {
 } from '../game/RunTape';
 import { isolateProfileStorage } from '../game/ProfileStorage';
 import type { AgentTapeReplaySnapshot } from '../replay/AgentTapeReplay';
-import { renderTrueReel } from './TrueReelRenderer';
+import { renderTrueReel, renderTrueReelGround, updateTrueReel } from './TrueReelRenderer';
 
 export const LANTERN_VERSION_REFUSAL =
   'This projectionist cannot thread a reel cut for another machine. The show stays dark, but the reel remains on the shelf.';
@@ -220,6 +220,7 @@ type LanternShowActions = {
 export class LanternShow {
   private readonly root = document.createElement('section');
   private readonly card: HTMLElement;
+  private readonly startedAt = performance.now();
   private state: LanternShowState;
   private drag: { id: number; x: number; y: number } | null = null;
 
@@ -266,6 +267,10 @@ export class LanternShow {
     this.card = this.root.querySelector<HTMLElement>('[data-testid="lantern-intertitle"]')!;
     this.root.addEventListener('click', this.onClick);
     const stage = this.root.querySelector<HTMLElement>('[data-lantern-pan]')!;
+    if (tape.inputLog.entries.some((entry) => entry.a.some(isAgentOrdersAction))) {
+      stage.innerHTML = renderTrueReelGround(tape.contract, tape.seed);
+      this.root.dataset.terrainReadyMs = String(Math.round(performance.now() - this.startedAt));
+    }
     stage.addEventListener('pointerdown', this.onPointerDown);
     stage.addEventListener('pointermove', this.onPointerMove);
     stage.addEventListener('pointerup', this.onPointerUp);
@@ -360,10 +365,15 @@ export class LanternShow {
     const stage = this.root.querySelector<HTMLElement>('[data-testid="lantern-true-stage"]');
     if (!stage) return;
     if (!snapshot) {
-      stage.innerHTML = '<p style="position:absolute;inset:42% 0 auto;text-align:center;font-size:22px">Winding the true reel...</p>';
+      if (!stage.querySelector('[data-testid="lantern-true-world"]')) {
+        stage.innerHTML = '<p style="position:absolute;inset:42% 0 auto;text-align:center;font-size:22px">Winding the true reel...</p>';
+      }
       return;
     }
-    stage.innerHTML = renderTrueReel(snapshot);
+    if (!updateTrueReel(stage, snapshot, this.tape.contract, this.tape.seed)) {
+      stage.innerHTML = renderTrueReel(snapshot, this.tape.contract, this.tape.seed);
+      this.root.dataset.terrainReadyMs = String(Math.round(performance.now() - this.startedAt));
+    }
   }
 
   dispose(): void {
