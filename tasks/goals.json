@@ -3077,7 +3077,8 @@
               "id": "reel-deep-links",
               "title": "watch opens THAT ride - plain-boot reel URLs (?watch=<reelId>) open the true show without debug; the landing links to them; a share control in the show",
               "taskFile": "reel-deep-links.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "9f863ea063557d7a63983f82f1ddf034d1625189",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "note": "Release audit: every landing watch link dumps the visitor at the profile prompt. Queued behind heat10-r2 on lane-b."
