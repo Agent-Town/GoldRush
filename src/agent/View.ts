@@ -1,4 +1,5 @@
 import { runStatSimHarness } from '../crafting/StatSimHarness';
+import engineEra from '../../assets/engine-era.json' with { type: 'json' };
 import { Balance } from '../game/Balance';
 import type { EconomyEvent } from '../game/Economy';
 import { summarizeRun } from '../game/RunManager';
@@ -23,6 +24,7 @@ export type AgentWaveLogEntry = {
 
 export type AgentView = {
   schema: 'goldrush.view.v1';
+  viewVersion: number;
   stablePrefix: {
     seed: string;
     contract: {
@@ -203,6 +205,7 @@ export function buildView(source: AgentViewSource): AgentView {
 
   return structuredClone({
     schema: 'goldrush.view.v1',
+    viewVersion: engineEra.viewSchema.version,
     stablePrefix: cache.stablePrefix,
     appendLog: cache.appendLog,
     now: buildNow(diagnostics, economyLog, orders, standingOrders, boundary),
