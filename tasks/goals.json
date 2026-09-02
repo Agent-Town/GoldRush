@@ -3818,10 +3818,13 @@
               "id": "view-schema-versioning",
               "title": "S2: the rider view is versioned, additive-only, stamped beside the engine hash (L3)",
               "taskFile": "view-schema-versioning.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-02",
+              "mergeHash": "7bf8318c6ce2c251fae5edab3041370f91cd55c6",
+              "drainedBy": "s2459",
+              "drainNotesS2459": "MERGED. s2458 gated it green but could not land it (live main-slot runner). s2459 re-landed on a main that had moved twice (b4d8e199c watchdog-self-check, 33e22d9c2 attended rulings), so s2458 merge classification had decayed and the gate was RE-RUN rather than inherited, in a detached worktree: tsc rc=0, build rc=0, view-schema-guard 3/3 + engine-era-guard 5/5 + health-watch-agents 2/2, 11 adjacent suites 100 pass 0 fail 142.1s -> 110 tests 110 pass 0 fail. TWO conflicts, both resolved by KEEPING BOTH SIDES: package.json test:node-guards (86 legs; the two sides were PROVEN to differ only by their one new leg each before resolving) and tasks/BACKLOG.md (all rows kept). Engine pin RE-MEASURED on the merged tree rather than inherited: 4082ebe4... exactly s2458 pin, and main own 30ae0a3c... also pinned, so no correction was owed. Review: reviews/view-schema-versioning.md (s2459 re-land addendum).",
               "drainNotes": "s2458: GATED GREEN, MERGE DEFERRED. Gated on the merged tree in a detached worktree (tsc rc=0, build rc=0, 46 adjacent tests 46 pass 0 fail); gated commit cf1e10a21 preserved as branch save/view-schema-gated-s2458. NOT merged: the main slot was held by a live runner (main--20260902-223733-watchdog-self-check, pid 71704 ALIVE) whose uncommitted package.json edit touches the same test:node-guards line this slice edits. Also cured F-2458-1: main was ALREADY outside era 5 before this slice (s2457 winnability-receipts rotated the corpus and its drain missed the pin append); the gated commit appends era-5 pins 30ae0a3c and 4082ebe4. Merge instructions + re-measure command in reviews/view-schema-versioning.md."
             },
             {

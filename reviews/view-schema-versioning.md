@@ -149,3 +149,86 @@ Trial merge onto `main` @ `719105ec3` was **clean** — `Auto-merging tasks/BACK
 4. `node --test scripts/engine-era-guard.test.mjs` must be **rc=0** before the merge commit is considered done.
 5. Flip the `view-schema-versioning` leaf to `merged` with the merge hash, in a following commit
    (a commit cannot contain its own hash), then run `npm run test:ledger-guards` as the last act.
+
+
+---
+
+## s2459 RE-LAND ADDENDUM — MERGED at `7bf8318c6`
+
+s2458 gated this slice green and deliberately did not merge it: the main slot was
+held by a live runner (pid 71704) whose uncommitted `package.json` edit touched
+the same `test:node-guards` line. That was the right call. By the time s2459 took
+the lock, main had moved **twice** — `b4d8e199c` (watchdog-self-check, drained
+this fire) and `33e22d9c2` (an attended session's owner rulings, landed mid-fire)
+— so **the merge classification above had decayed and the gate was RE-RUN rather
+than inherited**. A review's merge classification is perishable when a pile is
+drained in order.
+
+### Re-gate on the merged tree, in a detached worktree (§3.0b)
+
+| Leg | Result |
+|---|---|
+| `npx tsc --noEmit` | rc=0, clean |
+| `npm run build` | rc=0 |
+| `view-schema-guard` + `engine-era-guard` + `health-watch-agents` | **10 pass / 0 fail**, 3.3 s |
+| 11 adjacent suites (`battery-manifest`, `gate-caller-audit`, `run-guards`, `skillmd-guard`, `site-contract`, `worker-type-coverage`, `deploy-mirror-allowlist`, `agent-reels`, `agent-seat`, `assay-worker`, `assay-replay`) | **100 pass / 0 fail**, 142.1 s |
+| Re-check after the catch-up merge of `092cb938e` | **60 pass / 0 fail**, 6.3 s |
+| **Total** | **110 tests, 110 pass, 0 fail** |
+
+**The adjacent list is MINE, not s2458's.** Its eight were correct for its base;
+mine adds the three guards that parse the `test:node-guards` string in
+`package.json`, because that line is the one this re-land had to resolve by hand.
+
+**`test:node-guards` is not path-mandated and I say why rather than implying it**
+(F-1460-1): the diff touches `src/agent`, `src/game`, `src/replay`, `src/ui` —
+none of `src/sim`, `src/systems`, `src/entities`. The guards genuinely implicated
+were run directly.
+
+**Console / page errors: no boot probe run, and here is the reason rather than a
+hand-wave.** Three changed files are rendered surfaces (`src/game/Game.ts`,
+`src/ui/LanternShow.ts`, `src/replay/AgentTapeReplay.ts`), so s2458's "no
+rendered surface changes" is too loose a phrase for them. Read: Game.ts adds one
+field to tape `meta`; LanternShow widens a validator's allowed-key set and a
+type; AgentTapeReplay widens a key-shape test. **No draw call, no DOM, no CSS, no
+material, no shader.** The reel-watching path those files serve is exercised by
+`agent-reels` and `agent-seat`, both green above.
+
+### Conflicts — both resolved by KEEPING BOTH SIDES
+
+**`package.json`, the contention point s2458 named.** Main's side carried
+`scripts/health-watch-agents.test.mjs` (the watchdog slice, drained an hour
+earlier in this same fire); the branch carried `scripts/view-schema-guard.test.mjs`.
+Before resolving I **proved the two sides differ by nothing else**: stripping
+those two tokens makes the two strings byte-identical. The resolution keeps both
+— **86 legs** — verified by parsing the result and asserting both names are
+present, not by eyeballing the line.
+
+**`tasks/BACKLOG.md`.** Union; every row kept (the branch's view-schema row, the
+runner's watchdog row, this fire's shipped row).
+
+### The engine pin was RE-MEASURED, not inherited
+
+s2458 left a standing warning: *"this pin is only valid while main's corpus does
+not move."* Main moved twice, so I measured rather than reasoned:
+
+| Tree | `computeEngineHash` |
+|---|---|
+| merged | `4082ebe41a9c…4cbf` — **exactly s2458's appended pin**, and `engine-era.json`'s top-level `engineHash` already points to it |
+| main before the merge | `30ae0a3ce591…a926` — **also already pinned**, by s2458's repair append |
+
+**No pin correction was owed.** Why it held is worth writing down, because it is
+the opposite of the intuitive answer: neither intervening commit touched
+`ENGINE_SOURCE_INPUTS`. `b4d8e199c` touches `scripts/health-watch.sh`,
+`scripts/health-watch-agents.test.mjs` and `package.json` — and that corpus
+contains `scripts/assay-replay-agent.mjs` as a **single named file**, not
+`scripts/` as a directory, while F-2458-2 already measured that `package.json` is
+not in it at all. `33e22d9c2` touches only `specs/` and `tasks/`. **A fire that
+reasoned "I edited `scripts/`, so the hash rotated" would have appended a fourth
+pin for a hash that never moved** — and the registry is append-only, so that
+mistake is not reversible by editing. Measure the hash; never infer it from the
+shape of your own diff.
+
+### Salvage lifecycle
+
+`save/view-schema-gated-s2458` re-landed, so it is renamed
+`archive/view-schema-gated-s2458` in this same fire, per §2E.
