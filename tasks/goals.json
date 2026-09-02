@@ -3833,11 +3833,12 @@
               "id": "t3-refinery-ceremony",
               "title": "S6: T3 the Refinery megaproject + played ceremony, E3 to E4 (human path)",
               "taskFile": "t3-refinery-ceremony.md",
-              "status": "stopped",
+              "status": "superseded",
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-02",
-              "stopNote": "duplicate of shipped t3-refinery bc388f4c2 (valve ceremony already on main); caught by the pre-queue gate, retracted before dispatch"
+              "supersededBy": "t3-refinery",
+              "note": "authored 2026-09-02 as an S6 story slice; the pre-queue gate showed t3-refinery already MERGED bc388f4c2 (the valve ceremony); retracted before dispatch"
             },
             {
               "id": "era-mechanic-audit",
