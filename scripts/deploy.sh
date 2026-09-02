@@ -172,19 +172,93 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
     # take EnvironmentFile=/etc/goldrush-{assay,ledger}.env, outside the synced tree (runbook
     # :32,:60). Strictly subtractive, and it leaves the payload/allowlist fork (b)/(c) open.
     if ssh -o ConnectTimeout=8 -o BatchMode=yes root@<droplet> true 2>/dev/null; then
-      # F-DISK-0902: the droplet mirror is RUNTIME-ONLY. Review videos (3.3G), screenshots (1.5G), marketing (379M),
-      # the env dir (671M) and raw/motion/pilot art (5.7G) had been rsynced to a 24G box that only needs what the
-      # ledger+assayer import: src, scripts, functions, server, package files, assets/contracts|layer-contracts|
-      # crafting-queue and the one pilots subtree in ENGINE_SOURCE_INPUTS. Keep this list in step with that surface.
-      if rsync -az --delete --timeout=60 --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist --exclude 'gate-s*' --exclude reviews --exclude e1-review-video --exclude marketing --exclude env --exclude assets/raw --exclude assets/motion-pilot --exclude assets/contact-sheets --exclude assets/reference --include 'assets/pilots/map-rebuild-spike/***' --exclude 'assets/pilots/*' ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
+      # The mirror is a positive runtime allowlist. A sender-only final exclusion lets --delete
+      # remove receiver spillover while the protect rule keeps box-installed node_modules.
+      # MIRROR_FILTERS_BEGIN (parsed by deploy-mirror-allowlist.test.mjs)
+      MIRROR_FILTERS=(
+        "--filter=P /node_modules/***"
+        "--include=/scripts/"
+        "--include=/news/"
+        "--include=/lore/"
+        "--include=/assets/"
+        "--include=/assets/audio/"
+        "--include=/assets/audio/raw/"
+        "--include=/assets/raw/"
+        "--include=/assets/pilots/"
+        "--include=/assets/pilots/map-rebuild-spike/"
+        "--include=/assets/pilots/map-rebuild-spike/reconcile-late/"
+        "--include=/assets/pilots/*-3d/"
+        "--include=/assets/pilots/run3d/"
+        "--include=/src/***"
+        "--include=/scripts/assay-worker.mjs"
+        "--include=/scripts/assay-replay.mjs"
+        "--include=/scripts/assay-replay-agent.mjs"
+        "--include=/scripts/asset-diet.mjs"
+        "--include=/news/herald.json"
+        "--include=/lore/world-dispatches.md"
+        "--include=/functions/***"
+        "--include=/server/***"
+        "--include=/ops/***"
+        "--include=/site/***"
+        "--include=/public/***"
+        "--include=/assets/contracts/***"
+        "--include=/assets/layer-contracts/***"
+        "--include=/assets/crafting-queue/***"
+        "--include=/assets/charters/***"
+        "--include=/assets/audio/raw/*.mp3"
+        "--include=/assets/processed/***"
+        "--include=/assets/raw/boss-land-yacht.png"
+        "--include=/assets/raw/boss-land-yacht-damage.png"
+        "--include=/assets/raw/ceremony-stage-t*.png"
+        "--include=/assets/raw/plate-contract-*.png"
+        "--include=/assets/pilots/map-rebuild-spike/*.json"
+        "--include=/assets/pilots/map-rebuild-spike/*.mjs"
+        "--include=/assets/pilots/map-rebuild-spike/*.glb"
+        "--include=/assets/pilots/map-rebuild-spike/reconcile-late/*.json"
+        "--include=/assets/pilots/map-rebuild-spike/reconcile-late/*.mjs"
+        "--include=/assets/pilots/map-rebuild-spike/landmarks/***"
+        "--include=/assets/pilots/*-3d/*.e*.glb"
+        "--include=/assets/pilots/railcar-3d/railcar.glb"
+        "--include=/assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb"
+        "--include=/assets/pilots/ark-plaza-e10-3d/ark-plaza-e10.glb"
+        "--include=/assets/pilots/ark-deck-era-dressing-e10-3d/ark-deck-era-dressing-e10.glb"
+        "--include=/assets/pilots/old-digger-3d/old-digger.glb"
+        "--include=/assets/pilots/homemaker-9000-3d/homemaker-9000.glb"
+        "--include=/assets/pilots/crawler-3d/crawler.glb"
+        "--include=/assets/pilots/salvage-claw-3d/salvage-claw-detail-opus5.glb"
+        "--include=/assets/pilots/tavern-3d/town-v3-tavern.glb"
+        "--include=/assets/pilots/general-store-3d/general-store.glb"
+        "--include=/assets/pilots/claim-office-3d/claim-office.glb"
+        "--include=/assets/pilots/assay-office-3d/assay-office.glb"
+        "--include=/assets/pilots/chapel-3d/chapel.glb"
+        "--include=/assets/pilots/schoolhouse-3d/schoolhouse.glb"
+        "--include=/assets/pilots/stamp-mill-3d/stamp-mill.glb"
+        "--include=/assets/pilots/dynamo-hall-3d/dynamo-hall.glb"
+        "--include=/assets/pilots/town-plate-3d/town-plate.glb"
+        "--include=/assets/pilots/plaza-props-3d/*.e*.glb"
+        "--include=/assets/pilots/plaza-props-3d/era-props.e*.json"
+        "--include=/assets/pilots/plaza-props-3d/covered_wagon.glb"
+        "--include=/assets/pilots/plaza-props-3d/water_trough.glb"
+        "--include=/assets/pilots/plaza-props-3d/pan_monument.glb"
+        "--include=/assets/pilots/baron-props-3d/baron-props.glb"
+        "--include=/assets/pilots/run3d/*.glb"
+        "--include=/package.json"
+        "--include=/package-lock.json"
+        "--include=/tsconfig.json"
+        "--include=/vite.config.ts"
+        "--include=/index.html"
+        "--include=/assets/engine-era.json"
+        "--filter=-s *"
+      )
+      # MIRROR_FILTERS_END
+      if rsync -az --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ root@<droplet>:/opt/goldrush/ 2>/dev/null \
         && ssh -o BatchMode=yes root@<droplet> "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
-        # F-DISK-0902: measure what the mirror weighs after every sync. The runtime set is ~1 GB; anything
-        # past 2,500 MB means non-runtime content is shipping again (a new top-level dir the exclude
-        # list does not know) and is said out loud here and in the fire handoff that reads this log.
+        # F-DISK-0902: the first allowlisted sync measured 1,456 MB including protected node_modules;
+        # 2,184 MB is that measured runtime weight plus 50% headroom.
         MIRROR_MB="$(ssh -o BatchMode=yes root@<droplet> "du -sm /opt/goldrush 2>/dev/null | cut -f1" 2>/dev/null)"
         if [ -n "${MIRROR_MB:-}" ]; then
-          if [ "$MIRROR_MB" -gt 2500 ]; then note "MIRROR-BLOAT: /opt/goldrush is ${MIRROR_MB} MB after sync (ceiling 2500) — a non-runtime directory is shipping again; fix the rsync filter before the next deploy"; else note "mirror weight after sync: ${MIRROR_MB} MB"; fi
+          if [ "$MIRROR_MB" -gt 2184 ]; then note "MIRROR-BLOAT: /opt/goldrush is ${MIRROR_MB} MB after sync (ceiling 2184) — the runtime mirror exceeded its measured weight plus 50%; check the allowlist before the next deploy"; else note "mirror weight after sync: ${MIRROR_MB} MB"; fi
         fi
       else
         note "ASSAYER SYNC FAILED mid-step: droplet may be mixed-state — run the runbook sync by hand before trusting fresh verdicts"
