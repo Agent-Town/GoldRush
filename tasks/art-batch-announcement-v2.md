@@ -1,7 +1,8 @@
 # Task art-batch-announcement-v2: THREE NEW PANELS for the v2 announcement thread (ART SLOT, OWNER-PRIORITY)
 
 You are Codex with image_gen, running in the ART slot.
-CODEX: model=gpt-5.6-sol effort=high
+CODEX: model=gpt-5.6-terra effort=high
+RETRY 1 (attended 2026-09-02 15:3x): the first dispatch died at "Selected model is at capacity" on gpt-5.6-sol before any panel was drawn (run 20260902-152121, zero images); changed premise = the model line above. If terra reports capacity too, STOP and write the exact error into the report; do not loop.
 **GENERATOR: gpt-image-2 (owner directive 2026-09-02, verbatim: "You can use Codex to create new images using the GPT Image 2.0 model to improve things."). THREE panels, no more. The other v2 posts reuse shipped panels 02, 04, 05, 06, 07, 09 unchanged.**
 READ FIRST: `marketing/outbox/announcement-thread/THREAD-v2.md` (the posts these panels illustrate: Post 1, Post 5, Post 9) · `assets/raw/interview-cartoon-01.png`, `-02.png`, `-04.png`, `-05.png`, `-09.png` (THE CAST AS ALREADY DRAWN: condition every prompt on two of them for continuity) · `assets/raw/plate-contract-the-claim.png` + `plate-contract-e2-trestle.png` (THE VOICE anchors) · `assets/raw/char-prospector-portrait.png` + `turn-prospector.png` (the Prospector agent body) · the precedent run file `assets/raw/codex-art-run-art-batch-interview-cartoons.md` (its QA table is the bar).
 
