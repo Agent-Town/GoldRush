@@ -1,29 +1,47 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "d47f32f68edb5001dfa40687b5767872bf2045280cfb16d9434b2d2c0d8e2f0b",
+  "engineHash": "eaadcc383d5d16f20a0534c9d4824bee87cae916b94f6491bb8fe9055a39c78a",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "pins": [
     {
       "engineHash": "c0a015aed8285ebf05228ff1165395b86b9496d66af45e7c5b9c41d6bffc237b",
+      "aliases": [
+        "895ca0fe4bf718327d2bef695a5eb21602f3392521c83cc4e2ed745a8267bbdf"
+      ],
       "pinnedAt": "2026-08-31T13:37:49+07:00",
       "cause": "Era 5 declaration: replayability became a board and submission law; the Lantern Show gained dismissible refusal cleanup and live gold/health copy. Simulation behaviour did not change."
     },
     {
       "engineHash": "417ac150318346d52acf9658a6578bc1cc9d54d484c922e80fb6cb8965c3c864",
+      "aliases": [
+        "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
+      ],
       "pinnedAt": "2026-09-01",
       "cause": "door-dawn-fencepost merge b80253bff moved src/playbook/PlaybookFormat.ts (the inclusive-endpoint cure); the s2411 drain owed this append and missed it - heat 9 stopped on the gap"
     },
     {
       "engineHash": "25040ad58451125adfa7d1d6c19c70f40ce17cd8cc6d377134e0a545922ca2ca",
+      "aliases": [
+        "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
+      ],
       "pinnedAt": "2026-09-01",
       "cause": "fires guard-hygiene package.json edits (95b495e2b test-timeout, 19c19469a guard config) - package.json sits in ENGINE_SOURCE_INPUTS so factory tooling tweaks rotate the engine identity; behaviour unchanged"
     },
     {
       "engineHash": "d47f32f68edb5001dfa40687b5767872bf2045280cfb16d9434b2d2c0d8e2f0b",
+      "aliases": [
+        "a0b6b3b0782065a003911b961b4d8a3946e6b65ac67efbdcae7c42cb3e9dbef2"
+      ],
       "pinnedAt": "2026-09-02",
       "cause": "fires guard-hygiene package.json edits after c13b4c24 (8dbb5122a F-2424-1, b116a45be F-2433-1, 3d9484a61 F-2435-1) - tooling files inside ENGINE_SOURCE_INPUTS; behaviour unchanged. The surface narrowing (engine-surface-narrowing) ends this class."
+    },
+    {
+      "engineHash": "eaadcc383d5d16f20a0534c9d4824bee87cae916b94f6491bb8fe9055a39c78a",
+      "aliases": [],
+      "pinnedAt": "2026-09-02",
+      "cause": "engine identity narrowed to replay-bearing source and data; old-basis pins retain their new-basis aliases, and show/worker membership now accepts either basis"
     }
   ],
   "history": [

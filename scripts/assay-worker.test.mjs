@@ -154,7 +154,9 @@ test('an earlier pin in the current era remains assayable', async () => {
   const { directory: replayDirectory, stub } = await fixture();
   const workerDirectory = await mkdtemp(path.join(tmpdir(), 'assay-worker-lineage-'));
   const scripts = path.join(workerDirectory, 'scripts');
+  const replay = path.join(workerDirectory, 'src/replay');
   const earlierPin = 'a'.repeat(64);
+  const earlierAlias = 'b'.repeat(64);
   const unknownPin = '0'.repeat(64);
   const lineageRow = (id, engineHash) => {
     const candidate = row(`matching-round2-${id}`);
@@ -164,25 +166,28 @@ test('an earlier pin in the current era remains assayable', async () => {
   };
   const api = await mockApi([
     lineageRow('earlier-pin', earlierPin),
+    lineageRow('earlier-alias', earlierAlias),
     lineageRow('head-pin', engineEra.engineHash),
     lineageRow('unknown-pin', unknownPin),
   ]);
   try {
     await mkdir(scripts, { recursive: true });
+    await mkdir(replay, { recursive: true });
     await mkdir(path.join(workerDirectory, 'assets'));
     await copyFile(path.join(root, 'scripts/assay-worker.mjs'), path.join(scripts, 'assay-worker.mjs'));
     await copyFile(path.join(root, 'scripts/assay-replay-agent.mjs'), path.join(scripts, 'assay-replay-agent.mjs'));
+    await copyFile(path.join(root, 'src/replay/EngineEraLineage.mjs'), path.join(replay, 'EngineEraLineage.mjs'));
     await writeFile(path.join(workerDirectory, 'assets/engine-era.json'), JSON.stringify({
       ...engineEra,
       name: 'the Fixture Era',
-      pins: [{ engineHash: earlierPin }, { engineHash: engineEra.engineHash }],
+      pins: [{ engineHash: earlierPin, aliases: [earlierAlias] }, { engineHash: engineEra.engineHash, aliases: [] }],
     }));
     await symlink(path.join(root, 'node_modules'), path.join(workerDirectory, 'node_modules'), 'dir');
 
     const { code, stderr } = await runWorker(api.base, stub, ['--once'], path.join(scripts, 'assay-worker.mjs')).done;
     assert.equal(code, 0, stderr);
-    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['verified', 'verified', 'unassayable']);
-    assert.equal(api.posts[2].reason, `engine era ${engineEra.era} 'the Fixture Era', tape claims unknown pin ${unknownPin} in era ${engineEra.era}`);
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['verified', 'verified', 'verified', 'unassayable']);
+    assert.equal(api.posts[3].reason, `engine era ${engineEra.era} 'the Fixture Era', tape claims unknown pin ${unknownPin} in era ${engineEra.era}`);
   } finally {
     await api.close();
     await rm(replayDirectory, { recursive: true, force: true });

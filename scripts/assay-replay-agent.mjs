@@ -34,10 +34,6 @@ import { createServer } from 'vite';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const CANONICAL_ASSAY_NODE_VERSION = '26.4.0';
 export const ENGINE_SOURCE_INPUTS = [
-  'package-lock.json',
-  'package.json',
-  'tsconfig.json',
-  'vite.config.ts',
   'scripts/assay-replay-agent.mjs',
   'assets/contracts',
   'assets/crafting-queue/contract.v1.json',

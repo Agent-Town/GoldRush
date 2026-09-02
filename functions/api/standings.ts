@@ -4,6 +4,7 @@ import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'j
 import type { DifficultyPresetId } from '../../src/game/Balance';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
 import { CONTRACT_BUNDLES, runTapeEnvelopeForContract } from '../../src/playbook/PlaybookFormat';
+import { engineEraIncludes } from '../../src/replay/EngineEraLineage.mjs';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 import type { LedgerStorage } from './_accounts';
@@ -832,7 +833,7 @@ function currentLineageRefusal(tape: JsonRecord): string | null {
   if (meta.era !== engineEra.era) {
     return `This reel rode era ${meta.era}; the county accepts era ${engineEra.era} '${engineEra.name}'.`;
   }
-  return engineEra.pins.some((pin) => pin.engineHash === meta.engineHash)
+  return engineEraIncludes(engineEra, meta.engineHash)
     ? null
     : `This reel's engine pin is not recorded in era ${engineEra.era} '${engineEra.name}'.`;
 }
