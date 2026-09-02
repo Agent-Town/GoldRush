@@ -659,6 +659,36 @@ if (process.argv.includes('--json')) {
     `  EXPOSED (name IS on main, but these bytes are not): ${exposed.length} files, ${kb(total(exposed))}`,
   );
   list(exposed, (r) => `${r.name}  staging ${kb(r.size)} vs main ${kb(r.mainSize)}`);
+  // F-2451-1 (s2451): PRINT THE REMEDY BESIDE THE ALARM. This bucket named an
+  // owed act ("salvage them") and never named the tool that performs it, and
+  // `node scripts/salvage-art-staging.mjs` appears in NO law surface — measured
+  // s2451 across all six: its ONE mention in `scripts/fire.md` is F-2218-1
+  // citing this file's sibling as the subject of an unrelated census. The cost
+  // was 14 days: `worktrees/art/assets/LEDGER.md` sat here from s2066 (61 KB)
+  // to s2451 (62 KB) while every dry-board fire correctly REPORTED it and none
+  // could act. The alarm was never wrong — it was unactionable.
+  //
+  // EXPOSED is why the obvious reading is worse than useless: those files have
+  // a name main already tracks, so "salvage them" reads as "commit it", and
+  // committing this one would have clobbered main's 249 KB ledger with a
+  // DIFFERENT 62 KB document. A careful fire correctly refuses the destructive
+  // act and then has nowhere to go. The remedy tool never touches main (it
+  // writes a save/* ref through a throwaway GIT_INDEX_FILE), which is exactly
+  // the fact a fire needs at this moment and could not get here.
+  //
+  // Conditional on a NON-EMPTY bucket on purpose: F-2208-1 governs DECLARATIONS
+  // ("did I actually look?"), whose failure is silent, and this file already
+  // prints one of those always-on a few lines below. A REMEDY is not a
+  // declaration — printing "here is how to salvage" under `AT RISK 0` is the
+  // noise that decays a line into a formality (the F-2366-1 restraint).
+  if (atRisk.length > 0) {
+    console.log(
+      '  ➡️  REMEDY — ends the exposure WITHOUT touching main or its working tree:\n' +
+        '        node scripts/salvage-art-staging.mjs save/art-staging-s<N>\n' +
+        '      then push it, or these bytes merely move to LOCAL-ONLY (F-1055-1):\n' +
+        '        git push origin save/art-staging-s<N>',
+    );
+  }
   console.log(
     `\nLOCAL-ONLY (in git HERE, but on no origin ref — one push from safe): ${localOnly.length} files, ${kb(total(localOnly))}`,
   );
