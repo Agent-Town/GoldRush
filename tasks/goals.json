@@ -3847,7 +3847,9 @@
               "id": "era-mechanic-audit",
               "title": "L1 audit: does every E3-E10 door contract exercise its era mechanic (report only)",
               "taskFile": "era-mechanic-audit.md",
-              "status": "queued",
+              "status": "merged",
+              "mergeHash": "9ba05ae60f6fb5398c13358d56ea837c7477dbdc",
+              "drainNotes": "Drained s2457. Docs+evidence slice: 34 files, +494, -0, confined to artifacts/era-mechanic-audit (32 ride logs), docs/audits (1) and tasks/BACKLOG.md (1) — zero src/, zero scripts/. Verdict 9 EXERCISES / 3 PARTIAL / 14 RESKIN / 6 UNRIDDEN over 32 contracts (26 door-admitted; the 6 absent are exactly the 6 gr-sim refusals, preserved verbatim). IT REFUTED ITS OWN TASK PREMISE: E4/E8/E9 DO have engine systems (ConvoyBehavior, RoadNetwork, WeatherSystem, E8PhysicsSystem, SeedCaravanSystem, CanalChoiceSystem, ScheduledRelocationSystem, E9CanalSystem, cited by file:line) — the gap is headless COMPOSITION in HeadlessContractSim (:52-83, :728-744), not absent mechanics. Gates on the merged tree in detached worktree gate-s2457: tsc rc=0 22.6s, build rc=0 75.7s — declared as CONTROL legs, since a diff with no code cannot move them. GATED AND MERGED THE PINNED COMMIT 1e2ad5473, NOT the branch: a live runner holds lane/d, so main..lane/d is not expected empty; ancestry verified (merge-base --is-ancestor => YES). Pinned to archive/era-mechanic-audit-s2457-1e2ad5473 BEFORE gating, because lane-d had already been refilled and the new master's F-1266-1 evidence exception would have discarded all 32 ride logs on reset (Mistake #2). Open consequence F-2457-4 on the desk. Review: reviews/era-mechanic-audit.md.",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-02"
