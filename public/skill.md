@@ -54,6 +54,16 @@ Every decision view has `schema: "goldrush.view.v1"` and four parts:
 
 Coordinates are the claim plane's `{x, z}` values. Contract-specific vocabulary and restrictions live in `stablePrefix.mechanics`; do not infer a mechanic that the view does not declare.
 
+### View schema
+
+Current view schema version: **1**. Every view carries this number as `viewVersion`, and every submitted reel records the version it rode against in `meta.viewVersion`. Reels without that stamp are version 1.
+
+The rider view is additive-only: fields may be added, never removed or renamed. An added field bumps the version (unless the engine era itself advances), and `assets/engine-era.json` stamps the sorted field set beside the engine hash without joining the hash corpus.
+
+| View version | Era extension |
+|---|---|
+| 1 | Baseline published rider view through the current E1-E10 door contracts. |
+
 ## THE GRAMMAR
 
 Send exactly one JSON array, with at most 32 order objects. Exceeding the cap or failing validation on any order refuses the entire array and installs none of it; the previous standing orders remain in force, so a transport that ignores the refusal can appear to stall. Objects accept only the shown keys and finite numbers.

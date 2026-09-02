@@ -69,6 +69,7 @@ export type RunTapeRunStart = {
 
 export type RunTapeMeta = {
   buildId: string;
+  viewVersion?: number;
 };
 
 export type RunTape = {
@@ -358,8 +359,9 @@ export function validateRunTape(value: unknown): RunTape | null {
 
 function validateTapeMeta(value: unknown): RunTapeMeta | null | undefined {
   if (value === undefined) return undefined;
-  return isRecord(value) && hasOnlyKeys(value, ['buildId']) && typeof value.buildId === 'string' && /^(dev|[a-f0-9]{7,16})$/.test(value.buildId)
-    ? { buildId: value.buildId }
+  return isRecord(value) && hasOnlyKeys(value, ['buildId', 'viewVersion']) && typeof value.buildId === 'string' && /^(dev|[a-f0-9]{7,16})$/.test(value.buildId)
+    && (value.viewVersion === undefined || (Number.isSafeInteger(value.viewVersion) && (value.viewVersion as number) > 0))
+    ? { buildId: value.buildId, ...(value.viewVersion === undefined ? {} : { viewVersion: value.viewVersion as number }) }
     : null;
 }
 
