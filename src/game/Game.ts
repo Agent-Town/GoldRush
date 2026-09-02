@@ -487,7 +487,7 @@ export class Game {
   private readonly agentRiderViewState = new Map<string, { wave: number; needsRider: boolean; pendingSecure: boolean; terminal: boolean; sentAt: number }>();
   private readonly agentRiderViewSources = new Map<string, AgentViewSource>();
   private agentRiderViewSequence = 0;
-  private agentRiderTerminal: { reason: RunEndReason; wave: number } | null = null;
+  private agentRiderTerminal: { reason: RunEndReason | 'preserve_fell'; wave: number } | null = null;
   private readonly actorWeapons = new Map<Hero, HeroWeapon>();
   // Playbook engine (PB-01/PB-02, ?debug-only surface): the recorder pins the
   // solo session to the lockstep intent seam; the replay session drives a
@@ -734,6 +734,9 @@ export class Game {
   private readonly tileStateStore = new TileStateStore(safeLocalStorage());
   private readonly activeContract = bornContract(this.tileStateStore);
   private readonly offeredBuildables = mechanicsBuildableIds(this.activeContract);
+  private readonly preserveTarget = createPreserveTarget(this.activeContract);
+  private readonly preserveVisual = this.preserveTarget ? createPreserveVisual(this.preserveTarget) : null;
+  private preserveFell = false;
   // A4 (door-completion-sheet §A4, RATIFIED 2026-08-20). ONE consumer per run, shared by the
   // three gate sites below, so its refusal counters are the run's real total and not three
   // partial tallies. Built off the CONTRACT, never the epoch — A6 reuses it from E8.
@@ -1379,7 +1382,9 @@ export class Game {
   };
   private readonly wreckerContext = {
     nearestBuilding: (from: THREE.Vector3) =>
-      this.waveSystem.preferredEscortTarget(from) ?? this.preferredTramEscortSpanTarget() ?? this.goldTargeting.nearestBuilding(from),
+      this.preserveTarget?.active
+        ? this.preserveTarget
+        : this.waveSystem.preferredEscortTarget(from) ?? this.preferredTramEscortSpanTarget() ?? this.goldTargeting.nearestBuilding(from),
     hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget, amount?: number) => this.combat.handleBuildingHit(enemy, target, amount),
     palisadeRoute: (from: THREE.Vector3, to: THREE.Vector3, clearance: number) => this.buildSystem.palisadeRoute(from, to, clearance),
   };
@@ -1479,7 +1484,12 @@ export class Game {
       () => this.activeContract,
       this.boot,
       () => !isStealDisabled() && this.hasBuiltStockpile(),
-      () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active || this.ferrisWheel?.target.active === true),
+      () => !isWreckDisabled() && (
+        this.preserveTarget?.active === true
+        || this.buildSystem.hasAnyBuildable
+        || this.megaprojectTarget.active
+        || this.ferrisWheel?.target.active === true
+      ),
       () => this.liveThiefCount(),
       () => this.territoryRingPresent,
       this.heroStart,
@@ -1549,6 +1559,11 @@ export class Game {
       // Every contract that declares no canal choices answers `true` and is unchanged.
       (x, z) => this.canalChoices?.worksAllowed(x, z) ?? true,
     );
+    if (this.preserveTarget) {
+      this.goldTargeting.registerBuilding(this.preserveTarget);
+      this.combat.registerBuildingDamageResolver((target, amount) =>
+        target === this.preserveTarget ? this.damagePreserve(amount) : this.buildSystem.resolveBuildingDamage(target, amount));
+    }
     this.pressureSystem = new PressureSystem(
       this.economy,
       this.buildSystem.boilerHouses,
@@ -1834,7 +1849,7 @@ export class Game {
     // Write-at-end law: staged tile-state entries land when the run ends, whatever ended it.
     this.events.on('run_ended', (event) => {
       this.agentRiderTerminal = {
-        reason: event.reason,
+        reason: this.preserveFell ? 'preserve_fell' : event.reason,
         wave: event.summary.deepestWave ?? event.summary.wavesSurvived,
       };
       this.tileStateStore.commitAtRunEnd();
@@ -2012,7 +2027,9 @@ export class Game {
       (staticStageDebug || this.activeContract.id === 'e10-last-claim') && finaleTile.tileId === 'ark-plaza-e10',
       (x, z, base) => Terrain.visualY(x, z, base),
       (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
-      () => this.runManager?.secureCurrentRun(this.secureWaveForRun()),
+      () => {
+        if (!this.preserveTarget) this.runManager?.secureCurrentRun(this.secureWaveForRun());
+      },
     );
     this.mountTileStateRenderEntries();
     const renderParams = new URLSearchParams(window.location.search);
@@ -2627,6 +2644,7 @@ export class Game {
     this.devilsAlleyPresentation?.dispose();
     this.e10FinaleSystem.dispose();
     this.e10StaticBoss.dispose();
+    if (this.preserveVisual) disposeObject3D(this.preserveVisual);
     this.e7ArsenalSystem.dispose();
     this.e8ArsenalSystem.dispose();
     this.crawlerBoss.dispose();
@@ -4480,6 +4498,7 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    if (this.preserveVisual) this.scene.add(this.preserveVisual);
     this.createHollowCrossingVisuals();
     this.damSurge = new DamSurgeEvent(
       this.actors,
@@ -5403,6 +5422,7 @@ export class Game {
       devilsAlleyPresentation: this.devilsAlleyPresentation?.diagnostics ?? null,
       e10Finale: this.e10FinaleSystem.diagnostics(),
       e10Static: this.e10StaticBoss.diagnostics(),
+      preserve: this.preserveDiagnostics(),
       e7Signal: this.e7SignalSystem.diagnostics,
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
@@ -5411,20 +5431,23 @@ export class Game {
       broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
       lowOrbit: this.lowOrbit.diagnostics,
       hollowCrossing: this.hollowCrossing.diagnostics,
-      run: this.runManager?.diagnostics ?? {
-        secured: false,
-        rush: false,
-        lastRunEndedReason: null,
-        meta: null,
-        victoryPayout: null,
-        suspend: {
-          hasSuspend: false,
-          restored: false,
-          restoredWave: null,
-          lastWriteAt: null,
-          lastWriteMs: null,
-          sizeBytes: 0,
-        },
+      run: {
+        ...(this.runManager?.diagnostics ?? {
+          secured: false,
+          rush: false,
+          lastRunEndedReason: null,
+          meta: null,
+          victoryPayout: null,
+          suspend: {
+            hasSuspend: false,
+            restored: false,
+            restoredWave: null,
+            lastWriteAt: null,
+            lastWriteMs: null,
+            sizeBytes: 0,
+          },
+        }),
+        ...(this.preserveFell ? { lastRunEndedReason: 'preserve_fell' } : {}),
       },
       contract: {
         ...activeContractDiagnostics(),
@@ -5791,7 +5814,7 @@ export class Game {
   }
 
   autoSecureWaveForRun(): number {
-    if (this.e10StaticBoss.diagnostics().enabled && !this.e10StaticBoss.receded) return Number.MAX_SAFE_INTEGER;
+    if (!this.preserveTarget && this.e10StaticBoss.diagnostics().enabled && !this.e10StaticBoss.receded) return Number.MAX_SAFE_INTEGER;
     // The fairground has two clauses now, and they are different in kind. The WHEEL clause is the
     // loss rule and is unchanged: a stopped dynamo never restarts, so the run is over. The FLOCK
     // clause is the ratified objective (door-completion sheet A1) and is only unfinished: the
@@ -5816,8 +5839,32 @@ export class Game {
       // every contract that declares no discharge-able front, so nothing else moves.
       || !this.interferenceFront.objectiveAllowsSecure
       || !this.showroomCaptureObjective.objectiveAllowsSecure
+      || (this.preserveTarget !== null && !this.preserveTarget.active)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
+  }
+
+  private preserveDiagnostics(): { hp: number; maxHp: number; alive: boolean } | null {
+    return this.preserveTarget
+      ? {
+          hp: Math.round(this.preserveTarget.hp * 1000) / 1000,
+          maxHp: this.preserveTarget.maxHp,
+          alive: this.preserveTarget.active && this.preserveTarget.hp > 0,
+        }
+      : null;
+  }
+
+  private damagePreserve(amount: number) {
+    const target = this.preserveTarget!;
+    const damage = Math.max(0, amount);
+    target.hp = Math.max(0, target.hp - damage);
+    if (target.hp === 0) {
+      target.active = false;
+      this.preserveFell = true;
+      this.preserveVisual!.visible = false;
+      this.deathPending = true;
+    }
+    return { applied: damage > 0, family: target.family, index: target.index, hp: target.hp, maxHp: target.maxHp, wrecked: !target.active };
   }
 
   private runWasSecured(wavesSurvived: number): boolean {
@@ -8116,6 +8163,13 @@ export class Game {
     this.hollowCrossing.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
+    if (this.preserveTarget) {
+      this.preserveTarget.hp = this.preserveTarget.maxHp;
+      this.preserveTarget.active = true;
+      this.preserveFell = false;
+      this.preserveVisual!.visible = true;
+      this.goldTargeting.registerBuilding(this.preserveTarget);
+    }
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();
@@ -9985,6 +10039,65 @@ function buildableIdFromString(value: string): BuildableId | null {
 
 function buildingNeedsRepair(entry: { hp: number; maxHp: number; wrecked: boolean }, repairUnderPct: number): boolean {
   return entry.maxHp > 0 && (entry.wrecked || (entry.hp > 0 && (entry.hp / entry.maxHp) * 100 < repairUnderPct));
+}
+
+function createPreserveTarget(contract: ContractManifest): BuildingTarget | null {
+  const preserve = contract.twist.preserve;
+  return preserve
+    ? {
+        id: `preserve:${preserve.work}`,
+        family: preserve.work,
+        index: 0,
+        position: new THREE.Vector3(preserve.position.x, 0, preserve.position.z),
+        halfX: 1,
+        halfZ: 1,
+        active: true,
+        hp: preserve.hp,
+        maxHp: preserve.hp,
+        reachRadius: 1.4,
+      }
+    : null;
+}
+
+function createPreserveVisual(target: BuildingTarget): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'Preserve.warm_vent';
+  group.position.set(target.position.x, Terrain.visualY(target.position.x, target.position.z, 0), target.position.z);
+  const stone = new THREE.MeshStandardMaterial({ color: '#493b33', roughness: 0.9 });
+  const warmth = new THREE.MeshStandardMaterial({ color: '#ffb34d', emissive: '#ff6a24', emissiveIntensity: 2.4, roughness: 0.35 });
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(1.25, 1.5, 0.6, 12), stone);
+  base.position.y = 0.3;
+  const glow = new THREE.Mesh(new THREE.SphereGeometry(0.9, 16, 10), warmth);
+  glow.scale.y = 0.55;
+  glow.position.y = 0.85;
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(1.15, 0.18, 8, 20), warmth);
+  rim.rotation.x = Math.PI / 2;
+  rim.position.y = 0.68;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 256;
+  canvas.height = 64;
+  const context = canvas.getContext('2d');
+  if (context) {
+    context.fillStyle = 'rgba(29, 19, 14, 0.86)';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.strokeStyle = '#ffb34d';
+    context.lineWidth = 4;
+    context.strokeRect(2, 2, canvas.width - 4, canvas.height - 4);
+    context.fillStyle = '#fff0c7';
+    context.font = 'bold 28px sans-serif';
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText('WARM VENT', canvas.width / 2, canvas.height / 2 + 1);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const tag = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture, depthTest: false }));
+  tag.position.y = 2.25;
+  tag.scale.set(4.5, 1.125, 1);
+  tag.renderOrder = RenderLayers.worldUi;
+  group.add(base, glow, rim, tag);
+  return group;
 }
 
 function browserMegaprojectStorage(): MegaprojectStorage | undefined {
