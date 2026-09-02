@@ -32,6 +32,8 @@ type ScoreRow = {
   timeAlive: number;
   gold: number;
   baseValue: number;
+  preserveWavesAlive?: number;
+  preserveHpFraction?: number;
 };
 
 type SeedMode = 'live' | 'bench';
@@ -113,6 +115,9 @@ type BoardGroup = { contracts: Map<string, unknown>; aggregate: GroupAggregate }
 const CONTRACT_EPOCHS = new Map(
   CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts.map((contract) => [contract.id, bundle.epochId] as const)),
 );
+const PRESERVE_CONTRACTS = new Set(CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
+  .filter((contract) => 'preserve' in contract.twist)
+  .map((contract) => contract.id)));
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 export const MAX_JSON_BYTES = Math.max(...CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
   .map((contract) => runTapeEnvelopeForContract(contract.id).maxTapeBytes))) + 44 * 1024;
@@ -135,7 +140,7 @@ const STACK_COST_FIELDS = ['tokensIn', 'tokensOut', 'calls'] as const;
 const STACK_KEYS = new Set<string>([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source']);
 const STORED_STACK_KEYS = new Set([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source', 'declaredBy']);
 const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack', 'party', 'tape']);
-const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue']);
+const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue', 'preserveWavesAlive', 'preserveHpFraction']);
 const PARTY_KEYS = new Set(['riderCount', 'riders']);
 const RIDER_KEYS = new Set(['name', 'stack']);
 // Two riders is the smallest posse; four is the lockstep slot ceiling the tape format already
@@ -282,7 +287,7 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     if (replayedHash !== null) row.assayHash = replayedHash;
     delete row.assayReason;
     if ((body.verdict === 'rejected' || body.verdict === 'unassayable') && reason) row.assayReason = reason;
-    const next = retainUnranked(rows);
+    const next = retainUnranked(rows, locator.contractId);
     await kv.put(boardKey(locator.epochId, locator.contractId), JSON.stringify(next));
     await syncAssayBoardIndex(kv, locator.epochId, locator.contractId, next);
     return json(cors, { ok: true, locator, assay: row.assay });
@@ -329,7 +334,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
       return error(cors, 400, 'bad_view', 'Field book view not accepted.');
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? rankedRows(await readBoard(kv, epochId, contractId, true, season)) : []] as const));
+    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? rankedRows(await readBoard(kv, epochId, contractId, true, season), contractId) : []] as const));
     const frontiers = frontierDecisionMap(boards);
     if (view === 'byParty') {
       return json(cors, {
@@ -436,7 +441,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   // param is the solo board — which is byte-identical to the board this endpoint served before.
   const partySize = partyParam === null || partyParam === 'solo' ? 1 : Number(partyParam);
   const partition = rows.filter((row) => (row.party?.riderCount ?? 1) === partySize);
-  const ranked = rankedRows(partition);
+  const ranked = rankedRows(partition, contractId);
   const board = ranked.map(boardRow);
   const rejectedCount = partition.filter((row) => row.assay === 'rejected'
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
@@ -468,6 +473,8 @@ function boardRow(row: StoredRow, index: number): JsonRecord {
     timeAlive: row.timeAlive,
     gold: row.gold,
     baseValue: row.baseValue,
+    ...(row.preserveWavesAlive === undefined ? {} : { preserveWavesAlive: row.preserveWavesAlive }),
+    ...(row.preserveHpFraction === undefined ? {} : { preserveHpFraction: row.preserveHpFraction }),
     assay: row.assay,
     difficulty: row.difficulty,
     ...(Number.isFinite(row.submittedAt) && row.submittedAt >= 0 ? { submittedAt: row.submittedAt } : {}),
@@ -555,6 +562,8 @@ function showing(row: StoredRow, contractId: string, frontiers: ReadonlyMap<stri
       timeAlive: row.timeAlive,
       gold: row.gold,
       baseValue: row.baseValue,
+      ...(row.preserveWavesAlive === undefined ? {} : { preserveWavesAlive: row.preserveWavesAlive }),
+      ...(row.preserveHpFraction === undefined ? {} : { preserveHpFraction: row.preserveHpFraction }),
     },
     difficulty: row.difficulty,
     submittedAt: row.submittedAt,
@@ -735,22 +744,22 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   const standingKind = party?.riderCount ?? 1;
   const sameStanding = (row: StoredRow) => row.anonId === anonId && (row.party?.riderCount ?? 1) === standingKind;
   const prior = current.find((row) => sameStanding(row) && (tape ? isRankedRow(row) : row.tape === undefined));
-  const kept = prior && compareScores(prior, candidate) < 0 ? prior : candidate;
+  const kept = prior && compareScores(prior, candidate, contractId) < 0 ? prior : candidate;
   const next = retainUnranked([
     ...current.filter((row) => !sameStanding(row) || (!tape && row.tape !== undefined)),
     kept,
-  ]);
+  ], contractId);
   // ponytail: KV read-modify-write; move this board to a Durable Object if concurrent submissions measurably collide.
   await kv.put(key, JSON.stringify(next));
   if (tape && kept === candidate) await syncAssayBoardIndex(kv, epochId, contractId, next);
-  const index = rankedRows(next).indexOf(kept);
+  const index = rankedRows(next, contractId).indexOf(kept);
   return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null });
 }
 
 async function readBoard(kv: StandingsStorage, epochId: string, contractId: string, tolerateFailure = false, season: number = CURRENT_SEASON): Promise<StoredRow[]> {
   try {
     const parsed = JSON.parse((await kv.get(boardKey(epochId, contractId, season))) ?? '[]') as unknown;
-    return Array.isArray(parsed) ? retainUnranked(parsed.map((row) => validateStoredRow(row, contractId)).filter((row): row is StoredRow => row !== null)) : [];
+    return Array.isArray(parsed) ? retainUnranked(parsed.map((row) => validateStoredRow(row, contractId)).filter((row): row is StoredRow => row !== null), contractId) : [];
   } catch {
     if (tolerateFailure) return [];
     throw new HttpError(503, 'board_unavailable', 'The county book is unavailable.');
@@ -765,6 +774,8 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     timeAlive: value.timeAlive,
     gold: value.gold,
     baseValue: value.baseValue,
+    preserveWavesAlive: value.preserveWavesAlive,
+    preserveHpFraction: value.preserveHpFraction,
   });
   const profileName = cleanName(value.profileName);
   if (!score || typeof value.anonId !== 'string' || !ANON_ID.test(value.anonId)) return null;
@@ -815,8 +826,8 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   };
 }
 
-function rankedRows(rows: StoredRow[]): StoredRow[] {
-  return rows.filter(isRankedRow).sort(compareScores).slice(0, MAX_ROWS);
+function rankedRows(rows: StoredRow[], contractId: string): StoredRow[] {
+  return rows.filter(isRankedRow).sort((a, b) => compareScores(a, b, contractId)).slice(0, MAX_ROWS);
 }
 
 function isRankedRow(row: StoredRow): boolean {
@@ -838,8 +849,8 @@ function currentLineageRefusal(tape: JsonRecord): string | null {
     : `This reel's engine pin is not recorded in era ${engineEra.era} '${engineEra.name}'.`;
 }
 
-function retainUnranked(rows: StoredRow[]): StoredRow[] {
-  const ranked = rankedRows(rows);
+function retainUnranked(rows: StoredRow[], contractId: string): StoredRow[] {
+  const ranked = rankedRows(rows, contractId);
   const unranked = rows.filter((row) => !isRankedRow(row))
     .sort((a, b) => b.submittedAt - a.submittedAt)
     .slice(0, MAX_ROWS);
@@ -847,7 +858,15 @@ function retainUnranked(rows: StoredRow[]): StoredRow[] {
 }
 
 function scoreOf(row: ScoreRow): ScoreRow {
-  return { secured: row.secured, waves: row.waves, timeAlive: row.timeAlive, gold: row.gold, baseValue: row.baseValue };
+  return {
+    secured: row.secured,
+    waves: row.waves,
+    timeAlive: row.timeAlive,
+    gold: row.gold,
+    baseValue: row.baseValue,
+    ...(row.preserveWavesAlive === undefined ? {} : { preserveWavesAlive: row.preserveWavesAlive }),
+    ...(row.preserveHpFraction === undefined ? {} : { preserveHpFraction: row.preserveHpFraction }),
+  };
 }
 
 function assayRowId(row: StoredRow): string {
@@ -924,13 +943,30 @@ function validateScore(value: unknown): ScoreRow | null {
   const timeAlive = numberInRange(value.timeAlive, 0, 24 * 60 * 60);
   const gold = integerInRange(value.gold, 0, 1_000_000_000);
   const baseValue = integerInRange(value.baseValue, 0, 1_000_000_000);
+  const preserveWavesAlive = value.preserveWavesAlive === undefined ? undefined : integerInRange(value.preserveWavesAlive, 0, 10_000);
+  const preserveHpFraction = value.preserveHpFraction === undefined ? undefined : numberInRange(value.preserveHpFraction, 0, 1);
   return waves === null || timeAlive === null || gold === null || baseValue === null
+    || preserveWavesAlive === null || preserveHpFraction === null
     ? null
-    : { secured: true, waves, timeAlive, gold, baseValue };
+    : {
+        secured: true,
+        waves,
+        timeAlive,
+        gold,
+        baseValue,
+        ...(preserveWavesAlive === undefined ? {} : { preserveWavesAlive }),
+        ...(preserveHpFraction === undefined ? {} : { preserveHpFraction }),
+      };
 }
 
-function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { submittedAt?: number }): number {
+export function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { submittedAt?: number }, contractId?: string): number {
   if (a.secured !== b.secured) return a.secured ? -1 : 1;
+  if (contractId && PRESERVE_CONTRACTS.has(contractId)) {
+    if (a.preserveWavesAlive !== b.preserveWavesAlive) return (b.preserveWavesAlive ?? -1) - (a.preserveWavesAlive ?? -1);
+    if (a.preserveHpFraction !== b.preserveHpFraction) return (b.preserveHpFraction ?? -1) - (a.preserveHpFraction ?? -1);
+    if (a.timeAlive !== b.timeAlive) return b.timeAlive - a.timeAlive;
+    return (a.submittedAt ?? 0) - (b.submittedAt ?? 0);
+  }
   if (a.waves !== b.waves) return b.waves - a.waves;
   if (a.baseValue !== b.baseValue) return b.baseValue - a.baseValue;
   if (a.timeAlive !== b.timeAlive) return b.timeAlive - a.timeAlive;
