@@ -76,6 +76,7 @@ import {
   appendRunTape,
   keepRunTape,
   readRunTapes,
+  runTapeRecordingMeta,
   runTapeEventLogHash,
   submittedRunTape,
   type RunTape,
@@ -6980,9 +6981,9 @@ export class Game {
       { slot: tape.inputLog.primarySlot, start: tape.inputLog.start, entries: tape.inputLog.entries },
       ...tape.inputLog.streams,
     ];
-    const agentTape = recordings.some((recording) =>
+    const hasAgentOrders = recordings.some((recording) =>
       recording.entries.some((entry) => entry.a.some(isAgentOrdersAction)));
-    if (agentTape) {
+    if (hasAgentOrders && tape.meta?.engineHash && tape.meta.era) {
       this.startTrueRunTapeReplay(tape);
       return;
     }
@@ -7010,11 +7011,8 @@ export class Game {
       };
       sessions.set(slot, new PlaybookReplaySession(
         playbook,
-        agentTape ? Number.POSITIVE_INFINITY : undefined,
+        undefined,
         true,
-        slot === tape.inputLog.primarySlot
-          ? (action) => { this.agentStub?.submitOrders(action.orders); }
-          : undefined,
       ));
       const actor = this.actors[slot]!;
       actor.group.visible = true;
@@ -7028,7 +7026,7 @@ export class Game {
     this.mpLocalSlot = tape.inputLog.primarySlot;
     this.mpActionSlot = 0;
     this.runTapeReplay = {
-      tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape, divergedAtWave: null,
+      tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape: false, divergedAtWave: null,
       trueDriver: null, snapshot: null, requestedTick: 0, requestPending: false, winding: false, eraRefusal: null,
     };
     this.replayCameraPan.set(0, 0, 0);
@@ -7042,7 +7040,7 @@ export class Game {
   }
 
   private startTrueRunTapeReplay(tape: RunTape): void {
-    const meta = tape.meta as { buildId: string; engineHash?: string; era?: number } | undefined;
+    const meta = tape.meta;
     const eraRefusal = !meta?.engineHash || meta.era !== engineEra.era || !engineEraIncludes(engineEra, meta.engineHash)
       ? { tapeHash: meta?.engineHash ?? `unstamped build ${meta?.buildId ?? 'unknown'}`, currentHash: engineEra.engineHash, tapeEra: meta?.era ?? null, currentEra: engineEra.era }
       : null;
@@ -7324,15 +7322,23 @@ export class Game {
 
   private startRunTape(): void {
     this.lastRunTape = null;
+    const suspended = readRunSuspend();
     this.runTapeRecorder = new RunTapeRecorder({
       contract: this.activeContract.id,
       seed: this.runSeed,
       difficulty: this.difficultyPreset,
-      meta: { buildId: __APP_BUILD__ },
+      meta: runTapeRecordingMeta(
+        localStorage,
+        this.activeContract.id,
+        { buildId: __APP_BUILD__, engineHash: engineEra.engineHash, era: engineEra.era },
+        suspended?.contractId === this.activeContract.id,
+      ),
       start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
       runStart: {
         meta: this.appliedMetaProgress,
-        research: this.researchState,
+        research: this.researchState.unlocks?.rocketCartCaptured
+          ? this.researchState
+          : { ...this.researchState, unlocks: {} },
       },
     });
   }

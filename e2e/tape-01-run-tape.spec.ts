@@ -6,6 +6,7 @@ import {
   appendRunTape,
   keepRunTape,
   readRunTapes,
+  runTapeRecordingMeta,
   runTapeEventLogHash,
   type RunTape,
   type RunTapeEventLog,
@@ -99,7 +100,9 @@ test('the keep result stays false when profile storage rejects the write', () =>
 });
 
 test('the recorder deduplicates routed actions and freezes the hash at its input ceiling', () => {
-  const recorder = new RunTapeRecorder({ contract: 'the-claim', seed: 'bounded', difficulty: 'trail', start: { x: 0, z: 12 } });
+  const meta = { buildId: 'deadbeef', engineHash: '1'.repeat(64), era: 5 };
+  const recorder = new RunTapeRecorder({ contract: 'the-claim', seed: 'bounded', difficulty: 'trail', start: { x: 0, z: 12 }, meta });
+  meta.engineHash = '2'.repeat(64);
   const action = { type: 'context_action', action: 'fund' } as const;
   recorder.recordAction(action);
   recorder.record(idleIntents, { x: 0, z: 12 }, [action]);
@@ -114,6 +117,15 @@ test('the recorder deduplicates routed actions and freezes the hash at its input
   expect(recorded.inputLog.entries[0]?.a).toEqual([action]);
   expect(recorded.inputLog.streams).toMatchObject([{ slot: 1, entries: [{ t: 0, mx: 1, my: 0 }] }]);
   expect(recorded.eventLogHash).toBe(runTapeEventLogHash(eventLog(1)));
+  expect(recorded.meta).toEqual({ buildId: 'deadbeef', engineHash: '1'.repeat(64), era: 5 });
+});
+
+test('a resumed recording keeps the engine stamp captured by the original build', () => {
+  const store = storage();
+  const oldMeta = runTapeRecordingMeta(store, 'the-claim', { buildId: 'deadbeef', engineHash: '1'.repeat(64), era: 5 }, false);
+  const resumedMeta = runTapeRecordingMeta(store, 'the-claim', { buildId: 'cafebabe', engineHash: '2'.repeat(64), era: 6 }, true);
+
+  expect(resumedMeta).toEqual(oldMeta);
 });
 
 async function prep(page: Page): Promise<void> {
