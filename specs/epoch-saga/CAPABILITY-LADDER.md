@@ -1,0 +1,59 @@
+# The Capability Ladder: the ten epochs as an eval ladder, the human path kept, and the laws that follow
+### Status: RATIFIED 2026-09-02 (owner ratified the six design calls and the E9 ruling; Q1-Q3 below batched) · attended session (Fable 5.1) · governs every epoch from E3 onward and amends BUILD-PLAN.md §6
+
+## 0. Why this spec exists (verified state, 2026-09-02, not inherited)
+The saga master plan (README.md, 2026-07-07) and BUILD-PLAN.md (2026-07-11) were written for a family game whose spine is megaproject, ceremony, town transform. What shipped since is a species-blind benchmark: one door, verified tapes, era lineage, a replayed board. Verified on main and on the live door today:
+- E2 is FINISHED (owner, 2026-08-22, verbatim: "yes, I want to admit it, E2 should be finished as well"; `reviews/e2-finished.md`, 4/4 maps through the door).
+- ALL TEN epochs have contracts admitted to the live door (`public/skill.md`): E1 six, E2 five, E3-E9 four each, E10 one (`e10-last-claim`). Thirty-nine ranked contracts.
+- Several "future" systems already exist in code: `src/systems/PowerGraph.ts` (E3, producer/relay/consumer/storage, brown-out and cut-wire states), `src/systems/PressureSystem.ts` + `PressureArsenalSystem.ts` (E2), `src/systems/DecaySystem.ts` (E6), `src/playbook/PlaybookFormat.ts` (E7), `src/meta/Megaproject.ts`. NOT verified: vehicles (E4), the boat (E5), gravity (E8), persistence (E9): treat as open.
+- What is NOT built for E3 onward is the story loop: ceremonies, town transforms, per-era art batches, beat tables.
+- Pace: E2's remainder took six weeks (2026-07-11 to 2026-08-22), not the "1-2 factory weeks" of BUILD-PLAN §6, because the same window built the door, the eras and the replayed board. §6 is amended in this commit.
+
+## 1. Owner directives (verbatim, 2026-09-02)
+- On the spec and the E9 fork: "Ok, please do that - E9, yes, that is the idea. I agree with your design calls."
+- On the human path: "I would love to be able to play the story as well - the Baron was only beaten after the agents saw my tape of beating it. They did not come up with a strategy on their own. So this is also important going forward that humans - and especially me - can test the game and ensure that things are working correctly and as intended."
+- On publishing and the arena: "I want to publish the first part now and lets see - maybe we find a community of users that start a battle between their agents and the players or in multiplayer even combinations of them."
+- Standing, still binding: the E2 railcar ruling (2026-08-13, "no, I did not have the weapons then"), the Q1-Q6 saga rulings of 2026-07-07, the one-town law and the Dredge-Queen act structure (2026-07-16).
+
+## 2. The ladder (the reframe)
+Each era's signature mechanic is a distinct reasoning problem for a rider. This table is the design brief for every era's door contracts: a contract that does not exercise its era's mechanic is a reskin, not an era.
+
+| Era | Mechanic | What it tests in a rider |
+|---|---|---|
+| E2 | pressure with hazard | resource management under vent-or-boom risk |
+| E3 | the grid under sabotage | defending a network, not a base; graph reasoning |
+| E4 | distance, roads, convoys | spatial planning at scale, intent-level control |
+| E5 | storms schedule the waves | prediction under adversarial weather |
+| E6 | everything decays | temporal reasoning; the patience win |
+| E7 | playbooks and the Echo | writing programs the sim executes; self-play against one's own tapes |
+| E8 | low gravity, air as wall | transfer under changed physics |
+| E9 | persistent tiles | long-horizon stewardship across runs |
+| E10 | preserve, don't extract | following a flipped objective over a trained habit |
+
+Two notes the plan did not know: (a) the era-5 replayed board already proved the determinism dividend E7 depends on, so the plan's "riskiest system" is de-risked more than §7 states; (b) E10's objective flip is the cleanest goal-generalization probe in the game and costs almost nothing to build.
+
+## 3. Laws (binding from this date)
+- **L1 THE LADDER LAW.** One era, one mechanic, one named reasoning problem (the table above). Every door contract of an era must exercise its mechanic; the era's review names how.
+- **L2 THE WINNABILITY LAW** (generalizes the 2026-08-13 railcar ruling): every door contract is winnable from its own starting kit, standalone, in a plain boot. A contract that fields a boss grants the means to beat it as a floor. Unwinnable-by-construction is a bug class, never a difficulty setting. The narrative reveal (earn the rockets by beating the Baron) stays intact for campaign flow; the floor is a floor, not a removal.
+- **L3 THE VIEW-SCHEMA LAW.** The JSON view a rider reads grows with every era. Extensions are ADDITIVE ONLY (never remove or rename a field), version-stamped in `assets/engine-era.json` beside the engine hash, and documented per era in `public/skill.md`. Today the view carries no schema version field (verified by grep of skill.md, 2026-09-02); S2 adds one.
+- **L4 THE HUMAN REFERENCE LAW** (owner, 2026-09-02, above). The story loop is the human path and is NEVER cut; every era's contracts are human-playable in a plain boot on the same door the agents use; the owner's played verdict stays an era GATE (BUILD-PLAN §2.4); the owner's tapes are reference tapes and live in the gauntlet almanac as the Baron tape does. The precedent is the ruling's own evidence: the Baron fell to agents only after they studied a human tape.
+- **L5 TWO SPINES, ONE ENGINE.** Per era, the order is: mechanic + door contracts first; ceremony, town, art and beats drip behind. Behind, never dropped (L4).
+- **L6 THE E9 STAGE LAW** (ruled 2026-09-02: "E9, yes, that is the idea"). Board contracts for E9 are STAGE contracts (C1, C2, C3) that start from CANONICAL initial-state snapshots, so "same contract, same seed" comparability holds on the standings. Persistence (canals stay dug, green spreads) is a PLAYER feature layered above, per profile. The persistence substrate (BUILD-PLAN §7.1) must be specced with "start from canonical snapshot" as a first-class operation.
+- **Ratified design calls** (owner: "I agree with your design calls"): E4 verbs stay intent-level ("drive to", "convoy along"), never tick-granular; E5's boat re-anchors DISCRETELY between waves, no continuous hull physics; BUILD-PLAN §6 throughput is rewritten with measured numbers (done in this commit).
+
+## 4. Slices (each ends in a playable checkpoint with its gate)
+1. **S1 WINNABILITY RECEIPTS + KIT GUARD** (fire-authorable, lane). (a) A ledger script derives, per door-admitted contract, its winnability receipt: the first VERIFIED secure on the standings (species, reel id, pin) or `unclaimed`. (b) A static guard reds when a contract's enemy roster includes a boss/elite class and its starting kit (plus contract-granted floors) contains no weapon that can damage that class: the railcar class can never recur silently. GATE: guard green on all thirty-nine contracts with the E2 railcar maps as the regression fixture; the receipts ledger lists every contract; `unclaimed` contracts surface on skill.md (Q3).
+2. **S2 VIEW-SCHEMA VERSIONING** (fire-authorable, lane). `engine-era.json` gains `viewSchema` (version + the field set); the JSON view carries `viewVersion`; a guard snapshots the field set per version and reds on any removal or rename; skill.md documents the per-era view extensions and L3. GATE: guard green; a mutation test proves a removed field reds and an added field passes; skill.md guards re-pinned.
+3. **S3 THE E10 OBJECTIVE FLIP** (attended spec-slice, then a master). `e10-last-claim` gets a real preserve objective (a preserved thing survives N waves; ranking on preservation, never gold, Q2). The E10 contracts on disk carry no preserve verb I could find (2026-09-02). GATE: a headless ride that keeps extracting loses; one that preserves secures; standings rank on the preservation score.
+4. **S4 THE ECHO FROM OWN REELS** (design note only, after the E7 mechanic proper): a rider's Echo instantiates from that rider's own verified reels, self-play against oneself.
+5. **S5 E9 STAGE SUBSTRATE** (attended spec, parked until E9's build; the ruling is recorded now so the substrate is specced right): canonical snapshot per stage contract; persistence layered per profile; suspend-safe, MP-reconciled.
+6. **S6 THE HUMAN PATH, E3** (attended + fires): the next story slice is E3's ceremony, beats and town pass; the owner plays the Canyon Works and the E3 ceremony as the era gate. Human reference tapes per era banked in the almanac.
+7. **S7 THE ARENA** (Q1): humans versus agents already share the door. Mixed parties in Ride Together still sit behind `?mp=dev` (`src/main.ts:240`). The co-op milestone's own gate ("after E2 ships", owner 2026-07-07) OPENED on 2026-08-22.
+
+## 5. Integration map
+Touches: `public/skill.md` (+ guards), `assets/engine-era.json` (+ `engine-era-guard.test.mjs`), a new winnability guard in `test:node-guards`, `assets/contracts/epoch-10-deepsky/contracts.json` (S3), `specs/epoch-saga/BUILD-PLAN.md` §6 (amended now). Untouched: sim mechanics, ranking (`functions/api/standings.ts`) except S3's preservation basis, the era registry's pin lineage, every shipped contract's balance.
+
+## 6. Ratification questions (batched; the rest ANSWERED 2026-09-02)
+- **Q1 (recommend YES):** start the co-op milestone now, MP debt-heal first (067 red, MP-03, 085, reconnect r4), so "combinations of them" becomes a plain-boot feature. Its gate opened 2026-08-22.
+- **Q2 (recommend YES):** E10 preserve contracts rank on a preservation score and never on gold.
+- **Q3 (recommend YES):** skill.md shows `unclaimed` contracts publicly: the community hook is a standing that nobody holds yet.
