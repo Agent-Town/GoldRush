@@ -32,6 +32,9 @@ export const RUN_TAPE_VERSION = 2 as const;
 export const RUN_TAPE_SIM_VERSION = 1 as const;
 export const RUN_TAPE_RECENT_LIMIT = 10;
 
+/** Semantic player inputs preserved by the human tape, including `prospector_dispatch`. */
+export type RunTapeAction = LockstepAction;
+
 export type RunTapeOutcome = {
   reason: RunEndReason;
   secured: boolean;
@@ -105,7 +108,7 @@ export class RunTapeRecorder {
   private readonly createdAt = Date.now();
   private readonly entries: PlaybookEntry[] = [];
   private readonly probes: PlaybookProbe[] = [];
-  private readonly pendingActions: LockstepAction[] = [];
+  private readonly pendingActions: RunTapeAction[] = [];
   private readonly streams = new Map<number, StreamState>();
   private edgeState: LockstepSampleEdgeState = zeroLockstepSampleEdgeState();
   private tick = 0;
@@ -130,11 +133,16 @@ export class RunTapeRecorder {
     if (this.tick >= MAX_PLAYBOOK_TICKS) return this.truncate('max-ticks');
     this.primarySlot = primarySlot;
     const queued = [...queuedActions];
-    const seen = new Set(queued.map(stableHash));
+    const routed = new Map<string, number>();
+    for (const action of queued) {
+      const hash = stableHash(action);
+      routed.set(hash, (routed.get(hash) ?? 0) + 1);
+    }
     for (const action of this.pendingActions.splice(0)) {
       const hash = stableHash(action);
-      if (!seen.has(hash)) queued.push(action);
-      seen.add(hash);
+      const duplicates = routed.get(hash) ?? 0;
+      if (duplicates > 0) routed.set(hash, duplicates - 1);
+      else queued.push(action);
     }
     const sample = lockstepInputFromIntents(intents, { queuedActions: queued });
     const { actions, next } = lockstepActionsFromSample(sample, this.edgeState);
@@ -170,7 +178,7 @@ export class RunTapeRecorder {
     this.appendStream(stream, this.tick - 1, sample.mx, sample.my, actions);
   }
 
-  recordAction(action: LockstepAction): void {
+  recordAction(action: RunTapeAction): void {
     if (this.stopped || this.truncation) return;
     const normalized = normalizeLockstepAction(action);
     if (normalized) this.pendingActions.push(normalized);
@@ -234,7 +242,7 @@ export class RunTapeRecorder {
     return { probes: this.probes.map((probe) => ({ ...probe })) };
   }
 
-  private append(t: number, mx: number, my: number, actions: LockstepAction[]): void {
+  private append(t: number, mx: number, my: number, actions: RunTapeAction[]): void {
     const moved = mx !== this.mx || my !== this.my;
     if (!moved && actions.length === 0) return;
     const last = this.entries.at(-1);
@@ -250,7 +258,7 @@ export class RunTapeRecorder {
     this.my = my;
   }
 
-  private appendStream(stream: StreamState, t: number, mx: number, my: number, actions: LockstepAction[]): void {
+  private appendStream(stream: StreamState, t: number, mx: number, my: number, actions: RunTapeAction[]): void {
     if (mx === stream.mx && my === stream.my && actions.length === 0) return;
     if (stream.entries.length >= this.maxEntries) return this.truncate('max-entries');
     stream.entries.push({ t, mx, my, a: actions.map((action) => ({ ...action })) });

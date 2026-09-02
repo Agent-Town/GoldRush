@@ -258,6 +258,7 @@ import {
   type DeathRunStatsSnapshot,
 } from '../ui/DeathOverlay';
 import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
+import { ProspectorDispatchInput, type ProspectorDispatchTarget } from '../ui/ProspectorDispatchInput';
 import { PartyOverview, type PartyOverviewSnapshot } from '../ui/PartyOverview';
 import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
@@ -364,6 +365,7 @@ const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
 const BARON_PROPS_3D_URL = new URL('../../assets/pilots/baron-props-3d/baron-props.glb', import.meta.url).href;
 const BARON_PROPS_3D_TRIANGLES = { launcher: 2_020, rocket: 876, powder_keg: 704 } as const;
 const TRAIL_GUIDE_DWELL_MS = 4_000;
+const PROSPECTOR_DISPATCH_SETTLE_TICKS = 4;
 const GREEN_WAYPOINT_CONTRACT_ID = 'e1-dry-gulch';
 const COUNTY_ANON_ID_KEY = 'gr.countyStandings.anonId.v1';
 // Browsers cap shared in-flight keepalive bodies at 64 KiB (65,536 B); s2310 measured
@@ -714,6 +716,10 @@ export class Game {
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
+  private readonly prospectorDispatchInput: ProspectorDispatchInput;
+  private readonly pendingProspectorDispatches: Array<{ type: 'prospector_dispatch'; node: string }> = [];
+  private readonly prospectorDispatchQueue: string[] = [];
+  private prospectorDispatchSettleTicks = 0;
   private readonly partyOverview: PartyOverview;
   private readonly assetLoadingCue = createAssetLoadingCue();
   private readonly promptStack = document.createElement('div');
@@ -1718,6 +1724,12 @@ export class Game {
       () => !this.buildSystem.isBuildMode || this.buildSystem.captureConfirmValidity(),
     );
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
+    this.prospectorDispatchInput = new ProspectorDispatchInput(
+      this.canvas,
+      () => this.hud.prospectorSelected && !this.buildSystem.isBuildMode,
+      (x, y) => this.prospectorDispatchTargetAt(x, y),
+      (node) => this.dispatchProspector(node),
+    );
     this.partyOverview = new PartyOverview(this.getElement('#hud'), (playerId) => this.glanceAtRider(playerId));
     this.getElement('#hud').append(this.assetLoadingCue);
     this.e7SignalSystem.mount(this.getElement('#hud'));
@@ -2580,6 +2592,7 @@ export class Game {
     window.removeEventListener('pointerdown', this.dismissTrailGuide);
     window.removeEventListener('keydown', this.dismissTrailGuide);
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
+    this.prospectorDispatchInput.dispose();
     document.removeEventListener('visibilitychange', this.onPerformanceVisibilityChange);
     this.input.dispose();
     this.cameraZoom.dispose();
@@ -2718,6 +2731,9 @@ export class Game {
     }
     if (this.runTapeReplay?.agentTape && this.state.current === 'levelup') this.syncUpgradeOverlay();
     const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : this.consumePlaybookTick(sampledIntents, cancelConsumed);
+    if (!this.mpClient && !this.runTapeReplay && this.pendingProspectorDispatches.length > 0) {
+      this.mpActionsThisTick.push(...this.pendingProspectorDispatches.splice(0).map((action) => ({ slot: 0, action })));
+    }
     const echoSample = this.echoActionSample(intents);
     if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
     if (
@@ -2994,6 +3010,7 @@ export class Game {
       );
       this.progression.consumeXpTotal(this.combat.xpCount);
       this.prospector.updateSimulation(delta, this.timeAlive, this.primaryActor.group.position);
+      this.advanceProspectorDispatch();
     } else {
       this.captureRenderState();
       if (
@@ -3279,6 +3296,7 @@ export class Game {
     if (action.type === 'place_build' && !this.deepwaterClaim) {
       if (this.buildSystem.confirmPlacement(this.timeAlive, action)) this.recordLedgerBuildable(action.id as BuildableId);
     }
+    if (action.type === 'prospector_dispatch') this.beginProspectorDispatch(action.node);
     if (action.type === 'weapon_toggle') this.toggleWeapon(this.actionActor);
     if (action.type === 'restart' && this.state.current === 'dead') {
       this.deferMultiplayerTransition(() => this.resetRun());
@@ -4621,6 +4639,9 @@ export class Game {
     this.syncHeroVisualHeight();
     for (const actor of this.actors) actor.snapRenderState();
     this.updateActionActorPosition();
+    this.pendingProspectorDispatches.length = 0;
+    this.prospectorDispatchQueue.length = 0;
+    this.prospectorDispatchSettleTicks = 0;
     this.prospector.reset(this.primaryActor.group.position);
     this.scene.add(this.prospector.group);
     this.scene.add(this.vfx.group);
@@ -7011,6 +7032,9 @@ export class Game {
       trueDriver: null, snapshot: null, requestedTick: 0, requestPending: false, winding: false, eraRefusal: null,
     };
     this.replayCameraPan.set(0, 0, 0);
+    this.pendingProspectorDispatches.length = 0;
+    this.prospectorDispatchQueue.length = 0;
+    this.prospectorDispatchSettleTicks = 0;
     this.prospector.reset(this.primaryActor.group.position);
     this.cameraRig.snapTo(this.localActor.group.position);
     this.mountLanternShow(tape);
@@ -7490,6 +7514,87 @@ export class Game {
     }, this.timeAlive);
     this.harvestSnapshot = this.harvestSystem.update(0, this.timeAlive, this.visibleHarvestTargets());
     return (panned.activeNodes.find((entry) => entry.id === node)?.remaining ?? before) < before;
+  }
+
+  private dispatchProspector(node: string): void {
+    const action = { type: 'prospector_dispatch', node } as const;
+    if (this.mpClient) this.mpQueuedActions.push(action);
+    else {
+      this.pendingProspectorDispatches.push(action);
+      this.recordRunTapeAction(action);
+    }
+  }
+
+  private beginProspectorDispatch(node: string): boolean {
+    const point = this.prospectorDispatchPoint(node);
+    if (!point || this.state.current !== 'playing' || this.state.isPaused) return false;
+    this.prospectorDispatchQueue.push(node);
+    if (this.prospectorDispatchQueue.length === 1) {
+      this.prospectorDispatchSettleTicks = distanceSq2(this.prospector.position.x, this.prospector.position.z, point.x, point.z)
+        <= Balance.agent.arriveRadius ** 2 ? PROSPECTOR_DISPATCH_SETTLE_TICKS : 0;
+      this.prospector.assignWork(point, 0);
+    }
+    return true;
+  }
+
+  private advanceProspectorDispatch(): void {
+    const node = this.prospectorDispatchQueue[0];
+    if (!node) {
+      if (!this.runTapeReplay && !this.prospector.hasActiveTask && this.harvestSnapshot.activeNodes.some((entry) =>
+        entry.active && distanceSq2(this.prospector.position.x, this.prospector.position.z, entry.position.x, entry.position.z)
+          <= Balance.goldSeam.channelRange ** 2)) this.speakTrailGuide('first-prospector-pan');
+      return;
+    }
+    const point = this.prospectorDispatchPoint(node);
+    if (!point) {
+      this.prospectorDispatchQueue.shift();
+    } else if (distanceSq2(this.prospector.position.x, this.prospector.position.z, point.x, point.z)
+      <= Balance.agent.arriveRadius ** 2) {
+      if (this.prospectorDispatchSettleTicks < PROSPECTOR_DISPATCH_SETTLE_TICKS) {
+        this.prospectorDispatchSettleTicks += 1;
+        this.prospector.assignWork(point, 0);
+        return;
+      }
+      this.panAgentAt(node);
+      this.prospectorDispatchQueue.shift();
+    } else if (!this.prospector.hasActiveTask) {
+      this.prospector.assignWork(point, 0);
+    }
+    const next = this.prospectorDispatchQueue[0];
+    const nextPoint = next ? this.prospectorDispatchPoint(next) : null;
+    if (nextPoint) {
+      this.prospectorDispatchSettleTicks = distanceSq2(this.prospector.position.x, this.prospector.position.z, nextPoint.x, nextPoint.z)
+        <= Balance.agent.arriveRadius ** 2 ? PROSPECTOR_DISPATCH_SETTLE_TICKS : 0;
+      this.prospector.assignWork(nextPoint, 0);
+    }
+  }
+
+  private prospectorDispatchPoint(node: string): ProspectorPoint | null {
+    const seam = this.harvestSnapshot.activeNodes.find((entry) => entry.id === node && entry.active);
+    if (seam) return seam.position;
+    const sluice = Number(node.match(/^sluice-(\d+)$/)?.[1] ?? 0) - 1;
+    return this.buildSystem.diagnostics.sluicePositions[sluice] ?? null;
+  }
+
+  private prospectorDispatchTargetAt(clientX: number, clientY: number): ProspectorDispatchTarget | null {
+    const rect = this.canvas.getBoundingClientRect();
+    this.aimPointerNdc.set(
+      ((clientX - rect.left) / Math.max(1, rect.width)) * 2 - 1,
+      -(((clientY - rect.top) / Math.max(1, rect.height)) * 2 - 1),
+    );
+    this.aimRaycaster.setFromCamera(this.aimPointerNdc, this.camera);
+    if (!this.aimRaycaster.ray.intersectPlane(this.aimGroundPlane, this.pointerAimPoint)) return null;
+    const targets = [
+      ...this.harvestSnapshot.activeNodes
+        .filter((entry) => entry.active)
+        .map((entry) => ({ id: entry.id, label: 'seam', position: entry.position })),
+      ...this.buildSystem.diagnostics.sluicePositions
+        .map((position, index) => ({ id: `sluice-${index + 1}`, label: 'sluice', position })),
+    ];
+    return targets
+      .map((target) => ({ ...target, distance: distanceSq2(this.pointerAimPoint.x, this.pointerAimPoint.z, target.position.x, target.position.z) }))
+      .filter((target) => target.distance <= 2.2 ** 2)
+      .sort((a, b) => a.distance - b.distance)[0] ?? null;
   }
 
   private showProspectorIntro(): void {
@@ -8122,6 +8227,9 @@ export class Game {
     };
     this.state.restart();
     this.playerPauseActive = false;
+    this.pendingProspectorDispatches.length = 0;
+    this.prospectorDispatchQueue.length = 0;
+    this.prospectorDispatchSettleTicks = 0;
     this.prospector.reset(this.primaryActor.group.position);
     this.prefetchContractPresentation();
     this.syncUi();

@@ -193,6 +193,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
     factLines: () => [
       `Home post: ${formatNumber(Balance.agent.homeX)}, ${formatNumber(Balance.agent.homeZ)}`,
       `Move speed: ${formatNumber(Balance.agent.moveSpeed)}wu/s`,
+      'Pan command: select the Prospector and click a seam, or hold a seam on touch.',
       `First survey: ${formatNumber(Balance.agent.surveyFirstSeconds)}s`,
       `Priority chase mark: ${Balance.agent.priorityChaseMark}`,
     ],

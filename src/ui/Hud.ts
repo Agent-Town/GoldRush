@@ -107,6 +107,7 @@ export class Hud {
   private baronPortraitUrl = '';
   private baronPortraitLoading = false;
   private prospectorPanelOpen = false;
+  private prospectorSelectedValue = false;
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
@@ -248,6 +249,10 @@ export class Hud {
     this.elements.contractBriefing.addEventListener('click', this.onBriefingClick);
     this.elements.agentChip.addEventListener('click', this.onAgentChipClick);
     window.addEventListener('keydown', this.onKeyDown, { capture: true });
+  }
+
+  get prospectorSelected(): boolean {
+    return this.prospectorSelectedValue;
   }
 
   update(snapshot: UiSnapshot, meta: PauseMetaSnapshot, showPauseMeta = snapshot.paused): void {
@@ -398,6 +403,12 @@ export class Hud {
   };
 
   private setProspectorPanelOpen(open: boolean): void {
+    if (open && !this.prospectorSelectedValue) {
+      // Opening the charter (chip click or G) selects the Prospector: from here on a click on a
+      // seam or sluice sends it to pan (ProspectorDispatchInput). Modifier-click never needed it.
+      this.prospectorSelectedValue = true;
+      this.elements.agentChip.dataset.selected = 'true';
+    }
     this.prospectorPanelOpen = open;
     this.elements.agentChip.dataset.open = String(open);
     this.elements.agentChip.setAttribute('aria-expanded', String(open));
