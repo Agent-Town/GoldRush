@@ -24,6 +24,20 @@ alert() {
 
 runner_alive() { [ -n "$(runner_pids)" ]; }
 
+AGENT_LABELS="com.goldrush.dashboard com.goldrush.health com.goldrush.fire"
+agent_states() {
+  local listed label state
+  listed=$(launchctl list 2>&1) || {
+    echo "launchctl list unavailable: $listed" >&2
+    return 1
+  }
+  for label in $AGENT_LABELS; do
+    state=MISSING
+    echo "$listed" | awk -v label="$label" '$3 == label { found=1 } END { exit !found }' && state=LOADED
+    echo "$label:$state"
+  done
+}
+
 # F-2137-1: annotate the runner line when the live process predates the runner script's
 # newest commit. Silent when current, so a healthy board reads exactly as it always has.
 runner_staleness_note() {
@@ -137,6 +151,8 @@ edge_probe() {
 }
 
 dashboard() {
+  local agents
+  agents=$(agent_states) || return 1
   echo "=== Gold Rush factory — $(date '+%F %H:%M:%S') ==="
   echo "edge   : $(edge_probe)   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)"
   # F-2137-1: ALIVE is not the same as CURRENT. A runner executes the parse it loaded at exec
@@ -146,6 +162,8 @@ dashboard() {
   # at start (CLAUDE.md §1.4); a verdict only helps the reader who was going to look anyway.
   echo "runner : $(runner_alive && echo ALIVE || echo DEAD)$(runner_staleness_note)"
   echo "fire   : $(fire_proc && echo RUNNING || echo between-fires)"
+  echo "agents :"
+  echo "$agents" | sed 's/^/  /'
   echo "lock   : $(head -c 120 STATUS.md)"
   echo "queued : $(queued_count) task(s)   in-flight: $(running_count)   pending-orders: $(pending_count)"
   # "ahead" counts COMMITS, which is not the same as undrained WORK: a
@@ -170,9 +188,29 @@ dashboard() {
   echo "last fire log line: $(tail -1 "logs/fire-$(date +%Y%m%d).log" 2>/dev/null | head -c 120)"
 }
 
-if [ "${1:-}" = "status" ]; then dashboard; exit 0; fi
+if [ "${1:-}" = "status" ]; then dashboard; exit $?; fi
 
 # ---- health pass ----
+# 0. The watchdog's launchd siblings (and itself) must all remain loaded.
+AGENT_STATES=$(agent_states) || exit 1
+AGENT_SUMMARY=$(echo "$AGENT_STATES" | tr '\n' ',' | sed 's/,$//')
+AGENT_MISSING=$(echo "$AGENT_STATES" | sed -n 's/:MISSING$//p' | tr '\n' ',' | sed 's/,$//')
+OLD_AGENT_MISSING=$(grep '^agentmissing=' "$STATE" 2>/dev/null | tail -1 | cut -d= -f2-)
+if [ "$AGENT_MISSING" != "${OLD_AGENT_MISSING:-}" ]; then
+  if [ -n "$AGENT_MISSING" ]; then
+    alert "Launch agent(s) missing: $AGENT_MISSING — remedies recorded in $STATE"
+  elif [ -n "${OLD_AGENT_MISSING:-}" ]; then
+    alert "Launch agents recovered: $OLD_AGENT_MISSING"
+  fi
+fi
+grep -v -e '^agentmissing=' -e '^agentremedy=' "$STATE" > "$STATE.tmp" 2>/dev/null; mv "$STATE.tmp" "$STATE" 2>/dev/null || : > "$STATE"
+echo "agentmissing=$AGENT_MISSING" >> "$STATE"
+if [ -n "$AGENT_MISSING" ]; then
+  echo "$AGENT_MISSING" | tr ',' '\n' | while read -r label; do
+    echo "agentremedy=$label: launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/$label.plist" >> "$STATE"
+  done
+fi
+
 # 1. Runner dead -> restart headless (the one auto-remediation).
 if ! runner_alive; then
   alert "Runner was DEAD — restarting it headless"
@@ -304,4 +342,10 @@ grep -v -e '^edgebad=' -e '^edgedark=' -e '^edgeslow=' "$STATE" > "$STATE.tmp" 2
 echo "edgedark=$DARKN" >> "$STATE"
 echo "edgeslow=$SLOWN" >> "$STATE"
 
-note "ok runner=$(runner_alive && echo 1 || echo 0) queued=$QC inflight=$RC pending=$PC edge=$EDGE"
+PASS=ok
+AGENT_FAILURES=""
+if [ -n "$AGENT_MISSING" ]; then
+  PASS=FAIL
+  AGENT_FAILURES=$(echo "$AGENT_MISSING" | tr ',' '\n' | sed 's/^/ AGENT MISSING: /' | tr '\n' ' ' | sed 's/ $//')
+fi
+note "$PASS runner=$(runner_alive && echo 1 || echo 0) queued=$QC inflight=$RC pending=$PC agents=$AGENT_SUMMARY edge=$EDGE$AGENT_FAILURES"
