@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "91c43545642dde32a7ecafb3c6716acbf6c46e234a70e97a72f41e6a78aaa443",
+  "engineHash": "4082ebe41a9c70652edcb84946417c879a16be404087891a2961e86c009a4cbf",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -134,6 +134,18 @@
       "pinnedAt": "2026-09-02",
       "cause": "content re-hash, no behaviour change: same-laws-harvest-parity drain (9e5d0636d) added the player Prospector dispatch input + tape input kind in src/game, src/ui, src/mp, src/story; sim untouched; same era per F-1441-3",
       "aliases": []
+    },
+    {
+      "engineHash": "30ae0a3ce5912646b2caf68c34115ad32395ad5197897f7cb68dc8e6944fa926",
+      "aliases": [],
+      "pinnedAt": "2026-09-02T22:12:00+07:00",
+      "cause": "winnability-receipts drain b5850417a (runner commit 280d95d7f) added assets/contracts/winnability-receipts.json, a 207-line receipts ledger nothing imports; assets/contracts is inside ENGINE_SOURCE_INPUTS so the content re-hashed. Simulation behaviour did not change. The s2457 drain owed this append and missed it; s2458 measured main already outside era 5 and repaired the gap rather than pinning only its own state."
+    },
+    {
+      "engineHash": "4082ebe41a9c70652edcb84946417c879a16be404087891a2961e86c009a4cbf",
+      "aliases": [],
+      "pinnedAt": "2026-09-02T23:10:00+07:00",
+      "cause": "view-schema-versioning merge: the rider view and tape meta gained a numeric viewVersion (src/agent/View.ts, src/game/Game.ts, src/game/RunTape.ts, src/replay/AgentTapeReplay.ts, src/ui/LanternShow.ts). Observation surface only - no sim, systems, entities or Balance touched, and legacy tapes without the field stay accepted. Simulation behaviour did not change."
     }
   ],
   "history": [
