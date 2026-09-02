@@ -1,0 +1,24 @@
+# Task ss-04-e3-beats: the Voltage Age gets its story — the E3 chapter's beats, tavern tales and Gazette headlines, as data (lane-c, commit prefix "feat:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c.
+READ FIRST: AGENTS.md; `specs/epoch-saga/CAPABILITY-LADDER.md` §3 L4 (THE HUMAN REFERENCE LAW: the story loop is never cut) and §4 S6; `lore/STORYBOOK.md` lines 136–187 (CHAPTER E3 — THE VOLTAGE AGE, the source of every beat) and the E3 interstitial notes near line 631; `src/story/beats.ts` (`E2_STORY_BEATS` at ~:243 is the SHAPE to copy; the E2→E3 ceremony beats `e3-ceremony-dynamo/tree/title` at ~:295–:320 already exist and must stay); `src/story/StoryRuntime.ts` + `ceremonyPostscripts.ts` (how beats trigger and how postscripts fire); `reviews/ss-02.md` (the SS-02 drain review: the bar for a beat table); `specs/epoch-saga/e3-voltage-bundle.md` (the twins, the ledger reveal, the moth season).
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/c main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` — are NEVER "work" and NEVER a STOP; discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE: `git -C worktrees/lane-c status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
+
+## Why (owner 2026-09-02, verbatim: "I would love to be able to play the story as well"; BUILD-PLAN §4 E3 CER-1 "twins' beat table + ledger reveal")
+E2's story loop shipped (E2 beats, the T2 Dynamo ceremony). E3 has its ceremony INTO the era but no chapter: a player who reaches the Canyon Works meets no twins, no ledger reveal, no Gazette. The benchmark does not need it; the human path does, and L4 says the human path is never cut.
+
+## Scope
+1. **`E3_STORY_BEATS`** in `src/story/beats.ts`: the chapter's beats derived from STORYBOOK Chapter E3, mystery law intact (the Gazette/board media rules SS-02 established): arrival at the Canyon Works, the two company representatives (the twins), the brown-out ledger reveal, the moth season, the saboteur night, the defection tavern tale, the era's exit hook toward the Refinery. Each beat: id, trigger (contract/wave/science/town event; reuse the E2 trigger vocabulary), speaker, lines (LEXICON-clean, no em-dashes, no letters-in-art dependencies), `presentation`, art key only where a plate exists in `assets/` (cite the file; never invent a key).
+2. **Tavern tales + Gazette headlines** for E3 in the same data shape E2 uses (find E2's and mirror it; cite file:line).
+3. **Runtime wiring:** the runtime loads E3 beats when the active epoch is `epoch-3-voltage` exactly as it loads E2's (cite the switch site); no beat fires in E1/E2 runs (guard it in the spec).
+4. **e2e** `e2e/ss-04-e3-beats.spec.ts`: a Canyon Works ride (dev server, plain boot with the epoch selected the way a player selects it) shows the arrival beat and the twins beat at their triggers; E1's Claim shows none of them; zero console/page errors; desktop + 390px; screenshots to `reviews/shots-ss-04-e3-beats/`.
+
+## Firewall
+Touch ONLY: `src/story/beats.ts`, the E3 tale/headline data file(s) you name, the runtime epoch switch (one site), the new spec, BACKLOG row. NO changes to: E1/E2 beats, ceremonies (T2 stays; T3 is `tasks/t3-refinery-ceremony.md`, a separate task), the sim, contracts, `src/ui/TrueReelRenderer.ts`, other tasks' fresh work.
+
+## Self-check (evidence, not vibes)
+`npx tsc --noEmit` clean; `npm run build` green; the new spec green desktop + 390px; `e2e/ss-02*.spec.ts` and `e2e/*story*.spec.ts` (list them) unmodified-green both projects; `npm run test:node-guards` green (LEXICON + copy guards); zero console/page errors; screenshots at the paths above.
+End: READY-FOR-GATES + the beat table (id · trigger · speaker · one line each), the storybook lines each beat cites.
+
+## No-op / honesty guard
+If STORYBOOK Chapter E3 lacks a beat the bundle names, write the beat from the bundle and mark it PROPOSED in a comment (uncited lore is a proposal, per the lore law) rather than inventing canon silently.
