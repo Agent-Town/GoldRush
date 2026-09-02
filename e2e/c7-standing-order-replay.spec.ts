@@ -12,7 +12,17 @@ test('a fresh browser standing-order tape watches to its own hash while an unsta
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
   page.on('pageerror', (error) => errors.push(error.message));
   const tape = await recordStandingTape(page);
-  expect(tape.meta).toEqual({ buildId: 'dev', engineHash: engineEra.engineHash, era: engineEra.era });
+  // Merge reconciliation (drain s2461): main's view-schema-versioning slice stamps `viewVersion` on
+  // every fresh tape and this lane's slice stamps `engineHash`/`era`. Both land on the same meta, so
+  // the exact-equality assertion asserts all three. Kept as toEqual rather than toMatchObject on
+  // purpose: the point of this line is that a fresh tape carries EXACTLY the declared stamp and no
+  // stray field, which is what makes the unstamped-vs-stamped routing below decidable.
+  expect(tape.meta).toEqual({
+    buildId: 'dev',
+    viewVersion: engineEra.viewSchema.version,
+    engineHash: engineEra.engineHash,
+    era: engineEra.era,
+  });
 
   await page.goto('/');
   await page.getByTestId('start-menu-enter-town').click();

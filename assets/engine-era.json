@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "10c1fa66d73ba5ab527adb0991aa625cb768e24d0c6b518944e975a418871594",
+  "engineHash": "cb321d83cc39b86c3cc80633e5d7ca9331b24188b88a6983cd1cbeb69729437b",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -158,6 +158,12 @@
       "aliases": [],
       "pinnedAt": "2026-09-03T01:40:00+07:00",
       "cause": "ss-04-e3-beats merge (s2460): src/story/beats.ts gained E3_STORY_BEATS and src/story/StoryRuntime.ts loads them only when activeEpochId() is epoch-3-voltage. Content re-hash, no simulation behaviour change: story beats are presentational cards the sim never reads, and the merged tree ran test:node-guards 563 pass / 0 sim failures. Same era: the board law is unchanged."
+    },
+    {
+      "engineHash": "cb321d83cc39b86c3cc80633e5d7ca9331b24188b88a6983cd1cbeb69729437b",
+      "aliases": [],
+      "pinnedAt": "2026-09-03T03:10:00+07:00",
+      "cause": "human-tape-true-reel-stamp merge (s2461): src/game/RunTape.ts gained engineHash/era on RunTapeMeta plus runTapeRecordingMeta (resume retains the original stamp), and src/game/Game.ts now stamps fresh human tapes through it. Both are inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: the stamp is tape METADATA the sim never reads, and the merged tree ran test:node-guards 562 pass with zero sim failures. The merge also unions main viewVersion with the lane engineHash/era on the same validator, so all three fields now validate together. Same era: no view field was removed or renamed and no tape shape was invalidated (unstamped legacy tapes still validate)."
     }
   ],
   "history": [
