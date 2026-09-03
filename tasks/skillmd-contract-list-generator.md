@@ -1,0 +1,25 @@
+# Task skillmd-contract-list-generator: skill.md's contract list is rendered from the contracts and the receipts, pinned by a guard, and carries the claimed/unclaimed marker (lane-a, commit prefix "feat:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-a.
+READ FIRST: AGENTS.md; the stopped run `tasks/done/stopped-s2464-honesty-guard-skillmd-list-has-no-generator-20260903-065543-unclaimed-contracts-public.md` and its report (`tasks/runs/20260903-065543-lane-a-unclaimed-contracts-public.md.log`, grep "Required fork": the contract list in `public/skill.md` is hand-authored, so a marker written into it would rot silently); `public/skill.md` BENCH SEEDS (~:163: the per-contract list with seed variants; the section this task makes generated); `scripts/skillmd-guard.test.mjs` (the only skill.md guard today: what it pins and how baselines are re-pinned); `assets/contracts/*/contracts.json` + `assets/contracts/bench-seeds.json` (the source of truth for the list); `assets/contracts/winnability-receipts.json` + `scripts/winnability-receipts.mjs` (claimed/unclaimed per contract, merged b5850417a); `docs/research/2026-09-03-harnessdev-and-the-county.md` §3 (why the marker matters).
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/a main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` — are NEVER "work" and NEVER a STOP; discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE: `git -C worktrees/lane-a status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
+
+## Why (owner ruling Q3, 2026-09-02 "sure, start all of them"; the honest STOP of 2026-09-03: "establish a generated/pinned skill.md contract-list path before publishing markers, otherwise they will silently rot")
+The marker is one line per contract; the only way it stays true is if the whole list is rendered from data every time and a guard reds when skill.md drifts from that render.
+
+## Scope
+1. **The renderer** `scripts/render-skillmd-contracts.mjs`: renders the BENCH SEEDS contract list (every door-admitted contract with its seed variants, in today's exact wording and order so the diff is only the marker column) from the contract manifests + bench seeds + the receipts file, and writes it between two HTML comment fences in `public/skill.md` (`<!-- contracts:begin -->` / `<!-- contracts:end -->`); idempotent; `--check` mode exits non-zero on drift without writing.
+2. **The marker:** each contract line ends with `unclaimed` or `first secured by <species> (<profile>) on <date>` from the receipts; a one-line legend above the list, LEXICON-clean, no em-dashes.
+3. **The guard** `scripts/skillmd-contracts-guard.test.mjs` (in `test:node-guards`): runs the renderer in `--check` mode against the committed skill.md (reds on drift), asserts every door contract appears exactly once with exactly one marker, and that the marker counts match the receipts file. Mutation proof: hand-edit one marker → red.
+4. **Existing guards:** `skillmd-guard.test.mjs` baselines re-pinned per its own instructions; the citation/copy guards green.
+5. **Docs:** the file header of skill.md notes the fenced section is generated and names the command.
+
+## Firewall
+Touch ONLY: `scripts/render-skillmd-contracts.mjs` (new), `scripts/skillmd-contracts-guard.test.mjs` (new), `public/skill.md` (the fenced section + header note + guard baselines), `package.json` (wire), BACKLOG row. NO changes to: contracts, receipts logic, ranking, `site/**`, other tasks' fresh work.
+
+## Self-check (evidence, not vibes)
+`npx tsc --noEmit` clean; `npm run build` green; `npm run test:node-guards` green including both skill.md guards (count); the renderer's diff against today's skill.md is ONLY the fences, the legend and the marker column (quote the diff stat); the mutation proof red then green; marker counts per epoch quoted and matched.
+End: READY-FOR-GATES + the diff stat, the counts, the legend text.
+
+## No-op / honesty guard
+If today's list cannot be reproduced from the manifests (a hand-added line with no data source: name it), keep that line verbatim via an explicit allowlist in the renderer and report it; never drop a contract from the door's page.
