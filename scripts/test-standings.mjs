@@ -150,7 +150,7 @@ async function checkAssayStrips(onRequest) {
   equal(verifiedCell.assayStrip.era, { id: 'b8cf2332d', label: 'Same-Game era' }, 'verified row carries its era');
   equal(verifiedCell.assayStrip.outcome.waves, verified.waves, 'Outcome reads the verified score');
   equal(verifiedCell.assayStrip.economy, { status: 'measured', decisions: 10, frontierDecisions: 10, efficiency: 1 }, 'Economy is frontier-anchored');
-  equal(verifiedCell.assayStrip.cost, { calls: 2 }, 'Cost reads the declaration without inventing tokens');
+  equal(verifiedCell.assayStrip.cost, { orders: null, calls: 2, tokensIn: null, tokensOut: null, durationS: verified.timeAlive }, 'Cost reads duration and declarations without inventing tape counts or tokens');
   equal(fieldBook.body.byStack.find((row) => row.model === 'pending-mind').contracts[0].assayStrip, undefined, 'unverified row has no assay strip');
 }
 
@@ -349,6 +349,7 @@ async function checkPosts(onRequest) {
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'pending row shows on board');
   equal(board.body.board[0].assay, 'pending', 'pending badge state is exposed');
+  equal(board.body.board[0].cost, { orders: null, calls: null, tokensIn: null, tokensOut: null, durationS: 120 }, 'pending row exposes the complete cost shape without inventing declarations');
 
   const twin = tape('twin-final-tick', 20, 'fnv1a32:1234abcd', 'e1-twin-banks');
   twin.inputLog.durationTicks = 18_002;
@@ -485,7 +486,16 @@ async function checkBankedBaronTapes(onRequest, queueRoute, verdictRoute, valida
 
 async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   const kv = makeKv();
-  await call(onRequest, 'POST', '/api/standings', post('1'.repeat(32), 30, tape('verify-me', 30)), kv);
+  const verifyTape = tape('verify-me', 30);
+  verifyTape.inputLog.durationTicks = 2;
+  verifyTape.inputLog.entries = [
+    { t: 0, mx: 0, my: 0, a: [{ kind: 'agent_orders', orders: [] }] },
+    { t: 1, mx: 1, my: 0, a: [] },
+  ];
+  verifyTape.inputLog.streams = [{ slot: 1, start: { x: 0, z: 12 }, entries: [{ t: 0, mx: 0, my: 1, a: [] }] }];
+  const verifyPost = post('1'.repeat(32), 30, verifyTape);
+  verifyPost.stack = { model: 'cost-fixture', calls: 114, tokensIn: 9_000 };
+  await call(onRequest, 'POST', '/api/standings', verifyPost, kv);
   await call(onRequest, 'POST', '/api/standings', post('2'.repeat(32), 25, tape('reject-me', 25)), kv);
   await call(onRequest, 'POST', '/api/standings', post('5'.repeat(32), 20, tape('retry-me', 20)), kv);
   equal((await assayIndex(kv)).locators.length, 3, 'submissions append pending locators');
@@ -515,9 +525,11 @@ async function checkVerdicts(onRequest, queueRoute, verdictRoute) {
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'rejected row drops from ranking');
   equal(board.body.board[0].assay, 'verified', 'verified row remains ranked');
+  equal(board.body.board[0].cost, { orders: 3, calls: 114, tokensIn: 9_000, tokensOut: null, durationS: 120 }, 'verified row counts every primary and human stream input at assay time and returns the full cost shape');
   equal(board.body.rejectedCount, 1, 'rejected row is counted');
   const stored = JSON.parse(await kv.get(KEY));
   equal(stored.length, 3, 'unranked rows survive in KV');
+  equal(stored.find((row) => row.tape.id === 'verify-me').orders, 3, 'assay verdict persists the county-counted tape entries');
   equal(stored.find((row) => row.tape.id === 'reject-me').assayReason, 'replay diverged', 'rejection reason is retained on the row');
   equal(stored.find((row) => row.tape.id === 'retry-me').assayReason, 'instrument exited 143', 'instrument reason is retained on the row');
 

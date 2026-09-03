@@ -126,7 +126,9 @@ function standingsUrl(board) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.querySelector('[data-standings="rows"]');
+  const costChart = document.querySelector('[data-standings="cost-chart"]');
   if (!body) return;
+  let claimRows = [];
 
   async function loadStandings() {
     const results = await Promise.allSettled(COUNTY_BOARDS.map(async (board) => {
@@ -174,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         tr.appendChild(cell('num', '·'));
         tr.appendChild(cell('num gold', '·'));
+        tr.appendChild(cell('cost', '·'));
         tr.appendChild(watchCell(board));
         body.appendChild(tr);
         return;
@@ -189,9 +192,12 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.appendChild(rider);
       tr.appendChild(cell('num', formatCount(score.waves ?? best.waves)));
       tr.appendChild(cell('num gold', formatCount(score.gold ?? best.gold)));
+      tr.appendChild(costCell(best.cost));
       tr.appendChild(watchCell(board, best));
       body.appendChild(tr);
     });
+    claimRows = settled.find(({ board }) => board.contract === 'the-claim')?.rows ?? [];
+    drawCostChart(costChart, claimRows);
     return pendingTotal;
   }
 
@@ -217,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
     body.textContent = '';
     const tr = document.createElement('tr');
     const td = document.createElement('td');
-    td.colSpan = 5;
+    td.colSpan = 6;
     td.textContent = text;
     tr.appendChild(td);
     body.appendChild(tr);
@@ -252,6 +258,19 @@ document.addEventListener('DOMContentLoaded', () => {
     return td;
   }
 
+  function costCell(cost = {}) {
+    const bits = [];
+    if (Number.isFinite(cost.orders)) bits.push(`${formatCount(cost.orders)} orders`);
+    if (Number.isFinite(cost.calls)) bits.push(`${formatCount(cost.calls)} calls`);
+    if (Number.isFinite(cost.durationS)) bits.push(formatDuration(cost.durationS));
+    const td = cell('cost', bits.join(' · ') || '·');
+    const tokens = [];
+    if (Number.isFinite(cost.tokensIn)) tokens.push(`${formatCount(cost.tokensIn)} in`);
+    if (Number.isFinite(cost.tokensOut)) tokens.push(`${formatCount(cost.tokensOut)} out`);
+    if (tokens.length) td.title = `Tokens: ${tokens.join(' · ')}`;
+    return td;
+  }
+
   function watchCell(board, row) {
     const td = document.createElement('td');
     const a = document.createElement('a');
@@ -267,5 +286,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Self-scheduling: loadStandings picks its own next tick from the validation
   // state (15 s while a reel is at the assay office, 60 s at rest).
+  window.addEventListener('resize', () => drawCostChart(costChart, claimRows));
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => drawCostChart(costChart, claimRows));
   loadStandings();
 });
+
+function formatDuration(value) {
+  const seconds = Math.max(0, Math.floor(value));
+  return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+function drawCostChart(canvas, rows) {
+  if (!canvas) return;
+  const points = rows.filter((row) => row.assay === 'verified' && Number.isFinite(row.cost?.orders))
+    .map((row) => ({ orders: row.cost.orders, waves: row.score?.waves ?? row.waves ?? 0 }));
+  const width = canvas.clientWidth || 320;
+  const height = canvas.clientHeight || 170;
+  const scale = window.devicePixelRatio || 1;
+  canvas.width = Math.round(width * scale);
+  canvas.height = Math.round(height * scale);
+  const ctx = canvas.getContext('2d');
+  ctx.scale(scale, scale);
+  const styles = getComputedStyle(canvas);
+  const ink = styles.getPropertyValue('--ink-soft').trim() || '#665d50';
+  const brass = styles.getPropertyValue('--brass').trim() || '#a5682a';
+  ctx.clearRect(0, 0, width, height);
+  ctx.font = '11px ui-monospace, monospace';
+  ctx.fillStyle = ink;
+  if (!points.length) {
+    ctx.fillText('The Claim awaits a costed ride.', 12, 24);
+    canvas.setAttribute('aria-label', 'The Claim has no costed rides yet.');
+    return;
+  }
+  const left = 34, right = width - 12, top = 12, bottom = height - 28;
+  const maxOrders = Math.max(1, ...points.map((point) => point.orders));
+  const maxWaves = Math.max(1, ...points.map((point) => point.waves));
+  ctx.strokeStyle = ink;
+  ctx.globalAlpha = 0.45;
+  ctx.beginPath(); ctx.moveTo(left, top); ctx.lineTo(left, bottom); ctx.lineTo(right, bottom); ctx.stroke();
+  ctx.globalAlpha = 1;
+  ctx.fillText(String(maxWaves), 4, top + 4);
+  ctx.fillText('0', 18, bottom + 4);
+  ctx.fillText(`${formatCount(maxOrders)} orders`, Math.max(left, right - 92), height - 7);
+  ctx.fillStyle = brass;
+  for (const point of points) {
+    const x = left + (point.orders / maxOrders) * (right - left);
+    const y = bottom - (point.waves / maxWaves) * (bottom - top);
+    ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI * 2); ctx.fill();
+  }
+  canvas.setAttribute('aria-label', `The Claim cost versus waves: ${points.map((point) => `${point.orders} orders, ${point.waves} waves`).join('; ')}.`);
+}

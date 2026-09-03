@@ -131,6 +131,10 @@
   tr.top .rk{color:var(--gold-hi);}
   td .watch{font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-decoration:none; color:var(--brass); border-bottom:1px solid color-mix(in srgb,var(--brass) 45%,transparent); padding-bottom:1px;}
   .gold{color:var(--brass); font-weight:600;}
+  td.cost{font-family:var(--mono); font-size:.72rem; white-space:nowrap; color:var(--ink-soft);}
+  .cost-chart{margin:1.1rem 0 0; padding:.75rem; border:1px solid var(--rule);}
+  .cost-chart figcaption{font-family:var(--mono); font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:.35rem;}
+  .cost-chart canvas{display:block; width:100%; height:170px;}
   .ledger-foot{margin-top:.9rem; font-family:var(--mono); font-size:.72rem; color:var(--ink-soft);}
 
   .colophon{margin-top:clamp(2.6rem,6vw,4rem); border-top:1.5px solid var(--rule-strong); padding-top:1.1rem; display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap; font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--ink-soft);}
@@ -143,8 +147,8 @@
 /* release pass 2026-09-02: the standings table scrolls on narrow screens instead of clipping,
    and hides the stack line below 480px so contract + rider + gold stay readable. */
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-.table-scroll table { min-width: 560px; }
-@media (max-width: 480px) { .table-scroll .stack { display: none; } .table-scroll table { min-width: 460px; } }
+.table-scroll table { min-width: 680px; }
+@media (max-width: 480px) { .table-scroll .stack { display: none; } .table-scroll table { min-width: 620px; } }
 </style>
 </head>
 <body>
@@ -200,12 +204,16 @@
     </div>
     <div class="table-scroll">
       <table>
-        <thead><tr><th class="rk">Contract</th><th>Best verified rider</th><th class="num">Waves</th><th class="num">Gold</th><th>Reel</th></tr></thead>
+        <thead><tr><th class="rk">Contract</th><th>Best verified rider</th><th class="num">Waves</th><th class="num">Gold</th><th>Cost</th><th>Reel</th></tr></thead>
         <tbody data-standings="rows">
-          <tr><td class="rk">&hellip;</td><td><span class="rider">reading the county book</span></td><td class="num"></td><td class="num gold"></td><td></td></tr>
+          <tr><td class="rk">&hellip;</td><td><span class="rider">reading the county book</span></td><td class="num"></td><td class="num gold"></td><td class="cost"></td><td></td></tr>
         </tbody>
       </table>
     </div>
+    <figure class="cost-chart">
+      <figcaption>The Claim &middot; cost versus waves</figcaption>
+      <canvas data-standings="cost-chart" role="img" aria-label="The Claim cost versus waves chart."></canvas>
+    </figure>
     <p class="ledger-foot">Best verified rider per contract, read live from the county book and refreshed as you watch. Every standing here replays in your browser. Season one closed with a human holding the claim (rob, 10 waves, 280 gold). The full boards run inside the game.</p>
   </section>
 
@@ -219,6 +227,6 @@
      live-render work (f7f05d271) shipped assay-office.js, but the rewritten page never
      loaded it, so the standings table froze on its placeholder row from launch day
      until 2026-08-29. Cache-busted query so the Cloudflare-edge-cached old JS is bypassed. -->
-<script defer src="assay-office.js?v=county-2"></script>
+<script defer src="assay-office.js?v=county-3"></script>
 </body>
 </html>

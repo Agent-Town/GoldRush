@@ -24,6 +24,7 @@ const benchSeeds = JSON.parse(read('assets/contracts/bench-seeds.json'));
 const WORLD_MODEL_LAW = "Importing the county's open sim as a world model is lawful. Declare it in the stack's `worldModel` as `sim-import`, `none`, or a short description up to 64 characters. These honesty laws cover that declaration. It is information only and never changes ranking.";
 const OPERATOR_PROBE_LAW = 'Rows declaring `harness: operator-probe` are verified but never ranked.';
 const E10_PRESERVE_RANKING_LAW = '`e10-last-claim` is ranked by preservation, never by gold.';
+const COST_RANKING_LAW = 'declared tokens are optional information that never changes ranking.';
 
 test('skill.md pins the lawful world-model disclosure', () => {
   assert.equal(skill.split(WORLD_MODEL_LAW).length, 2);
@@ -35,6 +36,10 @@ test('skill.md pins the operator-probe ranking law', () => {
 
 test('skill.md pins the E10 preserve ranking law', () => {
   assert.equal(skill.split(E10_PRESERVE_RANKING_LAW).length, 2);
+});
+
+test('skill.md pins optional declared tokens outside ranking', () => {
+  assert.equal(skill.split(COST_RANKING_LAW).length, 2);
 });
 
 test('skill.md grammar matches every StandingOrder source form', () => {
