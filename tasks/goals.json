@@ -3994,10 +3994,13 @@
               "id": "skillmd-contract-list-generator",
               "title": "Q3 v2: skill.md contract list rendered from data, pinned by a guard, carrying the claimed/unclaimed marker",
               "taskFile": "skillmd-contract-list-generator.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-03"
+              "queuedAt": "2026-09-03",
+              "mergeHash": "24352d079c666413df8ccf9087dc4c5d76a07854",
+              "drainedAt": "2026-09-03",
+              "drainNotes": "drained s2472: gated on the merged tree in detached gate-s2472; tsc+build green, both skill.md guards 17/17, citation+site 25/25, law-pointer 22/22, renderer --check rc=0; package.json guard-list union verified by set algebra (91 = union, missing [], invented []); landed tree byte-identical to the gated tree 1b9061218a704f3b684ef1d186ac92870ecd3d1b. Review reviews/skillmd-contract-list-generator.md"
             },
             {
               "id": "tape-resume",
