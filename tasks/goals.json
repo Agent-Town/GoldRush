@@ -3962,10 +3962,13 @@
               "id": "refusal-taxonomy",
               "title": "HarnessDev F: refusals recorded per rider; /api/refusals; the taxonomy in skill.md",
               "taskFile": "refusal-taxonomy.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-03"
+              "queuedAt": "2026-09-03",
+              "mergeHash": "75e86f1c3934f4aaf2258df13b7f948f3e3d0c2f",
+              "drainedBy": "fire s2470",
+              "drainNotes": "s2470: gated on the merged tree in detached gate-s2470 — tsc rc=0, build rc=0, test:stats 87/215/215/26 (both KV and sqlite refusal paths), skillmd-guard 13/13 incl. the slice's own self-executing enumeration mutation proof, functions/door guards 13/13. skillmd-guard.test.mjs CONFLICTED and was union-resolved AT THE SYNTACTIC BOUNDARY (F-2469-1: both sides' final test( shared one closer); verified by node --check + 13 top-level/0 nested + test-name set algebra + running it, never by grepping for each side's strings. e2e door specs gated on a DIFFERENTIAL — main is already red 8/34 and the merged tree is byte-identically 8/34 (control worktree ctrl-s2470). Finding F-2470-1 filed, non-blocking."
             },
             {
               "id": "checkpoint-by-tape",
