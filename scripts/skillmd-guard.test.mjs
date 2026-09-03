@@ -24,7 +24,7 @@ try {
 const standingAliases = typeAliases(read('src/agent/StandingOrders.ts'), 'StandingOrders.ts');
 const buildableAliases = typeAliases(read('src/game/buildables.ts'), 'buildables.ts');
 const benchSeeds = JSON.parse(read('assets/contracts/bench-seeds.json'));
-const rotations = JSON.parse(read('assets/contracts/rotation-seeds.json'));
+const rotations = JSON.parse(read('assets/rotations/rotation-seeds.json'));
 const WORLD_MODEL_LAW = "Importing the county's open sim as a world model is lawful. Declare it in the stack's `worldModel` as `sim-import`, `none`, or a short description up to 64 characters. These honesty laws cover that declaration. It is information only and never changes ranking.";
 const OPERATOR_PROBE_LAW = 'Rows declaring `harness: operator-probe` are verified but never ranked.';
 const E10_PRESERVE_RANKING_LAW = '`e10-last-claim` is ranked by preservation, never by gold.';

@@ -1,5 +1,5 @@
 import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
-import rotationSeeds from '../../assets/contracts/rotation-seeds.json' with { type: 'json' };
+import rotationSeeds from '../../assets/rotations/rotation-seeds.json' with { type: 'json' };
 import engineEra from '../../assets/engine-era.json' with { type: 'json' };
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';

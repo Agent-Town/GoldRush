@@ -8,7 +8,7 @@ import { createServer } from 'vite';
 import { createLedgerServer } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
 import engineEra from '../assets/engine-era.json' with { type: 'json' };
-import rotationSeeds from '../assets/contracts/rotation-seeds.json' with { type: 'json' };
+import rotationSeeds from '../assets/rotations/rotation-seeds.json' with { type: 'json' };
 
 const SECRET = 'assay-worker-test-secret';
 // The season roll (owner 2026-08-15): the county writes in the current season's key shape, and the

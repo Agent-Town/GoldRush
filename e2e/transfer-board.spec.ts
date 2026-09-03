@@ -1,7 +1,7 @@
 import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
-import rotationRegistry from '../assets/contracts/rotation-seeds.json' with { type: 'json' };
+import rotationRegistry from '../assets/rotations/rotation-seeds.json' with { type: 'json' };
 
 const SHOTS = path.resolve('reviews/shots-transfer-board');
 

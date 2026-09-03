@@ -1,12 +1,12 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
-import rotations from '../assets/contracts/rotation-seeds.json' with { type: 'json' };
+import rotations from '../assets/rotations/rotation-seeds.json' with { type: 'json' };
 import atomicContracts from '../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
 import deepwaterContracts from '../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
 import deepskyContracts from '../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
@@ -17,6 +17,17 @@ import redfieldsContracts from '../assets/contracts/epoch-9-redfields/contracts.
 import signalContracts from '../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
 import steamworksContracts from '../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
 import voltageContracts from '../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
+import { ENGINE_SOURCE_INPUTS, computeEngineHash } from './assay-replay-agent.mjs';
+
+const root = fileURLToPath(new URL('../', import.meta.url));
+
+function findRotationRegistries(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const absolute = path.join(directory, entry.name);
+    if (entry.isDirectory()) return findRotationRegistries(absolute);
+    return entry.isFile() && entry.name === 'rotation-seeds.json' ? [absolute] : [];
+  });
+}
 
 const bundles = [
   frontierContracts,
@@ -32,6 +43,17 @@ const bundles = [
 ];
 const allContractIds = bundles.flatMap((bundle) => bundle.contracts.map((contract) => contract.id));
 const knownContractIds = new Set(allContractIds);
+
+test('rotation registry stays outside the engine identity corpus', async () => {
+  const corpusRoot = process.env.ENGINE_CORPUS_ROOT ?? root;
+  const registries = ENGINE_SOURCE_INPUTS
+    .filter((input) => !path.extname(input))
+    .flatMap((input) => findRotationRegistries(path.join(corpusRoot, input)))
+    .map((file) => path.relative(corpusRoot, file));
+  assert.deepEqual(registries, [], `rotation registries inside ENGINE_SOURCE_INPUTS: ${registries.join(', ')}`);
+  const declared = JSON.parse(readFileSync(path.join(corpusRoot, 'assets/engine-era.json'), 'utf8')).engineHash;
+  assert.equal(await computeEngineHash(corpusRoot), declared);
+});
 
 // F-1222-2 (s1222). bench-seeds.json keys on `contractId` ALONE, but the server validates
 // with knownContract(epochId, contractId) — a PAIR. That lookup is only sound because no
