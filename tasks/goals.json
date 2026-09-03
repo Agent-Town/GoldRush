@@ -3898,10 +3898,12 @@
               "id": "unclaimed-contracts-public",
               "title": "Q3 ruled: skill.md marks every door contract claimed/unclaimed from the receipts",
               "taskFile": "unclaimed-contracts-public.md",
-              "status": "queued",
+              "status": "stopped",
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-02"
+              "queuedAt": "2026-09-02",
+              "stopNote": "STOPPED s2464 at the master's own honesty guard, run 20260903-065543 (rc=0, 3m42s, ZERO diff — the WHY is written into the run report, so this is Mistake #1 satisfied, not a Silent No-Op). The runner found the door-contract list in public/skill.md is HAND-MAINTAINED: nothing generates it, so publishing claimed/unclaimed receipt markers into that block would silently rot on the next manual contract-list edit. RE-VERIFIED s2464 rather than inherited (Mistake #4): every reference to public/skill.md across scripts/ is a READ or an assertion — winnability-receipts.mjs:77 readFile, skillmd-guard.test.mjs:13/:55 compares the block against SUPPORTED_CONTRACTS, view-schema-guard.mjs:97 reads it; NO writer exists. NOT re-queueable as written: it needs a PREDECESSOR that establishes a generated-or-pinned contract-list path. Its two runs stopped for DIFFERENT causes (run 1 = lane-safety pre-flight behind the then-undrained e10-preserve-ranking, since merged at 1fefa326a; run 2 = this honesty guard), so §7.5's changed-premise rule was satisfied and this is not an identical retry. The owner's Q3 ruling stands; only the implementation path is open. See F-2464-1.",
+              "stoppedAt": "2026-09-03"
             },
             {
               "id": "kit-guard-generic-damage",
