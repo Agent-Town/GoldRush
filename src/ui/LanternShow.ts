@@ -17,6 +17,11 @@ export const LANTERN_REEL_UNAVAILABLE =
 
 export type AgentRunTape = RunTape & { meta?: { buildId: string; engineHash?: string; era?: number; viewVersion?: number } };
 export type ReelVerdict = { ok: true; tape: AgentRunTape } | { ok: false; reason: 'version' | 'unavailable' };
+const replayEraMeta = new WeakMap<RunTape, NonNullable<AgentRunTape['meta']>>();
+
+export function readReplayEraMeta(tape: RunTape): AgentRunTape['meta'] {
+  return replayEraMeta.get(tape) ?? tape.meta;
+}
 
 /**
  * TAPE-03's half of the version law. A reel arriving from `/api/standings?reel=` is parsed by the
@@ -43,10 +48,12 @@ export function validateAgentRunTape(value: unknown): AgentRunTape | null {
     ? { ...value, meta: { buildId: publicMeta.buildId, ...(publicMeta.viewVersion === undefined ? {} : { viewVersion: publicMeta.viewVersion }) } }
     : value);
   if (!tape) return null;
-  // An engine hash proves a playable era only as a pair; a half-stamp stays honestly unstamped.
-  return publicMeta
+  const normalized = publicMeta
     ? { ...tape, meta: publicMeta.engineHash && publicMeta.era ? publicMeta : { buildId: publicMeta.buildId } }
     : tape;
+  // Keep the normalized public contract while carrying validated stamp evidence to the watch router.
+  if (publicMeta) replayEraMeta.set(normalized, publicMeta);
+  return normalized;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
