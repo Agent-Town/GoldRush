@@ -20,6 +20,16 @@ export class SqliteStorage {
         expires_at INTEGER
       );
       CREATE INDEX IF NOT EXISTS kv_expires_at ON kv(expires_at) WHERE expires_at IS NOT NULL;
+      CREATE TABLE IF NOT EXISTS refusals (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        reason TEXT NOT NULL,
+        contract_id TEXT NOT NULL,
+        anon_id TEXT NOT NULL,
+        profile_name TEXT NOT NULL,
+        refused_at INTEGER NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS refusals_anon_time ON refusals(anon_id, refused_at DESC);
+      CREATE INDEX IF NOT EXISTS refusals_profile_time ON refusals(profile_name, refused_at DESC);
     `);
     this.read = this.db.prepare('SELECT value FROM kv WHERE key = ? AND (expires_at IS NULL OR expires_at > ?)');
     this.write = this.db.prepare(`
@@ -33,6 +43,10 @@ export class SqliteStorage {
       SELECT key AS name FROM kv
       WHERE substr(key, 1, ?) = ? AND key > ?
       ORDER BY key LIMIT ?
+    `);
+    this.insertRefusal = this.db.prepare(`
+      INSERT INTO refusals (reason, contract_id, anon_id, profile_name, refused_at)
+      VALUES (?, ?, ?, ?, ?)
     `);
   }
 
@@ -61,6 +75,23 @@ export class SqliteStorage {
     const keys = rows.slice(0, PAGE_SIZE);
     const list_complete = rows.length <= PAGE_SIZE;
     return { keys, list_complete, ...(list_complete ? {} : { cursor: keys.at(-1).name }) };
+  }
+
+  async recordRefusal(record) {
+    this.insertRefusal.run(record.reason, record.contractId, record.anonId, record.profileName, record.refusedAt);
+  }
+
+  async readRefusals({ rider, profile, limit }) {
+    const column = rider ? 'anon_id' : 'profile_name';
+    const value = rider ?? profile;
+    const counts = Object.fromEntries(this.db.prepare(`
+      SELECT reason, COUNT(*) AS count FROM refusals WHERE ${column} = ? GROUP BY reason ORDER BY reason
+    `).all(value).map((row) => [row.reason, Number(row.count)]));
+    const recent = this.db.prepare(`
+      SELECT reason, contract_id AS contractId, anon_id AS anonId, profile_name AS profileName, refused_at AS refusedAt
+      FROM refusals WHERE ${column} = ? ORDER BY refused_at DESC, id DESC LIMIT ?
+    `).all(value, limit);
+    return { counts, recent };
   }
 
   close() {

@@ -14,6 +14,7 @@ async function loadLedgerRuntime() {
     const vite = await createViteServer({ root: ROOT, configFile: false, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
     try {
       const standings = await vite.ssrLoadModule('/functions/api/standings.ts');
+      const refusals = await vite.ssrLoadModule('/functions/api/refusals.ts');
       const accounts = await vite.ssrLoadModule('/functions/api/_accounts.ts');
       return {
         maxRequestBytes: standings.MAX_JSON_BYTES,
@@ -21,6 +22,8 @@ async function loadLedgerRuntime() {
           '/api/standings': standings.onRequest,
           '/api/standings/assay-queue': standings.onRequestAssayQueue,
           '/api/standings/assay-verdict': standings.onRequestAssayVerdict,
+          '/api/standings/refusals': refusals.onRequest,
+          '/api/refusals': refusals.onRequest,
           '/api/request-code': accounts.requestCode,
           '/api/verify': accounts.verifyCode,
           '/api/session': accounts.sessionStatus,

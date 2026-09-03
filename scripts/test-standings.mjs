@@ -31,10 +31,12 @@ try {
   const { MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
+  const { onRequest: onRequestRefusals } = await vite.ssrLoadModule('/functions/api/refusals.ts');
   httpRoutes = {
     '/api/standings': onRequest,
     '/api/standings/assay-queue': onRequestAssayQueue,
     '/api/standings/assay-verdict': onRequestAssayVerdict,
+    '/api/refusals': onRequestRefusals,
   };
   for (backend of ['kv', 'sqlite']) {
     checks = 0;
@@ -55,6 +57,7 @@ try {
     await checkRetroAssay(onRequest, onRequestAssayQueue);
     await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkAssayStrips(onRequest);
+    await checkRefusals(onRequest, onRequestRefusals);
     console.log(`standings assay ${backend} checks passed (${checks})`);
   }
 } finally {
@@ -62,6 +65,30 @@ try {
   sqliteStores.forEach((store) => store.close());
   await rm(sqliteRoot, { recursive: true, force: true });
   await vite.close();
+}
+
+async function checkRefusals(onRequest, onRequestRefusals) {
+  const kv = makeKv();
+  const rider = '7'.repeat(32);
+  const unsecured = post(rider, 4);
+  unsecured.score.secured = false;
+  equal((await call(onRequest, 'POST', '/api/standings', unsecured, kv)).body.error, 'unsecured', 'an unsecured submission gets its own failure reason');
+  const malformed = post(rider, 4);
+  malformed.seed = '';
+  equal((await call(onRequest, 'POST', '/api/standings', malformed, kv)).body.error, 'bad_payload', 'a malformed submission is refused');
+
+  const byRider = await call(onRequestRefusals, 'GET', `/api/refusals?rider=${rider}`, undefined, kv);
+  equal(byRider.status, 200, 'a rider can read its refusal taxonomy');
+  equal(byRider.body.counts, { bad_payload: 1, unsecured: 1 }, 'refusal counts are grouped by reason');
+  equal(byRider.body.recent.map(({ reason, contractId }) => ({ reason, contractId })).sort((a, b) => a.reason.localeCompare(b.reason)), [
+    { reason: 'bad_payload', contractId: 'the-claim' },
+    { reason: 'unsecured', contractId: 'the-claim' },
+  ], 'recent refusals return reason and contract only');
+  equal(Object.keys(byRider.body.recent[0]).sort(), ['contractId', 'reason', 'refusedAt'], 'the endpoint does not echo rider identity');
+  equal(Number.isSafeInteger(byRider.body.recent[0].refusedAt), true, 'recent refusals carry timestamps');
+  const byProfile = await call(onRequestRefusals, 'GET', '/api/refusals?profile=Assay%20Test', undefined, kv);
+  equal(byProfile.body.counts, byRider.body.counts, 'public profile lookup reads the same taxonomy');
+  console.log(`refusals ${backend} sample ${JSON.stringify(byRider.body)}`);
 }
 
 async function checkPreserveRanking(onRequest, compareScores) {
@@ -864,6 +891,10 @@ function makeKv({ barrierIndexReads = 0, pauseAfterBoardReads = 0 } = {}) {
     : {
         get: async (key) => values.get(key) ?? null,
         put: async (key, value) => { values.set(key, value); },
+        list: async ({ prefix = '', cursor = '' } = {}) => {
+          const keys = [...values.keys()].filter((key) => key.startsWith(prefix) && key > cursor).sort().map((name) => ({ name }));
+          return { keys, list_complete: true };
+        },
       };
   if (backend === 'sqlite') sqliteStores.push(storage);
   const ops = { reads: 0, writes: 0 };
@@ -897,6 +928,8 @@ function makeKv({ barrierIndexReads = 0, pauseAfterBoardReads = 0 } = {}) {
     put: async (key, value, options) => { ops.writes += 1; await storage.put(key, value, options); },
     delete: (key) => storage.delete?.(key),
     list: (options) => storage.list?.(options),
+    ...(storage.recordRefusal ? { recordRefusal: (record) => storage.recordRefusal(record) } : {}),
+    ...(storage.readRefusals ? { readRefusals: (query) => storage.readRefusals(query) } : {}),
   };
 }
 

@@ -11,6 +11,8 @@ import { createServer } from 'vite';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const read = (relative) => readFileSync(path.resolve(root, relative), 'utf8');
 const skill = readFileSync(process.env.SKILLMD_PATH ?? path.resolve(root, 'public/skill.md'), 'utf8');
+const refusalSource = readFileSync(process.env.REFUSALS_SOURCE ?? path.resolve(root, 'functions/api/refusals.ts'), 'utf8');
+const standingsSource = readFileSync(process.env.STANDINGS_SOURCE ?? path.resolve(root, 'functions/api/standings.ts'), 'utf8');
 const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 let supportedContracts;
 try {
@@ -35,6 +37,32 @@ test('skill.md pins the operator-probe ranking law', () => {
 
 test('skill.md pins the E10 preserve ranking law', () => {
   assert.equal(skill.split(E10_PRESERVE_RANKING_LAW).length, 2);
+});
+
+test('every standings submission refusal branch is enumerated', () => {
+  assert.deepEqual(refusalTaxonomy(), refusalBranches());
+});
+
+test('skill.md refusal list matches the executable taxonomy', () => {
+  assert.deepEqual(jsonBlock('refusal-taxonomy').sort(), refusalTaxonomy());
+});
+
+test('the refusal enumeration BITES an unrecorded branch', { skip: process.env.STANDINGS_SOURCE ? 'running as the manufactured-defect child' : false }, () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'refusal-taxonomy-'));
+  const drifted = path.join(dir, 'standings.ts');
+  try {
+    writeFileSync(drifted, standingsSource.replace(
+      "return refuseSubmission(context, cors, body, 400, 'bad_payload', 'Standing not accepted.');",
+      "return error(cors, 400, 'bad_payload', 'Standing not accepted.');",
+    ));
+    const env = { ...process.env, STANDINGS_SOURCE: drifted };
+    delete env.NODE_TEST_CONTEXT;
+    const child = spawnSync(process.execPath, ['--test', fileURLToPath(import.meta.url)], { timeout: 240_000, killSignal: 'SIGKILL', cwd: root, encoding: 'utf8', env });
+    assert.notEqual(child.status, 0, 'dropping a recorded reason did NOT red the enumeration test');
+    assert.match(`${child.stdout}${child.stderr}`, /every standings submission refusal branch is enumerated/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test('skill.md grammar matches every StandingOrder source form', () => {
@@ -105,6 +133,21 @@ test('the guard BITES a drifted skill.md (positive control, manufactured defect)
 function typeAliases(source, filename) {
   const file = ts.createSourceFile(filename, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   return new Map(file.statements.filter(ts.isTypeAliasDeclaration).map((node) => [node.name.text, node.type]));
+}
+
+function refusalTaxonomy() {
+  const block = /SUBMISSION_REFUSAL_REASONS\s*=\s*\[([\s\S]*?)\]\s*as const/.exec(refusalSource);
+  assert.ok(block, 'refusal taxonomy declaration not found');
+  return [...block[1].matchAll(/'([^']+)'/g)].map((match) => match[1]).sort();
+}
+
+function refusalBranches() {
+  const submit = standingsSource.slice(standingsSource.indexOf('async function submitScore'), standingsSource.indexOf('async function refuseSubmission'));
+  assert.doesNotMatch(submit, /return error\(cors,/, 'submission rejection bypasses refusal recording');
+  const direct = [...submit.matchAll(/refuseSubmission\([\s\S]*?,\s*\d+,\s*'([^']+)'/g)].map((match) => match[1]);
+  const reader = standingsSource.slice(standingsSource.indexOf('async function readJson'), standingsSource.indexOf('function corsHeaders'));
+  const readErrors = [...reader.matchAll(/new HttpError\(\d+,\s*'([^']+)'/g)].map((match) => match[1]);
+  return [...new Set([...direct, ...readErrors])].sort();
 }
 
 function expand(node, aliases) {
