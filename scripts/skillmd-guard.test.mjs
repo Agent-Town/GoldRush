@@ -29,6 +29,7 @@ const E10_PRESERVE_RANKING_LAW = '`e10-last-claim` is ranked by preservation, ne
 const COST_RANKING_LAW = 'declared tokens are optional information that never changes ranking.';
 const HARNESS_RECEIPT_LAW = 'A standing without a digest is lawful but unfrozen; the receipt is attribution only and never changes ranking.';
 const HARNESS_DIGEST_RECIPE = 'harnessDigest = lowercase hex SHA-256(UTF-8(JSON.stringify([charterText, notebookGenerationHeader, controllerVersion])))';
+const TAPE_CHECKPOINT_LAW = '**Your tape is your checkpoint.** Resume a solo reel at any recorded tick, answer from that exact state, and `gr-sim` replaces the rest of the reel with the continued ride.';
 
 test('skill.md pins the lawful world-model disclosure', () => {
   assert.equal(skill.split(WORLD_MODEL_LAW).length, 2);
@@ -75,6 +76,11 @@ test('the refusal enumeration BITES an unrecorded branch', { skip: process.env.S
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('skill.md pins the tape checkpoint command', () => {
+  assert.equal(skill.split(TAPE_CHECKPOINT_LAW).length, 2);
+  assert.match(skill, /gr-sim\.mjs --resume ride\.json --to-tick 900 --policy=idle/);
 });
 
 test('skill.md grammar matches every StandingOrder source form', () => {

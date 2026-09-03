@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "8ccbfe165813b81a468e23676903a807b2c91f89a0e4fae813cfdc6a3293969f",
+  "engineHash": "2a06eb514e3037efc403fc59f4540bbca31ef8947ee1e58cd56cf157a5aecd47",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -176,6 +176,12 @@
       "aliases": [],
       "pinnedAt": "2026-09-03T11:25:00+07:00",
       "cause": "harness-receipts merge (s2469): src/agent/DeclaredStack.ts gains two optional stack fields (harnessDigest, harnessRef), computeHarnessDigest() and assembleSelfDeclaredStack(). src/ is inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: the digest is rider-side ATTRIBUTION the sim never reads, both fields are optional and validated shape-only, SCORE_KEYS and compareScores are untouched, and rows without the fields stay valid and rank unchanged. The door and board changes live in functions/ and site/, which are outside the hash corpus. Same era: no view field was removed or renamed and no tape shape was invalidated."
+    },
+    {
+      "engineHash": "2a06eb514e3037efc403fc59f4540bbca31ef8947ee1e58cd56cf157a5aecd47",
+      "aliases": [],
+      "pinnedAt": "2026-09-03T13:45:00+07:00",
+      "cause": "tape-resume merge (s2471): src/replay/AgentTapeReplay.ts gains resumeAt(targetTick), an additive entry point on the shared replay session that advances an existing tape to a tick and hands back the same headless sim. No existing code path changed - the replay of an untouched tape hashes identically (straight = resumed = assay). Content re-hash, no behaviour change."
     }
   ],
   "history": [

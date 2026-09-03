@@ -11,7 +11,7 @@
 import { createInterface } from 'node:readline';
 import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
@@ -22,25 +22,27 @@ const BUILD_ID = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { encodin
 
 // Declared above the first call: `parseArgs` runs at module top level, so a `const`
 // further down is still in its temporal dead zone by then.
-const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty', 'overtime', 'tape', 'science-steps'];
+const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty', 'overtime', 'tape', 'science-steps', 'resume', 'to-tick'];
 const SEAT_KEYS = ['room', 'origin', 'name', 'town', 'party', 'tick-rate', 'max-ticks', 'desync-at', 'strict', 'model', 'harness', 'harness-version', 'harness-ref', 'config', 'source'];
 const DIFFICULTY_VALUES = ['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', 'hard'];
 
 if (process.argv.includes('--help')) {
   process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle] [--overtime] [--science-steps N] [--tape <path>]\n'
+    + '       gr-sim --resume <tape.json> [--to-tick N] [--tape <path>]\n'
     + '       gr-sim --room <code> --origin <url> [--model <id>] [--harness <name>] [--harness-ref <commit-or-url>] [--party 2-4] [--max-ticks N] [--strict]\n\n'
     + 'A seat invited into a browser room rides that browser world: room-served NDJSON views arrive on stdout and stdin order arrays travel as agent_orders acts. --strict still refuses mixed rooms.\n');
   process.exit(0);
 }
 const options = parseArgs(process.argv.slice(2));
+const resumeTape = options.resume ? JSON.parse(await readFile(resolve(options.resume), 'utf8')) : null;
 // A seat cannot pick its own contract: it boots whatever the host already committed the
 // room to, which is why the setup is read BEFORE any game module is loaded.
 const seatSetup = options.room ? await fetchRoomSetup(options.origin, options.room) : null;
 
 const location = new URL('http://gr-sim.local/');
 location.searchParams.set('debug', '');
-location.searchParams.set('contract', seatSetup?.contractId ?? options.contract);
-location.searchParams.set('seed', seatSetup?.seed ?? options.seed);
+location.searchParams.set('contract', seatSetup?.contractId ?? resumeTape?.contract ?? options.contract);
+location.searchParams.set('seed', seatSetup?.seed ?? resumeTape?.seed ?? options.seed);
 globalThis.location = location;
 globalThis.window = { location };
 
@@ -70,23 +72,37 @@ try {
       process.exitCode = 1;
     }
   } else {
-    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
     let difficulty = 'trail';
-    if (options.preset !== undefined || options.difficulty !== undefined || options.tape !== undefined) {
+    let sim;
+    let start;
+    let prefixEntries = [];
+    if (resumeTape) {
+      const { AgentTapeReplaySession } = await vite.ssrLoadModule('/src/replay/AgentTapeReplay.ts');
+      const replay = new AgentTapeReplaySession(resumeTape);
+      const resumeTick = options.toTick ?? Math.max(0, replay.durationTicks - 1);
+      sim = replay.resumeAt(resumeTick);
+      difficulty = resumeTape.difficulty;
+      start = resumeTape.inputLog.start;
+      prefixEntries = resumeTape.inputLog.entries.filter((entry) => entry.t < resumeTick);
+      process.stderr.write(`gr-sim resumed: ${options.resume} at tick ${resumeTick}\n`);
+    } else {
+      const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
       const { Balance, applyDifficultyPreset, normalizeDifficultyPreset } = await vite.ssrLoadModule('/src/game/Balance.ts');
       difficulty = normalizeDifficultyPreset(options.preset ?? options.difficulty);
       if (options.preset !== undefined || options.difficulty !== undefined) {
         applyDifficultyPreset(difficulty);
         process.stderr.write(`gr-sim preset: ${difficulty} enemy.hp=${Balance.enemy.hp}\n`);
       }
+      sim = new HeadlessContractSim({
+        contractId: options.contract,
+        seed: options.seed,
+        mode: options.mode,
+        overtime: options.overtime,
+        scienceSteps: options.scienceSteps,
+      });
+      const turn = sim.currentTurn();
+      start = { x: turn.view.now.hero.x, z: turn.view.now.hero.z };
     }
-    const sim = new HeadlessContractSim({
-      contractId: options.contract,
-      seed: options.seed,
-      mode: options.mode,
-      overtime: options.overtime,
-      scienceSteps: options.scienceSteps,
-    });
     // F-E2S-1: boss fights get six full waves after the later posting boundary.
     const BOSS_GRACE_WAVES = 6;
     const secureWave = sim.manifest.twist.secureWave ?? 20;
@@ -102,7 +118,6 @@ try {
       : createInterface({ input: process.stdin, crlfDelay: Infinity });
     const lines = input?.[Symbol.asyncIterator]();
     let turn = sim.currentTurn();
-    const start = { x: turn.view.now.hero.x, z: turn.view.now.hero.z };
     const submissions = [];
     let endReason;
     while (true) {
@@ -122,12 +137,15 @@ try {
     }
 
     const outcome = { ...sim.outcome(), ...(endReason ? { endReason } : {}) };
-    if (options.tape) await writeAgentTape(vite, resolve(options.tape), sim, outcome, {
-      contract: options.contract,
-      seed: options.seed,
+    const tapePath = options.tape ?? options.resume;
+    if (tapePath) await writeAgentTape(vite, resolve(tapePath), sim, outcome, {
+      contract: resumeTape?.contract ?? options.contract,
+      seed: resumeTape?.seed ?? options.seed,
       difficulty,
       start,
+      prefixEntries,
       submissions,
+      baseTape: resumeTape,
     });
     process.stdout.write(`${JSON.stringify(outcome)}\n`);
     process.stderr.write(`gr-sim speed: ${sim.wavesPerSecond.toFixed(2)} waves/s\n`);
@@ -258,7 +276,8 @@ async function writeAgentTape(vite, path, sim, outcome, run) {
   // moving it earlier would replay into a closed secure window); the elapsed count is the side
   // that was wrong, because this log's timeline runs one tick past the last step it caused.
   const elapsedTicks = Math.round((outcome.timeMs / 1000) * 30);
-  const lastEntryTick = run.submissions.length ? run.submissions[run.submissions.length - 1].t : -1;
+  const entries = [...run.prefixEntries, ...run.submissions.map(({ t, orders }) => ({ t, mx: 0, my: 0, a: [{ kind: 'agent_orders', orders }] }))];
+  const lastEntryTick = entries.length ? entries[entries.length - 1].t : -1;
   const durationTicks = Math.max(elapsedTicks, lastEntryTick + 1);
   const eventLogHash = agentOrdersEventLogHash(sim.standingOrdersSnapshot());
   const contentId = `agent-${stableHash({ contract: run.contract, seed: run.seed, difficulty: run.difficulty, eventLogHash }).slice('fnv1a32:'.length)}`;
@@ -267,28 +286,30 @@ async function writeAgentTape(vite, path, sim, outcome, run) {
   // content id, so two identical runs differ in exactly this field.
   const id = `${contentId}-${randomUUID()}`;
   const tape = {
+    ...(run.baseTape ?? {}),
     version: RUN_TAPE_VERSION,
-    id,
+    id: run.baseTape?.id ?? id,
     createdAt: 0,
     kept: true,
     contract: run.contract,
     seed: run.seed,
     difficulty: run.difficulty,
     simVersion: RUN_TAPE_SIM_VERSION,
-    meta: { buildId: BUILD_ID, engineHash: await computeEngineHash(root), era: engineEra.era, viewVersion: engineEra.viewSchema.version },
+    meta: run.baseTape?.meta ?? { buildId: BUILD_ID, engineHash: await computeEngineHash(root), era: engineEra.era, viewVersion: engineEra.viewSchema.version },
     // Tape v2's declaration (`specs/agent-play/tape-contract.md` §2-§3): the progression this run
     // was born under, captured by the sim at birth rather than re-derived here.
-    runStart: sim.runStart,
+    runStart: run.baseTape?.runStart ?? sim.runStart,
     inputLog: {
+      ...(run.baseTape?.inputLog ?? {}),
       version: 1,
-      name: contentId,
+      name: run.baseTape?.inputLog.name ?? contentId,
       contractId: run.contract,
       seed: run.seed,
       difficultyPreset: run.difficulty,
       stepSeconds: 1 / 30,
       start: run.start,
       durationTicks,
-      entries: run.submissions.map(({ t, orders }) => ({ t, mx: 0, my: 0, a: [{ kind: 'agent_orders', orders }] })),
+      entries,
       truncated: null,
       primarySlot: 0,
       streams: [],
@@ -339,7 +360,11 @@ function parseArgs(args) {
     for (const key of SEAT_KEYS) {
       if (values[key] !== undefined) throw new Error(`--${key} needs --room.`);
     }
-    if (!values.contract) throw new Error('--contract is required.');
+    if (!values.contract && !values.resume) throw new Error('--contract or --resume is required.');
+    if (values.resume && ['contract', 'seed', 'mode', 'preset', 'difficulty', 'overtime', 'science-steps'].some((key) => values[key] !== undefined)) {
+      throw new Error('--resume reads contract, seed, difficulty, and run setup from the tape.');
+    }
+    if (values['to-tick'] !== undefined && !values.resume) throw new Error('--to-tick needs --resume.');
     return {
       contract: values.contract,
       seed: values.seed ?? 'gold-rush',
@@ -350,6 +375,8 @@ function parseArgs(args) {
       overtime: values.overtime === true,
       scienceSteps: integerArg(values, 'science-steps', 0, 0, Number.MAX_SAFE_INTEGER),
       tape: values.tape,
+      resume: values.resume,
+      toTick: integerArg(values, 'to-tick', undefined, 0, Number.MAX_SAFE_INTEGER),
     };
   }
 
@@ -358,7 +385,7 @@ function parseArgs(args) {
   if (values.preset !== undefined || values.difficulty !== undefined) {
     throw new Error('--preset and --difficulty cannot be used with --room; the host room owns difficulty.');
   }
-  for (const key of ['contract', 'seed', 'mode', 'overtime', 'tape', 'science-steps']) {
+  for (const key of ['contract', 'seed', 'mode', 'overtime', 'tape', 'science-steps', 'resume', 'to-tick']) {
     if (values[key] !== undefined) throw new Error(`--${key} is decided by the room; drop it when using --room.`);
   }
   if (!values.origin) throw new Error('--room requires --origin.');
