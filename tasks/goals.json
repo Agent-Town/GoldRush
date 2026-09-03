@@ -3988,23 +3988,24 @@
               "id": "transfer-board",
               "title": "HarnessDev B: weekly held-out seeds, windowed door, generalization cell (spec specs/transfer-board.md; sequenced after harness-receipts)",
               "taskFile": "transfer-board.md",
-              "status": "blocked",
+              "status": "merged",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-03",
-              "blockClass": "gate-side",
-              "blockedReason": "F-2472-3 (s2472 drain, control-proven): the registry path assets/contracts/rotation-seeds.json sits inside ENGINE_SOURCE_INPUTS (assay-replay-agent.mjs:38 is a whole-directory entry), so merging rotates computeEngineHash 2a06eb51 -> 43f54a20 and every existing verified reel is refused reel_not_current at the door. That violates the ratified spec own law L1 ADDITIVE. The runner STOPPED honestly at its own guard and did not return READY-FOR-GATES. NOT an owner fork: superseded by transfer-board-v2-registry-outside-engine-corpus, which relocates the file to assets/rotations/ and restores the hash to base byte-identically (measured). Review reviews/transfer-board.md.",
-              "supersededBy": "transfer-board-v2-registry-outside-engine-corpus"
+              "supersededBy": "transfer-board-v2-registry-outside-engine-corpus",
+              "mergeHash": "639933a3d149192c9f8d3dc3b18c27644d206378",
+              "drainNotes": "F-2472-3 gate-side hold SATISFIED and lifted s2473: the registry moved to assets/rotations/, and computeEngineHash on the merged tree measures 2a06eb51...a5aecd47 == assets/engine-era.json era-5 declared hash, byte-identical to main (control: main measures the same). No reel is refused reel_not_current; spec law L1 ADDITIVE holds. Shipped inside the v2 merge via BUILD-ON-PREDECESSOR. Review reviews/transfer-board-v2-registry-outside-engine-corpus.md."
             },
             {
               "id": "transfer-board-v2-registry-outside-engine-corpus",
               "title": "F-2472-3 cure: the rotation registry moves out of the engine identity corpus so the transfer board is genuinely additive",
               "taskFile": "transfer-board-v2-registry-outside-engine-corpus.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-b",
               "authoredBy": "FIRE-AUTHORED s2472 (attended review welcome)",
               "queuedAt": "2026-09-03",
-              "note": "BUILD-ON-PREDECESSOR master (F-2089-1): extends lane/b @ a7dc8fdab rather than resetting it; declares all 13 held paths, predicate verified held-subset-of-declared 13/13 before queueing."
+              "note": "BUILD-ON-PREDECESSOR master (F-2089-1): extends lane/b @ a7dc8fdab rather than resetting it; declares all 13 held paths, predicate verified held-subset-of-declared 13/13 before queueing.",
+              "mergeHash": "639933a3d149192c9f8d3dc3b18c27644d206378"
             },
             {
               "id": "skillmd-contract-list-generator",
