@@ -333,6 +333,7 @@ async function checkPosts(onRequest) {
   const stored = JSON.parse(await kv.get(KEY));
   equal(stored.length, 1, 'tapeless row survives in KV');
   equal(stored[0].assay, undefined, 'tapeless row is unattested');
+  ok(!Object.hasOwn(stored[0], 'stack'), 'a legacy row remains valid without harness receipt fields');
   const emptyBoard = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(emptyBoard.body.board.length, 0, 'tapeless row is excluded from board');
 
@@ -344,11 +345,19 @@ async function checkPosts(onRequest) {
   equal((await call(onRequest, 'POST', '/api/standings', oversizedDisclosure, kv)).status, 400, 'world-model disclosure is capped at 64 characters');
 
   const taped = post('0'.repeat(32), 20, tape('pending-tape', 20));
+  taped.stack = { model: 'test-model', harness: 'test-rig', harnessVersion: 'v1', harnessDigest: 'c'.repeat(64), harnessRef: 'abcdef1' };
   const pending = await call(onRequest, 'POST', '/api/standings', taped, kv);
   equal(pending.body.rank, 1, 'taped resubmission supersedes unattested row');
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'pending row shows on board');
   equal(board.body.board[0].assay, 'pending', 'pending badge state is exposed');
+  equal(board.body.board[0].harnessDigest, 'c'.repeat(64), 'harness digest reaches the board');
+  equal(board.body.board[0].harnessRef, 'abcdef1', 'harness reference reaches the board');
+  for (const [field, value] of [['harnessDigest', 'nope'], ['harnessRef', 'ftp://example.com/harness']]) {
+    const invalid = post('9'.repeat(32), 10);
+    invalid.stack = { [field]: value };
+    equal((await call(onRequest, 'POST', '/api/standings', invalid, makeKv())).status, 400, `${field} shape is checked`);
+  }
 
   const twin = tape('twin-final-tick', 20, 'fnv1a32:1234abcd', 'e1-twin-banks');
   twin.inputLog.durationTicks = 18_002;

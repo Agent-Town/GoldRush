@@ -43,6 +43,8 @@ type SelfDeclaredStack = {
   model?: string;
   harness?: string;
   harnessVersion?: string;
+  harnessDigest?: string;
+  harnessRef?: string;
   worldModel?: string;
   config?: string;
   source?: string;
@@ -137,8 +139,8 @@ const MAX_WORLD_MODEL_LENGTH = 64;
 const MAX_STACK_COST = 1_000_000_000_000;
 const STACK_TEXT_FIELDS = ['model', 'harness', 'harnessVersion', 'worldModel', 'config'] as const;
 const STACK_COST_FIELDS = ['tokensIn', 'tokensOut', 'calls'] as const;
-const STACK_KEYS = new Set<string>([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source']);
-const STORED_STACK_KEYS = new Set([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source', 'declaredBy']);
+const STACK_KEYS = new Set<string>([...STACK_TEXT_FIELDS, ...STACK_COST_FIELDS, 'source', 'harnessDigest', 'harnessRef']);
+const STORED_STACK_KEYS = new Set([...STACK_KEYS, 'declaredBy']);
 const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack', 'party', 'tape']);
 const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue', 'preserveWavesAlive', 'preserveHpFraction']);
 const PARTY_KEYS = new Set(['riderCount', 'riders']);
@@ -499,6 +501,8 @@ function boardStack(stack?: SelfDeclaredStack): JsonRecord {
     ...(stack.model === undefined ? {} : { model: stack.model }),
     ...(stack.harness === undefined ? {} : { harness: stack.harness }),
     ...(stack.harnessVersion === undefined ? {} : { harnessVersion: stack.harnessVersion }),
+    ...(stack.harnessDigest === undefined ? {} : { harnessDigest: stack.harnessDigest }),
+    ...(stack.harnessRef === undefined ? {} : { harnessRef: stack.harnessRef }),
     ...(stack.worldModel === undefined ? {} : { worldModel: stack.worldModel }),
     ...(stack.source === undefined ? {} : { source: stack.source }),
   };
@@ -581,6 +585,8 @@ function stackCell(row: StoredRow, contractId: string, frontiers: ReadonlyMap<st
     ...(row.stack?.calls === undefined ? {} : { calls: row.stack.calls }),
     ...(row.stack?.harness === undefined ? {} : { harness: row.stack.harness }),
     ...(row.stack?.harnessVersion === undefined ? {} : { harnessVersion: row.stack.harnessVersion }),
+    ...(row.stack?.harnessDigest === undefined ? {} : { harnessDigest: row.stack.harnessDigest }),
+    ...(row.stack?.harnessRef === undefined ? {} : { harnessRef: row.stack.harnessRef }),
     ...(row.stack?.worldModel === undefined ? {} : { worldModel: row.stack.worldModel }),
     ...(row.stack?.config === undefined ? {} : { config: row.stack.config }),
   };
@@ -1005,6 +1011,21 @@ function validateStack(value: unknown, stored = false): SelfDeclaredStack | null
   }
   // Stored rows are season history; never retro-judge version-less harness declarations.
   if (!stored && stack.harness !== undefined && !stack.harnessVersion?.trim()) return null;
+  if (value.harnessDigest !== undefined) {
+    if (typeof value.harnessDigest !== 'string' || !SHA256.test(value.harnessDigest)) return null;
+    stack.harnessDigest = value.harnessDigest;
+  }
+  if (value.harnessRef !== undefined) {
+    if (typeof value.harnessRef !== 'string' || value.harnessRef.length > MAX_STACK_FIELD_LENGTH) return null;
+    if (!/^[a-f0-9]{7,40}$/.test(value.harnessRef)) {
+      try {
+        if (new URL(value.harnessRef).protocol !== 'https:') return null;
+      } catch {
+        return null;
+      }
+    }
+    stack.harnessRef = value.harnessRef;
+  }
   if (value.source !== undefined) {
     if (typeof value.source !== 'string' || value.source.length > MAX_STACK_FIELD_LENGTH) return null;
     try {

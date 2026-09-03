@@ -16,6 +16,28 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 // delete this test's coverage from every fire. See the F-2321-1 row for the measurement.
 const NODE_ENGINES = installedNodeEngines();
 
+test('harness digest pins all three rider-side inputs', async () => {
+  const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { assembleSelfDeclaredStack, computeHarnessDigest, normalizeSelfDeclaredStack } = await vite.ssrLoadModule('/src/agent/DeclaredStack.ts');
+    const first = await computeHarnessDigest('charter text', '## generation 7', 'controller-v3');
+    assert.equal(await computeHarnessDigest('charter text', '## generation 7', 'controller-v3'), first);
+    assert.notEqual(await computeHarnessDigest('charter texu', '## generation 7', 'controller-v3'), first);
+    assert.match(first, /^[a-f0-9]{64}$/);
+    assert.deepEqual(normalizeSelfDeclaredStack({ harness: 'test-rig', harnessVersion: 'controller-v3', harnessDigest: first, harnessRef: 'abcdef1' }), {
+      harness: 'test-rig', harnessVersion: 'controller-v3', harnessDigest: first, harnessRef: 'abcdef1',
+    });
+    assert.deepEqual(await assembleSelfDeclaredStack({
+      model: 'test-model', harness: 'test-rig', harnessVersion: 'controller-v3', harnessRef: 'abcdef1',
+      charterText: 'charter text', notebookGenerationHeader: '## generation 7',
+    }), {
+      model: 'test-model', harness: 'test-rig', harnessVersion: 'controller-v3', harnessRef: 'abcdef1', harnessDigest: first,
+    });
+  } finally {
+    await vite.close();
+  }
+});
+
 const ORDERS = [
   [{ verb: 'HARVEST', seam: 'gold-seam-1' }],
   [{ verb: 'HARVEST', seam: 'gold-seam-2' }],
