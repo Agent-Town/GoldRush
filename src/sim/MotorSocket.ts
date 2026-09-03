@@ -2,6 +2,9 @@ import type * as THREE from 'three';
 import { Vehicle, type VehicleDiagnostics } from '../entities/Vehicle';
 import { Balance } from '../game/Balance';
 import type { ContractManifest, ContractMotorFrontier } from '../meta/ContractFamilies';
+import {
+  MOTOR_EVENT_TAIL, MOTOR_GRADE_REACH, MOTOR_STOP_REACH, type MotorObjectiveKind,
+} from './MotorContract';
 import { ConvoyBehavior, type ConvoyDiagnostics, type ConvoyPathEntity } from '../systems/ConvoyBehavior';
 import { FuelSystem, type FuelDiagnostics } from '../systems/FuelSystem';
 import { RoadNetwork, type RoadNetworkDiagnostics, type RoadSegment } from '../systems/RoadSegment';
@@ -54,20 +57,17 @@ import { WeatherSystem, type WeatherPhase, type WeatherSnapshot } from '../syste
  * (`create` returns null), so no admitted contract's terminal moves.
  */
 
-export const MOTOR_GRADE_VERB = 'GRADE' as const;
-export const MOTOR_HAUL_VERB = 'HAUL' as const;
-/** `DustFlatsTile.gradeRoadAt`'s default reach: the Prospector must stand this close to an ungraded corridor's start. */
-export const MOTOR_GRADE_REACH = 2.5;
-/** The haul stop's reach: the Hauler must come to rest this close to the declared far end. Same figure as the grade reach. */
-export const MOTOR_STOP_REACH = 2.5;
-/** How many motor events THE VIEW carries in its tail; the count of all of them rides beside it. */
-export const MOTOR_EVENT_TAIL = 12;
+// The leaf vocabulary lives in `./MotorContract` so `MechanicsManifest` can read it without dragging
+// this file's `Vehicle`/`FuelSystem` -> `world/Terrain` -> `?raw` graph into Node-only collection.
+// Re-exported here so a reader of the socket still finds them where they expect.
+export {
+  MOTOR_EVENT_TAIL, MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH,
+} from './MotorContract';
+export type { MotorObjectiveKind } from './MotorContract';
 
 type Point = Readonly<{ x: number; z: number }>;
 type Corridor = NonNullable<ContractManifest['tileParams']['roadCorridors']>[number];
 type Hulk = NonNullable<ContractManifest['tileParams']['salvageHulks']>[number];
-
-export type MotorObjectiveKind = 'haul' | 'convoy' | 'deliveries' | 'tow';
 
 export type MotorEvent =
   | { type: 'motor_road_graded'; at: number; corridorId: string; length: number }

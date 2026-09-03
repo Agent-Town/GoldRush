@@ -25,7 +25,9 @@ import { NOISE_HUNT_RULES } from '../systems/NoiseHuntSystem';
 import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 import { HOLLOW_EXTRACTION_RADIUS, HOLLOW_GLOW_DAMAGE_PER_SECOND } from '../systems/HollowCrossingSystem';
-import { MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH } from '../sim/MotorSocket';
+// From the LEAF module, never `../sim/MotorSocket`: that file's graph reaches `world/Terrain` and
+// its `?raw` import, which breaks `playwright --list` for the two specs that import this one.
+import { MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH } from '../sim/MotorContract';
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
