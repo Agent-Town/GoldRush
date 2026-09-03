@@ -176,3 +176,232 @@ function finiteOr(value: number | undefined, fallback: number): number {
 function round3(value: number): number {
   return Math.round(value * 1000) / 1000;
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════════════════
+// E8 — AIR AS THE WALL, the headless-safe consumer (`tasks/e8-mare-claim-physics.md`, 2026-09-03).
+//
+// WHAT IS DECLARED, AND BY WHOM. `e8-mare-claim` authors `tileParams.atmosphere` as
+// `{ airIsWall: true, outsideDomes: 'suit-timer' }` (`assets/contracts/epoch-8-orbital/contracts.json`),
+// three `dome-cluster-pad-*` build zones, and six `harvestAnchors` — the "six regolith harvest
+// grounds across the mare flat" its own briefing promises. The bundle ratified the shape
+// (`specs/epoch-saga/e8-orbital-bundle.md` §B): domes hold atmosphere, breaches drain it on visible
+// dials, and outside the domes the suit timer rules exploration; its objectives name "pan (regolith
+// He-3 runs on suit timers)". Until this consumer, `E8PhysicsSystem` reduced the whole declaration
+// to the `vacuum` flag above and nothing read it (the 2026-09-02 era-mechanic audit: RESKIN).
+//
+// WHAT THIS DOES, HONESTLY BOUNDED. It is a MEASUREMENT of one body against authored rectangles on
+// the fixed step, plus an objective latch. It damages nothing and mints nothing: the browser
+// composes no atmosphere consumer at all (`Game.ts` reads only the gravity profile), so a rule that
+// hurt the body or paid it would put the two engines on different boards for the same orders (the
+// Same Laws law, `CAPABILITY-LADDER.md` L7). What CAN differ without breaking that law is what
+// counts toward the era's objective — and that is all this changes:
+//   · the suit: `SUIT_AIR_SECONDS` of air, draining one second per second outside a breathing dome,
+//     refilling at `SUIT_REFILL_PER_SECOND` inside one;
+//   · the domes: breached while an outlaw stands on the pad (the sheet's "sieger enemies"; debris
+//     rain has no headless hazard on this map and is not modelled), draining over
+//     `DOME_AIR_DRAIN_SECONDS`, sealing back over `DOME_AIR_REFILL_SECONDS` once the pad is clear;
+//   · the regolith run: a pan tick landed on a ground while the suit still holds air WORKS that
+//     ground; a breathless tick is counted and not credited. The claim cannot secure until
+//     `REGOLITH_GROUNDS_FOR_SECURE` of the authored grounds have been worked on suit air
+//     (`objectiveAllowsSecure`), a count published on the view beside the authored total.
+//
+// SCOPED BY ID AND BY DATA, in the `HollowCrossingSystem.create` shape: `e8-eclipse` carries a
+// byte-identical atmosphere block and the same dome pads, and its row on the L1 ladder ("compose
+// gravity/air first, then make the eclipse remove an air/energy route") is its own slice — lifting
+// the id gate is that slice's one-line call, not this one's. Every other contract gets `none()`.
+// ═══════════════════════════════════════════════════════════════════════════════════════════
+
+export const SUIT_AIR_SECONDS = 60;
+export const SUIT_REFILL_PER_SECOND = 4;
+export const DOME_AIR_DRAIN_SECONDS = 45;
+export const DOME_AIR_REFILL_SECONDS = 30;
+export const DOME_ZONE_PREFIX = 'dome-cluster';
+export const AIR_WALL_CONTRACT_IDS: readonly string[] = ['e8-mare-claim'];
+/**
+ * HOW MANY of the authored regolith grounds the claim must have WORKED ON SUIT AIR before it may
+ * secure. One — "the smallest that the contract's briefing already promises"
+ * (`tasks/e8-mare-claim-physics.md` §2), and it is deliberately not six.
+ *
+ * MEASURED, not guessed (`artifacts/e8-mare-claim-physics/mare-claim.log`, 2026-09-04):
+ *   · a floor ride works ground 1 at t=5.3s — one ground is reachable from the starting kit;
+ *   · a HARNESS ride (immortal hero) worked 5 of 6 in 819 seconds and 27 waves and never saw the
+ *     sixth, because only two seams are active at a time and a depleted one respawns on a RANDOM
+ *     open anchor 20s later (`src/systems/HarvestSystem.ts:205,343`, `Balance.goldSeam.respawnSeconds`);
+ *   · no rider has EVER secured this contract — `assets/contracts/winnability-receipts.json` reads
+ *     `{"contractId":"e8-mare-claim","status":"unclaimed"}`.
+ * A six-ground gate would therefore have made a never-yet-won map turn on a coin-flip queue of
+ * respawns, which is the L2 bug class by name ("Unwinnable-by-construction is a bug class, never a
+ * difficulty setting", `specs/epoch-saga/CAPABILITY-LADDER.md:38`). The count is published on the
+ * view as `now.air.regolith.required` beside `grounds`, so raising it later is one line here and a
+ * documented number there — the ladder's next E8 row, once the map authors a dependable air loop.
+ */
+export const REGOLITH_GROUNDS_FOR_SECURE = 1;
+
+type Point = Readonly<{ x: number; z: number }>;
+type Rect = Readonly<{ id: string; minX: number; maxX: number; minZ: number; maxZ: number }>;
+type Sieger = Readonly<{ isAlive: boolean; position: Point }>;
+
+export type E8AtmosphereDiagnostics = Readonly<{
+  declared: boolean;
+  wall: 'suit-timer' | 'suit-only' | null;
+  suit: Readonly<{
+    body: 'prospector';
+    seconds: number;
+    capacity: number;
+    refillPerSecond: number;
+    inDome: string | null;
+    empty: boolean;
+    drainedTotal: number;
+    emptySeconds: number;
+  }>;
+  domes: ReadonlyArray<Readonly<{ id: string; air: number; breached: boolean; breaches: number; siegers: number }>>;
+  regolith: Readonly<{
+    grounds: number;
+    required: number;
+    worked: readonly number[];
+    runsOnAir: number;
+    breathlessPans: number;
+    complete: boolean;
+  }>;
+}>;
+
+type DomeState = { readonly zone: Rect; air: number; breached: boolean; breaches: number; siegers: number };
+
+export class E8AtmosphereSystem {
+  private suitSeconds: number;
+  private inDome: string | null = null;
+  private drainedTotal = 0;
+  private emptySeconds = 0;
+  private runsOnAir = 0;
+  private breathlessPans = 0;
+  private readonly worked = new Set<number>();
+  private readonly domes: DomeState[];
+
+  private constructor(
+    private readonly declared: boolean,
+    private readonly wall: 'suit-timer' | 'suit-only' | null,
+    domes: readonly Rect[],
+    private readonly grounds: number,
+  ) {
+    this.suitSeconds = SUIT_AIR_SECONDS;
+    this.domes = domes.map((zone) => ({ zone, air: 1, breached: false, breaches: 0, siegers: 0 }));
+  }
+
+  /** One read of the CONTRACT, never the epoch — the same rule every era consumer follows. */
+  static create(contract: ContractManifest): E8AtmosphereSystem {
+    const atmosphere = contract.tileParams.atmosphere;
+    const domes = (contract.tileParams.buildZones ?? []).filter(({ id }) => id.startsWith(DOME_ZONE_PREFIX));
+    const grounds = contract.tileParams.harvestAnchors?.length ?? 0;
+    if (
+      !AIR_WALL_CONTRACT_IDS.includes(contract.id)
+      || atmosphere?.airIsWall !== true
+      || atmosphere.outsideDomes !== 'suit-timer'
+      || domes.length === 0
+      || grounds === 0
+    ) return E8AtmosphereSystem.none();
+    return new E8AtmosphereSystem(true, atmosphere.outsideDomes, domes, grounds);
+  }
+
+  static none(): E8AtmosphereSystem {
+    return new E8AtmosphereSystem(false, null, [], 0);
+  }
+
+  get isDeclared(): boolean {
+    return this.declared;
+  }
+
+  /** The latch: true on every contract that declares no air wall, so no admitted terminal moves. */
+  get objectiveAllowsSecure(): boolean {
+    return !this.declared || this.worked.size >= this.required;
+  }
+
+  /** The gate's own number, clamped to what the map actually authors. */
+  private get required(): number {
+    return Math.min(REGOLITH_GROUNDS_FOR_SECURE, this.grounds);
+  }
+
+  /**
+   * One fixed step. Domes first (a sieger on the pad breaches it; a clear pad seals), then the
+   * suit against the dome it stands in. Order matters and is fixed: the suit reads the dials this
+   * step already moved, in both runtimes of this engine.
+   */
+  update(delta: number, body: Point, siegers: readonly Sieger[]): void {
+    if (!this.declared || delta <= 0) return;
+    for (const dome of this.domes) {
+      let count = 0;
+      for (const sieger of siegers) if (sieger.isAlive && inside(dome.zone, sieger.position)) count += 1;
+      const breached = count > 0;
+      if (breached && !dome.breached) dome.breaches += 1;
+      dome.breached = breached;
+      dome.siegers = count;
+      dome.air = breached
+        ? Math.max(0, dome.air - delta / DOME_AIR_DRAIN_SECONDS)
+        : Math.min(1, dome.air + delta / DOME_AIR_REFILL_SECONDS);
+    }
+    const breathing = this.domes.find((dome) => dome.air > 0 && inside(dome.zone, body)) ?? null;
+    this.inDome = breathing?.zone.id ?? null;
+    if (breathing) {
+      this.suitSeconds = Math.min(SUIT_AIR_SECONDS, this.suitSeconds + delta * SUIT_REFILL_PER_SECOND);
+      return;
+    }
+    const drained = Math.min(this.suitSeconds, delta);
+    this.suitSeconds -= drained;
+    this.drainedTotal += drained;
+    if (this.suitSeconds <= 0) this.emptySeconds += delta;
+  }
+
+  /**
+   * A pan tick landed on the ground `anchorIndex`. Credited toward the regolith run only while the
+   * suit holds air; otherwise counted as breathless and NOT credited. Returns whether it counted.
+   */
+  notePan(anchorIndex: number): boolean {
+    if (!this.declared || !Number.isInteger(anchorIndex) || anchorIndex < 0) return false;
+    if (this.suitSeconds <= 0) {
+      this.breathlessPans += 1;
+      return false;
+    }
+    this.runsOnAir += 1;
+    this.worked.add(anchorIndex);
+    return true;
+  }
+
+  get suitEmpty(): boolean {
+    return this.declared && this.suitSeconds <= 0;
+  }
+
+  get diagnostics(): E8AtmosphereDiagnostics {
+    return {
+      declared: this.declared,
+      wall: this.wall,
+      suit: {
+        body: 'prospector',
+        seconds: round3(this.suitSeconds),
+        capacity: SUIT_AIR_SECONDS,
+        refillPerSecond: SUIT_REFILL_PER_SECOND,
+        inDome: this.inDome,
+        empty: this.suitEmpty,
+        drainedTotal: round3(this.drainedTotal),
+        emptySeconds: round3(this.emptySeconds),
+      },
+      domes: this.domes.map((dome) => ({
+        id: dome.zone.id,
+        air: round3(dome.air),
+        breached: dome.breached,
+        breaches: dome.breaches,
+        siegers: dome.siegers,
+      })),
+      regolith: {
+        grounds: this.grounds,
+        required: this.required,
+        worked: [...this.worked].sort((left, right) => left - right),
+        runsOnAir: this.runsOnAir,
+        breathlessPans: this.breathlessPans,
+        complete: this.objectiveAllowsSecure && this.declared,
+      },
+    };
+  }
+}
+
+function inside(zone: Rect, point: Point): boolean {
+  return point.x >= zone.minX && point.x <= zone.maxX && point.z >= zone.minZ && point.z <= zone.maxZ;
+}
