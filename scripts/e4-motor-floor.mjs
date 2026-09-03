@@ -33,50 +33,106 @@ export function motorFloorOrders(view, variant = 'rig') {
   // defend-first: the haul can wait for the works (it only has to land before the Land-Yacht);
   // the turret cannot wait for the haul. Every other variant hauls in the opening thirty seconds.
   const haulNow = variant !== 'defend-first' || (now.works.byKind.turret ?? 0) >= 1 || now.wave >= 4;
-  if (haulNow) orders.push(...motorSteps(now.motor));
+  if (haulNow) orders.push(...motorSteps(now.motor, now.prospector ?? { x: now.hero.x, z: now.hero.z }));
   orders.push(...claimFloor(view, variant));
   return fitToCap(orders);
 }
 
-/** The E4 half. Idempotent against the view: every step already taken is left out. */
-export function motorSteps(motor) {
+/**
+ * The E4 half. Idempotent against the view: every step already taken is left out, so resubmitting
+ * it every turn (which is what a rider does) never re-walks a road it has already walked.
+ *
+ * ROUTE ORDER IS THE WHOLE GAME HERE. The tar and the corridor stake are visited NEAREST-FIRST from
+ * where the Prospector actually stands, because a fixed order costs runs: on the Long Road the
+ * stake is eight units west and the tar is a hundred and seventy east, so "fuel, then grade" walks
+ * seven hundred and fifty units and the town never leaves the west end. Nearest-first walks three
+ * hundred and ninety for the same two errands.
+ */
+export function motorSteps(motor, from = null) {
   if (!motor) return [];
   const steps = [];
-  for (const node of motor.fuel.nodes) {
-    if (node.harvested) continue;
-    // Arrive, step aside, come back: the harvest needs half a second within reach, and a MOVE_TO
-    // completes the instant it arrives, so the dwell is written as three short walks.
-    steps.push(
-      { verb: 'MOVE_TO', pos: { x: node.x, z: node.z } },
-      { verb: 'MOVE_TO', pos: { x: node.x + FUEL_HOP, z: node.z } },
-      { verb: 'MOVE_TO', pos: { x: node.x, z: node.z } },
-    );
-  }
-  if (motor.objective.arrived) return steps;
-  const corridor = motor.roads.corridors.find(({ id }) => id === motor.objective.corridorId);
-  if (!corridor) return steps;
-  const stop = motor.objective.stop;
   const vehicle = motor.vehicle;
-  const near = (point, target) => point && Math.hypot(point.x - target.x, point.z - target.z) <= STAGED_REACH;
-  // Staged: the Hauler already rests at the stake, or is on its way there. Called: it is already
-  // driving to the stop, so the only thing left is to let it arrive.
-  const staged = near(vehicle, corridor.start) || (vehicle.state !== 'idle' && near(vehicle.dispatch, corridor.start));
-  const called = vehicle.state !== 'idle' && near(vehicle.dispatch, stop);
-  if (called) return steps;
-  // The stake is worth a detour only while it still buys something: an ungraded road to grade, or a
-  // Hauler to put on it. When the stop IS the stake (the tow's second leg comes back down the road
-  // it went up) the detour collapses into the call below, and the policy stays idempotent.
-  const stakeIsStop = near(corridor.start, stop);
-  if ((!corridor.graded || !staged) && !stakeIsStop && !corridor.closed) {
-    steps.push({ verb: 'MOVE_TO', pos: { x: corridor.start.x, z: corridor.start.z } });
-    if (!corridor.graded) steps.push({ verb: 'GRADE' });
-    if (!staged) steps.push({ verb: 'HAUL' });
-  } else if (!corridor.graded && stakeIsStop && !corridor.closed) {
-    steps.push({ verb: 'MOVE_TO', pos: { x: corridor.start.x, z: corridor.start.z } }, { verb: 'GRADE' });
+  let at = from ?? { x: vehicle.x, z: vehicle.z };
+  const corridor = motor.objective.arrived ? null : motor.roads.corridors.find(({ id }) => id === motor.objective.corridorId);
+
+  // Errand one: the tar, and the stake if this leg's road still needs grading. Both are "stand
+  // there for a moment" jobs, so they share one nearest-first walk.
+  const chores = motor.fuel.nodes
+    .filter((node) => !node.harvested)
+    .map((node) => ({ kind: 'fuel', pos: { x: node.x, z: node.z } }));
+  if (corridor && !corridor.graded && !corridor.closed) chores.push({ kind: 'grade', pos: corridor.start });
+  while (chores.length > 0) {
+    let best = 0;
+    for (let index = 1; index < chores.length; index += 1) {
+      if (distance(at, chores[index].pos) < distance(at, chores[best].pos)) best = index;
+    }
+    const [chore] = chores.splice(best, 1);
+    if (chore.kind === 'grade') {
+      steps.push({ verb: 'MOVE_TO', pos: { x: chore.pos.x, z: chore.pos.z } }, { verb: 'GRADE' });
+    } else {
+      // Arrive, step aside, come back: the harvest needs half a second within reach, and a MOVE_TO
+      // completes the instant it arrives, so the dwell is written as three short walks.
+      steps.push(
+        { verb: 'MOVE_TO', pos: { x: chore.pos.x, z: chore.pos.z } },
+        { verb: 'MOVE_TO', pos: { x: chore.pos.x + FUEL_HOP, z: chore.pos.z } },
+        { verb: 'MOVE_TO', pos: { x: chore.pos.x, z: chore.pos.z } },
+      );
+    }
+    at = chore.pos;
   }
-  steps.push({ verb: 'MOVE_TO', pos: { x: stop.x, z: stop.z } });
-  steps.push({ verb: 'HAUL' });
+  if (!corridor) return steps;
+
+  const stop = motor.objective.stop;
+  const near = (point, target) => point !== null && point !== undefined && distance(point, target) <= STAGED_REACH;
+  // Called: the Hauler is already driving to the stop, so the only thing left is to let it arrive.
+  if (vehicle.state !== 'idle' && near(vehicle.dispatch, stop)) return steps;
+
+  // Errand two, first half: if the Hauler rests on a graded road that is NOT this leg's road, call
+  // it home down that road before striking out. `HAUL` drives straight lines, so a Hauler left at
+  // the head of one lease crosses open county to the next one at three fuel a second, while the
+  // grade it already paid for would carry it back to the camp end for one-and-a-fifth. This is the
+  // difference between Gusher County delivering one lease and delivering all three.
+  const ridden = motor.roads.corridors.find((entry) => entry.id !== corridor.id && onCorridor(vehicle, entry));
+  if (ridden) {
+    const exit = distance(ridden.start, corridor.start) <= distance(ridden.end, corridor.start) ? ridden.start : ridden.end;
+    const heading = vehicle.state !== 'idle' && near(vehicle.dispatch, exit);
+    if (distance(vehicle, exit) > STAGED_REACH && !heading) {
+      steps.push({ verb: 'MOVE_TO', pos: { x: exit.x, z: exit.z } }, { verb: 'HAUL' });
+      return steps;
+    }
+  }
+
+  // Errand two: put the Hauler ON the road before the long call. `HAUL` is a straight-line drive to
+  // where the Prospector stands, so a Hauler called from off-road crosses country at 9/s and 3
+  // fuel/s while the graded corridor beside it would carry it at 22.5/s for 1.2. Skipped when the
+  // Hauler already rides this leg's road (the Long Road's lead Hauler starts on it) and when the
+  // stake IS the stop (the tow comes back down the road it went up), so no leg walks itself twice.
+  const staged = onCorridor(vehicle, corridor) || near(vehicle, corridor.start)
+    || (vehicle.state !== 'idle' && near(vehicle.dispatch, corridor.start));
+  if (!staged && !near(corridor.start, stop)) {
+    steps.push({ verb: 'MOVE_TO', pos: { x: corridor.start.x, z: corridor.start.z } }, { verb: 'HAUL' });
+  }
+  steps.push({ verb: 'MOVE_TO', pos: { x: stop.x, z: stop.z } }, { verb: 'HAUL' });
   return steps;
+}
+
+function distance(a, b) {
+  return Math.hypot(a.x - b.x, a.z - b.z);
+}
+
+/**
+ * Is the Hauler riding this corridor already? Point-to-segment, with a tolerance a shade over the
+ * road's own `Balance.e4Road.halfWidth` (1.5) because this is a policy heuristic, not a game rule:
+ * being wrong by half a unit costs one redundant call, never a wrong answer.
+ */
+function onCorridor(point, corridor) {
+  if (!corridor.graded) return false;
+  const dx = corridor.end.x - corridor.start.x;
+  const dz = corridor.end.z - corridor.start.z;
+  const lengthSq = dx * dx + dz * dz;
+  if (lengthSq <= 0) return false;
+  const t = Math.min(1, Math.max(0, ((point.x - corridor.start.x) * dx + (point.z - corridor.start.z) * dz) / lengthSq));
+  return Math.hypot(point.x - (corridor.start.x + dx * t), point.z - (corridor.start.z + dz * t)) <= 2;
 }
 
 function fitToCap(orders) {
