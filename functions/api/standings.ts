@@ -81,6 +81,7 @@ type StoredRow = ScoreRow & {
   assayedAt?: number;
   assayHash?: string;
   assayReason?: string;
+  orders?: number;
 };
 
 type AssayLocator = {
@@ -283,6 +284,7 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     if (!row) return error(cors, 404, 'assay_not_found', 'Pending assay not found.');
     row.assay = body.verdict;
     row.assayedAt = Date.now();
+    row.orders = inputEntryCount(row) ?? 0;
     delete row.assayHash;
     if (replayedHash !== null) row.assayHash = replayedHash;
     delete row.assayReason;
@@ -489,6 +491,17 @@ function boardRow(row: StoredRow, index: number): JsonRecord {
     } : {}),
     // A handle to the reel, never the reel: the tape blob is fetched on demand by ?reel=<id>.
     ...(reel ? { reel } : {}),
+    cost: rowCost(row),
+  };
+}
+
+function rowCost(row: StoredRow): JsonRecord {
+  return {
+    orders: row.orders ?? null,
+    calls: row.stack?.calls ?? null,
+    tokensIn: row.stack?.tokensIn ?? null,
+    tokensOut: row.stack?.tokensOut ?? null,
+    durationS: row.timeAlive,
   };
 }
 
@@ -609,11 +622,7 @@ function assayStrip(row: StoredRow, contractId: string, frontiers: ReadonlyMap<s
     era,
     outcome: { secured: true, waves: row.waves, timeAlive: row.timeAlive },
     economy,
-    cost: {
-      ...(row.stack?.tokensIn === undefined ? {} : { tokensIn: row.stack.tokensIn }),
-      ...(row.stack?.tokensOut === undefined ? {} : { tokensOut: row.stack.tokensOut }),
-      ...(row.stack?.calls === undefined ? {} : { calls: row.stack.calls }),
-    },
+    cost: rowCost(row),
   };
 }
 
@@ -639,13 +648,22 @@ function assayEra(submittedAt: number): { id: string; label: string } {
 }
 
 function decisionCount(row: StoredRow): number | undefined {
-  const input = isRecord(row.tape?.inputLog) ? row.tape.inputLog : null;
-  if (!input || !Array.isArray(input.entries)) return undefined;
-  const streams = Array.isArray(input.streams) ? input.streams : [];
-  const entries = [input.entries, ...streams.flatMap((stream) => isRecord(stream) && Array.isArray(stream.entries) ? [stream.entries] : [])].flat();
+  const entries = tapeEntries(row);
+  if (!entries) return undefined;
   const decisions = entries.filter((entry) => isRecord(entry) && Array.isArray(entry.a)
     && entry.a.some((action) => isRecord(action) && action.kind === 'agent_orders')).length;
   return decisions > 0 ? decisions : undefined;
+}
+
+function inputEntryCount(row: StoredRow): number | undefined {
+  return tapeEntries(row)?.length;
+}
+
+function tapeEntries(row: StoredRow): unknown[] | undefined {
+  const input = isRecord(row.tape?.inputLog) ? row.tape.inputLog : null;
+  if (!input || !Array.isArray(input.entries)) return undefined;
+  const streams = Array.isArray(input.streams) ? input.streams : [];
+  return [input.entries, ...streams.flatMap((stream) => isRecord(stream) && Array.isArray(stream.entries) ? [stream.entries] : [])].flat();
 }
 
 // 'h+a', 'h+h+a', 'a+a+a' — humans first so the key is stable however the riders were ordered.
@@ -798,12 +816,14 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   const assayedAt = value.assayedAt === undefined ? undefined : integerInRange(value.assayedAt, 0, Number.MAX_SAFE_INTEGER);
   const assayHash = typeof value.assayHash === 'string' && ASSAY_HASH.test(value.assayHash) ? value.assayHash : undefined;
   const assayReason = typeof value.assayReason === 'string' && value.assayReason.length <= MAX_ASSAY_REASON_LENGTH ? value.assayReason : undefined;
+  const orders = value.orders === undefined ? undefined : integerInRange(value.orders, 0, Number.MAX_SAFE_INTEGER);
   if (submittedAt === null || tape === null || (tape && !tapeMatchesScore(tape, score))) return null;
   if ((!tape && (value.assay !== undefined || value.assayedAt !== undefined || value.assayHash !== undefined || value.assayReason !== undefined))
     || (tape && !assay)
     || (value.assayedAt !== undefined && assayedAt === null)
     || (value.assayHash !== undefined && !assayHash)
     || (value.assayReason !== undefined && assayReason === undefined)
+    || (value.orders !== undefined && orders === null)
     || ((assay === 'verified' || assay === 'rejected') && (assayedAt === undefined || assayHash === undefined))
     || (assay === 'unassayable' && (assayedAt === undefined || assayHash !== undefined || assayReason === undefined))) return null;
   return {
@@ -823,6 +843,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     ...(typeof assayedAt === 'number' ? { assayedAt } : {}),
     ...(assayHash === undefined ? {} : { assayHash }),
     ...(assayReason === undefined ? {} : { assayReason }),
+    ...(typeof orders === 'number' ? { orders } : {}),
   };
 }
 
