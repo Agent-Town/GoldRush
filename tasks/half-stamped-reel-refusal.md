@@ -9,7 +9,7 @@ The watch path chooses the replay engine by whether the tape carries agent order
 
 ## Scope
 1. **Decide the era refusal before choosing the path.** Any tape carrying ANY era stamp (`meta.era` or `meta.engineHash`) is checked by the same `engineEraIncludes` rule the true reel uses; a half-stamped or foreign-era tape is refused with the honest unstamped-era refusal (`data-era-refused="true"`, the existing refusal copy) regardless of which replay path it would have taken. Fully unstamped legacy tapes keep today's behaviour (the tape show), stated in a comment with the reason.
-2. **No weakening:** `e2e/agent-reels.spec.ts:301` turns green on both projects with its assertion unchanged.
+2. **No weakening:** `e2e/agent-reels.spec.ts:301` ("plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal") turns green on both projects with its assertion unchanged.
 3. **Adjacent:** `e2e/agent-reels.spec.ts` (all), `e2e/reel-deep-links.spec.ts`, `e2e/tape-02-lantern-show.spec.ts`, `e2e/c7-standing-order-replay.spec.ts`, `e2e/true-reel-harness.spec.ts` unmodified-green both projects; zero console/page errors; screenshots of the refusal to `reviews/shots-half-stamped-reel-refusal/`.
 
 ## Firewall
