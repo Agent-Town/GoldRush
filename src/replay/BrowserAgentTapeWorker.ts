@@ -7,12 +7,16 @@ worker.onmessage = async ({ data }: MessageEvent<{
   id?: number;
   type?: 'start' | 'advance';
   tape?: unknown;
-  search?: string;
   targetTick?: number;
   stopAfterWave?: number;
 }>) => {
   try {
-    Object.assign(globalThis, { window: { location: new URL(`http://gr-sim.local/${data.search ?? ''}`) } });
+    if (data.tape && typeof data.tape === 'object' && !Array.isArray(data.tape)) {
+      const contract = Reflect.get(data.tape, 'contract');
+      if (typeof contract !== 'string' || !contract) throw new Error('malformed tape');
+      const { stageReplayContract } = await import('../meta/ContractFamilies');
+      stageReplayContract(contract);
+    }
     const { AgentTapeReplaySession, replayAgentTape } = await import('./AgentTapeReplay');
     if (!data.type) {
       worker.postMessage({ result: await replayAgentTape(data.tape) });

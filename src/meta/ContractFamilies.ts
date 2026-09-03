@@ -1322,7 +1322,9 @@ export function clearCharterLaunch(): void {
 }
 
 function activeContractSelection(): { contract: ContractManifest; diagnostics: ActiveContractDiagnostics } {
-  const search = currentSearch();
+  const search = replayContractId === null
+    ? currentSearch()
+    : `?contract=${encodeURIComponent(replayContractId)}`;
   if (activeSelection && activeSelectionSearch === search) return activeSelection;
 
   const contracts = listContracts(DEFAULT_EPOCH_ID);
