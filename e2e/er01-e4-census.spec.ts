@@ -54,6 +54,14 @@ for (const contract of motor.contracts) {
       const rules = manifest.rules as { id: string; source: string; data: Record<string, unknown> }[];
       const ruleIds = rules.map(({ id }) => id);
       const twist = contract.twist as { baron?: { variantId?: string; wave?: number } };
+      const motorTwist = (contract.twist as {
+        motorFrontier?: {
+          haul?: { corridorId: string };
+          convoy?: { corridorId: string };
+          deliveries?: { corridorIds: string[]; closures: boolean };
+          tow?: { hulkId: string };
+        };
+      }).motorFrontier;
       if (twist.baron?.variantId === 'land_yacht') {
         expect(ruleIds).toEqual(expect.arrayContaining([
           'land_yacht_acts', 'land_yacht_crane', 'land_yacht_dread', 'land_yacht_head_loot', 'land_yacht_orbit',
@@ -79,12 +87,34 @@ for (const contract of motor.contracts) {
         // AP-11 species B: fields no booted system reads must NOT be minted. These are the
         // Dust Flats' declared-but-inert layers; if a future author wires one, this fails and
         // the manifest is meant to grow — deliberately, not by accident.
+        //
+        // GROWN DELIBERATELY, 2026-09-03 (`tasks/e4-roads-and-convoys.md`): the headless door now
+        // composes `MotorSocket` wherever `twist.motorFrontier` is declared, so the road corridors
+        // (`camp-to-railhead` is the haul objective) and the weather clock are consumed vocabulary
+        // and the manifest declares them under `motor_*` rules. The ORBIT peel vocabulary, the tar
+        // seams, the dry wash and the haze colour still have no consumer in either engine and stay
+        // forbidden. A contract WITHOUT the motor twist keeps the whole original list.
         const serialized = JSON.stringify(manifest);
-        for (const inert of ['lapsBeforePeel', 'peelSpeed', 'peelPoints', 'north-cut', 'telegraphSeconds', 'tarSeams', 'tar-west', 'roadCorridors', 'camp-to-railhead', 'dryWash', 'stormSeconds', 'hazeColor']) {
+        const stillInert = ['lapsBeforePeel', 'peelSpeed', 'peelPoints', 'north-cut', 'tarSeams', 'tar-west', 'dryWash', 'hazeColor'];
+        const consumedByMotor = ['telegraphSeconds', 'roadCorridors', 'camp-to-railhead', 'stormSeconds'];
+        for (const inert of motorTwist ? stillInert : [...stillInert, ...consumedByMotor]) {
           expect(serialized).not.toContain(inert);
         }
       } else {
         expect(ruleIds.filter((id) => id.startsWith('land_yacht'))).toEqual([]);
+      }
+      // Every Motor map declares one errand and the manifest publishes exactly that one, keyed on
+      // the DATA. A map that ever loses its twist loses these rules with it, which is the point.
+      if (motorTwist) {
+        expect(ruleIds).toEqual(expect.arrayContaining(['motor_roads', 'motor_fuel', 'motor_hauler', 'motor_haul_objective', 'motor_weather']));
+        const kind = (['haul', 'convoy', 'deliveries', 'tow'] as const).find((key) => motorTwist[key] !== undefined);
+        expect(kind).toBeDefined();
+        expect(rules.find(({ id }) => id === 'motor_haul_objective')?.data).toMatchObject({ kind, engines: 'gr-sim' });
+        expect(ruleIds.filter((id) => id === 'motor_haul_objective')).toHaveLength(1);
+        expect(ruleIds.includes('motor_convoy')).toBe(kind === 'convoy');
+        expect(ruleIds.includes('motor_closures')).toBe(motorTwist.deliveries?.closures === true);
+      } else {
+        expect(ruleIds.filter((id) => id.startsWith('motor_'))).toEqual([]);
       }
 
       const admitted = new HeadlessContractSim({ contractId: contract.id, seed: `${contract.id}-census-probe` });

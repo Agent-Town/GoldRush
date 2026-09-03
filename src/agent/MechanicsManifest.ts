@@ -25,6 +25,9 @@ import { NOISE_HUNT_RULES } from '../systems/NoiseHuntSystem';
 import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 import { HOLLOW_EXTRACTION_RADIUS, HOLLOW_GLOW_DAMAGE_PER_SECOND } from '../systems/HollowCrossingSystem';
+// From the LEAF module, never `../sim/MotorSocket`: that file's graph reaches `world/Terrain` and
+// its `?raw` import, which breaks `playwright --list` for the two specs that import this one.
+import { MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH } from '../sim/MotorContract';
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
@@ -328,6 +331,137 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       seconds: Balance.landYacht.dreadSeconds,
       requires: 'a ready watchtower',
     }));
+  }
+  // E4 Motor Frontier (`tasks/e4-roads-and-convoys.md`). Gated on the DATA (`twist.motorFrontier`
+  // beside `twist.weather`), never the contract id. The consumer is `src/sim/MotorSocket.ts`, which
+  // the headless door composes; the browser boot composes no motor consumer today (`Game.ts` mounts
+  // `Vehicle`/`FuelSystem` only under `?debug&vehicles` and `DustFlatsTile` has no importer), and the
+  // `engines` field says so rather than implying a parity that does not exist yet.
+  const motor = twist.motorFrontier;
+  const motorWeather = twist.weather;
+  if (motor && motorWeather) {
+    const corridors = tile.roadCorridors ?? [];
+    const end = (id: string | undefined): { x: number; z: number } => corridors.find((corridor) => corridor.id === id)?.end ?? { x: 0, z: 0 };
+    const start = (id: string | undefined): { x: number; z: number } => corridors.find((corridor) => corridor.id === id)?.start ?? { x: 0, z: 0 };
+    rules.push(rule('motor_roads', 'MotorSocket.gradeAt', {
+      corridors: corridors.map(({ id }) => id).sort(),
+      count: corridors.length,
+      gradeReach: MOTOR_GRADE_REACH,
+      halfWidth: Balance.e4Road.halfWidth,
+      friendlySpeedMultiplier: Balance.e4Road.friendlySpeedMultiplier,
+      friendlyFuelMultiplier: Balance.e4Road.friendlyFuelMultiplier,
+      verb: `${MOTOR_GRADE_VERB} with the Prospector within gradeReach of an ungraded corridor start`,
+      engines: 'gr-sim',
+    }));
+    rules.push(rule('motor_fuel', 'FuelSystem.update', {
+      nodes: Balance.e4Fuel.nodePositions.map(({ x, z }) => ({ x, z })),
+      harvestRange: Balance.e4Fuel.harvestRange,
+      harvestSeconds: Balance.e4Fuel.harvestSeconds,
+      tarPerNode: Balance.e4Fuel.tarPerNode,
+      fuelPerTar: Balance.e4Fuel.fuelPerTar,
+      refineSeconds: Balance.e4Fuel.refineSeconds,
+      capacity: Balance.e4Fuel.capacity,
+      harvestedBy: 'any actor standing within harvestRange for harvestSeconds; the Prospector counts',
+      engines: 'gr-sim',
+    }));
+    rules.push(rule('motor_hauler', 'Vehicle.update', {
+      startX: motor.vehicle.start.x,
+      startZ: motor.vehicle.start.z,
+      speed: Balance.e4Fuel.vehicleSpeed,
+      burnPerSecond: Balance.e4Fuel.burnPerSecond,
+      arriveRadius: Balance.e4Fuel.arriveRadius,
+      stormMovementMultiplier: motorWeather.stormMovementMultiplier,
+      verb: `${MOTOR_HAUL_VERB} drives the Hauler to where the Prospector stands; it halts dry when the tank empties and resumes as tar refines`,
+      engines: 'gr-sim',
+    }));
+    // ONE objective rule, whichever of the four this map declares, all under the same id so a rider
+    // reads the errand from one place and `kind` tells it which errand this is.
+    if (motor.haul) {
+      rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+        kind: 'haul',
+        corridorId: motor.haul.corridorId,
+        label: motor.haul.label,
+        stopX: end(motor.haul.corridorId).x,
+        stopZ: end(motor.haul.corridorId).z,
+        stopReach: MOTOR_STOP_REACH,
+        requires: 'the Hauler at rest within stopReach of the stop; on a boss contract, before the boss falls',
+        engines: 'gr-sim',
+      }));
+    }
+    if (motor.convoy) {
+      const route = tile.convoyRoute ?? [];
+      const far = route[route.length - 1] ?? { x: 0, z: 0 };
+      rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+        kind: 'convoy',
+        corridorId: motor.convoy.corridorId,
+        label: motor.convoy.label,
+        stopX: far.x,
+        stopZ: far.z,
+        stopReach: MOTOR_STOP_REACH,
+        requires: 'the convoy at the far end of tileParams.convoyRoute; it gains exactly the ground the lead Hauler gains toward that stop and never the ground it gives back',
+        engines: 'gr-sim',
+      }));
+    }
+    if (motor.deliveries) {
+      rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+        kind: 'deliveries',
+        corridorIds: [...motor.deliveries.corridorIds],
+        label: motor.deliveries.label,
+        stops: motor.deliveries.corridorIds.map((id) => ({ corridorId: id, x: end(id).x, z: end(id).z })),
+        stopReach: MOTOR_STOP_REACH,
+        closures: motor.deliveries.closures,
+        requires: 'the Hauler at rest within stopReach of every lease road end, each while that road is open',
+        engines: 'gr-sim',
+      }));
+      if (motor.deliveries.closures) {
+        rules.push(rule('motor_closures', 'MotorSocket.syncClosures', {
+          corridorIds: [...motor.deliveries.corridorIds],
+          closedWhile: 'weather.phase === storm',
+          picks: 'corridorIds[weather.cycle % corridorIds.length]',
+          effect: 'no road bonus on the closed lease and no delivery through it; the road is not a wall',
+          engines: 'gr-sim',
+        }));
+      }
+    }
+    if (motor.tow) {
+      const hulk = (tile.salvageHulks ?? []).find(({ id }) => id === motor.tow!.hulkId);
+      rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+        kind: 'tow',
+        corridorId: motor.tow.corridorId,
+        label: motor.tow.label,
+        hulkId: motor.tow.hulkId,
+        hulkKind: hulk?.kind ?? 'unknown',
+        hulkX: hulk?.x ?? 0,
+        hulkZ: hulk?.z ?? 0,
+        stopX: start(motor.tow.corridorId).x,
+        stopZ: start(motor.tow.corridorId).z,
+        stopReach: MOTOR_STOP_REACH,
+        requires: 'the Hauler at rest by the hulk to hitch it, then at rest at the gate end of the road to deliver it',
+        engines: 'gr-sim',
+      }));
+    }
+    rules.push(rule('motor_weather', 'WeatherSystem.sample', {
+      cycleSeconds: motorWeather.cycleSeconds,
+      clearSeconds: motorWeather.clearSeconds,
+      telegraphSeconds: motorWeather.telegraphSeconds,
+      stormSeconds: motorWeather.stormSeconds,
+      stormMovementMultiplier: motorWeather.stormMovementMultiplier,
+      stormVisibilityMultiplier: motorWeather.stormVisibilityMultiplier,
+      slows: ['hauler', 'convoy', 'enemies'],
+      visibility: 'rider-visible only; no simulation consumer',
+      engines: 'gr-sim',
+    }));
+    if (motor.convoy) {
+      rules.push(rule('motor_convoy', 'ConvoyBehavior.update', {
+        members: motor.convoy.members,
+        label: motor.convoy.label,
+        spacing: Balance.convoy.spacing,
+        catchupMultiplier: Balance.convoy.catchupMultiplier,
+        route: 'tileParams.convoyRoute',
+        advances: 'by the lead Hauler own gain toward the far stop, never by a clock',
+        engines: 'gr-sim',
+      }));
+    }
   }
   // --- E5 Deepwater. Gated exactly as the browser's `createDeepwaterClaimTile` consumer.
   const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta'

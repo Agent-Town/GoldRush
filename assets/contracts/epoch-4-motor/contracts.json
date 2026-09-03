@@ -72,6 +72,11 @@
       },
       "twist": {
         "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Dust Flats ride: fuel the Hauler at the camp's three tar nodes, grade the surveyed corridors from their stakes, and haul to the railhead through the storms. The claim cannot be secured until the Hauler rests at the railhead, and on this map that has to happen before the Land-Yacht falls.",
+          "vehicle": { "start": { "x": -20, "z": -8 } },
+          "haul": { "corridorId": "camp-to-railhead", "label": "the railhead" }
+        },
         "weather": {
           "cycleSeconds": 30,
           "clearSeconds": 6,
@@ -197,6 +202,11 @@
       },
       "twist": {
         "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Long Road ride: the town IS the convoy. Grade the long road from its west stake, fuel the lead Hauler at the tar nodes by the middle way-station, then walk east ahead of it. The town gains exactly the ground the lead Hauler gains toward the far railhead and never the ground it gives back, and 380 units of ungraded road costs far more fuel than the county owns.",
+          "vehicle": { "start": { "x": -180, "z": 0 } },
+          "convoy": { "members": 3, "label": "the far railhead", "corridorId": "the-long-road" }
+        },
         "weather": {
           "cycleSeconds": 30,
           "clearSeconds": 6,
@@ -313,6 +323,15 @@
       },
       "twist": {
         "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Gusher County ride: three lease roads run out of the County Camp and the Hauler has to reach the head of every one. Each storm washes out one lease by the county's own weather clock, carrying no road bonus and taking no delivery while it blows, so ride the open leases first and come back for the closed one when it reopens.",
+          "vehicle": { "start": { "x": -12, "z": -10 } },
+          "deliveries": {
+            "corridorIds": ["camp-to-west-lease", "camp-to-east-lease", "camp-to-north-lease"],
+            "label": "the three lease heads",
+            "closures": true
+          }
+        },
         "weather": {
           "cycleSeconds": 30,
           "clearSeconds": 6,
@@ -412,6 +431,11 @@
       },
       "twist": {
         "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Boneyard ride: one spent boiler comes down to the Gate Camp on the Hauler's hook. Grade the west gate road, fuel at the tar nodes between the rows, hitch the boiler where it lies, and bring it back. A storm does not stop the tow; it makes the same distance cost more fuel, because the Hauler burns by the second and a storm stretches every second out.",
+          "vehicle": { "start": { "x": 0, "z": -40 } },
+          "tow": { "hulkId": "spent-boiler-west", "corridorId": "gate-to-west-rows", "label": "the Gate Camp" }
+        },
         "weather": {
           "cycleSeconds": 40,
           "clearSeconds": 10,
