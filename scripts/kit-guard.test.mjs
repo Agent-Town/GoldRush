@@ -40,12 +40,15 @@ for (const contractId of doorIds) {
 
 test.after(() => {
   const unique = new Map(rows.map((row) => [`${row.name}\0${row.bolt}\0${row.blast}`, row]));
+  const assertingContracts = new Set(rows.map((row) => row.contractId));
+  const zeroContracts = doorIds.filter((contractId) => !assertingContracts.has(contractId));
   console.log('\nkind | bolt | blast | evidence');
   console.log('--- | --- | --- | ---');
   for (const row of [...unique.values()].sort((a, b) => a.name.localeCompare(b.name))) {
     console.log(`${row.name} | ${verdict(row.bolt)} | ${verdict(row.blast)} | ${row.source}; ${COMBAT_PATH}:${lineOf(combatSource, 'enemy.takeDamage(damage)')}/${lineOf(combatSource, 'enemy.takeDamage(damage);', combatSource.indexOf('private resolveBoltHits'))}; ${ENEMY_PATH}:${lineOf(enemySource, 'takeDamage(amount: number)')}`);
   }
   console.log(`kit-guard: ${doorIds.length} door contracts, ${rows.length} fielded contract-kind paths, ${unique.size} distinct damage rows`);
+  console.log(`kit-guard coverage: ${assertingContracts.size} asserting / ${zeroContracts.length} zero; zero: ${zeroContracts.join(', ') || 'none'}`);
 });
 
 function damageRatio(kind, weapon) {
@@ -206,7 +209,9 @@ async function readDoorIds() {
   const skill = await readFile('public/skill.md', 'utf8');
   const match = skill.match(/<!-- skillmd-guard:door-contracts:start -->\s*```json\s*([\s\S]*?)\s*```\s*<!-- skillmd-guard:door-contracts:end -->/);
   assert.ok(match, 'public/skill.md door-contracts block not found');
-  return JSON.parse(match[1]);
+  const ids = JSON.parse(match[1]);
+  assert.ok(ids.length > 0, 'public/skill.md skillmd-guard:door-contracts block is empty');
+  return ids;
 }
 
 async function readContracts() {
