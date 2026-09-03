@@ -4,6 +4,8 @@ import { expect, test } from '@playwright/test';
 
 const fixturePath = 'artifacts/eh2-fixture/tape.json';
 const fixture = JSON.parse(readFileSync(fixturePath, 'utf8'));
+const hillMinePath = 'artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json';
+const hillMine = JSON.parse(readFileSync(hillMinePath, 'utf8'));
 
 test('the browser replays the assayer fixture to the claimed and node hashes', async ({ page }) => {
   test.setTimeout(120_000);
@@ -31,4 +33,28 @@ test('the browser replays the assayer fixture to the claimed and node hashes', a
   expect(browser.ticks).toBe(node.ticks);
   expect(errors).toEqual([]);
   console.log(`[eh2] claimed=${fixture.eventLogHash} node=${node.eventLogHash} browser=${browser.eventLogHash} browserWallMs=${browser.wallMs}`);
+});
+
+test('the module worker takes Hill Mine from the tape without a page location', async ({ page }) => {
+  test.setTimeout(120_000);
+  const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', hillMinePath], {
+    encoding: 'utf8',
+    timeout: 120_000,
+  }));
+  await page.goto('/src/replay/harness.html?debug&contract=the-claim');
+  const browser = await page.evaluate((tape) => new Promise<any>((resolve, reject) => {
+    const worker = new Worker('/src/replay/BrowserAgentTapeWorker.ts', { type: 'module' });
+    worker.onmessage = ({ data }) => {
+      worker.terminate();
+      if (data.error) reject(new Error(data.error));
+      else resolve(data.result);
+    };
+    worker.onerror = ({ message }) => reject(new Error(message));
+    worker.postMessage({ tape });
+  }), hillMine);
+
+  expect(browser.eventLogHash).toBe(node.eventLogHash);
+  expect(browser.eventLogHash).toBe(hillMine.eventLogHash);
+  expect(browser.outcome).toEqual(node.outcome);
+  console.log(`[hill-mine-worker] claimed=${hillMine.eventLogHash} node=${node.eventLogHash} browser=${browser.eventLogHash}`);
 });

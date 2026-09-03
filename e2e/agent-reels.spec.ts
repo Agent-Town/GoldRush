@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
@@ -10,6 +11,7 @@ import { trueReelTerrain } from '../src/ui/TrueReelTerrain';
 const FIXTURE_PATH = path.resolve('artifacts/eh3-fixture/tape.json');
 const HEAT_7_CROWN_PATH = path.resolve('artifacts/gauntlet-heat7-20260830/baron/run-1-tape.json');
 const HUD_FIXTURE_PATH = path.resolve('artifacts/gauntlet-heat6-guests-r2-20260825/openclaw/hill-mine/attempt-3.tape.json');
+const HILL_MINE_CROWN_PATH = path.resolve('artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json');
 const SHOT_DIR = path.resolve('reviews/shots-true-reel-sprites');
 const ERA_SHOT_DIR = path.resolve('reviews/shots-reel-era');
 const ERA_FIVE_SHOT_DIR = path.resolve('reviews/shots-era-five');
@@ -298,6 +300,25 @@ test('plain town board WATCH plays an era-current reel without debug', async ({ 
   expect(errors).toEqual([]);
 });
 
+test('the Hill Mine crown keeps its tape contract through a landing link and the town board', async ({ page }) => {
+  test.setTimeout(180_000);
+  const tape = await currentEraTape(HILL_MINE_CROWN_PATH);
+  const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', HILL_MINE_CROWN_PATH], {
+    encoding: 'utf8', timeout: 120_000,
+  }));
+  const errors = collectErrors(page);
+  await page.route(`${GAME_API_ORIGIN}/api/standings**`, (route) => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ ok: true, reel: tape }),
+  }));
+  await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=the-claim&epoch=epoch-1-frontier`);
+  await assertHillMineReel(page, tape, node.eventLogHash, true);
+  await page.getByTestId('lantern-close').click();
+
+  errors.push(...await openBoardReel(page, tape));
+  await assertHillMineReel(page, tape, node.eventLogHash);
+  expect(errors).toEqual([]);
+});
+
 test('plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const tape = await currentEraTape();
@@ -376,6 +397,23 @@ function probe(page: Page): Promise<any> {
     const raw = document.querySelector<HTMLElement>('[data-testid="lantern-show"]')?.dataset.trueReelProbe;
     return raw ? JSON.parse(raw) : null;
   });
+}
+
+async function assertHillMineReel(page: Page, tape: any, nodeHash: string, finish = false): Promise<void> {
+  const world = page.getByTestId('lantern-true-world');
+  await expect(world.locator('[data-replay-terrain="e2-hill-mine"]')).toBeVisible();
+  await expect(world.locator('[data-terrain-feature="identity"]')).toContainText('Hill Mine');
+  await expect.poll(async () => (await probe(page))?.contract?.id).toBe('e2-hill-mine');
+  expect((await probe(page)).contract).toEqual({ id: 'e2-hill-mine', tileId: 'e2-hill-mine', width: 96, height: 96 });
+  if (!finish) return;
+  for (let wave = 1; wave <= tape.outcome.waves && await page.getByTestId('lantern-show').getAttribute('data-playback') !== 'complete'; wave += 1) {
+    await page.getByTestId('lantern-wave-skip').click();
+    await expect.poll(async () =>
+      await page.getByTestId('lantern-show').getAttribute('data-playback') === 'complete'
+        || ((await probe(page))?.wave ?? -1) >= wave, { timeout: 20_000 }).toBe(true);
+  }
+  await expect(page.getByTestId('lantern-show')).toHaveAttribute('data-playback', 'complete', { timeout: 20_000 });
+  await expect(page.getByTestId('lantern-playback-status')).toHaveAttribute('data-hash', nodeHash);
 }
 
 async function frameP95(page: Page): Promise<number> {

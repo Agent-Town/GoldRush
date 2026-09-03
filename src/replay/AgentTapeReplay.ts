@@ -7,6 +7,7 @@ import {
 } from '../game/RunTape';
 import { saveMetaProgress } from '../game/MetaProgress';
 import { saveResearchState } from '../meta/ResearchTree';
+import { stageReplayContract } from '../meta/ContractFamilies';
 import { stableHash } from '../mp/LockstepClient';
 import { isAgentOrdersAction } from '../playbook/PlaybookFormat';
 import { FakeStorage } from '../sim/FakeStorage';
@@ -22,6 +23,7 @@ export type AgentTapeReplayResult = {
 };
 
 export type AgentTapeReplaySnapshot = {
+  contract: { id: string; tileId: string; width: number; height: number };
   tick: number;
   wave: number;
   timeAlive: number;
@@ -68,6 +70,7 @@ export class AgentTapeReplaySession {
     if (tape.inputLog.streams.length > 0) throw new Error('an agent tape carries no additional streams');
 
     applyDifficultyPreset(normalizeDifficultyPreset(tape.difficulty));
+    stageReplayContract(tape.contract);
     this.durationTicks = tape.inputLog.durationTicks;
     this.sim = bootDeclaredRun(tape);
     this.orders = ordersByTick(tape);
@@ -141,6 +144,12 @@ export class AgentTapeReplaySession {
       if (!aliveIds.has(id) && this.tick - enemy.lastSeen > 15) this.recentEnemies.delete(id);
     }
     return {
+      contract: {
+        id: this.sim.manifest.id,
+        tileId: this.sim.manifest.tileParams.tileId,
+        width: this.sim.manifest.tileParams.dimensions?.width ?? this.sim.manifest.tileParams.size ?? 64,
+        height: this.sim.manifest.tileParams.dimensions?.height ?? this.sim.manifest.tileParams.size ?? 64,
+      },
       tick: this.tick,
       wave: internal.waves.diagnostics.wave,
       timeAlive: internal.timeAlive,
