@@ -53,6 +53,14 @@ function mirrorDir(spec) {
   return dir;
 }
 
+function mirrorWith(sql) {
+  const dir = keep(mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-tables-')));
+  const db = new DatabaseSync(path.join(dir, 'ledger-2026-09-03.db'));
+  db.exec(sql);
+  db.close();
+  return dir;
+}
+
 function run(dir, extra = [], script = SUBJECT) {
   return spawnSync(process.execPath, [script, '--dir', dir, ...extra], { timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8' });
 }
@@ -122,6 +130,24 @@ test('the corpus is DECLARED even on the happy path — "0 account rows" must no
   assert.match(r.stdout, /corpus\s+: read \(1 mirror\(s\), 1 read, 0 unreadable\)/);
   assert.match(r.stdout, /keys inspected\s+: 3/);
   assert.match(r.stdout, /account-class rows\s+: 0/);
+});
+
+test('an unmapped table without `key` is NAMED as skipped on the happy path', () => {
+  const r = run(mirrorWith('create table weather (forecast text); insert into weather values (\'sunny\')'));
+  assert.equal(r.status, 0);
+  assert.match(r.stdout, /tables inspected\s+: ledger-2026-09-03\.db:weather\[SKIPPED: no declared columns\]/);
+  assert.match(r.stdout, /✅ CLEAN/);
+});
+
+test('mapped refusals identity columns are declared and catch an exposed account identity', () => {
+  const r = run(mirrorWith(`
+    create table refusals (anon_id text, profile_name text);
+    insert into refusals values ('session:exposed-rider', 'County Rider');
+  `));
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /refusals\[anon_id,profile_name\]/);
+  assert.match(r.stdout, /session:exposed-rider/);
+  assert.match(r.stdout, /ACCOUNT DATA IN A PLAINTEXT MIRROR/);
 });
 
 test('an UNRECOGNISED key class warns and does NOT refuse by default', () => {
@@ -280,4 +306,16 @@ test('MANUFACTURED: dropping the always-on declaration reds the F-2208-1 arm', (
   const r = runVariant(v, mirrorDir(CLEAN));
   assert.doesNotMatch(r.stdout, /keys inspected/,
     'the variant must lose the declaration — else that arm proves nothing');
+});
+
+test('MANUFACTURED: removing the refusals map recreates the blind spot', () => {
+  const v = variantOf(
+    "const TABLE_IDENTITY_COLUMNS = { refusals: ['anon_id', 'profile_name'] };",
+    'const TABLE_IDENTITY_COLUMNS = {};');
+  const r = runVariant(v, mirrorWith(`
+    create table refusals (anon_id text, profile_name text);
+    insert into refusals values ('session:exposed-rider', 'County Rider');
+  `));
+  assert.equal(r.status, 0, 'without the map the exposed identity is missed');
+  assert.match(r.stdout, /refusals\[SKIPPED: no declared columns\]/);
 });

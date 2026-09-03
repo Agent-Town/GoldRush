@@ -102,6 +102,10 @@ const ACCOUNT_PREFIXES = ['account:', 'attempts:', 'code:', 'ratelimit:', 'save:
 // The county-standings classes the gate explicitly calls fine in plaintext.
 const SAFE_PREFIXES = ['standings:', 'assay-', 'assay:'];
 
+// Non-KV tables whose identity-bearing columns must pass through the same
+// account-prefix classifier as `key` values. Anything else is declared SKIPPED.
+const TABLE_IDENTITY_COLUMNS = { refusals: ['anon_id', 'profile_name'] };
+
 const DEFAULT_DIR = fileURLToPath(new URL('../artifacts/ledger-backups/', import.meta.url));
 
 function parseArgs(argv) {
@@ -137,15 +141,20 @@ function readMirror(file, DatabaseSync) {
       const tables = db.prepare("select name from sqlite_master where type='table'")
         .all().map(r => r.name).sort();
       const keys = [];
+      const inspections = [];
       for (const t of tables) {
-        // Only tables that actually carry a `key` column are key-value shaped.
         const cols = db.prepare(`pragma table_info(${JSON.stringify(t)})`).all().map(c => c.name);
-        if (!cols.includes('key')) continue;
-        for (const row of db.prepare(`select key from ${JSON.stringify(t)}`).all()) {
-          if (typeof row.key === 'string') keys.push(row.key);
+        const harvested = cols.includes('key')
+          ? ['key']
+          : (TABLE_IDENTITY_COLUMNS[t] ?? []).filter(column => cols.includes(column));
+        inspections.push({ table: t, columns: harvested });
+        for (const column of harvested) {
+          for (const row of db.prepare(`select ${JSON.stringify(column)} as value from ${JSON.stringify(t)}`).all()) {
+            if (typeof row.value === 'string') keys.push({ table: t, column, key: row.value });
+          }
         }
       }
-      return { file, state: 'read', tables, keys };
+      return { file, state: 'read', tables: inspections, keys };
     } finally {
       db.close();
     }
@@ -189,7 +198,8 @@ async function main(argv) {
 
   const readable = result.mirrors.filter(m => m.state === 'read');
   const unreadable = result.mirrors.filter(m => m.state === 'unreadable');
-  const allKeys = readable.flatMap(m => m.keys.map(k => ({ file: path.basename(m.file), key: k })));
+  const allKeys = readable.flatMap(m => m.keys.map(k => ({ file: path.basename(m.file), ...k })));
+  const tableInspections = readable.flatMap(m => m.tables.map(t => ({ file: path.basename(m.file), ...t })));
   const account = allKeys.filter(k => classifyKey(k.key) === 'account');
   const unrecognised = allKeys.filter(k => classifyKey(k.key) === 'unrecognised');
 
@@ -201,6 +211,7 @@ async function main(argv) {
       read: readable.length,
       unreadable: unreadable.length,
       keys: allKeys.length,
+      tables: tableInspections,
       accountRows: account.length,
       unrecognisedRows: unrecognised.length,
       account,
@@ -213,6 +224,8 @@ async function main(argv) {
     console.log(`  corpus                  : ${result.corpus} (${result.mirrors.length} mirror(s), ` +
       `${readable.length} read, ${unreadable.length} unreadable)`);
     console.log(`  dir                     : ${result.dir}`);
+    console.log(`  tables inspected        : ${tableInspections.map(t =>
+      `${t.file}:${t.table}[${t.columns.length ? t.columns.join(',') : 'SKIPPED: no declared columns'}]`).join('; ') || 'none'}`);
     console.log(`  keys inspected          : ${allKeys.length}`);
     console.log(`  account-class rows      : ${account.length}`);
     console.log(`  unrecognised rows       : ${unrecognised.length}`);
