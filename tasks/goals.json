@@ -4029,6 +4029,24 @@
               "mergeHash": "54ad83927f0325b25bb78e5c4a1df67a821047b9",
               "drainedBy": "s2471 2026-09-03",
               "drainNotes": "Merged 54ad83927. gr-sim --resume/--to-tick replays through the shared AgentTapeReplaySession and continues the same tape; straight and resumed tapes are byte-identical and the assayer and the door both accept the resumed reel. Era 5 gained pin 2a06eb514e3037efc403fc59f4540bbca31ef8947ee1e58cd56cf157a5aecd47 (lineage append, era unchanged) - teeth proven by manufacturing the defect: without it engine-era-guard reds 1 of 5. Two conflicts resolved: gr-sim.mjs by union, skillmd-guard.test.mjs at the syntactic boundary (F-2469-1 shape, second consecutive fire) verified by node --check plus set algebra 13 union 10 = 14. Review reviews/tape-resume.md. F-2471-1 filed non-blocking: e2e/agent-reels.spec.ts:301 is RED on main too (control-proven), because Game.ts:7033 routes an era-less tape away from the only site that computes the refusal."
+            },
+            {
+              "id": "half-stamped-reel-refusal",
+              "title": "F-2471-1: a half-stamped tape gets its honest era refusal instead of playing on the legacy path",
+              "taskFile": "half-stamped-reel-refusal.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-03"
+            },
+            {
+              "id": "ledger-exposure-guard-declares-tables",
+              "title": "F-2470-1: the mirror-exposure guard declares inspected tables and names the ones it cannot see",
+              "taskFile": "ledger-exposure-guard-declares-tables.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-03"
             }
           ]
         }
