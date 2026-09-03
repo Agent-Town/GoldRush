@@ -78,6 +78,30 @@
       "fingerprint": "290a72ce62f4",
       "excerpt": "elif ( cd \"$wt\" && git reset --hard main >/dev/null 2>&1 && git clean -fd >/dev/null 2>&1 ); then"
     },
+    "scripts/fire.md -> lane-runner-v3.sh:11": {
+      "target": "scripts/lane-runner-v3.sh",
+      "line": 11,
+      "fingerprint": "0eca6a2cf7d8",
+      "excerpt": "git -C \"$1\" status --porcelain=v1 -z --untracked-files=all -- . \\"
+    },
+    "scripts/fire.md -> art-staging-audit.mjs:439": {
+      "target": "scripts/art-staging-audit.mjs",
+      "line": 439,
+      "fingerprint": "00e54682a534",
+      "excerpt": "for (const line of git('status', '--porcelain', '--untracked-files=all', '--', 'assets/').split('\\n'"
+    },
+    "scripts/fire.md -> lane-usable.mjs:505": {
+      "target": "scripts/lane-usable.mjs",
+      "line": 505,
+      "fingerprint": "9c5e3050955d",
+      "excerpt": "` tracked-dirt=${r.dirt.tracked.length} untracked=${r.dirt.untracked.length}${r.busy ? ' BUSY' : ''}"
+    },
+    "scripts/fire.md -> lane-usable.mjs:622": {
+      "target": "scripts/lane-usable.mjs",
+      "line": 622,
+      "fingerprint": "3767a56cf6a6",
+      "excerpt": "const isMain = /(^|\\/)lane-usable\\.mjs$/.test(process.argv[1] || '')"
+    },
     "scripts/fire.md -> gen-audio.mjs:194": {
       "target": "scripts/gen-audio.mjs",
       "line": 194,
