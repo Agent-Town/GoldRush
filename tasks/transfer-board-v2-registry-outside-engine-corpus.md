@@ -19,6 +19,8 @@ EXPECTED-HOLDS: site/index.html
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b.
 
+⚠️ **HOW TO READ THE FILES BELOW: this lane is deliberately NOT reset to main (see the pre-flight), so it sits ~13 commits behind and several of these do not exist in your worktree.** Read them out of main with `git show main:<path>` — e.g. `git show main:reviews/transfer-board.md`. Do NOT merge or rebase main into the lane to make them appear; that is a different act with a different risk, and this task does not authorise it.
+
 READ FIRST: AGENTS.md; `reviews/transfer-board.md` (finding **F-2472-3** — the measurement that produced this task, including the three-row hash table); `specs/transfer-board.md` law **L1 ADDITIVE**; `scripts/assay-replay-agent.mjs:36–44` (`ENGINE_SOURCE_INPUTS` — `assets/contracts` is a WHOLE-DIRECTORY entry and `collectEngineFiles` recurses it collecting every `.json`); `assets/engine-era.json` (era 5, declared `engineHash`); your own predecessor run `tasks/runs/20260903-131051-lane-b-transfer-board.md.log` (it STOPPED honestly at this exact coupling — read its last 20 lines).
 
 ## ⛔ PRE-FLIGHT — THIS LANE'S CONTENT IS YOUR BASE. DO NOT RESET IT.
