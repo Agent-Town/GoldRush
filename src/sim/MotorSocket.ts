@@ -4,7 +4,7 @@ import { Balance } from '../game/Balance';
 import type { ContractManifest, ContractMotorFrontier } from '../meta/ContractFamilies';
 import { ConvoyBehavior, type ConvoyDiagnostics, type ConvoyPathEntity } from '../systems/ConvoyBehavior';
 import { FuelSystem, type FuelDiagnostics } from '../systems/FuelSystem';
-import { RoadNetwork, type RoadNetworkDiagnostics } from '../systems/RoadSegment';
+import { RoadNetwork, type RoadNetworkDiagnostics, type RoadSegment } from '../systems/RoadSegment';
 import { WeatherSystem, type WeatherPhase, type WeatherSnapshot } from '../systems/WeatherSystem';
 
 /**
@@ -35,10 +35,23 @@ import { WeatherSystem, type WeatherPhase, type WeatherSnapshot } from '../syste
  * Prospector stands. Fuel needs no verb: standing within `Balance.e4Fuel.harvestRange` of a tar node
  * for `harvestSeconds` harvests it, exactly as the browser's `visibleActorPositions()` seam does.
  *
- * WHAT IT GATES. `objectiveAllowsSecure` is the haul latch: the Hauler has come to rest within
- * `MOTOR_STOP_REACH` of the declared corridor's far end. It reads `false` on every contract that
- * declares no `motorFrontier` by never being constructed (`create` returns null), so no admitted
- * contract's terminal moves.
+ * WHAT IT GATES. `objectiveAllowsSecure` is the era's errand, one per Motor map, each the audit's
+ * own "smallest slice" (`docs/audits/2026-09-02-era-mechanic-audit.md` §Smallest slices):
+ *   `haul`        the Dust Flats: the Hauler at rest within `MOTOR_STOP_REACH` of the declared
+ *                 corridor's far end;
+ *   `convoy`      the Long Road: the town's convoy at the far end of `tileParams.convoyRoute`. The
+ *                 convoy gains exactly the ground the lead Hauler gains toward that stop and never
+ *                 the ground it gives back, so it is fuel-, road- and storm-leashed rather than a
+ *                 free clock, and a Hauler driven in circles moves the town nowhere;
+ *   `deliveries`  Gusher County: one delivery per lease road, and while a storm blows one of those
+ *                 roads is washed out by the weather clock alone — no road bonus on it and no
+ *                 delivery through it, so the rider rides the open leases first and comes back;
+ *   `tow`         the Boneyard: the Hauler at rest by the named hulk hitches it, and rests again at
+ *                 the gate end of the declared road to deliver it. Nothing weighs the hulk beyond
+ *                 the round trip itself: `Vehicle` prices fuel per SECOND, so the same distance
+ *                 costs more fuel under a storm, which is the whole tow decision.
+ * It reads `false` on every contract that declares no `motorFrontier` by never being constructed
+ * (`create` returns null), so no admitted contract's terminal moves.
  */
 
 export const MOTOR_GRADE_VERB = 'GRADE' as const;
@@ -52,6 +65,9 @@ export const MOTOR_EVENT_TAIL = 12;
 
 type Point = Readonly<{ x: number; z: number }>;
 type Corridor = NonNullable<ContractManifest['tileParams']['roadCorridors']>[number];
+type Hulk = NonNullable<ContractManifest['tileParams']['salvageHulks']>[number];
+
+export type MotorObjectiveKind = 'haul' | 'convoy' | 'deliveries' | 'tow';
 
 export type MotorEvent =
   | { type: 'motor_road_graded'; at: number; corridorId: string; length: number }
@@ -60,28 +76,47 @@ export type MotorEvent =
   | { type: 'motor_hauler_dry'; at: number; x: number; z: number; distanceTravelled: number }
   | { type: 'motor_haul_arrived'; at: number; x: number; z: number; atStop: boolean; roadDistance: number; distanceTravelled: number; fuelDrawn: number }
   | { type: 'motor_weather'; at: number; phase: WeatherPhase; cycle: number }
-  | { type: 'motor_convoy_arrived'; at: number; routeId: string; distance: number };
+  | { type: 'motor_convoy_arrived'; at: number; routeId: string; distance: number }
+  // Declared-objective events. Each fires only on the map whose twist declares that objective, so
+  // no other Motor contract's event stream (or terminal hash) moves by their existence.
+  | { type: 'motor_road_closed'; at: number; corridorId: string; cycle: number }
+  | { type: 'motor_road_reopened'; at: number; corridorId: string; cycle: number }
+  | { type: 'motor_lease_delivered'; at: number; corridorId: string; x: number; z: number; delivered: number; remaining: number; fuelDrawn: number }
+  | { type: 'motor_tow_hitched'; at: number; hulkId: string; x: number; z: number; fuelDrawn: number }
+  | { type: 'motor_tow_delivered'; at: number; hulkId: string; x: number; z: number; distanceTravelled: number; fuelDrawn: number };
 
 export type MotorVerbResult = { ok: true; corridorId?: string } | { ok: false; reason: string };
 
+export type MotorObjectiveView = Readonly<{
+  kind: MotorObjectiveKind;
+  corridorId: string;
+  label: string;
+  stop: Point;
+  stopReach: number;
+  arrived: boolean;
+  arrivedAt: number | null;
+  roadDistanceAtArrival: number | null;
+  securableAtWave: number | null;
+  /** `deliveries` only: the lease roads still owed, in order, and how many have landed. */
+  remaining?: readonly string[];
+  delivered?: readonly string[];
+  /** `tow` only: the hulk and whether it is on the hook yet. */
+  hulk?: Readonly<{ id: string; kind: Hulk['kind']; x: number; z: number }>;
+  hitched?: boolean;
+  hitchedAt?: number | null;
+}>;
+
 export type MotorDiagnostics = Readonly<{
   contractId: string;
-  objective: Readonly<{
-    kind: 'haul';
-    corridorId: string;
-    label: string;
-    stop: Point;
-    stopReach: number;
-    arrived: boolean;
-    arrivedAt: number | null;
-    roadDistanceAtArrival: number | null;
-    securableAtWave: number | null;
-  }>;
+  objective: MotorObjectiveView;
   weather: Readonly<WeatherSnapshot & { nextPhaseInSeconds: number }>;
   roads: Readonly<RoadNetworkDiagnostics & {
     gradeReach: number;
     graded: readonly string[];
-    corridors: readonly Readonly<{ id: string; start: Point; end: Point; graded: boolean }>[];
+    corridors: readonly Readonly<{ id: string; start: Point; end: Point; graded: boolean; closed?: boolean }>[];
+    /** `deliveries` with closures only: the lease road the current storm has washed out, and the next. */
+    closed?: readonly string[];
+    closesNext?: string | null;
   }>;
   fuel: FuelDiagnostics;
   vehicle: Readonly<VehicleDiagnostics & { onRoad: boolean; roadDistance: number; dispatch: Point | null }>;
@@ -97,6 +132,9 @@ export type MotorSimulationSnapshot = Readonly<{
   haul: Readonly<{ arrived: boolean; arrivedAt: number | null }>;
   convoy: Readonly<{ routeId: string; leaderDistance: number; arrived: boolean }> | null;
   events: number;
+  /** Declared-objective state. Absent on `haul`, so the Dust Flats' terminal hash does not move. */
+  delivered?: readonly string[];
+  tow?: Readonly<{ hulkId: string; hitched: boolean; delivered: boolean }>;
 }>;
 
 export type MotorOutcomeSummary = Readonly<{
@@ -108,6 +146,10 @@ export type MotorOutcomeSummary = Readonly<{
   fuelDrawn: number;
   tarHarvested: number;
   convoyArrived: boolean | null;
+  /** Declared-objective state, absent on `haul` for the same reason as the snapshot's. */
+  kind?: MotorObjectiveKind;
+  delivered?: readonly string[];
+  towed?: boolean;
 }>;
 
 type Convoy = {
@@ -116,8 +158,11 @@ type Convoy = {
   routeId: string;
   label: string;
   total: number;
+  stop: Point;
   arrived: boolean;
   arrivedAt: number | null;
+  /** The closest the lead Hauler has yet come to the far stop; the town never gives ground back. */
+  bestRemaining: number;
 };
 
 export class MotorSocket {
@@ -126,11 +171,23 @@ export class MotorSocket {
   }
 
   readonly contractId: string;
+  readonly kind: MotorObjectiveKind;
   private readonly weather: WeatherSystem;
   private readonly roads = new RoadNetwork();
   private readonly graded = new Set<string>();
+  private readonly segments = new Map<string, RoadSegment>();
   private readonly corridors: readonly Corridor[];
-  private readonly haulCorridor: Corridor;
+  /** The road the objective is about: the haul's corridor, the convoy's road, the tow's gate road. */
+  private readonly objectiveCorridor: Corridor;
+  /** `deliveries` only: the lease roads, in authored order, and the ones already delivered. */
+  private readonly leases: readonly Corridor[];
+  private readonly delivered = new Set<string>();
+  private readonly closures: boolean;
+  private closedNow: readonly string[] = [];
+  /** `tow` only. */
+  private readonly hulk: Hulk | null;
+  private hitched = false;
+  private hitchedAt: number | null = null;
   private readonly fuel: FuelSystem;
   private readonly vehicle: Vehicle;
   private readonly convoy: Convoy | null;
@@ -151,19 +208,54 @@ export class MotorSocket {
     this.contractId = manifest.id;
     this.weather = new WeatherSystem({ era: 4, contractId: manifest.id, ...weather });
     this.corridors = manifest.tileParams.roadCorridors ?? [];
-    const haul = this.corridors.find((corridor) => corridor.id === twist.haul.corridorId);
-    if (!haul) throw new Error(`${manifest.id} hauls to an unknown road corridor ${twist.haul.corridorId}.`);
-    this.haulCorridor = haul;
+    const corridor = (id: string, what: string): Corridor => {
+      const found = this.corridors.find((entry) => entry.id === id);
+      if (!found) throw new Error(`${manifest.id} ${what} an unknown road corridor ${id}.`);
+      return found;
+    };
+    // Exactly one objective key, as `validateMotorFrontier` enforces at authoring time; the throw is
+    // the belt beside those braces, so a hand-built manifest cannot compose a socket with no errand.
+    if (twist.haul) {
+      this.kind = 'haul';
+      this.objectiveCorridor = corridor(twist.haul.corridorId, 'hauls to');
+      this.leases = [];
+      this.hulk = null;
+      this.closures = false;
+    } else if (twist.convoy) {
+      this.kind = 'convoy';
+      this.objectiveCorridor = corridor(twist.convoy.corridorId, 'runs its convoy along');
+      this.leases = [];
+      this.hulk = null;
+      this.closures = false;
+    } else if (twist.deliveries) {
+      this.kind = 'deliveries';
+      this.leases = twist.deliveries.corridorIds.map((id) => corridor(id, 'delivers to'));
+      this.objectiveCorridor = this.leases[0]!;
+      this.hulk = null;
+      this.closures = twist.deliveries.closures;
+    } else if (twist.tow) {
+      this.kind = 'tow';
+      this.objectiveCorridor = corridor(twist.tow.corridorId, 'tows down');
+      this.leases = [];
+      const hulk = (manifest.tileParams.salvageHulks ?? []).find((entry) => entry.id === twist.tow!.hulkId);
+      if (!hulk) throw new Error(`${manifest.id} tows an unknown salvage hulk ${twist.tow.hulkId}.`);
+      this.hulk = hulk;
+      this.closures = false;
+    } else {
+      throw new Error(`${manifest.id} declares twist.motorFrontier with no objective.`);
+    }
     // Always enabled: the twist IS the enable. The browser's `isDevVehiclesEnabled` predicate is the
     // debug harness's switch, not a game rule, so nothing of it is transcribed here.
     this.fuel = new FuelSystem(() => true);
     this.vehicle = new Vehicle(this.fuel, { start: twist.vehicle.start });
     this.lastVehicleState = this.vehicle.diagnostics.state;
     const route = manifest.tileParams.convoyRoute;
-    this.convoy = twist.convoy && route && route.length >= 2 ? createConvoy(manifest.id, twist.convoy, route) : null;
+    this.convoy = twist.convoy && route && route.length >= 2
+      ? createConvoy(manifest.id, twist.convoy, route, twist.vehicle.start)
+      : null;
   }
 
-  /** The haul latch: true once the Hauler has come to rest at the declared far end. One-way. */
+  /** The era's errand, one per map, latched one-way. See the file header for the four. */
   get objectiveAllowsSecure(): boolean {
     return this.arrived;
   }
@@ -192,8 +284,12 @@ export class MotorSocket {
     }
 
     const before = this.vehicle.diagnostics;
-    const road = this.roads.movementAt({ x: before.x, z: before.z });
     const weather = this.weather.sample(at);
+    // The closure schedule, from the weather clock alone: while a storm blows on a `deliveries` map,
+    // one lease road is washed out. Nothing random, nothing per-tick — the cycle number picks it, so
+    // a rider can read `closesNext` off the view and plan the next thirty seconds against it.
+    this.syncClosures(weather, time, emit);
+    const road = this.movementAt({ x: before.x, z: before.z });
     this.vehicle.update(step, {
       speedMultiplier: road.speedMultiplier * weather.movementMultiplier,
       fuelMultiplier: road.fuelMultiplier,
@@ -206,7 +302,11 @@ export class MotorSocket {
         this.record(emit, { type: 'motor_hauler_dry', at: time, x: round3(after.x), z: round3(after.z), distanceTravelled: round3(after.distanceTravelled) });
       }
       if (after.state === 'arrived') {
-        const atStop = this.nearStop(after);
+        // The haul latch lands INSIDE the state transition, before the arrival event, exactly as the
+        // Dust Flats' pinned hashes recorded it. The other three objectives settle per-tick below,
+        // because a Hauler already at rest on a washed-out lease must be able to deliver the moment
+        // the storm lifts, without a second dispatch it has no distance left to travel.
+        const atStop = this.kind === 'haul' && this.nearStop(after);
         if (atStop && !this.arrived) {
           this.arrived = true;
           this.arrivedAt = time;
@@ -233,14 +333,113 @@ export class MotorSocket {
 
     const convoy = this.convoy;
     if (convoy) {
-      convoy.behavior.update(step * weather.movementMultiplier);
+      // The town follows the lead Hauler: it gains exactly the ground that Hauler gains toward the
+      // far stop, and never the ground it gives back. `ConvoyBehavior.update` advances its leader by
+      // `delta * maxSpeed`, so a delta of `gained / vehicleSpeed` advances it by `gained` — the road,
+      // the storm and the tank are already priced into `gained`, because they shaped the drive.
+      const remaining = Math.hypot(after.x - convoy.stop.x, after.z - convoy.stop.z);
+      const gained = Math.max(0, convoy.bestRemaining - remaining);
+      convoy.bestRemaining = Math.min(convoy.bestRemaining, remaining);
+      if (gained > 0) convoy.behavior.update(gained / Balance.e4Fuel.vehicleSpeed);
       const leader = convoy.behavior.diagnostics().leaderDistance;
       if (!convoy.arrived && leader >= convoy.total - 1e-6) {
         convoy.arrived = true;
         convoy.arrivedAt = time;
         this.record(emit, { type: 'motor_convoy_arrived', at: time, routeId: convoy.routeId, distance: round3(leader) });
+        if (this.kind === 'convoy' && !this.arrived) {
+          this.arrived = true;
+          this.arrivedAt = time;
+          this.roadDistanceAtArrival = round3(this.roadDistance);
+        }
       }
     }
+
+    if (this.kind === 'deliveries') this.settleDeliveries(after, time, emit);
+    if (this.kind === 'tow') this.settleTow(after, time, emit);
+  }
+
+  /**
+   * `deliveries`: a lease lands when the Hauler is at rest within reach of that lease road's far end
+   * AND that road is open. A washed-out lease refuses the delivery and says so on the view, which is
+   * the whole choice the audit asked for: ride the open leases, come back for the closed one.
+   */
+  private settleDeliveries(vehicle: VehicleDiagnostics, time: number, emit: (event: MotorEvent) => void): void {
+    if (this.arrived || vehicle.state !== 'arrived') return;
+    for (const lease of this.leases) {
+      if (this.delivered.has(lease.id) || this.closedNow.includes(lease.id)) continue;
+      if (Math.hypot(vehicle.x - lease.end.x, vehicle.z - lease.end.z) > MOTOR_STOP_REACH) continue;
+      this.delivered.add(lease.id);
+      this.record(emit, {
+        type: 'motor_lease_delivered',
+        at: time,
+        corridorId: lease.id,
+        x: round3(vehicle.x),
+        z: round3(vehicle.z),
+        delivered: this.delivered.size,
+        remaining: this.leases.length - this.delivered.size,
+        fuelDrawn: round3(this.fuel.diagnostics.drawn),
+      });
+      if (this.delivered.size === this.leases.length) {
+        this.arrived = true;
+        this.arrivedAt = time;
+        this.roadDistanceAtArrival = round3(this.roadDistance);
+      }
+      return;
+    }
+  }
+
+  /**
+   * `tow`: at rest by the hulk puts it on the hook; at rest at the gate end of the declared road,
+   * with the hulk on the hook, delivers it. Two legs, one tank, one storm clock.
+   */
+  private settleTow(vehicle: VehicleDiagnostics, time: number, emit: (event: MotorEvent) => void): void {
+    const hulk = this.hulk;
+    if (!hulk || this.arrived || vehicle.state !== 'arrived') return;
+    if (!this.hitched) {
+      if (Math.hypot(vehicle.x - hulk.x, vehicle.z - hulk.z) > MOTOR_STOP_REACH) return;
+      this.hitched = true;
+      this.hitchedAt = time;
+      this.record(emit, { type: 'motor_tow_hitched', at: time, hulkId: hulk.id, x: round3(vehicle.x), z: round3(vehicle.z), fuelDrawn: round3(this.fuel.diagnostics.drawn) });
+      return;
+    }
+    const stop = this.objectiveCorridor.start;
+    if (Math.hypot(vehicle.x - stop.x, vehicle.z - stop.z) > MOTOR_STOP_REACH) return;
+    this.arrived = true;
+    this.arrivedAt = time;
+    this.roadDistanceAtArrival = round3(this.roadDistance);
+    this.record(emit, {
+      type: 'motor_tow_delivered',
+      at: time,
+      hulkId: hulk.id,
+      x: round3(vehicle.x),
+      z: round3(vehicle.z),
+      distanceTravelled: round3(vehicle.distanceTravelled),
+      fuelDrawn: round3(this.fuel.diagnostics.drawn),
+    });
+  }
+
+  /** The storm's washout, recomputed each tick and announced only when it changes. */
+  private syncClosures(weather: WeatherSnapshot, time: number, emit: (event: MotorEvent) => void): void {
+    if (!this.closures || this.leases.length === 0) return;
+    const closed = weather.phase === 'storm' ? [this.leases[weather.cycle % this.leases.length]!.id] : [];
+    for (const id of this.closedNow) {
+      if (!closed.includes(id)) this.record(emit, { type: 'motor_road_reopened', at: time, corridorId: id, cycle: weather.cycle });
+    }
+    for (const id of closed) {
+      if (!this.closedNow.includes(id)) this.record(emit, { type: 'motor_road_closed', at: time, corridorId: id, cycle: weather.cycle });
+    }
+    this.closedNow = closed;
+  }
+
+  /**
+   * `RoadNetwork.movementAt`, minus any graded corridor the storm has washed out. A closed road is
+   * not a wall: it carries no bonus, so the Hauler crawls it at off-road speed and off-road cost.
+   */
+  private movementAt(point: Point): Readonly<{ speedMultiplier: number; fuelMultiplier: number }> {
+    const road = this.roads.movementAt(point);
+    if (road.speedMultiplier <= 1 || this.closedNow.length === 0) return road;
+    const onOpen = [...this.segments].some(([id, segment]) => !this.closedNow.includes(id) && segment.contains(point));
+    return onOpen ? road : { speedMultiplier: 1, fuelMultiplier: 1 };
   }
 
   /** `GRADE`: the ungraded corridor whose stake is within reach of the given ground, nearest first. */
@@ -258,6 +457,7 @@ export class MotorSocket {
     }
     const segment = this.roads.build(candidate.corridor.id, candidate.corridor.start, candidate.corridor.end);
     this.graded.add(candidate.corridor.id);
+    this.segments.set(candidate.corridor.id, segment);
     this.record(emit, { type: 'motor_road_graded', at: round3(at), corridorId: candidate.corridor.id, length: round3(segment.length) });
     return { ok: true, corridorId: candidate.corridor.id };
   }
@@ -278,22 +478,12 @@ export class MotorSocket {
   diagnostics(at: number, secureWave: number): MotorDiagnostics {
     const weather = this.weather.sample(at);
     const vehicle = this.vehicle.diagnostics;
-    const road = this.roads.movementAt({ x: vehicle.x, z: vehicle.z });
+    const road = this.movementAt({ x: vehicle.x, z: vehicle.z });
     const fuel = this.fuel.diagnostics;
     const convoy = this.convoy;
     return {
       contractId: this.contractId,
-      objective: {
-        kind: 'haul',
-        corridorId: this.haulCorridor.id,
-        label: this.twist.haul.label,
-        stop: { x: this.haulCorridor.end.x, z: this.haulCorridor.end.z },
-        stopReach: MOTOR_STOP_REACH,
-        arrived: this.arrived,
-        arrivedAt: this.arrivedAt,
-        roadDistanceAtArrival: this.roadDistanceAtArrival,
-        securableAtWave: this.arrived ? secureWave : null,
-      },
+      objective: this.objectiveView(secureWave),
       weather: {
         ...weather,
         phaseProgress: round3(weather.phaseProgress),
@@ -310,7 +500,11 @@ export class MotorSocket {
           start: { x: corridor.start.x, z: corridor.start.z },
           end: { x: corridor.end.x, z: corridor.end.z },
           graded: this.graded.has(corridor.id),
+          ...(this.closures ? { closed: this.closedNow.includes(corridor.id) } : {}),
         })),
+        ...(this.closures
+          ? { closed: [...this.closedNow], closesNext: this.leases[(weather.cycle + (weather.phase === 'storm' ? 1 : 0)) % this.leases.length]?.id ?? null }
+          : {}),
       },
       fuel: {
         ...fuel,
@@ -334,6 +528,64 @@ export class MotorSocket {
       events: this.events.slice(-MOTOR_EVENT_TAIL),
       eventCount: this.eventCount,
     };
+  }
+
+  /**
+   * The rider's read of the errand. The `haul` shape is EXACTLY what the Dust Flats published before
+   * the other three objectives existed — same keys, same order — so its pinned views do not move;
+   * the per-kind extras ride behind spreads that are empty on `haul`.
+   */
+  private objectiveView(secureWave: number): MotorObjectiveView {
+    const base = {
+      kind: this.kind,
+      corridorId: this.nextCorridor().id,
+      label: this.label(),
+      stop: this.stop(),
+      stopReach: MOTOR_STOP_REACH,
+      arrived: this.arrived,
+      arrivedAt: this.arrivedAt,
+      roadDistanceAtArrival: this.roadDistanceAtArrival,
+      securableAtWave: this.arrived ? secureWave : null,
+    };
+    if (this.kind === 'deliveries') {
+      return {
+        ...base,
+        remaining: this.leases.filter((lease) => !this.delivered.has(lease.id)).map(({ id }) => id),
+        delivered: this.leases.filter((lease) => this.delivered.has(lease.id)).map(({ id }) => id),
+      };
+    }
+    if (this.kind === 'tow' && this.hulk) {
+      return {
+        ...base,
+        hulk: { id: this.hulk.id, kind: this.hulk.kind, x: this.hulk.x, z: this.hulk.z },
+        hitched: this.hitched,
+        hitchedAt: this.hitchedAt,
+      };
+    }
+    return base;
+  }
+
+  /** Where the Hauler must go NEXT for the errand to advance. */
+  private stop(): Point {
+    if (this.kind === 'convoy' && this.convoy) return { x: this.convoy.stop.x, z: this.convoy.stop.z };
+    if (this.kind === 'tow') {
+      if (this.hulk && !this.hitched) return { x: this.hulk.x, z: this.hulk.z };
+      return { x: this.objectiveCorridor.start.x, z: this.objectiveCorridor.start.z };
+    }
+    const corridor = this.nextCorridor();
+    return { x: corridor.end.x, z: corridor.end.z };
+  }
+
+  /** The road the next leg rides: the objective's own, or the first lease still owed. */
+  private nextCorridor(): Corridor {
+    if (this.kind !== 'deliveries') return this.objectiveCorridor;
+    return this.leases.find((lease) => !this.delivered.has(lease.id) && !this.closedNow.includes(lease.id))
+      ?? this.leases.find((lease) => !this.delivered.has(lease.id))
+      ?? this.leases[this.leases.length - 1]!;
+  }
+
+  private label(): string {
+    return this.twist.haul?.label ?? this.twist.convoy?.label ?? this.twist.deliveries?.label ?? this.twist.tow?.label ?? this.contractId;
   }
 
   /** The deterministic half, for the terminal hash: what moved, where it rests, what it burned. */
@@ -361,6 +613,8 @@ export class MotorSocket {
       haul: { arrived: this.arrived, arrivedAt: this.arrivedAt },
       convoy: convoy ? { routeId: convoy.routeId, leaderDistance: convoy.behavior.diagnostics().leaderDistance, arrived: convoy.arrived } : null,
       events: this.eventCount,
+      ...(this.kind === 'deliveries' ? { delivered: this.leases.filter((lease) => this.delivered.has(lease.id)).map(({ id }) => id) } : {}),
+      ...(this.kind === 'tow' && this.hulk ? { tow: { hulkId: this.hulk.id, hitched: this.hitched, delivered: this.arrived } } : {}),
     };
   }
 
@@ -375,11 +629,15 @@ export class MotorSocket {
       fuelDrawn: round3(this.fuel.diagnostics.drawn),
       tarHarvested: this.tarHarvested,
       convoyArrived: this.convoy ? this.convoy.arrived : null,
+      ...(this.kind === 'haul' ? {} : { kind: this.kind }),
+      ...(this.kind === 'deliveries' ? { delivered: this.leases.filter((lease) => this.delivered.has(lease.id)).map(({ id }) => id) } : {}),
+      ...(this.kind === 'tow' ? { towed: this.arrived } : {}),
     };
   }
 
   private nearStop(vehicle: VehicleDiagnostics): boolean {
-    return Math.hypot(vehicle.x - this.haulCorridor.end.x, vehicle.z - this.haulCorridor.end.z) <= MOTOR_STOP_REACH;
+    const stop = this.stop();
+    return Math.hypot(vehicle.x - stop.x, vehicle.z - stop.z) <= MOTOR_STOP_REACH;
   }
 
   private secondsToNextPhase(weather: WeatherSnapshot): number {
@@ -403,7 +661,12 @@ export class MotorSocket {
   }
 }
 
-function createConvoy(contractId: string, twist: NonNullable<ContractMotorFrontier['convoy']>, route: readonly Point[]): Convoy {
+function createConvoy(
+  contractId: string,
+  twist: NonNullable<ContractMotorFrontier['convoy']>,
+  route: readonly Point[],
+  leadStart: Point,
+): Convoy {
   const points = route.map((point) => ({ x: point.x, z: point.z }));
   const total = points.slice(1).reduce((sum, point, index) => sum + Math.hypot(point.x - points[index]!.x, point.z - points[index]!.z), 0);
   // The leader rides at the Hauler's own speed; followers close gaps at the convoy catch-up rate,
@@ -414,14 +677,17 @@ function createConvoy(contractId: string, twist: NonNullable<ContractMotorFronti
     maxSpeed: index === 0 ? Balance.e4Fuel.vehicleSpeed : Balance.e4Fuel.vehicleSpeed * Balance.convoy.catchupMultiplier,
   }));
   const routeId = `${contractId}:convoy`;
+  const stop = points[points.length - 1]!;
   return {
     behavior: new ConvoyBehavior(members, { id: routeId, points }, Balance.convoy.spacing),
     members,
     routeId,
     label: twist.label,
     total,
+    stop,
     arrived: false,
     arrivedAt: null,
+    bestRemaining: Math.hypot(leadStart.x - stop.x, leadStart.z - stop.z),
   };
 }
 

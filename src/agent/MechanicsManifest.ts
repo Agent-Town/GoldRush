@@ -339,7 +339,8 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   const motorWeather = twist.weather;
   if (motor && motorWeather) {
     const corridors = tile.roadCorridors ?? [];
-    const stop = corridors.find(({ id }) => id === motor.haul.corridorId)?.end ?? { x: 0, z: 0 };
+    const end = (id: string | undefined): { x: number; z: number } => corridors.find((corridor) => corridor.id === id)?.end ?? { x: 0, z: 0 };
+    const start = (id: string | undefined): { x: number; z: number } => corridors.find((corridor) => corridor.id === id)?.start ?? { x: 0, z: 0 };
     rules.push(rule('motor_roads', 'MotorSocket.gradeAt', {
       corridors: corridors.map(({ id }) => id).sort(),
       count: corridors.length,
@@ -371,15 +372,72 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       verb: `${MOTOR_HAUL_VERB} drives the Hauler to where the Prospector stands; it halts dry when the tank empties and resumes as tar refines`,
       engines: 'gr-sim',
     }));
-    rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
-      corridorId: motor.haul.corridorId,
-      label: motor.haul.label,
-      stopX: stop.x,
-      stopZ: stop.z,
-      stopReach: MOTOR_STOP_REACH,
-      requires: 'the Hauler at rest within stopReach of the stop; on a boss contract, before the boss falls',
-      engines: 'gr-sim',
-    }));
+    // ONE objective rule, whichever of the four this map declares, all under the same id so a rider
+    // reads the errand from one place and `kind` tells it which errand this is.
+    if (motor.haul) {
+      rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+        kind: 'haul',
+        corridorId: motor.haul.corridorId,
+        label: motor.haul.label,
+        stopX: end(motor.haul.corridorId).x,
+        stopZ: end(motor.haul.corridorId).z,
+        stopReach: MOTOR_STOP_REACH,
+        requires: 'the Hauler at rest within stopReach of the stop; on a boss contract, before the boss falls',
+        engines: 'gr-sim',
+      }));
+    }
+    if (motor.convoy) {
+      const route = tile.convoyRoute ?? [];
+      const far = route[route.length - 1] ?? { x: 0, z: 0 };
+      rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+        kind: 'convoy',
+        corridorId: motor.convoy.corridorId,
+        label: motor.convoy.label,
+        stopX: far.x,
+        stopZ: far.z,
+        stopReach: MOTOR_STOP_REACH,
+        requires: 'the convoy at the far end of tileParams.convoyRoute; it gains exactly the ground the lead Hauler gains toward that stop and never the ground it gives back',
+        engines: 'gr-sim',
+      }));
+    }
+    if (motor.deliveries) {
+      rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+        kind: 'deliveries',
+        corridorIds: [...motor.deliveries.corridorIds],
+        label: motor.deliveries.label,
+        stops: motor.deliveries.corridorIds.map((id) => ({ corridorId: id, x: end(id).x, z: end(id).z })),
+        stopReach: MOTOR_STOP_REACH,
+        closures: motor.deliveries.closures,
+        requires: 'the Hauler at rest within stopReach of every lease road end, each while that road is open',
+        engines: 'gr-sim',
+      }));
+      if (motor.deliveries.closures) {
+        rules.push(rule('motor_closures', 'MotorSocket.syncClosures', {
+          corridorIds: [...motor.deliveries.corridorIds],
+          closedWhile: 'weather.phase === storm',
+          picks: 'corridorIds[weather.cycle % corridorIds.length]',
+          effect: 'no road bonus on the closed lease and no delivery through it; the road is not a wall',
+          engines: 'gr-sim',
+        }));
+      }
+    }
+    if (motor.tow) {
+      const hulk = (tile.salvageHulks ?? []).find(({ id }) => id === motor.tow!.hulkId);
+      rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+        kind: 'tow',
+        corridorId: motor.tow.corridorId,
+        label: motor.tow.label,
+        hulkId: motor.tow.hulkId,
+        hulkKind: hulk?.kind ?? 'unknown',
+        hulkX: hulk?.x ?? 0,
+        hulkZ: hulk?.z ?? 0,
+        stopX: start(motor.tow.corridorId).x,
+        stopZ: start(motor.tow.corridorId).z,
+        stopReach: MOTOR_STOP_REACH,
+        requires: 'the Hauler at rest by the hulk to hitch it, then at rest at the gate end of the road to deliver it',
+        engines: 'gr-sim',
+      }));
+    }
     rules.push(rule('motor_weather', 'WeatherSystem.sample', {
       cycleSeconds: motorWeather.cycleSeconds,
       clearSeconds: motorWeather.clearSeconds,
@@ -398,6 +456,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         spacing: Balance.convoy.spacing,
         catchupMultiplier: Balance.convoy.catchupMultiplier,
         route: 'tileParams.convoyRoute',
+        advances: 'by the lead Hauler own gain toward the far stop, never by a clock',
         engines: 'gr-sim',
       }));
     }

@@ -2426,21 +2426,40 @@ function readDebugParamsForRegistry(): { debug: boolean } {
 //
 // The twist that composes the shared motor consumer (`src/sim/MotorSocket.ts`) into a contract:
 // its authored `roadCorridors` become gradeable roads, one fuelled Hauler starts at
-// `vehicle.start`, and SECURE waits for the Hauler to come to rest at the far end of
-// `haul.corridorId`. Requires `twist.weather`, whose storms slow the Hauler (the fuel leash the
-// spec's Dust Flats §B names). `convoy` composes `ConvoyBehavior` along `tileParams.convoyRoute`.
+// `vehicle.start`, and SECURE waits for that Hauler to finish the era's own errand. Requires
+// `twist.weather`, whose storms slow the Hauler (the fuel leash the spec's Dust Flats §B names).
+//
+// EXACTLY ONE OBJECTIVE KEY, one per Motor map, each the audit's own "smallest slice" verbatim
+// (`docs/audits/2026-09-02-era-mechanic-audit.md` §Smallest slices):
+//   `haul`        the Dust Flats — "one contract-authored road plus one fuelled vehicle ... distance
+//                 traversal gates secure";
+//   `convoy`      the Long Road — "compose its existing convoy route and gate secure on the convoy
+//                 reaching the far stop"; the town rides `tileParams.convoyRoute` behind the lead
+//                 Hauler and advances exactly as far as that Hauler drives, so the convoy is fuel-,
+//                 road- and storm-leashed rather than a free clock;
+//   `deliveries`  Gusher County — "the objective rides a fuelled vehicle that must choose roads
+//                 around timed weather closures": one delivery per lease road, and each storm cycle
+//                 washes out one of them by the weather clock alone;
+//   `tow`         the Boneyard — "one salvage hulk tow ... gates secure on delivery": hitch the
+//                 named `tileParams.salvageHulks` entry, then bring it back down the gate road.
 // ─────────────────────────────────────────────────────────────────────────────────────────────
 export type ContractMotorFrontier = {
   description: string;
   vehicle: { start: ContractHarvestAnchor };
-  haul: { corridorId: string; label: string };
-  convoy?: { members: number; label: string };
+  haul?: { corridorId: string; label: string };
+  convoy?: { members: number; label: string; corridorId: string };
+  deliveries?: { corridorIds: readonly string[]; label: string; closures: boolean };
+  tow?: { hulkId: string; corridorId: string; label: string };
 };
 
+/** The four objective keys, of which a Motor Frontier declares exactly one. */
+export const MOTOR_OBJECTIVE_KEYS = ['haul', 'convoy', 'deliveries', 'tow'] as const;
+
 /**
- * The Motor Frontier fails closed at authoring time: an unknown field, a haul that names no authored
- * corridor, a Hauler with no finite start, a convoy with no route, or storms with no weather would
- * otherwise surface as a runtime throw inside `MotorSocket.create` on every boot of the contract.
+ * The Motor Frontier fails closed at authoring time: an unknown field, an objective that names no
+ * authored corridor, a Hauler with no finite start, a convoy with no route, a tow whose hulk is not
+ * in the yard, or storms with no weather would otherwise surface as a runtime throw inside
+ * `MotorSocket.create` on every boot of the contract.
  */
 function validateMotorFrontier(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
   const motor: unknown = contract.twist.motorFrontier;
@@ -2449,7 +2468,7 @@ function validateMotorFrontier(contract: ContractManifest, reasons: ContractDesc
     addDescriptorReason(reasons, reason('field_section', 'The Motor Frontier section has the wrong shape.', 'twist.motorFrontier'));
     return;
   }
-  addUnknownFieldReasons(motor, ['description', 'vehicle', 'haul', 'convoy'], 'twist.motorFrontier', reasons);
+  addUnknownFieldReasons(motor, ['description', 'vehicle', ...MOTOR_OBJECTIVE_KEYS], 'twist.motorFrontier', reasons);
   if (!contract.twist.weather) {
     addDescriptorReason(reasons, reason('motor_frontier', 'The Motor Frontier needs twist.weather to drive its storms.', 'twist.motorFrontier'));
   }
@@ -2460,16 +2479,39 @@ function validateMotorFrontier(contract: ContractManifest, reasons: ContractDesc
   if (!start || !Number.isFinite(start.x) || !Number.isFinite(start.z)) {
     addDescriptorReason(reasons, reason('motor_frontier', 'The Hauler needs a finite start.', 'twist.motorFrontier.vehicle'));
   }
+  const declared = MOTOR_OBJECTIVE_KEYS.filter((key) => motor[key] !== undefined);
+  if (declared.length !== 1) {
+    addDescriptorReason(reasons, reason('motor_frontier', `A Motor Frontier declares exactly one of ${MOTOR_OBJECTIVE_KEYS.join(', ')}; this one declares ${declared.length}.`, 'twist.motorFrontier'));
+  }
   const corridors = contract.tileParams.roadCorridors ?? [];
-  const haul = isRecord(motor.haul) ? motor.haul : null;
-  if (!haul || typeof haul.corridorId !== 'string' || !corridors.some((corridor) => corridor.id === haul.corridorId) || !shortText(haul.label)) {
-    addDescriptorReason(reasons, reason('motor_frontier', 'The haul must name one authored road corridor and label its stop.', 'twist.motorFrontier.haul'));
+  const authored = (id: unknown): boolean => typeof id === 'string' && corridors.some((corridor) => corridor.id === id);
+  if (motor.haul !== undefined) {
+    const haul = isRecord(motor.haul) ? motor.haul : null;
+    if (!haul || !authored(haul.corridorId) || !shortText(haul.label)) {
+      addDescriptorReason(reasons, reason('motor_frontier', 'The haul must name one authored road corridor and label its stop.', 'twist.motorFrontier.haul'));
+    }
   }
   if (motor.convoy !== undefined) {
     const convoy = isRecord(motor.convoy) ? motor.convoy : null;
     if (!convoy || !Number.isSafeInteger(convoy.members) || (convoy.members as number) <= 0 || !shortText(convoy.label)
-      || (contract.tileParams.convoyRoute?.length ?? 0) < 2) {
-      addDescriptorReason(reasons, reason('motor_frontier', 'A convoy needs a positive member count, a label, and an authored convoyRoute of two or more points.', 'twist.motorFrontier.convoy'));
+      || !authored(convoy.corridorId) || (contract.tileParams.convoyRoute?.length ?? 0) < 2) {
+      addDescriptorReason(reasons, reason('motor_frontier', 'A convoy needs a positive member count, a label, one authored road corridor, and an authored convoyRoute of two or more points.', 'twist.motorFrontier.convoy'));
+    }
+  }
+  if (motor.deliveries !== undefined) {
+    const deliveries = isRecord(motor.deliveries) ? motor.deliveries : null;
+    const ids = Array.isArray(deliveries?.corridorIds) ? deliveries.corridorIds : null;
+    if (!deliveries || !ids || ids.length < 2 || !ids.every(authored) || new Set(ids).size !== ids.length
+      || !shortText(deliveries.label) || typeof deliveries.closures !== 'boolean') {
+      addDescriptorReason(reasons, reason('motor_frontier', 'Deliveries need two or more distinct authored road corridors, a label, and a closures flag; a closure schedule with one road would leave nothing to choose.', 'twist.motorFrontier.deliveries'));
+    }
+  }
+  if (motor.tow !== undefined) {
+    const tow = isRecord(motor.tow) ? motor.tow : null;
+    const hulks = contract.tileParams.salvageHulks ?? [];
+    if (!tow || !authored(tow.corridorId) || !shortText(tow.label)
+      || typeof tow.hulkId !== 'string' || !hulks.some((hulk) => hulk.id === tow.hulkId)) {
+      addDescriptorReason(reasons, reason('motor_frontier', 'A tow must name one authored salvage hulk, one authored road corridor, and label its stop.', 'twist.motorFrontier.tow'));
     }
   }
 }
