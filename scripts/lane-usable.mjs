@@ -286,8 +286,27 @@ export function classifyDirt(porcelain) {
   return { tracked, untracked, churn }
 }
 
+// F-2490-1 (s2490): `-uall` IS LOAD-BEARING — DO NOT REMOVE IT TO SAVE A FLAG.
+// `git status --porcelain` COLLAPSES a wholly-untracked directory into ONE entry
+// (`?? artifacts/e4-roads-and-convoys/`), so a count taken from it counts ENTRIES,
+// not FILES, and the gap is unbounded — one line can stand for a megabyte.
+// Measured s2490 across the 99-tree fleet: 215 entries vs 3925 files (18.26x), and
+// gr-task-rehearsal alone read `untracked=4` for 2738 real files. That blind spot
+// is what let an attended wip-salvage walk past 11 files / 1.0 MB of lane-b gate
+// evidence (F-2489-1), one `git clean -fd` from gone — and `clean -fd` deletes
+// FILES, so the file count is the only number that answers "what would a refill
+// destroy?". `untracked=` therefore counts FILES from here on.
+// COST, measured rather than feared: +14% on this tool's git time fleet-wide
+// (19.3s -> 22.0s). Keeping BOTH numbers was priced and REJECTED — a second
+// back-to-back call is +50% (+10.4s), too dear for a read every fire runs at
+// triage, and the entry count is the defective number nobody needs.
+// The parse itself is unchanged and stays TEXT-in (F-1416-1), so this flag lives
+// in the one seam `lane-usable-dirt-parse.test.mjs` cannot reach — which is why
+// `scripts/lane-usable-untracked-files-guard.test.mjs` asserts it separately.
 function dirt(worktree) {
-  return classifyDirt(git(['status', '--porcelain'], { cwd: worktree }).replace(/\n+$/, ''))
+  return classifyDirt(
+    git(['status', '--porcelain', '--untracked-files=all'], { cwd: worktree }).replace(/\n+$/, ''),
+  )
 }
 
 function sessionLabel() {
