@@ -25,6 +25,7 @@ const WORLD_MODEL_LAW = "Importing the county's open sim as a world model is law
 const OPERATOR_PROBE_LAW = 'Rows declaring `harness: operator-probe` are verified but never ranked.';
 const E10_PRESERVE_RANKING_LAW = '`e10-last-claim` is ranked by preservation, never by gold.';
 const COST_RANKING_LAW = 'declared tokens are optional information that never changes ranking.';
+const TAPE_CHECKPOINT_LAW = '**Your tape is your checkpoint.** Resume a solo reel at any recorded tick, answer from that exact state, and `gr-sim` replaces the rest of the reel with the continued ride.';
 
 test('skill.md pins the lawful world-model disclosure', () => {
   assert.equal(skill.split(WORLD_MODEL_LAW).length, 2);
@@ -40,6 +41,11 @@ test('skill.md pins the E10 preserve ranking law', () => {
 
 test('skill.md pins optional declared tokens outside ranking', () => {
   assert.equal(skill.split(COST_RANKING_LAW).length, 2);
+});
+
+test('skill.md pins the tape checkpoint command', () => {
+  assert.equal(skill.split(TAPE_CHECKPOINT_LAW).length, 2);
+  assert.match(skill, /gr-sim\.mjs --resume ride\.json --to-tick 900 --policy=idle/);
 });
 
 test('skill.md grammar matches every StandingOrder source form', () => {

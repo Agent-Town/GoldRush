@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -111,6 +111,66 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
   );
   assert.notEqual(unsupported.status, 0);
   assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron/);
+});
+
+test('gr-sim resumes at a recorded mid-ride tick as one byte-identical tape', { timeout: 240_000 }, async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'gold-rush-tape-resume-'));
+  try {
+    const straightPath = join(directory, 'straight.json');
+    const resumedPath = join(directory, 'resumed.json');
+    const positions = {
+      sentry_beacon: [{ x: 0, z: 13 }, { x: 0, z: 11 }, { x: 3, z: 12 }, { x: -3, z: 12 }, { x: 0, z: 15 }, { x: 0, z: 9 }],
+      turret: [{ x: 4, z: 14 }, { x: -4, z: 14 }, { x: 4, z: 10 }, { x: -4, z: 10 }],
+    };
+    const costs = { sentry_beacon: [25, 35, 45, 55, 75, 95], turret: [50, 70, 95, 125] };
+    const ordersFor = (view) => {
+      if (view.now.pendingSecure) return [{ verb: 'SECURE_CHOICE', choice: 'bank' }];
+      if (view.now.pendingOffer?.[0]) return [{ verb: 'PICK_UPGRADE', id: view.now.pendingOffer[0].id }];
+      const orders = [];
+      for (const kind of ['sentry_beacon', 'turret']) {
+        for (let index = view.now.works.byKind[kind] ?? 0; index < positions[kind].length; index += 1) {
+          orders.push({ verb: 'BUILD', what: kind, where: positions[kind][index], when: { goldGte: costs[kind][index] } });
+        }
+      }
+      for (const seam of view.now.seams.filter(({ active, remaining }) => active && remaining > 0)) {
+        for (let count = 0; count < 4; count += 1) orders.push({ verb: 'HARVEST', seam: seam.id });
+      }
+      if (view.now.works.hp > 0 && view.now.works.hp < view.now.works.maxHp * 0.6) orders.push({ verb: 'REPAIR_UNDER', pct: 80 });
+      orders.push({ verb: 'HOLD', pos: { x: 0, z: 12 } });
+      return orders.slice(0, 32);
+    };
+    const straight = await scriptedCli(
+      ['--contract', 'the-claim', '--seed', 'e1-the-claim-02', '--tape', straightPath],
+      ordersFor,
+    );
+    assert.equal(straight.secured, true);
+
+    const tape = JSON.parse(readFileSync(straightPath, 'utf8'));
+    const resumeTick = tape.inputLog.entries[Math.floor(tape.inputLog.entries.length / 2)].t;
+    writeFileSync(resumedPath, readFileSync(straightPath));
+    const resumed = await scriptedCli(['--resume', resumedPath, '--to-tick', String(resumeTick)], ordersFor);
+    assert.equal(resumed.secured, true);
+    assert.equal(readFileSync(resumedPath, 'utf8'), readFileSync(straightPath, 'utf8'));
+    const resumedTape = JSON.parse(readFileSync(resumedPath, 'utf8'));
+
+    const replay = spawnSync(process.execPath, ['scripts/assay-replay.mjs', resumedPath], {
+      cwd: ROOT, encoding: 'utf8', timeout: 60_000,
+    });
+    assert.equal(replay.status, 0, replay.stderr);
+    const assay = JSON.parse(replay.stdout);
+    assert.equal(assay.eventLogHash, tape.eventLogHash);
+
+    const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+    try {
+      const { validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
+      assert.ok(validateTape(resumedTape, tape.contract, tape.seed, tape.difficulty), 'the county door accepts the resumed tape');
+      process.stdout.write(`[tape-resume] straight=${tape.eventLogHash} resumed=${resumedTape.eventLogHash} assay=${assay.eventLogHash} door=accepted\n`);
+    } finally {
+      await vite.close();
+    }
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 });
 
 test('a reactive client can recover from rejected orders', { timeout: 30_000 }, async () => {

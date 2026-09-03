@@ -97,6 +97,15 @@ export class AgentTapeReplaySession {
     return this.snapshot();
   }
 
+  resumeAt(targetTick: number): HeadlessContractSim {
+    if (!Number.isSafeInteger(targetTick) || targetTick < 0 || targetTick > this.durationTicks) {
+      throw new Error(`resume tick must be an integer between 0 and ${this.durationTicks}`);
+    }
+    this.advanceTo(targetTick);
+    if (this.tick !== targetTick) throw new Error(`tape ended at tick ${this.tick} before resume tick ${targetTick}`);
+    return this.sim;
+  }
+
   snapshot(): AgentTapeReplaySnapshot {
     const internal = this.sim as unknown as {
       hero: { group: { position: { x: number; z: number } }; hp: number; maxHp: number };
