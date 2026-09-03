@@ -62,20 +62,89 @@ const SYNC_SPAWNERS = ['spawnSync', 'execFileSync', 'execSync'];
 const ASYNC_SPAWNERS = ['spawn', 'execFile', 'exec', 'fork'];
 const SPAWNERS = [...SYNC_SPAWNERS, ...ASYNC_SPAWNERS];
 
-/** Offsets that are CODE — not comment, not string literal. Correction 3. */
+/**
+ * Correction 4 (F-2465-1, s2465): A REGEX LITERAL IS NOT A STRING, AND MISREADING ONE
+ * DESYNCHRONISES EVERYTHING AFTER IT — SILENTLY, AND TOWARD "NOT CODE".
+ *
+ * The mask below used to know three things: line comments, block comments and string
+ * literals. It did NOT know regex literals, and it scanned their bodies as ordinary code —
+ * so a regex holding a quote character desynchronised it. `fixture-teardown.test.mjs:15`
+ * carries `(['"`])` inside `const PREFIX = /.../g`; the mask read that `'` as the start of
+ * a string and swallowed the rest of the file, including the real, UNBOUNDED
+ * `spawnSync(process.execPath, ['--test', ...])` at `:35`.
+ *
+ * The drop is SILENT and it is NOT counted: `unparsed` counts only `topLevelArgs` failures,
+ * never mask drops, so the site never enters the corpus at all and the census reports
+ * `✅ 0 exposed inside mandated legs` from a corpus that is missing it. Measured s2465:
+ * 9 genuinely-unbounded SYNC node-child sites across 6 files, every one inside a MANDATED
+ * battery leg, invisible to the instrument built to find exactly them.
+ *
+ * Proven by manufacturing, with a reverse control: removing ONLY line 15's regex literal
+ * makes `:35` visible; removing an unrelated line leaves it hidden.
+ *
+ * Correction 5 (same finding): EXCLUDE PROPERTY ACCESS. Surfacing the sites above also
+ * surfaces `re.exec(src)`, `db.exec('create table ...')` and `enemies.spawn()`, because
+ * `\bexec\s*\(` matches after a dot — false positives the old defect happened to hide.
+ * Measured s2465: of 21 property-access spawner forms in this corpus, ZERO are a
+ * module-namespace `child_process` call (`cp.execSync` etc.), so this cannot lose a real
+ * one. It is scoped narrowly for that reason: the day someone writes `cp.spawnSync`, this
+ * must be revisited rather than widened by habit.
+ */
+const RX_PREFIX_KEYWORDS = new Set([
+  'return', 'typeof', 'instanceof', 'in', 'of', 'new', 'delete', 'void',
+  'case', 'do', 'else', 'yield', 'await', 'throw',
+]);
+
+/** Does the `/` at `i` open a REGEX rather than a division? Standard prev-significant-token
+ *  disambiguation: `)` and `]` end an expression (so: division); a bare word divides UNLESS
+ *  it is a keyword that cannot end one; everything else precedes a regex. */
+function startsRegex(src, i) {
+  let j = i - 1;
+  while (j >= 0 && /\s/.test(src[j])) j--;
+  if (j < 0) return true;
+  const p = src[j];
+  if (/[A-Za-z0-9_$]/.test(p)) {
+    let k = j;
+    while (k >= 0 && /[A-Za-z0-9_$]/.test(src[k])) k--;
+    return RX_PREFIX_KEYWORDS.has(src.slice(k + 1, j + 1));
+  }
+  return !(p === ')' || p === ']');
+}
+
+/** Offsets that are CODE — not comment, not string literal, not regex literal. Corrections 3+4. */
 function codeMask(src) {
   const mask = new Uint8Array(src.length).fill(1);
-  let mode = null, quote = null;
+  let mode = null, quote = null, inClass = false;
   for (let i = 0; i < src.length; i++) {
     const c = src[i], n = src[i + 1];
     if (mode === 'line') { mask[i] = 0; if (c === '\n') mode = null; continue; }
     if (mode === 'block') { mask[i] = 0; if (c === '*' && n === '/') { mask[i + 1] = 0; i++; mode = null; } continue; }
     if (mode === 'str') { mask[i] = 0; if (c === '\\') { mask[i + 1] = 0; i++; continue; } if (c === quote) mode = null; continue; }
+    if (mode === 'rx') {
+      mask[i] = 0;
+      if (c === '\\') { mask[i + 1] = 0; i++; continue; }
+      if (c === '[') { inClass = true; continue; }
+      if (c === ']') { inClass = false; continue; }
+      // A regex literal cannot span a newline. Resyncing here bounds the blast radius of a
+      // misread `/` to ONE line instead of the rest of the file — the failure that produced
+      // this finding. Fail small, and in the direction that keeps code visible.
+      if (c === '\n') { mode = null; inClass = false; continue; }
+      if (c === '/' && !inClass) { mode = null; continue; }
+      continue;
+    }
     if (c === '/' && n === '/') { mode = 'line'; mask[i] = 0; continue; }
     if (c === '/' && n === '*') { mode = 'block'; mask[i] = 0; continue; }
+    if (c === '/' && startsRegex(src, i)) { mode = 'rx'; inClass = false; mask[i] = 0; continue; }
     if (c === '"' || c === "'" || c === '`') { mode = 'str'; quote = c; mask[i] = 0; continue; }
   }
   return mask;
+}
+
+/** Is the spawner name at `i` a PROPERTY access (`re.exec(`)? Correction 5. */
+function isPropertyAccess(src, i) {
+  let j = i - 1;
+  while (j >= 0 && /\s/.test(src[j])) j--;
+  return j >= 0 && src[j] === '.';
 }
 
 /** Split the top-level arguments of a call, string/comment aware. Returns null if unbalanced. */
@@ -153,6 +222,10 @@ export function census(dir = DIR) {
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.mjs')).sort();
   const rows = [];
   let unparsed = 0;
+  // F-2465-1: the mask is the one place this census can narrow SILENTLY — a dropped site
+  // never becomes a row, so a corpus hole is indistinguishable from a clean board. Count
+  // the drops and DECLARE them on stdout always, including the happy path (F-2208-1).
+  let masked = 0, propertyAccess = 0;
   for (const f of files) {
     const src = fs.readFileSync(path.join(dir, f), 'utf8');
     const bags = constBags(src);
@@ -161,7 +234,8 @@ export function census(dir = DIR) {
       const re = new RegExp(`\\b${fn}\\s*\\(`, 'g');
       let m;
       while ((m = re.exec(src))) {
-        if (!mask[m.index]) continue;
+        if (isPropertyAccess(src, m.index)) { propertyAccess++; continue; }
+        if (!mask[m.index]) { masked++; continue; }
         const open = src.indexOf('(', m.index + fn.length);
         const got = topLevelArgs(src, open);
         if (!got) { unparsed++; continue; }
@@ -179,7 +253,7 @@ export function census(dir = DIR) {
       }
     }
   }
-  return { files, rows, unparsed };
+  return { files, rows, unparsed, masked, propertyAccess };
 }
 
 /** The mandated batteries' legs, DERIVED from package.json — never transcribed (F-2207-1). */
@@ -217,6 +291,9 @@ function main() {
 
   // Corpus declared ALWAYS, including the happy path (F-2208-1).
   console.log(`corpus  : ${c.files.length} scripts/*.mjs · ${c.rows.length} spawn call sites · ${c.unparsed} unparsed`);
+  // F-2465-1: the two ways an occurrence leaves the corpus WITHOUT becoming a row. Printed
+  // always, so a future mask desync is a number that moved rather than a silent narrowing.
+  console.log(`excluded: ${c.masked} in comment/string/regex · ${c.propertyAccess} property access (re.exec, db.exec)`);
   console.log(`battery : ${legs.all.size} mandated legs derived from package.json (ledger ${legs.ledger.size} · node-guards ${legs.node.size})`);
   console.log('');
   console.log(`EXPOSED (unbounded + SYNC + node child)  : ${exposed.length}`);
@@ -259,7 +336,15 @@ function main() {
     console.log('   Each can hang the battery with no bound and no diagnostic (F-2429-1).');
     process.exit(1);
   }
-  console.log(`\n✅ ${inBattery.length} exposed inside mandated legs${strict ? ` (--max=${max})` : ''}.`);
+  // F-2465-1: the banner reports the NUMBER, so it must not contradict it. In advisory mode
+  // stdout is the whole interface (F-2210-1), and a ✅ beside a non-zero count is the same
+  // false reassurance this instrument exists to prevent — it read `✅ 9 exposed` the moment
+  // the mask cure made the nine visible. Advisory still exits 0 by design (F-1460-1).
+  const mark = inBattery.length === 0 ? '✅' : '⚠️ ';
+  console.log(`\n${mark} ${inBattery.length} exposed inside mandated legs${strict ? ` (--max=${max})` : ''}.`);
+  if (inBattery.length > 0 && !argv.includes('--list')) {
+    console.log('   Name them with `node scripts/spawn-bound-census.mjs --list`.');
+  }
   process.exit(0);
 }
 
