@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "ac138d0f393a3f0630cd59fc5e3035e8b507db07c8275a5d13ba0bb8f8332a34",
+  "engineHash": "8ccbfe165813b81a468e23676903a807b2c91f89a0e4fae813cfdc6a3293969f",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -170,6 +170,12 @@
       "aliases": [],
       "pinnedAt": "2026-09-03T04:35:00+07:00",
       "cause": "e10-preserve-ranking merge (s2462): src/game/Game.ts adds preserveDiagnostics() to runTapeEventLog() and two additive score fields (preserveWavesAlive, preserveHpFraction) at the county-standings submission site. src/ is inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: preserveDiagnostics() is a read, the event-log field is spread CONDITIONALLY so non-preserve contracts produce a byte-identical event log, and the one reorder (hoisting runTapeEventLog() above the snapshot call) has only pure reads between the old and new call sites. Measured on the merged tree: tape-01 + tape-02 + c7-standing-order-replay 14/14 and same-laws-harvest-parity 4/4 (eventLogHash fnv1a32:a6c04f80 unchanged), test:node-guards 564 pass. Same era: no view field was removed or renamed, no tape shape was invalidated, and the ranking change itself lives in functions/, which is outside the hash corpus."
+    },
+    {
+      "engineHash": "8ccbfe165813b81a468e23676903a807b2c91f89a0e4fae813cfdc6a3293969f",
+      "aliases": [],
+      "pinnedAt": "2026-09-03T11:25:00+07:00",
+      "cause": "harness-receipts merge (s2469): src/agent/DeclaredStack.ts gains two optional stack fields (harnessDigest, harnessRef), computeHarnessDigest() and assembleSelfDeclaredStack(). src/ is inside ENGINE_SOURCE_INPUTS, so the content re-hashes. Content re-hash only, no simulation behaviour change: the digest is rider-side ATTRIBUTION the sim never reads, both fields are optional and validated shape-only, SCORE_KEYS and compareScores are untouched, and rows without the fields stay valid and rank unchanged. The door and board changes live in functions/ and site/, which are outside the hash corpus. Same era: no view field was removed or renamed and no tape shape was invalidated."
     }
   ],
   "history": [

@@ -23,12 +23,12 @@ const BUILD_ID = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { encodin
 // Declared above the first call: `parseArgs` runs at module top level, so a `const`
 // further down is still in its temporal dead zone by then.
 const SOLO_KEYS = ['contract', 'seed', 'policy', 'mode', 'preset', 'difficulty', 'overtime', 'tape', 'science-steps'];
-const SEAT_KEYS = ['room', 'origin', 'name', 'town', 'party', 'tick-rate', 'max-ticks', 'desync-at', 'strict', 'model', 'harness', 'harness-version', 'config', 'source'];
+const SEAT_KEYS = ['room', 'origin', 'name', 'town', 'party', 'tick-rate', 'max-ticks', 'desync-at', 'strict', 'model', 'harness', 'harness-version', 'harness-ref', 'config', 'source'];
 const DIFFICULTY_VALUES = ['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', 'hard'];
 
 if (process.argv.includes('--help')) {
   process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle] [--overtime] [--science-steps N] [--tape <path>]\n'
-    + '       gr-sim --room <code> --origin <url> [--model <id>] [--harness <name>] [--party 2-4] [--max-ticks N] [--strict]\n\n'
+    + '       gr-sim --room <code> --origin <url> [--model <id>] [--harness <name>] [--harness-ref <commit-or-url>] [--party 2-4] [--max-ticks N] [--strict]\n\n'
     + 'A seat invited into a browser room rides that browser world: room-served NDJSON views arrive on stdout and stdin order arrays travel as agent_orders acts. --strict still refuses mixed rooms.\n');
   process.exit(0);
 }
@@ -149,6 +149,17 @@ try {
  */
 async function rideSeated(vite, options, setup) {
   const { AgentSeat } = await vite.ssrLoadModule('/src/sim/SeatedLockstepSim.ts');
+  const { assembleSelfDeclaredStack } = await vite.ssrLoadModule('/src/agent/DeclaredStack.ts');
+  const stack = await assembleSelfDeclaredStack({
+    model: options.model,
+    harness: options.harness,
+    harnessVersion: options.harnessVersion,
+    harnessRef: options.harnessRef,
+    config: options.config,
+    source: options.source,
+    charterText: process.env.GR_HARNESS_CHARTER_TEXT,
+    notebookGenerationHeader: process.env.GR_HARNESS_NOTEBOOK_HEADER,
+  });
   const seat = await AgentSeat.take({
     origin: options.origin,
     code: options.room,
@@ -156,15 +167,7 @@ async function rideSeated(vite, options, setup) {
     player: {
       name: options.name,
       town: options.town,
-      ...((options.model || options.harness || options.harnessVersion || options.config || options.source) ? {
-        stack: {
-          ...(options.model ? { model: options.model } : {}),
-          ...(options.harness ? { harness: options.harness } : {}),
-          ...(options.harnessVersion ? { harnessVersion: options.harnessVersion } : {}),
-          ...(options.config ? { config: options.config } : {}),
-          ...(options.source ? { source: options.source } : {}),
-        },
-      } : {}),
+      ...(stack ? { stack } : {}),
     },
     partySize: options.party,
     tickRate: options.tickRate,
@@ -375,6 +378,7 @@ function parseArgs(args) {
     model: values.model,
     harness: values.harness,
     harnessVersion: values['harness-version'],
+    harnessRef: values['harness-ref'],
     config: values.config,
     source: values.source,
   };

@@ -51,6 +51,7 @@ test('an unknown watch URL shows an honest refusal and returns to the start menu
 });
 
 test('landing watch links name their reel, contract, and epoch', async ({ page }) => {
+  const errors = collectErrors(page);
   const script = await readFile(path.resolve('site/assay-office.js'), 'utf8');
   await page.route('**/api/standings*', async (route) => {
     const contract = new URL(route.request().url()).searchParams.get('contract')!;
@@ -60,8 +61,10 @@ test('landing watch links name their reel, contract, and epoch', async ({ page }
       body: JSON.stringify({
         ok: true,
         board: contract === 'the-claim'
-          ? [{ assay: 'verified', profileName: 'The Rig', score: { waves: 20, gold: 680 }, reel: { id: 'reel-claim', simVersion: 1 } }]
-          : [],
+          ? [{ assay: 'verified', profileName: 'The Rig', model: 'test-model', harness: 'test-rig', harnessDigest: 'deadbeef'.repeat(8), score: { waves: 20, gold: 680 }, reel: { id: 'reel-claim', simVersion: 1 } }]
+          : contract === 'e1-dry-gulch'
+            ? [{ assay: 'verified', profileName: 'Legacy Rig', model: 'test-model', harness: 'test-rig', score: { waves: 18, gold: 400 } }]
+            : [],
       }),
     });
   });
@@ -71,6 +74,9 @@ test('landing watch links name their reel, contract, and epoch', async ({ page }
   await expect(links).toHaveCount(6);
   await expect(links.first()).toHaveAttribute('href', 'https://agenttown.app/goldrush/?watch=reel-claim&contract=the-claim&epoch=epoch-1-frontier');
   await expect(links.nth(1)).toHaveAttribute('href', 'https://agenttown.app/goldrush/');
+  await expect(page.locator('[data-standings="rows"] tr').first()).toContainText('harness deadbeef');
+  await expect(page.locator('[data-standings="rows"] tr').nth(1)).not.toContainText('harness ');
+  expect(errors).toEqual([]);
 });
 
 function collectErrors(page: Page): string[] {

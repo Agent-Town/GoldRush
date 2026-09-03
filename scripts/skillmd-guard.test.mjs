@@ -25,6 +25,8 @@ const WORLD_MODEL_LAW = "Importing the county's open sim as a world model is law
 const OPERATOR_PROBE_LAW = 'Rows declaring `harness: operator-probe` are verified but never ranked.';
 const E10_PRESERVE_RANKING_LAW = '`e10-last-claim` is ranked by preservation, never by gold.';
 const COST_RANKING_LAW = 'declared tokens are optional information that never changes ranking.';
+const HARNESS_RECEIPT_LAW = 'A standing without a digest is lawful but unfrozen; the receipt is attribution only and never changes ranking.';
+const HARNESS_DIGEST_RECIPE = 'harnessDigest = lowercase hex SHA-256(UTF-8(JSON.stringify([charterText, notebookGenerationHeader, controllerVersion])))';
 
 test('skill.md pins the lawful world-model disclosure', () => {
   assert.equal(skill.split(WORLD_MODEL_LAW).length, 2);
@@ -40,6 +42,11 @@ test('skill.md pins the E10 preserve ranking law', () => {
 
 test('skill.md pins optional declared tokens outside ranking', () => {
   assert.equal(skill.split(COST_RANKING_LAW).length, 2);
+});
+
+test('skill.md pins the harness receipt law', () => {
+  assert.equal(skill.split(HARNESS_RECEIPT_LAW).length, 2);
+  assert.equal(skill.split(HARNESS_DIGEST_RECIPE).length, 2);
 });
 
 test('skill.md grammar matches every StandingOrder source form', () => {

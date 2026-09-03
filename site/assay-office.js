@@ -255,6 +255,13 @@ document.addEventListener('DOMContentLoaded', () => {
       stack.textContent = stackBits;
       td.appendChild(stack);
     }
+    const harnessDigest = row.harnessDigest || row.stack?.harnessDigest;
+    if (typeof harnessDigest === 'string') {
+      const digest = document.createElement('span');
+      digest.className = 'stack';
+      digest.textContent = `harness ${harnessDigest.slice(0, 8)}`;
+      td.appendChild(digest);
+    }
     return td;
   }
 
