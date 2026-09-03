@@ -1178,9 +1178,11 @@ export class HeadlessContractSim {
           // contract that declares no discharge-able front and no admitted terminal moves.
           || !this.interferenceFront.objectiveAllowsSecure
           // E8: the regolith-run latch, keyed on the Mare Claim's own atmosphere declaration in
-          // the canyon-connect shape. A claim whose six regolith grounds were not all worked on
-          // suit air cannot secure at any wave; working them opens the ordinary secure wave.
-          // True on every contract that declares no air wall, so no admitted terminal moves.
+          // the canyon-connect shape. A claim that has not worked `REGOLITH_GROUNDS_FOR_SECURE` of
+          // its authored grounds ON SUIT AIR cannot secure at any wave; working them opens the
+          // ordinary secure wave. A pan made with an empty suit is counted and credits nothing, so
+          // the era's own wall decides this. True on every contract that declares no air wall, so
+          // no admitted contract's terminal moves.
           || !this.atmosphere.objectiveAllowsSecure
           || this.atomic?.objectiveAllowsSecure === false
           || (this.preserve !== null && !this.preserve.active)
