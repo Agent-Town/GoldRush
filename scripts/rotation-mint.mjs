@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { createHmac } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 
 const contracts = [
   ['the-claim', 'e1-the-claim'],
@@ -15,8 +16,13 @@ const args = new Map();
 for (let index = 2; index < process.argv.length; index += 2) args.set(process.argv[index], process.argv[index + 1]);
 const week = args.get('--week');
 const saltFile = args.get('--salt-file');
-if (!/^\d{4}-W\d{2}$/.test(week ?? '') || !saltFile || args.size !== 2) {
-  throw new Error('usage: node scripts/rotation-mint.mjs --week YYYY-Www --salt-file <path-outside-repo>');
+// --append <registry.json>: merge the minted rotation into the tracked registry (replace a same-id
+// entry, keep history, sort by opensAt) instead of printing it. This is the RT-01 fire duty's form
+// (scripts/fire.md); the print form stays byte-identical for the mint test and for eyeballing.
+const appendPath = args.get('--append');
+const validShape = args.size === 2 || (args.size === 3 && typeof appendPath === 'string' && appendPath.length > 0);
+if (!/^\d{4}-W\d{2}$/.test(week ?? '') || !saltFile || !validShape) {
+  throw new Error('usage: node scripts/rotation-mint.mjs --week YYYY-Www --salt-file <path-outside-repo> [--append assets/rotations/rotation-seeds.json]');
 }
 const salt = (await readFile(saltFile, 'utf8')).trim();
 if (!salt) throw new Error('rotation salt is empty');
@@ -34,9 +40,19 @@ const seeds = Object.fromEntries(contracts.map(([contractId, prefix]) => {
   return [contractId, `${prefix}-${id}-${digest}`];
 }));
 
-process.stdout.write(`${JSON.stringify({ rotations: [{
+const rotation = {
   id,
   opensAt: monday.toISOString(),
   closesAt: new Date(monday.getTime() + 7 * 86_400_000).toISOString(),
   seeds,
-}] }, null, 2)}\n`);
+};
+
+if (appendPath) {
+  const existing = existsSync(appendPath) ? JSON.parse(await readFile(appendPath, 'utf8')) : { rotations: [] };
+  const rotations = (existing.rotations ?? []).filter((entry) => entry.id !== rotation.id).concat([rotation])
+    .sort((a, b) => a.opensAt.localeCompare(b.opensAt));
+  await writeFile(appendPath, `${JSON.stringify({ ...existing, rotations }, null, 2)}\n`);
+  process.stdout.write(`appended ${id} to ${appendPath} (${rotations.length} rotation(s))\n`);
+} else {
+  process.stdout.write(`${JSON.stringify({ rotations: [rotation] }, null, 2)}\n`);
+}

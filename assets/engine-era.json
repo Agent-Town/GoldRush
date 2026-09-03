@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "2a06eb514e3037efc403fc59f4540bbca31ef8947ee1e58cd56cf157a5aecd47",
+  "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -182,6 +182,12 @@
       "aliases": [],
       "pinnedAt": "2026-09-03T13:45:00+07:00",
       "cause": "tape-resume merge (s2471): src/replay/AgentTapeReplay.ts gains resumeAt(targetTick), an additive entry point on the shared replay session that advances an existing tape to a tick and hands back the same headless sim. No existing code path changed - the replay of an untouched tape hashes identically (straight = resumed = assay). Content re-hash, no behaviour change."
+    },
+    {
+      "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+      "pinnedAt": "2026-09-03",
+      "cause": "content re-hash, no behaviour change: the half-stamped-reel-refusal drain (01506cbde, src/game watch-path routing) moved the corpus after the previous pin; same era per F-1441-3",
+      "aliases": []
     }
   ],
   "history": [
