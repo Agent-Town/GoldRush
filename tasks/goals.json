@@ -4069,11 +4069,13 @@
               "id": "e4-roads-and-convoys",
               "title": "L1 reskin ladder: the four E4 maps compose roads, vehicles and convoys headless (Claude implementer)",
               "taskFile": "e4-roads-and-convoys.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-03",
-              "note": "attended-dispatched Claude agent; NOT for the lane runner (no queue copy)"
+              "note": "attended-dispatched Claude agent; NOT for the lane runner (no queue copy)",
+              "mergeHash": "48ef7df8dde3ecdb5cf13a8efc9186ac9d8dbb7c",
+              "mergedAt": "2026-09-04"
             },
             {
               "id": "e8-mare-claim-physics",
@@ -4093,6 +4095,33 @@
               "taskFile": "reel-contract-routing-hazard.md",
               "status": "queued",
               "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-04"
+            },
+            {
+              "id": "e4-vehicles-plain-boot",
+              "title": "F-E4-3: vehicles and tar mount in a plain boot on the Motor maps; the player gets the rider errands (L7)",
+              "taskFile": "e4-vehicles-plain-boot.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-04"
+            },
+            {
+              "id": "sim-terrain-read-canonicalization",
+              "title": "F-E4-2: sim-path terrain reads on the canonicalization grid; whole-run browser hash = node for E4 reels",
+              "taskFile": "sim-terrain-read-canonicalization.md",
+              "status": "queued",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-04"
+            },
+            {
+              "id": "f-e4-1-suspend-snapshot-repro",
+              "title": "F-E4-1 INVESTIGATE: does captureSnapshot crash a plain-boot ride at the first wave boundary, or only the harness",
+              "taskFile": "f-e4-1-suspend-snapshot-repro.md",
+              "status": "queued",
+              "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-04"
             }
