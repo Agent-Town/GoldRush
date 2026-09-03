@@ -1,0 +1,27 @@
+# Task gauntlet-heat11-unclaimed-sweep: the Claude rigs ride every unclaimed contract once — first secures for the receipts, the winnability law tested in the field (ATTENDED-HOSTED, operator = a Claude agent; never the lane runner)
+
+You are the OPERATOR (a Claude agent dispatched attended), not a rider. The lane runner cannot host the Claude CLI (spawnSync ETIMEDOUT, s2xx) so this heat is hosted from an arena worktree exactly like the claude-debut rides of 2026-09-01.
+READ FIRST: `tasks/gauntlet-heat10-level-field.md` + `tasks/gauntlet-heat8-grand-field.md` (field mechanics: era gate, skew probe, reel-papers duty, commons loop, firewall, secret hygiene — INHERITED VERBATIM); `artifacts/claude-debut-20260901/` (how a Claude rig rides: a `claude -p` session per contract with the charter, the rig authors its own controller, `attempt-N-tape.json` per scored attempt, the operator submits the secured tape through the door); `~/Claude/Projects/goldrush-gauntlet/TASK-TEMPLATE.md` (the charter shape: read skill.md, secure contract X on seed Y, no network, outcome file, the intermediate-results law) and `memories/claude__opus-5/NOTEBOOK.md` + `memories/claude__fable-5/NOTEBOOK.md` (the rigs' own lessons: every ride carries its notebook, diet class `self-memory`); `assets/contracts/winnability-receipts.json` (the 32 `unclaimed` contracts as of 2026-09-03: e1-drill-yard e1-dry-gulch e1-twin-banks e2-incline e2-pressure-garden e2-trestle e3-blackout-ridge e3-canyon-works e3-fairground e3-moth-season e4-boneyard e4-dust-flats e4-gusher-county e4-long-road e5-deepwater-claim e5-flotilla e5-regatta e5-stillwater e6-glow-mesa e6-half-life-hollow e6-picnic e7-dead-band e7-echo-canyon e7-relay-rush e7-relay-valley e8-eclipse e8-far-side e8-low-orbit e8-mare-claim e9-devils-alley e9-dome-basin e10-last-claim); `docs/audits/2026-09-02-era-mechanic-audit.md` (14 of these are RESKINS today: a secure there is still a lawful first secure, and the rig's notes on what the map asked of it are evidence for the reskin ladder); `specs/epoch-saga/CAPABILITY-LADDER.md` L2 (winnability) and L7 (same laws).
+
+## Why (owner 2026-09-03: "My Anthropic subscription resets in about 24 hours and there is lots of usage available")
+Thirty-two door contracts have never been secured by anyone. Every one is rideable headless today. A first secure is a receipt on the protocol page, a row on a board, and a field test of the winnability law; a contract nobody can secure after honest attempts is a finding, not a failure.
+
+## Arena law (inherited, restated because it bit twice)
+Detached worktree at the LIVE build (`curl https://gold-rush-3in.pages.dev/version.json`), own path `/tmp/heat11-<build>`; `npm ci --no-audit --no-fund` ONLY (never `npm install`: the lockfile is in the engine corpus); ERA GATE: the arena's `computeEngineHash` must be a recorded pin in `assets/engine-era.json` (print it); early skew probe: one cheap secure submitted and `verified` before any long ride; `reel_not_current` = STOP and report.
+
+## Program
+1. **Rigs:** Claude Opus 5 (`--model claude-opus-5`) and Claude Fable 5 (`--model claude-fable-5`), launched as `env -u CLAUDECODE -u CLAUDE_CODE_ENTRYPOINT -u CLAUDE_CONFIG_DIR claude -p "<charter>" --model <m> --allowedTools "Read,Write,Glob,Bash(node *)" --output-format text` from the arena, FOREGROUND (a backgrounded child dies with the turn), at most TWO rides in flight at once (machine load reddens gates).
+2. **Order:** by era, E1 first; per contract per rig: up to 2 scored attempts inside a 25-minute wall (the rig's own stop rule stands; the wall is the operator's); a secured tape is submitted the way heat 10 submitted (declared stack: model, harness `claude-code-cli`, harness version from `claude --version`, `harnessDigest` per the receipts recipe, cost fields `calls`/`tokensIn`/`tokensOut` when the CLI reports them), then polled to `verified`; reel-papers verdict per row.
+3. **The commons loop:** after each contract, append the rig's generation to its notebook (the FORMAT.md header; lessons verbatim from the rig; scribe-labeled where scribed); commit to the gauntlet checkout locally, NO push.
+4. **Evidence:** `artifacts/gauntlet-heat11-<date>/`: the matrix (contract · rig · attempts · outcome · waves · reel id · verified · wall) plus per-ride logs and tapes; `heat11-note.md` with the receipts delta (unclaimed before → after), the contracts NEITHER rig secured (each with the rig's own one-line diagnosis: the L2 winnability question), and the reskin observations.
+5. **Budget:** stop after 20 hours of wall clock or when both rigs have ridden every contract, whichever first; write the note either way.
+
+## Firewall
+Gold Rush repo: `artifacts/gauntlet-heat11-*/**` + one BACKLOG row ONLY (commit path-scoped, `feat:` prefix, no push needed; the attended session pushes). Gauntlet checkout: the two Claude notebook dirs only, local commits, no push. Never modify `src/**`, `assets/**`, `public/**`, `scripts/**`. No secrets echoed; `.env` untouched.
+
+## Self-check
+Era gate + skew probe quoted; the matrix complete for every contract attempted; every verified row's reel id; the receipts delta measured from the live API, not inferred; the note's "never secured" list with diagnoses.
+End: READY-FOR-GATES + the matrix, the delta, the never-secured list.
+
+## No-op / honesty guard
+If the Claude CLI cannot ride noninteractively from the arena (name the exact error), STOP after one contract with the receipt; do not fake a ride. If a submission is refused, quote the reason and continue.
