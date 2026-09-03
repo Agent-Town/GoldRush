@@ -73,6 +73,10 @@ test('every Motor reel replays to its claimed hash in Node, and the two engines 
     // `artifacts/e4-roads-and-convoys/report.md` F-E4-2. So the both-engine claim is made where it
     // can be made honestly: the SAME scripted order stream, the same fixed tick budget, under the
     // first wave boundary, with the motor state compared field for field.
+    // Settle on a blank page first: the harness boots its own navigation from `?contract=`, and
+    // under parallel workers that pending navigation interrupts the NEXT map's goto
+    // ("is interrupted by another navigation to ..."). One blank hop per map costs nothing.
+    await page.goto('about:blank');
     await page.goto(HARNESS(map.id, `${map.id}-01`));
     await page.waitForFunction(() => Boolean(window.__GR_AGENT_TAPE_REPLAY__));
     const browserDigest = await page.evaluate(async ({ contract, modules }) => {
@@ -94,6 +98,10 @@ test('every Motor map publishes its own errand to a browser rider, and GRADE is 
   test.setTimeout(180_000);
   const errors = collectErrors(page);
   for (const map of MAPS) {
+    // Settle on a blank page first: the harness boots its own navigation from `?contract=`, and
+    // under parallel workers that pending navigation interrupts the NEXT map's goto
+    // ("is interrupted by another navigation to ..."). One blank hop per map costs nothing.
+    await page.goto('about:blank');
     await page.goto(HARNESS(map.id, `${map.id}-01`));
     await page.waitForFunction(() => Boolean(window.__GR_AGENT_TAPE_REPLAY__));
     const result = await page.evaluate(async ({ contract, far, modules }) => {
