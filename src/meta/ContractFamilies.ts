@@ -751,7 +751,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean };
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier }; // E4 rides the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -1590,7 +1590,7 @@ const AUTHORED_TWIST_KEYS = [
   'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
-  'scheduledRelocation', 'persistentCanalChoices', 'emberShore',
+  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier',
 ] as const;
 const AUTHORED_PRACTICE_KEYS = [
   'scheduledWaves', 'scores', 'metaProgress', 'runHistory', 'standings', 'tapes', 'goldGrant', 'bellWaveSize',
@@ -2103,7 +2103,7 @@ function variableDescriptorArrayShape(
 function validateContractMap(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
   validateEngineDependencies(contract, reasons);
   validateLightRamp(contract.twist.lightRamp, reasons);
-  validateWaterMask(contract.tileParams.waterMask, reasons);
+  validateWaterMask(contract.tileParams.waterMask, reasons); validateMotorFrontier(contract, reasons); // E4: same line, so no cited coordinate below moves
   const captureQuota = contract.twist.showroom?.captureQuota;
   if (contract.twist.showroom !== undefined
     && (typeof captureQuota !== 'number' || !Number.isSafeInteger(captureQuota) || captureQuota <= 0)) {
@@ -2415,4 +2415,61 @@ try {
 function readDebugParamsForRegistry(): { debug: boolean } {
   const params = new URLSearchParams(window.location.search);
   return { debug: params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase' };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// E4 MOTOR FRONTIER (`tasks/e4-roads-and-convoys.md`, 2026-09-03) — APPENDED AT THE END OF THE
+// FILE ON PURPOSE, like the wave-clock block beside the twist allowlist: `tasks/goals.json` cites
+// this file by line in nine places (`:701`, `:755`, `:1099`, `:1103`, `:1111`, `:1177`, `:1345`,
+// `:1542`, `:2294`), and a type or a validator inserted at its natural home shifts every one of
+// them. Below the last cited line it costs nothing.
+//
+// The twist that composes the shared motor consumer (`src/sim/MotorSocket.ts`) into a contract:
+// its authored `roadCorridors` become gradeable roads, one fuelled Hauler starts at
+// `vehicle.start`, and SECURE waits for the Hauler to come to rest at the far end of
+// `haul.corridorId`. Requires `twist.weather`, whose storms slow the Hauler (the fuel leash the
+// spec's Dust Flats §B names). `convoy` composes `ConvoyBehavior` along `tileParams.convoyRoute`.
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+export type ContractMotorFrontier = {
+  description: string;
+  vehicle: { start: ContractHarvestAnchor };
+  haul: { corridorId: string; label: string };
+  convoy?: { members: number; label: string };
+};
+
+/**
+ * The Motor Frontier fails closed at authoring time: an unknown field, a haul that names no authored
+ * corridor, a Hauler with no finite start, a convoy with no route, or storms with no weather would
+ * otherwise surface as a runtime throw inside `MotorSocket.create` on every boot of the contract.
+ */
+function validateMotorFrontier(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
+  const motor: unknown = contract.twist.motorFrontier;
+  if (motor === undefined) return;
+  if (!isRecord(motor) || Array.isArray(motor)) {
+    addDescriptorReason(reasons, reason('field_section', 'The Motor Frontier section has the wrong shape.', 'twist.motorFrontier'));
+    return;
+  }
+  addUnknownFieldReasons(motor, ['description', 'vehicle', 'haul', 'convoy'], 'twist.motorFrontier', reasons);
+  if (!contract.twist.weather) {
+    addDescriptorReason(reasons, reason('motor_frontier', 'The Motor Frontier needs twist.weather to drive its storms.', 'twist.motorFrontier'));
+  }
+  if (typeof motor.description !== 'string' || motor.description.trim() === '') {
+    addDescriptorReason(reasons, reason('motor_frontier', 'The Motor Frontier needs a description.', 'twist.motorFrontier.description'));
+  }
+  const start = isRecord(motor.vehicle) && isRecord(motor.vehicle.start) ? motor.vehicle.start : null;
+  if (!start || !Number.isFinite(start.x) || !Number.isFinite(start.z)) {
+    addDescriptorReason(reasons, reason('motor_frontier', 'The Hauler needs a finite start.', 'twist.motorFrontier.vehicle'));
+  }
+  const corridors = contract.tileParams.roadCorridors ?? [];
+  const haul = isRecord(motor.haul) ? motor.haul : null;
+  if (!haul || typeof haul.corridorId !== 'string' || !corridors.some((corridor) => corridor.id === haul.corridorId) || !shortText(haul.label)) {
+    addDescriptorReason(reasons, reason('motor_frontier', 'The haul must name one authored road corridor and label its stop.', 'twist.motorFrontier.haul'));
+  }
+  if (motor.convoy !== undefined) {
+    const convoy = isRecord(motor.convoy) ? motor.convoy : null;
+    if (!convoy || !Number.isSafeInteger(convoy.members) || (convoy.members as number) <= 0 || !shortText(convoy.label)
+      || (contract.tileParams.convoyRoute?.length ?? 0) < 2) {
+      addDescriptorReason(reasons, reason('motor_frontier', 'A convoy needs a positive member count, a label, and an authored convoyRoute of two or more points.', 'twist.motorFrontier.convoy'));
+    }
+  }
 }

@@ -79,9 +79,23 @@ for (const contract of motor.contracts) {
         // AP-11 species B: fields no booted system reads must NOT be minted. These are the
         // Dust Flats' declared-but-inert layers; if a future author wires one, this fails and
         // the manifest is meant to grow — deliberately, not by accident.
+        //
+        // GROWN DELIBERATELY, 2026-09-03 (`tasks/e4-roads-and-convoys.md`): the headless door now
+        // composes `MotorSocket` wherever `twist.motorFrontier` is declared, so the road corridors
+        // (`camp-to-railhead` is the haul objective) and the weather clock are consumed vocabulary
+        // and the manifest declares them under `motor_*` rules. The ORBIT peel vocabulary, the tar
+        // seams, the dry wash and the haze colour still have no consumer in either engine and stay
+        // forbidden. A contract WITHOUT the motor twist keeps the whole original list.
         const serialized = JSON.stringify(manifest);
-        for (const inert of ['lapsBeforePeel', 'peelSpeed', 'peelPoints', 'north-cut', 'telegraphSeconds', 'tarSeams', 'tar-west', 'roadCorridors', 'camp-to-railhead', 'dryWash', 'stormSeconds', 'hazeColor']) {
+        const motorTwist = (contract.twist as { motorFrontier?: { haul: { corridorId: string } } }).motorFrontier;
+        const stillInert = ['lapsBeforePeel', 'peelSpeed', 'peelPoints', 'north-cut', 'tarSeams', 'tar-west', 'dryWash', 'hazeColor'];
+        const consumedByMotor = ['telegraphSeconds', 'roadCorridors', 'camp-to-railhead', 'stormSeconds'];
+        for (const inert of motorTwist ? stillInert : [...stillInert, ...consumedByMotor]) {
           expect(serialized).not.toContain(inert);
+        }
+        if (motorTwist) {
+          expect(ruleIds).toEqual(expect.arrayContaining(['motor_roads', 'motor_fuel', 'motor_hauler', 'motor_haul_objective', 'motor_weather']));
+          expect(rules.find(({ id }) => id === 'motor_haul_objective')?.data).toMatchObject({ corridorId: motorTwist.haul.corridorId, engines: 'gr-sim' });
         }
       } else {
         expect(ruleIds.filter((id) => id.startsWith('land_yacht'))).toEqual([]);

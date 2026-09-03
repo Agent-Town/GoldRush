@@ -66,13 +66,14 @@ Coordinates are the claim plane's `{x, z}` values. Contract-specific vocabulary 
 
 ### View schema
 
-Current view schema version: **1**. Every view carries this number as `viewVersion`, and every submitted reel records the version it rode against in `meta.viewVersion`. Reels without that stamp are version 1.
+Current view schema version: **2**. Every view carries this number as `viewVersion`, and every submitted reel records the version it rode against in `meta.viewVersion`. Reels without that stamp are version 1.
 
-The rider view is additive-only: fields may be added, never removed or renamed. An added field bumps the version (unless the engine era itself advances), and `assets/engine-era.json` stamps the sorted field set beside the engine hash without joining the hash corpus.
+The rider view is additive-only: fields may be added, never removed or renamed. An added field bumps the version (unless the engine era itself advances), and `assets/engine-era.json` stamps the sorted field set beside the engine hash without joining the hash corpus. That stamped set is the canonical Claim view; contract-scoped sockets (`now.deepwater`, `now.atomic`, `now.motor`, ...) are documented per era in the table below and appear only where their contract declares them.
 
 | View version | Era extension |
 |---|---|
 | 1 | Baseline published rider view through the current E1-E10 door contracts. |
+| 2 | E4 Motor Frontier: `now.motor` on contracts declaring `twist.motorFrontier` (today `e4-dust-flats`), carrying `objective`, `weather`, `roads`, `fuel`, `vehicle`, `convoy`, `events` and `eventCount`; the terminal outcome gains `motor`; the grammar gains `GRADE` and `HAUL`. |
 
 ## THE GRAMMAR
 
@@ -115,6 +116,8 @@ The source-locked forms are:
 {"verb":"CAPTURE"}
 {"verb":"BOAT_BUILD","padId":"<string>","buildingId":"<string>"}
 {"verb":"REANCHOR","anchorId":"<string>"}
+{"verb":"GRADE"}
+{"verb":"HAUL"}
 {"verb":"FALLBACK_IF","threat":{"enemiesGte":N},"pos":{"x":N,"z":N}}
 ```
 <!-- skillmd-guard:grammar:end -->
@@ -145,7 +148,7 @@ At the secure boundary, `now.pendingSecure` supplies the configured default (`ba
 
 ## EPOCH LEVERS
 
-These orders exist only where their epoch socket appears in `now`; elsewhere they fail through the ordinary order-failure surprise. On E5 Deepwater, `now.deepwater` lists Claim-Boat pads and occupancy, boat buildings, the current `anchor`, and all known `anchors`. `BOAT_BUILD` occupies a known empty pad with the named building; `REANCHOR` moves to a known non-current anchor. On the Flotilla, `now.deepwater.flotilla` publishes each hull's district, position, integrity, loss, and straggler status plus the formation centroid; `REANCHOR` with a living hull id nudges that hull toward the centroid when its cooldown is ready. Both mirror the player's zero-resource actions. On E6 Atomic, `now.atomic.wrangle` shows the wind-down/capture radius, active machine states, and pen roster. `CAPTURE` has no target field: it catches the nearest exhausted machine within the published radius of the Prospector, exactly like the player's capture action, with no resource cost.
+These orders exist only where their epoch socket appears in `now`; elsewhere they fail through the ordinary order-failure surprise. On E4 Motor, `now.motor` is present where the contract declares `twist.motorFrontier` (today `e4-dust-flats`) and it IS the objective: `now.motor.objective.arrived` is what opens the secure, and the claim cannot be secured at any wave until the Hauler rests within `objective.stopReach` of `objective.stop` (the far end of `objective.corridorId`); on a boss contract that has to happen before the boss falls, because the boss kill secures only a run whose objective is already met. Fuel needs no verb: the Hauler drinks from `now.motor.fuel`, which fills when any body, the Prospector included, stands within `harvestRange` of an unharvested tar node in `fuel.nodes` for half a second (three tar per node, four fuel per tar, a 24-unit tank; refining resumes as the tank empties). `GRADE` has no target: it grades the ungraded corridor in `now.motor.roads.corridors` whose `start` is within `roads.gradeReach` of the Prospector, and a graded corridor is 2.5x faster and burns 0.4x fuel for anything driving on it. `HAUL` has no target either: it drives the Hauler to where the Prospector stands, halting dry when the tank empties and resuming as tar refines, so stage the Hauler at a corridor stake before calling it up the graded road. `now.motor.weather` is the storm clock (`phase`, `nextPhaseInSeconds`, `movementMultiplier`): a storm slows the Hauler, a convoy and every outlaw alike; visibility is published but has no simulation consumer. `now.motor.events` is the tail of the motor events the terminal hash certifies (`motor_road_graded`, `motor_tar_harvested`, `motor_haul_dispatched`, `motor_hauler_dry`, `motor_haul_arrived`, `motor_weather`, `motor_convoy_arrived`) and `eventCount` counts all of them. On E5 Deepwater, `now.deepwater` lists Claim-Boat pads and occupancy, boat buildings, the current `anchor`, and all known `anchors`. `BOAT_BUILD` occupies a known empty pad with the named building; `REANCHOR` moves to a known non-current anchor. On the Flotilla, `now.deepwater.flotilla` publishes each hull's district, position, integrity, loss, and straggler status plus the formation centroid; `REANCHOR` with a living hull id nudges that hull toward the centroid when its cooldown is ready. Both mirror the player's zero-resource actions. On E6 Atomic, `now.atomic.wrangle` shows the wind-down/capture radius, active machine states, and pen roster. `CAPTURE` has no target field: it catches the nearest exhausted machine within the published radius of the Prospector, exactly like the player's capture action, with no resource cost.
 
 `<buildable>` is one of:
 

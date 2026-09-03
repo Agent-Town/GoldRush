@@ -25,6 +25,7 @@ import { NOISE_HUNT_RULES } from '../systems/NoiseHuntSystem';
 import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 import { HOLLOW_EXTRACTION_RADIUS, HOLLOW_GLOW_DAMAGE_PER_SECOND } from '../systems/HollowCrossingSystem';
+import { MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH } from '../sim/MotorSocket';
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
@@ -328,6 +329,78 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       seconds: Balance.landYacht.dreadSeconds,
       requires: 'a ready watchtower',
     }));
+  }
+  // E4 Motor Frontier (`tasks/e4-roads-and-convoys.md`). Gated on the DATA (`twist.motorFrontier`
+  // beside `twist.weather`), never the contract id. The consumer is `src/sim/MotorSocket.ts`, which
+  // the headless door composes; the browser boot composes no motor consumer today (`Game.ts` mounts
+  // `Vehicle`/`FuelSystem` only under `?debug&vehicles` and `DustFlatsTile` has no importer), and the
+  // `engines` field says so rather than implying a parity that does not exist yet.
+  const motor = twist.motorFrontier;
+  const motorWeather = twist.weather;
+  if (motor && motorWeather) {
+    const corridors = tile.roadCorridors ?? [];
+    const stop = corridors.find(({ id }) => id === motor.haul.corridorId)?.end ?? { x: 0, z: 0 };
+    rules.push(rule('motor_roads', 'MotorSocket.gradeAt', {
+      corridors: corridors.map(({ id }) => id).sort(),
+      count: corridors.length,
+      gradeReach: MOTOR_GRADE_REACH,
+      halfWidth: Balance.e4Road.halfWidth,
+      friendlySpeedMultiplier: Balance.e4Road.friendlySpeedMultiplier,
+      friendlyFuelMultiplier: Balance.e4Road.friendlyFuelMultiplier,
+      verb: `${MOTOR_GRADE_VERB} with the Prospector within gradeReach of an ungraded corridor start`,
+      engines: 'gr-sim',
+    }));
+    rules.push(rule('motor_fuel', 'FuelSystem.update', {
+      nodes: Balance.e4Fuel.nodePositions.map(({ x, z }) => ({ x, z })),
+      harvestRange: Balance.e4Fuel.harvestRange,
+      harvestSeconds: Balance.e4Fuel.harvestSeconds,
+      tarPerNode: Balance.e4Fuel.tarPerNode,
+      fuelPerTar: Balance.e4Fuel.fuelPerTar,
+      refineSeconds: Balance.e4Fuel.refineSeconds,
+      capacity: Balance.e4Fuel.capacity,
+      harvestedBy: 'any actor standing within harvestRange for harvestSeconds; the Prospector counts',
+      engines: 'gr-sim',
+    }));
+    rules.push(rule('motor_hauler', 'Vehicle.update', {
+      startX: motor.vehicle.start.x,
+      startZ: motor.vehicle.start.z,
+      speed: Balance.e4Fuel.vehicleSpeed,
+      burnPerSecond: Balance.e4Fuel.burnPerSecond,
+      arriveRadius: Balance.e4Fuel.arriveRadius,
+      stormMovementMultiplier: motorWeather.stormMovementMultiplier,
+      verb: `${MOTOR_HAUL_VERB} drives the Hauler to where the Prospector stands; it halts dry when the tank empties and resumes as tar refines`,
+      engines: 'gr-sim',
+    }));
+    rules.push(rule('motor_haul_objective', 'MotorSocket.objectiveAllowsSecure', {
+      corridorId: motor.haul.corridorId,
+      label: motor.haul.label,
+      stopX: stop.x,
+      stopZ: stop.z,
+      stopReach: MOTOR_STOP_REACH,
+      requires: 'the Hauler at rest within stopReach of the stop; on a boss contract, before the boss falls',
+      engines: 'gr-sim',
+    }));
+    rules.push(rule('motor_weather', 'WeatherSystem.sample', {
+      cycleSeconds: motorWeather.cycleSeconds,
+      clearSeconds: motorWeather.clearSeconds,
+      telegraphSeconds: motorWeather.telegraphSeconds,
+      stormSeconds: motorWeather.stormSeconds,
+      stormMovementMultiplier: motorWeather.stormMovementMultiplier,
+      stormVisibilityMultiplier: motorWeather.stormVisibilityMultiplier,
+      slows: ['hauler', 'convoy', 'enemies'],
+      visibility: 'rider-visible only; no simulation consumer',
+      engines: 'gr-sim',
+    }));
+    if (motor.convoy) {
+      rules.push(rule('motor_convoy', 'ConvoyBehavior.update', {
+        members: motor.convoy.members,
+        label: motor.convoy.label,
+        spacing: Balance.convoy.spacing,
+        catchupMultiplier: Balance.convoy.catchupMultiplier,
+        route: 'tileParams.convoyRoute',
+        engines: 'gr-sim',
+      }));
+    }
   }
   // --- E5 Deepwater. Gated exactly as the browser's `createDeepwaterClaimTile` consumer.
   const deepwater = contract.id === 'e5-deepwater-claim' || contract.id === 'e5-regatta'

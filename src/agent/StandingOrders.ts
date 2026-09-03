@@ -43,6 +43,16 @@ export type StandingOrder =
   | { verb: 'CAPTURE' }
   | { verb: 'BOAT_BUILD'; padId: string; buildingId: string }
   | { verb: 'REANCHOR'; anchorId: string }
+  // E4 Motor Frontier (`tasks/e4-roads-and-convoys.md`): two targetless verbs, the world naming the
+  // target from the Prospector's ground exactly as `fund`/`recover`/`plant` do. `GRADE` grades the
+  // ungraded corridor whose stake is within reach; `HAUL` drives the Hauler to where the Prospector
+  // stands. They are VERBS rather than `CONTEXT_ACTION` actions because the browser's context-action
+  // handler destructures `order.target` for every action it does not name (`src/game/Game.ts:3426`),
+  // so a targetless action added to that union would break its type narrowing — and `Game.ts` is
+  // outside this slice's firewall. Like `CAPTURE`, they execute through an optional handler and fail
+  // honestly ("unavailable in this engine") wherever none is bound.
+  | { verb: 'GRADE' }
+  | { verb: 'HAUL' }
   | { verb: 'FALLBACK_IF'; threat: { enemiesGte: number }; pos: AgentVec2 };
 
 export type StandingOrderStatus = 'pending' | 'active' | 'done' | 'failed';
@@ -119,6 +129,7 @@ export type FinalVerbHandlers = {
   capture?: () => ActionOrderResult;
   boatBuild?: (padId: string, buildingId: string) => ActionOrderResult;
   reanchor?: (anchorId: string) => ActionOrderResult;
+  motor?: (verb: 'GRADE' | 'HAUL') => ActionOrderResult;
 };
 
 let installedExecutor: StandingOrdersExecutor | null = null;
@@ -140,6 +151,7 @@ export class StandingOrdersExecutor {
   private capture: (() => ActionOrderResult) | null = null;
   private boatBuild: ((padId: string, buildingId: string) => ActionOrderResult) | null = null;
   private reanchor: ((anchorId: string) => ActionOrderResult) | null = null;
+  private motor: ((verb: 'GRADE' | 'HAUL') => ActionOrderResult) | null = null;
   private buildProgress: { orderId: string; distance: number; at: number } | null = null;
 
   constructor(
@@ -255,6 +267,7 @@ export class StandingOrdersExecutor {
     this.capture = handlers.capture ?? null;
     this.boatBuild = handlers.boatBuild ?? null;
     this.reanchor = handlers.reanchor ?? null;
+    this.motor = handlers.motor ?? null;
   }
 
   snapshot(): StandingOrdersView {
@@ -386,6 +399,14 @@ export class StandingOrdersExecutor {
           : this.reanchor?.(order.anchorId);
       if (result?.ok) this.status(record, 'done', at);
       else this.fail(record, result?.reason ?? `${order.verb} is unavailable.`, at);
+      return {};
+    }
+
+    if (order.verb === 'GRADE' || order.verb === 'HAUL') {
+      this.status(record, 'active', at);
+      const result = this.motor?.(order.verb) ?? { ok: false as const, reason: `${order.verb} is unavailable in this engine.` };
+      if (result.ok) this.status(record, 'done', at);
+      else this.fail(record, result.reason, at);
       return {};
     }
 
@@ -605,6 +626,10 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     if (!exactKeys(value, ['verb', 'anchorId']) || !validId(value.anchorId)) return schemaError(index, 'REANCHOR');
     return { verb: 'REANCHOR', anchorId: value.anchorId };
   }
+  if (value.verb === 'GRADE' || value.verb === 'HAUL') {
+    if (!exactKeys(value, ['verb'])) return schemaError(index, value.verb);
+    return { verb: value.verb };
+  }
   if (value.verb === 'FALLBACK_IF') {
     if (!exactKeys(value, ['verb', 'threat', 'pos']) || !validPos(value.pos) || !isRecord(value.threat)) {
       return schemaError(index, 'FALLBACK_IF');
@@ -807,6 +832,7 @@ export function standingOrderIdentity(order: StandingOrder): string {
   if (order.verb === 'CAPTURE') return JSON.stringify([order.verb]);
   if (order.verb === 'BOAT_BUILD') return JSON.stringify([order.verb, order.padId, order.buildingId]);
   if (order.verb === 'REANCHOR') return JSON.stringify([order.verb, order.anchorId]);
+  if (order.verb === 'GRADE' || order.verb === 'HAUL') return JSON.stringify([order.verb]);
   return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
 }
 

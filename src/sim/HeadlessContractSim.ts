@@ -51,6 +51,7 @@ import {
 import { stableHash, type LockstepAction } from '../mp/LockstepClient';
 import { AtomicSocket } from './AtomicSocket';
 import { DeepwaterSocket } from './DeepwaterSocket';
+import { MotorSocket, type MotorDiagnostics, type MotorEvent, type MotorOutcomeSummary } from './MotorSocket';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem, type ShooterHandle } from '../systems/CombatSystem';
 import { CombatVfx } from '../systems/CombatVfx';
@@ -294,6 +295,8 @@ export type GrSimOutcome = {
     worksByTier: Record<string, number>;
     worksLost: number;
   };
+  /** E4: present only where the contract declares `twist.motorFrontier`; outside the hashed base. */
+  motor?: MotorOutcomeSummary;
 };
 
 export type GrSimTurn = {
@@ -382,6 +385,14 @@ export type HeadlessAgentView = AgentView & {
      * gold never loses a turret to the alley.
      */
     devilsAlley?: ScheduledRelocationDiagnostics;
+    /**
+     * E4 Motor Frontier. Present only where the contract declares `twist.motorFrontier`. This one
+     * IS the objective: `motor.objective.arrived` is what opens the secure, and `roads`, `fuel`,
+     * `vehicle` and `weather` are how a rider decides when to stand at a tar node, when to GRADE
+     * the stake it is standing at, when to HAUL, and whether the next storm will strand the tank.
+     * `events` is the tail of the motor events the terminal hash certifies; `eventCount` counts all.
+     */
+    motor?: MotorDiagnostics;
     hero: AgentView['now']['hero'] & {
       level: number;
       upgradesTaken: Record<string, number>;
@@ -617,6 +628,17 @@ export class HeadlessContractSim {
    * different boards from wave one.
    */
   private readonly devilsAlley: ScheduledRelocationSystem;
+  /**
+   * E4 — THE MOTOR FRONTIER SOCKET (`./MotorSocket.ts`), and the honest note about the other
+   * engine. It is sim-affecting in three places: the Hauler's position (the objective), the
+   * storm's movement multiplier on every outlaw, and the tar nodes' harvest from BOTH bodies'
+   * positions. All three mirror the composition `731373d4d` shipped in `Game.ts`; none of it is
+   * mounted by today's browser boot (`DustFlatsTile` has no importer; `Vehicle`/`FuelSystem` mount
+   * only under `?debug&vehicles`, `Game.ts:4585`), so a browser player on this contract meets none
+   * of these rules until that boot composes the same socket. Null on every contract that declares
+   * no `twist.motorFrontier`, so no admitted contract's tick, view, or hash moves.
+   */
+  private readonly motor: MotorSocket | null;
   private readonly waves: WaveSystem;
   private readonly progression: Progression;
   private readonly runManager: RunManager;
@@ -745,6 +767,9 @@ export class HeadlessContractSim {
     // A9: same read the browser performs at `Game.ts` — the CONTRACT's own twist plus its own
     // authored routes, bays and stakes. No voice headless: this engine paints nothing.
     this.devilsAlley = ScheduledRelocationSystem.create(this.manifest);
+    // E4: one read of the CONTRACT (`twist.motorFrontier` beside `twist.weather`), never the epoch,
+    // so an E4 contract that declares no motor twist keeps the ride it always had.
+    this.motor = MotorSocket.create(this.manifest);
     this.combat = new CombatSystem(
       this.events,
       [this.hero],
@@ -1068,6 +1093,7 @@ export class HeadlessContractSim {
       reanchor: (anchorId) => this.deepwater?.reanchor(anchorId, this.timeAlive)
         ? { ok: true }
         : { ok: false, reason: 'REANCHOR requires a known anchor other than the current anchor.' },
+      motor: (verb) => this.motorVerb(verb),
     });
     bindStandingUpgradePicker((id) => {
       const applied = this.progression.applyUpgrade(id);
@@ -1117,6 +1143,11 @@ export class HeadlessContractSim {
           // without both a corridor and relay sites, so `objectiveAllowsSecure` is true on every
           // contract that declares no discharge-able front and no admitted terminal moves.
           || !this.interferenceFront.objectiveAllowsSecure
+          // E4: the haul latch, keyed on `twist.motorFrontier` exactly as the canyon latch keys on
+          // `powerGrid.connect`. A Dust Flats run whose Hauler never rests at the railhead cannot
+          // secure at any wave; the arrival opens the ordinary secure wave. Null on every contract
+          // that declares no motor twist, so no admitted terminal moves.
+          || (this.motor !== null && !this.motor.objectiveAllowsSecure)
           || this.atomic?.objectiveAllowsSecure === false
           || (this.preserve !== null && !this.preserve.active)
           ? Number.MAX_SAFE_INTEGER
@@ -1265,9 +1296,19 @@ export class HeadlessContractSim {
         // as one that met it with four, and one that missed it could not have secured at all.
         ...(this.interferenceFront.isDeclared ? { interferenceFront: this.interferenceFront.diagnostics } : {}),
         ...(this.hollowCrossing.isDeclared ? { hollowCrossing: this.hollowCrossing.diagnostics } : {}),
+        // E4: spread-if-declared, same rule. Where the Hauler rests, what it burned and which
+        // corridors were graded are terminal facts a secure depends on: a claim secured with the
+        // Hauler at the railhead hashes differently from one that never left the camp.
+        ...(this.motor ? { motor: this.motor.simulationSnapshot } : {}),
       },
     });
-    return { ...base, eventLogHash, ...overtime, ...(this.preserveFell ? { endReason: 'preserve_fell' as const } : {}) };
+    return {
+      ...base,
+      eventLogHash,
+      ...overtime,
+      ...(this.motor ? { motor: this.motor.outcomeSummary } : {}),
+      ...(this.preserveFell ? { endReason: 'preserve_fell' as const } : {}),
+    };
   }
 
   // ---------------------------------------------------------------------------
@@ -1422,6 +1463,15 @@ export class HeadlessContractSim {
       [this.hero.group.position, this.prospector.position],
       this.waves.diagnostics.wave,
     );
+    // E4: the browser's own order (`Game.ts:2908-2910`: pressure -> fuel -> vehicle), with the same
+    // two bodies the pressure seam above hands over — the Prospector is the only one a rider moves,
+    // so it is the one that stands at a tar node. Events land in the replay log the hash certifies.
+    this.motor?.update(
+      STEP_SECONDS,
+      this.timeAlive,
+      [this.hero.group.position, this.prospector.position],
+      (event: MotorEvent) => this.replayEvents.push(event),
+    );
     this.syncContractPowerGrid();
     // Game.ts:2632-2636 orders these five exactly so: grid sync -> wheel -> wheel power -> graph
     // step -> connect objective. The flocks ride at the wheel's own site and read the day/night
@@ -1477,7 +1527,10 @@ export class HeadlessContractSim {
         : this.waves.preferredEscortTarget(from) ?? this.targeting.nearestBuilding(from),
       hitBuilding: (enemy, target, amount) => this.combat.handleBuildingHit(enemy, target, amount),
       palisadeRoute: (from, to, clearance) => this.build.palisadeRoute(from, to, clearance),
-    }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1));
+    // E4: the storm slows every outlaw, as `731373d4d`'s `Game.ts:1749` composed it
+    // (`dustFlats.enemyMovementMultiplier`); 1 on every contract without the motor twist.
+    }, (enemy) => this.nightSpeedMultiplier(enemy) * (this.atomic?.movementMultiplier(enemy) ?? 1)
+      * (this.motor?.enemyMovementMultiplier(this.timeAlive) ?? 1));
     this.picnicHold.update(
       STEP_SECONDS,
       this.timeAlive,
@@ -1570,6 +1623,9 @@ export class HeadlessContractSim {
     // it gates NOTHING, so it is published for planning rather than for scoring: where the next
     // sweep goes, and which of your works the wind is allowed to take.
     if (this.devilsAlley.isDeclared) view.now.devilsAlley = this.devilsAlley.diagnostics;
+    // E4: only where DECLARED. This one MOVES every turn and IS the objective — the haul latch, the
+    // tank, the graded corridors and the storm clock a rider plans the next thirty seconds against.
+    if (this.motor) view.now.motor = this.motor.diagnostics(this.timeAlive, this.manifest.twist.secureWave ?? Balance.run.secureWave);
     const progression = this.progression.snapshot;
     Object.assign(view.now.hero, {
       level: progression.level,
@@ -1746,6 +1802,10 @@ export class HeadlessContractSim {
       && (!this.canalChoices || this.canalChoices.objectiveAllowsSecure)
       // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
       && this.interferenceFront.objectiveAllowsSecure
+      // E4 rides it too: the Land-Yacht's fall cannot secure a railhead the Hauler never reached.
+      // The Dust Flats is the first contract that fields BOTH a Baron and an objective latch, so the
+      // order a rider must keep is stated on the view and in skill.md: haul first, then the boss.
+      && (this.motor === null || this.motor.objectiveAllowsSecure)
       && this.atomic?.objectiveAllowsSecure !== false;
     const runWave = this.currentRunWave();
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen'
@@ -1934,6 +1994,8 @@ export class HeadlessContractSim {
       // A9: null off every other contract, same rule. The presentation-stripped half rides the
       // determinism hash so a run that moved a turret cannot hash the same as one that did not.
       devilsAlley: this.devilsAlley.isDeclared ? this.devilsAlley.simulationSnapshot : null,
+      // E4: null off every other contract, same rule; the per-turn read is `now.motor` on the view.
+      motor: this.motor?.simulationSnapshot ?? null,
       preserve: this.preserveDiagnostics(),
       megaproject: megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked),
       mothSwarm: this.mothSwarm?.diagnostics() ?? null,
@@ -2381,6 +2443,21 @@ export class HeadlessContractSim {
       choice: decided.choice,
     });
     return { ok: true };
+  }
+
+  /**
+   * E4's two verbs, reached through the same public grammar and answered from the Prospector's
+   * ground exactly as `fundMegaproject` below reads its site: `GRADE` grades the corridor stake the
+   * Prospector stands at, `HAUL` calls the Hauler to where the Prospector stands. Both are refused
+   * with a reason a rider can act on (which stake is nearest, why the tank cannot move it).
+   */
+  private motorVerb(verb: 'GRADE' | 'HAUL'): { ok: true } | { ok: false; reason: string } {
+    if (!this.motor) return { ok: false, reason: `REJECTED: ${verb} needs a contract that declares twist.motorFrontier.` };
+    const emit = (event: MotorEvent) => this.replayEvents.push(event);
+    const result = verb === 'GRADE'
+      ? this.motor.gradeAt(this.prospector.position, round(this.timeAlive), emit)
+      : this.motor.haulTo(this.prospector.position, round(this.timeAlive), emit);
+    return result.ok ? { ok: true } : result;
   }
 
   private fundMegaproject(): { ok: true } | { ok: false; reason: string } {

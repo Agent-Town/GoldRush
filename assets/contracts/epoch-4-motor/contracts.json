@@ -72,6 +72,11 @@
       },
       "twist": {
         "secureWave": 12,
+        "motorFrontier": {
+          "description": "The Dust Flats ride: fuel the Hauler at the camp's three tar nodes, grade the surveyed corridors from their stakes, and haul to the railhead through the storms. The claim cannot be secured until the Hauler rests at the railhead, and on this map that has to happen before the Land-Yacht falls.",
+          "vehicle": { "start": { "x": -20, "z": -8 } },
+          "haul": { "corridorId": "camp-to-railhead", "label": "the railhead" }
+        },
         "weather": {
           "cycleSeconds": 30,
           "clearSeconds": 6,
