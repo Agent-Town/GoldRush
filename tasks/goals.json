@@ -4114,10 +4114,13 @@
               "id": "sim-terrain-read-canonicalization",
               "title": "F-E4-2: sim-path terrain reads on the canonicalization grid; whole-run browser hash = node for E4 reels",
               "taskFile": "sim-terrain-read-canonicalization.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-04"
+              "queuedAt": "2026-09-04",
+              "mergeHash": "7d23e345efa4a60cca4cf4f3cd1e9fed95d9c268",
+              "mergedAt": "2026-09-04",
+              "drainNotes": "s2494: MERGED. Honesty-guard STOP — the runner built the proof harness, the proof DISPROVED F-E4-2 height-arithmetic attribution, and it retained no sim terrain-read change. Real source named with coordinates (BrowserAgentTapeWorker.ts:15 writes window.location vs ContractFamilies.ts:2382 reading globalThis.location); that fix shipped separately as 22b9538e5, so this harness is now its standing regression gate and is GREEN on the merged tree where it was RED on the lane base. Gates: tsc clean 16.1s, build green 32.2s, all four Motor reels claimed=node=Chromium desktop AND 390px mobile, true-reel-harness 2/2 both projects. One desktop red (human parity GLTFLoader texture blob) proven PRE-EXISTING by a reverted-files control on main byte-identical spec: control 2/3 red vs merged 1/3, same signature. F-1460-1 node-guards trigger does not fire (0 src/ files). Review: reviews/sim-terrain-read-canonicalization.md"
             },
             {
               "id": "f-e4-1-suspend-snapshot-repro",
