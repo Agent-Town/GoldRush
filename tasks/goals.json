@@ -3971,6 +3971,15 @@
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-03",
               "stopNote": "STOPPED s2467 at the master’s own honesty guard, run 20260903-100116 (main slot). This is a FIREWALL SUCCESS, not a failure: the runner found the docs slice rests on a workflow that does not exist, REPORTED it, and left `public/skill.md` and its guard pins untouched rather than advertising a workflow the county cannot run. ZERO code diff; the whole output is one BACKLOG row, so Mistake #1 is satisfied — the WHY is written down. EVERY CLAIM RE-VERIFIED BY THE DRAIN AT SOURCE rather than inherited from the runner (Mistake #4): `node scripts/gr-sim.mjs --replay|--resume|--to-tick` each exit rc=1 `Unknown argument` (measured, all three); `--tape` IS present, so a completed tape can be written but never replayed to a tick; and `scripts/assay-replay.mjs` contains no `--to-tick`/`toTick`/`--resume`/`resumable` at all, so it can verify a whole tape and cannot emit resumable state. OWED BEFORE RE-QUEUEING: a real `gr-sim` replay-to-tick + resume contract, including production of the one contiguous single-era tape the door accepts. Re-queue only against that feature slice — this is a FEATURE, not a docs task."
+            },
+            {
+              "id": "transfer-board",
+              "title": "HarnessDev B: weekly held-out seeds, windowed door, generalization cell (spec specs/transfer-board.md; sequenced after harness-receipts)",
+              "taskFile": "transfer-board.md",
+              "status": "queued",
+              "lane": "lane-b",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-03"
             }
           ]
         }
