@@ -2452,9 +2452,6 @@ export type ContractMotorFrontier = {
   tow?: { hulkId: string; corridorId: string; label: string };
 };
 
-/** The four objective keys, of which a Motor Frontier declares exactly one. */
-export const MOTOR_OBJECTIVE_KEYS = ['haul', 'convoy', 'deliveries', 'tow'] as const;
-
 /**
  * The Motor Frontier fails closed at authoring time: an unknown field, an objective that names no
  * authored corridor, a Hauler with no finite start, a convoy with no route, a tow whose hulk is not
@@ -2462,6 +2459,12 @@ export const MOTOR_OBJECTIVE_KEYS = ['haul', 'convoy', 'deliveries', 'tow'] as c
  * `MotorSocket.create` on every boot of the contract.
  */
 function validateMotorFrontier(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
+  // The four objective keys, of which a Motor Frontier declares exactly one. Declared INSIDE the
+  // function on purpose: this file validates its own contract bundle at module-evaluation time
+  // (`validateContractsBundle`, well above this trailing block), so a module-level `const` down here
+  // is still in its temporal dead zone when the first descriptor is parsed and every E4 boot throws
+  // `Cannot access ... before initialization`. Measured, not guessed.
+  const MOTOR_OBJECTIVE_KEYS = ['haul', 'convoy', 'deliveries', 'tow'] as const;
   const motor: unknown = contract.twist.motorFrontier;
   if (motor === undefined) return;
   if (!isRecord(motor) || Array.isArray(motor)) {

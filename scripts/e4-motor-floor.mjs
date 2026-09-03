@@ -1,4 +1,4 @@
-// THE MOTOR FLOOR — one deterministic public-verb policy for the Dust Flats, shared by three
+// THE MOTOR FLOOR — one deterministic public-verb policy for ALL FOUR Motor maps, shared by three
 // instruments so the same order stream can be ridden in Node (`e4-motor-ride.mjs`, the node
 // guard) and in the browser (`e2e/e4-roads-and-convoys.spec.ts`), and their hashes compared.
 // Pure: no Node imports, no state outside the view it is handed. A rider reads THE VIEW and
@@ -6,9 +6,16 @@
 //
 // The reasoning problem it solves is the era's (CAPABILITY-LADDER L1, E4: distance, roads,
 // convoys): fuel first (three tar nodes, a dwell at each), then the corridor stake (GRADE), then
-// stage the Hauler at the stake (HAUL), then walk the railhead and call it up the graded road
+// stage the Hauler at the stake (HAUL), then walk to the stop and call it up the graded road
 // (HAUL again) — the road is what makes the last sixty units cost three fuel instead of twenty.
 // Everything after that is the ordinary claim floor: pan the nearest seams, ring the hero, mend.
+//
+// ONE POLICY, FOUR ERRANDS, because the view publishes the errand in one shape: `objective.stop` is
+// always "where the Hauler must go NEXT" and `objective.corridorId` is always "the road that leg
+// rides". So the haul's railhead, the convoy's far stop, the next OPEN lease head, and the tow's
+// hulk-then-gate are all the same three moves to this policy — walk, grade, call it up — and the
+// socket is what knows which errand that means. A washed-out lease is never chosen, because
+// `MotorSocket.nextCorridor` skips closed roads while any open one is still owed.
 
 const FUEL_HOP = 0.6;
 const STAGED_REACH = 3;
@@ -48,19 +55,26 @@ export function motorSteps(motor) {
   if (motor.objective.arrived) return steps;
   const corridor = motor.roads.corridors.find(({ id }) => id === motor.objective.corridorId);
   if (!corridor) return steps;
+  const stop = motor.objective.stop;
   const vehicle = motor.vehicle;
   const near = (point, target) => point && Math.hypot(point.x - target.x, point.z - target.z) <= STAGED_REACH;
   // Staged: the Hauler already rests at the stake, or is on its way there. Called: it is already
   // driving to the stop, so the only thing left is to let it arrive.
   const staged = near(vehicle, corridor.start) || (vehicle.state !== 'idle' && near(vehicle.dispatch, corridor.start));
-  const called = vehicle.state !== 'idle' && near(vehicle.dispatch, corridor.end);
+  const called = vehicle.state !== 'idle' && near(vehicle.dispatch, stop);
   if (called) return steps;
-  if (!corridor.graded || !staged) {
+  // The stake is worth a detour only while it still buys something: an ungraded road to grade, or a
+  // Hauler to put on it. When the stop IS the stake (the tow's second leg comes back down the road
+  // it went up) the detour collapses into the call below, and the policy stays idempotent.
+  const stakeIsStop = near(corridor.start, stop);
+  if ((!corridor.graded || !staged) && !stakeIsStop && !corridor.closed) {
     steps.push({ verb: 'MOVE_TO', pos: { x: corridor.start.x, z: corridor.start.z } });
     if (!corridor.graded) steps.push({ verb: 'GRADE' });
     if (!staged) steps.push({ verb: 'HAUL' });
+  } else if (!corridor.graded && stakeIsStop && !corridor.closed) {
+    steps.push({ verb: 'MOVE_TO', pos: { x: corridor.start.x, z: corridor.start.z } }, { verb: 'GRADE' });
   }
-  steps.push({ verb: 'MOVE_TO', pos: { x: corridor.end.x, z: corridor.end.z } });
+  steps.push({ verb: 'MOVE_TO', pos: { x: stop.x, z: stop.z } });
   steps.push({ verb: 'HAUL' });
   return steps;
 }
