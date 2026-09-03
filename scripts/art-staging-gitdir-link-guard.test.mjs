@@ -54,7 +54,7 @@
  * prejudge F-2159-1, the open OWNER'S DESK question about rooting this audit in
  * `test:ledger-guards`.
  */
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync, execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -66,6 +66,17 @@ import { fileURLToPath } from 'node:url';
 // and pathname keeps it percent-encoded. The subject's own header warns about it.
 const AUDIT = fs.realpathSync(fileURLToPath(new URL('./art-staging-audit.mjs', import.meta.url)));
 
+// F-2463-1 (s2463) — every fixture root this file mints is registered here and
+// removed on the way out. Without it each run left 11 `art-gitdir-*` trees in
+// TMPDIR (10 tests, arm 8 building two), which is exactly what
+// `fixture-teardown.test.mjs` counts: this file was that guard's sole survivor,
+// so three consecutive drains (s2459, s2460, s2462) each re-derived the same red.
+// Registry + `after` rather than a per-test try/finally because arm 8 holds two
+// roots at once and a `finally` per arm cannot see the other; the pattern is
+// `corpus-tree-unverifiable-guard.test.mjs:46/125`.
+const roots = [];
+after(() => { for (const r of roots) fs.rmSync(r, { recursive: true, force: true }); });
+
 /**
  * A scratch repo carrying one REGISTERED worktree plus a chosen set of unowned
  * sibling trees. `realpathSync` matters: macOS symlinks /tmp -> /private/tmp, and
@@ -73,6 +84,7 @@ const AUDIT = fs.realpathSync(fileURLToPath(new URL('./art-staging-audit.mjs', i
  */
 function fixture({ trees = ['salvage'] } = {}) {
   const repo = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'art-gitdir-')));
+  roots.push(repo);
   const g = (...a) => execFileSync('git', ['-C', repo, ...a], { encoding: 'utf8' });
 
   execFileSync('git', ['init', '-b', 'main', repo], { encoding: 'utf8' });
