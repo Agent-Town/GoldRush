@@ -3920,10 +3920,13 @@
               "id": "f2466-1-kit-guard-coverage-declaration",
               "title": "F-2466-1: the kit guard refuses an empty door list and declares which contracts it actually asserted on",
               "taskFile": "f2466-1-kit-guard-coverage-declaration.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-a",
               "authoredBy": "fire s2466 (from its own drain review of kit-guard-generic-damage)",
-              "queuedAt": "2026-09-03"
+              "queuedAt": "2026-09-03",
+              "mergeHash": "8d4447816686849c78d39d5f843e81ae52e60b21",
+              "drainedBy": "fire s2470",
+              "drainNotes": "s2470: gated on the merged tree in detached gate-s2470 — tsc rc=0, build rc=0, own spec 36/36, declaration verbatim '31 asserting / 5 zero', empty-corpus mutation reds rc=1 with the scope-1 message (control asserted 36 ids present first), adjacent battery-manifest+gate-caller-audit+skillmd-guard 60/60. Full test:node-guards NOT re-run — scoped reasoning in reviews/f2466-1-kit-guard-coverage-declaration.md."
             },
             {
               "id": "harness-receipts",
