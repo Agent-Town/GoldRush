@@ -43,17 +43,19 @@ type BrowserMotor = {
   eventCount: number;
 } | null;
 
-function collectErrors(page: Page): string[] {
-  const errors: string[] = [];
+function collectErrors(page: Page, errors: string[] = []): string[] {
   page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`); });
   page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
   return errors;
 }
 
-test('every Motor reel replays to its claimed hash in Node, and the two engines agree tick-for-tick under the wave boundary', async ({ page }, testInfo) => {
+test('every Motor reel replays to its claimed hash in Node and Chromium', async ({ page }, testInfo) => {
   test.setTimeout(300_000);
-  const errors = collectErrors(page);
+  const errors: string[] = [];
   const table: Array<Record<string, unknown>> = [];
+  const mismatches: Array<Record<string, unknown>> = [];
+  const context = page.context();
+  await page.close();
   const nodeDigests = JSON.parse(execFileSync(process.execPath, ['scripts/e4-motor-digest.mjs', '--all'], { encoding: 'utf8', timeout: 240_000 }).trim().split('\n').at(-1)!);
   for (const map of MAPS) {
     const tapePath = `${ARTIFACTS}/${map.id}-floor.tape.json`;
@@ -64,34 +66,41 @@ test('every Motor reel replays to its claimed hash in Node, and the two engines 
     // hash in a second Node engine (`assay-replay-agent.mjs`, a separate process and module graph).
     expect(node.eventLogHash).toBe(tape.eventLogHash);
 
-    // THE CROSS-ENGINE CLAIM, exactly as far as it goes. A whole E4 run does NOT replay identically
-    // in Chromium: `visualY(0, 72)` is 0.4667785887247181 in Chromium and 0.46677858872383526 in
-    // node 26.4.0, and the sim reads terrain, so the two drift apart over thousands of ticks. That
-    // is NOT this slice's doing: with `MotorSocket.create` stubbed to null, the same map's floor reel
-    // still ends early in the browser ("the run ended before tick 2701 of the order stream"), while
-    // `artifacts/eh2-fixture/tape.json` replays identically in both. Measured 2026-09-04; see
-    // `artifacts/e4-roads-and-convoys/report.md` F-E4-2. So the both-engine claim is made where it
-    // can be made honestly: the SAME scripted order stream, the same fixed tick budget, under the
-    // first wave boundary, with the motor state compared field for field.
-    // Settle on a blank page first: the harness boots its own navigation from `?contract=`, and
-    // under parallel workers that pending navigation interrupts the NEXT map's goto
-    // ("is interrupted by another navigation to ..."). One blank hop per map costs nothing.
-    await page.goto('about:blank');
-    await page.goto(HARNESS(map.id, `${map.id}-01`));
-    await page.waitForFunction(() => Boolean(window.__GR_AGENT_TAPE_REPLAY__));
-    const browserDigest = await page.evaluate(async ({ contract, modules }) => {
+    // This whole-run gate disproved F-E4-2's height-arithmetic attribution. The first divergent tick
+    // is the first enemy spawn: the browser worker boots the Claim contract because its location
+    // shim and ContractFamilies.currentSearch() read different globals. Keep collecting all four
+    // rows so the routing corrective has one complete regression gate.
+    // The harness navigates itself after a replay, so isolate each map in a disposable page.
+    const replayPage = await context.newPage();
+    collectErrors(replayPage, errors);
+    await replayPage.goto(HARNESS(map.id, `${map.id}-01`));
+    await replayPage.waitForFunction(() => Boolean(window.__GR_AGENT_TAPE_REPLAY__));
+    let browser: { eventLogHash?: string; outcome?: unknown; ticks?: number; error?: string };
+    try {
+      browser = await replayPage.evaluate(async (reel) => window.__GR_AGENT_TAPE_REPLAY__!.replay(reel), tape);
+    } catch (error) {
+      browser = { error: error instanceof Error ? error.message : String(error) };
+    }
+    if (browser.eventLogHash !== node.eventLogHash
+      || JSON.stringify(browser.outcome) !== JSON.stringify(node.outcome)
+      || browser.ticks !== node.ticks) {
+      mismatches.push({ contract: map.id, node, browser });
+    }
+    const browserDigest = await replayPage.evaluate(async ({ contract, modules }) => {
       const { HeadlessContractSim } = await import(/* @vite-ignore */ modules.sim);
       const { motorDigest } = await import(/* @vite-ignore */ modules.digest);
       return motorDigest(new HeadlessContractSim({ contractId: contract, seed: `${contract}-01` })) as string[];
     }, { contract: map.id, far: map.far, modules: MODULES });
     expect(browserDigest).toEqual(nodeDigests[map.id]);
 
-    table.push({ contract: map.id, seed: tape.seed, claimedHash: tape.eventLogHash, nodeReplayHash: node.eventLogHash, nodeTicks: node.ticks, subWaveDigestMatches: true, digestMarks: browserDigest.length });
-    console.log(`[e4-both-engines] ${map.id} claimed=${tape.eventLogHash} nodeReplay=${node.eventLogHash} subWaveDigest=MATCH(${browserDigest.length} marks)`);
+    table.push({ contract: map.id, seed: tape.seed, claimedHash: tape.eventLogHash, nodeReplayHash: node.eventLogHash, browserReplayHash: browser.eventLogHash, browserError: browser.error, nodeTicks: node.ticks, browserTicks: browser.ticks, subWaveDigestMatches: true, digestMarks: browserDigest.length });
+    console.log(`[e4-both-engines] ${map.id} claimed=${tape.eventLogHash} node=${node.eventLogHash}/${node.ticks} browser=${browser.error ?? `${browser.eventLogHash}/${browser.ticks}`}`);
+    await replayPage.close();
   }
   await mkdir(ARTIFACTS, { recursive: true });
   await writeFile(path.join(ARTIFACTS, `both-engines-${testInfo.project.name}.json`), `${JSON.stringify(table, null, 2)}\n`);
   expect(errors).toEqual([]);
+  expect(mismatches).toEqual([]);
 });
 
 test('every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake', async ({ page }) => {
