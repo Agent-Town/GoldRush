@@ -71,6 +71,7 @@ import { PressureSystem } from '../systems/PressureSystem';
 import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } from '../systems/ProbeRecovery';
 import { LowOrbitSystem, type LowOrbitDiagnostics } from '../systems/LowOrbitSystem';
 import { HollowCrossingSystem, type HollowCrossingDiagnostics } from '../systems/HollowCrossingSystem';
+import { E8AtmosphereSystem, E8PhysicsSystem } from '../systems/E8PhysicsSystem';
 import { SeedCaravanSystem, type SeedCaravanDiagnostics } from '../systems/SeedCaravanSystem';
 import {
   CANAL_ALREADY_DECIDED_REASON,
@@ -575,6 +576,36 @@ export class HeadlessContractSim {
    */
   private readonly lowOrbit: LowOrbitSystem;
   private readonly hollowCrossing: HollowCrossingSystem;
+  /**
+   * E8 — THE PHYSICS PROFILE, composed from the CONTRACT exactly as `Game.ts` composes it
+   * (`private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract)`), so the two
+   * engines read one profile: floaty 0.6g and 2.4x lob arcs on the Mare Claim, free-fall on low
+   * orbit, inert (`active: false`) everywhere gravity is not declared. It reaches this engine at
+   * the browser's own three seams and no others:
+   *   · LOBS — `syncE8LobPhysics` rewrites the hero's blast range and air time each step
+   *     (`Game.syncE8LobPhysics`), and `blastAt` clamps a BLAST_AT to the same reach the
+   *     browser's aim clamp allows (`Game.clampBlastAim`) and flies it for the same scaled time
+   *     (`Game.launchBlastAt`). Off the multiplier of 1 nothing changes, byte for byte.
+   *   · MOVEMENT — `e8PhysicsIntents` filters slot 0's intents through `filterMovement` with the
+   *     low-orbit terrain answer (`Game.e8PhysicsIntents`). Honest note, in A7's manner: this
+   *     engine drives slot 0 on `IDLE_INTENTS`, so the filter has nothing to bend and the hero
+   *     stays on its stake; the seam is composed so the day the hero thrusts here it bends the
+   *     same way. The Prospector is not filtered in EITHER engine.
+   *   · KNOCKBACK — `scaleKnockback` is read only by the E8 arsenal's grapple, which this engine
+   *     does not compose (the arsenal is its own row); the scale is published, not consumed.
+   * The profile is a constant of the contract and rides no hash (the A4 rule); it is published on
+   * `now.gravity` in both engines.
+   */
+  private readonly e8Physics: E8PhysicsSystem;
+  /**
+   * E8 — AIR AS THE WALL. See the consumer's own header in `E8PhysicsSystem.ts`: a suit timer
+   * on the Prospector, a breach dial per dome pad, and the regolith-run latch that gates the
+   * secure. Armed only on the Mare Claim's own declaration; `none()` everywhere else, so no other
+   * contract's hash, view or terminal moves. THE BROWSER COMPOSES NO ATMOSPHERE CONSUMER (the
+   * contract's `engineDependencies` row says so and stays `missing`), so this is stated rather
+   * than hidden: the wall binds the door's riders first, and the browser half is the next row.
+   */
+  private readonly atmosphere: E8AtmosphereSystem;
 
   /**
    * A7 debris chip, headless. Positional and hero-only, matching `Game.applyLowOrbitDebris`
@@ -586,6 +617,30 @@ export class HeadlessContractSim {
     const position = this.hero.group.position;
     const chip = this.lowOrbit.debrisDamage(position.x, position.z, STEP_SECONDS);
     if (chip > 0) this.combat.damageActor(chip, -1, this.hero);
+  }
+
+  /** `Game.syncE8LobPhysics`, seam for seam: the hero's lob reach and hang follow the profile. */
+  private syncE8LobPhysics(): void {
+    this.blastShooter.range = Balance.blast.range * this.e8Physics.lobArcDistanceMultiplier;
+    if (this.blastShooter.aoe) this.blastShooter.aoe.airTime = this.e8Physics.scaleLobAirTime(Balance.blast.airTime);
+  }
+
+  /**
+   * `Game.e8PhysicsIntents`, seam for seam: slot 0's intents pass through the profile's movement
+   * filter with low orbit's per-position terrain answer where that consumer is declared, and
+   * `terrain` is undefined everywhere else, which restores the pre-A7 arithmetic exactly. The
+   * same object comes back untouched when the filter has nothing to bend.
+   */
+  private e8PhysicsIntents(intents: Intents): Intents {
+    const position = this.hero.group.position;
+    const terrain = this.lowOrbit.isDeclared
+      ? {
+          controlScale: this.lowOrbit.controlScale(position.x, position.z),
+          speedScale: this.lowOrbit.speedScale(position.x, position.z),
+        }
+      : undefined;
+    const move = this.e8Physics.filterMovement(0, intents.move, STEP_SECONDS, this.hero.velocity, terrain);
+    return move === intents.move ? intents : { ...intents, move };
   }
   /**
    * A8 — THE SEED CARAVAN, ticked for real, unlike the E9 census sockets.
@@ -687,6 +742,7 @@ export class HeadlessContractSim {
   private baronRocketVolleys = 0;
   private readonly baronRocketTarget = new THREE.Vector3();
   private canyonConnectCompletedByDeadline = false;
+  private regolithGroundsLogged = 0;
   private canyonConnectFailed = false;
   private upgradeOfferKey = '';
   private upgradeOfferDeadlineSimMs = 0;
@@ -752,6 +808,10 @@ export class HeadlessContractSim {
     // install waits for `this.combat` below.
     this.lowOrbit = LowOrbitSystem.create(this.manifest);
     this.hollowCrossing = HollowCrossingSystem.create(this.manifest);
+    // E8: the same read the browser performs at `Game.ts` (the CONTRACT), so both engines ride one
+    // gravity profile; the atmosphere consumer arms on the Mare Claim's declaration alone.
+    this.e8Physics = new E8PhysicsSystem(this.manifest);
+    this.atmosphere = E8AtmosphereSystem.create(this.manifest);
     // A8: same read the browser performs at `Game.ts` — the contract's own twist and its own
     // authored zones/stakes. A fresh empty store per sim, so runs never inherit each other's greens.
     this.seedCaravan = SeedCaravanSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
@@ -1143,11 +1203,18 @@ export class HeadlessContractSim {
           // without both a corridor and relay sites, so `objectiveAllowsSecure` is true on every
           // contract that declares no discharge-able front and no admitted terminal moves.
           || !this.interferenceFront.objectiveAllowsSecure
-          // E4: the haul latch, keyed on `twist.motorFrontier` exactly as the canyon latch keys on
-          // `powerGrid.connect`. A Dust Flats run whose Hauler never rests at the railhead cannot
-          // secure at any wave; the arrival opens the ordinary secure wave. Null on every contract
+          // E4: the era's errand, keyed on `twist.motorFrontier` exactly as the canyon latch keys
+          // on `powerGrid.connect`. A Motor run whose Hauler never finishes its errand cannot
+          // secure at any wave; landing it opens the ordinary secure wave. Null on every contract
           // that declares no motor twist, so no admitted terminal moves.
           || (this.motor !== null && !this.motor.objectiveAllowsSecure)
+          // E8: the regolith-run latch, keyed on the Mare Claim's own atmosphere declaration in
+          // the canyon-connect shape. A claim that has not worked `REGOLITH_GROUNDS_FOR_SECURE` of
+          // its authored grounds ON SUIT AIR cannot secure at any wave; working them opens the
+          // ordinary secure wave. A pan made with an empty suit is counted and credits nothing, so
+          // the era's own wall decides this. True on every contract that declares no air wall, so
+          // no admitted contract's terminal moves.
+          || !this.atmosphere.objectiveAllowsSecure
           || this.atomic?.objectiveAllowsSecure === false
           || (this.preserve !== null && !this.preserve.active)
           ? Number.MAX_SAFE_INTEGER
@@ -1300,6 +1367,11 @@ export class HeadlessContractSim {
         // corridors were graded are terminal facts a secure depends on: a claim secured with the
         // Hauler at the railhead hashes differently from one that never left the camp.
         ...(this.motor ? { motor: this.motor.simulationSnapshot } : {}),
+        // E8: spread-if-declared like its neighbours — ABSENT on every contract that is not the
+        // Mare Claim, so no pinned hash moves. Included because the run's air is a terminal fact:
+        // a claim secured with six grounds worked on suit air is not the same run as one that
+        // panned them breathless, and the hash should be able to say so.
+        ...(this.atmosphere.isDeclared ? { atmosphere: this.atmosphere.diagnostics } : {}),
       },
     });
     return {
@@ -1422,8 +1494,11 @@ export class HeadlessContractSim {
     // Every call is null-guarded, so no already-admitted contract's tick changes.
     this.atomic?.tickDecay();
     this.deepwater?.advance(this.timeAlive);
+    // E8, in the browser's own order (`Game.updateActors`): lob physics, debris chip, then each
+    // actor's intents through the physics filter before it moves.
+    this.syncE8LobPhysics();
     this.applyLowOrbitDebris();
-    this.hero.update(STEP_SECONDS, IDLE_INTENTS, {
+    this.hero.update(STEP_SECONDS, this.e8PhysicsIntents(IDLE_INTENTS), {
       bounds: Terrain.bounds,
       sample: Terrain.sample,
       depenetrate: (point, maxDistance) => depenetrateFromBlockers(
@@ -1555,6 +1630,9 @@ export class HeadlessContractSim {
     );
     const hollowChip = this.hollowCrossing.update(STEP_SECONDS, this.prospector.position, 'prospector');
     if (hollowChip > 0) this.combat.damageActor(hollowChip, -1, this.hero);
+    // E8: the suit against the domes, read off the position the Prospector just moved to, with the
+    // outlaws where this step left them. No hp moves here — the wall counts, it does not cut.
+    this.atmosphere.update(STEP_SECONDS, this.prospector.position, this.enemies.all);
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncLightState();
     observeStandingOrders();
@@ -1929,6 +2007,7 @@ export class HeadlessContractSim {
   }
 
   private registerHeroShooter(): void {
+    this.syncE8LobPhysics();
     this.combat.registerShooter(this.heroShooter);
     this.combat.registerShooter(this.blastShooter);
   }
@@ -1982,6 +2061,11 @@ export class HeadlessContractSim {
       probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
       lowOrbit: this.lowOrbit.isDeclared ? this.lowOrbit.diagnostics : null,
       hollowCrossing: this.hollowCrossing.isDeclared ? this.hollowCrossing.diagnostics : null,
+      // E8: the same key the browser publishes (`Game.ts` `e8Physics: this.e8PhysicsSystem.diagnostics`),
+      // so `buildView` derives `now.gravity` identically in both engines; the air row is null off
+      // the Mare Claim, exactly like its neighbours.
+      e8Physics: this.e8Physics.diagnostics,
+      e8Atmosphere: this.atmosphere.isDeclared ? this.atmosphere.diagnostics : null,
       seedCaravan: this.seedCaravan?.simulationSnapshot ?? null,
       // A10: null off every other contract, exactly like its neighbours, so no admitted
       // contract's determinism hash grows a field. Two runs that decide the same segments in the
@@ -2312,7 +2396,18 @@ export class HeadlessContractSim {
       channels,
     }, this.timeAlive);
     this.harvestSnapshot = this.harvest.update(0, this.timeAlive, this.harvestTargets());
-    return (pannedTarget?.remaining ?? before) < before;
+    const landed = (pannedTarget?.remaining ?? before) < before;
+    // E8: a tick that landed on a regolith ground counts toward the run only on suit air. Absent
+    // an air wall `notePan` is a no-op, so no other contract's pan changes.
+    if (landed && this.atmosphere.isDeclared) {
+      const credited = this.atmosphere.notePan(seam.anchorIndex);
+      const worked = this.atmosphere.diagnostics.regolith.worked;
+      if (credited && worked.length !== this.regolithGroundsLogged) {
+        this.regolithGroundsLogged = worked.length;
+        this.replayEvents.push({ type: 'regolith_ground_worked', at: round(this.timeAlive), ground: seam.anchorIndex, worked: worked.length });
+      }
+    }
+    return landed;
   }
 
   private harvestTargets(): HarvestTarget[] {
@@ -2486,15 +2581,20 @@ export class HeadlessContractSim {
     const readyInMs = this.blastReadyInMs();
     if (readyInMs > 0) return { ok: false, reason: `COOLDOWN: Blast Charge ready in ${readyInMs}ms.` };
     const origin = this.hero.group.position;
-    if (Math.hypot(pos.x - origin.x, pos.z - origin.z) > Balance.blast.range) {
-      return { ok: false, reason: `OUT_OF_RANGE: BLAST_AT must be within ${Balance.blast.range}m of the hero.` };
+    // E8: the reach the browser's aim clamp allows (`Game.clampBlastAim`: range x the lob-arc
+    // multiplier) and the flight the browser's `launchBlastAt` flies (`scaleLobAirTime`). Off
+    // gravity both multipliers are 1 and this is the pre-E8 arithmetic exactly.
+    const reach = Balance.blast.range * this.e8Physics.lobArcDistanceMultiplier;
+    const airTime = this.e8Physics.scaleLobAirTime(Balance.blast.airTime);
+    if (Math.hypot(pos.x - origin.x, pos.z - origin.z) > reach) {
+      return { ok: false, reason: `OUT_OF_RANGE: BLAST_AT must be within ${reach}m of the hero.` };
     }
     const stats = this.progression.stats;
     const waveMult = 1 + Math.max(0, this.waves.diagnostics.wave) * Balance.blast.dmgPerWave;
     const launched = this.combat.launchLob(
       origin,
       new THREE.Vector3(pos.x, Balance.enemy.groundY, pos.z),
-      Balance.blast.airTime,
+      airTime,
       Balance.blast.damage * stats.blastDamageMult * waveMult,
       Balance.blast.radius * stats.blastRadiusMult,
       'hero_blast',
@@ -2505,7 +2605,14 @@ export class HeadlessContractSim {
     if (!shooter) throw new Error('Blast Charge shooter is not registered.');
     shooter.timer = this.blastShooter.cooldown;
     if (!this.combat.restoreSuspend(combat)) throw new Error('Blast Charge cooldown could not be restored.');
-    this.replayEvents.push({ type: 'blast_at', at: round(this.timeAlive), pos: point(pos) });
+    this.replayEvents.push({
+      type: 'blast_at',
+      at: round(this.timeAlive),
+      pos: point(pos),
+      // E8: the gravity-scaled lob, written into the event only where gravity is declared so every
+      // other contract's `blast_at` events (and their pinned hashes) keep their exact shape.
+      ...(this.e8Physics.diagnostics.active ? { lob: { reach: round(reach), airTime: round(airTime) } } : {}),
+    });
     return { ok: true };
   }
 

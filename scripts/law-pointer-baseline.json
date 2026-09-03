@@ -72,6 +72,36 @@
       "fingerprint": "99f3d85e2118",
       "excerpt": "export const EVIDENCE_PREFIXES = ['artifacts', 'reviews/shots-'];"
     },
+    "scripts/fire.md -> lane-runner-v3.sh:550": {
+      "target": "scripts/lane-runner-v3.sh",
+      "line": 550,
+      "fingerprint": "290a72ce62f4",
+      "excerpt": "elif ( cd \"$wt\" && git reset --hard main >/dev/null 2>&1 && git clean -fd >/dev/null 2>&1 ); then"
+    },
+    "scripts/fire.md -> lane-runner-v3.sh:11": {
+      "target": "scripts/lane-runner-v3.sh",
+      "line": 11,
+      "fingerprint": "0eca6a2cf7d8",
+      "excerpt": "git -C \"$1\" status --porcelain=v1 -z --untracked-files=all -- . \\"
+    },
+    "scripts/fire.md -> art-staging-audit.mjs:439": {
+      "target": "scripts/art-staging-audit.mjs",
+      "line": 439,
+      "fingerprint": "00e54682a534",
+      "excerpt": "for (const line of git('status', '--porcelain', '--untracked-files=all', '--', 'assets/').split('\\n'"
+    },
+    "scripts/fire.md -> lane-usable.mjs:505": {
+      "target": "scripts/lane-usable.mjs",
+      "line": 505,
+      "fingerprint": "9c5e3050955d",
+      "excerpt": "` tracked-dirt=${r.dirt.tracked.length} untracked=${r.dirt.untracked.length}${r.busy ? ' BUSY' : ''}"
+    },
+    "scripts/fire.md -> lane-usable.mjs:622": {
+      "target": "scripts/lane-usable.mjs",
+      "line": 622,
+      "fingerprint": "3767a56cf6a6",
+      "excerpt": "const isMain = /(^|\\/)lane-usable\\.mjs$/.test(process.argv[1] || '')"
+    },
     "scripts/fire.md -> gen-audio.mjs:194": {
       "target": "scripts/gen-audio.mjs",
       "line": 194,
@@ -222,9 +252,9 @@
       "fingerprint": "9efb1fe71821",
       "excerpt": "const backlogPath = path.resolve(value('--backlog', 'tasks/BACKLOG.md'));"
     },
-    "scripts/fire.md -> lane-usable.mjs:540": {
+    "scripts/fire.md -> lane-usable.mjs:559": {
       "target": "scripts/lane-usable.mjs",
-      "line": 540,
+      "line": 559,
       "fingerprint": "9e7150879216",
       "excerpt": "if (drift.length === 0) {"
     },
@@ -258,9 +288,9 @@
       "fingerprint": "5df9337b3bb3",
       "excerpt": "🔺 **ONE OWNER CHOICE in this digest, and it is a good-news one.** The county's first standing means"
     },
-    "scripts/fire.md -> marketing/outbox/gazette-queue.md:1744": {
+    "scripts/fire.md -> marketing/outbox/gazette-queue.md:1758": {
       "target": "marketing/outbox/gazette-queue.md",
-      "line": 1744,
+      "line": 1758,
       "fingerprint": "d7293afa016e",
       "excerpt": "- merge: `e7bb88cf` (upgrade-clock, the pick clock) · shots: `reviews/shots-upgrade-clock/{desktop,m"
     },

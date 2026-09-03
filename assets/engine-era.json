@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
+  "engineHash": "5d2fc15616271e8c900824450ce803eb5145c1136dae0d9655c393724794b11b",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -187,6 +187,12 @@
       "engineHash": "a607a81f44e10dc2b2262682c1e116c15917edffeeaa0c5909f383ccea5d8e04",
       "pinnedAt": "2026-09-03",
       "cause": "content re-hash, no behaviour change: the half-stamped-reel-refusal drain (01506cbde, src/game watch-path routing) moved the corpus after the previous pin; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "5d2fc15616271e8c900824450ce803eb5145c1136dae0d9655c393724794b11b",
+      "pinnedAt": "2026-09-03",
+      "cause": "content re-hash, no behaviour change for existing tapes: e8-mare-claim-physics drain (a121c7f14) composes E8PhysicsSystem headless for contracts declaring gravity/atmosphere; E1-E7 and the other E8 maps replay byte-identical (null floors measured); same era per F-1441-3",
       "aliases": []
     }
   ],

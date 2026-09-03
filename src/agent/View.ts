@@ -5,6 +5,7 @@ import type { EconomyEvent } from '../game/Economy';
 import { summarizeRun } from '../game/RunManager';
 import { activeContract, type ContractEnemyVariant, type ContractManifest } from '../meta/ContractFamilies';
 import { DEFAULT_COAL_SEAMS } from '../systems/coalSeamDefaults';
+import type { E8AtmosphereDiagnostics } from '../systems/E8PhysicsSystem';
 import { deriveMechanicsManifest, type MechanicsManifest } from './MechanicsManifest';
 
 export type AgentViewSource = {
@@ -21,6 +22,19 @@ export type AgentWaveLogEntry = {
   kills: number | null;
   surprises: readonly string[];
 };
+
+export type AgentGravityView = {
+  source: 'gravity' | 'zero-gravity';
+  movement: 'normal' | 'floaty' | 'free-fall';
+  feelG: number;
+  lobArcDistanceMultiplier: number;
+  lobAirTimeMultiplier: number;
+  knockbackScale: number;
+  orbitalReturn: boolean;
+  vacuum: boolean;
+};
+
+export type AgentAirView = Omit<E8AtmosphereDiagnostics, 'declared'>;
 
 export type AgentView = {
   schema: 'goldrush.view.v1';
@@ -57,6 +71,19 @@ export type AgentView = {
       site: { x: number; z: number; w: number; d: number };
     };
     preserve?: { hp: number; maxHp: number; alive: boolean };
+    /**
+     * E8 (additive, contract-scoped — outside the canonical field set, like `preserve`): the
+     * physics profile the run rides under, read off the same `E8PhysicsSystem` diagnostics both
+     * engines publish. Present only where the contract declares gravity.
+     */
+    gravity?: AgentGravityView;
+    /**
+     * E8 (additive, contract-scoped): air as the wall — the Prospector's suit timer, each dome
+     * pad's air dial and breach state, and the regolith-run latch that opens the secure. Present
+     * only where the contract declares the wall AND the engine composes its consumer (today the
+     * headless door on the Mare Claim; the browser composes none and publishes none).
+     */
+    air?: AgentAirView;
     timers: { runSeconds: number; nextWaveInSeconds: number };
     gold: number;
     hero: { hp: number; maxHp: number; x: number; z: number };
@@ -313,6 +340,8 @@ function buildNow(
         site: { x: number(site.x), z: number(site.z), w: number(site.w), d: number(site.d) },
       }
     : undefined;
+  const gravity = readGravity(record(diagnostics.e8Physics));
+  const air = readAir(record(diagnostics.e8Atmosphere));
   return {
     wave: boundary.wave,
     blastReadyInMs: Math.max(0, Math.round(number(diagnostics.blastReadyInMs))),
@@ -320,6 +349,8 @@ function buildNow(
     ...(pendingSecure ? { pendingSecure } : {}),
     ...(project ? { megaproject: project } : {}),
     ...(preserveState ? { preserve: preserveState } : {}),
+    ...(gravity ? { gravity } : {}),
+    ...(air ? { air } : {}),
     timers: {
       runSeconds: round(boundary.runSeconds),
       nextWaveInSeconds: round(number(diagnostics.nextWaveInSim)),
@@ -356,6 +387,59 @@ function buildNow(
       };
     }),
     score: summarizeRun(economyLog, boundary.wave),
+  };
+}
+
+/** `E8PhysicsSystem.diagnostics`, both engines: present on the view only while `active`. */
+function readGravity(physics: Record<string, unknown>): AgentGravityView | undefined {
+  if (physics.active !== true) return undefined;
+  const source = physics.source === 'zero-gravity' ? 'zero-gravity' : 'gravity';
+  const movement = physics.movement === 'free-fall' ? 'free-fall' : physics.movement === 'floaty' ? 'floaty' : 'normal';
+  return {
+    source,
+    movement,
+    feelG: number(physics.feelG, 1),
+    lobArcDistanceMultiplier: number(physics.lobArcDistanceMultiplier, 1),
+    lobAirTimeMultiplier: number(physics.lobAirTimeMultiplier, 1),
+    knockbackScale: number(physics.knockbackScale, 1),
+    orbitalReturn: physics.orbitalReturn === true,
+    vacuum: physics.vacuum === true,
+  };
+}
+
+/** `E8AtmosphereSystem.diagnostics`: present on the view only while the consumer is declared. */
+function readAir(atmosphere: Record<string, unknown>): AgentAirView | undefined {
+  if (atmosphere.declared !== true) return undefined;
+  const suit = record(atmosphere.suit);
+  const regolith = record(atmosphere.regolith);
+  const wall = atmosphere.wall === 'suit-timer' || atmosphere.wall === 'suit-only' ? atmosphere.wall : null;
+  return {
+    wall,
+    suit: {
+      body: 'prospector',
+      seconds: number(suit.seconds),
+      capacity: number(suit.capacity),
+      refillPerSecond: number(suit.refillPerSecond),
+      inDome: text(suit.inDome),
+      empty: suit.empty === true,
+      drainedTotal: number(suit.drainedTotal),
+      emptySeconds: number(suit.emptySeconds),
+    },
+    domes: records(atmosphere.domes).map((dome) => ({
+      id: text(dome.id) ?? 'dome',
+      air: number(dome.air),
+      breached: dome.breached === true,
+      breaches: integer(dome.breaches),
+      siegers: integer(dome.siegers),
+    })),
+    regolith: {
+      grounds: integer(regolith.grounds),
+      required: integer(regolith.required),
+      worked: Array.isArray(regolith.worked) ? regolith.worked.filter((entry): entry is number => Number.isInteger(entry)) : [],
+      runsOnAir: integer(regolith.runsOnAir),
+      breathlessPans: integer(regolith.breathlessPans),
+      complete: regolith.complete === true,
+    },
   };
 }
 
