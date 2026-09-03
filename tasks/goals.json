@@ -3898,12 +3898,13 @@
               "id": "unclaimed-contracts-public",
               "title": "Q3 ruled: skill.md marks every door contract claimed/unclaimed from the receipts",
               "taskFile": "unclaimed-contracts-public.md",
-              "status": "stopped",
+              "status": "superseded",
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-02",
-              "stopNote": "STOPPED s2464 at the master's own honesty guard, run 20260903-065543 (rc=0, 3m42s, ZERO diff — the WHY is written into the run report, so this is Mistake #1 satisfied, not a Silent No-Op). The runner found the door-contract list in public/skill.md is HAND-MAINTAINED: nothing generates it, so publishing claimed/unclaimed receipt markers into that block would silently rot on the next manual contract-list edit. RE-VERIFIED s2464 rather than inherited (Mistake #4): every reference to public/skill.md across scripts/ is a READ or an assertion — winnability-receipts.mjs:77 readFile, skillmd-guard.test.mjs:13/:55 compares the block against SUPPORTED_CONTRACTS, view-schema-guard.mjs:97 reads it; NO writer exists. NOT re-queueable as written: it needs a PREDECESSOR that establishes a generated-or-pinned contract-list path. Its two runs stopped for DIFFERENT causes (run 1 = lane-safety pre-flight behind the then-undrained e10-preserve-ranking, since merged at 1fefa326a; run 2 = this honesty guard), so §7.5's changed-premise rule was satisfied and this is not an identical retry. The owner's Q3 ruling stands; only the implementation path is open. See F-2464-1.",
-              "stoppedAt": "2026-09-03"
+              "stoppedAt": "2026-09-03",
+              "supersededBy": "skillmd-contract-list-generator",
+              "note": "stopped honestly 2026-09-03 (skill.md list has no generator); superseded by the generator task"
             },
             {
               "id": "kit-guard-generic-damage",
@@ -3966,11 +3967,12 @@
               "id": "checkpoint-by-tape",
               "title": "HarnessDev E: skill.md teaches that a rider tape is its checkpoint (docs)",
               "taskFile": "checkpoint-by-tape.md",
-              "status": "stopped",
+              "status": "superseded",
               "lane": "main",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-03",
-              "stopNote": "STOPPED s2467 at the master’s own honesty guard, run 20260903-100116 (main slot). This is a FIREWALL SUCCESS, not a failure: the runner found the docs slice rests on a workflow that does not exist, REPORTED it, and left `public/skill.md` and its guard pins untouched rather than advertising a workflow the county cannot run. ZERO code diff; the whole output is one BACKLOG row, so Mistake #1 is satisfied — the WHY is written down. EVERY CLAIM RE-VERIFIED BY THE DRAIN AT SOURCE rather than inherited from the runner (Mistake #4): `node scripts/gr-sim.mjs --replay|--resume|--to-tick` each exit rc=1 `Unknown argument` (measured, all three); `--tape` IS present, so a completed tape can be written but never replayed to a tick; and `scripts/assay-replay.mjs` contains no `--to-tick`/`toTick`/`--resume`/`resumable` at all, so it can verify a whole tape and cannot emit resumable state. OWED BEFORE RE-QUEUEING: a real `gr-sim` replay-to-tick + resume contract, including production of the one contiguous single-era tape the door accepts. Re-queue only against that feature slice — this is a FEATURE, not a docs task."
+              "supersededBy": "tape-resume",
+              "note": "stopped honestly 2026-09-03 (gr-sim has no replay-to-tick); superseded by the feature task"
             },
             {
               "id": "transfer-board",
@@ -3978,6 +3980,24 @@
               "taskFile": "transfer-board.md",
               "status": "queued",
               "lane": "lane-b",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-03"
+            },
+            {
+              "id": "skillmd-contract-list-generator",
+              "title": "Q3 v2: skill.md contract list rendered from data, pinned by a guard, carrying the claimed/unclaimed marker",
+              "taskFile": "skillmd-contract-list-generator.md",
+              "status": "queued",
+              "lane": "lane-a",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-03"
+            },
+            {
+              "id": "tape-resume",
+              "title": "HarnessDev E v2: gr-sim --resume replays a tape to a tick and continues; the door accepts the contiguous tape; skill.md paragraph",
+              "taskFile": "tape-resume.md",
+              "status": "queued",
+              "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-03"
             }
