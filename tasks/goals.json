@@ -4003,10 +4003,13 @@
               "id": "tape-resume",
               "title": "HarnessDev E v2: gr-sim --resume replays a tape to a tick and continues; the door accepts the contiguous tape; skill.md paragraph",
               "taskFile": "tape-resume.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-03"
+              "queuedAt": "2026-09-03",
+              "mergeHash": "54ad83927f0325b25bb78e5c4a1df67a821047b9",
+              "drainedBy": "s2471 2026-09-03",
+              "drainNotes": "Merged 54ad83927. gr-sim --resume/--to-tick replays through the shared AgentTapeReplaySession and continues the same tape; straight and resumed tapes are byte-identical and the assayer and the door both accept the resumed reel. Era 5 gained pin 2a06eb514e3037efc403fc59f4540bbca31ef8947ee1e58cd56cf157a5aecd47 (lineage append, era unchanged) - teeth proven by manufacturing the defect: without it engine-era-guard reds 1 of 5. Two conflicts resolved: gr-sim.mjs by union, skillmd-guard.test.mjs at the syntactic boundary (F-2469-1 shape, second consecutive fire) verified by node --check plus set algebra 13 union 10 = 14. Review reviews/tape-resume.md. F-2471-1 filed non-blocking: e2e/agent-reels.spec.ts:301 is RED on main too (control-proven), because Game.ts:7033 routes an era-less tape away from the only site that computes the refusal."
             }
           ]
         }
