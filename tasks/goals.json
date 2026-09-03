@@ -3953,10 +3953,13 @@
               "id": "self-unified-grid",
               "title": "HarnessDev D: the Self/Unified grid from the almanac (analysis)",
               "taskFile": "self-unified-grid.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-03"
+              "queuedAt": "2026-09-03",
+              "mergeHash": "d4505253cc077673d735207b34e09b4c9e299fbd",
+              "drainedAt": "2026-09-03",
+              "drainNotes": "drained s2472: gated on the merged tree in detached gate-s2472; tsc+build green, both skill.md guards 17/17, citation+site 25/25, law-pointer 22/22, renderer --check rc=0; package.json guard-list union verified by set algebra (91 = union, missing [], invented []); landed tree byte-identical to the gated tree 1b9061218a704f3b684ef1d186ac92870ecd3d1b. Review reviews/skillmd-contract-list-generator.md"
             },
             {
               "id": "refusal-taxonomy",
