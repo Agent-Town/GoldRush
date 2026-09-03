@@ -34,6 +34,9 @@ try {
   const base = `http://127.0.0.1:${server.address().port}`;
   assert.equal((await stat(ledgerDirectory)).mode & 0o777, 0o700);
   assert.equal((await stat(ledgerPath)).mode & 0o777, 0o600);
+  assert.deepEqual(storage.db.prepare('PRAGMA table_info(refusals)').all().map(({ name }) => name), [
+    'id', 'reason', 'contract_id', 'anon_id', 'profile_name', 'refused_at',
+  ], 'the additive refusal migration has the promised columns');
   await storage.put('ttl-probe', 'alive', { expirationTtl: 1 });
   await storage.put('ttl-write-probe', 'stale', { expirationTtl: 1 });
   assert.equal(await storage.get('ttl-probe'), 'alive');
@@ -65,6 +68,25 @@ try {
   assert.equal(oversized.body.error, 'reel_too_large');
 
   const tape = assayableTape();
+  const refusedBody = {
+    contractId: 'the-claim', epochId: 'epoch-1-frontier',
+    score: { secured: false, waves: 3, timeAlive: 12, gold: 7, baseValue: 20 },
+    profileName: 'Worker Probe', anonId: 'a'.repeat(32), difficulty: 'trail', seed: 'worker-probe', seedMode: 'live',
+    seedHash: 'b'.repeat(64), inputLogHash: 'c'.repeat(64),
+  };
+  const refused = await jsonFetch(`${base}/api/standings`, {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(refusedBody),
+  });
+  assert.equal(refused.status, 400);
+  assert.equal(refused.body.error, 'unsecured');
+  assert.deepEqual({ ...storage.db.prepare("SELECT reason, contract_id, anon_id, profile_name FROM refusals WHERE reason = 'unsecured'").get() }, {
+    reason: 'unsecured', contract_id: 'the-claim', anon_id: 'a'.repeat(32), profile_name: 'Worker Probe',
+  }, 'a refusal stores metadata but no tape body');
+  const taxonomy = await jsonFetch(`${base}/api/refusals?rider=${'a'.repeat(32)}`);
+  assert.deepEqual(taxonomy.body.counts, { unsecured: 1 });
+  assert.deepEqual(Object.keys(taxonomy.body.recent[0]).sort(), ['contractId', 'reason', 'refusedAt']);
+  assert.deepEqual((await jsonFetch(`${base}/api/standings/refusals?rider=${'a'.repeat(32)}`)).body.counts, { unsecured: 1 },
+    'the canonical proxy path reaches the SQLite refusal book');
   const submitted = await jsonFetch(`${base}/api/standings`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -93,7 +115,7 @@ try {
   assert.equal(slip.body.ranked, true);
   const queue = await jsonFetch(`${base}/api/standings/assay-queue?limit=100`, { headers: { 'x-assay-key': secret } });
   assert.equal(queue.body.queue.length, 0);
-  console.log('ledger worker HTTP contract checks passed (19)');
+  console.log('ledger worker HTTP contract checks passed (26)');
 } finally {
   await new Promise((resolve) => server.close(resolve));
   storage.close();

@@ -7,9 +7,10 @@ import { CONTRACT_BUNDLES, runTapeEnvelopeForContract } from '../../src/playbook
 import { engineEraIncludes } from '../../src/replay/EngineEraLineage.mjs';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash } from './_ratelimit';
+import { recordSubmissionRefusal, type RefusalStorage, type SubmissionRefusalReason } from './refusals';
 import type { LedgerStorage } from './_accounts';
 
-type StandingsStorage = Pick<LedgerStorage, 'get' | 'put'>;
+type StandingsStorage = Pick<LedgerStorage, 'get' | 'put'> & Pick<RefusalStorage, 'recordRefusal' | 'readRefusals'>;
 
 type StandingsEnv = {
   TELEMETRY?: StandingsStorage;
@@ -688,21 +689,31 @@ function partyRigs(party: SubmittedParty): string[] {
 }
 
 async function submitScore(context: StandingsContext, cors: Record<string, string>): Promise<Response> {
-  // A closed season is closed to the clerk too. This refuses BEFORE the body is read, so an
-  // archived board cannot be touched even by a well-formed standing (RETENTION LAW: history is
-  // read, never appended to). No param at all means the current season, exactly as before the roll.
-  const season = parseSeason(new URL(context.request.url));
-  if (season === null) return error(cors, 400, 'bad_season', 'Season not accepted.');
-  if (season !== CURRENT_SEASON) {
-    return error(cors, 403, 'season_closed', 'That season’s book is closed. The county writes only in the season now riding.');
+  // A closed season is closed to the clerk too. Its submission metadata is read only for the
+  // refusal ledger; the archived board remains unreachable by every write path (RETENTION LAW).
+  let body: JsonRecord;
+  try {
+    body = await readJson(context.request);
+  } catch (cause) {
+    if (cause instanceof HttpError && isSubmissionRefusalReason(cause.code)) {
+      return refuseSubmission(context, cors, {}, cause.status, cause.code, cause.message);
+    }
+    throw cause;
   }
-  const body = await readJson(context.request);
-  if (!hasOnlyKeys(body, POST_KEYS)) return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+  const season = parseSeason(new URL(context.request.url));
+  if (season === null) return refuseSubmission(context, cors, body, 400, 'bad_season', 'Season not accepted.');
+  if (season !== CURRENT_SEASON) {
+    return refuseSubmission(context, cors, body, 403, 'season_closed', 'That season’s book is closed. The county writes only in the season now riding.');
+  }
+  if (!hasOnlyKeys(body, POST_KEYS)) return refuseSubmission(context, cors, body, 400, 'bad_payload', 'Standing not accepted.');
   const contractId = typeof body.contractId === 'string' ? body.contractId : '';
   const epochId = typeof body.epochId === 'string' ? body.epochId : '';
   // Training, not standings — the drill yard never ranks.
   if (contractId === DRILL_YARD_CONTRACT_ID) {
-    return error(cors, 400, 'training_ground', 'The Drill Yard is the training ground — practice is its own reward.');
+    return refuseSubmission(context, cors, body, 400, 'training_ground', 'The Drill Yard is the training ground — practice is its own reward.');
+  }
+  if (isRecord(body.score) && body.score.secured === false) {
+    return refuseSubmission(context, cors, body, 400, 'unsecured', 'Only a secured claim can enter the standings.');
   }
   const score = validateScore(body.score);
   const profileName = cleanName(body.profileName);
@@ -718,25 +729,25 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   if (knownContract(epochId, contractId) && isRecord(body.tape) && isRecord(body.tape.inputLog)
     && Number.isSafeInteger(body.tape.inputLog.durationTicks)
     && (body.tape.inputLog.durationTicks as number) > runTapeEnvelopeForContract(contractId).maxTicks) {
-    return error(cors, 400, 'reel_duration_exceeded', `Reel duration exceeds the ${contractId} contract ceiling.`);
+    return refuseSubmission(context, cors, body, 400, 'reel_duration_exceeded', `Reel duration exceeds the ${contractId} contract ceiling.`);
   }
   const tape = body.tape === undefined ? undefined : validateTape(body.tape, contractId, seed, difficulty);
   if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null || party === null || tape === null) {
-    return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+    return refuseSubmission(context, cors, body, 400, 'bad_payload', 'Standing not accepted.');
   }
   if (!difficulty || (seedMode === 'bench' && defaulted)) {
-    return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+    return refuseSubmission(context, cors, body, 400, 'bad_payload', 'Standing not accepted.');
   }
   if (tape && await sha256Hex(JSON.stringify(tape.inputLog)) !== inputLogHash) {
-    return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+    return refuseSubmission(context, cors, body, 400, 'bad_payload', 'Standing not accepted.');
   }
   if (tape && !tapeMatchesScore(tape, score)) {
-    return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+    return refuseSubmission(context, cors, body, 400, 'bad_payload', 'Standing not accepted.');
   }
   const eraRefusal = tape ? currentLineageRefusal(tape) : null;
-  if (eraRefusal) return error(cors, 400, 'reel_not_current', eraRefusal);
+  if (eraRefusal) return refuseSubmission(context, cors, body, 400, 'reel_not_current', eraRefusal);
   if (seedMode === 'bench' && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(seed)) {
-    return error(cors, 400, 'bad_bench_seed', 'Bench seed not accepted.');
+    return refuseSubmission(context, cors, body, 400, 'bad_bench_seed', 'Bench seed not accepted.');
   }
 
   const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
@@ -745,7 +756,7 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     bumpCounter(kv, `standings:ratelimit:ip:${await clientIpHash(context.request)}`, MAX_REQUESTS_PER_IP, RATE_TTL_SECONDS),
     bumpCounter(kv, `standings:ratelimit:anon:${anonId}`, MAX_REQUESTS_PER_ANON, RATE_TTL_SECONDS),
   ]);
-  if (!ipAllowed || !anonAllowed) return error(cors, 429, 'rate_limited', 'The county clerk needs a spell.');
+  if (!ipAllowed || !anonAllowed) return refuseSubmission(context, cors, body, 429, 'rate_limited', 'The county clerk needs a spell.');
 
   const key = boardKey(epochId, contractId);
   const current = await readBoard(kv, epochId, contractId);
@@ -778,6 +789,26 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   if (tape && kept === candidate) await syncAssayBoardIndex(kv, epochId, contractId, next);
   const index = rankedRows(next, contractId).indexOf(kept);
   return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null });
+}
+
+async function refuseSubmission(
+  context: StandingsContext,
+  cors: Record<string, string>,
+  body: JsonRecord,
+  status: number,
+  reason: SubmissionRefusalReason,
+  message: string,
+): Promise<Response> {
+  try {
+    await recordSubmissionRefusal(context.env.TELEMETRY ?? context.env.ACCOUNTS, body, reason);
+  } catch {
+    // The refusal remains authoritative even when its diagnostic ledger is unavailable.
+  }
+  return error(cors, status, reason, message);
+}
+
+function isSubmissionRefusalReason(value: string): value is SubmissionRefusalReason {
+  return value === 'bad_json' || value === 'reel_too_large' || value === 'unsupported_media_type';
 }
 
 async function readBoard(kv: StandingsStorage, epochId: string, contractId: string, tolerateFailure = false, season: number = CURRENT_SEASON): Promise<StoredRow[]> {
