@@ -266,7 +266,7 @@ import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt, type CanalDecisionCandidate, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
-import { LanternShow, validateAgentRunTape, type LanternShowState } from '../ui/LanternShow';
+import { LanternShow, readReplayEraMeta, validateAgentRunTape, type LanternShowState } from '../ui/LanternShow';
 import { disposeObject3D } from '../utils/dispose';
 import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
@@ -7030,10 +7030,15 @@ export class Game {
     ];
     const hasAgentOrders = recordings.some((recording) =>
       recording.entries.some((entry) => entry.a.some(isAgentOrdersAction)));
-    if (hasAgentOrders && tape.meta?.engineHash && tape.meta.era) {
+    const meta = readReplayEraMeta(tape);
+    const carriesEraStamp = meta?.era !== undefined || meta?.engineHash !== undefined;
+    const eraRefused = carriesEraStamp
+      && (!meta?.engineHash || meta.era !== engineEra.era || !engineEraIncludes(engineEra, meta.engineHash));
+    if ((hasAgentOrders && meta?.engineHash && meta.era) || eraRefused) {
       this.startTrueRunTapeReplay(tape);
       return;
     }
+    // Fully unstamped tapes predate engine eras, so the legacy show remains their compatibility path.
     const maxSlot = Math.max(...recordings.map((entry) => entry.slot));
     while (this.actors.length <= maxSlot) {
       const actor = new Hero(RUN_CAST_SCALE);
@@ -7087,9 +7092,9 @@ export class Game {
   }
 
   private startTrueRunTapeReplay(tape: RunTape): void {
-    const meta = tape.meta;
+    const meta = readReplayEraMeta(tape);
     const eraRefusal = !meta?.engineHash || meta.era !== engineEra.era || !engineEraIncludes(engineEra, meta.engineHash)
-      ? { tapeHash: meta?.engineHash ?? `unstamped build ${meta?.buildId ?? 'unknown'}`, currentHash: engineEra.engineHash, tapeEra: meta?.era ?? null, currentEra: engineEra.era }
+      ? { tapeHash: meta?.engineHash && meta.era ? meta.engineHash : `unstamped build ${meta?.buildId ?? 'unknown'}`, currentHash: engineEra.engineHash, tapeEra: meta?.engineHash && meta.era ? meta.era : null, currentEra: engineEra.era }
       : null;
     const driver = eraRefusal ? null : new BrowserAgentTapeReplay(tape);
     this.runTapeReplay = {
