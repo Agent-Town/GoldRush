@@ -252,11 +252,22 @@ test('a reactive client can recover from rejected orders', { timeout: 30_000 }, 
 });
 
 test('headless landmark starts release before enemies can stall at the perimeter', { timeout: 120_000 }, () => {
+  // RE-DERIVED 2026-09-04, cause stated (F-1406-2 forbids pasting over a red without one):
+  // `tasks/e4-roads-and-convoys.md` composes `MotorSocket` into every Motor contract, and the
+  // Motor Frontier's storms now slow OUTLAWS as well as the Hauler
+  // (`HeadlessContractSim` hands `motor.enemyMovementMultiplier` to the enemy speed lambda, the
+  // composition `731373d4d` shipped in `Game.ts:1749`). An idle ride therefore kills a slightly
+  // different number of outlaws in the same number of waves, and its event log hashes differently.
+  // Waves are UNCHANGED on all four rows, which is the shape a movement-only change should have.
+  // The same four values were re-derived independently into `assets/contracts/null-floors.json`
+  // by riding, and the two agree.
+  //   was: long-road-01 41 kills 2b27b21d · long-road-02 48 kills 37ab9177
+  //        gusher-01    93 kills 95f5777c · gusher-02    29 kills a9b7d153
   const cases = [
-    ['e4-long-road', 'e4-long-road-01', -180, 0, 4, 41, 'fnv1a32:2b27b21d'],
-    ['e4-long-road', 'e4-long-road-02', -180, 0, 4, 48, 'fnv1a32:37ab9177'],
-    ['e4-gusher-county', 'e4-gusher-county-01', 0, -4, 5, 93, 'fnv1a32:95f5777c'],
-    ['e4-gusher-county', 'e4-gusher-county-02', 0, -4, 2, 29, 'fnv1a32:a9b7d153'],
+    ['e4-long-road', 'e4-long-road-01', -180, 0, 4, 44, 'fnv1a32:a7ffb1c9'],
+    ['e4-long-road', 'e4-long-road-02', -180, 0, 4, 50, 'fnv1a32:021ae639'],
+    ['e4-gusher-county', 'e4-gusher-county-01', 0, -4, 5, 90, 'fnv1a32:b9638b36'],
+    ['e4-gusher-county', 'e4-gusher-county-02', 0, -4, 2, 29, 'fnv1a32:e857081c'],
   ];
 
   for (const [contract, seed, startX, startZ, waves, kills, eventLogHash] of cases) {

@@ -3,8 +3,10 @@
  *
  * WHY THIS FILE EXISTS, measured rather than guessed. `MechanicsManifest` publishes the E4 rules and
  * needs these four numbers and two verb names. Importing them from `./MotorSocket` drags its whole
- * graph — `entities/Vehicle` and `systems/FuelSystem` both import `world/Terrain`, and `Terrain`
- * opens with `import ... from '.../m1-core.layer-contract.v1.json?raw'`, a Vite-only specifier. Two
+ * graph: `entities/Vehicle` and `systems/FuelSystem` both reach `world/Terrain`, whose first line
+ * pulls the m1-core layer contract through Vite's `?raw` suffix, a specifier plain Node cannot load
+ * (quoting it here would be read as a real import by `deploy-mirror-allowlist`, whose scanner does
+ * not skip comments, so it is described rather than quoted). Two
  * e2e specs import `MechanicsManifest` at MODULE level (`e2e/agent-view.spec.ts`,
  * `e2e/drill-yard-manifest.spec.ts`), so `npx playwright test --list` then loads that `?raw` in plain
  * Node and dies with "needs an import attribute of type: json" — collecting 0 tests in 0 files, which
