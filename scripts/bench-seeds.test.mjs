@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
+import rotations from '../assets/rotations/rotation-seeds.json' with { type: 'json' };
 import atomicContracts from '../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
 import deepwaterContracts from '../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
 import deepskyContracts from '../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
@@ -11,6 +17,17 @@ import redfieldsContracts from '../assets/contracts/epoch-9-redfields/contracts.
 import signalContracts from '../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
 import steamworksContracts from '../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
 import voltageContracts from '../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
+import { ENGINE_SOURCE_INPUTS, computeEngineHash } from './assay-replay-agent.mjs';
+
+const root = fileURLToPath(new URL('../', import.meta.url));
+
+function findRotationRegistries(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const absolute = path.join(directory, entry.name);
+    if (entry.isDirectory()) return findRotationRegistries(absolute);
+    return entry.isFile() && entry.name === 'rotation-seeds.json' ? [absolute] : [];
+  });
+}
 
 const bundles = [
   frontierContracts,
@@ -26,6 +43,17 @@ const bundles = [
 ];
 const allContractIds = bundles.flatMap((bundle) => bundle.contracts.map((contract) => contract.id));
 const knownContractIds = new Set(allContractIds);
+
+test('rotation registry stays outside the engine identity corpus', async () => {
+  const corpusRoot = process.env.ENGINE_CORPUS_ROOT ?? root;
+  const registries = ENGINE_SOURCE_INPUTS
+    .filter((input) => !path.extname(input))
+    .flatMap((input) => findRotationRegistries(path.join(corpusRoot, input)))
+    .map((file) => path.relative(corpusRoot, file));
+  assert.deepEqual(registries, [], `rotation registries inside ENGINE_SOURCE_INPUTS: ${registries.join(', ')}`);
+  const declared = JSON.parse(readFileSync(path.join(corpusRoot, 'assets/engine-era.json'), 'utf8')).engineHash;
+  assert.equal(await computeEngineHash(corpusRoot), declared);
+});
 
 // F-1222-2 (s1222). bench-seeds.json keys on `contractId` ALONE, but the server validates
 // with knownContract(epochId, contractId) — a PAIR. That lookup is only sound because no
@@ -80,5 +108,22 @@ test('bench seed sets cover Frontier and contain only valid known-contract seeds
       assert.equal(typeof seed, 'string', `${contractId} contains a non-string seed`);
       assert.ok(seed.length > 0 && seed.length <= 256, `${contractId} contains an invalid seed`);
     }
+  }
+});
+
+test('rotation mint is deterministic, week-sensitive, and requires a salt', () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'gold-rush-rotation-'));
+  const salt = path.join(dir, 'salt');
+  const script = fileURLToPath(new URL('./rotation-mint.mjs', import.meta.url));
+  try {
+    writeFileSync(salt, 'test-only-salt\n', { mode: 0o600 });
+    const mint = (week) => execFileSync(process.execPath, [script, '--week', week, '--salt-file', salt], { encoding: 'utf8' });
+    const first = mint('2026-W37');
+    assert.equal(first, mint('2026-W37'));
+    assert.notDeepEqual(JSON.parse(first).rotations[0].seeds, JSON.parse(mint('2026-W38')).rotations[0].seeds);
+    assert.deepEqual(Object.keys(rotations.rotations[0].seeds).sort(), Object.keys(JSON.parse(first).rotations[0].seeds).sort());
+    assert.notEqual(spawnSync(process.execPath, [script, '--week', '2026-W37'], { encoding: 'utf8' }).status, 0);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
   }
 });

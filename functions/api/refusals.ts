@@ -9,6 +9,7 @@ export const SUBMISSION_REFUSAL_REASONS = [
   'reel_duration_exceeded',
   'reel_not_current',
   'reel_too_large',
+  'rotation_closed',
   'season_closed',
   'training_ground',
   'unsecured',
