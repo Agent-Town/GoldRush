@@ -201,8 +201,9 @@ function round3(value: number): number {
 //     rain has no headless hazard on this map and is not modelled), draining over
 //     `DOME_AIR_DRAIN_SECONDS`, sealing back over `DOME_AIR_REFILL_SECONDS` once the pad is clear;
 //   · the regolith run: a pan tick landed on a ground while the suit still holds air WORKS that
-//     ground; a breathless tick is counted and not credited. The claim secures only once every
-//     authored ground has been worked on suit air (`objectiveAllowsSecure`).
+//     ground; a breathless tick is counted and not credited. The claim cannot secure until
+//     `REGOLITH_GROUNDS_FOR_SECURE` of the authored grounds have been worked on suit air
+//     (`objectiveAllowsSecure`), a count published on the view beside the authored total.
 //
 // SCOPED BY ID AND BY DATA, in the `HollowCrossingSystem.create` shape: `e8-eclipse` carries a
 // byte-identical atmosphere block and the same dome pads, and its row on the L1 ladder ("compose
@@ -216,6 +217,25 @@ export const DOME_AIR_DRAIN_SECONDS = 45;
 export const DOME_AIR_REFILL_SECONDS = 30;
 export const DOME_ZONE_PREFIX = 'dome-cluster';
 export const AIR_WALL_CONTRACT_IDS: readonly string[] = ['e8-mare-claim'];
+/**
+ * HOW MANY of the authored regolith grounds the claim must have WORKED ON SUIT AIR before it may
+ * secure. One — "the smallest that the contract's briefing already promises"
+ * (`tasks/e8-mare-claim-physics.md` §2), and it is deliberately not six.
+ *
+ * MEASURED, not guessed (`artifacts/e8-mare-claim-physics/mare-claim.log`, 2026-09-04):
+ *   · a floor ride works ground 1 at t=5.3s — one ground is reachable from the starting kit;
+ *   · a HARNESS ride (immortal hero) worked 5 of 6 in 819 seconds and 27 waves and never saw the
+ *     sixth, because only two seams are active at a time and a depleted one respawns on a RANDOM
+ *     open anchor 20s later (`src/systems/HarvestSystem.ts:205,343`, `Balance.goldSeam.respawnSeconds`);
+ *   · no rider has EVER secured this contract — `assets/contracts/winnability-receipts.json` reads
+ *     `{"contractId":"e8-mare-claim","status":"unclaimed"}`.
+ * A six-ground gate would therefore have made a never-yet-won map turn on a coin-flip queue of
+ * respawns, which is the L2 bug class by name ("Unwinnable-by-construction is a bug class, never a
+ * difficulty setting", `specs/epoch-saga/CAPABILITY-LADDER.md:38`). The count is published on the
+ * view as `now.air.regolith.required` beside `grounds`, so raising it later is one line here and a
+ * documented number there — the ladder's next E8 row, once the map authors a dependable air loop.
+ */
+export const REGOLITH_GROUNDS_FOR_SECURE = 1;
 
 type Point = Readonly<{ x: number; z: number }>;
 type Rect = Readonly<{ id: string; minX: number; maxX: number; minZ: number; maxZ: number }>;
@@ -292,7 +312,12 @@ export class E8AtmosphereSystem {
 
   /** The latch: true on every contract that declares no air wall, so no admitted terminal moves. */
   get objectiveAllowsSecure(): boolean {
-    return !this.declared || this.worked.size >= this.grounds;
+    return !this.declared || this.worked.size >= this.required;
+  }
+
+  /** The gate's own number, clamped to what the map actually authors. */
+  private get required(): number {
+    return Math.min(REGOLITH_GROUNDS_FOR_SECURE, this.grounds);
   }
 
   /**
@@ -367,7 +392,7 @@ export class E8AtmosphereSystem {
       })),
       regolith: {
         grounds: this.grounds,
-        required: this.grounds,
+        required: this.required,
         worked: [...this.worked].sort((left, right) => left - right),
         runsOnAir: this.runsOnAir,
         breathlessPans: this.breathlessPans,
