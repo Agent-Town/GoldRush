@@ -200,6 +200,12 @@
       "pinnedAt": "2026-09-03",
       "cause": "content re-hash, no behaviour change for existing tapes: e4-roads-and-convoys drain (48ef7df8d) composes MotorSocket headless for contracts declaring twist.motorFrontier; E1-E3 and E5+ replay byte-identical (the Claim control and the null floors re-derived); same era per F-1441-3",
       "aliases": []
+    },
+    {
+      "engineHash": "5442360305b6c293272fb3ae40ef851018aee7e854bc5eab70c90781df2d91be",
+      "pinnedAt": "2026-09-04",
+      "cause": "content re-hash, no behaviour change for existing tapes: reel-contract-routing-hazard drain (s2493) makes the browser module worker stage the tape's own contract before importing the replay graph, so a reel routes by its tape and not by page location; replay behaviour for correctly-routed tapes is unchanged and the Hill Mine crown now agrees claimed/node/browser at fnv1a32:0cdd3e78; same era per F-1441-3. HASH COMPUTED ON THE MERGED TREE, NOT INHERITED: the runner truthfully reported 024d2587 for its own lane tree (486 engine files, 135 commits behind main); the shipping tree has 488 and hashes to this value (F-2493-2).",
+      "aliases": []
     }
   ],
   "history": [
