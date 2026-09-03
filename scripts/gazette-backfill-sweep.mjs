@@ -86,6 +86,75 @@ export const PLAYER_PREFIXES = ['src/', 'assets/', 'public/', 'functions/', 'sit
 const PLAYER = new RegExp(`^(${PLAYER_PREFIXES.map((p) => p.replace(/\./g, '\\.')).join('|')})`)
 export const isPlayerPath = (file) => PLAYER.test(file)
 
+// ⚠️ THE ≤3/WEEK BATCHING RULE IS A *WEEKLY AGGREGATE*, AND NO SINGLE FIRE CAN SEE IT
+// (F-2491-1, measured s2491). GZ-01 says "≤3 GAZETTE items/week reach the owner (batch the
+// rest into the weekly roundup item)" — but a fire files ONE item, for ITS OWN drain, and
+// that act is locally correct every time. The rule's subject is the WEEK, which no actor in
+// the loop observes: this sweep counted reported/dismissed/candidates and had no opinion on
+// how many headlines the week already held.
+//
+// Measured s2491 for ISO week 2026-W36: 19 standalone items against a budget of 3, filed by
+// eleven separate fires (s2459..s2476) each judging its own merge worth a headline. Fires DO
+// batch when they think of it — five ROUNDUP-CLASS items sit in the same window — but the
+// counting was a HABIT, not a step, and during a high-drain burst every fire independently
+// reached the same locally-correct answer.
+//
+// SEVERITY, STATED HONESTLY AND DELIBERATELY NOT INFLATED: nothing is broken, this is NOT a
+// false green, and no verdict anywhere was wrong. The queue is a QUEUE the owner approves
+// FROM, so an over-full queue publishes nothing. What earns it a declaration is the
+// DIRECTION: it fails toward MORE owner load, in the one pipeline whose whole purpose is to
+// BOUND owner load — the owner's "one morning action" is handed 19 headlines to weigh where
+// the rule promises 3.
+//
+// ADVISORY ONLY, exit 0 always, like every other number this tool prints. A red is wrong
+// here for this file's own stated reason: "player-visible" is a JUDGEMENT, so a gate would
+// fire on honest work and be excused into uselessness within a week (F-1460-1). The count is
+// mechanical, which is exactly why it belongs in the instrument rather than in a sentence.
+export const ITEM_BUDGET = 3
+
+// Pure integer calendar arithmetic on y/m/d components — NEVER Date.parse of a date STRING.
+// `new Date('2026-09-03')` is UTC midnight while `new Date()` is LOCAL, and this machine is
+// UTC+07, so mixing the two collapses a window to zero width and reports 0 for every subject
+// alike (F-2391-1). Date.UTC here is used only as a calendar, never as a clock.
+export const isoWeekOf = (y, m, d) => {
+  const t = new Date(Date.UTC(y, m - 1, d))
+  t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7))
+  const yy = t.getUTCFullYear()
+  const week = Math.ceil(((t - Date.UTC(yy, 0, 1)) / 86400000 + 1) / 7)
+  return `${yy}-W${String(week).padStart(2, '0')}`
+}
+
+// A batched item spends no headline slot. TWO forms are in live use and both count: the
+// `ROUNDUP-CLASS` annotation line, and a headline that is itself a `## ROUNDUP —`. Counting
+// only the first over-reports by one in the 2026-W36 window; the finding survives either
+// reading (19 vs 18 against a budget of 3), which is why the looser one is used.
+export const isBatchedItem = (para) =>
+  /ROUNDUP-CLASS/.test(para) || /^##\s+ROUNDUP\b/.test(para.trimStart())
+
+// A gazette ITEM is a blank-line-scoped paragraph opening `## ` — the same scoping
+// `classifyCitation` already relies on, not a second parser (F-1261-1).
+export const weeklyItemCensus = (queueText, dateOf, week) => {
+  if (!queueText.trim()) {
+    return { corpus: 'unreadable', week, standalone: 0, batched: 0, uncited: 0, unresolved: 0, headlines: [] }
+  }
+  let standalone = 0, batched = 0, uncited = 0, unresolved = 0
+  const headlines = []
+  for (const para of queueText.split(/\r?\n\s*\r?\n/)) {
+    if (!/^##\s/.test(para.trimStart())) continue
+    const m = para.match(/merge:?\s*`?([0-9a-f]{7,40})/)
+    // Two different holes, reported apart because they owe different acts: an item this
+    // parser found no merge token in (the pre-2026-08 house format) versus one citing a hash
+    // no ref carries. Collapsing them into one "undated" number describes neither.
+    if (!m) { uncited++; continue }
+    const date = dateOf(m[1])
+    if (!date) { unresolved++; continue }
+    if (isoWeekOf(...date.split('-').map(Number)) !== week) continue
+    if (isBatchedItem(para)) batched++
+    else { standalone++; headlines.push(para.trimStart().split('\n')[0].slice(3, 72)) }
+  }
+  return { corpus: 'read', week, standalone, batched, uncited, unresolved, headlines }
+}
+
 const main = () => {
   // Git fills a date-only revision limit with the current clock time, shrinking the
   // same calendar window during the day. Pin date-only inputs to local midnight.
@@ -147,6 +216,49 @@ const main = () => {
   console.log(`  reported:                                          ${reported.length}`)
   console.log(`  dismissed (${MARKER}):                  ${dismissed.length}`)
   console.log(`  NOT cited anywhere — candidates to judge:         ${absent.length}`)
+
+  // F-2491-1. Printed ALWAYS, including when the week is under budget — a warning that
+  // appears only when something is wrong re-creates the ambiguity it removes (F-2208-1),
+  // and this number's whole job is to be in front of a fire at the moment it files.
+  const now = new Date()
+  const week = isoWeekOf(now.getFullYear(), now.getMonth() + 1, now.getDate())
+  const queueText = git('grep', '-h', '--break', '^', '--', 'marketing/outbox/gazette-queue.md')
+  // Date citations from the WHOLE history, not from `rows`. `rows` holds only player-path
+  // merges inside --since, so dating from it makes the count a FLOOR: an item citing a
+  // contained commit, or a merge outside the window, silently becomes "undated" and leaves
+  // the week. A week cited entirely that way would report 0 standalone and NOT warn — a
+  // false clean of exactly the shape this file's other comments are about. One `git log
+  // --all` is 12,563 commits in ~216 ms (measured s2491), so the honest read is also cheap.
+  const dateIndex = new Map()
+  for (const l of git('log', '--all', '--format=%H%x09%cs').trim().split('\n')) {
+    const [h, d] = l.split('\t')
+    if (h) dateIndex.set(h, d)
+  }
+  const byPrefix = new Map()
+  for (const [h, d] of dateIndex) {
+    const k = h.slice(0, 7)
+    if (!byPrefix.has(k)) byPrefix.set(k, [])
+    byPrefix.get(k).push([h, d])
+  }
+  const dateOf = (hash) =>
+    (byPrefix.get(hash.slice(0, 7)) ?? []).find(([h]) => h.startsWith(hash))?.[1] ?? null
+  const wk = weeklyItemCensus(queueText, dateOf, week)
+  console.log('')
+  if (wk.corpus !== 'read') {
+    console.log(`weekly headline budget: ⛔ CANNOT VERIFY — gazette-queue.md read back empty from this cwd.`)
+    console.log(`  This is a corpus failure, not a clean week. Re-run from the repo root.`)
+  } else {
+    console.log(`weekly headline budget (${wk.week}): ${wk.standalone} standalone, ${wk.batched} batched`)
+    console.log(`  GZ-01 allows <=${ITEM_BUDGET} standalone item(s) per week; the rest batch into a ROUNDUP.`)
+    console.log(`  (counted in NO week: ${wk.uncited} item(s) carry no merge citation this parser`)
+    console.log(`   resolves — the pre-2026-08 house format — and ${wk.unresolved} cite a hash on no ref.)`)
+    if (wk.standalone > ITEM_BUDGET) {
+      console.log(`  ⚠️  THE WEEK'S ${ITEM_BUDGET} HEADLINE SLOTS ARE SPENT. File as ROUNDUP-CLASS, not as a`)
+      console.log(`      new headline — the budget is a WEEKLY aggregate and your one item looks fine alone.`)
+      for (const h of wk.headlines.slice(0, 5)) console.log(`        already standing: ${h}`)
+      if (wk.headlines.length > 5) console.log(`        ... and ${wk.headlines.length - 5} more`)
+    }
+  }
   console.log('')
   console.log('--- dismissed (newest first; available to re-judge) ---')
   for (const r of dismissed) console.log(`  ${r.short}  ${r.date}  ${r.subject.slice(0, 96)}`)
