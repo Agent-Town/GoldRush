@@ -8,6 +8,7 @@ import { createServer } from 'vite';
 import { createLedgerServer } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
 import engineEra from '../assets/engine-era.json' with { type: 'json' };
+import rotationSeeds from '../assets/contracts/rotation-seeds.json' with { type: 'json' };
 
 const SECRET = 'assay-worker-test-secret';
 // The season roll (owner 2026-08-15): the county writes in the current season's key shape, and the
@@ -56,6 +57,7 @@ try {
     await checkUnrankedBound(onRequest);
     await checkRetroAssay(onRequest, onRequestAssayQueue);
     await checkSeasonRoll(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+    await checkRotationBoard(onRequest);
     await checkAssayStrips(onRequest);
     await checkRefusals(onRequest, onRequestRefusals);
     console.log(`standings assay ${backend} checks passed (${checks})`);
@@ -778,6 +780,52 @@ async function checkSeasonRoll(onRequest, queueRoute, verdictRoute) {
   equal(await kv.get(ARCHIVE_KEY), archiveBytes, 'a whole current-season lifecycle never touched season one');
 }
 
+async function checkRotationBoard(onRequest) {
+  const rotation = rotationSeeds.rotations[0];
+  const openAt = Date.parse(rotation.opensAt) + 1;
+  const priorNow = Date.now;
+  Date.now = () => openAt;
+  try {
+    const kv = makeKv();
+    const publicRow = storedRowFor(40, 'the-claim', 'epoch-1-frontier');
+    publicRow.assay = 'verified';
+    publicRow.assayedAt = openAt;
+    publicRow.assayHash = 'fnv1a32:1234abcd';
+    publicRow.stack = { declaredBy: 'self', model: 'transfer-test', harness: 'test-rig', harnessVersion: '1', harnessDigest: 'c'.repeat(64) };
+    await kv.put(KEY, JSON.stringify([publicRow]));
+
+    const before = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+    const accepted = await call(onRequest, 'POST', '/api/standings', rotationPost('d'.repeat(32), 12, rotation.seeds['the-claim']), kv);
+    equal(accepted.body.rotationId, rotation.id, 'an open rotation seed is admitted and stamped');
+    const stored = JSON.parse(await kv.get(KEY));
+    const rotationRow = stored.find((row) => row.rotationId === rotation.id);
+    equal(rotationRow.rotationId, rotation.id, 'the stored row carries its rotation id');
+    rotationRow.assay = 'verified';
+    rotationRow.assayedAt = openAt;
+    rotationRow.assayHash = 'fnv1a32:1234abcd';
+    await kv.put(KEY, JSON.stringify(stored));
+
+    const transfer = await call(onRequest, 'GET', `/api/standings?board=transfer&rotation=${rotation.id}`, undefined, kv);
+    equal(transfer.status, 200, 'the transfer board is readable by rotation id');
+    const claim = transfer.body.standings.find((standing) => standing.contractId === 'the-claim');
+    equal(claim.board.map((row) => [row.rotationId, row.waves]), [[rotation.id, 12]], 'the transfer board contains verified rotation rows only');
+
+    const after = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+    equal(after.body.board[0].heldOut, { rotationId: rotation.id, waves: 12 }, 'a public row joins its same-digest held-out result');
+    const withoutHeldOut = (response) => response.body.board.map(({ heldOut, ...row }) => row);
+    equal(JSON.stringify(withoutHeldOut(after)), JSON.stringify(withoutHeldOut(before)), 'public board rows are byte-identical apart from the additive heldOut cell');
+
+    Date.now = () => Date.parse(rotation.closesAt);
+    const refused = await call(onRequest, 'POST', '/api/standings', rotationPost('e'.repeat(32), 13, rotation.seeds['the-claim']), kv);
+    equal(refused.body.error, 'rotation_closed', 'the same rotation seed is refused at the closing instant');
+    const ordinary = post('f'.repeat(32), 4);
+    ordinary.seed = 'outside-the-registry';
+    equal((await call(onRequest, 'POST', '/api/standings', ordinary, makeKv())).status, 200, 'a live seed outside the registry keeps its prior behavior');
+  } finally {
+    Date.now = priorNow;
+  }
+}
+
 function post(anonId, waves, runTape, contractId = 'the-claim', epochId = 'epoch-1-frontier') {
   const submittedTape = runTape ? currentEraTape(runTape) : undefined;
   const inputLogHash = submittedTape ? createHash('sha256').update(JSON.stringify(submittedTape.inputLog)).digest('hex') : 'b'.repeat(64);
@@ -787,6 +835,16 @@ function post(anonId, waves, runTape, contractId = 'the-claim', epochId = 'epoch
     profileName: 'Assay Test', anonId, difficulty: 'trail', seed: 'gold-rush', seedMode: 'live',
     seedHash: 'a'.repeat(64), inputLogHash, ...(submittedTape ? { tape: submittedTape } : {}),
   };
+}
+
+function rotationPost(anonId, waves, seed) {
+  const payload = post(anonId, waves, tapeV2(`rotation-${anonId.slice(0, 4)}`, waves));
+  payload.seed = payload.tape.seed = payload.tape.inputLog.seed = seed;
+  payload.seedMode = 'bench';
+  payload.seedHash = createHash('sha256').update(seed).digest('hex');
+  payload.inputLogHash = createHash('sha256').update(JSON.stringify(payload.tape.inputLog)).digest('hex');
+  payload.stack = { model: 'transfer-test', harness: 'test-rig', harnessVersion: '1', harnessDigest: 'c'.repeat(64) };
+  return payload;
 }
 
 function tape(id, waves, eventLogHash = 'fnv1a32:1234abcd', contractId = 'the-claim') {

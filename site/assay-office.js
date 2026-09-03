@@ -1,4 +1,5 @@
 const STATS_ENDPOINT = 'https://agenttown.app/goldrush/api/stats';
+const CURRENT_ROTATION_ID = 'r2026w37';
 
 const DURATION_LABELS = {
   lt1m: 'under a minute',
@@ -124,9 +125,15 @@ function standingsUrl(board) {
   return `https://agenttown.app/api/standings?epoch=${board.epoch}&contract=${board.contract}`;
 }
 
+function rotationUrl() {
+  return `https://agenttown.app/api/standings?board=transfer&rotation=${CURRENT_ROTATION_ID}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const body = document.querySelector('[data-standings="rows"]');
   const costChart = document.querySelector('[data-standings="cost-chart"]');
+  const rotationBody = document.querySelector('[data-rotation="rows"]');
+  const rotationWindow = document.querySelector('[data-rotation="window"]');
   if (!body) return;
   let claimRows = [];
 
@@ -177,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tr.appendChild(cell('num', '·'));
         tr.appendChild(cell('num gold', '·'));
         tr.appendChild(cell('cost', '·'));
+        tr.appendChild(cell('generalization', '·'));
         tr.appendChild(watchCell(board));
         body.appendChild(tr);
         return;
@@ -193,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.appendChild(cell('num', formatCount(score.waves ?? best.waves)));
       tr.appendChild(cell('num gold', formatCount(score.gold ?? best.gold)));
       tr.appendChild(costCell(best.cost));
+      tr.appendChild(generalizationCell(best));
       tr.appendChild(watchCell(board, best));
       body.appendChild(tr);
     });
@@ -223,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
     body.textContent = '';
     const tr = document.createElement('tr');
     const td = document.createElement('td');
-    td.colSpan = 6;
+    td.colSpan = 7;
     td.textContent = text;
     tr.appendChild(td);
     body.appendChild(tr);
@@ -278,6 +287,32 @@ document.addEventListener('DOMContentLoaded', () => {
     return td;
   }
 
+  function generalizationCell(row) {
+    return cell('generalization', row.heldOut
+      ? `held-out w${formatCount(row.heldOut.waves)} / public w${formatCount(row.score?.waves ?? row.waves)}`
+      : 'not ridden');
+  }
+
+  async function loadRotation() {
+    if (!rotationBody) return;
+    try {
+      const response = await fetch(rotationUrl(), { headers: { Accept: 'application/json' } });
+      if (!response.ok) throw new Error('rotation unavailable');
+      const payload = await response.json();
+      if (!payload?.rotation?.seeds) throw new Error('rotation shape');
+      rotationWindow.textContent = `${payload.rotation.id} closes ${new Date(payload.rotation.closesAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' })} UTC`;
+      rotationBody.textContent = '';
+      for (const board of COUNTY_BOARDS) {
+        const tr = document.createElement('tr');
+        tr.appendChild(cell('rk', board.label));
+        tr.appendChild(cell('seed', payload.rotation.seeds[board.contract] ?? 'not minted'));
+        rotationBody.appendChild(tr);
+      }
+    } catch {
+      rotationWindow.textContent = 'the rotation wire is quiet';
+    }
+  }
+
   function watchCell(board, row) {
     const td = document.createElement('td');
     const a = document.createElement('a');
@@ -296,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', () => drawCostChart(costChart, claimRows));
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => drawCostChart(costChart, claimRows));
   loadStandings();
+  loadRotation();
 });
 
 function formatDuration(value) {

@@ -1,4 +1,5 @@
 import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
+import rotationSeeds from '../../assets/contracts/rotation-seeds.json' with { type: 'json' };
 import engineEra from '../../assets/engine-era.json' with { type: 'json' };
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
@@ -38,6 +39,13 @@ type ScoreRow = {
 };
 
 type SeedMode = 'live' | 'bench';
+
+type Rotation = {
+  id: string;
+  opensAt: string;
+  closesAt: string;
+  seeds: Record<string, string>;
+};
 
 type SelfDeclaredStack = {
   declaredBy: 'self';
@@ -85,6 +93,7 @@ type StoredRow = ScoreRow & {
   assayHash?: string;
   assayReason?: string;
   orders?: number;
+  rotationId?: string;
 };
 
 type AssayLocator = {
@@ -167,6 +176,7 @@ const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
 const WALK_ERA_START = 1_786_167_061_000;
 const WALK_ERA_STAMP = '3dd7790d';
 const SAME_GAME_ERA = SEASONS.find((season) => season.id === 'same-game-season')!;
+const ROTATIONS = (rotationSeeds.rotations as Rotation[]);
 
 // ── THE SEASON ROLL (owner ruling 2026-08-15, verbatim in specs/agent-play/tape-contract.md
 // §"The legacy board — RULED: SEASON ROLL": "I think this kind of calls for a next season?").
@@ -325,6 +335,19 @@ function constantTimeEqual(left: string, right: string): boolean {
 
 async function getBoard(context: StandingsContext, cors: Record<string, string>): Promise<Response> {
   const url = new URL(context.request.url);
+  if (url.searchParams.get('board') === 'transfer') {
+    const rotation = ROTATIONS.find(({ id }) => id === url.searchParams.get('rotation'));
+    if (!rotation || url.searchParams.size !== 2) return error(cors, 400, 'bad_rotation', 'Rotation not accepted.');
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    const standings = await Promise.all(Object.keys(rotation.seeds).map(async (contractId) => {
+      const epochId = CONTRACT_EPOCHS.get(contractId)!;
+      const rows = kv ? await readBoard(kv, epochId, contractId, true) : [];
+      const board = rankedRows(rows.filter((row) => row.rotationId === rotation.id && row.assay === 'verified'
+        && (row.party?.riderCount ?? 1) === 1), contractId).map((row, index) => boardRow(row, index));
+      return { epochId, contractId, board };
+    }));
+    return json(cors, { ok: true, board: 'transfer', rotation, standings });
+  }
   const epochId = url.searchParams.get('epoch') ?? '';
   const view = url.searchParams.get('view');
   // Every read surface carries the season the same way: one optional param, counted into the strict
@@ -339,7 +362,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
       return error(cors, 400, 'bad_view', 'Field book view not accepted.');
     }
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? rankedRows(await readBoard(kv, epochId, contractId, true, season), contractId) : []] as const));
+    const boards = await Promise.all(contracts.map(async (contractId) => [contractId, kv ? rankedRows((await readBoard(kv, epochId, contractId, true, season)).filter((row) => !row.rotationId), contractId) : []] as const));
     const frontiers = frontierDecisionMap(boards);
     if (view === 'byParty') {
       return json(cors, {
@@ -445,9 +468,10 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   // field BEFORE ranks are minted: a posse row can never move a solo rank, and an omitted party
   // param is the solo board — which is byte-identical to the board this endpoint served before.
   const partySize = partyParam === null || partyParam === 'solo' ? 1 : Number(partyParam);
-  const partition = rows.filter((row) => (row.party?.riderCount ?? 1) === partySize);
+  const partition = rows.filter((row) => !row.rotationId && (row.party?.riderCount ?? 1) === partySize);
   const ranked = rankedRows(partition, contractId);
-  const board = ranked.map(boardRow);
+  const rotation = currentOrLatestRotation(Date.now());
+  const board = ranked.map((row, index) => boardRow(row, index, heldOutFor(row, rows, contractId, rotation)));
   const rejectedCount = partition.filter((row) => row.assay === 'rejected'
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
   const retiredCount = partition.filter((row) => row.tape !== undefined && currentLineageRefusal(row.tape) !== null
@@ -467,7 +491,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   });
 }
 
-function boardRow(row: StoredRow, index: number): JsonRecord {
+function boardRow(row: StoredRow, index: number, heldOut?: JsonRecord | null): JsonRecord {
   const reel = row.tape === undefined ? undefined : { id: row.tape.id as string, simVersion: row.tape.simVersion as number };
   const season = resolveSeasonAt(row.submittedAt);
   return {
@@ -495,7 +519,18 @@ function boardRow(row: StoredRow, index: number): JsonRecord {
     // A handle to the reel, never the reel: the tape blob is fetched on demand by ?reel=<id>.
     ...(reel ? { reel } : {}),
     cost: rowCost(row),
+    ...(row.rotationId ? { rotationId: row.rotationId } : {}),
+    ...(heldOut === undefined ? {} : { heldOut }),
   };
+}
+
+function heldOutFor(row: StoredRow, rows: StoredRow[], contractId: string, rotation: Rotation | null): JsonRecord | null {
+  const digest = row.stack?.harnessDigest;
+  if (!rotation || !digest) return null;
+  const candidates = rows.filter((candidate) => candidate.rotationId === rotation.id && candidate.assay === 'verified'
+    && candidate.stack?.harnessDigest === digest && (candidate.party?.riderCount ?? 1) === (row.party?.riderCount ?? 1));
+  const best = rankedRows(candidates, contractId)[0];
+  return best ? { rotationId: rotation.id, waves: best.waves } : null;
 }
 
 function rowCost(row: StoredRow): JsonRecord {
@@ -746,7 +781,11 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   }
   const eraRefusal = tape ? currentLineageRefusal(tape) : null;
   if (eraRefusal) return refuseSubmission(context, cors, body, 400, 'reel_not_current', eraRefusal);
-  if (seedMode === 'bench' && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(seed)) {
+  const rotation = rotationForSeed(contractId, seed);
+  if (rotation && (Date.now() < Date.parse(rotation.opensAt) || Date.now() >= Date.parse(rotation.closesAt))) {
+    return refuseSubmission(context, cors, body, 403, 'rotation_closed', 'That rotation is not open.');
+  }
+  if (seedMode === 'bench' && !rotation && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(seed)) {
     return refuseSubmission(context, cors, body, 400, 'bad_bench_seed', 'Bench seed not accepted.');
   }
 
@@ -775,9 +814,11 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     ...(party ? { party } : {}),
     ...(tape ? { tape } : {}),
     ...(tape ? { assay: 'pending' as const } : {}),
+    ...(rotation ? { rotationId: rotation.id } : {}),
   };
   const standingKind = party?.riderCount ?? 1;
-  const sameStanding = (row: StoredRow) => row.anonId === anonId && (row.party?.riderCount ?? 1) === standingKind;
+  const sameStanding = (row: StoredRow) => row.anonId === anonId && row.rotationId === rotation?.id
+    && (row.party?.riderCount ?? 1) === standingKind;
   const prior = current.find((row) => sameStanding(row) && (tape ? isRankedRow(row) : row.tape === undefined));
   const kept = prior && compareScores(prior, candidate, contractId) < 0 ? prior : candidate;
   const next = retainUnranked([
@@ -787,8 +828,9 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   // ponytail: KV read-modify-write; move this board to a Durable Object if concurrent submissions measurably collide.
   await kv.put(key, JSON.stringify(next));
   if (tape && kept === candidate) await syncAssayBoardIndex(kv, epochId, contractId, next);
-  const index = rankedRows(next, contractId).indexOf(kept);
-  return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null });
+  const index = rankedRows(next.filter((row) => row.rotationId === rotation?.id), contractId).indexOf(kept);
+  return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null,
+    ...(rotation ? { rotationId: rotation.id } : {}) });
 }
 
 async function refuseSubmission(
@@ -854,6 +896,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   const assayHash = typeof value.assayHash === 'string' && ASSAY_HASH.test(value.assayHash) ? value.assayHash : undefined;
   const assayReason = typeof value.assayReason === 'string' && value.assayReason.length <= MAX_ASSAY_REASON_LENGTH ? value.assayReason : undefined;
   const orders = value.orders === undefined ? undefined : integerInRange(value.orders, 0, Number.MAX_SAFE_INTEGER);
+  const rotationId = value.rotationId === undefined ? undefined : typeof value.rotationId === 'string' ? value.rotationId : null;
   if (submittedAt === null || tape === null || (tape && !tapeMatchesScore(tape, score))) return null;
   if ((!tape && (value.assay !== undefined || value.assayedAt !== undefined || value.assayHash !== undefined || value.assayReason !== undefined))
     || (tape && !assay)
@@ -861,6 +904,8 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     || (value.assayHash !== undefined && !assayHash)
     || (value.assayReason !== undefined && assayReason === undefined)
     || (value.orders !== undefined && orders === null)
+    || rotationId === null
+    || (rotationId !== undefined && rotationForSeed(contractId, value.seed as string)?.id !== rotationId)
     || ((assay === 'verified' || assay === 'rejected') && (assayedAt === undefined || assayHash === undefined))
     || (assay === 'unassayable' && (assayedAt === undefined || assayHash !== undefined || assayReason === undefined))) return null;
   return {
@@ -881,6 +926,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     ...(assayHash === undefined ? {} : { assayHash }),
     ...(assayReason === undefined ? {} : { assayReason }),
     ...(typeof orders === 'number' ? { orders } : {}),
+    ...(rotationId ? { rotationId } : {}),
   };
 }
 
@@ -908,11 +954,29 @@ function currentLineageRefusal(tape: JsonRecord): string | null {
 }
 
 function retainUnranked(rows: StoredRow[], contractId: string): StoredRow[] {
+  const partitions = new Map<string, StoredRow[]>();
+  for (const row of rows) {
+    const key = row.rotationId ?? 'public';
+    partitions.set(key, [...(partitions.get(key) ?? []), row]);
+  }
+  return [...partitions.values()].flatMap((partition) => retainPartition(partition, contractId));
+}
+
+function retainPartition(rows: StoredRow[], contractId: string): StoredRow[] {
   const ranked = rankedRows(rows, contractId);
   const unranked = rows.filter((row) => !isRankedRow(row))
     .sort((a, b) => b.submittedAt - a.submittedAt)
     .slice(0, MAX_ROWS);
   return [...ranked, ...unranked];
+}
+
+function rotationForSeed(contractId: string, seed: string): Rotation | undefined {
+  return ROTATIONS.find((rotation) => rotation.seeds[contractId] === seed);
+}
+
+function currentOrLatestRotation(now: number): Rotation | null {
+  return [...ROTATIONS].filter((rotation) => Date.parse(rotation.opensAt) <= now)
+    .sort((a, b) => Date.parse(b.opensAt) - Date.parse(a.opensAt))[0] ?? null;
 }
 
 function scoreOf(row: ScoreRow): ScoreRow {

@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
+import rotations from '../assets/contracts/rotation-seeds.json' with { type: 'json' };
 import atomicContracts from '../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
 import deepwaterContracts from '../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
 import deepskyContracts from '../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
@@ -80,5 +86,22 @@ test('bench seed sets cover Frontier and contain only valid known-contract seeds
       assert.equal(typeof seed, 'string', `${contractId} contains a non-string seed`);
       assert.ok(seed.length > 0 && seed.length <= 256, `${contractId} contains an invalid seed`);
     }
+  }
+});
+
+test('rotation mint is deterministic, week-sensitive, and requires a salt', () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'gold-rush-rotation-'));
+  const salt = path.join(dir, 'salt');
+  const script = fileURLToPath(new URL('./rotation-mint.mjs', import.meta.url));
+  try {
+    writeFileSync(salt, 'test-only-salt\n', { mode: 0o600 });
+    const mint = (week) => execFileSync(process.execPath, [script, '--week', week, '--salt-file', salt], { encoding: 'utf8' });
+    const first = mint('2026-W37');
+    assert.equal(first, mint('2026-W37'));
+    assert.notDeepEqual(JSON.parse(first).rotations[0].seeds, JSON.parse(mint('2026-W38')).rotations[0].seeds);
+    assert.deepEqual(Object.keys(rotations.rotations[0].seeds).sort(), Object.keys(JSON.parse(first).rotations[0].seeds).sort());
+    assert.notEqual(spawnSync(process.execPath, [script, '--week', '2026-W37'], { encoding: 'utf8' }).status, 0);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
   }
 });

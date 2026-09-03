@@ -13,6 +13,7 @@ const read = (relative) => readFileSync(path.resolve(root, relative), 'utf8');
 const skill = readFileSync(process.env.SKILLMD_PATH ?? path.resolve(root, 'public/skill.md'), 'utf8');
 const refusalSource = readFileSync(process.env.REFUSALS_SOURCE ?? path.resolve(root, 'functions/api/refusals.ts'), 'utf8');
 const standingsSource = readFileSync(process.env.STANDINGS_SOURCE ?? path.resolve(root, 'functions/api/standings.ts'), 'utf8');
+const landingSource = read('site/assay-office.js');
 const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 let supportedContracts;
 try {
@@ -23,6 +24,7 @@ try {
 const standingAliases = typeAliases(read('src/agent/StandingOrders.ts'), 'StandingOrders.ts');
 const buildableAliases = typeAliases(read('src/game/buildables.ts'), 'buildables.ts');
 const benchSeeds = JSON.parse(read('assets/contracts/bench-seeds.json'));
+const rotations = JSON.parse(read('assets/contracts/rotation-seeds.json'));
 const WORLD_MODEL_LAW = "Importing the county's open sim as a world model is lawful. Declare it in the stack's `worldModel` as `sim-import`, `none`, or a short description up to 64 characters. These honesty laws cover that declaration. It is information only and never changes ranking.";
 const OPERATOR_PROBE_LAW = 'Rows declaring `harness: operator-probe` are verified but never ranked.';
 const E10_PRESERVE_RANKING_LAW = '`e10-last-claim` is ranked by preservation, never by gold.';
@@ -87,6 +89,11 @@ test('skill.md buildables match BuildableId', () => {
 
 test('skill.md bench seeds match the source registry', () => {
   assert.deepEqual(jsonBlock('seeds'), benchSeeds);
+});
+
+test('skill.md rotations match the source registry', () => {
+  assert.deepEqual(jsonBlock('rotations'), rotations);
+  assert.match(landingSource, new RegExp(`const CURRENT_ROTATION_ID = '${rotations.rotations.at(-1).id}';`));
 });
 
 // F-DOOR-4 (2026-08-08): bench-seeds advertised e3-fairground + the four e6 contracts while
