@@ -24,8 +24,12 @@ import {
 import type { PlaybookProbe } from '../playbook/PlaybookSession';
 import type { EconomySummary } from './Economy';
 import type { StandingOrdersView } from '../agent/StandingOrders';
+import type { MotorEvent } from '../sim/MotorSocket';
 import { freshMetaProgress, type MetaProgress } from './MetaProgress';
 import { freshResearchState, type ResearchState } from '../meta/ResearchTree';
+
+type WithoutAt<T> = T extends { at: number } ? Omit<T, 'at'> : T;
+export type RunTapeMotorEvent = WithoutAt<MotorEvent>;
 
 export const RUN_TAPES_KEY = 'gr.tapes.v1';
 export const RUN_TAPE_VERSION = 2 as const;
@@ -34,6 +38,12 @@ export const RUN_TAPE_RECENT_LIMIT = 10;
 
 /** Semantic player inputs preserved by the human tape, including `prospector_dispatch`. */
 export type RunTapeAction = LockstepAction;
+
+export type RunTapeMotorAction = {
+  t: number;
+  kind: 'motor_grade' | 'motor_haul';
+  point: { x: number; z: number };
+};
 
 export type RunTapeOutcome = {
   reason: RunEndReason;
@@ -49,6 +59,7 @@ export type RunTapeEventLog = {
   gold: number;
   wave: number;
   economy: EconomySummary;
+  motor?: { events: readonly RunTapeMotorEvent[]; eventCount: number };
 };
 
 export type RunTapeInputStream = {
@@ -60,6 +71,7 @@ export type RunTapeInputStream = {
 export type RunTapeInputLog = PlaybookRecording & {
   primarySlot: number;
   streams: RunTapeInputStream[];
+  motorActions?: RunTapeMotorAction[];
 };
 
 export type RunTapeRunStart = {
@@ -112,6 +124,7 @@ export class RunTapeRecorder {
   private readonly entries: PlaybookEntry[] = [];
   private readonly probes: PlaybookProbe[] = [];
   private readonly pendingActions: RunTapeAction[] = [];
+  private readonly motorActions: RunTapeMotorAction[] = [];
   private readonly streams = new Map<number, StreamState>();
   private edgeState: LockstepSampleEdgeState = zeroLockstepSampleEdgeState();
   private tick = 0;
@@ -187,6 +200,15 @@ export class RunTapeRecorder {
     if (normalized) this.pendingActions.push(normalized);
   }
 
+  recordMotorAction(kind: RunTapeMotorAction['kind'], point: { x: number; z: number }): void {
+    if (this.stopped || this.truncation) return;
+    this.motorActions.push({
+      t: this.tick,
+      kind,
+      point: { x: quantizePlaybookCoordinate(point.x), z: quantizePlaybookCoordinate(point.z) },
+    });
+  }
+
   get truncated(): boolean {
     return this.truncation !== null;
   }
@@ -223,6 +245,7 @@ export class RunTapeRecorder {
           start: { ...stream.start },
           entries: stream.entries.map((entry) => ({ ...entry, a: entry.a.map((action) => ({ ...action })) })),
         })),
+      ...(this.motorActions.length > 0 ? { motorActions: this.motorActions.map((action) => structuredClone(action)) } : {}),
     };
     return {
       version: RUN_TAPE_VERSION,
@@ -357,11 +380,12 @@ export function validateRunTape(value: unknown): RunTape | null {
   const envelope = runTapeEnvelopeForContract(value.contract);
   const parsed = validatePlaybook(value.inputLog, envelope.maxTicks, envelope.maxEntries);
   const streams = validateInputStreams(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0, envelope.maxEntries);
+  const motorActions = validateMotorActions(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0, envelope.maxEntries);
   const outcome = validateOutcome(value.outcome);
   const annotations = validateAnnotations(value.annotations);
   const meta = validateTapeMeta(value.meta);
   const runStart = validateRunStart(value.runStart);
-  if (!parsed.ok || !streams || !outcome || annotations === null || meta === null || (value.version === RUN_TAPE_VERSION ? !runStart : value.runStart !== undefined || value.meta !== undefined) || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
+  if (!parsed.ok || !streams || motorActions === null || !outcome || annotations === null || meta === null || (value.version === RUN_TAPE_VERSION ? !runStart : value.runStart !== undefined || value.meta !== undefined) || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
   return {
     version: value.version,
     id: value.id,
@@ -373,11 +397,28 @@ export function validateRunTape(value: unknown): RunTape | null {
     simVersion: value.simVersion as number,
     ...(meta ? { meta } : {}),
     ...(runStart ? { runStart } : {}),
-    inputLog: { ...parsed.playbook, ...streams },
+    inputLog: { ...parsed.playbook, ...streams, ...(motorActions?.length ? { motorActions } : {}) },
     eventLogHash: value.eventLogHash,
     outcome,
     ...(annotations ? { annotations } : {}),
   };
+}
+
+function validateMotorActions(value: unknown, durationTicks: number, maxEntries: number): RunTapeMotorAction[] | null | undefined {
+  if (!isRecord(value) || value.motorActions === undefined) return undefined;
+  if (!Array.isArray(value.motorActions) || value.motorActions.length > maxEntries) return null;
+  const actions: RunTapeMotorAction[] = [];
+  let previousTick = -1;
+  for (const action of value.motorActions) {
+    if (!isRecord(action) || !hasOnlyKeys(action, ['t', 'kind', 'point'])
+      || !Number.isInteger(action.t) || (action.t as number) < previousTick || (action.t as number) >= Math.max(1, durationTicks)
+      || (action.kind !== 'motor_grade' && action.kind !== 'motor_haul')
+      || !isRecord(action.point) || !hasOnlyKeys(action.point, ['x', 'z'])
+      || !nonNegativeCoordinate(action.point.x) || !nonNegativeCoordinate(action.point.z)) return null;
+    previousTick = action.t as number;
+    actions.push({ t: action.t as number, kind: action.kind, point: { x: action.point.x, z: action.point.z } });
+  }
+  return actions;
 }
 
 function validateTapeMeta(value: unknown): RunTapeMeta | null | undefined {
