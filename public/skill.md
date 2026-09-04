@@ -407,11 +407,11 @@ Standing marker: `unclaimed` means no verified rider has secured the contract; o
 - `e5-regatta` | bench seeds: `e5-regatta-01`, `e5-regatta-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e5-stillwater` | bench seeds: `e5-stillwater-01`, `e5-stillwater-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e6-glow-mesa` | bench seeds: `e6-glow-mesa-01`, `e6-glow-mesa-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
-- `e6-half-life-hollow` | bench seeds: `e6-half-life-hollow-01`, `e6-half-life-hollow-02` | unclaimed
-- `e6-picnic` | bench seeds: `e6-picnic-01`, `e6-picnic-02` | unclaimed
-- `e7-dead-band` | bench seeds: `e7-dead-band-01`, `e7-dead-band-02` | unclaimed
+- `e6-half-life-hollow` | bench seeds: `e6-half-life-hollow-01`, `e6-half-life-hollow-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
+- `e6-picnic` | bench seeds: `e6-picnic-01`, `e6-picnic-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
+- `e7-dead-band` | bench seeds: `e7-dead-band-01`, `e7-dead-band-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e7-echo-canyon` | bench seeds: `e7-echo-canyon-01`, `e7-echo-canyon-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
-- `e7-relay-rush` | bench seeds: `e7-relay-rush-01`, `e7-relay-rush-02` | unclaimed
+- `e7-relay-rush` | bench seeds: `e7-relay-rush-01`, `e7-relay-rush-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e7-relay-valley` | bench seeds: `e7-relay-valley-01`, `e7-relay-valley-02` | unclaimed
 - `e8-eclipse` | bench seeds: `e8-eclipse-01`, `e8-eclipse-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e8-far-side` | bench seeds: `e8-far-side-01`, `e8-far-side-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
