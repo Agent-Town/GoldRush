@@ -72,6 +72,7 @@ import { PROBE_RECOVERED_EVENT, ProbeRecovery, type ProbeRecoveryDiagnostics } f
 import { LowOrbitSystem, type LowOrbitDiagnostics } from '../systems/LowOrbitSystem';
 import { HollowCrossingSystem, type HollowCrossingDiagnostics } from '../systems/HollowCrossingSystem';
 import { E8AtmosphereSystem, E8PhysicsSystem } from '../systems/E8PhysicsSystem';
+import { E8SuitAirSystem } from '../systems/E8SuitAirSystem';
 import { SeedCaravanSystem, type SeedCaravanDiagnostics } from '../systems/SeedCaravanSystem';
 import {
   CANAL_ALREADY_DECIDED_REASON,
@@ -606,6 +607,23 @@ export class HeadlessContractSim {
    * than hidden: the wall binds the door's riders first, and the browser half is the next row.
    */
   private readonly atmosphere: E8AtmosphereSystem;
+  /**
+   * E8 — AIR AS THE WALL ON THE MARE CLAIM'S THREE SIBLINGS (`tasks/e8-remaining-maps.md`). Read
+   * the consumer's own header in `E8SuitAirSystem.ts`. It is the neighbour above's rule applied to
+   * the geographies the other three contracts author for themselves: the Far Side's lander yard and
+   * probe crater, Low Orbit's three pressurised decks, and the Eclipse's dome cluster under a
+   * shadow that takes the solar-fed pads offline mid-run.
+   *
+   * WHY TWO CONSUMERS AND NOT ONE WIDER GATE. `E8AtmosphereSystem` is id-scoped to the Mare Claim
+   * and this slice's firewall forbids changing its behaviour, so the siblings get their own
+   * consumer and the Mare Claim's guard keeps asserting, verbatim, that they never arm the old one.
+   * The consolidation that split owes is filed as F-E8RM-1.
+   *
+   * THE SAME TWO HONEST BOUNDS the neighbour above carries: nothing here moves hp or gold, so both
+   * runtimes of this engine stay on one board; and THE BROWSER COMPOSES NO ATMOSPHERE CONSUMER AT
+   * ALL, so these three contracts' `engineDependencies` rows stay `missing` and say why.
+   */
+  private readonly suitAir: E8SuitAirSystem;
 
   /**
    * A7 debris chip, headless. Positional and hero-only, matching `Game.applyLowOrbitDebris`
@@ -813,6 +831,10 @@ export class HeadlessContractSim {
     // gravity profile; the atmosphere consumer arms on the Mare Claim's declaration alone.
     this.e8Physics = new E8PhysicsSystem(this.manifest);
     this.atmosphere = E8AtmosphereSystem.create(this.manifest);
+    // E8: the same read again for the Mare Claim's three siblings. The two consumers are mutually
+    // exclusive by construction (`SUIT_AIR_CONTRACT_IDS` excludes the Mare Claim,
+    // `AIR_WALL_CONTRACT_IDS` excludes the other three), so at most one is ever declared.
+    this.suitAir = E8SuitAirSystem.create(this.manifest);
     // A8: same read the browser performs at `Game.ts` — the contract's own twist and its own
     // authored zones/stakes. A fresh empty store per sim, so runs never inherit each other's greens.
     this.seedCaravan = SeedCaravanSystem.create(this.manifest, new TileStateStore(NO_PROFILE_STORAGE));
@@ -1216,6 +1238,13 @@ export class HeadlessContractSim {
           // the era's own wall decides this. True on every contract that declares no air wall, so
           // no admitted contract's terminal moves.
           || !this.atmosphere.objectiveAllowsSecure
+          // E8: the siblings' own latch, keyed on their own declarations in the same shape. The Far
+          // Side and Low Orbit cannot secure until every authored crossing zone has been stood in
+          // ON SUIT AIR; the Eclipse cannot secure until its regolith run is made on air and, once
+          // the shadow has landed, one more ground has been worked on the reserve it forced the
+          // rider to transfer to. True on every contract that declares no suit air, so no admitted
+          // contract's terminal moves.
+          || !this.suitAir.objectiveAllowsSecure
           || this.atomic?.objectiveAllowsSecure === false
           || (this.preserve !== null && !this.preserve.active)
           ? Number.MAX_SAFE_INTEGER
@@ -1373,6 +1402,11 @@ export class HeadlessContractSim {
         // a claim secured with six grounds worked on suit air is not the same run as one that
         // panned them breathless, and the hash should be able to say so.
         ...(this.atmosphere.isDeclared ? { atmosphere: this.atmosphere.diagnostics } : {}),
+        // E8: spread-if-declared under its OWN key, so the Mare Claim's `atmosphere` row cannot
+        // move and the three siblings' rows are new rather than renamed. Included for the same
+        // reason: a Far Side secured with the crater crossed on air is not the same run as one
+        // that stood in it breathless, and the hash should be able to say so.
+        ...(this.suitAir.isDeclared ? { suitAir: this.suitAir.diagnostics } : {}),
       },
     });
     return {
@@ -1638,6 +1672,9 @@ export class HeadlessContractSim {
     // E8: the suit against the domes, read off the position the Prospector just moved to, with the
     // outlaws where this step left them. No hp moves here — the wall counts, it does not cut.
     this.atmosphere.update(STEP_SECONDS, this.prospector.position, this.enemies.all);
+    // E8: the siblings' suit, against the same position and the same outlaws, plus the wave the
+    // Eclipse's shadow is scheduled against. Inert on every other contract, hp untouched here too.
+    this.suitAir.update(STEP_SECONDS, this.prospector.position, this.enemies.all, this.currentRunWave());
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncLightState();
     observeStandingOrders();
@@ -2069,9 +2106,14 @@ export class HeadlessContractSim {
       hollowCrossing: this.hollowCrossing.isDeclared ? this.hollowCrossing.diagnostics : null,
       // E8: the same key the browser publishes (`Game.ts` `e8Physics: this.e8PhysicsSystem.diagnostics`),
       // so `buildView` derives `now.gravity` identically in both engines; the air row is null off
-      // the Mare Claim, exactly like its neighbours.
+      // the four E8 maps that declare an atmosphere, exactly like its neighbours.
       e8Physics: this.e8Physics.diagnostics,
-      e8Atmosphere: this.atmosphere.isDeclared ? this.atmosphere.diagnostics : null,
+      // ONE KEY, TWO CONSUMERS, and they cannot both be declared (see the construction site): the
+      // Mare Claim's own, or the siblings'. A rider therefore reads ONE `now.air` shape across all
+      // four E8 maps and `View.readAir` needs no second reader.
+      e8Atmosphere: this.atmosphere.isDeclared
+        ? this.atmosphere.diagnostics
+        : this.suitAir.isDeclared ? this.suitAir.diagnostics : null,
       seedCaravan: this.seedCaravan?.simulationSnapshot ?? null,
       // A10: null off every other contract, exactly like its neighbours, so no admitted
       // contract's determinism hash grows a field. Two runs that decide the same segments in the
@@ -2408,6 +2450,17 @@ export class HeadlessContractSim {
     if (landed && this.atmosphere.isDeclared) {
       const credited = this.atmosphere.notePan(seam.anchorIndex);
       const worked = this.atmosphere.diagnostics.regolith.worked;
+      if (credited && worked.length !== this.regolithGroundsLogged) {
+        this.regolithGroundsLogged = worked.length;
+        this.replayEvents.push({ type: 'regolith_ground_worked', at: round(this.timeAlive), ground: seam.anchorIndex, worked: worked.length });
+      }
+    }
+    // E8: the same rule on the three siblings, through their own consumer. Same event type,
+    // because it is the same fact: a ground worked on suit air. Absent an air wall `notePan` is a
+    // no-op, so no other contract's pan changes.
+    if (landed && this.suitAir.isDeclared) {
+      const credited = this.suitAir.notePan(seam.anchorIndex);
+      const worked = this.suitAir.diagnostics.regolith.worked;
       if (credited && worked.length !== this.regolithGroundsLogged) {
         this.regolithGroundsLogged = worked.length;
         this.replayEvents.push({ type: 'regolith_ground_worked', at: round(this.timeAlive), ground: seam.anchorIndex, worked: worked.length });
