@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "49c34f8bba3d61e003d1f421398e3835e3107945f396800fa124f946b2e4b2f9",
+  "engineHash": "41583818b1b62dcec49f241f0b9a3c7e168776a76be5d54e359e48dacc73e5be",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -206,6 +206,12 @@
       "pinnedAt": "2026-09-04",
       "cause": "content re-hash, no behaviour change for existing tapes: reel-contract-routing-hazard drain (s2493) makes the browser module worker stage the tape's own contract before importing the replay graph, so a reel routes by its tape and not by page location; replay behaviour for correctly-routed tapes is unchanged and the Hill Mine crown now agrees claimed/node/browser at fnv1a32:0cdd3e78; same era per F-1441-3. HASH COMPUTED ON THE MERGED TREE, NOT INHERITED: the runner truthfully reported 024d2587 for its own lane tree (486 engine files, 135 commits behind main); the shipping tree has 488 and hashes to this value (F-2493-2).",
       "aliases": []
+    },
+    {
+      "engineHash": "41583818b1b62dcec49f241f0b9a3c7e168776a76be5d54e359e48dacc73e5be",
+      "aliases": [],
+      "pinnedAt": "2026-09-04",
+      "cause": "content re-hash, no behaviour change for existing tapes: e4-vehicles-plain-boot drain (98cc0fc2f) composes Vehicle/FuelSystem for every twist.motorFrontier contract in a plain boot and adds motorActions to RunTape. Measured on the merged tree: all four Motor reels replay claimed=node=browser to their recorded hashes."
     }
   ],
   "history": [
