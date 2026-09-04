@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "41583818b1b62dcec49f241f0b9a3c7e168776a76be5d54e359e48dacc73e5be",
+  "engineHash": "737a979abc8e1e4a799cb56acc31b556dbc4400e8878d6c0f3c078dcb55b6ef9",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -212,6 +212,12 @@
       "aliases": [],
       "pinnedAt": "2026-09-04",
       "cause": "content re-hash, no behaviour change for existing tapes: e4-vehicles-plain-boot drain (98cc0fc2f) composes Vehicle/FuelSystem for every twist.motorFrontier contract in a plain boot and adds motorActions to RunTape. Measured on the merged tree: all four Motor reels replay claimed=node=browser to their recorded hashes."
+    },
+    {
+      "engineHash": "737a979abc8e1e4a799cb56acc31b556dbc4400e8878d6c0f3c078dcb55b6ef9",
+      "pinnedAt": "2026-09-04",
+      "cause": "content re-hash, no behaviour change for existing tapes: the four overnight drains (reel-contract-routing-hazard 22b9538e5 in src/meta+src/replay, e4-vehicles-plain-boot 98cc0fc2f in src/game, sim-terrain-read-canonicalization 7d23e345e harness only, f-e4-1 doc) left the corpus unpinned; appended attended before the deploy that carries them; same era per F-1441-3",
+      "aliases": []
     }
   ],
   "history": [
