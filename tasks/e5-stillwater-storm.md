@@ -1,0 +1,20 @@
+# Task e5-stillwater-storm: Stillwater schedules at least one adversarial storm-triggered wave without losing its quiet objective (lane-c, CLAUDE IMPLEMENTER)
+
+You are a Claude implementer for Gold Rush, working in worktrees/lane-c on branch lane/c.
+READ FIRST: AGENTS.md; `docs/audits/2026-09-02-era-mechanic-audit.md` row `e5-stillwater` (RESKIN: "Deepwater present; storm deliberately suppressed": `assets/contracts/epoch-5-deepwater/contracts.json:282,320,373`; scheduler selection `src/sim/HeadlessContractSim.ts:976-980`; log `artifacts/era-mechanic-audit/e5-stillwater.log` with `storm.waves:0`) and its smallest-slice line ("schedule at least one adversarial weather-triggered wave without removing its quiet/noise objective"); `src/systems/StormWaveScheduler.ts` + `src/sim/DeepwaterSocket.ts` (the E5 mechanic: fronts carry waves); how `e5-deepwater-claim`/`e5-regatta` compose the scheduler (EXERCISES rows); `specs/epoch-saga/e5-deepwater-bundle.md` §B (storms are the scheduler; the calm after); `specs/epoch-saga/CAPABILITY-LADDER.md` L1, L7.
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/c main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` — are NEVER "work" and NEVER a STOP; discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. THEN A CLEANLINESS LINE: `git -C worktrees/lane-c status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
+
+## Why (the audit: Stillwater is the one E5 map where the era's scheduler is switched off)
+## Scope
+1. Stillwater keeps its quiet/noise objective and gains at least one storm front that carries a wave (the scheduler composed, not a scripted spawn); SECURE requires holding through that front.
+2. Rider: the front is visible in `now` the way the other E5 maps expose it (no new field shape); the noise objective unchanged.
+3. Proof: ride log with the front and its wave; floor ride secures; both engines agree.
+## Common laws (every reskin slice)
+Both engines agree (one seed, browser and headless, same event-log hash: prove it); the contract's SECURE gates on its era mechanic; rider affordances additive (view-schema version bump, skill.md documented, guards re-pinned); human parity (L7): a plain-boot player can do what the rider can (verify; if not, the e2e pins the gap and a finding names it); no new balance number; E1 adjacent specs unmodified-green; ride logs with the era events under `artifacts/<slice>/`; report the engine hash (the drain pins). Commit path-scoped with the two attribution lines this repo uses today; never push.
+## Firewall
+Touch ONLY: `assets/contracts/epoch-5-deepwater/contracts.json` (`e5-stillwater` only), `src/sim/HeadlessContractSim.ts` (the scheduler selection for this contract), tests, evidence, BACKLOG row. NO changes to: `StormWaveScheduler.ts`, `DeepwaterSocket.ts` behaviour, other E5 maps, `Balance.ts`.
+## Self-check
+tsc clean; build green; `test:node-guards` + `test:stats` green (counts); the ride log; the hash table; e2e both projects zero console errors.
+End: READY-FOR-GATES + the hash table, the event evidence, the secure rule.
+## No-op / honesty guard
+If the quiet objective and a storm wave cannot coexist in the sim without a scheduler change (name the line), STOP and report the fork.
