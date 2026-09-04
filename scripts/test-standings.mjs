@@ -50,6 +50,7 @@ try {
     await checkPosts(onRequest);
     await checkPreserveRanking(onRequest, compareScores);
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
+    await checkBankedHeat11Tapes(onRequest, validateTape, validateRunTape);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
     await checkVerdictSlipExactMatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -401,7 +402,15 @@ async function checkPosts(onRequest) {
   equal(beyondDawn.status, 400, 'Night Shift beyond-margin tape is refused');
   equal(beyondDawn.body.error, 'reel_duration_exceeded', 'Night Shift beyond-margin refusal names the duration reason');
 
-  const oversized = post('6'.repeat(32), 20);
+  const picnic = tape('picnic-final-tick', 20, 'fnv1a32:1234abcd', 'e6-picnic');
+  picnic.inputLog.durationTicks = 18_002;
+  equal((await call(onRequest, 'POST', '/api/standings', post('6'.repeat(32), 20, picnic, 'e6-picnic', 'epoch-6-atomic'), kv)).status, 200, 'no-secureWave final-tick tape is accepted');
+  picnic.inputLog.durationTicks += 1;
+  const beyondPicnic = await call(onRequest, 'POST', '/api/standings', post('7'.repeat(32), 20, picnic, 'e6-picnic', 'epoch-6-atomic'), kv);
+  equal(beyondPicnic.status, 400, 'no-secureWave beyond-margin tape is refused');
+  equal(beyondPicnic.body.error, 'reel_duration_exceeded', 'no-secureWave beyond-margin refusal names the duration reason');
+
+  const oversized = post('8'.repeat(32), 20);
   oversized.profileName = 'x'.repeat(2 * 1024 * 1024);
   const tooLarge = await call(onRequest, 'POST', '/api/standings', oversized, kv);
   equal(tooLarge.status, 413, 'pretty-sized standing is refused before validation');
@@ -422,8 +431,8 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
     const envelope = runTapeEnvelopeForContract(contractId);
     return [contractId, envelope.maxTicks, envelope.maxTapeBytes, envelope.maxEntries, maxRequestBytes];
   }), [
-    ['the-claim', 18_000, 592_384, 3_600, 802_080],
-    ['e1-drill-yard', 18_000, 592_384, 3_600, 802_080],
+    ['the-claim', 18_002, 592_544, 3_601, 802_080],
+    ['e1-drill-yard', 18_002, 592_544, 3_601, 802_080],
     ['e1-dry-gulch', 18_002, 592_544, 3_601, 802_080],
     ['e1-night-shift', 22_502, 736_544, 4_501, 802_080],
     ['e1-twin-banks', 18_002, 592_544, 3_601, 802_080],
@@ -472,11 +481,12 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
     'e2-incline',
     'e3-canyon-works',
     'e4-dust-flats',
-  ].map(maxRunTapeTicksForContract), [18_000, 18_000, 18_002, 22_502, 18_002, 20_350, 23_145, 21_602, 18_002, 18_002], 'contract duration table is pinned');
-  equal(maxRunTapeTicksForContract('unknown-contract'), recorderTicks, 'unknown contracts keep the recorder ceiling');
+  ].map(maxRunTapeTicksForContract), [18_002, 18_002, 18_002, 22_502, 18_002, 20_350, 23_145, 21_602, 18_002, 18_002], 'contract duration table is pinned');
+  equal(maxRunTapeTicksForContract('unknown-contract'), recorderTicks + 2, 'unknown contracts keep the inclusive recorder ceiling');
   equal(runTapeEnvelopeForContract('unknown-contract'), runTapeEnvelopeForContract('the-claim'), 'unknown contracts keep the ordinary door envelope');
 
   for (const [contractId, ceiling, waves] of [
+    ['e6-picnic', 18_002, 20],
     ['e1-night-shift', 22_502, 25],
     ['e2-trestle', 23_145, 12],
     ['e2-incline', 21_602, 12],
@@ -503,6 +513,16 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
   tooManyBytes.padding = 'x'.repeat(baronEnvelope.maxTapeBytes);
   equal(validateTape(tooManyBytes, 'e1-baron', 'gold-rush', 'trail'), null, 'standings validator refuses beyond the Baron byte envelope');
   equal(submittedRunTape(tooManyBytes), undefined, 'browser submission refuses beyond the Baron byte envelope');
+}
+
+async function checkBankedHeat11Tapes(onRequest, validateTape, validateRunTape) {
+  for (const contractId of ['e6-half-life-hollow', 'e6-picnic', 'e7-relay-rush']) {
+    const submission = JSON.parse(readFileSync(`artifacts/gauntlet-heat11-20260903/rides/${contractId}/opus/submission.json`, 'utf8'));
+    submission.tape = currentEraTape(submission.tape);
+    ok(validateTape(submission.tape, contractId, submission.seed, submission.difficulty), `${contractId} heat-11 tape clears the standings validator`);
+    ok(validateRunTape(submission.tape), `${contractId} heat-11 tape clears the assay validator`);
+    equal((await call(onRequest, 'POST', '/api/standings', submission, makeKv())).status, 200, `${contractId} heat-11 submission is accepted locally`);
+  }
 }
 
 async function checkBankedBaronTapes(onRequest, queueRoute, verdictRoute, validateTape, validateRunTape) {

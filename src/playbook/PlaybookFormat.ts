@@ -62,17 +62,16 @@ const RUN_TAPE_CONTRACTS = new Map(
 /** One bounded door envelope, derived from the contract clock for every admission axis. */
 export function runTapeEnvelopeForContract(contractId: string): RunTapeEnvelope {
   const twist = RUN_TAPE_CONTRACTS.get(contractId);
-  let maxTicks = MAX_PLAYBOOK_TICKS;
+  // durationTicks is an exclusive end, so every ceiling needs room for an order accepted at its
+  // terminal tick: nominal boundary + terminal step + inclusive endpoint.
+  let maxTicks = MAX_PLAYBOOK_TICKS + 2;
   if (twist?.secureWave) {
     const finalWave = twist.baron
       ? Math.max(twist.secureWave, twist.baron.wave) + ASSAY_BOSS_GRACE_WAVES
       : twist.secureWave;
     const cadence = Math.max(0.1, twist.waveCadenceMult ?? 1);
-    // The sim takes one step through the final wave boundary, and gr-sim may record an accepted
-    // order at that terminal instant. durationTicks is an exclusive end, so that lawful endpoint
-    // needs one more slot: nominal boundary + terminal step + inclusive endpoint.
     const contractTicks = Math.ceil((finalWave * Balance.waves.waveInterval / cadence) / PLAYBOOK_STEP_SECONDS) + 2;
-    maxTicks = Math.max(MAX_PLAYBOOK_TICKS, contractTicks);
+    maxTicks = Math.max(maxTicks, contractTicks);
   }
   const maxEntries = Math.ceil(maxTicks / RUN_TAPE_ENVELOPE_TICKS_PER_ENTRY);
   return {
