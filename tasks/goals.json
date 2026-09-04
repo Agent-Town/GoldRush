@@ -4186,6 +4186,16 @@
               "mergedAt": "2026-09-04",
               "mergeHash": "89b12c79976a9bc8cf520c0030d5215b7de30a2b",
               "drainedBy": "s2502"
+            },
+            {
+              "id": "contract-clock-explicit",
+              "title": "F-CLOCK-1: every registry contract owns an explicit or objective-derived tape clock",
+              "taskFile": "contract-clock-explicit.md",
+              "status": "queued",
+              "lane": "main",
+              "authoredBy": "s2506 fire",
+              "queuedAt": "2026-09-04",
+              "note": "Preserves all current envelope ceilings while replacing the implicit 18,000-tick fallback with an authored clock and a 42-contract guard."
             }
           ]
         }
