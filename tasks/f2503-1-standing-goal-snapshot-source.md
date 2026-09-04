@@ -31,7 +31,7 @@ Read first: `AGENTS.md`; the predecessor master from main with `git show main:ta
 git grep -Fc "securedSnapshot = tape && current.find" lane/a -- functions/api/standings.ts
 ```
 
-It must print `1`. Do not reset, rebase, clean tracked files or merge main into this lane. The predecessor is complete work that this corrective extends. STOP if the tip is unrelated or any tracked held path falls outside the declared set. Normal untracked `logs/**`, `artifacts/**`, `reviews/shots-*` and image churn are not a stop.
+It must print `1`. Do not reset, rebase, clean tracked files or merge main into this lane. The predecessor is complete work that this corrective extends. STOP if the tip is unrelated or any tracked held path falls outside the declared set. The FACTORY-CHURN EXCEPTION applies (F-1407-1): untracked `logs/**`, `artifacts/**`, `reviews/shots-*` and image churn are expected; list them and proceed.
 
 ## Goal
 
