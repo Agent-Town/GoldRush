@@ -270,6 +270,7 @@ interface ThreeGameDiagnostics {
       hero: number;
       agent: number;
     } | null;
+    securedSnapshot: { waves: number; gold: number; timeAlive: number } | null;
     suspend: {
       hasSuspend: boolean;
       restored: boolean;

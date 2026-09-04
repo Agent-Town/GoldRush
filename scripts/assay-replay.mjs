@@ -94,6 +94,7 @@ try {
         gold: Math.floor(diagnostics.economy.summary.panned),
         timeAlive: Math.round(diagnostics.timeAlive * 1_000_000) / 1_000_000,
       },
+      securedSnapshot: diagnostics.run.securedSnapshot,
       ticks: Number(show.getAttribute('data-tick')),
     };
   });

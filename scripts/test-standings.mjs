@@ -47,7 +47,7 @@ try {
     await checkReplayableBoard(onRequest);
     await checkOperatorProbes(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
-    await checkPosts(onRequest);
+    await checkPosts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkPreserveRanking(onRequest, compareScores);
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -184,6 +184,7 @@ async function checkAssayStrips(onRequest) {
   verified.tape.inputLog.entries = Array.from({ length: 10 }, (_, index) => ({ t: index, mx: 0, my: 0, a: [{ kind: 'agent_orders', orders: [] }] }));
   verified.inputLogHash = createHash('sha256').update(JSON.stringify(verified.tape.inputLog)).digest('hex');
   const pending = structuredClone(verified);
+  pending.anonId = 'b'.repeat(32);
   pending.profileName = 'Pending Mind';
   pending.stack.model = 'pending-mind';
   pending.assay = 'pending';
@@ -372,7 +373,7 @@ async function checkAssayIndexRace(onRequest, queueRoute) {
   equal(withLateRow.body.queue.map((row) => row.locator.tapeId).sort(), [rowA.tape.id, rowB.tape.id, late.tape.id].sort(), 'reconcile restores the race without dropping a row written between its scan and index write');
 }
 
-async function checkPosts(onRequest) {
+async function checkPosts(onRequest, queueRoute, verdictRoute) {
   const kv = makeKv();
   const unattested = await call(onRequest, 'POST', '/api/standings', post('0'.repeat(32), 20), kv);
   equal(unattested.status, 200, 'tapeless POST accepted');
@@ -391,6 +392,10 @@ async function checkPosts(onRequest) {
   const oversizedDisclosure = post('2'.repeat(32), 10);
   oversizedDisclosure.stack = { worldModel: 'x'.repeat(65) };
   equal((await call(onRequest, 'POST', '/api/standings', oversizedDisclosure, kv)).status, 400, 'world-model disclosure is capped at 64 characters');
+  const forgedSnapshot = post('3'.repeat(32), 10);
+  forgedSnapshot.securedSnapshot = { waves: 99, timeAlive: 1, gold: 999_999 };
+  equal((await call(onRequest, 'POST', '/api/standings', forgedSnapshot, makeKv())).status, 400,
+    'the public score schema refuses a rider-declared secure snapshot');
 
   const taped = post('0'.repeat(32), 20, tape('pending-tape', 20));
   taped.stack = { model: 'test-model', harness: 'test-rig', harnessVersion: 'v1', harnessDigest: 'c'.repeat(64), harnessRef: 'abcdef1' };
@@ -406,12 +411,39 @@ async function checkPosts(onRequest) {
   const frozen = JSON.parse(await kv.get(KEY)).find((row) => row.tape?.id === 'pending-tape');
   equal({ waves: frozen.waves, timeAlive: frozen.timeAlive, gold: frozen.gold }, { waves: 20, timeAlive: 120, gold: 40 },
     'a later Rush post with the same reel keeps the official-goal snapshot');
+
+  const overtimeOnlyKv = makeKv();
+  const overtimeOnly = post('4'.repeat(32), 14, tape('one-shot-overtime', 14));
+  overtimeOnly.score = { ...overtimeOnly.score, waves: 14, timeAlive: 180, gold: 90 };
+  overtimeOnly.tape.outcome = { reason: 'rush', secured: true, waves: 14, timeAlive: 180, gold: 90 };
+  await call(onRequest, 'POST', '/api/standings', overtimeOnly, overtimeOnlyKv);
+  const overtimeQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, overtimeOnlyKv, SECRET);
+  const overtimeVerdict = verdict(overtimeQueue.body.queue[0].locator, 'verified', undefined, 'fnv1a32:1234abcd',
+    { waves: 10, timeAlive: 120, gold: 40 });
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', overtimeVerdict, overtimeOnlyKv, SECRET)).status, 200,
+    'the worker can verify a one-shot overtime tape');
+  const rewritten = JSON.parse(await overtimeOnlyKv.get(KEY))[0];
+  equal({ assay: rewritten.assay, waves: rewritten.waves, timeAlive: rewritten.timeAlive, gold: rewritten.gold },
+    { assay: 'verified', waves: 10, timeAlive: 120, gold: 40 },
+    'verification rewrites the rider final values to the secure-event snapshot');
+
+  const challenger = post('4'.repeat(32), 20, tape('later-overtime', 20));
+  challenger.score = { ...challenger.score, waves: 20, timeAlive: 240, gold: 100 };
+  challenger.tape.outcome = { reason: 'rush', secured: true, waves: 20, timeAlive: 240, gold: 100 };
+  await call(onRequest, 'POST', '/api/standings', challenger, overtimeOnlyKv);
+  const challengerQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue', undefined, overtimeOnlyKv, SECRET);
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(
+    challengerQueue.body.queue[0].locator, 'verified', undefined, 'fnv1a32:1234abcd', { waves: 10, timeAlive: 125, gold: 30 },
+  ), overtimeOnlyKv, SECRET)).status, 200, 'a later overtime tape verifies against its own secure snapshot');
+  const preserved = JSON.parse(await overtimeOnlyKv.get(KEY)).find((row) => row.assay === 'verified');
+  equal({ tape: preserved.tape.id, waves: preserved.waves, timeAlive: preserved.timeAlive, gold: preserved.gold },
+    { tape: 'one-shot-overtime', waves: 10, timeAlive: 120, gold: 40 }, 'a worse verified snapshot cannot erase the prior personal best');
   const worse = post('0'.repeat(32), 10, tape('worse-tape', 10));
   const worseResponse = await call(onRequest, 'POST', '/api/standings', worse, kv);
   equal({ stored: worseResponse.body.stored, rank: worseResponse.body.rank, retained: worseResponse.body.retained },
-    { stored: false, rank: null, retained: 'personal_best' }, 'a prior best is not reported as this run rank');
+    { stored: true, rank: null, retained: undefined }, 'a fresh tape waits for its own verified snapshot');
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
-  equal(board.body.board.length, 1, 'pending row shows on board');
+  equal(board.body.board.length, 1, 'one optimistic pending row shows per rider');
   equal(board.body.board[0].assay, 'pending', 'pending badge state is exposed');
   equal(board.body.board[0].cost, { orders: null, calls: null, tokensIn: null, tokensOut: null, durationS: 120 }, 'pending row exposes the complete cost shape without inventing declarations');
   equal(board.body.board[0].harnessDigest, 'c'.repeat(64), 'harness digest reaches the board');
@@ -969,10 +1001,11 @@ function queueRow(row, epochId, contractId) {
   };
 }
 
-function verdict(locator, verdictValue, reason, replayedHash = 'fnv1a32:1234abcd') {
+function verdict(locator, verdictValue, reason, replayedHash = 'fnv1a32:1234abcd', securedSnapshot = { waves: 10, timeAlive: 120, gold: 40 }) {
   return {
     locator, verdict: verdictValue,
     ...(verdictValue === 'unassayable' ? {} : { replayedHash }),
+    ...(verdictValue === 'verified' ? { securedSnapshot } : {}),
     ...(reason ? { reason } : {}),
   };
 }

@@ -101,6 +101,30 @@ test('a securing door tape carries its start, its boundary answer, and replays t
   }
 });
 
+test('an overtime replay returns the immutable secure-event snapshot and the later final outcome', { timeout: 240_000 }, async () => {
+  const directory = mkdtempSync(join(tmpdir(), 'gold-rush-assay-overtime-'));
+  try {
+    const tapePath = join(directory, 'overtime-tape.json');
+    const outcome = await ride(['--contract', 'the-claim', '--seed', 'e1-the-claim-02', '--overtime', '--tape', tapePath], 'rush');
+    const replay = seam(tapePath);
+    assert.equal(outcome.secured, true);
+    assert.deepEqual(replay.outcome, {
+      secured: outcome.secured,
+      waves: outcome.waves,
+      gold: outcome.gold,
+      timeAlive: outcome.timeMs / 1000,
+    });
+    assert.equal(replay.securedSnapshot.waves, 10);
+    assert.equal(replay.securedSnapshot.gold, 290);
+    assert.equal(Math.round(replay.securedSnapshot.timeAlive), 300);
+    assert.ok(replay.outcome.waves > replay.securedSnapshot.waves);
+    assert.notEqual(replay.outcome.gold, replay.securedSnapshot.gold);
+    assert.ok(replay.outcome.timeAlive > replay.securedSnapshot.timeAlive);
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
+});
+
 /** The assay seam the worker spawns, run exactly as `scripts/assay-worker.mjs` runs it. */
 function seam(tapePath) {
   const run = spawnSync(process.execPath, ['scripts/assay-replay.mjs', tapePath], {
@@ -132,8 +156,8 @@ const FORT = {
   turret: { at: [{ x: 4, z: 14 }, { x: -4, z: 14 }, { x: 4, z: 10 }, { x: -4, z: 10 }], cost: [50, 70, 95, 125] },
 };
 
-function ordersFor(view) {
-  if (view.now.pendingSecure) return [{ verb: 'SECURE_CHOICE', choice: 'bank' }];
+function ordersFor(view, secureChoice = 'bank') {
+  if (view.now.pendingSecure) return [{ verb: 'SECURE_CHOICE', choice: secureChoice }];
   if (view.now.pendingOffer?.[0]) return [{ verb: 'PICK_UPGRADE', id: view.now.pendingOffer[0].id }];
   const orders = [];
   for (const [kind, plan] of Object.entries(FORT)) {
@@ -149,7 +173,7 @@ function ordersFor(view) {
   return orders.slice(0, 32);
 }
 
-function ride(args) {
+function ride(args, secureChoice = 'bank') {
   return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, ['scripts/gr-sim.mjs', ...args], { cwd: process.cwd(), stdio: ['pipe', 'pipe', 'pipe'] });
     const timer = setTimeout(() => child.kill('SIGKILL'), 240_000);
@@ -164,7 +188,7 @@ function ride(args) {
         buffer = buffer.slice(newline + 1);
         if (!line) continue;
         const message = JSON.parse(line);
-        if (message.schema === 'goldrush.view.v1') child.stdin.write(`${JSON.stringify(ordersFor(message))}\n`);
+        if (message.schema === 'goldrush.view.v1') child.stdin.write(`${JSON.stringify(ordersFor(message, secureChoice))}\n`);
         else outcome = message;
       }
     });

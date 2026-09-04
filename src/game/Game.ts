@@ -1818,9 +1818,8 @@ export class Game {
         true,
         event.secureWave,
       );
-      const standingScore = { ...score, gold: Math.max(0, Math.floor(this.economy.gold)) };
+      const standingScore = { ...score, waves: event.secureWave, gold: Math.floor(event.summary.goldPanned), timeAlive: event.at };
       this.countyStanding = { waves: standingScore.waves, gold: standingScore.gold, timeAlive: standingScore.timeAlive };
-      void this.submitCountyStanding(standingScore);
       this.e7SignalSystem.recordContractWin(this.activeContract.id);
       emitStorySignal({ type: 'first-victory' });
       if (!this.baronBeatenThisRun) this.audio.play('victory-sting');
@@ -1831,6 +1830,8 @@ export class Game {
       this.audio.play('ledger-open', 0.75);
       const secured = this.runWasSecured(event.wavesSurvived);
       const { scoreAt, runStats, score, scores } = this.recordRunScore(event.wavesSurvived, event.timeAlive, secured);
+      const securedSnapshot = this.runManager?.diagnostics.securedSnapshot;
+      if (secured && securedSnapshot && !this.countyStanding) this.countyStanding = { ...securedSnapshot };
       if (secured) void this.submitCountyStanding(score);
       this.deathLedger = {
         timeAlive: event.timeAlive,
@@ -1879,6 +1880,7 @@ export class Game {
         true,
         event.summary.secureWaveReached,
       );
+      void this.submitCountyStanding(score);
       const ledger: DeathLedger = {
         timeAlive: event.at,
         kills: this.kills,
@@ -5467,6 +5469,7 @@ export class Game {
           lastRunEndedReason: null,
           meta: null,
           victoryPayout: null,
+          securedSnapshot: null,
           suspend: {
             hasSuspend: false,
             restored: false,
