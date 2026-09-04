@@ -36,6 +36,27 @@ export type AgentGravityView = {
 
 export type AgentAirView = Omit<E8AtmosphereDiagnostics, 'declared'>;
 
+/**
+ * E7 — the rider's playbook row. Structural rather than imported so this module keeps its
+ * render-free, sim-free import list (it already takes `E8AtmosphereDiagnostics` as a type only);
+ * `HeadlessContractSim.PlaybookUseDiagnostics` is the definition and assigns into this shape.
+ */
+export type AgentPlaybookUseView = Readonly<{
+  declared: boolean;
+  objective: 'relay' | 'mirror' | 'refusal' | 'suspended';
+  objectiveMet: boolean;
+  shelf: readonly Readonly<{ name: string; hash: string; entries: number; uses: number }>[];
+  uses: number;
+  repeats: number;
+  programRuns: number;
+  programSuspensions: number;
+  suspendedProgram: string | null;
+  relaysLitByProgram: readonly string[];
+  runningProgram: string | null;
+  refusals: Readonly<{ suppressed: number; muted: number; unrecorded: number }>;
+  last: Readonly<{ name: string; ok: boolean; reason: string | null; at: number }> | null;
+}>;
+
 export type AgentView = {
   schema: 'goldrush.view.v1';
   viewVersion: number;
@@ -84,6 +105,15 @@ export type AgentView = {
      * headless door on the Mare Claim; the browser composes none and publishes none).
      */
     air?: AgentAirView;
+    /**
+     * E7 (additive, contract-scoped — outside the canonical field set, like `preserve` and
+     * `gravity`): the playbook shelf, the running program, the counted refusals, and the one
+     * objective each Signal map latches its secure on. Present only on the four contracts
+     * `assets/contracts/epoch-7-signal/contracts.json` declares, and only in the engine that
+     * composes the verb (today the headless door; the browser publishes none — the human-parity
+     * gap `e2e/e7-playbook-rows.spec.ts` pins rather than papers over).
+     */
+    playbookUse?: AgentPlaybookUseView;
     timers: { runSeconds: number; nextWaveInSeconds: number };
     gold: number;
     hero: { hp: number; maxHp: number; x: number; z: number };

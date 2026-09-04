@@ -24,7 +24,7 @@ import { ProjectilePool } from '../entities/Projectile';
 import { ProspectorEmbodiment } from '../agent/Embodiment';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { XpMotePool } from '../entities/XpMote';
-import { Balance } from '../game/Balance';
+import { Balance, readDifficultyPreset } from '../game/Balance';
 import { Economy, summarizeLog, type EconomyEvent } from '../game/Economy';
 import { GameState } from '../game/GameState';
 import { hasBaronMedal } from '../game/Medals';
@@ -49,6 +49,16 @@ import {
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
 import { stableHash, type LockstepAction } from '../mp/LockstepClient';
+// E7: the Signal bundle itself, imported for its contract IDS and nothing else — the era scope is
+// READ off the bundle rather than typed out, exactly as `PlaybookFormat.ts:10` imports it.
+import signalContracts from '../../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
+import {
+  PLAYBOOK_STEP_SECONDS,
+  PLAYBOOK_VERSION,
+  playbookHash,
+  type PlaybookEntry,
+  type PlaybookRecording,
+} from '../playbook/PlaybookFormat';
 import { AtomicSocket } from './AtomicSocket';
 import { DeepwaterSocket } from './DeepwaterSocket';
 import { MotorSocket, type MotorDiagnostics, type MotorEvent, type MotorOutcomeSummary } from './MotorSocket';
@@ -60,7 +70,13 @@ import { CrowdFlockSystem, type CrowdFlockDiagnostics } from '../systems/CrowdFl
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { DayNightCycle, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { HarvestSystem, type HarvestSnapshot, type HarvestTarget } from '../systems/HarvestSystem';
-import { InterferenceFrontSystem, type InterferenceFrontDiagnostics } from '../systems/InterferenceFrontSystem';
+import {
+  INTERFERENCE_MUTED_REASON,
+  INTERFERENCE_MUTED_VOICE,
+  InterferenceFrontSystem,
+  POWERED_RELAY_KINDS,
+  type InterferenceFrontDiagnostics,
+} from '../systems/InterferenceFrontSystem';
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -81,7 +97,12 @@ import {
   type CanalChoiceDiagnostics,
 } from '../systems/CanalChoiceSystem';
 import { ScheduledRelocationSystem, type ScheduledRelocationDiagnostics } from '../systems/ScheduledRelocationSystem';
-import { SignalSuppression, type SignalSuppressionDiagnostics } from '../systems/SignalSuppression';
+import {
+  SIGNAL_SUPPRESSION_REASON,
+  SIGNAL_SUPPRESSION_VOICE,
+  SignalSuppression,
+  type SignalSuppressionDiagnostics,
+} from '../systems/SignalSuppression';
 import { BroadcastMirror, type BroadcastMirrorDiagnostics } from '../systems/BroadcastMirror';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
@@ -455,6 +476,93 @@ const IDLE_INTENTS: Intents = {
   debugPlant: false,
 };
 
+/**
+ * E7 — THE PLAYBOOK-USE VERB, and the four rows it closes.
+ *
+ * `docs/audits/2026-09-02-era-mechanic-audit.md` measured all four Signal maps as RESKIN/PARTIAL
+ * for one shared reason, quoted from its own smallest-slice list (`:79-82`): the era's systems
+ * exist and are composed here, but "the public grammar has no playbook verb", so nothing could
+ * ever reach them. `BroadcastMirror.ts:36` and `SignalSuppression.ts:12` both say the same thing
+ * about themselves and both predicted this exact cure ("the day a playbook verb reaches the door,
+ * it calls `noteUse` and the canyon answers with no edit here"). This block is that day.
+ *
+ * WHAT THE VERB IS, AND WHY IT IS ONE VERB. `PLAYBOOK_USE {name}` is the rider's whole loop:
+ *   · a name the run has never seen RECORDS the rider's demonstration so far under that name and
+ *     then uses it — record, name, delegate, in the order the player's own loop performs it
+ *     (`Game.stopPlaybookRecording` -> `Game.startNamedPlaybookReplay`);
+ *   · a name already on the run's shelf USES it again, which is a REPEAT, which is precisely what
+ *     the Echo's ratified lesson punishes (+10% hp per repeat, `BroadcastMirror.ts:49`).
+ * The demonstration is the rider's own accepted standing-order submissions, recorded in exactly
+ * the tape shape `gr-sim` already writes for a run (`scripts/gr-sim.mjs:279`), which is exactly
+ * the shape `BroadcastMirror.noteUse` reads. Nothing new was invented to carry it.
+ *
+ * WHAT A USE DOES, IN THE ORDER THE BROWSER DOES IT. `Game.startPlaybookReplay:3786` refuses on
+ * A4 first and A5 second, "and never both: the Dead Band's refusal is permanent and the front's
+ * is not". This engine asks the same two questions in the same order, through the same two
+ * consumers, and counts the refusal on the same counters. Past them, it notes the use on the
+ * mirror and then RUNS the program: the tape's own orders are re-submitted, so the sim executes
+ * the rider's demonstration on its own — L1 of `specs/epoch-saga/CAPABILITY-LADDER.md`, "writing
+ * programs the sim executes", with no new authority (every order in the program was already
+ * lawful when the rider submitted it).
+ *
+ * THE ERA SCOPE IS THE BUNDLE, NOT THE EPOCH STRING AND NOT THE TWIST. The four rows are the four
+ * contracts `assets/contracts/epoch-7-signal/contracts.json` declares, so the set is READ off that
+ * bundle rather than typed out. It cannot be the twist alone: `e8-far-side` declares
+ * `signalSuppression` too (`SignalSuppression.ts:20`), and giving the Far Side an E7 objective
+ * would be exactly the F-1471-1 casualty — a latch on a contract with no path to discharge it.
+ */
+const SIGNAL_BUNDLE_CONTRACT_IDS: ReadonlySet<string> = new Set(
+  (signalContracts.contracts as readonly { id: string }[]).map(({ id }) => id),
+);
+
+/**
+ * The four maps' objectives, each DERIVED from what its own contract already declares — no new
+ * contract field, no new twist key, nothing authored twice. One per map, disjoint by construction:
+ *   · `refusal`   — the Dead Band declares `signalSuppression.playbooks: false`, so a real
+ *                   `signal-suppressed` refusal is the proof its subtraction bit (audit `:81`);
+ *   · `mirror`    — Echo Canyon declares `broadcastMirror`, so a fielded mirror squad is the proof
+ *                   a use was recorded and answered (audit `:80`);
+ *   · `suspended` — Relay Rush declares `interferenceFront`, so the front suspending a program is
+ *                   the proof the wall reaches the era's own verb (audit `:82`);
+ *   · `relay`     — the Relay Valley declares four `relay-site` build zones and none of the above,
+ *                   so a relay lit BY A PROGRAM is its one relay action (audit `:79`).
+ */
+type PlaybookObjectiveKind = 'relay' | 'mirror' | 'refusal' | 'suspended';
+
+/** The rider-visible row. Presentation-stripped, in the socket house style of its neighbours. */
+export type PlaybookUseDiagnostics = Readonly<{
+  /** True on the four Signal-bundle contracts; the row is absent everywhere else. */
+  declared: boolean;
+  /** Which of the four proofs this map's secure is latched on. */
+  objective: PlaybookObjectiveKind;
+  /** The latch itself: false until this map's own proof exists. */
+  objectiveMet: boolean;
+  /** Tapes the rider has recorded this run, by name, with their canonical hashes. */
+  shelf: readonly Readonly<{ name: string; hash: string; entries: number; uses: number }>[];
+  /** Successful uses this run, and how many of those were repeats of an already-shelved tape. */
+  uses: number;
+  repeats: number;
+  /** How many times a used program was actually installed and run by the sim. */
+  programRuns: number;
+  /** How many times the interference front suspended a running program. */
+  programSuspensions: number;
+  /** The program the wall is holding right now, or null. It resumes when the wall passes. */
+  suspendedProgram: string | null;
+  /** Relay sites a running program lit, by id. Empty on maps that declare no relay sites. */
+  relaysLitByProgram: readonly string[];
+  /** The name of the program the sim is running right now, or null when the rider has the wheel. */
+  runningProgram: string | null;
+  /** Counted refusals, in the socket house style. */
+  refusals: Readonly<{ suppressed: number; muted: number; unrecorded: number }>;
+  /** The last thing the verb answered, so a rider never has to guess why nothing happened. */
+  last: Readonly<{ name: string; ok: boolean; reason: string | null; at: number }> | null;
+}>;
+
+type ShelvedPlaybook = { name: string; hash: string; entries: PlaybookEntry[]; uses: number };
+
+/** The rider's own submission ceiling (`validateStandingOrders`: "at most 32 entries"), restated. */
+const PROGRAM_ORDER_CAP = 32;
+
 export class HeadlessContractSim {
   readonly manifest: ContractManifest;
   readonly contractId: string;
@@ -524,17 +632,19 @@ export class HeadlessContractSim {
    * A4 — THE SIGNAL-SUPPRESSION CONSUMER, and the honest note about what it can mean HERE.
    *
    * The browser reads this same object at three gate sites (`E7SignalSystem.droneCanOperate`,
-   * `E7SignalSystem.update`, and the two playbook entry points in `Game.ts`). This engine
-   * reads it at none, because it HAS none: measured 2026-08-20, `HeadlessContractSim`
-   * constructs exactly one `Hero` (no slot >0, so no drone body), imports no `E7SignalSystem`
-   * (so no relay graph exists to link), and `src/agent/` declares no playbook verb.
+   * `E7SignalSystem.update`, and the two playbook entry points in `Game.ts`).
    *
-   * So suppression is enforced here BY CONSTRUCTION, not by a switch — and that difference is
-   * stated rather than hidden. What the consumer buys headless is (a) an identical READ of the
-   * contract, so both engines agree about which systems are declared off, (b) a rider-visible
-   * row in THE VIEW, and (c) a place for the guard that pins the by-construction claim
-   * (`e2e/e7-dead-band-suppression.spec.ts`). If a drone, playbook or relay chain is ever
-   * composed into this sim, it gates on THIS object and the note above becomes a real switch.
+   * AS OF 2026-09-05 THIS ENGINE READS IT AT ONE REAL GATE, and the note this paragraph replaces
+   * is the reason: it said "suppression is enforced here BY CONSTRUCTION, not by a switch ... if
+   * a drone, playbook or relay chain is ever composed into this sim, it gates on THIS object and
+   * the note above becomes a real switch." `PLAYBOOK_USE` is that composition, `usePlaybook()`
+   * below is that gate, and the Dead Band's `refusals.playbooks` counter is no longer a constant
+   * zero (`docs/audits/2026-09-02-era-mechanic-audit.md:45` measured it as one).
+   *
+   * The DRONE and RELAY-CHAIN halves are still by-construction, and that is still stated rather
+   * than hidden: this engine constructs exactly one `Hero` (no slot >0, so no drone body) and
+   * imports no `E7SignalSystem` (so no LOS graph exists to link). Both remain pinned by
+   * `e2e/e7-dead-band-suppression.spec.ts`.
    */
   private readonly signalSuppression: SignalSuppression;
   /**
@@ -545,14 +655,41 @@ export class HeadlessContractSim {
    * fields here exactly as it fields there — same squad sizes, same hp scale, same edges, through
    * the same `spawnAt` and under the same alive cap.
    *
-   * The RECORD half cannot fire here, and the reason is a measurement rather than an omission:
-   * `src/agent/StandingOrders.ts` declares no playbook verb (re-verified 2026-08-20, the same
-   * measurement A4 recorded), so a rider driving this engine through the public grammar has no
-   * way to USE a playbook — and "no playbook use -> no mirrors" is the ratified rule, not a gap.
-   * A GR-SIM run therefore reads `recordedUses: 0` and fields nothing, truthfully. The day a
-   * playbook verb reaches the door, it calls `noteUse` and the canyon answers with no edit here.
+   * The RECORD half was inert until 2026-09-05 and is now LIVE, exactly as this note predicted:
+   * `src/agent/StandingOrders.ts` declares `PLAYBOOK_USE`, `usePlaybook()` below calls `noteUse`
+   * on the successful path only, and the canyon answers with NO EDIT to this class's mirror seam.
+   * A rider that never uses a playbook still reads `recordedUses: 0` and still fields nothing —
+   * "no playbook use -> no mirrors" is the ratified rule and it is unchanged.
    */
   private readonly broadcastMirror: BroadcastMirror;
+  /**
+   * E7 — the playbook shelf, the demonstration, and the running program. See the block above the
+   * class. All four are per-RUN state: a tape belongs to the run that recorded it, exactly as the
+   * mirror's shadow belongs to the run that cast it (`BroadcastMirror.reset`).
+   */
+  private readonly playbookShelf = new Map<string, ShelvedPlaybook>();
+  private readonly playbookDemonstration: PlaybookEntry[] = [];
+  private readonly programLitRelays = new Set<string>();
+  private readonly playbookRelaySites: readonly Readonly<{ id: string; minX: number; maxX: number; minZ: number; maxZ: number }>[];
+  private readonly playbookObjective: PlaybookObjectiveKind | null;
+  private playbookUses = 0;
+  private playbookRepeats = 0;
+  private playbookProgramRuns = 0;
+  private readonly playbookRefusals = { suppressed: 0, muted: 0, unrecorded: 0 };
+  private pendingProgram: { name: string; hash: string; orders: StandingOrder[]; truncated: boolean } | null = null;
+  private installedProgram: { name: string; hash: string; orders: StandingOrder[] } | null = null;
+  private suspendedProgram: { name: string; hash: string; orders: StandingOrder[] } | null = null;
+  private playbookSuspensions = 0;
+  private runningProgram: string | null = null;
+  private lastPlaybookUse: PlaybookUseDiagnostics['last'] = null;
+  /**
+   * The two header facts a canonical tape carries that this sim does not otherwise keep. Read ONCE
+   * at construction: the preset from the same source the browser reads it from
+   * (`Balance.readDifficultyPreset`), the start from the contract's own `heroStart` stake, so a
+   * tape recorded here and a tape recorded in the browser on the same run hash the same way.
+   */
+  private readonly playbookDifficulty: string;
+  private readonly playbookStart: Readonly<{ x: number; z: number }>;
   /**
    * A6 — THE PROBE. Unlike its A4 neighbour above, this one is a REAL switch in this engine:
    * the Prospector is the body a rider can actually move (`:950`), the crater is ordinary
@@ -779,6 +916,9 @@ export class HeadlessContractSim {
     const start = new THREE.Vector3(stake?.x ?? 0, 0.06, stake?.z ?? 12);
     this.hero.resetRun(start);
     this.prospector.reset(start);
+    // E7 tape header, read once (see the fields' own note). Neither read touches the sim.
+    this.playbookDifficulty = readDifficultyPreset();
+    this.playbookStart = { x: round(start.x), z: round(start.z) };
 
     this.harvest = new HarvestSystem(
       this.economy,
@@ -824,6 +964,32 @@ export class HeadlessContractSim {
     // A5: same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. Built
     // before `BuildSystem` below, which injects its mute into the shooter seam.
     this.interferenceFront = InterferenceFrontSystem.create(this.manifest);
+    // E7: the relay sites, read with the SAME predicate `InterferenceFrontSystem.create` uses on
+    // the same field (`tileParams.buildZones` whose id starts `relay-site`), so the Valley and the
+    // Rush cannot disagree about what a relay site is. Empty on every map that authors none.
+    this.playbookRelaySites = (this.manifest.tileParams.buildZones ?? [])
+      .filter((zone) => typeof zone?.id === 'string' && zone.id.startsWith('relay-site')
+        && [zone.minX, zone.maxX, zone.minZ, zone.maxZ].every((value) => Number.isFinite(value)))
+      .map((zone) => ({
+        id: zone.id,
+        minX: Math.min(zone.minX, zone.maxX),
+        maxX: Math.max(zone.minX, zone.maxX),
+        minZ: Math.min(zone.minZ, zone.maxZ),
+        maxZ: Math.max(zone.minZ, zone.maxZ),
+      }));
+    // E7: one objective per Signal map, derived from that map's own declarations and from nothing
+    // else. Null off the bundle, so no other contract grows a latch, a view row or a hash key.
+    this.playbookObjective = SIGNAL_BUNDLE_CONTRACT_IDS.has(this.contractId)
+      ? this.signalSuppression.suppresses('playbooks')
+        ? 'refusal'
+        : this.broadcastMirror.isDeclared
+          ? 'mirror'
+          : this.interferenceFront.isDeclared
+            ? 'suspended'
+            : this.playbookRelaySites.length > 0
+              ? 'relay'
+              : null
+      : null;
     // A9: same read the browser performs at `Game.ts` — the CONTRACT's own twist plus its own
     // authored routes, bays and stakes. No voice headless: this engine paints nothing.
     this.devilsAlley = ScheduledRelocationSystem.create(this.manifest);
@@ -1154,6 +1320,10 @@ export class HeadlessContractSim {
         ? { ok: true }
         : { ok: false, reason: 'REANCHOR requires a known anchor other than the current anchor.' },
       motor: (verb) => this.motorVerb(verb),
+      // E7: the era's one additive verb. Bound unconditionally, exactly like `motor` above, so a
+      // rider that asks for it off a Signal map gets a NAMED refusal instead of the generic
+      // "unavailable in this engine" — the refusal itself is the answer, not a missing feature.
+      playbookUse: (name) => this.usePlaybook(name),
     });
     bindStandingUpgradePicker((id) => {
       const applied = this.progression.applyUpgrade(id);
@@ -1203,6 +1373,13 @@ export class HeadlessContractSim {
           // without both a corridor and relay sites, so `objectiveAllowsSecure` is true on every
           // contract that declares no discharge-able front and no admitted terminal moves.
           || !this.interferenceFront.objectiveAllowsSecure
+          // E7: the era's own errand, keyed on each Signal map's own declarations exactly as the
+          // canyon latch keys on `powerGrid.connect`. Four maps whose signature mechanic is
+          // playbooks were measured riding as ordinary survival with the mechanic never invoked
+          // (`docs/audits/2026-09-02-era-mechanic-audit.md:43-46`); this clause makes the proof of
+          // invocation the price of the claim. `playbookObjective` is null on every contract off
+          // the Signal bundle, so the getter is true there and no admitted terminal moves.
+          || !this.playbookObjectiveAllowsSecure
           // E4: the era's errand, keyed on `twist.motorFrontier` exactly as the canyon latch keys
           // on `powerGrid.connect`. A Motor run whose Hauler never finishes its errand cannot
           // secure at any wave; landing it opens the ordinary secure wave. Null on every contract
@@ -1255,6 +1432,19 @@ export class HeadlessContractSim {
   submitOrders(orders: unknown): ToolReceipt<'et.goldrush.orders', { orders: unknown }> {
     this.calls += 1;
     const receipt = this.surface.tools.submit_orders(orders);
+    // E7: THE DEMONSTRATION. Every ACCEPTED rider submission is one change-point on the run's
+    // tape, in the exact shape `gr-sim` already writes for a whole run (`scripts/gr-sim.mjs:279`).
+    // Recorded here rather than inside the executor because this is the public rider seam: the
+    // program the sim installs for itself goes through `surface.tools.submit_orders` directly and
+    // must NOT re-record itself, or a tape would grow every time it ran.
+    if (receipt.outcome.ok) {
+      this.recordDemonstration(orders);
+      // The rider took the wheel back: whatever program was running (or waiting out a wall) is no
+      // longer what the sim is doing, so nothing further can be credited to it and nothing resumes.
+      this.runningProgram = null;
+      this.installedProgram = null;
+      this.suspendedProgram = null;
+    }
     if (receipt.outcome.ok && Array.isArray(orders) && orders.length > 0
       && orders.every((order) => typeof order === 'object' && order !== null && 'verb' in order && order.verb === 'SECURE_CHOICE')) {
       this.secureChoiceCalls += 1;
@@ -1372,6 +1562,13 @@ export class HeadlessContractSim {
         // a claim secured with six grounds worked on suit air is not the same run as one that
         // panned them breathless, and the hash should be able to say so.
         ...(this.atmosphere.isDeclared ? { atmosphere: this.atmosphere.diagnostics } : {}),
+        // E7: spread-if-the-mechanic-RAN rather than spread-if-declared, and the difference is
+        // deliberate (see `playbookRan`): four idle null-floor hashes were recorded for these maps
+        // before the verb existed, and an absent key keeps every one of them exactly where it is.
+        // Present the moment a use, a refusal or a program-lit relay exists, because then it is a
+        // terminal fact the secure depends on — a claim won by a program is not the same run as
+        // one won by hand, and the hash should be able to say so.
+        ...(this.playbookRan ? { playbookUse: this.playbookUseDiagnostics } : {}),
       },
     });
     return {
@@ -1489,6 +1686,10 @@ export class HeadlessContractSim {
     }
     this.simTick += 1;
     this.timeAlive += STEP_SECONDS;
+    // E7: a used playbook installs its program at the TOP of the step that follows the use, so the
+    // executor is between iterations when its record list is replaced. Nothing else in this tick
+    // depends on it, and a step with no pending program is byte-identical to the step before.
+    this.applyPendingProgram();
     // Era sockets keep the browser's own relative order (Game.ts:2527-2541):
     //   decay.tick -> syncDeepwaterClaim -> actors -> e6TileConsumers -> arsenal -> waves -> wrangle.
     // Every call is null-guarded, so no already-admitted contract's tick changes.
@@ -1566,6 +1767,11 @@ export class HeadlessContractSim {
     // schedule is a function of sim time alone. It reads the board's standing works from the
     // targeting register (the same list the browser hands it) to decide which relays are lit.
     this.interferenceFront.update(STEP_SECONDS, this.targeting.allBuildings);
+    // E7: the wall against the running program, asked off the front the line above just advanced,
+    // then the Valley's relay action off the SAME standing-works register the front just read, so
+    // no two of the three can disagree about where the wall is or which sites carry a powered work.
+    this.syncProgramSuspension();
+    this.syncProgramRelays();
     // A9: the column advances on the SAME fixed step and at the SAME point in the order the
     // browser uses — after the standing-works register is current and BEFORE `enemies.update`,
     // so an outlaw walks into the board the wind has already rearranged this tick rather than
@@ -1663,6 +1869,10 @@ export class HeadlessContractSim {
     // A3: only where DECLARED, same rule. Unlike the suppression row this one is real per-turn
     // state — `pending` is what is about to arrive — so a rider polls it every turn.
     if (this.broadcastMirror.isDeclared) view.now.broadcastMirror = this.broadcastMirror.diagnostics;
+    // E7: only on the four Signal-bundle maps, so no other contract's view grows a field. This one
+    // MOVES every turn and IS the objective on all four — a rider that cannot read `objectiveMet`
+    // and `shelf` cannot tell whether its program has already earned the secure.
+    if (this.playbookUseDiagnostics) view.now.playbookUse = this.playbookUseDiagnostics;
     // A6: only where DECLARED, same rule. This one DOES belong to the run rather than the
     // contract — `recovered` flips mid-run and gates the secure — so unlike the suppression
     // row above it is real per-turn state a rider must be able to poll.
@@ -2058,6 +2268,9 @@ export class HeadlessContractSim {
       picnicHold: this.picnicHold.active ? this.picnicHold.diagnostics : null,
       signalSuppression: this.signalSuppression.diagnostics.declared ? this.signalSuppression.diagnostics : null,
       broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
+      // E7: null off the Signal bundle, exactly like its neighbours, so no other contract's
+      // diagnostics grow a field. The per-turn read is `now.playbookUse` on the view.
+      playbookUse: this.playbookUseDiagnostics,
       probeRecovery: this.probeRecovery.declared ? this.probeRecovery.diagnostics : null,
       lowOrbit: this.lowOrbit.isDeclared ? this.lowOrbit.diagnostics : null,
       hollowCrossing: this.hollowCrossing.isDeclared ? this.hollowCrossing.diagnostics : null,
@@ -2555,6 +2768,277 @@ export class HeadlessContractSim {
     return result.ok ? { ok: true } : result;
   }
 
+  /**
+   * E7 — THE DEMONSTRATION, recorded off the public rider seam. `t` is the sim tick `gr-sim`
+   * already stamps submissions with (`replayTick`), and the entries are strictly increasing
+   * because two submissions inside one tick REPLACE each other exactly as `submit()` does: a tape
+   * must not claim the rider said two different things at one instant.
+   *
+   * `PLAYBOOK_USE` is stripped from the tape it would otherwise appear in. That is not tidiness:
+   * a tape carrying the verb that plays it is a program that plays itself, and no bound in
+   * `PlaybookFormat` covers that recursion. An entry left with no orders is dropped.
+   */
+  private recordDemonstration(orders: unknown): void {
+    if (!Array.isArray(orders)) return;
+    const program = (orders as StandingOrder[]).filter((order) => order?.verb !== 'PLAYBOOK_USE');
+    if (program.length === 0) return;
+    const t = this.replayTick;
+    const entry: PlaybookEntry = { t, mx: 0, my: 0, a: [{ kind: 'agent_orders', orders: structuredClone(program) }] };
+    const last = this.playbookDemonstration.at(-1);
+    if (last && last.t === t) this.playbookDemonstration[this.playbookDemonstration.length - 1] = entry;
+    else this.playbookDemonstration.push(entry);
+  }
+
+  /**
+   * E7 — THE USE. The two refusals first, in the browser's own order and through the browser's own
+   * two consumers (`Game.startPlaybookReplay:3786`: A4 "first", A5 "second, and never both"), then
+   * the record/resolve, then `noteUse`, then the program. Every early return leaves the canyon
+   * nothing to mirror, which is the ratified rule ("a use, not an attempt", `Game.ts:3818`).
+   */
+  private usePlaybook(name: string): { ok: true } | { ok: false; reason: string } {
+    if (this.signalSuppression.refuse('playbooks')) {
+      return this.refusePlaybook(name, SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, 'suppressed');
+    }
+    // The front's refusal is asked at the BODY that would run the program — the Prospector, the one
+    // body a rider moves here — exactly as the browser asks it at the actor's own position.
+    if (this.interferenceFront.refuse('playbooks', this.prospector.position)) {
+      return this.refusePlaybook(name, INTERFERENCE_MUTED_REASON, INTERFERENCE_MUTED_VOICE, 'muted');
+    }
+
+    const shelved = this.playbookShelf.get(name) ?? this.recordPlaybook(name);
+    if (!shelved) {
+      this.playbookRefusals.unrecorded += 1;
+      const reason = 'NOTHING_RECORDED: PLAYBOOK_USE names a tape this run has not recorded; submit the orders you want it to repeat first.';
+      this.lastPlaybookUse = { name, ok: false, reason, at: round(this.timeAlive) };
+      return { ok: false, reason };
+    }
+
+    const repeat = shelved.uses;
+    shelved.uses += 1;
+    this.playbookUses += 1;
+    if (repeat > 0) this.playbookRepeats += 1;
+    // A3: the record half, and the identity is the canonical tape HASH exactly as the browser's is
+    // (`Game.ts:3823`), so renaming a habit cannot launder it out of its own repeat count.
+    this.broadcastMirror.noteUse({ id: shelved.hash, entries: shelved.entries });
+    // The program is INSTALLED on the next step, never inside this one: the executor is iterating
+    // its own record list right now, and replacing that list mid-iteration is the kind of quiet
+    // corruption this repo has a Mistake number for.
+    const program = programOrders(shelved.entries);
+    this.pendingProgram = { name, hash: shelved.hash, orders: program.orders, truncated: program.truncated };
+    this.lastPlaybookUse = { name, ok: true, reason: null, at: round(this.timeAlive) };
+    this.replayEvents.push({
+      type: 'playbook_used',
+      at: round(this.timeAlive),
+      name,
+      hash: shelved.hash,
+      entries: shelved.entries.length,
+      repeat,
+    });
+    return { ok: true };
+  }
+
+  /** One shape for both refusals, so the counters and the replay event can never drift apart. */
+  private refusePlaybook(
+    name: string,
+    code: string,
+    voice: string,
+    counter: 'suppressed' | 'muted',
+  ): { ok: false; reason: string } {
+    this.playbookRefusals[counter] += 1;
+    const reason = `${code}: ${voice}`;
+    this.lastPlaybookUse = { name, ok: false, reason, at: round(this.timeAlive) };
+    this.replayEvents.push({ type: 'playbook_refused', at: round(this.timeAlive), name, reason: code });
+    return { ok: false, reason };
+  }
+
+  /**
+   * E7 — THE RECORD. A name the run has not seen banks the demonstration so far under that name,
+   * which is the rider's half of the player's record-name-delegate loop. Returns null when there
+   * is nothing to bank, which is an honest refusal rather than an empty tape.
+   */
+  private recordPlaybook(name: string): ShelvedPlaybook | null {
+    if (this.playbookDemonstration.length === 0) return null;
+    const entries = this.playbookDemonstration.map((entry) => structuredClone(entry));
+    const recording: PlaybookRecording = {
+      version: PLAYBOOK_VERSION,
+      name,
+      contractId: this.contractId,
+      seed: this.seed,
+      difficultyPreset: this.playbookDifficulty,
+      stepSeconds: PLAYBOOK_STEP_SECONDS,
+      start: { x: this.playbookStart.x, z: this.playbookStart.z },
+      durationTicks: (entries.at(-1)?.t ?? 0) + 1,
+      entries,
+      truncated: null,
+    };
+    const shelved: ShelvedPlaybook = { name, hash: playbookHash(recording), entries, uses: 0 };
+    this.playbookShelf.set(name, shelved);
+    this.replayEvents.push({
+      type: 'playbook_recorded',
+      at: round(this.timeAlive),
+      name,
+      hash: shelved.hash,
+      entries: entries.length,
+    });
+    return shelved;
+  }
+
+  /**
+   * E7 — THE PROGRAM RUNS. Installed at the top of a step so the executor is between iterations,
+   * and installed through the SAME public submission the rider uses, so it carries no authority a
+   * rider did not already have: every order in it was validated and permitted when it was first
+   * submitted, and it is re-validated here. A program that no longer validates is dropped loudly.
+   */
+  private applyPendingProgram(): void {
+    const pending = this.pendingProgram;
+    if (!pending) return;
+    this.pendingProgram = null;
+    if (pending.orders.length === 0) {
+      this.replayEvents.push({ type: 'playbook_program_empty', at: round(this.timeAlive), name: pending.name });
+      return;
+    }
+    const receipt = this.surface.tools.submit_orders(structuredClone(pending.orders));
+    if (!receipt.outcome.ok) {
+      this.replayEvents.push({
+        type: 'playbook_program_rejected',
+        at: round(this.timeAlive),
+        name: pending.name,
+        reason: receipt.outcome.reason,
+      });
+      return;
+    }
+    this.runningProgram = pending.name;
+    this.installedProgram = { name: pending.name, hash: pending.hash, orders: structuredClone(pending.orders) };
+    this.suspendedProgram = null;
+    this.playbookProgramRuns += 1;
+    this.replayEvents.push({
+      type: 'playbook_program_ran',
+      at: round(this.timeAlive),
+      name: pending.name,
+      hash: pending.hash,
+      orders: pending.orders.length,
+      // Loud truncation, the recorder's own law (`PlaybookSession.truncate`: no silent caps).
+      ...(pending.truncated ? { truncated: true } : {}),
+    });
+  }
+
+  /**
+   * E7 — THE SUSPENSION (Relay Rush's row, audit `:82`: "let one rider-authored playbook automate
+   * relay lighting, then have the interference front SUSPEND that program").
+   *
+   * The rule is A5's own rule, asked at a second moment. `Game.startPlaybookReplay:3789` asks the
+   * front "is a playbook off at this spot right now?" once, when a use is REQUESTED. A program is
+   * not a request, it is a thing that keeps running — so it is asked the same question on every
+   * fixed step it runs, at the body that runs it, and the answer suspends it while the wall stands
+   * over that body and restores it the instant the wall passes. That is the shooter seam's own
+   * shape (`BuildSystem.isShooterPowered`) and the ratification's own words: muted is not damaged,
+   * and a muted thing comes back "ON the instant it passes" (`InterferenceFrontSystem.ts:31`).
+   *
+   * THE COUNTER MOVES ON THE EDGE, NEVER PER TICK. `refuse()` is documented "exactly once per
+   * attempted use so the counters stay evidence rather than decoration"; a 2-second crossing over
+   * one body is ONE suspension, so it counts once. The suspension is only taken if the empty
+   * submission is actually accepted, so a refused submit never banks a refusal it did not cause.
+   */
+  private syncProgramSuspension(): void {
+    if (!this.interferenceFront.isDeclared) return;
+    const at = this.prospector.position;
+    const muted = this.interferenceFront.muted(at.x, at.z);
+    if (muted && this.runningProgram !== null && this.installedProgram) {
+      const cleared = this.surface.tools.submit_orders([]);
+      if (!cleared.outcome.ok) return;
+      this.interferenceFront.refuse('playbooks', at);
+      this.suspendedProgram = this.installedProgram;
+      this.runningProgram = null;
+      this.playbookSuspensions += 1;
+      this.replayEvents.push({
+        type: 'playbook_program_suspended',
+        at: round(this.timeAlive),
+        name: this.suspendedProgram.name,
+        reason: INTERFERENCE_MUTED_REASON,
+      });
+      return;
+    }
+    if (!muted && this.suspendedProgram) {
+      const resume = this.suspendedProgram;
+      const restored = this.surface.tools.submit_orders(structuredClone(resume.orders));
+      if (!restored.outcome.ok) return;
+      this.suspendedProgram = null;
+      this.runningProgram = resume.name;
+      this.replayEvents.push({ type: 'playbook_program_resumed', at: round(this.timeAlive), name: resume.name });
+    }
+  }
+
+  /**
+   * E7 — THE RELAY ACTION (the Valley's row, audit `:79`). A relay site is LIT by the same test
+   * `InterferenceFrontSystem.readSites` applies — a standing powered work inside the site — and it
+   * is lit BY A PROGRAM when that becomes true while a program holds the wheel. Read on the fixed
+   * step beside the front's own update, off the same standing-works register, so the two consumers
+   * cannot disagree about which sites are lit.
+   */
+  private syncProgramRelays(): void {
+    if (this.runningProgram === null || this.playbookRelaySites.length === 0) return;
+    for (const site of this.playbookRelaySites) {
+      if (this.programLitRelays.has(site.id)) continue;
+      const lit = this.targeting.allBuildings.some((work) => work.active && work.hp > 0
+        && POWERED_RELAY_KINDS.includes(work.family)
+        && work.position.x >= site.minX && work.position.x <= site.maxX
+        && work.position.z >= site.minZ && work.position.z <= site.maxZ);
+      if (lit) this.programLitRelays.add(site.id);
+    }
+  }
+
+  /**
+   * E7 — THE LATCH, one clause per map, each reading a counter the mechanic itself moved. True on
+   * every contract off the Signal bundle, so no other terminal moves (the F-1471-1 discipline).
+   */
+  private get playbookObjectiveAllowsSecure(): boolean {
+    switch (this.playbookObjective) {
+      case 'refusal': return this.signalSuppression.diagnostics.refusals.playbooks > 0;
+      case 'mirror': return this.broadcastMirror.diagnostics.squadsFielded > 0;
+      case 'suspended': return this.interferenceFront.diagnostics.refusals.playbooks > 0;
+      case 'relay': return this.programLitRelays.size > 0;
+      default: return true;
+    }
+  }
+
+  /** E7 — the rider-visible row; null off the Signal bundle so no other view grows a field. */
+  private get playbookUseDiagnostics(): PlaybookUseDiagnostics | null {
+    if (this.playbookObjective === null) return null;
+    return {
+      declared: true,
+      objective: this.playbookObjective,
+      objectiveMet: this.playbookObjectiveAllowsSecure,
+      shelf: [...this.playbookShelf.values()]
+        .map(({ name, hash, entries, uses }) => ({ name, hash, entries: entries.length, uses }))
+        .sort((left, right) => left.name.localeCompare(right.name)),
+      uses: this.playbookUses,
+      repeats: this.playbookRepeats,
+      programRuns: this.playbookProgramRuns,
+      programSuspensions: this.playbookSuspensions,
+      suspendedProgram: this.suspendedProgram?.name ?? null,
+      relaysLitByProgram: [...this.programLitRelays].sort(),
+      runningProgram: this.runningProgram,
+      refusals: { ...this.playbookRefusals },
+      last: this.lastPlaybookUse,
+    };
+  }
+
+  /**
+   * E7 — whether the mechanic produced a FACT this run. The terminal hash spreads the row only
+   * when this is true, which keeps every idle null-floor hash recorded before this slice exactly
+   * where it was (`assets/contracts/null-floors.json`) while still certifying any run the verb
+   * actually touched: a claim won with a program running is not the same run as one won without.
+   */
+  private get playbookRan(): boolean {
+    return this.playbookUses > 0
+      || this.playbookProgramRuns > 0
+      || this.playbookSuspensions > 0
+      || this.programLitRelays.size > 0
+      || this.playbookRefusals.suppressed > 0
+      || this.playbookRefusals.muted > 0
+      || this.playbookRefusals.unrecorded > 0;
+  }
+
   private fundMegaproject(): { ok: true } | { ok: false; reason: string } {
     const manifest = this.megaprojectManifest;
     const project = this.megaprojectProject;
@@ -2677,6 +3161,32 @@ function canonicalReplayEvents(events: readonly unknown[]): unknown[] {
     const orders = event.orders.filter((order) => !isRecord(order) || order.verb !== 'SECURE_CHOICE');
     return orders.length > 0 ? [{ ...event, orders }] : [];
   });
+}
+
+/**
+ * E7 — the executable half of a tape: every `agent_orders` action on it, in tape order, bounded by
+ * the SAME 32-order ceiling `validateStandingOrders` enforces, so a long demonstration cannot
+ * smuggle a submission the rider could never have made by hand. Repetition is KEPT: two identical
+ * `HARVEST` orders are two pans in the executor's own record list, so collapsing them would make a
+ * program do strictly less than the demonstration it copies.
+ *
+ * Movement and lockstep actions on the tape are deliberately NOT executed: this engine drives slot
+ * 0 on `IDLE_INTENTS` (F-E2PA-4), so there is no body a movement track could move, and pretending
+ * otherwise would be the Vocabulary Stretch (Mistake #14). The ORDERS are the program.
+ */
+function programOrders(entries: readonly PlaybookEntry[]): { orders: StandingOrder[]; truncated: boolean } {
+  const orders: StandingOrder[] = [];
+  for (const entry of entries) {
+    for (const action of entry.a) {
+      if (!('kind' in action) || action.kind !== 'agent_orders') continue;
+      for (const order of action.orders) {
+        if (order.verb === 'PLAYBOOK_USE') continue;
+        if (orders.length >= PROGRAM_ORDER_CAP) return { orders, truncated: true };
+        orders.push(structuredClone(order));
+      }
+    }
+  }
+  return { orders, truncated: false };
 }
 
 function canonicalStandingOrders(snapshot: StandingOrdersView): StandingOrdersView {

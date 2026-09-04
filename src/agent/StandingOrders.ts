@@ -53,6 +53,19 @@ export type StandingOrder =
   // honestly ("unavailable in this engine") wherever none is bound.
   | { verb: 'GRADE' }
   | { verb: 'HAUL' }
+  // E7 Signal Era (`docs/audits/2026-09-02-era-mechanic-audit.md:79-82`): the one playbook verb the
+  // four Signal maps were audited as missing. It carries a NAME and nothing else, deliberately:
+  //  · a name is what the player's own loop produces (record -> name -> delegate,
+  //    `Game.startNamedPlaybookReplay`), so the rider's verb is the same handle the player holds;
+  //  · the grammar guard expands this union into `public/skill.md` and can only expand scalars,
+  //    references and literal unions (`scripts/skillmd-guard.test.mjs:180`), so a tape-shaped
+  //    argument could not be published at all; and
+  //  · a verb that carried a program of orders would be a verb an order could carry, which is an
+  //    unbounded nesting no bound in `PlaybookFormat` covers. Reject-don't-stretch (Mistake #14).
+  // Like `CAPTURE`/`GRADE`/`HAUL` it executes through an optional handler and fails honestly
+  // ("unavailable in this engine") wherever none is bound — the browser binds none today, which is
+  // the human-parity gap this slice's guard pins rather than papers over.
+  | { verb: 'PLAYBOOK_USE'; name: string }
   | { verb: 'FALLBACK_IF'; threat: { enemiesGte: number }; pos: AgentVec2 };
 
 export type StandingOrderStatus = 'pending' | 'active' | 'done' | 'failed';
@@ -130,6 +143,8 @@ export type FinalVerbHandlers = {
   boatBuild?: (padId: string, buildingId: string) => ActionOrderResult;
   reanchor?: (anchorId: string) => ActionOrderResult;
   motor?: (verb: 'GRADE' | 'HAUL') => ActionOrderResult;
+  /** E7: hand the named playbook to the engine's signal systems. Unbound engines refuse honestly. */
+  playbookUse?: (name: string) => ActionOrderResult;
 };
 
 let installedExecutor: StandingOrdersExecutor | null = null;
@@ -152,6 +167,7 @@ export class StandingOrdersExecutor {
   private boatBuild: ((padId: string, buildingId: string) => ActionOrderResult) | null = null;
   private reanchor: ((anchorId: string) => ActionOrderResult) | null = null;
   private motor: ((verb: 'GRADE' | 'HAUL') => ActionOrderResult) | null = null;
+  private playbookUse: ((name: string) => ActionOrderResult) | null = null;
   private buildProgress: { orderId: string; distance: number; at: number } | null = null;
 
   constructor(
@@ -268,6 +284,7 @@ export class StandingOrdersExecutor {
     this.boatBuild = handlers.boatBuild ?? null;
     this.reanchor = handlers.reanchor ?? null;
     this.motor = handlers.motor ?? null;
+    this.playbookUse = handlers.playbookUse ?? null;
   }
 
   snapshot(): StandingOrdersView {
@@ -410,6 +427,15 @@ export class StandingOrdersExecutor {
       return {};
     }
 
+    if (order.verb === 'PLAYBOOK_USE') {
+      this.status(record, 'active', at);
+      const result = this.playbookUse?.(order.name)
+        ?? { ok: false as const, reason: 'PLAYBOOK_USE is unavailable in this engine.' };
+      if (result.ok) this.status(record, 'done', at);
+      else this.fail(record, result.reason, at);
+      return {};
+    }
+
     if (state.enemiesAlive < order.threat.enemiesGte) return null;
     this.status(record, 'active', at);
     if (distance(actor, order.pos) <= Balance.agent.arriveRadius) {
@@ -542,6 +568,10 @@ export function requiredLevel(order: StandingOrder): AgentPermissionLevel {
   if (order.verb === 'BUILD') return 3;
   if (order.verb === 'CONTEXT_ACTION') return 3;
   if (order.verb === 'HARVEST') return 2;
+  // E7: stated rather than inherited from the default below, because the browser gates the same
+  // act on `Balance.e7Playbook.requiredPermissionLevel` (= 2, `Game.playbookConsentGranted`).
+  // One rung, written down in both engines, so a parity claim about it can be checked.
+  if (order.verb === 'PLAYBOOK_USE') return 2;
   return 2;
 }
 
@@ -629,6 +659,12 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
   if (value.verb === 'GRADE' || value.verb === 'HAUL') {
     if (!exactKeys(value, ['verb'])) return schemaError(index, value.verb);
     return { verb: value.verb };
+  }
+  if (value.verb === 'PLAYBOOK_USE') {
+    // Same 1..80 char handle `BOAT_BUILD`/`REANCHOR` accept: a playbook name is a shelf label,
+    // not a path, and the engine that resolves it decides what an unknown name means.
+    if (!exactKeys(value, ['verb', 'name']) || !validId(value.name)) return schemaError(index, 'PLAYBOOK_USE');
+    return { verb: 'PLAYBOOK_USE', name: value.name };
   }
   if (value.verb === 'FALLBACK_IF') {
     if (!exactKeys(value, ['verb', 'threat', 'pos']) || !validPos(value.pos) || !isRecord(value.threat)) {
@@ -833,6 +869,7 @@ export function standingOrderIdentity(order: StandingOrder): string {
   if (order.verb === 'BOAT_BUILD') return JSON.stringify([order.verb, order.padId, order.buildingId]);
   if (order.verb === 'REANCHOR') return JSON.stringify([order.verb, order.anchorId]);
   if (order.verb === 'GRADE' || order.verb === 'HAUL') return JSON.stringify([order.verb]);
+  if (order.verb === 'PLAYBOOK_USE') return JSON.stringify([order.verb, order.name]);
   return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
 }
 
