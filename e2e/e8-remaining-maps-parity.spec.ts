@@ -21,18 +21,24 @@ import { expect, test } from '@playwright/test';
  * (F-E8MC-3, `artifacts/e8-mare-claim-physics/report.md`).
  */
 
-// MEASURED IN NODE on this tree, 2026-09-05, idle policy, 400-decision bound
-// (`artifacts/e8-remaining-maps/armed.json`; the control row also equals
-// `artifacts/e8-remaining-maps/control.json`, taken from a detached worktree of main).
+// MEASURED IN NODE on this tree, 2026-09-05, idle policy, 400-decision bound. Hashes and
+// outcomes: `artifacts/e8-remaining-maps/armed.json` (the control row also equals
+// `artifacts/e8-remaining-maps/control.json`, taken from a detached worktree of main). The `air`
+// rows below are the TERMINAL view, `artifacts/e8-remaining-maps/terminal-air.json`, because that
+// is the turn this ride reports: an idle Prospector never leaves the hero, so where it idles
+// decides whether the suit drains at all. That is itself the evidence the wall is live.
 const RIDES = [
   {
     contract: 'e8-far-side',
     seed: 'e8-far-side-01',
     node: { eventLogHash: 'fnv1a32:5c30efd5', secured: false, waves: 2, timeMs: 79_400, kills: 30 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
+    // The Far Side's idle Prospector never leaves the landing yard, so it breathes the whole
+    // ride and never reaches the crater: a full suit and an empty crossing.
     air: {
       wall: 'suit-only',
-      crossing: { zones: ['listening-probe-crater'], required: 1, reached: [], complete: false },
+      suit: { seconds: 60, empty: false, drainedTotal: 0 },
+      crossing: { zones: ['listening-probe-crater'], required: 1, reached: [], breathlessEntries: 0, complete: false },
     },
   },
   {
@@ -40,12 +46,16 @@ const RIDES = [
     seed: 'e8-low-orbit-01',
     node: { eventLogHash: 'fnv1a32:6e1931c2', secured: false, waves: 2, timeMs: 78_333, kills: 33 },
     gravity: { feelG: 0, lobArcDistanceMultiplier: 4.8, movement: 'free-fall', orbitalReturn: true, vacuum: true },
+    // Low Orbit's claim sits ON the middle deck, so an idle ride banks that one deck for free
+    // and neither of the two the spine has to be crossed for.
     air: {
       wall: 'suit-only',
+      suit: { seconds: 60, empty: false, drainedTotal: 0 },
       crossing: {
         zones: ['west-scaffold-deck', 'claw-carcass-yard', 'east-scaffold-deck'],
         required: 3,
-        reached: [],
+        reached: ['claw-carcass-yard'],
+        breathlessEntries: 0,
         complete: false,
       },
     },
@@ -57,6 +67,9 @@ const RIDES = [
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
     air: {
       wall: 'suit-timer',
+      // The claim is outside every dome pad, so the idle floor suffocates exactly as the Mare
+      // Claim's does: 60s of suit, all of it spent.
+      suit: { seconds: 0, empty: true, drainedTotal: 60 },
       // The idle floor dies at wave 2 and the shadow is scheduled for wave 10, so an idle ride
       // must show it NOT arrived. `arrivedAtWave` stays null until it lands, because the contract
       // authors `firstRunWarning: false` and a countdown would be the warning it refuses to give.
@@ -71,7 +84,11 @@ const RIDES = [
     seed: 'e8-mare-claim-01',
     node: { eventLogHash: 'fnv1a32:1a62757f', secured: false, waves: 2, timeMs: 81_233, kills: 32 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
-    air: { wall: 'suit-timer', regolith: { grounds: 6, required: 1, worked: [] } },
+    air: {
+      wall: 'suit-timer',
+      suit: { seconds: 0, empty: true, drainedTotal: 60 },
+      regolith: { grounds: 6, required: 1, worked: [] },
+    },
   },
 ] as const;
 
