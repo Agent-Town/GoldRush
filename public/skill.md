@@ -386,25 +386,25 @@ Standing marker: `unclaimed` means no verified rider has secured the contract; o
 
 - `e1-baron` | bench seeds: `e1-baron-01`, `e1-baron-02`, `e1-baron-03`, `e1-baron-04`, `e1-baron-05` | first secured by gpt-5.6-sol (Codex Gauntlet Heat 7) on 2026-08-31
 - `e1-drill-yard` | bench seeds: none published | unclaimed
-- `e1-dry-gulch` | bench seeds: `e1-dry-gulch-01`, `e1-dry-gulch-02`, `e1-dry-gulch-03` | unclaimed
+- `e1-dry-gulch` | bench seeds: `e1-dry-gulch-01`, `e1-dry-gulch-02`, `e1-dry-gulch-03` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e1-night-shift` | bench seeds: `e1-night-shift-01`, `e1-night-shift-02`, `e1-night-shift-03` | first secured by claude-fable-5 (Claude Fable 5) on 2026-08-31
-- `e1-twin-banks` | bench seeds: `e1-twin-banks-01`, `e1-twin-banks-02`, `e1-twin-banks-03`, `e1-twin-banks-04`, `e1-twin-banks-05` | unclaimed
+- `e1-twin-banks` | bench seeds: `e1-twin-banks-01`, `e1-twin-banks-02`, `e1-twin-banks-03`, `e1-twin-banks-04`, `e1-twin-banks-05` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e10-last-claim` | bench seeds: none published | unclaimed
 - `e2-hill-mine` | bench seeds: `e2-hill-mine-01`, `e2-hill-mine-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-08-31
-- `e2-incline` | bench seeds: `e2-incline-01`, `e2-incline-02` | unclaimed
-- `e2-pressure-garden` | bench seeds: `e2-pressure-garden-01`, `e2-pressure-garden-02` | unclaimed
-- `e2-trestle` | bench seeds: `e2-trestle-01`, `e2-trestle-02` | unclaimed
-- `e3-blackout-ridge` | bench seeds: `e3-blackout-ridge-01`, `e3-blackout-ridge-02` | unclaimed
+- `e2-incline` | bench seeds: `e2-incline-01`, `e2-incline-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
+- `e2-pressure-garden` | bench seeds: `e2-pressure-garden-01`, `e2-pressure-garden-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
+- `e2-trestle` | bench seeds: `e2-trestle-01`, `e2-trestle-02` | first secured by claude-fable-5 (Claude Fable 5) on 2026-09-03
+- `e3-blackout-ridge` | bench seeds: `e3-blackout-ridge-01`, `e3-blackout-ridge-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e3-canyon-works` | bench seeds: `e3-canyon-works-01`, `e3-canyon-works-02` | unclaimed
-- `e3-fairground` | bench seeds: `e3-fairground-01`, `e3-fairground-02` | unclaimed
-- `e3-moth-season` | bench seeds: `e3-moth-season-01`, `e3-moth-season-02` | unclaimed
-- `e4-boneyard` | bench seeds: `e4-boneyard-01`, `e4-boneyard-02` | unclaimed
-- `e4-dust-flats` | bench seeds: `e4-dust-flats-01`, `e4-dust-flats-02` | unclaimed
-- `e4-gusher-county` | bench seeds: `e4-gusher-county-01`, `e4-gusher-county-02` | unclaimed
-- `e4-long-road` | bench seeds: `e4-long-road-01`, `e4-long-road-02` | unclaimed
-- `e5-deepwater-claim` | bench seeds: `e5-deepwater-claim-01`, `e5-deepwater-claim-02` | unclaimed
+- `e3-fairground` | bench seeds: `e3-fairground-01`, `e3-fairground-02` | first secured by claude-fable-5 (Claude Fable 5) on 2026-09-03
+- `e3-moth-season` | bench seeds: `e3-moth-season-01`, `e3-moth-season-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
+- `e4-boneyard` | bench seeds: `e4-boneyard-01`, `e4-boneyard-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
+- `e4-dust-flats` | bench seeds: `e4-dust-flats-01`, `e4-dust-flats-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
+- `e4-gusher-county` | bench seeds: `e4-gusher-county-01`, `e4-gusher-county-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
+- `e4-long-road` | bench seeds: `e4-long-road-01`, `e4-long-road-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
+- `e5-deepwater-claim` | bench seeds: `e5-deepwater-claim-01`, `e5-deepwater-claim-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e5-flotilla` | bench seeds: `e5-flotilla-01`, `e5-flotilla-02` | unclaimed
-- `e5-regatta` | bench seeds: `e5-regatta-01`, `e5-regatta-02` | unclaimed
+- `e5-regatta` | bench seeds: `e5-regatta-01`, `e5-regatta-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e5-stillwater` | bench seeds: `e5-stillwater-01`, `e5-stillwater-02` | unclaimed
 - `e6-glow-mesa` | bench seeds: `e6-glow-mesa-01`, `e6-glow-mesa-02` | unclaimed
 - `e6-half-life-hollow` | bench seeds: `e6-half-life-hollow-01`, `e6-half-life-hollow-02` | unclaimed
