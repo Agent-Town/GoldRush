@@ -26,7 +26,7 @@ export const MAX_PLAYBOOK_INTENTS = 2_000;
 
 type EnvelopeContract = {
   id: string;
-  twist?: { secureWave?: number; waveCadenceMult?: number; baron?: { wave: number } };
+  twist?: { secureWave?: number; clockTicks?: number; waveCadenceMult?: number; baron?: { wave: number } };
 };
 
 export type RunTapeEnvelope = {
@@ -62,17 +62,18 @@ const RUN_TAPE_CONTRACTS = new Map(
 /** One bounded door envelope, derived from the contract clock for every admission axis. */
 export function runTapeEnvelopeForContract(contractId: string): RunTapeEnvelope {
   const twist = RUN_TAPE_CONTRACTS.get(contractId);
+  let contractTicks = twist?.clockTicks ?? MAX_PLAYBOOK_TICKS;
+  const secureWave = twist?.secureWave ?? 0;
+  if (secureWave > 0) {
+    const finalWave = twist?.baron
+      ? Math.max(secureWave, twist.baron.wave) + ASSAY_BOSS_GRACE_WAVES
+      : secureWave;
+    const cadence = Math.max(0.1, twist?.waveCadenceMult ?? 1);
+    contractTicks = Math.ceil((finalWave * Balance.waves.waveInterval / cadence) / PLAYBOOK_STEP_SECONDS);
+  }
   // durationTicks is an exclusive end, so every ceiling needs room for an order accepted at its
   // terminal tick: nominal boundary + terminal step + inclusive endpoint.
-  let maxTicks = MAX_PLAYBOOK_TICKS + 2;
-  if (twist?.secureWave) {
-    const finalWave = twist.baron
-      ? Math.max(twist.secureWave, twist.baron.wave) + ASSAY_BOSS_GRACE_WAVES
-      : twist.secureWave;
-    const cadence = Math.max(0.1, twist.waveCadenceMult ?? 1);
-    const contractTicks = Math.ceil((finalWave * Balance.waves.waveInterval / cadence) / PLAYBOOK_STEP_SECONDS) + 2;
-    maxTicks = Math.max(maxTicks, contractTicks);
-  }
+  const maxTicks = Math.max(MAX_PLAYBOOK_TICKS, contractTicks) + 2;
   const maxEntries = Math.ceil(maxTicks / RUN_TAPE_ENVELOPE_TICKS_PER_ENTRY);
   return {
     maxTicks,

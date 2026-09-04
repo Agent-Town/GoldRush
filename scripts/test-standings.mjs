@@ -29,7 +29,7 @@ const vite = await createServer({ root: process.cwd(), appType: 'custom', logLev
 try {
   const { MAX_JSON_BYTES, compareScores, onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
   const { submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
-  const { MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
+  const { CONTRACT_BUNDLES, MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
   const { onRequest: onRequestRefusals } = await vite.ssrLoadModule('/functions/api/refusals.ts');
@@ -41,7 +41,7 @@ try {
   };
   for (backend of ['kv', 'sqlite']) {
     checks = 0;
-    await checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS, MAX_JSON_BYTES);
+    await checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, CONTRACT_BUNDLES, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS, MAX_JSON_BYTES);
     checkTapeBuildMetadata(validateTape);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
@@ -482,9 +482,25 @@ async function checkPosts(onRequest, queueRoute, verdictRoute) {
   equal(tooLarge.body.error, 'reel_too_large', '413 names the compact-reel cure');
 }
 
-async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, recorderTicks, playbookEntries, maxRequestBytes) {
+async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, contractBundles, recorderTicks, playbookEntries, maxRequestBytes) {
   equal(recorderTicks, 18_000, 'browser recorder keeps its ten-minute DoS bound');
   equal(playbookEntries, 2_000, 'playbook authoring keeps its own 2,000-intent UX bound');
+  const contracts = contractBundles.flatMap((bundle) => bundle.contracts);
+  const clockSources = contracts.map(({ id, twist = {} }) => ({
+    id,
+    derived: Number.isFinite(twist.secureWave) && twist.secureWave > 0,
+    explicit: Number.isInteger(twist.clockTicks) && twist.clockTicks > 0,
+  }));
+  equal(clockSources.filter(({ derived, explicit }) => Number(derived) + Number(explicit) !== 1).map(({ id }) => id), [],
+    'every registry contract has exactly one positive clock source');
+  const clockCensus = {
+    total: clockSources.length,
+    derived: clockSources.filter(({ derived }) => derived).length,
+    explicit: clockSources.filter(({ explicit }) => explicit).length,
+    missing: clockSources.filter(({ derived, explicit }) => !derived && !explicit).length,
+  };
+  equal(clockCensus, { total: 42, derived: 24, explicit: 18, missing: 0 }, 'contract clock census is pinned');
+  console.log(`contract clock census ${clockCensus.total}/${clockCensus.derived}/${clockCensus.explicit}/${clockCensus.missing}`);
   equal([
     'the-claim',
     'e1-drill-yard',

@@ -730,6 +730,7 @@ export type ContractManifest = {
     coalSeams?: ContractHarvestAnchor[];
     seamYieldMult?: number;
     secureWave?: number;
+    clockTicks?: number;
     preserve?: { work: 'warm_vent'; hp: number; position: ContractHarvestAnchor };
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
@@ -1589,7 +1590,7 @@ const AUTHORED_TILE_KEYS = [
  * turn gold into guns.
  */
 const AUTHORED_TWIST_KEYS = [
-  'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
+  'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'clockTicks', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
   'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier',
@@ -1702,6 +1703,9 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
   if (!tileParams || !twist) return null;
   addUnknownFieldReasons(tileParams, AUTHORED_TILE_KEYS, 'tileParams', reasons);
   addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons);
+  if (twist.clockTicks !== undefined && (typeof twist.clockTicks !== 'number' || !Number.isInteger(twist.clockTicks) || twist.clockTicks <= 0)) {
+    addDescriptorReason(reasons, reason('field_number', 'clockTicks must be a positive integer.', 'twist.clockTicks'));
+  }
   if (twist.picnicHold !== undefined && typeof twist.picnicHold !== 'boolean') addDescriptorReason(reasons, reason('field_type', 'picnicHold must be true or false.', 'twist.picnicHold'));
   if (twist.preserve !== undefined) {
     const preserve = twist.preserve;
