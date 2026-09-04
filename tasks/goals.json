@@ -4059,11 +4059,12 @@
               "id": "gauntlet-heat11-unclaimed-sweep",
               "title": "Heat 11: Claude Opus + Fable ride every unclaimed contract once; first secures for the receipts; winnability tested in the field",
               "taskFile": "gauntlet-heat11-unclaimed-sweep.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "attended",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-03",
-              "note": "attended-dispatched Claude agent; NOT for the lane runner (no queue copy)"
+              "note": "complete: 32 unclaimed -> 9; 23 first secures; F-HEAT11-1 filed",
+              "mergeHash": "attended-evidence-commits-2026-09-04"
             },
             {
               "id": "e4-roads-and-convoys",
@@ -4145,6 +4146,15 @@
               "authoredBy": "attended 2026-09-02 (release pass)",
               "blockClass": "owner-fork",
               "blockedReason": "awaiting the owner word on the ranking order (2026-09-04): faster secure first among secured rows, gold before time, baseValue out of the comparison; queue the master when ruled",
+              "queuedAt": "2026-09-04"
+            },
+            {
+              "id": "envelope-fencepost-no-securewave",
+              "title": "F-HEAT11-1: the envelope inclusive-endpoint slack applies to every contract, not only those with a secureWave",
+              "taskFile": "envelope-fencepost-no-securewave.md",
+              "status": "queued",
+              "lane": "main",
+              "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-04"
             }
           ]
