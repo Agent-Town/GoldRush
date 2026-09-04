@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "e6f25014d9a6729bd93192d3f9fa14bb8735263b1c147a09fa3dfd22292382b9",
+  "engineHash": "e931ff6f682bfad77ae746d92488c259c7ee41440d803db5f8f79032282f0434",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -229,6 +229,12 @@
       "engineHash": "e6f25014d9a6729bd93192d3f9fa14bb8735263b1c147a09fa3dfd22292382b9",
       "pinnedAt": "2026-09-04T14:28Z",
       "cause": "content re-hash, no behaviour change: receipts-outside-engine-corpus removes the operational winnability ledger from ENGINE_SOURCE_INPUTS and repoints every executable reader; regenerating the ledger now leaves this hash byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "e931ff6f682bfad77ae746d92488c259c7ee41440d803db5f8f79032282f0434",
+      "pinnedAt": "2026-09-04T16:52Z",
+      "cause": "content re-hash, no simulation behaviour change for existing tapes: standing-formula-explained captures the already-emitted run_secured snapshot for the verified county row and carries it through replay, suspend and UI reporting; public claimed snapshots remain refused and the standings worker rewrites pending values from the verified replay result; same era per F-1441-3",
       "aliases": []
     }
   ],

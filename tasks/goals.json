@@ -1475,7 +1475,7 @@
             {
               "id": "e10-lore-owner-read",
               "title": "E10 lore pages await the owner's read (uncited lore is a proposal)",
-              "status": "blocked",
+              "status": "merged",
               "blockClass": "owner-fork",
               "blockedReason": "OWNER READ PENDING. The E10 attended specs landed 2026-08-20 and the lore pages written alongside them are the last content surface with no owner eyes on it. lore/ is the source of truth for every CONTENT fact (CLAUDE.md 9b) and uncited lore is a proposal, so no fire may ratify it. Only Robin's read closes this.",
               "note_s2090": "REGISTERED s2090 to close a Goal Registration Law gap, NOT a new item: it has been carried on the OWNER'S DESK since the E10 spec landing and given its own declaring BACKLOG row s2088, but had no goals.json leaf. desk-state-audit resolves desk slugs against goals.json, so it read UNRECORDED for s2088/s2089 while desk-declaration-guard simultaneously counted it as declared 32/32 - two instruments disagreeing about one item. s2089 diagnosed that split exactly and named the fix as its NEXT (C); this leaf is that fix. No state changed, only the record.",
@@ -4145,21 +4145,23 @@
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-04",
-              "note": "owner ruled YES 2026-09-04: the order + one rule text on three surfaces",
-              "blockClass": "gate-side",
-              "blockedReason": "s2503 GATE-SIDE HOLD, NOT MERGED. F-2503-1: lane/a d3814a1af freezes the first client-submitted score for a tape, but the accepted master requires the assayer to derive waves/gold/time from the replay's run_secured event so no rider can declare the snapshot. The replay/verdict transport carries only final outcome fields, and the browser snapshot is not retained through RunSuspend. LIFT = f2503-1-standing-goal-snapshot-source lands the server-derived secure-event snapshot and suspend proof. Review: reviews/standing-formula-explained.md. Lane tip remains intact.",
-              "heldBy": "s2503",
-              "supersededBy": "f2503-1-standing-goal-snapshot-source"
+              "note": "owner ruled YES 2026-09-04: the order + one rule text on three surfaces; shipped with the F-2503-1 assayer-authority corrective",
+              "mergeHash": "a43ccfbe74fbb0fc0e4b769e18a63ab7cf04f64f",
+              "mergedAt": "2026-09-04",
+              "drainedBy": "s2505"
             },
             {
               "id": "f2503-1-standing-goal-snapshot-source",
               "title": "F-2503-1: verified standings derive waves, gold and time from the replay's run_secured event and survive Rush suspension",
               "taskFile": "f2503-1-standing-goal-snapshot-source.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-a",
               "authoredBy": "s2503 fire",
               "queuedAt": "2026-09-04",
-              "note": "BUILD-ON-PREDECESSOR over held lane/a d3814a1af. Preserves the comparator/rule/UI and closes the gate-side assayer-authority plus suspend-persistence gap recorded in reviews/standing-formula-explained.md."
+              "note": "BUILD-ON-PREDECESSOR over held lane/a d3814a1af. Preserves the comparator/rule/UI and closes the gate-side assayer-authority plus suspend-persistence gap recorded in reviews/standing-formula-explained.md.",
+              "mergeHash": "a43ccfbe74fbb0fc0e4b769e18a63ab7cf04f64f",
+              "mergedAt": "2026-09-04",
+              "drainedBy": "s2505"
             },
             {
               "id": "envelope-fencepost-no-securewave",
