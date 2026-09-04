@@ -1,7 +1,15 @@
+import { execFileSync } from 'node:child_process';
 import { expect, test, type Page } from '@playwright/test';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
 const QUERY = '?debug&contract=e3-moth-season&nowaves&nospawn&nolevel&seed=e3-moth-season';
+const SEED = 'e3-moth-season-01';
+// The both-engine harness the county already uses for agent reels (`e2e/e4-roads-and-convoys.spec.ts`):
+// the SAME `HeadlessContractSim`, ridden in Node and in the browser runtime, one seed, one order
+// stream, one event-log hash. The `Game.ts` world is not in hash agreement with the headless door on
+// any map and is not claimed here.
+const HARNESS = `/src/replay/harness.html?debug&contract=e3-moth-season&seed=${SEED}`;
+const SIM_MODULE = '/src/sim/HeadlessContractSim.ts';
 // The authored corridor circuit (`assets/contracts/epoch-3-voltage/contracts.json`): one dynamo,
 // one relay span carried by a Sentry Beacon on the pylon site, and the gallery -> lamp pair the
 // Canyon Works composes the same way. The pre-placed Lantern Post sits ON the lamp node.
@@ -170,6 +178,56 @@ test('HUMAN PARITY: a plain boot offers the relay the rider BUILDs, and no debug
   // The objective a rider reads off `now.canyonConnect` is published to a plain boot too.
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.canyonWorks))
     .toMatchObject({ powered: 0, required: 1, byWave: 12, complete: false, failed: false });
+  expect(errors.console).toEqual([]);
+  expect(errors.page).toEqual([]);
+});
+
+test('both engines ride the corridor floor to the same event-log hash', async ({ page }, testInfo) => {
+  test.setTimeout(300_000);
+  const errors = { console: [] as string[], page: [] as string[] };
+  page.on('console', (message) => { if (message.type() === 'error') errors.console.push(message.text()); });
+  page.on('pageerror', (error) => errors.page.push(error.message));
+
+  const fixture = JSON.parse(await readFile('scripts/fixtures/moth-season-orders.json', 'utf8')) as unknown[];
+  const node = JSON.parse(execFileSync(
+    process.execPath,
+    ['scripts/gr-sim.mjs', '--contract', 'e3-moth-season', '--seed', SEED, '--policy=stdin'],
+    { encoding: 'utf8', timeout: 180_000, input: `${fixture.map((entry) => JSON.stringify(entry)).join('\n')}\n` },
+  ).trim().split('\n').at(-1)!) as { secured: boolean; waves: number; eventLogHash: string };
+
+  await page.goto(HARNESS);
+  await page.waitForFunction(() => Boolean(window.__GR_AGENT_TAPE_REPLAY__));
+  const browser = await page.evaluate(async ({ orders, seed, module }) => {
+    const { HeadlessContractSim } = await import(/* @vite-ignore */ module);
+    const sim = new HeadlessContractSim({ contractId: 'e3-moth-season', seed });
+    let turn = sim.currentTurn();
+    let index = 0;
+    while (!turn.terminal && index < orders.length) {
+      sim.submitOrders(orders[index]);
+      index += 1;
+      turn = sim.advanceToTurn();
+    }
+    while (!turn.terminal) turn = sim.advanceToTurn();
+    return { outcome: sim.outcome(), connect: turn.view.now.canyonConnect };
+  }, { orders: fixture, seed: SEED, module: SIM_MODULE });
+
+  expect(browser.outcome.eventLogHash).toBe(node.eventLogHash);
+  expect({ secured: browser.outcome.secured, waves: browser.outcome.waves }).toEqual({ secured: node.secured, waves: node.waves });
+  expect(browser.connect).toMatchObject({ required: 1, byWave: 12, complete: true, failed: false });
+
+  await mkdir('artifacts/e3-moth-season', { recursive: true });
+  await writeFile(
+    `artifacts/e3-moth-season/both-engines-${testInfo.project.name}.json`,
+    `${JSON.stringify({
+      contract: 'e3-moth-season',
+      seed: SEED,
+      orders: 'scripts/fixtures/moth-season-orders.json',
+      node: { secured: node.secured, waves: node.waves, eventLogHash: node.eventLogHash },
+      browser: { secured: browser.outcome.secured, waves: browser.outcome.waves, eventLogHash: browser.outcome.eventLogHash },
+      agree: browser.outcome.eventLogHash === node.eventLogHash,
+    }, null, 2)}\n`,
+  );
+  console.log(`[e3-moth-season-both-engines] node=${node.eventLogHash} browser=${browser.outcome.eventLogHash}`);
   expect(errors.console).toEqual([]);
   expect(errors.page).toEqual([]);
 });
