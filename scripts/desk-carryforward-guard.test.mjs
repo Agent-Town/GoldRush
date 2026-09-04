@@ -71,6 +71,16 @@ test('a clean carry-forward passes', () => {
   assert.deepEqual(r.silent, []);
 });
 
+test('the newest archived desk wins even when archive rows are out of order', () => {
+  const parsed = previousDesk(status(
+    handoff(HEADER),
+    archive(1533, `${HEADER} 🔺 **F-1000-1 OPEN**`),
+    archive(1537, `${HEADER} 🔺 **F-1000-2 OPEN**`),
+  ));
+  assert.equal(parsed.session, 1537);
+  assert.deepEqual(parsed.items, ['F-1000-2']);
+});
+
 test('MANUFACTURED DEFECT — a silently dropped item is caught', () => {
   // A passing guard never executes its violation path, so a green is not
   // evidence about the red (the s1299/s1300 standard). Drop one item, say

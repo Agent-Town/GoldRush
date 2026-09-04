@@ -247,14 +247,16 @@ export function deskItems(tail) {
 
 /** The newest ARCHIVED handoff desk — the one this fire must carry forward. */
 export function previousDesk(statusText) {
+  let newest = null;
   for (const line of statusText.split('\n')) {
     const m = line.match(/^- \*\*s(\d+) handoff \(line-1 archive\)/);
     if (!m) continue;
     const tail = deskTail(line);
     if (!tail) continue;
-    return { session: Number(m[1]), items: deskItems(tail), line };
+    const candidate = { session: Number(m[1]), items: deskItems(tail), line };
+    if (!newest || candidate.session > newest.session) newest = candidate;
   }
-  return null;
+  return newest;
 }
 
 /**

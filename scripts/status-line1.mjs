@@ -47,9 +47,8 @@
 // ("sNNNN lock"), and if the predecessor's handoff never got archived, recover it
 // with `git show <their-commit>:STATUS.md` rather than leaving a gap in the chain.
 //
-// The archive bullet is inserted at line 4 (0-based index 3), which is where
-// every prior handoff has put it: line 1 = state, lines 2-3 = blank, then the
-// newest-first archive bullets.
+// Insert before the first archive bullet. Most STATUS files have two blank lines
+// first, but one missing blank must not strand an older handoff above newer ones.
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -123,7 +122,9 @@ try {
     const lines = readLines();
     const prev = lines[0];
     lines[0] = oneLine(readFileSync(file, 'utf8'));
-    lines.splice(ARCHIVE_INDEX, 0, `- **${label} (line-1 archive):** ${prev}`);
+    const firstArchive = lines.findIndex((line, index) =>
+      index > 0 && /^- \*\*.+ \(line-1 archive\):\*\*/.test(line));
+    lines.splice(firstArchive === -1 ? ARCHIVE_INDEX : firstArchive, 0, `- **${label} (line-1 archive):** ${prev}`);
     write(lines);
     console.log(`set line 1 (${lines[0].length} chars); archived previous as "${label}"`);
   } else {
