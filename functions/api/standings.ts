@@ -29,7 +29,7 @@ type StandingsContext = {
 type JsonRecord = Record<string, unknown>;
 
 type ScoreRow = {
-  secured: true;
+  secured: boolean;
   waves: number;
   timeAlive: number;
   gold: number;
@@ -819,8 +819,9 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   const standingKind = party?.riderCount ?? 1;
   const sameStanding = (row: StoredRow) => row.anonId === anonId && row.rotationId === rotation?.id
     && (row.party?.riderCount ?? 1) === standingKind;
+  const securedSnapshot = tape && current.find((row) => sameStanding(row) && row.tape?.id === tape.id && isRankedRow(row));
   const prior = current.find((row) => sameStanding(row) && (tape ? isRankedRow(row) : row.tape === undefined));
-  const kept = prior && compareScores(prior, candidate, contractId) < 0 ? prior : candidate;
+  const kept = securedSnapshot ?? (prior && compareScores(prior, candidate, contractId) < 0 ? prior : candidate);
   const next = retainUnranked([
     ...current.filter((row) => !sameStanding(row) || (!tape && row.tape !== undefined)),
     kept,
@@ -829,7 +830,14 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   await kv.put(key, JSON.stringify(next));
   if (tape && kept === candidate) await syncAssayBoardIndex(kv, epochId, contractId, next);
   const index = rankedRows(next.filter((row) => row.rotationId === rotation?.id), contractId).indexOf(kept);
-  return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null,
+  const ranked = rankedRows(next.filter((row) => row.rotationId === rotation?.id), contractId);
+  const decidedBy = index === 0 ? 'crown' : index > 0 ? decidingKey(ranked[index - 1], kept, contractId) : undefined;
+  const retained = kept === securedSnapshot ? 'goal_snapshot' : kept !== candidate ? 'personal_best' : undefined;
+  const candidateStored = kept === candidate && next.includes(candidate);
+  const sameRun = candidateStored || retained === 'goal_snapshot';
+  return json(cors, { ok: true, stored: candidateStored, rank: sameRun && index >= 0 ? index + 1 : null,
+    ...(sameRun && decidedBy ? { decidedBy } : {}),
+    ...(retained ? { retained } : {}),
     ...(rotation ? { rotationId: rotation.id } : {}) });
 }
 
@@ -1090,10 +1098,21 @@ export function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRo
     return (a.submittedAt ?? 0) - (b.submittedAt ?? 0);
   }
   if (a.waves !== b.waves) return b.waves - a.waves;
-  if (a.baseValue !== b.baseValue) return b.baseValue - a.baseValue;
-  if (a.timeAlive !== b.timeAlive) return b.timeAlive - a.timeAlive;
   if (a.gold !== b.gold) return b.gold - a.gold;
+  if (a.timeAlive !== b.timeAlive) return a.secured ? a.timeAlive - b.timeAlive : b.timeAlive - a.timeAlive;
   return (a.submittedAt ?? 0) - (b.submittedAt ?? 0);
+}
+
+function decidingKey(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { submittedAt?: number }, contractId?: string): string {
+  if (contractId && PRESERVE_CONTRACTS.has(contractId)) {
+    if (a.preserveWavesAlive !== b.preserveWavesAlive || a.preserveHpFraction !== b.preserveHpFraction) return 'preservation';
+    if (a.timeAlive !== b.timeAlive) return 'time';
+    return 'submittedAt';
+  }
+  if (a.waves !== b.waves) return 'waves';
+  if (a.gold !== b.gold) return 'gold';
+  if (a.timeAlive !== b.timeAlive) return 'time';
+  return 'submittedAt';
 }
 
 function knownContract(epochId: string, contractId: string): boolean {

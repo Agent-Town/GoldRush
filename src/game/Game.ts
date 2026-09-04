@@ -261,6 +261,7 @@ import {
   type DeathOverlayOptions,
   type DeathResearchState,
   type DeathRunStatsSnapshot,
+  type CountyStandingView,
 } from '../ui/DeathOverlay';
 import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
 import { ProspectorDispatchInput, type ProspectorDispatchTarget } from '../ui/ProspectorDispatchInput';
@@ -418,6 +419,8 @@ type BaronProps3dState = 'off' | 'loading' | 'ready' | 'failed' | 'disposed';
 type RunStatsSnapshot = DeathRunStatsSnapshot & { defaultedPicks: number };
 
 export type RunReturnResult = 'secured' | 'overrun';
+
+type CountyStandingAnswer = Pick<CountyStandingView, 'state' | 'rank' | 'decidedBy' | 'message'>;
 
 export type GameBoot = ContractRunBoot & {
   replay?: {
@@ -1433,6 +1436,7 @@ export class Game {
     blastTime: 0,
   };
   private securedScoreAt: number | null = null;
+  private countyStanding: CountyStandingView | null = null;
 
   private runManager?: RunManager;
   private drillYard?: DrillYard;
@@ -1814,7 +1818,9 @@ export class Game {
         true,
         event.secureWave,
       );
-      void this.submitCountyStanding(score);
+      const standingScore = { ...score, gold: Math.max(0, Math.floor(this.economy.gold)) };
+      this.countyStanding = { waves: standingScore.waves, gold: standingScore.gold, timeAlive: standingScore.timeAlive };
+      void this.submitCountyStanding(standingScore);
       this.e7SignalSystem.recordContractWin(this.activeContract.id);
       emitStorySignal({ type: 'first-victory' });
       if (!this.baronBeatenThisRun) this.audio.play('victory-sting');
@@ -1846,6 +1852,7 @@ export class Game {
         actionLabel: 'Return to Town',
         secondaryActionLabel: 'Try Again',
         outcome: secured ? 'rush' : 'death',
+        countyStanding: secured ? this.countyStanding ?? undefined : undefined,
         runStats,
         agentAutonomyDelta: this.agentAutonomyDelta(returnResult === 'secured'),
         townName: readTownName(),
@@ -1866,7 +1873,7 @@ export class Game {
       discoverLedgerEntry('assay_office_records');
       if (event.reason !== 'secured') return;
       this.audio.play('ledger-open', 0.75);
-      const { scoreAt, economySummary, runStats, scores } = this.recordRunScore(
+      const { scoreAt, economySummary, runStats, score, scores } = this.recordRunScore(
         event.summary.deepestWave ?? event.summary.wavesSurvived,
         event.at,
         true,
@@ -1888,6 +1895,7 @@ export class Game {
         return;
       }
       const agentAutonomyDelta = this.agentAutonomyDelta(true);
+      const countyStanding = this.countyStanding ?? { waves: score.waves, gold: score.gold, timeAlive: score.timeAlive };
       window.setTimeout(() => {
         this.state.setPaused(true);
         const onDone = () => {
@@ -1900,6 +1908,7 @@ export class Game {
           ...this.researchOverlayOptions(2),
           ...this.keepTapeOptions(),
           outcome: 'secured',
+          countyStanding,
           actionLabel: 'Return to Town',
           secondaryActionLabel: 'New Claim',
           runStats,
@@ -7477,6 +7486,7 @@ export class Game {
   private async submitCountyStanding(score: ScoreRecord): Promise<void> {
     if (this.activeContract.practice?.standings === false) return;
     if (!this.countyStandingsEnabled || !score.secured || !readTelemetryOptIn() || globalThis.navigator?.onLine === false) return;
+    const standing = this.countyStanding;
     const multiplayerState = this.mpClient?.state();
     if (multiplayerState?.connected && !isMultiplayerStandingSubmitter(multiplayerState.roster, multiplayerState.playerId)) return;
     try {
@@ -7537,10 +7547,43 @@ export class Game {
         ...(party ? { party } : {}),
         ...(submittedTape ? { tape: submittedTape } : {}),
       });
-      await this.postCountyStanding(body);
+      this.updateCountyStanding({ state: 'submitting' }, standing);
+      const response = await this.postCountyStanding(body);
+      const payload = await response.json().catch(() => null) as null | {
+        stored?: unknown;
+        rank?: unknown;
+        decidedBy?: unknown;
+        retained?: unknown;
+        message?: unknown;
+      };
+      if (!response.ok) {
+        this.updateCountyStanding({ state: 'refused', message: typeof payload?.message === 'string' ? payload.message : 'Standing not accepted.' }, standing);
+        return;
+      }
+      if (payload?.stored === false && payload.retained !== 'goal_snapshot') {
+        this.updateCountyStanding({
+          state: 'not_ranked',
+          message: payload.retained === 'personal_best'
+            ? 'Your earlier county standing remains ahead.'
+            : 'The county book is full; this run was not ranked.',
+        }, standing);
+        return;
+      }
+      this.updateCountyStanding({
+        state: 'submitted',
+        rank: typeof payload?.rank === 'number' ? payload.rank : null,
+        ...(typeof payload?.decidedBy === 'string' ? { decidedBy: payload.decidedBy } : {}),
+      }, standing);
     } catch {
       // County standings are optional and must never block the secure ceremony.
+      this.updateCountyStanding({ state: 'unavailable' }, standing);
     }
+  }
+
+  private updateCountyStanding(answer: CountyStandingAnswer, standing = this.countyStanding): void {
+    if (!standing) return;
+    Object.assign(standing, answer);
+    this.deathOverlay.updateCountyStanding(standing);
   }
 
   private postCountyStanding(body: string): Promise<Response> {
@@ -8300,6 +8343,7 @@ export class Game {
     this.lastUpgradeOfferAudioKey = '';
     this.kills = 0;
     this.securedScoreAt = null;
+    this.countyStanding = null;
     this.baronBeatenThisRun = false;
     this.baronCeremony = null;
     this.baronStandardPlanted = false;

@@ -226,6 +226,7 @@
         </table>
       </div>
     </div>
+    <p class="ledger-foot" data-standing-rule></p>
     <figure class="cost-chart">
       <figcaption>The Claim &middot; cost versus waves</figcaption>
       <canvas data-standings="cost-chart" role="img" aria-label="The Claim cost versus waves chart."></canvas>
@@ -243,6 +244,6 @@
      live-render work (f7f05d271) shipped assay-office.js, but the rewritten page never
      loaded it, so the standings table froze on its placeholder row from launch day
      until 2026-08-29. Cache-busted query so the Cloudflare-edge-cached old JS is bypassed. -->
-<script defer src="assay-office.js?v=county-3"></script>
+<script type="module" src="assay-office.js?v=county-4"></script>
 </body>
 </html>

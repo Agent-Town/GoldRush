@@ -136,12 +136,31 @@ async function checkPreserveRanking(onRequest, compareScores) {
   const common = { waves: 1, timeAlive: 1, gold: 1, baseValue: 1, preserveWavesAlive: 99, preserveHpFraction: 1 };
   equal(compareScores({ ...common, secured: true }, { ...common, secured: false }, contractId) < 0, true, 'secured preserve row beats unsecured');
   equal([
-    { ...common, secured: true, profileName: 'base value wins', baseValue: 2, preserveWavesAlive: 0 },
-    { ...common, secured: true, profileName: 'preserve-shaped loser', baseValue: 1, preserveWavesAlive: 100 },
+    { ...common, secured: true, profileName: 'gold wins', baseValue: 1, gold: 2, preserveWavesAlive: 0 },
+    { ...common, secured: true, profileName: 'base value is ignored', baseValue: 2, gold: 1, preserveWavesAlive: 100 },
   ].sort((a, b) => compareScores(a, b, 'the-claim')).map((row) => row.profileName), [
-    'base value wins',
-    'preserve-shaped loser',
-  ], 'mixed non-preserve board keeps the existing base-value order');
+    'gold wins',
+    'base value is ignored',
+  ], 'mixed non-preserve board ranks gold and ignores base value');
+
+  const baron = [
+    { ...common, secured: true, profileName: 'codex', waves: 22, timeAlive: 597, gold: 319, submittedAt: 1 },
+    { ...common, secured: true, profileName: 'Claude Fable 5', waves: 22, timeAlive: 597, gold: 319, submittedAt: 2 },
+    { ...common, secured: true, profileName: 'Claude Opus 5', waves: 22, timeAlive: 594.9, gold: 394, submittedAt: 3 },
+  ];
+  equal(baron.sort((a, b) => compareScores(a, b, 'e1-baron')).map((row) => row.profileName), [
+    'Claude Opus 5',
+    'codex',
+    'Claude Fable 5',
+  ], 'live-shaped Baron fixture ranks Opus first by gold, then breaks the exact codex/Fable tie by earliest submission');
+
+  equal([
+    { ...common, secured: false, profileName: 'longer survival', timeAlive: 20 },
+    { ...common, secured: false, profileName: 'shorter survival', timeAlive: 10 },
+  ].sort((a, b) => compareScores(a, b, 'the-claim')).map((row) => row.profileName), [
+    'longer survival',
+    'shorter survival',
+  ], 'unsecured rows keep longer survival first');
 
   const invalid = post('c'.repeat(32), 8, undefined, contractId, epochId);
   invalid.score.preserveWavesAlive = 8;
@@ -377,6 +396,20 @@ async function checkPosts(onRequest) {
   taped.stack = { model: 'test-model', harness: 'test-rig', harnessVersion: 'v1', harnessDigest: 'c'.repeat(64), harnessRef: 'abcdef1' };
   const pending = await call(onRequest, 'POST', '/api/standings', taped, kv);
   equal(pending.body.rank, 1, 'taped resubmission supersedes unattested row');
+  equal(pending.body.decidedBy, 'crown', 'top submitted row explains that it holds the crown');
+  const overtime = structuredClone(taped);
+  overtime.score = { ...overtime.score, waves: 14, timeAlive: 180, gold: 90 };
+  overtime.tape.outcome = { reason: 'rush', secured: true, waves: 14, timeAlive: 180, gold: 90 };
+  const overtimeResponse = await call(onRequest, 'POST', '/api/standings', overtime, kv);
+  equal({ stored: overtimeResponse.body.stored, rank: overtimeResponse.body.rank, retained: overtimeResponse.body.retained },
+    { stored: false, rank: 1, retained: 'goal_snapshot' }, 'a Rush reply identifies the retained goal snapshot as this run');
+  const frozen = JSON.parse(await kv.get(KEY)).find((row) => row.tape?.id === 'pending-tape');
+  equal({ waves: frozen.waves, timeAlive: frozen.timeAlive, gold: frozen.gold }, { waves: 20, timeAlive: 120, gold: 40 },
+    'a later Rush post with the same reel keeps the official-goal snapshot');
+  const worse = post('0'.repeat(32), 10, tape('worse-tape', 10));
+  const worseResponse = await call(onRequest, 'POST', '/api/standings', worse, kv);
+  equal({ stored: worseResponse.body.stored, rank: worseResponse.body.rank, retained: worseResponse.body.retained },
+    { stored: false, rank: null, retained: 'personal_best' }, 'a prior best is not reported as this run rank');
   const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
   equal(board.body.board.length, 1, 'pending row shows on board');
   equal(board.body.board[0].assay, 'pending', 'pending badge state is exposed');

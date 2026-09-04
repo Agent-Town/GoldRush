@@ -1,4 +1,5 @@
 import type { ResearchNode } from '../meta/ResearchTree';
+import { COUNTY_STANDING_RULE } from '../../site/standing-rule.js';
 import { upgradeDefById } from '../game/Upgrades';
 import {
   RESEARCH_ICON_REGISTRY,
@@ -67,6 +68,16 @@ export type DeathResearchState = {
   pinnedPath?: readonly string[];
 };
 
+export type CountyStandingView = {
+  waves: number;
+  gold: number;
+  timeAlive: number;
+  state?: 'submitting' | 'submitted' | 'refused' | 'unavailable' | 'not_ranked';
+  rank?: number | null;
+  decidedBy?: string;
+  message?: string;
+};
+
 export type DeathOverlayOptions = {
   outcome?: 'death' | 'secured' | 'rush';
   actionLabel?: string;
@@ -75,6 +86,7 @@ export type DeathOverlayOptions = {
   agentAutonomyDelta?: { before: number; after: number };
   townName?: string | null;
   research?: DeathResearchState;
+  countyStanding?: CountyStandingView;
   onResearchPick?: (id: string) => DeathResearchState;
   onResearchSkip?: () => DeathResearchState;
   tapeKept?: boolean;
@@ -120,6 +132,12 @@ export class DeathOverlay {
   updateResearch(research: DeathResearchState): void {
     this.options.research = research;
     this.rerenderResearch();
+  }
+
+  updateCountyStanding(standing: CountyStandingView): void {
+    if (this.options.countyStanding !== standing) return;
+    const section = this.root.querySelector<HTMLElement>('[data-testid="county-standing"]');
+    if (section) section.innerHTML = this.renderCountyStandingContent(standing);
   }
 
   dispose(): void {
@@ -199,6 +217,7 @@ export class DeathOverlay {
             <dd data-death-upgrades>${this.escape(runStats.upgradeFamilies)}</dd>
           </div>
         </dl>
+        ${secured ? this.renderCountyStanding() : ''}
         ${this.renderAgentAutonomy()}
         ${this.renderScienceFooter()}
         ${this.renderTownFooter()}
@@ -228,6 +247,44 @@ export class DeathOverlay {
         </div>
       </div>
     `;
+  }
+
+  private renderCountyStanding(): string {
+    const standing = this.options.countyStanding;
+    if (!standing) return '';
+    return `<section class="death-overlay__scores" data-testid="county-standing" aria-label="Your county standing">${this.renderCountyStandingContent(standing)}</section>`;
+  }
+
+  private renderCountyStandingContent(standing: CountyStandingView): string {
+    const answer = standing.state === 'submitting'
+      ? 'The county is tallying this standing.'
+      : standing.state === 'refused'
+        ? `The county refused this standing: ${this.escape(standing.message ?? 'Standing not accepted.')}`
+        : standing.state === 'not_ranked'
+          ? this.escape(standing.message ?? 'This run was not ranked.')
+        : standing.state === 'unavailable'
+          ? 'The county book did not answer. Your run is still yours.'
+          : standing.state === 'submitted'
+            ? standing.rank === null || standing.rank === undefined
+              ? 'The assay office has it. Rank follows the county verdict.'
+              : `County rank #${standing.rank}. ${this.standingDecision(standing.decidedBy)}`
+            : '';
+    return `
+      <h2>Your county standing</h2>
+      <p data-testid="county-standing-score">Wave ${Math.max(0, Math.floor(standing.waves))} &middot; ${Math.max(0, Math.floor(standing.gold))} gold &middot; secured in ${this.formatTime(standing.timeAlive)}</p>
+      ${answer ? `<p data-testid="county-standing-answer">${answer}</p>` : ''}
+      <p data-testid="county-standing-rule">${this.escape(COUNTY_STANDING_RULE)}</p>
+    `;
+  }
+
+  private standingDecision(decidedBy?: string): string {
+    if (decidedBy === 'crown') return 'This run holds the crown.';
+    if (decidedBy === 'waves') return 'The row above leads on waves at the goal.';
+    if (decidedBy === 'gold') return 'The row above leads on gold at the goal.';
+    if (decidedBy === 'time') return 'The row above secured faster.';
+    if (decidedBy === 'submittedAt') return 'The tied row above was submitted earlier.';
+    if (decidedBy === 'preservation') return 'The row above leads on preservation.';
+    return 'The row above holds the next tiebreak.';
   }
 
   private renderScienceFooter(): string {
