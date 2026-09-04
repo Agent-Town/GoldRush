@@ -298,14 +298,18 @@ for (const contract of voltage.contracts) {
         restoreRig = () => Object.assign(Balance.sparkRig, rig);
         expect(mechanics).toMatchObject({
           buildables: expect.arrayContaining([
+            // The relay the corridor circuit is carried on. `lantern_post` is NOT offered here any
+            // more: declaring `twist.powerGrid` withdraws it (`MechanicsManifest.ts:823`) exactly
+            // as on `e3-blackout-ridge`, and this map's lamp is a pre-placed grid fixture instead.
             {
-              id: 'lantern_post',
+              id: 'sentry_beacon',
               operation: 'BUILD',
-              meaning: 'Light radius 7; moth target score is coverage x radius x 1.',
-              cost: 15,
-              costs: [15, 15, 15, 15, 15, 15],
-              maxCount: 8,
-              source: 'twist.mothSeason',
+              meaning: 'Lights the dark and slows what it touches; radius 8wu.',
+              cost: 25,
+              costs: [25, 35, 45, 55, 75, 95],
+              costRule: 'ceil-to-5',
+              maxCount: 6,
+              source: 'buildables.registry',
             },
             {
               id: 'decoy_shed',
@@ -318,6 +322,21 @@ for (const contract of voltage.contracts) {
             },
           ]),
           rules: expect.arrayContaining([
+            // The era mechanic on the secure latch, published from the same rule the Canyon Works
+            // publishes: the corridor must have carried current by the secure wave.
+            {
+              id: 'connect_objective',
+              source: 'Game.syncCanyonConnectObjective',
+              data: {
+                consumerRole: 'gallery',
+                poweredState: 'powered',
+                required: 1,
+                byWave: 12,
+                completionLatch: 'one-way-at-or-before-deadline',
+                failureLatch: 'one-way-after-deadline',
+                missedDeadline: 'run-unsecurable',
+              },
+            },
             {
               id: 'locked_night',
               source: 'DayNightCycle.sample',
@@ -372,7 +391,13 @@ for (const contract of voltage.contracts) {
           const sim = new HeadlessContractSim({ contractId: contract.id, seed });
           sim.hero.applyStats(100_000, 1);
           sim.hero.heal(100_000);
-          expect(sim.build.placeFree('lantern_post', { x: -8, z: 12 }, 0)).toBe(true);
+          // The relay first: without a Sentry Beacon on the pylon site the corridor span stays cut,
+          // the map's Lantern Post is off the lamp node's current, and the run cannot secure at all.
+          expect(sim.build.placeFree('sentry_beacon', { x: 0, z: -14 }, 0)).toBe(true);
+          // `lantern_post` is a PRE-PLACED grid fixture on this map now (`corridor-lamp`, x0 z6) and
+          // is no longer an offered buildable, so a free placement is refused in both engines —
+          // asserted here so the withdrawal is a pinned fact rather than a silent `false`.
+          expect(sim.build.placeFree('lantern_post', { x: -8, z: 12 }, 0)).toBe(false);
           expect(sim.build.placeFree('decoy_shed', { x: 0, z: 0 }, 0)).toBe(true);
           let turn = sim.advanceToTurn();
           while (!turn.terminal && sim.mothSwarm.diagnostics().alive === 0) turn = sim.advanceToTurn();

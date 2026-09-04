@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "3d0f567dd4cab4f9a643d88d293e2fa00db2e666e3cea3a3d646eb9a0baadb58",
+  "engineHash": "869f345151896ee319a959e2922763a93082fca12b944b045a2351cf80aa6aba",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -241,6 +241,12 @@
       "engineHash": "3d0f567dd4cab4f9a643d88d293e2fa00db2e666e3cea3a3d646eb9a0baadb58",
       "pinnedAt": "2026-09-04T19:08Z",
       "cause": "content re-hash, no simulation behaviour change for existing tapes: contract-clock-explicit gives each of the 18 flat-ceiling contracts an authored 18000-tick clock while the other 24 continue to derive their clocks from secureWave; all 42 admission envelopes remain byte-for-byte numerically unchanged; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "869f345151896ee319a959e2922763a93082fca12b944b045a2351cf80aa6aba",
+      "pinnedAt": "2026-09-05T00:00Z",
+      "cause": "content re-hash, no engine change: e3-moth-season-grid composes the existing Canyon Works power-graph seam into e3-moth-season by CONTRACT DATA only (one producer, one relay pylon site, the gallery -> lamp consumer pair, connect required 1 byWave 12, one pre-placed lantern_post on the lamp node, and a fevered_saboteur roster row so the span is cuttable). assets/contracts sits in ENGINE_SOURCE_INPUTS, so authored map data rotates the identity; no src file changed and every other contract envelope is byte-for-byte unchanged; same era per F-1441-3",
       "aliases": []
     }
   ],
