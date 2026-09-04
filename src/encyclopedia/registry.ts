@@ -457,6 +457,7 @@ function epochFactLines(epochId: string): string[] {
   ].filter(Boolean);
   return [
     `${epoch.displayName}: ${epoch.contracts.length || 1} claim page${epoch.contracts.length === 1 ? '' : 's'} in this era`,
+    ...(epochId === 'epoch-4-motor' ? ['Hauler: gather tar on foot, stand at the destination and press Confirm. At a survey stake, Confirm grades its road. Upgrade works too.'] : []),
     contracts.length > 0 ? `Claims: ${contracts.join(', ')}` : '',
     works.length > 0 ? `Works: ${works.slice(0, 4).join(', ')}` : '',
     opponents.length > 0 ? `Opponents: ${opponents.slice(0, 4).join(', ')}` : '',

@@ -2,6 +2,9 @@ import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { PROFILE_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import type { RunTape } from '../src/game/RunTape';
 
 // E4 ROADS AND CONVOYS — the both-engine proof and the human-parity pin
 // (`tasks/e4-roads-and-convoys.md` scope 1 and 4).
@@ -17,9 +20,8 @@ import { expect, test, type Page } from '@playwright/test';
 //      terminates on the hash and the motor summary Node recorded;
 //   3. every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake
 //      with a reason that names the nearest stake;
-//   4. HUMAN PARITY, honestly: a PLAIN boot of the Dust Flats (no `?debug`) mounts no Hauler and no
-//      tar, because `Game.ts:4585` gates `Vehicle`/`FuelSystem` behind `?debug&vehicles`. See the
-//      test's own comment and `artifacts/e4-roads-and-convoys/report.md` for the fork.
+//   4. HUMAN PARITY: a PLAIN Motor boot mounts the Hauler and tar, while the
+//      debug flag remains an override for non-Motor contracts.
 const ARTIFACTS = 'artifacts/e4-roads-and-convoys';
 const HARNESS = (contract: string, seed: string) => `/src/replay/harness.html?debug&contract=${contract}&seed=${seed}`;
 // Module paths the browser page imports live; passed as values so tsc does not try to resolve them
@@ -48,6 +50,21 @@ function collectErrors(page: Page): string[] {
   page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`); });
   page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
   return errors;
+}
+
+async function walkToZ(page: Page, target: number): Promise<void> {
+  for (let step = 0; step < 40; step += 1) {
+    const z = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.heroPos.z ?? 8);
+    if (Math.abs(z - target) < 0.6) return;
+    await page.keyboard.press(z > target ? 'KeyW' : 'KeyS', { delay: 120 });
+    await page.waitForTimeout(30);
+  }
+  throw new Error(`Player did not reach z=${target}.`);
+}
+
+async function confirm(page: Page, projectName: string): Promise<void> {
+  if (projectName === 'mobile-chrome') await page.locator('#confirm-button').click();
+  else await page.keyboard.press('Space');
 }
 
 test('every Motor reel replays to its claimed hash in Node, and the two engines agree tick-for-tick under the wave boundary', async ({ page }, testInfo) => {
@@ -131,30 +148,33 @@ test('every Motor map publishes its own errand to a browser rider, and GRADE is 
   expect(errors).toEqual([]);
 });
 
-test('human parity, measured: a plain boot of the Dust Flats mounts no Hauler, and only ?debug&vehicles does', async ({ page }) => {
+test('human parity: a Motor plain boot mounts its declared Hauler and tar', async ({ page }) => {
   test.setTimeout(180_000);
   const errors = collectErrors(page);
-  // THE FORK, PINNED (`tasks/e4-roads-and-convoys.md` scope 4 assumed "the existing E4 browser
-  // composition covers this"; it does not). `Game.ts:4585` mounts `Vehicle` and `FuelSystem` only
-  // when `isDevVehiclesEnabled()` is true, which is `isDebugEnabled() && params.has('vehicles')`
-  // (`Game.ts:10178-10181`), and `DustFlatsTile` has no importer at all. So the headless rider can
-  // GRADE and HAUL on a map where a browser player meets neither road nor Hauler. Closing that gap
-  // is a `Game.ts` change, which this slice's firewall forbids; the corrective is on the desk in
-  // BACKLOG. This test is the change detector: the day the plain boot composes a motor consumer it
-  // goes red, and it SHOULD, because that is the day this row can finally say "parity".
+  await page.addInitScript(({ epochKey, profileEpochKey, profileKey }) => {
+    const profile: ProfileState = {
+      version: 2,
+      activeId: 'robin',
+      profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+    };
+    localStorage.setItem(profileKey, JSON.stringify(profile));
+    localStorage.setItem(epochKey, 'epoch-4-motor');
+    localStorage.setItem(profileEpochKey, 'epoch-4-motor');
+    sessionStorage.setItem('gr.contract.launch.v1', 'e4-dust-flats');
+  }, { epochKey: ACTIVE_EPOCH_KEY, profileEpochKey: profileDataKey('robin', ACTIVE_EPOCH_KEY), profileKey: PROFILE_KEY });
   await page.goto('/?contract=e4-dust-flats&seed=e4-parity-plain');
-  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e4-dust-flats' && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const plain = await page.evaluate(() => ({
     vehicle: window.__THREE_GAME_DIAGNOSTICS__?.vehicle ?? null,
     fuel: window.__THREE_GAME_DIAGNOSTICS__?.fuel ?? null,
     testSeam: typeof window.__GR_TEST__,
   }));
   expect(plain.testSeam).toBe('undefined');
-  expect(plain.vehicle).toBeNull();
-  expect(plain.fuel).toBeNull();
+  expect(plain.vehicle).toMatchObject({ kind: 'hauler', state: 'idle', x: -20, z: -8 });
+  expect(plain.fuel).toMatchObject({ capacity: 24, harvestedNodes: 0 });
 
-  // The same contract with the dev flag: the Hauler is there, at the same start the socket uses.
-  await page.goto('/?debug&vehicles&contract=e4-dust-flats&seed=e4-parity-dev');
+  // `?debug&vehicles` remains the explicit override outside the Motor Frontier.
+  await page.goto('/?debug&vehicles&contract=e1-dry-gulch&seed=e4-parity-dev');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const dev = await page.evaluate(() => ({
     vehicle: window.__THREE_GAME_DIAGNOSTICS__?.vehicle ?? null,
@@ -162,6 +182,70 @@ test('human parity, measured: a plain boot of the Dust Flats mounts no Hauler, a
   }));
   expect(dev.vehicle).toMatchObject({ kind: 'hauler', state: 'idle', x: -20, z: -8 });
   expect(dev.fuel).toMatchObject({ capacity: 24, harvestedNodes: 0 });
-  console.log(`[e4-parity] plain boot vehicle=${JSON.stringify(plain.vehicle)} dev boot vehicle=${JSON.stringify(dev.vehicle)}`);
+  expect(errors).toEqual([]);
+});
+
+test('a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  const errors = collectErrors(page);
+  await page.addInitScript(({ epochKey, profileEpochKey, profileKey }) => {
+    const profile: ProfileState = {
+      version: 2,
+      activeId: 'robin',
+      profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+    };
+    localStorage.setItem(profileKey, JSON.stringify(profile));
+    localStorage.setItem(epochKey, 'epoch-4-motor');
+    localStorage.setItem(profileEpochKey, 'epoch-4-motor');
+    sessionStorage.setItem('gr.contract.launch.v1', 'e4-dust-flats');
+  }, { epochKey: ACTIVE_EPOCH_KEY, profileEpochKey: profileDataKey('robin', ACTIVE_EPOCH_KEY), profileKey: PROFILE_KEY });
+  await page.goto('/?contract=e4-dust-flats&seed=e4-player-ride');
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e4-dust-flats' && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  if (await page.getByTestId('contract-briefing-dismiss').isVisible()) await page.getByTestId('contract-briefing-dismiss').click();
+
+  // Start is (0, 8); the road stake is (0, 12), and the middle tar node is (0, -8). These are
+  // ordinary player movement and the shared Confirm context action, with no debug bridge or flag.
+  await walkToZ(page, 12);
+  await confirm(page, testInfo.project.name);
+  await walkToZ(page, -8);
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.fuel?.harvestedNodes ?? 0) > 0, null, { timeout: 5_000 });
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.fuel?.stored ?? 0) > 0);
+  const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.vehicle!.x);
+  await confirm(page, testInfo.project.name);
+  await page.waitForFunction((x) => Math.abs(window.__THREE_GAME_DIAGNOSTICS__!.vehicle!.x - x) > 0.5, before);
+
+  await mkdir('reviews/shots-e4-vehicles-plain-boot', { recursive: true });
+  await page.screenshot({ path: `reviews/shots-e4-vehicles-plain-boot/${testInfo.project.name}.png` });
+  const ride = await page.evaluate(() => ({
+    vehicle: window.__THREE_GAME_DIAGNOSTICS__!.vehicle,
+    fuel: window.__THREE_GAME_DIAGNOSTICS__!.fuel,
+  }));
+  expect(ride.vehicle).toMatchObject({ kind: 'hauler' });
+  expect(ride.fuel!.harvestedNodes).toBeGreaterThan(0);
+
+  // The assay harness adds only deterministic clocks and a run-end control; repeat the same player
+  // inputs there so the production recorder can seal immediately instead of waiting for a death.
+  await page.goto('/?debug&nolevel&nowaves&contract=e4-dust-flats&seed=e4-player-tape');
+  await page.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e4-dust-flats');
+  if (await page.getByTestId('contract-briefing-dismiss').isVisible()) await page.getByTestId('contract-briefing-dismiss').click();
+  await walkToZ(page, -8);
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.fuel?.stored ?? 0) > 0);
+  const tapeBefore = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.vehicle!.x);
+  await page.keyboard.press('Space');
+  await page.waitForFunction((x) => Math.abs(window.__THREE_GAME_DIAGNOSTICS__!.vehicle!.x - x) > 0.5, tapeBefore);
+  await page.evaluate(() => window.__GR_TEST__!.endRunForTest());
+  const tape = await page.evaluate(() => window.__GR_TEST__!.runTape.list()[0]!);
+  expect(tape.inputLog.motorActions).toEqual(expect.arrayContaining([expect.objectContaining({ kind: 'motor_haul' })]));
+  const tapePath = testInfo.outputPath('plain-boot-motor.tape.json');
+  await writeFile(tapePath, JSON.stringify(tape));
+  const slip = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay.mjs', tapePath], {
+    cwd: process.cwd(),
+    encoding: 'utf8',
+    timeout: 180_000,
+    env: { ...process.env, GR_ASSAY_REPLAY_PORT: String(5640 + testInfo.workerIndex) },
+  }).trim()) as { eventLogHash: string; ticks: number };
+  expect(slip.eventLogHash).toBe((tape as RunTape).eventLogHash);
+  expect(slip.ticks).toBe((tape as RunTape).inputLog.durationTicks);
+  console.log('E4_PLAIN_BOOT_ASSAY_SLIP', JSON.stringify(slip));
   expect(errors).toEqual([]);
 });

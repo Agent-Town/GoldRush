@@ -80,8 +80,11 @@ import {
   runTapeEventLogHash,
   submittedRunTape,
   type RunTape,
+  type RunTapeMotorAction,
+  type RunTapeMotorEvent,
   type RunTapeOutcome,
 } from './RunTape';
+import { MotorSocket, type MotorDiagnostics } from '../sim/MotorSocket';
 import { META_PROGRESS_KEY, agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
@@ -176,6 +179,7 @@ import { XpMotePool } from '../entities/XpMote';
 import { DeepwaterArsenal } from '../entities/DeepwaterArsenal';
 import { PressureSystem } from '../systems/PressureSystem';
 import { FuelSystem } from '../systems/FuelSystem';
+import { RoadSegment } from '../systems/RoadSegment';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
 import { E6ArsenalSystem, e6CureArmForOwner } from '../systems/E6ArsenalSystem';
 import { E6TileConsumerSystem } from '../systems/E6TileConsumerSystem';
@@ -452,6 +456,7 @@ type RunTapeReplayState = {
   requestPending: boolean;
   winding: boolean;
   eraRefusal: { tapeHash: string; currentHash: string; tapeEra: number | null; currentEra: number } | null;
+  motorActionIndex: number;
 };
 
 export class Game {
@@ -911,6 +916,8 @@ export class Game {
   private canyonConnectFailed = false;
   private fuelSystem?: FuelSystem;
   private vehicle?: Vehicle;
+  private motorSocket = MotorSocket.create(this.activeContract);
+  private readonly motorRoadViews = new Map<string, RoadSegment>();
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -2705,6 +2712,7 @@ export class Game {
     this.crowdFlockView?.dispose();
     this.vehicle?.dispose();
     this.fuelSystem?.dispose();
+    for (const road of this.motorRoadViews.values()) road.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -2906,8 +2914,15 @@ export class Game {
       this.e6ArsenalSystem.update(simDelta, this.timeAlive);
       this.e9ArsenalSystem.update(simDelta, this.timeAlive);
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
-      this.fuelSystem?.update(simDelta, this.visibleActorPositions());
-      this.vehicle?.update(simDelta);
+      if (this.motorSocket) {
+        const before = this.motorSocket.diagnostics(this.timeAlive, this.secureWaveForRun()).vehicle;
+        this.motorSocket.update(simDelta, this.timeAlive, this.visibleActorPositions(), () => undefined);
+        this.fuelSystem?.update(simDelta, this.visibleActorPositions());
+        this.syncMotorVehicleVisual(before.x, before.z);
+      } else {
+        this.fuelSystem?.update(simDelta, this.visibleActorPositions());
+        this.vehicle?.update(simDelta);
+      }
       this.buildSystem.applyTurretPressureFireRateMult(this.pressureArsenalSystem.turretFireRateMult * this.crawlerBoss.turretFireRateMult);
       this.applyHarvestStats(
         this.pressureArsenalSystem.updateAutoPan(
@@ -2956,6 +2971,7 @@ export class Game {
         isWreckDisabled() ? undefined : this.wreckerContext,
         (enemy) =>
           this.nightSpeedMultiplier(enemy) *
+          (this.motorSocket?.enemyMovementMultiplier(this.timeAlive) ?? 1) *
           this.wrangle.movementMultiplier(enemy) *
           this.e6ArsenalSystem.movementMultiplier(enemy) *
           this.e9ArsenalSystem.movementMultiplier(enemy),
@@ -4582,9 +4598,12 @@ export class Game {
         this.scene.add(this.tram.group);
       }
     }
-    if (isDevVehiclesEnabled()) {
-      this.fuelSystem = new FuelSystem(isDevVehiclesEnabled);
-      this.vehicle = new Vehicle(this.fuelSystem, { start: { x: -20, z: -8 } });
+    if (this.motorSocket || isDevVehiclesEnabled()) {
+      const enabled = () => this.motorSocket !== null || isDevVehiclesEnabled();
+      this.fuelSystem = new FuelSystem(enabled);
+      this.vehicle = new Vehicle(this.fuelSystem, {
+        start: this.activeContract.twist.motorFrontier?.vehicle.start ?? { x: -20, z: -8 },
+      });
       this.scene.add(this.fuelSystem.group, this.vehicle.group);
     }
     this.detailScatter = new DetailScatter();
@@ -5490,8 +5509,8 @@ export class Game {
       tram: this.tram?.diagnostics ?? null,
       fairground: this.ferrisWheel?.diagnostics ?? null,
       crowdFlocks: this.crowdFlocks?.diagnostics ?? null,
-      fuel: this.fuelSystem?.diagnostics ?? null,
-      vehicle: this.vehicle?.diagnostics ?? null,
+      fuel: this.motorSocket?.diagnostics(this.timeAlive, this.secureWaveForRun()).fuel ?? this.fuelSystem?.diagnostics ?? null,
+      vehicle: this.motorSocket?.diagnostics(this.timeAlive, this.secureWaveForRun()).vehicle ?? this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       canyonWorks: this.canyonConnectDiagnostics(),
       crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
@@ -5840,6 +5859,7 @@ export class Game {
       // every contract that declares no discharge-able front, so nothing else moves.
       || !this.interferenceFront.objectiveAllowsSecure
       || !this.showroomCaptureObjective.objectiveAllowsSecure
+      || (this.motorSocket !== null && !this.motorSocket.objectiveAllowsSecure)
       || (this.preserveTarget !== null && !this.preserveTarget.active)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
@@ -6154,7 +6174,8 @@ export class Game {
       && (this.canalChoices === null || this.canalChoices.objectiveAllowsSecure)
       // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
       && this.interferenceFront.objectiveAllowsSecure
-      && this.showroomCaptureObjective.objectiveAllowsSecure;
+      && this.showroomCaptureObjective.objectiveAllowsSecure
+      && (this.motorSocket === null || this.motorSocket.objectiveAllowsSecure);
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
       || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
@@ -7080,6 +7101,7 @@ export class Game {
     this.runTapeReplay = {
       tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape: false, divergedAtWave: null,
       trueDriver: null, snapshot: null, requestedTick: 0, requestPending: false, winding: false, eraRefusal: null,
+      motorActionIndex: 0,
     };
     this.replayCameraPan.set(0, 0, 0);
     this.pendingProspectorDispatches.length = 0;
@@ -7112,6 +7134,7 @@ export class Game {
       requestPending: driver !== null,
       winding: driver !== null,
       eraRefusal,
+      motorActionIndex: 0,
     };
     this.mountLanternShow(tape);
     if (eraRefusal) {
@@ -7203,6 +7226,11 @@ export class Game {
     const idle = intentsFromLockstepInput(null);
     if (!replay || replay.complete || this.state.isPaused || (this.state.current !== 'playing' && this.state.current !== 'levelup')) return idle;
     const actorIntents = this.actors.map(() => intentsFromLockstepInput(null));
+    const tick = replay.sessions.get(replay.tape.inputLog.primarySlot)?.status().tick ?? 0;
+    const motorActions = replay.tape.inputLog.motorActions ?? [];
+    while (replay.motorActionIndex < motorActions.length && motorActions[replay.motorActionIndex]!.t === tick) {
+      this.applyMotorTapeAction(motorActions[replay.motorActionIndex++]!);
+    }
     for (const [slot, session] of replay.sessions) {
       const actor = this.actors[slot];
       const input = session.step(actor?.group.position ?? null);
@@ -7240,6 +7268,7 @@ export class Game {
           gold: this.economy.gold,
           wave: this.waveSystem.diagnostics.wave,
           economy: summarizeLog(this.economy.log),
+          ...(this.motorSocket ? { motor: motorTapeEvents(this.motorSocket.diagnostics(this.timeAlive, this.secureWaveForRun())) } : {}),
         });
     replay.complete = true;
     replay.divergedAtWave = divergedAtWave;
@@ -7426,6 +7455,7 @@ export class Game {
       gold: this.economy.gold,
       wave: this.waveSystem.diagnostics.wave,
       economy: summarizeLog(this.economy.log),
+      ...(this.motorSocket ? { motor: motorTapeEvents(this.motorSocket.diagnostics(this.timeAlive, this.secureWaveForRun())) } : {}),
       ...(preserve ? { preserve } : {}),
     };
   }
@@ -8153,6 +8183,12 @@ export class Game {
     this.crowdFlocks?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
+    this.motorSocket = MotorSocket.create(this.activeContract);
+    for (const road of this.motorRoadViews.values()) {
+      this.scene.remove(road.group);
+      road.dispose();
+    }
+    this.motorRoadViews.clear();
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -9195,6 +9231,9 @@ export class Game {
     // fallback. The crater is bare ground with no building on it, so nothing above can claim
     // the press first.
     if (this.tryRecoverProbe(this.actionActor.group.position)) return;
+    // Confirm is the touch context key too: at a survey stake it grades first; elsewhere it calls
+    // the Hauler. Keyboard players retain U as the direct grade shortcut.
+    if (this.motorGrade(this.actionActor.group.position) || this.motorHaul(this.actionActor.group.position)) return;
     this.confirmDemolish();
   }
 
@@ -9209,6 +9248,7 @@ export class Game {
    */
   private confirmUpgrade(): boolean {
     if (this.canalChoices?.decide(this.actionActor.group.position, 'demolish').ok) return true;
+    if (this.motorGrade(this.actionActor.group.position)) return true;
     const candidate = this.upgradeCandidate;
     if (!candidate) return false;
     const upgraded = this.upgradeBuilding(candidate.id, candidate.index);
@@ -9218,6 +9258,49 @@ export class Game {
       this.buildingContextPrompt.update(null, null, false);
     }
     return upgraded;
+  }
+
+  private motorGrade(point: { x: number; z: number }, replay = false): boolean {
+    const result = this.motorSocket?.gradeAt(point, this.timeAlive, () => undefined);
+    if (!result?.ok) return false;
+    if (!this.motorRoadViews.has(result.corridorId!)) {
+      const corridor = this.activeContract.tileParams.roadCorridors?.find(({ id }) => id === result.corridorId);
+      if (corridor) {
+        const road = new RoadSegment(corridor.id, corridor.start, corridor.end);
+        this.motorRoadViews.set(corridor.id, road);
+        this.scene.add(road.group);
+      }
+    }
+    if (!replay) {
+      this.runTapeRecorder?.recordMotorAction('motor_grade', point);
+      this.vfx.floatText(new THREE.Vector3(point.x, Terrain.visualY(point.x, point.z, 0.5), point.z), 'Road graded', '#c4883a');
+    }
+    return true;
+  }
+
+  private motorHaul(point: { x: number; z: number }, replay = false): boolean {
+    const result = this.motorSocket?.haulTo(point, this.timeAlive, () => undefined);
+    if (!result?.ok) return false;
+    if (!replay) {
+      this.runTapeRecorder?.recordMotorAction('motor_haul', point);
+      this.speakTrailGuide('first-hauler');
+      this.vfx.floatText(new THREE.Vector3(point.x, Terrain.visualY(point.x, point.z, 0.5), point.z), 'Hauler called', '#83ded7');
+    }
+    return true;
+  }
+
+  private applyMotorTapeAction(action: RunTapeMotorAction): void {
+    if (action.kind === 'motor_grade') this.motorGrade(action.point, true);
+    else this.motorHaul(action.point, true);
+  }
+
+  private syncMotorVehicleVisual(previousX: number, previousZ: number): void {
+    if (!this.vehicle || !this.motorSocket) return;
+    const current = this.motorSocket.diagnostics(this.timeAlive, this.secureWaveForRun()).vehicle;
+    this.vehicle.group.position.set(current.x, Terrain.visualY(current.x, current.z, 0.1), current.z);
+    if (current.x !== previousX || current.z !== previousZ) {
+      this.vehicle.group.rotation.y = Math.atan2(current.x - previousX, current.z - previousZ);
+    }
   }
 
   private confirmDemolish(): boolean {
@@ -10176,8 +10259,16 @@ function isDevTramEnabled(): boolean {
 }
 
 function isDevVehiclesEnabled(): boolean {
+  // Production Motor contracts mount from twist.motorFrontier; this remains the non-Motor override.
   const params = new URLSearchParams(window.location.search);
   return isDebugEnabled() && params.has('vehicles');
+}
+
+function motorTapeEvents(motor: MotorDiagnostics): { events: RunTapeMotorEvent[]; eventCount: number } {
+  return {
+    events: motor.events.map(({ at: _at, ...event }) => event as RunTapeMotorEvent),
+    eventCount: motor.eventCount,
+  };
 }
 
 function createMegaprojectPlaqueTexture(lines: readonly string[]): THREE.CanvasTexture {

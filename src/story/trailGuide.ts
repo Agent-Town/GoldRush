@@ -11,7 +11,8 @@ export type TrailGuideTrigger =
   | 'first-return'
   | 'first-prospector-pan'
   | 'first-build-menu'
-  | 'first-theft';
+  | 'first-theft'
+  | 'first-hauler';
 
 export type TrailGuideBark = { id: string; trigger: TrailGuideTrigger; line: string };
 
@@ -27,6 +28,7 @@ export const TRAIL_GUIDE_BARKS: readonly TrailGuideBark[] = [
   { id: 'trail-guide-first-prospector-pan', trigger: 'first-prospector-pan', line: 'Send the Prospector to pan a seam while you hold the claim.' },
   { id: 'trail-guide-first-build-menu', trigger: 'first-build-menu', line: 'Every line here names its price and its work. Set what the claim is short of, not what looks grandest.' },
   { id: 'trail-guide-first-theft', trigger: 'first-theft', line: 'One of them is away with your gold. Give chase and it comes back to the pile, or let them run and keep your place at the claim.' },
+  { id: 'trail-guide-first-hauler', trigger: 'first-hauler', line: 'The Hauler follows your boots. Stand where it should go and press Confirm. At a survey stake, Confirm grades the road. Upgrade works too.' },
 ];
 
 export function takeTrailGuideBark(trigger: TrailGuideTrigger, storage = browserStorage()): TrailGuideBark | undefined {
