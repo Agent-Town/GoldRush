@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_ENDPOINT = 'https://agenttown.app/api/standings';
 const DEFAULT_FIXTURE = resolve(ROOT, 'scripts/fixtures/winnability-standings.json');
-const DEFAULT_OUTPUT = resolve(ROOT, 'assets/contracts/winnability-receipts.json');
+const DEFAULT_OUTPUT = resolve(ROOT, 'assets/rotations/winnability-receipts.json');
 
 const args = process.argv.slice(2);
 const offline = args.includes('--offline');

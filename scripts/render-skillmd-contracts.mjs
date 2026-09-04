@@ -10,7 +10,7 @@ const begin = '<!-- contracts:begin -->';
 const end = '<!-- contracts:end -->';
 const skill = readFileSync(skillPath, 'utf8');
 const seeds = JSON.parse(readFileSync(path.join(root, 'assets/contracts/bench-seeds.json'), 'utf8'));
-const receipts = JSON.parse(readFileSync(path.join(root, 'assets/contracts/winnability-receipts.json'), 'utf8')).contracts;
+const receipts = JSON.parse(readFileSync(path.join(root, 'assets/rotations/winnability-receipts.json'), 'utf8')).contracts;
 const manifests = new Map();
 
 for (const epoch of readdirSync(path.join(root, 'assets/contracts'), { withFileTypes: true })) {

@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "f9f634280279cacf4eb944ec92fc9022eaffdfb8841086fdd863c302097dbea0",
+  "engineHash": "e6f25014d9a6729bd93192d3f9fa14bb8735263b1c147a09fa3dfd22292382b9",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -223,6 +223,12 @@
       "engineHash": "f9f634280279cacf4eb944ec92fc9022eaffdfb8841086fdd863c302097dbea0",
       "pinnedAt": "2026-09-04",
       "cause": "content re-hash, no behaviour change: assets/contracts/winnability-receipts.json regenerated after heat 11 (27 claimed); the receipts ledger sits inside the whole-directory corpus entry and rotates the hash on every regeneration (corrective receipts-outside-engine-corpus queued); same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "e6f25014d9a6729bd93192d3f9fa14bb8735263b1c147a09fa3dfd22292382b9",
+      "pinnedAt": "2026-09-04T14:28Z",
+      "cause": "content re-hash, no behaviour change: receipts-outside-engine-corpus removes the operational winnability ledger from ENGINE_SOURCE_INPUTS and repoints every executable reader; regenerating the ledger now leaves this hash byte-identical; same era per F-1441-3",
       "aliases": []
     }
   ],
