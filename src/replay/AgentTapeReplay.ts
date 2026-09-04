@@ -18,6 +18,7 @@ const FROZEN_STEP_ALLOWANCE = 18_000;
 export type AgentTapeReplayResult = {
   eventLogHash: string;
   outcome: { secured: boolean; waves: number; gold: number; timeAlive: number };
+  securedSnapshot?: { waves: number; gold: number; timeAlive: number };
   ticks: number;
   engine: 'headless-contract-sim';
 };
@@ -188,6 +189,7 @@ export class AgentTapeReplaySession {
     const unreached = [...this.orders.keys()].filter((tick) => !this.applied.has(tick));
     if (unreached.length) throw new Error(`the run ended before tick ${unreached[0]} of the order stream`);
     const outcome = this.sim.outcome();
+    const securedSnapshot = this.sim.bankedSecuredSnapshot;
     return {
       eventLogHash: agentOrdersEventLogHash(this.sim.standingOrdersSnapshot()),
       outcome: {
@@ -196,6 +198,7 @@ export class AgentTapeReplaySession {
         gold: outcome.gold,
         timeAlive: outcome.timeMs / 1000,
       },
+      ...(securedSnapshot ? { securedSnapshot } : {}),
       ticks: this.steps,
       engine: 'headless-contract-sim',
     };

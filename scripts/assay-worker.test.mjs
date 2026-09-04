@@ -37,8 +37,10 @@ async function fixture() {
       if (attempt <= 3) throw new Error('stub instrument unavailable');
     }
     const eventLogHash = tape.id === 'hash-mismatch' ? 'fnv1a32:deadbeef' : tape.id === 'invalid-hash' ? 'not-a-hash' : tape.id.startsWith('matching-round2') ? tape.eventLogHash : 'fnv1a32:1234abcd';
-    const outcome = tape.id.startsWith('matching-round2') ? tape.outcome : { secured: true, waves: tape.id === 'outcome-mismatch' ? 9 : 10, timeAlive: 120, gold: 40 };
-    process.stdout.write(JSON.stringify({ eventLogHash, outcome }) + '\\n');
+    const outcome = tape.id === 'unsecured-mismatch'
+      ? { secured: false, waves: 9, timeAlive: 120, gold: 40 }
+      : tape.id.startsWith('matching-round2') ? tape.outcome : { secured: true, waves: tape.id === 'outcome-mismatch' ? 9 : 10, timeAlive: 120, gold: 40 };
+    process.stdout.write(JSON.stringify({ eventLogHash, outcome, ...(tape.id === 'unsecured-mismatch' ? {} : { securedSnapshot: { waves: 10, timeAlive: 100, gold: 30 } }) }) + '\\n');
   `);
   return { directory, stub };
 }
@@ -90,24 +92,27 @@ function runWorker(base, stub, flags = ['--once'], worker = path.join(root, 'scr
 
 test('once keeps completed mismatches rejected and retries instrument failures before unassayable', async () => {
   const { directory, stub } = await fixture();
-  const api = await mockApi([row('verified'), row('hash-mismatch'), row('outcome-mismatch'), row('crash'), row('invalid-hash'), row('legacy', 1)]);
+  const api = await mockApi([row('verified'), row('hash-mismatch'), row('outcome-mismatch'), row('unsecured-mismatch'), row('crash'), row('invalid-hash'), row('legacy', 1)]);
   try {
     const { code, stdout, stderr } = await runWorker(api.base, stub).done;
     assert.equal(code, 0, stderr);
     assert.equal(api.gets(), 1, '--once fetches the queue once');
-    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['verified', 'rejected', 'rejected', 'unassayable', 'unassayable', 'unassayable']);
+    assert.deepEqual(api.posts.map(({ verdict }) => verdict), ['verified', 'rejected', 'rejected', 'rejected', 'unassayable', 'unassayable', 'unassayable']);
     assert.match(api.posts[1].reason, /eventLogHash mismatch/);
     assert.match(api.posts[2].reason, /outcome mismatch: waves/);
-    assert.match(api.posts[3].reason, /stub instrument crash/);
-    assert.match(api.posts[4].reason, /no valid eventLogHash/);
-    assert.match(api.posts[5].reason, /legacy tape v1 is unverifiable/);
-    assert.equal(api.posts[3].replayedHash, undefined, 'no fake replay hash is published for an instrument failure');
+    assert.match(api.posts[3].reason, /outcome mismatch: secured/);
+    assert.match(api.posts[4].reason, /stub instrument crash/);
+    assert.match(api.posts[5].reason, /no valid eventLogHash/);
+    assert.match(api.posts[6].reason, /legacy tape v1 is unverifiable/);
+    assert.deepEqual(api.posts[0].securedSnapshot, { waves: 10, timeAlive: 100, gold: 30 });
+    assert.equal(api.posts[1].securedSnapshot, undefined, 'only a verified replay carries the secure snapshot');
+    assert.equal(api.posts[4].replayedHash, undefined, 'no fake replay hash is published for an instrument failure');
     const logs = stdout.trim().split('\n').map(JSON.parse);
     assert.deepEqual(logs.filter(({ event }) => event === 'instrument_retry').map(({ attempt, delayMs }) => [attempt, delayMs]), [
       [1, 10], [2, 20], [1, 10], [2, 20], [1, 10], [2, 20],
     ]);
     const verdicts = logs.filter(({ verdict }) => verdict);
-    assert.equal(verdicts.length, 6);
+    assert.equal(verdicts.length, 7);
     assert.ok(verdicts.every((entry) => entry.locator && entry.hashes && Number.isInteger(entry.wallMs)));
   } finally {
     await api.close();

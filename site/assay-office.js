@@ -130,6 +130,10 @@ function rotationUrl() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const standingRule = document.querySelector('[data-standing-rule]');
+  if (standingRule) void import('./standing-rule.js').then(({ COUNTY_STANDING_RULE }) => {
+    standingRule.textContent = COUNTY_STANDING_RULE;
+  });
   const body = document.querySelector('[data-standings="rows"]');
   const costChart = document.querySelector('[data-standings="cost-chart"]');
   const rotationBody = document.querySelector('[data-rotation="rows"]');

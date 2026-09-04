@@ -76,6 +76,13 @@ function outcomeMismatch(claim, actual) {
   return mismatches.length ? `outcome mismatch: ${mismatches.join(', ')}` : null;
 }
 
+function validSecuredSnapshot(value) {
+  return value && typeof value === 'object'
+    && Number.isInteger(value.waves) && value.waves >= 0
+    && Number.isInteger(value.gold) && value.gold >= 0
+    && Number.isFinite(value.timeAlive) && value.timeAlive >= 0;
+}
+
 async function assay(row) {
   const startedAt = performance.now();
   const claimedHash = typeof row?.tape?.eventLogHash === 'string' ? row.tape.eventLogHash : null;
@@ -109,6 +116,8 @@ async function assay(row) {
       if (typeof attemptResult?.eventLogHash !== 'string' || !/^fnv1a32:[a-f0-9]{8}$/.test(attemptResult.eventLogHash)) {
         throw new Error('instrument returned no valid eventLogHash');
       }
+      if (attemptResult.eventLogHash === claimedHash && !outcomeMismatch(row.score, attemptResult.outcome)
+        && !validSecuredSnapshot(attemptResult.securedSnapshot)) throw new Error('instrument returned no valid securedSnapshot');
       result = attemptResult;
       reason = undefined;
       break;
@@ -138,7 +147,8 @@ async function assay(row) {
   // text while what is logged below stays the operator's. An instrument failure can carry this
   // box's absolute paths through `error.message`; those say nothing to a rider and something to a
   // stranger, so they are named by basename on the wire and left whole in the log.
-  const payload = { locator: row?.locator, verdict, ...(replayedHash ? { replayedHash } : {}), ...(reason ? { reason: publicReason(reason) } : {}) };
+  const payload = { locator: row?.locator, verdict, ...(replayedHash ? { replayedHash } : {}),
+    ...(verdict === 'verified' ? { securedSnapshot: result.securedSnapshot } : {}), ...(reason ? { reason: publicReason(reason) } : {}) };
   if (!dryRun) {
     await requestJson(verdictUrl, {
       method: 'POST',

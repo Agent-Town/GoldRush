@@ -52,9 +52,12 @@ export type RunManagerSuspendState = {
   rush: boolean;
   securedAtWave: number;
   resultAt: number | null;
+  securedSnapshot?: SecuredStandingSnapshot | null;
   meta: MetaProgress;
   payout: MetaPayout | null;
 };
+
+export type SecuredStandingSnapshot = { waves: number; gold: number; timeAlive: number };
 
 export class RunManager {
   private host?: RunManagerHost;
@@ -67,6 +70,7 @@ export class RunManager {
   private endedRunId = 0;
   private securedAtWave = 0;
   private securedResultAt: number | null = null;
+  private securedSnapshot: SecuredStandingSnapshot | null = null;
   private lastRunEndedReason: RunEndReason | null = null;
   private meta: MetaProgress = freshMetaProgress();
   private storage?: MetaProgressStorage;
@@ -130,6 +134,7 @@ export class RunManager {
       rush: this.stayedForRushRunId === this.runId,
       securedAtWave: secured ? this.securedAtWave : 0,
       resultAt: secured ? this.securedResultAt : null,
+      securedSnapshot: secured && this.securedSnapshot ? { ...this.securedSnapshot } : null,
       meta: cloneMeta(this.meta),
       payout: secured && this.lastPayout ? { ...this.lastPayout } : null,
     };
@@ -168,6 +173,7 @@ export class RunManager {
       ? state.securedAtWave || Math.min(this.host?.wave() ?? 0, this.host?.secureWave?.() ?? this.host?.wave() ?? 0)
       : 0;
     this.securedResultAt = state.secured ? state.resultAt : null;
+    this.securedSnapshot = state.secured && state.securedSnapshot ? { ...state.securedSnapshot } : null;
     this.lastPayout = state.payout ? { ...state.payout } : null;
     this.endedRunId = 0;
     this.lastRunEndedReason = null;
@@ -183,6 +189,7 @@ export class RunManager {
     victoryPayout: MetaPayout | null;
     secureWaveReached: number | null;
     securedResultAt: number | null;
+    securedSnapshot: SecuredStandingSnapshot | null;
     suspend: RunSuspendDiagnostics;
   } {
     return {
@@ -193,6 +200,7 @@ export class RunManager {
       victoryPayout: this.lastPayout,
       secureWaveReached: this.securedRunId === this.runId ? this.securedAtWave : null,
       securedResultAt: this.securedRunId === this.runId ? this.securedResultAt : null,
+      securedSnapshot: this.securedRunId === this.runId && this.securedSnapshot ? { ...this.securedSnapshot } : null,
       suspend: this.runSuspend?.diagnostics() ?? {
         hasSuspend: false,
         restored: false,
@@ -237,6 +245,7 @@ export class RunManager {
     this.runId += 1;
     this.securedAtWave = 0;
     this.securedResultAt = null;
+    this.securedSnapshot = null;
     this.hideSecuredChip();
     this.options.onRunStarted?.();
     this.host.events.emit({ type: 'run_started', at, runId: this.runId });
@@ -298,15 +307,18 @@ export class RunManager {
     this.securedRunId = this.runId;
     this.securedAtWave = Math.max(0, Math.min(wave, this.host.secureWave?.() ?? wave));
     this.securedResultAt = this.options.now?.() ?? Date.now();
+    const at = this.host.at() ?? 0;
+    const summary = summarizeRun(this.host.economy.log, wave);
+    this.securedSnapshot = { waves: this.securedAtWave, gold: Math.floor(summary.goldPanned), timeAlive: at };
     this.awardSecuredClaim();
     this.host.events.emit({
       type: 'run_secured',
-      at: this.host.at() ?? 0,
+      at,
       runId: this.runId,
       secureWave: this.securedAtWave,
       resultAt: this.securedResultAt,
       summary: {
-        ...summarizeRun(this.host.economy.log, wave),
+        ...summary,
         secureWaveReached: this.securedAtWave,
         deepestWave: wave,
       },
@@ -581,7 +593,8 @@ function cloneMeta(meta: MetaProgress): MetaProgress {
 }
 
 function cloneSuspendState(state: RunManagerSuspendState): RunManagerSuspendState {
-  return { ...state, meta: cloneMeta(state.meta), payout: state.payout ? { ...state.payout } : null };
+  return { ...state, securedSnapshot: state.securedSnapshot ? { ...state.securedSnapshot } : null,
+    meta: cloneMeta(state.meta), payout: state.payout ? { ...state.payout } : null };
 }
 
 function zeroPayout(): MetaPayout {

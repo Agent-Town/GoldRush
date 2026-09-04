@@ -730,6 +730,7 @@ export class HeadlessContractSim {
   private economySequence = 0;
   private secured = false;
   private securedWave: number | null = null;
+  private securedSnapshot: { waves: number; gold: number; timeAlive: number } | null = null;
   private dead = false;
   private lastTurnWave = -1;
   private lastTurnOfferKey = '';
@@ -1389,6 +1390,10 @@ export class HeadlessContractSim {
   // untouched, so the gr-sim determinism pins keep meaning what they meant.
   // ---------------------------------------------------------------------------
 
+  get bankedSecuredSnapshot(): { waves: number; gold: number; timeAlive: number } | null {
+    return this.securedSnapshot ? { ...this.securedSnapshot } : null;
+  }
+
   /**
    * Advances exactly ONE fixed step — the grain a lockstep tick bundle buys.
    * `advanceToTurn()` runs a whole wave of these on its own authority; a seated sim
@@ -1812,6 +1817,7 @@ export class HeadlessContractSim {
         if (event.type === 'run_secured') {
           this.secured = true;
           this.securedWave = event.secureWave;
+          this.securedSnapshot = { waves: event.secureWave, gold: Math.floor(event.summary.goldPanned), timeAlive: event.at };
           this.secureChoice = 'pending';
           this.secureChoiceElapsed = 0;
         }

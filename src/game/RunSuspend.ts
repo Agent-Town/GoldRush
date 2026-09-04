@@ -401,7 +401,7 @@ export function normalizeRunSuspendDatum(value: unknown): RunSuspendEnvelope | n
 }
 
 export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
-  const { resultAt: _localResultAt, ...runManager } = snapshot.runManager;
+  const { resultAt: _localResultAt, securedSnapshot: _localStanding, ...runManager } = snapshot.runManager;
   return {
     v: snapshot.v,
     wave: snapshot.wave,
@@ -603,6 +603,7 @@ function captureSnapshot(
       rush: false,
       securedAtWave: 0,
       resultAt: null,
+      securedSnapshot: null,
       meta: deepClone(meta),
       payout: null,
     },
@@ -1202,7 +1203,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const runManager = isV2
     ? decodeRunManager(value.runManager, reasons)
     : meta
-      ? { secured: false, rush: false, securedAtWave: 0, resultAt: null, meta, payout: null }
+      ? { secured: false, rush: false, securedAtWave: 0, resultAt: null, securedSnapshot: null, meta, payout: null }
       : null;
   const agent = isV2 ? decodeAgent(value.agent, reasons) : null;
   const controls = isV2 ? decodeControls(value.controls, reasons) : null;
@@ -2736,12 +2737,24 @@ function decodeRunManager(value: unknown, reasons: string[]): RunManagerSuspendS
   const resultAt = record.resultAt === undefined || record.resultAt === null
     ? null
     : requiredNumber(record.resultAt, 0, MAX_TIMESTAMP, 'runManager.resultAt', reasons);
+  const securedSnapshot = record.securedSnapshot === undefined || record.securedSnapshot === null
+    ? null
+    : decodeSecuredSnapshot(record.securedSnapshot, reasons);
   if (record.secured === true && payout === null) reasons.push('runManager.secured requires payout');
   if (record.secured === false && payout !== null) reasons.push('runManager.payout requires secured');
   return typeof record.secured === 'boolean' && typeof record.rush === 'boolean' && meta && payout !== undefined
-    && securedAtWave !== null && resultAt !== undefined
-    ? { secured: record.secured, rush: record.rush, securedAtWave, resultAt, meta, payout }
+    && securedAtWave !== null && resultAt !== undefined && securedSnapshot !== undefined
+    ? { secured: record.secured, rush: record.rush, securedAtWave, resultAt, securedSnapshot, meta, payout }
     : null;
+}
+
+function decodeSecuredSnapshot(value: unknown, reasons: string[]): RunManagerSuspendState['securedSnapshot'] | undefined {
+  const record = requiredRecord(value, 'runManager.securedSnapshot', reasons);
+  if (!record) return undefined;
+  const waves = requiredNumber(record.waves, 0, MAX_COUNT, 'runManager.securedSnapshot.waves', reasons);
+  const gold = requiredNumber(record.gold, 0, MAX_COUNT, 'runManager.securedSnapshot.gold', reasons);
+  const timeAlive = requiredNumber(record.timeAlive, 0, MAX_TIMESTAMP, 'runManager.securedSnapshot.timeAlive', reasons);
+  return waves === null || gold === null || timeAlive === null ? undefined : { waves, gold, timeAlive };
 }
 
 function decodeMetaPayout(value: unknown, reasons: string[]): MetaPayout | null | undefined {

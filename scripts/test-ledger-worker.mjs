@@ -107,7 +107,7 @@ try {
   assert.equal(submitted.status, 200, JSON.stringify(submitted.body));
 
   const replay = path.join(directory, 'replay.mjs');
-  await writeFile(replay, `process.stdout.write(JSON.stringify({eventLogHash:'fnv1a32:1234abcd',outcome:{secured:true,waves:3,timeAlive:12,gold:7}}));\n`);
+  await writeFile(replay, `process.stdout.write(JSON.stringify({eventLogHash:'fnv1a32:1234abcd',outcome:{secured:true,waves:3,timeAlive:12,gold:7},securedSnapshot:{waves:3,timeAlive:12,gold:7}}));\n`);
   await runWorker(base, replay);
 
   const slip = await jsonFetch(`${base}/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=worker-contract`);

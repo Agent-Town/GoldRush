@@ -29,7 +29,7 @@ type StandingsContext = {
 type JsonRecord = Record<string, unknown>;
 
 type ScoreRow = {
-  secured: true;
+  secured: boolean;
   waves: number;
   timeAlive: number;
   gold: number;
@@ -37,6 +37,8 @@ type ScoreRow = {
   preserveWavesAlive?: number;
   preserveHpFraction?: number;
 };
+
+type SecuredSnapshot = Pick<ScoreRow, 'waves' | 'timeAlive' | 'gold'>;
 
 type SeedMode = 'live' | 'bench';
 
@@ -93,6 +95,7 @@ type StoredRow = ScoreRow & {
   assayHash?: string;
   assayReason?: string;
   orders?: number;
+  securedSnapshot?: SecuredSnapshot;
   rotationId?: string;
 };
 
@@ -170,7 +173,8 @@ const MAX_ASSAY_QUEUE = 100;
 const MAX_ASSAY_REASON_LENGTH = 256;
 const ASSAY_HASH = /^fnv1a32:[a-f0-9]{8}$/;
 const ASSAY_ROW_ID = /^[a-f0-9]{32}:[1-4]:\d{1,16}:[a-f0-9]{64}$/;
-const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason']);
+const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason', 'securedSnapshot']);
+const SECURED_SNAPSHOT_KEYS = new Set(['waves', 'timeAlive', 'gold']);
 const ASSAY_LOCATOR_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId']);
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
 const WALK_ERA_START = 1_786_167_061_000;
@@ -275,9 +279,11 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     const locator = isRecord(body.locator) ? body.locator : null;
     const reason = body.reason === undefined ? undefined : typeof body.reason === 'string' && body.reason.length <= MAX_ASSAY_REASON_LENGTH ? body.reason : null;
     const replayedHash = typeof body.replayedHash === 'string' && ASSAY_HASH.test(body.replayedHash) ? body.replayedHash : null;
+    const securedSnapshot = body.securedSnapshot === undefined ? undefined : validateSecuredSnapshot(body.securedSnapshot);
     if (!hasOnlyKeys(body, ASSAY_VERDICT_KEYS) || !locator || !hasOnlyKeys(locator, ASSAY_LOCATOR_KEYS)
       || (body.verdict !== 'verified' && body.verdict !== 'rejected' && body.verdict !== 'unassayable')
       || (body.verdict === 'unassayable' ? body.replayedHash !== undefined : replayedHash === null)
+      || (body.verdict === 'verified' ? securedSnapshot === null || securedSnapshot === undefined : body.securedSnapshot !== undefined)
       || reason === null || typeof locator.epochId !== 'string' || typeof locator.contractId !== 'string'
       || typeof locator.tapeId !== 'string' || locator.tapeId.length === 0 || locator.tapeId.length > MAX_REEL_ID_LENGTH
       || typeof locator.rowId !== 'string' || !ASSAY_ROW_ID.test(locator.rowId)
@@ -296,13 +302,25 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     }
     if (!row) return error(cors, 404, 'assay_not_found', 'Pending assay not found.');
     row.assay = body.verdict;
+    if (body.verdict === 'verified' && securedSnapshot) {
+      Object.assign(row, securedSnapshot);
+      row.securedSnapshot = securedSnapshot;
+    }
     row.assayedAt = Date.now();
     row.orders = inputEntryCount(row) ?? 0;
     delete row.assayHash;
     if (replayedHash !== null) row.assayHash = replayedHash;
     delete row.assayReason;
     if ((body.verdict === 'rejected' || body.verdict === 'unassayable') && reason) row.assayReason = reason;
-    const next = retainUnranked(rows, locator.contractId);
+    const competing = body.verdict === 'verified'
+      ? rows.find((candidate) => candidate !== row && sameStandingOwner(candidate, row) && candidate.assay === 'verified')
+      : undefined;
+    const verifiedRows = competing && compareScores(competing, row, locator.contractId) < 0
+      ? rows.filter((candidate) => candidate !== row)
+      : body.verdict === 'verified'
+        ? rows.filter((candidate) => candidate === row || !sameStandingOwner(candidate, row) || candidate.assay !== 'verified')
+        : rows;
+    const next = retainUnranked(verifiedRows, locator.contractId);
     await kv.put(boardKey(locator.epochId, locator.contractId), JSON.stringify(next));
     await syncAssayBoardIndex(kv, locator.epochId, locator.contractId, next);
     return json(cors, { ok: true, locator, assay: row.assay });
@@ -816,20 +834,26 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     ...(tape ? { assay: 'pending' as const } : {}),
     ...(rotation ? { rotationId: rotation.id } : {}),
   };
-  const standingKind = party?.riderCount ?? 1;
-  const sameStanding = (row: StoredRow) => row.anonId === anonId && row.rotationId === rotation?.id
-    && (row.party?.riderCount ?? 1) === standingKind;
-  const prior = current.find((row) => sameStanding(row) && (tape ? isRankedRow(row) : row.tape === undefined));
-  const kept = prior && compareScores(prior, candidate, contractId) < 0 ? prior : candidate;
+  const sameTape = tape && current.find((row) => sameStandingOwner(row, candidate) && row.tape?.id === tape.id
+    && row.assay !== 'rejected' && row.assay !== 'unassayable');
+  const prior = current.find((row) => sameStandingOwner(row, candidate) && (tape ? isRankedRow(row) : row.tape === undefined));
+  const kept = sameTape ?? (tape ? candidate : prior && compareScores(prior, candidate, contractId) < 0 ? prior : candidate);
   const next = retainUnranked([
-    ...current.filter((row) => !sameStanding(row) || (!tape && row.tape !== undefined)),
+    ...current.filter((row) => !sameStandingOwner(row, candidate) || (tape ? row.tape?.id !== tape.id : row.tape !== undefined)),
     kept,
   ], contractId);
   // ponytail: KV read-modify-write; move this board to a Durable Object if concurrent submissions measurably collide.
   await kv.put(key, JSON.stringify(next));
   if (tape && kept === candidate) await syncAssayBoardIndex(kv, epochId, contractId, next);
   const index = rankedRows(next.filter((row) => row.rotationId === rotation?.id), contractId).indexOf(kept);
-  return json(cors, { ok: true, stored: next.includes(kept), rank: index >= 0 ? index + 1 : null,
+  const ranked = rankedRows(next.filter((row) => row.rotationId === rotation?.id), contractId);
+  const decidedBy = index === 0 ? 'crown' : index > 0 ? decidingKey(ranked[index - 1], kept, contractId) : undefined;
+  const retained = kept === sameTape ? 'goal_snapshot' : kept !== candidate ? 'personal_best' : undefined;
+  const candidateStored = kept === candidate && next.includes(candidate);
+  const sameRun = candidateStored || retained === 'goal_snapshot';
+  return json(cors, { ok: true, stored: candidateStored, rank: sameRun && index >= 0 ? index + 1 : null,
+    ...(sameRun && decidedBy ? { decidedBy } : {}),
+    ...(retained ? { retained } : {}),
     ...(rotation ? { rotationId: rotation.id } : {}) });
 }
 
@@ -896,8 +920,11 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   const assayHash = typeof value.assayHash === 'string' && ASSAY_HASH.test(value.assayHash) ? value.assayHash : undefined;
   const assayReason = typeof value.assayReason === 'string' && value.assayReason.length <= MAX_ASSAY_REASON_LENGTH ? value.assayReason : undefined;
   const orders = value.orders === undefined ? undefined : integerInRange(value.orders, 0, Number.MAX_SAFE_INTEGER);
+  const securedSnapshot = value.securedSnapshot === undefined ? undefined : validateSecuredSnapshot(value.securedSnapshot);
   const rotationId = value.rotationId === undefined ? undefined : typeof value.rotationId === 'string' ? value.rotationId : null;
-  if (submittedAt === null || tape === null || (tape && !tapeMatchesScore(tape, score))) return null;
+  if (submittedAt === null || tape === null || securedSnapshot === null
+    || (tape && assay !== 'verified' && !tapeMatchesScore(tape, score))
+    || (assay === 'verified' && securedSnapshot && !sameSecuredSnapshot(score, securedSnapshot))) return null;
   if ((!tape && (value.assay !== undefined || value.assayedAt !== undefined || value.assayHash !== undefined || value.assayReason !== undefined))
     || (tape && !assay)
     || (value.assayedAt !== undefined && assayedAt === null)
@@ -926,18 +953,33 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     ...(assayHash === undefined ? {} : { assayHash }),
     ...(assayReason === undefined ? {} : { assayReason }),
     ...(typeof orders === 'number' ? { orders } : {}),
+    ...(securedSnapshot ? { securedSnapshot } : {}),
     ...(rotationId ? { rotationId } : {}),
   };
 }
 
 function rankedRows(rows: StoredRow[], contractId: string): StoredRow[] {
-  return rows.filter(isRankedRow).sort((a, b) => compareScores(a, b, contractId)).slice(0, MAX_ROWS);
+  const owners = new Set<string>();
+  return rows.filter(isRankedRow).sort((a, b) => compareScores(a, b, contractId)).filter((row) => {
+    const owner = standingOwnerKey(row);
+    if (owners.has(owner)) return false;
+    owners.add(owner);
+    return true;
+  }).slice(0, MAX_ROWS);
 }
 
 function isRankedRow(row: StoredRow): boolean {
   return row.tape !== undefined && currentLineageRefusal(row.tape) === null
     && row.stack?.harness !== 'operator-probe'
     && row.assay !== 'rejected' && row.assay !== 'unassayable';
+}
+
+function sameStandingOwner(left: StoredRow, right: StoredRow): boolean {
+  return standingOwnerKey(left) === standingOwnerKey(right);
+}
+
+function standingOwnerKey(row: StoredRow): string {
+  return `${row.anonId}\n${row.rotationId ?? ''}\n${row.party?.riderCount ?? 1}`;
 }
 
 function currentLineageRefusal(tape: JsonRecord): string | null {
@@ -964,7 +1006,8 @@ function retainUnranked(rows: StoredRow[], contractId: string): StoredRow[] {
 
 function retainPartition(rows: StoredRow[], contractId: string): StoredRow[] {
   const ranked = rankedRows(rows, contractId);
-  const unranked = rows.filter((row) => !isRankedRow(row))
+  const kept = new Set(ranked);
+  const unranked = rows.filter((row) => !kept.has(row))
     .sort((a, b) => b.submittedAt - a.submittedAt)
     .slice(0, MAX_ROWS);
   return [...ranked, ...unranked];
@@ -1081,6 +1124,18 @@ function validateScore(value: unknown): ScoreRow | null {
       };
 }
 
+function validateSecuredSnapshot(value: unknown): SecuredSnapshot | null {
+  if (!isRecord(value) || !hasOnlyKeys(value, SECURED_SNAPSHOT_KEYS)) return null;
+  const waves = integerInRange(value.waves, 0, 10_000);
+  const timeAlive = numberInRange(value.timeAlive, 0, 24 * 60 * 60);
+  const gold = integerInRange(value.gold, 0, 1_000_000_000);
+  return waves === null || timeAlive === null || gold === null ? null : { waves, timeAlive, gold };
+}
+
+function sameSecuredSnapshot(score: ScoreRow, snapshot: SecuredSnapshot): boolean {
+  return score.waves === snapshot.waves && score.timeAlive === snapshot.timeAlive && score.gold === snapshot.gold;
+}
+
 export function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { submittedAt?: number }, contractId?: string): number {
   if (a.secured !== b.secured) return a.secured ? -1 : 1;
   if (contractId && PRESERVE_CONTRACTS.has(contractId)) {
@@ -1090,10 +1145,21 @@ export function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRo
     return (a.submittedAt ?? 0) - (b.submittedAt ?? 0);
   }
   if (a.waves !== b.waves) return b.waves - a.waves;
-  if (a.baseValue !== b.baseValue) return b.baseValue - a.baseValue;
-  if (a.timeAlive !== b.timeAlive) return b.timeAlive - a.timeAlive;
   if (a.gold !== b.gold) return b.gold - a.gold;
+  if (a.timeAlive !== b.timeAlive) return a.secured ? a.timeAlive - b.timeAlive : b.timeAlive - a.timeAlive;
   return (a.submittedAt ?? 0) - (b.submittedAt ?? 0);
+}
+
+function decidingKey(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { submittedAt?: number }, contractId?: string): string {
+  if (contractId && PRESERVE_CONTRACTS.has(contractId)) {
+    if (a.preserveWavesAlive !== b.preserveWavesAlive || a.preserveHpFraction !== b.preserveHpFraction) return 'preservation';
+    if (a.timeAlive !== b.timeAlive) return 'time';
+    return 'submittedAt';
+  }
+  if (a.waves !== b.waves) return 'waves';
+  if (a.gold !== b.gold) return 'gold';
+  if (a.timeAlive !== b.timeAlive) return 'time';
+  return 'submittedAt';
 }
 
 function knownContract(epochId: string, contractId: string): boolean {
