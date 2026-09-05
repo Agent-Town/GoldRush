@@ -165,12 +165,17 @@ test('LITE and invalid bytes retain the painted fallback', async ({ page }) => {
 
 test('the mounted terrain stays inside the 115% p95 budget', async ({ page }, testInfo: TestInfo) => {
   test.setTimeout(60_000);
-  let release: (() => Promise<void>) | undefined;
-  await page.route(MODEL, (route) => { release = () => route.continue(); });
+  // F-LTW2-1 (2026-09-05): the renderer AND the advance stream both request the terrain GLB, so a
+  // single `release` closure kept only the LAST held request and the first stayed blocked forever
+  // (the inventory's 60 s timeouts on this test since 2026-08-11). Hold every match, release them
+  // all, then stop intercepting so later matches pass straight through.
+  const held: Array<() => Promise<void>> = [];
+  await page.route(MODEL, (route) => { held.push(() => route.continue()); });
   await boot(page, '&terrain3dPilot');
-  await expect.poll(() => release).toBeTruthy();
+  await expect.poll(() => held.length).toBeGreaterThan(0);
   const paintedP95Ms = await p95(page);
-  await release!();
+  await Promise.all(held.splice(0).map((release) => release()));
+  await page.unroute(MODEL);
   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState === 'ready');
   const pilotP95Ms = await p95(page);
   const report = { paintedP95Ms, pilotP95Ms, ratio: pilotP95Ms / paintedP95Ms };
