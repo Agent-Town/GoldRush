@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "1ecca4779fd90f484b6302ece778c90fa87da11ed515c02830c0c2f86f74bc90",
+  "engineHash": "ea7fd35e445e83fd19028bfb2587608883a9cb2dcb307f4086a89510b854f795",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -271,6 +271,12 @@
       "engineHash": "1ecca4779fd90f484b6302ece778c90fa87da11ed515c02830c0c2f86f74bc90",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: e7-player-playbook-parity drain — E7PlaybookLatch.ts is the one four-rule secure decision for Game.ts and HeadlessContractSim.ts; human PLAYBOOK_USE is recorded in the tape (RunTape.playbookUses) and replayed; the four E7 hashes and every other contract replay byte-identical (lane tables); same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "ea7fd35e445e83fd19028bfb2587608883a9cb2dcb307f4086a89510b854f795",
+      "pinnedAt": "2026-09-05",
+      "cause": "content re-hash: e5-stillwater-front-crew-2 crews Stillwater's 32-second storm with one existing corsair skiff; played riders still secure at wave 12 and 360000 ms, idle riders lose by wave 3, and other E5 pins remain byte-identical; same era per F-1441-3",
       "aliases": []
     }
   ],

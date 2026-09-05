@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { spawnSync } from 'node:child_process';
+import { mkdir } from 'node:fs/promises';
 import { createServer } from 'vite';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
@@ -182,8 +183,8 @@ test('Stillwater SECURES both bench seeds twice through the PLAIN door', () => {
   // THE ADMISSION PROOF (2026-08-21). No `admissionProbe` anywhere: this spawns
   // `scripts/gr-sim.mjs` exactly as any rider would, which is the only proof that admits a map.
   const expected = {
-    'e5-stillwater-01': { eventLogHash: 'fnv1a32:f9967071', kills: 97 },
-    'e5-stillwater-02': { eventLogHash: 'fnv1a32:8fb9ae74', kills: 127 },
+    'e5-stillwater-01': { eventLogHash: 'fnv1a32:7661ca43', kills: 103 },
+    'e5-stillwater-02': { eventLogHash: 'fnv1a32:3d3ea0fc', kills: 161 },
   } as const;
   for (const [seed, { eventLogHash, kills }] of Object.entries(expected)) {
     const outcomes = [1, 2].map(() => {
@@ -209,8 +210,8 @@ test('the same play through the in-process door agrees, and the decks survive wi
   // The transport the whole exemption history was measured on, kept so that history stays
   // re-runnable. Same policy, same seeds — a difference here can only be the DOOR, never the play.
   const expected = {
-    'e5-stillwater-01': { eventLogHash: 'fnv1a32:be2e0c63', strikes: 77 },
-    'e5-stillwater-02': { eventLogHash: 'fnv1a32:201e03cd', strikes: 76 },
+    'e5-stillwater-01': { eventLogHash: 'fnv1a32:4e99e655', strikes: 77 },
+    'e5-stillwater-02': { eventLogHash: 'fnv1a32:897e18b8', strikes: 77 },
   } as const;
   for (const [seed, { eventLogHash, strikes }] of Object.entries(expected)) {
     const outcomes = [1, 2].map(() => {
@@ -250,8 +251,8 @@ test('the same play through the in-process door agrees, and the decks survive wi
 test('idle Stillwater runs stay silent and still lose', () => {
   test.setTimeout(120_000);
   const expected = {
-    'e5-stillwater-01': 'fnv1a32:91a34a6a',
-    'e5-stillwater-02': 'fnv1a32:bd5a9d8f',
+    'e5-stillwater-01': 'fnv1a32:ba80f970',
+    'e5-stillwater-02': 'fnv1a32:7ab6a335',
   } as const;
   for (const [seed, eventLogHash] of Object.entries(expected)) {
     const outcomes = [1, 2].map(() => {
@@ -273,9 +274,9 @@ test('idle Stillwater runs stay silent and still lose', () => {
   }
 });
 
-test('plain boot resolves the Stillwater contract without browser errors', async ({ page }) => {
+test('plain boot shows the first crewed front shivering through the fog', async ({ page }, testInfo) => {
   const watch = watchErrors(page);
-  await page.goto('/?debug&contract=e5-stillwater&nowaves&nolevel&nopause');
+  await page.goto('/?debug&contract=e5-stillwater&nolevel&nopause');
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   expect(await page.evaluate(() => window.__GR_TEST__!.activeContract().id)).toBe('e5-stillwater');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId)).toBe('e5-stillwater');
@@ -287,5 +288,21 @@ test('plain boot resolves the Stillwater contract without browser errors', async
     }).deepwaterClaim?.noiseHunt;
     return hunt ? { sources: hunt.sources.map(({ id }) => id), fog: hunt.fog.id } : null;
   })).toEqual({ sources: ['air-pump', 'engine', 'harpoon-reload'], fog: 'stillwater-fog' });
+  await page.getByRole('button', { name: 'Begin' }).click();
+  const front = await page.evaluate(() => {
+    window.__GR_TEST__!.setManualSim(true);
+    window.__GR_TEST__!.advanceSim(8);
+    const deepwater = window.__THREE_GAME_DIAGNOSTICS__!.deepwaterClaim!;
+    return {
+      phase: deepwater.storm.weather.phase,
+      hazeStrength: deepwater.storm.weather.hazeStrength,
+      waves: deepwater.corsairWaves.map((wave) => ({ scheduledAt: wave.scheduledAt, enemies: wave.enemies.length })),
+      corsairs: window.__GR_TEST__!.enemyPositions().filter((enemy) => enemy.variantId === 'corsair_skiff').length,
+    };
+  });
+  expect(front).toEqual({ phase: 'storm', hazeStrength: 0.28, waves: [{ scheduledAt: 8, enemies: 1 }], corsairs: 1 });
+  await page.evaluate(() => window.__GR_TEST__!.advanceSim(5));
+  await mkdir('artifacts/e5-stillwater-front-crew-2', { recursive: true });
+  await page.screenshot({ path: `artifacts/e5-stillwater-front-crew-2/${testInfo.project.name}-first-front.png` });
   expectNoConsoleErrors(watch, 'e5-stillwater plain boot');
 });
