@@ -49,9 +49,6 @@ import {
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
 import { stableHash, type LockstepAction } from '../mp/LockstepClient';
-// E7: the Signal bundle itself, imported for its contract IDS and nothing else — the era scope is
-// READ off the bundle rather than typed out, exactly as `PlaybookFormat.ts:10` imports it.
-import signalContracts from '../../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
 import {
   PLAYBOOK_STEP_SECONDS,
   PLAYBOOK_VERSION,
@@ -74,9 +71,9 @@ import {
   INTERFERENCE_MUTED_REASON,
   INTERFERENCE_MUTED_VOICE,
   InterferenceFrontSystem,
-  POWERED_RELAY_KINDS,
   type InterferenceFrontDiagnostics,
 } from '../systems/InterferenceFrontSystem';
+import { E7PlaybookLatch, type E7PlaybookObjective } from '../systems/E7PlaybookLatch';
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -511,9 +508,6 @@ const IDLE_INTENTS: Intents = {
  * `signalSuppression` too (`SignalSuppression.ts:20`), and giving the Far Side an E7 objective
  * would be exactly the F-1471-1 casualty — a latch on a contract with no path to discharge it.
  */
-const SIGNAL_BUNDLE_CONTRACT_IDS: ReadonlySet<string> = new Set(
-  (signalContracts.contracts as readonly { id: string }[]).map(({ id }) => id),
-);
 
 /**
  * The four maps' objectives, each DERIVED from what its own contract already declares — no new
@@ -527,7 +521,7 @@ const SIGNAL_BUNDLE_CONTRACT_IDS: ReadonlySet<string> = new Set(
  *   · `relay`     — the Relay Valley declares four `relay-site` build zones and none of the above,
  *                   so a relay lit BY A PROGRAM is its one relay action (audit `:79`).
  */
-type PlaybookObjectiveKind = 'relay' | 'mirror' | 'refusal' | 'suspended';
+type PlaybookObjectiveKind = E7PlaybookObjective;
 
 /** The rider-visible row. Presentation-stripped, in the socket house style of its neighbours. */
 export type PlaybookUseDiagnostics = Readonly<{
@@ -669,9 +663,7 @@ export class HeadlessContractSim {
    */
   private readonly playbookShelf = new Map<string, ShelvedPlaybook>();
   private readonly playbookDemonstration: PlaybookEntry[] = [];
-  private readonly programLitRelays = new Set<string>();
-  private readonly playbookRelaySites: readonly Readonly<{ id: string; minX: number; maxX: number; minZ: number; maxZ: number }>[];
-  private readonly playbookObjective: PlaybookObjectiveKind | null;
+  private readonly playbookLatch: E7PlaybookLatch;
   private playbookUses = 0;
   private playbookRepeats = 0;
   private playbookProgramRuns = 0;
@@ -964,32 +956,7 @@ export class HeadlessContractSim {
     // A5: same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. Built
     // before `BuildSystem` below, which injects its mute into the shooter seam.
     this.interferenceFront = InterferenceFrontSystem.create(this.manifest);
-    // E7: the relay sites, read with the SAME predicate `InterferenceFrontSystem.create` uses on
-    // the same field (`tileParams.buildZones` whose id starts `relay-site`), so the Valley and the
-    // Rush cannot disagree about what a relay site is. Empty on every map that authors none.
-    this.playbookRelaySites = (this.manifest.tileParams.buildZones ?? [])
-      .filter((zone) => typeof zone?.id === 'string' && zone.id.startsWith('relay-site')
-        && [zone.minX, zone.maxX, zone.minZ, zone.maxZ].every((value) => Number.isFinite(value)))
-      .map((zone) => ({
-        id: zone.id,
-        minX: Math.min(zone.minX, zone.maxX),
-        maxX: Math.max(zone.minX, zone.maxX),
-        minZ: Math.min(zone.minZ, zone.maxZ),
-        maxZ: Math.max(zone.minZ, zone.maxZ),
-      }));
-    // E7: one objective per Signal map, derived from that map's own declarations and from nothing
-    // else. Null off the bundle, so no other contract grows a latch, a view row or a hash key.
-    this.playbookObjective = SIGNAL_BUNDLE_CONTRACT_IDS.has(this.contractId)
-      ? this.signalSuppression.suppresses('playbooks')
-        ? 'refusal'
-        : this.broadcastMirror.isDeclared
-          ? 'mirror'
-          : this.interferenceFront.isDeclared
-            ? 'suspended'
-            : this.playbookRelaySites.length > 0
-              ? 'relay'
-              : null
-      : null;
+    this.playbookLatch = new E7PlaybookLatch(this.manifest);
     // A9: same read the browser performs at `Game.ts` — the CONTRACT's own twist plus its own
     // authored routes, bays and stakes. No voice headless: this engine paints nothing.
     this.devilsAlley = ScheduledRelocationSystem.create(this.manifest);
@@ -2976,15 +2943,7 @@ export class HeadlessContractSim {
    * cannot disagree about which sites are lit.
    */
   private syncProgramRelays(): void {
-    if (this.runningProgram === null || this.playbookRelaySites.length === 0) return;
-    for (const site of this.playbookRelaySites) {
-      if (this.programLitRelays.has(site.id)) continue;
-      const lit = this.targeting.allBuildings.some((work) => work.active && work.hp > 0
-        && POWERED_RELAY_KINDS.includes(work.family)
-        && work.position.x >= site.minX && work.position.x <= site.maxX
-        && work.position.z >= site.minZ && work.position.z <= site.maxZ);
-      if (lit) this.programLitRelays.add(site.id);
-    }
+    this.playbookLatch.syncProgramRelays(this.runningProgram !== null, this.targeting.allBuildings);
   }
 
   /**
@@ -2992,21 +2951,19 @@ export class HeadlessContractSim {
    * every contract off the Signal bundle, so no other terminal moves (the F-1471-1 discipline).
    */
   private get playbookObjectiveAllowsSecure(): boolean {
-    switch (this.playbookObjective) {
-      case 'refusal': return this.signalSuppression.diagnostics.refusals.playbooks > 0;
-      case 'mirror': return this.broadcastMirror.diagnostics.squadsFielded > 0;
-      case 'suspended': return this.interferenceFront.diagnostics.refusals.playbooks > 0;
-      case 'relay': return this.programLitRelays.size > 0;
-      default: return true;
-    }
+    return this.playbookLatch.allowsSecure({
+      suppressedUses: this.signalSuppression.diagnostics.refusals.playbooks,
+      fieldedMirrors: this.broadcastMirror.diagnostics.squadsFielded,
+      mutedUses: this.interferenceFront.diagnostics.refusals.playbooks,
+    });
   }
 
   /** E7 — the rider-visible row; null off the Signal bundle so no other view grows a field. */
   private get playbookUseDiagnostics(): PlaybookUseDiagnostics | null {
-    if (this.playbookObjective === null) return null;
+    if (this.playbookLatch.objective === null) return null;
     return {
       declared: true,
-      objective: this.playbookObjective,
+      objective: this.playbookLatch.objective,
       objectiveMet: this.playbookObjectiveAllowsSecure,
       shelf: [...this.playbookShelf.values()]
         .map(({ name, hash, entries, uses }) => ({ name, hash, entries: entries.length, uses }))
@@ -3016,7 +2973,7 @@ export class HeadlessContractSim {
       programRuns: this.playbookProgramRuns,
       programSuspensions: this.playbookSuspensions,
       suspendedProgram: this.suspendedProgram?.name ?? null,
-      relaysLitByProgram: [...this.programLitRelays].sort(),
+      relaysLitByProgram: this.playbookLatch.relaysLitByProgram,
       runningProgram: this.runningProgram,
       refusals: { ...this.playbookRefusals },
       last: this.lastPlaybookUse,
@@ -3033,7 +2990,7 @@ export class HeadlessContractSim {
     return this.playbookUses > 0
       || this.playbookProgramRuns > 0
       || this.playbookSuspensions > 0
-      || this.programLitRelays.size > 0
+      || this.playbookLatch.relaysLitByProgram.length > 0
       || this.playbookRefusals.suppressed > 0
       || this.playbookRefusals.muted > 0
       || this.playbookRefusals.unrecorded > 0;

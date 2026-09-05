@@ -35,6 +35,13 @@ export const RUN_TAPE_RECENT_LIMIT = 10;
 /** Semantic player inputs preserved by the human tape, including `prospector_dispatch`. */
 export type RunTapeAction = LockstepAction;
 
+/** A human handing a named recording to the agent is a semantic input, not UI decoration. */
+export type RunTapePlaybookUse = Readonly<{
+  kind: 'playbook_use';
+  atTick: number;
+  playbook: PlaybookRecording;
+}>;
+
 export type RunTapeOutcome = {
   reason: RunEndReason;
   secured: boolean;
@@ -60,6 +67,7 @@ export type RunTapeInputStream = {
 export type RunTapeInputLog = PlaybookRecording & {
   primarySlot: number;
   streams: RunTapeInputStream[];
+  playbookUses?: RunTapePlaybookUse[];
 };
 
 export type RunTapeRunStart = {
@@ -112,6 +120,7 @@ export class RunTapeRecorder {
   private readonly entries: PlaybookEntry[] = [];
   private readonly probes: PlaybookProbe[] = [];
   private readonly pendingActions: RunTapeAction[] = [];
+  private readonly playbookUses: RunTapePlaybookUse[] = [];
   private readonly streams = new Map<number, StreamState>();
   private edgeState: LockstepSampleEdgeState = zeroLockstepSampleEdgeState();
   private tick = 0;
@@ -187,6 +196,11 @@ export class RunTapeRecorder {
     if (normalized) this.pendingActions.push(normalized);
   }
 
+  recordPlaybookUse(playbook: PlaybookRecording): void {
+    if (this.stopped || this.truncation) return;
+    this.playbookUses.push({ kind: 'playbook_use', atTick: this.tick, playbook: structuredClone(playbook) });
+  }
+
   get truncated(): boolean {
     return this.truncation !== null;
   }
@@ -223,6 +237,7 @@ export class RunTapeRecorder {
           start: { ...stream.start },
           entries: stream.entries.map((entry) => ({ ...entry, a: entry.a.map((action) => ({ ...action })) })),
         })),
+      playbookUses: this.playbookUses.map((use) => structuredClone(use)),
     };
     return {
       version: RUN_TAPE_VERSION,
@@ -355,13 +370,17 @@ export function validateRunTape(value: unknown): RunTape | null {
   if (typeof value.seed !== 'string' || typeof value.difficulty !== 'string' || !value.difficulty) return null;
   if (typeof value.eventLogHash !== 'string' || !EVENT_HASH.test(value.eventLogHash)) return null;
   const envelope = runTapeEnvelopeForContract(value.contract);
-  const parsed = validatePlaybook(value.inputLog, envelope.maxTicks, envelope.maxEntries);
+  if (!isRecord(value.inputLog)) return null;
+  const { primarySlot: _primarySlot, streams: _streams, playbookUses: rawPlaybookUses, ...playbookInput } = value.inputLog;
+  const parsed = validatePlaybook(playbookInput, envelope.maxTicks, envelope.maxEntries);
   const streams = validateInputStreams(value.inputLog, parsed.ok ? parsed.playbook.durationTicks : 0, envelope.maxEntries);
+  const playbookUses = validatePlaybookUses(rawPlaybookUses, parsed.ok ? parsed.playbook.durationTicks : 0, envelope);
   const outcome = validateOutcome(value.outcome);
   const annotations = validateAnnotations(value.annotations);
   const meta = validateTapeMeta(value.meta);
   const runStart = validateRunStart(value.runStart);
-  if (!parsed.ok || !streams || !outcome || annotations === null || meta === null || (value.version === RUN_TAPE_VERSION ? !runStart : value.runStart !== undefined || value.meta !== undefined) || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty) return null;
+  if (!parsed.ok || !streams || !playbookUses || !outcome || annotations === null || meta === null || (value.version === RUN_TAPE_VERSION ? !runStart : value.runStart !== undefined || value.meta !== undefined) || parsed.playbook.contractId !== value.contract || parsed.playbook.seed !== value.seed || parsed.playbook.difficultyPreset !== value.difficulty
+    || playbookUses.some(({ playbook }) => playbook.contractId !== value.contract || playbook.seed !== value.seed || playbook.difficultyPreset !== value.difficulty)) return null;
   return {
     version: value.version,
     id: value.id,
@@ -373,7 +392,7 @@ export function validateRunTape(value: unknown): RunTape | null {
     simVersion: value.simVersion as number,
     ...(meta ? { meta } : {}),
     ...(runStart ? { runStart } : {}),
-    inputLog: { ...parsed.playbook, ...streams },
+    inputLog: { ...parsed.playbook, ...streams, playbookUses },
     eventLogHash: value.eventLogHash,
     outcome,
     ...(annotations ? { annotations } : {}),
@@ -472,6 +491,27 @@ function validateInputStreams(value: unknown, durationTicks: number, maxEntries:
     });
   }
   return { primarySlot: value.primarySlot as number, streams };
+}
+
+function validatePlaybookUses(
+  value: unknown,
+  durationTicks: number,
+  envelope: ReturnType<typeof runTapeEnvelopeForContract>,
+): RunTapePlaybookUse[] | null {
+  if (value === undefined) return [];
+  if (!Array.isArray(value) || value.length > envelope.maxEntries) return null;
+  const uses: RunTapePlaybookUse[] = [];
+  let previousTick = -1;
+  for (const candidate of value) {
+    if (!isRecord(candidate) || !hasOnlyKeys(candidate, ['kind', 'atTick', 'playbook'])
+      || candidate.kind !== 'playbook_use' || !Number.isInteger(candidate.atTick)
+      || (candidate.atTick as number) < previousTick || (candidate.atTick as number) > durationTicks) return null;
+    const playbook = validatePlaybook(candidate.playbook, envelope.maxTicks, envelope.maxEntries);
+    if (!playbook.ok) return null;
+    uses.push({ kind: 'playbook_use', atTick: candidate.atTick as number, playbook: playbook.playbook });
+    previousTick = candidate.atTick as number;
+  }
+  return uses;
 }
 
 function nonNegativeCoordinate(value: unknown): value is number {
