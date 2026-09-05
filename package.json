@@ -30,6 +30,7 @@
     "test:stats": "node scripts/test-stats.mjs && node scripts/test-standings.mjs && node scripts/test-ledger-worker.mjs",
     "test:deploy-contract": "bash scripts/test-deploy-contract.sh",
     "test:deploy-site-contract": "bash scripts/test-deploy-site-contract.sh",
+    "test:playability": "GR_PLAYABILITY_SMOKE=1 playwright test e2e/playability-smoke.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --reporter=line",
     "verify:visual": "playwright test e2e/visual.spec.ts",
     "test:preview": "playwright test --config playwright.preview.config.ts",
     "test:release": "playwright test --config playwright.release.config.ts",
