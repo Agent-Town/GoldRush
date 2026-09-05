@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "3d0f567dd4cab4f9a643d88d293e2fa00db2e666e3cea3a3d646eb9a0baadb58",
+  "engineHash": "ea60c9b7694dd6e8a8ec3131d80349c5c15b9a19b125730dafb10c4e375ceca8",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -241,6 +241,12 @@
       "engineHash": "3d0f567dd4cab4f9a643d88d293e2fa00db2e666e3cea3a3d646eb9a0baadb58",
       "pinnedAt": "2026-09-04T19:08Z",
       "cause": "content re-hash, no simulation behaviour change for existing tapes: contract-clock-explicit gives each of the 18 flat-ceiling contracts an authored 18000-tick clock while the other 24 continue to derive their clocks from secureWave; all 42 admission envelopes remain byte-for-byte numerically unchanged; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "ea60c9b7694dd6e8a8ec3131d80349c5c15b9a19b125730dafb10c4e375ceca8",
+      "pinnedAt": "2026-09-05T00:00Z",
+      "cause": "content re-hash: e8-remaining-maps composes E8SuitAirSystem into the headless door for e8-far-side, e8-low-orbit and e8-eclipse and refreshes those three contracts engineDependencies prose. Existing tapes for every other contract are numerically unchanged (the consumer answers none() off those three ids and its diagnostics are spread-if-declared into the terminal hash); the three siblings idle floors move by design, measured 3fe83eca->5c30efd5, d7423597->6e1931c2, fac5d558->466507ac, with waves/timeMs/kills identical. The Mare Claim control is byte-identical on both seeds. Same era per F-1441-3",
       "aliases": []
     }
   ],

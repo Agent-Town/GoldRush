@@ -305,7 +305,7 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "far-side-contract-consumers", "status": "missing", "description": "Needs the declared signal suppression, suit-only zones, probe recovery, playback, and atmosphere-wall consumers." }
+          { "dep": "far-side-contract-consumers", "status": "missing", "description": "Signal suppression, probe recovery and playback have consumers, and the headless door now composes the suit-only atmosphere wall: the suit drains outside the landing yard and the crossing counts only on air. The BROWSER still composes no atmosphere consumer at all, so a player there meets no suit timer and this dependency stays missing until it does." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -493,7 +493,7 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "low-orbit-contract-consumers", "status": "missing", "description": "Needs the declared scaffold, debris, handhold-road, objective, and atmosphere-wall consumers; zero-gravity projectile physics already runs." }
+          { "dep": "low-orbit-contract-consumers", "status": "missing", "description": "Zero-gravity projectile physics, the scaffold decks, the debris bands and the handhold spine all run, and the headless door now composes the suit-only atmosphere wall: crossing every authored deck on suit air is what opens the secure. The BROWSER still composes no atmosphere consumer at all, so this dependency stays missing until it does." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -693,7 +693,7 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "eclipse-contract-consumers", "status": "missing", "description": "Needs the declared eclipse event, shadow-zone, objective, and atmosphere-wall consumers." }
+          { "dep": "eclipse-contract-consumers", "status": "missing", "description": "The headless door now composes the atmosphere wall and the eclipse event: mid-run the shadow takes the solar-fed dome pads offline, leaves the pad nearest the claim as the reserve, and the secure then needs a regolith ground worked on suit air after it lands. The authored shadow-zone rectangle itself still has no consumer, and the BROWSER composes neither the atmosphere nor the eclipse, so this dependency stays missing." }
         ],
         "lanes": {
           "spawnEdges": [

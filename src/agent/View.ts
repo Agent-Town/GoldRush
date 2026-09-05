@@ -6,6 +6,7 @@ import { summarizeRun } from '../game/RunManager';
 import { activeContract, type ContractEnemyVariant, type ContractManifest } from '../meta/ContractFamilies';
 import { DEFAULT_COAL_SEAMS } from '../systems/coalSeamDefaults';
 import type { E8AtmosphereDiagnostics } from '../systems/E8PhysicsSystem';
+import type { E8CrossingAirDiagnostics, E8EclipseAirDiagnostics } from '../systems/E8SuitAirSystem';
 import { deriveMechanicsManifest, type MechanicsManifest } from './MechanicsManifest';
 
 export type AgentViewSource = {
@@ -34,7 +35,19 @@ export type AgentGravityView = {
   vacuum: boolean;
 };
 
-export type AgentAirView = Omit<E8AtmosphereDiagnostics, 'declared'>;
+/**
+ * One air shape for all four E8 maps. The `wall`/`suit`/`domes`/`regolith` rows are the Mare
+ * Claim's, unchanged. The two optional blocks are ADDITIVE and contract-scoped, present only where
+ * the map declares the thing they describe (`E8SuitAirSystem`): a crossing on the Far Side and Low
+ * Orbit, the shadow on the Eclipse. No view-schema version bump goes with them, and that is the
+ * registry's own rule rather than an omission: `scripts/view-schema-guard.test.mjs` builds its
+ * canonical field list from `the-claim`, which declares no gravity and no air, so every
+ * contract-scoped field under `now` is unregistered by design (F-E8MC-1, `now.preserve` precedent).
+ */
+export type AgentAirView = Omit<E8AtmosphereDiagnostics, 'declared'> & {
+  crossing?: E8CrossingAirDiagnostics;
+  eclipse?: E8EclipseAirDiagnostics;
+};
 
 export type AgentView = {
   schema: 'goldrush.view.v1';
@@ -413,6 +426,8 @@ function readAir(atmosphere: Record<string, unknown>): AgentAirView | undefined 
   const suit = record(atmosphere.suit);
   const regolith = record(atmosphere.regolith);
   const wall = atmosphere.wall === 'suit-timer' || atmosphere.wall === 'suit-only' ? atmosphere.wall : null;
+  const crossing = readCrossing(atmosphere);
+  const eclipse = readEclipse(atmosphere);
   return {
     wall,
     suit: {
@@ -440,6 +455,41 @@ function readAir(atmosphere: Record<string, unknown>): AgentAirView | undefined 
       breathlessPans: integer(regolith.breathlessPans),
       complete: regolith.complete === true,
     },
+    ...(crossing ? { crossing } : {}),
+    ...(eclipse ? { eclipse } : {}),
+  };
+}
+
+/**
+ * `E8SuitAirSystem.diagnostics.crossing`: present only where the contract authors crossing zones
+ * (the Far Side's probe crater, Low Orbit's scaffold decks). Absent everywhere else, so no other
+ * map's air row grows a field.
+ */
+function readCrossing(air: Record<string, unknown>): E8CrossingAirDiagnostics | undefined {
+  if (!('crossing' in air)) return undefined;
+  const crossing = record(air.crossing);
+  return {
+    zones: strings(crossing.zones),
+    required: integer(crossing.required),
+    reached: strings(crossing.reached),
+    breathlessEntries: integer(crossing.breathlessEntries),
+    complete: crossing.complete === true,
+  };
+}
+
+/** `E8SuitAirSystem.diagnostics.eclipse`: the Eclipse alone, and only once the shadow is scheduled. */
+function readEclipse(air: Record<string, unknown>): E8EclipseAirDiagnostics | undefined {
+  if (!('eclipse' in air)) return undefined;
+  const eclipse = record(air.eclipse);
+  const arrivedAtWave = eclipse.arrivedAtWave;
+  return {
+    arrived: eclipse.arrived === true,
+    arrivedAtWave: typeof arrivedAtWave === 'number' && Number.isFinite(arrivedAtWave) ? arrivedAtWave : null,
+    offline: strings(eclipse.offline),
+    reserve: text(eclipse.reserve),
+    solar: eclipse.solar === 'offline' ? 'offline' : 'online',
+    groundsWorkedAfter: integer(eclipse.groundsWorkedAfter),
+    requiredAfter: integer(eclipse.requiredAfter),
   };
 }
 
