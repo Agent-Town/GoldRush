@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "8afae55feda2730606dbf46d869baf14bc66f733028547f1f1ba3d0b5a6a3a16",
+  "engineHash": "9254f19e3c6e126d2b37fe789055fb5ca2ccd6862090bc6e5b71984ed11d3325",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -283,6 +283,12 @@
       "engineHash": "8afae55feda2730606dbf46d869baf14bc66f733028547f1f1ba3d0b5a6a3a16",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: prefetch-bounded-warming drain (dfbed9491) — AdvanceStream.ts warms priorities 1-2 under a session byte allowance and StartMenu.ts gains the 'Warm every map' opt-in; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "9254f19e3c6e126d2b37fe789055fb5ca2ccd6862090bc6e5b71984ed11d3325",
+      "pinnedAt": "2026-09-05",
+      "cause": "src re-hash: shared-atlas-texture-dedupe drain (b7fdb9796) — src/assets/SharedAtlasPlugin.ts + AssetLoading.ts registration: one GPU texture per atlas-content hash across GLBs; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     }
   ],
