@@ -168,6 +168,8 @@ export class HomemakerBossSystem {
   private chairPlaced = false;
   private poweredDown = false;
   private persistentKept = false;
+  /** Armed while a kept chair is still waiting to be restored — see `restoreKeptState()`. */
+  private keptRestorePending = false;
   private coreSpawnPending = false;
   private lastAt = 0;
   private homemaker3dState: Homemaker3dState;
@@ -191,7 +193,25 @@ export class HomemakerBossSystem {
     this.homemaker3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.group.name = 'Homemaker9000.Placeholder';
     this.buildPresentation();
-    if (this.enabled) this.restorePersistentKept();
+    // The restore is NOT run here. It reaches the host's wave system, which a host that builds
+    // this system in a field initializer has not built yet. See `restoreKeptState()`.
+    this.keptRestorePending = this.enabled;
+  }
+
+  /**
+   * Restores the chair a previous run left kept, and tells the host to suppress this run's baron.
+   * It is deliberately NOT called from the constructor: `suppressBossSpawn()` reaches the host's
+   * wave system, and `Game` builds the Homemaker in a FIELD INITIALIZER (`Game.ts:1084`) while
+   * `this.waveSystem` is only assigned in the constructor body (`Game.ts:1466`) — so restoring at
+   * construction threw "Cannot read properties of undefined" on every reload with a kept chair and
+   * took the whole boot with it (F-ADM-1 / AD2-B1, `reviews/asset-diet-explicit-manifest.md`).
+   * The host calls this once its systems are wired; `update()` is the backstop for one that does
+   * not, and by then every host has a wave system. Idempotent: it fires at most once per arming.
+   */
+  restoreKeptState(): void {
+    if (!this.keptRestorePending) return;
+    this.keptRestorePending = false;
+    this.restorePersistentKept();
   }
 
   onWaveStarted(wave: number, bossWave: number): void {
@@ -214,6 +234,9 @@ export class HomemakerBossSystem {
     const delta = Math.max(0, at - this.lastAt);
     this.lastAt = at;
     if (!this.enabled) return;
+    // Backstop for a host that never made the explicit call: by the first tick every host has
+    // built the systems `restorePersistentKept()` reaches. A no-op once the host has called it.
+    if (this.keptRestorePending) this.restoreKeptState();
     if (this.persistentKept) {
       for (const enemy of this.liveComponents()) this.recycleEnemy(enemy);
       return this.syncPresentation();
@@ -337,7 +360,8 @@ export class HomemakerBossSystem {
     this.lastAt = 0;
     this.destroyed.clear();
     this.curated.clear();
-    if (this.enabled) this.restorePersistentKept();
+    this.keptRestorePending = this.enabled;
+    this.restoreKeptState();
     this.syncPresentation();
   }
 
