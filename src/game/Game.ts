@@ -3316,7 +3316,11 @@ export class Game {
   // to the drill yard's manual bell. Read from the RENDER side (`updatePresentation`), never
   // from the fixed sim step, and it publishes only: nothing here feeds the sim.
   private syncStoryWaveSignal(): void {
-    if (this.runTapeReplay) return;
+    // The drill bell is the other writer of the wave counter (`WaveSystem.triggerManualWave`, whose
+    // only caller is `DrillYard`), and the clerk's beat is once per profile: six rings in the
+    // practice yard would SPEND "Fifth horn recorded" on waves that were never a claim. Same
+    // predicate the `building-lost` emitter uses at :1976.
+    if (this.runTapeReplay || this.activeContract.practice?.metaProgress === false) return;
     const wave = this.currentRunWave();
     const previous = this.storyWaveSeen;
     this.storyWaveSeen = wave;
