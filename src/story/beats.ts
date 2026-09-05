@@ -1157,6 +1157,12 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // (tavern-tale shape: e3-tavern-twins-defect at lines 485-494 and e8-tavern-river-question at lines
 // 1114-1123; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second narrative system.
 // Mystery law holds: the Gazette prints what it can prove and never the meaning.
+// POINTER NOTE for whoever merges this block: the three E8 coordinates above (E8 at lines 978-1153,
+// e8-tavern-river-question at 1114-1123, and the e8-riverward-launch reference at the last beat)
+// are measured on THIS tree, where E10 appends directly after E8. E7 and E9 landed on main after
+// this lane was cut, and E7 alone sits above E8, so on the merged tree all three shift by exactly
+// +175 lines. Re-base them in the landing commit (CLAUDE.md section 4.10b); the E3 coordinates and
+// every lore/STORYBOOK.md citation below are unaffected, because nothing landed above them.
 // SPEAKER GAP (reported, not invented, the same finding ss-06, ss-07 and ss-09 recorded for E5, E6
 // and E8): STORYBOOK lines 584-586, 618 and 621 name this chapter's cast (the eldest heir, the Baron
 // in his last act of keeping, the Old Digger, the Quack, Chalk at the manifest, the Charter-Keeper,
