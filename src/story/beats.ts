@@ -513,6 +513,165 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// Chapter E4 follows the E2/E3 single-table shape above (see the E3 note at lines 409-410):
+// the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
+// (tavern tale shape: e2-depot-wedding at lines 367-374 and e3-tavern-twins-defect at lines
+// 485-494; Gazette headline shape: e2-iron-correction-rumor-one at lines 375-382 and
+// e3-gazette-two-offers at lines 433-442), not a second narrative system. Mystery law holds:
+// the Gazette prints what it can prove and never the meaning. Every beat cites its storybook
+// line. artKey is set only where a plate exists on disk under assets/raw/.
+export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    // lore/STORYBOOK.md:218,231
+    id: 'e4-dust-flats-arrival',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e4-dust-flats', // assets/raw/plate-contract-e4-dust-flats.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-dust-flats',
+    lines: ['The Refinery cracked its first crude in the night, and the flats opened at dawn.', 'That ground is too big to walk. From here the claim is how far we can reach.'],
+  },
+  {
+    // lore/STORYBOOK.md:202,231
+    id: 'e4-first-flivver',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-dust-flats',
+    lines: ['The mechanic opened the crates in the square and built the first Flivver in front of everyone.', 'She carried the piston in like a newborn. Nobody laughed twice.'],
+  },
+  {
+    // lore/STORYBOOK.md:203,232; Gazette headline in the E2/E3 shape, mystery law intact.
+    id: 'e4-gazette-crude-bath',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-dust-flats',
+    lines: ['GAZETTE: THE FOUNDING GENERATION, DRENCHED', "The wildcatter's first spray soaked the lot of them. The photograph hangs over the bar."],
+  },
+  {
+    // lore/STORYBOOK.md:191,204
+    id: 'e4-road-boss-theodolite',
+    trigger: 'contract-unlocked',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-dust-flats',
+    lines: ["The road boss carries the rail surveyor's old theodolite. Tools are ancestors too.", 'Stake a corridor and grade it. A road is the first ground we improve instead of stand on.'],
+  },
+  {
+    // lore/STORYBOOK.md:207
+    id: 'e4-sidecar-rides-along',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-dust-flats',
+    lines: ['I ride the sidecar now. The town strapped goggles around my middle.', 'I have no eyes. They did it anyway, so I am keeping them.'],
+  },
+  {
+    // lore/STORYBOOK.md:220
+    id: 'e4-long-road-goodbyes',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e4-long-road', // assets/raw/plate-contract-e4-long-road.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-long-road',
+    lines: ['The Long Road has no pads at all. Out there the convoy is the town.', 'Every way station you leave behind is a small goodbye. You get practice.'],
+  },
+  {
+    // lore/STORYBOOK.md:221
+    id: 'e4-gusher-county-order',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e4-gusher-county', // assets/raw/plate-contract-e4-gusher-county.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-gusher-county',
+    lines: ['Eight wild wells on three leases, each erupting on its own clock.', 'Cap one and the county answers. Choose the order first, and I will write it down.'],
+  },
+  {
+    // lore/STORYBOOK.md:198,222; the wagon is never named, per the Occult Law of that line.
+    id: 'e4-boneyard-quiet-rows',
+    trigger: 'contract-unlocked',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e4-boneyard', // assets/raw/plate-contract-e4-boneyard.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-boneyard',
+    lines: ['Nothing in that yard wakes unless you wake it. Work the rows and let the rest sleep.', 'We copied the drawers of the cheerful wagon into the cure studies and left a receipt in one.'],
+  },
+  {
+    // lore/STORYBOOK.md:225,226
+    id: 'e4-land-yacht-dread',
+    trigger: 'boss-arrival',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e4-boss-land-yacht', // assets/raw/plate-e4-boss-land-yacht.png
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e4-dust-flats',
+    lines: ['A dust column stands on the horizon at dawn, running against the weather.', 'It circles the derrick field at range and takes the outer heads as it passes.'],
+  },
+  {
+    // lore/STORYBOOK.md:205,234; the static is never explained, per that line.
+    id: 'e4-diner-radio',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && hasStoryBeatSeen('e4-dust-flats-arrival'),
+    lines: ['A teal radio murmurs on the Motor Inn shelf, and the kid on the porch wraps his own crystal set.', 'Static like weather from somewhere that has cities. We leave it playing.'],
+  },
+  {
+    // lore/STORYBOOK.md:196,228; tavern tale, LEXICON law: freed, never killed.
+    id: 'e4-tavern-freed-hands',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e4-land-yacht-dread'),
+    lines: ['The crew walked off the beached Yacht with their own bell and went home whistling.', 'You can tell the freed by how long they stare at their own hands.'],
+  },
+  {
+    // lore/STORYBOOK.md:208,233; the reveal waits for the race to be run, preserving the mystery law.
+    id: 'e4-gazette-re-survey',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e4-land-yacht-dread'),
+    lines: ['GAZETTE: HE RACED US AND THE FLATS VOTED', "The new map keeps his name in the surveyor's box. You surveyed it. We just proved it."],
+  },
+  {
+    // lore/STORYBOOK.md:197,234; the paper prints the figures and the reader prints the meaning.
+    // Chained behind the radio beat because line 234 sets both in the same season; the chain
+    // shape is e2-iron-correction-rumor-two at lines 391-398. NOTE (F-SS05-1): the natural
+    // trigger here would be a science milestone, but 'science-threshold' (src/story/signals.ts:8)
+    // has no emitter anywhere in src/ outside this module, so the nearest LIVE trigger is used.
+    id: 'e4-gazette-dust-chart',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && hasStoryBeatSeen('e4-diner-radio'),
+    lines: ['GAZETTE: THE DUST CHART TAKES A SECOND PAGE', 'The mail comes thinner and stranger this season. We print the figures and no comment.'],
+  },
+  {
+    // lore/STORYBOOK.md:235; the exit hook toward the Deepwater Claim. The T4 haul itself is
+    // the ceremony script t4-the-boat (src/ceremony/scripts.ts:130) and is not restated here.
+    id: 'e4-boat-horizon',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    lines: ['The hull stands finished in the tank farm, on land, miles from any water.', 'The wash reaches a delta and the delta reaches the sea. Harness every vehicle we own and haul.'],
+  },
+];
+
 export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
   ? [...STORY_BEATS, ...LEDGER_STORY_BEATS]
   : [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];
