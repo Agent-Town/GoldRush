@@ -94,7 +94,9 @@ if (
   # 2474c51ac wired external-server-guard into the BASE config — which the preview config
   # inherits via `...baseConfig` — and the flag started arming a :5188 probe that refuses.
   # This now matches `npm run test:asset-diet`, which has always run without the flag.
-  GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1 npm --prefix "$ROOT" exec -- playwright test \
+  # F-DEPLOY-1: the probe runs on its own scratch port (5297) so a lane playwright on 5189 cannot
+  # turn a production deploy into a fail-closed ABORT on the wrong cause (2026-09-05).
+  GR_PREVIEW_PORT="${GR_PREVIEW_PORT:-5297}" GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1 npm --prefix "$ROOT" exec -- playwright test \
     --config "$ROOT/playwright.preview.config.ts" "$ROOT/e2e/asset-diet.spec.ts" --workers=1 \
     --project=desktop-chrome --project=mobile-chrome --grep "town cue-window budget through player entry$"
 ) > "$CAPTURE" 2>&1; then BUDGET_RC=0; else BUDGET_RC=$?; fi
