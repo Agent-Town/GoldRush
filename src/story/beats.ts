@@ -1131,7 +1131,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     speaker: 'elder',
     oncePerProfile: true,
     presentation: 'card',
-    lines: ["The Ark yards are finished and the manifest is open: every portrait, the Long Table, a seed of the Elder tree in the greenkeeper's tin.", "The departure horn will be the Railcar's whistle note. And there are sails on the horizon already, crossed pickaxes on every one."],
+    lines: ["The Ark yards are finished and the manifest is open: every portrait, the Long Table, a seed of the Elder's Tree in the greenkeeper's tin.", "The departure horn will be the Railcar's whistle note. And there are sails on the horizon already, crossed pickaxes on every one."],
   },
 ];
 
