@@ -1327,6 +1327,182 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// Chapter E9 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and
+// Gazette headlines are ordinary, attributed beats, not a second narrative system.
+// Cast note (honesty guard): STORYBOOK lines 540-542 name five new E9 townsfolk (the moon-born
+// child grown, the canal reeve, the greenkeeper, the ice quarry chief, the weather warden). None
+// has a processed portrait - assets/raw/tf-canal-reeve-e9.png and its four siblings exist, but
+// assets/processed/ has no tf-*-e9 entry - so adding them to speakers.ts would render a broken
+// portrait. They are voiced here by the registered speakers who would carry their news in town,
+// and are named inside the lines, the way ss-07 voiced the E6 cast.
+// Trigger note (honesty guard): the Old Digger is NOT a twist.baron. The Dome Basin's twist
+// declares only clockTicks and an enemy roster (assets/contracts/epoch-9-redfields/contracts.json
+// :179-181), and boss-arrival / boss-defeat are emitted from the baron path alone (src/game/
+// Game.ts:5991 and :6250), so neither signal ever reaches this table. The Digger beats therefore
+// ride run-return-town, the nearest existing trigger, gated on an earlier beat instead of on
+// invented signals. A gate reads hintsSeen when the signal arrives, so a gated pair lands one town
+// return AFTER the beat it waits on: this chapter deliberately pays out across several returns,
+// which is how the persistence era is played.
+// Swatch law (STORYBOOK:532, bundle PALETTE NOTE): the green is E1's exact riverbank swatch and the
+// basin is the E1 claim's topology rotated, and the book says to say nothing in-game. No line below
+// points at either. Let someone's kid notice.
+export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    // lore/STORYBOOK.md:567,543
+    id: 'e9-dome-basin-arrival',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e9-dome-basin', // assets/raw/plate-contract-e9-dome-basin.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
+    lines: ['The Riverward is down and the ramp is out. The Pan Monument came off it first, set at the basin rim, dry and patient.', 'Quarry scarp to the north, dry basin to the south, and three stage gates to cut between them.'],
+  },
+  {
+    // lore/STORYBOOK.md:541,567
+    id: 'e9-water-ledger-opened',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
+    lines: ['The reeve opened the water ledger before the domes had roofs. The first ruling allocates melt-water to the river.', 'There is no river yet. The entry carries no coordinates. It is a law about a promise, and it is binding.'],
+  },
+  {
+    // lore/STORYBOOK.md:540
+    id: 'e9-grass-square-planted',
+    trigger: 'contract-unlocked',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
+    lines: ['The moon-born child carried a grass square down the ramp in a tin and set it into the commons soil.', 'One green foot on a red world. They tend it every morning before the water crews go out.'],
+  },
+  {
+    // lore/STORYBOOK.md:542
+    id: 'e9-greenkeeper-outside',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
+    lines: ['The greenkeeper plants outside now. Her teacher grew comfort under glass; she grows the stubborn kind under sky.', 'The quarry chief cuts her the ice, the weather warden steers the front that waters her far rows, and the clerk poles their mail.'],
+  },
+  {
+    // lore/STORYBOOK.md:537; ruling #17 - the number is canon, the owner of it never is.
+    id: 'e9-gazette-yearly-number',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
+    lines: ['GAZETTE: THE TOWER LOGGED THE YEARLY NUMBER AND THE TOWN ANSWERED', 'One claim-registry number out of the static, the same one as last year, no voice behind it. This paper prints the number and no owner.'],
+  },
+  {
+    // lore/STORYBOOK.md:556
+    id: 'e9-seed-run-planting',
+    trigger: 'contract-unlocked',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e9-seed-run', // assets/raw/plate-contract-e9-seed-run.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-seed-run',
+    lines: ['Every vault you plant on the way costs the escort its strength, and every one you plant stays planted.', 'Later crews shelter in the oases this crew spends itself to leave. Write that on the board and let them argue.'],
+  },
+  {
+    // lore/STORYBOOK.md:557; the era's mandated comedy beat, kept comic and never grim.
+    id: 'e9-devils-alley-wind',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e9-devils-alley', // assets/raw/plate-contract-e9-devils-alley.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-devils-alley',
+    lines: ['The devils cross on a schedule and they break nothing. They pick a building up and set it down somewhere else.', 'One turret went over the yard still working, indignant the whole way. Anchor what matters and let the wind replan the rest.'],
+  },
+  {
+    // lore/STORYBOOK.md:558
+    id: 'e9-old-canal-verdicts',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e9-old-canal', // assets/raw/plate-contract-e9-old-canal.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-old-canal',
+    lines: ['The Digger cut this canal generations back, wrong and almost right. Re-dig a segment slow and correct, or take it out fast and lose it.', 'The ground keeps every verdict. Water will run here by the sum of what you decide, and it will keep running that way.'],
+  },
+  {
+    // lore/STORYBOOK.md:547,568
+    id: 'e9-first-water-panned',
+    trigger: 'run-return-town',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-dome-basin-arrival'),
+    lines: ['Quarry ice, pumped and argued over for a week, and then panned. Melt-water swirled for grit in a brass pan under a pink sky.', 'The same verb we opened with, nine eras back. Nobody called it a ceremony and nobody moved until it was finished.'],
+  },
+  {
+    // lore/STORYBOOK.md:561,562; the era's threat night, and the act that teaches the fight's real verb.
+    id: 'e9-digger-correction',
+    trigger: 'run-return-town',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e9-boss-old-digger', // assets/raw/plate-e9-boss-old-digger.png
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-dome-basin-arrival'),
+    lines: ['Our newest canal was corrected in the night, re-dug to a century-old blueprint, beautifully and precisely wrong.', 'It never attacks. It unmakes, and our beams barely mark it. Whatever answers that machine, it is not more beams.'],
+  },
+  {
+    // lore/STORYBOOK.md:544; the tavern tale, in the shape of e3-tavern-twins-defect at lines 486-494.
+    id: 'e9-tavern-obedient-joke',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-digger-correction'),
+    lines: ['The house ruled on the Digger tonight. Nothing on this world wants anything, so nothing here is sick. It only ever obeyed.', 'The back table calls that the same disease at zero temperature. The front table calls it a machine doing its job. Both drink on it.'],
+  },
+  {
+    // lore/STORYBOOK.md:564; cure-arms lexicon (lore/canon-rules.md:13) - the fight is a reprogramming, and the machine is kept.
+    id: 'e9-digger-kept',
+    trigger: 'run-return-town',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-digger-correction'),
+    lines: ['They boarded it while it worked and swapped the old tape for our own canal record. It paused. It read. It turned.', "It re-dug its last correction right, and it digs to the reeve's charts now. We painted nothing over its crest."],
+  },
+  {
+    // lore/STORYBOOK.md:544,537; the Gazette prints what the archive can date and declines the name.
+    id: 'e9-gazette-crossed-pickaxes',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-digger-kept'),
+    lines: ['GAZETTE: CROSSED PICKAXES ON THE BLUEPRINT TAPE', 'A charter for a world nobody had seen, bought a century before this town could reach any sky. The archive dates it. We print the date.'],
+  },
+  {
+    // lore/STORYBOOK.md:570,543; written at the size the chapter fixes, and not one sentence larger.
+    id: 'e9-first-swim',
+    trigger: 'run-return-town',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-digger-kept'),
+    lines: ['C3 flooded and the basin filled and the water settled clear, and the monument ran its first open-sky water since the plaza.', 'The moon-born child walked past the whole crowd and dived. They came up and said a river sounds like everyone you love, yelling.'],
+  },
+  {
+    // lore/STORYBOOK.md:571; the exit hook toward E10, in the shape of e5-deep-reactor-horizon at lines 826-834.
+    id: 'e9-generation-ark-horizon',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    lines: ["The Ark yards are finished and the manifest is open: every portrait, the Long Table, a seed of the Elder's Tree in the greenkeeper's tin.", "The departure horn will be the Railcar's whistle note. And there are sails on the horizon already, crossed pickaxes on every one."],
+  },
+];
+
 export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
   ? [...STORY_BEATS, ...LEDGER_STORY_BEATS]
   : [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];
