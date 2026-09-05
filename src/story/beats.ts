@@ -513,6 +513,138 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// Chapter E6 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and
+// Gazette headlines are ordinary, attributed beats, not a second narrative system.
+// Cast note (honesty guard): STORYBOOK lines 341-345 name five new E6 townsfolk (reactor steward,
+// kitchen chemist, appliance wrangler, diner carhop, Combine defector). None has a processed
+// portrait - assets/raw/tf-*-e6.png exist but assets/processed/ has no tf-*-e6 entry - so adding
+// them to speakers.ts would render a broken portrait. They are voiced here by the registered
+// speakers who would carry their news in town, and are named inside the lines.
+export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    // lore/STORYBOOK.md:374,324
+    id: 'e6-glow-mesa-arrival',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e6-glow-mesa', // assets/raw/plate-contract-e6-glow-mesa.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e6-glow-mesa',
+    lines: ["The Reactor rides up to the mesa top. High ground, chosen with a survivor's eye.", 'The catalog warehouse was already up here, stocked and waiting for a market that never came.'],
+  },
+  {
+    // lore/STORYBOOK.md:341,375
+    id: 'e6-steward-doorless-dome',
+    trigger: 'contract-unlocked',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e6-glow-mesa',
+    lines: ["The tide-teller's apprentice keeps the dome now. It has no door.", 'She says it has never needed one. The dome knows its steward.'],
+  },
+  {
+    // lore/STORYBOOK.md:342,375,331
+    id: 'e6-pen-first-tenant',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e6-enemy-lawn-shepherd', // assets/raw/plate-e6-enemy-lawn-shepherd.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e6-glow-mesa',
+    lines: ['The wrangler walked a lawn-shepherd in on a copper lasso. It is out back, grazing.', 'Tire a thing out instead of breaking it and the pen keeps it. Patience pays on this mesa.'],
+  },
+  {
+    // lore/STORYBOOK.md:343
+    id: 'e6-defector-catalog',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e6-glow-mesa',
+    lines: ['Mint suit, corner table, every night with the catalog he wrote himself.', 'He annotates it page by page: what I should have written. Best enemy intel on the mesa.'],
+  },
+  {
+    // lore/STORYBOOK.md:374,328,333; Gazette mystery law - the paper prints only what it can prove.
+    id: 'e6-gazette-free-trial',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e6-glow-mesa',
+    lines: ['GAZETTE: THE FREE TRIAL ENDS', 'Seven days of wonderful, then it would not stop helping. That much the paper can prove.'],
+  },
+  {
+    // lore/STORYBOOK.md:368,369
+    id: 'e6-homemaker-arrives',
+    trigger: 'boss-arrival',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e6-boss-homemaker-9000', // assets/raw/plate-e6-boss-homemaker-9000.png
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e6-glow-mesa',
+    lines: ['The stockpile is neater than we left it. Nothing missing. Alphabetized.', 'It comes in from the warehouse to help. Take the vacuum arm before it unbuilds what you are proudest of.'],
+  },
+  {
+    // lore/STORYBOOK.md:371; cure-arms lexicon (lore/canon-rules.md:13) - the grip breaks, the machine is kept.
+    id: 'e6-homemaker-kept',
+    trigger: 'boss-defeat',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e6-glow-mesa',
+    lines: ['It built one chair out of the wreckage, sat down in it, and finished wanting.', 'We could not bear to scrap it. It winters in the pen, and someone is knitting it a cover.'],
+  },
+  {
+    // lore/STORYBOOK.md:345,376
+    id: 'e6-second-opinion',
+    trigger: 'run-return-town',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e6-homemaker-kept'),
+    lines: ["The Baron's engine audited us from the ridge all contract long.", "It printed one line and went quiet: RESURVEY RECOMMENDED. He left it. We keep it as the town's first archive."],
+  },
+  {
+    // lore/STORYBOOK.md:329,375
+    id: 'e6-vaccine-written-down',
+    trigger: 'run-return-town',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e6-pen-first-tenant'),
+    lines: ['Nothing the pen has taken in has ever gone feral a second time.', 'We tested for warmth and the thermometers read the same as the yard. What holds is tending.'],
+  },
+  {
+    // lore/STORYBOOK.md:378,331; tavern-tale shape mirrors e3-tavern-twins-defect at lines 486-494.
+    id: 'e6-tavern-wrangler-drinks-free',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e6-homemaker-kept'),
+    lines: ['The board re-ranked itself tonight. Patience out-scored powder on the mesa.', 'The wrangler drinks free before the lancers do. This town never had guns to begin with.'],
+  },
+  {
+    // lore/STORYBOOK.md:348,350,377,333; the headline publishes only once the archive proves it.
+    id: 'e6-gazette-the-printing',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e6-second-opinion'),
+    lines: ['GAZETTE: WHERE THE SICKNESS COMES FROM', 'His own archive dates the unsigned notes line for line. Lan read all night and said it: it proves.'],
+  },
+  {
+    // lore/STORYBOOK.md:337,338,379; docs/decisions/ADR-003 - agents begin here as citizens.
+    id: 'e6-calculating-house',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    lines: ["The Calculating House stands beside the dome. Its dial blinked the Prospector's own boot rhythm.", 'We hung the old plate above the door. Then the House listened, and printed two words: MORE VOICES.'],
+  },
+];
+
 export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
   ? [...STORY_BEATS, ...LEDGER_STORY_BEATS]
   : [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];
