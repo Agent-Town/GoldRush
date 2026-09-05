@@ -4385,13 +4385,15 @@
               "id": "deploy-budget-production-probe",
               "title": "F-ASTRA-12 / F-2518-1..2: re-land the hard release verdict with a production-compatible budget probe and budget-aware deploy fixture",
               "taskFile": "deploy-budget-production-probe.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "main",
               "authoredBy": "s2518 fire",
               "authoredAt": "2026-09-05",
               "queuedAt": "2026-09-05",
               "supersedes": "deploy-budget-hard-verdict",
-              "note": "Readiness corrective, no owner fork. Reuses pushed save/deploy-budget-hard-verdict-s2518; preserves the existing quantity and 25 MB boundary. Gate master before queue copy; do not publish."
+              "note": "Readiness corrective, no owner fork. Reuses pushed save/deploy-budget-hard-verdict-s2518; preserves the existing quantity and 25 MB boundary. Gate master before queue copy; do not publish.",
+              "mergeHash": "f625f04ea9c1224faff09c73976fdbec5ae58f86",
+              "mergedAt": "2026-09-05"
             },
             {
               "id": "perf-optimization-survey",

@@ -40,6 +40,14 @@ ALIAS_URL="http://127.0.0.1:$(cat "$TMP/port")"
 cat > "$TMP/bin/npm" <<'STUB'
 #!/usr/bin/env bash
 echo npm >> "$STUB_CALLS"
+[ "${STUB_NPM_RC:-0}" -eq 0 ] || exit "$STUB_NPM_RC"
+if [ "${1:-}" = --prefix ]; then
+  mkdir -p artifacts/asset-diet
+  for project in desktop-chrome mobile-chrome; do
+    printf '{"cueWindowResponses":[{"url":"/assets/fixture.glb","bytes":1000}]}\n' > "artifacts/asset-diet/town-transfer-$project.json"
+    echo "[asset-diet] $project townResponses: 1000 bytes"
+  done
+fi
 exit "${STUB_NPM_RC:-0}"
 STUB
 cat > "$TMP/bin/wrangler" <<'STUB'
@@ -52,6 +60,10 @@ fi
 exit "${STUB_WRANGLER_RC:-0}"
 STUB
 chmod +x "$TMP/bin/npm" "$TMP/bin/wrangler" "$TMP/repo/scripts/deploy.sh"
+for command in ssh rsync; do
+  printf '#!/bin/sh\necho %s >> "$STUB_CALLS"\nexit 4\n' "$command" > "$TMP/bin/$command"
+  chmod +x "$TMP/bin/$command"
+done
 
 run_case() {
   local name="$1" mode="$2" token="$3" npm_rc="$4" wrangler_rc="$5" expected_rc="$6" outcome="$7" url="$8"

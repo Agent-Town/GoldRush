@@ -47,6 +47,29 @@ type TownTransferMeasurements = {
 const execFileAsync = promisify(execFile);
 const cueTestMeasurementsByProject = new Map<string, TownTransferMeasurements>();
 
+declare global {
+  interface Window {
+    __assetDietCues: Array<{ text: string; ready: string | undefined }>;
+  }
+}
+
+// Observe rendered transient cues before navigation/entry; a protocol round trip can miss them.
+function observeLoadingCues() {
+  window.__assetDietCues = [];
+  const sample = () => {
+    const cue = document.querySelector<HTMLElement>('[data-testid="asset-loading-cue"]');
+    const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
+    if (cue && cue.getBoundingClientRect().height > 0 && getComputedStyle(cue).visibility === 'visible') {
+      const text = cue.textContent ?? '';
+      const ready = canvas?.dataset.assetLoadingReady;
+      const last = window.__assetDietCues.at(-1);
+      if (last?.text !== text || last?.ready !== ready) window.__assetDietCues.push({ text, ready });
+    }
+    requestAnimationFrame(sample);
+  };
+  requestAnimationFrame(sample);
+}
+
 function measuredResponse(url: URL, contentLength: string | undefined): TownResponse {
   const bytes = Number(contentLength ?? 0);
   const contentLengthIssue = contentLength === undefined
@@ -112,6 +135,12 @@ function responseStats(responses: TownResponse[]) {
   const uniqueBytes = [...counts.values()].reduce((sum, response) => sum + response.bytes, 0);
   const duplicateUrls = [...counts.entries()].filter(([, response]) => response.count > 1);
   return { totalBytes, uniqueBytes, duplicateBytes: totalBytes - uniqueBytes, duplicateUrls };
+}
+
+async function waitForTownAssets(page: Page) {
+  // Town starts at ready 0/0 before its asynchronous pilot import installs the loaders.
+  await expect.poll(async () => Number(await page.locator('#game-canvas').getAttribute('data-asset-loading-total')), { timeout: 45_000 }).toBeGreaterThan(0);
+  await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
 }
 
 async function matchesCommittedFile(filePath: string) {
@@ -224,7 +253,7 @@ test('dieted output keeps two terrain census views and town within screenshot to
   expectNoConsoleErrors(watch);
 });
 
-test('honest town and claim cues appear while GLBs are throttled and leave at ready', async ({ page }, testInfo) => {
+test('town cue-window budget through player entry', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const watch = watchErrors(page);
   const townTransfer = startTownTransferMeasurements(page);
@@ -234,10 +263,7 @@ test('honest town and claim cues appear while GLBs are throttled and leave at re
   await page.goto('/?town3dPilot=all&tier=full');
   await page.getByTestId('start-menu-enter-town').click();
   const cue = page.getByTestId('asset-loading-cue');
-  await expect(cue).toBeVisible();
-  await expect(cue).toHaveText(/^the town is raising… \d+\/\d+$/);
-  await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-town-throttled.png`) });
-  await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
+  await waitForTownAssets(page);
   await expect(cue).toBeHidden();
   const cueWindowResponses = townTransfer.sampleCueWindowResponses();
   const settledCueMeasurement = await townTransfer.settle();
@@ -255,17 +281,46 @@ test('honest town and claim cues appear while GLBs are throttled and leave at re
   // observed swing). The stable-looking settled <=20 s quantity is measured beside it but gated
   // on nothing. Which quantity should govern releases, and at what value, remains an open owner fork.
   expect(cueWindowResponseBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
+  await cdp.detach();
+  expectNoConsoleErrors(watch);
+});
 
-  await page.getByTestId('town-exit').click();
+test('honest town cues appear while GLBs are throttled and leave at ready', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const watch = watchErrors(page);
+  await mkdir(ARTIFACT_DIR, { recursive: true });
+  await page.addInitScript(observeLoadingCues);
+  const cdp = await throttleGlbs(page, testInfo.project.use.baseURL);
+  const cue = page.getByTestId('asset-loading-cue');
+
+  await page.goto('/?town3dPilot=all&tier=full');
   await page.getByTestId('start-menu-enter-town').click();
-  await expect(cue).toBeVisible();
-  await expect(page.locator('#game-canvas')).toHaveAttribute('data-asset-loading-ready', '0');
+  await expect.poll(() => page.evaluate(() => window.__assetDietCues.some(({ text }) => /^the town is raising… \d+\/\d+$/.test(text)))).toBe(true);
+  await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-town-throttled.png`) });
   await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
   await expect(cue).toBeHidden();
 
+  await page.getByTestId('town-exit').click();
+  await page.evaluate(() => { window.__assetDietCues = []; });
+  await page.getByTestId('start-menu-enter-town').click();
+  await expect.poll(() => page.evaluate(() => window.__assetDietCues.some(({ text, ready }) => /^the town is raising… \d+\/\d+$/.test(text) && ready === '0'))).toBe(true);
+  await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
+  await expect(cue).toBeHidden();
+  await cdp.detach();
+  expectNoConsoleErrors(watch);
+});
+
+// Fresh context: town prefetch can warm Claim's GLBs before navigation and erase its cold cue.
+// Full built bundle only: the Claim debug door is deliberately stripped from GR_RELEASE=e1.
+test('honest claim cue appears while GLBs are throttled and leaves at ready', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const watch = watchErrors(page);
+  await mkdir(ARTIFACT_DIR, { recursive: true });
+  await page.addInitScript(observeLoadingCues);
+  const cdp = await throttleGlbs(page, testInfo.project.use.baseURL);
+  const cue = page.getByTestId('asset-loading-cue');
   await page.goto('/?debug&era=1&contract=the-claim&nowaves&nolevel&nokill&nopause&tier=full&seed=asset-diet-cue');
-  await expect(cue).toBeVisible();
-  await expect(cue).toHaveText(/^the claim is raising… \d+\/\d+$/);
+  await expect.poll(() => page.evaluate(() => window.__assetDietCues.some(({ text }) => /^the claim is raising… \d+\/\d+$/.test(text)))).toBe(true);
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-claim-throttled.png`) });
   await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
   await expect(cue).toBeHidden();
@@ -284,7 +339,7 @@ test('town byte budget reports normal and saveData arms by URL', async ({ browse
       await expect(armPage.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-town-state', 'ready', { timeout: 45_000 });
     }
     await armPage.getByTestId('start-menu-enter-town').click();
-    await expect.poll(() => armPage.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
+    await waitForTownAssets(armPage);
     const cueWindowResponses = townTransfer.sampleCueWindowResponses();
     const settled = await townTransfer.settle();
     await cdp.detach();

@@ -13,3 +13,5 @@ Why this exists: Astra's review (F-ASTRA-12, verified) showed that every iOS use
 | Verdict | one line | SHIP / HOLD, signed by the owner |
 
 Owner directive (2026-09-05): "lets have it fix these findings. This is important stuff." The device rows are the owner's; a fire never fills them.
+
+The filename must use the exact **Build** value from the deploy's RELEASE VERDICT block: `docs/release/verdict-<build>.md` (including the full value when `CF_PAGES_COMMIT_SHA` supplies it). File presence records where the owner's device evidence lives; it does not imply SHIP or replace reading the signed verdict. Missing device evidence warns without blocking deployment. `--allow-over-budget` explicitly waives a failed budget check, including an unavailable measurement; it leaves the printed budget FAIL and records the allowance. `--dry-run` performs the build and budget check, then stops before publication.

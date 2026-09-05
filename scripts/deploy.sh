@@ -1,19 +1,34 @@
 #!/usr/bin/env bash
 # Gold Rush — deploy the current gated build to Cloudflare Pages.
-# Called by fires after handoff (DEPLOY LAW) or manually. Never blocks anything:
-# missing wrangler/auth skips; build/deploy failures are logged; default mode exits 0.
+# Called by fires after handoff (DEPLOY LAW) or manually. Budget failures block unless
+# explicitly waived; --strict also returns nonzero for other failure classes.
+# --dry-run builds and measures normally, then stops before credentials or publishing.
 set -u
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT" || exit 1
 STRICT=0
-[ "${1:-}" = "--strict" ] && STRICT=1
+ALLOW_OVER_BUDGET=0
+DRY_RUN=0
+for arg in "$@"; do
+  case "$arg" in
+    --strict) STRICT=1 ;;
+    --allow-over-budget) ALLOW_OVER_BUDGET=1 ;;
+    --dry-run) DRY_RUN=1 ;;
+    *) echo "Usage: $0 [--strict] [--allow-over-budget] [--dry-run]" >&2; exit 2 ;;
+  esac
+done
 LOG="logs/deploy.log"
 RESULT="logs/deploy-result.json"
 PAGES_PRODUCTION_URL="${GR_PAGES_PRODUCTION_URL:-https://gold-rush-3in.pages.dev}"
 mkdir -p logs
 note() { echo "[deploy] $(date '+%F %T') $*" >> "$LOG"; echo "[deploy] $*"; }
 DEPLOY_COMMIT="${CF_PAGES_COMMIT_SHA:-$(git rev-parse HEAD 2>/dev/null || printf 'unknown')}"
+BUILD_ID="${CF_PAGES_COMMIT_SHA:-$(git rev-parse --short=8 HEAD 2>/dev/null || printf 'unknown')}"
 PUBLISHED_BUILD=""
+BUDGET_LIMIT=25000000
+BUDGET_STATUS="FAIL (not measured)"
+BUDGET_SUMMARY=""
+BUDGET_ALLOWANCE=""
 write_result() {
   local outcome="$1" url="$2" ts tmp
   ts="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
@@ -24,7 +39,19 @@ write_result() {
 finish() {
   local outcome="$1" code="$2" url="${3:-}"
   write_result "$outcome" "$url" || note "FAILED: could not write $RESULT"
-  if [ "$STRICT" -eq 1 ]; then exit "$code"; fi
+  note "RELEASE VERDICT"
+  note "Build: $BUILD_ID"
+  note "Budget: $BUDGET_STATUS$BUDGET_ALLOWANCE (limit: $BUDGET_LIMIT bytes)"
+  if [ -n "$BUDGET_SUMMARY" ]; then
+    while IFS= read -r row; do note "$row"; done <<< "$BUDGET_SUMMARY"
+  fi
+  if [ -f "docs/release/verdict-$BUILD_ID.md" ]; then
+    note "Device verdict: PRESENT docs/release/verdict-$BUILD_ID.md (owner verdict not evaluated)"
+  else
+    note "Device verdict: WARN missing docs/release/verdict-$BUILD_ID.md"
+  fi
+  note "Outcome: $outcome"
+  if [ "$STRICT" -eq 1 ] || [ "$outcome" = budget_failed ]; then exit "$code"; fi
   exit 0
 }
 
@@ -45,7 +72,6 @@ trap 'finish interrupted 130' INT
 trap 'finish interrupted 143' TERM
 
 note "building…"
-BUILD_ID="${CF_PAGES_COMMIT_SHA:-$(git rev-parse --short=8 HEAD 2>/dev/null || printf 'unknown')}"
 # PRODUCTION IS E1-ONLY (owner ruling 2026-08-20, verbatim: "that is the production page - I
 # don't think we should deploy E9 there"): GR_RELEASE=e1 strips every post-E1 bundle at build
 # time and disables the ?debug contract door entirely (ContractFamilies.ts RELEASE_E1). Full
@@ -54,7 +80,6 @@ BUILD_ID="${CF_PAGES_COMMIT_SHA:-$(git rev-parse --short=8 HEAD 2>/dev/null || p
 if ! GR_RELEASE="${GR_RELEASE:-e1}" CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; finish build_failed 3; fi
 printf '{"build":"%s","builtAt":"%s"}\n' "$BUILD_ID" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > dist/version.json
 
-BUDGET_LIMIT=25000000
 BUDGET_OVER=0
 CAPTURE="$(mktemp "${TMPDIR:-/tmp}/gold-rush-deploy.XXXXXX")" || { note "FAILED: could not create deploy capture"; finish budget_failed 5; }
 BUDGET_CWD="$(mktemp -d "${TMPDIR:-/tmp}/gold-rush-budget.XXXXXX")" || { note "FAILED: could not create budget workdir"; finish budget_failed 5; }
@@ -71,17 +96,54 @@ if (
   # This now matches `npm run test:asset-diet`, which has always run without the flag.
   GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1 npm --prefix "$ROOT" exec -- playwright test \
     --config "$ROOT/playwright.preview.config.ts" "$ROOT/e2e/asset-diet.spec.ts" --workers=1 \
-    --grep "honest town and claim cues"
+    --project=desktop-chrome --project=mobile-chrome --grep "town cue-window budget through player entry$"
 ) > "$CAPTURE" 2>&1; then BUDGET_RC=0; else BUDGET_RC=$?; fi
 cat "$CAPTURE" >> "$LOG"
 BUDGET_MEASURED=0
+BUDGET_REPORT_FAILED=0
+BUDGET_PROJECTS=" "
 while read -r project bytes; do
+  case "$project" in
+    desktop-chrome|mobile-chrome) ;;
+    *) BUDGET_REPORT_FAILED=1; note "MEASUREMENT FAILED: unexpected project $project"; continue ;;
+  esac
+  case "$BUDGET_PROJECTS" in
+    *" $project "*) BUDGET_REPORT_FAILED=1; note "MEASUREMENT FAILED: duplicate project $project"; continue ;;
+  esac
+  BUDGET_PROJECTS="$BUDGET_PROJECTS$project "
   BUDGET_MEASURED=$((BUDGET_MEASURED + 1))
   if [ "$bytes" -lt "$BUDGET_LIMIT" ]; then
-    note "asset budget $project: $bytes bytes ($((BUDGET_LIMIT - bytes)) bytes headroom)"
+    note "asset budget $project: $bytes / $BUDGET_LIMIT bytes ($((BUDGET_LIMIT - bytes)) bytes headroom)"
   else
     BUDGET_OVER=1
-    note "asset budget $project: $bytes bytes ($((bytes - BUDGET_LIMIT)) bytes OVER)"
+    note "asset budget $project: $bytes / $BUDGET_LIMIT bytes ($((bytes - BUDGET_LIMIT)) bytes OVER)"
+  fi
+  BUDGET_SUMMARY="${BUDGET_SUMMARY:+$BUDGET_SUMMARY
+}$project: $bytes / $BUDGET_LIMIT bytes"
+  if TOP_FILES="$(node - "$BUDGET_CWD/artifacts/asset-diet/town-transfer-$project.json" "$bytes" <<'NODE'
+const fs = require('node:fs');
+try {
+  const { cueWindowResponses } = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+  if (!Array.isArray(cueWindowResponses) || !cueWindowResponses.length) throw new Error('no responses');
+  const totals = new Map();
+  for (const { url, bytes } of cueWindowResponses) {
+    if (typeof url !== 'string' || !Number.isSafeInteger(bytes) || bytes < 0) throw new Error('invalid response');
+    totals.set(url, (totals.get(url) ?? 0) + bytes);
+  }
+  const sum = [...totals.values()].reduce((a, b) => a + b, 0);
+  if (!Number.isSafeInteger(sum) || sum <= 0 || sum !== Number(process.argv[3])) throw new Error('response total mismatch');
+  for (const [url, bytes] of [...totals].sort((a, b) => b[1] - a[1]).slice(0, 5)) console.log(`  ${bytes} bytes ${url}`);
+} catch (error) {
+  console.error(`Budget file report failed: ${error.message}`);
+  process.exit(1);
+}
+NODE
+)"; then
+    note "top five contributing files ($project, cue-window transfer including repeat requests):"
+    while IFS= read -r row; do note "$row"; done <<< "$TOP_FILES"
+  else
+    BUDGET_REPORT_FAILED=1
+    note "MEASUREMENT FAILED: missing or invalid per-file budget report for $project"
   fi
 done < <(sed -nE 's/.*\[asset-diet\] ([^ ]+) townResponses: ([0-9]+) bytes.*/\1 \2/p' "$CAPTURE")
 # F-1489-3: a gate that measured NOTHING used to emit the same WARN as a gate that measured an
@@ -90,10 +152,15 @@ done < <(sed -nE 's/.*\[asset-diet\] ([^ ]+) townResponses: ([0-9]+) bytes.*/\1 
 if [ "$BUDGET_MEASURED" -eq 0 ]; then
   note "MEASURED NOTHING: asset budget parsed 0 projects (playwright rc=$BUDGET_RC) — this is NOT a pass"
 fi
-if [ "$BUDGET_RC" -ne 0 ] || [ "$BUDGET_OVER" -ne 0 ] || [ "$BUDGET_MEASURED" -eq 0 ]; then
-  if [ "$STRICT" -eq 1 ]; then note "ABORT: asset budget check failed in strict mode"; finish budget_failed 5; fi
-  note "WARN: asset budget check failed — default mode continues"
+BUDGET_STATUS="PASS"
+if [ "$BUDGET_RC" -ne 0 ] || [ "$BUDGET_OVER" -ne 0 ] || [ "$BUDGET_MEASURED" -ne 2 ] || [ "$BUDGET_REPORT_FAILED" -ne 0 ]; then
+  BUDGET_STATUS="FAIL (probe rc=$BUDGET_RC; measured projects=$BUDGET_MEASURED; report failures=$BUDGET_REPORT_FAILED)"
+  if [ "$ALLOW_OVER_BUDGET" -ne 1 ]; then note "ABORT: asset budget check failed; use --allow-over-budget to waive explicitly"; finish budget_failed 5; fi
+  BUDGET_ALLOWANCE="; ALLOWED by --allow-over-budget"
+  note "WARN: asset budget failure explicitly allowed by --allow-over-budget; measurements above (unavailable if none)"
 fi
+
+if [ "$DRY_RUN" -eq 1 ]; then note "DRY RUN: skipping publication and assayer sync"; finish dry_run 0; fi
 
 SNAPSHOT="$(mktemp -d "${TMPDIR:-/tmp}/gold-rush-dist.XXXXXX")" || { note "FAILED: could not create deploy snapshot"; finish deploy_failed 4; }
 cp -R dist/. "$SNAPSHOT"/ || { note "FAILED: could not copy deploy snapshot"; finish deploy_failed 4; }
