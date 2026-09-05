@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "82ea9af6de1788cf309340b9eace9d147f5723c041be89f2064490efb331a2e9",
+  "engineHash": "324bb3cd0e32f2b71c37f86d74593340ee782e2718f8173274a7e7d15a0d2e8f",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -253,6 +253,12 @@
       "engineHash": "82ea9af6de1788cf309340b9eace9d147f5723c041be89f2064490efb331a2e9",
       "pinnedAt": "2026-09-05",
       "cause": "content re-hash: e7-playbook-rows drain (b38d60295) adds PLAYBOOK_USE and the signal-system composition on the four Signal Era maps; every other contract replays byte-identical (eight E7 idle null floors and the E1/E8 controls measured); same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "324bb3cd0e32f2b71c37f86d74593340ee782e2718f8173274a7e7d15a0d2e8f",
+      "pinnedAt": "2026-09-05",
+      "cause": "content re-hash: e3-moth-season drain (de21da4f5) rewrites the Moth Season contract row (assets/contracts/epoch-3-voltage/contracts.json) — the sabotageable light circuit as contract data, zero src/ edits; every other contract replays byte-identical (the lane's both-engine tables + the E7/E8 pins measured); same era per F-1441-3",
       "aliases": []
     }
   ],

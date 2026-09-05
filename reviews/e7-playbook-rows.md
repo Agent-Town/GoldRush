@@ -25,3 +25,6 @@ Base `5d8603982` (the E4 lane tip; the lane never merged main). MAIN-MOVED and r
 - **F-E7PB-3 (open, same class as E4's):** no Signal map secures at a scripted floor (the rides meet the objective and die to waves). Heat 11's Opus secured three of the four under the old rules; a real rider under the new latch is the honest test. If none secures, a survival-floor slice follows (owner precedent).
 - **F-E7PB-2 (known, harness-only):** the F-E4-1 class; the browser arm is bounded to 890 ticks.
 - **Engine pin:** appended in this drain.
+
+## Post-drain finding (2026-09-05, attended)
+- **F-E7PB-4 (CURED in the e3-moth-season drain commit):** the E7 `public/skill.md` merge resolution (lane prose + main's fenced contract list) dropped two MAIN-side paragraphs the lane never had: the view-schema "additive-only" sentence under THE VIEW and the county ranking rule under SUBMITTING A STANDING. Caught by `scripts/standing-rule-surfaces.test.mjs` (the three-surfaces guard: actual 1 vs expected 2) on the next drain's battery; production build `4620d4d3` shipped without the rule for roughly one hour. Both restored verbatim from `46649a53`; guard 1/1, `view-schema-guard` 3/3. Lesson: a hand-resolved prose merge is judged by the guard battery, not by eye — run `standing-rule-surfaces` whenever `public/skill.md` is a MAIN-MOVED file.
