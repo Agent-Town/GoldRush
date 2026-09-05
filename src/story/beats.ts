@@ -534,7 +534,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['The Claim-Boat is the claim now. We hold on anchor points, and the storm fronts run west to east.', 'What we own is measured downward: one fathom for anyone, two with gear, four with the bell.'],
   },
   {
-    // lore/STORYBOOK.md:254,267
+    // lore/STORYBOOK.md:254,267,293
     id: 'e5-harbormaster-manifest',
     trigger: 'contract-unlocked',
     speaker: 'clerk',
@@ -542,6 +542,16 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
     lines: ['The manifest went up in chalk on the wheelhouse door: tools before furniture, seed before harvest, books before both.', 'We counted ourselves twice on the water and once more at dawn. The number held.'],
+  },
+  {
+    // lore/STORYBOOK.md:294
+    id: 'e5-rebuild-long-table',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
+    lines: ['First thing raised on the new shore was the long table, before the Harbor House had walls to put around it.', 'We were all seasick in unison, then sea-legged on the same wave. The manifest chalk hangs retired over the bar.'],
   },
   {
     // lore/STORYBOOK.md:266
@@ -554,7 +564,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ["The tide-teller called the crest within a hand's width. Swell period, bird behavior, kelp set.", 'She reads the sea. Write the method down before anyone calls it a gift.'],
   },
   {
-    // lore/STORYBOOK.md:255; Gazette mystery-law headline in the E3 shape at lines 435-441.
+    // lore/STORYBOOK.md:255,293; Gazette mystery-law headline in the E3 shape at lines 435-441.
     id: 'e5-gazette-monument-carry',
     trigger: 'contract-unlocked',
     speaker: 'newsie',

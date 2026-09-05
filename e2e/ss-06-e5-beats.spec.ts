@@ -14,6 +14,7 @@ const SHOTS = 'reviews/shots-ss-06-e5-beats';
 const IDS = [
   'e5-deepwater-claim-arrival',
   'e5-harbormaster-manifest',
+  'e5-rebuild-long-table',
   'e5-tide-teller-reading',
   'e5-gazette-monument-carry',
   'e5-first-dive-w1',
@@ -136,6 +137,10 @@ test('a player-selected Deepwater town presents the Claim-Boat arrival and the m
   await expectBeat(page, 'e5-harbormaster-manifest');
   await expect(page.getByTestId('story-beat-card')).toContainText('wheelhouse door');
   await shot(page, testInfo, 'manifest');
+  await dismissBeat(page);
+  await expectBeat(page, 'e5-rebuild-long-table');
+  await expect(page.getByTestId('story-beat-card')).toContainText('long table');
+  await shot(page, testInfo, 'rebuild');
   await dismissBeat(page);
   await expectBeat(page, 'e5-tide-teller-reading');
   await shot(page, testInfo, 'tide-teller');
