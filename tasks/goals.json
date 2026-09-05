@@ -4315,11 +4315,15 @@
               "id": "deploy-budget-hard-verdict",
               "title": "F-ASTRA-12: production deploys fail closed on the 25 MB budget and print a RELEASE VERDICT block",
               "taskFile": "deploy-budget-hard-verdict.md",
-              "status": "queued",
+              "status": "superseded",
               "lane": "main",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "queuedAt": "2026-09-05"
+              "queuedAt": "2026-09-05",
+              "blockClass": "gate-side",
+              "supersededBy": "deploy-budget-production-probe",
+              "heldBy": "s2518",
+              "blockedReason": "s2518 readiness HOLD, NOT MERGED. Focused guard 13/13; real production probe failed and full Node battery was interrupted. The unchanged deploy contract also fails its empty-measurement fixture. Source preserved verbatim and pushed at save/deploy-budget-hard-verdict-s2518 (36176d1ca93701e2f6ceb0d3d9f52df79e164443); only its four main output paths were restored. Superseded by deploy-budget-production-probe, which re-lands the preserved implementation and fixes the production probe/fixture before gating. No owner word owed. Review: reviews/deploy-budget-hard-verdict-s2518.md."
             },
             {
               "id": "asset-diet-explicit-manifest",
@@ -4370,6 +4374,18 @@
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
               "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+            },
+            {
+              "id": "deploy-budget-production-probe",
+              "title": "F-ASTRA-12 / F-2518-1..2: re-land the hard release verdict with a production-compatible budget probe and budget-aware deploy fixture",
+              "taskFile": "deploy-budget-production-probe.md",
+              "status": "queued",
+              "lane": "main",
+              "authoredBy": "s2518 fire",
+              "authoredAt": "2026-09-05",
+              "queuedAt": "2026-09-05",
+              "supersedes": "deploy-budget-hard-verdict",
+              "note": "Readiness corrective, no owner fork. Reuses pushed save/deploy-budget-hard-verdict-s2518; preserves the existing quantity and 25 MB boundary. Gate master before queue copy; do not publish."
             }
           ]
         }
