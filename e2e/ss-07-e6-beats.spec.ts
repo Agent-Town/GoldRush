@@ -188,9 +188,18 @@ test('the Atomic boss and return beats fire only on their own triggers', async (
   const emit = async (signal: RuntimeStorySignal): Promise<void> => {
     await page.evaluate((value) => window.__GR_STORY__?.emit(value), signal);
   };
+  // StoryRuntime.dismiss() opens a GAP_MS window before the next card (StoryRuntime.ts:123),
+  // so an empty active() is only proof of an empty queue once that window has elapsed.
   const drain = async (): Promise<string[]> => {
     const seen: string[] = [];
     for (let attempt = 0; attempt < 24; attempt += 1) {
+      try {
+        await expect
+          .poll(() => page.evaluate(() => window.__GR_STORY__?.active() ?? null), { timeout: 5_000 })
+          .not.toBeNull();
+      } catch {
+        break;
+      }
       const active = await page.evaluate(() => window.__GR_STORY__?.active() ?? null);
       if (!active) break;
       seen.push(active);
