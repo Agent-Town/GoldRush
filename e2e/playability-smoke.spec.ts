@@ -27,8 +27,10 @@
  *     (src/meta/ContractUnlock.ts:77) throws away a staged launch whose contract is still locked,
  *     so a smoke of the whole board has to arrive as a player who has earned the whole board.
  *
- * WHY IT IS NOT IN THE DEFAULT BATTERY. 42 contracts x 2 projects is ~40 minutes of wall clock.
- * Tagged `@slow`; run it with `npm run test:playability`.
+ * WHY IT IS NOT IN THE DEFAULT BATTERY. 42 contracts x 2 projects is ~30 minutes of wall clock per
+ * environment (measured: dev 26 min, preview 28 min). Tagged `@slow` AND gated behind
+ * GR_PLAYABILITY_SMOKE, because the tag alone would not keep it out of `npm test` (see the
+ * `test.skip` below). Run it with `npm run test:playability`.
  */
 import { appendFile, mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
@@ -69,6 +71,18 @@ const ONLY = (process.env.GR_SMOKE_ONLY ?? '')
   .filter(Boolean);
 
 if (SMOKE_BASE_URL) test.use({ baseURL: SMOKE_BASE_URL });
+
+/**
+ * OUT OF THE DEFAULT BATTERY, BY MECHANISM AND NOT BY WISH. `playwright.config.ts` sets
+ * `testDir: './e2e'` and ignores only `**\/*.rig.ts` plus three specs another config claims, so a
+ * `@slow` tag on its own would NOT keep these 42 x 2 cells (~30 minutes per environment) out of
+ * `npm test`. This is the house gate for exactly that — the same shape as
+ * `e2e/f1148-1-trajectory-probe.spec.ts:5` and `e2e/landmark-brightness.spec.ts:183`.
+ */
+test.skip(
+  !process.env.GR_PLAYABILITY_SMOKE,
+  'whole-board matrix, ~30 min per environment — run `npm run test:playability`, or set GR_PLAYABILITY_SMOKE=1',
+);
 
 const PROFILE_ID = 'robin';
 /** The whole board, in board order — src/meta/ContractFamilies.ts:1004. */
