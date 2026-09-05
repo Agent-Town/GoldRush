@@ -194,6 +194,7 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--include=/scripts/assay-replay.mjs"
         "--include=/scripts/assay-replay-agent.mjs"
         "--include=/scripts/asset-diet.mjs"
+        "--include=/scripts/asset-diet.manifest.json"
         "--include=/news/herald.json"
         "--include=/lore/world-dispatches.md"
         "--include=/functions/***"

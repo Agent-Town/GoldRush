@@ -1,5 +1,5 @@
 import { Logger, NodeIO } from '@gltf-transform/core';
-import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
+import { ALL_EXTENSIONS, EXTMeshoptCompression } from '@gltf-transform/extensions';
 import { meshopt, textureCompress } from '@gltf-transform/functions';
 import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer';
 import sharp from 'sharp';
@@ -74,6 +74,7 @@ for (const entry of modelManifest) {
     && Array.isArray(entry.patterns) && entry.patterns.length && entry.patterns.every((pattern) => typeof pattern === 'string' && pattern.trim())
     && typeof entry.compress === 'boolean' && typeof entry.reason === 'string' && entry.reason.trim(),
   `Invalid asset diet manifest entry: ${JSON.stringify(entry)}`);
+  assert.ok(entry.quantize === undefined || typeof entry.quantize === 'boolean', `Invalid quantize policy: ${entry.family}`);
 }
 assert.equal(new Set(modelManifest.map(({ family }) => family)).size, modelManifest.length, 'Asset diet family names must be unique.');
 const sourceModels = (await filesUnder(resolve('assets/pilots'))).filter((file) => extname(file) === '.glb');
@@ -91,7 +92,7 @@ for (const file of distFiles.filter((file) => extname(file) === '.glb')) {
   families[0].files.push(file);
 }
 await Promise.all(modelFamilies.map(async (family) => { family.before = await totalBytes(family.files); }));
-const dietModels = modelFamilies.filter(({ compress }) => compress).flatMap(({ files }) => files);
+const dietModels = modelFamilies.filter(({ compress }) => compress).flatMap(({ files, quantize }) => files.map((file) => ({ file, quantize })));
 const platePngs = [];
 
 await runPool(distFiles.filter((file) => extname(file) === '.png'), 8, async (file) => {
@@ -99,11 +100,11 @@ await runPool(distFiles.filter((file) => extname(file) === '.png'), 8, async (fi
   if (((width === 1671 || width === 1672) && height === 941) || (width === 1024 && height === 1024)) platePngs.push(file);
 });
 
-const beforeModels = await totalBytes(dietModels);
+const beforeModels = await totalBytes(dietModels.map(({ file }) => file));
 const beforePngs = await totalBytes(platePngs);
 
 await Promise.all([MeshoptDecoder.ready, MeshoptEncoder.ready]);
-await runPool(dietModels, 3, async (file) => {
+await runPool(dietModels, 3, async ({ file, quantize }) => {
   const io = new NodeIO()
     .setLogger(new Logger(Logger.Verbosity.WARN))
     .registerExtensions(ALL_EXTENSIONS)
@@ -112,8 +113,9 @@ await runPool(dietModels, 3, async (file) => {
       'meshopt.encoder': MeshoptEncoder,
     });
   const document = await io.read(file);
+  if (quantize === false) document.createExtension(EXTMeshoptCompression).setRequired(true);
+  else await document.transform(meshopt({ encoder: MeshoptEncoder, level: 'medium' }));
   await document.transform(
-    meshopt({ encoder: MeshoptEncoder, level: 'medium' }),
     textureCompress({ encoder: sharp, targetFormat: 'webp', quality: 80, effort: 6 }),
   );
   await io.write(file, document);
@@ -151,7 +153,7 @@ for (const file of textFiles) {
 }
 if (staleReferences.length) throw new Error(`Asset diet left stale PNG references:\n${staleReferences.join('\n')}`);
 
-const afterModels = await totalBytes(dietModels);
+const afterModels = await totalBytes(dietModels.map(({ file }) => file));
 const afterPngs = await totalBytes([...replacements.values()].map((name) => join(dirname(platePngs[0] ?? distDir), name)));
 const afterHeraldBytes = await totalBytes((await filesUnder(distDir))
   .filter((file) => basename(file).includes('herald-engraving-')));

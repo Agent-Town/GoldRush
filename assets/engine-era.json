@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "869f345151896ee319a959e2922763a93082fca12b944b045a2351cf80aa6aba",
+  "engineHash": "977ef6b77fd25040e7b2249d8ac1d814c1f6660a354500b98ca3e11a3cce6b58",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -247,6 +247,12 @@
       "engineHash": "869f345151896ee319a959e2922763a93082fca12b944b045a2351cf80aa6aba",
       "pinnedAt": "2026-09-05T00:00Z",
       "cause": "content re-hash, no engine change: e3-moth-season-grid composes the existing Canyon Works power-graph seam into e3-moth-season by CONTRACT DATA only (one producer, one relay pylon site, the gallery -> lamp consumer pair, connect required 1 byWave 12, one pre-placed lantern_post on the lamp node, and a fevered_saboteur roster row so the span is cuttable). assets/contracts sits in ENGINE_SOURCE_INPUTS, so authored map data rotates the identity; no src file changed and every other contract envelope is byte-for-byte unchanged; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "977ef6b77fd25040e7b2249d8ac1d814c1f6660a354500b98ca3e11a3cce6b58",
+      "pinnedAt": "2026-09-05T05:00:11.946Z",
+      "cause": "content re-hash, no simulation behaviour change: asset-diet-explicit-manifest-2 completes the retained asset-diet-explicit-manifest loader wiring by registering its shared Meshopt-aware factory and nine routed GLB loaders; compression and cache fingerprinting are build-only changes; same era per F-1441-3",
       "aliases": []
     }
   ],

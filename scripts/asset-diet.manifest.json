@@ -15,7 +15,8 @@
     "family": "panoramas",
     "patterns": ["assets/pilots/map-rebuild-spike/*-panorama.glb"],
     "compress": true,
-    "reason": "Panoramas use the terrain loader and can decode the same compression."
+    "quantize": false,
+    "reason": "Use lossless Meshopt geometry: the terrain loader validates exact authored unique-vertex counts, which position quantization collapses. Textures still use WebP."
   },
   {
     "family": "town-buildings",
