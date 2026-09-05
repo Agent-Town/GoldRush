@@ -2351,7 +2351,11 @@ export class TownScene {
           <div class="town-ui__contract-topline">
             <span class="town-ui__contract-tag">${escapeHtml(formatTag(tags[0] ?? 'trail'))}</span>
             ${
-              unlock.preview
+              // `!__GR_RELEASE_E1__ &&` folds the whole ternary to '' at build time. `unlock.preview`
+              // alone is a RUNTIME test, and a runtime test keeps its string literals in the bundle:
+              // measured on this tree, the release build carried "contract-testing-tag" until this
+              // guard was added.
+              !__GR_RELEASE_E1__ && unlock.preview
                 ? `<span class="town-ui__contract-tag" data-testid="contract-testing-tag-${escapeHtml(
                     contract.id,
                   )}" style="background:#8a5b5b;" title="${escapeHtml(

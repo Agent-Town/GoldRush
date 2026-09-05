@@ -38,8 +38,26 @@ const DIST_DIR = path.resolve('dist');
 const LAST_EPOCH = 'epoch-10-deepsky';
 const OPEN_LABEL = 'Open every claim';
 const LOCK_LABEL = 'Lock the board again';
-/** Every string the release bundle must not carry. */
-const PREVIEW_ONLY_STRINGS = [OPEN_LABEL, LOCK_LABEL, 'preview-unlock-all', 'gr.previewUnlockAll.v1', 'Opened for testing'];
+/**
+ * Every string the release bundle must not carry. Two of these once DID survive: the constant
+ * `Opened for testing` and the tag id `contract-testing-tag`, because each sat behind a RUNTIME
+ * test (`!previewUnlockAllActive()`, `unlock.preview`) rather than a `__GR_RELEASE_E1__` fold, and
+ * a runtime test keeps its literals. Both call sites now carry an explicit build-time guard. Keep
+ * this list wide: it is the only thing that would notice the next one.
+ */
+const PREVIEW_ONLY_STRINGS = [
+  OPEN_LABEL,
+  LOCK_LABEL,
+  'preview-unlock-all',
+  'previewUnlockAll',
+  'gr.previewUnlockAll.v1',
+  'Opened for testing',
+  'contract-testing-tag',
+  'Testing build',
+  'Standings are unaffected',
+];
+/** Present in every build: proves the grep is reading real bundle text, not an empty corpus. */
+const RELEASE_CONTROL_STRINGS = ['Tavern Ledger', 'Awaits the Steamworks era'];
 
 const BOARD = listBoardContracts();
 const DEFAULT_UNLOCKS = BOARD.filter((contract) => contract.boardRow.unlock === 'default');
@@ -49,8 +67,8 @@ const OPEN_AT_LAST_ERA = DEFAULT_UNLOCKS.length + ERA_ONLY_UNLOCKS.length;
 
 type Census = { chapters: number; cards: number; open: number; testing: number };
 
-async function seedProfile(page: Page, epochId: string | null): Promise<void> {
-  await page.goto('/');
+async function seedProfile(page: Page, epochId: string | null, origin = ''): Promise<void> {
+  await page.goto(`${origin}/`);
   await page.evaluate(
     ({ activeEpochKey, epoch, profileKey, townNameKey }) => {
       localStorage.clear();
@@ -76,6 +94,24 @@ async function seedProfile(page: Page, epochId: string | null): Promise<void> {
   await page.reload();
 }
 
+/**
+ * A first boot fires story beats and a town welcome that swallow the next click. Measured on the
+ * release preview: the tavern prompt was live, `town-open-board` was clicked, and the board never
+ * opened because the "Quartz Hill has a name now" beat was still on screen.
+ */
+async function clearOverlays(page: Page): Promise<void> {
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    const skip = page.getByTestId('town-welcome-skip');
+    if (await skip.isVisible().catch(() => false)) {
+      await skip.click();
+      continue;
+    }
+    if (!(await page.getByTestId('story-beat-card').isVisible().catch(() => false))) return;
+    await page.mouse.click(6, 6);
+    await page.waitForTimeout(250);
+  }
+}
+
 /** The player's own route: enter the town, walk to the tavern, open the ledger. No debug seam. */
 async function openBoard(page: Page): Promise<void> {
   await page.getByTestId('start-menu-enter-town').click();
@@ -90,30 +126,47 @@ async function openBoard(page: Page): Promise<void> {
   await expect(page.getByTestId('contract-board-title')).toBeVisible();
 }
 
-/** Walk every chapter of the book and count what is actually on it. */
+/**
+ * Walk every chapter of the book and count what is actually on it.
+ * The three per-chapter counts are taken in ONE `evaluate`: as three separate locator counts this
+ * was 90 protocol round-trips per census and three censuses timed the mobile run out at 180 s.
+ */
 async function census(page: Page): Promise<Census> {
   const chapters = await page.getByTestId('contract-chapter-nav').locator('[data-contract-page]').count();
   const result: Census = { chapters, cards: 0, open: 0, testing: 0 };
   for (let index = 0; index < chapters; index += 1) {
     await page.locator(`[data-contract-page="${index}"]`).click();
     await expect(page.getByTestId('contract-card-list')).toHaveAttribute('data-contract-page-index', String(index));
-    const sections = page.locator('.town-ui__board-sections');
-    result.cards += await sections.locator('[data-testid^="contract-card-"]').count();
-    result.open += await sections.locator('[data-contract-locked="false"]').count();
-    result.testing += await sections.locator('[data-testid^="contract-testing-tag-"]').count();
+    const page_ = await page.evaluate(() => {
+      const sections = document.querySelector('.town-ui__board-sections');
+      return {
+        cards: sections?.querySelectorAll('[data-testid^="contract-card-"]').length ?? 0,
+        open: sections?.querySelectorAll('[data-contract-locked="false"]').length ?? 0,
+        testing: sections?.querySelectorAll('[data-testid^="contract-testing-tag-"]').length ?? 0,
+      };
+    });
+    result.cards += page_.cards;
+    result.open += page_.open;
+    result.testing += page_.testing;
   }
   return result;
 }
 
 /**
- * The book, not the whole town. A full-page shot here is ~1 MB of photographic 3D backdrop per
- * frame (10 frames = 12 MB), and the evidence is the board's own state, so the shot is clipped to
- * the board shell: same proof, ~40x smaller, and it stays inside the repo's size manners.
+ * The book, not the whole town, and at CSS scale in JPEG. Measured on this tree: full-page PNG =
+ * 12 MB for ten frames, board-shell PNG = 9.5 MB (Pixel 5 shoots at DPR 2.75 and the era backdrop
+ * is photographic). The evidence is the board's own state and its counts, so the shot is clipped,
+ * unscaled and lossy, which keeps every frame inside the ~300 KB the rest of `artifacts/` holds to.
  */
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
   const target = page.locator('.town-ui__board-shell').first();
-  await target.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`) });
+  await target.screenshot({
+    path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.jpg`),
+    type: 'jpeg',
+    quality: 72,
+    scale: 'css',
+  });
 }
 
 test('the board data still says 16 of 42 contracts unlock by default', () => {
@@ -210,28 +263,20 @@ test('the E1 release build carries no such control', async ({ page }) => {
   test.setTimeout(180_000);
   const watch = watchErrors(page);
 
-  // (a) the DOM: the board opens and the control is not on it.
-  await page.goto(`${releaseUrl}/`);
-  await page.evaluate(() => {
-    localStorage.clear();
-    sessionStorage.clear();
-  });
-  await page.goto(`${releaseUrl}/`);
-  await page.getByTestId('profile-name-input').fill('Robin');
-  await page.getByTestId('profile-create').click();
+  // (a) the DOM: the board opens and the control is not on it. Seeded and teleported rather than
+  // walked: this test is about the control's ABSENCE from the release build, and the plain-boot
+  // reachability of the board is proved on the dev build by the two tests above.
+  await seedProfile(page, null, releaseUrl);
+  await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
-  const townName = page.getByTestId('town-name-input');
-  if (await townName.isVisible().catch(() => false)) {
-    await townName.fill('Quartz Hill');
-    await page.getByTestId('town-name-submit').click();
-  }
-  await page.mouse.click(6, 6);
+  await clearOverlays(page);
   await page.evaluate(() => {
     const town = window.__GR_TOWN_DIAGNOSTICS__!;
     const tavern = town.buildings.find((entry) => entry.id === 'tavern')!;
     town.teleport(tavern.approach.x, tavern.approach.z);
   });
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe('tavern');
+  await clearOverlays(page);
   await page.getByTestId('town-open-board').click();
   await expect(page.getByTestId('contract-board-title')).toBeVisible();
   await expect(page.getByTestId('preview-unlock-all')).toHaveCount(0);
@@ -244,12 +289,16 @@ test('the E1 release build carries no such control', async ({ page }) => {
   const texts = files.filter((entry) => entry.isFile() && /\.(js|html|css)$/.test(entry.name));
   expect(texts.length).toBeGreaterThan(0);
   const hits: string[] = [];
+  const controls = new Set<string>();
   for (const entry of texts) {
     const file = path.join(entry.parentPath ?? DIST_DIR, entry.name);
     const source = await readFile(file, 'utf8');
     for (const needle of PREVIEW_ONLY_STRINGS) if (source.includes(needle)) hits.push(`${path.relative(DIST_DIR, file)}: ${needle}`);
+    for (const needle of RELEASE_CONTROL_STRINGS) if (source.includes(needle)) controls.add(needle);
   }
   expect(hits).toEqual([]);
+  // A zero over an unreadable corpus is not evidence (the F-2208-1 shape): prove the grep can see.
+  expect([...controls].sort()).toEqual([...RELEASE_CONTROL_STRINGS].sort());
 
   expectNoConsoleErrors(watch, 'preview-unlock-all-release');
 });

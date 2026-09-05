@@ -88,6 +88,12 @@ export function togglePreviewUnlockAll(): boolean {
 
 export function contractUnlockStatus(contract: ContractManifest): ContractUnlockStatus {
   const status = resolveContractUnlock(contract);
+  // MEASURED, not assumed: without this line the release bundle still carried the literal
+  // "Opened for testing". `previewUnlockAllActive()` does minify to `function(){return!1}` in a
+  // release build, but the minifier does not inline it into this caller, so the branch stayed
+  // "live" and its string constant rode along. An explicit early return makes the rest of this
+  // function unreachable at build time and the constant disappears with it.
+  if (RELEASE_E1) return status;
   // The real predicate always runs first, so a card the player genuinely earned is never mislabelled
   // "testing" and the honest gate text survives for the board to show.
   if (status.unlocked || !previewUnlockAllActive()) return status;
