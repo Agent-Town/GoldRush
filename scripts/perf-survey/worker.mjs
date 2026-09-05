@@ -6,7 +6,8 @@ const workerAsset=inventory.dist.all.find(f=>/\/BrowserAgentTapeWorker-.*\.js$/.
 if(!workerAsset)throw new Error('Built browser replay worker not found');
 const env=await launch(),rows=[];
 try{
- for(const m of sim.rows.filter(m=>!values.map||m.map===values.map))for(const source of m.tapes){
+ const onlyW=values.map?new Set(values.map.split(',')):null;
+for(const m of sim.rows.filter(m=>!onlyW||onlyW.has(m.map)))for(const source of m.tapes){
   const {page,context,errors}=await pageFor(env.browser,{width:390,height:844});
   const row={key:source.key,map:m.map,tapePath:source.tapePath,before:host(),errors};
   try{

@@ -5,7 +5,8 @@ const inventory=await read('inventory.json');
 const allMaps=[...inventory.maps,{id:'town'}];
 const ordered=[...inventory.priority,...allMaps.map(m=>m.id).filter(id=>!inventory.priority.includes(id))];
 const ids=values.all?ordered:[values.map??'the-claim'];
-const rows=values.resume?(await read('census.json')).rows:[];
+const censusFile=process.env.GR_SURVEY_CENSUS??'census.json';
+const rows=values.resume?(await read(censusFile)).rows:[];
 const env=await launch();
 const deadline=Date.now()+Number(values.minutes??120)*60000;
 try{
@@ -24,7 +25,7 @@ try{
    row.rawSamples=`samples/${key}.json`;await write(row.rawSamples,measured);
    row.status='measured';
   }catch(e){row.status='failed';row.failure=String(e);row.pageState=await page.evaluate(()=>({url:location.href,text:document.body.innerText.slice(0,1200),dataset:{...document.querySelector('canvas')?.dataset}})).catch(()=>null);}
-  row.after=host();rows.push(row);await write('census.json',{schemaVersion:1,instrument:'scripts/perf-survey/run.mjs',windowMs:10000,expectedMaps:allMaps.map(m=>m.id),rows});
+  row.after=host();rows.push(row);await write(censusFile,{schemaVersion:1,instrument:'scripts/perf-survey/run.mjs',windowMs:10000,expectedMaps:allMaps.map(m=>m.id),rows});
   console.log(`${key}: ${row.status} calls=${row.metrics?.calls?.p95} p95=${row.metrics?.frameMs?.p95?.toFixed(2)} load=${row.after.load[0].toFixed(1)} ${row.failure??''}`);
   await context.close();
  }

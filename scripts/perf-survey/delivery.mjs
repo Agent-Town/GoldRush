@@ -21,7 +21,28 @@ try{
   try{
    const query=map.id==='town'?'town3dPilot=all&tier=full':new URLSearchParams({contract:map.id,epoch:map.epochId,tier:'full',debug:'',nolevel:'',nopause:'',nokill:'',nowaves:''}).toString();
    await page.goto(`${env.base}/?${query}`,{waitUntil:'domcontentloaded',timeout:60000});
-   if(map.id==='town')await page.getByTestId('start-menu-enter-town').click({timeout:60000});
+   if(map.id==='town'){
+    // A genuine first visitor lands on FIRST BOOT (StartMenu.ts:129 renderFirstBoot): the profile
+    // must be named before Enter Town exists. That gate is part of the honest first-visit path.
+    // isVisible() does NOT wait; on a throttled leg the form has not rendered yet when it is asked.
+    // waitForSelector is the waiting form, and the throttled legs need the wait.
+    const firstBoot=await page.waitForSelector('[data-testid="profile-create-form"]',{state:'visible',timeout:45000}).then(()=>true).catch(()=>false);
+    if(firstBoot){
+     row.firstBootProfileGate=true;
+     await page.getByTestId('profile-name-input').fill('Survey');
+     await page.getByTestId('profile-create').click();
+    }
+    // Naming the claim-holder carries a first visitor straight into the town, so Enter Town never
+    // appears on that path. Wait for whichever of the two the build actually shows.
+    // Measured 2026-09-05: naming the claim-holder carries a first visitor STRAIGHT into the town
+    // (the town-naming card is already up), and the menu's Enter Town node lingers in the DOM
+    // un-actionable. So wait for the town itself; only a returning visitor needs the click.
+    row.autoEnteredTownAfterNaming=await page.waitForFunction(()=>Boolean(window.__GR_TOWN_DIAGNOSTICS__),null,{timeout:120000}).then(()=>true).catch(()=>false);
+    if(!row.autoEnteredTownAfterNaming){
+     await page.getByTestId('start-menu-enter-town').click({timeout:60000});
+     await page.waitForFunction(()=>Boolean(window.__GR_TOWN_DIAGNOSTICS__),null,{timeout:60000});
+    }
+   }
    await page.waitForFunction(()=>__PERF_SURVEY__.firstFrameMs!==null,null,{timeout:60000});
    row.firstFrameMs=await page.evaluate(()=>__PERF_SURVEY__.firstFrameMs);
    // The throttled leg measures first frame, not eventual complete download. Unthrottled

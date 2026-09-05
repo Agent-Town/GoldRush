@@ -9,10 +9,11 @@ export const read=async name=>JSON.parse(await fs.readFile(path.join(out,name),'
 export const write=async(name,data)=>{await fs.mkdir(path.dirname(path.join(out,name)),{recursive:true});await fs.writeFile(path.join(out,name),JSON.stringify(data,null,2)+'\n');};
 export const host=()=>({at:new Date().toISOString(),load:os.loadavg(),freeMemory:os.freemem()});
 export const stats=values=>{const a=[...values].sort((a,b)=>a-b);return {n:a.length,min:a[0]??null,p50:a[Math.floor((a.length-1)*.5)]??null,p95:a[Math.floor((a.length-1)*.95)]??null,p99:a[Math.floor((a.length-1)*.99)]??null,max:a.at(-1)??null};};
+export const surveyPort=Number(process.env.GR_SURVEY_PORT??5312);
 export async function launch(){
-  const server=await preview({root,logLevel:'silent',preview:{host:'127.0.0.1',port:5276,strictPort:true}});
+  const server=await preview({root,logLevel:'silent',preview:{host:'127.0.0.1',port:surveyPort,strictPort:true}});
   const browser=await chromium.launch({channel:'chromium',headless:true,args:['--enable-precise-memory-info']});
-  return {browser,base:'http://127.0.0.1:5276',close:async()=>{await browser.close();await new Promise(r=>server.httpServer.close(r));}};
+  return {browser,base:`http://127.0.0.1:${surveyPort}`,close:async()=>{await browser.close();await new Promise(r=>server.httpServer.close(r));}};
 }
 export function observeThree(){
   // three.js's existing devtools observation event; no application module is replaced.
