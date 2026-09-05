@@ -3,11 +3,21 @@
 **Slice** perf-optimization-survey · **branch** `lane/b` · **base** `5f1cc3cea` · **salvage tip** `b50676bd8`
 **Verdict — SURVEY COMPLETE WITH NAMED GAPS.** No game code changed. 40 of 42 board contracts plus
 the town measured structurally; three E10 contracts cannot be launched at all (F-PERF-11) and one of
-them, `e10-last-claim`, measured fine. **Every frame-timing number in this survey is untrustworthy
-and is labelled as such** — the host carried three other implementers all evening and the 1-minute
-load moved between 3.3 and 114.0 across the census (F-PERF-1). Structural counts — draw calls,
-triangles, instance slots, textures, GPU bytes, wire bytes, heap after forced GC — are load
-independent, were re-taken under widely different load, and are what this survey ranks on.
+them, `e10-last-claim`, measured fine. **Every frame-timing number taken during the census is
+untrustworthy and is labelled as such** — the host carried three other implementers all evening and
+the 1-minute load moved between 3.3 and 114.0 (F-PERF-1). Structural counts — draw calls, triangles,
+instance slots, textures, GPU bytes, wire bytes, heap after forced GC — are load independent, were
+re-taken under widely different load, and are what this survey ranks on.
+
+**A late quiet window let one trustworthy frame baseline be taken, and it changes the shape of the
+answer (§1b).** Held below 1-minute load 12, median of three, nine arms across five maps — including
+the 210-draw-call `e9-seed-run` under stress and the 156,240-triangle `e1-night-shift` — **all deliver
+119–120 fps with 0.9–1.3 ms of render-submit CPU and 0–1 frames over 16.7 ms per 10 seconds.** On an
+M4 Max at 1280×800 the renderer has roughly an order of magnitude of headroom against a 60 Hz budget.
+**So this survey does not report a desktop frame problem, and none of the render-side rungs below
+claims one.** They are headroom, GPU-memory and low-end-device arguments. The costs that *are* large
+today are the sim (F-PERF-8: 59% of a replay in one clone), delivery (F-PERF-9/10) and resident
+texture memory (F-PERF-5).
 
 Two premises in the master were wrong and are corrected here: the board holds **42** contracts, not
 36 (§0), and the sculpted terrains are **128×128 grids of 32,768 triangles**, so the "what would a
@@ -83,6 +93,45 @@ builds — a `?debug`-only path. It is **not a player cost** and is deliberately
 ladder. It *is* a real cost for everything that boots with `?debug`: the e2e gate battery and the
 county replay verifier. `updateMatrixWorld` at 214–334 ms per 6 s appears in **both** arms and is
 real player cost (§2).
+
+---
+
+## 1b. The one trustworthy frame baseline (quiet host, median of three)
+
+`node scripts/perf-survey/quiet.mjs` → `artifacts/perf-survey/quiet.json`. This instrument *enforces*
+the measurement law rather than recording it: `os.loadavg()` before and after each sample, any sample
+whose peak 1-minute load exceeds the ceiling **discarded and retaken**, the figure reported as the
+**median of three surviving samples**, and a map that cannot yield three clean samples reported as
+`insufficient-clean-samples` rather than estimated. Ceiling 12, up to 6 attempts per arm, full tier,
+1280×800, DPR 1.
+
+| arm (full/desktop) | delivered fps | renderMs p95 | frames > 16.7 ms per 10 s | draw calls p95 | triangles p95 | peak load | kept / discarded |
+|---|---|---|---|---|---|---|---|
+| the-claim wave 1 | 120 | 1.20 | 0 | 86 | 110,330 | 10.9 | 3 / 3 |
+| the-claim stress | 120 | 1.10 | 0 | 172 | 112,888 | 10.6 | 3 / 0 |
+| e9-seed-run wave 1 | 120 | 1.20 | 1 | 128 | 102,740 | 10.5 | 3 / 0 |
+| **e9-seed-run stress** (the 210-call map) | **119** | **1.30** | **1** | 210 | 103,022 | 9.2 | 3 / 0 |
+| e2-hill-mine wave 1 | 120 | 1.10 | 0 | 87 | 116,722 | 10.5 | 3 / 3 |
+| e2-hill-mine stress | 120 | 1.10 | 0 | 156 | 116,560 | 9.5 | 3 / 0 |
+| **e1-night-shift wave 1** (the 156k-triangle map) | 120 | 1.10 | 0 | 86 | **156,240** | 12.0 | 3 / 3 |
+| e4-long-road wave 1 | 120 | 1.00 | 1 | 63 | 98,194 | 10.3 | 3 / 0 |
+| e4-long-road stress | 120 | 0.90 | 0 | 80 | 100,640 | 9.6 | 3 / 0 |
+| town | — | — | — | — | — | — | 0 / 6 — **insufficient clean samples** |
+| e1-night-shift stress | — | — | — | — | — | — | 1 / 5 — **insufficient clean samples** |
+
+Sample-to-sample spread within each arm is negligible: delivered fps 119.3–120.0, renderMs p95 varies
+by at most 0.10 ms. Two arms are reported as failures rather than filled in with a dirty number.
+
+**Read it carefully.** 120 fps is the headless rAF ceiling, so this says *the renderer never misses
+the pace*, not *the renderer runs at 120*. The load-independent statement is the second column:
+**render submit costs 0.9–1.3 ms of CPU per frame at every arm measured**, against a 16.7 ms frame at
+60 Hz. Triangle count varies by 60% across these arms and draw calls by 3.3×, and neither moves the
+number — the desktop GPU is nowhere near saturated.
+
+**What this does *not* say:** nothing about phones, nothing about the `lite` tier's real trigger path,
+nothing about GPU memory pressure (§2, F-PERF-5), and nothing about a device where 215 MB of resident
+texture actually matters. It removes "the desktop frame is slow" from the ranking; it does not remove
+the structural findings, which are about what happens on the devices this box cannot imitate.
 
 ---
 
@@ -264,32 +313,83 @@ is the largest real main-thread item, and it is the same work F-PERF-4 proposes 
 
 ## 4. Sim cost (scope 3)
 
-`node scripts/perf-survey/sim.mjs --map <ids>` (node `--cpu-prof`) and
-`node scripts/perf-survey/worker.mjs` → `sim/*.json`, `worker.json`. 31 real county tapes were
-fetched from `agenttown.app` by `tapes.mjs`; five maps were measured within budget. Every replay
-**hash-matched its tape** (`hashMatches: true` on all 9 node runs and all 9 completed browser runs).
+`node scripts/perf-survey/sim.mjs --resume --map <ids>` (node `--cpu-prof`) and
+`node scripts/perf-survey/worker.mjs` → `sim/*.json`, `worker.json`. `tapes.mjs` fetched the county
+board: **31 of 42 contracts have a real played tape**; `e1-drill-yard` returns HTTP 400 and ten maps
+have no reel. **25 county tapes and 29 null floors measured.**
 
-| tape | ticks | simulated s | node ×realtime | node tick p50/p95 ms | browser worker ×realtime | browser verify s |
-|---|---|---|---|---|---|---|
-| idle-the-claim | 2,338 | 78 | 99 | 0.255 / 0.704 | 106 | 0.9 |
-| idle-e4-gusher-county | 4,279 | 143 | 102 | 0.289 / 0.504 | 51 | 3.4 |
-| idle-e6-picnic | 1,957 | 65 | 103 | 0.261 / 0.601 | 57 | 1.6 |
-| idle-e9-devils-alley | 3,250 | 108 | 68 | 0.397 / 0.999 | 189 | 0.7 |
-| idle-e1-baron | 3,493 | 116 | 66 | 0.408 / 0.954 | 86 | 1.6 |
-| county-e4-gusher-county | 10,801 | 360 | 41 | 0.753 / 1.456 | 21 | 17.8 |
-| county-e9-devils-alley | 18,600 | 620 | 24 | 1.295 / 2.633 | 51 | 11.8 |
-| county-the-claim | 9,001 | 300 | 23 | 1.220 / 2.998 | **20** | 15.2 |
-| **county-e6-picnic** | 18,001 | 600 | **14** | 2.381 / 4.146 | **11** | **56.5** |
-| county-e1-baron | 41,712 | 1,390 | — | — | *failed: 60 s browser bound* | — |
+⚠️ Two calibrations before reading the table. The node column runs under `--cpu-prof` at 1 ms
+sampling inside a vite SSR module graph, so it is a **profiled** figure and pessimistic; the browser
+worker column is the un-profiled path and is closer to what the assayer actually does. Both are wall
+clock and therefore load-sensitive — the load at each sample is the last column, and it ranged 4 to
+64. The **hash column is not load-sensitive**: it is a pure computation and is trustworthy.
 
-⚠️ These are wall-clock and therefore load-sensitive; the ×realtime ratios are the load-sensitive
-half. The hotspot attribution below is structural (it is a share of the same run).
+| map | ticks | simulated s | node ×realtime (profiled) | tick p95 ms | browser worker ×realtime | browser verify s | hash | load |
+|---|---|---|---|---|---|---|---|---|
+| e10-last-claim | 7202 | 240 | 8 | 7.28 | — | — | ✅ | 23 |
+| e8-low-orbit | 18600 | 620 | 11 | 5.56 | 19 | 31.6 | ✅ | 21 |
+| e8-far-side | 18600 | 620 | 11 | 6.36 | 27 | 22.0 | ✅ | 21 |
+| e6-half-life-hollow | 18001 | 600 | 12 | 5.42 | 16 | 38.2 | ✅ | 13 |
+| e1-twin-banks | 18001 | 600 | 14 | 4.80 | 14 | 44.2 | ✅ | 6 |
+| e6-picnic | 18001 | 600 | 14 | 4.15 | 18 | 33.4 | ✅ | 17 |
+| e4-dust-flats | 13140 | 438 | 16 | 4.37 | 36 | 12.3 | ✅ | 39 |
+| e1-night-shift | 22502 | 750 | 18 | 3.24 | 17 | 44.3 | ✅ | 7 |
+| e4-long-road | 10801 | 360 | 19 | 3.41 | 47 | 7.8 | ✅ | 24 |
+| e2-incline | 17782 | 593 | 19 | 3.35 | 19 | 31.8 | ✅ | 4 |
+| e4-boneyard | 10801 | 360 | 23 | 2.61 | 29 | 12.4 | ✅ | 23 |
+| the-claim | 9001 | 300 | 23 | 3.00 | 37 | 8.1 | ✅ | 14 |
+| e9-devils-alley | 18600 | 620 | 24 | 2.63 | 47 | 12.8 | ✅ | 17 |
+| e2-trestle | 19585 | 653 | 26 | 3.74 | 27 | 24.0 | ✅ | 5 |
+| e1-dry-gulch | 18001 | 600 | 28 | 1.74 | 31 | 19.6 | ✅ | 8 |
+| e6-glow-mesa | 10967 | 366 | 29 | 1.89 | 41 | 8.9 | ✅ | 13 |
+| e2-hill-mine | 13627 | 454 | 31 | 2.05 | 32 | 14.4 | ✅ | 6 |
+| e3-blackout-ridge | 10801 | 360 | 34 | 1.33 | 50 | 7.4 | ✅ | 42 |
+| e5-flotilla | 8161 | 272 | 38 | 1.43 | 60 | 4.6 | ✅ | 11 |
+| e3-moth-season | 16390 | 546 | 40 | 1.20 | 53 | 10.4 | **❌** | 64 |
+| e4-gusher-county | 10801 | 360 | 41 | 1.46 | 59 | 6.2 | ✅ | 19 |
+| e5-regatta | 8161 | 272 | 52 | 1.08 | 77 | 3.6 | ✅ | 13 |
+| e2-pressure-garden | 10801 | 360 | 72 | 0.79 | 72 | 5.1 | ✅ | 4 |
+| e5-stillwater | 10801 | 360 | 81 | 0.58 | 141 | 2.7 | ✅ | 12 |
+| e5-deepwater-claim | 8161 | 272 | 96 | 0.54 | 171 | 1.7 | ✅ | 16 |
 
-### F-PERF-7 — Flagged below 20× realtime: `county-e6-picnic` at 14× (node) and 11× (browser); `county-the-claim` sits on the line at 20×
+Null floors (idle policy, same maps): **27× to 165× realtime**, i.e. the played input, not the map,
+is what costs.
 
-`e6-picnic`'s 600-second tape verifies in **56.5 s in the browser worker** — a real measurement, not
-an extrapolation. `county-e1-baron` (1,390 simulated seconds) **cannot be verified in the browser at
-all**: it exceeds the worker's own 60-second bound.
+### F-PERF-7 — Ten of twenty-five played tapes replay below 20× realtime, and six more cannot be measured at all
+
+Below 20× in node: `e10-last-claim` 8×, `e8-low-orbit` 11×, `e8-far-side` 11×, `e6-half-life-hollow`
+12×, `e1-twin-banks` 14×, `e6-picnic` 14×, `e4-dust-flats` 16×, `e1-night-shift` 18×, `e4-long-road`
+19×, `e2-incline` 19×. Six of those ten were sampled at load ≤ 17, and **three at load 4–7 — a
+genuinely quiet host**: `e2-incline` 19× at load 3.6, `e1-twin-banks` 14× at load 5.7,
+`e1-night-shift` 18× at load 6.7. Those three cannot be explained away by contention.
+
+In the browser worker, six fall below 20×, worst `county-e6-picnic` at **11× — 56.5 s to verify a
+600-second tape**. Four browser runs failed outright: `county-e1-baron` and `county-e7-relay-rush`
+exceed the worker's own 60 s bound, and both `e10-last-claim` runs failed.
+
+Six further county tapes could not be measured in node at all — `e1-baron`, `e3-fairground`,
+`e7-echo-canyon`, `e7-dead-band`, `e7-relay-rush`, `e8-eclipse` were **SIGKILLed at the instrument's
+60-second ceiling**, so they are slower than every tape in the table. **The flagged set is therefore
+at least 16 of 31.**
+
+### F-PERF-14 — One county tape replays to a different event-log hash than it records, reproducibly
+
+`county-e3-moth-season` is the **only** hash mismatch in 25 tapes. It declares 10,801 ticks; the
+replay runs to **16,390** and produces `fnv1a32:9be0399e` against the tape's recorded
+`fnv1a32:64e32dde`. Every other measured tape replays to **exactly** its declared tick count and
+matches its hash.
+
+This is not instrument noise and not host load (a hash is a pure computation):
+
+- reproduced twice by `sim-tape.mjs`, at load 63.9 and again at load ~16, both giving `9be0399e`;
+- the repo's own independent verifier, `scripts/assay-replay-agent.mjs`, produces **the same
+  `9be0399e` and the same 16,390 ticks** (`sim/county-e3-moth-season-assay.log`).
+
+Two independent code paths agree with each other and disagree with the tape. Either the served reel
+carries a hash from an older engine, or `e3-moth-season` has a real determinism divergence. **The
+assayer verifies standings by exactly this hash**, so it needs a dedicated bisect; this survey does
+not resolve which of the two it is. Reproduce:
+`node scripts/perf-survey/sim-tape.mjs tapes/county-e3-moth-season.json recheck`.
 
 ### F-PERF-8 — 59% of the sim's replay time is `structuredClone`, and it has one address
 
@@ -317,9 +417,10 @@ snapshot(): StandingOrdersView {
 
 `HeadlessContractSim.ts:1283` exposes `standingOrders: () => snapshotStandingOrders()` to the agent
 adapter, so the **whole history log is deep-cloned on every call, and the history grows with the
-run** — quadratic in tape length. That is exactly the observed shape: 78 s idle tapes run at 99×
-while a 600 s played tape runs at 14×. Runners-up in the same profile: `terrainSeed` 1,248 ms,
-`terrainHash` 873 ms, `diagnostics` 691 ms.
+run** — quadratic in tape length. That is exactly the shape the table shows: null floors run at
+27–165× while played tapes of the same maps fall to 8–19×, and the slowest tapes are the longest
+ones. Runners-up in the same profile: `terrainSeed` 1,248 ms, `terrainHash` 873 ms, `diagnostics`
+691 ms.
 
 ---
 
@@ -477,14 +578,19 @@ Measured build is `5f1cc3cea`. Verified by content, not by commit message:
 
 ## 9. What was not measured (named gaps)
 
-1. **Every frame timing.** 170 of 215 rows above load 12; no row is re-takeable tonight (F-PERF-1).
+1. **Every frame timing in the census proper.** 170 of 215 rows above load 12 (F-PERF-1). Partly
+   closed by §1b: a late quiet window produced nine clean median-of-three arms across five maps, but
+   **the town and `e1-night-shift` under stress never got three clean samples**, and no lite/mobile
+   arm was re-taken clean at all.
 2. **Per-system millisecond attribution** — attempted, noise-dominated, reported as failed (F-PERF-6).
 3. **Three of six worst maps** for attribution (`e2-pressure-garden`, `e6-half-life-hollow`,
    `e2-hill-mine`) — the time budget closed first.
 4. **Three board contracts** cannot be launched at all (F-PERF-11): `e10-ember-shore`,
    `e10-archive-world`, `e10-river`.
-5. **Sim: 5 maps of 42.** 31 county tapes are downloaded and ready in `artifacts/perf-survey/tapes/`;
-   `county-e1-baron` exceeds the browser worker's 60 s bound and was not measured.
+5. **Sim: 25 played tapes of the 31 that exist** (11 contracts have no county reel; `e1-drill-yard`
+   returns HTTP 400). Six tapes — `e1-baron`, `e3-fairground`, `e7-echo-canyon`, `e7-dead-band`,
+   `e7-relay-rush`, `e8-eclipse` — exceed the instrument's 60 s node ceiling and are unmeasured
+   *because they are slow*, which is itself the finding. F-PERF-14 is diagnosed but not bisected.
 6. **GPU-side texture allocation** — every residency figure is a decoded-bytes estimate from the
    scene walk, never a driver query.
 7. **The leaking module** in F-PERF-13 — growth proven, owner not named.
@@ -501,9 +607,21 @@ Ranked by measured evidence ÷ effort. Every "measured cost" is a number in this
 behind it. Every "estimated win" is an **estimate** and carries its formula. No entry is justified by
 a frame timing taken tonight.
 
+🚨 **One finding does not belong on a performance ladder and should not wait behind it: F-PERF-14.**
+`county-e3-moth-season` replays to a different event-log hash than the tape records — reproducibly,
+across two runs of this survey's instrument *and* the repo's own `assay-replay-agent.mjs`, while all
+24 other tapes match exactly. The assayer verifies standings by that hash. It is a correctness
+question, not a speed one, and it is the first thing in this document a fire should pick up.
+
+⚠️ **Read §1b first.** On a quiet M4 Max the desktop renderer has ~13× headroom (0.9–1.3 ms of submit
+CPU against a 16.7 ms frame) at every arm measured, including the worst map under stress. **Entries
+2, 4, 6 and 7 below are therefore headroom, GPU-memory and low-end-device arguments — not fixes for a
+frame rate that is broken today.** The entries that address a cost which is large *right now* on the
+hardware actually measured are 1 (sim), 5 (resident texture memory) and 10 (delivery).
+
 | # | area | measured cost | estimated win (with formula) | effort | risk | proposed master |
 |---|---|---|---|---|---|---|
-| 1 | Sim — `StandingOrders.snapshot()` deep-clones the whole history every call (F-PERF-8) | 24,539 ms of the 41,658 ms `county-e6-picnic` replay = **59%**; growth is quadratic in tape length | est. replay → `replayMs − structuredCloneMs` = 17.1 s, i.e. **14× → ~34× realtime**, browser verify 56.5 s → ~24 s | **S** | L — callers may rely on receiving a mutable copy | `standing-orders-snapshot-without-the-history-clone` |
+| 1 | Sim — `StandingOrders.snapshot()` deep-clones the whole history every call (F-PERF-8) | 24,539 ms of the 41,658 ms `county-e6-picnic` replay = **59%**; quadratic in tape length; **10 of 25 played tapes are below 20× realtime and 6 more exceed a 60 s ceiling entirely** | est. replay → `replayMs − structuredCloneMs` = 17.1 s, i.e. **14× → ~34× realtime**, browser verify 56.5 s → ~24 s | **S** | L — callers may rely on receiving a mutable copy | `standing-orders-snapshot-without-the-history-clone` |
 | 2 | `EnemyPool` submits its full 96-instance capacity with 0 enemies alive (F-PERF-4) | 14 instanced groups (8 visible) × 96 slots at wave 1 with `enemiesAlive: 0` = **39,360 triangles** of empty pool | est. wave-1 triangles **−36%** on `the-claim` (39,360 of 110,330), draw calls unchanged | **S** | L — `count` is already the documented three.js seam | `enemy-pool-submits-only-the-live-instances` |
 | 3 | The only draw-call budget covers 1 map of 42, and another map already breaks it (F-PERF-3) | `e9-seed-run` **max 211** vs the `perf-01` `maxDrawCalls <= 200` ceiling; 8 more maps at 168–172 | no runtime win — it **stops the next regression**; converts 41 unguarded maps into guarded ones | **S** | L — additive test only | `stress-draw-call-budget-covers-the-board` |
 | 4 | `TerrainVistaRing` + `Terrain3dSculptContinuation` have zero triangles in the frustum at every zoom (§6) | 13,952 triangles/frame on `the-claim`, 0 of them inside the clip frustum, on all 3 probed maps | est. **−12% submitted triangles** (13,952 of 112,888) at gameplay zoom; must confirm they are not the distant skyline the player sees | **S** | M — they may be deliberately unculled for the horizon | `vista-ring-earns-its-submission` |
@@ -523,11 +641,19 @@ must be taken on a host below 1-minute load 12** — this survey could not suppl
 frozen quiet-host baseline is a prerequisite for rungs that need one (see
 `reviews/f1440-2-perf-gate-without-a-frozen-baseline.md`).
 
+0. **`moth-season-replay-hash-divergence`** (correctness, not speed — ahead of everything below).
+   Bisect whether `county-e3-moth-season`'s served reel carries a stale hash or the engine diverges
+   on that contract; the replay also overruns its declared 10,801 ticks to 16,390.
+   *Moves:* hash mismatches among measured county tapes 1 → 0.
+   *GATE:* `node scripts/perf-survey/sim.mjs --resume --map e3-moth-season` reports
+   `hashMatches: true` **and** `result.ticks === declaredDurationTicks`, with
+   `scripts/assay-replay-agent.mjs` agreeing.
 1. **`standing-orders-snapshot-without-the-history-clone`** — stop deep-cloning `this.history` in
    `StandingOrdersExecutor.snapshot()`; clone lazily or hand back a frozen view.
-   *Moves:* `county-e6-picnic` node replay 41.7 s → under 20 s.
-   *GATE:* `node scripts/perf-survey/sim.mjs --map e6-picnic` shows `realtimeMultiple >= 20` **and**
-   `hashMatches: true` on all five measured tapes (determinism is the hard constraint, not speed).
+   *Moves:* `county-e6-picnic` node replay 41.7 s → under 20 s; the ten tapes below 20× → zero.
+   *GATE:* `node scripts/perf-survey/sim.mjs --resume` shows `realtimeMultiple >= 20` on all 25
+   measured county tapes **and** `hashMatches: true` on all of them except the F-PERF-14 outlier
+   (determinism is the hard constraint, not speed); the six 60 s-ceiling tapes measure at all.
 2. **`enemy-pool-submits-only-the-live-instances`** — drive `InstancedMesh.count` from the live enemy
    count instead of capacity.
    *Moves:* `the-claim-full-desktop-wave1` triangles p95 110,330 → under 75,000.
