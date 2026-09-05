@@ -1,4 +1,5 @@
 import { loadMetaProgress } from '../game/MetaProgress';
+import { activeProfile, loadProfileState, profileDataKey } from '../game/ProfileStorage';
 import { loadScores } from '../game/Scoreboard';
 import {
   clearPlayerContractLaunch,
@@ -14,9 +15,86 @@ import {
 } from './ContractFamilies';
 import { browserResearchStorage, loadResearchState, scienceMeter } from './ResearchTree';
 
-export type ContractUnlockStatus = { unlocked: boolean; condition: string; action?: string };
+export type ContractUnlockStatus = {
+  unlocked: boolean;
+  condition: string;
+  action?: string;
+  /** True only when the preview-only "Open every claim" control is what opened this card. */
+  preview?: true;
+  /** The real gate this card sits behind, kept so the board can stay honest while previewing. */
+  lockedCondition?: string;
+};
+
+// ── PREVIEW-ONLY "OPEN EVERY CLAIM" (task `preview-unlock-all`, owner 2026-09-05 night:
+// "how do we get them all playable for me to test? ... push hard while I sleep").
+// The owner tests every era by hand on the full-board preview; 26 of the 42 board contracts sit
+// behind `secured:` chains, science thresholds or the era gate, and grinding them is not a test.
+// This flag opens them on a NON-RELEASE build only. `RELEASE_E1` folds to the literal `true` in an
+// E1 build (vite `define`), so every branch below it — and the control that writes it — is dead
+// code the bundler drops; the release bundle carries neither the flag nor its label.
+// The `typeof` guard matches `ContractFamilies.ts:27`: node-side harnesses ssr-load this module
+// with no `define` in scope.
+const RELEASE_E1 = typeof __GR_RELEASE_E1__ !== 'undefined' && __GR_RELEASE_E1__;
+/** Logical key. Stored per profile as `gr.profile.v2.<profileId>.gr.previewUnlockAll.v1`. */
+export const PREVIEW_UNLOCK_ALL_KEY = 'gr.previewUnlockAll.v1';
+export const PREVIEW_UNLOCK_ALL_CONDITION = 'Opened for testing';
+
+// Never global, never a URL parameter: the same localStorage the unlock chain already reads
+// (`loadScores`, the research registries, `gr.activeEpoch.v1`), namespaced to the ACTIVE profile
+// exactly the way `tileStateKey` namespaces tile state (`ProfileStorage.ts:268`). A URL parameter
+// would be shareable and would follow a link into someone else's save; a profile-scoped key
+// cannot leave this browser profile.
+function previewUnlockAllStorageKey(mintProfile: boolean): string | null {
+  try {
+    const storage = globalThis.localStorage;
+    if (!storage) return null;
+    // A read must never mint a profile as a side effect; a click may (the player is present).
+    if (!mintProfile && !loadProfileState(storage)) return null;
+    return profileDataKey(activeProfile(storage).id, PREVIEW_UNLOCK_ALL_KEY);
+  } catch {
+    return null;
+  }
+}
+
+/** Is the preview unlock on for the active profile? Always false in the E1 release build. */
+export function previewUnlockAllActive(): boolean {
+  if (RELEASE_E1) return false;
+  try {
+    const key = previewUnlockAllStorageKey(false);
+    return !!key && globalThis.localStorage?.getItem(key) === '1';
+  } catch {
+    return false;
+  }
+}
+
+/** Turn the preview unlock on or off for the active profile. Returns the resulting state. */
+export function setPreviewUnlockAll(open: boolean): boolean {
+  if (RELEASE_E1) return false;
+  try {
+    const key = previewUnlockAllStorageKey(true);
+    if (!key) return false;
+    if (open) globalThis.localStorage?.setItem(key, '1');
+    else globalThis.localStorage?.removeItem(key);
+  } catch {
+    return false;
+  }
+  return previewUnlockAllActive();
+}
+
+/** Flip it. This is what the board's one control calls. */
+export function togglePreviewUnlockAll(): boolean {
+  return setPreviewUnlockAll(!previewUnlockAllActive());
+}
 
 export function contractUnlockStatus(contract: ContractManifest): ContractUnlockStatus {
+  const status = resolveContractUnlock(contract);
+  // The real predicate always runs first, so a card the player genuinely earned is never mislabelled
+  // "testing" and the honest gate text survives for the board to show.
+  if (status.unlocked || !previewUnlockAllActive()) return status;
+  return { unlocked: true, condition: PREVIEW_UNLOCK_ALL_CONDITION, preview: true, lockedCondition: status.condition };
+}
+
+function resolveContractUnlock(contract: ContractManifest): ContractUnlockStatus {
   const epochs = listEpochs().map(({ id }) => loadEpoch(id));
   const epoch = epochs.find((entry) => entry.contracts.some(({ id }) => id === contract.id));
   if (epoch && !epochIsActive(epoch.id)) {

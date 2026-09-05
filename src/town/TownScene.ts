@@ -95,7 +95,7 @@ import { TownWelcome } from './TownWelcome';
 import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 import { takeMeiWorldDispatch } from './worldDispatches';
 import { takeTrailGuideBark } from '../story/trailGuide';
-import { contractUnlockStatus as contractUnlock } from '../meta/ContractUnlock';
+import { contractUnlockStatus as contractUnlock, previewUnlockAllActive, togglePreviewUnlockAll } from '../meta/ContractUnlock';
 import { deriveMechanicsManifest, mechanicsManifestLine } from '../agent/MechanicsManifest';
 import { SoundSystem } from '../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
@@ -1371,6 +1371,10 @@ export class TownScene {
       this.closeBoard();
       return;
     }
+    if (!__GR_RELEASE_E1__ && target?.closest('[data-preview-unlock-all]')) {
+      this.togglePreviewUnlockAll();
+      return;
+    }
     if (target?.closest('[data-ride-toggle]')) {
       event.preventDefault();
       this.rideExpanded = !this.rideExpanded;
@@ -2204,8 +2208,12 @@ export class TownScene {
   private renderBoard(): void {
     const activeEpoch = loadEpoch(activeEpochId());
     const debug = !__GR_RELEASE_E1__ && new URLSearchParams(window.location.search).has('debug');
+    // "Open every claim" has to reach the CHAPTERS too, or the 26 gated contracts stay off the book
+    // entirely and the control opens nothing the owner can see. `previewUnlockAllActive()` is already
+    // false in an E1 release build, so the era curtain there is untouched.
+    const previewUnlockAll = previewUnlockAllActive();
     const chapters = listEpochs()
-      .filter((epoch) => debug || epoch.order <= activeEpoch.order)
+      .filter((epoch) => debug || previewUnlockAll || epoch.order <= activeEpoch.order)
       .map((epoch) => loadEpoch(epoch.id));
     const scores = loadScores();
     const pageIndex = clampBoardPage(this.boardPageIndex, chapters.length);
@@ -2230,6 +2238,7 @@ export class TownScene {
           <div>
             <p class="town-ui__board-eyebrow">Tavern Ledger</p>
             <h2 data-testid="contract-board-title">The Book</h2>
+            ${this.renderPreviewUnlockControl()}
           </div>
           <button class="town-ui__board-close" type="button" data-contract-close data-testid="contract-board-close">Back</button>
         </header>
@@ -2282,6 +2291,37 @@ export class TownScene {
     this.loadSurfaceEraBackdrop(this.board, boardEpochId);
   }
 
+  // PREVIEW ONLY. `if (__GR_RELEASE_E1__) return ''` folds to `if (true) return ''` in an E1 build,
+  // so the label, the tag and this whole body are unreachable and the bundler drops them — the proof
+  // is a grep of `dist/` for "Open every claim" in `e2e/preview-unlock-all.spec.ts`.
+  // It lives on the board itself, NOT behind `?debug` (CLAUDE.md §5 Mistake #10: the owner has to
+  // reach it in a plain boot). Styling rides existing board classes plus inline rules: `town.css` is
+  // outside this task's firewall, and a testing control is not worth widening it.
+  private renderPreviewUnlockControl(): string {
+    if (__GR_RELEASE_E1__) return '';
+    const open = previewUnlockAllActive();
+    return `
+      <button
+        class="town-ui__board-close"
+        type="button"
+        data-preview-unlock-all
+        data-testid="preview-unlock-all"
+        aria-pressed="${open ? 'true' : 'false'}"
+        title="Testing only. This build is not the release."
+        style="margin-top:8px;min-height:32px;padding:6px 10px;font-size:0.72rem;color:#fff8e8;background:${open ? '#8a5b5b' : '#5b8a8a'};box-shadow:0 3px 0 rgba(46,27,14,0.5);"
+      >${open ? 'Lock the board again' : 'Open every claim'}</button>
+      ${open ? '<p class="town-ui__board-eyebrow" data-testid="preview-unlock-all-note" style="margin-top:6px;color:#8a5b5b;">Testing build. Standings are unaffected.</p>' : ''}
+    `;
+  }
+
+  private togglePreviewUnlockAll(): void {
+    if (__GR_RELEASE_E1__) return;
+    togglePreviewUnlockAll();
+    this.boardPageIndex = 0;
+    this.renderBoard();
+    this.board.querySelector<HTMLElement>('[data-preview-unlock-all]')?.focus({ preventScroll: true });
+  }
+
   private selectBoardPage(index: number): void {
     this.boardPageIndex = index;
     this.renderBoard();
@@ -2310,6 +2350,15 @@ export class TownScene {
         <div class="town-ui__contract-copy">
           <div class="town-ui__contract-topline">
             <span class="town-ui__contract-tag">${escapeHtml(formatTag(tags[0] ?? 'trail'))}</span>
+            ${
+              unlock.preview
+                ? `<span class="town-ui__contract-tag" data-testid="contract-testing-tag-${escapeHtml(
+                    contract.id,
+                  )}" style="background:#8a5b5b;" title="${escapeHtml(
+                    `Opened for testing. Really: ${unlock.lockedCondition ?? unlock.condition}`,
+                  )}">testing</span>`
+                : ''
+            }
             <span class="town-ui__contract-state">${unlock.unlocked ? 'Open' : 'Locked'}</span>
           </div>
           <h3>${escapeHtml(contract.boardRow.name)}</h3>
@@ -2567,7 +2616,11 @@ export class TownScene {
   private emitBoardStorySignals(): void {
     emitStorySignal({ type: 'board-first-open' });
     for (const contract of listBoardContracts()) {
-      if (contract.id === DEFAULT_CONTRACT_ID || !contractUnlock(contract).unlocked) continue;
+      if (contract.id === DEFAULT_CONTRACT_ID) continue;
+      const unlock = contractUnlock(contract);
+      // A preview unlock is not a story beat: firing "contract-unlocked" for all 26 gated contracts
+      // would burn the owner's real first-sight moments on a testing toggle.
+      if (!unlock.unlocked || unlock.preview) continue;
       emitStorySignal({
         type: 'contract-unlocked',
         contractId: contract.id,
