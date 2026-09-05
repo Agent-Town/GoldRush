@@ -4397,11 +4397,11 @@
               "id": "perf-optimization-survey",
               "title": "Owner 2026-09-05: a gpt-6-astra xhigh SURVEY measuring frame, sim, delivery and memory per map (36 contracts + town), ranking the wins and proposing the fix ladder; no game code changes",
               "taskFile": "perf-optimization-survey.md",
-              "status": "queued",
+              "status": "planned",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "queuedAt": "2026-09-05"
+              "note": "Dispatched 11:55 and STOPPED attended at 12:02 (2026-09-05): host load 35-280 with four gpt-6-astra implementers + gate batteries running — every frame/tick/time-to-first-frame number would have been load-polluted. Re-queue when the board is quiet (load < 8, no other implementer live): it is a MEASUREMENT task and the machine is its instrument."
             },
             {
               "id": "lantern-true-world-reel-2",
