@@ -2371,3 +2371,19 @@ body:has(.gr-profile-title) #touch-controls {
   .lantern-show__controls button { min-height: 40px; padding: 6px 10px; }
   .lantern-show__controls output { flex-basis: 100%; }
 }
+
+/* The ride owns the viewport; framing is a disclosure on narrow screens. */
+.lantern-show__stage > canvas { display: block; width: 100%; height: 100%; }
+.lantern-show__title details { pointer-events: auto; }
+.lantern-show__title summary { cursor: pointer; font-size: clamp(24px, 4vw, 44px); font-weight: 800; }
+.lantern-show__title [data-testid="lantern-reel-label"] { font-size: 14px; color: #fff8e8; background: #2e1b0e; }
+.lantern-show__placeholders { position: absolute; left: 30px; bottom: 130px; margin: 0; padding: 5px 8px; background: rgba(46,27,14,.9); color: #fff8e8; font-size: 12px; }
+@media (max-width: 560px) {
+  .lantern-show__stage { inset: 64px 10px auto; height: 62dvh; }
+  .lantern-show__title { top: 8px; padding: 0 8px; min-width: 90vw; }
+  .lantern-show__title summary { font-size: 23px; }
+  .lantern-show__title details[open] { background: #2e1b0e; }
+  .lantern-show__controls { bottom: 8px; gap: 4px; padding: 6px; max-height: calc(38dvh - 82px); }
+  .lantern-show__controls [data-testid="lantern-share-url"] { min-width: 0; width: 100%; }
+  .lantern-show__placeholders, .lantern-show__stage [data-testid="lantern-truth-placeholders"] { left: 8px !important; bottom: 4px !important; font-size: 10px; }
+}

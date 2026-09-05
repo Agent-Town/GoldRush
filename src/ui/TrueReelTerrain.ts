@@ -20,12 +20,12 @@ export type TrueReelTerrain = {
 };
 
 /** Read-only projection of the same manifest fields consumed by the run. */
-export function trueReelTerrain(contractId: string, seed: string, wave: number): TrueReelTerrain {
+export function trueReelTerrain(contractId: string, seed: string, wave: number, heightAt?: (x: number, z: number) => number): TrueReelTerrain {
   const contract = loadContract(contractId);
   const phase = lightPhase(contract, wave);
   const key = `${contractId}\0${seed}\0${phase.key}`;
   const cached = cache.get(key);
-  if (cached) return cached;
+  if (cached && !heightAt) return cached;
 
   const width = contract.tileParams.dimensions?.width ?? contract.tileParams.size ?? 64;
   const height = contract.tileParams.dimensions?.height ?? contract.tileParams.size ?? 64;
@@ -43,7 +43,7 @@ export function trueReelTerrain(contractId: string, seed: string, wave: number):
     for (let column = 0; column < COLS; column += 1) {
       const x = (column + .5) / COLS * width - width / 2;
       const z = height / 2 - (row + .5) / ROWS * height;
-      heights.push(terrainHeight(contract, x, z));
+      heights.push(heightAt?.(x, z) ?? terrainHeight(contract, x, z));
     }
   }
 
@@ -67,10 +67,12 @@ export function trueReelTerrain(contractId: string, seed: string, wave: number):
     phase: phase.key,
     svg: `<g data-replay-terrain="${escapeHtml(contract.id)}" data-seed="${escapeHtml(seed)}" data-light-phase="${escapeHtml(phase.key)}">${ground}${contourLines(heights, project, width, height)}${water}${buildZones}${rails}${cliffLayer(contract, project)}${anchorLayer(contract, project)}${spawnEdgeLayer(contract, width, height, project)}${darkness}${lanternLayer(contract, project, phase.darkness)}${label}</g>`,
   };
-  cache.set(key, result);
+  if (!heightAt) cache.set(key, result);
   return result;
 }
 
+// Standalone catalog previews have no mounted world. Reels always inject the page's Terrain
+// sampler; keep the legacy preview estimate here until Terrain accepts a non-global descriptor.
 function terrainHeight(contract: ContractManifest, x: number, z: number): number {
   const analytic = contract.tileParams.elevation?.analytic;
   let height = analytic?.hillMine === 1 ? hillMineHeight(x, z, analytic) : analyticHeight(x, z, analytic);
@@ -259,7 +261,7 @@ function contourLines(heights: number[], project: TrueReelTerrain['project'], wi
   return path ? `<path d="${path}" fill="none" stroke="#f1d39a" stroke-width=".18" opacity=".6" data-terrain-feature="contour" />` : '';
 }
 
-function lightPhase(contract: ContractManifest, wave: number): { key: string; darkness: number } {
+export function lightPhase(contract: ContractManifest, wave: number): { key: string; darkness: number } {
   const ramp = contract.twist.lightRamp;
   const frames = ramp?.keyframes ?? [];
   if (!ramp || frames.length === 0) return { key: 'day:0', darkness: 0 };

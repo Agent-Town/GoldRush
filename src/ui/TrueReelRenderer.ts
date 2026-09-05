@@ -61,13 +61,13 @@ const workVisuals: Record<string, string> = {
   lantern_post: sentryUrl,
 };
 
-function reelParts(snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string): {
+function reelParts(snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string, heightAt?: (x: number, z: number) => number): {
   terrain: string;
   terrainPhase: string;
   dynamics: string;
   placeholderText: string;
 } {
-  const terrain = trueReelTerrain(contractId, seed, snapshot.wave);
+  const terrain = trueReelTerrain(contractId, seed, snapshot.wave, heightAt);
   const at = (x: number, z: number) => terrain.project(x, z);
   const entity = (
     type: string,
@@ -147,13 +147,13 @@ function reelParts(snapshot: AgentTapeReplaySnapshot, contractId: string, seed: 
   };
 }
 
-export function renderTrueReel(snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string): string {
-  const parts = reelParts(snapshot, contractId, seed);
+export function renderTrueReel(snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string, heightAt?: (x: number, z: number) => number): string {
+  const parts = reelParts(snapshot, contractId, seed, heightAt);
   return reelShell(parts.terrain, parts.dynamics, parts.placeholderText);
 }
 
-export function renderTrueReelGround(contractId: string, seed: string): string {
-  const terrain = trueReelTerrain(contractId, seed, 0);
+export function renderTrueReelGround(contractId: string, seed: string, heightAt?: (x: number, z: number) => number): string {
+  const terrain = trueReelTerrain(contractId, seed, 0, heightAt);
   return reelShell(terrain.svg, '', 'Reel does not carry: decorative props');
 }
 
@@ -167,13 +167,13 @@ function reelShell(terrain: string, dynamics: string, placeholderText: string): 
   <p data-testid="lantern-truth-placeholders" style="position:absolute;left:30px;bottom:clamp(96px,18vh,350px);margin:0;padding:5px 8px;background:rgba(46,27,14,.9);color:#fff8e8;font-size:12px">${placeholderText}</p>`;
 }
 
-export function updateTrueReel(root: HTMLElement, snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string): boolean {
+export function updateTrueReel(root: HTMLElement, snapshot: AgentTapeReplaySnapshot, contractId: string, seed: string, heightAt?: (x: number, z: number) => number): boolean {
   const dynamics = root.querySelector<SVGGElement>('[data-replay-dynamics]');
   const terrain = root.querySelector<SVGGElement>(`[data-replay-terrain="${CSS.escape(contractId)}"]`);
   const legend = root.querySelector<HTMLElement>('[data-testid="lantern-truth-placeholders"]');
   if (!dynamics || !terrain || !legend) return false;
   if (dynamics.dataset.tick === String(snapshot.tick)) return true;
-  const parts = reelParts(snapshot, contractId, seed);
+  const parts = reelParts(snapshot, contractId, seed, heightAt);
   if (terrain.dataset.lightPhase !== parts.terrainPhase) return false;
   dynamics.innerHTML = parts.dynamics;
   dynamics.dataset.tick = String(snapshot.tick);
@@ -186,7 +186,7 @@ function enemyVisual(kind: string): string | undefined {
   return enemyVisuals[key] ?? (key.includes('baron') ? baronUrl : key === 'claim_jumper' ? enemyUrl : undefined);
 }
 
-function workVisual(kind: string): string | undefined {
+export function workVisual(kind: string): string | undefined {
   return workVisuals[normalize(kind)];
 }
 
