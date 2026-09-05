@@ -1,4 +1,4 @@
-import { E3_STORY_BEATS, E4_STORY_BEATS, E5_STORY_BEATS, E6_STORY_BEATS, STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats';
+import { E3_STORY_BEATS, E4_STORY_BEATS, E5_STORY_BEATS, E6_STORY_BEATS, E9_STORY_BEATS, STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats';
 import './story.css';
 import { hasStoryBeatSeen, markStoryBeatSeen } from './seenState';
 import { emitStorySignal, onStorySignal, STORY_RUNTIME_SIGNAL_REGISTRY, type RuntimeStorySignal } from './signals';
@@ -78,6 +78,7 @@ export class StoryRuntime {
       ...(activeEpochId() === 'epoch-4-motor' ? E4_STORY_BEATS : []),
       ...(activeEpochId() === 'epoch-6-atomic' ? E6_STORY_BEATS : []),
       ...(activeEpochId() === 'epoch-5-deepwater' ? E5_STORY_BEATS : []),
+      ...(activeEpochId() === 'epoch-9-redfields' ? E9_STORY_BEATS : []),
       ...(await this.postscriptBeats),
     ]) {
       if ('postscriptOnly' in signal && signal.postscriptOnly && !beat.id.startsWith('wd04-postscript-')) continue;
