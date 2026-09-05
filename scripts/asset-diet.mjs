@@ -3,25 +3,17 @@ import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { meshopt, textureCompress } from '@gltf-transform/functions';
 import { MeshoptDecoder, MeshoptEncoder } from 'meshoptimizer';
 import sharp from 'sharp';
+import assert from 'node:assert/strict';
 import { readdir, readFile, rename, stat, unlink, writeFile } from 'node:fs/promises';
-import { basename, dirname, extname, join, resolve } from 'node:path';
+import { basename, dirname, extname, join, matchesGlob, relative, resolve } from 'node:path';
 
 const distDir = resolve('dist');
-const modelSourceDir = resolve('assets/pilots/map-rebuild-spike');
+const modelManifest = JSON.parse(await readFile(new URL('./asset-diet.manifest.json', import.meta.url), 'utf8'));
 // F-1184-1, made permanent by gazette-art-wiring-hardening.
 const HERALD_SPOT_CUT_BUDGET_BYTES = 1_500_000;
 // Scope 1 measured 1,099,906 B on disk; 1.5 MB leaves 36% encoder drift
 // (and still bounds 8 spot cuts at 64 KiB plus 6 panels at 160 KiB).
 const HERALD_DEV_ART_BUDGET_BYTES = 1_500_000;
-const townLandmarkModelNames = [
-  'assay-office',
-  'chapel',
-  'claim-office',
-  'general-store',
-  'schoolhouse',
-  'town-plate',
-  'town-v3-tavern',
-];
 
 async function filesUnder(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -76,17 +68,30 @@ if (heraldDevArtBytes > HERALD_DEV_ART_BUDGET_BYTES) {
   throw new Error(`Herald dev-path art exceeds byte budget: ${heraldDevArtBytes} B measured > ${HERALD_DEV_ART_BUDGET_BYTES} B ceiling.`);
 }
 
-const sourceModels = await filesUnder(modelSourceDir);
-const compressedModelNames = new Set(sourceModels
-  .filter((file) => file.endsWith('-terrain.glb') || file.includes('/landmarks/'))
-  .map((file) => basename(file, '.glb')));
-townLandmarkModelNames.forEach((name) => compressedModelNames.add(name));
+assert.ok(Array.isArray(modelManifest) && modelManifest.length, 'Asset diet needs a nonempty GLB manifest.');
+for (const entry of modelManifest) {
+  assert.ok(typeof entry.family === 'string' && entry.family.trim()
+    && Array.isArray(entry.patterns) && entry.patterns.length && entry.patterns.every((pattern) => typeof pattern === 'string' && pattern.trim())
+    && typeof entry.compress === 'boolean' && typeof entry.reason === 'string' && entry.reason.trim(),
+  `Invalid asset diet manifest entry: ${JSON.stringify(entry)}`);
+}
+assert.equal(new Set(modelManifest.map(({ family }) => family)).size, modelManifest.length, 'Asset diet family names must be unique.');
+const sourceModels = (await filesUnder(resolve('assets/pilots'))).filter((file) => extname(file) === '.glb');
 const distFiles = await filesUnder(distDir);
-const dietModels = distFiles.filter((file) => {
-  if (extname(file) !== '.glb') return false;
-  const outputName = basename(file, '.glb');
-  return [...compressedModelNames].some((sourceName) => outputName.startsWith(`${sourceName}-`));
-});
+const modelFamilies = modelManifest.map((entry) => ({ ...entry, files: [], before: 0 }));
+for (const file of distFiles.filter((file) => extname(file) === '.glb')) {
+  // Strip only Vite's emitted suffix; worker assets omit the diet fingerprint.
+  // Match the entire remaining source filename, including .eN; never a family prefix.
+  const sourceName = basename(file).replace(/-[\w-]{8}(?:-diet-[a-f0-9]{8})?\.glb$/, '.glb');
+  const sources = sourceModels.filter((source) => basename(source) === sourceName);
+  assert.equal(sources.length, 1, `Asset diet cannot resolve a unique source for ${relative(distDir, file)}: ${sources.join(', ')}`);
+  const sourcePath = relative(resolve('.'), sources[0]).split('\\').join('/');
+  const families = modelFamilies.filter(({ patterns }) => patterns.some((pattern) => matchesGlob(sourcePath, pattern)));
+  assert.equal(families.length, 1, `Asset diet requires exactly one manifest entry for ${sourcePath} (${relative(distDir, file)}); found ${families.length}.`);
+  families[0].files.push(file);
+}
+await Promise.all(modelFamilies.map(async (family) => { family.before = await totalBytes(family.files); }));
+const dietModels = modelFamilies.filter(({ compress }) => compress).flatMap(({ files }) => files);
 const platePngs = [];
 
 await runPool(distFiles.filter((file) => extname(file) === '.png'), 8, async (file) => {
@@ -152,10 +157,15 @@ const afterHeraldBytes = await totalBytes((await filesUnder(distDir))
   .filter((file) => basename(file).includes('herald-engraving-')));
 const percent = (after, before) => before ? `${Math.round((1 - after / before) * 100)}%` : '0%';
 console.log(
-  `[asset-diet] ${dietModels.length} terrain/landmark GLBs ${beforeModels} -> ${afterModels} bytes (${percent(afterModels, beforeModels)} cut); `
+  `[asset-diet] ${dietModels.length} manifest GLBs ${beforeModels} -> ${afterModels} bytes (${percent(afterModels, beforeModels)} cut); `
   + `${platePngs.length} plate-class PNGs ${beforePngs} -> ${afterPngs} bytes (${percent(afterPngs, beforePngs)} cut); `
   + `herald spot cuts ${afterHeraldBytes} bytes.`,
 );
+console.log('[asset-diet] GLB bytes by manifest family:\n| Family | GLBs | Before bytes | After bytes | Cut | Policy |\n| --- | ---: | ---: | ---: | ---: | --- |');
+for (const family of modelFamilies) {
+  const after = await totalBytes(family.files);
+  console.log(`| ${family.family} | ${family.files.length} | ${family.before} | ${after} | ${percent(after, family.before)} | ${family.compress ? 'compress' : `skip: ${family.reason}`} |`);
+}
 if (afterHeraldBytes > HERALD_SPOT_CUT_BUDGET_BYTES) {
   throw new Error(`Herald spot cuts exceed byte budget: ${afterHeraldBytes} B measured > ${HERALD_SPOT_CUT_BUDGET_BYTES} B ceiling.`);
 }

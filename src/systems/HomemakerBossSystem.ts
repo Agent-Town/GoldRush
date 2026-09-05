@@ -557,9 +557,9 @@ export class HomemakerBossSystem {
     const serial = ++this.homemaker3dLoadSerial;
     this.homemaker3dState = 'loading';
     this.publishHomemaker3d();
-    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+    void import('../assets/AssetLoading').then(({ createGltfLoader }) => {
       if (serial !== this.homemaker3dLoadSerial) return;
-      new GLTFLoader().load(HOMEMAKER_3D_URL, ({ scene }) => {
+      createGltfLoader().load(HOMEMAKER_3D_URL, ({ scene }) => {
         if (serial !== this.homemaker3dLoadSerial) return disposeObject3D(scene);
         const meshes = this.inspectHomemaker3d(scene);
         if (!meshes) {

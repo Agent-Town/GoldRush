@@ -1512,9 +1512,9 @@ export class EnemyPool {
     const serial = ++this.railcar3dLoadSerial;
     this.railcar3dState = 'loading';
     this.publishRailcar3d();
-    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+    void import('../assets/AssetLoading').then(({ createGltfLoader }) => {
       if (serial !== this.railcar3dLoadSerial) return;
-      new GLTFLoader().load(RAILCAR_3D_URL, ({ scene }) => {
+      createGltfLoader().load(RAILCAR_3D_URL, ({ scene }) => {
         if (serial !== this.railcar3dLoadSerial) {
           disposeObject3D(scene);
           return;

@@ -531,9 +531,9 @@ export class DredgeQueenBossSystem {
     const serial = ++this.dredgeQueen3dLoadSerial;
     this.dredgeQueen3dState = 'loading';
     this.publishDredgeQueen3d();
-    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+    void import('../assets/AssetLoading').then(({ createGltfLoader }) => {
       if (serial !== this.dredgeQueen3dLoadSerial) return;
-      new GLTFLoader().load(DREDGE_QUEEN_3D_URL, ({ scene }) => {
+      createGltfLoader().load(DREDGE_QUEEN_3D_URL, ({ scene }) => {
         if (serial !== this.dredgeQueen3dLoadSerial) {
           disposeObject3D(scene);
           return;

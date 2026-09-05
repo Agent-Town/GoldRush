@@ -5,6 +5,10 @@ import { MeshoptDecoder } from 'meshoptimizer';
 type Tracker = { manager: LoadingManager; label: string; ready: number; total: number };
 const trackers = new WeakMap<HTMLCanvasElement, Tracker>();
 
+export function createGltfLoader(manager?: LoadingManager): GLTFLoader {
+  return new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder);
+}
+
 export function resetAssetLoading(canvas: HTMLCanvasElement, label: string): void {
   trackers.delete(canvas);
   publish(canvas, label, 0, 0, 'ready');
@@ -32,7 +36,7 @@ export function trackedGltfLoader(canvas: HTMLCanvasElement, label: string): GLT
     };
     trackers.set(canvas, tracker);
   }
-  return new GLTFLoader(tracker.manager).setMeshoptDecoder(MeshoptDecoder);
+  return createGltfLoader(tracker.manager);
 }
 
 export function createAssetLoadingCue(): HTMLElement {

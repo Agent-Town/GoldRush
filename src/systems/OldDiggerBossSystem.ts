@@ -538,9 +538,9 @@ export class OldDiggerBossSystem {
     const serial = ++this.oldDigger3dLoadSerial;
     this.oldDigger3dState = 'loading';
     this.publishOldDigger3d();
-    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+    void import('../assets/AssetLoading').then(({ createGltfLoader }) => {
       if (serial !== this.oldDigger3dLoadSerial) return;
-      new GLTFLoader().load(OLD_DIGGER_3D_URL, ({ scene }) => {
+      createGltfLoader().load(OLD_DIGGER_3D_URL, ({ scene }) => {
         if (serial !== this.oldDigger3dLoadSerial) {
           disposeObject3D(scene);
           return;

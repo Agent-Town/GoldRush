@@ -472,9 +472,9 @@ export class SalvageClawBossSystem {
     const serial = ++this.modelLoadSerial;
     this.modelState = 'loading';
     this.publishModelState();
-    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+    void import('../assets/AssetLoading').then(({ createGltfLoader }) => {
       if (serial !== this.modelLoadSerial) return;
-      new GLTFLoader().load(MODEL_URL, ({ scene }) => {
+      createGltfLoader().load(MODEL_URL, ({ scene }) => {
         if (serial !== this.modelLoadSerial) return disposeObject3D(scene);
         const meshes = this.inspectModel(scene);
         if (!meshes) {
