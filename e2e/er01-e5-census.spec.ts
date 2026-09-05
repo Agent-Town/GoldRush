@@ -38,7 +38,7 @@ test('E5 storm cargo and schedule facts stay separate, and only crewed fronts em
     const { deepwaterStormCarriesCorsairs, deepwaterStormDisablesScheduledWaves } = await vite.ssrLoadModule('/src/world/DeepwaterClaimTile.ts');
 
     for (const contract of deepwater.contracts) {
-      expect(deepwaterStormCarriesCorsairs(contract)).toBe(contract.id !== 'e5-stillwater');
+      expect(deepwaterStormCarriesCorsairs(contract)).toBe(true);
       expect(deepwaterStormDisablesScheduledWaves(contract)).toBe(contract.id !== 'e5-stillwater');
     }
 
@@ -227,12 +227,8 @@ for (const contract of deepwater.contracts) {
         const first = drive(30 * 120);
         const second = drive(30 * 120);
         expect(JSON.stringify(second.simulationSnapshot)).toBe(JSON.stringify(first.simulationSnapshot));
-        // THE STORM TRACK CREWS A WAVE ONLY WHERE THE CONTRACT DECLARES CORSAIRS FOR IT. Three of
-        // these four author `corsairWaveSize: 3` and their storm IS the run clock; `e5-stillwater`
-        // authors 0 with a storm suppressed to a 3600s cycle, so ZERO here is the correct and
-        // required reading — asserting `> 0` for it would demand a wave its data forbids. The
-        // zero-arm is the stronger assertion of the two: it pins the suppression itself, and if
-        // the Stillwater ever spawns a corsair, something has re-crewed a track that must stay dry.
+        // Every E5 storm track is now crewed. Stillwater alone keeps the generic north/south
+        // schedule too, so its one-skiff fronts add pressure without replacing the noise hunt.
         const crews = contract.tileParams.deepwater.corsairWaveSize > 0;
         expect(first.diagnostics.corsairWaves > 0).toBe(crews);
         expect(first.diagnostics.corsairsSpawned > 0).toBe(crews);

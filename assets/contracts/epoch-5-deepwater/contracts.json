@@ -345,7 +345,7 @@
             ]
           },
           "stormTrack": { "regionId": "open-water", "westX": -64, "eastX": 64 },
-          "corsairWaveSize": 0,
+          "corsairWaveSize": 1,
           "wrecks": [
             { "id": "w1-supply-barge", "era": "E1", "x": -36, "z": -24, "depthClass": "wreck" },
             { "id": "w2-locomotive", "era": "E2", "x": -18, "z": -30, "depthClass": "wreck" },
@@ -371,16 +371,32 @@
       "twist": {
         "secureWave": 12,
         "weather": {
-          "cycleSeconds": 3600,
-          "clearSeconds": 3599,
-          "telegraphSeconds": 0.25,
-          "stormSeconds": 0.25,
-          "stormMovementMultiplier": 1,
-          "stormVisibilityMultiplier": 1,
-          "hazeColor": "#6f8f8a",
-          "hazeStrength": 0
+          "cycleSeconds": 32,
+          "clearSeconds": 5,
+          "telegraphSeconds": 3,
+          "stormSeconds": 10,
+          "stormMovementMultiplier": 0.72,
+          "stormVisibilityMultiplier": 0.58,
+          "hazeColor": "#335f64",
+          "hazeStrength": 0.28
         },
         "enemyRoster": [
+          {
+            "id": "corsair_skiff",
+            "label": "Corsair Skiff",
+            "waveMin": 1,
+            "hpScale": 1,
+            "speedMult": 1,
+            "visualScale": 1.25,
+            "tint": "#8f4f32",
+            "spawnEdges": ["west"],
+            "spawnGates": [{ "edge": "west", "x": -62, "z": 0 }],
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "waterRegions": ["open-water", "lagoon-shallows", "reef-gap", "wreck-shelf"],
+            "art": "placeholder"
+          },
           {
             "id": "machine_leviathan",
             "label": "Machine Leviathan",
