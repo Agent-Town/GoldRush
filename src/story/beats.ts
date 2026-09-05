@@ -672,6 +672,161 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// Chapter E5 follows the E2/E3 single-table shape above: tavern tales and Gazette headlines are
+// ordinary, attributed beats (E3 examples at lines 435-441 and 487-493), not a second narrative
+// system. Every line is LEXICON-clean and cites its STORYBOOK source in the comment above it.
+// SPEAKER GAP (reported, not invented): STORYBOOK Chapter E5 names a harbormaster (:267), a
+// tide-teller (:266), a cannery-hand (:265), a shipwright and a pearl-diver (:267). None has a
+// portrait in assets/processed, and src/story/speakers.ts:1 requires one per speaker id, so this
+// table voices them through registered speakers exactly as ss-04 voiced the E3 twins through the
+// tavernkeeper (beats.ts:425-432). No speaker was added.
+export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    // lore/STORYBOOK.md:248,280
+    id: 'e5-deepwater-claim-arrival',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e5-deepwater-claim', // assets/raw/plate-contract-e5-deepwater-claim.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
+    lines: ['The Claim-Boat is the claim now. We hold on anchor points, and the storm fronts run west to east.', 'What we own is measured downward: one fathom for anyone, two with gear, four with the bell.'],
+  },
+  {
+    // lore/STORYBOOK.md:254,267,293
+    id: 'e5-harbormaster-manifest',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
+    lines: ['The manifest went up in chalk on the wheelhouse door: tools before furniture, seed before harvest, books before both.', 'We counted ourselves twice on the water and once more at dawn. The number held.'],
+  },
+  {
+    // lore/STORYBOOK.md:294
+    id: 'e5-rebuild-long-table',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
+    lines: ['First thing raised on the new shore was the long table, before the Harbor House had walls to put around it.', 'We were all seasick in unison, then sea-legged on the same wave. The manifest chalk hangs retired over the bar.'],
+  },
+  {
+    // lore/STORYBOOK.md:266
+    id: 'e5-tide-teller-reading',
+    trigger: 'contract-unlocked',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
+    lines: ["The tide-teller called the crest within a hand's width. Swell period, bird behavior, kelp set.", 'She reads the sea. Write the method down before anyone calls it a gift.'],
+  },
+  {
+    // lore/STORYBOOK.md:255,293; Gazette mystery-law headline in the E3 shape at lines 435-441.
+    id: 'e5-gazette-monument-carry',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
+    lines: ['GAZETTE: THE PAN STANDS ABOVE THE WATERLINE', 'The plinth went up the switchback hand to hand. The tavern keeps three claims for the last pair, and this paper prints none of them.'],
+  },
+  {
+    // lore/STORYBOOK.md:295
+    id: 'e5-first-dive-w1',
+    trigger: 'contract-unlocked',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
+    lines: ['The bell dropped to W1 and found the old supply barge, still loaded with the gear our grandparents packed.', 'Nobody strips that wreck bare. We never voted on it and we never will.'],
+  },
+  {
+    // lore/STORYBOOK.md:282
+    id: 'e5-regatta-storm-course',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e5-regatta', // assets/raw/plate-contract-e5-regatta.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-regatta',
+    lines: ['The Regatta runs beacon to beacon while the boat is still under attack, and corsair racers loot every checkpoint they reach first.', 'The fastest water is nearest the front. Read the storm, or sail the long way and lose.'],
+  },
+  {
+    // lore/STORYBOOK.md:283
+    id: 'e5-stillwater-quiet',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e5-stillwater', // assets/raw/plate-contract-e5-stillwater.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-stillwater',
+    lines: ['Stillwater sits fogged and stormless, and the leviathan hunts whatever is loud.', 'Pumps down, sail trim only. I can work a whole shift without making a sound.'],
+  },
+  {
+    // lore/STORYBOOK.md:284
+    id: 'e5-flotilla-formation',
+    trigger: 'contract-unlocked',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e5-flotilla', // assets/raw/plate-contract-e5-flotilla.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-flotilla',
+    lines: ['Kitchen scow, turret raft, still-room barge. Three hulls, one town, and the formation is the only wall we have.', 'If a hull goes, we close the gap around it. Nobody rows home alone.'],
+  },
+  {
+    // lore/STORYBOOK.md:287,288
+    id: 'e5-dredge-queen-flag',
+    trigger: 'boss-arrival',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e5-boss-dredge-queen', // assets/raw/plate-e5-boss-dredge-queen.png
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e5-deepwater-claim',
+    lines: ['Her flag crests the storm front before her hull does, and she would rather rob us than fight us.', 'Break both paddles to pin her on station, and interrupt the claw before our history leaves in her hold.'],
+  },
+  {
+    // lore/STORYBOOK.md:296; tavern-tale shape mirrors e3-tavern-twins-defect at lines 487-493.
+    id: 'e5-tavern-locomotive-argument',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e5-first-dive-w1'),
+    lines: ["W2 holds a locomotive on the sea floor. Ours off the drowned spur, or the world's, carried in from a coast the maps have stopped being right about.", 'The house has quit taking sides. The argument keeps better than the answer would.'],
+  },
+  {
+    // lore/STORYBOOK.md:296; the reveal states the sighting and withholds the explanation.
+    id: 'e5-mystery-hull-w5',
+    trigger: 'run-return-town',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e5-first-dive-w1'),
+    lines: ['W5 is too smooth and faintly lit, and no diver will touch it. The tide-teller anchored above it one whole night, listening.', 'In the morning she said only this: it is not asleep, it is waiting to be useful.'],
+  },
+  {
+    // lore/STORYBOOK.md:270,290; the reveal keeps the Gazette mystery law by printing the notice and no name.
+    id: 'e5-gazette-crossed-pickaxes',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e5-dredge-queen-flag'),
+    lines: ['GAZETTE: CROSSED PICKAXES UNDER THE CORSAIR PAINT', 'Her struck flag carries an older mark, and that fleet sold at auction two seasons before the water came. This paper prints the notice and no name.'],
+  },
+  {
+    // lore/STORYBOOK.md:297; the exit hook toward E6, in the shape of e3-refinery-horizon at lines 505-513.
+    id: 'e5-deep-reactor-horizon',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    lines: ["Every hull took one line in the year's flattest calm, and what came up off the trench edge glows teal and patient.", "It comes ashore at the glow mesa's foot, above the new waterline, where the next era is already waiting."],
+  },
+];
+
 // Chapter E6 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and
 // Gazette headlines are ordinary, attributed beats, not a second narrative system.
 // Cast note (honesty guard): STORYBOOK lines 341-345 name five new E6 townsfolk (reactor steward,
