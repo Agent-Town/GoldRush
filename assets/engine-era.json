@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "e5c6080917f508cce5dc910af92b8a50b1b2e302a35235283aa35f2daac0cb9a",
+  "engineHash": "9b2b30d80676a442594b1911c750dc0753ba90fcc43b2fa11d0f02d95228c742",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -373,6 +373,12 @@
       "engineHash": "e5c6080917f508cce5dc910af92b8a50b1b2e302a35235283aa35f2daac0cb9a",
       "pinnedAt": "2026-09-06",
       "cause": "src re-hash: e6-picnic-thirty-second-death drain — the Picnic briefing block gains the loss condition and the hold rules from the published three_stake_hold rule (assets/contracts text only; both idle floors and the receipt-class prover hash byte-identical, every replay unchanged); same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "9b2b30d80676a442594b1911c750dc0753ba90fcc43b2fa11d0f02d95228c742",
+      "pinnedAt": "2026-09-06",
+      "cause": "src re-hash: story-signal-emitters drain — the four story signals nobody emitted (wave-complete, rung-promotion, science-threshold, first-boot) now publish from Game.ts/main.ts as presentation signals; the E1 null floors 21/21 and the played tapes replay byte-identical; same era per F-1441-3",
       "aliases": []
     }
   ],
