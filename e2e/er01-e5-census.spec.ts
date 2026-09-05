@@ -22,6 +22,46 @@ const EXPECTED_ACTIVE_CONTRACT: Record<string, string> = {
  */
 const ADMITTED = new Set(['e5-deepwater-claim', 'e5-regatta', 'e5-stillwater', 'e5-flotilla']);
 
+test('E5 storm cargo and schedule facts stay separate, and only crewed fronts emit waves', async () => {
+  test.setTimeout(90_000);
+  const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
+  const previousLocation = host.location;
+  const previousWindow = host.window;
+  host.location = new URL('http://gr-sim.local/?debug&contract=e5-stillwater');
+  host.window = { location: host.location };
+  const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+  try {
+    const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
+    const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
+    const { DeepwaterSocket } = await vite.ssrLoadModule('/src/sim/DeepwaterSocket.ts');
+    const { EnemyPool } = await vite.ssrLoadModule('/src/entities/pools.ts');
+    const { deepwaterStormCarriesCorsairs, deepwaterStormDisablesScheduledWaves } = await vite.ssrLoadModule('/src/world/DeepwaterClaimTile.ts');
+
+    for (const contract of deepwater.contracts) {
+      expect(deepwaterStormCarriesCorsairs(contract)).toBe(contract.id !== 'e5-stillwater');
+      expect(deepwaterStormDisablesScheduledWaves(contract)).toBe(contract.id !== 'e5-stillwater');
+    }
+
+    const emitted = (corsairWaveSize: number) => {
+      const contract = structuredClone(loadContract('e5-deepwater-claim'));
+      contract.tileParams.deepwater.corsairWaveSize = corsairWaveSize;
+      const sim = new HeadlessContractSim({ contractId: 'the-claim', seed: 'e5-storm-emission' });
+      const events: Array<{ wave: number; at: number }> = [];
+      const socket = DeepwaterSocket.create(contract, new EnemyPool(), sim.combat, () => sim.hero.group.position, (wave: number, at: number) => events.push({ wave, at }));
+      socket.advance(9);
+      return events;
+    };
+    expect(emitted(0)).toEqual([]);
+    expect(emitted(1)).toEqual([{ wave: 1, at: 8 }]);
+  } finally {
+    await vite.close();
+    if (previousLocation === undefined) delete host.location;
+    else host.location = previousLocation;
+    if (previousWindow === undefined) delete host.window;
+    else host.window = previousWindow;
+  }
+});
+
 /**
  * THE `SOCKETED_BUT_REFUSED` STATE IS RETIRED (2026-08-21). It was introduced one day earlier for
  * exactly one contract — `e5-stillwater`, whose noise-hunt consumer was live while the map still

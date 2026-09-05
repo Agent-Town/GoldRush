@@ -167,16 +167,20 @@ export class DeepwaterClaimTile {
   }
 }
 
-/**
- * TRUE where the storm track IS the run's clock, i.e. where the contract declares corsairs for
- * it to carry. Both engines gate the generic wave schedule and the run's wave number on this,
- * because on `e5-stillwater` the storm is authored suppressed (a 3600s cycle) and crews nobody:
- * reading `corsairWaves.length` as the wave there would freeze the run at wave 0 forever and
- * make its authored `secureWave: 12` unreachable by construction.
- */
-export function deepwaterStormDrivesWaves(contract: ContractManifest): boolean {
+export function deepwaterStormCarriesCorsairs(contract: ContractManifest): boolean {
   return (contract.tileParams.deepwater?.corsairWaveSize ?? 0) > 0;
 }
+
+export function deepwaterStormDisablesScheduledWaves(contract: ContractManifest): boolean {
+  return deepwaterStormCarriesCorsairs(contract) && !contract.tileParams.stillwater;
+}
+
+export function deepwaterFrontCarriesWave(wave: CorsairSkiffWave): boolean {
+  return wave.enemies.length > 0;
+}
+
+// Compatibility for the public mechanics manifest, outside this slice's firewall.
+export const deepwaterStormDrivesWaves = deepwaterStormDisablesScheduledWaves;
 
 export function createDeepwaterClaimTile(contract: ContractManifest): DeepwaterClaimTile | null {
   return DEEPWATER_CONTRACTS.has(contract.id) ? new DeepwaterClaimTile(contract) : null;
