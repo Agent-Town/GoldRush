@@ -89,15 +89,33 @@ test('contract-valid GLB feeds every visualY consumer and keeps the water agreem
   const table = [];
   for (const [x, z] of samplePoints) {
     await page.evaluate(([px, pz]) => window.__GR_TEST__?.teleport(px, pz), [x, z]);
+    // The hero may settle up to ~0.4 off a requested point (collision resolution against a blocker
+    // that grew there since the points were chosen); arrival means NEAR the target and no longer
+    // moving, and the sample below reads the ground under the hero's real position.
     await page.waitForFunction(([px, pz]) => {
       const hero = window.__THREE_GAME_DIAGNOSTICS__?.heroPos;
-      return hero != null && Math.abs(hero.x - px) < 0.01 && Math.abs(hero.z - pz) < 0.01;
+      return hero != null && Math.abs(hero.x - px) < 1 && Math.abs(hero.z - pz) < 1;
     }, [x, z]);
-    const sample = await page.evaluate(([px, pz]) => ({
-      height: window.__GR_TEST__!.terrainVisualY(px, pz),
-      padded: window.__GR_TEST__!.terrainVisualY(px, pz, 0, 1.1),
-      heroY: window.__THREE_GAME_DIAGNOSTICS__!.heroPos.y,
-    }), [x, z]);
+    await page.waitForFunction(() => {
+      const w = window as unknown as { __t3dLast?: { x: number; z: number } };
+      const hero = window.__THREE_GAME_DIAGNOSTICS__!.heroPos;
+      const settled = w.__t3dLast != null && w.__t3dLast.x === hero.x && w.__t3dLast.z === hero.z;
+      w.__t3dLast = { x: hero.x, z: hero.z };
+      return settled;
+    }, undefined, { polling: 120 });
+    // F-T3D-1 (2026-09-05): the hero's rendered Y belongs to the ground under the hero's ACTUAL
+    // position, which settles a hair off the requested teleport target; sampling at the target
+    // compared two different points and read as a 0.0214 "height bug" that no sampler could fix.
+    const sample = await page.evaluate(() => {
+      const hero = window.__THREE_GAME_DIAGNOSTICS__!.heroPos;
+      return {
+        heroX: hero.x,
+        heroZ: hero.z,
+        height: window.__GR_TEST__!.terrainVisualY(hero.x, hero.z),
+        padded: window.__GR_TEST__!.terrainVisualY(hero.x, hero.z, 0, 1.1),
+        heroY: hero.y,
+      };
+    });
     expect(sample.heroY).toBeCloseTo(sample.height + 0.06, 2);
     table.push({ x, z, ...sample });
   }

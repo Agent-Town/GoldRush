@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "c552efe029369e05180c3df68e3c91003be7430164519d298e9898d9d07bdb28",
+  "engineHash": "3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -301,6 +301,12 @@
       "engineHash": "c552efe029369e05180c3df68e3c91003be7430164519d298e9898d9d07bdb28",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: asset-diet-explicit-manifest v1+v2 drain (9b7d3eef6) — nine bare GLTFLoader sites routed through the shared meshopt factory (AssetLoading.createGltfLoader), the tracked loader keeps the SharedAtlasPlugin; asset/loader plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885",
+      "pinnedAt": "2026-09-05",
+      "cause": "corpus re-hash without a sim change: glb-export-contract-and-validator drain — 32 terrain *.export.json Blender sidecars under assets/pilots/map-rebuild-spike enter ENGINE_SOURCE_INPUTS via the directory rule (assay-replay-agent.mjs:42/:76); the game never loads them; no src/ or contract change; every contract replays byte-identical; same era per F-1441-3 (F-GLB-1)",
       "aliases": []
     }
   ],

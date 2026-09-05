@@ -48,7 +48,7 @@ Measured s1515 by replaying both regexes from the merged guard:
 `he said "foo and then some prose "<title>".` yields `"foo and then some prose "` from **both** arms.
 **Priced against the live corpus: 2 genuine citations**, both verified by reading the spec —
 `e2e/tl-01-run-telemetry.spec.ts:229` ("plain no-debug secure return keeps telemetry invisible to gameplay")
-and `e2e/asset-diet.spec.ts:73` ("honest town and claim cues appear while GLBs are throttled and leave at ready").
+and `e2e/asset-diet.spec.ts:288` ("honest town cues appear while GLBs are throttled and leave at ready" — renamed by the 2026-09-05 cue split; its claim half is `:315").
 That is a **lower bound**: the probe's matcher was stricter than the shipped `matchesATitle`.
 
 ⓘ *Those two titles are quoted here because this master was caught by `test:citations` without them —
