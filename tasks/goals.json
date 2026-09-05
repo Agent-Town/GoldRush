@@ -4333,11 +4333,13 @@
               "id": "asset-diet-explicit-manifest",
               "title": "F-ASTRA-3: asset-diet compresses by explicit manifest; every GLTFLoader routes through the shared meshopt loader",
               "taskFile": "asset-diet-explicit-manifest.md",
-              "status": "queued",
+              "status": "superseded",
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "queuedAt": "2026-09-05"
+              "queuedAt": "2026-09-05",
+              "supersededBy": "asset-diet-explicit-manifest-2",
+              "stopNote": "v1 STOPPED 2026-09-05 (gpt-6-astra): implementation complete and held on lane/a; blocked on three couplings outside the firewall (engine pin, vite fingerprint, deploy mirror include). v2 builds on the held commit with the three lifts."
             },
             {
               "id": "shared-atlas-texture-dedupe",
@@ -4407,6 +4409,16 @@
               "taskFile": "lantern-true-world-reel-2.md",
               "status": "queued",
               "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "queuedAt": "2026-09-05"
+            },
+            {
+              "id": "asset-diet-explicit-manifest-2",
+              "title": "F-ASTRA-3 v2: land the asset-diet manifest + shared loader (held on lane/a) with the vite fingerprint include, the deploy mirror include and the era pin — BUILD-ON-PREDECESSOR",
+              "taskFile": "asset-diet-explicit-manifest-2.md",
+              "status": "queued",
+              "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
               "queuedAt": "2026-09-05"
