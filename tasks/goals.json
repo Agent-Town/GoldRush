@@ -4284,20 +4284,22 @@
               "id": "e5-stillwater-front-crew-2",
               "title": "F-E5SP-1 v2: the Stillwater gains its first crewed front (size-1 candidate) with pins re-recorded; ordinary idle loses by w3, played secures at w12 — the v1 isolation clause dropped (changed premise)",
               "taskFile": "e5-stillwater-front-crew-2.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
-              "queuedAt": "2026-09-05"
+              "queuedAt": "2026-09-05",
+              "mergeHash": "69080c3cd3d6d927394689ba610114a64cb3e371",
+              "mergedAt": "2026-09-05"
             },
             {
               "id": "lantern-true-world-reel",
               "title": "F-ASTRA-11: the Lantern reel renders the paid-for world stage (terrain pilot + rigs + snapshot-driven sprites), SVG kept as the labelled tactical fallback",
               "taskFile": "lantern-true-world-reel.md",
-              "status": "planned",
+              "status": "queued",
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+              "queuedAt": "2026-09-05"
             },
             {
               "id": "prefetch-bounded-warming",
