@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "a44df406ac339b817ee5c13dfcdcfb9a869ebd0cf41d91efc74043fd69967024",
+  "engineHash": "ea4dcc6e4977754cba6d0d5f0921c4dc909a6cc5b0a3318b7c6696056e72765b",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -319,6 +319,12 @@
       "engineHash": "a44df406ac339b817ee5c13dfcdcfb9a869ebd0cf41d91efc74043fd69967024",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: homemaker-kept-state-init-order drain — HomemakerBossSystem.restoreKeptState() is called by Game after WaveSystem exists (the constructor no longer restores); E6 null floors and a played tape byte-identical (fnv1a32:0ae65b8e / 004ae8d7 / fdce1d04); same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "ea4dcc6e4977754cba6d0d5f0921c4dc909a6cc5b0a3318b7c6696056e72765b",
+      "pinnedAt": "2026-09-05",
+      "cause": "src re-hash: bounded-prefetch-town-halls drain — AdvanceStream.ts state machine typed/documented, terminal 'allowance' state, complete-plan-at-allowance publishes ready (F-BPTH-1); asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     }
   ],
