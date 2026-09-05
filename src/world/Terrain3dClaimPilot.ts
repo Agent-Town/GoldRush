@@ -523,7 +523,22 @@ function validPanorama(metrics: Metrics, contract: PanoramaContract, mount: Moun
     metrics.materials === contract.materialCount && metrics.vertices === contract.vertices;
 }
 
-function bakeHeightGrid(model: THREE.Object3D, metrics: Metrics): (x: number, z: number) => number {
+/**
+ * The height the player's feet stand on has to be the height the player SEES. The mesh
+ * draws two triangles per grid cell across one diagonal; a bilinear lerp over the cell's
+ * four corners is a different, curved surface, and the two disagree by up to 0.6667 units
+ * on the Mare's abrupt relief (F-ASTRA-10, its own centroid sweep of the four terrains:
+ * Claim 0.0253 / Twin Banks 0.0230 / Hill Mine 0.1033 / Mare 0.6667). That gap is exactly
+ * where feet float or sink.
+ *
+ * So the diagonal is BAKED OUT OF THE INDEX BUFFER, per cell, never assumed: whichever way
+ * the exporter split a cell, the sample lands on the plane of the triangle the point falls
+ * in, and the sampled height equals the drawn surface everywhere. Still O(1) per sample and
+ * one extra byte per cell.
+ *
+ * Render-side only (CLAUDE.md §4.6): the simulation stays planar and never reads this.
+ */
+export function bakeHeightGrid(model: THREE.Object3D, metrics: Metrics): (x: number, z: number) => number {
   const mesh = model.getObjectByProperty('isMesh', true) as THREE.Mesh;
   const position = mesh.geometry.getAttribute('position');
   const segments = Math.round(Math.sqrt(position.count)) - 1;
@@ -532,6 +547,8 @@ function bakeHeightGrid(model: THREE.Object3D, metrics: Metrics): (x: number, z:
   const stepZ = (metrics.bounds.max.z - metrics.bounds.min.z) / segments;
   const heights = new Float32Array(width * width);
   const seen = new Uint8Array(heights.length);
+  const columns = new Int32Array(position.count);
+  const rows = new Int32Array(position.count);
   const point = new THREE.Vector3();
   model.updateMatrixWorld(true);
   for (let index = 0; index < position.count; index += 1) {
@@ -543,18 +560,58 @@ function bakeHeightGrid(model: THREE.Object3D, metrics: Metrics): (x: number, z:
     if (column < 0 || column > segments || row < 0 || row > segments || seen[cell]) throw new Error('invalid terrain grid');
     heights[cell] = point.y;
     seen[cell] = 1;
+    columns[index] = column;
+    rows[index] = row;
   }
   if (seen.some((value) => value !== 1)) throw new Error('incomplete terrain grid');
+  // 0 = the cell is split (low,low)..(high,high); 1 = split (high,low)..(low,high).
+  const diagonals = new Uint8Array(Math.max(segments * segments, 1));
+  const drawn = new Uint8Array(diagonals.length);
+  const indices = mesh.geometry.index;
+  const triangleCount = Math.floor((indices?.count ?? position.count) / 3);
+  for (let triangle = 0; triangle < triangleCount; triangle += 1) {
+    const a = indices ? indices.getX(triangle * 3) : triangle * 3;
+    const b = indices ? indices.getX(triangle * 3 + 1) : triangle * 3 + 1;
+    const c = indices ? indices.getX(triangle * 3 + 2) : triangle * 3 + 2;
+    const columnA = columns[a]!, columnB = columns[b]!, columnC = columns[c]!;
+    const rowA = rows[a]!, rowB = rows[b]!, rowC = rows[c]!;
+    const column = Math.min(columnA, columnB, columnC);
+    const row = Math.min(rowA, rowB, rowC);
+    if (Math.max(columnA, columnB, columnC) - column !== 1 || Math.max(rowA, rowB, rowC) - row !== 1) {
+      throw new Error('invalid terrain topology');
+    }
+    // Corner bits: 1 = (low,low), 2 = (high,low), 4 = (low,high), 8 = (high,high). A half-cell
+    // triangle covers exactly three of them, and the missing one names the diagonal.
+    const mask = (1 << ((rowA - row) * 2 + columnA - column))
+      | (1 << ((rowB - row) * 2 + columnB - column))
+      | (1 << ((rowC - row) * 2 + columnC - column));
+    const diagonal = mask === 0b1011 || mask === 0b1101 ? 0 : mask === 0b1110 || mask === 0b0111 ? 1 : -1;
+    const cell = row * segments + column;
+    if (diagonal < 0 || (drawn[cell] && diagonals[cell] !== diagonal)) throw new Error('invalid terrain topology');
+    diagonals[cell] = diagonal;
+    drawn[cell]! += 1;
+  }
+  if (segments > 0 && drawn.some((value) => value !== 2)) throw new Error('incomplete terrain topology');
+  const lastCell = Math.max(segments - 1, 0);
   return (x, z) => {
     const gx = THREE.MathUtils.clamp((x - metrics.bounds.min.x) / stepX, 0, segments);
     const gz = THREE.MathUtils.clamp((z - metrics.bounds.min.z) / stepZ, 0, segments);
-    const x0 = Math.floor(gx);
-    const z0 = Math.floor(gz);
+    const x0 = Math.min(Math.floor(gx), lastCell);
+    const z0 = Math.min(Math.floor(gz), lastCell);
     const x1 = Math.min(x0 + 1, segments);
     const z1 = Math.min(z0 + 1, segments);
-    const north = THREE.MathUtils.lerp(heights[z0 * width + x0]!, heights[z0 * width + x1]!, gx - x0);
-    const south = THREE.MathUtils.lerp(heights[z1 * width + x0]!, heights[z1 * width + x1]!, gx - x0);
-    return THREE.MathUtils.lerp(north, south, gz - z0);
+    const fx = gx - x0;
+    const fz = gz - z0;
+    const low = heights[z0 * width + x0]!;
+    const east = heights[z0 * width + x1]!;
+    const south = heights[z1 * width + x0]!;
+    const high = heights[z1 * width + x1]!;
+    // Each branch is the plane through one drawn triangle's three corners, so the sample sits
+    // on the rendered surface rather than near it.
+    if (diagonals[z0 * segments + x0] === 0) {
+      return fz <= fx ? low + (east - low) * fx + (high - east) * fz : low + (high - south) * fx + (south - low) * fz;
+    }
+    return fx + fz <= 1 ? low + (east - low) * fx + (south - low) * fz : high + (high - south) * (fx - 1) + (high - east) * (fz - 1);
   };
 }
 
