@@ -103,7 +103,10 @@ if [ "$FIRE_ENGINE" = "codex" ]; then
   # one hour): launchd's PATH finds an orphaned homebrew 0.133; nvm-v24's wrapper is half-installed
   # (native binary ENOENT); nvm-v23 carries the real 0.147+. A candidate qualifies only if
   # --version RUNS and reports >= CODEX_MIN (Sol's server floor). None qualify -> claude fallthrough.
-  CODEX_BIN=""; CODEX_MIN="0.147.0"
+  # F-CLI-1 (owner decision 3, 2026-09-05): the floor is now Astra's, not Sol's — gpt-6-astra (the
+  # ~/.codex config model since 2026-09-05) is refused by anything older with a 400 "requires a newer
+  # version of Codex", which is exactly how every fire from ~06:00 to 10:15 that day died (rc=1).
+  CODEX_BIN=""; CODEX_MIN="0.153.0"
   for c in $(ls -1d "$HOME"/.nvm/versions/node/*/bin/codex 2>/dev/null | sort -rV) "$(command -v codex || true)" /opt/homebrew/bin/codex /usr/local/bin/codex; do
     { [ -n "$c" ] && [ -x "$c" ]; } || continue
     v=$("$c" --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
