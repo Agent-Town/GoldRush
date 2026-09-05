@@ -69,15 +69,21 @@ test('the landed registry names the live engine and stays outside its hash corpu
   const registry = await assertCurrentEra(ROOT);
   assert.equal(registry.era, 5);
 
-  const [grSim, replay, worker, game] = await Promise.all([
+  const [grSim, replay, worker, game, lanternController] = await Promise.all([
     readFile(path.join(ROOT, 'scripts/gr-sim.mjs'), 'utf8'),
     readFile(path.join(ROOT, 'scripts/assay-replay-agent.mjs'), 'utf8'),
     readFile(path.join(ROOT, 'scripts/assay-worker.mjs'), 'utf8'),
     readFile(path.join(ROOT, 'src/game/Game.ts'), 'utf8'),
+    // lantern-true-world-reel-2 (2026-09-05) moved the viewer's era refusal out of Game into the
+    // shared LanternController; the contract is that SOME viewer path refuses an unknown pin.
+    readFile(path.join(ROOT, 'src/replay/LanternController.ts'), 'utf8'),
   ]);
   assert.match(grSim, /engineHash: await computeEngineHash\(root\), era: engineEra\.era/);
   assert.match(replay, /ssrLoadModule\('\/src\/replay\/AgentTapeReplay\.ts'\)/);
-  assert.match(game, /engineEraIncludes\(engineEra, meta\.engineHash\)/);
+  assert.ok(
+    /engineEraIncludes\(engineEra, meta\.engineHash\)/.test(game) || /engineEraIncludes\(engineEra, meta\.engineHash\)/.test(lanternController),
+    'the viewer era refusal must live in Game.ts or LanternController.ts',
+  );
   assert.match(worker, /engineEraIncludes\(engineEra, tapeEngineHash\)/);
   assert.match(worker, /engine era \$\{engineEra\.era\} '\$\{engineEra\.name\}', tape from era \$\{tapeEra\}/);
 

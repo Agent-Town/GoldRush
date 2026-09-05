@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "9254f19e3c6e126d2b37fe789055fb5ca2ccd6862090bc6e5b71984ed11d3325",
+  "engineHash": "b395ee1f9e2fa226489c749f2468778d023ad900b682aadc3f8fd15a481612b1",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -289,6 +289,12 @@
       "engineHash": "9254f19e3c6e126d2b37fe789055fb5ca2ccd6862090bc6e5b71984ed11d3325",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: shared-atlas-texture-dedupe drain (b7fdb9796) — src/assets/SharedAtlasPlugin.ts + AssetLoading.ts registration: one GPU texture per atlas-content hash across GLBs; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "b395ee1f9e2fa226489c749f2468778d023ad900b682aadc3f8fd15a481612b1",
+      "pinnedAt": "2026-09-05",
+      "cause": "src re-hash: lantern-true-world-reel-2 drain (6faf890df) — LanternController extracted from Game.ts, LanternBoot + LanternWorldStage added, main.ts replay route; the replay worker, AgentTapeReplay, RunTape and the sim untouched; every contract replays byte-identical (tape-02 + true-reel-harness green); same era per F-1441-3",
       "aliases": []
     }
   ],
