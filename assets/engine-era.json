@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "c552efe029369e05180c3df68e3c91003be7430164519d298e9898d9d07bdb28",
+  "engineHash": "6e27423b60157b3661a1d822d90e4ec47eb65952fe6568544dade163a17e223f",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -301,6 +301,12 @@
       "engineHash": "c552efe029369e05180c3df68e3c91003be7430164519d298e9898d9d07bdb28",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: asset-diet-explicit-manifest v1+v2 drain (9b7d3eef6) — nine bare GLTFLoader sites routed through the shared meshopt factory (AssetLoading.createGltfLoader), the tracked loader keeps the SharedAtlasPlugin; asset/loader plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "6e27423b60157b3661a1d822d90e4ec47eb65952fe6568544dade163a17e223f",
+      "pinnedAt": "2026-09-05",
+      "cause": "src re-hash: homemaker-kept-state-init-order (F-ADM-1 / AD2-B1) — the Homemaker kept-chair restore left the constructor and became an explicit post-construction call from Game once waveSystem exists (HomemakerBossSystem.restoreKeptState, backstopped once in update); initialization order only, no sim or contract change; the e6-glow-mesa null floors (fnv1a32:0ae65b8e / fnv1a32:004ae8d7) and a played e6-glow-mesa tape (fnv1a32:fdce1d04) replay byte-identical; same era per F-1441-3",
       "aliases": []
     }
   ],

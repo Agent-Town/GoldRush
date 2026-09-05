@@ -1514,6 +1514,14 @@ export class Game {
       // its own `BroadcastMirror`, so the mirror rule is one implementation in two engines.
       (wave) => this.broadcastMirror.fieldMirrors(wave),
     );
+    // AD2-B1 / F-ADM-1 (`reviews/asset-diet-explicit-manifest.md`): the Homemaker is built in a
+    // FIELD INITIALIZER above (`:1084`), i.e. BEFORE this constructor body runs, and its
+    // kept-chair restore calls `suppressBaronForRun()` on the wave system built immediately
+    // above. Restoring at construction therefore reached an undefined `this.waveSystem` and threw
+    // the whole boot away on any reload of an E6 run whose Homemaker was kept. The restore is an
+    // explicit post-construction call, made the moment the only system it reaches exists; nothing
+    // between the two lines reads the Homemaker.
+    this.homemakerBoss.restoreKeptState();
     resetAssetLoading(canvas, 'the claim');
     this.assertActorMode();
     this.renderer = createRenderer(canvas);
