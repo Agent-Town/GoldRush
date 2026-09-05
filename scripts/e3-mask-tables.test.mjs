@@ -133,6 +133,12 @@ test('published mask tables exactly track authored contract data', async () => {
       'pylonSites', 'rails', 'waterSources', 'harvestAnchors', 'prePlacedBuildables',
       'elevation', 'heightfield', 'water', 'lanes',
     ],
+    // OWED, and deliberately not pinned here (F-E3MS-2): the corridor light circuit added
+    // `pylonSites` and `prePlacedBuildables` to this map's authored tile data, but the published
+    // mirror `assets/contracts/epoch-3-voltage/mask-tables/e3-moth-season.json` is outside the
+    // `tasks/e3-moth-season-grid.md` firewall (which scopes `assets/contracts/` to `contracts.json`
+    // alone), so the mirror still lacks both keys. Add them here in the same commit that
+    // republishes the mask, exactly as `e3-canyon-works` above already carries them.
     'e3-moth-season': ['tileId', 'size', 'river', 'ford', 'buildZones', 'waterSources', 'lanes'],
     'e3-blackout-ridge': [
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'pylonSites',

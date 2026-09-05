@@ -94,6 +94,12 @@
           { "id": "dark-corridor", "bank": "north", "minX": -6, "maxX": 6, "minZ": -34, "maxZ": 34 },
           { "id": "east-tithe-yard", "bank": "north", "minX": 8, "maxX": 32, "minZ": -24, "maxZ": 24 }
         ],
+        "pylonSites": [
+          { "id": "corridor-pylon", "nodeId": "corridor-pylon", "wireFrom": "corridor-dynamo", "x": 0, "z": -14, "radius": 2.5 }
+        ],
+        "prePlacedBuildables": [
+          { "id": "lantern_post", "x": 0, "z": 6 }
+        ],
         "waterSources": [],
         "palette": {
           "id": "moth-season-ink-blue",
@@ -121,10 +127,27 @@
           "litThreshold": 0.35,
           "attachDamagePerSecond": 6
         },
+        "powerGrid": {
+          "maxSpanLength": 30,
+          "nodes": [
+            { "id": "corridor-dynamo", "label": "Corridor Dynamo", "kind": "producer", "x": 0, "z": -32, "outputWatts": 20 },
+            { "id": "corridor-pylon", "label": "Corridor Pylon", "kind": "relay", "x": 0, "z": -14 },
+            { "id": "corridor-gallery", "label": "Corridor Gallery", "kind": "consumer", "role": "gallery", "x": 0, "z": 2, "drawWatts": 6, "priority": 10 },
+            { "id": "corridor-lamp", "label": "Corridor Lamp", "kind": "consumer", "role": "lamp", "x": 0, "z": 6, "drawWatts": 2, "priority": 30 }
+          ],
+          "wires": [
+            { "a": "corridor-dynamo", "b": "corridor-pylon" },
+            { "a": "corridor-pylon", "b": "corridor-gallery" },
+            { "a": "corridor-gallery", "b": "corridor-lamp" }
+          ],
+          "connect": { "required": 1, "byWave": 12 }
+        },
         "enemyRoster": [
           { "id": "moth_swarm", "label": "Fever Moths", "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
           { "id": "moth_swarm", "label": "Fever Moths", "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
-          { "id": "night_runner", "label": "Fevered Runner", "hpScale": 1.75, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
+          { "id": "moth_swarm", "label": "Fever Moths", "waveMin": 4, "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
+          { "id": "night_runner", "label": "Fevered Runner", "hpScale": 1.75, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" },
+          { "id": "fevered_saboteur", "label": "Corridor Saboteur", "waveMin": 4, "hpScale": 1.1, "speedMult": 1.12, "visualScale": 0.95, "tint": "#6f806c", "wrecker": true, "buildingDamageScale": 1.25, "spawnEdges": ["north", "south"] }
         ]
       },
       "boardRow": {
@@ -134,13 +157,18 @@
         "unlock": "secured:e3-blackout-ridge"
       },
       "briefing": {
-        "goals": ["Hold through wave 12 while the decoy shed draws the migration."],
+        "goals": [
+          "Hold through wave 12 while the decoy shed draws the migration.",
+          "CONNECT the corridor gallery to the dynamo by wave 12."
+        ],
         "rules": [
           "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
           "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
-          "The cycle stays at night, easing only through two-second dusks."
+          "The cycle stays at night, easing only through two-second dusks.",
+          "The corridor lamp runs on the dynamo's current: a Sentry Beacon raised on the CORRIDOR PYLON SITE closes the span, and a wrecked beacon cuts it and puts the lamp out.",
+          "REPAIR the beacon to relight the corridor; a corridor that never carried current by wave 12 cannot be secured at any wave."
         ],
-        "geographyLine": "Two lit yards flank one unlit north-south corridor."
+        "geographyLine": "Two lit yards flank one unlit north-south corridor, wired dynamo to pylon to gallery lamp."
       }
     },
     {
