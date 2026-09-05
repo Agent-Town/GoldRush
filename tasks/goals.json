@@ -4430,6 +4430,46 @@
               "queuedAt": "2026-09-05",
               "mergeHash": "9b7d3eef68367ca02001a070ca9457420edd1d12",
               "mergedAt": "2026-09-05"
+            },
+            {
+              "id": "renderer-count-artifacts-under-shared-atlas",
+              "title": "F-SAD-3: re-record the exact renderer texture-count artifacts the shared-atlas dedupe moved (wire-crawler-3d, wire-railcar-3d)",
+              "taskFile": "renderer-count-artifacts-under-shared-atlas.md",
+              "status": "planned",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "Wave 2 for the Claude Opus implementers (Codex out of quota): dispatch when its lane is free and drained; the master ignores its lane pre-flight for a Claude agent (the attended session resets the worktree onto main before launching)."
+            },
+            {
+              "id": "bounded-prefetch-town-halls",
+              "title": "F-PBW-2: the town bulk halls join the town priority set; the stream publishes an explicit allowance terminal state; town-stamp-mill spec follows the law",
+              "taskFile": "bounded-prefetch-town-halls.md",
+              "status": "planned",
+              "lane": "lane-b",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "Wave 2 for the Claude Opus implementers (Codex out of quota): dispatch when its lane is free and drained; the master ignores its lane pre-flight for a Claude agent (the attended session resets the worktree onto main before launching)."
+            },
+            {
+              "id": "homemaker-kept-state-init-order",
+              "title": "F-ADM-1: the Homemaker kept-state restore runs after the wave system exists (reload crash on E6)",
+              "taskFile": "homemaker-kept-state-init-order.md",
+              "status": "planned",
+              "lane": "lane-a",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "Wave 2 for the Claude Opus implementers (Codex out of quota): dispatch when its lane is free and drained; the master ignores its lane pre-flight for a Claude agent (the attended session resets the worktree onto main before launching)."
+            },
+            {
+              "id": "e10-bank-secured-claim-regression",
+              "title": "F-E10-1: bisect and fix (or re-pin per the ratified spec) the missing bank-secured-claim beat after a Preserve on the Last Claim",
+              "taskFile": "e10-bank-secured-claim-regression.md",
+              "status": "planned",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "Wave 2 for the Claude Opus implementers (Codex out of quota): dispatch when its lane is free and drained; the master ignores its lane pre-flight for a Claude agent (the attended session resets the worktree onto main before launching)."
             }
           ]
         }
