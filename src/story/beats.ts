@@ -959,6 +959,199 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 411-514, E6 at lines 837-960):
+// the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
+// (tavern-tale shape: e3-tavern-twins-defect at lines 485-494 and e6-tavern-wrangler-drinks-free
+// at lines 931-940; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second
+// narrative system. Mystery law holds: the Gazette prints what it can prove and never the meaning.
+// SPEAKER GAP (reported, not invented, the same finding ss-06 and ss-07 recorded for E5 and E6):
+// STORYBOOK lines 485-486 name five new E8 townsfolk (the moon-born child, the dome gardener, the
+// launch master, the suit fitter, the He-3 assayer). None has a processed portrait - assets/raw/
+// holds tf-moon-born-child-e8.png, tf-dome-gardener-e8.png, tf-launch-master-e8.png and
+// tf-suit-fitter-e8.png, but assets/processed/ has no tf-*-e8 entry, and src/story/speakers.ts:9-15
+// requires a processed portrait per speaker id - so adding them would render a broken portrait.
+// They are voiced here through registered speakers and named inside the lines. No speaker added.
+// Household Law (lore/canon-rules.md:19-20): the moon-born child is a minor, so the Canteen beat
+// keeps the child among the whole town and its gardener, never alone.
+// ADR-001 holds: the era's arms are light, magnets and thrown regolith. No firearms are named.
+// artKey is set only where a plate exists on disk under assets/raw/.
+export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    // lore/STORYBOOK.md:511,498
+    id: 'e8-mare-claim-arrival',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e8-mare-claim', // assets/raw/plate-contract-e8-mare-claim.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
+    lines: ['The landing burn is spent and the first dome holds. Pads on the mare flat, the crater rim premium and wide open to debris, the lava tube mouth past that.', 'Earth hangs in the sky over all of it. Outside the glass the air meter is our old dive meter with a new dial, and I trust it exactly as much.'],
+  },
+  {
+    // lore/STORYBOOK.md:511,481
+    id: 'e8-breach-drill',
+    trigger: 'contract-unlocked',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
+    lines: ['Before the second dome went up we drilled the breach, the way this town once drilled the fire brigade.', 'Gentle, thorough, and never grim. The suit fitter checked every seal twice, then stepped out of the light a minute, and nobody followed her.'],
+  },
+  {
+    // lore/STORYBOOK.md:475,476,511
+    id: 'e8-left-last',
+    trigger: 'contract-unlocked',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
+    lines: ['We could not leave before the atom and the signal were built, and we would not leave while one jack down there still glowed.', 'So we left last, the way the last one out holds the door. Nobody put that to a vote either.'],
+  },
+  {
+    // lore/STORYBOOK.md:487,511
+    id: 'e8-monument-first-water',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
+    lines: ['The Pan Monument rode up the ramp before the town did, same order we carried it up the switchback in the rain.', 'Tonight the plinth runs its first water, reclaimed and thin and bright, a ring around the pan on a world that has none.'],
+  },
+  {
+    // lore/STORYBOOK.md:512,491,473
+    id: 'e8-pan-in-regolith',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
+    lines: ['The pan works up here. Drum it dry through the moon dust and the helium flecks settle out exactly where the colour used to.', 'They printed the poster before the first shift ended: silver hair, black sky, blue Earth up, and the pan held level.'],
+  },
+  {
+    // lore/STORYBOOK.md:505,482; Gazette mystery law - the paper prints only what it can prove.
+    id: 'e8-gazette-claw-tags',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
+    lines: ['GAZETTE: A FENCE SECTION LEFT UPWARD AND LEFT A RECEIPT', 'Claw stamp, lot number, ledger line, printed neat. One lot is annotated in a looping hand and priced at zero, and this paper will not print what that means.'],
+  },
+  {
+    // lore/STORYBOOK.md:500
+    id: 'e8-far-side-probe',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e8-far-side', // assets/raw/plate-contract-e8-far-side.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-far-side',
+    lines: ['No Earth in that sky, no drones, no playbooks. Whoever walks the Far Side walks it suited and out of contact the whole way.', 'Half buried at the end of it sits a probe with no maker plate that has been recording the dark. It played our first hello back to us, a valley calling a lighthouse.'],
+  },
+  {
+    // lore/STORYBOOK.md:501,508
+    id: 'e8-low-orbit-yard',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e8-low-orbit', // assets/raw/plate-contract-e8-low-orbit.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-low-orbit',
+    lines: ['That scaffold in free fall is the Claw itself, salvaged and rebuilt into our first orbital yard. The repossessor, repossessed, and filed under assets.', 'Nothing falls up there. A lob you miss is not a miss, it is an appointment, and the handholds are the only roads.'],
+  },
+  {
+    // lore/STORYBOOK.md:502
+    id: 'e8-eclipse-reserves',
+    trigger: 'contract-unlocked',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e8-eclipse', // assets/raw/plate-contract-e8-eclipse.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-eclipse',
+    lines: ['The eclipse takes the sun mid-shift, early and unannounced the first time. Solar goes dark, the dark waves come, and the brown-out ledger rules the rest of it.', 'Bank the charge while the light is free. Reserves are love letters to your future self.'],
+  },
+  {
+    // lore/STORYBOOK.md:488,514
+    id: 'e8-baron-at-the-pad',
+    trigger: 'boss-arrival',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e8-mare-claim',
+    lines: ['The old man stood at the launch pad this morning, upright, the stopped watch on its chain. He did not warn us and he did not bless us.', 'He asked one question. "Is it enough yet?" Then he left, before an answer was possible.'],
+  },
+  {
+    // lore/STORYBOOK.md:504,506,507
+    id: 'e8-salvage-kings-claw',
+    trigger: 'boss-arrival',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e8-boss-salvage-kings-claw', // assets/raw/plate-e8-boss-salvage-kings-claw.png
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e8-mare-claim',
+    lines: ['His grandson descends in acts. Crown first, too high to reach, dropping lines with corsairs riding them down into our claim.', 'Then the winch, lifting whole buildings out of the dust with the tag already printed. Cut the lines at their anchors, break the drums mid-lift, and catch what comes back down.'],
+  },
+  {
+    // lore/STORYBOOK.md:508,514; cure-arms lexicon (lore/canon-rules.md:13-14) - the grip breaks and the crew walks.
+    id: 'e8-claw-crew-walks',
+    trigger: 'boss-defeat',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e8-mare-claim',
+    lines: ['Feet broken, crown dark, and the crew came down in good order because we left them the order to come down in.', 'The grandson took one bolt for the ledger and checked a watch that runs. He said his grandfather says she would call it not spent. She told him it never was.'],
+  },
+  {
+    // lore/STORYBOOK.md:512,486
+    id: 'e8-mass-driver-waybill',
+    trigger: 'run-return-town',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e8-mare-claim-arrival'),
+    lines: ['The mass-driver threw its first load east this shift, and I logged it on a waybill whose columns have not changed since the rail spur.', 'Seventh of my line on the same railroad, and the railroad goes to orbit now. The form is the heirloom.'],
+  },
+  {
+    // lore/STORYBOOK.md:485,513; tavern-tale shape mirrors e3-tavern-twins-defect at lines 485-494.
+    id: 'e8-tavern-river-question',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e8-breach-drill'),
+    lines: ['The moon-born child asked the whole Canteen what a river sounds like, and ten eras of townsfolk tried to answer with their hands.', 'The dome gardener settled it by morning. One square of grass in a tray, grown for that child, so your feet know.'],
+  },
+  {
+    // lore/STORYBOOK.md:481; the era's turn, stated once, in the shape of e6-vaccine-written-down at lines 918-929.
+    id: 'e8-out-of-reach',
+    trigger: 'run-return-town',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e8-claw-crew-walks'),
+    lines: ['Nothing up here wants anything. The strain never crossed the black, because the black carries no road, no water, no catalog and no signal we do not own end to end.', 'First era since the river that we are not hunted, and we kept every habit anyway. The warmth was never only for the machines.'],
+  },
+  {
+    // lore/STORYBOOK.md:478; the mystery law holds - the paper prints the window seat and declines the green.
+    id: 'e8-gazette-green-through-the-glass',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e8-out-of-reach'),
+    lines: ['GAZETTE: THE WINDOW SEAT IS NEVER EMPTY AND NEVER FOUGHT OVER', 'The tavern swears that on clear nights one stitch of the old valley shows green through the glass. No instrument confirms it, so this paper prints the seat and not the green.'],
+  },
+  {
+    // lore/STORYBOOK.md:515; the exit hook toward E9, in the shape of e5-deep-reactor-horizon at lines 819-827.
+    id: 'e8-riverward-launch',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    lines: ['The Colony Seed was built in the yard the Claw became and aimed at the red dot in the black. The town voted its name and the moon-born child won: the Riverward.', 'It left quietly. No countdown, a long burn, radio silence. We watched the dot not change, and then we all went back to work.'],
+  },
+];
+
 export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
   ? [...STORY_BEATS, ...LEDGER_STORY_BEATS]
   : [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];
