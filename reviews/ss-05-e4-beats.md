@@ -1,6 +1,6 @@
 # Review: ss-05-e4-beats — the Motor Frontier chapter as data (lane-a, Claude Opus 5 implementer, attended drain 2026-09-05)
 
-**Slice/branch/tip:** `ss-05-e4-beats` · `lane/a` · commits `ff9ed4217` (slice) + `60510114d` (ledger row) over `fccd17254` · merge: see the drain commit.
+**Slice/branch/tip:** `ss-05-e4-beats` · `lane/a` · commits `ff9ed4217` (slice) + `60510114d` (ledger row) over `fccd17254` · merge `373638978` (no-ff; the E6 merge repaired beats.ts by hand: both chapters had appended before the same trailing export and git aligned their identical structural lines as context — base + E4 block + E6 block + one trailing export).
 **Verdict:** MERGED. E4 joins E1–E3 as a chapter the human path can play (L4): 14 beats loaded when the active epoch is `epoch-4-motor`, every beat citing `lore/STORYBOOK.md` (lines 191–235), tavern tales and Gazette headlines in the E2/E3 single-table shape, mystery and LEXICON laws held, no new speakers (the chapter's mechanic, wildcatter and road boss have no portraits and are voiced by registered speakers, as `ss-04` did for the twins), `artKey` only on the five beats whose plates exist on disk.
 
 ## Evidence
