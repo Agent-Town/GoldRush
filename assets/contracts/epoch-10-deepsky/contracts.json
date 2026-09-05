@@ -67,6 +67,9 @@
       },
       "twist": {
         "secureWave": 12,
+        "harvestFreeObjective": {
+          "description": "Preserve, not extract: the last warm vent is kept alight through the Static squall. Seams stay unauthored until the E10S-4 door slice earns them on measured evidence, so this claim declares no harvest anchors and the board still opens it as itself."
+        },
         "enemyRoster": [
           {
             "id": "static_mote",
@@ -282,7 +285,12 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": { "clockTicks": 18000 },
+      "twist": {
+        "clockTicks": 18000,
+        "harvestFreeObjective": {
+          "description": "Preserve, not extract: light is held through Static squalls to re-ink one archive wing at a time, and the wings themselves yield nothing. Seams stay unauthored until the archive door slice earns them on measured evidence."
+        }
+      },
       "boardRow": {
         "name": "The Archive World",
         "ledgerBlurb": "Two ruined stack wings lead from the archive entry to a deep warning shelf.",
@@ -600,7 +608,12 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": { "clockTicks": 18000 },
+      "twist": {
+        "clockTicks": 18000,
+        "harvestFreeObjective": {
+          "description": "The ending, not a contract: dawn, one river, one center ford, one pan, no enemies and no waves. The River is door-exempt by design and never mines a seam."
+        }
+      },
       "boardRow": {
         "name": "The River",
         "ledgerBlurb": "At dawn, with no enemies and no waves, the first river waits for one pan.",
