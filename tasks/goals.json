@@ -4437,11 +4437,12 @@
               "id": "renderer-count-artifacts-under-shared-atlas",
               "title": "F-SAD-3: re-record the exact renderer texture-count artifacts the shared-atlas dedupe moved (wire-crawler-3d, wire-railcar-3d)",
               "taskFile": "renderer-count-artifacts-under-shared-atlas.md",
-              "status": "planned",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "Wave 2 for the Claude Opus implementers (Codex out of quota): dispatch when its lane is free and drained; the master ignores its lane pre-flight for a Claude agent (the attended session resets the worktree onto main before launching)."
+              "mergeHash": "5aa79c754d17b747f7e025f3f6499532b026e701",
+              "mergedAt": "2026-09-05"
             },
             {
               "id": "bounded-prefetch-town-halls",
