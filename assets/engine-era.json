@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "95c5a753be5c312889680a71c248ae8e1913c7402ef1f4a6bef58fcda1156a1f",
+  "engineHash": "a44df406ac339b817ee5c13dfcdcfb9a869ebd0cf41d91efc74043fd69967024",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -313,6 +313,12 @@
       "engineHash": "95c5a753be5c312889680a71c248ae8e1913c7402ef1f4a6bef58fcda1156a1f",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: terrain-height-triangle-sampler drain — Terrain3dClaimPilot.bakeHeightGrid samples the drawn triangles (render-side visualY only; the planar sim untouched, fingerprint spec green); every contract replays byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "a44df406ac339b817ee5c13dfcdcfb9a869ebd0cf41d91efc74043fd69967024",
+      "pinnedAt": "2026-09-05",
+      "cause": "src re-hash: homemaker-kept-state-init-order drain — HomemakerBossSystem.restoreKeptState() is called by Game after WaveSystem exists (the constructor no longer restores); E6 null floors and a played tape byte-identical (fnv1a32:0ae65b8e / 004ae8d7 / fdce1d04); same era per F-1441-3",
       "aliases": []
     }
   ],

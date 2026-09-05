@@ -4457,11 +4457,12 @@
               "id": "homemaker-kept-state-init-order",
               "title": "F-ADM-1: the Homemaker kept-state restore runs after the wave system exists (reload crash on E6)",
               "taskFile": "homemaker-kept-state-init-order.md",
-              "status": "planned",
+              "status": "merged",
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "Wave 2 for the Claude Opus implementers (Codex out of quota): dispatch when its lane is free and drained; the master ignores its lane pre-flight for a Claude agent (the attended session resets the worktree onto main before launching)."
+              "mergeHash": "c3e16ae93b1fc64f092b27110156d0aeaa26814f",
+              "mergedAt": "2026-09-05"
             },
             {
               "id": "e10-bank-secured-claim-regression",
