@@ -1,3 +1,54 @@
+// THE ADVANCE STREAM — one warm step ahead of the player, under a per-session byte allowance.
+//
+// THE STATE MACHINE (published verbatim as `canvas.dataset.assetPrefetchState`, and as the
+// `data-asset-prefetch-state` attribute an e2e spec reads). Seven values, three of them terminal:
+//
+//        enter(scene) ──▶ settling ──▶ resolving ──▶ fetching ──┐
+//                            ▲            ▲   │                 │
+//                            │            └───┘ (next target)   │
+//                            │                                  │
+//        pause()/dispose() ──┴──▶ paused          ┌─────────────┘
+//                                                 ▼
+//                        plan drained? ──yes──▶ ready      (terminal, no failures)
+//                              │                partial    (terminal, ≥1 target or fetch failed)
+//                              no
+//                              ▼
+//                     bytes >= allowance? ──yes──▶ allowance (terminal, work still queued)
+//                              │
+//                              no ──▶ keep fetching
+//
+//  settling   transient: `enter()` published the new plan; the first two rAFs have not fired yet.
+//  resolving  transient: a target's URL list is being imported+resolved (town or contract module).
+//  fetching   working: a two-file batch is in flight, or the next one is scheduled on idle.
+//  paused     NOT terminal: `pause()`/`dispose()`/a scene change stopped the stream; `enter()`
+//             resumes it. This is the only non-terminal stop, and the only one that aborts in-flight
+//             fetches.
+//  ready      TERMINAL: every target resolved and every URL of the plan completed, no failures.
+//  partial    TERMINAL: the plan drained but at least one resolve or fetch failed.
+//  allowance  TERMINAL: the per-session byte allowance (`ADVANCE_STREAM_BYTE_ALLOWANCE`, published
+//             as `assetPrefetchAllowance`) was reached with work STILL QUEUED, so the stream refused
+//             to start another batch. Distinct from `ready`/`partial` (which mean the plan finished)
+//             and from `paused` (which resumes). Only `enter()` leaves it, and only if the tab's
+//             accumulated `assetPrefetchBytes` — persisted in sessionStorage, so a reload does not
+//             refill it — is still under the allowance. F-BPTH-1: this state used to preempt the
+//             drained-plan check, so a plan that COMPLETED at or over the allowance reported an
+//             early stop; the drained-plan check now runs first and `allowance` means "stopped
+//             short", nothing else. It shipped as `budget-exhausted` in 065252649.
+//
+// A SEPARATE, SMALLER MACHINE rides alongside on `assetPrefetchTownState`: `pending` (the town's URL
+// list is not resolved yet), `partial` (resolved, not every URL completed) and `ready` (every town
+// URL completed — the cue in AssetLoading.ts:75 uses this to stay silent on an already-warm town).
+// It answers "is the town warm?" independently of which target the stream is currently on, because
+// the town is priority 1 in the menu and run scenes but absent from the plan while the player is
+// standing in it.
+//
+// THE TOWN'S PRIORITY-1 SET INCLUDES ITS BULK HALLS (stamp mill + dynamo hall) on normal
+// connections — they are the town. Save Data still trims them (townUrls below). Measured on the
+// built tree, 2026-09-05: the town costs 2,614,544 B at era 1 and at most 3,764,624 B (era 4, its
+// worst era), of which the two halls are 334,760 B / 490,268 B — 2.8%–4.1% of the 12,000,000 B
+// mobile allowance. The worst town + worst single destination is 8,394,980 B (70.0%), so the
+// allowance can never evict the halls from a shipped build.
+
 import { loadScores } from '../game/Scoreboard';
 import { readRunSuspend } from '../game/RunSuspend';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
@@ -19,6 +70,24 @@ export type AdvanceStreamTarget = {
   id: string;
   priority: 1 | 2 | 3 | 4;
 };
+
+/** Every value `assetPrefetchState` can publish. See the state machine at the top of this file. */
+export type AdvanceStreamState =
+  | 'settling'
+  | 'resolving'
+  | 'fetching'
+  | 'paused'
+  | 'ready'
+  | 'partial'
+  | 'allowance';
+
+/**
+ * The states from which the stream will not schedule another fetch on its own: the plan drained
+ * (`ready`/`partial`) or the byte allowance stopped it with work still queued (`allowance`).
+ * `paused` is NOT here — it resumes. Wait on membership of this list, never on `ready` alone, or a
+ * spec hangs the moment the allowance bites.
+ */
+export const ADVANCE_STREAM_TERMINAL_STATES: readonly AdvanceStreamState[] = ['ready', 'partial', 'allowance'];
 
 type NavigatorWithConnection = Navigator & { connection?: { saveData?: boolean } };
 type IdleWindow = Window & {
@@ -116,7 +185,7 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
   let idleHandle = 0;
   let frameHandle = 0;
   let abort: AbortController | undefined;
-  let state = 'paused';
+  let state: AdvanceStreamState = 'paused';
   let enabled = true;
   const idleWindow = window as IdleWindow;
 
@@ -171,14 +240,28 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
   const run = (ownGeneration: number) => {
     if (ownGeneration !== generation) return;
     idleHandle = 0;
+    // F-BPTH-1 — DRAINED BEFORE STOPPED-SHORT, in that order. The allowance check used to sit above
+    // this one, so a plan that fetched everything and happened to land on the allowance published
+    // the early-stop state and never `ready`: "we finished" and "we gave up" were the same word, and
+    // a spec waiting for `ready` hung on a stream that had nothing left to do. Terminal-by-completion
+    // is decided first; `allowance` below can now only mean "work still queued".
+    if (urls.length === 0 && targets.length === 0) {
+      state = failed ? 'partial' : 'ready';
+      priority = 0;
+      target = '';
+      publish();
+      return;
+    }
     // The current two-file batch may finish over budget; never start another one.
     if (enabled && bytes >= allowance) {
-      state = 'budget-exhausted';
+      state = 'allowance';
       publish();
       return;
     }
     if (urls.length === 0) {
       const next = targets.shift();
+      // Unreachable — the drained check above already returned on an empty plan — but a bare
+      // `return` here would stall the stream with nothing scheduled, so re-publish terminal.
       if (!next) {
         state = failed ? 'partial' : 'ready';
         priority = 0;

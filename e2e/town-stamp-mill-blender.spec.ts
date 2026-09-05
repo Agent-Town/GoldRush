@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { ADVANCE_STREAM_TERMINAL_STATES } from '../src/assets/AdvanceStream';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
@@ -145,17 +146,62 @@ function assertNoErrors(errors: ErrorBucket): void {
   expect(errors.pageErrors).toEqual([]);
 }
 
-test('normal connections prefetch both bulk town halls', async ({ page }) => {
+// THE LAW (bounded-prefetch-town-halls, 2026-09-05): the bulk halls are part of the TOWN's
+// priority-1 set on normal connections — they are the town — so the whole town warms before the
+// stream moves to its priority-2 destination, and Save Data alone trims them (asserted in
+// `advance-stream.spec.ts:75`). Two things changed from the pre-allowance version of this test:
+//   1. It no longer waits for `ready`. Since 065252649 the stream may also stop terminally at
+//      `allowance`, and waiting for one terminal state hangs whenever the other one happens.
+//   2. It stubs prefetch bodies. `AdvanceStream` accounts REAL response bytes, and the dev server
+//      ships the pre-diet source GLBs: the era-1 town alone is 18,049,588 B on the dev tree
+//      (`town-plate.glb` is 7,904,068 B of it) against 2,614,544 B in the built tree the players
+//      get. So on the dev tree the 12,000,000 B mobile allowance is spent six URLs into the town
+//      and the halls are never asked for — an artefact of the harness, not of the law. Same house
+//      pattern, same reason as `advance-stream.spec.ts:63-66` ("Keep the allowance out of this
+//      assertion"). The byte law itself is measured against the BUILT tree, in
+//      `artifacts/bounded-prefetch-town-halls/report.md`.
+test('normal connections prefetch both bulk town halls inside the town priority-1 set', async ({ page }) => {
   await installSeedAndWebglCounter(page);
+  const errors = collectErrors(page);
   const prefetched: string[] = [];
   page.on('request', (request) => {
-    if (request.headers()['x-gold-rush-prefetch'] === '1') prefetched.push(request.url());
+    if (request.headers()['x-gold-rush-prefetch'] === '1') prefetched.push(new URL(request.url()).pathname);
   });
+  // Keep the allowance out of this assertion: only the plan may decide what the town warms.
+  await page.route('**/*.glb', (route) => route.request().headers()['x-gold-rush-prefetch'] === '1'
+    ? route.fulfill({ contentType: 'model/gltf-binary', body: Buffer.alloc(37) })
+    : route.continue());
+
   await page.goto('/');
-  await page.waitForFunction(() => document.querySelector('canvas')?.dataset.assetPrefetchState === 'ready', undefined, { timeout: 20_000 });
-  expect(prefetched.filter((url) => /stamp-mill|dynamo-hall/.test(url)).map((url) => new URL(url).pathname)).toEqual(
+  const canvas = page.locator('#game-canvas');
+  const terminalState = async (): Promise<string> => {
+    const value = await canvas.getAttribute('data-asset-prefetch-state');
+    return ADVANCE_STREAM_TERMINAL_STATES.some((state) => state === value) ? 'terminal' : `still-running:${value}`;
+  };
+  await expect.poll(terminalState, { timeout: 20_000 }).toBe('terminal');
+  // Terminal AND complete: every town URL fetched, so the town's set was never truncated.
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'ready');
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-town-state', 'ready');
+
+  const townPaths = await page.evaluate(async () => {
+    // Indirect specifier: the dev server resolves it, TypeScript must not try to.
+    const townPath = '/src/town/TownTavernPilot.ts';
+    const { townPrefetchUrls } = await import(townPath);
+    return (townPrefetchUrls() as string[]).map((url) => new URL(url, location.href).pathname);
+  });
+  expect(townPaths.filter((path) => /stamp-mill|dynamo-hall/.test(path))).toEqual(
     expect.arrayContaining([expect.stringContaining('stamp-mill'), expect.stringContaining('dynamo-hall')]),
   );
+  expect(prefetched.filter((path) => /stamp-mill|dynamo-hall/.test(path))).toEqual(
+    expect.arrayContaining([expect.stringContaining('stamp-mill'), expect.stringContaining('dynamo-hall')]),
+  );
+  expect(townPaths.filter((path) => !prefetched.includes(path))).toEqual([]);
+  // Priority 1 means FIRST: no priority-2 destination URL may be requested before the town is done.
+  const lastTownIndex = Math.max(...townPaths.map((path) => prefetched.lastIndexOf(path)));
+  const firstDestinationIndex = prefetched.findIndex((path) => !townPaths.includes(path));
+  expect(lastTownIndex).toBeGreaterThanOrEqual(0);
+  if (firstDestinationIndex >= 0) expect(lastTownIndex).toBeLessThan(firstDestinationIndex);
+  assertNoErrors(errors);
 });
 
 test('Stamp Mill pilot is lazy, contract-valid, visual-only, and stays inside the frame-time gate', async ({ page }, testInfo) => {
