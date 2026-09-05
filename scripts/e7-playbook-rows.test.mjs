@@ -189,10 +189,12 @@ test('the era scope is the Signal bundle: no other contract grows a row, a latch
   }
 });
 
-test('HUMAN PARITY, pinned rather than papered over: the browser binds no playbook verb', () => {
+test('HUMAN PARITY: browser player and rider use the shared Signal latch and the human tape records the use', () => {
   const standingOrders = read('src/agent/StandingOrders.ts');
   const game = read('src/game/Game.ts');
   const sim = read('src/sim/HeadlessContractSim.ts');
+  const latch = read('src/systems/E7PlaybookLatch.ts');
+  const runTape = read('src/game/RunTape.ts');
 
   // The verb is public grammar.
   assert.match(standingOrders, /verb: 'PLAYBOOK_USE'; name: string/);
@@ -200,19 +202,19 @@ test('HUMAN PARITY, pinned rather than papered over: the browser binds no playbo
   // The headless door binds it.
   assert.match(sim, /playbookUse: \(name\) => this\.usePlaybook\(name\)/);
 
-  // THE GAP, stated as a source fact so it cannot rot into a false claim of parity.
-  // A browser PLAYER can already use a playbook by hand: `Game.stopPlaybookRecording` saves a tape
-  // to the shelf and `Game.startNamedPlaybookReplay` plays it, through the same two refusals and
-  // the same `BroadcastMirror.noteUse`. What the browser has NOT got is (a) this verb bound for a
-  // rider and (b) the four secure latches, which live in `HeadlessContractSim.autoSecureWaveForRun`
-  // only. So the four Signal maps decide their secure DIFFERENTLY in the two engines today, and
-  // that divergence is F-E7PB-1 in `artifacts/e7-playbook-rows/report.md`, not an oversight.
-  // The day someone binds the verb in `Game.ts`, this assertion reds and the finding must be
-  // retired in the same commit.
-  assert.equal(/bindStandingOrderFinalVerbs\([\s\S]{0,2000}?playbookUse:/.test(game), false,
-    'Game.ts now binds playbookUse: close F-E7PB-1 and update this guard in the same commit');
-  assert.equal(game.includes('playbookObjectiveAllowsSecure'), false,
-    'Game.ts now carries the playbook secure latch: close F-E7PB-1 and update this guard');
+  assert.match(game, /playbookUse: \(name: string\) => this\.useNamedPlaybookForRider\(name, playerId\)/);
+  assert.match(game, /private readonly playbookLatch = new E7PlaybookLatch\(this\.activeContract\)/);
+  assert.match(sim, /private readonly playbookLatch: E7PlaybookLatch/);
+  assert.match(game, /\|\| !this\.playbookObjectiveAllowsSecure/);
+  assert.match(sim, /\|\| !this\.playbookObjectiveAllowsSecure/);
+  for (const rule of [
+    /case 'refusal': return signals\.suppressedUses > 0/,
+    /case 'mirror': return signals\.fieldedMirrors > 0/,
+    /case 'suspended': return signals\.mutedUses > 0/,
+    /case 'relay': return this\.lit\.size > 0/,
+  ]) assert.match(latch, rule);
   assert.match(game, /this\.broadcastMirror\.noteUse\(/, 'the browser player path still reaches the mirror');
   assert.match(game, /this\.signalSuppression\.refuse\('playbooks'\)/, 'the browser player path still asks A4');
+  assert.match(runTape, /kind: 'playbook_use'/);
+  assert.match(game, /recordPlaybookUse\(playbook\)/);
 });

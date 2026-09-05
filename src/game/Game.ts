@@ -188,6 +188,7 @@ import { E9CanalSystem } from '../systems/E9CanalSystem';
 import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
+import { E7PlaybookLatch } from '../systems/E7PlaybookLatch';
 import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression } from '../systems/SignalSuppression';
 import { BroadcastMirror } from '../systems/BroadcastMirror';
 import { FRONT_HALF_WIDTH, INTERFERENCE_MUTED_REASON, INTERFERENCE_MUTED_VOICE, InterferenceFrontSystem } from '../systems/InterferenceFrontSystem';
@@ -460,6 +461,7 @@ type RunTapeReplayState = {
   winding: boolean;
   eraRefusal: { tapeHash: string; currentHash: string; tapeEra: number | null; currentEra: number } | null;
   motorActionIndex: number;
+  playedPlaybookUses: number;
 };
 
 export class Game {
@@ -505,6 +507,8 @@ export class Game {
   private playbookReplay: PlaybookReplaySession | null = null;
   private playbookReplaySlot = 0;
   private playbookReplayRequiresConsent = false;
+  private playbookReplayMuted = false;
+  private playbookUses = 0;
   private playbookPlayerHidden = false;
   private playbookSurface?: PlaybookSurface;
   private readonly mpHeroChips = new Map<string, HTMLElement>();
@@ -761,6 +765,7 @@ export class Game {
    * constructor's first line and must be handed the reader already.
    */
   private readonly broadcastMirror = BroadcastMirror.create(this.activeContract);
+  private readonly playbookLatch = new E7PlaybookLatch(this.activeContract);
   /**
    * A6 (door-completion-sheet §A6, RATIFIED 2026-08-20). ONE consumer per run, shared by the
    * player's confirm key, the agent rider's `CONTEXT_ACTION action:'recover'`, and the secure
@@ -3009,6 +3014,7 @@ export class Game {
       // `HeadlessContractSim`, reading the same standing-works register, so the two engines put
       // the front in the same place and light the same relays at the same instant.
       this.interferenceFront.update(simDelta, this.goldTargeting.allBuildings);
+      this.playbookLatch.syncProgramRelays(this.playbookReplay?.active === true, this.goldTargeting.allBuildings);
       this.syncInterferenceBand();
       // A9: the column advances on the same sim delta and in the same relative order as
       // `HeadlessContractSim` — after the standing-works register is current and ahead of the
@@ -3455,7 +3461,24 @@ export class Game {
         this.publishDiagnostics();
         return { ok: true as const };
       },
+      playbookUse: (name: string) => this.useNamedPlaybookForRider(name, playerId),
     };
+  }
+
+  private useNamedPlaybookForRider(name: string, playerId: string) {
+    const actor = this.agentRiderActor(playerId);
+    if (!actor) return { ok: false as const, reason: 'INVALID_ACTOR: the rider is not in this room.' };
+    if (this.signalSuppression.refuse('playbooks')) return { ok: false as const, reason: SIGNAL_SUPPRESSION_REASON };
+    if (this.interferenceFront.refuse('playbooks', actor.group.position)) return { ok: false as const, reason: INTERFERENCE_MUTED_REASON };
+    const text = getPlaybookText(localStorage, name);
+    if (!text) return { ok: false as const, reason: 'NOTHING_RECORDED' };
+    const parsed = parsePlaybookText(text);
+    if (!parsed.ok || parsed.playbook.contractId !== this.activeContract.id || parsed.playbook.seed !== this.runSeed
+      || parsed.playbook.difficultyPreset !== this.difficultyPreset) {
+      return { ok: false as const, reason: parsed.ok ? 'PLAYBOOK_MISMATCH' : parsed.reason };
+    }
+    this.notePlayerPlaybookUse(parsed.playbook);
+    return { ok: true as const };
   }
 
   private agentRiderActor(playerId: string): Hero | undefined {
@@ -3679,6 +3702,14 @@ export class Game {
       if (!this.state.simActive || sampledIntents.pause) return sampledIntents;
       const slot = this.playbookReplaySlot;
       const actor = this.actors[slot];
+      const muted = Boolean(actor && this.interferenceFront.muted(actor.group.position.x, actor.group.position.z));
+      if (muted) {
+        if (!this.playbookReplayMuted && actor) this.interferenceFront.refuse('playbooks', actor.group.position);
+        this.playbookReplayMuted = true;
+        this.mpActorIntents = this.actors.map((_, index) => index === 0 ? sampledIntents : intentsFromLockstepInput(null));
+        return sampledIntents;
+      }
+      this.playbookReplayMuted = false;
       // A5 gates the drone at the CALL SITE rather than inside `E7SignalSystem`, on purpose: the
       // Dead Band's suppression is a property of the whole contract and belongs in that class,
       // while the front's mute is a property of WHERE THE DRONE IS STANDING this instant. Same
@@ -3839,6 +3870,7 @@ export class Game {
     this.playbookReplay = new PlaybookReplaySession(playbook, normalizeProbeEvery(options.probeEvery));
     this.playbookReplaySlot = slot;
     this.playbookReplayRequiresConsent = false;
+    this.playbookReplayMuted = false;
     // A3: THE RECORD HALF, and it is deliberately the LAST line of the successful path. The sheet
     // records "every playbook the player/agent USES" — a use, not an attempt — so every refusal
     // above (suppressed, multiplayer, not-found, unparseable, contract/seed/difficulty mismatch,
@@ -3846,8 +3878,14 @@ export class Game {
     // not its shelf name, so renaming a habit does not launder it out of its own repeat count.
     // RECORDING is not a use: the sheet's shadow is cast by playing a tape back, and the recorder
     // path above deliberately does not call this.
-    this.broadcastMirror.noteUse({ id: playbookHash(playbook), entries: playbook.entries });
+    this.notePlayerPlaybookUse(playbook);
     return { ok: true };
+  }
+
+  private notePlayerPlaybookUse(playbook: PlaybookRecording, record = true): void {
+    this.broadcastMirror.noteUse({ id: playbookHash(playbook), entries: playbook.entries });
+    this.playbookUses += 1;
+    if (record) this.runTapeRecorder?.recordPlaybookUse(playbook);
   }
 
   private startNamedPlaybookReplay(name: string): { ok: boolean; reason?: string } {
@@ -3910,6 +3948,7 @@ export class Game {
     }
     this.playbookReplaySlot = 0;
     this.playbookReplayRequiresConsent = false;
+    this.playbookReplayMuted = false;
     this.e7SignalSystem.clearDroneDrop();
     return { ok: true };
   }
@@ -3920,6 +3959,7 @@ export class Game {
     this.playbookRecorder = null;
     this.playbookReplay = null;
     this.playbookReplayRequiresConsent = false;
+    this.playbookReplayMuted = false;
   }
 
   private playbookStatus() {
@@ -5459,6 +5499,13 @@ export class Game {
       e8Physics: this.e8PhysicsSystem.diagnostics,
       probeRecovery: this.probeRecovery.diagnostics,
       broadcastMirror: this.broadcastMirror.isDeclared ? this.broadcastMirror.diagnostics : null,
+      playbookUse: this.playbookLatch.objective === null ? null : {
+        declared: true,
+        objective: this.playbookLatch.objective,
+        objectiveMet: this.playbookObjectiveAllowsSecure,
+        uses: this.playbookUses,
+        relaysLitByProgram: this.playbookLatch.relaysLitByProgram,
+      },
       lowOrbit: this.lowOrbit.diagnostics,
       hollowCrossing: this.hollowCrossing.diagnostics,
       run: {
@@ -5869,11 +5916,20 @@ export class Game {
       // not won by outliving it: miss the deadline and the run cannot secure at any wave. True on
       // every contract that declares no discharge-able front, so nothing else moves.
       || !this.interferenceFront.objectiveAllowsSecure
+      || !this.playbookObjectiveAllowsSecure
       || !this.showroomCaptureObjective.objectiveAllowsSecure
       || (this.motorSocket !== null && !this.motorSocket.objectiveAllowsSecure)
       || (this.preserveTarget !== null && !this.preserveTarget.active)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
+  }
+
+  private get playbookObjectiveAllowsSecure(): boolean {
+    return this.playbookLatch.allowsSecure({
+      suppressedUses: this.signalSuppression.diagnostics.refusals.playbooks,
+      fieldedMirrors: this.broadcastMirror.diagnostics.squadsFielded,
+      mutedUses: this.interferenceFront.diagnostics.refusals.playbooks,
+    });
   }
 
   private preserveDiagnostics(): { hp: number; maxHp: number; alive: boolean } | null {
@@ -7066,7 +7122,7 @@ export class Game {
     const carriesEraStamp = meta?.era !== undefined || meta?.engineHash !== undefined;
     const eraRefused = carriesEraStamp
       && (!meta?.engineHash || meta.era !== engineEra.era || !engineEraIncludes(engineEra, meta.engineHash));
-    if ((hasAgentOrders && meta?.engineHash && meta.era) || eraRefused) {
+    if ((tape.inputLog.playbookUses?.length ?? 0) === 0 && ((hasAgentOrders && meta?.engineHash && meta.era) || eraRefused)) {
       this.startTrueRunTapeReplay(tape);
       return;
     }
@@ -7113,6 +7169,7 @@ export class Game {
       tape, sessions, speed: 1, skipWave: null, complete: false, hash: null, agentTape: false, divergedAtWave: null,
       trueDriver: null, snapshot: null, requestedTick: 0, requestPending: false, winding: false, eraRefusal: null,
       motorActionIndex: 0,
+      playedPlaybookUses: 0,
     };
     this.replayCameraPan.set(0, 0, 0);
     this.pendingProspectorDispatches.length = 0;
@@ -7146,6 +7203,7 @@ export class Game {
       winding: driver !== null,
       eraRefusal,
       motorActionIndex: 0,
+      playedPlaybookUses: 0,
     };
     this.mountLanternShow(tape);
     if (eraRefusal) {
@@ -7241,6 +7299,12 @@ export class Game {
     const motorActions = replay.tape.inputLog.motorActions ?? [];
     while (replay.motorActionIndex < motorActions.length && motorActions[replay.motorActionIndex]!.t === tick) {
       this.applyMotorTapeAction(motorActions[replay.motorActionIndex++]!);
+    }
+    const playbookUses = replay.tape.inputLog.playbookUses ?? [];
+    while (replay.playedPlaybookUses < playbookUses.length
+      && playbookUses[replay.playedPlaybookUses]!.atTick <= tick) {
+      this.notePlayerPlaybookUse(playbookUses[replay.playedPlaybookUses]!.playbook, false);
+      replay.playedPlaybookUses += 1;
     }
     for (const [slot, session] of replay.sessions) {
       const actor = this.actors[slot];
@@ -8199,6 +8263,8 @@ export class Game {
     // A fresh run must never inherit a live tape (playbook sessions are
     // per-run; the recorder would otherwise capture across a world reset).
     this.abortPlaybookSessions();
+    this.playbookLatch.reset();
+    this.playbookUses = 0;
     const deferMetaRecap =
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.timeAlive = 0;

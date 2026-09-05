@@ -2,6 +2,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 
 // E7 PLAYBOOK ROWS — the both-engine proof and the human-parity pin.
 //
@@ -16,10 +17,9 @@ import { expect, test, type Page } from '@playwright/test';
 //      stream the Node guard uses, reaches the same playbook digest and the same event-log hash
 //      the Node ride reaches (the table is written to artifacts/);
 //   2. every one of the four boots plain, with zero console/page errors, on desktop and 390px;
-//   3. HUMAN PARITY, measured rather than assumed: a plain browser boot of each Signal map gives a
-//      PLAYER the E7 playbook loop (record -> name -> replay, through the same two refusals and the
-//      same mirror) but gives a RIDER no `PLAYBOOK_USE` and no playbook secure latch, because
-//      binding either is a `Game.ts` change this slice's firewall forbids. F-E7PB-1.
+//   3. HUMAN PARITY, measured rather than assumed: a plain browser boot gives the PLAYER the E7
+//      playbook loop (record -> name -> replay) through the shared signal latch, while an assay
+//      replay proves the recorded use input survives the human tape boundary.
 const ARTIFACTS = 'artifacts/e7-playbook-rows';
 // The harness page boots a module context the browser can `import()` the sim from; passed as a
 // value so tsc does not try to resolve it relative to this file.
@@ -101,6 +101,30 @@ function collectErrors(page: Page): string[] {
   page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`); });
   page.on('pageerror', (error) => errors.push(`pageerror: ${error.message}`));
   return errors;
+}
+
+async function movePlayerTo(page: Page, target: { x: number; z: number }): Promise<void> {
+  for (const axis of ['x', 'z'] as const) {
+    for (let pass = 0; pass < 4; pass += 1) {
+      const current = await page.evaluate((key) => window.__THREE_GAME_DIAGNOSTICS__!.player.position[key], axis);
+      if (Math.abs(current - target[axis]) < 1.2) break;
+      const increasing = current < target[axis];
+      const code = axis === 'x' ? (increasing ? 'KeyD' : 'KeyA') : (increasing ? 'KeyS' : 'KeyW');
+      await page.keyboard.down(code);
+      try {
+        await page.waitForFunction(
+          ({ key, value, increasing }) => increasing
+            ? window.__THREE_GAME_DIAGNOSTICS__!.player.position[key] >= value - 0.8
+            : window.__THREE_GAME_DIAGNOSTICS__!.player.position[key] <= value + 0.8,
+          { key: axis, value: target[axis], increasing },
+          { timeout: 20_000 },
+        );
+      } finally {
+        await page.keyboard.up(code);
+      }
+      if (pass === 3) throw new Error(`player did not reach ${axis}=${target[axis]}`);
+    }
+  }
 }
 
 /**
@@ -191,33 +215,76 @@ test('every Signal map still boots clean for a player, and the E7 board is where
   expect(errors).toEqual([]);
 });
 
-test('HUMAN PARITY, measured: the plain browser gives the PLAYER the loop and the RIDER no verb (F-E7PB-1)', async ({ page }) => {
+test('HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch', async ({ page }) => {
   test.setTimeout(180_000);
   const errors = collectErrors(page);
-  await page.goto('/?epoch=epoch-7-signal&contract=e7-relay-valley&seed=e7-parity-plain');
+  await page.addInitScript(({ key }) => localStorage.setItem(key, JSON.stringify({
+    version: 1,
+    tracks: { territory: 0, science: 0, hero: 0, agent: 2 },
+  })), { key: META_PROGRESS_KEY });
+  await page.goto('/?epoch=epoch-7-signal&contract=e7-relay-valley&seed=e7-parity-plain&nolevel&nokill');
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId !== undefined);
   const briefing = page.getByTestId('contract-briefing');
   if (await briefing.isVisible()) await page.getByTestId('contract-briefing-dismiss').click();
 
+  const seam = await page.evaluate(() => {
+    const sites = window.__THREE_GAME_DIAGNOSTICS__!.harvestVisuals!.seams;
+    return sites.slice(1).reduce((best, candidate) => Math.hypot(candidate.x + 45, candidate.z - 42) < Math.hypot(best.x + 45, best.z - 42) ? candidate : best, sites[0]!);
+  });
+  await movePlayerTo(page, seam);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.economy.gold), { timeout: 15_000 }).toBeGreaterThanOrEqual(25);
+
+  await page.getByTestId('playbook-toggle').click();
+  await page.getByTestId('playbook-name').fill('Relay Patrol');
+  await page.getByTestId('playbook-record').click();
+  await page.getByTestId('playbook-toggle').click();
+  await movePlayerTo(page, { x: RELAY_R1_PAD.x, z: RELAY_R1_PAD.z + 2 });
+  await page.keyboard.press('KeyB');
+  await page.keyboard.press('Digit1');
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.ghostValid)).toBe(true);
+  await page.keyboard.press('Enter');
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.buildables.find(({ id }) => id === 'sentry_beacon')?.count ?? 0)).toBe(1);
+  if (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.mode)) await page.keyboard.press('KeyB');
+  await page.getByTestId('playbook-toggle').click();
+  await page.getByTestId('playbook-record').click();
+  await page.getByTestId('playbook-toggle').click();
+  await page.getByTestId('playbook-toggle').click();
+  await page.getByTestId('playbook-replay-Relay Patrol').click();
+  await expect.poll(() => page.evaluate(() => (window.__THREE_GAME_DIAGNOSTICS__ as unknown as { playbookUse: { objectiveMet: boolean } }).playbookUse.objectiveMet)).toBe(true);
+
   const plain = await page.evaluate(() => ({
-    // The PLAYER's half of the loop is present in a plain boot: the shelf-and-replay surface the
-    // Exchange publishes, and the jack-board the era's milestones light.
-    board: Boolean(document.querySelector('[data-testid="e7-jack-board"]')),
-    // The RIDER's half is not: no headless playbook row reaches this engine's diagnostics, because
-    // `Game.ts` composes no `playbookUse` handler and no playbook secure latch.
-    playbookUseDiagnostics: (window.__THREE_GAME_DIAGNOSTICS__ as unknown as Record<string, unknown>).playbookUse ?? null,
+    row: (window.__THREE_GAME_DIAGNOSTICS__ as unknown as { playbookUse: { objective: string; objectiveMet: boolean; uses: number; relaysLitByProgram: string[] } }).playbookUse,
+    litJacks: window.__THREE_GAME_DIAGNOSTICS__!.e7Signal.jacks.filter((jack) => jack.state === 'lit').map((jack) => jack.id),
     testSeam: typeof window.__GR_TEST__,
   }));
-  expect(plain.board).toBe(true);
-  // THE GAP, stated as a measurement. A browser PLAYER can already record, name and replay a
-  // playbook by hand, and that path runs the same two refusals and the same `BroadcastMirror`.
-  // What the browser has NOT got is the rider verb and the four secure latches, which live in
-  // `HeadlessContractSim` only. So the four Signal maps decide their secure differently in the two
-  // engines today. Closing it is a `Game.ts` change this slice's firewall forbids; the corrective
-  // is on the desk in BACKLOG. This assertion is the change detector: the day the browser composes
-  // the row it goes red, and it SHOULD, because that is the day this row can say "parity".
-  expect(plain.playbookUseDiagnostics).toBeNull();
+  expect(plain.row).toMatchObject({ objective: 'relay', objectiveMet: true, uses: 1, relaysLitByProgram: ['relay-site-r1'] });
+  expect(plain.litJacks).toContain('ford-table');
   expect(plain.testSeam).toBe('undefined');
-  console.log(`[e7-parity] plain boot board=${plain.board} riderPlaybookRow=${JSON.stringify(plain.playbookUseDiagnostics)}`);
+  console.log(`[e7-parity] plain player use=${JSON.stringify(plain.row)} lit=${JSON.stringify(plain.litJacks)}`);
+  expect(errors).toEqual([]);
+});
+
+test('the human run tape records and assay-replays a player playbook use', async ({ page }) => {
+  test.setTimeout(180_000);
+  const errors = collectErrors(page);
+  await page.goto('/?debug&epoch=epoch-7-signal&contract=e7-relay-valley&seed=e7-human-tape&nowaves&nolevel&nopause');
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__));
+  const briefing = page.getByTestId('contract-briefing');
+  if (await briefing.isVisible()) await page.getByTestId('contract-briefing-dismiss').click();
+  expect(await page.evaluate(() => window.__GR_TEST__!.playbook.startRecording({
+    script: [{ t: 0, mx: 1, my: 0, a: [] }, { t: 5, mx: 0, my: 0, a: [] }],
+  }))).toMatchObject({ ok: true });
+  await page.evaluate(() => window.__GR_TEST__!.advanceSim(1));
+  expect(await page.evaluate(() => window.__GR_TEST__!.playbook.stopRecording('Assay Patrol'))).toMatchObject({ ok: true, saved: true });
+  expect(await page.evaluate(() => window.__GR_TEST__!.playbook.startReplay({ name: 'Assay Patrol' }))).toMatchObject({ ok: true });
+  await page.evaluate(() => window.__GR_TEST__!.advanceSim(1));
+  await page.evaluate(() => window.__GR_TEST__!.endRunForTest());
+  const tape = await page.evaluate(() => window.__GR_TEST__!.runTape.list()[0]!);
+  expect(tape.inputLog.playbookUses).toHaveLength(1);
+  expect(tape.inputLog.playbookUses?.[0]).toMatchObject({ kind: 'playbook_use', playbook: { name: 'Assay Patrol' } });
+
+  await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
+  await page.goto(`/?debug&assayReplay&replay=${tape.id}&contract=${tape.contract}&seed=${tape.seed}&difficulty=${tape.difficulty}`);
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__ as unknown as { playbookUse?: { uses: number } })?.playbookUse?.uses === 1);
   expect(errors).toEqual([]);
 });
