@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "32d89821dc8d566aa04cb735add6fbe5a75d76613fdd47d7453e02d0a3e627cc",
+  "engineHash": "e5c6080917f508cce5dc910af92b8a50b1b2e302a35235283aa35f2daac0cb9a",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -367,6 +367,12 @@
       "engineHash": "32d89821dc8d566aa04cb735add6fbe5a75d76613fdd47d7453e02d0a3e627cc",
       "pinnedAt": "2026-09-06",
       "cause": "src re-hash: the testing-build board unlock control drain (ContractUnlock wrapper + TownScene chapter curtain behind a per-profile flag; unlock predicates byte-identical; statically dead in the E1 release bundle; the sim and every replay unchanged); same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "e5c6080917f508cce5dc910af92b8a50b1b2e302a35235283aa35f2daac0cb9a",
+      "pinnedAt": "2026-09-06",
+      "cause": "src re-hash: e6-picnic-thirty-second-death drain — the Picnic briefing block gains the loss condition and the hold rules from the published three_stake_hold rule (assets/contracts text only; both idle floors and the receipt-class prover hash byte-identical, every replay unchanged); same era per F-1441-3",
       "aliases": []
     }
   ],
