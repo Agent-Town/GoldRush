@@ -4357,11 +4357,12 @@
               "id": "terrain-height-triangle-sampler",
               "title": "F-ASTRA-10: visualY samples the drawn triangles (diagonal from the index buffer); centroid discrepancy 0",
               "taskFile": "terrain-height-triangle-sampler.md",
-              "status": "planned",
+              "status": "merged",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+              "mergeHash": "cf91fe5e9f903338c70c95b6c4db35152f729b9f",
+              "mergedAt": "2026-09-05"
             },
             {
               "id": "landmark-lighting-calibration",
