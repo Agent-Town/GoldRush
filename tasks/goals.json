@@ -4404,11 +4404,12 @@
               "id": "perf-optimization-survey",
               "title": "Owner 2026-09-05: a gpt-6-astra xhigh SURVEY measuring frame, sim, delivery and memory per map (36 contracts + town), ranking the wins and proposing the fix ladder; no game code changes",
               "taskFile": "perf-optimization-survey.md",
-              "status": "queued",
+              "status": "building",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "queuedAt": "2026-09-05"
+              "queuedAt": "2026-09-05",
+              "note": "Fourth dispatch (codex xhigh, 21:20) died at 41 min / 236k tokens on \"Selected model is at capacity\"; the WIP (instruments + raw evidence + working report) is salvage-committed on lane/b; continued by a Claude Opus 5 agent (owner: Opus for implementation) with load-aware sampling."
             },
             {
               "id": "lantern-true-world-reel-2",
