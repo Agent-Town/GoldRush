@@ -40,9 +40,9 @@ function assertNoErrors(errors: ErrorBucket): void {
  * once-per-profile first-boot marker can be observed across two boots of the same profile.
  * Playwright hands every test a fresh context, so there is nothing to clear.
  */
-async function seedProfile(page: Page, options: { agentTrack?: number } = {}): Promise<void> {
+async function seedProfile(page: Page, options: { agentTrack?: number; scienceTrack?: number } = {}): Promise<void> {
   await page.addInitScript(
-    ({ profileKey, townKey, talesKey, metaKey, agentTrack }) => {
+    ({ profileKey, townKey, talesKey, metaKey, agentTrack, scienceTrack }) => {
       if (localStorage.getItem(profileKey)) return;
       const state: ProfileState = {
         version: 2,
@@ -63,7 +63,7 @@ async function seedProfile(page: Page, options: { agentTrack?: number } = {}): P
       localStorage.setItem(talesKey, '1');
       localStorage.setItem(
         metaKey,
-        JSON.stringify({ version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: agentTrack ?? 0 } }),
+        JSON.stringify({ version: 1, tracks: { territory: 0, science: scienceTrack ?? 0, hero: 0, agent: agentTrack ?? 0 } }),
       );
     },
     {
@@ -72,6 +72,7 @@ async function seedProfile(page: Page, options: { agentTrack?: number } = {}): P
       talesKey: profileDataKey('robin', STORY_TALES_STORAGE_KEY),
       metaKey: profileDataKey('robin', META_PROGRESS_KEY),
       agentTrack: options.agentTrack ?? 0,
+      scienceTrack: options.scienceTrack ?? 0,
     },
   );
 }
@@ -264,5 +265,41 @@ test('securing a plain-boot Claim promotes the rung and a research pick crosses 
     await expect(page.getByTestId('story-beat-card')).toContainText('The first mark matters.');
   }
   await shot(page, testInfo, 'science-first-pick');
+  assertNoErrors(errors);
+});
+
+test('a second rung and a fourth science step reach the last three E1 beats', async ({ page }, testInfo) => {
+  test.setTimeout(240_000);
+  // One rung and two science steps already banked, so this ride's secure lands rung 2 and its
+  // research pick lands science step 4 — the thresholds the remaining three beats are keyed to
+  // (beats.ts:117 deputy-trusted-routine >= 2, :135 science-mastery >= 3, :144 baron-shadow >= 4).
+  await seedProfile(page, { agentTrack: 1, scienceTrack: 2 });
+  await recordSignals(page);
+  const errors = collectErrors(page);
+
+  await bootTheClaim(page, 'ss-emit-thresholds', 1.5);
+  await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 90_000 });
+
+  const promotions = (await signalsOfType(page, 'rung-promotion')) as { type: 'rung-promotion'; level: number }[];
+  expect(promotions.map((signal) => signal.level)).toEqual([2]);
+  await waitForBeat(page, 'deputy-trusted-routine', 90_000);
+  if (await beatOnScreen(page, 'deputy-trusted-routine')) {
+    await expect(page.getByTestId('story-beat-card')).toContainText('Trusted routine unlocked.');
+    await shot(page, testInfo, 'deputy-trusted-routine');
+  }
+
+  await page.getByTestId('bank-secured-claim').click();
+  await expect(page.getByTestId('research-card-0')).toBeVisible({ timeout: 20_000 });
+  await page.getByTestId('research-card-0').click();
+
+  const thresholds = (await signalsOfType(page, 'science-threshold')) as { type: 'science-threshold'; threshold: number }[];
+  expect(thresholds.map((signal) => signal.threshold)).toEqual([4]);
+  await waitForBeat(page, 'science-mastery', 90_000);
+  if (await beatOnScreen(page, 'science-mastery')) await shot(page, testInfo, 'science-mastery');
+  await waitForBeat(page, 'baron-shadow', 90_000);
+  if (await beatOnScreen(page, 'baron-shadow')) {
+    await expect(page.getByTestId('story-beat-card')).toContainText('An oxblood coat asked after your claim.');
+    await shot(page, testInfo, 'baron-shadow');
+  }
   assertNoErrors(errors);
 });
