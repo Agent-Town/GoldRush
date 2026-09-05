@@ -64,7 +64,7 @@ Removing the exclusion at `src/town/TownTavernPilot.ts:49` (`.filter(([id]) => i
 
 **NO changes to:**
 - `src/assets/AdvanceStream.ts` — the prefetch policy is a ratified owner directive and the subject of this measurement. If you believe it is wrong, that is a FINDING for your report, not an edit.
-- `e2e/asset-diet.spec.ts` — **explicitly out of scope by the F-1167-1 row's own warning.** Its `townResponseBytes < 25_000_000` budget (`e2e/asset-diet.spec.ts:101`, in "honest town and claim cues appear while GLBs are throttled and leave at ready") is a separate, real regression. Removing the exclusion adds two more prefetched models and may push it further red: **observe and report the number, do not fix it and do not re-pin it.**
+- `e2e/asset-diet.spec.ts` — **explicitly out of scope by the F-1167-1 row's own warning.** Its `townResponseBytes < 25_000_000` budget (`e2e/asset-diet.spec.ts:256`, in "town cue-window budget through player entry" — the 2026-09-05 deploy-probe cue split moved the budget assertion out of the old "honest town and claim cues…" test into this one) is a separate, real regression. Removing the exclusion adds two more prefetched models and may push it further red: **observe and report the number, do not fix it and do not re-pin it.**
 - The specs' `?terrain2d` helper default, their `!url.search` collector filter, and their `page.goto('/')` boot — these are correct for the town phase (see Why). Changing them would suppress the prefetch and make the specs test a configuration no player is in, which is the opposite of the owner's ruling.
 - Sim semantics; any other file under `src/`; any other `e2e/*.spec.ts`; `playwright.config.ts`; `package.json`; `tasks/**`; `scripts/**`.
 
