@@ -652,6 +652,240 @@ function preparePanorama(model: THREE.Object3D): void {
 const LANDMARK_EMISSIVE_DEFAULT = 3;
 const LANDMARK_EMISSIVE: Record<string, number> = { 'the-claim': 1.45, 'e2-hill-mine': 1.45, 'e2-trestle': 1.5, 'e2-pressure-garden': 1.45, 'e2-incline': 1.45 };
 
+/**
+ * F-ASTRA-9, THE CALIBRATION (2026-09-05, owner: "Ok, then lets have it fix these findings.").
+ *
+ * Astra measured the defect as a RELATIONSHIP, not a number: "Most daylight landmarks therefore
+ * illuminate themselves while surrounding terrain responds to the sun." The numbers above are that
+ * relationship written down — the atlas is routed into EMISSION, so at 3 a body emits roughly three
+ * times its own albedo on top of whatever the sun gives it, and the low sun models nothing on it.
+ *
+ * The reference rig (`e2e/landmark-brightness.spec.ts`, "reference rig") measures the three
+ * families that share this rig in one frame — terrain (no emissive, the reference), landmark, and
+ * the unlit hero sprite (the ceiling). Measured on `25a3b25a7`, desktop, landmark/terrain median
+ * luminance:
+ *
+ *   Mare Claim (emissive 3)      4.72   <- the finding, quantified
+ *   The Claim  (emissive 1.45)   1.04
+ *   Hill Mine  (1.45 / roof 2)   0.72
+ *   Night Shift (NEVER painted)  0.90   <- the control: what a body reads at when only the rig lights it
+ *
+ * Night Shift is the control because `loadMount` skips `keepLandmarkPaintReadable` on it entirely,
+ * so its bodies have only the GLB's own emissive and answer the rig alone — and they sit slightly
+ * BELOW the ground they stand on, which is what a lit body does. That is the shape this calibration
+ * aims at: the whole-body emissive becomes a small INK LIFT that keeps the illustrated paint off
+ * the floor, not the body's light source, with Astra's ceiling of 0.6 as a hard cap.
+ *
+ * THE NUMBER IS MEASURED, NOT CHOSEN — AND THE READABILITY FLOOR, NOT THE CEILING, SET IT. Sweeping
+ * one forced intensity across every mount (the rig's `?lmemissive=` dial, desktop, same probes)
+ * separates the two terms: the SUN's share of what the body renders at is the lit value at emissive
+ * 0 over the value at the arm.
+ *
+ *   arm            0     0.20    0.30    0.45    0.60    legacy(3)
+ *   Mare Claim   100%     63%     54%     46%     40%        18%   <- authored 3, the worst case
+ *   The Claim    100%     68%     59%     52%     48%        37%
+ *
+ * By that measure alone 0.30 would win — the highest lift at which the sun is still the majority
+ * contributor everywhere. IT WAS TRIED AND IT BROKE A READABILITY LAW. `e2e/map-census.spec.ts`
+ * probes the first mount of all 43 contracts and fails under median luminance 0.06; a FULL 47-test
+ * run at 0.30 dropped FOUR dark-bodied maps under it (e3-moth-season 0.044, e6-glow-mesa 0.051,
+ * e6-picnic 0.054, e2-pressure-garden 0.053) while the same run on the pre-change tree was clean,
+ * so the regression was this calibration's and not the board's. The bodies that break are the ones
+ * whose atlas is already dark — moth season's watch gate renders 0.0445 with NO emissive at all,
+ * against a 0.93 salt-flat ground — and a lift proportional to a global default gives the darkest
+ * paint the least help, exactly where it is needed most.
+ *
+ * So the default is 0.45: a 6.7x cut from the legacy 3, under Astra's ceiling of 0.6, moving the
+ * worst map from 18% sun to 46%, and keeping every daylight body under the unlit hero sprite in the
+ * same frame — at emissive 3 the buildings out-shone her, which is the other way of saying a
+ * painted building had stopped behaving like a lit object.
+ *
+ * AND FOR FOUR MAPS NO VALUE UNDER THE CEILING WORKS AT ALL. The full census at 0.45 reds the same
+ * four; the rig's sweep says why — moth season's watch gate reads 0.0445 at emissive 0, 0.0512 at
+ * 0.30, 0.0557 at 0.45 and 0.0588 at 0.60, so the whole legal range moves it by a hundredth and the
+ * floor stays out of reach. Their paint, not their lighting, is the defect, and F-ASTRA-1 says the
+ * same thing about these atlases ("large areas become nearly uniform grey or rust ... Restore
+ * material and value separation"). Lighting cannot cure a dark atlas without becoming its light
+ * source again, which IS the finding. So those contracts are EXEMPT and keep their authored lift
+ * until their atlas is re-graded; the calibration lands on the other 39.
+ *
+ * THE TABLE ABOVE IS KEPT AS A RELATIVE GRADE. Three signed-off shifts tuned those numbers against
+ * each other (the baron's cold fort under its warm banners, hill mine's shouting roof, the trestle
+ * pair) and F-BHM-1 is the scar from silently resetting them. So the authored value is divided by
+ * the legacy default to recover the grade the shift intended, and the grade is re-hung on the
+ * calibrated default — the ORDER between mounts is preserved exactly, only the scale moves. The
+ * TINT half of each of those shifts (`material.color.multiply(tint)`, the baron's wet iron, hill
+ * mine's oxide roof) is untouched by this change and still does its work on the diffuse.
+ */
+const LANDMARK_EMISSIVE_WHOLE_BODY_MAX = 0.6;
+/** The calibrated whole-body ink lift: what the legacy default of 3 becomes. */
+const LANDMARK_EMISSIVE_CALIBRATED_DEFAULT = 0.45;
+/**
+ * The paint must not go to mud on a body whose shift graded it far down. Documented as a guard, not
+ * as tuning: the lowest authored value in the table is 1.28, which lands at 0.192, so as of this
+ * commit the floor binds on NOTHING. It exists so a future grade below ~0.8 cannot silently reach
+ * zero and leave a body with no lift at all.
+ */
+const LANDMARK_EMISSIVE_WHOLE_BODY_MIN = 0.12;
+/**
+ * Emissive windows and teal systems keep their glow: those are UNLIT paint objects
+ * (`dressLandmark`'s `MeshBasicMaterial` lamp quads, the night pools' shader term, the water
+ * emissive), none of which route through this function — the cap below only ever touches a body
+ * whose own diffuse atlas was being used as its light source.
+ */
+/**
+ * Contracts whose landmark atlas is too dark for the sun to carry: measured, each one reds
+ * `e2e/map-census.spec.ts`'s 0.06 landmark-readability floor at EVERY legal calibrated lift on a
+ * full 47-test run, while the pre-change tree is clean. They keep their authored emissive until
+ * F-ASTRA-1's value separation reaches their atlas. Membership is a MEASUREMENT, not a taste: a map
+ * leaves this list the moment a full census run clears the floor without it.
+ */
+const LANDMARK_EMISSIVE_READABILITY_EXEMPT = new Set([
+  'e2-pressure-garden',
+  'e3-moth-season',
+  'e6-glow-mesa',
+  'e6-picnic',
+]);
+
+function calibratedLandmarkIntensity(authored: number, contractId: string): number {
+  const dials = lightingDials();
+  if (dials.mode === 'legacy') return authored;
+  if (dials.emissive !== undefined) return dials.emissive;
+  if (LANDMARK_EMISSIVE_READABILITY_EXEMPT.has(contractId)) return authored;
+  const grade = authored / LANDMARK_EMISSIVE_DEFAULT;
+  const lift = LANDMARK_EMISSIVE_CALIBRATED_DEFAULT * grade;
+  return +THREE.MathUtils.clamp(lift, LANDMARK_EMISSIVE_WHOLE_BODY_MIN, LANDMARK_EMISSIVE_WHOLE_BODY_MAX).toFixed(4);
+}
+
+/**
+ * THE REFERENCE-RIG DIALS (harness, not gameplay). Every dial is ABSENT by default, so a plain boot
+ * takes the calibrated path and no branch below runs. They exist because a look change the owner
+ * judges has to be reversible in the browser he is holding, without a rebuild:
+ *
+ *   ?lighting=legacy   every landmark back to its authored self-lit emissive (the pre-2026-09-05
+ *                      render) and back to DoubleSide — the A/B, and the shape of the REVERT
+ *   ?lmemissive=<n>    force one whole-body emissive intensity on every mount (the sweep)
+ *   ?lmcull=off        keep DoubleSide on verified-closed bodies (isolates the culling from the paint)
+ *
+ * Read from the live search string rather than cached at module load so a harness can navigate
+ * between arms; the parse is once per body install, not per frame.
+ */
+type LightingDials = { mode: 'calibrated' | 'legacy'; emissive: number | undefined; cull: boolean };
+
+function lightingDials(): LightingDials {
+  if (typeof window === 'undefined') return { mode: 'calibrated', emissive: undefined, cull: true };
+  const params = new URLSearchParams(window.location.search);
+  const emissive = Number(params.get('lmemissive'));
+  return {
+    mode: params.get('lighting') === 'legacy' ? 'legacy' : 'calibrated',
+    emissive: params.has('lmemissive') && Number.isFinite(emissive) && emissive >= 0 ? emissive : undefined,
+    cull: params.get('lmcull') !== 'off' && params.get('lighting') !== 'legacy',
+  };
+}
+
+/**
+ * F-ASTRA-9, THE CULLING. Astra: "All 443 material records scanned in pilot GLBs were double-sided.
+ * That is justified for some sheets and panoramas, but unnecessary for many closed buildings...
+ * Enable backface culling on verified closed meshes, not through a global toggle."
+ *
+ * VERIFIED means two conditions, both measured on the geometry that actually loaded:
+ *  1. every undirected edge is shared by exactly two triangles — welded by POSITION, because a GLB
+ *     splits vertices at UV and normal seams, so raw indices would call every seam an open edge and
+ *     no body would ever qualify;
+ *  2. the signed volume is positive, i.e. the winding really is outward. A closed shell with
+ *     inverted winding would VANISH under FrontSide, which is exactly the failure mode a global
+ *     toggle produces and the reason this is a per-mesh verdict.
+ *
+ * A material is only culled when EVERY mesh that shares it passed — GLB materials are shared
+ * instances that survive a re-install, so one sheet in a pack keeps the whole material double-sided.
+ * The original side is banked on the material so `?lighting=legacy` and a re-install restore it.
+ */
+type MeshClosure = { closed: boolean; reason: 'closed' | 'open-edges' | 'inverted-winding' | 'no-index-or-position' };
+
+function classifyMeshClosure(geometry: THREE.BufferGeometry): MeshClosure {
+  const cached = geometry.userData.landmarkClosure as MeshClosure | undefined;
+  if (cached) return cached;
+  const verdict = ((): MeshClosure => {
+    const position = geometry.getAttribute('position');
+    if (!position) return { closed: false, reason: 'no-index-or-position' };
+    const count = geometry.index?.count ?? position.count;
+    if (count < 3 || count % 3 !== 0) return { closed: false, reason: 'no-index-or-position' };
+    // Weld by quantised position: 1e-4 is far below the smallest feature in these bodies (metres)
+    // and far above float32 noise on a 64 m map.
+    const weld = new Map<string, number>();
+    const welded = new Int32Array(position.count);
+    const points: number[] = [];
+    for (let index = 0; index < position.count; index += 1) {
+      const x = position.getX(index);
+      const y = position.getY(index);
+      const z = position.getZ(index);
+      const key = `${Math.round(x * 1e4)},${Math.round(y * 1e4)},${Math.round(z * 1e4)}`;
+      let id = weld.get(key);
+      if (id === undefined) {
+        id = points.length / 3;
+        weld.set(key, id);
+        points.push(x, y, z);
+      }
+      welded[index] = id;
+    }
+    const at = (slot: number): number => welded[geometry.index ? geometry.index.getX(slot) : slot]!;
+    const edges = new Map<number, number>();
+    const vertexCount = points.length / 3;
+    let volume = 0;
+    for (let slot = 0; slot < count; slot += 3) {
+      const a = at(slot);
+      const b = at(slot + 1);
+      const c = at(slot + 2);
+      if (a === b || b === c || a === c) continue; // a degenerate triangle has no surface to face
+      for (const [from, to] of [[a, b], [b, c], [c, a]] as const) {
+        const key = Math.min(from, to) * vertexCount + Math.max(from, to);
+        edges.set(key, (edges.get(key) ?? 0) + 1);
+      }
+      const ax = points[a * 3]!, ay = points[a * 3 + 1]!, az = points[a * 3 + 2]!;
+      const bx = points[b * 3]!, by = points[b * 3 + 1]!, bz = points[b * 3 + 2]!;
+      const cx = points[c * 3]!, cy = points[c * 3 + 1]!, cz = points[c * 3 + 2]!;
+      volume += (ax * (by * cz - bz * cy) - ay * (bx * cz - bz * cx) + az * (bx * cy - by * cx)) / 6;
+    }
+    for (const shared of edges.values()) if (shared !== 2) return { closed: false, reason: 'open-edges' };
+    if (volume <= 0) return { closed: false, reason: 'inverted-winding' };
+    return { closed: true, reason: 'closed' };
+  })();
+  geometry.userData.landmarkClosure = verdict;
+  return verdict;
+}
+
+type ClosureCensus = { id: string; meshes: number; closed: number; open: number; culled: number; doubleSided: number; reasons: Record<string, number> };
+
+function cullVerifiedClosedMeshes(model: THREE.Object3D, mountId: string): ClosureCensus {
+  const census: ClosureCensus = { id: mountId, meshes: 0, closed: 0, open: 0, culled: 0, doubleSided: 0, reasons: {} };
+  const verdictPerMaterial = new Map<THREE.Material, boolean>();
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh;
+    if (!mesh.isMesh || mesh.userData.landmarkContactShadow) return;
+    const closure = classifyMeshClosure(mesh.geometry);
+    census.meshes += 1;
+    census[closure.closed ? 'closed' : 'open'] += 1;
+    census.reasons[closure.reason] = (census.reasons[closure.reason] ?? 0) + 1;
+    for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+      verdictPerMaterial.set(material, (verdictPerMaterial.get(material) ?? true) && closure.closed);
+    }
+  });
+  const cull = lightingDials().cull;
+  for (const [material, closed] of verdictPerMaterial) {
+    const banked = material.userData.landmarkBaseSide as THREE.Side | undefined;
+    const original = banked ?? material.side;
+    material.userData.landmarkBaseSide = original;
+    const next = closed && cull ? THREE.FrontSide : original;
+    if (material.side !== next) {
+      material.side = next;
+      material.needsUpdate = true;
+    }
+    if (next === THREE.FrontSide) census.culled += 1;
+    else census.doubleSided += 1;
+  }
+  return census;
+}
+
 function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
   const dressing = CONTRACT_LANDMARK_DRESSING[contractId]?.[mountId];
   if (!dressing) return;
@@ -692,7 +926,7 @@ function dressLandmark(model: THREE.Object3D, contractId: string, mountId: strin
  * the dataset published the TABLE's number rather than the material's. It now publishes the
  * material's (see terrain3dPilotLandmarkMaterials).
  */
-function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint = DEFAULT_LANDMARK_PAINT): void {
+function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint = DEFAULT_LANDMARK_PAINT, contractId = ''): void {
   // An untinted body must not even round-trip its colour through getHex/setHex —
   // that quantises to 8 bits per channel, and every map except e1-baron is
   // supposed to come out of here byte-identical to before this seam existed.
@@ -711,7 +945,11 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     }
     material.emissive.set(paint.tint);
     material.emissiveMap = material.map;
-    material.emissiveIntensity = paint.intensity;
+    // The authored number is banked so the dataset can publish BOTH — the grade the beauty shift
+    // wrote and the lit value it renders at — and so `?lighting=legacy` restores the exact
+    // pre-calibration render from a material that may already have been re-installed once.
+    material.userData.landmarkAuthoredEmissive = paint.intensity;
+    material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity, contractId);
   });
 }
 
@@ -1978,6 +2216,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       const mounts = (selected.contract.landmarkMounts ?? []).filter((mount) => mount.asset);
       host.canvas.dataset.terrain3dPilotLandmarkExpected = String(mounts.length);
       const assets = new Map<string, Promise<THREE.Object3D | undefined>>();
+      const closureCensus = new Map<string, ClosureCensus>();
       const diagnostics: string[] = [];
       const nextLandmarks = new THREE.Group();
       nextLandmarks.name = 'Terrain3dLandmarks';
@@ -2008,6 +2247,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           model.rotation.set(...mount.rotation);
           model.scale.fromArray(mount.scale);
           inspect(model, false);
+          // F-ASTRA-9: verified backface culling runs on EVERY mounted body, night shift included —
+          // it is a geometry verdict, not a paint one, and it changes no lighting.
+          closureCensus.set(mount.id, cullVerifiedClosedMeshes(model, mount.id));
           if (host.contractId !== 'e1-night-shift') {
             const live = LIVE_SPRING_POND_CONTRACTS.has(host.contractId) && mount.id === 'isolated_spring';
             const contractIntensity = LANDMARK_EMISSIVE[host.contractId];
@@ -2015,7 +2257,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
               ? { intensity: DRY_GULCH_SPRING_EMISSIVE, tint: DEFAULT_LANDMARK_PAINT.tint }
               : (LANDMARK_PAINT[host.contractId]?.[mount.id]
                 ?? (contractIntensity !== undefined ? { intensity: contractIntensity, tint: DEFAULT_LANDMARK_PAINT.tint } : DEFAULT_LANDMARK_PAINT));
-            keepLandmarkPaintReadable(model, paint);
+            keepLandmarkPaintReadable(model, paint, host.contractId);
           }
           if (host.contractId === 'e1-baron' && BARON_SWAY_AMPLITUDE[mount.id] !== undefined) {
             installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
@@ -2095,6 +2337,28 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
         }
         host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'mounted';
         host.canvas.dataset.terrain3dPilotLandmarkEmissive = String(LANDMARK_EMISSIVE[host.contractId] ?? LANDMARK_EMISSIVE_DEFAULT);
+        // F-ASTRA-9 census: per-mount closed/open mesh counts and what the verdict did to the
+        // material side. Published MEASURED, for the same reason emissiveIntensity is (F-BHM-1) —
+        // a table lookup would keep reporting the intent after a later pass overwrote the render.
+        {
+          const box = new THREE.Box3();
+          const rows = nextLandmarks.children.flatMap((model) => {
+            const row = closureCensus.get(model.name);
+            if (!row) return [];
+            box.setFromObject(model);
+            // The body's own vertical extent, so a probe can be aimed at the WALL rather than at
+            // the ground in front of a lattice headframe (the reference rig's first false reading).
+            return [{ ...row, baseY: +box.min.y.toFixed(3), topY: +box.max.y.toFixed(3) }];
+          });
+          const total = rows.reduce((sum: { meshes: number; closed: number; open: number; culled: number; doubleSided: number }, row) => ({
+            meshes: sum.meshes + row.meshes,
+            closed: sum.closed + row.closed,
+            open: sum.open + row.open,
+            culled: sum.culled + row.culled,
+            doubleSided: sum.doubleSided + row.doubleSided,
+          }), { meshes: 0, closed: 0, open: 0, culled: 0, doubleSided: 0 });
+          host.canvas.dataset.terrain3dPilotLandmarkSides = JSON.stringify({ total, mounts: rows });
+        }
         host.canvas.dataset.terrain3dPilotLandmarks = String(nextLandmarks.children.length);
         host.canvas.dataset.terrain3dPilotLandmarkSkipped = String(diagnostics.length);
         host.canvas.dataset.terrain3dPilotLandmarkDiagnostics = diagnostics.join('; ');
@@ -2119,12 +2383,20 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           const standard = [...materials].filter((material): material is THREE.MeshStandardMaterial =>
             (material as THREE.MeshStandardMaterial).isMeshStandardMaterial);
           const intensities = standard.map((material) => +material.emissiveIntensity.toFixed(3));
+          const authored = standard
+            .map((material) => material.userData.landmarkAuthoredEmissive as number | undefined)
+            .filter((value): value is number => typeof value === 'number');
           return {
             id: model.name,
             total: materials.size,
             transparent: [...materials].filter((material) => material.transparent).length,
             depthWriteDisabled: [...materials].filter((material) => !material.depthWrite).length,
             emissiveIntensity: intensities.length ? [Math.min(...intensities), Math.max(...intensities)] : [],
+            authoredEmissive: authored.length ? [Math.min(...authored), Math.max(...authored)] : [],
+            frontSided: [...materials].filter((material) => material.side === THREE.FrontSide).length,
+            doubleSided: [...materials].filter((material) => material.side === THREE.DoubleSide).length,
+            roughness: standard.length ? +Math.min(...standard.map((material) => material.roughness)).toFixed(3) : null,
+            metalness: standard.length ? +Math.max(...standard.map((material) => material.metalness)).toFixed(3) : null,
           };
         }));
         publish(host.canvas, 'ready', 'glb', terrainMetrics, nextPanorama, panoramaMetrics);

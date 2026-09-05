@@ -152,6 +152,36 @@ type MuzzleFlash = {
  * a contact shadow's offset, an art board's camera — reads the same two numbers the
  * rig is built from instead of copying them.
  */
+/**
+ * THE REFERENCE RIG'S DIALS (F-ASTRA-9, 2026-09-05 — harness only, absent by default).
+ *
+ * Astra asked for terrain, landmark, building and sprite to be calibrated "together under one
+ * reference rig". This IS the one rig — `Terrain3dClaimPilot`, the town pilots and
+ * `LanternWorldStage` all construct this class — so the dials belong here rather than in a second
+ * scene that would drift from it. Every value is a MULTIPLIER on the shipped constant, never a
+ * snapshot, so a dial-less boot takes the untouched path and the diff cannot silently re-tune the
+ * game (the DAY_PALETTES rule, one paragraph up).
+ *
+ *   ?exposure=<n>  scale the renderer's ACES exposure (Renderer.ts ships 1.05)
+ *   ?sun=<n>       scale the 2.35 golden-hour key
+ *   ?fill=<n>      scale the 1.12 hemisphere fill
+ */
+type LightRigDials = { exposure: number; sun: number; fill: number };
+
+function readLightRigDials(): LightRigDials {
+  if (typeof window === 'undefined') return { exposure: 1, sun: 1, fill: 1 };
+  const params = new URLSearchParams(window.location.search);
+  const read = (key: string): number => {
+    const value = Number(params.get(key));
+    return params.has(key) && Number.isFinite(value) && value >= 0 ? value : 1;
+  };
+  return { exposure: read('exposure'), sun: read('sun'), fill: read('fill') };
+}
+
+const LIGHT_RIG_DIALS = readLightRigDials();
+/** One renderer must not be re-scaled by a second LightRig over the same canvas. */
+const exposureDialled = new WeakSet<THREE.WebGLRenderer>();
+
 export const LEDGER_SUN_POSITION = new THREE.Vector3(-28, 18, -22);
 export const LEDGER_SUN_TARGET = new THREE.Vector3(4, 0, 8);
 
@@ -237,6 +267,10 @@ export class LightRig {
     const heatAllowed = heat && performanceTierDiagnostics().tier === 'full' ? heat : undefined;
     this.post = new LedgerPostPass(heatAllowed);
     this.dustDevils = heatAllowed && heatAllowed.devils > 0 ? new DustDevils(heatAllowed.devils) : undefined;
+    if (LIGHT_RIG_DIALS.exposure !== 1 && !exposureDialled.has(renderer)) {
+      exposureDialled.add(renderer);
+      renderer.toneMappingExposure *= LIGHT_RIG_DIALS.exposure;
+    }
     this.group.name = 'GoldenHourLightRig';
     this.sun.name = 'LedgerLowSun';
     this.sun.position.copy(LEDGER_SUN_POSITION);
@@ -436,6 +470,12 @@ export class LightRig {
   }
 
   private applyNightShiftPalette(darkness: number): void {
+    this.applyPalette(darkness);
+    if (LIGHT_RIG_DIALS.sun !== 1) this.sun.intensity *= LIGHT_RIG_DIALS.sun;
+    if (LIGHT_RIG_DIALS.fill !== 1) this.fill.intensity *= LIGHT_RIG_DIALS.fill;
+  }
+
+  private applyPalette(darkness: number): void {
     if (!this.nightShift.enabled) {
       const day = this.dayPalette;
       this.background.copy(day ? dayPaletteColor(day.background) : this.dayBackground);
