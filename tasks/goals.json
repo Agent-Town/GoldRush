@@ -4295,21 +4295,25 @@
               "id": "lantern-true-world-reel",
               "title": "F-ASTRA-11: the Lantern reel renders the paid-for world stage (terrain pilot + rigs + snapshot-driven sprites), SVG kept as the labelled tactical fallback",
               "taskFile": "lantern-true-world-reel.md",
-              "status": "queued",
+              "status": "superseded",
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "queuedAt": "2026-09-05"
+              "queuedAt": "2026-09-05",
+              "supersededBy": "lantern-true-world-reel-2",
+              "stopNote": "v1 STOPPED 2026-09-05 (gpt-6-astra): the plain watch URL boots the whole Game (main.ts:372→:125→:135) and the world is module-global (Terrain.ts:77-79); no-WebGL returns to the menu. Coupling report merged; re-authored as v2 with the boot-routing lift."
             },
             {
               "id": "prefetch-bounded-warming",
               "title": "F-ASTRA-5: the advance stream warms destination + one successor under a byte allowance; the sweep becomes an explicit opt-in",
               "taskFile": "prefetch-bounded-warming.md",
-              "status": "queued",
+              "status": "merged",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "queuedAt": "2026-09-05"
+              "queuedAt": "2026-09-05",
+              "mergeHash": "dfbed949126b8300a5a3d6e108e2d7b7e28f3381",
+              "mergedAt": "2026-09-05"
             },
             {
               "id": "deploy-budget-hard-verdict",
@@ -4396,6 +4400,16 @@
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
               "note": "Queue into the FIRST lane whose Astra slice has been DRAINED (rewrite the lane letters in the header/pre-flight before the cp; never pre-queue behind an undrained lane — Mistake #9 burn)."
+            },
+            {
+              "id": "lantern-true-world-reel-2",
+              "title": "F-ASTRA-11 v2: an independent replay boot (no Game) with the replay controller extracted, the world stage + sprites on the reel, tactical SVG fallback labelled; reel-deep-links updated",
+              "taskFile": "lantern-true-world-reel-2.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "queuedAt": "2026-09-05"
             }
           ]
         }
