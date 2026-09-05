@@ -396,9 +396,9 @@ export class CrawlerBossSystem {
     const serial = ++this.crawler3dLoadSerial;
     this.crawler3dState = 'loading';
     this.publishCrawler3d();
-    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+    void import('../assets/AssetLoading').then(({ createGltfLoader }) => {
       if (serial !== this.crawler3dLoadSerial) return;
-      new GLTFLoader().load(CRAWLER_3D_URL, ({ scene }) => {
+      createGltfLoader().load(CRAWLER_3D_URL, ({ scene }) => {
         if (serial !== this.crawler3dLoadSerial) {
           disposeObject3D(scene);
           return;

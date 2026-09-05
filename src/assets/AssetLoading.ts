@@ -6,6 +6,10 @@ import { SharedAtlasCache, SharedAtlasPlugin } from './SharedAtlasPlugin';
 type Tracker = { manager: LoadingManager; label: string; ready: number; total: number; atlases: SharedAtlasCache };
 const trackers = new WeakMap<HTMLCanvasElement, Tracker>();
 
+export function createGltfLoader(manager?: LoadingManager): GLTFLoader {
+  return new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder);
+}
+
 export function resetAssetLoading(canvas: HTMLCanvasElement, label: string): void {
   trackers.get(canvas)?.atlases.clear();
   trackers.set(canvas, createTracker(canvas, label));
@@ -44,7 +48,7 @@ export function trackedGltfLoader(canvas: HTMLCanvasElement, label: string): GLT
     tracker.atlases.clear();
   }
   const cache = tracker.atlases;
-  return new GLTFLoader(tracker.manager).setMeshoptDecoder(MeshoptDecoder)
+  return createGltfLoader(tracker.manager)
     .register((parser) => new SharedAtlasPlugin(parser, cache));
 }
 

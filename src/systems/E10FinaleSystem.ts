@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { createGltfLoader } from '../assets/AssetLoading';
 import { charterLineageRootId } from '../charter/CharterSchema';
 import { stampCharter } from '../charter/CharterStamp';
 import { getPostCreditsCharter } from '../charter/TheRiver';
@@ -122,7 +122,7 @@ export class E10FinaleSystem {
   }
 
   private async loadArk(): Promise<void> {
-    const loader = new GLTFLoader();
+    const loader = createGltfLoader();
     let plaza: THREE.Object3D | undefined;
     try {
       plaza = (await loader.loadAsync(ARK_ASSETS[0])).scene;

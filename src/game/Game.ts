@@ -4874,9 +4874,9 @@ export class Game {
     if (this.baronProps3dState !== 'off') return;
     const serial = ++this.baronProps3dLoadSerial;
     this.baronProps3dState = 'loading';
-    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+    void import('../assets/AssetLoading').then(({ createGltfLoader }) => {
       if (serial !== this.baronProps3dLoadSerial) return;
-      new GLTFLoader().load(BARON_PROPS_3D_URL, ({ scene }) => {
+      createGltfLoader().load(BARON_PROPS_3D_URL, ({ scene }) => {
         if (serial !== this.baronProps3dLoadSerial) {
           disposeObject3D(scene);
           return;

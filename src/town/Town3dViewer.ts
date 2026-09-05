@@ -45,8 +45,8 @@ export function installTown3dViewer(host: ViewerHost): () => void {
       return;
     }
     void file.arrayBuffer().then(async (buffer) => {
-      const { GLTFLoader } = await import('three/examples/jsm/loaders/GLTFLoader.js');
-      new GLTFLoader().parse(
+      const { createGltfLoader } = await import('../assets/AssetLoading');
+      createGltfLoader().parse(
         buffer,
         '',
         (gltf) => {

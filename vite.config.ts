@@ -22,6 +22,7 @@ export default defineConfig(() => {
   const buildVariant = process.env.GR_BUILD_VARIANT ?? (releaseE1 ? 'e1-preview' : 'dev');
   const assetDietFingerprint = createHash('sha256')
     .update(readFileSync(resolve(process.cwd(), 'scripts/asset-diet.mjs')))
+    .update(readFileSync(resolve(process.cwd(), 'scripts/asset-diet.manifest.json')))
     .update(readFileSync(resolve(process.cwd(), 'package-lock.json')))
     .digest('hex')
     .slice(0, 8);
