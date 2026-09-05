@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { WARM_EVERY_MAP_KEY } from '../src/assets/AdvanceStream';
 import {
   FIRST_CLAIM_DONE_KEY,
   PROFILE_KEY,
@@ -48,7 +49,8 @@ test('menu idle warms town first and publishes progress', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test('saveData keeps tier one and skips bulk contract maps', async ({ page }) => {
+test('saveData keeps tier one with the full-map opt-in and skips bulk contract maps', async ({ page }) => {
+  await page.addInitScript(key => localStorage.setItem(key, 'true'), WARM_EVERY_MAP_KEY);
   await page.addInitScript((activeEpochKey) => {
     localStorage.setItem(activeEpochKey, 'epoch-10-deepsky');
     Object.defineProperty(navigator, 'connection', { configurable: true, value: { saveData: true } });
@@ -58,9 +60,13 @@ test('saveData keeps tier one and skips bulk contract maps', async ({ page }) =>
   page.on('request', (request) => {
     if (request.headers()['x-gold-rush-prefetch'] === '1') prefetched.push(request.url());
   });
+  // Keep the allowance out of this assertion: only Save Data may stop the sweep.
+  await page.route('**/*.glb', route => route.request().headers()['x-gold-rush-prefetch'] === '1'
+    ? route.fulfill({ contentType: 'model/gltf-binary', body: Buffer.alloc(37) })
+    : route.continue());
 
   await page.goto('/');
-  await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-prefetch-state'), { timeout: 20_000 }).toBe('ready');
+  await expect(page.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-state', 'ready', { timeout: 20_000 });
 
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-save-data', 'true');
   expect(prefetched.some((url) => /(?:the-claim|dry-gulch|night-shift|twin-banks|baron)-(?:terrain|panorama)/.test(url))).toBe(false);
@@ -71,6 +77,8 @@ test('saveData keeps tier one and skips bulk contract maps', async ({ page }) =>
 });
 
 test('lite rendering skips unused 3D prefetch', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.addInitScript(key => localStorage.setItem(key, 'true'), WARM_EVERY_MAP_KEY);
   const prefetched: string[] = [];
   page.on('request', (request) => {
     if (request.headers()['x-gold-rush-prefetch'] === '1') prefetched.push(request.url());
@@ -80,9 +88,44 @@ test('lite rendering skips unused 3D prefetch', async ({ page }) => {
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-state', 'ready');
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-enabled', 'false');
   expect(prefetched).toEqual([]);
+  expect(errors).toEqual([]);
+});
+
+test('the warm-every-map opt-in restores the sweep', async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
+  const errors = collectErrors(page);
+  const prefetched: string[] = [];
+  await page.route('**/*.glb', async (route) => {
+    if (route.request().headers()['x-gold-rush-prefetch'] !== '1') return route.continue();
+    prefetched.push(route.request().url());
+    await route.fulfill({ contentType: 'model/gltf-binary', body: Buffer.alloc(1) });
+  });
+  await page.goto('/?tier=full');
+  const canvas = page.locator('#game-canvas');
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'ready', { timeout: 20_000 });
+  expect(prefetched.some(url => url.includes('dry-gulch-terrain'))).toBe(false);
+
+  await page.getByTestId('start-menu-settings').click();
+  const toggle = page.getByRole('checkbox', { name: 'Warm every map' });
+  await expect(toggle).not.toBeChecked();
+  await toggle.check();
+  await expect.poll(() => prefetched.some(url => url.includes('dry-gulch-terrain'))).toBe(true);
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'ready', { timeout: 30_000 });
+  expect(prefetched.some(url => url.includes('archive-world-terrain'))).toBe(true);
+  expect(await page.evaluate(key => localStorage.getItem(key), WARM_EVERY_MAP_KEY)).toBe('true');
+  await page.getByTestId('start-menu-settings-close').click();
+  await page.getByTestId('start-menu-settings').click();
+  await expect(toggle).toBeChecked();
+  await toggle.scrollIntoViewIfNeeded();
+  await expect(toggle).toBeInViewport();
+  await page.screenshot({ path: `artifacts/prefetch-bounded-warming/settings-${testInfo.project.name}.png` });
+  await toggle.uncheck();
+  expect(await page.evaluate(key => localStorage.getItem(key), WARM_EVERY_MAP_KEY)).toBe('false');
+  expect(errors).toEqual([]);
 });
 
 test('closing profiles resumes the menu stream', async ({ page }) => {
+  const errors = collectErrors(page);
   await page.route('**/*.glb', async (route) => {
     if (route.request().headers()['x-gold-rush-prefetch'] === '1') await new Promise((resolve) => setTimeout(resolve, 500));
     await route.continue().catch(() => undefined);
@@ -95,6 +138,7 @@ test('closing profiles resumes the menu stream', async ({ page }) => {
   await page.getByTestId('profile-back').click();
   await expect(page.locator('#game-canvas')).not.toHaveAttribute('data-asset-prefetch-state', 'paused');
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-asset-prefetch-scene', 'menu');
+  expect(errors).toEqual([]);
 });
 
 test('launch aborts pending prefetch before the run requests its own map', async ({ page }) => {
@@ -146,15 +190,12 @@ function collectErrors(page: Page): string[] {
 }
 
 async function openBoard(page: Page): Promise<void> {
-  await hold(page, 'KeyA', 850);
-  await hold(page, 'KeyW', 850);
+  await page.evaluate(() => {
+    const town = window.__GR_TOWN_DIAGNOSTICS__!;
+    const { x, z } = town.buildings.find(({ id }) => id === 'tavern')!.approach;
+    town.teleport(x, z);
+  });
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
   await expect(page.getByTestId('contract-board')).toBeVisible();
-}
-
-async function hold(page: Page, key: string, ms: number): Promise<void> {
-  await page.keyboard.down(key);
-  await page.waitForTimeout(ms);
-  await page.keyboard.up(key);
 }
