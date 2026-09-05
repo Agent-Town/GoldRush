@@ -2,7 +2,7 @@
 
 The hardening is not merged. Its focused guard passes, but the release probe has no successful production measurement and the full Node battery did not finish. This is a gate-side readiness hold, not an owner fork or a finding that the new fail-closed branch is wrong.
 
-The main-slot done-move is `tasks/done/20260905-103054-deploy-budget-hard-verdict.md`. The runner's report is in the matching main run log; its four output paths are preserved verbatim at `save/deploy-budget-hard-verdict-s2518`, commit `36176d1ca93701e2f6ceb0d3d9f52df79e164443`, pushed to origin. The save commit adds only those paths over `79cc45b93`. The temporary-index save left main's index and working tree unchanged. Before restoring the four paths to HEAD, their SHA-256 values were checked against `artifacts/s2518-fire/deploy-salvage.json`; other working-tree dirt was left alone.
+The main-slot done-move is retained as `tasks/done/rejected-20260905-103054-deploy-budget-hard-verdict.md` after this hold. The runner's report is in the matching main run log; its four output paths are preserved verbatim at `save/deploy-budget-hard-verdict-s2518`, commit `36176d1ca93701e2f6ceb0d3d9f52df79e164443`, pushed to origin. The save commit adds only those paths over `79cc45b93`. The temporary-index save left main's index and working tree unchanged. Before restoring the four paths to HEAD, their SHA-256 values were checked against `artifacts/s2518-fire/deploy-salvage.json`; other working-tree dirt was left alone.
 
 ## F-2518-1 — the deploy contract fixture cannot reach its own assertions
 
