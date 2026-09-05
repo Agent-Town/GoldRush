@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Gold Rush performance survey census",
+  "type": "object",
+  "required": ["schemaVersion", "instrument", "windowMs", "expectedMaps", "rows"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "instrument": {"const": "scripts/perf-survey/run.mjs"},
+    "windowMs": {"const": 10000},
+    "expectedMaps": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["key", "map", "tier", "viewport", "state", "before", "after", "errors", "status"],
+        "properties": {
+          "key": {"type": "string"},
+          "map": {"type": "string"},
+          "tier": {"enum": ["full", "lite"]},
+          "viewport": {"type": "object", "required": ["width", "height"], "properties": {"width": {"enum": [1280, 390]}, "height": {"enum": [800, 844]}}},
+          "state": {"enum": ["wave1", "stress", "town"]},
+          "status": {"enum": ["measured", "failed"]},
+          "errors": {"type": "object", "required": ["console", "page", "network"], "properties": {"console": {"type": "array"}, "page": {"type": "array"}, "network": {"type": "array"}}},
+          "elapsedMs": {"type": "number", "minimum": 10000},
+          "scenePath": {"type": "string", "pattern": "^scenes/.*\\.json$"},
+          "rawSamples": {"type": "string", "pattern": "^samples/.*\\.json$"},
+          "metrics": {"type": "object", "required": ["frameMs", "calls", "triangles", "geometries", "textures", "programs", "heap", "renderMs"], "properties": {"frameMs": {"$ref": "#/$defs/distribution"}, "calls": {"$ref": "#/$defs/distribution"}, "triangles": {"$ref": "#/$defs/distribution"}, "renderMs": {"$ref": "#/$defs/distribution"}}}
+        },
+        "allOf": [{"if": {"properties": {"status": {"const": "measured"}}}, "then": {"required": ["metrics", "rawSamples", "scenePath", "elapsedMs", "start", "end"]}, "else": {"required": ["failure"]}}]
+      }
+    }
+  },
+  "$defs": {"distribution": {"type": "object", "required": ["n", "min", "p50", "p95", "p99", "max"], "properties": {"n": {"type": "integer", "minimum": 1}, "min": {"type": "number", "minimum": 0}, "p50": {"type": "number", "minimum": 0}, "p95": {"type": "number", "minimum": 0}, "p99": {"type": "number", "minimum": 0}, "max": {"type": "number", "minimum": 0}}}}
+}
