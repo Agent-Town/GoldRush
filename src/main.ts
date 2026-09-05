@@ -5,8 +5,7 @@ import { markStartupFrameReady, prefetchNonCriticalGeneratedTextures } from './a
 import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import type { RunReturnResult } from './game/Game';
-import { FIRST_CLAIM_DONE_KEY, loadProfileState } from './game/ProfileStorage';
-import { hasStoryBeatSeen, markStoryBeatSeen } from './story/seenState';
+import { FIRST_CLAIM_DONE_KEY, activeProfile, loadProfileState, profileDataKey } from './game/ProfileStorage';
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
@@ -123,19 +122,28 @@ const RUN_ROUTE_PARAMS = ['contract', 'seed', 'difficulty', 'mode', 'press', 're
 
 // F-SS05-1: `first-boot` is a declared signal that nothing in `src/` emitted. The boot path is
 // the only honest site for it, and it fires exactly once per profile.
-const FIRST_BOOT_SEEN_KEY = 'signal:first-boot';
+const FIRST_BOOT_SIGNAL_KEY = 'gr.story.firstBoot.v1';
 
-// ⚠️ NOT `hasStoryBeatSeen` alone. Both story-seen helpers reach `activeProfile`/`markHintSeen`,
-// and BOTH funnel through `ensureProfileState` (ProfileStorage.ts:129), which CREATES and SAVES a
-// default "Robin" profile when none exists. Asking the question before the player has answered
-// "Who's prospecting?" would therefore answer it for them and skip profile creation entirely — so
-// a boot with no profile state simply is not a profile's first boot yet, and the next load (the
-// launch reload) carries the signal instead.
+// Two traps live in this six-line function, and both were paid for once.
+//
+// 1. ⚠️ NOT the story seen-state helpers. `hasStoryBeatSeen`/`markStoryBeatSeen` reach
+//    `activeProfile`/`markHintSeen`, and BOTH funnel through `ensureProfileState`
+//    (ProfileStorage.ts:129), which CREATES and SAVES a default "Robin" profile when none exists.
+//    Asking the question before the player has answered "Who's prospecting?" would answer it for
+//    them and skip profile creation (e2e/profile-first-boot.spec.ts:41 asserts no Robin ghost). So
+//    a boot with no profile state is not yet a profile's first boot; the next load carries it.
+// 2. ⚠️ NOT the profile's `hintsSeen` list either. That list is the record of which BEATS a player
+//    has been shown, and `e2e/ss-02-beats.spec.ts:212` asserts its exact contents; a signal-level
+//    marker filed there is a beat that was never shown. This keeps its own per-profile datum.
 function claimFirstBootForProfile(): boolean {
   try {
+    // `loadProfileState` first: it never creates a profile, and `activeProfile` is only safe to
+    // call once one exists.
     if (!loadProfileState(window.localStorage)) return false;
-    if (hasStoryBeatSeen(FIRST_BOOT_SEEN_KEY)) return false;
-    return markStoryBeatSeen(FIRST_BOOT_SEEN_KEY);
+    const key = profileDataKey(activeProfile(window.localStorage).id, FIRST_BOOT_SIGNAL_KEY);
+    if (window.localStorage.getItem(key) !== null) return false;
+    window.localStorage.setItem(key, '1');
+    return true;
   } catch {
     // Storage is optional; a boot that cannot remember is not one we announce.
     return false;

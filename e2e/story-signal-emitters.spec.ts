@@ -15,7 +15,9 @@ import type { RuntimeStorySignal } from '../src/story/signals';
 // same table the game reads at run time, AFTER boot so `applyStoredDifficultyPreset()` cannot
 // clobber it.
 const SHOT_DIR = path.resolve('reviews/shots-story-signal-emitters');
-const FIRST_BOOT_HINT = 'story:signal:first-boot';
+// Literal, not imported: `src/main.ts` is the app entry and runs its whole boot on import.
+// Kept in step with FIRST_BOOT_SIGNAL_KEY in src/main.ts.
+const FIRST_BOOT_MARK = profileDataKey('robin', 'gr.story.firstBoot.v1');
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
@@ -86,10 +88,13 @@ async function recordSignals(page: Page): Promise<void> {
     // Every beat id the player was actually shown, in order. A card lives 6 s and the queue paces
     // itself, so polling `active()` can miss one; this cannot.
     scope.__SS_BEATS__ = [];
+    // `document`, not `document.documentElement`: an init script runs before the document element
+    // exists, and observing null throws — which would abort this whole script and silently take
+    // the signal listener below with it.
     new MutationObserver(() => {
       const id = document.querySelector('[data-testid="story-beat-card"]')?.getAttribute('data-beat-id');
       if (id && scope.__SS_BEATS__.at(-1) !== id) scope.__SS_BEATS__.push(id);
-    }).observe(document.documentElement, { childList: true, subtree: true });
+    }).observe(document, { childList: true, subtree: true });
     const importViteModule = new Function('specifier', 'return import(specifier)') as (specifier: string) => Promise<unknown>;
     void importViteModule('/src/story/signals.ts')
       .then((module) => {
@@ -111,6 +116,12 @@ async function signalsOfType(page: Page, type: RuntimeStorySignal['type']): Prom
   ) as Promise<RuntimeStorySignal[]>;
 }
 
+/** The per-profile first-boot marker, read raw so the assertion sees the stored key itself. */
+async function firstBootMark(page: Page): Promise<string | null> {
+  return page.evaluate((key) => localStorage.getItem(key), FIRST_BOOT_MARK);
+}
+
+/** The profile's beat-seen list, which the first-boot marker must stay OUT of (ss-02:212). */
 async function profileHints(page: Page): Promise<string[]> {
   return page.evaluate((profileKey) => {
     const raw = localStorage.getItem(profileKey);
@@ -183,14 +194,16 @@ test('first-boot fires once per profile on a plain boot and never again', async 
   await page.goto('/');
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 5 || Boolean(document.querySelector('[data-testid="start-menu"]')));
   await expect.poll(() => signalsOfType(page, 'first-boot').then((list) => list.length), { timeout: 15_000 }).toBe(1);
-  expect(await profileHints(page)).toContain(FIRST_BOOT_HINT);
+  expect(await firstBootMark(page)).toBe('1');
+  expect(await profileHints(page)).toEqual([]);
   await shot(page, testInfo, 'first-boot');
 
   await page.reload();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 5 || Boolean(document.querySelector('[data-testid="start-menu"]')));
   await page.waitForTimeout(1_500);
   expect(await signalsOfType(page, 'first-boot')).toEqual([]);
-  expect((await profileHints(page)).filter((hint) => hint === FIRST_BOOT_HINT)).toHaveLength(1);
+  expect(await firstBootMark(page)).toBe('1');
+  expect(await profileHints(page)).toEqual([]);
   assertNoErrors(errors);
 });
 
