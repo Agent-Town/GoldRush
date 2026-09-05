@@ -8,7 +8,7 @@ import type { CombatSystem } from '../systems/CombatSystem';
 import { FlotillaHullSystem, type FlotillaHullDiagnostics } from '../systems/FlotillaHullSystem';
 import { NoiseHuntSystem, type NoiseHuntDiagnostics } from '../systems/NoiseHuntSystem';
 import { RegattaRaceSystem, type RegattaRaceDiagnostics } from '../systems/RegattaRaceSystem';
-import { createDeepwaterClaimTile, type CorsairSkiffWave, type DeepwaterClaimTile } from '../world/DeepwaterClaimTile';
+import { createDeepwaterClaimTile, deepwaterFrontCarriesWave, type CorsairSkiffWave, type DeepwaterClaimTile } from '../world/DeepwaterClaimTile';
 
 /**
  * ER-01 E5 era socket — the headless consumer for the Deepwater Claim.
@@ -134,7 +134,7 @@ export class DeepwaterSocket {
     for (const wave of pending) {
       const bossWave = baron?.variantId === 'dredge_queen' ? baron.wave : Number.POSITIVE_INFINITY;
       const escortMultiplier = this.offerToBoss(wave, bossWave);
-      this.emitWaveStarted(wave.wave, wave.scheduledAt);
+      if (deepwaterFrontCarriesWave(wave)) this.emitWaveStarted(wave.wave, wave.scheduledAt);
       this.spawnCorsairs(wave, escortMultiplier);
     }
   }

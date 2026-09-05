@@ -107,7 +107,7 @@ import {
 import { BroadcastMirror, type BroadcastMirrorDiagnostics } from '../systems/BroadcastMirror';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
 import { WaveSystem } from '../systems/WaveSystem';
-import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
+import { deepwaterStormDisablesScheduledWaves } from '../world/DeepwaterClaimTile';
 import { depenetrateFromBlockers } from '../world/LandmarkCollision';
 import * as Terrain from '../world/Terrain';
 
@@ -1268,11 +1268,9 @@ export class HeadlessContractSim {
       createRng(`${this.seed}:waves`),
       (text, at, wave) => this.replayEvents.push({ type: 'announcement', at, wave: wave ?? null, text }),
       (wave, at) => this.startWave(wave, at),
-      // Game.ts:1387 — the Deepwater Claim runs no generic schedule; its storm track is the
-      // clock. A2: only where that track actually CREWS a wave. `e5-stillwater` authors a
-      // suppressed storm and `corsairWaveSize: 0`, so its clock is the ordinary schedule and
-      // its pressure is the roster's own `machine_leviathan` on the two authored spawn edges.
-      () => this.deepwater !== null && deepwaterStormDrivesWaves(this.manifest),
+      // The flagship E5 tracks use their storms as the clock. Stillwater's authored storm is
+      // suppressed, so it keeps the ordinary schedule and its machine-leviathan pressure.
+      () => this.deepwater !== null && deepwaterStormDisablesScheduledWaves(this.manifest),
       () => this.manifest,
       boot,
       () => this.build.diagnostics.stockpilesState.some((entry) => entry.active),
@@ -2163,7 +2161,7 @@ export class HeadlessContractSim {
   }
 
   private currentRunWave(): number {
-    return this.deepwater && deepwaterStormDrivesWaves(this.manifest)
+    return this.deepwater && deepwaterStormDisablesScheduledWaves(this.manifest)
       ? this.deepwater.diagnostics.corsairWaves
       : this.waves.diagnostics.wave;
   }

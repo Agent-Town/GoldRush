@@ -286,7 +286,7 @@ import {
   type NightShiftPhase,
 } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
-import { createDeepwaterClaimTile, deepwaterStormDrivesWaves, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
+import { createDeepwaterClaimTile, deepwaterFrontCarriesWave, deepwaterStormDisablesScheduledWaves, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
 import { readTownName } from '../town/TownNaming';
 import { gameApiUrl } from '../app/GameApi';
 import { installRunTelemetry, reportRenderDemotion } from '../telemetry/runBeacon';
@@ -1487,11 +1487,10 @@ export class Game {
         this.advanceMegaprojectOnWave(atSim);
         return !this.secureClaimChoicePending();
       },
-      // A2: the storm track replaces the generic schedule only where it actually CREWS a wave.
-      // `e5-stillwater` authors a suppressed storm and `corsairWaveSize: 0`, so its clock stays
-      // the ordinary one — GR-SIM gates the identical predicate (`HeadlessContractSim`).
+      // Stillwater keeps the generic pressure clock while its authored storm is suppressed.
+      // GR-SIM gates the identical predicate (`HeadlessContractSim`).
       () => areWavesDisabled()
-        || (this.deepwaterClaim !== null && deepwaterStormDrivesWaves(this.activeContract))
+        || (this.deepwaterClaim !== null && deepwaterStormDisablesScheduledWaves(this.activeContract))
         || this.activeContract.practice?.scheduledWaves === false,
       () => this.activeContract,
       this.boot,
@@ -6065,7 +6064,7 @@ export class Game {
         wave,
         baron?.variantId === 'dredge_queen' ? baron.wave : Number.POSITIVE_INFINITY,
       );
-      this.events.emit({ type: 'wave_started', at: wave.scheduledAt, wave: wave.wave });
+      if (deepwaterFrontCarriesWave(wave)) this.events.emit({ type: 'wave_started', at: wave.scheduledAt, wave: wave.wave });
       this.spawnDeepwaterCorsairs(wave, bossEscort);
     }
   }
@@ -6160,7 +6159,7 @@ export class Game {
   }
 
   private currentRunWave(): number {
-    return this.deepwaterClaim && deepwaterStormDrivesWaves(this.activeContract)
+    return this.deepwaterClaim && deepwaterStormDisablesScheduledWaves(this.activeContract)
       ? this.deepwaterCorsairWavesSpawned
       : this.waveSystem.diagnostics.wave;
   }
