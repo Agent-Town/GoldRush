@@ -4580,11 +4580,12 @@
               "id": "playability-smoke-36",
               "title": "A 36-contract plain-boot playability matrix on main and on the full-board preview (briefing, HUD, keyboard movement, wave 2, zero errors) before the owner tests by hand",
               "taskFile": "playability-smoke-36.md",
-              "status": "planned",
+              "status": "merged",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "Overnight Opus wave (owner 2026-09-05: \"push hard while I sleep\"); dispatched by the attended session when the survey frees the board."
+              "mergeHash": "637b45845d929bddf3454f5c759bec519527ba83",
+              "mergedAt": "2026-09-05"
             },
             {
               "id": "story-signal-emitters",
@@ -4595,6 +4596,36 @@
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
               "note": "Overnight Opus wave; dispatch to lane-a after the E4 chapter drains."
+            },
+            {
+              "id": "e10-empty-harvest-anchors-unlaunchable",
+              "title": "F-SMOKE-1: three E10 maps (ember-shore, archive-world, river) fall back to The Claim — decide from the specs (anchors vs harvest-free preserve exemption) and land it with a board-launchable guard",
+              "taskFile": "e10-empty-harvest-anchors-unlaunchable.md",
+              "status": "planned",
+              "lane": "scratch",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "Overnight Opus wave from the smoke blockers; runs in a scratch worktree on its own branch; the attended session drains."
+            },
+            {
+              "id": "e6-picnic-thirty-second-death",
+              "title": "F-SMOKE-2: an unbuilt player dies on e6-picnic at ~30 s — measure the opening, decide with the bundle (grace period vs briefing), prove a human opening survives",
+              "taskFile": "e6-picnic-thirty-second-death.md",
+              "status": "planned",
+              "lane": "scratch",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "Overnight Opus wave from the smoke blockers; runs in a scratch worktree on its own branch; the attended session drains."
+            },
+            {
+              "id": "preview-unlock-all",
+              "title": "Owner test aid: a preview-only \"Open every claim\" control on the board (compiled out of the E1 release), per-profile, tagged \"testing\"",
+              "taskFile": "preview-unlock-all.md",
+              "status": "planned",
+              "lane": "scratch",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "Overnight Opus wave from the smoke blockers; runs in a scratch worktree on its own branch; the attended session drains."
             }
           ]
         }
