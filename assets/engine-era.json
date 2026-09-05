@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "ea4dcc6e4977754cba6d0d5f0921c4dc909a6cc5b0a3318b7c6696056e72765b",
+  "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -325,6 +325,12 @@
       "engineHash": "ea4dcc6e4977754cba6d0d5f0921c4dc909a6cc5b0a3318b7c6696056e72765b",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: bounded-prefetch-town-halls drain — AdvanceStream.ts state machine typed/documented, terminal 'allowance' state, complete-plan-at-allowance publishes ready (F-BPTH-1); asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
+      "pinnedAt": "2026-09-05",
+      "cause": "src re-hash: landmark-lighting-calibration drain — Terrain3dClaimPilot paint/material functions (emissive 3 → 0.45 default as a relative grade, closed meshes FrontSide) and LightRig constants; render-side only, the planar sim untouched; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     }
   ],

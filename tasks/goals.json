@@ -4368,11 +4368,12 @@
               "id": "landmark-lighting-calibration",
               "title": "F-ASTRA-9/1: landmarks lit by the sun (emission ≤ 0.6), backface culling on proven-closed meshes, A/B evidence + owner veto",
               "taskFile": "landmark-lighting-calibration.md",
-              "status": "planned",
+              "status": "merged",
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+              "mergeHash": "ab3704716a128ed069468d30039e71ee54a7ac87",
+              "mergedAt": "2026-09-05"
             },
             {
               "id": "glb-export-contract-and-validator",
