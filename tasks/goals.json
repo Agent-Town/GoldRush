@@ -4303,41 +4303,41 @@
               "id": "prefetch-bounded-warming",
               "title": "F-ASTRA-5: the advance stream warms destination + one successor under a byte allowance; the sweep becomes an explicit opt-in",
               "taskFile": "prefetch-bounded-warming.md",
-              "status": "planned",
+              "status": "queued",
               "lane": "lane-b",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+              "queuedAt": "2026-09-05"
             },
             {
               "id": "deploy-budget-hard-verdict",
               "title": "F-ASTRA-12: production deploys fail closed on the 25 MB budget and print a RELEASE VERDICT block",
               "taskFile": "deploy-budget-hard-verdict.md",
-              "status": "planned",
+              "status": "queued",
               "lane": "main",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+              "queuedAt": "2026-09-05"
             },
             {
               "id": "asset-diet-explicit-manifest",
               "title": "F-ASTRA-3: asset-diet compresses by explicit manifest; every GLTFLoader routes through the shared meshopt loader",
               "taskFile": "asset-diet-explicit-manifest.md",
-              "status": "planned",
+              "status": "queued",
               "lane": "lane-a",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+              "queuedAt": "2026-09-05"
             },
             {
               "id": "shared-atlas-texture-dedupe",
               "title": "F-ASTRA-4: a GLTFLoader plugin shares one texture per atlas-content hash across GLBs; residency measured",
               "taskFile": "shared-atlas-texture-dedupe.md",
-              "status": "planned",
+              "status": "queued",
               "lane": "lane-d",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
-              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+              "queuedAt": "2026-09-05"
             },
             {
               "id": "terrain-height-triangle-sampler",
