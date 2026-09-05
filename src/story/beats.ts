@@ -959,6 +959,181 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 411-514, E5 at 683-828,
+// E6 at 837-960): the era's tavern tales and Gazette headlines are ordinary attributed beats in
+// THIS table, not a second narrative system (tavern-tale shape: e2-depot-wedding at lines
+// 367-374, e3-tavern-twins-defect at 485-494, e5-tavern-locomotive-argument at 789-798;
+// Gazette-headline shape: e2-iron-correction-rumor-one at 375-382, e3-gazette-two-offers at
+// 433-442, e6-gazette-the-printing at 941-950). Mystery law holds: the Gazette prints what it
+// can prove and never the meaning. Every beat cites its storybook line; artKey is set only
+// where a plate exists on disk under assets/raw/.
+// Cast note (honesty guard): STORYBOOK lines 421-425 name six E7 cast members (Chalk the first
+// made citizen, the switchboard chief, the playbook librarian, the drone keeper, the tape
+// courier kid, the Combine defector at the Exchange). None has a processed portrait -
+// assets/raw/tf-*-e7.png exist but assets/processed/ has no tf-*-e7 entry, and speakers.ts:10-16
+// resolves portraits from assets/processed/ - so a new speaker id would render broken art. They
+// are voiced here by the registered speakers who carry their news in town, and are named inside
+// the lines. Mei (the `newsie` speaker) IS registered and carries both Gazette beats, which is
+// exactly owner ruling #11 (STORYBOOK:424,461): the chief runs the boards, the defector runs the
+// Exchange, and Mei runs its news desk.
+export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    // lore/STORYBOOK.md:449,435
+    id: 'e7-relay-valley-arrival',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e7-relay-valley', // assets/raw/plate-contract-e7-relay-valley.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
+    lines: ['Four masts on the two ridges, and every dish is turned away from us.', 'MORE VOICES, the House printed. So the towers ask the horizon, and we wait to hear who is left.'],
+  },
+  {
+    // lore/STORYBOOK.md:449,408
+    id: 'e7-exchange-wrong-number',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
+    lines: ['The Exchange opened in our old annex, and the first long call out of this valley was a wrong number.', "A lighthouse keeper on some far coast, confused, then kind. We talked an hour, and the board's first jack was soldered in that night."],
+  },
+  {
+    // lore/STORYBOOK.md:450,421; lore/characters.md:14 (CANON, owner ruling #13) - the chapter still prints CHALK as a proposal, the character file carries the ruling.
+    id: 'e7-chalk-first-filing',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
+    lines: ['Chalk has a desk at the claim office now, a portrait on the ledger wall, and rung zero like anybody starting out.', "Named for what the Elder's chair was holding the morning she was gone. Its first filing was a set of rescue coordinates."],
+  },
+  {
+    // lore/STORYBOOK.md:451,422
+    id: 'e7-playbook-library-tape-001',
+    trigger: 'contract-unlocked',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e7-bld-playbook-library', // assets/raw/plate-e7-bld-playbook-library.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
+    lines: ['The library opened in the schoolhouse, and tape number one is her morning panning circuit, unimproved.', "The drones walk that round in her rhythm now. We framed the reel beside the pan's file of rejected improvements."],
+  },
+  {
+    // lore/STORYBOOK.md:406,451; the Gazette prints the trade and never the question nobody asks.
+    id: 'e7-gazette-new-hands',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
+    lines: ['GAZETTE: NEW HANDS, WELCOME', 'Nine off the ferry at the river mouth, trades listed, coats still stiff with salt. This paper prints their trade and asks them nothing else.'],
+  },
+  {
+    // lore/STORYBOOK.md:416
+    id: 'e7-mission-sent-column',
+    trigger: 'contract-unlocked',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
+    lines: ['One made citizen to each answering jack, and only ever where somebody asked us first.', "The chief's rescue ledger grew a second column in her own hand: SENT. The tavern hung a little map with brass pins in it."],
+  },
+  {
+    // lore/STORYBOOK.md:438
+    id: 'e7-echo-canyon-mirror',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e7-echo-canyon', // assets/raw/plate-contract-e7-echo-canyon.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-echo-canyon',
+    lines: ['Everything I record down here comes back at me next wave, copied wrong and walking.', 'So vary the round. My habits have a shadow in this canyon, and it is studying them.'],
+  },
+  {
+    // lore/STORYBOOK.md:439
+    id: 'e7-dead-band-quiet',
+    trigger: 'contract-unlocked',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e7-dead-band', // assets/raw/plate-contract-e7-dead-band.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-dead-band',
+    lines: ['The Dead Band takes no signal at all. No relay chain, no drones, no playbooks.', 'Hands, boots, and the four oldest tools. You learn what the drones gave you by going without them for a shift.'],
+  },
+  {
+    // lore/STORYBOOK.md:440; the front is described and never explained (mystery law).
+    id: 'e7-relay-rush-front',
+    trigger: 'contract-unlocked',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e7-relay-rush', // assets/raw/plate-contract-e7-relay-rush.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-rush',
+    lines: ['Relay Rush runs on a clock: light the whole chain before the interference front crosses the valley.', 'It comes on as the paper going pale, and it mutes whatever it swallows. Light them in order and do not stop to admire the work.'],
+  },
+  {
+    // lore/STORYBOOK.md:443,444
+    id: 'e7-echo-arrival',
+    trigger: 'boss-arrival',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e7-boss-the-echo', // assets/raw/plate-e7-boss-the-echo.png
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e7-relay-valley',
+    lines: ['The towers started handing our own traffic back, one tick late. The switchboard chief named it first: somebody is playing us back.', 'It stood up on the valley floor wearing our base. Its turrets are our turrets, and its patrols are my recorded rounds.'],
+  },
+  {
+    // lore/STORYBOOK.md:445,446; the kept-machine lineage (cure-arms lexicon, lore/canon-rules.md:13) - the pattern is starved, the machine is kept.
+    id: 'e7-echo-kept-in-a-jar',
+    trigger: 'boss-defeat',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e7-relay-valley',
+    lines: ['Nothing she had done before could touch it. Only the moves that were on no tape at all.', 'It came down to one bright mote, and the House printed a jar. It winters on the shelf beside the chair and the crawler, and it keeps how we play.'],
+  },
+  {
+    // lore/STORYBOOK.md:407,452; tavern-tale shape mirrors e3-tavern-twins-defect at lines 485-494.
+    id: 'e7-tavern-does-not-hang-up',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e7-exchange-wrong-number'),
+    lines: ['The bridge-keeper signed off with a full weather report, complete and correct, and then there was nothing after it.', 'We have quit asking how the board looks tonight. Nobody in this town unplugs a jack. The log stays open.'],
+  },
+  {
+    // lore/STORYBOOK.md:417,418
+    id: 'e7-recall-come-home',
+    trigger: 'run-return-town',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e7-mission-sent-column'),
+    lines: ['The House printed its second word this era. The first was MORE VOICES. This one is COME HOME.', 'They came back one line at a time, and not all of them. The pen keeps a cover folded for each one still out.'],
+  },
+  {
+    // lore/STORYBOOK.md:425; the paper can prove the scrip and cannot name the client, so it prints only the scrip.
+    id: 'e7-gazette-mispronounced',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e7-echo-arrival'),
+    lines: ['GAZETTE: RUSTLERS PAID IN OLD RAIL SCRIP', 'The tape they filled runs hours of weddings, freight and weather. One name occurs once, in passing, said wrong. This paper prints the scrip and no client.'],
+  },
+  {
+    // lore/STORYBOOK.md:453,408; the exit hook toward E8, in the shape of e5-deep-reactor-horizon at lines 819-827.
+    id: 'e7-starship-countdown',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    lines: ['The last frequency went quiet, so the chief patched it through the whole ring once and left that jack lit for good.', 'Then the Starship stood on the pad with our newest citizens aboard, and she counted the ground to the sky: five, four, three, two.'],
+  },
+];
+
 // Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 411-514, E6 at lines 837-960):
 // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
 // (tavern-tale shape: e3-tavern-twins-defect at lines 485-494 and e6-tavern-wrangler-drinks-free
