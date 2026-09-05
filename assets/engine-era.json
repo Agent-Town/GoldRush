@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "9b2b30d80676a442594b1911c750dc0753ba90fcc43b2fa11d0f02d95228c742",
+  "engineHash": "e40023d41bceb6b93e140d6f60ca6e83724dec1fc56c1cc1984e88b627fa294e",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -379,6 +379,12 @@
       "engineHash": "9b2b30d80676a442594b1911c750dc0753ba90fcc43b2fa11d0f02d95228c742",
       "pinnedAt": "2026-09-06",
       "cause": "src re-hash: story-signal-emitters drain — the four story signals nobody emitted (wave-complete, rung-promotion, science-threshold, first-boot) now publish from Game.ts/main.ts as presentation signals; the E1 null floors 21/21 and the played tapes replay byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "e40023d41bceb6b93e140d6f60ca6e83724dec1fc56c1cc1984e88b627fa294e",
+      "pinnedAt": "2026-09-06",
+      "cause": "src re-hash: ss-11-e10-beats drain — E10_STORY_BEATS data plus its StoryRuntime switch line, unioned after E9 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     }
   ],

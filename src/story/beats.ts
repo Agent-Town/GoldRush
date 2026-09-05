@@ -1503,6 +1503,244 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 411-514, E8 at lines 1153-1328):
+// the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
+// (tavern-tale shape: e3-tavern-twins-defect at lines 485-494 and e8-tavern-river-question at lines
+// 1289-1298; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second narrative system.
+// Mystery law holds: the Gazette prints what it can prove and never the meaning.
+// LANDED 2026-09-06 (attended drain, CLAUDE.md section 4.10b): the E8 coordinates above were re-based
+// by +175 in the landing commit, E7 and E9 having landed on main after this lane was cut. Measured on
+// the merged file, not inherited: E8 at 1153-1328, e8-tavern-river-question at 1289-1298. The E3
+// coordinates and every lore/STORYBOOK.md citation below were unaffected.
+// SPEAKER GAP (reported, not invented, the same finding ss-06, ss-07 and ss-09 recorded for E5, E6
+// and E8): STORYBOOK lines 584-586, 618 and 621 name this chapter's cast (the eldest heir, the Baron
+// in his last act of keeping, the Old Digger, the Quack, Chalk at the manifest, the Charter-Keeper,
+// the child at the lever). assets/processed/ holds no e10 portrait of any of them, and
+// src/story/speakers.ts:9-15 requires a processed portrait per speaker id, so adding one would
+// render a broken portrait. They are voiced here through registered speakers and named inside the
+// lines. No speaker added.
+// TRIGGER GAP (reported, not invented, per the honesty guard): THE QUIET is a boss in the storybook
+// (lines 609-613) but no epoch-10-deepsky contract carries a twist.baron, and boss-arrival /
+// boss-defeat are emitted only when one exists (src/game/Game.ts:5987-5991 and src/game/Game.ts:6250).
+// 'wave-complete' is declared at src/story/signals.ts:6 but nothing under src/ emits it. So the
+// Quiet's acts ride the nearest signals that DO fire in this era: contract-unlocked
+// (src/town/TownScene.ts:2568-2578) and run-return-town (src/town/TownScene.ts:2583), chained through
+// hasStoryBeatSeen exactly the way the E8 table chains. No signal added.
+// PROPOSED PLAY (marked, not asserted): every epoch-10-deepsky contract still declares a missing
+// engine consumer in assets/contracts/epoch-10-deepsky/contracts.json
+// (tileParams.engineDependencies: ember-shore-preserve-consumers, archive-world-consumers,
+// last-claim-finale-metadata-consumer, credits-river-consumer). The fiction below is cited canon in
+// every case; the lines that describe the era's PLAY rather than its fiction are marked PROPOSED at
+// their own beat until those consumers land.
+// Household Law (lore/canon-rules.md:19-20): the child at the Press lever stands under the hero's
+// hands, never alone. Cure-arms LEXICON (lore/canon-rules.md:13-14): the unraveled are dispersed and
+// remembered, never killed or slain. ADR-001 holds: this era's arms are a pan, a lantern, a song and
+// bursts that put color back. artKey is set only where a plate exists on disk under assets/raw/.
+export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    // lore/STORYBOOK.md:617,584
+    id: 'e10-ark-boarding',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
+    lines: ["The fleet with the crossed pickaxes made the Ark yards, and the eldest heir asked it with his whole family listening. The valley was his too, wasn't it. Always said so.", 'The town laughed, and the laugh was a yes, and ten generations of rivalry retired in one boarding queue.'],
+  },
+  {
+    // lore/STORYBOOK.md:617
+    id: 'e10-long-table-seed',
+    trigger: 'contract-unlocked',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e10-long-table', // assets/raw/plate-e10-long-table.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
+    lines: ["We planted the Elder's Tree seed in the Long Table hall before the first watch, and it takes ship-light the way it took valley light.", "Watered on the reeve's old schedule, the one this town wrote after it learned what a tree costs. Grief and law agreed at last, on one seed."],
+  },
+  {
+    // lore/STORYBOOK.md:584
+    id: 'e10-welcome-from',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
+    lines: ['The heirs came aboard spent, never sick, rich in exactly the things the Static eats first, and we seated them the way this house has seated every arrival since the wagon ring.', 'Every soul at that table had read the whole printed story years before they knocked. We set the places anyway, and the intake form is still one question long. Where shall we say welcome from.'],
+  },
+  {
+    // lore/STORYBOOK.md:585
+    id: 'e10-baron-stays',
+    trigger: 'contract-unlocked',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
+    lines: ['The Baron did not board. He is ancient now, and he stays on the red world with the Old Digger, keeping the canals right for the greenest thing his century ever touched.', 'He asked one thing of the heir, and he handed over the stopped watch. It never ran here. Maybe it runs out there.'],
+  },
+  {
+    // lore/STORYBOOK.md:586
+    id: 'e10-quack-freed',
+    trigger: 'contract-unlocked',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
+    lines: ["The Baron's last act of keeping was letting go. The oldest prisoner in the family ledger walks this ship freed, and he took the far end of the Long Table.", 'No one remembers what he called himself, only what he sold. He keeps the apothecary drawer now, and this time the drawer is honest.'],
+  },
+  {
+    // lore/STORYBOOK.md:618,603; PROPOSED PLAY: the preserve loop this line promises waits on
+    // ember-shore-preserve-consumers (assets/contracts/epoch-10-deepsky/contracts.json).
+    id: 'e10-ember-shore-arrival',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e10-ember-shore', // assets/raw/plate-contract-e10-ember-shore.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
+    lines: ['First world made port. Cooling lava veins band the whole dry shore, and the vent at the south end is the last live heat on it.', 'A machine stands over the east ground, cooled right through, older than the Combine. Nobody aboard can tell you what built it, and the sky out here is older than the machine.'],
+  },
+  {
+    // lore/STORYBOOK.md:618,603,589; mystery law holds, in the E3 Gazette shape at lines 433-442.
+    id: 'e10-gazette-new-verb',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
+    lines: ['GAZETTE: FIRST WORLD MADE PORT AND THE HOLD CAME HOME EMPTY', 'The board has posted a contract that asks this town to keep one vent alight and carry nothing away. This paper can print the contract. It will not print what the new verb means.'],
+  },
+  {
+    // lore/STORYBOOK.md:605,619; PROPOSED PLAY: the wing-by-wing re-ink and its page unlocks wait on
+    // archive-world-consumers (assets/contracts/epoch-10-deepsky/contracts.json).
+    id: 'e10-archive-world-shelf',
+    trigger: 'contract-unlocked',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e10-archive-world', // assets/raw/plate-contract-e10-archive-world.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-archive-world',
+    lines: ['The Archive World is a library that lost. Its ruins stop mid sentence, un-inked, and we bring back one wing at a time by holding light through the squalls.', 'Deep in the stacks one shelf is empty and labeled in pictogram. Ours, unless. I have never had to teach that lesson twice.'],
+  },
+  {
+    // lore/STORYBOOK.md:606,612; PROPOSED PLAY: the ten-deck run and the oldest-first forgetting wait
+    // on last-claim-finale-metadata-consumer (assets/contracts/epoch-10-deepsky/contracts.json).
+    id: 'e10-last-claim-decks',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e10-last-claim', // assets/raw/plate-contract-e10-last-claim.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-last-claim',
+    lines: ['The heart storm came for the Ark itself, so the deck is the map. Ten lineage decks stern to bow, each one worked in its own colors with its own tools.', 'It forgets our work oldest first. The Spark Rig goes, then the boilers, then the arcs, and we finish with the newest science defending the oldest things.'],
+  },
+  {
+    // lore/STORYBOOK.md:607,621,622; PROPOSED PLAY: the post-credits pan waits on
+    // credits-river-consumer (assets/contracts/epoch-10-deepsky/contracts.json).
+    id: 'e10-river-charter',
+    trigger: 'contract-unlocked',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-contract-e10-river', // assets/raw/plate-contract-e10-river.png
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-river',
+    lines: ["The child's first charter is open at dawn, and there is nothing on it to fight. One river, one ford, one pan.", 'Go on. It is your claim now.'],
+  },
+  {
+    // lore/STORYBOOK.md:618; the manifest keeper is the House's first made citizen (ADR-003).
+    id: 'e10-chalk-manifest',
+    trigger: 'run-return-town',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-ember-shore-arrival'),
+    lines: ['Charters chosen at the world window, squalls weathered, worlds logged. Chalk enters every one of them in the columns the rail spur ruled a long time ago.', 'The first made citizen this town ever had, still at a desk. The desk sails now, and the form is still the heirloom.'],
+  },
+  {
+    // lore/STORYBOOK.md:589,592; the era's turn and the ruled final strain, each stated once.
+    id: 'e10-what-you-hand-on',
+    trigger: 'run-return-town',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-ember-shore-arrival'),
+    lines: ['What is a claim. Out here the answer is what you hand on, and the contracts say it before any of us do. The last work of this town does not take a thing. It keeps one.', 'The rival out here never wanted gold. It wants meaning, which is ink and color and memory, and it is the same old hunger with nothing smaller left to eat.'],
+  },
+  {
+    // lore/STORYBOOK.md:610,619; Stillwater (E5) is the plant this beat pays.
+    id: 'e10-portrait-fades',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e10-boss-the-quiet', // assets/raw/plate-e10-boss-the-quiet.png
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-ark-boarding'),
+    lines: ['A portrait on the Long Table wall faded last night. Slightly. The house noticed, because noticing is the whole trade and always has been.', 'The ones who sailed Stillwater felt it first. They learned quiet as a place once, so they know it the moment it arrives as a threat.'],
+  },
+  {
+    // lore/STORYBOOK.md:611; cure-arms LEXICON (lore/canon-rules.md:13-14) holds to the last era.
+    id: 'e10-unraveled-board',
+    trigger: 'run-return-town',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-portrait-fades'),
+    lines: ['The squalls put every machine this town ever turned back onto our own decks, gray at the edges and forgetting themselves. Rail toughs, saboteurs, tar sprites, toasters.', 'Not one of them was harmed. Every one the re-ink grammar disperses is a memory put back on the wall, so our tally reads as remembering.'],
+  },
+  {
+    // lore/STORYBOOK.md:613; the three preserves, and the Quiet recedes rather than falls.
+    id: 'e10-three-preserves',
+    trigger: 'run-return-town',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-last-claim-decks'),
+    lines: ['Inside the aura the work inverts into keeping. One lantern lit, one song playing, one portrait untouched, and every preserve we hold weakens the heart.', 'You do not damage the Quiet. You out-live it, and when it breaks it does not fall. It recedes.'],
+  },
+  {
+    // lore/STORYBOOK.md:596; tavern-tale shape mirrors e8-tavern-river-question at lines 1114-1123.
+    id: 'e10-tavern-starlight-pan',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e10-starlight-pan', // assets/raw/plate-e10-starlight-pan.png
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-unraveled-board'),
+    lines: ['The house settled an old argument this week. Somebody asked which upgrade finally made the pan a weapon, and the Prospector lifted the first pan out of its case and swept it once at the window.', 'Nebula light gathered into charges on the old timing, in front of everybody. It was never improved and never needed to be. The one tool we refused to touch is the one the Quiet cannot make old.'],
+  },
+  {
+    // lore/STORYBOOK.md:620,613; the mystery law holds, so the paper prints the jar and not the mote.
+    id: 'e10-gazette-mote-in-the-jar',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-three-preserves'),
+    lines: ['GAZETTE: IT RECEDED, AND THE COLOR CAME BACK UP THE WALL NAME BY NAME', "There is a mote in a jar on the House's shelf tonight, under one pictogram: remember. This paper prints the jar and the label. It does not print what is inside."],
+  },
+  {
+    // lore/STORYBOOK.md:620,614; the grace note, and the E8 question answered by a watch.
+    id: 'e10-watch-wound',
+    trigger: 'run-return-town',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    presentation: 'card',
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-gazette-mote-in-the-jar'),
+    lines: ['In the re-inked light the heir took out the stopped watch, stopped since the day a man called this valley spent, and wound it.', 'It runs. Is it enough yet, she asked me once. It is answered now by a watch that keeps time again, and it sits on the shelf under the portraits.'],
+  },
+  {
+    // lore/STORYBOOK.md:621; the last node opens the Press, in the shape of e8-riverward-launch at
+    // lines 1144-1153. Household Law (lore/canon-rules.md:19-20): the child is at the lever with her.
+    id: 'e10-charter-press',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    presentation: 'card',
+    artKey: 'plate-e10-charter-press-hall', // assets/raw/plate-e10-charter-press-hall.png
+    lines: ['The last node was not a weapon and not a wall. It opened the Press, and the lever in that hall is child height on purpose.', "Her hands over a child's hands, and the first charter is the child's to choose. The child chartered a river. Of course they did. Every story on that wall starts with one."],
+  },
+];
+
 export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
   ? [...STORY_BEATS, ...LEDGER_STORY_BEATS]
   : [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];
