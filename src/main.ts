@@ -5,7 +5,8 @@ import { markStartupFrameReady, prefetchNonCriticalGeneratedTextures } from './a
 import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import type { RunReturnResult } from './game/Game';
-import { FIRST_CLAIM_DONE_KEY } from './game/ProfileStorage';
+import { FIRST_CLAIM_DONE_KEY, loadProfileState } from './game/ProfileStorage';
+import { hasStoryBeatSeen, markStoryBeatSeen } from './story/seenState';
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
@@ -120,8 +121,32 @@ installEpochLedgerDiscovery();
 
 const RUN_ROUTE_PARAMS = ['contract', 'seed', 'difficulty', 'mode', 'press', 'replay', 'watch'] as const;
 
+// F-SS05-1: `first-boot` is a declared signal that nothing in `src/` emitted. The boot path is
+// the only honest site for it, and it fires exactly once per profile.
+const FIRST_BOOT_SEEN_KEY = 'signal:first-boot';
+
+// ⚠️ NOT `hasStoryBeatSeen` alone. Both story-seen helpers reach `activeProfile`/`markHintSeen`,
+// and BOTH funnel through `ensureProfileState` (ProfileStorage.ts:129), which CREATES and SAVES a
+// default "Robin" profile when none exists. Asking the question before the player has answered
+// "Who's prospecting?" would therefore answer it for them and skip profile creation entirely — so
+// a boot with no profile state simply is not a profile's first boot yet, and the next load (the
+// launch reload) carries the signal instead.
+function claimFirstBootForProfile(): boolean {
+  try {
+    if (!loadProfileState(window.localStorage)) return false;
+    if (hasStoryBeatSeen(FIRST_BOOT_SEEN_KEY)) return false;
+    return markStoryBeatSeen(FIRST_BOOT_SEEN_KEY);
+  } catch {
+    // Storage is optional; a boot that cannot remember is not one we announce.
+    return false;
+  }
+}
+
 afterFirstFrame(() => {
-  void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));
+  void import('./story').then(({ emitStorySignal, installStoryRuntime }) => {
+    installStoryRuntime(app);
+    if (claimFirstBootForProfile()) emitStorySignal({ type: 'first-boot' });
+  });
 });
 
 async function startGame(boot: GameBoot = {}): Promise<void> {

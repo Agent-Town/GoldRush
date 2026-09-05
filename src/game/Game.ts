@@ -1325,6 +1325,13 @@ export class Game {
   private movePinReported = false;
   private movePinDiagnostic: { x: number; z: number; sample: Terrain.TerrainSample; sinceSeconds: number } | null = null;
   private kills = 0;
+  // Story-signal watchers (F-SS05-1). PRESENTATION ONLY: they observe state the render side
+  // already reads and publish story signals; nothing here is read back by the sim, so the
+  // event-log hash is untouched (CLAUDE.md §4.6). Both hold the value seen on the PREVIOUS
+  // frame, not a high-water mark, so a `resetRun` that rewinds the wave counter re-arms them.
+  private storyWaveSeen = 0;
+  private storyRungLevel = -1;
+  private storyScienceSteps = 0;
   private baronBeatenThisRun = false;
   private baronCeremony: { atSim: number; startedTickElapsed: number } | null = null;
   private readonly baronStandardPosition = new THREE.Vector3();
@@ -3293,11 +3300,41 @@ export class Game {
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
     this.syncUi();
+    this.syncStoryWaveSignal();
+    this.syncStoryRungSignal();
     this.syncAssayOfficePrompt();
     this.syncBuildingContextPrompt();
     this.syncWorldInfoNotePrompt();
     this.syncLanternShow();
     this.publishDiagnostics();
+  }
+
+  // F-SS05-1: `wave-complete` was a declared signal with no emitter, so `first-wave-five`
+  // (beats.ts:69, `wave >= 5`) had never fired for a player. Wave N is COMPLETE when the wave
+  // counter leaves it, which is the only wave-end transition the scheduled path exposes —
+  // `WaveSystem.resolveWaveState` only ever returns quiet/warning/active, and 'cleared' belongs
+  // to the drill yard's manual bell. Read from the RENDER side (`updatePresentation`), never
+  // from the fixed sim step, and it publishes only: nothing here feeds the sim.
+  private syncStoryWaveSignal(): void {
+    if (this.runTapeReplay) return;
+    const wave = this.currentRunWave();
+    const previous = this.storyWaveSeen;
+    this.storyWaveSeen = wave;
+    if (wave > previous && previous >= 1) emitStorySignal({ type: 'wave-complete', wave: previous });
+  }
+
+  // F-SS05-1: `rung-promotion` likewise had no emitter, so both deputy beats (beats.ts:108, :117)
+  // were unreachable. The promotion IS the persisted autonomy track — "secured claims advance the
+  // Prospector" (ProspectorPanel.autonomyLine) — so the per-run `agentPolicySlotBonus` is
+  // deliberately excluded: a policy slot is a loan, not a rung. Starting at -1 means the first
+  // frame only seeds the baseline, so a returning profile already at rung 2 is not told it was
+  // just promoted.
+  private syncStoryRungSignal(): void {
+    if (this.runTapeReplay) return;
+    const level = this.runManager ? agentAutonomyLevel(this.runManager.metaProgress) : 0;
+    const previous = this.storyRungLevel;
+    this.storyRungLevel = level;
+    if (previous >= 0 && level > previous) emitStorySignal({ type: 'rung-promotion', level });
   }
 
   private consumeMultiplayerTick(bundle: LockstepTick): Intents {
@@ -9465,7 +9502,7 @@ export class Game {
         roundsRemaining = Math.max(0, roundsRemaining - 1);
         this.applyResearchEffects();
         this.syncMegaprojectSite();
-        this.emitScienceCompleteIfReady();
+        this.emitScienceSignals();
         this.publishDiagnostics();
       }
       return state();
@@ -9509,13 +9546,23 @@ export class Game {
     this.researchState = saveResearchState(this.researchStorage, next);
     this.applyResearchEffects();
     this.syncMegaprojectSite();
-    this.emitScienceCompleteIfReady();
+    this.emitScienceSignals();
     this.publishDiagnostics();
     return true;
   }
 
-  private emitScienceCompleteIfReady(): void {
-    if (scienceMeter(this.researchState).complete) emitStorySignal({ type: 'science-complete' });
+  // F-SS05-1: `science-threshold` had no emitter, so science-first-pick, science-mastery and
+  // baron-shadow (beats.ts:126, :135, :144 — thresholds 1, 3 and 4) had never fired for a player.
+  // The threshold reached IS the science step count the meter already shows; both callers below
+  // run on the research overlay's UI path, after a pick has been taken and saved, so this reads
+  // and publishes only. The `> steps` guard keeps it once per crossing.
+  private emitScienceSignals(): void {
+    const meter = scienceMeter(this.researchState);
+    if (meter.steps > this.storyScienceSteps) {
+      this.storyScienceSteps = meter.steps;
+      emitStorySignal({ type: 'science-threshold', threshold: meter.steps });
+    }
+    if (meter.complete) emitStorySignal({ type: 'science-complete' });
   }
 
   private researchDiagnostics(): {
