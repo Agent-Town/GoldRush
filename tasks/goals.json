@@ -4288,6 +4288,86 @@
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-05"
+            },
+            {
+              "id": "lantern-true-world-reel",
+              "title": "F-ASTRA-11: the Lantern reel renders the paid-for world stage (terrain pilot + rigs + snapshot-driven sprites), SVG kept as the labelled tactical fallback",
+              "taskFile": "lantern-true-world-reel.md",
+              "status": "planned",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+            },
+            {
+              "id": "prefetch-bounded-warming",
+              "title": "F-ASTRA-5: the advance stream warms destination + one successor under a byte allowance; the sweep becomes an explicit opt-in",
+              "taskFile": "prefetch-bounded-warming.md",
+              "status": "planned",
+              "lane": "lane-b",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+            },
+            {
+              "id": "deploy-budget-hard-verdict",
+              "title": "F-ASTRA-12: production deploys fail closed on the 25 MB budget and print a RELEASE VERDICT block",
+              "taskFile": "deploy-budget-hard-verdict.md",
+              "status": "planned",
+              "lane": "main",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+            },
+            {
+              "id": "asset-diet-explicit-manifest",
+              "title": "F-ASTRA-3: asset-diet compresses by explicit manifest; every GLTFLoader routes through the shared meshopt loader",
+              "taskFile": "asset-diet-explicit-manifest.md",
+              "status": "planned",
+              "lane": "lane-a",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+            },
+            {
+              "id": "shared-atlas-texture-dedupe",
+              "title": "F-ASTRA-4: a GLTFLoader plugin shares one texture per atlas-content hash across GLBs; residency measured",
+              "taskFile": "shared-atlas-texture-dedupe.md",
+              "status": "planned",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+            },
+            {
+              "id": "terrain-height-triangle-sampler",
+              "title": "F-ASTRA-10: visualY samples the drawn triangles (diagonal from the index buffer); centroid discrepancy 0",
+              "taskFile": "terrain-height-triangle-sampler.md",
+              "status": "planned",
+              "lane": "lane-d",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+            },
+            {
+              "id": "landmark-lighting-calibration",
+              "title": "F-ASTRA-9/1: landmarks lit by the sun (emission ≤ 0.6), backface culling on proven-closed meshes, A/B evidence + owner veto",
+              "taskFile": "landmark-lighting-calibration.md",
+              "status": "planned",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
+            },
+            {
+              "id": "glb-export-contract-and-validator",
+              "title": "F-ASTRA-7/8: per-asset export profiles (extras/animations preserved) + a node GLB contract guard + docs/3d/PIPELINE.md",
+              "taskFile": "glb-export-contract-and-validator.md",
+              "status": "planned",
+              "lane": "lane-a",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "authoredAt": "2026-09-05",
+              "note": "HELD until F-CLI-1 is cured: the master carries CODEX: model=gpt-6-astra effort=xhigh, which the factory codex CLI 0.149.1 rejects (400: requires a newer Codex). Queue after the CLI upgrade."
             }
           ]
         }
