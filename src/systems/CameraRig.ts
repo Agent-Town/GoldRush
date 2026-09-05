@@ -23,6 +23,16 @@ export class CameraRig {
     this.distanceScale = scale;
   }
 
+  /** Fit the selected contract with the normal game pose, including narrow portrait viewports. */
+  frameBounds(bounds: { minX: number; maxX: number; minZ: number; maxZ: number }, target: THREE.Vector3): void {
+    const width = bounds.maxX - bounds.minX;
+    const depth = bounds.maxZ - bounds.minZ;
+    const halfFov = THREE.MathUtils.degToRad(this.camera.fov / 2);
+    const distance = Math.max(width / Math.max(.1, this.camera.aspect), depth) / (2 * Math.tan(halfFov));
+    this.setDistanceScale((distance + depth * .28) * this.sceneScale / Balance.camera.offset.length());
+    this.snapTo(target);
+  }
+
   diagnostics(): { baseDistance: number; actualDistance: number; glanceActive: boolean } {
     return {
       baseDistance: Balance.camera.offset.length() / this.sceneScale,

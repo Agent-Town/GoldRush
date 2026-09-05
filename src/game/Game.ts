@@ -156,7 +156,6 @@ import {
   parsePlaybookText,
   PLAYBOOK_STEP_SECONDS,
   PLAYBOOK_VERSION,
-  isAgentOrdersAction,
   playbookHash,
   quantizePlaybookCoordinate,
   validateEntries,
@@ -224,8 +223,7 @@ import {
 } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
 import engineEra from '../../assets/engine-era.json' with { type: 'json' };
-import { BrowserAgentTapeReplay } from '../replay/BrowserAgentTapeReplay';
-import type { AgentTapeReplaySnapshot } from '../replay/AgentTapeReplay';
+import { LanternController, usesLanternWorker, type LanternReplayState } from '../replay/LanternController';
 import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type UpgradeCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
@@ -272,7 +270,7 @@ import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt, type CanalDecisionCandidate, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
-import { LanternShow, readReplayEraMeta, validateAgentRunTape, type LanternShowState } from '../ui/LanternShow';
+import { LanternShow, validateAgentRunTape, type LanternShowState } from '../ui/LanternShow';
 import { disposeObject3D } from '../utils/dispose';
 import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
@@ -343,7 +341,6 @@ import { DevilsAlleyPresentation } from '../systems/DevilsAlleyPresentation';
 import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
 import { CanalChoiceSystem } from '../systems/CanalChoiceSystem';
 import { CanalFlowPresentation } from '../systems/CanalFlowPresentation';
-import { engineEraIncludes } from '../replay/EngineEraLineage.mjs';
 // Replay Law: Frontier upgrades remain available after later epochs activate.
 const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
 const STAMP_MILL_ID = 'stamp-mill';
@@ -445,21 +442,8 @@ function assayReplayBoot(boot: GameBoot): GameBoot {
   }
 }
 
-type RunTapeReplayState = {
-  tape: RunTape;
+type RunTapeReplayState = LanternReplayState & {
   sessions: Map<number, PlaybookReplaySession>;
-  speed: 1 | 2 | 4;
-  skipWave: number | null;
-  complete: boolean;
-  hash: string | null;
-  agentTape: boolean;
-  divergedAtWave: number | null;
-  trueDriver: BrowserAgentTapeReplay | null;
-  snapshot: AgentTapeReplaySnapshot | null;
-  requestedTick: number;
-  requestPending: boolean;
-  winding: boolean;
-  eraRefusal: { tapeHash: string; currentHash: string; tapeEra: number | null; currentEra: number } | null;
   motorActionIndex: number;
   playedPlaybookUses: number;
 };
@@ -1330,6 +1314,7 @@ export class Game {
   private lastRunTape: RunTape | null = null;
   private runTapeReplay: RunTapeReplayState | null = null;
   private lanternShow?: LanternShow;
+  private lanternController?: LanternController;
   private readonly replayCameraPan = new THREE.Vector3();
   private readonly replayCameraTarget = new THREE.Vector3();
   private elapsed = 0;
@@ -2637,7 +2622,7 @@ export class Game {
     this.input.dispose();
     this.cameraZoom.dispose();
     this.playbookSurface?.dispose();
-    this.runTapeReplay?.trueDriver?.dispose();
+    this.lanternController?.dispose();
     this.lanternShow?.dispose();
     this.e7SignalSystem.dispose();
     this.hud.dispose();
@@ -2751,7 +2736,7 @@ export class Game {
 
   private update(delta: number): boolean {
     if (this.runTapeReplay?.complete || this.finishRunTapeReplayIfComplete()) return false;
-    if (this.runTapeReplay?.trueDriver) return this.updateTrueRunTapeReplay();
+    if (this.lanternController) return false;
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
@@ -7116,13 +7101,7 @@ export class Game {
       { slot: tape.inputLog.primarySlot, start: tape.inputLog.start, entries: tape.inputLog.entries },
       ...tape.inputLog.streams,
     ];
-    const hasAgentOrders = recordings.some((recording) =>
-      recording.entries.some((entry) => entry.a.some(isAgentOrdersAction)));
-    const meta = readReplayEraMeta(tape);
-    const carriesEraStamp = meta?.era !== undefined || meta?.engineHash !== undefined;
-    const eraRefused = carriesEraStamp
-      && (!meta?.engineHash || meta.era !== engineEra.era || !engineEraIncludes(engineEra, meta.engineHash));
-    if ((tape.inputLog.playbookUses?.length ?? 0) === 0 && ((hasAgentOrders && meta?.engineHash && meta.era) || eraRefused)) {
+    if (usesLanternWorker(tape)) {
       this.startTrueRunTapeReplay(tape);
       return;
     }
@@ -7182,47 +7161,18 @@ export class Game {
   }
 
   private startTrueRunTapeReplay(tape: RunTape): void {
-    const meta = readReplayEraMeta(tape);
-    const eraRefusal = !meta?.engineHash || meta.era !== engineEra.era || !engineEraIncludes(engineEra, meta.engineHash)
-      ? { tapeHash: meta?.engineHash && meta.era ? meta.engineHash : `unstamped build ${meta?.buildId ?? 'unknown'}`, currentHash: engineEra.engineHash, tapeEra: meta?.engineHash && meta.era ? meta.era : null, currentEra: engineEra.era }
-      : null;
-    const driver = eraRefusal ? null : new BrowserAgentTapeReplay(tape);
-    this.runTapeReplay = {
-      tape,
-      sessions: new Map(),
-      speed: 1,
-      skipWave: null,
-      complete: eraRefusal !== null,
-      hash: null,
-      agentTape: true,
-      divergedAtWave: null,
-      trueDriver: driver,
-      snapshot: null,
-      requestedTick: 0,
-      requestPending: driver !== null,
-      winding: driver !== null,
-      eraRefusal,
-      motorActionIndex: 0,
-      playedPlaybookUses: 0,
-    };
-    this.mountLanternShow(tape);
-    if (eraRefusal) {
-      this.state.setPaused(true);
-      this.syncLanternShow();
-      return;
-    }
-    void driver!.start().then((reply) => {
-      const replay = this.runTapeReplay;
-      if (!replay || replay.trueDriver !== driver) return;
-      replay.snapshot = reply.snapshot ?? null;
-      replay.requestedTick = replay.snapshot?.tick ?? 0;
-      replay.requestPending = false;
-      replay.winding = false;
-      this.syncLanternShow();
-    }).catch((error) => {
-      if (this.runTapeReplay?.trueDriver === driver) this.failTrueRunTapeReplay(error);
+    this.lanternController?.dispose();
+    this.lanternController = new LanternController(this.getElement('#app'), tape, {
+      close: () => this.closeRunTapeReplay(), shareUrl: this.boot.replay?.shareUrl,
+      tactical: true, heightAt: Terrain.sampleHeight,
+      pan: (dx, dz) => {
+        this.replayCameraPan.x = THREE.MathUtils.clamp(this.replayCameraPan.x + dx, -24, 24);
+        this.replayCameraPan.z = THREE.MathUtils.clamp(this.replayCameraPan.z + dz, -24, 24);
+      },
     });
-    this.syncLanternShow();
+    this.runTapeReplay = Object.assign(this.lanternController.replay, {
+      sessions: new Map<number, PlaybookReplaySession>(), motorActionIndex: 0, playedPlaybookUses: 0,
+    });
   }
 
   private mountLanternShow(tape: RunTape): void {
@@ -7237,57 +7187,6 @@ export class Game {
         this.replayCameraPan.z = THREE.MathUtils.clamp(this.replayCameraPan.z + dz, -24, 24);
       },
     }, this.boot.replay?.shareUrl);
-  }
-
-  private updateTrueRunTapeReplay(): boolean {
-    const replay = this.runTapeReplay;
-    if (!replay?.trueDriver || replay.complete || this.state.isPaused) return false;
-    replay.requestedTick += 1;
-    this.pumpTrueRunTapeReplay();
-    return true;
-  }
-
-  private pumpTrueRunTapeReplay(): void {
-    const replay = this.runTapeReplay;
-    const driver = replay?.trueDriver;
-    if (!replay || !driver || replay.complete || replay.requestPending) return;
-    replay.requestPending = true;
-    const target = replay.skipWave === null ? replay.requestedTick : replay.tape.inputLog.durationTicks + 18_000;
-    void driver.advance(target, replay.skipWave ?? undefined).then((reply) => {
-      const current = this.runTapeReplay;
-      if (!current || current.trueDriver !== driver) return;
-      current.requestPending = false;
-      current.snapshot = reply.snapshot ?? current.snapshot;
-      current.winding = false;
-      if (current.skipWave !== null && (current.snapshot?.wave ?? 0) >= current.skipWave) {
-        current.skipWave = null;
-        current.requestedTick = current.snapshot?.tick ?? current.requestedTick;
-        this.loop.setTimeScale(current.speed);
-      }
-      if (reply.result) {
-        current.hash = reply.result.eventLogHash;
-        current.complete = true;
-        current.skipWave = null;
-        this.state.setPaused(true);
-        this.loop.setTimeScale(1);
-      } else if (!this.state.isPaused && (current.skipWave !== null || current.requestedTick > (current.snapshot?.tick ?? 0))) {
-        this.pumpTrueRunTapeReplay();
-      }
-      this.syncLanternShow();
-    }).catch((error) => {
-      if (this.runTapeReplay?.trueDriver === driver) this.failTrueRunTapeReplay(error);
-    });
-  }
-
-  private failTrueRunTapeReplay(error: unknown): void {
-    console.error('[lantern-show] true replay failed', error);
-    const replay = this.runTapeReplay;
-    if (!replay) return;
-    replay.requestPending = false;
-    replay.winding = false;
-    replay.complete = true;
-    this.state.setPaused(true);
-    this.syncLanternShow();
   }
 
   private consumeRunTapeReplayTick(): Intents {
@@ -7361,16 +7260,17 @@ export class Game {
   }
 
   private setRunTapeReplayPaused(paused: boolean): void {
+    if (this.lanternController) return this.lanternController.pause(paused);
     const replay = this.runTapeReplay;
     if (!replay || replay.complete) return;
     replay.skipWave = null;
     this.state.setPaused(paused);
     this.loop.setTimeScale(replay.speed);
     this.syncLanternShow();
-    if (!paused) this.pumpTrueRunTapeReplay();
   }
 
   private setRunTapeReplaySpeed(speed: 1 | 2 | 4): void {
+    if (this.lanternController) return this.lanternController.speed(speed);
     const replay = this.runTapeReplay;
     if (!replay || replay.complete) return;
     replay.speed = speed;
@@ -7380,6 +7280,7 @@ export class Game {
   }
 
   private skipRunTapeReplayWave(): void {
+    if (this.lanternController) return this.lanternController.skipWave();
     const replay = this.runTapeReplay;
     if (!replay || replay.complete) return;
     replay.skipWave = (replay.snapshot?.wave ?? this.waveSystem.diagnostics.wave) + 1;
@@ -7389,16 +7290,10 @@ export class Game {
   }
 
   private restartRunTapeReplay(): void {
+    if (this.lanternController) return this.lanternController.restart();
     const current = this.runTapeReplay;
     const tape = current?.tape;
     if (!tape) return;
-    if (current.trueDriver) {
-      current.trueDriver.dispose();
-      this.state.setPaused(false);
-      this.loop.setTimeScale(1);
-      this.startTrueRunTapeReplay(tape);
-      return;
-    }
     this.runTapeReplay = null;
     this.loop.setTimeScale(1);
     this.mpLocalSlot = 0;
@@ -7407,7 +7302,8 @@ export class Game {
   }
 
   private closeRunTapeReplay(): void {
-    this.runTapeReplay?.trueDriver?.dispose();
+    this.lanternController?.dispose();
+    this.lanternController = undefined;
     this.runTapeReplay = null;
     this.lanternShow?.dispose();
     this.lanternShow = undefined;
@@ -7417,6 +7313,7 @@ export class Game {
   }
 
   private syncLanternShow(): void {
+    if (this.lanternController) return this.lanternController.sync();
     const replay = this.runTapeReplay;
     if (!replay || !this.lanternShow) return;
     const primary = replay.sessions.get(replay.tape.inputLog.primarySlot);

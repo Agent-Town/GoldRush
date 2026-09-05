@@ -6,6 +6,7 @@ import {
   type RunTape,
 } from '../game/RunTape';
 import { isolateProfileStorage } from '../game/ProfileStorage';
+import { PERFORMANCE_TIER_STORAGE_KEY, RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY } from '../game/PerformanceTier';
 import type { AgentTapeReplaySnapshot } from '../replay/AgentTapeReplay';
 import { renderTrueReel, renderTrueReelGround, updateTrueReel } from './TrueReelRenderer';
 
@@ -161,7 +162,7 @@ export function openLanternRefusal(parent: HTMLElement, message: string, onClose
   root.querySelector<HTMLButtonElement>('[data-testid="lantern-refusal-close"]')?.focus({ preventScroll: true });
 }
 
-export function isolateReplayStorage(storage: Storage): () => void {
+export function isolateReplayStorage(storage: Storage, readVisualPreferences = false): () => void {
   const restoreProfileStorage = isolateProfileStorage(storage);
   const prototype = Storage.prototype;
   const getItem = prototype.getItem;
@@ -169,7 +170,8 @@ export function isolateReplayStorage(storage: Storage): () => void {
   const removeItem = prototype.removeItem;
   const clear = prototype.clear;
   prototype.getItem = function (key: string): string | null {
-    return this === storage ? null : getItem.call(this, key);
+    const visualPreference = readVisualPreferences && (key === PERFORMANCE_TIER_STORAGE_KEY || key === RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY);
+    return this === storage && !visualPreference ? null : getItem.call(this, key);
   };
   prototype.setItem = function (key: string, value: string): void {
     if (this !== storage) setItem.call(this, key, value);
@@ -225,6 +227,15 @@ type LanternShowActions = {
   pan: (dx: number, dz: number) => void;
 };
 
+export type LanternWorldView = {
+  canvas: HTMLCanvasElement;
+  heightAt: (x: number, z: number) => number;
+  update: (snapshot: AgentTapeReplaySnapshot | null) => void;
+  placeholders: string;
+};
+
+type LanternViewOptions = { tactical?: boolean; world?: LanternWorldView; heightAt?: (x: number, z: number) => number };
+
 export class LanternShow {
   private readonly root = document.createElement('section');
   private readonly card: HTMLElement;
@@ -232,7 +243,7 @@ export class LanternShow {
   private state: LanternShowState;
   private drag: { id: number; x: number; y: number } | null = null;
 
-  constructor(parent: HTMLElement, private readonly tape: RunTape, private readonly actions: LanternShowActions, shareUrl?: string) {
+  constructor(parent: HTMLElement, private readonly tape: RunTape, private readonly actions: LanternShowActions, shareUrl?: string, private readonly view: LanternViewOptions = {}) {
     this.state = {
       tick: 0,
       durationTicks: tape.inputLog.durationTicks,
@@ -257,9 +268,10 @@ export class LanternShow {
     this.root.innerHTML = `
       <div class="lantern-show__stage" data-lantern-pan data-testid="lantern-true-stage" aria-label="Drag to pan the lantern view"></div>
       <div class="lantern-show__frame" aria-hidden="true"></div>
-      <header class="lantern-show__title"><p>Schoolhouse Lantern Room</p><h1>The Lantern Show</h1>
+      <header class="lantern-show__title"><details ${window.matchMedia('(max-width: 560px)').matches ? '' : 'open'}>
+        <summary>The Lantern Show</summary><p>Schoolhouse Lantern Room</p>
         <p data-testid="lantern-agent-honesty" style="padding: 8px 14px; border: 2px solid #8b7d3c; background: rgba(46, 27, 14, 0.94); color: #fff8e8; font-size: clamp(14px, 2vw, 20px)" hidden></p>
-      </header>
+      </details><span data-testid="lantern-reel-label"></span></header>
       <div class="lantern-show__intertitle" data-testid="lantern-intertitle" role="status" hidden></div>
       <div class="lantern-show__controls">
         <button type="button" data-lantern-action="pause" data-testid="lantern-pause">Pause</button>
@@ -275,8 +287,13 @@ export class LanternShow {
     this.card = this.root.querySelector<HTMLElement>('[data-testid="lantern-intertitle"]')!;
     this.root.addEventListener('click', this.onClick);
     const stage = this.root.querySelector<HTMLElement>('[data-lantern-pan]')!;
-    if (tape.inputLog.entries.some((entry) => entry.a.some(isAgentOrdersAction))) {
-      stage.innerHTML = renderTrueReelGround(tape.contract, tape.seed);
+    this.root.dataset.presentation = view.world && !view.tactical ? 'world' : 'tactical';
+    if (view.world && !view.tactical) {
+      stage.append(view.world.canvas);
+      stage.insertAdjacentHTML('beforeend', '<p class="lantern-show__placeholders" data-testid="lantern-truth-placeholders">Reel does not carry: decorative props</p>');
+      this.root.dataset.terrainReadyMs = String(Math.round(performance.now() - this.startedAt));
+    } else if (tape.inputLog.entries.some((entry) => entry.a.some(isAgentOrdersAction))) {
+      stage.innerHTML = renderTrueReelGround(tape.contract, tape.seed, view.heightAt ?? view.world?.heightAt);
       this.root.dataset.terrainReadyMs = String(Math.round(performance.now() - this.startedAt));
     }
     stage.addEventListener('pointerdown', this.onPointerDown);
@@ -300,6 +317,8 @@ export class LanternShow {
     this.root.dataset.recordedHash = this.tape.eventLogHash;
     this.root.dataset.eraRefused = String(state.eraRefusal !== null);
     this.root.dataset.trueReelProbe = state.snapshot ? JSON.stringify(state.snapshot) : '';
+    const label = this.root.querySelector<HTMLElement>('[data-testid="lantern-reel-label"]');
+    if (label) label.textContent = state.agentTape && (!this.view.world || this.view.tactical) && !state.eraRefusal ? 'Tactical reel' : '';
     if (state.agentTape) {
       if (state.eraRefusal) {
         const stage = this.root.querySelector<HTMLElement>('[data-testid="lantern-true-stage"]');
@@ -372,14 +391,20 @@ export class LanternShow {
   private renderTrueWorld(snapshot: AgentTapeReplaySnapshot | null): void {
     const stage = this.root.querySelector<HTMLElement>('[data-testid="lantern-true-stage"]');
     if (!stage) return;
+    if (this.view.world && !this.view.tactical) {
+      this.view.world.update(snapshot);
+      const legend = stage.querySelector<HTMLElement>('[data-testid="lantern-truth-placeholders"]');
+      if (legend) legend.textContent = `Reel does not carry: ${this.view.world.placeholders}`;
+      return;
+    }
     if (!snapshot) {
       if (!stage.querySelector('[data-testid="lantern-true-world"]')) {
         stage.innerHTML = '<p style="position:absolute;inset:42% 0 auto;text-align:center;font-size:22px">Winding the true reel...</p>';
       }
       return;
     }
-    if (!updateTrueReel(stage, snapshot, this.tape.contract, this.tape.seed)) {
-      stage.innerHTML = renderTrueReel(snapshot, this.tape.contract, this.tape.seed);
+    if (!updateTrueReel(stage, snapshot, this.tape.contract, this.tape.seed, this.view.heightAt ?? this.view.world?.heightAt)) {
+      stage.innerHTML = renderTrueReel(snapshot, this.tape.contract, this.tape.seed, this.view.heightAt ?? this.view.world?.heightAt);
       this.root.dataset.terrainReadyMs = String(Math.round(performance.now() - this.startedAt));
     }
   }

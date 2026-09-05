@@ -107,6 +107,8 @@ if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('playb
 }
 accountSync.install();
 let game: Game | undefined;
+let lanternBoot: { dispose: () => void } | undefined;
+const PENDING_LANTERN_KEY = 'gr.lantern.pending.v1';
 let assayBench: AssayBench | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
@@ -286,12 +288,14 @@ function teardownActiveScene(): void {
   const parts = [
     ['town', town],
     ['game', game],
+    ['lantern', lanternBoot],
     ['assay bench', assayBench],
     ['profiles', profiles],
     ['start menu', startMenu],
   ] as const;
   town = undefined;
   game = undefined;
+  lanternBoot = undefined;
   assayBench = undefined;
   profiles = undefined;
   startMenu = undefined;
@@ -369,16 +373,33 @@ function openRunTapeShelf(): void {
   void import('./ui/LanternShow').then(({ openTapeShelf }) => openTapeShelf(localStorage, watchRunTape));
 }
 
-async function watchRunTape(tape: RunTape, epochId = activeEpochId(), closeToMenu = false): Promise<void> {
+async function watchRunTape(tape: RunTape, epochId = activeEpochId(), closeToMenu = false, freshPage = false): Promise<void> {
+  const initialOptions = new URLSearchParams(window.location.search);
+  const tactical = initialOptions.get('reel') === 'tactical';
+  const { usesLanternWorker } = await import('./replay/LanternController');
+  const independent = usesLanternWorker(tape);
+  // Town/Game may already have evaluated Terrain for another contract. A fresh page is the
+  // contract boundary, including local-only shelf reels which cannot be fetched from standings.
+  if (independent && !closeToMenu && !freshPage) {
+    sessionStorage.setItem(PENDING_LANTERN_KEY, JSON.stringify({ tape, epochId }));
+    window.location.assign(reelUrl(tape.id, tape.contract, epochId));
+    return;
+  }
   teardownActiveScene();
   stageReplayContract(tape.contract);
   const bootSearch = new URLSearchParams({ contract: tape.contract, seed: tape.seed, difficulty: tape.difficulty, replay: tape.id, epoch: epochId });
+  if (tactical) bootSearch.set('reel', 'tactical');
+  if (initialOptions.has('tier')) bootSearch.set('tier', initialOptions.get('tier')!);
   history.replaceState({ goldRushScene: 'replay' }, '', `${window.location.pathname}?${bootSearch.toString()}${window.location.hash}`);
   const { isolateReplayStorage } = await import('./ui/LanternShow');
-  restoreReplayStorage = isolateReplayStorage(localStorage);
+  restoreReplayStorage = isolateReplayStorage(localStorage, independent);
   try {
     const shareUrl = reelUrl(tape.id, tape.contract, epochId);
-    await startGame({ replay: { tape, shareUrl, onClose: closeToMenu ? closeDeepLinkToMenu : closeRunTapeReplay } });
+    if (independent) {
+      advanceStream.pause();
+      const { bootLantern } = await import('./replay/LanternBoot');
+      lanternBoot = await bootLantern(app, tape, { shareUrl, tactical, close: closeToMenu ? closeDeepLinkToMenu : closeRunTapeReplay });
+    } else await startGame({ replay: { tape, shareUrl, onClose: closeToMenu ? closeDeepLinkToMenu : closeRunTapeReplay } });
     history.replaceState({ goldRushScene: 'replay' }, '', shareUrl);
   } catch (error) {
     (closeToMenu ? closeDeepLinkToMenu : closeRunTapeReplay)();
@@ -391,7 +412,16 @@ async function openWatchDeepLink(search: URLSearchParams): Promise<void> {
   const contractId = search.get('contract')?.trim();
   const epochId = search.get('epoch')?.trim();
   let payload: unknown = null;
-  if (reelId && contractId && epochId) {
+  let localShelf = false;
+  const pending = sessionStorage.getItem(PENDING_LANTERN_KEY);
+  if (pending) {
+    sessionStorage.removeItem(PENDING_LANTERN_KEY);
+    try {
+      const saved = JSON.parse(pending);
+      if (saved.tape?.id === reelId && saved.tape?.contract === contractId && saved.epochId === epochId) { payload = { reel: saved.tape }; localShelf = true; }
+    } catch { /* A stale local handoff falls back to the public reel lookup. */ }
+  }
+  if (!payload && reelId && contractId && epochId) {
     const url = new URL(gameApiUrl('/api/standings'));
     url.searchParams.set('reel', reelId);
     url.searchParams.set('contract', contractId);
@@ -406,7 +436,7 @@ async function openWatchDeepLink(search: URLSearchParams): Promise<void> {
   const { LANTERN_REEL_UNAVAILABLE, LANTERN_VERSION_REFUSAL, openLanternRefusal, readStandingsReel } = await import('./ui/LanternShow');
   const verdict = readStandingsReel(payload);
   if (verdict.ok) {
-    await watchRunTape(verdict.tape, epochId!, true);
+    await watchRunTape(verdict.tape, epochId!, !localShelf, true);
     return;
   }
   openLanternRefusal(app, verdict.reason === 'version' ? LANTERN_VERSION_REFUSAL : LANTERN_REEL_UNAVAILABLE, closeDeepLinkToMenu);
@@ -414,26 +444,33 @@ async function openWatchDeepLink(search: URLSearchParams): Promise<void> {
 
 function reelUrl(reelId: string, contractId: string, epochId: string): string {
   const url = new URL(window.location.href);
-  url.search = new URLSearchParams({ watch: reelId, contract: contractId, epoch: epochId }).toString();
+  const search = new URLSearchParams({ watch: reelId, contract: contractId, epoch: epochId });
+  if (url.searchParams.get('reel') === 'tactical') search.set('reel', 'tactical');
+  if (url.searchParams.has('tier')) search.set('tier', url.searchParams.get('tier')!);
+  url.search = search.toString();
   return url.href;
 }
 
 function closeRunTapeReplay(): void {
+  const independent = Boolean(lanternBoot);
   teardownActiveScene();
   restoreReplayStorage?.();
   restoreReplayStorage = undefined;
   stageReplayContract(null);
   replaceRunRoute('town');
-  openTown();
+  if (independent) window.location.reload();
+  else openTown();
 }
 
 function closeDeepLinkToMenu(): void {
+  const independent = Boolean(lanternBoot);
   teardownActiveScene();
   restoreReplayStorage?.();
   restoreReplayStorage = undefined;
   stageReplayContract(null);
   history.replaceState({ goldRushScene: 'menu' }, '', window.location.pathname);
-  showStartMenu();
+  if (independent) window.location.reload();
+  else showStartMenu();
 }
 
 function openClaimLedger(entryId?: LedgerEntryId): void {
