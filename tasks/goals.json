@@ -4474,6 +4474,21 @@
               "authoredBy": "attended 2026-09-02 (release pass)",
               "authoredAt": "2026-09-05",
               "note": "Wave 2 for the Claude Opus implementers (Codex out of quota): dispatch when its lane is free and drained; the master ignores its lane pre-flight for a Claude agent (the attended session resets the worktree onto main before launching)."
+            },
+            {
+              "id": "homemaker-readiness-error-diagnostic",
+              "title": "F-HKS-2: show captured runtime errors when Homemaker readiness fails",
+              "taskFile": "homemaker-readiness-error-diagnostic.md",
+              "status": "planned",
+              "lane": "lane-a",
+              "authoredBy": "FIRE-AUTHORED s2522 from attended F-HKS-2",
+              "authoredAt": "2026-09-05",
+              "authoringBlock": {
+                "class": "attended-owed",
+                "finding": "F-HKS-2 / OPUS WAVE 2 dispatch ruling",
+                "measuredBy": "s2522 2026-09-05",
+                "reason": "Master is authored and banked. Attended owns Opus dispatch/drains while Codex queues are parked under F-CODEX-1; no spec or owner choice is owed. Dispatch this test-only follow-up after the current lane-a work is drained."
+              }
             }
           ]
         }
