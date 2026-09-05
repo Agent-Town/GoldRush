@@ -38,7 +38,7 @@ test('normal mode stops after the successor and honours the byte allowance', asy
     sessionStorage.setItem(bytesKey, String(allowance - primary.length * bodyBytes - 1));
   }, RESPONSE_BYTES);
   await mountStream(page, { kind: 'run', contractId: 'e1-drill-yard' });
-  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'budget-exhausted');
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'allowance');
   const limited = await page.evaluate(() => {
     const { requests, primary, successor, allowance, bytesKey } = window.__PREFETCH_FIXTURE__;
     return { requests, expected: [...primary, ...successor.slice(0, 2)], allowance, bytes: Number(sessionStorage.getItem(bytesKey)) };
@@ -54,11 +54,11 @@ test('normal mode stops after the successor and honours the byte allowance', asy
     stream.pause();
     stream.enter({ kind: 'run', contractId: 'the-claim' });
   });
-  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'budget-exhausted');
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'allowance');
   expect(await page.evaluate(() => window.__PREFETCH_FIXTURE__.requests.length)).toBe(limited.requests.length);
   await page.reload();
   await mountStream(page, { kind: 'menu' });
-  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'budget-exhausted');
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'allowance');
   await expect(canvas).toHaveAttribute('data-asset-prefetch-bytes', String(limited.bytes));
   expect(await page.evaluate(() => window.__PREFETCH_FIXTURE__.requests)).toEqual([]);
   expect(errors).toEqual([]);
@@ -74,6 +74,31 @@ test('balanced uses the smaller allowance and completed URLs are counted once ac
   await page.evaluate(() => window.__PREFETCH_FIXTURE__.stream.enter({ kind: 'town' }));
   await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'ready');
   await expect(canvas).toHaveAttribute('data-asset-prefetch-bytes', bytes!);
+  expect(errors).toEqual([]);
+});
+
+// F-BPTH-1 — `allowance` means STOPPED SHORT, and nothing else. The allowance check used to sit
+// ABOVE the drained-plan check in AdvanceStream's `run()`, so a plan that fetched every URL and
+// landed on the allowance published the early-stop state instead of `ready`: "we finished" and "we
+// gave up" were the same word, and anything waiting for `ready` hung on a stream with no work left.
+test('a plan that completes exactly at the allowance publishes ready, not the allowance stop', async ({ page }) => {
+  const errors = await openFixture(page);
+  await mountStream(page, { kind: 'run', contractId: 'e1-drill-yard' });
+  const canvas = page.locator('#game-canvas');
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'ready');
+
+  // Leave room for exactly the whole plan: its last batch lands ON the allowance with nothing queued.
+  const { allowance, planSize } = await page.evaluate((bodyBytes) => {
+    const { stream, primary, successor, allowance, bytesKey } = window.__PREFETCH_FIXTURE__;
+    const planSize = new Set([...primary, ...successor]).size;
+    stream.dispose();
+    sessionStorage.setItem(bytesKey, String(allowance - planSize * bodyBytes));
+    return { allowance, planSize };
+  }, RESPONSE_BYTES);
+  await mountStream(page, { kind: 'run', contractId: 'e1-drill-yard' });
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-bytes', String(allowance));
+  await expect(canvas).toHaveAttribute('data-asset-prefetch-state', 'ready');
+  expect(await page.evaluate(() => window.__PREFETCH_FIXTURE__.requests.length)).toBe(planSize);
   expect(errors).toEqual([]);
 });
 
