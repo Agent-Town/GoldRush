@@ -4214,11 +4214,12 @@
               "id": "e5-stillwater-storm",
               "title": "L1 reskin ladder: Stillwater schedules a storm-triggered wave (Claude implementer)",
               "taskFile": "e5-stillwater-storm.md",
-              "status": "queued",
+              "status": "superseded",
               "lane": "lane-c",
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-05",
-              "note": "attended-dispatched Claude implementer; NOT for the lane runner (no queue copy)"
+              "note": "honest STOP 2026-09-05: the fork measured (F-E5STORM-1); evidence merged 482cbeeb0",
+              "supersededBy": "e5-storm-predicate-split"
             },
             {
               "id": "e7-playbook-rows",
@@ -4239,6 +4240,15 @@
               "authoredBy": "attended 2026-09-02 (release pass)",
               "queuedAt": "2026-09-05",
               "note": "attended-dispatched Claude implementer; NOT for the lane runner (no queue copy)"
+            },
+            {
+              "id": "e5-storm-predicate-split",
+              "title": "F-E5STORM-1: a storm front counts as a wave only when it carries one; split the predicate; then Stillwater wakes",
+              "taskFile": "e5-storm-predicate-split.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "attended 2026-09-02 (release pass)",
+              "queuedAt": "2026-09-05"
             }
           ]
         }
