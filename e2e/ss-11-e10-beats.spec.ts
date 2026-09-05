@@ -197,8 +197,9 @@ test('a player-selected Deep Sky town presents the boarding and the Long Table b
 
   // The arrival: read the id and the copy in ONE snapshot, so the assertion cannot be overtaken.
   await seekBeat(page, 'e10-ark-boarding');
-  expect(await cardSnapshot(page)).toMatchObject({ id: 'e10-ark-boarding', speaker: 'prospector' });
-  expect((await cardSnapshot(page)).text).toContain('the laugh was a yes');
+  const boarding = await cardSnapshot(page);
+  expect(boarding).toMatchObject({ id: 'e10-ark-boarding', speaker: 'prospector' });
+  expect(boarding.text).toContain('the laugh was a yes');
   await shot(page, testInfo, 'boarding');
 
   // A cast beat at its own trigger: the Baron who does not board, spoken by the preacher.
@@ -209,7 +210,9 @@ test('a player-selected Deep Sky town presents the boarding and the Long Table b
   await shot(page, testInfo, 'baron-stays');
 
   await seekBeat(page, 'e10-last-claim-decks');
-  expect((await cardSnapshot(page)).text).toContain('the deck is the map');
+  const finale = await cardSnapshot(page);
+  expect(finale.id).toBe('e10-last-claim-decks');
+  expect(finale.text).toContain('the deck is the map');
   await shot(page, testInfo, 'last-claim-decks');
   await dismissBeat(page);
   await page.getByTestId('contract-launch-e10-last-claim').click();
