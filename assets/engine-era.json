@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "1052ba1ab016c53d1b6cceff3db4d0859b38ade38f7e07a95a51112ba3c51b81",
+  "engineHash": "583c7743fb8967291eeecd830f049a3768b0563b6356cf9cb7d21fb0b905f2d3",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -349,6 +349,12 @@
       "engineHash": "1052ba1ab016c53d1b6cceff3db4d0859b38ade38f7e07a95a51112ba3c51b81",
       "pinnedAt": "2026-09-05",
       "cause": "src re-hash: ss-09-e8-beats drain — E8_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "583c7743fb8967291eeecd830f049a3768b0563b6356cf9cb7d21fb0b905f2d3",
+      "pinnedAt": "2026-09-06",
+      "cause": "src re-hash: ss-08-e7-beats + ss-10-e9-beats drains — E7_STORY_BEATS and E9_STORY_BEATS data plus their StoryRuntime switch lines, unioned in era order beside E8 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     }
   ],
