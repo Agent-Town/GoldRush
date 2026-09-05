@@ -1,0 +1,22 @@
+# Task story-signal-emitters: the four story signals nobody emits, so six E1 beats finally fire in play (LANE-A, commit prefix "fix:")
+
+You are the implementer for Gold Rush (Claude Opus 5, the overnight wave of 2026-09-05), running natively on Robin's Mac in `worktrees/lane-a` (branch `lane/a`).
+READ FIRST: AGENTS.md; `reviews/ss-05-e4-beats.md` F-SS05-1 (verified attended 2026-09-05: `science-threshold` (`src/story/signals.ts:8`), `wave-complete` (`:6`), `rung-promotion` (`:13`) and `first-boot` (`:2`) have ZERO emitters in `src/` outside the story module — only `e2e/ss-02-beats.spec.ts` (its synthetic-signal helper near line 149, outside any test body) emits them synthetically — so the six E1 beats that depend on them (`src/story/beats.ts:69` first-wave-five, `:108` and `:117` the deputy promotions, `:126`, `:135`, `:144` science-first-pick, science-mastery, baron-shadow) have never fired for a player); `src/story/signals.ts` (the declared signal shapes); `src/story/StoryRuntime.ts` (how `emitStorySignal` is consumed; the 3 s `GAP_MS` window at `:123`); the existing emitter sites for the OTHER signals (`src/town/TownScene.ts:1534`, `:1576`, `:2142`, `:2568`; `src/ui/ProspectorPanel.ts:196`) — the pattern to copy; `specs/epoch-saga/CAPABILITY-LADDER.md` §3 L4 (the human path is never cut) and §4.6 of CLAUDE.md (rendering-only vs sim: a story signal is presentation; it must never change simulation state or the event-log hash).
+
+## Why (owner 2026-09-02: "I would love to be able to play the story as well"; the E4 chapter's runner found the gap on 2026-09-05)
+Six shipped E1 beats — including the first wave-five moment, both deputy promotions and the Baron's shadow — are unreachable in a real game because their signals are declared but never emitted. The story spine has had holes since SS-01 that only a synthetic spec ever filled.
+
+## Scope
+1. **Find and name the emission sites by reading** (report each as file:line): wave completion (the wave system's wave-end transition — emit `wave-complete` with the wave number, once per wave, from the RENDER/UI side of the wave boundary, never inside the fixed-timestep sim step), the science threshold crossings (the research/science ceiling system — emit `science-threshold` with the threshold reached), the Prospector's autonomy rung promotions (where the rung level increases — emit `rung-promotion` with the level), and the first plain boot of a profile (`src/main.ts` boot path — emit `first-boot` exactly once per profile, persisted the way `oncePerProfile` beats are).
+2. **Determinism law:** the emitters read state and publish signals; they write nothing the sim reads. Prove it: the E1 null floor and one played tape replay byte-identical before/after (hash table in the report; a `src/` change rotates the engine hash — report it, the drain pins).
+3. **Prove the beats fire in play:** extend `e2e/ss-01-beats.spec.ts` or add `e2e/story-signal-emitters.spec.ts` (plain boot, no `?debug`): a Claim ride reaches wave 5 and the first-wave-five card appears; a science pick shows science-first-pick; a rung promotion shows the deputy beat; a fresh profile's first boot shows the first-boot beat once and not on the second boot. Desktop + 390px, zero console/page errors, screenshots to `reviews/shots-story-signal-emitters/`. `ss-01..ss-07` + `story-loop` specs: note which of the six pre-existing F-2460-2 reds turn green because their signals now exist, and leave any that stay red with their reason.
+
+## Firewall
+Touch ONLY: the emitter sites you name (one call each; no logic change around them), `src/main.ts` (first boot only), the new/extended spec, `reviews/shots-story-signal-emitters/`, `tasks/BACKLOG.md` (your row). NO changes to: `src/story/beats.ts` (the beats are right; their signals were missing), the sim step, `RunTape.ts`, contracts, other tasks' fresh work. Keep artifacts small.
+
+## No-op / honesty guard
+If a signal has no honest emission site (for example a threshold the science system never computes), say so with file:line and emit the others; do not fake a signal from a timer. Commit what you have even if you stop early.
+
+## Self-check (evidence, not vibes)
+`npx tsc --noEmit` clean; `npm run build` green; the spec green both projects; the hash table; the emitter table (signal · file:line · when it fires); the F-2460-2 delta (which reds turned green).
+End: READY-FOR-GATES + the emitter table, the hash table, the F-2460-2 delta, the engine hash for the pin.
