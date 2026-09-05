@@ -752,7 +752,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier }; // E4 rides the trailing intersection so no cited line below moves
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string } }; // E4 and E10's harvest-free declaration ride the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -1346,7 +1346,7 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
     const requested = candidates.find((entry) => entry.id === requestedId);
     if (!requested) {
       fallbackReason = 'unknown-contract';
-    } else if (requested.tileParams.harvestAnchors?.length === 0) {
+    } else if (requested.tileParams.harvestAnchors?.length === 0 && requested.twist.harvestFreeObjective === undefined) {
       fallbackReason = 'unavailable-contract';
       contract = {
         ...fallback,
@@ -1593,7 +1593,7 @@ const AUTHORED_TWIST_KEYS = [
   'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'clockTicks', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
-  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier',
+  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier', 'harvestFreeObjective',
 ] as const;
 const AUTHORED_PRACTICE_KEYS = [
   'scheduledWaves', 'scores', 'metaProgress', 'runHistory', 'standings', 'tapes', 'goldGrant', 'bellWaveSize',
@@ -2524,3 +2524,59 @@ function validateMotorFrontier(contract: ContractManifest, reasons: ContractDesc
     }
   }
 }
+
+/**
+ * THE HARVEST-FREE DOOR EXEMPTION (F-E10L-1, 2026-09-06) — the law behind ONE clause at `:1349`,
+ * `requested.twist.harvestFreeObjective === undefined`. Grep that token to find both ends.
+ *
+ * TWO THINGS ABOUT THIS BLOCK'S SHAPE, both load-bearing, neither cosmetic:
+ *   - It sits at the FILE'S END and adds no line above the door, because `tasks/goals.json`'s
+ *     `e10s-1b-ember-shore-schema-and-data` leaf cites `ContractFamilies.ts:1345` by line and
+ *     `law-pointer-guard` reddens the moment anything shifts it. Same reason the type field rides
+ *     the trailing intersection at `:755` and the allowlist entry rides `AUTHORED_TWIST_KEYS`'s
+ *     last line.
+ *   - The door reads the field INLINE and must keep doing so. Do NOT "tidy" it into a helper:
+ *     `scripts/same-game-audit.mjs:104` lifts the whole `} else if (...) {` expression out of this
+ *     file by regex and re-evaluates it with `Function('requested', ...)`, where only `requested`
+ *     is bound. A helper call there throws "Browser unavailable-contract source wiring changed",
+ *     and a trailing `//` comment on that line breaks the same regex. Measured both ways, 2026-09-06.
+ *
+ * WHAT WENT WRONG. `harvestAnchors: []` carries TWO meanings on one array, and they want opposite
+ * answers:
+ *   - the AGENT-PLAY door reads it as "not admitted to the benchmark" — `SUPPORTED_CONTRACTS` is
+ *     derived from `harvestAnchors?.length !== 0` minus the exemption table
+ *     (`src/sim/HeadlessContractSim.ts:254`), and `scripts/door-admission-baseline.json` ratchets
+ *     it, so a map MUST keep the array empty until a public-verb prover earns its admission;
+ *   - this door read it as "the map is unfinished, send the player to The Claim" — and that is
+ *     wrong for a map that is deliberately inert for the benchmark and perfectly walkable for a
+ *     human.
+ * `tasks/e10s-1c-ember-shore-inert-landing.md:27` (F-2165-1, measured in a detached control, landed
+ * as `14dbb496a`) proves the collision is real: the Ember Shore's four authored anchors were
+ * REMOVED again because "the four `harvestAnchors` + `benchSeeds` + two null-floors rows constitute
+ * ADMISSION ... The e6-picnic shape is the house answer: the data lands with empty anchors, and the
+ * E10S-4 door slice earns the admission later on evidence." So the three Deep Sky maps could not
+ * gain seams, and without seams no player could open them: 12/12 smoke cells fell back to The Claim
+ * with `fallbackReason: 'unavailable-contract'` (`artifacts/playability-smoke/report.md`, rows
+ * 77-80 and 83-84).
+ *
+ * THE FIX. A map may now say so in its own data. `twist.harvestFreeObjective` is a DELIBERATE
+ * authored declaration, never inferred: it says this contract's objective is not extraction, so an
+ * empty seam list is the design rather than an unfinished map. It changes NOTHING about the
+ * agent-play door (the array stays empty, the baseline and the null floors do not move) and only
+ * stops this door from lying to the player. `scripts/board-launchable-guard.test.mjs` holds the
+ * other half: every board contract must have seams or carry this declaration, so a fourth silent
+ * one cannot ship.
+ *
+ * WHO CARRIES IT TODAY, AND ON WHOSE WORD:
+ *   - `e10-ember-shore` — the preserve contract. `specs/epoch-saga/e10-deepsky-bundle.md:17` gives
+ *     it "one preserve-contract ('keep the last warm vent alight through the Static squall')", and
+ *     `specs/agent-play/e10-ember-shore-preserve.md:18` builds the vent as a warmth structure with
+ *     a STOKE action. Its own `twist.emberShore.preserve` is already authored here.
+ *   - `e10-archive-world` — light-hold restoration. `specs/agent-play/e10-archive-world-restoration.md:24`,
+ *     verbatim: "the wings themselves yield nothing — you are not here to extract."
+ *   - `e10-river` — the post-credits ceremony. `specs/agent-play/door-completion-sheet.md:36`
+ *     (RATIFIED 2026-08-20), verbatim: "RECORDED as permanently door-exempt-by-design (it is the
+ *     ending, not a contract)", and `specs/enemy-rosters-e6-e10.md:195`: "empty `enemyRoster`, no
+ *     boss, no waves. This contract remains one pan and the river."
+ * `e10-last-claim` does NOT carry it and must not: it has four authored anchors and is admitted.
+ */

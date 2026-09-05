@@ -119,7 +119,16 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // contracts left outside are the four that carry cited exemptions, not empty data.
   // ATTRIBUTED BY REVERT-AND-REPRODUCE: emptying those anchors in both the contract and the
   // published mask table, with every other line of the slice in place, reproduced 4 exactly.
-  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 3);
+  // ⚠️ ELEVENTH STACK — DECLARATION MOVE, NOT AN ADMISSION (2026-09-06, `e10-empty-harvest-anchors-unlaunchable`,
+  // F-E10L-1): the three Deep Sky maps that carried cited harvest-free exemptions (`e10-ember-shore`,
+  // `e10-archive-world`, `e10-river`) now DECLARE it (`twist.harvestFreeObjective`), so the browser door
+  // opens them as themselves and the audit's not-offered set empties, 3 -> 0. Their `harvestAnchors`
+  // stay `[]`: the agent-play door is untouched, `measurements` stays 10, `exemptions` stays 3.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE by the implementer: reverting the one door clause at
+  // `src/meta/ContractFamilies.ts` and nothing else reproduced not-offered = 3 naming exactly those
+  // three maps; restoring it reproduced 0 (audit rows 1602 -> 1719). No board contract is refused by
+  // the browser any more.
+  assert.equal(audit.rows.filter((row) => row.direction === 'not-offered').length, 0);
   // measurements stays 10: the AP-16-4 table measures the 13-contract LEGACY-refusal population,
   // and none of the empty-data admissions was ever in that population.
   assert.equal(audit.admission.measurements.length, 10);
@@ -403,7 +412,13 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // (E2's branch measured its unmoved summary on a pre-Picnic base; the merged tree carries the
   // Picnic's +10/+31/-1 — pinned verbatim from this tree's regen.)
   assert.equal(audit.admission.exemptions.length, 3);
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 456, equal: 1143, 'not-offered': 3 });
+  // ELEVENTH STACK (2026-09-06, `e10-empty-harvest-anchors-unlaunchable`, F-E10L-1/F-E10L-2): the three
+  // Deep Sky maps that declare `twist.harvestFreeObjective` are now OFFERED to humans, so their parity rows
+  // exist and land as `agent-lacks` (the agent door still has no anchors for them, by design) or `equal`:
+  // not-offered 3 -> 0, agent-lacks 456 -> 549, equal 1143 -> 1170 (rows 1602 -> 1719). Numbers are this
+  // tree's own `--json` regen output, verbatim; the drain's `docs/bench/same-game-audit.md` regen carries
+  // the same figures.
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 549, equal: 1170, 'not-offered': 0 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
