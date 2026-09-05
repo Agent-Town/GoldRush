@@ -10,7 +10,7 @@ The bounded stream (`dfbed9491` → `065252649`) warms priorities 1–2 under a 
 ## Scope
 1. Decide and implement: the town's priority-1 set includes its bulk halls under normal connections (saveData keeps excluding them, as today); measure the town's priority-1 bytes with the halls and show it fits the 12 MB mobile allowance with the destination — if it does not, say so and propose the allowance number instead of silently raising it.
 2. Terminal states: when the allowance stops the stream, publish an explicit `assetPrefetchState` value (name it, e.g. `allowance`) distinct from `ready`/`partial`/`paused`, and document the state machine in a comment at the top of `AdvanceStream.ts`.
-3. Update `e2e/town-stamp-mill-blender.spec.ts:148` to the new law (name the changed assertions); `advance-stream`, `advance-stream-bounded`, `advance-stream-cache-reuse`, `advance-stream-walkthrough` unmodified-green both projects.
+3. Update `e2e/town-stamp-mill-blender.spec.ts:148` ("normal connections prefetch both bulk town halls") to the new law (name the changed assertions); `advance-stream`, `advance-stream-bounded`, `advance-stream-cache-reuse`, `advance-stream-walkthrough` unmodified-green both projects.
 
 ## Firewall
 Touch ONLY: `src/assets/AdvanceStream.ts`, `src/town/TownTavernPilot.ts` (only if the URL grouping must move), `e2e/town-stamp-mill-blender.spec.ts`, `e2e/advance-stream-bounded.spec.ts` (only to assert the new terminal state), `artifacts/bounded-prefetch-town-halls/**`, `tasks/BACKLOG.md` (your row). NO changes to: the sim, contract data, `Terrain3dClaimPilot.ts`, the settings UI.
