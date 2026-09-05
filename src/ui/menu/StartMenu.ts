@@ -27,6 +27,7 @@ import { activeEpochId, loadContract } from '../../meta/ContractFamilies';
 import { readTownName } from '../../town/TownNaming';
 import { accountSync } from '../../game/AccountSync';
 import { eraBackdropRef, loadEraBackdrop } from '../EraBackdrop';
+import { setWarmEveryMapEnabled, warmEveryMapEnabled } from '../../assets/AdvanceStream';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const panelUrl = new URL('../../../assets/processed/ui-menu-panel.png', import.meta.url).href;
@@ -156,6 +157,11 @@ export class StartMenu {
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
           ${renderStorySettingsControl(STORY_SETTINGS_IDS)}
           ${renderPerformanceTierControl(PERFORMANCE_TIER_ID)}
+          <label>
+            <span>Warm every map</span>
+            <input data-testid="start-menu-warm-every-map" type="checkbox" ${warmEveryMapEnabled() ? 'checked' : ''} />
+          </label>
+          <p class="gr-start-menu__settings-note">Prepare more maps while idle, within this visit's download allowance. Uses extra data; Save Data and Lite still apply.</p>
           ${renderTelemetrySettingsControl(TELEMETRY_STATS_ID)}
         </section>
       </div>
@@ -164,6 +170,11 @@ export class StartMenu {
     this.disposeStorySettings = bindStorySettingsControl(this.root, STORY_SETTINGS_IDS);
     this.disposePerformanceSettings = bindPerformanceTierControl(this.root, PERFORMANCE_TIER_ID);
     this.disposeTelemetrySettings = bindTelemetrySettingsControl(this.root, TELEMETRY_STATS_ID);
+    this.root.querySelector<HTMLInputElement>('[data-testid="start-menu-warm-every-map"]')?.addEventListener('change', (event) => {
+      const input = event.currentTarget as HTMLInputElement;
+      setWarmEveryMapEnabled(input.checked);
+      input.checked = warmEveryMapEnabled();
+    });
     this.root.querySelector<HTMLFormElement>('[data-testid="profile-create-form"]')?.addEventListener('submit', (event) => {
       event.preventDefault();
       this.createFirstProfile();
