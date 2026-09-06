@@ -193,7 +193,39 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
   let abort: AbortController | undefined;
   let state: AdvanceStreamState = 'paused';
   let enabled = true;
+  let warmedClipGroups = false;
   const idleWindow = window as IdleWindow;
+
+  // THE WARM-ON-IDLE PATH FOR DEFERRED SPRITE CLIP GROUPS (task hero-slot-clip-split, 2026-09-07).
+  // A scene loads only the clip groups it declares, so in the town the hero's claim animations
+  // (char-hero-sheet-work8 + char-hero-sheet-attack8, 35 cells, 4,310,829 B) are never fetched at
+  // entry. They ride THIS callback instead — the same idle tick the stream already uses — and they
+  // ride it LAST, behind the stream's own plan.
+  //
+  // WHY LAST, AND NOT MERELY "ONCE THE SCENE READS READY". Measured, and it is the whole reason
+  // this sits where it sits: firing on the first idle tick after `assetLoadingState=ready` put all
+  // 35 cells straight back into the measured first-town window, 8,901,114 B / 141 hero responses
+  // before and after, not one byte moved. The window's END is OBSERVED by a poll over CDP, not
+  // taken from the page's own clock, so between the page publishing `ready` and the probe seeing it
+  // there is a skirt of hundreds of milliseconds (the F-AUDIO-3 note in e2e/asset-diet.spec.ts
+  // measures 507 ms of it at 8 Mbps) — and on loopback 4.3 MB fits in that skirt with room to
+  // spare. Deferring to a signal the probe cannot see is not deferring.
+  //
+  // The plan draining is the honest cue, and it is the right one for the player too: the plan holds
+  // the map the player is about to enter, which they will need before they need a swing animation.
+  // Terminal-by-completion only — `allowance` is deliberately excluded, because that state means a
+  // metered connection already spent its budget, and 4.3 MB of animation is exactly what such a
+  // connection should be made to pay for on claim entry instead (the claim scene's own declaration
+  // in src/game/Game.ts loads it then, from a cold cache, which is correct rather than merely
+  // cheap). Dynamic import so the advance-stream chunk does not pull three.js and the sprite tables
+  // in; by the time this fires SpriteAnimator is long loaded, so it costs no request. One shot per
+  // stream, and a scene change makes a new stream.
+  const warmClipGroups = () => {
+    if (warmedClipGroups) return;
+    if (canvas.dataset.assetLoadingState !== 'ready') return;
+    warmedClipGroups = true;
+    void import('./SpriteAnimator').then(({ warmDeferredSpriteClipGroups }) => warmDeferredSpriteClipGroups());
+  };
 
   const publish = () => {
     canvas.dataset.assetPrefetchScene = scene.kind;
@@ -256,6 +288,14 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
       priority = 0;
       target = '';
       publish();
+      // The plan is done and the scene is standing: the last thing the connection owes is the
+      // deferred sprite clip groups. See warmClipGroups above for why this is the cue and not
+      // `assetLoadingState=ready` on its own. In the `town` scene this is guaranteed to run with
+      // the scene ready, because the F-BUDGET-3 hold below refuses to resolve or fetch a contract
+      // target while the scene reads `loading` — so the plan CANNOT drain first. In the `menu`
+      // scene it usually does not fire (no scene loader is mounted, so there is no `ready` to
+      // read), which is correct: no sprite slot is live there to warm.
+      warmClipGroups();
       return;
     }
     // The current two-file batch may finish over budget; never start another one.
@@ -362,6 +402,9 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
   const enter = (nextScene: AdvanceStreamScene) => {
     pause();
     scene = nextScene;
+    // Re-armed per scene, not per page: a new scene can bring new sprite slots, and a menu that
+    // drained its plan with no slot live must not spend the town's one shot.
+    warmedClipGroups = false;
     enabled = threeDimensionalAssetsEnabled();
     allowance = performanceTierDiagnostics().tier !== 'full' || window.matchMedia('(pointer: coarse)').matches
       ? ADVANCE_STREAM_BYTE_ALLOWANCE.mobile : ADVANCE_STREAM_BYTE_ALLOWANCE.desktop;

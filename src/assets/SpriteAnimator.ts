@@ -27,6 +27,7 @@ type Contract = {
 
 type ContractSlot = {
   slot?: string;
+  clipGroups?: ClipGroupSource;
   fallback?: { file?: string };
   frames?: FrameSource;
   clips?: Record<string, ClipSource>;
@@ -48,6 +49,17 @@ type ContractSlot = {
 type OrientationSource = {
   frames?: FrameSource;
   clips?: Record<string, ClipSource>;
+};
+
+/**
+ * A slot's clip-group table (`clipGroups` in assets/layer-contracts/characters.v2.json). `default`
+ * names the group that is ALWAYS loaded; `clips` moves individual clips out of it. A slot without
+ * the block has every clip in its default group and therefore loads exactly as it always did.
+ */
+type ClipGroupSource = {
+  notes?: string;
+  default?: string;
+  clips?: Record<string, string>;
 };
 
 type WalkSheetSource = {
@@ -110,6 +122,12 @@ type RuntimeClip = {
 
 type RuntimeOrientation = {
   clips: Map<string, RuntimeClip>;
+  /**
+   * The orientation's own atlas, kept so a clip group that arrives LATE can be indexed out of
+   * frames that are already fetched and uploaded (see mergeClipGroupsIntoRuntime). Costs nothing:
+   * every entry is a frame the live clips already retain, and they all share one atlas texture.
+   */
+  frames?: Array<RuntimeFrame | null>;
 };
 
 type RuntimeSlot = {
@@ -117,7 +135,12 @@ type RuntimeSlot = {
   rotationDirections: Set<string>;
   rotationMirrors: Map<string, string>;
   diagnosticMirrors: Set<string>;
+  /** The clip groups whose cells have been requested for this slot. Grows, never shrinks. */
+  groups: Set<string>;
 };
+
+/** True when this clip's group is one the caller wants loaded now. */
+type ClipAccept = (clip: string) => boolean;
 
 type PickedClip = {
   clip: RuntimeClip;
@@ -191,7 +214,7 @@ const processedTextureUrlsByFile = new Map(
 );
 const textureLoader = new THREE.TextureLoader();
 const processedTextureCache = new Map<string, Promise<THREE.Texture | null>>();
-const runtimeCache = new Map<string, Promise<RuntimeSlot | null>>();
+const runtimeCache = new Map<string, RuntimeSlotEntry>();
 const testClipAtlasCache = new Map<string, Promise<RuntimeClip>>();
 const animationDiagnostics: Partial<Record<AssetSlotId, SpriteAnimationSnapshot>> = {};
 const testClips = new Map<AssetSlotId, { frames: string[]; fps: number }>();
@@ -200,6 +223,119 @@ let spriteStatsFrame = -1;
 let activeAnimators = 0;
 let textureSwapsPerFrame = 0;
 const nonCriticalSpriteRuntimeSlots: readonly AssetSlotId[] = [assetSlots.charProspectorAgent, assetSlots.charBaron];
+
+// ─── CLIP GROUPS — THE TOWN LOADS ONLY THE CLIPS THE TOWN PLAYS ────────────────────────────────
+// Owner, 2026-09-06/07, verbatim: "now it loads veerrry slowly" and "yes, lets do 1".
+//
+// The hero's runtime slot was ATOMIC: createRuntimeSlot loaded every orientation and every clip of
+// the slot before the animator was ready. Measured with the deploy's own instrument on the e1
+// release build (artifacts/hero-slot-clip-split/, both projects identical): that slot is 8,901,114 B
+// in 141 responses inside the first-town window, 43.7 % of the whole window, and 4,310,829 B of it
+// is `pan` (char-hero-sheet-work8, 29 cells) and `attack` (char-hero-sheet-attack8, 6 cells) — two
+// CLAIM animations the town cannot play. TownScene.ts calls `hero.update()` without the `panning`
+// argument and never calls `playAttackPose` (only Game.ts:594 does), so in the town those cells are
+// fetched, decoded, atlased and uploaded to be looked at by nobody.
+//
+// A clip now carries a GROUP (the contract's `clipGroups` block, per slot). The rules:
+//  · The slot's DEFAULT group always loads. It carries walk and idle — the fallback chain every
+//    other clip degrades to in pickClip (requested -> walk -> idle) — so a clip whose group has not
+//    arrived plays the fallback and never throws, never blanks, never stalls a frame.
+//  · A non-default group loads when a SCENE DECLARES it (SPRITE_CLIP_GROUPS below), and otherwise
+//    warms on the advance stream's idle callback once the scene the player is standing in reads
+//    ready (src/assets/AdvanceStream.ts). Never at scene entry, which is the window this cures.
+//  · Groups are MONOTONIC per slot: a later declaration merges clips into the live RuntimeSlot,
+//    whose orientation clip Maps the animators read fresh every frame, so a group that arrives
+//    mid-scene simply starts playing. Nothing is ever unloaded.
+//  · A clip whose frames are already atlased in an existing orientation costs NOTHING to add late
+//    (it is an index into RuntimeOrientation.frames). Only a clip with its own sheets — the hero's
+//    pose library — costs a fetch, and it costs exactly its own sheets.
+const DEFAULT_CLIP_GROUP = 'default';
+
+/**
+ * What each scene needs, by name, so the declaration is data a guard can check rather than a
+ * literal at a call site. The town plays walk and idle; the claim additionally pans and swings.
+ * scripts/hero-clip-groups.test.mjs asserts every name here exists in the character contract.
+ */
+export const SPRITE_CLIP_GROUPS = {
+  town: ['town'],
+  claim: ['town', 'claim'],
+} as const satisfies Record<string, readonly string[]>;
+
+type RuntimeSlotEntry = {
+  slotId: AssetSlotId;
+  /** Resolves as soon as the slot's DEFAULT group is built; later groups merge into the same object. */
+  slot: Promise<RuntimeSlot | null>;
+  /** Groups requested so far — the merge queue's dedupe key. */
+  requested: Set<string>;
+  /** Serialises merges so two declarations cannot build the same clip twice. */
+  merging: Promise<unknown>;
+};
+
+let requestedClipGroups: ReadonlySet<string> = new Set<string>(SPRITE_CLIP_GROUPS.town);
+
+function clipGroupTable(slotId: AssetSlotId): { fallback: string; byClip: Record<string, string> } {
+  const source = slotContracts.get(slotId)?.clipGroups;
+  return { fallback: source?.default ?? DEFAULT_CLIP_GROUP, byClip: source?.clips ?? {} };
+}
+
+/** The group a clip belongs to. Exactly one, always: unlisted clips are in the slot's default group. */
+function clipGroupFor(slotId: AssetSlotId, clip: string): string {
+  const { fallback, byClip } = clipGroupTable(slotId);
+  return byClip[clip] ?? fallback;
+}
+
+function acceptClipGroups(slotId: AssetSlotId, groups: ReadonlySet<string>): ClipAccept {
+  const { fallback } = clipGroupTable(slotId);
+  return (clip) => {
+    const group = clipGroupFor(slotId, clip);
+    return group === fallback || groups.has(group);
+  };
+}
+
+/** Every non-default group this slot declares, in contract order. */
+function deferredClipGroups(slotId: AssetSlotId): string[] {
+  const { fallback, byClip } = clipGroupTable(slotId);
+  return [...new Set(Object.values(byClip))].filter((group) => group !== fallback);
+}
+
+function publishClipGroups(): void {
+  if (typeof document === 'undefined') return;
+  const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
+  if (canvas) canvas.dataset.spriteClipGroups = [...requestedClipGroups].sort().join(' ');
+}
+
+/**
+ * A scene says which clip groups it needs. Call it with a member of SPRITE_CLIP_GROUPS, as early in
+ * the scene's module as possible — both scene modules are dynamically imported, so module scope is
+ * strictly before the scene's own `new Hero()`.
+ *
+ * Loading is monotonic: declaring a SMALLER set never unloads anything, it only stops the next
+ * animator from asking for more. Already-live slots get the newly named groups merged in.
+ */
+export function declareSpriteClipGroups(groups: readonly string[]): void {
+  requestedClipGroups = new Set(groups);
+  publishClipGroups();
+  for (const [cacheKey, entry] of runtimeCache) mergeRequestedGroups(cacheKey, entry, requestedClipGroups);
+}
+
+/**
+ * THE WARM-ON-IDLE PATH. Everything the contract defers, for every slot already in play, requested
+ * now. Called from the advance stream's idle callback once the scene the player is standing in
+ * reads ready — never at scene entry, which is the whole point (src/assets/AdvanceStream.ts).
+ */
+export function warmDeferredSpriteClipGroups(): void {
+  const groups = new Set(requestedClipGroups);
+  for (const { slotId } of runtimeCache.values()) {
+    for (const group of deferredClipGroups(slotId)) groups.add(group);
+  }
+  if (groups.size === requestedClipGroups.size) return;
+  declareSpriteClipGroups([...groups]);
+}
+
+/** Diagnostics + guards: which groups a slot has actually requested. */
+export function spriteClipGroupsRequested(): readonly string[] {
+  return [...requestedClipGroups].sort();
+}
 const heroAgeByEpochOrder = new Map<number, HeroAge>([
   [1, 'young'],
   [2, 'young'],
@@ -773,10 +909,70 @@ function loadRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
       ? `${slotId}:${readProspectorSkin()}`
       : slotId;
   const cached = runtimeCache.get(cacheKey);
-  if (cached) return cached;
-  const promise = createRuntimeSlot(slotId);
-  runtimeCache.set(cacheKey, promise);
-  return promise;
+  if (cached) {
+    mergeRequestedGroups(cacheKey, cached, requestedClipGroups);
+    // The BASE promise, not the merge: an animator becomes ready on its default group and plays
+    // the fallback for anything still in flight. Waiting on a late group here would reintroduce
+    // exactly the atomic load this slice removes.
+    return cached.slot;
+  }
+  const groups = new Set(requestedClipGroups);
+  const entry: RuntimeSlotEntry = {
+    slotId,
+    slot: createRuntimeSlot(slotId, groups),
+    requested: groups,
+    merging: Promise.resolve(),
+  };
+  runtimeCache.set(cacheKey, entry);
+  return entry.slot;
+}
+
+/**
+ * Bring one cached slot up to `groups`. Only the names it has never asked for are built, and the
+ * builds are chained so two scene declarations in the same tick cannot race into a duplicate atlas.
+ */
+function mergeRequestedGroups(cacheKey: string, entry: RuntimeSlotEntry, groups: ReadonlySet<string>): void {
+  const missing = [...groups].filter((group) => !entry.requested.has(group));
+  if (missing.length === 0) return;
+  for (const group of missing) entry.requested.add(group);
+  const accept: ClipAccept = (clip) => missing.includes(clipGroupFor(entry.slotId, clip));
+  entry.merging = entry.merging
+    .then(() => entry.slot)
+    .then((runtime) => {
+      if (!runtime) return;
+      for (const group of missing) runtime.groups.add(group);
+      return mergeClipGroupsIntoRuntime(entry.slotId, runtime, accept);
+    })
+    .catch(() => undefined);
+  void entry.merging.then(() => { if (runtimeCache.get(cacheKey) === entry) publishClipGroups(); });
+}
+
+/**
+ * Add the clips of newly requested groups to a slot that is already live. Two kinds exist and they
+ * cost very differently:
+ *  1. A clip whose frames live in an orientation the slot already built — its cells are fetched,
+ *     decoded and atlased already, so the clip is an INDEX into RuntimeOrientation.frames. Free.
+ *  2. A clip with its own sheets — the hero's pose library (heroPoseFrameFiles) — which fetches
+ *     exactly its own cells and nothing else.
+ * Walk sheets never appear here: the contract law (scripts/hero-clip-groups.test.mjs) keeps every
+ * walk-sheet clip in the default group, because those clips ARE the fallback, so no late group can
+ * ever require re-resolving a walk sheet (which would redo the age/skin probe and its side effects).
+ */
+async function mergeClipGroupsIntoRuntime(slotId: AssetSlotId, runtime: RuntimeSlot, accept: ClipAccept): Promise<void> {
+  const slot = slotContracts.get(slotId);
+  const fromAtlas = (name: string, source: OrientationSource) => {
+    const orientation = runtime.orientations.get(name.toLowerCase());
+    const frames = orientation?.frames;
+    if (!orientation || !frames) return;
+    for (const [clip, clipSource] of Object.entries(source.clips ?? {})) {
+      if (!accept(clip) || orientation.clips.has(clip)) continue;
+      const built = clipFromAtlas(frames, clipSource);
+      if (built) orientation.clips.set(clip, built);
+    }
+  };
+  for (const [name, source] of Object.entries(slot?.orientations ?? {})) fromAtlas(name, source);
+  for (const [name, source] of Object.entries(slot?.rotations?.directions ?? {})) fromAtlas(name, source);
+  if (slotId === assetSlots.charHero) await addHeroPoseClips(runtime.orientations, accept);
 }
 
 export function prefetchNonCriticalSpriteRuntimes(): Promise<void> {
@@ -785,8 +981,9 @@ export function prefetchNonCriticalSpriteRuntimes(): Promise<void> {
     .then(() => undefined);
 }
 
-async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
+async function createRuntimeSlot(slotId: AssetSlotId, groups: ReadonlySet<string>): Promise<RuntimeSlot | null> {
   if (typeof document === 'undefined') return null;
+  const accept = acceptClipGroups(slotId, groups);
   const slot = slotContracts.get(slotId);
   const fallbackTexture = await loadGeneratedTexture(slotId);
   const fallbackClip = fallbackTexture
@@ -804,13 +1001,13 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
   const diagnosticMirrors = new Set<string>();
 
   for (const [name, source] of orientationSources) {
-    const orientation = await createRuntimeOrientation(source.frames, source.clips ?? {}, fallbackClip);
+    const orientation = await createRuntimeOrientation(source.frames, source.clips ?? {}, fallbackClip, accept);
     if (orientation) orientations.set(name, orientation);
   }
 
   for (const [name, source] of Object.entries(slot?.rotations?.directions ?? {})) {
     const direction = name.toLowerCase();
-    const orientation = await createRuntimeOrientation(source.frames, source.clips ?? {}, fallbackClip);
+    const orientation = await createRuntimeOrientation(source.frames, source.clips ?? {}, fallbackClip, accept);
     if (orientation) {
       orientations.set(direction, orientation);
       rotationDirections.add(direction);
@@ -835,7 +1032,7 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
       const mirrorSource = slot?.rotations?.mirrors?.[direction]?.toLowerCase();
       const rotationSource = slot?.rotations?.directions?.[direction] ?? (mirrorSource ? slot?.rotations?.directions?.[mirrorSource] : undefined);
       const merged = mergeWalkSheetWithRotationIdle(source, rotationSource);
-      const orientation = await createRuntimeOrientation(merged.frames, merged.clips ?? {}, fallbackClip);
+      const orientation = await createRuntimeOrientation(merged.frames, merged.clips ?? {}, fallbackClip, accept);
       if (orientation) {
         orientations.set(direction, orientation);
         rotationDirections.add(direction);
@@ -866,12 +1063,14 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
     }
   }
 
-  if (slotId === assetSlots.charHero) await addHeroPoseClips(orientations);
+  if (slotId === assetSlots.charHero) await addHeroPoseClips(orientations, accept);
 
   if (orientations.size === 0 && fallbackClip) {
     orientations.set('side', { clips: new Map([['idle', fallbackClip], ['walk', fallbackClip]]) });
   }
-  return orientations.size > 0 ? { orientations, rotationDirections, rotationMirrors, diagnosticMirrors } : null;
+  return orientations.size > 0
+    ? { orientations, rotationDirections, rotationMirrors, diagnosticMirrors, groups: new Set(groups) }
+    : null;
 }
 
 async function resolveWalkSheet(slotId: AssetSlotId, slot: ContractSlot | undefined): Promise<WalkSheetSource | null> {
@@ -977,17 +1176,27 @@ async function walkSheetLoads(sheet: WalkSheetSource): Promise<boolean> {
   return (await Promise.all(files.map(loadProcessedTexture))).every((texture) => texture !== null);
 }
 
-async function addHeroPoseClips(orientations: Map<string, RuntimeOrientation>): Promise<void> {
+/**
+ * The hero's pose library: the only clips in this repo with sheets of their own, and therefore the
+ * only ones whose group membership changes what is FETCHED rather than merely what is indexed.
+ * `pan` (char-hero-sheet-work8) and `attack` (char-hero-sheet-attack8) are 35 cells / 4,310,829 B —
+ * the whole of the town-window saving. A clip the caller has not accepted is skipped before its
+ * first cell is asked for.
+ */
+async function addHeroPoseClips(orientations: Map<string, RuntimeOrientation>, accept: ClipAccept): Promise<void> {
   for (const [clipName, directions] of Object.entries(heroPoseFrameFiles)) {
+    if (!accept(clipName)) continue;
     for (const [direction, files] of Object.entries(directions)) {
+      const orientation = orientations.get(direction);
+      if (!orientation || orientation.clips.has(clipName)) continue;
       const clip = await createRuntimeOrientation(
         { files: [...files] },
         { [clipName]: { frames: files.map((_, index) => index), fps: clipName === 'attack' ? 12 : 8 } },
         null,
+        accept,
       );
       const runtimeClip = clip?.clips.get(clipName);
-      const orientation = orientations.get(direction);
-      if (runtimeClip && orientation) orientation.clips.set(clipName, runtimeClip);
+      if (runtimeClip) orientation.clips.set(clipName, runtimeClip);
     }
   }
 }
@@ -1116,7 +1325,13 @@ async function createRuntimeOrientation(
   frames: FrameSource | undefined,
   clipSources: Record<string, ClipSource>,
   fallbackClip: RuntimeClip | null,
+  accept: ClipAccept = () => true,
 ): Promise<RuntimeOrientation | null> {
+  // THE ONE PLACE A DEFERRED GROUP SAVES BYTES: a source whose every declared clip is out of group
+  // is skipped BEFORE its cells are asked for. A source that declares no clips at all (a bare frame
+  // strip) is never skipped — it has no group to be out of.
+  const names = Object.keys(clipSources);
+  if (names.length > 0 && !names.some(accept)) return null;
   const frameFiles = resolveFrameFiles(frames);
   const frameTextures = await Promise.all(frameFiles.map(loadProcessedTexture));
   const loadedFrames = frameTextures.map((texture, index) =>
@@ -1129,17 +1344,23 @@ async function createRuntimeOrientation(
   const atlasFrames = createAtlasFrameMap(loadedFrames);
   const clips = new Map<string, RuntimeClip>();
   for (const [name, source] of Object.entries(clipSources)) {
-    const indexes = source.frames ?? [0];
-    const clipFrames = indexes.map((index) => atlasFrames[index]);
-    if (clipFrames.every((frame): frame is RuntimeFrame => !!frame)) {
-      clips.set(name, { frames: clipFrames, fps: source.fps ?? 1, cadenceReferenceFrames: source.cadenceReferenceFrames });
-    }
+    if (!accept(name)) continue;
+    const clip = clipFromAtlas(atlasFrames, source);
+    if (clip) clips.set(name, clip);
   }
   // s15 + task 016: an orientation must always resolve idle without replacing a real walk
   // pair. Walk-only direction blocks keep cycling; idle falls back to the billboard.
   if (fallbackClip && !clips.has('idle')) clips.set('idle', fallbackClip);
   if (clips.size === 0 && atlasFrames[0]) clips.set('idle', { frames: [atlasFrames[0]], fps: 1 });
-  return clips.size > 0 ? { clips } : null;
+  return clips.size > 0 ? { clips, frames: atlasFrames } : null;
+}
+
+/** One clip out of an orientation's already-atlased frames. Null when a frame it names is missing. */
+function clipFromAtlas(atlasFrames: Array<RuntimeFrame | null>, source: ClipSource): RuntimeClip | null {
+  const indexes = source.frames ?? [0];
+  const clipFrames = indexes.map((index) => atlasFrames[index]);
+  if (!clipFrames.every((frame): frame is RuntimeFrame => !!frame)) return null;
+  return { frames: clipFrames, fps: source.fps ?? 1, cadenceReferenceFrames: source.cadenceReferenceFrames };
 }
 
 function resolveFrameFiles(frames: FrameSource | undefined): string[] {
