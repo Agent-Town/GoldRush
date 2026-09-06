@@ -428,7 +428,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 ];
 
 // Chapter E3 follows E2's single-table shape above: town tales and Gazette headlines are
-// ordinary, attributed beats (E2 examples at lines 368-397), not a second narrative system.
+// ordinary, attributed beats (E2 examples at lines 388-419), not a second narrative system.
 export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:174
@@ -452,7 +452,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['Copper trim offers one exclusive line. Silver trim offers the other.', 'Keep both contracts unsigned. We string our own wire.'],
   },
   {
-    // lore/STORYBOOK.md:147,174; Gazette mystery-law headline in the E2 shape at lines 376-397.
+    // lore/STORYBOOK.md:147,174; Gazette mystery-law headline in the E2 shape at lines 396-419.
     id: 'e3-gazette-two-offers',
     trigger: 'contract-unlocked',
     speaker: 'newsie',
@@ -504,7 +504,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['Both company orders say the same thing: cut the town line.', 'The wire-cutters stopped before the first span.'],
   },
   {
-    // lore/STORYBOOK.md:147,177; tavern-tale shape mirrors e2-depot-wedding at lines 368-373.
+    // lore/STORYBOOK.md:147,177; tavern-tale shape mirrors e2-depot-wedding at lines 388-395.
     id: 'e3-tavern-twins-defect',
     trigger: 'run-return-town',
     speaker: 'tavernkeeper',
@@ -534,11 +534,11 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E4 follows the E2/E3 single-table shape above (see the E3 note at lines 409-410):
+// Chapter E4 follows the E2/E3 single-table shape above (see the E3 note at lines 430-431):
 // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
-// (tavern tale shape: e2-depot-wedding at lines 367-374 and e3-tavern-twins-defect at lines
-// 485-494; Gazette headline shape: e2-iron-correction-rumor-one at lines 375-382 and
-// e3-gazette-two-offers at lines 433-442), not a second narrative system. Mystery law holds:
+// (tavern tale shape: e2-depot-wedding at lines 388-395 and e3-tavern-twins-defect at lines
+// 506-515; Gazette headline shape: e2-iron-correction-rumor-one at lines 396-403 and
+// e3-gazette-two-offers at lines 454-463), not a second narrative system. Mystery law holds:
 // the Gazette prints what it can prove and never the meaning. Every beat cites its storybook
 // line. artKey is set only where a plate exists on disk under assets/raw/.
 export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
@@ -670,7 +670,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:197,234; the paper prints the figures and the reader prints the meaning.
     // Chained behind the radio beat because line 234 sets both in the same season; the chain
-    // shape is e2-iron-correction-rumor-two at lines 391-398. NOTE (F-SS05-1): the natural
+    // shape is e2-iron-correction-rumor-two at lines 412-419. NOTE (F-SS05-1): the natural
     // trigger here would be a science milestone, but 'science-threshold' (src/story/signals.ts:8)
     // has no emitter anywhere in src/ outside this module, so the nearest LIVE trigger is used.
     id: 'e4-gazette-dust-chart',
@@ -694,18 +694,33 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 ];
 
 // Chapter E5 follows the E2/E3 single-table shape above: tavern tales and Gazette headlines are
-// ordinary, attributed beats (E3 examples at lines 435-441 and 487-493), not a second narrative
+// ordinary, attributed beats (E3 examples at lines 454-463 and 506-515), not a second narrative
 // system. Every line is LEXICON-clean and cites its STORYBOOK source in the comment above it.
 // SPEAKER GAP (reported, not invented): STORYBOOK Chapter E5 names a harbormaster (:267), a
 // tide-teller (:266), a cannery-hand (:265), a shipwright and a pearl-diver (:267). None has a
 // portrait in assets/processed, and src/story/speakers.ts:1 requires one per speaker id, so this
 // table voices them through registered speakers exactly as ss-04 voiced the E3 twins through the
-// tavernkeeper (beats.ts:425-432). No speaker was added.
-// STILL TRUE after portraits-e5-e10-batch (2026-09-06), and measured rather than assumed: that
-// batch processed every `assets/raw/tf-*-e{6,7,8,9}.png` plate and E5 HAS NONE - `ls assets/raw/
-// tf-*-e5.png` returns nothing, so no harbormaster, tide-teller, cannery-hand, shipwright or
-// pearl-diver portrait exists to register. E5 is the one chapter the batch could not serve, and
-// closing F-SS06-1 needs an ART generation task, not a processing one.
+// tavernkeeper (beats.ts:444-453). No speaker was added.
+// SPEAKER GAP CLOSED 2026-09-06 by portraits-e5-e10-generated-batch. The paragraph above is kept
+// as the record of why this table reads the way it does, and is superseded on its factual claim:
+// the five E5 plates were GENERATED (owner ruling 2026-09-06, verbatim: "if there are still
+// higgsfield credits, use them") and all five ids are registered - `tide-teller-e5`,
+// `cannery-hand-e5`, `harbormaster-e5`, `shipwright-e5`, `pearl-diver-e5`.
+// RE-KEYED (2), and the two are deliberately different so the rule can be argued with:
+//   - `e5-harbormaster-manifest`, `clerk` -> `harbormaster-e5`, COPY BYTE-IDENTICAL. The manifest
+//     chalked on the wheelhouse door is hers and the line carries no third-person pronoun, so
+//     there was nothing to rewrite. Re-keying alone was the whole change.
+//   - `e5-tide-teller-reading`, `schoolteacher` -> `tide-teller-e5`, REWRITTEN. It said "She reads
+//     the sea", and no speaker can say that of herself. Her own insistence that the method be
+//     written down is the storybook's ruling for her (lore/STORYBOOK.md:266: state her method
+//     plainly so no one writes her as magic), so the instruction survives in her mouth.
+// REGISTERED WITHOUT A BEAT (3), stated rather than papered over: no line in this table names the
+// cannery-hand, the shipwright or the pearl-diver at all, so there was nothing to re-key for them.
+// LEFT ON EVIDENCE: `e5-mystery-hull-w5` names the tide-teller and QUOTES her ("In the morning she
+// said only this"), so it is the schoolteacher's mystery report and re-keying it would turn a
+// quoted oracle into a woman quoting herself; `e5-rebuild-long-table` mentions the harbormaster's
+// retired chalk but is the tavernkeeper's own house report; `e5-deep-reactor-horizon` is the
+// elder's science-complete exit hook, which every chapter uses.
 export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:248,280
@@ -722,7 +737,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:254,267,293
     id: 'e5-harbormaster-manifest',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'harbormaster-e5',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
@@ -742,14 +757,14 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:266
     id: 'e5-tide-teller-reading',
     trigger: 'contract-unlocked',
-    speaker: 'schoolteacher',
+    speaker: 'tide-teller-e5',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e5-deepwater-claim',
-    lines: ["The tide-teller called the crest within a hand's width. Swell period, bird behavior, kelp set.", 'She reads the sea. Write the method down before anyone calls it a gift.'],
+    lines: ["I called the crest within a hand's width, and I will tell anyone how. Swell period, bird behavior, kelp set.", 'I read the sea. Reading can be taught. Write my method down before anyone calls it a gift.'],
   },
   {
-    // lore/STORYBOOK.md:255,293; Gazette mystery-law headline in the E3 shape at lines 435-441.
+    // lore/STORYBOOK.md:255,293; Gazette mystery-law headline in the E3 shape at lines 454-463.
     id: 'e5-gazette-monument-carry',
     trigger: 'contract-unlocked',
     speaker: 'newsie',
@@ -813,7 +828,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['Her flag crests the storm front before her hull does, and she would rather rob us than fight us.', 'Break both paddles to pin her on station, and interrupt the claw before our history leaves in her hold.'],
   },
   {
-    // lore/STORYBOOK.md:296; tavern-tale shape mirrors e3-tavern-twins-defect at lines 487-493.
+    // lore/STORYBOOK.md:296; tavern-tale shape mirrors e3-tavern-twins-defect at lines 506-515.
     id: 'e5-tavern-locomotive-argument',
     trigger: 'run-return-town',
     speaker: 'tavernkeeper',
@@ -843,7 +858,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['GAZETTE: CROSSED PICKAXES UNDER THE CORSAIR PAINT', 'Her struck flag carries an older mark, and that fleet sold at auction two seasons before the water came. This paper prints the notice and no name.'],
   },
   {
-    // lore/STORYBOOK.md:297; the exit hook toward E6, in the shape of e3-refinery-horizon at lines 505-513.
+    // lore/STORYBOOK.md:297; the exit hook toward E6, in the shape of e3-refinery-horizon at lines 526-534.
     id: 'e5-deep-reactor-horizon',
     trigger: 'science-complete',
     speaker: 'elder',
@@ -858,7 +873,7 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // (e6-steward-doorless-dome, e6-defector-catalog, e7-chalk-first-filing, e7-mission-sent-column, e8-breach-drill,
 // e9-grass-square-planted, e9-greenkeeper-outside, e9-first-swim); every citation kept. e7-starship-countdown stays the
 // elder's: the science-complete exit hook is the elder's shape in every chapter (e5-deep-reactor-horizon, e9-generation-ark-horizon).
-// Chapter E6 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and
+// Chapter E6 follows the E2/E3 single-table shape above (E3 at lines 432-535): tavern tales and
 // Gazette headlines are ordinary, attributed beats, not a second narrative system.
 // Cast note (honesty guard): STORYBOOK lines 341-345 name five new E6 townsfolk (reactor steward,
 // kitchen chemist, appliance wrangler, diner carhop, Combine defector). They are voiced here by
@@ -969,7 +984,7 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['Nothing the pen has taken in has ever gone feral a second time.', 'We tested for warmth and the thermometers read the same as the yard. What holds is tending.'],
   },
   {
-    // lore/STORYBOOK.md:378,331; tavern-tale shape mirrors e3-tavern-twins-defect at lines 486-494.
+    // lore/STORYBOOK.md:378,331; tavern-tale shape mirrors e3-tavern-twins-defect at lines 506-515.
     id: 'e6-tavern-wrangler-drinks-free',
     trigger: 'run-return-town',
     speaker: 'tavernkeeper',
@@ -999,12 +1014,12 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 411-514, E5 at 688-833,
-// E6 at 851-974): the era's tavern tales and Gazette headlines are ordinary attributed beats in
+// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 432-535, E5 at 724-869,
+// E6 at 892-1015): the era's tavern tales and Gazette headlines are ordinary attributed beats in
 // THIS table, not a second narrative system (tavern-tale shape: e2-depot-wedding at lines
-// 367-374, e3-tavern-twins-defect at 485-494, e5-tavern-locomotive-argument at 794-803;
-// Gazette-headline shape: e2-iron-correction-rumor-one at 375-382, e3-gazette-two-offers at
-// 433-442, e6-gazette-the-printing at 955-964). Mystery law holds: the Gazette prints what it
+// 388-395, e3-tavern-twins-defect at 506-515, e5-tavern-locomotive-argument at 830-839;
+// Gazette-headline shape: e2-iron-correction-rumor-one at 396-403, e3-gazette-two-offers at
+// 454-463, e6-gazette-the-printing at 996-1005). Mystery law holds: the Gazette prints what it
 // can prove and never the meaning. Every beat cites its storybook line; artKey is set only
 // where a plate exists on disk under assets/raw/.
 // Cast note (honesty guard): STORYBOOK lines 421-425 name six E7 cast members (Chalk the first
@@ -1143,7 +1158,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['Nothing she had done before could touch it. Only the moves that were on no tape at all.', 'It came down to one bright mote, and the House printed a jar. It winters on the shelf beside the chair and the crawler, and it keeps how we play.'],
   },
   {
-    // lore/STORYBOOK.md:407,452; tavern-tale shape mirrors e3-tavern-twins-defect at lines 485-494.
+    // lore/STORYBOOK.md:407,452; tavern-tale shape mirrors e3-tavern-twins-defect at lines 506-515.
     id: 'e7-tavern-does-not-hang-up',
     trigger: 'run-return-town',
     speaker: 'tavernkeeper',
@@ -1173,7 +1188,7 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['GAZETTE: RUSTLERS PAID IN OLD RAIL SCRIP', 'The tape they filled runs hours of weddings, freight and weather. One name occurs once, in passing, said wrong. This paper prints the scrip and no client.'],
   },
   {
-    // lore/STORYBOOK.md:453,408; the exit hook toward E8, in the shape of e5-deep-reactor-horizon at lines 819-827.
+    // lore/STORYBOOK.md:453,408; the exit hook toward E8, in the shape of e5-deep-reactor-horizon at lines 860-868.
     id: 'e7-starship-countdown',
     trigger: 'science-complete',
     speaker: 'elder',
@@ -1183,23 +1198,30 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 411-514, E6 at lines 851-974):
+// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 432-535, E6 at lines 892-1015):
 // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
-// (tavern-tale shape: e3-tavern-twins-defect at lines 485-494 and e6-tavern-wrangler-drinks-free
-// at lines 945-954; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second
+// (tavern-tale shape: e3-tavern-twins-defect at lines 506-515 and e6-tavern-wrangler-drinks-free
+// at lines 986-995; Gazette shape: e3-gazette-two-offers at lines 454-463), not a second
 // narrative system. Mystery law holds: the Gazette prints what it can prove and never the meaning.
 // SPEAKER GAP (reported, not invented, the same finding ss-06 and ss-07 recorded for E5 and E6):
 // STORYBOOK lines 485-486 name five new E8 townsfolk (the moon-born child, the dome gardener, the
 // launch master, the suit fitter, the He-3 assayer).
 // They are voiced here through registered speakers and named inside the lines.
-// UPDATED 2026-09-06 by portraits-e5-e10-batch - THE PORTRAIT HALF OF THIS NOTE IS NOW STALE AND
-// IS CORRECTED HERE: the four E8 plates are processed and registered (`moon-born-child-e8`,
-// `dome-gardener-e8`, `launch-master-e8`, `suit-fitter-e8`). THE HE-3 ASSAYER STILL HAS NO
-// PORTRAIT - she is named in the storybook and no `tf-*-e8` plate was ever generated for her, so
-// four of the five, not five. NO E8 BEAT WAS RE-KEYED, and the reason is the copy: `e8-breach-
-// drill` says "nobody followed her" and `e8-tavern-river-question` is the tavernkeeper's own tale,
-// while `e8-riverward-launch` is the elder's science-complete exit hook. Re-attributing them needs
-// a COPY revision, which that task's firewall forbade. See assets/LEDGER.md's portraits-e5-e10-batch row.
+// UPDATED 2026-09-06 by portraits-e5-e10-batch, then CORRECTED THE SAME DAY by
+// portraits-e5-e10-generated-batch, because BOTH halves of that update have since been falsified
+// and a stale note here is exactly how a later reader infers a gap that no longer exists:
+//   1. the four E8 plates are processed and registered (`moon-born-child-e8`, `dome-gardener-e8`,
+//      `launch-master-e8`, `suit-fitter-e8`), and the HE-3 ASSAYER NOW HAS A PLATE TOO. It was
+//      GENERATED (owner ruling 2026-09-06) and registered as `he3-assayer-e8`, so this era is five
+//      of five, not four. The sentence that said she had none is retired.
+//   2. "NO E8 BEAT WAS RE-KEYED" stopped being true the moment the COPY REVISION above moved
+//      `e8-breach-drill` to `suit-fitter-e8` and put its line in her own voice.
+// NO BEAT WAS RE-KEYED TO THE ASSAYER, and that is measured rather than assumed: no line in this
+// table names her. `e8-pan-in-regolith` prints "helium flecks" and a poster of "silver hair", but
+// the silver figure on that poster is the Prospector (lore/STORYBOOK.md:473) and the beat is the
+// Prospector's own; `e8-tavern-river-question` is the tavernkeeper's tale; `e8-riverward-launch`
+// is the elder's science-complete exit hook. Her portrait is registered and waits for a line.
+// See assets/LEDGER.md rows 72 and 73.
 // Household Law (lore/canon-rules.md:19-20): the moon-born child is a minor, so the Canteen beat
 // keeps the child among the whole town and its gardener, never alone.
 // ADR-001 holds: the era's arms are light, magnets and thrown regolith. No firearms are named.
@@ -1341,7 +1363,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['The mass-driver threw its first load east this shift, and I logged it on a waybill whose columns have not changed since the rail spur.', 'Seventh of my line on the same railroad, and the railroad goes to orbit now. The form is the heirloom.'],
   },
   {
-    // lore/STORYBOOK.md:485,513; tavern-tale shape mirrors e3-tavern-twins-defect at lines 485-494.
+    // lore/STORYBOOK.md:485,513; tavern-tale shape mirrors e3-tavern-twins-defect at lines 506-515.
     id: 'e8-tavern-river-question',
     trigger: 'run-return-town',
     speaker: 'tavernkeeper',
@@ -1351,7 +1373,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['The moon-born child asked the whole Canteen what a river sounds like, and ten eras of townsfolk tried to answer with their hands.', 'The dome gardener settled it by morning. One square of grass in a tray, grown for that child, so your feet know.'],
   },
   {
-    // lore/STORYBOOK.md:481; the era's turn, stated once, in the shape of e6-vaccine-written-down at lines 918-929.
+    // lore/STORYBOOK.md:481; the era's turn, stated once, in the shape of e6-vaccine-written-down at lines 976-985.
     id: 'e8-out-of-reach',
     trigger: 'run-return-town',
     speaker: 'schoolteacher',
@@ -1371,7 +1393,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['GAZETTE: THE WINDOW SEAT IS NEVER EMPTY AND NEVER FOUGHT OVER', 'The tavern swears that on clear nights one stitch of the old valley shows green through the glass. No instrument confirms it, so this paper prints the seat and not the green.'],
   },
   {
-    // lore/STORYBOOK.md:515; the exit hook toward E9, in the shape of e5-deep-reactor-horizon at lines 819-827.
+    // lore/STORYBOOK.md:515; the exit hook toward E9, in the shape of e5-deep-reactor-horizon at lines 860-868.
     id: 'e8-riverward-launch',
     trigger: 'science-complete',
     speaker: 'elder',
@@ -1381,7 +1403,7 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E9 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and
+// Chapter E9 follows the E2/E3 single-table shape above (E3 at lines 432-535): tavern tales and
 // Gazette headlines are ordinary, attributed beats, not a second narrative system.
 // Cast note (honesty guard): STORYBOOK lines 540-542 name five new E9 townsfolk (the moon-born
 // child grown, the canal reeve, the greenkeeper, the ice quarry chief, the weather warden).
@@ -1537,7 +1559,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['Our newest canal was corrected in the night, re-dug to a century-old blueprint, beautifully and precisely wrong.', 'It never attacks. It unmakes, and our beams barely mark it. Whatever answers that machine, it is not more beams.'],
   },
   {
-    // lore/STORYBOOK.md:544; the tavern tale, in the shape of e3-tavern-twins-defect at lines 486-494.
+    // lore/STORYBOOK.md:544; the tavern tale, in the shape of e3-tavern-twins-defect at lines 506-515.
     id: 'e9-tavern-obedient-joke',
     trigger: 'run-return-town',
     speaker: 'tavernkeeper',
@@ -1577,7 +1599,7 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ["C3 flooded and the basin filled and the water settled clear, and the monument ran its first open-sky water since the plaza.", "I walked past the whole crowd and dived. I came up, and now I know: a river sounds like everyone you love, yelling."],
   },
   {
-    // lore/STORYBOOK.md:571; the exit hook toward E10, in the shape of e5-deep-reactor-horizon at lines 826-834.
+    // lore/STORYBOOK.md:571; the exit hook toward E10, in the shape of e5-deep-reactor-horizon at lines 860-868.
     id: 'e9-generation-ark-horizon',
     trigger: 'science-complete',
     speaker: 'elder',
@@ -1587,10 +1609,10 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 411-514, E8 at lines 1181-1356):
+// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 432-535, E8 at lines 1229-1404):
 // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
-// (tavern-tale shape: e3-tavern-twins-defect at lines 485-494 and e8-tavern-river-question at lines
-// 1317-1326; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second narrative system.
+// (tavern-tale shape: e3-tavern-twins-defect at lines 506-515 and e8-tavern-river-question at lines
+// 1365-1374; Gazette shape: e3-gazette-two-offers at lines 454-463), not a second narrative system.
 // Mystery law holds: the Gazette prints what it can prove and never the meaning.
 // LANDED 2026-09-06 (attended drain, CLAUDE.md section 4.10b): the E8 coordinates above were re-based
 // by +175 in the landing commit, E7 and E9 having landed on main after this lane was cut. Measured on
@@ -1605,6 +1627,17 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // comment at the end of this table cited `e8-riverward-launch at lines 1144-1153` while the true
 // range on that very commit was 1319-1327. It is corrected there to 1347-1355. A re-base that fixes
 // a table header is not finished until every citation in the table's body is re-derived too.
+// RE-BASED AGAIN 2026-09-06 by portraits-e5-e10-generated-batch, and THIS TIME THE WHOLE FILE, not
+// just this seam, because the sweep found that EVERY in-file coordinate in beats.ts had rotted and
+// none of them by this table's own hand. Two commits did it and neither re-derived: the
+// story-signal-gaps merge added a first-boot beat at the head of the E1 table (+21 to everything
+// below it), and the COPY REVISION added its five-line note between E5 and E6 (+5 more to
+// everything below THAT). The whole set is re-derived here by locating each symbol in the edited
+// file - never by adding a shift to an inherited number - and verified 44/44 exact against the
+// tree, this table's own body citation among them (e8-riverward-launch 1347-1355 -> 1395-1403,
+// e8-tavern-river-question 1114-1123 -> 1365-1374, which had been stale since long before either
+// of those commits). The numbers in the four paragraphs ABOVE are deliberately left alone: they
+// are a record of what values WERE, not pointers to where anything IS.
 // SPEAKER GAP (reported, not invented, the same finding ss-06, ss-07 and ss-09 recorded for E5, E6
 // and E8): STORYBOOK lines 584-586, 618 and 621 name this chapter's cast (the eldest heir, the Baron
 // in his last act of keeping, the Old Digger, the Quack, Chalk at the manifest, the Charter-Keeper,
@@ -1621,6 +1654,27 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // my line on the same railroad ... The form is the heirloom") and reads as the clerk admiring
 // Chalk, not as Chalk. The heir, the Baron, the Old Digger, the Quack and the Charter-Keeper have
 // no plate in any era. NO E10 BEAT WAS RE-KEYED. See assets/LEDGER.md's portraits-e5-e10-batch row.
+// SPEAKER GAP CLOSED 2026-09-06 by portraits-e5-e10-generated-batch. The two paragraphs above are
+// kept as the record of why this table reads the way it does, and are superseded on their factual
+// claim: four E10 plates were GENERATED (owner ruling 2026-09-06, verbatim: "if there are still
+// higgsfield credits, use them") and registered - `eldest-heir-e10`, `baron-e10`, `quack-e10`,
+// `charter-keeper-e10`. The Old Digger has no plate in any era and is still voiced through others.
+// RE-KEYED (2), both rewritten, because both spoke of their own subject in the third person:
+//   - `e10-baron-stays`, `preacher` -> `baron-e10`. It opened "The Baron did not board. He is
+//     ancient now", and no man reports himself that way. The line canon owes him
+//     (lore/STORYBOOK.md:585, "It never ran here. Maybe it runs out there.") is kept verbatim.
+//   - `e10-quack-freed`, `schoolteacher` -> `quack-e10`. Its line CAN be his, and it is better as
+//     his: "No one remembers what I called myself, only what I sold" keeps ruling #18's promise
+//     that he is unnamed to the last (lore/characters.md:29) while letting him say it himself.
+// LEFT ON EVIDENCE, each with its blocking reason rather than a shrug: `e10-ark-boarding` names
+// the heir but is this chapter's ARRIVAL beat, which is the Prospector's in every chapter
+// (e5-deepwater-claim-arrival, e8-mare-claim-arrival, e10-ember-shore-arrival), and its second
+// half is the town's laugh rather than the heir's own words; `e10-watch-wound` names him but is
+// the Prospector's grace note, closing on her own memory; `e10-welcome-from` is the tavernkeeper's
+// house report; `e10-chalk-manifest` stays the clerk's for the reason given above;
+// `e10-charter-press` is the elder's science-complete exit hook, which every chapter uses. So
+// `eldest-heir-e10` and `charter-keeper-e10` are registered and carry no beat yet: a portrait
+// waiting for a line, stated instead of forced.
 // TRIGGER GAP (reported, not invented, per the honesty guard): THE QUIET is a boss in the storybook
 // (lines 609-613) but no epoch-10-deepsky contract carries a twist.baron, and boss-arrival /
 // boss-defeat are emitted only when one exists (src/game/Game.ts:5987-5991 and src/game/Game.ts:6250).
@@ -1687,21 +1741,21 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:585
     id: 'e10-baron-stays',
     trigger: 'contract-unlocked',
-    speaker: 'preacher',
+    speaker: 'baron-e10',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
-    lines: ['The Baron did not board. He is ancient now, and he stays on the red world with the Old Digger, keeping the canals right for the greenest thing his century ever touched.', 'He asked one thing of the heir, and he handed over the stopped watch. It never ran here. Maybe it runs out there.'],
+    lines: ['I am not boarding. I am ancient, and I stay on the red world with the Old Digger, keeping the canals right for the greenest thing my century ever touched.', 'I asked one thing of the heir, and I put the stopped watch in his hands. It never ran here. Maybe it runs out there.'],
   },
   {
     // lore/STORYBOOK.md:586
     id: 'e10-quack-freed',
     trigger: 'contract-unlocked',
-    speaker: 'schoolteacher',
+    speaker: 'quack-e10',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e10-ember-shore',
-    lines: ["The Baron's last act of keeping was letting go. The oldest prisoner in the family ledger walks this ship freed, and he took the far end of the Long Table.", 'No one remembers what he called himself, only what he sold. He keeps the apothecary drawer now, and this time the drawer is honest.'],
+    lines: ["The Baron's last act of keeping was letting go. The oldest prisoner in that family ledger walks this ship freed, and I took the far end of the Long Table.", 'No one remembers what I called myself, only what I sold. I keep the apothecary drawer now, and this time the drawer is honest.'],
   },
   {
     // lore/STORYBOOK.md:618,603; PROPOSED PLAY: the preserve loop this line promises waits on
@@ -1716,7 +1770,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['First world made port. Cooling lava veins band the whole dry shore, and the vent at the south end is the last live heat on it.', 'A machine stands over the east ground, cooled right through, older than the Combine. Nobody aboard can tell you what built it, and the sky out here is older than the machine.'],
   },
   {
-    // lore/STORYBOOK.md:618,603,589; mystery law holds, in the E3 Gazette shape at lines 433-442.
+    // lore/STORYBOOK.md:618,603,589; mystery law holds, in the E3 Gazette shape at lines 454-463.
     id: 'e10-gazette-new-verb',
     trigger: 'contract-unlocked',
     speaker: 'newsie',
@@ -1813,7 +1867,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     lines: ['Inside the aura the work inverts into keeping. One lantern lit, one song playing, one portrait untouched, and every preserve we hold weakens the heart.', 'You do not damage the Quiet. You out-live it, and when it breaks it does not fall. It recedes.'],
   },
   {
-    // lore/STORYBOOK.md:596; tavern-tale shape mirrors e8-tavern-river-question at lines 1114-1123.
+    // lore/STORYBOOK.md:596; tavern-tale shape mirrors e8-tavern-river-question at lines 1365-1374.
     id: 'e10-tavern-starlight-pan',
     trigger: 'run-return-town',
     speaker: 'tavernkeeper',
@@ -1845,7 +1899,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
   {
     // lore/STORYBOOK.md:621; the last node opens the Press, in the shape of e8-riverward-launch at
-    // lines 1347-1355 (F-PORT-3: this cited 1144-1153, stale by -175 since the E10 landing commit,
+    // lines 1395-1403 (F-PORT-3: this cited 1144-1153, stale by -175 since the E10 landing commit,
     // whose own +175 re-base fixed the table header and missed this body citation; re-derived by
     // locating the beat, not by arithmetic). Household Law (lore/canon-rules.md:19-20): the child is
     // at the lever with her.

@@ -6,6 +6,11 @@ export type StorySpeakerId =
   | 'newsie'
   | 'schoolteacher'
   | 'preacher'
+  | 'tide-teller-e5'
+  | 'cannery-hand-e5'
+  | 'harbormaster-e5'
+  | 'shipwright-e5'
+  | 'pearl-diver-e5'
   | 'reactor-steward-e6'
   | 'kitchen-chemist-e6'
   | 'appliance-wrangler-e6'
@@ -22,11 +27,16 @@ export type StorySpeakerId =
   | 'dome-gardener-e8'
   | 'suit-fitter-e8'
   | 'moon-born-child-e8'
+  | 'he3-assayer-e8'
   | 'canal-reeve-e9'
   | 'greenkeeper-e9'
   | 'ice-quarry-chief-e9'
   | 'weather-warden-e9'
-  | 'moon-born-child-e9';
+  | 'moon-born-child-e9'
+  | 'eldest-heir-e10'
+  | 'baron-e10'
+  | 'quack-e10'
+  | 'charter-keeper-e10';
 
 export type StorySpeaker = {
   id: StorySpeakerId;
@@ -54,6 +64,26 @@ const preacherPortraitUrl = new URL('../../assets/processed/townsfolk-preacher.p
 // #8a8a8a, while assets/raw/townsfolk-elder.png (the source of the seven above) is 46.22%
 // key-coloured. They are processed full-bleed at 384x384 like `char-prospector-portrait.png`,
 // which is the same tier and already one of the seven.
+// THE E5 / E8 / E10 CAST (portraits-e5-e10-generated-batch, 2026-09-06), the half of the era cast
+// the processing batch above could not serve because its plates did not exist yet. Owner ruling
+// 2026-09-06, verbatim: "if there are still higgsfield credits, use them". The ten plates were
+// GENERATED (Higgsfield GPT Image 2, the row-60 style anchor verbatim, retakes until the ground
+// warmth landed in the band) and then processed by the identical row-60 recipe as the 21 above -
+// `node scripts/extract-alpha.mjs --full-bleed --size 384`, alpha dropped - so the two batches are
+// one tier: 384x384, 3-channel, opaque, 0 transparent and 0 magenta px.
+// Provenance and per-plate QA: artifacts/portraits-e5-e10-generated/generation.log and
+// assets/LEDGER.md row 73.
+const tideTellerE5PortraitUrl = new URL('../../assets/processed/townsfolk-tide-teller-e5.png', import.meta.url).href;
+const canneryHandE5PortraitUrl = new URL('../../assets/processed/townsfolk-cannery-hand-e5.png', import.meta.url).href;
+const harbormasterE5PortraitUrl = new URL('../../assets/processed/townsfolk-harbormaster-e5.png', import.meta.url).href;
+const shipwrightE5PortraitUrl = new URL('../../assets/processed/townsfolk-shipwright-e5.png', import.meta.url).href;
+const pearlDiverE5PortraitUrl = new URL('../../assets/processed/townsfolk-pearl-diver-e5.png', import.meta.url).href;
+const he3AssayerE8PortraitUrl = new URL('../../assets/processed/townsfolk-he3-assayer-e8.png', import.meta.url).href;
+const eldestHeirE10PortraitUrl = new URL('../../assets/processed/townsfolk-eldest-heir-e10.png', import.meta.url).href;
+const baronE10PortraitUrl = new URL('../../assets/processed/townsfolk-baron-e10.png', import.meta.url).href;
+const quackE10PortraitUrl = new URL('../../assets/processed/townsfolk-quack-e10.png', import.meta.url).href;
+const charterKeeperE10PortraitUrl = new URL('../../assets/processed/townsfolk-charter-keeper-e10.png', import.meta.url).href;
+
 const reactorStewardE6PortraitUrl = new URL('../../assets/processed/townsfolk-reactor-steward-e6.png', import.meta.url).href;
 const kitchenChemistE6PortraitUrl = new URL('../../assets/processed/townsfolk-kitchen-chemist-e6.png', import.meta.url).href;
 const applianceWranglerE6PortraitUrl = new URL('../../assets/processed/townsfolk-appliance-wrangler-e6.png', import.meta.url).href;
@@ -83,6 +113,12 @@ const moonBornChildE9PortraitUrl = new URL('../../assets/processed/townsfolk-moo
 // its ink centroid within 187-197 of 384 - at most 5px, under 1.3%, off centre, i.e. about one
 // pixel in the rendered card - so 50% centres all of them and the existing seven's own 50-52%
 // band is met. The Y term is inert for square sources and is set to the sibling value.
+// EXTENDED 2026-09-06 to the ten generated plates, re-measured rather than assumed. The statistic
+// is the luminance-weighted ink centroid (weight = 255 - Rec.709 luma, summed over all 147,456 px);
+// under that definition the 21 processed plates above measure 187.0-198.5 and the ten new ones
+// measure 188.2-198.1, i.e. the new batch sits inside the band the registered set already occupies
+// (widest deviation: quack-e10 at 198.1, 6.1 px of 384 off centre, about 1.2 px in the 74 px card,
+// against weather-warden-e9's 198.5 which has shipped at this value since the batch above).
 const ERA_CAST_OBJECT_POSITION = '50% 42%';
 
 export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
@@ -127,6 +163,41 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
     name: 'Preacher',
     portraitUrl: preacherPortraitUrl,
     objectPosition: '50% 42%',
+  },
+
+  // E5, the deepwater claim (lore/STORYBOOK.md:265-267 THE PEOPLE; plates assets/raw/tf-*-e5.png,
+  // assets/LEDGER.md row 73). Role nouns, hyphenated exactly as the storybook hyphenates them.
+  'tide-teller-e5': {
+    id: 'tide-teller-e5',
+    name: 'Tide-Teller',
+    portraitUrl: tideTellerE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  // The E2 newcomer kid, grown (lore/STORYBOOK.md:265): the plate keeps the paper boat as the
+  // face-chain to that portrait, so the id is the E5 role and the character is the E2 one.
+  'cannery-hand-e5': {
+    id: 'cannery-hand-e5',
+    name: 'Cannery-Hand',
+    portraitUrl: canneryHandE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'harbormaster-e5': {
+    id: 'harbormaster-e5',
+    name: 'Harbormaster',
+    portraitUrl: harbormasterE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'shipwright-e5': {
+    id: 'shipwright-e5',
+    name: 'Shipwright',
+    portraitUrl: shipwrightE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'pearl-diver-e5': {
+    id: 'pearl-diver-e5',
+    name: 'Pearl-Diver',
+    portraitUrl: pearlDiverE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
   },
 
   // E6, the glow mesa (lore/STORYBOOK.md:341-345 THE PEOPLE; plates assets/raw/tf-*-e6.png,
@@ -213,8 +284,9 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
   },
 
   // E8, the mare claim (lore/STORYBOOK.md:485-486 THE PEOPLE; plates assets/raw/tf-*-e8.png,
-  // assets/LEDGER.md row 63). The He-3 assayer is named in the storybook and has NO plate, so
-  // no id is registered for her.
+  // assets/LEDGER.md rows 63 and 73). CORRECTED 2026-09-06: the He-3 assayer's plate was generated
+  // in the batch of row 73, so the era's fifth townsfolk is registered here and the note that said
+  // she had none is retired. Five of five.
   'launch-master-e8': {
     id: 'launch-master-e8',
     name: 'Launch Master',
@@ -237,6 +309,14 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
     id: 'moon-born-child-e8',
     name: 'Moon-Born Child',
     portraitUrl: moonBornChildE8PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  // The assay lineage one era from its Press destiny (lore/STORYBOOK.md:486). "He-3" is the
+  // storybook's own spelling of the isotope and stays hyphenated.
+  'he3-assayer-e8': {
+    id: 'he3-assayer-e8',
+    name: 'He-3 Assayer',
+    portraitUrl: he3AssayerE8PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
 
@@ -270,6 +350,38 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
     id: 'moon-born-child-e9',
     name: 'Moon-Born Child',
     portraitUrl: moonBornChildE9PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+
+  // E10, the deep sky (lore/STORYBOOK.md:584-586, 618, 621; plates assets/raw/tf-*-e10.png,
+  // assets/LEDGER.md row 73). Three of these four keep the article, because the article is the
+  // canon name: the rival has never been anything but "the Baron" in this repo's own UI
+  // (src/agent/View.ts:617 already ships that string), the heir is a role and not a person, and
+  // the Quack is UNNAMED BY DESIGN - "no one remembers what he called himself; only what he sold"
+  // (lore/characters.md:29, endpoint ruling #18, 2026-07-18). Giving him a name here would break
+  // the oldest promise the character has.
+  'eldest-heir-e10': {
+    id: 'eldest-heir-e10',
+    name: 'The Eldest Heir',
+    portraitUrl: eldestHeirE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'baron-e10': {
+    id: 'baron-e10',
+    name: 'The Baron',
+    portraitUrl: baronE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'quack-e10': {
+    id: 'quack-e10',
+    name: 'The Quack',
+    portraitUrl: quackE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'charter-keeper-e10': {
+    id: 'charter-keeper-e10',
+    name: 'Charter-Keeper',
+    portraitUrl: charterKeeperE10PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
 };
