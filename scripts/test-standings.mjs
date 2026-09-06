@@ -51,7 +51,7 @@ try {
     await checkLineageReassay(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
     await checkOperatorProbes(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
-    await checkPosts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+    await checkPosts(onRequest, onRequestAssayQueue, onRequestAssayVerdict, MAX_JSON_BYTES);
     await checkPreserveRanking(onRequest, compareScores);
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
     await checkBankedHeat11Tapes(onRequest, validateTape, validateRunTape);
@@ -553,7 +553,7 @@ async function checkAssayIndexRace(onRequest, queueRoute) {
   equal(withLateRow.body.queue.map((row) => row.locator.tapeId).sort(), [rowA.tape.id, rowB.tape.id, late.tape.id].sort(), 'reconcile restores the race without dropping a row written between its scan and index write');
 }
 
-async function checkPosts(onRequest, queueRoute, verdictRoute) {
+async function checkPosts(onRequest, queueRoute, verdictRoute, maxRequestBytes) {
   const kv = makeKv();
   const unattested = await call(onRequest, 'POST', '/api/standings', post('0'.repeat(32), 20), kv);
   equal(unattested.status, 200, 'tapeless POST accepted');
@@ -655,7 +655,10 @@ async function checkPosts(onRequest, queueRoute, verdictRoute) {
   equal(beyondPicnic.body.error, 'reel_duration_exceeded', 'no-secureWave beyond-margin refusal names the duration reason');
 
   const oversized = post('8'.repeat(32), 20);
-  oversized.profileName = 'x'.repeat(2 * 1024 * 1024);
+  // DERIVED, not a literal: this padding only means anything while it is larger than the
+  // reader cap, and the cap follows the envelope (F-HEAT12-2 moved it 802,080 -> 2,531,360, at
+  // which point the old hardcoded 2 MiB was admitted and the assertion silently changed subject).
+  oversized.profileName = 'x'.repeat(maxRequestBytes + 1);
   const tooLarge = await call(onRequest, 'POST', '/api/standings', oversized, kv);
   equal(tooLarge.status, 413, 'pretty-sized standing is refused before validation');
   equal(tooLarge.body.error, 'reel_too_large', '413 names the compact-reel cure');
@@ -690,13 +693,23 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
   ].map((contractId) => {
     const envelope = runTapeEnvelopeForContract(contractId);
     return [contractId, envelope.maxTicks, envelope.maxTapeBytes, envelope.maxEntries, maxRequestBytes];
+  // THE DERIVATION, so a reader can check the pins by arithmetic rather than by belief. Since
+  // F-HEAT12-2 the byte axis prices two classes of entry (PlaybookFormat.ts, the comment above
+  // RUN_TAPE_ENVELOPE_TICKS_PER_ORDER_ENTRY):
+  //   maxEntries      = ceil(maxTicks / 5)                        one movement change-point per 5 ticks
+  //   maxOrderEntries = ceil(maxTicks / 30)                       one whole order array per second
+  //   maxTapeBytes    = 16,384 + maxEntries*160 + maxOrderEntries*(2,400 - 160)
+  //   maxRequestBytes = max(maxTapeBytes over every contract) + 44 KiB of request metadata
+  // The Claim: 16,384 + 3,601*160 + 601*2,240 = 1,938,784 (was 592,544 when every entry cost 160).
+  // The reader cap follows the widest contract, e2-trestle at 2,486,304, so 2,486,304 + 45,056
+  // = 2,531,360 (was 802,080). maxTicks and maxEntries are UNCHANGED on every row.
   }), [
-    ['the-claim', 18_002, 592_544, 3_601, 802_080],
-    ['e1-drill-yard', 18_002, 592_544, 3_601, 802_080],
-    ['e1-dry-gulch', 18_002, 592_544, 3_601, 802_080],
-    ['e1-night-shift', 22_502, 736_544, 4_501, 802_080],
-    ['e1-twin-banks', 18_002, 592_544, 3_601, 802_080],
-    ['e1-baron', 20_350, 667_584, 4_070, 802_080],
+    ['the-claim', 18_002, 1_938_784, 3_601, 2_531_360],
+    ['e1-drill-yard', 18_002, 1_938_784, 3_601, 2_531_360],
+    ['e1-dry-gulch', 18_002, 1_938_784, 3_601, 2_531_360],
+    ['e1-night-shift', 22_502, 2_418_784, 4_501, 2_531_360],
+    ['e1-twin-banks', 18_002, 1_938_784, 3_601, 2_531_360],
+    ['e1-baron', 20_350, 2_188_544, 4_070, 2_531_360],
   ], 'E1 four-axis door envelope table is pinned');
 
   const widestCharacter = '\ud800';

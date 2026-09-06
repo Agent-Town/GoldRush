@@ -148,6 +148,12 @@ const PRESERVE_CONTRACTS = new Set(CONTRACT_BUNDLES.flatMap((bundle) => bundle.c
   .filter((contract) => 'preserve' in contract.twist)
   .map((contract) => contract.id)));
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
+// THE OUTER WALL, and it is derived rather than authored: the widest per-contract reel plus 44 KiB
+// of request metadata. It is NOT the refusal a rider meets first. Side by side after F-HEAT12-2's
+// two-class pricing (`PlaybookFormat.runTapeEnvelopeForContract`):
+//   per-contract reel ceiling, `e9-dome-basin`   1,938,784 B  (was 592,544)  <- `validateTape`
+//   outer wall, every request                    2,531,360 B  (was 802,080)  <- `readJson`
+// Both moved together because this line reads the envelope; neither number is written down twice.
 export const MAX_JSON_BYTES = Math.max(...CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts
   .map((contract) => runTapeEnvelopeForContract(contract.id).maxTapeBytes))) + 44 * 1024;
 const MAX_ROWS = 100;

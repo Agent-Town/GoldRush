@@ -54,6 +54,28 @@ const ASSAY_BOSS_GRACE_WAVES = 6;
 const RUN_TAPE_ENVELOPE_TICKS_PER_ENTRY = 5;
 const RUN_TAPE_BYTES_PER_ENTRY = 160;
 const RUN_TAPE_FIXED_BYTES = 16 * 1024;
+// F-HEAT12-2, THE SECOND CLASS OF ENTRY. The 160 above is honest for what it was measured on: the
+// Baron proof's entries carry one small standing order each. An entry may lawfully carry up to 24
+// actions, each an `agent_orders` array of up to 32 orders (`StandingOrders.validateStandingOrders`,
+// `standings.ts` `validTapeEntries`), and a rider stating a whole policy per change-point pays
+// far more than 160 bytes for it. Measured over 505 retained reels in `artifacts/**` (68,505 entries,
+// script `artifacts/dome-basin-winnable/probe-corpus.mjs`), COMPACT as the door serialises them:
+//
+//   orders in entry |    1 |    8 |   16 |   24 |   32 | any shape
+//   mean bytes      |  106 |  452 |  807 | 1067 | 1358 |       410
+//   max bytes       |  151 |  718 | 1208 | 1939 | 1923 |      2162
+//
+// 2,400 budgets the widest entry ever recorded (2,162 B) with 11% margin, the same margin style as
+// 160 over 140.7. HOW MANY of them the budget pays for is a cadence, and the engine already has
+// one: 30 ticks is the lockstep hash exchange (`LockstepClient` DEFAULT_HASH_EVERY_TICKS = 30),
+// the run-tape probe interval (`RunTape.ts:175`) and one second of sim time. One whole policy
+// restatement per second is 1.9x the Dome Basin w16 rider's measured decision rate (one per 56.5
+// ticks) and above every retained reel but heat 11's Relay Valley stutter (one per 9.5 ticks,
+// 138.6 B/tick), which restates 32 orders three times a second and is a size the cap should still
+// refuse. The surcharge is added to — never instead of — the movement budget, so no tape that fits
+// today can stop fitting.
+const RUN_TAPE_ENVELOPE_TICKS_PER_ORDER_ENTRY = 30;
+const RUN_TAPE_BYTES_PER_ORDER_ENTRY = 2_400;
 const RUN_TAPE_CONTRACTS = new Map(
   CONTRACT_BUNDLES.flatMap((bundle) => (bundle.contracts as EnvelopeContract[])
     .map((contract) => [contract.id, contract.twist] as const)),
@@ -75,10 +97,16 @@ export function runTapeEnvelopeForContract(contractId: string): RunTapeEnvelope 
   // terminal tick: nominal boundary + terminal step + inclusive endpoint.
   const maxTicks = Math.max(MAX_PLAYBOOK_TICKS, contractTicks) + 2;
   const maxEntries = Math.ceil(maxTicks / RUN_TAPE_ENVELOPE_TICKS_PER_ENTRY);
+  // Two classes, one ceiling: every entry is paid for at the movement price, and up to one entry
+  // per second may additionally be a whole standing-order array. `maxEntries` and `maxTicks` are
+  // untouched, so the entry and tick axes still say exactly what they said.
+  const maxOrderEntries = Math.ceil(maxTicks / RUN_TAPE_ENVELOPE_TICKS_PER_ORDER_ENTRY);
   return {
     maxTicks,
     maxEntries,
-    maxTapeBytes: RUN_TAPE_FIXED_BYTES + maxEntries * RUN_TAPE_BYTES_PER_ENTRY,
+    maxTapeBytes: RUN_TAPE_FIXED_BYTES
+      + maxEntries * RUN_TAPE_BYTES_PER_ENTRY
+      + maxOrderEntries * (RUN_TAPE_BYTES_PER_ORDER_ENTRY - RUN_TAPE_BYTES_PER_ENTRY),
   };
 }
 
