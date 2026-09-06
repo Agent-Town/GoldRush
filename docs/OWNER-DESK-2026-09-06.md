@@ -39,6 +39,13 @@ The Eclipse turned out winnable today: seed -02 secures under the air-wall polic
 ### A7. The first-town gate (F-BUDGET-4, added 2026-09-06 evening)
 The deploy's 25 MB first-town budget measures host speed, not payload (a 2.05× swing on one fixed build). It stays as a tripwire; the request-family guard is the real one. A payload-shaped gate would count bytes by family at `ready` plus what the scene declares. Decide whether to keep the fail-closed 25 MB number or replace it; the levers that actually moved the slow load tonight were round trips (241 → 32 JS requests) and the music (3 MB out of the window); the hero slot's clip split (~4.3 MB) is the largest lever left.
 
+
+### A8. Four canon calls from the aging batch (F-AGE-1/2/3/4, added 2026-09-07 01:10)
+- **The Old Digger is a machine** (E9's boss, the ancient terraformer). I prompted it as an ancient man; the plate passed every number and was withheld unregistered (`assets/raw/tf-old-digger-e10.png`). Options: keep it as a new E10 human under another name, re-prompt it as the machine, or shelve it. Recommendation: shelve until an E10 beat needs a face.
+- **The Elder's sex.** The shipped E1 plate is a bearded man; the lore says "her". The aged E2 plate follows the art. Say which moves. Recommendation: the lore, one word ("him"), since the face has shipped for weeks.
+- **The Elder after her death.** Fourteen beats in E5-E10 still speak as `elder`; the E3/E4 lines now go to the keeper of her chart, the schoolteacher of that era. Say whether the later eras follow the same precedent. Recommendation: yes, one slice, no copy change expected.
+- **The Boilerwright's sex.** The plate is a woman; the storybook's wedding line implies a man; nothing shipped contradicts. Recommendation: keep the woman and touch the storybook line.
+
 ## B. Ten minutes of the owner's hands (nobody else can)
 
 ### B1. The device verdict rows
