@@ -17,8 +17,9 @@
 // WHEN IT REDS: a family appeared in the first-town window that is not listed below. That is the
 // question F-BUDGET-2 could not answer, asked at the right grain. Either the asset belongs in the
 // first town (add it here, in sort order, in the same commit as the change that introduced it) or
-// it does not (defer it — see the F-BUDGET-3 hold in src/assets/AdvanceStream.ts and the ordering
-// assertion in e2e/asset-diet.spec.ts).
+// it does not (defer it — see the F-BUDGET-3 hold in src/assets/AdvanceStream.ts, the F-AUDIO-3
+// music hold in src/audio/SoundSystem.ts, and the two ordering assertions in
+// e2e/asset-diet.spec.ts, which are what actually enforce those two holds).
 //
 // INPUT: artifacts/asset-diet/town-transfer-<project>.json, which the asset-diet suite rewrites on
 // every run, so the corpus stays live rather than frozen.
@@ -154,8 +155,6 @@ export const FIRST_TOWN_FAMILIES = [
   'claim_stake.js',
   'covered_wagon.glb',
   'dispose.js',
-  'era-e1-frontier-loop.js',
-  'era-e1-frontier-loop.mp3',
   'favicon-32.png',
   'general-store.glb',
   'hero-homesteader-f.png',
@@ -177,8 +176,6 @@ export const FIRST_TOWN_FAMILIES = [
   'scripts.js',
   'story.css',
   'story.js',
-  'title-theme.js',
-  'title-theme.mp3',
   'town-plate.glb',
   'town-v3-tavern.glb',
   'townEraProps.js',
@@ -204,6 +201,36 @@ export const ADVANCE_STREAM_RESIDUE_FAMILIES = [
   'the-claim-terrain.glb',
 ];
 
+/**
+ * THE DEFERRED MUSIC (F-AUDIO-3, 2026-09-06). These four families were pinned as the first town's
+ * own until the audio-deferral slice measured what they were: 3,001,468 B of mp3 (plus 211 B of
+ * `?url` module) that the autoplay policy forbids playing until the player has gestured, fetched at
+ * the head of the town's own queue because the gesture that unlocks the AudioContext is normally
+ * the very click that enters the town. `src/audio/SoundSystem.ts` now holds the `music` group until
+ * the scene the player is standing in publishes itself playable, so on the CURED build none of
+ * these four is fetched inside the window at all — measured on the release e1 bundle, both
+ * projects, loopback and an emulated 8 Mbps, three runs each: era-e1-frontier-loop leaves the
+ * window entirely and title-theme is never fetched on this path (the menu disposes before the
+ * deferred start), against a pre-cure 1,200,587 B + 1,800,881 B inside it.
+ *
+ * They are still ALLOWED, and only for the same reason the advance-stream residue is: the corpus
+ * this guard reads (artifacts/asset-diet/town-transfer-*.json) predates the cure, and the drain
+ * restores that tracked evidence rather than rewriting it. DELETE THIS LIST the first time a
+ * post-cure corpus is committed. Nothing is lost meanwhile: the ordering assertion that actually
+ * enforces the invariant lives in e2e/asset-diet.spec.ts ("music is not fetched before the first
+ * town is playable"), it reads the page's own clock rather than this corpus, and it is proven to
+ * fail 2/2 projects on the uncured build.
+ *
+ * `menu-tap.mp3` is deliberately NOT here. It is 8,821 B, it is the sound of the click itself, and
+ * a first click that makes no sound is a worse game than a first town that is 8 KB heavier.
+ */
+export const DEFERRED_MUSIC_FAMILIES = [
+  'era-e1-frontier-loop.js',
+  'era-e1-frontier-loop.mp3',
+  'title-theme.js',
+  'title-theme.mp3',
+];
+
 const sorted = (list) => [...list].sort();
 
 async function observedFamilies() {
@@ -219,12 +246,22 @@ async function observedFamilies() {
 }
 
 test('the pinned family lists are sorted, deduped and disjoint', () => {
-  assert.deepEqual(FIRST_TOWN_FAMILIES, sorted(FIRST_TOWN_FAMILIES), 'FIRST_TOWN_FAMILIES must stay sorted');
-  assert.deepEqual(ADVANCE_STREAM_RESIDUE_FAMILIES, sorted(ADVANCE_STREAM_RESIDUE_FAMILIES), 'ADVANCE_STREAM_RESIDUE_FAMILIES must stay sorted');
-  assert.equal(new Set(FIRST_TOWN_FAMILIES).size, FIRST_TOWN_FAMILIES.length, 'duplicate family in FIRST_TOWN_FAMILIES');
-  assert.equal(new Set(ADVANCE_STREAM_RESIDUE_FAMILIES).size, ADVANCE_STREAM_RESIDUE_FAMILIES.length, 'duplicate family in ADVANCE_STREAM_RESIDUE_FAMILIES');
-  const overlap = FIRST_TOWN_FAMILIES.filter((family) => ADVANCE_STREAM_RESIDUE_FAMILIES.includes(family));
-  assert.deepEqual(overlap, [], 'a family cannot be both the town\'s own and advance-stream residue');
+  const lists = {
+    FIRST_TOWN_FAMILIES,
+    ADVANCE_STREAM_RESIDUE_FAMILIES,
+    DEFERRED_MUSIC_FAMILIES,
+  };
+  for (const [name, list] of Object.entries(lists)) {
+    assert.deepEqual(list, sorted(list), `${name} must stay sorted`);
+    assert.equal(new Set(list).size, list.length, `duplicate family in ${name}`);
+  }
+  const names = Object.keys(lists);
+  for (const [index, name] of names.entries()) {
+    for (const other of names.slice(index + 1)) {
+      const overlap = lists[name].filter((family) => lists[other].includes(family));
+      assert.deepEqual(overlap, [], `a family cannot be in both ${name} and ${other}`);
+    }
+  }
 });
 
 test('the family derivation survives a rebuild', () => {
@@ -241,7 +278,7 @@ test('the family derivation survives a rebuild', () => {
 });
 
 test('every first-town request belongs to a pinned family', async () => {
-  const allowed = new Set([...FIRST_TOWN_FAMILIES, ...ADVANCE_STREAM_RESIDUE_FAMILIES]);
+  const allowed = new Set([...FIRST_TOWN_FAMILIES, ...ADVANCE_STREAM_RESIDUE_FAMILIES, ...DEFERRED_MUSIC_FAMILIES]);
   const unpinned = [];
   for (const [project, families] of await observedFamilies()) {
     for (const family of sorted(families)) if (!allowed.has(family)) unpinned.push(`${project}: ${family}`);

@@ -19,7 +19,15 @@ const MAX_PER_SOUND = 4;
 const GLOBAL_VOICE_CAP = 12;
 const HEADROOM_AFTER_VOICES = 6;
 const HEADROOM_GAIN_FLOOR = 0.45;
+// Same timeout the advance stream gives its own idle work: an idle callback that never gets an
+// idle slot still fires within a second, so a busy load cannot strand the music indefinitely.
+const MUSIC_HOLD_TIMEOUT_MS = 1_000;
 let audioWasUnlocked = false;
+
+type IdleWindow = Window & {
+  requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+  cancelIdleCallback?: (handle: number) => void;
+};
 const FAMILY_INTERVAL_MS = {
   gold: 120,
   hit: 60,
@@ -98,6 +106,8 @@ export class SoundSystem {
   private readonly loops = new Map<SoundName, LoopState>();
   private readonly startingLoops = new Set<SoundName>();
   private readonly desiredLoops = new Map<SoundName, number>();
+  private musicHoldHandle = 0;
+  private musicGestureTickPassed = false;
   private readonly unsubscribePreferences = subscribeAudioPreferences(() => this.applyMasterVolume());
 
   constructor() {
@@ -139,6 +149,10 @@ export class SoundSystem {
       return;
     }
     if (this.startingLoops.has(name)) return;
+    if (this.musicMustWait(name)) {
+      this.scheduleMusicHold();
+      return;
+    }
     void this.startLoop(name, volume);
   }
 
@@ -202,6 +216,7 @@ export class SoundSystem {
 
   dispose(): void {
     this.disposed = true;
+    this.cancelMusicHold();
     window.removeEventListener('pointerdown', this.unlock);
     window.removeEventListener('keydown', this.unlock);
     this.unsubscribePreferences();
@@ -532,6 +547,86 @@ export class SoundSystem {
   private startDesiredLoops(): void {
     for (const [name, volume] of this.desiredLoops) this.setLoop(name, true, volume);
   }
+
+  /**
+   * F-AUDIO-3 — MUSIC IS NEVER FETCHED INSIDE THE WINDOW THAT MAKES A SCENE PLAYABLE.
+   *
+   * Owner, 2026-09-06: "now it loads veerrry slowly" / "are the assets optimized for size?". The
+   * first-town bisect (reviews/first-town-transfer-bisect.md) decomposed that window and found
+   * 3,010,289 B of mp3 in it, of which 3,001,468 B is the two MUSIC tracks — 13.9 % of the
+   * transfer spent on sound nobody can hear yet. The code was ALREADY lazy-until-a-gesture, which
+   * was the wrong gate: the gesture that unlocks the AudioContext is normally the same click that
+   * enters the town, so "after the gesture" and "on top of the town's own 21.6 MB" were the same
+   * instant. Measured on the release e1 bundle, loopback, before this hold: title-theme at 281 ms
+   * and era-e1-frontier-loop at 530 ms of a window that closed at 919 ms (desktop).
+   *
+   * TRUE while starting this track would mean FETCHING it at such a moment. Two conditions:
+   *
+   * 1. THE GESTURE'S OWN TICK has not passed. `unlock` runs on `pointerdown`, before the `click`
+   *    handler has swapped scenes, so nothing decided in that tick knows what the click meant. Of
+   *    the 1,200,587 B of title-theme fetched there, every byte was thrown away one frame later by
+   *    the menu's own dispose(). One idle callback is enough for the truth to settle: by then this
+   *    system is either disposed with the menu, or alive on a menu where nothing is raising.
+   * 2. A SCENE IS RAISING. The rule the advance stream already follows (F-BUDGET-3,
+   *    src/assets/AdvanceStream.ts): the scene the player is standing in outranks anything they
+   *    cannot yet hear. `era-e1-frontier-loop` (1,800,881 B) used to be fetched at TownScene
+   *    construction — at the head of the town's own queue.
+   *
+   * A track whose buffer is already in hand never waits: a mute/unmute or a volume change during a
+   * load costs no network and must stay instant.
+   *
+   * SCOPE. The `music` group only, by design — `menu-tap.mp3` (8,821 B) is in the same window and
+   * stays there, because a first click that makes no sound is a worse game. And only `setLoop`,
+   * because every `music` entry in the manifest is a loop; if a one-shot music cue is ever added,
+   * e2e/first-town-audio-deferred.spec.ts asserts on the FILE, not on the call path, and will say so.
+   *
+   * FAIL-OPEN by construction: an absent canvas and an absent or `ready` `assetLoadingState` both
+   * read "not raising", and the hold re-arms on its own idle callback, so no scene can strand the
+   * music — it starts the moment the scene it belongs to is playable.
+   */
+  private musicMustWait(name: SoundName): boolean {
+    if (soundManifest[name].group !== 'music') return false;
+    if (this.buffers.has(name)) return false;
+    return !this.musicGestureTickPassed || sceneIsRaising();
+  }
+
+  private scheduleMusicHold(): void {
+    if (this.musicHoldHandle || this.disposed) return;
+    const idleWindow = window as IdleWindow;
+    this.musicHoldHandle = idleWindow.requestIdleCallback
+      ? idleWindow.requestIdleCallback(this.releaseMusicHold, { timeout: MUSIC_HOLD_TIMEOUT_MS })
+      : window.setTimeout(this.releaseMusicHold, 80);
+  }
+
+  private cancelMusicHold(): void {
+    if (!this.musicHoldHandle) return;
+    const idleWindow = window as IdleWindow;
+    if (idleWindow.cancelIdleCallback) idleWindow.cancelIdleCallback(this.musicHoldHandle);
+    else window.clearTimeout(this.musicHoldHandle);
+    this.musicHoldHandle = 0;
+  }
+
+  // Re-enters setLoop for every standing desire. A track whose scene is still raising re-arms this
+  // same callback, so the hold costs one idle slot per second at worst; a desire that has since
+  // been dropped simply is not there, and nothing re-arms.
+  private readonly releaseMusicHold = (): void => {
+    this.musicHoldHandle = 0;
+    if (this.disposed) return;
+    this.musicGestureTickPassed = true;
+    this.startDesiredLoops();
+  };
+}
+
+/**
+ * The scene the player is waiting on, read from the same attribute the loading cue and the advance
+ * stream read (src/assets/AssetLoading.ts publish()). HONEST LIMIT, inherited from that signal: it
+ * tracks the scene's GLTF LoadingManager only, so it goes `ready` while character sprite sheets are
+ * still streaming. Music therefore leaves the GLB half of the window for certain and the sheet tail
+ * only sometimes — 3.0 MB either way, which is the measured point of this hold.
+ */
+function sceneIsRaising(): boolean {
+  if (typeof document === 'undefined') return false;
+  return document.querySelector<HTMLCanvasElement>('#game-canvas')?.dataset.assetLoadingState === 'loading';
 }
 
 function isSoundName(name: string): name is SoundName {

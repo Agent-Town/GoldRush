@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "9351c22729cf2478362a8890b7af5077b6bf4b56afeed63fc062778fc4123db7",
+  "engineHash": "e35f9423bf516f1a8ed45332a685f44969098e6f6356521376587797b5ac45c6",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -505,6 +505,12 @@
       "engineHash": "9351c22729cf2478362a8890b7af5077b6bf4b56afeed63fc062778fc4123db7",
       "pinnedAt": "2026-09-06",
       "cause": "sprite-cell-manifests: the two char-*.png ?url globs are eager, so the hashed cell URLs are inlined at build time and the first town no longer spends one round trip per sprite cell (JS requests in the window 205 to 32; 921 to 135 chunks); no sim change; stacked on e8-air-wall-all-maps f28903f4",
+      "aliases": []
+    },
+    {
+      "engineHash": "e35f9423bf516f1a8ed45332a685f44969098e6f6356521376587797b5ac45c6",
+      "pinnedAt": "2026-09-06",
+      "cause": "first-town-audio-deferred: the music group is held until the scene the player stands in reads off loading and past the gesture's own tick (3.0 MB of mp3 leave the first-town window; the title theme is no longer fetched and thrown away on the enter-town path); no sim change; stacked on sprite-cell-manifests 9351c227",
       "aliases": []
     }
   ],
