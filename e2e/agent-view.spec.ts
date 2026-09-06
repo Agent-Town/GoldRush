@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test } from '@playwright/test';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
 import { deriveMechanicsManifest, mechanicsManifestLine, type MechanicsManifest } from '../src/agent/MechanicsManifest';
 import type { AgentView } from '../src/agent/View';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
@@ -9,8 +10,27 @@ import { listContracts } from '../src/meta/ContractFamilies';
 import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
+/**
+ * F-HMV-3, RE-POINTED 2026-09-07 (`spec-hygiene-batch`, owner "yes, lets do 1, 2, and 3"). This
+ * snapshot had been stale on exactly two fields for days, and the drains that met it could only
+ * attribute the red as pre-existing:
+ *
+ *   • `viewVersion` — `src/agent/View.ts:306` stamps every view with `engineEra.viewSchema.version`
+ *     since the view-schema-versioning slice (see `e2e/c7-standing-order-replay.spec.ts:22`).
+ *   • `map.coalSeams` — `View.ts:352` publishes the contract's coal since the owner's 2026-08-21
+ *     `coalSeams` ruling. The Claim declares no `twist.pressureEnabled`, so the honest value here is
+ *     the EMPTY list, and pinning the empty list is what makes a future accidental default visible.
+ *
+ * RE-POINTED, not made tolerant: both fields are deterministic for this seed, so a tolerant
+ * assertion would buy nothing and lose the one thing a snapshot is for. `viewVersion` is
+ * INTERPOLATED from `assets/engine-era.json` rather than hardcoded, following the c7 spec's
+ * precedent — the era number has one owner (`scripts/view-schema-guard.test.mjs`,
+ * `scripts/engine-era-guard.test.mjs`), and a second hardcoded copy here would red this suite on
+ * every era bump for a fact it is not the judge of. Its PRESENCE and POSITION are still pinned.
+ */
 const WAVE_THREE_SNAPSHOT = `{
   "schema": "goldrush.view.v1",
+  "viewVersion": ${engineEra.viewSchema.version},
   "stablePrefix": {
     "seed": "ap-view",
     "contract": {
@@ -209,6 +229,7 @@ const WAVE_THREE_SNAPSHOT = `{
           "z": 6.9
         }
       ],
+      "coalSeams": [],
       "water": {
         "river": true,
         "ford": true,

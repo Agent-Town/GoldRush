@@ -75,6 +75,19 @@ async function walkTo(page: Page, target: { x: number; z: number }): Promise<voi
   expect(Math.hypot(target.x - settled.x, target.z - settled.z)).toBeLessThanOrEqual(1.6);
 }
 
+/**
+ * EVIDENCE IS WRITTEN ONLY WHEN IT IS ASKED FOR (F-HMV-2, cured 2026-09-07 by `spec-hygiene-batch`).
+ * This helper used to write straight into `artifacts/e10s-3-preserve/shots/` and
+ * `artifacts/e10s-4-door/shots/` — 14 TRACKED PNGs — so every gate run dirtied the tree with
+ * fourteen re-encoded screenshots and every drain had to restore them by hand before it could
+ * merge (a drain's own precondition is a clean tree). The default sink is now the gitignored
+ * `test-results/evidence/`; `GR_REFRESH_EVIDENCE=1` is the explicit ask that refreshes the
+ * committed plates. Both sinks keep the SAME per-slice layout, so a refresh run and a gate run
+ * differ in destination only. The attachment below is unconditional: the Playwright report carries
+ * the shot either way, so nothing is lost by not writing the tracked copy.
+ */
+const EVIDENCE_ROOT = process.env.GR_REFRESH_EVIDENCE === '1' ? 'artifacts' : 'test-results/evidence';
+
 /** E10S-3's shots stay in E10S-3's folder; the E10S-4 errand's land in this slice's own. */
 async function shoot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   const slice = name.startsWith('plain-boot-panning')
@@ -82,7 +95,7 @@ async function shoot(page: Page, testInfo: TestInfo, name: string): Promise<void
     || name.startsWith('plain-boot-vent-kept')
     ? 'e10s-4-door'
     : 'e10s-3-preserve';
-  const body = await page.screenshot({ path: `artifacts/${slice}/shots/${testInfo.project.name}-${name}.png`, scale: 'css' });
+  const body = await page.screenshot({ path: `${EVIDENCE_ROOT}/${slice}/shots/${testInfo.project.name}-${name}.png`, scale: 'css' });
   await testInfo.attach(name, { body, contentType: 'image/png' });
 }
 

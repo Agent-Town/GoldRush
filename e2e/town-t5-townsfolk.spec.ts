@@ -5,12 +5,22 @@ import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { TOWN_ACTORS, townActorBark, type TownActorId } from '../src/town/townsfolk';
 
-const ARTIFACT_DIR = path.resolve('artifacts/town-t5');
+/**
+ * THE FOURTH WRITER OF THE F-HMV-2 / F-RRR-5 CLASS, FOUND BY MEASUREMENT RATHER THAN BY LIST
+ * (`spec-hygiene-batch`, 2026-09-07). The master named three evidence writers; running this spec to
+ * diagnose F-CELL-2 rewrote FOUR MORE tracked PNGs under `artifacts/town-t5/` and dirtied the tree,
+ * which is the very condition this batch's own self-check has to satisfy. Same cure, same flag: the
+ * default sink is the gitignored `test-results/evidence/`, and `GR_REFRESH_EVIDENCE=1` is the
+ * explicit ask that refreshes the committed plates at the same filenames.
+ */
+const ARTIFACT_DIR = path.resolve(
+  process.env.GR_REFRESH_EVIDENCE === '1' ? 'artifacts/town-t5' : 'test-results/evidence/town-t5',
+);
 const CONCEPT_PATH = path.resolve('assets/raw/concept-town-square.png');
 const PROFILE_ID = 'robin';
 const GROWTH_BEATS_SEEN = ['story:town-growth-general-store', 'story:town-growth-chapel'];
 
-type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+type ErrorBucket = { consoleErrors: string[]; pageErrors: string[]; network: string[] };
 type Box = { x: number; y: number; width: number; height: number };
 type SeedState = {
   territory?: number;
@@ -19,12 +29,36 @@ type SeedState = {
 };
 type TownDiagnostics = NonNullable<Window['__GR_TOWN_DIAGNOSTICS__']>;
 
+/**
+ * F-CELL-2, CURED 2026-09-07 (`spec-hygiene-batch`). The console half of this bucket is all Chrome
+ * gives you for a failed fetch — the generic "Failed to load resource: the server responded with a
+ * status of 404 ()", with NO url in the text — so the two 404s that red this spec were
+ * UNDIAGNOSABLE without editing the file, which is a red nobody can triage from a report. The
+ * network transcript below is captured alongside and printed in the failure message.
+ *
+ * It is DIAGNOSTIC ONLY, deliberately: `assertNoErrors` still asserts on exactly the two arrays it
+ * always asserted on, so this cannot flip a green test red on a 404 some other test tolerates.
+ */
 function collectErrors(page: Page): ErrorBucket {
-  const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
+  const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [], network: [] };
   page.on('console', (message) => {
-    if (message.type() === 'error') bucket.consoleErrors.push(message.text());
+    if (message.type() !== 'error') return;
+    // THE URL IS IN THE MESSAGE'S LOCATION, NOT ITS TEXT. Chrome's resource-failure line is the
+    // generic "Failed to load resource: the server responded with a status of 404 (Not Found)" for
+    // every 404 alike, but the ConsoleMessage's `location().url` is the failing resource itself —
+    // and the page-level `response` listener below misses these, because they are issued from a
+    // WORKER context that `page.on('response')` does not report. Measured 2026-09-07: the transcript
+    // alone showed thirteen ERR_ABORTED teardown entries and neither 404; the location gave both.
+    const { url, lineNumber } = message.location();
+    bucket.consoleErrors.push(url ? `${message.text()}  <- ${url}:${lineNumber}` : message.text());
   });
   page.on('pageerror', (error) => bucket.pageErrors.push(error.message));
+  page.on('requestfailed', (request) => {
+    bucket.network.push(`FAILED ${request.url()} — ${request.failure()?.errorText ?? 'unknown'}`);
+  });
+  page.on('response', (response) => {
+    if (response.status() >= 400) bucket.network.push(`HTTP ${response.status()} ${response.url()}`);
+  });
   return bucket;
 }
 
@@ -123,6 +157,18 @@ async function renderConceptComparison(page: Page, testInfo: TestInfo, squarePat
     <!doctype html>
     <html>
       <head>
+        <!--
+          F-CELL-2, DIAGNOSED AND CURED 2026-09-07 (\`spec-hygiene-batch\`). THE TWO 404s WERE THIS
+          PAGE'S OWN. Measured with the console message's location (see \`collectErrors\`): both were
+          \`GET /favicon.ico\` -> 404, twice, and nothing in \`src/\` or \`public/\` was missing. The
+          game's own \`index.html\` declares \`/favicon-32.png\`, \`/favicon-16.png\` and
+          \`/favicon-48.png\` — there has never been a \`favicon.ico\` — but this synthetic comparison
+          document, injected by \`page.setContent\`, declares no icon at all, so Chrome falls back to
+          the implicit \`/favicon.ico\` and the dev server answers 404. The red was manufactured by
+          the harness and belonged to no shipped asset. An empty data: icon asks for nothing at all,
+          and cannot rot when the real favicons are renamed.
+        -->
+        <link rel="icon" href="data:," />
         <style>
           body { margin: 0; background: #2e1b0e; font: 16px Georgia, serif; color: #fff8e8; }
           .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; box-sizing: border-box; height: 100vh; }
@@ -153,8 +199,11 @@ function visibleActorIds(diagnostics: TownDiagnostics): TownActorId[] {
 }
 
 function assertNoErrors(errors: ErrorBucket): void {
-  expect(errors.consoleErrors).toEqual([]);
-  expect(errors.pageErrors).toEqual([]);
+  const transcript = errors.network.length
+    ? `\nnetwork transcript (F-CELL-2 — the url Chrome's console line omits):\n  ${errors.network.join('\n  ')}`
+    : '\nnetwork transcript: no 4xx/5xx and no failed request was observed on this page.';
+  expect(errors.consoleErrors, `console errors${transcript}`).toEqual([]);
+  expect(errors.pageErrors, `page errors${transcript}`).toEqual([]);
 }
 
 test('townsfolk bark data is epoch-scoped and short', () => {

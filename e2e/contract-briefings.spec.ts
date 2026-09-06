@@ -24,7 +24,17 @@ type SeedScore = {
   contractId?: string;
 };
 
-const ARTIFACT_DIR = path.resolve('artifacts/survive-copy');
+/**
+ * EVIDENCE IS WRITTEN ONLY WHEN IT IS ASKED FOR (F-RRR-5, cured 2026-09-07 by `spec-hygiene-batch`;
+ * F-HMV-2's class). This constant used to be `artifacts/survive-copy` unconditionally — a top-level
+ * const with no enclosing test, so every run of this spec re-encoded the TRACKED PNGs there and left
+ * the tree dirty for the next drain to restore by hand. The default sink is now the gitignored
+ * `test-results/evidence/`; `GR_REFRESH_EVIDENCE=1` is the explicit ask that refreshes the committed
+ * plates, at the same filenames.
+ */
+const ARTIFACT_DIR = path.resolve(
+  process.env.GR_REFRESH_EVIDENCE === '1' ? 'artifacts/survive-copy' : 'test-results/evidence/survive-copy',
+);
 const CONTRACTS: readonly Briefing[] = [
   {
     id: 'the-claim',

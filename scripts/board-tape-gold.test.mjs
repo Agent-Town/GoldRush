@@ -134,7 +134,17 @@ const BENCH_SEED = 'e1-the-claim-01';
 // 1180 panned). A run that never spends holds exactly what it panned and could not tell the two
 // meanings apart.
 const PAN_TARGET = 30;
-const EVIDENCE = path.join(root, 'artifacts/browser-door-held-gold');
+// EVIDENCE IS WRITTEN ONLY WHEN IT IS ASKED FOR (F-RRR-5, cured 2026-09-07 by `spec-hygiene-batch`;
+// F-HMV-2's class). This guard used to write `artifacts/browser-door-held-gold/browser-submission.json`
+// unconditionally, and that file's `measuredAt` is a fresh ISO stamp on every run — pure noise over a
+// TRACKED file, which is exactly the churn F-1229-1 named for `test:accounts`/`test:mp`. Those two
+// honour GR_GUARD_NO_ARTIFACT (opt-OUT, set by scripts/run-guards.mjs); this one is opt-IN instead, so
+// that the quiet default is the clean tree and no runner has to remember a flag to keep it. Set
+// GR_REFRESH_EVIDENCE=1 to refresh the committed submission; otherwise it lands in the gitignored
+// test-results/evidence/ under the same name.
+const EVIDENCE = path.join(root, process.env.GR_REFRESH_EVIDENCE === '1'
+  ? 'artifacts/browser-door-held-gold'
+  : 'test-results/evidence/browser-door-held-gold');
 
 test("the browser door submits the purse held at the secure tick, not the run's lifetime panning", { timeout: 300_000 }, async () => {
   const vite = await createServer({
