@@ -26,6 +26,8 @@ const expectedResidual = baseline.suspects.filter(({ file }) => HELD_SHEETS.has(
 const cured = baseline.suspects.filter(({ file }) => !HELD_SHEETS.has(stem(file)));
 
 assert.equal(baseline.scanned, 1314);
+// F-PORT-4 (attended 2026-09-06): the portraits-e5-e10 batch added 21 full-bleed, fully opaque townsfolk portraits
+// (no transparent pixels, so no halo candidates); the denominator is 1314 + 21 = 1335, measured on the tree.
 assert.equal(baseline.suspects.length, 1075);
 assert.equal(expectedResidual.length, 264);
 assert.equal(cured.length, 811);
@@ -39,7 +41,7 @@ try {
   fs.writeFileSync(SWEEP, savedSweep);
 }
 
-assert.equal(current.scanned, 1314, 'processed PNG denominator moved');
+assert.equal(current.scanned, 1335, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
