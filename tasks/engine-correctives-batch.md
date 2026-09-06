@@ -1,0 +1,21 @@
+# Task engine-correctives-batch: four one-line engine correctives with their guards (SCRATCH worktree, Claude Opus 5 implementer; commit prefix "fix:")
+
+You are the implementer for Gold Rush, running natively on Robin's Mac in a scratch worktree on branch `feat/engine-correctives-batch`, base current `main`.
+READ FIRST: AGENTS.md; the E10S-4 rows in `tasks/BACKLOG.md` and `reviews/e10s-4-*.md` (F-E10S4-2: retiring the `engineDependencies` row failed the whole bundle with `twist.emberShore: engine_dependency_required` because `twist.emberShore` sits in `DECLARED_INERT_PATHS` at `src/meta/ContractFamilies.ts:1621` and `:1832` then requires a non-empty array; the path is no longer inert); `src/game/ProfileStorage.ts:41` (`PROFILE_DATA_KEYS`: the first-boot key added by the story-signal-gaps slice is not in it, so it is not swept on profile delete/export, F-SSE-3; find the key's name in `src/story/` or `src/game/`); `src/vite-env.d.ts` (`ThreeGameDiagnostics` omits `picnicHold`, which `src/game/Game.ts` publishes through an `as` cast around `:3039`/`:5680`, F-PICNIC-2); `src/story/signals.ts:14` (`run-return-town` carries an optional `contractId` that is never set, so the three post-run E5 beats gate on `hasStoryBeatSeen` of an earlier beat instead of on the era's own return, F-SS06-2; find the emitter in `src/game/` and the E5 beats in `src/story/beats.ts`).
+Pre-flight: this worktree was cut from `main` by the attended session; `git status --short` must be clean apart from the `node_modules` symlink. If tracked files are dirty or the branch is wrong, STOP and report.
+
+## Why (owner 2026-09-07, verbatim: "yes, lets do 1, 2, and 3")
+Four findings each cured by a line, each owed a guard so they stay cured.
+
+## Scope
+1. F-E10S4-2: drop `twist.emberShore` from `DECLARED_INERT_PATHS` (it is consumed since E10S-4), then complete what E10S-4's scope 6 wanted: retire the `engineDependencies` row for the Ember Shore if the bundle validator now accepts it; if a different guard reds, stop and report the exact message; the E10 census re-pointed with a citation.
+2. F-SSE-3: the first-boot key in `PROFILE_DATA_KEYS`; a guard that every `gr.profile.*`/profile-scoped key written by `src/story/` and `src/game/` is in the set (grep the writers, assert membership).
+3. F-PICNIC-2: `picnicHold` typed on `ThreeGameDiagnostics`, the `as` cast removed, and one e2e reading it type-safely (extend the picnic spec by a line).
+4. F-SS06-2: `run-return-town` carries the contract id from its emitter; the three post-run E5 beats gate on that id (the same construction the E3 beat at `beats.ts:492` avoids); the E5 chapter spec re-pointed only if a trigger expectation must name the id.
+
+## Firewall
+Touch ONLY: `src/meta/ContractFamilies.ts` (the inert list), the Ember Shore contract row (the row only), `src/game/ProfileStorage.ts`, `src/vite-env.d.ts`, `src/game/Game.ts` (the cast and the emitter only), `src/story/signals.ts`, `src/story/beats.ts` (the three E5 post-run beats' `when` only), the guards named, `package.json` (node-guards list only, BEFORE `&& node scripts/nul-audit.mjs`), `e2e/er01-e10-census.spec.ts` + the picnic and E5 chapter specs (re-points with cited reasons only), `artifacts/engine-correctives-batch/**`, one row at the top of `tasks/BACKLOG.md`. NO changes to: `Balance.ts`, other contracts, `public/skill.md` by hand, `STATUS.md`.
+
+## Self-check (evidence, not vibes)
+`npx tsc --noEmit` clean; `npm run build` green; the new guards + `e3-mask-tables` + `door-admission-ratchet` + `same-game-audit` + `view-schema-guard` + `law-pointer-guard` green; e2e `er01-e10-census` + `e10-ember-shore-preserve` + the picnic spec + `ss-06-e5-beats` green on both projects at one worker on your own port (5309); `null-floor-anchors.mjs --check` reports only the pre-existing eraStamp; zero console/page errors. Do NOT run the full node-guard battery; do NOT `pkill` anything: stop only the PIDs you started; `--trace=off`; nothing over 5 MB; restore any tracked evidence a spec rewrites before committing.
+End: READY-FOR-GATES + the four before/after proofs, the engine hash (the drain pins it), findings with file:line. If you find yourself about to exit without changes, write WHY into your report first.
