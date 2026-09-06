@@ -55,10 +55,22 @@
         "stakeMarkers": [],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -36, "z": -20 },
-          { "x": -12, "z": 18 },
-          { "x": 12, "z": 18 },
-          { "x": 36, "z": -20 }
+          {
+            "x": -36,
+            "z": -20
+          },
+          {
+            "x": -12,
+            "z": 18
+          },
+          {
+            "x": 12,
+            "z": 18
+          },
+          {
+            "x": 36,
+            "z": -20
+          }
         ],
         "heightfield": {
           "id": "relay-valley-ridgelines",
@@ -104,9 +116,18 @@
       "twist": {
         "clockTicks": 18000,
         "enemyRoster": [
-          { "id": "rogue_automaton", "label": "Rogue Automaton" },
-          { "id": "data_rustler", "label": "Data-Rustler" }
-        ]
+          {
+            "id": "rogue_automaton",
+            "label": "Rogue Automaton"
+          },
+          {
+            "id": "data_rustler",
+            "label": "Data-Rustler"
+          }
+        ],
+        "hero": {
+          "maxHpBonus": 300
+        }
       },
       "boardRow": {
         "name": "The Relay Valley",
@@ -127,7 +148,8 @@
         "rules": [
           "Relays connect only when they can see one another.",
           "Recorded patrols stop when they enter a dead zone.",
-          "Four relay sites span the two exposed ridges."
+          "Four relay sites span the two exposed ridges.",
+          "The valley claim keeps a field hospital: you stand up with 400 hit points, not the usual 100, because no relay site on either ridge comes within 31wu of the claim."
         ],
         "geographyLine": "Two exposed relay ridges stand at height five above a thick valley floor, split by a dead gap and line-of-sight fog pockets."
       }
@@ -178,10 +200,22 @@
         "stakeMarkers": [],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -14, "z": -6 },
-          { "x": 14, "z": -6 },
-          { "x": -42, "z": 8 },
-          { "x": 42, "z": 8 }
+          {
+            "x": -14,
+            "z": -6
+          },
+          {
+            "x": 14,
+            "z": -6
+          },
+          {
+            "x": -42,
+            "z": 8
+          },
+          {
+            "x": 42,
+            "z": 8
+          }
         ],
         "heightfield": {
           "id": "echo-canyon-walls",
@@ -228,7 +262,11 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "broadcast-mirror-consumer", "status": "missing", "description": "Needs the playbook broadcast-mirror, echo-band, and objective consumers declared by this contract." }
+          {
+            "dep": "broadcast-mirror-consumer",
+            "status": "missing",
+            "description": "Needs the playbook broadcast-mirror, echo-band, and objective consumers declared by this contract."
+          }
         ],
         "lanes": {
           "spawnEdges": [
@@ -243,8 +281,14 @@
       "twist": {
         "clockTicks": 18000,
         "enemyRoster": [
-          { "id": "rogue_automaton", "label": "Rogue Automaton" },
-          { "id": "data_rustler", "label": "Data-Rustler" }
+          {
+            "id": "rogue_automaton",
+            "label": "Rogue Automaton"
+          },
+          {
+            "id": "data_rustler",
+            "label": "Data-Rustler"
+          }
         ],
         "broadcastMirror": {
           "description": "Each playbook used this run returns as a corrupted enemy copy on the next wave.",
@@ -320,10 +364,22 @@
         "stakeMarkers": [],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -14, "z": -6 },
-          { "x": 14, "z": -6 },
-          { "x": -34, "z": 37 },
-          { "x": 34, "z": 37 }
+          {
+            "x": -14,
+            "z": -6
+          },
+          {
+            "x": 14,
+            "z": -6
+          },
+          {
+            "x": -34,
+            "z": 37
+          },
+          {
+            "x": 34,
+            "z": 37
+          }
         ],
         "heightfield": {
           "id": "relay-valley-ridgelines",
@@ -344,7 +400,11 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "signal-suppression-consumer", "status": "missing", "description": "Needs the contract-level drone, playbook, and relay-chain suppression consumer declared by this contract." }
+          {
+            "dep": "signal-suppression-consumer",
+            "status": "missing",
+            "description": "Needs the contract-level drone, playbook, and relay-chain suppression consumer declared by this contract."
+          }
         ],
         "lanes": {
           "spawnEdges": [
@@ -360,7 +420,10 @@
       "twist": {
         "clockTicks": 18000,
         "enemyRoster": [
-          { "id": "data_rustler", "label": "Data-Rustler" }
+          {
+            "id": "data_rustler",
+            "label": "Data-Rustler"
+          }
         ],
         "signalSuppression": {
           "description": "No drones, no playbooks, and no relay chains operate in the Dead Band.",
@@ -444,14 +507,31 @@
           }
         ],
         "stakeMarkers": [
-          { "id": "relay-ridge-command-stake", "x": -25, "z": 41, "heroStart": true }
+          {
+            "id": "relay-ridge-command-stake",
+            "x": -25,
+            "z": 41,
+            "heroStart": true
+          }
         ],
         "waterSources": [],
         "harvestAnchors": [
-          { "x": -45, "z": 32 },
-          { "x": -25, "z": 32 },
-          { "x": 25, "z": 32 },
-          { "x": 45, "z": 32 }
+          {
+            "x": -45,
+            "z": 32
+          },
+          {
+            "x": -25,
+            "z": 32
+          },
+          {
+            "x": 25,
+            "z": 32
+          },
+          {
+            "x": 45,
+            "z": 32
+          }
         ],
         "heightfield": {
           "id": "relay-valley-ridgelines",
@@ -472,7 +552,11 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "interference-front-consumer", "status": "missing", "description": "Needs the event-driven interference-front cycle and signal-muting consumer declared by this contract." }
+          {
+            "dep": "interference-front-consumer",
+            "status": "missing",
+            "description": "Needs the event-driven interference-front cycle and signal-muting consumer declared by this contract."
+          }
         ],
         "lanes": {
           "spawnEdges": [
@@ -488,8 +572,14 @@
       "twist": {
         "clockTicks": 18000,
         "enemyRoster": [
-          { "id": "data_rustler", "label": "Data-Rustler" },
-          { "id": "rogue_automaton", "label": "Rogue Automaton" }
+          {
+            "id": "data_rustler",
+            "label": "Data-Rustler"
+          },
+          {
+            "id": "rogue_automaton",
+            "label": "Rogue Automaton"
+          }
         ],
         "interferenceFront": {
           "description": "An event-driven wall of static crosses the map on a schedule and mutes everything it swallows.",

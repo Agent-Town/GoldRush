@@ -14,7 +14,7 @@ import {
   activeContractDiagnostics,
   activeEpoch as selectActiveEpoch,
   activeTileDescriptor,
-  contractDescriptorJson,
+  contractDescriptorJson, contractHeroMaxHpBonus,
   DEFAULT_EPOCH_ID,
   listEpochs,
   loadContract,
@@ -9426,7 +9426,17 @@ export class Game {
       if (shooter.aoe) shooter.aoe.radius = blastRadius;
     }
     this.syncBlastReticleRadius(blastRadius);
-    for (const actor of this.actors) actor.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
+    // THE CLAIM GRIT, browser half (owner 2026-09-06). Headless twin: `applyProgressionStats`.
+    // `fresh` is exact rather than a heuristic: `Hero.maxHp` equals `Balance.hero.maxHp` only
+    // when `maxHpBonus` is still zero, which is true exactly once per actor per run — at birth
+    // and after `resetRun` — so the grit is paid into hit points on the same beat it is paid into
+    // the ceiling, and never twice. Without it a restarted hero would stand at 100 of 400.
+    const grit = contractHeroMaxHpBonus(this.activeContract);
+    for (const actor of this.actors) {
+      const fresh = actor.maxHp === Balance.hero.maxHp;
+      actor.applyStats(stats.maxHpBonus + grit, stats.moveSpeedMult);
+      if (fresh && grit > 0) actor.heal(grit);
+    }
     const platingHeal = upgradeDefById.tinkers_plating.deltas.heal;
     if (pickedId === 'tinkers_plating' && platingHeal !== undefined) {
       for (const actor of this.actors) actor.heal(platingHeal);

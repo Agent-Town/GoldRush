@@ -752,7 +752,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number } }; // E4 and E10's harvest-free declaration and E3's per-contract purse ride the trailing intersection so no cited line below moves
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number }; hero?: { maxHpBonus: number } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and E7's claim grit ride the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -1593,7 +1593,7 @@ const AUTHORED_TWIST_KEYS = [
   'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'clockTicks', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
-  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier', 'harvestFreeObjective', 'economy',
+  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier', 'harvestFreeObjective', 'economy', 'hero',
 ] as const;
 const AUTHORED_PRACTICE_KEYS = [
   'scheduledWaves', 'scores', 'metaProgress', 'runHistory', 'standings', 'tapes', 'goldGrant', 'bellWaveSize',
@@ -1702,7 +1702,7 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
   if (!isRecord(value.briefing) || Array.isArray(value.briefing)) addDescriptorReason(reasons, reason('field_section', 'The briefing has the wrong shape.', 'briefing'));
   if (!tileParams || !twist) return null;
   addUnknownFieldReasons(tileParams, AUTHORED_TILE_KEYS, 'tileParams', reasons);
-  addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons); validateContractEconomy(twist.economy, reasons); // the purse validator rides this line; see its note at the file's end
+  addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons); validateContractEconomy(twist.economy, reasons); validateContractHero(twist.hero, reasons); // the purse and claim-grit validators ride this line; see their notes at the file's end
   if (twist.clockTicks !== undefined && (typeof twist.clockTicks !== 'number' || !Number.isInteger(twist.clockTicks) || twist.clockTicks <= 0)) {
     addDescriptorReason(reasons, reason('field_number', 'clockTicks must be a positive integer.', 'twist.clockTicks'));
   }
@@ -2608,4 +2608,61 @@ function validateContractEconomy(value: unknown, reasons: ContractDescriptorReas
   if (typeof bankCap !== 'number' || !Number.isInteger(bankCap) || bankCap <= 0) {
     addDescriptorReason(reasons, reason('field_number', 'A contract purse must be a positive whole number of gold.', 'twist.economy.bankCap'));
   }
+}
+
+/**
+ * THE CLAIM GRIT (owner ruling 2026-09-06, verbatim: "lets adjust the policy so the hard levels
+ * can be won"), the door half of `twist.hero.maxHpBonus`. Grep `contractHeroMaxHpBonus` to find
+ * the engine half — ONE function, called by `Game.applyStats` and by
+ * `HeadlessContractSim.applyProgressionStats`, so the browser and the sim cannot drift apart.
+ *
+ * IT SITS AT THE FILE'S END AND ADDS NO LINE ABOVE THE DOOR, and its call RIDES the existing
+ * `addUnknownFieldReasons(twist, ...)` statement, for exactly the reason the purse's note above
+ * states: `tasks/goals.json` cites `ContractFamilies.ts:1345` by line, the type field rides the
+ * trailing intersection at `:755`, and the allowlist entry rides `AUTHORED_TWIST_KEYS`'s last
+ * line. A new statement in the middle would have moved every one of those.
+ *
+ * WHY THE MAP CARRIES IT (measured, `artifacts/relay-valley-winnable/`). Heat 12 priced this map
+ * at "~80 seconds of HP" and named it HARD, not broken. Re-measured here on the same seed and the
+ * same v3 controller, the honest price is larger and the cause is different: the run does not end
+ * to slow attrition, it ends to the wave-18 swarm — 57 enemies alive, 37 of them thieves, against
+ * ONE welded hero and one turret. Two other levers were built and measured and BOTH plateau at
+ * wave 18: a claim-side build zone with three guns and a ten-post palisade screen reached
+ * 556.9 s, and a per-contract draft rule that put `field_dressing` in EVERY offer reached 557.0 s
+ * from wave 12, 555.4 s from wave 8 and 528.6 s from wave 6. Halving the roster's
+ * `contactDamageScale` reached 562.5 s. Only hit points cross wave 19: +225 dies at 579.4 s,
+ * +250 secures with 10.6 hp left, +300 secures with 90.6. The map is priced at 300.
+ *
+ * WHAT IT REFUSES. An absolute bonus, in hit points, as a positive integer no greater than 1000 —
+ * because the number a contract authors is the number a rider is TOLD (the briefing rule and the
+ * mechanics manifest both print it) and the number added to `Balance.hero.maxHp`. A fractional or
+ * negative grit would make the printed rule a lie and could drive the hero's ceiling below its
+ * own current hit points, so it is a door refusal rather than a runtime clamp. The 1000 ceiling
+ * is the literal and not a named const on purpose: this module runs `validateContractsBundle` at
+ * TOP LEVEL (`:1799`), so a `const` declared here would still be in its temporal dead zone when
+ * the door first runs and the first authored grit would crash every engine at import (F-RVW-2,
+ * measured).
+ */
+function validateContractHero(value: unknown, reasons: ContractDescriptorReason[]): void {
+  if (value === undefined) return;
+  if (!isRecord(value) || Array.isArray(value)) {
+    addDescriptorReason(reasons, reason('field_section', 'The hero section has the wrong shape.', 'twist.hero'));
+    return;
+  }
+  addUnknownFieldReasons(value, ['maxHpBonus'], 'twist.hero', reasons);
+  const maxHpBonus = value.maxHpBonus;
+  if (typeof maxHpBonus !== 'number' || !Number.isInteger(maxHpBonus) || maxHpBonus <= 0 || maxHpBonus > 1000) {
+    addDescriptorReason(reasons, reason('field_number', 'A claim grit must be a positive whole number of hit points, at most 1000.', 'twist.hero.maxHpBonus'));
+  }
+}
+
+/**
+ * THE CLAIM GRIT, engine half: the hit points this contract adds to every actor's ceiling, or 0.
+ * Both engines call THIS function and nothing else, which is what
+ * `scripts/contract-hero-grit-override.test.mjs` proves. It re-checks the shape the door already
+ * refused because a run can be booted from a tape or a room whose manifest never passed the door.
+ */
+export function contractHeroMaxHpBonus(contract: ContractManifest): number {
+  const bonus = contract.twist.hero?.maxHpBonus;
+  return typeof bonus === 'number' && Number.isInteger(bonus) && bonus > 0 && bonus <= 1000 ? bonus : 0;
 }
