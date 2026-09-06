@@ -50,6 +50,7 @@ const cueTestMeasurementsByProject = new Map<string, TownTransferMeasurements>()
 declare global {
   interface Window {
     __assetDietCues: Array<{ text: string; ready: string | undefined }>;
+    __assetDietPrefetches: Array<{ url: string; label: string; state: string; target: string }>;
   }
 }
 
@@ -281,6 +282,52 @@ test('town cue-window budget through player entry', async ({ page }, testInfo) =
   // observed swing). The stable-looking settled <=20 s quantity is measured beside it but gated
   // on nothing. Which quantity should govern releases, and at what value, remains an open owner fork.
   expect(cueWindowResponseBytes).toBeLessThan(TOWN_TRANSFER_CEILING_BYTES);
+  await cdp.detach();
+  expectNoConsoleErrors(watch);
+});
+
+// F-BUDGET-3 (2026-09-06) — NOTHING OUTSIDE THE FIRST TOWN IS FETCHED BEFORE THE FIRST TOWN IS
+// PLAYABLE. In the `town` scene the advance stream's priority-1 target is a CONTRACT, so the
+// stream used to pull `the-claim-terrain.glb` + `the-claim-panorama.glb` (1,052,408 B, measured on
+// the built e1 bundle at main e5f3ac820) while the town the player had just entered was still
+// raising. AdvanceStream.ts now re-schedules a contract target while the scene's own loader
+// publishes `assetLoadingState=loading`. This asserts the ORDER, which is what the cure changes:
+// every prefetch issued while the town was raising is a TOWN asset, and a contract is warmed only
+// afterwards. The byte gate above cannot see this — its window ends on the very signal the hold
+// waits for — so the invariant needs its own assertion. Reads the stream's published target rather
+// than a URL shape, so a renamed map cannot silently retire the check.
+test('the advance stream holds contract prefetch until the town is playable', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const watch = watchErrors(page);
+  await page.addInitScript(() => {
+    window.__assetDietPrefetches = [];
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = (input: RequestInfo | URL, init?: RequestInit) => {
+      if (new Headers(init?.headers).get('x-gold-rush-prefetch') === '1') {
+        const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
+        window.__assetDietPrefetches.push({
+          url: String(input),
+          label: canvas?.dataset.assetLoadingLabel ?? '',
+          state: canvas?.dataset.assetLoadingState ?? '',
+          target: canvas?.dataset.assetPrefetchTarget ?? '',
+        });
+      }
+      return nativeFetch(input, init);
+    };
+  });
+  const cdp = await throttleGlbs(page, testInfo.project.use.baseURL);
+
+  await page.goto('/?town3dPilot=all&tier=full');
+  await page.getByTestId('start-menu-enter-town').click();
+  await waitForTownAssets(page);
+
+  const duringTheRaising = await page.evaluate(() => window.__assetDietPrefetches
+    .filter(({ label, state, target }) => label === 'the town' && state === 'loading' && target !== 'town'));
+  expect(duringTheRaising, 'contract prefetch issued while the town was still raising').toEqual([]);
+
+  await expect
+    .poll(() => page.evaluate(() => window.__assetDietPrefetches.some(({ target }) => target !== '' && target !== 'town')), { timeout: 30_000 })
+    .toBe(true);
   await cdp.detach();
   expectNoConsoleErrors(watch);
 });
