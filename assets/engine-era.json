@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "60415d3f1be740e2cdb3236736adbe18bb9bf508f1c472ed17167725b590bae2",
+  "engineHash": "6dfdde6fb2b081ff62a832814d5faf64f0d62eb83a2fe7a6d953d97e3825cd21",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -487,6 +487,12 @@
       "engineHash": "60415d3f1be740e2cdb3236736adbe18bb9bf508f1c472ed17167725b590bae2",
       "pinnedAt": "2026-09-06",
       "cause": "secure-choice-refusal-both-cures: while the secure window is open a submission that is not a single SECURE_CHOICE is refused visibly (SECURE_CHOICE_ONLY on the order channel + one gr-sim stderr line) and each refusal spends one fixed step of the pending clock, so the choice defaults through the existing expiry path and no policy can hang a heat (F-MCAP-1, owner: both); stacked on air-wall 70c31bbb",
+      "aliases": []
+    },
+    {
+      "engineHash": "6dfdde6fb2b081ff62a832814d5faf64f0d62eb83a2fe7a6d953d97e3825cd21",
+      "pinnedAt": "2026-09-06",
+      "cause": "first-town-transfer-bisect: the advance stream holds a contract prefetch until the current scene's loader reads ready (F-BUDGET-3: the Claim's terrain + panorama, 1.05 MB, no longer race the town's own load); the bisect found no merge grew the transfer, the gate measures host speed (F-BUDGET-4); stacked on secure-choice 60415d3f",
       "aliases": []
     }
   ],

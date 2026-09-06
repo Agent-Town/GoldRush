@@ -19,7 +19,12 @@
 //
 //  settling   transient: `enter()` published the new plan; the first two rAFs have not fired yet.
 //  resolving  transient: a target's URL list is being imported+resolved (town or contract module).
-//  fetching   working: a two-file batch is in flight, or the next one is scheduled on idle.
+//  fetching   working: a two-file batch is in flight, or the next one is scheduled on idle. Since
+//             F-BUDGET-3 this also covers the SCENE HOLD: while the current scene's own loader
+//             publishes `assetLoadingState=loading`, a CONTRACT target neither resolves nor
+//             fetches — it re-arms on the same idle callback until the scene is ready. The state
+//             stays `fetching` because that is exactly what it means ("scheduled on idle"); no new
+//             state was minted, and the town target is never held.
 //  paused     NOT terminal: `pause()`/`dispose()`/a scene change stopped the stream; `enter()`
 //             resumes it. This is the only non-terminal stop, and the only one that aborts in-flight
 //             fetches.
@@ -182,6 +187,7 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
   let scene: AdvanceStreamScene = { kind: 'menu' };
   let priority = 0;
   let target = '';
+  let targetKind: AdvanceStreamTarget['kind'] = 'town';
   let idleHandle = 0;
   let frameHandle = 0;
   let abort: AbortController | undefined;
@@ -258,6 +264,31 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
       publish();
       return;
     }
+    // F-BUDGET-3 — THE SCENE THE PLAYER IS STANDING IN OUTRANKS THE ONE THEY MIGHT ENTER.
+    // In the `town` and `run` scenes the plan's priority-1 target is a CONTRACT (see
+    // advanceStreamPriority above), so the stream used to pull the NEXT map's terrain while the
+    // town the player just entered was still raising. Measured with the deploy's own budget probe
+    // on the built e1 bundle at main e5f3ac820 (2026-09-06): the first-town cue window carried
+    // `the-claim-terrain.glb` + `the-claim-panorama.glb`, 1,052,408 bytes, before the town was
+    // playable — 4.9% of a 21,638,025-byte transfer spent on a map the player cannot reach yet.
+    // While the CURRENT SCENE's own loader still says `loading`, re-schedule instead of resolving
+    // or fetching a contract: warm-ahead work can wait, the town's own load cannot.
+    // Scoped to `contract` targets on purpose — the town target IS the first town, and delaying it
+    // would slow the very thing this guard protects (the menu scene warms the town at priority 1).
+    // FAIL-OPEN by construction: an absent attribute (no scene loader mounted, e.g. the
+    // advance-stream fixture) and `ready` never hold, and the hold re-arms on the same idle
+    // callback the stream already uses, so no scene can stall it permanently — it resumes the
+    // moment `assetLoadingState` leaves `loading`.
+    // HONEST LIMIT: `assetLoadingState` tracks the scene's GLTF LoadingManager only
+    // (AssetLoading.ts:19-37); the character sprite sheets are not on it, so the hold releases
+    // while those are still streaming. It buys the GLB half of the window, not all of it.
+    const pendingKind = urls.length === 0 ? targets[0]?.kind : targetKind;
+    if (pendingKind === 'contract' && canvas.dataset.assetLoadingState === 'loading') {
+      state = 'fetching';
+      publish();
+      schedule(() => run(ownGeneration));
+      return;
+    }
     if (urls.length === 0) {
       const next = targets.shift();
       // Unreachable — the drained check above already returned on an empty plan — but a bare
@@ -271,6 +302,7 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
       }
       priority = next.priority;
       target = next.id;
+      targetKind = next.kind;
       state = 'resolving';
       publish();
       void resolveTarget(next).then((resolved) => {
@@ -342,6 +374,7 @@ export function createAdvanceStream(canvas: HTMLCanvasElement): {
     failed = 0;
     priority = targets[0]?.priority ?? 0;
     target = targets[0]?.id ?? '';
+    targetKind = targets[0]?.kind ?? 'town';
     state = 'settling';
     const ownGeneration = generation;
     publish();
