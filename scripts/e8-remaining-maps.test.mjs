@@ -336,11 +336,19 @@ test('the ride the audit measured, now carrying its air, and the un-composed has
     assert.equal(composed.outcome.eventLogHash, pinned.composed, `${contractId} composed hash`);
     assert.ok(composed.view.now.air, `${contractId} must publish now.air`);
 
+    // THE FLOOR IS THE COMPOSED RIDE. Re-pointed 2026-09-06 (F-MCAP-4, attended drain of
+    // mare-claim-air-prevalent): `assets/contracts/null-floors.json` was re-pinned to the COMPOSED idle
+    // rides when air was composed on these three maps, so the line this replaces (un-composed hash
+    // equals the floor) asserted the pre-composition world and reddened `test:node-guards` on main
+    // (e8-far-side un-composed fnv1a32:3fe83eca against the pinned fnv1a32:5c30efd5, verified by
+    // revert at 502a398d9). The same shape as the F-MCAP-3 cure in e8-mare-claim-physics.test.mjs.
+    assert.equal(composed.outcome.eventLogHash, floors[contractId][pinned.seed].eventLogHash, `${contractId}: the pinned null floor is the composed idle ride`);
+
     // MUTATION PROOF. Remove the composition — `E8SuitAirSystem.create` answering `none()` is
-    // exactly the engine the audit measured — and the hash falls back to the CONTRACT'S OWN PINNED
-    // NULL FLOOR, the view loses `now.air`, and the latch stops existing.
+    // exactly the engine the audit measured — and the hash leaves the pinned floor, the view loses
+    // `now.air`, and the latch stops existing.
     const uncomposed = withPatch(E8SuitAirSystem, 'create', () => E8SuitAirSystem.none(), () => idleRide(contractId, pinned.seed));
-    assert.equal(uncomposed.outcome.eventLogHash, floors[contractId][pinned.seed].eventLogHash, `${contractId} un-composed hash`);
+    assert.notEqual(uncomposed.outcome.eventLogHash, floors[contractId][pinned.seed].eventLogHash, `${contractId}: without air the ride cannot sit on the composed floor`);
     assert.notEqual(uncomposed.outcome.eventLogHash, composed.outcome.eventLogHash);
     assert.equal(uncomposed.view.now.air, undefined);
     assert.equal(uncomposed.view.now.gravity !== undefined, true, 'the gravity profile is a separate composition');

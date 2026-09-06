@@ -73,14 +73,22 @@ const rides = path.join(root, 'artifacts/gauntlet-heat12-20260905/rides');
  * this cure — the run's lifetime panning at the secure tick — and is here only so a revert reds.
  */
 const FIXTURES = [
-  { ride: 'e8-mare-claim', pannedAtSecure: 1_180 },
+  // RE-POINTED 2026-09-06 (attended drain of mare-claim-air-prevalent, owner ruling "no, this has to be
+  // more prevalent"): heat 12's Mare Claim reel no longer SECURES under `twist.atmosphere { 4, 4 }`
+  // (it works three of the four required grounds and dies at 620.6 s; the county retired its row under
+  // ADR-004 at 11:18Z), so it has no secure tick for this guard to measure. The securing Mare Claim
+  // reel is the air-wall prover (`artifacts/mare-claim-air-prevalent/prover-01.tape.json`, w20, 600 s,
+  // held 20, fnv1a32:41ae7f17), copied as a submission-shaped fixture under `artifacts/board-tape-gold/`.
+  // Its `pannedAtSecure` is the run's lifetime panning read from `gr-sim --resume` on that tape.
+  { ride: 'e8-mare-claim', dir: 'artifacts/board-tape-gold/e8-mare-claim-air-prevalent', pannedAtSecure: 990 },
   { ride: 'e3-moth-season', pannedAtSecure: 530 },
   { ride: 'e7-relay-rush', pannedAtSecure: 870 },
 ];
 
-for (const { ride, pannedAtSecure } of FIXTURES) {
+for (const { ride, dir, pannedAtSecure } of FIXTURES) {
   test(`${ride}: the standing's gold is the purse held at the secure tick`, { timeout: 240_000 }, () => {
-    const submission = JSON.parse(readFileSync(path.join(rides, ride, 'submission.json'), 'utf8'));
+    const fixtureDir = dir ? path.join(root, dir) : path.join(rides, ride);
+    const submission = JSON.parse(readFileSync(path.join(fixtureDir, 'submission.json'), 'utf8'));
     const declared = {
       secured: submission.score.secured,
       waves: submission.score.waves,
@@ -103,7 +111,7 @@ for (const { ride, pannedAtSecure } of FIXTURES) {
 
     // Where the county issued a slip, the hash this guard replayed is the hash the county assayed,
     // so the numbers above are about the live row and not about a lookalike.
-    const slip = JSON.parse(readFileSync(path.join(rides, ride, 'verdict-slip.json'), 'utf8'));
+    const slip = JSON.parse(readFileSync(path.join(fixtureDir, 'verdict-slip.json'), 'utf8'));
     if (slip.assay === 'verified') {
       assert.equal(slip.assayHash, replay.eventLogHash, 'the live slip assayed a different reel than this fixture');
     }

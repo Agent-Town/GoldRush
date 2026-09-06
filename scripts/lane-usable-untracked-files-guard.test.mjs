@@ -23,10 +23,10 @@
 // @cwd-invariant-collection-guard is NOT claimed here: this spawns node, not
 // playwright --list, so it is not a collection guard.
 
-import test from 'node:test'
+import test, { after } from 'node:test'
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync } from 'node:fs'
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -46,8 +46,16 @@ const git = (args, cwd) =>
 // on the path shape /worktrees/<slot>$ and reports nothing otherwise. The worktree
 // holds a WHOLLY-UNTRACKED directory of `fileCount` files — the exact shape that
 // collapses. Ground truth is therefore known and > 1.
+// TEARDOWN (2026-09-06, attended drain; the fixture-teardown guard named this file): every fixture and
+// variant directory is collected here and removed when the file's tests are done. Until this landed the
+// file leaked eight temp directories per run, and the fires' every-cycle batteries had left 1,922 of
+// them in the host tmpdir (moved aside the same day, never counted as evidence).
+const CREATED = []
+after(() => { for (const dir of CREATED) rmSync(dir, { recursive: true, force: true }) })
+
 function fixture(fileCount = 3) {
   const root = mkdtempSync(join(tmpdir(), 'lane-usable-uall-'))
+  CREATED.push(root)
   git(['init', '-q', '-b', 'main'], root)
   git(['config', 'user.email', 'guard@example.invalid'], root)
   git(['config', 'user.name', 'guard'], root)
@@ -109,6 +117,7 @@ function variantOf(replacementArgs) {
   const patched = src.replace(DIRT_CALL, `git([${replacementArgs}], { cwd: worktree })`)
   assert.notEqual(patched, src, 'variant precondition: the edit must actually change the subject')
   const dir = mkdtempSync(join(tmpdir(), 'lane-usable-variant-'))
+  CREATED.push(dir)
   writeFileSync(join(dir, 'lane-usable.mjs'), patched)
   copyFileSync(join(HERE, 'lane-residue.mjs'), join(dir, 'lane-residue.mjs'))
   return join(dir, 'lane-usable.mjs')
