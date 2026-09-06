@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const commit = takeFlag('--commit');
-const base = takeValue('--base') ?? process.env.ASSAY_API_BASE || 'https://agenttown.app';
+const base = takeValue('--base') ?? (process.env.ASSAY_API_BASE || 'https://agenttown.app');
 const only = takeValue('--contract');
 if (args.length) throw new Error(`unknown option: ${args[0]}`);
 
