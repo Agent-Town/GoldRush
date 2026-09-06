@@ -18,10 +18,19 @@ const outputPath = resolve(ROOT, valueOf('--output') ?? DEFAULT_OUTPUT);
 const contracts = await doorContracts();
 const fixture = offline ? JSON.parse(await readFile(fixturePath, 'utf8')) : null;
 const receipts = [];
+// F-RECEIPTS-1 (attended 2026-09-06): a first-secure receipt is a HISTORICAL fact and must never move later.
+// The door keeps one row per rider, so a re-ride replaces that rider's earlier row and its date; regenerating
+// from the live board alone rewrote nine first-secure receipts (species and dates) the morning heat 12's
+// re-rides landed. The stored receipt wins unless the live board offers a strictly EARLIER verified secure.
+let stored = new Map();
+try { stored = new Map(JSON.parse(await readFile(outputPath, 'utf8')).contracts.filter((r) => r.status === 'claimed').map((r) => [r.contractId, r])); } catch { stored = new Map(); }
 
 for (const contract of contracts) {
   if (contract.standings === false) {
-    receipts.push({ epochId: contract.epochId, contractId: contract.id, status: 'unclaimed', reason: 'standings-disabled' });
+    // Owner ruling 2026-09-06 ("drill yard is not winable"): a standings-disabled board entry is a TRAINING
+    // GROUND, not a contract. It never counts toward the receipts denominator (heat 12 measured it: POST refused as
+    // `training_ground`, GET answers 400, the only one of 36) and it is never 'unclaimed'.
+    receipts.push({ epochId: contract.epochId, contractId: contract.id, status: 'training-ground', reason: 'standings-disabled' });
     continue;
   }
   const board = offline
@@ -43,7 +52,7 @@ for (const contract of contracts) {
   if (typeof pin !== 'string' || pin.length === 0) throw new Error(`${contract.id}: verified reel ${first.reel.id} has no public engine pin`);
   if (!Number.isFinite(first.submittedAt)) throw new Error(`${contract.id}: verified reel ${first.reel.id} has no submission date`);
 
-  receipts.push({
+  const candidate = {
     epochId: contract.epochId,
     contractId: contract.id,
     status: 'claimed',
@@ -54,7 +63,9 @@ for (const contract of contracts) {
     reelId: first.reel.id,
     pin,
     date: new Date(first.submittedAt).toISOString(),
-  });
+  };
+  const kept = stored.get(contract.id);
+  receipts.push(kept && Date.parse(kept.date) <= Date.parse(candidate.date) ? kept : candidate);
 }
 
 const ledger = {
@@ -124,5 +135,6 @@ function printSummary(rows) {
     console.log(`${epoch}\t${counts.claimed}\t${counts.unclaimed}\t${counts.claimed + counts.unclaimed}`);
   }
   const claimed = rows.filter((row) => row.status === 'claimed').length;
-  console.log(`TOTAL\t${claimed}\t${rows.length - claimed}\t${rows.length}`);
+  const training = rows.filter((row) => row.status === 'training-ground').length;
+  console.log(`TOTAL\t${claimed}\t${rows.length - claimed - training}\t${rows.length - training}\t(+${training} training ground, not a contract)`);
 }

@@ -29,14 +29,14 @@ for (const receipt of receipts) {
   if (manifests.get(receipt.contractId) !== receipt.epochId) {
     throw new Error(`${receipt.contractId}: receipt epoch does not match its contract manifest`);
   }
-  if (!['claimed', 'unclaimed'].includes(receipt.status)) throw new Error(`${receipt.contractId}: invalid receipt status`);
+  if (!['claimed', 'unclaimed', 'training-ground'].includes(receipt.status)) throw new Error(`${receipt.contractId}: invalid receipt status`);
 }
 
 const rows = [...receipts].sort((a, b) => a.contractId.localeCompare(b.contractId));
 const ids = rows.map(({ contractId }) => contractId);
 const rendered = [
   begin,
-  'Standing marker: `unclaimed` means no verified rider has secured the contract; otherwise the first verified secure names the rider and date.',
+  'Standing marker: `unclaimed` means no verified rider has secured the contract; `training ground` means the entry is practice, not a contract, and never counts; otherwise the first verified secure names the rider and date.',
   '',
   ...rows.map((receipt) => {
     const variants = seeds[receipt.contractId];
@@ -72,6 +72,7 @@ if (process.argv.includes('--check')) {
 
 function marker(receipt) {
   if (receipt.status === 'unclaimed') return 'unclaimed';
+  if (receipt.status === 'training-ground') return 'training ground';
   if (!receipt.species || !receipt.profileName || !Number.isFinite(Date.parse(receipt.date))) {
     throw new Error(`${receipt.contractId}: claimed receipt is missing species, profile, or date`);
   }

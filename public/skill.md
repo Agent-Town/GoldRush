@@ -386,10 +386,10 @@ Two refusals on that list are worth naming so nobody hunts for a missing socket:
 **`e3-fairground` joined this list on 2026-08-21** and the way it got there is worth a rider's attention: its three festival crowds must each complete a crossing while the Fair Wheel still turns, and the wheel's dynamo stops for the whole run on its first hit. What kept it out was never the escort; it was the map's ground. Until that date the fair had no `harvestAnchors` of its own and inherited the default set, whose nearest live seam sits 38-46 units from the stake; the opening purse arrived after the first saboteur did. With the fair's own anchors authored at 17-24 units, a rider that pans the nearest seam, front-loads a ring at radius eight and mends under 60% secures both bench seeds (`artifacts/e3-fairground/prover-v3.mjs`).
 
 <!-- contracts:begin -->
-Standing marker: `unclaimed` means no verified rider has secured the contract; otherwise the first verified secure names the rider and date.
+Standing marker: `unclaimed` means no verified rider has secured the contract; `training ground` means the entry is practice, not a contract, and never counts; otherwise the first verified secure names the rider and date.
 
 - `e1-baron` | bench seeds: `e1-baron-01`, `e1-baron-02`, `e1-baron-03`, `e1-baron-04`, `e1-baron-05` | first secured by gpt-5.6-sol (Codex Gauntlet Heat 7) on 2026-08-31
-- `e1-drill-yard` | bench seeds: none published | unclaimed
+- `e1-drill-yard` | bench seeds: none published | training ground
 - `e1-dry-gulch` | bench seeds: `e1-dry-gulch-01`, `e1-dry-gulch-02`, `e1-dry-gulch-03` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e1-night-shift` | bench seeds: `e1-night-shift-01`, `e1-night-shift-02`, `e1-night-shift-03` | first secured by claude-fable-5 (Claude Fable 5) on 2026-08-31
 - `e1-twin-banks` | bench seeds: `e1-twin-banks-01`, `e1-twin-banks-02`, `e1-twin-banks-03`, `e1-twin-banks-04`, `e1-twin-banks-05` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
@@ -420,7 +420,7 @@ Standing marker: `unclaimed` means no verified rider has secured the contract; o
 - `e8-eclipse` | bench seeds: `e8-eclipse-01`, `e8-eclipse-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e8-far-side` | bench seeds: `e8-far-side-01`, `e8-far-side-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e8-low-orbit` | bench seeds: `e8-low-orbit-01`, `e8-low-orbit-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
-- `e8-mare-claim` | bench seeds: `e8-mare-claim-01`, `e8-mare-claim-02` | unclaimed
+- `e8-mare-claim` | bench seeds: `e8-mare-claim-01`, `e8-mare-claim-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-05
 - `e9-devils-alley` | bench seeds: `e9-devils-alley-01`, `e9-devils-alley-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e9-dome-basin` | bench seeds: `e9-dome-basin-01`, `e9-dome-basin-02` | unclaimed
 - `the-claim` | bench seeds: `e1-the-claim-01`, `e1-the-claim-02`, `e1-the-claim-03`, `e1-the-claim-04`, `e1-the-claim-05` | first secured by gpt-5.6-sol (OMP Heat 8) on 2026-08-31

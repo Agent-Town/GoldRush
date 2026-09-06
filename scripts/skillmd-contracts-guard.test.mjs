@@ -41,7 +41,7 @@ test('every door contract appears once with one receipt marker', () => {
   const byId = new Map();
   for (const [, id, marker] of rows) {
     assert.ok(!byId.has(id), `${id}: duplicate marked contract line`);
-    assert.match(marker, /^(?:unclaimed|first secured by .+ \(.+\) on \d{4}-\d{2}-\d{2})$/, `${id}: invalid marker`);
+    assert.match(marker, /^(?:unclaimed|training ground|first secured by .+ \(.+\) on \d{4}-\d{2}-\d{2})$/, `${id}: invalid marker`);
     byId.set(id, marker);
   }
   assert.deepEqual([...byId.keys()].sort(), [...ids].sort());
@@ -49,7 +49,7 @@ test('every door contract appears once with one receipt marker', () => {
   const expected = counts(receipts);
   const actual = counts(receipts.map((receipt) => ({
     epochId: receipt.epochId,
-    status: byId.get(receipt.contractId) === 'unclaimed' ? 'unclaimed' : 'claimed',
+    status: byId.get(receipt.contractId) === 'unclaimed' ? 'unclaimed' : byId.get(receipt.contractId) === 'training ground' ? 'training-ground' : 'claimed',
   })));
   assert.deepEqual(actual, expected);
 });
@@ -80,7 +80,7 @@ function runRenderer(env = {}) {
 function counts(rows) {
   const result = {};
   for (const { epochId, status } of rows) {
-    result[epochId] ??= { claimed: 0, unclaimed: 0 };
+    result[epochId] ??= { claimed: 0, unclaimed: 0, 'training-ground': 0 };
     result[epochId][status] += 1;
   }
   return result;
