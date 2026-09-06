@@ -33,6 +33,9 @@ import { MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH 
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
+// hero-move-verb: read from the verb's own module so the published contract cannot drift from the
+// executor that enforces it.
+import { HERO_ARRIVE_RADIUS, HERO_ORDER_REFUSALS } from './StandingOrders';
 import {
   SEED_CARAVAN_DWELL_SECONDS,
   SEED_CARAVAN_MAX_HP,
@@ -95,6 +98,27 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   // any contract handed to it, including one that is not the contract being played.
   const beaconLadder = resolveBeaconLadder(twist.economy?.beaconLadder);
 
+  // hero-move-verb (owner ruling 2026-09-06, verbatim: "yes! please! rider has to be able to move,
+  // I did not know that was not possible before"). THE FIRST UNCONDITIONAL ROW IN THIS MANIFEST,
+  // and the exception earns itself: every other rule here answers "what does THIS contract
+  // declare", while this one answers "what does the hero verb promise", and the promise is a
+  // property of the ENGINE, identical on every map. It is published per contract anyway because
+  // `stablePrefix.mechanics` is the only machine-readable surface a rider reads before it rides,
+  // and a verb whose arrival radius and refusal vocabulary lived only in prose would be a verb a
+  // machine has to guess at. It is FIRST in the list so every ordered census pin gains exactly one
+  // token at index 0.
+  rules.push(rule('hero_orders', 'StandingOrders.MOVE_HERO', {
+    verb: 'MOVE_HERO',
+    body: 'hero',
+    arriveRadius: HERO_ARRIVE_RADIUS,
+    refusals: HERO_ORDER_REFUSALS,
+    // Who may hold the hero, stated as the engine table rather than as a slogan.
+    pilots: {
+      headless: 'the rider pilots the run\'s only hero',
+      roomSeat: 'a headless roster seat pilots its own hero',
+      soloBrowser: 'a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS',
+    },
+  }));
   if (tile.river) rules.push(rule('river', 'tileParams.river'));
   if (tile.ford) {
     rules.push(rule('water_crossings', 'tileParams.ford', {

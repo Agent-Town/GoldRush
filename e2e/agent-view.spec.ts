@@ -119,6 +119,26 @@ const WAVE_THREE_SNAPSHOT = `{
       "interactables": [],
       "rules": [
         {
+          "id": "hero_orders",
+          "source": "StandingOrders.MOVE_HERO",
+          "data": {
+            "verb": "MOVE_HERO",
+            "body": "hero",
+            "arriveRadius": 0.5,
+            "refusals": [
+              "HERO_NOT_YOURS",
+              "UNREACHABLE_TERRAIN",
+              "UNREACHABLE_APPROACH",
+              "HERO_UNAVAILABLE"
+            ],
+            "pilots": {
+              "headless": "the rider pilots the run's only hero",
+              "roomSeat": "a headless roster seat pilots its own hero",
+              "soloBrowser": "a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS"
+            }
+          }
+        },
+        {
           "id": "river",
           "source": "tileParams.river",
           "data": {}

@@ -32,17 +32,22 @@ const EXPECTED_DEPENDENCY: Record<string, string> = {
  * every admission collide with every other. A contract that gains a mechanic edits ITS OWN line
  * and nothing else. Rows are the manifest rule IDs `deriveMechanicsManifest` emits, in order.
  */
+// RE-POINTED BY hero-move-verb (owner ruling 2026-09-06, "rider has to be able to move"):
+// `hero_orders` is `deriveMechanicsManifest`'s first UNCONDITIONAL row, published on every
+// contract because the MOVE_HERO contract (arrival radius, refusal vocabulary, who may hold the
+// hero) belongs to the ENGINE, not to a map. The list is `rules.sort(byId)`, so it lands
+// alphabetically and no other row moved. Measured on this tree, not assumed.
 const EXPECTED_RULES: Record<string, string[]> = {
-  'e8-mare-claim': ['build_zones'],
+  'e8-mare-claim': ['build_zones', 'hero_orders'],
   // A4's consumer is contract-gated, not epoch-gated, and the Far Side declares
   // `twist.signalSuppression` — so this row was ALREADY true before A7 touched anything.
   // Measured, not assumed: the first draft of this table guessed `['build_zones']` here and the
   // census caught it immediately, which is the whole reason the rows are written out per id.
   // MERGED-TREE CORRECTION (A6+A7 drain, 2026-08-20): A6's ProbeRecovery consumer exists here,
   // so the Far Side speaks three rules — this row was 2 on the A7 branch, which predated A6.
-  'e8-far-side': ['build_zones', 'probe_recovery', 'signal_suppression'],
-  'e8-low-orbit': ['build_zones', 'zero_gravity'],
-  'e8-eclipse': ['build_zones'],
+  'e8-far-side': ['build_zones', 'hero_orders', 'probe_recovery', 'signal_suppression'],
+  'e8-low-orbit': ['build_zones', 'hero_orders', 'zero_gravity'],
+  'e8-eclipse': ['build_zones', 'hero_orders'],
 };
 
 for (const contract of orbital.contracts) {

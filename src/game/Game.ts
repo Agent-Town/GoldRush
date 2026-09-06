@@ -93,7 +93,7 @@ import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentViewSource } from '../agent/View';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
-import { bindStandingUpgradePicker, snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
+import { bindStandingOrderHero, bindStandingUpgradePicker, snapshotStandingOrders, type StandingOrder } from '../agent/StandingOrders';
 import { isMultiplayerStandingSubmitter, multiplayerStandingParty, resetMultiplayerStandingRoster } from '../agent/DeclaredStack';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RegattaRaceSystem } from '../systems/RegattaRaceSystem';
@@ -2626,6 +2626,21 @@ export class Game {
       }
       return applied;
     });
+    // hero-move-verb (owner ruling 2026-09-06). THE SINGLETON EXECUTOR THIS DOOR INSTALLS BELONGS
+    // TO A HERO A HUMAN IS FLYING. `installAgentStub` runs `bindStandingOrders` inside
+    // `createToolSurface` (`src/agent/ToolSurface.ts:216`), and the body it steers through
+    // `Embodiment.updateSimulation` is the Prospector standing beside the player's own hero. So the
+    // channel is bound with `riderPiloted: false` UNCONDITIONALLY: a MOVE_HERO that reaches this
+    // door is refused with `HERO_NOT_YOURS` and never applied over the keys. This is the whole
+    // enforcement of the owner's law in the browser; a rider that wants to walk a hero takes a
+    // headless roster seat, where `AgentRiderBody` binds its OWN channel to its OWN body.
+    // Bound here rather than beside the stub above so no line of the call that reaches
+    // `placeBuilding`/`panAt` moves (`scripts/fire.md` cites `Game.ts:2598-2599`).
+    bindStandingOrderHero({
+      position: () => this.primaryActor.group.position,
+      riderPiloted: () => false,
+      walkable: ({ x, z }) => this.actorTerrainSample(x, z).walkable,
+    });
     this.agentStub.heartbeat();
     if (showIntro) this.showProspectorIntro();
   }
@@ -4433,6 +4448,17 @@ export class Game {
             this.agentRiderAdapter(playerId),
             this.agentRiderFinalVerbs(playerId),
             { buildTargetReachable: ({ x, z }) => Terrain.isBuildable(x, z) },
+            // hero-move-verb: the seat's own terrain answer, the same sample `Hero.update` obeys
+            // through `updateActors`'s terrain object, plus the bounds it clamps into. A seat
+            // exists only for a `client === 'headless'` roster entry (the loop above), so this
+            // channel can never reach a human's hero.
+            {
+              walkable: ({ x, z }) => x >= Terrain.bounds.minX + Balance.hero.radius
+                && x <= Terrain.bounds.maxX - Balance.hero.radius
+                && z >= Terrain.bounds.minZ + Balance.hero.radius
+                && z <= Terrain.bounds.maxZ - Balance.hero.radius
+                && this.actorTerrainSample(x, z).walkable,
+            },
           ),
         );
       }

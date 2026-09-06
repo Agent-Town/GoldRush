@@ -17,8 +17,12 @@ test('the Drill Yard derives every declared practice mechanic without changing i
     { id: 'rolling_log', count: 2, operations: ['strike'], source: 'practice.targets' },
     { id: 'straw_man', count: 3, operations: ['strike'], source: 'practice.targets' },
   ]);
+  // hero-move-verb (owner ruling 2026-09-06): `hero_orders` is the manifest's first unconditional
+  // row, published on every contract because the verb's contract belongs to the engine rather than
+  // to a map. Alphabetical, so it lands between `drill_wave` and `ledger_free_practice`.
   expect(manifest.rules.map(({ id }) => id)).toEqual([
     'drill_wave',
+    'hero_orders',
     'ledger_free_practice',
     'practice_buildables',
     'practice_gold_grant',

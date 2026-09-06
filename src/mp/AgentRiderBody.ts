@@ -1,6 +1,16 @@
 import * as THREE from 'three';
 import { StandingOrdersExecutor, type FinalVerbHandlers, type StandingOrder, type StandingOrdersView } from '../agent/StandingOrders';
-import { createToolSurface, type AgentGameAdapter, type ToolSurfaceOptions } from '../agent/ToolSurface';
+import { createToolSurface, type AgentGameAdapter, type AgentVec2, type ToolSurfaceOptions } from '../agent/ToolSurface';
+
+/**
+ * hero-move-verb: the room's half of the hero channel. A seat's body IS an ordinary multiplayer
+ * Hero, so `MOVE_HERO` and `MOVE_TO` steer the same body here; the two only name different bodies
+ * in GR-SIM, where `MOVE_TO` drives the Prospector. `Game.syncMultiplayerActors` constructs an
+ * `AgentRiderBody` for a roster entry ONLY where `player.client === 'headless'`, so a body that
+ * exists at all is a rider's, never a human pilot's, and `riderPiloted` is true by construction.
+ * The walkable probe is injected because terrain is the browser's to answer.
+ */
+export type AgentRiderBodyHero = { walkable?: (pos: AgentVec2) => boolean };
 
 export type AgentRiderBodySnapshot = StandingOrdersView & {
   playerId: string;
@@ -17,11 +27,24 @@ export type AgentRiderBodyFutureState = {
 export class AgentRiderBody {
   private readonly executor: StandingOrdersExecutor;
   private submissionId: string | null = null;
+  /** hero-move-verb: the seat body's position, refreshed by `movement()` before each tick. */
+  private actorPoint: AgentVec2 = { x: 0, z: 0 };
 
-  constructor(readonly playerId: string, game: AgentGameAdapter, finalVerbs?: FinalVerbHandlers, options: ToolSurfaceOptions = {}) {
+  constructor(
+    readonly playerId: string,
+    game: AgentGameAdapter,
+    finalVerbs?: FinalVerbHandlers,
+    options: ToolSurfaceOptions = {},
+    hero: AgentRiderBodyHero = {},
+  ) {
     const surface = createToolSurface(game, { ...options, permissionLevel: 3 });
     this.executor = new StandingOrdersExecutor(surface, game.diagnostics ?? (() => ({})), game.economyLog);
     if (finalVerbs) this.executor.bindFinalVerbs(finalVerbs);
+    this.executor.bindHeroChannel({
+      position: () => this.actorPoint,
+      riderPiloted: () => true,
+      walkable: hero.walkable ?? (() => true),
+    });
   }
 
   submit(orders: StandingOrder[], submissionId: string, at: number): boolean {
@@ -32,7 +55,12 @@ export class AgentRiderBody {
   }
 
   movement(at: number, actor: { x: number; z: number }): THREE.Vector2 {
-    const target = this.executor.tick(at, actor).movement;
+    this.actorPoint = actor;
+    const result = this.executor.tick(at, actor);
+    // hero-move-verb: one body, so one vector. `movement` (MOVE_TO/HOLD/BUILD travel) and
+    // `heroMovement` (MOVE_HERO) can never both be set on one tick, because the executor returns on
+    // the first order that owns the tick.
+    const target = result.movement ?? result.heroMovement;
     if (!target) return new THREE.Vector2();
     const dx = target.x - actor.x;
     const dz = target.z - actor.z;

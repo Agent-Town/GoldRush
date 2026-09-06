@@ -431,7 +431,22 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   //      this one map and shows the anchors REPLACE it rather than stack with it.
   // Numbers are this tree's own `--json` regen output, verbatim; the drain's `docs/bench/same-game-audit.md`
   // regen carries the same figures.
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 528, equal: 1192, 'not-offered': 0 });
+  // ⚠️ TWELFTH STACK — A ROW MOVE, NOT A DATA MOVE (2026-09-06, hero-move-verb; owner ruling
+  // verbatim: "yes! please! rider has to be able to move, I did not know that was not possible
+  // before"). The audit gained a per-contract HERO MOVEMENT row: humans walk the hero with the keys
+  // or the touch stick, and until this slice no verb in the union reached that body
+  // (`reviews/relay-valley-winnable.md` F-RVW-6). 1720 -> 1762 rows, +42, one per contract:
+  // 37 `equal` (the door admits the contract and MOVE_HERO reaches the hero) and 5 `agent-lacks`
+  // (the five the door refuses before play, where `agentCanEnter` is false and the row inherits
+  // that refusal exactly as every other verb row does). 528 -> 533 agent-lacks, 1192 -> 1229 equal,
+  // exemption count and not-offered unchanged.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE: the tree WITH the `MOVE_HERO` verb declared and this row
+  // still absent reproduced `0 / 528 / 1192 / 0 over 1720` EXACTLY
+  // (`artifacts/hero-move-verb/audit-verb-only.json`). So the whole movement belongs to the ROW,
+  // and the verb alone moves nothing here — which is the finding: `doorVerbs` is derived from the
+  // union, so the verb entered this script for free, and the audit still could not see the
+  // asymmetry because it had never asked the question.
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 533, equal: 1229, 'not-offered': 0 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });

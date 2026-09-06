@@ -316,6 +316,27 @@ function audit() {
       ));
     }
 
+    // hero-move-verb (owner ruling 2026-09-06, verbatim: "yes! please! rider has to be able to
+    // move, I did not know that was not possible before"). THE ROW THIS AUDIT NEVER HAD, and its
+    // absence is why the audit read `equal` on a board where a human could kite and a rider could
+    // not: `doorVerbs` is derived from the union, so `MOVE_HERO` entered this script the moment the
+    // verb was declared, and measuring the tree with the verb declared and this row absent
+    // reproduced 0/528/1192/0 EXACTLY (`artifacts/hero-move-verb/audit-verb-only.json`). A parity
+    // fact nothing asks about is a parity fact nothing can find. The human side is the movement
+    // keys and the touch stick (`InputController` -> `Game.updateActors` -> `Hero.update`); the
+    // door side is MOVE_HERO through the SAME `Intents.move` seam.
+    const heroMove = agentCanEnter && doorVerbs.includes('MOVE_HERO');
+    rows.push(row(
+      contract,
+      'verb',
+      'the player walks the hero with the movement keys or the touch stick',
+      heroMove
+        ? 'MOVE_HERO walks the hero to a point through the same Intents.move seam'
+        : 'no standing order reaches the hero body',
+      direction(true, heroMove),
+      `${line('src/game/Game.ts', 'private updateActors(simDelta: number, fallbackIntents: Intents): void {')} · ${line('src/sim/HeadlessContractSim.ts', 'private heroOrderIntents(): Intents {')} · ${line('src/agent/StandingOrders.ts', heroMove ? "| { verb: 'MOVE_HERO'" : 'export type StandingOrder =')}`,
+    ));
+
     rows.push(row(
       contract,
       'choice',

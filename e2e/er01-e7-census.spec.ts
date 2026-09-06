@@ -101,13 +101,18 @@ const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
  * only Echo Canyon declares a mirror — asserted as ORDERED lists, so a rule that leaked onto the
  * wrong contract reddens here rather than passing as an extra.
  */
+// RE-POINTED BY hero-move-verb (owner ruling 2026-09-06, "rider has to be able to move"):
+// `hero_orders` is `deriveMechanicsManifest`'s first UNCONDITIONAL row, published on every
+// contract because the MOVE_HERO contract (arrival radius, refusal vocabulary, who may hold the
+// hero) belongs to the ENGINE, not to a map. The list is `rules.sort(byId)`, so it lands
+// alphabetically and no other row moved. Measured on this tree, not assumed.
 const EXPECTED_RULES: Record<string, string[]> = {
-  'e7-relay-valley': ['build_zones', 'contract_hero_grit'], // 2026-09-06 relay-valley-winnable: the claim grit is a published rule (F-RVW-3)
-  'e7-echo-canyon': ['broadcast_mirror', 'build_zones'],
-  'e7-dead-band': ['build_zones', 'signal_suppression'],
+  'e7-relay-valley': ['build_zones', 'contract_hero_grit', 'hero_orders'], // 2026-09-06 relay-valley-winnable: the claim grit is a published rule (F-RVW-3)
+  'e7-echo-canyon': ['broadcast_mirror', 'build_zones', 'hero_orders'],
+  'e7-dead-band': ['build_zones', 'hero_orders', 'signal_suppression'],
   // A5: sourced FROM `InterferenceFrontSystem`, so the row cannot promise a deadline the run
   // does not enforce. Relay Rush is the only Signal contract that declares the front.
-  'e7-relay-rush': ['build_zones', 'interference_front'],
+  'e7-relay-rush': ['build_zones', 'hero_orders', 'interference_front'],
 };
 
 for (const contract of signal.contracts) {
