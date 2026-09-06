@@ -73,6 +73,7 @@ import {
   InterferenceFrontSystem,
   type InterferenceFrontDiagnostics,
 } from '../systems/InterferenceFrontSystem';
+import { E10SquallScheduler, type SquallDiagnostics } from '../systems/E10SquallScheduler';
 import { E7PlaybookLatch, type E7PlaybookObjective } from '../systems/E7PlaybookLatch';
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
@@ -396,6 +397,15 @@ export type HeadlessAgentView = AgentView & {
      * wait out the wall, or to accept that the deadline is gone.
      */
     interferenceFront?: InterferenceFrontDiagnostics;
+    /**
+     * E10S-2. Present only where the contract declares `twist.emberShore.squall` with a whole
+     * cadence. This one is NOT an objective and gates NOTHING yet — it is a WEATHER CLOCK, so
+     * what a rider needs from it is the shape A9's hazard row has: `phase` and
+     * `secondsToNextPhase` say what the map is doing and when it changes, `secondsToNextSquall`
+     * is the planning number, and `transitions` is the event log two engines are compared on.
+     * The warmth this schedule will eventually drain arrives with E10S-3.
+     */
+    squall?: SquallDiagnostics;
     /**
      * A9. Present only where the contract declares `twist.scheduledRelocation` WITH authored
      * patrol routes. This one is NOT an objective — nothing here opens or shuts the secure — it
@@ -824,6 +834,14 @@ export class HeadlessContractSim {
    */
   private readonly interferenceFront: InterferenceFrontSystem;
   /**
+   * E10S-2 — the Ember Shore's Static squall, and it runs IDENTICALLY in both engines for the
+   * reason the alley below does: a scheduler is SIM STATE. Nothing reads it to change the board
+   * yet, but the phase it publishes is what E10S-3's warmth decay will be keyed on, so it has to
+   * be the same phase at the same tick in both engines BEFORE anything depends on it — a clock
+   * that only one engine ran would put the two on different weather from wave one.
+   */
+  private readonly squall: E10SquallScheduler;
+  /**
    * A9 — the scheduled relocation, and it runs IDENTICALLY in both engines because it is
    * sim-affecting: a devil MOVES a building's position, which changes what a turret covers and
    * what an outlaw walks into. A consumer that only the browser ran would put the two engines on
@@ -979,6 +997,10 @@ export class HeadlessContractSim {
     // A5: same read the browser performs at `Game.ts` — the CONTRACT, never the epoch. Built
     // before `BuildSystem` below, which injects its mute into the shooter seam.
     this.interferenceFront = InterferenceFrontSystem.create(this.manifest);
+    // E10S-2: same read the browser performs at `Game.ts` — the CONTRACT's own
+    // `twist.emberShore.squall`, never the epoch, so a contract that declares no squall holds an
+    // inert scheduler that answers "calm" forever and no other map's view or hash grows a field.
+    this.squall = E10SquallScheduler.create(this.manifest);
     this.playbookLatch = new E7PlaybookLatch(this.manifest);
     // A9: same read the browser performs at `Game.ts` — the CONTRACT's own twist plus its own
     // authored routes, bays and stakes. No voice headless: this engine paints nothing.
@@ -1547,6 +1569,13 @@ export class HeadlessContractSim {
         // that certifies the secure: a run that met it with three relays lit is not the same run
         // as one that met it with four, and one that missed it could not have secured at all.
         ...(this.interferenceFront.isDeclared ? { interferenceFront: this.interferenceFront.diagnostics } : {}),
+        // E10S-2: spread-if-declared for the same reason as A5 above — ABSENT on every contract
+        // but the Ember Shore, which has NO pinned floors and no bench seeds today
+        // (`assets/contracts/bench-seeds.json` carries no e10 key), so no pinned hash anywhere can
+        // move. Included because a scheduler is SIM STATE and the phase log is the terminal proof
+        // of it: a run whose squall opened one tick later is a different run, and the hash should
+        // be able to say so before E10S-3 makes that difference cost warmth.
+        ...(this.squall.isDeclared ? { squall: this.squall.diagnostics } : {}),
         ...(this.hollowCrossing.isDeclared ? { hollowCrossing: this.hollowCrossing.diagnostics } : {}),
         // E4: spread-if-declared, same rule. Where the Hauler rests, what it burned and which
         // corridors were graded are terminal facts a secure depends on: a claim secured with the
@@ -1771,6 +1800,12 @@ export class HeadlessContractSim {
     // schedule is a function of sim time alone. It reads the board's standing works from the
     // targeting register (the same list the browser hands it) to decide which relays are lit.
     this.interferenceFront.update(STEP_SECONDS, this.targeting.allBuildings);
+    // E10S-2: the squall clock advances beside the other schedules and on the SAME fixed step, so
+    // the phase is a function of sim time alone. It reads nothing and writes nothing else — the
+    // board it will eventually change belongs to E10S-3 — so its position in this order cannot
+    // affect any other system, only the tick its own transitions are stamped with. `Game.ts` ticks
+    // it at the matching point in its own order, immediately after the front, for that reason.
+    this.squall.update(STEP_SECONDS);
     // E7: the wall against the running program, asked off the front the line above just advanced,
     // then the Valley's relay action off the SAME standing-works register the front just read, so
     // no two of the three can disagree about where the wall is or which sites carry a powered work.
@@ -1914,6 +1949,11 @@ export class HeadlessContractSim {
     // position, the countdown to the next front, and the per-site lit/muted pair a rider needs to
     // decide where to spend the next 25 gold before the deadline closes.
     if (this.interferenceFront.isDeclared) view.now.interferenceFront = this.interferenceFront.diagnostics;
+    // E10S-2: only where DECLARED. This one MOVES every turn and gates NOTHING today, so it is
+    // published for planning exactly as the alley below is: which phase the shore is in, how long
+    // it has, and the log of every change so far. `the-claim`'s canonical view is unaffected,
+    // which is why `view-schema-guard` needs no new registry field for it.
+    if (this.squall.isDeclared) view.now.squall = this.squall.diagnostics;
     // A9: only where DECLARED. This one MOVES every turn and — unlike the caravan and the wall —
     // it gates NOTHING, so it is published for planning rather than for scoring: where the next
     // sweep goes, and which of your works the wind is allowed to take.
@@ -2301,6 +2341,10 @@ export class HeadlessContractSim {
       // grow a field. The terminal half of the same object also rides the determinism hash
       // (`outcome()` below) — this row is the per-turn read.
       interferenceFront: this.interferenceFront.isDeclared ? this.interferenceFront.diagnostics : null,
+      // E10S-2: null off every other contract, exactly like its neighbours, so no admitted
+      // contract's diagnostics grow a field. The terminal half of the same object also rides the
+      // determinism hash (`outcome()` above) — this row is the per-turn read.
+      squall: this.squall.isDeclared ? this.squall.diagnostics : null,
       // A9: null off every other contract, same rule. The presentation-stripped half rides the
       // determinism hash so a run that moved a turret cannot hash the same as one that did not.
       devilsAlley: this.devilsAlley.isDeclared ? this.devilsAlley.simulationSnapshot : null,

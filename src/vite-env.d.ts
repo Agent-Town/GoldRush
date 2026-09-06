@@ -529,6 +529,10 @@ interface ThreeGameDiagnostics {
   lowOrbit: import('./systems/LowOrbitSystem').LowOrbitDiagnostics;
   devilsAlley: import('./systems/ScheduledRelocationSystem').ScheduledRelocationDiagnostics | null;
   devilsAlleyPresentation: import('./systems/DevilsAlleyPresentation').DevilsAlleyPresentationDiagnostics | null;
+  /** E10S-2: null on every contract that declares no Static squall. The clock's own read. */
+  squall: import('./systems/E10SquallScheduler').SquallDiagnostics | null;
+  /** E10S-2: what a PLAIN boot shows and ducks. Presentation only; nothing here reaches the sim. */
+  squallPresentation: import('./systems/E10SquallPresentation').SquallPresentationDiagnostics | null;
   hollowCrossing: import('./systems/HollowCrossingSystem').HollowCrossingDiagnostics;
   harvest: {
     activeNodes: Array<{

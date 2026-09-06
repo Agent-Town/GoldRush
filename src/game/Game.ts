@@ -191,6 +191,8 @@ import { E7PlaybookLatch } from '../systems/E7PlaybookLatch';
 import { SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, SignalSuppression } from '../systems/SignalSuppression';
 import { BroadcastMirror } from '../systems/BroadcastMirror';
 import { FRONT_HALF_WIDTH, INTERFERENCE_MUTED_REASON, INTERFERENCE_MUTED_VOICE, InterferenceFrontSystem } from '../systems/InterferenceFrontSystem';
+import { E10SquallScheduler } from '../systems/E10SquallScheduler';
+import { E10SquallPresentation } from '../systems/E10SquallPresentation';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
@@ -763,6 +765,21 @@ export class Game {
    * the refusal counters are the run's real total. Built off the CONTRACT, never the epoch.
    */
   private readonly interferenceFront = InterferenceFrontSystem.create(this.activeContract);
+  /**
+   * E10S-2 (`specs/agent-play/e10-ember-shore-preserve.md` §3, §4) — the Ember Shore's Static
+   * squall, read off the CONTRACT exactly as `HeadlessContractSim` reads it, so the two engines
+   * cannot disagree about which phase the shore is in or on which tick it changed. Inert on every
+   * other map: an undeclared scheduler answers "calm" forever and publishes nothing.
+   */
+  private readonly squall = E10SquallScheduler.create(this.activeContract);
+  /**
+   * The squall's whole presentation, and deliberately no more than the spec asked for: a wash and
+   * a mix duck (§4, "presentation-thin desat ... the full aura shader is the Quiet's finale tech
+   * — NOT built here"). Null on every map that declares no squall, so nobody else pays a DOM node
+   * for it. The class lives in its own file because `Game` is render code and the SCHEDULER must
+   * not be (F-A8-7) — the split is between sim and render, not between file and file.
+   */
+  private squallPresentation: E10SquallPresentation | null = null;
   /**
    * A10 (`specs/agent-play/door-completion-sheet.md:26`) — the Old Canal's three verdicts. A FIELD
    * INITIALISER rather than a constructor-body line, and that placement is load-bearing: field
@@ -1806,6 +1823,9 @@ export class Game {
     this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
     this.getElement('#app').append(this.damageVignette);
+    // E10S-2: the wash joins the page only where a squall is declared, so no other map carries a
+    // DOM layer for it. It mounts at zero opacity — `sync` below is what paints it.
+    if (this.squall.isDeclared) this.squallPresentation = new E10SquallPresentation(this.getElement('#app'));
     window.addEventListener('pointerdown', this.skipBaronCeremony, { passive: true });
     window.addEventListener('keydown', this.skipBaronCeremony);
     this.registerHeroShooters(this.primaryActor, this.heroShooter, this.blastShooter);
@@ -2649,6 +2669,7 @@ export class Game {
     this.deathOverlay.dispose();
     this.upgradeOverlay.dispose();
     this.damageVignette.remove();
+    this.squallPresentation?.dispose();
     this.debugTools.dispose();
     this.run3dPilot?.dispose();
     this.terrain3dPilotCancelled = true;
@@ -3016,6 +3037,12 @@ export class Game {
       this.interferenceFront.update(simDelta, this.goldTargeting.allBuildings);
       this.playbookLatch.syncProgramRelays(this.playbookReplay?.active === true, this.goldTargeting.allBuildings);
       this.syncInterferenceBand();
+      // E10S-2: the squall clock advances on the same sim delta and at the same point in the order
+      // `HeadlessContractSim` uses — immediately after the front — so both engines stamp their
+      // phase transitions with the same tick. The clock reads nothing and changes no board state;
+      // the line after it is pure presentation, reading the numbers the line before published.
+      this.squall.update(simDelta);
+      if (this.squallPresentation) this.squallPresentation.sync(this.squall.diagnostics);
       // A9: the column advances on the same sim delta and in the same relative order as
       // `HeadlessContractSim` — after the standing-works register is current and ahead of the
       // enemy integration step — reading the same register and calling the same one BuildSystem
@@ -4468,10 +4495,14 @@ export class Game {
       : (this.contractEpoch?.order ?? 1) >= 3
         ? 'era-e3-voltage-loop'
         : 'era-e1-frontier-loop';
+    // E10S-2 — THE MIX DUCK, APPLIED HERE BECAUSE THIS IS THE ONE PLACE THIS PROJECT SETS LOOP
+    // VOLUME. `E10SquallPresentation.gain` is 1 whenever no squall is blowing and on every map
+    // that declares none, so every other contract's mix is byte-for-byte what it was.
+    const squallDuck = this.squallPresentation?.gain ?? 1;
     for (const loop of ['era-e1-frontier-loop', 'era-e2-steamworks-loop', 'era-e3-voltage-loop'] as const) {
       // Music rides through pause overlays (level-up choices pause on most kills —
       // stopping the voice restarted the track every time; owner, Baron run 2026-07-13).
-      this.audio.setLoop(loop, inRun && loop === musicLoop, this.e10StaticBoss.musicGain);
+      this.audio.setLoop(loop, inRun && loop === musicLoop, this.e10StaticBoss.musicGain * squallDuck);
     }
     if (!active) {
       this.audio.setLoop('river-ambience-loop', false);
@@ -4480,16 +4511,16 @@ export class Game {
       return;
     }
 
-    this.audio.setLoop('river-ambience-loop', true, 0.35 + this.spatialAudioVolume({ x: this.camera.position.x, z: 0 }, 34) * 0.65);
+    this.audio.setLoop('river-ambience-loop', true, (0.35 + this.spatialAudioVolume({ x: this.camera.position.x, z: 0 }, 34) * 0.65) * squallDuck);
 
     const sluices = this.buildSystem.diagnostics.sluicePositions;
     let sluiceVolume = 0;
     for (const position of sluices) sluiceVolume = Math.max(sluiceVolume, this.spatialAudioVolume(position, 26));
-    this.audio.setLoop('sluice-water-loop', sluices.length > 0 && sluiceVolume > 0.04, sluiceVolume);
+    this.audio.setLoop('sluice-water-loop', sluices.length > 0 && sluiceVolume > 0.04, sluiceVolume * squallDuck);
 
     const prospector = this.prospector.snapshot;
     const moving = prospector.moving || prospector.drifting;
-    this.audio.setLoop('prospector-hover-loop', moving, this.spatialAudioVolume(prospector.position, 20));
+    this.audio.setLoop('prospector-hover-loop', moving, this.spatialAudioVolume(prospector.position, 20) * squallDuck);
   }
 
   private spatialAudioVolume(point: { x: number; z: number }, radius: number): number {
@@ -5519,6 +5550,11 @@ export class Game {
       // `e2e/e7-relay-rush-front.spec.ts` reads to prove the browser runs the same wall the
       // headless engine does.
       interferenceFront: this.interferenceFront.isDeclared ? this.interferenceFront.diagnostics : null,
+      // E10S-2: null off every other map, the same shape every optional consumer above uses. The
+      // pair is what `e2e/e10-ember-shore-squall.spec.ts` reads to prove the browser runs the same
+      // clock the headless engine does AND that a PLAYER can see it in a plain boot (Mistake #10).
+      squall: this.squall.isDeclared ? this.squall.diagnostics : null,
+      squallPresentation: this.squallPresentation?.diagnostics ?? null,
       // A9: null off every other map, same shape. `e2e/e9-devils-alley-relocation.spec.ts` reads
       // this pair to prove the browser sweeps the same schedule the headless engine does, and
       // that the PLAYER can see it in a plain boot (Mistake #10).
@@ -8303,6 +8339,10 @@ export class Game {
     // leftover phase of the last one.
     this.interferenceFront.reset();
     this.syncInterferenceBand();
+    // E10S-2: the cadence restarts with the run — a new run opens calm with its first squall 68s
+    // away, never the leftover phase of the last one, and the wash goes back to clear with it.
+    this.squall.reset();
+    this.squallPresentation?.reset();
     // A9: the schedule restarts with the run — a new run's first sweep belongs to its own wave 1,
     // never the leftover phase of the last one, and nothing is left suspended in the air.
     this.devilsAlley.reset();

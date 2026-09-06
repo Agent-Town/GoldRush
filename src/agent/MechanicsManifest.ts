@@ -5,6 +5,7 @@ import { beaconCost, buildableBlurb, buildableCostAt, getBuildableDef, resolveBe
 import { PicnicHoldSystem, PICNIC_ACTIVE_DEFENSE_SECONDS, PICNIC_HOLD_RADIUS, PICNIC_HOLD_SECONDS, PICNIC_STAKE_PRESS_WEIGHT } from '../systems/PicnicHoldSystem';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
+import { E10SquallScheduler, SQUALL_PHASE_ORDER } from '../systems/E10SquallScheduler';
 import {
   DEVIL_COLUMN_RADIUS,
   DEVIL_SWEEP_SECONDS,
@@ -718,6 +719,36 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       refusalReason: INTERFERENCE_MUTED_REASON,
       // Named so a rider reads the DEADLINE and the trade, not five numbers.
       consequence: 'a wall of static crosses west to east every 90s; anything under it is muted (turrets and beacons stop firing, drones and playbooks refuse) but never damaged; the run cannot secure unless 3 of the 4 relay sites carry a standing turret or beacon when the third front arrives',
+    }));
+  }
+
+  // --- E10S-2 the Static squall. SOURCED FROM THE CONSUMER for the same reason A5 is: the row
+  // publishes the cadence `E10SquallScheduler` will actually run, so a briefing cannot promise a
+  // squall at 60s that the contract retunes to 90. Absent unless the contract declares
+  // `twist.emberShore.squall` with a whole cadence — the same refuse-to-arm the consumer applies.
+  //
+  // THE ROW SAYS WHAT THE SLICE DOES **AND WHAT IT DOES NOT**, which is the honest shape for a
+  // half-landed mechanic: this scheduler changes nothing on the board yet, and a rider that read
+  // "mote pressure doubles" as a live rule would plan against weather that is not there. AP-11
+  // admits a mechanic only when it is BOTH declared and consumed; the phase IS consumed (published
+  // in both engines, painted in one), the pressure is not, and `applies` says so in one word.
+  const squall = E10SquallScheduler.create(contract);
+  if (squall.isDeclared) {
+    const cadence = squall.diagnostics;
+    rules.push(rule('static_squall', 'E10SquallScheduler.update', {
+      phases: SQUALL_PHASE_ORDER,
+      calmSeconds: cadence.calmSeconds,
+      telegraphSeconds: cadence.telegraphSeconds,
+      squallSeconds: cadence.squallSeconds,
+      recoverSeconds: cadence.recoverSeconds,
+      cycleSeconds: cadence.cycleSeconds,
+      // Published so E10S-3 wires one already-derived number; NOT applied by this slice.
+      motePressureMultiplier: cadence.motePressureMultiplier,
+      applies: 'phase-only',
+      view: 'now.squall',
+      consequence: 'a Static squall crosses the whole shore on a fixed cycle: 60s calm, an 8s telegraph as the edges pale, 25s of squall, an 8s recover. The browser desaturates and ducks the mix while it blows. NOTHING else changes yet — the vent warmth this schedule will drain, the STOKE verb that answers it and the loss it can cause arrive with the preserve consumer (E10S-3); doubled mote pressure is published here and not applied.',
+      gatesSecure: false,
+      damages: false,
     }));
   }
 
