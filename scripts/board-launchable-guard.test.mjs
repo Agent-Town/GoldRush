@@ -34,8 +34,27 @@ const root = fileURLToPath(new URL('..', import.meta.url));
  * grew seams, which is good news and should be paired with its admission evidence.
  */
 const HARVEST_FREE_BOARD_CONTRACTS = {
-  'e10-ember-shore':
-    "specs/epoch-saga/e10-deepsky-bundle.md:17 gives the Ember Shore \"one preserve-contract ('keep the last warm vent alight through the Static squall')\"; specs/agent-play/e10-ember-shore-preserve.md:18 builds the vent as a warmth structure with a STOKE action. Its seams stay unauthored until E10S-4 earns the admission on evidence (tasks/e10s-1c-ember-shore-inert-landing.md:27, landed 14dbb496a).",
+  // ⓘ `e10-ember-shore` HELD A ROW HERE UNTIL E10S-4 (2026-09-06) AND NO LONGER DOES — it grew
+  // seams, which is the good-news half this ratchet's own doc comment predicts and the remedy its
+  // own message prescribes, verbatim: "add the row with its spec citation, or remove it with the
+  // anchors that replaced it." The retired reason, kept so the removal is legible rather than
+  // silent: "specs/epoch-saga/e10-deepsky-bundle.md:17 gives the Ember Shore 'one
+  // preserve-contract (keep the last warm vent alight through the Static squall)';
+  // specs/agent-play/e10-ember-shore-preserve.md:18 builds the vent as a warmth structure with a
+  // STOKE action. Its seams stay unauthored until E10S-4 earns the admission on evidence
+  // (tasks/e10s-1c-ember-shore-inert-landing.md:27, landed 14dbb496a)."
+  //
+  // WHY THE DECLARATION HAD TO GO WITH THE ANCHORS, not merely could: the four cooling-vein
+  // anchors ARE the map's authored stoking economy (`specs/agent-play/e10-ember-shore-preserve.md`
+  // §3 "Anchors"), so `harvestAnchors` is no longer empty; and `:98` below refuses a contract that
+  // carries seams AND the declaration ("one of the two is a lie"), while `:130` refuses a
+  // harvest-free contract that reaches the agent-play door. Keeping both would have reddened this
+  // guard twice with no src/ change able to reconcile them. The contract's OWN retired description
+  // said the same thing in advance: "Seams stay unauthored until the E10S-4 door slice earns them
+  // on measured evidence, so this claim declares no harvest anchors." Measured before the removal
+  // (`artifacts/e10s-4-door/door-both-declared.json`): the BROWSER door does not refuse the
+  // anchored map either way — `activeId: 'e10-ember-shore'`, `fallbackReason: null` — so the map
+  // stays openable on its seams alone, which is the first test in this file.
   'e10-archive-world':
     'specs/agent-play/e10-archive-world-restoration.md:24, verbatim: "the wings themselves yield nothing - you are not here to extract." Its seams wait on the same door-slice evidence.',
   'e10-river':

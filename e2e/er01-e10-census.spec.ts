@@ -4,20 +4,34 @@ import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json
 import deepSky from '../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
 
 const EXPECTED_RULES: Record<string, string[]> = {
-  // RE-POINTED, WITH THE REASON, and one of the two rows was ALREADY STALE before this slice
-  // touched it: `static_squall` has been derived for this contract since E10S-2 landed
-  // `E10SquallScheduler` (`reviews/e10s-2-squall-scheduler.md`), so this census had been red on
-  // main since that drain — measured 2026-09-06, `['build_zones','static_squall']` against the
-  // `['build_zones']` this row still claimed. E10S-3 adds `preserve_vent`. Both rules are DERIVED
-  // FROM CONSUMERS both engines run, which is exactly what this census is for: it certifies that
-  // the Deep Sky debt on the card matches the debt in the engine, and the debt just got smaller.
-  'e10-ember-shore': ['build_zones', 'static_squall', 'preserve_vent'],
+  // RE-POINTED BY E10S-4, and the Ember Shore row was STALE IN ITS ORDER, not its contents:
+  // `deriveMechanicsManifest` returns `rules.sort(byId)` (`src/agent/MechanicsManifest.ts:986`),
+  // so the derived list is alphabetical and E10S-3's `['build_zones','static_squall',
+  // 'preserve_vent']` could never have matched. It was never SEEN because the buildables clause
+  // below fails earlier in the same test (F-E10S3-7), which is exactly how one stale clause hides
+  // another. Measured on this tree, 2026-09-06, by `artifacts/e10s-4-door/census-truth-probe.mjs`.
+  // Both Ember Shore rules are DERIVED FROM CONSUMERS both engines run, which is what this census
+  // is for: the debt on the card must match the debt in the engine.
+  'e10-ember-shore': ['build_zones', 'preserve_vent', 'static_squall'],
   'e10-archive-world': ['build_zones'],
   'e10-last-claim': ['build_zones'],
   'e10-river': ['river', 'water_crossings'],
 };
 
 const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
+  // NOT RETIRED, AND THE ENGINE IS THE REASON (E10S-4 scope 6, attempted and refused). The Ember
+  // Shore has no engine debt left: both consumers landed in E10S-2/E10S-3, and the reason the row
+  // survived them — "the CLAIM is not yet earned: bench seeds, null-floor rows, the public-verb
+  // prover and board admission all belong to the E10S-4 door slice" — is discharged by this slice.
+  // Removing the row was MEASURED and it fails the whole bundle:
+  //   Invalid authored contract epoch-10-deepsky/e10-ember-shore: twist.emberShore:
+  //   engine_dependency_required
+  // because `twist.emberShore` sits in `DECLARED_INERT_PATHS` (`src/meta/ContractFamilies.ts:1661`)
+  // and the validator at `:1832` requires a non-empty `engineDependencies` array for any contract
+  // that declares one of those paths. The path is no longer inert, so the cure is to drop it from
+  // that list — an engine change this slice was firewalled out of. The row therefore stays, with
+  // `landedBy: 'E10S-4'` and a description that says the claim is earned, so the campaign dossier
+  // does not report a served map as missing (`scripts/campaign-map-dossier-table.mjs:63`).
   'e10-ember-shore': 'ember-shore-preserve-consumers',
   'e10-archive-world': 'archive-world-consumers',
   // RE-POINTED (stale before E10S-3, cited): the Last Claim's dependency was renamed to
@@ -30,9 +44,9 @@ const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
 };
 
 /**
- * E10S-3: only the Ember Shore's dependency has landed a consumer. Every other Deep Sky row is
- * still `missing` and this map defaults them, so a second map flipping without its own evidence
- * would red here rather than pass by omission.
+ * Only the Ember Shore's dependency has landed a consumer. Every other Deep Sky row is still
+ * `missing` and this map defaults them, so a second map flipping without its own evidence would
+ * red here rather than pass by omission.
  */
 const EXPECTED_DEPENDENCY_STATUS: Record<string, 'missing' | 'landed'> = {
   'e10-ember-shore': 'landed',
@@ -43,6 +57,50 @@ const EXPECTED_LOSS_STAKES: Record<string, number> = {
   'e10-archive-world': 0,
   'e10-last-claim': 3,
   'e10-river': 0,
+};
+
+/**
+ * THE PER-ID ADMISSION TRUTH, which is the whole reason this census exists as four tests rather
+ * than one epoch-wide assertion (the `er01-e6-census` pattern). Two Deep Sky maps are now served
+ * by the agent-play door and two are not, and every clause below is keyed on that rather than on
+ * "E10 is unfinished":
+ *   - `e10-ember-shore` — ADMITTED by E10S-4 on measured evidence: four cooling-vein
+ *     `harvestAnchors`, two bench seeds, two null-floor rows that both LOSE (`vent_guttered` at
+ *     93.0 s, `fnv1a32:1b73c4b7` / `fnv1a32:5c8b38ac`), and a public-verb prover that SECURES both
+ *     seeds twice at wave 12 (`fnv1a32:84aace38` / `fnv1a32:de0f1cb5`). `reviews/e10s-4-*`.
+ *   - `e10-last-claim` — ADMITTED before this slice, and this census had been LYING about it: the
+ *     old blanket clause asserted the constructor throws for every Deep Sky id, which has been
+ *     false for the Last Claim since its own admission. Measured 2026-09-06: it constructs.
+ *   - `e10-archive-world` and `e10-river` — still refused, and the refusal is asserted with its
+ *     own message so the two doors stay legible.
+ */
+const ADMITTED: Record<string, boolean> = {
+  'e10-ember-shore': true,
+  'e10-archive-world': false,
+  'e10-last-claim': true,
+  'e10-river': false,
+};
+
+/**
+ * F-E10S3-7, CURED. The census asserted `mechanics.buildables` was `undefined` for every Deep Sky
+ * contract; the manifest derives the six-entry registry menu for all four, and has since long
+ * before E10S-3 — that clause reddened all four tests on a pristine tree. The list is the
+ * REGISTRY's, identical on every Deep Sky map and not a function of admission, so it is asserted
+ * once here rather than per id, and a map that ever loses or gains a buildable reddens.
+ */
+const EXPECTED_BUILDABLES = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office'];
+
+/**
+ * Bench seeds arrive WITH admission and never before it (`tasks/e10s-1c-ember-shore-inert-landing.md:27`).
+ * They are NOT implied by it, though, and this map says so: `e10-last-claim` is admitted and
+ * publishes none, which is why the census keeps a measured row per id rather than deriving seeds
+ * from `ADMITTED` and quietly asserting a rule the county does not follow.
+ */
+const EXPECTED_SEEDS: Record<string, string[] | undefined> = {
+  'e10-ember-shore': ['e10-ember-shore-01', 'e10-ember-shore-02'],
+  'e10-archive-world': undefined,
+  'e10-last-claim': undefined,
+  'e10-river': undefined,
 };
 
 for (const contract of deepSky.contracts) {
@@ -64,7 +122,7 @@ for (const contract of deepSky.contracts) {
     };
     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
     try {
-      expect((benchSeeds as Record<string, string[]>)[contract.id]).toBeUndefined();
+      expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
       const dependency = 'engineDependencies' in contract.tileParams
         ? contract.tileParams.engineDependencies
         : undefined;
@@ -84,14 +142,23 @@ for (const contract of deepSky.contracts) {
       const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
       const mechanics = deriveMechanicsManifest(contract);
 
-      expect(mechanics.buildables).toBeUndefined();
+      expect(mechanics.buildables?.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_BUILDABLES);
       expect(mechanics.interactables).toEqual([]);
       expect(mechanics.rules.map(({ id }: { id: string }) => id)).toEqual(EXPECTED_RULES[contract.id]);
       expect(mechanics.posting.lossStakes).toHaveLength(EXPECTED_LOSS_STAKES[contract.id]!);
       for (const seed of [`${contract.id}-01`, `${contract.id}-02`]) {
-        expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
-          new RegExp(`AP-07 supports only .*received ${contract.id}`),
-        );
+        // The agent-play door, asked directly. An admitted map must OPEN for a rider on its own
+        // id; a refused one must say so in the door's own words rather than failing some other
+        // way. This is the clause admission actually flips, so it is the clause that has to be
+        // per id — asserting the throw for the whole epoch was already false for the Last Claim.
+        if (ADMITTED[contract.id]) {
+          const sim = new HeadlessContractSim({ contractId: contract.id, seed });
+          expect(sim.currentTurn().view.now.wave).toBe(0);
+        } else {
+          expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
+            new RegExp(`AP-07 supports only .*received ${contract.id}`),
+          );
+        }
       }
       expect(consoleErrors).toEqual([]);
     } finally {

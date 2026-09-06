@@ -405,7 +405,15 @@ test('published mask tables exactly track authored contract data', async () => {
   assert.deepEqual(emberShoreMask.fixtureZones, emberShore.tileParams.buildZones
     .filter((zone) => zone.id === 'last-warm-vent-site')
     .map(({ id, minX, maxX, minZ, maxZ }) => ({ id, minX, maxX, minZ, maxZ })));
-  assert.deepEqual(emberShore.tileParams.harvestAnchors, []);
+  // E10S-4 (2026-09-06) EARNED THE SEAMS THIS PIN ONCE HELD EMPTY. It read `[]` because
+  // `tasks/e10s-1c-ember-shore-inert-landing.md:27` (F-2165-1) landed the map INERT: four authored
+  // anchors plus bench seeds plus floor rows constitute ADMISSION, and admission is earned by a
+  // public-verb prover, never by a data tidy. The prover earned it, so the pin now names the four
+  // cooling-vein anchors themselves rather than their absence, and `:254` above still deep-equals
+  // these against the published mask table, the surface F-2258-1 proved was the admission payload.
+  assert.deepEqual(emberShore.tileParams.harvestAnchors, [
+    { x: -6, z: -24 }, { x: -20, z: -34 }, { x: -38, z: -22 }, { x: -54, z: -12 },
+  ]);
 
   for (const id of ['e4-long-road', 'e4-gusher-county', 'e4-boneyard', 'e5-regatta', 'e5-stillwater', 'e5-flotilla']) {
     const authored = contract(id);

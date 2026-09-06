@@ -47,14 +47,31 @@
         ],
         "rails": [],
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          {
+            "x": -6,
+            "z": -24
+          },
+          {
+            "x": -20,
+            "z": -34
+          },
+          {
+            "x": -38,
+            "z": -22
+          },
+          {
+            "x": -54,
+            "z": -12
+          }
+        ],
+        "engineDependencies": [
+          { "dep": "ember-shore-preserve-consumers", "status": "landed", "landedBy": "E10S-3", "description": "BOTH CONSUMERS LANDED AND THE CLAIM IS NOW EARNED: the squall phase machine in both engines (E10S-2, src/systems/E10SquallScheduler.ts, now.squall) and the warmth meter, STOKE action, gutter terminal, doubled mote pressure and secure latch in both engines (E10S-3, src/systems/E10PreserveSystem.ts, now.emberShore.preserve); E10S-4 added the four cooling-vein harvestAnchors, two bench seeds, two null-floor rows that both LOSE, and the public-verb prover that secures both seeds twice, so the map is admitted. THE ROW IS KEPT ONLY BECAUSE THE ENGINE REFUSES ITS REMOVAL: twist.emberShore is in DECLARED_INERT_PATHS (src/meta/ContractFamilies.ts:1661), so the validator at :1832 requires a non-empty engineDependencies array and retiring this entry fails the bundle with twist.emberShore: engine_dependency_required. Nothing is missing; the cure is dropping that path from the list, an engine change E10S-4 was firewalled out of." }
+        ],
         "heightfield": {
           "id": "ember-shore-cooling-veins",
           "mode": "visual"
         },
-        "engineDependencies": [
-          { "dep": "ember-shore-preserve-consumers", "status": "landed", "landedBy": "E10S-3", "description": "BOTH CONSUMERS LANDED: twist.emberShore.squall runs the calm/telegraph/squall/recover phase machine in both engines (E10S-2, src/systems/E10SquallScheduler.ts, published at now.squall); twist.emberShore.preserve runs the warmth meter, the STOKE context action, the gutter terminal, the applied doubled mote pressure and the secure latch in both engines (E10S-3, src/systems/E10PreserveSystem.ts, published at now.emberShore.preserve). The row is not retired because the CLAIM is not yet earned: bench seeds, null-floor rows, the public-verb prover and board admission all belong to the E10S-4 door slice." }
-        ],
         "lanes": {
           "spawnEdges": [
             "north",
@@ -67,9 +84,6 @@
       },
       "twist": {
         "secureWave": 12,
-        "harvestFreeObjective": {
-          "description": "Preserve, not extract: the last warm vent is kept alight through the Static squall. Seams stay unauthored until the E10S-4 door slice earns them on measured evidence, so this claim declares no harvest anchors and the board still opens it as itself."
-        },
         "enemyRoster": [
           {
             "id": "static_mote",
