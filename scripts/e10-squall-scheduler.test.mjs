@@ -234,9 +234,15 @@ test('the mechanics manifest publishes the squall rule, and says what it does no
   assert.ok(rule, 'the Ember Shore manifest carries no static_squall rule');
   assert.equal(rule.source, 'E10SquallScheduler.update');
   assert.equal(rule.data.cycleSeconds, EXPECTED_CADENCE.cycleSeconds);
-  assert.equal(rule.data.applies, 'phase-only', 'the rule must say the pressure is published and not applied');
-  assert.equal(rule.data.gatesSecure, false);
-  assert.match(String(rule.data.consequence), /E10S-3/, 'the rule must name the slice that lands the warmth it will drain');
+  // RE-POINTED BY E10S-3, with the reason. Until this slice the row read `phase-only` and its
+  // consequence named E10S-3 as the slice that would wire the pressure. E10S-3 wired it
+  // (`E10PreserveSystem.pressureTarget` doubles the share of the field that walks at the vent
+  // while the squall blows), so these assertions now pin the OPPOSITE fact. The original
+  // assertion's PURPOSE is preserved exactly: the row may not lie about what it does.
+  assert.equal(rule.data.applies, 'phase-and-pressure', 'the rule must say the mote pressure is applied, not merely published');
+  assert.equal(rule.data.gatesSecure, false, 'the CLOCK still gates nothing; the vent rule (preserve_vent) is what gates the secure');
+  assert.match(String(rule.data.consequence), /twice the usual share/, 'the rule must state the applied pressure in the consequence a rider reads');
+  assert.doesNotMatch(String(rule.data.consequence), /E10S-3/, 'the consequence may no longer defer the pressure to a future slice — it landed');
   assert.equal(
     deriveMechanicsManifest('the-claim').rules.some(({ id }) => id === 'static_squall'),
     false,

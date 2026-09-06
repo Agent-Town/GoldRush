@@ -193,6 +193,7 @@ import { BroadcastMirror } from '../systems/BroadcastMirror';
 import { FRONT_HALF_WIDTH, INTERFERENCE_MUTED_REASON, INTERFERENCE_MUTED_VOICE, InterferenceFrontSystem } from '../systems/InterferenceFrontSystem';
 import { E10SquallScheduler } from '../systems/E10SquallScheduler';
 import { E10SquallPresentation } from '../systems/E10SquallPresentation';
+import { E10PreserveSystem, PRESERVE_STOKE_SINK } from '../systems/E10PreserveSystem';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
@@ -264,7 +265,7 @@ import {
   type DeathRunStatsSnapshot,
   type CountyStandingView,
 } from '../ui/DeathOverlay';
-import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
+import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent, type VentWarmthState } from '../ui/Hud';
 import { ProspectorDispatchInput, type ProspectorDispatchTarget } from '../ui/ProspectorDispatchInput';
 import { PartyOverview, type PartyOverviewSnapshot } from '../ui/PartyOverview';
 import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
@@ -484,7 +485,7 @@ export class Game {
   private readonly agentRiderViewState = new Map<string, { wave: number; needsRider: boolean; pendingSecure: boolean; terminal: boolean; sentAt: number }>();
   private readonly agentRiderViewSources = new Map<string, AgentViewSource>();
   private agentRiderViewSequence = 0;
-  private agentRiderTerminal: { reason: RunEndReason | 'preserve_fell'; wave: number } | null = null;
+  private agentRiderTerminal: { reason: RunEndReason | 'preserve_fell' | 'vent_guttered'; wave: number } | null = null;
   private readonly actorWeapons = new Map<Hero, HeroWeapon>();
   // Playbook engine (PB-01/PB-02, ?debug-only surface): the recorder pins the
   // solo session to the lockstep intent seam; the replay session drives a
@@ -772,6 +773,15 @@ export class Game {
    * other map: an undeclared scheduler answers "calm" forever and publishes nothing.
    */
   private readonly squall = E10SquallScheduler.create(this.activeContract);
+  /**
+   * E10S-3 (`specs/agent-play/e10-ember-shore-preserve.md` §3 "The vent", §4) — the vent the
+   * squall above is the antagonist of, read off the CONTRACT exactly as `HeadlessContractSim`
+   * reads it. It holds the warmth meter, answers STOKE, and gutters. Inert on every other map, so
+   * no other contract grows a meter, a verb or a way to lose.
+   */
+  private readonly preserveVent = E10PreserveSystem.create(this.activeContract);
+  /** Latched once, so the run's terminal is named exactly as `preserveFell` is beside it. */
+  private ventGuttered = false;
   /**
    * The squall's whole presentation, and deliberately no more than the spec asked for: a wash and
    * a mix duck (§4, "presentation-thin desat ... the full aura shader is the Quiet's finale tech
@@ -1889,7 +1899,7 @@ export class Game {
     // Write-at-end law: staged tile-state entries land when the run ends, whatever ended it.
     this.events.on('run_ended', (event) => {
       this.agentRiderTerminal = {
-        reason: this.preserveFell ? 'preserve_fell' : event.reason,
+        reason: this.preserveFell ? 'preserve_fell' : this.ventGuttered ? 'vent_guttered' : event.reason,
         wave: event.summary.deepestWave ?? event.summary.wavesSurvived,
       };
       this.tileStateStore.commitAtRunEnd();
@@ -2127,6 +2137,14 @@ export class Game {
           recover: () => this.tryRecoverProbe(this.actionActor.group.position),
           inReach: (x: number, z: number) => this.probeRecovery.inReach({ x, z }),
           diagnostics: () => this.probeRecovery.diagnostics,
+        },
+        // E10S-3: the same three handles the probe carries, for the same reason — a spec running
+        // under `setManualSim(true)` has no live frame for a key press to be consumed on, and a
+        // clock spec that has to keep the vent alight should not have to drive a keyboard to do it.
+        vent: {
+          stoke: () => this.tryStokeVent(this.actionActor.group.position),
+          inReach: (x: number, z: number) => this.preserveVent.inReach({ x, z }),
+          diagnostics: () => this.preserveVent.diagnostics,
         },
         spawnWrecker: (edge?: CompassEdge) => this.spawnHarnessWrecker(edge),
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
@@ -2995,6 +3013,17 @@ export class Game {
               const stake = this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive);
               return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
             }
+          // E10S-3: the doubled mote pressure, APPLIED — the same per-enemy seam and the same
+          // deterministic `enemy.id` share `HeadlessContractSim` uses, so both engines steer the
+          // same outlaws at the vent on the same tick. A quarter of the field in the calm, half of
+          // it while the squall blows. Contact damage is deliberately NOT suppressed for a
+          // pressing outlaw (the Picnic clause below suppresses its own): the squall has to make
+          // the shore busier than the calm, not safer.
+          : this.preserveVent.isDeclared
+            ? (enemy) => {
+                const vent = this.preserveVent.pressureTarget(enemy);
+                return vent ? new THREE.Vector3(vent.x, Balance.enemy.groundY, vent.z) : actorTargets;
+              }
           : this.flotillaHulls
             ? [this.flotillaTargetPosition()]
             : actorTargets,
@@ -3042,6 +3071,15 @@ export class Game {
       // phase transitions with the same tick. The clock reads nothing and changes no board state;
       // the line after it is pure presentation, reading the numbers the line before published.
       this.squall.update(simDelta);
+      // E10S-3: the vent immediately after the clock that drains it, at the matching point in
+      // `HeadlessContractSim`'s own order, so both engines lose the same warmth on the same tick.
+      // A guttered vent ends the run through `deathPending`, the same seam `damagePreserve` uses
+      // for `e10-last-claim`'s felled vent — a different mechanic, the same terminal class.
+      this.preserveVent.update(simDelta, this.squall.diagnostics);
+      if (this.preserveVent.hasGuttered && !this.ventGuttered) {
+        this.ventGuttered = true;
+        this.deathPending = true;
+      }
       if (this.squallPresentation) this.squallPresentation.sync(this.squall.diagnostics);
       // A9: the column advances on the same sim delta and in the same relative order as
       // `HeadlessContractSim` — after the standing-works register is current and ahead of the
@@ -3508,6 +3546,11 @@ export class Game {
           ? (this.canalChoices?.decide(actor.group.position, order.action === 'redig' ? 'redig' : 'demolish').ok ?? false)
           : order.action === 'plant'
           ? (this.seedCaravan?.tryPlant(actor.group.position).ok ?? false)
+          // E10S-3: the rider stokes from ITS OWN body's position, exactly as it plants and
+          // recovers from it — standing in the vent disc is the mechanic, so whoever walks there
+          // is who can feed the fire.
+          : order.action === 'stoke'
+          ? this.tryStokeVent(actor.group.position)
           : order.action === 'fund'
           ? this.fundMegaprojectStage(actor.group.position)
           // A6: the rider recovers from ITS OWN body's position, not the local player's —
@@ -5328,6 +5371,39 @@ export class Game {
   }
 
   /**
+   * E10S-3 — STOKE, in `tryRecoverProbe`'s shape and for the same reasons: keyed on the CONSUMER's
+   * own declaration (never the contract id), refused silently when the body is out of the disc so
+   * the confirm key falls through to whatever is next, and routed through Economy — the only gold
+   * writer — so a stoke a player cannot afford costs the vent nothing and the purse nothing.
+   *
+   * The float text is the whole feedback a player needs at the vent itself; the meter on the HUD
+   * carries the rest. Both are plain-boot surfaces (Mistake #10).
+   */
+  private tryStokeVent(position: THREE.Vector3): boolean {
+    if (!this.preserveVent.isDeclared || !this.preserveVent.inReach(position)) return false;
+    const result = this.preserveVent.tryStoke(position, (amount) => this.economy.apply({
+      id: crypto.randomUUID(),
+      at: this.timeAlive,
+      type: 'gold_spent',
+      sink: PRESERVE_STOKE_SINK,
+      amount,
+    }).ok);
+    if (!result.ok) {
+      if (result.reason === 'insufficient-gold') this.vfx.floatText(position, 'Need gold!', '#a0522d');
+      return false;
+    }
+    this.audio.play('stockpile-deposit', 0.8);
+    this.vfx.floatText(position, `STOKED +${this.preserveVent.diagnostics.stoke.warmthRestore}`, '#f0a860', 1.7);
+    // NO RUN-TAPE ENTRY, and that is the A8/A10 precedent rather than an omission: `LockstepAction`
+    // carries only `upgrade`/`demolish`/`fund`/`recover` (`src/mp/LockstepClient.ts:26-31`), so the
+    // plant and the canal verdicts record none either. Widening that union is a multiplayer-wire
+    // change outside this slice's firewall; the gap is declared in the review rather than papered
+    // over by recording an action the wire cannot normalise.
+    this.publishDiagnostics();
+    return true;
+  }
+
+  /**
    * The standing hint, announced the first time the crossing actually reaches the crater. It
    * is the only thing that tells an unaided player the confirm key does something out here.
    */
@@ -5554,6 +5630,9 @@ export class Game {
       // pair is what `e2e/e10-ember-shore-squall.spec.ts` reads to prove the browser runs the same
       // clock the headless engine does AND that a PLAYER can see it in a plain boot (Mistake #10).
       squall: this.squall.isDeclared ? this.squall.diagnostics : null,
+      // E10S-3: null on every contract that declares no vent. This is the row `View.readEmberShore`
+      // turns into the rider's `now.emberShore.preserve` and the row the browser e2e reads.
+      preserveVent: this.preserveVent.isDeclared ? this.preserveVent.diagnostics : null,
       squallPresentation: this.squallPresentation?.diagnostics ?? null,
       // A9: null off every other map, same shape. `e2e/e9-devils-alley-relocation.spec.ts` reads
       // this pair to prove the browser sweeps the same schedule the headless engine does, and
@@ -5596,6 +5675,7 @@ export class Game {
           },
         }),
         ...(this.preserveFell ? { lastRunEndedReason: 'preserve_fell' } : {}),
+        ...(this.ventGuttered ? { lastRunEndedReason: 'vent_guttered' } : {}),
       },
       contract: {
         ...activeContractDiagnostics(),
@@ -5989,6 +6069,11 @@ export class Game {
       || !this.playbookObjectiveAllowsSecure
       || !this.showroomCaptureObjective.objectiveAllowsSecure
       || (this.motorSocket !== null && !this.motorSocket.objectiveAllowsSecure)
+      // E10S-3: mirrors `HeadlessContractSim.autoSecureWaveForRun` clause for clause. The Ember
+      // Shore is not won by outliving it: a vent gone cold, or one that has not ridden a whole
+      // Static squall still burning, leaves the run unsecurable at any wave. True on every
+      // contract that declares no preserve consumer, so nothing else moves.
+      || !this.preserveVent.objectiveAllowsSecure
       || (this.preserveTarget !== null && !this.preserveTarget.active)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
@@ -6312,7 +6397,11 @@ export class Game {
       // A5 rides it too: a boss kill cannot secure a deadline the relays never met.
       && this.interferenceFront.objectiveAllowsSecure
       && this.showroomCaptureObjective.objectiveAllowsSecure
-      && (this.motorSocket === null || this.motorSocket.objectiveAllowsSecure);
+      && (this.motorSocket === null || this.motorSocket.objectiveAllowsSecure)
+      // E10S-3 rides it too: a boss kill cannot secure a shore whose vent went out. The Ember
+      // Shore declares no baron today, so this clause is true by absence there; it is written
+      // anyway so the two secure paths in this file cannot drift apart.
+      && this.preserveVent.objectiveAllowsSecure;
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
       || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
@@ -7005,7 +7094,27 @@ export class Game {
     this.hud.setWeaponDisarmReason(
       this.heroWeaponsDisarmed() ? (this.deepwaterClaim ? 'Hands full of sea.' : 'Hands full of river.') : null,
     );
+    // E10S-3: the vent meter, contract-scoped — null (and so hidden) on every map but the Ember
+    // Shore. `inReach` is measured off the body the confirm key acts from, so the price only
+    // appears where pressing the key would actually buy warmth.
+    this.hud.setVentWarmth(this.ventWarmthState());
     this.playbookSurface?.update();
+  }
+
+  /** E10S-3: the consumer's own numbers, narrowed to what the meter draws. Null where undeclared. */
+  private ventWarmthState(): VentWarmthState | null {
+    if (!this.preserveVent.isDeclared) return null;
+    const vent = this.preserveVent.diagnostics;
+    return {
+      warmth: vent.warmth,
+      maxWarmth: vent.maxWarmth,
+      alight: vent.alight,
+      draining: vent.decaying,
+      stokeCost: vent.stoke.goldCost,
+      inReach: this.preserveVent.inReach(this.actionActor.group.position),
+      squallsSurvived: vent.squallsSurvived,
+      squallsRequired: vent.squallsRequired,
+    };
   }
 
   private partyOverviewSnapshot(): PartyOverviewSnapshot {
@@ -8343,6 +8452,10 @@ export class Game {
     // away, never the leftover phase of the last one, and the wash goes back to clear with it.
     this.squall.reset();
     this.squallPresentation?.reset();
+    // E10S-3: the vent relights with the run — full warmth, no stokes, no squalls survived and no
+    // gutter, so a lost claim never carries its cold vent into the next attempt.
+    this.preserveVent.reset();
+    this.ventGuttered = false;
     // A9: the schedule restarts with the run — a new run's first sweep belongs to its own wave 1,
     // never the leftover phase of the last one, and nothing is left suspended in the air.
     this.devilsAlley.reset();
@@ -9319,6 +9432,11 @@ export class Game {
     // `?debug`, no dev bridge (Mistake #10). It sits ahead of demolish because a stake and a
     // building are never in reach of each other on this map.
     if (this.seedCaravan?.tryPlant(this.actionActor.group.position).ok) return;
+    // E10S-3: STOKE is a PLAIN-BOOT context action on the key every other one uses — no `?debug`,
+    // no dev bridge (Mistake #10). It sits beside the plant and ahead of demolish for the same
+    // reason: the vent is bare ground with no building on it, so nothing above can claim the press
+    // first, and the Ember Shore declares no megaproject, crater or canal to compete with it.
+    if (this.tryStokeVent(this.actionActor.group.position)) return;
     // A10: the confirm key RE-DIGS at an undecided stake — a PLAIN-BOOT context action on the
     // same key every other one uses (Mistake #10, no `?debug`, no dev bridge). DEMOLISH is the
     // upgrade key and the prompt's second button (`confirmUpgrade` below, `canalDecision`), which

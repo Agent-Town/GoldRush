@@ -53,7 +53,7 @@
           "mode": "visual"
         },
         "engineDependencies": [
-          { "dep": "ember-shore-preserve-consumers", "status": "missing", "description": "SQUALL SCHEDULER HALF LANDED (E10S-2, src/systems/E10SquallScheduler.ts): twist.emberShore.squall runs the calm/telegraph/squall/recover phase machine in both engines and publishes now.squall. STILL MISSING: the declared preserve warmth/stoke consumer and the secure latch, which E10S-3 lands, and the admission the E10S-4 door earns. The schema pins status to the literal 'missing' (src/meta/ContractFamilies.ts:1810, `entry.status !== 'missing'`), so a landed half is recorded here rather than flipped." }
+          { "dep": "ember-shore-preserve-consumers", "status": "landed", "landedBy": "E10S-3", "description": "BOTH CONSUMERS LANDED: twist.emberShore.squall runs the calm/telegraph/squall/recover phase machine in both engines (E10S-2, src/systems/E10SquallScheduler.ts, published at now.squall); twist.emberShore.preserve runs the warmth meter, the STOKE context action, the gutter terminal, the applied doubled mote pressure and the secure latch in both engines (E10S-3, src/systems/E10PreserveSystem.ts, published at now.emberShore.preserve). The row is not retired because the CLAIM is not yet earned: bench seeds, null-floor rows, the public-verb prover and board admission all belong to the E10S-4 door slice." }
         ],
         "lanes": {
           "spawnEdges": [

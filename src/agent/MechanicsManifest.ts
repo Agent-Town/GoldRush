@@ -6,6 +6,7 @@ import { PicnicHoldSystem, PICNIC_ACTIVE_DEFENSE_SECONDS, PICNIC_HOLD_RADIUS, PI
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
 import { E10SquallScheduler, SQUALL_PHASE_ORDER } from '../systems/E10SquallScheduler';
+import { E10PreserveSystem } from '../systems/E10PreserveSystem';
 import {
   DEVIL_COLUMN_RADIUS,
   DEVIL_SWEEP_SECONDS,
@@ -742,12 +743,53 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       squallSeconds: cadence.squallSeconds,
       recoverSeconds: cadence.recoverSeconds,
       cycleSeconds: cadence.cycleSeconds,
-      // Published so E10S-3 wires one already-derived number; NOT applied by this slice.
+      // E10S-3 WIRED IT: the number below is now applied to the share of the field that walks at
+      // the vent while the squall blows (`E10PreserveSystem.pressureTarget`), so `applies` says
+      // `phase-and-pressure` and the consequence no longer promises weather that is not there.
       motePressureMultiplier: cadence.motePressureMultiplier,
-      applies: 'phase-only',
+      applies: 'phase-and-pressure',
       view: 'now.squall',
-      consequence: 'a Static squall crosses the whole shore on a fixed cycle: 60s calm, an 8s telegraph as the edges pale, 25s of squall, an 8s recover. The browser desaturates and ducks the mix while it blows. NOTHING else changes yet — the vent warmth this schedule will drain, the STOKE verb that answers it and the loss it can cause arrive with the preserve consumer (E10S-3); doubled mote pressure is published here and not applied.',
+      consequence: 'a Static squall crosses the whole shore on a fixed cycle: 60s calm, an 8s telegraph as the edges pale, 25s of squall, an 8s recover. The browser desaturates and ducks the mix while it blows. The squall is the only time the vent loses warmth, and while it blows twice the usual share of the field walks at the vent instead of at you.',
       gatesSecure: false,
+      damages: false,
+    }));
+  }
+
+  // --- E10S-3 the preserve vent. SOURCED FROM THE CONSUMER for the same reason the clock above
+  // is: the row publishes the warmth, price, disc and latch `E10PreserveSystem` will actually
+  // enforce, so a briefing cannot promise a 15-gold stoke the contract retunes to 40. Absent
+  // unless the contract declares `twist.emberShore.preserve` against a stake its tile carries —
+  // the same refuse-to-arm the consumer applies, so a half-declared vent publishes no rule at all
+  // (F-1471-1: a mechanic on the card that no engine consumes is the casualty this discipline is
+  // named for).
+  const vent = E10PreserveSystem.create(contract);
+  const preserve = vent.diagnostics;
+  // The stake id is non-null wherever the consumer armed (arming REQUIRES a marker the tile
+  // carries), but the narrowing is written rather than asserted: a rule that published a null
+  // stake would send a rider to nowhere.
+  if (vent.isDeclared && preserve.stakeId !== null) {
+    const stakeId = preserve.stakeId;
+    rules.push(rule('preserve_vent', 'E10PreserveSystem.update', {
+      stake: stakeId,
+      warmth: preserve.maxWarmth,
+      squallDecayPerSecond: preserve.decayPerSecond,
+      decaysOnlyDuring: 'squall',
+      action: preserve.stoke.action,
+      order: { verb: 'CONTEXT_ACTION', action: 'stoke' },
+      goldCost: preserve.stoke.goldCost,
+      warmthRestore: preserve.stoke.warmthRestore,
+      stokeRadius: preserve.stoke.radius,
+      squallsRequiredForSecure: preserve.squallsRequired,
+      // Read off the SCHEDULER that owns the number rather than off the vent, which reports the
+      // multiplier it has SEEN and has seen none before the run's first tick. One source, and it
+      // is the same one `E10PreserveSystem.update` will be handed every step.
+      motePressMultiplierDuringSquall: squall.diagnostics.motePressureMultiplier,
+      view: 'now.emberShore.preserve',
+      lossRule: 'warmth-zero-ends-the-run',
+      secureRule: 'vent-alight-and-one-full-squall-survived',
+      // Named so a rider reads the TRADE and the clock, not seven numbers.
+      consequence: `the last warm vent holds ${preserve.maxWarmth} warmth and loses ${preserve.decayPerSecond} a second for as long as a Static squall blows, and nothing else on this map takes warmth from it. STOKE inside ${preserve.stoke.radius} of the ${stakeId} spends ${preserve.stoke.goldCost} gold for ${preserve.stoke.warmthRestore} warmth. A vent that reaches zero ends the run there and then; a claim cannot be secured at any wave unless the vent is still alight and has ridden out at least ${preserve.squallsRequired} whole squall.`,
+      gatesSecure: true,
       damages: false,
     }));
   }

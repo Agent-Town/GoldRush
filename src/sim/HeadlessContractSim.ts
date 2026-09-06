@@ -74,6 +74,7 @@ import {
   type InterferenceFrontDiagnostics,
 } from '../systems/InterferenceFrontSystem';
 import { E10SquallScheduler, type SquallDiagnostics } from '../systems/E10SquallScheduler';
+import { E10PreserveSystem, PRESERVE_STOKE_SINK, type E10PreserveDiagnostics } from '../systems/E10PreserveSystem';
 import { E7PlaybookLatch, type E7PlaybookObjective } from '../systems/E7PlaybookLatch';
 import { createHomemakerBossSystem, type HomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { LightField, type LightSource } from '../systems/LightField';
@@ -306,7 +307,13 @@ export type GrSimOutcome = {
   defaultedPicks: number;
   defaultedSecure: number;
   eventLogHash: string;
-  endReason?: 'preserve_fell';
+  /**
+   * E10S-3 adds `vent_guttered` beside `preserve_fell` rather than reusing it. They are two
+   * different losses on two different maps: `preserve_fell` is `e10-last-claim`'s warm vent felled
+   * by outlaws, `vent_guttered` is the Ember Shore's warmth reaching zero in a Static squall that
+   * nobody stoked against. A run that names the wrong one lies about what killed it.
+   */
+  endReason?: 'preserve_fell' | 'vent_guttered';
   securedWave?: number;
   overtimeWaves?: number;
   homestead?: {
@@ -406,6 +413,21 @@ export type HeadlessAgentView = AgentView & {
      * The warmth this schedule will eventually drain arrives with E10S-3.
      */
     squall?: SquallDiagnostics;
+    /**
+     * E10S-3. Present only where the contract declares `twist.emberShore.preserve` against a real
+     * stake. This one IS the objective AND the loss: `preserve.objectiveMet` is what opens the
+     * secure, `preserve.warmth` is the meter a rider watches fall while `now.squall.blowing` is
+     * true, `preserve.stoke` carries the price, the disc radius and every refusal the run has
+     * collected, and `preserve.guttered` is the terminal the run ended on.
+     *
+     * IT IS `now.emberShore.preserve` RATHER THAN `now.preserve`, and the difference is not
+     * cosmetic: `now.preserve` is ALREADY the shape `twist.preserve` publishes on
+     * `e10-last-claim` — a damageable warm vent's `{ hp, maxHp, alive }` (`src/agent/View.ts:107`,
+     * pinned by `scripts/e10-preserve-objective.test.mjs`). Two unrelated shapes on one field is
+     * how a rider learns to distrust a view. The path chosen mirrors the CONTRACT's own path,
+     * `twist.emberShore.preserve`, so a rider that can read the twist can find the row.
+     */
+    emberShore?: { preserve: E10PreserveDiagnostics };
     /**
      * A9. Present only where the contract declares `twist.scheduledRelocation` WITH authored
      * patrol routes. This one is NOT an objective — nothing here opens or shuts the secure — it
@@ -842,6 +864,16 @@ export class HeadlessContractSim {
    */
   private readonly squall: E10SquallScheduler;
   /**
+   * E10S-3 — the vent the squall above is the antagonist of, and it runs IDENTICALLY in both
+   * engines for the strongest reason on this list: it can END A RUN. Warmth decays only while the
+   * scheduler says a squall is blowing, a stoke spends the run's own gold to answer it, a vent at
+   * zero is a loss terminal, and the secure latch reads the pair. A consumer only one engine ran
+   * would let a browser player lose a claim the headless door secured on the same orders.
+   */
+  private readonly preserveVent: E10PreserveSystem;
+  /** Latched once, so the terminal is recorded exactly as `preserveFell` is beside it. */
+  private ventGuttered = false;
+  /**
    * A9 — the scheduled relocation, and it runs IDENTICALLY in both engines because it is
    * sim-affecting: a devil MOVES a building's position, which changes what a turret covers and
    * what an outlaw walks into. A consumer that only the browser ran would put the two engines on
@@ -1001,6 +1033,11 @@ export class HeadlessContractSim {
     // `twist.emberShore.squall`, never the epoch, so a contract that declares no squall holds an
     // inert scheduler that answers "calm" forever and no other map's view or hash grows a field.
     this.squall = E10SquallScheduler.create(this.manifest);
+    // E10S-3: the same read the browser performs at `Game.ts` — the CONTRACT's own
+    // `twist.emberShore.preserve` against its own `stakeMarkers`, never the epoch. A contract that
+    // declares no preserve (or names a stake its tile does not carry) holds an inert consumer that
+    // publishes nothing, gutters never, and answers true to the secure latch.
+    this.preserveVent = E10PreserveSystem.create(this.manifest);
     this.playbookLatch = new E7PlaybookLatch(this.manifest);
     // A9: same read the browser performs at `Game.ts` — the CONTRACT's own twist plus its own
     // authored routes, bays and stakes. No voice headless: this engine paints nothing.
@@ -1410,6 +1447,12 @@ export class HeadlessContractSim {
           // contract's terminal moves.
           || !this.suitAir.objectiveAllowsSecure
           || this.atomic?.objectiveAllowsSecure === false
+          // E10S-3: the Ember Shore's own latch, keyed on `twist.emberShore.preserve` exactly as
+          // the canyon latch keys on `powerGrid.connect` (F-1471-1). A shore whose vent has gone
+          // cold, or that has not ridden one whole Static squall with it still burning, cannot
+          // secure at any wave. True on every contract that declares no preserve consumer, so no
+          // admitted contract's terminal moves.
+          || !this.preserveVent.objectiveAllowsSecure
           || (this.preserve !== null && !this.preserve.active)
           ? Number.MAX_SAFE_INTEGER
           : this.manifest.twist.secureWave ?? Balance.run.secureWave,
@@ -1576,6 +1619,12 @@ export class HeadlessContractSim {
         // of it: a run whose squall opened one tick later is a different run, and the hash should
         // be able to say so before E10S-3 makes that difference cost warmth.
         ...(this.squall.isDeclared ? { squall: this.squall.diagnostics } : {}),
+        // E10S-3: spread-if-declared for the same reason the clock above is, and with more at
+        // stake — this one CAN end the run, so the warmth left, the stokes bought and the squalls
+        // ridden are the terminal facts that certify (or refuse) the secure. Absent on every
+        // contract but the Ember Shore, which still has no bench seeds and no floor rows, so no
+        // pinned hash anywhere moves.
+        ...(this.preserveVent.isDeclared ? { preserveVent: this.preserveVent.diagnostics } : {}),
         ...(this.hollowCrossing.isDeclared ? { hollowCrossing: this.hollowCrossing.diagnostics } : {}),
         // E4: spread-if-declared, same rule. Where the Hauler rests, what it burned and which
         // corridors were graded are terminal facts a secure depends on: a claim secured with the
@@ -1606,6 +1655,7 @@ export class HeadlessContractSim {
       ...overtime,
       ...(this.motor ? { motor: this.motor.outcomeSummary } : {}),
       ...(this.preserveFell ? { endReason: 'preserve_fell' as const } : {}),
+      ...(this.ventGuttered ? { endReason: 'vent_guttered' as const } : {}),
     };
   }
 
@@ -1806,6 +1856,16 @@ export class HeadlessContractSim {
     // affect any other system, only the tick its own transitions are stamped with. `Game.ts` ticks
     // it at the matching point in its own order, immediately after the front, for that reason.
     this.squall.update(STEP_SECONDS);
+    // E10S-3: the vent immediately after the clock that drains it, so the warmth lost on tick N
+    // and the phase read on tick N are the same reading. `Game.ts` ticks it at the matching point
+    // in its own order for the same reason. The gutter is latched here and ends the run exactly as
+    // `damagePreserve` ends one on `e10-last-claim` — a different mechanic, the same terminal
+    // class: a preserve contract whose thing went out is over, not merely unsecurable.
+    this.preserveVent.update(STEP_SECONDS, this.squall.diagnostics);
+    if (this.preserveVent.hasGuttered && !this.ventGuttered) {
+      this.ventGuttered = true;
+      this.dead = true;
+    }
     // E7: the wall against the running program, asked off the front the line above just advanced,
     // then the Valley's relay action off the SAME standing-works register the front just read, so
     // no two of the three can disagree about where the wall is or which sites carry a powered work.
@@ -1831,7 +1891,18 @@ export class HeadlessContractSim {
           const stake = this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive);
           return stake ? new THREE.Vector3(stake.x, Balance.enemy.groundY, stake.z) : actorTargets;
         }
-      : this.deepwater?.targetPosition(this.hero.group.position) ?? actorTargets, (enemy) => {
+      // E10S-3: the doubled mote pressure, APPLIED — through the same per-enemy target seam the
+      // Picnic presses its stakes with, and with the same deterministic `enemy.id` share, so the
+      // browser steers the same outlaws on the same tick. A quarter of the field walks at the vent
+      // in the calm and half of it in the squall (`E10SquallScheduler.motePressureMultiplier`,
+      // published by E10S-2 and wired here). Contact damage is NOT suppressed for a pressing
+      // outlaw the way the Picnic suppresses it: the squall must make the shore busier, not safer.
+      : this.preserveVent.isDeclared
+        ? (enemy) => {
+            const vent = this.preserveVent.pressureTarget(enemy);
+            return vent ? new THREE.Vector3(vent.x, Balance.enemy.groundY, vent.z) : actorTargets;
+          }
+        : this.deepwater?.targetPosition(this.hero.group.position) ?? actorTargets, (enemy) => {
       if (!this.picnicHold.pressureTarget(enemy, picnicStructures, picnicHero, this.timeAlive) && !this.deepwater?.diagnostics.flotilla && this.atomic?.isHostile(enemy) !== false) this.combat.handleEnemyContact(enemy);
       return this.dead;
     }, this.build.palisadeBlockers, {
@@ -1954,6 +2025,10 @@ export class HeadlessContractSim {
     // it has, and the log of every change so far. `the-claim`'s canonical view is unaffected,
     // which is why `view-schema-guard` needs no new registry field for it.
     if (this.squall.isDeclared) view.now.squall = this.squall.diagnostics;
+    // E10S-3: only where DECLARED, same rule — but unlike the clock above, this one GATES. A rider
+    // that cannot read `warmth` cannot know when to spend 15 gold, and one that cannot read
+    // `objectiveMet` cannot tell whether the squall it just rode out earned the claim.
+    if (this.preserveVent.isDeclared) view.now.emberShore = { preserve: this.preserveVent.diagnostics };
     // A9: only where DECLARED. This one MOVES every turn and — unlike the caravan and the wall —
     // it gates NOTHING, so it is published for planning rather than for scoring: where the next
     // sweep goes, and which of your works the wind is allowed to take.
@@ -2345,6 +2420,9 @@ export class HeadlessContractSim {
       // contract's diagnostics grow a field. The terminal half of the same object also rides the
       // determinism hash (`outcome()` above) — this row is the per-turn read.
       squall: this.squall.isDeclared ? this.squall.diagnostics : null,
+      // E10S-3: the same null-where-undeclared shape the clock beside it uses, so the browser's
+      // `__THREE_GAME_DIAGNOSTICS__.preserveVent` and this row answer with one object.
+      preserveVent: this.preserveVent.isDeclared ? this.preserveVent.diagnostics : null,
       // A9: null off every other contract, same rule. The presentation-stripped half rides the
       // determinism hash so a run that moved a turret cannot hash the same as one that did not.
       devilsAlley: this.devilsAlley.isDeclared ? this.devilsAlley.simulationSnapshot : null,
@@ -2359,7 +2437,9 @@ export class HeadlessContractSim {
       run: {
         secured: this.secured,
         pendingSecure: this.secureChoice === 'pending',
-        lastRunEndedReason: this.preserveFell ? 'preserve_fell' : this.secureChoice === 'bank' ? 'secured' : null,
+        lastRunEndedReason: this.preserveFell
+          ? 'preserve_fell'
+          : this.ventGuttered ? 'vent_guttered' : this.secureChoice === 'bank' ? 'secured' : null,
       },
       progression: { ...this.progression.snapshot, choiceRule: 'first-offer' },
       agent: {
@@ -2729,6 +2809,24 @@ export class HeadlessContractSim {
     return { ok: true };
   }
 
+  /**
+   * E10S-3 — STOKE, from the PROSPECTOR'S OWN GROUND, exactly as `plant`, `recover`, `fund` and
+   * the canal verdicts work: the world names the target, so the body's position is the whole
+   * argument and there is nothing for a rider to mis-index. The purse is the run's own —
+   * `Economy.apply` refuses when the gold is not there and the vent gains nothing — because F-1741
+   * forbids headless-only minting, and Economy is the only gold writer on either engine.
+   */
+  private stokeVent(): { ok: true } | { ok: false; reason: string } {
+    const result = this.preserveVent.tryStoke(this.prospector.position, (amount) => this.economy.apply(this.economyEvent({
+      type: 'gold_spent',
+      sink: PRESERVE_STOKE_SINK,
+      amount,
+    })).ok);
+    if (!result.ok) return { ok: false, reason: result.message };
+    this.replayEvents.push({ type: 'context_action', at: round(this.timeAlive), action: 'stoke', cost: result.cost });
+    return { ok: true };
+  }
+
   private answerSecureChoice(choice: 'bank' | 'rush'): { ok: true } | { ok: false; reason: string } {
     if (this.secureChoice !== 'pending') return { ok: false, reason: 'INVALID_WINDOW: no secure choice is pending.' };
     this.secureChoice = choice;
@@ -2740,6 +2838,7 @@ export class HeadlessContractSim {
     if (order.action === 'fund') return this.fundMegaproject();
     if (order.action === 'recover') return this.recoverProbe();
     if (order.action === 'plant') return this.plantSeedVault();
+    if (order.action === 'stoke') return this.stokeVent();
     if (order.action === 'redig' || order.action === CANAL_BACKFILL_ACTION) return this.decideCanalSegment(order.action);
     const { id, index } = order.target;
     const ok = order.action === 'upgrade'

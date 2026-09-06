@@ -436,11 +436,14 @@ export type ContractRectZone = {
   maxZ: number;
   description?: string;
 };
-export type ContractEngineDependency = {
-  dep: string;
-  status: 'missing';
-  description: string;
-};
+/**
+ * F-E10S2-1, cured by E10S-3: a dependency can now say it LANDED, and must name the slice that
+ * landed it. `landedBy` is present exactly when `status` is `landed` — see the validator at
+ * `validateEngineDependencies` — so neither state can borrow the other's shape.
+ */
+export type ContractEngineDependency =
+  | { dep: string; status: 'missing'; description: string }
+  | { dep: string; status: 'landed'; landedBy: string; description: string };
 export type ContractObjective = { id: string; description: string };
 export type ContractObjectiveMetadata = { description: string; teachingIntent: string };
 export type ContractDeepwaterFields = {
@@ -1804,15 +1807,25 @@ function validateEngineDependencies(contract: ContractManifest, reasons: Contrac
       addDescriptorReason(reasons, reason('engine_dependency_shape', 'Engine dependencies must be a non-empty list.', 'tileParams.engineDependencies'));
     } else dependencies.forEach((entry, index) => {
       const path = `tileParams.engineDependencies[${index}]`;
+      // F-E10S2-1, cured by E10S-3. The schema admitted the literal 'missing' and nothing else, so
+      // a dependency whose consumer had SHIPPED could only be recorded in prose — which is how the
+      // Ember Shore's row came to say "SQUALL SCHEDULER HALF LANDED" inside a field stamped
+      // `missing`. A `landed` status closes that gap, and it carries `landedBy` because a landed
+      // claim with no slice name is unverifiable: the reader must be able to go and check.
+      // `landedBy` is REQUIRED for 'landed' and FORBIDDEN for 'missing' — a missing dependency has
+      // no slice to name, and admitting one would let a row claim credit while still declaring
+      // itself absent.
+      const landed = entry.status === 'landed';
       if (
-        !exactRecord(entry, ['dep', 'status', 'description'])
+        !exactRecord(entry, landed ? ['dep', 'status', 'description', 'landedBy'] : ['dep', 'status', 'description'])
         || !shortText(entry.dep)
-        || entry.status !== 'missing'
+        || (entry.status !== 'missing' && !landed)
+        || (landed && !shortText(entry.landedBy))
         || typeof entry.description !== 'string'
         || entry.description.trim() === ''
         || entry.description.length > 1_024
       ) {
-        addDescriptorReason(reasons, reason('engine_dependency_shape', 'An engine dependency needs dep, missing status, and a description.', path));
+        addDescriptorReason(reasons, reason('engine_dependency_shape', 'An engine dependency needs dep, a missing or landed status (landed names its slice in landedBy), and a description.', path));
       }
     });
   }

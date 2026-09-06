@@ -7,6 +7,7 @@ import { activeContract, type ContractEnemyVariant, type ContractManifest } from
 import { DEFAULT_COAL_SEAMS } from '../systems/coalSeamDefaults';
 import type { E8AtmosphereDiagnostics } from '../systems/E8PhysicsSystem';
 import type { E8CrossingAirDiagnostics, E8EclipseAirDiagnostics } from '../systems/E8SuitAirSystem';
+import type { E10PreserveDiagnostics, PreserveStokeRefusal } from '../systems/E10PreserveSystem';
 import { deriveMechanicsManifest, type MechanicsManifest } from './MechanicsManifest';
 
 export type AgentViewSource = {
@@ -127,6 +128,17 @@ export type AgentView = {
      * gap `e2e/e7-playbook-rows.spec.ts` pins rather than papers over).
      */
     playbookUse?: AgentPlaybookUseView;
+    /**
+     * E10S-3 (additive, contract-scoped — outside the canonical field set, like `preserve` and
+     * `air`): the Ember Shore's last warm vent. `preserve.warmth` falls only while
+     * `now.squall.blowing` is true, `preserve.stoke` carries the price and the disc a rider must
+     * stand in, and `preserve.objectiveMet` is what opens the secure.
+     *
+     * NOT `now.preserve`, deliberately: that field is already `twist.preserve`'s damageable warm
+     * vent on `e10-last-claim` (`{ hp, maxHp, alive }`, thirty lines above). The path here mirrors
+     * the CONTRACT's own `twist.emberShore.preserve` so a rider reading the twist finds the row.
+     */
+    emberShore?: { preserve: E10PreserveDiagnostics };
     timers: { runSeconds: number; nextWaveInSeconds: number };
     gold: number;
     hero: { hp: number; maxHp: number; x: number; z: number };
@@ -385,6 +397,7 @@ function buildNow(
     : undefined;
   const gravity = readGravity(record(diagnostics.e8Physics));
   const air = readAir(record(diagnostics.e8Atmosphere));
+  const emberShore = readEmberShore(record(diagnostics.preserveVent));
   return {
     wave: boundary.wave,
     blastReadyInMs: Math.max(0, Math.round(number(diagnostics.blastReadyInMs))),
@@ -394,6 +407,7 @@ function buildNow(
     ...(preserveState ? { preserve: preserveState } : {}),
     ...(gravity ? { gravity } : {}),
     ...(air ? { air } : {}),
+    ...(emberShore ? { emberShore } : {}),
     timers: {
       runSeconds: round(boundary.runSeconds),
       nextWaveInSeconds: round(number(diagnostics.nextWaveInSim)),
@@ -447,6 +461,60 @@ function readGravity(physics: Record<string, unknown>): AgentGravityView | undef
     knockbackScale: number(physics.knockbackScale, 1),
     orbitalReturn: physics.orbitalReturn === true,
     vacuum: physics.vacuum === true,
+  };
+}
+
+/**
+ * `E10PreserveSystem.diagnostics`: present on the view only while the consumer is declared, i.e.
+ * only on the Ember Shore. Read FIELD BY FIELD rather than passed through, which is `readAir`'s
+ * own discipline: the browser hands this builder a diagnostics blob, and a rider's view should
+ * never be able to carry whatever a render-side bug happened to put in it.
+ */
+function readEmberShore(preserve: Record<string, unknown>): { preserve: E10PreserveDiagnostics } | undefined {
+  if (preserve.declared !== true) return undefined;
+  const stoke = record(preserve.stoke);
+  const refused = record(stoke.refusals);
+  const pressure = record(preserve.motePressure);
+  const at = preserve.position === null ? null : point(preserve.position);
+  const guttered = preserve.guttered === true;
+  return {
+    preserve: {
+      declared: true,
+      stakeId: text(preserve.stakeId),
+      position: at,
+      warmth: number(preserve.warmth),
+      maxWarmth: number(preserve.maxWarmth),
+      alight: preserve.alight === true,
+      guttered,
+      gutteredAtSeconds: guttered ? number(preserve.gutteredAtSeconds) : null,
+      decayPerSecond: number(preserve.decayPerSecond),
+      decaying: preserve.decaying === true,
+      warmthLost: number(preserve.warmthLost),
+      warmthRestored: number(preserve.warmthRestored),
+      stoke: {
+        action: 'STOKE',
+        goldCost: integer(stoke.goldCost),
+        warmthRestore: number(stoke.warmthRestore),
+        radius: number(stoke.radius),
+        uses: integer(stoke.uses),
+        refusals: {
+          undeclared: integer(refused.undeclared),
+          guttered: integer(refused.guttered),
+          'out-of-reach': integer(refused['out-of-reach']),
+          'insufficient-gold': integer(refused['insufficient-gold']),
+          'already-warm': integer(refused['already-warm']),
+        },
+        lastRefusal: (text(stoke.lastRefusal) as PreserveStokeRefusal | null),
+      },
+      squallsSurvived: integer(preserve.squallsSurvived),
+      squallsRequired: integer(preserve.squallsRequired),
+      motePressure: {
+        multiplier: number(pressure.multiplier, 1),
+        active: pressure.active === true,
+        pressShare: number(pressure.pressShare),
+      },
+      objectiveMet: preserve.objectiveMet === true,
+    },
   };
 }
 
