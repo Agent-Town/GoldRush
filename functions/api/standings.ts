@@ -142,8 +142,10 @@ const ASSAY_QUEUE_INDEX_KEY = 'assay-queue-index';
 const ASSAY_INDEX_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId', 'submittedAt']);
 const ASSAY_INDEX_ENVELOPE_KEYS = new Set(['version', 'sweptAt', 'locators']);
 const ASSAY_INDEX_MAX_AGE_MS = 900_000;
-const MAX_REQUESTS_PER_ANON = 12;
-const MAX_REQUESTS_PER_IP = 60;
+// Owner ruling 2026-09-06 ("sure, raise it", F-HEAT12-8): a heat rides more than twelve contracts an hour from one
+// rider and one host; 30 per rider and 120 per address leave the assayer's queue, not the door, as the pace.
+const MAX_REQUESTS_PER_ANON = 30;
+const MAX_REQUESTS_PER_IP = 120;
 const RATE_TTL_SECONDS = 60 * 60;
 const SHA256 = /^[a-f0-9]{64}$/;
 const ANON_ID = /^[a-f0-9]{32}$/;
