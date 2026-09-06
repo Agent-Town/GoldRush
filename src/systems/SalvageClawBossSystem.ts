@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import type { ClaimJumperEnemy, EnemySpawnParams } from '../entities/Enemy';
 import { Balance } from '../game/Balance';
+import type { BossStoryEmitter } from '../story/signals';
 import type { SalvageClawCarcassPayload } from '../game/TileStateStore';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { disposeObject3D } from '../utils/dispose';
@@ -119,6 +120,14 @@ export class SalvageClawBossSystem {
     private readonly announce: (text: string, title: string) => void,
     private readonly enabled: boolean,
     private readonly persistence: SalvageClawPersistence,
+    /**
+     * The story lifecycle hook (F-SS09-3). `e8-mare-claim` declares no `twist.baron`, so the baron
+     * path in Game.ts emits nothing for this boss; these are the only honest call sites, and they
+     * sit on the four announced transitions below, never on the rehydration paths
+     * (`restoreFromLiveComponents`, `restorePersistentCarcass`), which re-derive a state the player
+     * already lived through.
+     */
+    private readonly story: BossStoryEmitter,
   ) {
     this.modelState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.group.name = 'SalvageClaw.Placeholder';
@@ -224,6 +233,7 @@ export class SalvageClawBossSystem {
     this.started = true;
     this.nextTheftAt = at + Balance.salvageClaw.theftIntervalSeconds;
     this.announce('Small things begin leaving upward. Each absence has a receipt.', 'THE PAPERWORK');
+    this.story.act('paperwork'); // lore/STORYBOOK.md:505 - Act 0, the dread: the era's dread is PAPERWORK.
   }
 
   private updateTheft(at: number): void {
@@ -262,6 +272,9 @@ export class SalvageClawBossSystem {
       }
     }
     this.announce('Cut the grapple anchors. The Crown is still too high to hit.', 'THE CROWN');
+    // The Claw itself is on the map now, so this is BOTH the arrival and Act 1.
+    this.story.arrival();
+    this.story.act('crown'); // lore/STORYBOOK.md:506 - Act 1, THE CROWN (in orbit).
   }
 
   private updateDebris(at: number): void {
@@ -285,6 +298,7 @@ export class SalvageClawBossSystem {
     this.nextLiftAt = at;
     this.spawnComponent('winch', this.anchor.clone(), Balance.salvageClaw.winchHp, 'WINCH', 'e8-mare-claim:salvage-claw-winch', 1);
     this.announce('The Winch enters weapon range. Break it while the building is still on the line.', 'THE WINCH');
+    this.story.act('winch'); // lore/STORYBOOK.md:507 - Act 2, THE WINCH (descending).
   }
 
   private updateLift(at: number): void {
@@ -322,6 +336,7 @@ export class SalvageClawBossSystem {
     this.act = 3;
     this.spawnComponent('anchor_feet', this.anchor.clone(), Balance.salvageClaw.feetHp, 'ANCHOR-FEET', 'e8-mare-claim:salvage-claw-feet', 1);
     this.announce('The Crown goes dark. The feet commit. The siege turns around.', 'THE ANCHOR-FEET');
+    this.story.act('anchor-feet'); // lore/STORYBOOK.md:508 - Act 3, THE ANCHOR-FEET (landed).
   }
 
   private finishFight(position: THREE.Vector3, at: number): void {
@@ -332,6 +347,8 @@ export class SalvageClawBossSystem {
     this.ledgerEvents.push('crew-descends:good-order');
     this.persistence.writeAtCeremony({ x: this.anchor.x, z: this.anchor.z });
     this.announce('The crew descends in good order. The Claw stays, kept until it becomes a place.', 'THE WARM QUIT');
+    // The feet are broken and the crew walks: the fight is over, cure-arms style. Kept machine #4.
+    this.story.defeat(); // lore/STORYBOOK.md:508
   }
 
   private updateWarmQuit(at: number): void {
@@ -567,6 +584,11 @@ export class SalvageClawBossSystem {
     this.destroyed.add('anchor_feet');
   }
 
+  /**
+   * Re-derives the act from whatever components are alive (a rehydration, not a transition), so it
+   * deliberately emits NO story signal: the player already watched the act it is recovering, and a
+   * card here would replay a beat they have seen.
+   */
   private restoreFromLiveComponents(at: number): void {
     if (!this.enabled) return;
     const components = this.liveBossComponents();

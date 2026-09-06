@@ -29,6 +29,11 @@ export const MEDALS_KEY = 'gr.medals.v1';
 export const FIRST_CLAIM_DONE_KEY = 'gr.firstClaim.done.v1';
 export const TOWN_WELCOME_SEEN_KEY = 'gr.townWelcome.seen.v1';
 export const DREDGE_QUEEN_WRECK_KEY = 'gr.e5W6Wreck.v1';
+// F-SSE-3: the once-per-profile `first-boot` marker. Written by the boot path
+// (`claimFirstBootForProfile`, src/main.ts:125/:138), which declares the same literal because
+// `src/main.ts` runs its whole boot on import and this module must not pull it in; it is registered
+// HERE so profile delete / export / import sweep it with everything else the profile owns.
+export const STORY_FIRST_BOOT_KEY = 'gr.story.firstBoot.v1';
 const TILE_STATE_DATA_KEY_PREFIX = 'tilestate.';
 export const DEFAULT_PROFILE_NAME = 'Robin';
 export const DEFAULT_DIFFICULTY_PRESET: DifficultyPresetId = 'trail';
@@ -44,6 +49,7 @@ export const PROFILE_DATA_KEYS = new Set([
   FIRST_CLAIM_DONE_KEY,
   TOWN_WELCOME_SEEN_KEY,
   DREDGE_QUEEN_WRECK_KEY,
+  STORY_FIRST_BOOT_KEY,
   LEGACY_SCOREBOARD_KEY,
   SCOREBOARD_KEY,
   RESEARCH_STATE_KEY,

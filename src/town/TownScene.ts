@@ -2637,7 +2637,13 @@ export class TownScene {
   private emitReturnStorySignal(): void {
     if (!this.options.returnResult || this.returnBeatEmitted) return;
     this.returnBeatEmitted = true;
-    emitStorySignal({ type: 'run-return-town', result: this.options.returnResult });
+    // F-SS06-2: the map the run returned FROM, so a beat tied to one claim can say so instead of
+    // standing in for the contract with `hasStoryBeatSeen` on an earlier beat.
+    emitStorySignal({
+      type: 'run-return-town',
+      result: this.options.returnResult,
+      contractId: this.options.initialBoardContractId,
+    });
   }
 
   private instanceCount(name: string): number {

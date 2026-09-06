@@ -22,6 +22,9 @@ async function loadLedgerRuntime() {
           '/api/standings': standings.onRequest,
           '/api/standings/assay-queue': standings.onRequestAssayQueue,
           '/api/standings/assay-verdict': standings.onRequestAssayVerdict,
+          // F-LINEAGE-4 (attended 2026-09-06): the droplet ledger IS the live door behind nginx's /api/standings, so the
+          // ADR-004 re-assay verb must be routed here too; without it agenttown.app answered 404 while the Pages origin answered 401.
+          '/api/standings/reassay': standings.onRequestStandingsReassay,
           '/api/standings/refusals': refusals.onRequest,
           '/api/refusals': refusals.onRequest,
           '/api/request-code': accounts.requestCode,

@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "1b0485ceba550cbb8256d1ef5af20a6e6b7272561d4c75cb95a3531a759ee684",
+  "engineHash": "4125dc8c6bdd91205c3a1c3067f928534ea22b30c1326c2312bf95a361809fad",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -421,6 +421,12 @@
       "engineHash": "1b0485ceba550cbb8256d1ef5af20a6e6b7272561d4c75cb95a3531a759ee684",
       "pinnedAt": "2026-09-06",
       "cause": "src re-hash: board-tape-gold drain — the headless secure snapshot reports the purse HELD at the secure tick (was lifetime panning), hash-neutral: all four heat-12 fixture reels reproduce their own eventLogHash; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "4125dc8c6bdd91205c3a1c3067f928534ea22b30c1326c2312bf95a361809fad",
+      "pinnedAt": "2026-09-06",
+      "cause": "src re-hash: story-signal-gaps drain — boss-act/arrival/defeat signals emitted from inside the Salvage Claw, Old Digger and Quiet boss systems, run-return-town carries its contract id, a first-boot beat row, the first-boot key swept with the profile, one Hud per root (presentation signals only; the E1 null floors 21/21 and the played tapes byte-identical); same era per F-1441-3",
       "aliases": []
     }
   ],

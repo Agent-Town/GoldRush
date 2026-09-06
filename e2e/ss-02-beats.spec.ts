@@ -2,7 +2,7 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
-import { MEDALS_KEY, PROFILE_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { MEDALS_KEY, PROFILE_KEY, STORY_FIRST_BOOT_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { STORY_BEATS } from '../src/story/beats';
 import { STORY_RUNTIME_SIGNAL_REGISTRY, type RuntimeStorySignal } from '../src/story/signals';
 import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
@@ -11,6 +11,10 @@ import { STORY_SPEAKERS } from '../src/story/speakers';
 const ARTIFACT_DIR = path.resolve('artifacts/ss-02');
 
 const EXPECTED_BEATS = [
+  // story-signal-gaps (F-SSE-1): the opening card, first in the table because first boot precedes
+  // the town having a name. `seedProfile` below marks the profile as already booted, so the card
+  // does not enter the driven tests and the exact `hintsSeen` assertions are unchanged.
+  'first-boot',
   'founding-welcome',
   'first-contract',
   'town-growth-general-store',
@@ -57,7 +61,7 @@ function collectErrors(page: Page): ErrorBucket {
 async function seedProfile(page: Page, talesEnabled = true): Promise<void> {
   await page.goto('/?debug&nowaves&nolevel&seed=ss-02-seed');
   await page.evaluate(
-    ({ profileKey, metaKey, talesKey, enabled }) => {
+    ({ profileKey, metaKey, talesKey, firstBootKey, enabled }) => {
       localStorage.clear();
       sessionStorage.clear();
       const state: ProfileState = {
@@ -77,11 +81,16 @@ async function seedProfile(page: Page, talesEnabled = true): Promise<void> {
       localStorage.setItem(profileKey, JSON.stringify(state));
       localStorage.setItem(metaKey, JSON.stringify({ version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } }));
       localStorage.setItem(talesKey, enabled ? '1' : '0');
+      // This profile has booted before: the reload below would otherwise fire `first-boot` and put
+      // the E1 opening card on screen while these tests drive their own signals. The opening card
+      // has its own coverage in e2e/story-signal-emitters.spec.ts.
+      localStorage.setItem(firstBootKey, '1');
     },
     {
       profileKey: PROFILE_KEY,
       metaKey: profileDataKey('robin', META_PROGRESS_KEY),
       talesKey: profileDataKey('robin', STORY_TALES_STORAGE_KEY),
+      firstBootKey: profileDataKey('robin', STORY_FIRST_BOOT_KEY),
       enabled: talesEnabled,
     },
   );
@@ -168,6 +177,8 @@ function sampleSignal(trigger: RuntimeStorySignal['type']): RuntimeStorySignal {
       return { type: 'first-boot' };
     case 'boss-arrival':
       return { type: 'boss-arrival', contractId: 'e1-baron', contractName: 'The Claim-Jumper Baron' };
+    case 'boss-act':
+      return { type: 'boss-act', contractId: 'e1-baron', boss: 'claim-jumper-baron', act: 'arrival' };
     case 'boss-defeat':
       return { type: 'boss-defeat', contractId: 'e1-baron', contractName: 'The Claim-Jumper Baron' };
     case 'ledger-page':
@@ -182,7 +193,7 @@ function linesFor(beat: (typeof STORY_BEATS)[number]): readonly string[] {
   return typeof beat.lines === 'function' ? beat.lines(signal) : beat.lines;
 }
 
-test('SS-02 table is 23 registered, attributed, two-line E1 beats', () => {
+test('SS-02 table is 24 registered, attributed, two-line E1 beats', () => {
   const ids = STORY_BEATS.map((beat) => beat.id);
   expect(ids).toEqual([...EXPECTED_BEATS]);
   expect(new Set(ids).size).toBe(STORY_BEATS.length);

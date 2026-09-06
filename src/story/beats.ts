@@ -32,6 +32,27 @@ const legacyBoardUnlockSeenKey = (signal: RuntimeStorySignal): string =>
 
 export const STORY_BEATS: readonly StoryBeat[] = [
   {
+    // lore/STORYBOOK.md:64,30 - E1's spine opens on "First boot: the greeting, the trail, the first
+    // claim", and the era's question is answered straight so every later era can complicate it. The
+    // book's own thesis (:6) is withheld: mystery law, and a saga does not spoil itself on card one.
+    // F-SSE-1: `first-boot` had no consuming beat, so the one signal that fires once per profile
+    // showed nothing.
+    // `oncePerProfile: true` even though the SIGNAL is already once per profile (guarded by its own
+    // datum, `claimFirstBootForProfile`, src/main.ts:138): the belt is the signal, the braces are the
+    // table, and the beat-seen key is what lets a seeded profile declare it has already been greeted
+    // the same way it declares every other beat. Note the two markers are different things and stay
+    // that way: `story:first-boot` in `hintsSeen` records the CARD, and the profile datum records the
+    // SIGNAL, which is why the signal's marker still never enters `hintsSeen` (F-SSE-2's rule).
+    id: 'first-boot',
+    trigger: 'first-boot',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    lines: [
+      'You came up the trail with a hat, a coat and a satchel, and out here that is a whole outfit.',
+      'What is a claim? Gold, they will tell you. Simple, wrong, and the reason every one of us is standing here.',
+    ],
+  },
+  {
     id: 'founding-welcome',
     trigger: 'town-named',
     speaker: 'elder',
@@ -1379,6 +1400,20 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // invented signals. A gate reads hintsSeen when the signal arrives, so a gated pair lands one town
 // return AFTER the beat it waits on: this chapter deliberately pays out across several returns,
 // which is how the persistence era is played.
+// Trigger note (SUPERSEDED 2026-09-06 by the story-signal-gaps slice, kept for the record): the Old
+// Digger is still NOT a twist.baron - the Dome Basin's twist declares only clockTicks and an enemy
+// roster (assets/contracts/epoch-9-redfields/contracts.json:179-181) - so the BARON path still
+// reaches nothing here. What changed is that the boss system now reports its own lifecycle:
+// OldDiggerBossSystem emits boss-arrival + boss-act('renovation') from startRenovation,
+// boss-act('boarding') from tryBoard, boss-act('swap') from beginSwap, and boss-defeat from
+// finishSwap. The two Digger beats below have moved off the run-return-town stand-in onto those real
+// acts; the beats that WAIT on them (the tavern joke, the Gazette, the first swim) still ride
+// run-return-town gated on hintsSeen, because they are town news about a fight that already
+// happened, and this chapter deliberately pays out across several returns.
+// Honesty guard, not fixed: STORYBOOK:561's Act 0 dread (the canal corrected overnight) has no
+// state in the system - nothing simulates the overnight correction - so no act signal stands for it,
+// and e9-digger-correction (which cites :561 AND :562) rides the renovation, the first act that is
+// really observable.
 // Swatch law (STORYBOOK:532, bundle PALETTE NOTE): the green is E1's exact riverbank swatch and the
 // basin is the E1 claim's topology rotated, and the book says to say nothing in-game. No line below
 // points at either. Let someone's kid notice.
@@ -1488,12 +1523,12 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:561,562; the era's threat night, and the act that teaches the fight's real verb.
     id: 'e9-digger-correction',
-    trigger: 'run-return-town',
+    trigger: 'boss-act',
     speaker: 'prospector',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-e9-boss-old-digger', // assets/raw/plate-e9-boss-old-digger.png
-    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-dome-basin-arrival'),
+    when: (signal) => signal.type === 'boss-act' && signal.contractId === 'e9-dome-basin' && signal.act === 'renovation',
     lines: ['Our newest canal was corrected in the night, re-dug to a century-old blueprint, beautifully and precisely wrong.', 'It never attacks. It unmakes, and our beams barely mark it. Whatever answers that machine, it is not more beams.'],
   },
   {
@@ -1509,11 +1544,11 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:564; cure-arms lexicon (lore/canon-rules.md:13) - the fight is a reprogramming, and the machine is kept.
     id: 'e9-digger-kept',
-    trigger: 'run-return-town',
+    trigger: 'boss-defeat',
     speaker: 'preacher',
     oncePerProfile: true,
     presentation: 'card',
-    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-digger-correction'),
+    when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e9-dome-basin',
     lines: ['They boarded it while it worked and swapped the old tape for our own canal record. It paused. It read. It turned.', "It re-dug its last correction right, and it digs to the reeve's charts now. We painted nothing over its crest."],
   },
   {
@@ -1588,6 +1623,19 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // Quiet's acts ride the nearest signals that DO fire in this era: contract-unlocked
 // (src/town/TownScene.ts:2568-2578) and run-return-town (src/town/TownScene.ts:2583), chained through
 // hasStoryBeatSeen exactly the way the E8 table chains. No signal added.
+// TRIGGER GAP (PARTLY CLOSED 2026-09-06 by the story-signal-gaps slice; the rest still reported,
+// not invented, per the honesty guard): THE QUIET is a boss in the storybook (lines 609-613) and no
+// epoch-10-deepsky contract carries a twist.baron, so the BARON path still reaches nothing here.
+// E10StaticBossSystem now reports its own lifecycle instead: boss-arrival + boss-act('approach')
+// from arrive(), boss-act('three-preserves') when the aura seats, boss-defeat from recede().
+// WHAT IS STILL A STAND-IN, and why:
+//   - STORYBOOK:610, Act 0, the fading portrait: fiction with no state in any system. Nothing to
+//     observe, so e10-portrait-fades stays on run-return-town.
+//   - STORYBOOK:611, Act 1, the squalls: the unraveled-enemy scheduler does not exist yet (the E10S
+//     ladder owns it), so e10-unraveled-board stays on run-return-town.
+// The system's act 1 is the storybook's Act 2 (the approach) and its act 2 is the storybook's Act 3
+// (the three preserves); the acts are named for what happens, never renumbered to fit the book.
+// 'wave-complete' was a dead trigger when this table landed and now fires (F-SS11-2).
 // PROPOSED PLAY (marked, not asserted): every epoch-10-deepsky contract still declares a missing
 // engine consumer in assets/contracts/epoch-10-deepsky/contracts.json
 // (tileParams.engineDependencies: ember-shore-preserve-consumers, archive-world-consumers,
@@ -1752,11 +1800,11 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:613; the three preserves, and the Quiet recedes rather than falls.
     id: 'e10-three-preserves',
-    trigger: 'run-return-town',
+    trigger: 'boss-act',
     speaker: 'elder',
     oncePerProfile: true,
     presentation: 'card',
-    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e10-last-claim-decks'),
+    when: (signal) => signal.type === 'boss-act' && signal.contractId === 'e10-last-claim' && signal.act === 'three-preserves',
     lines: ['Inside the aura the work inverts into keeping. One lantern lit, one song playing, one portrait untouched, and every preserve we hold weakens the heart.', 'You do not damage the Quiet. You out-live it, and when it breaks it does not fall. It recedes.'],
   },
   {
