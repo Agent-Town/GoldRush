@@ -41,7 +41,19 @@ const IDLE = {
   'e8-eclipse': { seed: 'e8-eclipse-01', composed: 'fnv1a32:466507ac', waves: 2, timeMs: 81_800, kills: 32 },
 };
 // THE CONTROL, pinned by `reviews/e8-mare-claim-physics.md` before this slice existed.
-const MARE_CLAIM = { seed: 'e8-mare-claim-01', hash: 'fnv1a32:1a62757f', waves: 2, timeMs: 81_233, kills: 32 };
+// RE-POINTED 2026-09-06 by `tasks/mare-claim-air-prevalent.md` (owner ruling: "no, this has to be
+// more prevalent"), from `fnv1a32:1a62757f`. This row is the MARE CLAIM's, which that slice owns;
+// every sibling row in this file is deliberately untouched, and this test's point survives intact —
+// the Mare Claim still rides byte-identically with `E8SuitAirSystem` composed and with it gone, and
+// the outcome fields below are unmoved. Attribution:
+// `artifacts/mare-claim-air-prevalent/floor-attribution.json`.
+//
+// KNOWN RED IN THIS FILE, NOT THIS ROW AND NOT THIS SLICE (F-MCAP-4): the sibling test above
+// asserts each un-composed idle hash equals that map's PINNED NULL FLOOR while also asserting it
+// differs from the composed one, and the floors hold the composed value. Measured on a pristine
+// `main` (502a398d9) with every file of this slice reverted: the same test fails with the same
+// numbers, `e8-far-side` un-composed `fnv1a32:3fe83eca` against the pinned `fnv1a32:5c30efd5`.
+const MARE_CLAIM = { seed: 'e8-mare-claim-01', hash: 'fnv1a32:32f62335', waves: 2, timeMs: 81_233, kills: 32 };
 
 const location = new URL('http://gr-sim.local/?debug&contract=e8-far-side&seed=e8-far-side-01');
 globalThis.location = location;

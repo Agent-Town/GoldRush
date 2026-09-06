@@ -227,10 +227,18 @@ test('the ride the audit measured, now carrying its air — and the un-composed 
   assert.notEqual(uncomposed.outcome.eventLogHash, composed.outcome.eventLogHash);
   assert.equal(uncomposed.view.now.air, undefined);
   assert.equal(uncomposed.view.now.gravity !== undefined, true, 'the gravity profile is a separate composition');
-  // The recorded fallback is not a number this file invented: it is the contract's pinned null
-  // floor, which is what makes "the audit's engine" a checkable claim.
+  // The recorded numbers are not invented here: the COMPOSED ride above is the contract's pinned
+  // null floor, which is what makes "the engine this map actually rides" a checkable claim.
+  //
+  // RE-POINTED 2026-09-06 (`tasks/mare-claim-air-prevalent.md`) from `IDLE_HASH_UNCOMPOSED`, and
+  // this line was ALREADY RED before that slice: the sentence was written when the pinned floor
+  // still held the audit's un-composed value, and the floors were regenerated to the composed one
+  // when `e8-mare-claim-physics` landed. Verified against a pristine `main` (502a398d9), where
+  // `floors[e8-mare-claim][e8-mare-claim-01].eventLogHash` is `fnv1a32:1a62757f` and
+  // `IDLE_HASH_UNCOMPOSED` is `fnv1a32:ee2f7c14` — the assertion could not have passed. F-MCAP-3.
   const floors = JSON.parse(read('assets/contracts/null-floors.json')).floors[CONTRACT];
-  assert.equal(floors[SEED].eventLogHash, IDLE_HASH_UNCOMPOSED);
+  assert.equal(floors[SEED].eventLogHash, IDLE_HASH_COMPOSED);
+  assert.notEqual(floors[SEED].eventLogHash, IDLE_HASH_UNCOMPOSED);
 });
 
 test('the gravity-scaled lob: 2.4x reach and hang, and OUT_OF_RANGE the moment the profile is gone', () => {
