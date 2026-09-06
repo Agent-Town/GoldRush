@@ -286,6 +286,47 @@ test('town cue-window budget through player entry', async ({ page }, testInfo) =
   expectNoConsoleErrors(watch);
 });
 
+// SPRITE-CELL-MANIFESTS (2026-09-06) — THE FIRST TOWN COSTS A HANDFUL OF SCRIPT REQUESTS, NOT ONE
+// PER SPRITE CELL. Owner, verbatim: "now it loads veerrry slowly". The bisect measured the shape:
+// 241 JS requests carrying 27,557 B inside this same window, one tiny `?url` module per cell,
+// emitted by the LAZY `import.meta.glob` in src/assets/SpriteAnimator.ts and src/assets/generated.ts.
+// Those globs are now `eager: true`, so the URLs are inlined at build time: measured 205/206 -> 32
+// JS responses per project in this window, and 172/173 -> 0 cell modules.
+// This asserts COUNTS and the CELL SET, never bytes: the byte gate above is host speed, not
+// payload (F-BUDGET-4, 2.05x on one fixed build), and the whole point of the cure is round trips.
+// The floors are deliberately loose — the window closes on a racing signal, so the exact number of
+// sheet cells that land inside it moves with the host. What cannot move is the SHAPE: zero
+// per-cell script modules, a two-figure script count, and the sheets still arriving as PNGs.
+test('the first town fetches no per-cell script module and stays in double figures of scripts', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const watch = watchErrors(page);
+  const townTransfer = startTownTransferMeasurements(page);
+  const cdp = await throttleGlbs(page, testInfo.project.use.baseURL);
+
+  await page.goto('/?town3dPilot=all&tier=full');
+  await page.getByTestId('start-menu-enter-town').click();
+  await waitForTownAssets(page);
+  const cueWindowResponses = townTransfer.sampleCueWindowResponses();
+  await townTransfer.settle();
+
+  const pathOf = ({ url }: TownResponse) => url.split('?')[0];
+  const isSheetCell = (name: string) => /-r\d+c\d+-[^/]*$/.test(name);
+  const scripts = cueWindowResponses.filter((response) => pathOf(response).endsWith('.js'));
+  const cellModules = scripts.filter((response) => isSheetCell(pathOf(response)));
+  const cellImages = cueWindowResponses.filter((response) => pathOf(response).endsWith('.png') && isSheetCell(pathOf(response)));
+  console.info(`[asset-diet] ${testInfo.project.name} townScripts: ${scripts.length} cellModules: ${cellModules.length} cellImages: ${cellImages.length}`);
+
+  expect(cellModules.map(pathOf),
+    'a sprite cell URL is being fetched as its own JS module again — the char-*.png `?url` globs in src/assets/SpriteAnimator.ts and src/assets/generated.ts have lost `eager: true` (see scripts/sprite-cell-url-inlining.test.mjs)').toEqual([]);
+  expect(scripts.length,
+    'the first town is fetching a three-figure number of scripts; before the cell URLs were inlined it fetched 205/206, of which 172/173 were one-line URL modules').toBeLessThanOrEqual(60);
+  // The cure must not have stopped the CELLS from loading — only the modules that named them.
+  expect(cellImages.length,
+    'the town stopped fetching sprite sheet cells; inlining the URLs must change how they are named, never whether they arrive').toBeGreaterThanOrEqual(100);
+  await cdp.detach();
+  expectNoConsoleErrors(watch);
+});
+
 // F-BUDGET-3 (2026-09-06) — NOTHING OUTSIDE THE FIRST TOWN IS FETCHED BEFORE THE FIRST TOWN IS
 // PLAYABLE. In the `town` scene the advance stream's priority-1 target is a CONTRACT, so the
 // stream used to pull `the-claim-terrain.glb` + `the-claim-panorama.glb` (1,052,408 B, measured on

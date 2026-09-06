@@ -43,7 +43,11 @@ const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string
   [assetSlots.bldPortraitStockpile]: () => import('../../assets/processed/bld-stockpile-yard.png?url').then((module) => module.default),
   [assetSlots.bldPortraitTurret]: () => import('../../assets/processed/bld-signal-turret.png?url').then((module) => module.default),
 };
+// Eager for the same reason as src/assets/SpriteAnimator.ts (see the law comment there): a lazy
+// `?url` glob costs one JS module and one round trip PER CELL, and the town's own actors go
+// through this door. Both globs share the pattern literal, so Vite emits the URL table once.
 const processedCharacterUrls = import.meta.glob<string>('../../assets/processed/char-*.png', {
+  eager: true,
   query: '?url',
   import: 'default',
 });
@@ -169,18 +173,15 @@ export function loadGeneratedTexture(slotId: AssetSlotId): Promise<THREE.Texture
 export function loadProcessedCharacterTexture(file: string): Promise<THREE.Texture | null> {
   const cached = processedCharacterTextureCache.get(file);
   if (cached) return cached;
-  const urlLoader = processedCharacterUrls[`../../assets/processed/${file}`];
-  const promise = urlLoader
-    ? urlLoader().then(
-        (url) =>
-          new Promise<THREE.Texture | null>((resolve) => {
-            loader.load(url, (texture) => {
-              texture.colorSpace = THREE.SRGBColorSpace;
-              texture.anisotropy = 4;
-              resolve(texture);
-            }, undefined, () => resolve(null));
-          }),
-      )
+  const url = processedCharacterUrls[`../../assets/processed/${file}`];
+  const promise = url
+    ? new Promise<THREE.Texture | null>((resolve) => {
+        loader.load(url, (texture) => {
+          texture.colorSpace = THREE.SRGBColorSpace;
+          texture.anisotropy = 4;
+          resolve(texture);
+        }, undefined, () => resolve(null));
+      })
     : Promise.resolve(null);
   processedCharacterTextureCache.set(file, promise);
   return promise;

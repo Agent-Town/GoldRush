@@ -59,7 +59,25 @@ export function requestFamily(url) {
   return stripped.replace(SHEET_CELL, '$1');
 }
 
-/** Everything the first town itself legitimately fetches before it is playable. Sorted. */
+/**
+ * Everything the first town itself legitimately fetches before it is playable. Sorted.
+ *
+ * THE `char-*.js` ENTRIES ARE DEAD WEIGHT AS OF 2026-09-06 (sprite-cell-manifests). Nineteen
+ * families left this window when the `char-*.png` `?url` globs in `src/assets/SpriteAnimator.ts`
+ * and `src/assets/generated.ts` became `eager: true`: the eighteen `char-*-sheet-*.js` cell-URL
+ * modules and `rolldown-runtime.js`, which existed to load them. Measured on the e1 release build
+ * through the deploy's own instrument, both projects: JS families 51 -> 32, JS responses
+ * 205/206 -> 32, cell-URL modules 172/173 -> 0. No PNG family left the window (the cure changes
+ * how a cell URL is NAMED, never whether the cell is fetched); two arrived that used to miss it
+ * (`char-hero-sheet-attack8.png`, `char-hero-sheet-work8.png`), both already pinned below.
+ *
+ * They stay listed rather than being struck because this guard reads the COMMITTED corpus in
+ * `artifacts/asset-diet/`, which still predates the cure — the same rule the advance-stream
+ * residue below already follows. A superset never reds; a premature strike would. Delete the
+ * eighteen `char-*.js` rows and `rolldown-runtime.js` the first time a post-cure corpus is
+ * committed, in that commit. (Post-cure corpus for reference:
+ * `artifacts/sprite-cell-manifests/after-<project>.json`.)
+ */
 export const FIRST_TOWN_FAMILIES = [
   'AssayBench.js',
   'AssetLoading.js',

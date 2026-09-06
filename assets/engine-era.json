@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "f28903f44c0fa2f9d59c527fb80eac5a3de380ad6a5f60c9b7e04c35c47e3bbb",
+  "engineHash": "9351c22729cf2478362a8890b7af5077b6bf4b56afeed63fc062778fc4123db7",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -499,6 +499,12 @@
       "engineHash": "f28903f44c0fa2f9d59c527fb80eac5a3de380ad6a5f60c9b7e04c35c47e3bbb",
       "pinnedAt": "2026-09-06",
       "cause": "e8-air-wall-all-maps: the same air wall on every Orbital contract (owner: same air for all space contracts): the Eclipse carries regolithRequired 4 / regolithWindowWaves 4, the Far Side and Low Orbit crossingRequired 4 / crossingWindowWaves 4 (a credited entry per window plus every zone stood in on air), one shared E8AirWindow, now.air.crossing published; stacked on first-town-transfer-bisect 6dfdde6f",
+      "aliases": []
+    },
+    {
+      "engineHash": "9351c22729cf2478362a8890b7af5077b6bf4b56afeed63fc062778fc4123db7",
+      "pinnedAt": "2026-09-06",
+      "cause": "sprite-cell-manifests: the two char-*.png ?url globs are eager, so the hashed cell URLs are inlined at build time and the first town no longer spends one round trip per sprite cell (JS requests in the window 205 to 32; 921 to 135 chunks); no sim change; stacked on e8-air-wall-all-maps f28903f4",
       "aliases": []
     }
   ],
