@@ -800,6 +800,17 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       secureRule: 'at-least-one-stake-held-at-default-secure-wave',
     }));
   }
+  // THE CONTRACT PURSE (owner 2026-09-06, "a per-contract cap override"). Published because the
+  // agent view carries `now.gold` but NO cap — a rider cannot see how much its purse holds from
+  // the view at all, so an authored purse that is not on the card is invisible until income is
+  // silently refused. Absent the twist the rule is absent, and the default is `Balance`'s.
+  if (twist.economy?.bankCap !== undefined) {
+    rules.push(rule('contract_bank_cap', 'twist.economy.bankCap', {
+      bankCap: twist.economy.bankCap,
+      defaultBankCap: Balance.economy.bankCap,
+      rule: 'income-above-the-purse-is-refused',
+    }));
+  }
   if (practice) {
     const suppressed = Object.entries(practice)
       .filter(([, value]) => value === false)

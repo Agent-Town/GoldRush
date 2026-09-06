@@ -251,6 +251,7 @@
       },
       "twist": {
         "secureWave": 12,
+        "economy": { "bankCap": 360 },
         "dayNightCycle": { "periodSeconds": 120, "duskRampSeconds": 30, "dawnRampSeconds": 20, "nightDepth": 1, "waveSchedule": { "duskWave": 4, "darkWave": 8 } },
         "lightRamp": {
           "duskWave": 4,
@@ -356,7 +357,7 @@
       "boardRow": { "name": "The Canyon Works", "ledgerBlurb": "String the gorge with current; the Fever comes to every light we raise.", "tags": ["voltage", "network", "night"], "unlock": "default" },
       "briefing": {
         "goals": ["Survive through wave 12 from the Dynamo Sub-Hall yard.", "CONNECT both cliff galleries by wave 6."],
-        "rules": ["Sentry Beacons raised on marked PYLON SITES carry current up the switchbacks.", "Every gallery, lamp, turret, and tram draws watts; the ledger sheds higher-priority numbers first.", "Fevered saboteurs are drawn to the grid and cut a span when they wreck a pylon."],
+        "rules": ["Sentry Beacons raised on marked PYLON SITES carry current up the switchbacks.", "The Works keeps a strongbox: this claim's purse holds 360 gold, not the usual 200, so all six beacons (25+35+45+55+75+95 = 330) fit in one descent.", "Every gallery, lamp, turret, and tram draws watts; the ledger sheds higher-priority numbers first.", "Fevered saboteurs are drawn to the grid and cut a span when they wreck a pylon."],
         "geographyLine": "A 96 by 112 gorge: sub-hall south, one dam channel, split switchbacks, and paired galleries above."
       }
     },

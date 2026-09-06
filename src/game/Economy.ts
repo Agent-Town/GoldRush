@@ -13,6 +13,12 @@ export type EconomyEventBase = {
   at: number;
 };
 
+/**
+ * The cap-source id a contract's authored purse rides (`Economy.setContractBankCap`). Named once,
+ * exported, so both engines and `scripts/contract-bank-cap-override.test.mjs` say the same string.
+ */
+export const CONTRACT_BANK_CAP_SOURCE = 'contract:bank_cap';
+
 export type EconomyActor = 'player' | 'prospector';
 export type EconomyResourceId = 'gold' | 'pressure';
 export type ResourceBalance = {
@@ -266,6 +272,31 @@ export class Economy {
   removeCapSource(id: string): void {
     this.capSources.delete(id);
     this.current.bankCap = this.bankCap;
+  }
+
+  /**
+   * THE CONTRACT PURSE. Owner ruling 2026-09-06, verbatim, to heat 12's `e3-canyon-works`
+   * blocker: **"a per-contract cap override"** — chosen over repricing the beacon ladder or
+   * widening the deadline precisely so every other map's economy stays byte-identical.
+   *
+   * It rides `capSources` rather than shadowing `Balance.economy.bankCap`, for three reasons:
+   *   - `Economy` stays the SOLE gold writer and the cap stays ONE getter, so there is still
+   *     exactly one answer to "how much can this purse hold?" (`bankCap`, above);
+   *   - stockpiles, `upgrade:stockpile_cap` and `research:assay_grading` keep stacking on top
+   *     of the contract purse exactly as they stack on the default one — a raised purse is a
+   *     different STARTING point, not a different rule;
+   *   - a contract that authors nothing calls this with `undefined`, the source is removed, and
+   *     the getter returns `Balance.economy.bankCap` unchanged. That is the guard's control case.
+   *
+   * The stored amount is the DELTA from the default, because `capSources` are bonuses; the
+   * authored number in `twist.economy.bankCap` is the ABSOLUTE purse a rider is told about.
+   */
+  setContractBankCap(cap: number | undefined): void {
+    if (typeof cap !== 'number' || !Number.isFinite(cap) || cap <= 0) {
+      this.removeCapSource(CONTRACT_BANK_CAP_SOURCE);
+      return;
+    }
+    this.addCapSource(CONTRACT_BANK_CAP_SOURCE, Math.round(cap) - Balance.economy.bankCap);
   }
 }
 

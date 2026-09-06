@@ -9436,6 +9436,7 @@ export class Game {
     this.buildSystem.applyStats(stats.beaconFireRateMult, 1 + continued.turretDamageMult);
     this.agentPolicySlotBonus = Math.max(0, Math.floor(stats.agentPolicySlots));
     this.applyUpgradeCapEffects(stats);
+    this.applyContractBankCap();
     this.applyResearchEffects();
   }
 
@@ -9462,6 +9463,22 @@ export class Game {
     } else {
       this.economy.removeCapSource('upgrade:stockpile_cap');
     }
+  }
+
+  /**
+   * THE CONTRACT PURSE, browser half. Owner ruling 2026-09-06, verbatim: **"a per-contract cap
+   * override"**. Headless twin: the ride on `HeadlessContractSim.ts`'s `run_reset` line. The two
+   * must agree, and `scripts/contract-bank-cap-override.test.mjs` is where that is proved.
+   *
+   * WHY IT LIVES IN `applyStats` AND NOT THE CONSTRUCTOR. `activeContract` is a readonly field
+   * fixed at birth, so one call would do — but `applyStats` already runs once from the
+   * constructor (`:1746`) and again on every upgrade, and `setContractBankCap` is idempotent
+   * (`capSources` is a Map keyed by source id). Riding the existing sync means the purse cannot
+   * be lost to a later re-sync, and it adds no line above `Game.ts:2547`, which `scripts/fire.md`
+   * cites by coordinate and `law-pointer-guard` fingerprints.
+   */
+  private applyContractBankCap(): void {
+    this.economy.setContractBankCap(this.activeContract.twist.economy?.bankCap);
   }
 
   private applyResearchEffects(): void {

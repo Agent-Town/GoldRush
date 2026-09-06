@@ -752,7 +752,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string } }; // E4 and E10's harvest-free declaration ride the trailing intersection so no cited line below moves
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number } }; // E4 and E10's harvest-free declaration and E3's per-contract purse ride the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -1593,7 +1593,7 @@ const AUTHORED_TWIST_KEYS = [
   'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'clockTicks', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
-  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier', 'harvestFreeObjective',
+  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier', 'harvestFreeObjective', 'economy',
 ] as const;
 const AUTHORED_PRACTICE_KEYS = [
   'scheduledWaves', 'scores', 'metaProgress', 'runHistory', 'standings', 'tapes', 'goldGrant', 'bellWaveSize',
@@ -1702,7 +1702,7 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
   if (!isRecord(value.briefing) || Array.isArray(value.briefing)) addDescriptorReason(reasons, reason('field_section', 'The briefing has the wrong shape.', 'briefing'));
   if (!tileParams || !twist) return null;
   addUnknownFieldReasons(tileParams, AUTHORED_TILE_KEYS, 'tileParams', reasons);
-  addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons);
+  addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons); validateContractEconomy(twist.economy, reasons); // the purse validator rides this line; see its note at the file's end
   if (twist.clockTicks !== undefined && (typeof twist.clockTicks !== 'number' || !Number.isInteger(twist.clockTicks) || twist.clockTicks <= 0)) {
     addDescriptorReason(reasons, reason('field_number', 'clockTicks must be a positive integer.', 'twist.clockTicks'));
   }
@@ -2580,3 +2580,32 @@ function validateMotorFrontier(contract: ContractManifest, reasons: ContractDesc
  *     boss, no waves. This contract remains one pan and the river."
  * `e10-last-claim` does NOT carry it and must not: it has four authored anchors and is admitted.
  */
+
+/**
+ * THE PER-CONTRACT PURSE (owner ruling 2026-09-06, verbatim: "a per-contract cap override"), the
+ * door half of `twist.economy.bankCap`. Grep `validateContractEconomy` to find both ends.
+ *
+ * IT SITS AT THE FILE'S END AND ADDS NO LINE ABOVE THE DOOR, and its call RIDES the existing
+ * `addUnknownFieldReasons(twist, ...)` statement at `:1705`, for exactly the reason the block
+ * above this one states: `tasks/goals.json` cites `ContractFamilies.ts:1345` by line, the type
+ * field rides the trailing intersection at `:755`, and the allowlist entry rides
+ * `AUTHORED_TWIST_KEYS`'s last line. A new statement here would have moved every one of those.
+ *
+ * WHAT IT REFUSES. An absolute purse, in gold, as a positive integer — because the number a
+ * contract authors is the number a rider is TOLD (the briefing rule and the mechanics manifest
+ * both print it), while `Economy.setContractBankCap` stores the delta from
+ * `Balance.economy.bankCap`. A fractional or negative purse would make the printed rule a lie and
+ * could drive the summed cap below zero, so it is a door refusal rather than a runtime clamp.
+ */
+function validateContractEconomy(value: unknown, reasons: ContractDescriptorReason[]): void {
+  if (value === undefined) return;
+  if (!isRecord(value) || Array.isArray(value)) {
+    addDescriptorReason(reasons, reason('field_section', 'The economy section has the wrong shape.', 'twist.economy'));
+    return;
+  }
+  addUnknownFieldReasons(value, ['bankCap'], 'twist.economy', reasons);
+  const bankCap = value.bankCap;
+  if (typeof bankCap !== 'number' || !Number.isInteger(bankCap) || bankCap <= 0) {
+    addDescriptorReason(reasons, reason('field_number', 'A contract purse must be a positive whole number of gold.', 'twist.economy.bankCap'));
+  }
+}
