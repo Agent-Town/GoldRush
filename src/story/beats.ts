@@ -273,7 +273,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-enemy-name',
     trigger: 'ledger-page',
-    speaker: 'clerk',
+    speaker: 'clerk-e2',
     oncePerProfile: true,
     seenKey: (signal) => (signal.type === 'ledger-page' ? `e2-enemy-name:${signal.entryId}` : 'e2-enemy-name'),
     when: (signal) => signal.type === 'ledger-page' && ['rail_tough', 'steam_wrecker', 'coal_thief'].includes(signal.entryId),
@@ -282,7 +282,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-ceremony-mill',
     trigger: 'epoch-activated',
-    speaker: 'elder',
+    speaker: 'elder-e2',
     oncePerProfile: false,
     presentation: 'epoch-ceremony',
     artKey: 'kit-stamp-mill',
@@ -304,7 +304,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-ceremony-title',
     trigger: 'epoch-activated',
-    speaker: 'elder',
+    speaker: 'elder-e2',
     oncePerProfile: false,
     presentation: 'epoch-ceremony',
     artKey: 'kit-era-2',
@@ -326,7 +326,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e3-ceremony-tree',
     trigger: 'epoch-activated',
-    speaker: 'elder',
+    speaker: 'schoolteacher-e3',
     oncePerProfile: false,
     presentation: 'epoch-ceremony',
     artKey: 'kit-era-3',
@@ -337,7 +337,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e3-ceremony-title',
     trigger: 'epoch-activated',
-    speaker: 'elder',
+    speaker: 'schoolteacher-e3',
     oncePerProfile: false,
     presentation: 'epoch-ceremony',
     artKey: 'kit-era-3',
@@ -348,7 +348,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-railcar-arrival',
     trigger: 'boss-arrival',
-    speaker: 'clerk',
+    speaker: 'clerk-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e2-hill-mine',
     lines: ['Railcar on the cut.', 'Break the wheels, boiler, and cabin before the town signs the next ledger.'],
@@ -356,7 +356,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-rail-arrives',
     trigger: 'epoch-activated',
-    speaker: 'newsie',
+    speaker: 'newsie-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'epoch-activated' && signal.epochId === 'epoch-2-steamworks',
     lines: ['Rail over the ridge! The first graduate has the Depot flag.', 'The town just grew a timetable.'],
@@ -364,7 +364,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-gazette-press',
     trigger: 'epoch-activated',
-    speaker: 'newsie',
+    speaker: 'newsie-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'epoch-activated' && signal.epochId === 'epoch-2-steamworks',
     lines: ['The Gazette press is running.', 'First edition: the whistle means vent.'],
@@ -380,7 +380,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-elder-tree',
     trigger: 'contract-unlocked',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e2-hill-mine',
     lines: ["Her chair is empty. Her chalk still says, 'What you close, know how to open.'", 'We planted the cottonwood where she taught.'],
@@ -388,7 +388,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-depot-wedding',
     trigger: 'contract-unlocked',
-    speaker: 'preacher',
+    speaker: 'preacher-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e2-hill-mine',
     lines: ['The Depot household begins at sunset.', "Leave the Prospector's place set; it kept their first timetable."],
@@ -396,7 +396,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-iron-correction-rumor-one',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e2-hill-mine',
     lines: ['Iron Correction rumor: someone bought a timetable in cash.', 'The buyer asked for no return date.'],
@@ -404,7 +404,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-iron-correction-rumor-three',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'run-return-town' && hasStoryBeatSeen('e2-iron-correction-rumor-two'),
     lines: ['Iron Correction rumor: a rich man asked what year it is.', 'Nobody answered twice.'],
@@ -412,7 +412,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-iron-correction-rumor-two',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'run-return-town' && hasStoryBeatSeen('e2-iron-correction-rumor-one'),
     lines: ['Iron Correction rumor: something on the rails is too heavy for the trestle.', 'That is all the Gazette can prove.'],
@@ -420,7 +420,7 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-prides-tuition-crate',
     trigger: 'boss-defeat',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e2',
     oncePerProfile: true,
     when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e2-hill-mine',
     lines: ["The rocket rack came to the Schoolhouse in the Baron's crate.", "We painted over the crest. It still ghosts through: Pride's Tuition."],
@@ -445,7 +445,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:147,174
     id: 'e3-twin-representatives',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e3',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
@@ -455,7 +455,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:147,174; Gazette mystery-law headline in the E2 shape at lines 396-419.
     id: 'e3-gazette-two-offers',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e3',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
@@ -465,7 +465,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:148,152,175
     id: 'e3-first-night-round',
     trigger: 'contract-unlocked',
-    speaker: 'elder',
+    speaker: 'schoolteacher-e3',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
@@ -475,7 +475,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:139,176
     id: 'e3-brownout-ledger',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'clerk-e3',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e3-canyon-works',
@@ -485,7 +485,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:165-176
     id: 'e3-moth-season',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e3',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e3-moth-season', // assets/raw/plate-contract-e3-moth-season.png
@@ -507,7 +507,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:147,177; tavern-tale shape mirrors e2-depot-wedding at lines 388-395.
     id: 'e3-tavern-twins-defect',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e3',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e3-saboteur-night'),
@@ -517,7 +517,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:147,177; the reveal waits for proof, preserving the Gazette mystery law.
     id: 'e3-gazette-ledger-reveal',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e3',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e3-saboteur-night'),
@@ -527,7 +527,7 @@ export const E3_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:178
     id: 'e3-refinery-horizon',
     trigger: 'science-complete',
-    speaker: 'elder',
+    speaker: 'schoolteacher-e3',
     oncePerProfile: true,
     presentation: 'card',
     lines: ['The Refinery rises by lamplight. At dawn, crude arrives from the flats.', "That horizon is too wide to walk. We're going to need to move faster."],
@@ -557,7 +557,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:202,231
     id: 'e4-first-flivver',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e4',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-dust-flats',
@@ -567,7 +567,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:203,232; Gazette headline in the E2/E3 shape, mystery law intact.
     id: 'e4-gazette-crude-bath',
     trigger: 'contract-unlocked',
-    speaker: 'newsie',
+    speaker: 'newsie-e4',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-dust-flats',
@@ -577,7 +577,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:191,204
     id: 'e4-road-boss-theodolite',
     trigger: 'contract-unlocked',
-    speaker: 'elder',
+    speaker: 'schoolteacher-e4',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e4-dust-flats',
@@ -597,7 +597,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:220
     id: 'e4-long-road-goodbyes',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e4',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e4-long-road', // assets/raw/plate-contract-e4-long-road.png
@@ -608,7 +608,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:221
     id: 'e4-gusher-county-order',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'clerk-e4',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e4-gusher-county', // assets/raw/plate-contract-e4-gusher-county.png
@@ -619,7 +619,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:198,222; the wagon is never named, per the Occult Law of that line.
     id: 'e4-boneyard-quiet-rows',
     trigger: 'contract-unlocked',
-    speaker: 'schoolteacher',
+    speaker: 'schoolteacher-e4',
     oncePerProfile: true,
     presentation: 'card',
     artKey: 'plate-contract-e4-boneyard', // assets/raw/plate-contract-e4-boneyard.png
@@ -641,7 +641,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:205,234; the static is never explained, per that line.
     id: 'e4-diner-radio',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e4',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && hasStoryBeatSeen('e4-dust-flats-arrival'),
@@ -651,7 +651,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:196,228; tavern tale, LEXICON law: freed, never killed.
     id: 'e4-tavern-freed-hands',
     trigger: 'run-return-town',
-    speaker: 'tavernkeeper',
+    speaker: 'tavernkeeper-e4',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e4-land-yacht-dread'),
@@ -661,7 +661,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:208,233; the reveal waits for the race to be run, preserving the mystery law.
     id: 'e4-gazette-re-survey',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e4',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e4-land-yacht-dread'),
@@ -675,7 +675,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // has no emitter anywhere in src/ outside this module, so the nearest LIVE trigger is used.
     id: 'e4-gazette-dust-chart',
     trigger: 'run-return-town',
-    speaker: 'newsie',
+    speaker: 'newsie-e4',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && hasStoryBeatSeen('e4-diner-radio'),
@@ -686,7 +686,7 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // the ceremony script t4-the-boat (src/ceremony/scripts.ts:130) and is not restated here.
     id: 'e4-boat-horizon',
     trigger: 'science-complete',
-    speaker: 'elder',
+    speaker: 'schoolteacher-e4',
     oncePerProfile: true,
     presentation: 'card',
     lines: ['The hull stands finished in the tank farm, on land, miles from any water.', 'The wash reaches a delta and the delta reaches the sea. Harness every vehicle we own and haul.'],
@@ -1916,3 +1916,39 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
   ? [...STORY_BEATS, ...LEDGER_STORY_BEATS]
   : [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];
+
+// THE ERA-AGING RE-KEY (portraits-era-aging-batch, 2026-09-06; owner ruling, verbatim: "lets use the
+// higgsfield credits, I think they expire soon. go hard."). lore/STORYBOOK.md:80 THE LAWS OF TIME ages
+// the townsfolk ~12-15 years per era, and until this batch the E2, E3 and E4 tables above spoke through
+// the unchanged E1 faces. 33 beats now carry era-suffixed speakers (src/story/speakers.ts): every E2
+// beat to its `-e2` id, every E3 beat to `-e3`, every E4 beat to `-e4`; the six `prospector` beats stay,
+// because the agent does not age (lore/characters.md:12, "agents age in dignity, not decay", and no
+// era plate exists for it). THIS NOTE IS DELIBERATELY AT THE FILE'S END: F-GEN-1 showed every in-file
+// coordinate in this module rots the moment a line is inserted above it, so the re-key was authored to
+// change 33 lines IN PLACE and add none, and this note is appended after the last export, below every
+// coordinate anything cites. Verified: 33 insertions against 33 deletions with the file length unmoved
+// at the re-key commit, and every in-file citation re-resolves exact.
+// COPY: unchanged, byte for byte, in all 33. That is a measured outcome, not an omission - every line
+// re-keyed here was already written ABOUT its subject's world rather than as a first-person claim, so
+// no pronoun, name or tense had to move. Triggers, `when`, `seenKey`, `oncePerProfile`, `presentation`,
+// `artKey`, `ceremonyStep`, sizes and STORYBOOK citations are all untouched.
+// THE ELDER, the canon question this slice had to answer (6 lines): lore/characters.md:33 has her pass
+// in EARLY E2 - "the schoolhouse keeps her chart", lore/STORYBOOK.md:89 - so no beat after that morning
+// can be her own voice. Her two E2 ceremony beats (`e2-ceremony-mill`, `e2-ceremony-title`) fire on
+// `epoch-activated`, i.e. at the era's opening, while she is alive: they went to `elder-e2`, the plate
+// her ARC names ("frailer, brighter-eyed"). The four E3 and two E4 lines went to THE KEEPER OF HER
+// CHART, the schoolteacher of that era - `e3-ceremony-tree`, `e3-ceremony-title`, `e3-first-night-round`,
+// `e3-refinery-horizon`, `e4-road-boss-theodolite`, `e4-boat-horizon`. Each reads correctly in the
+// keeper's mouth without an edit, and three of them are ABOUT the Elder ("The first lamp burns in the
+// Elder's Tree", "The Elder's Tree stays lit"), which no one can say of her own memorial. There is
+// deliberately no `elder-e3` or `elder-e4` id for a later beat to reach for.
+// REPORTED, NOT FIXED (F-AGE-4, outside this slice's firewall): FOURTEEN more beats still speak as
+// `elder` after her death - two in E5 (`e5-first-dive-w1`, `e5-deep-reactor-horizon`), one in E6
+// (`e6-calculating-house`), two in E7 (`e7-dead-band-quiet`, `e7-starship-countdown`), three in E8
+// (`e8-left-last`, `e8-baron-at-the-pad`, `e8-riverward-launch`), two in E9 (`e9-first-water-panned`,
+// `e9-generation-ark-horizon`) and four in E10 (`e10-long-table-seed`, `e10-river-charter`,
+// `e10-three-preserves`, `e10-charter-press`). The copy-revision note above the E6 header keeps the
+// science-complete hook as "the elder's shape in every chapter", which is a real structural convention -
+// but the character has been dead since early E2, so the shape outlives the woman by eight eras. This
+// task was scoped to E2-E4; those fourteen are an owner call, and the precedent set here is the answer
+// if he wants one: the keeper of her chart in that era, and no copy change was needed once.
