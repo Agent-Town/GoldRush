@@ -864,6 +864,19 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       rule: 'authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices',
     }));
   }
+  // THE CLAIM GRIT (owner 2026-09-06, "lets adjust the policy so the hard levels can be won").
+  // Published for the same reason the purse is: the view carries `now.hero.maxHp` but no basis, so
+  // a rider cannot tell an authored ceiling from three `tinkers_plating` stacks, and on a map where
+  // no building reaches the hero the ceiling IS the whole survival budget. Absent the twist the
+  // rule is absent, and the default is `Balance`'s.
+  if (twist.hero?.maxHpBonus !== undefined) {
+    rules.push(rule('contract_hero_grit', 'twist.hero.maxHpBonus', {
+      heroMaxHp: Balance.hero.maxHp + twist.hero.maxHpBonus,
+      defaultHeroMaxHp: Balance.hero.maxHp,
+      maxHpBonus: twist.hero.maxHpBonus,
+      rule: 'the-claim-grit-is-added-to-every-actor-ceiling-and-paid-in-hit-points-at-run-start',
+    }));
+  }
   if (practice) {
     const suppressed = Object.entries(practice)
       .filter(([, value]) => value === false)

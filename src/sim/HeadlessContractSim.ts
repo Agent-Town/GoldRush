@@ -36,7 +36,7 @@ import type { EffectiveStats } from '../game/StatSheet';
 import { resolveFiller, upgradeDefById, upgradeEffect } from '../game/Upgrades';
 import { isBuildableId, resolveBeaconLadder } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
-import { listBoardContracts, listEpochs, loadContract, loadEpoch, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
+import { contractHeroMaxHpBonus, listBoardContracts, listEpochs, loadContract, loadEpoch, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
 import {
   activeMegaprojectManifest,
   ensureMegaprojectProject,
@@ -2727,7 +2727,15 @@ export class HeadlessContractSim {
     this.heroShooter.volley = Balance.sparkRig.volley + stats.volleyBonus;
     this.blastShooter.cooldown = Math.max(0.35, Balance.blast.cooldown * stats.blastCooldownMult);
     if (this.blastShooter.aoe) this.blastShooter.aoe.radius = Balance.blast.radius * stats.blastRadiusMult;
-    this.hero.applyStats(Math.max(stats.maxHpBonus, this.hero.maxHp - Balance.hero.maxHp), stats.moveSpeedMult);
+    // THE CLAIM GRIT, headless half (owner 2026-09-06). Browser twin: `Game.applyStats`. The grit
+    // is subtracted INSIDE the existing never-shrink `Math.max` and added back outside it, so the
+    // clamp still compares upgrade bonus against upgrade bonus; fold the grit into the clamp
+    // instead and it re-reads itself on every stat change and ratchets the ceiling upward without
+    // bound (measured: 175 became 1990 by wave 20 — F-RVW-1).
+    const grit = contractHeroMaxHpBonus(this.manifest);
+    const heroWasFresh = this.hero.maxHp === Balance.hero.maxHp;
+    this.hero.applyStats(Math.max(stats.maxHpBonus, this.hero.maxHp - Balance.hero.maxHp - grit) + grit, stats.moveSpeedMult);
+    if (heroWasFresh && grit > 0) this.hero.heal(grit);
     if (pickedId === 'tinkers_plating') this.hero.heal(upgradeDefById.tinkers_plating.deltas.heal ?? 0);
     this.harvest.applyStats(
       stats.panTickMult,

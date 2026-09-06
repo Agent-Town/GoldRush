@@ -102,7 +102,7 @@ const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
  * wrong contract reddens here rather than passing as an extra.
  */
 const EXPECTED_RULES: Record<string, string[]> = {
-  'e7-relay-valley': ['build_zones'],
+  'e7-relay-valley': ['build_zones', 'contract_hero_grit'], // 2026-09-06 relay-valley-winnable: the claim grit is a published rule (F-RVW-3)
   'e7-echo-canyon': ['broadcast_mirror', 'build_zones'],
   'e7-dead-band': ['build_zones', 'signal_suppression'],
   // A5: sourced FROM `InterferenceFrontSystem`, so the row cannot promise a deadline the run

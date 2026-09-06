@@ -106,7 +106,8 @@
         "enemyRoster": [
           { "id": "rogue_automaton", "label": "Rogue Automaton" },
           { "id": "data_rustler", "label": "Data-Rustler" }
-        ]
+        ],
+        "hero": { "maxHpBonus": 300 }
       },
       "boardRow": {
         "name": "The Relay Valley",
@@ -127,7 +128,8 @@
         "rules": [
           "Relays connect only when they can see one another.",
           "Recorded patrols stop when they enter a dead zone.",
-          "Four relay sites span the two exposed ridges."
+          "Four relay sites span the two exposed ridges.",
+          "The valley claim keeps a field hospital: you stand up with 400 hit points, not the usual 100, because no relay site on either ridge comes within 31wu of the claim."
         ],
         "geographyLine": "Two exposed relay ridges stand at height five above a thick valley floor, split by a dead gap and line-of-sight fog pockets."
       }
