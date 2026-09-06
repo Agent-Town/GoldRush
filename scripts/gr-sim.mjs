@@ -258,6 +258,17 @@ async function readOrders(lines, sim, submissions) {
   }
 }
 
+/**
+ * THE REFUSAL, ON BOTH WIRES (F-MCAP-1; owner ruling 2026-09-06, verbatim: "(5) both").
+ *
+ * A log reader gets this stderr line, in the same `gr-sim <what happened>` shape every other
+ * diagnostic here uses; a rider that reads only stdout gets the SAME words inside the re-printed
+ * view, because the refusal now rides `now.orders[]` with `status: "failed"` and a `reason` that
+ * begins with the refusal word (`src/agent/StandingOrders.ts`, `SECURE_WINDOW_REFUSAL`). The word
+ * is deliberately NOT written to stdout as a bare line: stdout is strict NDJSON here and every
+ * consumer JSON-parses it line by line, so a diagnostic there would break the transport it is
+ * meant to inform.
+ */
 function rejectOrders(reason, sim) {
   process.stderr.write(`gr-sim rejected orders: ${reason}\n`);
   process.stdout.write(`${JSON.stringify(sim.currentTurn().view)}\n`);

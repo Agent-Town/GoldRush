@@ -1553,6 +1553,12 @@ export class HeadlessContractSim {
       && orders.every((order) => typeof order === 'object' && order !== null && 'verb' in order && order.verb === 'SECURE_CHOICE')) {
       this.secureChoiceCalls += 1;
     }
+    // F-MCAP-1 cure B: a refused submission spends one fixed step of an open secure window. This
+    // is the ONLY seam a refusal reaches — `gr-sim.readOrders` reads stdin again without advancing
+    // the sim until a submission is accepted — so charging it here is what makes the clock run at
+    // all. Every other refusal is a no-op: `spendSecureWindowOnRefusal` returns unless a choice
+    // is pending.
+    if (!receipt.outcome.ok) this.spendSecureWindowOnRefusal();
     this.replayEvents.push({
       type: 'orders',
       at: round(this.timeAlive),
@@ -1800,15 +1806,55 @@ export class HeadlessContractSim {
     return this.dead || this.secureChoice === 'bank';
   }
 
+  /**
+   * F-MCAP-1 cure B (owner ruling 2026-09-06, verbatim: "(5) both"): the pending choice's own
+   * clock, asked as a question. Open while the choice is pending AND its window still has time on
+   * it. Before this slice the two halves could not come apart, because the only thing that ever
+   * advanced `secureChoiceElapsed` was `step()`, which lands the default in the same statement
+   * that pushes the clock past the deadline; a REFUSED submission now spends it too
+   * (`spendSecureWindowOnRefusal`), so the clock can run out while the sim is parked between
+   * steps waiting on a rider that will not stop concatenating. When it does, the DOOR stops
+   * demanding a lone choice (`StandingOrders.submit`) and the very next advance lands the default
+   * through the same expiry path below. No policy can hang a heat.
+   */
+  private get secureWindowOpen(): boolean {
+    return this.secureChoice === 'pending'
+      && this.secureChoiceElapsed + Number.EPSILON < Balance.offers.pickSeconds;
+  }
+
+  /**
+   * F-MCAP-1 cure B: one fixed step of the rider's decision window, spent by a submission the
+   * door would not take. Clamped at the deadline and it does NOT land the default, deliberately:
+   * `advanceToTurn` throws when it is entered on an already-terminal sim, so a run that ended
+   * inside a rejected `submit_orders` would CRASH the transport instead of ending it. The clock
+   * is spent here; `secureWindowOpen` closes; `step()` lands the default exactly as it always has.
+   */
+  private spendSecureWindowOnRefusal(): void {
+    if (this.secureChoice !== 'pending') return;
+    this.secureChoiceElapsed = Math.min(this.secureChoiceElapsed + STEP_SECONDS, Balance.offers.pickSeconds);
+  }
+
+  /** The one place the secure choice defaults, unchanged in substance, named so both callers agree. */
+  private expireSecureWindow(): void {
+    this.defaultedSecure += 1;
+    this.answerSecureChoice(this.boot.overtime ? 'rush' : 'bank');
+  }
+
   private step(): void {
     if (this.secureChoice === 'pending') {
+      // F-MCAP-1 cure B: a window whose clock refusals already spent is OVER, and it expires here
+      // — before the executor ticks — so the choice defaults exactly as the existing expiry path
+      // defaults it and a rider cannot win back a decision by being refused six hundred times.
+      // This branch is unreachable on every path that existed before the cure: nothing but a
+      // refused submission can leave the clock spent while the choice is still pending.
+      if (!this.secureWindowOpen) {
+        this.expireSecureWindow();
+        return;
+      }
       this.prospector.updateSimulation(0, this.timeAlive, this.hero.group.position);
       if (this.secureChoice !== 'pending') return;
       this.secureChoiceElapsed += STEP_SECONDS;
-      if (this.secureChoiceElapsed + Number.EPSILON >= Balance.offers.pickSeconds) {
-        this.defaultedSecure += 1;
-        this.answerSecureChoice(this.boot.overtime ? 'rush' : 'bank');
-      }
+      if (this.secureChoiceElapsed + Number.EPSILON >= Balance.offers.pickSeconds) this.expireSecureWindow();
       return;
     }
     this.simTick += 1;
@@ -2501,6 +2547,10 @@ export class HeadlessContractSim {
       run: {
         secured: this.secured,
         pendingSecure: this.secureChoice === 'pending',
+        // F-MCAP-1 cure B: the window's own clock, published beside the choice so the door can
+        // tell "answer this" from "this is over". Absent in the browser's diagnostics, where
+        // `StandingOrders.runtimeState` falls back to `pendingSecure` and nothing moves.
+        secureWindowOpen: this.secureWindowOpen,
         lastRunEndedReason: this.preserveFell
           ? 'preserve_fell'
           : this.ventGuttered ? 'vent_guttered' : this.secureChoice === 'bank' ? 'secured' : null,

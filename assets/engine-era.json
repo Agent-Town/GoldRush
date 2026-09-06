@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "70c31bbbb782ee669ee254bafb04715ad2583727e04fdf34a39881d3c065d7be",
+  "engineHash": "60415d3f1be740e2cdb3236736adbe18bb9bf508f1c472ed17167725b590bae2",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -481,6 +481,12 @@
       "engineHash": "70c31bbbb782ee669ee254bafb04715ad2583727e04fdf34a39881d3c065d7be",
       "pinnedAt": "2026-09-06",
       "cause": "mare-claim-air-prevalent: the Mare Claim's air wall rules the whole ride, authored per contract (regolithRequired 4, regolithWindowWaves 4; E8PhysicsSystem consumer, now.air.regolith view fields), stacked on portraits 91dbc88a",
+      "aliases": []
+    },
+    {
+      "engineHash": "60415d3f1be740e2cdb3236736adbe18bb9bf508f1c472ed17167725b590bae2",
+      "pinnedAt": "2026-09-06",
+      "cause": "secure-choice-refusal-both-cures: while the secure window is open a submission that is not a single SECURE_CHOICE is refused visibly (SECURE_CHOICE_ONLY on the order channel + one gr-sim stderr line) and each refusal spends one fixed step of the pending clock, so the choice defaults through the existing expiry path and no policy can hang a heat (F-MCAP-1, owner: both); stacked on air-wall 70c31bbb",
       "aliases": []
     }
   ],
