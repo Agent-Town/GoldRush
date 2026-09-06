@@ -680,6 +680,11 @@ export const E4_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // portrait in assets/processed, and src/story/speakers.ts:1 requires one per speaker id, so this
 // table voices them through registered speakers exactly as ss-04 voiced the E3 twins through the
 // tavernkeeper (beats.ts:425-432). No speaker was added.
+// STILL TRUE after portraits-e5-e10-batch (2026-09-06), and measured rather than assumed: that
+// batch processed every `assets/raw/tf-*-e{6,7,8,9}.png` plate and E5 HAS NONE - `ls assets/raw/
+// tf-*-e5.png` returns nothing, so no harbormaster, tide-teller, cannery-hand, shipwright or
+// pearl-diver portrait exists to register. E5 is the one chapter the batch could not serve, and
+// closing F-SS06-1 needs an ART generation task, not a processing one.
 export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:248,280
@@ -830,10 +835,19 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // Chapter E6 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and
 // Gazette headlines are ordinary, attributed beats, not a second narrative system.
 // Cast note (honesty guard): STORYBOOK lines 341-345 name five new E6 townsfolk (reactor steward,
-// kitchen chemist, appliance wrangler, diner carhop, Combine defector). None has a processed
-// portrait - assets/raw/tf-*-e6.png exist but assets/processed/ has no tf-*-e6 entry - so adding
-// them to speakers.ts would render a broken portrait. They are voiced here by the registered
-// speakers who would carry their news in town, and are named inside the lines.
+// kitchen chemist, appliance wrangler, diner carhop, Combine defector). They are voiced here by
+// the registered speakers who would carry their news in town, and are named inside the lines.
+// UPDATED 2026-09-06 by portraits-e5-e10-batch - THE PORTRAIT HALF OF THIS NOTE IS NOW STALE AND
+// IS CORRECTED HERE: all six E6 plates are processed and all six ids are registered
+// (`reactor-steward-e6`, `kitchen-chemist-e6`, `appliance-wrangler-e6`, `diner-carhop-e6`,
+// `combine-defector-e6`, `depot-clerk-e6`), so a speaker id no longer renders broken art. NO E6
+// BEAT WAS RE-KEYED ANYWAY, and the reason is the copy, not the art: every E6 line that names a
+// cast member is written as a REPORT about them - `e6-steward-doorless-dome` says "She says it has
+// never needed one" and `e6-defector-catalog` says "he wrote himself", so those two put a
+// third-person pronoun in the speaker's own mouth, while `e6-pen-first-tenant` and
+// `e6-tavern-wrangler-drinks-free` are the tavernkeeper's own reports, which the batch's own rule
+// leaves alone. Re-attributing any of them needs a COPY revision, which that task's firewall
+// forbade. See assets/LEDGER.md's portraits-e5-e10-batch row for the per-beat table.
 export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:374,324
@@ -959,23 +973,32 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 411-514, E5 at 683-828,
-// E6 at 837-960): the era's tavern tales and Gazette headlines are ordinary attributed beats in
+// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 411-514, E5 at 688-833,
+// E6 at 851-974): the era's tavern tales and Gazette headlines are ordinary attributed beats in
 // THIS table, not a second narrative system (tavern-tale shape: e2-depot-wedding at lines
-// 367-374, e3-tavern-twins-defect at 485-494, e5-tavern-locomotive-argument at 789-798;
+// 367-374, e3-tavern-twins-defect at 485-494, e5-tavern-locomotive-argument at 794-803;
 // Gazette-headline shape: e2-iron-correction-rumor-one at 375-382, e3-gazette-two-offers at
-// 433-442, e6-gazette-the-printing at 941-950). Mystery law holds: the Gazette prints what it
+// 433-442, e6-gazette-the-printing at 955-964). Mystery law holds: the Gazette prints what it
 // can prove and never the meaning. Every beat cites its storybook line; artKey is set only
 // where a plate exists on disk under assets/raw/.
 // Cast note (honesty guard): STORYBOOK lines 421-425 name six E7 cast members (Chalk the first
 // made citizen, the switchboard chief, the playbook librarian, the drone keeper, the tape
-// courier kid, the Combine defector at the Exchange). None has a processed portrait -
-// assets/raw/tf-*-e7.png exist but assets/processed/ has no tf-*-e7 entry, and speakers.ts:10-16
-// resolves portraits from assets/processed/ - so a new speaker id would render broken art. They
+// courier kid, the Combine defector at the Exchange). They
 // are voiced here by the registered speakers who carry their news in town, and are named inside
 // the lines. Mei (the `newsie` speaker) IS registered and carries both Gazette beats, which is
 // exactly owner ruling #11 (STORYBOOK:424,461): the chief runs the boards, the defector runs the
 // Exchange, and Mei runs its news desk.
+// UPDATED 2026-09-06 by portraits-e5-e10-batch - THE PORTRAIT HALF OF THIS NOTE IS NOW STALE AND
+// IS CORRECTED HERE: all six E7 plates are processed and all six ids are registered
+// (`civic-agent-e7` = CHALK per lore/characters.md:14 and assets/LEDGER.md row 64,
+// `switchboard-chief-e7`, `playbook-librarian-e7`, `drone-keeper-e7`, `tape-courier-e7`,
+// `combine-defector-e7`), so a speaker id no longer renders broken art. NO E7 BEAT WAS RE-KEYED
+// ANYWAY, and the reason is the copy: `e7-chalk-first-filing` says "Its first filing was a set of
+// rescue coordinates" and `e7-mission-sent-column` says "in her own hand", both of which put a
+// third-person pronoun for the speaker in the speaker's own mouth; `e7-echo-arrival` is already
+// correctly the Prospector's first-person line; `e7-starship-countdown` is the elder's
+// science-complete exit hook, the shape every chapter uses. Re-attributing them needs a COPY
+// revision, which that task's firewall forbade. See assets/LEDGER.md's portraits-e5-e10-batch row.
 export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     // lore/STORYBOOK.md:449,435
@@ -1134,18 +1157,23 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 411-514, E6 at lines 837-960):
+// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 411-514, E6 at lines 851-974):
 // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
 // (tavern-tale shape: e3-tavern-twins-defect at lines 485-494 and e6-tavern-wrangler-drinks-free
-// at lines 931-940; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second
+// at lines 945-954; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second
 // narrative system. Mystery law holds: the Gazette prints what it can prove and never the meaning.
 // SPEAKER GAP (reported, not invented, the same finding ss-06 and ss-07 recorded for E5 and E6):
 // STORYBOOK lines 485-486 name five new E8 townsfolk (the moon-born child, the dome gardener, the
-// launch master, the suit fitter, the He-3 assayer). None has a processed portrait - assets/raw/
-// holds tf-moon-born-child-e8.png, tf-dome-gardener-e8.png, tf-launch-master-e8.png and
-// tf-suit-fitter-e8.png, but assets/processed/ has no tf-*-e8 entry, and src/story/speakers.ts:9-15
-// requires a processed portrait per speaker id - so adding them would render a broken portrait.
-// They are voiced here through registered speakers and named inside the lines. No speaker added.
+// launch master, the suit fitter, the He-3 assayer).
+// They are voiced here through registered speakers and named inside the lines.
+// UPDATED 2026-09-06 by portraits-e5-e10-batch - THE PORTRAIT HALF OF THIS NOTE IS NOW STALE AND
+// IS CORRECTED HERE: the four E8 plates are processed and registered (`moon-born-child-e8`,
+// `dome-gardener-e8`, `launch-master-e8`, `suit-fitter-e8`). THE HE-3 ASSAYER STILL HAS NO
+// PORTRAIT - she is named in the storybook and no `tf-*-e8` plate was ever generated for her, so
+// four of the five, not five. NO E8 BEAT WAS RE-KEYED, and the reason is the copy: `e8-breach-
+// drill` says "nobody followed her" and `e8-tavern-river-question` is the tavernkeeper's own tale,
+// while `e8-riverward-launch` is the elder's science-complete exit hook. Re-attributing them needs
+// a COPY revision, which that task's firewall forbade. See assets/LEDGER.md's portraits-e5-e10-batch row.
 // Household Law (lore/canon-rules.md:19-20): the moon-born child is a minor, so the Canteen beat
 // keeps the child among the whole town and its gardener, never alone.
 // ADR-001 holds: the era's arms are light, magnets and thrown regolith. No firearms are named.
@@ -1330,11 +1358,19 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 // Chapter E9 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and
 // Gazette headlines are ordinary, attributed beats, not a second narrative system.
 // Cast note (honesty guard): STORYBOOK lines 540-542 name five new E9 townsfolk (the moon-born
-// child grown, the canal reeve, the greenkeeper, the ice quarry chief, the weather warden). None
-// has a processed portrait - assets/raw/tf-canal-reeve-e9.png and its four siblings exist, but
-// assets/processed/ has no tf-*-e9 entry - so adding them to speakers.ts would render a broken
-// portrait. They are voiced here by the registered speakers who would carry their news in town,
+// child grown, the canal reeve, the greenkeeper, the ice quarry chief, the weather warden).
+// They are voiced here by the registered speakers who would carry their news in town,
 // and are named inside the lines, the way ss-07 voiced the E6 cast.
+// UPDATED 2026-09-06 by portraits-e5-e10-batch - THE PORTRAIT HALF OF THIS NOTE IS NOW STALE AND
+// IS CORRECTED HERE: all five E9 plates are processed and registered (`moon-born-child-e9`,
+// `canal-reeve-e9`, `greenkeeper-e9`, `ice-quarry-chief-e9`, `weather-warden-e9`), and ONE beat
+// was re-keyed on the strength of it: `e9-water-ledger-opened`, clerk -> canal-reeve-e9, copy
+// byte-identical (its own comment carries the reasoning). The other four E9 beats that name a
+// cast member keep their stand-in speaker because the copy blocks the swap: `e9-grass-square-
+// planted` says "They tend it", `e9-greenkeeper-outside` says "she grows the stubborn kind",
+// `e9-first-swim` says "They came up" - each a third-person pronoun for the person who would be
+// speaking - and `e9-generation-ark-horizon` is the elder's science-complete exit hook. Those
+// need a COPY revision, which that task's firewall forbade. See assets/LEDGER.md's portraits-e5-e10-batch row.
 // Trigger note (honesty guard): the Old Digger is NOT a twist.baron. The Dome Basin's twist
 // declares only clockTicks and an enemy roster (assets/contracts/epoch-9-redfields/contracts.json
 // :179-181), and boss-arrival / boss-defeat are emitted from the baron path alone (src/game/
@@ -1360,9 +1396,17 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
   {
     // lore/STORYBOOK.md:541,567
+    // RE-KEYED by portraits-e5-e10-batch, clerk -> canal-reeve-e9, copy and citation untouched.
+    // The only beat in E5-E10 that passes all three arms: the line NAMES the reeve, carries no
+    // third-person pronoun for her (so the role-noun self-reference reads like the tavernkeeper's
+    // own "The house has quit taking sides" at e5-tavern-locomotive-argument), and water law is
+    // the reeve's own office while E9's clerk line poles the canal packet-boat
+    // (lore/STORYBOOK.md:542) - so `clerk` here was a stand-in for a missing portrait, not an
+    // attribution. Every other candidate is listed with its blocking reason in
+    // assets/LEDGER.md's portraits-e5-e10-batch row; they need a COPY pass, which this task may not make.
     id: 'e9-water-ledger-opened',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'canal-reeve-e9',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
@@ -1503,22 +1547,40 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 411-514, E8 at lines 1153-1328):
+// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 411-514, E8 at lines 1181-1356):
 // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
 // (tavern-tale shape: e3-tavern-twins-defect at lines 485-494 and e8-tavern-river-question at lines
-// 1289-1298; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second narrative system.
+// 1317-1326; Gazette shape: e3-gazette-two-offers at lines 433-442), not a second narrative system.
 // Mystery law holds: the Gazette prints what it can prove and never the meaning.
 // LANDED 2026-09-06 (attended drain, CLAUDE.md section 4.10b): the E8 coordinates above were re-based
 // by +175 in the landing commit, E7 and E9 having landed on main after this lane was cut. Measured on
 // the merged file, not inherited: E8 at 1153-1328, e8-tavern-river-question at 1289-1298. The E3
 // coordinates and every lore/STORYBOOK.md citation below were unaffected.
+// RE-BASED AGAIN 2026-09-06 by portraits-e5-e10-batch, +28 at this seam: that batch inserted comment
+// blocks into the E5-E9 cast notes above, so E8 moved 1153-1328 -> 1181-1356 and
+// e8-tavern-river-question 1289-1298 -> 1317-1326. Both re-derived by locating the symbols in the
+// edited file, not by adding the shift to the inherited number. The +5 (E5) and +14 (E6) coordinates
+// in the E7 and E8 headers were re-based the same way in the same commit.
+// ⚠ AND THE +175 RE-BASE ABOVE MISSED ONE, found by the same sweep (F-PORT-3): the e10-charter-press
+// comment at the end of this table cited `e8-riverward-launch at lines 1144-1153` while the true
+// range on that very commit was 1319-1327. It is corrected there to 1347-1355. A re-base that fixes
+// a table header is not finished until every citation in the table's body is re-derived too.
 // SPEAKER GAP (reported, not invented, the same finding ss-06, ss-07 and ss-09 recorded for E5, E6
 // and E8): STORYBOOK lines 584-586, 618 and 621 name this chapter's cast (the eldest heir, the Baron
 // in his last act of keeping, the Old Digger, the Quack, Chalk at the manifest, the Charter-Keeper,
 // the child at the lever). assets/processed/ holds no e10 portrait of any of them, and
-// src/story/speakers.ts:9-15 requires a processed portrait per speaker id, so adding one would
+// src/story/speakers.ts requires a processed portrait per speaker id, so adding one would
 // render a broken portrait. They are voiced here through registered speakers and named inside the
 // lines. No speaker added.
+// RE-CHECKED 2026-09-06 by portraits-e5-e10-batch and STILL TRUE AS WRITTEN, with one nuance
+// worth stating: `ls assets/raw/tf-*-e10.png` returns nothing, so the batch confirmed by
+// measurement that no E10 plate of anyone exists. Two of this cast do now have a portrait from an
+// EARLIER era - `civic-agent-e7` (Chalk) and `moon-born-child-e9` - and either could carry an E10
+// beat if the copy allowed it. It does not: `e10-chalk-manifest` closes on "the form is still the
+// heirloom", which is the CLERK LINE's own signature (compare e8-mass-driver-waybill, "Seventh of
+// my line on the same railroad ... The form is the heirloom") and reads as the clerk admiring
+// Chalk, not as Chalk. The heir, the Baron, the Old Digger, the Quack and the Charter-Keeper have
+// no plate in any era. NO E10 BEAT WAS RE-KEYED. See assets/LEDGER.md's portraits-e5-e10-batch row.
 // TRIGGER GAP (reported, not invented, per the honesty guard): THE QUIET is a boss in the storybook
 // (lines 609-613) but no epoch-10-deepsky contract carries a twist.baron, and boss-arrival /
 // boss-defeat are emitted only when one exists (src/game/Game.ts:5987-5991 and src/game/Game.ts:6250).
@@ -1730,7 +1792,10 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
   {
     // lore/STORYBOOK.md:621; the last node opens the Press, in the shape of e8-riverward-launch at
-    // lines 1144-1153. Household Law (lore/canon-rules.md:19-20): the child is at the lever with her.
+    // lines 1347-1355 (F-PORT-3: this cited 1144-1153, stale by -175 since the E10 landing commit,
+    // whose own +175 re-base fixed the table header and missed this body citation; re-derived by
+    // locating the beat, not by arithmetic). Household Law (lore/canon-rules.md:19-20): the child is
+    // at the lever with her.
     id: 'e10-charter-press',
     trigger: 'science-complete',
     speaker: 'elder',
