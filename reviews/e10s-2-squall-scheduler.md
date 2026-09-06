@@ -1,0 +1,31 @@
+# Review: e10s-2-squall-scheduler — the Ember Shore's Static squall, phase machine + thin presentation (E10S-2; lane-a worktree, Claude Opus 5 implementer, attended drain 2026-09-06 morning)
+
+**Slice/branch/tip:** `e10s-2-squall-scheduler` · `feat/e10s-2-squall` · commits `e4ea0b574`, `443b7c41e`, `45f6f9410` on base `41b1e63cf` · merged to main: see the ledger row (first-parent merge; the collisions were the ledger and the Game/HeadlessContractSim hook sites beside the Canyon Works ladder, resolved by the drain).
+**Verdict:** MERGED. The first rung of the E10S ladder (owner 2026-09-06: "then lets do the E10S ladder"): a deterministic squall phase machine in both engines (calm 60 s → telegraph 8 s → squall 25 s → recover 8 s, a 101 s cycle of 3,030 ticks; transitions event-logged at 0 / 1801 / 2041 / 2791 / 3031), a render-side vignette/desaturation stub and a real ambience mix duck during the squall (gain exactly 1 on every other map), the phase published on the view and in the mechanics rule. Nothing else, by design: no vent, warmth, stoke, loss, latch, anchors or admission (F-2165-1 honoured); the doubled mote pressure is published on the view and NOT applied, so the map's outcome does not move; E10S-3 wires the number.
+
+## What it does
+`src/systems/E10SquallScheduler.ts` (private ctor + `create()` off the contract, refuse-to-arm, fixed-step `update`, presentation-stripped diagnostics, zero render imports: `InterferenceFrontSystem`'s shape, deliberately not its band geometry), `src/systems/E10SquallPresentation.ts` (the stub and the duck), hooks in `Game.ts` and `HeadlessContractSim.ts`, `MechanicsManifest` (the squall rule), `vite-env.d.ts` (`squall` + `squallPresentation` on the diagnostics, F-E10S2-5), `twist.emberShore.squall` on the `e10-ember-shore` row with `recoverSeconds: 8` in data (F-E10S2-2), the dependency entry's description narrowed to name the landed half. `scripts/e10-squall-scheduler.test.mjs` (12 tests) and `e2e/e10-ember-shore-squall.spec.ts` (plain boot: calm, squall blowing, cycle closed).
+
+## Evidence
+| Gate | Where | Result |
+|---|---|---|
+| Determinism | worktree | two headless 3,100-tick runs: identical transition ticks; two headless idle-to-terminal runs: identical `fnv1a32:30b18787` (w3, 112,467 ms, 55 kills, secured false: Law 2 holds, idle dies at wave 3 after exactly one squall); browser desktop and mobile: 0/1801/2041/2791/3031 asserted equal to the table (`artifacts/e10s-2-squall/determinism.json`) |
+| Floors | worktree, `null-floor-anchors.mjs --check` | 79 rows across 34 contracts byte-identical; the only difference the eraStamp (pre-existing on any branch cut from `41b1e63cf`); `e10-ember-shore`, `e10-last-claim` and `e10-river` have NO floor rows because `bench-seeds.json` carries no e10 key (vacuous-by-absence, said out loud) |
+| Guards | worktree | new `e10-squall-scheduler` 12/12; `view-schema-guard` + `e3-mask-tables` + `board-launchable-guard` 38/38; `same-game-audit` + `door-admission-ratchet` 4/4; `skillmd-guard`, `skillmd-contracts-guard`, `null-floor-anchors`, `bench-seeds` green once the pin lands; `law-pointer-guard` red on the predicted `fire.md` rot (F-E10S2-3, re-based by the drain) |
+| tsc / build | worktree | clean / green (24.4 s, herald under ceiling) |
+| e2e | worktree, own dev server on 5301, both projects | `e10-ember-shore-squall` 2/2 + 2/2; `e10-river-boot-guard` 1/1 + 1/1; playability smoke cell `e10-ember-shore` 1/1 + 1/1 (boots as itself, wave 2, zero errors); `e7-relay-rush-front` 4/4 desktop (adjacency to the Game.ts hook) |
+| Engine era | worktree hash `df00b2a3…` on the pre-canyon tree | re-measured on the merged tree by the drain and pinned there |
+| Attended on the merged tree | see the drain commit and the ledger row | tsc, the guards, the pointer re-base, build, the squall spec + the river boot guard + the smoke cell at one worker on both projects |
+
+Screenshots: `artifacts/e10s-2-squall/shots/{desktop,mobile}-chrome-{plain-boot-calm,squall-blowing,cycle-closed-calm}.png`, `smoke-{desktop,mobile}-chrome.png` (2.4 MB total).
+
+## Merge classification
+Base `41b1e63cf`; main moved by the receipts, ADR-004 and the Canyon Works second lever (`510016e55`), which touched `Game.ts`, `HeadlessContractSim.ts`, `MechanicsManifest.ts`, `ContractFamilies.ts` and `package.json` at other sites. `src/systems/E10SquallScheduler.ts`, `src/systems/E10SquallPresentation.ts`, `scripts/e10-squall-scheduler.test.mjs`, `e2e/e10-ember-shore-squall.spec.ts`, `artifacts/e10s-2-squall/*`: NEW. `src/game/Game.ts`, `src/sim/HeadlessContractSim.ts`, `src/agent/MechanicsManifest.ts`, `src/vite-env.d.ts`, `assets/contracts/epoch-10-deepsky/contracts.json`, `package.json`: LANE-TOUCHED, additive beside the ladder's hunks. `tasks/BACKLOG.md`: MAIN-MOVED, unioned. Attended in the landing commit: `scripts/fire.md`'s `Game.ts:2547–2548` pointer re-based to the measured members (F-E10S2-3) and the guard baseline updated.
+
+## Findings
+- **F-E10S2-1 (schema, non-blocking):** `engineDependencies` entries admit only `status: 'missing'` (`src/meta/ContractFamilies.ts:1806-1810`), so the scheduler half cannot flip to `landed`; the description names what landed and what stays missing. A `landed` status is a one-line schema change for the E10S-3 slice, which retires the whole entry anyway.
+- **F-E10S2-2 (OWNER WORD RETUNES):** `recoverSeconds: 8` is authored, not ratified: the spec names three durations (60/8/25) and four phases; the recover phase was derived as the telegraph's mirror and put in data so one token retunes it. E5's own tail ratio would have made it 35 s; that was refused as an invention.
+- **F-E10S2-3 (pointer rot, cured in the landing commit):** the Game.ts hook moved `placeBuilding`/`panAt`; `scripts/fire.md:28` re-based by measurement, not by the predicted +20 alone.
+- **F-E10S2-4:** the era-5 pin owed and landed by the drain.
+- **F-E10S2-5 (firewall interpretation, declared):** four lines in `src/vite-env.d.ts` for the diagnostics fields, the coupled surface of the view builder (F-2258-1's shape); accepted.
+- **Next rungs:** E10S-3 (the preserve consumer: warmth, stoke, loss, the secure latch, applying the doubled mote pressure) and E10S-4 (the door: anchors, prover, admission). Masters follow from the B5 spec.
