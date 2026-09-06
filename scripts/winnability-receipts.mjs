@@ -41,7 +41,10 @@ for (const contract of contracts) {
     .sort((a, b) => a.submittedAt - b.submittedAt || a.reel.id.localeCompare(b.reel.id))[0];
 
   if (!first) {
-    receipts.push({ epochId: contract.epochId, contractId: contract.id, status: 'unclaimed' });
+    // F-LINEAGE-6 (attended 2026-09-06): a contract whose LAST verified row was retired under ADR-004 still has
+    // its first-secure fact; the stored receipt keeps it (append-only, F-RECEIPTS-1) instead of falling to 'unclaimed'.
+    const kept = stored.get(contract.id);
+    receipts.push(kept ?? { epochId: contract.epochId, contractId: contract.id, status: 'unclaimed' });
     continue;
   }
 

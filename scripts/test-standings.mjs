@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -32,11 +33,13 @@ try {
   const { CONTRACT_BUNDLES, MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
+  const { onRequest: onRequestReassay } = await vite.ssrLoadModule('/functions/api/standings/reassay.ts');
   const { onRequest: onRequestRefusals } = await vite.ssrLoadModule('/functions/api/refusals.ts');
   httpRoutes = {
     '/api/standings': onRequest,
     '/api/standings/assay-queue': onRequestAssayQueue,
     '/api/standings/assay-verdict': onRequestAssayVerdict,
+    '/api/standings/reassay': onRequestReassay,
     '/api/refusals': onRequestRefusals,
   };
   for (backend of ['kv', 'sqlite']) {
@@ -45,6 +48,7 @@ try {
     checkTapeBuildMetadata(validateTape);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
+    await checkLineageReassay(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
     await checkOperatorProbes(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -256,6 +260,162 @@ async function checkReplayableBoard(onRequest) {
   equal(refused.body.error, 'reel_not_current', 'the door names the current-era failure');
   equal(refused.body.message, `This reel rode era ${engineEra.era - 1}; the county accepts era ${engineEra.era} '${engineEra.name}'.`, 'the door gives the honest era reason');
   equal(await kv.get(key), storedBytes, 'the refused tape is never stored');
+}
+
+// THE LINEAGE RE-ASSAY (ADR-004, owner ruling 2026-09-06). The fixture is the case in point's own
+// shape: two verified standings on `e3-moth-season`, one recorded under the CURRENT engine and one
+// under an earlier era-5 pin, exactly as heat 12's Opus row and heat 11's Fable row sit today.
+async function checkLineageReassay(onRequest, queueRoute, verdictRoute, reassayRoute) {
+  const contractId = 'e3-moth-season';
+  const epochId = 'epoch-3-voltage';
+  const board = `/api/standings?contract=${contractId}&epoch=${epochId}`;
+  const key = `standings:s2:${epochId}:${contractId}`;
+  const kv = makeKv();
+  const olderPin = engineEra.pins[0].engineHash;
+
+  const current = storedRowFor(1, contractId, epochId);
+  current.profileName = 'Claude Opus 5';
+  current.stack = { declaredBy: 'self', model: 'claude-opus-5', harness: 'claude-code-cli', harnessVersion: '1' };
+  current.tape.id = 'opus-moth-reel';
+  current.submittedAt = 2;
+  current.assay = 'verified';
+  current.assayedAt = 20;
+  current.assayHash = current.tape.eventLogHash;
+  current.securedSnapshot = { waves: current.waves, timeAlive: current.timeAlive, gold: current.gold };
+
+  // The stale row's score is its GOAL SNAPSHOT, which does NOT equal its reel's final outcome — the
+  // `retained: 'goal_snapshot'` shape the door mints on a re-POST. A re-queue that forgot this would
+  // not "fail": the row would simply stop validating and vanish from storage on the next read.
+  const stale = storedRowFor(2, contractId, epochId);
+  stale.profileName = 'Claude Fable 5';
+  stale.stack = { declaredBy: 'self', model: 'claude-fable-5', harness: 'claude-code-cli', harnessVersion: '1' };
+  stale.tape.id = 'fable-moth-reel';
+  stale.tape.meta = { ...stale.tape.meta, engineHash: olderPin };
+  stale.submittedAt = 1;
+  stale.assay = 'verified';
+  stale.assayedAt = 10;
+  stale.assayHash = stale.tape.eventLogHash;
+  stale.timeAlive = 90;
+  stale.securedSnapshot = { waves: stale.waves, timeAlive: 90, gold: stale.gold };
+  await kv.put(key, JSON.stringify([current, stale]));
+
+  const before = await call(onRequest, 'GET', board, undefined, kv);
+  equal(before.body.board.map((row) => row.profileName), ['Claude Opus 5', 'Claude Fable 5'], 'both standings rank before the re-assay');
+  equal(before.body.retiredCount, 0, 'and neither is retired yet');
+  equal(JSON.parse(await kv.get(key)).length, 2, 'the goal-snapshot row survives a plain board read');
+
+  const reason = 'e3-moth-season composition changed at engine pin 324bb3cd0e32f2b7 (2026-09-05)';
+  const request = { epochId, contractId, reason };
+  equal((await workerCall(reassayRoute, 'POST', '/api/standings/reassay', request, kv, undefined)).status, 503, 'the re-assay verb fails closed without a configured secret');
+  equal((await workerCall(reassayRoute, 'POST', '/api/standings/reassay', request, kv, SECRET, 'wrong')).status, 401, 'a wrong key cannot re-assay a contract');
+  equal((await workerCall(reassayRoute, 'GET', '/api/standings/reassay', undefined, kv, SECRET)).status, 405, 'the re-assay verb is POST only');
+  equal((await workerCall(reassayRoute, 'POST', '/api/standings/reassay', { epochId, contractId }, kv, SECRET)).status, 400, 'a re-assay without a stated reason is refused');
+  equal((await workerCall(reassayRoute, 'POST', '/api/standings/reassay', { epochId, contractId: 'no-such-contract', reason }, kv, SECRET)).status, 400, 'a re-assay of an unknown contract is refused');
+  equal((await workerCall(reassayRoute, 'POST', '/api/standings/reassay', { ...request, extra: 1 }, kv, SECRET)).status, 400, 'the re-assay body keeps the strict key arithmetic');
+  equal(await kv.get(key), JSON.stringify([current, stale]), 'every refused re-assay leaves the board byte-identical');
+
+  const requeue = await workerCall(reassayRoute, 'POST', '/api/standings/reassay', request, kv, SECRET);
+  equal(requeue.status, 200, 'the assayer key re-assays the contract');
+  equal(requeue.body.requeued, 2, 'every verified row of the contract goes back into the queue');
+  const requeued = JSON.parse(await kv.get(key));
+  equal(requeued.length, 2, 're-queueing deletes nothing');
+  equal(requeued.map((row) => row.assay), ['pending', 'pending'], 'both rows are pending again');
+  equal(requeued.map((row) => row.lineage.reason), [reason, reason], 'each row carries the operator cause');
+  equal((await call(onRequest, 'GET', board, undefined, kv)).body.board.length, 2, 'a re-queued board does not flicker: pending rows keep their ranks while the assay runs');
+
+  const requeuedBytes = await kv.get(key);
+  const second = await workerCall(reassayRoute, 'POST', '/api/standings/reassay', request, kv, SECRET);
+  equal(second.body.requeued, 0, 'a second call re-queues nothing');
+  equal(await kv.get(key), requeuedBytes, 'and writes nothing: the verb is idempotent while the assay is outstanding');
+
+  const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, kv, SECRET);
+  equal(queue.body.queue.map((row) => row.locator.tapeId).sort(), ['fable-moth-reel', 'opus-moth-reel'], 'both re-queued rows reach the assayer');
+  const opusLocator = queue.body.queue.find((row) => row.locator.tapeId === 'opus-moth-reel').locator;
+  const fableLocator = queue.body.queue.find((row) => row.locator.tapeId === 'fable-moth-reel').locator;
+
+  const reverified = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict',
+    verdict(opusLocator, 'verified', undefined, current.tape.eventLogHash, current.securedSnapshot), kv, SECRET);
+  equal(reverified.body.assay, 'verified', 'a standing that still replays is verified again');
+  const retired = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict',
+    verdict(fableLocator, 'rejected', 'eventLogHash mismatch: claimed fnv1a32:1234abcd, replayed fnv1a32:9be0399e', 'fnv1a32:9be0399e'), kv, SECRET);
+  equal(retired.body.assay, 'retired', 'a re-queued standing that no longer replays is RETIRED, not rejected');
+
+  const settled = JSON.parse(await kv.get(key));
+  const keptRow = settled.find((row) => row.tape.id === 'opus-moth-reel');
+  const retiredRow = settled.find((row) => row.tape.id === 'fable-moth-reel');
+  equal(keptRow.assay, 'verified', 'the replaying standing holds its verdict');
+  equal(keptRow.submittedAt, 2, 'and keeps its original first-secure date');
+  equal(keptRow.lineage, undefined, 'a row that replays sheds its lineage mark');
+  ok(keptRow.assayedAt > 20, 'only the assay date moves');
+  equal(retiredRow.assay, 'retired', 'the diverging standing is retired');
+  equal(retiredRow.submittedAt, 1, 'a retirement never moves the date the standing was earned');
+  equal(retiredRow.assayReason, `lineage: recorded under ${olderPin}, no longer replays under ${engineEra.engineHash}`, 'the retirement names both engines');
+  equal(retiredRow.assayHash, 'fnv1a32:9be0399e', 'and keeps the hash the replay actually produced');
+  equal(retiredRow.lineage.reason, reason, 'the almanac keeps the operator cause on the retired row');
+
+  const after = await call(onRequest, 'GET', board, undefined, kv);
+  equal(after.body.board.map((row) => row.profileName), ['Claude Opus 5'], 'the ranked board excludes the retired standing');
+  equal(after.body.retiredCount, 1, 'retiredCount counts it');
+  equal(after.body.rejectedCount, 0, 'a retirement is not a rejection');
+  const settledBytes = await kv.get(key);
+  await call(onRequest, 'GET', board, undefined, kv);
+  equal(await kv.get(key), settledBytes, 'reading the board leaves the retired row byte-identical (retention law)');
+  equal(JSON.parse(settledBytes).length, 2, 'the retired row stays in storage');
+
+  equal((await call(onRequest, 'GET', `${board}&reel=fable-moth-reel`, undefined, kv)).status, 200, 'WATCH still serves the retired reel');
+  const slip = await call(onRequest, 'GET', `${board}&verdict=fable-moth-reel`, undefined, kv);
+  equal(slip.body.assay, 'retired', 'the slip names the retirement');
+  equal(slip.body.ranked, false, 'and says the row holds no rank');
+  equal(slip.body.assayReason, retiredRow.assayReason, 'the slip serves the lineage reason');
+  equal(slip.body.lineage.reason, reason, 'and the cause the county gave for asking again');
+
+  // THE HONESTY GUARD, EXECUTED. `src/encyclopedia/reader.ts:695` validates a field-book cell's
+  // `assayStatus` against a closed list and DROPS any cell outside it — a browser reader this slice
+  // may not touch. It survives because a retired row is never ranked, and the field book is built
+  // from ranked rows alone, so the new state can never reach it. Asserted, not assumed.
+  const fieldBook = await call(onRequest, 'GET', `/api/standings?view=byStack&epoch=${epochId}`, undefined, kv);
+  const cells = fieldBook.body.byStack.flatMap((row) => row.contracts);
+  equal(fieldBook.body.byStack.map((row) => row.model), ['claude-opus-5'], 'the field book carries only the standing that replays');
+  equal(cells.some((cell) => cell.assayStatus === 'retired'), false, 'no field-book cell ever carries the retired state');
+
+  checkReceiptsIgnoreRetirement(after.body, current.tape.meta.engineHash, olderPin);
+}
+
+// F-RECEIPTS-1: a first-secure receipt is history, not derived state (ADR-004 rule 3). The real
+// generator is run against the post-retirement board — the retired rider is simply absent from it —
+// with the retired rider's own receipt already on disk, and the receipt must not move.
+function checkReceiptsIgnoreRetirement(boardBody, currentPin, olderPin) {
+  const directory = mkdtempSync(path.join(tmpdir(), 'gold-rush-receipts-'));
+  try {
+    const fixture = path.join(directory, 'fixture.json');
+    const output = path.join(directory, 'receipts.json');
+    writeFileSync(fixture, JSON.stringify({
+      defaultBoard: [],
+      boards: { 'e3-moth-season': boardBody.board },
+      reels: {
+        'opus-moth-reel': { reel: { meta: { engineHash: currentPin } } },
+        'fable-moth-reel': { reel: { meta: { engineHash: olderPin } } },
+      },
+    }));
+    const receipt = {
+      epochId: 'epoch-3-voltage',
+      contractId: 'e3-moth-season',
+      status: 'claimed',
+      species: 'claude-fable-5',
+      profileName: 'Claude Fable 5',
+      reelId: 'fable-moth-reel',
+      pin: olderPin,
+      date: new Date(1).toISOString(),
+    };
+    writeFileSync(output, `${JSON.stringify({ version: 1, source: 'fixture', contracts: [receipt] }, null, 2)}\n`);
+    const result = spawnSync(process.execPath, ['scripts/winnability-receipts.mjs', '--offline', '--fixture', fixture, '--output', output],
+      { cwd: process.cwd(), encoding: 'utf8', timeout: 120_000 });
+    equal(result.status, 0, `the receipts generator runs against the post-retirement board: ${result.stderr}`);
+    const regenerated = JSON.parse(readFileSync(output, 'utf8')).contracts.find((row) => row.contractId === 'e3-moth-season');
+    equal(regenerated, receipt, 'retiring a standing never moves the contract first-secure receipt');
+  } finally {
+    rmSync(directory, { recursive: true, force: true });
+  }
 }
 
 async function checkOperatorProbes(onRequest, queueRoute, verdictRoute) {
