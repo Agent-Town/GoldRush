@@ -853,6 +853,11 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
+// COPY REVISION 2026-09-06 (owner ruling, verbatim: "yes" to the copy revision): eight beats that named their cast in the
+// third person now speak in the cast member's own voice and are keyed to the portraits the portraits-e5-e10-batch landed
+// (e6-steward-doorless-dome, e6-defector-catalog, e7-chalk-first-filing, e7-mission-sent-column, e8-breach-drill,
+// e9-grass-square-planted, e9-greenkeeper-outside, e9-first-swim); every citation kept. e7-starship-countdown stays the
+// elder's: the science-complete exit hook is the elder's shape in every chapter (e5-deep-reactor-horizon, e9-generation-ark-horizon).
 // Chapter E6 follows the E2/E3 single-table shape above (E3 at lines 411-514): tavern tales and
 // Gazette headlines are ordinary, attributed beats, not a second narrative system.
 // Cast note (honesty guard): STORYBOOK lines 341-345 name five new E6 townsfolk (reactor steward,
@@ -885,11 +890,11 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:341,375
     id: 'e6-steward-doorless-dome',
     trigger: 'contract-unlocked',
-    speaker: 'elder',
+    speaker: 'reactor-steward-e6',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e6-glow-mesa',
-    lines: ["The tide-teller's apprentice keeps the dome now. It has no door.", 'She says it has never needed one. The dome knows its steward.'],
+    lines: ["I keep the dome now. It has no door.", "It has never needed one. The dome knows its steward."],
   },
   {
     // lore/STORYBOOK.md:342,375,331
@@ -906,11 +911,11 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:343
     id: 'e6-defector-catalog',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'combine-defector-e6',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e6-glow-mesa',
-    lines: ['Mint suit, corner table, every night with the catalog he wrote himself.', 'He annotates it page by page: what I should have written. Best enemy intel on the mesa.'],
+    lines: ["Corner table, every night, with the catalog I wrote myself.", "I annotate it page by page: what I should have written. Best enemy intel on the mesa."],
   },
   {
     // lore/STORYBOOK.md:374,328,333; Gazette mystery law - the paper prints only what it can prove.
@@ -1046,11 +1051,11 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:450,421; lore/characters.md:14 (CANON, owner ruling #13) - the chapter still prints CHALK as a proposal, the character file carries the ruling.
     id: 'e7-chalk-first-filing',
     trigger: 'contract-unlocked',
-    speaker: 'clerk',
+    speaker: 'civic-agent-e7',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
-    lines: ['Chalk has a desk at the claim office now, a portrait on the ledger wall, and rung zero like anybody starting out.', "Named for what the Elder's chair was holding the morning she was gone. Its first filing was a set of rescue coordinates."],
+    lines: ["I have a desk at the claim office now, a portrait on the ledger wall, and rung zero like anybody starting out.", "They named me for what the Elder's chair was holding the morning she was gone. My first filing was a set of rescue coordinates."],
   },
   {
     // lore/STORYBOOK.md:451,422
@@ -1077,11 +1082,11 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:416
     id: 'e7-mission-sent-column',
     trigger: 'contract-unlocked',
-    speaker: 'preacher',
+    speaker: 'switchboard-chief-e7',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e7-relay-valley',
-    lines: ['One made citizen to each answering jack, and only ever where somebody asked us first.', "The chief's rescue ledger grew a second column in her own hand: SENT. The tavern hung a little map with brass pins in it."],
+    lines: ["One made citizen to each answering jack, and only ever where somebody asked us first.", "My rescue ledger grew a second column in my own hand: SENT. The tavern hung a little map with brass pins in it."],
   },
   {
     // lore/STORYBOOK.md:438
@@ -1215,11 +1220,11 @@ export const E8_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:511,481
     id: 'e8-breach-drill',
     trigger: 'contract-unlocked',
-    speaker: 'preacher',
+    speaker: 'suit-fitter-e8',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e8-mare-claim',
-    lines: ['Before the second dome went up we drilled the breach, the way this town once drilled the fire brigade.', 'Gentle, thorough, and never grim. The suit fitter checked every seal twice, then stepped out of the light a minute, and nobody followed her.'],
+    lines: ["Before the second dome went up we drilled the breach, the way this town once drilled the fire brigade.", "Gentle, thorough, and never grim. I checked every seal twice, then stepped out of the light a minute, and nobody followed. This town holds the door."],
   },
   {
     // lore/STORYBOOK.md:475,476,511
@@ -1451,21 +1456,21 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:540
     id: 'e9-grass-square-planted',
     trigger: 'contract-unlocked',
-    speaker: 'schoolteacher',
+    speaker: 'moon-born-child-e9',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
-    lines: ['The moon-born child carried a grass square down the ramp in a tin and set it into the commons soil.', 'One green foot on a red world. They tend it every morning before the water crews go out.'],
+    lines: ["I carried the grass square down the ramp in a tin and set it into the commons soil.", "One green foot on a red world. I tend it every morning before the water crews go out."],
   },
   {
     // lore/STORYBOOK.md:542
     id: 'e9-greenkeeper-outside',
     trigger: 'contract-unlocked',
-    speaker: 'tavernkeeper',
+    speaker: 'greenkeeper-e9',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e9-dome-basin',
-    lines: ['The greenkeeper plants outside now. Her teacher grew comfort under glass; she grows the stubborn kind under sky.', 'The quarry chief cuts her the ice, the weather warden steers the front that waters her far rows, and the clerk poles their mail.'],
+    lines: ["I plant outside now. My teacher grew comfort under glass; I grow the stubborn kind under sky.", "The quarry chief cuts me the ice, the weather warden steers the front that waters my far rows, and the clerk poles our mail."],
   },
   {
     // lore/STORYBOOK.md:537; ruling #17 - the number is canon, the owner of it never is.
@@ -1565,11 +1570,11 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     // lore/STORYBOOK.md:570,543; written at the size the chapter fixes, and not one sentence larger.
     id: 'e9-first-swim',
     trigger: 'run-return-town',
-    speaker: 'elder',
+    speaker: 'moon-born-child-e9',
     oncePerProfile: true,
     presentation: 'card',
     when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e9-digger-kept'),
-    lines: ['C3 flooded and the basin filled and the water settled clear, and the monument ran its first open-sky water since the plaza.', 'The moon-born child walked past the whole crowd and dived. They came up and said a river sounds like everyone you love, yelling.'],
+    lines: ["C3 flooded and the basin filled and the water settled clear, and the monument ran its first open-sky water since the plaza.", "I walked past the whole crowd and dived. I came up, and now I know: a river sounds like everyone you love, yelling."],
   },
   {
     // lore/STORYBOOK.md:571; the exit hook toward E10, in the shape of e5-deep-reactor-horizon at lines 826-834.
