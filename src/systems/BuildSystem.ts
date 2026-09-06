@@ -11,10 +11,12 @@ import { Balance } from '../game/Balance';
 import {
   beaconCost as registryBeaconCost,
   buildableBlurb,
+  buildableCostAt,
   buildableDefs,
   buildableTierEffectLine,
   getBuildableDef,
   isBuildableId,
+  type BeaconLadder,
   type BuildableDef,
   type BuildableId,
 } from '../game/buildables';
@@ -456,6 +458,12 @@ export class BuildSystem {
   private repairs = 0;
   private repairGold = 0;
   private palisadeKitCredits = 0;
+  /**
+   * The ACTIVE contract's authored beacon ladder, or `undefined` for `Balance.beacon`'s own curve.
+   * Deliberately NOT cleared by `reset()`: a run reset re-runs the same contract, and its prices
+   * are a property of the claim, not of the run.
+   */
+  private contractBeaconLadder: BeaconLadder | undefined;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -1911,8 +1919,21 @@ export class BuildSystem {
     return getBuildableDef(this.selectedId) ?? buildableDefs[0];
   }
 
+  /**
+   * THE PER-CONTRACT BEACON LADDER, engine half (owner ruling 2026-09-06, "lets adjust the policy
+   * so the hard levels can be won"). Both engines call this exactly once at contract load —
+   * `Game.applyContractBeaconLadder` and the `run_reset` line in `HeadlessContractSim` — and
+   * `scripts/contract-beacon-ladder-override.test.mjs` is where the two are proved to agree.
+   * `undefined` restores `Balance.beacon`'s own curve, which is the guard's control case.
+   */
+  setContractBeaconLadder(ladder: BeaconLadder | undefined): void {
+    this.contractBeaconLadder = ladder && ladder.length > 0 ? ladder : undefined;
+  }
+
   private costFor(def: BuildableDef): number {
-    return def.id === 'palisade' && this.palisadeKitCredits > 0 ? 0 : def.costCurve(this.countFor(def.id));
+    return def.id === 'palisade' && this.palisadeKitCredits > 0
+      ? 0
+      : buildableCostAt(def, this.countFor(def.id), this.contractBeaconLadder);
   }
 
   private activePositions(
@@ -2568,7 +2589,7 @@ export class BuildSystem {
     if (missingFraction <= 0) return 0;
     const override = this.repairCostOverrides[id][index] ?? 0;
     if (override > 0 && this.wrecked[id][index]) return override;
-    const cost = this.buildCosts[id][index] || def?.costCurve(0) || 0;
+    const cost = this.buildCosts[id][index] || (def ? buildableCostAt(def, 0, this.contractBeaconLadder) : 0) || 0;
     const pct = Math.min(Balance.repair.capPctOfCost, Balance.repair.pctOfCost * missingFraction);
     return Math.ceil(cost * Math.max(0, pct));
   }

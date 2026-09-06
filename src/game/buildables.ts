@@ -201,8 +201,50 @@ export function buildableTierEffectLine(id: BuildableId, tier = 1): string | und
   return undefined;
 }
 
-export function beaconCost(index: number): number {
+/**
+ * THE PER-CONTRACT BEACON LADDER (owner ruling 2026-09-06, verbatim: "lets adjust the policy so
+ * the hard levels can be won"), the second of the two Canyon Works levers. The first was the purse
+ * (`twist.economy.bankCap`, `Economy.setContractBankCap`); this is its twin for PRICE.
+ *
+ * WHY A LADDER AND NOT A SCALE. What a rider and a first-timer both need is the number they will
+ * be charged, rung by rung. `Balance.beacon.costGrowth` produces its ladder by a formula that is
+ * then rounded to 5s, so a multiplier authored on one map yields prices nobody can state on a
+ * briefing card without repeating the arithmetic. An authored ladder IS the statement.
+ *
+ * WHY IT IS A PARAMETER AND NOT MODULE STATE. `deriveMechanicsManifest` prices EVERY contract's
+ * buildables, including contracts that are not the one being played (the E3 census derives four
+ * manifests in one process). A module-level "active ladder" would price the wrong map. So the
+ * ladder travels as an argument, `BuildSystem` holds the ACTIVE contract's copy on the instance,
+ * and `Balance.beacon` itself is never touched — a contract that authors nothing is byte-identical.
+ */
+export type BeaconLadder = readonly number[];
+
+/** The most rungs an authored ladder may declare: one price per beacon the claim can ever raise. */
+export const BEACON_LADDER_MAX_RUNGS = Balance.beacon.maxCount;
+
+export function beaconCost(index: number, ladder?: BeaconLadder): number {
+  if (ladder && ladder.length > 0) return ladder[Math.min(Math.max(0, Math.trunc(index)), ladder.length - 1)];
   return Math.ceil((Balance.beacon.costBase * Balance.beacon.costGrowth ** index) / 5) * 5;
+}
+
+/**
+ * The ONE site that prices a buildable instance. Both engines reach it through
+ * `BuildSystem.costFor`, and `MechanicsManifest` publishes what it returns, so a contract's ladder
+ * cannot be live in one engine and absent in the other or absent from the card.
+ */
+export function buildableCostAt(def: BuildableDef, built: number, ladder?: BeaconLadder): number {
+  return def.id === 'sentry_beacon' ? beaconCost(built, ladder) : def.costCurve(built);
+}
+
+/**
+ * Normalises an AUTHORED ladder into one the engines may price with, or `undefined`. The door
+ * (`validateContractEconomy`) refuses malformed ladders outright; this is the runtime's own belt —
+ * a shape that reached here anyway prices exactly as `Balance.beacon` does, never at 0 or NaN.
+ */
+export function resolveBeaconLadder(value: unknown): BeaconLadder | undefined {
+  if (!Array.isArray(value) || value.length === 0 || value.length > Balance.beacon.maxCount) return undefined;
+  if (!value.every((rung) => typeof rung === 'number' && Number.isInteger(rung) && rung > 0)) return undefined;
+  return value as BeaconLadder;
 }
 
 export function turretCost(index: number): number {

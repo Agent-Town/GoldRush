@@ -34,7 +34,7 @@ import { freshResearchState, hasResearchNode, loadResearchState } from '../meta/
 import type { RunTapeRunStart } from '../game/RunTape';
 import type { EffectiveStats } from '../game/StatSheet';
 import { resolveFiller, upgradeDefById, upgradeEffect } from '../game/Upgrades';
-import { isBuildableId } from '../game/buildables';
+import { isBuildableId, resolveBeaconLadder } from '../game/buildables';
 import { RunManager } from '../game/RunManager';
 import { listBoardContracts, listEpochs, loadContract, loadEpoch, type ContractBaronTwist, type ContractManifest, type ContractPowerGrid, type ContractRunBoot } from '../meta/ContractFamilies';
 import {
@@ -1322,7 +1322,7 @@ export class HeadlessContractSim {
       return applied;
     });
     this.bindEventLog();
-    this.economy.setContractBankCap(this.manifest.twist.economy?.bankCap); this.economy.apply(this.economyEvent({ type: 'run_reset' })); // THE CONTRACT PURSE (owner 2026-09-06) rides this line so no cited coordinate below moves; browser twin at `Game.applyContractBankCap`
+    this.economy.setContractBankCap(this.manifest.twist.economy?.bankCap); this.build.setContractBeaconLadder(resolveBeaconLadder(this.manifest.twist.economy?.beaconLadder)); this.economy.apply(this.economyEvent({ type: 'run_reset' })); // THE CONTRACT PURSE and THE BEACON LADDER (owner 2026-09-06) ride this line so no cited coordinate below moves; browser twins at `Game.applyContractBankCap` / `Game.applyContractBeaconLadder`
     const sim = this;
     this.runManager = new RunManager(
       {

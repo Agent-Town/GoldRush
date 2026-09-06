@@ -71,7 +71,7 @@ The browser mounts the Fair Wheel into `PowerGraphSystem`, but GR-SIM has neithe
 | | "**12%** faster outside light below **35%** coverage" | `nightSpeedOutsideLight` 1.12, `litThreshold` 0.35 | ✅ |
 | | "two-second dusks" | `duskRampSeconds` 2 | ✅ |
 | | "**two** lit yards flank **one** unlit corridor" | `west-lit-yard`, `dark-corridor`, `east-tithe-yard` | ✅ |
-| `e3-canyon-works` | "CONNECT **both** cliff galleries by wave **6**" | `powerGrid.connect` `{required: 2, byWave: 6}`; zones `west-gallery`+`east-gallery` | ✅ |
+| `e3-canyon-works` | "CONNECT **both** cliff galleries by wave **8** (widened from 6 on 2026-09-06, canyon-works-second-lever)" | `powerGrid.connect` `{required: 2, byWave: 8}`; zones `west-gallery`+`east-gallery` | ✅ |
 | | "96 by 112 gorge" | `dimensions` 96 × 112 | ✅ |
 | `e3-fairground` | "wheel makes **24 W**" | `fairground.wheel.outputWatts` 24 | ✅ |
 | | "watch radius to **18** units" | `wheel.viewRadius` 18 | ✅ |

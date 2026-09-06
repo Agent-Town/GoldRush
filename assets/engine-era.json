@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "8822c2f07c963f37dd79ea423682de8cbc8c259c97c4dedc1355b8e5497273fb",
+  "engineHash": "351b869099f6015b5ab4202e87ec6de1f721a9883147d67a1b9997056db1ae93",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -397,6 +397,12 @@
       "engineHash": "8822c2f07c963f37dd79ea423682de8cbc8c259c97c4dedc1355b8e5497273fb",
       "pinnedAt": "2026-09-06",
       "cause": "src re-hash: canyon-works-bank-cap-override drain — a per-contract bank cap read by Economy through its cap-source seam in both engines, set to 360 on e3-canyon-works only (owner ruling 2026-09-06 (2)); every other map's purse and every null floor byte-identical; same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "351b869099f6015b5ab4202e87ec6de1f721a9883147d67a1b9997056db1ae93",
+      "pinnedAt": "2026-09-06",
+      "cause": "src re-hash: canyon-works-second-lever drain — connect.byWave 6 → 8 and a per-contract beacon ladder (twist.economy.beaconLadder, priced at the one buildableCostAt seam in both engines) on e3-canyon-works only, per the owner's 'hard levels can be won' ruling; the two canyon idle-floor rows re-pointed (the widened deadline moves them), every other floor byte-identical; same era per F-1441-3",
       "aliases": []
     }
   ],
