@@ -51,7 +51,7 @@ Era pins appended tonight (all era 5, same era per F-1441-3): `1052ba1a` (E8), `
 - `$B:tasks/…` is a zsh modifier (brace the variable); `--include='*.mjs'` must be quoted.
 - Safe to free: `dist/`, `test-results/`, own control worktrees, stale `$TMPDIR/goldrush-manifest-fingerprint-*` fixture copies (3.6 GB each). Never `tasks/runs/`, `logs/`, `artifacts/`, salvage dirs, other sessions' worktrees.
 
-## 6. The morning wave (2026-09-06, 06:00-11:00, after the owner's rulings; all merged, pushed and deployed at `d1ff4610`)
+## 6. The morning wave (2026-09-06, 06:00-11:00, after the owner's rulings; all merged, pushed and deployed; the final production build of the morning is `624dacff`)
 The owner's words, verbatim: "(1) re-record it (2) a per-contract cap override", then "(3) - yes, drill yard is not winable, lets adjust the policy so the hard levels can be won, then lets do the E10S ladder, fix these story parts please, fix the board and tape gold issue", then on the desk items "(1) my initial idea was to have seasons and change things from season to season to stay fair to the participants, we are now in the early release phase, we can act freely (2) ok, we can adjust things later (3) I never played it, I am not sure (4) sure, raise it (5) yes, that is too big, we have so much art and stuff in the github, we have to adjust here (6) have to test that later, about to head out (7) later (8) more details please".
 
 | Slice | Merge | What changed | Review |
@@ -70,9 +70,10 @@ The owner's words, verbatim: "(1) re-record it (2) a per-contract cap override",
 | dome-basin-winnable | `6c03481e0` | the reel envelope priced honestly; Dome Basin secured with no lever (sentry beacons) | `reviews/dome-basin-winnable.md` |
 | e10s-3-preserve-consumer | `ab7005e86` | the Ember Shore's vent, warmth, stoke, loss and secure latch; un-keepable until E10S-4's anchors | `reviews/e10s-3-preserve-consumer.md` |
 | browser-door-held-gold | `c4488824f` | the browser door submits the held purse too; both doors mean one gold | `reviews/browser-door-held-gold.md` |
+| e10s-4-ember-shore-door | `f8392f474` | the Ember Shore's anchors, seeds, floors, prover and admission: the E10S ladder is complete | `reviews/e10s-4-ember-shore-door.md` |
 
 **Live effects verified:** the ADR-004 rule ran on the live door for Moth Season: the Claude Fable 5 row (recorded under the old composition) is retired with a lineage reason, the Claude Opus 5 row is verified again and now prints its held purse (200); `retiredCount 1`. The receipts did not move. Lesson banked: the live standings door is the droplet's ledger behind nginx, the sweep sees ranked rows only, and a re-queue must restore the reel's declared score.
 
-**In flight:** `e10s-4-ember-shore-door` (anchors, prover, admission; the ladder's last rung; lane-a). Drain it like the others; the census spec `er01-e10-census` is its gate and currently red on a stale clause (F-E10S3-7).
+**In flight:** nothing. The E10S ladder closed at `f8392f474`; the Ember Shore's receipt reads `unclaimed` until heat 13's first verified claim.
 
 **Still on the desk after this morning:** the Mare Claim air wall (3), device rows (6), the lighting veto (7), the E5/E10 portrait GENERATION (money, the ART slot), the copy revision that lets nine chapter beats speak in their own voice, the Git LFS data plan and any history rewrite (never done unasked), F-RVW-6 (a rider cannot move the hero: a design decision), the F-BUDGET-2 bisect, heat 13 with the notebook lessons (sentry beacons on Dome Basin), and the county-wide re-assay pass that normalises every old snapshot to the held meaning once the owner wants the boards re-read.
