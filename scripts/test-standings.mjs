@@ -52,6 +52,7 @@ try {
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
     await checkBankedHeat11Tapes(onRequest, validateTape, validateRunTape);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
+    await checkScoreMismatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkDuplicateTapeIds(onRequest, onRequestAssayVerdict);
     await checkVerdictSlipExactMatch(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
     await checkAssayIndex(onRequest, onRequestAssayQueue);
@@ -778,6 +779,70 @@ async function checkRetroAssay(onRequest, queueRoute) {
   const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=100', undefined, kv, SECRET);
   equal(queue.body.queue.length, 14, 'all legacy taped rows enter retro-assay queue');
   equal(JSON.parse(await kv.get(KEY)).length, 17, 'lazy migration deletes no stored rows');
+}
+
+/**
+ * ONE GOLD NUMBER PER STANDING (F-2464-3, owner ruling 2026-09-06 "fix the board and tape gold
+ * issue"). The assign in the verdict path is how the board publishes the SECURE-TICK standing for
+ * a run that rode on past it, and the first two arms below keep that. What it must never do again
+ * is substitute a different QUANTITY for the same instant, which is how a heat-12 Mare Claim reel
+ * that banked 60 gold was published at 1180. Every arm here reds on the pre-cure code.
+ */
+async function checkScoreMismatch(onRequest, queueRoute, verdictRoute) {
+  const secureTick = { waves: 20, timeAlive: 120, gold: 40 };
+  const pendingLocator = async (kv, id) => {
+    await call(onRequest, 'POST', '/api/standings', post('8'.repeat(32), 20, tape(id, 20)), kv);
+    const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=1', undefined, kv, SECRET);
+    return queue.body.queue[0].locator;
+  };
+
+  // A banked run: the snapshot IS the terminal tick, and it agrees. Nothing is rewritten.
+  const agreeKv = makeKv();
+  const agreeLocator = await pendingLocator(agreeKv, 'banked-agrees');
+  const agreed = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict',
+    verdict(agreeLocator, 'verified', undefined, 'fnv1a32:1234abcd', secureTick), agreeKv, SECRET);
+  equal(agreed.status, 200, 'a banked snapshot that agrees with the declared score verifies');
+  equal(agreed.body.assay, 'verified', 'and the county records the verdict the worker reached');
+  const agreedRow = JSON.parse(await agreeKv.get(KEY)).find((row) => row.tape.id === 'banked-agrees');
+  equal({ waves: agreedRow.waves, timeAlive: agreedRow.timeAlive, gold: agreedRow.gold }, secureTick,
+    'the rider keeps the score they declared');
+  equal(agreedRow.securedSnapshot, secureTick, 'and the row carries the snapshot that confirmed it');
+
+  // The same instant, a different gold: the defect this task was opened for.
+  const mismatchKv = makeKv();
+  const mismatchLocator = await pendingLocator(mismatchKv, 'banked-disagrees');
+  const refused = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict',
+    verdict(mismatchLocator, 'verified', undefined, 'fnv1a32:1234abcd', { ...secureTick, gold: 1_180 }), mismatchKv, SECRET);
+  equal(refused.status, 200, 'the verdict endpoint still answers the worker');
+  equal({ assay: refused.body.assay, reason: refused.body.reason }, { assay: 'rejected', reason: 'score_mismatch' },
+    'a verified verdict whose snapshot contradicts the score at one tick is answered as a named rejection');
+  const refusedRow = JSON.parse(await mismatchKv.get(KEY)).find((row) => row.tape.id === 'banked-disagrees');
+  equal({ assay: refusedRow.assay, gold: refusedRow.gold, reason: refusedRow.assayReason, snapshot: refusedRow.securedSnapshot },
+    { assay: 'rejected', gold: 40, reason: 'score_mismatch', snapshot: undefined },
+    'the row is rejected with its reason and the rider\'s gold is never overwritten');
+  const slip = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=banked-disagrees', undefined, mismatchKv);
+  equal({ assay: slip.body.assay, reason: slip.body.assayReason, ranked: slip.body.ranked },
+    { assay: 'rejected', reason: 'score_mismatch', ranked: false }, 'and the rider can read the reason on their own slip');
+  equal((await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, mismatchKv)).body.board.length, 0,
+    'a score-mismatched row holds no rank');
+
+  // Overtime: the secure tick precedes the terminal tick, so a different gold is honest and the
+  // snapshot still becomes the standing.
+  const overtimeKv = makeKv();
+  const overtimeLocator = await pendingLocator(overtimeKv, 'rode-on');
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict',
+    verdict(overtimeLocator, 'verified', undefined, 'fnv1a32:1234abcd', { waves: 10, timeAlive: 60, gold: 1_180 }), overtimeKv, SECRET)).body.assay,
+    'verified', 'a snapshot taken before the terminal tick may carry its own gold');
+  const rodeOn = JSON.parse(await overtimeKv.get(KEY)).find((row) => row.tape.id === 'rode-on');
+  equal({ waves: rodeOn.waves, timeAlive: rodeOn.timeAlive, gold: rodeOn.gold }, { waves: 10, timeAlive: 60, gold: 1_180 },
+    'and the standing is still the secure tick, not the end of the ride');
+
+  // An impossible snapshot — the claim secured after the run ended — is refused on its own.
+  const impossibleKv = makeKv();
+  const impossibleLocator = await pendingLocator(impossibleKv, 'secured-after-the-end');
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict',
+    verdict(impossibleLocator, 'verified', undefined, 'fnv1a32:1234abcd', { waves: 21, timeAlive: 120, gold: 40 }), impossibleKv, SECRET)).body.reason,
+    'score_mismatch', 'a snapshot deeper than the score it belongs to is impossible, whatever its gold says');
 }
 
 async function checkDuplicateTapeIds(onRequest, verdictRoute) {

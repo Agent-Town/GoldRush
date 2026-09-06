@@ -115,7 +115,13 @@ test('an overtime replay returns the immutable secure-event snapshot and the lat
       timeAlive: outcome.timeMs / 1000,
     });
     assert.equal(replay.securedSnapshot.waves, 10);
-    assert.equal(replay.securedSnapshot.gold, 290);
+    // 290 until 2026-09-06 (F-2464-2, owner ruling "fix the board and tape gold issue"). That was
+    // this run's LIFETIME PANNING at the secure tick; the county publishes this snapshot over the
+    // row, so the board printed a number no rider had. The snapshot now reports the purse actually
+    // HELD at that tick — the same quantity `outcome().gold` reports, and the only one that can
+    // agree with it, since `outcome().gold` is inside the event-log hash. 290 is what this rider
+    // had PANNED by wave 10; 6 is what it still HELD when the claim was secured.
+    assert.equal(replay.securedSnapshot.gold, 6);
     assert.equal(Math.round(replay.securedSnapshot.timeAlive), 300);
     assert.ok(replay.outcome.waves > replay.securedSnapshot.waves);
     assert.notEqual(replay.outcome.gold, replay.securedSnapshot.gold);

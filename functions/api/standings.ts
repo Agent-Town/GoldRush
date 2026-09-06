@@ -8,7 +8,7 @@ import { CONTRACT_BUNDLES, runTapeEnvelopeForContract } from '../../src/playbook
 import { engineEraIncludes } from '../../src/replay/EngineEraLineage.mjs';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
 import { bumpCounter, clientIpHash } from './_ratelimit';
-import { recordSubmissionRefusal, type RefusalStorage, type SubmissionRefusalReason } from './refusals';
+import { recordSubmissionRefusal, type AssayRejectionReason, type RefusalStorage, type SubmissionRefusalReason } from './refusals';
 import type { LedgerStorage } from './_accounts';
 
 type StandingsStorage = Pick<LedgerStorage, 'get' | 'put'> & Pick<RefusalStorage, 'recordRefusal' | 'readRefusals'>;
@@ -301,8 +301,21 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
       return error(cors, 400, 'bad_verdict', 'Verified replay hash does not match the submitted tape.');
     }
     if (!row) return error(cors, 404, 'assay_not_found', 'Pending assay not found.');
-    row.assay = body.verdict;
-    if (body.verdict === 'verified' && securedSnapshot) {
+    // ONE GOLD NUMBER PER STANDING (F-2464-3, owner ruling 2026-09-06, verbatim: "fix the board
+    // and tape gold issue"). The assign below is how the board publishes the SECURE-TICK standing
+    // rather than the end of a run that rode on past it — that is why it exists and it stays. What
+    // it must never do again is quietly substitute a DIFFERENT QUANTITY for the same instant: the
+    // headless door declared the purse held at the secure tick while the assayer's snapshot
+    // reported the run's lifetime panning, so a Mare Claim reel that banked 60 gold was published
+    // as 1180 and nobody could say which was the standing. `securedSnapshotMismatch` reads the two
+    // as measurements of one replay: the secure tick cannot follow the terminal tick, and when the
+    // two ARE the same tick the two golds must agree. A disagreement is now a named rejection the
+    // rider can read at `?verdict=<reel id>`, never a rewrite.
+    const mismatch = body.verdict === 'verified' && securedSnapshot ? securedSnapshotMismatch(row, securedSnapshot) : null;
+    const verdictValue = mismatch ? 'rejected' : body.verdict;
+    row.assay = verdictValue;
+    if (mismatch) delete row.securedSnapshot;
+    else if (body.verdict === 'verified' && securedSnapshot) {
       Object.assign(row, securedSnapshot);
       row.securedSnapshot = securedSnapshot;
     }
@@ -311,19 +324,23 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     delete row.assayHash;
     if (replayedHash !== null) row.assayHash = replayedHash;
     delete row.assayReason;
-    if ((body.verdict === 'rejected' || body.verdict === 'unassayable') && reason) row.assayReason = reason;
-    const competing = body.verdict === 'verified'
+    if (mismatch) row.assayReason = mismatch;
+    else if ((body.verdict === 'rejected' || body.verdict === 'unassayable') && reason) row.assayReason = reason;
+    const competing = verdictValue === 'verified'
       ? rows.find((candidate) => candidate !== row && sameStandingOwner(candidate, row) && candidate.assay === 'verified')
       : undefined;
     const verifiedRows = competing && compareScores(competing, row, locator.contractId) < 0
       ? rows.filter((candidate) => candidate !== row)
-      : body.verdict === 'verified'
+      : verdictValue === 'verified'
         ? rows.filter((candidate) => candidate === row || !sameStandingOwner(candidate, row) || candidate.assay !== 'verified')
         : rows;
     const next = retainUnranked(verifiedRows, locator.contractId);
     await kv.put(boardKey(locator.epochId, locator.contractId), JSON.stringify(next));
     await syncAssayBoardIndex(kv, locator.epochId, locator.contractId, next);
-    return json(cors, { ok: true, locator, assay: row.assay });
+    // The worker logs the verdict IT reached; this answers with the verdict the county RECORDED,
+    // and names the reason when the two differ, so a score mismatch is visible in the operator log
+    // rather than only in the row it demoted.
+    return json(cors, { ok: true, locator, assay: row.assay, ...(mismatch ? { reason: mismatch } : {}) });
   });
 }
 
@@ -1134,6 +1151,33 @@ function validateSecuredSnapshot(value: unknown): SecuredSnapshot | null {
 
 function sameSecuredSnapshot(score: ScoreRow, snapshot: SecuredSnapshot): boolean {
   return score.waves === snapshot.waves && score.timeAlive === snapshot.timeAlive && score.gold === snapshot.gold;
+}
+
+/**
+ * THE COMPARATOR THAT USED TO BE DECORATIVE (F-2464-3, 2026-09-06).
+ *
+ * `sameSecuredSnapshot` above guards every STORED verified row, but it could never fail: the
+ * verdict path assigned the snapshot over the score first, so the read-back always agreed with
+ * itself. This is the same comparison made where it still means something — before the assign,
+ * against the score the rider declared and the replay confirmed.
+ *
+ * Both numbers come from ONE replay of ONE reel. The row's score is the terminal tick (the worker
+ * has already refused the verdict if the replay disagreed with it); the snapshot is the secure
+ * tick. So:
+ *
+ *   - the secure tick cannot come AFTER the terminal tick. A snapshot deeper in waves or later in
+ *     time than the score it belongs to is impossible, whatever its gold says.
+ *   - when the two describe the SAME tick — the rider banked and stopped, which is every heat-12
+ *     standing — they are two readings of one instant and their gold must agree. It did not, and
+ *     that was the whole finding: the reel banked 60 and the board printed 1180.
+ *   - when the secure tick precedes the terminal tick, the rider rode on into overtime. The gold
+ *     legitimately differs there (they kept earning and spending after the claim was won) and the
+ *     snapshot is applied exactly as before, because the standing is the secure tick.
+ */
+function securedSnapshotMismatch(score: ScoreRow, snapshot: SecuredSnapshot): AssayRejectionReason | null {
+  if (snapshot.waves > score.waves || snapshot.timeAlive > score.timeAlive) return 'score_mismatch';
+  const sameTick = snapshot.waves === score.waves && snapshot.timeAlive === score.timeAlive;
+  return sameTick && snapshot.gold !== score.gold ? 'score_mismatch' : null;
 }
 
 export function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { submittedAt?: number }, contractId?: string): number {

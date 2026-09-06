@@ -2029,7 +2029,26 @@ export class HeadlessContractSim {
         if (event.type === 'run_secured') {
           this.secured = true;
           this.securedWave = event.secureWave;
-          this.securedSnapshot = { waves: event.secureWave, gold: Math.floor(event.summary.goldPanned), timeAlive: event.at };
+          // THE STANDING'S GOLD IS THE PURSE HELD AT THE SECURE TICK (F-2464-2, owner ruling
+          // 2026-09-06, verbatim: "fix the board and tape gold issue"). This snapshot used to
+          // report `event.summary.goldPanned` — the run's LIFETIME panning — while the same run's
+          // `outcome().gold` reports `round(this.economy.gold)`, the purse actually held. The
+          // county publishes the snapshot, so the board printed a number no rider had: measured by
+          // replaying the three heat-12 reels (artifacts/board-tape-gold/), the Mare Claim banks
+          // 60 held against 1180 panned, Moth Season 200 against 530, Relay Rush 200 against 870.
+          // Held is the meaning that CAN be made to agree, and not by taste: `outcome().gold` sits
+          // inside the event-log hash (`final.base` in `outcome()` below), so every pinned hash in
+          // the repo would move if the tape were taught to declare panning instead. Nothing else
+          // reads this field — `bankedSecuredSnapshot` is consumed only by the assay instrument
+          // (src/replay/AgentTapeReplay.ts) — so no outcome, hash or floor moves with it.
+          // `timeAlive` rounds to the same millisecond grain `outcome().timeMs` uses, so a run that
+          // banks at the secure tick produces a snapshot EXACTLY equal to its declared score and
+          // the county's score-equals-snapshot comparator can be load-bearing instead of decorative.
+          this.securedSnapshot = {
+            waves: event.secureWave,
+            gold: Math.floor(this.economy.gold),
+            timeAlive: Math.round(event.at * 1000) / 1000,
+          };
           this.secureChoice = 'pending';
           this.secureChoiceElapsed = 0;
         }
