@@ -51,11 +51,16 @@ const SEEDED = new Set(['e9-dome-basin', 'e9-seed-run', 'e9-old-canal', 'e9-devi
  * absence is asserted everywhere else. The order is `deriveMechanicsManifest`'s own: A10's rule is
  * pushed before A5's, which is after A8's.
  */
+// RE-POINTED BY hero-move-verb (owner ruling 2026-09-06, "rider has to be able to move"):
+// `hero_orders` is `deriveMechanicsManifest`'s first UNCONDITIONAL row, published on every
+// contract because the MOVE_HERO contract (arrival radius, refusal vocabulary, who may hold the
+// hero) belongs to the ENGINE, not to a map. The list is `rules.sort(byId)`, so it lands
+// alphabetically and no other row moved. Measured on this tree, not assumed.
 const EXPECTED_RULES: Record<string, string[]> = {
-  'e9-dome-basin': ['build_zones'],
-  'e9-seed-run': ['build_zones', 'persistent_planting'],
-  'e9-devils-alley': ['build_zones', 'scheduled_relocation'],
-  'e9-old-canal': ['build_zones', 'persistent_canal_choices'],
+  'e9-dome-basin': ['build_zones', 'hero_orders'],
+  'e9-seed-run': ['build_zones', 'hero_orders', 'persistent_planting'],
+  'e9-devils-alley': ['build_zones', 'hero_orders', 'scheduled_relocation'],
+  'e9-old-canal': ['build_zones', 'hero_orders', 'persistent_canal_choices'],
 };
 
 for (const contract of redfields.contracts) {

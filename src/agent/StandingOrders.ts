@@ -17,6 +17,27 @@ export type StandingOrder =
   | { verb: 'REPAIR_UNDER'; pct: number }
   | { verb: 'MOVE_TO'; pos: AgentVec2 }
   | { verb: 'HOLD'; pos: AgentVec2 }
+  // hero-move-verb (owner ruling 2026-09-06, verbatim: "yes! please! rider has to be able to move,
+  // I did not know that was not possible before"). MOVE_TO and HOLD above steer the PROSPECTOR
+  // (`src/agent/Embodiment.ts:131` feeds their target to `assignWork`); nothing in this union ever
+  // reached the hero, which is why `reviews/relay-valley-winnable.md` F-RVW-6 filed the asymmetry
+  // as structural and why the Ember Shore prover's first ride died at 136 s with the vent kept
+  // (`artifacts/e10s-4-door/prover.mjs:60-66`). A human kites; a rider could only build something
+  // that shoots back.
+  //
+  // MOVE_HERO walks the hero to `pos` by the SAME path a human's keys take: each fixed step the
+  // order publishes a steering target, the engine derives the unit `Intents.move` toward it, passes
+  // it through the physics filter (`e8PhysicsIntents`) and hands it to `Hero.update`. No line of
+  // `Hero.ts`'s movement math is touched, so a kited hero obeys terrain speed, slopes, walls,
+  // depenetration and low-orbit drift exactly as a piloted one does.
+  //
+  // THERE IS NO `HOLD_HERO`, deliberately (Mistake #14, reject-don't-stretch). `HOLD` exists for
+  // the Prospector because an idle Prospector DRIFTS: `Embodiment.driftNearHero:287` walks it back
+  // toward the hero every step it has no work, so "stay here" needs a verb that keeps re-issuing
+  // the point. The hero has no such drift. With no move intent `Hero.update` decelerates it to a
+  // stop and it stays where it stopped, so "hold the hero here" is already MOVE_HERO plus silence.
+  // A HOLD_HERO would add a verb whose only effect is to occupy the executor forever.
+  | { verb: 'MOVE_HERO'; pos: AgentVec2 }
   | { verb: 'BLAST_AT'; pos: AgentVec2 }
   | { verb: 'SET_WEAPON'; weapon: 'rig' | 'blast' }
   | { verb: 'HARVEST'; seam: string }
@@ -114,9 +135,60 @@ export type StandingOrdersSubmission =
 
 export type StandingOrderTickResult = {
   movement?: AgentVec2;
+  /**
+   * hero-move-verb: where an ACTIVE `MOVE_HERO` wants the hero this tick. A separate field from
+   * `movement` because the two name different bodies in GR-SIM (`movement` is the Prospector's
+   * work assignment, this is the hero's steering target) and the same body at a browser room seat,
+   * where the rider's body IS a hero. Engines that steer the hero at a seam EARLIER in their step
+   * than the executor's tick read `standingOrderHeroSteering()` instead, which holds this value.
+   */
+  heroMovement?: AgentVec2;
   receipt?: ToolReceipt;
   receiptPoint?: AgentVec2;
 };
+
+/**
+ * hero-move-verb: the engine's answer to "whose hero is this, where is it, and will that ground
+ * take it". Bound per engine so the ONE rule the owner set can be enforced in one place: a rider's
+ * order never moves a human's hero.
+ *
+ *   · GR-SIM binds `riderPiloted: () => true`: the run has a single body and the rider is its only
+ *     pilot, so the hero is the rider's to walk.
+ *   · A browser ROOM binds one channel per headless seat (`src/mp/AgentRiderBody.ts`), and a seat
+ *     exists only where the roster says `client === 'headless'` (`Game.syncMultiplayerActors`), so
+ *     `riderPiloted` is true BY CONSTRUCTION for exactly the seats a rider owns.
+ *   · The browser's SINGLETON executor (the door a rider reaches on a solo game) binds
+ *     `riderPiloted: () => false`, because the hero there is the human at the keys. The order is
+ *     refused with `HERO_NOT_YOURS` rather than applied over their input.
+ *
+ * An engine that binds no channel at all refuses honestly, exactly like `CAPTURE`/`GRADE`/`HAUL`.
+ */
+export type HeroChannel = {
+  /** The live position of the hero this executor may steer. */
+  position: () => AgentVec2;
+  /** True only where the RIDER, not a human, pilots that hero. */
+  riderPiloted: () => boolean;
+  /** The engine's terrain answer for a candidate destination: refuse, never stall silently. */
+  walkable: (pos: AgentVec2) => boolean;
+};
+
+/**
+ * hero-move-verb: the hero has arrived when its own body covers the point. One body radius rather
+ * than the Prospector's `Balance.agent.arriveRadius` (0.16) because the two bodies stop
+ * differently: `Embodiment.stepTowardTarget` moves the Prospector geometrically by
+ * `min(distance, speed * delta)` and lands exactly on the point, while `Hero.update` carries
+ * momentum (`Balance.hero.accel`/`decel`) and coasts roughly 0.2 wu past a full-speed stop. Read
+ * off `Balance.hero.radius` rather than added to `Balance`, so no balance number moves.
+ */
+export const HERO_ARRIVE_RADIUS = Balance.hero.radius;
+
+/** hero-move-verb: the reasons a MOVE_HERO can refuse, published in the mechanics manifest. */
+export const HERO_ORDER_REFUSALS = [
+  'HERO_NOT_YOURS',
+  'UNREACHABLE_TERRAIN',
+  'UNREACHABLE_APPROACH',
+  'HERO_UNAVAILABLE',
+] as const;
 
 type RuntimeState = {
   timeAlive: number;
@@ -178,6 +250,9 @@ export class StandingOrdersExecutor {
   private motor: ((verb: 'GRADE' | 'HAUL') => ActionOrderResult) | null = null;
   private playbookUse: ((name: string) => ActionOrderResult) | null = null;
   private buildProgress: { orderId: string; distance: number; at: number } | null = null;
+  private heroChannel: HeroChannel | null = null;
+  private heroSteer: AgentVec2 | null = null;
+  private heroProgress: { orderId: string; distance: number; at: number } | null = null;
 
   constructor(
     private readonly surface: GoldRushToolSurface,
@@ -241,6 +316,11 @@ export class StandingOrdersExecutor {
   tick(at: number, actor: AgentVec2): StandingOrderTickResult {
     const state = this.state(at, this.records.some((record) => record.status === 'pending' || record.status === 'active'));
     this.detectSurprises(state, at);
+    // hero-move-verb: the steering target is re-derived from scratch every tick and survives no
+    // longer than the order that set it. Cleared HERE rather than in the MOVE_HERO branch so every
+    // exit from the loop below (an earlier order owning the tick, a permission denial, a secure
+    // window, an empty order list) stops the hero rather than leaving it walking on a stale point.
+    this.heroSteer = null;
 
     for (const record of this.records) {
       if (record.status === 'done' || record.status === 'failed') continue;
@@ -272,6 +352,8 @@ export class StandingOrdersExecutor {
     this.submission = 0;
     this.sequence = 0;
     this.buildProgress = null;
+    this.heroSteer = null;
+    this.heroProgress = null;
     this.previousState = null;
     this.expectedWaveAt = null;
     this.failureReasons.clear();
@@ -283,6 +365,25 @@ export class StandingOrdersExecutor {
 
   bindUpgradePicker(pick: (id: string) => boolean): void {
     this.pickUpgrade = pick;
+  }
+
+  /** hero-move-verb: install (or, with null, revoke) this executor's hero. */
+  bindHeroChannel(channel: HeroChannel | null): void {
+    this.heroChannel = channel;
+    this.heroSteer = null;
+    this.heroProgress = null;
+  }
+
+  /**
+   * hero-move-verb: where an active MOVE_HERO wants the hero, or null. Both engines steer the hero
+   * EARLIER in their fixed step than they tick this executor (`HeadlessContractSim.step` runs
+   * `hero.update` at :1785 and `prospector.updateSimulation` at :1942; `Game.updateActors` runs
+   * before `Game.ts:3141`), so the target a tick publishes is consumed on the NEXT step. That one
+   * step of latency is identical in both engines and a function of sim state alone, which is what
+   * determinism and cross-engine parity require; it is not a race.
+   */
+  heroSteering(): AgentVec2 | null {
+    return this.heroSteer;
   }
 
   bindFinalVerbs(handlers: FinalVerbHandlers): void {
@@ -360,6 +461,48 @@ export class StandingOrdersExecutor {
     if (order.verb === 'HOLD') {
       this.status(record, 'active', at);
       return { movement: order.pos };
+    }
+
+    // hero-move-verb. Shaped on BUILD's travel clause above rather than on MOVE_TO's, because the
+    // hero can be BLOCKED in ways the Prospector cannot: it has no pathfinder, it collides with
+    // terrain, and a target behind a wall would otherwise pin the executor forever on an order that
+    // looks active and never arrives. So progress is watched the way BUILD watches its approach and
+    // the same four-second no-progress rule refuses. Every exit either completes, refuses with a
+    // reason, or returns a live steering target: no silent stall.
+    if (order.verb === 'MOVE_HERO') {
+      const channel = this.heroChannel;
+      if (!channel) {
+        this.fail(record, 'HERO_UNAVAILABLE: MOVE_HERO is unavailable in this engine.', at);
+        return {};
+      }
+      // The owner's law, enforced before anything else can read a position: a rider's order never
+      // moves a human's hero. Checked EVERY tick rather than once at submission, because a seat can
+      // change hands mid-run and a stale answer would be exactly the failure this guards.
+      if (!channel.riderPiloted()) {
+        this.fail(record, 'HERO_NOT_YOURS: a human pilots this hero; the order is refused, never applied over their input.', at);
+        return {};
+      }
+      if (!channel.walkable(order.pos)) {
+        this.fail(record, 'UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain.', at);
+        return {};
+      }
+      const hero = channel.position();
+      const remaining = distance(hero, order.pos);
+      if (remaining <= HERO_ARRIVE_RADIUS) {
+        this.heroProgress = null;
+        this.status(record, 'done', at);
+        return {};
+      }
+      this.status(record, 'active', at);
+      if (this.heroProgress?.orderId !== record.id || remaining < this.heroProgress.distance - 0.05) {
+        this.heroProgress = { orderId: record.id, distance: remaining, at };
+      } else if (at - this.heroProgress.at >= 4) {
+        this.heroProgress = null;
+        this.fail(record, 'UNREACHABLE_APPROACH: MOVE_HERO target has no traversable approach.', at);
+        return {};
+      }
+      this.heroSteer = order.pos;
+      return { heroMovement: order.pos };
     }
 
     if (order.verb === 'BLAST_AT') {
@@ -540,6 +683,29 @@ export function bindStandingOrderFinalVerbs(handlers: Parameters<StandingOrdersE
   installedExecutor?.bindFinalVerbs(handlers);
 }
 
+/** hero-move-verb: hand the installed executor the hero it may steer, or null to revoke it. */
+export function bindStandingOrderHero(channel: HeroChannel | null): void {
+  installedExecutor?.bindHeroChannel(channel);
+}
+
+/** hero-move-verb: the installed executor's live hero steering target, or null. */
+export function standingOrderHeroSteering(): AgentVec2 | null {
+  return installedExecutor?.heroSteering() ?? null;
+}
+
+/**
+ * hero-move-verb: the unit `Intents.move` a human's keys would produce walking from `from` to `to`,
+ * or null once the two are the same point. Lives here rather than in either engine so both derive
+ * the identical vector from the identical arithmetic. `y` is the WORLD Z axis, matching
+ * `Hero.update`'s `targetVelocity.set(moveX, 0, moveY)` and `AgentRiderBody.movement`.
+ */
+export function heroMoveIntent(from: AgentVec2, to: AgentVec2): { x: number; y: number } | null {
+  const dx = to.x - from.x;
+  const dz = to.z - from.z;
+  const length = Math.hypot(dx, dz);
+  return length > 0 ? { x: dx / length, y: dz / length } : null;
+}
+
 export function tickStandingOrders(at: number, actor: AgentVec2): StandingOrderTickResult {
   return installedExecutor?.tick(at, actor) ?? {};
 }
@@ -604,7 +770,10 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     if (!exactKeys(value, ['verb', 'pct']) || !finiteInRange(value.pct, 0, 100)) return schemaError(index, 'REPAIR_UNDER');
     return { verb: 'REPAIR_UNDER', pct: value.pct };
   }
-  if (value.verb === 'MOVE_TO' || value.verb === 'HOLD') {
+  if (value.verb === 'MOVE_TO' || value.verb === 'HOLD' || value.verb === 'MOVE_HERO') {
+    // hero-move-verb rides the same two-key shape on purpose: a point is a point, and a rider that
+    // can write MOVE_TO can write MOVE_HERO without learning a second grammar. The bodies differ,
+    // the schema does not.
     if (!exactKeys(value, ['verb', 'pos']) || !validPos(value.pos)) return schemaError(index, value.verb);
     return { verb: value.verb, pos: value.pos };
   }
@@ -866,7 +1035,7 @@ export function standingOrderIdentity(order: StandingOrder): string {
       ...(order.rotationSteps ? ['rotationSteps', order.rotationSteps] : [])]);
   }
   if (order.verb === 'REPAIR_UNDER') return JSON.stringify([order.verb, order.pct]);
-  if (order.verb === 'MOVE_TO' || order.verb === 'HOLD' || order.verb === 'BLAST_AT') {
+  if (order.verb === 'MOVE_TO' || order.verb === 'HOLD' || order.verb === 'MOVE_HERO' || order.verb === 'BLAST_AT') {
     return JSON.stringify([order.verb, order.pos.x, order.pos.z]);
   }
   if (order.verb === 'HARVEST') return JSON.stringify([order.verb, 'seam' in order ? order.seam : order.sluice]);

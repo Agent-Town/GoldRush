@@ -4,9 +4,12 @@ import { install, type AgentBuildingRef, type AgentGameAdapter, type GoldRushToo
 import {
   bindStandingOrderBlast,
   bindStandingOrderFinalVerbs,
+  bindStandingOrderHero,
   bindStandingUpgradePicker,
+  heroMoveIntent,
   observeStandingOrders,
   snapshotStandingOrders,
+  standingOrderHeroSteering,
   type StandingOrder,
   type StandingOrdersView,
 } from '../agent/StandingOrders';
@@ -729,12 +732,15 @@ export class HeadlessContractSim {
    * both engines run (`HeadlessContractSim:18` and `:53`), and `BLAST_AT` is a public standing
    * order, so a rider's missed lob returns here precisely as it returns in the browser.
    *
-   * The MOVEMENT half is different, and the difference is stated rather than hidden: this sim
-   * drives slot 0 on `IDLE_INTENTS` (F-E2PA-4), so the hero never thrusts and the handhold drift
-   * — a THRUST-response penalty — has nothing to act on. It is inert here by construction, not
-   * by omission. The debris chip is NOT inert: it is positional, so a hero posted inside a band
-   * takes it, and the guard in `e2e/e8-low-orbit-momentum.spec.ts` pins both halves of this
-   * paragraph so the claim cannot rot into a lie.
+   * The MOVEMENT half USED to be different, and the difference was stated rather than hidden: this
+   * sim drove slot 0 on `IDLE_INTENTS` (F-E2PA-4), so the hero never thrust and the handhold drift
+   * — a THRUST-response penalty — had nothing to act on. hero-move-verb (owner 2026-09-06) ends
+   * that: `heroOrderIntents` feeds a live `MOVE_HERO` through the same filter, so the drift now
+   * acts on a rider's walk exactly as it acts on a human's keys. It stays inert on a run that
+   * issues no MOVE_HERO, which is every idle floor. The debris chip is NOT inert either way: it is
+   * positional, so a hero posted inside a band takes it, and the guard in
+   * `e2e/e8-low-orbit-momentum.spec.ts` pins both halves of this paragraph so the claim cannot rot
+   * into a lie.
    */
   private readonly lowOrbit: LowOrbitSystem;
   private readonly hollowCrossing: HollowCrossingSystem;
@@ -749,10 +755,11 @@ export class HeadlessContractSim {
    *     browser's aim clamp allows (`Game.clampBlastAim`) and flies it for the same scaled time
    *     (`Game.launchBlastAt`). Off the multiplier of 1 nothing changes, byte for byte.
    *   · MOVEMENT — `e8PhysicsIntents` filters slot 0's intents through `filterMovement` with the
-   *     low-orbit terrain answer (`Game.e8PhysicsIntents`). Honest note, in A7's manner: this
-   *     engine drives slot 0 on `IDLE_INTENTS`, so the filter has nothing to bend and the hero
-   *     stays on its stake; the seam is composed so the day the hero thrusts here it bends the
-   *     same way. The Prospector is not filtered in EITHER engine.
+   *     low-orbit terrain answer (`Game.e8PhysicsIntents`). Honest note, in A7's manner, kept
+   *     current: this engine drove slot 0 on `IDLE_INTENTS` until hero-move-verb, so the filter had
+   *     nothing to bend and the hero stayed on its stake. That day has come: `heroOrderIntents`
+   *     hands it a live MOVE_HERO walk and it bends the same way it bends a human's keys in the
+   *     browser. The Prospector is not filtered in EITHER engine.
    *   · KNOCKBACK — `scaleKnockback` is read only by the E8 arsenal's grapple, which this engine
    *     does not compose (the arsenal is its own row); the scale is published, not consumed.
    * The profile is a constant of the contract and rides no hash (the A4 rule); it is published on
@@ -810,6 +817,30 @@ export class HeadlessContractSim {
    * `terrain` is undefined everywhere else, which restores the pre-A7 arithmetic exactly. The
    * same object comes back untouched when the filter has nothing to bend.
    */
+  /**
+   * hero-move-verb: slot 0's intents for this step. `IDLE_INTENTS` was the whole answer until the
+   * owner's 2026-09-06 ruling; now a live `MOVE_HERO` steering target turns into the SAME unit
+   * `Intents.move` a human's keys produce, and everything downstream (the physics filter,
+   * `Hero.update`, terrain, walls, depenetration) is byte-for-byte the piloted path.
+   *
+   * WITH NO ORDER STEERING, THIS RETURNS THE `IDLE_INTENTS` OBJECT ITSELF, not a zeroed copy. That
+   * is load-bearing for the null floors: `e8PhysicsIntents` below returns its argument unchanged
+   * when `filterMovement` hands back the same vector (`move === intents.move`), so an idle run
+   * walks exactly the object graph it walked before this verb existed and every floor stays
+   * byte-identical. The steered object is a single reused field for the same reason.
+   */
+  private heroOrderIntents(): Intents {
+    const target = standingOrderHeroSteering();
+    if (!target) return IDLE_INTENTS;
+    const move = heroMoveIntent(this.hero.group.position, target);
+    if (!move) return IDLE_INTENTS;
+    this.heroOrderedIntents.move.set(move.x, move.y);
+    return this.heroOrderedIntents;
+  }
+
+  /** hero-move-verb: the one reused steered-intents object; see `heroOrderIntents` above. */
+  private readonly heroOrderedIntents: Intents = { ...IDLE_INTENTS, move: new THREE.Vector2() };
+
   private e8PhysicsIntents(intents: Intents): Intents {
     const position = this.hero.group.position;
     const terrain = this.lowOrbit.isDeclared
@@ -1353,6 +1384,19 @@ export class HeadlessContractSim {
       buildTargetReachable: ({ x, z }) => Terrain.isBuildable(x, z),
     });
     bindStandingOrderBlast((pos) => this.blastAt(pos));
+    // hero-move-verb: GR-SIM is single-seat and the rider is the run's only pilot, so the hero is
+    // the rider's to walk (`riderPiloted: true`). The terrain answer is the SAME pair `Hero.update`
+    // itself obeys: the walkable sample, and the bounds it clamps into. A target outside either is
+    // refused up front rather than walked at until the four-second no-progress rule notices.
+    bindStandingOrderHero({
+      position: () => this.hero.group.position,
+      riderPiloted: () => true,
+      walkable: ({ x, z }) => x >= Terrain.bounds.minX + Balance.hero.radius
+        && x <= Terrain.bounds.maxX - Balance.hero.radius
+        && z >= Terrain.bounds.minZ + Balance.hero.radius
+        && z <= Terrain.bounds.maxZ - Balance.hero.radius
+        && Terrain.sample(x, z).walkable,
+    });
     bindStandingOrderFinalVerbs({
       setWeapon: (weapon) => this.setWeapon(weapon),
       secureChoice: (choice) => this.answerSecureChoice(choice),
@@ -1782,7 +1826,7 @@ export class HeadlessContractSim {
     // actor's intents through the physics filter before it moves.
     this.syncE8LobPhysics();
     this.applyLowOrbitDebris();
-    this.hero.update(STEP_SECONDS, this.e8PhysicsIntents(IDLE_INTENTS), {
+    this.hero.update(STEP_SECONDS, this.e8PhysicsIntents(this.heroOrderIntents()), {
       bounds: Terrain.bounds,
       sample: Terrain.sample,
       depenetrate: (point, maxDistance) => depenetrateFromBlockers(
@@ -1812,10 +1856,11 @@ export class HeadlessContractSim {
       this.prospector.position,
     );
     // BOTH bodies, because the browser passes `visibleActorPositions()` (`Game.ts:1012`) — every actor
-    // that can walk to a coal seam. This sim has two: the hero, which never leaves its stake (it takes
-    // `IDLE_INTENTS` above), and the Prospector, which is the only thing a rider can actually MOVE and
-    // which `harvestTargets():1508` already treats as actor `'0'` for the gold seams. Passing the hero
-    // alone left the coal economy physically unreachable headless — no order could put a body on a seam.
+    // that can walk to a coal seam. This sim has two: the hero, which stayed on its stake for as long
+    // as it took `IDLE_INTENTS` and now walks wherever a `MOVE_HERO` sends it (`heroOrderIntents`
+    // above), and the Prospector, which `harvestTargets():1508` already treats as actor `'0'` for the
+    // gold seams. Passing the hero alone left the coal economy physically unreachable headless — with
+    // the hero welded, no order could put a body on a seam.
     this.pressure.update(
       STEP_SECONDS,
       this.timeAlive,
@@ -3354,9 +3399,12 @@ function canonicalReplayEvents(events: readonly unknown[]): unknown[] {
  * `HARVEST` orders are two pans in the executor's own record list, so collapsing them would make a
  * program do strictly less than the demonstration it copies.
  *
- * Movement and lockstep actions on the tape are deliberately NOT executed: this engine drives slot
- * 0 on `IDLE_INTENTS` (F-E2PA-4), so there is no body a movement track could move, and pretending
- * otherwise would be the Vocabulary Stretch (Mistake #14). The ORDERS are the program.
+ * Movement and lockstep actions on the tape are STILL deliberately not executed, and hero-move-verb
+ * does not change that. The reason has always been narrower than "no body": a tape's movement track
+ * is a stream of raw AXIS SAMPLES from a human's keys or stick, and `MOVE_HERO` is a destination.
+ * Replaying axes as a program would be inventing a demonstration the rider never submitted, which is
+ * the Vocabulary Stretch (Mistake #14). A rider that wants its walk repeated puts the MOVE_HERO in
+ * the orders, where it is already carried. The ORDERS are the program.
  */
 function programOrders(entries: readonly PlaybookEntry[]): { orders: StandingOrder[]; truncated: boolean } {
   const orders: StandingOrder[] = [];

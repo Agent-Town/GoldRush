@@ -5,14 +5,19 @@ import atomic from '../assets/contracts/epoch-6-atomic/contracts.json' with { ty
 
 // Post-socket rule lists. `wrangle_*` appears on every Atomic contract because the browser
 // enables WrangleSystem for the whole epoch (Game.ts:646); the two tile rules are Glow Mesa's.
+// RE-POINTED BY hero-move-verb (owner ruling 2026-09-06, "rider has to be able to move"):
+// `hero_orders` is `deriveMechanicsManifest`'s first UNCONDITIONAL row, published on every
+// contract because the MOVE_HERO contract (arrival radius, refusal vocabulary, who may hold the
+// hero) belongs to the ENGINE, not to a map. The list is `rules.sort(byId)`, so it lands
+// alphabetically and no other row moved. Measured on this tree, not assumed.
 const EXPECTED_RULES: Record<string, string[]> = {
   'e6-glow-mesa': [
-    'baron', 'build_zones', 'decay_field_windows', 'night_vein_ring',
+    'baron', 'build_zones', 'decay_field_windows', 'hero_orders', 'night_vein_ring',
     'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down',
   ],
-  'e6-showroom': ['build_zones', 'showroom_capture_quota', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
-  'e6-half-life-hollow': ['build_zones', 'hollow_crossing', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
-  'e6-picnic': ['build_zones', 'three_stake_hold', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-showroom': ['build_zones', 'hero_orders', 'showroom_capture_quota', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-half-life-hollow': ['build_zones', 'hero_orders', 'hollow_crossing', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
+  'e6-picnic': ['build_zones', 'hero_orders', 'three_stake_hold', 'wrangle_capture', 'wrangle_exhausted', 'wrangle_pen', 'wrangle_wind_down'],
 };
 
 /**

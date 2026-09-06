@@ -3,6 +3,11 @@ import { createServer, type ViteDevServer } from 'vite';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 import deepSky from '../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
 
+// RE-POINTED BY hero-move-verb (owner ruling 2026-09-06, "rider has to be able to move"):
+// `hero_orders` is `deriveMechanicsManifest`'s first UNCONDITIONAL row, published on every
+// contract because the MOVE_HERO contract (arrival radius, refusal vocabulary, who may hold the
+// hero) belongs to the ENGINE, not to a map. The list is `rules.sort(byId)`, so it lands
+// alphabetically and no other row moved. Measured on this tree, not assumed.
 const EXPECTED_RULES: Record<string, string[]> = {
   // RE-POINTED BY E10S-4, and the Ember Shore row was STALE IN ITS ORDER, not its contents:
   // `deriveMechanicsManifest` returns `rules.sort(byId)` (`src/agent/MechanicsManifest.ts:986`),
@@ -12,10 +17,10 @@ const EXPECTED_RULES: Record<string, string[]> = {
   // another. Measured on this tree, 2026-09-06, by `artifacts/e10s-4-door/census-truth-probe.mjs`.
   // Both Ember Shore rules are DERIVED FROM CONSUMERS both engines run, which is what this census
   // is for: the debt on the card must match the debt in the engine.
-  'e10-ember-shore': ['build_zones', 'preserve_vent', 'static_squall'],
-  'e10-archive-world': ['build_zones'],
-  'e10-last-claim': ['build_zones'],
-  'e10-river': ['river', 'water_crossings'],
+  'e10-ember-shore': ['build_zones', 'hero_orders', 'preserve_vent', 'static_squall'],
+  'e10-archive-world': ['build_zones', 'hero_orders'],
+  'e10-last-claim': ['build_zones', 'hero_orders'],
+  'e10-river': ['hero_orders', 'river', 'water_crossings'],
 };
 
 const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {

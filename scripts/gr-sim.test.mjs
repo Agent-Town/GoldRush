@@ -843,8 +843,25 @@ test('Twin Banks consumes its declared crossings and build zones before securing
   assert.equal(secondCli.status, 0, secondCli.stderr);
   assert.equal(secondCli.stdout, firstCli.stdout);
   const transcript = firstCli.stdout.trim().split('\n').map(JSON.parse);
+  // hero-move-verb (owner ruling 2026-09-06): the manifest's first unconditional row, published on
+  // every contract because the verb's contract belongs to the engine rather than to a map.
   assert.deepEqual(transcript[0].stablePrefix.mechanics.rules, [
     { id: 'build_zones', source: 'tileParams.buildZones', data: { count: 2, banks: ['north', 'south'] } },
+    {
+      id: 'hero_orders',
+      source: 'StandingOrders.MOVE_HERO',
+      data: {
+        verb: 'MOVE_HERO',
+        body: 'hero',
+        arriveRadius: 0.5,
+        refusals: ['HERO_NOT_YOURS', 'UNREACHABLE_TERRAIN', 'UNREACHABLE_APPROACH', 'HERO_UNAVAILABLE'],
+        pilots: {
+          headless: "the rider pilots the run's only hero",
+          roomSeat: 'a headless roster seat pilots its own hero',
+          soloBrowser: 'a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS',
+        },
+      },
+    },
     { id: 'river', source: 'tileParams.river', data: {} },
     { id: 'water_crossings', source: 'tileParams.ford', data: { count: 2, ids: ['east-ford', 'west-ford'] } },
   ]);

@@ -99,6 +99,7 @@ The source-locked forms are:
 {"verb":"REPAIR_UNDER","pct":N}
 {"verb":"MOVE_TO","pos":{"x":N,"z":N}}
 {"verb":"HOLD","pos":{"x":N,"z":N}}
+{"verb":"MOVE_HERO","pos":{"x":N,"z":N}}
 {"verb":"BLAST_AT","pos":{"x":N,"z":N}}
 {"verb":"SET_WEAPON","weapon":"rig"}
 {"verb":"SET_WEAPON","weapon":"blast"}
@@ -125,7 +126,7 @@ The source-locked forms are:
 ```
 <!-- skillmd-guard:grammar:end -->
 
-Orders are evaluated in array order; the first actionable order owns that tick. Put waiting work and conditional actions before a persistent `HOLD`. `BUILD` waits for its gold or wave condition, then uses the same affordability, placement, terrain, cap, and collision rules as a player build. Build orders imply travel: the ordering rider walks within that buildable's placement radius before the work happens. An unreachable terrain target fails honestly so later orders can proceed. `REPAIR_UNDER` selects damaged or wrecked works below the requested percentage and already implies travel. `MOVE_TO` completes on arrival; `HOLD` remains active. `HARVEST` names an active seam from the view or a zero-based sluice index; panning happens where the Prospector stands, so the order walks there first and travel time is real. The player has the same dispatch command (select the Prospector and click a seam, or hold it on touch); the Prospector serves the player and the rider alike. `FALLBACK_IF` activates at the named live-enemy threshold.
+Orders are evaluated in array order; the first actionable order owns that tick. Put waiting work and conditional actions before a persistent `HOLD`. `BUILD` waits for its gold or wave condition, then uses the same affordability, placement, terrain, cap, and collision rules as a player build. Build orders imply travel: the ordering rider walks within that buildable's placement radius before the work happens. An unreachable terrain target fails honestly so later orders can proceed. `REPAIR_UNDER` selects damaged or wrecked works below the requested percentage and already implies travel. `MOVE_TO` completes on arrival; `HOLD` remains active. `MOVE_HERO` is the one order that moves the HERO rather than the Prospector: it walks the hero to `pos` down the same movement path a human's keys drive, completes when the hero's own body covers the point (arrival radius 0.5), and always answers rather than stalling, refusing `UNREACHABLE_TERRAIN` for ground the hero cannot stand on, `UNREACHABLE_APPROACH` after four seconds without progress toward it, and `HERO_NOT_YOURS` wherever a human pilots that hero (which is every solo browser game, so the verb belongs to the headless door and to headless roster seats); the whole contract is published as the `hero_orders` rule in `stablePrefix.mechanics`. `HARVEST` names an active seam from the view or a zero-based sluice index; panning happens where the Prospector stands, so the order walks there first and travel time is real. The player has the same dispatch command (select the Prospector and click a seam, or hold it on touch); the Prospector serves the player and the rider alike. `FALLBACK_IF` activates at the named live-enemy threshold.
 
 Gold seams deplete and then come back, so `remaining` climbing is normal. A depleted seam returns after its respawn wait refilled to capacity, and the `seamRespawnReduction` stat shortens that wait.
 
