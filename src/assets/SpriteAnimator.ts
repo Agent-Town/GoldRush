@@ -167,12 +167,27 @@ type OverlayKind = 'orientation' | 'frame';
 
 const contract = JSON.parse(characterContractText) as Contract;
 const slotContracts = new Map((contract.slots ?? []).map((slot) => [slot.slot, slot]));
+// THE CELL URLS ARE INLINED, NOT FETCHED — `eager: true` is load-bearing (owner, 2026-09-06
+// evening, verbatim: "now it loads veerrry slowly"; task sprite-cell-manifests).
+// A LAZY `?url` glob makes Vite emit one ~116-byte JS module per matched cell — 786 of them in the
+// e1 release build, 95,547 B in total — and `loadProcessedTexture()` then spends a whole round trip
+// per cell just to learn a string. The first town fetched 172-241 of those modules before it was
+// playable (reviews/first-town-transfer-bisect.md, "at 100 ms round trips those 241 requests are
+// the 'veerrry slowly'"). `eager: true` resolves the same hashed, immutable URLs at build time and
+// inlines them into the importing chunk: measured 786 cell modules -> 0, in-window JS requests
+// 205/206 -> 32, and the entry chunk got SMALLER (1,143,893 -> 1,135,986 B), because 786
+// dynamic-import call sites cost more code than the strings they were fetching.
+// The glob stays the ONLY source of the cell set, so the inlined table cannot drift out of sync
+// with `assets/processed/`; scripts/sprite-cell-url-inlining.test.mjs proves both halves and reds
+// if a lazy per-cell module ever comes back. Keep the pattern literal byte-identical: the release
+// build rewrites it to an explicit frontier file list (vite.config.ts, releaseE1CharacterImports).
 const processedTextureUrls = import.meta.glob<string>('../../assets/processed/char-*.png', {
+  eager: true,
   query: '?url',
   import: 'default',
 });
 const processedTextureUrlsByFile = new Map(
-  Object.entries(processedTextureUrls).map(([path, urlLoader]) => [path.split('/').pop() ?? path, urlLoader]),
+  Object.entries(processedTextureUrls).map(([path, url]) => [path.split('/').pop() ?? path, url]),
 );
 const textureLoader = new THREE.TextureLoader();
 const processedTextureCache = new Map<string, Promise<THREE.Texture | null>>();
@@ -1146,23 +1161,22 @@ function resolveFrameFiles(frames: FrameSource | undefined): string[] {
 function loadProcessedTexture(file: string): Promise<THREE.Texture | null> {
   const cached = processedTextureCache.get(file);
   if (cached) return cached;
-  const urlLoader = processedTextureUrlsByFile.get(file);
-  if (!urlLoader) return Promise.resolve(null);
-  const promise = urlLoader().then(
-    (url) =>
-      new Promise<THREE.Texture | null>((resolve) => {
-        textureLoader.load(
-          url,
-          (texture) => {
-            configureTexture(texture);
-            resolve(texture);
-          },
-          undefined,
-          () => resolve(null),
-        );
-      }),
-    () => null,
-  );
+  // The URL is a build-time constant (see the eager glob above), so the texture request starts on
+  // this tick instead of after a module round trip. A cell absent from the glob still resolves
+  // null, exactly as the missing-loader branch did.
+  const url = processedTextureUrlsByFile.get(file);
+  if (!url) return Promise.resolve(null);
+  const promise = new Promise<THREE.Texture | null>((resolve) => {
+    textureLoader.load(
+      url,
+      (texture) => {
+        configureTexture(texture);
+        resolve(texture);
+      },
+      undefined,
+      () => resolve(null),
+    );
+  });
   processedTextureCache.set(file, promise);
   return promise;
 }
