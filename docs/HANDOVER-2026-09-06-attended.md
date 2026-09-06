@@ -77,3 +77,30 @@ The owner's words, verbatim: "(1) re-record it (2) a per-contract cap override",
 **In flight:** nothing. The E10S ladder closed at `f8392f474`; the Ember Shore's receipt reads `unclaimed` until heat 13's first verified claim.
 
 **Still on the desk after this morning:** the Mare Claim air wall (3), device rows (6), the lighting veto (7), the E5/E10 portrait GENERATION (money, the ART slot), the copy revision that lets nine chapter beats speak in their own voice, the Git LFS data plan and any history rewrite (never done unasked), F-RVW-6 (a rider cannot move the hero: a design decision), the F-BUDGET-2 bisect, heat 13 with the notebook lessons (sentry beacons on Dome Basin), and the county-wide re-assay pass that normalises every old snapshot to the held meaning once the owner wants the boards re-read.
+
+## 7. The afternoon wave (2026-09-06, 14:00-18:30 local): eight rulings, six landed, two are the owner's own
+
+Owner rulings, verbatim, on the desk list of the morning: "(1) no, this has to be more prevalent, otherwise it makes no sense (2) will do it soon (3) will do it soon (4) if there are still higgsfield credits, use them, I think they will expire soon. Otherwise GPT subscription is back tomorrow morning for GPT Image 2.0 via the subscription (5) yes (6) I don't want to pay and don't want to lose everything. Maybe we can have an archive GitHub repository? then the one to use for implementation gets smaller and we still can keep everything (7) yes! please! rider has to be able to move, I did not know that was not possible before (8) this has to be fixed on all of them".
+
+| # | ruling | what landed | where |
+|---|---|---|---|
+| 1 | Mare Claim air wall prevalent | `mare-claim-air-prevalent` MERGED `6eb64526d`: `twist.atmosphere { regolithRequired 4, regolithWindowWaves 4 }`, one credit per 120 s window; prover secures both seeds; heat 12's Opus row retires under ADR-004 (re-assay running at write time) | `reviews/mare-claim-air-prevalent.md` |
+| 2 | device verdict rows | owner's own ("will do it soon") | desk |
+| 3 | lighting veto | owner's own ("will do it soon") | desk |
+| 4 | E5/E8/E10 portraits | ten plates generated on Higgsfield (65 credits; ~3,600 remain), then `portraits-e5-e10-generated` MERGED `06783206c`: 38 speakers, four beats re-keyed, three rewritten | `reviews/portraits-e5-e10-generated.md`, LEDGER row 73 |
+| 5 | copy revision | MERGED `7ff401669` (eight beats in their own voices) | the morning's review |
+| 6 | archive repo | `Agent-Town/GoldRush-archive` created (private); main's 11,474 first-parent commits mirrored; the branch pass is running at write time (see §7.2) | `docs/ops/archive-repo.md` |
+| 7 | rider moves the hero | `hero-move-verb` MERGED `15f6fbb23`: `MOVE_HERO` on the intents path; kiting wins neither proof map (F-HMV-4) | `reviews/hero-move-verb.md` |
+| 8 | fix the gold on all boards | county-wide ADR-004 re-assay COMPLETE: 48 ranked rows, 46 kept at their reel gold, 10 golds corrected, 2 retired (e7-relay-rush and e8-eclipse no longer replay) | `artifacts/reassay-county-2026-09-06/table.txt` |
+
+Deployed: production `aea6a7e5` at 18:14 local (copy revision + hero-move + portraits + air wall; assayer synced and restarted AFTER the county pass finished); full-board preview `https://full-board.gold-rush-3in.pages.dev` rebuilt from the same tree.
+
+### 7.1 Standing state for the next session
+- `test:node-guards` is RED on main independent of today's slices: `scripts/e8-remaining-maps.test.mjs:331` (F-MCAP-4, pins the un-composed idle hash against composed floors; verified by revert at `502a398d9`). Fire-authorable corrective. A full-battery transcript from the deployed tree is at `/tmp/node-guards-full.out` on this Mac only if it survived; the reviews carry the finding either way.
+- `test:citations` was red since the morning's drains and is green again (F-GEN-4: two rotted ledger citations repaired in `c738d586a`).
+- `null-floor-anchors --check` reports only the stale eraStamp (pre-existing).
+- Owner's desk, unchanged from the morning plus today's: F-HMV-1 (a parallel hero channel), the sibling E8 maps (Far Side / Low Orbit are gated by crossings, not air; the Eclipse ports the Mare Claim's cure with one `E8SuitAirSystem` slice), F-MCAP-1 (the pending-secure infinite loop for concatenated plans), the implementation-repo shrink (needs his word: assets split + `git filter-repo`), F-E10S4-2/3, F-DBW-1, the county-wide evidence policy.
+- Higgsfield credits remain (~3,600 at 6.5 per plate); the E1-E4 townsfolk who still speak through stand-ins are the next batch if he wants it; GPT Image 2 via the subscription returns tomorrow morning by his word.
+
+### 7.2 The archive mirror, exactly
+`scratchpad/archive/mirror.sh` pushed main in chunks of 100 first-parent commits (11,474 commits, 09:20-11:02Z) and every tag; its branch loop then FAILED all 484 branches on a zsh modifier trap (`"refs/heads/$b:refs/heads/$b"`: `$b:r` is the root-name modifier, so the colon vanished and git saw one concatenated refspec). Re-run as `mirror-refs.sh` with `${b}` braces at 11:09Z, six >100 MB branches skipped by name; 28 of 478 done at 11:20Z, ~20 s each. The next session verifies with `git ls-remote archive | wc -l` (expect ~530) and records the final count in `docs/ops/archive-repo.md`; a branch that fails twice is listed there, never forced.

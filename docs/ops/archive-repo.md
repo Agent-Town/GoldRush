@@ -34,3 +34,8 @@ The game itself needs about 7 GB of art plus 0.7 GB of code and data. Everything
 - Create the assets repo from the current tree's four art directories; verify a fresh clone plus the symlinks builds (`npm run build`) and the playability smoke boots all 42 contracts.
 - `pip install git-filter-repo`; on a fresh clone run the filter with the path list above; verify `npm run build`, `test:node-guards`, and the size; push to a NEW repo name (`GoldRush-impl`) and only then swap the origin remotes, recut every worktree, and re-point the fire and the runner.
 - Never force-push over `GoldRush` itself until the new repo has run one full day of fires.
+
+## Mirror log (2026-09-06)
+- 09:20-11:02Z: main's 11,474 first-parent commits pushed in chunks of 100 (`scratchpad/archive/mirror.sh`), then all tags. The archive's `main` stood at `502a398d9` when the pass ended; the branch pass below moves it to the day's tip.
+- The first branch pass FAILED every one of 484 branches on a zsh modifier trap: `"refs/heads/$b:refs/heads/$b"` reads `$b:r` as the root-name modifier, the colon vanishes and git sees one concatenated refspec ("src refspec … does not match any"). Cure: `${b}` braces (the same trap as the chunk loop's `${C}` earlier in the day; grep every `$VAR:` in a script before running it).
+- 11:09Z: `mirror-refs.sh` re-pushes every branch except the six named above, one push per branch (~20 s each, ~2.5 h). Final count and any twice-failed branch are recorded here by the next session; a failed branch is listed, never forced.
