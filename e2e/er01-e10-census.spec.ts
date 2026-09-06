@@ -20,7 +20,12 @@ const EXPECTED_RULES: Record<string, string[]> = {
 const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
   'e10-ember-shore': 'ember-shore-preserve-consumers',
   'e10-archive-world': 'archive-world-consumers',
-  'e10-last-claim': 'last-claim-objective-consumer',
+  // RE-POINTED (stale before E10S-3, cited): the Last Claim's dependency was renamed to
+  // `last-claim-finale-metadata-consumer` by `1c57e5e68` ("runner(lane-a): e10-preserve-objective")
+  // when its warm-vent objective landed and only the finale METADATA stayed missing. Measured at
+  // base `0c3188493`, 2026-09-06: the contract carries the new id and this row still claimed the
+  // old one, so this clause had been red since that drain.
+  'e10-last-claim': 'last-claim-finale-metadata-consumer',
   'e10-river': 'credits-river-consumer',
 };
 

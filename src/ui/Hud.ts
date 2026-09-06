@@ -186,12 +186,13 @@ export class Hud {
       </section>
 
       <!--
-        E10S-3 — THE VENT'S WARMTH, on the HUD a plain boot already draws (Mistake #10: a mechanic
+        E10S-3: THE VENT'S WARMTH, on the HUD a plain boot already draws (Mistake #10: a mechanic
         a player cannot see is a mechanic that did not ship). It rides the resource-panel grid the
         pressure gauge and the power ledger already share, and it is contract-scoped exactly as
         they are: hidden on every map that declares no vent, which is every map but the Ember
-        Shore. It reuses their track and fill classes rather than minting a second meter's CSS —
-        the same meter, a different reading.
+        Shore. It reuses their track and fill classes rather than minting a second meter's CSS.
+        NOTE: this comment lives inside a template literal, so it survives transpilation and is
+        scanned by scripts/no-emdash-guard.test.mjs. No em dashes and no backticks here.
       -->
       <section class="hud-panel hud-panel--resource hud-panel--warmth" data-testid="hud-warmth" aria-label="Vent warmth" hidden>
         <span class="hud-gauge" aria-hidden="true"></span>
