@@ -1322,7 +1322,7 @@ export class HeadlessContractSim {
       return applied;
     });
     this.bindEventLog();
-    this.economy.apply(this.economyEvent({ type: 'run_reset' }));
+    this.economy.setContractBankCap(this.manifest.twist.economy?.bankCap); this.economy.apply(this.economyEvent({ type: 'run_reset' })); // THE CONTRACT PURSE (owner 2026-09-06) rides this line so no cited coordinate below moves; browser twin at `Game.applyContractBankCap`
     const sim = this;
     this.runManager = new RunManager(
       {
