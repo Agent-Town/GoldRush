@@ -45,7 +45,21 @@ export type AgentGravityView = {
  * canonical field list from `the-claim`, which declares no gravity and no air, so every
  * contract-scoped field under `now` is unregistered by design (F-E8MC-1, `now.preserve` precedent).
  */
-export type AgentAirView = Omit<E8AtmosphereDiagnostics, 'declared'> & {
+export type AgentAirView = Omit<E8AtmosphereDiagnostics, 'declared' | 'regolith'> & {
+  /**
+   * The regolith row, with the four WINDOW fields made non-optional. They are optional in the
+   * consumers' shared shape only because `E8SuitAirSystem` (the three siblings) does not emit
+   * them and this slice's firewall forbids touching that file; `readAir` fills them for every E8
+   * map, so a rider reads one air shape across the era. `windowWaves: null` means the map credits
+   * a worked ground whenever it is worked; a number means at most one ground counts toward the
+   * latch per that many waves of run time, and `window` names which one the run clock stands in.
+   */
+  regolith: Omit<E8AtmosphereDiagnostics['regolith'], 'windowWaves' | 'window' | 'creditedThisWindow' | 'windowHeldPans'> & Readonly<{
+    windowWaves: number | null;
+    window: number;
+    creditedThisWindow: number;
+    windowHeldPans: number;
+  }>;
   crossing?: E8CrossingAirDiagnostics;
   eclipse?: E8EclipseAirDiagnostics;
 };
@@ -552,6 +566,12 @@ function readAir(atmosphere: Record<string, unknown>): AgentAirView | undefined 
       runsOnAir: integer(regolith.runsOnAir),
       breathlessPans: integer(regolith.breathlessPans),
       complete: regolith.complete === true,
+      // Always present, on all four E8 maps: a consumer that emits no window publishes the absence
+      // as `null` rather than dropping the field, so `now.air` stays ONE shape a rider can read.
+      windowWaves: Number.isInteger(regolith.windowWaves) ? (regolith.windowWaves as number) : null,
+      window: integer(regolith.window),
+      creditedThisWindow: integer(regolith.creditedThisWindow),
+      windowHeldPans: integer(regolith.windowHeldPans),
     },
     ...(crossing ? { crossing } : {}),
     ...(eclipse ? { eclipse } : {}),

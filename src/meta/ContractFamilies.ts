@@ -755,7 +755,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] }; hero?: { maxHpBonus: number } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and beacon ladder, and E7's claim grit ride the trailing intersection so no cited line below moves
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] }; hero?: { maxHpBonus: number }; atmosphere?: { regolithRequired: number; regolithWindowWaves?: number } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and beacon ladder, E7's claim grit and E8's regolith gate ride the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -1596,7 +1596,7 @@ const AUTHORED_TWIST_KEYS = [
   'picnicHold', 'pressureEnabled', 'coalSeams', 'seamYieldMult', 'secureWave', 'clockTicks', 'preserve', 'waveCadenceMult', 'lightRamp', 'dayNightCycle',
   'weather', 'mothSeason', 'fairground', 'powerGrid', 'enemyLanternClasses', 'enemyRoster', 'showroom', 'baron', 'broadcastMirror',
   'signalSuppression', 'interferenceFront', 'probePlayback', 'zeroGravity', 'eclipseEvent', 'persistentPlanting',
-  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier', 'harvestFreeObjective', 'economy', 'hero',
+  'scheduledRelocation', 'persistentCanalChoices', 'emberShore', 'motorFrontier', 'harvestFreeObjective', 'economy', 'hero', 'atmosphere',
 ] as const;
 const AUTHORED_PRACTICE_KEYS = [
   'scheduledWaves', 'scores', 'metaProgress', 'runHistory', 'standings', 'tapes', 'goldGrant', 'bellWaveSize',
@@ -1705,7 +1705,7 @@ function validateAuthoredContractShape(value: unknown, reasons: ContractDescript
   if (!isRecord(value.briefing) || Array.isArray(value.briefing)) addDescriptorReason(reasons, reason('field_section', 'The briefing has the wrong shape.', 'briefing'));
   if (!tileParams || !twist) return null;
   addUnknownFieldReasons(tileParams, AUTHORED_TILE_KEYS, 'tileParams', reasons);
-  addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons); validateContractEconomy(twist.economy, reasons); validateContractHero(twist.hero, reasons); // the purse and claim-grit validators ride this line; see their notes at the file's end
+  addUnknownFieldReasons(twist, AUTHORED_TWIST_KEYS, 'twist', reasons); validateContractEconomy(twist.economy, reasons); validateContractHero(twist.hero, reasons); validateContractTwistAtmosphere(twist.atmosphere, tileParams, reasons); // the purse, claim-grit and regolith-gate validators ride this line; see their notes at the file's end
   if (twist.clockTicks !== undefined && (typeof twist.clockTicks !== 'number' || !Number.isInteger(twist.clockTicks) || twist.clockTicks <= 0)) {
     addDescriptorReason(reasons, reason('field_number', 'clockTicks must be a positive integer.', 'twist.clockTicks'));
   }
@@ -2715,4 +2715,66 @@ function validateContractHero(value: unknown, reasons: ContractDescriptorReason[
 export function contractHeroMaxHpBonus(contract: ContractManifest): number {
   const bonus = contract.twist.hero?.maxHpBonus;
   return typeof bonus === 'number' && Number.isInteger(bonus) && bonus > 0 && bonus <= 1000 ? bonus : 0;
+}
+
+/**
+ * THE REGOLITH GATE (owner ruling 2026-09-06, verbatim: "no, this has to be more prevalent,
+ * otherwise it makes no sense"), the door half of `twist.atmosphere`. Grep
+ * `validateContractTwistAtmosphere` to find both ends; the engine half is
+ * `E8AtmosphereSystem.create` in `src/systems/E8PhysicsSystem.ts`.
+ *
+ * WHAT IT REFUSES, and why each refusal is a DOOR refusal rather than a runtime clamp: the two
+ * numbers a contract authors here are the numbers the LATCH enforces, the numbers the BRIEFING
+ * prints and the numbers the VIEW publishes, so anything that would make those three disagree must
+ * never reach an engine.
+ *   - a non-record, or any field but the two named — silence is the default, and an unread field
+ *     would read as a promise the engine never keeps;
+ *   - a `regolithRequired` that is not a whole number above zero — a fractional or negative count
+ *     of grounds is not a harder gate, it is a different mechanic;
+ *   - a `regolithRequired` above the grounds the map actually AUTHORS — the consumer clamps to
+ *     `harvestAnchors.length` anyway, so authoring more would print a number no rider can reach
+ *     ("Unwinnable-by-construction is a bug class, never a difficulty setting",
+ *     `specs/epoch-saga/CAPABILITY-LADDER.md:38`);
+ *   - a `regolithWindowWaves` that is not a whole number above zero — the window is a count of
+ *     waves, and a zero-wave window would credit every ground in one sortie, which is the whole
+ *     thing this field exists to prevent;
+ *   - the block on a contract that declares no `tileParams.atmosphere.airIsWall` — no consumer
+ *     would ever read it there, and a gate nothing enforces is the reskin the ruling rejected.
+ * A block with `regolithRequired` and no window is LAWFUL: that is the count raised on its own,
+ * with grounds still creditable in any order at any time.
+ */
+function validateContractTwistAtmosphere(
+  value: unknown,
+  tileParams: Record<string, unknown>,
+  reasons: ContractDescriptorReason[],
+): void {
+  if (value === undefined) return;
+  if (!isRecord(value) || Array.isArray(value)) {
+    addDescriptorReason(reasons, reason('field_section', 'The atmosphere twist has the wrong shape.', 'twist.atmosphere'));
+    return;
+  }
+  addUnknownFieldReasons(value, ['regolithRequired', 'regolithWindowWaves'], 'twist.atmosphere', reasons);
+  const airIsWall = isRecord(tileParams.atmosphere) && tileParams.atmosphere.airIsWall === true;
+  if (!airIsWall) {
+    addDescriptorReason(reasons, reason(
+      'atmosphere_undeclared',
+      'A regolith gate needs an air wall: declare tileParams.atmosphere.airIsWall first.',
+      'twist.atmosphere',
+    ));
+  }
+  const grounds = Array.isArray(tileParams.harvestAnchors) ? tileParams.harvestAnchors.length : 0;
+  const required = value.regolithRequired;
+  if (typeof required !== 'number' || !Number.isInteger(required) || required <= 0) {
+    addDescriptorReason(reasons, reason('field_number', 'A regolith gate must be a positive whole number of grounds.', 'twist.atmosphere.regolithRequired'));
+  } else if (required > grounds) {
+    addDescriptorReason(reasons, reason(
+      'field_number',
+      'A regolith gate cannot ask for more grounds than the map authors.',
+      'twist.atmosphere.regolithRequired',
+    ));
+  }
+  const windowWaves = value.regolithWindowWaves;
+  if (windowWaves !== undefined && (typeof windowWaves !== 'number' || !Number.isInteger(windowWaves) || windowWaves <= 0)) {
+    addDescriptorReason(reasons, reason('field_number', 'A regolith window must be a positive whole number of waves.', 'twist.atmosphere.regolithWindowWaves'));
+  }
 }

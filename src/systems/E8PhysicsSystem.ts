@@ -201,9 +201,13 @@ function round3(value: number): number {
 //     rain has no headless hazard on this map and is not modelled), draining over
 //     `DOME_AIR_DRAIN_SECONDS`, sealing back over `DOME_AIR_REFILL_SECONDS` once the pad is clear;
 //   · the regolith run: a pan tick landed on a ground while the suit still holds air WORKS that
-//     ground; a breathless tick is counted and not credited. The claim cannot secure until
-//     `REGOLITH_GROUNDS_FOR_SECURE` of the authored grounds have been worked on suit air
-//     (`objectiveAllowsSecure`), a count published on the view beside the authored total.
+//     ground; a breathless tick is counted and not credited. The claim cannot secure until the
+//     contract's own count of the authored grounds has been worked on suit air
+//     (`objectiveAllowsSecure`), a count published on the view beside the authored total — the
+//     contract authors it as `twist.atmosphere.regolithRequired` and `REGOLITH_GROUNDS_FOR_SECURE`
+//     is the default for a contract that authors nothing, with at most one ground credited per
+//     `regolithWindowWaves` of run time. See THE PREVALENCE RULE below for the measurement that
+//     chose both numbers.
 //
 // SCOPED BY ID AND BY DATA, in the `HollowCrossingSystem.create` shape: `e8-eclipse` carries a
 // byte-identical atmosphere block and the same dome pads, and its row on the L1 ladder ("compose
@@ -234,8 +238,45 @@ export const AIR_WALL_CONTRACT_IDS: readonly string[] = ['e8-mare-claim'];
  * difficulty setting", `specs/epoch-saga/CAPABILITY-LADDER.md:38`). The count is published on the
  * view as `now.air.regolith.required` beside `grounds`, so raising it later is one line here and a
  * documented number there — the ladder's next E8 row, once the map authors a dependable air loop.
+ *
+ * THAT ROW LANDED, 2026-09-06 (`tasks/mare-claim-air-prevalent.md`), and this constant kept its
+ * value: the count is now AUTHORED PER CONTRACT (`twist.atmosphere.regolithRequired`) and this is
+ * the default a contract that authors nothing still gets. `E8SuitAirSystem` reads it unchanged for
+ * the Mare Claim's three siblings, whose numbers this slice measured and did not touch.
  */
 export const REGOLITH_GROUNDS_FOR_SECURE = 1;
+
+/**
+ * THE PREVALENCE RULE (owner ruling 2026-09-06, verbatim: "no, this has to be more prevalent,
+ * otherwise it makes no sense"), and why it is TWO numbers rather than one.
+ *
+ * MEASURED FIRST on heat 12's own securing tape, replayed tick for tick
+ * (`artifacts/mare-claim-air-prevalent/measure-e8-mare-claim.json`, the replay reproduces
+ * `fnv1a32:f84d1d2b`): the rider worked ground #1 at t = 6.0 s, the latch closed there, and the
+ * suit then sat EMPTY for 488.8 of 600 seconds while 197 breathless pans cost nothing. The wall
+ * cost one order. But raising `required` alone does not fix that, and the same tape says why: the
+ * rider worked #1 at 6 s, #4 at 17 s and #2 at 42 s — THREE grounds inside the suit's first
+ * 60-second charge, without once going back for air. A four-ground gate on its own would have been
+ * bought in the opening sortie plus one more, and the last nine minutes would still ask nothing.
+ *
+ * So the second number is a WINDOW: at most one ground is credited toward the latch per
+ * `regolithWindowWaves` of run time. Four grounds at one per four waves cannot be bought before
+ * the fourth window opens, which on this map's 30-second cadence is t = 360 s of a 600-second run,
+ * and the rider must leave a dome with air in four of the five windows. That is the era's thesis
+ * ("air becomes the wall", `specs/epoch-saga/e8-orbital-bundle.md` §B) made into a shape a rider
+ * plans a whole ride around, rather than one it pays off and forgets.
+ *
+ * THE WINDOW IS MEASURED ON THIS CONSUMER'S OWN RUN CLOCK, not on the wave counter, and that is a
+ * deliberate honesty rather than an approximation: `update` is the only thing this class is
+ * handed, and it is handed a fixed delta and nothing else — no wave — so the boundary is
+ * `windowWaves x the contract's own wave interval` in seconds, accumulated a tick at a time. On
+ * the Mare Claim that is 4 x 30 = 120 s. Measured against the same tape, the wave counter turns
+ * within one tick of each 30-second multiple (wave 1 at 30.0 s, wave 10 at 300.0 s), so the two
+ * clocks agree everywhere except a single 1/30 s sliver at each boundary. The window INDEX is
+ * published on the view (`now.air.regolith.window`) precisely so a rider never has to guess which
+ * side of that sliver it is on.
+ */
+export const REGOLITH_WINDOW_WAVES_DEFAULT: number | null = null;
 
 type Point = Readonly<{ x: number; z: number }>;
 type Rect = Readonly<{ id: string; minX: number; maxX: number; minZ: number; maxZ: number }>;
@@ -262,6 +303,20 @@ export type E8AtmosphereDiagnostics = Readonly<{
     runsOnAir: number;
     breathlessPans: number;
     complete: boolean;
+    /**
+     * THE WINDOW, optional in the TYPE and always present on the VIEW. Optional here because
+     * `E8SuitAirSystem` shares this shape for the Mare Claim's three siblings and this slice's
+     * firewall forbids touching that file; `View.readAir` fills the four fields for all four E8
+     * maps (`windowWaves: null` where no window is authored), so a rider still reads ONE air shape
+     * across the era. Null `windowWaves` means every credited ground counts whenever it is worked.
+     */
+    windowWaves?: number | null;
+    /** Which window the run clock stands in, zero-based; always 0 while no window is authored. */
+    window?: number;
+    /** Grounds credited toward the latch inside THIS window. At most one while a window is authored. */
+    creditedThisWindow?: number;
+    /** Pans made on suit air, on a fresh ground, that the window refused. Counted, credited to nothing. */
+    windowHeldPans?: number;
   }>;
 }>;
 
@@ -274,6 +329,10 @@ export class E8AtmosphereSystem {
   private emptySeconds = 0;
   private runsOnAir = 0;
   private breathlessPans = 0;
+  private windowHeldPans = 0;
+  private elapsedSeconds = 0;
+  private windowIndex = 0;
+  private creditedThisWindow = 0;
   private readonly worked = new Set<number>();
   private readonly domes: DomeState[];
 
@@ -282,6 +341,12 @@ export class E8AtmosphereSystem {
     private readonly wall: 'suit-timer' | 'suit-only' | null,
     domes: readonly Rect[],
     private readonly grounds: number,
+    /** `twist.atmosphere.regolithRequired`, or null for the ratified default. */
+    private readonly authoredRequired: number | null = null,
+    /** `twist.atmosphere.regolithWindowWaves`, or null for no window at all. */
+    private readonly windowWaves: number | null = null,
+    /** Seconds per wave on THIS contract — `Balance.waves.waveInterval` over its own cadence. */
+    private readonly waveSeconds: number = Balance.waves.waveInterval,
   ) {
     this.suitSeconds = SUIT_AIR_SECONDS;
     this.domes = domes.map((zone) => ({ zone, air: 1, breached: false, breaches: 0, siegers: 0 }));
@@ -299,7 +364,15 @@ export class E8AtmosphereSystem {
       || domes.length === 0
       || grounds === 0
     ) return E8AtmosphereSystem.none();
-    return new E8AtmosphereSystem(true, atmosphere.outsideDomes, domes, grounds);
+    // THE AUTHORED READ. The door already refuses malformed shapes
+    // (`validateContractTwistAtmosphere`); this second belt exists because a run can be booted from
+    // a tape or a room whose manifest never passed the door, and the honest answer there is the
+    // RATIFIED DEFAULT rather than a crash or a made-up number.
+    const authored = contract.twist.atmosphere;
+    const required = positiveInteger(authored?.regolithRequired);
+    const windowWaves = positiveInteger(authored?.regolithWindowWaves) ?? REGOLITH_WINDOW_WAVES_DEFAULT;
+    const waveSeconds = Balance.waves.waveInterval / Math.max(0.1, contract.twist.waveCadenceMult ?? 1);
+    return new E8AtmosphereSystem(true, atmosphere.outsideDomes, domes, grounds, required, windowWaves, waveSeconds);
   }
 
   static none(): E8AtmosphereSystem {
@@ -317,7 +390,24 @@ export class E8AtmosphereSystem {
 
   /** The gate's own number, clamped to what the map actually authors. */
   private get required(): number {
-    return Math.min(REGOLITH_GROUNDS_FOR_SECURE, this.grounds);
+    return Math.min(this.authoredRequired ?? REGOLITH_GROUNDS_FOR_SECURE, this.grounds);
+  }
+
+  /** Seconds one window lasts, or null where the contract authors no window. */
+  private get windowSeconds(): number | null {
+    return this.windowWaves === null ? null : this.windowWaves * this.waveSeconds;
+  }
+
+  /**
+   * The window the run clock stands in. Rolls the per-window credit over on the way past, so both
+   * the latch and the view see the same boundary in the same tick.
+   */
+  private syncWindow(): void {
+    const seconds = this.windowSeconds;
+    const index = seconds === null ? 0 : Math.floor(this.elapsedSeconds / seconds);
+    if (index === this.windowIndex) return;
+    this.windowIndex = index;
+    this.creditedThisWindow = 0;
   }
 
   /**
@@ -327,6 +417,9 @@ export class E8AtmosphereSystem {
    */
   update(delta: number, body: Point, siegers: readonly Sieger[]): void {
     if (!this.declared || delta <= 0) return;
+    // The run clock first, so the dials, the suit and the window all read one tick.
+    this.elapsedSeconds += delta;
+    this.syncWindow();
     for (const dome of this.domes) {
       let count = 0;
       for (const sieger of siegers) if (sieger.isAlive && inside(dome.zone, sieger.position)) count += 1;
@@ -361,7 +454,20 @@ export class E8AtmosphereSystem {
       return false;
     }
     this.runsOnAir += 1;
+    // THE WINDOW sits between "on air" and "banked", and only there: a breathless pan is refused
+    // exactly as before, a pan on a ground already banked still counts as work on air exactly as
+    // before, and only a FRESH ground in a window that has already credited one is held back —
+    // counted as `windowHeldPans`, credited to nothing. Nothing about the pan's GOLD changes: this
+    // class mints nothing and the caller has already paid the rider (`HeadlessContractSim`'s
+    // harvest path), which is what keeps both runtimes of this engine on one board.
+    this.syncWindow();
+    if (this.worked.has(anchorIndex)) return true;
+    if (this.windowWaves !== null && this.creditedThisWindow >= 1) {
+      this.windowHeldPans += 1;
+      return false;
+    }
     this.worked.add(anchorIndex);
+    this.creditedThisWindow += 1;
     return true;
   }
 
@@ -397,9 +503,18 @@ export class E8AtmosphereSystem {
         runsOnAir: this.runsOnAir,
         breathlessPans: this.breathlessPans,
         complete: this.objectiveAllowsSecure && this.declared,
+        windowWaves: this.windowWaves,
+        window: this.windowIndex,
+        creditedThisWindow: this.creditedThisWindow,
+        windowHeldPans: this.windowHeldPans,
       },
     };
   }
+}
+
+/** A whole number above zero, or null — the one shape both authored air numbers take. */
+function positiveInteger(value: number | undefined): number | null {
+  return typeof value === 'number' && Number.isInteger(value) && value > 0 ? value : null;
 }
 
 function inside(zone: Rect, point: Point): boolean {

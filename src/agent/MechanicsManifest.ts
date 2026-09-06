@@ -4,6 +4,7 @@ import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSyste
 import { beaconCost, buildableBlurb, buildableCostAt, getBuildableDef, resolveBeaconLadder, type BuildableId } from '../game/buildables';
 import { PicnicHoldSystem, PICNIC_ACTIVE_DEFENSE_SECONDS, PICNIC_HOLD_RADIUS, PICNIC_HOLD_SECONDS, PICNIC_STAKE_PRESS_WEIGHT } from '../systems/PicnicHoldSystem';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
+import { DOME_AIR_DRAIN_SECONDS, DOME_AIR_REFILL_SECONDS, DOME_ZONE_PREFIX, E8AtmosphereSystem } from '../systems/E8PhysicsSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
 import { E10SquallScheduler, SQUALL_PHASE_ORDER } from '../systems/E10SquallScheduler';
 import { E10PreserveSystem } from '../systems/E10PreserveSystem';
@@ -612,6 +613,42 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       // The consequence a rider must plan around: this is an OBJECTIVE, not a bonus.
       consequence: 'the run cannot secure until the probe is recovered; stand in the crater and take the context action',
       playsOnce: true,
+    }));
+  }
+
+  // --- E8 air as the wall. SOURCED FROM THE CONSUMER for the same reason A6 above is: the row
+  // states the count and the window `E8AtmosphereSystem` will actually enforce, so a card can
+  // never promise a gate the run does not hold or hide one it does. Absent everywhere the consumer
+  // is not armed, which today is everywhere but the Mare Claim (`AIR_WALL_CONTRACT_IDS`); the
+  // three siblings run their own consumer and their own row is that slice's to write.
+  const airWall = E8AtmosphereSystem.create(contract);
+  if (airWall.isDeclared) {
+    const { suit, regolith } = airWall.diagnostics;
+    const windowWaves = regolith.windowWaves ?? null;
+    rules.push(rule('air_wall_regolith', 'E8AtmosphereSystem.notePan', {
+      suitSeconds: suit.capacity,
+      refillPerSecond: suit.refillPerSecond,
+      refillsIn: `any ${DOME_ZONE_PREFIX}-* pad that still holds air`,
+      grounds: regolith.grounds,
+      required: regolith.required,
+      // Spread-if-authored rather than a null: a `MechanicValue` has no null, and a rule that
+      // printed `windowWaves: 0` would read as a window rather than the absence of one. Silence
+      // means every worked ground counts whenever it is worked. The rider's real question is "how
+      // long is a window", so the row does the arithmetic the consumer does rather than making a
+      // rider guess at the wave cadence.
+      ...(windowWaves === null ? {} : {
+        windowWaves,
+        windowSeconds: windowWaves * (Balance.waves.waveInterval / Math.max(0.1, contract.twist.waveCadenceMult ?? 1)),
+      }),
+      domeDrainSeconds: DOME_AIR_DRAIN_SECONDS,
+      domeRefillSeconds: DOME_AIR_REFILL_SECONDS,
+      // The consequence, stated as a consequence: this is an OBJECTIVE, not a hazard. It costs no
+      // hit points and pays no gold, which is why a rider that ignores it simply cannot secure.
+      consequence: windowWaves === null
+        ? `the run cannot secure until ${regolith.required} of the ${regolith.grounds} regolith grounds have been panned with air still in the suit; a breathless pan still pays gold and counts for nothing`
+        : `the run cannot secure until ${regolith.required} of the ${regolith.grounds} regolith grounds have been panned with air still in the suit, and only ONE ground counts per ${windowWaves}-wave window, so the run is made in trips across the whole contract; a breathless pan still pays gold and counts for nothing`,
+      gatesSecure: true,
+      damages: false,
     }));
   }
 
