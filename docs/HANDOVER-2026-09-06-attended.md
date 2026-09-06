@@ -104,3 +104,29 @@ Deployed: production `aea6a7e5` at 18:14 local (copy revision + hero-move + port
 
 ### 7.2 The archive mirror, exactly
 `scratchpad/archive/mirror.sh` pushed main in chunks of 100 first-parent commits (11,474 commits, 09:20-11:02Z) and every tag; its branch loop then FAILED all 484 branches on a zsh modifier trap (`"refs/heads/$b:refs/heads/$b"`: `$b:r` is the root-name modifier, so the colon vanished and git saw one concatenated refspec). Re-run as `mirror-refs.sh` with `${b}` braces at 11:09Z, six >100 MB branches skipped by name; 28 of 478 done at 11:20Z, ~20 s each. The next session verifies with `git ls-remote archive | wc -l` (expect ~530) and records the final count in `docs/ops/archive-repo.md`; a branch that fails twice is listed there, never forced.
+
+## 8. The evening wave (2026-09-06, 19:30-23:30 local): the owner's rulings, six merges, two deploys, three re-assays
+
+Owner rulings, verbatim: "Ok- I am off for now. Please continue with all work necessary to fix the epochs. yes, same air for all space contracts - but I also never played the levels, so I dont know exactly, well, the player can also not walk the Prospector but just the rider. ok, good plan about the shrinking, lets use the higgsfield credits, I think they expire soon. go hard. (5) both" · "https://agenttown.app/goldrush/ does not work for me at all, does not load" · "now it loads veerrry slowly" · "are the assets optimized for size?" · "salt stored, stray processes killed, key rotated".
+
+| slice | verdict | merge | what to know |
+|---|---|---|---|
+| `secure-choice-refusal-both-cures` | MERGED | `14c163c87` | `SECURE_CHOICE_ONLY` on the order channel + one gr-sim stderr line; each refusal spends one fixed step of the pending clock; 8,783 turns never ending → 601 turns exit 0. F-SCR-1 cured in the drain: seven guards behind `nul-audit` had never run. |
+| `first-town-transfer-bisect` | MERGED, premise inverted | `36d1bfed8` | no merge grew the transfer; the 25 MB gate measures host speed (F-BUDGET-4, desk); the advance stream no longer prefetches a contract while the town loads (F-BUDGET-3); composition report: sheets 12.2 MB / 208 requests, hero slot 8.9 MB / 141, mp3s 3.0 MB, 241 JS requests for 27 KB. |
+| `relay-rush-replays-again` | MERGED, INTENDED | `de79ee009` | the retired reel was heat 11's; `b38d60295` (playbook proof became the price of the claim) explains it; a prover secures twice; new guard `relay-rush-reel` (the heaviest in the battery). |
+| `e8-air-wall-all-maps` | MERGED | `3a9bab9c8` | the Mare Claim's rule on the Eclipse, a crossing window on the Far Side and Low Orbit; provers secure the two; the Eclipse is survival-bound at every gate (F-EAWA-1) → `eclipse-winnable` running. |
+| `first-town-audio-deferred` | running | | the two mp3s leave the window (lever 2). |
+| `sprite-cell-manifests` | running | | 241 cell requests → ~20 (lever 3). |
+| `eclipse-winnable` | running | | the binding constraint, the smallest per-contract lever, provers. |
+
+Deploys: production `aea6a7e5` (18:14) and `53d8552b` (23:02); the full-board preview rebuilt each time. Re-assays under ADR-004: the Mare Claim's Opus row retired (18:18), the Far Side's retired and the Low Orbit's survived (23:07-23:09), each as its review predicted; evidence under `artifacts/reassay-*-2026-09-06/`.
+
+The slow load, measured: the landing is 1.8 MB and shows in 1.6-4.7 s on a normal link, 3.6 s on emulated 3G; the owner's blank screen was the `?lighting=legacy` URL (skips the landing, goes to the contract card) on a slow link plus edge latency (HTML is no-cache, TTFB 0.16-2.1 s). The first town is 21.6 MB by the gate, but the gate is host speed (F-BUDGET-4); round trips are the real lever (the two running slices).
+
+Rulings recorded: F-HMV-1 CLOSED (the owner's parity reading: a human steers only the rider); the shrink plan approved; credits to be spent; F-MCAP-1 both cures. Desk items B3/B4/B5 struck by the owner.
+
+### 8.1 The archive, the art store, the shrink rehearsal
+`GoldRush-archive` complete (539 refs). `GoldRush-assets` complete (5.7 GB, five chunks ≤ 1.4 GB, `9fdd2e0`). The shrink rehearsal (`scratchpad/shrink/rehearsal.sh`, a fresh `--no-local` clone, `git filter-repo --invert-paths` over a computed drop-list, `--replace-refs`, then a commit-map re-point of every hash in tracked text: 2,257 full + 21,304 abbreviated hashes across 1,051 files, 0 ambiguous) measured: dropping every `artifacts/*` entry gives a 0.95 GB pack; keeping the 349 entries a grep finds referenced gives ~8 GB, so the real keep-list must be by READ (imports and `readFileSync`), not by mention, and by size. `goal-tracker`'s ancestry check (`merge-base --is-ancestor <mergeHash> main`) fails on old ids even with replace refs, which is why the commit-map re-point of `tasks/goals.json` is part of the recipe. The real run waits for a quiet attended window; the swap of the working checkout is the owner-present step.
+
+### 8.2 The portrait aging batch (Higgsfield, in flight at write time)
+Canon: `lore/STORYBOOK.md` THE LAWS OF TIME (12-15 years per era), `lore/characters.md` (the Elder passes early in E2; Chen Mei is the Gazette's first editor from E2; the Chen family works the press). Nineteen faces: the E1 cast aged for E2 (+13), E3 (+26), E4 (+39) by image reference (`higgsfield upload create` → id → `--image-references`), plus the boilerwright, Chen Wei the pressman, Chen Lan the typesetter, and the Old Digger (E10). Script `.claude/cache/era-aging-batch.mjs`, log `scratchpad/era-aging/batch.jsonl`, raws land as `assets/raw/tf-<slug>.png` (E2 complete at write time). The processing/registration/re-key slice is authored when the batch ends; the six earlier no-line portraits still need copy. Canon note found: the shipped E1 Elder plate is a man while the lore says "her".
