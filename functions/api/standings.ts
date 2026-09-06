@@ -191,7 +191,7 @@ const ASSAY_ROW_ID = /^[a-f0-9]{32}:[1-4]:\d{1,16}:[a-f0-9]{64}$/;
 const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason', 'securedSnapshot']);
 const SECURED_SNAPSHOT_KEYS = new Set(['waves', 'timeAlive', 'gold']);
 const ASSAY_LOCATOR_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId']);
-const REASSAY_KEYS = new Set(['epochId', 'contractId', 'reason']);
+const REASSAY_KEYS = new Set(['epochId', 'contractId', 'reason', 'includeRetired']);
 const LINEAGE_KEYS = new Set(['reason', 'requeuedAt']);
 const MAX_LINEAGE_REASON_LENGTH = 256;
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
@@ -392,9 +392,10 @@ export async function onRequestStandingsReassay(context: StandingsContext): Prom
   return assayRequest(context, async (cors) => {
     if (context.request.method !== 'POST') return error(cors, 405, 'method_not_allowed', 'POST only');
     const body = await readJson(context.request);
-    const { epochId, contractId, reason } = body;
+    const { epochId, contractId, reason, includeRetired } = body;
     if (!hasOnlyKeys(body, REASSAY_KEYS) || typeof epochId !== 'string' || typeof contractId !== 'string'
       || typeof reason !== 'string' || reason.length === 0 || reason.length > MAX_LINEAGE_REASON_LENGTH
+      || (includeRetired !== undefined && typeof includeRetired !== 'boolean')
       || !knownContract(epochId, contractId)) {
       return error(cors, 400, 'bad_reassay', 'Re-assay request not accepted.');
     }
@@ -402,11 +403,24 @@ export async function onRequestStandingsReassay(context: StandingsContext): Prom
     if (!kv) return error(cors, 503, 'board_unavailable', 'The county book is unavailable.');
     const rows = await readBoard(kv, epochId, contractId);
     const requeuedAt = Date.now();
-    const requeued = rows.filter((row) => row.assay === 'verified' && row.tape !== undefined);
+    const requeued = rows.filter((row) => (row.assay === 'verified' || (includeRetired === true && row.assay === 'retired')) && row.tape !== undefined);
     for (const row of requeued) {
-      // The row's SCORE and `submittedAt` are left exactly as they are. A verified row's score is
-      // its own recorded `securedSnapshot`, which need not equal the reel's final outcome, so
-      // rewriting either would move a standing the county never re-measured.
+      // `submittedAt` (the first-secure date) is left exactly as it is. The SCORE is restored to the
+      // reel's own declared outcome before the re-assay: a verified row's score is the county's
+      // snapshot from an EARLIER assay, and the snapshot's meaning can change (2026-09-06: lifetime
+      // panning became the purse held at the secure tick), so judging the replay against the old
+      // snapshot retires honest rows for the county's own reasons. Measured live on Moth Season the
+      // morning this landed: the Opus row replayed to its exact hash and was still retired because its
+      // stored gold was the old 530 while its reel declares 200. The re-assay judges the reel against
+      // its declaration and then re-snapshots under the current meaning.
+      const outcome = isRecord(row.tape?.outcome) ? row.tape.outcome : null;
+      if (outcome) {
+        const waves = integerInRange(outcome.waves, 0, 10_000);
+        const timeAlive = numberInRange(outcome.timeAlive, 0, 24 * 60 * 60);
+        const gold = integerInRange(outcome.gold, 0, 1_000_000_000);
+        if (waves !== null && timeAlive !== null && gold !== null) Object.assign(row, { waves, timeAlive, gold });
+      }
+      delete row.securedSnapshot;
       row.assay = 'pending';
       row.lineage = { reason, requeuedAt };
       delete row.assayReason;

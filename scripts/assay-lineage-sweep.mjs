@@ -32,6 +32,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const commit = takeFlag('--commit');
+const includeRetired = takeFlag('--include-retired'); // re-queue rows the county itself retired (a repair, ADR-004)
 const base = takeValue('--base') ?? (process.env.ASSAY_API_BASE || 'https://agenttown.app');
 const only = takeValue('--contract');
 if (args.length) throw new Error(`unknown option: ${args[0]}`);
@@ -51,7 +52,7 @@ let swept = 0;
 let called = 0;
 for (const contract of targets) {
   const board = await getJson(`${base}/api/standings`, { epoch: contract.epochId, contract: contract.id });
-  const verified = (board.board ?? []).filter((row) => row.assay === 'verified' && row.reel?.id);
+  const verified = (board.board ?? []).filter((row) => (row.assay === 'verified' || (includeRetired && row.assay === 'retired')) && row.reel?.id);
   const stale = [];
   for (const row of verified) {
     const reel = await getJson(`${base}/api/standings`, { epoch: contract.epochId, contract: contract.id, reel: row.reel.id });

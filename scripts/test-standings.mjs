@@ -282,6 +282,12 @@ async function checkLineageReassay(onRequest, queueRoute, verdictRoute, reassayR
   current.assay = 'verified';
   current.assayedAt = 20;
   current.assayHash = current.tape.eventLogHash;
+  // The row's stored gold is the county's OLD snapshot (lifetime panning, 530 on the live Moth Season
+  // row) while its reel declares the purse held (200): the re-queue must restore the declaration, or
+  // an honest, replaying row is retired for the county's own earlier overwrite (measured live 2026-09-06).
+  current.tape.outcome = { ...current.tape.outcome, secured: true, waves: current.waves, timeAlive: current.timeAlive, gold: current.gold };
+  const declaredGold = current.gold;
+  current.gold = declaredGold + 330;
   current.securedSnapshot = { waves: current.waves, timeAlive: current.timeAlive, gold: current.gold };
 
   // The stale row's score is its GOAL SNAPSHOT, which does NOT equal its reel's final outcome — the
@@ -322,6 +328,8 @@ async function checkLineageReassay(onRequest, queueRoute, verdictRoute, reassayR
   equal(requeued.length, 2, 're-queueing deletes nothing');
   equal(requeued.map((row) => row.assay), ['pending', 'pending'], 'both rows are pending again');
   equal(requeued.map((row) => row.lineage.reason), [reason, reason], 'each row carries the operator cause');
+  equal(requeued.find((row) => row.tape.id === 'opus-moth-reel').gold, declaredGold, 'a re-queued row is judged against its reel\'s DECLARED gold, not the county\'s earlier snapshot');
+  equal(requeued.find((row) => row.tape.id === 'opus-moth-reel').securedSnapshot, undefined, 'and the old snapshot is dropped until the replay re-measures it');
   equal((await call(onRequest, 'GET', board, undefined, kv)).body.board.length, 2, 'a re-queued board does not flicker: pending rows keep their ranks while the assay runs');
 
   const requeuedBytes = await kv.get(key);
@@ -335,7 +343,7 @@ async function checkLineageReassay(onRequest, queueRoute, verdictRoute, reassayR
   const fableLocator = queue.body.queue.find((row) => row.locator.tapeId === 'fable-moth-reel').locator;
 
   const reverified = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict',
-    verdict(opusLocator, 'verified', undefined, current.tape.eventLogHash, current.securedSnapshot), kv, SECRET);
+    verdict(opusLocator, 'verified', undefined, current.tape.eventLogHash, { waves: current.waves, timeAlive: current.timeAlive, gold: declaredGold }), kv, SECRET);
   equal(reverified.body.assay, 'verified', 'a standing that still replays is verified again');
   const retired = await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict',
     verdict(fableLocator, 'rejected', 'eventLogHash mismatch: claimed fnv1a32:1234abcd, replayed fnv1a32:9be0399e', 'fnv1a32:9be0399e'), kv, SECRET);
@@ -345,6 +353,7 @@ async function checkLineageReassay(onRequest, queueRoute, verdictRoute, reassayR
   const keptRow = settled.find((row) => row.tape.id === 'opus-moth-reel');
   const retiredRow = settled.find((row) => row.tape.id === 'fable-moth-reel');
   equal(keptRow.assay, 'verified', 'the replaying standing holds its verdict');
+  equal(keptRow.gold, declaredGold, 'and its published gold is the purse the replay measured, no longer the stale snapshot');
   equal(keptRow.submittedAt, 2, 'and keeps its original first-secure date');
   equal(keptRow.lineage, undefined, 'a row that replays sheds its lineage mark');
   ok(keptRow.assayedAt > 20, 'only the assay date moves');
@@ -358,6 +367,15 @@ async function checkLineageReassay(onRequest, queueRoute, verdictRoute, reassayR
   equal(after.body.board.map((row) => row.profileName), ['Claude Opus 5'], 'the ranked board excludes the retired standing');
   equal(after.body.retiredCount, 1, 'retiredCount counts it');
   equal(after.body.rejectedCount, 0, 'a retirement is not a rejection');
+  const repair = await workerCall(reassayRoute, 'POST', '/api/standings/reassay', { ...request, includeRetired: true }, kv, SECRET);
+  equal(repair.body.requeued, 2, 'includeRetired re-queues the retired row beside the verified one (a settled verdict is fair game for a later composition change)');
+  equal(JSON.parse(await kv.get(key)).find((row) => row.tape.id === 'fable-moth-reel').assay, 'pending', 'a retired row can be asked again, for a repair');
+  const repairQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, kv, SECRET);
+  const fableAgain = repairQueue.body.queue.find((row) => row.locator.tapeId === 'fable-moth-reel').locator;
+  const opusAgain = repairQueue.body.queue.find((row) => row.locator.tapeId === 'opus-moth-reel').locator;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(opusAgain, 'verified', undefined, current.tape.eventLogHash, { waves: current.waves, timeAlive: current.timeAlive, gold: declaredGold }), kv, SECRET)).body.assay, 'verified', 'the replaying row is verified again on the repair pass');
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(fableAgain, 'rejected', 'eventLogHash mismatch: claimed fnv1a32:1234abcd, replayed fnv1a32:9be0399e', 'fnv1a32:9be0399e'), kv, SECRET)).body.assay, 'retired', 'and retires again when it still does not replay');
+  equal((await workerCall(reassayRoute, 'POST', '/api/standings/reassay', { ...request, includeRetired: 'yes' }, kv, SECRET)).status, 400, 'includeRetired must be a boolean');
   const settledBytes = await kv.get(key);
   await call(onRequest, 'GET', board, undefined, kv);
   equal(await kv.get(key), settledBytes, 'reading the board leaves the retired row byte-identical (retention law)');
