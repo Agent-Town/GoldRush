@@ -141,7 +141,7 @@ test('death ledger derives lifetime panned, spent, and beacons from economy log'
   await expect(page.locator('[data-death-gold]')).toContainText(String(panned));
   await expect(page.locator('[data-death-spent]')).toContainText('25');
   await expect(page.locator('[data-death-beacons-built]')).toContainText('1');
-  await expect(page.getByTestId('best-claim-row').first()).toContainText(`${panned} gold`);
+  await expect(page.getByTestId('best-claim-row').first()).toContainText(`${state.economy.gold} gold held`);  // 2026-09-06 browser-door-held-gold: the standing row prints the purse HELD at the secure tick (F-BDHG-1)
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

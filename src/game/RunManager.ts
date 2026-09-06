@@ -20,6 +20,10 @@ import { appendRunHistory, openRunLedger } from '../ui/RunLedger';
 
 type EconomyLog = {
   log: readonly EconomyEvent[];
+  // The purse HELD right now, not the run's lifetime panning (F-2464-4, owner ruling 2026-09-06,
+  // verbatim: "fix the board and tape gold issue"). `secureRun` reads it for the standing snapshot;
+  // both hosts already own an `Economy`, so nothing new is threaded to reach it.
+  gold: number;
 };
 
 type RunManagerHost = {
@@ -309,7 +313,16 @@ export class RunManager {
     this.securedResultAt = this.options.now?.() ?? Date.now();
     const at = this.host.at() ?? 0;
     const summary = summarizeRun(this.host.economy.log, wave);
-    this.securedSnapshot = { waves: this.securedAtWave, gold: Math.floor(summary.goldPanned), timeAlive: at };
+    // THE STANDING'S GOLD IS THE PURSE HELD AT THE SECURE TICK (F-2464-4, owner ruling 2026-09-06,
+    // verbatim: "fix the board and tape gold issue"). This snapshot used to report
+    // `summary.goldPanned` — the run's LIFETIME panning, never decremented by a spend — while the
+    // headless twin (`HeadlessContractSim.ts:2087`) already reports `Math.floor(this.economy.gold)`.
+    // The county publishes the assayer's snapshot OVER the row (`functions/api/standings.ts`), and
+    // the browser instrument (`scripts/assay-replay.mjs`) reads this very field for a browser reel,
+    // so leaving it as panning would have every browser row rejected `score_mismatch` against a
+    // held-purse score, or published at a number no rider had. `Math.floor` and not `round` because
+    // that is the grain the headless snapshot and every downstream floor already use.
+    this.securedSnapshot = { waves: this.securedAtWave, gold: Math.floor(this.host.economy.gold), timeAlive: at };
     this.awardSecuredClaim();
     this.host.events.emit({
       type: 'run_secured',

@@ -33,14 +33,37 @@
 // THE NON-VACUITY CONTROL. Each fixture also carries the panned figure the pre-cure snapshot
 // reported. Reverting the sim's snapshot line puts that number back and reds both the equality and
 // the control, so this guard cannot pass by agreeing with itself.
+//
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// THE SECOND DOOR (F-2464-4, same owner ruling, added 2026-09-06). The arms above measure the
+// HEADLESS door. The arm at the bottom measures the BROWSER door — the one a human rides — because
+// after the cure above the two doors meant different things by `score.gold`: the browser submitted
+// `summarizeLog(...).panned` (`Game.ts` `recordRunScore`, `runTapeOutcome`, the `run_secured`
+// handler, `RunManager.secureRun`) while the headless door submitted the purse held. Agent rows
+// would have published held and human rows panning, on one board.
+//
+// That arm is a RECORDING, not a replay, and deliberately so. A banked browser reel cannot be the
+// fixture: the browser instrument is reached only by a reel whose engine stamp the CURRENT era
+// registry admits (`LanternController.usesLanternWorker` → `replayEraRefusal`), and no such reel
+// exists on disk — every browser-shaped tape in `artifacts/` is an idle probe stamped to a retired
+// engine, panning and holding zero, which cannot separate the two meanings even in principle. So
+// this arm rides a real browser run to its secure tick and reads what the door actually POSTS,
+// which is the claim the finding is about. Its non-vacuity control is measured in the same run
+// rather than banked: gold is granted mid-run so the purse held and the lifetime panning CANNOT be
+// the same integer, and the guard asserts they differ before asserting which one was published.
+//
+// NOTHING LEAVES THIS MACHINE. `https://agenttown.app/api/standings` is intercepted by the page
+// route below and fulfilled locally; the live county is never contacted.
 
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
+import { chromium } from 'playwright';
+import { createServer } from 'vite';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const rides = path.join(root, 'artifacts/gauntlet-heat12-20260905/rides');
@@ -85,6 +108,187 @@ for (const { ride, pannedAtSecure } of FIXTURES) {
       assert.equal(slip.assayHash, replay.eventLogHash, 'the live slip assayed a different reel than this fixture');
     }
   });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// THE BROWSER DOOR (F-2464-4). Storage keys are literals because this file is plain node and the
+// game's constants are TypeScript; each is cited so a rename is findable:
+//   `src/game/ProfileStorage.ts:20`, `src/telemetry/payload.ts:3`, `:5`.
+const PROFILE_KEY = 'gr.profile.v2';
+const TELEMETRY_OPT_IN_KEY = 'gr.telemetry.optIn.v1';
+const TELEMETRY_DEV_SEND_KEY = 'gr.telemetry.devSend.v1';
+const STANDINGS_ORIGIN = 'https://agenttown.app';
+// A bench seed for `the-claim`; `submitCountyStanding` refuses a pinned seed that is not one
+// (`assets/contracts/bench-seeds.json`).
+const BENCH_SEED = 'e1-the-claim-01';
+// The run PANS at least this much and then SPENDS a beacon, so the purse held ends BELOW the run's
+// lifetime panning — the same direction as the live defect (the Mare Claim banked 60 held against
+// 1180 panned). A run that never spends holds exactly what it panned and could not tell the two
+// meanings apart.
+const PAN_TARGET = 30;
+const EVIDENCE = path.join(root, 'artifacts/browser-door-held-gold');
+
+test("the browser door submits the purse held at the secure tick, not the run's lifetime panning", { timeout: 300_000 }, async () => {
+  const vite = await createServer({
+    root,
+    logLevel: 'silent',
+    server: { host: '127.0.0.1', port: 0 },
+  });
+  await vite.listen();
+  const base = vite.resolvedUrls?.local?.[0]?.replace(/\/$/, '') ?? `http://127.0.0.1:${vite.config.server.port}`;
+  const browser = await chromium.launch({ headless: true, channel: 'chromium' });
+  try {
+    const page = await browser.newPage();
+    const errors = [];
+    page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`); });
+    page.on('pageerror', (error) => errors.push(`page: ${error.message}`));
+
+    await page.addInitScript(({ profileKey, optInKey, devSendKey }) => {
+      localStorage.clear();
+      sessionStorage.clear();
+      localStorage.setItem(profileKey, JSON.stringify({
+        version: 2,
+        activeId: 'browser-door-held-gold',
+        profiles: [{
+          id: 'browser-door-held-gold',
+          name: 'Browser Door Held Gold',
+          createdAt: 1,
+          updatedAt: 1,
+          difficultyPreset: 'trail',
+          hintsSeen: ['story:first-contract'],
+        }],
+      }));
+      localStorage.setItem(optInKey, '1');
+      localStorage.setItem(devSendKey, '1');
+    }, { profileKey: PROFILE_KEY, optInKey: TELEMETRY_OPT_IN_KEY, devSendKey: TELEMETRY_DEV_SEND_KEY });
+
+    // THE LIVE COUNTY IS NEVER CONTACTED: the POST is captured here and answered locally.
+    const posts = [];
+    await page.route(`${STANDINGS_ORIGIN}/api/standings**`, async (route) => {
+      if (route.request().method() === 'POST') posts.push(JSON.parse(route.request().postData() ?? '{}'));
+      await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"stored":true,"rank":1}' });
+    });
+    await page.route('**/api/telemetry', (route) => route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' }));
+
+    await page.goto(`${base}/?debug&nolevel&seed=${BENCH_SEED}`, { waitUntil: 'load', timeout: 120_000 });
+    await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 5, undefined, { timeout: 120_000 });
+
+    // The sim clock is driven by hand from here on, exactly as `e2e/tape-01-run-tape.spec.ts` drives
+    // it, so the setup below cannot race the wave scheduler.
+    await page.evaluate(() => {
+      window.__GR_TEST__.setManualSim(true);
+      window.__GR_TEST__.setBalance('enemy.contactDamage', 0);
+      window.__GR_TEST__.clearScores();
+      window.__GR_TEST__.resetRun();
+      window.__GR_TEST__.setManualSim(true);
+    });
+
+    // ① PAN. Stand on the nearest live seam and channel until the run has really panned gold.
+    await page.evaluate(() => {
+      const hero = window.__THREE_GAME_DIAGNOSTICS__.heroPos;
+      const [nearest] = window.__THREE_GAME_DIAGNOSTICS__.harvest.activeNodes
+        .filter((entry) => entry.active)
+        .sort((a, b) => (a.position.x - hero.x) ** 2 + (a.position.z - hero.z) ** 2
+          - ((b.position.x - hero.x) ** 2 + (b.position.z - hero.z) ** 2));
+      if (!nearest) throw new Error('no live seam to pan');
+      window.__GR_TEST__.teleport(nearest.position.x, nearest.position.z);
+    });
+    await advanceUntil(page, (target) => window.__THREE_GAME_DIAGNOSTICS__.economy.summary.panned >= target, 2, 40,
+      'the run never panned; the two gold meanings would coincide', PAN_TARGET);
+
+    // ② SPEND. Step off the seam (the build ghost is overlap-invalid on a node) and buy a beacon, so
+    // the purse held drops below the lifetime panning and the guard below has two distinct numbers.
+    await page.evaluate(() => window.__GR_TEST__.teleport(3, 12));
+    await advanceUntil(page, () => window.__THREE_GAME_DIAGNOSTICS__.harvest.channeling === false, 0.5, 20,
+      'the hero kept channelling after stepping off the seam');
+    await page.evaluate(() => window.__GR_TEST__.setBuildMode(true));
+    await advanceUntil(page, () => window.__THREE_GAME_DIAGNOSTICS__.build.ghostValid === true, 0.5, 20,
+      'the build ghost never became valid');
+    assert.equal(await page.evaluate(() => window.__GR_TEST__.placeBeacon()), true, 'the beacon would not place');
+    await advanceUntil(page, () => window.__THREE_GAME_DIAGNOSTICS__.economy.summary.spent > 0, 0.5, 20,
+      'the beacon cost nothing, so the purse held still equals the lifetime panning');
+
+    // ③ SECURE. The wave acceleration `e2e/assay-auto-tape.spec.ts` uses to reach the secure wave.
+    await page.evaluate(() => {
+      window.__GR_TEST__.setBalance('waves.waveInterval', 0.35);
+      window.__GR_TEST__.setBalance('waves.trickleInterval', 9999);
+      window.__GR_TEST__.setBalance('waves.pulseBase', 1);
+      window.__GR_TEST__.setBalance('waves.pulsePerWave', 0);
+      window.__GR_TEST__.setBalance('waves.pulsesPerWave', 1);
+      window.__GR_TEST__.setBalance('waves.edgesPerPulse', 1);
+      window.__GR_TEST__.setManualSim(false);
+    });
+
+    // The secure overlay pauses the sim, so the numbers read here ARE the secure tick's.
+    await page.waitForSelector('[data-testid="claim-secured"]', { timeout: 120_000 });
+    const atSecure = await page.evaluate(() => {
+      const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+      return {
+        held: Math.floor(diagnostics.economy.gold),
+        panned: Math.floor(diagnostics.economy.summary.panned),
+        snapshot: diagnostics.run.securedSnapshot,
+        wave: Math.floor(diagnostics.wave),
+      };
+    });
+
+    await page.click('[data-testid="bank-secured-claim"]');
+    await waitFor(() => posts.length > 0, 60_000, 'the browser door never posted a standing');
+    const posted = posts[0];
+
+    // THE NON-VACUITY CONTROL, measured in this very run: unless the two quantities differ, every
+    // assertion below would pass under either meaning and this guard would prove nothing.
+    assert.notEqual(atSecure.held, atSecure.panned,
+      `held (${atSecure.held}) and panned (${atSecure.panned}) coincided, so this run cannot tell the two meanings apart`);
+
+    // THE FINDING. What the door PUBLISHES is the purse held.
+    assert.equal(posted.score.gold, atSecure.held, 'the browser door submitted a gold that is not the purse held at the secure tick');
+    assert.notEqual(posted.score.gold, atSecure.panned, 'the browser door is submitting lifetime panning again');
+
+    // The reel it attaches DECLARES the same number, so the assayer's outcome comparison means one
+    // thing on both doors, and the snapshot the instrument reads agrees with the score at one tick —
+    // which is what makes `securedSnapshotMismatch` load-bearing rather than decorative.
+    assert.equal(posted.tape?.outcome?.gold, atSecure.held, 'the attached reel declares a different gold than the submitted score');
+    assert.deepEqual(atSecure.snapshot, { waves: posted.score.waves, gold: atSecure.held, timeAlive: posted.score.timeAlive },
+      'the secure snapshot and the submitted score disagree at one tick');
+
+    assert.deepEqual(errors, [], 'the run raised console or page errors');
+
+    mkdirSync(EVIDENCE, { recursive: true });
+    writeFileSync(path.join(EVIDENCE, 'browser-submission.json'), `${JSON.stringify({
+      measuredAt: new Date().toISOString(),
+      contract: 'the-claim',
+      seed: BENCH_SEED,
+      panTarget: PAN_TARGET,
+      atSecure,
+      submitted: {
+        score: posted.score,
+        tapeOutcome: posted.tape?.outcome ?? null,
+        eventLogHash: posted.tape?.eventLogHash ?? null,
+      },
+    }, null, 2)}\n`);
+  } finally {
+    await browser.close();
+    await vite.close();
+  }
+});
+
+async function waitFor(predicate, timeoutMs, message) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    if (predicate()) return;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+  throw new Error(message);
+}
+
+/** Steps the hand-driven sim clock until the page-side predicate holds, or fails with its reason. */
+async function advanceUntil(page, predicate, seconds, steps, message, argument) {
+  for (let step = 0; step < steps; step += 1) {
+    if (await page.evaluate(predicate, argument)) return;
+    await page.evaluate((advance) => window.__GR_TEST__.advanceSim(advance), seconds);
+  }
+  if (await page.evaluate(predicate, argument)) return;
+  throw new Error(message);
 }
 
 /** The assay seam the worker spawns, run exactly as `scripts/assay-worker.mjs` runs it. */
