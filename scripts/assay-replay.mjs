@@ -91,7 +91,13 @@ try {
       outcome: {
         secured: diagnostics.run.secured,
         waves: Math.floor(diagnostics.wave),
-        gold: Math.floor(diagnostics.economy.summary.panned),
+        // THE PURSE HELD, not the run's lifetime panning (F-2464-4, owner ruling 2026-09-06,
+        // verbatim: "fix the board and tape gold issue"). This is the field the worker compares
+        // against the reel's declared `outcome.gold`, and a browser reel now declares the held
+        // purse (`Game.runTapeOutcome`) exactly as a headless reel does (`outcome().gold` =
+        // `round(economy.gold)`). Reading `economy.summary.panned` here verified the OTHER
+        // quantity, so a browser reel and an agent reel could never be assayed by one meaning.
+        gold: Math.floor(diagnostics.economy.gold),
         timeAlive: Math.round(diagnostics.timeAlive * 1_000_000) / 1_000_000,
       },
       securedSnapshot: diagnostics.run.securedSnapshot,

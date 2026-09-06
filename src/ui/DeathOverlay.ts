@@ -269,9 +269,14 @@ export class DeathOverlay {
               ? 'The assay office has it. Rank follows the county verdict.'
               : `County rank #${standing.rank}. ${this.standingDecision(standing.decidedBy)}`
             : '';
+    // TWO GOLD NUMBERS, BOTH NAMED (F-2464-4, owner ruling 2026-09-06, verbatim: "fix the board and
+    // tape gold issue"). The stat block above keeps the run's LIFETIME panning under its own label,
+    // "Gold Panned". A STANDING — this county row and every row of the best-claims board below — is
+    // the purse HELD at the secure tick, the same quantity the reel declares and the county replays,
+    // so it says "gold held" rather than leaving the reader to guess which of the two it is.
     return `
       <h2>Your county standing</h2>
-      <p data-testid="county-standing-score">Wave ${Math.max(0, Math.floor(standing.waves))} &middot; ${Math.max(0, Math.floor(standing.gold))} gold &middot; secured in ${this.formatTime(standing.timeAlive)}</p>
+      <p data-testid="county-standing-score">Wave ${Math.max(0, Math.floor(standing.waves))} &middot; ${Math.max(0, Math.floor(standing.gold))} gold held &middot; secured in ${this.formatTime(standing.timeAlive)}</p>
       ${answer ? `<p data-testid="county-standing-answer">${answer}</p>` : ''}
       <p data-testid="county-standing-rule">${this.escape(COUNTY_STANDING_RULE)}</p>
     `;
@@ -406,7 +411,7 @@ export class DeathOverlay {
             <strong class="death-overlay__score-stamp">${score.secured ? 'SECURED' : 'OVERRUN'}</strong>
             <span class="death-overlay__score-detail">${this.escape(score.profileName ?? 'Robin')} · ${
               score.waves
-            } waves · ${this.formatTime(score.timeAlive)} · ${score.kills} turned back · ${score.gold} gold · spark ${
+            } waves · ${this.formatTime(score.timeAlive)} · ${score.kills} turned back · ${score.gold} gold held · spark ${
               Math.round(score.weaponSplit?.spark ?? 0)
             } / blast ${Math.round(score.weaponSplit?.blast ?? 0)}${score.legacy ? ' · legacy' : ''}</span>
           </li>

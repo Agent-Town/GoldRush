@@ -1842,7 +1842,11 @@ export class Game {
         true,
         event.secureWave,
       );
-      const standingScore = { ...score, waves: event.secureWave, gold: Math.floor(event.summary.goldPanned), timeAlive: event.at };
+      // `score.gold` is already the purse HELD at this very tick (`recordRunScore`, called on the
+      // line above at the instant `run_secured` fires), so the standing carries the same quantity
+      // the reel declares and the assayer's snapshot reports. It used to override with
+      // `event.summary.goldPanned` — the run's lifetime panning (F-2464-4, owner 2026-09-06).
+      const standingScore = { ...score, waves: event.secureWave, gold: score.gold, timeAlive: event.at };
       this.countyStanding = { waves: standingScore.waves, gold: standingScore.gold, timeAlive: standingScore.timeAlive };
       this.e7SignalSystem.recordContractWin(this.activeContract.id);
       emitStorySignal({ type: 'first-victory' });
@@ -7166,7 +7170,14 @@ export class Game {
     const score: ScoreRecord = {
       waves,
       kills: this.kills,
-      gold: economySummary.panned,
+      // THE STANDING'S GOLD IS THE PURSE HELD, at the tick this score describes (F-2464-4, owner
+      // ruling 2026-09-06, verbatim: "fix the board and tape gold issue"). This is the number
+      // `submitCountyStanding` posts and the number the attached reel declares, so it must be the
+      // same quantity the headless door declares — `HeadlessContractSim.outcome()` reports
+      // `round(this.economy.gold)`, which sits INSIDE the event-log hash and therefore could never
+      // be taught to mean panning. Lifetime panning survives, labelled, on the run summary
+      // (`ledger.goldPanned` → "Gold Panned"); it is a stat, not the standing.
+      gold: Math.floor(this.economy.gold),
       timeAlive,
       at: scoreAt,
       secured,
@@ -7500,7 +7511,13 @@ export class Game {
       secured: reason === 'secured' || reason === 'rush',
       waves: Math.max(0, Math.floor(summary.deepestWave ?? summary.wavesSurvived)),
       timeAlive: Math.max(0, at),
-      gold: Math.max(0, Math.floor(summary.goldPanned)),
+      // The reel DECLARES the purse held at its terminal tick, exactly as the headless reel does
+      // (`HeadlessContractSim.outcome()` = `round(this.economy.gold)`), so the assayer's outcome
+      // comparison means one thing on both doors (F-2464-4, owner 2026-09-06). Was
+      // `summary.goldPanned`. The reel's `eventLogHash` does not move with this: the hash is taken
+      // over `runTapeEventLog()` only (`RunTape.ts:276`), and that log's `gold` field has always
+      // been `this.economy.gold` — the held purse — while `outcome` sits outside the hash.
+      gold: Math.max(0, Math.floor(this.economy.gold)),
     };
   }
 
@@ -8489,11 +8506,15 @@ export class Game {
       blastTime: this.blastTime,
     };
     const scores = loadScores();
+    // `score.gold` is the purse HELD (F-2464-4, 2026-09-06); `deathLedger.goldPanned` is the run's
+    // lifetime panning and stays that way on the summary. This lookup only finds THIS run's row in
+    // the local board, so it must compare like with like or the current run would stop highlighting.
+    const heldGold = Math.floor(this.economy.gold);
     const matchingScore = scores.find(
       (score) =>
         score.waves === this.deathLedger.wavesSurvived &&
         score.kills === this.deathLedger.kills &&
-        score.gold === this.deathLedger.goldPanned &&
+        score.gold === heldGold &&
         score.timeAlive === this.deathLedger.timeAlive,
     );
     const onDone = () => this.returnToTown('overrun');

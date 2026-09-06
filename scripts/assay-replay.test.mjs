@@ -22,6 +22,34 @@ test('rob\'s v1 live reel is retained but reported as unverifiable legacy', () =
   assert.equal(fixture.eventLogHash, 'fnv1a32:f6390382');
 });
 
+/**
+ * THE BROWSER ARM READS THE PURSE HELD (F-2464-4, owner ruling 2026-09-06, verbatim: "fix the board
+ * and tape gold issue"). Every other test in this file rides the HEADLESS arm, because that is the
+ * only arm a banked reel can reach: `assay-replay.mjs` routes an `agent_orders` reel to
+ * `assay-replay-agent.mjs`, and the browser arm below it is reached only by a browser recording.
+ *
+ * THIS IS A SOURCE PIN AND SAYS SO. A replay fixture for the browser arm is not producible today
+ * and the reason is structural, not effort: a browser reel replays through a FIXED boot
+ * (`?debug&assayReplay&replay=…`) that re-applies no `setBalance`, no `grantGold` and no
+ * `teleport`, so any recording able to separate the purse held from the run's lifetime panning
+ * within a short ride diverges on replay and its hash — the thing the worker actually compares —
+ * would not reproduce. Every browser-shaped tape already on disk is an idle probe stamped to a
+ * retired engine that panned and held zero, which cannot separate the two meanings even in
+ * principle. So the BEHAVIOURAL proof for the browser door lives in `scripts/board-tape-gold.test.mjs`,
+ * which rides a real browser run to its secure tick and reads what the door POSTS; this test only
+ * refuses the two-token regression that would put the other quantity back into the instrument.
+ */
+test('the browser arm of the assay instrument reports the purse held, not lifetime panning', () => {
+  // Comment lines are stripped first: the prose beside the cure names the rejected quantity, and a
+  // guard that reads its own explanation as a violation would be unmaintainable.
+  const instrument = readFileSync('scripts/assay-replay.mjs', 'utf8')
+    .split('\n').filter((line) => !line.trim().startsWith('//')).join('\n');
+  assert.match(instrument, /gold: Math\.floor\(diagnostics\.economy\.gold\),/,
+    'the browser arm no longer reports the purse held at the replayed terminal tick');
+  assert.doesNotMatch(instrument, /economy\.summary\.panned/,
+    'the browser arm is reading lifetime panning again, so a browser reel and an agent reel would be assayed by two different meanings');
+});
+
 test('the round-2 corpus hash remains byte-for-byte pinned', () => {
   const tape = JSON.parse(readFileSync('artifacts/assay-e2e-20260822/round2/tape-secure-verb.json', 'utf8'));
   assert.equal(tape.eventLogHash, 'fnv1a32:ba8fdc3e');
