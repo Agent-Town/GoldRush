@@ -1,5 +1,6 @@
 import { Balance } from '../game/Balance';
 import type { ContractBuildZone, ContractManifest, ContractRectZone } from '../meta/ContractFamilies';
+import { E8AirWindow, positiveInteger } from './E8AirWindow';
 import {
   DOME_AIR_DRAIN_SECONDS,
   DOME_AIR_REFILL_SECONDS,
@@ -86,11 +87,32 @@ type Sieger = Readonly<{ isAlive: boolean; position: Point }>;
 export type E8CrossingAirDiagnostics = Readonly<{
   /** Every authored zone the crossing counts, in contract order. */
   zones: readonly string[];
+  /**
+   * HOW MANY CREDITED CROSSINGS THE LATCH NEEDS. Without authored numbers this keeps its original
+   * meaning — the count of authored zones, every one of which must be stood in on air. With
+   * `twist.atmosphere.crossingRequired` it is that number of CREDITS, of any authored zone, and
+   * every zone must still have been stood in on air at least once (the conjunct is deliberate:
+   * this rule can only ever be stricter than the one it replaces).
+   */
   required: number;
-  /** The ones the body has stood in WITH air, in contract order. */
+  /** The ones the body has stood in WITH air, in contract order. Never window-gated. */
   reached: readonly string[];
+  /** Credits banked toward the latch. Equals `reached.length` where no window is authored. */
+  credited: number;
   /** Entries made with an empty suit. Counted, credited to nothing. */
   breathlessEntries: number;
+  /**
+   * THE WINDOW, published for the same reason the Mare Claim publishes its own: a rider that
+   * cannot see which window it stands in is guessing at a 1/30 s sliver. Null `windowWaves` means
+   * every entry made on air counts whenever it is made.
+   */
+  windowWaves: number | null;
+  /** Which window the run clock stands in, zero-based; always 0 while no window is authored. */
+  window: number;
+  /** Crossings credited toward the latch inside THIS window. At most one while a window is authored. */
+  creditedThisWindow: number;
+  /** Entries made ON AIR that the window refused. Counted, credited to nothing, still `reached`. */
+  windowHeldEntries: number;
   complete: boolean;
 }>;
 
@@ -136,6 +158,27 @@ type ShelterState = {
 
 type EclipseConfig = Readonly<{ atWave: number; reserveId: string }>;
 
+/**
+ * The four numbers a contract may author under `twist.atmosphere`, already read and defaulted.
+ * Nulls mean "the contract authored nothing", which is the ratified pre-2026-09-06 behaviour.
+ */
+type AuthoredAir = Readonly<{
+  regolithRequired: number | null;
+  regolithWindowWaves: number | null;
+  crossingRequired: number | null;
+  crossingWindowWaves: number | null;
+  /** Seconds per wave on THIS contract — `Balance.waves.waveInterval` over its own cadence. */
+  waveSeconds: number;
+}>;
+
+const NO_AUTHORED_AIR: AuthoredAir = {
+  regolithRequired: null,
+  regolithWindowWaves: null,
+  crossingRequired: null,
+  crossingWindowWaves: null,
+  waveSeconds: Balance.waves.waveInterval,
+};
+
 export class E8SuitAirSystem {
   private suitSeconds: number;
   private inShelter: string | null = null;
@@ -145,11 +188,22 @@ export class E8SuitAirSystem {
   private runsOnAirAfterEclipse = 0;
   private breathlessPans = 0;
   private breathlessEntries = 0;
+  private windowHeldPans = 0;
+  private windowHeldEntries = 0;
+  private creditedCrossings = 0;
   private eclipseArrivedAtWave: number | null = null;
   private readonly worked = new Set<number>();
   private readonly reached = new Set<string>();
   private readonly insideCrossing = new Set<string>();
   private readonly shelters: ShelterState[];
+  /**
+   * TWO CLOCKS, ONE LAW (`src/systems/E8AirWindow.ts`). The Eclipse rides the regolith one and the
+   * two crossing maps ride the crossing one; no map declares both, because `create()` gives a map
+   * crossings or grounds and never a gate on each. Both are built even so, because an object that
+   * exists and is never asked is cheaper to read than a null that has to be checked at four sites.
+   */
+  private readonly regolithClock: E8AirWindow;
+  private readonly crossingClock: E8AirWindow;
 
   private constructor(
     private readonly declared: boolean,
@@ -160,9 +214,13 @@ export class E8SuitAirSystem {
     private readonly crossings: readonly Rect[],
     private readonly grounds: number,
     private readonly eclipse: EclipseConfig | null,
+    /** `twist.atmosphere`, already read; `NO_AUTHORED_AIR` where the contract authors nothing. */
+    private readonly authored: AuthoredAir = NO_AUTHORED_AIR,
   ) {
     this.suitSeconds = SUIT_AIR_SECONDS;
     this.shelters = shelters.map((zone) => ({ zone, air: 1, breached: false, breaches: 0, siegers: 0, offline: false }));
+    this.regolithClock = new E8AirWindow(windowSeconds(authored.regolithWindowWaves, authored.waveSeconds));
+    this.crossingClock = new E8AirWindow(windowSeconds(authored.crossingWindowWaves, authored.waveSeconds));
   }
 
   /**
@@ -182,6 +240,12 @@ export class E8SuitAirSystem {
    *   3. THE RESERVE. The shelter nearest the map origin, ties broken by contract order. On the
    *      Eclipse's three pads that is `dome-cluster-pad-center`, and the rule is stated rather than
    *      the id, so a re-authored pad list cannot silently leave the map with no reserve at all.
+   *
+   * AND ONE READ OF `twist.atmosphere`, added 2026-09-06 (owner ruling, verbatim: "yes, same air
+   * for all space contracts - but I also never played the levels, so I dont know exactly"). The
+   * four numbers are the CONTRACT's, exactly as `E8AtmosphereSystem` reads the Mare Claim's two:
+   * the door refuses malformed shapes and this second belt answers with the ratified default for a
+   * run booted from a tape whose manifest never passed the door.
    */
   static create(contract: ContractManifest): E8SuitAirSystem {
     const tile = contract.tileParams;
@@ -207,6 +271,14 @@ export class E8SuitAirSystem {
       // `twist.secureWave` moves the shadow with it.
       ? { atWave: Math.max(1, Math.ceil(secureWave / 2)), reserveId: reserve.id }
       : null;
+    const authoredAir = contract.twist.atmosphere;
+    const authored: AuthoredAir = {
+      regolithRequired: positiveInteger(authoredAir?.regolithRequired),
+      regolithWindowWaves: positiveInteger(authoredAir?.regolithWindowWaves),
+      crossingRequired: positiveInteger(authoredAir?.crossingRequired),
+      crossingWindowWaves: positiveInteger(authoredAir?.crossingWindowWaves),
+      waveSeconds: Balance.waves.waveInterval / Math.max(0.1, contract.twist.waveCadenceMult ?? 1),
+    };
     return new E8SuitAirSystem(
       true,
       atmosphere.outsideDomes,
@@ -215,6 +287,7 @@ export class E8SuitAirSystem {
       crossings,
       tile.harvestAnchors?.length ?? 0,
       eclipse,
+      authored,
     );
   }
 
@@ -232,20 +305,39 @@ export class E8SuitAirSystem {
    * that declares no suit air, so no admitted contract's terminal moves.
    *
    *   · a crossing map (Far Side, Low Orbit) secures once every authored crossing zone has been
-   *     stood in WITH air;
+   *     stood in WITH air, and — where the contract authors `crossingRequired` — once that many
+   *     crossings have been CREDITED, at most one per authored window. The conjunct is on purpose:
+   *     the authored rule can then only ever be stricter than the rule it replaces, so no ride
+   *     that could not secure before can secure now;
    *   · the Eclipse secures once the regolith run is made on air AND, if the shadow has already
    *     landed, one more ground has been worked on air since it did.
    */
   get objectiveAllowsSecure(): boolean {
     if (!this.declared) return true;
-    if (this.crossings.length > 0) return this.reached.size >= this.crossings.length;
+    if (this.crossings.length > 0) {
+      return this.reached.size >= this.crossings.length && this.creditedCrossings >= this.requiredCrossings;
+    }
     if (this.worked.size < this.requiredGrounds) return false;
     return !this.eclipseArrived || this.runsOnAirAfterEclipse >= this.requiredAfterEclipse;
   }
 
-  /** The Mare Claim's own gate number, clamped to what this map actually authors. */
+  /**
+   * The regolith gate: the contract's own number where it authors one, else the ratified default,
+   * either way clamped to what this map actually authors. A crossing map gates on its zones and
+   * carries no regolith gate at all, exactly as before.
+   */
   private get requiredGrounds(): number {
-    return this.crossings.length > 0 ? 0 : Math.min(REGOLITH_GROUNDS_FOR_SECURE, this.grounds);
+    if (this.crossings.length > 0) return 0;
+    return Math.min(this.authored.regolithRequired ?? REGOLITH_GROUNDS_FOR_SECURE, this.grounds);
+  }
+
+  /**
+   * The crossing gate: the contract's own number of CREDITS where it authors one, else the count
+   * of authored zones (the ratified pre-2026-09-06 meaning, kept verbatim so a contract that
+   * authors nothing rides the wall it always rode).
+   */
+  private get requiredCrossings(): number {
+    return this.authored.crossingRequired ?? this.crossings.length;
   }
 
   private get requiredAfterEclipse(): number {
@@ -267,6 +359,10 @@ export class E8SuitAirSystem {
    */
   update(delta: number, body: Point, siegers: readonly Sieger[], wave: number): void {
     if (!this.declared || delta <= 0) return;
+    // The run clock first, so the dials, the suit, the crossing and both windows read one tick —
+    // the order `E8AtmosphereSystem.update` fixed for the Mare Claim, for the same reason.
+    this.regolithClock.advance(delta);
+    this.crossingClock.advance(delta);
     if (this.eclipse !== null && !this.eclipseArrived && wave >= this.eclipse.atWave) {
       this.eclipseArrivedAtWave = wave;
       for (const shelter of this.shelters) shelter.offline = shelter.zone.id !== this.eclipse.reserveId;
@@ -305,6 +401,14 @@ export class E8SuitAirSystem {
    * second. Credit is not one-way in the other direction either, and deliberately so: a rider who
    * arrives breathless can walk back to the air and cross again, so a mistake costs a trip rather
    * than the run (`CAPABILITY-LADDER.md` L2, unwinnable-by-construction is a bug class).
+   *
+   * THE WINDOW SITS BETWEEN "on air" and "banked", and only there — the exact place
+   * `E8AtmosphereSystem.notePan` puts it. A breathless entry is refused first, exactly as before.
+   * An entry made on air is always RECORDED in `reached` (it is a record of where the body has
+   * been, and the latch's zone conjunct reads it), and only the CREDIT is window-gated: an entry
+   * in a window that has already credited one is counted as `windowHeldEntries` and banks nothing.
+   * Re-entering the SAME zone in a later window credits again, which is what makes a four-credit
+   * gate reachable on the Far Side, whose contract authors exactly one crossing rectangle.
    */
   private noteCrossings(body: Point): void {
     for (const zone of this.crossings) {
@@ -315,15 +419,27 @@ export class E8SuitAirSystem {
       }
       if (this.insideCrossing.has(zone.id)) continue;
       this.insideCrossing.add(zone.id);
-      if (this.suitSeconds > 0) this.reached.add(zone.id);
-      else this.breathlessEntries += 1;
+      if (this.suitSeconds <= 0) {
+        this.breathlessEntries += 1;
+        continue;
+      }
+      this.reached.add(zone.id);
+      if (this.crossingClock.claim()) this.creditedCrossings += 1;
+      else this.windowHeldEntries += 1;
     }
   }
 
   /**
    * A pan tick landed on the ground `anchorIndex`. Credited toward the run only while the suit
    * holds air; otherwise counted as breathless and NOT credited. Returns whether it counted. The
-   * rule and the wording are `E8AtmosphereSystem.notePan`'s, because it is the same rule.
+   * rule and the wording are `E8AtmosphereSystem.notePan`'s, because it is the same rule — and
+   * since 2026-09-06 so is the WINDOW: a fresh ground in a window that has already credited one is
+   * held back, counted as `windowHeldPans`, and credited to nothing. Nothing about the pan's GOLD
+   * changes; this class mints nothing and the caller has already paid the rider.
+   *
+   * `runsOnAirAfterEclipse` counts every pan made on air after the shadow landed, window or no
+   * window, because the eclipse's own after-gate asks for WORK on the reserve rather than for a
+   * fresh ground — the rule the Eclipse has carried since `tasks/e8-remaining-maps.md`, unmoved.
    */
   notePan(anchorIndex: number): boolean {
     if (!this.declared || !Number.isInteger(anchorIndex) || anchorIndex < 0) return false;
@@ -333,6 +449,11 @@ export class E8SuitAirSystem {
     }
     this.runsOnAir += 1;
     if (this.eclipseArrived) this.runsOnAirAfterEclipse += 1;
+    if (this.worked.has(anchorIndex)) return true;
+    if (!this.regolithClock.claim()) {
+      this.windowHeldPans += 1;
+      return false;
+    }
     this.worked.add(anchorIndex);
     return true;
   }
@@ -366,15 +487,27 @@ export class E8SuitAirSystem {
         runsOnAir: this.runsOnAir,
         breathlessPans: this.breathlessPans,
         complete: this.objectiveAllowsSecure && this.declared,
+        // The same four window fields the Mare Claim publishes, on the same shape, so `now.air`
+        // reads identically across all four E8 maps. Null `windowWaves` on a map that authors no
+        // window, which is every crossing map and every contract that authors nothing.
+        windowWaves: this.authored.regolithWindowWaves,
+        window: this.regolithClock.window,
+        creditedThisWindow: this.regolithClock.creditedThisWindow,
+        windowHeldPans: this.windowHeldPans,
       },
       ...(this.crossings.length > 0
         ? {
             crossing: {
               zones,
-              required: this.crossings.length,
+              required: this.requiredCrossings,
               reached: zones.filter((id) => this.reached.has(id)),
+              credited: this.creditedCrossings,
               breathlessEntries: this.breathlessEntries,
-              complete: this.reached.size >= this.crossings.length,
+              windowWaves: this.authored.crossingWindowWaves,
+              window: this.crossingClock.window,
+              creditedThisWindow: this.crossingClock.creditedThisWindow,
+              windowHeldEntries: this.windowHeldEntries,
+              complete: this.reached.size >= this.crossings.length && this.creditedCrossings >= this.requiredCrossings,
             },
           }
         : {}),
@@ -401,6 +534,11 @@ function rect(zone: Rect): Rect {
 
 function inside(zone: Rect, point: Point): boolean {
   return point.x >= zone.minX && point.x <= zone.maxX && point.z >= zone.minZ && point.z <= zone.maxZ;
+}
+
+/** One window in SECONDS, or null where the contract authors no window of that kind. */
+function windowSeconds(waves: number | null, waveSeconds: number): number | null {
+  return waves === null ? null : waves * waveSeconds;
 }
 
 function nearestToOrigin(zones: readonly Rect[]): Rect | null {

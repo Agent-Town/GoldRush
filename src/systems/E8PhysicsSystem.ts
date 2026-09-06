@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { Balance } from '../game/Balance';
 import type { ContractManifest } from '../meta/ContractFamilies';
 import type { ShooterHandle } from './CombatSystem';
+import { E8AirWindow, positiveInteger } from './E8AirWindow';
 
 type MovementProfile = 'normal' | 'floaty' | 'free-fall';
 type PhysicsContract = ContractManifest & {
@@ -330,9 +331,14 @@ export class E8AtmosphereSystem {
   private runsOnAir = 0;
   private breathlessPans = 0;
   private windowHeldPans = 0;
-  private elapsedSeconds = 0;
-  private windowIndex = 0;
-  private creditedThisWindow = 0;
+  /**
+   * THE WINDOW, since `tasks/e8-air-wall-all-maps.md`: the seven lines that used to live here as
+   * `elapsedSeconds` / `windowIndex` / `creditedThisWindow` / `syncWindow` moved verbatim into
+   * `src/systems/E8AirWindow.ts` so `E8SuitAirSystem` enforces THE SAME LAW on the era's other
+   * three maps rather than a copy of it. Behaviour is unchanged, and the Mare Claim's own idle
+   * floor (`fnv1a32:32f62335`) is what proves it.
+   */
+  private readonly clock: E8AirWindow;
   private readonly worked = new Set<number>();
   private readonly domes: DomeState[];
 
@@ -350,6 +356,7 @@ export class E8AtmosphereSystem {
   ) {
     this.suitSeconds = SUIT_AIR_SECONDS;
     this.domes = domes.map((zone) => ({ zone, air: 1, breached: false, breaches: 0, siegers: 0 }));
+    this.clock = new E8AirWindow(this.windowSeconds);
   }
 
   /** One read of the CONTRACT, never the epoch — the same rule every era consumer follows. */
@@ -399,18 +406,6 @@ export class E8AtmosphereSystem {
   }
 
   /**
-   * The window the run clock stands in. Rolls the per-window credit over on the way past, so both
-   * the latch and the view see the same boundary in the same tick.
-   */
-  private syncWindow(): void {
-    const seconds = this.windowSeconds;
-    const index = seconds === null ? 0 : Math.floor(this.elapsedSeconds / seconds);
-    if (index === this.windowIndex) return;
-    this.windowIndex = index;
-    this.creditedThisWindow = 0;
-  }
-
-  /**
    * One fixed step. Domes first (a sieger on the pad breaches it; a clear pad seals), then the
    * suit against the dome it stands in. Order matters and is fixed: the suit reads the dials this
    * step already moved, in both runtimes of this engine.
@@ -418,8 +413,7 @@ export class E8AtmosphereSystem {
   update(delta: number, body: Point, siegers: readonly Sieger[]): void {
     if (!this.declared || delta <= 0) return;
     // The run clock first, so the dials, the suit and the window all read one tick.
-    this.elapsedSeconds += delta;
-    this.syncWindow();
+    this.clock.advance(delta);
     for (const dome of this.domes) {
       let count = 0;
       for (const sieger of siegers) if (sieger.isAlive && inside(dome.zone, sieger.position)) count += 1;
@@ -460,14 +454,12 @@ export class E8AtmosphereSystem {
     // counted as `windowHeldPans`, credited to nothing. Nothing about the pan's GOLD changes: this
     // class mints nothing and the caller has already paid the rider (`HeadlessContractSim`'s
     // harvest path), which is what keeps both runtimes of this engine on one board.
-    this.syncWindow();
     if (this.worked.has(anchorIndex)) return true;
-    if (this.windowWaves !== null && this.creditedThisWindow >= 1) {
+    if (!this.clock.claim()) {
       this.windowHeldPans += 1;
       return false;
     }
     this.worked.add(anchorIndex);
-    this.creditedThisWindow += 1;
     return true;
   }
 
@@ -504,17 +496,12 @@ export class E8AtmosphereSystem {
         breathlessPans: this.breathlessPans,
         complete: this.objectiveAllowsSecure && this.declared,
         windowWaves: this.windowWaves,
-        window: this.windowIndex,
-        creditedThisWindow: this.creditedThisWindow,
+        window: this.clock.window,
+        creditedThisWindow: this.clock.creditedThisWindow,
         windowHeldPans: this.windowHeldPans,
       },
     };
   }
-}
-
-/** A whole number above zero, or null — the one shape both authored air numbers take. */
-function positiveInteger(value: number | undefined): number | null {
-  return typeof value === 'number' && Number.isInteger(value) && value > 0 ? value : null;
 }
 
 function inside(zone: Rect, point: Point): boolean {

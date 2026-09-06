@@ -755,7 +755,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] }; hero?: { maxHpBonus: number }; atmosphere?: { regolithRequired: number; regolithWindowWaves?: number } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and beacon ladder, E7's claim grit and E8's regolith gate ride the trailing intersection so no cited line below moves
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] }; hero?: { maxHpBonus: number }; atmosphere?: { regolithRequired?: number; regolithWindowWaves?: number; crossingRequired?: number; crossingWindowWaves?: number } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and beacon ladder, E7's claim grit and E8's regolith+crossing air gates ride the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -2719,9 +2719,27 @@ export function contractHeroMaxHpBonus(contract: ContractManifest): number {
 
 /**
  * THE REGOLITH GATE (owner ruling 2026-09-06, verbatim: "no, this has to be more prevalent,
- * otherwise it makes no sense"), the door half of `twist.atmosphere`. Grep
- * `validateContractTwistAtmosphere` to find both ends; the engine half is
- * `E8AtmosphereSystem.create` in `src/systems/E8PhysicsSystem.ts`.
+ * otherwise it makes no sense") AND THE CROSSING GATE (owner ruling 2026-09-06 evening, verbatim:
+ * "yes, same air for all space contracts - but I also never played the levels, so I dont know
+ * exactly"), the door half of `twist.atmosphere`. Grep `validateContractTwistAtmosphere` to find
+ * both ends; the engine halves are `E8AtmosphereSystem.create` in `src/systems/E8PhysicsSystem.ts`
+ * (the Mare Claim) and `E8SuitAirSystem.create` in `src/systems/E8SuitAirSystem.ts` (its three
+ * siblings). One block, two gates, and a contract authors the one its own geography can pay:
+ * grounds where the map has regolith and domes, crossings where it has a vacuum to cross.
+ *
+ * WHAT THE CROSSING HALF REFUSES, over and above the shape rules below:
+ *   - a `crossingRequired` on a map that declares no `tileParams.atmosphere.outsideDomes` — no
+ *     suit rules outside, so no crossing could ever be made ON AIR and the gate reads as a promise
+ *     nothing keeps;
+ *   - a `crossingRequired` on a map that authors no crossing rectangle at all (no
+ *     `probeRecoveryZones`, no `orbitalScaffoldZones`) — `E8SuitAirSystem.create` derives the
+ *     crossing from those two lists, so a gate there is unwinnable by construction
+ *     (`specs/epoch-saga/CAPABILITY-LADDER.md:38`);
+ *   - a WINDOW with no gate of its own (`regolithWindowWaves` without `regolithRequired`,
+ *     `crossingWindowWaves` without `crossingRequired`) — a window paces a gate, and pacing a gate
+ *     that does not exist is a field no engine reads;
+ *   - a block that authors NEITHER gate — an atmosphere twist that changes nothing is the reskin
+ *     both rulings rejected.
  *
  * WHAT IT REFUSES, and why each refusal is a DOOR refusal rather than a runtime clamp: the two
  * numbers a contract authors here are the numbers the LATCH enforces, the numbers the BRIEFING
@@ -2753,28 +2771,79 @@ function validateContractTwistAtmosphere(
     addDescriptorReason(reasons, reason('field_section', 'The atmosphere twist has the wrong shape.', 'twist.atmosphere'));
     return;
   }
-  addUnknownFieldReasons(value, ['regolithRequired', 'regolithWindowWaves'], 'twist.atmosphere', reasons);
-  const airIsWall = isRecord(tileParams.atmosphere) && tileParams.atmosphere.airIsWall === true;
-  if (!airIsWall) {
+  addUnknownFieldReasons(
+    value,
+    ['regolithRequired', 'regolithWindowWaves', 'crossingRequired', 'crossingWindowWaves'],
+    'twist.atmosphere',
+    reasons,
+  );
+  const atmosphere = isRecord(tileParams.atmosphere) ? tileParams.atmosphere : null;
+  const required = value.regolithRequired;
+  const crossingRequired = value.crossingRequired;
+  if (required === undefined && crossingRequired === undefined) {
     addDescriptorReason(reasons, reason(
-      'atmosphere_undeclared',
-      'A regolith gate needs an air wall: declare tileParams.atmosphere.airIsWall first.',
+      'field_section',
+      'An atmosphere twist must author a gate: regolithRequired, crossingRequired, or both.',
       'twist.atmosphere',
     ));
   }
-  const grounds = Array.isArray(tileParams.harvestAnchors) ? tileParams.harvestAnchors.length : 0;
-  const required = value.regolithRequired;
-  if (typeof required !== 'number' || !Number.isInteger(required) || required <= 0) {
-    addDescriptorReason(reasons, reason('field_number', 'A regolith gate must be a positive whole number of grounds.', 'twist.atmosphere.regolithRequired'));
-  } else if (required > grounds) {
-    addDescriptorReason(reasons, reason(
-      'field_number',
-      'A regolith gate cannot ask for more grounds than the map authors.',
-      'twist.atmosphere.regolithRequired',
-    ));
+  if (required !== undefined) {
+    if (atmosphere?.airIsWall !== true) {
+      addDescriptorReason(reasons, reason(
+        'atmosphere_undeclared',
+        'A regolith gate needs an air wall: declare tileParams.atmosphere.airIsWall first.',
+        'twist.atmosphere',
+      ));
+    }
+    const grounds = Array.isArray(tileParams.harvestAnchors) ? tileParams.harvestAnchors.length : 0;
+    if (typeof required !== 'number' || !Number.isInteger(required) || required <= 0) {
+      addDescriptorReason(reasons, reason('field_number', 'A regolith gate must be a positive whole number of grounds.', 'twist.atmosphere.regolithRequired'));
+    } else if (required > grounds) {
+      addDescriptorReason(reasons, reason(
+        'field_number',
+        'A regolith gate cannot ask for more grounds than the map authors.',
+        'twist.atmosphere.regolithRequired',
+      ));
+    }
   }
-  const windowWaves = value.regolithWindowWaves;
-  if (windowWaves !== undefined && (typeof windowWaves !== 'number' || !Number.isInteger(windowWaves) || windowWaves <= 0)) {
-    addDescriptorReason(reasons, reason('field_number', 'A regolith window must be a positive whole number of waves.', 'twist.atmosphere.regolithWindowWaves'));
+  if (crossingRequired !== undefined) {
+    if (atmosphere?.outsideDomes === undefined) {
+      addDescriptorReason(reasons, reason(
+        'atmosphere_undeclared',
+        'A crossing gate needs a suit: declare tileParams.atmosphere.outsideDomes first.',
+        'twist.atmosphere',
+      ));
+    }
+    const crossings = (Array.isArray(tileParams.probeRecoveryZones) ? tileParams.probeRecoveryZones.length : 0)
+      + (Array.isArray(tileParams.orbitalScaffoldZones) ? tileParams.orbitalScaffoldZones.length : 0);
+    if (crossings === 0) {
+      addDescriptorReason(reasons, reason(
+        'atmosphere_undeclared',
+        'A crossing gate needs a crossing: author probeRecoveryZones or orbitalScaffoldZones first.',
+        'twist.atmosphere.crossingRequired',
+      ));
+    }
+    if (typeof crossingRequired !== 'number' || !Number.isInteger(crossingRequired) || crossingRequired <= 0) {
+      addDescriptorReason(reasons, reason('field_number', 'A crossing gate must be a positive whole number of crossings.', 'twist.atmosphere.crossingRequired'));
+    }
+  }
+  validateAirWindow(value.regolithWindowWaves, required, 'regolith', 'twist.atmosphere.regolithWindowWaves', reasons);
+  validateAirWindow(value.crossingWindowWaves, crossingRequired, 'crossing', 'twist.atmosphere.crossingWindowWaves', reasons);
+}
+
+/** One window, one rule: a positive whole number of waves, and only beside the gate it paces. */
+function validateAirWindow(
+  windowWaves: unknown,
+  gate: unknown,
+  kind: 'regolith' | 'crossing',
+  field: string,
+  reasons: ContractDescriptorReason[],
+): void {
+  if (windowWaves === undefined) return;
+  if (typeof windowWaves !== 'number' || !Number.isInteger(windowWaves) || windowWaves <= 0) {
+    addDescriptorReason(reasons, reason('field_number', `A ${kind} window must be a positive whole number of waves.`, field));
+  }
+  if (gate === undefined) {
+    addDescriptorReason(reasons, reason('field_number', `A ${kind} window paces a ${kind} gate: author ${kind}Required beside it.`, field));
   }
 }

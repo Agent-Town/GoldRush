@@ -5,6 +5,7 @@ import { beaconCost, buildableBlurb, buildableCostAt, getBuildableDef, resolveBe
 import { PicnicHoldSystem, PICNIC_ACTIVE_DEFENSE_SECONDS, PICNIC_HOLD_RADIUS, PICNIC_HOLD_SECONDS, PICNIC_STAKE_PRESS_WEIGHT } from '../systems/PicnicHoldSystem';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { DOME_AIR_DRAIN_SECONDS, DOME_AIR_REFILL_SECONDS, DOME_ZONE_PREFIX, E8AtmosphereSystem } from '../systems/E8PhysicsSystem';
+import { E8SuitAirSystem } from '../systems/E8SuitAirSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
 import { E10SquallScheduler, SQUALL_PHASE_ORDER } from '../systems/E10SquallScheduler';
 import { E10PreserveSystem } from '../systems/E10PreserveSystem';
@@ -674,6 +675,59 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       gatesSecure: true,
       damages: false,
     }));
+  }
+
+  // --- E8 air as the wall, ON THE OTHER THREE MAPS (owner ruling 2026-09-06 evening, verbatim:
+  // "yes, same air for all space contracts - but I also never played the levels, so I dont know
+  // exactly"). Same shape, same sourcing, same reason as the Mare Claim row above — and the same
+  // rule, published under the name the map's own geography earns: the Eclipse works GROUNDS and
+  // gets `air_wall_regolith` (one rule id for one rule, so a rider who learned it on the Mare
+  // Claim reads the same row here); the Far Side and Low Orbit make CROSSINGS and get
+  // `air_wall_crossing`. Absent on every contract whose suit-air consumer is not armed, and the
+  // two rows are mutually exclusive by construction: `E8SuitAirSystem.create` gives a map
+  // crossings or grounds, never a gate on each.
+  const suitAir = E8SuitAirSystem.create(contract);
+  if (suitAir.isDeclared) {
+    const { suit, regolith, crossing } = suitAir.diagnostics;
+    const waveSeconds = Balance.waves.waveInterval / Math.max(0.1, contract.twist.waveCadenceMult ?? 1);
+    const shelters = suitAir.diagnostics.domes.map(({ id }) => id);
+    if (crossing) {
+      const windowWaves = crossing.windowWaves;
+      rules.push(rule('air_wall_crossing', 'E8SuitAirSystem.noteCrossings', {
+        suitSeconds: suit.capacity,
+        refillPerSecond: suit.refillPerSecond,
+        refillsIn: shelters.join(', '),
+        zones: crossing.zones,
+        required: crossing.required,
+        // Spread-if-authored, exactly as the regolith row does it: a `MechanicValue` has no null,
+        // and `windowWaves: 0` would read as a window rather than the absence of one.
+        ...(windowWaves === null ? {} : { windowWaves, windowSeconds: windowWaves * waveSeconds }),
+        // The consequence, stated as a consequence. This is an OBJECTIVE, not a hazard: it costs
+        // no hit points and pays no gold, so a rider that ignores it simply cannot secure.
+        consequence: windowWaves === null
+          ? `the run cannot secure until the Prospector has stood in every one of the ${crossing.zones.length} authored crossing zones with air still in the suit; an entry made breathless is counted and credits nothing`
+          : `the run cannot secure until every authored crossing zone has been stood in on air AND ${crossing.required} crossings have been credited, and only ONE crossing counts per ${windowWaves}-wave window, so the vacuum is crossed across the whole contract; an entry made breathless is counted and credits nothing`,
+        gatesSecure: true,
+        damages: false,
+      }));
+    } else {
+      const windowWaves = regolith.windowWaves ?? null;
+      rules.push(rule('air_wall_regolith', 'E8SuitAirSystem.notePan', {
+        suitSeconds: suit.capacity,
+        refillPerSecond: suit.refillPerSecond,
+        refillsIn: `any ${DOME_ZONE_PREFIX}-* pad that still holds air`,
+        grounds: regolith.grounds,
+        required: regolith.required,
+        ...(windowWaves === null ? {} : { windowWaves, windowSeconds: windowWaves * waveSeconds }),
+        domeDrainSeconds: DOME_AIR_DRAIN_SECONDS,
+        domeRefillSeconds: DOME_AIR_REFILL_SECONDS,
+        consequence: windowWaves === null
+          ? `the run cannot secure until ${regolith.required} of the ${regolith.grounds} regolith grounds have been panned with air still in the suit; a breathless pan still pays gold and counts for nothing`
+          : `the run cannot secure until ${regolith.required} of the ${regolith.grounds} regolith grounds have been panned with air still in the suit, and only ONE ground counts per ${windowWaves}-wave window, so the run is made in trips across the whole contract; a breathless pan still pays gold and counts for nothing`,
+        gatesSecure: true,
+        damages: false,
+      }));
+    }
   }
 
   // --- A7 low orbit. SOURCED FROM THE CONSUMER for the same reason A4 is: the manifest asks
