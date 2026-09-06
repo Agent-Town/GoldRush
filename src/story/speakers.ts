@@ -6,6 +6,24 @@ export type StorySpeakerId =
   | 'newsie'
   | 'schoolteacher'
   | 'preacher'
+  | 'newsie-e2'
+  | 'elder-e2'
+  | 'tavernkeeper-e2'
+  | 'clerk-e2'
+  | 'preacher-e2'
+  | 'schoolteacher-e2'
+  | 'boilerwright-e2'
+  | 'pressman-e2'
+  | 'typesetter-e2'
+  | 'newsie-e3'
+  | 'tavernkeeper-e3'
+  | 'clerk-e3'
+  | 'preacher-e3'
+  | 'schoolteacher-e3'
+  | 'newsie-e4'
+  | 'tavernkeeper-e4'
+  | 'clerk-e4'
+  | 'schoolteacher-e4'
   | 'tide-teller-e5'
   | 'cannery-hand-e5'
   | 'harbormaster-e5'
@@ -52,6 +70,46 @@ const prospectorPortraitUrl = new URL('../../assets/processed/char-prospector-po
 const newsiePortraitUrl = new URL('../../assets/processed/char-newsie-mei-sheet-walk8-r2c0.png', import.meta.url).href;
 const schoolteacherPortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher.png', import.meta.url).href;
 const preacherPortraitUrl = new URL('../../assets/processed/townsfolk-preacher.png', import.meta.url).href;
+
+// THE ERA-AGING CAST (portraits-era-aging-batch, 2026-09-06). Owner ruling, verbatim: "lets use the
+// higgsfield credits, I think they expire soon. go hard." lore/STORYBOOK.md:80 THE LAWS OF TIME ages
+// the townsfolk ~12-15 years per era, and until this batch the E2, E3 and E4 chapters spoke through
+// the E1 faces unchanged. Eighteen plates were GENERATED on Higgsfield (GPT Image 2) with the shipped
+// E1 portrait passed as an image REFERENCE, so each aged face is the same person one era on, and then
+// processed by the identical row-60 recipe as the 31 registered below - `node scripts/extract-alpha.mjs
+// --full-bleed --size 384`, alpha dropped - so all three batches are one tier: 384x384, 3-channel,
+// opaque, 0 transparent and 0 magenta px. Provenance and per-plate QA:
+// artifacts/portraits-era-aging/generation.jsonl and assets/LEDGER.md row 74.
+// NAMES: a person's name does not change when they age, so Mei keeps the E1 newsie's exact display
+// name in all three eras (the `newsie` entry below is the pattern) and the role nouns keep their E1
+// spelling. THE CHEN PARENTS are new faces rather than returning ones, so they carry their trade
+// where a 74x90 card can read it: lore/characters.md:54-55 names them CHEN WEI the pressman and CHEN
+// LAN the typesetter, and the given name leads here exactly as it leads in "Mei Chen".
+// WITHHELD, and stated rather than papered over (honesty guard, F-AGE-3): a nineteenth plate,
+// assets/raw/tf-old-digger-e10.png, was generated as "an ancient man" - but THE OLD DIGGER IS A
+// MACHINE in canon: the E9 boss, an ancient terraformer executing the Baron's century-old survey
+// (lore/STORYBOOK.md:544, :560, :675, ruling #15 at :722; src/game/Game.ts:1169 emits it as a boss;
+// src/game/TileStateStore.ts:12 flags it as kept machine #5). The plate is a good old prospector and
+// reads clearly at 120px, but it is not that character, so it is NOT registered and NOT processed
+// into assets/processed. The raw is kept. Owner call, LEDGER row 74.
+const newsieE2PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e2.png', import.meta.url).href;
+const elderE2PortraitUrl = new URL('../../assets/processed/townsfolk-elder-e2.png', import.meta.url).href;
+const tavernkeeperE2PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e2.png', import.meta.url).href;
+const clerkE2PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e2.png', import.meta.url).href;
+const preacherE2PortraitUrl = new URL('../../assets/processed/townsfolk-preacher-e2.png', import.meta.url).href;
+const schoolteacherE2PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e2.png', import.meta.url).href;
+const boilerwrightE2PortraitUrl = new URL('../../assets/processed/townsfolk-boilerwright-e2.png', import.meta.url).href;
+const pressmanE2PortraitUrl = new URL('../../assets/processed/townsfolk-pressman-e2.png', import.meta.url).href;
+const typesetterE2PortraitUrl = new URL('../../assets/processed/townsfolk-typesetter-e2.png', import.meta.url).href;
+const newsieE3PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e3.png', import.meta.url).href;
+const tavernkeeperE3PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e3.png', import.meta.url).href;
+const clerkE3PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e3.png', import.meta.url).href;
+const preacherE3PortraitUrl = new URL('../../assets/processed/townsfolk-preacher-e3.png', import.meta.url).href;
+const schoolteacherE3PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e3.png', import.meta.url).href;
+const newsieE4PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e4.png', import.meta.url).href;
+const tavernkeeperE4PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e4.png', import.meta.url).href;
+const clerkE4PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e4.png', import.meta.url).href;
+const schoolteacherE4PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e4.png', import.meta.url).href;
 
 // THE ERA CAST (E6-E9 plates), processed by portraits-e5-e10-batch from the row-60 portrait
 // convention (assets/LEDGER.md rows 60-65). Each id carries the ERA OF ITS PLATE, because the
@@ -119,6 +177,10 @@ const moonBornChildE9PortraitUrl = new URL('../../assets/processed/townsfolk-moo
 // measure 188.2-198.1, i.e. the new batch sits inside the band the registered set already occupies
 // (widest deviation: quack-e10 at 198.1, 6.1 px of 384 off centre, about 1.2 px in the 74 px card,
 // against weather-warden-e9's 198.5 which has shipped at this value since the batch above).
+// EXTENDED AGAIN 2026-09-06 to the eighteen era-aging plates, re-measured under the same definition:
+// they sit at 185.9-197.1, so the registered set's band widens by 1.1 px at the low end (pressman-e2
+// and tavernkeeper-e4 both 185.9) and not at all at the high end. The widest deviation from centre is
+// unchanged at 6.1 px of 384 - about 1.2 px in the rendered 74 px card - so 50% still centres all 49.
 const ERA_CAST_OBJECT_POSITION = '50% 42%';
 
 export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
@@ -163,6 +225,132 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
     name: 'Preacher',
     portraitUrl: preacherPortraitUrl,
     objectPosition: '50% 42%',
+  },
+
+  // E2, the Steamworks (lore/STORYBOOK.md:88-93 THE PEOPLE; plates assets/raw/tf-*-e2.png,
+  // assets/LEDGER.md row 74). Six returning E1 faces about twelve years on, plus three faces the
+  // chapter names for the first time. THE ELDER IS ALIVE HERE and only here: lore/characters.md:33
+  // has her pass in EARLY E2, so `elder-e2` is the "frailer, brighter-eyed" plate that ARC names,
+  // it carries the two E2 ceremony beats that fire at the era's opening, and there is deliberately
+  // no `elder-e3` or `elder-e4` for a later beat to reach for.
+  'newsie-e2': {
+    id: 'newsie-e2',
+    name: 'Mei Chen',
+    portraitUrl: newsieE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'elder-e2': {
+    id: 'elder-e2',
+    name: 'Elder',
+    portraitUrl: elderE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e2': {
+    id: 'tavernkeeper-e2',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e2': {
+    id: 'clerk-e2',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'preacher-e2': {
+    id: 'preacher-e2',
+    name: 'Preacher',
+    portraitUrl: preacherE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e2': {
+    id: 'schoolteacher-e2',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  // The first wedding's half of the pairing (lore/STORYBOOK.md:91), a role noun like the rest of
+  // the era cast. No E2 beat names her, so she is registered and waiting for a line.
+  'boilerwright-e2': {
+    id: 'boilerwright-e2',
+    name: 'Boilerwright',
+    portraitUrl: boilerwrightE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  // THE CHEN PARENTS (lore/characters.md:53-55; lore/STORYBOOK.md:93 "Wei presses, Lan sets type,
+  // Mei still sells on the plaza"). The rail spur's first freight is the press, so E2 is the era the
+  // family business becomes a printing house and the two of them get faces.
+  'pressman-e2': {
+    id: 'pressman-e2',
+    name: 'Wei, the Pressman',
+    portraitUrl: pressmanE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'typesetter-e2': {
+    id: 'typesetter-e2',
+    name: 'Lan, the Typesetter',
+    portraitUrl: typesetterE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+
+  // E3, the Voltage Age (lore/STORYBOOK.md:139-178; plates assets/raw/tf-*-e3.png, LEDGER row 74).
+  // Same five faces again, about twenty-five years past E1.
+  'newsie-e3': {
+    id: 'newsie-e3',
+    name: 'Mei Chen',
+    portraitUrl: newsieE3PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e3': {
+    id: 'tavernkeeper-e3',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE3PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e3': {
+    id: 'clerk-e3',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE3PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'preacher-e3': {
+    id: 'preacher-e3',
+    name: 'Preacher',
+    portraitUrl: preacherE3PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e3': {
+    id: 'schoolteacher-e3',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE3PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+
+  // E4, the Motor Age (lore/STORYBOOK.md:191-235; plates assets/raw/tf-*-e4.png, LEDGER row 74).
+  // Four faces, about thirty-nine years past E1 - the era the storybook calls the hero's mid-life.
+  'newsie-e4': {
+    id: 'newsie-e4',
+    name: 'Mei Chen',
+    portraitUrl: newsieE4PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e4': {
+    id: 'tavernkeeper-e4',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE4PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e4': {
+    id: 'clerk-e4',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE4PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e4': {
+    id: 'schoolteacher-e4',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE4PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
   },
 
   // E5, the deepwater claim (lore/STORYBOOK.md:265-267 THE PEOPLE; plates assets/raw/tf-*-e5.png,

@@ -24,7 +24,15 @@ async function seed(page: Page): Promise<void> {
     const profile: ProfileState = {
       version: 2,
       activeId: 'robin',
-      profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+      // F-AGE-6 (2026-09-06, portraits-era-aging-batch; PRE-EXISTING red, proved by revert-run):
+      // `hintsSeen: []` used to be harmless, and stopped being harmless when the story-signal-gaps
+      // merge added the `first-boot` beat to the head of the E1 table. It fires on the reload below
+      // and sits in the queue, so this spec's very first expectation met `first-boot` instead of the
+      // card it asked for and all four runs went red. The E1 greeting is not what this spec is
+      // about, so it is seeded as already seen - exactly what ss-04 and ss-05 do with the whole
+      // oncePerProfile roster (`OLD_STORY_HINTS`, ss-04-e3-beats.spec.ts:26-28). Every assertion
+      // below is unchanged.
+      profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: ['story:first-boot'] }],
     };
     localStorage.setItem(profileKey, JSON.stringify(profile));
   }, PROFILE_KEY);
@@ -49,9 +57,18 @@ async function continueCeremony(page: Page, id: string): Promise<void> {
   await page.locator('[data-story-ceremony-continue]').click();
 }
 
+// F-AGE-6, the second half (same PRE-EXISTING red, same proof): this asserted the authored beats
+// were `E2_STORY_BEATS.slice(3)`, i.e. everything after a THREE-beat head. The head has since grown
+// to nine - the five E2/E3 ceremony beats and `e2-railcar-arrival` landed above the authored block -
+// so the literal 3 was reading ceremony beats into the authored list and failing on the first id and
+// again on `oncePerProfile`. Taking the table's TAIL says the same thing the 3 meant ("the authored
+// beats are the end of this table, in this order, and nothing has been appended after them") without
+// a magic number that rots every time the head grows. Assertions themselves untouched.
+const AUTHORED_BEATS = E2_STORY_BEATS.slice(-AUTHORED_IDS.length);
+
 test('SS-03 table uses registered speakers and once-per-profile authored beats', () => {
-  expect(E2_STORY_BEATS.slice(3).map((beat) => beat.id)).toEqual([...AUTHORED_IDS]);
-  for (const beat of E2_STORY_BEATS.slice(3)) {
+  expect(AUTHORED_BEATS.map((beat) => beat.id)).toEqual([...AUTHORED_IDS]);
+  for (const beat of AUTHORED_BEATS) {
     expect(beat.oncePerProfile).toBe(true);
     expect(STORY_SPEAKERS[beat.speaker]).toBeTruthy();
     expect(['epoch-activated', 'contract-unlocked', 'run-return-town', 'boss-defeat']).toContain(beat.trigger);
