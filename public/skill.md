@@ -114,6 +114,7 @@ The source-locked forms are:
 {"verb":"CONTEXT_ACTION","action":"plant"}
 {"verb":"CONTEXT_ACTION","action":"redig"}
 {"verb":"CONTEXT_ACTION","action":"backfill"}
+{"verb":"CONTEXT_ACTION","action":"stoke"}
 {"verb":"CAPTURE"}
 {"verb":"BOAT_BUILD","padId":"<string>","buildingId":"<string>"}
 {"verb":"REANCHOR","anchorId":"<string>"}

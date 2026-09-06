@@ -6,7 +6,14 @@ export type BuildSink =
   | `build_${string}`
   | `repair_${BuildableId}`
   | `upgrade_${BuildableId}`
-  | `megaproject_${string}`;
+  | `megaproject_${string}`
+  // E10S-3: the Ember Shore's STOKE. Its own prefix rather than a borrowed one, because every
+  // other prefix here is READ by `summarizeLog`: `build_` counts a building and adds to the
+  // claim's standing base value, `upgrade_` adds to it, `repair_` counts a repair. A stoke is
+  // none of those — it buys warmth that burns away — so a run that stoked four times must show
+  // four spends and zero buildings. Nothing branches on `stoke_`, which is the point: it lands in
+  // `summary.spent` and nowhere else, which is the whole truth about it.
+  | `stoke_${string}`;
 
 export type EconomyEventBase = {
   id: string;

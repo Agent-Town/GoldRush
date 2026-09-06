@@ -4,7 +4,14 @@ import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json
 import deepSky from '../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
 
 const EXPECTED_RULES: Record<string, string[]> = {
-  'e10-ember-shore': ['build_zones'],
+  // RE-POINTED, WITH THE REASON, and one of the two rows was ALREADY STALE before this slice
+  // touched it: `static_squall` has been derived for this contract since E10S-2 landed
+  // `E10SquallScheduler` (`reviews/e10s-2-squall-scheduler.md`), so this census had been red on
+  // main since that drain — measured 2026-09-06, `['build_zones','static_squall']` against the
+  // `['build_zones']` this row still claimed. E10S-3 adds `preserve_vent`. Both rules are DERIVED
+  // FROM CONSUMERS both engines run, which is exactly what this census is for: it certifies that
+  // the Deep Sky debt on the card matches the debt in the engine, and the debt just got smaller.
+  'e10-ember-shore': ['build_zones', 'static_squall', 'preserve_vent'],
   'e10-archive-world': ['build_zones'],
   'e10-last-claim': ['build_zones'],
   'e10-river': ['river', 'water_crossings'],
@@ -13,8 +20,22 @@ const EXPECTED_RULES: Record<string, string[]> = {
 const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
   'e10-ember-shore': 'ember-shore-preserve-consumers',
   'e10-archive-world': 'archive-world-consumers',
-  'e10-last-claim': 'last-claim-objective-consumer',
+  // RE-POINTED (stale before E10S-3, cited): the Last Claim's dependency was renamed to
+  // `last-claim-finale-metadata-consumer` by `1c57e5e68` ("runner(lane-a): e10-preserve-objective")
+  // when its warm-vent objective landed and only the finale METADATA stayed missing. Measured at
+  // base `0c3188493`, 2026-09-06: the contract carries the new id and this row still claimed the
+  // old one, so this clause had been red since that drain.
+  'e10-last-claim': 'last-claim-finale-metadata-consumer',
   'e10-river': 'credits-river-consumer',
+};
+
+/**
+ * E10S-3: only the Ember Shore's dependency has landed a consumer. Every other Deep Sky row is
+ * still `missing` and this map defaults them, so a second map flipping without its own evidence
+ * would red here rather than pass by omission.
+ */
+const EXPECTED_DEPENDENCY_STATUS: Record<string, 'missing' | 'landed'> = {
+  'e10-ember-shore': 'landed',
 };
 
 const EXPECTED_LOSS_STAKES: Record<string, number> = {
@@ -48,8 +69,15 @@ for (const contract of deepSky.contracts) {
         ? contract.tileParams.engineDependencies
         : undefined;
       const expectedDependency = EXPECTED_DEPENDENCY[contract.id];
+      // RE-POINTED BY E10S-3, WITH THE REASON (F-E10S2-1). The schema admitted only the literal
+      // `missing`, so a dependency whose consumers had SHIPPED could say so only in prose. It now
+      // admits `landed` with a `landedBy` slice name, and the Ember Shore's row is the first to
+      // use it: both `twist.emberShore` consumers run in both engines. The census's PURPOSE is
+      // unchanged — a Deep Sky map must still NAME its engine debt — so the assertion keeps
+      // requiring the entry and the id, and now checks the status the map actually carries.
+      const expectedStatus = EXPECTED_DEPENDENCY_STATUS[contract.id] ?? 'missing';
       if (expectedDependency === undefined) expect(dependency).toBeUndefined();
-      else expect(dependency).toEqual([expect.objectContaining({ dep: expectedDependency, status: 'missing' })]);
+      else expect(dependency).toEqual([expect.objectContaining({ dep: expectedDependency, status: expectedStatus })]);
 
       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
       const { deriveMechanicsManifest } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts');

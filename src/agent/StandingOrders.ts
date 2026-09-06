@@ -40,6 +40,15 @@ export type StandingOrder =
   // world names the stake, so the body's position is the whole argument.
   | { verb: 'CONTEXT_ACTION'; action: 'redig' }
   | { verb: 'CONTEXT_ACTION'; action: 'backfill' }
+  // E10S-3 (`specs/agent-play/e10-ember-shore-preserve.md` §3 "The vent"): feed the last warm vent
+  // the Prospector is standing at, spending the contract's authored gold cost for its authored
+  // warmth. Targetless like `fund`/`recover`/`plant`/`redig` and for the same reason — the world
+  // names the target, the body's position is the whole argument, and there is no index to
+  // mis-quote. It is a CONTEXT_ACTION rather than its own verb because it carries no argument and
+  // because both engines already route the whole family through one handler; `GRADE`/`HAUL` are
+  // verbs only because the browser's `applyDeferredAction` destructures `order.target` for every
+  // action it does not name, and `stoke` IS named there (`src/game/Game.ts`, the targetless list).
+  | { verb: 'CONTEXT_ACTION'; action: 'stoke' }
   | { verb: 'CAPTURE' }
   | { verb: 'BOAT_BUILD'; padId: string; buildingId: string }
   | { verb: 'REANCHOR'; anchorId: string }
@@ -633,6 +642,7 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     if (value.action === 'plant' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'plant' };
     if (value.action === 'redig' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'redig' };
     if (value.action === 'backfill' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'backfill' };
+    if (value.action === 'stoke' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'stoke' };
     if ((value.action !== 'upgrade' && value.action !== 'demolish') || !exactKeys(value, ['verb', 'action', 'target']) || !isRecord(value.target)) {
       return schemaError(index, 'CONTEXT_ACTION');
     }

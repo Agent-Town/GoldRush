@@ -141,6 +141,14 @@ test('E10S-2 the clock: the browser changes phase on the same ticks the headless
     // This spec measures the CLOCK, not the hero's survival: a run that ends at wave 4 stops the
     // sim and would red this as a phase failure instead of the roster failure it is.
     harness.setBalance('enemy.contactDamage', 0);
+    // RE-POINTED BY E10S-3, WITH THE REASON. Since the preserve consumer landed, an unstoked vent
+    // reaches zero on the squall's LAST tick (2790) and ENDS the run — which stopped this spec's
+    // clock one transition short of `recover` and two short of the cycle closing. The vent is now
+    // a second way for a clock spec to die, so it is answered the same way the roster was: with
+    // the run's own purse and the map's own verb, inside the loop below. This buys the ECONOMY the
+    // Ember Shore has not been authored yet (`harvestAnchors: []` until E10S-4, F-E10S3-1), not
+    // the mechanic — `e2e/e10-ember-shore-preserve.spec.ts` is where the vent itself is measured.
+    harness.grantGold(400);
   });
 
   const start = await squall(page);
@@ -163,6 +171,13 @@ test('E10S-2 the clock: the browser changes phase on the same ticks the headless
       await shoot(page, testInfo, 'squall-blowing');
     }
     if (state!.transitions.length >= EXPECTED_TRANSITIONS.length) break;
+    // E10S-3: keep the vent alight so the CLOCK can finish its cycle. Stoking on the way down is
+    // exactly the play the map asks of a player; a clock spec should not be the thing that proves
+    // the vent can be kept, so it simply refuses to be killed by it.
+    await page.evaluate(() => {
+      const vent = window.__GR_TEST__!.vent;
+      if (vent.diagnostics().declared && vent.diagnostics().warmth < 60) vent.stoke();
+    });
     await page.evaluate(() => window.__GR_TEST__!.advanceSim(4));
   }
 

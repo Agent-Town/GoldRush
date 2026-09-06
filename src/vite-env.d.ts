@@ -254,7 +254,13 @@ interface ThreeGameDiagnostics {
   run: {
     secured: boolean;
     rush: boolean;
-    lastRunEndedReason: 'death' | 'secured' | 'rush' | null;
+    /**
+     * `preserve_fell` (`e10-last-claim`'s warm vent felled by outlaws) and `vent_guttered` (the
+     * Ember Shore's warmth reaching zero in an unanswered squall, E10S-3) were already being
+     * published here by `Game.publishDiagnostics` through a spread the declaration did not admit.
+     * Named so a reader of this file learns what the browser can actually say.
+     */
+    lastRunEndedReason: 'death' | 'secured' | 'rush' | 'preserve_fell' | 'vent_guttered' | null;
     meta: {
       version: 1;
       tracks: {
@@ -531,6 +537,8 @@ interface ThreeGameDiagnostics {
   devilsAlleyPresentation: import('./systems/DevilsAlleyPresentation').DevilsAlleyPresentationDiagnostics | null;
   /** E10S-2: null on every contract that declares no Static squall. The clock's own read. */
   squall: import('./systems/E10SquallScheduler').SquallDiagnostics | null;
+  /** E10S-3: null on every contract that declares no preserve vent. The consumer's own read. */
+  preserveVent: import('./systems/E10PreserveSystem').E10PreserveDiagnostics | null;
   /** E10S-2: what a PLAIN boot shows and ducks. Presentation only; nothing here reaches the sim. */
   squallPresentation: import('./systems/E10SquallPresentation').SquallPresentationDiagnostics | null;
   hollowCrossing: import('./systems/HollowCrossingSystem').HollowCrossingDiagnostics;
@@ -1094,6 +1102,17 @@ interface Window {
       recover: () => boolean;
       inReach: (x: number, z: number) => boolean;
       diagnostics: () => import('./systems/ProbeRecovery').ProbeRecoveryDiagnostics;
+    };
+    /**
+     * E10S-3, in the shape `probe` above already has and for the same reason: a spec must be able
+     * to STOKE without driving the confirm key through a frozen manual clock, plus the pure reach
+     * predicate so a spec can prove the disc is a PLACE and not a global flag. The mechanic itself
+     * is plain-boot (`Game.confirmAction`); this is only the test-side handle.
+     */
+    vent: {
+      stoke: () => boolean;
+      inReach: (x: number, z: number) => boolean;
+      diagnostics: () => import('./systems/E10PreserveSystem').E10PreserveDiagnostics;
     };
     spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     wreck: (family: GrBuildableId, index: number) => boolean;

@@ -51,6 +51,23 @@ export type PauseMetaSnapshot = {
   mastery: Array<{ name: string; effect: string }>;
 };
 
+/**
+ * E10S-3 — what the HUD needs to draw the Ember Shore's vent, and nothing more. Derived from
+ * `E10PreserveSystem.diagnostics` by `Game.ventWarmthState`; structural rather than imported so
+ * this module keeps its render-only import list.
+ */
+export type VentWarmthState = {
+  warmth: number;
+  maxWarmth: number;
+  alight: boolean;
+  /** True only while the squall is actually taking warmth — the meter turns as the shore does. */
+  draining: boolean;
+  stokeCost: number;
+  inReach: boolean;
+  squallsSurvived: number;
+  squallsRequired: number;
+};
+
 type HudElements = {
   root: HTMLElement;
   trainingTag: HTMLElement;
@@ -67,6 +84,10 @@ type HudElements = {
   pressureFill: HTMLElement;
   powerPanel: HTMLElement;
   powerText: HTMLElement;
+  warmthPanel: HTMLElement;
+  warmthText: HTMLElement;
+  warmthFill: HTMLElement;
+  warmthStoke: HTMLElement;
   weaponPanel: HTMLElement;
   weaponReason: HTMLElement;
   weaponChip: HTMLElement;
@@ -179,6 +200,23 @@ export class Hud {
         <strong class="hud-value" data-hud-power></strong>
       </section>
 
+      <!--
+        E10S-3: THE VENT'S WARMTH, on the HUD a plain boot already draws (Mistake #10: a mechanic
+        a player cannot see is a mechanic that did not ship). It rides the resource-panel grid the
+        pressure gauge and the power ledger already share, and it is contract-scoped exactly as
+        they are: hidden on every map that declares no vent, which is every map but the Ember
+        Shore. It reuses their track and fill classes rather than minting a second meter's CSS.
+        NOTE: this comment lives inside a template literal, so it survives transpilation and is
+        scanned by scripts/no-emdash-guard.test.mjs. No em dashes and no backticks here.
+      -->
+      <section class="hud-panel hud-panel--resource hud-panel--warmth" data-testid="hud-warmth" aria-label="Vent warmth" hidden>
+        <span class="hud-gauge" aria-hidden="true"></span>
+        <span class="hud-label">Warmth</span>
+        <span class="hud-pressure-uses" data-hud-warmth-stoke hidden></span>
+        <strong class="hud-value" data-hud-warmth>0</strong>
+        <span class="hud-pressure-track" aria-hidden="true"><span class="hud-pressure-fill" data-hud-warmth-fill></span></span>
+      </section>
+
       <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
         <span class="hud-label">Weapon</span>
         <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
@@ -232,6 +270,10 @@ export class Hud {
       pressureFill: this.get(root, '[data-hud-pressure-fill]'),
       powerPanel: this.get(root, '[data-testid="hud-power"]'),
       powerText: this.get(root, '[data-hud-power]'),
+      warmthPanel: this.get(root, '[data-testid="hud-warmth"]'),
+      warmthText: this.get(root, '[data-hud-warmth]'),
+      warmthFill: this.get(root, '[data-hud-warmth-fill]'),
+      warmthStoke: this.get(root, '[data-hud-warmth-stoke]'),
       weaponPanel: this.get(root, '[data-testid="hud-weapon"]'),
       weaponReason: this.get(root, '[data-testid="hud-weapon-reason"]'),
       weaponChip: this.get(root, '[data-hud-weapon]'),
@@ -336,6 +378,36 @@ export class Hud {
     this.elements.contractBriefing.hidden = true;
     this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
     this.elements.metaRecap.hidden = true;
+  }
+
+  /**
+   * E10S-3 — the vent meter, pushed rather than folded into `UiSnapshot`, on the same seam
+   * `setWeaponDisarmReason` below uses. `UiBridge.build` takes twenty-four positional arguments
+   * and a twenty-fifth for one contract's meter would make every caller pay for one map; a setter
+   * costs nothing anywhere else and keeps `UiBridge` untouched.
+   *
+   * `null` hides the panel, which is what every map but the Ember Shore passes.
+   */
+  setVentWarmth(vent: VentWarmthState | null): void {
+    this.elements.warmthPanel.hidden = !vent;
+    if (!vent) return;
+    const percent = this.percent(vent.warmth, vent.maxWarmth);
+    this.elements.warmthPanel.dataset.state = !vent.alight ? 'cold' : vent.draining ? 'draining' : 'alight';
+    this.elements.warmthText.textContent = `${Math.ceil(vent.warmth)}/${Math.round(vent.maxWarmth)}`;
+    this.elements.warmthFill.style.width = `${percent}%`;
+    // Ember while it burns, deeper as the squall takes it, cold brown when it has gone out. Set
+    // here rather than in the stylesheet so the meter needs no CSS of its own (see the markup).
+    this.elements.warmthFill.style.background = !vent.alight ? '#4a3a2c' : vent.draining ? '#a0522d' : '#f0a860';
+    // The price is only worth showing where the player can actually pay it: standing in the disc.
+    this.elements.warmthStoke.hidden = !vent.inReach || !vent.alight;
+    this.elements.warmthStoke.textContent = `STOKE ${vent.stokeCost}g`;
+    this.elements.warmthPanel.title = vent.alight
+      ? `Squalls ridden out ${vent.squallsSurvived}/${vent.squallsRequired} · stand at the vent and confirm to stoke (${vent.stokeCost} gold)`
+      : 'The last warm vent has gone out.';
+    this.elements.warmthPanel.setAttribute(
+      'aria-label',
+      `Vent warmth ${Math.ceil(vent.warmth)} of ${Math.round(vent.maxWarmth)}, ${vent.alight ? (vent.draining ? 'falling in the squall' : 'holding') : 'out'}`,
+    );
   }
 
   setWeaponDisarmReason(reason: string | null): void {
