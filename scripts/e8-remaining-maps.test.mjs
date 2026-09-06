@@ -35,10 +35,17 @@ const manifestOf = (id) => bundle.find((entry) => entry.id === id);
 // MEASURED on this tree, 2026-09-05 (node v23.11.1), idle policy, 400-decision bound. Re-derivable
 // with `artifacts/e8-remaining-maps/probe-armed.mjs`; the un-composed column is the pinned null
 // floor, which is what makes "the audit's engine" a checkable claim rather than a memory.
+// RE-POINTED 2026-09-06 by `tasks/e8-air-wall-all-maps.md` (owner ruling: "yes, same air for all
+// space contracts"), from `5c30efd5` / `6e1931c2` / `466507ac`. All three rows moved for the same
+// two reasons and NEITHER is an outcome change: the air block grew fields (`crossing.credited` and
+// the four window fields; the sibling regolith row grew the Mare Claim's four), and each contract
+// now authors `twist.atmosphere`. The idle ride itself is unmoved — same waves, same timeMs, same
+// kills, still lost — which is what the deepEqual below asserts. Attribution measured both ways:
+// `artifacts/e8-air-wall-all-maps/floor-attribution.json`.
 const IDLE = {
-  'e8-far-side': { seed: 'e8-far-side-01', composed: 'fnv1a32:5c30efd5', waves: 2, timeMs: 79_400, kills: 30 },
-  'e8-low-orbit': { seed: 'e8-low-orbit-01', composed: 'fnv1a32:6e1931c2', waves: 2, timeMs: 78_333, kills: 33 },
-  'e8-eclipse': { seed: 'e8-eclipse-01', composed: 'fnv1a32:466507ac', waves: 2, timeMs: 81_800, kills: 32 },
+  'e8-far-side': { seed: 'e8-far-side-01', composed: 'fnv1a32:22c47125', waves: 2, timeMs: 79_400, kills: 30 },
+  'e8-low-orbit': { seed: 'e8-low-orbit-01', composed: 'fnv1a32:088a929c', waves: 2, timeMs: 78_333, kills: 33 },
+  'e8-eclipse': { seed: 'e8-eclipse-01', composed: 'fnv1a32:121b0402', waves: 2, timeMs: 81_800, kills: 32 },
 };
 // THE CONTROL, pinned by `reviews/e8-mare-claim-physics.md` before this slice existed.
 // RE-POINTED 2026-09-06 by `tasks/mare-claim-air-prevalent.md` (owner ruling: "no, this has to be
@@ -62,9 +69,12 @@ const vite = await createServer({ root: ROOT, appType: 'custom', logLevel: 'sile
 const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts');
 const { E8SuitAirSystem, SUIT_AIR_CONTRACT_IDS } = await vite.ssrLoadModule('/src/systems/E8SuitAirSystem.ts');
 const { SUIT_AIR_SECONDS, REGOLITH_GROUNDS_FOR_SECURE, E8AtmosphereSystem } = await vite.ssrLoadModule('/src/systems/E8PhysicsSystem.ts');
+const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
 after(() => vite.close());
 
 const centreOf = (zone) => ({ x: (zone.minX + zone.maxX) / 2, z: (zone.minZ + zone.maxZ) / 2 });
+/** None of the four E8 contracts authors `waveCadenceMult`, so a window is waves x this. */
+const WAVE_SECONDS = Balance.waves.waveInterval;
 const zoneOf = (id, contractId) => {
   const tile = manifestOf(contractId).tileParams;
   return [...(tile.buildZones ?? []), ...(tile.orbitalScaffoldZones ?? []), ...(tile.probeRecoveryZones ?? [])]
@@ -103,10 +113,24 @@ function crossingRide(contractId, seed, { immortal = false, stopAtWave = null, m
       assert.equal(sim.submitOrders([{ verb: 'SECURE_CHOICE', choice: 'bank' }]).outcome.ok, true);
     } else {
       const crossing = now.air?.crossing;
-      const next = crossing?.zones.find((id) => !crossing.reached.includes(id)) ?? crossing?.zones.at(-1);
       const orders = [];
       if (now.probeRecovery && !now.probeRecovery.recovered) orders.push({ verb: 'CONTEXT_ACTION', action: 'recover' });
-      if (next) orders.push({ verb: 'HOLD', pos: centreOf(zoneOf(next, contractId)) });
+      // THE SHUTTLE (`tasks/e8-air-wall-all-maps.md`, 2026-09-06). Parking in the crossing zone
+      // banks exactly ONE credit however long the ride sits there, because an ENTRY is what counts
+      // and the window credits at most one per `crossingWindowWaves`. So the ride goes out when
+      // its window still holds a credit and comes HOME TO BREATHE when it does not — which is the
+      // errand the owner's ruling asks a rider for, written as the smallest policy that pays it.
+      const target = crossing === undefined
+        ? null
+        : crossing.creditedThisWindow === 0
+          // A zone not yet stood in first (the latch still asks for every one of them), else
+          // rotate, so the Far Side's single crater is re-entered on a fresh window.
+          ? crossing.zones.find((id) => !crossing.reached.includes(id))
+            ?? crossing.zones[crossing.credited % crossing.zones.length]
+          // The shelter the suit fills in. On Low Orbit the decks ARE the shelters, so this is
+          // simply "stay where the air is"; on the Far Side it is the lander's yard.
+          : (now.air.domes[0]?.id ?? crossing.zones[0]);
+      if (target) orders.push({ verb: 'HOLD', pos: centreOf(zoneOf(target, contractId)) });
       if (orders.length) assert.equal(sim.submitOrders(orders).outcome.ok, true);
     }
     if (stopAtWave !== null && turn.view.now.wave >= stopAtWave) break;
@@ -215,14 +239,23 @@ test('the crossing is made on air, or it is not made: a breathless entry counts 
   const made = E8SuitAirSystem.create(manifestOf('e8-far-side'));
   assert.equal(made.objectiveAllowsSecure, false, 'an uncrossed Far Side cannot secure');
   made.update(1, crater, [], 1);
+  // RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`): the contract now authors
+  // `{ crossingRequired: 4, crossingWindowWaves: 4 }`, so ONE entry credits one of four and the
+  // latch stays shut. The row this replaces asserted `required: 1` and `complete: true` here,
+  // which was the pre-ruling wall — one round trip in a 600-second contract.
   assert.deepEqual(made.diagnostics.crossing, {
     zones: ['listening-probe-crater'],
-    required: 1,
+    required: 4,
     reached: ['listening-probe-crater'],
+    credited: 1,
     breathlessEntries: 0,
-    complete: true,
+    windowWaves: 4,
+    window: 0,
+    creditedThisWindow: 1,
+    windowHeldEntries: 0,
+    complete: false,
   });
-  assert.equal(made.objectiveAllowsSecure, true);
+  assert.equal(made.objectiveAllowsSecure, false, 'one crossing of four cannot open the latch');
 
   // An ENTRY is what counts, not a step: thirty steps parked in the crater are one crossing.
   const parked = E8SuitAirSystem.create(manifestOf('e8-far-side'));
@@ -247,22 +280,76 @@ test('the crossing is made on air, or it is not made: a breathless entry counts 
   assert.equal(starved.diagnostics.suit.seconds, SUIT_AIR_SECONDS);
   starved.update(1, { x: 0, z: 10 }, [], 1);
   starved.update(1, crater, [], 1);
-  assert.equal(starved.objectiveAllowsSecure, true);
+  assert.equal(starved.diagnostics.crossing.credited, 1, 'the re-crossing is credited');
   assert.equal(starved.diagnostics.crossing.breathlessEntries, 1, 'the refused entry stays on the record');
+});
+
+test('the crossing window credits at most one entry per window, and holds the rest', () => {
+  // THE OWNER'S RULING MADE CHECKABLE (2026-09-06, verbatim: "yes, same air for all space
+  // contracts - but I also never played the levels, so I dont know exactly"). The Far Side authors
+  // ONE crossing rectangle, so a four-credit gate is only reachable because a RE-ENTRY in a later
+  // window credits again — which is the whole reason the credit is counted per entry rather than
+  // per zone. Measured against heat 12's own securing tape, which entered the crater exactly once
+  // (`artifacts/e8-air-wall-all-maps/measure-e8-far-side.json`, `credited: 1`).
+  const contract = manifestOf('e8-far-side');
+  const { crossingRequired, crossingWindowWaves } = contract.twist.atmosphere;
+  const windowSeconds = crossingWindowWaves * WAVE_SECONDS;
+  const crater = centreOf(zoneOf('listening-probe-crater', 'e8-far-side'));
+  const yard = centreOf(zoneOf('far-side-landing-yard', 'e8-far-side'));
+  const air = E8SuitAirSystem.create(contract);
+
+  // One trip out and home is one credit; a second trip in the SAME window banks nothing.
+  const trip = () => {
+    air.update(1, crater, [], 1);
+    air.update(1, yard, [], 1);
+  };
+  trip();
+  trip();
+  trip();
+  let dials = air.diagnostics.crossing;
+  assert.equal(dials.credited, 1, 'one credit per window, however many trips are made');
+  assert.equal(dials.windowHeldEntries, 2, 'the refused entries are counted, and credited to nothing');
+  assert.equal(dials.breathlessEntries, 0, 'a held entry is not a breathless one');
+  assert.deepEqual(dials.reached, ['listening-probe-crater'], 'a held entry is still somewhere the body has been');
+  assert.equal(air.objectiveAllowsSecure, false);
+
+  // THE ROLL-OVER, and the latch: one credit per window until the authored count is met, and not
+  // one window sooner. The ride waits inside the yard, which is where the suit refills.
+  for (let banked = 1; banked < crossingRequired; banked += 1) {
+    for (let second = 0; second < windowSeconds; second += 1) air.update(1, yard, [], 1);
+    assert.equal(air.objectiveAllowsSecure, false, `${banked} crossings cannot open a ${crossingRequired}-crossing latch`);
+    trip();
+    assert.equal(air.diagnostics.crossing.credited, banked + 1);
+  }
+  dials = air.diagnostics.crossing;
+  assert.equal(dials.complete, true);
+  assert.equal(air.objectiveAllowsSecure, true);
+  assert.equal(dials.window, crossingRequired - 1, 'the earliest possible finish is one window per crossing');
 });
 
 test('low orbit crosses its three authored decks, and the returning-lob seam is untouched', () => {
   const air = E8SuitAirSystem.create(manifestOf('e8-low-orbit'));
   const decks = ['west-scaffold-deck', 'claw-carcass-yard', 'east-scaffold-deck'];
+  const windowSeconds = manifestOf('e8-low-orbit').twist.atmosphere.crossingWindowWaves * WAVE_SECONDS;
   assert.deepEqual(air.diagnostics.crossing.zones, decks);
-  assert.equal(air.diagnostics.crossing.required, 3);
+  // RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`): four CREDITED entries, not three
+  // zones — and the zone conjunct is kept beside it, so this map's latch is strictly stricter than
+  // the one it replaces. Three decks in three windows is three credits and the latch stays shut.
+  assert.equal(air.diagnostics.crossing.required, 4);
   for (const deck of decks) {
     assert.equal(air.objectiveAllowsSecure, false);
-    air.update(1, centreOf(zoneOf(deck, 'e8-low-orbit')), [], 1);
-    air.update(1, { x: 0, z: 40 }, [], 1);
+    const inside = centreOf(zoneOf(deck, 'e8-low-orbit'));
+    air.update(1, inside, [], 1);                                    // the ENTRY, which is the credit
+    for (let second = 0; second < windowSeconds; second += 1) air.update(1, inside, [], 1);
+    air.update(1, { x: 0, z: 40 }, [], 1);                           // out over the debris, so the next entry registers
   }
+  assert.deepEqual(air.diagnostics.crossing.reached, decks, 'every deck stood on, and still short');
+  assert.equal(air.diagnostics.crossing.credited, 3);
+  assert.equal(air.objectiveAllowsSecure, false, 'three decks are three credits of the four asked');
+  air.update(1, centreOf(zoneOf(decks[0], 'e8-low-orbit')), [], 1);
+  assert.equal(air.diagnostics.crossing.credited, 4, 're-entering a deck in a fresh window credits again');
+  assert.equal(air.diagnostics.crossing.breathlessEntries, 0, 'the decks ARE the shelters, so no entry can be breathless');
   assert.equal(air.objectiveAllowsSecure, true);
-  assert.deepEqual(air.diagnostics.crossing.reached, decks);
 
   // THE PROVEN SEAM IS KEPT, and this is a claim about a file rather than about this one: the
   // drift/debris scaling still reaches `filterMovement` through the sim's own movement seam, and
@@ -283,10 +370,26 @@ test('the eclipse removes an air route mid-run, and the secure needs a ground wo
     'the first run gets no warning: the contract authors firstRunWarning false',
   );
   assert.equal(before.reserve, 'dome-cluster-pad-center', 'the reserve is the shelter nearest the origin');
-  assert.equal(before.requiredAfter, REGOLITH_GROUNDS_FOR_SECURE);
+  assert.equal(before.requiredAfter, REGOLITH_GROUNDS_FOR_SECURE, 'the AFTER gate keeps the ratified default');
 
-  // The regolith latch alone, satisfied BEFORE the shadow: the map may secure on it.
+  // RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`): the Eclipse now authors the Mare
+  // Claim's own gate, `{ regolithRequired: 4, regolithWindowWaves: 4 }`, so the regolith latch is
+  // four grounds in four windows rather than the one this row used to bank at t = 5 s. The line
+  // this replaces panned ground #3 once and read `objectiveAllowsSecure` true.
+  const dome = centreOf(zoneOf('dome-cluster-pad-center', 'e8-eclipse'));
+  const windowSeconds = manifestOf('e8-eclipse').twist.atmosphere.regolithWindowWaves * WAVE_SECONDS;
+  assert.equal(air.diagnostics.regolith.required, 4);
+  assert.equal(air.diagnostics.regolith.windowWaves, 4);
   assert.equal(air.notePan(3), true);
+  assert.equal(air.notePan(0), false, 'a second fresh ground in the same window is held');
+  assert.equal(air.diagnostics.regolith.windowHeldPans, 1);
+  assert.equal(air.objectiveAllowsSecure, false, 'one ground of four cannot open the latch');
+  for (const ground of [0, 1, 2]) {
+    for (let second = 0; second < windowSeconds; second += 1) air.update(1, dome, [], 1);
+    assert.equal(air.notePan(ground), true, `window ${ground + 1} credits ground ${ground}`);
+  }
+  assert.deepEqual(air.diagnostics.regolith.worked, [0, 1, 2, 3]);
+  // The regolith latch alone, satisfied BEFORE the shadow: the map may secure on it.
   assert.equal(air.objectiveAllowsSecure, true);
 
   // MID-RUN, read off the run's own boundary: `Balance.run.secureWave` is 20, so wave 10.
@@ -319,7 +422,10 @@ test('the eclipse removes an air route mid-run, and the secure needs a ground wo
 
   // AND THE LATCH MOVED WITH IT: the pre-shadow run no longer opens the secure on its own.
   assert.equal(air.objectiveAllowsSecure, false, 'reserves are the objective now');
-  assert.equal(air.notePan(4), true);
+  // The AFTER gate asks for WORK on the reserve, not for a fresh ground, so a pan on a ground the
+  // run already banked pays it — and the window never touches it. That is the rule this map has
+  // carried since `tasks/e8-remaining-maps.md`, unmoved by the authored numbers above it.
+  assert.equal(air.notePan(3), true);
   assert.equal(air.diagnostics.eclipse.groundsWorkedAfter, 1);
   assert.equal(air.objectiveAllowsSecure, true);
 });

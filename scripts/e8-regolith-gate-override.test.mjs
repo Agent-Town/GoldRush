@@ -109,25 +109,34 @@ test('a contract that authors no atmosphere twist keeps the default gate and get
     assert.equal(plain.diagnostics.regolith.windowHeldPans, 0);
     assert.equal(plain.objectiveAllowsSecure, true);
 
-    // THE CONTROL IN THE WILD. The three siblings run their own consumer off the same constant and
-    // this slice never touched their file, so their gate is still one and their window is absent.
+    // THE CONTROL IN THE WILD, RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`, owner
+    // ruling: "yes, same air for all space contracts"). The three siblings now author their own
+    // gates, so the control is each sibling's OWN manifest with `twist.atmosphere` stripped — the
+    // same move the Mare Claim control above makes, on the consumer that runs those maps. The line
+    // this replaces asserted `sibling.twist.atmosphere === undefined`, which was true only while
+    // the ruling had reached one map of four.
     for (const id of SIBLINGS) {
       const sibling = loadContract(id);
-      assert.equal(sibling.twist.atmosphere, undefined, `${id} must author no regolith gate`);
       assert.equal(E8AtmosphereSystem.create(sibling).isDeclared, false, `${id} must not arm the Mare Claim consumer`);
-      const own = E8SuitAirSystem.create(sibling);
-      assert.equal(own.isDeclared, true, `${id} must arm its own consumer`);
+      const bareSibling = { ...sibling, twist: { ...sibling.twist, atmosphere: undefined } };
+      const own = E8SuitAirSystem.create(bareSibling);
+      assert.equal(own.isDeclared, true, `${id} must arm its own consumer with no gate authored`);
       const { regolith, crossing } = own.diagnostics;
       // A crossing map (the Far Side, Low Orbit) gates on its authored zones instead of grounds, so
       // its regolith gate is zero by construction; the Eclipse keeps the shared default. Either way
-      // the number is the CONSUMER's, never an authored override, and never above the default.
+      // the number here is the CONSUMER's, never an authored override, and never above the default.
       assert.equal(
         regolith.required,
         crossing ? 0 : Math.min(REGOLITH_GROUNDS_FOR_SECURE, regolith.grounds),
-        `${id} must keep the default gate`,
+        `${id} must keep the default gate when it authors none`,
       );
-      assert.ok(regolith.required <= REGOLITH_GROUNDS_FOR_SECURE, `${id} must never carry a raised gate`);
-      assert.equal(regolith.windowWaves, undefined, `${id} must publish no window on its own diagnostics`);
+      assert.ok(regolith.required <= REGOLITH_GROUNDS_FOR_SECURE, `${id} must never carry a raised gate by default`);
+      assert.equal(regolith.windowWaves, null, `${id} must publish no window when it authors none`);
+      if (crossing) {
+        // The pre-ruling crossing meaning, kept verbatim: the count of authored zones, no window.
+        assert.equal(crossing.required, crossing.zones.length, `${id} must default to its authored zones`);
+        assert.equal(crossing.windowWaves, null);
+      }
     }
   });
 });
@@ -228,11 +237,23 @@ test('the published gate cannot drift from the authored one', async () => {
     assert.ok(rules.includes(`${words[regolithWindowWaves]}-wave`), `the card must state the ${regolithWindowWaves}-wave window`);
     assert.ok(rules.includes('air'), 'the card must say the grounds are worked on air');
 
-    // Every other contract publishes no air rule at all — the consumer is id-scoped and so is this.
+    // NO CONTRACT PUBLISHES THIS ROW FROM THE MARE CLAIM'S CONSUMER BUT THE MARE CLAIM — the
+    // consumer is id-scoped and so is this. RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`):
+    // the Eclipse now publishes an `air_wall_regolith` row of its own, sourced from
+    // `E8SuitAirSystem.notePan`, because it enforces the same rule; the two crossing maps publish
+    // `air_wall_crossing` instead. So the check is on the SOURCE, which is what says which engine
+    // a rider's row came from, rather than on the row's absence.
     for (const id of [...SIBLINGS, 'the-claim']) {
-      const published = deriveMechanicsManifest(loadContract(id)).rules.filter((entry) => entry.id === 'air_wall_regolith');
-      assert.deepEqual(published, [], `${id} must publish no Mare Claim air rule`);
+      for (const published of deriveMechanicsManifest(loadContract(id)).rules.filter((entry) => entry.id === 'air_wall_regolith')) {
+        assert.notEqual(published.source, 'E8AtmosphereSystem.notePan', `${id} must not publish the Mare Claim consumer's row`);
+        assert.equal(published.source, 'E8SuitAirSystem.notePan', `${id}'s air row must name its own consumer`);
+      }
     }
+    assert.deepEqual(
+      deriveMechanicsManifest(loadContract('the-claim')).rules.filter((entry) => entry.id.startsWith('air_wall')),
+      [],
+      'a contract with no air at all publishes no air rule',
+    );
   });
 });
 
