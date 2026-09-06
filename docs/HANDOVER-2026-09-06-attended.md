@@ -51,7 +51,7 @@ Era pins appended tonight (all era 5, same era per F-1441-3): `1052ba1a` (E8), `
 - `$B:tasks/…` is a zsh modifier (brace the variable); `--include='*.mjs'` must be quoted.
 - Safe to free: `dist/`, `test-results/`, own control worktrees, stale `$TMPDIR/goldrush-manifest-fingerprint-*` fixture copies (3.6 GB each). Never `tasks/runs/`, `logs/`, `artifacts/`, salvage dirs, other sessions' worktrees.
 
-## 6. The morning wave (2026-09-06, 06:00-11:00, after the owner's rulings; all merged, pushed and deployed at ``)
+## 6. The morning wave (2026-09-06, 06:00-11:00, after the owner's rulings; all merged, pushed and deployed at `d1ff4610`)
 The owner's words, verbatim: "(1) re-record it (2) a per-contract cap override", then "(3) - yes, drill yard is not winable, lets adjust the policy so the hard levels can be won, then lets do the E10S ladder, fix these story parts please, fix the board and tape gold issue", then on the desk items "(1) my initial idea was to have seasons and change things from season to season to stay fair to the participants, we are now in the early release phase, we can act freely (2) ok, we can adjust things later (3) I never played it, I am not sure (4) sure, raise it (5) yes, that is too big, we have so much art and stuff in the github, we have to adjust here (6) have to test that later, about to head out (7) later (8) more details please".
 
 | Slice | Merge | What changed | Review |
