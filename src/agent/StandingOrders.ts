@@ -190,6 +190,35 @@ export const HERO_ORDER_REFUSALS = [
   'HERO_UNAVAILABLE',
 ] as const;
 
+/**
+ * F-MCAP-1 (`reviews/mare-claim-air-prevalent.md:34`; owner ruling 2026-09-06, verbatim: "(5)
+ * both"): the word a secure window refuses with.
+ *
+ * The window accepts exactly one `SECURE_CHOICE` and nothing else, which pulls against the
+ * adjacent `PICK_UPGRADE` rule: order arrays REPLACE, so a rider that picks an upgrade must
+ * re-send its whole plan behind the pick. A rider that carried that habit into the secure window
+ * submitted `[SECURE_CHOICE, ...plan]` and got no answer at all — 8,783 identical turns in 35 s,
+ * re-measured on this tree before the cure (`artifacts/secure-choice-refusal/before-until-end.json`,
+ * matching the 14,467 the air-wall prover burned) — because the refusal reached only the
+ * transport's stderr and `snapshot().orders`, the one channel a view-only rider reads, never
+ * moved. The refusal now lands there in the `{ status: 'failed', reason }` shape every other
+ * refusal uses (`HERO_NOT_YOURS`, `UNREACHABLE_TERRAIN`, `INVALID_TARGET`), so the rider is told
+ * in the turn it happens.
+ */
+export const SECURE_WINDOW_REFUSAL = 'SECURE_CHOICE_ONLY';
+
+/**
+ * The id the published refusal carries. Deliberately outside the `orders-<submission>-<index>`
+ * namespace: this record is NOT a standing order (it never executes, it is never ticked) but a
+ * receipt for one the door would not take.
+ */
+export const SECURE_WINDOW_REFUSAL_ID = 'refused-secure-window';
+
+/** F-MCAP-1: the whole refusal, so the door, the guard and the transport quote ONE string. */
+export const SECURE_WINDOW_REFUSAL_MESSAGE =
+  `${SECURE_WINDOW_REFUSAL}: while the secure window is open, the only accepted submission is a single `
+  + 'SECURE_CHOICE; answer the choice, then re-send the rest of the plan.';
+
 type RuntimeState = {
   timeAlive: number;
   runState: string;
@@ -210,6 +239,16 @@ type RuntimeState = {
   sluices: AgentVec2[];
   pendingOffer: string[];
   pendingSecure: boolean;
+  /**
+   * F-MCAP-1 cure B: whether the pending choice's own CLOCK still has time on it. Split from
+   * `pendingSecure` because the two can now come apart: a refused submission spends the window
+   * (`HeadlessContractSim.spendSecureWindowOnRefusal`) without answering the choice, so a rider
+   * that will not stop concatenating eventually finds the window shut while the choice is still
+   * pending. Only the "exactly one SECURE_CHOICE" rule reads this; the tick-skip and the
+   * "requires a live secure window" rule stay on `pendingSecure`, so a LATE lone choice is still
+   * served rather than thrown away.
+   */
+  secureWindowOpen: boolean;
 };
 
 type ValidationResult = { ok: true; orders: StandingOrder[] } | { ok: false; message: string };
@@ -253,6 +292,14 @@ export class StandingOrdersExecutor {
   private heroChannel: HeroChannel | null = null;
   private heroSteer: AgentVec2 | null = null;
   private heroProgress: { orderId: string; distance: number; at: number } | null = null;
+  /**
+   * F-MCAP-1 cure A: the live secure-window refusal, published on the END of `snapshot().orders`
+   * and held OUTSIDE `this.records` so a refused submission cannot delete the plan the rider
+   * already had accepted (the loop's own view showed submission 36 still standing) and cannot be
+   * ticked, replaced or executed. One record at a time, refreshed rather than appended, so a
+   * rider that repeats itself six hundred times grows neither the order list nor the log.
+   */
+  private secureWindowRefusal: StandingOrderRecord | null = null;
 
   constructor(
     private readonly surface: GoldRushToolSurface,
@@ -277,9 +324,14 @@ export class StandingOrdersExecutor {
       this.append({ at: eventAt, type: 'orders_rejected', reason: message });
       return { ok: false, reason: 'INVALID_ARGS', message };
     }
-    if (state.pendingSecure && (validated.orders.length !== 1 || validated.orders[0]?.verb !== 'SECURE_CHOICE')) {
-      const message = 'While the secure window is open, the only accepted submission is a single SECURE_CHOICE.';
+    // F-MCAP-1: keyed on the WINDOW rather than on the choice, so a rider that spent the whole
+    // clock refusing is finally let through (its plan, or its late choice, both land) instead of
+    // being refused forever. `HeadlessContractSim` closes the window one refusal at a time; every
+    // other engine leaves the two equal, so this is the old rule wherever the clock is not spent.
+    if (state.secureWindowOpen && (validated.orders.length !== 1 || validated.orders[0]?.verb !== 'SECURE_CHOICE')) {
+      const message = SECURE_WINDOW_REFUSAL_MESSAGE;
       this.append({ at: eventAt, type: 'orders_rejected', reason: message });
+      this.refuseSecureWindow(validated.orders, message, eventAt);
       return { ok: false, reason: 'INVALID_ARGS', message };
     }
     if (validated.orders.some((order) => order.verb === 'SECURE_CHOICE') && !state.pendingSecure) {
@@ -308,6 +360,8 @@ export class StandingOrdersExecutor {
       order,
       status: 'pending',
     }));
+    // F-MCAP-1: an accepted submission retires the refusal receipt; the rider has moved on.
+    this.secureWindowRefusal = null;
     this.needsRiderValue = false;
     this.append({ at: eventAt, type: 'orders_replaced', orders: copyRecords(this.records) });
     return { ok: true, count: this.records.length };
@@ -315,6 +369,9 @@ export class StandingOrdersExecutor {
 
   tick(at: number, actor: AgentVec2): StandingOrderTickResult {
     const state = this.state(at, this.records.some((record) => record.status === 'pending' || record.status === 'active'));
+    // F-MCAP-1: the receipt lives exactly as long as the choice it answered for. Cleared here so
+    // a run that carries on past its secure (a `rush`) does not carry a stale refusal with it.
+    if (!state.pendingSecure) this.secureWindowRefusal = null;
     this.detectSurprises(state, at);
     // hero-move-verb: the steering target is re-derived from scratch every tick and survives no
     // longer than the order that set it. Cleared HERE rather than in the MOVE_HERO branch so every
@@ -347,6 +404,7 @@ export class StandingOrdersExecutor {
 
   reset(): void {
     this.records = [];
+    this.secureWindowRefusal = null;
     this.history.length = 0;
     this.needsRiderValue = false;
     this.submission = 0;
@@ -400,7 +458,9 @@ export class StandingOrdersExecutor {
   snapshot(): StandingOrdersView {
     return {
       needsRider: this.needsRiderValue,
-      orders: copyRecords(this.records),
+      // F-MCAP-1 cure A: the refusal rides the END of the same array every other refusal rides,
+      // so `now.orders[]` answers a rider that reads nothing but THE VIEW.
+      orders: copyRecords(this.secureWindowRefusal ? [...this.records, this.secureWindowRefusal] : this.records),
       log: this.history.map((event) => ({
         ...event,
         ...(event.orders ? { orders: copyRecords(event.orders) } : {}),
@@ -609,6 +669,38 @@ export class StandingOrdersExecutor {
       this.fail(record, `${receipt.outcome.reason}${detail ? ` (${detail})` : ''}: ${record.order.verb} action was rejected.`, at);
     }
     return { receipt, receiptPoint: point };
+  }
+
+  /**
+   * F-MCAP-1 cure A: publish the secure-window refusal where a rider can see it.
+   *
+   * The record names the order that CAUSED the refusal — the first one that is not the choice —
+   * because that is the single fact the rider is missing: not "something was wrong" but "this
+   * order is why the whole submission bounced". A submission of nothing but choices names its own
+   * head instead; an EMPTY submission names nothing at all, so it publishes no record and rides
+   * the log line and `needsRider` alone (there is no order to point at, and inventing one would
+   * be worse than saying less).
+   *
+   * Refreshed rather than appended: an identical repeat is already published, so it re-emits
+   * neither an `order_status` event nor a surprise. That is `fail`'s own `failureReasons` rule,
+   * applied one level up, and it is what keeps a six-hundred-refusal ride O(1) in the log.
+   */
+  private refuseSecureWindow(orders: StandingOrder[], message: string, at: number): void {
+    const offending = orders.find((order) => order.verb !== 'SECURE_CHOICE') ?? orders[0];
+    if (!offending) return;
+    const published = this.secureWindowRefusal;
+    if (
+      published
+      && published.reason === message
+      && standingOrderIdentity(published.order) === standingOrderIdentity(offending)
+    ) return;
+    const record: StandingOrderRecord = {
+      id: SECURE_WINDOW_REFUSAL_ID,
+      order: structuredClone(offending),
+      status: 'pending',
+    };
+    this.secureWindowRefusal = record;
+    this.fail(record, message, at);
   }
 
   private fail(record: StandingOrderRecord, reason: string, at: number): void {
@@ -927,6 +1019,12 @@ function runtimeState(
       ? state.progression.offer.filter((id): id is string => typeof id === 'string')
       : [],
     pendingSecure: isRecord(state.run) && state.run.pendingSecure === true,
+    // F-MCAP-1 cure B: engines that do not publish the window's own clock fall back to the
+    // choice itself, which is exactly the rule that stood before this slice. The browser
+    // (`Game.ts`) publishes no `secureWindowOpen`, so its door does not move.
+    secureWindowOpen: isRecord(state.run) && typeof state.run.secureWindowOpen === 'boolean'
+      ? state.run.secureWindowOpen
+      : isRecord(state.run) && state.run.pendingSecure === true,
   };
 }
 
