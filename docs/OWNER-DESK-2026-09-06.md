@@ -39,13 +39,13 @@ Every item below needs either a word from Robin or ten minutes of his hands. Eve
 ### B2. The lighting veto (REVERT-LIGHTING)
 What shipped on 2026-09-05 (`ab3704716`, `reviews/landmark-lighting-calibration.md`): landmarks lit by the sun instead of self-lit (emissive 3 → a measured 0.45 default; four dark-paint maps exempt; 50 closed meshes single-sided; the Mare Claim's landmark-to-terrain luminance 5.34 → 2.07). How to judge: open a landmark map live (the Mare Claim, Canyon Works), then the same URL with `?lighting=legacy` appended, and compare; the switch is in the shipped build, no rebuild. Say REVERT-LIGHTING to reverse; say nothing and it stands.
 
-### B3. The rotation salt
+### B3. The rotation salt ✅ DONE 2026-09-06 evening (owner: "salt stored").
 `~/.goldrush/rotation-salt` (65 bytes, mode 600, 2026-09-03) is the only copy of the held-out-seed salt; losing it changes future weeks' seeds only, committed rotations stay valid. Copy it into your password manager. One minute.
 
-### B4. The OpenRouter key
+### B4. The OpenRouter key ✅ DONE 2026-09-06 evening (owner: "key rotated").
 The stray plaintext copy was deleted with your word on 2026-08-31; the real key stays in `.env.local`. Rotating it at openrouter.ai is still recommended and only you can.
 
-### B5. Two stray processes from another project
+### B5. Two stray processes from another project ✅ DONE 2026-09-06 evening (owner: "stray processes killed").
 `npm run build && node --test tests/*.test.mjs` from `~/Projects/2112/code/2112media/non-wordpress-site` has been running since 2026-08-28 06:57 (pids 13504 and 13543). Not this project's, so nobody here kills it. `kill 13504 13543` if you are not waiting on it.
 
 ## C. Struck since the morning's desk (so nobody re-asks)

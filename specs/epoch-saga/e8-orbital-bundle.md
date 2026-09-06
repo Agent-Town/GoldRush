@@ -30,3 +30,6 @@
 
 ## §C — engine prereqs
 Gravity/atmosphere tile params (GT extension) · breach/seal mechanics on the wall class · suit/air state (dive-state reuse) · debris-arc telegraphed hazards · descending-boss phase framework · procgen interiors v2 (tube biome family). Audio showcase: the muffle/silence/radio layers.
+
+**Owner directive, 2026-09-06 (verbatim): "yes, same air for all space contracts - but I also never played the levels, so I dont know exactly".** The air wall rules the whole ride on all four maps (the Mare Claim shipped 2026-09-06 with `regolithRequired 4` / `regolithWindowWaves 4`; the Far Side, Low Orbit and the Eclipse follow through `e8-air-wall-all-maps`); the numbers come from measurement and a prover must secure before any wall ships.
+
