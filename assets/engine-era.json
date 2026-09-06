@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "a231d5ff989b9f21ec5a9f98c698c5a83f6cb7a8ab0a89739a9b089a035e87b1",
+  "engineHash": "1b0485ceba550cbb8256d1ef5af20a6e6b7272561d4c75cb95a3531a759ee684",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -415,6 +415,12 @@
       "engineHash": "a231d5ff989b9f21ec5a9f98c698c5a83f6cb7a8ab0a89739a9b089a035e87b1",
       "pinnedAt": "2026-09-06",
       "cause": "src re-hash: portraits-e5-e10-batch drain — 21 speaker ids registered in src/story/speakers.ts and one E9 beat re-keyed to the canal reeve (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+      "aliases": []
+    },
+    {
+      "engineHash": "1b0485ceba550cbb8256d1ef5af20a6e6b7272561d4c75cb95a3531a759ee684",
+      "pinnedAt": "2026-09-06",
+      "cause": "src re-hash: board-tape-gold drain — the headless secure snapshot reports the purse HELD at the secure tick (was lifetime panning), hash-neutral: all four heat-12 fixture reels reproduce their own eventLogHash; same era per F-1441-3",
       "aliases": []
     }
   ],

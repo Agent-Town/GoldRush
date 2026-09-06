@@ -18,6 +18,24 @@ export const SUBMISSION_REFUSAL_REASONS = [
 
 export type SubmissionRefusalReason = (typeof SUBMISSION_REFUSAL_REASONS)[number];
 
+/**
+ * WHAT THE ASSAY REFUSES, as opposed to what the door refuses (F-2464-3, 2026-09-06).
+ *
+ * These name a verdict the county reaches about a standing it already accepted and stored, so they
+ * are deliberately NOT members of `SUBMISSION_REFUSAL_REASONS` above: that list is pinned by
+ * `scripts/skillmd-guard.test.mjs` against the `refuseSubmission(...)` branches in `standings.ts`
+ * and against `public/skill.md`'s published taxonomy, and an assay verdict has neither. They reach
+ * a rider as the `assayReason` on their own slip (`GET /api/standings?...&verdict=<reel id>`).
+ *
+ * `score_mismatch` — the reel's declared score and the county's own secure-tick snapshot disagree
+ * about one instant. Before this reason existed the county silently published its snapshot over
+ * the rider's score, which is how a Mare Claim reel that banked 60 gold appeared on the board at
+ * 1180 (F-HEAT12-5).
+ */
+export const ASSAY_REJECTION_REASONS = ['score_mismatch'] as const;
+
+export type AssayRejectionReason = (typeof ASSAY_REJECTION_REASONS)[number];
+
 export type RefusalRecord = {
   reason: SubmissionRefusalReason;
   contractId: string;
