@@ -1658,7 +1658,16 @@ const DECLARED_INERT_PATHS = [
   'twist.persistentPlanting',
   'twist.scheduledRelocation',
   'twist.persistentCanalChoices',
-  'twist.emberShore',
+  // RETIRED 2026-09-07 (F-E10S4-2): `twist.emberShore` WAS here and is no longer inert. Both of
+  // its consumers run in both engines — the squall phase machine (E10S-2, `E10SquallScheduler`)
+  // and the warmth/stoke/gutter/secure latch (E10S-3, `E10PreserveSystem`) — and E10S-4 admitted
+  // the map on measured evidence. Keeping it listed made this file DEMAND that a served map keep
+  // declaring an engine debt it no longer owes: `validateEngineDependencies` below rejects any
+  // contract carrying a listed path unless `tileParams.engineDependencies` is non-empty, so
+  // retiring the Ember Shore's row failed the whole bundle with `twist.emberShore:
+  // engine_dependency_required` (E10S-4 scope 6, attempted and refused; `reviews/e10s-4-ember-
+  // shore-door.md`). The path was the only inert declaration `e10-ember-shore` carried and no
+  // other contract declares it, so this removal changes the verdict for exactly one contract.
   'tileParams.archiveWingZones',
   'tileParams.emptyShelfZone',
   'tileParams.lightHoldSites',

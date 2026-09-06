@@ -5873,7 +5873,14 @@ export class Game {
         p95: this.frameMsP95,
         sampleCount: this.frameMsSamples.length,
       },
-    } as ThreeGameDiagnostics;
+    };
+    // ⚠️ DO NOT RESTORE `as ThreeGameDiagnostics` HERE (F-PICNIC-2, 2026-09-07). The blanket cast
+    // silenced excess-property checking over this whole literal, so a key could be PUBLISHED and
+    // never DECLARED — and four had drifted that way: `picnicHold`, `preserve`, `movePin` and
+    // `playbookUse`, each of them read by an e2e spec that had to widen the global type locally to
+    // see it. Declared in `src/vite-env.d.ts` and the cast dropped, so an undeclared key now reds
+    // at compile time instead of in a spec's `as any`. If a new key fails to type-check here, the
+    // fix is a line in the declaration, never this cast.
     Object.assign(window.__THREE_GAME_DIAGNOSTICS__, { defaultedPicks: this.defaultedPicks });
     this.serveAgentRiderViews();
   }
