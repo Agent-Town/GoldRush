@@ -50,3 +50,29 @@ Era pins appended tonight (all era 5, same era per F-1441-3): `1052ba1a` (E8), `
 - Merging chapters that append at the same seam: rebuild `beats.ts` from blocks in era order, never trust git's line matching (it interleaved E4/E6 earlier in the night).
 - `$B:tasks/…` is a zsh modifier (brace the variable); `--include='*.mjs'` must be quoted.
 - Safe to free: `dist/`, `test-results/`, own control worktrees, stale `$TMPDIR/goldrush-manifest-fingerprint-*` fixture copies (3.6 GB each). Never `tasks/runs/`, `logs/`, `artifacts/`, salvage dirs, other sessions' worktrees.
+
+## 6. The morning wave (2026-09-06, 06:00-11:00, after the owner's rulings; all merged, pushed and deployed at ``)
+The owner's words, verbatim: "(1) re-record it (2) a per-contract cap override", then "(3) - yes, drill yard is not winable, lets adjust the policy so the hard levels can be won, then lets do the E10S ladder, fix these story parts please, fix the board and tape gold issue", then on the desk items "(1) my initial idea was to have seasons and change things from season to season to stay fair to the participants, we are now in the early release phase, we can act freely (2) ok, we can adjust things later (3) I never played it, I am not sure (4) sure, raise it (5) yes, that is too big, we have so much art and stuff in the github, we have to adjust here (6) have to test that later, about to head out (7) later (8) more details please".
+
+| Slice | Merge | What changed | Review |
+|---|---|---|---|
+| county null floors re-recorded (ruling 1) | `5fc223c1a` | the ten stale Moth Season / E8 floor rows regenerated under the current engine | ledger row |
+| canyon-works-bank-cap-override (ruling 2) | `8bb2a7912` | a per-contract bank cap, 360 on the Canyon Works | `reviews/canyon-works-bank-cap-override.md` |
+| the drill yard retired + F-RECEIPTS-1 | `270a1a634` | 35 contracts, 32 claimed, 3 unclaimed; first-secure receipts are append-only | ledger rows |
+| ADR-004 seasons and lineage + the rate limit + the sparse-checkout pilot | `4d43b3eb9` | the owner's ruling recorded; 30 posts per rider and 120 per address per hour; lane-d at 8.3 GB | `docs/decisions/ADR-004-seasons-and-lineage.md` |
+| canyon-works-second-lever | `510016e55` | connect by wave 8 and a 240 g beacon ladder: the Canyon Works secures headless for the first time | `reviews/canyon-works-second-lever.md` |
+| e10s-2-squall-scheduler | `616cc0eb1` | the Ember Shore's Static squall as a phase machine in both engines | `reviews/e10s-2-squall-scheduler.md` |
+| portraits-e5-e10-batch | `b41a3311c` | 21 townsfolk portraits, 21 speaker ids, one beat honestly re-keyed | `reviews/portraits-e5-e10-batch.md` |
+| lineage-reassay-on-composition-change | `b300b4cf8` | the `retired` outcome, the re-queue verb, the sweep; the droplet ledger routes the verb (`d68e3da55`), the re-queue restores the reel's declared score (`65aab082a`) | `reviews/lineage-reassay-on-composition-change.md` |
+| board-tape-gold | `4e256c895` | the standing's gold is the purse held at the secure tick; no silent overwrite | `reviews/board-tape-gold.md` |
+| story-signal-gaps | `d68e3da55` | boss-act signals from the Claw, Digger and Quiet; the return's contract id; a first-boot beat; one Hud per root | `reviews/story-signal-gaps.md` |
+| relay-valley-winnable | `cdbd248a4` | the claim grit: Relay Valley secures wave 20 | `reviews/relay-valley-winnable.md` |
+| dome-basin-winnable | `6c03481e0` | the reel envelope priced honestly; Dome Basin secured with no lever (sentry beacons) | `reviews/dome-basin-winnable.md` |
+| e10s-3-preserve-consumer | `ab7005e86` | the Ember Shore's vent, warmth, stoke, loss and secure latch; un-keepable until E10S-4's anchors | `reviews/e10s-3-preserve-consumer.md` |
+| browser-door-held-gold | `c4488824f` | the browser door submits the held purse too; both doors mean one gold | `reviews/browser-door-held-gold.md` |
+
+**Live effects verified:** the ADR-004 rule ran on the live door for Moth Season: the Claude Fable 5 row (recorded under the old composition) is retired with a lineage reason, the Claude Opus 5 row is verified again and now prints its held purse (200); `retiredCount 1`. The receipts did not move. Lesson banked: the live standings door is the droplet's ledger behind nginx, the sweep sees ranked rows only, and a re-queue must restore the reel's declared score.
+
+**In flight:** `e10s-4-ember-shore-door` (anchors, prover, admission; the ladder's last rung; lane-a). Drain it like the others; the census spec `er01-e10-census` is its gate and currently red on a stale clause (F-E10S3-7).
+
+**Still on the desk after this morning:** the Mare Claim air wall (3), device rows (6), the lighting veto (7), the E5/E10 portrait GENERATION (money, the ART slot), the copy revision that lets nine chapter beats speak in their own voice, the Git LFS data plan and any history rewrite (never done unasked), F-RVW-6 (a rider cannot move the hero: a design decision), the F-BUDGET-2 bisect, heat 13 with the notebook lessons (sentry beacons on Dome Basin), and the county-wide re-assay pass that normalises every old snapshot to the held meaning once the owner wants the boards re-read.
