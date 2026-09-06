@@ -590,7 +590,15 @@ function readCrossing(air: Record<string, unknown>): E8CrossingAirDiagnostics | 
     zones: strings(crossing.zones),
     required: integer(crossing.required),
     reached: strings(crossing.reached),
+    credited: integer(crossing.credited),
     breathlessEntries: integer(crossing.breathlessEntries),
+    // The window, read FIELD BY FIELD like the regolith row above and for the same reason: a
+    // consumer that authors no window publishes the absence as `null` rather than dropping the
+    // field, so `now.air.crossing` stays ONE shape a rider can read on either crossing map.
+    windowWaves: Number.isInteger(crossing.windowWaves) ? (crossing.windowWaves as number) : null,
+    window: integer(crossing.window),
+    creditedThisWindow: integer(crossing.creditedThisWindow),
+    windowHeldEntries: integer(crossing.windowHeldEntries),
     complete: crossing.complete === true,
   };
 }

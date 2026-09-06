@@ -326,6 +326,10 @@
       },
       "twist": {
         "clockTicks": 18000,
+        "atmosphere": {
+          "crossingRequired": 4,
+          "crossingWindowWaves": 4
+        },
         "enemyRoster": [
           { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" }
         ],
@@ -357,7 +361,9 @@
         "rules": [
           "Earth is absent from the sky.",
           "The Far Side reuses the Mare Claim rim-and-flat ground.",
-          "Waves enter from the north, west, and east."
+          "Waves enter from the north, west, and east.",
+          "The crossing is not made until four separate entries into the listening-probe crater are credited with air still in the suit.",
+          "Only one crossing counts in each four-wave window, so the vacuum is crossed again and again; the suit fills only inside the landing yard."
         ],
         "geographyLine": "The Mare Claim rim-and-flat terrain with a landing yard at one end and the listening-probe crater at the other."
       }
@@ -513,6 +519,10 @@
       },
       "twist": {
         "clockTicks": 18000,
+        "atmosphere": {
+          "crossingRequired": 4,
+          "crossingWindowWaves": 4
+        },
         "enemyRoster": [
           { "id": "scrap_corsair", "label": "Scrap Corsair" }
         ],
@@ -540,7 +550,9 @@
         "rules": [
           "Three surveyed decks divide the orbital yard.",
           "Two debris fields flank the central spine.",
-          "Waves enter from the west and east."
+          "Waves enter from the west and east.",
+          "The scaffold is not crossed until every deck has been stood on and four separate deck entries are credited with air still in the suit.",
+          "Only one crossing counts in each four-wave window, so the spine is worked all run; the suit fills only on a pressurised deck."
         ],
         "geographyLine": "The Salvage King's Claw rebuilt as a three-deck orbital yard, with a handhold spine between two drifting debris fields."
       }
@@ -740,6 +752,10 @@
       },
       "twist": {
         "clockTicks": 18000,
+        "atmosphere": {
+          "regolithRequired": 4,
+          "regolithWindowWaves": 4
+        },
         "enemyRoster": [
           { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" },
           { "id": "scrap_corsair", "label": "Scrap Corsair" }
@@ -770,7 +786,9 @@
         "rules": [
           "Seven surveyed build grounds span the rim and mare flat.",
           "The eastbound mass-driver rail crosses the southern footing.",
-          "Waves enter from the north, west, and east."
+          "Waves enter from the north, west, and east.",
+          "The claim is not made until four of the six regolith grounds are worked with air still in the suit.",
+          "Only one ground counts in each four-wave window, so the run is made in trips; the suit fills only inside a breathing dome, and the shadow leaves just one breathing."
         ],
         "geographyLine": "The Mare Claim rim, dome cluster, regolith fields, launch pad, and mass-driver rail beneath a dark sky."
       }

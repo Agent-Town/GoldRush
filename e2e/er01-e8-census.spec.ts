@@ -52,9 +52,16 @@ const EXPECTED_RULES: Record<string, string[]> = {
   // census caught it immediately, which is the whole reason the rows are written out per id.
   // MERGED-TREE CORRECTION (A6+A7 drain, 2026-08-20): A6's ProbeRecovery consumer exists here,
   // so the Far Side speaks three rules — this row was 2 on the A7 branch, which predated A6.
-  'e8-far-side': ['build_zones', 'hero_orders', 'probe_recovery', 'signal_suppression'],
-  'e8-low-orbit': ['build_zones', 'hero_orders', 'zero_gravity'],
-  'e8-eclipse': ['build_zones', 'hero_orders'],
+  // RE-POINTED 2026-09-06 by `tasks/e8-air-wall-all-maps.md` (owner ruling, verbatim: "yes, same
+  // air for all space contracts - but I also never played the levels, so I dont know exactly").
+  // All three siblings now publish their air rule for the same reason the Mare Claim does — the
+  // gate a rider must plan the ride around, sourced from the consumer that enforces it. The Far
+  // Side and Low Orbit make CROSSINGS (`air_wall_crossing`, `E8SuitAirSystem.noteCrossings`); the
+  // Eclipse works GROUNDS and publishes the same `air_wall_regolith` id the Mare Claim does, from
+  // its own consumer, because it is the same rule. Order as the manifest emits it.
+  'e8-far-side': ['air_wall_crossing', 'build_zones', 'hero_orders', 'probe_recovery', 'signal_suppression'],
+  'e8-low-orbit': ['air_wall_crossing', 'build_zones', 'hero_orders', 'zero_gravity'],
+  'e8-eclipse': ['air_wall_regolith', 'build_zones', 'hero_orders'],
 };
 
 for (const contract of orbital.contracts) {

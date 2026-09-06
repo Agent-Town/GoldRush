@@ -31,31 +31,54 @@ const RIDES = [
   {
     contract: 'e8-far-side',
     seed: 'e8-far-side-01',
-    node: { eventLogHash: 'fnv1a32:5c30efd5', secured: false, waves: 2, timeMs: 79_400, kills: 30 },
+    // RE-POINTED 2026-09-06 by `tasks/e8-air-wall-all-maps.md` (owner ruling: "yes, same air for
+    // all space contracts"), from `fnv1a32:5c30efd5` and `required: 1`. Every outcome field is
+    // unmoved — the idle floor still loses at wave 2 with 30 kills — and the hash moved because
+    // the crossing block grew its window fields and the contract now authors the gate.
+    node: { eventLogHash: 'fnv1a32:22c47125', secured: false, waves: 2, timeMs: 79_400, kills: 30 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
     // The Far Side's idle Prospector never leaves the landing yard, so it breathes the whole
     // ride and never reaches the crater: a full suit and an empty crossing.
     air: {
       wall: 'suit-only',
       suit: { seconds: 60, empty: false, drainedTotal: 0 },
-      crossing: { zones: ['listening-probe-crater'], required: 1, reached: [], breathlessEntries: 0, complete: false },
+      crossing: {
+        zones: ['listening-probe-crater'],
+        required: 4,
+        reached: [],
+        credited: 0,
+        breathlessEntries: 0,
+        windowWaves: 4,
+        window: 0,
+        creditedThisWindow: 0,
+        windowHeldEntries: 0,
+        complete: false,
+      },
     },
   },
   {
     contract: 'e8-low-orbit',
     seed: 'e8-low-orbit-01',
-    node: { eventLogHash: 'fnv1a32:6e1931c2', secured: false, waves: 2, timeMs: 78_333, kills: 33 },
+    // RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`), from `fnv1a32:6e1931c2` and
+    // `required: 3`. Outcome fields unmoved; the hash moved for the same two reasons.
+    node: { eventLogHash: 'fnv1a32:088a929c', secured: false, waves: 2, timeMs: 78_333, kills: 33 },
     gravity: { feelG: 0, lobArcDistanceMultiplier: 4.8, movement: 'free-fall', orbitalReturn: true, vacuum: true },
-    // Low Orbit's claim sits ON the middle deck, so an idle ride banks that one deck for free
-    // and neither of the two the spine has to be crossed for.
+    // Low Orbit's claim sits ON the middle deck, so an idle ride banks that one deck for free —
+    // one credit of the four asked, in the first window, and neither of the two decks the spine
+    // has to be crossed for.
     air: {
       wall: 'suit-only',
       suit: { seconds: 60, empty: false, drainedTotal: 0 },
       crossing: {
         zones: ['west-scaffold-deck', 'claw-carcass-yard', 'east-scaffold-deck'],
-        required: 3,
+        required: 4,
         reached: ['claw-carcass-yard'],
+        credited: 1,
         breathlessEntries: 0,
+        windowWaves: 4,
+        window: 0,
+        creditedThisWindow: 1,
+        windowHeldEntries: 0,
         complete: false,
       },
     },
@@ -63,7 +86,9 @@ const RIDES = [
   {
     contract: 'e8-eclipse',
     seed: 'e8-eclipse-01',
-    node: { eventLogHash: 'fnv1a32:466507ac', secured: false, waves: 2, timeMs: 81_800, kills: 32 },
+    // RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`), from `fnv1a32:466507ac` and
+    // `required: 1`. Outcome fields unmoved; the Eclipse now authors the Mare Claim's own gate.
+    node: { eventLogHash: 'fnv1a32:121b0402', secured: false, waves: 2, timeMs: 81_800, kills: 32 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
     air: {
       wall: 'suit-timer',
@@ -74,7 +99,7 @@ const RIDES = [
       // must show it NOT arrived. `arrivedAtWave` stays null until it lands, because the contract
       // authors `firstRunWarning: false` and a countdown would be the warning it refuses to give.
       eclipse: { arrived: false, arrivedAtWave: null, reserve: 'dome-cluster-pad-center', solar: 'online' },
-      regolith: { grounds: 6, required: 1, worked: [] },
+      regolith: { grounds: 6, required: 4, worked: [], windowWaves: 4, window: 0, creditedThisWindow: 0, windowHeldPans: 0 },
     },
   },
   {
@@ -86,8 +111,10 @@ const RIDES = [
     // to be more prevalent"), from `fnv1a32:1a62757f` and `required: 1`. Every outcome field is
     // unmoved — the idle floor still loses at wave 2 with 32 kills — and only the hash moved,
     // because the Mare Claim's `atmosphere` block now carries the authored gate and the window.
-    // The eclipse row above is DELIBERATELY untouched: it runs `E8SuitAirSystem`, which this
-    // slice's firewall forbids changing, and its gate is still the shared default of one.
+    // The eclipse row above WAS deliberately untouched by that slice, whose firewall forbade
+    // changing `E8SuitAirSystem`; `tasks/e8-air-wall-all-maps.md` (2026-09-06 evening) carried the
+    // ruling to all three siblings, and this control row is what proves the shared-window refactor
+    // it made left the Mare Claim byte-identical.
     node: { eventLogHash: 'fnv1a32:32f62335', secured: false, waves: 2, timeMs: 81_233, kills: 32 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
     air: {

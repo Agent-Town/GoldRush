@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "6dfdde6fb2b081ff62a832814d5faf64f0d62eb83a2fe7a6d953d97e3825cd21",
+  "engineHash": "f28903f44c0fa2f9d59c527fb80eac5a3de380ad6a5f60c9b7e04c35c47e3bbb",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -493,6 +493,12 @@
       "engineHash": "6dfdde6fb2b081ff62a832814d5faf64f0d62eb83a2fe7a6d953d97e3825cd21",
       "pinnedAt": "2026-09-06",
       "cause": "first-town-transfer-bisect: the advance stream holds a contract prefetch until the current scene's loader reads ready (F-BUDGET-3: the Claim's terrain + panorama, 1.05 MB, no longer race the town's own load); the bisect found no merge grew the transfer, the gate measures host speed (F-BUDGET-4); stacked on secure-choice 60415d3f",
+      "aliases": []
+    },
+    {
+      "engineHash": "f28903f44c0fa2f9d59c527fb80eac5a3de380ad6a5f60c9b7e04c35c47e3bbb",
+      "pinnedAt": "2026-09-06",
+      "cause": "e8-air-wall-all-maps: the same air wall on every Orbital contract (owner: same air for all space contracts): the Eclipse carries regolithRequired 4 / regolithWindowWaves 4, the Far Side and Low Orbit crossingRequired 4 / crossingWindowWaves 4 (a credited entry per window plus every zone stood in on air), one shared E8AirWindow, now.air.crossing published; stacked on first-town-transfer-bisect 6dfdde6f",
       "aliases": []
     }
   ],
