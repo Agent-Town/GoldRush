@@ -51,7 +51,18 @@ declare global {
   interface Window {
     __assetDietCues: Array<{ text: string; ready: string | undefined }>;
     __assetDietPrefetches: Array<{ url: string; label: string; state: string; target: string }>;
+    __assetDietAudio: Array<{ url: string; at: number }>;
+    __assetDietPhases: Array<{ at: number; label: string; state: string }>;
   }
+}
+
+// The `music` group of src/audio/manifest.ts, by file stem. SFX and ambience are deliberately absent:
+// `menu-tap.mp3` (8,821 B) is a first click's own sound and belongs in the window.
+const MUSIC_STEMS = ['title-theme', 'era-e1-frontier-loop', 'era-e2-steamworks-loop', 'era-e3-voltage-loop'];
+
+function isMusicRequest(url: string): boolean {
+  const base = url.split('?')[0].split('/').pop() ?? url;
+  return MUSIC_STEMS.some((stem) => base.startsWith(`${stem}-`) || base === `${stem}.mp3`);
 }
 
 // Observe rendered transient cues before navigation/entry; a protocol round trip can miss them.
@@ -328,6 +339,74 @@ test('the advance stream holds contract prefetch until the town is playable', as
   await expect
     .poll(() => page.evaluate(() => window.__assetDietPrefetches.some(({ target }) => target !== '' && target !== 'town')), { timeout: 30_000 })
     .toBe(true);
+  await cdp.detach();
+  expectNoConsoleErrors(watch);
+});
+
+// F-AUDIO-3 (2026-09-06) — NO MUSIC RIDES THE WINDOW THAT MAKES THE FIRST TOWN PLAYABLE.
+// Owner: "now it loads veerrry slowly" / "are the assets optimized for size?". The bisect measured
+// 3,010,289 B of mp3 inside the first-town window, of which 3,001,468 B is music that the autoplay
+// policy forbids playing until the player has gestured. The code was already lazy-until-a-gesture,
+// which was the wrong gate: the gesture is normally the same click that enters the town, so both
+// tracks were fetched at the head of the town's own queue (measured on the release e1 bundle,
+// loopback: title-theme 1,200,587 B at 223 ms and era-e1-frontier-loop 1,800,881 B at 387 ms, of a
+// window that closed at 555 ms). SoundSystem now holds music until the scene the player is standing
+// in publishes itself playable — the same rule the advance stream follows for contract prefetch.
+//
+// ASSERTS ORDER, ON THE PAGE'S OWN CLOCK, for the same reason the advance-stream test does and one
+// more. The byte gate cannot see this (its window ends on the very signal the hold waits for), and
+// the window's END is OBSERVED by polling a DOM attribute over CDP — at 8 Mbps the page published
+// `ready` at 5,883 ms and the poll saw it at 6,449 ms, a 507 ms skirt in which a correctly deferred
+// fetch still looks late. `performance.now()` inside the page has no such skirt.
+//
+// WHY THE PHASE FORM AND NOT THE STATE AT FETCH TIME: `assetLoadingState` is not monotonic, and the
+// town publishes `ready 0/0` at construction before its first GLTF starts. On the UNCURED build the
+// era loop was fetched in exactly that gap, reading `state=ready`, so a state-at-fetch-time check
+// passes on the bug. Proven to bite: this assertion fails 2/2 projects on the uncured build, naming
+// both tracks; the state-at-fetch-time form fails 0/2.
+test('music is not fetched before the first town is playable', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const watch = watchErrors(page);
+  await page.addInitScript(() => {
+    window.__assetDietAudio = [];
+    window.__assetDietPhases = [];
+    const samplePhase = () => {
+      const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
+      const phase = { label: canvas?.dataset.assetLoadingLabel ?? '', state: canvas?.dataset.assetLoadingState ?? '' };
+      const last = window.__assetDietPhases.at(-1);
+      if (last?.label !== phase.label || last?.state !== phase.state) {
+        window.__assetDietPhases.push({ at: Math.round(performance.now()), ...phase });
+      }
+      requestAnimationFrame(samplePhase);
+    };
+    requestAnimationFrame(samplePhase);
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = (input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(typeof input === 'object' && 'url' in input ? input.url : input);
+      if (url.includes('.mp3')) window.__assetDietAudio.push({ url, at: Math.round(performance.now()) });
+      return nativeFetch(input, init);
+    };
+  });
+  const cdp = await throttleGlbs(page, testInfo.project.use.baseURL);
+
+  await page.goto('/?town3dPilot=all&tier=full');
+  await page.getByTestId('start-menu-enter-town').click();
+  await waitForTownAssets(page);
+
+  const phases = await page.evaluate(() => window.__assetDietPhases);
+  const raisingAt = phases.find(({ label, state }) => label === 'the town' && state === 'loading')?.at;
+  expect(raisingAt, 'the town never published a raising phase').toBeDefined();
+  const playableAt = phases.find(({ label, state, at }) => label === 'the town' && state === 'ready' && at > (raisingAt ?? 0))?.at;
+  expect(playableAt, 'the town never published itself playable').toBeDefined();
+
+  const music = (await page.evaluate(() => window.__assetDietAudio)).filter(({ url }) => isMusicRequest(url));
+  const earlyMusic = music.filter(({ at }) => at < (playableAt ?? 0)).map(({ url, at }) => `${url.split('/').pop()} at ${at} ms (playable at ${playableAt} ms)`);
+  expect(earlyMusic, 'a music track was fetched before the first town was playable').toEqual([]);
+
+  // PRESENCE, not just absence: a deferral that never ends is a mute, not a saving.
+  await expect
+    .poll(async () => (await page.evaluate(() => window.__assetDietAudio)).filter(({ url }) => isMusicRequest(url)).length, { timeout: 30_000 })
+    .toBeGreaterThan(0);
   await cdp.detach();
   expectNoConsoleErrors(watch);
 });
