@@ -22,7 +22,7 @@ Every item below needs either a word from Robin or ten minutes of his hands. Eve
 **What it costs you.** One word, and a quiet evening: every clone and worktree is recut, the fire and the runner are re-pointed, and the new repo runs a full day of fires under a new name before anything is swapped.
 **Recommendation.** Yes, after the archive branch pass is verified complete.
 
-### A4. The Higgsfield credits (about 3,600, roughly 550 plates, expiring)
+### A4. The Higgsfield credits (about 3,600, roughly 550 plates, expiring) ✅ SPENT IN PART 2026-09-06 evening: 195 credits, nineteen era-aging plates (the E1 cast across E2-E4, the Boilerwright, the Chen family, the Old Digger); about 3,400 remain
 **Facts.** All ten eras now have cast plates: the E1 town, this morning's E6/E7/E9 batch and today's E5/E8/E10 batch (`assets/LEDGER.md` rows 72 and 73). The E2–E4 chapters speak through the E1 town by design; the storybook names one new E2 face, the boilerwright. Six of today's portraits have no line yet, which is copy and costs no credits.
 **Options.** (a) A small batch: the boilerwright plus any face you name. (b) Era-aged variants of the E1 cast for E2–E4; the art law says era transforms are image EDITS of existing art, which is GPT Image 2 work and is back on the subscription tomorrow morning. (c) Let them lapse.
 **Recommendation.** (a) if you name faces; otherwise (c). Spending credits without a slot to fill is the runaway-generator shape.
@@ -31,6 +31,13 @@ Every item below needs either a word from Robin or ten minutes of his hands. Eve
 **Facts.** `src/agent/StandingOrders.ts:205` refuses any submission made while the secure window is open that is not exactly one `SECURE_CHOICE`, and `src/sim/HeadlessContractSim.ts:1760` freezes the run while the choice is pending. A rider that concatenates its plan behind the choice (which the adjacent `PICK_UPGRADE` case requires, because arrays replace) gets an infinite turn loop, not an error: 14,467 identical turns at t = 600 with `expiresInMs` stuck at 20,000. The refusal never reaches a transport that reads only views.
 **Options.** (a) Surface the refusal on stdout. (b) Let the pending-secure clock count down regardless, so a silent rider ends with the choice defaulted. Both are fire-authorable; which one is design.
 **Recommendation.** Both: tell the rider, and never let a policy hang a heat.
+
+
+### A6. The Eclipse's difficulty (F-ECW-4, added 2026-09-06 midnight)
+The Eclipse turned out winnable today: seed -02 secures under the air-wall policy unchanged, seed -01 with one `MOVE_HERO` that stands the hero in its own fort (`reviews/eclipse-winnable.md`). Nothing was tuned. If you want it EASIER than that, the two cheapest honest levers were measured: a second build line (pure data, 115 hp margin) or `twist.hero.maxHpBonus: 100` (Relay Valley's precedent, 71.8 hp margin). One word picks one; silence keeps the map as hard as it is.
+
+### A7. The first-town gate (F-BUDGET-4, added 2026-09-06 evening)
+The deploy's 25 MB first-town budget measures host speed, not payload (a 2.05× swing on one fixed build). It stays as a tripwire; the request-family guard is the real one. A payload-shaped gate would count bytes by family at `ready` plus what the scene declares. Decide whether to keep the fail-closed 25 MB number or replace it; the levers that actually moved the slow load tonight were round trips (241 → 32 JS requests) and the music (3 MB out of the window); the hero slot's clip split (~4.3 MB) is the largest lever left.
 
 ## B. Ten minutes of the owner's hands (nobody else can)
 
