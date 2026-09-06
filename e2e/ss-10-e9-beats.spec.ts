@@ -141,7 +141,7 @@ test('SS-10 table is attributed, presentational, and uses the shipped trigger vo
     expect(beat.oncePerProfile).toBe(true);
     expect(beat.presentation).toBe('card');
     expect(STORY_SPEAKERS[beat.speaker]).toBeTruthy();
-    expect(['contract-unlocked', 'boss-arrival', 'boss-defeat', 'run-return-town', 'science-complete']).toContain(beat.trigger);
+    expect(['contract-unlocked', 'boss-arrival', 'boss-act', 'boss-defeat', 'run-return-town', 'science-complete']).toContain(beat.trigger);
   }
 });
 

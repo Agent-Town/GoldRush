@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
+import type { BossStoryEmitter } from '../story/signals';
 import { disposeObject3D } from '../utils/dispose';
 
 export type E10PreserveKind = 'light' | 'song' | 'memory';
@@ -75,6 +76,15 @@ export class E10StaticBossSystem {
     private readonly visualY: (x: number, z: number, base: number) => number,
     private readonly announce: (text: string, title: string) => void,
     private readonly onReceded: () => void,
+    /**
+     * The story lifecycle hook (F-SS11-1). No `epoch-10-deepsky` contract carries a `twist.baron`.
+     * HONESTY NOTE on the act numbering: this system tracks THREE transitions, and they are not the
+     * storybook's four. Storybook Act 0 (the fading portrait, :610) is fiction with no state here,
+     * and Act 1 (the squalls, :611) belongs to the unraveled-enemy scheduler, which does not exist
+     * yet. What this system observes is the approach (:612) and the three preserves (:613), then
+     * the receding (:613). The acts below are named for what happens, not for the book's numbers.
+     */
+    private readonly story: BossStoryEmitter,
   ) {
     this.group.name = 'TheQuiet.Static';
     this.heart = new THREE.Mesh(
@@ -134,6 +144,7 @@ export class E10StaticBossSystem {
     if (this.act === 1 && at - this.arrivedAt >= Balance.e10Static.approachSeconds) {
       this.act = 2;
       this.announce('Keep one lantern lit. Keep one song playing. Keep one portrait untouched.', 'THREE PRESERVES');
+      this.story.act('three-preserves'); // lore/STORYBOOK.md:613 - the heart: the fight is three preserves.
     }
     if (this.act === 2) this.applyPressure(Math.max(0, deltaSeconds), at);
     this.syncPresentation();
@@ -226,6 +237,8 @@ export class E10StaticBossSystem {
     this.previousTransition = this.canvas.style.transition;
     this.canvas.style.transition = 'filter 120ms linear';
     this.announce('A want with no object reaches for the Ark\'s kept things.', 'THE STATIC');
+    this.story.arrival();
+    this.story.act('approach'); // lore/STORYBOOK.md:612 - the approach: the heart comes on in rings of desaturation.
   }
 
   private applyPressure(deltaSeconds: number, at: number): void {
@@ -250,6 +263,8 @@ export class E10StaticBossSystem {
     this.victory = 'receded';
     this.canvas.style.filter = 'grayscale(0)';
     this.announce('The Quiet does not die. It recedes. One mote remains: remember.', 'THE RECEDING');
+    // It is out-lived, not killed: `defeat` is the end of the fight, and the copy holds the line.
+    this.story.defeat(); // lore/STORYBOOK.md:613
     this.syncPresentation();
     this.onReceded();
   }

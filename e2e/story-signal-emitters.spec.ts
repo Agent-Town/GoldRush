@@ -2,7 +2,16 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
-import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import {
+  FIRST_CLAIM_DONE_KEY,
+  PROFILE_KEY,
+  STORY_FIRST_BOOT_KEY,
+  TOWN_NAME_KEY,
+  profileDataKey,
+  type ProfileState,
+} from '../src/game/ProfileStorage';
+import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { STORY_RUNTIME_BEATS } from '../src/story/beats';
 import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
 import type { RuntimeStorySignal } from '../src/story/signals';
 
@@ -15,9 +24,13 @@ import type { RuntimeStorySignal } from '../src/story/signals';
 // same table the game reads at run time, AFTER boot so `applyStoredDifficultyPreset()` cannot
 // clobber it.
 const SHOT_DIR = path.resolve('reviews/shots-story-signal-emitters');
-// Literal, not imported: `src/main.ts` is the app entry and runs its whole boot on import.
-// Kept in step with FIRST_BOOT_SIGNAL_KEY in src/main.ts.
-const FIRST_BOOT_MARK = profileDataKey('robin', 'gr.story.firstBoot.v1');
+const GAP_SHOT_DIR = path.resolve('reviews/shots-story-signal-gaps');
+// Imported from ProfileStorage, where F-SSE-3 registered it in PROFILE_DATA_KEYS. It was a literal
+// here while `src/main.ts` (the app entry, which runs its whole boot on import) was its only home.
+const FIRST_BOOT_MARK = profileDataKey('robin', STORY_FIRST_BOOT_KEY);
+// Every once-per-profile beat of the CORE table (E1 + E2 + ledger), pre-marked so a boss chapter's
+// own cards are the only ones a boss test can see. Same construction as ss-09/ss-10/ss-11.
+const CORE_STORY_HINTS = STORY_RUNTIME_BEATS.filter((beat) => beat.oncePerProfile).map((beat) => `story:${beat.id}`);
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
@@ -40,9 +53,15 @@ function assertNoErrors(errors: ErrorBucket): void {
  * once-per-profile first-boot marker can be observed across two boots of the same profile.
  * Playwright hands every test a fresh context, so there is nothing to clear.
  */
-async function seedProfile(page: Page, options: { agentTrack?: number; scienceTrack?: number } = {}): Promise<void> {
+async function seedProfile(
+  page: Page,
+  options: { agentTrack?: number; scienceTrack?: number; epochId?: string; hintsSeen?: readonly string[] } = {},
+): Promise<void> {
   await page.addInitScript(
-    ({ profileKey, townKey, talesKey, metaKey, agentTrack, scienceTrack }) => {
+    ({
+      profileKey, townKey, talesKey, metaKey, agentTrack, scienceTrack,
+      epochId, epochKey, flatEpochKey, firstClaimKey, flatFirstClaimKey, hintsSeen,
+    }) => {
       if (localStorage.getItem(profileKey)) return;
       const state: ProfileState = {
         version: 2,
@@ -54,7 +73,7 @@ async function seedProfile(page: Page, options: { agentTrack?: number; scienceTr
             createdAt: 1,
             updatedAt: 1,
             difficultyPreset: 'trail',
-            hintsSeen: [],
+            hintsSeen: [...hintsSeen],
           },
         ],
       };
@@ -65,6 +84,15 @@ async function seedProfile(page: Page, options: { agentTrack?: number; scienceTr
         metaKey,
         JSON.stringify({ version: 1, tracks: { territory: 0, science: scienceTrack ?? 0, hero: 0, agent: agentTrack ?? 0 } }),
       );
+      // A chapter's beats load only while its era is the active one (StoryRuntime.receive), and the
+      // era is a player-owned profile key, so it is selected the player's way. Both the per-profile
+      // and the flat key, the way every other chapter spec seeds it.
+      if (epochId) {
+        localStorage.setItem(epochKey, epochId);
+        localStorage.setItem(flatEpochKey, epochId);
+        localStorage.setItem(firstClaimKey, '1');
+        localStorage.setItem(flatFirstClaimKey, '1');
+      }
     },
     {
       profileKey: PROFILE_KEY,
@@ -73,6 +101,12 @@ async function seedProfile(page: Page, options: { agentTrack?: number; scienceTr
       metaKey: profileDataKey('robin', META_PROGRESS_KEY),
       agentTrack: options.agentTrack ?? 0,
       scienceTrack: options.scienceTrack ?? 0,
+      epochId: options.epochId ?? '',
+      epochKey: profileDataKey('robin', ACTIVE_EPOCH_KEY),
+      flatEpochKey: ACTIVE_EPOCH_KEY,
+      firstClaimKey: profileDataKey('robin', FIRST_CLAIM_DONE_KEY),
+      flatFirstClaimKey: FIRST_CLAIM_DONE_KEY,
+      hintsSeen: options.hintsSeen ?? [],
     },
   );
 }
@@ -147,10 +181,44 @@ async function shortenTheRide(page: Page, waveInterval: number): Promise<void> {
   }, waveInterval);
 }
 
-async function bootTheClaim(page: Page, seed: string, waveInterval: number): Promise<void> {
-  await page.goto(`/?contract=the-claim&seed=${seed}&nolevel&timescale=8`);
+/**
+ * Stages the contract launch the way the town board's own launch button does
+ * (`stagePlayerContractLaunch`, src/meta/ContractFamilies.ts:1250, whose only act is this
+ * sessionStorage write). It is the PLAYER's authorization, not a debug one: without it a
+ * `?contract=` for a saga map falls back to The Claim with `fallbackReason: 'debug-disabled'`
+ * (ContractFamilies.ts:1343), which is exactly what a first draft of these two tests measured. No
+ * `?debug` is used anywhere in this file.
+ */
+async function stageBoardLaunch(page: Page, contractId: string): Promise<void> {
+  await page.addInitScript((id) => {
+    try { sessionStorage.setItem('gr.contract.launch.v1', id); } catch {}
+  }, contractId);
+}
+
+async function bootContract(page: Page, contractId: string, seed: string, waveInterval: number): Promise<void> {
+  await page.goto(`/?contract=${contractId}&seed=${seed}&nolevel&timescale=8`);
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10, undefined, { timeout: 30_000 });
+  // The ride must really be on the map under test; a silent fallback would prove nothing.
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId)).toBe(contractId);
   await shortenTheRide(page, waveInterval);
+}
+
+async function bootTheClaim(page: Page, seed: string, waveInterval: number): Promise<void> {
+  await bootContract(page, 'the-claim', seed, waveInterval);
+}
+
+/** Every `boss-act` the run published, in order, as `<boss>:<act>`. */
+async function bossActs(page: Page): Promise<string[]> {
+  return page.evaluate(() =>
+    ((window as unknown as { __SS_SIGNALS__?: { type: string; boss?: string; act?: string }[] }).__SS_SIGNALS__ ?? [])
+      .filter((signal) => signal.type === 'boss-act')
+      .map((signal) => `${signal.boss}:${signal.act}`),
+  );
+}
+
+async function gapShot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  await mkdir(GAP_SHOT_DIR, { recursive: true });
+  await page.screenshot({ path: path.join(GAP_SHOT_DIR, `${testInfo.project.name}-${name}.jpg`), type: 'jpeg', quality: 60 });
 }
 
 /**
@@ -196,7 +264,12 @@ test('first-boot fires once per profile on a plain boot and never again', async 
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 5 || Boolean(document.querySelector('[data-testid="start-menu"]')));
   await expect.poll(() => signalsOfType(page, 'first-boot').then((list) => list.length), { timeout: 15_000 }).toBe(1);
   expect(await firstBootMark(page)).toBe('1');
-  expect(await profileHints(page)).toEqual([]);
+  // F-SSE-1, cured: the signal now has a beat, so the opening card is on screen in a plain boot.
+  await waitForBeat(page, 'first-boot', 20_000);
+  await expect(page.getByTestId('story-beat-card')).toContainText('What is a claim?');
+  // The card's own marker joins hintsSeen the way every once-per-profile beat's does; the SIGNAL's
+  // marker is the separate profile datum asserted above, and it still never lands here (F-SSE-2).
+  await expect.poll(() => profileHints(page), { timeout: 10_000 }).toEqual(['story:first-boot']);
   await shot(page, testInfo, 'first-boot');
 
   await page.reload();
@@ -204,7 +277,85 @@ test('first-boot fires once per profile on a plain boot and never again', async 
   await page.waitForTimeout(1_500);
   expect(await signalsOfType(page, 'first-boot')).toEqual([]);
   expect(await firstBootMark(page)).toBe('1');
-  expect(await profileHints(page)).toEqual([]);
+  expect(await profileHints(page)).toEqual(['story:first-boot']);
+  assertNoErrors(errors);
+});
+
+test('the Salvage Claw reports its own acts on a plain-boot Mare Claim ride', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  // `e8-mare-claim` declares no `twist.baron` (assets/contracts/epoch-8-orbital/contracts.json), so
+  // before this slice the baron path emitted nothing here and five shipped E8 beats could not fire.
+  await seedProfile(page, { epochId: 'epoch-8-orbital', hintsSeen: CORE_STORY_HINTS });
+  await stageBoardLaunch(page, 'e8-mare-claim');
+  await recordSignals(page);
+  const errors = collectErrors(page);
+
+  await bootContract(page, 'e8-mare-claim', 'ss-gap-claw', 1.2);
+  // Balance.salvageClaw: dread at arriveWave - dreadWaves (6), the Crown at arriveWave (8).
+  await expect
+    .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0), { timeout: 120_000, intervals: [250] })
+    .toBeGreaterThanOrEqual(8);
+
+  await expect.poll(() => bossActs(page), { timeout: 30_000 }).toEqual(
+    expect.arrayContaining(['salvage-claw:paperwork', 'salvage-claw:crown']),
+  );
+  const arrivals = (await signalsOfType(page, 'boss-arrival')) as { contractId: string }[];
+  expect(arrivals.map((signal) => signal.contractId)).toContain('e8-mare-claim');
+
+  await waitForBeat(page, 'e8-salvage-kings-claw', 60_000);
+  if (await beatOnScreen(page, 'e8-salvage-kings-claw')) {
+    await expect(page.getByTestId('story-beat-card')).toContainText('descends in acts');
+  }
+  await gapShot(page, testInfo, 'e8-salvage-kings-claw');
+  assertNoErrors(errors);
+});
+
+test('the Old Digger renovation act shows its card on a plain-boot Dome Basin ride', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  // `e9-dome-basin` declares no `twist.baron` either, and this beat used to ride `run-return-town`
+  // gated on an earlier beat. It is keyed to the real act now.
+  await seedProfile(page, { epochId: 'epoch-9-redfields', hintsSeen: CORE_STORY_HINTS });
+  await stageBoardLaunch(page, 'e9-dome-basin');
+  await recordSignals(page);
+  const errors = collectErrors(page);
+
+  await bootContract(page, 'e9-dome-basin', 'ss-gap-digger', 1.2);
+  // Balance.oldDigger.arriveWave = 2.
+  await expect
+    .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0), { timeout: 120_000, intervals: [250] })
+    .toBeGreaterThanOrEqual(2);
+
+  await expect.poll(() => bossActs(page), { timeout: 30_000 }).toEqual(
+    expect.arrayContaining(['old-digger:renovation']),
+  );
+  await waitForBeat(page, 'e9-digger-correction', 60_000);
+  if (await beatOnScreen(page, 'e9-digger-correction')) {
+    await expect(page.getByTestId('story-beat-card')).toContainText('It unmakes');
+  }
+  await gapShot(page, testInfo, 'e9-digger-correction');
+  assertNoErrors(errors);
+});
+
+test('the contract briefing is still readable at 3 s in a plain boot and dismisses on its own timer', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  // F-CWBC-2 said a second HUD mount hid this card inside a second on desktop. The card owns an 8 s
+  // timer (src/ui/Hud.ts, showContractBriefing); this is the regression arm for both halves.
+  await seedProfile(page);
+  const errors = collectErrors(page);
+
+  await page.goto('/?contract=the-claim&seed=ss-gap-briefing');
+  const briefing = page.getByTestId('contract-briefing');
+  await expect(briefing).toBeVisible({ timeout: 30_000 });
+  const shownAt = Date.now();
+  await page.waitForTimeout(Math.max(0, 3_000 - (Date.now() - shownAt)));
+  await expect(briefing).toBeVisible();
+  await expect(page.getByTestId('contract-briefing-name')).toHaveText('The Claim');
+  await gapShot(page, testInfo, 'contract-briefing-at-3s');
+
+  // Its own timer, not a remount: still up at 7 s, gone by 11 s.
+  await page.waitForTimeout(Math.max(0, 7_000 - (Date.now() - shownAt)));
+  await expect(briefing).toBeVisible();
+  await expect(briefing).toBeHidden({ timeout: 6_000 });
   assertNoErrors(errors);
 });
 

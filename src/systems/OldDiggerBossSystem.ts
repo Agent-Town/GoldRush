@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import type { ClaimJumperEnemy, EnemySpawnParams } from '../entities/Enemy';
 import { Balance } from '../game/Balance';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
+import type { BossStoryEmitter } from '../story/signals';
 import type { OldDiggerGentlePayload } from '../game/TileStateStore';
 import { disposeObject3D } from '../utils/dispose';
 
@@ -136,6 +137,13 @@ export class OldDiggerBossSystem {
     private readonly surveyPath: readonly SurveyPoint[],
     private readonly enabled: boolean,
     private readonly persistence: OldDiggerGentlePersistence,
+    /**
+     * The story lifecycle hook (F-SS10-1). `e9-dome-basin` declares no `twist.baron`, so this boss
+     * reaches the story only from here. THE NO-KILL LAW shapes the vocabulary: `defeat` is the swap
+     * completing and the machine joining the fleet, not a kill. `restorePersistentGentle` is a
+     * rehydration of a finished fight and deliberately emits nothing.
+     */
+    private readonly story: BossStoryEmitter,
   ) {
     this.oldDigger3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.group.name = 'OldDigger.Placeholder';
@@ -208,6 +216,7 @@ export class OldDiggerBossSystem {
     const hull = this.hull();
     if (hull) hull.scriptMoveTo(hull.position.x, hull.position.z, 0, { ignoreTerrain: true });
     this.announce('It pauses. It reads.', 'THE SWAP');
+    this.story.act('swap'); // lore/STORYBOOK.md:564 - Act 3, the swap: the playbook verb as the weapon.
   }
 
   private updateSwap(at: number): void {
@@ -241,6 +250,8 @@ export class OldDiggerBossSystem {
     this.archivedTape = this.tape;
     this.persistence.writeAtCeremony({ x: this.restPosition.x, z: this.restPosition.z });
     this.announce('The old tape goes to the archive. It re-digs to the reeve’s charts now, gently, forever.', 'IT JOINS THE FLEET');
+    // The end of the fight, no-kill law intact: it TURNED. Kept machine #5. lore/STORYBOOK.md:564
+    this.story.defeat();
   }
 
   private tryBoard(position: THREE.Vector3, at: number): boolean {
@@ -253,6 +264,7 @@ export class OldDiggerBossSystem {
     this.nextDroneRespawnAt = at + Balance.oldDigger.droneRespawnSeconds;
     for (let index = 0; index < Balance.oldDigger.droneCount; index += 1) this.spawnDrone(index);
     this.announce('Board it while it works. The tape deck waits at its heart.', 'THE BOARDING');
+    this.story.act('boarding'); // lore/STORYBOOK.md:563 - Act 2, the boarding: climb it WHILE IT WORKS.
     return true;
   }
 
@@ -411,6 +423,8 @@ export class OldDiggerBossSystem {
     this.nextUnmakeAt = this.lastAt + Balance.oldDigger.unmakeIntervalSeconds;
     this.scriptSurveyMove(this.lastAt);
     this.announce('It arrives still working. It does not attack. It unmakes.', 'THE OLD DIGGER');
+    this.story.arrival();
+    this.story.act('renovation'); // lore/STORYBOOK.md:562 - Act 1, the renovation: it never attacks, it UNMAKES.
   }
 
   private spawnHull(position: THREE.Vector3): ClaimJumperEnemy | null | undefined {

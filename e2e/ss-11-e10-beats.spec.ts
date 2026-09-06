@@ -163,7 +163,7 @@ test('SS-11 table is attributed, presentational, and uses the E2/E3 trigger voca
     expect(beat.oncePerProfile).toBe(true);
     expect(beat.presentation).toBe('card');
     expect(STORY_SPEAKERS[beat.speaker]).toBeTruthy();
-    expect(['contract-unlocked', 'wave-complete', 'boss-arrival', 'boss-defeat', 'run-return-town', 'science-complete']).toContain(beat.trigger);
+    expect(['contract-unlocked', 'wave-complete', 'boss-arrival', 'boss-act', 'boss-defeat', 'run-return-town', 'science-complete']).toContain(beat.trigger);
     const lines = typeof beat.lines === 'function' ? [] : beat.lines;
     expect(lines.length).toBeGreaterThan(0);
     for (const line of lines) expect(line).not.toContain('—');
@@ -279,8 +279,10 @@ test('the Quiet, the return and the Press beats fire only on their own triggers'
   await emit(EMBER_SHORE);
   expect(await drain()).toEqual([...ARRIVAL_IDS]);
 
-  // No E10 contract carries a twist.baron, so boss-arrival never fires in this era
-  // (src/game/Game.ts:5987-5991). The Quiet's acts ride the return chain instead.
+  // No E10 contract carries a twist.baron, so the BARON path emits nothing in this era; since the
+  // story-signal-gaps slice the Quiet's own system reports its lifecycle instead
+  // (src/systems/E10StaticBossSystem.ts). Arrival alone still lands no card: the dread and the
+  // squalls have no state to observe, so those two beats stay on the return chain.
   await emit({ type: 'boss-arrival', contractId: 'e10-last-claim', contractName: 'The Last Claim' });
   expect(e10Only(await drain())).toEqual([]);
 
@@ -297,10 +299,16 @@ test('the Quiet, the return and the Press beats fire only on their own triggers'
   await emit({ type: 'run-return-town', result: 'secured' });
   expect(e10Only(await drain())).toEqual(['e10-tavern-starlight-pan']);
 
-  // The three preserves wait for the finale card, not for another return.
+  // The finale card is still a contract unlock.
   await emit({ ...EMBER_SHORE, contractId: 'e10-last-claim', contractName: 'The Last Claim', ledgerBlurb: 'Ten lineage decks run stern to bow and end at three small preserves.' });
   expect(await drain()).toEqual(['e10-last-claim-decks']);
+
+  // The three preserves are now the Quiet's OWN act, in the run, at the moment the aura seats
+  // (E10StaticBossSystem.update -> act 2, lore/STORYBOOK.md:613). A town return no longer plays it,
+  // and the act plays it without one.
   await emit({ type: 'run-return-town', result: 'secured' });
+  expect(e10Only(await drain())).toEqual([]);
+  await emit({ type: 'boss-act', contractId: 'e10-last-claim', boss: 'the-quiet', act: 'three-preserves' });
   expect(e10Only(await drain())).toEqual(['e10-three-preserves']);
 
   await emit({ type: 'run-return-town', result: 'secured' });

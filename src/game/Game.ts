@@ -63,7 +63,7 @@ import {
   type MegaprojectState,
   type MegaprojectStorage,
 } from '../meta/Megaproject';
-import { emitStorySignal } from '../story/signals';
+import { bossStoryEmitter, emitStorySignal } from '../story/signals';
 import { takeTrailGuideBark, type TrailGuideTrigger } from '../story/trailGuide';
 import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revealLedgerEnemyStats } from '../encyclopedia/state';
 import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
@@ -1080,6 +1080,9 @@ export class Game {
       readAtBirth: () => this.readSalvageClawCarcassAtBirth(),
       writeAtCeremony: (payload) => this.writeSalvageClawCarcassAtCeremony(payload),
     },
+    // F-SS09-3: the Claw's own lifecycle, not the baron path (`announceBaronBeat` returns early on
+    // a contract with no `twist.baron`, and `e8-mare-claim` declares none).
+    bossStoryEmitter('salvage-claw', () => this.activeContract),
   );
   private readonly homemakerBoss = createHomemakerBossSystem({
     enemies: this.enemies,
@@ -1135,6 +1138,8 @@ export class Game {
       readAtBirth: () => this.readOldDiggerGentleAtBirth(),
       writeAtCeremony: (payload) => this.writeOldDiggerGentleAtCeremony(payload),
     },
+    // F-SS10-1: `e9-dome-basin` declares no `twist.baron` either.
+    bossStoryEmitter('old-digger', () => this.activeContract),
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -2053,6 +2058,10 @@ export class Game {
       () => {
         if (!this.preserveTarget) this.runManager?.secureCurrentRun(this.secureWaveForRun());
       },
+      // F-SS11-1: no Deep Sky contract carries a `twist.baron`. `finaleContract`, not
+      // `this.activeContract`: on the debug stage the Quiet stands on the finale map the stage
+      // loaded, and the beat must name the map the boss is actually on.
+      bossStoryEmitter('the-quiet', () => finaleContract),
     );
     this.mountTileStateRenderEntries();
     const renderParams = new URLSearchParams(window.location.search);

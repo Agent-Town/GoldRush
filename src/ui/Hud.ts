@@ -90,8 +90,20 @@ type HudElements = {
   buildMount: HTMLElement;
 };
 
+/**
+ * ONE HUD PER SURFACE (F-CWBC-2). `#hud` is a shared element and the constructor below REPLACES its
+ * children, so two live Huds on one root leave the older one holding detached nodes while its
+ * timers keep firing against the LIVE root: `dispose()` clears `elements.root`'s own classes and
+ * datasets, and `hideContractBriefing` would hide a card the older instance no longer owns. That is
+ * how a first-timer lost the contract briefing inside its own 8 s timer. So every mount retires the
+ * previous Hud on that root first, and `dispose()` is idempotent, so a late `Game.dispose()` on an
+ * already-retired Hud cannot reach through to the live one.
+ */
+const mountedHuds = new WeakMap<HTMLElement, Hud>();
+
 export class Hud {
   private readonly elements: HudElements;
+  private disposed = false;
   private lastGold = 0;
   private lastAnnouncement: string | null = null;
   private lastAnnouncementAt = -1;
@@ -110,6 +122,9 @@ export class Hud {
   private prospectorSelectedValue = false;
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
+    // Retire any Hud still bound to this root BEFORE the markup below replaces its nodes.
+    mountedHuds.get(root)?.dispose();
+    mountedHuds.set(root, this);
     root.innerHTML = `
       <p class="hud-training-tag" data-testid="drill-yard-training-tag" hidden>DRILL YARD: training</p>
 
@@ -301,6 +316,9 @@ export class Hud {
   }
 
   dispose(): void {
+    if (this.disposed) return;
+    this.disposed = true;
+    if (mountedHuds.get(this.elements.root) === this) mountedHuds.delete(this.elements.root);
     this.disposeAudioSettings();
     this.disposeStorySettings();
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);
