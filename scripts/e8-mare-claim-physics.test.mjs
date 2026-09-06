@@ -32,7 +32,12 @@ const read = (relative) => readFileSync(new URL(`../${relative}`, import.meta.ur
 
 // MEASURED on this tree, 2026-09-04 (node v23.11.1). Every one of these is a real ride's output,
 // re-derivable with `artifacts/e8-mare-claim-physics/ride.mjs`.
-const IDLE_HASH_COMPOSED = 'fnv1a32:1a62757f';
+// RE-POINTED 2026-09-06 by `tasks/mare-claim-air-prevalent.md` (owner ruling: "no, this has to be
+// more prevalent"), from `fnv1a32:1a62757f`. The idle ride itself is UNCHANGED in every outcome
+// field; only the hash moved, because `atmosphere.diagnostics` rides `eventLogHash` and that block
+// gained the authored gate (1 -> 4) and the four window fields. Both halves attributed separately
+// in `artifacts/mare-claim-air-prevalent/floor-attribution.json`.
+const IDLE_HASH_COMPOSED = 'fnv1a32:32f62335';
 const IDLE_HASH_UNCOMPOSED = 'fnv1a32:ee2f7c14';
 
 const location = new URL(`http://gr-sim.local/?debug&contract=${CONTRACT}&seed=${SEED}`);
@@ -45,6 +50,8 @@ const { HeadlessContractSim } = await vite.ssrLoadModule('/src/sim/HeadlessContr
 const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
 const { E8PhysicsSystem, E8AtmosphereSystem, SUIT_AIR_SECONDS, REGOLITH_GROUNDS_FOR_SECURE } = physics;
 after(() => vite.close());
+/** The engine's own `create`, captured before any patch, so a proof can restore the default gate. */
+const defaultCreate = E8AtmosphereSystem.create;
 
 const manifest = contracts.activeContract();
 const dome = (id) => manifest.tileParams.buildZones.find((zone) => zone.id === id);
@@ -175,7 +182,12 @@ test('air is the wall: the suit drains outside, refills inside, and a breathless
   assert.equal(run.objectiveAllowsSecure, false, 'an unworked claim cannot secure');
   assert.equal(run.notePan(3), true);
   assert.equal(run.diagnostics.regolith.worked.length, REGOLITH_GROUNDS_FOR_SECURE);
-  assert.equal(run.objectiveAllowsSecure, true);
+  // RE-POINTED 2026-09-06 (`tasks/mare-claim-air-prevalent.md`): one ground no longer opens the
+  // latch on THIS contract, because it now authors `twist.atmosphere.regolithRequired` above the
+  // shared default. The pan itself is unchanged, and a contract that authors nothing still opens
+  // on one — that control is `scripts/e8-regolith-gate-override.test.mjs`.
+  assert.equal(run.objectiveAllowsSecure, false, 'one ground of the authored four cannot secure');
+  assert.equal(run.diagnostics.regolith.required, manifest.twist.atmosphere.regolithRequired);
   const starved = E8AtmosphereSystem.create(manifest);
   for (let step = 0; step < SUIT_AIR_SECONDS + 1; step += 1) starved.update(1, OUTSIDE, []);
   assert.equal(starved.diagnostics.suit.empty, true);
@@ -215,10 +227,18 @@ test('the ride the audit measured, now carrying its air — and the un-composed 
   assert.notEqual(uncomposed.outcome.eventLogHash, composed.outcome.eventLogHash);
   assert.equal(uncomposed.view.now.air, undefined);
   assert.equal(uncomposed.view.now.gravity !== undefined, true, 'the gravity profile is a separate composition');
-  // The recorded fallback is not a number this file invented: it is the contract's pinned null
-  // floor, which is what makes "the audit's engine" a checkable claim.
+  // The recorded numbers are not invented here: the COMPOSED ride above is the contract's pinned
+  // null floor, which is what makes "the engine this map actually rides" a checkable claim.
+  //
+  // RE-POINTED 2026-09-06 (`tasks/mare-claim-air-prevalent.md`) from `IDLE_HASH_UNCOMPOSED`, and
+  // this line was ALREADY RED before that slice: the sentence was written when the pinned floor
+  // still held the audit's un-composed value, and the floors were regenerated to the composed one
+  // when `e8-mare-claim-physics` landed. Verified against a pristine `main` (502a398d9), where
+  // `floors[e8-mare-claim][e8-mare-claim-01].eventLogHash` is `fnv1a32:1a62757f` and
+  // `IDLE_HASH_UNCOMPOSED` is `fnv1a32:ee2f7c14` — the assertion could not have passed. F-MCAP-3.
   const floors = JSON.parse(read('assets/contracts/null-floors.json')).floors[CONTRACT];
-  assert.equal(floors[SEED].eventLogHash, IDLE_HASH_UNCOMPOSED);
+  assert.equal(floors[SEED].eventLogHash, IDLE_HASH_COMPOSED);
+  assert.notEqual(floors[SEED].eventLogHash, IDLE_HASH_UNCOMPOSED);
 });
 
 test('the gravity-scaled lob: 2.4x reach and hang, and OUT_OF_RANGE the moment the profile is gone', () => {
@@ -268,13 +288,32 @@ test('the secure turns on the regolith run: same seed, same orders, two latches'
   assert.equal(closed.offered, false, 'a claim that has not made its regolith run cannot be offered a secure');
   assert.ok(closed.view.now.wave >= 20, `the ride must reach the boundary to prove it was refused there (wave ${closed.view.now.wave})`);
 
-  // LATCH OPEN — the same ride, the same seed, the run made: offered at 20 and banked.
-  const open = ride({ orders, immortal: true });
+  // THE AUTHORED GATE, added 2026-09-06 (`tasks/mare-claim-air-prevalent.md`): with the contract's
+  // own `twist.atmosphere` in force, this SAME one-ground ride is refused a secure at the same
+  // boundary, because the gate is four grounds at one per four-wave window. That is the ruling
+  // biting, measured on the ride this file already had.
+  const gated = ride({ orders, immortal: true, stopAtWave: 22 });
+  assert.equal(gated.offered, false, 'one ground of the authored four cannot be offered a secure');
+  assert.ok(gated.view.now.wave >= 20, `the gated ride must reach the boundary (wave ${gated.view.now.wave})`);
+  assert.equal(gated.view.now.air.regolith.complete, false);
+  assert.equal(gated.view.now.air.regolith.worked.length, 1);
+
+  // LATCH OPEN — the same ride, the same seed, the run made: offered at 20 and banked. The gate is
+  // taken back to the shared default for this case (the contract read with `twist.atmosphere`
+  // stripped, which is the engine's own default path), so what is under test stays what it always
+  // was: the SECURE turning on the regolith run rather than on the size of the gate.
+  const bare = { ...manifest, twist: { ...manifest.twist, atmosphere: undefined } };
+  const open = withPatch(
+    E8AtmosphereSystem,
+    'create',
+    (contract) => defaultCreate.call(E8AtmosphereSystem, contract.id === CONTRACT ? bare : contract),
+    () => ride({ orders, immortal: true }),
+  );
   assert.equal(open.offered, true);
   assert.equal(open.terminal, true);
   assert.equal(open.outcome.secured, true);
   assert.equal(open.outcome.waves, 20);
   assert.equal(open.view.now.air.regolith.complete, true);
   assert.ok(open.view.now.air.regolith.runsOnAir >= 1);
-  console.log(JSON.stringify({ closedAtWave: closed.view.now.wave, open: open.outcome }));
+  console.log(JSON.stringify({ closedAtWave: closed.view.now.wave, gatedAtWave: gated.view.now.wave, open: open.outcome }));
 });

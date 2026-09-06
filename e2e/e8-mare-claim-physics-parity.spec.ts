@@ -27,8 +27,17 @@ const CONTRACT = 'e8-mare-claim';
 const SEED = 'e8-mare-claim-01';
 // Measured in node on this tree (`scripts/e8-mare-claim-physics.test.mjs`; the idle ride of
 // `artifacts/e8-mare-claim-physics/mare-claim.log`).
+//
+// RE-POINTED 2026-09-06 by `tasks/mare-claim-air-prevalent.md` (owner ruling: "no, this has to be
+// more prevalent"), from `fnv1a32:1a62757f`. The idle ride is UNCHANGED in every outcome field —
+// still lost, still wave 2, still 81 233 ms, still 32 kills — and only its hash moved, because
+// `atmosphere.diagnostics` rides `eventLogHash` and that block gained the authored gate (1 -> 4)
+// and the four window fields. Attribution measured both halves separately:
+// `artifacts/mare-claim-air-prevalent/floor-attribution.json` (fields alone -> `fnv1a32:4d17c659`,
+// fields plus numbers -> the value below). The same two rows moved in
+// `assets/contracts/null-floors.json` and nowhere else.
 const NODE = {
-  eventLogHash: 'fnv1a32:1a62757f',
+  eventLogHash: 'fnv1a32:32f62335',
   secured: false,
   waves: 2,
   timeMs: 81_233,
@@ -98,6 +107,8 @@ test('the Mare Claim rides to the same event-log hash in the browser as in node'
   // The era, as the browser runtime sees it: 0.6g, 2.4x arcs, and a suit that empties outside the
   // domes on a ride that never goes back inside.
   expect(ride.gravity).toMatchObject({ feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true });
-  expect(ride.air).toMatchObject({ suit: { drainedTotal: 60, empty: true }, regolith: { grounds: 6, required: 1, worked: [] } });
+  // `required` re-pointed 1 -> 4 with the hash above: the gate is now authored per contract as
+  // `twist.atmosphere.regolithRequired`. `worked` stays empty because an idle ride pans nothing.
+  expect(ride.air).toMatchObject({ suit: { drainedTotal: 60, empty: true }, regolith: { grounds: 6, required: 4, worked: [] } });
   expect(errors).toEqual([]);
 });

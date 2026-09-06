@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "91dbc88a42a40eb89b4cdb715db4621672152fc0fe121de6c785e4c3b3b544e1",
+  "engineHash": "70c31bbbb782ee669ee254bafb04715ad2583727e04fdf34a39881d3c065d7be",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -258,19 +258,19 @@
     {
       "engineHash": "324bb3cd0e32f2b71c37f86d74593340ee782e2718f8173274a7e7d15a0d2e8f",
       "pinnedAt": "2026-09-05",
-      "cause": "content re-hash: e3-moth-season drain (de21da4f5) rewrites the Moth Season contract row (assets/contracts/epoch-3-voltage/contracts.json) \u2014 the sabotageable light circuit as contract data, zero src/ edits; every other contract replays byte-identical (the lane's both-engine tables + the E7/E8 pins measured); same era per F-1441-3",
+      "cause": "content re-hash: e3-moth-season drain (de21da4f5) rewrites the Moth Season contract row (assets/contracts/epoch-3-voltage/contracts.json) — the sabotageable light circuit as contract data, zero src/ edits; every other contract replays byte-identical (the lane's both-engine tables + the E7/E8 pins measured); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "b061540c8e645fbe0e2c1ccd24784f5aece9d4f9e47817a8990d21d8c0337628",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: e5-storm-predicate-split drain \u2014 deepwaterStormCarriesCorsairs split from deepwaterStormDisablesScheduledWaves in Game.ts/HeadlessContractSim.ts/DeepwaterSocket.ts; an empty front emits no wave_started; every shipped E5 pin byte-identical (Stillwater/Regatta/Flotilla played+idle tables in artifacts/e5-storm-predicate-split/report.md); same era per F-1441-3",
+      "cause": "src re-hash: e5-storm-predicate-split drain — deepwaterStormCarriesCorsairs split from deepwaterStormDisablesScheduledWaves in Game.ts/HeadlessContractSim.ts/DeepwaterSocket.ts; an empty front emits no wave_started; every shipped E5 pin byte-identical (Stillwater/Regatta/Flotilla played+idle tables in artifacts/e5-storm-predicate-split/report.md); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "1ecca4779fd90f484b6302ece778c90fa87da11ed515c02830c0c2f86f74bc90",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: e7-player-playbook-parity drain \u2014 E7PlaybookLatch.ts is the one four-rule secure decision for Game.ts and HeadlessContractSim.ts; human PLAYBOOK_USE is recorded in the tape (RunTape.playbookUses) and replayed; the four E7 hashes and every other contract replay byte-identical (lane tables); same era per F-1441-3",
+      "cause": "src re-hash: e7-player-playbook-parity drain — E7PlaybookLatch.ts is the one four-rule secure decision for Game.ts and HeadlessContractSim.ts; human PLAYBOOK_USE is recorded in the tape (RunTape.playbookUses) and replayed; the four E7 hashes and every other contract replay byte-identical (lane tables); same era per F-1441-3",
       "aliases": []
     },
     {
@@ -282,85 +282,85 @@
     {
       "engineHash": "8afae55feda2730606dbf46d869baf14bc66f733028547f1f1ba3d0b5a6a3a16",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: prefetch-bounded-warming drain (065252649) \u2014 AdvanceStream.ts warms priorities 1-2 under a session byte allowance and StartMenu.ts gains the 'Warm every map' opt-in; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: prefetch-bounded-warming drain (065252649) — AdvanceStream.ts warms priorities 1-2 under a session byte allowance and StartMenu.ts gains the 'Warm every map' opt-in; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "9254f19e3c6e126d2b37fe789055fb5ca2ccd6862090bc6e5b71984ed11d3325",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: shared-atlas-texture-dedupe drain (3a47f1800) \u2014 src/assets/SharedAtlasPlugin.ts + AssetLoading.ts registration: one GPU texture per atlas-content hash across GLBs; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: shared-atlas-texture-dedupe drain (3a47f1800) — src/assets/SharedAtlasPlugin.ts + AssetLoading.ts registration: one GPU texture per atlas-content hash across GLBs; render/asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "b395ee1f9e2fa226489c749f2468778d023ad900b682aadc3f8fd15a481612b1",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: lantern-true-world-reel-2 drain (e8319998d) \u2014 LanternController extracted from Game.ts, LanternBoot + LanternWorldStage added, main.ts replay route; the replay worker, AgentTapeReplay, RunTape and the sim untouched; every contract replays byte-identical (tape-02 + true-reel-harness green); same era per F-1441-3",
+      "cause": "src re-hash: lantern-true-world-reel-2 drain (e8319998d) — LanternController extracted from Game.ts, LanternBoot + LanternWorldStage added, main.ts replay route; the replay worker, AgentTapeReplay, RunTape and the sim untouched; every contract replays byte-identical (tape-02 + true-reel-harness green); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "c552efe029369e05180c3df68e3c91003be7430164519d298e9898d9d07bdb28",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: asset-diet-explicit-manifest v1+v2 drain (9b7d3eef6) \u2014 nine bare GLTFLoader sites routed through the shared meshopt factory (AssetLoading.createGltfLoader), the tracked loader keeps the SharedAtlasPlugin; asset/loader plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: asset-diet-explicit-manifest v1+v2 drain (9b7d3eef6) — nine bare GLTFLoader sites routed through the shared meshopt factory (AssetLoading.createGltfLoader), the tracked loader keeps the SharedAtlasPlugin; asset/loader plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "3c38c993fda488a95045297e012476484cbce9a62567a6ffbf0d9a524b7b4885",
       "pinnedAt": "2026-09-05",
-      "cause": "corpus re-hash without a sim change: glb-export-contract-and-validator drain \u2014 32 terrain *.export.json Blender sidecars under assets/pilots/map-rebuild-spike enter ENGINE_SOURCE_INPUTS via the directory rule (assay-replay-agent.mjs:42/:76); the game never loads them; no src/ or contract change; every contract replays byte-identical; same era per F-1441-3 (F-GLB-1)",
+      "cause": "corpus re-hash without a sim change: glb-export-contract-and-validator drain — 32 terrain *.export.json Blender sidecars under assets/pilots/map-rebuild-spike enter ENGINE_SOURCE_INPUTS via the directory rule (assay-replay-agent.mjs:42/:76); the game never loads them; no src/ or contract change; every contract replays byte-identical; same era per F-1441-3 (F-GLB-1)",
       "aliases": []
     },
     {
       "engineHash": "95c5a753be5c312889680a71c248ae8e1913c7402ef1f4a6bef58fcda1156a1f",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: terrain-height-triangle-sampler drain \u2014 Terrain3dClaimPilot.bakeHeightGrid samples the drawn triangles (render-side visualY only; the planar sim untouched, fingerprint spec green); every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: terrain-height-triangle-sampler drain — Terrain3dClaimPilot.bakeHeightGrid samples the drawn triangles (render-side visualY only; the planar sim untouched, fingerprint spec green); every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "a44df406ac339b817ee5c13dfcdcfb9a869ebd0cf41d91efc74043fd69967024",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: homemaker-kept-state-init-order drain \u2014 HomemakerBossSystem.restoreKeptState() is called by Game after WaveSystem exists (the constructor no longer restores); E6 null floors and a played tape byte-identical (fnv1a32:0ae65b8e / 004ae8d7 / fdce1d04); same era per F-1441-3",
+      "cause": "src re-hash: homemaker-kept-state-init-order drain — HomemakerBossSystem.restoreKeptState() is called by Game after WaveSystem exists (the constructor no longer restores); E6 null floors and a played tape byte-identical (fnv1a32:0ae65b8e / 004ae8d7 / fdce1d04); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "ea4dcc6e4977754cba6d0d5f0921c4dc909a6cc5b0a3318b7c6696056e72765b",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: bounded-prefetch-town-halls drain \u2014 AdvanceStream.ts state machine typed/documented, terminal 'allowance' state, complete-plan-at-allowance publishes ready (F-BPTH-1); asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: bounded-prefetch-town-halls drain — AdvanceStream.ts state machine typed/documented, terminal 'allowance' state, complete-plan-at-allowance publishes ready (F-BPTH-1); asset plumbing only, no sim or contract change; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "86e53f37efee27cc9e1333b7dba29719c61e002ed2edfdd5cda8d729545df77b",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: landmark-lighting-calibration drain \u2014 Terrain3dClaimPilot paint/material functions (emissive 3 \u2192 0.45 default as a relative grade, closed meshes FrontSide) and LightRig constants; render-side only, the planar sim untouched; every contract replays byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: landmark-lighting-calibration drain — Terrain3dClaimPilot paint/material functions (emissive 3 → 0.45 default as a relative grade, closed meshes FrontSide) and LightRig constants; render-side only, the planar sim untouched; every contract replays byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "ff52a6e3ae298fd0da174dbd228e650698502ff32ec225e8f1a55655c5d0b434",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: ss-05-e4-beats + ss-07-e6-beats drains \u2014 E4_STORY_BEATS and E6_STORY_BEATS data plus the StoryRuntime epoch switches (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+      "cause": "src re-hash: ss-05-e4-beats + ss-07-e6-beats drains — E4_STORY_BEATS and E6_STORY_BEATS data plus the StoryRuntime epoch switches (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "97add8282c1f1702589e291126d035f343303e50ebde57d8c23fd203bbef9bc6",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: ss-06-e5-beats drain on top of E4/E6 \u2014 E5_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+      "cause": "src re-hash: ss-06-e5-beats drain on top of E4/E6 — E5_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "1052ba1ab016c53d1b6cceff3db4d0859b38ade38f7e07a95a51112ba3c51b81",
       "pinnedAt": "2026-09-05",
-      "cause": "src re-hash: ss-09-e8-beats drain \u2014 E8_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+      "cause": "src re-hash: ss-09-e8-beats drain — E8_STORY_BEATS data plus the StoryRuntime switch (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "583c7743fb8967291eeecd830f049a3768b0563b6356cf9cb7d21fb0b905f2d3",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: ss-08-e7-beats + ss-10-e9-beats drains \u2014 E7_STORY_BEATS and E9_STORY_BEATS data plus their StoryRuntime switch lines, unioned in era order beside E8 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+      "cause": "src re-hash: ss-08-e7-beats + ss-10-e9-beats drains — E7_STORY_BEATS and E9_STORY_BEATS data plus their StoryRuntime switch lines, unioned in era order beside E8 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "226820026a822a9a4335be8aa7aa69ebfebf751313426d2b26d444d5023a7857",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: e10-empty-harvest-anchors-unlaunchable drain \u2014 the three Deep Sky maps declare twist.harvestFreeObjective and the browser door refuses only an undeclared seamless map (contract declaration + door path; harvestAnchors stay empty, null floors, receipts and mask tables byte-identical, every replay unchanged); same era per F-1441-3",
+      "cause": "src re-hash: e10-empty-harvest-anchors-unlaunchable drain — the three Deep Sky maps declare twist.harvestFreeObjective and the browser door refuses only an undeclared seamless map (contract declaration + door path; harvestAnchors stay empty, null floors, receipts and mask tables byte-identical, every replay unchanged); same era per F-1441-3",
       "aliases": []
     },
     {
@@ -372,19 +372,19 @@
     {
       "engineHash": "e5c6080917f508cce5dc910af92b8a50b1b2e302a35235283aa35f2daac0cb9a",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: e6-picnic-thirty-second-death drain \u2014 the Picnic briefing block gains the loss condition and the hold rules from the published three_stake_hold rule (assets/contracts text only; both idle floors and the receipt-class prover hash byte-identical, every replay unchanged); same era per F-1441-3",
+      "cause": "src re-hash: e6-picnic-thirty-second-death drain — the Picnic briefing block gains the loss condition and the hold rules from the published three_stake_hold rule (assets/contracts text only; both idle floors and the receipt-class prover hash byte-identical, every replay unchanged); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "9b2b30d80676a442594b1911c750dc0753ba90fcc43b2fa11d0f02d95228c742",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: story-signal-emitters drain \u2014 the four story signals nobody emitted (wave-complete, rung-promotion, science-threshold, first-boot) now publish from Game.ts/main.ts as presentation signals; the E1 null floors 21/21 and the played tapes replay byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: story-signal-emitters drain — the four story signals nobody emitted (wave-complete, rung-promotion, science-threshold, first-boot) now publish from Game.ts/main.ts as presentation signals; the E1 null floors 21/21 and the played tapes replay byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "e40023d41bceb6b93e140d6f60ca6e83724dec1fc56c1cc1984e88b627fa294e",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: ss-11-e10-beats drain \u2014 E10_STORY_BEATS data plus its StoryRuntime switch line, unioned after E9 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+      "cause": "src re-hash: ss-11-e10-beats drain — E10_STORY_BEATS data plus its StoryRuntime switch line, unioned after E9 (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     },
     {
@@ -396,85 +396,91 @@
     {
       "engineHash": "8822c2f07c963f37dd79ea423682de8cbc8c259c97c4dedc1355b8e5497273fb",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: canyon-works-bank-cap-override drain \u2014 a per-contract bank cap read by Economy through its cap-source seam in both engines, set to 360 on e3-canyon-works only (owner ruling 2026-09-06 (2)); every other map's purse and every null floor byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: canyon-works-bank-cap-override drain — a per-contract bank cap read by Economy through its cap-source seam in both engines, set to 360 on e3-canyon-works only (owner ruling 2026-09-06 (2)); every other map's purse and every null floor byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "351b869099f6015b5ab4202e87ec6de1f721a9883147d67a1b9997056db1ae93",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: canyon-works-second-lever drain \u2014 connect.byWave 6 \u2192 8 and a per-contract beacon ladder (twist.economy.beaconLadder, priced at the one buildableCostAt seam in both engines) on e3-canyon-works only, per the owner's 'hard levels can be won' ruling; the two canyon idle-floor rows re-pointed (the widened deadline moves them), every other floor byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: canyon-works-second-lever drain — connect.byWave 6 → 8 and a per-contract beacon ladder (twist.economy.beaconLadder, priced at the one buildableCostAt seam in both engines) on e3-canyon-works only, per the owner's 'hard levels can be won' ruling; the two canyon idle-floor rows re-pointed (the widened deadline moves them), every other floor byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "5d5e9d5e100b38186a12475cd85ab2a3bdd3f8890c2203318ea2a518f7ee1830",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: e10s-2-squall-scheduler drain \u2014 the Ember Shore's Static squall phase machine in both engines (calm 60 s / telegraph 8 s / squall 25 s / recover 8 s, event-logged transitions) with a render-side stub and an ambience duck that is exactly 1 on every other map; no floor row exists for the E10 maps and every other floor is byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: e10s-2-squall-scheduler drain — the Ember Shore's Static squall phase machine in both engines (calm 60 s / telegraph 8 s / squall 25 s / recover 8 s, event-logged transitions) with a render-side stub and an ambience duck that is exactly 1 on every other map; no floor row exists for the E10 maps and every other floor is byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "a231d5ff989b9f21ec5a9f98c698c5a83f6cb7a8ab0a89739a9b089a035e87b1",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: portraits-e5-e10-batch drain \u2014 21 speaker ids registered in src/story/speakers.ts and one E9 beat re-keyed to the canal reeve (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
+      "cause": "src re-hash: portraits-e5-e10-batch drain — 21 speaker ids registered in src/story/speakers.ts and one E9 beat re-keyed to the canal reeve (story presentation only; the sim, contracts and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "1b0485ceba550cbb8256d1ef5af20a6e6b7272561d4c75cb95a3531a759ee684",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: board-tape-gold drain \u2014 the headless secure snapshot reports the purse HELD at the secure tick (was lifetime panning), hash-neutral: all four heat-12 fixture reels reproduce their own eventLogHash; same era per F-1441-3",
+      "cause": "src re-hash: board-tape-gold drain — the headless secure snapshot reports the purse HELD at the secure tick (was lifetime panning), hash-neutral: all four heat-12 fixture reels reproduce their own eventLogHash; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "4125dc8c6bdd91205c3a1c3067f928534ea22b30c1326c2312bf95a361809fad",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: story-signal-gaps drain \u2014 boss-act/arrival/defeat signals emitted from inside the Salvage Claw, Old Digger and Quiet boss systems, run-return-town carries its contract id, a first-boot beat row, the first-boot key swept with the profile, one Hud per root (presentation signals only; the E1 null floors 21/21 and the played tapes byte-identical); same era per F-1441-3",
+      "cause": "src re-hash: story-signal-gaps drain — boss-act/arrival/defeat signals emitted from inside the Salvage Claw, Old Digger and Quiet boss systems, run-return-town carries its contract id, a first-boot beat row, the first-boot key swept with the profile, one Hud per root (presentation signals only; the E1 null floors 21/21 and the played tapes byte-identical); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "a703f20274408a88dc778c07c5da4a8590181c2851f3f6731329616c68df91a9",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: relay-valley-winnable drain \u2014 a per-contract hero grit (twist.hero.maxHpBonus, one reader in both engines, the progression clamp made grit-aware) set to 300 on e7-relay-valley only, per the owner's 'hard levels can be won' ruling; the two relay-valley idle-floor rows re-pointed and still losing, every other floor byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: relay-valley-winnable drain — a per-contract hero grit (twist.hero.maxHpBonus, one reader in both engines, the progression clamp made grit-aware) set to 300 on e7-relay-valley only, per the owner's 'hard levels can be won' ruling; the two relay-valley idle-floor rows re-pointed and still losing, every other floor byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "1e73faf916a5826e5e1dc6057217d82b824842421f82d1c9e12e2f029f552522",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: dome-basin-winnable drain \u2014 the reel envelope's byte axis priced honestly for order-array play (an additive per-tick surcharge in src/playbook/PlaybookFormat.ts; maxTicks and maxEntries unchanged, nothing that fitted stops fitting); no sim change, every floor byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: dome-basin-winnable drain — the reel envelope's byte axis priced honestly for order-array play (an additive per-tick surcharge in src/playbook/PlaybookFormat.ts; maxTicks and maxEntries unchanged, nothing that fitted stops fitting); no sim change, every floor byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "338b656d5e6ceef6439b43e6ff5e87daa3fbe2cffed3cbb7fb611c5fdec8a2ca",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: e10s-3-preserve-consumer drain \u2014 the Ember Shore's vent (warmth, stoke, the vent_guttered loss, the secure latch) in both engines, the doubled mote pressure applied during the squall, STOKE as a targetless CONTEXT_ACTION, the landed dependency status; no floor row exists for the E10 maps and every other floor is byte-identical; same era per F-1441-3",
+      "cause": "src re-hash: e10s-3-preserve-consumer drain — the Ember Shore's vent (warmth, stoke, the vent_guttered loss, the secure latch) in both engines, the doubled mote pressure applied during the squall, STOKE as a targetless CONTEXT_ACTION, the landed dependency status; no floor row exists for the E10 maps and every other floor is byte-identical; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "84b28f47849628e8d2cf4c8975f89d5e87f2315847ef4e90dc19f3749464b122",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: browser-door-held-gold drain \u2014 the browser door submits and verifies the purse HELD at the secure tick (five submit sites, RunManager's snapshot, the browser instrument); hash-neutral by construction (the event log's gold was always the held purse) and by measurement; same era per F-1441-3",
+      "cause": "src re-hash: browser-door-held-gold drain — the browser door submits and verifies the purse HELD at the secure tick (five submit sites, RunManager's snapshot, the browser instrument); hash-neutral by construction (the event log's gold was always the held purse) and by measurement; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "ce555f66a0ad92cf103adce14d18544bf70c1d338c95b75793fd92ed7924d219",
       "pinnedAt": "2026-09-06",
-      "cause": "content re-hash: e10s-4-ember-shore-door drain \u2014 the Ember Shore's four cooling-vein harvest anchors, bench seeds e10-ember-shore-01/-02 and their losing idle floors, the mask table, admission earned by the public-verb prover (both seeds secured twice); harvestFreeObjective retired with the anchors per the launchable guard's own remedy; no src change; same era per F-1441-3",
+      "cause": "content re-hash: e10s-4-ember-shore-door drain — the Ember Shore's four cooling-vein harvest anchors, bench seeds e10-ember-shore-01/-02 and their losing idle floors, the mask table, admission earned by the public-verb prover (both seeds secured twice); harvestFreeObjective retired with the anchors per the launchable guard's own remedy; no src change; same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "7984269ea5ef422a21635c6c429104fca5945ca29a529b93847930098e080b93",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: the copy revision \u2014 eight chapter beats re-keyed to their own cast's voice and portraits (story presentation only; the sim and every replay byte-identical); same era per F-1441-3",
+      "cause": "src re-hash: the copy revision — eight chapter beats re-keyed to their own cast's voice and portraits (story presentation only; the sim and every replay byte-identical); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "465ada3a7009ffcfb92ec7550f33ba133da7704fd44d04955368dcfaec2f9130",
       "pinnedAt": "2026-09-06",
-      "cause": "src re-hash: hero-move-verb drain \u2014 the MOVE_HERO standing order (riders steer the hero through the same intents path a human's keys take, in both engines; refused HERO_NOT_YOURS where a human holds the hero; additive, every floor byte-identical, tapes replay); same era per F-1441-3",
+      "cause": "src re-hash: hero-move-verb drain — the MOVE_HERO standing order (riders steer the hero through the same intents path a human's keys take, in both engines; refused HERO_NOT_YOURS where a human holds the hero; additive, every floor byte-identical, tapes replay); same era per F-1441-3",
       "aliases": []
     },
     {
       "engineHash": "91dbc88a42a40eb89b4cdb715db4621672152fc0fe121de6c785e4c3b3b544e1",
       "pinnedAt": "2026-09-06",
       "cause": "portraits-e5-e10-generated: the ten generated E5/E8/E10 plates registered as speakers, four beats re-keyed and three rewritten in first person (story presentation only; no sim change), stacked on hero-move-verb 465ada3a",
+      "aliases": []
+    },
+    {
+      "engineHash": "70c31bbbb782ee669ee254bafb04715ad2583727e04fdf34a39881d3c065d7be",
+      "pinnedAt": "2026-09-06",
+      "cause": "mare-claim-air-prevalent: the Mare Claim's air wall rules the whole ride, authored per contract (regolithRequired 4, regolithWindowWaves 4; E8PhysicsSystem consumer, now.air.regolith view fields), stacked on portraits 91dbc88a",
       "aliases": []
     }
   ],

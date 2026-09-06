@@ -82,12 +82,18 @@ const RIDES = [
     // it: no `crossing` block, no `eclipse` block, the same hash.
     contract: 'e8-mare-claim',
     seed: 'e8-mare-claim-01',
-    node: { eventLogHash: 'fnv1a32:1a62757f', secured: false, waves: 2, timeMs: 81_233, kills: 32 },
+    // RE-POINTED 2026-09-06 by `tasks/mare-claim-air-prevalent.md` (owner ruling: "no, this has
+    // to be more prevalent"), from `fnv1a32:1a62757f` and `required: 1`. Every outcome field is
+    // unmoved — the idle floor still loses at wave 2 with 32 kills — and only the hash moved,
+    // because the Mare Claim's `atmosphere` block now carries the authored gate and the window.
+    // The eclipse row above is DELIBERATELY untouched: it runs `E8SuitAirSystem`, which this
+    // slice's firewall forbids changing, and its gate is still the shared default of one.
+    node: { eventLogHash: 'fnv1a32:32f62335', secured: false, waves: 2, timeMs: 81_233, kills: 32 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
     air: {
       wall: 'suit-timer',
       suit: { seconds: 0, empty: true, drainedTotal: 60 },
-      regolith: { grounds: 6, required: 1, worked: [] },
+      regolith: { grounds: 6, required: 4, worked: [] },
     },
   },
 ] as const;

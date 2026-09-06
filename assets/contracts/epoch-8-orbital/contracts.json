@@ -182,6 +182,10 @@
       },
       "twist": {
         "clockTicks": 18000,
+        "atmosphere": {
+          "regolithRequired": 4,
+          "regolithWindowWaves": 4
+        },
         "enemyRoster": [
           { "id": "scrap_corsair", "label": "Scrap Corsair" },
           { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" }
@@ -206,7 +210,9 @@
         "rules": [
           "The crater rim stands at height six above the mare flat.",
           "Seven surveyed build grounds span the rim and mare flat.",
-          "Waves enter from the north, west, and east."
+          "Waves enter from the north, west, and east.",
+          "The claim is not made until four of the six regolith grounds are worked with air still in the suit.",
+          "Only one ground counts in each four-wave window, so the run is made in trips; the suit fills only inside a breathing dome."
         ],
         "geographyLine": "A height-six crater rim rings a height-zero mare with dome pads, regolith fields, a lava-tube mouth, launch pad, and eastbound mass-driver rail."
       }

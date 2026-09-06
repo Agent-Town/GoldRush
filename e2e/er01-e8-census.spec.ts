@@ -38,7 +38,14 @@ const EXPECTED_DEPENDENCY: Record<string, string> = {
 // hero) belongs to the ENGINE, not to a map. The list is `rules.sort(byId)`, so it lands
 // alphabetically and no other row moved. Measured on this tree, not assumed.
 const EXPECTED_RULES: Record<string, string[]> = {
-  'e8-mare-claim': ['build_zones', 'hero_orders'],
+  // RE-POINTED 2026-09-06 by `tasks/mare-claim-air-prevalent.md` (owner ruling: "no, this has to
+  // be more prevalent"), from `['build_zones']`. The Mare Claim's air wall now PUBLISHES its rule
+  // — the gate of four grounds and the four-wave window a rider must plan the ride around — rather
+  // than leaving a rider to discover it from `now.air` alone. Sourced from the consumer, so the
+  // row cannot promise a gate the run does not hold. The three sibling rows below are untouched:
+  // they run `E8SuitAirSystem`, whose own manifest row is that slice's to write.
+  // DRAIN 2026-09-06: unioned with hero-move-verb's `hero_orders` row (main), order as the manifest emits it.
+  'e8-mare-claim': ['air_wall_regolith', 'build_zones', 'hero_orders'],
   // A4's consumer is contract-gated, not epoch-gated, and the Far Side declares
   // `twist.signalSuppression` — so this row was ALREADY true before A7 touched anything.
   // Measured, not assumed: the first draft of this table guessed `['build_zones']` here and the
