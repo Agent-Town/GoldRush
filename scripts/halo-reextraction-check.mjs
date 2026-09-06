@@ -41,7 +41,10 @@ try {
   fs.writeFileSync(SWEEP, savedSweep);
 }
 
-assert.equal(current.scanned, 1335, 'processed PNG denominator moved');
+// F-PORT-4 again (2026-09-06, portraits-e5-e10-generated-batch): ten more full-bleed, fully opaque
+// townsfolk portraits (the E5 cast, the He-3 assayer, and four of the E10 cast) - 0 transparent px
+// apiece, so still no halo candidates - move the denominator 1335 + 10 = 1345, measured on the tree.
+assert.equal(current.scanned, 1345, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),

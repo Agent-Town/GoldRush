@@ -202,10 +202,11 @@ test('a player-selected Deep Sky town presents the boarding and the Long Table b
   expect(boarding.text).toContain('the laugh was a yes');
   await shot(page, testInfo, 'boarding');
 
-  // A cast beat at its own trigger: the Baron who does not board, spoken by the preacher.
+  // A cast beat at its own trigger: the Baron who does not board, and since
+  // portraits-e5-e10-generated-batch he says it himself instead of being reported by the preacher.
   await seekBeat(page, 'e10-baron-stays');
   const baron = await cardSnapshot(page);
-  expect(baron.speaker).toBe('preacher');
+  expect(baron.speaker).toBe('baron-e10');
   expect(baron.text).toContain('Maybe it runs out there');
   await shot(page, testInfo, 'baron-stays');
 
