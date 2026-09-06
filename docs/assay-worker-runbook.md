@@ -73,6 +73,75 @@ sudo systemctl restart gold-rush-assay
 
 To rotate the shared secret, stop the worker, replace the Cloudflare Pages secret `ASSAY_WORKER_SECRET`, update `/etc/gold-rush-assay.env`, then start the worker. Pending rows remain queued during the short stop. Confirm the first poll has no `unauthorized` backoff before retiring the old secret from any operator password store.
 
+## Lineage re-assay: when a contract's composition changes
+
+ADR-004 (owner ruling 2026-09-06, verbatim: *"my initial idea was to have seasons and change things
+from season to season to stay fair to the participants, we are now in the early release phase, we can
+act freely"*). Until the first season boundary, the boards carry only standings that replay under the
+current engine. When a contract's composition moves after riders verified rows on it, those rows are
+put back through the assay: the ones that replay stay verified with their original first-secure date,
+the ones that do not are **retired** with a lineage reason and kept in the almanac. Nothing is deleted.
+
+### The verb
+
+```
+POST /api/standings/reassay
+x-assay-key: <ASSAY_WORKER_SECRET>
+content-type: application/json
+
+{ "epochId": "<epochId>", "contractId": "<contractId>", "reason": "<why, <=256 chars>" }
+```
+
+| | |
+| --- | --- |
+| Auth | the assayer's own shared secret, exactly as `/api/standings/assay-verdict`. No secret configured answers 503; a wrong key answers 401. |
+| Rate limit | none. The submission limiter lives in the POST-a-standing path only. |
+| Effect | every `verified` row of that contract with a reel flips to `pending`, gains a `lineage` mark carrying the reason, and re-enters the assay index. Scores, party, stack and `submittedAt` are untouched. |
+| Response | `{ ok, epochId, contractId, requeued, requeuedAt }` — `requeued` is how many rows were flipped. |
+| Idempotent | a second call while the assay is outstanding finds no `verified` rows, answers `requeued: 0` and writes nothing. A call *after* the assayer has re-verified rows will legitimately re-queue them again; that is the verb working, not a loop. |
+| Refusals | `bad_reassay` (400) for an unknown contract, a missing or over-long reason, or any extra key. |
+
+### What the assayer then does
+
+The worker's vocabulary is unchanged — it still posts only `verified`, `rejected` and `unassayable`,
+so the door and the droplet need no lockstep deploy. The county decides what a verdict *means* for a
+re-queued row:
+
+| Worker posts | Row was marked | County records |
+| --- | --- | --- |
+| `verified` | lineage | `verified`, same `submittedAt`, new `assayedAt`, mark cleared |
+| `rejected` | lineage | `retired`, reason `lineage: recorded under <tape engine hash>, no longer replays under <current engine hash>`, mark kept |
+| `unassayable` | lineage | `unassayable`, mark kept — an instrument failure proves nothing about replayability, so a later sweep can ask again |
+| anything | not marked | unchanged behaviour |
+
+A `retired` row leaves the ranked board and the rank mint, is counted in the board response's
+`retiredCount`, stays in storage, and keeps answering `?reel=<id>` (WATCH) and
+`?verdict=<id>` (the assay slip, which also serves the `lineage` cause). First-secure receipts in
+`assets/rotations/winnability-receipts.json` are history and never move (F-RECEIPTS-1).
+
+Retirement runs alongside the era-5 replayable-board law: `retiredCount` counts both a row retired by
+this rule and a row whose reel sits outside the current era's pins.
+
+### Finding the contracts that need it
+
+```sh
+node scripts/assay-lineage-sweep.mjs                    # dry: prints the plan, writes nothing
+node scripts/assay-lineage-sweep.mjs --contract e3-moth-season
+ASSAY_WORKER_SECRET=... node scripts/assay-lineage-sweep.mjs --commit   # calls the verb
+```
+
+The sweep reads `assets/engine-era.json`, finds each pin whose `cause` text names a contract, and asks
+the door for that contract's verified rows and their reels' recorded engine pins. A contract with any
+verified row recorded *before* its naming pin is a candidate. It is dry unless `--commit` is passed,
+and `--commit` requires `ASSAY_WORKER_SECRET`.
+
+The trigger is deliberately over-inclusive: a pin whose cause names a contract for an innocent reason
+costs one extra replay per row and nothing else, because the retirement is decided by the replay and
+never by the pattern match. A row that still replays is verified again with the date it earned.
+
+The sweep is **not** wired into `scripts/deploy.sh`. It is an operator step, run from the deployed
+checkout after `ASSAYER SYNCED` appears in the deploy log.
+
 ## Smoke production without writing verdicts
 
 Run from the deployed checkout. This reads the current production queue once, replays its returned rows, prints dry verdicts, and never calls the verdict endpoint:

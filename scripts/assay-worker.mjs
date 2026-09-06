@@ -149,16 +149,22 @@ async function assay(row) {
   // stranger, so they are named by basename on the wire and left whole in the log.
   const payload = { locator: row?.locator, verdict, ...(replayedHash ? { replayedHash } : {}),
     ...(verdict === 'verified' ? { securedSnapshot: result.securedSnapshot } : {}), ...(reason ? { reason: publicReason(reason) } : {}) };
+  let recorded;
   if (!dryRun) {
-    await requestJson(verdictUrl, {
+    const response = await requestJson(verdictUrl, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),
     });
+    // ADR-004: the worker's vocabulary is unchanged, but the county may record a `rejected` on a
+    // lineage-re-queued row as `retired` instead. The log says what was WRITTEN, not only what was
+    // posted, so `journalctl` never disagrees with the board about a retirement.
+    recorded = typeof response?.assay === 'string' && response.assay !== verdict ? response.assay : undefined;
   }
   process.stdout.write(`${JSON.stringify({
     locator: row?.locator ?? null,
     verdict,
+    ...(recorded ? { recorded } : {}),
     hashes: { claimed: claimedHash, replayed: replayedHash },
     wallMs: Math.round(performance.now() - startedAt),
     ...(reason ? { reason } : {}),

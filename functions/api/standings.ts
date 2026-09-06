@@ -77,6 +77,15 @@ type SubmittedParty = {
   riders: PartyRider[];
 };
 
+// THE LINEAGE MARK (ADR-004, owner ruling 2026-09-06). Set by the reassay verb when a contract's
+// composition changed under standings that were honestly verified; it says WHY the row went back
+// into the queue, and it is what tells the verdict endpoint that a `rejected` on this row is a
+// RETIREMENT (the county moved the ground) rather than a rider's failed claim.
+type LineageMark = {
+  reason: string;
+  requeuedAt: number;
+};
+
 type StoredRow = ScoreRow & {
   profileName: string;
   anonId: string;
@@ -90,13 +99,17 @@ type StoredRow = ScoreRow & {
   stack?: SelfDeclaredStack;
   party?: SubmittedParty;
   tape?: JsonRecord;
-  assay?: 'pending' | 'verified' | 'rejected' | 'unassayable';
+  // `retired` is a TERMINAL LINEAGE outcome, not a rider verdict: the reel no longer replays because
+  // its contract's composition moved after the ride. It is unranked, counted in `retiredCount`,
+  // stored forever (retention law) and still served by WATCH and the assay slip.
+  assay?: 'pending' | 'verified' | 'rejected' | 'unassayable' | 'retired';
   assayedAt?: number;
   assayHash?: string;
   assayReason?: string;
   orders?: number;
   securedSnapshot?: SecuredSnapshot;
   rotationId?: string;
+  lineage?: LineageMark;
 };
 
 type AssayLocator = {
@@ -178,6 +191,9 @@ const ASSAY_ROW_ID = /^[a-f0-9]{32}:[1-4]:\d{1,16}:[a-f0-9]{64}$/;
 const ASSAY_VERDICT_KEYS = new Set(['locator', 'verdict', 'replayedHash', 'reason', 'securedSnapshot']);
 const SECURED_SNAPSHOT_KEYS = new Set(['waves', 'timeAlive', 'gold']);
 const ASSAY_LOCATOR_KEYS = new Set(['epochId', 'contractId', 'tapeId', 'rowId']);
+const REASSAY_KEYS = new Set(['epochId', 'contractId', 'reason']);
+const LINEAGE_KEYS = new Set(['reason', 'requeuedAt']);
+const MAX_LINEAGE_REASON_LENGTH = 256;
 const DRILL_YARD_CONTRACT_ID = 'e1-drill-yard';
 const WALK_ERA_START = 1_786_167_061_000;
 const WALK_ERA_STAMP = '3dd7790d';
@@ -303,7 +319,14 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
       return error(cors, 400, 'bad_verdict', 'Verified replay hash does not match the submitted tape.');
     }
     if (!row) return error(cors, 404, 'assay_not_found', 'Pending assay not found.');
-    row.assay = body.verdict;
+    // THE LINEAGE RULE (ADR-004 rule 2). The worker's vocabulary is unchanged — it posts exactly the
+    // three verdicts it always posted, so the door and the droplet need no lockstep deploy. What
+    // changes is who the county blames: a `rejected` on a row the reassay verb re-queued is the
+    // COUNTY's composition change catching up with an honest standing, so it is recorded as
+    // `retired` naming both engines. An `unassayable` is an instrument failure and proves nothing
+    // about replayability, so the mark stays and a later sweep can ask again.
+    const retiring = body.verdict === 'rejected' && row.lineage !== undefined;
+    row.assay = retiring ? 'retired' : body.verdict;
     if (body.verdict === 'verified' && securedSnapshot) {
       Object.assign(row, securedSnapshot);
       row.securedSnapshot = securedSnapshot;
@@ -313,7 +336,11 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     delete row.assayHash;
     if (replayedHash !== null) row.assayHash = replayedHash;
     delete row.assayReason;
-    if ((body.verdict === 'rejected' || body.verdict === 'unassayable') && reason) row.assayReason = reason;
+    if (retiring) row.assayReason = lineageRetirementReason(row);
+    else if ((body.verdict === 'rejected' || body.verdict === 'unassayable') && reason) row.assayReason = reason;
+    // A row that replays again is current again: the mark is spent, and `submittedAt` — the row's
+    // first-secure date — was never touched by this path, so the standing keeps the day it earned.
+    if (body.verdict === 'verified') delete row.lineage;
     const competing = body.verdict === 'verified'
       ? rows.find((candidate) => candidate !== row && sameStandingOwner(candidate, row) && candidate.assay === 'verified')
       : undefined;
@@ -327,6 +354,71 @@ export async function onRequestAssayVerdict(context: StandingsContext): Promise<
     await syncAssayBoardIndex(kv, locator.epochId, locator.contractId, next);
     return json(cors, { ok: true, locator, assay: row.assay });
   });
+}
+
+/**
+ * THE RE-ASSAY VERB (ADR-004 rule 2, owner ruling 2026-09-06: "we are now in the early release
+ * phase, we can act freely"). When a contract's composition changes, every verified standing on it
+ * was earned on a board that no longer exists. This puts those rows back in the assay queue with a
+ * lineage mark; the assayer then decides each one on the evidence — replays again, or retires.
+ *
+ * It rides the assayer's own secret path (`assayRequest`), so it is authenticated exactly as the
+ * verdict endpoint is and is untouched by the submission rate limiter, which lives in `submitScore`
+ * alone. It is idempotent by construction: only `verified` rows are flipped, so a second call finds
+ * none and writes nothing.
+ */
+export async function onRequestStandingsReassay(context: StandingsContext): Promise<Response> {
+  return assayRequest(context, async (cors) => {
+    if (context.request.method !== 'POST') return error(cors, 405, 'method_not_allowed', 'POST only');
+    const body = await readJson(context.request);
+    const { epochId, contractId, reason } = body;
+    if (!hasOnlyKeys(body, REASSAY_KEYS) || typeof epochId !== 'string' || typeof contractId !== 'string'
+      || typeof reason !== 'string' || reason.length === 0 || reason.length > MAX_LINEAGE_REASON_LENGTH
+      || !knownContract(epochId, contractId)) {
+      return error(cors, 400, 'bad_reassay', 'Re-assay request not accepted.');
+    }
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    if (!kv) return error(cors, 503, 'board_unavailable', 'The county book is unavailable.');
+    const rows = await readBoard(kv, epochId, contractId);
+    const requeuedAt = Date.now();
+    const requeued = rows.filter((row) => row.assay === 'verified' && row.tape !== undefined);
+    for (const row of requeued) {
+      // The row's SCORE and `submittedAt` are left exactly as they are. A verified row's score is
+      // its own recorded `securedSnapshot`, which need not equal the reel's final outcome, so
+      // rewriting either would move a standing the county never re-measured.
+      row.assay = 'pending';
+      row.lineage = { reason, requeuedAt };
+      delete row.assayReason;
+    }
+    if (requeued.length > 0) {
+      const next = retainUnranked(rows, contractId);
+      await kv.put(boardKey(epochId, contractId), JSON.stringify(next));
+      await syncAssayBoardIndex(kv, epochId, contractId, next);
+    }
+    return json(cors, { ok: true, epochId, contractId, requeued: requeued.length, requeuedAt });
+  });
+}
+
+function lineageRetirementReason(row: StoredRow): string {
+  const meta = isRecord(row.tape?.meta) ? row.tape.meta : null;
+  const recorded = typeof meta?.engineHash === 'string' ? meta.engineHash : 'an unrecorded engine';
+  return `lineage: recorded under ${recorded}, no longer replays under ${engineEra.engineHash}`.slice(0, MAX_ASSAY_REASON_LENGTH);
+}
+
+function validateLineage(value: unknown): LineageMark | null {
+  if (!isRecord(value) || !hasOnlyKeys(value, LINEAGE_KEYS)) return null;
+  const requeuedAt = integerInRange(value.requeuedAt, 0, Number.MAX_SAFE_INTEGER);
+  return typeof value.reason === 'string' && value.reason.length > 0
+    && value.reason.length <= MAX_LINEAGE_REASON_LENGTH && requeuedAt !== null
+    ? { reason: value.reason, requeuedAt }
+    : null;
+}
+
+// A row leaves the ranked board for two different lineage reasons, and the county counts both under
+// one number: its reel's engine pin is not in the current era at all (the era-5 replayable-board
+// law), or its contract's composition moved and the re-assay retired it (ADR-004).
+function isRetiredRow(row: StoredRow): boolean {
+  return row.assay === 'retired' || (row.tape !== undefined && currentLineageRefusal(row.tape) !== null);
 }
 
 async function assayRequest(context: StandingsContext, handle: (cors: Record<string, string>) => Promise<Response>): Promise<Response> {
@@ -467,6 +559,9 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
       ...(row.assayedAt === undefined ? {} : { assayedAt: row.assayedAt }),
       ...(row.assayHash === undefined ? {} : { assayHash: row.assayHash }),
       ...(row.assayReason === undefined ? {} : { assayReason: row.assayReason }),
+      // The almanac's half of the lineage rule: a retired row says not only that it no longer
+      // replays but WHY the county came asking again, in the operator's own words.
+      ...(row.lineage === undefined ? {} : { lineage: row.lineage }),
     });
   }
   const difficultyParam = url.searchParams.get('difficulty');
@@ -494,7 +589,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   const board = ranked.map((row, index) => boardRow(row, index, heldOutFor(row, rows, contractId, rotation)));
   const rejectedCount = partition.filter((row) => row.assay === 'rejected'
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
-  const retiredCount = partition.filter((row) => row.tape !== undefined && currentLineageRefusal(row.tape) !== null
+  const retiredCount = partition.filter((row) => isRetiredRow(row)
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
   const probeCount = partition.filter((row) => row.stack?.harness === 'operator-probe'
     && (difficulty === 'all' || row.difficulty === difficulty)).length;
@@ -917,25 +1012,34 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   const tape = value.tape === undefined ? undefined : validateTape(value.tape, contractId, value.seed, difficulty);
   const submittedAt = integerInRange(value.submittedAt, 0, Number.MAX_SAFE_INTEGER);
   const assay = value.assay === undefined && tape ? 'pending'
-    : value.assay === 'pending' || value.assay === 'verified' || value.assay === 'rejected' || value.assay === 'unassayable' ? value.assay : undefined;
+    : value.assay === 'pending' || value.assay === 'verified' || value.assay === 'rejected'
+      || value.assay === 'unassayable' || value.assay === 'retired' ? value.assay : undefined;
   const assayedAt = value.assayedAt === undefined ? undefined : integerInRange(value.assayedAt, 0, Number.MAX_SAFE_INTEGER);
   const assayHash = typeof value.assayHash === 'string' && ASSAY_HASH.test(value.assayHash) ? value.assayHash : undefined;
   const assayReason = typeof value.assayReason === 'string' && value.assayReason.length <= MAX_ASSAY_REASON_LENGTH ? value.assayReason : undefined;
   const orders = value.orders === undefined ? undefined : integerInRange(value.orders, 0, Number.MAX_SAFE_INTEGER);
   const securedSnapshot = value.securedSnapshot === undefined ? undefined : validateSecuredSnapshot(value.securedSnapshot);
   const rotationId = value.rotationId === undefined ? undefined : typeof value.rotationId === 'string' ? value.rotationId : null;
-  if (submittedAt === null || tape === null || securedSnapshot === null
-    || (tape && assay !== 'verified' && !tapeMatchesScore(tape, score))
+  const lineage = value.lineage === undefined ? undefined : validateLineage(value.lineage);
+  // A re-queued row's score is the `securedSnapshot` the county measured at its verification, which
+  // is allowed to differ from the reel's final outcome (a run may continue past the secure). Without
+  // this clause the `pending` arm of the tape/score check would DELETE every goal-snapshot standing
+  // the reassay verb touched — the row would simply stop validating on the next read.
+  const snapshotBacked = securedSnapshot !== undefined && securedSnapshot !== null && sameSecuredSnapshot(score, securedSnapshot);
+  if (submittedAt === null || tape === null || securedSnapshot === null || lineage === null
+    || (tape && assay !== 'verified' && !(lineage && snapshotBacked) && !tapeMatchesScore(tape, score))
     || (assay === 'verified' && securedSnapshot && !sameSecuredSnapshot(score, securedSnapshot))) return null;
   if ((!tape && (value.assay !== undefined || value.assayedAt !== undefined || value.assayHash !== undefined || value.assayReason !== undefined))
     || (tape && !assay)
+    || (!tape && lineage !== undefined)
     || (value.assayedAt !== undefined && assayedAt === null)
     || (value.assayHash !== undefined && !assayHash)
     || (value.assayReason !== undefined && assayReason === undefined)
     || (value.orders !== undefined && orders === null)
     || rotationId === null
     || (rotationId !== undefined && rotationForSeed(contractId, value.seed as string)?.id !== rotationId)
-    || ((assay === 'verified' || assay === 'rejected') && (assayedAt === undefined || assayHash === undefined))
+    || ((assay === 'verified' || assay === 'rejected' || assay === 'retired') && (assayedAt === undefined || assayHash === undefined))
+    || (assay === 'retired' && assayReason === undefined)
     || (assay === 'unassayable' && (assayedAt === undefined || assayHash !== undefined || assayReason === undefined))) return null;
   return {
     ...score,
@@ -957,6 +1061,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
     ...(typeof orders === 'number' ? { orders } : {}),
     ...(securedSnapshot ? { securedSnapshot } : {}),
     ...(rotationId ? { rotationId } : {}),
+    ...(lineage ? { lineage } : {}),
   };
 }
 
@@ -973,7 +1078,7 @@ function rankedRows(rows: StoredRow[], contractId: string): StoredRow[] {
 function isRankedRow(row: StoredRow): boolean {
   return row.tape !== undefined && currentLineageRefusal(row.tape) === null
     && row.stack?.harness !== 'operator-probe'
-    && row.assay !== 'rejected' && row.assay !== 'unassayable';
+    && row.assay !== 'rejected' && row.assay !== 'unassayable' && row.assay !== 'retired';
 }
 
 function sameStandingOwner(left: StoredRow, right: StoredRow): boolean {
