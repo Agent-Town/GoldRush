@@ -33,3 +33,6 @@ Gravity/atmosphere tile params (GT extension) · breach/seal mechanics on the wa
 
 **Owner directive, 2026-09-06 (verbatim): "yes, same air for all space contracts - but I also never played the levels, so I dont know exactly".** The air wall rules the whole ride on all four maps (the Mare Claim shipped 2026-09-06 with `regolithRequired 4` / `regolithWindowWaves 4`; the Far Side, Low Orbit and the Eclipse follow through `e8-air-wall-all-maps`); the numbers come from measurement and a prover must secure before any wall ships.
 
+
+**Owner directive, 2026-09-07 (desk answer A1, verbatim): "I want space experiences of humans to need them having air. It has to be logical. If that means we have to change something ok."** Air is a real survival constraint for the human body in space, not a latch schedule: outside pressurised ground the rider's suit drains, at zero the body takes harm, refills happen only inside pressurised ground, and the geography must make that true (a crossing that is also a shelter is not a crossing). Implemented by `e8-air-logical`.
+
