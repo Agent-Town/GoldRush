@@ -1,0 +1,36 @@
+# Review: e8-air-wall-all-maps — the same air wall on every Orbital contract (scratch worktree, Claude Opus 5 implementer, attended drain 2026-09-06 evening)
+
+**Slice/branch/tip:** `e8-air-wall-all-maps` · `fix/e8-air-wall-all-maps` · commits `e0c92bbb9`, `ab83a0171`, `9dc160412` on base `e5f3ac820` · merged to main: see the ledger row (first-parent merge; collisions `package.json` (guard list) and the ledger; the lane's scratch `playwright.e8air.config.ts` dropped at the drain).
+**Verdict:** MERGED. Owner ruling 2026-09-06, verbatim: "yes, same air for all space contracts - but I also never played the levels, so I dont know exactly". The Mare Claim's arithmetic on all four maps (wave interval 30 s, a four-wave window is 120 s, five windows in a run, so four credits cannot exist before t = 360 s and one window is slack). The Eclipse takes the Mare Claim's rule verbatim through the same authored read (`twist.atmosphere: { regolithRequired: 4, regolithWindowWaves: 4 }`, 4 of 6 authored grounds); the Far Side and Low Orbit take the same wall through their own gate (`{ crossingRequired: 4, crossingWindowWaves: 4 }`: four credited entries of any authored zone, at most one per window, AND every authored zone still stood in on air, so the new latch is strictly stricter than the one it replaces; the Far Side authors one crater, so a re-entry in a later window credits again). One shared `src/systems/E8AirWindow.ts` serves both consumers; `now.air.crossing.{required, windowWaves, window, creditedThisWindow}` is published beside the regolith fields; the manifest publishes `air_wall_crossing` for the two crossing maps; the briefings state the number and the window.
+
+## The measurement, per map (heat 12 replayed on this tree vs the prover on seed -01)
+| map | heat 12's ride | the prover |
+|---|---|---|
+| Far Side | latch at 256 s under the old rule, NEVER under the new (1 credit of 4); suit never emptied, drained 201.0 s, one crater entry | SECURED w20 / 600 s / gold 50; latch at 375 s, four credits one per window, drained 251.2 s (+25 % air work), 0 breathless |
+| Low Orbit | latch 23 s old / 364 s new; suit never emptied, drained 94.2 s, 5 credits + 52 window-held entries | SECURED w20 / 600 s / gold 95; latch 366 s, all three decks, 0 breathless |
+| Eclipse | latch 5.0 s on `required: 1`; suit empty 387.5 of 585 s, 189 breathless pans; LOST w19 / 585.2 s | NOT SECURED: w19 / 588.7 s / gold 140; the latch CLOSES at 454 s with the run alive (grounds at 5 / 129 / 247 / 454 s), suit empty 1 s of 588, 0 breathless |
+
+**The honest measurement that decides the Eclipse (F-EAWA-1):** the same prover with the gate at 1, 2, 3 and 4 ends identically to the tick (w19 / 588.733 s / 895 kills / 140 gold), and heat 12's own `required: 1` ride died EARLIER. The wall is crossable there and is not what kills the run; the map is survival-bound: `Balance.turret.maxCount` 4 (`Balance.ts:535`), `Balance.beacon.maxCount` 6 (`:519`), one build line inside the beacon radius of the welded hero, so the tier-2 sink is the whole late game and the economy never reaches 150 at a view boundary. Lowering the gate would weaken the ruling and buy nothing, so `{4, 4}` ships and the Eclipse's winnability goes to its own slice (`eclipse-winnable`, authored from this review). Two prover variants were measured and were worse (F-EAWA-4).
+
+Proof tapes, twice byte-identical each: Far Side `fnv1a32:5595c0a8` (tape `4a081149`), Low Orbit `977775a6` (`6ec0ac0f`), Eclipse `ab543f56` (`c25e7fd1`), each reproduced exactly by `scripts/assay-replay-agent.mjs`. Floors: the six sibling rows moved with every outcome field unchanged (`5c30efd5→22c47125`, `47d63524→6870bf46`, `6e1931c2→088a929c`, `b77f104b→7953c1e9`, `466507ac→121b0402`, `1568e702→2659423c`), attribution measured both ways; the two Mare Claim rows are the control and did not move, which proves the shared-window refactor behaviour-identical.
+
+**ADR-004, per map:** the Far Side's Opus row (200) RETIRES (its tape replays but credits 1 of 4 and re-assays `secured true → false`, w20 → 22, 600 → 672.3 s); the Low Orbit's Opus row (200) SURVIVES (all four outcome fields unmoved, the latch simply moves 23 → 364 s: two of its harvest anchors sit inside the decks); the Eclipse is already unclaimed and its tape's outcome is unmoved. The drain re-assays the two maps after the deploy.
+
+## Evidence
+| Gate | Where | Result |
+|---|---|---|
+| Guards | worktree | new `e8-crossing-gate-override` 7/7; `e8-regolith-gate-override` 6/6; `e8-remaining-maps` 10/10 (F-MCAP-4 stays cured); `e8-mare-claim-physics` 5/5; `e3-mask-tables` 30/30; `view-schema` 3/3; `skillmd-guard` 16/16; `door-admission-ratchet`; `same-game-audit` 3/3; `battery-manifest` 5/5; `no-emdash` |
+| tsc / build | worktree | clean / green |
+| e2e | worktree, port 5305, both projects | `e8-remaining-maps-parity` + `er01-e8-census` + `e8-mare-claim-physics-parity` 18 passed; `contract-briefings` 14 passed; plain no-`?debug` cards at 390 px for all three (the siblings need the unlock chain; the shooter uses the product's own `gr.previewUnlockAll.v1` switch, F-EAWA-3) |
+| Engine era | worktree hash `313f2967…` | re-measured on the merged tree (`f28903f4`, main had moved) and pinned by the drain |
+| Attended on the merged tree | see the drain commit and the ledger row | tsc clean; era-5 pin `f28903f4` 5/5; build green; eleven guard files 108/108 (the crossing guard's token added to the runner list at the drain: the lane had appended it behind `nul-audit`, the inert tail F-SCR-1 named); `null-floor-anchors --check` only the pre-existing eraStamp; e2e `e8-remaining-maps-parity` + `er01-e8-census` + `e8-mare-claim-physics-parity` + `contract-briefings` 32 passed (1.5 m) both projects |
+
+## Merge classification
+Base `e5f3ac820`; main moved by three merges, none touching these engine files. `src/systems/E8SuitAirSystem.ts`, `src/systems/E8PhysicsSystem.ts`, `src/meta/ContractFamilies.ts`, `src/agent/View.ts`, `src/agent/MechanicsManifest.ts`, `assets/contracts/epoch-8-orbital/contracts.json`, `assets/contracts/null-floors.json`, `scripts/e8-regolith-gate-override.test.mjs`, `scripts/e8-remaining-maps.test.mjs`, `e2e/e8-remaining-maps-parity.spec.ts`, `e2e/er01-e8-census.spec.ts`: LANE-TOUCHED. `src/systems/E8AirWindow.ts`, `scripts/e8-crossing-gate-override.test.mjs`, `artifacts/e8-air-wall-all-maps/*` (24 files, 2.4 MB): NEW. `package.json`: unioned. `tasks/BACKLOG.md`: unioned.
+
+## Findings
+- **F-EAWA-1 (OWNER-VISIBLE, slice authored):** the Eclipse is survival-bound, not air-bound; a balance ruling per contract (fort caps or a build ground), never a global number.
+- **F-EAWA-2:** on Low Orbit the crossing zones ARE the shelters (`E8SuitAirSystem.ts:194-199`), so the wall there is a schedule (four traverses of the spine across the run), not an air budget; making it a budget needs a geography change.
+- **F-EAWA-3:** the three siblings are not plain-bootable without the unlock chain (`ContractUnlock.ts:159` clears a staged launch of a locked contract).
+- **F-EAWA-4:** two prover variants measured and worse; recorded in the prover's header.
+- Drain note: the lane appended its guard behind `nul-audit` (the inert tail of F-SCR-1, cured on main after the lane was cut); the drain moved it into the runner list.
