@@ -63,6 +63,17 @@ test('shot bursts do not restart the E1 music loop', async ({ page }) => {
   page.on('pageerror', (error) => errors.push(error.message));
   await seedProfile(page);
   await page.goto('/?debug&nowaves&nolevel&nopause&seed=mu-02-shots');
+  // WAIT FOR THE GAME BEFORE THE UNLOCKING CLICK (F-AUDIO-2 diagnosis, 2026-09-07). This was the
+  // "Received array: []" red, 2 of 2 projects on the uncured build and on this one: `SoundSystem`
+  // attaches its `pointerdown`/`keydown` unlock listeners in its CONSTRUCTOR (SoundSystem.ts:114),
+  // and this test used to click one frame after `goto`, before the Game — and therefore the
+  // SoundSystem — existed. The gesture landed on nothing, `unlocked` stayed false for the whole run
+  // (probed: frame 908, runState "playing", requests 0, `__GR_AUDIO_DIAGNOSTICS__` never published),
+  // so the era loop could never start and `audio.loops` stayed empty until the poll timed out. It is
+  // the harness, not the product: no player can click a canvas the game has not built yet, and the
+  // sibling test at :46 has always waited for a frame first for exactly this reason. Not the
+  // snapshot F-AUDIO-2 names, and not the F-AUDIO-3 music hold — neither had run at all.
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0)).toBeGreaterThan(0);
   await page.locator('#game-canvas').click({ position: { x: 40, y: 40 } });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.loops)).toContain('era-e1-frontier-loop');
   await expect

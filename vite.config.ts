@@ -55,6 +55,34 @@ export default defineConfig(() => {
       },
     },
   },
+  // THE WORKER BUNDLE IS A SECOND BUILD, AND IT INHERITS NOTHING BY DEFAULT (F-CELL-5, 2026-09-07).
+  // `src/replay/BrowserAgentTapeWorker.ts` is bundled by its own Rollup pass. Until this block
+  // existed that pass saw neither `plugins` nor `build.rollupOptions.output`, with two measured
+  // consequences on a `GR_RELEASE=e1` build:
+  //   1. CONTENT. The E1 narrowing in `releaseE1ContentPlugin` never reached the worker's copy of
+  //      the module graph, so its `char-*.png` glob resolved to every era's sheet cells and its
+  //      contract imports kept their `epoch-2..10` ids. `npm run build:release` was RED on clean
+  //      main for exactly this — "later epoch manifest id in assets/BrowserAgentTapeWorker-*.js"
+  //      (scripts/assert-release-build.mjs:16). The deploy never caught it because
+  //      `scripts/deploy.sh:80` runs `npm run build`, which does not call that assertion.
+  //   2. SIZE. The worker's assets fell back to Vite's default `assets/[name]-[hash][extname]`, so
+  //      they could not collide with (and be deduped against) the main pass's `-diet-` names:
+  //      1,231 PNGs / 96,097,301 B of un-dieted duplicates, roughly doubling the deployed asset
+  //      count for files no first-town request ever asks for.
+  // `plugins` is written as the same two constructors in the same order as the main list so the two
+  // passes cannot drift apart silently; Vite requires fresh instances per bundling, which is why it
+  // is a function. `craftingQueuePlugin()` only defines dev-server hooks, so it is inert here and
+  // present for that symmetry alone.
+  worker: {
+    plugins: () => [releaseE1ContentPlugin(releaseE1), craftingQueuePlugin()],
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name]-[hash]-diet-${assetDietFingerprint}.js`,
+        chunkFileNames: `assets/[name]-[hash]-diet-${assetDietFingerprint}.js`,
+        assetFileNames: `assets/[name]-[hash]-diet-${assetDietFingerprint}[extname]`,
+      },
+    },
+  },
   };
 });
 
@@ -160,10 +188,9 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
         "'../../assets/audio/raw/*.mp3'",
         "['../../assets/audio/raw/*.mp3', '!../../assets/audio/raw/dredge-queen-arrival-horn.mp3', '!../../assets/audio/raw/e5-deepwater-ambience-loop.mp3', '!../../assets/audio/raw/era-e2-steamworks-loop.mp3', '!../../assets/audio/raw/era-e3-voltage-loop.mp3', '!../../assets/audio/raw/homemaker-done-chime.mp3', '!../../assets/audio/raw/old-digger-tape-swap.mp3', '!../../assets/audio/raw/t4-*.mp3', '!../../assets/audio/raw/t5-*.mp3']",
       );
-      transformed = transformed.replaceAll(
-        "['../../assets/processed/terrain-*.png', '../../assets/processed/ter-*.png', '../../assets/processed/prop-spring-pond.png']",
-        "['../../assets/processed/terrain-*.png', '../../assets/processed/prop-spring-pond.png']",
-      );
+      // (The `ter-*.png` narrowing that used to live here is gone with F-CELL-4: `src/world/Terrain.ts`
+      // no longer globs that pattern at all, in any variant, so the search string could never match
+      // again and a dead replacement reads like a narrowing that is still happening.)
       transformed = transformed.replace(
         /\.\.\/\.\.\/assets\/processed\/icons-e2-r0c\d\.png/g,
         '../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png',

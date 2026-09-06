@@ -82,7 +82,23 @@ type EnemySpritePresentation = {
   tintFromVariant: boolean;
 };
 
-const processedE6SpriteCells = import.meta.glob('../../assets/processed/char-e6-*-sheet-walk8-r*c*.png');
+// THE FOUR CELL GLOBS BELOW ARE BUILD-TIME PRESENCE PROBES, NOT LOADERS (F-CELL-4, 2026-09-07).
+// Nothing here ever FETCHES a cell; each `e<N>EnemySpriteBinding()` only asks whether eight keys
+// exist, to decide `placeholder`. A LAZY glob still pays for the loading it never does: Vite emits
+// one ~116-byte JS module per matched file, and the dev-variant build carried 72 of them
+// (`char-e6..e9-*-sheet-walk8-r<row>c<col>-<hash>-diet-<fp>.js`) that nothing on any code path
+// requests. `eager: true` resolves the same URLs at build time and inlines them into this chunk, so
+// the record — and the boolean semantics that read it — are unchanged while the per-cell modules go
+// to zero. Same cure, same reasoning as `src/assets/SpriteAnimator.ts` (read the law comment there).
+// Keep each pattern literal byte-identical: the release build rewrites all four to a no-match path
+// (vite.config.ts, `replacements`), which leaves an empty record and `placeholder: true` — correct,
+// because no E6-E9 enemy exists in the E1 release. The options are repeated inline on purpose:
+// Vite static-analyses `import.meta.glob` and rejects a shared `const` for either argument.
+const processedE6SpriteCells = import.meta.glob<string>('../../assets/processed/char-e6-*-sheet-walk8-r*c*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 const E6_ENEMY_SPRITE_BINDINGS = {
   feral_toaster: { slot: assetSlots.charE6FeralToaster, sheet: 'char-e6-feral_toaster-sheet-walk8.png' },
   lawn_shepherd: { slot: assetSlots.charE6LawnShepherd, sheet: 'char-e6-lawn_shepherd-sheet-walk8.png' },
@@ -99,7 +115,11 @@ export function e6EnemySpriteBinding(variantId: string) {
   return { ...binding, placeholder };
 }
 
-const processedE7SpriteCells = import.meta.glob('../../assets/processed/char-e7-*-sheet-walk8-r*c*.png');
+const processedE7SpriteCells = import.meta.glob<string>('../../assets/processed/char-e7-*-sheet-walk8-r*c*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 const e7SpriteBindings = {
   rogue_automaton: { slot: assetSlots.charE7RogueAutomaton, sheet: 'char-e7-rogue_automaton-sheet-walk8.png' },
   data_rustler: { slot: assetSlots.charE7DataRustler, sheet: 'char-e7-data_rustler-sheet-walk8.png' },
@@ -115,7 +135,11 @@ export function e7EnemySpriteBinding(variantId: string) {
   return { ...binding, placeholder };
 }
 
-const processedE8SpriteCells = import.meta.glob('../../assets/processed/char-e8-*-sheet-walk8-r*c*.png');
+const processedE8SpriteCells = import.meta.glob<string>('../../assets/processed/char-e8-*-sheet-walk8-r*c*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 const e8SpriteBindings = {
   scrap_corsair: { slot: assetSlots.charE8ScrapCorsair, sheet: 'char-e8-scrap_corsair-sheet-walk8.png' },
   sun_glare_shambler: { slot: assetSlots.charE8SunGlareShambler, sheet: 'char-e8-sun_glare_shambler-sheet-walk8.png' },
@@ -131,7 +155,11 @@ export function e8EnemySpriteBinding(variantId: string) {
   return { ...binding, placeholder };
 }
 
-const processedE9SpriteCells = import.meta.glob('../../assets/processed/char-e9-*-sheet-walk8-r*c*.png');
+const processedE9SpriteCells = import.meta.glob<string>('../../assets/processed/char-e9-*-sheet-walk8-r*c*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 const e9SpriteBindings = {
   feral_terraformer: { slot: assetSlots.charE9FeralTerraformer, sheet: 'char-e9-feral_terraformer-sheet-walk8.png' },
   claim_jump_prospect_drone: { slot: assetSlots.charE9ClaimJumpProspectDrone, sheet: 'char-e9-claim_jump_prospect_drone-sheet-walk8.png' },

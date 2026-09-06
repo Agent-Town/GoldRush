@@ -28,6 +28,19 @@ test('the era loop rides through pause without restarting', async ({ page, brows
   const before = await read();
   expect(before.starts).toBe(1);
 
+  // F-AUDIO-2: the published diagnostics object must report loopElapsedSeconds as a CLOCK. Held
+  // across a wait, a snapshot returns the same number twice; a getter reads the audio context at
+  // read time. Every other assertion in this file polls a FRESH publish, so only holding one
+  // object can tell the two apart — and without this, dropping the getter reds nothing.
+  const clock = await page.evaluate(async () => {
+    const held = window.__GR_AUDIO_DIAGNOSTICS__!;
+    const loop = held.loops.find((name) => name.startsWith('era-'))!;
+    const first = held.loopElapsedSeconds[loop] ?? -1;
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    return { first, second: held.loopElapsedSeconds[loop] ?? -1 };
+  });
+  expect(clock.second, 'loopElapsedSeconds must be read from the audio clock, not frozen at the last audio event').toBeGreaterThan(clock.first);
+
   await page.keyboard.press('KeyP');
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused)).toBe(true);
   await page.waitForTimeout(1500);
