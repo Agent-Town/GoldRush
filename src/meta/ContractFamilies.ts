@@ -22,7 +22,7 @@ import deepskyContracts from '../../assets/contracts/epoch-10-deepsky/contracts.
 import deepskyManifest from '../../assets/contracts/epoch-10-deepsky/manifest.json' with { type: 'json' };
 import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
 import { e7SignalExitBeatReady } from '../systems/E7SignalSystem';
-import type { BuildableId } from '../game/buildables';
+import { BEACON_LADDER_MAX_RUNGS, type BuildableId } from '../game/buildables'; // the ladder's rung cap rides this line so no cited coordinate below moves (`ContractFamilies.ts:1345`, tasks/goals.json)
 
 const RELEASE_E1 = typeof __GR_RELEASE_E1__ !== 'undefined' && __GR_RELEASE_E1__;
 
@@ -752,7 +752,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number } }; // E4 and E10's harvest-free declaration and E3's per-contract purse ride the trailing intersection so no cited line below moves
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] } }; // E4 and E10's harvest-free declaration and E3's per-contract purse and beacon ladder ride the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -2603,9 +2603,46 @@ function validateContractEconomy(value: unknown, reasons: ContractDescriptorReas
     addDescriptorReason(reasons, reason('field_section', 'The economy section has the wrong shape.', 'twist.economy'));
     return;
   }
-  addUnknownFieldReasons(value, ['bankCap'], 'twist.economy', reasons);
+  addUnknownFieldReasons(value, ['bankCap', 'beaconLadder'], 'twist.economy', reasons);
   const bankCap = value.bankCap;
   if (typeof bankCap !== 'number' || !Number.isInteger(bankCap) || bankCap <= 0) {
     addDescriptorReason(reasons, reason('field_number', 'A contract purse must be a positive whole number of gold.', 'twist.economy.bankCap'));
+  }
+  validateContractBeaconLadder(value.beaconLadder, reasons);
+}
+
+/**
+ * THE PER-CONTRACT BEACON LADDER (owner ruling 2026-09-06, verbatim: "lets adjust the policy so
+ * the hard levels can be won"), the door half of `twist.economy.beaconLadder`. Grep
+ * `validateContractBeaconLadder` to find both ends.
+ *
+ * WHAT IT REFUSES, and why each refusal is a DOOR refusal rather than a runtime clamp: the ladder
+ * a contract authors is the ladder a rider is CHARGED and the ladder the card PRINTS, so anything
+ * that would make those three disagree must never reach an engine.
+ *   - a non-list, an empty list, or more rungs than `beacon.maxCount` can ever buy — the last rung
+ *     would be unreachable and the printed total a lie;
+ *   - a fractional, zero or negative price — gold is whole, and a free or negative beacon is a
+ *     different mechanic, not a price;
+ *   - a rung that is not a multiple of 5 — `MechanicsManifest` publishes `costRule: 'ceil-to-5'`
+ *     for this buildable and `public/skill.md` tells every rider that prices round up to 5s;
+ *   - a ladder that goes DOWN — every price curve in the game climbs, and a rider that assumes it
+ *     would mis-plan a descent.
+ * A ladder shorter than `maxCount` is LAWFUL: `beaconCost` holds the last rung, which is how a
+ * contract prices a flat tail deliberately.
+ */
+function validateContractBeaconLadder(value: unknown, reasons: ContractDescriptorReason[]): void {
+  if (value === undefined) return;
+  const rungs = Array.isArray(value) ? value : null;
+  const wellFormed = rungs !== null
+    && rungs.length > 0
+    && rungs.length <= BEACON_LADDER_MAX_RUNGS
+    && rungs.every((rung) => typeof rung === 'number' && Number.isInteger(rung) && rung > 0 && rung % 5 === 0)
+    && rungs.every((rung, index) => index === 0 || rung >= rungs[index - 1]);
+  if (!wellFormed) {
+    addDescriptorReason(reasons, reason(
+      'field_number',
+      `A beacon ladder must be 1 to ${BEACON_LADDER_MAX_RUNGS} non-decreasing prices, each a positive whole multiple of 5 gold.`,
+      'twist.economy.beaconLadder',
+    ));
   }
 }

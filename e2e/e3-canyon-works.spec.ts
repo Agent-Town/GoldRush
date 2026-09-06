@@ -50,7 +50,11 @@ test('strings the gorge, holds the night, and restores a cut span', async ({ pag
   }, PYLONS)).toEqual([true, true, true, true, true, true]);
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.2));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.canyonWorks)).toEqual({
-    powered: 2, required: 2, byWave: 6, complete: true, failed: false,
+    // byWave MIRRORS the authored `twist.powerGrid.connect.byWave`, widened 6 -> 8 by the owner's
+    // 2026-09-06 ruling ("lets adjust the policy so the hard levels can be won"). Measured on the
+    // shipped contract: the latch now fails with wave 9 at t = 270.03
+    // (`artifacts/canyon-works-second-lever/deadline-probe.json`).
+    powered: 2, required: 2, byWave: 8, complete: true, failed: false,
   });
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.power)).toMatchObject({
     totalSupplyWatts: 26,

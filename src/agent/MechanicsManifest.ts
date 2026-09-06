@@ -1,7 +1,7 @@
 import { listEpochs, loadContract, loadEpoch, type ContractEscortMode, type ContractManifest } from '../meta/ContractFamilies';
 import { Balance } from '../game/Balance';
 import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSystem';
-import { buildableBlurb, getBuildableDef, type BuildableId } from '../game/buildables';
+import { beaconCost, buildableBlurb, buildableCostAt, getBuildableDef, resolveBeaconLadder, type BuildableId } from '../game/buildables';
 import { PicnicHoldSystem, PICNIC_ACTIVE_DEFENSE_SECONDS, PICNIC_HOLD_RADIUS, PICNIC_HOLD_SECONDS, PICNIC_STAKE_PRESS_WEIGHT } from '../systems/PicnicHoldSystem';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
@@ -89,6 +89,9 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
   const tile = contract.tileParams;
   const twist = contract.twist;
   const practice = contract.practice;
+  // THE PER-CONTRACT BEACON LADDER travels as a value, never as module state: this function prices
+  // any contract handed to it, including one that is not the contract being played.
+  const beaconLadder = resolveBeaconLadder(twist.economy?.beaconLadder);
 
   if (tile.river) rules.push(rule('river', 'tileParams.river'));
   if (tile.ford) {
@@ -811,6 +814,25 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       rule: 'income-above-the-purse-is-refused',
     }));
   }
+  // THE PER-CONTRACT BEACON LADDER (owner 2026-09-06, "lets adjust the policy so the hard levels
+  // can be won"). `buildables[].costs` already carries the prices a rider is charged; this rule
+  // exists so a rider can SEE that this claim's prices are authored rather than the usual curve,
+  // and can compare the two totals without re-deriving `Balance.beacon` itself. Absent the twist
+  // the rule is absent and `buildables[].costs` is the default curve, unchanged.
+  if (beaconLadder) {
+    // Published over EVERY rung the claim can raise, not just the rungs the field lists: a ladder
+    // shorter than `maxCount` holds its last price, so the charge schedule is the honest ladder.
+    const rungs = getBuildableDef('sentry_beacon')?.maxCount ?? beaconLadder.length;
+    const ladder = Array.from({ length: rungs }, (_, index) => beaconCost(index, beaconLadder));
+    const defaultLadder = Array.from({ length: rungs }, (_, index) => beaconCost(index));
+    const sum = (prices: readonly number[]): number => prices.reduce((total, price) => total + price, 0);
+    rules.push(rule('contract_beacon_ladder', 'twist.economy.beaconLadder', {
+      ladder: ladder.map((cost, index) => ({ rung: index + 1, cost, defaultCost: defaultLadder[index] })),
+      total: sum(ladder),
+      defaultTotal: sum(defaultLadder),
+      rule: 'authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices',
+    }));
+  }
   if (practice) {
     const suppressed = Object.entries(practice)
       .filter(([, value]) => value === false)
@@ -867,8 +889,8 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         id: def.id,
         operation: 'BUILD' as const,
         meaning: meaning ?? buildableBlurb(def) ?? '',
-        cost: def.costCurve(0),
-        costs: Array.from({ length: Math.min(def.maxCount, 6) }, (_, index) => def.costCurve(index)),
+        cost: buildableCostAt(def, 0, beaconLadder),
+        costs: Array.from({ length: Math.min(def.maxCount, 6) }, (_, index) => buildableCostAt(def, index, beaconLadder)),
         ...((def.id === 'sentry_beacon' || def.id === 'turret') ? { costRule: 'ceil-to-5' as const } : {}),
         maxCount: def.maxCount,
         source,

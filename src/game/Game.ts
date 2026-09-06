@@ -304,7 +304,7 @@ import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgra
 import { clearScores, loadScores, recordScore, type ScoreRecord } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
-import { buildableDefs, isBuildableId, type BuildableId } from './buildables';
+import { buildableDefs, isBuildableId, resolveBeaconLadder, type BuildableId } from './buildables'; // `resolveBeaconLadder` rides this line so no cited coordinate below moves (`Game.ts:2547`, scripts/fire.md)
 import {
   captureRunSuspendSnapshot,
   multiplayerRunSuspendFutureState,
@@ -9437,6 +9437,7 @@ export class Game {
     this.agentPolicySlotBonus = Math.max(0, Math.floor(stats.agentPolicySlots));
     this.applyUpgradeCapEffects(stats);
     this.applyContractBankCap();
+    this.applyContractBeaconLadder();
     this.applyResearchEffects();
   }
 
@@ -9479,6 +9480,20 @@ export class Game {
    */
   private applyContractBankCap(): void {
     this.economy.setContractBankCap(this.activeContract.twist.economy?.bankCap);
+  }
+
+  /**
+   * THE PER-CONTRACT BEACON LADDER, browser half. Owner ruling 2026-09-06, verbatim: **"lets
+   * adjust the policy so the hard levels can be won"**. Headless twin: the ride on
+   * `HeadlessContractSim.ts`'s `run_reset` line. `scripts/contract-beacon-ladder-override.test.mjs`
+   * proves the two agree, that a contract without the field prices exactly as `Balance.beacon`,
+   * and that the published card cannot drift from the prices the engines charge.
+   *
+   * It rides `applyStats` beside the purse for the same reason the purse does: the call is
+   * idempotent, a later re-sync cannot lose it, and it adds no line above `Game.ts:2547`.
+   */
+  private applyContractBeaconLadder(): void {
+    this.buildSystem.setContractBeaconLadder(resolveBeaconLadder(this.activeContract.twist.economy?.beaconLadder));
   }
 
   private applyResearchEffects(): void {
