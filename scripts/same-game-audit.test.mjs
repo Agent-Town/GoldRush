@@ -415,10 +415,23 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // ELEVENTH STACK (2026-09-06, `e10-empty-harvest-anchors-unlaunchable`, F-E10L-1/F-E10L-2): the three
   // Deep Sky maps that declare `twist.harvestFreeObjective` are now OFFERED to humans, so their parity rows
   // exist and land as `agent-lacks` (the agent door still has no anchors for them, by design) or `equal`:
-  // not-offered 3 -> 0, agent-lacks 456 -> 549, equal 1143 -> 1170 (rows 1602 -> 1719). Numbers are this
-  // tree's own `--json` regen output, verbatim; the drain's `docs/bench/same-game-audit.md` regen carries
-  // the same figures.
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 549, equal: 1170, 'not-offered': 0 });
+  // not-offered 3 -> 0, agent-lacks 456 -> 549, equal 1143 -> 1170 (rows 1602 -> 1719).
+  // ⚠️ TWELFTH STACK — ADMISSION MOVE (2026-09-06, `e10s-4-ember-shore-door`): the Ember Shore's four
+  // authored cooling-vein `harvestAnchors` admit it to the AGENT door, so twenty-one of its rows stop
+  // reading `agent-lacks` and read `equal` instead: agent-lacks 549 -> 528, equal 1170 -> 1192, rows
+  // 1719 -> 1720. `exemptions` and `measurements` do NOT move — the Ember Shore was never in
+  // `CONTRACT_ADMISSION_EXEMPTIONS`, it was refused by empty data, which is the same door the Picnic
+  // came through. The +1 row is the map gaining a HARVEST verb row it could not have while seamless.
+  // ATTRIBUTED BY REVERT-AND-REPRODUCE, in TWO controls because this slice moves two data facts:
+  //   A. anchors emptied in BOTH the contract and the published mask table AND `twist.harvestFreeObjective`
+  //      restored — every other line of the slice in place — reproduced `549 / 1170 / 0 over 1719`
+  //      EXACTLY, the eleventh stack's pin. So the whole movement above belongs to the four anchors.
+  //   B. anchors emptied with the declaration LEFT OFF (the state `board-launchable-guard` refuses)
+  //      measured `518 / 1161 / not-offered 1 over 1680`, which prices the declaration on its own for
+  //      this one map and shows the anchors REPLACE it rather than stack with it.
+  // Numbers are this tree's own `--json` regen output, verbatim; the drain's `docs/bench/same-game-audit.md`
+  // regen carries the same figures.
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 528, equal: 1192, 'not-offered': 0 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });

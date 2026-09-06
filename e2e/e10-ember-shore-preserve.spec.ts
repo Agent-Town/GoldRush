@@ -47,9 +47,42 @@ test.beforeEach(async ({ page }, testInfo) => page.addInitScript((key) => {
 
 const vent = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.preserveVent);
 const squall = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.squall);
+const gold = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.economy.gold);
+const heroAt = (page: Page) => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.heroPos);
 
+/** The four authored cooling-vein anchors (E10S-4), transcribed so a retune reds this spec too. */
+const ANCHORS = [{ x: -6, z: -24 }, { x: -20, z: -34 }, { x: -38, z: -22 }, { x: -54, z: -12 }];
+const reach = (point: { x: number; z: number }) => Math.hypot(point.x - VENT.x, point.z - VENT.z);
+const inReach = async (page: Page) => reach(await heroAt(page)) <= VENT.radius;
+
+/**
+ * Walks the hero with the player's OWN keys, the `078-ux-hygiene` pattern. It stops inside 0.6wu,
+ * which is comfortably inside both things this spec asks of it: the seam's 1.6wu channel range
+ * (`Balance.goldSeam.channelRange`) and the vent's 4wu stoke disc.
+ */
+async function walkTo(page: Page, target: { x: number; z: number }): Promise<void> {
+  for (let step = 0; step < 90; step += 1) {
+    const at = await heroAt(page);
+    if (Math.hypot(target.x - at.x, target.z - at.z) <= 0.6) return;
+    const keys: string[] = [];
+    if (Math.abs(target.x - at.x) > 0.6) keys.push(target.x > at.x ? 'KeyD' : 'KeyA');
+    if (Math.abs(target.z - at.z) > 0.6) keys.push(target.z > at.z ? 'KeyS' : 'KeyW');
+    for (const key of keys) await page.keyboard.down(key);
+    await page.waitForTimeout(160);
+    for (const key of [...keys].reverse()) await page.keyboard.up(key);
+  }
+  const settled = await heroAt(page);
+  expect(Math.hypot(target.x - settled.x, target.z - settled.z)).toBeLessThanOrEqual(1.6);
+}
+
+/** E10S-3's shots stay in E10S-3's folder; the E10S-4 errand's land in this slice's own. */
 async function shoot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
-  const body = await page.screenshot({ path: `artifacts/e10s-3-preserve/shots/${testInfo.project.name}-${name}.png`, scale: 'css' });
+  const slice = name.startsWith('plain-boot-panning')
+    || name.startsWith('plain-boot-squall-biting')
+    || name.startsWith('plain-boot-vent-kept')
+    ? 'e10s-4-door'
+    : 'e10s-3-preserve';
+  const body = await page.screenshot({ path: `artifacts/${slice}/shots/${testInfo.project.name}-${name}.png`, scale: 'css' });
   await testInfo.attach(name, { body, contentType: 'image/png' });
 }
 
@@ -60,8 +93,15 @@ async function dismissBriefing(page: Page): Promise<void> {
 
 /**
  * The player's own door, without `?debug` — the launch key the board itself writes, exactly as
- * `e10-ember-shore-squall.spec.ts` opens it. The map is reachable at all only because it declares
- * `twist.harvestFreeObjective` (F-E10L-1); a regression there lands here as a fallback to The Claim.
+ * `e10-ember-shore-squall.spec.ts` opens it.
+ *
+ * RE-POINTED BY E10S-4. This used to say the map was reachable "only because it declares
+ * `twist.harvestFreeObjective` (F-E10L-1)". It is now reachable because it has SEAMS: the four
+ * authored cooling-vein `harvestAnchors` land with this slice's admission, `harvestAnchors.length`
+ * is no longer 0, and `src/meta/ContractFamilies.ts:1352` therefore never reaches its second
+ * conjunct. The declaration was removed with the anchors that replaced it, because
+ * `scripts/board-launchable-guard.test.mjs:98` refuses a map that carries both ("one of the two is
+ * a lie"). A regression in EITHER still lands here as a fallback to The Claim.
  */
 async function bootPlainFromTheBoard(page: Page): Promise<void> {
   await page.goto('/?nolevel&nopause');
@@ -201,6 +241,83 @@ test('E10S-3 the stoke: confirm at the vent spends the authored gold for the aut
   await shoot(page, testInfo, 'stoked-vent-survived');
 
   expectNoConsoleErrors(watch, 'e10-ember-shore stoke');
+});
+
+/**
+ * E10S-4 — THE ERRAND, IN A PLAIN BOOT AND ON THE PLAYER'S OWN CLOCK.
+ *
+ * This is the test E10S-3 could not write. Its stoke test had to GRANT a purse through the debug
+ * harness and said so (F-E10S3-1: "`e10-ember-shore` authors no harvest anchors until E10S-4 and
+ * therefore has no income of its own"). The four cooling-vein anchors are that income, so the whole
+ * loop is now playable with no flag, no harness, no granted coin: walk out to a vein, pan until the
+ * purse holds a stoke, walk back inside the disc, and answer the squall when it bites.
+ *
+ * IT RUNS IN REAL SECONDS ON PURPOSE. `advanceSim` lives behind `?debug`, and a clock a player does
+ * not have would prove the wrong thing here — the claim is that the errand FITS between the
+ * squalls at the authored cadence (60 s of calm to earn 15 gold in, a 25 s squall to spend it in),
+ * and that claim is only true if nobody is fast-forwarding. Hence the ~110 s budget and the
+ * generous polls; `test.setTimeout(240_000)` above covers it.
+ */
+test('E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent', async ({ page }, testInfo) => {
+  const watch = watchErrors(page);
+  await bootPlainFromTheBoard(page);
+  await dismissBriefing(page);
+
+  const contract = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract);
+  expect(contract.activeId).toBe(CONTRACT_ID);
+  expect(contract.fallbackReason).toBeNull();
+
+  // THE SEAMS ARE ON THE BOARD, and they are the authored anchors rather than the engine default:
+  // every live node sits on one of the four cooling-vein coordinates this slice authored.
+  const seams = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.harvest.activeNodes
+    .filter((node) => node.active)
+    .map((node) => ({ id: node.id, x: node.position.x, z: node.position.z, remaining: node.remaining })));
+  expect(seams.length).toBeGreaterThan(0);
+  for (const seam of seams) expect(ANCHORS).toContainEqual({ x: seam.x, z: seam.z });
+  expect(await gold(page)).toBe(0);
+
+  // OUT TO THE NEAREST VEIN, on the player's own keys, and pan until the purse can pay a stoke.
+  const vein = [...seams].sort((a, b) => reach(a) - reach(b))[0];
+  await walkTo(page, vein);
+  await expect.poll(() => gold(page), { timeout: 60_000, intervals: [500] }).toBeGreaterThanOrEqual(VENT.goldCost);
+  const earned = await gold(page);
+  await shoot(page, testInfo, 'plain-boot-panning-the-vein');
+
+  // BACK INSIDE THE DISC. `walkTo` stops within 0.6wu of its target and the stand is 2.5wu south of
+  // the stake, well inside the authored 4wu radius and off the vent altar's own footprint.
+  await walkTo(page, { x: VENT.x, z: VENT.z - 2.5 });
+  expect(await inReach(page)).toBe(true);
+
+  // WAIT FOR THE SQUALL TO BITE. The stoke is capped at 100, so pressing while the vent is full
+  // throws the difference away; the errand is only honest once the weather has taken more than the
+  // restore is worth. At the authored cadence that is ten seconds into the squall, ~78 s in.
+  await expect.poll(async () => (await vent(page))!.warmth, { timeout: 120_000, intervals: [1_000] })
+    .toBeLessThanOrEqual(VENT.warmth - VENT.restore);
+  const bitten = await vent(page);
+  expect(bitten!.guttered).toBe(false);
+  expect((await squall(page))!.blowing).toBe(true);
+  await shoot(page, testInfo, 'plain-boot-squall-biting');
+
+  // THE PLAYER'S OWN KEY, paying with the player's own gold.
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__!.preserveVent?.stoke.uses ?? 0) >= 1, undefined, { timeout: 15_000 });
+  const stoked = await vent(page);
+  expect(stoked!.stoke.uses).toBe(1);
+  expect(earned - (await gold(page))).toBeGreaterThanOrEqual(VENT.goldCost);
+  expect(stoked!.warmth).toBeGreaterThan(bitten!.warmth);
+
+  // AND THE VENT IS STILL ALIGHT WHEN THE SQUALL LETS GO, which is the whole turn: the run that
+  // would have ended at 93.0 s unstoked (the idle floor, `fnv1a32:1b73c4b7`) is still going.
+  await expect.poll(async () => (await squall(page))!.blowing, { timeout: 60_000, intervals: [1_000] }).toBe(false);
+  const survived = await vent(page);
+  expect(survived!.guttered).toBe(false);
+  expect(survived!.alight).toBe(true);
+  expect(survived!.squallsSurvived).toBeGreaterThanOrEqual(1);
+  expect(survived!.objectiveMet).toBe(true);
+  await expect(page.getByTestId('hud-warmth')).toHaveAttribute('data-state', 'alight');
+  await shoot(page, testInfo, 'plain-boot-vent-kept-on-panned-gold');
+
+  expectNoConsoleErrors(watch, 'e10-ember-shore plain-boot errand');
 });
 
 test('E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run', async ({ page }, testInfo) => {

@@ -347,6 +347,10 @@ Public bench seeds are not sealed evaluation seeds. “Sealed” means the opera
   "e9-old-canal": [
     "e9-old-canal-01",
     "e9-old-canal-02"
+  ],
+  "e10-ember-shore": [
+    "e10-ember-shore-01",
+    "e10-ember-shore-02"
   ]
 }
 ```
@@ -394,6 +398,7 @@ Standing marker: `unclaimed` means no verified rider has secured the contract; `
 - `e1-dry-gulch` | bench seeds: `e1-dry-gulch-01`, `e1-dry-gulch-02`, `e1-dry-gulch-03` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e1-night-shift` | bench seeds: `e1-night-shift-01`, `e1-night-shift-02`, `e1-night-shift-03` | first secured by claude-fable-5 (Claude Fable 5) on 2026-08-31
 - `e1-twin-banks` | bench seeds: `e1-twin-banks-01`, `e1-twin-banks-02`, `e1-twin-banks-03`, `e1-twin-banks-04`, `e1-twin-banks-05` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
+- `e10-ember-shore` | bench seeds: `e10-ember-shore-01`, `e10-ember-shore-02` | unclaimed
 - `e10-last-claim` | bench seeds: none published | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e2-hill-mine` | bench seeds: `e2-hill-mine-01`, `e2-hill-mine-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-08-31
 - `e2-incline` | bench seeds: `e2-incline-01`, `e2-incline-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
@@ -434,6 +439,7 @@ Standing marker: `unclaimed` means no verified rider has secured the contract; `
   "e1-dry-gulch",
   "e1-night-shift",
   "e1-twin-banks",
+  "e10-ember-shore",
   "e10-last-claim",
   "e2-hill-mine",
   "e2-incline",
