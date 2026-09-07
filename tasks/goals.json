@@ -5049,8 +5049,16 @@
             {
               "id": "main-chapter-story-readiness",
               "title": "F-2537-1: six Frontier chapter-exclusion checks wait for the story reader before asserting an empty later-epoch queue",
+              "status": "blocked",
+              "taskFile": "main-chapter-story-readiness.md",
+              "blockClass": "gate-side",
+              "blockedReason": "s2538: six-wait output is held for F-2537-2 classification. Frontier 12/12 and E7 mobile 3/3 pass, but full adjacency has an unexplained mobile M2 count 1 vs 2; complete unchanged-base control does not reproduce M2. Candidate 83f1429f6ff2dc26254f0c18225466991b6454ea retained on save/main-chapter-readiness-s2538. See reviews/main-chapter-story-readiness.md. The queued main-m2-palisade-placement-diagnosis.md corrective owns the next measurement; satisfy this gate-side condition before restoring and draining the candidate."
+            },
+            {
+              "id": "main-m2-palisade-placement-diagnosis",
+              "title": "F-2537-2: classify intermittent second palisade placement and correct only demonstrated test readiness",
               "status": "queued",
-              "taskFile": "main-chapter-story-readiness.md"
+              "taskFile": "main-m2-palisade-placement-diagnosis.md"
             }
           ]
         }
