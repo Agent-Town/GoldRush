@@ -156,6 +156,7 @@ test('The Claim cannot load Atomic beats in Frontier', async ({ page }) => {
   await page.getByTestId('town-open-board').click();
   await page.getByTestId('contract-launch-the-claim').click();
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim');
+  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e6-')))).toEqual([]);
   await expect(page.locator('[data-beat-id^="e6-"]')).toHaveCount(0);
   expectNoConsoleErrors(errors);
