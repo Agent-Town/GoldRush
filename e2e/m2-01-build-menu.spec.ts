@@ -184,13 +184,14 @@ test('palisade footprint rejects overlap while allowing edge-touch chaining', as
   await teleport(page, 0, 12);
   await page.evaluate(() => window.__GR_TEST__?.selectBuildable('palisade'));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? true)).toBe(false);
-  const frame = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0);
-  await page.evaluate(() => {
+  const tick = await page.evaluate(() => {
+    const before = window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0;
     window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Enter' }));
     window.dispatchEvent(new KeyboardEvent('keyup', { code: 'Enter' }));
     window.__GR_TEST__?.teleport(0, 14);
+    return before;
   });
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0)).toBeGreaterThan(frame);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.simulation.tick ?? 0)).toBeGreaterThan(tick + 1);
   await expect.poll(() => buildableCount(page, 'palisade')).toBe(1);
   expect(await gold(page)).toBe(40);
 
