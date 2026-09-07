@@ -29,6 +29,8 @@ const shotDir = path.resolve('reviews/shots-elder-walk8-regeneration');
 const BASE = 'e0f1880ed74475545c421316f5592f65e5636579';
 const SHEET = 'char-elder-sheet-walk8';
 const ELDER = { x: -6.65, z: 7.35 };
+// The town clamps zoom to TOWN_ZOOM_MIN..MAX; this is a value inside it that frames one actor.
+const TOWN_ZOOM_IN = 0.36;
 
 const sha256 = (buffer: Buffer): string => createHash('sha256').update(buffer).digest('hex');
 
@@ -135,7 +137,13 @@ test('a plain town boot walks the Elder on anchored feet at the schoolhouse', as
 
   expect(errors).toEqual([]);
 
-  await page.waitForTimeout(500);
+  // The evidence shot has to SHOW her, not just prove her in numbers: stand south-east of her post
+  // so the schoolhouse is behind the camera rather than in front of her, and zoom in.
+  await page.evaluate(({ target, zoom }) => {
+    window.__GR_TOWN_DIAGNOSTICS__!.teleport(target.x + 0.75, target.z + 1.5);
+    window.__GR_TOWN_DIAGNOSTICS__!.camera.setZoom(zoom);
+  }, { target: post, zoom: TOWN_ZOOM_IN });
+  await page.waitForTimeout(900);
   await mkdir(shotDir, { recursive: true });
   await page.locator('#game-canvas').screenshot({ path: path.join(shotDir, `${testInfo.project.name}.png`) });
 });
