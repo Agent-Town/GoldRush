@@ -55,6 +55,7 @@ Your A1 ruling is live in the engine: the hero's suit drains outside pressurised
 - **D1:** should both species gain a `WORK_AT` policy (a target-named "send the Prospector to work there")? Recommendation: no for now; walk the hero, the Prospector drifts in, exactly as a human does.
 - **D2:** confirm the heat-12 board is re-ridden rather than repaired once the grammar lands (22 of 24 scored rows retire). Recommendation: yes.
 **RULED 2026-09-07 (owner, verbatim: "D1 - no, AI and human users have to have the same options and tools, otherwise it is unfair. fairness is crucial. D2: re-ride it yes"):** D1 = no `WORK_AT` for either species (ADR-005 amended with the fairness words); D2 = the board is re-ridden on the new grammar after the drain, never repaired. `tasks/rider-parity-grammar.md` revised on these words and LAUNCHED (scratch `wt-grammar`, port 5309).
+**2026-09-07 ~13:30:** the grammar's first four stages are built and pass their own gates, but the full battery on the merged tree reddened eleven fixtures whose rider plans still walk the Prospector, so nothing landed; the continuation (`rider-parity-grammar-stage3`) makes the branch green, removes the three verbs, re-derives the 28 dependent files, and gives the rider `CONTEXT_ACTION`'s four human-only targets under your fairness word. The re-ride gauntlet follows it. Nothing to decide.
 
 
 ### A11. The cast sheets and the payload gate (F-FTP-1, added 2026-09-07 late morning)

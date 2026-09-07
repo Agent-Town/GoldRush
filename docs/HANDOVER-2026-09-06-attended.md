@@ -169,4 +169,4 @@ Also: F-RPA-4 (the `T` debug spawn key guarded) `9e1d8a2e3`; the fire rulebook's
 
 | slice | verdict | merge | what to know |
 |---|---|---|---|
-| `rider-parity-grammar` | RUNNING | (Opus 5 on `wt-grammar`, port 5309, since ~10:47) | D1 no WORK_AT, D2 re-ride; retires 22 of 24 scored heat-12 rows in stage 3; the drain authors the re-ride gauntlet from its list |
+| `rider-parity-grammar` | GATED RED, returned to the branch | attempt `b8e62a1e8` saved | stages 1/2/4/6 built and self-green; the full battery on the merged tree 726/741 (e4 floor rides, Moth Season, the heat-5 hill-mine pin, a skill.md em dash); continuation `rider-parity-grammar-stage3` runs ON the branch (A0 battery green → removal → 28 files → CONTEXT_ACTION parity); the re-ride gauntlet after that |
