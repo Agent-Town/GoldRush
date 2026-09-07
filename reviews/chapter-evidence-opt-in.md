@@ -31,6 +31,12 @@ The lane's original report is preserved verbatim at `artifacts/s2536-fire/runner
 
 No new source defect or owner decision. F-AGE2-3 and F-AGE2-5 are discharged; prior readiness, placement and board-gold correctives remain intact. Goal registration and done-move closure belong to this drain; do not redispatch the master. No gameplay-affecting code changed, so deployment is not owed. The next action is the normal board triage after the closing retention and ledger checks.
 
+## Closing duties
+
+All three consumed chapter save refs were renamed to archive refs and pushed atomically; original lane ahead=0. Board REAL=0/UNKNOWN=0; all ten planned leaves are priced, none fire-authorable, so no refill. Runner alive, queues/in-flight/pending orders zero. Lane-d's 26 tracked art changes and lane-b's untracked evidence remain their owners' work. No gameplay deployment is owed.
+
+The inherited 55-item desk audit found zero closed items; all 55 are carried verbatim. Ledger, rotation, ticker timing and gazette judgments are recorded in `artifacts/s2553-fire/standing-duties.json`. The full retention judgment is `artifacts/s2553-fire/retention-judgment.md`. The final post-handoff battery receipt belongs at `artifacts/s2553-fire/closing-ledger.txt`; it must evaluate the desk rather than skip it.
+
 ---
 
 # s2552 — chapter writers: browser acceptance banked, drain held
