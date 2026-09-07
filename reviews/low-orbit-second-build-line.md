@@ -1,0 +1,23 @@
+# Review: low-orbit-second-build-line — the measurement lands, the lever does not (scratch worktree, Claude Opus 5 implementer, attended drain 2026-09-07)
+
+**Slice/branch/tip:** `low-orbit-second-build-line` · `fix/low-orbit-second-build-line` · two commits ending `0b12ee242` on base `738bf0ce7` · merged to main as `fbd99a828` (evidence only: 70 files under `artifacts/low-orbit-second-build-line/`, one card screenshot, one ledger row; nothing under `src`, `assets/contracts`, `null-floors.json`, `scripts` or `e2e`).
+**Verdict:** MERGED AS MEASUREMENT. The owner ruled "A9 - second build line"; measured on both seeds, the second build line does not win Low Orbit honestly, so nothing ships and the fork returns to the desk with numbers. The implementer walked the honesty guard's own path: the smallest authored zone (`claw-yard-north-apron`, the Eclipse apron's 16×10 north of the hero's home, committed as `tile-north-apron.json` but never authored into the contract) is byte-inert on its own (both seeds replay their baselines identically), secures seed 01 only with one turret at (0, 25) by 10 hp on a knife edge (the same turret at (0, 24) reads wave 13 / 411 s; at (0, 22) wave 19 / 590 s), and regresses seed 02 from wave 12 / 366 s to wave 11 / 343 s. The cause is not the fort: from t = 388.8 s every return order fails `UNREACHABLE_APPROACH` (`src/agent/StandingOrders.ts:556-561`) because in free fall the hero coasts faster than she can thrust back, and every hit point is lost outside the yard at |z| up to 64, beyond any turret's 16 or beacon's 8. The no-sortie control finishes a tier-2 fort and still does not secure at the wave ceiling; the air-ignoring control reproduces `e8-air-logical` exactly.
+
+## Evidence
+| Gate | Where | Result |
+|---|---|---|
+| Zone print | worktree | three zones (the yard 36×28, two scaffold decks 22×20); the hero's start and all ten fort sites already buildable; both crossing entries on the decks, covered by zero works; the crossings are already build zones (F-LOSB-1) |
+| Ladder | `LADDER.log`, 27 rows | baseline w19 / 585.100 s twice identical (`6e97b13b`); zone-only byte-identical; apron + turret (0,25) SECURED w20 / 600 s / 10 hp (`62d478a3`, twice); seventeen other arms worse; seed 02 baseline w12 / 366.233 s, the winner w11 / 342.700 s |
+| Controls | worktree | air-ignoring w14 / 420.633 s (`943f688e`, reproduces e8-air-logical); no-sortie w22 / 660 s wave-ceiling (`8ac741b3`); the winning fort without the zone w15 / 456.767 s |
+| Floors | worktree | both idle rows byte-equal to `null-floors.json`; not edited |
+| Guards | worktree | tsc rc 0 · build rc 0 · `e8-remaining-maps` 10/10 · `e3-mask-tables` 30/30 · `door-admission-ratchet` 1/1 · `same-game-audit` 6/6 · `view-schema-guard` 3/3 · `skillmd-guard` 16/16 · `law-pointer-guard` 22/22 · `engine-era-guard` 5/5 (no input touched; the hash `1a825ba0…` equals the pin) |
+| e2e | port 5313, both projects | `er01-e8-census` + `e8-low-orbit-momentum` + `e8-remaining-maps-parity` + `e8-physics` + `e8-roster`: 19 + 19 passed; the 390 px card unchanged, 0 console errors |
+| **Attended** | merged tree | evidence-only merge; the era hash unmoved by this slice (the chain it landed in is pinned by the drain) |
+
+## Findings
+- **F-LOSB-1:** the crossings' entries already sit on build zones; "a second line where the crossings arrive" needs no authored zone and measures worse (w16 / 482 s, w17 / 531 s).
+- **F-LOSB-2:** ride length is not a smooth function of gun placement on this map ((0,24) w13, (0,25) w20, (0,22) w19); no build-zone tuning is honestly a lever.
+- **F-LOSB-3:** `scripts/engine-era-guard.test.mjs:92-95` reads three tape fixtures under `artifacts/claude-debut-2026090*` that sparse worktrees exclude; the guard reads 4/5 for that reason alone (the drain's sparse-worktree note, now explained).
+- **F-LOSB-4 (cured in the carried-forward arm.mjs):** the Eclipse ladder's `arm.mjs:83` sends `--no-kite` whenever `--kite` is absent, wrong for Low Orbit; four early rows are marked `kite none`.
+- **F-LOSB-6 (fires' queue):** `e2e/e8-roster.spec.ts:12` rewrites two tracked PNGs on every run (the evidence-writer class; opt-in cure).
+- **The fork (OWNER'S DESK A9, re-opened):** (a) ship nothing, the A6 precedent (recommended by the implementer); (b) ship `claw-yard-north-apron` anyway, exactly the ruling's words, inert unless built on, secures seed 01 only; (c) price the map on `twist.hero.maxHpBonus`; (d) the real cause, engine ground: the hero's free-fall return (a thrust or a tether that lets a rider come home from a crossing), a new slice with its own measurement. The drain's recommendation: (d) if Low Orbit must be winnable by a human-shaped plan, (a) otherwise.

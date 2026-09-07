@@ -170,6 +170,7 @@ Also: F-RPA-4 (the `T` debug spawn key guarded) `9e1d8a2e3`; the fire rulebook's
 | slice | verdict | merge | what to know |
 |---|---|---|---|
 | `elder-walk8-regeneration` | MERGED | `374b0154f` | the Elder's walk sheet as the woman (255 credits, twelve Seedance takes), her feet anchored; the gated first town 33.85 of 35 MB now; A13 (a patrol loop for her) on the desk |
+| `low-orbit-second-build-line` | MERGED AS MEASUREMENT | `fbd99a828` | the second build line does not win Low Orbit (knife edge on seed 01, worse on 02; free-fall drift is the cause); nothing shipped; A9 re-opened with four options |
 | `youngsters-rechain-batch` | MERGED | `9bbece8cf` | the two youngsters re-chained from the shipped children (A12 option b), five speakers; A17 (their names on the cards) on the desk |
 | `canon-calls-a8-batch` | MERGED | `1997e313a` | the Elder a woman in her E1/E2 portraits, the Old Digger's portrait the machine (owner A8); no beat re-keyed; F-A8-1 the E1 spec's month-old red on the desk queue; the walk8 sheet is the next batch |
 | `rider-parity-grammar` + `stage3` | MERGED | `08287cdd7` | the 1:1 grammar whole: 15 equal / 0 / 0; 57 tapes retired in the ledger; two E4/E5 specs owed on desk questions A14/A15; the county re-assay and heat 13 follow |
