@@ -7726,11 +7726,11 @@
             {
               "id": "lane-a-node-guards-ps-capture",
               "title": "F-2546-1: retain complete bounded ps output in both contention readers",
-              "status": "planned",
+              "status": "queued",
               "taskFile": "lane-a-node-guards-ps-capture.md",
               "lane": "lane-a",
               "authoredBy": "s2546 (FIRE-AUTHORED)",
-              "note": "Priced instrument corrective with an 8-arm isolated reproducer. Dispatch only after the current MAIN full Node battery exits; preserve MAIN board-gold output and the held chapter candidate. Review reviews/node-guards-ps-capture.md."
+              "note": "s2546: MAIN full battery exited with the same two ENOBUFS failures. Copy to lane-a only after the closing ledger gate passes; master strict queue gate passes. Preserve MAIN gold output and held chapter candidate; no runtime changes. Review reviews/node-guards-ps-capture.md."
             }
           ]
         }
