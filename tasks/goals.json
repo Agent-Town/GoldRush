@@ -5069,9 +5069,10 @@
             {
               "id": "main-board-gold-current-grammar",
               "title": "F-2541-1: re-record the three board-gold positive fixtures under current grammar without altering retired tapes or held-purse assertions",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "main-board-gold-current-grammar.md",
-              "drainNotes": "s2550 HOLD: direct full Node completed naturally at rc=1, 1374.5 s, 742 tests: 736 pass, 1 fail, 5 explicit skips, zero cancelled. The fixture sweep passed board-gold but stopped at rider-parity-reach.test.mjs: stale stage-1 Prospector count 12 versus shipped stage-3 count 10. Unchanged main repeats 4/5, so F-2550-1 is gate-side and independent of this gold patch. Registered lane-a-rider-parity-reach-stage3.md corrects the census and preserves both newly hero-owned sites. Saved source ffac3a697ee37c01e24fe16a36b70b2a1fc145c6 remains unmerged and untouched. Next FIRE composes that finished corrective with this saved candidate, runs full Node directly plus remaining drain gates, and only then drains serially. No chained-tail result or full fixture-sweep completion is claimed. No gold redispatch. Review reviews/main-board-gold-current-grammar.md; report artifacts/s2550-fire/report.md."
+              "drainNotes": "s2551 PASS: saved gold source landed after reach corrective 85a159e2e. Direct full Node rc0 in 1464.9s, 737 pass/5 explicit skips, all 128 fixture owners and full npm tail; tsc/build, four selected guards, adjacency 34/34, plain boots 2/2. Six historical tape/slip hashes and browser/helper code unchanged. Review reviews/main-board-gold-current-grammar.md; artifacts/s2551-fire/report.md.",
+              "mergeHash": "526dc5c8b280ba937823c5a7215cf33e9c26dc2b"
             }
           ]
         }

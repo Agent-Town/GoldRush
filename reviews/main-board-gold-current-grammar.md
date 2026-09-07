@@ -1,3 +1,27 @@
+# s2551 — PASS: current-grammar board gold fixtures drained
+
+## Slice and verdict
+
+`main-board-gold-current-grammar.md`; preserved tip `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`. **PASS — source committed as `526dc5c8b280ba937823c5a7215cf33e9c26dc2b`**, after the separately committed stage-3 reach corrective `85a159e2e5ef428b85d55a4c244faf24ae027f48`. Earlier HOLD entries below are historical.
+
+## Behavior and merge classification
+
+Three fresh local tapes replace retired-grammar positive fixtures while retaining real assay replay, event-hash/outcome equality, secure-snapshot equality and held-purse versus lifetime-panning checks. The recordings explicitly claim no live county verdict. All six historical submissions/slips and the browser test/helper tail are byte-identical. No runtime, dependencies, scoring, engine pin or live standings changed.
+
+Base `810ef008dc828de64dcc43d97ec2513082aa3323`: main never changed the remaining test-source path. The twelve fixture artifacts were already retained; all thirteen saved blobs match. The source file is LANE-ONLY; no conflict resolution. The explicit disjoint-pair exception gated this file with the separately edited reach test on candidate `b8c94406dde131168217e59a190ec7f953013aa0`, base `6f6675de6830ad5d0742bf1c9580b86f426da2d0`.
+
+## Evidence
+
+Full direct Node command rc 0 in 1464.9 s: 742 tests, 737 pass, zero fail/cancelled, five explicitly skipped cases (two owner-ruled Baron tests and three fire-shell cross-engine tests). **All 128 fixture owners passed**, including this gold test and the corrected reach test; the complete npm tail ran through clean NUL audit. Typecheck/build rc 0 in 5.3/20.4 s; four selected guards pass in 2.0 s, power p95 0.371 ms. Desktop/mobile adjacency 34/34 in 163.2 s; plain boots 2/2 in 8.4 s with zero warnings, console errors or page errors. Independent read-only Codex review found no actionable issue.
+
+Receipts: `artifacts/s2551-fire/full-node.txt`, `artifacts/s2551-fire/full-node-result.json`, `artifacts/s2551-fire/remaining-gates.txt`, `artifacts/s2551-fire/browser-gates.txt`, `artifacts/s2551-fire/codex-review.txt`, `artifacts/s2551-fire/historical-fixtures.json`, `artifacts/s2551-fire/preserved-gold-blobs.json`, `artifacts/s2551-fire/path-classification.json`, `artifacts/s2551-fire/adjacency-shots.json`. Prior mutation proof remains `artifacts/board-tape-gold/current-grammar/mutation-test.txt`.
+
+## Findings and next action
+
+F-2541-1 and F-2550-1 are resolved; F-2549-1 remains resolved by the uncapped wrapper route. No new owner decision. Closing task/desk ledger checks follow handoff and must evaluate the real desk, rather than count the ACTIVE-lock skip as coverage. Next FIRE resumes the separate chapter candidate `save/chapter-evidence-s2541` and preserves main's 138-row Moth tape. No public deployment is owed by these test-only corrections.
+
+---
+
 # s2550 — HOLD: full command exposes a stale reach census
 
 The preserved MAIN gold correction remains **unmerged**. Gate candidate `589d207c97db03b5e89f9042d249b3447324156e`, base `0eb139bdc7f1612da449a816038520b72153d456`, contains the same 13 saved blobs from `save/board-gold-current-grammar-s2547` (`ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`). No runtime, engine, dependency or browser/helper code changed. The six historical tapes/slips remain byte-identical. No conflicts were resolved.
