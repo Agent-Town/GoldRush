@@ -54,6 +54,10 @@ Your A1 ruling is live in the engine: the hero's suit drains outside pressurised
 - **D1:** should both species gain a `WORK_AT` policy (a target-named "send the Prospector to work there")? Recommendation: no for now; walk the hero, the Prospector drifts in, exactly as a human does.
 - **D2:** confirm the heat-12 board is re-ridden rather than repaired once the grammar lands (22 of 24 scored rows retire). Recommendation: yes.
 
+
+### A11. The cast sheets and the payload gate (F-FTP-1, added 2026-09-07 late morning)
+The new gate judges 15.6 MB of declared first-town payload (62 % of your 25 MB). Ten town-actor sheets weigh another 16.1 MB in the build, all reachable as actors turn, but only one cell of each loads before the town is playable, so they are declared demand-paged and not gated. Gating them would read 31.7 MB against 25 MB and every deploy would need the waiver. Options: keep as shipped (my recommendation), gate the upper bound and raise the budget, or gate them and cut ~6.7 MB by the hero clip split's recipe.
+
 ## B. Ten minutes of the owner's hands (nobody else can)
 
 ### B1. The device verdict rows
