@@ -352,6 +352,7 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--include=/site/***"
         "--include=/public/***"
         "--include=/assets/contracts/***"
+        "--include=/assets/first-town-payload.json"
         "--include=/assets/rotations/***"
         "--include=/assets/layer-contracts/***"
         "--include=/assets/crafting-queue/***"

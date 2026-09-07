@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "03a4789deb6f64a4cacaa8ed9b68cccd710828412a1828a902a3424e52e76cd0",
+  "engineHash": "32c940079ba3dd1921ca2be10a4a0d5a1de36f49c9199e1f99ecc02230f9f33d",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -559,6 +559,12 @@
       "engineHash": "03a4789deb6f64a4cacaa8ed9b68cccd710828412a1828a902a3424e52e76cd0",
       "pinnedAt": "2026-09-07",
       "cause": "portraits-era-aging-2-batch: the five trades across E5-E10 and the Salvage King get their own faces (31 speakers registered, 50 beats re-keyed, copy byte-identical) on the merged tree that also carries the first-town payload gate's AdvanceStream (src/story/speakers.ts, src/story/beats.ts); owner A4 2026-09-07: use the credits, they expire soon",
+      "aliases": []
+    },
+    {
+      "engineHash": "32c940079ba3dd1921ca2be10a4a0d5a1de36f49c9199e1f99ecc02230f9f33d",
+      "pinnedAt": "2026-09-07",
+      "cause": "F-FTP-5 (attended review fix 2026-09-07): src/assets/AdvanceStream.ts imports assets/first-town-payload.json as a DEFAULT import (Node's JSON modules have no named exports; the named form broke every Node loader of the module, caught by whole-suite-collection on main); the browser bundle is byte-equivalent and no sim path changes",
       "aliases": []
     }
   ],

@@ -54,7 +54,11 @@
 // mobile allowance. The worst town + worst single destination is 8,394,980 B (70.0%), so the
 // allowance can never evict the halls from a shipped build.
 
-import { saveDataTrim } from '../../assets/first-town-payload.json' with { type: 'json' };
+// A DEFAULT import, not a named one: Node's JSON modules export only `default`, so the named form
+// broke every Node loader of this module (the whole-suite collection guard, F-FTP-5, 2026-09-07);
+// Vite bundles both forms to the same bytes.
+import firstTownPayload from '../../assets/first-town-payload.json' with { type: 'json' };
+const { saveDataTrim } = firstTownPayload;
 import { loadScores } from '../game/Scoreboard';
 import { readRunSuspend } from '../game/RunSuspend';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';

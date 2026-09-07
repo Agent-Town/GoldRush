@@ -34,7 +34,13 @@ async function filesUnder(relative, extensions) {
   return files;
 }
 
-function localSpecifiers(source) {
+function localSpecifiers(rawSource) {
+  // Comments are not imports: a `//` note that mentions `import('./town/TownScene')` inside
+  // src/town/TownScene.ts itself (the clip-split slice's owner quote) resolved to a phantom
+  // src/town/town/TownScene and reddened the closure walk (2026-09-07). Strip block and line
+  // comments before scanning; string literals with `//` (URLs) survive because only a line
+  // that STARTS with `//` (after whitespace) is dropped.
+  const source = rawSource.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
   const values = new Set();
   const patterns = [
     /(?:import|export)\s+(?:type\s+)?(?:[\s\S]*?\s+from\s+)?['"]([^'"]+)['"]/g,
