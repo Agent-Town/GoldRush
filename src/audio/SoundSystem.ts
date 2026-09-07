@@ -230,7 +230,7 @@ export class SoundSystem {
 
   diagnostics(): SoundDiagnostics {
     const active = this.voices.size;
-    return {
+    const snapshot: SoundDiagnostics = {
       unlocked: this.unlocked,
       muted: readAudioMuted(),
       volume: readAudioVolume(),
@@ -246,7 +246,7 @@ export class SoundSystem {
       loops: [...this.loops.keys()],
       loopSourceCounts: Object.fromEntries([...this.loops].map(([name, loop]) => [name, loop.sourceCount])),
       loopVolumes: Object.fromEntries([...this.loops].map(([name, loop]) => [name, loop.gain.gain.value])),
-      loopElapsedSeconds: Object.fromEntries([...this.loops].map(([name, loop]) => [name, Math.max(0, (this.context?.currentTime ?? loop.startedAt) - loop.startedAt)])),
+      loopElapsedSeconds: this.loopElapsedSeconds(),
       lastRequested: this.lastRequested,
       lastStarted: this.lastStarted,
       playsPerSecond: this.playsPerSecondSnapshot(),
@@ -255,6 +255,30 @@ export class SoundSystem {
       droppedByFamily: Object.fromEntries(this.droppedByFamily),
       droppedByPriority: Object.fromEntries(this.droppedByPriority),
     };
+    // F-AUDIO-2 (2026-09-07): loopElapsedSeconds IS A CLOCK, NOT A SNAPSHOT.
+    // `publishAudioDiagnostics()` republishes `window.__GR_AUDIO_DIAGNOSTICS__` only on an audio
+    // EVENT (a voice reserved/released, a start, a drop). Every other field here is event-shaped and
+    // that is right; this one is a duration, so a published object froze it at the last event and a
+    // poller reading it was measuring "did a sound happen recently", not "is the loop still running".
+    // `e2e/music-survives-pause.spec.ts` and `e2e/mu-02-music.spec.ts` both poll it, and both were
+    // safe only by accident: a live run happens to generate constant events. The getter is read at
+    // read time from the context's own clock, so a HELD reference reports the true elapsed seconds.
+    // Chosen over the alternative (delete the elapsed assertions and assert `startedBySound`): about
+    // the same size, but that deletes the only evidence either spec has that the loop's clock kept
+    // advancing, and it would leave every other reader of the published object still frozen.
+    // Enumerable + configurable on purpose: spread, JSON.stringify and Playwright's serialisation all
+    // read own enumerable properties, so a copy still lands a number, evaluated at the copy.
+    Object.defineProperty(snapshot, 'loopElapsedSeconds', {
+      enumerable: true,
+      configurable: true,
+      get: () => this.loopElapsedSeconds(),
+    });
+    return snapshot;
+  }
+
+  private loopElapsedSeconds(): Record<string, number> {
+    const now = this.context?.currentTime;
+    return Object.fromEntries([...this.loops].map(([name, loop]) => [name, Math.max(0, (now ?? loop.startedAt) - loop.startedAt)]));
   }
 
   private readonly unlock = (): void => {

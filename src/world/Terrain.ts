@@ -631,8 +631,19 @@ const BANK_VARIANT_FILES = terrainBankVariantFiles();
 // single failed/blocked asset request would then kill the whole app instead
 // of falling back to placeholders (gate finding, s11: visual-polish-assets
 // fallback test). Lazy keeps asset fetches out of the module graph.
+//
+// F-CELL-4 (2026-09-07): `'../../assets/processed/ter-*.png'` used to sit in this list and matched
+// EXACTLY the seven `ter-rail-elements-r0c0..r0c6.png` sheet cells — art-batch-010 output that no
+// consumer has ever wired. Only two names are ever looked up through this map: `prop-spring-pond.png`
+// (:832) and the `terrain-*` bank variants the m1-core contract names (`terrainBankVariantFiles()`,
+// :1622). So the entry bought nothing and cost seven per-cell JS modules and seven PNG assets in
+// every dev-variant build. The staying-lazy law above is untouched: this is a NARROWING, not an
+// eagerness change. The release build never carried them either — `vite.config.ts` used to strip
+// this exact entry from the array literal, and that replacement was removed in the same commit,
+// because a replacement whose search string no longer exists reads like a narrowing that is not
+// happening. If a rail-element consumer is ever wired, add its OWN pattern here.
 const processedTextureUrls = import.meta.glob<string>(
-  ['../../assets/processed/terrain-*.png', '../../assets/processed/ter-*.png', '../../assets/processed/prop-spring-pond.png'],
+  ['../../assets/processed/terrain-*.png', '../../assets/processed/prop-spring-pond.png'],
   {
     query: '?url',
     import: 'default',

@@ -63,21 +63,24 @@ export function requestFamily(url) {
 /**
  * Everything the first town itself legitimately fetches before it is playable. Sorted.
  *
- * THE `char-*.js` ENTRIES ARE DEAD WEIGHT AS OF 2026-09-06 (sprite-cell-manifests). Nineteen
- * families left this window when the `char-*.png` `?url` globs in `src/assets/SpriteAnimator.ts`
- * and `src/assets/generated.ts` became `eager: true`: the eighteen `char-*-sheet-*.js` cell-URL
- * modules and `rolldown-runtime.js`, which existed to load them. Measured on the e1 release build
- * through the deploy's own instrument, both projects: JS families 51 -> 32, JS responses
- * 205/206 -> 32, cell-URL modules 172/173 -> 0. No PNG family left the window (the cure changes
- * how a cell URL is NAMED, never whether the cell is fetched); two arrived that used to miss it
- * (`char-hero-sheet-attack8.png`, `char-hero-sheet-work8.png`), both already pinned below.
+ * THE `char-*.js` ROWS AND `rolldown-runtime.js` ARE STRUCK, 2026-09-07 (F-CELL-6). They were the
+ * cell-URL modules the LAZY `char-*.png` `?url` globs used to emit, plus the runtime that existed
+ * to load them; the sprite-cell-manifests cure (2026-09-06, `eager: true` in
+ * `src/assets/SpriteAnimator.ts` and `src/assets/generated.ts`) deleted the mechanism, and they
+ * stayed listed only because this guard reads the COMMITTED corpus in `artifacts/asset-diet/`,
+ * which predated it. THIS is the commit that refreshes that corpus, so this is the commit that
+ * strikes them — the instruction the superseded note left for exactly now.
  *
- * They stay listed rather than being struck because this guard reads the COMMITTED corpus in
- * `artifacts/asset-diet/`, which still predates the cure — the same rule the advance-stream
- * residue below already follows. A superset never reds; a premature strike would. Delete the
- * eighteen `char-*.js` rows and `rolldown-runtime.js` the first time a post-cure corpus is
- * committed, in that commit. (Post-cure corpus for reference:
- * `artifacts/sprite-cell-manifests/after-<project>.json`.)
+ * Measured on the refreshed corpus (e1 release build, the deploy's own instrument, both projects,
+ * `GR_PREVIEW_PORT=5293`): cue-window responses 473/475 -> 270/270, families 106/108 -> 82/82. All
+ * twenty `char-*-sheet-*.js` rows and `rolldown-runtime.js` are absent from both projects. Proven
+ * to bite rather than to be vacuous: with these rows struck, this guard reds on the PRE-cure corpus
+ * (kept at `artifacts/perf-correctives-batch/town-transfer-<project>-precure.json`) with 23 unpinned
+ * families per project — these twenty-one rows plus the two title-theme rows struck below.
+ *
+ * `scripts.js` is deliberately NOT struck even though it too left the window: the virtual ceremony
+ * module simply changed chunk name (`_gold-rush-release-e1-ceremony-scripts.js` arrived in the same
+ * measurement), and a build-volatile name is exactly what a superset is for.
  */
 export const FIRST_TOWN_FAMILIES = [
   'AssayBench.js',
@@ -110,46 +113,26 @@ export const FIRST_TOWN_FAMILIES = [
   'bld-tavern.png',
   'ceremonyPostscripts.js',
   'chapel.glb',
-  'char-assay-clerk-sheet-walk8-a.js',
   'char-assay-clerk-sheet-walk8-a.png',
-  'char-elder-sheet-walk8.js',
   'char-elder-sheet-walk8.png',
-  'char-hero-sheet-attack8.js',
   'char-hero-sheet-attack8.png',
-  'char-hero-sheet-back-f.js',
   'char-hero-sheet-back-f.png',
-  'char-hero-sheet-front-f.js',
   'char-hero-sheet-front-f.png',
-  'char-hero-sheet-rotation-f.js',
   'char-hero-sheet-rotation-f.png',
-  'char-hero-sheet-rotation2-f.js',
   'char-hero-sheet-rotation2-f.png',
-  'char-hero-sheet-side-actions-f.js',
   'char-hero-sheet-side-actions-f.png',
-  'char-hero-sheet-side-f.js',
   'char-hero-sheet-side-f.png',
-  'char-hero-sheet-walk8.js',
   'char-hero-sheet-walk8.png',
-  'char-hero-sheet-walkdiag8.js',
   'char-hero-sheet-walkdiag8.png',
-  'char-hero-sheet-work8.js',
   'char-hero-sheet-work8.png',
-  'char-newsie-mei-sheet-walk8.js',
   'char-newsie-mei-sheet-walk8.png',
-  'char-preacher-sheet-walk8-a.js',
   'char-preacher-sheet-walk8-a.png',
   'char-prospector-portrait.png',
-  'char-prospector-sheet-hover8.js',
   'char-prospector-sheet-hover8.png',
-  'char-schoolteacher-sheet-walk8-a.js',
   'char-schoolteacher-sheet-walk8-a.png',
-  'char-storekeeper-sheet-walk8.js',
   'char-storekeeper-sheet-walk8.png',
-  'char-tavernkeeper-sheet-walk8.js',
   'char-tavernkeeper-sheet-walk8.png',
-  'char-youngster-f-sheet-walk8.js',
   'char-youngster-f-sheet-walk8.png',
-  'char-youngster-m-sheet-walk8.js',
   'char-youngster-m-sheet-walk8.png',
   'claim-office.glb',
   'claim_stake.js',
@@ -170,7 +153,6 @@ export const FIRST_TOWN_FAMILIES = [
   'pan_monument.glb',
   'payload.js',
   'riparian_dressing_pack.js',
-  'rolldown-runtime.js',
   'runBeacon.js',
   'schoolhouse.glb',
   'scripts.js',
@@ -193,8 +175,16 @@ export const FIRST_TOWN_FAMILIES = [
  * because the committed corpus predates the F-BUDGET-3 hold (measured at 1,052,408 B on the built
  * e1 bundle at main e5f3ac820). They are tolerated so the guard is honest about today's corpus,
  * never extended: the second assertion below refuses any contract family that is not the board's
- * FIRST contract, so a second map cannot enter the first town through this door. Delete this
- * pair the first time a post-cure corpus is committed.
+ * FIRST contract, so a second map cannot enter the first town through this door.
+ *
+ * ⚠️ THE LINE THAT USED TO END THIS NOTE — "delete this pair the first time a post-cure corpus is
+ * committed" — WAS AN UNMEASURED PREDICTION, AND IT WAS WRONG (F-CELL-6, 2026-09-07). The post-cure
+ * corpus is committed, and both families are STILL inside the cue window on both projects. The hold
+ * is doing its job; what the prediction missed is that the window's END is polled over CDP with
+ * ~500 ms of skirt (F-AUDIO-4), so an asset released a few hundred milliseconds AFTER playable still
+ * lands inside the RECORDED window even though it is outside the real one. The invariant that
+ * actually bites lives in e2e/asset-diet.spec.ts, which reads the page's own clock. Keep the pair;
+ * do not re-add the prediction.
  */
 export const ADVANCE_STREAM_RESIDUE_FAMILIES = [
   'the-claim-panorama.glb',
@@ -213,13 +203,16 @@ export const ADVANCE_STREAM_RESIDUE_FAMILIES = [
  * window entirely and title-theme is never fetched on this path (the menu disposes before the
  * deferred start), against a pre-cure 1,200,587 B + 1,800,881 B inside it.
  *
- * They are still ALLOWED, and only for the same reason the advance-stream residue is: the corpus
- * this guard reads (artifacts/asset-diet/town-transfer-*.json) predates the cure, and the drain
- * restores that tracked evidence rather than rewriting it. DELETE THIS LIST the first time a
- * post-cure corpus is committed. Nothing is lost meanwhile: the ordering assertion that actually
- * enforces the invariant lives in e2e/asset-diet.spec.ts ("music is not fetched before the first
- * town is playable"), it reads the page's own clock rather than this corpus, and it is proven to
- * fail 2/2 projects on the uncured build.
+ * HALF STRUCK ON THE POST-CURE CORPUS, 2026-09-07 (F-CELL-6). Refreshed through the deploy's own
+ * instrument on the e1 release build, both projects: `title-theme.js` and `title-theme.mp3` are
+ * GONE from the window, exactly as the cure predicted (the menu disposes one frame before the
+ * deferred start, so the 1,200,587 B was being downloaded and thrown away). Both `era-e1-frontier-
+ * loop` families are STILL THERE, on both projects — and that is not the hold failing. The cue
+ * window's END is polled over CDP with ~500 ms of skirt (F-AUDIO-4) while the loop arrives 26-195 ms
+ * AFTER playable, so it lands outside the real window and inside the recorded one. The two rows stay
+ * for the same honest reason the advance-stream residue does, and the assertion that actually
+ * enforces the invariant is in e2e/asset-diet.spec.ts ("music is not fetched before the first town
+ * is playable"), which reads the page's own clock and fails 2/2 projects on the uncured build.
  *
  * `menu-tap.mp3` is deliberately NOT here. It is 8,821 B, it is the sound of the click itself, and
  * a first click that makes no sound is a worse game than a first town that is 8 KB heavier.
@@ -227,8 +220,6 @@ export const ADVANCE_STREAM_RESIDUE_FAMILIES = [
 export const DEFERRED_MUSIC_FAMILIES = [
   'era-e1-frontier-loop.js',
   'era-e1-frontier-loop.mp3',
-  'title-theme.js',
-  'title-theme.mp3',
 ];
 
 const sorted = (list) => [...list].sort();

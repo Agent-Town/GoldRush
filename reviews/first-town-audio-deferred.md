@@ -20,7 +20,7 @@ Base `28a872077`; main moved by the Relay Rush, air-wall and sprite-cell merges.
 
 ## Findings
 - **F-AUDIO-1:** the bisect review transposed the two mp3 sizes (`title-theme.mp3` is 1,200,587 B; `era-e1-frontier-loop.mp3` 1,800,881 B); the total stands.
-- **F-AUDIO-2 (fire-authorable):** `SoundSystem.diagnostics()` republishes only on an audio event, so `loopElapsedSeconds` is a snapshot, not a clock; assert `startedBySound` instead (`SoundSystem.ts:297,338`); `music-survives-pause.spec.ts:22` and mu-02:69 poll it safely only because a run generates constant events.
+- **F-AUDIO-2 (fire-authorable):** `SoundSystem.diagnostics()` republishes only on an audio event, so `loopElapsedSeconds` is a snapshot, not a clock; assert `startedBySound` instead (`SoundSystem.ts:321,362` after perf-correctives-batch; `:297,338` when written); `music-survives-pause.spec.ts:22` and mu-02:80 (was :69) poll it safely only because a run generates constant events.
 - **F-AUDIO-3 (cured):** the music hold; honest limit stated in the code: `assetLoadingState` covers the GLTF LoadingManager only, so the hold buys the GLB half of the window for certain and the sheet tail only sometimes.
 - **F-AUDIO-4:** the cue window's end is polled over CDP with ~500 ms of skirt; `assetLoadingState` is not monotonic (the town publishes `ready 0/0` at construction), so a state-at-fetch-time check passes on the bug; the phase form fails 2/2 on the uncured build.
 - Carried: the mobile byte-race test and mu-02 are pre-existing unstable reds (the red inventory's class); the hero slot's clip split remains the largest lever.
