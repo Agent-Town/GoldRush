@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
-async function waitForGame(page: Page): Promise<void> {
-  await page.goto('/?nowaves&nolevel');
+async function waitForGame(page: Page, url: string): Promise<void> {
+  await page.goto(url);
   await expect(page.locator('#game-canvas')).toBeVisible();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 }
@@ -28,7 +28,7 @@ async function waitForDeath(page: Page): Promise<void> {
 
 test('T spawns Claim Jumpers, contact kills hero, R restarts in place', async ({ page }) => {
   const errors = collectPageErrors(page);
-  await waitForGame(page);
+  await waitForGame(page, '/?debug&nowaves&nolevel');
 
   // Since m1/02 the Spark Rig fights back: overwhelm immediately so contact
   // damage outpaces the rig (iframes cap intake at ~16 dmg/s -> death ~6.5s).
@@ -52,6 +52,19 @@ test('T spawns Claim Jumpers, contact kills hero, R restarts in place', async ({
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBe(0);
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.hp)).toBe(100);
 
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('T does not spawn Claim Jumpers without debug consent', async ({ page }) => {
+  const errors = collectPageErrors(page);
+  await waitForGame(page, '/?nowaves&nolevel');
+
+  const frame = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0);
+  await spawnDebugPack(page);
+  await page.waitForFunction((before) => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > before, frame);
+
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBe(0);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
