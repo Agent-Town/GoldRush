@@ -1,3 +1,5 @@
+> ⛔ SHIPPED — DO NOT QUEUE (merged to main as `15f6fbb23`, attended drain; the BACKLOG row "hero-move-verb SHIPPED 15f6fbb23" is the proof; `git merge-base --is-ancestor 15f6fbb23 main` = yes. Banner added 2026-09-07 for the task-guard audit: this master had no goal leaf.)
+
 # Task hero-move-verb: riders can move the hero (SCRATCH worktree, Claude Opus 5 implementer; commit prefix "feat:")
 
 You are the implementer for Gold Rush, running natively on Robin's Mac in a scratch worktree on branch `feat/hero-move-verb`, base current `main`.
