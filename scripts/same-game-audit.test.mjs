@@ -490,4 +490,91 @@ test('same-game audit also emits a complete markdown table', () => {
   assert.match(result.stdout, /\| contract \| surface \| humans-get \| agents-get \| direction \| evidence \|/);
   assert.match(result.stdout, /## New divergence classes beyond the seed/);
   assert.match(result.stdout, /## Worst offenders/);
+  assert.match(result.stdout, /## Controls parity \(ADR-005\)/);
+  assert.match(result.stdout, /\| verb \| acts from \| agent reaches \| human control \| verdict \| evidence \| note \|/);
+});
+
+// ---------------------------------------------------------------------------
+// ADR-005 controls parity. Owner ruling 2026-09-07: "There cannot be an unfair advantage here of
+// it being able to control the Prospector like the rider and the human cant."
+// ---------------------------------------------------------------------------
+
+/** The verbs the door declares, read INDEPENDENTLY of the generator's own selector. */
+function declaredDoorVerbs() {
+  const file = fs.readFileSync(path.join(ROOT, 'src/agent/StandingOrders.ts'), 'utf8');
+  const from = file.indexOf('export type StandingOrder =');
+  const to = file.indexOf('export type StandingOrderStatus', from);
+  assert.ok(from >= 0 && to > from, 'StandingOrder union shape changed');
+  return [...new Set([...file.slice(from, to).matchAll(/verb: '([A-Z][A-Z_]*)'/g)].map((match) => match[1]))].sort();
+}
+
+/** The keys of the generator's hand-maintained map, read out of its source. */
+function mappedDoorVerbs() {
+  const script = fs.readFileSync(SCRIPT, 'utf8');
+  const from = script.indexOf('const HUMAN_CONTROLS = {');
+  const to = script.indexOf("\nconst CONTROL_VERDICTS", from);
+  assert.ok(from >= 0 && to > from, 'HUMAN_CONTROLS map shape changed');
+  return [...new Set([...script.slice(from, to).matchAll(/^ {2}([A-Z][A-Z_]*): \{$/gm)].map((match) => match[1]))].sort();
+}
+
+// THE TEETH, and deliberately the cheap ones: this is the assertion that reds the SECOND a verb is
+// added to the door without a human control beside it, and it runs in milliseconds because it reads
+// two files rather than booting vite over forty-two contracts. The generator throws on the same
+// condition (which reds every test above through `status === 0`), so the door is guarded twice: once
+// where the report is produced and once where a reader can see why.
+test('every door verb is mapped to a human control (ADR-005)', () => {
+  const declared = declaredDoorVerbs();
+  // Assert the control's own validity before believing what it says (F-2215-1): comparing two
+  // empty sets passes while measuring nothing.
+  assert.ok(declared.length >= 18, `control invalid: only ${declared.length} door verbs found`);
+  assert.deepEqual(mappedDoorVerbs(), declared,
+    'a door verb has no ADR-005 human-control row (or a row names a verb the door dropped) — '
+    + 'edit HUMAN_CONTROLS in scripts/same-game-audit.mjs');
+});
+
+test('same-game audit publishes the ADR-005 controls section', () => {
+  const result = run('--json');
+  assert.equal(result.status, 0, result.stderr);
+  const { controls } = JSON.parse(result.stdout);
+  const declared = declaredDoorVerbs();
+
+  assert.deepEqual(controls.verbs.map((entry) => entry.verb), declared);
+  assert.deepEqual(Object.keys(controls.verbs[0]), [
+    'verb', 'body', 'agent-reaches', 'human-control', 'verdict', 'evidence', 'note',
+  ]);
+  assert.ok(controls.verbs.every((entry) => ['equal', 'agent-only', 'human-only-richer'].includes(entry.verdict)));
+  assert.ok(controls.verbs.every((entry) => ['hero', 'prospector', 'world'].includes(entry.body)));
+  // Every citation is a resolved `file:line`, so a moved anchor cannot survive as prose.
+  assert.ok(controls.verbs.every((entry) => entry.evidence.split(' · ').every((cite) => /^[\w./-]+:\d+$/.test(cite))));
+  assert.ok(controls.policies.every((entry) => /^[\w./-]+:\d+$/.test(entry['set-at'])));
+
+  // A verb no human control reaches is `agent-only` by definition. The converse does NOT hold:
+  // REPAIR_UNDER has a human twin for its THRESHOLD and none for its map-wide reach, so it is
+  // `agent-only` while still naming the control the human does have.
+  for (const entry of controls.verbs) {
+    if (entry['human-control'] === 'NONE') {
+      assert.equal(entry.verdict, 'agent-only', `${entry.verb} names no human control but is not agent-only`);
+    }
+  }
+
+  // The ruling names this one out loud, so it is pinned rather than merely derived.
+  assert.equal(controls.verbs.find((entry) => entry.verb === 'MOVE_TO').verdict, 'agent-only');
+  assert.equal(controls.verbs.find((entry) => entry.verb === 'MOVE_HERO').verdict, 'equal');
+  assert.equal(controls.summary.equal + controls.summary['agent-only'] + controls.summary['human-only-richer'],
+    controls.verbs.length);
+  assert.ok(controls.policies.length >= 5, 'the human Prospector policy surface is under-reported');
+});
+
+// F-2096-1's lesson applied to this section: the tables above prove the GENERATOR is right, and a
+// committed report nobody regenerated stays wrong underneath them. A verb added to the door reds
+// the map test immediately; this is what reds the DOC.
+test('the committed same-game report carries a controls row for every door verb', () => {
+  const report = fs.readFileSync(path.join(ROOT, 'docs/bench/same-game-audit.md'), 'utf8');
+  const from = report.indexOf('### The door verbs against that surface');
+  assert.ok(from >= 0, 'committed same-game report has no ADR-005 controls table — '
+    + 'regenerate with `node scripts/same-game-audit.mjs --write-report`');
+  const section = report.slice(from);
+  const rows = [...section.matchAll(/^\| ([A-Z][A-Z_]*) \| /gm)].map((match) => match[1]).sort();
+  assert.deepEqual([...new Set(rows)], declaredDoorVerbs(),
+    'committed controls table is stale — regenerate with `node scripts/same-game-audit.mjs --write-report`');
 });
