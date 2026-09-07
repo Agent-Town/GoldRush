@@ -19,17 +19,37 @@ const HELD_SHEETS = new Set([
   'char-youngster-m-sheet-walk8',
 ]);
 
+// REGENERATED, NOT RE-EXTRACTED (task elder-walk8-regeneration, 2026-09-07; owner ruling A8,
+// verbatim: "F-AGE1: has to be adapted to be woman"). A stem listed here is held out of `cured` for
+// the same reason as any HELD_SHEETS member — its bytes are not expected to match BASE, so the
+// alpha/opaque-RGB invariant below cannot apply to it — but its BASE residue is no longer EXPECTED,
+// because the sheet was generated afresh by a pipeline that ends in the post-s1449 extractor and
+// therefore carries the alpha bleed the 2026-07 sheets predate.
+//
+// MEASURED on this tree: all 32 `char-elder-sheet-walk8` cells are suspects at BASE (the bearded
+// man, extracted 2026-07-11) and 0 of 32 are suspects now, with no cell of any other sheet becoming
+// one. So the held residue moves 264 -> 232 and `cured` does not move (811): the Elder's cells were
+// never in it. The assertion below is what makes this a claim rather than a subtraction — if a
+// regenerated sheet came back haloed, its cells would appear in `current.suspects`, be absent from
+// `expectedResidual`, and red the deepEqual.
+const REGENERATED_SHEETS = new Set([
+  'char-elder-sheet-walk8',
+]);
+
 const gitShow = (file) => execFileSync('git', ['show', `${BASE}:${file}`], { maxBuffer: 20 * 1024 * 1024 });
 const baseline = JSON.parse(gitShow(SWEEP));
 const stem = (file) => path.basename(file).replace(/-r\d+c\d+\.png$/, '').replace(/\.png$/, '');
-const expectedResidual = baseline.suspects.filter(({ file }) => HELD_SHEETS.has(stem(file)));
+const expectedResidual = baseline.suspects.filter(({ file }) => HELD_SHEETS.has(stem(file)) && !REGENERATED_SHEETS.has(stem(file)));
 const cured = baseline.suspects.filter(({ file }) => !HELD_SHEETS.has(stem(file)));
+const regenerated = baseline.suspects.filter(({ file }) => REGENERATED_SHEETS.has(stem(file)));
 
 assert.equal(baseline.scanned, 1314);
 // F-PORT-4 (attended 2026-09-06): the portraits-e5-e10 batch added 21 full-bleed, fully opaque townsfolk portraits
 // (no transparent pixels, so no halo candidates); the denominator is 1314 + 21 = 1335, measured on the tree.
 assert.equal(baseline.suspects.length, 1075);
-assert.equal(expectedResidual.length, 264);
+// 264 - 32 regenerated Elder cells; see REGENERATED_SHEETS above.
+assert.equal(expectedResidual.length, 232);
+assert.equal(regenerated.length, 32);
 assert.equal(cured.length, 811);
 
 const savedSweep = fs.readFileSync(SWEEP);
@@ -112,4 +132,4 @@ for (const { file } of cured) {
 }
 
 assert.equal(failures.length, 0, `re-extraction invariant failed:\n${failures.join('\n')}`);
-console.log(`halo re-extraction PASS: ${cured.length} cured, ${expectedResidual.length} held, ${current.scanned} scanned; alpha and opaque RGB unchanged`);
+console.log(`halo re-extraction PASS: ${cured.length} cured, ${expectedResidual.length} held, ${regenerated.length} regenerated-and-cured, ${current.scanned} scanned; alpha and opaque RGB unchanged`);

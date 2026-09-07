@@ -101,6 +101,7 @@ import { SoundSystem } from '../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
 import tavernkeeperWalkFrames from '../../assets/processed/char-tavernkeeper-sheet-walk8.frames.json' with { type: 'json' };
 import storekeeperWalkFrames from '../../assets/processed/char-storekeeper-sheet-walk8.frames.json' with { type: 'json' };
+import elderWalkFrames from '../../assets/processed/char-elder-sheet-walk8.frames.json' with { type: 'json' };
 
 // THE TOWN DECLARES ITS CLIP GROUPS (task hero-slot-clip-split, 2026-09-07; owner, verbatim: "now
 // it loads veerrry slowly"). This module is reached only through `await import('./town/TownScene')`
@@ -130,9 +131,16 @@ type ProcessedWalkFrames = {
   cells: Array<{ row: number; col: number; bbox: number[] }>;
 };
 
+// F-A8-5 (review `reviews/canon-calls-a8-batch.md`, 2026-09-07): this map held only the
+// tavernkeeper and the storekeeper, so the Elder rendered with no footline anchoring — her
+// billboard sat by the cell's centre instead of by her feet, and the taller cells of her sheet
+// floated. `assets/LEDGER.md:48` carried that as PENDING-INTEGRATION from 2026-07-11. Her sheet
+// is regenerated under the same stem by task elder-walk8-regeneration, so registering it here is
+// the whole of the wiring; every other actor still falls back to the centred default.
 const townCastWalkFrames: Partial<Record<TownActorId, ProcessedWalkFrames>> = {
   tavernkeeper: tavernkeeperWalkFrames,
   storekeeper: storekeeperWalkFrames,
+  elder: elderWalkFrames,
 };
 const tailorSignUrls = import.meta.glob<string>('../../assets/processed/prop-tailor-sign.png', {
   eager: true,
