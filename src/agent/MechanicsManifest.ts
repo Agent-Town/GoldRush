@@ -4,7 +4,7 @@ import { FLOCK_SPEED_MULT, LANE_SPACING_RADII } from '../systems/CrowdFlockSyste
 import { beaconCost, buildableBlurb, buildableCostAt, getBuildableDef, resolveBeaconLadder, type BuildableId } from '../game/buildables';
 import { PicnicHoldSystem, PICNIC_ACTIVE_DEFENSE_SECONDS, PICNIC_HOLD_RADIUS, PICNIC_HOLD_SECONDS, PICNIC_STAKE_PRESS_WEIGHT } from '../systems/PicnicHoldSystem';
 import { DEBRIS_DAMAGE_PER_SECOND, DEBRIS_SPEED_SCALE, DRIFT_CONTROL_SCALE, LowOrbitSystem } from '../systems/LowOrbitSystem';
-import { DOME_AIR_DRAIN_SECONDS, DOME_AIR_REFILL_SECONDS, DOME_ZONE_PREFIX, E8AtmosphereSystem } from '../systems/E8PhysicsSystem';
+import { DOME_AIR_DRAIN_SECONDS, DOME_AIR_REFILL_SECONDS, DOME_ZONE_PREFIX, E8AtmosphereSystem, SUIT_HARM_TICK_SECONDS } from '../systems/E8PhysicsSystem';
 import { E8SuitAirSystem } from '../systems/E8SuitAirSystem';
 import { INTERFERENCE_MUTED_REASON, InterferenceFrontSystem, POWERED_RELAY_KINDS } from '../systems/InterferenceFrontSystem';
 import { E10SquallScheduler, SQUALL_PHASE_ORDER } from '../systems/E10SquallScheduler';
@@ -705,8 +705,8 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         // The consequence, stated as a consequence. This is an OBJECTIVE, not a hazard: it costs
         // no hit points and pays no gold, so a rider that ignores it simply cannot secure.
         consequence: windowWaves === null
-          ? `the run cannot secure until the Prospector has stood in every one of the ${crossing.zones.length} authored crossing zones with air still in the suit; an entry made breathless is counted and credits nothing`
-          : `the run cannot secure until every authored crossing zone has been stood in on air AND ${crossing.required} crossings have been credited, and only ONE crossing counts per ${windowWaves}-wave window, so the vacuum is crossed across the whole contract; an entry made breathless is counted and credits nothing`,
+          ? `the run cannot secure until the hero has stood in every one of the ${crossing.zones.length} authored crossing zones with air still in her suit; an entry made breathless is counted and credits nothing`
+          : `the run cannot secure until the hero has stood in every authored crossing zone on air AND ${crossing.required} crossings have been credited, and only ONE crossing counts per ${windowWaves}-wave window, so the vacuum is crossed across the whole contract; an entry made breathless is counted and credits nothing`,
         gatesSecure: true,
         damages: false,
       }));
@@ -728,6 +728,31 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
         damages: false,
       }));
     }
+  }
+
+  // --- E8 THE HUMAN'S SUIT (owner directive 2026-09-07, verbatim: "I want space experiences of
+  // humans to need them having air. It has to be logical. If that means we have to change something
+  // ok"). One row for all four Orbital maps, sourced from whichever consumer this contract arms,
+  // and the ONLY E8 row whose `damages` reads true: the two rows above are OBJECTIVES that refuse a
+  // secure, this one is a HAZARD that kills. A rider that reads only the objective rows would plan
+  // a ride its hero cannot survive, which is exactly the drift a sourced manifest exists to stop.
+  const humanSuit = airWall.isDeclared ? airWall : suitAir.isDeclared ? suitAir : null;
+  if (humanSuit) {
+    const { suit, domes } = humanSuit.diagnostics;
+    rules.push(rule('air_suit_human', 'E8HumanSuit.update', {
+      body: suit.body,
+      suitSeconds: suit.capacity,
+      refillPerSecond: suit.refillPerSecond,
+      refillsIn: domes.map(({ id }) => id).join(', '),
+      // Spread-if-authored, the shape both rows above use: a `MechanicValue` has no null, and
+      // `harmPerSecond: 0` would read as a harm rather than the absence of one.
+      ...(suit.harmPerSecond === null ? {} : { harmPerSecond: suit.harmPerSecond, harmTickSeconds: SUIT_HARM_TICK_SECONDS }),
+      consequence: suit.harmPerSecond === null
+        ? `the hero's suit holds ${suit.capacity}s of air outside pressurised ground and refills only inside it; an empty suit costs no hit points on this contract`
+        : `the hero's suit holds ${suit.capacity}s of air outside pressurised ground and refills only inside it at ${suit.refillPerSecond}s per second; once it empties she loses ${suit.harmPerSecond}hp every second until she reaches air or dies`,
+      gatesSecure: false,
+      damages: suit.harmPerSecond !== null,
+    }));
   }
 
   // --- A7 low orbit. SOURCED FROM THE CONSUMER for the same reason A4 is: the manifest asks

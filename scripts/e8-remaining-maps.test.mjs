@@ -42,10 +42,18 @@ const manifestOf = (id) => bundle.find((entry) => entry.id === id);
 // now authors `twist.atmosphere`. The idle ride itself is unmoved — same waves, same timeMs, same
 // kills, still lost — which is what the deepEqual below asserts. Attribution measured both ways:
 // `artifacts/e8-air-wall-all-maps/floor-attribution.json`.
+// RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07: the suit became the HUMAN's and an empty one costs hit points).
+// Two of these three rows moved by their HASH ONLY — the Far Side and Low Orbit drop their hero
+// INSIDE pressurised ground (`far-side-landing-yard`, `claw-carcass-yard`), so an idle human there
+// never suffocates and the ride is the same ride carrying two more view fields. The ECLIPSE row
+// moved its OUTCOME as well, from 81 800 ms / 32 kills to 76 733 / 30, and that is the directive
+// working rather than a regression: this map drops its hero at (0, 12), six world units north of
+// the dome cluster, so an idle rider's suit empties at t = 60 s and she is charged 5 hp a second
+// after it. She dies five seconds sooner than she used to, of the thing the era is about.
 const IDLE = {
-  'e8-far-side': { seed: 'e8-far-side-01', composed: 'fnv1a32:22c47125', waves: 2, timeMs: 79_400, kills: 30 },
-  'e8-low-orbit': { seed: 'e8-low-orbit-01', composed: 'fnv1a32:088a929c', waves: 2, timeMs: 78_333, kills: 33 },
-  'e8-eclipse': { seed: 'e8-eclipse-01', composed: 'fnv1a32:121b0402', waves: 2, timeMs: 81_800, kills: 32 },
+  'e8-far-side': { seed: 'e8-far-side-01', composed: 'fnv1a32:05ae6272', waves: 2, timeMs: 79_400, kills: 30 },
+  'e8-low-orbit': { seed: 'e8-low-orbit-01', composed: 'fnv1a32:e6813da3', waves: 2, timeMs: 78_333, kills: 33 },
+  'e8-eclipse': { seed: 'e8-eclipse-01', composed: 'fnv1a32:9568f50b', waves: 2, timeMs: 76_733, kills: 30 },
 };
 // THE CONTROL, pinned by `reviews/e8-mare-claim-physics.md` before this slice existed.
 // RE-POINTED 2026-09-06 by `tasks/mare-claim-air-prevalent.md` (owner ruling: "no, this has to be
@@ -60,7 +68,13 @@ const IDLE = {
 // differs from the composed one, and the floors hold the composed value. Measured on a pristine
 // `main` (502a398d9) with every file of this slice reverted: the same test fails with the same
 // numbers, `e8-far-side` un-composed `fnv1a32:3fe83eca` against the pinned `fnv1a32:5c30efd5`.
-const MARE_CLAIM = { seed: 'e8-mare-claim-01', hash: 'fnv1a32:32f62335', waves: 2, timeMs: 81_233, kills: 32 };
+//
+// RE-POINTED AGAIN 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from `fnv1a32:32f62335` / 81 233 ms / 32 kills. The Mare
+// Claim is still the control for the shared code and this test still makes its point — the ride is
+// byte-identical with `E8SuitAirSystem` composed and with it gone — but its OUTCOME moved, and the
+// master said in advance that it might ("they may move if the hero now breathes; say so"). It does:
+// this map drops its hero at (0, 12), outside every dome, so the idle floor now suffocates.
+const MARE_CLAIM = { seed: 'e8-mare-claim-01', hash: 'fnv1a32:271eabbb', waves: 2, timeMs: 76_033, kills: 30 };
 
 const location = new URL('http://gr-sim.local/?debug&contract=e8-far-side&seed=e8-far-side-01');
 globalThis.location = location;
@@ -130,7 +144,12 @@ function crossingRide(contractId, seed, { immortal = false, stopAtWave = null, m
           // The shelter the suit fills in. On Low Orbit the decks ARE the shelters, so this is
           // simply "stay where the air is"; on the Far Side it is the lander's yard.
           : (now.air.domes[0]?.id ?? crossing.zones[0]);
-      if (target) orders.push({ verb: 'HOLD', pos: centreOf(zoneOf(target, contractId)) });
+      // RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07): the crossing is made by the HERO now, so the shuttle is
+      // `MOVE_HERO` rather than `HOLD`. `HOLD` parks the PROSPECTOR, a made agent that does not
+      // breathe and whose entries no longer credit anything; steering the human is the whole point
+      // of the rule. The policy above is unchanged — go out while the window holds a credit, come
+      // home to breathe when it does not.
+      if (target) orders.push({ verb: 'MOVE_HERO', pos: centreOf(zoneOf(target, contractId)) });
       if (orders.length) assert.equal(sim.submitOrders(orders).outcome.ok, true);
     }
     if (stopAtWave !== null && turn.view.now.wave >= stopAtWave) break;
@@ -327,29 +346,45 @@ test('the crossing window credits at most one entry per window, and holds the re
   assert.equal(dials.window, crossingRequired - 1, 'the earliest possible finish is one window per crossing');
 });
 
-test('low orbit crosses its three authored decks, and the returning-lob seam is untouched', () => {
+test('low orbit crosses its two outboard decks, and the returning-lob seam is untouched', () => {
   const air = E8SuitAirSystem.create(manifestOf('e8-low-orbit'));
-  const decks = ['west-scaffold-deck', 'claw-carcass-yard', 'east-scaffold-deck'];
+  // RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07): `claw-carcass-yard` has LEFT this list. It is the map's only
+  // pressurised ground now (`twist.atmosphere.pressurisedZoneIds`), and a rectangle that holds air
+  // is not a crossing — which is F-EAWA-2's cure, the finding that said the wall here could only
+  // ever be a schedule because the crossings and the shelters were the same three rectangles.
+  const decks = ['west-scaffold-deck', 'east-scaffold-deck'];
   const windowSeconds = manifestOf('e8-low-orbit').twist.atmosphere.crossingWindowWaves * WAVE_SECONDS;
   assert.deepEqual(air.diagnostics.crossing.zones, decks);
   // RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`): four CREDITED entries, not three
   // zones — and the zone conjunct is kept beside it, so this map's latch is strictly stricter than
   // the one it replaces. Three decks in three windows is three credits and the latch stays shut.
   assert.equal(air.diagnostics.crossing.required, 4);
-  for (const deck of decks) {
+  // RE-POINTED 2026-09-07: the loop now goes HOME BETWEEN CREDITS, because it has to. Parking in a
+  // deck for a whole 120-second window used to be free — the deck was the shelter — and it now
+  // empties a sixty-second suit twice over. Alternating the two decks from the cabin is the ride
+  // the map asks for, and the four credits still cannot exist before the fourth window opens.
+  const cabin = centreOf(zoneOf('claw-carcass-yard', 'e8-low-orbit'));
+  const breathe = (seconds) => { for (let second = 0; second < seconds; second += 1) air.update(1, cabin, [], 1); };
+  for (let credit = 0; credit < 4; credit += 1) {
     assert.equal(air.objectiveAllowsSecure, false);
-    const inside = centreOf(zoneOf(deck, 'e8-low-orbit'));
-    air.update(1, inside, [], 1);                                    // the ENTRY, which is the credit
-    for (let second = 0; second < windowSeconds; second += 1) air.update(1, inside, [], 1);
-    air.update(1, { x: 0, z: 40 }, [], 1);                           // out over the debris, so the next entry registers
+    air.update(1, centreOf(zoneOf(decks[credit % 2], 'e8-low-orbit')), [], 1);   // the ENTRY, on air
+    breathe(windowSeconds);                                                       // home, and the window rolls
   }
-  assert.deepEqual(air.diagnostics.crossing.reached, decks, 'every deck stood on, and still short');
-  assert.equal(air.diagnostics.crossing.credited, 3);
-  assert.equal(air.objectiveAllowsSecure, false, 'three decks are three credits of the four asked');
-  air.update(1, centreOf(zoneOf(decks[0], 'e8-low-orbit')), [], 1);
+  assert.deepEqual(air.diagnostics.crossing.reached, decks, 'every deck stood on');
   assert.equal(air.diagnostics.crossing.credited, 4, 're-entering a deck in a fresh window credits again');
-  assert.equal(air.diagnostics.crossing.breathlessEntries, 0, 'the decks ARE the shelters, so no entry can be breathless');
+  assert.equal(air.diagnostics.crossing.breathlessEntries, 0, 'every entry was taken from the cabin on a full suit');
   assert.equal(air.objectiveAllowsSecure, true);
+
+  // F-EAWA-2'S CURE, ASSERTED AS THE THING THAT USED TO BE IMPOSSIBLE. Before 2026-09-07 this map
+  // could not produce a breathless entry at all, because the crossings and the shelters were the
+  // same three rectangles and `breathlessEntries` could only ever read 0. Now a body that stays
+  // out past its suit and walks into a deck is refused, which is what makes the wall an air budget.
+  const budget = E8SuitAirSystem.create(manifestOf('e8-low-orbit'));
+  const spine = { x: 22, z: 0 };
+  for (let second = 0; second < SUIT_AIR_SECONDS + 5; second += 1) budget.update(1, spine, [], 1);
+  budget.update(1, centreOf(zoneOf(decks[1], 'e8-low-orbit')), [], 1);
+  assert.equal(budget.diagnostics.crossing.breathlessEntries, 1, 'a deck reached on an empty suit credits nothing');
+  assert.deepEqual(budget.diagnostics.crossing.reached, [], 'and is not even recorded as reached');
 
   // THE PROVEN SEAM IS KEPT, and this is a claim about a file rather than about this one: the
   // drift/debris scaling still reaches `filterMovement` through the sim's own movement seam, and

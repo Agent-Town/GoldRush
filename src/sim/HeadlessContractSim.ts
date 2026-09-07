@@ -2037,12 +2037,16 @@ export class HeadlessContractSim {
     );
     const hollowChip = this.hollowCrossing.update(STEP_SECONDS, this.prospector.position, 'prospector');
     if (hollowChip > 0) this.combat.damageActor(hollowChip, -1, this.hero);
-    // E8: the suit against the domes, read off the position the Prospector just moved to, with the
-    // outlaws where this step left them. No hp moves here — the wall counts, it does not cut.
-    this.atmosphere.update(STEP_SECONDS, this.prospector.position, this.enemies.all);
-    // E8: the siblings' suit, against the same position and the same outlaws, plus the wave the
-    // Eclipse's shadow is scheduled against. Inert on every other contract, hp untouched here too.
-    this.suitAir.update(STEP_SECONDS, this.prospector.position, this.enemies.all, this.currentRunWave());
+    // E8: the HUMAN's suit against the domes, read off the hero's own position — the body a rider
+    // steers with `MOVE_HERO` and the only body on these maps that breathes (owner directive
+    // 2026-09-07; `E8HumanSuit`). It used to read `this.prospector.position`, which is a made agent.
+    // hp DOES move here now, and it moves the one lawful way: the consumer returns the chip and
+    // `CombatSystem` applies it, exactly as `hollowCrossing` above returns its radiation chip.
+    const suitChip = this.atmosphere.update(STEP_SECONDS, this.hero.group.position, this.enemies.all)
+      // E8: the siblings' suit, against the same body and the same outlaws, plus the wave the
+      // Eclipse's shadow is scheduled against. Inert on every other contract.
+      + this.suitAir.update(STEP_SECONDS, this.hero.group.position, this.enemies.all, this.currentRunWave());
+    if (suitChip > 0) this.combat.damageActor(suitChip, -1, this.hero);
     this.dayNightSnapshot = this.sampleDayNightSnapshot();
     this.syncLightState();
     observeStandingOrders();

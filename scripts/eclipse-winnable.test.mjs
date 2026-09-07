@@ -119,8 +119,15 @@ test('the globals the measured arms would have raised are unmoved', async () => 
 test('the air wall the Eclipse ships is still the ruled one', async () => {
   await withVite(async (vite) => {
     const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
-    assert.deepEqual(loadContract(CONTRACT).twist.atmosphere, { regolithRequired: 4, regolithWindowWaves: 4 },
-      'winnability must never be bought by softening the air ruling (owner 2026-09-06: "same air for all space contracts")');
+    // RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07): the row grew three fields and this test's point is
+    // narrower than a deep-equal was. What it guards is that the Eclipse's WINNABILITY is never
+    // bought by softening the air, so it asserts the two GATE numbers are unmoved and that the
+    // human-suit half is the shipped one rather than a private easing of this map.
+    const air = loadContract(CONTRACT).twist.atmosphere;
+    assert.equal(air.regolithRequired, 4, 'winnability must never be bought by softening the air ruling (owner 2026-09-06: "same air for all space contracts")');
+    assert.equal(air.regolithWindowWaves, 4, 'nor by widening the window');
+    assert.equal(air.suitSeconds, 60, 'nor by handing this map a bigger suit than its siblings');
+    assert.equal(air.harmPerSecond, 5, 'nor by charging its hero less for an empty one');
   });
 });
 

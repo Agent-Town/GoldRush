@@ -141,7 +141,7 @@
           "outsideDomes": "suit-timer"
         },
         "engineDependencies": [
-          { "dep": "atmosphere-wall-consumer", "status": "missing", "description": "Needs the declared atmosphere wall and suit-timer consumer; gravity physics already has a registered consumer." }
+          { "dep": "atmosphere-wall-consumer", "status": "missing", "description": "The headless door composes the atmosphere wall and, since 2026-09-07, the HUMAN suit: the hero drains outside a breathing dome, refills only inside one, and loses five hit points a second once it empties, through CombatSystem. The BROWSER still composes no atmosphere consumer at all, so a player there meets neither the suit nor the harm, and this dependency stays missing until Game.ts composes it." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -184,7 +184,14 @@
         "clockTicks": 18000,
         "atmosphere": {
           "regolithRequired": 4,
-          "regolithWindowWaves": 4
+          "regolithWindowWaves": 4,
+          "suitSeconds": 60,
+          "harmPerSecond": 5,
+          "pressurisedZoneIds": [
+            "dome-cluster-pad-west",
+            "dome-cluster-pad-center",
+            "dome-cluster-pad-east"
+          ]
         },
         "enemyRoster": [
           { "id": "scrap_corsair", "label": "Scrap Corsair" },
@@ -212,7 +219,9 @@
           "Seven surveyed build grounds span the rim and mare flat.",
           "Waves enter from the north, west, and east.",
           "The claim is not made until four of the six regolith grounds are worked with air still in the suit.",
-          "Only one ground counts in each four-wave window, so the run is made in trips; the suit fills only inside a breathing dome."
+          "Only one ground counts in each four-wave window, so the run is made in trips; a ground worked while her suit is empty counts for nothing.",
+          "Outside the domes there is no air. The hero lands six paces north of the dome cluster with sixty seconds in her suit, and only a breathing dome fills it.",
+          "An empty suit costs her five hit points every second until she reaches air."
         ],
         "geographyLine": "A height-six crater rim rings a height-zero mare with dome pads, regolith fields, a lava-tube mouth, launch pad, and eastbound mass-driver rail."
       }
@@ -311,7 +320,7 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "far-side-contract-consumers", "status": "missing", "description": "Signal suppression, probe recovery and playback have consumers, and the headless door now composes the suit-only atmosphere wall: the suit drains outside the landing yard and the crossing counts only on air. The BROWSER still composes no atmosphere consumer at all, so a player there meets no suit timer and this dependency stays missing until it does." }
+          { "dep": "far-side-contract-consumers", "status": "missing", "description": "Signal suppression, probe recovery and playback have consumers, and the headless door composes the suit-only atmosphere wall. Since 2026-09-07 the body it measures is the HERO: her suit drains outside the landing yard, refills only inside it, costs five hit points a second once empty, and the crossing into the probe crater is hers to make. The BROWSER still composes no atmosphere consumer at all, so a player there meets neither the suit nor the harm, and this dependency stays missing until Game.ts composes it." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -328,7 +337,12 @@
         "clockTicks": 18000,
         "atmosphere": {
           "crossingRequired": 4,
-          "crossingWindowWaves": 4
+          "crossingWindowWaves": 4,
+          "suitSeconds": 60,
+          "harmPerSecond": 5,
+          "pressurisedZoneIds": [
+            "far-side-landing-yard"
+          ]
         },
         "enemyRoster": [
           { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" }
@@ -363,7 +377,9 @@
           "The Far Side reuses the Mare Claim rim-and-flat ground.",
           "Waves enter from the north, west, and east.",
           "The crossing is not made until four separate entries into the listening-probe crater are credited with air still in the suit.",
-          "Only one crossing counts in each four-wave window, so the vacuum is crossed again and again; the suit fills only inside the landing yard."
+          "Only one crossing counts in each four-wave window, so the vacuum is crossed again and again; an entry made on an empty suit counts for nothing.",
+          "The hero makes the crossing herself. Her suit holds sixty seconds of air and only the landing yard fills it; the crater lies sixty-eight paces out.",
+          "An empty suit costs her five hit points every second until she reaches air."
         ],
         "geographyLine": "The Mare Claim rim-and-flat terrain with a landing yard at one end and the listening-probe crater at the other."
       }
@@ -505,7 +521,7 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "low-orbit-contract-consumers", "status": "missing", "description": "Zero-gravity projectile physics, the scaffold decks, the debris bands and the handhold spine all run, and the headless door now composes the suit-only atmosphere wall: crossing every authored deck on suit air is what opens the secure. The BROWSER still composes no atmosphere consumer at all, so this dependency stays missing until it does." }
+          { "dep": "low-orbit-contract-consumers", "status": "missing", "description": "Zero-gravity projectile physics, the scaffold decks, the debris bands and the handhold spine all run, and the headless door composes the suit-only atmosphere wall. Since 2026-09-07 only the carcass yard holds air, the two outboard decks are vacuum, and the hero herself must cross to them on her own suit. The BROWSER still composes no atmosphere consumer at all, so a player there meets neither the suit nor the harm, and this dependency stays missing until Game.ts composes it." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -521,7 +537,12 @@
         "clockTicks": 18000,
         "atmosphere": {
           "crossingRequired": 4,
-          "crossingWindowWaves": 4
+          "crossingWindowWaves": 4,
+          "suitSeconds": 60,
+          "harmPerSecond": 5,
+          "pressurisedZoneIds": [
+            "claw-carcass-yard"
+          ]
         },
         "enemyRoster": [
           { "id": "scrap_corsair", "label": "Scrap Corsair" }
@@ -551,8 +572,10 @@
           "Three surveyed decks divide the orbital yard.",
           "Two debris fields flank the central spine.",
           "Waves enter from the west and east.",
-          "The scaffold is not crossed until every deck has been stood on and four separate deck entries are credited with air still in the suit.",
-          "Only one crossing counts in each four-wave window, so the spine is worked all run; the suit fills only on a pressurised deck."
+          "The scaffold is not crossed until the hero has stood on both outboard decks and four separate deck entries are credited with air still in her suit.",
+          "Only one crossing counts in each four-wave window, so the spine is worked all run; an entry made on an empty suit counts for nothing.",
+          "Only the carcass yard holds air. The two scaffold decks are open frame in vacuum, and her suit holds sixty seconds.",
+          "An empty suit costs her five hit points every second until she reaches air."
         ],
         "geographyLine": "The Salvage King's Claw rebuilt as a three-deck orbital yard, with a handhold spine between two drifting debris fields."
       }
@@ -711,7 +734,7 @@
           }
         ],
         "engineDependencies": [
-          { "dep": "eclipse-contract-consumers", "status": "missing", "description": "The headless door now composes the atmosphere wall and the eclipse event: mid-run the shadow takes the solar-fed dome pads offline, leaves the pad nearest the claim as the reserve, and the secure then needs a regolith ground worked on suit air after it lands. The authored shadow-zone rectangle itself still has no consumer, and the BROWSER composes neither the atmosphere nor the eclipse, so this dependency stays missing." }
+          { "dep": "eclipse-contract-consumers", "status": "missing", "description": "The headless door composes the atmosphere wall and the eclipse event: mid-run the shadow takes the solar-fed dome pads offline, leaves the pad nearest the claim as the reserve, and the secure then needs a regolith ground worked on the hero air after it lands. Since 2026-09-07 the suit is hers and an empty one costs five hit points a second, so the reserve is a life-support ration rather than a bookkeeping note. The authored shadow-zone rectangle itself still has no consumer, and the BROWSER composes neither the atmosphere nor the eclipse, so this dependency stays missing." }
         ],
         "lanes": {
           "spawnEdges": [
@@ -754,7 +777,14 @@
         "clockTicks": 18000,
         "atmosphere": {
           "regolithRequired": 4,
-          "regolithWindowWaves": 4
+          "regolithWindowWaves": 4,
+          "suitSeconds": 60,
+          "harmPerSecond": 5,
+          "pressurisedZoneIds": [
+            "dome-cluster-pad-west",
+            "dome-cluster-pad-center",
+            "dome-cluster-pad-east"
+          ]
         },
         "enemyRoster": [
           { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" },
@@ -788,7 +818,9 @@
           "The eastbound mass-driver rail crosses the southern footing.",
           "Waves enter from the north, west, and east.",
           "The claim is not made until four of the six regolith grounds are worked with air still in the suit.",
-          "Only one ground counts in each four-wave window, so the run is made in trips; the suit fills only inside a breathing dome, and the shadow leaves just one breathing."
+          "Only one ground counts in each four-wave window, so the run is made in trips; a ground worked while her suit is empty counts for nothing.",
+          "Outside the domes there is no air. The hero lands six paces north of the dome cluster with sixty seconds in her suit, and the shadow leaves just one dome breathing.",
+          "An empty suit costs her five hit points every second until she reaches air."
         ],
         "geographyLine": "The Mare Claim rim, dome cluster, regolith fields, launch pad, and mass-driver rail beneath a dark sky."
       }

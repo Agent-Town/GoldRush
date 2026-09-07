@@ -5,9 +5,12 @@ import {
   DOME_AIR_DRAIN_SECONDS,
   DOME_AIR_REFILL_SECONDS,
   DOME_ZONE_PREFIX,
+  E8HumanSuit,
   REGOLITH_GROUNDS_FOR_SECURE,
   SUIT_AIR_SECONDS,
-  SUIT_REFILL_PER_SECOND,
+  authoredHarmPerSecond,
+  authoredPressurisedZoneIds,
+  authoredSuitSeconds,
   type E8AtmosphereDiagnostics,
 } from './E8PhysicsSystem';
 
@@ -30,12 +33,18 @@ import {
 // gravity half absent are STALE, exactly as the master says. None of the three published `now.air`.
 // The gravity half was already composed; THE AIR HALF IS WHAT THIS FILE ADDS.
 //
-// WHAT IT DOES, HONESTLY BOUNDED. Like `E8AtmosphereSystem` before it, this is a MEASUREMENT of
-// one body against authored rectangles on the fixed step, plus an objective latch. It damages
-// nothing and mints nothing: the browser composes no atmosphere consumer at all, so a rule that
-// hurt the body or paid it would put the two engines on different boards for the same orders (the
-// Same Laws law, `specs/epoch-saga/CAPABILITY-LADDER.md` L7). What CAN differ without breaking
-// that law is what counts toward the era's objective, and that is all this changes.
+// WHAT IT DOES, HONESTLY BOUNDED. Like `E8AtmosphereSystem` beside it, this is a MEASUREMENT of one
+// body against authored rectangles on the fixed step, plus an objective latch — and, since
+// 2026-09-07, a HARM the caller routes through `CombatSystem`. It still mints nothing.
+//
+// THE BODY CHANGED, 2026-09-07 (owner directive, verbatim: "I want space experiences of humans to
+// need them having air. It has to be logical. If that means we have to change something ok"). Until
+// then this consumer measured the PROSPECTOR — a made agent, the town's brass firstborn — and
+// published `suit.body: 'prospector'`. It now measures the HERO, the human body a rider steers with
+// `MOVE_HERO`, because she is the one the storybook says breathes and the one who can die of not.
+// See `E8HumanSuit` in `src/systems/E8PhysicsSystem.ts` for the canon citations and the measurement
+// that forced it: on the securing tapes the human spent 0 of 600 s outside pressurised ground on
+// the Far Side and Low Orbit, and 601 of 600 s outside it on the Mare Claim.
 //
 // EVERY NUMBER IS INHERITED, NEVER INVENTED (the master's "no new balance number"): the suit's
 // capacity and refill, the shelter drain and reseal windows, and the count of grounds a claim must
@@ -55,9 +64,13 @@ import {
 //     atmosphere-wall/suit-air half; keep the proven returning-lob seam"). The drift scaling is
 //     already routed: `HeadlessContractSim.e8PhysicsIntents` passes `LowOrbitSystem`'s per-position
 //     `controlScale`/`speedScale` into `filterMovement`, and `LowOrbitSystem` is untouched here, so
-//     the returning-lob seam keeps working exactly as it was proven. The new half is the air: the
-//     three authored scaffold decks are the only pressurised ground in the yard, and crossing the
-//     spine to reach every one of them on suit air is what opens the secure.
+//     the returning-lob seam keeps working exactly as it was proven. The new half is the air.
+//     ⚠️ THE GEOGRAPHY WAS WRONG UNTIL 2026-09-07 (F-EAWA-2, `reviews/e8-air-wall-all-maps.md`):
+//     all three scaffold decks were BOTH the pressurised ground and the thing to be crossed, so a
+//     breathless entry was unreachable by construction and the wall was a schedule rather than an
+//     air budget. The contract now names its pressurised ground — `claw-carcass-yard`, the Claw's
+//     carcass rebuilt as the town's first orbital yard, the one place on this map with a cabin —
+//     and the two outboard decks are open scaffolding in vacuum, which is what scaffolding is.
 //   · `e8-eclipse` ("compose gravity/air first, then make the eclipse remove an air/energy route
 //     the rider must transfer around"). Gravity was already composed; air arrives here with the
 //     same dome dials and the same regolith latch the Mare Claim proved. Then the contract's own
@@ -167,6 +180,10 @@ type AuthoredAir = Readonly<{
   regolithWindowWaves: number | null;
   crossingRequired: number | null;
   crossingWindowWaves: number | null;
+  /** `twist.atmosphere.suitSeconds`, already defaulted to `SUIT_AIR_SECONDS`. */
+  suitSeconds: number;
+  /** `twist.atmosphere.harmPerSecond`, or null where the contract authors no harm. */
+  harmPerSecond: number | null;
   /** Seconds per wave on THIS contract — `Balance.waves.waveInterval` over its own cadence. */
   waveSeconds: number;
 }>;
@@ -176,14 +193,18 @@ const NO_AUTHORED_AIR: AuthoredAir = {
   regolithWindowWaves: null,
   crossingRequired: null,
   crossingWindowWaves: null,
+  suitSeconds: SUIT_AIR_SECONDS,
+  harmPerSecond: null,
   waveSeconds: Balance.waves.waveInterval,
 };
 
 export class E8SuitAirSystem {
-  private suitSeconds: number;
-  private inShelter: string | null = null;
-  private drainedTotal = 0;
-  private emptySeconds = 0;
+  /**
+   * THE HUMAN'S SUIT, since 2026-09-07. One definition, shared with the Mare Claim's consumer
+   * (`E8HumanSuit` in `src/systems/E8PhysicsSystem.ts`) for the reason `E8AirWindow` exists: the
+   * number the briefing prints and the number the engine enforces must be the same object.
+   */
+  private readonly suit: E8HumanSuit;
   private runsOnAir = 0;
   private runsOnAirAfterEclipse = 0;
   private breathlessPans = 0;
@@ -217,7 +238,7 @@ export class E8SuitAirSystem {
     /** `twist.atmosphere`, already read; `NO_AUTHORED_AIR` where the contract authors nothing. */
     private readonly authored: AuthoredAir = NO_AUTHORED_AIR,
   ) {
-    this.suitSeconds = SUIT_AIR_SECONDS;
+    this.suit = new E8HumanSuit(authored.suitSeconds, authored.harmPerSecond);
     this.shelters = shelters.map((zone) => ({ zone, air: 1, breached: false, breaches: 0, siegers: 0, offline: false }));
     this.regolithClock = new E8AirWindow(windowSeconds(authored.regolithWindowWaves, authored.waveSeconds));
     this.crossingClock = new E8AirWindow(windowSeconds(authored.crossingWindowWaves, authored.waveSeconds));
@@ -255,12 +276,37 @@ export class E8SuitAirSystem {
     const scaffolds: readonly ContractRectZone[] = tile.orbitalScaffoldZones ?? [];
     const craters: readonly ContractRectZone[] = tile.probeRecoveryZones ?? [];
     const startStake = tile.stakeMarkers?.find((marker) => marker.heroStart) ?? null;
-    const shelters: readonly Rect[] = atmosphere.outsideDomes === 'suit-timer'
-      ? buildZones.filter(({ id }) => id.startsWith(DOME_ZONE_PREFIX)).map(rect)
-      : scaffolds.length > 0
-        ? scaffolds.map(rect)
-        : buildZones.filter((zone) => startStake !== null && inside(rect(zone), startStake)).map(rect);
-    const crossings: readonly Rect[] = craters.length > 0 ? craters.map(rect) : scaffolds.map(rect);
+    // THE PRESSURISED GROUND, NAMED BY THE CONTRACT (`twist.atmosphere.pressurisedZoneIds`, added
+    // 2026-09-07). Where a contract names it, that list IS the answer, drawn from every rectangle
+    // the map authors; where it names nothing, the three derivations below stand exactly as they
+    // shipped. This is the one field the owner's "make the geography true" half needed: on Low
+    // Orbit the three scaffold decks were BOTH the shelters and the crossings, so a crossing there
+    // could never be breathless and the wall was a schedule rather than an air budget (F-EAWA-2).
+    // Naming the station's own cabin — the carcass yard, the Claw rebuilt as the town's first
+    // orbital yard — leaves the two outboard decks in vacuum, where scaffolding is.
+    const pressurised = authoredPressurisedZoneIds(contract);
+    const everyZone: readonly ContractRectZone[] = [...buildZones, ...scaffolds, ...craters];
+    const shelters: readonly Rect[] = pressurised !== null
+      ? dedupe(everyZone.filter(({ id }) => pressurised.includes(id)).map(rect))
+      : atmosphere.outsideDomes === 'suit-timer'
+        ? buildZones.filter(({ id }) => id.startsWith(DOME_ZONE_PREFIX)).map(rect)
+        : scaffolds.length > 0
+          ? scaffolds.map(rect)
+          : buildZones.filter((zone) => startStake !== null && inside(rect(zone), startStake)).map(rect);
+    // A CROSSING IS VACUUM, by definition and now by construction: any authored rectangle that also
+    // holds air is struck off the crossing list rather than counted as one. Before this line the
+    // Far Side's crater (never pressurised) was already a true crossing and Low Orbit's decks were
+    // not, and nothing in the code said which was which.
+    //
+    // THE FILTER RIDES THE AUTHORED READ AND ONLY IT. A contract that names no pressurised ground
+    // keeps the crossing list it always had, unfiltered — otherwise the fallback derivation on a
+    // `suit-only` map (shelters = the scaffolds) would strike out every crossing it just derived
+    // and silently move the map onto the regolith latch. The pre-2026-09-07 default is the
+    // control this whole file is measured against, so it changes only where a contract asks.
+    const shelterIds = new Set(pressurised === null ? [] : shelters.map(({ id }) => id));
+    const crossings: readonly Rect[] = (craters.length > 0 ? craters : scaffolds)
+      .map(rect)
+      .filter(({ id }) => !shelterIds.has(id));
     if (shelters.length === 0) return E8SuitAirSystem.none();
     const eclipseEvent = contract.twist.eclipseEvent;
     const secureWave = contract.twist.secureWave ?? Balance.run.secureWave;
@@ -277,6 +323,8 @@ export class E8SuitAirSystem {
       regolithWindowWaves: positiveInteger(authoredAir?.regolithWindowWaves),
       crossingRequired: positiveInteger(authoredAir?.crossingRequired),
       crossingWindowWaves: positiveInteger(authoredAir?.crossingWindowWaves),
+      suitSeconds: authoredSuitSeconds(contract),
+      harmPerSecond: authoredHarmPerSecond(contract),
       waveSeconds: Balance.waves.waveInterval / Math.max(0.1, contract.twist.waveCadenceMult ?? 1),
     };
     return new E8SuitAirSystem(
@@ -349,16 +397,22 @@ export class E8SuitAirSystem {
   }
 
   get suitEmpty(): boolean {
-    return this.declared && this.suitSeconds <= 0;
+    return this.declared && this.suit.empty;
   }
 
   /**
    * One fixed step, in `E8AtmosphereSystem.update`'s order and for the same reason: the shadow
-   * first (it changes which shelters can breathe at all), then the shelters, then the suit against
-   * the shelter it stands in, then the crossing the body is or is not making on that air.
+   * first (it changes which shelters can breathe at all), then the shelters, then the HUMAN's suit
+   * against the shelter SHE stands in, then the crossing she is or is not making on that air.
+   *
+   * `human` is the hero's position, and since 2026-09-07 it is the only body this consumer
+   * measures. The Prospector used to be the argument here and used to be the body whose entries
+   * counted as crossings; it is a made agent, it does not breathe, and a machine walking into a
+   * crater was never "a space experience of a human" (the owner's directive, quoted in
+   * `E8HumanSuit`). RETURNS the hp the caller owes `CombatSystem` this step.
    */
-  update(delta: number, body: Point, siegers: readonly Sieger[], wave: number): void {
-    if (!this.declared || delta <= 0) return;
+  update(delta: number, human: Point, siegers: readonly Sieger[], wave: number): number {
+    if (!this.declared || delta <= 0) return 0;
     // The run clock first, so the dials, the suit, the crossing and both windows read one tick —
     // the order `E8AtmosphereSystem.update` fixed for the Mare Claim, for the same reason.
     this.regolithClock.advance(delta);
@@ -382,21 +436,14 @@ export class E8SuitAirSystem {
         ? Math.max(0, shelter.air - delta / DOME_AIR_DRAIN_SECONDS)
         : Math.min(1, shelter.air + delta / DOME_AIR_REFILL_SECONDS);
     }
-    const breathing = this.shelters.find((shelter) => shelter.air > 0 && inside(shelter.zone, body)) ?? null;
-    this.inShelter = breathing?.zone.id ?? null;
-    if (breathing) {
-      this.suitSeconds = Math.min(SUIT_AIR_SECONDS, this.suitSeconds + delta * SUIT_REFILL_PER_SECOND);
-    } else {
-      const drained = Math.min(this.suitSeconds, delta);
-      this.suitSeconds -= drained;
-      this.drainedTotal += drained;
-      if (this.suitSeconds <= 0) this.emptySeconds += delta;
-    }
-    this.noteCrossings(body);
+    const breathing = this.shelters.find((shelter) => shelter.air > 0 && inside(shelter.zone, human)) ?? null;
+    const harm = this.suit.update(delta, breathing?.zone.id ?? null);
+    this.noteCrossings(human);
+    return harm;
   }
 
   /**
-   * The crossing, measured off the body the rider actually moves. An ENTRY is what counts, not a
+   * The crossing, measured off THE HUMAN BODY the rider steers with `MOVE_HERO`. An ENTRY is what counts, not a
    * step: a body parked in the crater with an empty suit is one refused crossing, not thirty a
    * second. Credit is not one-way in the other direction either, and deliberately so: a rider who
    * arrives breathless can walk back to the air and cross again, so a mistake costs a trip rather
@@ -410,16 +457,16 @@ export class E8SuitAirSystem {
    * Re-entering the SAME zone in a later window credits again, which is what makes a four-credit
    * gate reachable on the Far Side, whose contract authors exactly one crossing rectangle.
    */
-  private noteCrossings(body: Point): void {
+  private noteCrossings(human: Point): void {
     for (const zone of this.crossings) {
-      const within = inside(zone, body);
+      const within = inside(zone, human);
       if (!within) {
         this.insideCrossing.delete(zone.id);
         continue;
       }
       if (this.insideCrossing.has(zone.id)) continue;
       this.insideCrossing.add(zone.id);
-      if (this.suitSeconds <= 0) {
+      if (this.suit.empty) {
         this.breathlessEntries += 1;
         continue;
       }
@@ -443,7 +490,7 @@ export class E8SuitAirSystem {
    */
   notePan(anchorIndex: number): boolean {
     if (!this.declared || !Number.isInteger(anchorIndex) || anchorIndex < 0) return false;
-    if (this.suitSeconds <= 0) {
+    if (this.suit.empty) {
       this.breathlessPans += 1;
       return false;
     }
@@ -463,16 +510,7 @@ export class E8SuitAirSystem {
     return {
       declared: this.declared,
       wall: this.wall,
-      suit: {
-        body: 'prospector',
-        seconds: round3(this.suitSeconds),
-        capacity: SUIT_AIR_SECONDS,
-        refillPerSecond: SUIT_REFILL_PER_SECOND,
-        inDome: this.inShelter,
-        empty: this.suitEmpty,
-        drainedTotal: round3(this.drainedTotal),
-        emptySeconds: round3(this.emptySeconds),
-      },
+      suit: this.suit.diagnostics,
       domes: this.shelters.map((shelter) => ({
         id: shelter.zone.id,
         air: round3(shelter.air),
@@ -530,6 +568,16 @@ export class E8SuitAirSystem {
 
 function rect(zone: Rect): Rect {
   return { id: zone.id, minX: zone.minX, maxX: zone.maxX, minZ: zone.minZ, maxZ: zone.maxZ };
+}
+
+/**
+ * One rectangle per id, first occurrence wins. Low Orbit authors `claw-carcass-yard` TWICE — once
+ * as a build zone and once as a scaffold deck — so a contract that names it pressurised would
+ * otherwise get two shelters with one id, two dial rows, and a `domes` list a rider cannot read.
+ */
+function dedupe(zones: readonly Rect[]): readonly Rect[] {
+  const seen = new Set<string>();
+  return zones.filter(({ id }) => (seen.has(id) ? false : (seen.add(id), true)));
 }
 
 function inside(zone: Rect, point: Point): boolean {

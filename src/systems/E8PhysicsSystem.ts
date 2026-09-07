@@ -191,13 +191,22 @@ function round3(value: number): number {
 // to the `vacuum` flag above and nothing read it (the 2026-09-02 era-mechanic audit: RESKIN).
 //
 // WHAT THIS DOES, HONESTLY BOUNDED. It is a MEASUREMENT of one body against authored rectangles on
-// the fixed step, plus an objective latch. It damages nothing and mints nothing: the browser
-// composes no atmosphere consumer at all (`Game.ts` reads only the gravity profile), so a rule that
-// hurt the body or paid it would put the two engines on different boards for the same orders (the
-// Same Laws law, `CAPABILITY-LADDER.md` L7). What CAN differ without breaking that law is what
-// counts toward the era's objective — and that is all this changes:
-//   · the suit: `SUIT_AIR_SECONDS` of air, draining one second per second outside a breathing dome,
-//     refilling at `SUIT_REFILL_PER_SECOND` inside one;
+// the fixed step, plus an objective latch — and, since 2026-09-07, a HARM the caller routes through
+// `CombatSystem`. It still mints nothing.
+//
+// ⚠️ THE "IT DAMAGES NOTHING" CLAUSE THAT STOOD HERE FROM 2026-09-03 TO 2026-09-07 IS RETIRED, and
+// the reason is worth keeping: it was never a design preference, it was a Same-Laws guard. The
+// browser composed no atmosphere consumer, so a rule that hurt the body headless would have put the
+// two engines on different boards for the same orders (`CAPABILITY-LADDER.md` L7). The owner's
+// 2026-09-07 directive ("I want space experiences of humans to need them having air") makes the
+// harm the point, so the guard is satisfied the other way round: `Game.ts` composes this consumer
+// too, applies the same chip through the same resolver, and the two engines still agree about hp.
+// What they still differ on is what counts toward the OBJECTIVE, which is the pre-existing bound
+// the contracts' own `engineDependencies` rows have stated since the wall shipped.
+//   · the suit: the HUMAN's, `twist.atmosphere.suitSeconds` of air (default `SUIT_AIR_SECONDS`),
+//     draining one second per second outside a breathing dome, refilling at
+//     `SUIT_REFILL_PER_SECOND` inside one, and charging `twist.atmosphere.harmPerSecond` of hp for
+//     every whole second it spends empty;
 //   · the domes: breached while an outlaw stands on the pad (the sheet's "sieger enemies"; debris
 //     rain has no headless hazard on this map and is not modelled), draining over
 //     `DOME_AIR_DRAIN_SECONDS`, sealing back over `DOME_AIR_REFILL_SECONDS` once the pad is clear;
@@ -222,6 +231,169 @@ export const DOME_AIR_DRAIN_SECONDS = 45;
 export const DOME_AIR_REFILL_SECONDS = 30;
 export const DOME_ZONE_PREFIX = 'dome-cluster';
 export const AIR_WALL_CONTRACT_IDS: readonly string[] = ['e8-mare-claim'];
+
+/**
+ * HOW OFTEN AN EMPTY SUIT CHARGES ITS HARM, in seconds of run clock. ONE second, and the number is
+ * forced rather than chosen: `Hero.takeDamage` sets `Balance.hero.iframes` (0.5 s) on every applied
+ * hit (`src/entities/Hero.ts:260`), so a source that charges more often than twice a second has
+ * most of its charges REFUSED and reports a rate it does not deliver. A one-second cadence clears
+ * that window twice over, which makes `harmPerSecond` mean what it says.
+ *
+ * The consequence is stated rather than hidden: suffocation rides `CombatSystem` exactly like every
+ * other source, so a charge that lands inside an iframe another source opened is refused — the same
+ * mercy an outlaw's second bolt gets. That is what "one damage resolver" costs, and it is cheaper
+ * than a second resolver.
+ */
+export const SUIT_HARM_TICK_SECONDS = 1;
+
+/**
+ * THE HUMAN'S SUIT (owner directive 2026-09-07, verbatim: "I want space experiences of humans to
+ * need them having air. It has to be logical. If that means we have to change something ok").
+ *
+ * WHOSE LUNG THIS IS, and the measurement that settled it. Until this file, the era's suit was
+ * measured against `this.prospector.position` in both consumers and published as
+ * `suit.body: 'prospector'` — and the Prospector is a MADE AGENT, the town's brass firstborn
+ * (`lore/STORYBOOK.md:453` "a crew of made agents — machines first into the sky"; `:681` "E8-E9
+ * crew elder"). The storybook nowhere says it breathes. What the E8 chapter says instead is that
+ * the town's HUMANS do: the suit fitter is "the sewing tradition's fifth act: the town that sewed a
+ * machine's cover now sews everyone's air" (`lore/STORYBOOK.md:481`), the arrival beat is a BREACH
+ * DRILL, "they practice losing air the way they once practiced fire brigade" (`:518`), and the hero
+ * — silver, human, the body a rider steers with `MOVE_HERO` — "pans the regolith with the same pan"
+ * (`:473`). So the body that carries air here is the HERO, and the machine that never needed it has
+ * stopped pretending to.
+ *
+ * MEASURED FIRST, on the four securing tapes (`artifacts/e8-air-logical/body-*.json`): the human
+ * body spent 0 of 600 s outside pressurised ground on the Far Side, 0 of 600 s on Low Orbit,
+ * 275 of 600 s on the Eclipse — and 601 of 600 s on the Mare Claim, where she stands at (0, 12),
+ * six world units north of the centre dome, for the WHOLE securing ride. A rule about human air
+ * that never once read the human is exactly the illogic the directive names.
+ *
+ * WHAT IT IS. One dial, per run, shared by both era consumers so the number in the briefing and the
+ * number the engine enforces cannot drift (`E8AirWindow`'s own reason for existing). Outside
+ * pressurised ground it drains one second per second; inside it refills at `SUIT_REFILL_PER_SECOND`
+ * and nothing else refills it; at zero it charges `harmPerSecond` of hp once per
+ * `SUIT_HARM_TICK_SECONDS`, and the CALLER routes that through `CombatSystem` — this class returns
+ * hp and never applies it, because `CombatSystem` is the sole damage resolver (`CLAUDE.md` §4.4)
+ * and the shape is `HollowCrossingSystem.update`'s, which has returned its radiation chip to its
+ * caller since E6.
+ *
+ * A NULL `harmPerSecond` MEANS NO HARM AT ALL — the pre-2026-09-07 behaviour, and the default a
+ * contract that authors nothing still gets.
+ */
+export class E8HumanSuit {
+  private seconds: number;
+  private ground: string | null = null;
+  private drainedTotal = 0;
+  private emptySeconds = 0;
+  private harmDealt = 0;
+  private harmTicks = 0;
+  /** Seconds of empty suit not yet charged. Reset the moment the body reaches air. */
+  private harmCarry = 0;
+
+  /**
+   * @param capacity seconds of air a full suit holds (`twist.atmosphere.suitSeconds`).
+   * @param harmPerSecond hp per second of an empty suit, or null where the contract authors none.
+   */
+  constructor(readonly capacity: number, readonly harmPerSecond: number | null) {
+    this.seconds = capacity;
+  }
+
+  /**
+   * One fixed step against the id of the pressurised ground the body stands in, or null in vacuum.
+   * Returns the hp the caller owes `CombatSystem` this step — 0 on every step but the charging one.
+   */
+  update(delta: number, breathing: string | null): number {
+    this.ground = breathing;
+    if (breathing !== null) {
+      this.seconds = Math.min(this.capacity, this.seconds + delta * SUIT_REFILL_PER_SECOND);
+      // A partial second of suffocation that ends at an airlock costs nothing: the charge is a
+      // WHOLE second held, not a debt carried. Nothing can be gained by stepping in and out,
+      // because the suit takes `capacity` seconds to empty before a charge can begin at all.
+      this.harmCarry = 0;
+      return 0;
+    }
+    const drained = Math.min(this.seconds, delta);
+    this.seconds -= drained;
+    this.drainedTotal += drained;
+    if (this.seconds > 0) return 0;
+    this.emptySeconds += delta;
+    if (this.harmPerSecond === null) return 0;
+    this.harmCarry += delta;
+    let harm = 0;
+    while (this.harmCarry >= SUIT_HARM_TICK_SECONDS) {
+      this.harmCarry -= SUIT_HARM_TICK_SECONDS;
+      harm += this.harmPerSecond * SUIT_HARM_TICK_SECONDS;
+      this.harmTicks += 1;
+    }
+    this.harmDealt += harm;
+    return harm;
+  }
+
+  get empty(): boolean {
+    return this.seconds <= 0;
+  }
+
+  get diagnostics(): E8HumanSuitDiagnostics {
+    return {
+      body: 'hero',
+      seconds: round3(this.seconds),
+      capacity: this.capacity,
+      refillPerSecond: SUIT_REFILL_PER_SECOND,
+      harmPerSecond: this.harmPerSecond,
+      inDome: this.ground,
+      empty: this.empty,
+      drainedTotal: round3(this.drainedTotal),
+      emptySeconds: round3(this.emptySeconds),
+      harmDealt: round3(this.harmDealt),
+      harmTicks: this.harmTicks,
+    };
+  }
+}
+
+/**
+ * The suit row on the view, one shape for all four E8 maps. `body` is the literal `'hero'` since
+ * 2026-09-07: the human is the only body on these maps that needs air, and there is no second dial
+ * to confuse it with.
+ */
+export type E8HumanSuitDiagnostics = Readonly<{
+  body: 'hero';
+  seconds: number;
+  capacity: number;
+  refillPerSecond: number;
+  /** hp per second of an empty suit; null where the contract authors no harm. */
+  harmPerSecond: number | null;
+  /** The pressurised rectangle the human breathes in, or null in vacuum. */
+  inDome: string | null;
+  empty: boolean;
+  drainedTotal: number;
+  emptySeconds: number;
+  /** hp this suit has charged through `CombatSystem` across the run. */
+  harmDealt: number;
+  /** How many whole seconds of empty suit have been charged. */
+  harmTicks: number;
+}>;
+
+/**
+ * THE PRESSURISED GROUND, named by the contract rather than derived from a prefix
+ * (`twist.atmosphere.pressurisedZoneIds`). Returns the authored ids where the contract names them,
+ * and null where it names none — in which case each consumer keeps the derivation it shipped with,
+ * which is what makes this field additive rather than a migration.
+ */
+export function authoredPressurisedZoneIds(contract: ContractManifest): readonly string[] | null {
+  const ids = contract.twist.atmosphere?.pressurisedZoneIds;
+  if (!Array.isArray(ids) || ids.length === 0) return null;
+  return ids.every((id) => typeof id === 'string' && id.length > 0) ? ids : null;
+}
+
+/** The suit's capacity for this contract: its own authored seconds, else the ratified default. */
+export function authoredSuitSeconds(contract: ContractManifest): number {
+  return positiveInteger(contract.twist.atmosphere?.suitSeconds) ?? SUIT_AIR_SECONDS;
+}
+
+/** The harm an empty suit charges on this contract, or null where it authors none. */
+export function authoredHarmPerSecond(contract: ContractManifest): number | null {
+  return positiveInteger(contract.twist.atmosphere?.harmPerSecond);
+}
 /**
  * HOW MANY of the authored regolith grounds the claim must have WORKED ON SUIT AIR before it may
  * secure. One — "the smallest that the contract's briefing already promises"
@@ -286,16 +458,8 @@ type Sieger = Readonly<{ isAlive: boolean; position: Point }>;
 export type E8AtmosphereDiagnostics = Readonly<{
   declared: boolean;
   wall: 'suit-timer' | 'suit-only' | null;
-  suit: Readonly<{
-    body: 'prospector';
-    seconds: number;
-    capacity: number;
-    refillPerSecond: number;
-    inDome: string | null;
-    empty: boolean;
-    drainedTotal: number;
-    emptySeconds: number;
-  }>;
+  /** THE HUMAN'S dial since 2026-09-07; see `E8HumanSuit` for whose lung it is and why. */
+  suit: E8HumanSuitDiagnostics;
   domes: ReadonlyArray<Readonly<{ id: string; air: number; breached: boolean; breaches: number; siegers: number }>>;
   regolith: Readonly<{
     grounds: number;
@@ -324,10 +488,13 @@ export type E8AtmosphereDiagnostics = Readonly<{
 type DomeState = { readonly zone: Rect; air: number; breached: boolean; breaches: number; siegers: number };
 
 export class E8AtmosphereSystem {
-  private suitSeconds: number;
-  private inDome: string | null = null;
-  private drainedTotal = 0;
-  private emptySeconds = 0;
+  /**
+   * THE HUMAN'S SUIT, since 2026-09-07 (`E8HumanSuit`, and the owner directive quoted there). It
+   * replaced the four fields that used to live here — `suitSeconds`, `inDome`, `drainedTotal`,
+   * `emptySeconds` — measured against the PROSPECTOR. The dial's shape on the view is unchanged
+   * apart from `body`, `harmPerSecond`, `harmDealt` and `harmTicks`; the BODY behind it is the hero.
+   */
+  private readonly suit: E8HumanSuit;
   private runsOnAir = 0;
   private breathlessPans = 0;
   private windowHeldPans = 0;
@@ -353,8 +520,12 @@ export class E8AtmosphereSystem {
     private readonly windowWaves: number | null = null,
     /** Seconds per wave on THIS contract — `Balance.waves.waveInterval` over its own cadence. */
     private readonly waveSeconds: number = Balance.waves.waveInterval,
+    /** `twist.atmosphere.suitSeconds`, already defaulted to `SUIT_AIR_SECONDS`. */
+    suitSeconds: number = SUIT_AIR_SECONDS,
+    /** `twist.atmosphere.harmPerSecond`, or null where the contract authors no harm. */
+    harmPerSecond: number | null = null,
   ) {
-    this.suitSeconds = SUIT_AIR_SECONDS;
+    this.suit = new E8HumanSuit(suitSeconds, harmPerSecond);
     this.domes = domes.map((zone) => ({ zone, air: 1, breached: false, breaches: 0, siegers: 0 }));
     this.clock = new E8AirWindow(this.windowSeconds);
   }
@@ -362,7 +533,14 @@ export class E8AtmosphereSystem {
   /** One read of the CONTRACT, never the epoch — the same rule every era consumer follows. */
   static create(contract: ContractManifest): E8AtmosphereSystem {
     const atmosphere = contract.tileParams.atmosphere;
-    const domes = (contract.tileParams.buildZones ?? []).filter(({ id }) => id.startsWith(DOME_ZONE_PREFIX));
+    // THE PRESSURISED GROUND. The contract names it where it cares to
+    // (`twist.atmosphere.pressurisedZoneIds`); where it names nothing, the derivation this file
+    // shipped with stands — the `dome-cluster` build pads, by prefix. Naming the rule rather than
+    // the ids is what lets a re-authored pad list stay honest (`E8SuitAirSystem.create`'s note).
+    const pressurised = authoredPressurisedZoneIds(contract);
+    const domes = (contract.tileParams.buildZones ?? []).filter(({ id }) => (
+      pressurised === null ? id.startsWith(DOME_ZONE_PREFIX) : pressurised.includes(id)
+    ));
     const grounds = contract.tileParams.harvestAnchors?.length ?? 0;
     if (
       !AIR_WALL_CONTRACT_IDS.includes(contract.id)
@@ -379,7 +557,17 @@ export class E8AtmosphereSystem {
     const required = positiveInteger(authored?.regolithRequired);
     const windowWaves = positiveInteger(authored?.regolithWindowWaves) ?? REGOLITH_WINDOW_WAVES_DEFAULT;
     const waveSeconds = Balance.waves.waveInterval / Math.max(0.1, contract.twist.waveCadenceMult ?? 1);
-    return new E8AtmosphereSystem(true, atmosphere.outsideDomes, domes, grounds, required, windowWaves, waveSeconds);
+    return new E8AtmosphereSystem(
+      true,
+      atmosphere.outsideDomes,
+      domes,
+      grounds,
+      required,
+      windowWaves,
+      waveSeconds,
+      authoredSuitSeconds(contract),
+      authoredHarmPerSecond(contract),
+    );
   }
 
   static none(): E8AtmosphereSystem {
@@ -407,11 +595,19 @@ export class E8AtmosphereSystem {
 
   /**
    * One fixed step. Domes first (a sieger on the pad breaches it; a clear pad seals), then the
-   * suit against the dome it stands in. Order matters and is fixed: the suit reads the dials this
-   * step already moved, in both runtimes of this engine.
+   * HUMAN's suit against the dome SHE stands in. Order matters and is fixed: the suit reads the
+   * dials this step already moved, in both runtimes of this engine.
+   *
+   * `human` is the hero's position, and it is the only body this consumer measures since
+   * 2026-09-07 (`E8HumanSuit`). The Prospector used to be the argument here; it is a made agent
+   * and does not breathe, so nothing is measured against it any more.
+   *
+   * RETURNS THE HP THE CALLER OWES `CombatSystem` this step, in whole `harmPerSecond` charges —
+   * `HollowCrossingSystem.update`'s shape, and for its reason: one damage resolver, and a
+   * measurement class that returns harm rather than applying it can be read without reading combat.
    */
-  update(delta: number, body: Point, siegers: readonly Sieger[]): void {
-    if (!this.declared || delta <= 0) return;
+  update(delta: number, human: Point, siegers: readonly Sieger[]): number {
+    if (!this.declared || delta <= 0) return 0;
     // The run clock first, so the dials, the suit and the window all read one tick.
     this.clock.advance(delta);
     for (const dome of this.domes) {
@@ -425,25 +621,23 @@ export class E8AtmosphereSystem {
         ? Math.max(0, dome.air - delta / DOME_AIR_DRAIN_SECONDS)
         : Math.min(1, dome.air + delta / DOME_AIR_REFILL_SECONDS);
     }
-    const breathing = this.domes.find((dome) => dome.air > 0 && inside(dome.zone, body)) ?? null;
-    this.inDome = breathing?.zone.id ?? null;
-    if (breathing) {
-      this.suitSeconds = Math.min(SUIT_AIR_SECONDS, this.suitSeconds + delta * SUIT_REFILL_PER_SECOND);
-      return;
-    }
-    const drained = Math.min(this.suitSeconds, delta);
-    this.suitSeconds -= drained;
-    this.drainedTotal += drained;
-    if (this.suitSeconds <= 0) this.emptySeconds += delta;
+    const breathing = this.domes.find((dome) => dome.air > 0 && inside(dome.zone, human)) ?? null;
+    return this.suit.update(delta, breathing?.zone.id ?? null);
   }
 
   /**
-   * A pan tick landed on the ground `anchorIndex`. Credited toward the regolith run only while the
-   * suit holds air; otherwise counted as breathless and NOT credited. Returns whether it counted.
+   * A pan tick landed on the ground `anchorIndex`. Credited toward the regolith run only while THE
+   * HUMAN's suit holds air; otherwise counted as breathless and NOT credited. Returns whether it
+   * counted.
+   *
+   * WHOSE AIR GATES THE CLAIM, since 2026-09-07: hers. The pan is still the Prospector's work — the
+   * agent walks the seam and the caller has already paid the rider — but a claim is not made by a
+   * machine working over a suffocating surveyor, so a ground worked while her dial reads zero banks
+   * nothing. That is the same sentence the briefing prints, now about the body that can die of it.
    */
   notePan(anchorIndex: number): boolean {
     if (!this.declared || !Number.isInteger(anchorIndex) || anchorIndex < 0) return false;
-    if (this.suitSeconds <= 0) {
+    if (this.suit.empty) {
       this.breathlessPans += 1;
       return false;
     }
@@ -464,23 +658,14 @@ export class E8AtmosphereSystem {
   }
 
   get suitEmpty(): boolean {
-    return this.declared && this.suitSeconds <= 0;
+    return this.declared && this.suit.empty;
   }
 
   get diagnostics(): E8AtmosphereDiagnostics {
     return {
       declared: this.declared,
       wall: this.wall,
-      suit: {
-        body: 'prospector',
-        seconds: round3(this.suitSeconds),
-        capacity: SUIT_AIR_SECONDS,
-        refillPerSecond: SUIT_REFILL_PER_SECOND,
-        inDome: this.inDome,
-        empty: this.suitEmpty,
-        drainedTotal: round3(this.drainedTotal),
-        emptySeconds: round3(this.emptySeconds),
-      },
+      suit: this.suit.diagnostics,
       domes: this.domes.map((dome) => ({
         id: dome.zone.id,
         air: round3(dome.air),
