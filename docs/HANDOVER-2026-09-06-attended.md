@@ -133,3 +133,19 @@ Canon: `lore/STORYBOOK.md` THE LAWS OF TIME (12-15 years per era), `lore/charact
 
 ### 8.3 Housekeeping at close (2026-09-07 01:15)
 The eight scratch worktrees of the evening (all merged) and the shrink rehearsal clone were removed to free disk; every branch stays in git. Production is `1fae9880`, the assayer pinned to it, the full-board preview rebuilt from the same tree. Nothing is running. Open for the next session: the fires' queue in the desk document §D plus the evening's carried findings (F-CELL-4/5, F-AUDIO-2, F-RRR-4, F-EAWA-2, F-AGE-4's later eras if ruled), the hero-slot clip split as the largest slow-load lever, and the shrink's real run once the owner is present.
+
+## 9. The morning of 2026-09-07 (06:15-10:00 local): the desk answered, seven correctives slices, the parity audit, logical air
+
+Owner rulings, verbatim: "yes, lets to 1, 2, and 3 and let me check my desk" · "Codex limits reset in 3 hours" · the desk answers A1-A7 (recorded in the ledger row of 10:20 and in ADR-005 / the E8 spec directive).
+
+| slice | verdict | merge | what to know |
+|---|---|---|---|
+| `perf-correctives-batch` | MERGED | `8e1ed3c15` | pools presence-probe modules 79 → 0; the tape worker's 96 MB of un-dieted PNGs out of dist; a post-cure corpus; the audio clock; F-PERFC-1 (`build:release` red on main; the deploy never asserts) on the desk |
+| `engine-correctives-batch` | MERGED | `689042c66` | four one-liners with guards; the Ember Shore row retirement stopped honestly; F-ECB-4 (a sparse worktree can manufacture a Retention-Law deletion of `logs/`) |
+| `spec-hygiene-batch` | MERGED | `81eca5828` | evidence writers opt-in (`GR_REFRESH_EVIDENCE=1`); the town-t5 404s were the harness's favicon; `Balance.ts.orig` gone; `--resume` no longer overwrites; the briefing spec's one known loader transient tolerated and counted after a bisect over control checkouts |
+| `rider-parity-audit` | MERGED (docs) | `e41da8e01` | the human's surface is six policies + a named dispatch; 11 equal / 6 agent-only / 1 human-richer verbs; the second-arm finding; the draft grammar master with D1/D2 |
+| `story-correctives-batch` | MERGED | `ae0df5b06` | 18 beats: the bosses answer their acts, the eleven silent faces speak, Chalk canon on both tags |
+| `hero-slot-clip-split` | MERGED | `a51fe3db4` | clip groups; 4.3 MB / 35 requests out of the first town; F-HCS-5: the pose spec re-pointed after per-frame traces proved no regression |
+| `e8-air-logical` | MERGED | (this drain) | the hero breathes on all four maps; Low Orbit's crossings vacuum; three provers secure, Low Orbit's 14.9 s deficit on the desk (F-EAL-3) |
+
+Also: F-RPA-4 (the `T` debug spawn key guarded) `9e1d8a2e3`; the fire rulebook's `Game.ts` pointer moved twice by measurement (2598 → 2612 → 2634); the law-pointer guard's `--update` flag re-fingerprints a rotted line as truth and must never be run before the text is corrected. Portrait batch 2 (39 faces: the five trades across E5-E10 by chained reference, the youngsters, the Salvage King, three machine plates that duplicate existing `boss-*` raws) ran through the morning; its processing master follows. The shrink rehearsal v2 (`scratchpad/shrink/rehearsal-v2.sh`, keep-by-read + iterate) landed the pack at 1.06 GiB with tsc and build green in the clone; 15 guard tests read history, run logs or dropped evidence and would need their inputs kept or the guards taught; the real run and the swap wait for the owner with the fires held.

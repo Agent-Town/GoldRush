@@ -46,6 +46,14 @@ The deploy's 25 MB first-town budget measures host speed, not payload (a 2.05× 
 - **The Elder after her death.** Fourteen beats in E5-E10 still speak as `elder`; the E3/E4 lines now go to the keeper of her chart, the schoolteacher of that era. Say whether the later eras follow the same precedent. Recommendation: yes, one slice, no copy change expected.
 - **The Boilerwright's sex.** The plate is a woman; the storybook's wedding line implies a man; nothing shipped contradicts. Recommendation: keep the woman and touch the storybook line.
 
+
+### A9. Low Orbit under the human suit (F-EAL-3, added 2026-09-07 morning)
+Your A1 ruling is live in the engine: the hero's suit drains outside pressurised ground and harms at zero on all four Orbital maps, and Low Orbit's crossings are vacuum now. Three maps secure with sortie-planning provers; Low Orbit reaches wave 19 at 585 of 600 seconds and the suit is not why (the same rider with sorties suppressed outlives the gate), so the fourteen-second deficit is the four human crossings. Two precedented levers were measured, neither shipped without your word: `twist.hero.maxHpBonus` (Relay Valley's precedent) or a second build line. Recommendation: the second build line, pure data.
+
+### A10. The rider-parity grammar (ADR-005 audit, added 2026-09-07 morning)
+- **D1:** should both species gain a `WORK_AT` policy (a target-named "send the Prospector to work there")? Recommendation: no for now; walk the hero, the Prospector drifts in, exactly as a human does.
+- **D2:** confirm the heat-12 board is re-ridden rather than repaired once the grammar lands (22 of 24 scored rows retire). Recommendation: yes.
+
 ## B. Ten minutes of the owner's hands (nobody else can)
 
 ### B1. The device verdict rows
