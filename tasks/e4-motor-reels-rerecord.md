@@ -11,7 +11,7 @@ The four Motor reels the spec replays were recorded with `MOVE_TO` and `HOLD`; u
 
 ## Scope
 1. Apply the owner's A15 ruling to the Long Road stop (the reach constant or the moved stop) as per-map data, with the floor guard re-pinned and the cause stated.
-2. Re-record each of the four reels with a hero-walked plan through the public door (the E4 floor plans in `scripts/e4-roads-and-convoys.test.mjs` are the model), twice byte-identical each; land them where the spec reads them; re-pin `e2e/e4-roads-and-convoys.spec.ts:69` with BEFORE/AFTER hashes and the cause; the ledger rows for the retired reels get a "re-recorded as" pointer, nothing deleted.
+2. Re-record each of the four reels with a hero-walked plan through the public door (the E4 floor plans in `scripts/e4-roads-and-convoys.test.mjs` are the model), twice byte-identical each; land them where the spec reads them; re-pin `e2e/e4-roads-and-convoys.spec.ts:69` ("every Motor reel replays to its claimed hash in Node and Chromium") with BEFORE/AFTER hashes and the cause; the ledger rows for the retired reels get a "re-recorded as" pointer, nothing deleted.
 3. `e2e/e4-roads-and-convoys.spec.ts` green on both projects at one worker on your own port; `scripts/e4-roads-and-convoys.test.mjs` green; the engine hash reported (the drain pins it if data moved).
 
 ## Firewall
