@@ -1,0 +1,42 @@
+CODEX: model=gpt-5.6-sol effort=medium
+# Task lane-a-node-guards-ps-capture: bound complete process capture in both contention readers (LANE-A, commit prefix "fix:")
+
+FIRE-AUTHORED s2546, 2026-09-07; F-2546-1. One gate-instrument corrective, not a simulation change.
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-a`.
+READ FIRST: AGENTS.md; STATUS verification lessons; `reviews/node-guards-ps-capture.md`; `scripts/node-guards-concurrency.mjs`, `scripts/run-node-guards.mjs`, and `scripts/node-guards-contention.test.mjs` in full. The existing contention test and its harness define the contract: observers do not count, genuine battery process forests count once, and the stamp remains advisory.
+
+## Sequencing and pre-flight
+
+Use the branch resolved from `git worktree list`; at authoring lane-a is `feat/e10s-4-door`, ahead=0, tracked dirt=0, untracked=0. If that mapping changes, STOP and report rather than reset another branch. The factory must dispatch this only after the live MAIN full Node battery has exited. Before running contention or full Node tests, establish that no other genuine battery is running; if occupied, report WAITING-FOR-QUIET and leave the test verdict pending. Never kill another session or excuse a red as contention.
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B feat/e10s-4-door main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **EVIDENCE-ARTIFACT EXCEPTION (F-1266-1, s1266): changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`, and any `.png` screenshot — are NEVER "work" and NEVER a STOP, whether they sit as uncommitted dirt or as the entire content of an ahead commit. Screenshots are never byte-identity gated, so their bytes differ from main forever. Discard them (`git checkout -- <paths>` / reset) and PROCEED, listing what you discarded. ⚠️ The trap this closes: a run that STOPPED still ran playwright and still regenerated screenshots, so a stopped predecessor leaves tracked dirt that freezes its successor — three consecutive masters (gazette-welcome-drift-observation-frame v1/v2, newsie-drift-shell-divergence-rate) died before measuring anything, the third killed by the exhaust of the first two.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. **THEN A CLEANLINESS LINE, WHICH THE LANE TEMPLATE OWED AND DID NOT CARRY UNTIL s1505 (F-1505-1): `git -C worktrees/lane-a status --short` → must be clean, with the FACTORY-CHURN EXCEPTION — always expected, never a STOP; list them and proceed (F-1407-1): (a) `logs/**`; (b) `artifacts/**`, `reviews/shots-*` and any `.png`. What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.** ⚠️ **This clause is not optional politeness — `scripts/banked-master-preflight-guard.test.mjs` (in `test:ledger-guards`) REDS on any `status:"queued"` master that declares a PRE-FLIGHT without matching `/F-1407-1|FACTORY-CHURN EXCEPTION/`.** Until s1505 this template omitted it while the guard demanded it, so **copying the template VERBATIM — exactly as the bold instruction above orders — reddened the battery.** Every recent lane master carried the clause because its author added it by hand; the template never learned, so the defect was invisible to everyone who followed the law and only bit the fire that followed it *literally*. The F-1266-1 evidence-artifact exception above is about `artifacts/**` in the AHEAD COMMITS; this one is about churn in the WORKING TREE, and the guard keys on this one.
+
+## Why (F-2546-1, measured 2026-09-07)
+
+The completed MAIN retry-predecessor ran 742 tests: 735 pass, 2 fail, 5 skip, 1623.300 s. Both failures name `spawnSync ps ENOBUFS` in `waitForQuietBoard`; one is direct and one is inside the fixture-owner sweep. Evidence: `artifacts/s2545-fire/main-node-terminal-observed.txt` and `artifacts/s2546-fire/ps-capture-probe.json`.
+
+At authoring main `d1471866b`, `scripts/node-guards-contention.test.mjs` line 47 captures ps command text without a maxBuffer option; `scripts/run-node-guards.mjs` lines 48–52 does the same, then returns no stamp on capture error. Both collect observers before applying `runsNodeGuardsBattery`. The shared classifier is already correct; it cannot inspect bytes capture discarded.
+
+The isolated PATH-mock probe feeds 1,200,000 observer characters plus a genuine sibling to the exact extracted functions. Original: quiet-reader ENOBUFS, advisory NO_STAMP. Only ps maxBuffer changed to 64 MiB: quiet-reader returns QUIET and the real-classifier advisory returns CONTENDED — 2. Short-output controls preserve both results. The quiet-reader arm deliberately stubs classification false to isolate capture; it is not a classification proof. No real battery or giant-argv process was launched. Current live capture was only 8,926 bytes: the historical process producing the oversized response was not recovered. Do not claim otherwise.
+
+## Scope
+
+1. Give BOTH ps captures an explicit adequate bounded buffer (64 MiB is the measured working option). Reuse an existing shared option only if it reduces the change; no capture framework, retries, silent success, or new process selector. Preserve loud quiet-reader failures and advisory harness failures beyond the bound.
+2. Extend the existing contention test with a deterministic oversized-output regression using local fake pgrep/ps executables. Use the real classifier for observer versus battery cases. Assert the fixture actually exceeds the prior capture limit. Cover a long observer with no sibling and with a real sibling; preserve lone-battery silence, wrapper/child collapse, missing-pgrep behavior, and child pass/fail exit codes. Keep mock PATH local, cleanup all fixtures, and do not launch a giant real process that contaminates other sessions.
+3. Prove teeth: restore only the original ps capture options on a scratch copy, show the new check failing for the intended ENOBUFS/lost-stamp cause, restore the cure and pass. Record both outcomes. Keep the production stamp advisory in every case.
+
+## Firewall
+
+Touch ONLY: `scripts/run-node-guards.mjs`, `scripts/node-guards-contention.test.mjs`, optional `scripts/node-guards-concurrency.mjs` if sharing the bounded option actually simplifies, and `artifacts/node-guards-ps-capture/**` for evidence.
+NO changes to simulation/runtime, `src/**`, `e2e/**`, existing board-gold work or current-grammar evidence, `scripts/fixture-teardown.test.mjs`, any other tests, package/battery topology, timeouts, concurrency limits, engine pins, STATUS, specs, reviews, or other tasks. No permission edits, skipped assertions, raised battery deadlines, deploy, or API submissions. The existing test is already rooted in `test:node-guards`; no new guard file or caller baseline entry is needed.
+
+## Self-check (evidence, not vibes)
+
+- `node --test scripts/node-guards-contention.test.mjs` green ALONE, plus the manufactured regression failure and recovery above.
+- `npx tsc --noEmit` and `npm run build` green.
+- `npm run test:node-guards` to terminal completion ALONE on the native Node interpreter; record version, reduced-concurrency banner if present, total/pass/fail/skip, fixture-owner subjects actually visited, chained-tail completion and exit status. The current 128-subject fixture sweep may take many minutes; no inherited duration or title counts as completion. Any red remains a red and must be read.
+- `node scripts/gate-caller-audit.mjs --include-untracked` passes. No browser/screenshot work is needed for this process-output change; preserve existing e2e files.
+- Evidence transcript, mutation result and concise report under `artifacts/node-guards-ps-capture/`.
+
+No-op guard: if you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate.
+End READY-FOR-GATES, with exact changed sites, measured oversized byte count, both capture verdicts, full-gate terminal result and any remaining limitation. A larger bounded buffer has a finite ceiling; do not describe it as unlimited capture.
