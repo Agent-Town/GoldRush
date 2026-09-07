@@ -1,6 +1,9 @@
 {
   "note": "THE FIRST TOWN'S DECLARED PAYLOAD, by family. One source for the gate (scripts/first-town-payload.mjs, which sums each family's files in dist/) and for the game (src/assets/AdvanceStream.ts reads saveDataTrim below). WHY IT EXISTS: F-BUDGET-4 — the released gate measured a browser race, not a payload (21.6 / 10.5 / 21.6 MB on one fixed build), so what the town DECLARES had to become data. A family here is the hashed basename with the build hash, the -diet- content hash and any -rNcM sheet cell stripped, exactly as scripts/first-town-request-families.test.mjs derives it. ADD A ROW IN THE SAME COMMIT AS THE CHANGE THAT INTRODUCES THE ASSET; a family in dist that nothing here names is invisible to the gate, and a family named here that dist does not emit fails it.",
-  "saveDataTrim": ["dynamo-hall", "stamp-mill"],
+  "saveDataTrim": [
+    "dynamo-hall",
+    "stamp-mill"
+  ],
   "saveDataTrimWhy": "The bulk halls the advance stream drops when navigator.connection.saveData is set. src/assets/AdvanceStream.ts builds its townUrls filter from this list; the gate subtracts the same names for its Save Data subtotal, so the metered arm of the game and the metered arm of the budget cannot disagree.",
   "groups": [
     {
@@ -19,8 +22,8 @@
     },
     {
       "kind": "cast",
-      "demandPaged": true,
-      "why": "The ten town actors, one sheet each, named by src/town/town-actor-sheets.json and animated by src/town/TownScene.ts applyFullBodyFrame (`-r<row>c<frame>`), so every cell of every sheet is reachable while the player stands in the town. DEMAND-PAGED, and therefore REPORTED RATHER THAN GATED: a cell is fetched the first time an actor turns to face that way, never at entry. Measured 2026-09-07 on the e1 release build through the deploy's own instrument, both projects: exactly ONE cell of each of the ten sheets is inside the cue window (~0.5 MB of the 16.1 MB this group weighs), and after a 12.7 s settle the busiest sheet had reached 9 of its 32 cells. The gated total therefore understates the true entry payload by roughly that half-megabyte, and this group's own number states the rest. WHETHER THE BUDGET SHOULD GOVERN THIS GROUP TOO IS AN OWNER FORK (see tasks/BACKLOG.md, desk): flipping demandPaged to false gates the upper bound, which today reads 31,686,860 B against a 25,000,000 B budget.",
+      "demandPaged": false,
+      "why": "GATED since 2026-09-07 (owner desk answer A11, verbatim: \"raise the budget, this is a good size in my opinion, we don't have to go too crazy\"): the ten town actors, one sheet each, named by src/town/town-actor-sheets.json and animated by src/town/TownScene.ts applyFullBodyFrame (`-r<row>c<frame>`), so every cell of every sheet is reachable while the player stands in the town. A cell is fetched the first time an actor turns to face that way, never at entry, so this is the UPPER BOUND of the first town, judged against a budget raised from 25,000,000 to 35,000,000 B for exactly this reason. Before the ruling the group was demand-paged and reported, not gated (F-FTP-1).",
       "families": [
         "char-assay-clerk-sheet-walk8-a.png",
         "char-elder-sheet-walk8.png",
@@ -84,7 +87,9 @@
     {
       "kind": "audio",
       "why": "The click's own sound. The music group is deferred (see `excluded`).",
-      "families": ["menu-tap.mp3"]
+      "families": [
+        "menu-tap.mp3"
+      ]
     },
     {
       "kind": "code",
@@ -128,7 +133,9 @@
     {
       "kind": "document",
       "why": "The page itself.",
-      "families": ["index.html"]
+      "families": [
+        "index.html"
+      ]
     }
   ],
   "excluded": [

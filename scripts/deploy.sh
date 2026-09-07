@@ -25,7 +25,12 @@ note() { echo "[deploy] $(date '+%F %T') $*" >> "$LOG"; echo "[deploy] $*"; }
 DEPLOY_COMMIT="${CF_PAGES_COMMIT_SHA:-$(git rev-parse HEAD 2>/dev/null || printf 'unknown')}"
 BUILD_ID="${CF_PAGES_COMMIT_SHA:-$(git rev-parse --short=8 HEAD 2>/dev/null || printf 'unknown')}"
 PUBLISHED_BUILD=""
-BUDGET_LIMIT=25000000
+# THE BUDGET (owner desk answer A11, 2026-09-07, verbatim: "raise the budget, this is a good size in my
+# opinion, we don't have to go too crazy"): the ten town-actor sheets are GATED now (the cast group's
+# upper bound, 16.1 MB, joins the 15.6 MB the first town already declared), and the budget rises from
+# 25,000,000 to 35,000,000 B so the whole declared payload (about 31.7 MB) sits inside it with room
+# for a plate or two, not for a new map. Nothing is dieted on this ruling.
+BUDGET_LIMIT=35000000
 # THE TRIPWIRE CEILING (owner desk answer A7, 2026-09-07). The browser cue-window number is host
 # speed, not payload — F-BUDGET-4 measured 21,589,212 / 10,540,927 / 21,638,025 bytes on ONE fixed
 # build, a 2.05x swing, and 6,411,798 on the same build at an emulated 8 Mbps. It no longer decides

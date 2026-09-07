@@ -26,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { computePayload, crossCheckDeclaration, readDeclaration, requestFamily } from './first-town-payload.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const LIMIT = 25_000_000;
+const LIMIT = 35_000_000; // owner A11 2026-09-07: "raise the budget, this is a good size"; the cast sheets are gated now
 const CEILING = 30_000_000;
 const OVER_CEILING = [31_000_000, 4000, 3000, 2000, 1000, 500];
 const UNDER_CEILING = [4000, 3000, 2000, 1000, 500];
@@ -137,8 +137,8 @@ if (process.argv[2] === 'run') {
 // ─── THE GATE FAILS CLOSED ON THE PAYLOAD ──────────────────────────────────────────────────────
 
 for (const [name, env, expect] of [
-  ['payload over the budget', { PAYLOAD_BIG: String(LIMIT) }, /first-town payload: \d+ \/ 25000000 bytes \(\d+ bytes OVER\)/],
-  ['payload exactly ON the budget (the comparison is less-than)', { PAYLOAD_BIG: () => String(LIMIT - GATED_FILLER()) }, /first-town payload: 25000000 \/ 25000000 bytes \(0 bytes OVER\)/],
+  ['payload over the budget', { PAYLOAD_BIG: String(LIMIT) }, /first-town payload: \d+ \/ 35000000 bytes \(\d+ bytes OVER\)/],
+  ['payload exactly ON the budget (the comparison is less-than)', { PAYLOAD_BIG: () => String(LIMIT - GATED_FILLER()) }, /first-town payload: 35000000 \/ 35000000 bytes \(0 bytes OVER\)/],
   ['a declared family the build does not emit', { PAYLOAD_SKIP_FAMILY: 'char-hero-sheet-walk8.png' }, /MEASUREMENT FAILED: scripts\/first-town-payload\.mjs rc=1/],
   ['the probe tripwire over its ceiling', { ASSET_SIZES: JSON.stringify(OVER_CEILING) }, /probe tripwire desktop-chrome: 31010500 \/ 30000000 bytes \(1010500 bytes OVER the ceiling\)/],
 ]) {
@@ -198,7 +198,7 @@ test('the verdict block names which number gates and which only trips', (t) => {
 
 test('the budget and the ceiling in the block are the constants deploy.sh holds', () => {
   const source = readFileSync(join(ROOT, 'scripts/deploy.sh'), 'utf8');
-  assert.match(source, /^BUDGET_LIMIT=25000000$/m, 'the 25,000,000 B first-town budget is the owner\'s number; this guard pins it');
+  assert.match(source, /^BUDGET_LIMIT=35000000$/m, 'the 35,000,000 B first-town budget is the owner\'s number (A11, 2026-09-07: "raise the budget, this is a good size"); this guard pins it');
   assert.match(source, /^TRIPWIRE_CEILING=30000000$/m, 'the probe tripwire ceiling moved without a ruling');
   // ONE CEILING, TWO CALLERS. e2e/asset-diet.spec.ts asserts the same tripwire at its own site, and
   // scripts/deploy.sh runs THAT test: two different numbers would make the probe fail the spec while
@@ -219,7 +219,7 @@ test('--allow-over-budget waives both numbers at once, and says which failed', (
   assert.equal(run.result.outcome, 'dry_run');
   assert.equal(run.result.publishedBuild, '');
   assert.match(run.stdout, /Budget: FAIL.*ALLOWED by --allow-over-budget/);
-  assert.match(run.stdout, /payload GATE .*: FAIL \(\d+ \/ 25000000 bytes, \d+ bytes OVER\)/);
+  assert.match(run.stdout, /payload GATE .*: FAIL \(\d+ \/ 35000000 bytes, \d+ bytes OVER\)/);
   assert.match(run.stdout, /probe TRIPWIRE .*: FAIL \(a project exceeded the ceiling\)/);
   assert.match(run.stdout, /Device verdict: WARN missing docs\/release\/verdict-budget-test-build.md/);
   assert.deepEqual([...run.stdout.matchAll(/\[deploy\]   (\d+) bytes (\/assets\/asset-\d\.glb)/g)].map(m => [Number(m[1]), m[2]]),
@@ -233,7 +233,7 @@ test('under-budget dry run passes; an existing owner verdict is reported without
   writeFileSync(join(f.root, 'docs/release/verdict-budget-test-build.md'), 'HOLD: owner device checks pending\n');
   const run = f.run(['--strict', '--dry-run']);
   assert.equal(run.status, 0, run.stdout + run.stderr);
-  assert.match(run.stdout, /Budget: PASS \(limit: 25000000 bytes\)/);
+  assert.match(run.stdout, /Budget: PASS \(limit: 35000000 bytes\)/);
   assert.match(run.stdout, /Device verdict: PRESENT.*owner verdict not evaluated/);
   assert.doesNotMatch(run.stdout, /ALLOWED|WARN missing/);
   assert.equal(existsSync(join(f.root, 'network-calls')), false);
