@@ -20,6 +20,15 @@ const source = Object.fromEntries([
   'src/ui/UpgradeOverlay.ts',
   'functions/api/standings.ts',
   'src/meta/ContractFamilies.ts',
+  // ADR-005 controls section: the human's real control surface lives in these five files plus
+  // Game.ts. They are read for CITATIONS only, exactly like the registries above.
+  'src/agent/AgentConsent.ts',
+  'src/agent/Embodiment.ts',
+  'src/core/InputController.ts',
+  'src/game/RunManager.ts',
+  'src/playbook/PlaybookSurface.ts',
+  'src/ui/ProspectorDispatchInput.ts',
+  'src/ui/ProspectorPanel.ts',
 ].map((file) => [file, read(file)]));
 
 const vite = await createServer({ root: ROOT, server: { middlewareMode: true }, appType: 'custom', logLevel: 'silent' });
@@ -84,11 +93,47 @@ const buildableIds = quoted(between(
   'export type BuildableId =',
   'export type BuildPlacement',
 ));
-const doorVerbs = [...new Set(quoted(between(
+const standingOrderUnion = between(
   source['src/agent/StandingOrders.ts'],
   'export type StandingOrder =',
   'export type StandingOrderStatus',
-)))];
+);
+const doorVerbs = [...new Set(quoted(standingOrderUnion))];
+/**
+ * ADR-005: the VERB NAMES, not every quoted string in the union.
+ *
+ * `doorVerbs` above is `quoted()` over the whole block, so it also collects the union's lowercase
+ * argument literals (`rig`, `bank`, `stoke`, `upgrade`) and, because `quoted()` matches across
+ * newlines, twenty-odd fragments of the block's own comments wherever an apostrophe closes one.
+ * Thirty-eight entries for eighteen verbs. That is harmless for the `includes('MOVE_TO')` probes
+ * below, and useless as a denominator: a controls map checked against it would demand a human
+ * control for `Reject-don`. This selector reads the discriminant itself.
+ */
+const doorVerbNames = [...new Set(
+  [...standingOrderUnion.matchAll(/verb: '([A-Z][A-Z_]*)'/g)].map((match) => match[1]),
+)].sort();
+if (doorVerbNames.length === 0) throw new Error('StandingOrder union shape changed: no verb discriminants found');
+/**
+ * F-RPA-1, measured by this selector on the day it was written: `doorVerbs` is SHORT BY FOUR.
+ *
+ * `quoted()`'s `'([^']+)'` crosses newlines, so wherever a comment inside the union contains an
+ * apostrophe (`a human's keys`, `Reject-don't-stretch`, `the player's own loop`) the match runs
+ * from that apostrophe to the next one and swallows the declarations between them. `FALLBACK_IF`,
+ * `GRADE`, `HAUL` and `PLAYBOOK_USE` are all declared immediately after such a comment and are
+ * therefore ABSENT from `doorVerbs` today.
+ *
+ * Nothing above asks `doorVerbs.includes()` about any of the four, so no row is wrong right now.
+ * The hazard is the next row: `doorVerbs.includes('GRADE')` reads false, so a GRADE row would
+ * report `agent-lacks` on every contract, and the resulting divergence would be attributed to the
+ * door rather than to a regex. That is the F-2371-1 lesson in another file, and the strict
+ * selector below is the reason this section cannot inherit it. Published rather than thrown: the
+ * loose list is load-bearing for the pinned mechanics summary and is not this slice's to change.
+ */
+const verbRegistryGap = doorVerbNames.filter((verb) => !doorVerbs.includes(verb));
+const looseVerbsMissed = doorVerbs.filter((entry) => /^[A-Z][A-Z_]*$/.test(entry) && !doorVerbNames.includes(entry));
+if (looseVerbsMissed.length > 0) {
+  throw new Error(`Verb selector missed a declared verb the quoted registry found: ${looseVerbsMissed.join(', ')}`);
+}
 const tapeBlock = between(
   source['functions/api/standings.ts'],
   'function validTapeAction(',
@@ -151,6 +196,343 @@ const tapeExemptions = [
   { actions: 'skip_ceremony', reason: 'Baron ceremony is presentation-only; headless spawns the Baron directly without a ceremony gate.', citation: line('src/sim/HeadlessContractSim.ts', '(position, at, escorts) => this.postBaronSpawn(position, at, escorts)') },
 ];
 const tapeExemptActions = new Set(tapeExemptions.flatMap(({ actions }) => actions.split(' / ')));
+
+// ---------------------------------------------------------------------------
+// ADR-005 CONTROLS PARITY. Owner ruling 2026-09-07, verbatim: "Humans cannot control the
+// positioning of the Prospector, just the rider, for the Prospector they can give "policies" like
+// repair. This has to be 1:1 the same for the AI. There cannot be an unfair advantage here of it
+// being able to control the Prospector like the rider and the human cant."
+//
+// The rest of this audit measures MECHANICS: can both species reach the same buildable, the same
+// seam, the same draft. That question is blind to the one the owner asked, because a mechanic both
+// species reach through DIFFERENT BODIES reads `equal` here forever. So this section measures the
+// CONTROL SURFACE instead: for every door verb, which body it acts from, and whether a human at a
+// plain boot has a control that reaches it.
+//
+// TWO RULES BIND THIS MAP.
+//  1. Nothing behind `?debug` counts. `window.__GR_TEST__` is installed only when the query
+//     carries `debug` (`Game.ts`, the `__GR_RELEASE_E1__` guard on that block), so a mechanic whose
+//     only browser lever lives there has NO human control. That is Mistake #10 stated as a rule.
+//  2. The map is HAND-MAINTAINED and its key set is checked against the live union. A verb added
+//     to `StandingOrder` without a row here throws before a single row is emitted, which is the
+//     whole point: the door cannot grow a new power without someone answering "and what does the
+//     human press for this?".
+// ---------------------------------------------------------------------------
+
+/** The five policies a human can set on the Prospector, and the door verb (if any) that matches. */
+const HUMAN_PROSPECTOR_POLICIES = [
+  {
+    policy: 'trust rung L0..L3 (granted / revoked)',
+    changes: 'which abilities the Prospector may use at all; the rung a rider order must clear',
+    setAt: ['src/ui/ProspectorPanel.ts', 'data-testid="prospector-rung-toggle-'],
+    doorVerb: null,
+    verdict: 'human-only-richer',
+  },
+  {
+    policy: 'ability grants (auto_collect, auto_repair, light_duty, auto_pan, place_building)',
+    changes: 'which chores the Prospector performs unattended, per ability',
+    setAt: ['src/ui/ProspectorPanel.ts', 'data-prospector-ability='],
+    doorVerb: null,
+    verdict: 'human-only-richer',
+  },
+  {
+    policy: 'repair under N% HP (0..100, default 60)',
+    changes: 'the damage threshold below which the Prospector tends a work',
+    setAt: ['src/ui/ProspectorPanel.ts', 'data-prospector-automation="repairUnderPct"'],
+    doorVerb: 'REPAIR_UNDER',
+    verdict: 'equal',
+  },
+  {
+    policy: 'act after N seconds idle (0..60, default 0.8)',
+    changes: 'how long the Prospector must be idle before an unattended chore starts',
+    setAt: ['src/ui/ProspectorPanel.ts', 'data-prospector-automation="idleSeconds"'],
+    doorVerb: null,
+    verdict: 'human-only-richer',
+  },
+  {
+    policy: 'dispatch to a named seam or sluice',
+    changes: 'sends the Prospector to ONE published work target and pans it there',
+    setAt: ['src/ui/ProspectorDispatchInput.ts', 'if (target) this.dispatch(target.id);'],
+    doorVerb: 'HARVEST',
+    verdict: 'equal',
+  },
+  {
+    policy: 'walk the hero (the Prospector drifts to it)',
+    changes: 'the ONLY positional control a human has over the Prospector: with no work assigned it '
+      + 'walks back to the hero every step, so where the hero stands is where the Prospector ends up',
+    setAt: ['src/agent/Embodiment.ts', 'private driftNearHero(delta: number, at: number, hero: ProspectorPoint): void {'],
+    doorVerb: 'MOVE_HERO',
+    verdict: 'equal',
+  },
+];
+
+/**
+ * The eighteen door verbs against that surface. `body` is the body the verb acts FROM in GR-SIM,
+ * which is the engine the benchmark scores; where the browser room seat acts from a different body
+ * the note says so, because that difference is itself a parity fact.
+ */
+const HUMAN_CONTROLS = {
+  BLAST_AT: {
+    body: 'hero',
+    reaches: 'throws the Blast Charge at a point within the hero-anchored range clamp',
+    human: {
+      control: 'Q (or touch Q) selects the Blast Charge, the pointer aims the reticle, the charge fires on its own cooldown',
+      cites: [['src/core/InputController.ts', "weaponToggle: ['KeyQ', 'TouchWeaponToggle'],"],
+        ['src/game/Game.ts', 'private updateBlastAim(intents: Intents): void {']],
+    },
+    verdict: 'equal',
+    note: 'Same origin body, same range clamp, same cooldown; the human aims continuously, the rider names a point.',
+  },
+  BOAT_BUILD: {
+    body: 'world',
+    reaches: 'occupies a named Claim-Boat pad with a named building',
+    human: null,
+    verdict: 'agent-only',
+    note: 'NO plain-boot control. The only browser lever is `__GR_TEST__.placeBoatBuilding`, installed only under `?debug`.',
+  },
+  BUILD: {
+    body: 'prospector',
+    reaches: 'places a buildable at a point, walking the acting body inside that buildable\'s placement radius first',
+    human: {
+      control: 'B opens the build menu, 1..6 selects, R rotates, confirm places the ghost, all radius-bounded from the HERO',
+      cites: [['src/core/InputController.ts', "build: ['KeyB'],"],
+        ['src/game/Game.ts', 'private confirmAction(confirmAllowedAtIssue = true): void {']],
+    },
+    verdict: 'equal',
+    note: 'The mechanic has a twin and both are radius-bounded. The asymmetry is WHICH body carries the radius, '
+      + 'and that is charged to MOVE_TO rather than counted twice here.',
+  },
+  CAPTURE: {
+    body: 'prospector',
+    reaches: 'catches the nearest exhausted machine within the wrangle radius of the acting body',
+    human: {
+      control: 'the confirm key at the hero, ahead of demolish in the context chain',
+      cites: [['src/game/Game.ts', 'if (this.wrangle.tryCapture(this.actionActor.group.position)) return;']],
+    },
+    verdict: 'equal',
+    note: 'Browser room seats capture from the rider\'s own hero; GR-SIM captures from the Prospector, so the '
+      + 'reach travels with a body the human cannot place.',
+  },
+  CONTEXT_ACTION: {
+    body: 'prospector',
+    reaches: 'upgrade, demolish, fund, recover, plant, redig, backfill, stoke, from the acting body\'s ground',
+    human: {
+      control: 'the confirm key (and U for demolish/backfill) at the hero, one chain of world interactions',
+      cites: [['src/game/Game.ts', 'private confirmAction(confirmAllowedAtIssue = true): void {'],
+        ['src/game/Game.ts', 'private confirmUpgrade(): boolean {']],
+    },
+    verdict: 'human-only-richer',
+    note: 'The same confirm key ALSO reaches four interactions no verb names: the drill yard, the assay bench, '
+      + 'the E10 static boss and the Old Digger. GR-SIM acts from the Prospector where the human acts from the hero.',
+  },
+  FALLBACK_IF: {
+    body: 'prospector',
+    reaches: 'sends the Prospector to a point once the live-enemy count crosses a threshold',
+    human: null,
+    verdict: 'agent-only',
+    note: 'Positions the Prospector, conditionally. A human has no threshold rule and no destination to give.',
+  },
+  GRADE: {
+    body: 'prospector',
+    reaches: 'grades the ungraded corridor whose stake is within reach of the acting body',
+    human: {
+      control: 'the confirm key, or U as the keyboard shortcut, at a survey stake near the hero',
+      cites: [['src/game/Game.ts', 'if (this.motorGrade(this.actionActor.group.position) || this.motorHaul(this.actionActor.group.position)) return;'],
+        ['src/core/InputController.ts', "upgrade: ['KeyU'],"]],
+    },
+    verdict: 'equal',
+    note: 'GR-SIM grades from the Prospector\'s ground; the human grades from the hero\'s.',
+  },
+  HARVEST: {
+    body: 'prospector',
+    reaches: 'walks the Prospector to a named active seam or sluice index and pans it there',
+    human: {
+      control: 'select the Prospector then click the seam, or Alt/Shift-click it, or touch-hold it and confirm the prompt',
+      cites: [['src/ui/ProspectorDispatchInput.ts', 'if (target) this.dispatch(target.id);'],
+        ['src/game/Game.ts', '(node) => this.dispatchProspector(node),']],
+    },
+    verdict: 'equal',
+    note: 'THE ONE PROSPECTOR-POSITIONING CONTROL A HUMAN HAS, and it is target-named rather than free: the '
+      + 'destination must be a published seam or sluice, never an arbitrary point. The rider pays a consent rung '
+      + 'the human does not.',
+  },
+  HAUL: {
+    body: 'prospector',
+    reaches: 'drives the Hauler in a straight line to where the acting body stands',
+    human: {
+      control: 'the confirm key at the hero, after grade in the same chain',
+      cites: [['src/game/Game.ts', 'if (this.motorGrade(this.actionActor.group.position) || this.motorHaul(this.actionActor.group.position)) return;']],
+    },
+    verdict: 'equal',
+    note: 'Same body difference as GRADE: the rider calls the Hauler to a Prospector it placed, the human to its hero.',
+  },
+  HOLD: {
+    body: 'prospector',
+    reaches: 'pins the Prospector at a point by re-issuing that point every tick, against its drift',
+    human: null,
+    verdict: 'agent-only',
+    note: 'The verb exists BECAUSE the Prospector drifts to the hero. A human cannot suppress that drift at all; '
+      + 'walking the hero is the whole of the human\'s answer.',
+  },
+  MOVE_HERO: {
+    body: 'hero',
+    reaches: 'walks the hero to a point down the same Intents.move seam a human\'s keys drive',
+    human: {
+      control: 'WASD, the arrow keys, or the touch stick',
+      cites: [['src/core/InputController.ts', "moveUp: ['KeyW', 'ArrowUp'],"]],
+    },
+    verdict: 'equal',
+    note: 'The ruling\'s first half, already shipped: the rider steers the rider\'s body, and only its own '
+      + '(the solo browser door refuses with HERO_NOT_YOURS).',
+  },
+  MOVE_TO: {
+    body: 'prospector',
+    reaches: 'walks the Prospector to any point on the map',
+    human: null,
+    verdict: 'agent-only',
+    note: 'THE VERB THE RULING NAMES FIRST. There is no human control for it and, by the ruling, there must not be one.',
+  },
+  PICK_UPGRADE: {
+    body: 'world',
+    reaches: 'takes one id from the live three-card draft',
+    human: {
+      control: 'click a card in the upgrade overlay',
+      cites: [['src/ui/UpgradeOverlay.ts', "type: 'pick_upgrade'"]],
+    },
+    verdict: 'equal',
+    note: 'The human picks by index, the rider by id, off the same offer and the same clock.',
+  },
+  PLAYBOOK_USE: {
+    body: 'prospector',
+    reaches: 'records or replays a named tape of the rider\'s own order arrays',
+    human: {
+      control: 'the Playbook Library: name it, Record, then Use it off the shelf',
+      cites: [['src/playbook/PlaybookSurface.ts', 'data-testid="playbook-record"'],
+        ['src/game/Game.ts', 'private startNamedPlaybookReplay(name: string)']],
+    },
+    verdict: 'equal',
+    note: 'Same shelf, same permission rung, same two refusals. The body appears only in the interference-front '
+      + 'reach test, which GR-SIM asks at the Prospector and the browser at the actor.',
+  },
+  REANCHOR: {
+    body: 'world',
+    reaches: 'moves the Claim Boat to a known non-current anchor, or nudges a Flotilla hull',
+    human: null,
+    verdict: 'agent-only',
+    note: 'NO plain-boot control. The only browser lever is `__GR_TEST__.reanchorClaimBoat`, installed only under `?debug`.',
+  },
+  REPAIR_UNDER: {
+    body: 'prospector',
+    reaches: 'walks the Prospector to the first work anywhere on the map below the given percentage and repairs it',
+    human: {
+      control: 'the Prospector panel\'s "Repair under N% HP" number input, which sets the threshold and nothing else',
+      cites: [['src/ui/ProspectorPanel.ts', 'data-prospector-automation="repairUnderPct"'],
+        ['src/game/Game.ts', 'private nearestProspectorRepairTarget()']],
+    },
+    verdict: 'agent-only',
+    note: 'THE THRESHOLD IS EQUAL AND THE REACH IS NOT. The human\'s sweep only considers works within '
+      + 'Balance.sparkRig.range of the Prospector, which drifts to the hero; the order\'s search has no radius at '
+      + 'all and its travel clause carries the Prospector to whatever it finds.',
+  },
+  SECURE_CHOICE: {
+    body: 'world',
+    reaches: 'answers the secure window with bank or rush',
+    human: {
+      control: 'the two buttons on the Claim Office overlay',
+      cites: [['src/game/RunManager.ts', 'data-testid="bank-secured-claim"'],
+        ['src/game/RunManager.ts', 'data-testid="stay-for-rush"']],
+    },
+    verdict: 'equal',
+    note: 'Same window, same default, same clock.',
+  },
+  SET_WEAPON: {
+    body: 'hero',
+    reaches: 'selects rig or blast, idempotently',
+    human: {
+      control: 'Q (or touch Q) toggles between the same two modes',
+      cites: [['src/core/InputController.ts', "weaponToggle: ['KeyQ', 'TouchWeaponToggle'],"],
+        ['src/game/Game.ts', 'private toggleWeapon(actor = this.localActor): HeroWeapon {']],
+    },
+    verdict: 'equal',
+    note: 'Toggle versus SET is a re-submission safety difference, not a reach difference.',
+  },
+};
+
+const CONTROL_VERDICTS = ['equal', 'agent-only', 'human-only-richer'];
+
+/**
+ * The line where the union DECLARES a verb, not where a validator returns one. `line()` is
+ * file-wide and takes the first hit, and every declaration happens to precede its handler today;
+ * this resolves inside the union block instead, so the citation cannot silently slide onto
+ * `validateOrder`'s echo of the same literal if the file is ever reordered.
+ */
+function verbDeclarationLine(verb) {
+  const file = 'src/agent/StandingOrders.ts';
+  const unionStart = source[file].indexOf(standingOrderUnion);
+  const offset = standingOrderUnion.indexOf(`verb: '${verb}'`);
+  if (offset < 0) throw new Error(`Door verb ${verb} is not declared in the StandingOrder union`);
+  return `${file}:${source[file].slice(0, unionStart + offset).split('\n').length}`;
+}
+
+/** The ADR-005 controls section. Throws before emitting a row if the map and the union disagree. */
+function controls() {
+  const missing = doorVerbNames.filter((verb) => !(verb in HUMAN_CONTROLS)).sort();
+  if (missing.length > 0) {
+    throw new Error(
+      `ADR-005 controls map has no human control mapped for door verb(s): ${missing.join(', ')}. `
+      + 'Every verb the door declares must name the human control that reaches it, or be recorded as '
+      + '`agent-only` with the reason. Add the row to HUMAN_CONTROLS in scripts/same-game-audit.mjs.',
+    );
+  }
+  const stale = Object.keys(HUMAN_CONTROLS).filter((verb) => !doorVerbNames.includes(verb)).sort();
+  if (stale.length > 0) {
+    throw new Error(`ADR-005 controls map names verb(s) the door no longer declares: ${stale.join(', ')}.`);
+  }
+
+  const verbs = doorVerbNames.map((verb) => {
+    const entry = HUMAN_CONTROLS[verb];
+    if (!CONTROL_VERDICTS.includes(entry.verdict)) {
+      throw new Error(`ADR-005 controls verdict for ${verb} is not one of ${CONTROL_VERDICTS.join(' / ')}`);
+    }
+    return {
+      verb,
+      body: entry.body,
+      'agent-reaches': entry.reaches,
+      'human-control': entry.human?.control ?? 'NONE',
+      verdict: entry.verdict,
+      // Resolving the citation HERE rather than in the map means a moved anchor reds the audit
+      // the same way every other citation in this file does.
+      evidence: [
+        ...(entry.human?.cites ?? []).map(([file, needle]) => line(file, needle)),
+        verbDeclarationLine(verb),
+      ].join(' · '),
+      note: entry.note,
+    };
+  });
+
+  const policies = HUMAN_PROSPECTOR_POLICIES.map((entry) => ({
+    policy: entry.policy,
+    changes: entry.changes,
+    'set-at': line(entry.setAt[0], entry.setAt[1]),
+    'door-verb': entry.doorVerb ?? 'none',
+    verdict: entry.verdict,
+  }));
+
+  const summary = Object.fromEntries(CONTROL_VERDICTS.map((verdict) => [
+    verdict,
+    verbs.filter((entry) => entry.verdict === verdict).length,
+  ]));
+  return {
+    ruling: 'ADR-005 (owner, 2026-09-07): the agent controls exactly what a human controls.',
+    debugGate: line('src/game/Game.ts', 'window.__GR_TEST__ = {'),
+    heroChannelRefusal: line('src/game/Game.ts', 'riderPiloted: () => false,'),
+    // F-RPA-1: the verbs the audit's older `quoted()` registry cannot see. Empty is the goal.
+    verbRegistryGap,
+    verbs,
+    policies,
+    summary,
+  };
+}
 
 function manifestEvidence(contract, id) {
   const file = 'src/agent/MechanicsManifest.ts';
@@ -382,6 +764,11 @@ function audit() {
     contracts: [...new Set(rows.map((entry) => entry.contract))],
     rows,
     summary,
+    // ADR-005. Deliberately OUTSIDE `rows`/`summary`: the mechanics table is per-contract and its
+    // totals are pinned by `same-game-audit.test.mjs`; the controls table is per-VERB and counting
+    // it into those totals would multiply eighteen facts by forty-three contracts and move a pin
+    // that measures something else.
+    controls: controls(),
     admission: {
       measurements: admissionMeasurement(),
       exemptions: Object.entries(admissionExemptions).map(([contractId, exemption]) => ({ contractId, ...exemption })),
@@ -479,6 +866,50 @@ function markdown(result) {
     '- AP-16-4 admission plus adapted E2/E4 censuses: **18/18** desktop + 390px mobile. The census change is refusal → first-view admission for three E2 railcars and four E4 contracts; no outcome pins changed.',
     '- `ap-standing-orders` + `skillmd-door`: **14/14** desktop + 390px mobile, including the plain production boot with zero captured console/page errors.',
     '- Adjacent `front-door-parity`: **0/4**, unmodified and outside this slice. Its stdin fixture ends before answering the AP-16-2 upgrade offer, and its idle assertion still expects the removed automatic `heavy_spark` picks. No AP-16-4 path touches progression or that spec.',
+    '',
+    '## Controls parity (ADR-005)',
+    '',
+    result.controls.ruling,
+    '',
+    'Every row above measures a MECHANIC and is blind to which BODY reaches it, so a mechanic both species '
+      + 'reach through different bodies reads `equal` here forever. This section asks the owner\'s question instead: '
+      + 'for each door verb, which body it acts from in GR-SIM, and whether a human at a plain boot has a control '
+      + 'that reaches it. Nothing behind `?debug` counts as a human control '
+      + `(the whole \`__GR_TEST__\` bridge is installed only under that flag, ${result.controls.debugGate}), and the `
+      + `solo browser door refuses \`MOVE_HERO\` outright (${result.controls.heroChannelRefusal}).`,
+    '',
+    `- equal: ${result.controls.summary.equal}`,
+    `- agent-only: ${result.controls.summary['agent-only']}`,
+    `- human-only-richer: ${result.controls.summary['human-only-richer']}`,
+    `- verbs measured: ${result.controls.verbs.length}`,
+    '',
+    'The map is hand-maintained and its key set is checked against the live `StandingOrder` union: a verb added '
+      + 'to the door without a row here throws before any row is emitted, so the door cannot grow a power without '
+      + 'someone answering "and what does the human press for this?".',
+    '',
+    result.controls.verbRegistryGap.length === 0
+      ? '**F-RPA-1: closed.** The older `quoted()` verb registry now sees every declared verb.'
+      : `**F-RPA-1 (open):** the audit's older \`quoted()\` verb registry is short by `
+        + `${result.controls.verbRegistryGap.length} of ${result.controls.verbs.length}: `
+        + `${result.controls.verbRegistryGap.map((verb) => `\`${verb}\``).join(', ')}. Its pattern crosses newlines, `
+        + "so a comment apostrophe inside the union swallows the declarations that follow it. No row asks "
+        + '`doorVerbs.includes()` about any of the four today, so nothing above is wrong; a row that did would '
+        + 'report `agent-lacks` on every contract and blame the door for a regex.',
+    '',
+    '### The human\'s Prospector policy surface',
+    '',
+    '| policy | what it changes | where the human sets it | door verb | verdict |',
+    '|---|---|---|---|---|',
+    ...result.controls.policies.map((entry) => `| ${cell(entry.policy)} | ${cell(entry.changes)} | ${cell(entry['set-at'])} | ${cell(entry['door-verb'])} | ${cell(entry.verdict)} |`),
+    '',
+    '### The door verbs against that surface',
+    '',
+    '| verb | acts from | agent reaches | human control | verdict | evidence | note |',
+    '|---|---|---|---|---|---|---|',
+    ...result.controls.verbs.map((entry) => `| ${cell(entry.verb)} | ${cell(entry.body)} | ${cell(entry['agent-reaches'])} | ${cell(entry['human-control'])} | ${cell(entry.verdict)} | ${cell(entry.evidence)} | ${cell(entry.note)} |`),
+    '',
+    'The full measurement, with the heat-12 usage counts behind each verb and the 1:1 grammar the ruling implies, '
+      + 'is `docs/bench/rider-parity-audit.md`.',
     '',
     '## Full parity table',
     '',
