@@ -137,9 +137,10 @@ test('the corridor circuit is cut, dark, repaired and lit across the floor ride'
   const terminalLamp = trace.at(-1).lamp;
   assert.ok(terminalLamp === 'powered' || terminalLamp === 'dark', 'the terminal corridor state must be readable');
 
-  mkdirSync(path.join(ROOT, 'artifacts/e3-moth-season'), { recursive: true });
+  const evidenceDir = path.join(ROOT, process.env.GR_REFRESH_EVIDENCE === '1' ? 'artifacts/e3-moth-season' : 'test-results/evidence/e3-moth-season');
+  mkdirSync(evidenceDir, { recursive: true });
   writeFileSync(
-    path.join(ROOT, `artifacts/e3-moth-season/ride-${SEED}.json`),
+    path.join(evidenceDir, `ride-${SEED}.json`),
     `${JSON.stringify({ seed: SEED, outcome, beats: { dark: trace[0].turn, lit: lit.turn, cut: cut.turn, relit: null }, terminalLamp, trace }, null, 2)}\n`,
   );
   console.log(`moth-season circuit beats dark@${trace[0].turn} lit@${lit.turn} cut@${cut.turn} relit=none terminal=${terminalLamp} hash=${outcome.eventLogHash}`);
