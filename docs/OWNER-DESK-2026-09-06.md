@@ -35,6 +35,7 @@ Every item below needs either a word from Robin or ten minutes of his hands. Eve
 
 ### A6. The Eclipse's difficulty (F-ECW-4, added 2026-09-06 midnight)
 The Eclipse turned out winnable today: seed -02 secures under the air-wall policy unchanged, seed -01 with one `MOVE_HERO` that stands the hero in its own fort (`reviews/eclipse-winnable.md`). Nothing was tuned. If you want it EASIER than that, the two cheapest honest levers were measured: a second build line (pure data, 115 hp margin) or `twist.hero.maxHpBonus: 100` (Relay Valley's precedent, 71.8 hp margin). One word picks one; silence keeps the map as hard as it is.
+**RULED 2026-09-07 (owner, verbatim: "A6 - keep it as hard as it is"):** the Eclipse stays exactly as measured; neither lever ships; F-ECW-4 CLOSED.
 
 ### A7. The first-town gate (F-BUDGET-4, added 2026-09-06 evening)
 The deploy's 25 MB first-town budget measures host speed, not payload (a 2.05× swing on one fixed build). It stays as a tripwire; the request-family guard is the real one. A payload-shaped gate would count bytes by family at `ready` plus what the scene declares. Decide whether to keep the fail-closed 25 MB number or replace it; the levers that actually moved the slow load tonight were round trips (241 → 32 JS requests) and the music (3 MB out of the window); the hero slot's clip split (~4.3 MB) is the largest lever left.
@@ -53,6 +54,7 @@ Your A1 ruling is live in the engine: the hero's suit drains outside pressurised
 ### A10. The rider-parity grammar (ADR-005 audit, added 2026-09-07 morning)
 - **D1:** should both species gain a `WORK_AT` policy (a target-named "send the Prospector to work there")? Recommendation: no for now; walk the hero, the Prospector drifts in, exactly as a human does.
 - **D2:** confirm the heat-12 board is re-ridden rather than repaired once the grammar lands (22 of 24 scored rows retire). Recommendation: yes.
+**RULED 2026-09-07 (owner, verbatim: "D1 - no, AI and human users have to have the same options and tools, otherwise it is unfair. fairness is crucial. D2: re-ride it yes"):** D1 = no `WORK_AT` for either species (ADR-005 amended with the fairness words); D2 = the board is re-ridden on the new grammar after the drain, never repaired. `tasks/rider-parity-grammar.md` revised on these words and LAUNCHED (scratch `wt-grammar`, port 5309).
 
 
 ### A11. The cast sheets and the payload gate (F-FTP-1, added 2026-09-07 late morning)

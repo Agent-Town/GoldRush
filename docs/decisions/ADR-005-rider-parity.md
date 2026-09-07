@@ -12,4 +12,13 @@
 3. Existing tapes that use removed verbs no longer replay and retire under ADR-004; heats and provers are re-ridden on the new grammar. Early release: "we can act freely".
 4. `docs/bench/same-game-audit.md` gains a controls table and a guard keeps every door verb mapped to a human control.
 
+**Amendment, 2026-09-07 (owner desk answers D1 and D2, verbatim).** D1, asked whether both species should gain a target-named `WORK_AT` policy:
+
+> "no, AI and human users have to have the same options and tools, otherwise it is unfair. fairness is crucial."
+
+D2, asked whether the heat-12 board is re-ridden rather than repaired once the grammar lands: "re-ride it yes".
+
+5. No `WORK_AT`-shaped policy is added for either species. The 1:1 grammar is the human's own surface and nothing more: the rider's body under direct control (`MOVE_HERO`), the six Prospector policies, the named seam/sluice dispatch. Fairness is the ruling's own word for the law, and it cuts both ways: a control added for one species is added for both in the same slice or not at all.
+6. The heat-12 board is re-ridden on the new grammar after `rider-parity-grammar` drains; retired rows are never repaired.
+
 **Related.** ADR-004 (seasons and lineage), F-HMV-1 (closed by the same ruling's first half on 2026-09-06: "the player can also not walk the Prospector but just the rider").

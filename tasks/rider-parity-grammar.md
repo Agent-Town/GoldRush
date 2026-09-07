@@ -1,9 +1,6 @@
-# Task rider-parity-grammar: the 1:1 door grammar ADR-005 requires (DRAFT — NOT QUEUED)
+# Task rider-parity-grammar: the 1:1 door grammar ADR-005 requires (SCRATCH worktree, Claude Opus 5 implementer; commit prefix "feat:"; LAUNCHED 2026-09-07 on the owner's words)
 
-> **DRAFT, authored 2026-09-07 by `rider-parity-audit` from its own measurement. NOT in `tasks/queue/`.**
-> It carries **two owner decisions** (D1, D2 below) and **retires 22 of 24 scored heat-12 rows**, so an attended
-> session launches it, not a fire. Split it before launching if the board must stay scorable in between; the
-> stages below are already cut so that each one lands alone.
+> **Authored 2026-09-07 by `rider-parity-audit` from its own measurement; LAUNCHED the same day by the attended session once the owner answered both decisions it carried.** D1 (a `WORK_AT` policy for both species): **"no, AI and human users have to have the same options and tools, otherwise it is unfair. fairness is crucial."** D2 (re-ride the heat-12 board rather than repair it): **"re-ride it yes"**. Stage 5 below is therefore RULED OUT and the D2 section is answered; stages 1-4 and 6 stand as drafted. It **retires 22 of 24 scored heat-12 rows** in stage 3, which the owner has accepted; the board is re-ridden after this task drains.
 
 You are the implementer for Gold Rush, running natively on Robin's Mac in a scratch worktree on branch `feat/rider-parity-grammar`, base current `main`.
 
@@ -27,8 +24,8 @@ Owner ruling 2026-09-07, verbatim in ADR-005:
 
 1. In `src/sim/HeadlessContractSim.ts`, change these nine reads from `this.prospector.position` to `this.hero.group.position`, matching the browser's `this.actionActor.group.position`:
    `capture` (`:1404`), `contextAction` upgrade/demolish (`:2967-2968`), `stokeVent` (`:2942`), `recoverProbe` (`:2986`), `plantSeedVault` (`:3006`), `decideCanalSegment` (`:3028`), `motorVerb` grade and haul (`:3055-3056`), `usePlaybook`'s interference test (`:3093`), `fundMegaproject` (`:3328-3329`).
-   Line numbers are from `main` at `6664de241` and WILL have moved; find the sites by the call, never by the coordinate.
-2. **Do NOT touch** the pan reach (`:2831`), the repair reach (`:2822`), or the E8 suit/crossing reads (`:2038`, `:2042`, `:2045`). Harvest and repair are Prospector chores on both sides already; the suit belongs to `e8-air-logical`. If that slice has landed and moved these, report the collision rather than resolving it.
+   Line numbers are from `main` at `6664de241` and HAVE moved (`e8-air-logical` and four correctives batches landed above them); find the sites by the call, never by the coordinate.
+2. **Do NOT touch** the pan reach (`:2831`), the repair reach (`:2822`), or the E8 suit/crossing reads. Harvest and repair are Prospector chores on both sides already. `e8-air-logical` LANDED at `94f642279` (2026-09-07) and re-based the suit onto the hero itself (the hero breathes; an empty suit harms her); read those sites, leave them, and report any E8 read that still hangs off the Prospector's position as a finding rather than resolving it here.
 3. `src/mp/AgentRiderBody.ts` and `Game.agentRiderFinalVerbs` already act from the rider's own hero. Verify by reading, change nothing, and say so in the review.
 4. Update `public/skill.md`'s prose wherever it says an action happens "where the Prospector stands" (the `CONTEXT_ACTION` paragraph, `GRADE`/`HAUL`, `CAPTURE`, the E8 air paragraph's mention of the Prospector's ground). **The skill.md fence is generated — regenerate it with `scripts/skillmd-guard.test.mjs`, never by hand.**
 5. Re-pin every moved hash. 37 of 89 heat-12 tapes carry a re-based verb (15 of 24 scored); every prover that funds, recovers, plants, decides a canal, grades, hauls, captures, stokes or uses a playbook is re-ridden.
@@ -53,10 +50,10 @@ Owner ruling 2026-09-07, verbatim in ADR-005:
 15. `public/skill.md:155` currently claims "Both mirror the player's zero-resource actions"; today that is false. It becomes true in this stage, so leave the sentence and make it true rather than editing it earlier.
 16. An e2e in a **plain boot, no `?debug`** asserting a human can place a deck building and reanchor (Mistake #10: "where does the PLAYER see this, in a plain boot?").
 
-### Stage 5 — OWNER DECISION D1: the `WORK_AT` policy, both species (DO NOT IMPLEMENT WITHOUT A WORD)
+### Stage 5 — OWNER DECISION D1: RULED 2026-09-07, NO `WORK_AT` (nothing to build)
 
-17. Removing `MOVE_TO` costs riders the ability to send the Prospector to a work target that is not a seam or sluice. The human cannot do that either today, so removal is lawful — but the audit's recommendation is that BOTH species gain a target-named "send to work" policy over targets the view already publishes (seams, sluices, damaged works, the megaproject site, corridor stakes, canal stakes, vents, craters): a `WORK_AT`-shaped verb for the rider, a click on the same targets for the human's dispatch. That restores the useful half of `MOVE_TO` without the unfair half, in one act, for both sides.
-18. **This is new player-facing scope. Park it on the OWNER'S DESK; do not build it on this task's authority.**
+17. Removing `MOVE_TO` costs riders the ability to send the Prospector to a work target that is not a seam or sluice. The human cannot do that either today, so removal is lawful. The audit proposed that BOTH species gain a target-named "send to work" policy; the owner refused it, verbatim: **"no, AI and human users have to have the same options and tools, otherwise it is unfair. fairness is crucial."** A rider reaches a work target the way a human does: walk the hero (`MOVE_HERO`), the Prospector drifts in behind it, and the six policies plus the named seam/sluice dispatch do the rest. Build nothing here; do not add a verb, a policy or a click for either species.
+18. Stage 6's controls table is the proof of the ruling: after stages 1-4 it must report ZERO `agent-only` and ZERO `human-richer` controls. If any control survives on one side only, it is a finding for the review, not something to fix by adding to the other side.
 
 ### Stage 6 — the audit and the ledger
 
@@ -65,9 +62,9 @@ Owner ruling 2026-09-07, verbatim in ADR-005:
 21. **F-RPA-1 while you are in the file:** `scripts/same-game-audit.mjs`'s legacy `doorVerbs` registry is short by four verbs because `quoted()` crosses newlines. Removing three verbs changes that list. Either fix `quoted()` to stop at a newline and re-pin the mechanics summary in the same commit, or leave it and confirm `controls.verbRegistryGap` still reports honestly. **Do not fix it silently** — the mechanics summary `{ 'agent-exceeds': 0, 'agent-lacks': 533, equal: 1229, 'not-offered': 0 }` is pinned in `scripts/same-game-audit.test.mjs` and any movement must be attributed.
 22. `tasks/BACKLOG.md`: one row per stage, event and row in the same commit.
 
-### OWNER DECISION D2 (ask before stage 3)
+### OWNER DECISION D2: RULED 2026-09-07 (owner, verbatim: "re-ride it yes")
 
-Stage 3 retires 22 of 24 scored heat-12 rows. Confirm the board is re-ridden rather than repaired, and confirm the timing against whatever heat is live.
+Stage 3 retires 22 of 24 scored heat-12 rows. The owner has ruled the board is re-ridden on the new grammar, never repaired: proceed with stage 3 without asking again, retire the rows in the same commit as the removal (ADR-004 clause 3), and list every retired row with its ride id so the drain can author the re-ride gauntlet from your list. Heat 12 is the live board (`artifacts/gauntlet-heat12-20260905/`); the re-ride is a follow-up master, not this task.
 
 ## Firewall
 
@@ -80,7 +77,7 @@ NO changes to: `docs/decisions/ADR-005-rider-parity.md` or any ratified ruling �
 - `npx tsc --noEmit` clean; `npm run build` green.
 - Per stage: the tapes whose hashes move are named and re-pinned, with the BEFORE and AFTER hash in the review. A hash that moves without a named cause is a red.
 - Guards: `same-game-audit` · `same-game-report-guard` · `skillmd-guard` (the fence regenerates) · `agent-rung-conformance` · `view-schema-guard` · `hero-move-verb` · `law-pointer-guard` · `citation-title-guard` · `gr-sim` · plus one NEW guard per stage: stage 1 asserts every action reach test reads the hero in both engines; stage 2 asserts `REPAIR_UNDER` refuses a work outside `Balance.sparkRig.range`; stage 3 asserts the three verbs are unknown to `validateStandingOrders` and that a retired tape fails at submission with the unknown-verb message.
-- e2e both projects (desktop + 390px), own scratch port, zero console/page errors on a plain boot: `ap-standing-orders`, `skillmd-door`, `tape-01-run-tape`, `ap16-6-browser-seat`, plus stage 4's new plain-boot deck spec.
+- e2e both projects (desktop + 390px), own scratch port (5309), zero console/page errors on a plain boot: `ap-standing-orders`, `skillmd-door`, `tape-01-run-tape`, `ap16-6-browser-seat`, plus stage 4's new plain-boot deck spec.
 - `docs/bench/same-game-audit.md` regenerates cleanly (`--write-report`) and its controls table reports the new verdicts.
 - Do NOT run the full node-guard battery in one go; run the named guards.
 
