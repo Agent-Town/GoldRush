@@ -10,7 +10,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 const E1 = 'epoch-1-frontier';
 const E3 = 'epoch-3-voltage';
 const E6 = 'epoch-6-atomic';
-const SHOTS = 'reviews/shots-ss-07-e6-beats';
+const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-07-e6-beats' : 'test-results/evidence/shots-ss-07-e6-beats';
 const IDS = [
   'e6-glow-mesa-arrival',
   'e6-steward-doorless-dome',

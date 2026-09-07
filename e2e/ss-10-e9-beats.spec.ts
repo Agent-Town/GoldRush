@@ -23,7 +23,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 const E1 = 'epoch-1-frontier';
 const E2 = 'epoch-2-steamworks';
 const E9 = 'epoch-9-redfields';
-const SHOTS = 'reviews/shots-ss-10-e9-beats';
+const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-10-e9-beats' : 'test-results/evidence/shots-ss-10-e9-beats';
 const IDS = [
   'e9-dome-basin-arrival',
   'e9-water-ledger-opened',
