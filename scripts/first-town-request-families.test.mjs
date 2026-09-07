@@ -81,6 +81,21 @@ export function requestFamily(url) {
  * `scripts.js` is deliberately NOT struck even though it too left the window: the virtual ceremony
  * module simply changed chunk name (`_gold-rush-release-e1-ceremony-scripts.js` arrived in the same
  * measurement), and a build-volatile name is exactly what a superset is for.
+ *
+ * `char-hero-sheet-attack8.png` AND `char-hero-sheet-work8.png` ARE DEAD WEIGHT AS OF 2026-09-07
+ * (hero-slot-clip-split; owner, verbatim: "yes, lets do 1"). They are the hero's CLAIM animations —
+ * `pan` and `attack` — and the town plays neither: TownScene calls `hero.update()` without the
+ * `panning` argument and never calls `playAttackPose` (only src/game/Game.ts does). They are now in
+ * the `claim` clip group of `assets/layer-contracts/characters.v2.json`, so the town fetches them
+ * not at all; they arrive on the advance stream's idle callback once the town reads ready, or the
+ * moment the claim scene declares its groups. Measured through the deploy's own instrument on the
+ * e1 release build, both projects: the hero's slot in the cue window 8,901,114 B / 141 responses ->
+ * 4,590,285 B / 106, the two families 35 responses -> 0. The committed corpus (refreshed by perf-correctives-batch
+ * BEFORE this cure) still records them, a superset never reds, so both rows stay until a post-cure
+ * corpus is committed and are struck in THAT commit. (Post-cure corpus for reference:
+ * `artifacts/hero-slot-clip-split/after-<project>.json`.) The invariant that actually enforces this
+ * lives in e2e/asset-diet.spec.ts ("the first town fetches no hero claim animation"), which reads
+ * the page's own clock and is proven to fail on the uncured build.
  */
 export const FIRST_TOWN_FAMILIES = [
   'AssayBench.js',

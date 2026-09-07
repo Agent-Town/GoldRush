@@ -338,6 +338,51 @@ test('the first town fetches no per-cell script module and stays in double figur
   expectNoConsoleErrors(watch);
 });
 
+// HERO-SLOT-CLIP-SPLIT (2026-09-07) — THE TOWN FETCHES ONLY THE HERO CLIPS THE TOWN PLAYS.
+// Owner, verbatim: "now it loads veerrry slowly" and "yes, lets do 1". The hero's runtime slot used
+// to load atomically: every orientation and every clip before the animator was ready, measured at
+// 8,901,114 B in 141 responses inside this window (43.7 % of it), of which `pan`
+// (char-hero-sheet-work8, 29 cells, 3,552,007 B) and `attack` (char-hero-sheet-attack8, 6 cells,
+// 758,822 B) are CLAIM animations the town cannot play — TownScene calls hero.update() without the
+// `panning` argument and never calls playAttackPose. Those two clips are now in the `claim` group
+// of assets/layer-contracts/characters.v2.json; the town declares only its default group.
+//
+// ASSERTS PRESENCE AND ABSENCE BY FAMILY, never bytes — the byte gate above is host speed, not
+// payload (F-BUDGET-4, 2.05x on one fixed build). Absence is the cure; the walk/idle presence
+// assertions beside it are what stops "absent" from being achieved by breaking the hero.
+test('the first town fetches no hero claim animation', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const watch = watchErrors(page);
+  const townTransfer = startTownTransferMeasurements(page);
+  const cdp = await throttleGlbs(page, testInfo.project.use.baseURL);
+
+  await page.goto('/?town3dPilot=all&tier=full');
+  await page.getByTestId('start-menu-enter-town').click();
+  await waitForTownAssets(page);
+  const cueWindowResponses = townTransfer.sampleCueWindowResponses();
+
+  const sheetOf = ({ url }: TownResponse) => (url.split('?')[0].split('/').pop() ?? '').replace(/-r\d+c\d+.*$/, '');
+  const heroCells = cueWindowResponses.filter((response) => sheetOf(response).startsWith('char-hero-'));
+  const claimCells = heroCells.filter((response) => /^char-hero-sheet-(work8|attack8)$/.test(sheetOf(response)));
+  const heroBytes = heroCells.reduce((sum, { bytes }) => sum + bytes, 0);
+  console.info(`[asset-diet] ${testInfo.project.name} heroCells: ${heroCells.length} bytes: ${heroBytes} claimCells: ${claimCells.length}`);
+
+  expect(claimCells.map((response) => response.url),
+    'the hero\'s claim animations are being fetched before the first town is playable; before the clip split that was 35 responses and 4,310,829 B of pan + attack the town never plays (assets/layer-contracts/characters.v2.json clipGroups, src/assets/SpriteAnimator.ts)').toEqual([]);
+  // The town must still fetch the hero it DOES animate: absence achieved by loading no hero at all
+  // would pass the assertion above and ship an invisible player.
+  expect(heroCells.length,
+    'the town stopped fetching the hero entirely; deferring the claim group must remove pan and attack, never walk and idle').toBeGreaterThanOrEqual(60);
+  const groups = await page.locator('#game-canvas').getAttribute('data-sprite-clip-groups');
+  expect(groups, 'the town declared a clip group beyond its own').toBe('town');
+
+  await expect
+    .poll(() => page.locator('#game-canvas').getAttribute('data-sprite-clip-groups'), { timeout: 30_000 })
+    .toBe('claim town');
+  await cdp.detach();
+  expectNoConsoleErrors(watch);
+});
+
 // F-BUDGET-3 (2026-09-06) — NOTHING OUTSIDE THE FIRST TOWN IS FETCHED BEFORE THE FIRST TOWN IS
 // PLAYABLE. In the `town` scene the advance stream's priority-1 target is a CONTRACT, so the
 // stream used to pull `the-claim-terrain.glb` + `the-claim-panorama.glb` (1,052,408 B, measured on

@@ -2,7 +2,7 @@ import './town.css';
 import { performanceTierDiagnostics, type PerformanceTier } from '../game/PerformanceTier';
 import * as THREE from 'three';
 import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
-import { SpriteAnimator } from '../assets/SpriteAnimator';
+import { declareSpriteClipGroups, SpriteAnimator, SPRITE_CLIP_GROUPS } from '../assets/SpriteAnimator';
 import { clearProcessedCharacterTextureCache, loadGeneratedTexture, loadProcessedCharacterTexture } from '../assets/generated';
 import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
 import { tagPlaceholder } from '../assets/slots';
@@ -101,6 +101,17 @@ import { SoundSystem } from '../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
 import tavernkeeperWalkFrames from '../../assets/processed/char-tavernkeeper-sheet-walk8.frames.json' with { type: 'json' };
 import storekeeperWalkFrames from '../../assets/processed/char-storekeeper-sheet-walk8.frames.json' with { type: 'json' };
+
+// THE TOWN DECLARES ITS CLIP GROUPS (task hero-slot-clip-split, 2026-09-07; owner, verbatim: "now
+// it loads veerrry slowly"). This module is reached only through `await import('./town/TownScene')`
+// in src/main.ts:393, so module scope runs on the way into the town and strictly before this
+// class's own `new Hero()` field initialiser. The town plays walk and idle and nothing else — it
+// calls `hero.update()` without the `panning` argument (see the call below) and never calls
+// `playAttackPose` — so it asks for the default group only. The claim group's 4,310,829 B of
+// char-hero-sheet-work8 and char-hero-sheet-attack8 cells are not fetched on this path; they warm
+// on the advance stream's idle callback once the town reads ready, or the moment src/game/Game.ts
+// declares them, whichever comes first.
+declareSpriteClipGroups(SPRITE_CLIP_GROUPS.town);
 
 const contractPlateUrls = import.meta.glob<string>('../../assets/raw/plate-contract-*.png', {
   eager: true,

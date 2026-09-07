@@ -4,6 +4,14 @@
   "slots": [
     {
       "slot": "char.hero",
+      "clipGroups": {
+        "notes": "hero-slot-clip-split, 2026-09-07 (owner, verbatim: 'now it loads veerrry slowly' / 'yes, lets do 1'). A clip's GROUP decides WHEN its cells are fetched, never whether they exist. Every clip of this slot is in exactly one group: the ones named here, and `default` for all the rest. The default group is ALWAYS loaded — it carries walk and idle, which are the fallback every other clip degrades to (SpriteAnimator pickClip: requested -> walk -> idle), so a deferred clip can never throw or blank the hero. A non-default group is loaded when a scene declares it (SPRITE_CLIP_GROUPS in src/assets/SpriteAnimator.ts: the town declares ['town'], the claim declares ['town','claim']) and otherwise warms on the advance stream's idle callback once the scene the player is standing in reads ready. LAW, enforced by scripts/hero-clip-groups.test.mjs: clips carried by a walk sheet (walk4/walk8) are always default-group — they ARE the fallback — so a late group can never need a walk sheet re-resolved. MEASURED, the deploy's instrument on the e1 release build, both projects: pan (char-hero-sheet-work8, 29 cells, 3,552,007 B) and attack (char-hero-sheet-attack8, 6 cells, 758,822 B) are 4,310,829 B of the hero's 8,901,114 B inside the first-town window, and the town plays neither — TownScene.ts calls hero.update() without the `panning` argument and never calls playAttackPose (only Game.ts:594 does).",
+        "default": "town",
+        "clips": {
+          "attack": "claim",
+          "pan": "claim"
+        }
+      },
       "fallback": {
         "file": "hero-homesteader-f.png"
       },

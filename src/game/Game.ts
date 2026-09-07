@@ -3,9 +3,11 @@ import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'j
 import { applyGeneratedMap, disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
 import {
   beginSpriteStatsFrame,
+  declareSpriteClipGroups,
   setSpriteTestClip,
   spriteAnimationDiagnostics,
   spriteStatsDiagnostics,
+  SPRITE_CLIP_GROUPS,
 } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder, type AssetSlotId } from '../assets/slots';
 import { EventBus, type RunEndReason, type RunSummary } from '../core/EventBus';
@@ -344,6 +346,18 @@ import { DevilsAlleyPresentation } from '../systems/DevilsAlleyPresentation';
 import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
 import { CanalChoiceSystem } from '../systems/CanalChoiceSystem';
 import { CanalFlowPresentation } from '../systems/CanalFlowPresentation';
+
+// THE CLAIM DECLARES ITS CLIP GROUPS BEFORE ITS FIRST WAVE (task hero-slot-clip-split, 2026-09-07).
+// This module is reached only through `await import('./game/Game')` in src/main.ts:166 — nothing
+// static imports it — so module scope runs when a run is starting and strictly BEFORE this class's
+// own `new Hero(RUN_CAST_SCALE)` field initialiser, which is the earliest a hero sprite can ask for
+// its cells. The claim is where the hero pans a seam and swings a rig, so it needs the `claim`
+// group: char-hero-sheet-work8 (pan) and char-hero-sheet-attack8 (attack), the 4,310,829 B the town
+// no longer pays for. Declaring LATE would still be correct — a group that arrives mid-scene merges
+// into the live runtime and starts playing, and until then pickClip falls back to walk/idle — but
+// declaring here means the fetch starts before the first enemy exists rather than at the first swing.
+declareSpriteClipGroups(SPRITE_CLIP_GROUPS.claim);
+
 // Replay Law: Frontier upgrades remain available after later epochs activate.
 const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
 const STAMP_MILL_ID = 'stamp-mill';
