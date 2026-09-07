@@ -5070,7 +5070,8 @@
               "id": "main-board-gold-current-grammar",
               "title": "F-2541-1: re-record the three board-gold positive fixtures under current grammar without altering retired tapes or held-purse assertions",
               "status": "queued",
-              "taskFile": "main-board-gold-current-grammar.md"
+              "taskFile": "main-board-gold-current-grammar.md",
+              "drainNotes": "s2547 HOLD: final MAIN output is preserved on origin/save/board-gold-current-grammar-s2547 at ffac3a697ee37c01e24fe16a36b70b2a1fc145c6. Runner board-gold 4/4 and retirement 2/2, tsc/build passed; full Node rc=1 in 1698.991 s, first group 742 tests (735 pass, 2 F-2546-1 ps ENOBUFS failures, 5 skips). Fixture sweep visited 98/128; chained tail NOT RUN. Source stays uncommitted runner output on main; all 12 evidence files retained. Wait for lane-a-node-guards-ps-capture, then resume serial drains in detached current-base candidates, classifying base failures and completing each candidate's required gates. No acceptance, redispatch, runtime merge, or owner decision. See reviews/main-board-gold-current-grammar.md and artifacts/s2547-fire/report.md."
             }
           ]
         }
