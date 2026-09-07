@@ -1,3 +1,30 @@
+# s2548 — Bounded process capture drained
+
+**Slice/branch/tip:** `lane-a-node-guards-ps-capture.md`, `feat/e10s-4-door`, `44a68f643`. **Merge:** `65bd9b4ca5a48baa85298cb11aa15614194a4493`. **Verdict: ACCEPTED with one reproduced, unchanged-base failure (F-2541-1); the full battery is not green.**
+
+Both readers retain complete process output up to a finite 64 MiB ceiling. The existing test uses a 1,200,009-byte fixture and the real invocation classifier. Ordinary silence, sibling counts, wrapper collapse, missing-pgrep behavior, and child failure propagation remain checked. No runtime, selector, deadline, or dependency changes.
+
+| Gate | Result |
+|---|---|
+| Focused contention | 1/1, 2.5 s; full-battery instance also passes |
+| TypeScript / build | rc 0, 4.7 / 19.3 s |
+| Full Node 26.4.0, alone | 742 tests: 736 pass, 1 fail, 5 skipped, 0 cancelled; 922.0 s; zero ENOBUFS |
+| Known failure control | Unchanged-base sources: 0/3 gold positive reels, same malformed-tape refusal |
+| Fixture sweep | 20/128 visited; stopped at board-gold; remaining 108 unvisited |
+| Remaining diff guards | 4/4: power p95 0.322 ms, task, citations, callers |
+| Suppressed npm tail | All six commands separately completed at rc 0; desk leg explicitly SKIP during ACTIVE, to be evaluated at closing |
+| Mutation evidence | Runner removed each capture limit independently: ENOBUFS / missing stamps both red, restored cure green |
+
+Evidence: `artifacts/s2548-fire/capture-gates.txt`, `artifacts/s2548-fire/base-control.txt`, `artifacts/s2548-fire/followups.txt`, `artifacts/s2548-fire/fixture-owner-visited.txt`, `artifacts/node-guards-ps-capture/mutation-red.txt`, and `artifacts/s2548-fire/report.md`. The task explicitly waives browser/screenshot work for this process-output change.
+
+Classification base `8de08b7ee`; detached candidate `3cd596ef62cbbf6b2b9bb173ef4ee483e29f2304`. Both source paths are LANE-TOUCHED only: `scripts/run-node-guards.mjs` and `scripts/node-guards-contention.test.mjs`. All ten incoming artifacts are NEW. Each path and blob is recorded in `artifacts/s2548-fire/classification.json`; no conflict resolution was needed. Gates ran on clean detached sources. The atomic main merge used the FIRE §2A coexistence exception: disjoint factory logs and the completed MAIN gold source were left untouched, with all 13 gold source/evidence blobs verified before and after. No staged merge was left on main.
+
+**F-2546-1 closed.** **F-2541-1 remains open:** fixture-teardown line 40 receives the board-gold child's three malformed-tape failures at line 330. Current unchanged-base control reproduces all three; this exact known-red is the drain skill's explicit proceed case. The already-finished MAIN corrective is preserved on `save/board-gold-current-grammar-s2547`; drain it next, then the separate chapter candidate. No new failure or owner fork was found. The buffer is bounded, not unlimited.
+
+---
+
+Historical diagnosis follows unchanged; its pending wording describes s2546.
+
 # Node guard process capture — F-2546-1
 
 Measured 2026-09-07 by s2546 on main d1471866b; corrective authored, not implemented.

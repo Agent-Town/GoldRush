@@ -7727,11 +7727,13 @@
             {
               "id": "lane-a-node-guards-ps-capture",
               "title": "F-2546-1: retain complete bounded ps output in both contention readers",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-a-node-guards-ps-capture.md",
               "lane": "lane-a",
               "authoredBy": "s2546 (FIRE-AUTHORED)",
-              "note": "s2546: MAIN full battery exited with the same two ENOBUFS failures. Copy to lane-a only after the closing ledger gate passes; master strict queue gate passes. Preserve MAIN gold output and held chapter candidate; no runtime changes. Review reviews/node-guards-ps-capture.md."
+              "note": "s2546: MAIN full battery exited with the same two ENOBUFS failures. Copy to lane-a only after the closing ledger gate passes; master strict queue gate passes. Preserve MAIN gold output and held chapter candidate; no runtime changes. Review reviews/node-guards-ps-capture.md.",
+              "mergeHash": "65bd9b4ca5a48baa85298cb11aa15614194a4493",
+              "drainNotes": "s2548: both bounded captures drained at 65bd9b4ca5a48baa85298cb11aa15614194a4493. Focused 1/1, tsc/build, four remaining diff guards and six separately completed npm tail commands pass (mid-lock desk leg explicitly SKIP). Full Node 26.4.0 alone: 742 tests, 736 pass, one known F-2541-1 fixture-sweep failure, five skips; zero ENOBUFS; contention regression passes. Current unchanged-base control repeats the same 0/3 malformed gold tapes. Fixture sweep visited 20/128. No runtime change; main gold and chapter drains remain separate. Review reviews/node-guards-ps-capture.md; artifacts/s2548-fire/report.md."
             }
           ]
         }
