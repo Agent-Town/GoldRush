@@ -40,6 +40,17 @@ const IDS = [
   'e9-gazette-crossed-pickaxes',
   'e9-first-swim',
   'e9-generation-ark-horizon',
+  // story-correctives-batch, 2026-09-07: F-SSG-5 recorded that OldDiggerBossSystem reports three acts
+  // and only `renovation` had a consuming beat. These two close it, appended at the table's end.
+  'e9-digger-boarding',
+  'e9-digger-swap',
+] as const;
+// The Digger's acts and the beat each one reaches (src/systems/OldDiggerBossSystem.ts:427, :267,
+// :219). `renovation` is emitted in the same call as `boss-arrival`, by that system's own note.
+const DIGGER_ACTS = [
+  ['renovation', 'e9-digger-correction'],
+  ['boarding', 'e9-digger-boarding'],
+  ['swap', 'e9-digger-swap'],
 ] as const;
 const OLD_STORY_HINTS = STORY_RUNTIME_BEATS
   .filter((beat) => beat.oncePerProfile)
@@ -199,6 +210,39 @@ test('The Claim cannot load Red Fields beats in Frontier', async ({ page }) => {
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim');
   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e9-')))).toEqual([]);
   await expect(page.locator('[data-beat-id^="e9-"]')).toHaveCount(0);
+  expectNoConsoleErrors(errors);
+});
+
+test('every Old Digger act reaches one beat, and only its own', async ({ page }) => {
+  test.setTimeout(150_000);
+  const errors = watchErrors(page);
+  await seedTown(page, E9);
+  await page.goto('/');
+  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+
+  // StoryRuntime.dismiss() opens a GAP_MS window before the next card, so an empty active() only
+  // proves an empty queue once that window has elapsed (the drain shape ss-09 and ss-11 both use).
+  const drain = async (): Promise<string[]> => {
+    const seen: string[] = [];
+    for (let attempt = 0; attempt < 12; attempt += 1) {
+      try {
+        await expect.poll(() => page.evaluate(() => window.__GR_STORY__?.active() ?? null), { timeout: 5_000 }).not.toBeNull();
+      } catch {
+        break;
+      }
+      const active = await page.evaluate(() => window.__GR_STORY__?.active() ?? null);
+      if (!active) break;
+      seen.push(active);
+      await dismissBeat(page);
+    }
+    return seen;
+  };
+
+  for (const [act, id] of DIGGER_ACTS) {
+    const signal: RuntimeStorySignal = { type: 'boss-act', contractId: 'e9-dome-basin', boss: 'old-digger', act };
+    await page.evaluate((value) => window.__GR_STORY__?.emit(value), signal);
+    expect(await drain(), `boss-act ${act}`).toEqual([id]);
+  }
   expectNoConsoleErrors(errors);
 });
 

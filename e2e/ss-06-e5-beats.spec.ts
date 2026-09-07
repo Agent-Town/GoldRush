@@ -26,6 +26,13 @@ const IDS = [
   'e5-mystery-hull-w5',
   'e5-gazette-crossed-pickaxes',
   'e5-deep-reactor-horizon',
+  // story-correctives-batch, 2026-09-07: the three E5 portraits portraits-e5-e10-generated-batch
+  // registered without a line ("no line in this table names the cannery-hand, the shipwright or the
+  // pearl-diver at all") now each carry one, appended at the table's end on the era's own arrival
+  // unlock, below every in-file coordinate the header cites.
+  'e5-cannery-hand-paper-boat',
+  'e5-shipwright-drydock',
+  'e5-pearl-diver-ladder',
 ] as const;
 const OLD_STORY_HINTS = STORY_RUNTIME_BEATS
   .filter((beat) => beat.oncePerProfile)

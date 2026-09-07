@@ -14,6 +14,15 @@ const AUTHORED_IDS = [
   'e2-iron-correction-rumor-three',
   'e2-iron-correction-rumor-two',
   'e2-prides-tuition-crate',
+  // story-correctives-batch, 2026-09-07: the four E2 portraits that portraits-era-aging-batch
+  // registered without a line now each carry one (src/story/beats.ts, appended at the table's end so
+  // no in-file citation above them moved). They ride the same e2-hill-mine unlock as e2-elder-tree
+  // and e2-depot-wedding, so they land at the back of that unlock's queue, which is where the
+  // sequence below now reads them.
+  'e2-tavern-welcome',
+  'e2-boiler-fed-line',
+  'e2-press-first-run',
+  'e2-held-galley',
 ] as const;
 
 async function seed(page: Page): Promise<void> {
@@ -101,6 +110,10 @@ test('Steamworks beats tell the full thread once without spoiling the Iron Corre
   await expectBeat(page, 'e2-elder-tree', 'Her chair is empty');
   await expectBeat(page, 'e2-depot-wedding', "Prospector's place set");
   await expectBeat(page, 'e2-iron-correction-rumor-one', 'bought a timetable in cash');
+  await expectBeat(page, 'e2-tavern-welcome', 'One plate long');
+  await expectBeat(page, 'e2-boiler-fed-line', 'Your beacons drink now');
+  await expectBeat(page, 'e2-press-first-run', 'brought us our voice');
+  await expectBeat(page, 'e2-held-galley', 'Truth keeps better than fear');
 
   await emit(page, { type: 'run-return-town', result: 'secured' });
   await expectBeat(page, 'return-secured', 'Drinks tonight');
