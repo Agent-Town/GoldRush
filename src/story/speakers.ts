@@ -85,7 +85,8 @@ export type StorySpeakerId =
   | 'preacher-e8'
   | 'preacher-e9'
   | 'preacher-e10'
-  | 'salvage-king-e8';
+  | 'salvage-king-e8'
+  | 'old-digger';
 
 export type StorySpeaker = {
   id: StorySpeakerId;
@@ -94,6 +95,21 @@ export type StorySpeaker = {
   objectPosition: string;
 };
 
+// THE ELDER IS A WOMAN, in the art as in the text (owner ruling 2026-09-07, verbatim: "A8 F-AGE1:
+// has to be adapted to be woman"; lore/characters.md:35 carries it as canon). The lore has written
+// her as "she" since the first cast sheet (lore/characters.md:32-33, her chart, her chalk, her chair
+// at lore/STORYBOOK.md:89) while the shipped plate was a bearded man - F-AGE-1, raised by the first
+// aging batch and ruled here. The FILENAMES below do not move: `townsfolk-elder.png` and
+// `townsfolk-elder-e2.png` are REPLACED in place by a woman's portrait and its aged E2 (git keeps
+// every version; the superseded man is recoverable from history, and the raw that made him,
+// assets/raw/townsfolk-elder.png, is retained on disk under CLAUDE.md section 4.10b and never
+// deleted). Sources: assets/raw/tf-elder-woman-e1.png and tf-elder-woman-e2.png, LEDGER row 77.
+// TIER CHANGE, stated because it is visible and not a defect: the superseded plate was a CHROMA-KEYED
+// cutout (RGBA, 68,277 transparent px of 147,456) because its 768x768 raw was 46.0% #8a8a8a ground;
+// the new plate is a FULL-BLEED parchment bust like every one of the 80 era portraits below and like
+// `char-prospector-portrait.png`, which has shipped in this same card since M1. The Elder's four
+// remaining E1 siblings (tavernkeeper, clerk, schoolteacher, preacher) are still keyed cutouts, so E1
+// now mixes the two tiers - as it already did through the Prospector, the era's most-seen speaker.
 const elderPortraitUrl = new URL('../../assets/processed/townsfolk-elder.png', import.meta.url).href;
 const tavernkeeperPortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper.png', import.meta.url).href;
 const clerkPortraitUrl = new URL('../../assets/processed/townsfolk-assay-clerk.png', import.meta.url).href;
@@ -116,13 +132,20 @@ const preacherPortraitUrl = new URL('../../assets/processed/townsfolk-preacher.p
 // spelling. THE CHEN PARENTS are new faces rather than returning ones, so they carry their trade
 // where a 74x90 card can read it: lore/characters.md:54-55 names them CHEN WEI the pressman and CHEN
 // LAN the typesetter, and the given name leads here exactly as it leads in "Mei Chen".
-// WITHHELD, and stated rather than papered over (honesty guard, F-AGE-3): a nineteenth plate,
-// assets/raw/tf-old-digger-e10.png, was generated as "an ancient man" - but THE OLD DIGGER IS A
-// MACHINE in canon: the E9 boss, an ancient terraformer executing the Baron's century-old survey
-// (lore/STORYBOOK.md:544, :560, :675, ruling #15 at :722; src/game/Game.ts:1169 emits it as a boss;
-// src/game/TileStateStore.ts:12 flags it as kept machine #5). The plate is a good old prospector and
-// reads clearly at 120px, but it is not that character, so it is NOT registered and NOT processed
-// into assets/processed. The raw is kept. Owner call, LEDGER row 74.
+// RULED 2026-09-07 (owner, verbatim: "F-AGE3: I don't understand the issue, a robot gets
+// reprogrammed, that does not change its visual appearance"), and the withheld-plate note that stood
+// here is retired by it. F-AGE-3 asked whether the Old Digger's anthropomorphised plate
+// (assets/raw/tf-old-digger-e10.png, "an ancient man") could be registered under some other name; the
+// answer is that the question was the wrong one. THE OLD DIGGER IS A MACHINE and stays one through
+// the reprogramming, so ITS PORTRAIT IS THE MACHINE: lore/STORYBOOK.md:561 now carries the ruling
+// verbatim ("its portrait is the machine plate, never a face"), :544 makes it the Baron's charter,
+// :560 opens the boss with "no kill path; the fight is a REPROGRAMMING", :565 keeps it working as
+// kept machine #5 and :676 tabulates it; ruling #15 at :723; src/game/Game.ts:1205 emits its boss
+// lifecycle as `old-digger` and src/game/TileStateStore.ts:12 flags the kept machine.
+// `old-digger` below is therefore registered against assets/raw/tf-old-digger-machine-e9.png (the
+// bucket-wheel plate the batch-2 run minted as a machine alternate and LEDGER row 76 retained), NOT
+// against the man-face raw, which stays withheld, unprocessed and unregistered exactly as it was.
+// LEDGER row 77.
 const newsieE2PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e2.png', import.meta.url).href;
 const elderE2PortraitUrl = new URL('../../assets/processed/townsfolk-elder-e2.png', import.meta.url).href;
 const tavernkeeperE2PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e2.png', import.meta.url).href;
@@ -148,11 +171,20 @@ const schoolteacherE4PortraitUrl = new URL('../../assets/processed/townsfolk-sch
 // (CLAUDE.md section 8): `combine-defector-e6` and `combine-defector-e7` are one man in two
 // eras, `moon-born-child-e8` and `moon-born-child-e9` one child before and after growing. The
 // suffix also stops a reader assuming an E10 plate exists where none does.
-// TIER NOTE (measured, not inherited): these plates are FULL-BLEED parchment busts with NO
-// chroma key - assets/raw/tf-reactor-steward-e6.png keys 0/147456 px at the pipeline's own
-// #8a8a8a, while assets/raw/townsfolk-elder.png (the source of the seven above) is 46.22%
-// key-coloured. They are processed full-bleed at 384x384 like `char-prospector-portrait.png`,
-// which is the same tier and already one of the seven.
+// TIER NOTE (measured, not inherited). RE-STATED 2026-09-07 (canon-calls-a8): the exemplar this note
+// used to name has changed tier. It read "assets/raw/townsfolk-elder.png (the source of the seven
+// above) is 46.22% key-coloured" - true of ONE of the seven when written, and false now, because the
+// Elder's plate is a full-bleed woman's portrait from tf-elder-woman-e1.png and its old raw feeds
+// nothing any more. The contrast the note exists to draw is unchanged, so it is re-measured against a
+// raw that is still keyed. Definition stated so the numbers are reproducible: the extractor's own
+// predicate, keyDist = max per-channel distance from #8a8a8a <= tol 26 (scripts/extract-alpha.mjs:81),
+// counted over every pixel at native size. Under it, assets/raw/townsfolk-tavernkeeper.png (768x768,
+// one of the four E1 plates still keyed) is 41.83% key-coloured - 246,734 of 589,824 px - while
+// assets/raw/tf-reactor-steward-e6.png keys 0.00% and assets/raw/tf-elder-woman-e1.png keys 0/1048576.
+// The superseded 46.22% could not be reproduced under any of three readings of the old raw (46.01% at
+// native tol 26, 46.11% at tol+feather 40, 45.90% resampled to 384 at tol 26), which is why this note
+// now pins its definition instead of a bare number. These plates are processed full-bleed at 384x384
+// like `char-prospector-portrait.png`, which is the same tier and already one of the seven.
 // THE E5 / E8 / E10 CAST (portraits-e5-e10-generated-batch, 2026-09-06), the half of the era cast
 // the processing batch above could not serve because its plates did not exist yet. Owner ruling
 // 2026-09-06, verbatim: "if there are still higgsfield credits, use them". The ten plates were
@@ -249,6 +281,14 @@ const preacherE10PortraitUrl = new URL('../../assets/processed/townsfolk-preache
 // entry all say e8; the RAW keeps its minted name because assets/raw is never rewritten. A reader
 // looking for tf-salvage-king-e8.png will not find it; the E5 file is the one.
 const salvageKingE8PortraitUrl = new URL('../../assets/processed/townsfolk-salvage-king-e8.png', import.meta.url).href;
+
+// THE OLD DIGGER, E9's boss and the only speaker in this file that is not a person. Its plate is the
+// MACHINE (the ruling is quoted above and at lore/STORYBOOK.md:561): a bucket-wheel terraformer on
+// tracks, the Baron's crossed pickaxes struck on its drum, red spoil under it. The id carries NO era
+// suffix on purpose - the suffix convention exists because a person's face changes era to era, and
+// this one does not: "the Old Digger looks the same before and after the swap, in E9 and in any later
+// era" (STORYBOOK:561). A later era that gives it a line reuses this id.
+const oldDiggerPortraitUrl = new URL('../../assets/processed/townsfolk-old-digger.png', import.meta.url).href;
 
 // objectPosition for the era cast is '50% 42%' across the board, and that is MEASURED rather
 // than copied. The card crops with object-fit: cover into a 74x90 box (58x76 mobile), so a
@@ -856,6 +896,30 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
     id: 'salvage-king-e8',
     name: 'The Salvage King',
     portraitUrl: salvageKingE8PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+
+  // THE OLD DIGGER (owner ruling 2026-09-07, F-AGE-3; LEDGER row 77). REGISTERED WITH NO BEAT, and
+  // that is the measured outcome rather than an omission: all four e9-digger-* beats are other
+  // speakers' reports ABOUT the machine, and the honesty guard in this batch's master re-keys only a
+  // line that is the machine's OWN words. The per-beat reasoning is in the LEDGER row; row 74's five
+  // beatless portraits are the precedent. A future E9/E10 line written in the Digger's own voice
+  // reaches this id and finds it ready.
+  // NAME: "The Old Digger" keeps its capital article for the same reason "The Salvage King",
+  // "The Baron", "The Eldest Heir" and "The Quack" above do - the title IS the name canon uses
+  // (lore/STORYBOOK.md:544, :560, :676 all set it as THE OLD DIGGER).
+  // objectPosition MEASURED, not copied: the ink centroid of the machine plate is 193.4 of 384, i.e.
+  // 1.4 px right of centre, deep inside the 184.3-198.5 band the 80 registered plates occupy, so the
+  // X term is 50% like all of them. The Y term is INERT here and the value is therefore the sibling
+  // constant rather than the 50% a machine plate might seem to want: every shipped portrait box is
+  // taller than wide (74x90, 58x76 mobile, and the ceremony card's clamp(74,9vw,112) x
+  // clamp(96,13vw,146) - src/story/story.css:186-187, :253-254, :106-107), so `object-fit: cover`
+  // scales a SQUARE source by height, leaves zero vertical overflow, and 42% and 50% render the same
+  // pixels. If a box ever renders wider than tall, the Y term wakes up and this plate wants 50%.
+  'old-digger': {
+    id: 'old-digger',
+    name: 'The Old Digger',
+    portraitUrl: oldDiggerPortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
 };

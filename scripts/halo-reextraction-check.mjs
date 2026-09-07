@@ -55,7 +55,15 @@ try {
 // generated; the five youngster plates are deliberately NOT processed into assets/processed
 // (F-AGE2-1: their faces do not descend from the shipped E1 youngsters - see src/story/speakers.ts
 // and assets/LEDGER.md row 75), which is why this is +31 and not +36.
-assert.equal(current.scanned, 1394, 'processed PNG denominator moved');
+// F-PORT-4 a fifth time (2026-09-07, canon-calls-a8): ONE more of the same tier - the Old Digger's
+// machine plate, 0 transparent px and no halo candidate - so the denominator moves 1394 + 1 = 1395,
+// measured on the tree. THREE plates were processed in that batch; the other two REPLACE
+// assets/processed/townsfolk-elder{,-e2}.png in place (owner ruling F-AGE-1, the Elder is a woman),
+// so they add no file and move no denominator. The replacement is also invisible to the invariant
+// below: townsfolk-elder.png is a full-frame keyed cutout with clean alpha and has never been a halo
+// suspect, so it appears in neither `cured` nor `expectedResidual` at the BASE sweep, and swapping it
+// for a fully opaque plate cannot break the alpha/opaque-RGB comparison.
+assert.equal(current.scanned, 1395, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),
