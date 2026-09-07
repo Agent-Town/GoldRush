@@ -1,4 +1,4 @@
-# MAIN beat citation refresh — s2533 drain
+# MAIN beat citation refresh — s2533 / s2534 drain
 
 ## Slice / branch / tip
 
@@ -6,7 +6,7 @@
 
 ## Verdict
 
-HOLD. No source or registry change was merged. The MAIN done-move and working-tree correction remain available; the candidate patch and registry are retained in the fire evidence.
+HOLD, continued in s2534. No source or registry change was merged. The MAIN done-move and working-tree correction remain available; the candidate patch and registry are retained in the fire evidence. The accepted native node battery remains owed; the s2534 run selected Node 23.11.1 instead of the repository's pinned 26.4.0.
 
 ## What it does
 
@@ -32,3 +32,21 @@ The gate contains only those two tracked edits before tests. Factory log churn, 
 F-AGE2-2's candidate is correct but not yet landed: the attended description said ten, but its live-line inventory and the authoring checker both enumerate nine, and all nine were verified. F-AGE2-3 and F-AGE2-5 belong to the separate lane-c task. **F-2533-1 (pre-existing test defect; fire-authorable corrective):** `e2e/m1-01-claim-jumpers-death.spec.ts` opens `/?nowaves&nolevel`, presses T, and expects a pack. F-RPA-4 correctly requires `isDebugEnabled()` before that key spawns (`src/game/Game.ts`). The stale test fails identically on candidate and unchanged base, both projects. Keep the runtime gate; make the positive test opt into debug and add a plain-boot negative control. Corrective master: `tasks/lane-a-m1-debug-spawn-contract.md`.
 
 The full node battery timeout is an incomplete measurement, not a discovered game regression and not permission to raise limits or skip tests. The pending MAIN drain still owes a complete accepted battery. Do not reimplement or re-queue its completed citation task.
+
+## s2534 continuation
+
+Gate base `354c62b643824432f0b7fe3c1df95893165045e2`, candidate `/private/tmp/gr-s2534-citation-gate`. The source blob and proposed pin are identical to s2533's candidate. `artifacts/s2534-fire/inherited-gate-equivalence.txt` verifies no intervening committed changes across source, scripts, tests, functions, package files or the registry. No conflict resolution or new implementation was needed.
+
+The direct node run exited 1 after 1,142.455 seconds: 724 tests, 718 passed, 2 failed, 1 cancelled, 3 skipped. Its shell-chained later legs did not execute. `artifacts/s2534-fire/node-guards.txt` preserves the complete output: the fixture teardown file timed out at 300,000 ms, `gr-sim.test.mjs` failed at file level, and the declared-timeout override arm failed. This run used the login shell's Node 23.11.1. `.nvmrc` requires 26.4.0, available at `/opt/homebrew/bin/node`; the F-2076-1/F-2166-2 interpreter distinction is therefore relevant, and this is not an accepted drain battery. The unchanged-base control is recorded in `artifacts/s2534-fire/base-controls.txt`.
+
+The standalone power measurement was green at 0.392 ms against 0.500 ms, on Node 23.11.1. An accidentally duplicated selector probe is explicitly aborted and excluded; `artifacts/s2534-fire/selector-probe-abort.json` and `artifacts/s2534-fire/selected-guards.txt` preserve that operator error. Its brief overlap preceded the fixture guard and is another reason not to treat the first run's red count as a clean regression measurement.
+
+Resume with the pinned interpreter and the existing append-only battery driver, which has no additional 900-second wrapper timeout. Preserve all tests and all declared budgets:
+
+```sh
+/opt/homebrew/bin/node scripts/gate-battery.mjs --label "citation native node gate" --transcript artifacts/s2534-fire/node-guards.txt --cwd /private/tmp/gr-s2534-citation-gate --env PATH=/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin --env CLAUDE_CONFIG_DIR=/Users/robin/.claude '[["native node guards","npm","run","test:node-guards"]]'
+```
+
+Re-check the committed executable diff against the named base before reusing this worktree. A complete accepted result is still required. Do not raise limits, re-pin to excuse a red, or dispatch the citation implementer again.
+
+The final unchanged-base control returned 13 passed / 1 failed / 2 cancelled (16 tests, 610.6 s). The fixture timeout and override refusal reproduce. The simulation result does not match exactly: 86.9 s file failure on the candidate versus 300.3 s file timeout on base. Under Node 26.4.0 the timeout guard passes 2/2 (5.0 s). This isolates the interpreter defect for that arm without claiming a full native gate or exonerating the unmatched simulation fingerprint. No corrective code is authored from this invalid arrangement; the next owed act is the properly arranged measurement.
