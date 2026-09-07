@@ -2266,7 +2266,7 @@ export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
 // pronoun, name or tense can come loose; and every one of the 50 lines was already written about its
 // subject's world or as that trade's own report. Triggers, `when`, `seenKey`, `oncePerProfile`,
 // `presentation`, `artKey`, `ceremonyStep`, sizes and every STORYBOOK citation are untouched.
-// WHO STAYS: the 18 `prospector` beats in E5-E10 stay, for row 74's reason - the agent does not age
+// WHO STAYS: the 20 `prospector` beats in E5-E10 stay, for row 74's reason - the agent does not age
 // (lore/characters.md:12, "agents age in dignity, not decay") and no era plate exists for it. The 14
 // `elder` beats in E5-E10 also stay, UNTOUCHED AND DELIBERATELY SO: they are F-AGE-4, an open owner
 // call, and this slice was scoped not to answer it. Nothing else in these six tables was an
