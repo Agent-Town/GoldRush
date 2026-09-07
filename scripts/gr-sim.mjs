@@ -12,7 +12,7 @@ import { createInterface } from 'node:readline';
 import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 import engineEra from '../assets/engine-era.json' with { type: 'json' };
@@ -29,6 +29,7 @@ const DIFFICULTY_VALUES = ['greenhorn', 'trail', 'vein-hunter', 'vein_hunter', '
 if (process.argv.includes('--help')) {
   process.stdout.write('Usage: gr-sim --contract <id> [--seed <seed>] [--policy=idle] [--overtime] [--science-steps N] [--tape <path>]\n'
     + '       gr-sim --resume <tape.json> [--to-tick N] [--tape <path>]\n'
+    + '         A resume without --tape records to the sibling <tape>.resumed.json and NEVER over its input.\n'
     + '       gr-sim --room <code> --origin <url> [--model <id>] [--harness <name>] [--harness-ref <commit-or-url>] [--party 2-4] [--max-ticks N] [--strict]\n\n'
     + 'A seat invited into a browser room rides that browser world: room-served NDJSON views arrive on stdout and stdin order arrays travel as agent_orders acts. --strict still refuses mixed rooms.\n');
   process.exit(0);
@@ -137,7 +138,13 @@ try {
     }
 
     const outcome = { ...sim.outcome(), ...(endReason ? { endReason } : {}) };
-    const tapePath = options.tape ?? options.resume;
+    // F-E10S4-3, CURED 2026-09-07 (`spec-hygiene-batch`). This line used to read
+    // `options.tape ?? options.resume`, so a bare `--resume ride.tape.json` wrote the NEW recording
+    // over the one it had just replayed: the input destroyed by reading it, found by tripping it at
+    // the E10S-4 drain and worked around there with a scratch `--tape` on every invocation. A resume
+    // with no `--tape` now writes the SIBLING `<stem>.resumed<ext>` instead, and an explicit `--tape`
+    // still wins. `scripts/gr-sim-resume-tape-safety.test.mjs` holds the input's bytes to it.
+    const tapePath = options.tape ?? (options.resume ? resumedTapePath(options.resume) : undefined);
     if (tapePath) await writeAgentTape(vite, resolve(tapePath), sim, outcome, {
       contract: resumeTape?.contract ?? options.contract,
       seed: resumeTape?.seed ?? options.seed,
@@ -272,6 +279,20 @@ async function readOrders(lines, sim, submissions) {
 function rejectOrders(reason, sim) {
   process.stderr.write(`gr-sim rejected orders: ${reason}\n`);
   process.stdout.write(`${JSON.stringify(sim.currentTurn().view)}\n`);
+}
+
+/**
+ * THE SIBLING A BARE `--resume` WRITES TO (F-E10S4-3). `ride.tape.json` -> `ride.tape.resumed.json`,
+ * `ride` -> `ride.resumed`. Directory and stem are kept so the pair reads as one pair on disk, and
+ * the returned path is never the input path — which is the whole point: a replay must not be able to
+ * destroy the recording it replays. NOT exported: this module runs its CLI at import time (parseArgs
+ * at top level), so `scripts/gr-sim-resume-tape-safety.test.mjs` drives the real binary instead of
+ * importing this helper — which is the stronger evidence anyway, since it measures the file on disk.
+ */
+function resumedTapePath(input) {
+  const resolved = resolve(input);
+  const ext = extname(resolved);
+  return ext ? `${resolved.slice(0, -ext.length)}.resumed${ext}` : `${resolved}.resumed`;
 }
 
 async function writeAgentTape(vite, path, sim, outcome, run) {

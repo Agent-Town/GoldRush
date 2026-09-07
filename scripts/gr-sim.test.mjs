@@ -172,10 +172,20 @@ test('gr-sim resumes at a recorded mid-ride tick as one byte-identical tape', { 
     writeFileSync(resumedPath, readFileSync(straightPath));
     const resumed = await scriptedCli(['--resume', resumedPath, '--to-tick', String(resumeTick)], ordersFor);
     assert.equal(resumed.secured, true);
-    assert.equal(readFileSync(resumedPath, 'utf8'), readFileSync(straightPath, 'utf8'));
-    const resumedTape = JSON.parse(readFileSync(resumedPath, 'utf8'));
+    // RE-POINTED 2026-09-07 (`spec-hygiene-batch`, F-E10S4-3), a COUPLED SURFACE declared rather
+    // than an unrelated edit: this test used to read its result back out of `resumedPath` itself,
+    // because a bare `--resume` OVERWROTE its input. That hazard is now cured — a bare resume writes
+    // the sibling `<stem>.resumed<ext>` — so leaving these four reads on `resumedPath` would have
+    // left them comparing the untouched COPY of `straightPath` against `straightPath`: still green,
+    // measuring nothing, which is the false green this repo forbids. The output path moves; every
+    // assertion below is the SAME assertion it always was, plus the one this cure earns (the input
+    // survived). `scripts/gr-sim-resume-tape-safety.test.mjs` guards the rule itself.
+    const resumeOutputPath = `${resumedPath.slice(0, -'.json'.length)}.resumed.json`;
+    assert.equal(readFileSync(resumedPath, 'utf8'), readFileSync(straightPath, 'utf8'), 'the resume wrote over its own input');
+    assert.equal(readFileSync(resumeOutputPath, 'utf8'), readFileSync(straightPath, 'utf8'));
+    const resumedTape = JSON.parse(readFileSync(resumeOutputPath, 'utf8'));
 
-    const replay = spawnSync(process.execPath, ['scripts/assay-replay.mjs', resumedPath], {
+    const replay = spawnSync(process.execPath, ['scripts/assay-replay.mjs', resumeOutputPath], {
       cwd: ROOT, encoding: 'utf8', timeout: 60_000,
     });
     assert.equal(replay.status, 0, replay.stderr);

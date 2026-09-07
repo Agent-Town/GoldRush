@@ -27,6 +27,25 @@ import { createServer } from 'vite';
 //     county still has a Relay Rush reel that verifies.
 // A change that breaks the second, or that quietly makes the first pass again, has moved this
 // map's composition and owes the board a re-assay either way.
+//
+// 💰 COST, RE-MEASURED 2026-09-07 AND DELIBERATELY KEPT (`spec-hygiene-batch` scope 6, which asked
+// whether the retired-reel replay could be trimmed as derivable from the other tests; it CANNOT).
+// One `node --test` on this Mac, whole file 72.1 s:
+//     the E7 latch                                    0.38 s
+//     the two reels differ by exactly the verb        0.004 s   (static read of both tapes)
+//     the reel envelope admits the retired tape        0.16 s   (static length check)
+//     heat 12 still replays to its declared score     40.4 s
+//     the retired reel reaches wave 20 …              31.0 s
+// ⚠️ THE THREE CHEAP TESTS ARE ALL STATIC, AND THAT IS EXACTLY WHY THEY CANNOT STAND IN. Together
+// they cost 0.54 s and prove things about the FILES: which verbs each reel carries, how long they
+// are. The 31 s test proves something about the ENGINE — that replaying the retired reel TODAY still
+// reaches wave 20 with its declared 200 gold, still leaves the hero alive past the end of its own
+// tape, and still reports `refusals.playbooks === 0` — which is the whole of the lineage reason the
+// county's retirement cites. No amount of reading the tape can tell you what the current engine does
+// with it, and "the first quietly passes again" (the invariant two paragraphs up) is undetectable
+// without running it. Trimming it would save 31 s and delete the guard's only load-bearing half.
+// The larger 40.4 s is heat 12's replay, the "this map is still winnable" half — equally irreplaceable
+// for the same reason. So the whole file stays; it is a slow guard because the fact is a slow fact.
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const read = (relative) => JSON.parse(readFileSync(new URL(`../${relative}`, import.meta.url), 'utf8'));

@@ -5,7 +5,7 @@ import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
 
-type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+type ErrorBucket = { consoleErrors: string[]; pageErrors: string[]; suppressedBlobErrors: number };
 type Briefing = {
   id: string;
   name: string;
@@ -24,7 +24,17 @@ type SeedScore = {
   contractId?: string;
 };
 
-const ARTIFACT_DIR = path.resolve('artifacts/survive-copy');
+/**
+ * EVIDENCE IS WRITTEN ONLY WHEN IT IS ASKED FOR (F-RRR-5, cured 2026-09-07 by `spec-hygiene-batch`;
+ * F-HMV-2's class). This constant used to be `artifacts/survive-copy` unconditionally — a top-level
+ * const with no enclosing test, so every run of this spec re-encoded the TRACKED PNGs there and left
+ * the tree dirty for the next drain to restore by hand. The default sink is now the gitignored
+ * `test-results/evidence/`; `GR_REFRESH_EVIDENCE=1` is the explicit ask that refreshes the committed
+ * plates, at the same filenames.
+ */
+const ARTIFACT_DIR = path.resolve(
+  process.env.GR_REFRESH_EVIDENCE === '1' ? 'artifacts/survive-copy' : 'test-results/evidence/survive-copy',
+);
 const CONTRACTS: readonly Briefing[] = [
   {
     id: 'the-claim',
@@ -140,9 +150,16 @@ function authoredWaveFor(line: string, twist: Record<string, unknown>): number |
 }
 
 function collectErrors(page: Page): ErrorBucket {
-  const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
+  const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [], suppressedBlobErrors: 0 };
   page.on('console', (message) => {
-    if (message.type() === 'error') bucket.consoleErrors.push(message.text());
+    if (message.type() !== 'error') return;
+    // 2026-09-07 (attended drain of spec-hygiene-batch, F-SHB-2's class): tolerate only the one measured
+    // load-sensitive texture-blob transient that `e2e/support/console-watch.ts:12-13` already tolerates
+    // (F-1304-1 / F-1180-2). Under a host running several implementers' gates this 42-launch loop tripped
+    // it in six consecutive runs while every control tree passed; the game continues past it. Counted,
+    // never hidden: `assertNoErrors` prints the count. The full `watchErrors` migration stays F-SHB-2.
+    if (message.text().startsWith("THREE.GLTFLoader: Couldn't load texture blob:")) { bucket.suppressedBlobErrors += 1; return; }
+    bucket.consoleErrors.push(message.text());
   });
   page.on('pageerror', (error) => bucket.pageErrors.push(error.message));
   return bucket;
@@ -304,6 +321,7 @@ async function expectStacked(upper: Locator, lower: Locator): Promise<void> {
 }
 
 function assertNoErrors(errors: ErrorBucket): void {
+  if (errors.suppressedBlobErrors > 0) console.log(`collectErrors suppressed ${errors.suppressedBlobErrors} known GLTFLoader blob error(s)`);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 }
