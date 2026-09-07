@@ -327,3 +327,27 @@ test('the manifest publishes air_suit_human on every Orbital map, and it is the 
     }
   });
 });
+
+test('the dial is on the HUD a plain boot draws, and it is contract-scoped', async () => {
+  // MISTAKE #10, AS A GUARD: "where does the PLAYER see this, in a plain boot?" A rule that can
+  // kill her in silence is the worst version of a mechanic that did not ship. The visual proof is
+  // `artifacts/e8-air-logical/dial-*-390.png` (four plain boots at 390 px, zero console errors,
+  // re-shootable with `shoot-dial.mjs`); this asserts the seams those shots ride, so a later
+  // refactor cannot quietly unplug the meter and leave the screenshots as the only record.
+  const hud = readFileSync(new URL('../src/ui/Hud.ts', import.meta.url), 'utf8');
+  const game = readFileSync(new URL('../src/game/Game.ts', import.meta.url), 'utf8');
+
+  // The markup, its three states, and the setter that drives them.
+  assert.match(hud, /data-testid="hud-suit-air"/, 'the HUD must carry the suit panel');
+  assert.match(hud, /data-hud-suit-air-fill/, 'and the fill the meter turns');
+  assert.match(hud, /setSuitAir\(suit: SuitAirState \| null\): void/, 'pushed on the setVentWarmth seam');
+  for (const state of ['empty', 'breathing', 'draining']) {
+    assert.ok(hud.includes(`'${state}'`), `the dial must be able to read ${state}`);
+  }
+  // CONTRACT-SCOPED, exactly as the vent meter is: `null` hides it, and every map outside the
+  // Orbital bundle passes null because `suitAirState` answers null where no consumer is declared.
+  assert.match(hud, /this\.elements\.suitPanel\.hidden = !suit;/, 'null must hide the panel');
+  assert.match(game, /private suitAirState\(\): SuitAirState \| null/, 'the browser must derive the dial');
+  assert.match(game, /this\.hud\.setSuitAir\(this\.suitAirState\(\)\);/, 'and push it every HUD sync');
+  await Promise.resolve();
+});

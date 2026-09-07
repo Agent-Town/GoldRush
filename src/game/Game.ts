@@ -196,7 +196,8 @@ import { E10SquallPresentation } from '../systems/E10SquallPresentation';
 import { E10PreserveSystem, PRESERVE_STOKE_SINK } from '../systems/E10PreserveSystem';
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
-import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
+import { E8AtmosphereSystem, E8PhysicsSystem } from '../systems/E8PhysicsSystem';
+import { E8SuitAirSystem } from '../systems/E8SuitAirSystem';
 import { LowOrbitSystem } from '../systems/LowOrbitSystem';
 import { HollowCrossingSystem } from '../systems/HollowCrossingSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
@@ -265,7 +266,7 @@ import {
   type DeathRunStatsSnapshot,
   type CountyStandingView,
 } from '../ui/DeathOverlay';
-import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent, type VentWarmthState } from '../ui/Hud';
+import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type SuitAirState, type UiIntent, type VentWarmthState } from '../ui/Hud';
 import { ProspectorDispatchInput, type ProspectorDispatchTarget } from '../ui/ProspectorDispatchInput';
 import { PartyOverview, type PartyOverviewSnapshot } from '../ui/PartyOverview';
 import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
@@ -830,6 +831,27 @@ export class Game {
   /** Mistake #7: every write-sink gets a dupe-guard. The crater hint announces ONCE per run. */
   private probeHintAnnounced = false;
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
+  /**
+   * E8 — THE HUMAN'S SUIT IN THE BROWSER (owner directive 2026-09-07, verbatim: "I want space
+   * experiences of humans to need them having air. It has to be logical. If that means we have to
+   * change something ok"). The same read the headless door performs — the CONTRACT, never the
+   * epoch — so the two engines cannot disagree about which map has air in it.
+   *
+   * WHY THIS COMPOSITION EXISTS AT ALL, when every version of this consumer before 2026-09-07 was
+   * deliberately headless-only: because the thing it now does is HURT THE PLAYER. The old rule
+   * moved no hit points, so composing it here would have bought nothing; the new one kills a hero
+   * who runs out of air, and a rule that killed a rider at the door but not a human at the keys
+   * would put the two engines on different boards for the same orders (the Same Laws law,
+   * specs/epoch-saga/CAPABILITY-LADDER.md L7) — and, worse, would answer a directive about human
+   * experience in the one engine no human plays.
+   *
+   * WHAT IS COMPOSED HERE IS THE SURVIVAL HALF AND ONLY IT: the suit drains, refills and charges,
+   * and the dial is on the HUD. The OBJECTIVE half — the regolith and crossing latches that gate
+   * the secure — stays where it was, which is the pre-existing bound these contracts' own
+   * `engineDependencies` rows have declared since the wall shipped.
+   */
+  private readonly e8Atmosphere = E8AtmosphereSystem.create(this.activeContract);
+  private readonly e8SuitAir = E8SuitAirSystem.create(this.activeContract);
   // A7 (door-completion-sheet §A7, RATIFIED 2026-08-20). The low-orbit geography consumer:
   // handhold spine, scaffold decks, debris bands, and the orbital-return flag that
   // `E8PhysicsSystem:133` has computed since E8 landed while nothing read it. Built off the
@@ -2635,7 +2657,7 @@ export class Game {
     // enforcement of the owner's law in the browser; a rider that wants to walk a hero takes a
     // headless roster seat, where `AgentRiderBody` binds its OWN channel to its OWN body.
     // Bound here rather than beside the stub above so no line of the call that reaches
-    // `placeBuilding`/`panAt` moves (`scripts/fire.md` cites `Game.ts:2598-2599`).
+    // `placeBuilding`/`panAt` moves (`scripts/fire.md` cites `Game.ts:2620-2621`, re-based there 2026-09-07 by +22 when the E8 human suit composed its two browser fields at `:834`).
     bindStandingOrderHero({
       position: () => this.primaryActor.group.position,
       riderPiloted: () => false,
@@ -3234,6 +3256,7 @@ export class Game {
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
     this.syncE8LobPhysics();
     this.applyLowOrbitDebris(simDelta);
+    this.applyE8SuitAir(simDelta);
     for (let slot = 0; slot < this.actors.length; slot += 1) {
       const actor = this.actors[slot];
       if (!actor?.group.visible) continue;
@@ -3326,6 +3349,38 @@ export class Game {
       const chip = this.lowOrbit.debrisDamage(actor.group.position.x, actor.group.position.z, fixedDelta);
       if (chip > 0) this.combat.damageActor(chip, -1, actor);
     }
+  }
+
+  /**
+   * E8 suit air, browser side, and it is `applyLowOrbitDebris` above seam for seam: the consumer
+   * measures and RETURNS whole hit points, and `CombatSystem` — the sole damage resolver — is what
+   * applies them. Inert on every contract that declares no atmosphere.
+   *
+   * ONE BODY, ON PURPOSE. The era models ONE suit, so this walks the LOCAL actor rather than every
+   * actor the way the debris chip does: a multiplayer room would need one dial per seat, which is
+   * a second consumer and a different slice. The debris chip can walk them all because it is
+   * positional and stateless; a suit is neither.
+   */
+  private applyE8SuitAir(fixedDelta: number): void {
+    if (!this.e8Atmosphere.isDeclared && !this.e8SuitAir.isDeclared) return;
+    const body = this.localActor.group.position;
+    const chip = this.e8Atmosphere.update(fixedDelta, body, this.enemies.all)
+      + this.e8SuitAir.update(fixedDelta, body, this.enemies.all, this.waveSystem.diagnostics.wave);
+    if (chip > 0) this.combat.damageActor(chip, -1, this.localActor);
+  }
+
+  /** E8: the consumer's own numbers, narrowed to what the dial draws. Null where undeclared. */
+  private suitAirState(): SuitAirState | null {
+    const consumer = this.e8Atmosphere.isDeclared ? this.e8Atmosphere : this.e8SuitAir.isDeclared ? this.e8SuitAir : null;
+    if (!consumer) return null;
+    const { suit } = consumer.diagnostics;
+    return {
+      seconds: suit.seconds,
+      capacity: suit.capacity,
+      inDome: suit.inDome,
+      empty: suit.empty,
+      harmPerSecond: suit.harmPerSecond,
+    };
   }
 
   private syncE8LobPhysics(): void {
@@ -7137,6 +7192,10 @@ export class Game {
     // Shore. `inReach` is measured off the body the confirm key acts from, so the price only
     // appears where pressing the key would actually buy warmth.
     this.hud.setVentWarmth(this.ventWarmthState());
+    // E8: the human's suit, contract-scoped exactly as the vent meter above is — null (and so
+    // hidden) on every map that declares no atmosphere, which is everything outside the Orbital
+    // bundle. A rule that can kill her has to be a thing she can watch.
+    this.hud.setSuitAir(this.suitAirState());
     this.playbookSurface?.update();
   }
 

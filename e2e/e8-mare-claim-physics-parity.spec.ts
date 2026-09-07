@@ -36,12 +36,21 @@ const SEED = 'e8-mare-claim-01';
 // `artifacts/mare-claim-air-prevalent/floor-attribution.json` (fields alone -> `fnv1a32:4d17c659`,
 // fields plus numbers -> the value below). The same two rows moved in
 // `assets/contracts/null-floors.json` and nowhere else.
+//
+// RE-POINTED AGAIN 2026-09-07 (`tasks/e8-air-logical.md`, owner directive) from
+// `fnv1a32:32f62335` / 81 233 ms / 32 kills, and this time the OUTCOME moved with the hash. The
+// suit is the HUMAN's now and an empty one charges 5 hp a second; this map drops its hero at
+// (0, 12), six world units north of every dome it authors, so the idle floor suffocates and dies
+// five seconds sooner. Attribution measured both halves separately again
+// (`artifacts/e8-air-logical/floor-attribution.json`): with `twist.atmosphere.harmPerSecond`
+// struck, the ride returns to 81 233 ms / 32 kills and only the hash differs
+// (`fnv1a32:b2fd3146`), which puts the whole outcome move on the human's own lungs.
 const NODE = {
-  eventLogHash: 'fnv1a32:32f62335',
+  eventLogHash: 'fnv1a32:271eabbb',
   secured: false,
   waves: 2,
-  timeMs: 81_233,
-  kills: 32,
+  timeMs: 76_033,
+  kills: 30,
 };
 
 test('the Mare Claim rides to the same event-log hash in the browser as in node', async ({ page }) => {

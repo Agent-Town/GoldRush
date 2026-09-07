@@ -45,7 +45,11 @@ const EXPECTED_RULES: Record<string, string[]> = {
   // row cannot promise a gate the run does not hold. The three sibling rows below are untouched:
   // they run `E8SuitAirSystem`, whose own manifest row is that slice's to write.
   // DRAIN 2026-09-06: unioned with hero-move-verb's `hero_orders` row (main), order as the manifest emits it.
-  'e8-mare-claim': ['air_wall_regolith', 'build_zones', 'hero_orders'],
+  // RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07): `air_suit_human` joins every Orbital row. It is the SURVIVAL
+  // half the directive added — the hero's own dial and what an empty one costs her — and it is
+  // the only E8 rule whose `damages` reads true; the `air_wall_*` rows beside it stay objectives.
+  // The manifest emits its rules sorted, so the new id sorts to the head of all four lists.
+  'e8-mare-claim': ['air_suit_human', 'air_wall_regolith', 'build_zones', 'hero_orders'],
   // A4's consumer is contract-gated, not epoch-gated, and the Far Side declares
   // `twist.signalSuppression` — so this row was ALREADY true before A7 touched anything.
   // Measured, not assumed: the first draft of this table guessed `['build_zones']` here and the
@@ -59,9 +63,9 @@ const EXPECTED_RULES: Record<string, string[]> = {
   // Side and Low Orbit make CROSSINGS (`air_wall_crossing`, `E8SuitAirSystem.noteCrossings`); the
   // Eclipse works GROUNDS and publishes the same `air_wall_regolith` id the Mare Claim does, from
   // its own consumer, because it is the same rule. Order as the manifest emits it.
-  'e8-far-side': ['air_wall_crossing', 'build_zones', 'hero_orders', 'probe_recovery', 'signal_suppression'],
-  'e8-low-orbit': ['air_wall_crossing', 'build_zones', 'hero_orders', 'zero_gravity'],
-  'e8-eclipse': ['air_wall_regolith', 'build_zones', 'hero_orders'],
+  'e8-far-side': ['air_suit_human', 'air_wall_crossing', 'build_zones', 'hero_orders', 'probe_recovery', 'signal_suppression'],
+  'e8-low-orbit': ['air_suit_human', 'air_wall_crossing', 'build_zones', 'hero_orders', 'zero_gravity'],
+  'e8-eclipse': ['air_suit_human', 'air_wall_regolith', 'build_zones', 'hero_orders'],
 };
 
 for (const contract of orbital.contracts) {

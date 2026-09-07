@@ -68,6 +68,27 @@ export type VentWarmthState = {
   squallsRequired: number;
 };
 
+/**
+ * E8 — WHAT THE HUD NEEDS TO DRAW THE HUMAN'S SUIT, and nothing more (owner directive 2026-09-07,
+ * verbatim: "I want space experiences of humans to need them having air. It has to be logical. If
+ * that means we have to change something ok"). Derived from `E8HumanSuit.diagnostics` by
+ * `Game.suitAirState`; structural rather than imported so this module keeps its sim-free imports,
+ * exactly as `VentWarmthState` above does.
+ *
+ * A MECHANIC A PLAYER CANNOT SEE IS A MECHANIC THAT DID NOT SHIP (Mistake #10), and this one can
+ * kill her: the dial is the only warning between a full suit and a hero losing hit points a second
+ * at a time in silence.
+ */
+export type SuitAirState = {
+  seconds: number;
+  capacity: number;
+  /** The pressurised rectangle she is breathing in, or null in vacuum. */
+  inDome: string | null;
+  empty: boolean;
+  /** hp a second an empty suit costs; null where the contract authors no harm. */
+  harmPerSecond: number | null;
+};
+
 type HudElements = {
   root: HTMLElement;
   trainingTag: HTMLElement;
@@ -88,6 +109,9 @@ type HudElements = {
   warmthText: HTMLElement;
   warmthFill: HTMLElement;
   warmthStoke: HTMLElement;
+  suitPanel: HTMLElement;
+  suitText: HTMLElement;
+  suitFill: HTMLElement;
   weaponPanel: HTMLElement;
   weaponReason: HTMLElement;
   weaponChip: HTMLElement;
@@ -217,6 +241,22 @@ export class Hud {
         <span class="hud-pressure-track" aria-hidden="true"><span class="hud-pressure-fill" data-hud-warmth-fill></span></span>
       </section>
 
+      <!--
+        E8: THE HUMAN'S SUIT, on the HUD a plain boot already draws. It rides the same
+        resource-panel grid the pressure gauge, the power ledger and the vent meter share, and it
+        is contract-scoped exactly as they are: hidden on every map that declares no atmosphere,
+        which is every map outside the Orbital bundle. It reuses their track and fill classes
+        rather than minting a second meter's CSS.
+        NOTE: this comment lives inside a template literal, so it survives transpilation and is
+        scanned by scripts/no-emdash-guard.test.mjs. No em dashes and no backticks here.
+      -->
+      <section class="hud-panel hud-panel--resource hud-panel--suit-air" data-testid="hud-suit-air" aria-label="Suit air" hidden>
+        <span class="hud-gauge" aria-hidden="true"></span>
+        <span class="hud-label">Air</span>
+        <strong class="hud-value" data-hud-suit-air>0s</strong>
+        <span class="hud-pressure-track" aria-hidden="true"><span class="hud-pressure-fill" data-hud-suit-air-fill></span></span>
+      </section>
+
       <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
         <span class="hud-label">Weapon</span>
         <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
@@ -274,6 +314,9 @@ export class Hud {
       warmthText: this.get(root, '[data-hud-warmth]'),
       warmthFill: this.get(root, '[data-hud-warmth-fill]'),
       warmthStoke: this.get(root, '[data-hud-warmth-stoke]'),
+      suitPanel: this.get(root, '[data-testid="hud-suit-air"]'),
+      suitText: this.get(root, '[data-hud-suit-air]'),
+      suitFill: this.get(root, '[data-hud-suit-air-fill]'),
       weaponPanel: this.get(root, '[data-testid="hud-weapon"]'),
       weaponReason: this.get(root, '[data-testid="hud-weapon-reason"]'),
       weaponChip: this.get(root, '[data-hud-weapon]'),
@@ -407,6 +450,39 @@ export class Hud {
     this.elements.warmthPanel.setAttribute(
       'aria-label',
       `Vent warmth ${Math.ceil(vent.warmth)} of ${Math.round(vent.maxWarmth)}, ${vent.alight ? (vent.draining ? 'falling in the squall' : 'holding') : 'out'}`,
+    );
+  }
+
+  /**
+   * E8 — the suit dial, pushed on the same seam `setVentWarmth` above uses and for the same
+   * reason: `UiBridge.build` already takes two dozen positional arguments and one era's meter is
+   * not worth a twenty-fifth. `null` hides the panel, which is what every map outside the Orbital
+   * bundle passes.
+   *
+   * THREE STATES, and they are the three a rider has to tell apart at a glance: BREATHING inside
+   * pressurised ground (the dial is filling), DRAINING in vacuum with air left, and EMPTY, which
+   * on a contract that authors harm is the state that is actively killing her.
+   */
+  setSuitAir(suit: SuitAirState | null): void {
+    this.elements.suitPanel.hidden = !suit;
+    if (!suit) return;
+    const seconds = Math.max(0, suit.seconds);
+    const state = suit.empty ? 'empty' : suit.inDome !== null ? 'breathing' : 'draining';
+    this.elements.suitPanel.dataset.state = state;
+    this.elements.suitText.textContent = `${Math.ceil(seconds)}s`;
+    this.elements.suitFill.style.width = `${this.percent(seconds, suit.capacity)}%`;
+    // Teal while the town's air holds her, amber out on the flat, red once it is gone. Set here
+    // rather than in the stylesheet so the meter needs no CSS of its own (the vent meter's rule).
+    this.elements.suitFill.style.background = suit.empty ? '#c0392b' : suit.inDome !== null ? '#4fb3a6' : '#e0a83c';
+    const harm = suit.harmPerSecond === null ? '' : ` Losing ${suit.harmPerSecond} hit points a second.`;
+    this.elements.suitPanel.title = suit.empty
+      ? `The suit is empty.${harm} Reach pressurised ground.`
+      : suit.inDome !== null
+        ? `Breathing in ${suit.inDome}; the suit is filling.`
+        : `${Math.ceil(seconds)}s of air left outside pressurised ground.`;
+    this.elements.suitPanel.setAttribute(
+      'aria-label',
+      `Suit air ${Math.ceil(seconds)} of ${Math.round(suit.capacity)} seconds, ${state}`,
     );
   }
 

@@ -35,13 +35,17 @@ const RIDES = [
     // all space contracts"), from `fnv1a32:5c30efd5` and `required: 1`. Every outcome field is
     // unmoved — the idle floor still loses at wave 2 with 30 kills — and the hash moved because
     // the crossing block grew its window fields and the contract now authors the gate.
-    node: { eventLogHash: 'fnv1a32:22c47125', secured: false, waves: 2, timeMs: 79_400, kills: 30 },
+    // RE-POINTED AGAIN 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from `fnv1a32:22c47125`. Every outcome field is STILL
+    // unmoved: this map drops its hero INSIDE `far-side-landing-yard`, the one rectangle it
+    // pressurises, so an idle human here never suffocates and the hash moved only because the
+    // suit row grew `harmPerSecond`, `harmDealt` and `harmTicks` and its `body` became 'hero'.
+    node: { eventLogHash: 'fnv1a32:05ae6272', secured: false, waves: 2, timeMs: 79_400, kills: 30 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
-    // The Far Side's idle Prospector never leaves the landing yard, so it breathes the whole
-    // ride and never reaches the crater: a full suit and an empty crossing.
+    // The Far Side's idle HERO never leaves the landing yard, so she breathes the whole ride and
+    // never reaches the crater: a full suit, no charge, and an empty crossing.
     air: {
       wall: 'suit-only',
-      suit: { seconds: 60, empty: false, drainedTotal: 0 },
+      suit: { body: 'hero', seconds: 60, empty: false, drainedTotal: 0, harmPerSecond: 5, harmDealt: 0, harmTicks: 0 },
       crossing: {
         zones: ['listening-probe-crater'],
         required: 4,
@@ -61,23 +65,26 @@ const RIDES = [
     seed: 'e8-low-orbit-01',
     // RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`), from `fnv1a32:6e1931c2` and
     // `required: 3`. Outcome fields unmoved; the hash moved for the same two reasons.
-    node: { eventLogHash: 'fnv1a32:088a929c', secured: false, waves: 2, timeMs: 78_333, kills: 33 },
+    // RE-POINTED AGAIN 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from `fnv1a32:088a929c`, and this row moved for TWO
+    // reasons where the others moved for one. Outcome fields still unmoved (the hero starts inside
+    // the carcass yard, which is now the map's only pressurised ground), but the FREE CREDIT IS
+    // GONE: the yard has left the crossing list, so an idle ride banks nothing at all. That is
+    // F-EAWA-2's cure showing up in the fixture — a rectangle that holds air is not a crossing,
+    // and this map's wall is an air budget now rather than a schedule an idle ride part-pays.
+    node: { eventLogHash: 'fnv1a32:e6813da3', secured: false, waves: 2, timeMs: 78_333, kills: 33 },
     gravity: { feelG: 0, lobArcDistanceMultiplier: 4.8, movement: 'free-fall', orbitalReturn: true, vacuum: true },
-    // Low Orbit's claim sits ON the middle deck, so an idle ride banks that one deck for free —
-    // one credit of the four asked, in the first window, and neither of the two decks the spine
-    // has to be crossed for.
     air: {
       wall: 'suit-only',
-      suit: { seconds: 60, empty: false, drainedTotal: 0 },
+      suit: { body: 'hero', seconds: 60, empty: false, drainedTotal: 0, harmPerSecond: 5, harmDealt: 0, harmTicks: 0 },
       crossing: {
-        zones: ['west-scaffold-deck', 'claw-carcass-yard', 'east-scaffold-deck'],
+        zones: ['west-scaffold-deck', 'east-scaffold-deck'],
         required: 4,
-        reached: ['claw-carcass-yard'],
-        credited: 1,
+        reached: [],
+        credited: 0,
         breathlessEntries: 0,
         windowWaves: 4,
         window: 0,
-        creditedThisWindow: 1,
+        creditedThisWindow: 0,
         windowHeldEntries: 0,
         complete: false,
       },
@@ -88,13 +95,19 @@ const RIDES = [
     seed: 'e8-eclipse-01',
     // RE-POINTED 2026-09-06 (`tasks/e8-air-wall-all-maps.md`), from `fnv1a32:466507ac` and
     // `required: 1`. Outcome fields unmoved; the Eclipse now authors the Mare Claim's own gate.
-    node: { eventLogHash: 'fnv1a32:121b0402', secured: false, waves: 2, timeMs: 81_800, kills: 32 },
+    // RE-POINTED AGAIN 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from `fnv1a32:121b0402` / 81 800 ms / 32 kills, and
+    // this row's OUTCOME moved: the hero is dropped at (0, 12), six world units north of every
+    // dome, so her suit empties at t = 60 s and she is charged 5 hp a second after it. She dies
+    // five seconds sooner. Attribution measured both ways in
+    // `artifacts/e8-air-logical/floor-attribution.json`: with `harmPerSecond` struck, every
+    // outcome field returns to the value above and only the hash differs.
+    node: { eventLogHash: 'fnv1a32:9568f50b', secured: false, waves: 2, timeMs: 76_733, kills: 30 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
     air: {
       wall: 'suit-timer',
-      // The claim is outside every dome pad, so the idle floor suffocates exactly as the Mare
-      // Claim's does: 60s of suit, all of it spent.
-      suit: { seconds: 0, empty: true, drainedTotal: 60 },
+      // The hero is outside every dome pad, so the idle floor suffocates exactly as the Mare
+      // Claim's does: 60s of suit, all of it spent, and then sixteen seconds of being charged.
+      suit: { body: 'hero', seconds: 0, empty: true, drainedTotal: 60, harmPerSecond: 5, harmDealt: 80, harmTicks: 16 },
       // The idle floor dies at wave 2 and the shadow is scheduled for wave 10, so an idle ride
       // must show it NOT arrived. `arrivedAtWave` stays null until it lands, because the contract
       // authors `firstRunWarning: false` and a countdown would be the warning it refuses to give.
@@ -115,11 +128,16 @@ const RIDES = [
     // changing `E8SuitAirSystem`; `tasks/e8-air-wall-all-maps.md` (2026-09-06 evening) carried the
     // ruling to all three siblings, and this control row is what proves the shared-window refactor
     // it made left the Mare Claim byte-identical.
-    node: { eventLogHash: 'fnv1a32:32f62335', secured: false, waves: 2, timeMs: 81_233, kills: 32 },
+    // RE-POINTED AGAIN 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from `fnv1a32:32f62335` / 81 233 ms / 32 kills. This
+    // row is still the CONTROL for the shared code — the Mare Claim still rides byte-identically
+    // with `E8SuitAirSystem` composed and with it gone — and the master said in advance that it
+    // might move ("they may move if the hero now breathes; say so"). It does, for exactly the
+    // reason the Eclipse's does: the same (0, 12) drop, six world units outside the same domes.
+    node: { eventLogHash: 'fnv1a32:271eabbb', secured: false, waves: 2, timeMs: 76_033, kills: 30 },
     gravity: { feelG: 0.6, lobArcDistanceMultiplier: 2.4, movement: 'floaty', vacuum: true },
     air: {
       wall: 'suit-timer',
-      suit: { seconds: 0, empty: true, drainedTotal: 60 },
+      suit: { body: 'hero', seconds: 0, empty: true, drainedTotal: 60, harmPerSecond: 5, harmDealt: 80, harmTicks: 16 },
       regolith: { grounds: 6, required: 4, worked: [] },
     },
   },
