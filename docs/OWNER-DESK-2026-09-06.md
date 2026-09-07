@@ -60,6 +60,7 @@ Your A1 ruling is live in the engine: the hero's suit drains outside pressurised
 - **D2:** confirm the heat-12 board is re-ridden rather than repaired once the grammar lands (22 of 24 scored rows retire). Recommendation: yes.
 **RULED 2026-09-07 (owner, verbatim: "D1 - no, AI and human users have to have the same options and tools, otherwise it is unfair. fairness is crucial. D2: re-ride it yes"):** D1 = no `WORK_AT` for either species (ADR-005 amended with the fairness words); D2 = the board is re-ridden on the new grammar after the drain, never repaired. `tasks/rider-parity-grammar.md` revised on these words and LAUNCHED (scratch `wt-grammar`, port 5309).
 **2026-09-07 ~13:30:** the grammar's first four stages are built and pass their own gates, but the full battery on the merged tree reddened eleven fixtures whose rider plans still walk the Prospector, so nothing landed; the continuation (`rider-parity-grammar-stage3`) makes the branch green, removes the three verbs, re-derives the 28 dependent files, and gives the rider `CONTEXT_ACTION`'s four human-only targets under your fairness word. The re-ride gauntlet follows it. Nothing to decide.
+**Landed 08287cdd7 (~17:00):** all stages; the controls table reads 15 equal / 0 agent-only / 0 human-richer; 57 tapes and 22 of 24 scored heat-12 rows retired in the ledger; the county re-assay and the heat-13 re-ride follow. Three E4/E5 questions it surfaced are A14–A16 below.
 
 
 ### A11. The cast sheets and the payload gate (F-FTP-1, added 2026-09-07 late morning)
@@ -76,6 +77,15 @@ The town names the youngsters Pip and Juniper (`src/town/townsfolk.ts:156`, `:17
 
 ### A13. Should the Elder patrol the town? (F-EW8-3, added 2026-09-07 late afternoon)
 Her new walk sheet has 32 cells, but the town grants a patrol loop only to the tavernkeeper and the storekeeper (`src/town/TownScene.ts:5097`), so she stands at the schoolhouse facing down and a player never sees her walk. Giving her the same loop is one entry in that map and a spec change. Recommendation: yes, the same cycle as the tavernkeeper (8 s walk, 30 s pause); one word.
+
+### A14. The Regatta's racing body (F-RPG-18/19, added 2026-09-07 evening)
+Headless, the race course is handed the Prospector's position as the socket's "hero" while the browser races every visible actor plus the boat anchor; and every race gate is water no body can stand on. Under the grammar the Prospector is not a body anyone positions, so `e5-regatta-race` cannot be made honest by a re-point. Options: (a) the boat is the racing body for both species (the hero rides it; the gates are buoys the boat passes), (b) the gates move onto standable shore and the hero runs them, (c) the race is retired as a mechanic. Recommendation: (a), it is what the fiction already says.
+
+### A15. The Long Road's convoy stop (F-RPG-10, added 2026-09-07 evening)
+Arrival needs the Hauler to rest exactly on (190, 0), which is unwalkable ground behind a block, so no body a human positions can land the errand (the floor now writes an aim ladder and lands nothing). Options: give the convoy the same `MOTOR_STOP_REACH` the other three errands use, or move the stop onto standable ground. Recommendation: the reach, one constant read from the others.
+
+### A16. Moth Season's choice (F-RPG-11, added 2026-09-07 evening)
+Under the grammar the map secures at wave 12 OR mends its corridor beacon, not both (24 wu of corridor against a 10 wu sweep; twelve configurations measured). A human faces the identical choice, so this is a design fact, not a defect: say whether it stands. Recommendation: it stands; the guard pins the secure and says so.
 
 ## B. Ten minutes of the owner's hands (nobody else can)
 
@@ -99,6 +109,7 @@ The stray plaintext copy was deleted with your word on 2026-08-31; the real key 
 The lineage ruling (ADR-004, ratified and applied county-wide today), the per-contract bank-cap override, the drill yard, the E5–E10 art batch, the disk (sparse checkouts), the archive repository (created and mirroring), F-CLI-2 (`~/.codex/config.toml` is back at `service_tier = "default"`), F-CWBC-2 (did not reproduce at its base; likely cured by `main.ts`'s `replaceChildren`, the invariant landed anyway), F-HEAT12-2 (the size scare was pretty-printed bytes; compact reels were admitted, F-DBW-1), the Mare Claim air wall (F-HEAT12-6), and test:node-guards (cured, `ac1314ee5`).
 
 ## D. The fires' queue (no decision needed; listed so it stays visible)
+- **Added 2026-09-07 evening (from the grammar drain):** F-RPG-9 `ap-standing-orders.spec.ts:155` mobile flake (wait for the revoked ability on the view); F-RPG-13 `scripts/gr-sim.mjs:246` hangs on a retired verb instead of failing; F-RPG-15 `scripts/agent-seat.test.mjs:130` reads a retired verb as `UNSPEAKABLE_ON_THE_WIRE`; F-RPG-16 `E10StaticBossDiagnostics.sites` without coordinates; comment mentions of the old body in `AgentRiderBody.ts:7-8,60` and `MotorSocket.ts:456`.
 - **Added 2026-09-07 late afternoon (from the walk-sheet drain):** F-EW8-1 `assets/processed-full/townsfolk-elder.png` is still the bearded man (reference tier, no consumer); F-EW8-6 `scripts/anim-pass-table.mjs:119` crashes on main on twelve `*.cut.json` sidecars without `cells` (in no battery).
 - **Added 2026-09-07 evening (from the youngsters drain):** F-YR-3 `assets/LEDGER.md:403` (row 75) is a broken table row, an unescaped regex alternation splits it into 10 cells: escape the pipes.
 - **Added 2026-09-07 ~15:00 (from the canon-calls-a8 drain):** F-A8-1 `e2e/ss-01-beats.spec.ts` 6/8 red on main since 2026-08-11 (the E1 queue head `ledger-page:the_claim` sits ahead of `founding-welcome`; drain the head in the spec, or rule that the founding welcome outranks the ledger page on a plain boot: the owner sees the ledger page first today); F-A8-2 LEDGER row 74's wrong source raw (corrected in row 77); F-A8-4 the E1 card mixes plate tiers (four keyed cutouts beside two full-bleed plates).
