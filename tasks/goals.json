@@ -4977,7 +4977,7 @@
               "title": "F-AGE2-3/F-AGE2-5: chapter screenshots and the Moth Season ride use explicit evidence refresh; plain gates preserve retained artifacts",
               "status": "queued",
               "taskFile": "lane-c-chapter-evidence-opt-in.md",
-              "drainNotes": "s2537 HOLD: current-base candidate fee574e47be6eb813c73fecd4a5357e973a34a29, origin/save/chapter-evidence-s2537. Seven writer changes preserve the newer four-test Moth program and 138-row recording. tsc/build/Moth 4/4/boot/power pass; 51 retained files unchanged, 50 scratch PNGs observed. Complete chapters 67/68 (F-2537-1 E7 reader undefined); adjacency 29/32 (known two M1 plus F-2537-2 M2 count 1 vs 2). New E7/M2 failures pass focused controls on both unchanged base and candidate; complete runs remain red. Readiness corrective authored for MAIN; M2 cause and full Node battery remain owed. Preserve lane and done-move, no re-queue or owner fork. See reviews/chapter-evidence-opt-in.md and artifacts/s2537-fire/resume.md.",
+              "drainNotes": "s2541 HOLD: current-base candidate 44fd2661f345f25c9d9099359ff405eabd6b641e is on origin/save/chapter-evidence-s2541. Full Node command rc=1 after 818.1 s: first group 742 tests, 736 pass, 1 fail, 5 explicit skips; chained tail NOT RUN. Fixture sweep fails because board-tape-gold uses three retired-verb tapes (F-2541-1), reproduced 0/3 on unchanged base c03903e3a1905e26d91914532154fc014b699781. Current Moth scratch trace 138 rows/f7af6739; 51 retained files unchanged. Separate MAIN corrective main-board-gold-current-grammar is authored. Complete chapters, adjacency and plain boot remain owed on this candidate. Preserve lane and done-move; do not re-dispatch. See reviews/chapter-evidence-opt-in.md and artifacts/s2541-fire/resume.md.",
               "note_s2540": "F-2537-1 readiness prerequisite merged by 985db2d33b22121a3a6d2b47628666e05116031e; F-2537-2 was closed by s2539. This completed writer patch remains unmerged and requires its own current-base classification and full declared gates. Preserve lane and done-move; do not re-dispatch."
             },
             {
@@ -5064,6 +5064,12 @@
               "taskFile": "main-m2-palisade-placement-diagnosis.md",
               "mergeHash": "0eac2a9bec302665ab3483ec0413eca2e7469992",
               "note_s2539": "F-2537-2 closed by atomic tick/input readiness. Independent M2 14/14, adjacency 30/32 with two unchanged-base M1 reds, input-sample causal/reverse controls 4/4, boots 2/2. Runtime untouched. Review reviews/main-m2-palisade-placement-diagnosis.md; evidence artifacts/s2539-fire/."
+            },
+            {
+              "id": "main-board-gold-current-grammar",
+              "title": "F-2541-1: re-record the three board-gold positive fixtures under current grammar without altering retired tapes or held-purse assertions",
+              "status": "queued",
+              "taskFile": "main-board-gold-current-grammar.md"
             }
           ]
         }

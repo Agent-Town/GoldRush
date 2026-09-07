@@ -1,3 +1,37 @@
+# s2541 — chapter evidence writer drain
+
+**Slice:** `lane-c-chapter-evidence-opt-in.md`; lane `feat/hero-move-verb` at `386e129f714e634d9a2a9a18f31f8afa9f08f0fd`. **Candidate:** `44fd2661f345f25c9d9099359ff405eabd6b641e`, pushed to `save/chapter-evidence-s2541`, based on main `c03903e3a1905e26d91914532154fc014b699781`.
+
+**Verdict: HOLD — not merged.** The seven writer changes preserve main's current readiness fixes and Moth program. The full Node command fails on a separate, reproduced stale-fixture defect. No runtime, historical recording, lane branch or done-move was changed.
+
+Ordinary chapter screenshots and Moth trace output go to ignored scratch storage; the literal `GR_REFRESH_EVIDENCE=1` flag selects the retained destination. The candidate retains all current assertions and all six story-reader waits.
+
+| Gate | Current evidence |
+|---|---|
+| Full Node command | rc 1; first group 742 tests, 736 pass / 1 fail / 5 explicit skips, 818.1 s. Chained tail **not run**. `artifacts/s2541-fire/full-node.log` |
+| Failure control | Unchanged base: all three headless board-gold cases fail with the same malformed-tape refusal, 0/3, 4.06 s. `artifacts/s2541-fire/base-board-gold.txt` |
+| Typecheck and build | Both rc 0. `artifacts/s2541-fire/compile.txt` |
+| Moth ordinary writer | Executed in the full Node run; scratch trace 138 rows, `fnv1a32:f7af6739`. All four Moth tests pass in that group. |
+| Moth explicit refresh | 1/1, 12.5 s; retained write reproduces the scratch bytes. `artifacts/s2541-fire/explicit-moth.txt` |
+| Retained evidence | All 51 starting artifacts remain byte-identical. `artifacts/s2541-fire/writer-proof.json` |
+| Browser gates | Complete six-chapter run, task-025/M1/M2 adjacency, plain desktop/390px boot, and chapter explicit-refresh proof remain owed on this candidate. No current browser acceptance is claimed. |
+
+The five Node skips are two owner-ruled Baron cases and three fire-shell cross-engine checks. They are not coverage. The fixture-owner sweep stopped at its failing board-gold child; its title's 128 subjects does not mean all 128 were visited.
+
+## Classification
+
+All seven paths also moved on main after the lane base: six `e2e/ss-06` through `ss-11` specs and `scripts/moth-season-pressure.test.mjs`. Apply only their writer destination changes from the saved s2537 patch. Main's six readiness barriers, newer four-test Moth program, and 138-row retained recording win. The runner's older JSON and report do not overwrite them. Exact per-path history and patch: `artifacts/s2541-fire/file-classification.json`, `artifacts/s2541-fire/candidate.patch`, `artifacts/s2541-fire/classification.json`.
+
+## Findings and next gate
+
+- **F-2541-1 — reproduced on unchanged base, gate-side corrective registered.** `scripts/fixture-teardown.test.mjs:40` asserts its board-gold child succeeded. The child instead fails at `scripts/board-tape-gold.test.mjs:330`: all three banked headless tapes are invalid under the landed ADR-005 grammar. Direct validation identifies Mare Claim `MOVE_TO` at tick 0, Moth Season `HOLD` at tick 1820, and Relay Rush `HOLD` at tick 0. The validator and assay door are behaving as intended. `artifacts/s2541-fire/tape-diagnosis.json` records exact input hashes and refusals. `tasks/main-board-gold-current-grammar.md` restores positive held-purse coverage with current recordings while preserving historical tapes and strict validation. This is not an owner fork and not a contention finding.
+- The s2537 readiness and M2 prerequisites have since merged, at `985db2d33b22121a3a6d2b47628666e05116031e` and `0eac2a9bec302665ab3483ec0413eca2e7469992`. Their completion does not discharge this writer patch's remaining gates.
+- Preserve both existing done-moves. Do not re-dispatch the chapter task or refill its held lane. Resume instructions: `artifacts/s2541-fire/resume.md`.
+
+---
+
+## Historical s2537 report — retained verbatim; current verdict is above
+
 # Chapter evidence opt-in — s2537 gate HOLD
 
 ## Slice, branch and tip
