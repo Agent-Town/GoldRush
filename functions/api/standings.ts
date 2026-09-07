@@ -1050,7 +1050,7 @@ function validateStoredRow(value: unknown, contractId: string): StoredRow | null
   const stack = value.stack === undefined ? undefined : validateStack(value.stack, true);
   const party = value.party === undefined ? undefined : validateParty(value.party, true);
   if (stack === null || party === null) return null;
-  const tape = value.tape === undefined ? undefined : validateTape(value.tape, contractId, value.seed, difficulty);
+  const tape = value.tape === undefined ? undefined : validateTape(value.tape, contractId, value.seed, difficulty, true);
   const submittedAt = integerInRange(value.submittedAt, 0, Number.MAX_SAFE_INTEGER);
   const assay = value.assay === undefined && tape ? 'pending'
     : value.assay === 'pending' || value.assay === 'verified' || value.assay === 'rejected'
@@ -1138,9 +1138,29 @@ function currentLineageRefusal(tape: JsonRecord): string | null {
   if (meta.era !== engineEra.era) {
     return `This reel rode era ${meta.era}; the county accepts era ${engineEra.era} '${engineEra.name}'.`;
   }
-  return engineEraIncludes(engineEra, meta.engineHash)
-    ? null
-    : `This reel's engine pin is not recorded in era ${engineEra.era} '${engineEra.name}'.`;
+  if (!engineEraIncludes(engineEra, meta.engineHash)) return `This reel's engine pin is not recorded in era ${engineEra.era} '${engineEra.name}'.`;
+  return tapeGrammarRefusal(tape);
+}
+
+// A stored reel whose orders name a verb the door has since retired (ADR-005) is RETIRED at read:
+// unranked and counted, exactly like a cross-era reel, and the county says why. Walks the primary
+// entries and every stream; the first refusal is the reason.
+function tapeGrammarRefusal(tape: JsonRecord): string | null {
+  const input = isRecord(tape.inputLog) ? tape.inputLog : null;
+  if (!input) return null;
+  const lists: unknown[] = [input.entries, ...(Array.isArray(input.streams) ? input.streams.map((stream) => (isRecord(stream) ? stream.entries : undefined)) : [])];
+  for (const entries of lists) {
+    if (!Array.isArray(entries)) continue;
+    for (const entry of entries) {
+      if (!isRecord(entry) || !Array.isArray(entry.a)) continue;
+      for (const action of entry.a) {
+        if (!isRecord(action) || action.kind !== 'agent_orders') continue;
+        const verdict = validateStandingOrders(action.orders);
+        if (!verdict.ok) return `This reel's orders name a verb the door has retired (${verdict.message}); it stands retired under ADR-005.`;
+      }
+    }
+  }
+  return null;
 }
 
 function retainUnranked(rows: StoredRow[], contractId: string): StoredRow[] {
@@ -1421,14 +1441,19 @@ function validateParty(value: unknown, stored = false): SubmittedParty | null {
   return { riderCount, riders };
 }
 
-export function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): JsonRecord | null {
+// `stored` is true when the county re-reads a row it already accepted: the tape's SHAPE is still
+// required, but its order grammar is judged by `tapeGrammarRefusal` (a retired verb makes the row
+// RETIRED and COUNTED, never silently dropped). At the door (`stored` false) the grammar is strict.
+// ADR-005 stage 3 (2026-09-07): the first read after the grammar deploy emptied 25 boards with a
+// retiredCount of zero because every retired-verb tape simply stopped validating (F-RPG-21).
+export function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null, stored = false): JsonRecord | null {
   if (!isRecord(value) || new TextEncoder().encode(JSON.stringify(value)).length > runTapeEnvelopeForContract(String(contractId)).maxTapeBytes) return null;
   if (!hasOnlyKeys(value, new Set(['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'meta', 'runStart', 'inputLog', 'eventLogHash', 'outcome']))) return null;
   if ((value.version !== 1 && value.version !== 2) || value.simVersion !== 1 || typeof value.id !== 'string' || !value.id || value.id.length > 64) return null;
   if (!Number.isSafeInteger(value.createdAt) || (value.createdAt as number) < 0 || typeof value.kept !== 'boolean') return null;
   if (value.contract !== contractId || value.seed !== seed || value.difficulty !== difficulty) return null;
   if (typeof value.eventLogHash !== 'string' || !/^fnv1a32:[a-f0-9]{8}$/.test(value.eventLogHash)) return null;
-  if (!validTapeOutcome(value.outcome) || !validTapeInput(value.inputLog, contractId, seed, difficulty)
+  if (!validTapeOutcome(value.outcome) || !validTapeInput(value.inputLog, contractId, seed, difficulty, stored)
     || !validTapeMeta(value.meta)
     || (value.version === 2 ? !validRunStart(value.runStart) : value.runStart !== undefined || value.meta !== undefined)) return null;
   return value;
@@ -1475,7 +1500,7 @@ function validTapeOutcome(value: unknown): boolean {
     && numberInRange(value.gold, 0, 1_000_000_000) !== null;
 }
 
-function validTapeInput(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): boolean {
+function validTapeInput(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null, stored = false): boolean {
   if (!isRecord(value) || !hasOnlyKeys(value, new Set(['version', 'name', 'contractId', 'seed', 'difficultyPreset', 'stepSeconds', 'start', 'durationTicks', 'entries', 'truncated', 'primarySlot', 'streams']))) return false;
   if (value.version !== 1 || value.contractId !== contractId || value.seed !== seed || value.difficultyPreset !== difficulty || value.stepSeconds !== 1 / 30) return false;
   if (typeof value.name !== 'string' || !value.name || value.name.length > 64 || !isRecord(value.start)
@@ -1485,27 +1510,27 @@ function validTapeInput(value: unknown, contractId: unknown, seed: unknown, diff
   const duration = integerInRange(value.durationTicks, 0, envelope.maxTicks);
   if (duration === null || !Array.isArray(value.entries) || value.entries.length > envelope.maxEntries || !validTapeTruncation(value.truncated, duration)) return false;
   const primarySlot = integerInRange(value.primarySlot, 0, 3);
-  if (primarySlot === null || !Array.isArray(value.streams) || value.streams.length > 3 || !validTapeEntries(value.entries, duration, envelope.maxEntries)) return false;
+  if (primarySlot === null || !Array.isArray(value.streams) || value.streams.length > 3 || !validTapeEntries(value.entries, duration, envelope.maxEntries, stored)) return false;
   const slots = new Set<number>([primarySlot]);
   for (const stream of value.streams) {
     if (!isRecord(stream) || !hasOnlyKeys(stream, new Set(['slot', 'start', 'entries']))) return false;
     const slot = integerInRange(stream.slot, 0, 3);
     if (slot === null || slots.has(slot) || !isRecord(stream.start) || !hasOnlyKeys(stream.start, new Set(['x', 'z']))) return false;
     if (numberInRange(stream.start.x, -256, 256) === null || numberInRange(stream.start.z, -256, 256) === null) return false;
-    if (!validTapeEntries(stream.entries, duration, envelope.maxEntries)) return false;
+    if (!validTapeEntries(stream.entries, duration, envelope.maxEntries, stored)) return false;
     slots.add(slot);
   }
   return true;
 }
 
-function validTapeEntries(entries: unknown, duration: number, maxEntries: number): boolean {
+function validTapeEntries(entries: unknown, duration: number, maxEntries: number, stored = false): boolean {
   if (!Array.isArray(entries) || entries.length > maxEntries) return false;
   let prior = -1;
   for (const entry of entries) {
     if (!isRecord(entry) || !hasOnlyKeys(entry, new Set(['t', 'mx', 'my', 'a']))) return false;
     const tick = integerInRange(entry.t, 0, Math.max(0, duration - 1));
     if (tick === null || tick <= prior || !quantizedAxis(entry.mx) || !quantizedAxis(entry.my) || !Array.isArray(entry.a) || entry.a.length > 24) return false;
-    if (!entry.a.every(validTapeAction)) return false;
+    if (!entry.a.every((action) => validTapeAction(action, stored))) return false;
     if (entry.a.some((action) => isRecord(action) && action.kind === 'agent_orders') && (entry.mx !== 0 || entry.my !== 0)) return false;
     prior = tick;
   }
@@ -1520,10 +1545,12 @@ function validTapeTruncation(value: unknown, duration: number): boolean {
     && value.atTick === duration;
 }
 
-function validTapeAction(value: unknown): boolean {
+function validTapeAction(value: unknown, stored = false): boolean {
   if (!isRecord(value)) return false;
   if (value.kind === 'agent_orders') {
-    return hasOnlyKeys(value, new Set(['kind', 'orders'])) && validateStandingOrders(value.orders).ok;
+    if (!hasOnlyKeys(value, new Set(['kind', 'orders']))) return false;
+    if (stored) return Array.isArray(value.orders) && value.orders.length <= 32 && value.orders.every((order) => isRecord(order) && typeof order.verb === 'string');
+    return validateStandingOrders(value.orders).ok;
   }
   if (typeof value.type !== 'string') return false;
   const simple = new Set(['weapon_toggle', 'restart', 'debug_spawn', 'debug_xp', 'skip_ceremony', 'research_skip']);

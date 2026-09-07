@@ -245,13 +245,22 @@ async function checkReplayableBoard(onRequest) {
   retired.submittedAt = 1;
   retired.tape.id = 'era-three-crown';
   retired.tape.meta = { buildId: 'deadbeef', engineHash: '0'.repeat(64), era: 3 };
-  await kv.put(key, JSON.stringify([retired, current]));
+  // ADR-005 stage 3: a reel whose orders name a retired verb is RETIRED AND COUNTED at read, never
+  // dropped (F-RPG-21: the first read after the grammar deploy emptied 25 boards with retiredCount 0).
+  const held = structuredClone(current);
+  held.profileName = 'The Held Crown';
+  held.anonId = 'e'.repeat(32);
+  held.submittedAt = 1;
+  held.tape.id = 'held-crown';
+  held.tape.inputLog.entries = [{ t: 0, mx: 0, my: 0, a: [{ kind: 'agent_orders', orders: [{ verb: 'HOLD', pos: { x: 0, z: 30 } }] }] }];
+  held.inputLogHash = createHash('sha256').update(JSON.stringify(held.tape.inputLog)).digest('hex');
+  await kv.put(key, JSON.stringify([retired, held, current]));
   const storedBytes = await kv.get(key);
 
   const response = await call(onRequest, 'GET', '/api/standings?contract=e1-baron&epoch=epoch-1-frontier', undefined, kv);
   equal(response.body.board.map(({ rank, profileName }) => ({ rank, profileName })), [{ rank: 1, profileName: 'The Walking Crown' }], 'e1-baron mints only the era-current crown');
-  equal(response.body.retiredCount, 1, 'the cross-era Baron crown is counted as retired');
-  equal(await kv.get(key), storedBytes, 'reading the replayable board leaves both raw rows byte-identical');
+  equal(response.body.retiredCount, 2, 'the cross-era Baron crown AND the retired-verb crown are counted as retired, not dropped');
+  equal(await kv.get(key), storedBytes, 'reading the replayable board leaves all three raw rows byte-identical');
 
   const staleTape = { ...tapeV2('stale-door', 1), meta: { buildId: 'deadbeef', engineHash: '0'.repeat(64), era: engineEra.era - 1 } };
   const stalePost = post('d'.repeat(32), 1, staleTape);
@@ -789,26 +798,63 @@ async function checkDoorEnvelopes(onRequest, validateTape, validateRunTape, subm
 }
 
 async function checkBankedHeat11Tapes(onRequest, validateTape, validateRunTape) {
+  // ADR-005 stage 3 (2026-09-07): the Half-Life Hollow and Picnic reels walk the Prospector with
+  // MOVE_TO / HOLD, verbs the door has retired; the door refuses them and a stored copy reads back
+  // retired. Relay Rush names no retired verb and still submits.
   for (const contractId of ['e6-half-life-hollow', 'e6-picnic', 'e7-relay-rush']) {
     const submission = JSON.parse(readFileSync(`artifacts/gauntlet-heat11-20260903/rides/${contractId}/opus/submission.json`, 'utf8'));
     submission.tape = currentEraTape(submission.tape);
-    ok(validateTape(submission.tape, contractId, submission.seed, submission.difficulty), `${contractId} heat-11 tape clears the standings validator`);
-    ok(validateRunTape(submission.tape), `${contractId} heat-11 tape clears the assay validator`);
-    equal((await call(onRequest, 'POST', '/api/standings', submission, makeKv())).status, 200, `${contractId} heat-11 submission is accepted locally`);
+    const retiredVerb = contractId !== 'e7-relay-rush';
+    if (retiredVerb) {
+      equal(validateTape(submission.tape, contractId, submission.seed, submission.difficulty), null, `${contractId} heat-11 tape is refused by the standings validator: it names a retired verb`);
+      ok(validateTape(submission.tape, contractId, submission.seed, submission.difficulty, true), `${contractId} heat-11 tape still clears the STORED-row validator (shape only)`);
+      equal((await call(onRequest, 'POST', '/api/standings', submission, makeKv())).status, 400, `${contractId} heat-11 submission is refused at the door`);
+    } else {
+      ok(validateTape(submission.tape, contractId, submission.seed, submission.difficulty), `${contractId} heat-11 tape clears the standings validator`);
+      ok(validateRunTape(submission.tape), `${contractId} heat-11 tape clears the assay validator`);
+      equal((await call(onRequest, 'POST', '/api/standings', submission, makeKv())).status, 200, `${contractId} heat-11 submission is accepted locally`);
+    }
   }
 }
 
 async function checkBankedBaronTapes(onRequest, queueRoute, verdictRoute, validateTape, validateRunTape) {
   const kv = makeKv();
   const tapes = [1, 2].map((run) => JSON.parse(readFileSync(`artifacts/gauntlet-heat6-20260825/e1-baron/run-${run}-tape.json`, 'utf8')));
+  // ADR-005 stage 3 (2026-09-07): both banked Baron tapes walk the Prospector with MOVE_TO and HOLD,
+  // verbs the door has retired. The door refuses them; a stored row carrying one reads back retired
+  // and counted (F-RPG-21); the assay-queue path below rides current-grammar reels instead.
   for (const [index, runTape] of tapes.entries()) {
-    ok(validateTape(runTape, runTape.contract, runTape.seed, runTape.difficulty), `banked Baron tape ${index + 1} clears the standings validator`);
-    ok(validateRunTape({ ...runTape, meta: { buildId: runTape.meta.buildId } }), `banked Baron tape ${index + 1} clears the assay validator`);
+    equal(validateTape(runTape, runTape.contract, runTape.seed, runTape.difficulty), null, `banked Baron tape ${index + 1} is refused by the standings validator: it names a retired verb`);
+    ok(validateTape(runTape, runTape.contract, runTape.seed, runTape.difficulty, true), `banked Baron tape ${index + 1} still clears the STORED-row validator (shape only)`);
     const submitted = await call(onRequest, 'POST', '/api/standings', bankedPost(runTape, `${index + 7}`.repeat(32)), kv);
-    equal(submitted.status, 200, `banked Baron tape ${index + 1} submits`);
+    equal(submitted.status, 400, `banked Baron tape ${index + 1} is refused at the door`);
+  }
+  const storedKey = 'standings:s2:epoch-1-frontier:e1-baron';
+  const storedBanked = storedRowFor(1, 'e1-baron', 'epoch-1-frontier');
+  storedBanked.profileName = 'The Banked Baron';
+  storedBanked.tape = currentEraTape(tapes[0]);
+  storedBanked.seed = storedBanked.tape.seed;
+  storedBanked.difficulty = storedBanked.tape.difficulty;
+  storedBanked.inputLogHash = createHash('sha256').update(JSON.stringify(storedBanked.tape.inputLog)).digest('hex');
+  storedBanked.assay = 'verified';
+  storedBanked.assayedAt = 2;
+  storedBanked.assayHash = storedBanked.tape.eventLogHash;
+  await kv.put(storedKey, JSON.stringify([storedBanked]));
+  const bankedBoard = await call(onRequest, 'GET', '/api/standings?contract=e1-baron&epoch=epoch-1-frontier', undefined, kv);
+  equal(bankedBoard.body.board.length, 0, 'a stored banked Baron row leaves the ranked board');
+  equal(bankedBoard.body.retiredCount, 1, 'and is COUNTED as retired, not dropped');
+  await kv.put(storedKey, '[]');
+  // The same two banked reels with the retired orders struck out are current-grammar reels: same seed,
+  // difficulty and outcome, so they submit and enter the queue exactly as the banked ones once did.
+  for (const [index, runTape] of tapes.entries()) {
+    const current = structuredClone(runTape);
+    current.id = `${runTape.id}-current`;
+    for (const entry of current.inputLog.entries) for (const action of entry.a ?? []) if (action.kind === 'agent_orders') action.orders = action.orders.filter((order) => order.verb !== 'MOVE_TO' && order.verb !== 'HOLD' && order.verb !== 'FALLBACK_IF');
+    const submitted = await call(onRequest, 'POST', '/api/standings', bankedPost(current, `${index + 7}`.repeat(32)), kv);
+    equal(submitted.status, 200, `current-grammar Baron reel ${index + 1} (the banked reel with its retired orders struck) submits: ${JSON.stringify(submitted.body).slice(0, 160)}`);
   }
   const queue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=10', undefined, kv, SECRET);
-  equal(queue.body.queue.length, 2, 'both banked Baron tapes enter the assay queue');
+  equal(queue.body.queue.length, 2, 'both current-grammar Baron reels enter the assay queue');
   for (const row of queue.body.queue) {
     equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(row.locator, 'verified', undefined, row.tape.eventLogHash), kv, SECRET)).status, 200, `${row.locator.tapeId} accepts its verified worker verdict`);
     equal((await call(onRequest, 'GET', `/api/standings?contract=e1-baron&epoch=epoch-1-frontier&verdict=${row.locator.tapeId}`, undefined, kv)).body.assay, 'verified', `${row.locator.tapeId} polls verified`);
