@@ -6,13 +6,16 @@ import { join } from 'node:path';
 import test from 'node:test';
 import { createServer } from 'vite';
 
-const hold = { verb: 'HOLD', pos: { x: 0, z: 12 } };
+// ADR-005 stage 3: was a HOLD. Every assertion below is about TAPE VALIDATION bounds — order
+// count, a non-finite coordinate, a moved body — so it needs a verb the door accepts and a
+// two-key point shape, which MOVE_HERO is and HOLD no longer exists to be.
+const park = { verb: 'MOVE_HERO', pos: { x: 0, z: 12 } };
 
 test('agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids', async () => {
   const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
   try {
     const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
-    const tape = fixture(Array(32).fill(hold));
+    const tape = fixture(Array(32).fill(park));
     assert.ok(validateTape(tape, tape.contract, tape.seed, tape.difficulty));
     const v2 = { ...tape, version: 2, runStart: runStart() };
     assert.ok(validateTape(v2, v2.contract, v2.seed, v2.difficulty));
@@ -27,9 +30,9 @@ test('agent reel validation reuses the door bounds and CLI tape content stays de
     assert.equal(validateTape({ ...v2, runStart: { ...v2.runStart, meta: {} } }, v2.contract, v2.seed, v2.difficulty), null);
     assert.equal(validateTape({ ...v2, runStart: { ...v2.runStart, research: { ...v2.runStart.research, version: 2 } } }, v2.contract, v2.seed, v2.difficulty), null);
     assert.equal(validateTape({ ...v2, runStart: undefined }, v2.contract, v2.seed, v2.difficulty), null);
-    assert.equal(validateTape(fixture(Array(33).fill(hold)), tape.contract, tape.seed, tape.difficulty), null);
-    assert.equal(validateTape(fixture([{ verb: 'HOLD', pos: { x: Number.NaN, z: 12 } }]), tape.contract, tape.seed, tape.difficulty), null);
-    const moving = fixture([hold]);
+    assert.equal(validateTape(fixture(Array(33).fill(park)), tape.contract, tape.seed, tape.difficulty), null);
+    assert.equal(validateTape(fixture([{ verb: 'MOVE_HERO', pos: { x: Number.NaN, z: 12 } }]), tape.contract, tape.seed, tape.difficulty), null);
+    const moving = fixture([park]);
     moving.inputLog.entries[0].mx = 1;
     assert.equal(validateTape(moving, tape.contract, tape.seed, tape.difficulty), null);
 
@@ -75,7 +78,7 @@ test('agent reel validation reuses the door bounds and CLI tape content stays de
   try {
     const first = join(directory, 'first.json');
     const second = join(directory, 'second.json');
-    const input = `${JSON.stringify([hold])}\n${Array(20).fill('null').join('\n')}\n`;
+    const input = `${JSON.stringify([park])}\n${Array(20).fill('null').join('\n')}\n`;
     for (const [output, prefix] of [[first, `${JSON.stringify([{ verb: 'NOPE' }])}\n`], [second, '']]) {
       const run = spawnSync(process.execPath, [
         'scripts/gr-sim.mjs', '--contract', 'the-claim', '--seed', 'e1-the-claim-01', '--tape', output,

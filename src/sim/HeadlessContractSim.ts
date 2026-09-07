@@ -593,6 +593,17 @@ type ShelvedPlaybook = { name: string; hash: string; entries: PlaybookEntry[]; u
 /** The rider's own submission ceiling (`validateStandingOrders`: "at most 32 entries"), restated. */
 const PROGRAM_ORDER_CAP = 32;
 
+/**
+ * ADR-005 stage 3 item 8: the four CONTEXT_ACTION actions this engine declares in the grammar and
+ * composes no consumer for. Named beside their consumers so the refusal can say which is missing.
+ */
+const CONFIRM_KEY_CONSUMERS: Readonly<Record<'drill' | 'assay' | 'preserve' | 'digger', string>> = {
+  drill: 'drill yard',
+  assay: 'assay bench',
+  preserve: 'E10 Static preserve sites',
+  digger: 'Old Digger',
+};
+
 export class HeadlessContractSim {
   readonly manifest: ContractManifest;
   readonly contractId: string;
@@ -1401,7 +1412,11 @@ export class HeadlessContractSim {
       setWeapon: (weapon) => this.setWeapon(weapon),
       secureChoice: (choice) => this.answerSecureChoice(choice),
       contextAction: (order) => this.contextAction(order),
-      capture: () => this.atomic?.capture(this.prospector.position)
+      // ADR-005 stage 1: from the HERO, matching `Game.confirmAction`'s
+      // `this.wrangle.tryCapture(this.actionActor.group.position)`. A browser room seat already
+      // captured from the rider's own hero; this is GR-SIM catching up, so the two engines answer
+      // the same question at the same body.
+      capture: () => this.atomic?.capture(this.hero.group.position)
         ? { ok: true }
         : { ok: false, reason: 'CAPTURE requires an exhausted machine within capture range.' },
       boatBuild: (padId, buildingId) => this.deepwater?.placeBoatBuilding(padId, buildingId)
@@ -2035,7 +2050,13 @@ export class HeadlessContractSim {
       this.timeAlive,
       this.hero.group.position,
     );
-    const hollowChip = this.hollowCrossing.update(STEP_SECONDS, this.prospector.position, 'prospector');
+    // F-RPG-3, CURED 2026-09-07 (`rider-parity-grammar-stage3` item 10, ADR-005). The crossing was
+    // walked by the PROSPECTOR here and by every VISIBLE ACTOR in the browser
+    // (`Game.updateActors`, `src/game/Game.ts:3285-3286`), and the chip it earned was applied to the
+    // HERO either way — so GR-SIM asked one body where it stood and hurt another. The hero walks
+    // the crossing now, which is the body a human positions and the body that pays. The actor key
+    // moves with it so the per-actor radiation carry is not inherited across the change.
+    const hollowChip = this.hollowCrossing.update(STEP_SECONDS, this.hero.group.position, 'hero');
     if (hollowChip > 0) this.combat.damageActor(hollowChip, -1, this.hero);
     // E8: the HUMAN's suit against the domes, read off the hero's own position — the body a rider
     // steers with `MOVE_HERO` and the only body on these maps that breathes (owner directive
@@ -2936,14 +2957,20 @@ export class HeadlessContractSim {
   }
 
   /**
-   * E10S-3 — STOKE, from the PROSPECTOR'S OWN GROUND, exactly as `plant`, `recover`, `fund` and
+   * E10S-3 — STOKE, from the RIDER'S OWN GROUND, exactly as `plant`, `recover`, `fund` and
    * the canal verdicts work: the world names the target, so the body's position is the whole
    * argument and there is nothing for a rider to mis-index. The purse is the run's own —
    * `Economy.apply` refuses when the gold is not there and the vent gains nothing — because F-1741
    * forbids headless-only minting, and Economy is the only gold writer on either engine.
+   *
+   * ADR-005 stage 1: the ground is the HERO'S, matching `Game.confirmAction`'s
+   * `this.tryStokeVent(this.actionActor.group.position)`. The audit predicted this one converges
+   * TOWARD the browser rather than away (`docs/bench/rider-parity-audit.md` §3d): the Ember Shore
+   * prover already assumed the browser's rule, where the body that stands in the vent disc is the
+   * one the player walks.
    */
   private stokeVent(): { ok: true } | { ok: false; reason: string } {
-    const result = this.preserveVent.tryStoke(this.prospector.position, (amount) => this.economy.apply(this.economyEvent({
+    const result = this.preserveVent.tryStoke(this.hero.group.position, (amount) => this.economy.apply(this.economyEvent({
       type: 'gold_spent',
       sink: PRESERVE_STOKE_SINK,
       amount,
@@ -2966,10 +2993,24 @@ export class HeadlessContractSim {
     if (order.action === 'plant') return this.plantSeedVault();
     if (order.action === 'stoke') return this.stokeVent();
     if (order.action === 'redig' || order.action === CANAL_BACKFILL_ACTION) return this.decideCanalSegment(order.action);
+    // ADR-005 stage 3 item 8: the confirm key's last four world interactions. GR-SIM composes NONE
+    // of their consumers — no drill yard, no assay bench, neither E10 boss — so they refuse
+    // honestly here, exactly as `CAPTURE`/`GRADE`/`HAUL`/`PLAYBOOK_USE` refuse where no handler is
+    // bound. The refusal NAMES the action rather than answering a generic 'unavailable', because a
+    // rider that cannot tell 'this engine has no bench' from 'you are not standing at one' cannot
+    // plan. `now.contextPress` publishes the same fact ahead of the order, so a rider never has to
+    // discover it by being refused.
+    if (order.action === 'drill' || order.action === 'assay' || order.action === 'preserve' || order.action === 'digger') {
+      return { ok: false, reason: `REJECTED: ${order.action} is unavailable in this engine; it has no ${CONFIRM_KEY_CONSUMERS[order.action]}.` };
+    }
     const { id, index } = order.target;
+    // ADR-005 stage 1: upgrade and demolish reach from the HERO, matching the browser's own
+    // `this.buildSystem.upgradeBuilding(id, index, this.timeAlive, this.actionActor.group.position)`
+    // and its demolish twin. This is the heaviest of the nine in heat-12 traffic (160 of the 169
+    // CONTEXT_ACTION orders were `upgrade`), so it is the one whose hashes move most.
     const ok = order.action === 'upgrade'
-      ? this.build.upgradeBuilding(id, index, this.timeAlive, this.prospector.position)
-      : this.build.demolish(id, index, this.timeAlive, this.prospector.position);
+      ? this.build.upgradeBuilding(id, index, this.timeAlive, this.hero.group.position)
+      : this.build.demolish(id, index, this.timeAlive, this.hero.group.position);
     if (!ok) return { ok: false, reason: `REJECTED: ${order.action} ${id}:${index} is not legal here.` };
     this.syncStockpileHoldings();
     this.replayEvents.push({ type: 'context_action', at: round(this.timeAlive), action: order.action, target: { id, index } });
@@ -2977,9 +3018,12 @@ export class HeadlessContractSim {
   }
 
   /**
-   * A6 — THE RECOVERY AND THE PLAYBACK, headless. The Prospector is the body that crosses
-   * (the hero never leaves its stake, `:919`), so the reach test reads the Prospector's
-   * position exactly as `fundMegaproject` below does.
+   * A6 — THE RECOVERY AND THE PLAYBACK, headless. The reach test reads the HERO'S position,
+   * exactly as `fundMegaproject` below does and exactly as the browser's
+   * `this.tryRecoverProbe(this.actionActor.group.position)` does (ADR-005 stage 1). The comment
+   * this replaces said "the Prospector is the body that crosses (the hero never leaves its
+   * stake)" — true when it was written, false since `MOVE_HERO` shipped 2026-09-06: the hero is
+   * now the body a rider walks, and it is the one the human walks too.
    *
    * THE PLAYBACK IS THE REPLAY-LOG EVENT. This engine has no jack-board and no float text, so
    * the banked fragment is carried in the event and mirrored on `now.probeRecovery` — a rider
@@ -2987,7 +3031,7 @@ export class HeadlessContractSim {
    * fires exactly once because the consumer's latch is one-way.
    */
   private recoverProbe(): { ok: true } | { ok: false; reason: string } {
-    const result = this.probeRecovery.recover(this.prospector.position);
+    const result = this.probeRecovery.recover(this.hero.group.position);
     if (!result.ok) return { ok: false, reason: `REJECTED: ${result.reason}.` };
     this.replayEvents.push({
       type: PROBE_RECOVERED_EVENT,
@@ -2999,15 +3043,16 @@ export class HeadlessContractSim {
   }
 
   /**
-   * A8's context action, reached by the SAME public verb the browser player uses — the
-   * Prospector must be standing at the stake, exactly as the megaproject fund below demands the
-   * site. The plant is optional by construction: a rider that never issues this order still
+   * A8's context action, reached by the SAME public verb the browser player uses — the RIDER'S
+   * HERO must be standing at the stake (ADR-005 stage 1), exactly as the megaproject fund below
+   * demands the site and exactly as the browser's
+   * `this.seedCaravan?.tryPlant(this.actionActor.group.position)` demands it. The plant is optional by construction: a rider that never issues this order still
    * secures, and one that plants three times pays three quarters of the guard for three greens
    * that outlive the run.
    */
   private plantSeedVault(): { ok: true } | { ok: false; reason: string } {
     if (!this.seedCaravan) return { ok: false, reason: 'REJECTED: this contract declares no planting grounds.' };
-    const planted = this.seedCaravan.tryPlant(this.prospector.position);
+    const planted = this.seedCaravan.tryPlant(this.hero.group.position);
     if (!planted.ok) return planted;
     this.replayEvents.push({
       type: 'context_action',
@@ -3020,16 +3065,17 @@ export class HeadlessContractSim {
   }
 
   /**
-   * A10's context actions, reached by the SAME public verbs the browser player uses — the
-   * Prospector must be standing at the stake, exactly as the plant and the megaproject fund
-   * demand their ground. Neither is optional the way a plant is: this contract cannot secure
+   * A10's context actions, reached by the SAME public verbs the browser player uses — the RIDER'S
+   * HERO must be standing at the stake (ADR-005 stage 1), exactly as the plant and the megaproject
+   * fund demand their ground and exactly as the browser's
+   * `this.canalChoices?.decide(this.actionActor.group.position, 'redig')` demands it. Neither is optional the way a plant is: this contract cannot secure
    * until all three segments carry a verdict, so a rider that never issues these orders loses
    * the map no matter how long it survives.
    */
   private decideCanalSegment(action: 'redig' | 'backfill'): { ok: true } | { ok: false; reason: string } {
     if (!this.canalChoices) return { ok: false, reason: `REJECTED: ${CANAL_NOT_DECLARED_REASON}.` };
     const choice = action === 'redig' ? 'redig' : 'demolish';
-    const decided = this.canalChoices.decide(this.prospector.position, choice);
+    const decided = this.canalChoices.decide(this.hero.group.position, choice);
     if (!decided.ok) {
       // ALREADY_DECIDED is the one refusal a rider will meet by simply re-issuing an order that
       // already landed, so it is named rather than lumped with the reach failure.
@@ -3047,17 +3093,18 @@ export class HeadlessContractSim {
   }
 
   /**
-   * E4's two verbs, reached through the same public grammar and answered from the Prospector's
-   * ground exactly as `fundMegaproject` below reads its site: `GRADE` grades the corridor stake the
-   * Prospector stands at, `HAUL` calls the Hauler to where the Prospector stands. Both are refused
+   * E4's two verbs, reached through the same public grammar and answered from the HERO'S ground
+   * (ADR-005 stage 1) exactly as `fundMegaproject` below reads its site: `GRADE` grades the corridor
+   * stake the hero stands at, `HAUL` calls the Hauler to where the hero stands — which is the
+   * browser's own rule, `this.motorGrade(this.actionActor.group.position) || this.motorHaul(...)`. Both are refused
    * with a reason a rider can act on (which stake is nearest, why the tank cannot move it).
    */
   private motorVerb(verb: 'GRADE' | 'HAUL'): { ok: true } | { ok: false; reason: string } {
     if (!this.motor) return { ok: false, reason: `REJECTED: ${verb} needs a contract that declares twist.motorFrontier.` };
     const emit = (event: MotorEvent) => this.replayEvents.push(event);
     const result = verb === 'GRADE'
-      ? this.motor.gradeAt(this.prospector.position, round(this.timeAlive), emit)
-      : this.motor.haulTo(this.prospector.position, round(this.timeAlive), emit);
+      ? this.motor.gradeAt(this.hero.group.position, round(this.timeAlive), emit)
+      : this.motor.haulTo(this.hero.group.position, round(this.timeAlive), emit);
     return result.ok ? { ok: true } : result;
   }
 
@@ -3092,9 +3139,13 @@ export class HeadlessContractSim {
     if (this.signalSuppression.refuse('playbooks')) {
       return this.refusePlaybook(name, SIGNAL_SUPPRESSION_REASON, SIGNAL_SUPPRESSION_VOICE, 'suppressed');
     }
-    // The front's refusal is asked at the BODY that would run the program — the Prospector, the one
-    // body a rider moves here — exactly as the browser asks it at the actor's own position.
-    if (this.interferenceFront.refuse('playbooks', this.prospector.position)) {
+    // The front's refusal is asked at the BODY that would run the program — the HERO (ADR-005
+    // stage 1), exactly as the browser asks it at the actor's own position
+    // (`Game.useNamedPlaybookForRider`: `this.interferenceFront.refuse('playbooks', actor.group.position)`,
+    // and `Game.playbookMutedByFront`: the same call at `this.primaryActor.group.position`).
+    // F-RPG-2 CLOSED (stage 3 item 9): `syncProgramSuspension` asks this same front at this same
+    // body now, so a program cannot be suspended at a body that did not start it.
+    if (this.interferenceFront.refuse('playbooks', this.hero.group.position)) {
       return this.refusePlaybook(name, INTERFERENCE_MUTED_REASON, INTERFERENCE_MUTED_VOICE, 'muted');
     }
 
@@ -3234,7 +3285,13 @@ export class HeadlessContractSim {
    */
   private syncProgramSuspension(): void {
     if (!this.interferenceFront.isDeclared) return;
-    const at = this.prospector.position;
+    // F-RPG-2, CURED 2026-09-07 (`rider-parity-grammar-stage3` item 9, ADR-005). This read was
+    // `this.prospector.position` while `usePlaybook` two hundred lines up asked the same front at
+    // the hero, so a running program could be auto-suspended at a body the rider never placed and
+    // could not move — and the browser asks BOTH at its acting hero
+    // (`Game.playbookMutedByFront`, `src/game/Game.ts:3964-3965`). One front, one body, both
+    // engines: the hero, which is the body a human positions.
+    const at = this.hero.group.position;
     const muted = this.interferenceFront.muted(at.x, at.z);
     if (muted && this.runningProgram !== null && this.installedProgram) {
       const cleared = this.surface.tools.submit_orders([]);
@@ -3329,9 +3386,12 @@ export class HeadlessContractSim {
       return { ok: false, reason: 'REJECTED: no megaproject stage can be funded.' };
     }
     const { x, z, w, d } = manifest.siteFootprint;
-    const dx = Math.max(Math.abs(this.prospector.position.x - x) - w * 0.5, 0);
-    const dz = Math.max(Math.abs(this.prospector.position.z - z) - d * 0.5, 0);
-    if (dx * dx + dz * dz > 2.2 * 2.2) return { ok: false, reason: 'OUT_OF_REACH: the Prospector is not at the megaproject site.' };
+    const dx = Math.max(Math.abs(this.hero.group.position.x - x) - w * 0.5, 0);
+    const dz = Math.max(Math.abs(this.hero.group.position.z - z) - d * 0.5, 0);
+    // ADR-005 stage 1: the refusal names the body that actually has to stand there. The browser's
+    // own fund is `this.fundMegaprojectStage(this.actionActor.group.position)`, so the rider walks
+    // the hero to the site exactly as the player does.
+    if (dx * dx + dz * dz > 2.2 * 2.2) return { ok: false, reason: 'OUT_OF_REACH: the rider is not at the megaproject site.' };
     const cost = megaprojectStageCost(manifest, project);
     const spent = this.economy.apply(this.economyEvent({
       type: 'gold_spent',

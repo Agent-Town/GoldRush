@@ -125,6 +125,19 @@ export type AgentView = {
      * physics profile the run rides under, read off the same `E8PhysicsSystem` diagnostics both
      * engines publish. Present only where the contract declares gravity.
      */
+    /**
+     * ADR-005 stage 3 item 8 (additive, contract-scoped — like `preserve`, `gravity` and `air`, and
+     * therefore outside the canonical `viewSchema.fields` set): the four world interactions the
+     * confirm key reaches and no verb named until this slice. Present only where the engine
+     * composes at least one of them — never on the headless door, which composes none and refuses
+     * the four actions by name.
+     */
+    contextPress?: {
+      readonly drill: readonly { id: 'faucet' | 'bell'; x: number; z: number }[];
+      readonly assay: boolean;
+      readonly preserve: readonly { id: string; verb: string; held: boolean }[];
+      readonly digger: { x: number; z: number; boarded: boolean } | null;
+    };
     gravity?: AgentGravityView;
     /**
      * E8 (additive, contract-scoped): air as the wall — the Prospector's suit timer, each dome
@@ -371,6 +384,54 @@ function buildStablePrefix(
   };
 }
 
+/**
+ * ADR-005 stage 3 item 8 — THE CONFIRM KEY'S OWN MENU, published so a rider learns it the way a
+ * player does: by seeing what is offered, not by pressing and being refused.
+ *
+ * `Game.confirmAction` reaches four world interactions no verb named until this slice — the drill
+ * yard's faucet and bell, the assay office's bench, the E10 Static's kept meanings and the Old
+ * Digger's deck. This row names which of the four THIS ENGINE composes and, where the consumer
+ * already reports it, where they stand. Additive and contract-scoped, exactly like `preserve`,
+ * `gravity` and `air`: absent entirely where none of the four is composed, which is every GR-SIM
+ * contract today (the headless door composes no drill yard, no bench and neither E10 boss, and its
+ * CONTEXT_ACTION handler says so in the refusal).
+ *
+ * MEASURED GAP, published rather than hidden: the E10 Static's own diagnostics carry no site
+ * COORDINATES (`E10StaticBossDiagnostics.sites` is id/kind/verb/meaning/held/protectedFor/
+ * interactions), so `preserve` names the sites and their verbs but cannot say where they are. A
+ * rider walks to them the way a player does — the sites are authored props on one map. Giving them
+ * coordinates means editing that system, which is outside this slice's firewall.
+ */
+function readContextPress(diagnostics: Record<string, unknown>): AgentView['now']['contextPress'] {
+  const yard = record(diagnostics.drillYard);
+  const faucet = record(yard.faucet);
+  const bell = record(yard.bell);
+  const stations: { id: 'faucet' | 'bell'; x: number; z: number }[] = [];
+  if (typeof faucet.x === 'number' && typeof faucet.z === 'number') stations.push({ id: 'faucet', x: round(faucet.x), z: round(faucet.z) });
+  if (typeof bell.x === 'number' && typeof bell.z === 'number') stations.push({ id: 'bell', x: round(bell.x), z: round(bell.z) });
+
+  const staticBoss = record(diagnostics.e10Static);
+  const sites = Array.isArray(staticBoss.sites)
+    ? staticBoss.sites.flatMap((entry) => {
+        const site = record(entry);
+        const id = text(site.id);
+        const verb = text(site.verb);
+        return id && verb ? [{ id, verb, held: site.held === true }] : [];
+      })
+    : [];
+  const preserveSites = staticBoss.enabled === true ? sites : [];
+
+  const digger = record(diagnostics.oldDiggerBoss);
+  const diggerAt = record(digger.position);
+  const diggerRow = digger.active === true && typeof diggerAt.x === 'number' && typeof diggerAt.z === 'number'
+    ? { x: round(diggerAt.x), z: round(diggerAt.z), boarded: digger.boarded === true }
+    : null;
+
+  const assay = diagnostics.assayBenchInReach === true;
+  if (stations.length === 0 && preserveSites.length === 0 && diggerRow === null && !assay) return undefined;
+  return { drill: stations, assay, preserve: preserveSites, digger: diggerRow };
+}
+
 function buildNow(
   diagnostics: Record<string, unknown>,
   economyLog: readonly EconomyEvent[],
@@ -412,6 +473,7 @@ function buildNow(
   const gravity = readGravity(record(diagnostics.e8Physics));
   const air = readAir(record(diagnostics.e8Atmosphere));
   const emberShore = readEmberShore(record(diagnostics.preserveVent));
+  const contextPress = readContextPress(diagnostics);
   return {
     wave: boundary.wave,
     blastReadyInMs: Math.max(0, Math.round(number(diagnostics.blastReadyInMs))),
@@ -422,6 +484,7 @@ function buildNow(
     ...(gravity ? { gravity } : {}),
     ...(air ? { air } : {}),
     ...(emberShore ? { emberShore } : {}),
+    ...(contextPress ? { contextPress } : {}),
     timers: {
       runSeconds: round(boundary.runSeconds),
       nextWaveInSeconds: round(number(diagnostics.nextWaveInSim)),

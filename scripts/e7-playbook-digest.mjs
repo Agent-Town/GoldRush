@@ -20,15 +20,15 @@ export const E7_PLAYBOOK_SCRIPTS = {
     { verb: 'BUILD', what: 'sentry_beacon', where: RELAY_R1_PAD, when: { goldGte: 25 } },
   ]],
   'e7-echo-canyon': [
-    [{ verb: 'PLAYBOOK_USE', name: 'canyon-patrol' }, ...harvest('gold-seam-1', 6), { verb: 'HOLD', pos: { x: 0, z: 10 } }],
-    [{ verb: 'PLAYBOOK_USE', name: 'canyon-patrol' }, { verb: 'HOLD', pos: { x: 0, z: 10 } }],
+    [{ verb: 'PLAYBOOK_USE', name: 'canyon-patrol' }, ...harvest('gold-seam-1', 6), { verb: 'MOVE_HERO', pos: { x: 0, z: 10 } }],
+    [{ verb: 'PLAYBOOK_USE', name: 'canyon-patrol' }, { verb: 'MOVE_HERO', pos: { x: 0, z: 10 } }],
   ],
   'e7-dead-band': [[{ verb: 'PLAYBOOK_USE', name: 'old-tools' }]],
   'e7-relay-rush': [[
     { verb: 'PLAYBOOK_USE', name: 'relay-program' },
     ...harvest('gold-seam-1', 10),
     { verb: 'BUILD', what: 'sentry_beacon', where: RELAY_R1_PAD, when: { goldGte: 25 } },
-    { verb: 'HOLD', pos: { x: -25, z: 41 } },
+    { verb: 'MOVE_HERO', pos: { x: -25, z: 41 } },
   ]],
 };
 

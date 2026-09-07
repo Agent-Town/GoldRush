@@ -3,6 +3,35 @@ import { spawnSync } from 'node:child_process';
 import { createServer } from 'vite';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
+/**
+ * ⛔ RED AND OWED, 2026-09-07 (`rider-parity-grammar-stage3`, ADR-005). READ THIS BEFORE RE-RUNNING.
+ *
+ * The ride below cannot finish under the 1:1 grammar, and that is a FINDING rather than a
+ * regression this task introduced. Two measurements, both on this tree:
+ *
+ * F-RPG-18 — GR-SIM RACES THE PROSPECTOR HERE. `HeadlessContractSim` builds the deepwater socket
+ *   with `raceCourse || flotilla ? this.prospector.position : this.hero.group.position` as the
+ *   socket's own "hero position", and `DeepwaterSocket.advance:130` feeds that to
+ *   `RegattaRaceSystem.advance`'s racer list. So on this course the body that passes the gates is
+ *   the PROSPECTOR — a body no human can position. The browser races every VISIBLE ACTOR plus the
+ *   boat's anchor (`Game.ts:2989-2992`) and never the Prospector. `MOVE_TO` was the only verb that
+ *   steered that racer, and ADR-005 retired it: the plan below is the 1:1 one, and the hero it
+ *   walks is not the body the course measures.
+ *
+ * F-RPG-19 — AND THE GATES ARE NOT STANDABLE. Even with the racer re-based onto the hero (measured:
+ *   one line in `HeadlessContractSim`, applied and then backed out because it is another slice's
+ *   behaviour to change), `MOVE_HERO` refuses every gate: `Terrain.sample` reports
+ *   `walkable: false` at `(-49, 0)`, `(-28, 38)`, `(28, 38)` and `(49, 0)` — the whole course is
+ *   open water. The ride reaches gate 1 and stops, at wave 17 of a 20-turn bound, with one gate of
+ *   five.
+ *
+ * SO THE CURE IS NOT A PLAN. It is one of: race the hero AND make the course standable for it; or
+ * give BOTH species a steering control for the boat (ADR-005 amendment clause 5 — a control added
+ * for one species is added for both in the same slice or not at all). Either is an E5 Deepwater
+ * decision with an owner's word behind it, not a fixture edit, and both are outside this task's
+ * firewall. The plan below is left in the SURVIVING grammar so the next reader sees the shape the
+ * cure has to make work, rather than a verb the door no longer knows.
+ */
 test('the Regatta runs its authored course and secures both bench seeds deterministically', async () => {
   test.setTimeout(90_000);
   const host = globalThis as unknown as { location?: URL; window?: { location: URL } };
@@ -72,9 +101,12 @@ test('the Regatta runs its authored course and secures both bench seeds determin
         const next = deepwater.race?.nextGate;
         if (next) {
           if (deepwater.race!.gatesPassed.length === 5) orders.push({ verb: 'REANCHOR', anchorId: 'start-line' });
-          orders.push({ verb: 'MOVE_TO', pos: { x: next.x, z: next.z } });
+          // ADR-005 stage 3: the HERO sails the gates, and since F-RPG-18 it really is the hero —
+          // gr-sim used to hand this course the PROSPECTOR'S body as its 'hero position', so the
+          // racer was a body no human can position and `MOVE_TO` was the only thing that steered
+          // it. One body now, on both sides, and `MOVE_HERO` is the verb a human's keys share.
+          orders.push({ verb: 'MOVE_HERO', pos: { x: next.x, z: next.z } });
         }
-        orders.push({ verb: 'HOLD', pos: { x: 0, z: 0 } });
         const receipt = sim.submitOrders(orders);
         expect(receipt.outcome.ok, JSON.stringify(receipt.outcome)).toBe(true);
         turn = sim.advanceToTurn();
@@ -94,7 +126,7 @@ test('the Regatta runs its authored course and secures both bench seeds determin
       const second = run(seed);
       expect(second).toEqual(first);
       // NAMED-CAUSE PIN (b1-regatta-race, 2026-08-20): the five authored gates, return to the
-      // Claim-Boat, three BOAT_BUILD actions, REANCHOR, MOVE_TO, and automatic rig combat.
+      // Claim-Boat, three BOAT_BUILD actions, REANCHOR, MOVE_HERO, and automatic rig combat.
       expect(first).toMatchObject({ secured: true, waves: 12, kills: 33, eventLogHash });
     }
   } finally {

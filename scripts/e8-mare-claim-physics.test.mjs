@@ -283,7 +283,9 @@ test('the secure turns on the regolith run: same seed, same orders, two latches'
   // authored way back to breathable air (there is no water here, so no sluice to be sent to).
   const orders = [
     { verb: 'HARVEST', seam: 'gold-seam-1' },
-    { verb: 'HOLD', pos: centreOf(dome('dome-cluster-pad-center')) },
+    // ADR-005 stage 3: was HOLD on the pad. The rider walks its HERO onto the pad and the
+    // Prospector drifts in behind it to breathe — the answer public/skill.md now teaches.
+    { verb: 'MOVE_HERO', pos: centreOf(dome('dome-cluster-pad-center')) },
   ];
 
   // LATCH CLOSED — the run has not worked its ground, so the wave-20 boundary offers nothing.

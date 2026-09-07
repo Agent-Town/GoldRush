@@ -53,7 +53,7 @@ child.stdout.on('data', (chunk) => {
     firstView = false;
     const orders = MODE === 'invalid'
       ? [{ verb: 'PICK_UPGRADE', id: 'no-such-offer-id-s2128' }]
-      : [{ verb: 'HOLD', pos: { x: 0, z: 12 } }];
+      : [{ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }];
     sentAt = Date.now();
     child.stdin.write(`${JSON.stringify(orders)}\n`);
   }

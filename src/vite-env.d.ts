@@ -187,6 +187,12 @@ interface ThreeGameDiagnostics {
   pulse: number;
   edge: 'north' | 'south' | 'east' | 'west' | null;
   drillYard: import('./game/DrillYard').DrillYardDiagnostics | null;
+  /**
+   * ADR-005 stage 3 item 8: whether the acting body stands inside an assay office's bench reach.
+   * Published on the RIDER's diagnostics (`Game.agentRiderDiagnostics`) so `now.contextPress` can
+   * say the same thing the player's prompt says. Optional: the local-player literal does not carry it.
+   */
+  assayBenchInReach?: boolean;
   budget: number;
   lastPulseAt: number;
   spawnDisabled: boolean;

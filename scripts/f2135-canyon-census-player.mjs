@@ -37,7 +37,7 @@ export default async function censusOrders(view) {
     if (now.gold >= pairCost) {
       return [
         ...sites.slice(built, pairEnd).flatMap((pos, index) => [
-          { verb: 'MOVE_TO', pos },
+          { verb: 'MOVE_HERO', pos },
           { verb: 'BUILD', what: 'sentry_beacon', where: pos, when: { goldGte: COSTS[built + index] } },
         ]),
         nextTurn(),
@@ -45,7 +45,7 @@ export default async function censusOrders(view) {
     }
     return harvestOrPoll(view, sites[built]);
   }
-  return [{ verb: 'HOLD', pos: { x: 0, z: -44 } }];
+  return [{ verb: 'MOVE_HERO', pos: { x: 0, z: -44 } }];
 }
 
 censusOrders.reset = () => { turnNumber = 0; rows = []; };
@@ -89,7 +89,7 @@ function harvestOrPoll(view, destination) {
   const pos = distance(here, destination) < 0.2
     ? { x: here.x + (Math.floor(view.now.timers.runSeconds * 5) % 2 ? -1 : 1), z: here.z }
     : destination;
-  return [{ verb: 'MOVE_TO', pos }, nextTurn()];
+  return [{ verb: 'MOVE_HERO', pos }, nextTurn()];
 }
 
 function nextTurn() {

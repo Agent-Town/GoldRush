@@ -273,7 +273,7 @@ import { ProspectorDispatchInput, type ProspectorDispatchTarget } from '../ui/Pr
 import { PartyOverview, type PartyOverviewSnapshot } from '../ui/PartyOverview';
 import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
-import { BuildingContextPrompt, type CanalDecisionCandidate, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
+import { BuildingContextPrompt, type CanalDecisionCandidate, type DeckContextCandidate, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { LanternShow, validateAgentRunTape, type LanternShowState } from '../ui/LanternShow';
@@ -310,7 +310,7 @@ import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgra
 import { clearScores, loadScores, recordScore, type ScoreRecord } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
-import { buildableDefs, isBuildableId, resolveBeaconLadder, type BuildableId } from './buildables'; // `resolveBeaconLadder` rides this line so no cited coordinate below moves (`Game.ts:2547`, scripts/fire.md)
+import { buildableDefs, getBuildableDef, isBuildableId, resolveBeaconLadder, type BuildableId } from './buildables'; // `resolveBeaconLadder` rides this line so no cited coordinate below moves (`Game.ts:2547`, scripts/fire.md)
 import {
   captureRunSuspendSnapshot,
   multiplayerRunSuspendFutureState,
@@ -345,7 +345,7 @@ import { SeedCaravanSystem } from '../systems/SeedCaravanSystem';
 import { ScheduledRelocationSystem } from '../systems/ScheduledRelocationSystem';
 import { DevilsAlleyPresentation } from '../systems/DevilsAlleyPresentation';
 import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
-import { CanalChoiceSystem } from '../systems/CanalChoiceSystem';
+import { CanalChoiceSystem, CANAL_DECISION_REACH } from '../systems/CanalChoiceSystem';
 import { CanalFlowPresentation } from '../systems/CanalFlowPresentation';
 
 // THE CLAIM DECLARES ITS CLIP GROUPS BEFORE ITS FIRST WAVE (task hero-slot-clip-split, 2026-09-07).
@@ -1470,6 +1470,8 @@ export class Game {
   private upgradeCandidate: UpgradeCandidate | null = null;
   /** A10: the undecided stake in reach, or null. Drives the two-button prompt. */
   private canalDecisionCandidate: CanalDecisionCandidate | null = null;
+  /** ADR-005 stage 4: the Claim-Boat pad and anchor list a plain-boot player can reach. */
+  private deckContextCandidate: DeckContextCandidate | null = null;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastBuildIntent = false;
@@ -1867,6 +1869,11 @@ export class Game {
       // one seat could take on another's behalf is a persistence bug waiting to be filed.
       () => void this.canalChoices?.decide(this.actionActor.group.position, 'redig'),
       () => void this.canalChoices?.decide(this.actionActor.group.position, 'demolish'),
+      // ADR-005 stage 4. No multiplayer queue entry for either: the Deepwater Claim is a
+      // single-seat contract, and a deck a second seat could rebuild under the first is a
+      // persistence bug waiting to be filed — the same reason A10's verdicts queue nothing.
+      () => void this.tryDeckBuild(),
+      (anchorId: string) => void this.tryReanchor(anchorId),
     );
     this.assayOfficePrompt = new AssayOfficePrompt(this.promptStack);
     this.worldInfoNotePrompt = new WorldInfoNotePrompt(this.promptStack);
@@ -3655,6 +3662,24 @@ export class Game {
           // the crossing is the mechanic, so whoever walks it is who can lift the probe.
           : order.action === 'recover'
             ? this.tryRecoverProbe(actor.group.position)
+          // ADR-005 stage 3 item 8: the confirm key's last four world interactions, each bound to the
+          // SAME call `confirmAction` makes and reaching from the RIDER'S OWN BODY, in the order the
+          // key tries them. Before this a player pressing confirm reached the drill yard, the assay
+          // bench and both E10 bosses while a rider could reach none of them; that was the last
+          // human-richer row in the ADR-005 controls table.
+          : order.action === 'drill'
+            ? (this.drillYard?.interact(actor.group.position) ?? false)
+            : order.action === 'assay'
+            // The same two lines the key runs: the bench is an INFORMATION surface, so the rider's
+            // press focuses it exactly as the player's does and changes no simulation state either
+            // way. Reach is `assayOfficeInRange`, read from the acting body, not re-typed.
+            ? (this.buildSystem.assayOfficeInRange(actor.group.position)
+              ? (this.audio.play('ledger-open'), this.openAssayBench?.(), true)
+              : false)
+            : order.action === 'preserve'
+            ? this.e10StaticBoss.tryPreserve(actor.group.position, this.timeAlive)
+            : order.action === 'digger'
+            ? this.oldDiggerBoss.tryInteract(actor.group.position, this.timeAlive)
             : order.action === 'upgrade'
               ? this.buildSystem.upgradeBuilding(order.target.id, order.target.index, this.timeAlive, actor.group.position)
               : this.buildSystem.demolish(order.target.id, order.target.index, this.timeAlive, actor.group.position);
@@ -3707,6 +3732,12 @@ export class Game {
         terminalReceipt: this.agentRiderTerminal !== null,
       },
       ui: { ...ui, agent: null },
+      // ADR-005 stage 3 item 8: the confirm key's own reach, read from THIS RIDER'S body. Published
+      // so a rider learns the menu the way a player does — by seeing the prompt light up — rather
+      // than by pressing and being refused. The three other rows come from consumers this
+      // diagnostics literal already carries (`drillYard`, `e10Static`, `oldDiggerBoss`), so only
+      // the bench's reach is new here, and it is READ off `BuildSystem`, never re-typed.
+      assayBenchInReach: actor ? this.buildSystem.assayOfficeInRange(actor.group.position) : false,
       agent: {
         embodiment: {
           position,
@@ -8225,7 +8256,8 @@ export class Game {
     // A10: offered in ordinary play (no build mode, no `?debug`) — Mistake #10's answer to "where
     // does the PLAYER see this, in a plain boot?" is this prompt, on the stake, from wave 1.
     const canal = canInteract && !this.buildMenuOpen ? this.canalDecisionCandidate : null;
-    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund, canal);
+    const deck = canInteract && !this.buildMenuOpen ? this.deckContextCandidate : null;
+    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund, canal, deck);
     this.syncProbeHint();
   }
 
@@ -8241,6 +8273,7 @@ export class Game {
     this.demolishCandidate = demolish;
     this.upgradeCandidate = upgrade;
     this.canalDecisionCandidate = canInteract ? this.canalDecisionAt(position) : null;
+    this.deckContextCandidate = canInteract ? this.deckContextAt(position) : null;
     this.maybeEmitStampSiteBeat(fund);
   }
 
@@ -8257,6 +8290,95 @@ export class Game {
       title: 'The old cut: decide it once',
       line: 'Re-dig and the water runs here forever, and nothing stands in it. Demolish and the ground is yours to build on, forever. This choice outlives the run.',
     };
+  }
+
+
+  /**
+   * ADR-005 stage 4 — THE DECK, in a plain boot.
+   *
+   * The nearest UNOCCUPIED Claim-Boat pad within reach of the acting hero, plus every anchor the
+   * boat is not currently at. Offered exactly like the megaproject site and the canal stake: not
+   * gated on build mode, because a pad is a place on a hull rather than a building, and present in
+   * ordinary play from wave 1.
+   *
+   * The reach is `CANAL_DECISION_REACH`, READ rather than minted. Its own comment says why: the
+   * canal stake borrowed `SEED_CARAVAN_PLANT_REACH` because "a second number for the same gesture
+   * would only be a second thing to get wrong", and standing at a deck pad IS that gesture. Nothing
+   * is added to `Balance`.
+   *
+   * Pads sit at the anchor plus their authored offset, so they MOVE when the boat does; the
+   * positions are read from the live snapshot every tick rather than cached.
+   */
+  private deckContextAt(position: THREE.Vector3): DeckContextCandidate | null {
+    const claim = this.deepwaterClaim;
+    if (!claim) return null;
+    const boat = claim.snapshot().boat;
+    let best: { id: string; distanceSq: number } | null = null;
+    for (const pad of boat.pads) {
+      if (pad.occupied) continue;
+      const distanceSq = distanceSq2(position.x, position.z, boat.anchor.x + pad.x, boat.anchor.z + pad.z);
+      if (distanceSq > CANAL_DECISION_REACH * CANAL_DECISION_REACH) continue;
+      if (!best || distanceSq < best.distanceSq) best = { id: pad.id, distanceSq };
+    }
+    const anchors = this.deckAnchorChoices(boat.anchor.id);
+    if (!best && anchors.length === 0) return null;
+    const buildingId = this.buildSystem.diagnostics.selectedBuildable;
+    if (!best) return null;
+    return {
+      padId: best.id,
+      buildingId,
+      buildingName: getBuildableDef(buildingId)?.displayName ?? buildingId,
+      anchors,
+      title: 'The deck, and the water under it',
+      line: 'A pad takes one work and holds it while the boat moves. Weighing anchor carries the whole claim, deck and all.',
+    };
+  }
+
+  /**
+   * Every anchor the boat is not at, in authored order. A Flotilla hull is an anchor too — the
+   * door's `REANCHOR` accepts a living hull id there — so both sources are offered, exactly as
+   * `__GR_TEST__.reanchorClaimBoat` routes them.
+   */
+  private deckAnchorChoices(currentAnchorId: string): { id: string; label: string }[] {
+    const hulls = this.flotillaHulls?.diagnostics.hulls ?? [];
+    if (hulls.length > 0) {
+      return hulls.filter(({ id }) => id !== currentAnchorId).map(({ id }) => ({ id, label: id }));
+    }
+    const claimBoat = this.activeContract.tileParams.deepwater?.claimBoat;
+    return (claimBoat?.anchors ?? [])
+      .filter((anchor) => anchor.id !== currentAnchorId)
+      .map((anchor) => ({ id: anchor.id, label: anchor.id }));
+  }
+
+  /**
+   * ADR-005 stage 4: the confirm key's deck half. Zero-resource, exactly as `BOAT_BUILD` is —
+   * `ClaimBoat.placeBuilding` spends nothing, and `public/skill.md` has claimed the two verbs
+   * "mirror the player's zero-resource actions" since before the player had them.
+   */
+  private tryDeckBuild(): boolean {
+    const candidate = this.deckContextCandidate;
+    if (!candidate || !this.deepwaterClaim) return false;
+    const placed = this.deepwaterClaim.placeBoatBuilding(candidate.padId, candidate.buildingId);
+    if (!placed) return false;
+    this.recordLedgerBuildable(candidate.buildingId);
+    this.updateBuildingContextCandidates();
+    this.publishDiagnostics();
+    return true;
+  }
+
+  /**
+   * ADR-005 stage 4: the anchor list's half. Routed through the SAME branch the `?debug` bridge
+   * used, including the A2 noise beat — only a boat that actually got under way makes engine noise.
+   */
+  private tryReanchor(anchorId: string): boolean {
+    const moved = this.flotillaHulls?.diagnostics.hulls.some(({ id }) => id === anchorId)
+      ? this.flotillaHulls.reanchor(anchorId)
+      : this.deepwaterClaim?.reanchor(anchorId) ?? false;
+    if (!moved) return false;
+    this.noiseHunt?.onReanchor(this.timeAlive);
+    this.updateBuildingContextCandidates();
+    this.publishDiagnostics();
+    return true;
   }
 
   private syncWorldInfoNotePrompt(): void {
@@ -9587,6 +9709,11 @@ export class Game {
     // Confirm is the touch context key too: at a survey stake it grades first; elsewhere it calls
     // the Hauler. Keyboard players retain U as the direct grade shortcut.
     if (this.motorGrade(this.actionActor.group.position) || this.motorHaul(this.actionActor.group.position)) return;
+    // ADR-005 stage 4: the deck pad, ahead of demolish for the reason every world interaction above
+    // is — a Claim-Boat pad carries no work of its own, so nothing here can claim a press meant for
+    // a building. On every non-deepwater contract `deckContextCandidate` is null and this costs a
+    // null check.
+    if (this.tryDeckBuild()) return;
     this.confirmDemolish();
   }
 
@@ -9600,6 +9727,13 @@ export class Game {
    * binding was minted for a mechanic that lives on one map.
    */
   private confirmUpgrade(): boolean {
+    // ADR-005 stage 4: the upgrade key weighs anchor for the FIRST anchor the prompt lists, which is
+    // how a keyboard player reaches the list without a new binding — the same argument A10 made for
+    // putting its demolish half here. It can never collide: a deepwater claim refuses every
+    // ordinary build (`confirmAction`'s first branch), so there is no work on these maps for the
+    // upgrade below to claim.
+    const anchor = this.deckContextCandidate?.anchors[0];
+    if (anchor && this.tryReanchor(anchor.id)) return true;
     if (this.canalChoices?.decide(this.actionActor.group.position, 'demolish').ok) return true;
     if (this.motorGrade(this.actionActor.group.position)) return true;
     const candidate = this.upgradeCandidate;

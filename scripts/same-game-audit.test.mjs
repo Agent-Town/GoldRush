@@ -526,7 +526,10 @@ test('every door verb is mapped to a human control (ADR-005)', () => {
   const declared = declaredDoorVerbs();
   // Assert the control's own validity before believing what it says (F-2215-1): comparing two
   // empty sets passes while measuring nothing.
-  assert.ok(declared.length >= 18, `control invalid: only ${declared.length} door verbs found`);
+  // 15, not 18: ADR-005 stage 3 retired MOVE_TO, HOLD and FALLBACK_IF, the three verbs that
+  // positioned the Prospector. The floor is what makes this control VALID rather than vacuous
+  // (F-2215-1: two empty sets compare equal), so it tracks the door and is never a ceiling.
+  assert.ok(declared.length >= 15, `control invalid: only ${declared.length} door verbs found`);
   assert.deepEqual(mappedDoorVerbs(), declared,
     'a door verb has no ADR-005 human-control row (or a row names a verb the door dropped) — '
     + 'edit HUMAN_CONTROLS in scripts/same-game-audit.mjs');
@@ -557,8 +560,13 @@ test('same-game audit publishes the ADR-005 controls section', () => {
     }
   }
 
-  // The ruling names this one out loud, so it is pinned rather than merely derived.
-  assert.equal(controls.verbs.find((entry) => entry.verb === 'MOVE_TO').verdict, 'agent-only');
+  // The ruling names these out loud, so they are pinned rather than merely derived. MOVE_TO was
+  // 'agent-only' here until ADR-005 stage 3; the ruling's answer to an agent-only positioning verb
+  // is that it stops existing, so what is pinned now is its ABSENCE from the door's own grammar.
+  for (const retired of ['MOVE_TO', 'HOLD', 'FALLBACK_IF']) {
+    assert.equal(controls.verbs.find((entry) => entry.verb === retired), undefined,
+      `${retired} is back in the door grammar; ADR-005 forbids a verb that positions the Prospector`);
+  }
   assert.equal(controls.verbs.find((entry) => entry.verb === 'MOVE_HERO').verdict, 'equal');
   assert.equal(controls.summary.equal + controls.summary['agent-only'] + controls.summary['human-only-richer'],
     controls.verbs.length);

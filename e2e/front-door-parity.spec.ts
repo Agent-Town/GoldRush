@@ -2,19 +2,20 @@ import { expect, test } from '@playwright/test';
 import { spawn, spawnSync } from 'node:child_process';
 
 const HARVEST = (seam: string) => Array.from({ length: 6 }, () => ({ verb: 'HARVEST', seam }));
-const HOLD = [{ verb: 'HOLD', pos: { x: 0, z: 12 } }];
+// ADR-005 stage 3: the plan used to walk the Prospector to the claim and pin it there. It walks
+// the HERO now, and the Prospector drifts to it.
+const POST = [{ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }];
 const SECURING_ORDERS = [
   [
     ...HARVEST('gold-seam-2'),
     ...HARVEST('gold-seam-3'),
     ...HARVEST('gold-seam-1'),
-    { verb: 'MOVE_TO', pos: { x: 0, z: 12 } },
     { verb: 'BUILD', what: 'turret', where: { x: -3, z: 8 }, when: { goldGte: 50 } },
     { verb: 'BUILD', what: 'palisade', where: { x: -3, z: 10 }, when: { goldGte: 10 } },
     { verb: 'BUILD', what: 'palisade', where: { x: 0, z: 10 }, when: { goldGte: 10 } },
     { verb: 'BUILD', what: 'palisade', where: { x: 3, z: 10 }, when: { goldGte: 10 } },
     { verb: 'BUILD', what: 'palisade', where: { x: 0, z: 14 }, when: { goldGte: 10 } },
-    ...HOLD,
+    ...POST,
   ],
 ];
 const ANSWERED_FIRST_UPGRADE_LEVEL = 2;
@@ -59,8 +60,8 @@ function runReactive(answerOffers: boolean) {
           : firstView
             ? SECURING_ORDERS[0]
             : answerOffers && offer
-              ? [{ verb: 'PICK_UPGRADE', id: offer.id }, ...HOLD]
-              : HOLD;
+              ? [{ verb: 'PICK_UPGRADE', id: offer.id }, ...POST]
+              : POST;
         firstView = false;
         child.stdin.write(`${JSON.stringify(orders)}\n`);
       }
@@ -112,7 +113,11 @@ test('pure stdin progression and panning secure the Claim deterministically', as
     kills: 297,
     calls: 27,
     defaultedPicks: 0,
-    eventLogHash: 'fnv1a32:05270638',
+    // 05270638 -> 5747d7e0 (rider-parity-grammar-stage3 B, ADR-005): the plan above dropped the
+    // MOVE_TO that walked the Prospector to the claim and its trailing HOLD became MOVE_HERO at
+    // the same point, so the hero takes the post the Prospector was pinned to. Everything else
+    // this test is about is byte-identical: secured, wave 10, 297 kills, 0 gold, 27 calls.
+    eventLogHash: 'fnv1a32:5747d7e0',
   });
 });
 
@@ -132,7 +137,9 @@ test('silence defaults the first upgrade at the deadline', async () => {
     kills: 200,
     calls: 38,
     defaultedPicks: 6,
-    eventLogHash: 'fnv1a32:bd899678',
+    // bd899678 -> 3d9681c1, the same one cause as the ride above; secured false, wave 8, 200
+    // kills, 6 defaulted picks and 38 calls all unmoved.
+    eventLogHash: 'fnv1a32:3d9681c1',
   });
 });
 

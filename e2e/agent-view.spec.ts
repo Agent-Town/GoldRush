@@ -614,7 +614,7 @@ test('the seeded rider view stays cache-shaped and grows one honest wave at a ti
       economyLog: () => window.__GR_TEST__!.economyLog(),
       standingOrders: () => ({
         needsRider: true,
-        orders: [{ id: 'orders-1', order: { verb: 'HOLD', pos: { x: 0, z: 12 } }, status: 'active' }],
+        orders: [{ id: 'orders-1', order: { verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }, status: 'active' }],
         log: [{ seq: 1, at: 0, type: 'surprise', surprise: 'claim_damage' }],
       }),
     }).tools.view();

@@ -29,6 +29,9 @@ const source = Object.fromEntries([
   'src/playbook/PlaybookSurface.ts',
   'src/ui/ProspectorDispatchInput.ts',
   'src/ui/ProspectorPanel.ts',
+  // ADR-005 stage 4: the deck prompt is where BOAT_BUILD and REANCHOR gained their human twins,
+  // so the rows that claim those twins cite it and this list has to be able to resolve them.
+  'src/ui/BuildingContextPrompt.ts',
 ].map((file) => [file, read(file)]));
 
 const vite = await createServer({ root: ROOT, server: { middlewareMode: true }, appType: 'custom', logLevel: 'silent' });
@@ -50,8 +53,28 @@ function line(file, needle) {
   return `${file}:${source[file].slice(0, index).split('\n').length}`;
 }
 
+/**
+ * F-RPA-1, CLOSED 2026-09-07 by `rider-parity-grammar-stage3` — because the removal made it BITE.
+ *
+ * This used to read `/'([^']+)'/g`, which crosses newlines: wherever a comment inside a scanned
+ * block contained an apostrophe (`a human's keys`, `Reject-don't-stretch`), the match ran from that
+ * apostrophe to the next one and swallowed every declaration in between. The audit shipped for
+ * months with a registry four verbs short and nothing wrong downstream, because no probe asked
+ * about the four it was missing. Removing `MOVE_TO`, `HOLD` and `FALLBACK_IF` from the union moved
+ * the apostrophes, and the NEXT declaration to be swallowed was `PICK_UPGRADE` — which every
+ * contract's upgrade draft is matched against, so 222 mechanics flipped from `equal` to
+ * `agent-lacks` and the report announced `pick_upgrade` as an action no verb reaches. A false
+ * divergence at that scale is worse than none, so the parent master's own option A is taken here
+ * (`tasks/rider-parity-grammar.md` item 21: "Either fix `quoted()` to stop at a newline and re-pin
+ * the mechanics summary in the same commit, or leave it ... Do not fix it silently").
+ *
+ * A quoted literal never spans a line in any of the three blocks this reads (the buildable union,
+ * the StandingOrder union, the tape-action set), so bounding the class to one line loses nothing
+ * real and stops the swallow. `verbRegistryGap` below is now expected to be EMPTY, and the report
+ * says so where it used to publish the gap.
+ */
 function quoted(block) {
-  return [...block.matchAll(/'([^']+)'/g)].map((match) => match[1]);
+  return [...block.matchAll(/'([^'\n]+)'/g)].map((match) => match[1]);
 }
 
 function between(text, start, end) {
@@ -105,29 +128,23 @@ const doorVerbs = [...new Set(quoted(standingOrderUnion))];
  * `doorVerbs` above is `quoted()` over the whole block, so it also collects the union's lowercase
  * argument literals (`rig`, `bank`, `stoke`, `upgrade`) and, because `quoted()` matches across
  * newlines, twenty-odd fragments of the block's own comments wherever an apostrophe closes one.
- * Thirty-eight entries for eighteen verbs. That is harmless for the `includes('MOVE_TO')` probes
- * below, and useless as a denominator: a controls map checked against it would demand a human
- * control for `Reject-don`. This selector reads the discriminant itself.
+ * More entries than verbs, and useless as a denominator either way: a controls map checked against
+ * it would demand a human control for `bank`. This selector reads the discriminant itself.
  */
 const doorVerbNames = [...new Set(
   [...standingOrderUnion.matchAll(/verb: '([A-Z][A-Z_]*)'/g)].map((match) => match[1]),
 )].sort();
 if (doorVerbNames.length === 0) throw new Error('StandingOrder union shape changed: no verb discriminants found');
 /**
- * F-RPA-1, measured by this selector on the day it was written: `doorVerbs` is SHORT BY FOUR.
+ * F-RPA-1, CLOSED 2026-09-07 by `rider-parity-grammar-stage3` (see `quoted()` above for the whole
+ * account, and for the measurement that forced it: the removal moved the union's apostrophes and
+ * the next declaration swallowed was `PICK_UPGRADE`, which cost 222 mechanics their `equal`).
  *
- * `quoted()`'s `'([^']+)'` crosses newlines, so wherever a comment inside the union contains an
- * apostrophe (`a human's keys`, `Reject-don't-stretch`, `the player's own loop`) the match runs
- * from that apostrophe to the next one and swallows the declarations between them. `FALLBACK_IF`,
- * `GRADE`, `HAUL` and `PLAYBOOK_USE` are all declared immediately after such a comment and are
- * therefore ABSENT from `doorVerbs` today.
- *
- * Nothing above asks `doorVerbs.includes()` about any of the four, so no row is wrong right now.
- * The hazard is the next row: `doorVerbs.includes('GRADE')` reads false, so a GRADE row would
- * report `agent-lacks` on every contract, and the resulting divergence would be attributed to the
- * door rather than to a regex. That is the F-2371-1 lesson in another file, and the strict
- * selector below is the reason this section cannot inherit it. Published rather than thrown: the
- * loose list is load-bearing for the pinned mechanics summary and is not this slice's to change.
+ * The gap is EXPECTED TO BE EMPTY now, and it is still measured rather than assumed: this is the
+ * kind of defect that comes back the moment someone widens `quoted()` again, and the report below
+ * publishes the list either way. A non-empty gap here means a verb the loose registry cannot see,
+ * which is how a `doorVerbs.includes()` probe would silently report `agent-lacks` on every contract
+ * and blame the door for a regex (the F-2371-1 lesson, in another file).
  */
 const verbRegistryGap = doorVerbNames.filter((verb) => !doorVerbs.includes(verb));
 const looseVerbsMissed = doorVerbs.filter((entry) => /^[A-Z][A-Z_]*$/.test(entry) && !doorVerbNames.includes(entry));
@@ -286,9 +303,15 @@ const HUMAN_CONTROLS = {
   BOAT_BUILD: {
     body: 'world',
     reaches: 'occupies a named Claim-Boat pad with a named building',
-    human: null,
-    verdict: 'agent-only',
-    note: 'NO plain-boot control. The only browser lever is `__GR_TEST__.placeBoatBuilding`, installed only under `?debug`.',
+    human: {
+      control: 'the confirm key (or the prompt button) while the hero stands at an unoccupied Claim-Boat pad, placing the current build selection',
+      cites: [['src/game/Game.ts', 'private tryDeckBuild(): boolean {'],
+        ['src/ui/BuildingContextPrompt.ts', "this.deckBuildButton.dataset.testid = 'deck-build';"]],
+    },
+    verdict: 'equal',
+    note: 'ADR-005 stage 4 gave the HUMAN the control rather than cutting the verb (clause 2). Both are '
+      + 'zero-resource and both name a pad; the rider names it by id, the human by standing at it. '
+      + "Proved in a plain boot with no `?debug`: e2e/rider-parity-grammar.spec.ts.",
   },
   BUILD: {
     body: 'prospector',
@@ -300,7 +323,8 @@ const HUMAN_CONTROLS = {
     },
     verdict: 'equal',
     note: 'The mechanic has a twin and both are radius-bounded. The asymmetry is WHICH body carries the radius, '
-      + 'and that is charged to MOVE_TO rather than counted twice here.',
+      + 'and that asymmetry is now GONE: the acting body is the hero on both sides (ADR-005 stage 3 '
+      + 'retired MOVE_TO, which this note used to charge it to).',
   },
   CAPTURE: {
     body: 'prospector',
@@ -314,23 +338,22 @@ const HUMAN_CONTROLS = {
       + 'reach travels with a body the human cannot place.',
   },
   CONTEXT_ACTION: {
-    body: 'prospector',
-    reaches: 'upgrade, demolish, fund, recover, plant, redig, backfill, stoke, from the acting body\'s ground',
+    body: 'hero',
+    reaches: 'upgrade, demolish, fund, recover, plant, redig, backfill, stoke, drill, assay, preserve, digger, '
+      + 'from the acting body\'s ground',
     human: {
       control: 'the confirm key (and U for demolish/backfill) at the hero, one chain of world interactions',
       cites: [['src/game/Game.ts', 'private confirmAction(confirmAllowedAtIssue = true): void {'],
         ['src/game/Game.ts', 'private confirmUpgrade(): boolean {']],
     },
-    verdict: 'human-only-richer',
-    note: 'The same confirm key ALSO reaches four interactions no verb names: the drill yard, the assay bench, '
-      + 'the E10 static boss and the Old Digger. GR-SIM acts from the Prospector where the human acts from the hero.',
-  },
-  FALLBACK_IF: {
-    body: 'prospector',
-    reaches: 'sends the Prospector to a point once the live-enemy count crosses a threshold',
-    human: null,
-    verdict: 'agent-only',
-    note: 'Positions the Prospector, conditionally. A human has no threshold rule and no destination to give.',
+    verdict: 'equal',
+    note: 'ADR-005 stage 3 item 8 closed the last human-richer row. The confirm key reached four world '
+      + 'interactions no verb named: the drill yard, the assay bench, the E10 Static and the Old Digger. '
+      + 'All four are CONTEXT_ACTION actions now (drill, assay, preserve, digger), each bound to the SAME '
+      + 'call the key makes and reaching from the acting body\'s own position, and now.contextPress '
+      + 'publishes the menu. Stage 1 had already moved the family off the Prospector onto the hero in '
+      + 'GR-SIM, so both species act from the same body. Where an engine composes none of the four '
+      + 'consumers they refuse by name, exactly as CAPTURE/GRADE/HAUL/PLAYBOOK_USE do.',
   },
   GRADE: {
     body: 'prospector',
@@ -366,14 +389,6 @@ const HUMAN_CONTROLS = {
     verdict: 'equal',
     note: 'Same body difference as GRADE: the rider calls the Hauler to a Prospector it placed, the human to its hero.',
   },
-  HOLD: {
-    body: 'prospector',
-    reaches: 'pins the Prospector at a point by re-issuing that point every tick, against its drift',
-    human: null,
-    verdict: 'agent-only',
-    note: 'The verb exists BECAUSE the Prospector drifts to the hero. A human cannot suppress that drift at all; '
-      + 'walking the hero is the whole of the human\'s answer.',
-  },
   MOVE_HERO: {
     body: 'hero',
     reaches: 'walks the hero to a point down the same Intents.move seam a human\'s keys drive',
@@ -384,13 +399,6 @@ const HUMAN_CONTROLS = {
     verdict: 'equal',
     note: 'The ruling\'s first half, already shipped: the rider steers the rider\'s body, and only its own '
       + '(the solo browser door refuses with HERO_NOT_YOURS).',
-  },
-  MOVE_TO: {
-    body: 'prospector',
-    reaches: 'walks the Prospector to any point on the map',
-    human: null,
-    verdict: 'agent-only',
-    note: 'THE VERB THE RULING NAMES FIRST. There is no human control for it and, by the ruling, there must not be one.',
   },
   PICK_UPGRADE: {
     body: 'world',
@@ -417,22 +425,30 @@ const HUMAN_CONTROLS = {
   REANCHOR: {
     body: 'world',
     reaches: 'moves the Claim Boat to a known non-current anchor, or nudges a Flotilla hull',
-    human: null,
-    verdict: 'agent-only',
-    note: 'NO plain-boot control. The only browser lever is `__GR_TEST__.reanchorClaimBoat`, installed only under `?debug`.',
+    human: {
+      control: 'the anchor list in the same deck prompt — one button per anchor the boat is not at, with the upgrade key bound to the first',
+      cites: [['src/game/Game.ts', 'private tryReanchor(anchorId: string): boolean {'],
+        ['src/ui/BuildingContextPrompt.ts', 'private renderAnchors(anchors: readonly { id: string; label: string }[]): void {']],
+    },
+    verdict: 'equal',
+    note: 'ADR-005 stage 4. Same routing as the retired `?debug` lever, Flotilla hulls included, and the '
+      + 'same A2 noise beat on a boat that actually got under way. Proved in a plain boot with no '
+      + '`?debug`: e2e/rider-parity-grammar.spec.ts.',
   },
   REPAIR_UNDER: {
     body: 'prospector',
-    reaches: 'walks the Prospector to the first work anywhere on the map below the given percentage and repairs it',
+    reaches: 'walks the Prospector to the NEAREST work within Balance.sparkRig.range below the given percentage and repairs it',
     human: {
-      control: 'the Prospector panel\'s "Repair under N% HP" number input, which sets the threshold and nothing else',
+      control: 'the Prospector panel\'s "Repair under N% HP" number input, plus the same radius sweep the order now uses',
       cites: [['src/ui/ProspectorPanel.ts', 'data-prospector-automation="repairUnderPct"'],
-        ['src/game/Game.ts', 'private nearestProspectorRepairTarget()']],
+        ['src/game/Game.ts', 'private nearestProspectorRepairTarget()'],
+        ['src/agent/StandingOrders.ts', 'const searchRange = Balance.sparkRig.range;']],
     },
-    verdict: 'agent-only',
-    note: 'THE THRESHOLD IS EQUAL AND THE REACH IS NOT. The human\'s sweep only considers works within '
-      + 'Balance.sparkRig.range of the Prospector, which drifts to the hero; the order\'s search has no radius at '
-      + 'all and its travel clause carries the Prospector to whatever it finds.',
+    verdict: 'equal',
+    note: 'ADR-005 stage 2. The THRESHOLD was always equal; the REACH is now too. The order\'s search '
+      + 'used to have no radius at all and its travel clause carried the Prospector to whatever it found '
+      + 'anywhere on the map. It now takes the NEAREST work within Balance.sparkRig.range of the acting '
+      + 'body, read off the same field the human sweep reads, exactly as Game.nearestProspectorRepairTarget does.',
   },
   SECURE_CHOICE: {
     body: 'world',

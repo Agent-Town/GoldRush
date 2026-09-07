@@ -68,7 +68,9 @@ function plan(view) {
   for (const seam of view.now.seams.filter(({ active, remaining }) => active && remaining > 0)) {
     for (let count = 0; count < 4; count += 1) orders.push({ verb: 'HARVEST', seam: seam.id });
   }
-  orders.push({ verb: 'HOLD', pos: { x: 0, z: 12 } });
+  // ADR-005 stage 3: the plan used to park the PROSPECTOR here with HOLD. It parks the HERO now,
+  // and the Prospector drifts to it — the same claim, held by the only body a rider positions.
+  orders.push({ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } });
   return orders.slice(0, 32);
 }
 

@@ -216,7 +216,7 @@ async function checkBrowserAgentOrders(browserEnv) {
     const submittedTick = before.tick;
     await agent.send([
       { verb: 'BUILD', what: 'palisade', where: { x: 0, z: 10 }, when: { goldGte: 0 } },
-      { verb: 'MOVE_TO', pos: { x: 8, z: 8 } },
+      { verb: 'MOVE_HERO', pos: { x: 8, z: 8 } },
     ], 'browser-order-arm-1');
     await Promise.all([left, right].map(({ page }) => page.waitForFunction(
       ({ tick }) => {
@@ -235,7 +235,7 @@ async function checkBrowserAgentOrders(browserEnv) {
 
     assert(a.rider.visible && b.rider.visible, 'the agent rider is a visible hero in both browser worlds');
     assert(Math.hypot(a.rider.position.x - before.rider.position.x, a.rider.position.z - before.rider.position.z) > 1,
-      'MOVE_TO changes the agent hero position');
+      'MOVE_HERO changes the agent hero position');
     assertEqual(JSON.stringify(a.rider.position), JSON.stringify(b.rider.position), 'both browsers place the agent hero identically');
     assertEqual(a.palisades, 1, 'the agent rider BUILD lands once in the first browser');
     assertEqual(b.palisades, 1, 'the agent rider BUILD lands once in the second browser');

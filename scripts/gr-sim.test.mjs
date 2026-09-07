@@ -158,7 +158,7 @@ test('gr-sim resumes at a recorded mid-ride tick as one byte-identical tape', { 
         for (let count = 0; count < 4; count += 1) orders.push({ verb: 'HARVEST', seam: seam.id });
       }
       if (view.now.works.hp > 0 && view.now.works.hp < view.now.works.maxHp * 0.6) orders.push({ verb: 'REPAIR_UNDER', pct: 80 });
-      orders.push({ verb: 'HOLD', pos: { x: 0, z: 12 } });
+      orders.push({ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } });
       return orders.slice(0, 32);
     };
     const straight = await scriptedCli(
@@ -209,7 +209,7 @@ test('a reactive client can recover from rejected orders', { timeout: 30_000 }, 
   const answer = (view) => {
     if (view.now.pendingSecure) return [{ verb: 'SECURE_CHOICE', choice: 'bank' }];
     if (view.now.pendingOffer?.[0]) return [{ verb: 'PICK_UPGRADE', id: view.now.pendingOffer[0].id }];
-    return [{ verb: 'HOLD', pos: { x: 0, z: 12 } }];
+    return [{ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }];
   };
   const result = await new Promise((resolve, reject) => {
     const child = spawn(process.execPath,
@@ -463,14 +463,26 @@ test('the gr-sim door walks to a remote BUILD and its tape assay-replays', { tim
             continue;
           }
           views.push(message);
-          const orders = message.now.pendingOffer?.[0]
+          // F-RPG-14, found by re-planning this fixture (ADR-005 stage 3): the rider must ANSWER
+          // the secure window. It never did, so the window refused its ordinary plan over and over
+          // (SECURE_CHOICE_ONLY), and F-MCAP-1's cure spends the window's clock ONE REFUSAL AT A
+          // TIME while the tape writer records only ACCEPTED submissions. A tape written that way
+          // does not replay to its own order-log hash: the refusals that moved the state are not in
+          // it. Measured on this tree — without this branch, tape fnv1a32:634bba4f replays to
+          // fnv1a32:51f97ebf twice over, with a byte-identical world outcome; with it, tape and
+          // replay agree at fnv1a32:93466629. The plan was incomplete, not the door; the finding
+          // stands for the drain because any rider that lets the window refuse it writes an
+          // unreplayable tape.
+          const orders = message.now.pendingSecure
+            ? [{ verb: 'SECURE_CHOICE', choice: 'bank' }]
+            : message.now.pendingOffer?.[0]
             ? [{ verb: 'PICK_UPGRADE', id: message.now.pendingOffer[0].id }]
             : message.now.works.byKind.palisade > 0
-              ? [{ verb: 'HOLD', pos: target }]
+              ? [{ verb: 'MOVE_HERO', pos: target }]
               : message.now.gold >= 10
                 ? [
                     { verb: 'BUILD', what: 'palisade', where: target, when: { goldGte: 10 } },
-                    { verb: 'HOLD', pos: target },
+                    { verb: 'MOVE_HERO', pos: target },
                   ]
                 : [{ verb: 'HARVEST', seam: message.now.seams.find(({ active, remaining }) => active && remaining > 0)?.id ?? 'gold-seam-1' }];
           child.stdin.write(`${JSON.stringify(orders)}\n`);
@@ -508,7 +520,14 @@ test('the gr-sim door walks to a remote BUILD and its tape assay-replays', { tim
 });
 
 test('gr-sim keeps standing orders through free blank and null turns', () => {
-  const plan = JSON.stringify([{ verb: 'HOLD', pos: { x: 12, z: 12 } }]);
+  // ADR-005 stage 3: the plan was a single HOLD, whose whole property was that it never
+  // completes, so the order sat 'active' for as long as the run kept it. Nothing in the surviving
+  // grammar is permanently active — MOVE_HERO completes on arrival, and (12,12) is not even
+  // standable on this map (measured: UNREACHABLE_TERRAIN). A BUILD whose gold condition can never
+  // be met is the honest replacement for what this test measures: it is RETAINED, tick after tick,
+  // across the blank and null turns, and the ID below is the proof that it is the SAME record
+  // rather than a re-submitted one.
+  const plan = JSON.stringify([{ verb: 'BUILD', what: 'palisade', where: { x: 3, z: 12 }, when: { goldGte: 99999 } }]);
   const run = spawnSync(
     process.execPath,
     ['scripts/gr-sim.mjs', '--contract', 'e1-dry-gulch', '--seed', 'bench-001'],
@@ -519,7 +538,9 @@ test('gr-sim keeps standing orders through free blank and null turns', () => {
   const lines = run.stdout.trim().split('\n').map(JSON.parse);
   const views = lines.filter((line) => line.schema === 'goldrush.view.v1');
   assert.equal(lines.at(-1).calls, 1);
-  assert.deepEqual(views.slice(1, 4).map((view) => view.now.orders[0]?.status), ['active', 'active', 'active']);
+  assert.deepEqual(views.slice(1, 4).map((view) => view.now.orders[0]?.status), ['pending', 'pending', 'pending']);
+  assert.deepEqual(views.slice(1, 4).map((view) => view.now.orders[0]?.id), ['orders-1-1', 'orders-1-1', 'orders-1-1'],
+    'the blank and null turns kept the SAME order record, not a re-submitted one');
 });
 
 test('gr-sim hashes a fractional-yield run identically twice', async () => {
@@ -618,7 +639,7 @@ test('overtime banks the Claim secure and measures the homestead on both Node en
     if (view.now.works.hp > 0 && view.now.works.hp < view.now.works.maxHp * 0.6) {
       orders.push({ verb: 'REPAIR_UNDER', pct: 80 });
     }
-    orders.push({ verb: 'HOLD', pos: { x: 0, z: 12 } });
+    orders.push({ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } });
     return orders.slice(0, 32);
   };
   const run = (node) => new Promise((resolve, reject) => {
@@ -689,7 +710,7 @@ test('runtime rush and --overtime use the same CLI ceiling and terminal stream',
       for (let count = 0; count < 4; count += 1) orders.push({ verb: 'HARVEST', seam: seam.id });
     }
     if (view.now.works.hp > 0 && view.now.works.hp < view.now.works.maxHp * 0.6) orders.push({ verb: 'REPAIR_UNDER', pct: 80 });
-    orders.push({ verb: 'HOLD', pos: { x: 0, z: 12 } });
+    orders.push({ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } });
     return orders.slice(0, 32);
   };
   const run = (overtime) => scriptedCli(
@@ -702,7 +723,12 @@ test('runtime rush and --overtime use the same CLI ceiling and terminal stream',
   assert.equal(explicit.endReason ?? null, flagged.endReason ?? null);
   assert.notEqual(explicit.endReason, 'wave-ceiling');
   assert.equal(explicit.eventLogHash, flagged.eventLogHash);
-  assert.equal(explicit.eventLogHash, 'fnv1a32:94fe2e2d');
+  // 94fe2e2d -> ec44fd11 (rider-parity-grammar-stage3 B, ADR-005): the policy above ended with
+  // HOLD at the claim and now ends with MOVE_HERO at the same point, so the hero takes the post the
+  // Prospector used to be pinned to. What this test is ABOUT is untouched and still asserted above:
+  // the runtime rush and the --overtime flag ride the same ceiling and produce the SAME hash as
+  // each other, which is the invariant. Only the shared value moved, and one plan change moved it.
+  assert.equal(explicit.eventLogHash, 'fnv1a32:ec44fd11');
 });
 
 test('the CLI science input reaches and funds the published megaproject cost', { timeout: 30_000 }, async () => {
@@ -712,9 +738,29 @@ test('the CLI science input reaches and funds the published megaproject cost', {
     (view) => {
       const project = view.now.megaproject;
       if (project) publishedCost ??= project.cost;
+      // ADR-005 stage 1 (`tasks/rider-parity-grammar.md`): `fundMegaproject` reads the HERO'S
+      // position now, matching the browser's `this.fundMegaprojectStage(this.actionActor.group.position)`.
+      // A `MOVE_TO` here walked the PROSPECTOR to the site and left the hero at its stake, so the
+      // fund was refused forever and this test hung on `funded === true` (measured: TypeError on
+      // `outcome.fundedAt.gold`). The 1:1 plan is the human's own: walk the rider's body to the
+      // site, then press fund.
+      // The site CENTRE is not walkable — it is the building's own footprint — so a MOVE_HERO
+      // naming it is refused `UNREACHABLE_TERRAIN` (measured on `the-claim`: site (-8,16),
+      // `Terrain.sample` not walkable). The fund reach is 2.2 wu from the footprint RECTANGLE, and
+      // the view publishes `site.w`/`site.d`, so the legal approach is derivable: stand beside the
+      // building, exactly as the player does.
+      //
+      // The offsets below are not arbitrary. `MOVE_HERO` completes within `Balance.hero.radius`
+      // (0.5) of its target, so a plan that aims AT the reach boundary can stop just outside it —
+      // measured: aiming 1.5/1.5 clear of the footprint stopped the hero at (-3.8,12.95), gap
+      // 2.30 > 2.2, and the fund answered `OUT_OF_REACH` forever. This pair lands inside the
+      // 180 points on this map that stay in reach after a full arrival-radius overshoot.
+      const approach = project
+        ? { x: project.site.x + project.site.w / 2 + 1.5, z: project.site.z - project.site.d / 2 - 0.75 }
+        : null;
       const fund = project && !project.funded && view.now.gold >= project.cost
         ? [
-            { verb: 'MOVE_TO', pos: { x: project.site.x, z: project.site.z } },
+            { verb: 'MOVE_HERO', pos: approach },
             { verb: 'CONTEXT_ACTION', action: 'fund' },
           ]
         : [];
@@ -725,7 +771,7 @@ test('the CLI science input reaches and funds the published megaproject cost', {
         const seam = view.now.seams.find(({ active, remaining }) => active && remaining > 0);
         if (seam) return Array.from({ length: 6 }, () => ({ verb: 'HARVEST', seam: seam.id }));
       }
-      return [{ verb: 'HOLD', pos: { x: 0, z: 12 } }];
+      return [{ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }];
     },
     (view) => view.now.megaproject?.funded === true,
   );

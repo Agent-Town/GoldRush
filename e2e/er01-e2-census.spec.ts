@@ -6,11 +6,11 @@ import steamworks from '../assets/contracts/epoch-2-steamworks/contracts.json' w
 const GRAMMAR_ORDERS = [
   { verb: 'BUILD', what: 'palisade', where: { x: 0, z: 12 }, when: { goldGte: 10 } },
   { verb: 'REPAIR_UNDER', pct: 50 },
-  { verb: 'MOVE_TO', pos: { x: 1, z: 12 } },
-  { verb: 'HOLD', pos: { x: 0, z: 12 } },
+  // ADR-005 stage 3: MOVE_TO, HOLD and FALLBACK_IF were retired, so the grammar sample is the
+  // grammar that exists. MOVE_HERO is the one body-positioning verb left.
+  { verb: 'MOVE_HERO', pos: { x: 1, z: 12 } },
   { verb: 'HARVEST', seam: 'gold-seam-1' },
   { verb: 'HARVEST', sluice: 0 },
-  { verb: 'FALLBACK_IF', threat: { enemiesGte: 1 }, pos: { x: 0, z: 12 } },
 ] as const;
 
 for (const contract of steamworks.contracts) {

@@ -15,13 +15,16 @@ export type StandingOrder =
       rotationSteps?: 0 | 1 | 2 | 3;
     }
   | { verb: 'REPAIR_UNDER'; pct: number }
-  | { verb: 'MOVE_TO'; pos: AgentVec2 }
-  | { verb: 'HOLD'; pos: AgentVec2 }
   // hero-move-verb (owner ruling 2026-09-06, verbatim: "yes! please! rider has to be able to move,
-  // I did not know that was not possible before"). MOVE_TO and HOLD above steer the PROSPECTOR
-  // (`src/agent/Embodiment.ts:131` feeds their target to `assignWork`); nothing in this union ever
-  // reached the hero, which is why `reviews/relay-valley-winnable.md` F-RVW-6 filed the asymmetry
-  // as structural and why the Ember Shore prover's first ride died at 136 s with the vent kept
+  // I did not know that was not possible before"). THE ONLY BODY-POSITIONING VERB IN THIS UNION,
+  // and deliberately so since `rider-parity-grammar` stage 3 (ADR-005, owner 2026-09-07: "Humans
+  // cannot control the positioning of the Prospector, just the rider"). `MOVE_TO`, `HOLD` and
+  // `FALLBACK_IF` used to sit here and steered the PROSPECTOR (`src/agent/Embodiment.ts:131` fed
+  // their target to `assignWork`) — a second freely-positioned body no human has. They are gone,
+  // and an unknown verb refuses honestly at submission, which is the retirement ADR-004 wants.
+  // Before hero-move-verb landed, nothing in this union reached the hero at all, which is why
+  // `reviews/relay-valley-winnable.md` F-RVW-6 filed the asymmetry as structural and why the Ember
+  // Shore prover's first ride died at 136 s with the vent kept
   // (`artifacts/e10s-4-door/prover.mjs:60-66`). A human kites; a rider could only build something
   // that shoots back.
   //
@@ -31,12 +34,15 @@ export type StandingOrder =
   // `Hero.ts`'s movement math is touched, so a kited hero obeys terrain speed, slopes, walls,
   // depenetration and low-orbit drift exactly as a piloted one does.
   //
-  // THERE IS NO `HOLD_HERO`, deliberately (Mistake #14, reject-don't-stretch). `HOLD` exists for
-  // the Prospector because an idle Prospector DRIFTS: `Embodiment.driftNearHero:287` walks it back
-  // toward the hero every step it has no work, so "stay here" needs a verb that keeps re-issuing
-  // the point. The hero has no such drift. With no move intent `Hero.update` decelerates it to a
-  // stop and it stays where it stopped, so "hold the hero here" is already MOVE_HERO plus silence.
-  // A HOLD_HERO would add a verb whose only effect is to occupy the executor forever.
+  // THERE IS NO `HOLD_HERO`, deliberately (Mistake #14, reject-don't-stretch), and stage 3's
+  // removal of `HOLD` does not reopen the question — it closes it. `HOLD` existed for the
+  // Prospector because an idle Prospector DRIFTS: `Embodiment.driftNearHero:287` walks it back
+  // toward the hero every step it has no work, so "stay there" needed a verb that kept re-issuing
+  // the point. That verb is gone with the rest of the positioning family, and drift is now the
+  // WHOLE answer to where an unemployed Prospector stands — which is what a human gets. The hero
+  // has no such drift: with no move intent `Hero.update` decelerates it to a stop and it stays
+  // where it stopped, so "hold the hero here" is already MOVE_HERO plus silence. A HOLD_HERO would
+  // add a verb whose only effect is to occupy the executor forever.
   | { verb: 'MOVE_HERO'; pos: AgentVec2 }
   | { verb: 'BLAST_AT'; pos: AgentVec2 }
   | { verb: 'SET_WEAPON'; weapon: 'rig' | 'blast' }
@@ -70,6 +76,25 @@ export type StandingOrder =
   // verbs only because the browser's `applyDeferredAction` destructures `order.target` for every
   // action it does not name, and `stoke` IS named there (`src/game/Game.ts`, the targetless list).
   | { verb: 'CONTEXT_ACTION'; action: 'stoke' }
+  // ADR-005 stage 3 item 8 (owner 2026-09-07: "AI and human users have to have the same options and
+  // tools"). THE LAST FOUR PLACES THE CONFIRM KEY WENT AND NO VERB DID. `Game.confirmAction` tries,
+  // in this order, the drill yard's station, the assay office's bench, the E10 Static's kept
+  // meanings and the Old Digger's deck — four world interactions a player reaches with the same
+  // press that upgrades a work, and which a rider could not reach at all. They are actions of
+  // CONTEXT_ACTION and targetless, like `fund`/`recover`/`plant`/`stoke`, for the same reason:
+  // the WORLD names the target, so the acting body's position is the whole argument.
+  //
+  // Each is bound to the SAME call the confirm key makes and reaches from the acting body's own
+  // position, so neither species can out-reach the other. Where an engine composes none of the
+  // four consumers, they fail honestly ("unavailable in this engine") exactly as
+  // `CAPTURE`/`GRADE`/`HAUL`/`PLAYBOOK_USE` do — today that is GR-SIM, which composes no drill
+  // yard, no assay bench and neither E10 boss, and `now.contextPress` says so rather than
+  // pretending. NO NEW MECHANIC IS ADDED for either species (ADR-005 amendment clause 5): every
+  // one of these already existed on the human's key, and this is the rider's word for that key.
+  | { verb: 'CONTEXT_ACTION'; action: 'drill' }
+  | { verb: 'CONTEXT_ACTION'; action: 'assay' }
+  | { verb: 'CONTEXT_ACTION'; action: 'preserve' }
+  | { verb: 'CONTEXT_ACTION'; action: 'digger' }
   | { verb: 'CAPTURE' }
   | { verb: 'BOAT_BUILD'; padId: string; buildingId: string }
   | { verb: 'REANCHOR'; anchorId: string }
@@ -95,8 +120,7 @@ export type StandingOrder =
   // Like `CAPTURE`/`GRADE`/`HAUL` it executes through an optional handler and fails honestly
   // ("unavailable in this engine") wherever none is bound — the browser binds none today, which is
   // the human-parity gap this slice's guard pins rather than papers over.
-  | { verb: 'PLAYBOOK_USE'; name: string }
-  | { verb: 'FALLBACK_IF'; threat: { enemiesGte: number }; pos: AgentVec2 };
+  | { verb: 'PLAYBOOK_USE'; name: string };
 
 export type StandingOrderStatus = 'pending' | 'active' | 'done' | 'failed';
 
@@ -499,9 +523,30 @@ export class StandingOrdersExecutor {
     }
 
     if (order.verb === 'REPAIR_UNDER') {
-      const target = state.buildings.find(
-        (building) => building.maxHp > 0 && (building.wrecked || (building.hp / building.maxHp) * 100 < order.pct),
-      );
+      // ADR-005 stage 2 (`docs/bench/rider-parity-audit.md` §3a change 3). The policy NAME was
+      // already 1:1 — a human sets "repair under N% HP" in the Prospector panel — but the REACH was
+      // not. This search used to be `state.buildings.find(...)` with no distance term at all, so it
+      // took the FIRST work anywhere on the map below the threshold and its travel clause carried
+      // the Prospector to it. The human's sweep considers only works within `Balance.sparkRig.range`
+      // of the Prospector, which drifts to the hero and is therefore bounded by where the human
+      // walked, and it takes the NEAREST (`Game.nearestProspectorRepairTarget`, whose
+      // `bestDistanceSq` starts at that same range squared). Both halves are copied here.
+      //
+      // `Balance.sparkRig.range` is READ, never re-typed: the browser reads the same field, so the
+      // two engines cannot fork the next time the number moves. The reach that follows stays
+      // `Balance.wreck.repairRadius` — that is the repair's own reach, unchanged, and this radius
+      // is the SEARCH's.
+      //
+      // Measured from the ACTOR, which is the Prospector in GR-SIM and the seat's own body at a
+      // browser room seat — the same body the travel clause below walks, so a target this search
+      // accepts is always one the order can actually reach.
+      const searchRange = Balance.sparkRig.range;
+      const target = state.buildings.reduce<(typeof state.buildings)[number] | null>((best, building) => {
+        if (building.maxHp <= 0) return best;
+        if (!building.wrecked && (building.hp / building.maxHp) * 100 >= order.pct) return best;
+        if (distance(actor, building.position) > searchRange) return best;
+        return best === null || distance(actor, building.position) < distance(actor, best.position) ? building : best;
+      }, null);
       if (!target) return null;
       this.status(record, 'active', at);
       if (distance(actor, target.position) > Balance.wreck.repairRadius) return { movement: target.position };
@@ -509,21 +554,8 @@ export class StandingOrdersExecutor {
       return this.finishAction(record, receipt, target.position, at);
     }
 
-    if (order.verb === 'MOVE_TO') {
-      if (distance(actor, order.pos) <= Balance.agent.arriveRadius) {
-        this.status(record, 'done', at);
-        return {};
-      }
-      this.status(record, 'active', at);
-      return { movement: order.pos };
-    }
-
-    if (order.verb === 'HOLD') {
-      this.status(record, 'active', at);
-      return { movement: order.pos };
-    }
-
-    // hero-move-verb. Shaped on BUILD's travel clause above rather than on MOVE_TO's, because the
+    // hero-move-verb. Shaped on BUILD's travel clause above rather than on the retired MOVE_TO's,
+    // because the
     // hero can be BLOCKED in ways the Prospector cannot: it has no pathfinder, it collides with
     // terrain, and a target behind a wall would otherwise pin the executor forever on an order that
     // looks active and never arrives. So progress is watched the way BUILD watches its approach and
@@ -648,13 +680,7 @@ export class StandingOrdersExecutor {
       return {};
     }
 
-    if (state.enemiesAlive < order.threat.enemiesGte) return null;
-    this.status(record, 'active', at);
-    if (distance(actor, order.pos) <= Balance.agent.arriveRadius) {
-      this.status(record, 'done', at);
-      return {};
-    }
-    return { movement: order.pos };
+    return null;
   }
 
   private finishAction(
@@ -862,10 +888,10 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     if (!exactKeys(value, ['verb', 'pct']) || !finiteInRange(value.pct, 0, 100)) return schemaError(index, 'REPAIR_UNDER');
     return { verb: 'REPAIR_UNDER', pct: value.pct };
   }
-  if (value.verb === 'MOVE_TO' || value.verb === 'HOLD' || value.verb === 'MOVE_HERO') {
-    // hero-move-verb rides the same two-key shape on purpose: a point is a point, and a rider that
-    // can write MOVE_TO can write MOVE_HERO without learning a second grammar. The bodies differ,
-    // the schema does not.
+  if (value.verb === 'MOVE_HERO') {
+    // hero-move-verb rides the same two-key shape the retired MOVE_TO did, on purpose: a point is
+    // a point, and a rider that knew the old grammar writes the new one without learning a second
+    // shape. One body now, and the schema is the one it always was.
     if (!exactKeys(value, ['verb', 'pos']) || !validPos(value.pos)) return schemaError(index, value.verb);
     return { verb: value.verb, pos: value.pos };
   }
@@ -904,6 +930,11 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     if (value.action === 'redig' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'redig' };
     if (value.action === 'backfill' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'backfill' };
     if (value.action === 'stoke' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'stoke' };
+    // ADR-005 stage 3 item 8: the confirm key's last four world interactions, targetless like the rest.
+    if (value.action === 'drill' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'drill' };
+    if (value.action === 'assay' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'assay' };
+    if (value.action === 'preserve' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'preserve' };
+    if (value.action === 'digger' && exactKeys(value, ['verb', 'action'])) return { verb: 'CONTEXT_ACTION', action: 'digger' };
     if ((value.action !== 'upgrade' && value.action !== 'demolish') || !exactKeys(value, ['verb', 'action', 'target']) || !isRecord(value.target)) {
       return schemaError(index, 'CONTEXT_ACTION');
     }
@@ -936,15 +967,6 @@ function validateOrder(value: Record<string, unknown>, index: number): StandingO
     // not a path, and the engine that resolves it decides what an unknown name means.
     if (!exactKeys(value, ['verb', 'name']) || !validId(value.name)) return schemaError(index, 'PLAYBOOK_USE');
     return { verb: 'PLAYBOOK_USE', name: value.name };
-  }
-  if (value.verb === 'FALLBACK_IF') {
-    if (!exactKeys(value, ['verb', 'threat', 'pos']) || !validPos(value.pos) || !isRecord(value.threat)) {
-      return schemaError(index, 'FALLBACK_IF');
-    }
-    if (!exactKeys(value.threat, ['enemiesGte']) || !finiteInRange(value.threat.enemiesGte, 1, 10_000)) {
-      return schemaError(index, 'FALLBACK_IF');
-    }
-    return { verb: 'FALLBACK_IF', threat: { enemiesGte: value.threat.enemiesGte }, pos: value.pos };
   }
   return `orders[${index}].verb "${value.verb}" is unknown.`;
 }
@@ -1133,7 +1155,7 @@ export function standingOrderIdentity(order: StandingOrder): string {
       ...(order.rotationSteps ? ['rotationSteps', order.rotationSteps] : [])]);
   }
   if (order.verb === 'REPAIR_UNDER') return JSON.stringify([order.verb, order.pct]);
-  if (order.verb === 'MOVE_TO' || order.verb === 'HOLD' || order.verb === 'MOVE_HERO' || order.verb === 'BLAST_AT') {
+  if (order.verb === 'MOVE_HERO' || order.verb === 'BLAST_AT') {
     return JSON.stringify([order.verb, order.pos.x, order.pos.z]);
   }
   if (order.verb === 'HARVEST') return JSON.stringify([order.verb, 'seam' in order ? order.seam : order.sluice]);
@@ -1146,8 +1168,7 @@ export function standingOrderIdentity(order: StandingOrder): string {
   if (order.verb === 'BOAT_BUILD') return JSON.stringify([order.verb, order.padId, order.buildingId]);
   if (order.verb === 'REANCHOR') return JSON.stringify([order.verb, order.anchorId]);
   if (order.verb === 'GRADE' || order.verb === 'HAUL') return JSON.stringify([order.verb]);
-  if (order.verb === 'PLAYBOOK_USE') return JSON.stringify([order.verb, order.name]);
-  return JSON.stringify([order.verb, order.threat.enemiesGte, order.pos.x, order.pos.z]);
+  return JSON.stringify([order.verb, order.name]);
 }
 
 function validId(value: unknown): value is string {

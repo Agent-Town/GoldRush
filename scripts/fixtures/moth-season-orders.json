@@ -1,94 +1,1794 @@
 [
-  [{"verb":"HARVEST","seam":"gold-seam-1"},{"verb":"HARVEST","seam":"gold-seam-1"},{"verb":"HARVEST","seam":"gold-seam-1"},{"verb":"HARVEST","seam":"gold-seam-1"},{"verb":"HARVEST","seam":"gold-seam-1"},{"verb":"HARVEST","seam":"gold-seam-1"},{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"HARVEST","seam":"gold-seam-2"},{"verb":"HARVEST","seam":"gold-seam-3"},{"verb":"HARVEST","seam":"gold-seam-3"},{"verb":"HARVEST","seam":"gold-seam-3"},{"verb":"HARVEST","seam":"gold-seam-3"},{"verb":"HARVEST","seam":"gold-seam-3"},{"verb":"HARVEST","seam":"gold-seam-3"},{"verb":"BUILD","what":"sentry_beacon","where":{"x":0,"z":-14},"when":{"goldGte":25}},{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"BUILD","what":"decoy_shed","where":{"x":8,"z":12},"when":{"goldGte":20}},{"verb":"BUILD","what":"sentry_beacon","where":{"x":-6,"z":8},"when":{"goldGte":60}},{"verb":"BUILD","what":"sentry_beacon","where":{"x":6,"z":8},"when":{"goldGte":90}},{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"tinkers_plating"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"pan_legend"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"tinkers_plating"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"tinkers_plating"}],
-  [{"verb":"PICK_UPGRADE","id":"split_spark"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"heavy_spark"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"split_spark"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"heavy_spark"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"heavy_spark"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"powder_charge"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"long_resonator"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"double_tap_coil"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"double_tap_coil"}],
-  [{"verb":"PICK_UPGRADE","id":"double_tap_coil"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"pan_legend"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}],
-  [{"verb":"PICK_UPGRADE","id":"powder_charge"}],
-  [{"verb":"REPAIR_UNDER","pct":60},{"verb":"HOLD","pos":{"x":0,"z":10}}]
+  [
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-1"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-1"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-1"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-1"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-1"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-1"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-2"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-2"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-2"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-2"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-2"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-2"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-3"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-3"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-3"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-3"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-3"
+    },
+    {
+      "verb": "HARVEST",
+      "seam": "gold-seam-3"
+    },
+    {
+      "verb": "BUILD",
+      "what": "sentry_beacon",
+      "where": {
+        "x": 0,
+        "z": -14
+      },
+      "when": {
+        "goldGte": 25
+      }
+    },
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "BUILD",
+      "what": "decoy_shed",
+      "where": {
+        "x": 8,
+        "z": 12
+      },
+      "when": {
+        "goldGte": 20
+      }
+    },
+    {
+      "verb": "BUILD",
+      "what": "sentry_beacon",
+      "where": {
+        "x": -6,
+        "z": 8
+      },
+      "when": {
+        "goldGte": 60
+      }
+    },
+    {
+      "verb": "BUILD",
+      "what": "sentry_beacon",
+      "where": {
+        "x": 6,
+        "z": 8
+      },
+      "when": {
+        "goldGte": 90
+      }
+    },
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "tinkers_plating"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "pan_legend"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "tinkers_plating"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "tinkers_plating"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "pan_legend"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "double_tap_coil"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "split_spark"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "powder_charge"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "split_spark"
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "powder_charge"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "heavy_spark"
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "double_tap_coil"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "long_resonator"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "PICK_UPGRADE",
+      "id": "heavy_spark"
+    }
+  ],
+  [
+    {
+      "verb": "REPAIR_UNDER",
+      "pct": 60
+    },
+    {
+      "verb": "MOVE_HERO",
+      "pos": {
+        "x": 0,
+        "z": 10
+      }
+    }
+  ],
+  [
+    {
+      "verb": "SECURE_CHOICE",
+      "choice": "bank"
+    }
+  ]
 ]

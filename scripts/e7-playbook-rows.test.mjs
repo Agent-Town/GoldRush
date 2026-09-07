@@ -82,10 +82,10 @@ test('Echo Canyon: a use is recorded, the next wave fields the mirror, and a rep
   const { HeadlessContractSim, close } = await loadSim('e7-echo-canyon', 'e7-echo-canyon-01');
   try {
     const script = [
-      [{ verb: 'PLAYBOOK_USE', name: 'canyon-patrol' }, ...harvest('gold-seam-1', 6), { verb: 'HOLD', pos: { x: 0, z: 10 } }],
+      [{ verb: 'PLAYBOOK_USE', name: 'canyon-patrol' }, ...harvest('gold-seam-1', 6), { verb: 'MOVE_HERO', pos: { x: 0, z: 10 } }],
       // The SAME name a turn later is a REPEAT of the SAME tape, which is exactly what the Echo's
       // ratified lesson punishes (+10% hp per repeat, `BroadcastMirror.ts:49`). Variety is the cure.
-      [{ verb: 'PLAYBOOK_USE', name: 'canyon-patrol' }, { verb: 'HOLD', pos: { x: 0, z: 10 } }],
+      [{ verb: 'PLAYBOOK_USE', name: 'canyon-patrol' }, { verb: 'MOVE_HERO', pos: { x: 0, z: 10 } }],
     ];
     const { view } = ride(HeadlessContractSim, 'e7-echo-canyon', 'e7-echo-canyon-01', script);
     const row = view.now.playbookUse;
@@ -136,7 +136,9 @@ test('Relay Rush: the interference front suspends a running program and restores
       ...harvest('gold-seam-1', 10),
       { verb: 'BUILD', what: 'sentry_beacon', where: RELAY_R1_PAD, when: { goldGte: 25 } },
       // The command stake, so the body the program runs from stands in the corridor the wall crosses.
-      { verb: 'HOLD', pos: { x: -25, z: 41 } },
+      // ADR-005 stage 3: the HERO walks to the stake and the Prospector drifts in behind it, which is
+      // also the body `usePlaybook` and `syncProgramSuspension` now read (stage 1, and item 9 below).
+      { verb: 'MOVE_HERO', pos: { x: -25, z: 41 } },
     ]];
     const { view } = ride(HeadlessContractSim, 'e7-relay-rush', 'e7-relay-rush-01', script);
     const row = view.now.playbookUse;

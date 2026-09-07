@@ -13,6 +13,29 @@ import { motorFloorOrders, motorSteps } from './e4-motor-floor.mjs';
 // establish why before re-deriving, never paste over it. Every number here was measured on
 // 2026-09-04 by three instruments that agree: this in-process door, `scripts/e4-motor-ride.mjs`
 // over the gr-sim NDJSON transport, and (for the idle rows) `assets/contracts/null-floors.json`.
+//
+// RE-DERIVED 2026-09-07 by `rider-parity-grammar-stage3` A0, one cause for every FLOOR row that
+// moved: ADR-005 (owner, "This has to be 1:1 the same for the AI"). The plans below walked the
+// PROSPECTOR to a stake with `MOVE_TO` and pinned it there with `HOLD`, two verbs no human has;
+// they now walk the HERO with `MOVE_HERO` and let the Prospector drift in behind it, and `GRADE`
+// and `HAUL` are measured at the hero in both engines since stage 1. Three consequences, all of
+// them visible in the numbers: the caller's body is wider (`Balance.hero.radius` 0.5 against
+// `Balance.agent.arriveRadius` 0.16), the route is one body's walk rather than two, and three of
+// the four errand stops are ground NO HERO CAN STAND ON, so a plan aims beside them.
+// EVERY IDLE ROW IS UNCHANGED — no orders, no grammar, no movement.
+//
+// F-RPG-10 (finding, for the drain; NOT a regression this task introduced): the Long Road's convoy
+// errand cannot be landed by any body a human positions. Its town gains ground only as the lead
+// Hauler's straight-line distance to `(190, 0)` falls, and it arrives when the cumulative gain
+// reaches `convoy.total` — which `MotorSocket.ts` seeds as that same opening distance, so the
+// Hauler must come to rest EXACTLY on the stop (`:341-345`). `HAUL` brings the Hauler to the hero,
+// and `Terrain.sample(190, 0).walkable` is false: the far railhead is an impassable rectangle
+// about x 186..190 by z -5..5, with standable ground only east of it at x >= 190.75, reachable
+// only around the block. Every rung of the aim ladder therefore refuses (measured: two
+// UNREACHABLE_TERRAIN, three UNREACHABLE_APPROACH), and the row below pins that honestly rather
+// than pretending. The cure is the socket's or the contract's — give the convoy the same
+// `MOTOR_STOP_REACH` the other three errands use, or move the stop onto standable ground — and
+// both are outside this task's firewall. The other three errands land exactly as before.
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const DUST_FLATS = 'e4-dust-flats';
@@ -28,10 +51,10 @@ const MAPS = [
     stop: { x: 0, z: 72 },
     rules: ['motor_fuel', 'motor_haul_objective', 'motor_hauler', 'motor_roads', 'motor_weather'],
     idle: { waves: 2, kills: 34, eventLogHash: 'fnv1a32:7e5b43cc' },
-    floor: { waves: 3, kills: 49, eventLogHash: 'fnv1a32:5f0b5354', objWave: 1 },
+    floor: { waves: 3, kills: 48, eventLogHash: 'fnv1a32:8985c7ba', objWave: 1, securableAtWave: 12, residual: [] },
     motor: {
-      graded: ['camp-to-railhead'], hauled: true, arrivedAt: 33.767, roadDistance: 61.254,
-      distanceTravelled: 88.284, fuelDrawn: 15.367, tarHarvested: 9, convoyArrived: null,
+      graded: ['camp-to-railhead'], hauled: true, arrivedAt: 35.033, roadDistance: 59.997,
+      distanceTravelled: 86.877, fuelDrawn: 16.03, tarHarvested: 9, convoyArrived: null,
     },
     events: ['motor_haul_arrived', 'motor_haul_dispatched', 'motor_road_graded', 'motor_tar_harvested', 'motor_weather'],
   },
@@ -42,10 +65,18 @@ const MAPS = [
     stop: { x: 190, z: 0 },
     rules: ['motor_convoy', 'motor_fuel', 'motor_haul_objective', 'motor_hauler', 'motor_roads', 'motor_weather'],
     idle: { waves: 4, kills: 44, eventLogHash: 'fnv1a32:a7ffb1c9' },
-    floor: { waves: 4, kills: 44, eventLogHash: 'fnv1a32:90df0f8c', objWave: 4 },
+    // F-RPG-10: the ONLY errand of the four the 1:1 grammar cannot land. See the note above MAPS.
+    floor: {
+      waves: 4, kills: 25, eventLogHash: 'fnv1a32:bf0c9c2c', objWave: null, securableAtWave: null,
+      residual: [
+        { verb: 'MOVE_HERO', pos: { x: 190, z: 0 } }, { verb: 'MOVE_HERO', pos: { x: 191, z: 0 } },
+        { verb: 'MOVE_HERO', pos: { x: 189, z: 0 } }, { verb: 'MOVE_HERO', pos: { x: 192, z: 0 } },
+        { verb: 'MOVE_HERO', pos: { x: 188, z: 0 } }, { verb: 'HAUL' },
+      ],
+    },
     motor: {
-      graded: ['the-long-road'], hauled: true, arrivedAt: 98.367, roadDistance: 370,
-      distanceTravelled: 370, fuelDrawn: 19.781, tarHarvested: 9, convoyArrived: true, kind: 'convoy',
+      graded: ['the-long-road'], hauled: false, arrivedAt: null, roadDistance: 291.75,
+      distanceTravelled: 291.75, fuelDrawn: 15.56, tarHarvested: 9, convoyArrived: false, kind: 'convoy',
     },
     events: ['motor_convoy_arrived', 'motor_haul_arrived', 'motor_haul_dispatched', 'motor_road_graded', 'motor_tar_harvested', 'motor_weather'],
   },
@@ -56,10 +87,10 @@ const MAPS = [
     stop: { x: -50, z: -40 },
     rules: ['motor_closures', 'motor_fuel', 'motor_haul_objective', 'motor_hauler', 'motor_roads', 'motor_weather'],
     idle: { waves: 5, kills: 90, eventLogHash: 'fnv1a32:b9638b36' },
-    floor: { waves: 8, kills: 198, eventLogHash: 'fnv1a32:2ee655c6', objWave: 3 },
+    floor: { waves: 6, kills: 131, eventLogHash: 'fnv1a32:a8ce35f4', objWave: 4, securableAtWave: 12, residual: [] },
     motor: {
       graded: ['camp-to-east-lease', 'camp-to-north-lease', 'camp-to-west-lease'], hauled: true,
-      arrivedAt: 82.567, roadDistance: 224.741, distanceTravelled: 260.981, fuelDrawn: 30.682,
+      arrivedAt: 133.7, roadDistance: 216.804, distanceTravelled: 265.314, fuelDrawn: 32.626,
       tarHarvested: 9, convoyArrived: null, kind: 'deliveries',
       delivered: ['camp-to-west-lease', 'camp-to-east-lease', 'camp-to-north-lease'],
     },
@@ -72,10 +103,10 @@ const MAPS = [
     stop: { x: -18, z: -8 },
     rules: ['motor_fuel', 'motor_haul_objective', 'motor_hauler', 'motor_roads', 'motor_weather'],
     idle: { waves: 4, kills: 35, eventLogHash: 'fnv1a32:5c7f6600' },
-    floor: { waves: 4, kills: 33, eventLogHash: 'fnv1a32:e84450a1', objWave: 3 },
+    floor: { waves: 4, kills: 40, eventLogHash: 'fnv1a32:5329f56d', objWave: 1, securableAtWave: 12, residual: [] },
     motor: {
-      graded: ['gate-to-west-rows'], hauled: true, arrivedAt: 71.967, roadDistance: 11.069,
-      distanceTravelled: 71.492, fuelDrawn: 21.508, tarHarvested: 9, convoyArrived: null,
+      graded: ['gate-to-west-rows'], hauled: true, arrivedAt: 53.933, roadDistance: 10.633,
+      distanceTravelled: 69.078, fuelDrawn: 20.844, tarHarvested: 9, convoyArrived: null,
       kind: 'tow', towed: true,
     },
     events: ['motor_haul_arrived', 'motor_haul_dispatched', 'motor_road_graded', 'motor_tar_harvested', 'motor_tow_delivered', 'motor_tow_hitched', 'motor_weather'],
@@ -190,43 +221,58 @@ test('the mechanic fires: tar fuels the Hauler, GRADE builds the corridor, HAUL 
   const door = await loadDoor(DUST_FLATS, SEED);
   try {
     const sim = new door.HeadlessContractSim({ contractId: DUST_FLATS, seed: SEED });
-    // Fuel: the Prospector stands at each tar node. HOLD keeps it there for the half-second dwell.
+    // Fuel: the HERO stands at each tar node (ADR-005: the rider positions the body a human
+    // positions, and fuel takes "any body"). No hold verb is needed or offered — `Hero.update`
+    // decelerates an unsteered hero to a stop where it stands, so arriving IS the dwell.
     for (const node of motor(sim).fuel.nodes) {
-      submit(sim, [{ verb: 'MOVE_TO', pos: { x: node.x, z: node.z } }, { verb: 'HOLD', pos: { x: node.x, z: node.z } }]);
+      submit(sim, [{ verb: 'MOVE_HERO', pos: { x: node.x, z: node.z } }]);
       for (let waited = 0; waited < 12 && !motor(sim).fuel.nodes.find((entry) => entry.x === node.x).harvested; waited += 1) tick(sim, 0.5);
     }
     assert.deepEqual({ ...motor(sim).fuel, nodes: undefined, active: undefined }, { tar: 3, stored: 24, capacity: 24, harvestedNodes: 3, refinedTar: 6, drawn: 0, nodes: undefined, active: undefined });
 
     // GRADE away from any stake is refused with the nearest stake named; at the stake it grades.
-    submit(sim, [{ verb: 'GRADE' }, { verb: 'HOLD', pos: { x: 12, z: -8 } }]);
+    submit(sim, [{ verb: 'GRADE' }]);
     tick(sim, STEP);
     const refused = sim.standingOrdersSnapshot().orders[0];
     assert.equal(refused.status, 'failed');
     assert.match(refused.reason, /OUT_OF_REACH: GRADE needs an ungraded corridor stake within 2\.5wu/);
-    submit(sim, [{ verb: 'MOVE_TO', pos: { x: 0, z: 12 } }, { verb: 'GRADE' }, { verb: 'HAUL' }, { verb: 'HOLD', pos: { x: 0, z: 12 } }]);
+    submit(sim, [{ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }, { verb: 'GRADE' }, { verb: 'HAUL' }]);
     for (let waited = 0; waited < 40 && motor(sim).vehicle.state !== 'arrived'; waited += 1) tick(sim, 0.5);
     const staged = motor(sim);
     assert.deepEqual(staged.roads.graded, ['camp-to-railhead']);
     assert.equal(staged.roads.segments, 1);
     assert.equal(staged.roads.length, 60);
     assert.equal(staged.vehicle.state, 'arrived');
-    assert.ok(Math.hypot(staged.vehicle.x, staged.vehicle.z - 12) < 0.2, 'the Hauler rests at the stake');
+    // 0.6, not 0.2: `HAUL` brings the Hauler to the body that called it, and that body is now the
+    // hero, which completes a walk inside `HERO_ARRIVE_RADIUS` (`Balance.hero.radius`, 0.5) where
+    // the Prospector completed one inside `Balance.agent.arriveRadius` (0.16). The Hauler is as
+    // exact as it ever was; the caller is a wider body.
+    assert.ok(Math.hypot(staged.vehicle.x, staged.vehicle.z - 12) < 0.6, `the Hauler rests at the stake: (${staged.vehicle.x}, ${staged.vehicle.z})`);
     assert.ok(staged.vehicle.distanceTravelled > 28 && staged.vehicle.distanceTravelled < 29, `staged ${staged.vehicle.distanceTravelled}`);
     const stagedFuel = staged.fuel.drawn;
     // Off-road: 28.2 units at 9/s burn 3/s = 9.4 fuel, plus the road's last unit-and-a-bit at 0.4x.
     assert.ok(stagedFuel > 9 && stagedFuel < 13.5, `off-road burn ${stagedFuel}`);
     assert.equal(staged.objective.arrived, false);
 
-    // The road leg: the Prospector walks the railhead and calls the Hauler up the graded corridor.
-    submit(sim, [{ verb: 'MOVE_TO', pos: { x: 0, z: 72 } }, { verb: 'HAUL' }, { verb: 'HOLD', pos: { x: 0, z: 72 } }]);
+    // The road leg: the HERO walks to the railhead and calls the Hauler up the graded corridor.
+    // The railhead stake itself is not standable — `Terrain.sample(0, 72).walkable` is false — so
+    // the plan aims one unit short of it and the Hauler that comes to the hero is still inside
+    // `objective.stopReach`. This is the aim ladder `scripts/e4-motor-floor.mjs` writes as orders,
+    // spelled out here: MOVE_HERO refuses the stake outright and the next rung takes the tick.
+    submit(sim, [{ verb: 'MOVE_HERO', pos: { x: 0, z: 72 } }, { verb: 'MOVE_HERO', pos: { x: 0, z: 71 } }, { verb: 'HAUL' }]);
+    tick(sim, STEP);
+    assert.match(sim.standingOrdersSnapshot().orders[0].reason, /UNREACHABLE_TERRAIN/, 'the railhead stake is not ground a hero can stand on');
     for (let waited = 0; waited < 80 && !motor(sim).objective.arrived; waited += 1) tick(sim, 0.5);
     const arrived = motor(sim);
     assert.equal(arrived.objective.arrived, true);
     assert.equal(arrived.objective.securableAtWave, 12);
-    assert.ok(Math.hypot(arrived.vehicle.x, arrived.vehicle.z - 72) < 0.1, `the Hauler rests at the railhead: (${arrived.vehicle.x}, ${arrived.vehicle.z})`);
+    assert.ok(Math.hypot(arrived.vehicle.x, arrived.vehicle.z - 72) <= arrived.objective.stopReach, `the Hauler rests within reach of the railhead: (${arrived.vehicle.x}, ${arrived.vehicle.z})`);
     const roadLeg = arrived.vehicle.roadDistance - staged.vehicle.roadDistance;
     const roadFuel = arrived.fuel.drawn - stagedFuel;
-    assert.ok(roadLeg > 59 && roadLeg <= 60.5, `road leg ${roadLeg}`);
+    // 58, not 59: the corridor is 60 units and the leg is now bounded by where a HERO can stand at
+    // each end — inside `Balance.hero.radius` of the stake, and one unit short of the unstandable
+    // railhead. The road still carries the whole trip; it just starts and ends a body's width in.
+    assert.ok(roadLeg > 58 && roadLeg <= 60.5, `road leg ${roadLeg}`);
     // 60 units at 22.5/s (9 x 2.5) burn 3/s x 0.4 for 2.67s = 3.2 fuel; a storm slows but does not cheapen it.
     assert.ok(roadFuel > 3 && roadFuel < 3.6, `road-leg burn ${roadFuel} for ${roadLeg} units`);
     assert.ok(roadFuel * 4 < stagedFuel, 'the graded road moved twice the distance for a quarter of the fuel');
@@ -252,11 +298,11 @@ test('the storm slows the Hauler by the authored multiplier and every outlaw wit
     assert.equal(internal.motor.enemyMovementMultiplier(25), 1);
     assert.equal(internal.motor.enemyMovementMultiplier(45), 0.7);
     // The Hauler under the storm: fuel it, then drive during the storm window and measure the speed.
-    submit(sim, [{ verb: 'MOVE_TO', pos: { x: -12, z: -8 } }, { verb: 'HOLD', pos: { x: -12, z: -8 } }]);
+    submit(sim, [{ verb: 'MOVE_HERO', pos: { x: -12, z: -8 } }]);
     for (let waited = 0; waited < 12 && motor(sim).fuel.harvestedNodes < 1; waited += 1) tick(sim, 0.5);
     tickTo(sim, 10.5); // into the storm (10s-22s of cycle 0)
     assert.equal(motor(sim).weather.phase, 'storm');
-    submit(sim, [{ verb: 'HAUL' }, { verb: 'HOLD', pos: { x: -12, z: -8 } }]);
+    submit(sim, [{ verb: 'HAUL' }]);
     tick(sim, STEP);
     const before = motor(sim).vehicle.distanceTravelled;
     tick(sim, 1);
@@ -338,15 +384,16 @@ test('Gusher County washes out one lease per storm, refuses a delivery through i
 
     // Fuel and grade the west lease from its stake, which is also a tar node.
     for (const node of motor(sim).fuel.nodes) {
-      submit(sim, [{ verb: 'MOVE_TO', pos: { x: node.x, z: node.z } }, { verb: 'HOLD', pos: { x: node.x, z: node.z } }]);
+      submit(sim, [{ verb: 'MOVE_HERO', pos: { x: node.x, z: node.z } }]);
       for (let waited = 0; waited < 60 && !motor(sim).fuel.nodes.find((entry) => entry.x === node.x).harvested; waited += 1) tick(sim, 0.5);
     }
-    submit(sim, [{ verb: 'MOVE_TO', pos: { x: -12, z: -8 } }, { verb: 'GRADE' }, { verb: 'HOLD', pos: { x: -12, z: -8 } }]);
+    submit(sim, [{ verb: 'MOVE_HERO', pos: { x: -12, z: -8 } }, { verb: 'GRADE' }]);
     for (let waited = 0; waited < 30 && motor(sim).roads.graded.length === 0; waited += 1) tick(sim, 0.5);
     assert.deepEqual(motor(sim).roads.graded, ['camp-to-west-lease']);
 
     // Park the Hauler at the west lease head DURING cycle 0's storm: the road is shut, so no delivery.
-    submit(sim, [{ verb: 'MOVE_TO', pos: { x: -50, z: -40 } }, { verb: 'HAUL' }, { verb: 'HOLD', pos: { x: -50, z: -40 } }]);
+    // This lease head IS standable ground, so the aim needs no ladder rung.
+    submit(sim, [{ verb: 'MOVE_HERO', pos: { x: -50, z: -40 } }, { verb: 'HAUL' }]);
     for (let waited = 0; waited < 60 && motor(sim).vehicle.state !== 'arrived'; waited += 1) tick(sim, 0.5);
     assert.equal(motor(sim).vehicle.state, 'arrived');
     for (let waited = 0; waited < 120 && motor(sim).weather.phase !== 'storm'; waited += 1) tick(sim, 0.5);
@@ -383,11 +430,13 @@ test('the Boneyard hitches its hulk where it lies and delivers it at the gate en
     assert.deepEqual(motor(sim).objective.hulk, { id: 'spent-boiler-west', kind: 'boiler', x: -18, z: -8 });
     assert.equal(motor(sim).objective.hitched, false);
     for (const node of motor(sim).fuel.nodes) {
-      submit(sim, [{ verb: 'MOVE_TO', pos: { x: node.x, z: node.z } }, { verb: 'HOLD', pos: { x: node.x, z: node.z } }]);
+      submit(sim, [{ verb: 'MOVE_HERO', pos: { x: node.x, z: node.z } }]);
       for (let waited = 0; waited < 60 && !motor(sim).fuel.nodes.find((entry) => entry.x === node.x).harvested; waited += 1) tick(sim, 0.5);
     }
-    // Leg one: the Hauler comes to the boiler and takes it on the hook.
-    submit(sim, [{ verb: 'MOVE_TO', pos: { x: -18, z: -8 } }, { verb: 'HAUL' }, { verb: 'HOLD', pos: { x: -18, z: -8 } }]);
+    // Leg one: the Hauler comes to the boiler and takes it on the hook. The hulk blocks a disc about
+    // two units wide around its own stake, so the plan's second aim rung is what stands: the hero
+    // walks up beside the boiler and the Hauler comes to the hero, inside `stopReach` of the hulk.
+    submit(sim, [{ verb: 'MOVE_HERO', pos: { x: -18, z: -8 } }, { verb: 'MOVE_HERO', pos: { x: -18, z: -10 } }, { verb: 'HAUL' }]);
     for (let waited = 0; waited < 80 && !motor(sim).objective.hitched; waited += 1) tick(sim, 0.5);
     const hitched = motor(sim);
     assert.equal(hitched.objective.hitched, true);
@@ -395,8 +444,8 @@ test('the Boneyard hitches its hulk where it lies and delivers it at the gate en
     assert.equal(hitched.objective.arrived, false, 'a hitched hulk is not a delivered hulk');
     assert.deepEqual(hitched.objective.stop, { x: -8, z: -38 }, 'the stop moves to the gate once the hook is on');
     assert.ok(hitched.events.some(({ type }) => type === 'motor_tow_hitched'));
-    // Leg two: back down the gate road.
-    submit(sim, [{ verb: 'MOVE_TO', pos: { x: -8, z: -38 } }, { verb: 'HAUL' }, { verb: 'HOLD', pos: { x: -8, z: -38 } }]);
+    // Leg two: back down the gate road. The gate stake IS standable ground.
+    submit(sim, [{ verb: 'MOVE_HERO', pos: { x: -8, z: -38 } }, { verb: 'HAUL' }]);
     for (let waited = 0; waited < 80 && !motor(sim).objective.arrived; waited += 1) tick(sim, 0.5);
     const delivered = motor(sim);
     assert.equal(delivered.objective.arrived, true);
@@ -476,7 +525,7 @@ for (const map of MAPS) {
       assert.equal(floor.leaked, false);
       assert.equal(floor.arrivedWave, map.floor.objWave, 'the errand lands on its pinned wave');
       assert.deepEqual(floor.outcome.motor, map.motor);
-      assert.equal(floor.view.now.motor.objective.securableAtWave, 12);
+      assert.equal(floor.view.now.motor.objective.securableAtWave, map.floor.securableAtWave);
       // L2 (winnability) is NOT claimed by these pins: no floor variant secures a Motor map yet, the
       // audit's own ceiling for this era. They certify that the MECHANIC fired and the gate opened.
       assert.equal(floor.outcome.secured, false);
@@ -484,8 +533,11 @@ for (const map of MAPS) {
       assert.equal(floor.outcome.kills, map.floor.kills);
       assert.equal(floor.outcome.eventLogHash, map.floor.eventLogHash);
       assert.deepEqual(rideTurns(door.HeadlessContractSim, map.id, seed, (view) => motorFloorOrders(view)).outcome, floor.outcome, 'the same seed and the same policy replay identically');
-      // The policy is idempotent against the view: once the errand has landed it issues no motor step.
-      assert.deepEqual(motorSteps(floor.view.now.motor, floor.view.now.prospector), []);
+      // The policy is idempotent against the view: once the errand has landed it issues no motor
+      // step. Read from the HERO now, the body the plan walks. On the Long Road the errand never
+      // lands (F-RPG-10), so what is pinned instead is the aim ladder the floor is still offering
+      // the refused stop: a plan that gave up would be the same silence as a plan that finished.
+      assert.deepEqual(motorSteps(floor.view.now.motor, floor.view.now.hero), map.floor.residual);
     } finally {
       await door.close();
     }

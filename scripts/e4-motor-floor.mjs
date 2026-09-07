@@ -33,7 +33,7 @@ export function motorFloorOrders(view, variant = 'rig') {
   // defend-first: the haul can wait for the works (it only has to land before the Land-Yacht);
   // the turret cannot wait for the haul. Every other variant hauls in the opening thirty seconds.
   const haulNow = variant !== 'defend-first' || (now.works.byKind.turret ?? 0) >= 1 || now.wave >= 4;
-  if (haulNow) orders.push(...motorSteps(now.motor, now.prospector ?? { x: now.hero.x, z: now.hero.z }));
+  if (haulNow) orders.push(...motorSteps(now.motor, { x: now.hero.x, z: now.hero.z }));
   orders.push(...claimFloor(view, variant));
   return fitToCap(orders);
 }
@@ -42,8 +42,13 @@ export function motorFloorOrders(view, variant = 'rig') {
  * The E4 half. Idempotent against the view: every step already taken is left out, so resubmitting
  * it every turn (which is what a rider does) never re-walks a road it has already walked.
  *
+ * ADR-005 (owner, 2026-09-07): every walk below is the HERO'S. The rider positions one body, the
+ * same one body a human positions, and the Prospector drifts in behind it with no order at all.
+ * `GRADE` and `HAUL` are measured at the hero in both engines since `rider-parity-grammar` stage 1,
+ * so a plan that walked the Prospector to a stake now grades nothing at all.
+ *
  * ROUTE ORDER IS THE WHOLE GAME HERE. The tar and the corridor stake are visited NEAREST-FIRST from
- * where the Prospector actually stands, because a fixed order costs runs: on the Long Road the
+ * where the hero actually stands, because a fixed order costs runs: on the Long Road the
  * stake is eight units west and the tar is a hundred and seventy east, so "fuel, then grade" walks
  * seven hundred and fifty units and the town never leaves the west end. Nearest-first walks three
  * hundred and ninety for the same two errands.
@@ -68,14 +73,16 @@ export function motorSteps(motor, from = null) {
     }
     const [chore] = chores.splice(best, 1);
     if (chore.kind === 'grade') {
-      steps.push({ verb: 'MOVE_TO', pos: { x: chore.pos.x, z: chore.pos.z } }, { verb: 'GRADE' });
+      steps.push({ verb: 'MOVE_HERO', pos: { x: chore.pos.x, z: chore.pos.z } }, { verb: 'GRADE' });
     } else {
-      // Arrive, step aside, come back: the harvest needs half a second within reach, and a MOVE_TO
-      // completes the instant it arrives, so the dwell is written as three short walks.
+      // Arrive, step aside, come back: the harvest needs half a second within reach, and a MOVE_HERO
+      // completes the instant it arrives, so the dwell is written as three short walks. The hop is
+      // 0.6 wu, wider than `HERO_ARRIVE_RADIUS` (0.5) so it is a real walk, and narrower than
+      // `Balance.e4Fuel.harvestRange` (1.35) so the node stays in reach for every step of it.
       steps.push(
-        { verb: 'MOVE_TO', pos: { x: chore.pos.x, z: chore.pos.z } },
-        { verb: 'MOVE_TO', pos: { x: chore.pos.x + FUEL_HOP, z: chore.pos.z } },
-        { verb: 'MOVE_TO', pos: { x: chore.pos.x, z: chore.pos.z } },
+        { verb: 'MOVE_HERO', pos: { x: chore.pos.x, z: chore.pos.z } },
+        { verb: 'MOVE_HERO', pos: { x: chore.pos.x + FUEL_HOP, z: chore.pos.z } },
+        { verb: 'MOVE_HERO', pos: { x: chore.pos.x, z: chore.pos.z } },
       );
     }
     at = chore.pos;
@@ -97,7 +104,7 @@ export function motorSteps(motor, from = null) {
     const exit = distance(ridden.start, corridor.start) <= distance(ridden.end, corridor.start) ? ridden.start : ridden.end;
     const heading = vehicle.state !== 'idle' && near(vehicle.dispatch, exit);
     if (distance(vehicle, exit) > STAGED_REACH && !heading) {
-      steps.push({ verb: 'MOVE_TO', pos: { x: exit.x, z: exit.z } }, { verb: 'HAUL' });
+      steps.push({ verb: 'MOVE_HERO', pos: { x: exit.x, z: exit.z } }, { verb: 'HAUL' });
       return steps;
     }
   }
@@ -110,10 +117,49 @@ export function motorSteps(motor, from = null) {
   const staged = onCorridor(vehicle, corridor) || near(vehicle, corridor.start)
     || (vehicle.state !== 'idle' && near(vehicle.dispatch, corridor.start));
   if (!staged && !near(corridor.start, stop)) {
-    steps.push({ verb: 'MOVE_TO', pos: { x: corridor.start.x, z: corridor.start.z } }, { verb: 'HAUL' });
+    steps.push({ verb: 'MOVE_HERO', pos: { x: corridor.start.x, z: corridor.start.z } }, { verb: 'HAUL' });
   }
-  steps.push({ verb: 'MOVE_TO', pos: { x: stop.x, z: stop.z } }, { verb: 'HAUL' });
+  steps.push(...aimLadder(stop, corridor), { verb: 'HAUL' });
   return steps;
+}
+
+/**
+ * THE AIM LADDER (ADR-005, measured 2026-09-07). `HAUL` drives the Hauler to where the HERO stands,
+ * and three of the four errand stops are ground no hero can stand on: the Dust Flats railhead
+ * (0,72) and the Long Road's far railhead (190,0) sample `walkable:false`, and the Boneyard's hulk
+ * blocks a disc about two units wide around its own stake. The Prospector never cared — nothing
+ * bounded where a work target could be — so the plans that walked it aimed straight at the stop.
+ * A rider that positions the human's body has to do what a human does: walk AT the stop, and step
+ * along the road when the ground refuses.
+ *
+ * The ladder is that, written as orders rather than as retries: aim at the stop, then one unit
+ * past it, one short, two past, two short. `MOVE_HERO` refuses an unwalkable target outright
+ * (`UNREACHABLE_TERRAIN`) and a failed order yields the tick to the next one, so the first
+ * standable rung wins on the same tick and no rung is ever re-tried. Every rung is inside
+ * `objective.stopReach` (2.5) with half a unit to spare, so the Hauler that comes to the hero is
+ * a Hauler at the stop. Measured nearest standable ground: the Dust Flats 0.25 short, the Long
+ * Road 0.75 past, Gusher County's three lease heads 0 (the ladder's first rung), the Boneyard 2.0
+ * short of its hulk and 0 at its gate.
+ */
+function aimLadder(stop, corridor) {
+  const axis = unit(stop, corridor.start) ?? unit(corridor.end, stop) ?? { x: 0, z: 1 };
+  return [0, 1, -1, 2, -2].map((offset) => ({
+    verb: 'MOVE_HERO',
+    pos: { x: round3(stop.x + axis.x * offset), z: round3(stop.z + axis.z * offset) },
+  }));
+}
+
+/** The unit vector from `from` to `to`, or null where the two coincide. */
+function unit(to, from) {
+  const dx = to.x - from.x;
+  const dz = to.z - from.z;
+  const length = Math.hypot(dx, dz);
+  return length > 1e-6 ? { x: dx / length, z: dz / length } : null;
+}
+
+/** Order text is hashed into tapes, so the rungs are written to a fixed precision, never raw floats. */
+function round3(value) {
+  return Math.round(value * 1000) / 1000;
 }
 
 function distance(a, b) {
@@ -176,7 +222,9 @@ function claimFloor(view, variant) {
   const orders = variant === 'turtle' ? [...ring, ...guns] : [...guns, ...ring];
   orders.push({ verb: 'REPAIR_UNDER', pct: variant === 'turtle' ? 80 : 60 });
   for (const seam of seams) for (let count = 0; count < 6; count += 1) orders.push({ verb: 'HARVEST', seam: seam.id });
-  orders.push({ verb: 'HOLD', pos: home });
+  // The plan once ended with `HOLD` at the hero's feet, which is the one thing the human's surface
+  // never offered (ADR-005). It was also redundant: `Embodiment.driftNearHero` walks an unemployed
+  // Prospector back to the hero every step, so "stand by the hero" is what silence already means.
   return orders;
 }
 

@@ -60,7 +60,9 @@ test('a wire act crosses into the sim and changes it', { timeout: 60_000 }, asyn
 test('agent_orders validates the standing-order grammar and wire bounds', { timeout: 60_000 }, async () => {
   await withSim(async (vite) => {
     const { normalizeLockstepAction } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
-    const orders = [{ verb: 'MOVE_TO', pos: { x: 4, z: -3 } }];
+    // ADR-005 stage 3: was MOVE_TO. Everything below is about the WIRE's own bounds (version,
+    // order count, payload size), so it needs a verb the door accepts and a point-shaped argument.
+    const orders = [{ verb: 'MOVE_HERO', pos: { x: 4, z: -3 } }];
     assert.deepEqual(normalizeLockstepAction({ type: 'agent_orders', version: 1, orders, submissionId: 'move-1' }), {
       type: 'agent_orders', version: 1, orders, submissionId: 'move-1',
     });
@@ -119,6 +121,12 @@ test('the seat carries BUILD and refuses to stretch for the rest', { timeout: 60
     for (const order of [
       { verb: 'HARVEST', seam: 'gold-seam-1' },
       { verb: 'REPAIR_UNDER', pct: 50 },
+      // MOVE_TO, HOLD and FALLBACK_IF are RETIRED as of ADR-005 stage 3, and they stay in this list
+      // because the answer they get is unchanged and was MEASURED here: the seat driver checks its
+      // own speakable-verb list BEFORE the door's grammar runs, so a retired verb reads
+      // UNSPEAKABLE_ON_THE_WIRE, not INVALID_ARGS. F-RPG-15, for the drain: that path's message ends
+      // "cannot ride the lockstep wire yet", and "yet" is now false for these three — they are not
+      // waiting on a wire, they are gone. The refusal is correct; the promise in the copy is not.
       { verb: 'MOVE_TO', pos: { x: 1, z: 2 } },
       { verb: 'HOLD', pos: { x: 1, z: 2 } },
       { verb: 'FALLBACK_IF', threat: { enemiesGte: 5 }, pos: { x: 1, z: 2 } },

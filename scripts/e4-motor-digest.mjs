@@ -14,17 +14,21 @@ export const DIGEST_TICKS = 780;
 export const DIGEST_MARKS = [120, 300, 480, 660, 780];
 
 /** The scripted stream: fuel at every tar node, grade the errand's road, then call the Hauler up it. */
+// ADR-005 stage 3 (owner 2026-09-07): every walk below is the HERO'S, and the Prospector drifts
+// in behind it. `MOVE_TO` and `HOLD` positioned the Prospector, which no human can do; a hero that
+// arrives and is then left alone STAYS where it stopped, so the old trailing HOLD needs no
+// replacement at all — arriving is the hold.
 export function digestOrders(motor, phase) {
   const node = motor.fuel.nodes.find((entry) => !entry.harvested);
-  if (node) return [{ verb: 'MOVE_TO', pos: { x: node.x, z: node.z } }, { verb: 'HOLD', pos: { x: node.x, z: node.z } }];
+  if (node) return [{ verb: 'MOVE_HERO', pos: { x: node.x, z: node.z } }];
   const corridor = motor.roads.corridors.find(({ id }) => id === motor.objective.corridorId);
-  if (!corridor) return [{ verb: 'HOLD', pos: { x: 0, z: 0 } }];
+  if (!corridor) return [{ verb: 'MOVE_HERO', pos: { x: 0, z: 0 } }];
   if (!corridor.graded) {
-    return [{ verb: 'MOVE_TO', pos: { x: corridor.start.x, z: corridor.start.z } }, { verb: 'GRADE' }, { verb: 'HOLD', pos: { x: corridor.start.x, z: corridor.start.z } }];
+    return [{ verb: 'MOVE_HERO', pos: { x: corridor.start.x, z: corridor.start.z } }, { verb: 'GRADE' }];
   }
-  if (phase.hauled) return [{ verb: 'HOLD', pos: { x: corridor.start.x, z: corridor.start.z } }];
+  if (phase.hauled) return [{ verb: 'MOVE_HERO', pos: { x: corridor.start.x, z: corridor.start.z } }];
   phase.hauled = true;
-  return [{ verb: 'HAUL' }, { verb: 'HOLD', pos: { x: corridor.start.x, z: corridor.start.z } }];
+  return [{ verb: 'HAUL' }, { verb: 'MOVE_HERO', pos: { x: corridor.start.x, z: corridor.start.z } }];
 }
 
 /** One line per mark: everything the socket owns, rounded exactly as the view rounds it. */

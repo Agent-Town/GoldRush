@@ -55,18 +55,69 @@ test('the round-2 corpus hash remains byte-for-byte pinned', () => {
   assert.equal(tape.eventLogHash, 'fnv1a32:ba8fdc3e');
 });
 
-test('pre-era engine-stamped agent tapes remain replayable', () => {
-  const replay = seam('artifacts/gauntlet-heat5b-20260825/e2-hill-mine/winning-tape.json');
-  assert.match(replay.eventLogHash, /^fnv1a32:[a-f0-9]{8}$/);
+/**
+ * RE-STATED 2026-09-07 (`rider-parity-grammar-stage3` B, ADR-005). This test asserted that a
+ * pre-era engine-stamped agent tape still replays. It no longer can, and the reason is the ruling:
+ * its plan names `HOLD`, and the door has no such verb. MEASURED, not assumed — every banked agent
+ * tape on disk carries one of the three retired verbs (57 heat-12, all of heat 5 and 5b, the whole
+ * assay-e2e round-2 corpus), so there is no surviving tape this test could be re-pointed at. The
+ * live replay path is still measured, by the test below that GENERATES a tape from the current door
+ * and replays it.
+ *
+ * What is asserted instead is the retirement itself, at the layer a BANKED tape meets it:
+ * `validateRunTape` (`src/replay/AgentTapeReplay.ts:67`) refuses the whole tape before a tick runs,
+ * so the assayer answers `malformed tape` and exits non-zero. A live rider meets the same
+ * retirement one layer later, at submission, with the named message
+ * (`scripts/rider-parity-retirement.test.mjs`).
+ *
+ * RETENTION LAW (CLAUDE.md 4.10b): the tape is NOT deleted, edited or re-recorded. Its recorded
+ * identity is kept here so the history survives its retirement — heat 5b, e2-hill-mine,
+ * winning-tape.json, which replayed to a well-formed fnv1a32 hash until this ruling landed.
+ */
+test('pre-era engine-stamped agent tapes are retired: the assayer refuses their plans', () => {
+  const run = spawnSync(process.execPath, ['scripts/assay-replay.mjs', 'artifacts/gauntlet-heat5b-20260825/e2-hill-mine/winning-tape.json'],
+    { cwd: process.cwd(), encoding: 'utf8', timeout: 120_000 });
+  assert.notEqual(run.status, 0, 'a tape naming a retired verb must not replay');
+  assert.match(run.stderr, /assay replay failed: malformed tape/);
+  const tape = JSON.parse(readFileSync('artifacts/gauntlet-heat5b-20260825/e2-hill-mine/winning-tape.json', 'utf8'));
+  const verbs = new Set(tape.inputLog.entries.flatMap(({ a }) => a.flatMap(({ orders }) => (orders ?? []).map(({ verb }) => verb))));
+  assert.ok(verbs.has('HOLD'), 'the tape still carries the retired verb it was retired for (nothing was edited)');
 });
 
-test('the hill-mine libm divergence tape has one canonical post-cure replay', () => {
-  const replay = seam('artifacts/gauntlet-heat5-20260824/e2-hill-mine/winning-tape.json');
-  assert.deepEqual({ eventLogHash: replay.eventLogHash, outcome: replay.outcome, ticks: replay.ticks }, {
-    eventLogHash: 'fnv1a32:53d07e8d',
-    outcome: { secured: false, waves: 16, gold: 27, timeAlive: 508.967 },
-    ticks: 15269,
-  });
+/**
+ * RE-STATED 2026-09-07 (`rider-parity-grammar-stage3` B, ADR-005), having been RE-DERIVED hours
+ * earlier in the same task's A0. Both movements are recorded here, because the second supersedes
+ * the first and a reader who sees only the end state cannot tell that the tape's behaviour was
+ * measured before it was retired.
+ *
+ * A0 (stage 2's bounded `REPAIR_UNDER`): the tape's hash did NOT move and could not —
+ * `agentOrdersEventLogHash` (`src/game/RunTape.ts:319`) hashes the tape's submissions alone. Its
+ * OUTCOME moved, and one change explained all four numbers: the search is now bounded to
+ * `Balance.sparkRig.range` (10) from the acting body and takes the nearest match, so the tape's 64
+ * `REPAIR_UNDER` orders stopped sending the Prospector across the map. Measured on this tree:
+ *   fnv1a32:53d07e8d, { secured: false, waves: 16, gold: 27, timeAlive: 508.967 }, 15269 ticks
+ *     -> fnv1a32:53d07e8d, { secured: false, waves: 17, gold: 38, timeAlive: 538.4 }, 16152 ticks.
+ *
+ * B (the removal): the tape carries 32 `HOLD` orders, so it no longer replays AT ALL.
+ * `validateRunTape` refuses the whole tape and the assayer answers `malformed tape`. The
+ * libm-divergence question this tape was banked for is not answered by a canonical replay any
+ * more; it is answered by the record above and by the tape itself, which is kept byte-for-byte
+ * (RETENTION LAW, CLAUDE.md 4.10b). Its row in
+ * `artifacts/rider-parity-grammar/retirement-ledger.json` is the same retirement in the ledger's
+ * own words.
+ */
+test('the hill-mine libm divergence tape is retired, and the tape it was measured from is kept', () => {
+  const path = 'artifacts/gauntlet-heat5-20260824/e2-hill-mine/winning-tape.json';
+  const run = spawnSync(process.execPath, ['scripts/assay-replay.mjs', path],
+    { cwd: process.cwd(), encoding: 'utf8', timeout: 240_000 });
+  assert.notEqual(run.status, 0, 'a tape naming a retired verb must not replay');
+  assert.match(run.stderr, /assay replay failed: malformed tape/);
+  // The tape is unedited: same recorded outcome, same retired verb, same 64 REPAIR_UNDER orders.
+  const tape = JSON.parse(readFileSync(path, 'utf8'));
+  assert.equal(tape.eventLogHash, 'fnv1a32:017e4c97');
+  const orders = tape.inputLog.entries.flatMap(({ a }) => a.flatMap(({ orders: submitted }) => submitted ?? []));
+  assert.equal(orders.filter(({ verb }) => verb === 'HOLD').length, 32);
+  assert.equal(orders.filter(({ verb }) => verb === 'REPAIR_UNDER').length, 64);
 });
 
 /**
@@ -149,7 +200,13 @@ test('an overtime replay returns the immutable secure-event snapshot and the lat
     // HELD at that tick — the same quantity `outcome().gold` reports, and the only one that can
     // agree with it, since `outcome().gold` is inside the event-log hash. 290 is what this rider
     // had PANNED by wave 10; 6 is what it still HELD when the claim was secured.
-    assert.equal(replay.securedSnapshot.gold, 6);
+    // 6 -> 15 (rider-parity-grammar-stage3 B, ADR-005): this ride is GENERATED by the policy
+    // below, whose plan used to end with HOLD at the claim and now ends with MOVE_HERO at the same
+    // point. The hero takes the post the Prospector used to be pinned to, so the run banks a
+    // different purse at the same wave. Everything the test is ABOUT is unchanged: the snapshot is
+    // still the immutable secure-tick reading, still the purse HELD rather than lifetime panning,
+    // and still different from the later final outcome.
+    assert.equal(replay.securedSnapshot.gold, 15);
     assert.equal(Math.round(replay.securedSnapshot.timeAlive), 300);
     assert.ok(replay.outcome.waves > replay.securedSnapshot.waves);
     assert.notEqual(replay.outcome.gold, replay.securedSnapshot.gold);
@@ -203,7 +260,9 @@ function ordersFor(view, secureChoice = 'bank') {
     for (let count = 0; count < 4; count += 1) orders.push({ verb: 'HARVEST', seam: seam.id });
   }
   if (view.now.works.hp > 0 && view.now.works.hp < view.now.works.maxHp * 0.6) orders.push({ verb: 'REPAIR_UNDER', pct: 80 });
-  orders.push({ verb: 'HOLD', pos: { x: 0, z: 12 } });
+  // ADR-005 stage 3: was HOLD at the claim, a verb the door no longer knows. The hero takes the
+  // post and the Prospector drifts to it.
+  orders.push({ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } });
   return orders.slice(0, 32);
 }
 

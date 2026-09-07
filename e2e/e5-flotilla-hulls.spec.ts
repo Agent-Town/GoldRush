@@ -74,8 +74,9 @@ test('the Flotilla keeps three losable hulls and secures both bench seeds determ
           }
           const straggler = deepwater.flotilla!.hulls.find(({ straggler }: { straggler: boolean }) => straggler)!;
           if (deepwater.flotilla!.reshapeCooldownSeconds === 0) orders.push({ verb: 'REANCHOR', anchorId: straggler.id });
-          orders.push({ verb: 'MOVE_TO', pos: { x: straggler.x, z: straggler.z } });
-          orders.push({ verb: 'HOLD', pos: { x: straggler.x, z: straggler.z } });
+          // ADR-005 stage 3: the hero swims out to the straggler; arriving IS the hold, so the
+          // second order the plan used to carry has nothing left to do.
+          orders.push({ verb: 'MOVE_HERO', pos: { x: straggler.x, z: straggler.z } });
         }
         const receipt = sim.submitOrders(orders);
         expect(receipt.outcome.ok, JSON.stringify(receipt.outcome)).toBe(true);
@@ -86,9 +87,16 @@ test('the Flotilla keeps three losable hulls and secures both bench seeds determ
       return sim.outcome();
     };
 
+    // RE-DERIVED 2026-09-07 (rider-parity-grammar-stage3, ADR-005). The plan above walked the
+    // PROSPECTOR to each straggler with MOVE_TO and pinned it there with HOLD; it walks the HERO
+    // now and the Prospector drifts in behind it. ONE cause, and everything this test is about is
+    // unmoved: secured, wave 12, 30 kills, three deck builds, the REANCHOR formation pulls, and
+    // both seeds still replay identically to themselves.
+    //   e5-flotilla-01  fnv1a32:5786662f -> fnv1a32:a9f33e48
+    //   e5-flotilla-02  fnv1a32:ee9f70c6 -> fnv1a32:673fe475
     const expected = {
-      'e5-flotilla-01': 'fnv1a32:5786662f',
-      'e5-flotilla-02': 'fnv1a32:ee9f70c6',
+      'e5-flotilla-01': 'fnv1a32:a9f33e48',
+      'e5-flotilla-02': 'fnv1a32:673fe475',
     } as const;
     for (const [seed, eventLogHash] of Object.entries(expected)) {
       const first = run(seed);

@@ -1,6 +1,6 @@
 # Rider parity audit — every door verb against the human's real control surface
 
-**Status:** MEASURED 2026-09-07, on `feat/rider-parity-audit` cut from `main` at `6664de241`. No runtime file changed.
+**Status:** MEASURED 2026-09-07, on `feat/rider-parity-audit` cut from `main` at `6664de241`. No runtime file changed by the audit itself. **IMPLEMENTED 2026-09-07 by `rider-parity-grammar` — see §3f for what landed, what is owed, and what the hashes did.**
 **Audits against:** `docs/decisions/ADR-005-rider-parity.md`, RATIFIED by the owner 2026-09-07, verbatim:
 
 > "Humans cannot control the positioning of the Prospector, just the rider, for the Prospector they can give "policies" like repair. This has to be 1:1 the same for the AI. There cannot be an unfair advantage here of it being able to control the Prospector like the rider and the human cant."
@@ -205,13 +205,125 @@ The grammar change cannot land in one slice without breaking the board mid-fligh
 
 ---
 
+
+### 3f. What actually landed (`rider-parity-grammar`, 2026-09-07)
+
+The proposal above was implemented on `feat/rider-parity-grammar` from `main` at `af767e318`.
+Stages 1, 2 and 4 LANDED; stage 3 is OWED with its removal written and its retirement delivered;
+stage 5 was RULED OUT by the owner (D1). This section is the measurement, not the plan.
+
+| # | proposed | landed | evidence |
+|---|---|---|---|
+| 1 | remove `MOVE_TO`, `HOLD`, `FALLBACK_IF` | **OWED** — patch written, tsc clean, not applied | `artifacts/rider-parity-grammar/stage3-removal.patch`, `stage3-owed.md` |
+| 2 | re-base the nine ACTION reach tests onto the hero | **LANDED** (twelve reads) | `scripts/rider-parity-reach.test.mjs` 5/5; `stage1-hash-attribution.json` |
+| 2b | do NOT re-base pan, repair, `harvestTargets` | **HELD** — pinned by the same guard | `rider-parity-reach.test.mjs`, test 3 |
+| 3 | bound `REPAIR_UNDER` to `Balance.sparkRig.range`, nearest-first | **LANDED** | `scripts/repair-under-radius.test.mjs` 3/3; `stage2-hash-attribution.json` |
+| 4 | give the HUMAN `BOAT_BUILD` / `REANCHOR` | **LANDED** — deck prompt, confirm key, anchor list | `e2e/rider-parity-grammar.spec.ts`, plain boot, both viewports |
+| 5 | publish or record the four confirm-key interactions | recorded, unchanged (a decision, not a duty) | this document, §1c |
+| 6 | a `WORK_AT` policy for both species | **RULED OUT** by the owner, D1 | ADR-005 amendment, consequence 5 |
+
+**The controls table moved from 11 equal / 6 agent-only / 1 human-only-richer to 14 / 3 / 1.** The
+three that remain `agent-only` are exactly `MOVE_TO`, `HOLD` and `FALLBACK_IF` — the stage-3
+removal. Nothing else on the board is agent-only, and the mechanics summary is unmoved at
+`{ 'agent-exceeds': 0, 'agent-lacks': 533, equal: 1229, 'not-offered': 0 }` over 1,762 rows, which is
+what change 2 predicted: the controls section adds eighteen facts without multiplying them by
+forty-two contracts.
+
+**What the hashes did, measured on this tree at both ends rather than read off the rides.** Change 2
+moved three of the 24 scored tapes (`e4-dust-flats` `46686d78`→`d025098f`, `e8-far-side`
+`a9448c78`→`b7b3438d`, `e8-low-orbit` `c69324de`→`2b48de28`) and ended two others before their order
+stream (`e1-baron`, `e7-dead-band`). Change 3 moved none to a new hash and ended four more
+(`e1-night-shift`, `e2-hill-mine`, `e9-dome-basin`, `e9-dome-basin.attempt-1`). In both passes,
+**zero tapes moved without carrying the verb class that explains them**, and every tape carrying
+neither class was byte-identical.
+
+**F-RPG-1, and it changes what §3c means.** The heat-12 board did not reproduce at the BASE of this
+task, before a line changed: of the 24 scored tapes, 21 replay to a hash other than the one their
+ride recorded and 3 do not replay at all (`e3-canyon-works` runs past its tape; `e8-eclipse` and
+`e8-mare-claim` suffocate under `e8-air-logical`). §3c's "the heat-12 board does not survive this
+change" was already true of the board on the morning this task started. The re-ride D2 ordered was
+owed either way.
+
+**Two findings this slice adds to §4.**
+
+- **F-RPG-2 (parity, reported not resolved).** After change 2, `usePlaybook`'s interference test
+  reads the hero while `syncProgramSuspension` still reads the Prospector
+  (`src/sim/HeadlessContractSim.ts`, the `const at = this.prospector.position;` in that method), so
+  the two halves of one system now disagree about which body the front is measured at. The browser
+  asks BOTH at the hero (`Game.useNamedPlaybookForRider` at `actor.group.position`,
+  `Game.playbookMutedByFront` at `this.primaryActor.group.position`). It is not among the nine sites
+  the master enumerated, so it is recorded rather than taken.
+- **F-RPG-3 (parity, E8, reported not resolved).** `this.hollowCrossing.update(STEP_SECONDS,
+  this.prospector.position, 'prospector')` still measures the E8 radiation chip at the Prospector,
+  where the browser measures it per visible actor (`Game.ts`, `this.hollowCrossing.update(simDelta,
+  actor.group.position, slot)`). `e8-air-logical` owns that system; the master ring-fenced it.
+
+### 3g. What stage 3 landed (`rider-parity-grammar-stage3`, 2026-09-07)
+
+Stage 3 landed in four commits on the same branch, after the drain's full battery returned the
+slice for eleven reds its own stages had made. This section supersedes 3f's OWED row.
+
+| # | proposed | landed | evidence |
+|---|---|---|---|
+| A0 | make the branch's own battery green before anything else | **LANDED** | `artifacts/rider-parity-grammar/gate/stage3-a0-node-guards.txt`: 742 tests, all eleven reds green |
+| 1 | remove `MOVE_TO`, `HOLD`, `FALLBACK_IF` | **LANDED** | `scripts/rider-parity-retirement.test.mjs` 2/2; the patch applied as written, tsc clean |
+| 1b | no special case for a retired tape | **HELD** | the union's unknown-verb tail is the whole refusal; the guard asserts the ordinary message |
+| 5 | the retirement, in the ledger | **LANDED** | `retirement-ledger.json` re-run against the LANDED door, byte-identical: 57 tapes / 22 scored rows / 22 rides |
+| 8 | the four confirm-key interactions become rider actions | **LANDED** | `drill`, `assay`, `preserve`, `digger`; `scripts/rider-parity-context-press.test.mjs` 5/5 with a biting control; `e2e/rider-parity-context-press.spec.ts` (plain boot) |
+| 9 | F-RPG-2: re-base `syncProgramSuspension` onto the hero | **LANDED** | `src/sim/HeadlessContractSim.ts`, one read; the two halves of the front now agree |
+| 10 | F-RPG-3: re-base the E8 hollow chip onto the hero | **LANDED** | `src/sim/HeadlessContractSim.ts`; the four Orbital provers re-run, three of four still secure and the fourth did not secure before either |
+
+**The controls table reads 15 equal / 0 agent-only / 0 human-only-richer** (was 14 / 3 / 1 at the
+drain, 11 / 6 / 1 before the task). Every door verb has a human twin and no human control reaches
+further than a rider's. The mechanics summary is UNMOVED at
+`{ 'agent-exceeds': 0, 'agent-lacks': 533, equal: 1229, 'not-offered': 0 }` across all four commits.
+
+**F-RPA-1 CLOSED**, and by the removal rather than by tidiness: taking three verbs out of the union
+moved its apostrophes, and the next declaration `quoted()` swallowed was `PICK_UPGRADE` — 222
+mechanics flipped from `equal` to `agent-lacks` and the report announced `pick_upgrade` as an
+action no verb reaches. Bounding the character class to one line restores the pinned summary exactly
+and empties `controls.verbRegistryGap`. The parent master's item 21 offered this choice and
+forbade making it silently; it is made here, measured, in the same commit as the removal.
+
+**F-RPG-2 and F-RPG-3 CLOSED** (3f recorded them as reported-not-resolved; stage 3's master took
+them as items 9 and 10). The E8 provers after the crossing re-base, each ridden twice and identical:
+
+| prover | before | after |
+|---|---|---|
+| `e8-eclipse` | secured, wave 20, `fnv1a32:38d285c1` | secured, wave 20, `fnv1a32:9c124886` |
+| `e8-far-side` | secured, wave 20, `fnv1a32:9703e5ba` | secured, wave 20, `fnv1a32:642e340f` |
+| `e8-mare-claim` | secured, wave 20, `fnv1a32:c57156c4` | secured, wave 20, `fnv1a32:81bd0aa0` |
+| `e8-low-orbit` | **unsecured**, wave 19, `fnv1a32:6e97b13b` | **unsecured**, wave 14, `fnv1a32:ab2b78eb` |
+
+Two causes, both named: the plan is the 1:1 one (`MOVE_HERO`, no `HOLD`) and the crossing is walked
+by the hero. `e8-low-orbit` did not secure before this task either, so nothing stopped securing.
+The runs are `artifacts/rider-parity-grammar/e8-provers/`, ridden by
+`artifacts/rider-parity-grammar/e8-prover-1to1.mjs` — a copy of `artifacts/e8-air-logical/prover.mjs`
+whose ONLY change is the plan, made rather than editing another slice's evidence.
+
+**Three findings stage 3 adds to §4:** F-RPG-10 (the Long Road's convoy errand cannot be landed by
+any body a human positions), F-RPG-11 (Moth Season can secure or mend its corridor, not both) and
+F-RPG-14 (a rider that never answers the secure window writes a tape that does not replay to its own
+order hash).
+
+---
+
+---
+
 ## 4. Findings
 
 - **F-RPA-1 (defect, cured in the generator; the underlying registry left alone).** `scripts/same-game-audit.mjs`'s `doorVerbs` registry is **short by four of eighteen**: `FALLBACK_IF`, `GRADE`, `HAUL` and `PLAYBOOK_USE` are absent. `quoted()`'s `/'([^']+)'/g` crosses newlines, so wherever a comment inside the `StandingOrder` union closes an apostrophe (`a human's keys`, `Reject-don't-stretch`, `the player's own loop`) the match runs to the next apostrophe and swallows the declarations between. Thirty-eight entries for eighteen verbs, twenty of them comment fragments. **No row asks `doorVerbs.includes()` about any of the four today, so no published row is wrong** — the hazard is the next one: a `GRADE` row would read `agent-lacks` on all 42 contracts and the resulting 42-row divergence would be attributed to the door rather than to a regex. This is F-2371-1 in a second file. The controls section reads the discriminant directly (`doorVerbNames`) and publishes the gap in `controls.verbRegistryGap`; correcting `doorVerbs` itself would move a pinned summary and is not this slice's to make.
 - **F-RPA-2 (staleness, cured here).** The committed `docs/bench/same-game-audit.md` was stale against `src/agent/MechanicsManifest.ts` by **420 citation lines**, all shifted by the same +54 that `e0c92bbb9` ("e8-air-wall-all-maps") inserted without regenerating the report. Proven by normalising `MechanicsManifest.ts:NNN` in both versions: after normalisation the committed and regenerated reports are byte-identical outside the new controls section (0 differing lines over 1,838). `scripts/same-game-report-guard.test.mjs` could not see it: by its own F-2096-1 comment it guards only the cited-exemptions table. Regenerated in this commit.
-- **F-RPA-3 (parity, the audit's subject).** GR-SIM answers every reach test from the Prospector where the browser answers it from the hero. Sites listed in 3a change 2. `public/skill.md:155-156` states the opposite for two of them: "`CAPTURE` ... exactly like the player's capture action" and "Both mirror the player's zero-resource actions" (of `BOAT_BUILD`/`REANCHOR`). The first is wrong about the body; the second is wrong about the player having the action at all.
+- **F-RPA-3 (parity, the audit's subject) — CLOSED 2026-09-07 by `rider-parity-grammar` stages 1 and 4.** GR-SIM answered every reach test from the Prospector where the browser answers it from the hero; the twelve reads listed in 3a change 2 now read `this.hero.group.position`, and `scripts/rider-parity-reach.test.mjs` keeps them there against a manufactured defect. Both halves of the `public/skill.md` complaint are also cured: the `CAPTURE` sentence now names the hero, and "Both mirror the player's zero-resource actions" became TRUE rather than edited — stage 4 gave the player the deck-pad build and the anchor list, in a plain boot with no `?debug` (`e2e/rider-parity-grammar.spec.ts`). What remains open is not this finding but F-RPG-2 and F-RPG-3 above, two reads the master ring-fenced.
 - **F-RPA-4 (hazard, out of scope, fire-authorable).** `intents.debugSpawn` (`T`) spawns a debug enemy pack with **no `isDebugEnabled()` guard** at `src/game/Game.ts:2897`, unlike `debugXp` (`:2901`) and `debugPlant` (`:2908`) immediately below it. A plain-boot human can press `T`. This is a live plain-boot control, so strictly it belongs in the human surface above; it is recorded as a defect instead because nobody intends it to be one.
 - **F-RPA-5 (hygiene).** `set_agent_automation` — the intent that carries both Prospector policies a human can tune — is **not a member of `UiIntent`** (`src/ui/Hud.ts:UiIntent`). `ProspectorPanel` emits it through `as unknown as UiIntent` (`src/ui/ProspectorPanel.ts:207`) and `Game.handleUiIntent` receives it through a matching cast (`src/game/Game.ts:8252-8256`). It is also **silently dropped in multiplayer**: the handler applies it only when `!this.mpClient` and returns either way (`src/game/Game.ts:8258-8263`), where rung and ability changes are queued as lockstep actions. So in a room, a human's repair threshold does nothing and no refusal is shown.
+- **F-RPG-10 (design, for the owner's desk; measured 2026-09-07).** `e4-long-road`'s convoy errand cannot be landed by any body a human positions. The town gains ground only as the lead Hauler's straight-line distance to `(190, 0)` falls, and it arrives when the cumulative gain reaches `convoy.total`, which `src/sim/MotorSocket.ts` seeds as that same opening distance, so the Hauler must come to rest EXACTLY on the stop (`:341-345`). `HAUL` brings the Hauler to the hero, and `Terrain.sample(190, 0).walkable` is false: the far railhead is an impassable rectangle about x 186..190 by z -5..5, with standable ground only east of it at x >= 190.75, reachable only around the block. Every rung of the floor's aim ladder refuses (two UNREACHABLE_TERRAIN, three UNREACHABLE_APPROACH). The other three Motor errands land. CURE (outside this task's firewall): give the convoy the same `MOTOR_STOP_REACH` the other three use, or move the stop onto standable ground.
+- **F-RPG-11 (design, for the owner's desk; twelve configurations measured).** On `e3-moth-season` a floor ride can secure at wave 12 OR mend its corridor beacon, not both. The beacon sits at `(0, -14)` and the claim at `(0, +10)`: 24 world units against the 10-unit repair sweep `REPAIR_UNDER` now uses (stage 2, the human's own). Every configuration that relights the corridor dies at wave 5-8; every one that holds the camp leaves it dark and secures on the one-way `complete` latch (F-E3MS-1). A human faces the identical choice, which is the law working. Whether the map should be winnable WITH its corridor lit is a design question.
+- **F-RPG-12 (hygiene, cured here).** `scripts/moth-season-pressure.test.mjs`'s `run()` had no `maxBuffer`, so a gr-sim ride past about 131 turns was killed with ENOBUFS and an EMPTY stderr, which reads exactly like a sim failure. The pre-ADR-005 ride sat just under the 1 MB cliff at 92 turns.
+- **F-RPG-13 (transport, reported).** A plan carrying a retired verb HANGS `gr-sim --policy=stdin` rather than failing: `readOrders` loops on a rejection waiting for a replacement line that a one-line-per-turn rider never sends. That is the mechanism behind the ten-minute `assay-replay` hang the stage-3 master warned about, and it is a property of the transport, not of the removal.
+- **F-RPG-14 (assay fidelity, reported; the fixture cured).** A rider that never ANSWERS the secure window writes a tape that does not replay to its own order-log hash. F-MCAP-1's cure spends the window's clock one refusal at a time and the tape writer records only ACCEPTED submissions, so the refusals that moved the state are absent from the tape. Measured on `e1-dry-gulch`/`embodied-build`: tape `fnv1a32:634bba4f` replayed to `fnv1a32:51f97ebf` twice over with a byte-identical WORLD outcome; with a SECURE_CHOICE branch added, tape and replay agree at `fnv1a32:93466629`.
+- **F-RPG-15 (copy, reported).** The seat driver's speakable-verb check runs BEFORE the door's grammar, so a retired verb on the lockstep wire answers `UNSPEAKABLE_ON_THE_WIRE` ("cannot ride the lockstep wire yet"), not `INVALID_ARGS`. The refusal is right; "yet" is now false for these three.
+- **F-RPG-16 (publishing gap, reported).** `now.contextPress` names the E10 Static's preserve sites by id and verb but cannot say WHERE they are: `E10StaticBossDiagnostics.sites` carries no coordinates. The drill yard's two stations and the Old Digger publish theirs, and the assay office is a work the view already lists. Giving the Static's sites coordinates means editing that system, outside this task's firewall.
 - **F-RPA-6 (parity, gating, non-blocking).** The human's dispatch checks **no consent at all** (`Game.beginProspectorDispatch:7879` has no `prospectorCan`/rung test), while the rider's `HARVEST` needs rung 2 and the granted `auto_pan` ability (`src/agent/StandingOrders.ts:841`, `:984`). Same for `BUILD` (rung 3 + `place_building`) against the human's ungated build menu. The agent is *more* restricted, so this is not an unfair advantage — but it is not 1:1 either, and a 1:1 reading of ADR-005 would make the human's Prospector dispatch respect the same rung the panel already exposes.
 
 ---

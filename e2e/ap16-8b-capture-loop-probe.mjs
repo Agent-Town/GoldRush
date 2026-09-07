@@ -23,7 +23,7 @@
  *   idle  — no orders at all. Reproduces the ap16-8 `idle` control under this instrumentation.
  *   blind — the ap16-8 scripted policy: CAPTURE whenever anything anywhere is exhausted,
  *           builds + harvests + HOLD. Position-blind. The CONTROL.
- *   hunt  — position-AWARE. Nearest exhausted machine -> MOVE_TO its live position ->
+ *   hunt  — position-AWARE. Nearest exhausted machine -> MOVE_HERO to its live position ->
  *           CAPTURE once inside `captureRadius`. Nothing else while a machine stands
  *           exhausted; falls back to the blind policy's economy orders when the board is clean.
  *
@@ -113,7 +113,7 @@ function economyOrders(sim, view) {
   return [
     ...buildOrders(view),
     ...view.seams.filter(({ active, remaining }) => active && remaining > 0).map(({ id }) => ({ verb: 'HARVEST', seam: id })),
-    { verb: 'HOLD', pos: { x: 0, z: 12 } },
+    { verb: 'MOVE_HERO', pos: { x: 0, z: 12 } },
   ];
 }
 
@@ -132,7 +132,7 @@ function plan(policy, sim, view, stats) {
   // measures from (src/sim/HeadlessContractSim.ts:544).
   const machines = exhaustedMachines(sim);
   if (machines.length === 0) {
-    return (policy === 'fortify' ? [...fortifyOrders(view), { verb: 'HOLD', pos: { x: 0, z: 12 } }] : economyOrders(sim, view)).slice(0, 32);
+    return (policy === 'fortify' ? [...fortifyOrders(view), { verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }] : economyOrders(sim, view)).slice(0, 32);
   }
   // `balanced` keeps the 3-beacon tape armed while it hunts; `fortify` keeps the full ring
   // armed and spends the pen's gold on it; `hunt` is the pure capture ceiling.
@@ -150,10 +150,10 @@ function plan(policy, sim, view, stats) {
   if (bestSq <= CAPTURE_RADIUS * CAPTURE_RADIUS) {
     stats.inRangeTicks += 1;
     stats.capturePlans += 1;
-    return [{ verb: 'CAPTURE' }, ...defence, { verb: 'MOVE_TO', pos: { x: best.x, z: best.z } }].slice(0, 32);
+    return [{ verb: 'CAPTURE' }, ...defence, { verb: 'MOVE_HERO', pos: { x: best.x, z: best.z } }].slice(0, 32);
   }
   stats.travelTicks += 1;
-  return [...defence, { verb: 'MOVE_TO', pos: { x: best.x, z: best.z } }].slice(0, 32);
+  return [...defence, { verb: 'MOVE_HERO', pos: { x: best.x, z: best.z } }].slice(0, 32);
 }
 
 function sample(sim) {

@@ -149,6 +149,17 @@ test('seeded standing orders obey priority, gates, legal actions, surprises, and
   });
   await page.getByTestId('hud-agent').click();
   await page.getByTestId('prospector-ability-place_building').uncheck();
+  // F-RPG-9, CURED HERE with the cure the drain prescribed (`reviews/rider-parity-grammar.md`):
+  // the checkbox's click and the CONSENT the door reads are two different clocks, and this line
+  // used to submit into the gap — measured 2 of 3 red on desktop-chrome at this gate, and 1 of 3
+  // on pre-merge main. Waiting for the checkbox to REPORT itself unchecked closes it: the panel
+  // re-renders from the consent state it just wrote, so an unchecked box means the door has the
+  // revocation, not merely that the pointer landed.
+  await expect(page.getByTestId('prospector-ability-place_building')).not.toBeChecked();
+  // ...and one more clock: the checkbox re-renders from the panel's own state, and the CONSENT the
+  // door reads is written on the frame after it. Measured: the box-only wait took desktop from 1 of
+  // 3 green to 3 of 3 and left mobile racing. Waiting two frames closes the second gap.
+  await page.evaluate(() => new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve()))));
   const revokedAbility = await submit(page, [
     { verb: 'BUILD', what: 'sentry_beacon', where: { x: 0, z: 10 }, when: { goldGte: 25 } },
   ]);
@@ -208,7 +219,13 @@ test('seeded standing orders obey priority, gates, legal actions, surprises, and
 
   const replacement = await submit(page, [
     { verb: 'BUILD', what: 'sentry_beacon', where: { x: 0, z: 0 }, when: { waveGte: 0 } },
-    { verb: 'MOVE_TO', pos: { x: 3, z: 10 } },
+    // ADR-005 stage 3: this was MOVE_TO, and its replacement is NOT MOVE_HERO. The subject here is
+    // the ORDER LIFECYCLE, not the verb: one order that fails and one that finishes. In a SOLO
+    // browser boot a HUMAN pilots the hero, so MOVE_HERO is refused HERO_NOT_YOURS by design
+    // (hero-move-verb's own law, owner 2026-09-06), and the solo door binds none of the final-verb
+    // handlers, so SET_WEAPON answers 'unavailable' — both read 'failed'. MEASURED, both of them.
+    // A second BUILD is what finishes here, on the 85 gold this test just granted.
+    { verb: 'BUILD', what: 'palisade', where: { x: -6, z: 10 }, when: { waveGte: 0 } },
   ]);
   expect(replacement.outcome).toMatchObject({ ok: true, result: { count: 2 } });
   await expect.poll(() => view(page).then((state) => state.orders[1]?.status), { timeout: 8_000 }).toBe('done');

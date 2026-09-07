@@ -20,9 +20,13 @@ function run(policy, input) {
   const result = spawnSync(
     process.execPath,
     ['scripts/gr-sim.mjs', '--contract', 'e3-moth-season', '--seed', SEED, `--policy=${policy}`],
-    { cwd: ROOT, encoding: 'utf8', input, timeout: 120_000 },
+    // `maxBuffer` explicitly, because gr-sim prints a WHOLE VIEW per turn and `spawnSync`'s default
+    // ceiling is 1 MB: the ride below crosses it at about turn 131 and the child is killed with
+    // ENOBUFS and an EMPTY stderr, which reads exactly like a sim failure and is not one
+    // (F-RPG-12, measured 2026-09-07 — the pre-ADR-005 ride sat just under the cliff at 92 turns).
+    { cwd: ROOT, encoding: 'utf8', input, timeout: 120_000, maxBuffer: 64 * 1024 * 1024 },
   );
-  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.status, 0, result.error?.message ?? result.stderr);
   return JSON.parse(result.stdout.trim().split('\n').at(-1));
 }
 
@@ -111,10 +115,18 @@ test('the corridor circuit is cut, dark, repaired and lit across the floor ride'
   assert.deepEqual({ gallery: cut.gallery, lamp: cut.lamp }, { gallery: 'dark', lamp: 'dark' });
   assert.ok(cut.beacon.some((entry) => entry.wrecked), 'the span cut without a wrecked beacon');
 
-  // 4. THE REPAIR. The standing REPAIR_UNDER order relights it, and the ride secures at 12.
-  const relit = trace.find((row) => row.turn > cut.turn && row.lamp === 'powered');
-  assert.ok(relit, 'the corridor was never repaired after the cut');
-  assert.equal(relit.span, 'intact');
+  // 4. THE REPAIR, AND ITS PRICE (re-derived 2026-09-07, `rider-parity-grammar-stage3` A0).
+  //    This beat used to belong to the same ride: the plan pinned the Prospector at the camp with
+  //    `HOLD` and `REPAIR_UNDER` searched the WHOLE MAP, so the Prospector walked twenty-four units
+  //    south on its own and mended the corridor beacon while the hero never moved. Neither half of
+  //    that survives ADR-005: no verb positions the Prospector any more, and the repair search is
+  //    bounded to `Balance.sparkRig.range` (10) from the acting body, exactly as the human's sweep
+  //    is. The corridor beacon sits at (0, -14); the claim it defends sits at (0, +10). A body
+  //    cannot hold both. So the beat is measured on its OWN ride below, and what this one pins is
+  //    the consequence: the span stays cut, and the ONE-WAY `complete` latch is what still carries
+  //    the secure to wave 12 (F-E3MS-1, now load-bearing rather than incidental).
+  assert.equal(trace.filter((row) => row.turn > cut.turn && row.lamp === 'powered').length, 0,
+    'the camp-holding ride cannot reach the corridor beacon: the mend is 24wu from a 10wu sweep');
   assert.deepEqual({ secured: outcome.secured, waves: outcome.waves }, { secured: true, waves: 12 });
 
   // MEASURED LIMIT, recorded not wished for (see `artifacts/e3-moth-season/report.md`, F-E3MS-1):
@@ -128,9 +140,66 @@ test('the corridor circuit is cut, dark, repaired and lit across the floor ride'
   mkdirSync(path.join(ROOT, 'artifacts/e3-moth-season'), { recursive: true });
   writeFileSync(
     path.join(ROOT, `artifacts/e3-moth-season/ride-${SEED}.json`),
-    `${JSON.stringify({ seed: SEED, outcome, beats: { dark: trace[0].turn, lit: lit.turn, cut: cut.turn, relit: relit.turn }, terminalLamp, trace }, null, 2)}\n`,
+    `${JSON.stringify({ seed: SEED, outcome, beats: { dark: trace[0].turn, lit: lit.turn, cut: cut.turn, relit: null }, terminalLamp, trace }, null, 2)}\n`,
   );
-  console.log(`moth-season circuit beats dark@${trace[0].turn} lit@${lit.turn} cut@${cut.turn} relit@${relit.turn} terminal=${terminalLamp} hash=${outcome.eventLogHash}`);
+  console.log(`moth-season circuit beats dark@${trace[0].turn} lit@${lit.turn} cut@${cut.turn} relit=none terminal=${terminalLamp} hash=${outcome.eventLogHash}`);
+});
+
+/**
+ * F-RPG-11, the fourth beat on its own ride, and the price it costs (measured 2026-09-07).
+ *
+ * The repair still works and the 1:1 grammar can still reach it — a rider walks the HERO to the
+ * corridor and the Prospector drifts in behind it, sees the wrecked beacon inside its 10wu sweep,
+ * walks the rest and mends it. What a rider cannot do is be in two places: every configuration
+ * measured (mend post z of -2, -4, -6, -8 and -10; one, two and unlimited trips; trips gated from
+ * waves 0, 3, 5, 6, 7, 8, 9, 10 and 11) either relights the corridor and dies at wave 5-8, or holds
+ * the camp to wave 12 and leaves the corridor dark. This test pins ONE side of that trade with the
+ * plainest ride of the set: leave for the corridor the moment it goes dark, come home when it is
+ * lit. It relights at turn 37 and the run falls one wave short of the secure.
+ *
+ * This is the law working, not a regression: a human player faces exactly the same choice, which is
+ * the whole of ADR-005 ("This has to be 1:1 the same for the AI"). Whether Moth Season should be
+ * winnable WITH its corridor lit is a design question for the owner, filed as F-RPG-11.
+ */
+test('the fourth beat on its own ride: walking the hero to the corridor mends it, and costs the claim', async () => {
+  const ride = await withSim(async ({ HeadlessContractSim }) => {
+    const sim = new HeadlessContractSim({ contractId: 'e3-moth-season', seed: SEED });
+    const trace = [];
+    let turn = sim.currentTurn();
+    let index = 0;
+    let mending = false;
+    let trips = 0;
+    while (!turn.terminal && index < 400) {
+      const now = turn.view.now;
+      const connect = now.canyonConnect ?? null;
+      const dark = Boolean(connect?.complete && connect.powered === 0);
+      if (mending && !dark) mending = false;
+      if (!mending && dark && trips < 1) { mending = true; trips += 1; }
+      const opening = FIXTURE[index]?.filter((order) => order.verb !== 'REPAIR_UNDER' && order.verb !== 'MOVE_HERO') ?? [];
+      const orders = now.pendingSecure
+        ? [{ verb: 'SECURE_CHOICE', choice: 'bank' }]
+        : now.pendingOffer?.length
+          ? [{ verb: 'PICK_UPGRADE', id: now.pendingOffer[0].id }]
+          : [...(index < 2 ? opening : []), { verb: 'REPAIR_UNDER', pct: 60 },
+             { verb: 'MOVE_HERO', pos: mending ? { x: 0, z: -6 } : { x: 0, z: 10 } }];
+      assert.equal(sim.submitOrders(orders).outcome.ok, true, `turn ${index}`);
+      trace.push({ turn: index, wave: now.wave, mending, ...circuit(sim) });
+      index += 1;
+      turn = sim.advanceToTurn();
+    }
+    return { trace, outcome: turn.terminal ? sim.outcome() : null };
+  });
+
+  const lit = ride.trace.find((row) => row.lamp === 'powered');
+  const cut = ride.trace.find((row) => row.turn > lit.turn && row.span === 'cut');
+  const relit = ride.trace.find((row) => row.turn > cut.turn && row.lamp === 'powered');
+  assert.ok(relit, 'walking the hero to the corridor must still mend the beacon');
+  assert.equal(relit.span, 'intact');
+  assert.equal(relit.turn, 37, 'the mend lands on its pinned turn');
+  assert.ok(ride.trace.slice(cut.turn, relit.turn).some((row) => row.mending), 'the mend needed the walk');
+  // The price, pinned so nobody re-derives it by accident: the claim falls short of the secure wave.
+  assert.deepEqual({ secured: ride.outcome?.secured, waves: ride.outcome?.waves }, { secured: false, waves: 11 });
+  console.log(`moth-season mend ride lit@${lit.turn} cut@${cut.turn} relit@${relit.turn} outcome=${JSON.stringify(ride.outcome)}`);
 });
 
 test('surviving the dark does not secure it: the corridor must have carried current', async () => {

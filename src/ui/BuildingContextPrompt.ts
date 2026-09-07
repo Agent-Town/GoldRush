@@ -24,6 +24,36 @@ export type CanalDecisionCandidate = {
   line: string;
 };
 
+/**
+ * ADR-005 stage 4 (`docs/bench/rider-parity-audit.md` §3a change 4; owner ruling 2026-09-07) — THE
+ * DECK, offered to the PLAYER.
+ *
+ * `BOAT_BUILD` and `REANCHOR` reached a real E5 mechanic whose only browser lever was
+ * `__GR_TEST__.placeBoatBuilding` / `__GR_TEST__.reanchorClaimBoat`, installed only under `?debug`.
+ * A plain-boot human could not build on the deck or move the anchor AT ALL, so the two verbs were
+ * `agent-only`: the audit's clearest case of Mistake #10 in its original form. ADR-005 clause 2's
+ * remedy for a thin human surface is to THICKEN IT, never to cut the verb — a mechanic an epoch is
+ * built on does not leave the door because the browser forgot to offer it.
+ *
+ * So the deck rides the prompt every other world interaction rides, on the keys the game already
+ * has: the confirm key places the selected buildable on the pad the hero is standing at, and the
+ * anchors are a LIST, one button each, with the upgrade key bound to the first of them. Nothing is
+ * spent — `ClaimBoat.placeBuilding` and `ClaimBoat.reanchor` take no resource, which is exactly what
+ * `public/skill.md` already claimed of the two verbs ("Both mirror the player's zero-resource
+ * actions"). That sentence was false when it was written; this is what makes it true.
+ */
+export type DeckContextCandidate = {
+  /** The pad the hero is standing at, so a spec can assert WHICH pad is being offered. */
+  padId: string;
+  /** What the confirm key will place there — the player's own current build selection. */
+  buildingId: BuildableId;
+  buildingName: string;
+  /** Every anchor the boat is not currently at. Empty means "nowhere else to go". */
+  anchors: readonly { id: string; label: string }[];
+  title: string;
+  line: string;
+};
+
 export class BuildingContextPrompt {
   private contentKey = '';
   private readonly root = document.createElement('div');
@@ -35,6 +65,10 @@ export class BuildingContextPrompt {
   private readonly demolishButton = document.createElement('button');
   private readonly canalRedigButton = document.createElement('button');
   private readonly canalDemolishButton = document.createElement('button');
+  private readonly deckBuildButton = document.createElement('button');
+  /** One button per anchor the boat is not at — the LIST the master asks for, not a toggle. */
+  private readonly deckAnchorRow = document.createElement('div');
+  private onReanchor: (anchorId: string) => void = () => {};
 
   constructor(
     parent: HTMLElement,
@@ -43,6 +77,8 @@ export class BuildingContextPrompt {
     onFund: () => void,
     onCanalRedig: () => void = () => {},
     onCanalDemolish: () => void = () => {},
+    onDeckBuild: () => void = () => {},
+    onReanchor: (anchorId: string) => void = () => {},
   ) {
     this.root.className = 'building-context-prompt';
     this.root.dataset.testid = 'building-context-prompt';
@@ -88,6 +124,25 @@ export class BuildingContextPrompt {
         button.blur();
       });
     }
+    this.deckBuildButton.className = 'building-context-prompt__button building-context-prompt__button--deck-build';
+    this.deckBuildButton.type = 'button';
+    this.deckBuildButton.dataset.testid = 'deck-build';
+    this.deckBuildButton.hidden = true;
+    this.deckBuildButton.addEventListener('click', () => {
+      onDeckBuild();
+      this.deckBuildButton.blur();
+    });
+    this.deckAnchorRow.className = 'building-context-prompt__anchors';
+    this.deckAnchorRow.dataset.testid = 'deck-anchors';
+    this.deckAnchorRow.hidden = true;
+    // Laid out here rather than in `src/styles.css`, which is outside this slice's firewall. The
+    // prompt is a four-column grid; an anchor LIST is one variable-length cell, so it spans the row
+    // and flows its own buttons. Everything else inherits `building-context-prompt__button`.
+    this.deckAnchorRow.style.gridColumn = '1 / -1';
+    this.deckAnchorRow.style.display = 'flex';
+    this.deckAnchorRow.style.flexWrap = 'wrap';
+    this.deckAnchorRow.style.gap = '8px';
+    this.onReanchor = onReanchor;
     this.root.append(
       this.icon,
       this.title,
@@ -96,6 +151,8 @@ export class BuildingContextPrompt {
       this.demolishButton,
       this.canalRedigButton,
       this.canalDemolishButton,
+      this.deckBuildButton,
+      this.deckAnchorRow,
       this.loss,
     );
     parent.append(this.root);
@@ -107,8 +164,11 @@ export class BuildingContextPrompt {
     enterEnabled: boolean,
     fund: MegaprojectFundCandidate | null = null,
     canal: CanalDecisionCandidate | null = null,
+    deck: DeckContextCandidate | null = null,
   ): void {
-    const contentKey = canal
+    const contentKey = deck
+      ? `deck:${deck.padId}:${deck.buildingId}:${deck.anchors.map((anchor) => anchor.id).join(',')}:${enterEnabled}`
+      : canal
       ? `canal:${canal.segmentId}:${canal.title}:${canal.line}:${enterEnabled}`
       : fund
       ? `fund:${fund.title}:${fund.stage}:${fund.cost}:${fund.line}:${enterEnabled}`
@@ -117,7 +177,29 @@ export class BuildingContextPrompt {
         : 'hidden';
     if (contentKey === this.contentKey) return;
     this.contentKey = contentKey;
-    this.root.hidden = demolish === null && fund === null && canal === null;
+    this.root.hidden = demolish === null && fund === null && canal === null && deck === null;
+    // ADR-005 stage 4. THE DECK OUTRANKS EVERY OTHER CANDIDATE for the same reason A10 does: a
+    // Claim-Boat pad is a place on a hull, and no work can stand on it for the branches below to
+    // describe (`Game.confirmAction` refuses an ordinary build outright while a deepwater claim is
+    // live). Offered in ordinary play, no build mode, no `?debug` — Mistake #10's answer to "where
+    // does the PLAYER see this, in a plain boot?".
+    if (deck) {
+      this.icon.textContent = 'D';
+      this.title.textContent = deck.title;
+      this.loss.textContent = deck.line;
+      this.upgradeButton.hidden = true;
+      this.demolishButton.hidden = true;
+      this.fundButton.hidden = true;
+      this.canalRedigButton.hidden = true;
+      this.canalDemolishButton.hidden = true;
+      this.deckBuildButton.hidden = false;
+      this.deckBuildButton.textContent = `Build ${deck.buildingName} on the ${deck.padId} pad${enterEnabled ? ' Enter' : ''}`;
+      this.renderAnchors(deck.anchors);
+      return;
+    }
+    this.deckBuildButton.hidden = true;
+    this.deckAnchorRow.hidden = true;
+    this.deckAnchorRow.replaceChildren();
     // A10 OUTRANKS EVERY OTHER CANDIDATE, and it can do so safely: an undecided canal band takes
     // no foundation, so there is never a building at a stake for the branches below to describe.
     if (canal) {
@@ -156,6 +238,30 @@ export class BuildingContextPrompt {
     this.upgradeButton.disabled = !upgrade?.canUpgrade;
     this.upgradeButton.textContent = upgradeLabel(upgrade);
     this.demolishButton.textContent = `Tear down (+${demolish.refund}g)${enterEnabled ? ' Enter' : ''}`;
+  }
+
+  /**
+   * The anchor LIST, rebuilt whenever the content key moves. One button per anchor the boat is not
+   * at, each carrying its own id in a testid, so a spec can assert WHICH anchors were offered rather
+   * than that "an anchor button existed". The upgrade key is bound to the first of them in
+   * `Game.confirmUpgrade`, which is how a keyboard player reaches the list without a new binding.
+   */
+  private renderAnchors(anchors: readonly { id: string; label: string }[]): void {
+    this.deckAnchorRow.replaceChildren();
+    this.deckAnchorRow.hidden = anchors.length === 0;
+    this.deckAnchorRow.style.display = anchors.length === 0 ? 'none' : 'flex';
+    anchors.forEach((anchor, index) => {
+      const button = document.createElement('button');
+      button.className = 'building-context-prompt__button building-context-prompt__button--deck-anchor';
+      button.type = 'button';
+      button.dataset.testid = `deck-anchor-${anchor.id}`;
+      button.textContent = `Weigh anchor: ${anchor.label}${index === 0 ? ' U' : ''}`;
+      button.addEventListener('click', () => {
+        this.onReanchor(anchor.id);
+        button.blur();
+      });
+      this.deckAnchorRow.append(button);
+    });
   }
 
   dispose(): void {

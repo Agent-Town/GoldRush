@@ -19,7 +19,9 @@ test('tape hash keeps the sim-owned standing-orders module across invalidation',
     assert.deepEqual(sim.standingOrdersSnapshot().log, [], 'a bound executor with zero submissions is valid');
     assert.equal(agentOrdersEventLogHash(sim.standingOrdersSnapshot()), emptyHash);
 
-    assert.equal(sim.submitOrders([{ verb: 'HOLD', pos: { x: 0, z: 12 } }]).outcome.ok, true);
+    // ADR-005 stage 3: any accepted submission does; this one used to be a HOLD, which the door
+    // no longer knows. Nothing here is about the verb — it is about which MODULE owns the log.
+    assert.equal(sim.submitOrders([{ verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }]).outcome.ok, true);
     const liveHash = agentOrdersEventLogHash(sim.standingOrdersSnapshot());
     assert.notEqual(liveHash, emptyHash);
 

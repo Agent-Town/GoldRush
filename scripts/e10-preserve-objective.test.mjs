@@ -35,18 +35,26 @@ function ride(HeadlessContractSim, orders) {
   return { outcome: sim.outcome(), view: turn.view };
 }
 
+/**
+ * RE-DERIVED 2026-09-07 (`rider-parity-grammar-stage3` B, ADR-005). Both plans used to end with
+ * `HOLD` at the preserve, a verb that pinned the PROSPECTOR on the monument while the hero stayed
+ * where it spawned. No human has that control, so both plans now end with `MOVE_HERO` at the same
+ * point: the RIDER stands on the preserve and the Prospector drifts in behind it. Same seed, same
+ * two plans, same verdicts — the extract ride still loses the monument and the defend ride still
+ * secures at wave 8. Only the bodies moved, so only the hashes moved, and each carries that cause.
+ */
 test('the Last Claim flips extraction into a preserve objective', async () => {
   const { HeadlessContractSim, close } = await loadSim();
   try {
     const extractOrders = [
       ...harvest('gold-seam-2', 6),
       ...harvest('gold-seam-1', 6),
-      { verb: 'HOLD', pos: { x: 0, z: 50 } },
+      { verb: 'MOVE_HERO', pos: { x: 0, z: 50 } },
     ];
     const extract = ride(HeadlessContractSim, extractOrders);
     assert.equal(extract.outcome.secured, false);
     assert.equal(extract.outcome.endReason, 'preserve_fell');
-    assert.equal(extract.outcome.eventLogHash, 'fnv1a32:fffbf66e');
+    assert.equal(extract.outcome.eventLogHash, 'fnv1a32:9b133c8d');
     assert.deepEqual(extract.view.now.preserve, { hp: 0, maxHp: 360, alive: false });
     assert.deepEqual(ride(HeadlessContractSim, extractOrders).outcome, extract.outcome);
 
@@ -57,12 +65,12 @@ test('the Last Claim flips extraction into a preserve objective', async () => {
       { verb: 'REPAIR_UNDER', pct: 70 },
       ...harvest('gold-seam-2', 10),
       ...harvest('gold-seam-1', 10),
-      { verb: 'HOLD', pos: { x: 0, z: 50 } },
+      { verb: 'MOVE_HERO', pos: { x: 0, z: 50 } },
     ];
     const defend = ride(HeadlessContractSim, defendOrders);
     assert.equal(defend.outcome.secured, true);
     assert.equal(defend.outcome.waves, 8);
-    assert.equal(defend.outcome.eventLogHash, 'fnv1a32:83eaf5e4');
+    assert.equal(defend.outcome.eventLogHash, 'fnv1a32:3eec9b2b');
     assert.equal(defend.view.now.preserve?.alive, true);
     assert.deepEqual(ride(HeadlessContractSim, defendOrders).outcome, defend.outcome);
 

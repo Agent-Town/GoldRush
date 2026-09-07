@@ -138,7 +138,7 @@ test('every Motor map publishes its own errand to a browser rider, and GRADE is 
       // The Prospector starts more than the 2.5wu grade reach from EVERY stake on all four maps
       // (nearest is 5.4wu, the Dust Flats' own camp-to-railhead), so GRADE has to refuse right here
       // and name the nearest one. No walk, so no wave boundary is crossed and nothing can time out.
-      const receipt = sim.submitOrders([{ verb: 'GRADE' }, { verb: 'HOLD', pos: { x: far.x, z: far.z } }]);
+      const receipt = sim.submitOrders([{ verb: 'GRADE' }, { verb: 'MOVE_HERO', pos: { x: far.x, z: far.z } }]);
       for (let tick = 0; tick < 10; tick += 1) sim.advanceOneTick();
       const orders: BrowserOrder[] = sim.standingOrdersSnapshot().orders
         .map((record: { order: { verb: string }; status: string; reason?: string }) => ({ verb: record.order.verb, status: record.status, reason: record.reason ?? null }));

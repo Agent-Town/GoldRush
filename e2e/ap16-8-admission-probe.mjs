@@ -18,7 +18,7 @@ for (const contractId of contracts) for (const policy of ['idle', 'scripted']) f
       : [...(now.atomic?.wrangle.active.some(({ state }) => state === 'exhausted') ? [{ verb: 'CAPTURE' }] : []),
         ...positions.slice(now.works.byKind.sentry_beacon ?? 0).map((where, index) => ({ verb: 'BUILD', what: 'sentry_beacon', where, when: { goldGte: [25, 35, 45][index] } })),
         ...now.seams.filter(({ active, remaining }) => active && remaining > 0).map(({ id }) => ({ verb: 'HARVEST', seam: id })),
-        { verb: 'HOLD', pos: { x: 0, z: 12 } }];
+        { verb: 'MOVE_HERO', pos: { x: 0, z: 12 } }];
     sim.submitOrders(orders.slice(0, 32)); try { turn = sim.advanceToTurn(); } catch (cause) { error = cause.message; break; }
   }
   const outcome = turn.terminal ? sim.outcome() : null; const alive = turn.view.now.threats.alive; const row = {

@@ -46,18 +46,19 @@ sim.on('exit', (code) => push({ kind: 'exit', value: code }));
 
 // The documented door (AP-11): the grammar below is the runtime truth from
 // src/agent/StandingOrders.ts + src/game/buildables.ts — agents get the verbs by law.
+// ADR-005 stage 3 (owner 2026-09-07) retired MOVE_TO, HOLD and FALLBACK_IF: nothing positions the
+// Prospector any more, for a rider or for a player. Teaching a model a verb the door refuses is
+// worse than teaching it nothing, so they are gone from here too.
 const GRAMMAR = `STANDING ORDER GRAMMAR (reply is always ONE JSON array of these objects; the array REPLACES your previous orders):
   {"verb":"BUILD","what":<buildable>,"where":{"x":N,"z":N},"when":{"goldGte":N}|{"waveGte":N}}
   {"verb":"REPAIR_UNDER","pct":N}            // auto-repair works under N% hp
-  {"verb":"MOVE_TO","pos":{"x":N,"z":N}}
-  {"verb":"HOLD","pos":{"x":N,"z":N}}        // fight from this spot
+  {"verb":"MOVE_HERO","pos":{"x":N,"z":N}}   // walk YOUR HERO there; the Prospector drifts to it
   {"verb":"HARVEST","seam":"<seam id>"}      // pan a seam by id from the view
   {"verb":"HARVEST","sluice":N}              // tend sluice number N
-  {"verb":"FALLBACK_IF","threat":{"enemiesGte":N},"pos":{"x":N,"z":N}}
 Buildables: sentry_beacon, palisade, sluice, stockpile, turret, assay_office, lantern_post, decoy_shed. Sluices only work beside water. Gold pays for builds; seams and sluices earn gold. WARNING: each reply REPLACES the ENTIRE order set — always resend the full set you want active; [] wipes all orders (never send it unless you mean to stand down).`;
 const messages = [
   { role: 'system', content: `You are a Gold Rush rider playing to WIN the contract. Each user message carries a JSON view of the claim at a decision point (the view's briefing, mechanics and almanac blocks explain this map). Reply with ONE JSON array of standing orders and NOTHING else — no prose, no code fences.\n${GRAMMAR}` },
-  { role: 'user', content: `GOLD RUSH CONTRACT BRIEFING\nContract ${contract} at trail difficulty. Hold the claim through the posted secure wave; survive and the win is banked. Strategy that works: HOLD near your claim, BUILD a sluice beside water and turrets/palisades on the pressed edges early, HARVEST seams between waves, set REPAIR_UNDER and a FALLBACK_IF. Return one JSON array of standing orders, with no prose.` },
+  { role: 'user', content: `GOLD RUSH CONTRACT BRIEFING\nContract ${contract} at trail difficulty. Hold the claim through the posted secure wave; survive and the win is banked. Strategy that works: keep your hero near your claim with MOVE_HERO, BUILD a sluice beside water and turrets/palisades on the pressed edges early, HARVEST seams between waves, and set REPAIR_UNDER. Return one JSON array of standing orders, with no prose.` },
 ];
 let tokensIn = 0, tokensOut = 0, calls = 0;
 const ordersLog = [];

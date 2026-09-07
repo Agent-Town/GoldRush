@@ -38,9 +38,13 @@ test('Stillwater carries one corsair at 8 seconds on a 32 second cycle without d
 });
 
 test('ordinary Stillwater riders lose by wave 3 while the reference ride secures at wave 12', () => {
+  // RE-PINNED 2026-09-07 (attended drain of rider-parity-grammar stage 3, F-RPG-17): the prover's two HOLD
+  // orders became MOVE_HERO when HOLD retired under ADR-005; the ride still secures at wave 12 / 360 s on
+  // both seeds with the same purse, only the event-log hashes moved (7661ca43 -> 879badb5, 3d3ea0fc -> 4ec49fdf);
+  // the idle rows are byte-unchanged.
   const expected = {
-    'e5-stillwater-01': { played: 'fnv1a32:7661ca43', idle: 'fnv1a32:ba80f970', inProcessIdle: 'fnv1a32:0ec0ed52' },
-    'e5-stillwater-02': { played: 'fnv1a32:3d3ea0fc', idle: 'fnv1a32:7ab6a335', inProcessIdle: 'fnv1a32:b72d7bbc' },
+    'e5-stillwater-01': { played: 'fnv1a32:879badb5', idle: 'fnv1a32:ba80f970', inProcessIdle: 'fnv1a32:0ec0ed52' },
+    'e5-stillwater-02': { played: 'fnv1a32:4ec49fdf', idle: 'fnv1a32:7ab6a335', inProcessIdle: 'fnv1a32:b72d7bbc' },
   };
   for (const [seed, pins] of Object.entries(expected)) {
     const played = run(['artifacts/e5-stillwater/prover.mjs', '--plain', '--seed', seed, '--policy', 'bait', '--deck', 'turret,sentry_beacon,turret', '--harvest', 'on', '--quiet']);
