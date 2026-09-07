@@ -26,9 +26,18 @@ DEPLOY_COMMIT="${CF_PAGES_COMMIT_SHA:-$(git rev-parse HEAD 2>/dev/null || printf
 BUILD_ID="${CF_PAGES_COMMIT_SHA:-$(git rev-parse --short=8 HEAD 2>/dev/null || printf 'unknown')}"
 PUBLISHED_BUILD=""
 BUDGET_LIMIT=25000000
+# THE TRIPWIRE CEILING (owner desk answer A7, 2026-09-07). The browser cue-window number is host
+# speed, not payload — F-BUDGET-4 measured 21,589,212 / 10,540,927 / 21,638,025 bytes on ONE fixed
+# build, a 2.05x swing, and 6,411,798 on the same build at an emulated 8 Mbps. It no longer decides
+# anything near the budget; it only catches a build so much heavier that even a fast host cannot
+# hide it. Generous on purpose: a tripwire that fires on noise is a tripwire nobody believes.
+TRIPWIRE_CEILING=30000000
 BUDGET_STATUS="FAIL (not measured)"
 BUDGET_SUMMARY=""
 BUDGET_ALLOWANCE=""
+PAYLOAD_STATUS="FAIL (not measured)"
+PAYLOAD_SUMMARY=""
+TRIPWIRE_STATUS="FAIL (not measured)"
 write_result() {
   local outcome="$1" url="$2" ts tmp
   ts="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
@@ -41,9 +50,18 @@ finish() {
   write_result "$outcome" "$url" || note "FAILED: could not write $RESULT"
   note "RELEASE VERDICT"
   note "Build: $BUILD_ID"
+  # TWO NUMBERS, AND THE BLOCK SAYS WHICH IS WHICH. The PAYLOAD is what the build declares the first
+  # town needs, summed from dist/ with no browser in the loop; it is the one the budget judges. The
+  # PROBE is the browser cue-window transfer; it is a tripwire under a far looser ceiling because it
+  # measures how much traffic happened to land before a racing signal (F-BUDGET-4).
   note "Budget: $BUDGET_STATUS$BUDGET_ALLOWANCE (limit: $BUDGET_LIMIT bytes)"
+  note "  payload GATE (declared, computed from the build): $PAYLOAD_STATUS"
+  if [ -n "$PAYLOAD_SUMMARY" ]; then
+    while IFS= read -r row; do note "  $row"; done <<< "$PAYLOAD_SUMMARY"
+  fi
+  note "  probe TRIPWIRE (browser cue window, ceiling $TRIPWIRE_CEILING bytes, host speed not payload): $TRIPWIRE_STATUS"
   if [ -n "$BUDGET_SUMMARY" ]; then
-    while IFS= read -r row; do note "$row"; done <<< "$BUDGET_SUMMARY"
+    while IFS= read -r row; do note "  $row"; done <<< "$BUDGET_SUMMARY"
   fi
   if [ -f "docs/release/verdict-$BUILD_ID.md" ]; then
     note "Device verdict: PRESENT docs/release/verdict-$BUILD_ID.md (owner verdict not evaluated)"
@@ -81,6 +99,8 @@ if ! GR_RELEASE="${GR_RELEASE:-e1}" CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run buil
 printf '{"build":"%s","builtAt":"%s"}\n' "$BUILD_ID" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > dist/version.json
 
 BUDGET_OVER=0
+TRIPWIRE_OVER=0
+PAYLOAD_MEASURED=0
 CAPTURE="$(mktemp "${TMPDIR:-/tmp}/gold-rush-deploy.XXXXXX")" || { note "FAILED: could not create deploy capture"; finish budget_failed 5; }
 BUDGET_CWD="$(mktemp -d "${TMPDIR:-/tmp}/gold-rush-budget.XXXXXX")" || { note "FAILED: could not create budget workdir"; finish budget_failed 5; }
 SNAPSHOT=""
@@ -114,14 +134,14 @@ while read -r project bytes; do
   esac
   BUDGET_PROJECTS="$BUDGET_PROJECTS$project "
   BUDGET_MEASURED=$((BUDGET_MEASURED + 1))
-  if [ "$bytes" -lt "$BUDGET_LIMIT" ]; then
-    note "asset budget $project: $bytes / $BUDGET_LIMIT bytes ($((BUDGET_LIMIT - bytes)) bytes headroom)"
+  if [ "$bytes" -lt "$TRIPWIRE_CEILING" ]; then
+    note "probe tripwire $project: $bytes / $TRIPWIRE_CEILING bytes ($((TRIPWIRE_CEILING - bytes)) bytes under the ceiling)"
   else
-    BUDGET_OVER=1
-    note "asset budget $project: $bytes / $BUDGET_LIMIT bytes ($((bytes - BUDGET_LIMIT)) bytes OVER)"
+    TRIPWIRE_OVER=1
+    note "probe tripwire $project: $bytes / $TRIPWIRE_CEILING bytes ($((bytes - TRIPWIRE_CEILING)) bytes OVER the ceiling)"
   fi
   BUDGET_SUMMARY="${BUDGET_SUMMARY:+$BUDGET_SUMMARY
-}$project: $bytes / $BUDGET_LIMIT bytes"
+}probe $project: $bytes / $TRIPWIRE_CEILING bytes"
   if TOP_FILES="$(node - "$BUDGET_CWD/artifacts/asset-diet/town-transfer-$project.json" "$bytes" <<'NODE'
 const fs = require('node:fs');
 try {
@@ -150,16 +170,76 @@ NODE
 done < <(sed -nE 's/.*\[asset-diet\] ([^ ]+) townResponses: ([0-9]+) bytes.*/\1 \2/p' "$CAPTURE")
 # F-1489-3: a gate that measured NOTHING used to emit the same WARN as a gate that measured an
 # OVERAGE, so six deploys shipped past an unmeasured budget and looked exactly like a pass.
-# Zero parsed projects is a failure of the instrument and is now said in its own words.
+# Zero parsed projects is a failure of the instrument and is now said in its own words. It no longer
+# blocks, because the budget no longer depends on it — the payload gate below needs no browser at
+# all — but an instrument that says nothing must never read as an instrument that said "fine".
 if [ "$BUDGET_MEASURED" -eq 0 ]; then
-  note "MEASURED NOTHING: asset budget parsed 0 projects (playwright rc=$BUDGET_RC) — this is NOT a pass"
+  note "MEASURED NOTHING: probe tripwire parsed 0 projects (playwright rc=$BUDGET_RC) — this is NOT a pass"
 fi
+TRIPWIRE_STATUS="PASS"
+if [ "$TRIPWIRE_OVER" -ne 0 ]; then
+  TRIPWIRE_STATUS="FAIL (a project exceeded the ceiling)"
+elif [ "$BUDGET_RC" -ne 0 ] || [ "$BUDGET_MEASURED" -ne 2 ] || [ "$BUDGET_REPORT_FAILED" -ne 0 ]; then
+  TRIPWIRE_STATUS="NOT MEASURED (probe rc=$BUDGET_RC; measured projects=$BUDGET_MEASURED; report failures=$BUDGET_REPORT_FAILED) — reported, does not gate"
+fi
+
+# ─── THE PAYLOAD GATE — WHAT THE BUILD DECLARES, NOT WHAT A BROWSER RACED ──────────────────────
+# Owner desk answer A7, 2026-09-07, on the recommendation from reviews/first-town-transfer-bisect.md
+# (F-BUDGET-4). The quantity above swings with the HOST: 21,589,212 / 10,540,927 / 21,638,025 bytes
+# across three runs of ONE fixed build, and 6,411,798 on that same build at an emulated 8 Mbps,
+# because the cue window ends at `data-asset-loading-state=ready`, a signal that tracks the scene's
+# GLTF LoadingManager while ~200 sheet responses race it. Worse, it cannot count what it cannot see:
+# vite preview serves the JS and CSS without a content-length, so 25 responses inside that window —
+# the 1.1 MB entry chunk among them — are recorded at ZERO bytes (measured 2026-09-07,
+# artifacts/first-town-payload-gate/). So the budget now judges scripts/first-town-payload.mjs,
+# which sums the families assets/first-town-payload.json declares out of dist/ with no browser, no
+# network and no clock in the loop.
+#
+# THE ABSENT-SCRIPT DOOR IS FOR ONE CALLER AND ONE ONLY. scripts/test-deploy-contract.sh:7 copies
+# THIS FILE ALONE into a throwaway tree and runs its fifteen alias/verification cases there, so the
+# payload script genuinely is not on disk for those runs. Falling back to the probe keeps that
+# contract meaningful instead of turning every case into an instrument failure. It is not a way out
+# in the real repo: scripts/deploy-budget.test.mjs asserts the script and its declaration exist
+# here, so deleting either reds the guard battery rather than quietly restoring the old gate.
+PAYLOAD_SCRIPT="$ROOT/scripts/first-town-payload.mjs"
+if [ -f "$PAYLOAD_SCRIPT" ]; then
+  if PAYLOAD_REPORT="$(node "$PAYLOAD_SCRIPT" 2>&1)"; then PAYLOAD_RC=0; else PAYLOAD_RC=$?; fi
+  printf '%s\n' "$PAYLOAD_REPORT" >> "$LOG"
+  PAYLOAD_BYTES="$(printf '%s\n' "$PAYLOAD_REPORT" | sed -nE 's/^first-town payload: ([0-9]+) bytes$/\1/p' | tail -1)"
+  if [ "$PAYLOAD_RC" -eq 0 ] && [ -n "$PAYLOAD_BYTES" ]; then
+    PAYLOAD_MEASURED=1
+    if [ "$PAYLOAD_BYTES" -lt "$BUDGET_LIMIT" ]; then
+      PAYLOAD_STATUS="PASS ($PAYLOAD_BYTES / $BUDGET_LIMIT bytes, $((BUDGET_LIMIT - PAYLOAD_BYTES)) bytes headroom)"
+      note "first-town payload: $PAYLOAD_BYTES / $BUDGET_LIMIT bytes ($((BUDGET_LIMIT - PAYLOAD_BYTES)) bytes headroom)"
+    else
+      BUDGET_OVER=1
+      PAYLOAD_STATUS="FAIL ($PAYLOAD_BYTES / $BUDGET_LIMIT bytes, $((PAYLOAD_BYTES - BUDGET_LIMIT)) bytes OVER)"
+      note "first-town payload: $PAYLOAD_BYTES / $BUDGET_LIMIT bytes ($((PAYLOAD_BYTES - BUDGET_LIMIT)) bytes OVER)"
+    fi
+    # The group table and the two ungated totals ride into the verdict so an ABORT is actionable:
+    # whoever reads it can see which group grew without opening the log.
+    PAYLOAD_SUMMARY="$(printf '%s\n' "$PAYLOAD_REPORT" | sed -nE '/^\| /p; /^first-town payload (declared|demand-paged): /p')"
+  else
+    PAYLOAD_STATUS="FAIL (payload script rc=$PAYLOAD_RC; printed no total)"
+    note "MEASUREMENT FAILED: scripts/first-town-payload.mjs rc=$PAYLOAD_RC — see $LOG"
+    PAYLOAD_SUMMARY="$(printf '%s\n' "$PAYLOAD_REPORT" | head -8)"
+  fi
+else
+  PAYLOAD_STATUS="NOT MEASURED (scripts/first-town-payload.mjs absent) — falling back to the probe"
+  note "PAYLOAD NOT MEASURED: $PAYLOAD_SCRIPT is absent; this run falls back to gating on the browser probe"
+  if [ "$BUDGET_RC" -ne 0 ] || [ "$BUDGET_MEASURED" -ne 2 ] || [ "$BUDGET_REPORT_FAILED" -ne 0 ]; then BUDGET_OVER=1; fi
+  while read -r fallback_project fallback_bytes; do
+    case "$fallback_project" in desktop-chrome|mobile-chrome) ;; *) continue ;; esac
+    [ "$fallback_bytes" -lt "$BUDGET_LIMIT" ] || BUDGET_OVER=1
+  done < <(sed -nE 's/.*\[asset-diet\] ([^ ]+) townResponses: ([0-9]+) bytes.*/\1 \2/p' "$CAPTURE")
+fi
+
 BUDGET_STATUS="PASS"
-if [ "$BUDGET_RC" -ne 0 ] || [ "$BUDGET_OVER" -ne 0 ] || [ "$BUDGET_MEASURED" -ne 2 ] || [ "$BUDGET_REPORT_FAILED" -ne 0 ]; then
-  BUDGET_STATUS="FAIL (probe rc=$BUDGET_RC; measured projects=$BUDGET_MEASURED; report failures=$BUDGET_REPORT_FAILED)"
-  if [ "$ALLOW_OVER_BUDGET" -ne 1 ]; then note "ABORT: asset budget check failed; use --allow-over-budget to waive explicitly"; finish budget_failed 5; fi
+if [ "$BUDGET_OVER" -ne 0 ] || [ "$TRIPWIRE_OVER" -ne 0 ] || { [ "$PAYLOAD_MEASURED" -eq 0 ] && [ -f "$PAYLOAD_SCRIPT" ]; }; then
+  BUDGET_STATUS="FAIL (payload $PAYLOAD_STATUS; tripwire $TRIPWIRE_STATUS)"
+  if [ "$ALLOW_OVER_BUDGET" -ne 1 ]; then note "ABORT: first-town budget check failed; use --allow-over-budget to waive explicitly"; finish budget_failed 5; fi
   BUDGET_ALLOWANCE="; ALLOWED by --allow-over-budget"
-  note "WARN: asset budget failure explicitly allowed by --allow-over-budget; measurements above (unavailable if none)"
+  note "WARN: first-town budget failure explicitly allowed by --allow-over-budget; measurements above (unavailable if none)"
 fi
 
 if [ "$DRY_RUN" -eq 1 ]; then note "DRY RUN: skipping publication and assayer sync"; finish dry_run 0; fi
