@@ -51,17 +51,18 @@ test('hero pans, fires, and returns to walk with curated pose frames', async ({ 
   // SOURCE frames from ~0.9 s, but the `clip` label reads `attack` until the pose timer expires
   // (~1.4 s), and this seed's river bank at x ~ 2.94 stops the hero at ~1.1 s, so the old wait
   // (`clip === 'walk'` AND walk8 frames) could only be met by timing luck. The curated-pose fact this
-  // spec exists for is the walk8 frames on a moving hero, which is what is asserted now, walking WEST
-  // onto open ground. Not a gameplay regression: the hero moves and the walk frames show on both trees.
+  // spec exists for is the walk8 frames on a moving hero, which is what is asserted now while the hero
+  // walks EAST past the fallen enemy (west of this spot is not walkable, measured). Not a gameplay
+  // regression: the hero moves and the walk frames show on both trees.
   const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.heroPos.x ?? 0);
-  await page.keyboard.down('KeyA');
+  await page.keyboard.down('KeyD');
   await page.waitForFunction((startX) => {
     const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
     const sprite = diagnostics?.spriteAnimations['char.hero'];
-    const moved = (diagnostics?.heroPos.x ?? startX) < startX - 0.5;
+    const moved = (diagnostics?.heroPos.x ?? startX) > startX + 0.5;
     return moved && !!sprite && (sprite.sourceFrameKey ?? sprite.frameKey).startsWith('char-hero-sheet-walk8-');
   }, before);
-  await page.keyboard.up('KeyA');
+  await page.keyboard.up('KeyD');
   expect(errors).toEqual([]);
 });
 
