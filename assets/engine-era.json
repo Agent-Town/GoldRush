@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "1926c803891774bc890ce1285a6f1561918efae823a9d57da2fa8f4bb0f7c74d",
+  "engineHash": "03a4789deb6f64a4cacaa8ed9b68cccd710828412a1828a902a3424e52e76cd0",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -553,6 +553,12 @@
       "engineHash": "1926c803891774bc890ce1285a6f1561918efae823a9d57da2fa8f4bb0f7c74d",
       "pinnedAt": "2026-09-06",
       "cause": "first-town-payload-gate: the deploy's first-town verdict judges the declared payload computed from the build (assets/first-town-payload.json read by the advance stream too), the browser probe stays a tripwire under a 30 MB ceiling; no sim change; stacked on e8-air-logical e6c5b7a1",
+      "aliases": []
+    },
+    {
+      "engineHash": "03a4789deb6f64a4cacaa8ed9b68cccd710828412a1828a902a3424e52e76cd0",
+      "pinnedAt": "2026-09-07",
+      "cause": "portraits-era-aging-2-batch: the five trades across E5-E10 and the Salvage King get their own faces (31 speakers registered, 50 beats re-keyed, copy byte-identical) on the merged tree that also carries the first-town payload gate's AdvanceStream (src/story/speakers.ts, src/story/beats.ts); owner A4 2026-09-07: use the credits, they expire soon",
       "aliases": []
     }
   ],

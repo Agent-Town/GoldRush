@@ -60,6 +60,9 @@ Your A1 ruling is live in the engine: the hero's suit drains outside pressurised
 ### A11. The cast sheets and the payload gate (F-FTP-1, added 2026-09-07 late morning)
 The new gate judges 15.6 MB of declared first-town payload (62 % of your 25 MB). Ten town-actor sheets weigh another 16.1 MB in the build, all reachable as actors turn, but only one cell of each loads before the town is playable, so they are declared demand-paged and not gated. Gating them would read 31.7 MB against 25 MB and every deploy would need the waiver. Options: keep as shipped (my recommendation), gate the upper bound and raise the budget, or gate them and cut ~6.7 MB by the hero clip split's recipe.
 
+### A12. Five youngster plates withheld on an identity break (F-AGE2-1, added 2026-09-07 late morning)
+Batch 2 aged the two youngsters into E2, E4 and E8, but the two E2 plates were minted without an image reference (the only two such faces in the run) and came out swapped: the `-a` plates show a girl and the `-b` plates a boy, the reverse of the shipped E1 sheets and portraits. E4 and E8 chained faithfully from the wrong faces. The implementer withheld all five rather than register the wrong child behind an id the CLERK LINE rides for ten eras; nothing player-visible is lost (no beat uses a youngster id). Options: (a) swap the ids and accept crossed props (the girl would hold the boy's shiny rock, the boy her book); (b) re-prompt the two E2 plates against the shipped E1 portraits and re-chain E4/E8, about five generations on the expiring credits; (c) shelve. Recommendation: (b). Evidence `reviews/shots-portraits-era-aging-2/withheld-youngsters-identity-break.png`.
+
 ## B. Ten minutes of the owner's hands (nobody else can)
 
 ### B1. The device verdict rows
