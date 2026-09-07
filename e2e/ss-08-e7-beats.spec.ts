@@ -10,7 +10,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 const E1 = 'epoch-1-frontier';
 const E3 = 'epoch-3-voltage';
 const E7 = 'epoch-7-signal';
-const SHOTS = 'reviews/shots-ss-08-e7-beats';
+const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-08-e7-beats' : 'test-results/evidence/shots-ss-08-e7-beats';
 const IDS = [
   'e7-relay-valley-arrival',
   'e7-exchange-wrong-number',

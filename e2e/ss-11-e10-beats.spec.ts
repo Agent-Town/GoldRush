@@ -11,7 +11,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 const E1 = 'epoch-1-frontier';
 const E3 = 'epoch-3-voltage';
 const E10 = 'epoch-10-deepsky';
-const SHOTS = 'reviews/shots-ss-11-e10-beats';
+const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-11-e10-beats' : 'test-results/evidence/shots-ss-11-e10-beats';
 // The Ember Shore is the only default-unlocked Deep Sky contract
 // (assets/contracts/epoch-10-deepsky/contracts.json, boardRow.unlock), so opening the board in a
 // fresh Deep Sky town queues exactly the seven boarding beats and nothing from the other three maps.

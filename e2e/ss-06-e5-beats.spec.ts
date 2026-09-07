@@ -10,7 +10,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 const E1 = 'epoch-1-frontier';
 const E2 = 'epoch-2-steamworks';
 const E5 = 'epoch-5-deepwater';
-const SHOTS = 'reviews/shots-ss-06-e5-beats';
+const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-06-e5-beats' : 'test-results/evidence/shots-ss-06-e5-beats';
 const IDS = [
   'e5-deepwater-claim-arrival',
   'e5-harbormaster-manifest',

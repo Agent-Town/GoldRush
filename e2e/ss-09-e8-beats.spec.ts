@@ -10,7 +10,7 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 const E1 = 'epoch-1-frontier';
 const E3 = 'epoch-3-voltage';
 const E8 = 'epoch-8-orbital';
-const SHOTS = 'reviews/shots-ss-09-e8-beats';
+const SHOTS = process.env.GR_REFRESH_EVIDENCE === '1' ? 'reviews/shots-ss-09-e8-beats' : 'test-results/evidence/shots-ss-09-e8-beats';
 // The Mare Claim is the only default-unlocked E8 contract
 // (assets/contracts/epoch-8-orbital/contracts.json, boardRow.unlock), so opening the board in an
 // Orbital town queues exactly the six arrival beats and nothing from the other three maps.
