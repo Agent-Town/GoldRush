@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "e6c5b7a19156b08453dd331948174cb96efccc5d668421b328667b1d1a4d5c0f",
+  "engineHash": "1926c803891774bc890ce1285a6f1561918efae823a9d57da2fa8f4bb0f7c74d",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -547,6 +547,12 @@
       "engineHash": "e6c5b7a19156b08453dd331948174cb96efccc5d668421b328667b1d1a4d5c0f",
       "pinnedAt": "2026-09-06",
       "cause": "e8-air-logical: humans in space need air (owner directive 2026-09-07): the hero's suit drains outside pressurised ground, refills only inside, and an empty suit harms per whole second through CombatSystem on all four Orbital maps (suitSeconds 60, harmPerSecond 5, authored per contract); Low Orbit's crossings become vacuum (pressurisedZoneIds names the cabin); the HUD dial; the authored latches unchanged; stacked on hero-slot-clip-split ee2b884b",
+      "aliases": []
+    },
+    {
+      "engineHash": "1926c803891774bc890ce1285a6f1561918efae823a9d57da2fa8f4bb0f7c74d",
+      "pinnedAt": "2026-09-06",
+      "cause": "first-town-payload-gate: the deploy's first-town verdict judges the declared payload computed from the build (assets/first-town-payload.json read by the advance stream too), the browser probe stays a tripwire under a 30 MB ceiling; no sim change; stacked on e8-air-logical e6c5b7a1",
       "aliases": []
     }
   ],

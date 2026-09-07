@@ -31,7 +31,17 @@ import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 const ARTIFACT_DIR = path.resolve('artifacts/asset-diet');
 const MAPS = [{ id: 'the-claim', era: 1 }, { id: 'e1-dry-gulch', era: 1 }] as const;
 const BUILT_BUNDLE_ONLY = 'asset diet measures the BUILT production bundle; set GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet';
-export const TOWN_TRANSFER_CEILING_BYTES = 25_000_000;
+// THE TRIPWIRE CEILING, NOT THE BUDGET (task first-town-payload-gate, 2026-09-07; owner desk answer
+// A7). This number used to be the release budget itself, and it was the wrong instrument for the
+// job: what it measures is how much traffic happened to land before a racing signal, so F-BUDGET-4
+// read 21,589,212 / 10,540,927 / 21,638,025 bytes on ONE fixed build and the A/B arm below has
+// straddled the old 25,000,000 three times (24,604,025 / 26,115,186 / 23,259,297, F-1627-2). The
+// budget now lives where it can be computed rather than raced — scripts/first-town-payload.mjs sums
+// what assets/first-town-payload.json declares out of dist/, and scripts/deploy.sh gates on that
+// against an unchanged 25,000,000 B. This assertion stays as the TRIPWIRE it always should have
+// been: loose enough that only a genuinely much heavier build trips it, and it must equal
+// TRIPWIRE_CEILING in scripts/deploy.sh, which scripts/deploy-budget.test.mjs asserts.
+export const TOWN_TRANSFER_CEILING_BYTES = 30_000_000;
 
 type TownResponse = { url: string; bytes: number; contentLengthIssue: 'absent' | 'unparseable' | null };
 type SettledTownMeasurement = {

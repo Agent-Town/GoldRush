@@ -54,6 +54,7 @@
 // mobile allowance. The worst town + worst single destination is 8,394,980 B (70.0%), so the
 // allowance can never evict the halls from a shipped build.
 
+import { saveDataTrim } from '../../assets/first-town-payload.json' with { type: 'json' };
 import { loadScores } from '../game/Scoreboard';
 import { readRunSuspend } from '../game/RunSuspend';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
@@ -114,8 +115,16 @@ export function setWarmEveryMapEnabled(enabled: boolean): void {
   window.dispatchEvent(new Event(WARM_EVERY_MAP_KEY));
 }
 
+// THE SAVE DATA TRIM IS DATA, AND THE GATE READS THE SAME ROW (task first-town-payload-gate,
+// 2026-09-07, owner desk answer A7). The two bulk halls used to be a literal `/stamp-mill|dynamo-
+// hall/` here and nowhere else, so the deploy's first-town budget had no way to know which files
+// leave the town's plan on a metered connection — it could only guess, and a guess that drifts is
+// how F-BUDGET-4 happened. `saveDataTrim` in assets/first-town-payload.json is now the one source:
+// this filter is built from it, and scripts/first-town-payload.mjs subtracts the same names for its
+// Save Data subtotal. Same list, same behaviour as the literal it replaces; add a hall in one place.
+const SAVE_DATA_TRIM = new RegExp(saveDataTrim.map((name) => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'));
 const townUrls = (saveData: boolean) => import('../town/TownTavernPilot').then(({ townPrefetchUrls }) =>
-  townPrefetchUrls().filter((url) => !saveData || !/stamp-mill|dynamo-hall/.test(url)));
+  townPrefetchUrls().filter((url) => !saveData || !SAVE_DATA_TRIM.test(url)));
 const contractUrls = (id: string) =>
   import('../world/Terrain3dClaimPilot').then(({ contractPrefetchUrls }) => contractPrefetchUrls(id));
 
