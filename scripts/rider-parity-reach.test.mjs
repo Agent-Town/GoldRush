@@ -35,8 +35,9 @@ const SIM = 'src/sim/HeadlessContractSim.ts';
 const GAME = 'src/game/Game.ts';
 
 /**
- * The nine ACTION reach sites named by the audit (§3a change 2), each as the exact call that
- * performs the reach. A coordinate would rot on the next slice; the call does not.
+ * The twelve stage-1 ACTION reach sites named by the audit (§3a change 2), plus stage 3's E8
+ * hollow crossing, each as the exact call that performs the reach. A coordinate would rot on the
+ * next slice; the call does not.
  */
 const HERO_REACHES = [
   ['capture', "capture: () => this.atomic?.capture(this.hero.group.position)"],
@@ -51,12 +52,13 @@ const HERO_REACHES = [
   ['usePlaybook interference', "this.interferenceFront.refuse('playbooks', this.hero.group.position)"],
   ['fundMegaproject x', 'Math.abs(this.hero.group.position.x - x)'],
   ['fundMegaproject z', 'Math.abs(this.hero.group.position.z - z)'],
+  ['E8 hollow crossing', "this.hollowCrossing.update(STEP_SECONDS, this.hero.group.position, 'hero')"],
 ];
 
 /**
- * The browser's own rule, which is the SHAPE the nine above were re-based onto. If the browser ever
- * moves its context chain off the acting hero, the parity claim above becomes a claim about a
- * body that no longer acts, so it is pinned here in the same guard rather than assumed.
+ * The browser's own rule, which is the SHAPE the stage-1 sites above were re-based onto. If the
+ * browser ever moves its context chain off the acting hero, the parity claim above becomes a claim
+ * about a body that no longer acts, so it is pinned here in the same guard rather than assumed.
  */
 const BROWSER_REACHES = [
   ['confirmAction chain', 'private confirmAction(confirmAllowedAtIssue = true): void {'],
@@ -85,7 +87,28 @@ const PROSPECTOR_REACHES = [
   ['harvestTargets body', 'position: this.prospector.position,'],
 ];
 
-test('every GR-SIM action reach test reads the hero (ADR-005 stage 1)', () => {
+const runSimMutation = (mutate) => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'rider-parity-reach-'));
+  try {
+    const drifted = path.join(dir, 'HeadlessContractSim.ts');
+    writeFileSync(drifted, mutate(read(SIM)));
+    const env = { ...process.env, RIDER_PARITY_SIM_PATH: drifted };
+    // A child inheriting NODE_TEST_CONTEXT can report failures over IPC to a parent that is not
+    // listening and exit 0, making the mutation control vacuous (`skillmd-guard`, s1493).
+    delete env.NODE_TEST_CONTEXT;
+    return spawnSync(process.execPath, ['--test', fileURLToPath(import.meta.url)], {
+      timeout: 240_000,
+      killSignal: 'SIGKILL',
+      cwd: ROOT,
+      encoding: 'utf8',
+      env,
+    });
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+};
+
+test('every guarded GR-SIM action reach reads the hero (ADR-005 stages 1 and 3)', () => {
   const source = read(SIM);
   for (const [name, needle] of HERO_REACHES) {
     assert.equal(source.split(needle).length, 2,
@@ -109,13 +132,23 @@ test('harvest and repair stay Prospector chores on both sides (they were already
   }
 });
 
+test('program suspension reads the hero inside syncProgramSuspension (ADR-005 stage 3)', () => {
+  const source = read(SIM);
+  const start = source.indexOf('  private syncProgramSuspension(): void {');
+  const end = source.indexOf('\n  }\n', start);
+  assert.ok(start >= 0 && end > start, `${SIM}: syncProgramSuspension moved`);
+  const method = source.slice(start, end);
+  assert.equal(method.split('const at = this.hero.group.position;').length, 2,
+    `${SIM}: syncProgramSuspension must read the hero exactly once`);
+});
+
 /**
  * The remaining `this.prospector.position` reads in the sim, enumerated. This is the test that makes
  * the guard a MEASUREMENT rather than a spot check: it counts every read and pins the count, so a
- * tenth reach test added tomorrow on the Prospector's body reds here even though nobody thought to
+ * eleventh read added tomorrow on the Prospector's body reds here even though nobody thought to
  * name it above. The list is the audit's own §3a 2b set plus the passive per-tick reads that are
  * not reach tests at all (construction wiring, the Prospector's own movement multiplier, the
- * pressure/motor body lists, the E8 hollow crossing, the interference-front suspension).
+ * pressure/motor body lists).
  */
 test('the Prospector reads that remain are exactly the ones that are meant to remain', () => {
   const source = read(SIM);
@@ -125,42 +158,56 @@ test('the Prospector reads that remain are exactly the ones that are meant to re
     // epitaph and this slice's own F-RPG-2 note, and both should survive a re-word.
     .filter(([, line]) => line.includes('this.prospector.position') && !line.startsWith('//') && !line.startsWith('*'))
     .map(([number, line]) => `${number}: ${line}`);
-  assert.equal(remaining.length, 12,
-    `${SIM} carries ${remaining.length} \`this.prospector.position\` code reads, not 12. `
-    + 'Stage 1 left exactly twelve: three deliberate reach tests (pan, repair, harvestTargets), '
+  assert.equal(remaining.length, 10,
+    `${SIM} carries ${remaining.length} \`this.prospector.position\` code reads, not 10. `
+    + 'Stage 3 leaves exactly ten: three deliberate reach tests (pan, repair, harvestTargets), '
     + "seven passive wirings (the deepwater shooter, BuildSystem's construction anchor, the "
     + "deepwater actor pick, build.update, the pressure and motor body lists, the Prospector's own "
-    + 'movement multiplier), the E8 hollow crossing, and the interference-front suspension. '
-    + `Adding a tenth ACTION reach on this body is the thing this test exists to catch:\n${remaining.join('\n')}`);
+    + 'movement multiplier). The E8 hollow crossing and interference-front suspension moved to '
+    + 'the hero in stage 3. Adding an unexpected code read on the Prospector is the thing this '
+    + `test exists to catch:\n${remaining.join('\n')}`);
 });
 
 test('the reach guard BITES a read moved back to the Prospector (manufactured defect)', {
   skip: process.env.RIDER_PARITY_SIM_PATH ? 'running as the manufactured-defect child' : false,
 }, () => {
-  const dir = mkdtempSync(path.join(tmpdir(), 'rider-parity-reach-'));
-  try {
-    const drifted = path.join(dir, 'HeadlessContractSim.ts');
-    const source = read(SIM);
-    const [name, needle] = HERO_REACHES[4];
+  const [name, needle] = HERO_REACHES[4];
+  const child = runSimMutation((source) => {
     assert.ok(source.includes(needle), `the control needs ${name} present to move it`);
-    writeFileSync(drifted, source.replace(needle, needle.replace('this.hero.group.position', 'this.prospector.position')));
-    // NODE_TEST_CONTEXT MUST BE STRIPPED — `scripts/skillmd-guard.test.mjs:137-143` measured this
-    // at s1493 and it cost a vacuous control: a child that inherits the variable reports over IPC
-    // to a parent that is not listening and EXITS 0 with failing assertions, so the naive control
-    // is green inside `test:node-guards` for the wrong reason. Reproduced here before the strip.
-    const env = { ...process.env, RIDER_PARITY_SIM_PATH: drifted };
-    delete env.NODE_TEST_CONTEXT;
-    const child = spawnSync(process.execPath, ['--test', fileURLToPath(import.meta.url)], {
-      timeout: 240_000,
-      killSignal: 'SIGKILL',
-      cwd: ROOT,
-      encoding: 'utf8',
-      env,
-    });
-    assert.notEqual(child.status, 0, 'a reach test moved back to the Prospector did NOT red the guard');
-    assert.match(`${child.stdout}${child.stderr}`, /every GR-SIM action reach test reads the hero/,
-      'the guard reddened, but not on the reach test — this control is measuring the wrong failure');
-  } finally {
-    rmSync(dir, { recursive: true, force: true });
-  }
+    return source.replace(needle, needle.replace('this.hero.group.position', 'this.prospector.position'));
+  });
+  assert.notEqual(child.status, 0, 'a reach test moved back to the Prospector did NOT red the guard');
+  assert.match(`${child.stdout}${child.stderr}`, /the recoverProbe reach test must read the hero exactly once/,
+    'the guard reddened, but not on the reach test — this control is measuring the wrong failure');
+});
+
+test('the reach guard BITES the E8 hollow crossing moved back to the Prospector', {
+  skip: process.env.RIDER_PARITY_SIM_PATH ? 'running as the manufactured-defect child' : false,
+}, () => {
+  const [, needle] = HERO_REACHES.at(-1);
+  const child = runSimMutation((source) => source.replace(
+    needle,
+    needle.replace('this.hero.group.position', 'this.prospector.position'),
+  ));
+  assert.notEqual(child.status, 0, 'the hollow crossing moved back to the Prospector did NOT red the guard');
+  assert.match(`${child.stdout}${child.stderr}`, /the E8 hollow crossing reach test must read the hero exactly once/);
+});
+
+test('the reach guard BITES program suspension moved back to the Prospector', {
+  skip: process.env.RIDER_PARITY_SIM_PATH ? 'running as the manufactured-defect child' : false,
+}, () => {
+  const child = runSimMutation((source) => source.replace(
+    'const at = this.hero.group.position;',
+    'const at = this.prospector.position;',
+  ));
+  assert.notEqual(child.status, 0, 'program suspension moved back to the Prospector did NOT red the guard');
+  assert.match(`${child.stdout}${child.stderr}`, /syncProgramSuspension must read the hero exactly once/);
+});
+
+test('the reach guard BITES an unexpected Prospector code read', {
+  skip: process.env.RIDER_PARITY_SIM_PATH ? 'running as the manufactured-defect child' : false,
+}, () => {
+  const child = runSimMutation((source) => `${source}\nthis.prospector.position;\n`);
+  assert.notEqual(child.status, 0, 'an unexpected Prospector code read did NOT red the census');
+  assert.match(`${child.stdout}${child.stderr}`, /carries 11 `this\.prospector\.position` code reads, not 10/);
 });
