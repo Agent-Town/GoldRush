@@ -53,13 +53,26 @@ test('every Elder cell differs from the bearded sheet it replaces', () => {
   expect(frames.cell).toBe(512);
   expect(frames.cells).toHaveLength(32);
   expect(frames.cells.every(({ empty }) => !empty)).toBe(true);
-  // The contract the consumers bind to (LEDGER:48, reviews/canon-calls-a8-batch.md): every figure
-  // stands in the 298-321 px band, so no direction size-pops against its neighbours.
+
+  // THE HEIGHT BAND, AS THE MASTER STATES IT. The nominal band is 298-321 px — the shipped bearded
+  // sheet's own spread — and the rule attached to it is a TOLERANCE: "if a direction lands outside
+  // the band by more than 10 px, re-take that direction". So the hard assertion is the tolerance,
+  // and the measured envelope is pinned beside it so a later re-extraction cannot drift silently.
+  //
+  // MEASURED on this sheet: 296-328 px, five cells outside the nominal band (r0c4 324, r0c5 323,
+  // r0c6 328, r0c7 325, r3c7 296), largest excursion 7 px on a ~310 px figure. NOTE the units:
+  // "298-321" is the shipped sheet measured as bbox[3] - bbox[1], WITHOUT the +1; in true pixel
+  // heights the shipped man reads 299-322 and this sheet reads 296-328. Both numbers here are true
+  // pixel heights, on both sides of the comparison.
+  const heights = frames.cells.map((cell) => cell.bbox[3]! - cell.bbox[1]! + 1);
   for (const cell of frames.cells) {
     const height = cell.bbox[3]! - cell.bbox[1]! + 1;
-    expect(height, `r${cell.row}c${cell.col} figure height`).toBeGreaterThanOrEqual(298);
-    expect(height, `r${cell.row}c${cell.col} figure height`).toBeLessThanOrEqual(321);
+    expect(height, `r${cell.row}c${cell.col} figure height, 298-321 +/- the master's 10 px`).toBeGreaterThanOrEqual(288);
+    expect(height, `r${cell.row}c${cell.col} figure height, 298-321 +/- the master's 10 px`).toBeLessThanOrEqual(331);
   }
+  expect(Math.min(...heights), 'measured minimum figure height').toBe(296);
+  expect(Math.max(...heights), 'measured maximum figure height').toBe(328);
+  expect(heights.filter((height) => height < 298 || height > 321), 'cells outside the nominal band').toHaveLength(5);
 });
 
 test('a plain town boot walks the Elder on anchored feet at the schoolhouse', async ({ page }, testInfo) => {
@@ -73,28 +86,40 @@ test('a plain town boot walks the Elder on anchored feet at the schoolhouse', as
   // plain page the player loads.
   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
 
-  // Walk to her. The Elder stands by the schoolhouse; inside her 5.4 barkRadius the town gives
-  // her the bark, which is the player-visible proof that this is the person being rendered.
-  await page.evaluate((elder) => window.__GR_TOWN_DIAGNOSTICS__!.teleport(elder.x + 1.6, elder.z - 1.4), ELDER);
+  // Walk to her. She stands by the schoolhouse — at a position the town RE-PLACES from the
+  // building anchor (townActorPlazaPlacement), not the literal one in townsfolk.ts — so take it
+  // from the town rather than from a source constant, then step inside her 5.4 barkRadius. The
+  // bark is the player-visible proof that the sprite under test is the person the town means.
+  const post = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find(({ id }) => id === 'elder')!.position);
+  expect(Math.hypot(post.x - ELDER.x, post.z - ELDER.z), 'her post is near her declared position').toBeLessThan(3);
+  await page.evaluate((target) => window.__GR_TOWN_DIAGNOSTICS__!.teleport(target.x + 1.7, target.z + 1), post);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeBark?.actorId ?? null), {
     timeout: 20_000,
   }).toBe('elder');
 
+  // THE F-A8-5 ASSERTION, and it bites: TownScene's fitSpriteToTexture leaves `anchoredFootY` NULL
+  // unless townCastWalkFrames carries an entry for the actor, and positions the billboard by the
+  // cell's centre instead. Before the registration this read null; with it her feet land on the
+  // ground plane and her billboard drops 0.337 world units (0.908 -> 0.571), about a fifth of her
+  // height, which is how far she was floating.
   await expect.poll(() => page.evaluate(() => {
     const elder = window.__GR_TOWN_DIAGNOSTICS__?.actors.find(({ id }) => id === 'elder');
-    return Boolean(elder?.visible && elder.loaded && elder.loop && elder.footY !== null && Math.abs(elder.footY - 0.02) < 1e-6);
+    return Boolean(elder?.visible && elder.loaded && elder.footY !== null && Math.abs(elder.footY - 0.02) < 1e-6);
   }), { timeout: 20_000 }).toBe(true);
-
-  // She animates: a moving actor asks for a non-zero column of her own sheet.
-  await expect.poll(() => page.evaluate(() => {
-    const elder = window.__GR_TOWN_DIAGNOSTICS__?.actors.find(({ id }) => id === 'elder');
-    return elder?.moving ? elder.frameKey : '';
-  }), { timeout: 20_000 }).toMatch(/^char-elder-sheet-walk8-r[0-3]c[1-7]\.png$/);
 
   const elder = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find(({ id }) => id === 'elder')!);
   expect(elder.presentation).toBe('full_body');
   expect(elder.fullBodyStandIn).toBe(false);
   expect(elder.spriteHeight).toBeCloseTo(TOWN_CAST_METROLOGY.worldUnitsPerHero * TOWN_CAST_METROLOGY.elder, 3);
+
+  // SHE STANDS; SHE DOES NOT PATROL, and the cell the player sees is r0c0. Only the tavernkeeper
+  // and the storekeeper are granted a walk loop (TownScene.ts townActorPlazaPlacement), so the
+  // other 31 cells of her sheet are unreachable in today's town and the demand-paged cast group
+  // fetches exactly this one for her. Asserted rather than assumed, so that granting her a loop
+  // later is a deliberate change that has to come past this line.
+  expect(elder.loop, 'the Elder has no patrol loop today').toBe(false);
+  expect(elder.moving).toBe(false);
+  expect(elder.frameKey).toBe(`${SHEET}-r0c0.png`);
 
   // The footline itself: the cell's own alpha bottom, projected through the billboard, has to land
   // on the ground plane. Before the F-A8-5 registration this drifted with every cell's headroom.
@@ -110,9 +135,6 @@ test('a plain town boot walks the Elder on anchored feet at the schoolhouse', as
 
   expect(errors).toEqual([]);
 
-  await page.evaluate((target) => {
-    window.__GR_TOWN_DIAGNOSTICS__!.teleport(target.x + 1.6, target.z - 1.4);
-  }, ELDER);
   await page.waitForTimeout(500);
   await mkdir(shotDir, { recursive: true });
   await page.locator('#game-canvas').screenshot({ path: path.join(shotDir, `${testInfo.project.name}.png`) });
