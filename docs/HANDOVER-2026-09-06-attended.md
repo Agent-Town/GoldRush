@@ -170,5 +170,6 @@ Also: F-RPA-4 (the `T` debug spawn key guarded) `9e1d8a2e3`; the fire rulebook's
 | slice | verdict | merge | what to know |
 |---|---|---|---|
 | `elder-walk8-regeneration` | MERGED | `374b0154f` | the Elder's walk sheet as the woman (255 credits, twelve Seedance takes), her feet anchored; the gated first town 33.85 of 35 MB now; A13 (a patrol loop for her) on the desk |
+| `youngsters-rechain-batch` | MERGED | `9bbece8cf` | the two youngsters re-chained from the shipped children (A12 option b), five speakers; A17 (their names on the cards) on the desk |
 | `canon-calls-a8-batch` | MERGED | `1997e313a` | the Elder a woman in her E1/E2 portraits, the Old Digger's portrait the machine (owner A8); no beat re-keyed; F-A8-1 the E1 spec's month-old red on the desk queue; the walk8 sheet is the next batch |
 | `rider-parity-grammar` | GATED RED, returned to the branch | attempt `b8e62a1e8` saved | stages 1/2/4/6 built and self-green; the full battery on the merged tree 726/741 (e4 floor rides, Moth Season, the heat-5 hill-mine pin, a skill.md em dash); continuation `rider-parity-grammar-stage3` runs ON the branch (A0 battery green → removal → 28 files → CONTEXT_ACTION parity); the re-ride gauntlet after that |
