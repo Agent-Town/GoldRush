@@ -37,6 +37,8 @@ All three consumed chapter save refs were renamed to archive refs and pushed ato
 
 The inherited 55-item desk audit found zero closed items; all 55 are carried verbatim. Ledger, rotation, ticker timing and gazette judgments are recorded in `artifacts/s2553-fire/standing-duties.json`. The full retention judgment is `artifacts/s2553-fire/retention-judgment.md`. The final post-handoff battery receipt belongs at `artifacts/s2553-fire/closing-ledger.txt`; it must evaluate the desk rather than skip it.
 
+Closing verification: `artifacts/s2553-fire/closing-ledger.txt` passed after the handoff commit in 108.5 s: 1,050/1,050 Node assertions, zero skips/failures, and 83 bash checks. Desk declaration, birth and carryforward all evaluated PASS; previous/current desks both contain 55 items, dropped zero.
+
 ---
 
 # s2552 — chapter writers: browser acceptance banked, drain held
