@@ -2894,7 +2894,8 @@ export class Game {
     const upgradedThisFrame = intents.upgrade && !this.lastUpgradeIntent ? this.confirmUpgrade() : false;
     if (intents.rotateBuild && !this.lastRotateIntent && this.buildSystem.isBuildMode) this.buildSystem.rotateGhost();
     if (intents.weaponToggle) this.toggleWeapon();
-    if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
+    // F-RPA-4 (rider-parity-audit, 2026-09-07): the T spawn key was the one debug key with no debug guard, a live plain-boot key.
+    if (intents.debugSpawn && !this.lastDebugSpawnIntent && isDebugEnabled()) this.spawnDebugPack();
     if (
       intents.debugXp &&
       !this.lastDebugXpIntent &&
