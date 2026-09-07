@@ -22,6 +22,10 @@ const IDS = [
   'e3-tavern-twins-defect',
   'e3-gazette-ledger-reveal',
   'e3-refinery-horizon',
+  // story-correctives-batch, 2026-09-07: `preacher-e3` was registered without a line, and THE RELAPSE
+  // (lore/STORYBOOK.md:143) is the E3 moment this file's own convention gives the preacher. Appended
+  // at the table's end, on the same return chain as e3-tavern-twins-defect.
+  'e3-lantern-walk-home',
 ] as const;
 const OLD_STORY_HINTS = STORY_RUNTIME_BEATS
   .filter((beat) => beat.oncePerProfile)

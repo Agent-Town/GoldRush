@@ -38,7 +38,16 @@ const IDS = [
   'e10-gazette-mote-in-the-jar',
   'e10-watch-wound',
   'e10-charter-press',
+  // story-correctives-batch, 2026-09-07, appended at the table's end (below every in-file coordinate
+  // the header cites): F-SS11-1/F-SSG-5's remaining Quiet act, and the two E10 portraits the header
+  // recorded as "registered and carry no beat yet: a portrait waiting for a line".
+  'e10-quiet-approach',
+  'e10-heir-always-said-so',
+  'e10-charter-keeper-first-charter',
 ] as const;
+// The Ember Shore unlock now queues one more card than ARRIVAL_IDS: the heir answers the arrival in
+// his own voice, and the table's order puts him last because his beat is appended last.
+const EMBER_SHORE_DRAIN = [...ARRIVAL_IDS, 'e10-heir-always-said-so'] as const;
 const EMBER_SHORE: RuntimeStorySignal = {
   type: 'contract-unlocked',
   contractId: 'e10-ember-shore',
@@ -278,7 +287,7 @@ test('the Quiet, the return and the Press beats fire only on their own triggers'
   };
 
   await emit(EMBER_SHORE);
-  expect(await drain()).toEqual([...ARRIVAL_IDS]);
+  expect(await drain()).toEqual([...EMBER_SHORE_DRAIN]);
 
   // No E10 contract carries a twist.baron, so the BARON path emits nothing in this era; since the
   // story-signal-gaps slice the Quiet's own system reports its lifecycle instead
@@ -309,6 +318,9 @@ test('the Quiet, the return and the Press beats fire only on their own triggers'
   // and the act plays it without one.
   await emit({ type: 'run-return-town', result: 'secured' });
   expect(e10Only(await drain())).toEqual([]);
+  // Both of the Quiet's acts are consumed since the story-correctives batch, each by one beat only.
+  await emit({ type: 'boss-act', contractId: 'e10-last-claim', boss: 'the-quiet', act: 'approach' });
+  expect(e10Only(await drain())).toEqual(['e10-quiet-approach']);
   await emit({ type: 'boss-act', contractId: 'e10-last-claim', boss: 'the-quiet', act: 'three-preserves' });
   expect(e10Only(await drain())).toEqual(['e10-three-preserves']);
 
@@ -319,7 +331,7 @@ test('the Quiet, the return and the Press beats fire only on their own triggers'
   expect(e10Only(await drain())).toEqual(['e10-watch-wound']);
 
   await emit({ type: 'science-complete' });
-  expect(e10Only(await drain())).toEqual(['e10-charter-press']);
+  expect(e10Only(await drain())).toEqual(['e10-charter-press', 'e10-charter-keeper-first-charter']);
 
   expectNoConsoleErrors(errors);
 });

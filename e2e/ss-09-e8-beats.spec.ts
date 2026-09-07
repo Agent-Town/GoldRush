@@ -35,6 +35,23 @@ const IDS = [
   'e8-out-of-reach',
   'e8-gazette-green-through-the-glass',
   'e8-riverward-launch',
+  // story-correctives-batch, 2026-09-07. F-SS09-3 said the Claw's acts could not each own a beat;
+  // the story-signal-gaps slice gave SalvageClawBossSystem a voice and F-SSG-5 said the acts still
+  // reached none. These four consume it, one per act, appended at the table's end so every in-file
+  // coordinate above them is unmoved; `e8-he3-assay-opens` gives the fifth E8 portrait its line.
+  'e8-claw-paperwork',
+  'e8-claw-crown',
+  'e8-claw-winch',
+  'e8-claw-anchor-feet',
+  'e8-he3-assay-opens',
+] as const;
+// The Claw's acts and the beat each one now reaches (src/systems/SalvageClawBossSystem.ts:236, :277,
+// :301, :339). `crown` is emitted in the same call as `boss-arrival`, by that system's own note.
+const CLAW_ACTS = [
+  ['paperwork', 'e8-claw-paperwork'],
+  ['crown', 'e8-claw-crown'],
+  ['winch', 'e8-claw-winch'],
+  ['anchor-feet', 'e8-claw-anchor-feet'],
 ] as const;
 const MARE_CLAIM: RuntimeStorySignal = {
   type: 'contract-unlocked',
@@ -131,7 +148,7 @@ test('SS-09 table is attributed, presentational, and uses the E2/E3 trigger voca
     expect(beat.oncePerProfile).toBe(true);
     expect(beat.presentation).toBe('card');
     expect(STORY_SPEAKERS[beat.speaker]).toBeTruthy();
-    expect(['contract-unlocked', 'wave-complete', 'boss-arrival', 'boss-defeat', 'run-return-town', 'science-complete']).toContain(beat.trigger);
+    expect(['contract-unlocked', 'wave-complete', 'boss-arrival', 'boss-act', 'boss-defeat', 'run-return-town', 'science-complete']).toContain(beat.trigger);
     const lines = typeof beat.lines === 'function' ? [] : beat.lines;
     expect(lines.length).toBeGreaterThan(0);
     for (const line of lines) expect(line).not.toContain('—');
@@ -230,6 +247,12 @@ test('the Orbital boss, return and ceiling beats fire only on their own triggers
   expect(afterArrival).toContain('e8-baron-at-the-pad');
   expect(afterArrival).toContain('e8-salvage-kings-claw');
   expect(afterArrival.indexOf('e8-baron-at-the-pad')).toBeLessThan(afterArrival.indexOf('e8-salvage-kings-claw'));
+
+  // Each act reaches exactly one beat, and only its own: the descent is four cards now, not two.
+  for (const [act, id] of CLAW_ACTS) {
+    await emit({ type: 'boss-act', contractId: 'e8-mare-claim', boss: 'salvage-claw', act });
+    expect(await drain(), `boss-act ${act}`).toEqual([id]);
+  }
 
   await emit({ type: 'boss-defeat', contractId: 'e8-mare-claim', contractName: 'The Mare Claim' });
   expect(await drain()).toContain('e8-claw-crew-walks');
