@@ -1,3 +1,40 @@
+# s2549 — Full Node gate remains incomplete
+
+## Slice and verdict
+
+`main-board-gold-current-grammar.md`; saved tip `ffac3a697ee37c01e24fe16a36b70b2a1fc145c6` on `save/board-gold-current-grammar-s2547`. Current-base gate candidate `77ef114f9bc0c9d2bbfc79e977f62bb139c59c45` combines it with base `5e20fa91f7bbcd433061cbf1b3c4ed4240498dc4`, including the already-landed bounded process-capture cure.
+
+**HOLD. No source commit or main merge.** The four positive gold cases and retirement checks pass, but the full Node command was stopped by the guard wrapper's 15-minute timeout. This is not complete acceptance evidence.
+
+## Behavior and classification
+
+The only remaining source delta is `scripts/board-tape-gold.test.mjs` (17 additions, 41 deletions); all twelve saved fixture artifacts already exist on main. All 13 saved blobs match the candidate. Three current-grammar local recordings preserve the assay seam, event-hash/outcome equality, secure-snapshot equality and held-purse versus panning distinction. Six historical submissions/slips and the browser arm/helpers remain byte-identical. No runtime, engine pin, dependency, or score changed. No conflict resolution was required. The detached checkout contains the complete tracked corpus; main's completed runner output and disjoint telemetry were preserved.
+
+## Evidence
+
+| Check | Current FIRE result |
+|---|---|
+| Gold cases | 4/4, 109.7 s; browser standings request intercepted locally |
+| Retired grammar | 2/2, 0.3 s |
+| Typecheck / build | rc 0, 5.3 / 18.7 s |
+| Diff-selected guards | Four short guards pass; power p95 0.360 ms |
+| Full Node | Incomplete: npm killed by `run-guards.mjs` at 900 s; wrapper 902.6 s, no terminal test counts; chained npm tail not reached |
+| Fixture sweep | Passed board-gold and advanced to later simulation fixtures; no all-128 completion claim |
+| Browser adjacency / plain boots | 34/34, 158.0 s; desktop and 390px boots 2/2, 8.6 s, zero console warnings/errors and page errors |
+| Mutation / independent review | Prior runner's gold-90-versus-0 mutation and scoped clean Codex review inspected; their artifacts retained verbatim |
+
+Current evidence: `artifacts/s2549-fire/gold-gates.txt`, `artifacts/s2549-fire/browser-gates.txt`, `artifacts/s2549-fire/node-progress.jsonl`, `artifacts/s2549-fire/historical-fixtures.json`, `artifacts/s2549-fire/classification.json`, `artifacts/s2549-fire/report.md`. The first missing-dependency attempt in the append-only transcript is invalid setup evidence; it was stopped before the valid focused run.
+
+## Findings and next action
+
+**F-2549-1 OPEN, gate-side:** the fire selected `run-guards.mjs` for the required full command despite its finite 15-minute npm cutoff. A live simulation child was observed near the cutoff. Its orphaned descendants exited before cleanup could send a signal; the real battery classifier then returned an empty set. No deadline was changed and no interrupted run is accepted.
+
+Next FIRE: resume this same candidate, run full `npm run test:node-guards` directly through `gate-battery.mjs` using `artifacts/s2549-fire/full-node-next-jobs.json`, Node 26.4.0 and FIRE serialization, and retain the entire command's terminal output. This preserves all per-test timeouts while avoiding the outer wrapper cutoff. Confirm all 128 fixture subjects and the chained tail, or classify actual terminal failures. Run the other four selected guards with their explicit `--only` list. No redispatch or new master is needed: full-command verification is already required by this master. F-2541-1's source corrective remains unmerged; F-2546-1's process-capture cure was already merged by s2548. Then resume the separate chapter-evidence drain, preserving main's 138-row Moth tape.
+
+---
+
+The s2547 record below is historical; its pending capture-cure wording predates s2548.
+
 # s2547 — current-grammar board-gold fixtures
 
 ## Slice and verdict
