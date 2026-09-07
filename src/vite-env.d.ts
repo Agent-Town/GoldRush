@@ -249,6 +249,15 @@ interface ThreeGameDiagnostics {
   };
   decay: ReturnType<import('./systems/DecaySystem').DecayScheduler['diagnostics']>;
   e6Tiles: import('./systems/E6TileConsumerSystem').E6TileConsumerDiagnostics;
+  /**
+   * F-PICNIC-2. `Game.publishDiagnostics` has always written this key; the declaration did not
+   * admit it, so the ONE objective `e6-picnic` can be lost on was invisible to the type and every
+   * reader had to widen it locally (`e2e/e6-picnic-opening.spec.ts` did, and said so). Declared as
+   * the system's own return type rather than a retyped shape, and NOT optional: the system is
+   * constructed on every contract (`Game.ts` `picnicHold`) and answers `[]` where no stake markers
+   * are authored, so "no stakes" is an empty list, never an absent key.
+   */
+  picnicHold: import('./systems/PicnicHoldSystem').PicnicHoldSystem['diagnostics'];
   wrangle: ReturnType<import('./systems/WrangleSystem').WrangleSystem['diagnostics']>;
   showroomCaptureObjective?: import('./systems/ShowroomCaptureObjective').ShowroomCaptureDiagnostics;
   run: {
@@ -539,9 +548,35 @@ interface ThreeGameDiagnostics {
   squall: import('./systems/E10SquallScheduler').SquallDiagnostics | null;
   /** E10S-3: null on every contract that declares no preserve vent. The consumer's own read. */
   preserveVent: import('./systems/E10PreserveSystem').E10PreserveDiagnostics | null;
+  /**
+   * The Last Claim's DAMAGEABLE preserve (`Game.preserveDiagnostics`), null where no contract
+   * declares one. Distinct from `preserveVent` above, which is the Ember Shore's warmth meter.
+   * Declared by F-PICNIC-2's slice for the same reason as `picnicHold`: `publishDiagnostics` was
+   * already writing it, `e2e/e10-preserve-objective.spec.ts` widened the type locally to read it,
+   * and the blanket `as ThreeGameDiagnostics` on the published literal is what let an undeclared
+   * key through unnoticed. That cast is gone, so every key here is now declared or it reds.
+   */
+  preserve: { hp: number; maxHp: number; alive: boolean } | null;
   /** E10S-2: what a PLAIN boot shows and ducks. Presentation only; nothing here reaches the sim. */
   squallPresentation: import('./systems/E10SquallPresentation').SquallPresentationDiagnostics | null;
   hollowCrossing: import('./systems/HollowCrossingSystem').HollowCrossingDiagnostics;
+  /**
+   * The last hero MOVE order that stopped making progress, or null while it is moving
+   * (`Game.movePinDiagnostic`). `e2e/c3-hero-move-pin.spec.ts` reads it through `as any` because
+   * this declaration did not admit it; F-PICNIC-2's slice declared it so that spec can drop the cast.
+   */
+  movePin: { x: number; z: number; sample: import('./world/Terrain').TerrainSample; sinceSeconds: number } | null;
+  /**
+   * E7's playbook objective row, null on every contract that declares none.
+   * `e2e/e7-playbook-rows.spec.ts` widens this at three sites for the same reason as `movePin`.
+   */
+  playbookUse: {
+    declared: true;
+    objective: import('./systems/E7PlaybookLatch').E7PlaybookObjective;
+    objectiveMet: boolean;
+    uses: number;
+    relaysLitByProgram: readonly string[];
+  } | null;
   harvest: {
     activeNodes: Array<{
       id: string;

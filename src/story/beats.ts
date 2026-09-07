@@ -829,12 +829,22 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
   {
     // lore/STORYBOOK.md:296; tavern-tale shape mirrors e3-tavern-twins-defect at lines 506-515.
+    // F-SS06-2 CURED (2026-09-07), and the same cure runs through the two beats below. These three
+    // are the era's POST-RUN beats, and every one of them used to stand in for "you came back from
+    // the Deepwater Claim" by asking `hasStoryBeatSeen` of an EARLIER beat — a proxy that fires on
+    // a return from any other map once the earlier card has been shown, and never fires at all for
+    // a player who dismissed it before it was marked. `run-return-town` now carries the map it
+    // returned FROM (`signals.ts`, emitted from `TownScene.emitReturnStorySignal`), so each of
+    // these asks the question it actually means, in the construction `e3-moth-season` uses for its
+    // own map (`signal.contractId === '<id>'`, the E3 beat at :492). The id is OPTIONAL on the
+    // signal because the town can be opened with no board contract, so an absent id correctly
+    // fires nothing.
     id: 'e5-tavern-locomotive-argument',
     trigger: 'run-return-town',
     speaker: 'tavernkeeper',
     oncePerProfile: true,
     presentation: 'card',
-    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e5-first-dive-w1'),
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && signal.contractId === 'e5-deepwater-claim',
     lines: ["W2 holds a locomotive on the sea floor. Ours off the drowned spur, or the world's, carried in from a coast the maps have stopped being right about.", 'The house has quit taking sides. The argument keeps better than the answer would.'],
   },
   {
@@ -844,7 +854,8 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     speaker: 'schoolteacher',
     oncePerProfile: true,
     presentation: 'card',
-    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e5-first-dive-w1'),
+    // F-SS06-2: was `hasStoryBeatSeen('e5-first-dive-w1')`, an arrival-card proxy for this map.
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && signal.contractId === 'e5-deepwater-claim',
     lines: ['W5 is too smooth and faintly lit, and no diver will touch it. The tide-teller anchored above it one whole night, listening.', 'In the morning she said only this: it is not asleep, it is waiting to be useful.'],
   },
   {
@@ -854,7 +865,12 @@ export const E5_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     speaker: 'newsie',
     oncePerProfile: true,
     presentation: 'card',
-    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && hasStoryBeatSeen('e5-dredge-queen-flag'),
+    // F-SS06-2: was `hasStoryBeatSeen('e5-dredge-queen-flag')`. That proxy carried a real narrative
+    // prerequisite — the Gazette reads HER struck flag, so the Dredge-Queen must have shown up —
+    // and the id gate keeps it, MEASURED rather than asserted: `e5-deepwater-claim` declares
+    // `twist.baron.wave: 1` and `twist.secureWave: 12`, so a SECURED return from this map cannot
+    // have happened without her arrival eleven waves earlier.
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured' && signal.contractId === 'e5-deepwater-claim',
     lines: ['GAZETTE: CROSSED PICKAXES UNDER THE CORSAIR PAINT', 'Her struck flag carries an older mark, and that fleet sold at auction two seasons before the water came. This paper prints the notice and no name.'],
   },
   {

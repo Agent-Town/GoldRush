@@ -166,6 +166,44 @@ test('The Claim cannot load Deepwater beats in Frontier', async ({ page }) => {
   expectNoConsoleErrors(errors);
 });
 
+/**
+ * F-SS06-2's guard. The three post-run E5 beats used to gate on `hasStoryBeatSeen` of an EARLIER
+ * beat, because `run-return-town` carried no contract id — so "the player came back from the
+ * Deepwater Claim" was approximated by "the player has been shown the Claim-Boat's arrival card",
+ * which is true after a return from any other Deepwater map. The signal now carries the map, the
+ * beats compare it, and this test is the difference: a foreign return must spend none of these
+ * three cards, and the Claim-Boat's own return must offer all three.
+ */
+const POST_RUN_E5_BEATS = ['e5-gazette-crossed-pickaxes', 'e5-mystery-hull-w5', 'e5-tavern-locomotive-argument'];
+
+test('F-SS06-2: the post-run Deepwater beats read the map the run returned from', async ({ page }) => {
+  test.setTimeout(90_000);
+  const errors = watchErrors(page);
+  await seedTown(page, E5);
+  await page.goto('/');
+  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
+
+  const offered = (ids: string[]) =>
+    page.evaluate((subject) => {
+      const story = window.__GR_STORY__;
+      return [story?.active() ?? null, ...(story?.pending() ?? [])]
+        .filter((id): id is string => typeof id === 'string' && subject.includes(id))
+        .sort();
+    }, ids);
+
+  // A secured return from a DIFFERENT Deepwater map. Under the old proxy this fired all three the
+  // moment the Claim-Boat's arrival card had been seen; it must now fire none.
+  const foreign: RuntimeStorySignal = { type: 'run-return-town', result: 'secured', contractId: 'e5-regatta' };
+  await page.evaluate((value) => window.__GR_STORY__?.emit(value), foreign);
+  expect(await offered(POST_RUN_E5_BEATS)).toEqual([]);
+
+  // The Claim-Boat's own return, which is what these three are about.
+  const own: RuntimeStorySignal = { type: 'run-return-town', result: 'secured', contractId: 'e5-deepwater-claim' };
+  await page.evaluate((value) => window.__GR_STORY__?.emit(value), own);
+  await expect.poll(() => offered(POST_RUN_E5_BEATS), { timeout: 8_000 }).toEqual(POST_RUN_E5_BEATS);
+  expectNoConsoleErrors(errors);
+});
+
 test(`${E2} cannot load Deepwater beats`, async ({ page }) => {
   const errors = watchErrors(page);
   await seedTown(page, E2);

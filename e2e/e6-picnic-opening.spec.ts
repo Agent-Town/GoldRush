@@ -79,14 +79,16 @@ type Snapshot = {
 };
 
 /**
- * `window.__THREE_GAME_DIAGNOSTICS__` is already declared globally (`src/vite-env.d.ts:995`), and
- * that declaration does NOT carry `picnicHold` — `Game.publishDiagnostics` writes the key through an
- * `as ThreeGameDiagnostics` cast (`src/game/Game.ts:5680`), so the objective this whole spec is about
- * is invisible to the type. Read the one missing key through this narrow widening rather than
- * redeclaring the global (a compile error) or editing `src/` (outside this task's firewall).
- * Filed as F-PICNIC-2.
+ * F-PICNIC-2, CURED 2026-09-07 — and this note is kept because the widening it replaces is the
+ * finding. This spec used to read the hold through a local `type PicnicDiagnostics = { picnicHold?:
+ * StakeState[] }` and an `as unknown as` cast, because `window.__THREE_GAME_DIAGNOSTICS__`'s
+ * declaration did NOT carry `picnicHold` while `Game.publishDiagnostics` wrote it anyway, under a
+ * blanket `as ThreeGameDiagnostics` on the whole published literal. So the ONE objective this map
+ * can be lost on was invisible to the type, and a spec had to assert its shape by hand.
+ * `picnicHold` is now declared (`src/vite-env.d.ts`, as `PicnicHoldSystem['diagnostics']`) and the
+ * blanket cast is gone, so every read below is the compiler's business again — no cast, and a
+ * renamed field reds here at `tsc` rather than at runtime.
  */
-type PicnicDiagnostics = { picnicHold?: StakeState[] };
 
 function seedEntries(): Array<[string, string]> {
   const profile: ProfileState = {
@@ -168,7 +170,7 @@ async function snapshot(page: Page): Promise<Snapshot> {
       maxHp: Number(diagnostics?.maxHp ?? 0),
       gold: Number(diagnostics?.economy?.gold ?? 0),
       enemiesAlive: Number(diagnostics?.enemiesAlive ?? 0),
-      stakes: ((diagnostics as unknown as PicnicDiagnostics | undefined)?.picnicHold ?? []).map((entry) => ({
+      stakes: (diagnostics?.picnicHold ?? []).map((entry) => ({
         id: String(entry.id),
         claimed: Boolean(entry.claimed),
         contested: Boolean(entry.contested),
@@ -204,7 +206,7 @@ async function installTimeline(page: Page): Promise<void> {
         if (openingHp === null) openingHp = Number(diagnostics.hp);
         if (marks.firstSpawnAt === null && Number(diagnostics.enemiesAlive) > 0) marks.firstSpawnAt = at;
         if (marks.firstHeroDamageAt === null && Number(diagnostics.hp) < openingHp) marks.firstHeroDamageAt = at;
-        const stakes = (diagnostics as unknown as PicnicDiagnostics).picnicHold ?? [];
+        const stakes = diagnostics.picnicHold ?? [];
         if (marks.firstStakePressureAt === null && stakes.some((entry) => entry.timer > 0)) marks.firstStakePressureAt = at;
         const claimed = stakes.filter((entry) => entry.claimed).length;
         if (marks.firstStakeClaimedAt === null && claimed >= 1) marks.firstStakeClaimedAt = at;
@@ -394,6 +396,32 @@ test.describe('e6-picnic: the opening the card describes', () => {
       'sandwich-east',
     ]);
     expect(opening.stakes.every((entry) => !entry.claimed), 'nothing is claimed at the whistle').toBe(true);
+
+    // F-PICNIC-2: the same rows read through the DECLARED type with no cast anywhere, so the
+    // declaration is checked against the running engine rather than merely existing. `position`
+    // and `held` are the two fields the old local widening did not know about, which is the whole
+    // shape of the finding: the spec had been asserting a type it invented.
+    const declared = await page.evaluate(() =>
+      (window.__THREE_GAME_DIAGNOSTICS__?.picnicHold ?? []).map((stake) => ({
+        id: stake.id,
+        position: stake.position,
+        held: stake.held,
+        claimed: stake.claimed,
+      })),
+    );
+    expect(declared.map(({ id }) => id), 'the declared key carries the same three stakes').toEqual([
+      'sandwich-west',
+      'sandwich-center',
+      'sandwich-east',
+    ]);
+    expect(
+      declared.every(({ held, claimed }) => held === !claimed),
+      "`held` is the system's own invariant, not a field this spec invented",
+    ).toBe(true);
+    expect(
+      declared.every(({ position }) => Number.isFinite(position?.x) && Number.isFinite(position?.z)),
+      'every stake publishes the world point it is held at',
+    ).toBe(true);
 
     // No input at all: this is the null floor, played in the browser. `levelup` is a run STATE
     // (`src/game/GameState.ts:1`), not an ending — an unbuilt hero still earns cards off the

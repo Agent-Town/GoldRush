@@ -24,19 +24,27 @@ const EXPECTED_RULES: Record<string, string[]> = {
 };
 
 const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
-  // NOT RETIRED, AND THE ENGINE IS THE REASON (E10S-4 scope 6, attempted and refused). The Ember
-  // Shore has no engine debt left: both consumers landed in E10S-2/E10S-3, and the reason the row
-  // survived them — "the CLAIM is not yet earned: bench seeds, null-floor rows, the public-verb
-  // prover and board admission all belong to the E10S-4 door slice" — is discharged by this slice.
-  // Removing the row was MEASURED and it fails the whole bundle:
+  // RE-POINTED BY engine-correctives-batch (F-E10S4-2 cured, 2026-09-07). STILL NOT RETIRED, BUT
+  // THE ENGINE IS NO LONGER THE REASON, and the difference is the whole point of re-pointing this
+  // block rather than leaving it. What this comment used to say — that removing the row fails the
+  // whole bundle with
   //   Invalid authored contract epoch-10-deepsky/e10-ember-shore: twist.emberShore:
   //   engine_dependency_required
-  // because `twist.emberShore` sits in `DECLARED_INERT_PATHS` (`src/meta/ContractFamilies.ts:1661`)
-  // and the validator at `:1832` requires a non-empty `engineDependencies` array for any contract
-  // that declares one of those paths. The path is no longer inert, so the cure is to drop it from
-  // that list — an engine change this slice was firewalled out of. The row therefore stays, with
-  // `landedBy: 'E10S-4'` and a description that says the claim is earned, so the campaign dossier
-  // does not report a served map as missing (`scripts/campaign-map-dossier-table.mjs:63`).
+  // because `twist.emberShore` sat in `DECLARED_INERT_PATHS` and `validateEngineDependencies`
+  // demands a non-empty `engineDependencies` array from any contract declaring a listed path — was
+  // TRUE and is now FALSE. That path is gone from the list (`src/meta/ContractFamilies.ts`, the
+  // RETIRED comment where it stood; the inert check is `validateEngineDependencies`, currently
+  // `:1841`), and the retirement was MEASURED on this tree with the row deleted: 42 contracts load
+  // and `parseContractDescriptor` returns `ok: true` with no reasons
+  // (`artifacts/engine-correctives-batch/probe-inert-retire.mjs`).
+  // WHAT KEEPS THE ROW IS NOW A GUARD, NAMED: `scripts/e10-preserve-consumer.test.mjs:455` ("the
+  // engine dependency says LANDED and names the slice that landed it") reads
+  // `contract.tileParams.engineDependencies` and reds `TypeError: Cannot read properties of
+  // undefined (reading 'status')` at `:459` the moment the row goes. That guard was outside the
+  // curing task's firewall, so the retirement is one ledger line plus that guard's own retirement,
+  // and it is deliberately left for whoever owns both. The row therefore stays, `status: 'landed'`
+  // with `landedBy: 'E10S-3'` and a description that says the claim is earned, so the campaign
+  // dossier does not report a served map as missing (`scripts/campaign-map-dossier-table.mjs:63`).
   'e10-ember-shore': 'ember-shore-preserve-consumers',
   'e10-archive-world': 'archive-world-consumers',
   // RE-POINTED (stale before E10S-3, cited): the Last Claim's dependency was renamed to

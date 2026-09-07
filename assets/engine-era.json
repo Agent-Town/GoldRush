@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "d2f03881011e54afa074efa2667a3e34cd463ee9fb494e274f0f55ebf57b1895",
+  "engineHash": "08d5ee5f2ae70640952e9fa6ad6f608c28d7ff72c753f8c2b691c1e41004905a",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -523,6 +523,12 @@
       "engineHash": "d2f03881011e54afa074efa2667a3e34cd463ee9fb494e274f0f55ebf57b1895",
       "pinnedAt": "2026-09-06",
       "cause": "perf-correctives-batch: the pools presence-probe globs go eager and Terrain's dead rail-cell entry is narrowed out (79 per-cell modules to 0 in the dev build), the tape worker's build pass inherits the diet naming and the release narrowing (1,231 un-dieted PNGs / 96 MB out of dist), the audio loop clock publishes through a getter; no sim change; stacked on portraits-era-aging 3f86a89c",
+      "aliases": []
+    },
+    {
+      "engineHash": "08d5ee5f2ae70640952e9fa6ad6f608c28d7ff72c753f8c2b691c1e41004905a",
+      "pinnedAt": "2026-09-06",
+      "cause": "engine-correctives-batch: twist.emberShore leaves DECLARED_INERT_PATHS, the diagnostics literal loses its blanket cast (picnicHold, preserve, movePin, playbookUse declared), the three post-run E5 beats gate on run-return-town's contract id, the profile-key sweep guard; no sim change; stacked on perf-correctives d2f03881",
       "aliases": []
     }
   ],
