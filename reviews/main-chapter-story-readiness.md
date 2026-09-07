@@ -1,3 +1,7 @@
+# s2539 follow-up — classification hold lifted, candidate still unmerged
+
+F-2537-2 is closed by the M2 test-readiness drain `0eac2a9bec302665ab3483ec0413eca2e7469992`. The goal is re-registered for draining its existing completed output; no runner re-dispatch is needed. Rebase the saved six-wait candidate `83f1429f6ff2dc26254f0c18225466991b6454ea` onto current main and run its required chapter, adjacency and boot gates. This fire did not accept or merge that candidate. See `reviews/main-m2-palisade-placement-diagnosis.md` for the causal proof.
+
 # MAIN chapter story readiness
 
 ## Slice and candidate

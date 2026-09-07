@@ -5049,10 +5049,10 @@
             {
               "id": "main-chapter-story-readiness",
               "title": "F-2537-1: six Frontier chapter-exclusion checks wait for the story reader before asserting an empty later-epoch queue",
-              "status": "blocked",
+              "status": "queued",
               "taskFile": "main-chapter-story-readiness.md",
-              "blockClass": "gate-side",
-              "blockedReason": "s2538: six-wait output is held for F-2537-2 classification. Frontier 12/12 and E7 mobile 3/3 pass, but full adjacency has an unexplained mobile M2 count 1 vs 2; complete unchanged-base control does not reproduce M2. Candidate 83f1429f6ff2dc26254f0c18225466991b6454ea retained on save/main-chapter-readiness-s2538. See reviews/main-chapter-story-readiness.md. The queued main-m2-palisade-placement-diagnosis.md corrective owns the next measurement; satisfy this gate-side condition before restoring and draining the candidate."
+              "note_s2538": "s2538: six-wait output is held for F-2537-2 classification. Frontier 12/12 and E7 mobile 3/3 pass, but full adjacency has an unexplained mobile M2 count 1 vs 2; complete unchanged-base control does not reproduce M2. Candidate 83f1429f6ff2dc26254f0c18225466991b6454ea retained on save/main-chapter-readiness-s2538. See reviews/main-chapter-story-readiness.md. The queued main-m2-palisade-placement-diagnosis.md corrective owns the next measurement; satisfy this gate-side condition before restoring and draining the candidate.",
+              "note_s2539": "Gate-side F-2537-2 classification condition discharged by 0eac2a9bec302665ab3483ec0413eca2e7469992. The completed six-wait candidate 83f1429f6ff2dc26254f0c18225466991b6454ea now awaits an independent drain on current main. Keep the saved candidate and existing done-move; do NOT re-dispatch the finished task. Its own chapter/adjacent/boot gates remain owed; no acceptance or merge claimed here."
             },
             {
               "id": "main-m2-palisade-placement-diagnosis",
