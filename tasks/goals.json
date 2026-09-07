@@ -7738,9 +7738,10 @@
             {
               "id": "lane-a-rider-parity-reach-stage3",
               "title": "F-2550-1: reconcile the strict Prospector-read census with shipped ADR-005 stage 3 while guarding both hero-owned sites",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "lane-a-rider-parity-reach-stage3.md",
-              "drainNotes": "s2550 FIRE-AUTHORED gate-side corrective. Unchanged main and preserved gold candidate both reproduce reach guard 4/5, census 10 versus stale 12. Stage 3 deliberately moved hollow crossing and playbook suspension to the hero. Focused/mutation tests first; FIRE composes with saved gold for full integration. No owner fork. Evidence artifacts/s2550-fire/full-node.txt and base-reach-control.txt."
+              "drainNotes": "s2551 drained after full disjoint reach+gold gate: Node rc0, 737 pass/5 documented skips, all 128 fixture owners; tsc/build, four selected guards, browser adjacency 34/34 and plain boots 2/2 pass. No runtime edit. Review reviews/rider-parity-reach-stage3.md; evidence artifacts/s2551-fire/report.md.",
+              "mergeHash": "85a159e2e5ef428b85d55a4c244faf24ae027f48"
             }
           ]
         }
