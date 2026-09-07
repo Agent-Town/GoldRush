@@ -1,3 +1,30 @@
+# s2552 — chapter writers: browser acceptance banked, drain held
+
+Candidate `ca0fec7e361c2a5ed82e5a8598a93dc47a7cd281` is backed up on `save/chapter-evidence-s2552`, based on main `d49604f87c18ed773b5fd8119256e737e8e7b734`. Gate tree: `/private/tmp/gr-gate-s2552`. Source lane tip `386e129f714e634d9a2a9a18f31f8afa9f08f0fd` and its existing done-move remain untouched.
+
+## Verdict
+HOLD for remaining gates. No source merged or deployed. This increment completed the six chapter suites and both evidence-writer behaviors. The complete Node command, task-025/M1/M2 adjacency and plain desktop/390px boots remain owed on this candidate. The earlier grammar and readiness correctives are already on main; no new source corrective or owner decision is claimed.
+
+## Evidence
+- Typecheck rc=0, 5.0 s; build rc=0, 23.5 s. Task, citation and gate-caller guards passed. See `artifacts/s2552-fire/compile.txt`.
+- Initial power p95 0.668 ms exceeded the 0.500 ms cap while this fire ran other diagnostics. On the unchanged tree, a standalone rerun passed at 0.322 ms. Both receipts are retained in `artifacts/s2552-fire/compile.txt` and `artifacts/s2552-fire/power-isolated.txt`; no limit or implementation was changed. The overlap is observed, not an assertion that an individual competing process caused the red.
+- Chapters: 68/68 desktop and mobile, one worker, rc=0, 1304.9 s. Console-watch reported zero suppressed errors in all 52 reports. `artifacts/s2552-fire/chapters.txt` preserves the complete run. Fifty scratch PNGs were produced; all 51 retained hashes matched the starting snapshot, and their mtimes predated the candidate commit. See `artifacts/s2552-fire/chapter-default-proof.json`.
+- Moth: ordinary 4/4 (47.3 s), explicit corridor refresh 1/1 (13.0 s), ordinary 4/4 again (47.0 s). Ordinary runs preserved both retained bytes and mtime and wrote matching scratch bytes; explicit refresh advanced mtime while retaining the correct current recording: 138 trace rows, `fnv1a32:f7af6739`. See `artifacts/s2552-fire/moth-proof.json` and its three transcripts. Current era 5 engine identity is `09838c3502b8d6038960dc9743f8a04c65522581ece88e6920079ae39dd7b5d4`. Historical drift remains attributed to `253927e1f` by the originating review; this fire does not reinstate the old lane recording.
+- Explicit chapter refresh: 1/1 desktop Deepwater, 45.8 s; five retained-path screenshots were actually written in the isolated gate tree, captured under `artifacts/s2552-fire/explicit-refresh-shots/`, then restored. All 51 retained hashes match again. `artifacts/s2552-fire/chapter-refresh-proof.json` records the writes. The first anchored selector matched no tests (rc=1); its transcript, proof and method are retained with `initial-` prefixes. Correcting the selector changed no test or runtime code.
+
+## Classification
+Seven test writers only, nine insertions and eight deletions. Six chapter files are byte-identical to their parent outside their SHOTS constants; the Moth writer changes only its output-directory choice. No assertions, triggers, source runtime, assets, pins, package/configuration or retained artifact bytes change. Exact per-path classification is `artifacts/s2552-fire/classification.json`; patch is `artifacts/s2552-fire/candidate.patch`.
+
+## Next fire
+Keep the lane and done-move held; do not redispatch. Recheck current main against the saved candidate. If only bookkeeping has moved, keep the exact tree/evidence association instead of recreating the already gated patch. Run the complete direct Node command alone on Node 26.4.0; do not route it through run-guards' 900-second wrapper. Then run task-025/M1/M2 on both projects and plain desktop/390px boots against an owned dev Vite server. Job lists are `artifacts/s2552-fire/full-node-jobs.json` and `artifacts/s2552-fire/adjacency-jobs.json`. Prior s2551 Node success is prerequisite evidence, not a pass on this writer candidate. Any source drift requires reclassification and affected gates. Merge only once the remaining gates are satisfied; then update the goal's full mergeHash and archive consumed save refs.
+
+## Standing duties and retention
+Runner alive, queue/in-flight zero, one real drain. Ten planned leaves are all priced, none fire-authorable; no refills. The 55 inherited desk items were checked: CLOSED 0, OPEN 2, BOTH 0, OPEN-DESK-ONLY 53, UNRECORDED 0, all carried. The 15-day ledger series is whole/current through September 7, zero account-class rows; 54 unknown-class rows remain advisory. Pull was idempotent. Rotation r2026w37 is already minted and open; landing ID matches. September 7 ticker is not due before 06:00 local. Gazette: 249 reported, 112 dismissed, zero candidates; W37 has three standalone and two batched headlines. No player-visible event occurred here.
+
+All 106 registered trees were visited, including the gitless fallback; the 6,775 gitless evidence files are remote-safe. Eight quiet-file exception identities match the preceding verified record; all 23 chunks behind six large trace blobs were checked at their offsite refs. No foreign content was touched. See `artifacts/s2552-fire/retention-judgment.md` and `artifacts/s2552-fire/standing-duties.json`. This fire's gate tree and ignored scratch outputs remain available for the next gate; only its own server is stopped before exit.
+
+---
+
 # s2541 — chapter evidence writer drain
 
 **Slice:** `lane-c-chapter-evidence-opt-in.md`; lane `feat/hero-move-verb` at `386e129f714e634d9a2a9a18f31f8afa9f08f0fd`. **Candidate:** `44fd2661f345f25c9d9099359ff405eabd6b641e`, pushed to `save/chapter-evidence-s2541`, based on main `c03903e3a1905e26d91914532154fc014b699781`.
