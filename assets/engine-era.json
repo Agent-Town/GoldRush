@@ -1,7 +1,7 @@
 {
   "era": 5,
   "name": "the Replayed Board",
-  "engineHash": "32c940079ba3dd1921ca2be10a4a0d5a1de36f49c9199e1f99ecc02230f9f33d",
+  "engineHash": "8e3fe217a6814032313b8a4fd4cfbd186c0ceafaefe213eb6fba2394cf12e8b3",
   "declaredAt": "2026-08-31",
   "note": "Owner ruling 2026-08-31: \"we don't need stuff in the leaderboards that does not get replayed\". The era marks a board-law change: only current-lineage reels rank; simulation behaviour did not change.",
   "viewSchema": {
@@ -565,6 +565,12 @@
       "engineHash": "32c940079ba3dd1921ca2be10a4a0d5a1de36f49c9199e1f99ecc02230f9f33d",
       "pinnedAt": "2026-09-07",
       "cause": "F-FTP-5 (attended review fix 2026-09-07): src/assets/AdvanceStream.ts imports assets/first-town-payload.json as a DEFAULT import (Node's JSON modules have no named exports; the named form broke every Node loader of the module, caught by whole-suite-collection on main); the browser bundle is byte-equivalent and no sim path changes",
+      "aliases": []
+    },
+    {
+      "engineHash": "8e3fe217a6814032313b8a4fd4cfbd186c0ceafaefe213eb6fba2394cf12e8b3",
+      "pinnedAt": "2026-09-07",
+      "cause": "canon-calls-a8-batch (owner A8 rulings 2026-09-07): the Elder becomes a woman in both her portraits (batch 3 plates over the shipped man plates), the Old Digger's portrait is the machine plate with an old-digger speaker (88 speakers), no beat re-keyed; src/story/speakers.ts alone moves the hash (story presentation, no sim)",
       "aliases": []
     }
   ],
