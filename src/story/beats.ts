@@ -1142,12 +1142,12 @@ export const E6_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 484-607, E5 at 796-981,
-// E6 at 1004-1127): the era's tavern tales and Gazette headlines are ordinary attributed beats in
+// Chapter E7 follows the E2/E3 single-table shape above (E3 at lines 484-607, E5 at 796-997,
+// E6 at 1020-1143): the era's tavern tales and Gazette headlines are ordinary attributed beats in
 // THIS table, not a second narrative system (tavern-tale shape: e2-depot-wedding at lines
-// 388-395, e3-tavern-twins-defect at 558-567, e5-tavern-locomotive-argument at 902-911;
+// 388-395, e3-tavern-twins-defect at 558-567, e5-tavern-locomotive-argument at 902-921;
 // Gazette-headline shape: e2-iron-correction-rumor-one at 396-403, e3-gazette-two-offers at
-// 506-515, e6-gazette-the-printing at 1108-1117). Mystery law holds: the Gazette prints what it
+// 506-515, e6-gazette-the-printing at 1124-1133). Mystery law holds: the Gazette prints what it
 // can prove and never the meaning. Every beat cites its storybook line; artKey is set only
 // where a plate exists on disk under assets/raw/.
 // Cast note (honesty guard): STORYBOOK lines 421-425 name six E7 cast members (Chalk the first
@@ -1326,10 +1326,10 @@ export const E7_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 484-607, E6 at lines 1004-1127):
+// Chapter E8 follows the E2/E3 single-table shape above (E3 at lines 484-607, E6 at lines 1020-1143):
 // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
 // (tavern-tale shape: e3-tavern-twins-defect at lines 558-567 and e6-tavern-wrangler-drinks-free
-// at lines 1098-1107; Gazette shape: e3-gazette-two-offers at lines 506-515), not a second
+// at lines 1114-1123; Gazette shape: e3-gazette-two-offers at lines 506-515), not a second
 // narrative system. Mystery law holds: the Gazette prints what it can prove and never the meaning.
 // SPEAKER GAP (reported, not invented, the same finding ss-06 and ss-07 recorded for E5 and E6):
 // STORYBOOK lines 485-486 name five new E8 townsfolk (the moon-born child, the dome gardener, the
@@ -1837,10 +1837,10 @@ export const E9_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 484-607, E8 at lines 1341-1588):
+// Chapter E10 follows the E2/E3 single-table shape above (E3 at lines 484-607, E8 at lines 1357-1604):
 // the era's tavern tales and Gazette headlines are ordinary attributed beats in THIS table
 // (tavern-tale shape: e3-tavern-twins-defect at lines 558-567 and e8-tavern-river-question at lines
-// 1477-1486; Gazette shape: e3-gazette-two-offers at lines 506-515), not a second narrative system.
+// 1493-1502; Gazette shape: e3-gazette-two-offers at lines 506-515), not a second narrative system.
 // Mystery law holds: the Gazette prints what it can prove and never the meaning.
 // LANDED 2026-09-06 (attended drain, CLAUDE.md section 4.10b): the E8 coordinates above were re-based
 // by +175 in the landing commit, E7 and E9 having landed on main after this lane was cut. Measured on
@@ -2127,7 +2127,7 @@ export const E10_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
   {
     // lore/STORYBOOK.md:621; the last node opens the Press, in the shape of e8-riverward-launch at
-    // lines 1507-1515 (F-PORT-3: this cited 1144-1153, stale by -175 since the E10 landing commit,
+    // lines 1523-1531 (F-PORT-3: this cited 1144-1153, stale by -175 since the E10 landing commit,
     // whose own +175 re-base fixed the table header and missed this body citation; re-derived by
     // locating the beat, not by arithmetic). Household Law (lore/canon-rules.md:19-20): the child is
     // at the lever with her.
