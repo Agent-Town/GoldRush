@@ -543,14 +543,24 @@ function readAir(atmosphere: Record<string, unknown>): AgentAirView | undefined 
   return {
     wall,
     suit: {
-      body: 'prospector',
+      // THE HUMAN'S DIAL since 2026-09-07 (owner directive; `E8HumanSuit`). The body a rider steers
+      // with `MOVE_HERO` is the one that breathes on these maps, so `body` reads 'hero' and there
+      // is no second dial: the Prospector is a made agent and its old suit is gone rather than
+      // renamed, which is the only way a rider cannot read the wrong one.
+      body: 'hero',
       seconds: number(suit.seconds),
       capacity: number(suit.capacity),
       refillPerSecond: number(suit.refillPerSecond),
+      // Null where the contract authors no harm, which is the pre-directive behaviour and the
+      // default a contract that authors nothing still gets. A rider that reads a number here knows
+      // an empty suit costs hp; a rider that reads null knows it does not.
+      harmPerSecond: Number.isInteger(suit.harmPerSecond) ? (suit.harmPerSecond as number) : null,
       inDome: text(suit.inDome),
       empty: suit.empty === true,
       drainedTotal: number(suit.drainedTotal),
       emptySeconds: number(suit.emptySeconds),
+      harmDealt: number(suit.harmDealt),
+      harmTicks: integer(suit.harmTicks),
     },
     domes: records(atmosphere.domes).map((dome) => ({
       id: text(dome.id) ?? 'dome',

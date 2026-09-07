@@ -755,7 +755,7 @@ export type ContractManifest = {
     persistentPlanting?: { description: string };
     scheduledRelocation?: { description: string };
     persistentCanalChoices?: { description: string };
-  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] }; hero?: { maxHpBonus: number }; atmosphere?: { regolithRequired?: number; regolithWindowWaves?: number; crossingRequired?: number; crossingWindowWaves?: number } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and beacon ladder, E7's claim grit and E8's regolith+crossing air gates ride the trailing intersection so no cited line below moves
+  } & { picnicHold?: boolean; motorFrontier?: ContractMotorFrontier; harvestFreeObjective?: { description: string }; economy?: { bankCap: number; beaconLadder?: number[] }; hero?: { maxHpBonus: number }; atmosphere?: { regolithRequired?: number; regolithWindowWaves?: number; crossingRequired?: number; crossingWindowWaves?: number; suitSeconds?: number; harmPerSecond?: number; pressurisedZoneIds?: readonly string[] } }; // E4 and E10's harvest-free declaration, E3's per-contract purse and beacon ladder, E7's claim grit and E8's regolith+crossing air gates plus the 2026-09-07 human-suit numbers ride the trailing intersection so no cited line below moves
   modes?: ContractEscortMode[];
   practice?: ContractPracticeMode;
   boardRow: {
@@ -2773,7 +2773,14 @@ function validateContractTwistAtmosphere(
   }
   addUnknownFieldReasons(
     value,
-    ['regolithRequired', 'regolithWindowWaves', 'crossingRequired', 'crossingWindowWaves'],
+    [
+      'regolithRequired', 'regolithWindowWaves', 'crossingRequired', 'crossingWindowWaves',
+      // THE HUMAN SUIT (owner directive 2026-09-07), three fields, each refused below on its own
+      // terms. `suitSeconds` and `harmPerSecond` are the dial and the cost of emptying it;
+      // `pressurisedZoneIds` names the rectangles that hold air, which is the half that makes the
+      // geography true — a crossing that is also a shelter is not a crossing (F-EAWA-2).
+      'suitSeconds', 'harmPerSecond', 'pressurisedZoneIds',
+    ],
     'twist.atmosphere',
     reasons,
   );
@@ -2787,6 +2794,7 @@ function validateContractTwistAtmosphere(
       'twist.atmosphere',
     ));
   }
+  validateHumanSuit(value, tileParams, atmosphere, reasons);
   if (required !== undefined) {
     if (atmosphere?.airIsWall !== true) {
       addDescriptorReason(reasons, reason(
@@ -2829,6 +2837,91 @@ function validateContractTwistAtmosphere(
   }
   validateAirWindow(value.regolithWindowWaves, required, 'regolith', 'twist.atmosphere.regolithWindowWaves', reasons);
   validateAirWindow(value.crossingWindowWaves, crossingRequired, 'crossing', 'twist.atmosphere.crossingWindowWaves', reasons);
+}
+
+/**
+ * THE HUMAN SUIT, the door half (owner directive 2026-09-07, verbatim: "I want space experiences of
+ * humans to need them having air. It has to be logical. If that means we have to change something
+ * ok"). The engine halves are `E8HumanSuit` and the two `authored*` readers beside it in
+ * `src/systems/E8PhysicsSystem.ts`.
+ *
+ * WHAT IT REFUSES, and why each refusal belongs at the DOOR rather than in a runtime clamp — the
+ * same reason the gate numbers above are refused here: these are the numbers the LATCH enforces,
+ * the numbers the BRIEFING prints and the numbers the VIEW publishes, and anything that would make
+ * those three disagree must never reach an engine.
+ *   - a `suitSeconds` or `harmPerSecond` that is not a whole number above zero. A fractional suit
+ *     is not a harder suit, it is a different dial; a zero or negative harm is the reskin the
+ *     directive rejected, and OMITTING the field is how a contract says "no harm" (that is the
+ *     pre-2026-09-07 behaviour and stays lawful).
+ *   - either of them on a contract that declares no `tileParams.atmosphere` at all — no consumer
+ *     would read them, so they would print a promise nothing keeps.
+ *   - a `pressurisedZoneIds` that is not a non-empty array of strings, or that names a rectangle
+ *     this map does not author. The list decides where a human can breathe; a typo in it is a map
+ *     with no air on it, which is "unwinnable by construction", the bug class
+ *     (`specs/epoch-saga/CAPABILITY-LADDER.md:38`).
+ *   - a `pressurisedZoneIds` that names EVERY authored crossing rectangle. That is F-EAWA-2 written
+ *     as data: if every crossing also holds air, no crossing can ever be breathless and the wall is
+ *     a schedule wearing an air budget's name.
+ */
+function validateHumanSuit(
+  value: Record<string, unknown>,
+  tileParams: Record<string, unknown>,
+  atmosphere: Record<string, unknown> | null,
+  reasons: ContractDescriptorReason[],
+): void {
+  const wholeAbove = (field: string, at: string): void => {
+    const found = value[field];
+    if (found === undefined) return;
+    if (typeof found !== 'number' || !Number.isInteger(found) || found <= 0) {
+      addDescriptorReason(reasons, reason('field_number', `A ${field} must be a positive whole number.`, at));
+    }
+    if (atmosphere === null) {
+      addDescriptorReason(reasons, reason(
+        'atmosphere_undeclared',
+        `A ${field} needs a suit: declare tileParams.atmosphere first.`,
+        at,
+      ));
+    }
+  };
+  wholeAbove('suitSeconds', 'twist.atmosphere.suitSeconds');
+  wholeAbove('harmPerSecond', 'twist.atmosphere.harmPerSecond');
+
+  const ids = value.pressurisedZoneIds;
+  if (ids === undefined) return;
+  if (!Array.isArray(ids) || ids.length === 0 || ids.some((id) => typeof id !== 'string' || id.length === 0)) {
+    addDescriptorReason(reasons, reason(
+      'field_section',
+      'Pressurised zones must be a non-empty list of authored rectangle ids.',
+      'twist.atmosphere.pressurisedZoneIds',
+    ));
+    return;
+  }
+  const rects = ['buildZones', 'orbitalScaffoldZones', 'probeRecoveryZones']
+    .flatMap((key) => (Array.isArray(tileParams[key]) ? (tileParams[key] as unknown[]) : []))
+    .filter(isRecord);
+  const authored = new Set(rects.map((zone) => zone.id).filter((id): id is string => typeof id === 'string'));
+  for (const id of ids as string[]) {
+    if (!authored.has(id)) {
+      addDescriptorReason(reasons, reason(
+        'field_section',
+        'A pressurised zone must name a rectangle this map authors.',
+        'twist.atmosphere.pressurisedZoneIds',
+      ));
+      return;
+    }
+  }
+  const crossings = ['probeRecoveryZones', 'orbitalScaffoldZones']
+    .flatMap((key) => (Array.isArray(tileParams[key]) ? (tileParams[key] as unknown[]) : []))
+    .filter(isRecord)
+    .map((zone) => zone.id)
+    .filter((id): id is string => typeof id === 'string');
+  if (crossings.length > 0 && crossings.every((id) => (ids as string[]).includes(id))) {
+    addDescriptorReason(reasons, reason(
+      'field_section',
+      'Pressurised zones cannot cover every crossing: a crossing that holds air is not a crossing.',
+      'twist.atmosphere.pressurisedZoneIds',
+    ));
+  }
 }
 
 /** One window, one rule: a positive whole number of waves, and only beside the gate it paces. */

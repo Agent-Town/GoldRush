@@ -184,7 +184,14 @@
         "clockTicks": 18000,
         "atmosphere": {
           "regolithRequired": 4,
-          "regolithWindowWaves": 4
+          "regolithWindowWaves": 4,
+          "suitSeconds": 60,
+          "harmPerSecond": 5,
+          "pressurisedZoneIds": [
+            "dome-cluster-pad-west",
+            "dome-cluster-pad-center",
+            "dome-cluster-pad-east"
+          ]
         },
         "enemyRoster": [
           { "id": "scrap_corsair", "label": "Scrap Corsair" },
@@ -212,7 +219,9 @@
           "Seven surveyed build grounds span the rim and mare flat.",
           "Waves enter from the north, west, and east.",
           "The claim is not made until four of the six regolith grounds are worked with air still in the suit.",
-          "Only one ground counts in each four-wave window, so the run is made in trips; the suit fills only inside a breathing dome."
+          "Only one ground counts in each four-wave window, so the run is made in trips; a ground worked while her suit is empty counts for nothing.",
+          "Outside the domes there is no air. The hero lands six paces north of the dome cluster with sixty seconds in her suit, and only a breathing dome fills it.",
+          "An empty suit costs her five hit points every second until she reaches air."
         ],
         "geographyLine": "A height-six crater rim rings a height-zero mare with dome pads, regolith fields, a lava-tube mouth, launch pad, and eastbound mass-driver rail."
       }
@@ -328,7 +337,12 @@
         "clockTicks": 18000,
         "atmosphere": {
           "crossingRequired": 4,
-          "crossingWindowWaves": 4
+          "crossingWindowWaves": 4,
+          "suitSeconds": 60,
+          "harmPerSecond": 5,
+          "pressurisedZoneIds": [
+            "far-side-landing-yard"
+          ]
         },
         "enemyRoster": [
           { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" }
@@ -363,7 +377,9 @@
           "The Far Side reuses the Mare Claim rim-and-flat ground.",
           "Waves enter from the north, west, and east.",
           "The crossing is not made until four separate entries into the listening-probe crater are credited with air still in the suit.",
-          "Only one crossing counts in each four-wave window, so the vacuum is crossed again and again; the suit fills only inside the landing yard."
+          "Only one crossing counts in each four-wave window, so the vacuum is crossed again and again; an entry made on an empty suit counts for nothing.",
+          "The hero makes the crossing herself. Her suit holds sixty seconds of air and only the landing yard fills it; the crater lies sixty-eight paces out.",
+          "An empty suit costs her five hit points every second until she reaches air."
         ],
         "geographyLine": "The Mare Claim rim-and-flat terrain with a landing yard at one end and the listening-probe crater at the other."
       }
@@ -521,7 +537,12 @@
         "clockTicks": 18000,
         "atmosphere": {
           "crossingRequired": 4,
-          "crossingWindowWaves": 4
+          "crossingWindowWaves": 4,
+          "suitSeconds": 60,
+          "harmPerSecond": 5,
+          "pressurisedZoneIds": [
+            "claw-carcass-yard"
+          ]
         },
         "enemyRoster": [
           { "id": "scrap_corsair", "label": "Scrap Corsair" }
@@ -551,8 +572,10 @@
           "Three surveyed decks divide the orbital yard.",
           "Two debris fields flank the central spine.",
           "Waves enter from the west and east.",
-          "The scaffold is not crossed until every deck has been stood on and four separate deck entries are credited with air still in the suit.",
-          "Only one crossing counts in each four-wave window, so the spine is worked all run; the suit fills only on a pressurised deck."
+          "The scaffold is not crossed until the hero has stood on both outboard decks and four separate deck entries are credited with air still in her suit.",
+          "Only one crossing counts in each four-wave window, so the spine is worked all run; an entry made on an empty suit counts for nothing.",
+          "Only the carcass yard holds air. The two scaffold decks are open frame in vacuum, and her suit holds sixty seconds.",
+          "An empty suit costs her five hit points every second until she reaches air."
         ],
         "geographyLine": "The Salvage King's Claw rebuilt as a three-deck orbital yard, with a handhold spine between two drifting debris fields."
       }
@@ -754,7 +777,14 @@
         "clockTicks": 18000,
         "atmosphere": {
           "regolithRequired": 4,
-          "regolithWindowWaves": 4
+          "regolithWindowWaves": 4,
+          "suitSeconds": 60,
+          "harmPerSecond": 5,
+          "pressurisedZoneIds": [
+            "dome-cluster-pad-west",
+            "dome-cluster-pad-center",
+            "dome-cluster-pad-east"
+          ]
         },
         "enemyRoster": [
           { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" },
@@ -788,7 +818,9 @@
           "The eastbound mass-driver rail crosses the southern footing.",
           "Waves enter from the north, west, and east.",
           "The claim is not made until four of the six regolith grounds are worked with air still in the suit.",
-          "Only one ground counts in each four-wave window, so the run is made in trips; the suit fills only inside a breathing dome, and the shadow leaves just one breathing."
+          "Only one ground counts in each four-wave window, so the run is made in trips; a ground worked while her suit is empty counts for nothing.",
+          "Outside the domes there is no air. The hero lands six paces north of the dome cluster with sixty seconds in her suit, and the shadow leaves just one dome breathing.",
+          "An empty suit costs her five hit points every second until she reaches air."
         ],
         "geographyLine": "The Mare Claim rim, dome cluster, regolith fields, launch pad, and mass-driver rail beneath a dark sky."
       }
