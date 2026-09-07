@@ -297,7 +297,13 @@ export class E8SuitAirSystem {
     // holds air is struck off the crossing list rather than counted as one. Before this line the
     // Far Side's crater (never pressurised) was already a true crossing and Low Orbit's decks were
     // not, and nothing in the code said which was which.
-    const shelterIds = new Set(shelters.map(({ id }) => id));
+    //
+    // THE FILTER RIDES THE AUTHORED READ AND ONLY IT. A contract that names no pressurised ground
+    // keeps the crossing list it always had, unfiltered — otherwise the fallback derivation on a
+    // `suit-only` map (shelters = the scaffolds) would strike out every crossing it just derived
+    // and silently move the map onto the regolith latch. The pre-2026-09-07 default is the
+    // control this whole file is measured against, so it changes only where a contract asks.
+    const shelterIds = new Set(pressurised === null ? [] : shelters.map(({ id }) => id));
     const crossings: readonly Rect[] = (craters.length > 0 ? craters : scaffolds)
       .map(rect)
       .filter(({ id }) => !shelterIds.has(id));

@@ -215,29 +215,41 @@ test('the authored latch is strictly stricter: every zone still has to be stood 
     const { Balance } = await vite.ssrLoadModule('/src/game/Balance.ts');
     const { loadContract } = await vite.ssrLoadModule('/src/meta/ContractFamilies.ts');
 
-    // Low Orbit authors THREE zones and asks for FOUR credits, so the two halves of the latch can
-    // be told apart: bounce between two decks until the credits are banked and the third deck is
-    // still owed, which under the old rule (every zone, no count) was also a refusal. Neither
-    // half alone is the gate; a ride that fails the old one cannot pass the new one.
+    // Low Orbit authors TWO crossing zones and asks for FOUR credits, so the two halves of the
+    // latch can be told apart: bank every credit on ONE deck and the other is still owed, which
+    // under the old rule (every zone, no count) was also a refusal. Neither half alone is the
+    // gate; a ride that fails the old one cannot pass the new one.
+    //
+    // RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive): this test used to
+    // bounce between the first two of THREE decks with the third left owed. `claw-carcass-yard`
+    // is no longer a crossing at all — it is the map's only pressurised ground
+    // (`twist.atmosphere.pressurisedZoneIds`), and a rectangle that holds air cannot be crossed
+    // breathless, which was F-EAWA-2. The shape of the proof is unchanged: bank the count on the
+    // zones the ride has visited, and show the unvisited one still shuts the latch.
     const contract = loadContract('e8-low-orbit');
     const { crossingRequired, crossingWindowWaves } = contract.twist.atmosphere;
     const windowSeconds = crossingWindowWaves * (Balance.waves.waveInterval / (contract.twist.waveCadenceMult ?? 1));
     const air = E8SuitAirSystem.create(contract);
     const decks = air.diagnostics.crossing.zones;
+    assert.equal(decks.length, 2, 'the carcass yard holds air and is not a crossing');
     const spine = { x: 22, z: 0 };  // between the yard and the east deck; vacuum, and no zone at all
 
+    // The window is rolled from inside the CABIN rather than from inside the deck: since
+    // 2026-09-07 a deck is vacuum, and waiting out a 120-second window in one empties a
+    // sixty-second suit — which would make this a test of suffocation rather than of the latch.
+    const cabin = centreOf(zoneOf(contract, 'claw-carcass-yard'));
     for (let credit = 0; credit < crossingRequired; credit += 1) {
-      const deck = decks[credit % 2];  // only the first two, on purpose
+      const deck = decks[0];  // only the first, on purpose
       air.update(1, centreOf(zoneOf(contract, deck)), [], 1);
-      for (let second = 0; second < windowSeconds; second += 1) air.update(1, centreOf(zoneOf(contract, deck)), [], 1);
       air.update(1, spine, [], 1);
+      for (let second = 0; second < windowSeconds; second += 1) air.update(1, cabin, [], 1);
     }
     assert.equal(air.diagnostics.crossing.credited, crossingRequired, 'the count is met');
-    assert.deepEqual(air.diagnostics.crossing.reached, decks.slice(0, 2), 'the third deck is still owed');
+    assert.deepEqual(air.diagnostics.crossing.reached, decks.slice(0, 1), 'the second deck is still owed');
     assert.equal(air.objectiveAllowsSecure, false, 'the count alone cannot open the latch');
     assert.equal(air.diagnostics.crossing.complete, false);
 
-    air.update(1, centreOf(zoneOf(contract, decks[2])), [], 1);
+    air.update(1, centreOf(zoneOf(contract, decks[1])), [], 1);
     assert.equal(air.objectiveAllowsSecure, true, 'the last zone closes it');
   });
 });

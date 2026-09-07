@@ -37,7 +37,11 @@ const read = (relative) => readFileSync(new URL(`../${relative}`, import.meta.ur
 // field; only the hash moved, because `atmosphere.diagnostics` rides `eventLogHash` and that block
 // gained the authored gate (1 -> 4) and the four window fields. Both halves attributed separately
 // in `artifacts/mare-claim-air-prevalent/floor-attribution.json`.
-const IDLE_HASH_COMPOSED = 'fnv1a32:32f62335';
+// RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from `fnv1a32:32f62335`: the suit is the HUMAN's now and an
+// empty one charges hit points, so this map's idle floor dies of the era's own rule five seconds
+// sooner than it used to (81 233 ms / 32 kills becomes 76 033 / 30). The hero is dropped at
+// (0, 12), six world units north of every dome this map authors.
+const IDLE_HASH_COMPOSED = 'fnv1a32:271eabbb';
 const IDLE_HASH_UNCOMPOSED = 'fnv1a32:ee2f7c14';
 
 const location = new URL(`http://gr-sim.local/?debug&contract=${CONTRACT}&seed=${SEED}`);
@@ -207,16 +211,20 @@ test('air is the wall: the suit drains outside, refills inside, and a breathless
 });
 
 test('the ride the audit measured, now carrying its air — and the un-composed hash it replaces', () => {
-  // The null floor with the composition: the SAME ride the audit logged (wave 2, 81233ms, 32
-  // kills) with the air state now inside the hash.
+  // The null floor with the composition: the ride the audit logged (wave 2), with the air state
+  // inside the hash — and, since 2026-09-07, with the human's own suffocation inside the outcome.
   const composed = ride();
   assert.equal(composed.terminal, true);
   assert.deepEqual(
     { secured: composed.outcome.secured, waves: composed.outcome.waves, timeMs: composed.outcome.timeMs, kills: composed.outcome.kills },
-    { secured: false, waves: 2, timeMs: 81_233, kills: 32 },
+    { secured: false, waves: 2, timeMs: 76_033, kills: 30 },
   );
   assert.equal(composed.outcome.eventLogHash, IDLE_HASH_COMPOSED);
   assert.equal(composed.view.now.air.suit.drainedTotal, 60, 'the idle floor suffocates: 60s of suit, all of it spent');
+  // AND IT NOW COSTS HER. Re-pointed 2026-09-07: the same sentence, with the consequence the
+  // directive added — the dial that empties is the human's and it charges her for emptying.
+  assert.ok(composed.view.now.air.suit.harmTicks > 0, 'an empty suit charges the hero every second');
+  assert.ok(composed.view.now.air.suit.harmDealt > 0, 'and the charge reaches her through CombatSystem');
   assert.equal(composed.view.now.air.regolith.worked.length, 0, 'an idle ride works no ground');
 
   // MUTATION PROOF. Remove the composition — `E8AtmosphereSystem.create` answering `none()` is

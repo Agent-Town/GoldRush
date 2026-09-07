@@ -316,6 +316,17 @@ test('one reader, because the browser composes no atmosphere consumer at all', (
   // and the contract's own `engineDependencies` row says so and stays `missing`.
   assert.equal(game.includes('E8AtmosphereSystem'), false, 'the browser must compose no atmosphere consumer');
   assert.equal([...headless.matchAll(/E8AtmosphereSystem\.create\(/g)].length, 1, 'exactly one composition, in the sim');
-  // The authored numbers are read in ONE place, so the gate cannot drift between two readers.
-  assert.equal([...consumer.matchAll(/contract\.twist\.atmosphere/g)].length, 1, 'exactly one authored read');
+  // The authored numbers are read in ONE FILE, so the gate cannot drift between two modules.
+  // RE-POINTED 2026-09-07 (`tasks/e8-air-logical.md`, owner directive 2026-09-07) from 1 to 4: the human-suit half added three more authored
+  // fields (`suitSeconds`, `harmPerSecond`, `pressurisedZoneIds`) and each has its own named
+  // reader beside the gate's — `authoredSuitSeconds`, `authoredHarmPerSecond`,
+  // `authoredPressurisedZoneIds`. Four readers in one file is still one place; what this line
+  // guards is that `E8SuitAirSystem` calls THOSE rather than re-reading the contract itself.
+  assert.equal([...consumer.matchAll(/contract\.twist\.atmosphere/g)].length, 4, 'four named readers, all in one file');
+  const siblings = readFileSync(new URL('../src/systems/E8SuitAirSystem.ts', import.meta.url), 'utf8');
+  assert.equal(
+    [...siblings.matchAll(/contract\.twist\.atmosphere/g)].length,
+    1,
+    'the siblings read the gate once and take the suit numbers from the shared readers',
+  );
 });
