@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawn, spawnSync } from 'node:child_process';
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { chmodSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -34,22 +34,30 @@ function assertTwoStamps(child) {
   assert.deepEqual(child.stderr.match(/^CONTENDED — \d+ concurrent batteries$/gm), [STAMP, STAMP]);
 }
 
+function nodeGuardsBatteryRunning(env = process.env) {
+  const found = spawnSync('pgrep', ['-f', 'run-node-guards'], { encoding: 'utf8', env });
+  if (found.error || (found.status !== 0 && found.status !== 1)) {
+    assert.fail(`could not measure node-guards contention: ${found.error?.message ?? found.stderr}`);
+  }
+  const pids = found.status === 0 ? found.stdout.trim().split(/\s+/) : [];
+  const listed = pids.length > 0
+    ? spawnSync('ps', ['-o', 'command=', '-p', pids.join(',')], {
+        encoding: 'utf8',
+        env,
+        maxBuffer: 64 * 1024 * 1024,
+      })
+    : undefined;
+  if (listed?.error || (listed && listed.status !== 0 && listed.status !== 1)) {
+    assert.fail(`could not inspect node-guards contention: ${listed.error?.message ?? listed.stderr}`);
+  }
+  return listed?.stdout.split('\n').some((command) => runsNodeGuardsBattery(command.trim())) ?? false;
+}
+
 async function waitForQuietBoard() {
   const deadline = Date.now() + 5_000;
   let quietSince = Date.now();
   while (Date.now() < deadline) {
-    const found = spawnSync('pgrep', ['-f', 'run-node-guards'], { encoding: 'utf8' });
-    if (found.error || (found.status !== 0 && found.status !== 1)) {
-      assert.fail(`could not measure node-guards contention: ${found.error?.message ?? found.stderr}`);
-    }
-    const pids = found.status === 0 ? found.stdout.trim().split(/\s+/) : [];
-    const listed = pids.length > 0
-      ? spawnSync('ps', ['-o', 'command=', '-p', pids.join(',')], { encoding: 'utf8' })
-      : undefined;
-    if (listed?.error || (listed && listed.status !== 0 && listed.status !== 1)) {
-      assert.fail(`could not inspect node-guards contention: ${listed.error?.message ?? listed.stderr}`);
-    }
-    const busy = listed?.stdout.split('\n').some((command) => runsNodeGuardsBattery(command.trim()));
+    const busy = nodeGuardsBatteryRunning();
     if (busy) quietSince = Date.now();
     else if (Date.now() - quietSince >= 300) return;
     await new Promise((resolve) => setTimeout(resolve, 25));
@@ -124,6 +132,25 @@ test('contention is advisory, correctly counted, and absent when alone', { timeo
     writeFileSync(passing, "import test from 'node:test'; test('pass', () => {});\n");
     writeFileSync(failing, "import test from 'node:test'; test('fail', () => { throw new Error('MANUFACTURED_FAILURE'); });\n");
     writeFileSync(slow, "import test from 'node:test'; test('slow sibling', async () => { console.log('SIBLING_READY'); await new Promise((r) => setTimeout(r, 20_000)); });\n");
+
+    const fakeBin = join(dir, 'bin');
+    const observerBytes = 1_200_000;
+    mkdirSync(fakeBin);
+    writeFileSync(join(fakeBin, 'pgrep'), `#!${process.execPath}\nprocess.stdout.write(process.env.FAKE_BATTERY === '1' ? '41001\\n41002\\n' : '41001\\n');\n`);
+    writeFileSync(join(fakeBin, 'ps'), `#!${process.execPath}\nconst observer = 'observer ' + 'x'.repeat(${observerBytes});\nconst rows = [[41001, 1, observer]];\nif (process.env.FAKE_BATTERY === '1') rows.push([41002, 1, ${JSON.stringify(`"${process.execPath}" "${HARNESS}" fixture.test.mjs`)}]);\nconst withPids = process.argv.includes('pid=,ppid=,command=');\nprocess.stdout.write(rows.map(([pid, ppid, command]) => withPids ? \`${'${pid} ${ppid} ${command}'}\` : command).join('\\n') + '\\n');\n`);
+    chmodSync(join(fakeBin, 'pgrep'), 0o755);
+    chmodSync(join(fakeBin, 'ps'), 0o755);
+    const oversizedEnv = { ...cleanEnv(), PATH: `${fakeBin}:${process.env.PATH}` };
+    const oversizedSiblingEnv = { ...oversizedEnv, FAKE_BATTERY: '1' };
+    assert.ok(Buffer.byteLength(`observer ${'x'.repeat(observerBytes)}`) > 1024 * 1024);
+    assert.equal(nodeGuardsBatteryRunning(oversizedEnv), false);
+    assert.equal(nodeGuardsBatteryRunning(oversizedSiblingEnv), true);
+    const oversizedObserver = runHarness(passing, oversizedEnv);
+    const oversizedSibling = runHarness(passing, oversizedSiblingEnv);
+    assert.equal(oversizedObserver.status, 0, `${oversizedObserver.stdout}${oversizedObserver.stderr}`);
+    assertNoStamp(oversizedObserver);
+    assert.equal(oversizedSibling.status, 0, `${oversizedSibling.stdout}${oversizedSibling.stderr}`);
+    assertTwoStamps(oversizedSibling);
 
     assert.equal(runsNodeGuardsBattery(`${process.execPath} ${HARNESS} fixture.test.mjs`), true);
     assert.equal(runsNodeGuardsBattery(`/bin/sh -c "${process.execPath}" "${HARNESS}" fixture.test.mjs & wait`), true);

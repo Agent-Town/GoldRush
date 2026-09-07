@@ -47,6 +47,7 @@ function contentionStamp() {
 
     const listed = spawnSync('ps', ['-o', 'pid=,ppid=,command=', '-p', [...pids].join(',')], {
       encoding: 'utf8',
+      maxBuffer: 64 * 1024 * 1024,
     });
     if (listed.error || listed.status !== 0) return undefined;
 
