@@ -83,7 +83,15 @@ try {
 // below: townsfolk-elder.png is a full-frame keyed cutout with clean alpha and has never been a halo
 // suspect, so it appears in neither `cured` nor `expectedResidual` at the BASE sweep, and swapping it
 // for a fully opaque plate cannot break the alpha/opaque-RGB comparison.
-assert.equal(current.scanned, 1395, 'processed PNG denominator moved');
+// F-PORT-4 a sixth time (2026-09-07, youngsters-rechain-batch): FIVE more of the same tier - the two
+// youngsters across E2, E4 and (for A) E8, re-minted against the shipped E1 portraits after the
+// identity break above - 0 transparent px apiece and no halo candidates, so the denominator moves
+// 1395 + 5 = 1400, measured on the tree. This is the +5 the note four paragraphs up said batch 2
+// could not add: the five plates it withheld are still withheld and still unprocessed (their raws
+// keep their batch-2 names - assets/raw/tf-youngster-a-e{2,4,8}.png and tf-youngster-b-e{2,4}.png),
+// and these five are the batch-4 re-chain under the same names with a `b` suffix. Nothing was
+// un-withheld; five new files exist. There is no B E8 plate in either batch.
+assert.equal(current.scanned, 1400, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),

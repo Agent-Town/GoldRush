@@ -86,7 +86,12 @@ export type StorySpeakerId =
   | 'preacher-e9'
   | 'preacher-e10'
   | 'salvage-king-e8'
-  | 'old-digger';
+  | 'old-digger'
+  | 'youngster-a-e2'
+  | 'youngster-a-e4'
+  | 'youngster-a-e8'
+  | 'youngster-b-e2'
+  | 'youngster-b-e4';
 
 export type StorySpeaker = {
   id: StorySpeakerId;
@@ -290,6 +295,49 @@ const salvageKingE8PortraitUrl = new URL('../../assets/processed/townsfolk-salva
 // era" (STORYBOOK:561). A later era that gives it a line reuses this id.
 const oldDiggerPortraitUrl = new URL('../../assets/processed/townsfolk-old-digger.png', import.meta.url).href;
 
+// THE TWO YOUNGSTERS, RE-CHAINED (youngsters-rechain-batch, 2026-09-07). Owner ruling, verbatim:
+// "A12 - option b" (docs/OWNER-DESK-2026-09-06.md:68-70).
+// WHAT BROKE, so nobody re-derives it as a defect: batch 2 aged these two like everyone else, but its
+// two E2 plates were the only aged faces in that run minted with NO image reference
+// (`"referenced": false` in artifacts/portraits-era-aging-2/generation.jsonl) AND with the sexes the
+// wrong way round against the shipped art, and E4 and E8 then chained faithfully from those wrong
+// faces. All five were withheld rather than registered (F-AGE2-1,
+// reviews/portraits-era-aging-2-batch.md:34); the owner chose to re-prompt and re-chain.
+// WHAT BATCH 4 DID: the two E2 plates were re-minted with the SHIPPED E1 PORTRAITS passed as the
+// image reference by upload id (assets/processed/townsfolk-youngster-a.png as
+// 4c51b5d4-c8cc-49eb-9c17-8ed824553dd6, townsfolk-youngster-b.png as
+// 363146d2-20a0-46d6-bf85-2cf48f2373ff), each E4 chained from its own new E2 raw by upload id and A's
+// E8 from his E4, so every plate descends from the child the game actually ships. Every generation row
+// in artifacts/youngsters-rechain/generation.jsonl records `"referenced": true`.
+// THE SEXES ARE THE ART'S, NOT THE PROSE'S: src/town/town-actor-sheets.json:8-9 gives youngster_a the
+// `-m` walk sheet and youngster_b the `-f` one, so A IS THE BOY and B IS THE GIRL, and the props
+// follow their own canon lines - A holds up the shiny rock (lore/characters.md:44, "I found a shiny
+// rock. It is probably science.") and B carries the book, chalk and sums (:45, "If the Baron comes,
+// he has to do sums first."). The plates were read at 384 px, at the true 74x90 card crop and at
+// 120 px against the shipped E1 children before any of this was written.
+// NAMES follow this file's own convention rather than the town cast's: the story card uses the ROLE
+// where src/town/townsfolk.ts uses a personal name (`clerk` is "Assay Clerk" here and "Ada Pike" at
+// townsfolk.ts:141). Stated because it is easy to read as an omission: these two DO have town-cast
+// names - Pip at townsfolk.ts:156 and Juniper at :176 - but both carry the post "Youngster", and the
+// A/B letters are the shipped slot names (src/assets/slots.ts:28-29), so the card says "Youngster A"
+// and "Youngster B". A future owner word naming them on the card reaches these two entries only.
+// REGISTERED WITH NO BEAT, on row 74's precedent and stated so it is not read as an oversight: no
+// beat in src/story/beats.ts keys any youngster id today. THE CLERK LINE is the future consumer of
+// A's face - lore/STORYBOOK.md:90 makes the schoolhouse's first graduate the Depot clerk "(the
+// youngster-a face, aged ~15 years: same eyes, same brow - the aging pipeline's proof case)" and :684
+// tabulates the ten uniforms, E2 depot through E10 letters between the Ark's decks. A line written in
+// either youngster's own voice reaches these ids and finds them ready.
+// TIER CHANGE, visible and not a defect, exactly as the Elder's note above records for her: the two
+// shipped E1 youngsters are CHROMA-KEYED full-body cutouts (RGBA, 88,880 and 83,077 transparent px of
+// 147,456) while these five are full-bleed parchment busts like the other 80 era portraits. At card
+// size the E1 plates therefore show a whole small figure and the era plates a head and shoulders;
+// the identity still reads across the step (reviews/shots-youngsters-rechain/faces-{a,b}-2x.png).
+const youngsterAE2PortraitUrl = new URL('../../assets/processed/townsfolk-youngster-a-e2.png', import.meta.url).href;
+const youngsterAE4PortraitUrl = new URL('../../assets/processed/townsfolk-youngster-a-e4.png', import.meta.url).href;
+const youngsterAE8PortraitUrl = new URL('../../assets/processed/townsfolk-youngster-a-e8.png', import.meta.url).href;
+const youngsterBE2PortraitUrl = new URL('../../assets/processed/townsfolk-youngster-b-e2.png', import.meta.url).href;
+const youngsterBE4PortraitUrl = new URL('../../assets/processed/townsfolk-youngster-b-e4.png', import.meta.url).href;
+
 // objectPosition for the era cast is '50% 42%' across the board, and that is MEASURED rather
 // than copied. The card crops with object-fit: cover into a 74x90 box (58x76 mobile), so a
 // SQUARE source is scaled by height and cropped horizontally: only the X term can move a
@@ -313,6 +361,11 @@ const oldDiggerPortraitUrl = new URL('../../assets/processed/townsfolk-old-digge
 // weather-warden-e9's shipped 198.5). That makes tavernkeeper-e7 the widest deviation from centre in
 // the whole registered set at 7.7 px of 384, up from 6.1 - about 1.5 px in the rendered 74 px card,
 // which is still inside the 8 px window the cover crop gives a square source. 50% centres all 80.
+// EXTENDED AGAIN 2026-09-07 to the five re-chained youngster plates, measured under the same
+// definition rather than assumed: 194.7 (a-e2), 193.8 (b-e2), 195.3 (a-e4), 196.3 (b-e4), 193.8
+// (a-e8). They sit wholly INSIDE the registered 184.3-198.5 band and move neither end; the widest
+// of the five is b-e4 at 4.3 px of 384 off centre, well under tavernkeeper-e7's standing 7.7 px.
+// 50% centres all 85.
 const ERA_CAST_OBJECT_POSITION = '50% 42%';
 
 export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
@@ -920,6 +973,41 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
     id: 'old-digger',
     name: 'The Old Digger',
     portraitUrl: oldDiggerPortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+
+  // THE YOUNGSTERS ACROSS THE ERAS (owner ruling 2026-09-07 A12; LEDGER row 78). The long comment
+  // above carries the provenance, the sexes, the naming convention and the no-beat reasoning.
+  // A is the boy with the shiny rock: E2 about twenty, E4 in his thirties, E8 silver-haired.
+  // B is the girl with the book and the sums: E2 and E4. There is no B E8 plate and none is claimed.
+  'youngster-a-e2': {
+    id: 'youngster-a-e2',
+    name: 'Youngster A',
+    portraitUrl: youngsterAE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'youngster-a-e4': {
+    id: 'youngster-a-e4',
+    name: 'Youngster A',
+    portraitUrl: youngsterAE4PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'youngster-a-e8': {
+    id: 'youngster-a-e8',
+    name: 'Youngster A',
+    portraitUrl: youngsterAE8PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'youngster-b-e2': {
+    id: 'youngster-b-e2',
+    name: 'Youngster B',
+    portraitUrl: youngsterBE2PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'youngster-b-e4': {
+    id: 'youngster-b-e4',
+    name: 'Youngster B',
+    portraitUrl: youngsterBE4PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
 };
