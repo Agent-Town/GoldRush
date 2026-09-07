@@ -1,3 +1,19 @@
+# s2550 — HOLD: full command exposes a stale reach census
+
+The preserved MAIN gold correction remains **unmerged**. Gate candidate `589d207c97db03b5e89f9042d249b3447324156e`, base `0eb139bdc7f1612da449a816038520b72153d456`, contains the same 13 saved blobs from `save/board-gold-current-grammar-s2547` (`ffac3a697ee37c01e24fe16a36b70b2a1fc145c6`). No runtime, engine, dependency or browser/helper code changed. The six historical tapes/slips remain byte-identical. No conflicts were resolved.
+
+The complete direct Node command ran alone under Node 26.4.0 with existing FIRE serialization and unchanged test deadlines. It ended naturally at **rc 1, 1374.5 seconds: 742 tests, 736 pass, one fail, five explicit skips, zero cancelled**. The failing parent is the 128-owner fixture sweep; it passed the gold child and later stopped on `rider-parity-reach.test.mjs`. The chained npm tail did not run. This is a complete red command, not full acceptance or all-128 coverage.
+
+**F-2550-1 OPEN, gate-side:** the reach guard expects twelve Prospector code-read lines; the source has ten. Candidate and unchanged-main controls both yield 4/5. All three control subjects match HEAD exactly. The stage-3 portion of `08287cdd7430d83be288fb3bf0cf5421af26938c` moved the hollow crossing and `syncProgramSuspension` to the hero intentionally, while the stage-1 test still counts them as Prospector reads. Restoring those runtime reads would violate ADR-005. The new registered lane-a task corrects the strict census and keeps both hero sites defended with mutation evidence.
+
+Other current gates: typecheck rc 0 (5.1 s), build rc 0 (19.4 s), four selected guards 4/4 (2.4 s; power p95 0.403 ms). No fresh browser adjacency or plain-boot claim is made this fire after the reproduced integration red; the preceding s2549 results remain historical and retained. The candidate and s2549 gate have no runtime/test/dependency differences, recorded explicitly, but that comparison does not waive the new full-command failure.
+
+Evidence: `artifacts/s2550-fire/full-node.txt`, `artifacts/s2550-fire/remaining-gates.txt`, `artifacts/s2550-fire/base-reach-control.txt`, `artifacts/s2550-fire/tree-equivalence.json`, `artifacts/s2550-fire/historical-fixtures.json`, `artifacts/s2550-fire/report.md`. Prior mutation evidence and independent Codex review remain in the saved current-grammar artifact directory.
+
+**Next:** finish `tasks/lane-a-rider-parity-reach-stage3.md`, compose that candidate with saved gold in a detached current-base checkout, complete the direct full Node command and outstanding drain gates, then accept serially. Preserve main's finished gold source, its done receipt, and the separate chapter candidate. No gold redispatch, no source merge, no public deploy. F-2549-1's wrapper-cutoff obligation is discharged by the terminal direct run; F-2541-1's source correction remains held pending this integration.
+
+---
+
 # s2549 — Full Node gate remains incomplete
 
 ## Slice and verdict

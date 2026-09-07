@@ -5071,7 +5071,7 @@
               "title": "F-2541-1: re-record the three board-gold positive fixtures under current grammar without altering retired tapes or held-purse assertions",
               "status": "queued",
               "taskFile": "main-board-gold-current-grammar.md",
-              "drainNotes": "s2549 HOLD: source remains unmerged MAIN output, preserved on origin/save/board-gold-current-grammar-s2547 at ffac3a697ee37c01e24fe16a36b70b2a1fc145c6. On a complete detached current-base candidate including s2548 capture cure: gold 4/4, retirement 2/2, tsc/build and four short diff guards passed. F-2549-1: run-guards.mjs killed the full Node npm child at its 900-second wrapper deadline; no terminal counts or chained tail, no all-128 fixture completion claim. Next fire runs the same full npm command directly through gate-battery.mjs, with Node 26.4.0 and FIRE serialization; preserve per-test deadlines and complete output. Exact job list artifacts/s2549-fire/full-node-next-jobs.json. No new master, redispatch, source acceptance or owner decision. Review reviews/main-board-gold-current-grammar.md; report artifacts/s2549-fire/report.md. Chapter candidate remains a separate drain."
+              "drainNotes": "s2550 HOLD: direct full Node completed naturally at rc=1, 1374.5 s, 742 tests: 736 pass, 1 fail, 5 explicit skips, zero cancelled. The fixture sweep passed board-gold but stopped at rider-parity-reach.test.mjs: stale stage-1 Prospector count 12 versus shipped stage-3 count 10. Unchanged main repeats 4/5, so F-2550-1 is gate-side and independent of this gold patch. Registered lane-a-rider-parity-reach-stage3.md corrects the census and preserves both newly hero-owned sites. Saved source ffac3a697ee37c01e24fe16a36b70b2a1fc145c6 remains unmerged and untouched. Next FIRE composes that finished corrective with this saved candidate, runs full Node directly plus remaining drain gates, and only then drains serially. No chained-tail result or full fixture-sweep completion is claimed. No gold redispatch. Review reviews/main-board-gold-current-grammar.md; report artifacts/s2550-fire/report.md."
             }
           ]
         }
@@ -7734,6 +7734,13 @@
               "note": "s2546: MAIN full battery exited with the same two ENOBUFS failures. Copy to lane-a only after the closing ledger gate passes; master strict queue gate passes. Preserve MAIN gold output and held chapter candidate; no runtime changes. Review reviews/node-guards-ps-capture.md.",
               "mergeHash": "65bd9b4ca5a48baa85298cb11aa15614194a4493",
               "drainNotes": "s2548: both bounded captures drained at 65bd9b4ca5a48baa85298cb11aa15614194a4493. Focused 1/1, tsc/build, four remaining diff guards and six separately completed npm tail commands pass (mid-lock desk leg explicitly SKIP). Full Node 26.4.0 alone: 742 tests, 736 pass, one known F-2541-1 fixture-sweep failure, five skips; zero ENOBUFS; contention regression passes. Current unchanged-base control repeats the same 0/3 malformed gold tapes. Fixture sweep visited 20/128. No runtime change; main gold and chapter drains remain separate. Review reviews/node-guards-ps-capture.md; artifacts/s2548-fire/report.md."
+            },
+            {
+              "id": "lane-a-rider-parity-reach-stage3",
+              "title": "F-2550-1: reconcile the strict Prospector-read census with shipped ADR-005 stage 3 while guarding both hero-owned sites",
+              "status": "queued",
+              "taskFile": "lane-a-rider-parity-reach-stage3.md",
+              "drainNotes": "s2550 FIRE-AUTHORED gate-side corrective. Unchanged main and preserved gold candidate both reproduce reach guard 4/5, census 10 versus stale 12. Stage 3 deliberately moved hollow crossing and playbook suspension to the hero. Focused/mutation tests first; FIRE composes with saved gold for full integration. No owner fork. Evidence artifacts/s2550-fire/full-node.txt and base-reach-control.txt."
             }
           ]
         }
