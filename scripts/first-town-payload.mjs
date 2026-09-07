@@ -166,7 +166,7 @@ export function readDeclaration() {
       throw new PayloadError(`${DECLARATION}: group ${group.kind} declares no families`);
     }
     const sorted = [...group.families].sort();
-    if (group.families.join(' ') !== sorted.join(' ')) {
+    if (group.families.join('\u0000') !== sorted.join('\u0000')) {
       throw new PayloadError(`${DECLARATION}: group ${group.kind} is not sorted`);
     }
     for (const family of group.families) {
