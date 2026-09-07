@@ -331,11 +331,6 @@ export function warmDeferredSpriteClipGroups(): void {
   if (groups.size === requestedClipGroups.size) return;
   declareSpriteClipGroups([...groups]);
 }
-
-/** Diagnostics + guards: which groups a slot has actually requested. */
-export function spriteClipGroupsRequested(): readonly string[] {
-  return [...requestedClipGroups].sort();
-}
 const heroAgeByEpochOrder = new Map<number, HeroAge>([
   [1, 'young'],
   [2, 'young'],
@@ -960,18 +955,34 @@ function mergeRequestedGroups(cacheKey: string, entry: RuntimeSlotEntry, groups:
  */
 async function mergeClipGroupsIntoRuntime(slotId: AssetSlotId, runtime: RuntimeSlot, accept: ClipAccept): Promise<void> {
   const slot = slotContracts.get(slotId);
-  const fromAtlas = (name: string, source: OrientationSource) => {
+  const mergeSource = async (name: string, source: OrientationSource) => {
     const orientation = runtime.orientations.get(name.toLowerCase());
-    const frames = orientation?.frames;
-    if (!orientation || !frames) return;
-    for (const [clip, clipSource] of Object.entries(source.clips ?? {})) {
-      if (!accept(clip) || orientation.clips.has(clip)) continue;
-      const built = clipFromAtlas(frames, clipSource);
-      if (built) orientation.clips.set(clip, built);
+    if (!orientation) return;
+    const wanted = Object.entries(source.clips ?? {}).filter(([clip]) => accept(clip) && !orientation.clips.has(clip));
+    if (wanted.length === 0) return;
+    // A direction's runtime orientation may have been REPLACED by the walk sheet's (createRuntimeSlot
+    // sets walk-sheet directions after the rotation ones), so the atlas standing there can belong to
+    // a different strip and its indices would name the wrong cells. Index the atlas only when it is
+    // demonstrably this source's own — same file list, in order — and otherwise build the source
+    // properly. The check is what makes the free path safe rather than merely usual.
+    const files = resolveFrameFiles(source.frames);
+    const atlas = orientation.frames;
+    const ownAtlas = !!atlas && atlas.length === files.length
+      && files.every((file, index) => atlas[index] === null || atlas[index]?.key === file);
+    if (ownAtlas && atlas) {
+      for (const [clip, clipSource] of wanted) {
+        const built = clipFromAtlas(atlas, clipSource);
+        if (built) orientation.clips.set(clip, built);
+      }
+      return;
+    }
+    const built = await createRuntimeOrientation(source.frames, Object.fromEntries(wanted), null, accept);
+    for (const [clip, runtimeClip] of built?.clips ?? []) {
+      if (accept(clip) && !orientation.clips.has(clip)) orientation.clips.set(clip, runtimeClip);
     }
   };
-  for (const [name, source] of Object.entries(slot?.orientations ?? {})) fromAtlas(name, source);
-  for (const [name, source] of Object.entries(slot?.rotations?.directions ?? {})) fromAtlas(name, source);
+  for (const [name, source] of Object.entries(slot?.orientations ?? {})) await mergeSource(name, source);
+  for (const [name, source] of Object.entries(slot?.rotations?.directions ?? {})) await mergeSource(name, source);
   if (slotId === assetSlots.charHero) await addHeroPoseClips(runtime.orientations, accept);
 }
 
