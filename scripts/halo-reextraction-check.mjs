@@ -49,7 +49,13 @@ try {
 // denominator moves 1345 + 18 = 1363, measured on the tree. NINETEEN plates were generated; the
 // nineteenth (tf-old-digger-e10) is deliberately NOT processed into assets/processed (F-AGE-3, see
 // src/story/speakers.ts), which is why this is +18 and not +19.
-assert.equal(current.scanned, 1363, 'processed PNG denominator moved');
+// F-PORT-4 a fourth time (2026-09-07, portraits-era-aging-2-batch): thirty-one more of the same tier
+// - the five trades across E5-E10 and the Salvage King - again 0 transparent px apiece and no halo
+// candidates, so the denominator moves 1363 + 31 = 1394, measured on the tree. THIRTY-SIX plates were
+// generated; the five youngster plates are deliberately NOT processed into assets/processed
+// (F-AGE2-1: their faces do not descend from the shipped E1 youngsters - see src/story/speakers.ts
+// and assets/LEDGER.md row 75), which is why this is +31 and not +36.
+assert.equal(current.scanned, 1394, 'processed PNG denominator moved');
 assert.deepEqual(
   current.suspects.map(({ file }) => file).sort(),
   expectedResidual.map(({ file }) => file).sort(),

@@ -54,7 +54,38 @@ export type StorySpeakerId =
   | 'eldest-heir-e10'
   | 'baron-e10'
   | 'quack-e10'
-  | 'charter-keeper-e10';
+  | 'charter-keeper-e10'
+  | 'newsie-e5'
+  | 'newsie-e6'
+  | 'newsie-e7'
+  | 'newsie-e8'
+  | 'newsie-e9'
+  | 'newsie-e10'
+  | 'tavernkeeper-e5'
+  | 'tavernkeeper-e6'
+  | 'tavernkeeper-e7'
+  | 'tavernkeeper-e8'
+  | 'tavernkeeper-e9'
+  | 'tavernkeeper-e10'
+  | 'clerk-e5'
+  | 'clerk-e6'
+  | 'clerk-e7'
+  | 'clerk-e8'
+  | 'clerk-e9'
+  | 'clerk-e10'
+  | 'schoolteacher-e5'
+  | 'schoolteacher-e6'
+  | 'schoolteacher-e7'
+  | 'schoolteacher-e8'
+  | 'schoolteacher-e9'
+  | 'schoolteacher-e10'
+  | 'preacher-e5'
+  | 'preacher-e6'
+  | 'preacher-e7'
+  | 'preacher-e8'
+  | 'preacher-e9'
+  | 'preacher-e10'
+  | 'salvage-king-e8';
 
 export type StorySpeaker = {
   id: StorySpeakerId;
@@ -164,6 +195,61 @@ const iceQuarryChiefE9PortraitUrl = new URL('../../assets/processed/townsfolk-ic
 const weatherWardenE9PortraitUrl = new URL('../../assets/processed/townsfolk-weather-warden-e9.png', import.meta.url).href;
 const moonBornChildE9PortraitUrl = new URL('../../assets/processed/townsfolk-moon-born-child-e9.png', import.meta.url).href;
 
+// THE LATER-ERA AGING CAST (portraits-era-aging-2-batch, 2026-09-07). Owner ruling, verbatim:
+// "(A4) use them, please, they will expire soon." The first aging batch (row 74) carried the E1 cast
+// through E4 and left E5-E10 still speaking through the unchanged E1 faces, an art gap it recorded
+// rather than closed. These thirty plates close it: the five trades across all six later eras,
+// GENERATED on Higgsfield (GPT Image 2) with each era's plate passed as the image REFERENCE for the
+// next, so every face descends from its own previous portrait rather than from a prose description,
+// then processed by the identical row-60 recipe as the 56 registered above (`node
+// scripts/extract-alpha.mjs --full-bleed --size 384`, alpha dropped) - 384x384, 3-channel, opaque,
+// 0 transparent and 0 magenta px. Provenance and per-plate QA:
+// artifacts/portraits-era-aging-2/generation.jsonl and assets/LEDGER.md row 75.
+// NAMES follow row 74's rule exactly: a person's name does not change when they age, so Mei keeps the
+// E1 newsie's display name in all six eras, and the trades keep their E1 role nouns. The story card
+// has always used the ROLE where the town cast uses a personal name (`clerk` is "Assay Clerk" here and
+// "Ada Pike" at src/town/townsfolk.ts:141), and that convention is kept.
+const newsieE5PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e5.png', import.meta.url).href;
+const newsieE6PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e6.png', import.meta.url).href;
+const newsieE7PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e7.png', import.meta.url).href;
+const newsieE8PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e8.png', import.meta.url).href;
+const newsieE9PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e9.png', import.meta.url).href;
+const newsieE10PortraitUrl = new URL('../../assets/processed/townsfolk-newsie-e10.png', import.meta.url).href;
+const tavernkeeperE5PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e5.png', import.meta.url).href;
+const tavernkeeperE6PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e6.png', import.meta.url).href;
+const tavernkeeperE7PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e7.png', import.meta.url).href;
+const tavernkeeperE8PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e8.png', import.meta.url).href;
+const tavernkeeperE9PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e9.png', import.meta.url).href;
+const tavernkeeperE10PortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper-e10.png', import.meta.url).href;
+const clerkE5PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e5.png', import.meta.url).href;
+const clerkE6PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e6.png', import.meta.url).href;
+const clerkE7PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e7.png', import.meta.url).href;
+const clerkE8PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e8.png', import.meta.url).href;
+const clerkE9PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e9.png', import.meta.url).href;
+const clerkE10PortraitUrl = new URL('../../assets/processed/townsfolk-clerk-e10.png', import.meta.url).href;
+const schoolteacherE5PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e5.png', import.meta.url).href;
+const schoolteacherE6PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e6.png', import.meta.url).href;
+const schoolteacherE7PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e7.png', import.meta.url).href;
+const schoolteacherE8PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e8.png', import.meta.url).href;
+const schoolteacherE9PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e9.png', import.meta.url).href;
+const schoolteacherE10PortraitUrl = new URL('../../assets/processed/townsfolk-schoolteacher-e10.png', import.meta.url).href;
+const preacherE5PortraitUrl = new URL('../../assets/processed/townsfolk-preacher-e5.png', import.meta.url).href;
+const preacherE6PortraitUrl = new URL('../../assets/processed/townsfolk-preacher-e6.png', import.meta.url).href;
+const preacherE7PortraitUrl = new URL('../../assets/processed/townsfolk-preacher-e7.png', import.meta.url).href;
+const preacherE8PortraitUrl = new URL('../../assets/processed/townsfolk-preacher-e8.png', import.meta.url).href;
+const preacherE9PortraitUrl = new URL('../../assets/processed/townsfolk-preacher-e9.png', import.meta.url).href;
+const preacherE10PortraitUrl = new URL('../../assets/processed/townsfolk-preacher-e10.png', import.meta.url).href;
+
+// THE SALVAGE KING, E8's antagonist: the Baron's GRANDSON, "the family business, literalized into
+// repossession" (lore/STORYBOOK.md:488, the boss at :504 and :674, ruling #13 at :720). He is a new
+// face, not an aged one, so his plate carries no reference and none is wanted.
+// A NAMING SLIP IS RECORDED HERE RATHER THAN PAPERED OVER: the raw was minted as
+// assets/raw/tf-salvage-king-e5.png and the generation log calls him `salvage-king-e5`, but nothing
+// in canon puts him in E5 - he descends on the Mare Claim in E8. The id, the processed file and this
+// entry all say e8; the RAW keeps its minted name because assets/raw is never rewritten. A reader
+// looking for tf-salvage-king-e8.png will not find it; the E5 file is the one.
+const salvageKingE8PortraitUrl = new URL('../../assets/processed/townsfolk-salvage-king-e8.png', import.meta.url).href;
+
 // objectPosition for the era cast is '50% 42%' across the board, and that is MEASURED rather
 // than copied. The card crops with object-fit: cover into a 74x90 box (58x76 mobile), so a
 // SQUARE source is scaled by height and cropped horizontally: only the X term can move a
@@ -181,6 +267,12 @@ const moonBornChildE9PortraitUrl = new URL('../../assets/processed/townsfolk-moo
 // they sit at 185.9-197.1, so the registered set's band widens by 1.1 px at the low end (pressman-e2
 // and tavernkeeper-e4 both 185.9) and not at all at the high end. The widest deviation from centre is
 // unchanged at 6.1 px of 384 - about 1.2 px in the rendered 74 px card - so 50% still centres all 49.
+// EXTENDED AGAIN 2026-09-07 to the thirty-one later-era plates, re-measured under the same definition
+// rather than assumed: they sit at 184.3-197.7, so the registered band's low end moves out by 1.6 px
+// (tavernkeeper-e7 at 184.3) and its high end does not move (newsie-e6 at 197.7 against
+// weather-warden-e9's shipped 198.5). That makes tavernkeeper-e7 the widest deviation from centre in
+// the whole registered set at 7.7 px of 384, up from 6.1 - about 1.5 px in the rendered 74 px card,
+// which is still inside the 8 px window the cover crop gives a square source. 50% centres all 80.
 const ERA_CAST_OBJECT_POSITION = '50% 42%';
 
 export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
@@ -570,6 +662,200 @@ export const STORY_SPEAKERS: Record<StorySpeakerId, StorySpeaker> = {
     id: 'charter-keeper-e10',
     name: 'Charter-Keeper',
     portraitUrl: charterKeeperE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+
+  // E5-E10, the later eras (portraits-era-aging-2-batch, assets/LEDGER.md row 75). The same five
+  // trades the town has had since E1, one era at a time, so the chapters stop speaking through E1
+  // faces. lore/STORYBOOK.md:80 THE LAWS OF TIME ages them 12-15 years per era and THE CLOCK LAW says
+  // that time is TOLD, not reconciled: the faces are read that way, and no age is arithmetic here.
+  'newsie-e5': {
+    id: 'newsie-e5',
+    name: 'Mei Chen',
+    portraitUrl: newsieE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'newsie-e6': {
+    id: 'newsie-e6',
+    name: 'Mei Chen',
+    portraitUrl: newsieE6PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'newsie-e7': {
+    id: 'newsie-e7',
+    name: 'Mei Chen',
+    portraitUrl: newsieE7PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'newsie-e8': {
+    id: 'newsie-e8',
+    name: 'Mei Chen',
+    portraitUrl: newsieE8PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'newsie-e9': {
+    id: 'newsie-e9',
+    name: 'Mei Chen',
+    portraitUrl: newsieE9PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'newsie-e10': {
+    id: 'newsie-e10',
+    name: 'Mei Chen',
+    portraitUrl: newsieE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e5': {
+    id: 'tavernkeeper-e5',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e6': {
+    id: 'tavernkeeper-e6',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE6PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e7': {
+    id: 'tavernkeeper-e7',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE7PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e8': {
+    id: 'tavernkeeper-e8',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE8PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e9': {
+    id: 'tavernkeeper-e9',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE9PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'tavernkeeper-e10': {
+    id: 'tavernkeeper-e10',
+    name: 'Tavernkeeper',
+    portraitUrl: tavernkeeperE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e5': {
+    id: 'clerk-e5',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e6': {
+    id: 'clerk-e6',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE6PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e7': {
+    id: 'clerk-e7',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE7PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e8': {
+    id: 'clerk-e8',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE8PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e9': {
+    id: 'clerk-e9',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE9PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'clerk-e10': {
+    id: 'clerk-e10',
+    name: 'Assay Clerk',
+    portraitUrl: clerkE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e5': {
+    id: 'schoolteacher-e5',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e6': {
+    id: 'schoolteacher-e6',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE6PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e7': {
+    id: 'schoolteacher-e7',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE7PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e8': {
+    id: 'schoolteacher-e8',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE8PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e9': {
+    id: 'schoolteacher-e9',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE9PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'schoolteacher-e10': {
+    id: 'schoolteacher-e10',
+    name: 'Schoolteacher',
+    portraitUrl: schoolteacherE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'preacher-e5': {
+    id: 'preacher-e5',
+    name: 'Preacher',
+    portraitUrl: preacherE5PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'preacher-e6': {
+    id: 'preacher-e6',
+    name: 'Preacher',
+    portraitUrl: preacherE6PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'preacher-e7': {
+    id: 'preacher-e7',
+    name: 'Preacher',
+    portraitUrl: preacherE7PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'preacher-e8': {
+    id: 'preacher-e8',
+    name: 'Preacher',
+    portraitUrl: preacherE8PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'preacher-e9': {
+    id: 'preacher-e9',
+    name: 'Preacher',
+    portraitUrl: preacherE9PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+  'preacher-e10': {
+    id: 'preacher-e10',
+    name: 'Preacher',
+    portraitUrl: preacherE10PortraitUrl,
+    objectPosition: ERA_CAST_OBJECT_POSITION,
+  },
+
+  // The Baron's grandson. He keeps the article, as "The Baron", "The Eldest Heir" and "The Quack"
+  // above do, because the title is the name canon uses for him (lore/STORYBOOK.md:488).
+  'salvage-king-e8': {
+    id: 'salvage-king-e8',
+    name: 'The Salvage King',
+    portraitUrl: salvageKingE8PortraitUrl,
     objectPosition: ERA_CAST_OBJECT_POSITION,
   },
 };
