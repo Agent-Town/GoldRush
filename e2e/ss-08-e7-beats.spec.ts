@@ -161,6 +161,7 @@ test('The Claim cannot load Signal beats in Frontier', async ({ page }) => {
   await page.getByTestId('town-open-board').click();
   await page.getByTestId('contract-launch-the-claim').click();
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim', undefined, { timeout: 60_000 });
+  await page.waitForFunction(() => Boolean(window.__GR_STORY__));
   expect(await page.evaluate(() => window.__GR_STORY__?.pending().filter((id) => id.startsWith('e7-')))).toEqual([]);
   await expect(page.locator('[data-beat-id^="e7-"]')).toHaveCount(0);
   expectNoConsoleErrors(errors);
