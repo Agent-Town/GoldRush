@@ -6,7 +6,7 @@ MAIN task `tasks/main-m2-palisade-placement-diagnosis.md`; completed done-move `
 
 ## Verdict
 
-APPROVED for merge. F-2537-2 is an input-readiness race in the test. Capture the simulation tick in the same browser evaluation that dispatches the rejected tap, then wait for consumption and a released-input sample before the next tap. Exact count, gold, rejection, edge-touch, and error assertions are unchanged; runtime code is untouched.
+MERGED as `0eac2a9bec302665ab3483ec0413eca2e7469992`. F-2537-2 is an input-readiness race in the test. Capture the simulation tick in the same browser evaluation that dispatches the rejected tap, then wait for consumption and a released-input sample before the next tap. Exact count, gold, rejection, edge-touch, and error assertions are unchanged; runtime code is untouched.
 
 ## Evidence
 
