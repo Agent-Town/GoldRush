@@ -4977,7 +4977,8 @@
               "title": "F-AGE2-3/F-AGE2-5: chapter screenshots and the Moth Season ride use explicit evidence refresh; plain gates preserve retained artifacts",
               "status": "queued",
               "taskFile": "lane-c-chapter-evidence-opt-in.md",
-              "drainNotes": "s2537 HOLD: current-base candidate fee574e47be6eb813c73fecd4a5357e973a34a29, origin/save/chapter-evidence-s2537. Seven writer changes preserve the newer four-test Moth program and 138-row recording. tsc/build/Moth 4/4/boot/power pass; 51 retained files unchanged, 50 scratch PNGs observed. Complete chapters 67/68 (F-2537-1 E7 reader undefined); adjacency 29/32 (known two M1 plus F-2537-2 M2 count 1 vs 2). New E7/M2 failures pass focused controls on both unchanged base and candidate; complete runs remain red. Readiness corrective authored for MAIN; M2 cause and full Node battery remain owed. Preserve lane and done-move, no re-queue or owner fork. See reviews/chapter-evidence-opt-in.md and artifacts/s2537-fire/resume.md."
+              "drainNotes": "s2537 HOLD: current-base candidate fee574e47be6eb813c73fecd4a5357e973a34a29, origin/save/chapter-evidence-s2537. Seven writer changes preserve the newer four-test Moth program and 138-row recording. tsc/build/Moth 4/4/boot/power pass; 51 retained files unchanged, 50 scratch PNGs observed. Complete chapters 67/68 (F-2537-1 E7 reader undefined); adjacency 29/32 (known two M1 plus F-2537-2 M2 count 1 vs 2). New E7/M2 failures pass focused controls on both unchanged base and candidate; complete runs remain red. Readiness corrective authored for MAIN; M2 cause and full Node battery remain owed. Preserve lane and done-move, no re-queue or owner fork. See reviews/chapter-evidence-opt-in.md and artifacts/s2537-fire/resume.md.",
+              "note_s2540": "F-2537-1 readiness prerequisite merged by 985db2d33b22121a3a6d2b47628666e05116031e; F-2537-2 was closed by s2539. This completed writer patch remains unmerged and requires its own current-base classification and full declared gates. Preserve lane and done-move; do not re-dispatch."
             },
             {
               "id": "lane-a-m1-debug-spawn-contract",
@@ -5049,10 +5050,12 @@
             {
               "id": "main-chapter-story-readiness",
               "title": "F-2537-1: six Frontier chapter-exclusion checks wait for the story reader before asserting an empty later-epoch queue",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "main-chapter-story-readiness.md",
               "note_s2538": "s2538: six-wait output is held for F-2537-2 classification. Frontier 12/12 and E7 mobile 3/3 pass, but full adjacency has an unexplained mobile M2 count 1 vs 2; complete unchanged-base control does not reproduce M2. Candidate 83f1429f6ff2dc26254f0c18225466991b6454ea retained on save/main-chapter-readiness-s2538. See reviews/main-chapter-story-readiness.md. The queued main-m2-palisade-placement-diagnosis.md corrective owns the next measurement; satisfy this gate-side condition before restoring and draining the candidate.",
-              "note_s2539": "Gate-side F-2537-2 classification condition discharged by 0eac2a9bec302665ab3483ec0413eca2e7469992. The completed six-wait candidate 83f1429f6ff2dc26254f0c18225466991b6454ea now awaits an independent drain on current main. Keep the saved candidate and existing done-move; do NOT re-dispatch the finished task. Its own chapter/adjacent/boot gates remain owed; no acceptance or merge claimed here."
+              "note_s2539": "Gate-side F-2537-2 classification condition discharged by 0eac2a9bec302665ab3483ec0413eca2e7469992. The completed six-wait candidate 83f1429f6ff2dc26254f0c18225466991b6454ea now awaits an independent drain on current main. Keep the saved candidate and existing done-move; do NOT re-dispatch the finished task. Its own chapter/adjacent/boot gates remain owed; no acceptance or merge claimed here.",
+              "mergeHash": "985db2d33b22121a3a6d2b47628666e05116031e",
+              "drainNotes": "s2540 ACCEPTED: six story-reader waits. Frontier 12/12, E7 mobile 3/3, adjacency 30/32 with only two M1 errors reproduced on unchanged base (6/8), M2 14/14; Node 26 tsc/build, boot 2/2, power and main task/citation/caller gates pass. See reviews/main-chapter-story-readiness.md and artifacts/s2540-fire/. Do not re-dispatch."
             },
             {
               "id": "main-m2-palisade-placement-diagnosis",

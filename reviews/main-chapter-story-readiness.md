@@ -1,41 +1,38 @@
-# s2539 follow-up — classification hold lifted, candidate still unmerged
+# MAIN chapter story readiness — s2540 drain
 
-F-2537-2 is closed by the M2 test-readiness drain `0eac2a9bec302665ab3483ec0413eca2e7469992`. The goal is re-registered for draining its existing completed output; no runner re-dispatch is needed. Rebase the saved six-wait candidate `83f1429f6ff2dc26254f0c18225466991b6454ea` onto current main and run its required chapter, adjacency and boot gates. This fire did not accept or merge that candidate. See `reviews/main-m2-palisade-placement-diagnosis.md` for the causal proof.
+## Slice, base and tip
 
-# MAIN chapter story readiness
-
-## Slice and candidate
-
-Task: `tasks/main-chapter-story-readiness.md`. Done-move: `20260907-172449-main-chapter-story-readiness.md`. Detached candidate `83f1429f6ff2dc26254f0c18225466991b6454ea` at `/private/tmp/gr-gate-s2538`, based on `03d9fe1a1bcd6c771d085175b51bc6e02583b10d`.
+Task `tasks/main-chapter-story-readiness.md`; completed MAIN output `20260907-172449-main-chapter-story-readiness.md`. Saved implementation `83f1429f6ff2dc26254f0c18225466991b6454ea` was applied onto current main `c688652ae051694761a47f80e874b168418eec04` in `/private/tmp/gr-gate-s2540`, producing `fd1404c773b87ff3973d372d172380f6e03b6ef9`. The integration base includes s2539's M2 input-readiness corrective.
 
 ## Verdict
 
-HOLD — no implementation merged. Candidate `83f1429f6ff2dc26254f0c18225466991b6454ea` is backed up on `origin/save/main-chapter-readiness-s2538`. Its six MAIN edits were removed only after verifying the captured patch and saved commit. The goal is blocked with blockClass gate-side pending F-2537-2 classification; the original done-move remains as provenance, not permission to re-dispatch.
+ACCEPTED — merged as `985db2d33b22121a3a6d2b47628666e05116031e`. This supersedes the s2538 hold and s2539 pending-gates status. F-2537-1 is closed. The two unrelated M1 failures are reproduced on unchanged main and do not block this test-only drain.
 
 ## What it does
 
-The six Frontier exclusion tests wait for the story reader before requiring its later-epoch queue to equal `[]`. Contract diagnostics become ready independently of the deferred story import in `src/main.ts`; they cannot prove that `StoryRuntime` has published its reader. Each test reuses the wait already present in its neighboring epoch controls. Queue equality, DOM absence and console assertions remain strict. No runtime, timeout, screenshot path, fixture or helper changes.
+Each of the six Frontier chapter-exclusion cases now waits for `window.__GR_STORY__` before reading its queue. The existing strict empty-array assertion, DOM absence assertion and console watcher remain unchanged. `src/main.ts` schedules the story import after two animation frames; `StoryRuntime.installDebugHandle` publishes the reader when that module installs. A missing reader and an installed empty queue are different states. No runtime, timeout, screenshot writer, fixture or helper changes.
 
 ## Evidence
 
-The implementer reported twelve selected tests and twelve passes across desktop and mobile, three additional mobile E7 passes, typecheck and build. Its report identifies Node 23.11.1, so those results are distinct from the fire's required Node 26 verification: `artifacts/chapter-story-readiness/report.md`.
+Native Node 26.4.0; detached tree clean after `npm ci`; one browser worker, trace off, private Vite cache and checked-free port 5330. `artifacts/s2540-fire/collection.txt` lists exactly twelve tests in six files.
 
-The fire's detached tree was clean after `npm ci`. Native Node 26.4.0 typecheck passed in 5.5 seconds and build in 23.1 seconds. Power passed at p95 0.428 ms against 0.500 ms; task, citation and gate-caller legs passed. The optional full Node attempt is incomplete: the generic wrapper terminated it at its 900-second limit. No Node pass is claimed. The explicit FIRE rule makes Node mandatory for simulation/entity/system changes; this candidate touches e2e only. The scope decision and failed wrapper receipt are retained in `artifacts/s2538-fire/gate-scope.md`. Receipts: `artifacts/s2538-fire/candidate.json`, `artifacts/s2538-fire/readiness.patch`, `artifacts/s2538-fire/npm-ci.log`, `artifacts/s2538-fire/core-gates.log`.
+- Typecheck passed in 4.9 s; build passed in 19.5 s, with the existing bundle warnings.
+- All twelve Frontier exclusions passed in 83.1 s; E7 mobile repeat passed 3/3 in 23.2 s. Every selected case reported zero suppressed GLTFLoader errors.
+- Full task-025/M1/M2 adjacency returned 30/32 in 133.0 s. Both failures are the same M1 test, `T spawns Claim Jumpers, contact kills hero, R restarts in place`, expecting enemiesAlive > 0 and receiving 0. All fourteen M2 cases passed.
+- A current-base control restored all six touched specs and proved an empty diff across source, e2e, scripts, functions and configs. Complete M1 returned 6/8 in 41.8 s with exactly the same two errors. The candidate files were then restored byte-identical.
+- Plain desktop and 390px boots passed in 8.6 s: zero console errors, warnings and page errors. Power p95 was 0.319 ms against a 0.500 ms cap. Main's task guard read 1,325 masters with zero invisible; citation and caller audits passed.
+- A bounded browser observation held the story module response, observed `undefined`, then released it and observed the installed reader with an empty later-epoch queue. This establishes the reader distinction; it does not claim town diagnostics can advance while their imported story module is withheld.
 
-The fire's collection reported exactly twelve tests in six files. All twelve passed in 80.9 seconds; the additional mobile E7 repeat passed 3/3 in 22.5 seconds. Every selected test reported zero suppressed GLTFLoader errors. Receipts: `artifacts/s2538-fire/readiness-collection.txt`, `artifacts/s2538-fire/browser-gates.log`. The adjacent set returned 29/32 in 138.5 seconds: both M1 debug-spawn cases expected enemiesAlive > 0 and received 0, and mobile M2 edge-touch expected count 2 and received 1. The plain desktop/390px boots passed in 8.5 seconds with zero console/page errors. The complete unchanged-base adjacent control returned 30/32 in 131.5 seconds, reproducing both M1 errors exactly but passing both M2 cases. Therefore M2 remains unexplained and this candidate is not accepted; `artifacts/s2538-fire/base-control-state.json` proves every runtime, test, script and configuration source matches the integration base for that control.
+Receipts: `artifacts/s2540-fire/gates.txt`, `artifacts/s2540-fire/followups.txt`, `artifacts/s2540-fire/base-control.json`, `artifacts/s2540-fire/ordering.txt`, `artifacts/s2540-fire/main-checks.txt`. Candidate/base failure screenshots and generated M2 images are retained under `artifacts/s2540-fire/browser-evidence/` and `artifacts/s2540-fire/generated-m2/`; they do not replace main's retained images.
 
 ## Merge classification
 
-All six paths are finished MAIN-slot output, with one additive line each and no overlapping foreign edit: `e2e/ss-06-e5-beats.spec.ts`, `e2e/ss-07-e6-beats.spec.ts`, `e2e/ss-08-e7-beats.spec.ts`, `e2e/ss-09-e8-beats.spec.ts`, `e2e/ss-10-e9-beats.spec.ts`, `e2e/ss-11-e10-beats.spec.ts`. The report is new. The policy probe returned CLEAR for the registered queued leaf. Factory logs and unrelated artifacts remain outside this drain.
+Every path was SAVED-ONLY: main had not changed it since the saved commit's parent. The six paths are `e2e/ss-06-e5-beats.spec.ts`, `e2e/ss-07-e6-beats.spec.ts`, `e2e/ss-08-e7-beats.spec.ts`, `e2e/ss-09-e8-beats.spec.ts`, `e2e/ss-10-e9-beats.spec.ts`, and `e2e/ss-11-e10-beats.spec.ts`. Each receives one existing-pattern wait. No conflict resolution was needed. Exact classification and patch: `artifacts/s2540-fire/classification.json`, `artifacts/s2540-fire/candidate.patch`.
 
-## Findings
+## Findings and limits
 
-F-2537-1 is addressed in the saved implementation, but its leaf remains held until drain acceptance. F-2537-2, the unresolved M2 edge-touch result, is separate. The broader `lane-c-chapter-evidence-opt-in` writer patch remains held under `reviews/chapter-evidence-opt-in.md`; accepting these six waits would not accept that patch or its older receipts.
+F-2537-1 CLOSED by this drain. F-2533-1 remains non-blocking here with a fresh base reproduction; its completed lane-a corrective awaits its own drain. F-2537-2 was closed by s2539, and both M2 projects pass here. The lane-c evidence-writer patch remains a separate unmerged slice; none of its changes or old gate claims is accepted by this review.
 
-F-2441-2 recurred as a measurement error: the 900-second generic wrapper cannot complete a battery whose recent native runs took 35–40 minutes. The process census after termination found no surviving child. The timeout is retained without a gameplay attribution, timeout increase or replacement green. This test-only task uses the explicit FIRE gate scope, not the broader generic skill default.
+Measurement failures are retained: the first boot invocation refused because the server process was launched from main despite its explicit Vite root pointing to the detached candidate; restarting the same server from the candidate directory satisfied the ownership guard. The first task-guard command named a nonexistent script; the real npm entry then correctly skipped in the linked worktree, so it was run against main for an actual verdict. The first extra ordering control incorrectly waited for town frames while withholding a module TownScene itself imports; it timed out before testing its claim. The corrected control observes only the declared reader boundary and passed. None of these refused arrangements is counted as a passing test.
 
-The next measurement is registered as `tasks/main-m2-palisade-placement-diagnosis.md`, restricted to M2 test readiness and diagnostic evidence. Runtime changes require a separately justified slice. Candidate and base failures are retained in `artifacts/s2538-fire/adjacent-results/` and `artifacts/s2538-fire/base-results/`; the three ordinary M2 screenshots last written by the base control are separately labelled `artifacts/s2538-fire/base-generated/`. They do not replace main's retained images.
-
-The original port-22 backup failed with No route to host. An SSH-over-443 retry, preserving strict host-key checking and using the same GitHub remote, succeeded; see `artifacts/s2538-fire/candidate-backup.txt`. The owned Vite process was stopped.
-
-Closing bookkeeping verification: main task guard 1,325 masters / zero invisible; ledger gate passed after the real handoff line existed, 1,050 assertions and 83 foundry checks in 106.2 seconds. This closes the fire paperwork, not the held implementation. Receipt: `artifacts/s2538-fire/closing-gates.log`.
+No full Node or full browser suite was run: the master explicitly excludes them for this e2e-only change, and FIRE requires the full Node battery for simulation/system/entity changes. The six identical barriers add no new algorithm requiring a separate implementation review. Factory telemetry and foreign artifacts were left outside the merge. No deployment is owed for this test-only drain.
