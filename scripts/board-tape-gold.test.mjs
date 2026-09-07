@@ -80,7 +80,14 @@ const FIXTURES = [
   // reel is the air-wall prover (`artifacts/mare-claim-air-prevalent/prover-01.tape.json`, w20, 600 s,
   // held 20, fnv1a32:41ae7f17), copied as a submission-shaped fixture under `artifacts/board-tape-gold/`.
   // Its `pannedAtSecure` is the run's lifetime panning read from `gr-sim --resume` on that tape.
-  { ride: 'e8-mare-claim', dir: 'artifacts/board-tape-gold/e8-mare-claim-air-prevalent', pannedAtSecure: 990 },
+  // RE-POINTED AGAIN 2026-09-07 (attended, F-EAL-6): once `e8-air-logical` (94f642279, owner A1 "humans in
+  // space need air") made an empty suit kill the hero, the air-wall prover dies before tick 2701 of its
+  // own order stream and this guard reddened on main for two hours. The securing reel is now the
+  // logical-air prover (`artifacts/e8-air-logical/prover-e8-mare-claim-01.tape.json`, w20, 600 s, purse 80,
+  // fnv1a32:968ff4a3, replaying to its own hash on the pin-79 engine), copied the same way under
+  // `e8-mare-claim-air-logical/`; the old fixture directory stays on disk (Retention Law). Lifetime panning
+  // read from `gr-sim --resume`: `now.score.goldPanned` 900 against a purse of 80.
+  { ride: 'e8-mare-claim', dir: 'artifacts/board-tape-gold/e8-mare-claim-air-logical', pannedAtSecure: 900 },
   { ride: 'e3-moth-season', pannedAtSecure: 530 },
   { ride: 'e7-relay-rush', pannedAtSecure: 870 },
 ];
